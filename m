@@ -1,158 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-35726-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35727-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B62339AEE93
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 19:49:36 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 822DE9AEEA8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 19:51:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7B253282568
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 17:49:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 343991F219DF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 17:51:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 674EA1FC7F6;
-	Thu, 24 Oct 2024 17:49:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2267A1FEFC3;
+	Thu, 24 Oct 2024 17:51:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="owYUupQZ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hiY542qu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33B901F585D;
-	Thu, 24 Oct 2024 17:49:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D2221EF958;
+	Thu, 24 Oct 2024 17:51:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729792172; cv=none; b=eQRqWC03nHzO0gKmFT+EoLnhradT0Z1zQx7xQFHegL0LaRYy+bhblCcXp/R4SnGm9/oZTqa9pXvYnGyfdrJefWzTkOA0yBhvW2d+Am7UjFwQ8VerrOka0tKkAp7OaqS6/PH1vlR9db4WoFWfETPl36A6KiP1UTpMJuUP7dVNRpc=
+	t=1729792281; cv=none; b=YQILfuDB98et+NuMIwoIpjdJacGEdoJdvdLk8j6JwST1/mmwmWahnB1KeZHvS5Nfj7CZi4Vm7hbc3VLWS1egdksSsduI6DGLt8qwnFpB3CHsMmnO0p2OAQ2JVlgcSZuVHi5Yzj2egYZ/5Ryr9RY5NiRry6C+7MBoD7xu7Cx8Dgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729792172; c=relaxed/simple;
-	bh=zhYWndttK/7xOoVyibLPyouE8AEyrLwPjBxjdEdHZmA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=A2t2O2N9GUxEqUXYfV3Fo6kyAzAjwY0XT30JwYX/25slaXaDMj2sqPPtLjlCG4fK5kRug5xjJ++BCR0cLuVVedW2R+Y/0mZhb2NfKhRHmt+VdHhn4nQTQT8o0JV1DOLOkDo15MAVD4QV51o0pPwKXOPS4Z43GbxDnR9MC1Jyths=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=owYUupQZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6948C4CEC7;
-	Thu, 24 Oct 2024 17:49:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729792171;
-	bh=zhYWndttK/7xOoVyibLPyouE8AEyrLwPjBxjdEdHZmA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=owYUupQZmFFMYFZyq/sNhN9t+gfp4Hil3ymUuZRoZl/SozSsXit9yb1V2m8OUU+Uz
-	 w+4QNvsdXxAtMBR3QLo1BUbeyoqIUIWrEFkZNdow4d44a7Ib9UY/o6Y7uhtcLKTHk/
-	 ENsupzMbapMYvkgBBczrHjE9L9J5ylZDOjgksWN3DBV37Y1ZOE3eLjxbzWArGiYxtE
-	 RVeEzJW6L4LSBLR9I5tEEnzLp68JOdSfHfCD7Pv4dK1AtT6HxPTsZFnzCI9zBKIEug
-	 XLnkYqf3WHwKg6CnXwSj3+QMde3uyPKuT0eLw2z8VcphAtEFMaZLB+Fy68L8r044r+
-	 TIp0/5XnV2LIQ==
-Date: Thu, 24 Oct 2024 12:49:29 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Johan Hovold <johan@kernel.org>
-Cc: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>, 
-	Mathieu Poirier <mathieu.poirier@linaro.org>, Chris Lew <quic_clew@quicinc.com>, 
-	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	Bjorn Andersson <quic_bjorande@quicinc.com>, linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	stable@vger.kernel.org, Johan Hovold <johan+linaro@kernel.org>
-Subject: Re: [PATCH v2 2/2] soc: qcom: pmic_glink: Handle GLINK intent
- allocation rejections
-Message-ID: <b7jydfdsyhn4xhrydsxmjayzvp3t3rwwrgnb45jzektbhotlmm@4czvpsdsjv4f>
-References: <20241023-pmic-glink-ecancelled-v2-0-ebc268129407@oss.qualcomm.com>
- <20241023-pmic-glink-ecancelled-v2-2-ebc268129407@oss.qualcomm.com>
- <ZxnrnY0rMQRWmUtd@hovoldconsulting.com>
+	s=arc-20240116; t=1729792281; c=relaxed/simple;
+	bh=mpIlZlRaCxkDCmg+pxpSIPgyUvtGMEuJt4hyIHi535E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=EMDViJQsGWjuiwXj2XJ6kXbdGYK+era29WbAnsfT/wsdqi4TkCJAV/cqOlZeCAPMt/ItakAbqqxvtU4kZWuvs1wDs2OoNTw5hx9gKx4ZbANVo+yn1kIDDpk6uj0wls7PPM4Ck7xPegdEbhgPreXjSs9nfp/s8jXzVMEzotkIAPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hiY542qu; arc=none smtp.client-ip=209.85.161.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-oo1-f43.google.com with SMTP id 006d021491bc7-5ebc0dbc65dso720029eaf.1;
+        Thu, 24 Oct 2024 10:51:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1729792278; x=1730397078; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Jc6NuU0ODoibJhPCVJDjw6esPivGZJhY0CSxZRAhpns=;
+        b=hiY542qu2EeaKabGnC9fO311/CZJUC6IHOzrfjTApH0HlOa1GccW8lXHDYeqsYj1j3
+         piPgqWLlN+J/Jf+Fv9RG3LYitS3Wn8lQs5QjIDloWQF2AYZSEP2rvFucD9B1XLrWgNdQ
+         3Jds97J42QYlhbd5p2sbxKf/w5XcrFbyrp5sSilacdn/ikkB/z6FC/njTK9dLcFd0Hqg
+         ghGSYs+CiCS5H7naVsJ4bKGaTb/oQWuV+9HieVVJRfGWHRNlm5VEgRtDA1FHCCNY/j0v
+         w635A6Q+RGuPXJy8hAyAYSoVCA40FVKIhjJ59Ci51UPJ2HheNDx1EoHCIeN/NJ93OSos
+         YIVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729792278; x=1730397078;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Jc6NuU0ODoibJhPCVJDjw6esPivGZJhY0CSxZRAhpns=;
+        b=WEq3KsLkWLoV0dD+DQWc478hTOVrArI8US7QQWk3hovT82dy4hoOnpzcP4BjeY7Nw/
+         X20+0M3rMWM2CdmFhgDbKCf+59lYx4QJXAvjgg4gF9RGYRDeYFBnZntfBl8sptZ712ib
+         kHaec0sa9Pak3fyiP5jO3lIBGc+3FrwgOZTKuBwUWMBGVyvbld4xwIYiZ3C2mzMkdrto
+         dxzGSZLPv0c2ExqWLh09sR0dtHoPyS12GncKQHxoG6e7ct1tVySo5xvI3RrdGxhEon7z
+         iv2EwfeRZEOh+RCmyHJcrhC1zgUOzsB+L+9y2xZuohlJ4gk2lefkLOelwTwJR2AO6fFP
+         f/Dg==
+X-Forwarded-Encrypted: i=1; AJvYcCUajfKqr0FmgevMZkNUoXKlk5YZnMyiYym5CPbTMT04QmUnesbDBPAUheuf4Z4mAFoo5vowi4NoCNsnc5lW@vger.kernel.org, AJvYcCVUw+3tVWHwa5v623VTKwURz2hJF78t8xWMnQ82WlVcWOOoDrbH9EGJt3AtHZ3M2ehpQzXy/HkhRlmDOqzY@vger.kernel.org, AJvYcCW0aGwNXMcPwYVL7UEcdbKwYkD9Yd2ldFB5RshBCHShE1ICIliUoXjHWXGO4yPSkPPbTxTEuJY3@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzmebhdv8ZpFRMhyL6tSIhqaowC4GfaqBH8Fc5wss8l/e5wLhxN
+	eQj2xPwOtP76awmvhvUcRXdqFEowwMG7Fr/86FYTUXOJGhRu6GxH
+X-Google-Smtp-Source: AGHT+IGG18h4HWFXUHL+AVT/CiehJARJDdu5LECKYjUv8wI1OGM4dXmOALas6TVufIUAnqB01Px/Hg==
+X-Received: by 2002:a05:6820:2611:b0:5e8:8b:f2f9 with SMTP id 006d021491bc7-5ec0576ef96mr1788028eaf.5.1729792278181;
+        Thu, 24 Oct 2024 10:51:18 -0700 (PDT)
+Received: from [192.168.1.22] (syn-070-114-247-242.res.spectrum.com. [70.114.247.242])
+        by smtp.googlemail.com with ESMTPSA id 006d021491bc7-5ec02c038cdsm428809eaf.31.2024.10.24.10.51.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 24 Oct 2024 10:51:17 -0700 (PDT)
+Message-ID: <c97ba583-0d03-4981-8113-87babfabbd7d@gmail.com>
+Date: Thu, 24 Oct 2024 12:51:16 -0500
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZxnrnY0rMQRWmUtd@hovoldconsulting.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v1 07/10] net: qrtr: allow socket endpoint binding
+To: Chris Lew <quic_clew@quicinc.com>, netdev@vger.kernel.org
+Cc: Marcel Holtmann <marcel@holtmann.org>, Andy Gross <agross@kernel.org>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20241018181842.1368394-1-denkenz@gmail.com>
+ <20241018181842.1368394-8-denkenz@gmail.com>
+ <64cc6a55-fa3f-42c3-b6b2-cd0da18cdeeb@quicinc.com>
+Content-Language: en-US
+From: Denis Kenzior <denkenz@gmail.com>
+In-Reply-To: <64cc6a55-fa3f-42c3-b6b2-cd0da18cdeeb@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Thu, Oct 24, 2024 at 08:39:25AM GMT, Johan Hovold wrote:
-> On Wed, Oct 23, 2024 at 05:24:33PM +0000, Bjorn Andersson wrote:
-> > Some versions of the pmic_glink firmware does not allow dynamic GLINK
-> > intent allocations, attempting to send a message before the firmware has
-> > allocated its receive buffers and announced these intent allocations
-> > will fail.
-> 
-> > Retry the send until intent buffers becomes available, or an actual
-> > error occur.
-> 
-> > Reported-by: Johan Hovold <johan@kernel.org>
-> > Closes: https://lore.kernel.org/all/Zqet8iInnDhnxkT9@hovoldconsulting.com/#t
-> > Cc: stable@vger.kernel.org # rpmsg: glink: Handle rejected intent request better
-> > Fixes: 58ef4ece1e41 ("soc: qcom: pmic_glink: Introduce base PMIC GLINK driver")
-> > Tested-by: Johan Hovold <johan+linaro@kernel.org>
-> > Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-> 
-> Thanks for the update. Still works as intended here.
-> 
+Hi Chris,
 
-Thanks for the confirmation.
-
-> >  int pmic_glink_send(struct pmic_glink_client *client, void *data, size_t len)
-> >  {
-> >  	struct pmic_glink *pg = client->pg;
-> > +	bool timeout_reached = false;
-> > +	unsigned long start;
-> >  	int ret;
-> >  
-> >  	mutex_lock(&pg->state_lock);
-> > -	if (!pg->ept)
-> > +	if (!pg->ept) {
-> >  		ret = -ECONNRESET;
-> > -	else
-> > -		ret = rpmsg_send(pg->ept, data, len);
-> > +	} else {
-> > +		start = jiffies;
-> > +		for (;;) {
-> > +			ret = rpmsg_send(pg->ept, data, len);
-> > +			if (ret != -EAGAIN)
-> > +				break;
-> > +
-> > +			if (timeout_reached) {
-> > +				ret = -ETIMEDOUT;
-> > +				break;
-> > +			}
-> > +
-> > +			usleep_range(1000, 5000);
+>> @@ -1346,6 +1367,9 @@ static int qrtr_getsockopt(struct socket *sock, int 
+>> level, int optname,
+>>       case QRTR_REPORT_ENDPOINT:
+>>           val = test_bit(QRTR_F_REPORT_ENDPOINT, &ipc->flags);
+>>           break;
+>> +    case QRTR_BIND_ENDPOINT:
+>> +        val = ipc->bound_endpoint;
+>> +        break;
 > 
-> I ran some quick tests of this patch this morning (reproducing the issue
-> five times), and with the above delay it seems a single resend is
-> enough. Dropping the delay I once hit:
-> 
-> [    8.723479] qcom_pmic_glink pmic-glink: pmic_glink_send - resend
-> [    8.723877] qcom_pmic_glink pmic-glink: pmic_glink_send - resend
-> [    8.723921] qcom_pmic_glink pmic-glink: pmic_glink_send - resend
-> [    8.723951] qcom_pmic_glink pmic-glink: pmic_glink_send - resend
-> [    8.723981] qcom_pmic_glink pmic-glink: pmic_glink_send - resend
-> [    8.724010] qcom_pmic_glink pmic-glink: pmic_glink_send - resend
-> [    8.724046] qcom_pmic_glink pmic-glink: pmic_glink_send - resend
-> 
-> which seems to suggest that a one millisecond sleep is sufficient for
-> the currently observed issue.
-> 
-> It would still mean up to 5k calls if you ever try to send a too large
-> buffer or similar and spin here for five seconds however. Perhaps
-> nothing to worry about at this point, but increasing the delay or
-> lowering the timeout could be considered.
+> In the case where an endpoint goes away and a client has bound their socket to 
+> an endpoint, would there be any notification to unbind the socket?
 > 
 
-I did consider this as well, but this code-path is specific to
-pmic-glink, so we shouldn't have any messages of size unexpected to the
-other side...
+I didn't think it was needed.  In my use case I would be relying on the relevant 
+device to be removed, (e.g. a udev notification would be received for the 
+devices associated with the PCIe modem).  ECONNRESET might also happen, with the 
+udev events following shortly after.
 
-If we do, then let's fix that. If I'm wrong in my assumptions, I'd be
-happy to see this corrected, without my arbitrarily chosen timeout
-values.
+> Is the expectation that the client would get notified through ECONNRESET on the 
+> next sendmsg() or receive the BYE/DEL_CLIENT/DEL_SERVER control message.
 
-Thanks,
-Bjorn
+Yes.
 
-> > +			timeout_reached = time_after(jiffies, start + PMIC_GLINK_SEND_TIMEOUT);
-> > +		}
-> > +	}
-> >  	mutex_unlock(&pg->state_lock);
-> >  
-> >  	return ret;
 > 
-> Johan
+> On that cleanup, I guess the client would either re-bind the socket back to 0 or 
+> wait for the mhi sysfs to come back and get the new endpoint id?
+
+In my case I would be closing the sockets entirely.  But what you describe can 
+also be done.
+
+Regards,
+-Denis
 
