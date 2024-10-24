@@ -1,80 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-35664-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35665-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C9049ADEA9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 10:14:46 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 97BBA9ADECF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 10:18:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C49DF1F23729
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 08:14:45 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 25E631F2388F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 08:18:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 577541C4A35;
-	Thu, 24 Oct 2024 08:11:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6FBB61B218F;
+	Thu, 24 Oct 2024 08:14:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outbound.mailhop.org header.i=@outbound.mailhop.org header.b="leqWNAvf"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Axtoj8Yy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from outbound1a.eu.mailhop.org (outbound1a.eu.mailhop.org [52.58.109.202])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EFAE1C4A23
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Oct 2024 08:11:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=52.58.109.202
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729757499; cv=pass; b=lifWcZzb79471c0wymoyW2yD5ROD/2nvRgQJM4XdGgYvT4NUx2CRcy93jVHdqKWJRlsI3oqP3pqJ9Jj1Er6xZEjCcYlfHOT4H54YC6eYhAHrstiZD/u22vFFA4goNaXHgGlSaln/P9dXmJn3dA9Oy58o40NnKcjDsq3fsmOgXhQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729757499; c=relaxed/simple;
-	bh=KArsoC11KVIWCNUmC3ZjBiqmSFW6aY2M79+FZ3Z8XFM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kbYCqc8I2L/VWOz57Yy/Ar8ae1h2TWHWcYtwwXWOBXu7ZglcBkPmjchMiHnoHSb9iyHZxfzWpHQClkABzm2HEXoHK21f/zIjX63ePYBk/BbTDsr/qXKyR4OXUiKvyEojONDsVJS5sK3hHHWlO+D8p5lFl0G4TbVFyKjYAB2aUYg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=demonlair.co.uk; spf=pass smtp.mailfrom=demonlair.co.uk; dkim=pass (2048-bit key) header.d=outbound.mailhop.org header.i=@outbound.mailhop.org header.b=leqWNAvf; arc=pass smtp.client-ip=52.58.109.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=demonlair.co.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=demonlair.co.uk
-ARC-Seal: i=1; a=rsa-sha256; t=1729757491; cv=none;
-	d=outbound.mailhop.org; s=arc-outbound20181012;
-	b=mHVIo9l+eUceMqrTd4IBgWRVsXg/hJ3KfjdYtYL6kssWxWV/mS/L03IHldKiU6twlKGPfeb+tayAz
-	 VSxgHZyAQBI+Natx4qEnlxiE8kXvMUkB75eYFxVEUXT4dq7Gvy34pAoj+0ngLjRXXEm1XkcG8/xpsl
-	 c6HA8QK48bTsnZMdGE1/F9+ZGIG6463VfTeQB5Br0HzDRhOJFOnGRBpCMzDZ1FBTJ4NTTs/QqZVmQz
-	 15i/rh3Nhupy8ivUNuwmn1qgD4BZJ7xuYul2yjStnn4ffSg/DIYYf+9nB4ppaR58OuBfD2yIrOuHg8
-	 KPxsW+0CWHNvmObsVrsI7kOX4xryKdg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=outbound.mailhop.org; s=arc-outbound20181012;
-	h=content-transfer-encoding:content-type:in-reply-to:from:references:cc:to:
-	 subject:mime-version:date:message-id:dkim-signature:from;
-	bh=AaVvclh9QZ53PLSnyOJZ8mzm2MIO2jd4GM/cgUMkd+o=;
-	b=rcLUzQA5Rj5RKUwHwr1nZSyUP0JWLal5K7WfLCnw3p46P0Uee+X7MtSg5YnO4BRMormYx9V7aZgQG
-	 G6HukKxfDIJOJOi339965kzsyxYFY+Crad/akLAvYPe+e1tTry10kIg58cW7bYSWBAKjZQHVPnj23i
-	 dKX8Na9/wHcXeDMTXvTGqxTIrATk2wzTncU+/oE9xpylg9A/7chn8oDtqN+WgzvjdU3mQwMZgAjlBx
-	 AAMIL8+Htreuy3zfSZa4gUQDUidd9dOUhhtvny5lgmlKL+2Ba8JH10yL3EN3jgQ6G0CyfvXkxE+LDc
-	 4Cm/Wu5d9CqG/8/szqWxU/ScF0/QITQ==
-ARC-Authentication-Results: i=1; outbound2.eu.mailhop.org;
-	spf=softfail smtp.mailfrom=demonlair.co.uk smtp.remote-ip=217.43.3.134;
-	dmarc=none header.from=demonlair.co.uk;
-	arc=none header.oldest-pass=0;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 176491AB6CC
+	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Oct 2024 08:14:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1729757694; cv=none; b=FGm5e5iy0f57Ki/TCsao2wtzUw/MY4i75EgslX1YA7BMFM9hvOcesIk9gqKXlxXKY8vbKN5DPWF/mNDTMpPULdt9ZZtgq0XPw90PHWKRRDMXGnBRVO4eRQ3ubCVH+91/nO9lmlUiYg26cCdjVAB5LXxzm6UPQ93cNaTcQ+ZL1zg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1729757694; c=relaxed/simple;
+	bh=lJltGDlNoIj7PRD57EZBWRK+uCtdjxhygbrM/Rjrr0s=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=GoHHtUjmSodwPn4dTqQjsOgF0JudnlMVeuMWQBhlGbKtZsPmZvpBbJHyI3HlVRVO7wL1zFeYNrtR4HlxzmHNp3HA6pS8aRyGoAPUOO+e0JzEKUO5fcuTj5HDCCPJwOS09rfYqhez95ZP66mLz6mMtHeo8rXzj5AYi/BLkGlFoDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Axtoj8Yy; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-43159c9f617so6069355e9.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Oct 2024 01:14:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=outbound.mailhop.org; s=dkim-high;
-	h=content-transfer-encoding:content-type:in-reply-to:from:references:cc:to:
-	 subject:mime-version:date:message-id:from;
-	bh=AaVvclh9QZ53PLSnyOJZ8mzm2MIO2jd4GM/cgUMkd+o=;
-	b=leqWNAvfbUwKVMIca8V8cB42gLdOAxnLWreZsnmoHG1KnVXqO1RNI2xiI6HzU/nq0oZ4YOEOJB4/3
-	 UV7jWx9suy8DnRvzRTIizoT5oi2f//I5IXjoGS+qptz/r5dvD4jm7em37cJq0GgTZ5Tr6ESHjEJZpS
-	 0U/8tPsjWc3pf+AQ0V20mdz+myOd1xm5aKEDWIUcFZrve0ps3qHBTyOYHmEw+byjekRLyNHvONP8zl
-	 dt9Es9zunA2DxaMeXwJIHgcAEyGGvsKgbeHPzl/7WgJVnI4umPqel5h5CW9Dq9v7ur88cIygY2Jxxv
-	 0r99P3lvRserXXW30uoXBUQXwGhn2ow==
-X-MHO-RoutePath: ZGVtb25sYWly
-X-MHO-User: 89f053c2-91df-11ef-9b6c-7b4c7e2b9385
-X-Report-Abuse-To: https://support.duocircle.com/support/solutions/articles/5000540958-duocircle-standard-smtp-abuse-information
-X-Mail-Handler: DuoCircle Outbound SMTP
-Received: from phoenix.demonlair.co.uk (host217-43-3-134.range217-43.btcentralplus.com [217.43.3.134])
-	by outbound2.eu.mailhop.org (Halon) with ESMTPA
-	id 89f053c2-91df-11ef-9b6c-7b4c7e2b9385;
-	Thu, 24 Oct 2024 08:11:17 +0000 (UTC)
-Received: from [10.57.1.52] (neptune.demonlair.co.uk [10.57.1.52])
-	by phoenix.demonlair.co.uk (Postfix) with ESMTP id D9D111EA107;
-	Thu, 24 Oct 2024 09:11:14 +0100 (BST)
-Message-ID: <dfe48df3-5527-4aed-889a-224221cbd190@demonlair.co.uk>
-Date: Thu, 24 Oct 2024 09:11:14 +0100
+        d=linaro.org; s=google; t=1729757690; x=1730362490; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ccPoXNx98DT2qy/9DNLY10I68wfGewmWvOOPtjIiyLo=;
+        b=Axtoj8YyHCgHwPqz+K4lVH5/AI+YBqR4F8xhXvD9HdBJ9irpkEyXCvv97FaMtx2M90
+         PCJ/LnLECF8cwKRk6uw6qQ5cpS8iVKIJRM1PYjadOJayF8J4n78Q3dHjowBW7Czvt6Qp
+         Puht7zKV6Xr/gTAOgF/dATCj0dkuXz7kPDcQ4Bxb92WDpTHqFLbBv9FrZLV+OiILcjZo
+         ITJ1nyNch18A/NKM6F65BGQO8SfKDkcZmwlF5EiUrHuSA6hxXIEzcjfLhv2p1xgEQcR4
+         /neKxuL5ycGXC9Eh7qpU92PmPftoZnGBDtwqxoEFpjpi5WwrAJ3J0Lsd7cywie1bsZE5
+         dfQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729757690; x=1730362490;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=ccPoXNx98DT2qy/9DNLY10I68wfGewmWvOOPtjIiyLo=;
+        b=STF2bSNhxmO8OVpqjhKkgEAp7OZ7FyMUtkRIomoWePp9Sr88aLfa/SFNEDsdZferYp
+         hNyL6yGnouOUBdWjw6mZd3G7C6NALT549ETH6yXnqjo0LhSpn16maCmLn5VsgqYbHx6D
+         I1n9d36qmyNlrNPIH5EX/6IW7oZRshTsfTBMfy+57GbrM5DEuqWcylvg03TtXpl9xBun
+         77fRJpX5IsCoXhuOPMCDjsD9PwkOatKheO6/gyDJDJ/cZGQy9TvDS8XfwlvC5zK9uOHp
+         WiRzr8JXIiehH8dSPic5zHaPcU/4lUQW58NZR5207b3YseecoBIAlmdnXyOGqjHOh52N
+         /Jlw==
+X-Forwarded-Encrypted: i=1; AJvYcCWj8BouAPbOCbUbDKidcGZyIiiepvnfJQvj8aPEPxevRKSPvxS79N03yQ5M3S4p6QEukr3fr0H2IU/DEV5X@vger.kernel.org
+X-Gm-Message-State: AOJu0YyE37VNpQSdrlwoZWTy1GQLwIMPp71qXB3/ni6CCKt3oJ207s7V
+	srqN37J5A/ABUcVAf0aXP6Lwo/lbacZWoCJZqlfY3zI1sLoEinsUDkqD5LYV/PE=
+X-Google-Smtp-Source: AGHT+IGwc+CsBuzyUeWwqgLNAC36h6mZY0W50CPNMxAcYFKjjDsEytFfdHHjXSXbazkn2g9xInmyoA==
+X-Received: by 2002:a05:6000:dd1:b0:374:c4e2:3ca7 with SMTP id ffacd0b85a97d-3803ac848b0mr909376f8f.5.1729757690447;
+        Thu, 24 Oct 2024 01:14:50 -0700 (PDT)
+Received: from ?IPV6:2a0d:e487:137f:ece6:fb3d:24cb:df87:1352? ([2a0d:e487:137f:ece6:fb3d:24cb:df87:1352])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37ee0a37935sm10743978f8f.17.2024.10.24.01.14.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 24 Oct 2024 01:14:50 -0700 (PDT)
+Message-ID: <f512138b-f9ac-4554-9b45-567079ac9605@linaro.org>
+Date: Thu, 24 Oct 2024 10:14:47 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,83 +78,93 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] dm-inlinecrypt: Add inline encryption support
-Content-Language: en-GB
-To: Adrian Vovk <adrianvovk@gmail.com>, Christoph Hellwig <hch@infradead.org>
-Cc: Eric Biggers <ebiggers@kernel.org>,
- Md Sadre Alam <quic_mdalam@quicinc.com>, axboe@kernel.dk, song@kernel.org,
- yukuai3@huawei.com, agk@redhat.com, snitzer@kernel.org,
- Mikulas Patocka <mpatocka@redhat.com>, adrian.hunter@intel.com,
- quic_asutoshd@quicinc.com, ritesh.list@gmail.com, ulf.hansson@linaro.org,
- andersson@kernel.org, konradybcio@kernel.org, kees@kernel.org,
- gustavoars@kernel.org, linux-block@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-raid@vger.kernel.org,
- dm-devel@lists.linux.dev, linux-mmc@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-hardening@vger.kernel.org,
- quic_srichara@quicinc.com, quic_varada@quicinc.com
-References: <20240916085741.1636554-1-quic_mdalam@quicinc.com>
- <20240916085741.1636554-2-quic_mdalam@quicinc.com>
- <20240921185519.GA2187@quark.localdomain> <ZvJt9ceeL18XKrTc@infradead.org>
- <ef3c9a17-79f3-4937-965e-52e2b9e66ac2@gmail.com>
- <ZxHwgsm2iP2Z_3at@infradead.org>
- <CAAdYy_mVy3uXPqWbjPzK_i8w7Okq73wKBQyc95TbnonE36rPgQ@mail.gmail.com>
- <ZxH4lnkQNhTP5fe6@infradead.org>
- <D96294E2-F17A-4E58-90FB-1D17747048E5@gmail.com>
- <ZxieZPlH-S9pakYW@infradead.org>
- <CAAdYy_ms=VmvxZy9QiMkwcNk21a2kVy73c8-NxUh4dNJuLefCg@mail.gmail.com>
-From: Geoff Back <geoff@demonlair.co.uk>
-In-Reply-To: <CAAdYy_ms=VmvxZy9QiMkwcNk21a2kVy73c8-NxUh4dNJuLefCg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
+From: neil.armstrong@linaro.org
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH 0/2] X1E001DE Snapdragon Devkit for Windows
+To: Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
+ konradybcio@kernel.org, krzk+dt@kernel.org, robh+dt@kernel.org
+Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, conor+dt@kernel.org, abel.vesa@linaro.org,
+ srinivas.kandagatla@linaro.org
+References: <20240911073337.90577-1-quic_sibis@quicinc.com>
+ <f67d0fcd-4940-a57a-0e11-b98ed29cd09d@quicinc.com>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <f67d0fcd-4940-a57a-0e11-b98ed29cd09d@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
+Hi,
 
-On 24/10/2024 03:52, Adrian Vovk wrote:
-> On Wed, Oct 23, 2024 at 2:57 AM Christoph Hellwig <hch@infradead.org> wrote:
->> On Fri, Oct 18, 2024 at 11:03:50AM -0400, Adrian Vovk wrote:
->>> Sure, but then this way you're encrypting each partition twice. Once by the dm-crypt inside of the partition, and again by the dm-crypt that's under the partition table. This double encryption is ruinous for performance, so it's just not a feasible solution and thus people don't do this. Would be nice if we had the flexibility though.
+On 23/10/2024 13:05, Sibi Sankar wrote:
+> 
+> 
+> On 9/11/24 13:03, Sibi Sankar wrote:
+>> Add initial support for X1E001DE Snapdragon Devkit for Windows. X1E001DE
+>> is the speed binned variant of X1E80100 that supports turbo boost up to
+>> 4.3 Ghz. The initial support includes the following:
+>>
+>> -DSPs
+>> -Ethernet (RTL8125BG) over the pcie 5 instance.
+>> -NVme
+>> -Wifi
+>> -USB-C ports
+>>
+> 
+> Hi All,
+> 
+> With the X1E Devkit cancelled and with no firmware updates promised for
+> it perpetually, please chime in and let me know if you still want to get
+> this series and rest (external-dp, usb-A ports, sd card slot and 3.5 mm
+> Jack) merged and have it supported upstream for the folks who already
+> received it!
 
-As an encrypted-systems administrator, I would actively expect and
-require that stacked encryption layers WOULD each encrypt.  If I have
-set up full disk encryption, then as an administrator I expect that to
-be obeyed without exception, regardless of whether some higher level
-file system has done encryption already.
+As there's some people owning this kit in the wild, yes please make sure the
+current patchset goes into mainline and I assume the community will add the
+missing bits in the future.
 
-Anything that allows a higher level to bypass the full disk encryption
-layer is, in my opinion, a bug and a serious security hole.
+Thanks,
+Neil
 
-Regards,
-
-Geoff.
-
-
->> Why do you assume the encryption would happen twice?
-> I'm not assuming. That's the behavior of dm-crypt without passthrough.
-> It just encrypts everything that moves through it. If I stack two
-> layers of dm-crypt on top of each other my data is encrypted twice.
->
->>>> Because you are now bypassing encryption for certainl LBA ranges in
->>>> the file system based on hints/flags for something sitting way above
->>>> in the stack.
->>>>
->>> Well the data is still encrypted. It's just encrypted with a different key. If the attacker has a FDE dump of the disk, the data is still just as inaccessible to them.
->> No one knows that it actually is encryped.  The lower layer just knows
->> the skip encryption flag was set, but it has zero assurance data
->> actually was encrypted.
-> I think it makes sense to require that the data is actually encrypted
-> whenever the flag is set. Of course there's no way to enforce that
-> programmatically, but code that sets the flag without making sure the
-> data gets encrypted some other way wouldn't pass review.
->
-> Alternatively, if I recall correctly it should be possible to just
-> check if the bio has an attached encryption context. If it has one,
-> then just pass-through. If it doesn't, then attach your own. No flag
-> required this way, and dm-default-key would only add encryption iff
-> the data isn't already encrypted.
->
-> Would either of those solutions be acceptable?
->
-> Best,
-> Adrian
->
+> 
+> -Sibi
+> 
+>> Link: https://www.qualcomm.com/news/releases/2024/05/qualcomm-accelerates-development-for-copilot--pcs-with-snapdrago
+>>
+>> Sibi Sankar (2):
+>>    dt-bindings: arm: qcom: Add Snapdragon Devkit for Windows
+>>    arm64: dts: qcom: Add X1E001DE Snapdragon Devkit for Windows
+>>
+>>   .../devicetree/bindings/arm/qcom.yaml         |   6 +
+>>   arch/arm64/boot/dts/qcom/Makefile             |   1 +
+>>   arch/arm64/boot/dts/qcom/x1e001de-devkit.dts  | 813 ++++++++++++++++++
+>>   3 files changed, 820 insertions(+)
+>>   create mode 100644 arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
+>>
+> 
 
 
