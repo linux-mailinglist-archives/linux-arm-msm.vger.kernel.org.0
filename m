@@ -1,205 +1,225 @@
-Return-Path: <linux-arm-msm+bounces-35662-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35663-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DDFBE9ADE32
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 09:52:34 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D15119ADE87
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 10:11:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0ACED1C2256A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 07:52:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5E8621F2328B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 08:11:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBFE51AAE3F;
-	Thu, 24 Oct 2024 07:52:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2EBD31AF0D5;
+	Thu, 24 Oct 2024 08:10:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G/SNzV/8"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SzajlhbB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7283A18B488;
-	Thu, 24 Oct 2024 07:52:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECE681AE005;
+	Thu, 24 Oct 2024 08:10:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729756350; cv=none; b=jiq2gXxcV0rMv/TqJlWFjPsIyoQ6JAVQgSo/mEk4//8sPIHnwy3Z1EL9I/qHolyCaZtKwH6oiV60uHxbn/PxuhEwzpbiShUBKQBEXtd6Aeso6P8rNJIr6l3JnVzCgdtZMt5djgCa9AcmfCoN9riy0gPB/fIHdnGQ8ClTi/u7BXI=
+	t=1729757454; cv=none; b=J7H1RLwG6vhtFuU7TQy90JD5CzbY5++GbcO+SUt9y3qPDKdDMIrt860quS7fDK3xTjmkIrWC2mpvP+JSeqD69muoNaib/ghPWGrzSITDPHfv3tCH8I1LQ8VCoMjRp1BX7jkLYrgeDDkj1yR2tGkA7RE3zn3LVUQWytMdkAuDrsk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729756350; c=relaxed/simple;
-	bh=3bsoItA4FoWHgxKrlTUQpSwnVMUBVNKejfINlmF4PYs=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=YutRaMIorE3joki4j42utFS75UOiPGVEGKeXAtANjC9xjYlHYhrWjFBiEPHvv8oryU+lohTVBVEH8xJ9o9sqbKpqCK9xNQibPL0vJD9+Llrz7oSYz7z88GwZCP1eKLeFjS0nWZ8eQu8vDaAi1/228nN9sM8l7G8ShXO3mEC3Yyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G/SNzV/8; arc=none smtp.client-ip=209.85.219.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-6cd7a2ed34bso3507616d6.2;
-        Thu, 24 Oct 2024 00:52:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729756347; x=1730361147; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=O0/EFW0Ues6w3fPRU2v9fda5kssgHquHWtzyYPgwJuQ=;
-        b=G/SNzV/8d4+5Alz61iZYTXAWd/wcEtwGqeTI+DfDNF1TirErORH6IwiEuphstS3S/x
-         d0iJjLN5OCmQ3a6oU3yFnQGKXMbXyf8UNTIdsrNBO426Jy5G4JS6Tk4tXer3CNdrvoPK
-         oCnwGZuwRKl1J3I/52gkNmJ2pH3XASMjHFRTCdK4hdMwY47tr6p1tUAFBHjWgp7La2HK
-         1yD7Sfr0llgpIdVZMOl8IIdOjwWx0wvT6TvDYItPB4dLIITnvOTNzZPp4ZogQ+ih6Oya
-         kZXlzNx+nqUkPbX8ZxPQC8nKBPzPOLJ3dInpYQrX9vaOxaMDTf3na2WzROzigu/RYz8F
-         8Oeg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729756347; x=1730361147;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=O0/EFW0Ues6w3fPRU2v9fda5kssgHquHWtzyYPgwJuQ=;
-        b=s0QtRpyI2ba20aOod8N8dYpjklD3eGXF1+33CcqUvnpUf8jqw/+nKmJWVU3VthtISX
-         P/yRFe8UTwJrsRMW5+oviehltJOcVeFmelM6gY8w0nslYgI2H4lEFbvbYxL1yqE4ND3d
-         Xmc4wI3JLO1i4juhFW/5pt6uQQWW0r/W8eH7elntbGQoqPgwcvqEInxuiSow4opLnCeX
-         kujZSumNBGxO5MLnYq7HRIK7e2wegx25jJqTuGggLbu9PL/TFoB28c0QHw5Bu2ApVLhI
-         yX8MgXInZQ47dt8MY6tXgkn4rs0MZw+6VWT71XIWZA0J9WycruxtJEQYsxtMBs27rC9o
-         dVWA==
-X-Forwarded-Encrypted: i=1; AJvYcCU97fEDtEM+VHyNkEcPQemnp3mi9rCD38ouN+FAZBYK4bwcYUMz64E5qgr5eqhHJvUVoldcv3P2eVhdww==@vger.kernel.org, AJvYcCUZolEIeiZcRqCWipv4aJfxz7Q7VzkQa889dRYUNE8h0KGj+JpTMS0I+p2It31APIaeMHM/8XcIjzKFhRY=@vger.kernel.org, AJvYcCV3L7vWaKVle+VrnQUYOTEgldQFY+UQZRTOQlgRRPGbcF3TQNDZIS327UJkop3jFYW82heMZhqjPAeXYFc9@vger.kernel.org, AJvYcCWOJrC6mSGaOU0WCbCF/Dd76MCWKgtZrIVaqJwHbubzJdp8QWi9WXA+4J+vei3TOobB2+CxBRoswqpXsCsG@vger.kernel.org, AJvYcCWqb3qus818YpuYB5ZH6QWhF7FfioFNOmoED4hHr0kT4VVrxSrTX04udtYolEXt9FD8Jdh/k/MVJZGcHdslKevN@vger.kernel.org, AJvYcCXsJTojbj9PNcZTx5Ddp2hkaHwS600w7FHkY9JO2Pvz8qbPEJAhkJ6z79gVA6L2XHNTcxu2sWHRw/04@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyv8HQFJ4isFLiVcen7uyd6w32/qB1o8BMh/NUfPz7NYu23oK9R
-	o1Vv+/YFfjUGzsY7Zqg5MvpO1d7p3Txmu5Xki1wE89/f21emj4K6
-X-Google-Smtp-Source: AGHT+IFy8n3my83FIpBvse1TJXvT5l1N0qfdSpBUn31spF9HVcMzbXW4pytU5zfKNTw3TxdD0g0ncw==
-X-Received: by 2002:a05:6214:3f8e:b0:6cc:51f:6c41 with SMTP id 6a1803df08f44-6ce34284a29mr65067106d6.36.1729756347374;
-        Thu, 24 Oct 2024 00:52:27 -0700 (PDT)
-Received: from [127.0.0.1] (syn-076-188-177-122.res.spectrum.com. [76.188.177.122])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6ce008acc1fsm46933966d6.20.2024.10.24.00.52.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 24 Oct 2024 00:52:27 -0700 (PDT)
-Date: Thu, 24 Oct 2024 03:52:24 -0400
-From: Adrian Vovk <adrianvovk@gmail.com>
-To: Christoph Hellwig <hch@infradead.org>
-CC: Eric Biggers <ebiggers@kernel.org>, Md Sadre Alam <quic_mdalam@quicinc.com>,
- axboe@kernel.dk, song@kernel.org, yukuai3@huawei.com, agk@redhat.com,
- snitzer@kernel.org, Mikulas Patocka <mpatocka@redhat.com>,
- adrian.hunter@intel.com, quic_asutoshd@quicinc.com, ritesh.list@gmail.com,
- ulf.hansson@linaro.org, andersson@kernel.org, konradybcio@kernel.org,
- kees@kernel.org, gustavoars@kernel.org, linux-block@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-raid@vger.kernel.org,
- dm-devel@lists.linux.dev, linux-mmc@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-hardening@vger.kernel.org,
- quic_srichara@quicinc.com, quic_varada@quicinc.com
-Subject: Re: [PATCH v2 1/3] dm-inlinecrypt: Add inline encryption support
-User-Agent: Thunderbird for Android
-In-Reply-To: <Zxnl4VnD6K6No4UQ@infradead.org>
-References: <20240916085741.1636554-2-quic_mdalam@quicinc.com> <20240921185519.GA2187@quark.localdomain> <ZvJt9ceeL18XKrTc@infradead.org> <ef3c9a17-79f3-4937-965e-52e2b9e66ac2@gmail.com> <ZxHwgsm2iP2Z_3at@infradead.org> <CAAdYy_mVy3uXPqWbjPzK_i8w7Okq73wKBQyc95TbnonE36rPgQ@mail.gmail.com> <ZxH4lnkQNhTP5fe6@infradead.org> <D96294E2-F17A-4E58-90FB-1D17747048E5@gmail.com> <ZxieZPlH-S9pakYW@infradead.org> <CAAdYy_ms=VmvxZy9QiMkwcNk21a2kVy73c8-NxUh4dNJuLefCg@mail.gmail.com> <Zxnl4VnD6K6No4UQ@infradead.org>
-Message-ID: <14126375-5F6F-484A-B34B-F0C011F3A9C5@gmail.com>
+	s=arc-20240116; t=1729757454; c=relaxed/simple;
+	bh=gscWgojEUanIV0DyFKMS6hDfBu/y+xjxw7+/o7qWgfI=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=QUmZohIWjclhOqn1FgdlVoOZae+gs1+FG+ZLujXWVXTjGpUUUBzTyU0Uj71L73Ht4NIzCf0Y5QVM4OIrYkZ3c0pmbE4hpOPuvrCM3Iixq3BMk68KVlK+7hT6Pe29jW+vClKj4baEs6AV0MEI3kC5XbTv4hYzJfBrwPIky9UCC98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=SzajlhbB; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49NL4V75028304;
+	Thu, 24 Oct 2024 08:10:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=aDUYIh+5i8guvYp5QFB1wb
+	bOqtDS8iKbjDahnB/AU2Q=; b=SzajlhbBPCT/7d4b08/qwFlJ9UYHoqQa75IFyM
+	36qYcrj/ZaiMlaKADNdh69O9UWZOuUByhUktpF5upvSs45b4BoDCUZuoBXJwRg6k
+	GISUMjntAVXFHOYifxzPadWiCUAC6lvKZ6OUoh/rIzX0ih0hhingOtsqDdg20x7o
+	BEIWSRMxwyXrN8kCLURpgeNK85rKRDkV26gjOug++nzNwQt+Pfymnc0CQoUBAaYt
+	/PfsGc1eXD8mivazKIN9gDmnyIeMrpkkNewoD5HV8DJrf/uwRLfB3/xTHzFMDW0s
+	nSmqYTK+ZmXOjPHBWesEDcW8vp6ZH08C2Tw/JkSmpiE9Lumg==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42em41vwww-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 24 Oct 2024 08:10:46 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49O8AjbT006206
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 24 Oct 2024 08:10:45 GMT
+Received: from cse-cd02-lnx.ap.qualcomm.com (10.80.80.8) by
+ nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Thu, 24 Oct 2024 01:10:39 -0700
+From: Tingguo Cheng <quic_tingguoc@quicinc.com>
+Date: Thu, 24 Oct 2024 16:09:48 +0800
+Subject: [PATCH v2] arm64: dts: qcom: qcs615: Adds SPMI bus, PMIC and
+ peripherals
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-ID: <20241024-adds-spmi-pmic-peripherals-for-qcs615-v2-1-f262ba243b63@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAM4AGmcC/62QQWrDMBBFrxK0ropHliU5q9yjBDMejRpBYjuSY
+ 1pC7l45KZQuugh0ocUX6L3/dRWZU+QstpurSLzEHMehBPWyEXTA4Z1l9CULVSldtaqV6H2WeTp
+ FWQ7JqTyfDpzwmGUYkzxTNtBIMMxNDbZF60VhTYlD/Lh73vaPnPh8Kbr5cfljK/Ligkqp1dXFI
+ c4Rj12+TNOY5q5Ium+JUo0JRmNLSm8XvXp6zCxpPJ3ivN14bmtnwPle9Rh6BrQVuUC6DpUh8t5
+ UtdG9EmujQ8zzmD7vH7HAvdKTmxeQIHtrbQjOQqhpVwZSHOi1FFrLPXYBPMNrtXfKeAie+A+ef
+ oZnmobRog+A9B88hzUZ693a8xdvf7vdvgDL2uldXgIAAA==
+X-Change-ID: 20240929-adds-spmi-pmic-peripherals-for-qcs615-16ee53179a7d
+To: <quic_fenglinw@quicinc.com>, <quic_tingweiz@quicinc.com>,
+        <kernel@quicinc.com>, Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Tingguo Cheng <quic_tingguoc@quicinc.com>
+X-Mailer: b4 0.15-dev-dedf8
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1729757438; l=3846;
+ i=quic_tingguoc@quicinc.com; s=20240917; h=from:subject:message-id;
+ bh=gscWgojEUanIV0DyFKMS6hDfBu/y+xjxw7+/o7qWgfI=;
+ b=58eSs6XTVjCBYB/4Q0x/P0kmh4/Y0s9KCZn13irBA3bR5XDMXHcbpPIgJE6M7IRjBNaYclCde
+ oWD02rm4DgWDrgeb2J1bY6Qv9RpGdJQfJOxooKRxf4nJ2FdDw3kbbN8
+X-Developer-Key: i=quic_tingguoc@quicinc.com; a=ed25519;
+ pk=PiFYQPN5GCP7O6SA43tuKfHAbl9DewSKOuQA/GiHQrI=
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: LTtkUse2ZST4K8miD4IFJos4w4yzcW1q
+X-Proofpoint-ORIG-GUID: LTtkUse2ZST4K8miD4IFJos4w4yzcW1q
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
+ adultscore=0 bulkscore=0 malwarescore=0 mlxlogscore=999 mlxscore=0
+ spamscore=0 lowpriorityscore=0 priorityscore=1501 phishscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410240063
 
+Add SPMI bus arbiter and include pm8150.dtsi for PMIC peripherals in
+pmm6155au which is a variant of pm8150. The power key and volume do-
+wn key are controlled by PMIC PON hardware on pmm6155au.
 
+Signed-off-by: Tingguo Cheng <quic_tingguoc@quicinc.com>
+---
+This patch depends on the patch series:
+- https://lore.kernel.org/all/20241022-add_initial_support_for_qcs615-v4-0-0a551c6dd342@quicinc.com/
+---
+Changes in v2:
+- Include "pm8150.dtsi" for QCS615 PMIC instead of creating a new
+  qcs615-pmic.dtsi in the case that pmm6155au is a variant of pm8150.
+- Fixed comments from community in V1.
+- Link to v1: https://lore.kernel.org/r/20241014-adds-spmi-pmic-peripherals-for-qcs615-v1-1-8a3c67d894d8@quicinc.com
+---
+ arch/arm64/boot/dts/qcom/qcs615-ride.dts | 27 +++++++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/qcs615.dtsi     | 23 +++++++++++++++++++++++
+ 2 files changed, 50 insertions(+)
 
-On October 24, 2024 2:14:57 AM EDT, Christoph Hellwig <hch@infradead=2Eorg=
-> wrote:
->On Wed, Oct 23, 2024 at 10:52:06PM -0400, Adrian Vovk wrote:
->> > Why do you assume the encryption would happen twice?
->>=20
->> I'm not assuming=2E That's the behavior of dm-crypt without passthrough=
-=2E
->> It just encrypts everything that moves through it=2E If I stack two
->> layers of dm-crypt on top of each other my data is encrypted twice=2E
->
->Sure=2E  But why would you do that?
+diff --git a/arch/arm64/boot/dts/qcom/qcs615-ride.dts b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
+index ee6cab3924a6d71f29934a8debba3a832882abdd..71ea0cb32eebed713b2a80ab692b14fdb4bd0ce4 100644
+--- a/arch/arm64/boot/dts/qcom/qcs615-ride.dts
++++ b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
+@@ -6,6 +6,7 @@
+ 
+ #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+ #include "qcs615.dtsi"
++#include "pm8150.dtsi"
+ / {
+ 	model = "Qualcomm Technologies, Inc. QCS615 Ride";
+ 	compatible = "qcom,qcs615-ride", "qcom,qcs615";
+@@ -210,6 +211,32 @@ &rpmhcc {
+ 	clocks = <&xo_board_clk>;
+ };
+ 
++&spmi_bus {
++	pmm6155au_0: pmic@0 {
++
++		pon: pon@800 {
++
++			/delete-property/ mode-bootloader;
++			/delete-property/ mode-recovery;
++
++			pon_pwrkey: pwrkey {
++				status = "okay";
++			};
++
++			pon_resin: resin {
++				linux,code = <KEY_VOLUMEDOWN>;
++				status = "okay";
++			};
++		};
++
++		pmm6155au_0_gpios: gpio@c000 {};
++	};
++
++	pmm6155au_1: pmic@1 {
++		status = "disabled";
++	};
++};
++
+ &uart0 {
+ 	status = "okay";
+ };
+diff --git a/arch/arm64/boot/dts/qcom/qcs615.dtsi b/arch/arm64/boot/dts/qcom/qcs615.dtsi
+index ac4c4c751da1fbb28865877555ba317677bc6bd2..3fc928913239cfc61c24d1b16c183b96f38e589d 100644
+--- a/arch/arm64/boot/dts/qcom/qcs615.dtsi
++++ b/arch/arm64/boot/dts/qcom/qcs615.dtsi
+@@ -517,6 +517,29 @@ sram@c3f0000 {
+ 			reg = <0x0 0x0c3f0000 0x0 0x400>;
+ 		};
+ 
++		spmi_bus: spmi@c440000 {
++			compatible = "qcom,spmi-pmic-arb";
++			reg = <0x0 0x0c440000 0x0 0x1100>,
++			      <0x0 0x0c600000 0x0 0x2000000>,
++			      <0x0 0x0e600000 0x0 0x100000>,
++			      <0x0 0x0e700000 0x0 0xa0000>,
++			      <0x0 0x0c40a000 0x0 0x26000>;
++			reg-names = "core",
++				    "chnls",
++				    "obsrvr",
++				    "intr",
++				    "cnfg";
++			interrupts-extended = <&pdc 1 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "periph_irq";
++			interrupt-controller;
++			#interrupt-cells = <4>;
++			#address-cells = <2>;
++			#size-cells = <0>;
++			cell-index = <0>;
++			qcom,channel = <0>;
++			qcom,ee = <0>;
++		};
++
+ 		intc: interrupt-controller@17a00000 {
+ 			compatible = "arm,gic-v3";
+ 			reg = <0x0 0x17a00000 0x0 0x10000>,     /* GICD */
 
-As mentioned earlier in the thread: I don't have a usecase specifically fo=
-r this and it was an example of a situation where passthrough is necessary =
-and no filesystem is involved at all=2E Though, as I also pointed out, a us=
-ecase where you're putting encrypted virtual partitions on an encrypted LVM=
- setup isn't all that absurd=2E
+---
+base-commit: de938618db2bafbe1a70c8fc43f06ccdd60364b2
+change-id: 20240929-adds-spmi-pmic-peripherals-for-qcs615-16ee53179a7d
+prerequisite-change-id: 20241022-add_initial_support_for_qcs615-2256f64a9c24:v4
+prerequisite-patch-id: 09782474af7eecf1013425fd34f9d2f082fb3616
+prerequisite-patch-id: 624720e543d7857e46d3ee49b8cea413772deb4c
+prerequisite-patch-id: 04ca722967256efddc402b7bab94136a5174b0b9
+prerequisite-patch-id: ab88a42ec69ad90e8509c9c5b7c6bdd595a7f783
+prerequisite-patch-id: 918724fafe43acaa4c4b980bfabe36e9c3212cd1
+prerequisite-patch-id: 3bd8edd83297815fcb1b81fcd891d3c14908442f
+prerequisite-patch-id: fc1cfec4ecd56e669c161c4d2c3797fc0abff0ae
 
-In my real-world case, I'm putting encrypted loop devices on top of a file=
-system that holds its own sensitive data=2E Each loop device has dm-crypt i=
-nside and uses a unique key, but the filesystem needs to be encrypted too (=
-because, again, it has its own sensitive data outside of the loop devices)=
-=2E The loop devices cannot be put onto their own separate partition becaus=
-e there's no good way to know ahead of time how much space either of the pa=
-rtitions would need: sometimes the loop devices need to take up loads of sp=
-ace on the partition, and other times the non-loop-device data needs to tak=
-e up that space=2E And to top it all off, the distribution of allocated spa=
-ce needs to change dynamically=2E
+Best regards,
+-- 
+Tingguo Cheng <quic_tingguoc@quicinc.com>
 
-The current Linux kernel does not support this use-case without double enc=
-ryption=2E The loop devices are encrypted once with their own dm-crypt inst=
-ance=2E Then that same data is encrypted a second time over by the partitio=
-n=2E
-
-Actually this scenario is simplified=2E We actually want to use fscrypt in=
-side of the loopback file too=2E So actually, without the passthrough mecha=
-nism some data would be encrypted three distinct times=2E
-
->> > No one knows that it actually is encryped=2E  The lower layer just kn=
-ows
->> > the skip encryption flag was set, but it has zero assurance data
->> > actually was encrypted=2E
->>=20
->> I think it makes sense to require that the data is actually encrypted
->> whenever the flag is set=2E Of course there's no way to enforce that
->> programmatically, but code that sets the flag without making sure the
->> data gets encrypted some other way wouldn't pass review=2E
->
->You have a lot of trusted in reviers=2E But even that doesn't help as
->the kernel can load code that never passed review=2E
-
-Ultimately, I'm unsure what the concern is here=2E
-
-It's a glaringly loud opt-in marker that encryption was already performed =
-or is otherwise intentionally unnecessary=2E The flag existing isn't what p=
-unches through the security model=2E It's the use of the flag that does=2E =
-I can't imagine anything setting the flag by accident=2E So what are you ac=
-tually concerned about? How are you expecting this flag to actually be misu=
-sed?
-
-As for third party modules that might punch holes, so what? 3rd party modu=
-les aren't the kernel's responsibility or problem
-
->> Alternatively, if I recall correctly it should be possible to just
->> check if the bio has an attached encryption context=2E If it has one,
->> then just pass-through=2E If it doesn't, then attach your own=2E No fla=
-g
->> required this way, and dm-default-key would only add encryption iff
->> the data isn't already encrypted=2E
->
->That at least sounds a little better=2E=20
-
-Please see my follow up=2E This is actually not feasible because it doesn'=
-t work=2E Sometimes, fscrypt will just ask to move encrypted blocks around =
-without providing an encryption context; the data doesn't need to be decryp=
-ted to be reshuffled on disk=2E This flag-less approach I describe would ac=
-tually just break: it it would unintentionally encrypt that data during shu=
-ffling=2E
-
-> But it still doesn't answer
->why we need this hack instead always encrypting at one layer instead
->of splitting it up=2E
-
-In my loopback file scenario, what would be the one layer that could handl=
-e the encryption?
-
-- the loopback files are just regular files that happen to have encrypted =
-data inside of them=2E Doing it a different way changes the semantics: with=
- a loopback file, I'm able to move it into a basic FAT filesystem and back =
-without losing the encryption on the data
-
-- the filesystem is completely unaware of any encryption=2E The loopback f=
-iles are just files with random content inside=2E The filesystem itself is =
-encrypted from below by the block layer=2E So, there's nothing for it to do=
-=2E
-
-- the underlying instance of dm-crypt is encrypting a single opaque blob o=
-f data, and so without explicit communication from above it cannot possibly=
- know how to handle this=2E
-
-Thus, I don't see a single layer that can handle this=2E The only solution=
- is for upper layers to communicate downward=2E
-
-Best,
-Adrian 
 
