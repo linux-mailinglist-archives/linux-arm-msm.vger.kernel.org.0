@@ -1,131 +1,93 @@
-Return-Path: <linux-arm-msm+bounces-35696-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35697-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4200C9AE8D7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 16:31:15 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BF5259AE92F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 16:43:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 73A241C22188
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 14:31:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 82AAC28AB8D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 14:43:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1AF281F7076;
-	Thu, 24 Oct 2024 14:28:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B32B91E284B;
+	Thu, 24 Oct 2024 14:42:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DYKDodnz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4B351F669F;
-	Thu, 24 Oct 2024 14:28:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8335F1DD0DF;
+	Thu, 24 Oct 2024 14:42:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729780102; cv=none; b=sBayP/2KkMjL1Z6Fz4U3VmBrtfhTo3/DTFZt3MOB3ZPglhTBmRTb3Vowo0UWG9yEGeHDF0ZjjEGvT3LS1EPeensUstqJghFvmIIY27EIdZK01zfqSwop+6zDlkvYH9RIjTbLOvlK899GMlA++oZAllh/bbFBDUSvHNo4NLS4kkg=
+	t=1729780977; cv=none; b=CTlillY8xw3iQlx7N+OIXC6ICarNQ/UMtmPYoTtoT3M9WowpIVJseSzwbv8IorCsTQlNVBd+Q1ZlcIP38QRtb0LW+XSgOaN2qLNbYHK8M6EJFQjKRRElqlbvPnqidQHZoox0JrKthXHuRF6LQzSiZcTsjJVeAquToC2ZXB5yQdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729780102; c=relaxed/simple;
-	bh=9KmBYw1eiZZ45NfTasyieiF5LdLBmbJ72ug2/gAsLL4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Eepb3oj2sOgPU1bMVfknhzV9wAih8uCZbJRGu865gLd/VRgijLgwO3mf3/1HrTsT/b8Rzfl7njwuARUswFD/OWieq1U1d2Bm5Hy1/JCrZXaQsRR4vZteXHEOF81zS1ZRkC3ukR9kBd4btp9jA7YPxpeY/qGq4zaCFmnDVXKd21k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com; spf=fail smtp.mailfrom=gmail.com; arc=none smtp.client-ip=198.175.65.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=gmail.com
-X-CSE-ConnectionGUID: dcA/yEC9RTOptQYJQJFs5Q==
-X-CSE-MsgGUID: q+V8CnhlQyKW+z9MOo4oLA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11235"; a="33209024"
-X-IronPort-AV: E=Sophos;i="6.11,229,1725346800"; 
-   d="scan'208";a="33209024"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Oct 2024 07:28:19 -0700
-X-CSE-ConnectionGUID: kAxyAEgGRsqzP2CbF2dKlA==
-X-CSE-MsgGUID: ROTIQ0wXTPGJYZDISuk74A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,229,1725346800"; 
-   d="scan'208";a="80776831"
-Received: from black.fi.intel.com ([10.237.72.28])
-  by orviesa006.jf.intel.com with ESMTP; 24 Oct 2024 07:28:16 -0700
-Received: by black.fi.intel.com (Postfix, from userid 1003)
-	id 30C1B252; Thu, 24 Oct 2024 17:28:14 +0300 (EEST)
-Date: Thu, 24 Oct 2024 17:28:14 +0300
-From: Andy Shevchenko <andy.shevchenko@gmail.com>
-To: Hans de Goede <hdegoede@redhat.com>
-Cc: Rayyan Ansari <rayyan@ansari.sh>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-iio@vger.kernel.org,
-	Bjorn Andersson <andersson@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Jonathan Cameron <jic23@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	s=arc-20240116; t=1729780977; c=relaxed/simple;
+	bh=t0OZKA4n9mqRbbHhAysa4Kw5aWrJMRzwz3vf4umP7xM=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=g5uTA38LQt+gijZHPagIyhcBxJbRIIGES5et88U0JDaJa2lrRucOb3acDQv7yZejGbfsmRIgSV19cqV4xfQKt4BBze7tAL6ONHklHtqVK3skyoKmvyq7yPLdlfgyMbkiIA3FR4vn6FOrUBZW4PMJ7EFfaiWjef18k+Fu5WmXS4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DYKDodnz; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C01DC4CEC7;
+	Thu, 24 Oct 2024 14:42:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1729780977;
+	bh=t0OZKA4n9mqRbbHhAysa4Kw5aWrJMRzwz3vf4umP7xM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=DYKDodnz92n7qFauFPJX856mxEtkMRGNMjwUV3bSfuD0OhqE5y777vSTQMVai1eby
+	 dezWu7I0s2pZn1/Md7UiCeTTCrgNR1nBVE9tS6lkCVmT9ZLVNeKhUvBdLZSN0BdVGW
+	 RFjOBNBgcI9snA5UIgyKtbIYtKsecpcQ9xnhQ4MqRIKwB/SngBKoIPvGU0G4B2TM8h
+	 t6lHtDvX+RLgvrI+5nVZdQ9PFa1l+UYKZk/nvAMuwfV1BpkhYMc3ng7/nnx1C/1fiX
+	 gz4f4dJJALNX0HfLLnlpkWNGbaAU/ICOGkGlEc2cf78+sPwMA11DkdFGg3yalKt8tB
+	 SU9IfRILVVs8A==
+From: Will Deacon <will@kernel.org>
+To: Robin Murphy <robin.murphy@arm.com>,
+	Joerg Roedel <joro@8bytes.org>,
+	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Lars-Peter Clausen <lars@metafoo.de>, linux-kernel@vger.kernel.org,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Robert Yang <decatf@gmail.com>, Rob Herring <robh@kernel.org>,
-	Sean Rhodes <sean@starlabs.systems>
-Subject: Re: [PATCH 2/3] iio: accel: kxcjk-1013: Add support for KX022-1020
-Message-ID: <ZxpZfgsf-KldiX4w@black.fi.intel.com>
-References: <20240714173431.54332-1-rayyan@ansari.sh>
- <20240714173431.54332-3-rayyan@ansari.sh>
- <823ce598-dffd-4983-bffa-32559558235d@redhat.com>
+	Conor Dooley <conor+dt@kernel.org>,
+	Rob Clark <robdclark@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: catalin.marinas@arm.com,
+	kernel-team@android.com,
+	Will Deacon <will@kernel.org>,
+	linux-arm-kernel@lists.infradead.org,
+	iommu@lists.linux.dev,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2] dt-bindings: iommu: arm,smmu: Add Qualcomm SAR2130P compatible
+Date: Thu, 24 Oct 2024 15:42:49 +0100
+Message-Id: <172977349100.1427890.9934602061209095444.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20241018-sar2130p-iommu-v2-1-64c361fceac8@linaro.org>
+References: <20241018-sar2130p-iommu-v2-1-64c361fceac8@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <823ce598-dffd-4983-bffa-32559558235d@redhat.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On Mon, Jul 15, 2024 at 10:30:46AM +0200, Hans de Goede wrote:
-> On 7/14/24 7:33 PM, Rayyan Ansari wrote:
-> > Add compatible for the KX022-1020 accelerometer [1] using the
-> > KX022-1023 [2] register map as both have an identical i2c interface.
-> > 
-> > [1]: https://kionixfs.azureedge.net/en/datasheet/KX022-1020%20Specifications%20Rev%2012.0.pdf
-> > [2]: https://kionixfs.azureedge.net/en/datasheet/KX023-1025%20Specifications%20Rev%2012.0.pdf
-> > 
-> > Signed-off-by: Rayyan Ansari <rayyan@ansari.sh>
+On Fri, 18 Oct 2024 11:28:46 +0300, Dmitry Baryshkov wrote:
+> Document compatible for ARM-500 SMMU controller on Qualcomm SAR2130P
+> platform.
 > 
-> Thanks, patch looks good to me:
 > 
-> Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 
-Note, this patch broke kx231025 case...
+Applied to will (for-joerg/arm-smmu/bindings), thanks!
 
-> >  	KXCJ91008,
-> >  	KXTJ21009,
-> >  	KXTF9,
-> > +	KX0221020,
-> >  	KX0231025,
-> >  	KX_MAX_CHIPS /* this must be last */
-> >  };
+[1/1] dt-bindings: iommu: arm,smmu: Add Qualcomm SAR2130P compatible
+      https://git.kernel.org/will/c/0ddb903fab63
 
-...because this enum is used of ODR startup timeout settings which
-are all moved now to be 0 and new ID inherited the timeouts from
-the KX0231025 case.
-
-Since I have been looking into the driver, and I have a few patches
-coming, I propose to do the following (as it's still ODR data being
-missed) to:
-1) revert this one;
-2) apply my set;
-3) re-apply this with the fixed data.
-
-Another approach can be done (but probably not by me) is to move the ID
-to the proper location, add ODR startup timeouts or explain why it's not
-needed and then apply my patch.
-
-But, taking into account that we are almost at -rc5 and I want my stuff
-not to be postponed, I tend to follow the first approach.
-
-Opinions, comments?
-
-P.S. FWIW, my set will include switching this driver to use chip_info
-structure so the similar mistakes won't happen again, that's also why
-I prefer the first approach I listed above.
-
+Cheers,
 -- 
-With Best Regards,
-Andy Shevchenko
+Will
 
-
+https://fixes.arm64.dev
+https://next.arm64.dev
+https://will.arm64.dev
 
