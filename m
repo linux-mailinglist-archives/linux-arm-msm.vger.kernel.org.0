@@ -1,129 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-35727-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35729-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 822DE9AEEA8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 19:51:31 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 20CF89AEEB8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 19:54:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 343991F219DF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 17:51:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 52C531C220E4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 17:53:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2267A1FEFC3;
-	Thu, 24 Oct 2024 17:51:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 757BC1FE0E8;
+	Thu, 24 Oct 2024 17:53:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hiY542qu"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jIF6zO24"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D2221EF958;
-	Thu, 24 Oct 2024 17:51:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7134B1FEFB6;
+	Thu, 24 Oct 2024 17:53:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729792281; cv=none; b=YQILfuDB98et+NuMIwoIpjdJacGEdoJdvdLk8j6JwST1/mmwmWahnB1KeZHvS5Nfj7CZi4Vm7hbc3VLWS1egdksSsduI6DGLt8qwnFpB3CHsMmnO0p2OAQ2JVlgcSZuVHi5Yzj2egYZ/5Ryr9RY5NiRry6C+7MBoD7xu7Cx8Dgc=
+	t=1729792431; cv=none; b=GolGGD4h9ZM7pZ4kaXVbDgFdFNQHLl7lWqVh4xGuRPqj6ORhKhfTRbB6Ah5wmS0iFFfnlJWGjZ+g2Wwa/R52DVzYvyLpp8UeFHvNjQO0VqhyBC5jw7Vpbzybix57uxxt+dLjJ+TsR1XFwdO9S1qNFjMFxS18VApQ1yQubX7o75s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729792281; c=relaxed/simple;
-	bh=mpIlZlRaCxkDCmg+pxpSIPgyUvtGMEuJt4hyIHi535E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EMDViJQsGWjuiwXj2XJ6kXbdGYK+era29WbAnsfT/wsdqi4TkCJAV/cqOlZeCAPMt/ItakAbqqxvtU4kZWuvs1wDs2OoNTw5hx9gKx4ZbANVo+yn1kIDDpk6uj0wls7PPM4Ck7xPegdEbhgPreXjSs9nfp/s8jXzVMEzotkIAPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hiY542qu; arc=none smtp.client-ip=209.85.161.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oo1-f43.google.com with SMTP id 006d021491bc7-5ebc0dbc65dso720029eaf.1;
-        Thu, 24 Oct 2024 10:51:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729792278; x=1730397078; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Jc6NuU0ODoibJhPCVJDjw6esPivGZJhY0CSxZRAhpns=;
-        b=hiY542qu2EeaKabGnC9fO311/CZJUC6IHOzrfjTApH0HlOa1GccW8lXHDYeqsYj1j3
-         piPgqWLlN+J/Jf+Fv9RG3LYitS3Wn8lQs5QjIDloWQF2AYZSEP2rvFucD9B1XLrWgNdQ
-         3Jds97J42QYlhbd5p2sbxKf/w5XcrFbyrp5sSilacdn/ikkB/z6FC/njTK9dLcFd0Hqg
-         ghGSYs+CiCS5H7naVsJ4bKGaTb/oQWuV+9HieVVJRfGWHRNlm5VEgRtDA1FHCCNY/j0v
-         w635A6Q+RGuPXJy8hAyAYSoVCA40FVKIhjJ59Ci51UPJ2HheNDx1EoHCIeN/NJ93OSos
-         YIVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729792278; x=1730397078;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Jc6NuU0ODoibJhPCVJDjw6esPivGZJhY0CSxZRAhpns=;
-        b=WEq3KsLkWLoV0dD+DQWc478hTOVrArI8US7QQWk3hovT82dy4hoOnpzcP4BjeY7Nw/
-         X20+0M3rMWM2CdmFhgDbKCf+59lYx4QJXAvjgg4gF9RGYRDeYFBnZntfBl8sptZ712ib
-         kHaec0sa9Pak3fyiP5jO3lIBGc+3FrwgOZTKuBwUWMBGVyvbld4xwIYiZ3C2mzMkdrto
-         dxzGSZLPv0c2ExqWLh09sR0dtHoPyS12GncKQHxoG6e7ct1tVySo5xvI3RrdGxhEon7z
-         iv2EwfeRZEOh+RCmyHJcrhC1zgUOzsB+L+9y2xZuohlJ4gk2lefkLOelwTwJR2AO6fFP
-         f/Dg==
-X-Forwarded-Encrypted: i=1; AJvYcCUajfKqr0FmgevMZkNUoXKlk5YZnMyiYym5CPbTMT04QmUnesbDBPAUheuf4Z4mAFoo5vowi4NoCNsnc5lW@vger.kernel.org, AJvYcCVUw+3tVWHwa5v623VTKwURz2hJF78t8xWMnQ82WlVcWOOoDrbH9EGJt3AtHZ3M2ehpQzXy/HkhRlmDOqzY@vger.kernel.org, AJvYcCW0aGwNXMcPwYVL7UEcdbKwYkD9Yd2ldFB5RshBCHShE1ICIliUoXjHWXGO4yPSkPPbTxTEuJY3@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzmebhdv8ZpFRMhyL6tSIhqaowC4GfaqBH8Fc5wss8l/e5wLhxN
-	eQj2xPwOtP76awmvhvUcRXdqFEowwMG7Fr/86FYTUXOJGhRu6GxH
-X-Google-Smtp-Source: AGHT+IGG18h4HWFXUHL+AVT/CiehJARJDdu5LECKYjUv8wI1OGM4dXmOALas6TVufIUAnqB01Px/Hg==
-X-Received: by 2002:a05:6820:2611:b0:5e8:8b:f2f9 with SMTP id 006d021491bc7-5ec0576ef96mr1788028eaf.5.1729792278181;
-        Thu, 24 Oct 2024 10:51:18 -0700 (PDT)
-Received: from [192.168.1.22] (syn-070-114-247-242.res.spectrum.com. [70.114.247.242])
-        by smtp.googlemail.com with ESMTPSA id 006d021491bc7-5ec02c038cdsm428809eaf.31.2024.10.24.10.51.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 24 Oct 2024 10:51:17 -0700 (PDT)
-Message-ID: <c97ba583-0d03-4981-8113-87babfabbd7d@gmail.com>
-Date: Thu, 24 Oct 2024 12:51:16 -0500
+	s=arc-20240116; t=1729792431; c=relaxed/simple;
+	bh=wf4Glc1hanqJTEE89z6YctKfrzuX3CKptNjSKVI+qeE=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=HlRxh0Onv2hOUehYrGq9CNAPW3DZr2gQCl/vtgD1T2DqgknyyW+qgRpH1acG0nWTYxLahdPmPyBLcTMy/rH5ewcn1exoVRSDwvnqM5SawvHoeSzcHK/GjfRffCOM9cxcW5qXg2sR8SN1a7N4VqOMXj8ywcq7+scy3J6lzxSw8AI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jIF6zO24; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49OA6niL026198;
+	Thu, 24 Oct 2024 17:53:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=SdFPGAkk5sfMCVHEaO9IDX
+	HeQAhjdtUYSx7Xrk7BWfU=; b=jIF6zO24unxhKD1JoM3W27v0EMusPE/H75aEvy
+	iAaHX62qMCDiSasiSGjbTI8GwWWrsU3SOkBfpX40jJw4bgedm0Noe5HwvnQmXeNT
+	nRxEoYMdUHnFj/kj3L7y7ZNe9a/MCaUWqJQq6+AvvG/TYNTBzlMiR8bbzu1aNUDq
+	hO9Cd2pAKmpPcmgHvyC3+OHmNsE6ar02CBCPRJK0LiEy0Mt980SlQzvWE1VhjLVR
+	U6cQgVmQlJiVv5EzT2S6PmptAZVVe4GjVP7pdfGzF3BxrO+h7z9RicXnlacVvRw/
+	bRMY9ltYHycoKw7DTR52Lmiou7eR4bMzOS0g37P2h7OeNeXw==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42em40ehwf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 24 Oct 2024 17:53:39 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49OHrc7W009878
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 24 Oct 2024 17:53:38 GMT
+Received: from hu-tdas-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Thu, 24 Oct 2024 10:53:35 -0700
+From: Taniya Das <quic_tdas@quicinc.com>
+Date: Thu, 24 Oct 2024 23:22:55 +0530
+Subject: [PATCH v2] arm64: defconfig: Enable sa8775p clock controllers
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v1 07/10] net: qrtr: allow socket endpoint binding
-To: Chris Lew <quic_clew@quicinc.com>, netdev@vger.kernel.org
-Cc: Marcel Holtmann <marcel@holtmann.org>, Andy Gross <agross@kernel.org>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20241018181842.1368394-1-denkenz@gmail.com>
- <20241018181842.1368394-8-denkenz@gmail.com>
- <64cc6a55-fa3f-42c3-b6b2-cd0da18cdeeb@quicinc.com>
-Content-Language: en-US
-From: Denis Kenzior <denkenz@gmail.com>
-In-Reply-To: <64cc6a55-fa3f-42c3-b6b2-cd0da18cdeeb@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-ID: <20241024-defconfig_sa8775p_clock_controllers-v2-1-a9e1cdaed785@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAHaJGmcC/5WQS26EMBBEr4K8Tkf+ADYoinKPaIRM0x6s4Rebo
+ EQj7h4PZJFtllWLek91Z5GCp8jq7M4CbT76eUpBPmUMeztdCXyXMpNc5oJLCR05nCfnr020Rut
+ iaXCY8dakcg3zMFCIoDjnVOS8KHnL0tISyPmvg/J+OXOgj88EW8+StTYS4DyOfq2zUrXKOa66S
+ lgyzujCkdG5Rm2ELaRw2mBHQj+mR4rRHpZ19nJKCgG/ajCOsOUQKNLUwWJX7CnCVgCH3FZO6A5
+ Lo+xbUkE/4XMSeGUPwd7HdQ7fxyubOAz/dcAmQAC2qqparnKJ5i+CXfZ9/wG/b2XZeQEAAA==
+X-Change-ID: 20241022-defconfig_sa8775p_clock_controllers-3000e540560b
+To: Bjorn Andersson <andersson@kernel.org>,
+        Catalin Marinas
+	<catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, <linux-arm-msm@vger.kernel.org>
+CC: Ajit Pandey <quic_ajipan@quicinc.com>,
+        Imran Shaik
+	<quic_imrashai@quicinc.com>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Taniya Das <quic_tdas@quicinc.com>
+X-Mailer: b4 0.15-dev-aa3f6
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: a7vv6e-6NNWOfdrg8zTm4haucIyWtrq8
+X-Proofpoint-GUID: a7vv6e-6NNWOfdrg8zTm4haucIyWtrq8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
+ impostorscore=0 spamscore=0 phishscore=0 mlxlogscore=750
+ lowpriorityscore=0 clxscore=1015 malwarescore=0 bulkscore=0 suspectscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410240147
 
-Hi Chris,
+Enable the SA8775P video, camera and display clock controllers to enable
+the video, camera and display functionalities on Qualcomm QCS9100 ride
+and ride rev3 boards.
 
->> @@ -1346,6 +1367,9 @@ static int qrtr_getsockopt(struct socket *sock, int 
->> level, int optname,
->>       case QRTR_REPORT_ENDPOINT:
->>           val = test_bit(QRTR_F_REPORT_ENDPOINT, &ipc->flags);
->>           break;
->> +    case QRTR_BIND_ENDPOINT:
->> +        val = ipc->bound_endpoint;
->> +        break;
-> 
-> In the case where an endpoint goes away and a client has bound their socket to 
-> an endpoint, would there be any notification to unbind the socket?
-> 
+Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+---
+Changes in v2:
+- Update the board names for QCS9100 [Dmitry].
+- Link to v1: https://lore.kernel.org/r/20241022-defconfig_sa8775p_clock_controllers-v1-1-cb399b0342c8@quicinc.com
+---
+ arch/arm64/configs/defconfig | 3 +++
+ 1 file changed, 3 insertions(+)
 
-I didn't think it was needed.  In my use case I would be relying on the relevant 
-device to be removed, (e.g. a udev notification would be received for the 
-devices associated with the PCIe modem).  ECONNRESET might also happen, with the 
-udev events following shortly after.
+diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+index 36b33b9f17042128f5bef96f58667b5807b712c2..6197934b38e08b7294ec897e451af6e96fd63cda 100644
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -1324,10 +1324,12 @@ CONFIG_QCM_GCC_2290=y
+ CONFIG_QCM_DISPCC_2290=m
+ CONFIG_QCS_GCC_404=y
+ CONFIG_SC_CAMCC_7280=m
++CONFIG_SA_CAMCC_8775P=m
+ CONFIG_QDU_GCC_1000=y
+ CONFIG_SC_CAMCC_8280XP=m
+ CONFIG_SC_DISPCC_7280=m
+ CONFIG_SC_DISPCC_8280XP=m
++CONFIG_SA_DISPCC_8775P=m
+ CONFIG_SA_GCC_8775P=y
+ CONFIG_SA_GPUCC_8775P=m
+ CONFIG_SC_GCC_7180=y
+@@ -1366,6 +1368,7 @@ CONFIG_SM_GPUCC_8550=m
+ CONFIG_SM_GPUCC_8650=m
+ CONFIG_SM_TCSRCC_8550=y
+ CONFIG_SM_TCSRCC_8650=y
++CONFIG_SA_VIDEOCC_8775P=m
+ CONFIG_SM_VIDEOCC_8250=y
+ CONFIG_QCOM_HFPLL=y
+ CONFIG_CLK_GFM_LPASS_SM8250=m
 
-> Is the expectation that the client would get notified through ECONNRESET on the 
-> next sendmsg() or receive the BYE/DEL_CLIENT/DEL_SERVER control message.
+---
+base-commit: 63b3ff03d91ae8f875fe8747c781a521f78cde17
+change-id: 20241022-defconfig_sa8775p_clock_controllers-3000e540560b
+prerequisite-message-id: <20241011-sa8775p-mm-v4-resend-patches-v5-0-4a9f17dc683a@quicinc.com>
+prerequisite-patch-id: c405247d3558175ea16e723e36ccba87b51da3e6
+prerequisite-patch-id: 2f421e48713add52f17b6e0a95a1e4cb410322e0
+prerequisite-patch-id: 037cc7f8c1c9f690bea1976550616e661f48c53a
+prerequisite-patch-id: 930db8201718c0a66286d85418c7bac1719a76d1
+prerequisite-patch-id: 79dc8594844768685144c302eaf404b0d6cb7ebd
+prerequisite-patch-id: 836d46d2d006bdaae12b8a8aaed2eb786fd636ce
+prerequisite-patch-id: 096e89f063b35a70bbd8f92c4eb5a32c850bd927
+prerequisite-patch-id: 5a49926d1dfada78038f963d5de23a558d9dd19b
 
-Yes.
+Best regards,
+-- 
+Taniya Das <quic_tdas@quicinc.com>
 
-> 
-> On that cleanup, I guess the client would either re-bind the socket back to 0 or 
-> wait for the mhi sysfs to come back and get the new endpoint id?
-
-In my case I would be closing the sockets entirely.  But what you describe can 
-also be done.
-
-Regards,
--Denis
 
