@@ -1,129 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-35711-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35712-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 598AE9AEB54
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 18:02:36 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A87C09AEB98
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 18:15:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DB181285625
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 16:02:34 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 140E5B22E4C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 16:15:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 08FBB1EF0BC;
-	Thu, 24 Oct 2024 16:02:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C5791DD0EC;
+	Thu, 24 Oct 2024 16:15:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EK9pKIXc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vIvBfst6"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6EB71F5825;
-	Thu, 24 Oct 2024 16:02:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DB241547D2;
+	Thu, 24 Oct 2024 16:15:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729785753; cv=none; b=Dk2uCZEFrxbUzIwXFJ9SlVBc3fsDBFhcX1IGDHyazcKnGmC+FYcV2oX2Zm3tNmM8kkP5z/fPfMHk9GtCTc8NgivXPWmhGF57/IHqZJ89PHK3iVLC6YPiSKrGvh0N/dvdhMizpcd/d8qbFSWQds22ZdNAhH2Wx64p7Z8pS5UQj3U=
+	t=1729786513; cv=none; b=gqGzrW9peZJUyhZcvhcCUynHN094KGP/JitGNA/1+9hFbBZtaV2CQP536TEcp75CCIySZAnvaaEyreEsdlIjXF+mYNiBTaI1afKUbjp6IljW93Qvfmlv37SCso39ARV94UFfAxUJ0zQOgdfiG0PYlqaXd1ifnxl3vLTy+w+pNCM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729785753; c=relaxed/simple;
-	bh=h0hSRniz6MntdSENub19c9kSV/crZIkSPwyBi1krOG8=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SHkhqUk8brJQE76UpTs11B29UKIQutu/R59f68OfZS+SISPsWulL4oddBSfkKYUT3WUft2RhiObj3LFdsZbaEq03VfZpSVJX5wqUQafBpLwkEOpiZrg770N72o7FMDfyrebmdLB1NHcbNAK01hQE61U6eC2a9Dl9m+0/+aTVCrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EK9pKIXc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D9ECC4CEE3;
-	Thu, 24 Oct 2024 16:02:33 +0000 (UTC)
+	s=arc-20240116; t=1729786513; c=relaxed/simple;
+	bh=a8XUIXmSwn3FMAXyuMm+VKbLCqiY3txch6Yo+wm1HOc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SZLQl0Gy3bgwqbWIk5Q1sXIWIcAcpZwZFIH2UBwBSYAaO7fP3auCJdwRjIoxBX40e8qDDHefRMWdUKLt1epcRWLIKP81EasFX5097p8r/wQbXB4gHB2HHhTGogQB34U8tIQGncMP4xxd+IsLGKekXRqXsuWNfALYBX0hNomKHro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vIvBfst6; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBEE7C4CEE3;
+	Thu, 24 Oct 2024 16:15:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729785753;
-	bh=h0hSRniz6MntdSENub19c9kSV/crZIkSPwyBi1krOG8=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=EK9pKIXcJOvunjlFF+uDgT1nL4BuIu0y73R1xZAJXMqypPCWwkH0Msa1mvh9HvOG9
-	 d8T+CRFgs5Z5OtX9IblhXfxnlShdTvDulV0nDSw81eVYVapHRVBQKz5zZnezQJWOOr
-	 VIq+RD5zgmrpo1MMX+FXZU4EyIHUxON5EYu/8RxV+t+v3yQNGsXPy2VCw6SnWD2+vA
-	 tXa0yzUVwjMrNBWaZCHey5Z3xqap+2+S7D04bAIKX2FMb0iC940Mv2AtpoZzJJT1Sa
-	 udbBz8hj0xsuRy8Q4BKDAo6VSpkvtg8C+XwFjC2j2SpeLnC9zRpqG28Xca7QpaoaAH
-	 kbGE6UJO0aeiQ==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
-	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.95)
-	(envelope-from <maz@kernel.org>)
-	id 1t40IA-006Vst-OP;
-	Thu, 24 Oct 2024 17:02:30 +0100
-Date: Thu, 24 Oct 2024 17:02:29 +0100
-Message-ID: <86r08532wa.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
-To: Sibi Sankar <quic_sibis@quicinc.com>
-Cc: <andersson@kernel.org>,
-	<konradybcio@kernel.org>,
-	<krzk+dt@kernel.org>,
-	<robh+dt@kernel.org>,
-	<linux-kernel@vger.kernel.org>,
-	<linux-arm-msm@vger.kernel.org>,
-	<devicetree@vger.kernel.org>,
-	<conor+dt@kernel.org>,
-	<abel.vesa@linaro.org>,
-	<srinivas.kandagatla@linaro.org>
+	s=k20201202; t=1729786513;
+	bh=a8XUIXmSwn3FMAXyuMm+VKbLCqiY3txch6Yo+wm1HOc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=vIvBfst6qB5Fr6s64C+mGYI76ibwQTq7TWHH5PWMHOvQrsZ7YXBIpXr63fOzX2wUV
+	 /b89nrXqbkV0CxduNhrbfhy1MhR5A2aLSANu++VHG7IDm3TmNKxoK3XNEhoHVUgCXm
+	 Mfcb0pMbFRkgTA4qOkJzeEmSj+1cp69VSxM8No+wEBzSlHZz1wnn0yyXU8EOdKptgW
+	 1NbINZt+lR341aKHajDrfSk2Xfw+4F58OcWqreAqj6lR2rcRfCip4foVksAO3b0T5V
+	 HNdn0hMMq+AApsFLXPWwxZu919e1Oj/z0F5Ss/TVGh6pd9oxj6gh4E9NUpc+/4yorC
+	 3N0cFNtD8W5bg==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1t40Ui-000000002M9-0Egw;
+	Thu, 24 Oct 2024 18:15:28 +0200
+Date: Thu, 24 Oct 2024 18:15:28 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Marc Zyngier <maz@kernel.org>
+Cc: Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
+	konradybcio@kernel.org, krzk+dt@kernel.org, robh+dt@kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, conor+dt@kernel.org,
+	abel.vesa@linaro.org, srinivas.kandagatla@linaro.org
 Subject: Re: [PATCH 0/2] X1E001DE Snapdragon Devkit for Windows
-In-Reply-To: <f67d0fcd-4940-a57a-0e11-b98ed29cd09d@quicinc.com>
+Message-ID: <ZxpyoFjA0jR_sxbg@hovoldconsulting.com>
 References: <20240911073337.90577-1-quic_sibis@quicinc.com>
-	<f67d0fcd-4940-a57a-0e11-b98ed29cd09d@quicinc.com>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/29.4
- (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+ <f67d0fcd-4940-a57a-0e11-b98ed29cd09d@quicinc.com>
+ <86r08532wa.wl-maz@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: quic_sibis@quicinc.com, andersson@kernel.org, konradybcio@kernel.org, krzk+dt@kernel.org, robh+dt@kernel.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org, abel.vesa@linaro.org, srinivas.kandagatla@linaro.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <86r08532wa.wl-maz@kernel.org>
 
-Hi Sibi,
+On Thu, Oct 24, 2024 at 05:02:29PM +0100, Marc Zyngier wrote:
 
-On Wed, 23 Oct 2024 12:05:35 +0100,
-Sibi Sankar <quic_sibis@quicinc.com> wrote:
-> 
-> 
-> 
-> On 9/11/24 13:03, Sibi Sankar wrote:
-> > Add initial support for X1E001DE Snapdragon Devkit for Windows. X1E001DE
-> > is the speed binned variant of X1E80100 that supports turbo boost up to
-> > 4.3 Ghz. The initial support includes the following:
-> > 
-> > -DSPs
-> > -Ethernet (RTL8125BG) over the pcie 5 instance.
-> > -NVme
-> > -Wifi
-> > -USB-C ports
-> > 
-> 
-> Hi All,
-> 
-> With the X1E Devkit cancelled and with no firmware updates promised for
-> it perpetually, please chime in and let me know if you still want to get
-> this series and rest (external-dp, usb-A ports, sd card slot and 3.5 mm
-> Jack) merged and have it supported upstream for the folks who already
-> received it!
+> The only change I made was to enable the ITS for pcie5, which was
+> routed via the PCIe MSI widget instead. But that's a SoC dtsi issue
+> for which I'll post a patch separately.
 
-I have one of these machines in my zoo, and would definitely want to
-see it fully supported upstream, even if QC never updates it again.
-The feature set of this box is rare enough that it makes it a very
-interesting platform.
+That's done on purpose since the boot firmware is not setting things up
+so that we can use the ITS with PCIe5 (or PCIe3) when running in EL1
+currently.
 
-So far, everything seems to be working just fine (except for the
-missing features you have mentioned).
-
-The only change I made was to enable the ITS for pcie5, which was
-routed via the PCIe MSI widget instead. But that's a SoC dtsi issue
-for which I'll post a patch separately.
-
-Thanks again for your effort, and I'm looking forward to seeing this
-box fully supported upstream despite its very short shelf life! ;-)
-
-	M.
-
--- 
-Without deviation from the norm, progress is not possible.
+Johan
 
