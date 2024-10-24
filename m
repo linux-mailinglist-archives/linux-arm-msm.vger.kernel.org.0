@@ -1,59 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-35732-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35733-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 837BA9AEF70
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 20:13:37 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1ADC39AEFB0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 20:30:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A7DBC1C22020
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 18:13:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D45F7283F3D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 18:30:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E5102003C1;
-	Thu, 24 Oct 2024 18:12:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42AB412FB1B;
+	Thu, 24 Oct 2024 18:30:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tV3jxGOW"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CapAVDcl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 231DE2003B3;
-	Thu, 24 Oct 2024 18:12:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F531170A2C
+	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Oct 2024 18:30:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729793569; cv=none; b=ddcCsqJvXBUFhUq/pArGjmycJaxT5tqzsNFkCPllphWnodGoTigM3e+cjVIIsRLgqcWqUlczdsMrZJyEklNwG1Oe4UwJt93U6Fq/iNa17XT+frNpUm2RN7xWZDaaKt9ArTeN5U/VGir9I8FsNH0LjR5kjXQ1tyDvhmhwoH73q1U=
+	t=1729794649; cv=none; b=MmU9QfMa6qTkquWa91Wh7IroRMEg5Y6C1hfqFEuCk4yIOyrI7DPmpuRdRtZyREghf8t717v99uyXrymTbVG2i38KDNgf4w0MhNDsLxf13c27Z1p7rQIIPRY9jROxzkMRK4hLl7h5LKHxL5OfkZFR7ZCOw/p+PTmapiyOPQUrtRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729793569; c=relaxed/simple;
-	bh=0TgSPICy9GnD2ZCno7GjLIa3ps9j1BQqoM3AdyZm85g=;
+	s=arc-20240116; t=1729794649; c=relaxed/simple;
+	bh=yI+Y9272Bgo7aFmteeZjMbL2tyekwQZD9WYomhNosGU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WOFF1TfoTj9X6mndcLr7upJ6icilEE/H9sRyAHZa3ami9SEtcuOC0h4yHWStwoisXXprsMDHXqSS/ARMfr/yHaeKIgPb4Fckq2WBsS92hEaCQVKcZosBJ6VQ3YVK0PYjLqAqo/mf1CbmAF3mGsUrN1YGwXHRcN8hjz8XgAeSmGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tV3jxGOW; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFA7BC4CEC7;
-	Thu, 24 Oct 2024 18:12:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729793568;
-	bh=0TgSPICy9GnD2ZCno7GjLIa3ps9j1BQqoM3AdyZm85g=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=tV3jxGOW3PgajFD4afYo/ICTxja3KcvJhAtNj70eG7lBlVm1FaCCiAU7m/gVWfUw6
-	 wpBF8iC4n/1fTbdpI7XYnZPXIg0Y9nDuKN6kCx3Qb5B5yjcteh22KAVDzMErnF0SUS
-	 eJ1X6hQhwbk/7ZrU3t4mBsUx6hGfsPEmS1X7D5l2hDRqpWkr4leGQTrc7ourDbvf2e
-	 gMVaK3u2pQz2GFqTTPRXL4gZDtQ9CTFtGfZlq+jWAW9DFtDKOh35EhDCCnC+1+0rxe
-	 dDeLQ85wbuAFaE7xBWMRYcW/1RmdZHlUWUec5ZaQErcTberv6NdP5S2Qh96HkBNoaA
-	 olLRDRR8krnlQ==
-Date: Thu, 24 Oct 2024 13:12:45 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Ram Prakash Gupta <quic_rampraka@quicinc.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>, 
-	Ulf Hansson <ulf.hansson@linaro.org>, linux-mmc@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, quic_cang@quicinc.com, quic_nguyenb@quicinc.com, 
-	quic_pragalla@quicinc.com, quic_sayalil@quicinc.com, quic_nitirawa@quicinc.com, 
-	quic_sachgupt@quicinc.com, quic_bhaskarv@quicinc.com, quic_narepall@quicinc.com, 
-	kernel@quicinc.com
-Subject: Re: [PATCH 1/1] mmc: sdhci-msm: Toggle the FIFO write clock after
- ungate
-Message-ID: <n5dd7fblsfppyfci3fsxyqqchc7pdaml2q5737hprbi2q6wvso@rig42wwnyad2>
-References: <20241022111025.25157-1-quic_rampraka@quicinc.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=cyt59zD+UQDMYrx2CVIdjEVGZuIdIGa2uhcYI7H8Q2STZ8ylH0a5ZyVJPqJPHc7RxTdYT3vIpYDQQlEUdzYVxaZ3H8LXHkOnyP+rdIBv6ELqRBYnNw9nu+2jV2mazV+SoyMDRVQL28kzq7XEVD2EjCLISBxczjcqNdbQfOTEbMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CapAVDcl; arc=none smtp.client-ip=209.85.167.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-539ee1acb86so1450108e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Oct 2024 11:30:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1729794645; x=1730399445; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=/1/sAyVSibd5hLQyAm0VwFvDlH9FogTkRBA3XUw/H7Y=;
+        b=CapAVDcldXrlwG1oPgfwNT4+8yQhjpJJHKUCrivuRl1qflYk4l3Oly3MYNUXRUaIzo
+         IDmivzTgDN9/L31V0cNqXOE2qhkXF+Dwmvf/Ap3DW7kzdlyVL+dcwaP/kNLVIsrIrmKV
+         FSUKK5l3Tox2m8zbvbwC7M8iWfjk3yjS06lAeb18B1qF3XIlxfrULSxktrvmw2of/KRS
+         F28014xKz53Rt3CNvQooRFSk+9ma6LDkFdi3my5+zkrg8DzG7Kp/FWwlTFOCfOZCoyqb
+         ldYHRN8TscE9sj09cJz3VbKOmQJlkGyOrEg7bnOkd5EyBKPG6f7ttD9FIg5Shg3m4yTw
+         vYcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729794645; x=1730399445;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/1/sAyVSibd5hLQyAm0VwFvDlH9FogTkRBA3XUw/H7Y=;
+        b=YxwiZDJaC/tisPcoqjkQiukFpwApALY9TSS3rZ+iN+p1FXyKB0ZjXgmRHI8Dvxv/EM
+         WTtfXFg7Ta6/jmQkrqFyDKozjBFnG0NQAe2VIbZheR9bgYrWI+L+5VvZheTQ0cE3VzP0
+         CyxPCmkfF6XZVlug7g0locOOYcm9uRYdF/k0/SSMpLUAgXhlvHASH030YTndREnrHpaD
+         LSMOyMsw3HxNTIdk/WFeD5BXhbxt7IdkqCmFABvyk7F40wfdLc46BTAhKVrp5LdiJnGH
+         r0jp7B7+/EjeHazRV347ItQ0G9jipgXmJ04C6fzXoYWkP6xTCH1gDWLqxwAvOP9dQcJt
+         z/jw==
+X-Forwarded-Encrypted: i=1; AJvYcCUPjdhAXC/DwDxEW9nYns9QwWJ2qsXRJ0yKS1+Td1vKKAKkzH9lDwF6/ZYpaZy9vUCUcMxSNGAL8P+5Lh2m@vger.kernel.org
+X-Gm-Message-State: AOJu0YxPcjXeUk8/MmZF+qnGG2qFCdhMzJMvZ3LILIWqsLGJFo1WTLzf
+	ln/NvTl0D0hp5HHcFw15tKBd/m8vOLIhyhAFqf/t8XYdjAIQ/lThd6lAqkfjLFA=
+X-Google-Smtp-Source: AGHT+IGrzoUBynCTOp+oNLSSYcxeqavz0ElVUXCpaD9ZGmZJS9xhP5O/rMH2mwesCuRuN19+XBvTWQ==
+X-Received: by 2002:a05:6512:2254:b0:53b:1526:3a63 with SMTP id 2adb3069b0e04-53b1a373bd1mr4614519e87.56.1729794644786;
+        Thu, 24 Oct 2024 11:30:44 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53a22431454sm1430864e87.212.2024.10.24.11.30.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Oct 2024 11:30:43 -0700 (PDT)
+Date: Thu, 24 Oct 2024 21:30:40 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Taniya Das <quic_tdas@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	Ajit Pandey <quic_ajipan@quicinc.com>, Imran Shaik <quic_imrashai@quicinc.com>, 
+	Jagadeesh Kona <quic_jkona@quicinc.com>, linux-arm-kernel@lists.infradead.org, linux-clk@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] arm64: defconfig: Enable sa8775p clock controllers
+Message-ID: <amatk3cl4rayggvir732jtopirqfjzvra4dspohc3xoctonfvs@zuxbjhncu54d>
+References: <20241024-defconfig_sa8775p_clock_controllers-v2-1-a9e1cdaed785@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,120 +85,26 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241022111025.25157-1-quic_rampraka@quicinc.com>
+In-Reply-To: <20241024-defconfig_sa8775p_clock_controllers-v2-1-a9e1cdaed785@quicinc.com>
 
-On Tue, Oct 22, 2024 at 04:40:25PM GMT, Ram Prakash Gupta wrote:
-> For Qualcomm SoCs with sdcc minor version 6B and more, command path
-> state machine is getting corrupted post clock ungate which is leading
-> to software timeout.
+On Thu, Oct 24, 2024 at 11:22:55PM +0530, Taniya Das wrote:
+> Enable the SA8775P video, camera and display clock controllers to enable
+> the video, camera and display functionalities on Qualcomm QCS9100 ride
+> and ride rev3 boards.
 > 
-> Toggle the write fifo clock to reset the async fifo to fix this issue.
-> 
-> Signed-off-by: Ram Prakash Gupta <quic_rampraka@quicinc.com>
+> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
 > ---
->  drivers/mmc/host/sdhci-msm.c | 41 ++++++++++++++++++++++++++++++++++++
->  1 file changed, 41 insertions(+)
+> Changes in v2:
+> - Update the board names for QCS9100 [Dmitry].
+> - Link to v1: https://lore.kernel.org/r/20241022-defconfig_sa8775p_clock_controllers-v1-1-cb399b0342c8@quicinc.com
+> ---
+>  arch/arm64/configs/defconfig | 3 +++
+>  1 file changed, 3 insertions(+)
 > 
-> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> index e113b99a3eab..c2ccdac21232 100644
-> --- a/drivers/mmc/host/sdhci-msm.c
-> +++ b/drivers/mmc/host/sdhci-msm.c
-> @@ -146,6 +146,7 @@
->  /* CQHCI vendor specific registers */
->  #define CQHCI_VENDOR_CFG1	0xA00
->  #define CQHCI_VENDOR_DIS_RST_ON_CQ_EN	(0x3 << 13)
-> +#define RCLK_TOGGLE BIT(1)
->  
->  struct sdhci_msm_offset {
->  	u32 core_hc_mode;
-> @@ -290,6 +291,7 @@ struct sdhci_msm_host {
->  	u32 dll_config;
->  	u32 ddr_config;
->  	bool vqmmc_enabled;
-> +	bool toggle_fifo_clk;
->  };
->  
->  static const struct sdhci_msm_offset *sdhci_priv_msm_offset(struct sdhci_host *host)
-> @@ -1162,6 +1164,39 @@ static int sdhci_msm_restore_sdr_dll_config(struct sdhci_host *host)
->  	return ret;
->  }
->  
-> +/*
-> + * After MCLK ugating, toggle the FIFO write clock to get
-> + * the FIFO pointers and flags to valid state.
-> + */
-> +static void sdhci_msm_toggle_fifo_write_clk(struct sdhci_host *host)
-> +{
-> +	u32 config;
-> +	struct mmc_ios ios = host->mmc->ios;
-> +	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
-> +	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
-> +	const struct sdhci_msm_offset *msm_offset = msm_host->offset;
-> +
-> +	if ((msm_host->tuning_done || ios.enhanced_strobe) &&
-> +		host->mmc->ios.timing == MMC_TIMING_MMC_HS400) {
-> +		/*
-> +		 * Select MCLK as DLL input clock.
-> +		 */
 
-Seems you could fit this in a single-line comment, perhaps with an empty
-line above if you want to create some separation(?)
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-> +		config = readl_relaxed(host->ioaddr + msm_offset->core_dll_config_3);
-> +		config |= RCLK_TOGGLE;
-> +		writel_relaxed(config, host->ioaddr + msm_offset->core_dll_config_3);
-> +
-> +		/* ensure above write as toggling same bit quickly */
-
-"same bit quickly" is completely arbitrary. Please state exactly what
-you need to wait for? E.g. is it some number of some clock ticks? If so,
-which clock and is it 1, 5, or 42 ticks?
-
-> +		wmb();
-
-This does not guarantee that the write completes before the delay.
-
-If you want to know that the write hit the hardware, before the sleep,
-issue a readl.
-
-Regards,
-Bjorn
-
-> +		udelay(2);
-> +
-> +		/*
-> +		 * Select RCLK as DLL input clock
-> +		 */
-> +		config &= ~RCLK_TOGGLE;
-> +		writel_relaxed(config, host->ioaddr + msm_offset->core_dll_config_3);
-> +	}
-> +}
-> +
->  static void sdhci_msm_set_cdr(struct sdhci_host *host, bool enable)
->  {
->  	const struct sdhci_msm_offset *msm_offset = sdhci_priv_msm_offset(host);
-> @@ -2587,6 +2622,9 @@ static int sdhci_msm_probe(struct platform_device *pdev)
->  	if (core_major == 1 && core_minor >= 0x71)
->  		msm_host->uses_tassadar_dll = true;
->  
-> +	if (core_major == 1 && core_minor >= 0x6B)
-> +		msm_host->toggle_fifo_clk = true;
-> +
->  	ret = sdhci_msm_register_vreg(msm_host);
->  	if (ret)
->  		goto clk_disable;
-> @@ -2720,6 +2758,9 @@ static __maybe_unused int sdhci_msm_runtime_resume(struct device *dev)
->  				       msm_host->bulk_clks);
->  	if (ret)
->  		return ret;
-> +
-> +	if (msm_host->toggle_fifo_clk)
-> +		sdhci_msm_toggle_fifo_write_clk(host);
->  	/*
->  	 * Whenever core-clock is gated dynamically, it's needed to
->  	 * restore the SDR DLL settings when the clock is ungated.
-> -- 
-> 2.17.1
-> 
-> 
+-- 
+With best wishes
+Dmitry
 
