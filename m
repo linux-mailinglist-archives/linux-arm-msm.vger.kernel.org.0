@@ -1,144 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-35710-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35711-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 09F4B9AEB36
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 17:59:24 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 598AE9AEB54
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 18:02:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 71B2DB215F6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 15:59:21 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DB181285625
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 16:02:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E1191F584D;
-	Thu, 24 Oct 2024 15:59:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 08FBB1EF0BC;
+	Thu, 24 Oct 2024 16:02:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="jR74GHFp"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EK9pKIXc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9507D1B0F26;
-	Thu, 24 Oct 2024 15:59:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6EB71F5825;
+	Thu, 24 Oct 2024 16:02:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729785556; cv=none; b=myuPGUCzeBImOGuJSIf77aS/SvHbS6gL291Gw15n9ZSLCPOPRbibGqn2db0AhHkoVvaHWMJHtXMvH+UJ5+bsS0ACczUrA3/loNHZl7udSLEs+bc9SXpBKkd/w8jCkgSDLoU6yII/oWw1ukfwkEvYS/8x9mnn/ZPja1zBQVQodJs=
+	t=1729785753; cv=none; b=Dk2uCZEFrxbUzIwXFJ9SlVBc3fsDBFhcX1IGDHyazcKnGmC+FYcV2oX2Zm3tNmM8kkP5z/fPfMHk9GtCTc8NgivXPWmhGF57/IHqZJ89PHK3iVLC6YPiSKrGvh0N/dvdhMizpcd/d8qbFSWQds22ZdNAhH2Wx64p7Z8pS5UQj3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729785556; c=relaxed/simple;
-	bh=LY3Xnn6E2dg53LDWA9RvAxOsaLUHM37Ouf3miNSZxtA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nse+Ff2Ki9ZS3VvMI4VqwVbiAwAmczUSfCOXB35+xt/NjFg1rTIx/ZrUW9kpO3P4/lfSwfTX4RveS51BQ0XJEbkCG7pD0LUhceTEfQiLrbqnyF+JHHHAWykw4cTD5FgKRrEzl5iPCXbvPzj4gaSI4ZMZkWhYBz7hes1DAewFf9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=bombadil.srs.infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=jR74GHFp; arc=none smtp.client-ip=198.137.202.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bombadil.srs.infradead.org
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=In-Reply-To:Content-Type:MIME-Version
-	:References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=S3nsdWvZ1qxMreWvwL33cyPfVPTO4nDA5dJi8VcaG2k=; b=jR74GHFpaaOQ5UfJX7u+wDtrMj
-	DXWoonzQdUnbIkEx3sxak0L+QM47hr7mI3bbqFrKMGu6Hx8IhxxIaDGxSiy1ueQ82XdXWArZ2Gm6l
-	bWOPnAYvB89JeZZjpPoChoPOt6ViPuKLgHfCJX/iFcxFOkLMLH7WBPmScq5x7Jk7IQWYiWQg9hfD7
-	NLNPlabaftRym5uUFPRHW9F8IElncXBlEu/6w8gnr2GTKekqbSg2cdL05ESTewL5HrLveWT5nNYYD
-	OhXzUJ8UMvdFDDSU1lV2SgtYYNtglYxFfhgE+dLBAo++twXJbY30q8B6Bz40RlvSVYGBNwRbmcSn1
-	OVGuiu0g==;
-Received: from hch by bombadil.infradead.org with local (Exim 4.98 #2 (Red Hat Linux))
-	id 1t40Ev-000000010mi-2Tc2;
-	Thu, 24 Oct 2024 15:59:09 +0000
-Date: Thu, 24 Oct 2024 08:59:09 -0700
-From: Christoph Hellwig <hch@infradead.org>
-To: Adrian Vovk <adrianvovk@gmail.com>
-Cc: Christoph Hellwig <hch@infradead.org>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Md Sadre Alam <quic_mdalam@quicinc.com>, axboe@kernel.dk,
-	song@kernel.org, yukuai3@huawei.com, agk@redhat.com,
-	snitzer@kernel.org, Mikulas Patocka <mpatocka@redhat.com>,
-	adrian.hunter@intel.com, quic_asutoshd@quicinc.com,
-	ritesh.list@gmail.com, ulf.hansson@linaro.org, andersson@kernel.org,
-	konradybcio@kernel.org, kees@kernel.org, gustavoars@kernel.org,
-	linux-block@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-raid@vger.kernel.org, dm-devel@lists.linux.dev,
-	linux-mmc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-hardening@vger.kernel.org, quic_srichara@quicinc.com,
-	quic_varada@quicinc.com
-Subject: Re: [PATCH v2 1/3] dm-inlinecrypt: Add inline encryption support
-Message-ID: <Zxpuzbjtq0eNP49Z@infradead.org>
-References: <ZxHwgsm2iP2Z_3at@infradead.org>
- <CAAdYy_mVy3uXPqWbjPzK_i8w7Okq73wKBQyc95TbnonE36rPgQ@mail.gmail.com>
- <ZxH4lnkQNhTP5fe6@infradead.org>
- <D96294E2-F17A-4E58-90FB-1D17747048E5@gmail.com>
- <ZxieZPlH-S9pakYW@infradead.org>
- <CAAdYy_ms=VmvxZy9QiMkwcNk21a2kVy73c8-NxUh4dNJuLefCg@mail.gmail.com>
- <Zxnl4VnD6K6No4UQ@infradead.org>
- <14126375-5F6F-484A-B34B-F0C011F3A9C5@gmail.com>
- <ZxoNgmwFVCXivbd3@infradead.org>
- <CAAdYy_kKHx-91hWxETu_4TJKr+h=-Q0WdoyQwXjRZiwiXCOOYQ@mail.gmail.com>
+	s=arc-20240116; t=1729785753; c=relaxed/simple;
+	bh=h0hSRniz6MntdSENub19c9kSV/crZIkSPwyBi1krOG8=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=SHkhqUk8brJQE76UpTs11B29UKIQutu/R59f68OfZS+SISPsWulL4oddBSfkKYUT3WUft2RhiObj3LFdsZbaEq03VfZpSVJX5wqUQafBpLwkEOpiZrg770N72o7FMDfyrebmdLB1NHcbNAK01hQE61U6eC2a9Dl9m+0/+aTVCrY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EK9pKIXc; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D9ECC4CEE3;
+	Thu, 24 Oct 2024 16:02:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1729785753;
+	bh=h0hSRniz6MntdSENub19c9kSV/crZIkSPwyBi1krOG8=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=EK9pKIXcJOvunjlFF+uDgT1nL4BuIu0y73R1xZAJXMqypPCWwkH0Msa1mvh9HvOG9
+	 d8T+CRFgs5Z5OtX9IblhXfxnlShdTvDulV0nDSw81eVYVapHRVBQKz5zZnezQJWOOr
+	 VIq+RD5zgmrpo1MMX+FXZU4EyIHUxON5EYu/8RxV+t+v3yQNGsXPy2VCw6SnWD2+vA
+	 tXa0yzUVwjMrNBWaZCHey5Z3xqap+2+S7D04bAIKX2FMb0iC940Mv2AtpoZzJJT1Sa
+	 udbBz8hj0xsuRy8Q4BKDAo6VSpkvtg8C+XwFjC2j2SpeLnC9zRpqG28Xca7QpaoaAH
+	 kbGE6UJO0aeiQ==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <maz@kernel.org>)
+	id 1t40IA-006Vst-OP;
+	Thu, 24 Oct 2024 17:02:30 +0100
+Date: Thu, 24 Oct 2024 17:02:29 +0100
+Message-ID: <86r08532wa.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Sibi Sankar <quic_sibis@quicinc.com>
+Cc: <andersson@kernel.org>,
+	<konradybcio@kernel.org>,
+	<krzk+dt@kernel.org>,
+	<robh+dt@kernel.org>,
+	<linux-kernel@vger.kernel.org>,
+	<linux-arm-msm@vger.kernel.org>,
+	<devicetree@vger.kernel.org>,
+	<conor+dt@kernel.org>,
+	<abel.vesa@linaro.org>,
+	<srinivas.kandagatla@linaro.org>
+Subject: Re: [PATCH 0/2] X1E001DE Snapdragon Devkit for Windows
+In-Reply-To: <f67d0fcd-4940-a57a-0e11-b98ed29cd09d@quicinc.com>
+References: <20240911073337.90577-1-quic_sibis@quicinc.com>
+	<f67d0fcd-4940-a57a-0e11-b98ed29cd09d@quicinc.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/29.4
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAAdYy_kKHx-91hWxETu_4TJKr+h=-Q0WdoyQwXjRZiwiXCOOYQ@mail.gmail.com>
-X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by bombadil.infradead.org. See http://www.infradead.org/rpr.html
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: quic_sibis@quicinc.com, andersson@kernel.org, konradybcio@kernel.org, krzk+dt@kernel.org, robh+dt@kernel.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org, abel.vesa@linaro.org, srinivas.kandagatla@linaro.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-On Thu, Oct 24, 2024 at 11:32:58AM -0400, Adrian Vovk wrote:
-> >> I'm not assuming. That's the behavior of dm-crypt without passthrough.
-> >> It just encrypts everything that moves through it. If I stack two
-> >> layers of dm-crypt on top of each other my data is encrypted twice.
-> >
-> >Sure.  But why would you do that?
+Hi Sibi,
+
+On Wed, 23 Oct 2024 12:05:35 +0100,
+Sibi Sankar <quic_sibis@quicinc.com> wrote:
 > 
-> As mentioned earlier in the thread: I don't have a usecase
-> specifically for this and it was an example of a situation where
-> passthrough is necessary and no filesystem is involved at all. Though,
-> as I also pointed out, a usecase where you're putting encrypted
-> virtual partitions on an encrypted LVM setup isn't all that absurd.
-
-It's a little odd but not entirely absurd indeed.  But it can also
-be easily handled by setting up a dm-crypt table just for the
-partition table.
-
-> In my real-world case, I'm putting encrypted loop devices on top of a
-> filesystem that holds its own sensitive data. Each loop device has
-> dm-crypt inside and uses a unique key, but the filesystem needs to be
-> encrypted too (because, again, it has its own sensitive data outside
-> of the loop devices). The loop devices cannot be put onto their own
-> separate partition because there's no good way to know ahead of time
-> how much space either of the partitions would need: sometimes the loop
-> devices need to take up loads of space on the partition, and other
-> times the non-loop-device data needs to take up that space. And to top
-> it all off, the distribution of allocated space needs to change
-> dynamically.
-
-And that's exactly the case I worry about.  The file system can't
-trust a layer entirely above it.  If we want to be able to have a
-space pool between a file systems with one encryption policy and
-images with another we'll need to replace the loop driver with a 
-block driver taking blocks from the file system space pool.  Which
-might be a good idea for various other reasons.
-
-> Ultimately, I'm unsure what the concern is here.
 > 
-> It's a glaringly loud opt-in marker that encryption was already
-> performed or is otherwise intentionally unnecessary. The flag existing
-> isn't what punches through the security model. It's the use of the
-> flag that does. I can't imagine anything setting the flag by accident.
-> So what are you actually concerned about? How are you expecting this
-> flag to actually be misused?
 > 
-> As for third party modules that might punch holes, so what? 3rd party
-> modules aren't the kernel's responsibility or problem
+> On 9/11/24 13:03, Sibi Sankar wrote:
+> > Add initial support for X1E001DE Snapdragon Devkit for Windows. X1E001DE
+> > is the speed binned variant of X1E80100 that supports turbo boost up to
+> > 4.3 Ghz. The initial support includes the following:
+> > 
+> > -DSPs
+> > -Ethernet (RTL8125BG) over the pcie 5 instance.
+> > -NVme
+> > -Wifi
+> > -USB-C ports
+> > 
+> 
+> Hi All,
+> 
+> With the X1E Devkit cancelled and with no firmware updates promised for
+> it perpetually, please chime in and let me know if you still want to get
+> this series and rest (external-dp, usb-A ports, sd card slot and 3.5 mm
+> Jack) merged and have it supported upstream for the folks who already
+> received it!
 
-On the one hand they are not.  On the other if you have a file system
-encryption scheme that is bypassed by a random other loadable code
-setting a single flag I would not consider it very trust worth or in
-fact actively dangerous.
+I have one of these machines in my zoo, and would definitely want to
+see it fully supported upstream, even if QC never updates it again.
+The feature set of this box is rare enough that it makes it a very
+interesting platform.
 
-> In my loopback file scenario, what would be the one layer that could
-> handle the encryption?
+So far, everything seems to be working just fine (except for the
+missing features you have mentioned).
 
-But getting rid of loopback devices.
+The only change I made was to enable the ITS for pcie5, which was
+routed via the PCIe MSI widget instead. But that's a SoC dtsi issue
+for which I'll post a patch separately.
 
+Thanks again for your effort, and I'm looking forward to seeing this
+box fully supported upstream despite its very short shelf life! ;-)
+
+	M.
+
+-- 
+Without deviation from the norm, progress is not possible.
 
