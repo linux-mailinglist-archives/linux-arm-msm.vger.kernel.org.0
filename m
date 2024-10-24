@@ -1,114 +1,181 @@
-Return-Path: <linux-arm-msm+bounces-35731-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35732-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3BDFF9AEF2B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 20:06:40 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 837BA9AEF70
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 20:13:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 68C5D1C223A1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 18:06:39 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A7DBC1C22020
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 18:13:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7EF3A2003BC;
-	Thu, 24 Oct 2024 18:06:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E5102003C1;
+	Thu, 24 Oct 2024 18:12:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R5og7cI2"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tV3jxGOW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oi1-f169.google.com (mail-oi1-f169.google.com [209.85.167.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9593E1FF05E;
-	Thu, 24 Oct 2024 18:06:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 231DE2003B3;
+	Thu, 24 Oct 2024 18:12:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729793187; cv=none; b=bizJ/p/gR75mDprGjVqhGDbNdHQ2n8mBBJLMwiiQCk8ivPI67YwX631UQp7cE5S5VVN6ugbdN+h+rdCfoQD3ZatNSCJEIs+MRee9pzekM3k5CN90VpZhDScipWhF+vkJh6SPOmRD36QcyiGTjcly6aEoI7wlc5XRTIdn+OEQGns=
+	t=1729793569; cv=none; b=ddcCsqJvXBUFhUq/pArGjmycJaxT5tqzsNFkCPllphWnodGoTigM3e+cjVIIsRLgqcWqUlczdsMrZJyEklNwG1Oe4UwJt93U6Fq/iNa17XT+frNpUm2RN7xWZDaaKt9ArTeN5U/VGir9I8FsNH0LjR5kjXQ1tyDvhmhwoH73q1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729793187; c=relaxed/simple;
-	bh=vOtfYpYAZcfPD3kzNtXenwXoxBDyVzXhYwbQuTZbIVI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=iv2QAoWLdfIfJQrhd6GQuoPOn8cj18AExPOrXUXA0SxDRgCZxDvf6P/oa8aLHNBTOHfUuVDsNCj4n7fvoofBlSoBAtpYwvzjuV1loFbgXeDJ3TgzfqhhI30XVkZZ2eCCFT20nDpEuqh8ZMY2F4Eo4BFXbPH/0PeXz1TTAlI2/JU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R5og7cI2; arc=none smtp.client-ip=209.85.167.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oi1-f169.google.com with SMTP id 5614622812f47-3e5fcf464ecso862799b6e.0;
-        Thu, 24 Oct 2024 11:06:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729793184; x=1730397984; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9UaViCTVHeE4554625O7z0qmjZeB3yLuwP4tPJC9Occ=;
-        b=R5og7cI26bYgfLuadV0w8l8jC7IFnNnBKGGhaR+WClt7Izm/VSv7Kv9apjwPJYxmFH
-         bPrLJJa8TJC1/hFitV3ILfzvLGxH70Q/G0OxDzT3ia/QBwt0tRQdlT2XXtp1EpHaxyIr
-         T9saigkZKekDoXAch9kzVjNduDP+57PrritC8BNo5oc8pgPZoOqvo9ySTIlAT7gTVcjf
-         H46vTtfsdbGPNqW2F+WdnN/SZLP/KooCPLIoQslAmbBRY7DSg6dZSUjOYyBWJhFdWoOj
-         aBmFlAXV6ncfhcdPCyorkU47yB6GH+3VaPKWNs9r8I8GM8pzGFmfgC9ERScQ5oBPBPUV
-         5efg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729793184; x=1730397984;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9UaViCTVHeE4554625O7z0qmjZeB3yLuwP4tPJC9Occ=;
-        b=gBWX+gkEE1SmdFUOXfTbHzQnD9EdkwRHMp92UYEt7Ee/NkJUQz1IaH5LMFYECpOdCc
-         4cghK/axlH+A94ZkbpFJqkc/70+guyuNtNmdTOA4/LtH7Y2wkQQw+E2O0U8o5XIkVXQX
-         tQ0n03Yd67knVxomMO67ryDdQKiDaKoAuiFyDLRppqdVp2Sq9xswuYSL5EHXmKSNwME6
-         FHzCt7AQBz1ItuMmWAkEzRBK1AsAfmtpas2A5RvuHuVEHwVwEPdPPwFDe0nadWWfvh5D
-         R+/cbDLtprxDcWEaVtyd/iLHWqZI4mAp66rh9ESR1p9ij3DbjLmtkFfkUYXd0lEzT3ym
-         NH9g==
-X-Forwarded-Encrypted: i=1; AJvYcCVfaurzhHAWjlyQ96EX/pspJLfYP45DcAkosGuPQqpN8mNFEIlS2oHi4T3ok9qghEOKReFTl/DA@vger.kernel.org, AJvYcCWLT7pKkQRYm9GyFvOhCmWIPUHeFA/g6sNsbHUtmkCslD6dUPYP9RL1Jj7hbGU6miH0LgYQjz5LIFVm91tI@vger.kernel.org, AJvYcCXkDrz1/nzp5HOAT+zBRuCMOu9NInMbK/C54J4kCtZhm7t/H9Ie0FVKNOgGrWiOG/4C4UxK2TpTvyvrXI2J@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz1z/H/lkjpilBFDTewSPyN8C5ndl95xZg2ymJKeIS92cSI+xl8
-	uMArussDy7NFvpMvc4RlnrACnRhnb8NCA784bgbx0FGOkJkg9lLs
-X-Google-Smtp-Source: AGHT+IGRgDjaOVRo4RzC8Gl7ibseB03w21ZI0dmvnwrOI7OKAXZTah2SVc2E7tRapN9D+omZhczv6A==
-X-Received: by 2002:a05:6808:1309:b0:3e6:1dcc:e1fa with SMTP id 5614622812f47-3e62cbfd427mr2713134b6e.47.1729793184598;
-        Thu, 24 Oct 2024 11:06:24 -0700 (PDT)
-Received: from [192.168.1.22] (syn-070-114-247-242.res.spectrum.com. [70.114.247.242])
-        by smtp.googlemail.com with ESMTPSA id 5614622812f47-3e61035f185sm2319032b6e.48.2024.10.24.11.06.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 24 Oct 2024 11:06:24 -0700 (PDT)
-Message-ID: <e178ef4d-3234-4c11-84f5-0a454d198f15@gmail.com>
-Date: Thu, 24 Oct 2024 13:06:22 -0500
+	s=arc-20240116; t=1729793569; c=relaxed/simple;
+	bh=0TgSPICy9GnD2ZCno7GjLIa3ps9j1BQqoM3AdyZm85g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WOFF1TfoTj9X6mndcLr7upJ6icilEE/H9sRyAHZa3ami9SEtcuOC0h4yHWStwoisXXprsMDHXqSS/ARMfr/yHaeKIgPb4Fckq2WBsS92hEaCQVKcZosBJ6VQ3YVK0PYjLqAqo/mf1CbmAF3mGsUrN1YGwXHRcN8hjz8XgAeSmGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tV3jxGOW; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFA7BC4CEC7;
+	Thu, 24 Oct 2024 18:12:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1729793568;
+	bh=0TgSPICy9GnD2ZCno7GjLIa3ps9j1BQqoM3AdyZm85g=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=tV3jxGOW3PgajFD4afYo/ICTxja3KcvJhAtNj70eG7lBlVm1FaCCiAU7m/gVWfUw6
+	 wpBF8iC4n/1fTbdpI7XYnZPXIg0Y9nDuKN6kCx3Qb5B5yjcteh22KAVDzMErnF0SUS
+	 eJ1X6hQhwbk/7ZrU3t4mBsUx6hGfsPEmS1X7D5l2hDRqpWkr4leGQTrc7ourDbvf2e
+	 gMVaK3u2pQz2GFqTTPRXL4gZDtQ9CTFtGfZlq+jWAW9DFtDKOh35EhDCCnC+1+0rxe
+	 dDeLQ85wbuAFaE7xBWMRYcW/1RmdZHlUWUec5ZaQErcTberv6NdP5S2Qh96HkBNoaA
+	 olLRDRR8krnlQ==
+Date: Thu, 24 Oct 2024 13:12:45 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Ram Prakash Gupta <quic_rampraka@quicinc.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>, 
+	Ulf Hansson <ulf.hansson@linaro.org>, linux-mmc@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, quic_cang@quicinc.com, quic_nguyenb@quicinc.com, 
+	quic_pragalla@quicinc.com, quic_sayalil@quicinc.com, quic_nitirawa@quicinc.com, 
+	quic_sachgupt@quicinc.com, quic_bhaskarv@quicinc.com, quic_narepall@quicinc.com, 
+	kernel@quicinc.com
+Subject: Re: [PATCH 1/1] mmc: sdhci-msm: Toggle the FIFO write clock after
+ ungate
+Message-ID: <n5dd7fblsfppyfci3fsxyqqchc7pdaml2q5737hprbi2q6wvso@rig42wwnyad2>
+References: <20241022111025.25157-1-quic_rampraka@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v1 10/10] net: qrtr: mhi: Report endpoint id in sysfs
-To: Chris Lew <quic_clew@quicinc.com>, netdev@vger.kernel.org
-Cc: Marcel Holtmann <marcel@holtmann.org>, Andy Gross <agross@kernel.org>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20241018181842.1368394-1-denkenz@gmail.com>
- <20241018181842.1368394-11-denkenz@gmail.com>
- <479ef16f-1711-4b16-8cad-c06fc5b42da0@quicinc.com>
-Content-Language: en-US
-From: Denis Kenzior <denkenz@gmail.com>
-In-Reply-To: <479ef16f-1711-4b16-8cad-c06fc5b42da0@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241022111025.25157-1-quic_rampraka@quicinc.com>
 
-Hi Chris,
-
->> @@ -72,6 +72,16 @@ static int qcom_mhi_qrtr_send(struct qrtr_endpoint *ep, 
->> struct sk_buff *skb)
->>       return rc;
->>   }
->> +static ssize_t endpoint_show(struct device *dev,
->> +                 struct device_attribute *attr, char *buf)
->> +{
->> +    struct qrtr_mhi_dev *qdev = dev_get_drvdata(dev);
->> +
->> +    return sprintf(buf, "%d\n", qdev->ep.id);
+On Tue, Oct 22, 2024 at 04:40:25PM GMT, Ram Prakash Gupta wrote:
+> For Qualcomm SoCs with sdcc minor version 6B and more, command path
+> state machine is getting corrupted post clock ungate which is leading
+> to software timeout.
 > 
-> %u might be more appropriate because the endpoint id is stored as a u32
+> Toggle the write fifo clock to reset the async fifo to fix this issue.
+> 
+> Signed-off-by: Ram Prakash Gupta <quic_rampraka@quicinc.com>
+> ---
+>  drivers/mmc/host/sdhci-msm.c | 41 ++++++++++++++++++++++++++++++++++++
+>  1 file changed, 41 insertions(+)
+> 
+> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+> index e113b99a3eab..c2ccdac21232 100644
+> --- a/drivers/mmc/host/sdhci-msm.c
+> +++ b/drivers/mmc/host/sdhci-msm.c
+> @@ -146,6 +146,7 @@
+>  /* CQHCI vendor specific registers */
+>  #define CQHCI_VENDOR_CFG1	0xA00
+>  #define CQHCI_VENDOR_DIS_RST_ON_CQ_EN	(0x3 << 13)
+> +#define RCLK_TOGGLE BIT(1)
+>  
+>  struct sdhci_msm_offset {
+>  	u32 core_hc_mode;
+> @@ -290,6 +291,7 @@ struct sdhci_msm_host {
+>  	u32 dll_config;
+>  	u32 ddr_config;
+>  	bool vqmmc_enabled;
+> +	bool toggle_fifo_clk;
+>  };
+>  
+>  static const struct sdhci_msm_offset *sdhci_priv_msm_offset(struct sdhci_host *host)
+> @@ -1162,6 +1164,39 @@ static int sdhci_msm_restore_sdr_dll_config(struct sdhci_host *host)
+>  	return ret;
+>  }
+>  
+> +/*
+> + * After MCLK ugating, toggle the FIFO write clock to get
+> + * the FIFO pointers and flags to valid state.
+> + */
+> +static void sdhci_msm_toggle_fifo_write_clk(struct sdhci_host *host)
+> +{
+> +	u32 config;
+> +	struct mmc_ios ios = host->mmc->ios;
+> +	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+> +	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
+> +	const struct sdhci_msm_offset *msm_offset = msm_host->offset;
+> +
+> +	if ((msm_host->tuning_done || ios.enhanced_strobe) &&
+> +		host->mmc->ios.timing == MMC_TIMING_MMC_HS400) {
+> +		/*
+> +		 * Select MCLK as DLL input clock.
+> +		 */
 
-Nice catch.  I'll fix it for the next version.
+Seems you could fit this in a single-line comment, perhaps with an empty
+line above if you want to create some separation(?)
+
+> +		config = readl_relaxed(host->ioaddr + msm_offset->core_dll_config_3);
+> +		config |= RCLK_TOGGLE;
+> +		writel_relaxed(config, host->ioaddr + msm_offset->core_dll_config_3);
+> +
+> +		/* ensure above write as toggling same bit quickly */
+
+"same bit quickly" is completely arbitrary. Please state exactly what
+you need to wait for? E.g. is it some number of some clock ticks? If so,
+which clock and is it 1, 5, or 42 ticks?
+
+> +		wmb();
+
+This does not guarantee that the write completes before the delay.
+
+If you want to know that the write hit the hardware, before the sleep,
+issue a readl.
 
 Regards,
--Denis
+Bjorn
+
+> +		udelay(2);
+> +
+> +		/*
+> +		 * Select RCLK as DLL input clock
+> +		 */
+> +		config &= ~RCLK_TOGGLE;
+> +		writel_relaxed(config, host->ioaddr + msm_offset->core_dll_config_3);
+> +	}
+> +}
+> +
+>  static void sdhci_msm_set_cdr(struct sdhci_host *host, bool enable)
+>  {
+>  	const struct sdhci_msm_offset *msm_offset = sdhci_priv_msm_offset(host);
+> @@ -2587,6 +2622,9 @@ static int sdhci_msm_probe(struct platform_device *pdev)
+>  	if (core_major == 1 && core_minor >= 0x71)
+>  		msm_host->uses_tassadar_dll = true;
+>  
+> +	if (core_major == 1 && core_minor >= 0x6B)
+> +		msm_host->toggle_fifo_clk = true;
+> +
+>  	ret = sdhci_msm_register_vreg(msm_host);
+>  	if (ret)
+>  		goto clk_disable;
+> @@ -2720,6 +2758,9 @@ static __maybe_unused int sdhci_msm_runtime_resume(struct device *dev)
+>  				       msm_host->bulk_clks);
+>  	if (ret)
+>  		return ret;
+> +
+> +	if (msm_host->toggle_fifo_clk)
+> +		sdhci_msm_toggle_fifo_write_clk(host);
+>  	/*
+>  	 * Whenever core-clock is gated dynamically, it's needed to
+>  	 * restore the SDR DLL settings when the clock is ungated.
+> -- 
+> 2.17.1
+> 
+> 
 
