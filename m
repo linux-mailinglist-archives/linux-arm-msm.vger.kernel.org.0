@@ -1,65 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-35676-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35677-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6AE669AE3C6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 13:24:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1CB359AE49F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 14:17:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9F95E1F21675
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 11:24:52 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C7CE71F2313C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 12:17:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 205551CF28B;
-	Thu, 24 Oct 2024 11:24:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 773181D515E;
+	Thu, 24 Oct 2024 12:17:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="WBKywO1P"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pnOlVSIj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9874E148838;
-	Thu, 24 Oct 2024 11:24:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30C311D1F46
+	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Oct 2024 12:17:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729769089; cv=none; b=aHBnvyVn0oB4vjep6Z09LFInLU9gRw8sQToTtrk9q80luz/ljk/q93/1oymBUT/ZYocjgVeXgB4Z9Lti7ypjRmUZ2W19EM/XxLGB49/muRsh5iv51quWzQWmKix1tbfNtapW5JelecKZvSU4n3SsypR6pXRcr2EU6RKGOTLvEgM=
+	t=1729772237; cv=none; b=RVES4CwC+O0UiRJy8jnuiucCdRd0kxAU573+IcY1EyzyLrLrF4N11jroro3EMhtMKLoSE++Gw2MbfGInQm8BPgDI6t85Z75y2HGUVizBXZ0/UtsOYPfiOHZD7pjwlH/S4ZUV20/KE982fFkcDSe8z5UU5PempQVD/3aNpGE5BGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729769089; c=relaxed/simple;
-	bh=bKn1zWxfQ+atPPXQ2airthHAbMPyOIETHQqWmdUEkMo=;
+	s=arc-20240116; t=1729772237; c=relaxed/simple;
+	bh=yN1CumGrlEoOGTx3OsHnc6OzwiPE2MWwwTJ05SNcsIM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UDZ6VSNsooim5e1tCE9IOXMNhYNARASlRe8urgYc3SnZLD1GmtVJfx7hyDZy2E7Vkj2E2GDI2H7C/e9YssUoM0rJsBw5Yx86yQWkqEBBczEUJEjqih9T2odl0pFMsq6/7g7+Cm+t8cAz2z8jVqtY/+IrkRejnVmoK/uIkDUq1iQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=WBKywO1P; arc=none smtp.client-ip=198.175.65.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1729769087; x=1761305087;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=bKn1zWxfQ+atPPXQ2airthHAbMPyOIETHQqWmdUEkMo=;
-  b=WBKywO1Pm1NH3hvIB2fG/6rNZ0kqx/QPX41SBI96VdkKuohi+0YjcjZT
-   IiU5U2ozjmwQAKfJwISrj0zC2DgcEwMWQcKPr97uPFvpkHIATUSfZo1Db
-   oxff63ZFG0VjKI2bM6NRB+0yDRG9ViUg02VARKBptmNmtCXSlDn+JFT+B
-   6qRvqiBYmQwnM5diRPZmL2/o6c7gFm9T1BmUDGHSiE6QFauPLMjqQjPao
-   Ld46plKc1Pl71DIfpOrJCIeIFSa1uHr/G2VeScrEwsVXH91JO9z9EZ5lR
-   bAODVCEWt7++PyoilsCtrct4To0V7jQFG4khQsoQeNGiNTcOj4OisCO40
-   g==;
-X-CSE-ConnectionGUID: ISOuK6Q5SU+WHX6vejvkmA==
-X-CSE-MsgGUID: mrWAhxaKQzyKkLPb8MjJCQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11234"; a="33192631"
-X-IronPort-AV: E=Sophos;i="6.11,229,1725346800"; 
-   d="scan'208";a="33192631"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Oct 2024 04:24:46 -0700
-X-CSE-ConnectionGUID: 9fViNcHISpWdpdOkUE7INA==
-X-CSE-MsgGUID: WOBsemSpSI+Pq49VF0YsRA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,229,1725346800"; 
-   d="scan'208";a="80735898"
-Received: from ahunter6-mobl1.ger.corp.intel.com (HELO [10.0.2.15]) ([10.246.16.81])
-  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Oct 2024 04:24:42 -0700
-Message-ID: <ed236a63-6505-4cd9-8ccf-97a1035e2848@intel.com>
-Date: Thu, 24 Oct 2024 14:24:36 +0300
+	 In-Reply-To:Content-Type; b=NaruHlO/k0Ngom+vTPpQg+SG9PFR1JQHZ8UFM12Na+5dYQPMz/8TcPZ5eiKOtJ3INCskA+k/v8SuJzLW/4xTERIo1gKHyAwf9PGXyMj56afl2A4lPSDru7KV0zPke/QqiJgr4FOnovxcsoILEzB+0PB/b692IhnUuwhtMyFw5jc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pnOlVSIj; arc=none smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-43169902057so8536415e9.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Oct 2024 05:17:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1729772232; x=1730377032; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=+WqnWzHmMKjcYaGejE3CaceAxDaXho2Bn8Ce4G3bwEI=;
+        b=pnOlVSIj5DSw0f0O8JlP3MbZxsmLEBWezCItsIgDWTw4me9fD1jAIvXtoyIoAPPPGd
+         p9peB5JfXoZqXr1xM0y82K0ZZOrPObrd3I/5ne/MkgBkM8VKNPkMHC6o+tc11G3QMz+M
+         BTdOOnCKDSea0dNVgTeOkhPpGvX0ykFy+4DV9QLRDCc+HCdqNOMJ5YdH1yA1w0JQthoL
+         /BHFWaxNjYTkxmRwdVVZGkeF4QAjOYd5azrDXgRpzLkTmCLcPo9VT2zLpIpWWSJBHiCg
+         54P8XbRzQ8O+MZvYPonSLQPV+m+bkKdv4/HYqJB5hHsO1Y/C1mY28u+Ntl/bQu1aWeLE
+         fObA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729772232; x=1730377032;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+WqnWzHmMKjcYaGejE3CaceAxDaXho2Bn8Ce4G3bwEI=;
+        b=YxVMU0KC7eJIlzX3JElzJKPFPLtWdYRO4GpOfqFtkL15bvEZd8FieKXyzZjH/2CqdD
+         D2r9l0YnK4N8npdCaaHv5gFg1lBY5kYM434+bG5yWKm2JbEVVkF7vSmfvGEzGdMQMFt+
+         SDbW7p5Hh3V8pJETU9AupaXf+igOpd+YuKwBtrMQ+cygIZTOBZTzF6htRsaicKrbcXHN
+         EG2KEsED54+RLgv8Fh+08AbMko82W3elV4YhV14NKbvklGbtcq3DfZdpuKrDhlDL3DO6
+         YNtU+DmtXsqad4r+JrJb4PB6Mmkcb69cP/hjKaZKOnpCRgQP7ZJvtu/Z1YISWV/CccqU
+         RpNA==
+X-Forwarded-Encrypted: i=1; AJvYcCVj3ge/6/ILvBfbeC2GDckGDSzikhd019nT89mf3DFRPDL7HsQTxWd7csELBqml+D7vEA8eWc/R+OzhPrCS@vger.kernel.org
+X-Gm-Message-State: AOJu0YzHqWnPf6H6SrxkcGA9wGrzdB0hiziMHsJIbQRSeOD72CDY1Nba
+	xgPF+rwx+T8V3EnLjzn2/gyOVq2Zc5KwLMCkpDV4whHyMCtYjKTSBSk7pl2zP18=
+X-Google-Smtp-Source: AGHT+IEUyrRxF3GxRrRtZfQCmqiZGXb/j5rR8aZTQFnJSE9gJyplmluufyYqxPIijRPFs/6nHaortw==
+X-Received: by 2002:a05:6000:1887:b0:37c:f933:48a9 with SMTP id ffacd0b85a97d-37efcef117cmr4250934f8f.1.1729772232236;
+        Thu, 24 Oct 2024 05:17:12 -0700 (PDT)
+Received: from [192.168.10.46] (146725694.box.freepro.com. [130.180.211.218])
+        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-37ee0b93ea6sm11229217f8f.84.2024.10.24.05.17.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 24 Oct 2024 05:17:11 -0700 (PDT)
+Message-ID: <ed55e542-6f30-4165-afdc-40b31b98d119@linaro.org>
+Date: Thu, 24 Oct 2024 14:17:11 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,109 +76,86 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] mmc: sdhci-msm: Add sysfs attribute for error state in
- SDHCI MSM driver
-To: Sachin Gupta <quic_sachgupt@quicinc.com>,
- Ulf Hansson <ulf.hansson@linaro.org>
-Cc: linux-mmc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
- quic_nguyenb@quicinc.com, quic_bhaskarv@quicinc.com, quic_mapa@quicinc.com,
- quic_narepall@quicinc.com, quic_nitirawa@quicinc.com,
- quic_rampraka@quicinc.com, quic_sartgarg@quicinc.com
-References: <20241022141659.18764-1-quic_sachgupt@quicinc.com>
+Subject: Re: [PATCH RESEND] thermal/drivers/qcom/lmh: remove false lockdep
+ backtrace
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Amit Kucheria <amitk@kernel.org>, Thara Gopinath <thara.gopinath@gmail.com>,
+ "Rafael J. Wysocki" <rafael@kernel.org>, Zhang Rui <rui.zhang@intel.com>,
+ Lukasz Luba <lukasz.luba@arm.com>
+Cc: Thara Gopinath <thara.gopinath@linaro.org>, linux-pm@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ stable@vger.kernel.org
+References: <20241011-lmh-lockdep-v1-1-495cbbe6fef1@linaro.org>
 Content-Language: en-US
-From: Adrian Hunter <adrian.hunter@intel.com>
-Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
- Business Identity Code: 0357606 - 4, Domiciled in Helsinki
-In-Reply-To: <20241022141659.18764-1-quic_sachgupt@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From: Daniel Lezcano <daniel.lezcano@linaro.org>
+In-Reply-To: <20241011-lmh-lockdep-v1-1-495cbbe6fef1@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On 22/10/24 17:16, Sachin Gupta wrote:
-> Introduce a new sysfs attribute err_state to the SDHCI MSM driver.
-> The attribute allows users to query the error state of the SDHCI host controller.
-
-We already have err_stats and err_state in debugfs.  That seems
-more appropriate.
-
+On 11/10/2024 07:48, Dmitry Baryshkov wrote:
+> Annotate LMH IRQs with lockdep classes so that the lockdep doesn't
+> report possible recursive locking issue between LMH and GIC interrupts.
 > 
-> Signed-off-by: Sachin Gupta <quic_sachgupt@quicinc.com>
-> Signed-off-by: Sarthak Garg <quic_sartgarg@quicinc.com>
+> For the reference:
+> 
+>         CPU0
+>         ----
+>    lock(&irq_desc_lock_class);
+>    lock(&irq_desc_lock_class);
+> 
+>   *** DEADLOCK ***
+> 
+> Call trace:
+>   dump_backtrace+0x98/0xf0
+>   show_stack+0x18/0x24
+>   dump_stack_lvl+0x90/0xd0
+>   dump_stack+0x18/0x24
+>   print_deadlock_bug+0x258/0x348
+>   __lock_acquire+0x1078/0x1f44
+>   lock_acquire+0x1fc/0x32c
+>   _raw_spin_lock_irqsave+0x60/0x88
+>   __irq_get_desc_lock+0x58/0x98
+>   enable_irq+0x38/0xa0
+>   lmh_enable_interrupt+0x2c/0x38
+>   irq_enable+0x40/0x8c
+>   __irq_startup+0x78/0xa4
+>   irq_startup+0x78/0x168
+>   __enable_irq+0x70/0x7c
+>   enable_irq+0x4c/0xa0
+>   qcom_cpufreq_ready+0x20/0x2c
+>   cpufreq_online+0x2a8/0x988
+>   cpufreq_add_dev+0x80/0x98
+>   subsys_interface_register+0x104/0x134
+>   cpufreq_register_driver+0x150/0x234
+>   qcom_cpufreq_hw_driver_probe+0x2a8/0x388
+>   platform_probe+0x68/0xc0
+>   really_probe+0xbc/0x298
+>   __driver_probe_device+0x78/0x12c
+>   driver_probe_device+0x3c/0x160
+>   __device_attach_driver+0xb8/0x138
+>   bus_for_each_drv+0x84/0xe0
+>   __device_attach+0x9c/0x188
+>   device_initial_probe+0x14/0x20
+>   bus_probe_device+0xac/0xb0
+>   deferred_probe_work_func+0x8c/0xc8
+>   process_one_work+0x20c/0x62c
+>   worker_thread+0x1bc/0x36c
+>   kthread+0x120/0x124
+>   ret_from_fork+0x10/0x20
+> 
+> Fixes: 53bca371cdf7 ("thermal/drivers/qcom: Add support for LMh driver")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  drivers/mmc/host/sdhci-msm.c | 40 ++++++++++++++++++++++++++++++++++++
->  1 file changed, 40 insertions(+)
-> 
-> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> index e113b99a3eab..a256e3569a92 100644
-> --- a/drivers/mmc/host/sdhci-msm.c
-> +++ b/drivers/mmc/host/sdhci-msm.c
-> @@ -290,6 +290,7 @@ struct sdhci_msm_host {
->  	u32 dll_config;
->  	u32 ddr_config;
->  	bool vqmmc_enabled;
-> +	bool err_occurred;
->  };
->  
->  static const struct sdhci_msm_offset *sdhci_priv_msm_offset(struct sdhci_host *host)
-> @@ -2255,6 +2256,8 @@ static void sdhci_msm_dump_vendor_regs(struct sdhci_host *host)
->  	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
->  	const struct sdhci_msm_offset *msm_offset = msm_host->offset;
->  
-> +	msm_host->err_occurred = true;
-> +
->  	SDHCI_MSM_DUMP("----------- VENDOR REGISTER DUMP -----------\n");
->  
->  	SDHCI_MSM_DUMP(
-> @@ -2398,6 +2401,41 @@ static int sdhci_msm_gcc_reset(struct device *dev, struct sdhci_host *host)
->  	return ret;
->  }
->  
-> +static ssize_t err_state_show(struct device *dev,
-> +			struct device_attribute *attr, char *buf)
-> +{
-> +	struct sdhci_host *host = dev_get_drvdata(dev);
-> +	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
-> +	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
-> +
-> +	if (!host || !host->mmc)
-> +		return -EINVAL;
-> +
-> +	return scnprintf(buf, PAGE_SIZE, "%d\n", !!msm_host->err_occurred);
-> +}
-> +
-> +static DEVICE_ATTR_RO(err_state);
-> +
-> +static struct attribute *sdhci_msm_sysfs_attrs[] = {
-> +	&dev_attr_err_state.attr,
-> +	NULL
-> +};
-> +
-> +static const struct attribute_group sdhci_msm_sysfs_group = {
-> +	.name = "qcom",
-> +	.attrs = sdhci_msm_sysfs_attrs,
-> +};
-> +
-> +static void sdhci_msm_init_sysfs(struct device *dev)
-> +{
-> +	int ret;
-> +
-> +	ret = sysfs_create_group(&dev->kobj, &sdhci_msm_sysfs_group);
-> +	if (ret)
-> +		dev_err(dev, "%s: Failed to create qcom sysfs group (err = %d)\n",
-> +				__func__, ret);
-> +}
-> +
->  static int sdhci_msm_probe(struct platform_device *pdev)
->  {
->  	struct sdhci_host *host;
-> @@ -2442,6 +2480,8 @@ static int sdhci_msm_probe(struct platform_device *pdev)
->  	sdhci_get_of_property(pdev);
->  	sdhci_msm_get_of_property(pdev, host);
->  
-> +	sdhci_msm_init_sysfs(&pdev->dev);
-> +
->  	msm_host->saved_tuning_phase = INVALID_TUNING_PHASE;
->  
->  	ret = sdhci_msm_gcc_reset(&pdev->dev, host);
 
+
+Applied, thanks
+
+
+-- 
+<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
 
