@@ -1,139 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-35742-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35743-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id CACA49AF301
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 21:54:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A23979AF3E1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 22:43:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 90751284D33
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 19:54:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 66731282C7A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 20:43:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0312219C542;
-	Thu, 24 Oct 2024 19:54:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19610217912;
+	Thu, 24 Oct 2024 20:42:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CX7HvxN1"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xw/MjzwT"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCAFC189F5F
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Oct 2024 19:54:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA1682178F6
+	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Oct 2024 20:42:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729799685; cv=none; b=aCj1ajoWzxiaZTJUqaf08xzllV/6mTA5hu96pjMeithdvTAFgHpFxFQeLngjeH87AA8tyLEmiKeO1ofLtAR3jyoOsfetu7QO89wPr6PKYcXqL4ihZM1NGz/f/mE/bXElfDw1rwmD53rYhrPX7ti4UKz4ZQ+tWF5dRxp+WNr1CmY=
+	t=1729802553; cv=none; b=Dq8MWoQkZe4FmgD2BdwZaiiW+sUZ5PRKJCpyKlx4AzMNBUhui4dnrGTuCWLJgEzONfGqs/U3DjV+lIDLATVERzpUlMb05dBQOpLz25sn3WBmUgVpzfvdi4k9bNzWgIYSiHrTICP5IlxSJq+eSSHLKMc/pQRhx9O/oJoiAxRcthY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729799685; c=relaxed/simple;
-	bh=mBZVdaWmerYGu5zd0okFXPgWZf+reUFWzKXCr66i1i0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ouMlFI4Z4W0ntKFAAk9/KDUlUZr9ZdBeuM51p1q67Zr+FWeNDorUNFsx55kDNKNwtASZkvDA5JF2ozEBGwiAn9RZ14hVshoeD3117BBUSZ0zJkLzt7JybFKbSsuQ4g1FElq3ospMqqI1Dxv3+bGV/yvCdA/DNCi4tyaDNq1Jx6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CX7HvxN1; arc=none smtp.client-ip=209.85.167.48
+	s=arc-20240116; t=1729802553; c=relaxed/simple;
+	bh=a4gTfnCJi732yoDCqTQUqO4Mk7Pmo1OqSE6yXObwo7I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BZ9AaHce5tDMWXxd/neGVAV/J7+DTkOzkdQWVIVEeThMQTGqO8yxl5pSu4Vegbd0ZgPhgn+H0lSudzJj0o3TmhqNRliucX3VWP2G/Np1CJVwwkITUXppeq2YMQWoRQDSvpWMNWTn+GDC0875hML/SRtYsojvF/OasY2k6E58HDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xw/MjzwT; arc=none smtp.client-ip=209.85.167.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-539e13375d3so1585676e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Oct 2024 12:54:43 -0700 (PDT)
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-539e13375d3so1627660e87.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Oct 2024 13:42:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729799682; x=1730404482; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1zIT1YGRsvT+pkeL01RKiL9RGgd9T2ZXW6c6w2M5TMA=;
-        b=CX7HvxN1Rcnb0nN5sPfcy56iFEIM4VlRSTSkuhZTs57VFQ2Nut+t1Dsg5jKVRPcdzu
-         KsE0jRWpoRMUjhnq0l9wEjwUQf3YyAz4qg7s/CWsoyBBmWCmvFHVs+HqJML1OGj0nGYJ
-         ctNHFbpWsBUSxKYMAEeZdydzREhyUj3LW3T3UaPrP7shvHQVlbjQsJdzztkmjqIl+fmV
-         gOkdDb1ajU51BlWRnMDMvv8pwcUqMAMoJibaVzxRzoTDjrcgmRo/mgqsv9Z4Ko3VcAAC
-         3miXkgnlWCnRRYKaWio3Ge9RD07iKNaPpEY2FMRiYDLIPTxqopsHeNAelStywaB8Grau
-         y4CA==
+        d=linaro.org; s=google; t=1729802549; x=1730407349; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=EiRse2pWkVFItuZf5sRm9MGvUV4h+zSWNVGTjIlgHco=;
+        b=xw/MjzwTSncxWnhUzuIV/vx/NQ5zTACcFHjohVBU+iDRFh+rHNGtks59S1dp0a4p82
+         dg6ntuQQsaH/POBjGOLSEO3lOtQDOLXYSRKmSefAAKkBAJz0dzlsxa2MtNZwew7BYhoF
+         0kVnCmqv++H7hQI86BNQi5U/xHQXA64PEs65Sar4ef+FwvQw38Jtsd5vvsp35weDU01h
+         l5wHCLFq05b3v/rCvJuIE3jbc4fkwMhdq3eHYgaSIFsre++e5HOnHUsI6gbfgrgy3E/7
+         h/dirgpefgI+X8kEN3n4UC+N+EJPtcz1mkcRxL4UYZgd9LaKakgRLU1MxrC3QvcW2VwE
+         bJKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729799682; x=1730404482;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=1zIT1YGRsvT+pkeL01RKiL9RGgd9T2ZXW6c6w2M5TMA=;
-        b=KCjqtpvJyVFfKT6EuWkHPmOVKshzFWHNcNRLytx/LE+14ecb/7SNnyU72mgZsSpHzZ
-         EFBDfLX0BgK6d5IO5GoCuJOQ0/nh73XaVTQWSRNJTPsRbtGOrTvKd5+46vRmXS6FBBhS
-         +aIdnWZuHgwLl0G4Dh1fVRvY28oKSwJWg8I/VFRofpmUfEFD3iE8fE511xcL0a7kor90
-         MbbNFShtvkiuv6mgsN//tper3MP90f+8+JklFPRvuzbUZIwKvq1sEF2QV2xxZmsDqj3N
-         DHq2Njg2gkD/AEUSwQz5LibFzjpF+fszR0ocx68YbQ16uwdl7bpVCvwe/oeUs7e4sy/V
-         PTUg==
-X-Forwarded-Encrypted: i=1; AJvYcCWnSwey74HemiY1F33Xiij2VgyuFXGW3ZgFEU7nxbfjpdG1hAT3AMDI/x54GAC3CY75iZdT7k54Ee/v3ZuL@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyj4cA5kVn5LaYKN1YBryhMkC7FAomtpXabiDSXS+xlHu5zK672
-	v+R3ucnPdFTrskWGKpGiR0jLVp3tuvHrK06PDEzqRbrsv0KjqB+Y3r7KDwMgrkM=
-X-Google-Smtp-Source: AGHT+IFalx0QZeZZilEqjiYctekRgtIKVNVU9HQYnnJfAhQXhHZ9ry82TcwqGxCi1zyluqe8Zd8wgw==
-X-Received: by 2002:a05:6512:131e:b0:539:e85c:c888 with SMTP id 2adb3069b0e04-53b1a38d185mr4425601e87.40.1729799681711;
-        Thu, 24 Oct 2024 12:54:41 -0700 (PDT)
-Received: from eriador.lan (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53a224403f1sm1450014e87.282.2024.10.24.12.54.40
+        d=1e100.net; s=20230601; t=1729802549; x=1730407349;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EiRse2pWkVFItuZf5sRm9MGvUV4h+zSWNVGTjIlgHco=;
+        b=te4eaaUKcDcO0o7eYvWYmyNhXyKQgyMRuljmNn7YZY/TBJYf46Mhly5yAbqITeEoRc
+         OYhaz9LsnE74a5l+Ht5wYuOtMVkzkUye5i5h39OzH8Zs72V5KRyMNDmwXnJhNWdJtufa
+         rqF8DAy2nEM2SQkxCi7RILJb5DT8bRvWMBtKElGYEYxBIydTKHEn3l6WQxwukemfylib
+         4mUYjp0Nihg1JeIrAao7ylcK35tpHlzSolxwazF173/IC32HOY2XwYaj8euQLa59TXsP
+         +BL/hIFEZSuOBVw6j7CRR/sTv1daCjcoDcge2S7d+vrdk0H5jU1rCWET6mP0OkeZQmnW
+         vBww==
+X-Forwarded-Encrypted: i=1; AJvYcCUSNQ14F13UL6bV7+MZRKuHgYPaRYsDoZ+1a5yHH8XhhoDICXpfy+pAan9inYp9XbVHlRIFDYvuFP36OiBB@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz86ZWOkUjfynvRbjeMCg1WFwgewHlyuCxeoRILG1NpeAJJ7NlE
+	Tw9GSCds8lg2Pmob3H67Mht36Bn3fJW3I5Le+UXejsy61/rXBwUCrxCW5utH/eM=
+X-Google-Smtp-Source: AGHT+IGeFHoQQweBzqV0wKkNtdHWmKUzLDRu4ioeHEAp3OSo3ZTq8jbUi/HBFWlMN4UDv0+wbg+SFg==
+X-Received: by 2002:a05:6512:1594:b0:533:4689:973c with SMTP id 2adb3069b0e04-53b1a33312amr4232769e87.23.1729802548636;
+        Thu, 24 Oct 2024 13:42:28 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53a223e599esm1468652e87.49.2024.10.24.13.42.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Oct 2024 12:54:40 -0700 (PDT)
+        Thu, 24 Oct 2024 13:42:27 -0700 (PDT)
+Date: Thu, 24 Oct 2024 23:42:26 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Andrzej Hajda <andrzej.hajda@intel.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Robert Foss <rfoss@kernel.org>,
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org,
-	Alexander Stein <alexander.stein@ew.tq-group.com>
-Subject: Re: [PATCH 0/6] drm/bridge: add ycbcr_420_allowed support
-Date: Thu, 24 Oct 2024 22:54:38 +0300
-Message-ID: <172979967003.2997922.5344167060572719601.b4-ty@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241019-bridge-yuv420-v1-0-d74efac9e4e6@linaro.org>
-References: <20241019-bridge-yuv420-v1-0-d74efac9e4e6@linaro.org>
+To: Yuanjie Yang <quic_yuanjiey@quicinc.com>
+Cc: ulf.hansson@linaro.org, robh@kernel.org, krzk+dt@kernel.org, 
+	conor+dt@kernel.org, bhupesh.sharma@linaro.org, andersson@kernel.org, 
+	konradybcio@kernel.org, linux-mmc@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, quic_tingweiz@quicinc.com
+Subject: Re: [PATCH v1 2/3] arm64: dts: qcom: qcs615: add SD and emmc node
+Message-ID: <xfy335jzh5t5a7fdrjfswerjdze3vaybf7rvkxnae3cv3xaii7@rn7iqwga2p62>
+References: <20241023092708.604195-1-quic_yuanjiey@quicinc.com>
+ <20241023092708.604195-3-quic_yuanjiey@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241023092708.604195-3-quic_yuanjiey@quicinc.com>
 
-On Sat, 19 Oct 2024 00:49:11 +0300, Dmitry Baryshkov wrote:
-> One of the features that drm_bridge_connector can't handle currently is
-> setting of the ycbcr_420_allowed flag on the connector. Add the flag to
-> the drm_bridge struct and propagate it to the drm_connector as AND of
-> all flags in the bridge chain.
+On Wed, Oct 23, 2024 at 05:27:07PM +0800, Yuanjie Yang wrote:
+> Add SD and emmc support to the QCS615 Ride platform. The SD controller
+> and emmc controller of QCS615 are derived from SM6115. Include the
+> relevant binding documents accordingly. Additionally, configure
+> emmc-related and SD-related opp, power, and interconnect settings
+> in the device tree.
 > 
-> As an example of the conversion, enable the flag on the DW HDMI bridge,
-> MSM DP bridge, display connector drivers (for DisplayPort and HDMI
-> outputs) and AUX bridges.
+> Signed-off-by: Yuanjie Yang <quic_yuanjiey@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/qcs615.dtsi | 198 +++++++++++++++++++++++++++
+>  1 file changed, 198 insertions(+)
 > 
-> [...]
+> diff --git a/arch/arm64/boot/dts/qcom/qcs615.dtsi b/arch/arm64/boot/dts/qcom/qcs615.dtsi
+> index fcba83fca7cf..3840edf13fe8 100644
+> --- a/arch/arm64/boot/dts/qcom/qcs615.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/qcs615.dtsi
+> @@ -399,6 +399,65 @@ qfprom: efuse@780000 {
+>  			#size-cells = <1>;
+>  		};
+>  
+> +		sdhc_1: mmc@7c4000 {
+> +			compatible = "qcom,qcs615-sdhci", "qcom,sdhci-msm-v5";
+> +			reg = <0 0x7c4000 0 0x1000>,
+> +			      <0 0x7c5000 0 0x1000>;
 
-Applied to drm-misc-next, thanks!
+ <0x0 0x007c4000 0x0 0x1000> (this applies to all address nodes, so
+ sdhc_2 too.
 
-[1/6] drm/display: bridge_connector: handle ycbcr_420_allowed
-      commit: 3ced1c68751299c0cdf6a1ceeafdbe77db7d4956
-[2/6] drm/atomic: add interlaced and ycbcr_420 flags to connector's state dump
-      commit: 58e6d652d138ef163d0b6b4d19f0fc9d4e8519fa
-[3/6] drm/bridge: display-connector: allow YCbCr 420 for HDMI and DP
-      commit: d5cd8280c52bad44d5943fa7501bf9f20718d432
-[4/6] drm/bridge: aux: allow interlaced and YCbCr 420 output
-      commit: c44a0faf5397134b3100c00cc8a8d72528bc422a
-[5/6] drm/msm/dp: migrate the ycbcr_420_allowed to drm_bridge
-      commit: 785324db2d7a44e866161b6309fbda9a2178d455
-[6/6] drm/bridge: dw-hdmi: set bridge's ycbcr_420_allowed flag
-      commit: 8a8fed657d0427f6765a48c93152a8d86cfe613c
 
-Best regards,
+> +			reg-names = "hc",
+> +				    "cqhci";
+> +
+> +			interrupts = <GIC_SPI 641 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 644 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "hc_irq",
+> +					  "pwr_irq";
+> +
+> +			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
+> +				 <&gcc GCC_SDCC1_APPS_CLK>,
+> +				 <&rpmhcc RPMH_CXO_CLK>,
+> +				 <&gcc GCC_SDCC1_ICE_CORE_CLK>;
+> +			clock-names = "iface",
+> +				      "core",
+> +				      "xo",
+> +				      "ice";
+> +
+> +			resets = <&gcc GCC_SDCC1_BCR>;
+> +
+> +			power-domains = <&rpmhpd RPMHPD_CX>;
+> +			operating-points-v2 = <&sdhc1_opp_table>;
+> +			iommus = <&apps_smmu 0x02c0 0x0>;
+> +			interconnects = <&aggre1_noc MASTER_SDCC_1 QCOM_ICC_TAG_ALWAYS
+> +					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+> +					<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
+> +					 &config_noc SLAVE_SDCC_1 QCOM_ICC_TAG_ALWAYS>;
+> +			interconnect-names = "sdhc-ddr",
+> +					     "cpu-sdhc";
+> +
+> +			bus-width = <8>;
+> +			qcom,dll-config = <0x000f642c>;
+> +			qcom,ddr-config = <0x80040868>;
+> +			supports-cqe;
+> +			dma-coherent;
+> +			mmc-ddr-1_8v;
+> +			mmc-hs200-1_8v;
+> +			mmc-hs400-1_8v;
+> +			mmc-hs400-enhanced-strobe;
+
+Are these board properties or SoC properties?
+
+> +			status = "disabled";
+> +
+
 -- 
 With best wishes
 Dmitry
-
 
