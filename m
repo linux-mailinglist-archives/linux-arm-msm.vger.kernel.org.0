@@ -1,147 +1,220 @@
-Return-Path: <linux-arm-msm+bounces-35643-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35644-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 796389ADB8F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 07:36:01 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 585609ADBAF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 07:52:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0907B1F22A34
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 05:36:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B6F20283963
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 05:52:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2AEA3165F16;
-	Thu, 24 Oct 2024 05:35:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80708176227;
+	Thu, 24 Oct 2024 05:52:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b="epV0ymeS"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="PSRigfJi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.17.13])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7093CC8F0;
-	Thu, 24 Oct 2024 05:35:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF0B175D47;
+	Thu, 24 Oct 2024 05:52:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729748156; cv=none; b=QRkc60Ts+bjLKgxfMqNB27UrAzd6Gu3bkllQEiF4oOxs+KC/2G9VddCNpLh+9axcTJNLzMa8zClNDm3Nw73lR3jFaJBZwMHFHL8awNV1IRs+Z10U8fjXWeFnZzJjluY0G3kKEzPhkrhrNjhL0Mbgg4+GMo53kkPx2SuXrcZHR9w=
+	t=1729749144; cv=none; b=Nx8Rd8h6JSmpUG8j2LNLinLGKTQ4gYjlOw58kxhuSQA65rhQS2VPkhYc56i4gtX8AdwD36NVQ5yX+gKj6hvZcF/9C7wfwsdFBcGvTtIzSR0fSUMgB28Db/SYul/a7rc9HM28L/GCI4HvcCLr6jBmW4UUhUfmrMN4kd7VLkQSFtg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729748156; c=relaxed/simple;
-	bh=g60dll80FQxag8/SLufMUrNVGPzznH20zTIyl/HTuJY=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=eF0Y+n9o9yP0/SWfw61GDVH3gFs1OYM2By2RdDSaYLdxSgSiNfTkl8PpCaMG0Zz9j1ki6tU5bTWjnn7GASJFVd1OmBkqUp80OxmMz0Js4Nt+BwqOFHiytyiglasWeEtJ+kG8UrIQLP4fxQF4TE0qP1vW+93brXtY+hxZNseUubg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz; spf=pass smtp.mailfrom=oldschoolsolutions.biz; dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b=epV0ymeS; arc=none smtp.client-ip=212.227.17.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oldschoolsolutions.biz
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=oldschoolsolutions.biz; s=s1-ionos; t=1729748151; x=1730352951;
-	i=jens.glathe@oldschoolsolutions.biz;
-	bh=g60dll80FQxag8/SLufMUrNVGPzznH20zTIyl/HTuJY=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:From:Subject:To:
-	 Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=epV0ymeSQ/AGz6GeBi7MT1laPzKqGZ3g/FUkTt5uP4eog8ZJ1S97wV1fFuatkgTG
-	 0tFRFnrFbem14pbLIauKs/DKAwgRUkqKhHLNY988qI49fQv71RkBF16SIk5i5i9Mo
-	 UaSxqs157wnPLZvzuqlobToleMNrnAA7UDTj+zw743Kh+ntlsnQttGkISLgCriLOC
-	 cNMDdKV7mwVv9ZMaPkz3KgAMsR+/5wS/bL+TR+p4pd2w8EetcxyyaRp2pumhTG+l3
-	 8SCFJWmtyKslCyA9KNs2sfHcmcreUwvT8ClS3uCAbtTkWMYkppf39NlegvBK/qCn4
-	 0ono0Eu0k+I1Wb8RvQ==
-X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
-Received: from [192.168.0.174] ([91.64.229.215]) by mrelayeu.kundenserver.de
- (mreue107 [212.227.15.183]) with ESMTPSA (Nemesis) id
- 1MRBac-1tI3tL0HGm-00LVMc; Thu, 24 Oct 2024 07:30:15 +0200
-Message-ID: <80334280-1c51-48a0-84ec-f0f81d834da6@oldschoolsolutions.biz>
-Date: Thu, 24 Oct 2024 07:30:14 +0200
+	s=arc-20240116; t=1729749144; c=relaxed/simple;
+	bh=H/v2vKPXkcQ5t90AgsLCbyIR8E+ZB2BVZJQwBlliVgA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=DcjShZh7PwHbei3dwewcFYMFfDlV0QdoaHh4mtCB5x4na0Yx5Q+A71Bek2cuR5g1XY5U1VcDJ7KBvXiVfFpB0bElQ5lhoefsWF2I93c0l+5Bff+quoz5isjyPdH3BaR57XhVd2yo3/r6cn7GLoL6DKmxcmGYgQwuDwEC1Ojl83c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=PSRigfJi; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49NL9gY1029454;
+	Thu, 24 Oct 2024 05:50:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	BJeOHwrcBgZcKztjE3nBe45ohKy9u2fJ3xGNMkWvCLA=; b=PSRigfJi33NbqriX
+	L1rqFq62ZD2sYOpBuUVBf/MwJlG4uZLtmJHLcQQ83g3yBeeHF1uy5uemLKHm+yya
+	fvnho2mritjSD3iY0mJYeXCOCKUn0yIGxWe8dYj7re3ciPmzbZ2MVE9A/yZOQ2XZ
+	YSjXJD/oRByFTIUAjI18V6lo+IZSb26oa8fIiDxIwjEWYdFPklXiWTa1hR3EJs9F
+	3NDLjkKyDAhYyFogQubpVnlGTSCl+0ELREqNWYSFbkobDsn7Wi9Q33tqL3LxmIqh
+	S5ia2Xkc8SJwCykVFsG/jIVU9vsrugNbxUj0ZmUwD/0aFpWIduLD68p+Sfpsry7j
+	3Sbxgg==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42em3w4mv8-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 24 Oct 2024 05:50:18 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49O5oH18019941
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 24 Oct 2024 05:50:17 GMT
+Received: from [10.204.101.50] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 23 Oct
+ 2024 22:50:13 -0700
+Message-ID: <593ea165-c3d0-e247-b6fc-d9266673858b@quicinc.com>
+Date: Thu, 24 Oct 2024 11:20:10 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-Subject: Re: [PATCH 0/2] X1E001DE Snapdragon Devkit for Windows
-To: Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
- konradybcio@kernel.org, krzk+dt@kernel.org, robh+dt@kernel.org
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, conor+dt@kernel.org, abel.vesa@linaro.org,
- srinivas.kandagatla@linaro.org
-References: <20240911073337.90577-1-quic_sibis@quicinc.com>
- <f67d0fcd-4940-a57a-0e11-b98ed29cd09d@quicinc.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v4 15/28] media: iris: implement query_cap, query_ctrl and
+ query_menu ioctls
 Content-Language: en-US
-In-Reply-To: <f67d0fcd-4940-a57a-0e11-b98ed29cd09d@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:qK+BrI5Vz73rqYM48skDu2mGNQ2ApZPiuZM814xNkSJcZ2i/xOH
- N8KitGNqBKXfC30gteZ0aw7kk48FoeKYRJRZ+sO4SXAuisMubFWZtp7jSh07xHvA2Ele321
- 7oAd9VRJssdHHobCZ6EB1h0e8O86eNPgOCZo7OxtnkNUUIrkViKAQUtX3LpsksdLVDQSL7o
- ILlvVI+rLmNuDWBFxOe3w==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:2wbg/tJno10=;S0BDExEUg0HU8c5y6IuaaA3ApJE
- iliG+XiNjsibQsd+y/PzcgnpDNU9MDRo7zzN+ifzo8Xn1uH0b4IS3IrBg/yel+sauVcNVDLEy
- yWXSwV/i5MWFep3UXV8NrIS49yE54kOCqatOpgCPmrFG33aqzPtdZyAWxPqaq1rA+k8qFCyXE
- EJXlOktliKfAyVuEaTDn2o2Lw8P0f9h+MhVdHDDC8GLGe/3lzVnimcHJYsJtz++GLCktbdrb7
- ubhIccs8lx3HQN13pjcFEv7EjttglvveY/EjmRdnSnqQZgWEoQN1tWA7cEwiaaM6cbXLl7ROH
- GZp3xuywFJZUaYDbi8AVPuRAQBFZuiow91Fzvz8wRWQ5xO2lP3F2xJfPiX6Id1EUbCBjgTAWb
- QSpumhnFlYFh8C1I55Hj390Vhc1B8ANxK19ep7QskAlUHyb0/KWwxHwme6eU2r1W29quZMvfl
- 70hI016mllKH3FWHI2cXx84EoY1OHGbQcNIqDky/80lo3xXHr4+5ZG0UlHIB6tU1ejmB6Dujn
- DfjNP4xfPWjJqCMT5haxWP/kx3WUM++GeepIyQA5A0Whpy3AZI1I5drzQxz9ykYX/+W+0igQN
- btCh+dpK4GFrbPltMBzuoZcsc9PahWOyieClgrj6hi+aDfzAyPLlxwRSQyNYzLBugSVrpoD6k
- Cyf33toI9+I6hPRtr54O13OzKfM7T29UWDuwQa7zl8Zu04vNDgZHc1skfjKuRCYvJeP9rh5+Q
- 9hwzgyGlJOJyOqFXvv3yyie1UwxEG2qfA==
+To: Hans Verkuil <hverkuil@xs4all.nl>,
+        Vikash Garodia
+	<quic_vgarodia@quicinc.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        "Mauro Carvalho Chehab" <mchehab@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>
+CC: Sebastian Fricke <sebastian.fricke@collabora.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Vedang Nagar
+	<quic_vnagar@quicinc.com>
+References: <20241014-qcom-video-iris-v4-v4-0-c5eaa4e9ab9e@quicinc.com>
+ <20241014-qcom-video-iris-v4-v4-15-c5eaa4e9ab9e@quicinc.com>
+ <c4350128-a05c-47af-a7e7-2810171cd311@xs4all.nl>
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+In-Reply-To: <c4350128-a05c-47af-a7e7-2810171cd311@xs4all.nl>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: vqQSDjV-aW-yArHobwcxZhxJ71ppJbSf
+X-Proofpoint-GUID: vqQSDjV-aW-yArHobwcxZhxJ71ppJbSf
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=999
+ priorityscore=1501 impostorscore=0 bulkscore=0 lowpriorityscore=0
+ clxscore=1015 suspectscore=0 spamscore=0 malwarescore=0 mlxscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410240041
 
 
-On 23.10.24 13:05, Sibi Sankar wrote:
->
->
-> On 9/11/24 13:03, Sibi Sankar wrote:
->> Add initial support for X1E001DE Snapdragon Devkit for Windows. X1E001D=
-E
->> is the speed binned variant of X1E80100 that supports turbo boost up to
->> 4.3 Ghz. The initial support includes the following:
->>
->> -DSPs
->> -Ethernet (RTL8125BG) over the pcie 5 instance.
->> -NVme
->> -Wifi
->> -USB-C ports
->>
->
-> Hi All,
->
-> With the X1E Devkit cancelled and with no firmware updates promised for
-> it perpetually, please chime in and let me know if you still want to get
-> this series and rest (external-dp, usb-A ports, sd card slot and 3.5 mm
-> Jack) merged and have it supported upstream for the folks who already
-> received it!
->
-> -Sibi
->
->> Link:
->> https://www.qualcomm.com/news/releases/2024/05/qualcomm-accelerates-dev=
-elopment-for-copilot--pcs-with-snapdrago
->>
->> Sibi Sankar (2):
->> =C2=A0=C2=A0 dt-bindings: arm: qcom: Add Snapdragon Devkit for Windows
->> =C2=A0=C2=A0 arm64: dts: qcom: Add X1E001DE Snapdragon Devkit for Windo=
-ws
->>
->> =C2=A0 .../devicetree/bindings/arm/qcom.yaml=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 6 +
->> =C2=A0 arch/arm64/boot/dts/qcom/Makefile=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 1 +
->> =C2=A0 arch/arm64/boot/dts/qcom/x1e001de-devkit.dts=C2=A0 | 813 +++++++=
-+++++++++++
->> =C2=A0 3 files changed, 820 insertions(+)
->> =C2=A0 create mode 100644 arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
->>
->
-Hi there,
 
-as one of the few owners of this box I am very interested in getting an
-as complete dt as possible. It may be unsupported (who cares), but it is
-quite useful hardware. So, yes please! I already have it up with the
-published patch and its doing useful stuff.
+On 10/23/2024 4:35 PM, Hans Verkuil wrote:
+> On 14/10/2024 11:07, Dikshita Agarwal wrote:
+>> From: Vedang Nagar <quic_vnagar@quicinc.com>
+>>
+>> Implement query_cap, query_ctrl and query_menu ioctls
+>> with necessary hooks.
+>>
+>> Signed-off-by: Vedang Nagar <quic_vnagar@quicinc.com>
+>> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+>> ---
+>>  drivers/media/platform/qcom/iris/iris_vidc.c | 52 ++++++++++++++++++++++++++++
+>>  1 file changed, 52 insertions(+)
+>>
+>> diff --git a/drivers/media/platform/qcom/iris/iris_vidc.c b/drivers/media/platform/qcom/iris/iris_vidc.c
+>> index 93d2be118a81..60ee05b67f86 100644
+>> --- a/drivers/media/platform/qcom/iris/iris_vidc.c
+>> +++ b/drivers/media/platform/qcom/iris/iris_vidc.c
+>> @@ -300,6 +300,55 @@ static int iris_enum_framesizes(struct file *filp, void *fh,
+>>  	return 0;
+>>  }
+>>  
+>> +static int iris_querycap(struct file *filp, void *fh, struct v4l2_capability *cap)
+>> +{
+>> +	strscpy(cap->driver, IRIS_DRV_NAME, sizeof(cap->driver));
+>> +	strscpy(cap->bus_info, IRIS_BUS_NAME, sizeof(cap->bus_info));
+> 
+> Filled in automatically, just drop this.
+Sure, will do.
+> 
+>> +	memset(cap->reserved, 0, sizeof(cap->reserved));
+> 
+> The core zeroes this already, just drop this.
+> 
+Sure, will do.
+>> +	strscpy(cap->card, "iris_decoder", sizeof(cap->card));
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static int iris_queryctrl(struct file *filp, void *fh, struct v4l2_queryctrl *q_ctrl)
+>> +{
+>> +	struct v4l2_ctrl *ctrl;
+>> +	struct iris_inst *inst = iris_get_inst(filp, NULL);
+>> +
+>> +	ctrl = v4l2_ctrl_find(&inst->ctrl_handler, q_ctrl->id);
+>> +	if (!ctrl)
+>> +		return -EINVAL;
+>> +
+>> +	q_ctrl->minimum = ctrl->minimum;
+>> +	q_ctrl->maximum = ctrl->maximum;
+>> +	q_ctrl->default_value = ctrl->default_value;
+>> +	q_ctrl->flags = 0;
+>> +	q_ctrl->step = ctrl->step;
+>> +
+>> +	return 0;
+>> +}
+> 
+> Huh???
+> 
+>> +
+>> +static int iris_querymenu(struct file *filp, void *fh, struct v4l2_querymenu *qmenu)
+>> +{
+>> +	struct iris_inst *inst = iris_get_inst(filp, NULL);
+>> +	struct v4l2_ctrl *ctrl;
+>> +
+>> +	ctrl = v4l2_ctrl_find(&inst->ctrl_handler, qmenu->id);
+>> +	if (!ctrl)
+>> +		return -EINVAL;
+>> +
+>> +	if (ctrl->type != V4L2_CTRL_TYPE_MENU)
+>> +		return -EINVAL;
+>> +
+>> +	if (qmenu->index < ctrl->minimum || qmenu->index > ctrl->maximum)
+>> +		return -EINVAL;
+>> +
+>> +	if (ctrl->menu_skip_mask & (1 << qmenu->index))
+>> +		return -EINVAL;
+>> +
+>> +	return 0;
+>> +}
+> 
+> Huh??
+> 
+>> +
+>>  static int iris_g_selection(struct file *filp, void *fh, struct v4l2_selection *s)
+>>  {
+>>  	struct iris_inst *inst = iris_get_inst(filp, NULL);
+>> @@ -366,6 +415,9 @@ static const struct v4l2_ioctl_ops iris_v4l2_ioctl_ops = {
+>>  	.vidioc_g_fmt_vid_out_mplane    = iris_g_fmt_vid_mplane,
+>>  	.vidioc_enum_framesizes         = iris_enum_framesizes,
+>>  	.vidioc_reqbufs                 = v4l2_m2m_ioctl_reqbufs,
+>> +	.vidioc_querycap                = iris_querycap,
+>> +	.vidioc_queryctrl               = iris_queryctrl,
+>> +	.vidioc_querymenu               = iris_querymenu,
+> 
+> queryctrl/menu are handled by the core if you set ctrl_handler in the v4l2_fh struct.
+> 
+> If you use the control handler, then this should never be used.Right, make sense, will remove these.
 
-- Jens
-
+Thanks,
+Dikshita
+> 
+>>  	.vidioc_g_selection             = iris_g_selection,
+>>  	.vidioc_subscribe_event         = iris_subscribe_event,
+>>  	.vidioc_unsubscribe_event       = iris_unsubscribe_event,
+>>
+> 
+> Regards,
+> 
+> 	Hans
 
