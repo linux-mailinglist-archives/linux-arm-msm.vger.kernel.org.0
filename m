@@ -1,161 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-35677-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35678-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1CB359AE49F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 14:17:23 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 963149AE52A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 14:40:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C7CE71F2313C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 12:17:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C78D11C243BA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 12:40:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 773181D515E;
-	Thu, 24 Oct 2024 12:17:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C0D061D95A4;
+	Thu, 24 Oct 2024 12:40:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pnOlVSIj"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pGyz5NUC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30C311D1F46
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Oct 2024 12:17:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89F5E1D2207;
+	Thu, 24 Oct 2024 12:40:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729772237; cv=none; b=RVES4CwC+O0UiRJy8jnuiucCdRd0kxAU573+IcY1EyzyLrLrF4N11jroro3EMhtMKLoSE++Gw2MbfGInQm8BPgDI6t85Z75y2HGUVizBXZ0/UtsOYPfiOHZD7pjwlH/S4ZUV20/KE982fFkcDSe8z5UU5PempQVD/3aNpGE5BGc=
+	t=1729773611; cv=none; b=LxddlS+PEhxUZYcrvitRpTaskxCCjBicwtNRQg8/4DfDuYPt8oIi+JY50+e+JZvrU/tap2+dmQ05aGI7EcKkDp1+9y3RJNpOEliARQIfUgScG06ZNNcTBxJjTxU8J8bmvsMbWNTV+v9v+Nh7nY9qQdVLFvPsjcNn02dK0yqpzXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729772237; c=relaxed/simple;
-	bh=yN1CumGrlEoOGTx3OsHnc6OzwiPE2MWwwTJ05SNcsIM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NaruHlO/k0Ngom+vTPpQg+SG9PFR1JQHZ8UFM12Na+5dYQPMz/8TcPZ5eiKOtJ3INCskA+k/v8SuJzLW/4xTERIo1gKHyAwf9PGXyMj56afl2A4lPSDru7KV0zPke/QqiJgr4FOnovxcsoILEzB+0PB/b692IhnUuwhtMyFw5jc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pnOlVSIj; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-43169902057so8536415e9.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Oct 2024 05:17:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729772232; x=1730377032; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=+WqnWzHmMKjcYaGejE3CaceAxDaXho2Bn8Ce4G3bwEI=;
-        b=pnOlVSIj5DSw0f0O8JlP3MbZxsmLEBWezCItsIgDWTw4me9fD1jAIvXtoyIoAPPPGd
-         p9peB5JfXoZqXr1xM0y82K0ZZOrPObrd3I/5ne/MkgBkM8VKNPkMHC6o+tc11G3QMz+M
-         BTdOOnCKDSea0dNVgTeOkhPpGvX0ykFy+4DV9QLRDCc+HCdqNOMJ5YdH1yA1w0JQthoL
-         /BHFWaxNjYTkxmRwdVVZGkeF4QAjOYd5azrDXgRpzLkTmCLcPo9VT2zLpIpWWSJBHiCg
-         54P8XbRzQ8O+MZvYPonSLQPV+m+bkKdv4/HYqJB5hHsO1Y/C1mY28u+Ntl/bQu1aWeLE
-         fObA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729772232; x=1730377032;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+WqnWzHmMKjcYaGejE3CaceAxDaXho2Bn8Ce4G3bwEI=;
-        b=YxVMU0KC7eJIlzX3JElzJKPFPLtWdYRO4GpOfqFtkL15bvEZd8FieKXyzZjH/2CqdD
-         D2r9l0YnK4N8npdCaaHv5gFg1lBY5kYM434+bG5yWKm2JbEVVkF7vSmfvGEzGdMQMFt+
-         SDbW7p5Hh3V8pJETU9AupaXf+igOpd+YuKwBtrMQ+cygIZTOBZTzF6htRsaicKrbcXHN
-         EG2KEsED54+RLgv8Fh+08AbMko82W3elV4YhV14NKbvklGbtcq3DfZdpuKrDhlDL3DO6
-         YNtU+DmtXsqad4r+JrJb4PB6Mmkcb69cP/hjKaZKOnpCRgQP7ZJvtu/Z1YISWV/CccqU
-         RpNA==
-X-Forwarded-Encrypted: i=1; AJvYcCVj3ge/6/ILvBfbeC2GDckGDSzikhd019nT89mf3DFRPDL7HsQTxWd7csELBqml+D7vEA8eWc/R+OzhPrCS@vger.kernel.org
-X-Gm-Message-State: AOJu0YzHqWnPf6H6SrxkcGA9wGrzdB0hiziMHsJIbQRSeOD72CDY1Nba
-	xgPF+rwx+T8V3EnLjzn2/gyOVq2Zc5KwLMCkpDV4whHyMCtYjKTSBSk7pl2zP18=
-X-Google-Smtp-Source: AGHT+IEUyrRxF3GxRrRtZfQCmqiZGXb/j5rR8aZTQFnJSE9gJyplmluufyYqxPIijRPFs/6nHaortw==
-X-Received: by 2002:a05:6000:1887:b0:37c:f933:48a9 with SMTP id ffacd0b85a97d-37efcef117cmr4250934f8f.1.1729772232236;
-        Thu, 24 Oct 2024 05:17:12 -0700 (PDT)
-Received: from [192.168.10.46] (146725694.box.freepro.com. [130.180.211.218])
-        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-37ee0b93ea6sm11229217f8f.84.2024.10.24.05.17.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 24 Oct 2024 05:17:11 -0700 (PDT)
-Message-ID: <ed55e542-6f30-4165-afdc-40b31b98d119@linaro.org>
-Date: Thu, 24 Oct 2024 14:17:11 +0200
+	s=arc-20240116; t=1729773611; c=relaxed/simple;
+	bh=YrCb/mhgDJB269wiz1IB8jtnqMuRua4t7v/e15WwlH4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=II6SbCpNZBhmajhaxFphwDNIsNz6SHVhjNyUcnypbi0lAGfxU/OfGEb4DtulR8MsOxi7fuzb0ejyQ49kxN+0yr4t1BEj30xOuwjNNAXGdH/NXvCuaFyXyAJG1cVL+nh1eyoxXVR/2u7iyRf7Dy/3WbPEXBS0PZCuCzZgwS+2EQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pGyz5NUC; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50F49C4CEC7;
+	Thu, 24 Oct 2024 12:40:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1729773611;
+	bh=YrCb/mhgDJB269wiz1IB8jtnqMuRua4t7v/e15WwlH4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=pGyz5NUCk+nC2ylIRx+oMRdFs05jcNmisi1bPlD+0Jwst/J0y5lzPH31hVS+SXI5w
+	 99k2CbFOevUjQZS2aI/8M9SEEN0s/RJT//p+s3n7lF/ZSP1Y/hT7B+z8oVuU4ttv+b
+	 UXLc8vH0Jh/Fx1hhzbh07HqZ/iFT88szxfKmskAIrDs7fyRfexSNIh1UpAGE6/BggY
+	 vq1NObvzg2/DBoRrobabsur48c4hPysH900VGjFoqwjuLvzDSvfe1srsJJQ1sgCq4q
+	 zBnZbpwalO8dD/8H0n/gYSCffTy/xbGtwpuIqVd43vwDD9PNwv3kmCd5/B6LxFtdwG
+	 u/4omlQXX9cWA==
+Date: Thu, 24 Oct 2024 13:40:04 +0100
+From: Will Deacon <will@kernel.org>
+To: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: =?iso-8859-1?B?QmFybmFi4XMgQ3rpbeFu?= <barnabas.czeman@mainlining.org>,
+	iommu@lists.linux.dev, Zhang Rui <rui.zhang@intel.com>,
+	Lee Jones <lee@kernel.org>, Joerg Roedel <joro@8bytes.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Thara Gopinath <thara.gopinath@gmail.com>,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Lukasz Luba <lukasz.luba@arm.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>, linux-gpio@vger.kernel.org,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	linux-arm-msm@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>, linux-pm@vger.kernel.org,
+	Amit Kucheria <amitk@kernel.org>
+Subject: Re: [PATCH RFC 10/14] dt-bindings: iommu: qcom,iommu: Add MSM8917
+ IOMMU to SMMUv1 compatibles
+Message-ID: <20241024124002.GC30704@willie-the-truck>
+References: <20241019-msm8917-v1-0-f1f3ca1d88e5@mainlining.org>
+ <20241019-msm8917-v1-10-f1f3ca1d88e5@mainlining.org>
+ <172934406753.3231809.282041778335117501.robh@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RESEND] thermal/drivers/qcom/lmh: remove false lockdep
- backtrace
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Amit Kucheria <amitk@kernel.org>, Thara Gopinath <thara.gopinath@gmail.com>,
- "Rafael J. Wysocki" <rafael@kernel.org>, Zhang Rui <rui.zhang@intel.com>,
- Lukasz Luba <lukasz.luba@arm.com>
-Cc: Thara Gopinath <thara.gopinath@linaro.org>, linux-pm@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- stable@vger.kernel.org
-References: <20241011-lmh-lockdep-v1-1-495cbbe6fef1@linaro.org>
-Content-Language: en-US
-From: Daniel Lezcano <daniel.lezcano@linaro.org>
-In-Reply-To: <20241011-lmh-lockdep-v1-1-495cbbe6fef1@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <172934406753.3231809.282041778335117501.robh@kernel.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-On 11/10/2024 07:48, Dmitry Baryshkov wrote:
-> Annotate LMH IRQs with lockdep classes so that the lockdep doesn't
-> report possible recursive locking issue between LMH and GIC interrupts.
+On Sat, Oct 19, 2024 at 08:21:16AM -0500, Rob Herring (Arm) wrote:
 > 
-> For the reference:
+> On Sat, 19 Oct 2024 13:50:47 +0200, Barnabás Czémán wrote:
+> > Add MSM8917 compatible string with "qcom,msm-iommu-v1" as fallback
+> > for the MSM8917 IOMMU which is compatible with Qualcomm's secure
+> > fw "SMMU v1" implementation.
+> > 
+> > Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+> > ---
+> >  Documentation/devicetree/bindings/iommu/qcom,iommu.yaml | 1 +
+> >  1 file changed, 1 insertion(+)
+> > 
 > 
->         CPU0
->         ----
->    lock(&irq_desc_lock_class);
->    lock(&irq_desc_lock_class);
+> My bot found errors running 'make dt_binding_check' on your patch:
 > 
->   *** DEADLOCK ***
+> yamllint warnings/errors:
 > 
-> Call trace:
->   dump_backtrace+0x98/0xf0
->   show_stack+0x18/0x24
->   dump_stack_lvl+0x90/0xd0
->   dump_stack+0x18/0x24
->   print_deadlock_bug+0x258/0x348
->   __lock_acquire+0x1078/0x1f44
->   lock_acquire+0x1fc/0x32c
->   _raw_spin_lock_irqsave+0x60/0x88
->   __irq_get_desc_lock+0x58/0x98
->   enable_irq+0x38/0xa0
->   lmh_enable_interrupt+0x2c/0x38
->   irq_enable+0x40/0x8c
->   __irq_startup+0x78/0xa4
->   irq_startup+0x78/0x168
->   __enable_irq+0x70/0x7c
->   enable_irq+0x4c/0xa0
->   qcom_cpufreq_ready+0x20/0x2c
->   cpufreq_online+0x2a8/0x988
->   cpufreq_add_dev+0x80/0x98
->   subsys_interface_register+0x104/0x134
->   cpufreq_register_driver+0x150/0x234
->   qcom_cpufreq_hw_driver_probe+0x2a8/0x388
->   platform_probe+0x68/0xc0
->   really_probe+0xbc/0x298
->   __driver_probe_device+0x78/0x12c
->   driver_probe_device+0x3c/0x160
->   __device_attach_driver+0xb8/0x138
->   bus_for_each_drv+0x84/0xe0
->   __device_attach+0x9c/0x188
->   device_initial_probe+0x14/0x20
->   bus_probe_device+0xac/0xb0
->   deferred_probe_work_func+0x8c/0xc8
->   process_one_work+0x20c/0x62c
->   worker_thread+0x1bc/0x36c
->   kthread+0x120/0x124
->   ret_from_fork+0x10/0x20
+> dtschema/dtc warnings/errors:
 > 
-> Fixes: 53bca371cdf7 ("thermal/drivers/qcom: Add support for LMh driver")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
+> 
+> doc reference errors (make refcheckdocs):
+> 
+> See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20241019-msm8917-v1-10-f1f3ca1d88e5@mainlining.org
 
+I don't see any errors in the logs...
 
-Applied, thanks
-
-
--- 
-<http://www.linaro.org/> Linaro.org â”‚ Open source software for ARM SoCs
-
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
+Will
 
