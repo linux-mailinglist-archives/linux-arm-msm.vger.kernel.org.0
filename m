@@ -1,57 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-35869-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35870-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 535369B0274
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 14:34:51 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 89FF29B0277
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 14:35:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 077371F234E1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 12:34:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BC7441C2124B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 12:35:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 64334231C8E;
-	Fri, 25 Oct 2024 12:34:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17F8E231C8F;
+	Fri, 25 Oct 2024 12:35:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kR9O2FOk"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SElkjssL"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E1BB1FE107;
-	Fri, 25 Oct 2024 12:34:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D792E1F80AD;
+	Fri, 25 Oct 2024 12:35:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729859686; cv=none; b=Ki3MlAIpGw0znt2RSAEK82UYbXZ5TYrTwk7ESNWhlPpBXrOQehUofnIAwikLCoU++H7Ft105Ed7SyIwK0laqgJ6Blj3c7JWXXFlQfp5DCf7zzXxbBxxro/oPopD3b5z7oe4jMmUjt+2MNrrzHH36/oM7S7p7T6iRCVjofhBgTko=
+	t=1729859731; cv=none; b=eSNgY3d5MIX+2gyxGQCeMxc1WXJIOw7ABU5uo2at1svCmkbK1QSjysKLdegOe+N1l6Xmf8Mhja0l1gEYDvjPlAEfO5IxsXOqkQGsJFsPdpHsqFUe5lZ9Y0/276NRYacgbszX4ShVDaYdX7tkyPffW+t9DP0JfeIMUyQr66FXPKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729859686; c=relaxed/simple;
-	bh=KlmpvUQiUGH9hbJtB2/sxgQMV8PN+Fo3A4mmPN+NcD8=;
+	s=arc-20240116; t=1729859731; c=relaxed/simple;
+	bh=NA66e2iqCnEkVY1lqjeKFf0Jyb7rhPBlZOP6atg66ts=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FPyvOvYP2YpUjnhRuLvhPwWw+l1XTqRtJreDyn+dHpx5C9zKUESElBFT15oR0yC8uMf9CzoKsXqENU8WaHAeDCaF2Rf9sREIBOoHaovLAQnItvVtxdhIiP3T9UOZfJ09tKZHqfaM/ujLBI3Lik5+GNtUIjsY2Yo3oSSUWApH360=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kR9O2FOk; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D498FC4CEC3;
-	Fri, 25 Oct 2024 12:34:44 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=mHc0n3LI6MvL3lEpZO6yXyuJwVthwnPjQajcBONuNPy7a+vD0fnCnp5ExOXcEE0qzgmdAiDxX5ZEbxm6hdC66A+j3ek/km2qDQRsSKGVqkTeqZ0t36lAX7sgNee8W+MMOoM3Wf9Hp7q7IQPyfg28iN4CBjCluxkrHEi4rsWKU3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SElkjssL; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 360EAC4CECC;
+	Fri, 25 Oct 2024 12:35:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729859685;
-	bh=KlmpvUQiUGH9hbJtB2/sxgQMV8PN+Fo3A4mmPN+NcD8=;
+	s=k20201202; t=1729859730;
+	bh=NA66e2iqCnEkVY1lqjeKFf0Jyb7rhPBlZOP6atg66ts=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=kR9O2FOkjxFRTeztY0naWl/Bn6TCUu4C5ub4DXqwmvbODSbvjX3cWAHh3tL0tfrAn
-	 rB67IxGd6glVhWiXKWrZi/TKOuT1XfXl9D82XI6XaP8NcILF4kcg4tzc+PJI8oceC4
-	 +tw/GSjCPJ6Y9wrcPcshsMCXXPmx0N9CejQqLwXk1wbWKrtHf5PILDxHXZ8dELPFIC
-	 h5sxipbbyNQI1Ol2h4aArHn/FAfP0RXE2S2Qg9/og8HY/lpWepaeW/R9GevGlp8Pby
-	 hoct6KlcdoeBA0AdLKOiUFPdp0mgbsBhGEJcWjt+Pxq2iyC5KyZw20v9Nbpau2swFc
-	 pX+0BRwPLIiZA==
-Date: Fri, 25 Oct 2024 14:34:42 +0200
+	b=SElkjssLyRg4Mp2WWV1UBP28ZwKRHI226LRR9un//LTMBDmUsF7n6lqrtna1ar9Ww
+	 iP4+cAmWYOInJ4lfrf0ybfWMLdrbdVPeq8wgMmhHv7dagcOJl26FvTWKfrZt9fSSso
+	 jZWreBf5JpG9X+es4LA3yEg0+EKsuA1FeQ8C+cOaAhpWiGj+NE6deZiOpiECqheIh7
+	 JcXQxlAMQ3HIUuAqpEBYUQhdi0L0iCJlDeev5CBjOmMcyAftfM6wiUGLTLLMTIAeVR
+	 qokX9Hjl2UTeptsgrTMPpKXy8aCmf75zn5EWgjyCr+i7cQ++gu0tXfc+zt1NmdBQ1N
+	 UMphlzajmu/uw==
+Date: Fri, 25 Oct 2024 14:35:26 +0200
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Qingqing Zhou <quic_qqzhou@quicinc.com>
-Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org, 
-	krzk+dt@kernel.org, conor+dt@kernel.org, robimarko@gmail.com, will@kernel.org, 
-	robin.murphy@arm.com, joro@8bytes.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, iommu@lists.linux.dev
-Subject: Re: [PATCH v3 2/4] dt-bindings: arm-smmu: document QCS615 APPS SMMU
-Message-ID: <mh3fh23aeix23argueflyqbia6gh62kqsbgehkrvzqgdklgao2@pikskhwfbdyr>
-References: <20241025030732.29743-1-quic_qqzhou@quicinc.com>
- <20241025030732.29743-3-quic_qqzhou@quicinc.com>
+To: Miaoqing Pan <quic_miaoqing@quicinc.com>
+Cc: kvalo@kernel.org, robh@kernel.org, krzk+dt@kernel.org, 
+	conor+dt@kernel.org, quic_jjohnson@quicinc.com, ath11k@lists.infradead.org, 
+	linux-wireless@vger.kernel.org, devicetree@vger.kernel.org, dmitry.baryshkov@linaro.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 1/2] dt-bindings: net: wireless: ath11k-pci: add
+ firmware-name property
+Message-ID: <aismpshqdh6pgya5fjxbem2kaqydbiyh72jwuh2hrismli2ysx@zxlos3etmhzc>
+References: <20241025100419.2128604-1-quic_miaoqing@quicinc.com>
+ <20241025100419.2128604-2-quic_miaoqing@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -60,17 +61,19 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20241025030732.29743-3-quic_qqzhou@quicinc.com>
+In-Reply-To: <20241025100419.2128604-2-quic_miaoqing@quicinc.com>
 
-On Fri, Oct 25, 2024 at 08:37:30AM +0530, Qingqing Zhou wrote:
-> Add the compatible for Qualcomm QCS615 APPS SMMU.
+On Fri, Oct 25, 2024 at 06:04:18PM +0800, Miaoqing Pan wrote:
+> This is the same optional property that defined in qcom,ath10k.yaml. It's
+> useful for the platform / board to specify firmware through device-tree.
 > 
-> Signed-off-by: Qingqing Zhou <quic_qqzhou@quicinc.com>
+> Signed-off-by: Miaoqing Pan <quic_miaoqing@quicinc.com>
 > ---
->  Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 2 ++
->  1 file changed, 2 insertions(+)
+>  .../devicetree/bindings/net/wireless/qcom,ath11k-pci.yaml  | 7 +++++++
+>  1 file changed, 7 insertions(+)
+> 
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Please do not send new versions while old version is being discussed.
 
 Best regards,
 Krzysztof
