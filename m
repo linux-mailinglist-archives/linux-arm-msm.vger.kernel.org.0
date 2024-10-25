@@ -1,189 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-35846-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35847-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 613C79AFFEB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 12:20:52 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 49BD79B001C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 12:29:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 84CD21C24E83
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 10:20:51 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BA18D2822CD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 10:29:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29A6F1D89E5;
-	Fri, 25 Oct 2024 10:20:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jaV8aXqg"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49DF31E1C11;
+	Fri, 25 Oct 2024 10:29:13 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEDE21D47D7
-	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2024 10:20:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A35DE18B498;
+	Fri, 25 Oct 2024 10:29:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729851649; cv=none; b=tFHcYLspRcdGijEDTQek6yImlZhTFdmFq+MB7f06b8SUW5XWw/O2wZMTVafDyM4qd0xj0ZumMDxZ43OBD6yDSQeWVWJBXBLRkSBFLxET/3WTHyV5qE8DutN8cxTy7RhzNuaILwq4T/ZslNr95LEvcqHtnUdIHZ02MdbLBAFDK9M=
+	t=1729852153; cv=none; b=oipG0SFhH5sarBM+4F2HpuflvdiEmokAlau/xdeJOL0vnI40pFVKjJG7B5bUmxG3STTv5ppRHG6iXasApiJXvfs2l+yHsKdWklBFuFiwaxQ8ycToABYb+paPGKrjTOWYaE6/4qLuosyrXE+gMvKdEiMmN/6cvxw+vnVFuBdwuIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729851649; c=relaxed/simple;
-	bh=1iLlAKGudjFkUN/QcEd0Uk7MU9ti5Wpd4+h+AMVeics=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jcBVtHIIRov72d4RuPWXd1AjuXCa6I/sTiiaLOL4it8lKQN/YQ47bdkIy5ANkhT2fasoL7iiDa0LeVzbxBcFR1RNCw/G3HBC9UOsyUnjPyWHQlwALYolIcBLoaHI0L+tKWXORz2csJcQJHHqKQzYey/umTbi5JGUpYzySCva10s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jaV8aXqg; arc=none smtp.client-ip=209.85.128.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-6e39bf12830so13877377b3.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2024 03:20:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729851646; x=1730456446; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=UZGOCvYm3rNUGn+PGYfltlg4oLnrSe3DwF5M9CLcXjE=;
-        b=jaV8aXqg/VWJYTPqUgRDCTd7bO9OC8eyHa8PUrgpnAzEE5BPYJmLNqJ+rwc1+60w7D
-         gYzfywaksyJlc1EU/hlESVXdAXkBpQ6rSeAq/CVJhrwPzhk8DUWVlKg1pOJVPvyBl9zr
-         RmtCYKrWn2QwdO9t/htwShurBYUeK8islTUDuIW7BXLWpS/tLeeVxjZPBLjsU8oRQJD6
-         aWSgCkpnXI2mX3ckiqqF2xxg7mp/fa45M7WAZYygwabd0Wl3A1kWQOIBWB4ynqHth9js
-         7Orwk4+ZdY+XJWcHRXYYravLoVNKHebe7R9mK/4/Pc7vDd2S6Esy9pMszKx+5K3osCBD
-         39rg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729851646; x=1730456446;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=UZGOCvYm3rNUGn+PGYfltlg4oLnrSe3DwF5M9CLcXjE=;
-        b=X3/SYAJOx68lLvSXmPVHNthYWxODfxETffbzMMddIlSDYGMmGb5IeA3T6PVr2uMzlh
-         V8CT8ynKLlNbhvm8/EXEfKewVEOnB0EBT743dZ4VxR9riFhDLqu8QZw0Fkl1OPo8sCCl
-         5ppdGHwWpMJEjiuGI+A2BLBh3Vqy0gns0J6x4NdKyvlriJ2SoJkxIF1mw4n5doWmi3+o
-         LMQGt0+L/1er0SM7IFRJBbeeGcMr3GiHTBVmJ+MI5hjafKnl9sVZLfJ5uZcJIg6LhHEG
-         RIzMqBC/0mN4Ur+kqJ7nGOkFg6aNJ5g6d4WrfxvG+ZvaUF9KGd4bI/ojaNj24KsggKPs
-         TuyQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV1T7F8QZ9UDZubZgBdI+T5cDDwpzlxWokyXK8p5O3PO5ECLWDtJdsDGR410Dazi4/z5ARm/XT9VyI5E2gy@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz457+HNwqBsOq1/yyBeI+qe1TS9hqLSrPzjfuxxPfvJ0amA2n9
-	mGNKw2k+XA0WjNBrdAqp+7/BaPz7Grr1MEqiVIJUftuvKvYmlYJrt4ooaVAw4Nns65Fjr1t9M1E
-	buPXUHyoMNPWng6dTtI1Zz4EaexlhuyUcuh7W/Q==
-X-Google-Smtp-Source: AGHT+IEK+IFBHUuYbFtTsmlZx0OQVp0kbPTqAa5jGXbCwa8RgIenukeKGRyvXq5xKgheZN8Zq0OHePmdyhBBXaHPjpY=
-X-Received: by 2002:a05:690c:3584:b0:6e3:7625:15f7 with SMTP id
- 00721157ae682-6e84de8edfamr42407037b3.10.1729851645875; Fri, 25 Oct 2024
- 03:20:45 -0700 (PDT)
+	s=arc-20240116; t=1729852153; c=relaxed/simple;
+	bh=kt4wYMkfsNTPdfoKwRwRU0gRMNf/RpLIukUSQs+5exU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YYAqjjEui3j5Pwhqp8+K+Yr5toE3rjS2JUJOyCDiKqKPXB2q6rOOZCrZEBCAq/8JTKU/3POKpiGXjr3uCMMVShseoPlbpkuNWi4AUl9N9Wo2dsnwFBy6/Q2bbsyEzyyaysos+gg/ALat+iNVzqpFffQdCR0VyZeMqcih+uaAl+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id AC4B4339;
+	Fri, 25 Oct 2024 03:29:39 -0700 (PDT)
+Received: from pluto (usa-sjc-mx-foss1.foss.arm.com [172.31.20.19])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 0DF593F73B;
+	Fri, 25 Oct 2024 03:29:07 -0700 (PDT)
+Date: Fri, 25 Oct 2024 11:29:05 +0100
+From: Cristian Marussi <cristian.marussi@arm.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Sibi Sankar <quic_sibis@quicinc.com>, Johan Hovold <johan@kernel.org>,
+	sudeep.holla@arm.com, cristian.marussi@arm.com,
+	ulf.hansson@linaro.org, jassisinghbrar@gmail.com,
+	linux-kernel@vger.kernel.org, arm-scmi@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	konradybcio@kernel.org, linux-pm@vger.kernel.org,
+	tstrudel@google.com, rafael@kernel.org
+Subject: Re: [PATCH V3 0/4] firmware: arm_scmi: Misc Fixes
+Message-ID: <Zxty8VaMPrU3fJAN@pluto>
+References: <20241007060642.1978049-1-quic_sibis@quicinc.com>
+ <ZwfsmqInJlqkQD_3@hovoldconsulting.com>
+ <ae5eaef9-301f-7d3f-c973-faa22ae780ee@quicinc.com>
+ <ZxkjqEmkBAsC6UkL@hovoldconsulting.com>
+ <c8e7420b-a7b4-89cd-1b6e-c1f6693c062d@quicinc.com>
+ <ik4dyfbphm7lkeipm2dbr7cmdfxewxd4jtuz2jfnscfwcyo2r4@lrin5hnsqvyd>
+ <83b635a7-fc69-7522-d985-810262500cb3@quicinc.com>
+ <CAA8EJppx1OmYnfSsMDebRRTbNb3dfAE_MM55T1SpLccP=s_K1A@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241024002514.92290-1-quic_miaoqing@quicinc.com>
- <20241024002514.92290-3-quic_miaoqing@quicinc.com> <pdjhyrjoreiykv2tquvufjw3rkti5sxrjvpmkjhvkfasq7zbo4@xxntxdmhhyg5>
- <bc3c06eb-1cb2-4cbb-aaad-95c09223f0cc@quicinc.com> <ig3m3sgmnkgfmwrlglundhqif6rygzl7uh7rzoemrz3yxgvfpc@35a323mw2wbt>
- <46de0bfe-ebdd-4b37-a957-3c64e30a1376@quicinc.com>
-In-Reply-To: <46de0bfe-ebdd-4b37-a957-3c64e30a1376@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 25 Oct 2024 13:20:35 +0300
-Message-ID: <CAA8EJpr4zgV4Sa4sPdCToQWs+CFJu6Xz6CPcPyHDhDczmuzj=g@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] wifi: ath11k: support board-specific firmware overrides
-To: Miaoqing Pan <quic_miaoqing@quicinc.com>
-Cc: kvalo@kernel.org, quic_jjohnson@quicinc.com, ath11k@lists.infradead.org, 
-	linux-wireless@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAA8EJppx1OmYnfSsMDebRRTbNb3dfAE_MM55T1SpLccP=s_K1A@mail.gmail.com>
 
-On Fri, 25 Oct 2024 at 10:23, Miaoqing Pan <quic_miaoqing@quicinc.com> wrote:
->
->
->
-> On 10/25/2024 2:01 PM, Dmitry Baryshkov wrote:
-> > On Fri, Oct 25, 2024 at 10:56:02AM +0800, Miaoqing Pan wrote:
-> >>
-> >>
-> >> On 10/25/2024 3:39 AM, Dmitry Baryshkov wrote:
-> >>> On Thu, Oct 24, 2024 at 08:25:14AM +0800, Miaoqing Pan wrote:
-> >>>> QCA6698AQ IP core is the same as WCN6855 hw2.1, but it has different RF,
-> >>>> IPA, thermal, RAM size and etc, so new firmware files used. This change
-> >>>> allows board DT files to override the subdir of the firmware directory
-> >>>> used to lookup the amss.bin and m3.bin.
-> >>>
-> >>> I have slight concerns regarding the _board_ DT files overriding the
-> >>> subdir. This opens a can of worms, allowing per-board firmware sets,
-> >>> which (as far as I understand) is far from being what driver maintainers
-> >>> would like to see. This was required for ath10k-snoc devices, since
-> >>> firmware for those platforms is signed by the vendor keys and it is
-> >>> limited to a particular SoC or SoC family. For ath11k-pci there is no
-> >>> such limitation.
-> >>>
-> >>> Would it be possible to use PCI subvendor / subdev to identify affected
-> >>> cards? PCI Revision? Any other way to identify the device?  Please
-> >>> provide lspci -nnvv for the affected device kind. Is there a way to
-> >>> identify the RF part somehow?
-> >>
-> >> It's rather difficult, for WCN685x, there are multiple evolved subseries for
-> >> customized products. e.g.
-> >>
-> >> QCA6698AQ/hw2.1
-> >> QCA2066/hw2.1
-> >> WCN6855/hw2.0/hw2.1
-> >> WCN6856/hw2.1
-> >>
-> >> They have the same PCIe ID (17cb:1103), the commit 5dc9d1a55e95 ("wifi:
-> >> ath11k: add support for QCA2066") reads TCSR_SOC_HW_SUB_VER to enumerate all
-> >> QCA2066 cards, it lacks of flexibility, as the list will become longer and
-> >> longer. But it's the only choice for QCA2066, as it's customized for X86
-> >> platform which without DT files.
+On Fri, Oct 25, 2024 at 01:11:37PM +0300, Dmitry Baryshkov wrote:
+> On Fri, 25 Oct 2024 at 09:46, Sibi Sankar <quic_sibis@quicinc.com> wrote:
 > >
-> > I guess, this is closer to Kalle's expectations: being able to detect
-> > the hardware instead of adding DT properties.
 > >
-> >> So for MSM those have DT file platforms, like SA8775P-RIDE/QCS8300-RIDE both
-> >> attached to QCA6698AQ, we can specify the correct firmware to
-> >> 'ath11k/WCN6855/hw2.1/qca6698aq', so it's not per-board firmware, it depends
-> >> on the type of the products(x86 windows, IoT products or AUTO).
 > >
-> > No-no-no and no. The firmware used must not be specific to the product
-> > type.  This is what everybody here is trying to avoid. Please try
-> > following the QCA2066 approach instead. And note that it could use new
-> > TLD as it perfectly shows itself as a different hardware kind.
->
-> Actually, TCSR_SOC_HW_SUB_VER is not SOC register, it's a TLMM hw
-> revision register in BAR0 space, it's hard to maintain the list.
-
-How is it so?
-
-And if it is hard, can we please get to the _normal_ way how vendors
-handle PCI hardware differences: the subvendor and subdevice? This is
-a usual way to describe that the PCIe device is the same, but the
-analog / tuner / RF / etc parts are different.
-
-> We're going to have another problem to enable NFA765 m.2 card for IoT
-> platforms, which has different feature sets with X86 platform, so also
-> new firmware should be used. In this case, QCA2066 approach not works.
-> Seems DT approach is only choice.
->
-> Could you advice ?
-
-Hmm, The first question is _why_ does it have different feature sets?
-What exactly is different? What if the user plugs a normal (laptop)
-M.2 card into their IoT device?
-
+> > On 10/25/24 11:44, Dmitry Baryshkov wrote:
+> > > On Fri, Oct 25, 2024 at 11:38:36AM +0530, Sibi Sankar wrote:
+> > >>
+> > >>
+> > >> On 10/23/24 21:56, Johan Hovold wrote:
+> > >>> On Wed, Oct 23, 2024 at 01:16:47PM +0530, Sibi Sankar wrote:
+> > >>>> On 10/10/24 20:32, Johan Hovold wrote:
+> > >>>>> On Mon, Oct 07, 2024 at 11:36:38AM +0530, Sibi Sankar wrote:
+> > >>>>>> The series addresses the kernel warnings reported by Johan at [1] and are
+> > >>>>>> are required to X1E cpufreq device tree changes [2] to land.
+> > >>>>>>
+> > >>>>>> [1] - https://lore.kernel.org/lkml/ZoQjAWse2YxwyRJv@hovoldconsulting.com/
+> > >>>>>> [2] - https://lore.kernel.org/lkml/20240612124056.39230-1-quic_sibis@quicinc.com/
+> > >>>>>>
+> > >>>>>> The following warnings remain unadressed:
+> > >>>>>> arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
+> > >>>>>> arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
+> > >>>>>
+> > >>>>> Are there any plans for how to address these?
+> > >>>
+> > >>>> Sorry missed replying to this. The error implies that duplicate
+> > >>>> opps are reported by the SCP firmware and appear once during probe.
+> > >>>
+> > >>> I only see it at boot, but it shows up four times here with the CRD:
+> > >>
+> > >> https://lore.kernel.org/lkml/d54f6851-d479-a136-f747-4c0180904a5e@quicinc.com/
+> > >>
+> > >> As explained ^^, we see duplicates for max sustainable performance twice
+> > >> for each domain.
+> > >
+> > > If existing products were shipped with the firmware that lists single
+> > > freq twice, please filter the frequencies like qcom-cpufreq-hw does.
 > >
-> >> 0000:01:00.0 Network controller [0280]: Qualcomm QCNFA765 Wireless Network
-> >> Adapter [17cb:1103] (rev 01)
-> >>      Subsystem: Qualcomm QCNFA765 Wireless Network Adapter [17cb:0108]
-> >>      Device tree node: /sys/firmware/devicetree/base/pci@1c00000/pcie@0/wifi@0
-> >>
-> >>
-> >>>
-> >>> Could you possibly clarify, how this situation is handled in Windows
-> >>> world?
-> >>
-> >> X86 platforms use standard m.2 PCIe card, and it will only use the default
-> >> main firmware files, as they without DT files.
+> > That was a qualcomm specific driver and hence we could do such
+> > kind of filtering. This however is the generic scmi perf protocol
+> > and it's not something we should ever consider introducing :/
+> 
+> This depends on the maintainer's discretion.
+> 
 > >
-> > So QCA6698AQ cannot appear on an M.2 PCIe card?
->
-> No, but no m.2 PCIe card so far. It depends on power sequencing module
-> to do power up.
+> > >
+> > >>
+> > >>>
+> > >>> [    8.098452] arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
+> > >>> [    8.109647] arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
+> > >>> [    8.128970] arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
+> > >>> [    8.142455] arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
+> > >>>
+> > >>>> This particular error can be fixed only by a firmware update and you
+> > >>>> should be able to test it out soon on the CRD first.
+> > >>>
+> > >>> Can you explain why this can only be fixed by a firmware update? Why
+> > >>> can't we suppress these warnings as well, like we did for the other
+> > >>> warnings related to the duplicate entries?
+> > >>>
+> > >>> IIUC the firmware is not really broken, but rather describes a feature
+> > >>> that Linux does not (yet) support, right?
+> > >>
+> > >> We keep saying it's a buggy firmware because the SCP firmware reports
+> > >> identical perf and power levels for the additional two opps and the
+> > >> kernel has no way of treating it otherwise and we shouldn't suppress
+> > >> them. Out of the two duplicate opps reported one is a artifact from how
+> > >> Qualcomm usually show a transition to boost frequencies. The second opp
+> > >> which you say is a feature should be treated as a boost opp i.e. one
+> > >> core can run at max at a lower power when other cores are at idle but
+> > >> we can start marking them as such once they start advertising their
+> > >> correct power requirements. So I maintain that this is the best we
+> > >> can do and need a firmware update for us to address anything more.
+> > >
+> > > Will existing shipping products get these firmware updates?
+> >
+> > They are sure to trickle out but I guess it's upto the oem
+> > to decide if they do want to pick these up like some of the
+> > other firmware updates being tested only on CRD. Not sure why
+> > warnings duplicates should block cpufreq from landing for x1e
+> > but if that's what the community wants I can drop reposting
+> > this series!
+> 
+> No, the community definitely wants to have cpufreq for X1E.
+> But at the same time some reviewers prefer to have a warning-free boot
+> if those warnings can't be really fixed. I don't have such a strict
+> position, but I'd prefer to see those messages at dev_info or dev_dbg
+> level.
 
-You are describing software (power sequencing module), while I was
-talking about the hardware. Nothing prevents OEM from adding fixed
-regulators to drive necessary voltages from the PCIe slot.
+I think dev_info could be an option from the SCMI perspective (as per my
+other mail), the important thing in these regards is to NOT go
+completely silent against fw anomalies...to avoid the the risk of being
+silently ignored .... I'll see what Sudeep thinks about...
 
--- 
-With best wishes
-Dmitry
+Thanks,
+Cristian
 
