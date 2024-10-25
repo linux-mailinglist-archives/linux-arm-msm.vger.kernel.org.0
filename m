@@ -1,289 +1,170 @@
-Return-Path: <linux-arm-msm+bounces-35837-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35838-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9827B9AFF38
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 11:59:44 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CAE1C9AFF52
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 12:01:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 546C328585E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 09:59:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 88CBC282E68
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 10:01:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 429911DD0C2;
-	Fri, 25 Oct 2024 09:59:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 182801FDF89;
+	Fri, 25 Oct 2024 10:00:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="SHGfTg6o"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="G3TRUDix"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 699D41D90A1;
-	Fri, 25 Oct 2024 09:59:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A578D1F81BD;
+	Fri, 25 Oct 2024 10:00:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729850365; cv=none; b=LYPS18cty9wlFj0R+IxLBw+FdOj4bKruij/ATuVLLyl3i7Vs6xaKYCu1SN31Yy15zlehE/g0sV8aZxmwH9ZM95pkpzAuGUuvom7LyrpFZ+Vyy1pfmVff4euji7BdPL6XkObUjv9iy27h/l04RCAVolcyjHhC8sYTQzea6ZbKtYI=
+	t=1729850409; cv=none; b=qk9+ZqLQ/3exMfJqS/S2+ffTKQFqODw2rkdDeftHHoG+hM3UwPNLa5Tj68itJs6pP2E+hdntJn48YcVp1tME8XHBJLSt6XkQmLBuDDa62PhveHGDDdZHB/4u9boC9fuaVlv6c+36j03WMYu1I2dCG23uewIbqheIQUaTT7sXr+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729850365; c=relaxed/simple;
-	bh=A0tbIubMUPu1KmNaFfOkWkedtaj9BPGHl5YSsFJzW4A=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=M4saM+8XItMBUwEto1JjQxW6q1cAtZ0K7dNmpCiiGef6Qw0ydodssxxJLdq2NPCzdWFBsnhWVqIwIKC2ZtS+DnfIIFTsosidzUGoOfwqCu2k28I3cTyYr+PO/b0YvGgoVtYWdXqKOafyNuG5LSAF/2oUwfrnTFt06BeOo655WD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=SHGfTg6o; arc=none smtp.client-ip=192.198.163.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1729850362; x=1761386362;
-  h=from:to:cc:subject:in-reply-to:references:date:
-   message-id:mime-version:content-transfer-encoding;
-  bh=A0tbIubMUPu1KmNaFfOkWkedtaj9BPGHl5YSsFJzW4A=;
-  b=SHGfTg6o08APtG9u5QA5fjsCnGoXzwXtIrXWxZRA6uegLR05yUeISCRG
-   zgo9EqNuw47rtHHFRhSQKAnwYvsZWp6uXcwjqluuE7YvRx4VqOshoCgaT
-   i411d4LAmr/CE4G7fwaN3nPC64YL/K/jGEKmAN/N8MknVz22Oi9UEMIuL
-   dVeyp59a/cOsLYAl4xhf/GS2Qjq8X/AjH96S8W7aAg5mLpJ9SZGjv9cau
-   LhiSYACIfHoyaj7jga4Kdhq9rcsGzefMnkjb0xVpAyH0O1xJc6fdM9G9B
-   jV/7od4cnYWODu6uhPG1yCg+EkZ7rspfCKUhGpSxrvf1JQwGG0W/3hIPQ
-   Q==;
-X-CSE-ConnectionGUID: RulL0W5fRgKTyUkvSRJIYQ==
-X-CSE-MsgGUID: RrThTF3cTDKXIu4Q0Wrojg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11235"; a="17145367"
-X-IronPort-AV: E=Sophos;i="6.11,231,1725346800"; 
-   d="scan'208";a="17145367"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
-  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Oct 2024 02:59:21 -0700
-X-CSE-ConnectionGUID: J/nzwOZxRuCCiipRaURsrA==
-X-CSE-MsgGUID: 0oumuCcWRtKOGTxyvWihhg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,231,1725346800"; 
-   d="scan'208";a="80980898"
-Received: from zzombora-mobl1.ti.intel.com (HELO localhost) ([10.245.246.193])
-  by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Oct 2024 02:59:09 -0700
-From: Jani Nikula <jani.nikula@linux.intel.com>
-To: Ville =?utf-8?B?U3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
- dri-devel@lists.freedesktop.org
-Cc: intel-gfx@lists.freedesktop.org, Abhinav Kumar
- <quic_abhinavk@quicinc.com>, Alain Volmat <alain.volmat@foss.st.com>, Alex
- Deucher <alexander.deucher@amd.com>, Alexey Brodkin
- <abrodkin@synopsys.com>, amd-gfx@lists.freedesktop.org, Andy Yan
- <andy.yan@rock-chips.com>, Christian =?utf-8?Q?K=C3=B6nig?=
- <christian.koenig@amd.com>,
- Danilo Krummrich <dakr@redhat.com>, Dmitry Baryshkov
- <dmitry.baryshkov@linaro.org>, freedreno@lists.freedesktop.org, Hans de
- Goede <hdegoede@redhat.com>, Heiko =?utf-8?Q?St=C3=BCbner?=
- <heiko@sntech.de>, Inki Dae
- <inki.dae@samsung.com>, Jyri Sarha <jyri.sarha@iki.fi>, Karol Herbst
- <kherbst@redhat.com>, linux-amlogic@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, linux-arm-msm@vger.kernel.orga,
- linux-mediatek@lists.infradead.org, linux-renesas-soc@vger.kernel.org,
- Liviu Dudau <liviu.dudau@arm.com>, Lyude Paul <lyude@redhat.com>,
- =?utf-8?Q?Ma=C3=ADra?=
- Canal <mairacanal@riseup.net>, Marijn Suijten
- <marijn.suijten@somainline.org>, nouveau@lists.freedesktop.org,
- nouveau@lists.freedesktop.orga, Patrik Jakobsson
- <patrik.r.jakobsson@gmail.com>, Rob Clark <robdclark@gmail.com>, Russell
- King <linux@armlinux.org.uk>, Sandy Huang <hjc@rock-chips.com>, Sean Paul
- <sean@poorly.run>, spice-devel@lists.freedesktop.org,
- virtualization@lists.linux.dev, xen-devel@lists.xenproject.org, Xinhui Pan
- <Xinhui.Pan@amd.com>, Zack Rusin <zack.rusin@broadcom.com>
-Subject: Re: [PATCH 0/2] drm: Treewide plane/crtc legacy state sweeping
-In-Reply-To: <ZxtMz8JP3DbzpMew@intel.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-References: <20241002182200.15363-1-ville.syrjala@linux.intel.com>
- <ZxtMz8JP3DbzpMew@intel.com>
-Date: Fri, 25 Oct 2024 12:59:05 +0300
-Message-ID: <8734kkqz9y.fsf@intel.com>
+	s=arc-20240116; t=1729850409; c=relaxed/simple;
+	bh=XFCPTdOf7277mkxyNqBln5PHSUltz8Pj1c1bIAULRes=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=a1ZecXkoDCSmzQ5vCxmZIAFYP4WP05jxpPT/q8x0iY332iCUEpDJy+IPv0jK8KnV+AWh7BO2A1kU6DphwvUfs6273QLwyN25e7YZyVZC7EFF4RnqddxRjsy1tgxLEwQ3CPgNrVOgoM3mEB1nv4smXf6IiEIKa89ihkXCM9PuiPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=G3TRUDix; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49P1BrSe004522;
+	Fri, 25 Oct 2024 09:59:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	PwYWGdB45qg/3CamTEfHajoG/yYk5oPu6x2vS9FthPY=; b=G3TRUDixCpwVp/37
+	eY2953pgVDCWctZFVnwujl30TbLM7k3Hpsf5X5T4RnafIpoMNhu8okxsTXNwk/y1
+	WFn3/aBkknSS119Y6ZoozDkRlKhQuCoAVRiKmdzjmepTwiuQ1eZ01SQlln8iMuwZ
+	opeAR+8ovLlW90i/jyerf9H7yz3zct9ylkgXNnQyY1m0aGNvIrTZzQIj/0To82K1
+	xfJ1IgfY9n1Gu15hNJYtx5Tf04Fz2TV8hFpz+/dHp1081Ss8AFMkym6hG2nF6+vE
+	eAQG6JQ547jiV/YHfQcmVMeu70uFlldtEHCUYeLJOgLM8a3jStv6MQo9uz0lW+Gu
+	VoIvFA==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42em688g37-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 25 Oct 2024 09:59:57 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49P9xua0011713
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 25 Oct 2024 09:59:56 GMT
+Received: from [10.151.41.25] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 25 Oct
+ 2024 02:59:52 -0700
+Message-ID: <b2a18ac5-727d-4f5b-9465-c360e6432dc5@quicinc.com>
+Date: Fri, 25 Oct 2024 15:29:49 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 1/6] dt-bindings: net: wireless: update required
+ properties for ath12k PCI module
+To: Krzysztof Kozlowski <krzk@kernel.org>, <ath12k@lists.infradead.org>
+CC: <linux-wireless@vger.kernel.org>, Kalle Valo <kvalo@kernel.org>,
+        Rob
+ Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor
+ Dooley <conor+dt@kernel.org>,
+        Jeff Johnson <jjohnson@kernel.org>,
+        Bjorn
+ Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
+References: <20241023060352.605019-1-quic_rajkbhag@quicinc.com>
+ <20241023060352.605019-2-quic_rajkbhag@quicinc.com>
+ <87db3d68-ab1a-4cc4-9857-416de39cea0f@kernel.org>
+ <e2c1ce1a-89af-4feb-a21a-9ca2578430e7@quicinc.com>
+ <b97b8350-3925-40b0-8f87-f89df429a52a@kernel.org>
+ <e7b27f57-efb2-45ea-bbe0-e5aeb90cbff9@quicinc.com>
+ <606083d8-4332-45e4-be41-08ca5425cc03@kernel.org>
+ <94defe49-c87a-44f6-8768-03f3d6687ac3@quicinc.com>
+ <50c0f184-030b-4a19-bf8a-077505170f03@kernel.org>
+Content-Language: en-US
+From: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
+In-Reply-To: <50c0f184-030b-4a19-bf8a-077505170f03@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: DTVJxZ-XF8nN1HLYhmgfBnExrhPnEtDh
+X-Proofpoint-GUID: DTVJxZ-XF8nN1HLYhmgfBnExrhPnEtDh
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 malwarescore=0
+ priorityscore=1501 adultscore=0 bulkscore=0 phishscore=0 mlxscore=0
+ lowpriorityscore=0 mlxlogscore=533 impostorscore=0 suspectscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410250076
 
-On Fri, 25 Oct 2024, Ville Syrj=C3=A4l=C3=A4 <ville.syrjala@linux.intel.com=
-> wrote:
-> On Wed, Oct 02, 2024 at 09:21:58PM +0300, Ville Syrjala wrote:
->> From: Ville Syrj=C3=A4l=C3=A4 <ville.syrjala@linux.intel.com>
->>=20
->> An attempt to hide the drm_plane/crtc legacy state better.
->>=20
->> This also highlights the fact that a lot of supposedly
->> atomic drivers are poking around in the legacy crtc state,
->> which is rather questionable. For planes we did force the
->> legacy state to NULL already to force drivers to behave.
->> But even then it seems capable of confusing people with
->> its high profile location directly under drm_plane.
->>=20
->> This might end up as some kind of conflict
->> galore, but the alternative would involve trying
->> to wean the atomic drivers off one by one,
->> which would probably take forever. At least with
->> this the issue becomes visible and shouldn't be
->> forgotten as easily.
->
-> Ping, anyone have thoughts on this? I'd like to get something
-> like this in at some point to make the legacy state (ab)users
-> easily visible...
+On 10/23/2024 5:38 PM, Krzysztof Kozlowski wrote:
+> On 23/10/2024 12:28, Raj Kumar Bhagat wrote:
+>> On 10/23/2024 12:29 PM, Krzysztof Kozlowski wrote:
+>>> On 23/10/2024 08:53, Raj Kumar Bhagat wrote:
+>>>> On 10/23/2024 12:17 PM, Krzysztof Kozlowski wrote:
+>>>>> On 23/10/2024 08:45, Raj Kumar Bhagat wrote:
+>>>>>> On 10/23/2024 12:05 PM, Krzysztof Kozlowski wrote:
+>>>>>>> On 23/10/2024 08:03, Raj Kumar Bhagat wrote:
+>>>>>>>> The current device-tree bindings for the Ath12K module list many
+>>>>>>>> WCN7850-specific properties as required. However, these properties are
+>>>>>>>> not applicable to other Ath12K devices.
+>>>>>>>>
+>>>>>>>> Hence, remove WCN7850-specific properties from the required section,
+>>>>>>>> retaining only generic properties valid across all Ath12K devices.
+>>>>>>>> WCN7850-specific properties will remain required based on the device's
+>>>>>>>> compatible enum.
+>>>>>>> Just not true. These apply to all devices described in this binding.
+>>>>>>>
+>>>>>>> NAK.
+>>>>>>>
+>>>>>>> Don't send patches for your downstream stuff.
+>>>>>> This is not for downstream. This series is the per-requisite for ath12k
+>>>>>> MLO support in upstream.
+>>>>>>
+>>>>>> In the subsequent patch [2/6] we are adding new device (QCN9274) in this
+>>>>>> binding that do not require the WCN7850 specific properties.
+>>>>>>
+>>>>>> This is a refactoring patch for the next patch [2/6].
+>>>>> It's just wrong. Not true. At this point of patch there are no other
+>>>>> devices. Don't refactor uselessly introducing incorrect hardware
+>>>> Ok then, If we squash this patch with the next patch [2/6], that actually adding
+>>>> the new device, then this patch changes are valid right?
+>>> Yes, except I asked to have separate binding for devices with different
+>>> interface (WSI). You add unrelated devices to same binding, growing it
+>>> into something tricky to manage. Your second patch misses if:then
+>>> disallwing all this WSI stuff for existing device... and then you should
+>>> notice there is absolutely *nothing* in common.
+>>>
+>> I understand your point about having separate bindings if there are no common
+>> properties. However, the title and description of this binding indicate that it
+>> is intended for Qualcomm ath12k wireless devices with a PCI bus. Given this, the
+>> QCN9274 seems to fit within the same binding.
+> Feel free to fix it. Or add common schema used by multiple bindings.
+> 
+>> Additionally, there will likely be more properties added in the future that could
+>> be common. For example, the “qcom,ath12k-calibration-variant” property (which the
+> You are supposed to add them now, not later. See writing bindings. They
+> are supposed to be complete.
+> 
 
-On the approach,
+Sure will add "qcom,ath12k-calibration-variant" in next version.
 
-Acked-by: Jani Nikula <jani.nikula@intel.com>
+>> ath12k host currently doesn’t support reading and using, hence we are not adding it
+>> now) could be a common property.
+> What is "host"? Either the device has this property or not. Whether host
+> supports something does not really matter, right? You have hardware
+> property or you have it *not*.
 
-with or without converting legacy into a pointer, up to you.
-
->
->>=20
->> The cc list was getting way out of hand, so I had
->> to trim it a bit. Hopefully I didn't chop off too
->> many names...
->>=20
->> Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
->> Cc: Alain Volmat <alain.volmat@foss.st.com>
->> Cc: Alex Deucher <alexander.deucher@amd.com>
->> Cc: Alexey Brodkin <abrodkin@synopsys.com>
->> Cc: amd-gfx@lists.freedesktop.org
->> Cc: Andy Yan <andy.yan@rock-chips.com>
->> Cc: "Christian K=C3=B6nig" <christian.koenig@amd.com>
->> Cc: Danilo Krummrich <dakr@redhat.com>
->> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> Cc: freedreno@lists.freedesktop.org
->> Cc: Hans de Goede <hdegoede@redhat.com>
->> Cc: "Heiko St=C3=BCbner" <heiko@sntech.de>
->> Cc: Inki Dae <inki.dae@samsung.com>
->> Cc: Jyri Sarha <jyri.sarha@iki.fi>
->> Cc: Karol Herbst <kherbst@redhat.com>
->> Cc: linux-amlogic@lists.infradead.org
->> Cc: linux-arm-msm@vger.kernel.org
->> Cc: linux-arm-msm@vger.kernel.orga
->> Cc: linux-mediatek@lists.infradead.org
->> Cc: linux-renesas-soc@vger.kernel.org
->> Cc: Liviu Dudau <liviu.dudau@arm.com>
->> Cc: Lyude Paul <lyude@redhat.com>
->> Cc: "Ma=C3=ADra Canal" <mairacanal@riseup.net>
->> Cc: Marijn Suijten <marijn.suijten@somainline.org>
->> Cc: nouveau@lists.freedesktop.org
->> Cc: nouveau@lists.freedesktop.orga
->> Cc: Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
->> Cc: Rob Clark <robdclark@gmail.com>
->> Cc: Russell King <linux@armlinux.org.uk>
->> Cc: Sandy Huang <hjc@rock-chips.com>
->> Cc: Sean Paul <sean@poorly.run>
->> Cc: spice-devel@lists.freedesktop.org
->> Cc: virtualization@lists.linux.dev
->> Cc: xen-devel@lists.xenproject.org
->> Cc: Xinhui Pan <Xinhui.Pan@amd.com>
->> Cc: Zack Rusin <zack.rusin@broadcom.com>
->>=20
->> Ville Syrj=C3=A4l=C3=A4 (2):
->>   drm: Move plane->{fb,old_fb,crtc} to legacy sub-structure
->>   drm: Move crtc->{x,y,mode,enabled} to legacy sub-structure
->>=20
->>  .../gpu/drm/amd/amdgpu/amdgpu_connectors.c    |  7 +-
->>  drivers/gpu/drm/amd/amdgpu/amdgpu_display.c   | 20 ++---
->>  drivers/gpu/drm/amd/amdgpu/amdgpu_pll.c       |  2 +-
->>  drivers/gpu/drm/amd/amdgpu/amdgpu_vkms.c      |  2 +-
->>  drivers/gpu/drm/amd/amdgpu/dce_v10_0.c        | 35 ++++----
->>  drivers/gpu/drm/amd/amdgpu/dce_v11_0.c        | 35 ++++----
->>  drivers/gpu/drm/amd/amdgpu/dce_v6_0.c         | 37 ++++-----
->>  drivers/gpu/drm/amd/amdgpu/dce_v8_0.c         | 35 ++++----
->>  .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 14 ++--
->>  .../amd/display/amdgpu_dm/amdgpu_dm_crtc.c    |  2 +-
->>  drivers/gpu/drm/amd/pm/amdgpu_dpm_internal.c  |  4 +-
->>  drivers/gpu/drm/arm/hdlcd_drv.c               |  2 +-
->>  drivers/gpu/drm/arm/malidp_hw.c               |  2 +-
->>  drivers/gpu/drm/armada/armada_crtc.c          | 12 ++-
->>  drivers/gpu/drm/ast/ast_dp.c                  |  8 +-
->>  drivers/gpu/drm/drm_atomic.c                  |  6 +-
->>  drivers/gpu/drm/drm_atomic_helper.c           |  8 +-
->>  drivers/gpu/drm/drm_client_modeset.c          | 10 +--
->>  drivers/gpu/drm/drm_crtc.c                    | 31 +++----
->>  drivers/gpu/drm/drm_crtc_helper.c             | 80 ++++++++++---------
->>  drivers/gpu/drm/drm_fb_helper.c               | 12 +--
->>  drivers/gpu/drm/drm_framebuffer.c             |  4 +-
->>  drivers/gpu/drm/drm_plane.c                   | 69 ++++++++--------
->>  drivers/gpu/drm/drm_plane_helper.c            |  6 +-
->>  drivers/gpu/drm/drm_vblank.c                  |  2 +-
->>  drivers/gpu/drm/exynos/exynos5433_drm_decon.c |  4 +-
->>  drivers/gpu/drm/gma500/cdv_intel_display.c    |  2 +-
->>  drivers/gpu/drm/gma500/cdv_intel_dp.c         |  6 +-
->>  drivers/gpu/drm/gma500/cdv_intel_hdmi.c       |  3 +-
->>  drivers/gpu/drm/gma500/cdv_intel_lvds.c       |  6 +-
->>  drivers/gpu/drm/gma500/gma_display.c          | 22 ++---
->>  drivers/gpu/drm/gma500/oaktrail_crtc.c        |  2 +-
->>  drivers/gpu/drm/gma500/psb_intel_display.c    |  2 +-
->>  drivers/gpu/drm/gma500/psb_intel_lvds.c       |  6 +-
->>  drivers/gpu/drm/gma500/psb_intel_sdvo.c       |  8 +-
->>  drivers/gpu/drm/i2c/ch7006_drv.c              |  7 +-
->>  drivers/gpu/drm/i2c/sil164_drv.c              |  2 +-
->>  .../drm/i915/display/intel_modeset_setup.c    |  4 +-
->>  drivers/gpu/drm/imx/lcdc/imx-lcdc.c           | 31 ++++---
->>  drivers/gpu/drm/mediatek/mtk_crtc.c           |  6 +-
->>  drivers/gpu/drm/meson/meson_overlay.c         |  2 +-
->>  drivers/gpu/drm/meson/meson_plane.c           |  8 +-
->>  drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 18 +++--
->>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |  6 +-
->>  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c     | 16 ++--
->>  drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c     |  4 +-
->>  drivers/gpu/drm/nouveau/dispnv04/crtc.c       | 25 +++---
->>  drivers/gpu/drm/nouveau/dispnv04/cursor.c     |  2 +-
->>  drivers/gpu/drm/nouveau/dispnv04/dfp.c        |  2 +-
->>  drivers/gpu/drm/nouveau/dispnv04/disp.c       |  4 +-
->>  .../gpu/drm/nouveau/dispnv04/tvmodesnv17.c    |  4 +-
->>  drivers/gpu/drm/nouveau/dispnv04/tvnv17.c     |  7 +-
->>  drivers/gpu/drm/nouveau/nouveau_connector.c   |  6 +-
->>  drivers/gpu/drm/qxl/qxl_display.c             |  6 +-
->>  drivers/gpu/drm/radeon/atombios_crtc.c        | 28 +++----
->>  drivers/gpu/drm/radeon/cik.c                  | 12 +--
->>  drivers/gpu/drm/radeon/evergreen.c            | 16 ++--
->>  drivers/gpu/drm/radeon/r100.c                 | 16 ++--
->>  drivers/gpu/drm/radeon/r600_cs.c              |  2 +-
->>  drivers/gpu/drm/radeon/r600_dpm.c             |  4 +-
->>  drivers/gpu/drm/radeon/radeon_connectors.c    |  7 +-
->>  drivers/gpu/drm/radeon/radeon_cursor.c        | 29 +++----
->>  drivers/gpu/drm/radeon/radeon_device.c        |  2 +-
->>  drivers/gpu/drm/radeon/radeon_display.c       | 26 +++---
->>  drivers/gpu/drm/radeon/radeon_drv.c           |  2 +-
->>  drivers/gpu/drm/radeon/radeon_legacy_crtc.c   | 16 ++--
->>  .../gpu/drm/radeon/radeon_legacy_encoders.c   |  2 +-
->>  drivers/gpu/drm/radeon/radeon_pm.c            |  2 +-
->>  drivers/gpu/drm/radeon/rs600.c                | 10 +--
->>  drivers/gpu/drm/radeon/rs690.c                | 22 ++---
->>  drivers/gpu/drm/radeon/rs780_dpm.c            |  6 +-
->>  drivers/gpu/drm/radeon/rv515.c                | 30 +++----
->>  drivers/gpu/drm/radeon/rv770.c                |  2 +-
->>  drivers/gpu/drm/radeon/si.c                   | 14 ++--
->>  .../gpu/drm/renesas/rcar-du/rcar_du_crtc.c    |  2 +-
->>  .../gpu/drm/renesas/shmobile/shmob_drm_crtc.c |  2 +-
->>  drivers/gpu/drm/rockchip/rockchip_drm_vop.c   |  6 +-
->>  drivers/gpu/drm/sti/sti_crtc.c                |  4 +-
->>  drivers/gpu/drm/sti/sti_cursor.c              |  2 +-
->>  drivers/gpu/drm/sti/sti_gdp.c                 |  2 +-
->>  drivers/gpu/drm/sti/sti_hqvdp.c               |  2 +-
->>  drivers/gpu/drm/sti/sti_tvout.c               |  6 +-
->>  drivers/gpu/drm/sti/sti_vid.c                 |  2 +-
->>  drivers/gpu/drm/tilcdc/tilcdc_crtc.c          | 10 +--
->>  drivers/gpu/drm/tiny/arcpgu.c                 |  2 +-
->>  drivers/gpu/drm/vboxvideo/vbox_mode.c         |  2 +-
->>  drivers/gpu/drm/vc4/vc4_dpi.c                 |  2 +-
->>  drivers/gpu/drm/vc4/vc4_plane.c               |  4 +-
->>  drivers/gpu/drm/virtio/virtgpu_display.c      |  4 +-
->>  drivers/gpu/drm/vkms/vkms_composer.c          |  4 +-
->>  drivers/gpu/drm/vkms/vkms_crtc.c              |  2 +-
->>  drivers/gpu/drm/vkms/vkms_writeback.c         |  4 +-
->>  drivers/gpu/drm/vmwgfx/vmwgfx_kms.c           |  8 +-
->>  drivers/gpu/drm/vmwgfx/vmwgfx_ldu.c           | 18 +++--
->>  drivers/gpu/drm/vmwgfx/vmwgfx_scrn.c          |  9 ++-
->>  drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c          |  4 +-
->>  drivers/gpu/drm/vmwgfx/vmwgfx_vkms.c          |  2 +-
->>  drivers/gpu/drm/xen/xen_drm_front_kms.c       |  2 +-
->>  include/drm/drm_crtc.h                        | 75 ++++++++---------
->>  include/drm/drm_plane.h                       | 52 ++++++------
->>  100 files changed, 599 insertions(+), 547 deletions(-)
->>=20
->> --=20
->> 2.45.2
-
---=20
-Jani Nikula, Intel
+Ah, my bad. I meant to say “ath12k driver”.
 
