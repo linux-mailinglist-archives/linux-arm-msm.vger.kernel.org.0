@@ -1,186 +1,206 @@
-Return-Path: <linux-arm-msm+bounces-35844-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35845-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id AC3B19AFFCD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 12:14:09 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EBE989AFFD4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 12:15:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3E7292885EE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 10:14:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AB64E283A39
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 10:15:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04EC1200105;
-	Fri, 25 Oct 2024 10:11:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8BDFC1EB27;
+	Fri, 25 Oct 2024 10:15:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aRSMQB3T"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="d/FcIrP4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66BA31FF7DB
-	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2024 10:11:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38B65192587
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2024 10:15:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729851110; cv=none; b=FNBtTMQMfWLe1DVm8v+POHn1QUVFbhfdEpj3k0ByYnPsvs7ukuqgOcPIyd7TA2w4os1iLOPMSH5e+zivUQQ9DMZ5lLQDNT0jCWJp8/8Tt9CIQP9AdYKZPyT9LkHslyE6Z8iGBeDqPUTCcx8UnE5SFzx0QXXx3wtLDbzyQ0VxbZg=
+	t=1729851328; cv=none; b=uEQALMXRL5i0NhnZqpvWatOb54MnOGhQuMSMSQE1qH6A0BpDQUrYRvXXm5kAYfUaXfkShL4ImbaBovOVAdLi6Brr8PxaEWUVvBg9c1tTbOxiW96qsJkXgsVKtoIt6KRgkEMaSYs9tCZLXp+kModltyIU3J1CnhNr64I5M9O9TRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729851110; c=relaxed/simple;
-	bh=NcF5NlARhc9rttUph2fFDKtzjKKxMIsZR0rLXYMN1Bo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fPigSGxyHObWI/VHDx0kBsxhocXrVmwvINDlRy1BwLqJgpazozuz1KZe5jALEYjLK0FcrMTcPzGrZK7g0oTBguUNhNvSAKmtuw83xv8XE1/t5uVdtJRI6lAOlgwYHu2af6MpPHpoKZjqOKhxsbEt8/ZUQ18xZaxttWyfDoaDqSE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=aRSMQB3T; arc=none smtp.client-ip=209.85.219.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-e28fd83b5bbso2077946276.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2024 03:11:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729851107; x=1730455907; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=pkf9nRBkB80Bq3MKpjBngWsWTtl6Rx4Rgdt86QJ7P7g=;
-        b=aRSMQB3TM57x73eRl5o45dtTK6nzNQE+evnm+YY89CaOtL7UVu6Pbiu+r+quCnLih6
-         y7maKjqoRblINWLbLHLB0HXVQZm84JBvEgrwuOsyBkwftJb+K+B4vZ24bYR7++NrHJKM
-         NO91sJ2B6USbXF9Us76v+Chuf7zIdhEMMiABvpQ3U29gyuAmt0vjXMsTxB4LmoVW2XC0
-         fqDYzE5pG5/Ioa2CRCHcYmRtgHJ9j6ZJyZ0Fp7GHdHCGpjB+Ba2rICDpZM0KTE+Mb1UO
-         dD9bP1QznxgQGhOsQ4oe3pLf5IUh8ZcDZDhJA2uTlHBuW1Gc6DnIzCAByj0zWXMIjGRL
-         QtKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729851107; x=1730455907;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=pkf9nRBkB80Bq3MKpjBngWsWTtl6Rx4Rgdt86QJ7P7g=;
-        b=YL/7aJFJh8ayomw4HrZV6s6b/kebZ5XHFvAC1OhqqY7bh0dfYpy05WKeNDdb6cLbMW
-         rL2E18f4SFohAiALr/jjRY6d6X7ED9nT/6i3OtUYdbd2AJqrg5pq8KaLylcJJrPKpexb
-         ZbQICOoazkH2u1Dm0O/B6wW26/1UqsQquaGnCLvLsjK3d8WLrgbCqs0ZoYZAtPoCAeJB
-         K6VegOva1EDjQqQui6XurUImxRUTWDTy5xcndapSw+JrSplRIS1/QnvufkZbzT/EEoQL
-         4+krWDe5bwEAAVGl2lD3E7ksPNREI2CmL6mQsYfsUo+nBL/pC1Tcs/ZLHocLNWp0X4l9
-         S37Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXmg2Pa5RMwou3EvRKHZnYOyhU4QyxJOhyzNfFy6JYddRZeiYgdOOSCVAsgezHVdFVh6ft/2NaASPB5XHos@vger.kernel.org
-X-Gm-Message-State: AOJu0YxMLI8jo3GLoCup4VTKgguNsUzb9EVhccwegnCkvmdimXXWTKus
-	SYeD57SfnYIzBBBZ74tMvMoBd3RgnBCzkjE/iWVfTqZgBKGDfdeA4WynfNwy5nIT56ZQHfdeWmO
-	QTQ6m6vZHpDJCy248sEL21F6qgstG9zLXcYVAdA==
-X-Google-Smtp-Source: AGHT+IFhzLcgcs/L0Xo5eHIlOxVTVTCvGQpIJ8zLoYotZJwVqJXphpuLV/3wEhh+Pt3fgM55yJPxDK0IR2Fz1nW32AQ=
-X-Received: by 2002:a05:690c:dd4:b0:643:92a8:ba00 with SMTP id
- 00721157ae682-6e7f0c46d68mr94570857b3.0.1729851107335; Fri, 25 Oct 2024
- 03:11:47 -0700 (PDT)
+	s=arc-20240116; t=1729851328; c=relaxed/simple;
+	bh=kYN2dB4ddnWcQp0D9KeXmv8oxL33z53rJDsqLD0hKak=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AL28etSYxFPf9tm8KO18WoHOx+WxRxjn9gbTdbPTBKsqxycmOXUQuY4z1JGWEB48qVGGT88FXvo53KbUq05/gmotoCR0bX1ZcKLXctaZcQ7ZDQSD2+ud8pLNkz/xmZH8KhZrX3s5DOoPGvFA7/QjxO4M4Wv8//j4Wm8Q2uuuqo4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=d/FcIrP4; arc=none smtp.client-ip=192.198.163.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1729851326; x=1761387326;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=kYN2dB4ddnWcQp0D9KeXmv8oxL33z53rJDsqLD0hKak=;
+  b=d/FcIrP49z/QI7OaCkTkBAcnDnidYDb5U+v1E7feGTrwlaZE+Z+nQHRv
+   QzTkfCvHnRRF48HKIlQaAxECxsKXcwX6PCAKt0Xhvrtdw42ehtOFb/LBA
+   cT8GpUI5zKHGFOPH5qN5Ylce+ZRZzo1O8eC6EjdIWoeSs+ijb4bHJ59Bo
+   7aImBcTxImHdwr+coO8GKJiGI9eI6l0QoFgqzQZTiEyzSjxgrqnKlxrw4
+   qNEM0c3ZbO3KuXE0L2Agf3SuCaPyVh3yFj4QKxsidPBlSQWW5VWcg0TCi
+   KhKvaEfTAIajDH33LE/Yuhd0uzYijxYLMc0fGB3aEq2d4fkKH3pajXbiI
+   A==;
+X-CSE-ConnectionGUID: 7i8B7/hIRomXCgwdOYaEmg==
+X-CSE-MsgGUID: 6W8lx5/rSjCYJoKOkt9+Cg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11235"; a="17146740"
+X-IronPort-AV: E=Sophos;i="6.11,231,1725346800"; 
+   d="scan'208";a="17146740"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Oct 2024 03:15:25 -0700
+X-CSE-ConnectionGUID: Jvp5S744RhGH2KlCx35tjQ==
+X-CSE-MsgGUID: Z+j7UqPCTj2FihB6FZNH6Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,231,1725346800"; 
+   d="scan'208";a="80985766"
+Received: from stinkpipe.fi.intel.com (HELO stinkbox) ([10.237.72.74])
+  by fmviesa008.fm.intel.com with SMTP; 25 Oct 2024 03:15:19 -0700
+Received: by stinkbox (sSMTP sendmail emulation); Fri, 25 Oct 2024 13:15:18 +0300
+Date: Fri, 25 Oct 2024 13:15:18 +0300
+From: Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
+To: Jani Nikula <jani.nikula@linux.intel.com>
+Cc: dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
+	Xinhui Pan <Xinhui.Pan@amd.com>,
+	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
+	Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Karol Herbst <kherbst@redhat.com>, Lyude Paul <lyude@redhat.com>,
+	Danilo Krummrich <dakr@redhat.com>,
+	Sandy Huang <hjc@rock-chips.com>,
+	Heiko =?iso-8859-1?Q?St=FCbner?= <heiko@sntech.de>,
+	Andy Yan <andy.yan@rock-chips.com>, amd-gfx@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+	nouveau@lists.freedesktop.org
+Subject: Re: [PATCH 1/2] drm: Move plane->{fb,old_fb,crtc} to legacy
+ sub-structure
+Message-ID: <ZxtvtqQzME--oy7-@intel.com>
+References: <20241002182200.15363-1-ville.syrjala@linux.intel.com>
+ <20241002182200.15363-2-ville.syrjala@linux.intel.com>
+ <Zv58AalhFaMgh7c5@intel.com>
+ <875xpgqzc1.fsf@intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241007060642.1978049-1-quic_sibis@quicinc.com>
- <ZwfsmqInJlqkQD_3@hovoldconsulting.com> <ae5eaef9-301f-7d3f-c973-faa22ae780ee@quicinc.com>
- <ZxkjqEmkBAsC6UkL@hovoldconsulting.com> <c8e7420b-a7b4-89cd-1b6e-c1f6693c062d@quicinc.com>
- <ik4dyfbphm7lkeipm2dbr7cmdfxewxd4jtuz2jfnscfwcyo2r4@lrin5hnsqvyd> <83b635a7-fc69-7522-d985-810262500cb3@quicinc.com>
-In-Reply-To: <83b635a7-fc69-7522-d985-810262500cb3@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 25 Oct 2024 13:11:37 +0300
-Message-ID: <CAA8EJppx1OmYnfSsMDebRRTbNb3dfAE_MM55T1SpLccP=s_K1A@mail.gmail.com>
-Subject: Re: [PATCH V3 0/4] firmware: arm_scmi: Misc Fixes
-To: Sibi Sankar <quic_sibis@quicinc.com>
-Cc: Johan Hovold <johan@kernel.org>, sudeep.holla@arm.com, cristian.marussi@arm.com, 
-	ulf.hansson@linaro.org, jassisinghbrar@gmail.com, 
-	linux-kernel@vger.kernel.org, arm-scmi@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
-	konradybcio@kernel.org, linux-pm@vger.kernel.org, tstrudel@google.com, 
-	rafael@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <875xpgqzc1.fsf@intel.com>
+X-Patchwork-Hint: comment
 
-On Fri, 25 Oct 2024 at 09:46, Sibi Sankar <quic_sibis@quicinc.com> wrote:
->
->
->
-> On 10/25/24 11:44, Dmitry Baryshkov wrote:
-> > On Fri, Oct 25, 2024 at 11:38:36AM +0530, Sibi Sankar wrote:
-> >>
-> >>
-> >> On 10/23/24 21:56, Johan Hovold wrote:
-> >>> On Wed, Oct 23, 2024 at 01:16:47PM +0530, Sibi Sankar wrote:
-> >>>> On 10/10/24 20:32, Johan Hovold wrote:
-> >>>>> On Mon, Oct 07, 2024 at 11:36:38AM +0530, Sibi Sankar wrote:
-> >>>>>> The series addresses the kernel warnings reported by Johan at [1] and are
-> >>>>>> are required to X1E cpufreq device tree changes [2] to land.
-> >>>>>>
-> >>>>>> [1] - https://lore.kernel.org/lkml/ZoQjAWse2YxwyRJv@hovoldconsulting.com/
-> >>>>>> [2] - https://lore.kernel.org/lkml/20240612124056.39230-1-quic_sibis@quicinc.com/
-> >>>>>>
-> >>>>>> The following warnings remain unadressed:
-> >>>>>> arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
-> >>>>>> arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
-> >>>>>
-> >>>>> Are there any plans for how to address these?
-> >>>
-> >>>> Sorry missed replying to this. The error implies that duplicate
-> >>>> opps are reported by the SCP firmware and appear once during probe.
-> >>>
-> >>> I only see it at boot, but it shows up four times here with the CRD:
-> >>
-> >> https://lore.kernel.org/lkml/d54f6851-d479-a136-f747-4c0180904a5e@quicinc.com/
-> >>
-> >> As explained ^^, we see duplicates for max sustainable performance twice
-> >> for each domain.
+On Fri, Oct 25, 2024 at 12:57:50PM +0300, Jani Nikula wrote:
+> On Thu, 03 Oct 2024, Ville Syrjälä <ville.syrjala@linux.intel.com> wrote:
+> > On Wed, Oct 02, 2024 at 09:21:59PM +0300, Ville Syrjala wrote:
+> >> From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+> >> 
+> >> Hide the plane->fb/etc. footguns better by stashing them inside
+> >> a "legacy" sub struct.
+> >> 
+> >> Eventually maybe we could turn 'legacy' into a pointer
+> >> that only exists on legacy drivers to completely prevent
+> >> any abuse by atomic drivers...
 > >
-> > If existing products were shipped with the firmware that lists single
-> > freq twice, please filter the frequencies like qcom-cpufreq-hw does.
->
-> That was a qualcomm specific driver and hence we could do such
-> kind of filtering. This however is the generic scmi perf protocol
-> and it's not something we should ever consider introducing :/
+> > Hmm. I should probably make it a pointer from the start,
+> > to avoid having to go through the same churn yet again.
+> 
+> [snip]
+> 
+> >> diff --git a/include/drm/drm_plane.h b/include/drm/drm_plane.h
+> >> index dd718c62ac31..a2d91ee4b40c 100644
+> >> --- a/include/drm/drm_plane.h
+> >> +++ b/include/drm/drm_plane.h
+> >> @@ -663,31 +663,33 @@ struct drm_plane {
+> >>  	/** @modifier_count: Size of the array pointed at by @modifier_count. */
+> >>  	unsigned int modifier_count;
+> >>  
+> >> -	/**
+> >> -	 * @crtc:
+> >> -	 *
+> >> -	 * Currently bound CRTC, only meaningful for non-atomic drivers. For
+> >> -	 * atomic drivers this is forced to be NULL, atomic drivers should
+> >> -	 * instead check &drm_plane_state.crtc.
+> >> -	 */
+> >> -	struct drm_crtc *crtc;
+> >> -
+> >> -	/**
+> >> -	 * @fb:
+> >> -	 *
+> >> -	 * Currently bound framebuffer, only meaningful for non-atomic drivers.
+> >> -	 * For atomic drivers this is forced to be NULL, atomic drivers should
+> >> -	 * instead check &drm_plane_state.fb.
+> >> -	 */
+> >> -	struct drm_framebuffer *fb;
+> >> -
+> >> -	/**
+> >> -	 * @old_fb:
+> >> -	 *
+> >> -	 * Temporary tracking of the old fb while a modeset is ongoing. Only
+> >> -	 * used by non-atomic drivers, forced to be NULL for atomic drivers.
+> >> -	 */
+> >> -	struct drm_framebuffer *old_fb;
+> >> +	struct {
+> 
+> Do you mean something along the lines of:
+> 
+> 	struct __plane_legacy_or_something {
+> 
+> >> +		/**
+> >> +		 * @crtc:
+> >> +		 *
+> >> +		 * Currently bound CRTC, only meaningful for non-atomic drivers. For
+> >> +		 * atomic drivers this is forced to be NULL, atomic drivers should
+> >> +		 * instead check &drm_plane_state.crtc.
+> >> +		 */
+> >> +		struct drm_crtc *crtc;
+> >> +
+> >> +		/**
+> >> +		 * @fb:
+> >> +		 *
+> >> +		 * Currently bound framebuffer, only meaningful for non-atomic drivers.
+> >> +		 * For atomic drivers this is forced to be NULL, atomic drivers should
+> >> +		 * instead check &drm_plane_state.fb.
+> >> +		 */
+> >> +		struct drm_framebuffer *fb;
+> >> +
+> >> +		/**
+> >> +		 * @old_fb:
+> >> +		 *
+> >> +		 * Temporary tracking of the old fb while a modeset is ongoing. Only
+> >> +		 * used by non-atomic drivers, forced to be NULL for atomic drivers.
+> >> +		 */
+> >> +		struct drm_framebuffer *old_fb;
+> >> +	} legacy;
+> 
+> and
+> 
+> 	} __legacy;
+> 
+> 	struct __plane_legacy_or_something *legacy;
+> 
+> and initially unconditionally:
+> 
+>        	p->legacy = &p->__legacy;
+> 
+> but later, once atomic drivers have been fixed:
+> 
+> 	if (!drm_core_check_feature(dev, DRIVER_COMPUTE_ATOMIC))
+> 		p->legacy = &p->__legacy;
+> 
+> It would make the last update really simple.
 
-This depends on the maintainer's discretion.
-
->
-> >
-> >>
-> >>>
-> >>> [    8.098452] arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
-> >>> [    8.109647] arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
-> >>> [    8.128970] arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
-> >>> [    8.142455] arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
-> >>>
-> >>>> This particular error can be fixed only by a firmware update and you
-> >>>> should be able to test it out soon on the CRD first.
-> >>>
-> >>> Can you explain why this can only be fixed by a firmware update? Why
-> >>> can't we suppress these warnings as well, like we did for the other
-> >>> warnings related to the duplicate entries?
-> >>>
-> >>> IIUC the firmware is not really broken, but rather describes a feature
-> >>> that Linux does not (yet) support, right?
-> >>
-> >> We keep saying it's a buggy firmware because the SCP firmware reports
-> >> identical perf and power levels for the additional two opps and the
-> >> kernel has no way of treating it otherwise and we shouldn't suppress
-> >> them. Out of the two duplicate opps reported one is a artifact from how
-> >> Qualcomm usually show a transition to boost frequencies. The second opp
-> >> which you say is a feature should be treated as a boost opp i.e. one
-> >> core can run at max at a lower power when other cores are at idle but
-> >> we can start marking them as such once they start advertising their
-> >> correct power requirements. So I maintain that this is the best we
-> >> can do and need a firmware update for us to address anything more.
-> >
-> > Will existing shipping products get these firmware updates?
->
-> They are sure to trickle out but I guess it's upto the oem
-> to decide if they do want to pick these up like some of the
-> other firmware updates being tested only on CRD. Not sure why
-> warnings duplicates should block cpufreq from landing for x1e
-> but if that's what the community wants I can drop reposting
-> this series!
-
-No, the community definitely wants to have cpufreq for X1E.
-But at the same time some reviewers prefer to have a warning-free boot
-if those warnings can't be really fixed. I don't have such a strict
-position, but I'd prefer to see those messages at dev_info or dev_dbg
-level.
-
-Also, can we please have some plan or idea if somebody is actually
-working with laptop vendors to get corresponding firmware updates onto
-their hardware?
+Yeah, something like that.
 
 -- 
-With best wishes
-Dmitry
+Ville Syrjälä
+Intel
 
