@@ -1,247 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-35763-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35764-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 11BDE9AF7BC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 04:56:25 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9DE4D9AF7BD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 04:56:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8C6541F22C39
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 02:56:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 61913281053
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 02:56:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 937CE170836;
-	Fri, 25 Oct 2024 02:56:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF30517CA1D;
+	Fri, 25 Oct 2024 02:56:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="M4F10/17"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VpSG9TFf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AE273D97A;
-	Fri, 25 Oct 2024 02:56:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F69C3D97A;
+	Fri, 25 Oct 2024 02:56:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729824980; cv=none; b=ca0O1TNwUPMDBjz+b6GjdhLd03IjD6eU506x3ZH/kzZqtfjD25gF4c05YsBQl6vIUCgGW3SuYIIUfgO25nso/EBYwamOSHALOkUBGLyTMyS7+byyCP/JADo03D856pkcsZGy1fKnVBNWeX/SvHNT4KnC11PyCnvyAx3xMsfHuU4=
+	t=1729824990; cv=none; b=q2GW0U6eCDoTeCtRKOnDLf/MpqyGVMzs9d4H4f4XqhgXEIa0mT1c88rDMeCxB6dfpI4F+IPcTP2UmUvPtrAQ10imBy7S/UqsPrgfHnfDTSTlXcSUgf8+HE3FeUaQnA+HfaMFQ+nsebn4Qf5vU9Dl6h/VSlualmai5PtICKJY1RY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729824980; c=relaxed/simple;
-	bh=w8LwT18h4jeKpdt+J0SrVZu6cTBKplpjDulaBJye5VA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=YysP2oqeiiLSv4WqyMymXRY48regefcoXROO3Y6jpVVOerlf8KJqVEIjzX5/HG/bqoGR8TiaUW3Fs6FC4QDgka6WQ0RaMJaRNTT2OwJR4ABA47YHC4ERrb7rFgT77fvflfOFMFiz5iMIBeL8V3uV9HNzY6wRipCF+gB1ytt3ctA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=M4F10/17; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49OKjNIj018287;
-	Fri, 25 Oct 2024 02:56:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	rrH8i8krQX+X1bfQxJ+5HWA5Ak+mxQl4+BbXyfftuC0=; b=M4F10/175BxJg82R
-	dq+P4GCV0qvHuiZi9jXAz6523mzAt472I11yz/csRjOBknDnJsPGFool6qphFFkU
-	6oQZH3CPcYO8kz+wcmda4Hk85CDDKhN+scms1VypCKvHH+s5zX7318UUEAX/S4ES
-	F4yzsY4sdzrOimGFfpSasYeXZtl6T7S+DG8N6EKbGPkrjUKOFwcjWRFBIhXLho6U
-	hUWMPd6QeAV9hhxOKNfoXaIx/BmQQl0xjuTzkkwZINfl4+g9yTuFT6ttU1dFgQcG
-	WsS+7WE9lj5Kq/o0FcJY7szgyHslpvLw1TBGcs3Wjhoz22C7HbLNGA2XtJE5KAD1
-	6jGd5A==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42em3wfhfh-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 25 Oct 2024 02:56:08 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49P2u6kn010138
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 25 Oct 2024 02:56:06 GMT
-Received: from [10.231.216.207] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 24 Oct
- 2024 19:56:05 -0700
-Message-ID: <bc3c06eb-1cb2-4cbb-aaad-95c09223f0cc@quicinc.com>
-Date: Fri, 25 Oct 2024 10:56:02 +0800
+	s=arc-20240116; t=1729824990; c=relaxed/simple;
+	bh=XywWuK21Kqbi5ds/dzHJKlCriZgNB0AONCXAcdIrKmM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=N6NdG1AH91G27hQjA2ASO8Kr6yiTgv4EbHbNoi0gfyS9gXGrUfMmtUy2MGI2qwLowoARH45iIvF29Hr8vv49hNXwqIxS7wnNJoEMeAAEG/TvoPwXa9XDcZjU5Xkgakkj++s4fFKXBmwo55vsTSQlhSmFn6+B+Lr/XvyYvHR9SJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VpSG9TFf; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3D04C4CEC7;
+	Fri, 25 Oct 2024 02:56:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1729824990;
+	bh=XywWuK21Kqbi5ds/dzHJKlCriZgNB0AONCXAcdIrKmM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=VpSG9TFfLeQ1GU3d6SZEE87VlYpl3kWJMH3RymPeAAMHt4uow+R8gOCoN6NrX1Dr5
+	 qcdgL2vUpZBa7KGeC3Ng/OWpbO7lpQ3yD7iirq8QPSVFv1cIb4Pa2lxfSJfjNap070
+	 Of9nHXiV3+yeuCPHsxtHnzQX4IYBAVXi2Hv7RrjJ+Ug4ouaUFxRP13Lr3hvFArB6/C
+	 tXwAyDwza/P0y+pilxwJbiX/ekCNhzR9unB5VPnQqB508eSAJDpXs8Z6Uh5hCveicx
+	 oBeSV3JWtqaRfEFsEYqYhZ40yh5nao7efP/SbOBvpbx9SONyo7axsfYcRSUiDkePrn
+	 DEZLKfBvgipBA==
+Date: Thu, 24 Oct 2024 19:56:28 -0700
+From: Eric Biggers <ebiggers@kernel.org>
+To: Ulf Hansson <ulf.hansson@linaro.org>
+Cc: Seshu Madhavi Puppala <quic_spuppala@quicinc.com>,
+	Adrian Hunter <adrian.hunter@intel.com>, linux-mmc@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	quic_rampraka@quicinc.com, quic_nitirawa@quicinc.com,
+	quic_sachgupt@quicinc.com, quic_bhaskarv@quicinc.com,
+	quic_neersoni@quicinc.com, quic_gaurkash@quicinc.com
+Subject: Re: [PATCH RFC 0/2] Avoid reprogram all keys to Inline Crypto Engine
+ for MMC runtime suspend resume
+Message-ID: <20241025025628.GD1781@sol.localdomain>
+References: <20241006135530.17363-1-quic_spuppala@quicinc.com>
+ <20241023213134.GC3736641@google.com>
+ <CAPDyKFo05Hyw9gdEBx7zQq_6P58ittHHsZQLuqmeR1AChyHSHw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] wifi: ath11k: support board-specific firmware
- overrides
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <kvalo@kernel.org>, <quic_jjohnson@quicinc.com>,
-        <ath11k@lists.infradead.org>, <linux-wireless@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20241024002514.92290-1-quic_miaoqing@quicinc.com>
- <20241024002514.92290-3-quic_miaoqing@quicinc.com>
- <pdjhyrjoreiykv2tquvufjw3rkti5sxrjvpmkjhvkfasq7zbo4@xxntxdmhhyg5>
-Content-Language: en-US
-From: Miaoqing Pan <quic_miaoqing@quicinc.com>
-In-Reply-To: <pdjhyrjoreiykv2tquvufjw3rkti5sxrjvpmkjhvkfasq7zbo4@xxntxdmhhyg5>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: u9IowL7hR9eMDbwM72mpVeR3QhH9MLQF
-X-Proofpoint-ORIG-GUID: u9IowL7hR9eMDbwM72mpVeR3QhH9MLQF
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 malwarescore=0
- mlxscore=0 lowpriorityscore=0 phishscore=0 impostorscore=0 clxscore=1015
- priorityscore=1501 mlxlogscore=999 suspectscore=0 bulkscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2410250020
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAPDyKFo05Hyw9gdEBx7zQq_6P58ittHHsZQLuqmeR1AChyHSHw@mail.gmail.com>
 
-
-
-On 10/25/2024 3:39 AM, Dmitry Baryshkov wrote:
-> On Thu, Oct 24, 2024 at 08:25:14AM +0800, Miaoqing Pan wrote:
->> QCA6698AQ IP core is the same as WCN6855 hw2.1, but it has different RF,
->> IPA, thermal, RAM size and etc, so new firmware files used. This change
->> allows board DT files to override the subdir of the firmware directory
->> used to lookup the amss.bin and m3.bin.
+On Fri, Oct 25, 2024 at 01:07:18AM +0200, Ulf Hansson wrote:
+> On Wed, 23 Oct 2024 at 23:31, Eric Biggers <ebiggers@kernel.org> wrote:
+> >
+> > On Sun, Oct 06, 2024 at 07:25:28PM +0530, Seshu Madhavi Puppala wrote:
+> > > Crypto reprogram all keys is called for each MMC runtime
+> > > suspend/resume in current upstream design.
+> >
+> > Is that correct?  I thought that similar to what is done for UFS, the key
+> > reprogramming happens only after the MMC controller is reset.  I thought that is
+> > different from a runtime suspend.
 > 
-> I have slight concerns regarding the _board_ DT files overriding the
-> subdir. This opens a can of worms, allowing per-board firmware sets,
-> which (as far as I understand) is far from being what driver maintainers
-> would like to see. This was required for ath10k-snoc devices, since
-> firmware for those platforms is signed by the vendor keys and it is
-> limited to a particular SoC or SoC family. For ath11k-pci there is no
-> such limitation.
+> Looks like Seshu is not really worried about the host's runtime
+> suspend, but the card's runtime suspend.
 > 
-> Would it be possible to use PCI subvendor / subdev to identify affected
-> cards? PCI Revision? Any other way to identify the device?  Please
-> provide lspci -nnvv for the affected device kind. Is there a way to
-> identify the RF part somehow?
-
-It's rather difficult, for WCN685x, there are multiple evolved subseries 
-for customized products. e.g.
-
-QCA6698AQ/hw2.1
-QCA2066/hw2.1
-WCN6855/hw2.0/hw2.1
-WCN6856/hw2.1
-
-They have the same PCIe ID (17cb:1103), the commit 5dc9d1a55e95 ("wifi: 
-ath11k: add support for QCA2066") reads TCSR_SOC_HW_SUB_VER to enumerate 
-all QCA2066 cards, it lacks of flexibility, as the list will become 
-longer and longer. But it's the only choice for QCA2066, as it's 
-customized for X86 platform which without DT files.
-
-So for MSM those have DT file platforms, like SA8775P-RIDE/QCS8300-RIDE 
-both attached to QCA6698AQ, we can specify the correct firmware to 
-'ath11k/WCN6855/hw2.1/qca6698aq', so it's not per-board firmware, it 
-depends on the type of the products(x86 windows, IoT products or AUTO).
-
-
-0000:01:00.0 Network controller [0280]: Qualcomm QCNFA765 Wireless 
-Network Adapter [17cb:1103] (rev 01)
-	Subsystem: Qualcomm QCNFA765 Wireless Network Adapter [17cb:0108]
-	Device tree node: /sys/firmware/devicetree/base/pci@1c00000/pcie@0/wifi@0
-
-
+> Perhaps there are some out of tree code involved here that makes use
+> of MMC_CAP_AGGRESSIVE_PM, which is what allows the card to be runtime
+> suspended?
 > 
-> Could you possibly clarify, how this situation is handled in Windows
-> world?
+> >
+> > If it's in fact triggering more often, maybe that is what needs to be fixed?
+> 
+> We could extend the runtime PM autosusend timeout for the card, if
+> that makes sense.
+> 
+> Kind regards
+> Uffe
 
-X86 platforms use standard m.2 PCIe card, and it will only use the 
-default main firmware files, as they without DT files.
+The keyslots are being reprogrammed from mmc_set_initial_state(), which is
+documented as:
 
-> 
->>
->> For example:
->>
->> - ath11k/WCN6855/hw2.1/amss.bin,
->>    ath11k/WCN6855/hw2.1/m3.bin: main firmware files, used by default
->>
->> - ath11k/WCN6855/hw2.1/qca6698aq/amss.bin,
->>    ath11k/WCN6855/hw2.1/qca6698aq/m3.bin
-> 
-> This approach looks good to me, thank you.
-> 
->>
->> Tested-on: QCA6698AQ hw2.1 PCI WLAN.HSP.1.1-04402-QCAHSPSWPL_V1_V2_SILICONZ_IOE-1
->>
->> Signed-off-by: Miaoqing Pan <quic_miaoqing@quicinc.com>
->> ---
->>   drivers/net/wireless/ath/ath11k/core.c | 16 ++++++++++++++++
->>   drivers/net/wireless/ath/ath11k/core.h | 11 +++--------
->>   2 files changed, 19 insertions(+), 8 deletions(-)
->>
->> diff --git a/drivers/net/wireless/ath/ath11k/core.c b/drivers/net/wireless/ath/ath11k/core.c
->> index be67382c00f6..775e48551522 100644
->> --- a/drivers/net/wireless/ath/ath11k/core.c
->> +++ b/drivers/net/wireless/ath/ath11k/core.c
->> @@ -1178,6 +1178,22 @@ static int ath11k_core_create_chip_id_board_name(struct ath11k_base *ab, char *n
->>   					       ATH11K_BDF_NAME_CHIP_ID);
->>   }
->>   
->> +void ath11k_core_create_firmware_path(struct ath11k_base *ab,
->> +				      const char *filename,
->> +				      void *buf, size_t buf_len)
->> +{	const char *board_name = NULL;
->> +
->> +	of_property_read_string(ab->dev->of_node, "firmware-name", &board_name);
-> 
-> soc_name rather than board_name, please. Or just fw_name.
+    /*
+     * Set initial state after a power cycle or a hw_reset.
+     */
+    void mmc_set_initial_state(struct mmc_host *host)
 
-Will update to 'fw_name'.
+It's called by: mmc_power_up(), mmc_power_off(), _mmc_hw_reset(), and
+mmc_sdio_sw_reset().
 
-> 
->> +
->> +	if (board_name)
->> +		snprintf(buf, buf_len, "%s/%s/%s/%s", ATH11K_FW_DIR,
->> +			 ab->hw_params.fw.dir, board_name, filename);
->> +	else
->> +		snprintf(buf, buf_len, "%s/%s/%s", ATH11K_FW_DIR,
->> +			 ab->hw_params.fw.dir, filename);
->> +}
->> +EXPORT_SYMBOL(ath11k_core_create_firmware_path);
->> +
->>   const struct firmware *ath11k_core_firmware_request(struct ath11k_base *ab,
->>   						    const char *file)
->>   {
->> diff --git a/drivers/net/wireless/ath/ath11k/core.h b/drivers/net/wireless/ath/ath11k/core.h
->> index 09c37e19a168..ce4102cfed4d 100644
->> --- a/drivers/net/wireless/ath/ath11k/core.h
->> +++ b/drivers/net/wireless/ath/ath11k/core.h
->> @@ -1249,6 +1249,9 @@ bool ath11k_core_coldboot_cal_support(struct ath11k_base *ab);
->>   
->>   const struct firmware *ath11k_core_firmware_request(struct ath11k_base *ab,
->>   						    const char *filename);
->> +void ath11k_core_create_firmware_path(struct ath11k_base *ab,
->> +				      const char *filename,
->> +				      void *buf, size_t buf_len);
->>   
->>   static inline const char *ath11k_scan_state_str(enum ath11k_scan_state state)
->>   {
->> @@ -1295,14 +1298,6 @@ static inline struct ath11k *ath11k_ab_to_ar(struct ath11k_base *ab,
->>   	return ab->pdevs[ath11k_hw_mac_id_to_pdev_id(&ab->hw_params, mac_id)].ar;
->>   }
->>   
->> -static inline void ath11k_core_create_firmware_path(struct ath11k_base *ab,
->> -						    const char *filename,
->> -						    void *buf, size_t buf_len)
->> -{
->> -	snprintf(buf, buf_len, "%s/%s/%s", ATH11K_FW_DIR,
->> -		 ab->hw_params.fw.dir, filename);
-> 
-> It could have perfectly lived here. Is there any reason to move the
-> function?
+Can that mean a power cycle of the card, not a power cycle of the host
+controller?  The keyslots are part of the host controller, so that may explain
+the problem.  The keyslots should be reprogrammed only when the host controller
+is reset, as that is when they are lost.  (And it should not be skipped entirely
+as this patchset does, as a host controller reset is possible.)
 
-Will update.
+I am not an expert in MMC or in the details of how Qualcomm ICE is wired up to
+the system, so I might have this wrong.  But let me know if it sounds right.
 
-> 
->> -}
->> -
->>   static inline const char *ath11k_bus_str(enum ath11k_bus bus)
->>   {
->>   	switch (bus) {
->> -- 
->> 2.25.1
->>
-> 
-
+- Eric
 
