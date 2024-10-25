@@ -1,245 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-35879-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35880-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B7E039B0460
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 15:43:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A57E79B047A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 15:48:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7666C283BCD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 13:43:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6B129284568
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 13:48:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE2F918E76C;
-	Fri, 25 Oct 2024 13:43:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mJ1VZ+rU"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 216575D477;
+	Fri, 25 Oct 2024 13:48:42 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97615212178;
-	Fri, 25 Oct 2024 13:43:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA02612B64;
+	Fri, 25 Oct 2024 13:48:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729863799; cv=none; b=Hyy9q8zUOXqFJ9LA7p+ammfuFfx50Si4HDeyy4SbcFPPETTduvkxuB/Qrvinbp6Qg6RjBUrtpCu22vLVsoEHHd3gKPPAeBeuaPypn6bftRODvujndhiDA4Zkl2lcB0BpRAsDgACfoUyQgilwtGx5UCgdzVIYrt9RrMZcIpJXlwI=
+	t=1729864122; cv=none; b=CfV9cM2DSwPE5qsDwefcJFonwAZ2eVCipmJD+jACrA6vpKk1KSe86tKkqmdzBAirt/Lc3b78umKJJCo7dgzZc8zb4udI9W8a5DeIZ78wCA95XSJaFkz0NB+d2br8xTCoZlHWxcdwmSDTMtHHQNr3A55yhuieeMs2QVt1Io2woA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729863799; c=relaxed/simple;
-	bh=eUnuwjJwi+3BJtdTbkuWsJKa0Oni+DRmKvBbfXcZ53g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=mocFnfd2YJqCntapYGd5Sgf5hHQIyl+fNgP7Y/7w/TXQUqdDIZkj0tV8+ARRWrrLCjnXVLPNm074LMmThvc/5ktJtBg9653TwF7ZPcpLsfRwGWSw8HPnewExtZGuB0SroKjwbg0TWAxS3zHDJuplxwz1OaSx/nC1ImBu4G50R04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=mJ1VZ+rU; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49PB252w001000;
-	Fri, 25 Oct 2024 13:43:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	lspiYDQki/H6lvWnXqRD9t3T6J10j+7zu28STsqRDys=; b=mJ1VZ+rU85Rkc+9k
-	0QPHWOUsJvH/6dLGRcWq7iH3vO8AV2WslO6FrlyZmiJ6H0qm1JcR5Skt99wi1MXq
-	acEaxYiG0zGYxXrE06L0c9C4gn5FgR2iEOyogHO3cXjwXyR1RgYQ4prDOGiVQNBO
-	sd10YnGhy54p3RHsPKJYsITp8pbp0+sRMePwZZ8wjYhAEZQVjORCAVaRKU0UembX
-	iWV04GV6Eql0a7LzKSP3HT+NVH18SjPm8sNY6hjfBieUthJuUdIjpKOscAbJ+nEx
-	aMKgCHiojHMebcOWYpLBrjUSrKJBQODQkPXB9u05nepL8cax0+AYSy7u+BFtSPPI
-	TRaUJA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42ga3s0gh9-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 25 Oct 2024 13:43:09 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49PDh94I024337
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 25 Oct 2024 13:43:09 GMT
-Received: from [10.253.77.237] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 25 Oct
- 2024 06:43:06 -0700
-Message-ID: <46b18b39-9e88-42f8-aa88-5b527fc92a9f@quicinc.com>
-Date: Fri, 25 Oct 2024 21:43:04 +0800
+	s=arc-20240116; t=1729864122; c=relaxed/simple;
+	bh=AWWxHlQ7+1+m8GRIlMTOKtAHKxDrjgZ5/Q1TV6hpEKA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RJ8hNJBygkeW0sx6zH2I3RbpNdLS5KBj1obwUU4ixeN4zyuEIvLsN9jZ7bvguDpTISZFgqkVntbQNV4ri8V7pR6of2IleK3fP1SrMQTCJQTwWbyGqftIzxHNZn8xsUEXp2CsdIMfBEMukJ/eCAcgx6ZPjZkY1F+6qM8pxTmeQzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id E8BBD339;
+	Fri, 25 Oct 2024 06:49:08 -0700 (PDT)
+Received: from pluto (usa-sjc-mx-foss1.foss.arm.com [172.31.20.19])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 3E1D63F71E;
+	Fri, 25 Oct 2024 06:48:37 -0700 (PDT)
+Date: Fri, 25 Oct 2024 14:48:26 +0100
+From: Cristian Marussi <cristian.marussi@arm.com>
+To: Johan Hovold <johan@kernel.org>
+Cc: Cristian Marussi <cristian.marussi@arm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sibi Sankar <quic_sibis@quicinc.com>, sudeep.holla@arm.com,
+	ulf.hansson@linaro.org, jassisinghbrar@gmail.com,
+	linux-kernel@vger.kernel.org, arm-scmi@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	konradybcio@kernel.org, linux-pm@vger.kernel.org,
+	tstrudel@google.com, rafael@kernel.org
+Subject: Re: [PATCH V3 0/4] firmware: arm_scmi: Misc Fixes
+Message-ID: <ZxuhqkDoWF8IYQxL@pluto>
+References: <20241007060642.1978049-1-quic_sibis@quicinc.com>
+ <ZwfsmqInJlqkQD_3@hovoldconsulting.com>
+ <ae5eaef9-301f-7d3f-c973-faa22ae780ee@quicinc.com>
+ <ZxkjqEmkBAsC6UkL@hovoldconsulting.com>
+ <c8e7420b-a7b4-89cd-1b6e-c1f6693c062d@quicinc.com>
+ <ik4dyfbphm7lkeipm2dbr7cmdfxewxd4jtuz2jfnscfwcyo2r4@lrin5hnsqvyd>
+ <83b635a7-fc69-7522-d985-810262500cb3@quicinc.com>
+ <CAA8EJppx1OmYnfSsMDebRRTbNb3dfAE_MM55T1SpLccP=s_K1A@mail.gmail.com>
+ <Zxty8VaMPrU3fJAN@pluto>
+ <ZxueBWB9nJ9Mt7bW@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] wifi: ath11k: support board-specific firmware
- overrides
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <kvalo@kernel.org>, <quic_jjohnson@quicinc.com>,
-        <ath11k@lists.infradead.org>, <linux-wireless@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20241024002514.92290-1-quic_miaoqing@quicinc.com>
- <20241024002514.92290-3-quic_miaoqing@quicinc.com>
- <pdjhyrjoreiykv2tquvufjw3rkti5sxrjvpmkjhvkfasq7zbo4@xxntxdmhhyg5>
- <bc3c06eb-1cb2-4cbb-aaad-95c09223f0cc@quicinc.com>
- <ig3m3sgmnkgfmwrlglundhqif6rygzl7uh7rzoemrz3yxgvfpc@35a323mw2wbt>
- <46de0bfe-ebdd-4b37-a957-3c64e30a1376@quicinc.com>
- <CAA8EJpr4zgV4Sa4sPdCToQWs+CFJu6Xz6CPcPyHDhDczmuzj=g@mail.gmail.com>
- <06ff37ef-dfda-470f-80f7-0f54bae25686@quicinc.com>
- <CAA8EJppFCXeUAZax+jv42JrKYgLmaPQNpXhn-06q_K_uB9JZLQ@mail.gmail.com>
-Content-Language: en-US
-From: Miaoqing Pan <quic_miaoqing@quicinc.com>
-In-Reply-To: <CAA8EJppFCXeUAZax+jv42JrKYgLmaPQNpXhn-06q_K_uB9JZLQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Vii_IZ0ku5j1EbhJ0xhH523yy7Kw26fP
-X-Proofpoint-GUID: Vii_IZ0ku5j1EbhJ0xhH523yy7Kw26fP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
- impostorscore=0 bulkscore=0 mlxlogscore=999 malwarescore=0 suspectscore=0
- phishscore=0 lowpriorityscore=0 mlxscore=0 priorityscore=1501 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2410250106
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZxueBWB9nJ9Mt7bW@hovoldconsulting.com>
 
-
-
-On 10/25/2024 8:21 PM, Dmitry Baryshkov wrote:
-> On Fri, 25 Oct 2024 at 15:03, Miaoqing Pan <quic_miaoqing@quicinc.com> wrote:
->>
->>
->>
->> On 10/25/2024 6:20 PM, Dmitry Baryshkov wrote:
->>> On Fri, 25 Oct 2024 at 10:23, Miaoqing Pan <quic_miaoqing@quicinc.com> wrote:
->>>>
->>>>
->>>>
->>>> On 10/25/2024 2:01 PM, Dmitry Baryshkov wrote:
->>>>> On Fri, Oct 25, 2024 at 10:56:02AM +0800, Miaoqing Pan wrote:
->>>>>>
->>>>>>
->>>>>> On 10/25/2024 3:39 AM, Dmitry Baryshkov wrote:
->>>>>>> On Thu, Oct 24, 2024 at 08:25:14AM +0800, Miaoqing Pan wrote:
->>>>>>>> QCA6698AQ IP core is the same as WCN6855 hw2.1, but it has different RF,
->>>>>>>> IPA, thermal, RAM size and etc, so new firmware files used. This change
->>>>>>>> allows board DT files to override the subdir of the firmware directory
->>>>>>>> used to lookup the amss.bin and m3.bin.
->>>>>>>
->>>>>>> I have slight concerns regarding the _board_ DT files overriding the
->>>>>>> subdir. This opens a can of worms, allowing per-board firmware sets,
->>>>>>> which (as far as I understand) is far from being what driver maintainers
->>>>>>> would like to see. This was required for ath10k-snoc devices, since
->>>>>>> firmware for those platforms is signed by the vendor keys and it is
->>>>>>> limited to a particular SoC or SoC family. For ath11k-pci there is no
->>>>>>> such limitation.
->>>>>>>
->>>>>>> Would it be possible to use PCI subvendor / subdev to identify affected
->>>>>>> cards? PCI Revision? Any other way to identify the device?  Please
->>>>>>> provide lspci -nnvv for the affected device kind. Is there a way to
->>>>>>> identify the RF part somehow?
->>>>>>
->>>>>> It's rather difficult, for WCN685x, there are multiple evolved subseries for
->>>>>> customized products. e.g.
->>>>>>
->>>>>> QCA6698AQ/hw2.1
->>>>>> QCA2066/hw2.1
->>>>>> WCN6855/hw2.0/hw2.1
->>>>>> WCN6856/hw2.1
->>>>>>
->>>>>> They have the same PCIe ID (17cb:1103), the commit 5dc9d1a55e95 ("wifi:
->>>>>> ath11k: add support for QCA2066") reads TCSR_SOC_HW_SUB_VER to enumerate all
->>>>>> QCA2066 cards, it lacks of flexibility, as the list will become longer and
->>>>>> longer. But it's the only choice for QCA2066, as it's customized for X86
->>>>>> platform which without DT files.
->>>>>
->>>>> I guess, this is closer to Kalle's expectations: being able to detect
->>>>> the hardware instead of adding DT properties.
->>>>>
->>>>>> So for MSM those have DT file platforms, like SA8775P-RIDE/QCS8300-RIDE both
->>>>>> attached to QCA6698AQ, we can specify the correct firmware to
->>>>>> 'ath11k/WCN6855/hw2.1/qca6698aq', so it's not per-board firmware, it depends
->>>>>> on the type of the products(x86 windows, IoT products or AUTO).
->>>>>
->>>>> No-no-no and no. The firmware used must not be specific to the product
->>>>> type.  This is what everybody here is trying to avoid. Please try
->>>>> following the QCA2066 approach instead. And note that it could use new
->>>>> TLD as it perfectly shows itself as a different hardware kind.
->>>>
->>>> Actually, TCSR_SOC_HW_SUB_VER is not SOC register, it's a TLMM hw
->>>> revision register in BAR0 space, it's hard to maintain the list.
->>>
->>> How is it so?
->>
->> I think QCA2066 approach is just a workaround. Different batches of chip
->> manufacture has different value in TCSR_SOC_HW_SUB_VER.
+On Fri, Oct 25, 2024 at 03:32:53PM +0200, Johan Hovold wrote:
+> On Fri, Oct 25, 2024 at 11:29:05AM +0100, Cristian Marussi wrote:
 > 
-> Ok. So, subvendor / subdevice?
-
-The 'subvendor' is fixed to 0x17cb, so it's useless. And I don't have 
-enough samples to decide to use 'subdevice', it's a risk for existing 
-devices.
-
+> > > > >>> [    8.098452] arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
+> > > > >>> [    8.109647] arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
+> > > > >>> [    8.128970] arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
+> > > > >>> [    8.142455] arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
 > 
->>
->>>
->>> And if it is hard, can we please get to the _normal_ way how vendors
->>> handle PCI hardware differences: the subvendor and subdevice? This is
->>> a usual way to describe that the PCIe device is the same, but the
->>> analog / tuner / RF / etc parts are different.
->>
->>
->>>
->>>> We're going to have another problem to enable NFA765 m.2 card for IoT
->>>> platforms, which has different feature sets with X86 platform, so also
->>>> new firmware should be used. In this case, QCA2066 approach not works.
->>>> Seems DT approach is only choice.
->>>>
->>>> Could you advice ?
->>>
->>> Hmm, The first question is _why_ does it have different feature sets?
->>> What exactly is different?
->>
->> Yeah, for IoT device will support SAP/TWT/UL-OFDMA/BSS color and etc new
->> features, and the existing x86 firmware mainly for STA mode.
->>
->> What if the user plugs a normal (laptop)
->>> M.2 card into their IoT device?
->>
->> If there is no DT file to specify the firmware, IoT device will load the
->> default firmware, it will affect SAP and WiFi-6 advanced features.
+> > I think dev_info could be an option from the SCMI perspective (as per my
+> > other mail), the important thing in these regards is to NOT go
+> > completely silent against fw anomalies...to avoid the the risk of being
+> > silently ignored .... I'll see what Sudeep thinks about...
 > 
-> Can we get all those nice features into x86 world instead?
+> I agree.
+> 
+> But could the error handling be improved to look less scary for an end
+> user by saying something about duplicate entries being ignored instead
+> perhaps?
+> 
+> Printing something at info level and with a FW_BUG ("[Firmware Bug]: ")
+> prefix as was done here:
+> 
+> 	https://lore.kernel.org/all/20230414084619.31524-1-johan+linaro@kernel.org/
+> 
+> should make it clear that this is not something for end users to worry
+> (too much) about.
 
-It's out of our scope, we will not touch the existing stable firmware 
-version, also it's not allowed.
+Sure...and thanks for the suggestion....I will cook something up around
+this....
 
-> 
->>
->>
->>>
->>>>>
->>>>>> 0000:01:00.0 Network controller [0280]: Qualcomm QCNFA765 Wireless Network
->>>>>> Adapter [17cb:1103] (rev 01)
->>>>>>        Subsystem: Qualcomm QCNFA765 Wireless Network Adapter [17cb:0108]
->>>>>>        Device tree node: /sys/firmware/devicetree/base/pci@1c00000/pcie@0/wifi@0
->>>>>>
->>>>>>
->>>>>>>
->>>>>>> Could you possibly clarify, how this situation is handled in Windows
->>>>>>> world?
->>>>>>
->>>>>> X86 platforms use standard m.2 PCIe card, and it will only use the default
->>>>>> main firmware files, as they without DT files.
->>>>>
->>>>> So QCA6698AQ cannot appear on an M.2 PCIe card?
->>>>
->>>> No, but no m.2 PCIe card so far. It depends on power sequencing module
->>>> to do power up.
->>>
->>> You are describing software (power sequencing module), while I was
->>> talking about the hardware. Nothing prevents OEM from adding fixed
->>> regulators to drive necessary voltages from the PCIe slot.
->>>
->>
-> 
-> 
+(I am probably too used to try to scary the FW guys that I forgot there
+are also innocent bystanders like final users :P)
 
+Thanks,
+Cristian
 
