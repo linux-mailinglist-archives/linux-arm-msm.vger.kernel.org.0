@@ -1,82 +1,90 @@
-Return-Path: <linux-arm-msm+bounces-35804-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35805-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6CB889AF9E5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 08:24:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A62ED9AF9EE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 08:29:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C58A72812CD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 06:24:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CB177280C68
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 06:28:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A16019B59F;
-	Fri, 25 Oct 2024 06:24:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18A9219A297;
+	Fri, 25 Oct 2024 06:28:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FDCQzeaj"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="W04LpWCW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59A5513049E
-	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2024 06:24:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B065A18C346
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2024 06:28:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729837454; cv=none; b=i6wR9e1r/UF67IPkB/RyBOEa02RcAW+4zJv3beZusir9Ua9ieEaVLNCUfamVXgZdFJMPnokZlsYiwjV+UjU3ulQcOCFoE0DwQjWCX9aYR9z4qBOev/gW8Z0ZvrEooo4cjXSgjLwaxRUZBiFmM722XAjitbxvQxEdkeZZj/BDEEw=
+	t=1729837723; cv=none; b=C0AYa2nGcocYJpODfeiFEV7t8KAno4SJppSXebHFnsES8Iz/zgcbQeuIAssNUEkrCtoGtzh/xFmO3AXqgZTeSCAIqeq3vNW609FY1FgpODiiBTaXWXgZRnTNsR8FU0U4zS2tY56Z9LbozXRvsQpIaS7RcnN4F2zC4s1iEJlq8TQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729837454; c=relaxed/simple;
-	bh=Dtmo5K08HFoyzCzvaJqKJiI2IxYH1seEW36tML8Cc4k=;
+	s=arc-20240116; t=1729837723; c=relaxed/simple;
+	bh=WwQi+D7FjT7HiEmRpKp14FbmPnTWN2j43SBZvSVshyI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MaVQ2FCxiIlQsPR657MV6+Mx2I/8nT8cpyE3Wmx1zFymywzOuHLobifjGNUFtphfYMxHiCumJDyQJ22EGikqxFup084Z+AQS1QOzBj6cemsOxAVd9CSJ+FwXEOHtpAeh8rZtvlv2Mf+7eQbG4SJd3FGCvVkwkZJkl56iTo/zDPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FDCQzeaj; arc=none smtp.client-ip=209.85.167.52
+	 Content-Type:Content-Disposition:In-Reply-To; b=H62b+XwWuUyP5HxV28EQghEzS8VWy2mE9QLAp1ibkl9ZQozCe+0B4CT6SU+Z40KDlzYPDIdldsJ9KgAdr8GBDAdfDl1atM1nPMsAVTlTpl3lrGK0rGqXuz4oMCKWq4pJ/JlQLxEjWvTzIUzi8u0Wlx/9IuWwYmfB7yMnDXdLJHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=W04LpWCW; arc=none smtp.client-ip=209.85.208.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-539f53973fdso1400207e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Oct 2024 23:24:11 -0700 (PDT)
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2fb57f97d75so14696801fa.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Oct 2024 23:28:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729837449; x=1730442249; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1729837719; x=1730442519; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=mmOluMnBeTWFpiyoaltYb/0n6IB+lT/bvEqrIoKWjjI=;
-        b=FDCQzeajJvascincXMeENQdH7HeEg7McLDBc+xk6MMrWwJwnguZT035tiKxKNPryoz
-         RjT/6YECaSJ4FEoaJkvVDECZLu19KIbQNrSRxY6Yjr041+blabwNxVRyQhG/QSy5Fg2X
-         s4Y92krrYn9lH7OfpXYmk9D0AFTF5QeoewOEvO9YnlB/WeLHdH9LP5j3FGrMg5TkFs4Y
-         m5CA3tKDERBCFsYKqNhstR6IJe7PkdOCoVd80aa6ADYyL9YqC6R4O+xCVNLU6oLIy8hb
-         J1SD9Ah9eeFGT1KeRgr9G8HBjQH+0fS4qVa0tFHcha05IpUchH5wvKVsMGkWBA4n7SVY
-         gwzw==
+        bh=ggQprwB+vTricRp85OZCHCZrtqv0PIzjtgOf5gOgeCo=;
+        b=W04LpWCWQuZjfMkPWTQrU4/HaikbvKIpiqEpLXqphOSJrv1zbzBe2QCUuw2ErZqTa4
+         yrvaXnhzCa05lOxWgaMb5u4Ixqp++MYK43m4XEFQb7KO0kiYakQTJEQWOtBvhTEyr5mm
+         Ave5QkvQHrM2pVn0hE6oY/7Kawfg0axoGGsQ+MjcpyZoIT4pEfinkC9Jynli7XSK3Pw5
+         WC1GZgkTKWiEg399U5rl+2OObi+6Wul59OmZkIrw1PxUyr1frTbi5RASxPIFvR4uJKdS
+         KlVIZSWciceky5HKmbLgoiv1MKjW47HWwXrrhw0MpReWooQ0JYPBKfmlj1yfOn4s+vZP
+         qk1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729837449; x=1730442249;
+        d=1e100.net; s=20230601; t=1729837719; x=1730442519;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=mmOluMnBeTWFpiyoaltYb/0n6IB+lT/bvEqrIoKWjjI=;
-        b=bXjqBIDvWigVE2zlhDGkj7v4zcq/uSSI1CsTv5lXS07lpJwV+hkyCPdl50AJxqoxE3
-         FnqC0R2uTDhQzjFo12EEZxpPrBbgBfS+8teGQBTbucochHOF/JgVcm+Yua+xPMeg16pW
-         8vFHZY7+3mEWVFhW24FEhLvhhTBsCS/D99bp4CrAoTBlZ7Am23TppW9g4NTGMY7T9rqm
-         cmP+g/vJv9xLO4EkwFSWiFctq5Gg86V/7BIQjMQ6nz0iWMlJ7RrKhYOTt1x4OYW/M3Hy
-         kjSzI8cUAZXgdbS8rvlLjfDW05NcG0Mw51xJ4LuErGYxA5VIVwNWptkVO2soDqCnmH+C
-         LAKQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXIpA2XuG+Tbg1l6WFoem+xhXowsriaqPWNt0Gf1szb8nRrp2Qq7W9OWqFR0y7w8Gkcy8KQcDiLeJV4/MUt@vger.kernel.org
-X-Gm-Message-State: AOJu0YyrmnKo0XKGzSJQ9jc6n34qXCyumLBu9tBI/UoJQ2klgKWwcT2c
-	WZwNuIJgUvttyvYhwuk1nzTXmnrI71fLhjh3AUmQv0UnBcmu068JwBOYW2/WxpQ=
-X-Google-Smtp-Source: AGHT+IElCN9Fu+YyZ052tJMBnTOU1DDpjvH/+g33kxgxMsa+Vi3RsCc+XeJ62OlpLC+YdFrC9YW6PA==
-X-Received: by 2002:a05:6512:b10:b0:53a:1b6:4624 with SMTP id 2adb3069b0e04-53b236a6986mr1605752e87.5.1729837449397;
-        Thu, 24 Oct 2024 23:24:09 -0700 (PDT)
+        bh=ggQprwB+vTricRp85OZCHCZrtqv0PIzjtgOf5gOgeCo=;
+        b=h6aSQp/DoOPAXa1WbcvmXJAsiSBFn0pfuO1/vAesSXK80CEIkj2DIzTY3TvkHZwYum
+         gbkD3Ck9fu5PFrX/Qjukbdep3pYCrWmNpVLgL6WFPD4MWF8fR+EfUbB35Ekbo5Mw7NxF
+         r1G8mq1h0dQbg2qxSQJGiFYGnKCiZWbDu6BW65eWEnZKmkZQNWfTqls4uTIrRE9Naw/H
+         OfXU7H6dec6lxUWE0NtSAp4U13rE9piSHAfTXXw8Qo5iIRkmDOI1Jz4AXgs3sBXxZ3rj
+         oeR60dEwrUdjUwsUXfxHKmhkeTlFkfBOINBGGxfWFo1FAPyMx/3MOiICMG3eXbsVl5n7
+         s1BA==
+X-Forwarded-Encrypted: i=1; AJvYcCX3hGw7xdNgkvSky6mpgsat2l4vm0HQC1AjJvO1hVOVuydzGXTBVE0igR1UMq0z74Pujkli/RbT0COQmKB7@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw79GptgIg/dcV8t7g7FWOQh4mGoM1TQFUoHbylvhK7UbpHdopO
+	lgWQHus/9/olh20C9zvMgW5jG4b0Gi2uhwpdD4vSUuVc7rsaOJKxSU8WQJ7B2m0=
+X-Google-Smtp-Source: AGHT+IFaqSi3YpsyTfNZEHslT6tXnIucCTkmvLVJIORZGEveGd+wYqYmRBCEZV5qZEaTCrCcylcBhg==
+X-Received: by 2002:a2e:b8c2:0:b0:2fb:382e:410f with SMTP id 38308e7fff4ca-2fca8227ddbmr26408121fa.26.1729837718711;
+        Thu, 24 Oct 2024 23:28:38 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53b2e1f42e9sm67236e87.301.2024.10.24.23.24.06
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2fcb4612a5asm703221fa.122.2024.10.24.23.28.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Oct 2024 23:24:07 -0700 (PDT)
-Date: Fri, 25 Oct 2024 09:24:05 +0300
+        Thu, 24 Oct 2024 23:28:36 -0700 (PDT)
+Date: Fri, 25 Oct 2024 09:28:33 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Gabor Juhos <j4g8y7@gmail.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/5] clk: qcom: apss-ipq-pll: drop 'alpha_en_mask' from
- IPQ5018 PLL config
-Message-ID: <yplfg55afv4vucpcxbkqsxmn44mzwr3tepbuvgtswhupx7fzfi@mwofp7v3uarm>
-References: <20241021-alpha-mode-cleanup-v1-0-55df8ed73645@gmail.com>
- <20241021-alpha-mode-cleanup-v1-1-55df8ed73645@gmail.com>
+To: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>, Rob Clark <robdclark@gmail.com>, 
+	Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>, Stephen Boyd <sboyd@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 2/3] dt-bindings: opp: Add v2-qcom-adreno vendor
+ bindings
+Message-ID: <4426b4kybtac6rc4twa5pgm3hvlegofemvqjcrvh6ni7f5z2h6@5dnlv3hgywh5>
+References: <20241021-gpu-acd-v2-0-9c25a62803bc@quicinc.com>
+ <20241021-gpu-acd-v2-2-9c25a62803bc@quicinc.com>
+ <mz4zpcr4tqh2w7vt75f4ofxjzfve54ozzgpdbi2jjzk5pdxbk7@t36tlt3mmprt>
+ <d858dadb-4098-4c9f-b4f0-393dc988db5f@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,51 +93,104 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241021-alpha-mode-cleanup-v1-1-55df8ed73645@gmail.com>
+In-Reply-To: <d858dadb-4098-4c9f-b4f0-393dc988db5f@quicinc.com>
 
-On Mon, Oct 21, 2024 at 10:21:57PM +0200, Gabor Juhos wrote:
-> Since neither 'alpha' nor 'alpha_hi' is defined in the configuration,
-> those will be initialized with zero values  implicitly. By using zero
-> alpha values, the output rate of the PLL will be the same whether
-> alpha mode is enabled or not.
+On Thu, Oct 24, 2024 at 12:56:58AM +0530, Akhil P Oommen wrote:
+> On 10/22/2024 11:19 AM, Krzysztof Kozlowski wrote:
+> > On Mon, Oct 21, 2024 at 05:23:43PM +0530, Akhil P Oommen wrote:
+> >> Add a new schema which extends opp-v2 to support a new vendor specific
+> >> property required for Adreno GPUs found in Qualcomm's SoCs. The new
+> >> property called "qcom,opp-acd-level" carries a u32 value recommended
+> >> for each opp needs to be shared to GMU during runtime.
+> >>
+> >> Cc: Rob Clark <robdclark@gmail.com>
+> >> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+> >> ---
+> >>  .../bindings/opp/opp-v2-qcom-adreno.yaml           | 96 ++++++++++++++++++++++
+> >>  1 file changed, 96 insertions(+)
+> >>
+> >> diff --git a/Documentation/devicetree/bindings/opp/opp-v2-qcom-adreno.yaml b/Documentation/devicetree/bindings/opp/opp-v2-qcom-adreno.yaml
+> >> new file mode 100644
+> >> index 000000000000..6d50c0405ef8
+> >> --- /dev/null
+> >> +++ b/Documentation/devicetree/bindings/opp/opp-v2-qcom-adreno.yaml
+> >> @@ -0,0 +1,96 @@
+> >> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> >> +%YAML 1.2
+> >> +---
+> >> +$id: http://devicetree.org/schemas/opp/opp-v2-qcom-adreno.yaml#
+> >> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> >> +
+> >> +title: Qualcomm Adreno compatible OPP supply
+> >> +
+> >> +description:
+> >> +  Adreno GPUs present in Qualcomm's Snapdragon chipsets uses an OPP specific
+> >> +  ACD related information tailored for the specific chipset. This binding
+> >> +  provides the information needed to describe such a hardware value.
+> >> +
+> >> +maintainers:
+> >> +  - Rob Clark <robdclark@gmail.com>
+> >> +
+> >> +allOf:
+> >> +  - $ref: opp-v2-base.yaml#
+> >> +
+> >> +properties:
+> >> +  compatible:
+> >> +    items:
+> >> +      - const: operating-points-v2-adreno
+> >> +      - const: operating-points-v2
+> >> +
+> >> +patternProperties:
+> >> +  '^opp-?[0-9]+$':
+> > 
+> > '-' should not be optional. opp1 is not expected name.
 > 
-> Remove the superfluous initialization of the 'alpha_en_mask' member
-> to make it clear that enabling alpha mode is not required to get the
-> desired output rate.
+> Agree. Will change this to '^opp-[0-9]+$'
 > 
-> No functional changes, the initial rate of the PLL is the same both
-> before and after the patch.
+> > 
+> >> +    type: object
+> >> +    additionalProperties: false
+> >> +
+> >> +    properties:
+> >> +      opp-hz: true
+> >> +
+> >> +      opp-level: true
+> >> +
+> >> +      opp-peak-kBps: true
+> >> +
+> >> +      opp-supported-hw: true
+> >> +
+> >> +      qcom,opp-acd-level:
+> >> +        description: |
+> >> +          A positive value representing the ACD (Adaptive Clock Distribution,
+> >> +          a fancy name for clk throttling during voltage droop) level associated
+> >> +          with this OPP node. This value is shared to a co-processor inside GPU
+> >> +          (called Graphics Management Unit a.k.a GMU) during wake up. It may not
+> >> +          be present for some OPPs and GMU will disable ACD while transitioning
+> >> +          to that OPP. This value encodes a voltage threshold and few other knobs
+> >> +          which are identified by characterization of the SoC. So, it doesn't have
+> >> +          any unit.
+> > 
+> > Thanks for explanation and other updates. I am still not happy with this
+> > property. I do not see reason why DT should encode magic values in a
+> > quite generic piece of code. This creates poor ABI, difficult to
+> > maintain or understand.
+> > 
+> 
+> Configuring GPU ACD block with its respective value is a requirement for each OPP.
+> So OPP node seems like the natural place for this data.
+> 
+> If it helps to resolve your concerns, I can elaborate the documentation with
+> details on the GMU HFI interface where this value should be passed on to the
+> hardware. Also replace "few other knobs" with "Delay cycles & Calibration margin"
+> in the above doc.
 
-After going through DISPCC changes, I think the whole series is
-incorrect: these PLL can change the rate (e.g. to facilitate CPU
-frequency changes). Normally PLL ops do not check the alpha_en bit when
-changing the rate, so the driver might try to set the PLL to the rate
-which requires alpha value, while the alpha_en bit isn't set.
+Usually the preference for DT is to specify data in a sensible way
+rather than just the values being programmed to the register. Is it
+possible to implement this approach for ACD values?
 
-> 
-> Tested on TP-Link Archer AX55 v1 (IPQ5018).
-> 
-> Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-> ---
->  drivers/clk/qcom/apss-ipq-pll.c | 1 -
->  1 file changed, 1 deletion(-)
-> 
-> diff --git a/drivers/clk/qcom/apss-ipq-pll.c b/drivers/clk/qcom/apss-ipq-pll.c
-> index e8632db2c542806e9527a22b54fe169e3e398a7a..dec2a5019cc77bf60142a86453883e336afc860f 100644
-> --- a/drivers/clk/qcom/apss-ipq-pll.c
-> +++ b/drivers/clk/qcom/apss-ipq-pll.c
-> @@ -73,7 +73,6 @@ static const struct alpha_pll_config ipq5018_pll_config = {
->  	.main_output_mask = BIT(0),
->  	.aux_output_mask = BIT(1),
->  	.early_output_mask = BIT(3),
-> -	.alpha_en_mask = BIT(24),
->  	.status_val = 0x3,
->  	.status_mask = GENMASK(10, 8),
->  	.lock_det = BIT(2),
-> 
-> -- 
-> 2.47.0
-> 
+>  
+> > 
 
 -- 
 With best wishes
