@@ -1,63 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-35963-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35964-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1BCB89B0DD2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 21:00:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 78A0A9B0DD9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 21:03:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9EDF21F24CEB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 19:00:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 080E21F247AD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 19:03:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE1AF20D508;
-	Fri, 25 Oct 2024 19:00:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 62C7920D4F2;
+	Fri, 25 Oct 2024 19:03:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CAF5XElo"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="PuAK74Uy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B5A21B07D4;
-	Fri, 25 Oct 2024 19:00:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E8EA20BB24
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2024 19:03:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729882841; cv=none; b=imDLVHzApgGNyJXjT2HhJfxo/GByc5bMtus4JF+sIbAX0/YZiic1MAOLLVVdftwoEApFYt49ITdNgGP6Z5SHz03C++wvaJOwsB5xwG4rQSPUWdjBiqRD9iVjsVkt4Knd0HQOGiVQgP08lNIcpohmSGT3rI6C621vM+2yDtNuncA=
+	t=1729882990; cv=none; b=fyb6WK2IqALlhil0kCQYvbF2MxjG7cZcjoQptvDEc+KDRJmoLWe0NcmVwutUvfdTpAX7njWXV86VnilGfSUuCSVAsWm2HHqPGSMnHfKi3Z0g85socKKL+3uVZOZDfJf6bLrbBqszbS3x5qSvjNR4aIZWlIbybqSuvFddKAKCz7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729882841; c=relaxed/simple;
-	bh=dOX6ODX9goy93nRBctzz/c0rm0U70NrmZOa8sHSdqek=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Nqliv/t9WCNu6KFGCXhQCzdJUaEk747KrwUXA4rBMlU8mYRIMP5JOH/0eGUV9m3bg0PaVA/D23kilN/NzzWCPLZnNtBA4CMNWNUYQIJuPH9b37wHP6PqRW7wVBSE+BWodxAt6ZnW0eLLcwlwordxa7QtcEuki4/MPBxt/GtTQ04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CAF5XElo; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49PB1xkB000880;
-	Fri, 25 Oct 2024 19:00:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	s=arc-20240116; t=1729882990; c=relaxed/simple;
+	bh=FyZnfFrKqDUkZoMJuDAW/enpzeoKc6kj37YA/BBSfSE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BlNUzuhgzZm98SvmCijcoXaL7UxA2sG+VAXlbuMQjbm7Gk8B+ardkfbBqMvCVLd5Wp8yYqaevFCWcf2i4vMkWiOVhmz4VGtxM8qvChUMyvSjkIDZrYVIyTNR7zZSCW4J9Jh7/c+UVsk9HpGTVoya/hbgQDd9DH/0WiOoeLbX+kk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=fail smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=PuAK74Uy; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49PAoXrq007689
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2024 19:03:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	4m4ynzInmCYuKFAigjMuDiiA5+f08cG6+h6uxFu2fDQ=; b=CAF5XEloBiGlCdWT
-	43VVSPkg0AyqWJnQOh/vSJrU1RwrYawm339SwppcmAta4kUz0sdl7xwIuF+yjbyc
-	ggqIqXstjim23jfOP/9qpuJ9sV0xQK4aPbRj/CVHjQwBInSrmz7SXhhkkFVz9q80
-	DDavxgl4dE2+h6AE1Ku0smYiscSaO3VjZnEeieBvtVZjLLePGUDMFVGEw9w+fnrV
-	NNeve5tK8J+PDuuUwR7MAgt23PFi0jm1I6CWKcCPJByFt8RJHLtT6T1ye4M753Wd
-	czGNbPNAv9XbYodzF2PG20LSYGDORMMVm7HkhAGYzRtJfsfts2Kae5hrfdzqyAh7
-	MSUJJw==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42ga3s1csn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 25 Oct 2024 19:00:23 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49PJ0MHu011047
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 25 Oct 2024 19:00:22 GMT
-Received: from [10.110.83.151] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 25 Oct
- 2024 12:00:21 -0700
-Message-ID: <1dcf786e-463f-4e51-af71-66ee6077b5f1@quicinc.com>
-Date: Fri, 25 Oct 2024 12:00:20 -0700
+	Y+FZUZZNLixikGGdE1Qm6JX9w5/tPIWWBM8H5e+9y4A=; b=PuAK74UyexXMlskV
+	ckO24+UwVU8ItVJs37ajGJ27CtLY1R50lRaCDZlGYTVhuH8fyOhuaqLCVXFnQH9F
+	uCLDpEYFhtbET5sIDgE+Dj53HcNhgrlmlGGKFsO3Qo6YnD0vbc9KkIOKdN5n/2XQ
+	XxybXUmySmcJ9kbGxRNzjxF8nONz0yK6qZ+DJnIgRZirBMlW/e3eeroGv243h65h
+	LEe9yNf/bsLXhz+9R0y7yenrczoA480kp9AaubQLeDc0koZ4V7Voz/oYG52vCroM
+	wPxqjETutkhCfmWJ7GWKop0OYuB6oT+QmvcqjE0QS865mWriatLgKUWKdWz4ue9q
+	GZm9Qg==
+Received: from mail-ot1-f72.google.com (mail-ot1-f72.google.com [209.85.210.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42g9x6hfe9-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2024 19:03:07 +0000 (GMT)
+Received: by mail-ot1-f72.google.com with SMTP id 46e09a7af769-7180917b56dso510969a34.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2024 12:03:06 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729882986; x=1730487786;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Y+FZUZZNLixikGGdE1Qm6JX9w5/tPIWWBM8H5e+9y4A=;
+        b=IJYg/l5Uewg+lHsjGnOku0WofV868jLANHVQ9Fjtn7E7OsyzGv1cKjv/i0j8lLVZGf
+         CTMcEGbWgG69U0bd8iGaxi+HMQCVD4OrOSZjZnvrnzIOAzRctrtCbA527pz3nWvgs2S7
+         D7jOepd5P+Gtdk6fSyBDTfW55F0UmB8XIa/jRg/i3RgAtNDzMMwhT2BjuP5+X9uG8yS3
+         6pyKC/zXA9b4Q5kEbwV0Vip61qnTnMz8H2tqZ14Np7ll4AiFYx7hYgraknSgUy5nt0/I
+         47tzUQ0jGZWmBdv9f7BzbfyBGGQCtqBTnfvs26eeDsJfyN/Vfc/5ODbKzXhhMh4hjy4K
+         acGg==
+X-Gm-Message-State: AOJu0YzrECyBxN59+Wb368ycjuFTP3vN6UJCb5l7KVcncDFFQ+dAfqNI
+	czx0TN0KxauUm4RegPfZnmlIADe+ATZLHsJQBpCgPMuOvhO0hgrS/MUkwZWAp2mt40AZNmxFsub
+	VNatwk6vykleuCacAbfQS5V3dWT9CzodNRXgDOEfU49QH+REqv5Rn74A54O/k41Rz
+X-Received: by 2002:a54:4002:0:b0:3e2:9e00:5fd2 with SMTP id 5614622812f47-3e6384b5cc3mr105135b6e.7.1729882986188;
+        Fri, 25 Oct 2024 12:03:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFROOfZDtFfyFTEvFLix5V9oTgyk1w4b15E9Y6n7jj7tYYo8LHGiuocblz0bZZYI/oVOtbjTA==
+X-Received: by 2002:a54:4002:0:b0:3e2:9e00:5fd2 with SMTP id 5614622812f47-3e6384b5cc3mr105124b6e.7.1729882985710;
+        Fri, 25 Oct 2024 12:03:05 -0700 (PDT)
+Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9b1dec8100sm98348866b.6.2024.10.25.12.03.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 25 Oct 2024 12:03:04 -0700 (PDT)
+Message-ID: <23f3558b-e620-437a-a014-0bf4e6efbb13@oss.qualcomm.com>
+Date: Fri, 25 Oct 2024 21:03:01 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,122 +83,103 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 2/9] drm/msm/dpu: move pstate->pipe initialization to
- dpu_plane_atomic_check
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark
-	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona
- Vetter <simona@ffwll.ch>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-References: <20241025-dpu-virtual-wide-v6-0-0310fd519765@linaro.org>
- <20241025-dpu-virtual-wide-v6-2-0310fd519765@linaro.org>
+Subject: Re: [PATCH 5/6] remoteproc: qcom: Add support of SHM bridge to enable
+ memory protection
+To: Mukesh Ojha <quic_mojha@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20241004212359.2263502-1-quic_mojha@quicinc.com>
+ <20241004212359.2263502-6-quic_mojha@quicinc.com>
 Content-Language: en-US
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20241025-dpu-virtual-wide-v6-2-0310fd519765@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20241004212359.2263502-6-quic_mojha@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ZWHZaI5rykXHJ0Ju0Xn8bsZKdz1nYDdx
-X-Proofpoint-GUID: ZWHZaI5rykXHJ0Ju0Xn8bsZKdz1nYDdx
+X-Proofpoint-GUID: HzJi_f2tQNc7jjIHsucKd2xFwF5ocJoO
+X-Proofpoint-ORIG-GUID: HzJi_f2tQNc7jjIHsucKd2xFwF5ocJoO
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
- impostorscore=0 bulkscore=0 mlxlogscore=999 malwarescore=0 suspectscore=0
- phishscore=0 lowpriorityscore=0 mlxscore=0 priorityscore=1501 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2410250145
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
+ clxscore=1015 mlxscore=0 phishscore=0 spamscore=0 lowpriorityscore=0
+ impostorscore=0 priorityscore=1501 mlxlogscore=999 suspectscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410250146
 
-
-
-On 10/24/2024 5:20 PM, Dmitry Baryshkov wrote:
-> In preparation for virtualized planes support, move pstate->pipe
-> initialization from dpu_plane_reset() to dpu_plane_atomic_check(). In
-> case of virtual planes the plane's pipe will not be known up to the
-> point of atomic_check() callback.
+On 4.10.2024 11:23 PM, Mukesh Ojha wrote:
+> Qualcomm SoCs running with the Qualcomm EL2 hypervisor(QHEE) have been
+> utilizing the Peripheral Authentication Service (PAS) from its TrustZone
+> (TZ) firmware to securely authenticate and reset via sequence of SMC
+> calls like qcom_scm_pas_init_image(), qcom_scm_pas_mem_setup(), and
+> qcom_scm_pas_auth_and_reset().
 > 
+> Memory protection need to be enabled for both meta data memory region and
+> remoteproc carveout memory region.
 
-I had R-bed this in v5. Did anything change in v6?
+Will TZ refuse to start the remoteprocs if this is not the case?
 
-But one comment below.
-
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> For memory passed to Qualcomm TrustZone, the memory should be part of
+> SHM bridge memory. However, when QHEE is present, PAS SMC calls are
+> getting trapped in QHEE, which create or gets memory from SHM bridge for
+> both meta data memory and for remoteproc carve out regions before it get
+> passed to TZ.  However, in absence of QHEE hypervisor, Linux need to
+> create SHM bridge for both meta data in qcom_scm_pas_init_image() and
+> for remoteproc memory before the call being made to
+> qcom_scm_pas_auth_and_reset().
+> 
+> For qcom_scm_pas_init_image() call, metadata content need to be copied
+> to the buffer allocated from SHM bridge before making the SMC call.
+> 
+> For qcom_scm_pas_auth_and_reset(), remoteproc memory region need to be
+> protected and for that SHM bridge need to be created. Make
+> qcom_tzmem_init_area() and qcom_tzmem_cleanup_area() exported symbol so
+> that it could be used to create SHM bridge for remoteproc region.
+> 
+> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
 > ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 25 +++++++++++--------------
->   1 file changed, 11 insertions(+), 14 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> index 37faf5b238b0..725c9a5826fd 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> @@ -797,13 +797,22 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
->   	uint32_t max_linewidth;
->   	unsigned int rotation;
->   	uint32_t supported_rotations;
-> -	const struct dpu_sspp_cfg *pipe_hw_caps = pstate->pipe.sspp->cap;
-> -	const struct dpu_sspp_sub_blks *sblk = pstate->pipe.sspp->cap->sblk;
-> +	const struct dpu_sspp_cfg *pipe_hw_caps;
-> +	const struct dpu_sspp_sub_blks *sblk;
->   
->   	if (new_plane_state->crtc)
->   		crtc_state = drm_atomic_get_new_crtc_state(state,
->   							   new_plane_state->crtc);
->   
-> +	pipe->sspp = dpu_rm_get_sspp(&kms->rm, pdpu->pipe);
-> +	r_pipe->sspp = NULL;
-> +
-> +	if (!pipe->sspp)
-> +		return -EINVAL;
-> +
-> +	pipe_hw_caps = pipe->sspp->cap;
-> +	sblk = pipe->sspp->cap->sblk;
-> +
->   	min_scale = FRAC_16_16(1, sblk->maxupscale);
->   	ret = drm_atomic_helper_check_plane_state(new_plane_state, crtc_state,
->   						  min_scale,
+>  drivers/firmware/qcom/qcom_scm.c         | 29 +++++++++++-----
+>  drivers/firmware/qcom/qcom_tzmem.c       | 14 +++-----
+>  drivers/remoteproc/qcom_q6v5_pas.c       | 44 ++++++++++++++++++++++++
+>  include/linux/firmware/qcom/qcom_scm.h   |  1 +
+>  include/linux/firmware/qcom/qcom_tzmem.h | 10 ++++++
+>  5 files changed, 80 insertions(+), 18 deletions(-)
 
-Do you think it will be better to move the get_sspp() call after the 
-drm_atomic_helper_check_plane_state()?
+This changes files in two separate subsystems. That implies this
+patch should be split in two. Or three.
 
-> @@ -820,7 +829,6 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
->   	pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
->   	r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
->   	r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-> -	r_pipe->sspp = NULL;
->   
->   	pstate->stage = DPU_STAGE_0 + pstate->base.normalized_zpos;
->   	if (pstate->stage >= pdpu->catalog->caps->max_mixer_blendstages) {
-> @@ -1286,7 +1294,6 @@ static void dpu_plane_reset(struct drm_plane *plane)
->   {
->   	struct dpu_plane *pdpu;
->   	struct dpu_plane_state *pstate;
-> -	struct dpu_kms *dpu_kms = _dpu_plane_get_kms(plane);
->   
->   	if (!plane) {
->   		DPU_ERROR("invalid plane\n");
-> @@ -1308,16 +1315,6 @@ static void dpu_plane_reset(struct drm_plane *plane)
->   		return;
->   	}
->   
-> -	/*
-> -	 * Set the SSPP here until we have proper virtualized DPU planes.
-> -	 * This is the place where the state is allocated, so fill it fully.
-> -	 */
-> -	pstate->pipe.sspp = dpu_rm_get_sspp(&dpu_kms->rm, pdpu->pipe);
-> -	pstate->pipe.multirect_index = DPU_SSPP_RECT_SOLO;
-> -	pstate->pipe.multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-> -
-> -	pstate->r_pipe.sspp = NULL;
-> -
->   	__drm_atomic_helper_plane_reset(plane, &pstate->base);
->   }
->   
 > 
+> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+> index 10986cb11ec0..dafc07dc181f 100644
+> --- a/drivers/firmware/qcom/qcom_scm.c
+> +++ b/drivers/firmware/qcom/qcom_scm.c
+> @@ -591,15 +591,19 @@ int qcom_scm_pas_init_image(u32 peripheral, const void *metadata, size_t size,
+>  	 * data blob, so make sure it's physically contiguous, 4K aligned and
+>  	 * non-cachable to avoid XPU violations.
+>  	 *
+> -	 * For PIL calls the hypervisor creates SHM Bridges for the blob
+> -	 * buffers on behalf of Linux so we must not do it ourselves hence
+> -	 * not using the TZMem allocator here.
+> +	 * For PIL calls the hypervisor like Gunyah or older QHEE creates SHM
+> +	 * Bridges for the blob buffers on behalf of Linux so we must not do it
+> +	 * ourselves hence use TZMem allocator only when these hypervisors are
+> +	 * not present.
+
+This is a bit hard to read.. How about:
+
+PIL calls require SHMBridge is set up for shared memory regions.
+Qualcomm hypervisors (Gunyah, QHEE) already take care of this.
+Only create new bridges if they're absent.
+
+[...]
+
+Konrad
 
