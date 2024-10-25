@@ -1,525 +1,196 @@
-Return-Path: <linux-arm-msm+bounces-35811-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35812-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 286FF9AFA98
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 09:06:35 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4FDB89AFAE1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 09:23:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A17D41F22F0E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 07:06:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 71B5C1C21225
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 07:23:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7112F1B0F06;
-	Fri, 25 Oct 2024 07:06:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 16B9518DF7F;
+	Fri, 25 Oct 2024 07:23:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="P4LubVhT"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="aRmCfi8+"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A89BD1AD3F5;
-	Fri, 25 Oct 2024 07:06:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0EE21BC5C;
+	Fri, 25 Oct 2024 07:23:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729839992; cv=none; b=as75fhQGGvjI4HRu3Rj5QM+QEoDMXFaKqv3ORU+E/R2WKsgXDNx8mS+YOajm0oR3YbABMEu0+GTUw/jeUKhXwMp8RzwIE6rIuUV6UCvuEYc1ypER5awX7nD/64czIIMOAe+cWm/3DS4OgmUMKeiUUR2bftz7BtCBo5DatjcaIjU=
+	t=1729840988; cv=none; b=PJuLTNwQLN/i+h9Qr7YLevpvSUF7K6UKZrpEEg4IsptrcoSO/SIhWztt27YfE/vxgdhqsgn57vlsXxN4oqA3yqLNJsPecNJPaI5Z5Oe3caG8MN2UmkhXdfDA+aC66YQsA9UztbqiJPfSvI8AisLpOHIpf1D19ROsCKfcfgFLQDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729839992; c=relaxed/simple;
-	bh=aW6nF5nbjqnDf2gKWctXLmLzglSWAjiTYtjxNmcssBs=;
+	s=arc-20240116; t=1729840988; c=relaxed/simple;
+	bh=Vz81de2dTtcSvQVe9/uWcYxcYzqICUHN3tnjqyy/zbs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=QLWbZ17H3LAuwPgIicba+NQNM7gr5X5X+ipbGmqG23KvjxEwIaNwpwet/dYzLgohmxgj5zdMHlLOAeTvEcDd2Uef0G5T9zageV2aspTEwst4MAHhgW8fNQlSp1NMZJjpxQt6vHH/L8zWk/cJLJzal4PkD4uTlk/yyWM+CO0Jq60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=P4LubVhT; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=XJyWTGJLW141RcJWNcbcLijrELNPPAvXgIAKht1XfUC3OR1/f6cO0xxdijgYCYUHQk5m256h2Kd9k3Qxc+CON36vFqRJ7HW4LmYdnHHeuW8tDKaVowRNiHIlR+ioBYkq5GulfcEAPSBJrt0Ht0CJ29Cbxp2tvPykF5jG4f/o2Ew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=aRmCfi8+; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49OM8nZl032117;
-	Fri, 25 Oct 2024 07:06:21 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49P62Nt4011872;
+	Fri, 25 Oct 2024 07:22:59 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	PeZfDPLYmvD7Ho29OCzvQoO+HEgqYvKkcRET85OGnL4=; b=P4LubVhThHQEIvSI
-	q50pL4EL+aDGlFJ+q1ZcHoQ7QozXnNWT2AqMNUSJAW43eJ2ACApJISteU6JAykJT
-	1uc/QRqSRqWw6QYJEF1Vv+hjqwSCUFXD8Qid0nW8q+i+DmMJ+Cggpf7jnaNcjqJQ
-	o+7RTZ6EUHVtTEXPn/U8Xvdy2X8D5G/ShD2Kidj9x2/n3Vny5VQpzEa4FBHvh6CB
-	y7lxi14JYAW8qGPm8p31N9COZ2Gjy0kNT4Jag9oUynFcWIG1mPh+ixEVCwDvygwY
-	q+/wzeavstDH8VdA8Cg5mXXXcIX41acTGwf1vM6yp96Wj+AtCLFsA/tWo9K/vwtf
-	rBb/PA==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42em3w04nd-1
+	3fGhefmJFrI68WA5TIXt8nAew1p7nkACWVJKgZe3/9w=; b=aRmCfi8+i7JnmKbA
+	nh0AgbjpXD9d9szwNFN5AVut/wwDplRCt1jQYv4BNhpEa9oDOUb4mOgMoYBFOLVX
+	oPcbKooS2yoPUDx/voY0TR5H03urcKKv+IkwS3slEeaeByNGVHpKwKJueFnViv8Z
+	tHVeiAGpcw5H+Ij60fefvbrRljKQoD1AoDBwIJHl579Lh4AaeRs5fqrvBixdDCTJ
+	jzbDz57yRvCaVAev3XkwcPZQTqcbuP0WqirXDDLKeRQVdBsdHPlqPQe/Au/fri5R
+	z7ymgS/kvtHbWSBaCYcpvSHIekKzQSFvtdre37koiigeWnw/mGW280xsJREtuDV9
+	731ucw==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42g5q80601-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 25 Oct 2024 07:06:21 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49P76KmA024448
+	Fri, 25 Oct 2024 07:22:59 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49P7MwgK004582
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 25 Oct 2024 07:06:20 GMT
-Received: from [10.204.101.50] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+	Fri, 25 Oct 2024 07:22:58 GMT
+Received: from [10.231.216.207] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 25 Oct
- 2024 00:06:16 -0700
-Message-ID: <5352bc86-61d2-cf69-f608-6f6de3cfe8f5@quicinc.com>
-Date: Fri, 25 Oct 2024 12:36:13 +0530
+ 2024 00:22:56 -0700
+Message-ID: <46de0bfe-ebdd-4b37-a957-3c64e30a1376@quicinc.com>
+Date: Fri, 25 Oct 2024 15:22:54 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v4 16/28] media: iris: implement vb2 streaming ops
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/2] wifi: ath11k: support board-specific firmware
+ overrides
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <kvalo@kernel.org>, <quic_jjohnson@quicinc.com>,
+        <ath11k@lists.infradead.org>, <linux-wireless@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20241024002514.92290-1-quic_miaoqing@quicinc.com>
+ <20241024002514.92290-3-quic_miaoqing@quicinc.com>
+ <pdjhyrjoreiykv2tquvufjw3rkti5sxrjvpmkjhvkfasq7zbo4@xxntxdmhhyg5>
+ <bc3c06eb-1cb2-4cbb-aaad-95c09223f0cc@quicinc.com>
+ <ig3m3sgmnkgfmwrlglundhqif6rygzl7uh7rzoemrz3yxgvfpc@35a323mw2wbt>
 Content-Language: en-US
-To: Hans Verkuil <hverkuil@xs4all.nl>,
-        Vikash Garodia
-	<quic_vgarodia@quicinc.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        "Mauro Carvalho Chehab" <mchehab@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>
-CC: Sebastian Fricke <sebastian.fricke@collabora.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20241014-qcom-video-iris-v4-v4-0-c5eaa4e9ab9e@quicinc.com>
- <20241014-qcom-video-iris-v4-v4-16-c5eaa4e9ab9e@quicinc.com>
- <59047df4-1e5f-488f-a134-f8bad7cf655c@xs4all.nl>
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
-In-Reply-To: <59047df4-1e5f-488f-a134-f8bad7cf655c@xs4all.nl>
-Content-Type: text/plain; charset="UTF-8"
+From: Miaoqing Pan <quic_miaoqing@quicinc.com>
+In-Reply-To: <ig3m3sgmnkgfmwrlglundhqif6rygzl7uh7rzoemrz3yxgvfpc@35a323mw2wbt>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: d2pajItHgeRvqZLm08k-63NOAg-5nyPz
-X-Proofpoint-ORIG-GUID: d2pajItHgeRvqZLm08k-63NOAg-5nyPz
+X-Proofpoint-ORIG-GUID: vLY0gUNKwtSfUmcadLkU2VtZiE56iv5q
+X-Proofpoint-GUID: vLY0gUNKwtSfUmcadLkU2VtZiE56iv5q
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
- malwarescore=0 spamscore=0 clxscore=1015 lowpriorityscore=0
- mlxlogscore=999 priorityscore=1501 mlxscore=0 suspectscore=0 phishscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410250054
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 suspectscore=0
+ impostorscore=0 priorityscore=1501 mlxlogscore=970 bulkscore=0
+ lowpriorityscore=0 spamscore=0 phishscore=0 malwarescore=0 adultscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410250056
 
 
 
-On 10/23/2024 4:43 PM, Hans Verkuil wrote:
-> On 14/10/2024 11:07, Dikshita Agarwal wrote:
->> In stream on, send HFI_CMD_START on capture and
->> output planes to start the processing on respective planes.
+On 10/25/2024 2:01 PM, Dmitry Baryshkov wrote:
+> On Fri, Oct 25, 2024 at 10:56:02AM +0800, Miaoqing Pan wrote:
 >>
->> During stream off, send HFI_CMD_STOP to firmware which is
->> a synchronous command. After the response is received from
->> firmware, the session is closed on firmware.
 >>
->> Introduce different states for instance and state transitions.
+>> On 10/25/2024 3:39 AM, Dmitry Baryshkov wrote:
+>>> On Thu, Oct 24, 2024 at 08:25:14AM +0800, Miaoqing Pan wrote:
+>>>> QCA6698AQ IP core is the same as WCN6855 hw2.1, but it has different RF,
+>>>> IPA, thermal, RAM size and etc, so new firmware files used. This change
+>>>> allows board DT files to override the subdir of the firmware directory
+>>>> used to lookup the amss.bin and m3.bin.
+>>>
+>>> I have slight concerns regarding the _board_ DT files overriding the
+>>> subdir. This opens a can of worms, allowing per-board firmware sets,
+>>> which (as far as I understand) is far from being what driver maintainers
+>>> would like to see. This was required for ath10k-snoc devices, since
+>>> firmware for those platforms is signed by the vendor keys and it is
+>>> limited to a particular SoC or SoC family. For ath11k-pci there is no
+>>> such limitation.
+>>>
+>>> Would it be possible to use PCI subvendor / subdev to identify affected
+>>> cards? PCI Revision? Any other way to identify the device?  Please
+>>> provide lspci -nnvv for the affected device kind. Is there a way to
+>>> identify the RF part somehow?
 >>
->> IRIS_INST_INIT - video instance is opened.
->> IRIS_INST_INPUT_STREAMING - stream on is completed on output plane.
->> IRIS_INST_OUTPUT_STREAMING - stream on is completed on capture
->> plane.
->> IRIS_INST_STREAMING - stream on is completed on both output and
->> capture planes.
->> IRIS_INST_DEINIT - video instance is closed.
->> IRIS_INST_ERROR - error state.
+>> It's rather difficult, for WCN685x, there are multiple evolved subseries for
+>> customized products. e.g.
 >>
->>                    |
->>                    v
->>             -------------
->>   +---------|   INIT    |---------  +
->>   |         -------------           |
->>   |            ^    ^               |
->>   |           /      \              |
->>   |          /        \             |
->>   |         v          v            |
->>   |    -----------    -----------   |
->>   |   |   INPUT         OUTPUT  |   |
->>   |---| STREAMING     STREAMING |---|
->>   |    -----------    -----------   |
->>   |        ^            ^           |
->>   |         \          /            |
->>   |          \        /             |
->>   |           v      v              |
->>   |         -------------           |
->>   |--------|  STREAMING |-----------|
->>   |         -------------           |
->>   |               |                 |
->>   |               |                 |
->>   |               v                 |
->>   |          -----------            |
->>   +-------->|  DEINIT   |<----------+
->>   |          -----------            |
->>   |               |                 |
->>   |               |                 |
->>   |               v                 |
->>   |          ----------             |
->>   +-------->|   ERROR  |<-----------+
->>              ----------.
+>> QCA6698AQ/hw2.1
+>> QCA2066/hw2.1
+>> WCN6855/hw2.0/hw2.1
+>> WCN6856/hw2.1
 >>
->> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
->> ---
->>  drivers/media/platform/qcom/iris/Makefile          |   1 +
->>  drivers/media/platform/qcom/iris/iris_hfi_common.h |   2 +
->>  .../platform/qcom/iris/iris_hfi_gen1_command.c     |  82 +++++++++++++++-
->>  .../platform/qcom/iris/iris_hfi_gen1_defines.h     |  24 +++++
->>  .../platform/qcom/iris/iris_hfi_gen1_response.c    |  39 +++++++-
->>  .../platform/qcom/iris/iris_hfi_gen2_command.c     |  61 ++++++++++++
->>  .../platform/qcom/iris/iris_hfi_gen2_defines.h     |   2 +
->>  .../platform/qcom/iris/iris_hfi_gen2_response.c    |  32 ++++++-
->>  drivers/media/platform/qcom/iris/iris_instance.h   |   4 +
->>  drivers/media/platform/qcom/iris/iris_state.c      | 104 +++++++++++++++++++++
->>  drivers/media/platform/qcom/iris/iris_state.h      |  58 ++++++++++++
->>  drivers/media/platform/qcom/iris/iris_utils.c      |  11 ++-
->>  drivers/media/platform/qcom/iris/iris_utils.h      |   2 +-
->>  drivers/media/platform/qcom/iris/iris_vb2.c        |  70 ++++++++++++++
->>  drivers/media/platform/qcom/iris/iris_vb2.h        |   3 +
->>  drivers/media/platform/qcom/iris/iris_vdec.c       |  75 +++++++++++++++
->>  drivers/media/platform/qcom/iris/iris_vdec.h       |   3 +
->>  drivers/media/platform/qcom/iris/iris_vidc.c       |  32 ++++++-
->>  18 files changed, 593 insertions(+), 12 deletions(-)
->>
+>> They have the same PCIe ID (17cb:1103), the commit 5dc9d1a55e95 ("wifi:
+>> ath11k: add support for QCA2066") reads TCSR_SOC_HW_SUB_VER to enumerate all
+>> QCA2066 cards, it lacks of flexibility, as the list will become longer and
+>> longer. But it's the only choice for QCA2066, as it's customized for X86
+>> platform which without DT files.
 > 
-> <snip>
+> I guess, this is closer to Kalle's expectations: being able to detect
+> the hardware instead of adding DT properties.
 > 
->> diff --git a/drivers/media/platform/qcom/iris/iris_vb2.c b/drivers/media/platform/qcom/iris/iris_vb2.c
->> index f89891e52fde..75c1364709d1 100644
->> --- a/drivers/media/platform/qcom/iris/iris_vb2.c
->> +++ b/drivers/media/platform/qcom/iris/iris_vb2.c
->> @@ -6,6 +6,7 @@
->>  #include "iris_buffer.h"
->>  #include "iris_instance.h"
->>  #include "iris_vb2.h"
->> +#include "iris_vdec.h"
->>  #include "iris_vpu_buffer.h"
->>  
->>  int iris_vb2_queue_setup(struct vb2_queue *q,
->> @@ -22,6 +23,10 @@ int iris_vb2_queue_setup(struct vb2_queue *q,
->>  	inst = vb2_get_drv_priv(q);
->>  
->>  	mutex_lock(&inst->lock);
->> +	if (inst->state == IRIS_INST_ERROR) {
->> +		ret = -EBUSY;
->> +		goto unlock;
->> +	}
->>  
->>  	core = inst->core;
->>  	f = V4L2_TYPE_IS_OUTPUT(q->type) ? inst->fmt_src : inst->fmt_dst;
->> @@ -49,6 +54,10 @@ int iris_vb2_queue_setup(struct vb2_queue *q,
->>  			dev_err(core->dev, "session open failed\n");
->>  			goto unlock;
->>  		}
->> +
->> +		ret = iris_inst_change_state(inst, IRIS_INST_INIT);
->> +		if (ret)
->> +			goto unlock;
->>  	}
->>  
->>  	buffers = &inst->buffers[buffer_type];
->> @@ -75,3 +84,64 @@ int iris_vb2_queue_setup(struct vb2_queue *q,
->>  
->>  	return ret;
->>  }
->> +
->> +int iris_vb2_start_streaming(struct vb2_queue *q, unsigned int count)
->> +{
->> +	struct iris_inst *inst;
->> +	int ret = 0;
->> +
->> +	inst = vb2_get_drv_priv(q);
->> +
->> +	if (V4L2_TYPE_IS_CAPTURE(q->type) && inst->state == IRIS_INST_INIT)
->> +		return 0;
->> +
->> +	mutex_lock(&inst->lock);
->> +	if (inst->state == IRIS_INST_ERROR) {
->> +		ret = -EBUSY;
+>> So for MSM those have DT file platforms, like SA8775P-RIDE/QCS8300-RIDE both
+>> attached to QCA6698AQ, we can specify the correct firmware to
+>> 'ath11k/WCN6855/hw2.1/qca6698aq', so it's not per-board firmware, it depends
+>> on the type of the products(x86 windows, IoT products or AUTO).
 > 
-> If an error occurs during start_streaming, then all queued buffers must be
-> returned to vb2 in state VB2_BUF_STATE_QUEUED.
-> 
->> +		goto error;
->> +	}
->> +
->> +	if (!V4L2_TYPE_IS_OUTPUT(q->type) &&
->> +	    !V4L2_TYPE_IS_CAPTURE(q->type)) {
->> +		ret = -EINVAL;
->> +		goto error;
->> +	}
->> +
->> +	if (V4L2_TYPE_IS_OUTPUT(q->type))
->> +		ret = iris_vdec_streamon_input(inst);
->> +	else if (V4L2_TYPE_IS_CAPTURE(q->type))
->> +		ret = iris_vdec_streamon_output(inst);
->> +	if (ret)
->> +		goto error;
->> +
->> +	mutex_unlock(&inst->lock);
->> +
->> +	return ret;
->> +
->> +error:
->> +	iris_inst_change_state(inst, IRIS_INST_ERROR);
->> +	mutex_unlock(&inst->lock);
->> +
->> +	return ret;
->> +}
->> +
->> +void iris_vb2_stop_streaming(struct vb2_queue *q)
->> +{
->> +	struct iris_inst *inst;
->> +
->> +	inst = vb2_get_drv_priv(q);
->> +
->> +	if (V4L2_TYPE_IS_CAPTURE(q->type) && inst->state == IRIS_INST_INIT)
->> +		return;
->> +
->> +	mutex_lock(&inst->lock);
->> +
->> +	if (!V4L2_TYPE_IS_OUTPUT(q->type) &&
->> +	    !V4L2_TYPE_IS_CAPTURE(q->type))
->> +		goto exit;
->> +
->> +	iris_vdec_session_streamoff(inst, q->type);
->> +
->> +exit:
-> 
-> stop_streaming must return all queued buffers to vb2 in state VB2_BUF_STATE_ERROR.
-> 
->> +	mutex_unlock(&inst->lock);
->> +}
->> diff --git a/drivers/media/platform/qcom/iris/iris_vb2.h b/drivers/media/platform/qcom/iris/iris_vb2.h
->> index 78157a97b86e..bc3bb830c2ba 100644
->> --- a/drivers/media/platform/qcom/iris/iris_vb2.h
->> +++ b/drivers/media/platform/qcom/iris/iris_vb2.h
->> @@ -9,4 +9,7 @@
->>  int iris_vb2_queue_setup(struct vb2_queue *q,
->>  			 unsigned int *num_buffers, unsigned int *num_planes,
->>  			 unsigned int sizes[], struct device *alloc_devs[]);
->> +int iris_vb2_start_streaming(struct vb2_queue *q, unsigned int count);
->> +void iris_vb2_stop_streaming(struct vb2_queue *q);
->> +
->>  #endif
->> diff --git a/drivers/media/platform/qcom/iris/iris_vdec.c b/drivers/media/platform/qcom/iris/iris_vdec.c
->> index 66a54771b9e8..44372e2811c3 100644
->> --- a/drivers/media/platform/qcom/iris/iris_vdec.c
->> +++ b/drivers/media/platform/qcom/iris/iris_vdec.c
->> @@ -241,3 +241,78 @@ int iris_vdec_subscribe_event(struct iris_inst *inst, const struct v4l2_event_su
->>  
->>  	return ret;
->>  }
->> +
->> +static void iris_vdec_kill_session(struct iris_inst *inst)
->> +{
->> +	const struct iris_hfi_command_ops *hfi_ops = inst->core->hfi_ops;
->> +
->> +	if (!inst->session_id)
->> +		return;
->> +
->> +	hfi_ops->session_close(inst);
->> +	iris_inst_change_state(inst, IRIS_INST_ERROR);
->> +}
->> +
->> +void iris_vdec_session_streamoff(struct iris_inst *inst, u32 plane)
->> +{
->> +	const struct iris_hfi_command_ops *hfi_ops = inst->core->hfi_ops;
->> +	int ret;
->> +
->> +	ret = hfi_ops->session_stop(inst, plane);
->> +	if (ret)
->> +		goto error;
->> +
->> +	ret = iris_inst_state_change_streamoff(inst, plane);
->> +	if (ret)
->> +		goto error;
->> +
->> +	return;
->> +
->> +error:
->> +	iris_vdec_kill_session(inst);
->> +}
->> +
->> +static int iris_vdec_process_streamon_input(struct iris_inst *inst)
->> +{
->> +	const struct iris_hfi_command_ops *hfi_ops = inst->core->hfi_ops;
->> +	int ret;
->> +
->> +	ret = hfi_ops->session_start(inst, V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE);
->> +	if (ret)
->> +		return ret;
->> +
->> +	return iris_inst_state_change_streamon(inst, V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE);
->> +}
->> +
->> +int iris_vdec_streamon_input(struct iris_inst *inst)
->> +{
->> +	return iris_vdec_process_streamon_input(inst);
->> +}
->> +
->> +static int iris_vdec_process_streamon_output(struct iris_inst *inst)
->> +{
->> +	const struct iris_hfi_command_ops *hfi_ops = inst->core->hfi_ops;
->> +	int ret;
->> +
->> +	ret = hfi_ops->session_start(inst, V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE);
->> +	if (ret)
->> +		return ret;
->> +
->> +	return iris_inst_state_change_streamon(inst, V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE);
->> +}
->> +
->> +int iris_vdec_streamon_output(struct iris_inst *inst)
->> +{
->> +	int ret;
->> +
->> +	ret = iris_vdec_process_streamon_output(inst);
->> +	if (ret)
->> +		goto error;
->> +
->> +	return ret;
->> +
->> +error:
->> +	iris_vdec_session_streamoff(inst, V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE);
->> +
->> +	return ret;
->> +}
->> diff --git a/drivers/media/platform/qcom/iris/iris_vdec.h b/drivers/media/platform/qcom/iris/iris_vdec.h
->> index d7b8a0ad6fa8..b3299164f823 100644
->> --- a/drivers/media/platform/qcom/iris/iris_vdec.h
->> +++ b/drivers/media/platform/qcom/iris/iris_vdec.h
->> @@ -14,5 +14,8 @@ int iris_vdec_enum_fmt(struct iris_inst *inst, struct v4l2_fmtdesc *f);
->>  int iris_vdec_try_fmt(struct iris_inst *inst, struct v4l2_format *f);
->>  int iris_vdec_s_fmt(struct iris_inst *inst, struct v4l2_format *f);
->>  int iris_vdec_subscribe_event(struct iris_inst *inst, const struct v4l2_event_subscription *sub);
->> +int iris_vdec_streamon_input(struct iris_inst *inst);
->> +int iris_vdec_streamon_output(struct iris_inst *inst);
->> +void iris_vdec_session_streamoff(struct iris_inst *inst, u32 plane);
->>  
->>  #endif
->> diff --git a/drivers/media/platform/qcom/iris/iris_vidc.c b/drivers/media/platform/qcom/iris/iris_vidc.c
->> index 60ee05b67f86..615f57bfaddc 100644
->> --- a/drivers/media/platform/qcom/iris/iris_vidc.c
->> +++ b/drivers/media/platform/qcom/iris/iris_vidc.c
->> @@ -142,10 +142,12 @@ int iris_open(struct file *filp)
->>  
->>  	inst->core = core;
->>  	inst->session_id = hash32_ptr(inst);
->> +	inst->state = IRIS_INST_DEINIT;
->>  
->>  	mutex_init(&inst->lock);
->>  	mutex_init(&inst->ctx_q_lock);
->>  	init_completion(&inst->completion);
->> +	init_completion(&inst->flush_completion);
->>  
->>  	iris_v4l2_fh_init(inst);
->>  
->> @@ -191,6 +193,9 @@ static void iris_session_close(struct iris_inst *inst)
->>  	bool wait_for_response = true;
->>  	int ret;
->>  
->> +	if (inst->state == IRIS_INST_DEINIT)
->> +		return;
->> +
->>  	reinit_completion(&inst->completion);
->>  
->>  	ret = hfi_ops->session_close(inst);
->> @@ -198,7 +203,7 @@ static void iris_session_close(struct iris_inst *inst)
->>  		wait_for_response = false;
->>  
->>  	if (wait_for_response)
->> -		iris_wait_for_session_response(inst);
->> +		iris_wait_for_session_response(inst, false);
->>  }
->>  
->>  int iris_close(struct file *filp)
->> @@ -211,6 +216,7 @@ int iris_close(struct file *filp)
->>  	mutex_lock(&inst->lock);
->>  	iris_vdec_inst_deinit(inst);
->>  	iris_session_close(inst);
->> +	iris_inst_change_state(inst, IRIS_INST_DEINIT);
->>  	iris_v4l2_fh_deinit(inst);
->>  	iris_remove_session(inst);
->>  	mutex_unlock(&inst->lock);
->> @@ -238,7 +244,14 @@ static int iris_try_fmt_vid_mplane(struct file *filp, void *fh, struct v4l2_form
->>  	int ret;
->>  
->>  	mutex_lock(&inst->lock);
->> +	if (inst->state == IRIS_INST_ERROR) {
->> +		ret = -EBUSY;
->> +		goto unlock;
->> +	}
-> 
-> Why this check? You should be able to try a format at any time.
-> 
-That's correct, will remove the state check from here.
->> +
->>  	ret = iris_vdec_try_fmt(inst, f);
->> +
->> +unlock:
->>  	mutex_unlock(&inst->lock);
->>  
->>  	return ret;
->> @@ -250,7 +263,14 @@ static int iris_s_fmt_vid_mplane(struct file *filp, void *fh, struct v4l2_format
->>  	int ret;
->>  
->>  	mutex_lock(&inst->lock);
->> +	if (inst->state == IRIS_INST_ERROR) {
->> +		ret = -EBUSY;
->> +		goto unlock;
->> +	}
-I think it should be ok to remove check from s_fmt as well.
->> +
->>  	ret = iris_vdec_s_fmt(inst, f);
->> +
->> +unlock:
->>  	mutex_unlock(&inst->lock);
->>  
->>  	return ret;
->> @@ -262,6 +282,11 @@ static int iris_g_fmt_vid_mplane(struct file *filp, void *fh, struct v4l2_format
->>  	int ret = 0;
->>  
->>  	mutex_lock(&inst->lock);
->> +	if (inst->state == IRIS_INST_ERROR) {
->> +		ret = -EBUSY;
->> +		goto unlock;
->> +	}
-> 
-> Same question, this should be fine at any time.
-> 
-Sure, will remove
+> No-no-no and no. The firmware used must not be specific to the product
+> type.  This is what everybody here is trying to avoid. Please try
+> following the QCA2066 approach instead. And note that it could use new
+> TLD as it perfectly shows itself as a different hardware kind.
 
-Thanks,
-Dikshita
->> +
->>  	if (V4L2_TYPE_IS_OUTPUT(f->type))
->>  		memcpy(f, inst->fmt_src, sizeof(*f));
->>  	else if (V4L2_TYPE_IS_CAPTURE(f->type))
->> @@ -269,6 +294,7 @@ static int iris_g_fmt_vid_mplane(struct file *filp, void *fh, struct v4l2_format
->>  	else
->>  		ret = -EINVAL;
->>  
->> +unlock:
->>  	mutex_unlock(&inst->lock);
->>  
->>  	return ret;
->> @@ -402,6 +428,8 @@ static struct v4l2_file_operations iris_v4l2_file_ops = {
->>  
->>  static const struct vb2_ops iris_vb2_ops = {
->>  	.queue_setup                    = iris_vb2_queue_setup,
->> +	.start_streaming                = iris_vb2_start_streaming,
->> +	.stop_streaming                 = iris_vb2_stop_streaming,
->>  };
->>  
->>  static const struct v4l2_ioctl_ops iris_v4l2_ioctl_ops = {
->> @@ -421,6 +449,8 @@ static const struct v4l2_ioctl_ops iris_v4l2_ioctl_ops = {
->>  	.vidioc_g_selection             = iris_g_selection,
->>  	.vidioc_subscribe_event         = iris_subscribe_event,
->>  	.vidioc_unsubscribe_event       = iris_unsubscribe_event,
->> +	.vidioc_streamon                = v4l2_m2m_ioctl_streamon,
->> +	.vidioc_streamoff               = v4l2_m2m_ioctl_streamoff,
->>  };
->>  
->>  void iris_init_ops(struct iris_core *core)
->>
+Actually, TCSR_SOC_HW_SUB_VER is not SOC register, it's a TLMM hw 
+revision register in BAR0 space, it's hard to maintain the list.
+
+We're going to have another problem to enable NFA765 m.2 card for IoT 
+platforms, which has different feature sets with X86 platform, so also 
+new firmware should be used. In this case, QCA2066 approach not works. 
+Seems DT approach is only choice.
+
+Could you advice ?
+
+
 > 
+>> 0000:01:00.0 Network controller [0280]: Qualcomm QCNFA765 Wireless Network
+>> Adapter [17cb:1103] (rev 01)
+>> 	Subsystem: Qualcomm QCNFA765 Wireless Network Adapter [17cb:0108]
+>> 	Device tree node: /sys/firmware/devicetree/base/pci@1c00000/pcie@0/wifi@0
+>>
+>>
+>>>
+>>> Could you possibly clarify, how this situation is handled in Windows
+>>> world?
+>>
+>> X86 platforms use standard m.2 PCIe card, and it will only use the default
+>> main firmware files, as they without DT files.
+> 
+> So QCA6698AQ cannot appear on an M.2 PCIe card?
+
+No, but no m.2 PCIe card so far. It depends on power sequencing module 
+to do power up.
+
+> 
+>>
+>>>
+>>>>
+>>>> For example:
+>>>>
+>>>> - ath11k/WCN6855/hw2.1/amss.bin,
+>>>>     ath11k/WCN6855/hw2.1/m3.bin: main firmware files, used by default
+>>>>
+>>>> - ath11k/WCN6855/hw2.1/qca6698aq/amss.bin,
+>>>>     ath11k/WCN6855/hw2.1/qca6698aq/m3.bin
+>>>
+> 
+
 
