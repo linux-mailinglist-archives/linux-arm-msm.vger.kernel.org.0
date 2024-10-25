@@ -1,660 +1,247 @@
-Return-Path: <linux-arm-msm+bounces-35909-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35910-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 774D79B0820
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 17:26:10 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DD5CC9B0834
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 17:28:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E7A8B1F21359
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 15:26:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9CF402846BB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 15:27:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D59920D4F7;
-	Fri, 25 Oct 2024 15:23:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9702013B294;
+	Fri, 25 Oct 2024 15:27:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VbPZgpMV"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Jv1cRHiS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A79E20D4E3
-	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2024 15:23:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C692A21A4A6
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2024 15:27:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729869792; cv=none; b=Ck3AKcdu0pNtGT+XdP6vhhAxGvvSng5ZX/ireMbX7eod40Y+ftmq4Ez7HAQXUwXtQAIWrAuVIVIuZqV4a/HGq61Dt52JXbQ7ioGpU0VMdm4rM2czzJEcXRuZ4gQw0qEYkEhK8Dzuc5e4bmSn10twHsEJajf3Q3zAo7yBQy3OcKg=
+	t=1729870061; cv=none; b=trIU4jFrz2WS8vlCnC0c6AI/ESgyRzU0D24RtAcUEjwYKPZw9yzQ7eFOzRwXk18pNOIjxtzNmYdacvWhL0GfuWZqs3qZDJZebM9crsiIE0/3a3CNGs1NFVMOR3I5BQN3rBmRAfHAA+mmMwTWXj+2ZGMJioY5UIejv40eEG+AGhQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729869792; c=relaxed/simple;
-	bh=8FbeicR87fUKKJuKBDf5OiGYnoTGgTDP768BkLjnows=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=b4y/rMb1w/DtQ+2eoPsjDCVJ3r0ivoIDf+OQyXFsUb3mcfXZ9cRXlf9+4JEEzCMdntK6AXGw/DcE26slgNVnbhAnEZ8fHGsqtxmD5juwecGouxMEeZRprivVgMeTZe1EN5kRlLAZsloo/UJ8xAJy05j1zdrrjqZYsmuhjTTbnow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VbPZgpMV; arc=none smtp.client-ip=209.85.208.182
+	s=arc-20240116; t=1729870061; c=relaxed/simple;
+	bh=YPz8n32v4Or352YKfavyNO4WwbwT2nTFjcL2sYaypOU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Q0qBND0wTj2jWXZ1liS1+8lSpVuOXGIIWSXvfmueejiZjg0Wlw1jI1SMBMK3zI3bdA+IxYDbU80hUrGUD0TGwM2Amc+TWFjd03dplntIgYEA0xP4hx7GFTWQ2uLrw4O2SADKuKzTYoQYp8FJ9BA8Wn9Jwv2nssDwCjBxV/TfEO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Jv1cRHiS; arc=none smtp.client-ip=209.85.208.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2fb49510250so23275751fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2024 08:23:08 -0700 (PDT)
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2fb51f39394so23044951fa.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2024 08:27:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729869787; x=1730474587; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=n/+QskIXdzcW+et8E4WD6OyvnlorVlqZ0XDg9qDj3+c=;
-        b=VbPZgpMVAgKQ/frIIGHJLN4BXqGnZ4gvUAa62SefDC7PZQyuEQgJ4AU91IMlCjAuwp
-         zSDIQlmvYswzluoTCV5+72aTmmsB+tYFJnSYJuix9b9f4mcToD1QDuXuoufeIBjmAc5V
-         3edCtyAko53gyYgMNrNh/du4376UUG9IuPbjRlWQp5kV3D1KU2i3+nbRC9uOIc3Hl6zj
-         9cGEzGwPHkhAYeL9+pMWO+gPcAlT48W23s4m4UcHSpIUeZeYzSY8KcO9tS+FyWyaGnKd
-         Ma37hoKa1yHripU8A2J5xjqT8oieftayD2WNarxXpmGaOZVV7pi4f532VsW8vyYzxFsK
-         G45A==
+        d=linaro.org; s=google; t=1729870057; x=1730474857; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZLxMD3LYpw0aYM0hbqBZVGj7CYv7DfIj6AfWn1gCd9U=;
+        b=Jv1cRHiS2xIU411IJzoF9y9SxLZT1kxnTkxAMTb20G3CU1ehHalH7mmJTu0BpLSKcp
+         bH8jBmUzGQaMuMs7WqHWd1RwK1co0ekjzifdhMOQmmTE5ADc5QhX5DUMAt16xf1Bxxc9
+         ++4WuYf0r/Q/gDxXMoburDK2sWbZhxg3DvFeu80PEIbo6hxjLJFgbOs7g1Bikc9SQRwB
+         pF4ItVgWdATSmhHoc3DLJuSNbiG83l5Gzqc4Jkj4EdD5JkmTRUEgaJl+YJyNcqhcdmbj
+         b++ne/FSRFy4RTiwjvXrGPdVgI3/auWvOLHsKdy8Sf0ldoCx/49MwrbU3vx7WrOJaff4
+         K89A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729869787; x=1730474587;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=n/+QskIXdzcW+et8E4WD6OyvnlorVlqZ0XDg9qDj3+c=;
-        b=pcAlonU5/NeXMNR+s2iZzZCeyVA+eUwhuZvHEoF6xDf5Af7HXX92StKXtyHYHghWuL
-         rSrYw48MSRi7cqJgVC7z66+A4TEwxWDsfZpEzDbxq1joD1EV7m4pRvtPwfu/kILu+ATe
-         sxSEhre7X9cVL1wPL80kMOMOGnqlVsJMlg+0ze7lQOJ6DqBExRvZyL14HYg4M+pWMJW0
-         2SjSsP/11Nil90J+h0/390pXo3rIjziKsq/87/PM2NwByRo3YuCBxSSUK9pIVq2SkIv8
-         Y+R6z1HOsvhp9m9eTh85+PWo2G4iRP8BY002C0CvGNl7CpOmiEvRt19xCdCpjcP7HvTk
-         rBSw==
-X-Gm-Message-State: AOJu0YzbsVGMp4VGYvpirY7Usyl1ltIAxRA4NNGlk9YvAISZw8sWfTI0
-	HcgIBrKDTwQvyu2r9UZ2DDbAHpPJ/R7IF1BOCWZwpAyPJQoBsa/aC4yo20JCU84=
-X-Google-Smtp-Source: AGHT+IF9wgbrox6j6lN8CGv6/Q/9ChwfZpJKyciZPAPHKN8VsER20WcxzNSCnBm/r/jsLuBJ0VSU1w==
-X-Received: by 2002:a2e:be26:0:b0:2fb:4bee:47ec with SMTP id 38308e7fff4ca-2fc9d59ef88mr59347791fa.33.1729869787202;
-        Fri, 25 Oct 2024 08:23:07 -0700 (PDT)
-Received: from [127.0.1.1] (2001-14ba-a0c3-3a00-70b-e6fc-b322-6a1b.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:70b:e6fc:b322:6a1b])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2fcb46017bdsm2135721fa.104.2024.10.25.08.23.03
+        d=1e100.net; s=20230601; t=1729870057; x=1730474857;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZLxMD3LYpw0aYM0hbqBZVGj7CYv7DfIj6AfWn1gCd9U=;
+        b=D+tiFzlyTWT28o33uU59K1ZLWI6eAw9FW8IG9C/KnY+eU8geE8thjV7foPwvi2xrj/
+         LV00GPk6EJh5CVcdyS3gB3iU4XOqfgcOGhwO+4WN4//V6BHFE8+ZZlFrH64pziI5qSnO
+         qbh5GPNC6ajYWtjSjwMn9ExIHDUOA7fPRgENXwtxmH4FEWfRe7ps3UnRCZjuHMLuzSsq
+         9kYvyEmqm+KJnJyTDvIb5JlbBh6KDzHFoN25VCyKF5wv7KURnOeKfO7ONhCd5JuhJwUA
+         l4s5oknkIrrGrk5TBei87g73KueFdlDjd+kHz/f3jTWv7O5kC9c3apFgkfK9nG+c89h0
+         lb6A==
+X-Forwarded-Encrypted: i=1; AJvYcCXvUwtXKALHMspHbvCjT+DwIT2p2HtZ7xuJI/DTbBGNGhjep7fflaJYwy4eklH/VJ78K2nTGL57cflfV7B/@vger.kernel.org
+X-Gm-Message-State: AOJu0YyKL8q2LYf9+R0e1s4EuCmwLk1BJ+qe81F5+0QuPBf6fndtCGHN
+	Nv8VdyfKK+8a2IQGpAhYC9idUf2NfL6coyR+9tT6moXnjkN2sBqd1alb/W//2Ic=
+X-Google-Smtp-Source: AGHT+IHymibtLZvbqHExD9TlPcDKRRIDD1wUReJVGtgRQre4wReQTIklKIuoBWC9W7yPTptEs0wKaw==
+X-Received: by 2002:a2e:8507:0:b0:2fb:51e0:91b with SMTP id 38308e7fff4ca-2fca828d9ebmr33654021fa.43.1729870056799;
+        Fri, 25 Oct 2024 08:27:36 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2fcb4519adfsm2236771fa.41.2024.10.25.08.27.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Oct 2024 08:23:05 -0700 (PDT)
+        Fri, 25 Oct 2024 08:27:35 -0700 (PDT)
+Date: Fri, 25 Oct 2024 18:27:33 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 25 Oct 2024 18:22:54 +0300
-Subject: [PATCH v2 2/2] soc: qcom: llcc: add support for SAR2130P and
- SAR1130P
+To: Miaoqing Pan <quic_miaoqing@quicinc.com>
+Cc: kvalo@kernel.org, quic_jjohnson@quicinc.com, 
+	ath11k@lists.infradead.org, linux-wireless@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] wifi: ath11k: support board-specific firmware
+ overrides
+Message-ID: <ksyukz7oouw2ilxxpx5nhnshu3zmnd5rtgeloea2vykzzn6ii5@unvpx26neirt>
+References: <pdjhyrjoreiykv2tquvufjw3rkti5sxrjvpmkjhvkfasq7zbo4@xxntxdmhhyg5>
+ <bc3c06eb-1cb2-4cbb-aaad-95c09223f0cc@quicinc.com>
+ <ig3m3sgmnkgfmwrlglundhqif6rygzl7uh7rzoemrz3yxgvfpc@35a323mw2wbt>
+ <46de0bfe-ebdd-4b37-a957-3c64e30a1376@quicinc.com>
+ <CAA8EJpr4zgV4Sa4sPdCToQWs+CFJu6Xz6CPcPyHDhDczmuzj=g@mail.gmail.com>
+ <06ff37ef-dfda-470f-80f7-0f54bae25686@quicinc.com>
+ <CAA8EJppFCXeUAZax+jv42JrKYgLmaPQNpXhn-06q_K_uB9JZLQ@mail.gmail.com>
+ <46b18b39-9e88-42f8-aa88-5b527fc92a9f@quicinc.com>
+ <xp5j6kkpggfhxvzuozqcvs2ugon5xexjgzl24zjlen7kggdaju@vd3okew4vcsy>
+ <49313be4-b0e2-4ec4-8663-bd4daf20f78a@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241025-sar2130p-llcc-v2-2-7455dc40e952@linaro.org>
-References: <20241025-sar2130p-llcc-v2-0-7455dc40e952@linaro.org>
-In-Reply-To: <20241025-sar2130p-llcc-v2-0-7455dc40e952@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Conor Dooley <conor@kernel.org>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=13837;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=8FbeicR87fUKKJuKBDf5OiGYnoTGgTDP768BkLjnows=;
- b=owEBbQKS/ZANAwAKARTbcu2+gGW4AcsmYgBnG7fP0YqsE/JOEf2MgIk/aicNopE/N6HwEiRny
- S+NiqtnEveJAjMEAAEKAB0WIQRdB85SOKWMgfgVe+4U23LtvoBluAUCZxu3zwAKCRAU23LtvoBl
- uCO2EADAz5LE9YpH9WKIT3z3KBepk2dxGH8qbSjm8trAhHCGeulGwKDcuu2bYCTNmGKuaDm8+L8
- tfmzGNyTEA0naacr7liogC9jYZQPJzOESppXJDWfry/SpycgZP4mWJq+d4LrwZpw2hx10mvcWDY
- ISxhWXt7RfVstYAeTngVrMeaZmOZQwXGf8UXlOCMB4IYs6PYOxeD3bVcsk2WYOcFP+ULmTf2u/L
- QWV70hVk1YEkE1vJ5klHPyCeKaoZHGLq8Rz0npKuQpoBwMNULOunDMML48TRvHGT4HwopLV2pIY
- LLCIiyj81FFguu3k0BoNhdKuqzrr4DgLj7f0YWYUB7C0C4OYUY33hiaQ3z5pb/9OzkA2GboeZGK
- zaowolFsMcY9lLgQbddKF5QDnV36kMw/dDLafpbooKAqTXH/vKw/yNcZtQROjV05wig6fTz46yz
- FgltI2hTDXajB2Tmmbls28ihsuUmnzWwhPz09n9m2ybvpfUSB3A/YS4vCAWJB8I8N84XE9Ll+RM
- KraHwZhOZ7Tem+gg5y3oLT5I4SxNhx6+LF/HWEn6aH85bZZFXPU90ZkS5P4VHBW7+fRRwAdFH/g
- yQPqfx3laXV2VB/8JIaQlWVsD8D8eoZFBUayeFkDAGo6q6cjvFDFH3L0PmXDTzVUUXu8M2/mo9R
- uAim5uZlR2heP7A==
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <49313be4-b0e2-4ec4-8663-bd4daf20f78a@quicinc.com>
 
-Implement necessary support for the LLCC control on the SAR1130P and
-SAR2130P platforms. These two platforms use different ATTR1_MAX_CAP
-shift and also require manual override for num_banks.
+On Fri, Oct 25, 2024 at 10:23:45PM +0800, Miaoqing Pan wrote:
+> 
+> 
+> On 10/25/2024 10:01 PM, Dmitry Baryshkov wrote:
+> > On Fri, Oct 25, 2024 at 09:43:04PM +0800, Miaoqing Pan wrote:
+> > > 
+> > > 
+> > > On 10/25/2024 8:21 PM, Dmitry Baryshkov wrote:
+> > > > On Fri, 25 Oct 2024 at 15:03, Miaoqing Pan <quic_miaoqing@quicinc.com> wrote:
+> > > > > 
+> > > > > 
+> > > > > 
+> > > > > On 10/25/2024 6:20 PM, Dmitry Baryshkov wrote:
+> > > > > > On Fri, 25 Oct 2024 at 10:23, Miaoqing Pan <quic_miaoqing@quicinc.com> wrote:
+> > > > > > > 
+> > > > > > > 
+> > > > > > > 
+> > > > > > > On 10/25/2024 2:01 PM, Dmitry Baryshkov wrote:
+> > > > > > > > On Fri, Oct 25, 2024 at 10:56:02AM +0800, Miaoqing Pan wrote:
+> > > > > > > > > 
+> > > > > > > > > 
+> > > > > > > > > On 10/25/2024 3:39 AM, Dmitry Baryshkov wrote:
+> > > > > > > > > > On Thu, Oct 24, 2024 at 08:25:14AM +0800, Miaoqing Pan wrote:
+> > > > > > > > > > > QCA6698AQ IP core is the same as WCN6855 hw2.1, but it has different RF,
+> > > > > > > > > > > IPA, thermal, RAM size and etc, so new firmware files used. This change
+> > > > > > > > > > > allows board DT files to override the subdir of the firmware directory
+> > > > > > > > > > > used to lookup the amss.bin and m3.bin.
+> > > > > > > > > > 
+> > > > > > > > > > I have slight concerns regarding the _board_ DT files overriding the
+> > > > > > > > > > subdir. This opens a can of worms, allowing per-board firmware sets,
+> > > > > > > > > > which (as far as I understand) is far from being what driver maintainers
+> > > > > > > > > > would like to see. This was required for ath10k-snoc devices, since
+> > > > > > > > > > firmware for those platforms is signed by the vendor keys and it is
+> > > > > > > > > > limited to a particular SoC or SoC family. For ath11k-pci there is no
+> > > > > > > > > > such limitation.
+> > > > > > > > > > 
+> > > > > > > > > > Would it be possible to use PCI subvendor / subdev to identify affected
+> > > > > > > > > > cards? PCI Revision? Any other way to identify the device?  Please
+> > > > > > > > > > provide lspci -nnvv for the affected device kind. Is there a way to
+> > > > > > > > > > identify the RF part somehow?
+> > > > > > > > > 
+> > > > > > > > > It's rather difficult, for WCN685x, there are multiple evolved subseries for
+> > > > > > > > > customized products. e.g.
+> > > > > > > > > 
+> > > > > > > > > QCA6698AQ/hw2.1
+> > > > > > > > > QCA2066/hw2.1
+> > > > > > > > > WCN6855/hw2.0/hw2.1
+> > > > > > > > > WCN6856/hw2.1
+> > > > > > > > > 
+> > > > > > > > > They have the same PCIe ID (17cb:1103), the commit 5dc9d1a55e95 ("wifi:
+> > > > > > > > > ath11k: add support for QCA2066") reads TCSR_SOC_HW_SUB_VER to enumerate all
+> > > > > > > > > QCA2066 cards, it lacks of flexibility, as the list will become longer and
+> > > > > > > > > longer. But it's the only choice for QCA2066, as it's customized for X86
+> > > > > > > > > platform which without DT files.
+> > > > > > > > 
+> > > > > > > > I guess, this is closer to Kalle's expectations: being able to detect
+> > > > > > > > the hardware instead of adding DT properties.
+> > > > > > > > 
+> > > > > > > > > So for MSM those have DT file platforms, like SA8775P-RIDE/QCS8300-RIDE both
+> > > > > > > > > attached to QCA6698AQ, we can specify the correct firmware to
+> > > > > > > > > 'ath11k/WCN6855/hw2.1/qca6698aq', so it's not per-board firmware, it depends
+> > > > > > > > > on the type of the products(x86 windows, IoT products or AUTO).
+> > > > > > > > 
+> > > > > > > > No-no-no and no. The firmware used must not be specific to the product
+> > > > > > > > type.  This is what everybody here is trying to avoid. Please try
+> > > > > > > > following the QCA2066 approach instead. And note that it could use new
+> > > > > > > > TLD as it perfectly shows itself as a different hardware kind.
+> > > > > > > 
+> > > > > > > Actually, TCSR_SOC_HW_SUB_VER is not SOC register, it's a TLMM hw
+> > > > > > > revision register in BAR0 space, it's hard to maintain the list.
+> > > > > > 
+> > > > > > How is it so?
+> > > > > 
+> > > > > I think QCA2066 approach is just a workaround. Different batches of chip
+> > > > > manufacture has different value in TCSR_SOC_HW_SUB_VER.
+> > > > 
+> > > > Ok. So, subvendor / subdevice?
+> > > 
+> > > The 'subvendor' is fixed to 0x17cb, so it's useless. And I don't have enough
+> > > samples to decide to use 'subdevice', it's a risk for existing devices.
+> > 
+> > What kind of risk? If subvendor is fixed, then it's Qualcomm who
+> > enumerates subdevices.
+> 
+> It's risk for there is not enough sample card to verify. Subdevice is never
+> used by ath1xk drivers.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/soc/qcom/llcc-qcom.c       | 460 ++++++++++++++++++++++++++++++++++++-
- include/linux/soc/qcom/llcc-qcom.h |  12 +
- 2 files changed, 466 insertions(+), 6 deletions(-)
+Oh, so it's just about development. I'd say, please discuss such risks
+with your management, unless Kalle or Jeff disagree with using the
+subdevice for identification.
 
-diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-index a470285f54a875bf2262aac7b0f84ed8fd028ef1..49526486d1025995eb7678e8bbd3facf313721ea 100644
---- a/drivers/soc/qcom/llcc-qcom.c
-+++ b/drivers/soc/qcom/llcc-qcom.c
-@@ -136,6 +136,8 @@ struct qcom_llcc_config {
- 	const struct llcc_slice_config *sct_data;
- 	const u32 *reg_offset;
- 	const struct llcc_edac_reg_offset *edac_reg_offset;
-+	u32 max_cap_shift; /* instead of ATTR1_MAX_CAP_SHIFT */
-+	u32 num_banks;
- 	int size;
- 	bool need_llcc_cfg;
- 	bool no_edac;
-@@ -298,6 +300,408 @@ static const struct llcc_slice_config sa8775p_data[] =  {
- 	},
- };
- 
-+static const struct llcc_slice_config sar1130p_data[] = {
-+	{
-+		.usecase_id = LLCC_CPUSS,
-+		.slice_id = 1,
-+		.max_cap = 4096,
-+		.priority = 1,
-+		.bonus_ways = 0x1fff,
-+		.res_ways = 0x0,
-+		.cache_mode = 0,
-+		.retain_on_pc = true,
-+		.activate_on_init = true,
-+	}, {
-+		.usecase_id = LLCC_VIDSC0,
-+		.slice_id = 2,
-+		.max_cap = 512,
-+		.priority = 3,
-+		.fixed_size = true,
-+		.bonus_ways = 0x1fff,
-+		.res_ways = 0x0,
-+		.cache_mode = 0,
-+		.retain_on_pc = true,
-+	}, {
-+		.usecase_id = LLCC_AUDIO,
-+		.slice_id = 6,
-+		.max_cap = 1024,
-+		.priority = 3,
-+		.fixed_size = true,
-+		.bonus_ways = 0x1fff,
-+		.res_ways = 0x0,
-+		.cache_mode = 0,
-+		.retain_on_pc = true,
-+	}, {
-+		.usecase_id = LLCC_CMPT,
-+		.slice_id = 10,
-+		.max_cap = 1024,
-+		.priority = 1,
-+		.fixed_size = true,
-+		.bonus_ways = 0x1fff,
-+		.res_ways = 0x0,
-+		.cache_mode = 0,
-+		.retain_on_pc = true,
-+	}, {
-+		.usecase_id = LLCC_GPUHTW,
-+		.slice_id = 11,
-+		.max_cap = 0,
-+		.priority = 1,
-+		.fixed_size = true,
-+		.bonus_ways = 0x1fff,
-+		.res_ways = 0x0,
-+		.cache_mode = 0,
-+		.retain_on_pc = true,
-+	}, {
-+		.usecase_id = LLCC_GPU,
-+		.slice_id = 12,
-+		.max_cap = 3072,
-+		.priority = 3,
-+		.fixed_size = true,
-+		.bonus_ways = 0x1fff,
-+		.res_ways = 0x0,
-+		.cache_mode = 0,
-+		.retain_on_pc = true,
-+		.write_scid_en = true,
-+	}, {
-+		.usecase_id = LLCC_MMUHWT,
-+		.slice_id = 13,
-+		.max_cap = 512,
-+		.priority = 1,
-+		.fixed_size = true,
-+		.bonus_ways = 0x1fff,
-+		.res_ways = 0x0,
-+		.cache_mode = 0,
-+	}, {
-+		.usecase_id = LLCC_DISP,
-+		.slice_id = 16,
-+		.max_cap = 12800,
-+		.priority = 1,
-+		.fixed_size = true,
-+		.bonus_ways = 0x1fff,
-+		.res_ways = 0x0,
-+		.cache_mode = 0,
-+		.retain_on_pc = true,
-+	}, {
-+		.usecase_id = LLCC_CVP,
-+		.slice_id = 28,
-+		.max_cap = 256,
-+		.priority = 3,
-+		.fixed_size = true,
-+		.bonus_ways = 0x1fff,
-+		.res_ways = 0x0,
-+		.cache_mode = 0,
-+		.retain_on_pc = true,
-+	}, {
-+		.usecase_id = LLCC_APTCM,
-+		.slice_id = 26,
-+		.max_cap = 2048,
-+		.priority = 3,
-+		.fixed_size = true,
-+		.bonus_ways = 0x0,
-+		.res_ways = 0x3,
-+		.cache_mode = true,
-+		.dis_cap_alloc = true,
-+		.retain_on_pc = true,
-+	}, {
-+		.usecase_id = LLCC_WRCACHE,
-+		.slice_id = 31,
-+		.max_cap = 256,
-+		.priority = 1,
-+		.fixed_size = true,
-+		.bonus_ways = 0x1fff,
-+		.res_ways = 0x0,
-+		.cache_mode = 0,
-+		.activate_on_init = true,
-+	}, {
-+		.usecase_id = LLCC_AENPU,
-+		.slice_id = 30,
-+		.max_cap = 3072,
-+		.priority = 3,
-+		.fixed_size = true,
-+		.bonus_ways = 0x1fff,
-+		.res_ways = 0x0,
-+		.cache_mode = 0,
-+		.retain_on_pc = true,
-+	}, {
-+		.usecase_id = LLCC_DISP_LEFT,
-+		.slice_id = 17,
-+		.max_cap = 0,
-+		.priority = 1,
-+		.fixed_size = true,
-+		.bonus_ways = 0x0,
-+		.res_ways = 0x0,
-+		.cache_mode = 0,
-+		.retain_on_pc = true,
-+	}, {
-+		.usecase_id = LLCC_DISP_RIGHT,
-+		.slice_id = 18,
-+		.max_cap = 0,
-+		.priority = 1,
-+		.fixed_size = true,
-+		.bonus_ways = 0x0,
-+		.res_ways = 0x0,
-+		.cache_mode = 0,
-+		.retain_on_pc = true,
-+	}, {
-+		.usecase_id = LLCC_EVCS_LEFT,
-+		.slice_id = 22,
-+		.max_cap = 0,
-+		.priority = 1,
-+		.fixed_size = true,
-+		.bonus_ways = 0x0,
-+		.res_ways = 0x0,
-+		.cache_mode = 0,
-+		.retain_on_pc = true,
-+	}, {
-+		.usecase_id = LLCC_EVCS_RIGHT,
-+		.slice_id = 23,
-+		.max_cap = 0,
-+		.priority = 1,
-+		.fixed_size = true,
-+		.bonus_ways = 0x0,
-+		.res_ways = 0x0,
-+		.cache_mode = 0,
-+		.retain_on_pc = true,
-+	},
-+};
-+
-+static const struct llcc_slice_config sar2130p_data[] = {
-+	{
-+		.usecase_id = LLCC_CPUSS,
-+		.slice_id = 1,
-+		.max_cap = 6144,
-+		.priority = 1,
-+		.fixed_size = 0,
-+		.bonus_ways = 0x3fffffff,
-+		.res_ways = 0x0,
-+		.cache_mode = 0,
-+		.retain_on_pc = true,
-+		.activate_on_init = true,
-+	}, {
-+		.usecase_id = LLCC_VIDSC0,
-+		.slice_id = 2,
-+		.max_cap = 128,
-+		.priority = 2,
-+		.fixed_size = true,
-+		.bonus_ways = 0x3fffffff,
-+		.res_ways = 0x0,
-+		.cache_mode = 0,
-+		.retain_on_pc = true,
-+	}, {
-+		.usecase_id = LLCC_AUDIO,
-+		.slice_id = 6,
-+		.max_cap = 1024,
-+		.priority = 3,
-+		.fixed_size = true,
-+		.bonus_ways = 0x3fffffff,
-+		.res_ways = 0x0,
-+		.cache_mode = 0,
-+		.retain_on_pc = true,
-+	}, {
-+		.usecase_id = LLCC_CMPT,
-+		.slice_id = 10,
-+		.max_cap = 1024,
-+		.priority = 1,
-+		.fixed_size = true,
-+		.bonus_ways = 0x3fffffff,
-+		.res_ways = 0x0,
-+		.cache_mode = 0,
-+		.retain_on_pc = true,
-+	}, {
-+		.usecase_id = LLCC_GPUHTW,
-+		.slice_id = 11,
-+		.max_cap = 0,
-+		.priority = 1,
-+		.fixed_size = true,
-+		.bonus_ways = 0x3fffffff,
-+		.res_ways = 0x0,
-+		.cache_mode = 0,
-+		.retain_on_pc = true,
-+	}, {
-+		.usecase_id = LLCC_GPU,
-+		.slice_id = 12,
-+		.max_cap = 1536,
-+		.priority = 2,
-+		.fixed_size = true,
-+		.bonus_ways = 0x3fffffff,
-+		.res_ways = 0x0,
-+		.cache_mode = 0,
-+		.retain_on_pc = true,
-+		.write_scid_en = true,
-+	}, {
-+		.usecase_id = LLCC_MMUHWT,
-+		.slice_id = 13,
-+		.max_cap = 1024,
-+		.priority = 1,
-+		.fixed_size = true,
-+		.bonus_ways = 0x3fffffff,
-+		.res_ways = 0x0,
-+		.cache_mode = 0,
-+		.activate_on_init = true,
-+	}, {
-+		.usecase_id = LLCC_DISP,
-+		.slice_id = 16,
-+		.max_cap = 0,
-+		.priority = 1,
-+		.fixed_size = true,
-+		.bonus_ways = 0x3fffffff,
-+		.res_ways = 0x0,
-+		.cache_mode = 0,
-+		.retain_on_pc = true,
-+	}, {
-+		.usecase_id = LLCC_APTCM,
-+		.slice_id = 26,
-+		.max_cap = 2048,
-+		.priority = 3,
-+		.fixed_size = true,
-+		.bonus_ways = 0x0,
-+		.res_ways = 0x3,
-+		.cache_mode = true,
-+		.dis_cap_alloc = true,
-+		.retain_on_pc = true,
-+	}, {
-+		.usecase_id = LLCC_WRCACHE,
-+		.slice_id = 31,
-+		.max_cap = 256,
-+		.priority = 1,
-+		.fixed_size = true,
-+		.bonus_ways = 0x3fffffff,
-+		.res_ways = 0x0,
-+		.cache_mode = 0,
-+		.activate_on_init = true,
-+	}, {
-+		.usecase_id = LLCC_VIEYE,
-+		.slice_id = 7,
-+		.max_cap = 7168,
-+		.priority = 4,
-+		.fixed_size = true,
-+		.bonus_ways = 0x3fffffff,
-+		.res_ways = 0x0,
-+		.cache_mode = 0,
-+		.retain_on_pc = true,
-+	}, {
-+		.usecase_id = LLCC_VIDPTH,
-+		.slice_id = 8,
-+		.max_cap = 7168,
-+		.priority = 4,
-+		.fixed_size = true,
-+		.bonus_ways = 0x3fffffff,
-+		.res_ways = 0x0,
-+		.cache_mode = 0,
-+		.retain_on_pc = true,
-+	}, {
-+		.usecase_id = LLCC_GPUMV,
-+		.slice_id = 9,
-+		.max_cap = 2048,
-+		.priority = 2,
-+		.fixed_size = true,
-+		.bonus_ways = 0x3fffffff,
-+		.res_ways = 0x0,
-+		.cache_mode = 0,
-+		.retain_on_pc = true,
-+	}, {
-+		.usecase_id = LLCC_EVA_LEFT,
-+		.slice_id = 20,
-+		.max_cap = 7168,
-+		.priority = 5,
-+		.fixed_size = true,
-+		.bonus_ways = 0x3ffffffc,
-+		.res_ways = 0x0,
-+		.cache_mode = 0,
-+		.retain_on_pc = true,
-+	}, {
-+		.usecase_id = LLCC_EVA_RIGHT,
-+		.slice_id = 21,
-+		.max_cap = 7168,
-+		.priority = 5,
-+		.fixed_size = true,
-+		.bonus_ways = 0x3ffffffc,
-+		.res_ways = 0x0,
-+		.cache_mode = 0,
-+		.retain_on_pc = true,
-+	}, {
-+		.usecase_id = LLCC_EVAGAIN,
-+		.slice_id = 25,
-+		.max_cap = 1024,
-+		.priority = 2,
-+		.fixed_size = true,
-+		.bonus_ways = 0x3fffffff,
-+		.res_ways = 0x0,
-+		.cache_mode = 0,
-+		.retain_on_pc = true,
-+	}, {
-+		.usecase_id = LLCC_AENPU,
-+		.slice_id = 30,
-+		.max_cap = 3072,
-+		.priority = 3,
-+		.fixed_size = true,
-+		.bonus_ways = 0x3fffffff,
-+		.res_ways = 0x0,
-+		.cache_mode = 0,
-+		.retain_on_pc = true,
-+	}, {
-+		.usecase_id = LLCC_VIPTH,
-+		.slice_id = 29,
-+		.max_cap = 1024,
-+		.priority = 4,
-+		.fixed_size = true,
-+		.bonus_ways = 0x3fffffff,
-+		.res_ways = 0x0,
-+		.cache_mode = 0,
-+		.retain_on_pc = true,
-+	}, {
-+		.usecase_id = LLCC_DISP_LEFT,
-+		.slice_id = 17,
-+		.max_cap = 0,
-+		.priority = 1,
-+		.fixed_size = true,
-+		.bonus_ways = 0x0,
-+		.res_ways = 0x0,
-+		.cache_mode = 0,
-+		.retain_on_pc = true,
-+	}, {
-+		.usecase_id = LLCC_DISP_RIGHT,
-+		.slice_id = 18,
-+		.max_cap = 0,
-+		.priority = 1,
-+		.fixed_size = true,
-+		.bonus_ways = 0x0,
-+		.res_ways = 0x0,
-+		.cache_mode = 0,
-+		.retain_on_pc = true,
-+	}, {
-+		.usecase_id = LLCC_EVCS_LEFT,
-+		.slice_id = 22,
-+		.max_cap = 0,
-+		.priority = 1,
-+		.fixed_size = true,
-+		.bonus_ways = 0x0,
-+		.res_ways = 0x0,
-+		.cache_mode = 0,
-+		.retain_on_pc = true,
-+	}, {
-+		.usecase_id = LLCC_EVCS_RIGHT,
-+		.slice_id = 23,
-+		.max_cap = 0,
-+		.priority = 1,
-+		.fixed_size = true,
-+		.bonus_ways = 0x0,
-+		.res_ways = 0x0,
-+		.cache_mode = 0,
-+		.retain_on_pc = true,
-+	}, {
-+		.usecase_id = LLCC_SPAD,
-+		.slice_id = 24,
-+		.max_cap = 7168,
-+		.priority = 1,
-+		.fixed_size = true,
-+		.bonus_ways = 0x0,
-+		.res_ways = 0x0,
-+		.cache_mode = 0,
-+		.retain_on_pc = true,
-+	},
-+};
-+
- static const struct llcc_slice_config sc7180_data[] =  {
- 	{
- 		.usecase_id = LLCC_CPUSS,
-@@ -2687,6 +3091,30 @@ static const struct qcom_llcc_config sa8775p_cfg[] = {
- 	},
- };
- 
-+static const struct qcom_llcc_config sar1130p_cfg[] = {
-+	{
-+		.sct_data	= sar1130p_data,
-+		.size		= ARRAY_SIZE(sar1130p_data),
-+		.need_llcc_cfg	= true,
-+		.reg_offset	= llcc_v2_1_reg_offset,
-+		.edac_reg_offset = &llcc_v2_1_edac_reg_offset,
-+		.max_cap_shift	= 0x0e,
-+		.num_banks	= 2,
-+	},
-+};
-+
-+static const struct qcom_llcc_config sar2130p_cfg[] = {
-+	{
-+		.sct_data	= sar2130p_data,
-+		.size		= ARRAY_SIZE(sar2130p_data),
-+		.need_llcc_cfg	= true,
-+		.reg_offset	= llcc_v2_1_reg_offset,
-+		.edac_reg_offset = &llcc_v2_1_edac_reg_offset,
-+		.max_cap_shift	= 0x0e,
-+		.num_banks	= 2,
-+	},
-+};
-+
- static const struct qcom_llcc_config sc7180_cfg[] = {
- 	{
- 		.sct_data	= sc7180_data,
-@@ -2839,6 +3267,16 @@ static const struct qcom_sct_config sa8775p_cfgs = {
- 	.num_config	= ARRAY_SIZE(sa8775p_cfg),
- };
- 
-+static const struct qcom_sct_config sar1130p_cfgs = {
-+	.llcc_config	= sar1130p_cfg,
-+	.num_config	= ARRAY_SIZE(sar1130p_cfg),
-+};
-+
-+static const struct qcom_sct_config sar2130p_cfgs = {
-+	.llcc_config	= sar2130p_cfg,
-+	.num_config	= ARRAY_SIZE(sar2130p_cfg),
-+};
-+
- static const struct qcom_sct_config sc7180_cfgs = {
- 	.llcc_config	= sc7180_cfg,
- 	.num_config	= ARRAY_SIZE(sc7180_cfg),
-@@ -3146,7 +3584,10 @@ static int _qcom_llcc_cfg_program(const struct llcc_slice_config *config,
- 	 */
- 	max_cap_cacheline = max_cap_cacheline / drv_data->num_banks;
- 	max_cap_cacheline >>= CACHE_LINE_SIZE_SHIFT;
--	attr1_val |= max_cap_cacheline << ATTR1_MAX_CAP_SHIFT;
-+	if (cfg->max_cap_shift)
-+		attr1_val |= max_cap_cacheline << cfg->max_cap_shift;
-+	else
-+		attr1_val |= max_cap_cacheline << ATTR1_MAX_CAP_SHIFT;
- 
- 	attr1_cfg = LLCC_TRP_ATTR1_CFGn(config->slice_id);
- 
-@@ -3383,12 +3824,17 @@ static int qcom_llcc_probe(struct platform_device *pdev)
- 		goto err;
- 	cfg = &cfgs->llcc_config[cfg_index];
- 
--	ret = regmap_read(regmap, cfg->reg_offset[LLCC_COMMON_STATUS0], &num_banks);
--	if (ret)
--		goto err;
-+	if (cfg->num_banks) {
-+		num_banks = cfg->num_banks;
-+	} else {
-+		ret = regmap_read(regmap, cfg->reg_offset[LLCC_COMMON_STATUS0], &num_banks);
-+		if (ret)
-+			goto err;
-+
-+		num_banks &= LLCC_LB_CNT_MASK;
-+		num_banks >>= LLCC_LB_CNT_SHIFT;
-+	}
- 
--	num_banks &= LLCC_LB_CNT_MASK;
--	num_banks >>= LLCC_LB_CNT_SHIFT;
- 	drv_data->num_banks = num_banks;
- 
- 	drv_data->regmaps = devm_kcalloc(dev, num_banks, sizeof(*drv_data->regmaps), GFP_KERNEL);
-@@ -3486,6 +3932,8 @@ static int qcom_llcc_probe(struct platform_device *pdev)
- static const struct of_device_id qcom_llcc_of_match[] = {
- 	{ .compatible = "qcom,qdu1000-llcc", .data = &qdu1000_cfgs},
- 	{ .compatible = "qcom,sa8775p-llcc", .data = &sa8775p_cfgs },
-+	{ .compatible = "qcom,sar1130p-llcc", .data = &sar1130p_cfgs },
-+	{ .compatible = "qcom,sar2130p-llcc", .data = &sar2130p_cfgs },
- 	{ .compatible = "qcom,sc7180-llcc", .data = &sc7180_cfgs },
- 	{ .compatible = "qcom,sc7280-llcc", .data = &sc7280_cfgs },
- 	{ .compatible = "qcom,sc8180x-llcc", .data = &sc8180x_cfgs },
-diff --git a/include/linux/soc/qcom/llcc-qcom.h b/include/linux/soc/qcom/llcc-qcom.h
-index 2f20281d4ad4352ef59e7b19148cd324c7991012..8e5d78fb4847a232ab17a66c2775552dcb287752 100644
---- a/include/linux/soc/qcom/llcc-qcom.h
-+++ b/include/linux/soc/qcom/llcc-qcom.h
-@@ -54,7 +54,19 @@
- #define LLCC_CAMEXP4	 52
- #define LLCC_DISP_WB	 53
- #define LLCC_DISP_1	 54
-+#define LLCC_VIEYE	 57
-+#define LLCC_VIDPTH	 58
-+#define LLCC_GPUMV	 59
-+#define LLCC_EVA_LEFT	 60
-+#define LLCC_EVA_RIGHT	 61
-+#define LLCC_EVAGAIN	 62
-+#define LLCC_VIPTH	 63
- #define LLCC_VIDVSP	 64
-+#define LLCC_DISP_LEFT	 65
-+#define LLCC_DISP_RIGHT	 66
-+#define LLCC_EVCS_LEFT	 67
-+#define LLCC_EVCS_RIGHT	 68
-+#define LLCC_SPAD	 69
- 
- /**
-  * struct llcc_slice_desc - Cache slice descriptor
+> 
+> > 
+> > I'm really reluctant to bringing more DT usage into the PCIe space.
+> > Especially if the user is able to swap cards.
+> 
+> Understand your concern, automatic adaptation is always the best choice. But
+> it may not work for MSM boards, the PCIe card (non m.2) is customized, which
+> has special PMU control. User can't swap cards. And that's why power
+> sequencing module was introduced.
+
+I know. Still, it's better to have less unnecessary data there for
+autodiscoverable devices.
+
+> 
+> > 
+> > > > > > And if it is hard, can we please get to the _normal_ way how vendors
+> > > > > > handle PCI hardware differences: the subvendor and subdevice? This is
+> > > > > > a usual way to describe that the PCIe device is the same, but the
+> > > > > > analog / tuner / RF / etc parts are different.
+> > > > > 
+> > > > > 
+> > > > > > 
+> > > > > > > We're going to have another problem to enable NFA765 m.2 card for IoT
+> > > > > > > platforms, which has different feature sets with X86 platform, so also
+> > > > > > > new firmware should be used. In this case, QCA2066 approach not works.
+> > > > > > > Seems DT approach is only choice.
+> > > > > > > 
+> > > > > > > Could you advice ?
+> > > > > > 
+> > > > > > Hmm, The first question is _why_ does it have different feature sets?
+> > > > > > What exactly is different?
+> > > > > 
+> > > > > Yeah, for IoT device will support SAP/TWT/UL-OFDMA/BSS color and etc new
+> > > > > features, and the existing x86 firmware mainly for STA mode.
+> > > > > 
+> > > > > What if the user plugs a normal (laptop)
+> > > > > > M.2 card into their IoT device?
+> > > > > 
+> > > > > If there is no DT file to specify the firmware, IoT device will load the
+> > > > > default firmware, it will affect SAP and WiFi-6 advanced features.
+> > > > 
+> > > > Can we get all those nice features into x86 world instead?
+> > > 
+> > > It's out of our scope, we will not touch the existing stable firmware
+> > > version, also it's not allowed.
+> > 
+> > If it's not allowed for laptop cards, why is it allowed for IoT M.2
+> > cards (which then can be perfectly installed into the laptop)?
+> > 
+> 
+> Only specific IoT M.2 cards.
+
+But they are (or are going to be available) for purchase? And more
+importantly, what prevents the user of a normal card to use "featureful"
+firmware with the laptop card?
 
 -- 
-2.39.5
-
+With best wishes
+Dmitry
 
