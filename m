@@ -1,81 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-35949-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35950-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C64B49B0D1C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 20:24:10 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6D99C9B0D37
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 20:28:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 202CE286B60
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 18:24:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BF0621F2128F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 18:28:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3840B20BB50;
-	Fri, 25 Oct 2024 18:23:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 95B601FB8A9;
+	Fri, 25 Oct 2024 18:26:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="M8sYcjM5"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LJO9NhRf"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF7420BB35
-	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2024 18:23:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 469DF1534E9;
+	Fri, 25 Oct 2024 18:26:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729880636; cv=none; b=AreOdQyQG9kgXOVpm7Lc0Un0FB7dnXmLtrfiU7qHOw6wKF/IAaHwk9ItFvSwRRt3JgjFD3ZDnmRZlCKtEUpHCeGctCnbYUbHVe8N0I2/zgzfWS4ZHB2NiQs0xmgg4m+dYP5lDtom87ES5E2Udoe/PyCgZ5LK1LsmYyzeVqxF0X8=
+	t=1729880778; cv=none; b=LBptr8Ulah+1VOXFzILw2Rn+JZCgh69CCjQa8ydSoKX11eeI5GF6P3s8uMFAuy+m8LXUIavLPilYL0U5vay3Fk7ky6ar86VH4fVcBJHI+Mf3KjSpHf0vqtFi/z3K0Bo11fKasgzlDTfKiZgPgqQvPP6iEDUfE2iJ6VTY5a6rkV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729880636; c=relaxed/simple;
-	bh=VuYfXZbXysbh25PQ4lYW3IZ7zhG5XyHxt5bS/C5tDKA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Z//GAWoLEk+4gSa9S7nT6X2g9A9fbEjZNvYSNWRZtoOeYsgAuEjDJd58kFM1u/yrF962UOAcXjAu6XePHsdikLKGoO8lbp99KPQ8HRS7vJRwr+orr0zYhcb/mkviBJGE6Hzq6dn6fNhcudaaF3+b3/ceTRO/0s5Qj2ExhFeDBBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=fail smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=M8sYcjM5; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49PBdjCx019590
-	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2024 18:23:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	s=arc-20240116; t=1729880778; c=relaxed/simple;
+	bh=A5sjD/WSqJ94Co3OsPk7FUMxfEBbXh0GDMQyJ/OcNNw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=cVYv5iraTvVEaN1bJMrCSTHwL50o59f2bRC4RdtfzpHqljn37UyjHP/BTqZRXmgwZK0POgi72bUIiO/DCie+extCr5vpNglxKl/Dv5nIvX+IUiKewTY/QMbpNqw+0pUlhim0Yy+b98owKsdaoZ2GELxiq+WmbhDB1wt1Pekv4JM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LJO9NhRf; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49PAvlqd008859;
+	Fri, 25 Oct 2024 18:26:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	3beKkZbEARnsxmifHxpb705DaWvn5ZgjjjVxCqTJTSg=; b=M8sYcjM5fJ/jXa2z
-	9hxff1l46aHfnI/W+Mr2KY9mftX8xgo5eNNgN96IsRINun8ARviRaQgCSuyPNUe0
-	RhRaWtmamCJnvlnalhZXxqtD6o7UNMALV5ud2S0K1tf1jxk6iRXOJ7lRHvoTyAJe
-	B6B7CjIeO6VFYpFRHA6Ghg4Lp+Lh3k2Ax1l/mgbMk+UW/E1Ornf30Hv4/fZ3Rkph
-	Iql3/GpSHEnIs/kLP3IRmzNtv/1mEo/lDcRd7CsNVCoB8N87zpokOFKevse+JmKC
-	iKgFCPSlLfmmk2DH74SLwxmDWWodkXDJXN+EusRrDFFXXcSmkGtEKABmhzLBcSkD
-	/n0sZA==
-Received: from mail-vs1-f71.google.com (mail-vs1-f71.google.com [209.85.217.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42em3wj4hj-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2024 18:23:53 +0000 (GMT)
-Received: by mail-vs1-f71.google.com with SMTP id ada2fe7eead31-4a47e84e2b3so50383137.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2024 11:23:53 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729880632; x=1730485432;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3beKkZbEARnsxmifHxpb705DaWvn5ZgjjjVxCqTJTSg=;
-        b=fWwVcWVevHn612mXxiBbzYNSQ95NYmacUs6SBn/B++wBxWmXK02iRwL35YAeQS8jqB
-         bxwejGawbs7mJc0Y85i2PuotE9ofPA7JqGx6kWFR+Af3Cf64qLorK09+ZNHC8GIBsRnM
-         ASblVvqw8KnKlIVrc0kL3gkXNC2NNQpfunpwZhV1zC7jV1EyCKkTNzrdHU9AwSJh5rbS
-         N/GDDkLdhX1qBZRZH0EXUSEEpS4+QtVh4gMibXOgTbRojzf40tSsCo4cAWu8vYT3IhEw
-         zUCJktbnY6RoVgNxShrGM+62B6CHAAAjlbFyRVKCEVo1LzJra7nmZSucvojIBg70MiYz
-         yOUg==
-X-Gm-Message-State: AOJu0YyKWrxJh3qaoV+IGmt2G9Ha4JFFKPznxBnkwRokfBNWAD12EowY
-	SZ2zXSvinSUViR8rPIX5/RFh+HGluC4i8WtuoifLoUPj7HgnbqwXbwaahWIHYlnn9KAGm8T9Jit
-	RI/uihckbSKyc98vSiDGshKOp4z7kdV3p/egufx8ia8J4ZTMe28Vq73oz8F/HBhUT
-X-Received: by 2002:a05:6102:1610:b0:4a4:7928:6381 with SMTP id ada2fe7eead31-4a8cfb2cbb1mr246620137.2.1729880632476;
-        Fri, 25 Oct 2024 11:23:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE/EV2cJbkJddZttFd9z9JB9kp8Bb/TyAtZgttyKQ7XAZIMKzi2FFIjhsg3QqvsnRbaODGO+A==
-X-Received: by 2002:a05:6102:1610:b0:4a4:7928:6381 with SMTP id ada2fe7eead31-4a8cfb2cbb1mr246611137.2.1729880632106;
-        Fri, 25 Oct 2024 11:23:52 -0700 (PDT)
-Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9b3a0834d9sm95176766b.190.2024.10.25.11.23.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 25 Oct 2024 11:23:51 -0700 (PDT)
-Message-ID: <9761224a-08e7-498a-a052-adca6bc405e4@oss.qualcomm.com>
-Date: Fri, 25 Oct 2024 20:23:49 +0200
+	o2hGL4RB0OKMSkFRgRQWPdvsJ1RPbEk7v//UEoZR3bc=; b=LJO9NhRf+RuvgoEV
+	QTwGzPVuBBi2zipFaOFTgi7g0fkZpMdZZHg7W500638krolkmO+YXoUcDHc/+Rnx
+	+MYwTiUq7K1mOHZJ462rnDCXE/4VbFMvlehHs6quq4p5sSMDRhnXF9jUQup7QHLX
+	9g2JyNqBlMxeF1T57on0F8KkERIHdt2aV1Fb6w9LsAKq7FyS673i+ws7JlUXDmvZ
+	ptkLP9ABnbtOnWllw84EjMS176sGmqQTuF2L0+OBXPLZ+vjO7mHYGSJjmrBY2cQ7
+	ADuHX70e15d7fV+STOYddBUZlH7KM2eTXqhlPSUYmlJN2amwn6VY+1PHXyxao6cE
+	T/qClA==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42fk52myp9-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 25 Oct 2024 18:26:07 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49PIQ6NL013702
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 25 Oct 2024 18:26:06 GMT
+Received: from [10.216.38.148] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 25 Oct
+ 2024 11:25:55 -0700
+Message-ID: <5f36903a-e21f-4f5b-bc59-ab2bd7cbfb30@quicinc.com>
+Date: Fri, 25 Oct 2024 23:55:51 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,51 +65,105 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 08/11] clk: qcom: add support for GCC on SAR2130P
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+Subject: Re: [PATCH v1 1/5] dt-bindings: dmaengine: qcom: gpi: Add additional
+ arg to dma-cell property
+To: Vinod Koul <vkoul@kernel.org>
+CC: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Kalpak Kawadkar <quic_kkawadka@quicinc.com>
-References: <20241025-sar2130p-clocks-v3-0-48f1842fd156@linaro.org>
- <20241025-sar2130p-clocks-v3-8-48f1842fd156@linaro.org>
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Andi Shyti <andi.shyti@kernel.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        =?UTF-8?Q?Christian_K=C3=B6nig?=
+	<christian.koenig@amd.com>,
+        <cros-qcom-dts-watchers@chromium.org>, <linux-arm-msm@vger.kernel.org>,
+        <dmaengine@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
+        <linux-media@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <linaro-mm-sig@lists.linaro.org>, <quic_msavaliy@quicinc.com>,
+        <quic_vtanuku@quicinc.com>
+References: <20241015120750.21217-1-quic_jseerapu@quicinc.com>
+ <20241015120750.21217-2-quic_jseerapu@quicinc.com> <Zw9HHRyvfd66Qn4a@vaman>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20241025-sar2130p-clocks-v3-8-48f1842fd156@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+From: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
+In-Reply-To: <Zw9HHRyvfd66Qn4a@vaman>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: KjkkV3OkkvzbNYvnivabgX4rQWtdkD09
-X-Proofpoint-ORIG-GUID: KjkkV3OkkvzbNYvnivabgX4rQWtdkD09
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Inpzn3t538ZY9e6nNhzik-q58ptW8QM4
+X-Proofpoint-ORIG-GUID: Inpzn3t538ZY9e6nNhzik-q58ptW8QM4
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 malwarescore=0
- mlxscore=0 lowpriorityscore=0 phishscore=0 impostorscore=0 clxscore=1015
- priorityscore=1501 mlxlogscore=626 suspectscore=0 bulkscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2410250140
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 mlxscore=0
+ lowpriorityscore=0 malwarescore=0 impostorscore=0 phishscore=0
+ adultscore=0 mlxlogscore=999 priorityscore=1501 spamscore=0 bulkscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410250140
 
-On 25.10.2024 5:03 PM, Dmitry Baryshkov wrote:
-> Add driver for the Global Clock Controller as present on the Qualcomm
-> SAR2130P platform. This is based on the msm-5.10 tree, tag
-> KERNEL.PLATFORM.1.0.r4-00400-NEO.0.
-> 
-> Co-developed-by: Kalpak Kawadkar <quic_kkawadka@quicinc.com>
-> Signed-off-by: Kalpak Kawadkar <quic_kkawadka@quicinc.com>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
 
-Acked-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+On 10/16/2024 10:24 AM, Vinod Koul wrote:
+> On 15-10-24, 17:37, Jyothi Kumar Seerapu wrote:
+>> When high performance with multiple i2c messages in a single transfer
+>> is required, employ Block Event Interrupt (BEI) to trigger interrupts
+>> after specific messages transfer and the last message transfer,
+>> thereby reducing interrupts.
+>>
+>> For each i2c message transfer, a series of Transfer Request Elements(TREs)
+>> must be programmed, including config tre for frequency configuration,
+>> go tre for holding i2c address and dma tre for holding dma buffer address,
+>> length as per the hardware programming guide. For transfer using BEI,
+>> multiple I2C messages may necessitate the preparation of config, go,
+>> and tx DMA TREs. However, a channel TRE size of 64 is often insufficient,
+>> potentially leading to failures due to inadequate memory space.
+>>
+>> Add additional argument to dma-cell property for channel TRE size.
+>> With this, adjust the channel TRE size via the device tree.
+>> The default size is 64, but clients can modify this value based on
+>> their specific requirements.
+>>
+>> Signed-off-by: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
+>> ---
+>>   Documentation/devicetree/bindings/dma/qcom,gpi.yaml | 6 ++++--
+>>   1 file changed, 4 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
+>> index 4df4e61895d2..002495921643 100644
+>> --- a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
+>> +++ b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
+>> @@ -54,14 +54,16 @@ properties:
+>>       maxItems: 13
+>>   
+>>     "#dma-cells":
+>> -    const: 3
+>> +    minItems: 3
+>> +    maxItems: 4
+>>       description: >
+>>         DMA clients must use the format described in dma.txt, giving a phandle
+>> -      to the DMA controller plus the following 3 integer cells:
+>> +      to the DMA controller plus the following 4 integer cells:
+>>         - channel: if set to 0xffffffff, any available channel will be allocated
+>>           for the client. Otherwise, the exact channel specified will be used.
+>>         - seid: serial id of the client as defined in the SoC documentation.
+>>         - client: type of the client as defined in dt-bindings/dma/qcom-gpi.h
+>> +      - channel-tre-size: size of the channel TRE (transfer ring element)
+> This is a firmware /software property, why should this be in hardware
+> description?
 
-Konrad
+This is a software property and here trying to add channel tre size as a 
+4th argument of dma-cells property.
+
+In V2, i have reverted the DT and binding changes related to adding new 
+argument for dma-cells property and used GPI driver defined value.
+
+
+Regards,
+
+JyothiKumar
+
+
+>
 
