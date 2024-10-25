@@ -1,76 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-35915-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35916-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 09F6D9B08BA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 17:44:47 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9248A9B08B1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 17:43:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 185B4B266B6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 15:43:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 577842828A6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 15:43:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78BFC158A2E;
-	Fri, 25 Oct 2024 15:43:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9332517BB1A;
+	Fri, 25 Oct 2024 15:43:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dgToPfiD"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vPArYkF+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0487815B10E
-	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2024 15:43:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E288515E5CA
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2024 15:43:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729871011; cv=none; b=ZwIEYZKJqOiOwFSFD0wl6lt0mkAN6ASYJkcUYYbQsm8Ih1rHiWOgSjzQnPa6QCywSBIWe+DFa/TtMzDy5LzZv/RXjqlUzw+ZfBjVkgeH1Oa++w9g01Yh8yd0Ig6np7oJ+JEUL3P18+dePZq4/V6vZjRz3Zhmsa2c8QOjbNcOvTA=
+	t=1729871012; cv=none; b=q9QyfXJPIg5xuiH2O3nXb8atEjRZ4YOqhIDsq7mKX6+Yp+HxpijFAHqIvJMVF9ZHyR9pbJCz3hn4bIuAaLMZShs11KxIfVDqhc8vgAKPXo+YLJ2CySD9ErVr8e0TJ1PY8pyd2RPgtvZ8ZyawU/Kq6Dpm6y9d8CebuCc96rEmpu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729871011; c=relaxed/simple;
-	bh=CjgCGF8KDBEgjUprVnwaPw0NVN/4TSImNIlCw64dsCI=;
+	s=arc-20240116; t=1729871012; c=relaxed/simple;
+	bh=0OGkSu9fVMeO/ggQr8GmRV/6Fq7P4yGca3PaDQMq+zo=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Rw2ssh6EuzHfAfSrm+AQrOJUeuuA69dGThtE8cSZeLApx3TZllJBYAYlfVFuj93gkhqvFqaW4h6XInjT1lJs+VAOQuC4IUIkppB54pngYzwFouGkkFWgKVYAQheoM9nX5fldutLpQPOn9vine6EoOI2VE7D9v/12gMfeaDaHTfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dgToPfiD; arc=none smtp.client-ip=209.85.128.51
+	 In-Reply-To:To:Cc; b=PR9vXd41TbpLWWn3Oass0wm0xtRXjcCTgLLPFsnzIUB8e3YkyXhGialgUYiWC4Lk1CCULcJ3WsVazFGfGeq4awwc89oQuUJFowselRSr3utRW3SMlhtVgvlKP4F15KU55CoO7Iyh9Y1F/Hhhocij3FlHHmrrRHW05gTgY/JUbuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vPArYkF+; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4315e9e9642so20150285e9.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2024 08:43:28 -0700 (PDT)
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4314b316495so19969845e9.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2024 08:43:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729871007; x=1730475807; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1729871008; x=1730475808; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=qGqv0lAx0Oo2mFI1vmKjI6WnegojsRi6EofkIgma6Oo=;
-        b=dgToPfiDTN2IvBx2TyK6RqszgmLtG/3yta3t73yMComKLDwJnZFj3NqgU5sYvcZSeG
-         oviypjYBE0yUqW415DIaINj0seO6pjZ76xK5Rh+NQTnx6H5FXunDCkatwJzr5vHl81LS
-         48TP7iqZnfXPKB6T2OB5PaiMcZRSvQi2PFRsqQ5cDPfvjddDSioukeyh+6hYXbRAeHgl
-         DLdUTYXmqxElMt/Vn2mXuwHXk7lPHnWwAAv7QxqcY5hb8pcccumiXacjApBXF9DOJxbC
-         bcB2oxt19W6ly2iWwHDtnZJ/2YoTXQOrEreVgrQUDdpkwAm+iSIuM+ljJvYDWCLBMua8
-         52Lg==
+        bh=BAvhKRhyCVaJwnIkEFPjzzUhPMWhbjYeJwcT/tBQFU0=;
+        b=vPArYkF+CvO0rNs+zRNY4x6QDh7gf3/K3/swMd9Be+gcs8htzuk1U7sKu88F4XiVKb
+         vbWikqwTVm/AGwQHgzKg9oXdnoxturmrbFIfnXNV90DM+YfKwLR00pR2ftFH8IrL8BKv
+         UbIarwLe9ngX8feoRzdk/ALjurL8OFToaDM2yjXzt8VkXfZPnlqYJP1Qp2yhQe2aYIlz
+         XgzqJ+i14vDNDvWO87xQdIZHjex5uYd9kwY3D2NPYtbvTu9RHvtfBtfVAeUR1BHFWCpp
+         I5nL6cBFLs7gXYShv/S7JYLdwYGUDJSHi1N3Oeg4UI9+aaUtZTGH22AxQf4qeo/1d3Yb
+         tj1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729871007; x=1730475807;
+        d=1e100.net; s=20230601; t=1729871008; x=1730475808;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=qGqv0lAx0Oo2mFI1vmKjI6WnegojsRi6EofkIgma6Oo=;
-        b=A/6Cq5P7A6jp8Ifib1jwwo+uRc8bcyMdi0p8UocTolJP/hiuV4jWij8ub2Ieg0znGo
-         U6AkisG1mR+iuntnP6f61DZXA2mLZUI0E/EKD66ke7u2rXDaARuW/nEpN6cecwk9U0vB
-         3yGWMBGiNvbhV5plgzXPlL0aQ7WJfvR922AtHZc143P+CjWWdudsv93xCEZsbzIYNhSw
-         tbfaxoNUgwtI/uMMXna2QhQreEZEa2dOYVTWWeIJNqF+TArZLvX6tS3NbeNtNApZ9j/Q
-         3PDHtHgLCqwz2FUL6os1bEtU/Dj26Ybbxs9Ao7s1mqqNImkm+8uPIBsXfjRC4xqcI/na
-         s/cw==
-X-Forwarded-Encrypted: i=1; AJvYcCV9vN3Iu6+8mWkYC5R0h59upkr6JHpLASXuuDRFlVEex++gcKwE3yFJrLjv674jMCr0vGDAmXA4E4S8S/Vz@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzimi2LPLZ+sJwUPK0iNP6NGGpEsxKJ7hnxmoThefJ90Mk+pyCt
-	Sfq8bHILL9O6Ji/1EzNo2pQTyTcdRswzmsjRJ7apyCrpwUiAPTzjG397ncJVeNs=
-X-Google-Smtp-Source: AGHT+IFHECj8EUQyf8YhHo3IpCwoRjMToLWTTJ77dLtZvc1gyMZs9S343YFJmQHzzLlYGaKwZuE0MQ==
-X-Received: by 2002:a05:600c:46d4:b0:431:60ac:9b0c with SMTP id 5b1f17b1804b1-4318415c989mr73914985e9.20.1729871007272;
-        Fri, 25 Oct 2024 08:43:27 -0700 (PDT)
+        bh=BAvhKRhyCVaJwnIkEFPjzzUhPMWhbjYeJwcT/tBQFU0=;
+        b=MfeUayZHyAyJFuZ8XL/1Rt8e7LJdxKd480JgaqQHii0E8vDoAsyhmF2AvYHv6Y7f3e
+         a/EyKR92nuTaSnw7imTULibVB1vxvLGRa/s5kCj2hC9B0tXrgLIAEH2EoHfm7OZgWeik
+         nYOQRySwEpLXv0gkWa7TuwYxRx35j9C6Z148SR1mwly5ntvhappXx9OLrnUPiIUly3kG
+         sBR2Go504vzTgv9m3WcxzxmXOj/N4evzS0sYI4cJU4ldM2KCmXFXenN0QOD5mSzdF5b8
+         bPzO0mmi7OQOkWNJTGIhuJQtyAmjMPUlpNoqT/KYspnVLRsCSroMn1BqdyvOmUWZgraG
+         LSHw==
+X-Forwarded-Encrypted: i=1; AJvYcCVCuTjfXqQELwB447cJ407pg2crBOr3GOJ+iFXfq6tnsuUc2CdkE8YjFt3b4FOm17EQ82vpd2O4sSWClbC/@vger.kernel.org
+X-Gm-Message-State: AOJu0YxmK2U1/YzlgDNuAzUsY6njpE0t/IbbSHFo4KenUsc7oNnKrKgw
+	UZXg7QUKlDa9fXgQi9hv8rcSEZkjaMFqrH5FjdF9dId3k7Dx1nn4pcDFKnDA+s/k7jN8SIIgIIx
+	9X6U=
+X-Google-Smtp-Source: AGHT+IGGijeTxGoA0dzwySSV7QmfufUp5vZNtDNrB7BBd9vPRhaNWh32zcGrgD8Yu6ae8r2kP/f0iw==
+X-Received: by 2002:a05:600c:3b1b:b0:431:594b:8e2b with SMTP id 5b1f17b1804b1-4318413ee73mr88288655e9.12.1729871008199;
+        Fri, 25 Oct 2024 08:43:28 -0700 (PDT)
 Received: from [127.0.0.1] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38058b479ffsm1829092f8f.49.2024.10.25.08.43.26
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38058b479ffsm1829092f8f.49.2024.10.25.08.43.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Oct 2024 08:43:26 -0700 (PDT)
+        Fri, 25 Oct 2024 08:43:27 -0700 (PDT)
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Date: Fri, 25 Oct 2024 16:43:24 +0100
-Subject: [PATCH 2/6] arm64: dts: qcom: sdm845-db845c-navigation-mezzanine:
- Convert mezzanine riser to dtso
+Date: Fri, 25 Oct 2024 16:43:25 +0100
+Subject: [PATCH 3/6] arm64: dts: qcom: sc8280xp-x13s: Drop redundant
+ clock-lanes from camera@10
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,7 +80,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241025-b4-linux-next-24-10-25-camss-dts-fixups-v1-2-cdff2f1a5792@linaro.org>
+Message-Id: <20241025-b4-linux-next-24-10-25-camss-dts-fixups-v1-3-cdff2f1a5792@linaro.org>
 References: <20241025-b4-linux-next-24-10-25-camss-dts-fixups-v1-0-cdff2f1a5792@linaro.org>
 In-Reply-To: <20241025-b4-linux-next-24-10-25-camss-dts-fixups-v1-0-cdff2f1a5792@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -93,60 +94,27 @@ Cc: Depeng Shao <quic_depengs@quicinc.com>,
  linux-kernel@vger.kernel.org, Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 X-Mailer: b4 0.15-dev-dedf8
 
-Convert the navigation / camera mezzanine from its own dts to a dtso. A
-small amount of additional includes / address / cell size change needs to
-be applied to convert.
+clock-lanes does nothing here - the sensor doesn't care about this
+property, remove it.
 
-Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org> # rb3
+Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org> # x13s
 Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/Makefile                                  | 3 +++
- ...ation-mezzanine.dts => sdm845-db845c-navigation-mezzanine.dtso} | 7 ++++++-
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 7145748afaf53c816e7b3efd8d5f583a2efbb82e..1660c8a95f677847c405bcee42cc5e26d8a98d51 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -211,6 +211,9 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r2.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r3.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-db845c.dtb
-+
-+sdm845-db845c-navigation-mezzanine.dtbs	:= sdm845-db845c.dtb sdm845-db845c-navigation-mezzanine.dtbo
-+
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-db845c-navigation-mezzanine.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-lg-judyln.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-lg-judyp.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
-similarity index 93%
-rename from arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dts
-rename to arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
-index a21caa6f3fa2594df2f08e48adeeaefd7a33396e..d62a20f018e7a7e1c7e77f0c927c2d9fe7ae8509 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
-@@ -4,8 +4,10 @@
-  */
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+index 83208b10f994b282ed50c3ba8a82298b6fc50deb..15f59b622bcd4250f43d329fd9a371ae4d0a73c6 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
++++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+@@ -633,7 +633,6 @@ camera@10 {
  
- /dts-v1/;
-+/plugin/;
- 
--#include "sdm845-db845c.dts"
-+#include <dt-bindings/clock/qcom,camcc-sdm845.h>
-+#include <dt-bindings/gpio/gpio.h>
- 
- &camss {
- 	vdda-phy-supply = <&vreg_l1a_0p875>;
-@@ -28,6 +30,9 @@ &cci {
- };
- 
- &cci_i2c0 {
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+
- 	camera@10 {
- 		compatible = "ovti,ov8856";
- 		reg = <0x10>;
+ 		port {
+ 			ov5675_ep: endpoint {
+-				clock-lanes = <0>;
+ 				data-lanes = <1 2>;
+ 				link-frequencies = /bits/ 64 <450000000>;
+ 				remote-endpoint = <&csiphy0_lanes01_ep>;
 
 -- 
 2.47.0
