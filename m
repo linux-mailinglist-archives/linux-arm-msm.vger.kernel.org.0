@@ -1,147 +1,186 @@
-Return-Path: <linux-arm-msm+bounces-35843-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35844-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A4C189AFFAE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 12:10:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id AC3B19AFFCD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 12:14:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 587B728737D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 10:10:42 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3E7292885EE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 10:14:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98652202F8C;
-	Fri, 25 Oct 2024 10:08:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04EC1200105;
+	Fri, 25 Oct 2024 10:11:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hAmoK8Np"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aRSMQB3T"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62F2D200CB0;
-	Fri, 25 Oct 2024 10:08:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66BA31FF7DB
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2024 10:11:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729850932; cv=none; b=ojir+4ssJCoshol8reN6/BA4++8dpTP6e7OAdHptVW1Fcxlwrq66G58C832bE1Rygj9uz/dhe6t7bVfesOX+gssZGRVzbRflE21EwKHIS8QV+Bbg3d3xrQEPjzCF4hiQVIRZ4p54ja/gRX2w6Ly3Rp71QdInAoFX+Z1SQ3U1IMg=
+	t=1729851110; cv=none; b=FNBtTMQMfWLe1DVm8v+POHn1QUVFbhfdEpj3k0ByYnPsvs7ukuqgOcPIyd7TA2w4os1iLOPMSH5e+zivUQQ9DMZ5lLQDNT0jCWJp8/8Tt9CIQP9AdYKZPyT9LkHslyE6Z8iGBeDqPUTCcx8UnE5SFzx0QXXx3wtLDbzyQ0VxbZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729850932; c=relaxed/simple;
-	bh=uMsrbKEFzUIIDa3jlcbEjO0ezM4GnYr63OfFQI2mv0Y=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=eti54e1a0XW7RsiW+BqGMHmvGByW6EZyM1zl2qaMnXzRuXOQG2xFXYodTW0lCUpsKPNGwaQGOTfEFx5M738TG6ViRqI38G84yaecWqdH6oMgjhXSppGaA+Uf+P2fwsozQX14XFX6HgwzE3j3n0PXccwkpuujck98i6dtoQGJeiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hAmoK8Np; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49P0mmpb004988;
-	Fri, 25 Oct 2024 10:08:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	6IgLGyzdm/Oz8+57j6vgG+Bixk6o1KsOnA+JBxBzS9Y=; b=hAmoK8NpDQkVoM+C
-	Gp+hHQSnPI2SOW/HB95nsNQSpeApGf1zR8iS+ZgzCyImmVCQsnqj7QpvmcoF7dl5
-	5XOvf2fzxd0SXntL6RfhcauMFytd9mzQs01NvdjywUzIjtyOKtpFxR2X8JuK+T4V
-	AQxI7yYM6AJz6KJ3gQDhVIKmjFo754A54/9GFeJYvKnj3lDhvHM9kOR+R2t4KTQk
-	H2agamty4Uiv+KvWuW/03W2+59kI8hxCqfK2WmOIDxK+eyc3ZaASCWg3IAazZG2Q
-	Qt243QgSRDRvPeIc6gAtlWVnvLCkl9Rh7n+h6Dk1MhgvZzOwDmF3hTOnm1KEEDjJ
-	pk5SjA==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42em688gvd-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 25 Oct 2024 10:08:42 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49PA8fKp025900
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 25 Oct 2024 10:08:41 GMT
-Received: from [10.151.41.25] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 25 Oct
- 2024 03:08:37 -0700
-Message-ID: <db0a6797-0e51-45b2-bf8a-58d53d8cf959@quicinc.com>
-Date: Fri, 25 Oct 2024 15:38:33 +0530
+	s=arc-20240116; t=1729851110; c=relaxed/simple;
+	bh=NcF5NlARhc9rttUph2fFDKtzjKKxMIsZR0rLXYMN1Bo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fPigSGxyHObWI/VHDx0kBsxhocXrVmwvINDlRy1BwLqJgpazozuz1KZe5jALEYjLK0FcrMTcPzGrZK7g0oTBguUNhNvSAKmtuw83xv8XE1/t5uVdtJRI6lAOlgwYHu2af6MpPHpoKZjqOKhxsbEt8/ZUQ18xZaxttWyfDoaDqSE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=aRSMQB3T; arc=none smtp.client-ip=209.85.219.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-e28fd83b5bbso2077946276.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2024 03:11:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1729851107; x=1730455907; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=pkf9nRBkB80Bq3MKpjBngWsWTtl6Rx4Rgdt86QJ7P7g=;
+        b=aRSMQB3TM57x73eRl5o45dtTK6nzNQE+evnm+YY89CaOtL7UVu6Pbiu+r+quCnLih6
+         y7maKjqoRblINWLbLHLB0HXVQZm84JBvEgrwuOsyBkwftJb+K+B4vZ24bYR7++NrHJKM
+         NO91sJ2B6USbXF9Us76v+Chuf7zIdhEMMiABvpQ3U29gyuAmt0vjXMsTxB4LmoVW2XC0
+         fqDYzE5pG5/Ioa2CRCHcYmRtgHJ9j6ZJyZ0Fp7GHdHCGpjB+Ba2rICDpZM0KTE+Mb1UO
+         dD9bP1QznxgQGhOsQ4oe3pLf5IUh8ZcDZDhJA2uTlHBuW1Gc6DnIzCAByj0zWXMIjGRL
+         QtKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729851107; x=1730455907;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pkf9nRBkB80Bq3MKpjBngWsWTtl6Rx4Rgdt86QJ7P7g=;
+        b=YL/7aJFJh8ayomw4HrZV6s6b/kebZ5XHFvAC1OhqqY7bh0dfYpy05WKeNDdb6cLbMW
+         rL2E18f4SFohAiALr/jjRY6d6X7ED9nT/6i3OtUYdbd2AJqrg5pq8KaLylcJJrPKpexb
+         ZbQICOoazkH2u1Dm0O/B6wW26/1UqsQquaGnCLvLsjK3d8WLrgbCqs0ZoYZAtPoCAeJB
+         K6VegOva1EDjQqQui6XurUImxRUTWDTy5xcndapSw+JrSplRIS1/QnvufkZbzT/EEoQL
+         4+krWDe5bwEAAVGl2lD3E7ksPNREI2CmL6mQsYfsUo+nBL/pC1Tcs/ZLHocLNWp0X4l9
+         S37Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXmg2Pa5RMwou3EvRKHZnYOyhU4QyxJOhyzNfFy6JYddRZeiYgdOOSCVAsgezHVdFVh6ft/2NaASPB5XHos@vger.kernel.org
+X-Gm-Message-State: AOJu0YxMLI8jo3GLoCup4VTKgguNsUzb9EVhccwegnCkvmdimXXWTKus
+	SYeD57SfnYIzBBBZ74tMvMoBd3RgnBCzkjE/iWVfTqZgBKGDfdeA4WynfNwy5nIT56ZQHfdeWmO
+	QTQ6m6vZHpDJCy248sEL21F6qgstG9zLXcYVAdA==
+X-Google-Smtp-Source: AGHT+IFhzLcgcs/L0Xo5eHIlOxVTVTCvGQpIJ8zLoYotZJwVqJXphpuLV/3wEhh+Pt3fgM55yJPxDK0IR2Fz1nW32AQ=
+X-Received: by 2002:a05:690c:dd4:b0:643:92a8:ba00 with SMTP id
+ 00721157ae682-6e7f0c46d68mr94570857b3.0.1729851107335; Fri, 25 Oct 2024
+ 03:11:47 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 2/6] dt-bindings: net: wireless: ath12k: describe WSI
- property for QCN9274
-To: Krzysztof Kozlowski <krzk@kernel.org>, <ath12k@lists.infradead.org>
-CC: <linux-wireless@vger.kernel.org>, Kalle Valo <kvalo@kernel.org>,
-        Rob
- Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor
- Dooley <conor+dt@kernel.org>,
-        Jeff Johnson <jjohnson@kernel.org>,
-        Bjorn
- Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-References: <20241023060352.605019-1-quic_rajkbhag@quicinc.com>
- <20241023060352.605019-3-quic_rajkbhag@quicinc.com>
- <c7c6bf7e-0f79-44b1-aed4-db1fdbedc9a8@kernel.org>
-Content-Language: en-US
-From: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
-In-Reply-To: <c7c6bf7e-0f79-44b1-aed4-db1fdbedc9a8@kernel.org>
+References: <20241007060642.1978049-1-quic_sibis@quicinc.com>
+ <ZwfsmqInJlqkQD_3@hovoldconsulting.com> <ae5eaef9-301f-7d3f-c973-faa22ae780ee@quicinc.com>
+ <ZxkjqEmkBAsC6UkL@hovoldconsulting.com> <c8e7420b-a7b4-89cd-1b6e-c1f6693c062d@quicinc.com>
+ <ik4dyfbphm7lkeipm2dbr7cmdfxewxd4jtuz2jfnscfwcyo2r4@lrin5hnsqvyd> <83b635a7-fc69-7522-d985-810262500cb3@quicinc.com>
+In-Reply-To: <83b635a7-fc69-7522-d985-810262500cb3@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Fri, 25 Oct 2024 13:11:37 +0300
+Message-ID: <CAA8EJppx1OmYnfSsMDebRRTbNb3dfAE_MM55T1SpLccP=s_K1A@mail.gmail.com>
+Subject: Re: [PATCH V3 0/4] firmware: arm_scmi: Misc Fixes
+To: Sibi Sankar <quic_sibis@quicinc.com>
+Cc: Johan Hovold <johan@kernel.org>, sudeep.holla@arm.com, cristian.marussi@arm.com, 
+	ulf.hansson@linaro.org, jassisinghbrar@gmail.com, 
+	linux-kernel@vger.kernel.org, arm-scmi@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
+	konradybcio@kernel.org, linux-pm@vger.kernel.org, tstrudel@google.com, 
+	rafael@kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: cTudtVr9yD2hfIhIKlDkE9f4wgUtdiAW
-X-Proofpoint-GUID: cTudtVr9yD2hfIhIKlDkE9f4wgUtdiAW
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 malwarescore=0
- priorityscore=1501 adultscore=0 bulkscore=0 phishscore=0 mlxscore=0
- lowpriorityscore=0 mlxlogscore=999 impostorscore=0 suspectscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410250078
 
-On 10/23/2024 12:30 PM, Krzysztof Kozlowski wrote:
-> On 23/10/2024 08:03, Raj Kumar Bhagat wrote:
->> QCN9274 device has WSI support. WSI stands for WLAN Serial Interface.
->> It is used for the exchange of specific control information across
->> radios based on the doorbell mechanism. This WSI connection is
->> essential to exchange control information among these devices
->>
->> Hence, describe WSI interface supported in QCN9274 with the following
->> properties:
->>
->>  - qcom,wsi-group-id: It represents the identifier assigned to the WSI
->>    connection. All the ath12k devices connected to same WSI connection
->>    have the same wsi-group-id.
->>
->>  - qcom,wsi-index: It represents the identifier assigned to ath12k
->>    device in the order of the WSI connection.
->>
->>  - qcom,wsi-num-devices: Number of devices connected through WSI in
->>    the same group ID.
->>
->> Signed-off-by: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
->> ---
->>  .../bindings/net/wireless/qcom,ath12k.yaml    | 61 +++++++++++++++++++
->>  1 file changed, 61 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/net/wireless/qcom,ath12k.yaml b/Documentation/devicetree/bindings/net/wireless/qcom,ath12k.yaml
->> index ecf38af747f7..6c8f97865075 100644
->> --- a/Documentation/devicetree/bindings/net/wireless/qcom,ath12k.yaml
->> +++ b/Documentation/devicetree/bindings/net/wireless/qcom,ath12k.yaml
->> @@ -19,6 +19,7 @@ properties:
->>    compatible:
->>      enum:
->>        - pci17cb,1107  # WCN7850
->> +      - pci17cb,1109  # QCN9274
-> 
-> Missing supplies. How does the device take power? Everything through
-> standard PCI pins? Are you sure? Please submit complete binding, so with
-> all required properties.
-> 
+On Fri, 25 Oct 2024 at 09:46, Sibi Sankar <quic_sibis@quicinc.com> wrote:
+>
+>
+>
+> On 10/25/24 11:44, Dmitry Baryshkov wrote:
+> > On Fri, Oct 25, 2024 at 11:38:36AM +0530, Sibi Sankar wrote:
+> >>
+> >>
+> >> On 10/23/24 21:56, Johan Hovold wrote:
+> >>> On Wed, Oct 23, 2024 at 01:16:47PM +0530, Sibi Sankar wrote:
+> >>>> On 10/10/24 20:32, Johan Hovold wrote:
+> >>>>> On Mon, Oct 07, 2024 at 11:36:38AM +0530, Sibi Sankar wrote:
+> >>>>>> The series addresses the kernel warnings reported by Johan at [1] and are
+> >>>>>> are required to X1E cpufreq device tree changes [2] to land.
+> >>>>>>
+> >>>>>> [1] - https://lore.kernel.org/lkml/ZoQjAWse2YxwyRJv@hovoldconsulting.com/
+> >>>>>> [2] - https://lore.kernel.org/lkml/20240612124056.39230-1-quic_sibis@quicinc.com/
+> >>>>>>
+> >>>>>> The following warnings remain unadressed:
+> >>>>>> arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
+> >>>>>> arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
+> >>>>>
+> >>>>> Are there any plans for how to address these?
+> >>>
+> >>>> Sorry missed replying to this. The error implies that duplicate
+> >>>> opps are reported by the SCP firmware and appear once during probe.
+> >>>
+> >>> I only see it at boot, but it shows up four times here with the CRD:
+> >>
+> >> https://lore.kernel.org/lkml/d54f6851-d479-a136-f747-4c0180904a5e@quicinc.com/
+> >>
+> >> As explained ^^, we see duplicates for max sustainable performance twice
+> >> for each domain.
+> >
+> > If existing products were shipped with the firmware that lists single
+> > freq twice, please filter the frequencies like qcom-cpufreq-hw does.
+>
+> That was a qualcomm specific driver and hence we could do such
+> kind of filtering. This however is the generic scmi perf protocol
+> and it's not something we should ever consider introducing :/
 
-QCN9274 gets powered from the standard Pcie (3.3 V) supply. No additional
-regulators are required.
+This depends on the maintainer's discretion.
+
+>
+> >
+> >>
+> >>>
+> >>> [    8.098452] arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
+> >>> [    8.109647] arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
+> >>> [    8.128970] arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
+> >>> [    8.142455] arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
+> >>>
+> >>>> This particular error can be fixed only by a firmware update and you
+> >>>> should be able to test it out soon on the CRD first.
+> >>>
+> >>> Can you explain why this can only be fixed by a firmware update? Why
+> >>> can't we suppress these warnings as well, like we did for the other
+> >>> warnings related to the duplicate entries?
+> >>>
+> >>> IIUC the firmware is not really broken, but rather describes a feature
+> >>> that Linux does not (yet) support, right?
+> >>
+> >> We keep saying it's a buggy firmware because the SCP firmware reports
+> >> identical perf and power levels for the additional two opps and the
+> >> kernel has no way of treating it otherwise and we shouldn't suppress
+> >> them. Out of the two duplicate opps reported one is a artifact from how
+> >> Qualcomm usually show a transition to boost frequencies. The second opp
+> >> which you say is a feature should be treated as a boost opp i.e. one
+> >> core can run at max at a lower power when other cores are at idle but
+> >> we can start marking them as such once they start advertising their
+> >> correct power requirements. So I maintain that this is the best we
+> >> can do and need a firmware update for us to address anything more.
+> >
+> > Will existing shipping products get these firmware updates?
+>
+> They are sure to trickle out but I guess it's upto the oem
+> to decide if they do want to pick these up like some of the
+> other firmware updates being tested only on CRD. Not sure why
+> warnings duplicates should block cpufreq from landing for x1e
+> but if that's what the community wants I can drop reposting
+> this series!
+
+No, the community definitely wants to have cpufreq for X1E.
+But at the same time some reviewers prefer to have a warning-free boot
+if those warnings can't be really fixed. I don't have such a strict
+position, but I'd prefer to see those messages at dev_info or dev_dbg
+level.
+
+Also, can we please have some plan or idea if somebody is actually
+working with laptop vendors to get corresponding firmware updates onto
+their hardware?
+
+-- 
+With best wishes
+Dmitry
 
