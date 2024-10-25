@@ -1,146 +1,239 @@
-Return-Path: <linux-arm-msm+bounces-35882-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35883-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B8EFB9B04B9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 15:55:51 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 85D3F9B04E8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 16:02:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 65C3A1F243FD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 13:55:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A4B1D1C2263F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 14:02:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B451E1FF04A;
-	Fri, 25 Oct 2024 13:55:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF0977080A;
+	Fri, 25 Oct 2024 14:02:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RHN9enql"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="trtMk32i"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 863751FB8BF;
-	Fri, 25 Oct 2024 13:55:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF83212189
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2024 14:02:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729864522; cv=none; b=mY0/VQmkjOYvrj9YdC6ZJVsFYEBicy+qj7hYeLiRyG0Ae7Ebxr0BAyIcj9x28n/IRtDL4nsqJIlwlrnBIQhpHrFR4B2pLCDgxYHgCnP0Ibz/rNghcPYaLKBY2buBhCtGf405DFXsLy8kJpFJ9hJyudrhtG22BZZKn950/kVxF2A=
+	t=1729864929; cv=none; b=vCm7CQoW4WCN40DU0UjCScqhqNFx7M+Ek5a303eSvhPqABvRtEMbxkWLV9nhHBFB2/1WQ/O6WOndqWjx1Q2ZyXhLOugbC9l5YH3isvmstSFlF0PUXcvPD2uR6k6swlwcfGvf0llx/BOfBOzapumT0vgXcx4bJsoHFJN5zaErBDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729864522; c=relaxed/simple;
-	bh=xkMudEWRRfD3YH0ME7+qRwqIW0hLv1EbymSWtkmjw8E=;
-	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=EITkVtbfoq9QcJZSAfweeryVlQY5qyANizqWIvD5uV5PL3z7pwpOrnMLqzBW2tZhd1iIa6pzYm0TS/N2bX2b1WENBINT8dD6416/LAw/zZQh7Z8uEs4RtIPImlYOwVlU7T/WOGkUzOSrBZ4rTOpD/3/v9mZ2Ftux9ILbrIkxFa8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RHN9enql; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BD6EC4CEC3;
-	Fri, 25 Oct 2024 13:55:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729864522;
-	bh=xkMudEWRRfD3YH0ME7+qRwqIW0hLv1EbymSWtkmjw8E=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=RHN9enqlblAP3ihkNIodMpf4bP8wly0fzq3tFnxiaYOD+m54357zDBKTeyBX+wTw1
-	 I5geDoQcgPiW41rQEKu3MdaSxT2X1UGfsulfW5wEwFcCuZ2DHyviCib8RRTg1XtfXh
-	 Qq1KMMnpvLV86w7ZXzz5xyFws0hVBEVbe4aEr+AcS2FxDie1L8rwm8eA46uvbOtVqz
-	 6FaOwJZUcNVD3ExoU3nDJD2YRNEkFB92X/f43IU8aszOfOQqQHyEHBqLlTF8CYhAJo
-	 NWzBj/9nOUsFgnm01yBh47rxH/qenVn2jAEucg0mDEaSB3tNe/ombT3NLwHFr21lax
-	 zRS2xomrCT7IA==
-Date: Fri, 25 Oct 2024 08:55:21 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1729864929; c=relaxed/simple;
+	bh=km1L8WKtCbh8DWn3RjGAq3vjkF63vfmjc3NyOlLBGB0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=b6BBRq/K4b6oipOBgHQex4YEWFUT3ofN7jEG/CoOE4zbNEsTTqLMswNFpM1WzoNE9B5+MTsnXSSAV9Af54oo8gRtWJz0IzIyEufBHHvr5420enUEUHU6H4NzOIKjv7xpETP8vZrK4xHAD5OXnqhQXgkkWi9kyvibXYoZCSPth+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=trtMk32i; arc=none smtp.client-ip=209.85.167.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-539e690479cso2182864e87.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2024 07:02:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1729864925; x=1730469725; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=2Nfudw1Ijx/8Xpt/Kv9XtTdHSXkroBGWJBG4jEUcsrk=;
+        b=trtMk32i5EBoPCoLfpLcmt0T1XqejhenBPw4JXa+7agR1Euygq60Y/1h/Jsv+CAsgR
+         5QW8VG1ELINsRtSQvToLkNwQVWVK8sCisw5tD7gRcs8F62Zvg5mYFRmsHWjtnFKWu+9p
+         9VP6xpNt0PIe4v5cIGGmAUc9Actz17Fz2U2S9B/HxKqDDvD8gMwzJ7SoWzZI2IZUVYg7
+         8rLjdicqGAkY8cT5qhFAmucQbuxSNWI6FWGaJbGEfNh8Ke7CTTnPKOdC0gyoCHl0VENI
+         7Bvg13uTz36umRAl2yW7qRxRF/glUtaF1I2ADC8Kl2eNHv6xZykq1OYEbLlrHgJVcobE
+         VEWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729864925; x=1730469725;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2Nfudw1Ijx/8Xpt/Kv9XtTdHSXkroBGWJBG4jEUcsrk=;
+        b=soArOkM/ES0H2jtGwZWZ5Hx5mrI4TKON1g/fm95aKXcGB208xjGbx3Xoy6NgzyxAT+
+         mYB/ACXZ8a1fzNaXqRLFdHThqzKDiJNSsjceaozIsTAkFdxsTPezYwpaZNf9YuO2E2bs
+         bf/Mx2YAbVicW+xzDMLK/88HwSu/trPcAdhe26CmspWeIqdmqXAggOmS5ULPpXvGmBKO
+         96LE42pv4RebTUQP17WIjNRJjZ4m/gYAsw94/UHVMerq8H0cuQFxdU5zsqQBmnWWdy0M
+         0gM+7Lvu+l7e1DAGOwX/dD6bkTJ9TsdhfLB1RQ20qi5qHFe02ilSFivC7gPL0C8vZR5v
+         8mcQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV/GAinEg63dF8jIYPofMFTzEmwmSJv34xtRTniuMPbnhYLDTj6LPzzy0vRkUMSoLXMCNBBsBgyTY93P0Bf@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywt2+ItIOLX/5d2J8HM/QQKQu76OQT8/PcFONn1pnbemll2xAZ4
+	pmFSh2kFtqwKHOhYl6rvrJU61mEMe2caOtbywFP6dgewYp/bvImRtzMqBd3xMXM=
+X-Google-Smtp-Source: AGHT+IGlgIINW/NRGGW5OX/pYH3iCgOXQYfEGayutQYaIB2YYqfQv9lQrWULX7nLw4cDcYMWY/7HOQ==
+X-Received: by 2002:a05:6512:114f:b0:539:88f7:d3c4 with SMTP id 2adb3069b0e04-53b1a328277mr6219477e87.29.1729864923455;
+        Fri, 25 Oct 2024 07:02:03 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53b2e140dbfsm193662e87.113.2024.10.25.07.02.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 25 Oct 2024 07:02:02 -0700 (PDT)
+Date: Fri, 25 Oct 2024 17:01:59 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Miaoqing Pan <quic_miaoqing@quicinc.com>
+Cc: kvalo@kernel.org, quic_jjohnson@quicinc.com, 
+	ath11k@lists.infradead.org, linux-wireless@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] wifi: ath11k: support board-specific firmware
+ overrides
+Message-ID: <xp5j6kkpggfhxvzuozqcvs2ugon5xexjgzl24zjlen7kggdaju@vd3okew4vcsy>
+References: <20241024002514.92290-1-quic_miaoqing@quicinc.com>
+ <20241024002514.92290-3-quic_miaoqing@quicinc.com>
+ <pdjhyrjoreiykv2tquvufjw3rkti5sxrjvpmkjhvkfasq7zbo4@xxntxdmhhyg5>
+ <bc3c06eb-1cb2-4cbb-aaad-95c09223f0cc@quicinc.com>
+ <ig3m3sgmnkgfmwrlglundhqif6rygzl7uh7rzoemrz3yxgvfpc@35a323mw2wbt>
+ <46de0bfe-ebdd-4b37-a957-3c64e30a1376@quicinc.com>
+ <CAA8EJpr4zgV4Sa4sPdCToQWs+CFJu6Xz6CPcPyHDhDczmuzj=g@mail.gmail.com>
+ <06ff37ef-dfda-470f-80f7-0f54bae25686@quicinc.com>
+ <CAA8EJppFCXeUAZax+jv42JrKYgLmaPQNpXhn-06q_K_uB9JZLQ@mail.gmail.com>
+ <46b18b39-9e88-42f8-aa88-5b527fc92a9f@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Sibi Sankar <quic_sibis@quicinc.com>
-Cc: krzk+dt@kernel.org, maz@kernel.org, konradybcio@kernel.org, 
- robh+dt@kernel.org, dmitry.baryshkov@linaro.org, 
- linux-kernel@vger.kernel.org, quic_jjohnson@quicinc.com, 
- srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org, 
- devicetree@vger.kernel.org, conor+dt@kernel.org, andersson@kernel.org, 
- abel.vesa@linaro.org, jens.glathe@oldschoolsolutions.biz
-In-Reply-To: <20241025123227.3527720-1-quic_sibis@quicinc.com>
-References: <20241025123227.3527720-1-quic_sibis@quicinc.com>
-Message-Id: <172986441294.1908121.6054999866989311557.robh@kernel.org>
-Subject: Re: [PATCH V3 0/3] X1E001DE Snapdragon Devkit for Windows
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <46b18b39-9e88-42f8-aa88-5b527fc92a9f@quicinc.com>
 
-
-On Fri, 25 Oct 2024 18:02:24 +0530, Sibi Sankar wrote:
-> Add initial support for X1E001DE Snapdragon Devkit for Windows. X1E001DE
-> is the speed binned variant of X1E80100 that supports turbo boost up to
-> 4.3 Ghz. The initial support includes the following:
-> 
-> -DSPs
-> -Ethernet (RTL8125BG) over the pcie 5 instance.
-> -NVme
-> -Wifi
-> -USB-C ports
-> 
-> V3:
-> * Asked around and looked at the firmware, couldn't find a codename so
->   will keep it as DEVKIT. Will update it if someone from the community
->   finds something else.
-> * Update type c roles as reported by ucsi. [Dmitry]
-> * Update THUNDERCOMM to Thundercomm. [Dmitry]
-> * Update regulator names and sort Order. [Dmitry]
-> * Add x1e001DE devkit to the safe list.
-> * Mark regulator-nmve as boot enabled.
+On Fri, Oct 25, 2024 at 09:43:04PM +0800, Miaoqing Pan wrote:
 > 
 > 
-> V2:
-> * Fix Ghz -> GHz  [Jeff]
-> * Pick up Ab tag from Rob.
-> * Use Vendor in ADSP/CDSP firmware path [Dmitry]
-> * Fix reserved gpios [Dmitry]
-> * Only port0 supports DRD update the dt accordingly [Dmitry]
+> On 10/25/2024 8:21 PM, Dmitry Baryshkov wrote:
+> > On Fri, 25 Oct 2024 at 15:03, Miaoqing Pan <quic_miaoqing@quicinc.com> wrote:
+> > > 
+> > > 
+> > > 
+> > > On 10/25/2024 6:20 PM, Dmitry Baryshkov wrote:
+> > > > On Fri, 25 Oct 2024 at 10:23, Miaoqing Pan <quic_miaoqing@quicinc.com> wrote:
+> > > > > 
+> > > > > 
+> > > > > 
+> > > > > On 10/25/2024 2:01 PM, Dmitry Baryshkov wrote:
+> > > > > > On Fri, Oct 25, 2024 at 10:56:02AM +0800, Miaoqing Pan wrote:
+> > > > > > > 
+> > > > > > > 
+> > > > > > > On 10/25/2024 3:39 AM, Dmitry Baryshkov wrote:
+> > > > > > > > On Thu, Oct 24, 2024 at 08:25:14AM +0800, Miaoqing Pan wrote:
+> > > > > > > > > QCA6698AQ IP core is the same as WCN6855 hw2.1, but it has different RF,
+> > > > > > > > > IPA, thermal, RAM size and etc, so new firmware files used. This change
+> > > > > > > > > allows board DT files to override the subdir of the firmware directory
+> > > > > > > > > used to lookup the amss.bin and m3.bin.
+> > > > > > > > 
+> > > > > > > > I have slight concerns regarding the _board_ DT files overriding the
+> > > > > > > > subdir. This opens a can of worms, allowing per-board firmware sets,
+> > > > > > > > which (as far as I understand) is far from being what driver maintainers
+> > > > > > > > would like to see. This was required for ath10k-snoc devices, since
+> > > > > > > > firmware for those platforms is signed by the vendor keys and it is
+> > > > > > > > limited to a particular SoC or SoC family. For ath11k-pci there is no
+> > > > > > > > such limitation.
+> > > > > > > > 
+> > > > > > > > Would it be possible to use PCI subvendor / subdev to identify affected
+> > > > > > > > cards? PCI Revision? Any other way to identify the device?  Please
+> > > > > > > > provide lspci -nnvv for the affected device kind. Is there a way to
+> > > > > > > > identify the RF part somehow?
+> > > > > > > 
+> > > > > > > It's rather difficult, for WCN685x, there are multiple evolved subseries for
+> > > > > > > customized products. e.g.
+> > > > > > > 
+> > > > > > > QCA6698AQ/hw2.1
+> > > > > > > QCA2066/hw2.1
+> > > > > > > WCN6855/hw2.0/hw2.1
+> > > > > > > WCN6856/hw2.1
+> > > > > > > 
+> > > > > > > They have the same PCIe ID (17cb:1103), the commit 5dc9d1a55e95 ("wifi:
+> > > > > > > ath11k: add support for QCA2066") reads TCSR_SOC_HW_SUB_VER to enumerate all
+> > > > > > > QCA2066 cards, it lacks of flexibility, as the list will become longer and
+> > > > > > > longer. But it's the only choice for QCA2066, as it's customized for X86
+> > > > > > > platform which without DT files.
+> > > > > > 
+> > > > > > I guess, this is closer to Kalle's expectations: being able to detect
+> > > > > > the hardware instead of adding DT properties.
+> > > > > > 
+> > > > > > > So for MSM those have DT file platforms, like SA8775P-RIDE/QCS8300-RIDE both
+> > > > > > > attached to QCA6698AQ, we can specify the correct firmware to
+> > > > > > > 'ath11k/WCN6855/hw2.1/qca6698aq', so it's not per-board firmware, it depends
+> > > > > > > on the type of the products(x86 windows, IoT products or AUTO).
+> > > > > > 
+> > > > > > No-no-no and no. The firmware used must not be specific to the product
+> > > > > > type.  This is what everybody here is trying to avoid. Please try
+> > > > > > following the QCA2066 approach instead. And note that it could use new
+> > > > > > TLD as it perfectly shows itself as a different hardware kind.
+> > > > > 
+> > > > > Actually, TCSR_SOC_HW_SUB_VER is not SOC register, it's a TLMM hw
+> > > > > revision register in BAR0 space, it's hard to maintain the list.
+> > > > 
+> > > > How is it so?
+> > > 
+> > > I think QCA2066 approach is just a workaround. Different batches of chip
+> > > manufacture has different value in TCSR_SOC_HW_SUB_VER.
+> > 
+> > Ok. So, subvendor / subdevice?
 > 
-> Sibi Sankar (3):
->   dt-bindings: arm: qcom: Add Snapdragon Devkit for Windows
->   firmware: qcom: uefisecapp: Allow X1E Devkit devices
->   arm64: dts: qcom: Add X1E001DE Snapdragon Devkit for Windows
+> The 'subvendor' is fixed to 0x17cb, so it's useless. And I don't have enough
+> samples to decide to use 'subdevice', it's a risk for existing devices.
+
+What kind of risk? If subvendor is fixed, then it's Qualcomm who
+enumerates subdevices.
+
+I'm really reluctant to bringing more DT usage into the PCIe space.
+Especially if the user is able to swap cards.
+
+> > > > And if it is hard, can we please get to the _normal_ way how vendors
+> > > > handle PCI hardware differences: the subvendor and subdevice? This is
+> > > > a usual way to describe that the PCIe device is the same, but the
+> > > > analog / tuner / RF / etc parts are different.
+> > > 
+> > > 
+> > > > 
+> > > > > We're going to have another problem to enable NFA765 m.2 card for IoT
+> > > > > platforms, which has different feature sets with X86 platform, so also
+> > > > > new firmware should be used. In this case, QCA2066 approach not works.
+> > > > > Seems DT approach is only choice.
+> > > > > 
+> > > > > Could you advice ?
+> > > > 
+> > > > Hmm, The first question is _why_ does it have different feature sets?
+> > > > What exactly is different?
+> > > 
+> > > Yeah, for IoT device will support SAP/TWT/UL-OFDMA/BSS color and etc new
+> > > features, and the existing x86 firmware mainly for STA mode.
+> > > 
+> > > What if the user plugs a normal (laptop)
+> > > > M.2 card into their IoT device?
+> > > 
+> > > If there is no DT file to specify the firmware, IoT device will load the
+> > > default firmware, it will affect SAP and WiFi-6 advanced features.
+> > 
+> > Can we get all those nice features into x86 world instead?
 > 
->  .../devicetree/bindings/arm/qcom.yaml         |   6 +
->  arch/arm64/boot/dts/qcom/Makefile             |   1 +
->  arch/arm64/boot/dts/qcom/x1e001de-devkit.dts  | 814 ++++++++++++++++++
->  drivers/firmware/qcom/qcom_scm.c              |   1 +
->  4 files changed, 822 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
-> 
-> --
-> 2.34.1
-> 
-> 
-> 
+> It's out of our scope, we will not touch the existing stable firmware
+> version, also it's not allowed.
 
+If it's not allowed for laptop cards, why is it allowed for IoT M.2
+cards (which then can be perfectly installed into the laptop)?
 
-My bot found new DTB warnings on the .dts files added or changed in this
-series.
+> > > > > > > 0000:01:00.0 Network controller [0280]: Qualcomm QCNFA765 Wireless Network
+> > > > > > > Adapter [17cb:1103] (rev 01)
+> > > > > > >        Subsystem: Qualcomm QCNFA765 Wireless Network Adapter [17cb:0108]
+> > > > > > >        Device tree node: /sys/firmware/devicetree/base/pci@1c00000/pcie@0/wifi@0
+> > > > > > > 
+> > > > > > > 
+> > > > > > > > 
+> > > > > > > > Could you possibly clarify, how this situation is handled in Windows
+> > > > > > > > world?
+> > > > > > > 
+> > > > > > > X86 platforms use standard m.2 PCIe card, and it will only use the default
+> > > > > > > main firmware files, as they without DT files.
+> > > > > > 
+> > > > > > So QCA6698AQ cannot appear on an M.2 PCIe card?
+> > > > > 
+> > > > > No, but no m.2 PCIe card so far. It depends on power sequencing module
+> > > > > to do power up.
+> > > > 
+> > > > You are describing software (power sequencing module), while I was
+> > > > talking about the hardware. Nothing prevents OEM from adding fixed
+> > > > regulators to drive necessary voltages from the PCIe slot.
 
-Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-are fixed by another series. Ultimately, it is up to the platform
-maintainer whether these warnings are acceptable or not. No need to reply
-unless the platform maintainer has comments.
-
-If you already ran DT checks and didn't see these error(s), then
-make sure dt-schema is up to date:
-
-  pip3 install dtschema --upgrade
-
-
-New warnings running 'make CHECK_DTBS=y qcom/x1e001de-devkit.dtb' for 20241025123227.3527720-1-quic_sibis@quicinc.com:
-
-arch/arm64/boot/dts/qcom/x1e001de-devkit.dtb: usb@a2f8800: interrupt-names: ['pwr_event', 'dp_hs_phy_irq', 'dm_hs_phy_irq'] is too short
-	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
-arch/arm64/boot/dts/qcom/x1e001de-devkit.dtb: system-cache-controller@25000000: reg: [[0, 620756992, 0, 2097152], [0, 622854144, 0, 2097152], [0, 624951296, 0, 2097152], [0, 627048448, 0, 2097152], [0, 629145600, 0, 2097152], [0, 631242752, 0, 2097152], [0, 633339904, 0, 2097152], [0, 635437056, 0, 2097152], [0, 637534208, 0, 2097152], [0, 639631360, 0, 2097152]] is too long
-	from schema $id: http://devicetree.org/schemas/cache/qcom,llcc.yaml#
-arch/arm64/boot/dts/qcom/x1e001de-devkit.dtb: system-cache-controller@25000000: reg-names: ['llcc0_base', 'llcc1_base', 'llcc2_base', 'llcc3_base', 'llcc4_base', 'llcc5_base', 'llcc6_base', 'llcc7_base', 'llcc_broadcast_base', 'llcc_broadcast_and_base'] is too long
-	from schema $id: http://devicetree.org/schemas/cache/qcom,llcc.yaml#
-arch/arm64/boot/dts/qcom/x1e001de-devkit.dtb: system-cache-controller@25000000: reg: [[0, 620756992, 0, 2097152], [0, 622854144, 0, 2097152], [0, 624951296, 0, 2097152], [0, 627048448, 0, 2097152], [0, 629145600, 0, 2097152], [0, 631242752, 0, 2097152], [0, 633339904, 0, 2097152], [0, 635437056, 0, 2097152], [0, 637534208, 0, 2097152], [0, 639631360, 0, 2097152]] is too long
-	from schema $id: http://devicetree.org/schemas/cache/qcom,llcc.yaml#
-arch/arm64/boot/dts/qcom/x1e001de-devkit.dtb: system-cache-controller@25000000: reg-names: ['llcc0_base', 'llcc1_base', 'llcc2_base', 'llcc3_base', 'llcc4_base', 'llcc5_base', 'llcc6_base', 'llcc7_base', 'llcc_broadcast_base', 'llcc_broadcast_and_base'] is too long
-	from schema $id: http://devicetree.org/schemas/cache/qcom,llcc.yaml#
-
-
-
-
-
+-- 
+With best wishes
+Dmitry
 
