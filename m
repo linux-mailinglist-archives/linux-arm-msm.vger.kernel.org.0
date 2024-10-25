@@ -1,161 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-35795-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35796-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A2C319AF994
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 08:09:11 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3DEF69AF999
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 08:09:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 62F3B283658
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 06:09:10 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DE11B1F22251
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 06:09:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB64D18DF97;
-	Fri, 25 Oct 2024 06:09:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E029218DF97;
+	Fri, 25 Oct 2024 06:09:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fHV/sDRL"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EnEFtAc0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0DB518A6DF;
-	Fri, 25 Oct 2024 06:09:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFFD518C030
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2024 06:09:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729836548; cv=none; b=cCGPXiiA4M1VX5mTnCW68UTLBHJd8uYA+9zALA/DxNi8wwblNCrjd+fnjO92Fl6lTsUfDiLAeY0xERgf6aorxR+AImnN2CucYgeQ2TU13xz9jTWIZLDxiMG+RDylUns5EmKisId7UyOeItuc13E54mkBkalfQBD2GjMEtJ4DP1o=
+	t=1729836588; cv=none; b=Im8SMjwawvQSU+BsjGv886gInHPskaDM4krzo6JVrSYmgzbxxp0YrKuVPLnlwJPJwKw0QjE08ulTJKWNfNjU4NLQKWP7ZxCFGRaCVT1Pkq6//AsitHLfLwlWi3oKiMeCH7EUC83OmHKi8gXQW5vHqZBwZFd8SaeAK/ffo8dsGAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729836548; c=relaxed/simple;
-	bh=iUuKyIIYb71VLRMYH4ci9GGeuu3H5IdGKlJRBSQs7mE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=YjB5JciND9pUCkUgOex89PIwGyBUGQBKH6q3Viv6Rs52karXwfOJjRjTG8ojNFRINzOhCjm7ONYstj0A942UR5tL+nexWBwFVe+SEXqbuK5fUnBgNZURTqEZNP1v7qBVNxGjniyyMIogihEwEmbYv3V00q71ppszHAFCi0AZgaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fHV/sDRL; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49OKlGF8009177;
-	Fri, 25 Oct 2024 06:08:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	w7Mf84VbPhqNkSnSUbM5bCqotbzjmoItpAKa5NiZcf0=; b=fHV/sDRLW3af4Zut
-	tbBFaW6L8NLBXbW1NwnMkICQsdBtA/DSqW1rh9rZ/AEACMJsJ1DyFe2D0MFZweae
-	IBuC0DtO8Mnvk0Ua9dKyXqetqQtYOyFOssUsPcXP9GyHA3ZO1Sq0BVy7FLF72gmj
-	LPJk0wGBBlSyNvkXt6ya7XvX8qDjDQuWuXkuv29WTPsEPsccyunjAi9DMv2r2yHm
-	PgJy4hgCa9JTSwWuz6fKrLJWMaUrxr/bhWbcpBKrooIy1MzCBx/HBs/rZKLn77r/
-	0rTdWsE1HUDqoUJOxF6tAIZBwDVg0n1hlrfwdge0FYbbuUgvJizXilvZTZkfEqNI
-	vvPGtA==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42em43fwr1-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 25 Oct 2024 06:08:44 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49P68hgk031990
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 25 Oct 2024 06:08:43 GMT
-Received: from [10.131.33.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 24 Oct
- 2024 23:08:39 -0700
-Message-ID: <c8e7420b-a7b4-89cd-1b6e-c1f6693c062d@quicinc.com>
-Date: Fri, 25 Oct 2024 11:38:36 +0530
+	s=arc-20240116; t=1729836588; c=relaxed/simple;
+	bh=VKgOuDEd4K0E7JpJ6DvceT83rJrIPW/PLFYrcwLMdFQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tzwmO7YWTaHZsibG34LESNOidZWT8g2sfH9iY5NVoN7KPs8AeLROJ1cavUZftLgajEAYZseEEWJ74EycDdVfMACWg6NODkQoMUB6qCJrzYmDKipnaH+4ShBiRKN2lxrdDms1P/TizJ4tB4toHrCVZmSECEBm4QEU/P7ieGmQrxE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EnEFtAc0; arc=none smtp.client-ip=209.85.167.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-539fb49c64aso2917574e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Oct 2024 23:09:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1729836585; x=1730441385; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=WGSwOfNTwBF1RVfw0bMgmzFOpa40Rq4a6Ot02SFfHkk=;
+        b=EnEFtAc03jVWECQr6qj66CkBj0G512t672ermJog1U/2pWwVBWK7gosukv7wEDVijp
+         Ta1Ah3xWmcuDT2ZlAFloU0imFdldCeXQI/e2yNQwtnZ9YEO/kb+tOkDGMS6BdM+mSONB
+         IcvQECQ9vhau6cSU2uXVIeVyGZjb+V3AOym8bUXhm6RopSKMcO4iRQbJmTcx55KYWiee
+         gEscLtkzi3xg9pajlndhurcog0DXfRfaBRGqP47ASOjoPrmaHOnEU9ZOkJ+ww6TwrS7H
+         2nX13Q1quuKtvubEIF8CwG9cZ6WoA99jkPRvHiYNTo5SrmxCVxjcL3Zv6dM+dhEQrj/5
+         sYKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729836585; x=1730441385;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WGSwOfNTwBF1RVfw0bMgmzFOpa40Rq4a6Ot02SFfHkk=;
+        b=dZxSeT1MHoLaUYlZIiAxHxIQwDAdSvIVz/qu6IAN/wRCQ51yBDmBfJzc4oy2FegX+3
+         o7oqdUWeADEmmvMmDsKnGI7HhY+9fLr4RMlG8Pm0vQ59SWxG2MrZoLAJuoZSG9+amtIV
+         muNNb5pf916NvpFH0Dp0iXQ+zzgNrGmHQ3f8U4ic6p5zEmFrhVofHa/puIIMpdzCnilr
+         Me0033ECmntONQMoqLfqQciXuiCLtaXLiCoDZoQAE/i96bY663bMj+yDC6U8p+n+9F8O
+         +bpeNX4GyCu46MghwO/g+azduvlOYEiwjofQDeXoXtnYLXLWDs608w3wBdIRUotPqNHQ
+         W8Lg==
+X-Forwarded-Encrypted: i=1; AJvYcCWmCyKByMbcUjL1ThnsU2v8PpSUOv9OKRRYhjGGo0d05yKnsReaZKAqK3An7ZxpMOXkPSN9jqb9tCVOlG6x@vger.kernel.org
+X-Gm-Message-State: AOJu0YwsgFD3BZI/hZBwZUGsTJrAeqHIwAo/Z5wIyTwOUyqmumd2qiXl
+	q8F531/i9lnJksEkxUz1nkHhCQxVnGRZOPqvgIOEH0vtKaaHyDrgAQPcjlr15y8=
+X-Google-Smtp-Source: AGHT+IH4kY+TfZ1uw4oFVFJNs6S8ff7aK9mZHUyqqpe7W5BmQI8FuCowWenPXdGmTodC/EhUEC9URw==
+X-Received: by 2002:a05:6512:258c:b0:53b:1e9b:b073 with SMTP id 2adb3069b0e04-53b1e9bb2d6mr7381629e87.3.1729836585041;
+        Thu, 24 Oct 2024 23:09:45 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53b2e10a915sm64598e87.12.2024.10.24.23.09.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Oct 2024 23:09:43 -0700 (PDT)
+Date: Fri, 25 Oct 2024 09:09:42 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Connor Abbott <cwabbott0@gmail.com>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+	Puranam V G Tejaswi <quic_pvgtejas@quicinc.com>
+Subject: Re: [PATCH v2 3/4] arm64: dts: qcom: sa8775p: Add gpu and gmu nodes
+Message-ID: <tg3jxbw4dqafaikl3yfvbl6jwou4ow2t2dnknmm2xpvbkjejrb@7yg76ykbxjns>
+References: <20241022-a663-gpu-support-v2-0-38da38234697@quicinc.com>
+ <20241022-a663-gpu-support-v2-3-38da38234697@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH V3 0/4] firmware: arm_scmi: Misc Fixes
-Content-Language: en-US
-To: Johan Hovold <johan@kernel.org>
-CC: <sudeep.holla@arm.com>, <cristian.marussi@arm.com>,
-        <ulf.hansson@linaro.org>, <jassisinghbrar@gmail.com>,
-        <linux-kernel@vger.kernel.org>, <arm-scmi@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>, <konradybcio@kernel.org>,
-        <linux-pm@vger.kernel.org>, <tstrudel@google.com>, <rafael@kernel.org>
-References: <20241007060642.1978049-1-quic_sibis@quicinc.com>
- <ZwfsmqInJlqkQD_3@hovoldconsulting.com>
- <ae5eaef9-301f-7d3f-c973-faa22ae780ee@quicinc.com>
- <ZxkjqEmkBAsC6UkL@hovoldconsulting.com>
-From: Sibi Sankar <quic_sibis@quicinc.com>
-In-Reply-To: <ZxkjqEmkBAsC6UkL@hovoldconsulting.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 8oGG8ulbuxduqeZUFnOlmGAnLt7x2Dqf
-X-Proofpoint-ORIG-GUID: 8oGG8ulbuxduqeZUFnOlmGAnLt7x2Dqf
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
- adultscore=0 mlxlogscore=999 spamscore=0 malwarescore=0 impostorscore=0
- phishscore=0 bulkscore=0 clxscore=1015 priorityscore=1501 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2410250045
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241022-a663-gpu-support-v2-3-38da38234697@quicinc.com>
 
-
-
-On 10/23/24 21:56, Johan Hovold wrote:
-> On Wed, Oct 23, 2024 at 01:16:47PM +0530, Sibi Sankar wrote:
->> On 10/10/24 20:32, Johan Hovold wrote:
->>> On Mon, Oct 07, 2024 at 11:36:38AM +0530, Sibi Sankar wrote:
->>>> The series addresses the kernel warnings reported by Johan at [1] and are
->>>> are required to X1E cpufreq device tree changes [2] to land.
->>>>
->>>> [1] - https://lore.kernel.org/lkml/ZoQjAWse2YxwyRJv@hovoldconsulting.com/
->>>> [2] - https://lore.kernel.org/lkml/20240612124056.39230-1-quic_sibis@quicinc.com/
->>>>
->>>> The following warnings remain unadressed:
->>>> arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
->>>> arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
->>>
->>> Are there any plans for how to address these?
+On Tue, Oct 22, 2024 at 03:16:05AM +0530, Akhil P Oommen wrote:
+> From: Puranam V G Tejaswi <quic_pvgtejas@quicinc.com>
 > 
->> Sorry missed replying to this. The error implies that duplicate
->> opps are reported by the SCP firmware and appear once during probe.
+> Add gpu and gmu nodes for sa8775p chipset. As of now all
+> SKUs have the same GPU fmax, so there is no requirement of
+> speed bin support.
 > 
-> I only see it at boot, but it shows up four times here with the CRD:
-
-https://lore.kernel.org/lkml/d54f6851-d479-a136-f747-4c0180904a5e@quicinc.com/
-
-As explained ^^, we see duplicates for max sustainable performance twice
-for each domain.
-
+> Signed-off-by: Puranam V G Tejaswi <quic_pvgtejas@quicinc.com>
+> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 94 +++++++++++++++++++++++++++++++++++
+>  1 file changed, 94 insertions(+)
 > 
-> [    8.098452] arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
-> [    8.109647] arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
-> [    8.128970] arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
-> [    8.142455] arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
-> 
->> This particular error can be fixed only by a firmware update and you
->> should be able to test it out soon on the CRD first.
-> 
-> Can you explain why this can only be fixed by a firmware update? Why
-> can't we suppress these warnings as well, like we did for the other
-> warnings related to the duplicate entries?
-> 
-> IIUC the firmware is not really broken, but rather describes a feature
-> that Linux does not (yet) support, right?
 
-We keep saying it's a buggy firmware because the SCP firmware reports
-identical perf and power levels for the additional two opps and the
-kernel has no way of treating it otherwise and we shouldn't suppress
-them. Out of the two duplicate opps reported one is a artifact from how
-Qualcomm usually show a transition to boost frequencies. The second opp
-which you say is a feature should be treated as a boost opp i.e. one
-core can run at max at a lower power when other cores are at idle but
-we can start marking them as such once they start advertising their
-correct power requirements. So I maintain that this is the best we
-can do and need a firmware update for us to address anything more.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
--Sibi
-
-
-> 
-> Johan
+-- 
+With best wishes
+Dmitry
 
