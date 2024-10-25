@@ -1,74 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-35923-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35924-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 03BBD9B0A48
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 18:49:58 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BFDC59B0A7B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 19:03:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 997BF1F21E10
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 16:49:57 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DB01A1C215B0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 17:03:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0312C1A76D0;
-	Fri, 25 Oct 2024 16:49:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C55B21A4BF;
+	Fri, 25 Oct 2024 17:03:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E3QhoXPF"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="FIyjcyfN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD09C170854;
-	Fri, 25 Oct 2024 16:49:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7619F18CC19
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2024 17:03:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729874984; cv=none; b=g3syCE2lwZdwFjevCBLkSp3bzLU0hbL5HgQXB1aOZeRqiICGcU94c1G6dO5jt2sDWmJIVP1I1MvOvXXQDSNrNq0ncG7Wb4Ee97Xe5TWrgQwP1sfJdK8ryooVh6pEdBrc0fQxtBEo9nH0HYQzS7e50rynieFzgRYTaR9qnkg7YYk=
+	t=1729875792; cv=none; b=k5c0crEhjI2vq5BubEb/WsyCeNa9xAUrtlFI8D+s2D7lWKj7nMpUgxh/TTA3zJe7JWA5/GiI8HuCovcu/mqgRDgJH2dj9loi3xcC9z8nz+HDP+syiCNzUo4UDchtvz7nDnsgijIV9pKx70hd1qdz/lxBerE7nFRp9w8VGfFZjRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729874984; c=relaxed/simple;
-	bh=DfJ3hQmZ6k+K93BrEtTXX6xLP3W07BuCdIALQFrMA38=;
+	s=arc-20240116; t=1729875792; c=relaxed/simple;
+	bh=WPGGcqaGiVoPmUoLM39b0KmLkesOa7TEdpIDHgfpP54=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Nk7esgihDIeKYjiMGJT4lLyk4mOnUZAMq6IQmQQSpkyk58awabVcLNwGQPcGgcQhJLaF/kIYlJX5G2FtBRBBwXzrFIkrlC7DmfyXc4FMFKMc7xiGnSqk0lw6fqcqm4rZ9jQBeZPgx67U+Z41PdEMT7TvjN0fZBYc0ReSpII6NtQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E3QhoXPF; arc=none smtp.client-ip=209.85.208.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-5c9709c9b0cso3088405a12.1;
-        Fri, 25 Oct 2024 09:49:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729874981; x=1730479781; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=C6NClCe/pCFahIjQkz67tW5BHdRGWDuFmSNfVYTs8HA=;
-        b=E3QhoXPFD6MNXqedY5yr58z9FDqwGoR5DQr4nl1M2bb5botDw8LgV/EwqiSqIYzyWL
-         6IOk6H8wxST5JWDC58XFRjV5FMrBqZUWMwAy0F+2r4F9Hfd6Tfok79Jb7UPGhfOUqN+2
-         vlGG5PBUx70FbcJJpXOqgNxs+M4aR7gsvgv/YH3LnFuNMCNvQdLVwjQ6m092FwzXZvih
-         1vtqprzbIDbXfs2WaGB90LDDqYgqO855TOXAFnix55a4xMu6maGhcrBNc63Fan0GLTrL
-         1wwAuXJY11soyFXOxqhTdhsT3OmpSR2LDksH2dam0h0I4fjxdM9Z2/8w9j8kiTI+nZ0e
-         MOpw==
+	 In-Reply-To:Content-Type; b=GV1T139yXheT4L2PoujKsdEKUpkAxRyPke7Z7DSlZKMU/eD9tkmsAib7M16TYj2nYXppe191p5eVMP4+xrctbeDV0Z2wJ+flxuoHGvKEoLRG6+sH1eIGYjZxry9eHw8BvDzkxKKuv4BRzt/nA8boRZqqZ+qf+MH9dsvuU5Z/gZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=fail smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=FIyjcyfN; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49PAvlkE008859
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2024 17:03:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	vcTKvOKbWn/IHq1qmbozjkGUKSKdBdJRZlsqwxZRKHk=; b=FIyjcyfNZM2gA28+
+	/9+xiEfvFxJtXtxdG+VY/dCz8RhUszFCmuYtr4Srb26vFA3Kz7RxRAj7Tqc0ZBzf
+	BBIskolE9HHpucIjVPt8bjj03KGFjPF2n0M0DMjlJMTOzfUGM2JPgCfALDdurNwP
+	yiRhgWvgAJPzRzTSS8vnK/ZDE1jQj9K1laOvHxCf8frvoVbzIYfgYDUR+Xt9EOIX
+	ROGTQGWfYUlG8oFrJ7q/6jnerBBKIBhzFHrtbDcZUJl3z3TiXg3J+HiLp/rA0fGG
+	uuOaSVRe+86i0H+j3t480M3iY1Y+q+BDEW1QXsscTcJJa1DmqVUrcL4tuhEBLhYW
+	egc9wQ==
+Received: from mail-io1-f70.google.com (mail-io1-f70.google.com [209.85.166.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42fk52msyx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2024 17:03:08 +0000 (GMT)
+Received: by mail-io1-f70.google.com with SMTP id ca18e2360f4ac-83aaad1b050so34760739f.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2024 10:03:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729874981; x=1730479781;
+        d=1e100.net; s=20230601; t=1729875783; x=1730480583;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=C6NClCe/pCFahIjQkz67tW5BHdRGWDuFmSNfVYTs8HA=;
-        b=e/dVSRsrLGQE5BRPK9byTxgSJc+gJXHwnMBrnNCYI9OYk4DHboapV9ltRnhvydBm8X
-         YX1RVeSNExK7Ibe8Nxp3f7MbdqMonI7S9Ud6UBLA5Dw7SEfzPQbYh6g8Lm3+x2zjETAM
-         EGLRPPvqmh91DbkoYgJdAp6MGgt+RQp6aKDYDkKfb/cD8GmZEncLheAbxIpVBYzoCKDF
-         ehEYIDTDGUoa5+p/RdbmlQ71bd2H1FXkpzPXcilSJQoq30FZF5+dXOt/jaDk0Ih3xmcZ
-         VD2TYxkEUUGe4NGMp7oHzBGoqqL6uVdj1k1siwwJXvcyzi4WFOk4fPvU0BsAqaQ1cdTk
-         fPiA==
-X-Forwarded-Encrypted: i=1; AJvYcCUHJpnJlVS/sXSs3RuAJcIEtzah6gBCUceNOWZgK398yxdCU9xphAj28X+DPD7tbeSA6xAGNsWCs55CPg==@vger.kernel.org, AJvYcCVVpPMfRZ4e7D9fJqQqsUqV/6KoiCluOJ2r3LiuiZL0ve8kuTHNNg7h338TRuTtofywSSm2oYLVBlfoxOGX@vger.kernel.org, AJvYcCVxQHNZb0DIpEDcrrDexUhkisKYO258j48D8w290AfmQfD/Zcm9BMI+IRr22tt6dUJKtv0pTSHa@vger.kernel.org, AJvYcCXUPe6fZE/a5bL94cV7N56OSRl0hUt3e9pMLCcKtPFCd4ptiWxqJT3qRUVWkeXfOJKtaQY3melExHfUlkZU@vger.kernel.org
-X-Gm-Message-State: AOJu0YxxsPilslVPKac845j7N3lilPxtdJ0EGAgR2adFNm7k6DqFa9jN
-	XykG/JikPKXEqEaNjayveRphG0Z9/EnqB8Skd/qWaKrmPrZD/g1y
-X-Google-Smtp-Source: AGHT+IEplfKRE+FzdIgQzkRri+LLQy1SDGVkqAbCGUQXY94gamrjimYvOVLFEObF5gDcFC6jz/NVsA==
-X-Received: by 2002:a17:907:72cb:b0:a9a:1918:c6c6 with SMTP id a640c23a62f3a-a9abf84ad47mr1057640966b.8.1729874980744;
-        Fri, 25 Oct 2024 09:49:40 -0700 (PDT)
+        bh=vcTKvOKbWn/IHq1qmbozjkGUKSKdBdJRZlsqwxZRKHk=;
+        b=h1x4sBoRFhQKwPF0lrrRorsICBAZhU2+ptkiX4M/fu2HOCKVYlSA/Un7uRTEk8GgM3
+         rHjZbQq/f96i+V2cUsNsYQ9Q8UD0wh5v35zrBO7tidnp3fxnTf53PcCbQHc9msrgTthL
+         dtlhKn0sNMtkePlZF8vMwTwuaCXYUvuq33sBazkPxB4H6JGAEQMNyMmToX1U2uZgr27Q
+         cygwYVir+6+sxOTDXVrGl4UE/PD/lOx5rUubDn+14QAXWY1Utx69Uj/HUuu7w99iNRhp
+         zw4DOx+sgo54GNGtRtleJegF5ud5+IDktP2uczxP0rwgdRml8BrtNLXJy4ESpF22HlFd
+         7nXg==
+X-Forwarded-Encrypted: i=1; AJvYcCXgnAZCD48P6y8hgjNxM9khqX+tOWdR7t4qgHWh4+4zkOJbFbwxJU0KFo8awix17S0eqP/AgRcY4xNqyM6r@vger.kernel.org
+X-Gm-Message-State: AOJu0YxBA+eC4Ysa8FXNhNJGnI8LNCpy1Lo7z73OxDv71fd9wSwfO7kY
+	4AEJJn/wOmDrqE282XgEiLUjltl8x+yunoeyGBj5SsDBSaV0AL0+FT8tHN8ZpfNZUdEt0W20Fqv
+	O4VJDUSYAqNw+8WVyuwxPiREvD43A139CNjtJs6nlSUPEVaYvz5tQMUZNf2CNYigm
+X-Received: by 2002:a92:c56f:0:b0:39a:f126:9d86 with SMTP id e9e14a558f8ab-3a4e806d563mr4396625ab.0.1729875783519;
+        Fri, 25 Oct 2024 10:03:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGFSKWdgG6048ZgDp7DafsAW3/5cONZNPlZ3U7SrY42s9TAXMiE0WlKFoU+kd/+YC5PraD7sA==
+X-Received: by 2002:a92:c56f:0:b0:39a:f126:9d86 with SMTP id e9e14a558f8ab-3a4e806d563mr4396375ab.0.1729875783022;
+        Fri, 25 Oct 2024 10:03:03 -0700 (PDT)
 Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9b1f298b1esm88169266b.107.2024.10.25.09.49.38
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9b1dec81a1sm90067866b.25.2024.10.25.10.03.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 25 Oct 2024 09:49:40 -0700 (PDT)
-Message-ID: <c153d278-7b61-4feb-a749-43226357acc3@gmail.com>
-Date: Fri, 25 Oct 2024 18:49:38 +0200
+        Fri, 25 Oct 2024 10:03:02 -0700 (PDT)
+Message-ID: <6852b25f-94a4-4e04-adc5-5c79eb1f17ca@oss.qualcomm.com>
+Date: Fri, 25 Oct 2024 19:03:01 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,43 +84,90 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] pinctrl: qcom: spmi: fix debugfs drive strength
-To: Johan Hovold <johan+linaro@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Linus Walleij <linus.walleij@linaro.org>
-Cc: Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
- Anjelique Melendez <quic_amelende@quicinc.com>, stable@vger.kernel.org
-References: <20241025121622.1496-1-johan+linaro@kernel.org>
+Subject: Re: [PATCH] soc: qcom: Rework BCM_TCS_CMD macro
+To: Eugen Hristev <eugen.hristev@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20241025084823.475199-1-eugen.hristev@linaro.org>
+ <c1d4c2b6-85a0-467a-930c-ac2797c72699@oss.qualcomm.com>
+ <a4c44b88-d106-4365-b405-ced561b9e526@linaro.org>
 Content-Language: en-US
-From: Konrad Dybcio <konradybcio@gmail.com>
-In-Reply-To: <20241025121622.1496-1-johan+linaro@kernel.org>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <a4c44b88-d106-4365-b405-ced561b9e526@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: wpZCaOokjBI-r1pzhy48yo6GW-CZZ6ny
+X-Proofpoint-ORIG-GUID: wpZCaOokjBI-r1pzhy48yo6GW-CZZ6ny
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 mlxscore=0
+ lowpriorityscore=0 malwarescore=0 impostorscore=0 phishscore=0
+ adultscore=0 mlxlogscore=999 priorityscore=1501 spamscore=0 bulkscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410250130
 
-On 25.10.2024 2:16 PM, Johan Hovold wrote:
-> Commit 723e8462a4fe ("pinctrl: qcom: spmi-gpio: Fix the GPIO strength
-> mapping") fixed a long-standing issue in the Qualcomm SPMI PMIC gpio
-> driver which had the 'low' and 'high' drive strength settings switched
-> but failed to update the debugfs interface which still gets this wrong.
+On 25.10.2024 2:06 PM, Eugen Hristev wrote:
 > 
-> Fix the debugfs code so that the exported values match the hardware
-> settings.
 > 
-> Note that this probably means that most devicetrees that try to describe
-> the firmware settings got this wrong if the settings were derived from
-> debugfs. Before the above mentioned commit the settings would have
-> actually matched the firmware settings even if they were described
-> incorrectly, but now they are inverted.
+> On 10/25/24 12:03, Konrad Dybcio wrote:
+>> On 25.10.2024 10:48 AM, Eugen Hristev wrote:
+>>> Reworked BCM_TCS_CMD macro in order to fix warnings from sparse:
+>>>
+>>> drivers/clk/qcom/clk-rpmh.c:270:28: warning: restricted __le32 degrades to integer
+>>> drivers/clk/qcom/clk-rpmh.c:270:28: warning: restricted __le32 degrades to integer
+>>>
+>>> While at it, used u32_encode_bits which made the code easier to
+>>> follow and removed unnecessary shift definitions.
+>>>
+>>> Signed-off-by: Eugen Hristev <eugen.hristev@linaro.org>
+>>> ---
+>>>   include/soc/qcom/tcs.h | 19 ++++++++-----------
+>>>   1 file changed, 8 insertions(+), 11 deletions(-)
+>>>
+>>> diff --git a/include/soc/qcom/tcs.h b/include/soc/qcom/tcs.h
+>>> index 3acca067c72b..130ed2582f37 100644
+>>> --- a/include/soc/qcom/tcs.h
+>>> +++ b/include/soc/qcom/tcs.h
+>>> @@ -60,22 +60,19 @@ struct tcs_request {
+>>>       struct tcs_cmd *cmds;
+>>>   };
+>>>   -#define BCM_TCS_CMD_COMMIT_SHFT        30
+>>>   #define BCM_TCS_CMD_COMMIT_MASK        0x40000000
+>>> -#define BCM_TCS_CMD_VALID_SHFT        29
+>>>   #define BCM_TCS_CMD_VALID_MASK        0x20000000
+>>> -#define BCM_TCS_CMD_VOTE_X_SHFT        14
+>>>   #define BCM_TCS_CMD_VOTE_MASK        0x3fff
+>>> -#define BCM_TCS_CMD_VOTE_Y_SHFT        0
+>>> -#define BCM_TCS_CMD_VOTE_Y_MASK        0xfffc000
+>>> +#define BCM_TCS_CMD_VOTE_Y_MASK        0x3fff
+>>> +#define BCM_TCS_CMD_VOTE_X_MASK        0xfffc000
+>>>     /* Construct a Bus Clock Manager (BCM) specific TCS command */
+>>>   #define BCM_TCS_CMD(commit, valid, vote_x, vote_y)        \
+>>> -    (((commit) << BCM_TCS_CMD_COMMIT_SHFT) |        \
+>>> -    ((valid) << BCM_TCS_CMD_VALID_SHFT) |            \
+>>> -    ((cpu_to_le32(vote_x) &                    \
+>>> -    BCM_TCS_CMD_VOTE_MASK) << BCM_TCS_CMD_VOTE_X_SHFT) |    \
+>>> -    ((cpu_to_le32(vote_y) &                    \
+>>> -    BCM_TCS_CMD_VOTE_MASK) << BCM_TCS_CMD_VOTE_Y_SHFT))
+>>> +    (u32_encode_bits(commit, BCM_TCS_CMD_COMMIT_MASK) |    \
+>>> +    u32_encode_bits(valid, BCM_TCS_CMD_VALID_MASK) |    \
+>>> +    u32_encode_bits((__force u32)cpu_to_le32(vote_x),    \
+>>> +            BCM_TCS_CMD_VOTE_X_MASK) |        \
+>>> +    u32_encode_bits((__force u32)cpu_to_le32(vote_y),    \
+>>> +            BCM_TCS_CMD_VOTE_Y_MASK))
+>>
+>> FIELD_PREP/GET?
+>>
+>> Konrad
 > 
-> Fixes: 723e8462a4fe ("pinctrl: qcom: spmi-gpio: Fix the GPIO strength mapping")
-> Fixes: eadff3024472 ("pinctrl: Qualcomm SPMI PMIC GPIO pin controller driver")
-> Cc: Anjelique Melendez <quic_amelende@quicinc.com>
-> Cc: stable@vger.kernel.org	# 3.19
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> ---
+> What would be the difference/advantage in using FIELD_PREP/GET instead of u32_encode_bits ?
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Probably none. I thought it was a function and not another magic macro,
+as it's lowercase..
+
+Doesn't le32_encode_bits do what you need then?
 
 Konrad
 
