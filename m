@@ -1,79 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-35852-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35853-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B8F639B00B9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 12:59:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B8CD39B00D7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 13:04:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EAD431C2252D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 10:59:16 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EB7961C20E81
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 11:04:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA8C41D9668;
-	Fri, 25 Oct 2024 10:58:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B1AA22B66D;
+	Fri, 25 Oct 2024 11:04:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="T8U0+Fr1"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sSoW3J+z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94B721FCC63
-	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2024 10:58:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F1141D363D
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2024 11:04:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729853912; cv=none; b=Al2mUmmg/u7IiUpt33vDO4mDacJk9+9mXQcKjZR3UFoOoufrgRaGDlTbBXUO5eL/7kMBxtCL+m6u4w9TsPa1e83eaw12L9kwXze1CbOhrUuckIA1TQRGjwjyTsbWU8DOAzjYClJWI5WMFUIot4RTge7YAmsTD/LHowpsITy+mqE=
+	t=1729854289; cv=none; b=bQHavmJZ1QuDIKIotDLrWLJKLLzrc8V2U0uYbU2V5nKsAA+Zgz9jPpWPHrhSs9+iLATshuOEZmaP32c6XJs3AkQPeB1CG9BNmaZVSd4Ex9gLZaOOypBT4NYg9rEuQ6HZ2Ez62ihUQ1ByTEhU1zMUCZY+Fx2IZxjqhWaurcnS4gk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729853912; c=relaxed/simple;
-	bh=ECX1hukPZNtp8BMXg37Df/yrLwJE8VU8+3Y5LlZlLIY=;
+	s=arc-20240116; t=1729854289; c=relaxed/simple;
+	bh=f1oZLRWi1iceQY+AnZhdiGRT5xb+TXAIA7EVsI6RjVo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sHJi6aQVvdejFxQ7MvCs3lUslDgCM9+iEhuNopn3thJESAlNLW+qAt+LaIaqBBKSaRCgQI7QFJa2g39YbdrHE+AnVBkLU7bxtSf70iNlCStvBOESyhsjudyYmfo1r8f5yc4+oXf8dFHvkYnXrsxkel3njPCMKzSzi0UZq9J45sA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=T8U0+Fr1; arc=none smtp.client-ip=209.85.208.178
+	 Content-Type:Content-Disposition:In-Reply-To; b=oKsFMmAm3OrVAbAvBBfYReK6hc4XJC75E8hA2FU/nE83Iw4JcKUag9fEnPw7fpsRE2K+3H3vKcqgvFXzqlx7o9yc/knnZ9f1KHyBWf5K2kZnow10P7Ucm84XLpkzAW3OzhEuIphyssMnhyUw9WYKKzt4XTmDchPkSGfmy64BugE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sSoW3J+z; arc=none smtp.client-ip=209.85.167.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2fb5014e2daso19818871fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2024 03:58:30 -0700 (PDT)
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-539eb97f26aso2004717e87.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2024 04:04:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729853908; x=1730458708; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1729854284; x=1730459084; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ls7AmwwkTfKSPwgzIwQ1t7Vt1x1W+KysTayrz2pRuBA=;
-        b=T8U0+Fr1RqQIP0wQIdhh+E2fs1bau/aDbDGxJ92pE8pzLF4/WgKvBpqOnVJ0AzTmjF
-         UPUoaFgOO8lE7SpSS359tYGfsrmOKiuqgisfQcLZ5+KMDzeZPu2SD3bTsjNEXy4OAq4C
-         VjyqVnyzPyXKWJ2Rs9Emo4znDCAdeHZS/w9OGlmdflrZqouSm2lL+5ubDMqrHgIvEnTQ
-         1asAIjCatepicrzhKirqQgVVckycZrFWWYiDnlTcwYm4um05CcjC/S0JT0d0jv84NtN7
-         IfZaC+xTh90lYi6puT87JAxwxBZwaN7EM8FPuu0x52r3zZabDv3WhU+wLOHAWjQGcZI3
-         CaUA==
+        bh=0npUi/QQj/8hAzQtbz5IYAGn1L/kq6JvsHfxRiCt458=;
+        b=sSoW3J+zOTlKtxZwUFGJF5GpSDAkz2KxWybEJoPv149b8Vqq2Q4h87j6wlAArPsvWE
+         u/0uNPFF0DWXJv2SFjgPTLJhRPMHEf+IUeU61UTUGliDnO++SP5b3I5mhqvuRMgzkbfj
+         AWsMRyo35n8Ci/JZXFxk8tgsIS7ogGt/QqJtWRLO8XrJez72DuLmjTX3f2hNdMbbwEGC
+         ZC8JZ6wrZoeGbNx1Ompd67+WpPRakh4OvfCtC+RQjqHpf5UaEpiQNaq93Ir6nfLku4bf
+         oCRDH6BO6O1/YUCvFFQJdDwHZGTjc1P1gyFOXIqirxSwcmL7qEM8hUtod5urWYvasoJe
+         VolQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729853908; x=1730458708;
+        d=1e100.net; s=20230601; t=1729854284; x=1730459084;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Ls7AmwwkTfKSPwgzIwQ1t7Vt1x1W+KysTayrz2pRuBA=;
-        b=Mqz4lPf+0ATX2xwRTWX2BuSZasPzZChAEeqP/Q8mgOZ+QpHm5+VVUlK+w5/AMhpRpA
-         ZgQFs27bqc2lcdULgwfsdevZzbQxybp6kTsWtbEAgzZs1zWarWkZF5NfMdSYzeVYHW4k
-         cvYs4twdPlGm98/NZN0X6SFQ5gmcE5TmczHE/dpSyfFFK4evs8/BqOJilf/Q0Mhkqn41
-         UV/qKmrEENAaaa6SNz+wda1ljS/JCzXueuEOaOip4cw6PeEGI2rb7mByCeje29y/XfoJ
-         aMYjReJIBuyaaEd4b2aPgtSj7VoDRp2LvkzU1bIusfYSWtT+UKy62Iho9v01xT5FlHg6
-         ddBQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWmws+2wyrZO0QpO+qDjT+PAMjIl2gdSrRzY3v0a2HO7HCJPOeX4M1gTcl0AgqIwa1ewg001KJ5t/s8eOeC@vger.kernel.org
-X-Gm-Message-State: AOJu0YydtfbPxpUrbAZcysFhvsaJ3dKfS1ww+GrSoGsCP2Zgmu1RKy42
-	9JYAeEX4ad21eHXHxxSUcoGbrp6a315NHDJlKLibGKQql0N5CKAUaigKp+oMZMIP77sHIbxG5wh
-	p
-X-Google-Smtp-Source: AGHT+IGA/Z7KmLl04J3eJ2bC/viGIJw7qPUnp5t83Rz5gQFdfFqzRrmTT/u2f9tQqAp5ONS6t/SWPA==
-X-Received: by 2002:a2e:a547:0:b0:2fb:5035:7e4 with SMTP id 38308e7fff4ca-2fc9d2e54camr55436891fa.5.1729853908499;
-        Fri, 25 Oct 2024 03:58:28 -0700 (PDT)
+        bh=0npUi/QQj/8hAzQtbz5IYAGn1L/kq6JvsHfxRiCt458=;
+        b=e3H9HmZYKxwbHQPNfZ+176brQWGnlBItL5mBY8TYWrpGS1l3G6iXxxFw9+KrPIXb45
+         s0y7fMSyHR0c4lcrm2/OWslIw9+PKPhMwr/67RZZ2jXICAAwcvConzrcyndr9i8bm6Sa
+         ZEjZa2duzPCtn4nv5epeFl58+UvjzozTDL9zf+PIfgjFL8iWMT/FihwJDdR/cQDjBD/Z
+         z42yC2H3WC1b8cGZoqHwE2PgKQQs7gxLmFQiKTwKNJ2EIinT8ZjoxgDO+r9cptRr8uMf
+         i/ec0kxNZuuGAGdRgbf3mpFYg1ERZ3jHd7sUS5FWm3vdn5/1fusdtmQPC6mO4LqL6YSn
+         suBQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWPjtiRZTlqMuUVp6Tu4C5anKugZDjWPqfEG0IQY3W06aPR8KVHwJggQTa1sj3AUxhnyCAKBe3hd02/lLjh@vger.kernel.org
+X-Gm-Message-State: AOJu0YzC+E5x5EhgE+GHgvAgsOX4/3+YuBV8/Tb2xOCRxUevxHO6AKGd
+	OJfaizoXmZgLSqa6pmwAnk/wO2UP62/Dh39QJxJb1Ov1TszP+9+K+i26nlwwHrw=
+X-Google-Smtp-Source: AGHT+IFBLlidK1lSRc4guNpkuXJCSvMxBnTQgcK54ic6c+sgh480iBRvsq4Il+3SdkKU9IlNSqXOpw==
+X-Received: by 2002:a05:6512:124c:b0:539:f699:4954 with SMTP id 2adb3069b0e04-53b1a39772bmr4551085e87.58.1729854284214;
+        Fri, 25 Oct 2024 04:04:44 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2fcb460169asm1442601fa.113.2024.10.25.03.58.26
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53b2e10a555sm138281e87.34.2024.10.25.04.04.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Oct 2024 03:58:27 -0700 (PDT)
-Date: Fri, 25 Oct 2024 13:58:24 +0300
+        Fri, 25 Oct 2024 04:04:42 -0700 (PDT)
+Date: Fri, 25 Oct 2024 14:04:41 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: shaojiedong <quic_shaojied@quicinc.com>
-Cc: kernel@quicinc.com, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v4] um: Remove double zero check
-Message-ID: <ekqjargt4udiqu2kp5awlxzm4l4xydu6fh6an5pspbt6rwr57l@qza5od72umxd>
-References: <20241025-upstream_branch-v4-1-8967d1b6ea3a@quicinc.com>
+To: Jiajie Chen <c@jia.je>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: x1e80100: Add performance hint for
+ boost clock
+Message-ID: <dbnc6kq2heyva2c4c4bt6kwo62sifi4kws6nup7etnnyyzawes@uag66bceq6is>
+References: <20241025031257.6284-2-c@jia.je>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,60 +85,42 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241025-upstream_branch-v4-1-8967d1b6ea3a@quicinc.com>
+In-Reply-To: <20241025031257.6284-2-c@jia.je>
 
-On Fri, Oct 25, 2024 at 02:48:49PM +0800, shaojiedong wrote:
-> free_pages() performs a parameter null check inside
-> therefore remove double zero check here.
+On Fri, Oct 25, 2024 at 11:12:58AM +0800, Jiajie Chen wrote:
+> The x1e80100 CPU can have up to two cores running at 4.0 GHz, with one
+> core in the second cluster (cores 4-7) and the other in the third
+> cluster (cores 8-11). However, the scheduler is currently unaware of
+> this, leading to scenarios where a single core benchmark might run at
+> 3.4 GHz when scheduled to the first cluster.
 > 
-> Signed-off-by: Shaojie Dong <quic_shaojied@quicinc.com>
+> This patch introduces capacity-dmips-mhz nodes to each CPU node in the
+> DTS. For cores numbered 4 and 8, the capacities are set to 1200, while
+> others are set to 1024. This ensures that the two cores can be
+> prioritized for scheduling. The value 1200 is derived from approximately
+> `1024/3.4*4.0`.
+> 
+> Note that capacity-dmips-mhz is not ideally suited for this purpose, as
+> it was designed to differentiate between performance and efficient
+> cores, not for core boosting. According to its definition, DMIPS/MHz
+> actually decreases with higher frequencies. However, since the CPU does
+> not support AMU, and no elegant solution was found, this approach is
+> used as a workaround.
+> 
+> With this patch, we observe two cores running at full 4.0 GHz without
+> core binding. The single core score of Geekbench 6 increases from 2452
+> to 2892, both without core binding. Tested on Surface Laptop 7.
 
-Doesn't match the From field.
+I think this is a nice hack, but I'd prefer to see scheduler being
+improved instead. From my (ignorant) point of view this should be close
+to SMT-based scheduling. We should split the jobs between the clusters,
+if that provides better power utilisation.
 
+> 
+> Signed-off-by: Jiajie Chen <c@jia.je>
 > ---
-> Changes in v4:
-> - EDITME: describe what is new in this series revision.
-> - EDITME: use bulletpoints and terse descriptions.
-
-NAK. Please get somebody from your team do an internal review first.
-Please descibe all the changes, even retroaspectively.
-
-> - Link to v3: https://lore.kernel.org/r/20241025-upstream_branch-v3-1-f6ec670e0206@quicinc.com
-> 
-> Changes in v3:
-> - EDITME: fit the git setup and simplify commit description
-> - Link to v2: https://lore.kernel.org/r/20241025-upstream_branch-v2-1-072009bfa7d0@quicinc.com
-> 
-> Changes in v2:
-> - EDITME: describe what is new in this series revision.
-> - EDITME: use bulletpoints and terse descriptions.
-> - Link to v1: https://lore.kernel.org/r/20241025-upstream_branch-v1-1-4829506c7cdb@quicinc.com
-> ---
->  arch/um/kernel/skas/mmu.c | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
-> 
-> diff --git a/arch/um/kernel/skas/mmu.c b/arch/um/kernel/skas/mmu.c
-> index d3fb506d5bd6084046cf5903c629432cd42b5ab3..0eb5a1d3ba70134f75d9b2af18544fca7248c6d6 100644
-> --- a/arch/um/kernel/skas/mmu.c
-> +++ b/arch/um/kernel/skas/mmu.c
-> @@ -46,8 +46,7 @@ int init_new_context(struct task_struct *task, struct mm_struct *mm)
->  	return 0;
->  
->   out_free:
-> -	if (new_id->stack != 0)
-> -		free_pages(new_id->stack, ilog2(STUB_DATA_PAGES));
-> +	free_pages(new_id->stack, ilog2(STUB_DATA_PAGES));
->   out:
->  	return ret;
->  }
-> 
-> ---
-> base-commit: fd21fa4a912ebbf8a6a341c31d8456f61e7d4170
-> change-id: 20241025-upstream_branch-06a9ea92948d
-> 
-> Best regards,
-> -- 
-> Shaojie Dong <quic_shaojied@quicinc.com>
+>  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
 > 
 
 -- 
