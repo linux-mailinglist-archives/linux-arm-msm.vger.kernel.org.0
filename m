@@ -1,174 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-35819-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35820-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 110989AFC8A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 10:29:11 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 616129AFCD4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 10:43:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 64EABB214DD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 08:29:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 25737282F43
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2024 08:43:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF7C61D223A;
-	Fri, 25 Oct 2024 08:28:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D2A581D278B;
+	Fri, 25 Oct 2024 08:43:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XTinhZ2Y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27B941D1E79;
-	Fri, 25 Oct 2024 08:28:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C66111D270D
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2024 08:43:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729844932; cv=none; b=UsdSLAEKV0vHP0EMOzsy9jVnRniFB8wtB/oS2GhP4M0H1c54T1TYt+8YzGJpGt9T0FZwNHMKR3jtfEkfqSr0rzBt0B1+0CyWYW2tzn58JSIAjaMaXHvQYTrOWIlppEiFCXv8jmFEfNE0rsA+yMJ+kn4opS0ZHRdpUw32Nl6AHp8=
+	t=1729845797; cv=none; b=bfgWWh/owBg+MFn1SVqTqWdQB3LgwzT5MuLGipy7nFtQ1vyhTlGGq8cBiXFgI+9y4WdAWPTHtobbrS8mvWTG3tPtL9xsOsAVcu13rKgku1B7ybN8U6MAAJDfzXPXEyZBXtyn0pxYIgMlU4ap9EMhcJUE/sXPCJlnGmmL2We4gHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729844932; c=relaxed/simple;
-	bh=Qh0w84bisMxn6v4DNS3rR1p5e79heOUwAl9dMkiZdTU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=u/k65oAd/x29k6XEK6fnYNo45jKTtzWOpFyLavFl/wIWC96hkjG2kpV6FcP2FroNQvSiwnvXDJKQ0fLB3FzA3PsrXx2iZAoc0uF9aRkk/Lzt3koAM/VG22zip+hOX89F7r1rypt2SqCVUnkBUX+70/YZYUzgWnh6FbJv7NFf98s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 0CD8A339;
-	Fri, 25 Oct 2024 01:29:19 -0700 (PDT)
-Received: from pluto (usa-sjc-mx-foss1.foss.arm.com [172.31.20.19])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 549333F73B;
-	Fri, 25 Oct 2024 01:28:47 -0700 (PDT)
-Date: Fri, 25 Oct 2024 09:28:38 +0100
-From: Cristian Marussi <cristian.marussi@arm.com>
-To: Sibi Sankar <quic_sibis@quicinc.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Johan Hovold <johan@kernel.org>, sudeep.holla@arm.com,
-	cristian.marussi@arm.com, ulf.hansson@linaro.org,
-	jassisinghbrar@gmail.com, linux-kernel@vger.kernel.org,
-	arm-scmi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org, konradybcio@kernel.org,
-	linux-pm@vger.kernel.org, tstrudel@google.com, rafael@kernel.org
-Subject: Re: [PATCH V3 0/4] firmware: arm_scmi: Misc Fixes
-Message-ID: <ZxtWtqsP5HdJYp5w@pluto>
-References: <20241007060642.1978049-1-quic_sibis@quicinc.com>
- <ZwfsmqInJlqkQD_3@hovoldconsulting.com>
- <ae5eaef9-301f-7d3f-c973-faa22ae780ee@quicinc.com>
- <ZxkjqEmkBAsC6UkL@hovoldconsulting.com>
- <c8e7420b-a7b4-89cd-1b6e-c1f6693c062d@quicinc.com>
- <ik4dyfbphm7lkeipm2dbr7cmdfxewxd4jtuz2jfnscfwcyo2r4@lrin5hnsqvyd>
- <83b635a7-fc69-7522-d985-810262500cb3@quicinc.com>
+	s=arc-20240116; t=1729845797; c=relaxed/simple;
+	bh=gqO6H9f6wkA2+S3L9LFbGLXMmbD0O/wXTCeVxvKUAQ8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=jKSLcnB4CRUGke2bSaYibMIjrcFlfJV1xFN6DpcZ/+UcvVDuvE0LlkMSixpXIrw4zFNDUyIImX9NakKviWhzgR9j3sPPnHfMWBc3BhIEzR/GuP0ipKQZIbbbHIyflt1ADiXCljL4lJRMdwirOELgTX/TTEgKM/DvyRFAt+KmFEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XTinhZ2Y; arc=none smtp.client-ip=209.85.128.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-6e5a5a59094so16820287b3.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2024 01:43:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1729845795; x=1730450595; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=GC+qtopUK4oSW4KGo5gKXeaDDfYPEvj4E4F8hcqDrxw=;
+        b=XTinhZ2Yle0mJw8ae4h4/NlZ42xApmKgqWq1gH+Na2cVGM8J4dJy5PT3XFmHcO4582
+         +bH6+ruN/lKpr1chM4K/7x10RCyoMr95xOvNmiqfwfu16msNh4WZkP7/C1tAsVF9LAqk
+         EsZqnb7PgLWwMv1BvByNSrgJWEW4a4SWc1EAIeIhE0CKrVS3RZ9sA7GQZJZAx5/xVP+O
+         N8tui2e/oq1IR2XnEe1qJeEM2+DxyqVf0r8sLiybKpal9o2zMFa7zT6n3yHS6gPqhQTq
+         4XDqhSwAByMSSxvYYOdsQdQQl4IxYUU2ivT+sS0cvY5aWydEv4+inih8M4IxH9WNhc3p
+         5xxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729845795; x=1730450595;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GC+qtopUK4oSW4KGo5gKXeaDDfYPEvj4E4F8hcqDrxw=;
+        b=foQO/QFjw9xuEJp7SNe5eZc8hO8lORpQnOtuRArXG6Bz1ksBjtww4uXORg7nO7ORUK
+         gt7XolB+fVwppI3o1GP8CaZu4vA4GHFGdQyb3uMXqQcD0sbFa/AOQ5XMNbos0nJl89QT
+         FCh6n65g0nmb1TXkFvtbedc+itZb3LY0sk361ii4o9cKV/lXE0SkBG332KpufMYXc1Fe
+         vZkP5aZHYyFWuKGC9noklp0PL3KAQwCl2Iv4D5+en8ZFq3FwZky3rSqL7WcgemQ5CexR
+         GxQlTVH2U6wyoKHggQ0DtLxRbK7iB5JH1h0LQjPKqCVuq+TwuenPQMHxpuC0XHKcLvDB
+         V6Yw==
+X-Forwarded-Encrypted: i=1; AJvYcCXQl81d5wEuKZat9Yiy2eFnR81xuQ/jbIumzgsJpgVDzuOohPyT5M+w15NzoAu7iNYNc4v/i4aLjmdTkVAj@vger.kernel.org
+X-Gm-Message-State: AOJu0YzezSFp6l5anxk7U108nE4MAVHzeL4bmVInaDOh4oWt/QVbQYkz
+	MDfEgodftMUumgx9kP+vRZ8RWHp07t3qBr8vZ5W56PoBeSNKRfbXQHZrhDNLUqJLrVXLMzvXYob
+	WHJxAclZxy2kfN5wF6pxKHYJKsPOz/m269HVckQ==
+X-Google-Smtp-Source: AGHT+IFrRXdZkgGxH0j5lBC5M/B8Et457P+nj+I6ZhAqPxt0MfCx1n+REAlyGGvq27rvvYwVe3tTniNTFUNptx7YNbM=
+X-Received: by 2002:a05:690c:4a03:b0:6e2:446f:422c with SMTP id
+ 00721157ae682-6e7f0e4735emr106087327b3.21.1729845794711; Fri, 25 Oct 2024
+ 01:43:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <83b635a7-fc69-7522-d985-810262500cb3@quicinc.com>
+References: <20241006135530.17363-1-quic_spuppala@quicinc.com>
+ <20241023213134.GC3736641@google.com> <CAPDyKFo05Hyw9gdEBx7zQq_6P58ittHHsZQLuqmeR1AChyHSHw@mail.gmail.com>
+ <20241025025628.GD1781@sol.localdomain>
+In-Reply-To: <20241025025628.GD1781@sol.localdomain>
+From: Ulf Hansson <ulf.hansson@linaro.org>
+Date: Fri, 25 Oct 2024 10:42:38 +0200
+Message-ID: <CAPDyKFo5EijkL5Y+MZ0=ZWyGdLfDdSdqTOC0eMsTVY00KP+RAA@mail.gmail.com>
+Subject: Re: [PATCH RFC 0/2] Avoid reprogram all keys to Inline Crypto Engine
+ for MMC runtime suspend resume
+To: Eric Biggers <ebiggers@kernel.org>
+Cc: Seshu Madhavi Puppala <quic_spuppala@quicinc.com>, Adrian Hunter <adrian.hunter@intel.com>, 
+	linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, quic_rampraka@quicinc.com, 
+	quic_nitirawa@quicinc.com, quic_sachgupt@quicinc.com, 
+	quic_bhaskarv@quicinc.com, quic_neersoni@quicinc.com, 
+	quic_gaurkash@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Oct 25, 2024 at 12:15:59PM +0530, Sibi Sankar wrote:
-> 
-> 
-> On 10/25/24 11:44, Dmitry Baryshkov wrote:
-> > On Fri, Oct 25, 2024 at 11:38:36AM +0530, Sibi Sankar wrote:
-> > > 
+On Fri, 25 Oct 2024 at 04:56, Eric Biggers <ebiggers@kernel.org> wrote:
+>
+> On Fri, Oct 25, 2024 at 01:07:18AM +0200, Ulf Hansson wrote:
+> > On Wed, 23 Oct 2024 at 23:31, Eric Biggers <ebiggers@kernel.org> wrote:
+> > >
+> > > On Sun, Oct 06, 2024 at 07:25:28PM +0530, Seshu Madhavi Puppala wrote:
+> > > > Crypto reprogram all keys is called for each MMC runtime
+> > > > suspend/resume in current upstream design.
+> > >
+> > > Is that correct?  I thought that similar to what is done for UFS, the key
+> > > reprogramming happens only after the MMC controller is reset.  I thought that is
+> > > different from a runtime suspend.
+> >
+> > Looks like Seshu is not really worried about the host's runtime
+> > suspend, but the card's runtime suspend.
+> >
+> > Perhaps there are some out of tree code involved here that makes use
+> > of MMC_CAP_AGGRESSIVE_PM, which is what allows the card to be runtime
+> > suspended?
+> >
+> > >
+> > > If it's in fact triggering more often, maybe that is what needs to be fixed?
+> >
+> > We could extend the runtime PM autosusend timeout for the card, if
+> > that makes sense.
+> >
+> > Kind regards
+> > Uffe
+>
+> The keyslots are being reprogrammed from mmc_set_initial_state(), which is
+> documented as:
+>
+>     /*
+>      * Set initial state after a power cycle or a hw_reset.
+>      */
+>     void mmc_set_initial_state(struct mmc_host *host)
+>
+> It's called by: mmc_power_up(), mmc_power_off(), _mmc_hw_reset(), and
+> mmc_sdio_sw_reset().
+>
+> Can that mean a power cycle of the card, not a power cycle of the host
+> controller?
 
-Hi,
+Yes, that's correct.
 
-> > > 
-> > > On 10/23/24 21:56, Johan Hovold wrote:
-> > > > On Wed, Oct 23, 2024 at 01:16:47PM +0530, Sibi Sankar wrote:
-> > > > > On 10/10/24 20:32, Johan Hovold wrote:
-> > > > > > On Mon, Oct 07, 2024 at 11:36:38AM +0530, Sibi Sankar wrote:
-> > > > > > > The series addresses the kernel warnings reported by Johan at [1] and are
-> > > > > > > are required to X1E cpufreq device tree changes [2] to land.
-> > > > > > > 
-> > > > > > > [1] - https://lore.kernel.org/lkml/ZoQjAWse2YxwyRJv@hovoldconsulting.com/
-> > > > > > > [2] - https://lore.kernel.org/lkml/20240612124056.39230-1-quic_sibis@quicinc.com/
-> > > > > > > 
-> > > > > > > The following warnings remain unadressed:
-> > > > > > > arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
-> > > > > > > arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
-> > > > > > 
-> > > > > > Are there any plans for how to address these?
-> > > > 
-> > > > > Sorry missed replying to this. The error implies that duplicate
-> > > > > opps are reported by the SCP firmware and appear once during probe.
-> > > > 
-> > > > I only see it at boot, but it shows up four times here with the CRD:
-> > > 
-> > > https://lore.kernel.org/lkml/d54f6851-d479-a136-f747-4c0180904a5e@quicinc.com/
-> > > 
-> > > As explained ^^, we see duplicates for max sustainable performance twice
-> > > for each domain.
-> > 
-> > If existing products were shipped with the firmware that lists single
-> > freq twice, please filter the frequencies like qcom-cpufreq-hw does.
-> 
-> That was a qualcomm specific driver and hence we could do such
-> kind of filtering. This however is the generic scmi perf protocol
-> and it's not something we should ever consider introducing :/
-> 
+Well, indirectly the host is likely to be power cycled too, but not necessarily.
 
-+1
+> The keyslots are part of the host controller, so that may explain
+> the problem.  The keyslots should be reprogrammed only when the host controller
+> is reset, as that is when they are lost.  (And it should not be skipped entirely
+> as this patchset does, as a host controller reset is possible.)
+>
+> I am not an expert in MMC or in the details of how Qualcomm ICE is wired up to
+> the system, so I might have this wrong.  But let me know if it sounds right.
 
-In the case of the other warnings, those were similarly related to
-duplicates, but the warns themselves were genereated by the OPP
-subsystem when trying to register a duplicate...it was indeed a bug
-at the SCMI layer to try registering a well-known duplicate with
-the OPP subsytem, so it was fixed in the SCMI stack...avoiding to
-propagate it to the OPP layer...but the duplicate error condition
-indeed still exist (since dependent on what the fw spits out) and they
-are trapped at the SCMI level and those noisy warning are just meant
-to trap this kind of firmware anomalies...
+It sounds reasonable to me, but I also don't know the HW well enough
+to be able to tell.
 
-...IOW who would have ever spotted this thing and considered to fix the
-firmware in future releases without the warnings :P ?
+Looks like we need some more input from Seshu and the QC folkz to
+understand better.
 
-> > 
-> > > 
-> > > > 
-> > > > [    8.098452] arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
-> > > > [    8.109647] arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
-> > > > [    8.128970] arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
-> > > > [    8.142455] arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
-> > > > 
-> > > > > This particular error can be fixed only by a firmware update and you
-> > > > > should be able to test it out soon on the CRD first.
-> > > > 
-> > > > Can you explain why this can only be fixed by a firmware update? Why
-> > > > can't we suppress these warnings as well, like we did for the other
-> > > > warnings related to the duplicate entries?
-> > > > 
-> > > > IIUC the firmware is not really broken, but rather describes a feature
-> > > > that Linux does not (yet) support, right?
-> > > 
-> > > We keep saying it's a buggy firmware because the SCP firmware reports
-> > > identical perf and power levels for the additional two opps and the
-> > > kernel has no way of treating it otherwise and we shouldn't suppress
-> > > them. Out of the two duplicate opps reported one is a artifact from how
-> > > Qualcomm usually show a transition to boost frequencies. The second opp
-> > > which you say is a feature should be treated as a boost opp i.e. one
-> > > core can run at max at a lower power when other cores are at idle but
-> > > we can start marking them as such once they start advertising their
-> > > correct power requirements. So I maintain that this is the best we
-> > > can do and need a firmware update for us to address anything more.
-> > 
-> > Will existing shipping products get these firmware updates?
-> 
-> They are sure to trickle out but I guess it's upto the oem
-> to decide if they do want to pick these up like some of the
-> other firmware updates being tested only on CRD. Not sure why
-> warnings duplicates should block cpufreq from landing for x1e
-> but if that's what the community wants I can drop reposting
-> this series!
-
-Not sure indeed which is the problem with such warnings since they are
-just doing their job...in general we tend not to disrupt operation even
-when the firmware is buggy (if possible) BUT we definitely try to be
-noisy about that to have firmware fixed (...not that fw guys seems so
-scared usually about warnings though :P)
-
-Anyway, I'm totally with Sibi here unless there is an impact at the
-functional level...Sudeep may think otherwise of course ...
-
-Thanks
-Cristian
-
+Kind regards
+Uffe
 
