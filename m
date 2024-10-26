@@ -1,83 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-36044-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36045-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 74DD89B1A7A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Oct 2024 21:00:36 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id C4BBC9B1A7E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Oct 2024 21:01:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 33E062827E3
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Oct 2024 19:00:35 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 61B6AB2170A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Oct 2024 19:00:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 23CAA1D6199;
-	Sat, 26 Oct 2024 19:00:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D47AD1D86E8;
+	Sat, 26 Oct 2024 19:00:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="w7ktOMAd"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lc7shbHh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59E21217F2E
-	for <linux-arm-msm@vger.kernel.org>; Sat, 26 Oct 2024 19:00:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB7A01D86C3
+	for <linux-arm-msm@vger.kernel.org>; Sat, 26 Oct 2024 19:00:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729969230; cv=none; b=QGG2dz0NRwLuarGVLqiRyrK516aqBiunYqYjn2JgbP9mXvscEhBD94VEegc4nFSKJuYpTjb2cVC21rqOQqODuUXBOHmUSbcT1OeoZX9aVuNneSFtDjI22dBUlpWyzkYHEjtSdhdhJKgcxOuBn8xydQeP+INtMESqmMev8xaMQo0=
+	t=1729969238; cv=none; b=epmPGq1hfgfgDrN3lCcX3OzMBIV8prRRSQ4ZgY0wjunM0XniToT4RiddQbp6CE5QW/epNhrGV+d5riuXp/KJQoToEd8TRwZlfMSvGOqCJh0mPri+C1Fa2Gy+kBQl4oD+b/KrvE4Wiwl3R5kB16Kz19rjhbu53SueVjyeY5zxHHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729969230; c=relaxed/simple;
-	bh=xrVsv1f3J/a+cca/uMoeNLvZWTqMW3/fAkM+gO4sxNQ=;
+	s=arc-20240116; t=1729969238; c=relaxed/simple;
+	bh=6dUlzTwUGPwpXZJnptyyaU8W89mDX5xxYq4Yx7VwhXM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MX3iKYg+zvKirHdJwBBBu2bFXEoySr305igvRqFj9T3HMzH9Pyf8u5W5bjlVE+cniHXVaLZq9xMtgseO/LBUEngHcuOQlOS+Cq0TBprzFRZEFDGLjv2IkT9fZMEp/ljpTjuq6agX8OdNAR7fe834EJ9ABJpjI80OMLGNKQsCx7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=w7ktOMAd; arc=none smtp.client-ip=209.85.208.174
+	 Content-Type:Content-Disposition:In-Reply-To; b=ec2GCk6gmvOKACSsZZRuFgjYkXKQb1PZtoQoe2bV8sn+TVCMsg3Ql+H3yt49riMIEGQleJzyxvqOHAlPgBe67DjxsnR1J8NpVnHc6nKAgY5Mj1xPhJNa4t26OPTFa5TNGiTbOsNTSBcTEHmMSwKypC6B+qFS5iiZfi1DiLGRWCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lc7shbHh; arc=none smtp.client-ip=209.85.167.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2fb57f97d75so26618951fa.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Oct 2024 12:00:18 -0700 (PDT)
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-539f76a6f0dso2819975e87.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Oct 2024 12:00:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729969216; x=1730574016; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1729969235; x=1730574035; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=P0aXmywXtFQzoylk5jPq1Mx0yS1/kK3ooi5YJXNL6+g=;
-        b=w7ktOMAdnMsIJsoXqnORj2KLrejdEFJdlTukV5GW6Fp8aEga3nZWEm2jZ9PK0g6Sub
-         FnCJR5U0WOLLrETZZBunwCXPRF8jeedZp5GGHy5rpRrJHUJiNMoAUjt0WNVQSIMWgkA+
-         sBQaOmJXQzFQMwoNgCNCHnsjT828N4PH01U3ZqCAOoYGI+qjvmGeQKpS8iucpUu2bSHj
-         YrFiOjttbnRZfOYrUWpa60jeT6qzbfhMBA0DyArVvWspbFnHPf9RXfcb3GK6HMdwnU7V
-         PfzTkOUpMm/Cx1bJOL3En3gFnf25LWUvbc9OAaU9cjAZ2ELJX3x7CRM7a5aCKvVytong
-         sB1Q==
+        bh=IOIxZ0ZR3GBH3uWPIb84gnfS91+/sVnFrw/NYTYrxQ4=;
+        b=lc7shbHhQblo5n2ttwlDOE4MlkA/AzTEnXDTjsQqEVJMkbPumFFZMny7jUO82/1vyw
+         4bFHD+GrqbN4slGWfKNj6ZHjipfPYc3WbQKVBsOBgGM9jWmkUZUhSvWPofft2x+fLwbs
+         QZidd2ynqjQakM0pWsz+wQSJlp+GglayxO1J63yU+6JIzHOFtg3Lt9JnSRx73WTX0gmg
+         +PUQxDKdu8GILADYOk/bXjXRfUouSujAp6wf9Wu5LZvGpivcNYWLLscYEOoinrknDY2S
+         3IyczVpTpNbOLax1LbAQeb87mFeGg9rhge4mu7i3C+ElHiQyWBOcZ3vlnItfrBllf3Hg
+         izGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729969216; x=1730574016;
+        d=1e100.net; s=20230601; t=1729969235; x=1730574035;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=P0aXmywXtFQzoylk5jPq1Mx0yS1/kK3ooi5YJXNL6+g=;
-        b=rvgHiauG8fuXlq+jj6BUKxQYmobAT6IF8kmanCCKyes8Z1JMGETjbXfYvqqWJmYALK
-         Nc6YN5q3RixvMPlXHyjHgCb2BHeZ3apydiVE0XELjX4DSgXX9VeRy/rNB1tirNzm4BTG
-         vMFdX3VzBzqMBCGP+20VVWHi43c9egYqB6AuvQeCf5d5C/fmeiKZ2WMS5qm5elwWqRr+
-         tpktbr3KTmdDNndWGF8FobEhmiaCytFTn/uUKf63Qi/isu8ZR8ALLAmF18F2qEVyXTRJ
-         cCavdvbc2MNXyvA5AxC13lXINNgtkzLJ2nfMhPzQ2FFoKM/APqR5aERe+jFQBFhOPkVx
-         E2zA==
-X-Forwarded-Encrypted: i=1; AJvYcCUykyhSRUOPc7Hf0GrnPoDjK7dXJNBdoajljct7kpV2mnZAIuXaUP3Vg5j0G664z83oY7/kLmxq69XKoDWl@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyu6s1eXK1dGiSRX64OgQvFfmsj4NkV4zFwNFDnp3/n7qW1POxd
-	X3ZwFE9BjD9z1gZrF8UgVHHyjcRFZNedgc0rrzZxlFUsPLhxpqNAIrzvIsokATI=
-X-Google-Smtp-Source: AGHT+IGu214Hc9cQ6fEog3SHe3ebMYcsV+Syoqqb9zKvV7wHW6Q1l+26kvcR25z4oE0yzUT5NcWPjw==
-X-Received: by 2002:a05:651c:b0f:b0:2fb:4abb:6fe1 with SMTP id 38308e7fff4ca-2fcbdf58a83mr11724311fa.4.1729969216500;
-        Sat, 26 Oct 2024 12:00:16 -0700 (PDT)
+        bh=IOIxZ0ZR3GBH3uWPIb84gnfS91+/sVnFrw/NYTYrxQ4=;
+        b=TcR1N+YVhQlALaF6/4LODpSKOSVHAWDuRXNTu1Fn0JeMibOGaYzuglkVLI7e4DsGyk
+         SAxiqms6UP+jDN5R4tho+DaUvtmGUc5kqX4bro7WPPcJbp6ShGphTFwdogw2itrVFdtP
+         URFfc9KHTkgauv0ZGlskbutt4DOyfFjUX48wLImz5BCGp+yUf43AOQZUfU4HOhICrpLe
+         pngMtJaqlLkNWdaTBbactoENE/3JIiEqNTY0QZxNMUv3HRyVJ7s2v/SKGlHJ7mryhnvD
+         jjuaeGJ8uZPCksRQ5RxZ8d9RFATX2CylYwx+EjlBA48DEr3uwpofGAANk2dr9D6wurQx
+         Ie+g==
+X-Forwarded-Encrypted: i=1; AJvYcCUAVS9W7fS6VlqOXoqZ95di0pqgrJ3C2Aus45/G/Xrz9UQx0hPT0zZY0aCHdXLBGlcisRPKxIoEyHt6NCVz@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx9DkOrBenFraW/JjREcIAhvXML6a9HnNAuQidJHEngE05x8Nay
+	NSaQ/aPnDCTeDzTKwZKKOxLKcZNZXSQNA2qL6UNlByiS6OpK1SxqSj/ajzg8TmQ=
+X-Google-Smtp-Source: AGHT+IG3BVqn6G9Q5H/9KlAzSLHu5IO2bydiW8FJchvfjiFJnTea1/XN1pTtre1vB7Qcl/SECPzELg==
+X-Received: by 2002:a05:6512:3d28:b0:539:e3a5:4fc7 with SMTP id 2adb3069b0e04-53b34b3ba70mr1350286e87.59.1729969234898;
+        Sat, 26 Oct 2024 12:00:34 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2fcb4601dcfsm6216711fa.118.2024.10.26.12.00.14
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53b2e1e9a0fsm583749e87.271.2024.10.26.12.00.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 26 Oct 2024 12:00:15 -0700 (PDT)
-Date: Sat, 26 Oct 2024 22:00:12 +0300
+        Sat, 26 Oct 2024 12:00:33 -0700 (PDT)
+Date: Sat, 26 Oct 2024 22:00:32 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Gabor Juhos <j4g8y7@gmail.com>
 Cc: Bjorn Andersson <andersson@kernel.org>, 
 	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org, 
 	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 5/5] clk: qcom: dispcc-sm6115: remove alpha values from
- disp_cc_pll0_config
-Message-ID: <t4erivkxr6dayt4vh3jjowdcj24dgtz3oph5rxztthbgizsani@c6ii3bt2pswv>
+Subject: Re: [PATCH 2/5] clk: qcom: apps-ipq-pll: drop 'alpha_en_mask' from
+ IPQ5332 PLL config
+Message-ID: <rc5rry2vywp4kruv52wfvatnncyodsvroop4qgexyehpxm467f@4l5t4o2e5nwj>
 References: <20241021-alpha-mode-cleanup-v1-0-55df8ed73645@gmail.com>
- <20241021-alpha-mode-cleanup-v1-5-55df8ed73645@gmail.com>
- <ifbybdn7nhsw2skgshjtskijrnyfn3r3fsg4znmf2olc2esbmn@gkurcqjlddj7>
+ <20241021-alpha-mode-cleanup-v1-2-55df8ed73645@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -86,55 +85,33 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ifbybdn7nhsw2skgshjtskijrnyfn3r3fsg4znmf2olc2esbmn@gkurcqjlddj7>
+In-Reply-To: <20241021-alpha-mode-cleanup-v1-2-55df8ed73645@gmail.com>
 
-On Fri, Oct 25, 2024 at 09:20:37AM +0300, Dmitry Baryshkov wrote:
-> On Mon, Oct 21, 2024 at 10:22:01PM +0200, Gabor Juhos wrote:
-> > Since both the 'alpha' and 'alpha_hi' members of the configuration is
-> > initialized (the latter is implicitly) with zero values, the output
-> > rate of the PLL will be the same whether alpha mode is enabled or not.
-> > 
-> > Remove the initialization of the alpha* members to make it clear that
-> > the alpha mode is not required to get the desired output rate.
-> > 
-> > No functional changes intended, compile tested only.
-> > 
-> > Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-> > ---
-> >  drivers/clk/qcom/dispcc-sm6115.c | 2 --
-> >  1 file changed, 2 deletions(-)
-> > 
-> > diff --git a/drivers/clk/qcom/dispcc-sm6115.c b/drivers/clk/qcom/dispcc-sm6115.c
-> > index 939887f82ecc3da21a5f26168c3161aa8cfeb3cb..2b236d52b29fe72b8979da85c8bd4bfd1db54c0b 100644
-> > --- a/drivers/clk/qcom/dispcc-sm6115.c
-> > +++ b/drivers/clk/qcom/dispcc-sm6115.c
-> > @@ -48,8 +48,6 @@ static const struct pll_vco spark_vco[] = {
-> >  /* 768MHz configuration */
-> >  static const struct alpha_pll_config disp_cc_pll0_config = {
-> >  	.l = 0x28,
-> > -	.alpha = 0x0,
-> > -	.alpha_en_mask = BIT(24),
+On Mon, Oct 21, 2024 at 10:21:58PM +0200, Gabor Juhos wrote:
+> Since neither 'alpha' nor 'alpha_hi' is defined in the configuration,
+> those will be initialized with zero values implicitly. By using zero
+> alpha values, the output rate of the PLL will be the same whether
+> alpha mode is enabled or not.
 > 
-> NAK, this isn't a fixed rate PLL.
-
-clk_alpha_pll_set_rate() hadnles this bit.
+> Remove the superfluous initialization of the 'alpha_en_mask' member
+> to make it clear that enabling alpha mode is not required to get the
+> desired output rate.
+> 
+> While at it, also add a comment to indicate the frequency the PLL
+> runs at with the current configuration.
+> 
+> No functional changes, the initial rate of the PLL is the same both
+> before and after the patch.
+> 
+> Tested on Xiaomi Router BE3600 2.5G (IPQ5312, out-of-tree board).
+> 
+> Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+> ---
+>  drivers/clk/qcom/apss-ipq-pll.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-
-
-> 
-> >  	.vco_val = 0x2 << 20,
-> >  	.vco_mask = GENMASK(21, 20),
-> >  	.main_output_mask = BIT(0),
-> > 
-> > -- 
-> > 2.47.0
-> > 
-> 
-> -- 
-> With best wishes
-> Dmitry
 
 -- 
 With best wishes
