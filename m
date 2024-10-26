@@ -1,82 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-35999-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36000-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 004A69B1757
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Oct 2024 13:14:22 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 099389B1770
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Oct 2024 13:28:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 836191F229B2
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Oct 2024 11:14:22 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 59B34B21F81
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Oct 2024 11:28:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB70E1D3656;
-	Sat, 26 Oct 2024 11:14:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2ABD41D362B;
+	Sat, 26 Oct 2024 11:28:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="PiSWcLJW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="agQ7DoRU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 776ED1D3654
-	for <linux-arm-msm@vger.kernel.org>; Sat, 26 Oct 2024 11:14:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F031B1B78F3;
+	Sat, 26 Oct 2024 11:28:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729941250; cv=none; b=IwJXewvaQ0eUqElNcmdlcIEOpWU9k2lLJD/19zew1xnq/OapMdRmpGPUHnJXSr5flhnJ8YnAJ69YxIx1SXxubvW2OcterKK9Dv5k5T+kkz17O9k4bJ26nDQKfQ8l3Hk/LFAtVGVeoeC1n9UD0vZj+MjdhVF7sv2wvLMoNynuS7U=
+	t=1729942120; cv=none; b=PSfNxjKrEIkbrFAgHs9OdTs6/55pjfBEyfLpbmtqxAnptBMZfUyl+LeonisIgxH1G5LlA2WAw6mYMzf1p7xEAtIxREO94tYTkzmaDdOR4y+D/e3WM52LUPVl7nXn+yg1VIeV6eTluSLkdLekK7NAAdFddTtULhhqBhFXm0s/+wg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729941250; c=relaxed/simple;
-	bh=6FvXG1+2BkeLGD3AY+/9YpHV5JAfMTLz69z6Znln92g=;
+	s=arc-20240116; t=1729942120; c=relaxed/simple;
+	bh=z56vanRfvPIkr/unET5JU6DPUCV4uByDh95So4Ihz14=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Jsz22z3rRLXwRWYcQQTDOXVm2kr5F7c4hMKZAFacBiAm78ohnqd76XHKB9OqY5HKFYq18v+VNMiI6NdRwd93w6RtqUHca+hXhCpuMLbafceiyuAAPA+ay/E8gm1whR5GXnbuo60UXSNbE2ubSj7Fdm8RAG6ptaG7CZdOHzV+pm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=fail smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=PiSWcLJW; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49Q4NlXb015443
-	for <linux-arm-msm@vger.kernel.org>; Sat, 26 Oct 2024 11:14:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	2VIJyVShOKe202SikbYNzeQ/DoTsTn4fTzLjpZCO0Wo=; b=PiSWcLJW0ywSuUUk
-	6iJfPs7noBJcyDSH2ik9YFwKE8ZkKBqVhU1l0HU4UpVkqtYUTCZQ1nfgUD/JQKgv
-	7DAXuIu1ijaT6Ypt/PZfF8wybNlk1RcxXUqn+r1GziR1kvxtL3l9vtaj+gbrO3YR
-	pDQTheD0KKWnl0FfjRHnkSRkesJdDzw6oq7lC6Cj+Ro3k2T6CpGPN88XLbpJ785L
-	xt1/sVl8CC31BmDdOH2yAgsANhFfgS93o1j8hzQElWCT+fmOaI2DnWuw+bDSGQ51
-	T2A5WrP0IAXE4+rLtDuR+0L5o0LabB1IHp5pHEenugyyhfTkN4IwezQcWPw0sxeg
-	YT61Vg==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42gqcqgvc9-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 26 Oct 2024 11:14:07 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7b1437d6f6cso69571585a.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Oct 2024 04:14:07 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729941246; x=1730546046;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2VIJyVShOKe202SikbYNzeQ/DoTsTn4fTzLjpZCO0Wo=;
-        b=hWDlkX7iAihH53UcAN3pdJnkxMuo77gFT7kCMW99/9qIJyEN9H3EVqI+yi+GO1ZnpE
-         KRI2EGIREYfjtsQU1Ae4+1gXTCu+bakmn1BpXGvLjdy+b5xPdb/mWpuWjRZk1AVeXSTf
-         BDvZfgu6onPzsp5SgzCRq/aiDyN2jcEff2P1l50BdMMt8BGyVYGyWXD0GDcPEgBpEbOi
-         g8DpmxlB8/3GhMexg5+ZMsN0keg9Nn5gY6jUe09G+k9yAO6G8D3/aHBGc3dzRjLfzz72
-         7tvSUerHQfmZua7IvOl2B1ZVeuqorRQKFRlF7dptBaSQ67aL1HbdHMaOmgF4+vLtu3JR
-         DOkg==
-X-Forwarded-Encrypted: i=1; AJvYcCVDB8vUbMGDVdX40GR4XE/DTYtq52nU2zl91qlhuLAI/BLaGVhC9VNbJImHMGGpae+v/oSH0GaKfcgI7Gqc@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz6kYu9LQ3g8sbSIbBvCLEHorsK/GFlIhExu/U0TrzQtCGUSKHf
-	AbbO7Ubea3IUhgbr8MHWOCS2K8rp3eRikIqENvcYVRvKq6x9DYj9C7GbWzm631YWLmx/8w4X/5/
-	p6eqWB0tGI7cSukWxNK/N9ZW9/jjM3qFKrST7GTIl7jlM/hnFWPuP1qHkI20oW4PC
-X-Received: by 2002:a05:6214:2628:b0:6cb:6e29:bad4 with SMTP id 6a1803df08f44-6d185862784mr17394596d6.11.1729941246096;
-        Sat, 26 Oct 2024 04:14:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHIkNHz09S+ye/cfwnCyIzU7xG6/ASc4nNFWo8hNZkb/kELlL+FU6P19DEXNKKxitu/4IweCQ==
-X-Received: by 2002:a05:6214:2628:b0:6cb:6e29:bad4 with SMTP id 6a1803df08f44-6d185862784mr17394366d6.11.1729941245630;
-        Sat, 26 Oct 2024 04:14:05 -0700 (PDT)
-Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9b1f297b04sm164496866b.134.2024.10.26.04.14.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 26 Oct 2024 04:14:05 -0700 (PDT)
-Message-ID: <56d061ea-1458-43b5-a823-eb625204913a@oss.qualcomm.com>
-Date: Sat, 26 Oct 2024 13:14:02 +0200
+	 In-Reply-To:Content-Type; b=cPFvZMu1bP7Zg8eYgXpsngPgmxlRyi4GFo1uM/+kj2uBnYttM6AdiVl6hs9yQV+snarlt+yvxnJUfdBljFDW8Y4P3nOyYJVsGi08Yxg//zuRnSu9PwcFo6rnOP62XlF1BXFNu2dc9aJTqq7rsamuyOFyy6OKbICYYSSbADaBfQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=agQ7DoRU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83C9EC4CEC6;
+	Sat, 26 Oct 2024 11:28:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1729942119;
+	bh=z56vanRfvPIkr/unET5JU6DPUCV4uByDh95So4Ihz14=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=agQ7DoRUTO7mZmG36HDXPsQTLTy43nEvH3aYOQhgkBpmoH+obuhWSFB5hN4CHFFBV
+	 ilA4PDK+Dd5veHGEnI2qGd+HUpbJfcUQM69x58q/ksp+VnnFpn4VkTx7igdKQlpA6w
+	 IsFwECPOS7Yqj0/iNyG6OU6EuYMdTqpjhSy7//TQxj3t9CvAOG3XghDd4ePgPsnEof
+	 byOncU69LJdgfD5iksA0PFYUGc8CUAepDOuE7HhssfRMEJsd0VNPr4LdnMBEkR1tbS
+	 sF/OobF1aDo9GXGnF5D+JHP1z6m9mcU3eknGY9XkxZs1IuOq9KSFiC7bVaHcil4KRm
+	 CxvTlYCyEo65Q==
+Message-ID: <e7ce51a1-97a1-4d54-a1d4-0f6d279a9055@kernel.org>
+Date: Sat, 26 Oct 2024 13:28:30 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,180 +50,104 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/6] arm64: dts: qcom: add base QCS615 RIDE dts
-To: "Aiqun Yu (Maria)" <quic_aiquny@quicinc.com>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Krzysztof Kozlowski
- <krzk@kernel.org>,
-        Lijuan Gao <quic_lijuang@quicinc.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>, kernel@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20240828-add_initial_support_for_qcs615-v1-0-5599869ea10f@quicinc.com>
- <20240828-add_initial_support_for_qcs615-v1-6-5599869ea10f@quicinc.com>
- <22qkvfravm6sxiq3xfavahg2u6b2pwlyzqbqvd55zym5zef3gi@m4bsqkdvggty>
- <17d0017e-b55d-4b32-9fd3-1a1a84e5ebf9@quicinc.com>
- <0ec92d59-0648-40ed-a522-307152b5c37d@kernel.org>
- <148451f2-6b1b-4616-b703-fd52e7afa2be@quicinc.com>
- <90c98fee-770c-4b83-9e05-6f04866094c2@kernel.org>
- <729deff2-d5df-4409-b941-af22de408521@quicinc.com>
- <9ded31cf-5b14-426a-a10c-694f20d4fb9e@kernel.org>
- <22657edf-5df9-44dc-b2a8-134ae613d819@kernel.org>
- <ded66421-9425-4b9d-9922-dacc66777b83@quicinc.com>
+Subject: Re: [PATCH 3/3] interconnect: qcom: Add EPSS L3 support on SA8775P
+To: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>,
+ Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+ Sibi Sankar <quic_sibis@quicinc.com>, linux-arm-msm@vger.kernel.org,
+ linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, quic_okukatla@quicinc.com,
+ quic_mdtipton@quicinc.com
+References: <20240904171209.29120-1-quic_rlaggysh@quicinc.com>
+ <20240904171209.29120-4-quic_rlaggysh@quicinc.com>
+ <c3efb01d-2138-4b79-97a1-653b7bd531d0@kernel.org>
+ <bfcc65b2-97a4-4353-a2fd-dce927c53428@quicinc.com>
+ <49aa8205-6324-412d-b03d-c2b3f738cc98@kernel.org>
+ <6b89de85-58c0-4808-9a33-6ee7dc26611d@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <ded66421-9425-4b9d-9922-dacc66777b83@quicinc.com>
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <6b89de85-58c0-4808-9a33-6ee7dc26611d@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: OYmPhTs0UMnnVYAchqu099BXWT_UJFdm
-X-Proofpoint-GUID: OYmPhTs0UMnnVYAchqu099BXWT_UJFdm
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- malwarescore=0 suspectscore=0 bulkscore=0 adultscore=0 spamscore=0
- phishscore=0 impostorscore=0 clxscore=1015 priorityscore=1501 mlxscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410260094
+Content-Transfer-Encoding: 7bit
 
-On 5.09.2024 7:29 AM, Aiqun Yu (Maria) wrote:
+On 25/10/2024 17:38, Raviteja Laggyshetty wrote:
 > 
 > 
-> On 9/4/2024 6:23 PM, Konrad Dybcio wrote:
->> On 4.09.2024 11:32 AM, Krzysztof Kozlowski wrote:
->>> On 04/09/2024 10:35, Lijuan Gao wrote:
->>>>
->>>>
->>>> 在 8/28/2024 5:34 PM, Krzysztof Kozlowski 写道:
->>>>> On 28/08/2024 11:31, Lijuan Gao wrote:
->>>>>>>>>> +/ {
->>>>>>>>>> +	model = "Qualcomm Technologies, Inc. QCS615 Ride";
->>>>>>>>>> +	compatible = "qcom,qcs615-ride", "qcom,qcs615";
->>>>>>>>>> +
->>>>>>>>>> +	chosen {
->>>>>>>>>> +		bootargs = "console=hvc0";
->>>>>>>>>
->>>>>>>>> Noooo, last time I agreed on this, you told me later it is different.
->>>>>>>>>
->>>>>>>> In the early stages, enabling HVC is to more easily verify clock and
->>>>>>>> PMIC related functions, as it’s difficult to debug without the console
->>>>>>>> log. After the clock and PMIC are ready, we will enable the UART console.
->>>>>>>
->>>>>>> Working serial is supposed to be part of the early submission.
->>>>>>>
->>>>>> Okay, I will remove it in the next patch.
->>>>>
->>>>> Can you post next version with proper serial device?
->>>>>
->>>>> Best regards,
->>>>> Krzysztof
->>>>>
->>>> Hi Krzysztof,
->>>>
->>>> Can we use the dts without console enabled as the first version? When 
->>>> the clock is ready, we will submit new changes to enable the UART console.
+> On 9/6/2024 10:00 PM, Krzysztof Kozlowski wrote:
+>> On 06/09/2024 17:32, Raviteja Laggyshetty wrote:
 >>>
->>> It is very surprising not to have console available in the first, early
->>> submission, but it is not a blocker for me.
+>>> On 9/4/2024 11:52 PM, Krzysztof Kozlowski wrote:
+>>>> On 04/09/2024 19:12, Raviteja Laggyshetty wrote:
+>>>>> +
+>>>>>  static const struct qcom_osm_l3_desc epss_l3_l3_vote = {
+>>>>>  	.nodes = epss_l3_nodes,
+>>>>>  	.num_nodes = ARRAY_SIZE(epss_l3_nodes),
+>>>>> @@ -284,6 +307,10 @@ static const struct of_device_id osm_l3_of_match[] = {
+>>>>>  	{ .compatible = "qcom,sm8150-osm-l3", .data = &osm_l3 },
+>>>>>  	{ .compatible = "qcom,sc8180x-osm-l3", .data = &osm_l3 },
+>>>>>  	{ .compatible = "qcom,sm8250-epss-l3", .data = &epss_l3_perf_state },
+>>>>> +	{ .compatible = "qcom,sa8775p-epss-l3-cl0",
+>>>>> +	  .data = &epss_l3_perf_state },
+>>>> Don't grow it but express compatibility.
+>>> ok. Will rename compatible from "qcom,sa8775p-epss-l3-cl0" to "qcom,sa8775p-epss-l3".
 >>
->> Lijuan,
->>
->> I see that the initial submission is very slim. GCC+UART+TLMM is
->> usually the smallest we tend to accept.
+>> This won't solve the problem. You still grow the table, right?
 > 
-> We are exploring various ways to improve the efficiency of the upstream
-> change merge process. In the current QCS615 project, we are
-> experimenting with a slim "HVC console" verified base device tree to
-> minimize dependencies and enhance parallel work efficiency.
-> 
-> Currently, different developers are working on the same QCS615 project.
-> One developer is focusing on clock support for QCS615, another is
-> working on interconnect support, and a third is handling TLMM pinctrl
-> support. Additionally, the QUP UART validation depends on above soc
-> specific GCC clock/TLMM support.
-> 
-> Here is the proposed process chart for reference, Clock/TLMM, even other
-> functionality like LLCC can be validated apart from current Base support
-> with HVC console enabled:
->                                +---------------+
-> 
->                                | Clock         |
-> 
->                                |               |
-> 
->                                +---------------+
-> 
-> +---------------------+
-> 
-> |    Base support:    |        +---------------+       +-----+
-> 
-> | HVC console enabled |------> | TLMM          | ----->| UART|
-> 
-> +---------------------+        +---------------+       +-----+
-> 
-> 
-> 
->                                +---------------+
-> 
->                                | Interconnect  |
-> 
->                                +---------------+
-> 
-> 
-> It is suggested to have process like this:
-> 1. Have hvc console enabled base device tree support.
-> 2. TLMM/GCC/Interconnect/LLCC/etc drivers can be pushed along with the
-> needful dt changes.
-> 3. QUP uart support change after TLMM/GCC dependency uploaded.
-> 
-> Here is an original example of qcs8300 project that the base device tree
-> wait until have all qup uart enabled support for reference:
-> 1. The first soc support[1] pushed at 08/14.
-> 2. TLMM support[2] pushed at 08/19.
-> 3. GCC clock support[3] pushed at 08/20.
-> 4. Interconnect support[4] pushed at 08/27.
-> 5. LLCC support[5] pushed at 09/03.
-> 6. Initial device tree support[6] pushed at 09/04. And it have 5
-> co-developer in the initial device tree support.
+> Falling back to "qcom,epss-l3" won't work because we need to vote into perf state register.
+> I am introducing a new fallback compatible "qcom,epss-l3-perf" for perf voting, which can be used for upcoming qcs8300.
 
-Right, plumbing up all of the UART dependencies properly on these
-platforms is very much not straightforward.
+Maybe, no clue, this was 1.5 months ago. I don't have original patches
+in the inbox anymore.
 
-> 
-> 
-> [1]https://lore.kernel.org/all/20240814072806.4107079-1-quic_jingyw@quicinc.com/
-> [2]https://lore.kernel.org/all/20240819064933.1778204-1-quic_jingyw@quicinc.com/
-> [3]https://lore.kernel.org/all/20240820-qcs8300-gcc-v1-0-d81720517a82@quicinc.com/
-> [4]https://lore.kernel.org/all/20240827151622.305-1-quic_rlaggysh@quicinc.com/
-> [5]https://lore.kernel.org/all/20240903-qcs8300_llcc_driver-v1-0-228659bdf067@quicinc.com/
->>
->> While hooking up these drivers may take some time, please consider
->> at least describing a subset of the clocks and the QUP UART, as
->> everything non-SoC-specific is already in place.
-> 
-> To be more specific, are you suggesting like adding the base device tree
-> describing with current nodes subset which only have non-soc-specific
-> info, like:
-> 1. "apps_rsc" nodes without info of
-> "qcom,qcs615-rpmh-clk","qcom,qcs615-gcc"?
-> 2."qcom,geni-debug-uart" nodes description without the clock properties?
+Just choose something sensible following writing bindings guideline.
 
-When writing that email, I thought about sending a small version of the
-GCC driver with just enough to turn on the UART clocks, but thinking
-about it again, that sounds like a really bad idea..
+Best regards,
+Krzysztof
 
-I think it's best if we stick to what you did in this patch, and validate
-things with `earlycon=qcom_geni,0xaddress` in cmdline. This way, we can
-take advantage of the bootloader setting it up for us.
-
-You could then include the base address of the serial engine in the
-commit message to let others reproduce it easily.
-
-Krzysztof, would you agree ^?
-
-Konrad
 
