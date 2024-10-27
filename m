@@ -1,58 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-36085-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36086-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E8B579B1FEA
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Oct 2024 20:48:43 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id DE2239B2043
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Oct 2024 21:19:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1C7ADB20D9B
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Oct 2024 19:48:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 952711F214A4
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Oct 2024 20:19:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93384145A0B;
-	Sun, 27 Oct 2024 19:48:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F4B817B50A;
+	Sun, 27 Oct 2024 20:19:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uJIsJTIO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rlTWgCHP"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6742E286A1;
-	Sun, 27 Oct 2024 19:48:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7C6317736;
+	Sun, 27 Oct 2024 20:19:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730058517; cv=none; b=d4vYolarqhSruu38VUKywM4ZKiVOr7vkfShg33BX1d1FFTlxhpENZDIsePcjkiOxQuQvSFXmTN2TqEb47q+4Nm9Fcm/pBvg48rz+AYbYAH0UjkYR3M92vIPQz+oLw2WQs5mnWpMzkVqRqSj1m6a7eAKb3nTF2qs3iC+OxYNU1R0=
+	t=1730060357; cv=none; b=a72PxE+s32XFlgPLsVKpb/px0Le5sHxNdNJ9B6g6ik7Pp1OkVeMVmxsC1EDlxKM53vCjvcfJEQkuX2V13rARalaFWIavjxi4w8pn8mb8dEeMpRl05B4tvFZ5UJcdsu2u1z2DGedIG9CSiaQiNpc8vTTNH3fCHiALqhK8SjoSElc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730058517; c=relaxed/simple;
-	bh=w3vKUjdSX9tc/J4Pkj3p4KIlJyBMlEnLHrC4g+m5zqI=;
+	s=arc-20240116; t=1730060357; c=relaxed/simple;
+	bh=vs/zKde3mmVVEHbutSfzn9KaQYfcpV6gzt5pasJjJ8s=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MnWT4K/xbY+yh7uL2xMF3MoYKfrXWwtFtX3t3qhixVdayhlH8HH6//ISLgO/YOhophOZ7ocXagg0kKrI/oTg9t+oGV/3JS+/yym5DVTCBa6l5ATmfcmL1W3Xp8iO+A+XPbYJb4QXk7216iZGSqb/7rjf5ny70odboYDj8qjxBsc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uJIsJTIO; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41947C4CEC3;
-	Sun, 27 Oct 2024 19:48:34 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=E0BmTntAlIRcpcinkdB/iG1CJD7nf55Lz3RWg3P1R/DOEh/7cNofy+1NB77j6hm4Nlk3klaa543JRQaVeMlAiUCnHMM8wpXqXMpwhXAgpvKvZpFF14fPEiZdVFITNmSNsuQCdVqC7a39qev7e+aUBspUmFeTGiD/Fs+NEUnCrwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rlTWgCHP; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48727C4CEC3;
+	Sun, 27 Oct 2024 20:19:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730058515;
-	bh=w3vKUjdSX9tc/J4Pkj3p4KIlJyBMlEnLHrC4g+m5zqI=;
+	s=k20201202; t=1730060356;
+	bh=vs/zKde3mmVVEHbutSfzn9KaQYfcpV6gzt5pasJjJ8s=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=uJIsJTIOl0Ry+IYC4ZugtnKEh9+8moghp6sy73CRyQwYDWIiMxtMtmvCg21f1EE8y
-	 bAc+I2oa5N4Khec5mtmIPcqZvqNsyBGW0rQgYN8e2cICEVZTB1PYUmUufA2gJ6nkmc
-	 IjHZ8w1yghUCwKrbK74LpcIK82Lo5j2o9blWHVoJCRToq1JHDYL2z6JjeOhL0y4ggQ
-	 X3qH83157R/ZQEp7yAI6/LQk+GXTDmzt9BMM48FsOYYsxjxvZvNeizmXdRMQWJlBuG
-	 dZCDCqL0QfxaAYqQInHGLoaB09WjNe4FzJoocbbP5gYOJx+n3uN3BxrYGMXc1Xyzoy
-	 FJaJ23dDFXTbA==
-Date: Sun, 27 Oct 2024 20:48:32 +0100
+	b=rlTWgCHPyoE64masgPL2i8xPK+fQh8+rbiUYO1vWKaq7aD1OyOTkCis2rsgelsqna
+	 WwfNr1NTsfDKE2ve/REtqNtYdbvj0GE8UnmDOQRHS1roEWelg7zIKXLDC6pLLqOejM
+	 NIPuiAqQ3UWu0Gicp1nb1fLMAwy1YeRf6UjyFuEPJ3+xgO8eEW2pcXKAxxaawmEzMu
+	 KmG2kjQe/ZF/Y4VFhOk9skdi8oMWTpIvWy4uzA8cZJFm+KtkutGUv5MWd+5ZyzYa8C
+	 gveOlWXXxLQpG1qJX1Y8mb8yVEoe1LVCNPXMUtkRhxREkhENneY3Ygs2ewrontaqyY
+	 jszG+UVtUsg2g==
+Date: Sun, 27 Oct 2024 21:19:12 +0100
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] dt-bindings: nvmem: qcom,qfprom: Add SAR2130P
- compatible
-Message-ID: <pm3f6guakzyn7xujcqrwv4xkcoq3zsigl3qvry7dzirxcoojjs@zrkvlupw3vyg>
-References: <20241027-sar2130p-nvmem-v2-0-743c1271bf2d@linaro.org>
- <20241027-sar2130p-nvmem-v2-2-743c1271bf2d@linaro.org>
+To: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Merck Hung <merckhung@gmail.com>
+Subject: Re: [PATCH v4 1/3] dt-bindings: arm: qcom: Add Microsoft Windows Dev
+ Kit 2023
+Message-ID: <jcv5ywftxggskbcyzbjmgiacb7kii7zmioenf7jfrqafke7zks@ge4vfzxmxap6>
+References: <20241027-jg-blackrock-for-upstream-v4-0-703b254fc95f@oldschoolsolutions.biz>
+ <20241027-jg-blackrock-for-upstream-v4-1-703b254fc95f@oldschoolsolutions.biz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -61,12 +62,38 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20241027-sar2130p-nvmem-v2-2-743c1271bf2d@linaro.org>
+In-Reply-To: <20241027-jg-blackrock-for-upstream-v4-1-703b254fc95f@oldschoolsolutions.biz>
 
-On Sun, Oct 27, 2024 at 01:42:34AM +0300, Dmitry Baryshkov wrote:
-> Document compatible for the QFPROM on SAR2130P platform.
+On Sun, Oct 27, 2024 at 02:02:16PM +0100, Jens Glathe wrote:
+> Add compatible values for the Microsoft Windows Dev Kit (WDK2023)
+> with its codename "blackrock". The Dev kit is a small desktop box
+> based on the mainboard of the Surface pro 9 5G, intended for
+> developers to test/build arm64-based Windows software.
+> Link: https://learn.microsoft.com/en-us/windows/arm/dev-kit/
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+> ---
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+>
+
+---
+
+<form letter>
+This is an automated instruction, just in case, because many review tags
+are being ignored. If you know the process, you can skip it (please do
+not feel offended by me posting it here - no bad intentions intended).
+If you do not know the process, here is a short explanation:
+
+Please add Acked-by/Reviewed-by/Tested-by tags when posting new
+versions, under or above your Signed-off-by tag. Tag is "received", when
+provided in a message replied to you on the mailing list. Tools like b4
+can help here. However, there's no need to repost patches *only* to add
+the tags. The upstream maintainer will do that for tags received on the
+version they apply.
+
+https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
+</form letter>
 
 Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
