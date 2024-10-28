@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-36204-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36205-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E9C9B9B3990
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 19:49:11 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E31409B3993
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 19:49:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9DC401F22EBB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 18:49:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A8823281805
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 18:49:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9D8B1E04A0;
-	Mon, 28 Oct 2024 18:48:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D15A71E0B7B;
+	Mon, 28 Oct 2024 18:48:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QrUJpRuw"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W8yGEmz9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9AC11DFE32;
-	Mon, 28 Oct 2024 18:48:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A77C21E008D;
+	Mon, 28 Oct 2024 18:48:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730141311; cv=none; b=n791NdtgBZwMMSiB5T5lwWFtb0mH0w9baTC2/QuwZ70/AFKPbEpyRmBc0ZtVlEOUhISYIPCTiPqVt54IZLj/ptBiFsnc8gOLuQEYYNvT+jG9ph6pWX1GwLiXUhAP6wxoopQNx7EhZAKjBGyqdm3a2rTPKCxsLZFfbFxJ+AIzeQA=
+	t=1730141312; cv=none; b=Dw9q0b87wFgL72jCwuBZtO7FnYJsIOxuDSP94Gks3HQee71EdSQrv2aIy/B52bdvibYW9w4L+YDu5tMCfJ7DJWgdkW0mfjSVJLPGFruAHeptP/j3jQzOqlh59bLLRk9keGS7qn5mnxpP3Ih50CqmtKyjsmD182GxwqCJnGhzhLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730141311; c=relaxed/simple;
-	bh=tJy7WRxFzYmpR4M+/fV3d8Qijiy2s/1g7HIRtP8Dflk=;
+	s=arc-20240116; t=1730141312; c=relaxed/simple;
+	bh=7yCnSD/2GuSo3KNhazT7H6gIGvBqe4Cbts6U9Qd+Fg8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=rZVZKjzKa71QGgi+V50fc94mdl1gtkZ6UWSVWLaiL33bVSoylPZ9PbFky1JrnL28K2ABVWSklcjnOgah8+uw4bthxH70JjemclepzM2iEdDIR1V3w7kyHJP3CrnVwRgonE7vJoYWgG1LQ6/i86Tys5I7lNZX+1IMGfTXEFstyEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QrUJpRuw; arc=none smtp.client-ip=209.85.218.51
+	 In-Reply-To:To:Cc; b=K8lSEnIVg2zKKJ8LbkqmftP/CXZywqogjsB8FO/2J4MtUyMjtrp5+yDk1FL1bMoT5nEGZHHc0m8pZn1OqJfsqza6j0MVLFCT5bejbbGZCxzkUUb5nhSkL8xO9dWbjnRv/xUp90uDavSu3+aUPV7dvEZf46Z+KmxcxAhCk8Q1D3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W8yGEmz9; arc=none smtp.client-ip=209.85.218.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a9a2cdc6f0cso626901966b.2;
-        Mon, 28 Oct 2024 11:48:29 -0700 (PDT)
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-a99cc265e0aso719530666b.3;
+        Mon, 28 Oct 2024 11:48:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730141308; x=1730746108; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1730141309; x=1730746109; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=WawemXe+1+8ApO76dXS2S+ra0pV/e8rA+QZSseLvbvM=;
-        b=QrUJpRuwTXfB8S/5tlOOXkdk/qgSkbnc50Xj+Z+HEKEo6Py6vp3z9CiPx5L8LLBcdN
-         N5+dPUJV+xtVpTbf03sZpp9c+ikvV3pWKHeqWT9x3A5CK+Hx6Q6orcpehH1F8SQ4WeiB
-         51s08oAQMLJ/Ir9ZG9psMQbrijVVem5J0GjcYGSM5HiFIXeyywYqohiuGxe4IxGHDi2v
-         Hae0wN/ei9NYUUf7CV/bg+j/d3FB/JsMf/m3pw2ThoXFpjKHRR31nyqNWv9lifM7GB5x
-         6NBskEyYf3WQQcFEHURT2Rjg0lWgt4soKkfxV+yUQ+Ry81myqaQXbX9OrTbMOsTx2O20
-         0K6w==
+        bh=XXXfTAEkam83QhXgigwp3Sp4eBqaqdCR04cbjsml3X4=;
+        b=W8yGEmz9LgWONsXNJaiSNIPic8TINgDswiyzrE8WAEhs+QQbYcc09dpt7KVVy0twZk
+         gK9lWAm8SgN9dQX2PEpSHKMpOCLrlKrKjnegvObo1icAY30MVbndBBZyXuUH71iHAx9a
+         YyhFQr68thwwMA97wgWlgVGD8RJbI6uagBOeWumJn4X+mM0hXZZ6eff57lDvtZmsh290
+         nMfX52zJYfes8Bq6vMCCENgziMewRNVT4+ft9rTQiNNPhgjiWLQzsxp+cQpzNjVY7nRm
+         Hxm0Jr8qoaKCt3WW+1KgHlNWsR734ZLbmr67mhm5K0dz9NUqnasLKgwFIts+k2FUzcSw
+         7afA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730141308; x=1730746108;
+        d=1e100.net; s=20230601; t=1730141309; x=1730746109;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=WawemXe+1+8ApO76dXS2S+ra0pV/e8rA+QZSseLvbvM=;
-        b=oGxcdJF0BfIRfr65lyEm8TwgMtuUBzl2BR4X0W3ThRZnNaAiNCJqVi65gNQE8sghF3
-         j0Uwne4o2Hniit0RY6jHXnWi3KCS7KTCNREPQcSh8wOtz5lK0x972PTyayAxB0K5VKd7
-         /bnbhWLSV0TLNSkNKcShqv3im20Xl4Nnm4RNuDFG1rrRpCOfcza82Zed5vC4KYVrVKNu
-         igYXkVfgRpk1Rr1euU9A9DFx8z5oe62t0nkaB6gcUQUKigsCyeEL7NNiijOAygdm74kD
-         9dBnNo2F81NdRreTSx/J1uTOH+IpSiH3yhu/0P5XCy6gEtyILhGbhJQcrqbF+ASfzmi/
-         EC3A==
-X-Forwarded-Encrypted: i=1; AJvYcCULsRSKS/KvOWzrDOcCKhqaTWT3EayIEOEqN7L+dE8dVlEuXRqrFJ0lPg4Xmwssw0aDg+FiozTO+zw=@vger.kernel.org, AJvYcCXYwvO50zh2Nq+ds8iqCIgEbyt11t8zrEGR9346OMpqc1JbHCTs2WCF4Ov308bbieR3YtrBa2pELUyFdjp6@vger.kernel.org
-X-Gm-Message-State: AOJu0YzYBGjqqdKhJ2CFbrRh5gtNKx1VnJ8yI5kupgMFHD72Mje7zUNl
-	KKgc0fkH98T+I2YPDLt2Gl/GxO840a4oyANBlw0Ex2mKcsAvfL6ERy9t0w==
-X-Google-Smtp-Source: AGHT+IHeEImOIFlRf6rqC6W0xEOD7To8xmifzI9uf6RD2K8NXlb3pzQMKVBf/U1LU6OEfWBCyyCMtA==
-X-Received: by 2002:a17:907:7d87:b0:a9a:f0e:cd4 with SMTP id a640c23a62f3a-a9de619a63bmr955258366b.55.1730141307881;
-        Mon, 28 Oct 2024 11:48:27 -0700 (PDT)
+        bh=XXXfTAEkam83QhXgigwp3Sp4eBqaqdCR04cbjsml3X4=;
+        b=Sz7vH0RfNOZTzySXuuYBZeJDkBjsEwpjXtDboZ74EtVT99oKtLkFO1MDjbSnoJPNR9
+         FMpvKiUPzEVnMZ7d0/LWsaZsO+GnXz9MHXvzc6eDYc1qQ/cyahJ/Dxp2tafnV/GJxFOQ
+         UTyPOQT7GRjCmmzq84Lub81ATJ4bNMUtMSfDYhG3JtO41kl0pQ/VhSGsHDKeupQDEL9V
+         Oc8eoznU8BvW7HARjLKXZbjDyR3PmBlzeKbUGNoXtPlFxQAMGKedbqQrvpb+HdoF3ZZQ
+         gpR5SUs4WA3BUwoLJFUDRPWNdNDvCfH/HA/i+0ws0gGs6qwEL2jZW5qhZgANDkCU+85a
+         U9IQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUJtMTEv+JHjJ5ZMquBSWcBQ8PAg8nPmlCJIgiuZAUBIMNCq9tvakwA49aFzs1v423qCBrZZso4tSRK6Gyl@vger.kernel.org, AJvYcCX8YDcOePkuohnUIJ3G5wlEaqVvb01ki0MwjS5sw2ZyO3YcyhsJrW2no61v28YQ832aQ/Vdqgo0sHg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzkE44LQG63gCQrj4H6ryyhh7vIEaIBxMOT0lhsm7SDqYwDCP3C
+	lkBHR0oot58rQcCVTPyJ/KZ7Ms0RC68m3TOAyuNb4hzIoSQ+H9gETyuQ4g==
+X-Google-Smtp-Source: AGHT+IGuGvnH3S2IwavGjjh3kYjtHwOl0iZ9ybgjficwGHEPIT7DcThmtudj7m8KEo7CQR/coYkVrw==
+X-Received: by 2002:a17:907:6d23:b0:a99:4aa7:4d6f with SMTP id a640c23a62f3a-a9de5d6f211mr877704366b.12.1730141308878;
+        Mon, 28 Oct 2024 11:48:28 -0700 (PDT)
 Received: from [192.168.0.2] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
         by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-a9b1f029617sm397585166b.81.2024.10.28.11.48.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Oct 2024 11:48:27 -0700 (PDT)
+        Mon, 28 Oct 2024 11:48:28 -0700 (PDT)
 From: Gabor Juhos <j4g8y7@gmail.com>
-Date: Mon, 28 Oct 2024 19:48:18 +0100
-Subject: [PATCH v2 4/5] clk: qcom: dispcc-qcm2290: remove alpha values from
+Date: Mon, 28 Oct 2024 19:48:19 +0100
+Subject: [PATCH v2 5/5] clk: qcom: dispcc-sm6115: remove alpha values from
  disp_cc_pll0_config
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -79,7 +79,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241028-alpha-mode-cleanup-v2-4-9bc6d712bd76@gmail.com>
+Message-Id: <20241028-alpha-mode-cleanup-v2-5-9bc6d712bd76@gmail.com>
 References: <20241028-alpha-mode-cleanup-v2-0-9bc6d712bd76@gmail.com>
 In-Reply-To: <20241028-alpha-mode-cleanup-v2-0-9bc6d712bd76@gmail.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -105,20 +105,22 @@ so dropping 'alpha_en_mask' is safe.
 
 No functional changes intended, compile tested only.
 
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
 ---
 Changes in v2:
   - extend the commit message to indicate that dropping 'alpha_en_mask' is safe
-  - Link to v1: https://lore.kernel.org/r/20241021-alpha-mode-cleanup-v1-4-55df8ed73645@gmail.com
+  - add RB tag from Dmitry
+  - Link to v1: https://lore.kernel.org/r/20241021-alpha-mode-cleanup-v1-5-55df8ed73645@gmail.com
 ---
- drivers/clk/qcom/dispcc-qcm2290.c | 2 --
+ drivers/clk/qcom/dispcc-sm6115.c | 2 --
  1 file changed, 2 deletions(-)
 
-diff --git a/drivers/clk/qcom/dispcc-qcm2290.c b/drivers/clk/qcom/dispcc-qcm2290.c
-index 449ffea2295d3760f40abe8b1195e9022f46a9b0..d7bb1399e1022afc68e45ee335d615d4a5be5add 100644
---- a/drivers/clk/qcom/dispcc-qcm2290.c
-+++ b/drivers/clk/qcom/dispcc-qcm2290.c
-@@ -40,8 +40,6 @@ static const struct pll_vco spark_vco[] = {
+diff --git a/drivers/clk/qcom/dispcc-sm6115.c b/drivers/clk/qcom/dispcc-sm6115.c
+index 939887f82ecc3da21a5f26168c3161aa8cfeb3cb..2b236d52b29fe72b8979da85c8bd4bfd1db54c0b 100644
+--- a/drivers/clk/qcom/dispcc-sm6115.c
++++ b/drivers/clk/qcom/dispcc-sm6115.c
+@@ -48,8 +48,6 @@ static const struct pll_vco spark_vco[] = {
  /* 768MHz configuration */
  static const struct alpha_pll_config disp_cc_pll0_config = {
  	.l = 0x28,
