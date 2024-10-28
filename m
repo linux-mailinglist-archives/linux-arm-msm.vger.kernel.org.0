@@ -1,65 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-36198-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36200-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9CD3D9B3975
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 19:46:15 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3C0289B3984
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 19:48:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3518F28189A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 18:46:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D8D531F22788
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 18:48:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B84C1E0493;
-	Mon, 28 Oct 2024 18:45:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1CE151DF738;
+	Mon, 28 Oct 2024 18:48:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="OHLyJlfK"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AyOr5kOV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93F2C1DFE13;
-	Mon, 28 Oct 2024 18:45:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ADDD3A268;
+	Mon, 28 Oct 2024 18:48:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730141132; cv=none; b=CougeZTVTfQHwd3CiMtoerePIfmqApOTRys1vpB0T+bLjkVvsGYO2QD2ioZfVUet9ibB7T+CctaWmPpkfpxcwA2QpxBwIUBbFQZ0UOUNYQ6xNNKg6rEaQN0K9JCGXJML5fqjfDaoN3wg0fIgCF2eeqoMMXMbq+pKIHiaJYzTXno=
+	t=1730141306; cv=none; b=qbbf7OTiojD6bc+QofsbnZBPPQglNF6wzmTP6juv+BLIZhe3Kp+qwJg3U7sFwkT4kmZ0qNHNwExs5skg3syPE4ZISQdet+XqALbeghreu2Axx7T5TEyiBjocco9nwDpigOGcbz88Yu0DF3o3bMNPd90d/uSyv1A1sCcRo+kbs5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730141132; c=relaxed/simple;
-	bh=SdEevymtrIAaa5wYZ7tbEjzfMEv+LIeEhjDsRCbg648=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=XajAV/0Bwd4UrPL8oLWlE/BAm7OTeEdhkdg22wRV9gifaqoXf/unTXReVoBnQoEEmPoimQf/ObaWAviLbI1k7bE9amg0px13ZNl+ZepvrYGZXmZfabGewIx7IjhU4FYKTk01BIlMu4awqWQv9gjhPyFBupdIonaeNhmSKa5RoaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=OHLyJlfK; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49SAeelO028808;
-	Mon, 28 Oct 2024 18:45:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	jovw9Io0FAsNVpy/zr5AVFcQbEL15/Uxof+hWVloP3s=; b=OHLyJlfKQvOOmWnx
-	2ec107juJ3RbvuOLJh/6/smBna+D6XpwYYHQoaiIBTdhDiIrlk3lmLG2oGxS84L+
-	fuRjslkd4sFO+n+Bajhstv6H5734lsVO1pSVSF0uvEadFWg5yqwVeMEMDYL/rpiK
-	GFUeMxWdd3fwf0LIHI00l4AzfEnxGrMNNTtWtePBOv+HaF6LdaauE5NAP128qF5B
-	2JTNdnSSmpf01YgmnqZzfsb8iygSx1BkwxW15vQQacb9VS+8LBrTKBmYTMPaLNAE
-	MJaL/1YPZLjLBsTyPsLAj4/YQHrE7iGuD4HdY7ruXunjxI6PDqL0/XDgmnxGzOJ7
-	HLSyMg==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42gsq8dyup-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 28 Oct 2024 18:45:04 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49SIj3Vd011697
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 28 Oct 2024 18:45:03 GMT
-Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Mon, 28 Oct 2024 11:45:02 -0700
-From: Elliot Berman <quic_eberman@quicinc.com>
-Date: Mon, 28 Oct 2024 11:44:59 -0700
-Subject: [PATCH v7 5/5] arm64: dts: qcom: Add PSCI SYSTEM_RESET2 types for
- sa8775p-ride
+	s=arc-20240116; t=1730141306; c=relaxed/simple;
+	bh=MLcOld+2red3dwWoB2u8Q1GcxpkrVirConXSUl2iIxo=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Dhdd5FRWP+RQlyagEkdj1qPngTYG1Ku4jDgHwqrWwRQIW70gsj+2yFlAtLajzW9pWIo5oQo2cFM13METwGz8ceeyIrR5tBOfk5mW3w72U7P/WZotR6ooNS6pnZvfeiWbbGSDQl0pCa/2HG+3PRa8hEZp6n1+PjkzTDv7FdWQp2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AyOr5kOV; arc=none smtp.client-ip=209.85.218.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-a9a6b4ca29bso571498466b.3;
+        Mon, 28 Oct 2024 11:48:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1730141302; x=1730746102; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=1L3PyT3DI7fVJTT6/gm8DMK/bwP+0mVSlGhALirvWfw=;
+        b=AyOr5kOV1s7mjf9nXhCalE/72T9PzdAvAAkxUele3ZoQRaj6gbuV1H7nK7A/o5WA1f
+         qEhZYqwgYgyMCOO8+zsORiYjkpXxV9NuNNRcjS8MCdUWHhYvAkPPnTtF50+p1dvJE7rc
+         bNVJ5ssp0R8dGyUnDryZtCMKNMiQw/egkdc2wgv7e7m2ObjbTDqKsidRHVR/UfKR6zHa
+         9Qlp0VCQMMEcrV7xXcNYiKKG2Hye29PzNm93jdGbqbz+5aDodlWKUXNbrPMQgxP/SHeB
+         PDRIFdzN/jX5IM6FiNmOSoOFtPVLW8FAjNj34fvQo/dn93caTJd5IaQWo0tf2aZZIQ8D
+         MBQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730141302; x=1730746102;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=1L3PyT3DI7fVJTT6/gm8DMK/bwP+0mVSlGhALirvWfw=;
+        b=kfcwLsFu5zvSIlk4IVbNZRkBPIMkue68qtdJGd15ESPw8XvpcRtbLU8uRyF+w4vHoG
+         rNeuo1ru7VNLmPmdmi9kE+QylknG7m9p2wYmaqoH0I7AYg1/OLpu39n6NTR8QxaEnA+S
+         HWGakiPukBb8bA6vx49d30Qr8cLEnH0/xfA+ZU+pLJ8aLDWGiAGCBW64mpjOMBL3YCqm
+         kk80YgOnCBA6yeYUiUkoitR5CDXMe+Jw2OLow2ils2pSavHWDsSeiPq0l8G6Q5MNvpbv
+         gi8F4vcv9jPJneV96WZ5Fvbu3NVSVVwHLmV0RtF/oMAYRPdGUvFuNxxTEF+HBWGrErRG
+         u8xw==
+X-Forwarded-Encrypted: i=1; AJvYcCU5ch42Cx90xMsNGUHm7otD1pwIgWyMyodxVKuQIWzyPi3ZzOanUMpyEPZ4T2Exr1KKZPoCUZLZMqI=@vger.kernel.org, AJvYcCX/AD7a3dM4ZBW8NSuRx3b010qFc7MMLYoL0QqLM5jIbdJ+DWyNLtzueazrC1dCnk2dNs0tlg0W5NiKx7xX@vger.kernel.org
+X-Gm-Message-State: AOJu0YwBJ/z5vTzB0pqWy9q9WEsV77sNbuOhNgONzGwCfL3udx5PfwnX
+	tfZwVFJnIevRLii6Yh+t+OCmQTSfe7F6KemhJv19HOaH+3ix+2w5KQ1Mzg==
+X-Google-Smtp-Source: AGHT+IETdkvSMOyudPTGJQzsHU7JlneDAZE8RdDq1tyzPR/PZps3mH0FOxDsyAC+Vfor9vo15EgPQg==
+X-Received: by 2002:a17:907:7e91:b0:a9a:20f9:a402 with SMTP id a640c23a62f3a-a9de5c91a85mr984710866b.13.1730141302240;
+        Mon, 28 Oct 2024 11:48:22 -0700 (PDT)
+Received: from [192.168.0.2] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
+        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-a9b1f029617sm397585166b.81.2024.10.28.11.48.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Oct 2024 11:48:21 -0700 (PDT)
+From: Gabor Juhos <j4g8y7@gmail.com>
+Subject: [PATCH v2 0/5] clk: qcom: remove superfluous alpha settings from
+ PLL configs
+Date: Mon, 28 Oct 2024 19:48:14 +0100
+Message-Id: <20241028-alpha-mode-cleanup-v2-0-9bc6d712bd76@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,105 +78,51 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-ID: <20241028-arm-psci-system_reset2-vendor-reboots-v7-5-a4c40b0ebc54@quicinc.com>
-References: <20241028-arm-psci-system_reset2-vendor-reboots-v7-0-a4c40b0ebc54@quicinc.com>
-In-Reply-To: <20241028-arm-psci-system_reset2-vendor-reboots-v7-0-a4c40b0ebc54@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Sebastian Reichel
-	<sre@kernel.org>, Rob Herring <robh@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Andy Yan
-	<andy.yan@rock-chips.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        "Mark
- Rutland" <mark.rutland@arm.com>,
-        Bartosz Golaszewski
-	<bartosz.golaszewski@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>, "Olof
- Johansson" <olof@lixom.net>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        "Will
- Deacon" <will@kernel.org>,
-        <cros-qcom-dts-watchers@chromium.org>,
-        "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-CC: Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
-        Melody Olvera
-	<quic_molvera@quicinc.com>,
-        Shivendra Pratap <quic_spratap@quicinc.com>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        Florian Fainelli
-	<florian.fainelli@broadcom.com>,
-        Stephen Boyd <swboyd@chromium.org>, <linux-pm@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        Elliot Berman
-	<quic_eberman@quicinc.com>
-X-Mailer: b4 0.14.1
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 3Iwzot7UU9L9vClWMjUBPtv_g1CK5vVS
-X-Proofpoint-ORIG-GUID: 3Iwzot7UU9L9vClWMjUBPtv_g1CK5vVS
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 bulkscore=0
- adultscore=0 mlxscore=0 priorityscore=1501 mlxlogscore=811 impostorscore=0
- lowpriorityscore=0 malwarescore=0 clxscore=1015 spamscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2410280147
+X-B4-Tracking: v=1; b=H4sIAG7cH2cC/32NQQ6CMBBFr0Jm7Zi2tsW44h6GRaUDnQQoaZVoC
+ He3cgCX7yX//Q0yJaYMt2qDRCtnjnMBdaqgC24eCNkXBiWUlkJJdOMSHE7RE3Yjufm1oLXyYbS
+ 2WvsaynBJ1PP7iN7bwoHzM6bP8bHKn/2bWyUKNMb3V/L1xWrTDJPj8dzFCdp93798fg84tAAAA
+ A==
+X-Change-ID: 20241021-alpha-mode-cleanup-661b544644d7
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Gabor Juhos <j4g8y7@gmail.com>
+X-Mailer: b4 0.14.2
 
-Add nodes for the vendor-defined system resets. "bootloader" will cause
-device to reboot and stop in the bootloader's fastboot mode. "edl" will
-cause device to reboot into "emergency download mode", which permits
-loading images via the Firehose protocol.
+There are several alpha PLL  configurations, where the alpha mode
+is enabled even if it is not strictly required in order to get the
+desired output rate of the PLL. This small series removes those
+superfluous settings.
 
-Co-developed-by: Shivendra Pratap <quic_spratap@quicinc.com>
-Signed-off-by: Shivendra Pratap <quic_spratap@quicinc.com>
-Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
 ---
- arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 7 +++++++
- arch/arm64/boot/dts/qcom/sa8775p.dtsi      | 2 +-
- 2 files changed, 8 insertions(+), 1 deletion(-)
+Changes in v2:
+  - extend the commit messages in the patches to indicate that dropping
+    'alpha_en_mask' is safe
+  - collect RB tags
+  - Link to v1: https://lore.kernel.org/r/20241021-alpha-mode-cleanup-v1-0-55df8ed73645@gmail.com
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-index 2a6170623ea9..9e8cc2187333 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-@@ -498,6 +498,13 @@ &pmm8654au_3_gpios {
- 			  "GNSS_BOOT_MODE";
- };
- 
-+&psci {
-+	reset-types {
-+		mode-bootloader = <0x10001 0x2>;
-+		mode-edl = <0 0x1>;
-+	};
-+};
-+
- &qupv3_id_1 {
- 	status = "okay";
- };
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-index 23f1b2e5e624..dd36eea80f7c 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-@@ -329,7 +329,7 @@ pmu {
- 		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_HIGH>;
- 	};
- 
--	psci {
-+	psci: psci {
- 		compatible = "arm,psci-1.0";
- 		method = "smc";
- 	};
+---
+Gabor Juhos (5):
+      clk: qcom: apss-ipq-pll: drop 'alpha_en_mask' from IPQ5018 PLL config
+      clk: qcom: apps-ipq-pll: drop 'alpha_en_mask' from IPQ5332 PLL config
+      clk: qcom: gcc-ipq6018: remove alpha values from NSS Crypto PLL's config
+      clk: qcom: dispcc-qcm2290: remove alpha values from disp_cc_pll0_config
+      clk: qcom: dispcc-sm6115: remove alpha values from disp_cc_pll0_config
 
+ drivers/clk/qcom/apss-ipq-pll.c   | 3 +--
+ drivers/clk/qcom/dispcc-qcm2290.c | 2 --
+ drivers/clk/qcom/dispcc-sm6115.c  | 2 --
+ drivers/clk/qcom/gcc-ipq6018.c    | 4 +---
+ 4 files changed, 2 insertions(+), 9 deletions(-)
+---
+base-commit: 9852d85ec9d492ebef56dc5f229416c925758edc
+change-id: 20241021-alpha-mode-cleanup-661b544644d7
+
+Best regards,
 -- 
-2.34.1
+Gabor Juhos <j4g8y7@gmail.com>
 
 
