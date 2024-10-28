@@ -1,52 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-36221-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36219-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7BC8F9B3B77
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 62CAF9B3B74
 	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 21:26:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 55D331F22D06
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 20:26:21 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 95A2F1C221B1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 20:26:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1FCFA1E9083;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09BAF1E32DC;
 	Mon, 28 Oct 2024 20:25:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VAShQeK6"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cf8ffnyz"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1A8D1E1337;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B01E81E1042;
 	Mon, 28 Oct 2024 20:25:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730147128; cv=none; b=HpiaPgJKsTty6zXl0JUDpBB9f5d+7vzK+kCDOtcdVJImCMvwYqHE34AZinfi4TX+HagYY4EARV7bHuiNyYtiVd4U4kd0tSycoLb0zmzd6jd/DOTaI5brO/Jz1v+J1OHu7+HYdjZ4vBg86oRS3gsC4CZpUpWKUtVOuzkiv7frWL4=
+	t=1730147128; cv=none; b=XUQj7TEGlr1GM2M+XMXvL00MQVbU1yb7Vw5TE4wJp/tUyW6URN1icnAKuUWd3cCBJBBXFdIYfcMk9teL6il4+Vw4Jo9FFlHutUHMBm8aEHGfNZ73v0zh+ovyuqcR4uhRXjpoXYyvdcmhek61XuGa7gxtkvNnBRWRmKbVCrw7NQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1730147128; c=relaxed/simple;
-	bh=7vtG9pA+K21LkqN2C0YcqauzDbOJlo+/wO1OQf2lUPc=;
+	bh=CQdMV8dkq/A9d6yVmrre2V2ErUvyIxE7venx1gnBvdA=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=N/6eTefVp1urxXHQEvIvBL9LflO7+BVo02DPrB8bnNA0KQT9qIGsY9Z0GOJ48iI02Ih+gYxE/AbZR0e5DTlpopDjg1Z7eXxEO48CUHIGcep+wdw2En16B2npOr4SZk+0keBqK60sBqk2eyWxsgMW0cIZtn4A2gga+YFeUJDfBwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VAShQeK6; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 3E3DAC4CEC3;
+	 In-Reply-To:To:Cc; b=C9rTBIru8U9eJ8aHT+REDrm3Ywo392dh6iXzioA7vzxW1xTZpj4PESLJALfR/L/J09Ok0UP16vWARd2iC0L8/XGAWjelmSqMsxDYmCV9JcHaPk/B383Wgzko0Nd0ArJYufNRgj/ipxGYtwXiqD80UTsmqnOYqdioGAVSVRUyWoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cf8ffnyz; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 6D7B6C4CEEC;
 	Mon, 28 Oct 2024 20:25:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1730147128;
-	bh=7vtG9pA+K21LkqN2C0YcqauzDbOJlo+/wO1OQf2lUPc=;
+	bh=CQdMV8dkq/A9d6yVmrre2V2ErUvyIxE7venx1gnBvdA=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=VAShQeK6wELG+LJTexWCcsL1TQneZROGgzrIfSr6UuCISpLN1Eb8yxuGUFRN/JYtq
-	 kZheZ3xfL+7Xwt7nVqewMy++GvEQjYwDDarkx1W82vDnNyWj7tWh0P2wTBPGaO3iOL
-	 FIbu/Raoeou0teu2UfGfu+YqlkFFfVw/33MFSAv6Gm1L+YRQ+0gqJqKzDrVPNXmIME
-	 zQm3S07HZs2A9jYiGuKeqdC+lvMsgiIQv7Z/dc5OODvdJefzvgVXCk04KZmJbkxVw+
-	 2jhQSZnSlNobEpasVNYEEBmWv4VOLSoAx/Q3L2Uen20MHwvtNKho1+k9o5CBscgJoX
-	 t68KVVLzLFMnA==
+	b=cf8ffnyz0NwdfObRPIIyRfTW91wf+5WW0OyzBUOEjVCjo9DtaTThPs7NnDrhsGxM2
+	 DEhQhyJAaRUz0bOI6NhdMIk3B0RX6llJ0rY13FZGnc75kuYohKaD417wlM+T4eSYyT
+	 aGGh1XWCjx2WFmNEDfPAwR0iI4Ko4+Hmy9RMT0aSrnjRVGuoVi/1DFXwQ6TbffUyCc
+	 +nssEeXDdKkZr2oTOu7V0UjGR2jN/3p7J5RQiZBE2B6gWJea3g1OYwW3Tsn6Qoc488
+	 sUTsY/JRo0QeH9N1RrGKpPErTmquRwewUjL14O6hbJ+zZqkVTGPFBF02eaYcycze2Q
+	 7Dgb09KHZLxtg==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31F18D5B149;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6189CD5B149;
 	Mon, 28 Oct 2024 20:25:28 +0000 (UTC)
 From: Jan Petrous via B4 Relay <devnull+jan.petrous.oss.nxp.com@kernel.org>
-Date: Mon, 28 Oct 2024 21:24:52 +0100
-Subject: [PATCH v4 10/16] net: macb: Use helper rgmii_clock
+Date: Mon, 28 Oct 2024 21:24:53 +0100
+Subject: [PATCH v4 11/16] net: xgene_enet: Use helper rgmii_clock
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,7 +55,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241028-upstream_s32cc_gmac-v4-10-03618f10e3e2@oss.nxp.com>
+Message-Id: <20241028-upstream_s32cc_gmac-v4-11-03618f10e3e2@oss.nxp.com>
 References: <20241028-upstream_s32cc_gmac-v4-0-03618f10e3e2@oss.nxp.com>
 In-Reply-To: <20241028-upstream_s32cc_gmac-v4-0-03618f10e3e2@oss.nxp.com>
 To: Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
@@ -84,11 +84,11 @@ Cc: linux-stm32@st-md-mailman.stormreply.com,
  devicetree@vger.kernel.org, NXP S32 Linux Team <s32@nxp.com>, 
  "Jan Petrous (OSS)" <jan.petrous@oss.nxp.com>
 X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1730147124; l=953;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1730147124; l=1083;
  i=jan.petrous@oss.nxp.com; s=20240922; h=from:subject:message-id;
- bh=cfFMV/oCv4h7wawq2S7/Nrlkv2gYpjiAbwErMMsRoC4=;
- b=QptE/ox0BP0PKywOxOQUJNHbaFkGlOwtL4gzNasllt2FkNCPLgOJtcm5hBk4sA9qKjsbrB7vG
- bmOOEU267emC22EuhsV56s5yzJKkM5Wj1cWcYefAtGxrAPjEGgUEKeV
+ bh=ez2eUvox+NA2tsnzDHS2muudXDPXOUk289T76vN/OhU=;
+ b=vEL45N1FGJLM+RgRwo1FmE4ffW8cGr8QBpLo+HpPla/E6gxsLRqEF5clGWKNsJcfwmEB/EFdC
+ J46TAbaFEPaCIvJL9QEF3u576I1KQoIDnblJTsraa5S119/1WoOQ/RH
 X-Developer-Key: i=jan.petrous@oss.nxp.com; a=ed25519;
  pk=Ke3wwK7rb2Me9UQRf6vR8AsfJZfhTyoDaxkUCqmSWYY=
 X-Endpoint-Received: by B4 Relay for jan.petrous@oss.nxp.com/20240922 with
@@ -102,35 +102,37 @@ Utilize a new helper function rgmii_clock().
 
 Signed-off-by: Jan Petrous (OSS) <jan.petrous@oss.nxp.com>
 ---
- drivers/net/ethernet/cadence/macb_main.c | 14 ++------------
- 1 file changed, 2 insertions(+), 12 deletions(-)
+ drivers/net/ethernet/apm/xgene/xgene_enet_hw.c | 16 +++++-----------
+ 1 file changed, 5 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
-index f06babec04a0..f1e481264511 100644
---- a/drivers/net/ethernet/cadence/macb_main.c
-+++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -530,19 +530,9 @@ static void macb_set_tx_clk(struct macb *bp, int speed)
- 	if (bp->phy_interface == PHY_INTERFACE_MODE_MII)
- 		return;
+diff --git a/drivers/net/ethernet/apm/xgene/xgene_enet_hw.c b/drivers/net/ethernet/apm/xgene/xgene_enet_hw.c
+index e641dbbea1e2..b854b6b42d77 100644
+--- a/drivers/net/ethernet/apm/xgene/xgene_enet_hw.c
++++ b/drivers/net/ethernet/apm/xgene/xgene_enet_hw.c
+@@ -421,18 +421,12 @@ static void xgene_enet_configure_clock(struct xgene_enet_pdata *pdata)
  
--	switch (speed) {
--	case SPEED_10:
--		rate = 2500000;
--		break;
--	case SPEED_100:
--		rate = 25000000;
--		break;
--	case SPEED_1000:
--		rate = 125000000;
--		break;
--	default:
-+	rate = rgmii_clock(speed);
-+	if (rate < 0)
- 		return;
--	}
+ 	if (dev->of_node) {
+ 		struct clk *parent = clk_get_parent(pdata->clk);
++		long rate = rgmii_clock(pdata->phy_speed);
  
- 	rate_rounded = clk_round_rate(bp->tx_clk, rate);
- 	if (rate_rounded < 0)
+-		switch (pdata->phy_speed) {
+-		case SPEED_10:
+-			clk_set_rate(parent, 2500000);
+-			break;
+-		case SPEED_100:
+-			clk_set_rate(parent, 25000000);
+-			break;
+-		default:
+-			clk_set_rate(parent, 125000000);
+-			break;
+-		}
++		if (rate < 0)
++			rate = 125000000;
++
++		clk_set_rate(parent, rate);
+ 	}
+ #ifdef CONFIG_ACPI
+ 	else {
 
 -- 
 2.46.0
