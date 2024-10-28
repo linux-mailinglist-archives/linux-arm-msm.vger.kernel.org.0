@@ -1,143 +1,273 @@
-Return-Path: <linux-arm-msm+bounces-36170-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36171-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 81BFB9B316E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 14:15:01 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F6829B31AA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 14:29:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B2DAA1C211CD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 13:15:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A76181F22591
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 13:29:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C4DCA1DB929;
-	Mon, 28 Oct 2024 13:14:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C4351DD0D6;
+	Mon, 28 Oct 2024 13:28:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eOKPfHNc"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QRJt2rVQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 976971DB92C
-	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Oct 2024 13:14:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D98EC1DC054
+	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Oct 2024 13:28:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730121296; cv=none; b=CXz9Jo91Rbv4ZjsP5kT4pijoOn4+ZH3vH77/OvF1zKGwK+tJH2jHFGtQkjwMtXAesqqeolGHK1uSFdZVkoCKBz47JzKULDGUerqdM+jVRGp0j7Lb4k/W3Wyp251Mm4jVsCJBqm+pJBWGMcoDwx0k6Mr28wXrZ1ZLC8bItUw1Wwg=
+	t=1730122122; cv=none; b=CmGl1sE6f/Dg6lX4fy8ms8NwykRkLqP9xraCHTVgPIW8Q+AzfFL/ilYDA9DqKzUHBdnc+eSrGHhfvMSuaXXx8k068ubaoAQOq3pFG/Uv6hl/psXQ3eSfazbm/u3nG2TfJbG9rz7Gz0U43B+vUhKKO5E91X3wy8PTSGSjTjVjWs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730121296; c=relaxed/simple;
-	bh=e+H7/8ZFlFExxneYh4qMJr3OPE3Obm7MPzwVFnWQ4Fo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=D8nynsSSA/WuWcrmclCGYT7uGOgytaZQqb97w/08ckCMU6jQ6QlBG2rFmeybQW+TxN2gPwZpnuBJnoXdxzNdQWII2R7TXbonl3B+qkuszzwhPNBQLV1NtdPM0egw47Y96luQy5cpJ8bBxiPnn9lvP5z2XfEzHwa39gkgqLulo8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eOKPfHNc; arc=none smtp.client-ip=209.85.167.42
+	s=arc-20240116; t=1730122122; c=relaxed/simple;
+	bh=RBeBzMmvK34PNPhhtb5HQD8f/GMEXSn61Z4rg5hsvc8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=iY3AGgZxq/UDzU3TXwocErs2KYds/xGjWAX4pGQTqwPoaHbm7DVgfMsZFqW/Ea0QTL8oU6K/L4+4v8AMPN/EaiMODYq+8cGVkzpJ5Z6SjyVUOrkMpC1ikJrwI0Io/PVSL35rNfjhQD9lD5UqQTiK8ZAM0yi4lTyknhl5vqSX5ws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QRJt2rVQ; arc=none smtp.client-ip=209.85.128.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-53a007743e7so4890804e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Oct 2024 06:14:54 -0700 (PDT)
+Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-6e35fb3792eso40036737b3.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Oct 2024 06:28:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1730121293; x=1730726093; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=dp3q2DmaZ8BXzAwaa0cSoS4TpNkn/nCd8yHDeDdV330=;
-        b=eOKPfHNcbKfbPoJTkxk2sBMJhCkVqFvOoEeJlq6KrpCF9oq6OiEWe1/qTdWpUTeQoT
-         nShKhqhU/JCZOJ3n6TJeX7zk4Iwzn5V6NIDKs2YZ3NnoV9JRzpmQvpDT64JkqGoQ5lsi
-         3qX/NXZxaH90MWgceW6qVWSYRoMo0UPE9E8srZAXMuvoGQkdoNEeGJhDL/Z4PZWdYosy
-         D0gWYiKbasdTvD07rswzRaYc8SHF+pKdwjKrWabdpX0Zm4WWvIobwaQoHQ46E5oHs81M
-         BrhNHtRsupTwYDmx+GmQfH161Vlh/MNmYeyUozX6X0MUegx003TZaV8kWWxDThz9/e4w
-         bv8w==
+        d=linaro.org; s=google; t=1730122119; x=1730726919; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ODHQvvFv62Zx/xb7/IaX9zhCggWHAAlTCQGt9XP7bv8=;
+        b=QRJt2rVQ7Zwjm9fdMkbPBExQdC3Y9GGQhzxqtB9ApdEm3U6WS2HiCpxqURX22e3iXT
+         PZR12pMDl2HLzP1c9vNMtzNIgxHy/dQGW/U63pwbBiS55Ao6VqOck3lQHKIF10NEIqgU
+         2328tg12Pi6vL2GB/gS+FA4pOk8+XRXXaPsOx6J32C9uTIPGrUnjwsQtpL40g6oJr3jz
+         OBX2Ppbx2bU1OtLsLkXyMNZTMVDRrTasE3nfCMZWjeVH24T7ujWysUlPnEXG8aTXExFA
+         Y2DwhPEr6EQ2MoVQpBgpj8fun9w6JJs9YQaWqbIMsP6m+Dlux8q+7ZtzfMyHDwC7IGgp
+         GZ0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730121293; x=1730726093;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dp3q2DmaZ8BXzAwaa0cSoS4TpNkn/nCd8yHDeDdV330=;
-        b=DdNvAxAuFqRwceKF+XtKlpGo0tO6CZrwtPjRCxfz4LOFioxJ4IVhsxCd0u/YTBLVd/
-         SsLXlVyEOQZuh7ebEQiqC9kyxwnXnwMDrPlFtscQ8iiNZ6vz42kz5Wq+OfYYLV5N69BL
-         k7ZvZSIroAsmxUnw0lyYshNniHeYrFK5aZC41XXg9hsSZq6sXQzaTGLAt8XeWd62U5Wd
-         0ru1Y42n2taQv6QXrDYSPQu1CiHBJzTX4CzQVFrS3lYCgwM+ykyrh1pGyMZ9rplPuEf6
-         YIP0VEPuPh1w0FOa2eDf2UcY1BPcgn/Gchu4ce/zmBT0Zo1lUjvEfUkIPwJDpHLpDKlQ
-         RG0A==
-X-Forwarded-Encrypted: i=1; AJvYcCXgadndxThzgTtnKjzDZIV4wEd5pExuBR7/O3OLw+CgybiZdbp2QGOCToltbbyhuLE/AXsm9/dnZrPeiYyb@vger.kernel.org
-X-Gm-Message-State: AOJu0YzACwgXjT7Ws3J46Ylw5Q6biGvDFOCRDjtWF6EG9NNRTgt5bGmx
-	AoWcmRf0fFw6DGhNniXDzcyWy5OWKdoIs26n1TzTq5kIYEDLf7IwpAv524Wi2io=
-X-Google-Smtp-Source: AGHT+IEJwg/JVNj5cu07/aL/9CeiE3T7ncVaaZ0g9sFSJEJ3+NF6QXOKj0U+4Ks1onPuF/nX6vi0sg==
-X-Received: by 2002:a05:6512:12c2:b0:539:f7ab:e161 with SMTP id 2adb3069b0e04-53b34a190demr3018930e87.45.1730121292653;
-        Mon, 28 Oct 2024 06:14:52 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53b2e10a5c6sm1062606e87.19.2024.10.28.06.14.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Oct 2024 06:14:51 -0700 (PDT)
-Date: Mon, 28 Oct 2024 15:14:49 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Tingguo Cheng <quic_tingguoc@quicinc.com>, quic_fenglinw@quicinc.com, 
-	quic_tingweiz@quicinc.com, kernel@quicinc.com, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: qcs615-ride: Enable PMIC
- peripherals
-Message-ID: <csxhtspv4klk3yrdqx4rkoag3ssaagim74nvdpglijkqzfux4d@btniilyxnnwm>
-References: <20241028-adds-spmi-pmic-peripherals-for-qcs615-v3-0-f0778572ee41@quicinc.com>
- <20241028-adds-spmi-pmic-peripherals-for-qcs615-v3-2-f0778572ee41@quicinc.com>
- <j4ggfrynyoriseef5r5x6uwgo6cespll2np7uitc64yagoa6pz@r3ro2cpqrrry>
- <38cceae8-5203-4057-bd8b-f20fe3656474@quicinc.com>
- <CAA8EJprYHjYVM58e7i7Sxj64DSth4hhW_cUZ3hGqX7u0ecZFQg@mail.gmail.com>
- <ad9c7e47-8a7b-4aee-8d88-cabf42ec3298@oss.qualcomm.com>
+        d=1e100.net; s=20230601; t=1730122119; x=1730726919;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ODHQvvFv62Zx/xb7/IaX9zhCggWHAAlTCQGt9XP7bv8=;
+        b=ekELJemRKPGrZZRHys0613+pO8P0ORyzJty9KRBbh4d/GolwlU1UaUyzzrFcrE+o1d
+         jIev8rmxxnFAnHZVfwdsgc4GeKN2bEIz6w7QTB1QPzrBKpSfVTGiMwqMRUfeIZsKZKzz
+         m9lGPo1i7RsaXysG4UWyK8FEzjYNCwDBlOkoLbewEVXcVcajVCpZh3dnI2TBLscljcV+
+         sFNGPiY8BwgQRs+t7+hpY+VNzKoixadTEipFqEIM+Kg713Vhh3xlMdQ/sfXKSAbmifHZ
+         Nlj472vrgNOlh7QkC6VlKcaz/FG6YvlHtxItXFV9yoxt2NkVTYeT6eSJRokOc9QgUdZU
+         LRWw==
+X-Forwarded-Encrypted: i=1; AJvYcCXqxkmBtcfyChgjSL2dJmoUkvv4Lxz5ychrJ6XcZnqHOxpTioeEgT9H6LRi+++ai2IUPBFI0i1ULAUe0m0g@vger.kernel.org
+X-Gm-Message-State: AOJu0YzDEi9iwpzMfXrXSD5K45W6OhffA0DhB6xz+01vK0rJyEINH5Hh
+	eM/uOB4/vOdDDTvyWshwbejkr11H9j7ABD47tBpnzNVrcpgEXS2zPjtmBHiCY4/QNNITMCC3tLO
+	5qMhrCzwsqYJSy6DOh34A89ckhgXqJY42iB8EyA==
+X-Google-Smtp-Source: AGHT+IFh/cJQhvJy2qy0gX3xlkp0CbLK8TXymrBa9x8XNk/di4wG/TzrWy42DG2ickeR3FscqmzTTLIBVMvxckF62og=
+X-Received: by 2002:a05:690c:ec7:b0:6e2:1527:4447 with SMTP id
+ 00721157ae682-6e9d8994a3amr76420097b3.1.1730122118910; Mon, 28 Oct 2024
+ 06:28:38 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ad9c7e47-8a7b-4aee-8d88-cabf42ec3298@oss.qualcomm.com>
+References: <20241023102148.1698910-1-quic_sibis@quicinc.com> <20241023102148.1698910-4-quic_sibis@quicinc.com>
+In-Reply-To: <20241023102148.1698910-4-quic_sibis@quicinc.com>
+From: Ulf Hansson <ulf.hansson@linaro.org>
+Date: Mon, 28 Oct 2024 14:28:02 +0100
+Message-ID: <CAPDyKFrVopgySevDVZtkZdHBBxiiVNh73VOXLqaHfXs9MyiZ+w@mail.gmail.com>
+Subject: Re: [PATCH V4 3/4] pmdomain: core: Fix debugfs node creation failure
+To: Sibi Sankar <quic_sibis@quicinc.com>
+Cc: sudeep.holla@arm.com, cristian.marussi@arm.com, jassisinghbrar@gmail.com, 
+	dmitry.baryshkov@linaro.org, linux-kernel@vger.kernel.org, 
+	arm-scmi@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, johan@kernel.org, konradybcio@kernel.org, 
+	linux-pm@vger.kernel.org, tstrudel@google.com, rafael@kernel.org, 
+	Johan Hovold <johan+linaro@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Oct 28, 2024 at 02:09:45PM +0100, Konrad Dybcio wrote:
-> On 28.10.2024 10:41 AM, Dmitry Baryshkov wrote:
-> > On Mon, 28 Oct 2024 at 10:40, Tingguo Cheng <quic_tingguoc@quicinc.com> wrote:
-> >>
-> >>
-> >>
-> >> On 10/28/2024 4:23 PM, Dmitry Baryshkov wrote:
-> >>> On Mon, Oct 28, 2024 at 04:03:25PM +0800, Tingguo Cheng wrote:
-> >>>> Enable PMIC and PMIC peripherals for qcs615-ride board.
-> >>>>
-> >>>> Signed-off-by: Tingguo Cheng <quic_tingguoc@quicinc.com>
-> >>>> ---
-> >>>>   arch/arm64/boot/dts/qcom/qcs615-ride.dts | 15 +++++++++++++++
-> >>>>   1 file changed, 15 insertions(+)
-> >>>>
-> >>>> diff --git a/arch/arm64/boot/dts/qcom/qcs615-ride.dts b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-> >>>> index ee6cab3924a6d71f29934a8debba3a832882abdd..37358f080827bbe4484c14c5f159e813810c2119 100644
-> >>>> --- a/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-> >>>> +++ b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-> >>>> @@ -6,6 +6,7 @@
-> >>>>
-> >>>>   #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-> >>>>   #include "qcs615.dtsi"
-> >>>> +#include "pm8150.dtsi"
-> >>>>   / {
-> >>>>      model = "Qualcomm Technologies, Inc. QCS615 Ride";
-> >>>>      compatible = "qcom,qcs615-ride", "qcom,qcs615";
-> >>>> @@ -210,6 +211,20 @@ &rpmhcc {
-> >>>>      clocks = <&xo_board_clk>;
-> >>>>   };
-> >>>>
-> >>>> +&pon {
-> >>>> +    /delete-property/ mode-bootloader;
-> >>>> +    /delete-property/ mode-recovery;
-> >>>
-> >>> Why?
-> >> Because boot modes will be supported on PSCI module from another patch,
-> >> reboot-modes are required to remove from PMIC side.
-> 
-> Do we know whether the PSCI call does the same thing under the hood?
+On Wed, 23 Oct 2024 at 12:22, Sibi Sankar <quic_sibis@quicinc.com> wrote:
+>
+> The domain attributes returned by the perf protocol can end up
+> reporting identical names across domains, resulting in debugfs
+> node creation failure. Fix this failure by ensuring that pm domains
+> get a unique name using ida in pm_genpd_init.
+>
+> Logs: [X1E reports 'NCC' for all its scmi perf domains]
+> debugfs: Directory 'NCC' with parent 'pm_genpd' already present!
+> debugfs: Directory 'NCC' with parent 'pm_genpd' already present!
+>
+> Reported-by: Johan Hovold <johan+linaro@kernel.org>
+> Closes: https://lore.kernel.org/lkml/ZoQjAWse2YxwyRJv@hovoldconsulting.com/
+> Fixes: 718072ceb211 ("PM: domains: create debugfs nodes when adding power domains")
+> Suggested-by: Ulf Hansson <ulf.hansson@linaro.org>
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> ---
+>
+> v3:
+> * Update device names only when a name collision occurs [Dmitry/Ulf]
+> * Drop Johan's T-b from "fix debugfs node creation failure"
+>
+>  drivers/pmdomain/core.c   | 65 ++++++++++++++++++++++++++++++---------
+>  include/linux/pm_domain.h |  1 +
+>  2 files changed, 51 insertions(+), 15 deletions(-)
+>
+> diff --git a/drivers/pmdomain/core.c b/drivers/pmdomain/core.c
+> index 76490f0bf1e2..756ed0975788 100644
+> --- a/drivers/pmdomain/core.c
+> +++ b/drivers/pmdomain/core.c
+> @@ -7,6 +7,7 @@
+>  #define pr_fmt(fmt) "PM: " fmt
+>
+>  #include <linux/delay.h>
+> +#include <linux/idr.h>
+>  #include <linux/kernel.h>
+>  #include <linux/io.h>
+>  #include <linux/platform_device.h>
+> @@ -23,6 +24,9 @@
+>  #include <linux/cpu.h>
+>  #include <linux/debugfs.h>
+>
+> +/* Provides a unique ID for each genpd device */
+> +static DEFINE_IDA(genpd_ida);
+> +
+>  #define GENPD_RETRY_MAX_MS     250             /* Approximate */
+>
+>  #define GENPD_DEV_CALLBACK(genpd, type, callback, dev)         \
+> @@ -189,7 +193,7 @@ static inline bool irq_safe_dev_in_sleep_domain(struct device *dev,
+>
+>         if (ret)
+>                 dev_warn_once(dev, "PM domain %s will not be powered off\n",
+> -                               genpd->name);
+> +                             dev_name(&genpd->dev));
+>
+>         return ret;
+>  }
+> @@ -274,7 +278,7 @@ static void genpd_debug_remove(struct generic_pm_domain *genpd)
+>         if (!genpd_debugfs_dir)
+>                 return;
+>
+> -       debugfs_lookup_and_remove(genpd->name, genpd_debugfs_dir);
+> +       debugfs_lookup_and_remove(dev_name(&genpd->dev), genpd_debugfs_dir);
+>  }
+>
+>  static void genpd_update_accounting(struct generic_pm_domain *genpd)
+> @@ -731,7 +735,7 @@ static int _genpd_power_on(struct generic_pm_domain *genpd, bool timed)
+>         genpd->states[state_idx].power_on_latency_ns = elapsed_ns;
+>         genpd->gd->max_off_time_changed = true;
+>         pr_debug("%s: Power-%s latency exceeded, new value %lld ns\n",
+> -                genpd->name, "on", elapsed_ns);
+> +                dev_name(&genpd->dev), "on", elapsed_ns);
+>
+>  out:
+>         raw_notifier_call_chain(&genpd->power_notifiers, GENPD_NOTIFY_ON, NULL);
+> @@ -782,7 +786,7 @@ static int _genpd_power_off(struct generic_pm_domain *genpd, bool timed)
+>         genpd->states[state_idx].power_off_latency_ns = elapsed_ns;
+>         genpd->gd->max_off_time_changed = true;
+>         pr_debug("%s: Power-%s latency exceeded, new value %lld ns\n",
+> -                genpd->name, "off", elapsed_ns);
+> +                dev_name(&genpd->dev), "off", elapsed_ns);
+>
+>  out:
+>         raw_notifier_call_chain(&genpd->power_notifiers, GENPD_NOTIFY_OFF,
+> @@ -1941,7 +1945,7 @@ int dev_pm_genpd_add_notifier(struct device *dev, struct notifier_block *nb)
+>
+>         if (ret) {
+>                 dev_warn(dev, "failed to add notifier for PM domain %s\n",
+> -                        genpd->name);
+> +                        dev_name(&genpd->dev));
+>                 return ret;
+>         }
+>
+> @@ -1988,7 +1992,7 @@ int dev_pm_genpd_remove_notifier(struct device *dev)
+>
+>         if (ret) {
+>                 dev_warn(dev, "failed to remove notifier for PM domain %s\n",
+> -                        genpd->name);
+> +                        dev_name(&genpd->dev));
+>                 return ret;
+>         }
+>
+> @@ -2014,7 +2018,7 @@ static int genpd_add_subdomain(struct generic_pm_domain *genpd,
+>          */
+>         if (!genpd_is_irq_safe(genpd) && genpd_is_irq_safe(subdomain)) {
+>                 WARN(1, "Parent %s of subdomain %s must be IRQ safe\n",
+> -                               genpd->name, subdomain->name);
+> +                    dev_name(&genpd->dev), subdomain->name);
+>                 return -EINVAL;
+>         }
+>
+> @@ -2089,7 +2093,7 @@ int pm_genpd_remove_subdomain(struct generic_pm_domain *genpd,
+>
+>         if (!list_empty(&subdomain->parent_links) || subdomain->device_count) {
+>                 pr_warn("%s: unable to remove subdomain %s\n",
+> -                       genpd->name, subdomain->name);
+> +                       dev_name(&genpd->dev), subdomain->name);
+>                 ret = -EBUSY;
+>                 goto out;
+>         }
+> @@ -2199,6 +2203,23 @@ static void genpd_lock_init(struct generic_pm_domain *genpd)
+>         }
+>  }
+>
+> +static bool genpd_name_present(const char *name)
+> +{
+> +       bool ret = false;
+> +       const struct generic_pm_domain *gpd;
+> +
+> +       mutex_lock(&gpd_list_lock);
+> +       list_for_each_entry(gpd, &gpd_list, gpd_list_node) {
+> +               if (!strcmp(dev_name(&gpd->dev), name)) {
+> +                       ret = true;
+> +                       break;
+> +               }
+> +       }
+> +       mutex_unlock(&gpd_list_lock);
+> +
+> +       return ret;
+> +}
+> +
+>  /**
+>   * pm_genpd_init - Initialize a generic I/O PM domain object.
+>   * @genpd: PM domain object to initialize.
+> @@ -2226,6 +2247,7 @@ int pm_genpd_init(struct generic_pm_domain *genpd,
+>         genpd->status = is_off ? GENPD_STATE_OFF : GENPD_STATE_ON;
+>         genpd->device_count = 0;
+>         genpd->provider = NULL;
+> +       genpd->device_id = -ENXIO;
+>         genpd->has_provider = false;
+>         genpd->accounting_time = ktime_get_mono_fast_ns();
+>         genpd->domain.ops.runtime_suspend = genpd_runtime_suspend;
+> @@ -2266,7 +2288,18 @@ int pm_genpd_init(struct generic_pm_domain *genpd,
+>                 return ret;
+>
+>         device_initialize(&genpd->dev);
+> -       dev_set_name(&genpd->dev, "%s", genpd->name);
+> +
+> +       if (!genpd_name_present(genpd->name)) {
+> +               dev_set_name(&genpd->dev, "%s", genpd->name);
+> +       } else {
+> +               ret = ida_alloc(&genpd_ida, GFP_KERNEL);
+> +               if (ret < 0) {
+> +                       put_device(&genpd->dev);
+> +                       return ret;
+> +               }
+> +               genpd->device_id = ret;
+> +               dev_set_name(&genpd->dev, "%s_%u", genpd->name, genpd->device_id);
+> +       }
 
-It might be writing to the SDAM. For example, SAR2130P also uses PM8150
-and, if I'm not mistaken, SDAM for reboot mode.
+If we can't assume that the genpd->name is unique, I think we need to
+hold the gpd_list_lock over this entire new section, until we have
+added the new genpd in the gpd_list. I am not sure we really want this
+as it could hurt (theoretically at least) boot/probing on systems
+where a lot of genpds are being used.
 
--- 
-With best wishes
-Dmitry
+That said, I would suggest we go for Dmitry's suggestion to make this
+genpd provider specific. Let's add a new genpd flag that genpd
+providers can set, if they need an ida to be tagged on to their
+device-name. Then we should set that flag for SCMI perf/power domains.
+
+[...]
+
+Kind regards
+Uffe
 
