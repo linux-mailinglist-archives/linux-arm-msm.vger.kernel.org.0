@@ -1,63 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-36137-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36138-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2BD999B2C54
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 11:08:15 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 95B029B2CBE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 11:25:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6CC4B280E0C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 10:08:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4D65D1F22710
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 10:25:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF89C1CCEE6;
-	Mon, 28 Oct 2024 10:08:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B297D1D2F6E;
+	Mon, 28 Oct 2024 10:24:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WpXAxDHH"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="GmShF6Px"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4A018E77B;
-	Mon, 28 Oct 2024 10:08:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0AC718C939
+	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Oct 2024 10:24:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730110091; cv=none; b=mh80Fu5ptx2I5I8Ha3Z/tjxdoo14KjKp7WKhb5WVTgDB7kzyZax6BtxQzqVxJe+8dyt6H84di9XUogjOpx6xDIif8/KA0LnAehECfM6ezlvHb9dCm19t6r0Uz82/9f5BwSqgSJBk73L++uEcXfP64NfvTnq8ZAJqIsTSukDFPDE=
+	t=1730111099; cv=none; b=cesNj5q13smZV/Oy/wlb7RmrpeizBdL5/NzgjOYM3MUMzmP3KDWKgWonLd/88jhTUoAYknNOaXPzdyMwRqUgE5W+Z8u2Eyi4RiLhvkIV/IbUjDghdgvRYpDPix6jGRRYthPg016czc1HB2N9m5LRaNHgBY9ieg9GdL/A2qz1LqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730110091; c=relaxed/simple;
-	bh=NLtcM1hkjof1fTLdSDHcaZ6iQK8KqH/wzHVn0jh3deY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=seaQqtJBvVHFrop9f2vCT5PpfEtet9pfWXd/4gEpAqLmGcdtR2u+t3KJDVZOcW5uNFqyC9UHMXwupKa4UvI0T0HqLNkz1eMENN3aTykslF/0xun4bMVaQdIyl9nCWg6yAY7x2wJGj6pu/SqpVasjVRuCUGqoc9xP8c78XVAd4Mc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WpXAxDHH; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49RNnA4K017530;
-	Mon, 28 Oct 2024 10:07:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	s=arc-20240116; t=1730111099; c=relaxed/simple;
+	bh=fbtunhKLM67bLa2qu23S88glusv6bfpysmOgMaktmbQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=rcS+A9EaVt1TybdlvogdQjB5vW15hrreuG+780c2IDN90JOw5/PGmD6fAbHYJBChe8ACco/UfemsQYnJgu0Ew8dnkf4eRBcLbGZ0eUWS6RwmZw+LttGKDonzo4mwLu00Zs4iVQ8VG+70WBwZHI12L3+4hrMzy2k2o3M/u+q2TYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=fail smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=GmShF6Px; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49RMfH8H008895
+	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Oct 2024 10:24:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	u6w09vuiLva5b8cnrEum/UWUMtRM/0/5HzAWBBqc9eQ=; b=WpXAxDHHSWUl947b
-	jXMxOO5ewytWmwojDUfj5Y3opOccO99hO7nPOk2mVAYMUdGuyTMk8rwVGv0OTLCT
-	70EvAsHyy8dxdWRWNa8gEoGt8BljfGwFFX2sBN1VQj0146YeVLwZJ1WcLEKSl9ne
-	t5aV0xbnjudpUTa/vRhBbhxxe99dbqP0NwLNv0dNpWuKossxZqkmkyB7SY+f8yYj
-	g+biBBf6A5cDvoT4x+oJFpdKtuvYFvADskZ03kR9FfNHMGx1pu/wjqOBd28CEKqj
-	7zdUoWM1dUMosZv39FVXuC1ULCwDc/uJIEVrTe1ufLkXSK/F0htY9UJkRiqWC22A
-	E/bDew==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42grt6vd4r-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 28 Oct 2024 10:07:53 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49SA7qfZ025319
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 28 Oct 2024 10:07:52 GMT
-Received: from [10.216.3.65] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 28 Oct
- 2024 03:07:46 -0700
-Message-ID: <6fea85fc-ccdc-46ec-b612-3712e9431301@quicinc.com>
-Date: Mon, 28 Oct 2024 15:37:44 +0530
+	fg9jSsM2x5+eCKxffj8Vjk5A547zvvC9R2DqGq/9wok=; b=GmShF6Pxdex6D+XI
+	Q7uD8E9NN8lBbja18R1/MeSvfBWP7oK5FjzhaKc8l/isGDj439YMBrBzaOuQtG9B
+	9LFRXsWIZys/bcI9idwyiElDDL0ED92m5J7g+c73BNrBI+g7zTK+68+U3t8Aiepu
+	Dnuy7Y88czX3pZ/+6Eu+CGKpCFeoVmiDP7aDUKEc7D41fZNA8VMYQpOYatRuCfaL
+	O1R+xdsNFNEJa17TBVwZmgTxTBSdd5Y7Uys2v00hUnNQXmZgGAd5W2Khzn5ZF2Jd
+	HGVaBFtiZ3LIoHN3m9a2HdEYjhqKMMJvbmWGUiirnv55XtTrd1X/X5Cnww7Pwl4S
+	q/i3yg==
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42gnsmmpmr-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Oct 2024 10:24:56 +0000 (GMT)
+Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-6cbf3f7273cso14358076d6.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Oct 2024 03:24:56 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730111095; x=1730715895;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fg9jSsM2x5+eCKxffj8Vjk5A547zvvC9R2DqGq/9wok=;
+        b=JCl8aiUZkCIbSIQUaZnRJW2ljBCAFqGPpEU4/AEkzHv4dqLpHl0U+syWSsk4mAj2Ey
+         BS3pP+EJTWOBii180ticzleRkkv53rXdM1qDs0OWtAqWqp68ZRnbkT1JA6+2J8vBoQoE
+         wHi8NeBmWjbRKOvnS8J70W9h7x5DuVhxfw5CA1wzPWDV7JX3jSzD5+dQuEdPbIHoP1Qu
+         FK7kLzxcem2kK2DSoJzw09nirp4i8lYHdZ0KCjYQvEazjYyDS4PKk/j4nvtu9trFnWjj
+         bMDhMUCew6NYZbX5AcST6SilgJMN88Rl+U6wHyHEe/WtIgD6JGU7l9ND30y5kAk1cDI2
+         3ntQ==
+X-Gm-Message-State: AOJu0YxzEgiBpEff+SdJP1FPKEZr0hqE+WQLc0/2Xl2Iep0PqOnn9K4n
+	tray55Tbyw1MYzj0eGX8kxvHtKWygLO4C1ehG4Q/Xxyy6+S3JZQHVj1Wvx/jYIJDETw/91S11pc
+	2atqpbQND+Mg+qfuwQ8hKxuWr+jidQ0mh+qjZwFtWXwjnhlvWXtfZBkTxZsdqkCJk
+X-Received: by 2002:ad4:5bc1:0:b0:6c3:6d25:2578 with SMTP id 6a1803df08f44-6d185816bf1mr54129706d6.8.1730111095781;
+        Mon, 28 Oct 2024 03:24:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE1LCyhTsx+s4J7iCqfSqv0uRemX/kPrSPNh3ahugTm/b+6Nqx8Iut8S7BU/6LdyG6nwn7IXA==
+X-Received: by 2002:ad4:5bc1:0:b0:6c3:6d25:2578 with SMTP id 6a1803df08f44-6d185816bf1mr54129576d6.8.1730111095455;
+        Mon, 28 Oct 2024 03:24:55 -0700 (PDT)
+Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9b1f298ef6sm363536566b.136.2024.10.28.03.24.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 28 Oct 2024 03:24:54 -0700 (PDT)
+Message-ID: <465ee5c1-2fca-4099-b618-f80484445dac@oss.qualcomm.com>
+Date: Mon, 28 Oct 2024 11:24:51 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,160 +83,54 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] drm/msm/a6xx: Fix excessive stack usage
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        "Konrad
- Dybcio" <konradybcio@kernel.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie
-	<airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Nathan Chancellor
-	<nathan@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        "Bill
- Wendling" <morbo@google.com>,
-        Justin Stitt <justinstitt@google.com>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
-        <linux-kernel@vger.kernel.org>, <llvm@lists.linux.dev>,
-        Arnd Bergmann <arnd@kernel.org>
-References: <20241027-stack-size-fix-v1-1-764e2e3566cb@quicinc.com>
- <j2qapo66f64y7ddqlu63dqvog2fdbhnaq3t24wp2srvdt4v7xl@fyqu4ry4wmts>
+Subject: Re: [PATCH v5 5/5] arm: dts: qcom-ipq5018-linksys-jamaica: Include
+ dts from arm64
+To: Sricharan Ramabadhran <quic_srichara@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Karl Chan <exxxxkc@getgoogleoff.me>,
+        Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+        conor+dt@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
+        linus.walleij@linaro.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-gpio@vger.kernel.org
+References: <20241002232804.3867-1-exxxxkc@getgoogleoff.me>
+ <20241002232804.3867-6-exxxxkc@getgoogleoff.me>
+ <f2eck3tudqoqyylcknfvz77wj52fornxevp6po3y7sov7swikt@asez6wepyl6h>
+ <768a1c92-6e1d-4d6c-90f6-efe66f68dd0e@oss.qualcomm.com>
+ <c154d164-57c8-4407-8b07-543676d21206@quicinc.com>
 Content-Language: en-US
-From: Akhil P Oommen <quic_akhilpo@quicinc.com>
-In-Reply-To: <j2qapo66f64y7ddqlu63dqvog2fdbhnaq3t24wp2srvdt4v7xl@fyqu4ry4wmts>
-Content-Type: text/plain; charset="UTF-8"
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <c154d164-57c8-4407-8b07-543676d21206@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: yM4lroPHSvQX2DwzVgWCZySGtX_3rfx5
-X-Proofpoint-GUID: yM4lroPHSvQX2DwzVgWCZySGtX_3rfx5
+X-Proofpoint-ORIG-GUID: G3URzoIsoVHK3KwlxTpVOB5--3Qe7MJ8
+X-Proofpoint-GUID: G3URzoIsoVHK3KwlxTpVOB5--3Qe7MJ8
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 bulkscore=0
- adultscore=0 clxscore=1015 impostorscore=0 malwarescore=0
- priorityscore=1501 phishscore=0 mlxscore=0 suspectscore=0 mlxlogscore=999
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410280083
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
+ malwarescore=0 lowpriorityscore=0 impostorscore=0 clxscore=1015
+ adultscore=0 priorityscore=1501 bulkscore=0 phishscore=0 spamscore=0
+ mlxlogscore=741 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410280084
 
-On 10/28/2024 1:56 PM, Dmitry Baryshkov wrote:
-> On Sun, Oct 27, 2024 at 11:35:47PM +0530, Akhil P Oommen wrote:
->> Clang-19 and above sometimes end up with multiple copies of the large
->> a6xx_hfi_msg_bw_table structure on the stack. The problem is that
->> a6xx_hfi_send_bw_table() calls a number of device specific functions to
->> fill the structure, but these create another copy of the structure on
->> the stack which gets copied to the first.
->>
->> If the functions get inlined, that busts the warning limit:
->>
->> drivers/gpu/drm/msm/adreno/a6xx_hfi.c:631:12: error: stack frame size (1032) exceeds limit (1024) in 'a6xx_hfi_send_bw_table' [-Werror,-Wframe-larger-than]
->>
->> Fix this by kmalloc-ating struct a6xx_hfi_msg_bw_table instead of using
->> the stack. Also, use this opportunity to skip re-initializing this table
->> to optimize gpu wake up latency.
->>
->> Cc: Arnd Bergmann <arnd@kernel.org>
->>
->> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
->> ---
->>  drivers/gpu/drm/msm/adreno/a6xx_gmu.h |  1 +
->>  drivers/gpu/drm/msm/adreno/a6xx_hfi.c | 34 ++++++++++++++++++++++------------
->>  2 files changed, 23 insertions(+), 12 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
->> index 94b6c5cab6f4..b4a79f88ccf4 100644
->> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
->> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
->> @@ -99,6 +99,7 @@ struct a6xx_gmu {
->>  	struct completion pd_gate;
->>  
->>  	struct qmp *qmp;
->> +	struct a6xx_hfi_msg_bw_table *bw_table;
->>  };
->>  
->>  static inline u32 gmu_read(struct a6xx_gmu *gmu, u32 offset)
->> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
->> index cdb3f6e74d3e..55e51c81be1f 100644
->> --- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
->> +++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
->> @@ -630,32 +630,42 @@ static void a6xx_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
->>  
->>  static int a6xx_hfi_send_bw_table(struct a6xx_gmu *gmu)
->>  {
->> -	struct a6xx_hfi_msg_bw_table msg = { 0 };
->> +	struct a6xx_hfi_msg_bw_table *msg;
->>  	struct a6xx_gpu *a6xx_gpu = container_of(gmu, struct a6xx_gpu, gmu);
->>  	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
->>  
->> +	if (gmu->bw_table)
->> +		goto send;
->> +
->> +	msg = devm_kzalloc(gmu->dev, sizeof(*msg), GFP_KERNEL);
+On 28.10.2024 7:33 AM, Sricharan Ramabadhran wrote:
 > 
-> Is it necessary after being sent? Isn't it better to just kzalloc() it
-> and then kfree() it at the end of the function?
-
-Keeping it around will help to cut down unnecessary work during
-subsequent gpu wake ups.
-
--Akhil.
-
 > 
->> +	if (!msg)
->> +		return -ENOMEM;
->> +
->>  	if (adreno_is_a618(adreno_gpu))
->> -		a618_build_bw_table(&msg);
->> +		a618_build_bw_table(msg);
->>  	else if (adreno_is_a619(adreno_gpu))
->> -		a619_build_bw_table(&msg);
->> +		a619_build_bw_table(msg);
->>  	else if (adreno_is_a640_family(adreno_gpu))
->> -		a640_build_bw_table(&msg);
->> +		a640_build_bw_table(msg);
->>  	else if (adreno_is_a650(adreno_gpu))
->> -		a650_build_bw_table(&msg);
->> +		a650_build_bw_table(msg);
->>  	else if (adreno_is_7c3(adreno_gpu))
->> -		adreno_7c3_build_bw_table(&msg);
->> +		adreno_7c3_build_bw_table(msg);
->>  	else if (adreno_is_a660(adreno_gpu))
->> -		a660_build_bw_table(&msg);
->> +		a660_build_bw_table(msg);
->>  	else if (adreno_is_a690(adreno_gpu))
->> -		a690_build_bw_table(&msg);
->> +		a690_build_bw_table(msg);
->>  	else if (adreno_is_a730(adreno_gpu))
->> -		a730_build_bw_table(&msg);
->> +		a730_build_bw_table(msg);
->>  	else if (adreno_is_a740_family(adreno_gpu))
->> -		a740_build_bw_table(&msg);
->> +		a740_build_bw_table(msg);
->>  	else
->> -		a6xx_build_bw_table(&msg);
->> +		a6xx_build_bw_table(msg);
->> +
->> +	gmu->bw_table = msg;
->>  
->> -	return a6xx_hfi_send_msg(gmu, HFI_H2F_MSG_BW_TABLE, &msg, sizeof(msg),
->> +send:
->> +	return a6xx_hfi_send_msg(gmu, HFI_H2F_MSG_BW_TABLE, gmu->bw_table, sizeof(*(gmu->bw_table)),
->>  		NULL, 0);
->>  }
->>  
->>
->> ---
->> base-commit: 74c374648ed08efb2ef339656f2764c28c046956
->> change-id: 20241024-stack-size-fix-28af7abd3fab
->>
->> Best regards,
->> -- 
->> Akhil P Oommen <quic_akhilpo@quicinc.com>
->>
+> On 10/26/2024 5:08 PM, Konrad Dybcio wrote:
+>> Would you folks know anything about it? Do we have an open source
+>> U-Boot release that could be sideloaded as a secondary bootloader to
+>> kick it into 64-bit mode
 > 
+> Yes slightly older u-boot release [1] supports booting both 32/64 bit
+> kernels.
+> 
+> [1] https://git.codelinaro.org/clo/qsdk/oss/boot/u-boot-2016/-/tree/win.coretech.1.0?ref_type=heads
 
+Thank you!
+
+Konrad
 
