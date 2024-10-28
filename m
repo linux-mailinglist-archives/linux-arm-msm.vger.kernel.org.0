@@ -1,181 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-36231-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36232-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7FB1C9B3C91
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 22:15:37 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D23469B3C95
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 22:16:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3EE3A282D40
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 21:15:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 637841F22F9C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 21:16:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4228319048F;
-	Mon, 28 Oct 2024 21:15:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07DA31E0DD9;
+	Mon, 28 Oct 2024 21:16:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="mS0SM146"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QNLY9pTv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f181.google.com (mail-il1-f181.google.com [209.85.166.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33B0A1D2796
-	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Oct 2024 21:15:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45CDF1E230E;
+	Mon, 28 Oct 2024 21:16:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730150133; cv=none; b=i2oKf+LWDfdKFTkCfxgiNI4WwE9LMmd0Cg6dEQQm3VXyiAdImzWtbtHww9AZheIkjwfG1/7WpY7AnLpKyJqOYjIR+f0bG77ZZnjSBvlycDkG1boFajoRJAqBsHZxoAg0cS89ru+gPyechmLxvIWTCO1jsYnlUxfshFqath7U4Mc=
+	t=1730150198; cv=none; b=Uz/erCfjqZn8D+JvOpEGXQYgqIx5nvNXpUusb5gZsmaBZnr199QofIA8e0rzJEFrt7jqJdfzwSQzQImcLu3CG4evbJq+RlTPo4ih+UqbtYGi3sYYwtCYi5Bd626/7WrAQCVz+NZoXwez2P2hW9tu5Iyhodhw5h2vdLXERLZIEWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730150133; c=relaxed/simple;
-	bh=mkMUtGo+Oj9yvO0/GL4Zp22hqsDNuCYQvmiCc5GQLko=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TGfHCCrhn7xY4Y5VE/wegI+nbI9jxH/WPAnYLuulwugrr4+Q+ZJ1kZVNiF6NXVnJrIEeo7XcUrbUUS4IYY0PAt0dVlKSFEPOCru6XQxI1YOQAU4r/ghFIe1iODVsyW78h3AiOB4vlq6AChZQzr5e0yyRF6Ykkry+NOTxQYG9ljc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=fail smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=mS0SM146; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49SKaIqG007417
-	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Oct 2024 21:15:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=tGkHjXmWVQjraKaJ6wwurxHm
-	5JCQa5c/z0VsW8zE1F8=; b=mS0SM146tNlumwHQZn5jjze0HBfwr2VwH2t1p0cM
-	V8aDkZZ9Pf1itoZgnVL8f95F2TtEU0I9YeV2g1llDIiym20+pLMFTi1mWi/2vaac
-	DSFUNw9ggDmNcziuJ7OAYQvTXtznS2vBllQwlPfkLr8CA0d5f+RXL1HhQLi8a1/v
-	5uZk14gX8j0Nu/zyF8koG6DRwhEVAUpIIUDC+47dUDvUBc8N1cnQiN74D7tyIPtq
-	Iy9j8jttPivmcCmkGc9sefCrA6ZzwveC6y/Oh5rSwS8s38zMfeEe7eyDEdZSmVR4
-	Ujo4mZByw1EeFumrRXXK8dCpWfwlRrUQyAwej8tSZuwz8g==
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42gr0x69qy-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Oct 2024 21:15:28 +0000 (GMT)
-Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-71e6d31b3bdso6614307b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Oct 2024 14:15:28 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730150128; x=1730754928;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+	s=arc-20240116; t=1730150198; c=relaxed/simple;
+	bh=TB/aR6e8qqZZ/NbQWYKoSmUDPWYT7mmVzJZlaNyn1Cw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Y1U21oXVlIeeucaAVlSEkPH8OdOoPv9E+q9zM2NBiFCdhW4Apf09s4/ozH3Yn+dAnWPJcqA/rG26GhuTVYtIzy611nyXMb4Vwyd8kdKdsKwgtnyxY9XjzZA8P0fNt/9av7n78LcAMb5FzYedtOKmIbU6e2oIdFQ7sp/m1ux+xzc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QNLY9pTv; arc=none smtp.client-ip=209.85.166.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-il1-f181.google.com with SMTP id e9e14a558f8ab-3a3a6abcbf1so19036955ab.2;
+        Mon, 28 Oct 2024 14:16:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1730150194; x=1730754994; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=tGkHjXmWVQjraKaJ6wwurxHm5JCQa5c/z0VsW8zE1F8=;
-        b=xOBuA/fkzZrle92IYte/+tDc8RD18aslumJhS6lqNVxDEnrv3KAjIdNVN8ZBXviLZK
-         raYVZKqemsTTSjsMP9wfUDfn/1q2/+XfUiqBg6NQt7F/YAAbSg8zy1QAcNBgdJWTqYa8
-         QU8fpsx3pV1lNoQH+sK/Ltba7V8RurU/QBj0TwmgvCSuLANREM+BWkSzDdO1eOQqg/Gh
-         6hEpYn6UeBgrilsfXVinuyTds3v0QzP7Av1LcCrCe82ch8rFpyphBweQmGRx5y7rYpjP
-         n/nbuEiBV3Xl+zECyx81frrCTuNLnIyx3MItx07zxbKMVb8FRdW2HzSLpw+qAU17X6Y6
-         /Rmg==
-X-Forwarded-Encrypted: i=1; AJvYcCWgSFE33eKD8/S/JDsDOd450oqylFykpuo5q6jnxr+5BjyKKFOT1YzW4wbY5WuZz7VXKFEe7NLsJ8MJq/LG@vger.kernel.org
-X-Gm-Message-State: AOJu0YxgdvOiN5ryIh6xBUGWCo7jqBrBJ3PA4+HG9QSqOTbz23n4CCuY
-	ocR7taXzKMEX9R7UJSDbmxbnygKgo3mQid5jeToyEImTOX94HkkBGsWm8TgmuxKgT1/PKF5gEZF
-	XaSGriHvbZeovvx64JBbrzAUx/RyO0P4SM73DzPpxOndBrk8LgI/EEn9Y2Y3o42Mq
-X-Received: by 2002:a05:6a00:4fc3:b0:71e:410:4764 with SMTP id d2e1a72fcca58-72062f83b02mr15359415b3a.8.1730150127711;
-        Mon, 28 Oct 2024 14:15:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHLS4bXucVxPkbGCTLBguqswLvz+psebCz/QBAAb4p4RpFPYgkJ71k2/L7RSrziUNRgAsspjg==
-X-Received: by 2002:a05:6a00:4fc3:b0:71e:410:4764 with SMTP id d2e1a72fcca58-72062f83b02mr15359374b3a.8.1730150127214;
-        Mon, 28 Oct 2024 14:15:27 -0700 (PDT)
-Received: from hu-bjorande-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72057a219efsm6252180b3a.168.2024.10.28.14.15.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Oct 2024 14:15:26 -0700 (PDT)
-Date: Mon, 28 Oct 2024 14:15:24 -0700
-From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-To: Elliot Berman <quic_eberman@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Sebastian Reichel <sre@kernel.org>,
-        Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, Andy Yan <andy.yan@rock-chips.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, cros-qcom-dts-watchers@chromium.org,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
-        Melody Olvera <quic_molvera@quicinc.com>,
-        Shivendra Pratap <quic_spratap@quicinc.com>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Florian Fainelli <florian.fainelli@broadcom.com>,
-        Stephen Boyd <swboyd@chromium.org>, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v7 4/5] arm64: dts: qcom: Add PSCI SYSTEM_RESET2 types
- for qcm6490-idp
-Message-ID: <Zx/+7BCOXY/qR3zj@hu-bjorande-lv.qualcomm.com>
-References: <20241028-arm-psci-system_reset2-vendor-reboots-v7-0-a4c40b0ebc54@quicinc.com>
- <20241028-arm-psci-system_reset2-vendor-reboots-v7-4-a4c40b0ebc54@quicinc.com>
+        bh=ktS5JZlVOvEaixmraj14grQIGS0mOTMVZfsZ8ze71Ik=;
+        b=QNLY9pTv2nfTzLOwYKn+SlblMm7RVI3vfd1hNUfhhhnqhLS5Sy1Me1z488asMr096a
+         xPERt9Sr+llVogyUV2qE3GiyC0MWfamD0UUuiReARlJIsh1uM0ndc2joL5qX1SqBE3Nj
+         8cUbzSFSSKyjwwBalLB4xvFUzOX/HR4W+lDI/Jt4X6WLlLeVp6WRIsMb8tz2QzoaQnAx
+         jrrt/KqD5it+/GXnX6h0kL29PCNLksKM6xrgZyJPh1xO4nLFgg7npCNJHkq7JxXBm55U
+         zBygiI2gwoSvfcfy2BjSsgI3WsfapHtzP5YuV0ZkA+Hqiypoz8UltGwn7cGAZ15waSoT
+         kTlQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730150194; x=1730754994;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ktS5JZlVOvEaixmraj14grQIGS0mOTMVZfsZ8ze71Ik=;
+        b=YAQL94noBJFA96KXPp/3in+jJHWwNOxjVFysR4Q8EIca0cF+MJQAq2WVrtk2SOoQZk
+         d2mNx/R+QBIqSnuqbUfackrwJlZOdP8sSLl+lJZXcOV+HqQsJRutqX3bUbNsu89acmfR
+         JpgcECNVRW3RPZorEu/R+51ZywVJqkiIK0PCG7Jn/bQEF2iJGva/K2hqhO4zGzblMUnr
+         MRHm4Nlc5vaOUiYNoiLqgquKtxCVACLQDYI/b9b499IEc4k+f1KT3UMwI7DI92dJDThM
+         Vjabljg2jtDlRrvzLIDmRDqm5BJRLTQJvtC1tHHQ56GTJqLOTB6xAUot1VXILieYgiEU
+         zZ2A==
+X-Forwarded-Encrypted: i=1; AJvYcCWP2uVdJErQR2parsNsX3FufHyYOtX0yizGplRTV8OIfdsQfRArqYYRg0FcwMX2nGMiV5AsgSg5zzbrA5TK@vger.kernel.org, AJvYcCXF8nJjIjfCRhHcyrqkSMCzwBtQa+bvRJmvoh1DwA4smRUC3kedO0NUZXYhVhaNi6lfXZtX0Bg3fTEA+3Le@vger.kernel.org
+X-Gm-Message-State: AOJu0YyYF4AYhltHc4m4gzon5holaJfbw2luJwxHTNRwvnmkR/hJK4s6
+	y48qO7XTFKHVRXGHnuOoOt1L2cW/927PpQg+KaBJm0YKt8kGL132Q/hvpvvX4puWSiXAfZCn85D
+	dJph8dPfQuuxYX2ciciUMYUA/MuWH123V
+X-Google-Smtp-Source: AGHT+IG9XrLh5NKIexOxyfcazqPge3CPHDgNBsyKjId3gtC/MJJHMtgd1LcfGFYvXzXYtIB2lAVzQZdmZdFDCxa0qBU=
+X-Received: by 2002:a05:6e02:20c8:b0:3a0:8c68:7705 with SMTP id
+ e9e14a558f8ab-3a4ed3012b2mr68380955ab.21.1730150194399; Mon, 28 Oct 2024
+ 14:16:34 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241028-arm-psci-system_reset2-vendor-reboots-v7-4-a4c40b0ebc54@quicinc.com>
-X-Proofpoint-ORIG-GUID: SCiW3dkewAR3eUC5b_yDE4i1imYs2bpL
-X-Proofpoint-GUID: SCiW3dkewAR3eUC5b_yDE4i1imYs2bpL
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 suspectscore=0
- clxscore=1015 bulkscore=0 adultscore=0 impostorscore=0 mlxscore=0
- malwarescore=0 mlxlogscore=883 priorityscore=1501 spamscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410280165
+References: <20241008125410.3422512-1-quic_bibekkum@quicinc.com> <20241008125410.3422512-6-quic_bibekkum@quicinc.com>
+In-Reply-To: <20241008125410.3422512-6-quic_bibekkum@quicinc.com>
+From: Rob Clark <robdclark@gmail.com>
+Date: Mon, 28 Oct 2024 14:16:22 -0700
+Message-ID: <CAF6AEGtOn3+99KMVRvpH=8Qs-g52ajVQyeBkxThSES_dEdVH+Q@mail.gmail.com>
+Subject: Re: [PATCH v16 5/5] iommu/arm-smmu: add ACTLR data and support for qcom_smmu_500
+To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+Cc: will@kernel.org, robin.murphy@arm.com, joro@8bytes.org, jgg@ziepe.ca, 
+	jsnitsel@redhat.com, robh@kernel.org, krzysztof.kozlowski@linaro.org, 
+	quic_c_gdjako@quicinc.com, dmitry.baryshkov@linaro.org, iommu@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Oct 28, 2024 at 11:44:58AM -0700, Elliot Berman wrote:
-
-Please fix the subject prefix, it should match other changes to the same
-files.
-
-Regards,
-Bjorn
-
-> Add nodes for the vendor-defined system resets. "bootloader" will cause
-> device to reboot and stop in the bootloader's fastboot mode. "edl" will
-> cause device to reboot into "emergency download mode", which permits
-> loading images via the Firehose protocol.
-> 
-> Co-developed-by: Shivendra Pratap <quic_spratap@quicinc.com>
-> Signed-off-by: Shivendra Pratap <quic_spratap@quicinc.com>
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+On Tue, Oct 8, 2024 at 5:55=E2=80=AFAM Bibek Kumar Patro
+<quic_bibekkum@quicinc.com> wrote:
+>
+> Add ACTLR data table for qcom_smmu_500 including
+> corresponding data entry and set prefetch value by
+> way of a list of compatible strings.
+>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 7 +++++++
->  arch/arm64/boot/dts/qcom/sc7280.dtsi     | 2 +-
->  2 files changed, 8 insertions(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-> index a0668f767e4b..9c141244a7b2 100644
-> --- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-> +++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-> @@ -617,6 +617,13 @@ &pon_resin {
->  	status = "okay";
->  };
->  
-> +&psci {
-> +	reset-types {
-> +		mode-bootloader = <0x10001 0x2>;
-> +		mode-edl = <0 0x1>;
-> +	};
+>  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 24 ++++++++++++++++++++++
+>  1 file changed, 24 insertions(+)
+>
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/a=
+rm/arm-smmu/arm-smmu-qcom.c
+> index 2d2c1e75632c..dd4fb883ebcd 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> @@ -25,8 +25,31 @@
+>
+>  #define CPRE                   (1 << 1)
+>  #define CMTLB                  (1 << 0)
+> +#define PREFETCH_SHIFT         8
+> +#define PREFETCH_DEFAULT       0
+> +#define PREFETCH_SHALLOW       (1 << PREFETCH_SHIFT)
+> +#define PREFETCH_MODERATE      (2 << PREFETCH_SHIFT)
+> +#define PREFETCH_DEEP          (3 << PREFETCH_SHIFT)
+>  #define GFX_ACTLR_PRR          (1 << 5)
+>
+> +static const struct of_device_id qcom_smmu_actlr_client_of_match[] =3D {
+> +       { .compatible =3D "qcom,adreno",
+> +                       .data =3D (const void *) (PREFETCH_DEEP | CPRE | =
+CMTLB) },
+> +       { .compatible =3D "qcom,adreno-gmu",
+> +                       .data =3D (const void *) (PREFETCH_DEEP | CPRE | =
+CMTLB) },
+> +       { .compatible =3D "qcom,adreno-smmu",
+> +                       .data =3D (const void *) (PREFETCH_DEEP | CPRE | =
+CMTLB) },
+> +       { .compatible =3D "qcom,fastrpc",
+> +                       .data =3D (const void *) (PREFETCH_DEEP | CPRE | =
+CMTLB) },
+> +       { .compatible =3D "qcom,sc7280-mdss",
+> +                       .data =3D (const void *) (PREFETCH_SHALLOW | CPRE=
+ | CMTLB) },
+> +       { .compatible =3D "qcom,sc7280-venus",
+> +                       .data =3D (const void *) (PREFETCH_SHALLOW | CPRE=
+ | CMTLB) },
+> +       { .compatible =3D "qcom,sm8550-mdss",
+> +                       .data =3D (const void *) (PREFETCH_DEFAULT | CMTL=
+B) },
+> +       { }
 > +};
+
+I guess by now there are some more entries to add
+("qcom,x1e80100-mdss", for example), but I guess those could be
+followup patches
+
+Reviewed-by: Rob Clark <robdclark@gmail.com>
+
 > +
->  &qupv3_id_0 {
->  	status = "okay";
+>  static struct qcom_smmu *to_qcom_smmu(struct arm_smmu_device *smmu)
+>  {
+>         return container_of(smmu, struct qcom_smmu, smmu);
+> @@ -640,6 +663,7 @@ static const struct qcom_smmu_match_data qcom_smmu_50=
+0_impl0_data =3D {
+>         .impl =3D &qcom_smmu_500_impl,
+>         .adreno_impl =3D &qcom_adreno_smmu_500_impl,
+>         .cfg =3D &qcom_smmu_impl0_cfg,
+> +       .client_match =3D qcom_smmu_actlr_client_of_match,
 >  };
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> index 3d8410683402..5360d0e51a65 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> @@ -850,7 +850,7 @@ pmu {
->  		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW>;
->  	};
->  
-> -	psci {
-> +	psci: psci {
->  		compatible = "arm,psci-1.0";
->  		method = "smc";
->  
-> 
-> -- 
+>
+>  /*
+> --
 > 2.34.1
-> 
+>
 
