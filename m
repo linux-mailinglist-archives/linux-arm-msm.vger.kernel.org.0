@@ -1,401 +1,197 @@
-Return-Path: <linux-arm-msm+bounces-36175-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36176-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5C5369B3230
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 14:53:38 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6D05F9B3279
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 15:04:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A0BFDB21EBF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 13:53:35 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A5647B221CB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 14:04:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D648A1DB92A;
-	Mon, 28 Oct 2024 13:53:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67FD71DD549;
+	Mon, 28 Oct 2024 14:04:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.larumbe@collabora.com header.b="Ltg+LkrX"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dEMivi0j"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97F631DCB2A;
-	Mon, 28 Oct 2024 13:53:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730123599; cv=pass; b=AnHZ0DB1wsab6wuxzShVe642SrnRFi6Fa/LRHPoGlY4wdVJPOXXFKSbEjsDTOHIb2GAjNW838RzhXGZldsf2KPbUZlhY+CGy+RfX52BzT2T/T3X3m8+80uZIyj6GVVYgD36g/J18fy04EjDR7OteFbbzkNvLU2ytlm87jryAlAs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730123599; c=relaxed/simple;
-	bh=+sf1o64AcJ/FoNsTbC0gd1WfByARrSg18vAcZ519Kek=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pynoIycGaeW7wer1dZ/SIxY65Bo9E52ZdSNQzS+P0X6kZMRFwab2UhI0Uf06qfnxBcwxlo+gUMlUczt72j5nCytYfeUJWg+47S6iBJKKJGNz4jQL9Xb3ZAMPML4C4MTBDFUC9v7QD021PZ7CI6wxxD7vooeo4sPZBbYhcGHgUto=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.larumbe@collabora.com header.b=Ltg+LkrX; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-ARC-Seal: i=1; a=rsa-sha256; t=1730123558; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=EcOmDm7hvmWzx7QQislKVWKADGy61mNauN2BcwCLtFaOR38dZSc0YfaTJt+uPLlCQWSIM3j2YUQU80Rt8T1NgQFYYzqwBv4vfhx/jMJqzFtsRLcmYbOSMVTnfjiEJt2Eaf9yu7Je30JIWtts88CDkUaNR/HyRYmc7mLCDJDeLMw=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1730123558; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=Hg092s3UQPlJ0VimOUJC6lF37+ZUflK9O9Jo2WEVTlE=; 
-	b=FP3fFR0B6LTEQSZz/8EYJEj1a2NxsV1UHvDSJgQUYwaS49ogERtRb6nuaNaP7GGk9CpabQ09tVCcFv/EXkDvjv+rWYIW+o5aeaQeFkYMK6Zdi7dLe4axaN8yorDEIRb4o2xvx89lPB2grzF/SgFJrrDQutzn76q8saJRSTyUt84=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.larumbe@collabora.com;
-	dmarc=pass header.from=<adrian.larumbe@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1730123558;
-	s=zohomail; d=collabora.com; i=adrian.larumbe@collabora.com;
-	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:References:MIME-Version:Content-Type:Content-Transfer-Encoding:In-Reply-To:Message-Id:Reply-To;
-	bh=Hg092s3UQPlJ0VimOUJC6lF37+ZUflK9O9Jo2WEVTlE=;
-	b=Ltg+LkrX8T7NXz87K6LvnVR2y9DZ6nM+9RQUrAy7URb1bkdH61v3GcaImv5gqkt2
-	4YpaB3fx8ZkK2es+f2J8qPG2o1AfGLqmA9YS3D8A4U01C6Q4QuNuK+RJomCchjhhkuw
-	2soMz0Qvssa/WPbcvnoxmvagJ/tdTDNmjfZIe81E=
-Received: by mx.zohomail.com with SMTPS id 173012355592718.768318491229252;
-	Mon, 28 Oct 2024 06:52:35 -0700 (PDT)
-Date: Mon, 28 Oct 2024 13:52:30 +0000
-From: =?utf-8?Q?Adri=C3=A1n?= Larumbe <adrian.larumbe@collabora.com>
-To: Tvrtko Ursulin <tursulin@ursulin.net>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	Boris Brezillon <boris.brezillon@collabora.com>, Rob Herring <robh@kernel.org>, 
-	Steven Price <steven.price@arm.com>, Melissa Wen <mwen@igalia.com>, 
-	=?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>, Lucas De Marchi <lucas.demarchi@intel.com>, 
-	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	freedreno@lists.freedesktop.org
-Subject: Re: [RFC PATCH 1/2] drm/drm_file: Add display of driver's internal
- memory size
-Message-ID: <jkbyhjvl4zx3tahpk3fiieujnwm2twb7gqt6g3hqtrb25ggxbn@66rvhu5n7tbg>
-References: <20241002234531.3113431-1-adrian.larumbe@collabora.com>
- <20241002234531.3113431-2-adrian.larumbe@collabora.com>
- <6657b080-f41e-4c95-8895-e474f1ca5d57@ursulin.net>
- <p72rfjerzsg4wsp6rgfcoo5fmlu77jmzdynosflj2hlos63pql@mnetv3t66wsc>
- <87a21c19-8fd2-492a-a620-243cd9c642dc@ursulin.net>
- <5h4vxk6hw7fkw4rebqprfdf3tmz7skdxfh6qgljcd4thxkpobu@jly67q62us4b>
- <54dd5ec4-3254-4d32-b6be-9a7b443d216b@ursulin.net>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 231F61DC734;
+	Mon, 28 Oct 2024 14:04:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1730124282; cv=none; b=uxILt3eMa9PQxSS5FjDVv9gtBNROEkX3U9pR6j2d6jJ7GxlcJ3P0flvGG23E/Mb2gX/x9QhkkXr6L7RBUVwSAqjeSZK2PD2Mk1zsRv/WLU6W/pnmkqARyPDLIrx5JtHEOyYBVsOwypGIBS5LeQ93aa0HAWTT1L2gCSEjb+gXIIU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1730124282; c=relaxed/simple;
+	bh=SOIvPyJRmfJFGhYZ/LtCwoJ8ea6QC7C8lqnI5ohpZWU=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=SKXTKm7vlb8bLEBLgSUrQBR5CsJqw4O33nlnOGlF6qegt3+aO0OetvteQqnEXVLkOQf7Y0PwgQh/vwZc1v+WO8HKfQFqIMhYQhY4Nq0CdRcMQJQ1CADisxWuDdjftmRGOyADF/SXQ6jAZ1sn5wE4mNjObFiHJxQKa5u7XAZsxGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dEMivi0j; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49SAVqHE027014;
+	Mon, 28 Oct 2024 14:04:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=fT/8CN3uQM667asE4FC0BJ
+	2VmDl+BTDbxH6qSb3j5Z8=; b=dEMivi0jn1DGZLGVHbcVPNt+azsZ6V0zLJj4yW
+	xImooj4pC67Zt/+znx+szQtEaiHA0CIkdlniz0VMim4WNubLwnFFIG7dEteTI7yu
+	zj3HTByer2ymH9JwFfk0xLCUHMuUmOmDuc50zJwFLOE4bTF0UHuWcSdkUPU+2wa0
+	uWEi6aIBDHRt6f2rYCMg4iGREJ975dRb4hyz1qGVW/qJwlK/HyKZR8NEduDSBu2p
+	gV5JmSzc1OGh85Tt2Xo6Szs/MXl/oWYJDQQOWzoKOKYjMmpDKxwyf0ETU7ggjeud
+	EIZ05/o0hanovngYlrB+kBx/XZDxEik4KwyaX42IhDzedLGA==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42gqrgn6hm-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 28 Oct 2024 14:04:25 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49SE4NTL009681
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 28 Oct 2024 14:04:23 GMT
+Received: from nsssdc-sh01-lnx.ap.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Mon, 28 Oct 2024 07:04:18 -0700
+From: Luo Jie <quic_luoj@quicinc.com>
+Subject: [PATCH v5 0/4] Add CMN PLL clock controller driver for IPQ9574
+Date: Mon, 28 Oct 2024 22:04:07 +0800
+Message-ID: <20241028-qcom_ipq_cmnpll-v5-0-339994b0388d@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <54dd5ec4-3254-4d32-b6be-9a7b443d216b@ursulin.net>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIANeZH2cC/2XOTQ6CMBAF4KuQrq3pL1RX3sMYImWQSaBAq42Gc
+ HcLCxPD8k3mfTMzCeARAjlnM/EQMeDgUtCHjNj27h5AsU6ZCCYUZ1zRyQ59ieNU2t6NXUerGlg
+ uTaM4z0lqjR4afG/i9ZZyi+E5+M92IMp1ulnMiGJnRUkZNcDYyYIFU4nL9EKLzh7TIlm1qH5C+
+ kbvBZUEURheNBVIzfS/sCzLF1ou0X7yAAAA
+To: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette
+	<mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon
+	<will@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <quic_kkumarcs@quicinc.com>,
+        <quic_suruchia@quicinc.com>, <quic_pavir@quicinc.com>,
+        <quic_linchen@quicinc.com>, <quic_leiwei@quicinc.com>,
+        <bartosz.golaszewski@linaro.org>, <srinivas.kandagatla@linaro.org>,
+        Luo Jie
+	<quic_luoj@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.14.1
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1730124258; l=3680;
+ i=quic_luoj@quicinc.com; s=20240808; h=from:subject:message-id;
+ bh=SOIvPyJRmfJFGhYZ/LtCwoJ8ea6QC7C8lqnI5ohpZWU=;
+ b=Q8ogq98h7xQnI1EwFgrxsiytJ6hwx2Fa+PSz1A+TvIrhXe4q7BKMsvKnee2EvHG+6+QF+5Uuh
+ g9v/6br40RhCxsASFJLuUM/JLP14rokvxXw9va/c39P7GFIvTXhYvP3
+X-Developer-Key: i=quic_luoj@quicinc.com; a=ed25519;
+ pk=P81jeEL23FcOkZtXZXeDDiPwIwgAHVZFASJV12w3U6w=
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: htoyhtuBrr-Vrd1PcZnwdTSInhPjOI-S
+X-Proofpoint-GUID: htoyhtuBrr-Vrd1PcZnwdTSInhPjOI-S
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 malwarescore=0
+ clxscore=1015 impostorscore=0 suspectscore=0 spamscore=0 mlxscore=0
+ adultscore=0 priorityscore=1501 mlxlogscore=999 phishscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410280113
 
-On 16.10.2024 09:07, Tvrtko Ursulin wrote:
-> 
-> On 15/10/2024 20:05, Adrián Larumbe wrote:
-> > Hi Tvrtko,
-> > 
-> > On 10.10.2024 10:50, Tvrtko Ursulin wrote:
-> > > 
-> > > On 09/10/2024 23:55, Adrián Larumbe wrote:
-> > > > Hi Tvrtko,
-> > > > 
-> > > > On 04.10.2024 14:41, Tvrtko Ursulin wrote:
-> > > > > 
-> > > > > Hi Adrian,
-> > > > > 
-> > > > > On 03/10/2024 00:45, Adrián Larumbe wrote:
-> > > > > > Some drivers must allocate a considerable amount of memory for bookkeeping
-> > > > > > structures and GPU's MCU-kernel shared communication regions. These are
-> > > > > > often created as a result of the invocation of the driver's ioctl()
-> > > > > > interface functions, so it is sensible to consider them as being owned by
-> > > > > > the render context associated with an open drm file.
-> > > > > > 
-> > > > > > However, at the moment drm_show_memory_stats only traverses the UM-exposed
-> > > > > > drm objects for which a handle exists. Private driver objects and memory
-> > > > > > regions, though connected to a render context, are unaccounted for in their
-> > > > > > fdinfo numbers.
-> > > > > > 
-> > > > > > Add a new drm_memory_stats 'internal' memory category.
-> > > > > > 
-> > > > > > Because deciding what constitutes an 'internal' object and where to find
-> > > > > > these are driver-dependent, calculation of this size must be done through a
-> > > > > > driver-provided function pointer, which becomes the third argument of
-> > > > > > drm_show_memory_stats. Drivers which have no interest in exposing the size
-> > > > > > of internal memory objects can keep passing NULL for unaltered behaviour.
-> > > > > > 
-> > > > > > Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
-> > > > > > Cc: Rob Clark <robdclark@gmail.com>
-> > > > > > Cc: Tvrtko Ursulin <tursulin@ursulin.net>
-> > > > > > Cc: Lucas De Marchi <lucas.demarchi@intel.com>
-> > > > > > ---
-> > > > > >     drivers/gpu/drm/drm_file.c              | 6 +++++-
-> > > > > >     drivers/gpu/drm/msm/msm_drv.c           | 2 +-
-> > > > > >     drivers/gpu/drm/panfrost/panfrost_drv.c | 2 +-
-> > > > > >     drivers/gpu/drm/v3d/v3d_drv.c           | 2 +-
-> > > > > >     include/drm/drm_file.h                  | 7 ++++++-
-> > > > > >     5 files changed, 14 insertions(+), 5 deletions(-)
-> > > > > > 
-> > > > > > diff --git a/drivers/gpu/drm/drm_file.c b/drivers/gpu/drm/drm_file.c
-> > > > > > index ad1dc638c83b..937471339c9a 100644
-> > > > > > --- a/drivers/gpu/drm/drm_file.c
-> > > > > > +++ b/drivers/gpu/drm/drm_file.c
-> > > > > > @@ -856,6 +856,7 @@ void drm_print_memory_stats(struct drm_printer *p,
-> > > > > >     	print_size(p, "total", region, stats->private + stats->shared);
-> > > > > >     	print_size(p, "shared", region, stats->shared);
-> > > > > >     	print_size(p, "active", region, stats->active);
-> > > > > > +	print_size(p, "internal", region, stats->internal);
-> > > > > >     	if (supported_status & DRM_GEM_OBJECT_RESIDENT)
-> > > > > >     		print_size(p, "resident", region, stats->resident);
-> > > > > > @@ -873,7 +874,7 @@ EXPORT_SYMBOL(drm_print_memory_stats);
-> > > > > >      * Helper to iterate over GEM objects with a handle allocated in the specified
-> > > > > >      * file.
-> > > > > >      */
-> > > > > > -void drm_show_memory_stats(struct drm_printer *p, struct drm_file *file)
-> > > > > > +void drm_show_memory_stats(struct drm_printer *p, struct drm_file *file, internal_bos func)
-> > > > > >     {
-> > > > > >     	struct drm_gem_object *obj;
-> > > > > >     	struct drm_memory_stats status = {};
-> > > > > > @@ -919,6 +920,9 @@ void drm_show_memory_stats(struct drm_printer *p, struct drm_file *file)
-> > > > > >     	}
-> > > > > >     	spin_unlock(&file->table_lock);
-> > > > > > +	if (func)
-> > > > > > +		func(&status, file);
-> > > > > > +
-> > > > > >     	drm_print_memory_stats(p, &status, supported_status, "memory");
-> > > > > >     }
-> > > > > >     EXPORT_SYMBOL(drm_show_memory_stats);
-> > > > > > diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-> > > > > > index edbc1ab0fbc8..2b3feb79afc4 100644
-> > > > > > --- a/drivers/gpu/drm/msm/msm_drv.c
-> > > > > > +++ b/drivers/gpu/drm/msm/msm_drv.c
-> > > > > > @@ -880,7 +880,7 @@ static void msm_show_fdinfo(struct drm_printer *p, struct drm_file *file)
-> > > > > >     	msm_gpu_show_fdinfo(priv->gpu, file->driver_priv, p);
-> > > > > > -	drm_show_memory_stats(p, file);
-> > > > > > +	drm_show_memory_stats(p, file, NULL);
-> > > > > >     }
-> > > > > >     static const struct file_operations fops = {
-> > > > > > diff --git a/drivers/gpu/drm/panfrost/panfrost_drv.c b/drivers/gpu/drm/panfrost/panfrost_drv.c
-> > > > > > index 04d615df5259..aaa8602bf00d 100644
-> > > > > > --- a/drivers/gpu/drm/panfrost/panfrost_drv.c
-> > > > > > +++ b/drivers/gpu/drm/panfrost/panfrost_drv.c
-> > > > > > @@ -609,7 +609,7 @@ static void panfrost_show_fdinfo(struct drm_printer *p, struct drm_file *file)
-> > > > > >     	panfrost_gpu_show_fdinfo(pfdev, file->driver_priv, p);
-> > > > > > -	drm_show_memory_stats(p, file);
-> > > > > > +	drm_show_memory_stats(p, file, NULL);
-> > > > > >     }
-> > > > > >     static const struct file_operations panfrost_drm_driver_fops = {
-> > > > > > diff --git a/drivers/gpu/drm/v3d/v3d_drv.c b/drivers/gpu/drm/v3d/v3d_drv.c
-> > > > > > index fb35c5c3f1a7..314e77c67972 100644
-> > > > > > --- a/drivers/gpu/drm/v3d/v3d_drv.c
-> > > > > > +++ b/drivers/gpu/drm/v3d/v3d_drv.c
-> > > > > > @@ -195,7 +195,7 @@ static void v3d_show_fdinfo(struct drm_printer *p, struct drm_file *file)
-> > > > > >     			   v3d_queue_to_string(queue), jobs_completed);
-> > > > > >     	}
-> > > > > > -	drm_show_memory_stats(p, file);
-> > > > > > +	drm_show_memory_stats(p, file, NULL);
-> > > > > >     }
-> > > > > >     static const struct file_operations v3d_drm_fops = {
-> > > > > > diff --git a/include/drm/drm_file.h b/include/drm/drm_file.h
-> > > > > > index 8c0030c77308..661d00d5350e 100644
-> > > > > > --- a/include/drm/drm_file.h
-> > > > > > +++ b/include/drm/drm_file.h
-> > > > > > @@ -469,6 +469,7 @@ void drm_send_event_timestamp_locked(struct drm_device *dev,
-> > > > > >      * @resident: Total size of GEM objects backing pages
-> > > > > >      * @purgeable: Total size of GEM objects that can be purged (resident and not active)
-> > > > > >      * @active: Total size of GEM objects active on one or more engines
-> > > > > > + * @internal: Total size of GEM objects that aren't exposed to user space
-> > > > > >      *
-> > > > > >      * Used by drm_print_memory_stats()
-> > > > > >      */
-> > > > > > @@ -478,16 +479,20 @@ struct drm_memory_stats {
-> > > > > >     	u64 resident;
-> > > > > >     	u64 purgeable;
-> > > > > >     	u64 active;
-> > > > > > +	u64 internal;
-> > > > > 
-> > > > > So equally as in the last round of discussion back in June, internal in my
-> > > > > mind still does not fit alongside the categories.
-> > > > > 
-> > > > > Reason is that in some drivers, at least such as i915, "internal" can be:
-> > > > > 
-> > > > > a) Backed by either system memory or device memory - so this does not provice
-> > > > > that visibility;
-> > > > > 
-> > > > > b) They can also be resident or not, active or not, etc - so from that angle
-> > > > > it also does not fit.
-> > > > > 
-> > > > > Do you lose anything if you add the internal objects into their respective
-> > > > > regions and under the existing categories? Like do you have an use case in
-> > > > > mind which needs to be able to distinguish between userspace and internal, or
-> > > > > the problem simply is internal are unaccounted for?
-> > > > 
-> > > > The main use case we have in mind is exposing the size of driver buffer
-> > > > allocations that are triggered in respone to an ioctl(), and so linked to an
-> > > 
-> > > Most of this and below is old and clear - but to this specific point - so you
-> > > do have an use case which specifically wants to know about the internal
-> > > allocations separately from the rest? Could you describe what it is?
-> 
-> What about this?
+The CMN PLL clock controller in Qualcomm IPQ chipsets provides
+the clocks to the networking hardware blocks that are internal
+or external to the SoC, and to the GCC. This driver configures
+the CMN PLL clock controller to enable the output clocks. The
+networking blocks include the internal blocks such as PPE
+(Packet Process Engine) and PCS blocks, and external hardware
+such as Ethernet PHY or switch. The CMN PLL block also outputs
+fixed rate clocks to GCC, such as 24 MHZ as XO clock and 32 KHZ
+as sleep clock supplied to GCC.
 
-I think the most obvious case would be accounting the size of tiler heap chunks. These
-are created as a response to OOM events when the device's tiling engine runs out of
-scratch space. Even though tiler heap growth events are kicked by the scheduler, they
-are bound to the DRM context for which the heap had first been created. We would like
-to keep a separate count of the size of these objects, together with the ones I described
-in the commit messages and before on this thread.
+The controller expects the input reference clock from the internal
+Wi-Fi block acting as the clock source. The output clocks supplied
+by the controller are fixed rate clocks.
 
-> > > > open file. I gave a summary of what these could be in the patch description, but
-> > > > in Panthor's case all these allocations are done with drm shmem functions
-> > > > because it makes it easier to retrieve the sgtable that gives us their system
-> > > > memory layout so that we can more easily map them onto the MMU's address space
-> > > > for a Pantor VM. These BO's, though managed by the drm shmem API, are never
-> > > > added to the open file list of user-exposed drm objects but we would still like
-> > > > to tell UM how much memory they take up.
-> > > > 
-> > > > In the case of Panthor, they all add into the resident tally because all these
-> > > > internal BO's are immediately pinned so that they can also be accessed by the
-> > > > HW, but it doesn't have to be so for other drivers which might also keep track
-> > > > of similar allocations.
-> > > > 
-> > > > I think maybe naming that tag as 'internal' is a bit of a misnomer and I could
-> > > > pick one that more accurately represents its meaning? Something like 'file-internal'
-> > > > or else 'file-private'.
-> > > > 
-> > > > Regarding a), I don't think where the allocations happen (system or device memory)
-> > > > is relevant in this case, just that the allocations are tied to an open file, but
-> > > > not exposed to UM through a DRM buffer object handle.
-> > > 
-> > > On this last paragraph - right.. I possibly got confused on a). Which is why I
-> > > always say it is good to include example output at least in the cover letter,
-> > > if not the commit message.
-> > > 
-> > > How would it look on this driver?
-> > > 
-> > > drm-total-$what: ..
-> > > drm-resident-$what: ..
-> > > drm-internal-$what: ...
-> > 
-> > In the case of Panthor, it would look like this:
-> > 
-> > drm-driver:     panthor
-> > drm-client-id:  3
-> > drm-engine-panthor:     611046570346 ns
-> > drm-cycles-panthor:     1172733302061
-> > drm-maxfreq-panthor:    1000000000 Hz
-> > drm-curfreq-panthor:    1000000000 Hz
-> > drm-total-memory:       16480 KiB
-> > drm-shared-memory:      0
-> > drm-active-memory:      16200 KiB
-> > drm-internal-memory:    10396 KiB
-> > drm-resident-memory:    26876 KiB
-> > drm-purgeable-memory:   0
-> > 
-> > Then in Panfrost:
-> > 
-> > drm-driver:     panfrost
-> > drm-client-id:  6
-> > drm-engine-fragment:    481941638 ns
-> > drm-cycles-fragment:    60243117
-> > drm-maxfreq-fragment:   799999987 Hz
-> > drm-curfreq-fragment:   124999998 Hz
-> > drm-engine-vertex-tiler:        55546675 ns
-> > drm-cycles-vertex-tiler:        6943796
-> > drm-maxfreq-vertex-tiler:       799999987 Hz
-> > drm-curfreq-vertex-tiler:       124999998 Hz
-> > drm-total-memory:       138420 KiB
-> > drm-shared-memory:      7200 KiB
-> > drm-active-memory:      0
-> > drm-internal-memory:    0
-> > drm-resident-memory:    2196 KiB
-> > drm-purgeable-memory:   128 KiB
-> > 
-> > 
-> > > b) still stands though in that internal can be resident or not, purgeable or
-> > > not.. Which is why I would like to know about the use case.
-> > 
-> > This is true, DRM file-internal objects or memory allocations could fall
-> > into any of these categories, and adding their sizes to the right one would
-> > be the responsibility of the function pointer passed to drm_show_memory_stats(),
-> > because that decision would have to be made on a per-driver basis.
-> 
-> It could work like that yes.
-> 
-> I only wonder if it would creating too much of the usual DRM mess of common
-> helpers and vfuncs, and vfuncs implemented via common helpers, which call
-> vfuncs, implemented by common helpers.. mental stack overflow.
-> 
-> I also need to go back to one of the early threads on fdinfo to remind myself
-> what was my counter proposal to the current design. In case it would be more
-> clearly more elegant at this point.
-> 
-> But anyway, first the core question of whether we really need the internal
-> separated out.
+The CMN PLL hardware block does not include any other function
+other than enabling the clocks to the networking hardware blocks
+and GCC.
 
-In the case of Panthor, we definitely do, or at least that's the consensus we had
-struck at Collabora. However, if there's no interest in having this generalised onto
-other drivers, then perhaps the best way forward would be keeping this drm fdinfo
-key private for Panthor, and maybe discuss whether it would make sense to expand it
-to the DRM fdinfo core in the future.    
+The driver is being enabled to support IPQ9574 SoC initially, and
+will be extended for other SoCs.
 
-> > > Also if you add drm-internal for any driver calling drm_print_memory_stats I
-> > > think you "break" at least i915. There internal objects are already accounted
-> > > in the existing categories. And printing out internal with zero would be very
-> > > misleading.
-> > 
-> > I wasn't aware of this. So i915 is already doing this kind of accounting for internal
-> 
-> Xe and amddgpu too, at least. So I guess the general principle when proposing
-> extensions is to have a browse around all current users.
-> 
-> > memory allocations. In that case, maybe printing of the 'drm-internal-memory' could
-> > be done conditionally when it's greater than 0 to avoid 'breaking' existing drivers,
-> > or else renaming it to 'drm-file-memory' would be seen as less invasive?
-> 
-> Skipping the print maybe yeah. Or even better a supported status flag as is
-> for resident and purgeable. But first the discussion on justifying internal as
-> a separate thing.
-> 
-> > I'm asking this because if, at the end of the day, making this change part of the
-> > drm fdinfo core is going to clash with existing accounting in other DRM drivers, perhaps
-> > it'd be easier to keep it Panthor-specific and add that tag together with its meaning
-> > to Documentation/gpu/panfrost.rst.
-> > 
-> > I thought about this at first, but it also struck me as something other drivers might
-> > want to do in the future in a sort of unified way, since internal allocations happening
-> > in response to an ioctl() is a common thing.
-> 
-> I agree internal allocations should generally be accounted. Question is does
-> it need to be separately.
-> 
-> Regards,
-> 
-> Tvrtko
-> 
-> > 
-> > Cheers,
-> > Adrian
-> > 
-> > > Regards,
-> > > 
-> > > Tvrtko
-> > > 
-> > > > 
-> > > > Regards,
-> > > > Adrian
-> > > > 
-> > > > > Regards,
-> > > > > 
-> > > > > Tvrtko
-> > > > > 
-> > > > > >     };
-> > > > > >     enum drm_gem_object_status;
-> > > > > > +typedef void (*internal_bos)(struct drm_memory_stats *status,
-> > > > > > +			     struct drm_file *file);
-> > > > > > +
-> > > > > >     void drm_print_memory_stats(struct drm_printer *p,
-> > > > > >     			    const struct drm_memory_stats *stats,
-> > > > > >     			    enum drm_gem_object_status supported_status,
-> > > > > >     			    const char *region);
-> > > > > > -void drm_show_memory_stats(struct drm_printer *p, struct drm_file *file);
-> > > > > > +void drm_show_memory_stats(struct drm_printer *p, struct drm_file *file, internal_bos func);
-> > > > > >     void drm_show_fdinfo(struct seq_file *m, struct file *f);
-> > > > > >     struct file *mock_drm_getfile(struct drm_minor *minor, unsigned int flags);
+Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
+---
+Changes in v5:
+- Move the hardware configurations into set_rate() from determine_rate().
+- Remove the dependency on IPQ_GCC_9574.
+- Correct the header files included.
+- Update reference clock of CMN PLL to use fixed factor clock.
+- Link to v4: https://lore.kernel.org/r/20241015-qcom_ipq_cmnpll-v4-0-27817fbe3505@quicinc.com
+
+Changes in v4:
+- Rename driver file to ipq-cmn-pll.c
+- Register CMN PLL as a 12 GHZ clock.
+- Configure CMN PLL input ref clock using clk_ops::determine_rate().
+  Add the additional output clocks to GCC and PCS.
+- Update the same information in dtbindings.
+- Use PM clock APIs for input clock enablement.
+- Link to v3: https://lore.kernel.org/r/20240827-qcom_ipq_cmnpll-v3-0-8e009cece8b2@quicinc.com
+
+Changes in v3:
+- Update description of dt-binding to explain scope of 'CMN' in CMN PLL.
+- Collect Reviewed-by tags for dtbindings and defconfig patches.
+- Enable PLL_LOCKED check for the stability of output clocks.
+- Link to v2: https://lore.kernel.org/r/20240820-qcom_ipq_cmnpll-v2-0-b000dd335280@quicinc.com
+
+Changes in v2:
+- Rename the dt-binding file with the compatible.
+- Remove property 'clock-output-names' from dt-bindings and define
+  names in the driver. Add qcom,ipq-cmn-pll.h to export the output
+  clock specifier.
+- Alphanumeric ordering of 'cmn_pll_ref_clk' node in DTS.
+- Fix allmodconfig error reported by test robot.
+- Replace usage of "common" to "CMN" to match the name with the
+  hardware specification.
+- Clarify in commit message on scope of CMN PLL function.
+- Link to v1: https://lore.kernel.org/r/20240808-qcom_ipq_cmnpll-v1-0-b0631dcbf785@quicinc.com
+
+---
+Luo Jie (4):
+      dt-bindings: clock: qcom: Add CMN PLL clock controller for IPQ SoC
+      clk: qcom: Add CMN PLL clock controller driver for IPQ SoC
+      arm64: defconfig: Enable Qualcomm IPQ CMN PLL clock controller
+      arm64: dts: qcom: Add CMN PLL node for IPQ9574 SoC
+
+ .../bindings/clock/qcom,ipq9574-cmn-pll.yaml       |  85 ++++
+ arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi   |  16 +-
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi              |  26 +-
+ arch/arm64/configs/defconfig                       |   1 +
+ drivers/clk/qcom/Kconfig                           |   9 +
+ drivers/clk/qcom/Makefile                          |   1 +
+ drivers/clk/qcom/ipq-cmn-pll.c                     | 436 +++++++++++++++++++++
+ include/dt-bindings/clock/qcom,ipq-cmn-pll.h       |  22 ++
+ 8 files changed, 594 insertions(+), 2 deletions(-)
+---
+base-commit: d61a00525464bfc5fe92c6ad713350988e492b88
+change-id: 20241014-qcom_ipq_cmnpll-bde0638f4116
+
+Best regards,
+-- 
+Luo Jie <quic_luoj@quicinc.com>
 
 
