@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-36152-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36153-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 828609B2EF2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 12:33:29 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9AD009B2EF6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 12:34:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CA90FB20F5C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 11:33:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2BEF41F22CEB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 11:34:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 909681D3648;
-	Mon, 28 Oct 2024 11:33:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 119701D63E0;
+	Mon, 28 Oct 2024 11:33:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XVMd61mX"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kyH7RQ1N"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61FD9A59;
-	Mon, 28 Oct 2024 11:33:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9A671D61AA;
+	Mon, 28 Oct 2024 11:33:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730115201; cv=none; b=S0iefcoJyIg/7PdCchnUqPU+rsSHVbAeghdim+94hRPN7IDn/YwQXCX2pgUA+KLQhyu8G0QpBLaIqe/Ok4nL7MJL6hNbRB4VZSvwt3O+IglBKvkVftKyvz7022Hk99vYqDdTqsf9Zj937xv+Papnk6bxeQXdbyF2afb0BTJ7tmc=
+	t=1730115234; cv=none; b=cxVuBusjfEO8thJq8UUvOONXQzP4dlR4LspIK0l2Lm5Y0SWchvGmS/hiiqfwGeqaWZMxqgufJrcEskTzjfLpCzC3gmqLKC6nTtjNsqQBRHmClECRWfuIeDCsN4TKXNGmAPBwwgZ9Yj6A1P9aOa8/L9a3+4TXm+Wbz//T3i3zAHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730115201; c=relaxed/simple;
-	bh=pVV6srachtafwwlBUnY7lawnsqiQatUuDFNTiMZlZhs=;
+	s=arc-20240116; t=1730115234; c=relaxed/simple;
+	bh=C9U2wR7QMKvnCiY8Oj16dYxxwnCEiYjjEE05MdMJPig=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RerfssAg4bdCHLrJPNUORFrDKHasBqcknMIqrageM+wDoN4rGpouOLrXhsGJxSUP+RvyTRqLBkMcsFQcgKmgvO29PvyygM5AZEGMT0HyJZI8hAKvmlchWXE0b09AUqbCLvlg28Djo9wXYtqDUNElZo9BvNbUQGrbcbfvz5NnMTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XVMd61mX; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52824C4CEC3;
-	Mon, 28 Oct 2024 11:33:17 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=JiIpiJp8cF88zvSwfBJcRNfCYtxKOGgfa8HOmnQEzYglxt+l8xYuVfbudsWQ9PF/PkpG05MOX79WNdyrLlRVR1vkY9bSaToazQz54n38IAhM7wJyeqBhrs2W9X8Miw/+m8pgmURlQRJoMukz++17TpUbwz/zQRRa2CMcQp7RsT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kyH7RQ1N; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05CC2C4CEE4;
+	Mon, 28 Oct 2024 11:33:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730115200;
-	bh=pVV6srachtafwwlBUnY7lawnsqiQatUuDFNTiMZlZhs=;
+	s=k20201202; t=1730115233;
+	bh=C9U2wR7QMKvnCiY8Oj16dYxxwnCEiYjjEE05MdMJPig=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=XVMd61mX2Klh8sbflTgwXt42mcTIJ8iQwjQwiE2E06sW2Em3wbMLLF6PHKvlVNUb7
-	 Yt/8wXL/6gonyjhVEqIlcV6X4jTheO93Eh1UPV1Sped9TPAro0KGa8VsVqh0p8u38T
-	 B9UpTbIpsNla6fm5NGhUO15KgUzZJ30tJbuyYDECqOBFAelvC9adgdtqbBSNIc53yr
-	 2JEeXSj9KOsizdkxehxxrcbUsfJvLlZMrKBnXPhkqE7Y0fOtQiMEMicyHOGVa5qcAW
-	 xWHJjjh+Gea099J82F14gNDEZaUoHADHmnAaSkc1ZXd7k6TR+CAMoXsitQBX33EMXv
-	 hRKs+D8xqC6ag==
-Message-ID: <b7a24d5b-bb0f-4eb5-8830-f32701cb94d1@kernel.org>
-Date: Mon, 28 Oct 2024 12:33:14 +0100
+	b=kyH7RQ1N3AehXgmtWz4H+JY00JSzNsphXQMc1aBLH7vsAmrZtkqS5qx8rrfCHT3iO
+	 UidNWlE50GhgTOjgiMRH+rkfTkcAeC6lBYy2h/7ibYBGpywAP0wlV9DY+tVQENfP1l
+	 3mjVPJWrMEWIUcBgAn1CGA6lo1GGH/xJ96PZIG7qzbhtHVNeGTKTq7o6NIWiJ14KL5
+	 wZAkS/hskjqso16cgCn2h7eKVP6SmdK1lT9S+Mp8qeTyf7JLtppuUqZIw92q52F8KL
+	 oBy66jTBtVvEYP4QryCr6WD88ypJIbhw5dlNmlEkmLjTOi2r3fb+m0wrQxS9xYszgr
+	 i4jT5lnqXERog==
+Message-ID: <50a0a56d-55ce-4b59-a004-b8418309eb92@kernel.org>
+Date: Mon, 28 Oct 2024 12:33:48 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,13 +50,14 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] arm64: dts: qcom: qcs615: Add QUPv3 configuration
+Subject: Re: [PATCH v2] arm64: dts: qcom: qcs615: Add QUPv3 configuration
 To: Viken Dadhaniya <quic_vdadhani@quicinc.com>, andersson@kernel.org,
  konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
  conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ konrad.dybcio@oss.qualcomm.com
 Cc: quic_msavaliy@quicinc.com, quic_anupkulk@quicinc.com
-References: <20241011103346.22925-1-quic_vdadhani@quicinc.com>
+References: <20241028112049.30734-1-quic_vdadhani@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -102,11 +103,11 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20241011103346.22925-1-quic_vdadhani@quicinc.com>
+In-Reply-To: <20241028112049.30734-1-quic_vdadhani@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 11/10/2024 12:33, Viken Dadhaniya wrote:
+On 28/10/2024 12:20, Viken Dadhaniya wrote:
 > Add DT support for QUPv3 Serial Engines.
 > 
 > Co-developed-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
@@ -123,12 +124,19 @@ On 11/10/2024 12:33, Viken Dadhaniya wrote:
 > Clock: https://lore.kernel.org/linux-devicetree/20240920-qcs615-clock-driver-v2-3-2f6de44eb2aa@quicinc.com/
 > ICC: https://lore.kernel.org/linux-devicetree/20240924143958.25-2-quic_rlaggysh@quicinc.com/
 > Apps SMMU: https://lore.kernel.org/all/20241011063112.19087-1-quic_qqzhou@quicinc.com/
+> 
+> v1 -> v2:
+> 
+> - Add opp-shared property.
+> - Use QCOM_ICC_TAG_ALWAYS flag in interconnect property.
+> 
+> v1 Link: https://lore.kernel.org/all/20241011103346.22925-1-quic_vdadhani@quicinc.com/
 > ---
->  arch/arm64/boot/dts/qcom/qcs615.dtsi | 602 ++++++++++++++++++++++++++-
->  1 file changed, 598 insertions(+), 4 deletions(-)
+>  arch/arm64/boot/dts/qcom/qcs615.dtsi | 642 ++++++++++++++++++++++++++-
+>  1 file changed, 638 insertions(+), 4 deletions(-)
 > 
 > diff --git a/arch/arm64/boot/dts/qcom/qcs615.dtsi b/arch/arm64/boot/dts/qcom/qcs615.dtsi
-> index 865ead601f85..9d7fc6fc5c6e 100644
+> index 865ead601f85..1d1cdf6f9a74 100644
 > --- a/arch/arm64/boot/dts/qcom/qcs615.dtsi
 > +++ b/arch/arm64/boot/dts/qcom/qcs615.dtsi
 > @@ -5,6 +5,7 @@
@@ -157,19 +165,20 @@ On 11/10/2024 12:33, Viken Dadhaniya wrote:
 > +		spi7 = &spi7;
 > +		serial0 = &uart0;
 
-Bus aliases are not supposed to be specific to SoC. Drop them from SoC DTSI.
+Comments from v1 apply.
 
 > +	};
 > +
 >  	cpus {
 >  		#address-cells = <2>;
 >  		#size-cells = <0>;
-> @@ -296,6 +312,25 @@
+> @@ -296,6 +312,26 @@
 >  		qcom,bcm-voters = <&apps_bcm_voter>;
 >  	};
 >  
 > +	qup_opp_table: opp-table-qup {
 > +		compatible = "operating-points-v2";
+> +		opp-shared;
 > +
 > +		opp-75000000 {
 > +			opp-hz = /bits/ 64 <75000000>;
@@ -190,16 +199,13 @@ Bus aliases are not supposed to be specific to SoC. Drop them from SoC DTSI.
 >  	psci {
 >  		compatible = "arm,psci-1.0";
 >  		method = "smc";
-> @@ -392,6 +427,24 @@
+> @@ -392,6 +428,24 @@
 >  			#size-cells = <1>;
 >  		};
 >  
 > +		gpi_dma0: qcom,gpi-dma@800000  {
 
-That's again downstream code. Do not send us stuff from downstream.
-
-
-
+Nope. Don't post downstream code.
 
 Best regards,
 Krzysztof
