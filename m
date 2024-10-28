@@ -1,233 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-36154-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36155-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id F11829B2F0C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 12:38:45 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E457D9B2F31
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 12:49:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AE5BF280E4D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 11:38:44 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6CA56B20BD7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 11:49:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D5A41D5CF5;
-	Mon, 28 Oct 2024 11:38:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4DD01D5CD3;
+	Mon, 28 Oct 2024 11:49:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="G3A/CT5D"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="saFsdTtm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F5F1D31B2
-	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Oct 2024 11:38:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9D1A4AEE0
+	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Oct 2024 11:49:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730115522; cv=none; b=AqDLAgsy+WWc+9F4zQ5MATQi/5h29SkIyRvBU60pHiClMLGpxZ3DCGDt1aXAOPNs7NbC/4b5BJLtwayUwlB31dKyqV5SRC+dFMBROlcs1AhX1wchB/vRTpOHtFIBzAPISlYO3/8bj7vVFgZhUJlRQUbYc8BJnNEMik+d/Y7iEtg=
+	t=1730116163; cv=none; b=I1PjIUxoeQIopFSJBOZq7k6U03kB05tEPTbZEqUoVP50coVO7XNyMxFzs88pFJmKxfHVuuiMI0WowrzgDFvzkwf5ZTCc9aC/LnLyYjjon3Lt6/wA/zcXnCcpLT7ON4A72GU5QW0C/sU3pudMLYB1PKToTXwAZaGXP621fNlOSwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730115522; c=relaxed/simple;
-	bh=IglqgVGUjmZfVdVL8l6vynVp9FHSWvs1YdSaxF9N1XQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JiR+LJKRA+acupPYsC/NSLBb4WOrss8ZLq+rIyUziD5f0V8w1NkPj2QBrw2Jo7vGEK75cC5Vid2ZhfDPwxIOjaxuP37rbSXKhDeaG6ZotQrMlSKl0cnlNL7B7RgrvRCIrbhMQq0jYf+wi0bB6PmSburj7NJJjCnOhuV69h4p8fc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=fail smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=G3A/CT5D; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49SAqDrD021678
-	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Oct 2024 11:38:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	CFOb/Mz8MxTSzhoQdxnw/yVybKGRopSmpFc7FewOgSg=; b=G3A/CT5DTSh/tyx+
-	qRiCMc9PIzJi6r2yGsY9kNUTLNlzBnwsojhjKQAevc+BdexTKJzzrGNscUQMN2dW
-	oEQvn9sRzoEFOQQbAp8+wjS/VMrrsdm51lH//RrhzRRPEOGGXRdBIdHjVirCYLky
-	Q+muHsiTnfN6Z1VTKP1G35i8mlpXyPIoEsSX6PgHVSTXESAJZZNRtnndvWIIHTuV
-	UDHGCtNUf3fkFLTyLKq3N8hyBQqZY0xlTAclxc9CTeMW67vGM4NF2NRGwA7wMXej
-	pG/gz7KQWjuO2+JmqqbgfxX3Gd4eXpffkK69exPd8hvMRHhlweXn5JvnG0EbJtvh
-	vi5/xw==
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42gs6e4p8c-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Oct 2024 11:38:39 +0000 (GMT)
-Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-6cbe6e6bcf2so14432926d6.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Oct 2024 04:38:39 -0700 (PDT)
+	s=arc-20240116; t=1730116163; c=relaxed/simple;
+	bh=Co+0E9YaF8rU9Lu8dKrUnSBVVrsUQunT/qB+81qDOac=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=ZmRYE9Q/mxvCTh33D2u3x7jPintMTtlgNgDLgeyPKLuu+/1pzrYfD7Q/ifw/blJH9ZzvQ9Kq03mcSp9/bbZtIiKQavS4mWeBEEPUD9iyA9BRt45g+nZYgis9Uyo4dG0xs6N0C72ugmcTo5goH5dVeRFhp3twwRiFFn21FHcqfv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=saFsdTtm; arc=none smtp.client-ip=209.85.167.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-539fbbadf83so5301785e87.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Oct 2024 04:49:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1730116159; x=1730720959; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=mb9zRgHMvMC//b1yhfiL4OPzd+wPu7HZpSZkxfRgNjA=;
+        b=saFsdTtm96fobxU9dSaLUgGxdEWXLH4pBh8w/cIU5to7YQEqCbI6JxtehOjB+ndPKj
+         FhPmaJccYJwqTzxdAp/wO8IiJrqkomxUfyKNysYfPzYtyDu9rYBDxgX4hDpr2c0C80P7
+         xMaSMKWsi0qT3J5xUJtx5kkNMG3pmbNotGbORomXKc/tZTBEigivdURrxAC/Jf43mbEP
+         9JCpfL66tyr3aPtee5Lwg18AGrp9CSua/kLKpqxJ+7lDEGOANGpAeiJq6D+HWEP1yWYa
+         OslVbFwCLC5bjfVv1wW8JwVBuNSCuDZHVIRi+qcqNSUtyuoHd6bStrYAa5FrNL3EVsmS
+         UY7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730115518; x=1730720318;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CFOb/Mz8MxTSzhoQdxnw/yVybKGRopSmpFc7FewOgSg=;
-        b=EBqgtZLbsX5pyBqybtVGbY9JArVU791Agy/JQYeBgdR1C9pU9FoRTlFzuEHF5ExmO9
-         D4ezLzIDzGrmwmcisU7mlCHr0UsdEYlBNAjqNTpLnt9vovSST7FW6SlepTNgH3+BfyZ2
-         Ljqxqae1QfcUhviKLpH5/hPveUcncurBD0V7nEa/aheCdE+FZ/63+iGDK4EgAkcHzrQt
-         Mg9DbdjuC14qOCzrnAj+6/HxrvR/iJui3UErRkJnf/G+ApY+1e2xkFRm5YdN6emOGzBj
-         3ZV6InlMG7jxOYWDhNgl1T98oLXMCq2S/ZlhtlAxWc0wem+JU8nAOwO316I7yhruSttO
-         OnQA==
-X-Forwarded-Encrypted: i=1; AJvYcCX8k/9XulNUwCR2c+EWxsAeS9t6u0dc4BItIS7brUe052d6T57f1IZk+Ca5B0c7ncxrrxogqAB9G/DGqmQ1@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw3eR/SIVD/X4kqG6Gw3JuTlzIka6B5/cxwrzXwlY0bq5RCt9IF
-	RdHlmXCt5VBu+rKTYJACrnYaUFlX4HrjcRwyvlZNb2gYd42ETAn2CQsBS9xyX8eGe8CvJmes8ro
-	J+e2kl5xPkaMrlyE5XxBsKRC3QYCex7wB+6binYlvpDz206FZ2ufpNiYgy+sNRDbG
-X-Received: by 2002:a0c:fc48:0:b0:6cc:2295:8724 with SMTP id 6a1803df08f44-6d185682eafmr57631476d6.5.1730115518324;
-        Mon, 28 Oct 2024 04:38:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEnqfUTdtr4QAm4sLjp+J3omyuIbuUB+MzUfKqr5h0k1AsTjgm8AtwXYb8zh9q+f7xKQUx06w==
-X-Received: by 2002:a0c:fc48:0:b0:6cc:2295:8724 with SMTP id 6a1803df08f44-6d185682eafmr57631266d6.5.1730115517880;
-        Mon, 28 Oct 2024 04:38:37 -0700 (PDT)
-Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5cbb629c250sm3134494a12.27.2024.10.28.04.38.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Oct 2024 04:38:37 -0700 (PDT)
-Message-ID: <5800abe0-19e6-4364-a305-1be63c28c6d9@oss.qualcomm.com>
-Date: Mon, 28 Oct 2024 12:38:35 +0100
+        d=1e100.net; s=20230601; t=1730116159; x=1730720959;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mb9zRgHMvMC//b1yhfiL4OPzd+wPu7HZpSZkxfRgNjA=;
+        b=w8iBJwkRFdL2Cx2H9E4fkXxSc57Gl3lpLvsfuQWTKXFFPlU9Yoh95AfzuXHS5Hhhky
+         lV+0u5UpeTNWbcaem5knrdz7Ivi3Mim3+Ed5bv6L2RRdYZZ+iwUhy2bebBBmZuJJYBpx
+         zoiB0U0XVOrvui5IZa56W9CjpbupNednQ4Vz4Tqa2V0HbWNtsTnRpElSDk+qrLK8qN+J
+         7qvnJpFPPeW5f2iisaM5s9onFP05jVgSD3jqRJt7OOdT3qRKRjnukelxbAMST3AeU3uf
+         dSnKdD41N0pmNtFsNEIoEZr3ePtnLwPRb3qutlMFWLit539H3XM0TOBJIlraOLfT1viX
+         UDXQ==
+X-Gm-Message-State: AOJu0Yy7NvFdA1vfRjy5/60sGmJdjPXdqTM3A5Tk255Xl9nUT2a1NWIB
+	u6Hc9MuqnfgZlmgl3xt41XfhRGhfymmeFw63EjzcEd0+4U/4Zv/rUTc/Zi/SptI=
+X-Google-Smtp-Source: AGHT+IEXr0XfiZcxDUh4Ya/xhi7vFzeN0peBhYX1m8G09G4UCXSdXYHWqD8Jl8qKxIXMmJy7ffIoxQ==
+X-Received: by 2002:a05:6512:10d1:b0:539:89f7:3187 with SMTP id 2adb3069b0e04-53b3490eef0mr3514599e87.47.1730116159070;
+        Mon, 28 Oct 2024 04:49:19 -0700 (PDT)
+Received: from umbar.lan ([192.130.178.90])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53b2e10a5c6sm1042385e87.19.2024.10.28.04.49.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Oct 2024 04:49:17 -0700 (PDT)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH 0/3] drm/msm/dp: mass-rename symbols
+Date: Mon, 28 Oct 2024 13:49:13 +0200
+Message-Id: <20241028-msm-dp-rename-v1-0-a2564e9457b0@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] arm64: dts: qcom: Add support for usb nodes on
- QCS8300
-To: Krishna Kurapati <quic_kriskura@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
-        devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>, quic_ppratap@quicinc.com,
-        quic_jackp@quicinc.com
-References: <20241011074619.796580-1-quic_kriskura@quicinc.com>
- <20241011074619.796580-2-quic_kriskura@quicinc.com>
- <297dbc48-4c34-4bac-822c-be3ae2d00d32@oss.qualcomm.com>
- <2da5e869-ae44-45b1-a751-8b5edfcdbd30@quicinc.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <2da5e869-ae44-45b1-a751-8b5edfcdbd30@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: -Q-wYbt8r239kWgEgLwDgu9jPOXj5dW8
-X-Proofpoint-GUID: -Q-wYbt8r239kWgEgLwDgu9jPOXj5dW8
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
- priorityscore=1501 lowpriorityscore=0 mlxlogscore=999 phishscore=0
- malwarescore=0 impostorscore=0 adultscore=0 spamscore=0 suspectscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410280093
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIADl6H2cC/x3MQQqAIBBG4avErBvQyYV0lWgR+Vuz0EIhgujuS
+ ctv8d5DFUVRaeweKri06pEbbN/Rui95A2toJjHirBHPqSYOJxfkJYGjAYJ3HjJYas1ZEPX+f9P
+ 8vh/QXxqbXwAAAA==
+To: Rob Clark <robdclark@gmail.com>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+ kernel test robot <lkp@intel.com>
+X-Mailer: b4 0.14.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1883;
+ i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
+ bh=Co+0E9YaF8rU9Lu8dKrUnSBVVrsUQunT/qB+81qDOac=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnH3o8ciOKjsiOAq7UqyEELQvVVIibSVOFsy8AV
+ vA8UGDvQnKJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZx96PAAKCRCLPIo+Aiko
+ 1UyHB/4vtNQGsmYkJ8efgL4QqmJSOaWdlUjtPu7p/+hvN4kqK4CH5fnnTNh0R7yl+YqUaRw0ibl
+ W5lNJs1zLmuAYc3odDWsVFjC/eRTNN9AOAbntyCS7BLMhm0aBtU3nKq4TVlPIijq/CtzM2puyvd
+ LQrziQ0aIuzpjScflkArCejxnTIUNdxalWXyyuiOgwIwDofYdSg7Vlt0+R6IlFkqefTltrSqDGs
+ JKpmj7HDB4UnLLYhcfu+Eu6Xl1Rd7qMoOEPVfQlBQbLdUgQ5u2Jz0SPg13z1l8XrJtFmLmz4IEY
+ yf3OqZzOGXmHQUWl1JkVeYSQN+4mKskfUrIwo4ozW6iiDO9X
+X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-On 26.10.2024 6:56 PM, Krishna Kurapati wrote:
-> 
-> 
-> On 10/25/2024 11:58 PM, Konrad Dybcio wrote:
->> On 11.10.2024 9:46 AM, Krishna Kurapati wrote:
->>
->> The commit title should include a `qcs8300: ` part, like others in
->> the directory (see git log --oneline arch/arm64/boot/dts/qcom).
->>
->>> Add support for USB controllers on QCS8300. The second
->>> controller is only High Speed capable.
->>>
->>> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
->>> ---
->>>   arch/arm64/boot/dts/qcom/qcs8300.dtsi | 168 ++++++++++++++++++++++++++
->>>   1 file changed, 168 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/qcs8300.dtsi b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
->>> index 2c35f96c3f28..4e6ba9f49b95 100644
->>> --- a/arch/arm64/boot/dts/qcom/qcs8300.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
->>> @@ -1363,6 +1363,174 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
->>>                   qcom,remote-pid = <5>;
->>>               };
->>>           };
->>> +
->>> +        usb_1_hsphy: phy@8904000 {
->>> +            compatible = "qcom,qcs8300-usb-hs-phy",
->>> +                     "qcom,usb-snps-hs-7nm-phy";
->>> +            reg = <0x0 0x8904000 0x0 0x400>;
->>
->> Please pad the address parts to 8 hex digits with leading zeroes.
->>
->>> +
->>> +            clocks = <&rpmhcc RPMH_CXO_CLK>;
->>> +            clock-names = "ref";
->>> +
->>> +            resets = <&gcc GCC_USB2_PHY_PRIM_BCR>;
->>> +
->>> +            #phy-cells = <0>;
->>> +
->>> +            status = "disabled";
->>> +        };
->>> +
->>> +        usb_2_hsphy: phy@8906000 {
->>> +            compatible = "qcom,qcs8300-usb-hs-phy",
->>> +                     "qcom,usb-snps-hs-7nm-phy";
->>> +            reg = <0x0 0x08906000 0x0 0x400>;
->>> +
->>> +            clocks = <&rpmhcc RPMH_CXO_CLK>;
->>> +            clock-names = "ref";
->>> +
->>> +            resets = <&gcc GCC_USB2_PHY_SEC_BCR>;
->>> +
->>> +            #phy-cells = <0>;
->>> +
->>> +            status = "disabled";
->>> +        };
->>> +
->>> +        usb_qmpphy: phy@8907000 {
->>> +            compatible = "qcom,qcs8300-qmp-usb3-uni-phy";
->>> +            reg = <0x0 0x8907000 0x0 0x2000>;
->>> +
->>> +            clocks = <&gcc GCC_USB3_PRIM_PHY_AUX_CLK>,
->>> +                 <&gcc GCC_USB_CLKREF_EN>,
->>> +                 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>,
->>> +                 <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
->>> +            clock-names = "aux", "ref", "com_aux", "pipe";
->>
->> Please make this a vertical list like in the node below.
->>
->> [...]
->>
->>> +            interconnects = <&aggre1_noc MASTER_USB3_0 0 &mc_virt SLAVE_EBI1 0>,
->>
->> QCOM_ICC_TAG_ALWAYS, see x1e80100.dtsi
->>
->>> +                    <&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_USB3_0 0>;
->>> +            interconnect-names = "usb-ddr", "apps-usb";
->>> +
->>> +            wakeup-source;
->>> +
->>> +            status = "disabled";
->>> +
->>> +            usb_1_dwc3: usb@a600000 {
->>> +                compatible = "snps,dwc3";
->>> +                reg = <0x0 0x0a600000 0x0 0xe000>;
->>> +                interrupts = <GIC_SPI 292 IRQ_TYPE_LEVEL_HIGH>;
->>> +                iommus = <&apps_smmu 0x80 0x0>;
->>> +                phys = <&usb_1_hsphy>, <&usb_qmpphy>;
->>> +                phy-names = "usb2-phy", "usb3-phy";
->>> +                snps,dis_u2_susphy_quirk;
->>> +                snps,dis_enblslpm_quirk;
->>
->> That's a very low number of quirks.. Should we have some more?
->>
-> 
-> snps,dis-u1-entry-quirk;
-> snps,dis-u2-entry-quirk;
-> snps,dis_u2_susphy_quirk;
-> snps,ssp-u3-u0-quirk;
-> 
-> I would actually like to add these as well, but there is no precedent in upstream as to what quirks to add for usb nodes
+The LKP reported [1] a symbol clash between the drm/msm/dp and the HIMBC
+driver being sumbitted, because both of them use a generic dp_ prefix
+for a lot of symbols. It's a hight time we made msm/dp driver use
+something less generic, like msm_dp.
 
-Every single one that applies to the hardware ;)
+[1] https://lore.kernel.org/oe-kbuild-all/202410250305.UHKDhtxy-lkp@intel.com/
 
-> , so I kept only a couple of them. Ideally downstream we disable u1u2 for almost all targets because of some issues in the past. (atleast during tethering use cases, but I need to double check though).
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+Dmitry Baryshkov (3):
+      drm/msm/dp: prefix all symbols with msm_dp_
+      drm/msm/dp: rename edp_ bridge functions and struct
+      drm/msm/dp: tidy up platform data names
 
-Does
+ drivers/gpu/drm/msm/dp/dp_audio.c   | 294 ++++++------
+ drivers/gpu/drm/msm/dp/dp_audio.h   |  38 +-
+ drivers/gpu/drm/msm/dp/dp_aux.c     | 148 +++---
+ drivers/gpu/drm/msm/dp/dp_aux.h     |  18 +-
+ drivers/gpu/drm/msm/dp/dp_catalog.c | 734 ++++++++++++++---------------
+ drivers/gpu/drm/msm/dp/dp_catalog.h | 118 ++---
+ drivers/gpu/drm/msm/dp/dp_ctrl.c    | 482 +++++++++----------
+ drivers/gpu/drm/msm/dp/dp_ctrl.h    |  40 +-
+ drivers/gpu/drm/msm/dp/dp_debug.c   |  68 +--
+ drivers/gpu/drm/msm/dp/dp_debug.h   |  10 +-
+ drivers/gpu/drm/msm/dp/dp_display.c | 904 ++++++++++++++++++------------------
+ drivers/gpu/drm/msm/dp/dp_display.h |  18 +-
+ drivers/gpu/drm/msm/dp/dp_drm.c     | 142 +++---
+ drivers/gpu/drm/msm/dp/dp_drm.h     |  22 +-
+ drivers/gpu/drm/msm/dp/dp_link.c    | 432 ++++++++---------
+ drivers/gpu/drm/msm/dp/dp_link.h    |  44 +-
+ drivers/gpu/drm/msm/dp/dp_panel.c   | 254 +++++-----
+ drivers/gpu/drm/msm/dp/dp_panel.h   |  42 +-
+ drivers/gpu/drm/msm/dp/dp_utils.c   |  20 +-
+ drivers/gpu/drm/msm/dp/dp_utils.h   |   8 +-
+ 20 files changed, 1918 insertions(+), 1918 deletions(-)
+---
+base-commit: dec9255a128e19c5fcc3bdb18175d78094cc624d
+change-id: 20241028-msm-dp-rename-f0eed848e231
 
-5b8baed4b881 ("arm64: dts: qcom: sc7180: Disable SuperSpeed instances in park mode")
+Best regards,
+-- 
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-apply here too?
-
-Konrad
 
