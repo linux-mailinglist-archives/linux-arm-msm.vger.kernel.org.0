@@ -1,105 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-36191-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36192-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 98CE29B3856
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 18:56:48 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 283A79B3872
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 18:59:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CA2B61C2218B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 17:56:47 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E2A2D2832AC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 17:59:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 807FB1DF25C;
-	Mon, 28 Oct 2024 17:56:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 671491DF73A;
+	Mon, 28 Oct 2024 17:59:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q2K5myif"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MIfUXmIZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44D2B188917;
-	Mon, 28 Oct 2024 17:56:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3770E1DF729;
+	Mon, 28 Oct 2024 17:59:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730138204; cv=none; b=SRDFYPHNG7h6l2yF3S97SN9X+qIAeKwB7OSO/rd7gT3kHQK3W+Iv8g6m2F68+dAe2SsIGKJb2sY3ZTpAuGx103CA9kOTKk0sAGN95+Mnr3aKMvS9J60lxrYEghFXkIcvl/RGBla0MifwXSNIFHnyMtoKM5Zn4xC+NbZW4RYa2Qw=
+	t=1730138380; cv=none; b=IlYQWyn2MPMHWqVdzhMty1dUDtcHUf3pfsI7M6Jo/fZya+j2vfX6/+PTWI7q8ZrDXCeM7OegaWqPSzcIFXi2ICOBWHaklolHykiec4yelK9rzFStheLP2S3nOwWnxB6aW7JwRHBOGDdg/AodSfrymYtcQIi8TyeTKc5ZEkBG8oE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730138204; c=relaxed/simple;
-	bh=ZcIOdBBX9x9S4mccfN00QP50E2GrhzZTTHwWiGiLi9c=;
-	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
-	 Subject:From:Cc:To:Date; b=rTaWdxH0+b2Zd5PYe52F4vO6+0qaaDEbPXTXMGyGhwDBVc3x2N62lgAV0mxSC53pngNiNn8nZNmox8hdVRNWTLT4VFZj/kJkUveqdZqLvLsnBHA83mjRt5Oc5kU2v0fOUGA/0Zgik6bOeV7Ni3l3FKHUvcsEsnlyfQZ6zfgp4bk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q2K5myif; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C67D5C4CEC3;
-	Mon, 28 Oct 2024 17:56:43 +0000 (UTC)
+	s=arc-20240116; t=1730138380; c=relaxed/simple;
+	bh=NNDZK1DgsTBU9hMvDjvluvD+vh7E84vISaTdisCl6nc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qKtEMpJnweEcT2XO4oIJyztAeQ+VVfrXMjjVBYQokvdWqtDcUsMeJV/KICvYNjNvfCVUo2DdCxs5olz1PRLANtcLabvrWnLPuZv3A5ZLOZlsnnvOuDpykfHO5fpDcA2gz1X4Uy79dv8RI2d5FGdcUkpYU3dbZkeFsMZpFtm8W6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MIfUXmIZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C7AAC4CEC3;
+	Mon, 28 Oct 2024 17:59:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730138203;
-	bh=ZcIOdBBX9x9S4mccfN00QP50E2GrhzZTTHwWiGiLi9c=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=q2K5myifszZpveps8gx27XMOnT2U1YZffqsvHUS5IFNf4nEQ7fRd9bHS1XjPRGVZO
-	 KFpTeeiqdejQAS/xZlcl433menOvBPr9pnIFEj5feTysVsO64XStek2hnsNwIHh+Ws
-	 g/0BbGIYHDdgr9GyB2KBNCC6C/Q99N+Fz+jFO9fQzcbex+4mxmpu5jfAEZGwIFY44v
-	 TuHM+TectHEqKNEATQM52fCJlsskYy3rDPV8nA56mWPnjJvTcstWitzpoZ0C3ATKJN
-	 MYmeseQDth9uFQCH9gItWXXXZX4uItoxQTrrKg2RFrW3WbqEmicuQUDtU0+D6FzmpJ
-	 y3qBqUCtB9ofQ==
-Message-ID: <bb5d855954d5ff8694a3978a9f87a9d2.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+	s=k20201202; t=1730138379;
+	bh=NNDZK1DgsTBU9hMvDjvluvD+vh7E84vISaTdisCl6nc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=MIfUXmIZON3MDXg7HzGZZEbagXo3naflrdv/a5QCLfR3SAQgye1gIQfWy9rMCx/j1
+	 XFa+DRZu9qPSYbHQlxL9lABTEyegZ52vV9WrRieuJll7AKnWYqu7BX12760tEAEL3a
+	 WchfUDjnOHSrRA3nHelHfE+VUQDtRb8imaxPpotVX4ZSjDKNm/kCKKFhoLy1iGlOZp
+	 GSHM2S5YXJPlHKcOpuEV5BkP9XugoATtLthXOqiaL5AWuusSE5PjffvlzXW2Yv+4eF
+	 PMaceQ13QRslMZcipJ1R82DfuMNWL2znqPlR8vM6ZjMxAww9HZReCPPjSBnBPcVLpu
+	 bHQeudYdO47jg==
+Date: Mon, 28 Oct 2024 12:59:37 -0500
+From: Rob Herring <robh@kernel.org>
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Conor Dooley <conor@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Sibi Sankar <quic_sibis@quicinc.com>,
+	Rajendra Nayak <quic_rjendra@quicinc.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, kernel test robot <lkp@intel.com>
+Subject: Re: [PATCH] dt-bindings: cache: qcom,llcc: Fix X1E80100 reg entries
+Message-ID: <20241028175937.GA1065786-robh@kernel.org>
+References: <20241018-qcom-llcc-bindings-reg-ranges-fix-v1-1-88693cb7723b@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20241028163403.522001-1-eugen.hristev@linaro.org>
-References: <20241028163403.522001-1-eugen.hristev@linaro.org>
-Subject: Re: [PATCH v2] soc: qcom: Rework BCM_TCS_CMD macro
-From: Stephen Boyd <sboyd@kernel.org>
-Cc: andersson@kernel.org, konradybcio@kernel.org, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, linux-pm@vger.kernel.org, djakov@kernel.org, mturquette@baylibre.com, Eugen Hristev <eugen.hristev@linaro.org>
-To: Eugen Hristev <eugen.hristev@linaro.org>, linux-arm-msm@vger.kernel.org
-Date: Mon, 28 Oct 2024 10:56:41 -0700
-User-Agent: alot/0.10
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241018-qcom-llcc-bindings-reg-ranges-fix-v1-1-88693cb7723b@linaro.org>
 
-Quoting Eugen Hristev (2024-10-28 09:34:03)
-> diff --git a/include/soc/qcom/tcs.h b/include/soc/qcom/tcs.h
-> index 3acca067c72b..152947a922c0 100644
-> --- a/include/soc/qcom/tcs.h
-> +++ b/include/soc/qcom/tcs.h
-> @@ -60,22 +63,19 @@ struct tcs_request {
->         struct tcs_cmd *cmds;
->  };
-> =20
-> -#define BCM_TCS_CMD_COMMIT_SHFT                30
-> -#define BCM_TCS_CMD_COMMIT_MASK                0x40000000
-> -#define BCM_TCS_CMD_VALID_SHFT         29
-> -#define BCM_TCS_CMD_VALID_MASK         0x20000000
-> -#define BCM_TCS_CMD_VOTE_X_SHFT                14
-> -#define BCM_TCS_CMD_VOTE_MASK          0x3fff
-> -#define BCM_TCS_CMD_VOTE_Y_SHFT                0
-> -#define BCM_TCS_CMD_VOTE_Y_MASK                0xfffc000
-> +#define BCM_TCS_CMD_COMMIT_MASK                BIT(30)
-> +#define BCM_TCS_CMD_VALID_MASK         BIT(29)
-> +#define BCM_TCS_CMD_VOTE_MASK          GENMASK(13, 0)
-> +#define BCM_TCS_CMD_VOTE_Y_MASK                GENMASK(13, 0)
-> +#define BCM_TCS_CMD_VOTE_X_MASK                GENMASK(27, 14)
-> =20
->  /* Construct a Bus Clock Manager (BCM) specific TCS command */
->  #define BCM_TCS_CMD(commit, valid, vote_x, vote_y)             \
-> -       (((commit) << BCM_TCS_CMD_COMMIT_SHFT) |                \
-> -       ((valid) << BCM_TCS_CMD_VALID_SHFT) |                   \
-> -       ((cpu_to_le32(vote_x) &                                 \
-> -       BCM_TCS_CMD_VOTE_MASK) << BCM_TCS_CMD_VOTE_X_SHFT) |    \
-> -       ((cpu_to_le32(vote_y) &                                 \
-> -       BCM_TCS_CMD_VOTE_MASK) << BCM_TCS_CMD_VOTE_Y_SHFT))
-> +       (le32_encode_bits(commit, BCM_TCS_CMD_COMMIT_MASK) |    \
-> +       le32_encode_bits(valid, BCM_TCS_CMD_VALID_MASK) |       \
-> +       le32_encode_bits(vote_x,        \
-> +                       BCM_TCS_CMD_VOTE_X_MASK) |              \
-> +       le32_encode_bits(vote_y,        \
-> +                       BCM_TCS_CMD_VOTE_Y_MASK))
+On Fri, Oct 18, 2024 at 04:13:47PM +0300, Abel Vesa wrote:
+> Document the missing Broadcast_AND region for x1e80100.
+> 
+> Fixes: e9ceb595c2d3 ("dt-bindings: cache: qcom,llcc: Add X1E80100 compatible")
+> Reported-by: kernel test robot <lkp@intel.com>
+> Closes: https://lore.kernel.org/oe-kbuild-all/202410181235.L7MF7z48-lkp@intel.com/
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+>  .../devicetree/bindings/cache/qcom,llcc.yaml       | 36 ++++++++++++++++++++--
+>  1 file changed, 34 insertions(+), 2 deletions(-)
 
-Why is cpu_to_le32() inside BCM_TCS_CMD at all? Is struct tcs_cmd::data
-supposed to be marked as __le32?
+Applied, thanks.
 
-Can the whole u32 be constructed and turned into an __le32 after setting
-all the bit fields instead of using le32_encode_bits() multiple times?
+Rob
+
 
