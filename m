@@ -1,95 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-36160-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36161-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id C2C9D9B2F54
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 12:53:47 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id AC1BD9B3000
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 13:21:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2550BB21D33
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 11:53:45 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3B91C1F21A60
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 12:21:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78AC21D54F2;
-	Mon, 28 Oct 2024 11:53:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B5FF71D8E16;
+	Mon, 28 Oct 2024 12:21:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="i3rTyWpk"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aCPDdwAj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35DDA2C697
-	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Oct 2024 11:53:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D38E717C61
+	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Oct 2024 12:21:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730116421; cv=none; b=t0r+XN7UsR1C2HlxZ7kKe3J2i7nrZWC1K/wZZrtUSAn8HWLxIe3rKWq55dlgzlWqZCOgaOhr2JCmMI5d/gCEOCTs0whrTkSn0UN/NrYsiYAnbdl5CVF0vDIISyDpZr9MAKtEZx+0CFi5P0BXFU2+VvRazsrS9P/YQ0hzR/tDga4=
+	t=1730118100; cv=none; b=I6uLuZl5/Zqq9N6hDsI7/3h1IpfPTdHmxWpJbqmtsPaXaaZl2HNI9u+iCPKyy24Lq3JI2LknNidl/IDEvcQugo+GRGdKqHS6eKbq7hTw2SMgIS5PL/pD4BhYALYJnR8jf8sWLeqyF/4QIXoxpUMuCe2jvI0x9CbFaeoRYrNymAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730116421; c=relaxed/simple;
-	bh=6QkgyBDKShlQ0y/cx9QH4amUPnbLqaaOreh4ogVY54Y=;
+	s=arc-20240116; t=1730118100; c=relaxed/simple;
+	bh=0KJmnar0ENzo0Nmbqy2W7n987z5/A5L/VlLbTAuSoe0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=g6ko4ujE7CSNp6VVw86XwJ0vrhsyn4HGQDoeE2zvG2bkB9msPVr3kboZmBHpevn0F/45JXOOBYL631XPBpgAeoFAFjiL4Nfj/lCciz4K4jKAJTT6CF2HXyqb86FrA/JwbrN4cWxTTVdEH7fi0i4RQUqbL3gk1Y71pyZYfkqUlek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=i3rTyWpk; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4315ee633dcso143705e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Oct 2024 04:53:38 -0700 (PDT)
+	 Content-Type:Content-Disposition:In-Reply-To; b=qZtZV8lz0LEWYjOeFAvqLVp4Vjv58xBFuKNc76ISJhFkiz5RZq3N/bhhZDUNJe9CN6kv+D/jIra7q6iAWzUJ2TlruF7c7kmONiMO2EJXWhH2US88EroctqnfOWsZgHmXpdtyaNQfdEzsgOoqBO8iTgwoGVaW+C3QntU+QauyTAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=aCPDdwAj; arc=none smtp.client-ip=209.85.167.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-539ee1acb86so4224067e87.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Oct 2024 05:21:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1730116417; x=1730721217; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1730118096; x=1730722896; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=s8ohfpnIEvg7feisWnyEQsAMOz4YBMRZ4DT963EvlJY=;
-        b=i3rTyWpk70CIPABaFlYyKNgHbGBH7oZCMF1MT9tY3/9GcRuFks3uXvY60ei17WiDD0
-         VQldY0CHYYyK4RFwFCX93Gxyywx093b7CrL6KjpTPQlweuzN3jDv0kWYpxUn9NAYAZ5A
-         vXQeMHufEkVjXI9pEZ/QGsSK2JAFkp0I1gjqq9Klaw+pqNLAv9piOMNVQhe/R2xMjTCd
-         Vj9Fy3Zn1XowaC/1Y6/ofY7vWwkLPqVujCmI9zR5s4KsUYHQjCWWg6s0TP1MD1eJTmGS
-         ihu5oaYTJbgFhJgLViPU1Fi+a+uF3dB2/40fZ7q6mbOIoJg6ikXBMAvB2ajQqXrjf+i5
-         Arlw==
+        bh=uZwvmXTI3rx+8d4K4ck0wQr/Ryjxkfv6hZd5Po8vYlY=;
+        b=aCPDdwAj85iMO/In7cy161VfGo9cF/kaZAQ2oOxyEFFzt45B0U2xoSW+xiYQRoZdCt
+         4QcznLyib5hIFsxukOF6Q/PNlo1TTFav6b2HB/QOmBXCsxK435ozTwFC5bkFe1rMufjm
+         VmiTcnSW6Pn31UOHYqwxN1Tfil5jEqhxgf7LN9Y3JyOKDfbu54n7I1G/HfT511V/Y7tf
+         CdkNU3uJpK73uDNt4o4PpKOE6+XBe5B/WvgY2eizNcIm6AN9nAhfX91DVqwEhhM8nUDi
+         3POXal89mb7j1x0WlHB6oJkNk1uQIC24r/hB9+XwxTO5kw3UKDuSoIEtSKU8Bq3b3pMW
+         XbaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730116417; x=1730721217;
+        d=1e100.net; s=20230601; t=1730118096; x=1730722896;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=s8ohfpnIEvg7feisWnyEQsAMOz4YBMRZ4DT963EvlJY=;
-        b=PMRtRZvZJs5hIutZb1cESF3jG+58rp6qyEeu6wnnWl9YTrsBhAq2aQE+wOfg1xXB9k
-         dyJNMcByj3pjhQEuhTb5GBAj6NjEOck0Xbapm/oOwLoKEw/aXG4aZbmlE3hIHtcSmnus
-         NVBz0YyLA5PXpHnBWu7J5QGuWyGXN8r1dfAUBK2P1Zpc5ur2KMSRvbJxVfRttZwf4jkt
-         VzyQDVpW9EA7f1v84Li+b+XExR/i84WBsJigiJuvWnNWVXSf4UdypypWsqYAm5O4wIWZ
-         7MsS/cbHy0X+EGcB4E4bkQi+R8vhL82PikALfKR2+iZe6NJTNJ+f+fjdGPsomBFGE4GS
-         NhRA==
-X-Forwarded-Encrypted: i=1; AJvYcCW9u5OTdLQNmHVqQINbMX4SLb8N7TvwFINBaMhjaKcn9lGwZ7YhA07fJ3A4e6Xg6/znfdNrWeF9pGeXhUGw@vger.kernel.org
-X-Gm-Message-State: AOJu0YzQJtVmtia/prXbmSlydNoJ9BsRzW354Kyfh1XMPNGaEbD6qpwW
-	Lq8HGiWaSrfaXQzK6Jy/zTE9DXiZZVy5LPKJttYmWWpuK3YociIuDYXJjCy3lg==
-X-Google-Smtp-Source: AGHT+IFAG1wQgZSHD4GZ1FDVInCNhg5i9ZX5wl+jOWzRo1tsON7IOnOTabrNuttxFekm1NvUnzUp2w==
-X-Received: by 2002:a05:600c:1e8f:b0:426:66a0:6df6 with SMTP id 5b1f17b1804b1-4319ab034e8mr4472705e9.0.1730116417455;
-        Mon, 28 Oct 2024 04:53:37 -0700 (PDT)
-Received: from google.com (88.140.78.34.bc.googleusercontent.com. [34.78.140.88])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4319359527asm106666165e9.16.2024.10.28.04.53.36
+        bh=uZwvmXTI3rx+8d4K4ck0wQr/Ryjxkfv6hZd5Po8vYlY=;
+        b=q8zHCAendmHI7pcTtJ3Nf4aNmH80IH3F3xmFKxRwz45iXp1JnhtTWr6DLXZ6Lhkaa3
+         Gt2XFsf5XlXsNwABvKUwP/NMNLW8FSb5PJG9Ni/aELiZLAB1GrdeufemlfijoX+J3MFt
+         7we+eZjjocbjuUqO3YUydeDQZtS/C0SePAS+8pvjd62qUIGYd9VkByPhNu2IhzRosCov
+         W2pLi7Htn/+KiNdOUbjH5bSvctEPRjSIatrR6htXbUfEd/zzoZ/GgORYYVZ8qmH0H82p
+         qKoadH4DaK3AVEDq7B8QzyhMdH3YUloA1ZRAUkBjmbWrCNTaNu0DCqPoJUKKGT9m6uAO
+         j61Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXHOBPXxdmD5s4OG/bBvveZihKKPwKuzEeQ/LOIKAnsqrVFWvq/zQ0HQdF33lL+VJk3PBQZDF3JXbX3xdH+@vger.kernel.org
+X-Gm-Message-State: AOJu0YyqFLuseQz6Blh9pTdC2/6rxkweQ9G5u/r52TyAM4Yc944t830Z
+	59e5dvgQuhP5Nn5x9JxFhNMLuDK1vQdnaTXS+c96GKFm0SgDQ3X3qGBdGYxdQqw=
+X-Google-Smtp-Source: AGHT+IGacAWVy3GFBz0pKlZcVPtx47HGkLAv1BBaK4EDC/lAvynm/V4JqWFS00dPEhyrQ8mVfYaTZQ==
+X-Received: by 2002:a05:6512:1090:b0:536:52ed:a23f with SMTP id 2adb3069b0e04-53b34728355mr2949537e87.0.1730118095954;
+        Mon, 28 Oct 2024 05:21:35 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53b2e1c9e43sm1056755e87.214.2024.10.28.05.21.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Oct 2024 04:53:36 -0700 (PDT)
-Date: Mon, 28 Oct 2024 11:53:33 +0000
-From: Mostafa Saleh <smostafa@google.com>
-To: Rob Clark <robdclark@gmail.com>
-Cc: iommu@lists.linux.dev, Will Deacon <will@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Rob Clark <robdclark@chromium.org>,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	"open list:DRM DRIVER for Qualcomm Adreno GPUs" <dri-devel@lists.freedesktop.org>,
-	"open list:DRM DRIVER for Qualcomm Adreno GPUs" <freedreno@lists.freedesktop.org>,
-	Jason Gunthorpe <jgg@ziepe.ca>,
-	Joao Martins <joao.m.martins@oracle.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	"moderated list:ARM SMMU DRIVERS" <linux-arm-kernel@lists.infradead.org>,
-	"open list:DRM DRIVER for Qualcomm Adreno GPUs" <linux-arm-msm@vger.kernel.org>,
-	open list <linux-kernel@vger.kernel.org>,
-	"open list:SUSPEND TO RAM" <linux-pm@vger.kernel.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Sean Paul <sean@poorly.run>, Steven Price <steven.price@arm.com>
-Subject: Re: [PATCH v9 0/4] io-pgtable-arm + drm/msm: Extend iova fault
- debugging
-Message-ID: <Zx97PU7cUEVCnpPl@google.com>
-References: <20240827181717.187245-1-robdclark@gmail.com>
+        Mon, 28 Oct 2024 05:21:34 -0700 (PDT)
+Date: Mon, 28 Oct 2024 14:21:32 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Viken Dadhaniya <quic_vdadhani@quicinc.com>, andersson@kernel.org, 
+	konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	konrad.dybcio@oss.qualcomm.com, quic_msavaliy@quicinc.com, quic_anupkulk@quicinc.com
+Subject: Re: [PATCH v2] arm64: dts: qcom: qcs615: Add QUPv3 configuration
+Message-ID: <hwan6cblfhvwmeos4izmhlzfaydxvs4s66wtjulk22aj3zhy6d@xkaqfgxe2sx2>
+References: <20241028112049.30734-1-quic_vdadhani@quicinc.com>
+ <50a0a56d-55ce-4b59-a004-b8418309eb92@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -98,58 +85,84 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240827181717.187245-1-robdclark@gmail.com>
+In-Reply-To: <50a0a56d-55ce-4b59-a004-b8418309eb92@kernel.org>
 
-Hi Rob,
+On Mon, Oct 28, 2024 at 12:33:48PM +0100, Krzysztof Kozlowski wrote:
+> On 28/10/2024 12:20, Viken Dadhaniya wrote:
+> > Add DT support for QUPv3 Serial Engines.
+> > 
+> > Co-developed-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+> > Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+> > Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+> > ---
+> > 
+> > Build Dependencies:
+> > 
+> > Base:
+> > https://lore.kernel.org/linux-devicetree/20240926-add_initial_support_for_qcs615-v3-5-e37617e91c62@quicinc.com/
+> > https://lore.kernel.org/linux-devicetree/20240926-add_initial_support_for_qcs615-v3-6-e37617e91c62@quicinc.com/
+> > 
+> > Clock: https://lore.kernel.org/linux-devicetree/20240920-qcs615-clock-driver-v2-3-2f6de44eb2aa@quicinc.com/
+> > ICC: https://lore.kernel.org/linux-devicetree/20240924143958.25-2-quic_rlaggysh@quicinc.com/
+> > Apps SMMU: https://lore.kernel.org/all/20241011063112.19087-1-quic_qqzhou@quicinc.com/
+> > 
+> > v1 -> v2:
+> > 
+> > - Add opp-shared property.
+> > - Use QCOM_ICC_TAG_ALWAYS flag in interconnect property.
+> > 
+> > v1 Link: https://lore.kernel.org/all/20241011103346.22925-1-quic_vdadhani@quicinc.com/
+> > ---
+> >  arch/arm64/boot/dts/qcom/qcs615.dtsi | 642 ++++++++++++++++++++++++++-
+> >  1 file changed, 638 insertions(+), 4 deletions(-)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/qcs615.dtsi b/arch/arm64/boot/dts/qcom/qcs615.dtsi
+> > index 865ead601f85..1d1cdf6f9a74 100644
+> > --- a/arch/arm64/boot/dts/qcom/qcs615.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/qcs615.dtsi
+> > @@ -5,6 +5,7 @@
+> >  
+> >  #include <dt-bindings/clock/qcom,qcs615-gcc.h>
+> >  #include <dt-bindings/clock/qcom,rpmh.h>
+> > +#include <dt-bindings/dma/qcom-gpi.h>
+> >  #include <dt-bindings/interconnect/qcom,icc.h>
+> >  #include <dt-bindings/interconnect/qcom,qcs615-rpmh.h>
+> >  #include <dt-bindings/interrupt-controller/arm-gic.h>
+> > @@ -17,6 +18,21 @@
+> >  	#address-cells = <2>;
+> >  	#size-cells = <2>;
+> >  
+> > +	aliases {
+> > +		i2c1 = &i2c1;
+> > +		i2c2 = &i2c2;
+> > +		i2c3 = &i2c3;
+> > +		i2c4 = &i2c4;
+> > +		i2c5 = &i2c5;
+> > +		i2c6 = &i2c6;
+> > +		i2c7 = &i2c7;
+> > +		spi2 = &spi2;
+> > +		spi4 = &spi4;
+> > +		spi6 = &spi6;
+> > +		spi7 = &spi7;
+> > +		serial0 = &uart0;
+> 
+> Comments from v1 apply.
+> 
 
-On Tue, Aug 27, 2024 at 11:17:08AM -0700, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
-> 
-> This series extends io-pgtable-arm with a method to retrieve the page
-> table entries traversed in the process of address translation, and then
-> beefs up drm/msm gpu devcore dump to include this (and additional info)
-> in the devcore dump.
-> 
-> This is a respin of https://patchwork.freedesktop.org/series/94968/
-> (minus a patch that was already merged)
-> 
-> v2: Fix an armv7/32b build error in the last patch
-> v3: Incorperate Will Deacon's suggestion to make the interface
->     callback based.
-> v4: Actually wire up the callback
-> v5: Drop the callback approach
-> v6: Make walk-data struct pgtable specific and rename
->     io_pgtable_walk_data to arm_lpae_io_pgtable_walk_data
-> v7: Re-use the pgtable walker added for arm_lpae_read_and_clear_dirty()
-> v8: Pass pte pointer to callback so it can modify the actual pte
-> v9: Fix selftests_running case
-> 
-> Rob Clark (4):
->   iommu/io-pgtable-arm: Make pgtable walker more generic
->   iommu/io-pgtable-arm: Re-use the pgtable walk for iova_to_phys
->   iommu/io-pgtable-arm: Add way to debug pgtable walk
->   drm/msm: Extend gpu devcore dumps with pgtbl info
+[...]
 
-Do you have plans to post another version of this series, as I am
-working on some patches, that would use some of the common page walk
-logic, so it would be more convenient to have them upstream.
-Otherwise, I can have your series as a dependency.
-
-Thanks,
-Mostafa
-
-
+> > @@ -392,6 +428,24 @@
+> >  			#size-cells = <1>;
+> >  		};
+> >  
+> > +		gpi_dma0: qcom,gpi-dma@800000  {
 > 
->  drivers/gpu/drm/msm/adreno/adreno_gpu.c |  10 ++
->  drivers/gpu/drm/msm/msm_gpu.c           |   9 ++
->  drivers/gpu/drm/msm/msm_gpu.h           |   8 ++
->  drivers/gpu/drm/msm/msm_iommu.c         |  22 ++++
->  drivers/gpu/drm/msm/msm_mmu.h           |   3 +-
->  drivers/iommu/io-pgtable-arm.c          | 149 +++++++++++++++---------
->  include/linux/io-pgtable.h              |  15 +++
->  7 files changed, 160 insertions(+), 56 deletions(-)
-> 
-> -- 
-> 2.46.0
-> 
+> Nope. Don't post downstream code.
+
+I'd say, as this has repeated the second time, please get the patches
+reviewed internally, before sending them for the third time.
+
+-- 
+With best wishes
+Dmitry
 
