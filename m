@@ -1,136 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-36205-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36206-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E31409B3993
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 19:49:24 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 49B479B39C9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 19:58:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A8823281805
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 18:49:23 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C3998B2152D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 18:58:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D15A71E0B7B;
-	Mon, 28 Oct 2024 18:48:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3F5C1DF98C;
+	Mon, 28 Oct 2024 18:57:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W8yGEmz9"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="I5ndG5x8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A77C21E008D;
-	Mon, 28 Oct 2024 18:48:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF8621DFE11
+	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Oct 2024 18:57:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730141312; cv=none; b=Dw9q0b87wFgL72jCwuBZtO7FnYJsIOxuDSP94Gks3HQee71EdSQrv2aIy/B52bdvibYW9w4L+YDu5tMCfJ7DJWgdkW0mfjSVJLPGFruAHeptP/j3jQzOqlh59bLLRk9keGS7qn5mnxpP3Ih50CqmtKyjsmD182GxwqCJnGhzhLU=
+	t=1730141878; cv=none; b=vB0JJiuP3sI0sY61vUb/ckzkFhAJl9qujfkGzIKzukBffuIZYXc8fRPgX4iFjBiLd229Sh/NTW2Dc8CZLRAixRzdl44cKwhLg+Uktfe77m0qqJuFmGrIOjjZAMCZQpX8t5KRMMJWOejNIkLijogZ5eaoSMV33YW+Rj1dIfNi/68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730141312; c=relaxed/simple;
-	bh=7yCnSD/2GuSo3KNhazT7H6gIGvBqe4Cbts6U9Qd+Fg8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=K8lSEnIVg2zKKJ8LbkqmftP/CXZywqogjsB8FO/2J4MtUyMjtrp5+yDk1FL1bMoT5nEGZHHc0m8pZn1OqJfsqza6j0MVLFCT5bejbbGZCxzkUUb5nhSkL8xO9dWbjnRv/xUp90uDavSu3+aUPV7dvEZf46Z+KmxcxAhCk8Q1D3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W8yGEmz9; arc=none smtp.client-ip=209.85.218.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-a99cc265e0aso719530666b.3;
-        Mon, 28 Oct 2024 11:48:30 -0700 (PDT)
+	s=arc-20240116; t=1730141878; c=relaxed/simple;
+	bh=ZqOIymdW7AOFGrkkZotyqe8mFhuss0YMD8c1cAdy6hM=;
+	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Kei2n36CJrbPW+sl4oUz8dlj4wHomaeK7HzGHXT5MMgtRgiV8qm3lGNtNTzNTTW2RQRL2Hxp+Bt7p56YbwyzmvSBzBkE3YtbMgnSxKME/riPbr++ks4m1F/Q/moAlMlFN1ndfdW/zLolV3jHuQB6UGLxU9NGgXGkQZEb0OcklCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=I5ndG5x8; arc=none smtp.client-ip=209.85.161.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-oo1-f44.google.com with SMTP id 006d021491bc7-5ebc04d495aso2682089eaf.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Oct 2024 11:57:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730141309; x=1730746109; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+        d=chromium.org; s=google; t=1730141876; x=1730746676; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=XXXfTAEkam83QhXgigwp3Sp4eBqaqdCR04cbjsml3X4=;
-        b=W8yGEmz9LgWONsXNJaiSNIPic8TINgDswiyzrE8WAEhs+QQbYcc09dpt7KVVy0twZk
-         gK9lWAm8SgN9dQX2PEpSHKMpOCLrlKrKjnegvObo1icAY30MVbndBBZyXuUH71iHAx9a
-         YyhFQr68thwwMA97wgWlgVGD8RJbI6uagBOeWumJn4X+mM0hXZZ6eff57lDvtZmsh290
-         nMfX52zJYfes8Bq6vMCCENgziMewRNVT4+ft9rTQiNNPhgjiWLQzsxp+cQpzNjVY7nRm
-         Hxm0Jr8qoaKCt3WW+1KgHlNWsR734ZLbmr67mhm5K0dz9NUqnasLKgwFIts+k2FUzcSw
-         7afA==
+        bh=d2LfEYca0SVAQ5XFZmx5kmUvCRKMJSdnjq6kZ9JePCA=;
+        b=I5ndG5x8bk8g9vlRPHBXSkKBj1M+LSvxp3YEpMcaC8MietUnPAMMrj5vUjWrpYXpVI
+         N84oWd0GRM8sbYxRJ1u8hnLavW4E0iAJws4k/Es5EiIR8FYbxot7OD1UmNE6PSV0Uv0+
+         T6wYH/alg+2mWvuv+fXcurNMPALq/rmUvJHOk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730141309; x=1730746109;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XXXfTAEkam83QhXgigwp3Sp4eBqaqdCR04cbjsml3X4=;
-        b=Sz7vH0RfNOZTzySXuuYBZeJDkBjsEwpjXtDboZ74EtVT99oKtLkFO1MDjbSnoJPNR9
-         FMpvKiUPzEVnMZ7d0/LWsaZsO+GnXz9MHXvzc6eDYc1qQ/cyahJ/Dxp2tafnV/GJxFOQ
-         UTyPOQT7GRjCmmzq84Lub81ATJ4bNMUtMSfDYhG3JtO41kl0pQ/VhSGsHDKeupQDEL9V
-         Oc8eoznU8BvW7HARjLKXZbjDyR3PmBlzeKbUGNoXtPlFxQAMGKedbqQrvpb+HdoF3ZZQ
-         gpR5SUs4WA3BUwoLJFUDRPWNdNDvCfH/HA/i+0ws0gGs6qwEL2jZW5qhZgANDkCU+85a
-         U9IQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUJtMTEv+JHjJ5ZMquBSWcBQ8PAg8nPmlCJIgiuZAUBIMNCq9tvakwA49aFzs1v423qCBrZZso4tSRK6Gyl@vger.kernel.org, AJvYcCX8YDcOePkuohnUIJ3G5wlEaqVvb01ki0MwjS5sw2ZyO3YcyhsJrW2no61v28YQ832aQ/Vdqgo0sHg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzkE44LQG63gCQrj4H6ryyhh7vIEaIBxMOT0lhsm7SDqYwDCP3C
-	lkBHR0oot58rQcCVTPyJ/KZ7Ms0RC68m3TOAyuNb4hzIoSQ+H9gETyuQ4g==
-X-Google-Smtp-Source: AGHT+IGuGvnH3S2IwavGjjh3kYjtHwOl0iZ9ybgjficwGHEPIT7DcThmtudj7m8KEo7CQR/coYkVrw==
-X-Received: by 2002:a17:907:6d23:b0:a99:4aa7:4d6f with SMTP id a640c23a62f3a-a9de5d6f211mr877704366b.12.1730141308878;
-        Mon, 28 Oct 2024 11:48:28 -0700 (PDT)
-Received: from [192.168.0.2] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
-        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-a9b1f029617sm397585166b.81.2024.10.28.11.48.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Oct 2024 11:48:28 -0700 (PDT)
-From: Gabor Juhos <j4g8y7@gmail.com>
-Date: Mon, 28 Oct 2024 19:48:19 +0100
-Subject: [PATCH v2 5/5] clk: qcom: dispcc-sm6115: remove alpha values from
- disp_cc_pll0_config
+        d=1e100.net; s=20230601; t=1730141876; x=1730746676;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=d2LfEYca0SVAQ5XFZmx5kmUvCRKMJSdnjq6kZ9JePCA=;
+        b=f4apqsjTGp0kBMItn7npFXVDsbC7E9Ro6xs1sxvhkpZymO5OuYo+4IL5RI0uTV0SYW
+         wUf+/tid+k7KJapPP43Lr1Nf8EszyWhjHkLhmcnGvSut9Cc3KUJeVvHg5legK3yDYweU
+         BUW25YR0q3ejwfcRH4jWiOnNSpiPpaDrgcCTVyTLNaOjdbzDmtbMBHiN6MslZi71OWQM
+         bzNc5M8Nf2rrFmA8+WIMknm1/t9cX88Tz14n7BiO2vvKNDcb8tRF1FI4NMPVnLpQuExw
+         3bXqMy98hxXabfkweb9VWFoE5+eoZusqqUsMLdY4dCgW20YK2Mf/tkeIonq/N0SHQQwg
+         GYbg==
+X-Forwarded-Encrypted: i=1; AJvYcCVLatlCggopKkciCDPnUKLBDL5sd3kF2mjQOOvbSqIWhA6Vj7MfDHz0BAuySAXp2O9OLXg+vOJFrmsS9jlP@vger.kernel.org
+X-Gm-Message-State: AOJu0YwJlbJ+0rRl40cPmQdvmk2c6/FcJC+F++hyedgnjPydkz/lcPva
+	EwVatuLK3TzG0qGumkrJHmU1conL4bwGTimvZV5E6zm2/IOSkbJoLYpbIXnAtziTj4OAVpOCoys
+	zKKgsMy71p+SL+WTFBAdk71r+orrTadFDqFK0
+X-Google-Smtp-Source: AGHT+IFvmYBtQn6VF/6ueDr0Mul6XafO9LMXlXZyFfebnMWZxAt0RxG3GM+9mJwqrZJNTpm99hm2yO6Tjm648OHps4A=
+X-Received: by 2002:a05:6358:41a1:b0:1c3:92d9:db9a with SMTP id
+ e5c5f4694b2df-1c3f9dfc925mr362147255d.10.1730141875928; Mon, 28 Oct 2024
+ 11:57:55 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 28 Oct 2024 14:57:55 -0400
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241028-alpha-mode-cleanup-v2-5-9bc6d712bd76@gmail.com>
-References: <20241028-alpha-mode-cleanup-v2-0-9bc6d712bd76@gmail.com>
-In-Reply-To: <20241028-alpha-mode-cleanup-v2-0-9bc6d712bd76@gmail.com>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Gabor Juhos <j4g8y7@gmail.com>
-X-Mailer: b4 0.14.2
+In-Reply-To: <20241028-arm-psci-system_reset2-vendor-reboots-v7-3-a4c40b0ebc54@quicinc.com>
+References: <20241028-arm-psci-system_reset2-vendor-reboots-v7-0-a4c40b0ebc54@quicinc.com>
+ <20241028-arm-psci-system_reset2-vendor-reboots-v7-3-a4c40b0ebc54@quicinc.com>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Mon, 28 Oct 2024 14:57:55 -0400
+Message-ID: <CAE-0n52buO+oJfesc+025hogm7BygMp4dO6b2_6aAoXVKRBs7w@mail.gmail.com>
+Subject: Re: [PATCH v7 3/5] firmware: psci: Read and use vendor reset types
+To: Andy Yan <andy.yan@rock-chips.com>, Arnd Bergmann <arnd@arndb.de>, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Catalin Marinas <catalin.marinas@arm.com>, Conor Dooley <conor+dt@kernel.org>, 
+	Elliot Berman <quic_eberman@quicinc.com>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+	Mark Rutland <mark.rutland@arm.com>, Olof Johansson <olof@lixom.net>, Rob Herring <robh@kernel.org>, 
+	Sebastian Reichel <sre@kernel.org>, Vinod Koul <vkoul@kernel.org>, Will Deacon <will@kernel.org>, 
+	cros-qcom-dts-watchers@chromium.org
+Cc: Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>, Melody Olvera <quic_molvera@quicinc.com>, 
+	Shivendra Pratap <quic_spratap@quicinc.com>, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	Florian Fainelli <florian.fainelli@broadcom.com>, linux-pm@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Since both the 'alpha' and 'alpha_hi' members of the configuration is
-initialized (the latter is implicitly) with zero values, the output
-rate of the PLL will be the same whether alpha mode is enabled or not.
+Quoting Elliot Berman (2024-10-28 11:44:57)
+> diff --git a/drivers/firmware/psci/psci.c b/drivers/firmware/psci/psci.c
+> index 2328ca58bba6..2d7b6efc8743 100644
+> --- a/drivers/firmware/psci/psci.c
+> +++ b/drivers/firmware/psci/psci.c
+> @@ -79,6 +79,14 @@ struct psci_0_1_function_ids get_psci_0_1_function_ids(void)
+>  static u32 psci_cpu_suspend_feature;
+>  static bool psci_system_reset2_supported;
+>
+> +struct psci_reset_param {
+> +       const char *mode;
+> +       u32 reset_type;
+> +       u32 cookie;
+> +};
+> +static struct psci_reset_param *psci_reset_params;
+> +static size_t num_psci_reset_params;
 
-Remove the initialization of the alpha* members to make it clear that
-the alpha mode is not required to get the desired output rate.
+These two can be __ro_after_init
 
-Despite that enabling alpha mode is not needed for the initial
-configuration, the set_rate() op might require that it is enabled
-already. In this particular case however, the clk_alpha_pll_set_rate()
-function will get reset the ALPHA_EN bit when the PLL's rate changes,
-so dropping 'alpha_en_mask' is safe.
+> +
+>  static inline bool psci_has_ext_power_state(void)
+>  {
+>         return psci_cpu_suspend_feature &
+> @@ -305,9 +313,38 @@ static int get_set_conduit_method(const struct device_node *np)
+>         return 0;
+>  }
+>
+> +static void psci_vendor_system_reset2(unsigned long action, void *data)
 
-No functional changes intended, compile tested only.
+Can 'data' simply be 'const char *cmd' instead?
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
----
-Changes in v2:
-  - extend the commit message to indicate that dropping 'alpha_en_mask' is safe
-  - add RB tag from Dmitry
-  - Link to v1: https://lore.kernel.org/r/20241021-alpha-mode-cleanup-v1-5-55df8ed73645@gmail.com
----
- drivers/clk/qcom/dispcc-sm6115.c | 2 --
- 1 file changed, 2 deletions(-)
+And can 'action' be dropped? It isn't used in this function.
 
-diff --git a/drivers/clk/qcom/dispcc-sm6115.c b/drivers/clk/qcom/dispcc-sm6115.c
-index 939887f82ecc3da21a5f26168c3161aa8cfeb3cb..2b236d52b29fe72b8979da85c8bd4bfd1db54c0b 100644
---- a/drivers/clk/qcom/dispcc-sm6115.c
-+++ b/drivers/clk/qcom/dispcc-sm6115.c
-@@ -48,8 +48,6 @@ static const struct pll_vco spark_vco[] = {
- /* 768MHz configuration */
- static const struct alpha_pll_config disp_cc_pll0_config = {
- 	.l = 0x28,
--	.alpha = 0x0,
--	.alpha_en_mask = BIT(24),
- 	.vco_val = 0x2 << 20,
- 	.vco_mask = GENMASK(21, 20),
- 	.main_output_mask = BIT(0),
+> +{
+> +       const char *cmd = data;
+> +       unsigned long ret;
+> +       size_t i;
+> +
+> +       for (i = 0; i < num_psci_reset_params; i++) {
+> +               if (!strcmp(psci_reset_params[i].mode, cmd)) {
+> +                       ret = invoke_psci_fn(PSCI_FN_NATIVE(1_1, SYSTEM_RESET2),
+> +                                            psci_reset_params[i].reset_type,
+> +                                            psci_reset_params[i].cookie, 0);
+> +                       /*
+> +                        * if vendor reset fails, log it and fall back to
+> +                        * architecture reset types
+> +                        */
+> +                       pr_err("failed to perform reset \"%s\": %ld\n", cmd,
+> +                              (long)ret);
 
--- 
-2.47.0
+			return?
 
+because we're not going to try another one, right?
 
