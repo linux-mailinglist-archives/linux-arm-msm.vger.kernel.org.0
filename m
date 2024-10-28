@@ -1,72 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-36239-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36240-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 724979B3CDB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 22:35:57 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5EFCB9B3CDD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 22:36:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C00E6B21282
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 21:35:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1A95B281048
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 21:36:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C88451EF0B7;
-	Mon, 28 Oct 2024 21:35:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB7651F4296;
+	Mon, 28 Oct 2024 21:35:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h/Wtp4zT"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Azpr6Wgd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86861EE009;
-	Mon, 28 Oct 2024 21:35:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC5361F4267;
+	Mon, 28 Oct 2024 21:35:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730151328; cv=none; b=Ea1axK3pI2mvwVi622GSSmott0alsD4YPd5jsjNjbNQlLVC43kHZUGw44u0Zl37NVODfZNPIPriklhhbJWbZHDQHIZsuuFLrDSizsKdzhwCcM1gkme8NbZ5cUXz3j5AUNL5zrSwtX5YV7esAKHUrHAW5GtP6Fjz0caO5JmCu7H0=
+	t=1730151331; cv=none; b=NF4jSQL7UQRsgo9hc9EJs+LshsSWMmQroWPz3SalbBFHwcZ7xYf8d7WYrN9C6KdU/Lktedxah59awoyulNZuEk86iU4ElGhpa1uOnbB1ZRCa0NMyqHQmuS1gHqEyH53T0tMJ5vVU60zofv/LX+9baeZGsINx/zKFrA3U4wkuPB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730151328; c=relaxed/simple;
-	bh=+E+z/EOaiAO9EI4kie6YvvmAmAMMQ+x08UASzW5Rucg=;
+	s=arc-20240116; t=1730151331; c=relaxed/simple;
+	bh=CC5DXv1pWsSCQKxatEBjAd9fJMcRefvmUAh3/PlXxlc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fQWmc51mm+K+59uEmsCPB9aWlNKpH63kyJfC91R6+PowSfBCU/7uUOBmQdrNTGr8tu37Y4sYOEusZAMXnvGwHZBrseKO1jeqq7tdhe9p6PKYDNCIzry7/25fVO+egDwL9yUH59EDS4nt4VJI3s438YYzTikChHvwK2h2BhLf7ZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h/Wtp4zT; arc=none smtp.client-ip=209.85.215.172
+	 MIME-Version; b=PLiAmM5Oomdyft82PDnWDpWc71P3RY0rINZC5dn+BZc1AgJyHyPoA++JmSw/Tqxl3m2rflglhurXM2343+hybA+C2Byn7wkR3QNxrA0l7VMgEkV6iqKKJxXWBSIftxyiZ+PIh44gU3+NYjDaJcqQJs4VeYj5frpxyYP2oThLDLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Azpr6Wgd; arc=none smtp.client-ip=209.85.210.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-7ea16c7759cso2246541a12.1;
-        Mon, 28 Oct 2024 14:35:26 -0700 (PDT)
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-71e625b00bcso3645926b3a.3;
+        Mon, 28 Oct 2024 14:35:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730151326; x=1730756126; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1730151329; x=1730756129; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=HG6V5IEjg5fR7H7zxvH/yThNTAfW1zJep5mmD3Nzp9E=;
-        b=h/Wtp4zTxmXPlsbN54HrbExpTqRk7EQDC4jw2SL+OoVvpOqEHlT0MsQNTQhD20gqYn
-         0kAwp+AQ8EUukYvT5v0BLyI+eY/Tf3mUKDQa+47WTThVWEpgVRDI9T409Y+F+xD4ixoD
-         /GrT+zo+uthxn18LITYCkpSfwFjwNF154OwppG2QjqYItgRGj5B8sGH4jS7Hd/9nwFXs
-         M03e/F1ZJpo5MR5FvE194b+BybcLzs+OJ2cqgT7/o+OWYR8swkqvlRSI+ucX1ox0Qhwo
-         z5sYbQxaTMbv8JQGaw3njluoOQgQd4dfvP55OoStVgNaInUAvLtyhuBbQKVc1LhplgNG
-         wgUQ==
+        bh=U5JCDOT4G1vRDgamkQTQYoEg3xqOKYS4iUoOBpBdGUM=;
+        b=Azpr6WgdJDObXRIye1to2pgHHww3FLapTjmAL9scPvfBV+xK4/whv7+mvDhtnZlgLQ
+         JBBJZCwStKyQ7lYTc0mvPF2JlStEwJV8bRlCyu3jVFLeJuXkU0GLeX0ciAi+6Zqb7wxC
+         paA3Cyca99gsrNVGp8PjV0gwo8m9sCxsxZpGR84AYCbNgZSiWLszi0cKzgWq9kXZykty
+         oRuEZZALZ/GXrXBzVSr5OTzgAnpou4acQdikQ+Bwi1y83UpiwYDpIF9F3MschQH7gGu7
+         4JshKXvAJOjgXPyK5DTVEpQPArg8FIOvcVTFp0ugLf7X9gx/5QXIhu2DxZRegumnPG+9
+         tEdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730151326; x=1730756126;
+        d=1e100.net; s=20230601; t=1730151329; x=1730756129;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=HG6V5IEjg5fR7H7zxvH/yThNTAfW1zJep5mmD3Nzp9E=;
-        b=SLXnkvdAsvDlumxHP3u9TRZ4csOQiAi6gcHzMB9AB0zt2GPIMW4cE/vzlrv2J+IHgK
-         wHMZhDeHM1t1o5fJooEBvw6LLcTxykvDn5mboGiBLCX8+awAf45eGKxPxaq/gHvJqm/B
-         relnGWUFA6TshSa3AkJY5dDriYPgSTcNX8d0WTZGxDoyD71PsThUgdvpDZrBJzCH2AvA
-         UibS2EiCv8Q8vnQ47KSzpmKgO/rAiFUz4f3eNWoJfTFREBuMG7HNalFSg4d1BUlUozg5
-         Ic3GUZc3EYtQJbTrVp/x3OSBUbRCQ9jIZ/yttJCju8K/R5aflrUJcmVlhFbcxDpkPCAZ
-         +LTA==
-X-Forwarded-Encrypted: i=1; AJvYcCUAWq6DBQ2HJh3xt5m05kvwcVROt+mvojrLDbGX8Zgdo6wBAZvBWO6hRCxQAQm+11N0GIYzS1Mr8ziHSgg=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy0Q4W4yDDlRRsjF4Eoo1YjK2ueRe9H507Y6FPwO4uaorWpjc/1
-	hZ7/1XQFjIsVQZjKxelzu9EpEN2eiBROgwN8DYnQBL+glN+LbdpN
-X-Google-Smtp-Source: AGHT+IHYfTByDMFcPygEQ50HF0A5OEX5ytobSAKHJ4GmVG1OnJTN978gymeL5m5xxwFxhYlpGaAN7A==
-X-Received: by 2002:a05:6a20:4499:b0:1d9:1a3b:85d4 with SMTP id adf61e73a8af0-1d9a83b5192mr14212818637.6.1730151325996;
-        Mon, 28 Oct 2024 14:35:25 -0700 (PDT)
+        bh=U5JCDOT4G1vRDgamkQTQYoEg3xqOKYS4iUoOBpBdGUM=;
+        b=A5ImeIH9Hon8AzN+BguyMqZFR35Wk2F0zSqGeUaGrjDR3kwxSWFIfMI2hEn9MMYcPO
+         SmZwQJJDqkcrzLSMApSXrI7vho7Ya2ytH5+Lzlq2c+exAy1/miKzXyUPqjlRbF4loqMu
+         5uRjboscv0oXMXG43Ir+Q/JhzDmRAEBOmUOBL7gPdkATdM37FFgLcbizClksC0Wi9Jhx
+         cf1xCpPq4QmpO8D1dG6A0Ds56+Nqv8SD1/FsuwYk0cWjDSGBQVq2PHsxUvNS+2MQo9Ds
+         QyefP/IT5x2EMHCviM4nk7/fu92tnAc7uBPKCKLPgQ5DBXoQ7wFUfYeUAe+H0skAvsl1
+         sGFQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXu6bikO/IenmqvjRtEHp/9Z2T16X/2HRUDMMOjzJqVoaczerlt7F5PitPEHQoG8vHFtamgMnQD3dKj3C0=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxUMOLl9Cq+V3N0g8qKI3ejAXICEV0qYFfnWQ7lINuW+3PyRcSJ
+	RW5AZPUA4TF2sBnwfM+avVyBwoUpkhdqO/e4Ml1KyVVCdXiL1aRP
+X-Google-Smtp-Source: AGHT+IGJ/vSmxwIqBeNVXBSzAWZP5g2tROL+0Y2wcPzndUVsioqMA6yobuvrQ/JZESgfajh0W3hfHw==
+X-Received: by 2002:a05:6a00:230b:b0:71e:4cff:2654 with SMTP id d2e1a72fcca58-72062f86088mr14718581b3a.6.1730151329086;
+        Mon, 28 Oct 2024 14:35:29 -0700 (PDT)
 Received: from localhost ([2a00:79e1:2e00:1301:12e9:d196:a1e9:ab67])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72057931a06sm6216898b3a.55.2024.10.28.14.35.25
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7205791e4dasm6207770b3a.25.2024.10.28.14.35.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Oct 2024 14:35:25 -0700 (PDT)
+        Mon, 28 Oct 2024 14:35:28 -0700 (PDT)
 From: Rob Clark <robdclark@gmail.com>
 To: iommu@lists.linux.dev
 Cc: linux-arm-msm@vger.kernel.org,
@@ -76,11 +76,17 @@ Cc: linux-arm-msm@vger.kernel.org,
 	Mostafa Saleh <smostafa@google.com>,
 	Rob Clark <robdclark@chromium.org>,
 	Joerg Roedel <joro@8bytes.org>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Joao Martins <joao.m.martins@oracle.com>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
 	linux-arm-kernel@lists.infradead.org (moderated list:ARM SMMU DRIVERS),
 	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v10 2/4] iommu/io-pgtable-arm: Re-use the pgtable walk for iova_to_phys
-Date: Mon, 28 Oct 2024 14:31:38 -0700
-Message-ID: <20241028213146.238941-3-robdclark@gmail.com>
+Subject: [PATCH v10 3/4] iommu/io-pgtable-arm: Add way to debug pgtable walk
+Date: Mon, 28 Oct 2024 14:31:39 -0700
+Message-ID: <20241028213146.238941-4-robdclark@gmail.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028213146.238941-1-robdclark@gmail.com>
 References: <20241028213146.238941-1-robdclark@gmail.com>
@@ -94,113 +100,97 @@ Content-Transfer-Encoding: 8bit
 
 From: Rob Clark <robdclark@chromium.org>
 
-Re-use the generic pgtable walk path.
+Add an io-pgtable method to walk the pgtable returning the raw PTEs that
+would be traversed for a given iova access.
 
 Signed-off-by: Rob Clark <robdclark@chromium.org>
 ---
- drivers/iommu/io-pgtable-arm.c | 74 +++++++++++++++++-----------------
- 1 file changed, 37 insertions(+), 37 deletions(-)
+ drivers/iommu/io-pgtable-arm.c | 25 +++++++++++++++++++++++++
+ include/linux/io-pgtable.h     | 15 +++++++++++++++
+ 2 files changed, 40 insertions(+)
 
 diff --git a/drivers/iommu/io-pgtable-arm.c b/drivers/iommu/io-pgtable-arm.c
-index 7e9c0f8ae138..88b128c77893 100644
+index 88b128c77893..6739e1fa54ec 100644
 --- a/drivers/iommu/io-pgtable-arm.c
 +++ b/drivers/iommu/io-pgtable-arm.c
-@@ -712,42 +712,6 @@ static size_t arm_lpae_unmap_pages(struct io_pgtable_ops *ops, unsigned long iov
- 				data->start_level, ptep);
+@@ -762,6 +762,30 @@ static phys_addr_t arm_lpae_iova_to_phys(struct io_pgtable_ops *ops,
+ 	return iopte_to_paddr(d.pte, data) | iova;
  }
  
--static phys_addr_t arm_lpae_iova_to_phys(struct io_pgtable_ops *ops,
--					 unsigned long iova)
--{
--	struct arm_lpae_io_pgtable *data = io_pgtable_ops_to_data(ops);
--	arm_lpae_iopte pte, *ptep = data->pgd;
--	int lvl = data->start_level;
--
--	do {
--		/* Valid IOPTE pointer? */
--		if (!ptep)
--			return 0;
--
--		/* Grab the IOPTE we're interested in */
--		ptep += ARM_LPAE_LVL_IDX(iova, lvl, data);
--		pte = READ_ONCE(*ptep);
--
--		/* Valid entry? */
--		if (!pte)
--			return 0;
--
--		/* Leaf entry? */
--		if (iopte_leaf(pte, lvl, data->iop.fmt))
--			goto found_translation;
--
--		/* Take it to the next level */
--		ptep = iopte_deref(pte, data);
--	} while (++lvl < ARM_LPAE_MAX_LEVELS);
--
--	/* Ran out of page tables to walk */
--	return 0;
--
--found_translation:
--	iova &= (ARM_LPAE_BLOCK_SIZE(lvl, data) - 1);
--	return iopte_to_paddr(pte, data) | iova;
--}
--
- struct io_pgtable_walk_data {
- 	struct io_pgtable		*iop;
- 	void				*data;
-@@ -763,6 +727,41 @@ static int __arm_lpae_iopte_walk(struct arm_lpae_io_pgtable *data,
- 				 arm_lpae_iopte *ptep,
- 				 int lvl);
- 
-+struct iova_to_phys_data {
-+	arm_lpae_iopte pte;
-+	int lvl;
-+};
-+
-+static int visit_iova_to_phys(struct io_pgtable_walk_data *walk_data, int lvl,
++static int visit_pgtable_walk(struct io_pgtable_walk_data *walk_data, int lvl,
 +			      arm_lpae_iopte *ptep, size_t size)
 +{
-+	struct iova_to_phys_data *data = walk_data->data;
-+	data->pte = *ptep;
-+	data->lvl = lvl;
++	struct arm_lpae_io_pgtable_walk_data *data = walk_data->data;
++	data->ptes[data->level++] = *ptep;
 +	return 0;
 +}
 +
-+static phys_addr_t arm_lpae_iova_to_phys(struct io_pgtable_ops *ops,
-+					 unsigned long iova)
++static int arm_lpae_pgtable_walk(struct io_pgtable_ops *ops, unsigned long iova,
++				 void *wd)
 +{
 +	struct arm_lpae_io_pgtable *data = io_pgtable_ops_to_data(ops);
-+	struct iova_to_phys_data d;
 +	struct io_pgtable_walk_data walk_data = {
-+		.data = &d,
-+		.visit = visit_iova_to_phys,
++		.data = wd,
++		.visit = visit_pgtable_walk,
 +		.addr = iova,
 +		.end = iova + 1,
 +	};
-+	int ret;
 +
-+	ret = __arm_lpae_iopte_walk(data, &walk_data, data->pgd, data->start_level);
-+	if (ret)
-+		return 0;
++	((struct arm_lpae_io_pgtable_walk_data *)wd)->level = 0;
 +
-+	iova &= (ARM_LPAE_BLOCK_SIZE(d.lvl, data) - 1);
-+	return iopte_to_paddr(d.pte, data) | iova;
++	return __arm_lpae_iopte_walk(data, &walk_data, data->pgd, data->start_level);
 +}
 +
  static int io_pgtable_visit(struct arm_lpae_io_pgtable *data,
  			    struct io_pgtable_walk_data *walk_data,
  			    arm_lpae_iopte *ptep, int lvl)
-@@ -780,8 +779,9 @@ static int io_pgtable_visit(struct arm_lpae_io_pgtable *data,
- 		return 0;
- 	}
+@@ -937,6 +961,7 @@ arm_lpae_alloc_pgtable(struct io_pgtable_cfg *cfg)
+ 		.unmap_pages	= arm_lpae_unmap_pages,
+ 		.iova_to_phys	= arm_lpae_iova_to_phys,
+ 		.read_and_clear_dirty = arm_lpae_read_and_clear_dirty,
++		.pgtable_walk	= arm_lpae_pgtable_walk,
+ 	};
  
--	if (WARN_ON(!iopte_table(pte, lvl)))
-+	if (!iopte_table(pte, lvl)) {
- 		return -EINVAL;
-+	}
+ 	return data;
+diff --git a/include/linux/io-pgtable.h b/include/linux/io-pgtable.h
+index b1ecfc3cd5bc..d7bfbf351975 100644
+--- a/include/linux/io-pgtable.h
++++ b/include/linux/io-pgtable.h
+@@ -178,12 +178,26 @@ struct io_pgtable_cfg {
+ 	};
+ };
  
- 	ptep = iopte_deref(pte, data);
- 	return __arm_lpae_iopte_walk(data, walk_data, ptep, lvl + 1);
++/**
++ * struct arm_lpae_io_pgtable_walk_data - information from a pgtable walk
++ *
++ * @ptes:     The recorded PTE values from the walk
++ * @level:    The level of the last PTE
++ *
++ * @level also specifies the last valid index in @ptes
++ */
++struct arm_lpae_io_pgtable_walk_data {
++	u64 ptes[4];
++	int level;
++};
++
+ /**
+  * struct io_pgtable_ops - Page table manipulation API for IOMMU drivers.
+  *
+  * @map_pages:    Map a physically contiguous range of pages of the same size.
+  * @unmap_pages:  Unmap a range of virtually contiguous pages of the same size.
+  * @iova_to_phys: Translate iova to physical address.
++ * @pgtable_walk: (optional) Perform a page table walk for a given iova.
+  *
+  * These functions map directly onto the iommu_ops member functions with
+  * the same names.
+@@ -197,6 +211,7 @@ struct io_pgtable_ops {
+ 			      struct iommu_iotlb_gather *gather);
+ 	phys_addr_t (*iova_to_phys)(struct io_pgtable_ops *ops,
+ 				    unsigned long iova);
++	int (*pgtable_walk)(struct io_pgtable_ops *ops, unsigned long iova, void *wd);
+ 	int (*read_and_clear_dirty)(struct io_pgtable_ops *ops,
+ 				    unsigned long iova, size_t size,
+ 				    unsigned long flags,
 -- 
 2.47.0
 
