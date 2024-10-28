@@ -1,76 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-36203-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36204-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 64FBE9B398C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 19:49:03 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E9C9B9B3990
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 19:49:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2A510282CED
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 18:49:02 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9DC401F22EBB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 18:49:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0BD441E00AF;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9D8B1E04A0;
 	Mon, 28 Oct 2024 18:48:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Tu/IewWd"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QrUJpRuw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5E141DFE23;
-	Mon, 28 Oct 2024 18:48:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9AC11DFE32;
+	Mon, 28 Oct 2024 18:48:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730141310; cv=none; b=j1dnvl0ca6AUDu1wX8CmhlhFsQO4UQfo6euC52ddBMKtBiEs5ooIhCZ9XA28sk+vf6IZUbtmuOsL3kzsbQQOA0UY/yjjkizVH8qGhbRwvHn8//9lGLAc/URto64TXIAIZLoVH/1PtSL56JLVFICINcxNnmE27Qtm7psPC6iB+IM=
+	t=1730141311; cv=none; b=n791NdtgBZwMMSiB5T5lwWFtb0mH0w9baTC2/QuwZ70/AFKPbEpyRmBc0ZtVlEOUhISYIPCTiPqVt54IZLj/ptBiFsnc8gOLuQEYYNvT+jG9ph6pWX1GwLiXUhAP6wxoopQNx7EhZAKjBGyqdm3a2rTPKCxsLZFfbFxJ+AIzeQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730141310; c=relaxed/simple;
-	bh=yM0OWmtAcDKn2FuZk6in24tAsAFJrfmMDU9dm2pIGiU=;
+	s=arc-20240116; t=1730141311; c=relaxed/simple;
+	bh=tJy7WRxFzYmpR4M+/fV3d8Qijiy2s/1g7HIRtP8Dflk=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=sNVl1scrsX/wy9kLyI4cGVRlNPvRkesz2I8qSvN6SlAosyIy0cO9uUO03Njxo601IThe/Jn+x4MrsPwA+CgAZcUcCDuB6tbx4lDgJpXvubMomUYvdB9YtepP9t5tfB3K1dDmPOP4aIJQfR7RuUVBWTgdVpaV27SpdaabHZ0A9pA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Tu/IewWd; arc=none smtp.client-ip=209.85.218.54
+	 In-Reply-To:To:Cc; b=rZVZKjzKa71QGgi+V50fc94mdl1gtkZ6UWSVWLaiL33bVSoylPZ9PbFky1JrnL28K2ABVWSklcjnOgah8+uw4bthxH70JjemclepzM2iEdDIR1V3w7kyHJP3CrnVwRgonE7vJoYWgG1LQ6/i86Tys5I7lNZX+1IMGfTXEFstyEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QrUJpRuw; arc=none smtp.client-ip=209.85.218.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a9a16b310f5so725249166b.0;
-        Mon, 28 Oct 2024 11:48:28 -0700 (PDT)
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a9a2cdc6f0cso626901966b.2;
+        Mon, 28 Oct 2024 11:48:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730141307; x=1730746107; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1730141308; x=1730746108; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=IBKU3i7B0mk4YfvFEK4QQaKbeBZNcN9N7bMX66oe7cQ=;
-        b=Tu/IewWdjbJ96/TeQNG2PMvEUTX25ATDQm9alOo5dXUJjqBa3Lw8F90liYvqn5JhEm
-         yg+//pjRbAl6NW5GgkTXotGUAPfLJE9g16JMzAjrgnx3OXEyFBimzQkx5M+GBz+ZBooq
-         VlLh56yClbJ0mTGS408OIqBBvZbWSTKRfiwRpyEGYmRAc14U2gfYYeb/FhvAmUfY4HH6
-         n0RfRSzdJLUSlo9BwlIDE0TGjZsGSzXXVP59zGAH7luEUnWfZ1/Mczvz9ArAMBdOG/XM
-         aFuCUnV9YOkQ1Wy5vlYu/RjRl/Gwr3YpQ1V8pD/rF7DINxAKB9BPdDRL1uKm9OcmXw/3
-         ZqcA==
+        bh=WawemXe+1+8ApO76dXS2S+ra0pV/e8rA+QZSseLvbvM=;
+        b=QrUJpRuwTXfB8S/5tlOOXkdk/qgSkbnc50Xj+Z+HEKEo6Py6vp3z9CiPx5L8LLBcdN
+         N5+dPUJV+xtVpTbf03sZpp9c+ikvV3pWKHeqWT9x3A5CK+Hx6Q6orcpehH1F8SQ4WeiB
+         51s08oAQMLJ/Ir9ZG9psMQbrijVVem5J0GjcYGSM5HiFIXeyywYqohiuGxe4IxGHDi2v
+         Hae0wN/ei9NYUUf7CV/bg+j/d3FB/JsMf/m3pw2ThoXFpjKHRR31nyqNWv9lifM7GB5x
+         6NBskEyYf3WQQcFEHURT2Rjg0lWgt4soKkfxV+yUQ+Ry81myqaQXbX9OrTbMOsTx2O20
+         0K6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730141307; x=1730746107;
+        d=1e100.net; s=20230601; t=1730141308; x=1730746108;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=IBKU3i7B0mk4YfvFEK4QQaKbeBZNcN9N7bMX66oe7cQ=;
-        b=MTN+ZFGTtwk5A8zndSnGCxA2N8JiGjdUxx5sWKK3VqMZbZajANTXfzeEXJZE3S2z9x
-         OGWH/MCVCNQGM08ppN/EHv8P4aGsUpIxASiLtp70Exe8Se0AhsgnxfmndIxMVsGx3pE4
-         YaJ2dXT5HtJcL3euSw/mDx+go7mkmS4vDxKCPCyPNN6Rigch93MWFR/IvHIgWhTlreCu
-         RRFHgnNnwuEB0w6SI4N+TY98IkPz60C+z5qC5R4EiWqrCL9SO+6+aXxqQvYic/WVSl1U
-         aL9cu0UbdM0Nuyp3ydZBktyPMsWNYSla/tQCJStXy+yDEVxVpCdfpWpBGVGgAw97hYJE
-         t65Q==
-X-Forwarded-Encrypted: i=1; AJvYcCURq2RCNV7633pdFqijX4iVT0VrqP3JQAmBbE+wQThZ6588HmXfuoEIahjvwnxyFni+SepFelsXsBTlTLOo@vger.kernel.org, AJvYcCWZ7zySTxcwFzlpNezWS1aox1p2oZXgOIDBgutrml96ddFXTa0h0E3au+6g0QawqdXmXqWgAonRHCs=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy4agj4nkrPk80ZKeXTSDnfGmjT25jzYoupNK7FOsFmO9yBWt3Q
-	ZKcUE9lwytLcvN7EI7mlGrO+P5WLclegAOQgK2aEfkblksOaJE99WShvHg==
-X-Google-Smtp-Source: AGHT+IHvbm0YXq5I5z7ls6NUwBrW0g1B7TNGWLeHRTUpyQ8rJAobLexARTglStPKazAs2xEKKpnWwQ==
-X-Received: by 2002:a17:907:7ea2:b0:a99:f4c3:580d with SMTP id a640c23a62f3a-a9de61a0042mr658100166b.42.1730141306868;
-        Mon, 28 Oct 2024 11:48:26 -0700 (PDT)
+        bh=WawemXe+1+8ApO76dXS2S+ra0pV/e8rA+QZSseLvbvM=;
+        b=oGxcdJF0BfIRfr65lyEm8TwgMtuUBzl2BR4X0W3ThRZnNaAiNCJqVi65gNQE8sghF3
+         j0Uwne4o2Hniit0RY6jHXnWi3KCS7KTCNREPQcSh8wOtz5lK0x972PTyayAxB0K5VKd7
+         /bnbhWLSV0TLNSkNKcShqv3im20Xl4Nnm4RNuDFG1rrRpCOfcza82Zed5vC4KYVrVKNu
+         igYXkVfgRpk1Rr1euU9A9DFx8z5oe62t0nkaB6gcUQUKigsCyeEL7NNiijOAygdm74kD
+         9dBnNo2F81NdRreTSx/J1uTOH+IpSiH3yhu/0P5XCy6gEtyILhGbhJQcrqbF+ASfzmi/
+         EC3A==
+X-Forwarded-Encrypted: i=1; AJvYcCULsRSKS/KvOWzrDOcCKhqaTWT3EayIEOEqN7L+dE8dVlEuXRqrFJ0lPg4Xmwssw0aDg+FiozTO+zw=@vger.kernel.org, AJvYcCXYwvO50zh2Nq+ds8iqCIgEbyt11t8zrEGR9346OMpqc1JbHCTs2WCF4Ov308bbieR3YtrBa2pELUyFdjp6@vger.kernel.org
+X-Gm-Message-State: AOJu0YzYBGjqqdKhJ2CFbrRh5gtNKx1VnJ8yI5kupgMFHD72Mje7zUNl
+	KKgc0fkH98T+I2YPDLt2Gl/GxO840a4oyANBlw0Ex2mKcsAvfL6ERy9t0w==
+X-Google-Smtp-Source: AGHT+IHeEImOIFlRf6rqC6W0xEOD7To8xmifzI9uf6RD2K8NXlb3pzQMKVBf/U1LU6OEfWBCyyCMtA==
+X-Received: by 2002:a17:907:7d87:b0:a9a:f0e:cd4 with SMTP id a640c23a62f3a-a9de619a63bmr955258366b.55.1730141307881;
+        Mon, 28 Oct 2024 11:48:27 -0700 (PDT)
 Received: from [192.168.0.2] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
-        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-a9b1f029617sm397585166b.81.2024.10.28.11.48.25
+        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-a9b1f029617sm397585166b.81.2024.10.28.11.48.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Oct 2024 11:48:26 -0700 (PDT)
+        Mon, 28 Oct 2024 11:48:27 -0700 (PDT)
 From: Gabor Juhos <j4g8y7@gmail.com>
-Date: Mon, 28 Oct 2024 19:48:17 +0100
-Subject: [PATCH v2 3/5] clk: qcom: gcc-ipq6018: remove alpha values from
- NSS Crypto PLL's config
+Date: Mon, 28 Oct 2024 19:48:18 +0100
+Subject: [PATCH v2 4/5] clk: qcom: dispcc-qcm2290: remove alpha values from
+ disp_cc_pll0_config
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,7 +79,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241028-alpha-mode-cleanup-v2-3-9bc6d712bd76@gmail.com>
+Message-Id: <20241028-alpha-mode-cleanup-v2-4-9bc6d712bd76@gmail.com>
 References: <20241028-alpha-mode-cleanup-v2-0-9bc6d712bd76@gmail.com>
 In-Reply-To: <20241028-alpha-mode-cleanup-v2-0-9bc6d712bd76@gmail.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -91,11 +91,11 @@ Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
 X-Mailer: b4 0.14.2
 
 Since both the 'alpha' and 'alpha_hi' members of the configuration is
-initialized with zero values, the output rate of the PLL will be the
-same whether alpha mode is enabled or not.
+initialized (the latter is implicitly) with zero values, the output
+rate of the PLL will be the same whether alpha mode is enabled or not.
 
 Remove the initialization of the alpha* members to make it clear that
-alpha mode is not required to get the desired output rate.
+the alpha mode is not required to get the desired output rate.
 
 Despite that enabling alpha mode is not needed for the initial
 configuration, the set_rate() op might require that it is enabled
@@ -103,49 +103,30 @@ already. In this particular case however, the clk_alpha_pll_set_rate()
 function will get reset the ALPHA_EN bit when the PLL's rate changes,
 so dropping 'alpha_en_mask' is safe.
 
-While at it, also add a comment to indicate the frequency the PLL runs
-at with the current configuration.
+No functional changes intended, compile tested only.
 
-No functional changes, the PLL runs at 1.2 GHz both before and after
-the change.
-
-Tested on Xiaomi Mi Router AX1800 (IPQ6018, out-of-tree board).
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
 ---
 Changes in v2:
   - extend the commit message to indicate that dropping 'alpha_en_mask' is safe
-  - add RB tag from Dmitry
-  - Link to v1: https://lore.kernel.org/r/20241021-alpha-mode-cleanup-v1-3-55df8ed73645@gmail.com
+  - Link to v1: https://lore.kernel.org/r/20241021-alpha-mode-cleanup-v1-4-55df8ed73645@gmail.com
 ---
- drivers/clk/qcom/gcc-ipq6018.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/clk/qcom/dispcc-qcm2290.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/clk/qcom/gcc-ipq6018.c b/drivers/clk/qcom/gcc-ipq6018.c
-index ab0f7fc665a9790dd8edba0cf4b86c5c672a337d..d861191b0c85ccc105ac0e62d7a68210c621fc13 100644
---- a/drivers/clk/qcom/gcc-ipq6018.c
-+++ b/drivers/clk/qcom/gcc-ipq6018.c
-@@ -4194,10 +4194,9 @@ static const struct alpha_pll_config ubi32_pll_config = {
- 	.test_ctl_hi_val = 0x4000,
- };
- 
-+/* 1200 MHz configuration */
- static const struct alpha_pll_config nss_crypto_pll_config = {
- 	.l = 0x32,
+diff --git a/drivers/clk/qcom/dispcc-qcm2290.c b/drivers/clk/qcom/dispcc-qcm2290.c
+index 449ffea2295d3760f40abe8b1195e9022f46a9b0..d7bb1399e1022afc68e45ee335d615d4a5be5add 100644
+--- a/drivers/clk/qcom/dispcc-qcm2290.c
++++ b/drivers/clk/qcom/dispcc-qcm2290.c
+@@ -40,8 +40,6 @@ static const struct pll_vco spark_vco[] = {
+ /* 768MHz configuration */
+ static const struct alpha_pll_config disp_cc_pll0_config = {
+ 	.l = 0x28,
 -	.alpha = 0x0,
--	.alpha_hi = 0x0,
- 	.config_ctl_val = 0x4001055b,
- 	.main_output_mask = BIT(0),
- 	.pre_div_val = 0x0,
-@@ -4206,7 +4205,6 @@ static const struct alpha_pll_config nss_crypto_pll_config = {
- 	.post_div_mask = GENMASK(11, 8),
- 	.vco_mask = GENMASK(21, 20),
- 	.vco_val = 0x0,
 -	.alpha_en_mask = BIT(24),
- };
- 
- static struct clk_hw *gcc_ipq6018_hws[] = {
+ 	.vco_val = 0x2 << 20,
+ 	.vco_mask = GENMASK(21, 20),
+ 	.main_output_mask = BIT(0),
 
 -- 
 2.47.0
