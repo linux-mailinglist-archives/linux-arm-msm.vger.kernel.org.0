@@ -1,163 +1,214 @@
-Return-Path: <linux-arm-msm+bounces-36163-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36164-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 081DA9B300A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 13:22:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 91EDB9B301E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 13:25:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8B8E71F21146
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 12:22:45 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C5D841F22179
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 12:24:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D74D17C61;
-	Mon, 28 Oct 2024 12:22:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 06FCC1D9339;
+	Mon, 28 Oct 2024 12:24:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="airc98HC"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vRwgHpkM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C18691D61AC
-	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Oct 2024 12:22:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B7E17C61
+	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Oct 2024 12:24:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730118163; cv=none; b=eO1sqMvlKUIlvT4eIm9rqJXhFNAC4TgADveetBEKxI/lFfMGkW8U4H1tY3k8jnajx5NR9rSQMN6daii1+n/4ciYhS5DQWhZluL/CqsbHZNUS/E0UtYh/vpHN1w98OhdL+r3oM3DWXWkJnD2oBuMpqT/ii4dsvPKahbAd0J3O7bM=
+	t=1730118280; cv=none; b=JGSe7yuo5DAzERtF5k6Ro079QBWmWJfJhkv7rS/ianP2S3+5yhprQHwSndeYzms7X1BlEw88VOvS9V/uwbeMRbnh/QZk6W+mcBjeSc4nWhIK+DQ3BtYPJJvUN0SuMRO1zbiIdWBGYtpIPhcIgfR/7xk2QtWIAP27I0FJ8dZOZtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730118163; c=relaxed/simple;
-	bh=v4nnScfFa5IpOIZ9twe89aFRYX0+3V7eDmJUoKi7jBM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mSuhVimJyNOUk9Dw3VWZmWk/WcHk4zfLMw9/8PbO4mhjsYkobe8AVG2WZJA5GUZWi3YAIcZFQoMbmT2ndqdJbJGD1+zhvVjoDclHx/RymuWEZEarUyJJUehsdn8MJ2Q+e3fKe6F0pc3x1TrjMGRzPMYBBaSwUbRpazezdXhR8X8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=airc98HC; arc=none smtp.client-ip=209.85.128.53
+	s=arc-20240116; t=1730118280; c=relaxed/simple;
+	bh=mSaHE3v21lE8qms03Sk8jUDId6PqNL+b81JWEpgodG8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Hijg0jfVouhieLE96n0g1kETjuKaL6oOGykrbJETgmi4+5X6n7kuJfh8q5mt1SavVCDbV/kSZFjeCwuL7nfPLZ0mS1F+2vTnfTHaoejekBNBqU8DTXDASfVTgHRyL2O93ju6VU7C284dm2ZIzGkd8P0z3Y1SpZYtretmYX2ivyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vRwgHpkM; arc=none smtp.client-ip=209.85.208.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4314fa33a35so41480315e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Oct 2024 05:22:40 -0700 (PDT)
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2fb5014e2daso39121731fa.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Oct 2024 05:24:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1730118159; x=1730722959; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=42xlY4CTCCMOJREXIIl0KBgi7tSrmtE7L65YgLuMbb0=;
-        b=airc98HCdIQ9DoCEE5RgjxPbpeeXH0GkTJHFFixUvha9b4FHJFHEE2Gu5L0fnPF+zH
-         INFu1Pl0tPRIPg1FFQTRmE/4QH+lutwJ/zlO1cIa/sc1u7+c2fe9JKw8ZQUAOgTW+T6W
-         nJ/UoeFesd/0TCionM0jyP7XJLGlo++U26Jb3d9CD+TMWKPt9hXg2OrRbMfF/7WTfWjo
-         VYh5Vgt9pT615ZdENQZOzgPqr2jO/7KbOJeHGwvvLsbK4hv11XANKAb3xX9QGO9U7ZLL
-         VbyUtKcVRfA+j9Wj03ooO7XvHCJus6yMaFoes33gQg5BeOYoTNBdh/PscJZZGvd+LTn+
-         mGJA==
+        d=linaro.org; s=google; t=1730118276; x=1730723076; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=hiakvBu5HWQteUMkqul4SIcxvJVDyv5yRsVh32mSkGg=;
+        b=vRwgHpkMIychKQjrSM3B/hC5AW//ktjoHTV2hbxDOd82osibbGeNUHBU/x4POSw6v4
+         0F1bFkgb8SlSBeATSvbO1/huR6OuhmJYp2Gr/znwnaWBVQlJIUqH6D5qAgNCtQP6LaSo
+         kbSfvFZR4/LQ+/NrZbGLUz+iWpkBwqCoCZBJADzvpbcTg30SwNnPEZCiWVFf2fgs4/ev
+         8Tn9fkVO6UIVOhwwq9o9Dk9RUBTwceyckXZ+CBT10mn/DwGAMAw/dZU/ZVXLuQfYKigv
+         KJtlR1HwU54CcOJy0QWpaBxZLgeAnmr+qyOFzsIsPv0lIDv3nOVN02/wkZKotqRRCr2O
+         fivw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730118159; x=1730722959;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=42xlY4CTCCMOJREXIIl0KBgi7tSrmtE7L65YgLuMbb0=;
-        b=hKirmeJ4ipFTW1GJJB77ePQTwi1PkO54lF3jKSc3zT1Mx4DR7LEHod/OUt8Ericton
-         VxGAtxewopMQ/WZaoxPqMGfuJxdbk0rLsQ6YxKb3loN3FoH5OBzG2Y8M81lC4Bf8n/19
-         PvDPYuoOkps4eSdW92EEvTJfQy1SInDmADmIkjJVjpmeDTui3nVpZg/u6FrqFXDlEk6k
-         /kVuzkMs3pxpJX5iJH7Tnrm5YpbTyBuT+Rjn1uHH/Jfh5KVXmHe/H1J/HLlEqqfL4C5t
-         quszNeIc9gj2XzFfMElkKHZpxSvzMRw/7r1P2xpjbVo4tc1ZUx1hkyHbHktcxUP/YJ6j
-         YiFg==
-X-Forwarded-Encrypted: i=1; AJvYcCX6sgLrD9jep/ksST5klxBmt0+u7V3IqO3dV0QcSfrFc5PzyJjgZm6dIbhqvj8f0XNi+Bsz9tzDV7XkOdgg@vger.kernel.org
-X-Gm-Message-State: AOJu0YzhzJKexbKBkHPksTwaxRVOVtAy+gSna0oEX/9z7bRqx9WS050J
-	kjzuad4eU40l/p4gCa2Cal8ahxuEKUvrDXuQQ46Li8HKSoM57dKueszZk3oKNCc=
-X-Google-Smtp-Source: AGHT+IFjtgIbINxQhGCP3y3IMwTys2Lf+h5YOyZA5SnPjmMIY+gDkrQ9FsjGqZHJrSO24BCho1A2Qw==
-X-Received: by 2002:a05:600c:4f06:b0:431:5044:e388 with SMTP id 5b1f17b1804b1-4319ad043e7mr75108345e9.22.1730118159031;
-        Mon, 28 Oct 2024 05:22:39 -0700 (PDT)
-Received: from [192.168.0.140] ([82.76.24.202])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-431935962acsm106569315e9.19.2024.10.28.05.22.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Oct 2024 05:22:38 -0700 (PDT)
-Message-ID: <8bd63441-7414-4bc1-9044-b3f1e7b21384@linaro.org>
-Date: Mon, 28 Oct 2024 14:22:38 +0200
+        d=1e100.net; s=20230601; t=1730118276; x=1730723076;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hiakvBu5HWQteUMkqul4SIcxvJVDyv5yRsVh32mSkGg=;
+        b=iZt2uDeIaMefr7X7nrY/gAzfvLXRWtXYGD0JegOjIwsmDz7djjizz4pNZPTg7yQjDo
+         ifmnP3k8t7bpuBudKb/UZBSH6CSz+mvhhW+XQbz4sjcvj3iCdzkBtp4ndkMYcNlg16H6
+         5kv4sEyXY8NKH/jgh9gwRg5/gNa+BUR2oPD/ZxKkty4csObHuEUUtrFi2YazTf7qrbV3
+         TzPw19u8mOuwYPYQcS8kkHgNL9grXb4fCfRmwf1EWF+HjZnqueH4IsVZ00tmEZXDubiq
+         VsyWfoWSH0vHe6VljAxEbDJI/ug/YvK/lk4YTaA4RoEd+R0cR6rl7jsBGWatoND9Ri8V
+         QnEg==
+X-Forwarded-Encrypted: i=1; AJvYcCV76mJCuPoQmihTIasCpOhWpTB9EoYEfdwAj2mNloiVo1jHFjIG4eCV6kdPAz12FtR7u1tGcHhHk82h4E5c@vger.kernel.org
+X-Gm-Message-State: AOJu0YxlKw5LsifPVyuwVr5DjPkmkR6o05efxQzsE526RpLGuz6jnXFB
+	DXINpD1umWVWgmkMqIQNEiQca4W4dXoG8CelpMBOAHgajAvIm+jZZvy1g0uCfDlUyXy56s9PTQj
+	V
+X-Google-Smtp-Source: AGHT+IHMzvTbKsXQiE7Sg+SLUe/8P7mNRx/fVvevQS58dQwaGnRtlPzMwEtJenkdv8S3A7kBzaWS/w==
+X-Received: by 2002:a2e:b8c3:0:b0:2fb:3445:a4af with SMTP id 38308e7fff4ca-2fcbdfe8b81mr29076191fa.21.1730118275722;
+        Mon, 28 Oct 2024 05:24:35 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2fcb451a043sm11549741fa.46.2024.10.28.05.24.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Oct 2024 05:24:34 -0700 (PDT)
+Date: Mon, 28 Oct 2024 14:24:32 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Nathan Chancellor <nathan@kernel.org>, 
+	Nick Desaulniers <ndesaulniers@google.com>, Bill Wendling <morbo@google.com>, 
+	Justin Stitt <justinstitt@google.com>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, llvm@lists.linux.dev, 
+	Arnd Bergmann <arnd@kernel.org>
+Subject: Re: [PATCH] drm/msm/a6xx: Fix excessive stack usage
+Message-ID: <qvi32futhcoe4tklfsdffhpkorpxjqxyjsajrlyuxega6o2fzn@p37z7llhr7c2>
+References: <20241027-stack-size-fix-v1-1-764e2e3566cb@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] soc: qcom: Rework BCM_TCS_CMD macro
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: andersson@kernel.org, konradybcio@kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20241025084823.475199-1-eugen.hristev@linaro.org>
- <c1d4c2b6-85a0-467a-930c-ac2797c72699@oss.qualcomm.com>
- <a4c44b88-d106-4365-b405-ced561b9e526@linaro.org>
- <6852b25f-94a4-4e04-adc5-5c79eb1f17ca@oss.qualcomm.com>
-Content-Language: en-US
-From: Eugen Hristev <eugen.hristev@linaro.org>
-In-Reply-To: <6852b25f-94a4-4e04-adc5-5c79eb1f17ca@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241027-stack-size-fix-v1-1-764e2e3566cb@quicinc.com>
 
-
-
-On 10/25/24 20:03, Konrad Dybcio wrote:
-> On 25.10.2024 2:06 PM, Eugen Hristev wrote:
->>
->>
->> On 10/25/24 12:03, Konrad Dybcio wrote:
->>> On 25.10.2024 10:48 AM, Eugen Hristev wrote:
->>>> Reworked BCM_TCS_CMD macro in order to fix warnings from sparse:
->>>>
->>>> drivers/clk/qcom/clk-rpmh.c:270:28: warning: restricted __le32 degrades to integer
->>>> drivers/clk/qcom/clk-rpmh.c:270:28: warning: restricted __le32 degrades to integer
->>>>
->>>> While at it, used u32_encode_bits which made the code easier to
->>>> follow and removed unnecessary shift definitions.
->>>>
->>>> Signed-off-by: Eugen Hristev <eugen.hristev@linaro.org>
->>>> ---
->>>>    include/soc/qcom/tcs.h | 19 ++++++++-----------
->>>>    1 file changed, 8 insertions(+), 11 deletions(-)
->>>>
->>>> diff --git a/include/soc/qcom/tcs.h b/include/soc/qcom/tcs.h
->>>> index 3acca067c72b..130ed2582f37 100644
->>>> --- a/include/soc/qcom/tcs.h
->>>> +++ b/include/soc/qcom/tcs.h
->>>> @@ -60,22 +60,19 @@ struct tcs_request {
->>>>        struct tcs_cmd *cmds;
->>>>    };
->>>>    -#define BCM_TCS_CMD_COMMIT_SHFT        30
->>>>    #define BCM_TCS_CMD_COMMIT_MASK        0x40000000
->>>> -#define BCM_TCS_CMD_VALID_SHFT        29
->>>>    #define BCM_TCS_CMD_VALID_MASK        0x20000000
->>>> -#define BCM_TCS_CMD_VOTE_X_SHFT        14
->>>>    #define BCM_TCS_CMD_VOTE_MASK        0x3fff
->>>> -#define BCM_TCS_CMD_VOTE_Y_SHFT        0
->>>> -#define BCM_TCS_CMD_VOTE_Y_MASK        0xfffc000
->>>> +#define BCM_TCS_CMD_VOTE_Y_MASK        0x3fff
->>>> +#define BCM_TCS_CMD_VOTE_X_MASK        0xfffc000
->>>>      /* Construct a Bus Clock Manager (BCM) specific TCS command */
->>>>    #define BCM_TCS_CMD(commit, valid, vote_x, vote_y)        \
->>>> -    (((commit) << BCM_TCS_CMD_COMMIT_SHFT) |        \
->>>> -    ((valid) << BCM_TCS_CMD_VALID_SHFT) |            \
->>>> -    ((cpu_to_le32(vote_x) &                    \
->>>> -    BCM_TCS_CMD_VOTE_MASK) << BCM_TCS_CMD_VOTE_X_SHFT) |    \
->>>> -    ((cpu_to_le32(vote_y) &                    \
->>>> -    BCM_TCS_CMD_VOTE_MASK) << BCM_TCS_CMD_VOTE_Y_SHFT))
->>>> +    (u32_encode_bits(commit, BCM_TCS_CMD_COMMIT_MASK) |    \
->>>> +    u32_encode_bits(valid, BCM_TCS_CMD_VALID_MASK) |    \
->>>> +    u32_encode_bits((__force u32)cpu_to_le32(vote_x),    \
->>>> +            BCM_TCS_CMD_VOTE_X_MASK) |        \
->>>> +    u32_encode_bits((__force u32)cpu_to_le32(vote_y),    \
->>>> +            BCM_TCS_CMD_VOTE_Y_MASK))
->>>
->>> FIELD_PREP/GET?
->>>
->>> Konrad
->>
->> What would be the difference/advantage in using FIELD_PREP/GET instead of u32_encode_bits ?
+On Sun, Oct 27, 2024 at 11:35:47PM +0530, Akhil P Oommen wrote:
+> Clang-19 and above sometimes end up with multiple copies of the large
+> a6xx_hfi_msg_bw_table structure on the stack. The problem is that
+> a6xx_hfi_send_bw_table() calls a number of device specific functions to
+> fill the structure, but these create another copy of the structure on
+> the stack which gets copied to the first.
 > 
-> Probably none. I thought it was a function and not another magic macro,
-> as it's lowercase..
+> If the functions get inlined, that busts the warning limit:
 > 
-> Doesn't le32_encode_bits do what you need then?
-
-That works too. It would move the `__force u32` to a higher level, but 
-works. I am sending a v2 with that.
-
+> drivers/gpu/drm/msm/adreno/a6xx_hfi.c:631:12: error: stack frame size (1032) exceeds limit (1024) in 'a6xx_hfi_send_bw_table' [-Werror,-Wframe-larger-than]
 > 
-> Konrad
+> Fix this by kmalloc-ating struct a6xx_hfi_msg_bw_table instead of using
+> the stack. Also, use this opportunity to skip re-initializing this table
+> to optimize gpu wake up latency.
+> 
+> Cc: Arnd Bergmann <arnd@kernel.org>
+> 
 
+Please no empty lines between tags.
+
+> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+
+After all the discussions:
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+> ---
+>  drivers/gpu/drm/msm/adreno/a6xx_gmu.h |  1 +
+>  drivers/gpu/drm/msm/adreno/a6xx_hfi.c | 34 ++++++++++++++++++++++------------
+>  2 files changed, 23 insertions(+), 12 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+> index 94b6c5cab6f4..b4a79f88ccf4 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+> @@ -99,6 +99,7 @@ struct a6xx_gmu {
+>  	struct completion pd_gate;
+>  
+>  	struct qmp *qmp;
+> +	struct a6xx_hfi_msg_bw_table *bw_table;
+>  };
+>  
+>  static inline u32 gmu_read(struct a6xx_gmu *gmu, u32 offset)
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+> index cdb3f6e74d3e..55e51c81be1f 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+> @@ -630,32 +630,42 @@ static void a6xx_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
+>  
+>  static int a6xx_hfi_send_bw_table(struct a6xx_gmu *gmu)
+>  {
+> -	struct a6xx_hfi_msg_bw_table msg = { 0 };
+> +	struct a6xx_hfi_msg_bw_table *msg;
+>  	struct a6xx_gpu *a6xx_gpu = container_of(gmu, struct a6xx_gpu, gmu);
+>  	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
+>  
+> +	if (gmu->bw_table)
+> +		goto send;
+> +
+> +	msg = devm_kzalloc(gmu->dev, sizeof(*msg), GFP_KERNEL);
+> +	if (!msg)
+> +		return -ENOMEM;
+> +
+>  	if (adreno_is_a618(adreno_gpu))
+> -		a618_build_bw_table(&msg);
+> +		a618_build_bw_table(msg);
+>  	else if (adreno_is_a619(adreno_gpu))
+> -		a619_build_bw_table(&msg);
+> +		a619_build_bw_table(msg);
+>  	else if (adreno_is_a640_family(adreno_gpu))
+> -		a640_build_bw_table(&msg);
+> +		a640_build_bw_table(msg);
+>  	else if (adreno_is_a650(adreno_gpu))
+> -		a650_build_bw_table(&msg);
+> +		a650_build_bw_table(msg);
+>  	else if (adreno_is_7c3(adreno_gpu))
+> -		adreno_7c3_build_bw_table(&msg);
+> +		adreno_7c3_build_bw_table(msg);
+>  	else if (adreno_is_a660(adreno_gpu))
+> -		a660_build_bw_table(&msg);
+> +		a660_build_bw_table(msg);
+>  	else if (adreno_is_a690(adreno_gpu))
+> -		a690_build_bw_table(&msg);
+> +		a690_build_bw_table(msg);
+>  	else if (adreno_is_a730(adreno_gpu))
+> -		a730_build_bw_table(&msg);
+> +		a730_build_bw_table(msg);
+>  	else if (adreno_is_a740_family(adreno_gpu))
+> -		a740_build_bw_table(&msg);
+> +		a740_build_bw_table(msg);
+>  	else
+> -		a6xx_build_bw_table(&msg);
+> +		a6xx_build_bw_table(msg);
+
+Note for the future improvement: this begs to be migrated to the catalog
+data, adding device-specific callback instead of this if/else series.
+
+
+> +
+> +	gmu->bw_table = msg;
+>  
+> -	return a6xx_hfi_send_msg(gmu, HFI_H2F_MSG_BW_TABLE, &msg, sizeof(msg),
+> +send:
+> +	return a6xx_hfi_send_msg(gmu, HFI_H2F_MSG_BW_TABLE, gmu->bw_table, sizeof(*(gmu->bw_table)),
+>  		NULL, 0);
+>  }
+>  
+> 
+> ---
+> base-commit: 74c374648ed08efb2ef339656f2764c28c046956
+> change-id: 20241024-stack-size-fix-28af7abd3fab
+> 
+> Best regards,
+> -- 
+> Akhil P Oommen <quic_akhilpo@quicinc.com>
+> 
+
+-- 
+With best wishes
+Dmitry
 
