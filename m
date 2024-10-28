@@ -1,202 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-36183-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36184-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E517C9B3515
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 16:39:42 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 96D409B3538
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 16:46:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A966C28020C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 15:39:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 56AE9282B43
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 15:46:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9BC21DE3D2;
-	Mon, 28 Oct 2024 15:39:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37C651DE2D7;
+	Mon, 28 Oct 2024 15:46:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="X+mzZXHc"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="i0lO/c0l"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A71D1DE3BB
-	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Oct 2024 15:39:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 521C61DC734
+	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Oct 2024 15:46:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730129977; cv=none; b=jLTfZ6Xy8Wfcevht7ncB/HUBhwMJ1YOO4OiWcj8PkMnZMpd/pfFfwWspBJHG8wf4Nw7t/M2k9LxZJuJOotcACHzzOSPfEey1XeSgDJmuVjZxmQk987RuIUxg4dB/aNAvROD2am7m8OeM6CiEQTeo2cQpecKTeLQv5lVXHm6pTA0=
+	t=1730130402; cv=none; b=t5UB4Y1Y1DWGi8SXT5fKVA7pP7rINdEsau3v26cNPHc+xCwVHO+hC9AbiRpet53rxiQYxjXrBkenIEHym9IQF9PwmWwkHnoxnORwMHkjwXb8ieBYTgHwpowbbFWros/Visv5NNoKDQfJjI5Smu/nKRsLYQ5OQtGNO/gLVR1qzpw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730129977; c=relaxed/simple;
-	bh=5Zl9G4AszNflo7us4pbB6lyR2ecBGbMh9TGpu/QHrCU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tnhz3V7v0VdO3fyC1TSXb4BOjICnfvF0EzI8VcvRpjaqSdW6n1W2pOG5R1dRIRCM2NiK9uUvMpgBwWBWp/VGZNyae3cVWNsQaTYf3YsrVkjjQ82oNRib4V3iJqlEMt8MQgRUPfmjdrHSE6YCIFAOcEgFF7LYGm5LmKNzPWcVfg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=X+mzZXHc; arc=none smtp.client-ip=209.85.167.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-539f58c68c5so7365168e87.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Oct 2024 08:39:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1730129973; x=1730734773; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=W1txbax2anf/FU/2wUye/OvBFVJa+xv11X9TALtaA18=;
-        b=X+mzZXHc8QcgLWRuP8j6ouMCxaCeIPPwqbAjsBCj4XxuWqRClRHXJZW7F8MSp6Drxa
-         w8OFdxnrEhL3uWtug/n1cyVhQ/8QB+r5476UkLd9np2wyThqdS/7eAP06mA/FFZrqNEl
-         Fp6XRnOYYT7vhBsUmp8U9j1/uB5pXenhRy9bN9pnALgRy6z3/YCxdqC7upg0odVQT6NZ
-         FMGDeU+Y+Q/h29Tn7qoA4RorltpbKOiXDU+rzlYqmCXr7PV8jipKrCPXX24bi5n681uB
-         xL3luonI1LDbCTX0UotQZrC07HHo0pGIwqyMB2cW5KXsqo8bhvSojuNvaonQ8xEh/pwE
-         B+yw==
+	s=arc-20240116; t=1730130402; c=relaxed/simple;
+	bh=eA+WK11+5F7kgjIh0WfNQgfuO7WaLXIuJapswCAe50M=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=D19uw2EvXaGeNgtbZelYVNz5zARJuM7JP38TsU2/BOX23xsvjBt/WaxOtSaqT7WcTDWzCYUgL2opj8tyBS/5HrjfZFMJ8bdtjBiktG34ty962NFfoYxufsxiCaltbn/f/q8WurbmXpgQFd3hOL/W6dSiHYHjmmixcnVr5Yo9YAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=fail smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=i0lO/c0l; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49SAHKPP030598
+	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Oct 2024 15:46:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	uXWv1L1P4AyDVtxCnG5hV6KjhukSzud5DuZcj1J/S1I=; b=i0lO/c0lj65gCLx/
+	Rw+HnDTOZjAHjwoiR/1uWLAy+Xd2Ii3yz7lI/XzNhWh+k5IfGb/dBmYeoqKY8WCA
+	6TonMl2y+gEfjX5yhHOVDA7cO+HpmdkqNlVMfwmGIUi2B04BkOP0cFrRMah/8sRe
+	nFHmqI6VqUxANIxRwIYDbOn6df/aJJ+/z6TLKffu0l9d63aI8mYwu6J0mWZVfD1Q
+	+4h4XNg5CDO3zuVQpQ3Qkd1jDxqIK1UGpOkfvpFAPyGGc4dPuoq99dipM/sYizfR
+	BmejYfwxWWAX2h54rVcZecdJL40WP6Zr15axUYIb3lAwYD58zF7u1gCRc6Q7OSJn
+	jp7QzQ==
+Received: from mail-oi1-f200.google.com (mail-oi1-f200.google.com [209.85.167.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42gsq8dgfg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Oct 2024 15:46:39 +0000 (GMT)
+Received: by mail-oi1-f200.google.com with SMTP id 5614622812f47-3e61c30daf2so69133b6e.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Oct 2024 08:46:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730129973; x=1730734773;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=W1txbax2anf/FU/2wUye/OvBFVJa+xv11X9TALtaA18=;
-        b=Po8dz13iAyGrnrhHPcmbmnIGiz7MBvP8iyJS0Ildl0Fm4J7T5aS4zmPHQ1XSKAra+y
-         XzxXVzi7g0aiMl9rS0Z6Pv+C27apbmzGjxLpT1OLU4DFOYfJrFdBG8NrUb31+oPkA+5L
-         fmhOkregz9zSUqfo9p+xTC5JkzMmvYJrUp2OM+4BZ4Ur5nMilOC5LBNvY4Sls0KuFKHw
-         gkPlr/drsoPnvEzlgFfQnGMjQ2ytcGiYI9De58srL8C+t9Ve1KADM3FVAHu2PkZUJHQr
-         IFNhX/ctCWgH/7buoorDzDnkXOmBTtaCoz2doITmTFcc3KL2xk9ersdicr+/0Ntf8TtL
-         l23g==
-X-Forwarded-Encrypted: i=1; AJvYcCU8WfN2ubNbBaBSBB/XuXY54UYNJdbh/M7sjSaoRgL9qBd1ng7Ms7hy3vrEsP6Itmu7kViyh6bAJwFNbKoI@vger.kernel.org
-X-Gm-Message-State: AOJu0YwtC2CMxE8a4ptS4Akn0jYRkgjzYotDQ+pruj5cj+5UGfLietUT
-	rA9pIZu4IVfF2BTx8JBSA1iMjdggNLgOMCL4DkvuUBCFNeQoTBNSqOU9ROE2/QU=
-X-Google-Smtp-Source: AGHT+IHyyRIHr8OLjFlezCBWy1i7uaYCwcnuB6xG6+YWBdjYuluL2KW9ciORdLVKXl6EVMW5IHAxGA==
-X-Received: by 2002:a05:6512:3049:b0:53b:1fc6:3d18 with SMTP id 2adb3069b0e04-53b348da845mr5494533e87.26.1730129972972;
-        Mon, 28 Oct 2024 08:39:32 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53b2e10a52fsm1092723e87.27.2024.10.28.08.39.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Oct 2024 08:39:31 -0700 (PDT)
-Date: Mon, 28 Oct 2024 17:39:29 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Luo Jie <quic_luoj@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, quic_kkumarcs@quicinc.com, quic_suruchia@quicinc.com, 
-	quic_pavir@quicinc.com, quic_linchen@quicinc.com, quic_leiwei@quicinc.com, 
-	bartosz.golaszewski@linaro.org, srinivas.kandagatla@linaro.org
-Subject: Re: [PATCH v5 4/4] arm64: dts: qcom: Add CMN PLL node for IPQ9574 SoC
-Message-ID: <crcbzpxjnbceilqccbwr7uyak6z6zdwr7mhfcyaw6vvpcce6ko@zrojbtqi4st4>
-References: <20241028-qcom_ipq_cmnpll-v5-0-339994b0388d@quicinc.com>
- <20241028-qcom_ipq_cmnpll-v5-4-339994b0388d@quicinc.com>
+        d=1e100.net; s=20230601; t=1730130398; x=1730735198;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=uXWv1L1P4AyDVtxCnG5hV6KjhukSzud5DuZcj1J/S1I=;
+        b=UXE1z0debJW7GgPnuz2VA2uAzrPNSMC0R8oJhYrRqU7xpwivQ67MleDG0JMXLSDzIJ
+         CGVNBLmoLaKerHCyQ3Zma9F9dNir6a4QqnyTaPPxYKJUkDcjpPhaGVyGMMdlMNsxM7Mh
+         bvqhplWxEl2HJvV8hC0NrY1GQ7XnZxY6M3iuyt0/Pq8B8v2KFByL/WEQcjbcOibIMVDJ
+         bM3NzDzGlUh2g1+wev3mbo66ZboHzq00lgMbjKqxlOXdBEiHQ4yP+nyZ/uMTn8ORwd06
+         UX+/N7tAwqchY97TN7p+kbFMG0IuUQJRRiM4UmvtzCLc+2/ERiHBzDz90a9+i+w8nu73
+         IwSg==
+X-Forwarded-Encrypted: i=1; AJvYcCVVRtw/aVKOMAKgAK/EihebCJh9A7lLXZLc+nBDvA2rnQZMzepxO2FBg/z8xRpjfsiLZwZSUpfAOc7pBg7n@vger.kernel.org
+X-Gm-Message-State: AOJu0YzBdklFwr40a+FyzHs6+PbYYLR34jYhz5gljzs6xAXN0Met6OAP
+	uP4VmN1eKUcae0Mw73TwD8Q1JoAmeoHbefeFc6vS2tI4XXtSCHiKKaNw8TSzjkJQNtIK1SLO/g4
+	Ehbjvj0W3vueo9bDB+BTdNlyx1r9N6mwb7XR0f0NK6oubOkpCF9TVL25qI377eeD6
+X-Received: by 2002:a05:6808:2117:b0:3e6:40b3:b37b with SMTP id 5614622812f47-3e640b3b64cmr1231585b6e.8.1730130398544;
+        Mon, 28 Oct 2024 08:46:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHaiv0d3Uy15/pqVCF75IboJqTQkwfHGPAlVPiwCgQJsKOla/IcnRmIUCLBabNT1fatrej9AQ==
+X-Received: by 2002:a05:6808:2117:b0:3e6:40b3:b37b with SMTP id 5614622812f47-3e640b3b64cmr1231566b6e.8.1730130398245;
+        Mon, 28 Oct 2024 08:46:38 -0700 (PDT)
+Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9b3a083466sm386476166b.193.2024.10.28.08.46.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 28 Oct 2024 08:46:36 -0700 (PDT)
+Message-ID: <828c465f-684b-4257-86cb-d9c753fc30f1@oss.qualcomm.com>
+Date: Mon, 28 Oct 2024 16:46:34 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241028-qcom_ipq_cmnpll-v5-4-339994b0388d@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 4/4] arm64: dts: qcom: qcs615: add the APPS SMMU node
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Qingqing Zhou <quic_qqzhou@quicinc.com>, andersson@kernel.org,
+        konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+        conor+dt@kernel.org, robimarko@gmail.com, will@kernel.org,
+        robin.murphy@arm.com, joro@8bytes.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        iommu@lists.linux.dev
+References: <20241025030732.29743-1-quic_qqzhou@quicinc.com>
+ <20241025030732.29743-5-quic_qqzhou@quicinc.com>
+ <8a60b729-b312-4afc-835b-a18060ad3f03@oss.qualcomm.com>
+ <zsphor7rpbwx4km6uxpepky2h7atbgjn2435puygmpssfc36mc@wkquqxud2yij>
+ <8c9804f2-ef4d-412b-97ea-f521dfd35ec2@oss.qualcomm.com>
+ <nhthg2rlfatc2pyhsuoulvo5447cxg7buv4aq3r7r5amsmjjoq@pgfyvvegfron>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <nhthg2rlfatc2pyhsuoulvo5447cxg7buv4aq3r7r5amsmjjoq@pgfyvvegfron>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: hrxsOwB9lcg0Q_nyrDVuEeoobt70QTyd
+X-Proofpoint-ORIG-GUID: hrxsOwB9lcg0Q_nyrDVuEeoobt70QTyd
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 bulkscore=0
+ adultscore=0 mlxscore=0 priorityscore=1501 mlxlogscore=621 impostorscore=0
+ lowpriorityscore=0 malwarescore=0 clxscore=1015 spamscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2410280126
 
-On Mon, Oct 28, 2024 at 10:04:11PM +0800, Luo Jie wrote:
-> The CMN PLL clock controller allows selection of an input clock rate
-> from a defined set of input clock rates. It in-turn supplies fixed
-> rate output clocks to the hardware blocks that provide the ethernet
-> functions such as PPE (Packet Process Engine) and connected switch or
-> PHY, and to GCC.
+On 26.10.2024 8:18 PM, Dmitry Baryshkov wrote:
+> On Fri, Oct 25, 2024 at 06:45:01PM +0200, Konrad Dybcio wrote:
+>> On 25.10.2024 1:06 PM, Dmitry Baryshkov wrote:
+>>> On Fri, Oct 25, 2024 at 10:54:24AM +0200, Konrad Dybcio wrote:
+>>>> On 25.10.2024 5:07 AM, Qingqing Zhou wrote:
+>>>>> Add the APPS SMMU node for QCS615 platform. Add the dma-ranges
+>>>>> to limit DMA address range to 36bit width to align with system
+>>>>> architecture.
+>>>>>
+>>>>> Signed-off-by: Qingqing Zhou <quic_qqzhou@quicinc.com>
+>>>>> ---
+>>>>
+>>>> You probably also want to mark it `dma-coherent` (see e.g.
+>>>> x1e80100.dtsi)
+>>>
+>>> Is it? I don't think SM6150 had dma-coherent SMMU, at least it wasn't
+>>> marked as such.
+>>
+>> I don't think I have any documentation on this, so.. one way to find out!
 > 
-> The reference clock of CMN PLL is routed from XO to the CMN PLL through
-> the internal WiFi block.
-> .XO (48 MHZ or 96 MHZ)-->WiFi (multiplier/divider)-->48 MHZ to CMN PLL.
-> 
-> The reference input clock from WiFi to CMN PLL is fully controlled by
-> the bootstrap pins which select the XO frequency (48 MHZ or 96 MHZ).
-> Based on this frequency, the divider in the internal Wi-Fi block is
-> automatically configured by hardware (1 for 48 MHZ, 2 for 96 MHZ), to
-> ensure output clock to CMN PLL is 48 MHZ.
-> 
-> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi | 16 ++++++++++++++-
->  arch/arm64/boot/dts/qcom/ipq9574.dtsi            | 26 +++++++++++++++++++++++-
->  2 files changed, 40 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi b/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
-> index 91e104b0f865..f026c2a9d0c0 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
-> @@ -3,7 +3,7 @@
->   * IPQ9574 RDP board common device tree source
->   *
->   * Copyright (c) 2020-2021 The Linux Foundation. All rights reserved.
-> - * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
-> + * Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All rights reserved.
->   */
->  
->  /dts-v1/;
-> @@ -164,6 +164,20 @@ &usb3 {
->  	status = "okay";
->  };
->  
-> +/*
-> + * The bootstrap pins for the board select the XO clock frequency,
-> + * which automatically enables the right dividers to ensure the
-> + * reference clock output to CMNPLL is 48 MHZ.
-> + */
-> +&cmn_pll_ref_clk {
-> +	clock-div = <1>;
-> +	clock-mult = <1>;
-> +};
-> +
->  &xo_board_clk {
->  	clock-frequency = <24000000>;
->  };
-> +
-> +&xo_clk {
-> +	clock-frequency = <48000000>;
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> index 14c7b3a78442..ad9cdb1f76db 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> @@ -3,10 +3,11 @@
->   * IPQ9574 SoC device tree source
->   *
->   * Copyright (c) 2020-2021 The Linux Foundation. All rights reserved.
-> - * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
-> + * Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All rights reserved.
->   */
->  
->  #include <dt-bindings/clock/qcom,apss-ipq.h>
-> +#include <dt-bindings/clock/qcom,ipq-cmn-pll.h>
->  #include <dt-bindings/clock/qcom,ipq9574-gcc.h>
->  #include <dt-bindings/interconnect/qcom,ipq9574.h>
->  #include <dt-bindings/interrupt-controller/arm-gic.h>
-> @@ -19,6 +20,12 @@ / {
->  	#size-cells = <2>;
->  
->  	clocks {
-> +		cmn_pll_ref_clk: cmn-pll-ref-clk {
-> +			compatible = "fixed-factor-clock";
-> +			clocks = <&xo_clk>;
-> +			#clock-cells = <0>;
-> +		};
-> +
->  		sleep_clk: sleep-clk {
->  			compatible = "fixed-clock";
->  			#clock-cells = <0>;
-> @@ -28,6 +35,11 @@ xo_board_clk: xo-board-clk {
->  			compatible = "fixed-clock";
->  			#clock-cells = <0>;
->  		};
-> +
-> +		xo_clk: xo-clk {
-> +			compatible = "fixed-clock";
-> +			#clock-cells = <0>;
-> +		};
+> I don't have qcs615 at hand, so a purely theoretical question. But how
+> should it break if we mark it as dma-coherent, while it is not?
 
-What is the difference between xo_clk and xo_board_clk? Are there two
-different crystals?
+The board will hang rather quickly
 
->  	};
->  
->  	cpus {
-
--- 
-With best wishes
-Dmitry
+Konrad
 
