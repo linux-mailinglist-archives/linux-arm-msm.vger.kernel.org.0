@@ -1,103 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-36091-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36092-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C590B9B20B4
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Oct 2024 22:10:19 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E2FE99B219F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 01:54:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 542E01C20852
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Oct 2024 21:10:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A0A732814A3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 00:54:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14C4117DFF1;
-	Sun, 27 Oct 2024 21:10:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4351E77F1B;
+	Mon, 28 Oct 2024 00:54:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AEldmhSe"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="C0nDK58V"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEABF1DFE8;
-	Sun, 27 Oct 2024 21:10:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A02D57CB6;
+	Mon, 28 Oct 2024 00:54:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730063414; cv=none; b=nwnh/hVlPOelcPFVWTouFEeoqx4zEUUbnIDhG6TZDhx9fjBq/T52i03wBgLaZVs3Zrcy8wkr82lFtcy8MW9DHxep1shOl9DHnatZwnGkKPxTT5EJHAOF077jj1AFnt6a6jNf3hECsooisE2Mjg74AcQC9vmIAOnAaRVyC8tEDeI=
+	t=1730076891; cv=none; b=TXAXl6enqVObluiuHN1GocwmTyhzCvdSJQzPum0UX58SKmExPRrHV28ikOuSY+EV2zBa8bWpyX67FV5vm9rnvxuKBeZRYkh2e0uboOqG+V7EktOFqztUxI6FO2Evb22ninxcDEGY7hLW6s6kQ7qdkI5Sfba/QCLEaQhXAfzBfwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730063414; c=relaxed/simple;
-	bh=FHPod0TcGB1+Z8/HScnJyv0wJJKMmlBsJCMaVTNArIc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SWuG5WUv8rR4En9HatxsOhkbPtM2SsMMkE3Ep6zG/R3OtHP7/CJP4gSB/G4QxpaWdRd2ZH6DlLMXc08Q4VCKsncFfzVNGB26UPpXCcgon0l9ig8IR2ywdpmknAwThYO0aiPA1tRoqX/PeniW0FXTgfvvGB7IP582ajYCxI9taZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AEldmhSe; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D504DC4CEC3;
-	Sun, 27 Oct 2024 21:10:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730063413;
-	bh=FHPod0TcGB1+Z8/HScnJyv0wJJKMmlBsJCMaVTNArIc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=AEldmhSeVYdk2X5Zg6UjyWmakQKS3DJ7+pyIuuCjltSh1HBvIhsjEIQW3vDE1+4CM
-	 mFu0dXL74Mfc6fpF4aMnzRw6O/RP/zepuTbvYGE4W5lEtlzcmeZT/+nRt1cYw4H5WJ
-	 sCaOoG5K+qD3yQGjGP6a0ULCLcKnVsNMVAEXgNkTnhMu2vLze46xmWhRpFwapV10dU
-	 XNd+5aY3T3d7fXZucocp7HiQuaZQuSY1NlbA0hstKl5tZ2dVAJl4VjXbBp8v+P58GY
-	 pMqH28XtmrD5Z2C+lPTlZPT11+YVTpILR5FFhQvgfPxzU2nWTFhxfKfGztbqcw4XQ/
-	 5d6Nei2h1YH/Q==
-Date: Sun, 27 Oct 2024 22:10:10 +0100
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/3] dt-bindings: arm: qcom: add QAR2130P board
-Message-ID: <xiqgif6a3nb6ab6nwpiir333jf4vmcn734ks2hjq7mlybgxl6f@lh3o6ca5t2lf>
-References: <20241027-sar2130p-dt-v1-0-739d36d31c33@linaro.org>
- <20241027-sar2130p-dt-v1-2-739d36d31c33@linaro.org>
+	s=arc-20240116; t=1730076891; c=relaxed/simple;
+	bh=2Gw2J1Ix/dv3nTenMLorT8vi0/rczXHt2/8+zNoq+aE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=gcidVfk5g7GciNOXqPRuurmqtVE42V/KAKXpCizaGeKUcv5iGjKmVUzcqHg4QYE0FKAGcZ/s9qNv+oTU8fMKmeChIRgQJZFxlUKB14zeKAzSE/w7xXF8BAgZBYfEWmratqwd8UZ8ajNq9f7x1mNr3X9mJ3tEedu1dzW1KOiCXCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=C0nDK58V; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49RNuURu023439;
+	Mon, 28 Oct 2024 00:54:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	lpKLsphvAee4QIkTtcAv2Ov+QXCubN1rwSAQDCdYNZE=; b=C0nDK58VprlJRRu5
+	TH9OXwrAIK1GExr54Pv6RW42alN6oqmJtAHO0NwIyCyveO31DGu01SJ9nTrj8PN7
+	jHWhXJbvr6p3tOxZLBR1Uq8rGG2OQbKbYN/7Ut7eyt6AD/fhgxbtSRRJB1wCobJx
+	I+WEEg+oKDA/LhXriPizaxgFW1LwT8UEWV2fTatGOnY1n54AKihi6XRjQ2XNXzF3
+	Nkv5vqR14Ry6PoXVCC/nsfdWN2jh59IpDJk6A1UhFYAjg7CY7BnpQxFIugOMFyrv
+	RDyPTAUPzxJCt886hn2pQtWOUMBKkCL+6J/rNnbEJGQUzZx8T3D2a6Ws5izIVdNJ
+	aylDcg==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42gqe5u8ks-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 28 Oct 2024 00:54:37 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49S0saoN006141
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 28 Oct 2024 00:54:36 GMT
+Received: from [10.64.68.153] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 27 Oct
+ 2024 17:54:32 -0700
+Message-ID: <3f90b3d6-9637-47b7-ad8a-ff43cb28ad32@quicinc.com>
+Date: Mon, 28 Oct 2024 08:54:29 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20241027-sar2130p-dt-v1-2-739d36d31c33@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: Add coresight nodes for QCS615
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Jinlong Mao
+	<quic_jinlmao@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>
+References: <20241017030005.893203-1-quic_jiegan@quicinc.com>
+ <69be09ec-e9a5-4fb6-890e-74a65f3ce404@oss.qualcomm.com>
+Content-Language: en-US
+From: Jie Gan <quic_jiegan@quicinc.com>
+In-Reply-To: <69be09ec-e9a5-4fb6-890e-74a65f3ce404@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: YNg6ClML5fS4ZAquffo5rDUaVqZ29SKr
+X-Proofpoint-ORIG-GUID: YNg6ClML5fS4ZAquffo5rDUaVqZ29SKr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
+ phishscore=0 bulkscore=0 mlxlogscore=999 malwarescore=0 adultscore=0
+ priorityscore=1501 impostorscore=0 mlxscore=0 clxscore=1015
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410280006
 
-On Sun, Oct 27, 2024 at 03:24:04AM +0200, Dmitry Baryshkov wrote:
-> Add the Qualcomm QAR2130P development board using the Qualcomm AR2 Gen1
-> aka SAR2130P platform.
+
+
+On 10/26/2024 2:47 AM, Konrad Dybcio wrote:
+> On 17.10.2024 5:00 AM, Jie Gan wrote:
+>> Add following coresight components on QCS615, EUD, TMC/ETF, TPDM, dynamic
+>> Funnel, TPDA, Replicator and ETM.
+>>
+>> Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
+>> ---
+>> Already checked by command:dtbs_check W=1.
+>>
+>> Dependencies:
+>> 1. Depends on qcs615 base dtsi change:
+>> https://lore.kernel.org/all/20240926-add_initial_support_for_qcs615-v3-5-e37617e91c62@quicinc.com/
+>> 2. Depends on qcs615 AOSS_QMP change:
+>> https://lore.kernel.org/linux-arm-msm/20241017025313.2028120-4-quic_chunkaid@quicinc.com/
+>> ---
+>>   arch/arm64/boot/dts/qcom/qcs615.dtsi | 1632 ++++++++++++++++++++++++++
+>>   1 file changed, 1632 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/qcs615.dtsi b/arch/arm64/boot/dts/qcom/qcs615.dtsi
+>> index 856b40e20cf3..87cca5de018e 100644
+>> --- a/arch/arm64/boot/dts/qcom/qcs615.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/qcs615.dtsi
+>> @@ -202,6 +202,18 @@ l3_0: l3-cache {
+>>   		};
+>>   	};
+>>   
+>> +	dummy_eud: dummy_sink {
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  Documentation/devicetree/bindings/arm/qcom.yaml | 7 +++++++
->  1 file changed, 7 insertions(+)
+> Node names (after the ':' and before the '{' signs) can't contain
+> underscores, use '-' instead.
+Sure, will fix it.
+
 > 
-> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-> index 0f18cb35c774aec48967eddbef4b4480dbc8edbe..02b2379ccf7741a0fba345d83d0ce7db731a3772 100644
-> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
-> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-> @@ -52,6 +52,7 @@ description: |
->          sa8155p
->          sa8540p
->          sa8775p
-> +        sar2130p
->          sc7180
->          sc7280
->          sc8180x
-> @@ -407,6 +408,12 @@ properties:
->                - qcom,qru1000-idp
->            - const: qcom,qru1000
->  
-> +      - description: Qualcomm AR2 Gen1 platform
-> +        items:
-> +          - enum:
-> +              - qcom,qar2130p
-> +          - const: qcom,sar2130p
+> [...]
+> 
+>> +		stm@6002000 {
+>> +			compatible = "arm,coresight-stm", "arm,primecell";
+>> +			reg = <0x0 0x6002000 0x0 0x1000>,
+> 
+> Please pad the non-zero address part to 8 hex digits with leading
+> zeroes, across the board
+Will fix it.
 
-That's a tricky different to spot.
+> 
+> This looks like a lot of nodes, all enabled by default. Will this run
+> on a production-fused device?
+Yes, usually Coresight nodes are enabled by default. Those nodes can run 
+on the commercial devices.
 
-You need to update qcom-soc.yaml with new pattern.
+> 
+> Konrad
 
-Best regards,
-Krzysztof
-
+Thanks,
+Jie
 
