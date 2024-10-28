@@ -1,82 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-36151-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36152-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8839D9B2EEC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 12:32:01 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 828609B2EF2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 12:33:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AA8671C217AA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 11:32:00 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CA90FB20F5C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 11:33:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0888F54765;
-	Mon, 28 Oct 2024 11:31:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 909681D3648;
+	Mon, 28 Oct 2024 11:33:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="O48pUA0f"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XVMd61mX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA8EBA59
-	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Oct 2024 11:31:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61FD9A59;
+	Mon, 28 Oct 2024 11:33:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730115118; cv=none; b=APLixd2IFIuUug9KCSHrOW3QKMXt16vN0nQsBX4Mt3qBGgklIbjGnSlzblPpDh5TKq6K+RI+Nfs6eeBjrB3CyfdImcbiJCTqCAN7+uXRBkiUA2CSpzzuO/oLlBJ18gOo1549Je+pc5h1gyToLDStqHj6RJSeH7M2t1/AGzzsWOE=
+	t=1730115201; cv=none; b=S0iefcoJyIg/7PdCchnUqPU+rsSHVbAeghdim+94hRPN7IDn/YwQXCX2pgUA+KLQhyu8G0QpBLaIqe/Ok4nL7MJL6hNbRB4VZSvwt3O+IglBKvkVftKyvz7022Hk99vYqDdTqsf9Zj937xv+Papnk6bxeQXdbyF2afb0BTJ7tmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730115118; c=relaxed/simple;
-	bh=PDN9vXO/dZI0+lgwYlek32a4uiMHBlWo7Nb6O/Pgn7s=;
+	s=arc-20240116; t=1730115201; c=relaxed/simple;
+	bh=pVV6srachtafwwlBUnY7lawnsqiQatUuDFNTiMZlZhs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GYCufxNYCk2O4d48pClobPPjhWhlFplQyrGwCMhbP+5vKrLjO7F6ZbzBAc6hwYvtop0mWUjCZxtgetYoyM3Mg6HgKWVmTmHu54TuFPYroPFa2jfQXO7J0Cqmm9GOxoL9em8CzOuGmtSFBmprb9ip0Nr5dNhbliHM3xx8SNPtUZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=fail smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=O48pUA0f; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49SBEreN017467
-	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Oct 2024 11:31:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Fay1WfqSR5ZfNix8IeEA2i6PepY/ruW4Izlv+/bHV0A=; b=O48pUA0fHbAHs9On
-	A0j2qJbEO+quqEysLo8jMe9xmB1AaO39EC43zjrhqCmbo+KwkaN03bDuY/4kEHj5
-	0q56AdsX/T8s6epYeDPU/w1QshWLaoFh5Tj9XO1n1ExjjEjL/8kpNGXiq8GbR2HB
-	vdC/Vrm+fvtqSBU1Nw37m14wASTPpKznP2Gr+863Td8RFDg9e/nEmSzbbgxxJOWW
-	epA+v79Fl4OgWSfPr3h1HNAW8+qwLBV0gcEkCPqLVS/7gyZThC/Hhkd5F8HCs9fo
-	PyVuYOUu9lrL9w3gozkW61DQ8CmJTBRfkUFOGwVaIz5L5smg33kYxy23LyCLk0YE
-	fADK7A==
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42gqrgmp4p-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Oct 2024 11:31:55 +0000 (GMT)
-Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-6cbe91571easo15369486d6.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Oct 2024 04:31:55 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730115115; x=1730719915;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Fay1WfqSR5ZfNix8IeEA2i6PepY/ruW4Izlv+/bHV0A=;
-        b=q56iYg3FAlZo527/P+An9xsOC6hQE7C1Ff15FA4/KEPkJErII4bUJXa0yXb0HhqlTa
-         sHgYCC1ni8OuAfLO7C6sHuxpQegXJ0EqcLLKEder3J9GN1wPASaPxr+X2GjKvrUM4IEw
-         LQHyoUTIRH/woVsNnN0WoKkl0K8TdDTnrTKCKoDKRWdFb06MaLNeqtX2hCVoHtL2ypZO
-         wm4FFgKVJ6TTdheAUHDhRMMmx5s+LbEzHBaY8GrocrQ5SG/Y+l1PcK0L50JpwLOfuNv7
-         OUdLBrrJDeFfkD71kJnXPXeFaEPNhL9/ylO9p96CVHGVZVvtD7vBZFXSEegSjwE0TwJF
-         ovqA==
-X-Forwarded-Encrypted: i=1; AJvYcCUidQt/zUhfeU/3U3DL0wpYOSVIPt6yoQxmthC4q/6BcQ/QikzG3Z67gPMIYnb4FH4nuHCn5k2+C2GZuJb+@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy9IlRGRjui8JpX+twbkNZwu+Daue/p7kYZTF2W+Q3iIJ3uIZ06
-	9kv6cqCtiLG8SNdPV5by+F5DZLQEyLgCFypg2ykw7OosUSqsnH/1hiw5Xrm1SphF6ypRKyY53Bd
-	R4/BG39nwwedCLhWBN9tJ5eusssPDNkThSZj76kkAqhAOs+byJDjjx/IKy2Uifdyx
-X-Received: by 2002:a05:6214:2583:b0:6c5:3338:45d6 with SMTP id 6a1803df08f44-6d18583be81mr55405616d6.11.1730115114827;
-        Mon, 28 Oct 2024 04:31:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEkvgYqxpo2ACrB5DdSvsn7yzDd4MDBFRzTXO/ZPMds196WuLyzCIGXKaPWm/X4ux6U8JcyOw==
-X-Received: by 2002:a05:6214:2583:b0:6c5:3338:45d6 with SMTP id 6a1803df08f44-6d18583be81mr55405456d6.11.1730115114488;
-        Mon, 28 Oct 2024 04:31:54 -0700 (PDT)
-Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9b1e0b232dsm366494766b.26.2024.10.28.04.31.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Oct 2024 04:31:54 -0700 (PDT)
-Message-ID: <27bea27a-9aa3-42f5-9b0a-df5744276966@oss.qualcomm.com>
-Date: Mon, 28 Oct 2024 12:31:50 +0100
+	 In-Reply-To:Content-Type; b=RerfssAg4bdCHLrJPNUORFrDKHasBqcknMIqrageM+wDoN4rGpouOLrXhsGJxSUP+RvyTRqLBkMcsFQcgKmgvO29PvyygM5AZEGMT0HyJZI8hAKvmlchWXE0b09AUqbCLvlg28Djo9wXYtqDUNElZo9BvNbUQGrbcbfvz5NnMTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XVMd61mX; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52824C4CEC3;
+	Mon, 28 Oct 2024 11:33:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1730115200;
+	bh=pVV6srachtafwwlBUnY7lawnsqiQatUuDFNTiMZlZhs=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=XVMd61mX2Klh8sbflTgwXt42mcTIJ8iQwjQwiE2E06sW2Em3wbMLLF6PHKvlVNUb7
+	 Yt/8wXL/6gonyjhVEqIlcV6X4jTheO93Eh1UPV1Sped9TPAro0KGa8VsVqh0p8u38T
+	 B9UpTbIpsNla6fm5NGhUO15KgUzZJ30tJbuyYDECqOBFAelvC9adgdtqbBSNIc53yr
+	 2JEeXSj9KOsizdkxehxxrcbUsfJvLlZMrKBnXPhkqE7Y0fOtQiMEMicyHOGVa5qcAW
+	 xWHJjjh+Gea099J82F14gNDEZaUoHADHmnAaSkc1ZXd7k6TR+CAMoXsitQBX33EMXv
+	 hRKs+D8xqC6ag==
+Message-ID: <b7a24d5b-bb0f-4eb5-8830-f32701cb94d1@kernel.org>
+Date: Mon, 28 Oct 2024 12:33:14 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,124 +50,158 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] drm/msm/a6xx: Fix excessive stack usage
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Rob Clark
- <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Nathan Chancellor <nathan@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Bill Wendling
- <morbo@google.com>,
-        Justin Stitt <justinstitt@google.com>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
-        Arnd Bergmann <arnd@kernel.org>
-References: <20241027-stack-size-fix-v1-1-764e2e3566cb@quicinc.com>
- <j2qapo66f64y7ddqlu63dqvog2fdbhnaq3t24wp2srvdt4v7xl@fyqu4ry4wmts>
- <6fea85fc-ccdc-46ec-b612-3712e9431301@quicinc.com>
- <CAA8EJpodjP3rY0Twe9sP37LWwk5ppP36dyLC9WKD6CTDOtmwzA@mail.gmail.com>
- <b7f72f38-2758-405b-abc7-60b73448d8bb@oss.qualcomm.com>
- <vtj3yahojkozge4bvq66ax2c2idbw27c3hs7l6cy3e7ucz4jqb@qge2nckj3mr4>
+Subject: Re: [PATCH v1] arm64: dts: qcom: qcs615: Add QUPv3 configuration
+To: Viken Dadhaniya <quic_vdadhani@quicinc.com>, andersson@kernel.org,
+ konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: quic_msavaliy@quicinc.com, quic_anupkulk@quicinc.com
+References: <20241011103346.22925-1-quic_vdadhani@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <vtj3yahojkozge4bvq66ax2c2idbw27c3hs7l6cy3e7ucz4jqb@qge2nckj3mr4>
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20241011103346.22925-1-quic_vdadhani@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: 6VIyq-zVf4FLeCJNkMpRCNirzxIupqXf
-X-Proofpoint-GUID: 6VIyq-zVf4FLeCJNkMpRCNirzxIupqXf
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 malwarescore=0
- clxscore=1015 impostorscore=0 suspectscore=0 spamscore=0 mlxscore=0
- adultscore=0 priorityscore=1501 mlxlogscore=999 phishscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410280093
 
-On 28.10.2024 11:52 AM, Dmitry Baryshkov wrote:
-> On Mon, Oct 28, 2024 at 11:36:15AM +0100, Konrad Dybcio wrote:
->> On 28.10.2024 11:27 AM, Dmitry Baryshkov wrote:
->>> On Mon, 28 Oct 2024 at 12:08, Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
->>>>
->>>> On 10/28/2024 1:56 PM, Dmitry Baryshkov wrote:
->>>>> On Sun, Oct 27, 2024 at 11:35:47PM +0530, Akhil P Oommen wrote:
->>>>>> Clang-19 and above sometimes end up with multiple copies of the large
->>>>>> a6xx_hfi_msg_bw_table structure on the stack. The problem is that
->>>>>> a6xx_hfi_send_bw_table() calls a number of device specific functions to
->>>>>> fill the structure, but these create another copy of the structure on
->>>>>> the stack which gets copied to the first.
->>>>>>
->>>>>> If the functions get inlined, that busts the warning limit:
->>>>>>
->>>>>> drivers/gpu/drm/msm/adreno/a6xx_hfi.c:631:12: error: stack frame size (1032) exceeds limit (1024) in 'a6xx_hfi_send_bw_table' [-Werror,-Wframe-larger-than]
->>>>>>
->>>>>> Fix this by kmalloc-ating struct a6xx_hfi_msg_bw_table instead of using
->>>>>> the stack. Also, use this opportunity to skip re-initializing this table
->>>>>> to optimize gpu wake up latency.
->>>>>>
->>>>>> Cc: Arnd Bergmann <arnd@kernel.org>
->>>>>>
->>>>>> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
->>>>>> ---
->>>>>>  drivers/gpu/drm/msm/adreno/a6xx_gmu.h |  1 +
->>>>>>  drivers/gpu/drm/msm/adreno/a6xx_hfi.c | 34 ++++++++++++++++++++++------------
->>>>>>  2 files changed, 23 insertions(+), 12 deletions(-)
->>>>>>
->>>>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
->>>>>> index 94b6c5cab6f4..b4a79f88ccf4 100644
->>>>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
->>>>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
->>>>>> @@ -99,6 +99,7 @@ struct a6xx_gmu {
->>>>>>      struct completion pd_gate;
->>>>>>
->>>>>>      struct qmp *qmp;
->>>>>> +    struct a6xx_hfi_msg_bw_table *bw_table;
->>>>>>  };
->>>>>>
->>>>>>  static inline u32 gmu_read(struct a6xx_gmu *gmu, u32 offset)
->>>>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
->>>>>> index cdb3f6e74d3e..55e51c81be1f 100644
->>>>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
->>>>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
->>>>>> @@ -630,32 +630,42 @@ static void a6xx_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
->>>>>>
->>>>>>  static int a6xx_hfi_send_bw_table(struct a6xx_gmu *gmu)
->>>>>>  {
->>>>>> -    struct a6xx_hfi_msg_bw_table msg = { 0 };
->>>>>> +    struct a6xx_hfi_msg_bw_table *msg;
->>>>>>      struct a6xx_gpu *a6xx_gpu = container_of(gmu, struct a6xx_gpu, gmu);
->>>>>>      struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
->>>>>>
->>>>>> +    if (gmu->bw_table)
->>>>>> +            goto send;
->>>>>> +
->>>>>> +    msg = devm_kzalloc(gmu->dev, sizeof(*msg), GFP_KERNEL);
->>>>>
->>>>> Is it necessary after being sent? Isn't it better to just kzalloc() it
->>>>> and then kfree() it at the end of the function?
->>>>
->>>> Keeping it around will help to cut down unnecessary work during
->>>> subsequent gpu wake ups.
->>>
->>> Then, I'd say, it is better to make it a part of the a6xx_gpu struct.
->>
->> I think a6xx_gmu makes more logical sense here.
->>
->> FWIW, the driver allocates both _gmu and _gpu for all GPUs regardless
+On 11/10/2024 12:33, Viken Dadhaniya wrote:
+> Add DT support for QUPv3 Serial Engines.
 > 
-> Hmm, are we expected to handle / perform BW requests in case of GMU-less
-> devices?
+> Co-developed-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+> ---
+> 
+> Build Dependencies:
+> 
+> Base:
+> https://lore.kernel.org/linux-devicetree/20240926-add_initial_support_for_qcs615-v3-5-e37617e91c62@quicinc.com/
+> https://lore.kernel.org/linux-devicetree/20240926-add_initial_support_for_qcs615-v3-6-e37617e91c62@quicinc.com/
+> 
+> Clock: https://lore.kernel.org/linux-devicetree/20240920-qcs615-clock-driver-v2-3-2f6de44eb2aa@quicinc.com/
+> ICC: https://lore.kernel.org/linux-devicetree/20240924143958.25-2-quic_rlaggysh@quicinc.com/
+> Apps SMMU: https://lore.kernel.org/all/20241011063112.19087-1-quic_qqzhou@quicinc.com/
+> ---
+>  arch/arm64/boot/dts/qcom/qcs615.dtsi | 602 ++++++++++++++++++++++++++-
+>  1 file changed, 598 insertions(+), 4 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/qcs615.dtsi b/arch/arm64/boot/dts/qcom/qcs615.dtsi
+> index 865ead601f85..9d7fc6fc5c6e 100644
+> --- a/arch/arm64/boot/dts/qcom/qcs615.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/qcs615.dtsi
+> @@ -5,6 +5,7 @@
+>  
+>  #include <dt-bindings/clock/qcom,qcs615-gcc.h>
+>  #include <dt-bindings/clock/qcom,rpmh.h>
+> +#include <dt-bindings/dma/qcom-gpi.h>
+>  #include <dt-bindings/interconnect/qcom,icc.h>
+>  #include <dt-bindings/interconnect/qcom,qcs615-rpmh.h>
+>  #include <dt-bindings/interrupt-controller/arm-gic.h>
+> @@ -17,6 +18,21 @@
+>  	#address-cells = <2>;
+>  	#size-cells = <2>;
+>  
+> +	aliases {
+> +		i2c1 = &i2c1;
+> +		i2c2 = &i2c2;
+> +		i2c3 = &i2c3;
+> +		i2c4 = &i2c4;
+> +		i2c5 = &i2c5;
+> +		i2c6 = &i2c6;
+> +		i2c7 = &i2c7;
+> +		spi2 = &spi2;
+> +		spi4 = &spi4;
+> +		spi6 = &spi6;
+> +		spi7 = &spi7;
+> +		serial0 = &uart0;
 
-opp-table does that for us
+Bus aliases are not supposed to be specific to SoC. Drop them from SoC DTSI.
 
-In case of no gmu ("gmu wrapper"), Linux is the only entity that controls
-things
+> +	};
+> +
+>  	cpus {
+>  		#address-cells = <2>;
+>  		#size-cells = <0>;
+> @@ -296,6 +312,25 @@
+>  		qcom,bcm-voters = <&apps_bcm_voter>;
+>  	};
+>  
+> +	qup_opp_table: opp-table-qup {
+> +		compatible = "operating-points-v2";
+> +
+> +		opp-75000000 {
+> +			opp-hz = /bits/ 64 <75000000>;
+> +			required-opps = <&rpmhpd_opp_low_svs>;
+> +		};
+> +
+> +		opp-100000000 {
+> +			opp-hz = /bits/ 64 <100000000>;
+> +			required-opps = <&rpmhpd_opp_svs>;
+> +		};
+> +
+> +		opp-128000000 {
+> +			opp-hz = /bits/ 64 <128000000>;
+> +			required-opps = <&rpmhpd_opp_nom>;
+> +		};
+> +	};
+> +
+>  	psci {
+>  		compatible = "arm,psci-1.0";
+>  		method = "smc";
+> @@ -392,6 +427,24 @@
+>  			#size-cells = <1>;
+>  		};
+>  
+> +		gpi_dma0: qcom,gpi-dma@800000  {
 
-Konrad
+That's again downstream code. Do not send us stuff from downstream.
+
+
+
+
+Best regards,
+Krzysztof
+
 
