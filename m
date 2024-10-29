@@ -1,112 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-36315-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36316-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 677D49B4C2F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 15:35:40 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CFC409B4DCB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 16:24:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E604EB237EB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 14:35:37 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 93808282EA7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 15:24:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 91AF72076B3;
-	Tue, 29 Oct 2024 14:34:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D532192D83;
+	Tue, 29 Oct 2024 15:24:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="H653H6pn"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E31i4+n2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A87B2076AB
-	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Oct 2024 14:34:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9ECC21348;
+	Tue, 29 Oct 2024 15:24:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730212499; cv=none; b=pEu+NEO+hKXVW6DXXxk/HWcGebs9X1ZmKL0Zmaca8okF/i1DAISFVmn59dxNdOQO4mhvE2MkAG8DpjGrHAUBAG9h8rJlLdUzl7fHHsz0MiylNLd4ieotXIDwPfrmF4Zinrif76OIsvOTcMNZTMqmpyxYVGM9rfuWf3pE5KN5gTA=
+	t=1730215448; cv=none; b=t7br68SlobF9P3m+v6DoW5SKdF9fqBSr5bqv1ZLvYmUYfjZaENqVWNhEbCCfLCxDJcnA7wEhKHfy3Y9zdTuZTOA1SS8eYtQD7eHwHqrF3B989FaVkbud4bQOC/0+oEL5w9s5Sc0jE96Egxr6tBzrxjAk88/UK9NhROvkInWFUHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730212499; c=relaxed/simple;
-	bh=YeRbvCOHpFl2Rls/HG77pjXIqr1UvfxcY5WdbtoW/8Q=;
+	s=arc-20240116; t=1730215448; c=relaxed/simple;
+	bh=OnfPNjPFcprKl1sN97TkhOv/xNK+Q/zpiKD+oNhDMSk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Qc/HE2oacnzbIE9XqGWmqPMfM7KEzXVrvWVI9JMdb3ipsU5fYKsX/JWUvFkb0DvMd+6wrsBpsR/rF7cSSF8lzZTMBU4jfX6eQhXctAr5+FgnEbhJwljkwTaLNkFRjVTyBL07GDuQFuz4hz9jfh56q5GTRdXe55eBZXz4+56kAoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=H653H6pn; arc=none smtp.client-ip=209.85.167.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-539fbe22ac0so5615727e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Oct 2024 07:34:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1730212495; x=1730817295; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=iJplz+InT+MvUMI0Dk/Kr6gDvRs81n3hngJD39fUITU=;
-        b=H653H6pn3O3geMvPbkm92Mn4q/lWteR260kEcGbGvlGFH7G5jRyYTtf5xzFcxjs75S
-         NHHVlT95NtOTfLBI4sj1DIiUtNkvYs1ViIGdy2Jw8s7FykjtFcNEN23bNaLLlR/Miyf/
-         53e9JS8enZc4YNZRq6CVEoqQFCkbalSf08eLwaHD9npqcYqtC5gYyGPxZQ/FopIdHhiD
-         I5O1fGmNCIKlZbBjDQrhxItAuMXc1mlr9S8+D6FgWsK/w5jobqZbJL/+qG0/HZNgpI/d
-         J4y8ENeAxHHcaEGq2D67aY8h2PJVgEGo50tjfIoKR/thV45o7G3bQB7+gNa9h0qjPRir
-         3Rng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730212495; x=1730817295;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=iJplz+InT+MvUMI0Dk/Kr6gDvRs81n3hngJD39fUITU=;
-        b=KnSTpYhNwrRzmMWaxQ0En7nMdBlNX6U2voDWotekF+p7s7SZGoNx/TfmXT9oHKDm5u
-         GYf18upNjUVepFYNL4GdvyeJ6USvmMUnUm9eiWoKBf5jaPn0rc1QR9XBQvQlkLDSeLy2
-         zwKWUK3GA1NB7iSDXEPl8VKXqFBw+DzkT0gAek2sV94vpIfsw4unDgStAj9p+ZZIzgrF
-         4wvFqWX2+OycfjvMZZozGPVvmlzqrwq1RT2K8/HZ/tGYsJ1nAIf+iqPxvhyJBUO9vDmO
-         AsfCYHSUOsf7iUviI5HHOauJmyUyCSvd+fRj6Cn+CqxUCH1T4dtOmXPRFnE2K5ZmPB6Z
-         Kakg==
-X-Forwarded-Encrypted: i=1; AJvYcCVdRvA4I3k4wdC/KDP44dHXJb1gFWPsRC/TX96iUoOMWEpXGXNVys1Fbr479lxQ4WMFYtMB/jsE2layJ/C9@vger.kernel.org
-X-Gm-Message-State: AOJu0YwpNE4NUqVTbaMEw34Vd8se9fiY0vPjASFRLCOtb+lJYYPTOMlq
-	eiOdJGW8PGqC7Rmg8aUTtwEDeBF1CW+BndALnyqje68VQFk9dx+C41GaydFj0GE=
-X-Google-Smtp-Source: AGHT+IEOewOEauMbqXmxjyKa4AXP/i4nzKrGrcQlOo+LSGab+OsUvtKOD9KDuD011sUIruFrVhDsYg==
-X-Received: by 2002:a05:6512:3d06:b0:539:8df0:4d3f with SMTP id 2adb3069b0e04-53b34a18ff8mr6704884e87.40.1730212495467;
-        Tue, 29 Oct 2024 07:34:55 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53b2e1eab9asm1415722e87.273.2024.10.29.07.34.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Oct 2024 07:34:54 -0700 (PDT)
-Date: Tue, 29 Oct 2024 16:34:53 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
-Cc: loic.poulain@linaro.org, rfoss@kernel.org, andi.shyti@kernel.org, 
-	linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Abaci Robot <abaci@linux.alibaba.com>
-Subject: Re: [PATCH v2 -next] i2c: qcom-cci: Remove the unused variable
- cci_clk_rate
-Message-ID: <xydlb2gwgkudbgg2q3i3g23lphrh4sj272z6lbthr4vhyaiju6@txxjgof7iz5m>
-References: <20241029020931.42311-1-jiapeng.chong@linux.alibaba.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=duKdzRHkQpDVn8lqn6eHzuJlyjC4MZA7N5h7aiRMCl5cQzP1S5yZu/L8BS90/jxeUokGwGA283y8ckgjyavLC8gV09znVolKW9SyV2Osbwc1bwRMiCXEWJR1Kl64RSMozI9zxgY+BlQeifA6jAp50sDpKTOP8A2yCC+pRl1JAPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E31i4+n2; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C660FC4CECD;
+	Tue, 29 Oct 2024 15:24:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1730215448;
+	bh=OnfPNjPFcprKl1sN97TkhOv/xNK+Q/zpiKD+oNhDMSk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=E31i4+n2VfP73VqUtiK+gGGwGyJPG/gqLdz1F/Xn8gtzgIte2GFbSrzS2tWamSxWl
+	 9Zw0YDHmBYpciQUj3b95NnqAHMns0WZL/efHJoyMUe+TT5Av6j75+LIOn2d10jG2Sa
+	 Y/wGc+s3uqYoxSChwozTI4vlkJhehj9XoxmAnsXi9m/WRyrUAexAyJpLI7kZGMq9cI
+	 Jv7t9zvjRKrRJHu6S4D0XxbuREDxDww2gja2p+62K9u14TvqnkkJV5ZTCLzYcENc29
+	 ekLAvwOCsdlxLy8apvJqWVnUINaro65w+MkYq8mkZm8f4/4hV8Vcja9W6w98QyEBGi
+	 YG75XcuK7bCvw==
+Date: Tue, 29 Oct 2024 10:24:02 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+Cc: Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>, 
+	Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@codeconstruct.com.au>, 
+	Christophe Leroy <christophe.leroy@csgroup.eu>, Herve Codina <herve.codina@bootlin.com>, 
+	Qiang Zhao <qiang.zhao@nxp.com>, Hitomi Hasegawa <hasegawa-hitomi@fujitsu.com>, 
+	Huisong Li <lihuisong@huawei.com>, Linus Walleij <linusw@kernel.org>, 
+	Imre Kaloz <kaloz@openwrt.org>, Karol Gugala <kgugala@antmicro.com>, 
+	Mateusz Holenko <mholenko@antmicro.com>, Gabriel Somlo <gsomlo@gmail.com>, 
+	Yinbo Zhu <zhuyinbo@loongson.cn>, Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Conor Dooley <conor.dooley@microchip.com>, 
+	Daire McNamara <daire.mcnamara@microchip.com>, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Heiko Stuebner <heiko@sntech.de>, 
+	Alim Akhtar <alim.akhtar@samsung.com>, Thierry Reding <thierry.reding@gmail.com>, 
+	Jonathan Hunter <jonathanh@nvidia.com>, Nishanth Menon <nm@ti.com>, 
+	Santosh Shilimkar <ssantosh@kernel.org>, Michal Simek <michal.simek@amd.com>, 
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Duje =?utf-8?Q?Mihanovi=C4=87?= <duje.mihanovic@skole.hr>, 
+	Mark Brown <broonie@kernel.org>, David Wu <david.wu@rock-chips.com>, 
+	Jianqun Xu <jay.xu@rock-chips.com>, Jay Buddhabhatti <jay.buddhabhatti@amd.com>, 
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>, Izhar Ameer Shaikh <izhar.ameer.shaikh@amd.com>, 
+	Naman Trivedi Manojbhai <naman.trivedimanojbhai@amd.com>, linux-arm-kernel@lists.infradead.org, soc@lists.linux.dev, 
+	linux-aspeed@lists.ozlabs.org, linux-kernel@vger.kernel.org, linuxppc-dev@lists.ozlabs.org, 
+	loongarch@lists.linux.dev, linux-mediatek@lists.infradead.org, 
+	linux-riscv@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
+	linux-rockchip@lists.infradead.org, linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org, 
+	linux-pm@vger.kernel.org
+Subject: Re: [PATCH] soc: Switch back to struct platform_driver::remove()
+Message-ID: <7iufjf4cnoofq63vtzrnlxneyjhmuhuaq2tqflzw6nc6xpixiu@dnyh4etii2vz>
+References: <20241029074859.509587-2-u.kleine-koenig@baylibre.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241029020931.42311-1-jiapeng.chong@linux.alibaba.com>
+In-Reply-To: <20241029074859.509587-2-u.kleine-koenig@baylibre.com>
 
-On Tue, Oct 29, 2024 at 10:09:31AM +0800, Jiapeng Chong wrote:
-> Variable ret is not effectively used, so delete it.
+On Tue, Oct 29, 2024 at 08:48:58AM GMT, Uwe Kleine-König wrote:
+> After commit 0edb555a65d1 ("platform: Make platform_driver::remove()
+> return void") .remove() is (again) the right callback to implement for
+> platform drivers.
 > 
-> drivers/i2c/busses/i2c-qcom-cci.c:526:16: warning: variable â€˜cci_clk_rateâ€™ set but not used.
+> Convert all platform drivers below drivers/soc to use .remove(), with
+> the eventual goal to drop struct platform_driver::remove_new(). As
+> .remove() and .remove_new() have the same prototypes, conversion is done
+> by just changing the structure member name in the driver initializer.
 > 
-> Reported-by: Abaci Robot <abaci@linux.alibaba.com>
-> Closes: https://bugzilla.openanolis.cn/show_bug.cgi?id=11532
-> Signed-off-by: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
-> ---
-> Changes in v2:
->   -Remove redundant code.
+> On the way do a few whitespace changes to make indention consistent.
 > 
->  drivers/i2c/busses/i2c-qcom-cci.c | 9 ---------
->  1 file changed, 9 deletions(-)
+> Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-Fixes: 823dfb7bdb21 ("i2c: qcom-cci: Stop complaining about DT set clock rate")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Acked-by: Bjorn Andersson <andersson@kernel.org> # qcom parts
 
--- 
-With best wishes
-Dmitry
+Regards,
+Bjorn
 
