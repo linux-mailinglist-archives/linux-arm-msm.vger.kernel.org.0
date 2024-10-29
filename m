@@ -1,103 +1,105 @@
-Return-Path: <linux-arm-msm+bounces-36316-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36317-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CFC409B4DCB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 16:24:14 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9E8389B4DEE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 16:29:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 93808282EA7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 15:24:13 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CFDF51C211AC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 15:29:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D532192D83;
-	Tue, 29 Oct 2024 15:24:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D71B51946A2;
+	Tue, 29 Oct 2024 15:28:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E31i4+n2"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PaPrkfmz"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9ECC21348;
-	Tue, 29 Oct 2024 15:24:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A96EF1940AA;
+	Tue, 29 Oct 2024 15:28:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730215448; cv=none; b=t7br68SlobF9P3m+v6DoW5SKdF9fqBSr5bqv1ZLvYmUYfjZaENqVWNhEbCCfLCxDJcnA7wEhKHfy3Y9zdTuZTOA1SS8eYtQD7eHwHqrF3B989FaVkbud4bQOC/0+oEL5w9s5Sc0jE96Egxr6tBzrxjAk88/UK9NhROvkInWFUHg=
+	t=1730215738; cv=none; b=PBTgZEVDF/epj7lYgDkUpSmMMU98T+xB68PUjBvUOG8+L2gXQmMb20Z2/Cocm/RgGvdk4R1WmIlSfASAsnDRs7QY8J2dbhqmtzsOHit1h7HP/nmfFSPUuO4zqxeD3skOLHttqS3LqPdteHdexn7+TzjM6nN6dXN1hDmzu3d69xE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730215448; c=relaxed/simple;
-	bh=OnfPNjPFcprKl1sN97TkhOv/xNK+Q/zpiKD+oNhDMSk=;
+	s=arc-20240116; t=1730215738; c=relaxed/simple;
+	bh=1XV7AWS0bMyulrKlI+gBgBaXL63lg4lT/SPouYmF8PQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=duKdzRHkQpDVn8lqn6eHzuJlyjC4MZA7N5h7aiRMCl5cQzP1S5yZu/L8BS90/jxeUokGwGA283y8ckgjyavLC8gV09znVolKW9SyV2Osbwc1bwRMiCXEWJR1Kl64RSMozI9zxgY+BlQeifA6jAp50sDpKTOP8A2yCC+pRl1JAPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E31i4+n2; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C660FC4CECD;
-	Tue, 29 Oct 2024 15:24:04 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=hGfPZI2NqJaBjZIYja38e+YykcU3Ic9z6WiNtf7da6aiQuJvlCL4+U2/X5OEwVpenlnGOFhnFMhqbvSBFif/5KcZzmJYB/6ymCHujOh5Q4ywM6fo9rOmP5NnSdBYio1OoVFNSY5Pmr+iolW45INSgpLsBw3N9slkjvvu4smaBqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PaPrkfmz; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A46EC4CECD;
+	Tue, 29 Oct 2024 15:28:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730215448;
-	bh=OnfPNjPFcprKl1sN97TkhOv/xNK+Q/zpiKD+oNhDMSk=;
+	s=k20201202; t=1730215738;
+	bh=1XV7AWS0bMyulrKlI+gBgBaXL63lg4lT/SPouYmF8PQ=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=E31i4+n2VfP73VqUtiK+gGGwGyJPG/gqLdz1F/Xn8gtzgIte2GFbSrzS2tWamSxWl
-	 9Zw0YDHmBYpciQUj3b95NnqAHMns0WZL/efHJoyMUe+TT5Av6j75+LIOn2d10jG2Sa
-	 Y/wGc+s3uqYoxSChwozTI4vlkJhehj9XoxmAnsXi9m/WRyrUAexAyJpLI7kZGMq9cI
-	 Jv7t9zvjRKrRJHu6S4D0XxbuREDxDww2gja2p+62K9u14TvqnkkJV5ZTCLzYcENc29
-	 ekLAvwOCsdlxLy8apvJqWVnUINaro65w+MkYq8mkZm8f4/4hV8Vcja9W6w98QyEBGi
-	 YG75XcuK7bCvw==
-Date: Tue, 29 Oct 2024 10:24:02 -0500
+	b=PaPrkfmzzrMFXFt2M7i9kHf/cA2XPoN8VUSFlKyoQiOA8BFmeIwWBLIoyd1BCQs16
+	 zJCB/ZTmWW/ggrJNRYgKSt6QQkL2WGSDSt+GVRZEBCa7wOy3i+txUVG9lLKxyF51IX
+	 WXsErryQjhXYlt31uRFMgSsQL3FGVQbeEfFR/IaAypVXD9sPN235veYrBR5om7YDMb
+	 lfdfDXwZTvw7sdtBoCf1GCmOC+H8PVkrNiZqjc6Y5d29ZvLMnQZgrnPvQxUYBS156l
+	 5knwzbwSkMxNwMR0YtY3Mjx2kJN6RBET7HBIcNa6U7x+myCjdzCIA8zgaTRxOUXtEr
+	 pvyHEqicIUXnA==
+Date: Tue, 29 Oct 2024 10:28:55 -0500
 From: Bjorn Andersson <andersson@kernel.org>
-To: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-Cc: Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>, 
-	Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@codeconstruct.com.au>, 
-	Christophe Leroy <christophe.leroy@csgroup.eu>, Herve Codina <herve.codina@bootlin.com>, 
-	Qiang Zhao <qiang.zhao@nxp.com>, Hitomi Hasegawa <hasegawa-hitomi@fujitsu.com>, 
-	Huisong Li <lihuisong@huawei.com>, Linus Walleij <linusw@kernel.org>, 
-	Imre Kaloz <kaloz@openwrt.org>, Karol Gugala <kgugala@antmicro.com>, 
-	Mateusz Holenko <mholenko@antmicro.com>, Gabriel Somlo <gsomlo@gmail.com>, 
-	Yinbo Zhu <zhuyinbo@loongson.cn>, Matthias Brugger <matthias.bgg@gmail.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Conor Dooley <conor.dooley@microchip.com>, 
-	Daire McNamara <daire.mcnamara@microchip.com>, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Heiko Stuebner <heiko@sntech.de>, 
-	Alim Akhtar <alim.akhtar@samsung.com>, Thierry Reding <thierry.reding@gmail.com>, 
-	Jonathan Hunter <jonathanh@nvidia.com>, Nishanth Menon <nm@ti.com>, 
-	Santosh Shilimkar <ssantosh@kernel.org>, Michal Simek <michal.simek@amd.com>, 
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Duje =?utf-8?Q?Mihanovi=C4=87?= <duje.mihanovic@skole.hr>, 
-	Mark Brown <broonie@kernel.org>, David Wu <david.wu@rock-chips.com>, 
-	Jianqun Xu <jay.xu@rock-chips.com>, Jay Buddhabhatti <jay.buddhabhatti@amd.com>, 
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>, Izhar Ameer Shaikh <izhar.ameer.shaikh@amd.com>, 
-	Naman Trivedi Manojbhai <naman.trivedimanojbhai@amd.com>, linux-arm-kernel@lists.infradead.org, soc@lists.linux.dev, 
-	linux-aspeed@lists.ozlabs.org, linux-kernel@vger.kernel.org, linuxppc-dev@lists.ozlabs.org, 
-	loongarch@lists.linux.dev, linux-mediatek@lists.infradead.org, 
-	linux-riscv@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
-	linux-rockchip@lists.infradead.org, linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org, 
-	linux-pm@vger.kernel.org
-Subject: Re: [PATCH] soc: Switch back to struct platform_driver::remove()
-Message-ID: <7iufjf4cnoofq63vtzrnlxneyjhmuhuaq2tqflzw6nc6xpixiu@dnyh4etii2vz>
-References: <20241029074859.509587-2-u.kleine-koenig@baylibre.com>
+To: Rex Nie <rex.nie@jaguarmicro.com>
+Cc: bryan.odonoghue@linaro.org, heikki.krogerus@linux.intel.com, 
+	gregkh@linuxfoundation.org, linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, angus.chen@jaguarmicro.com
+Subject: Re: [PATCH] usb: typec: qcom-pmic: fix uninitialized value hdr_len
+ and txbuf_len
+Message-ID: <q5vuljnuhhasjbexc2aphfd3bzykz3v43sx2bb7vu5h5zacb4y@gvzbthmmg6wj>
+References: <20241029021823.1978-1-rex.nie@jaguarmicro.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241029074859.509587-2-u.kleine-koenig@baylibre.com>
+In-Reply-To: <20241029021823.1978-1-rex.nie@jaguarmicro.com>
 
-On Tue, Oct 29, 2024 at 08:48:58AM GMT, Uwe Kleine-König wrote:
-> After commit 0edb555a65d1 ("platform: Make platform_driver::remove()
-> return void") .remove() is (again) the right callback to implement for
-> platform drivers.
+On Tue, Oct 29, 2024 at 10:18:23AM GMT, Rex Nie wrote:
+> If the read of USB_PDPHY_RX_ACKNOWLEDGE_REG failed, then hdr_len and
+> txbuf_len are uninitialized. It makes no sense to print message header
+> and payload. It is also not safe to print uninitialized length of ram.
 > 
-> Convert all platform drivers below drivers/soc to use .remove(), with
-> the eventual goal to drop struct platform_driver::remove_new(). As
-> .remove() and .remove_new() have the same prototypes, conversion is done
-> by just changing the structure member name in the driver initializer.
+> Signed-off-by: Rex Nie <rex.nie@jaguarmicro.com>
+> ---
+>  drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> On the way do a few whitespace changes to make indention consistent.
-> 
-> Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+> diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
+> index 5b7f52b74a40..53c2180a773a 100644
+> --- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
+> +++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
+> @@ -221,7 +221,7 @@ qcom_pmic_typec_pdphy_pd_transmit_payload(struct pmic_typec_pdphy *pmic_typec_pd
+>  					  unsigned int negotiated_rev)
+>  {
+>  	struct device *dev = pmic_typec_pdphy->dev;
+> -	unsigned int val, hdr_len, txbuf_len, txsize_len;
+> +	unsigned int val, hdr_len = 0, txbuf_len = 0, txsize_len;
 
-Acked-by: Bjorn Andersson <andersson@kernel.org> # qcom parts
+This stops us from printing uninitialized values, but the error print is
+now containing misleading/false data instead.
+
+As far as I can tell, the assignment of these three variables depend
+only on the  "msg" argument passed to the function, not on the
+operations leading up to their assignment.
+
+So how about just moving the 3 assignments up to the top of the function
+instead?
 
 Regards,
 Bjorn
+
+>  	unsigned long flags;
+>  	int ret;
+>  
+> -- 
+> 2.17.1
+> 
+> 
 
