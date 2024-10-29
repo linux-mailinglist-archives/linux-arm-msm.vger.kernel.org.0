@@ -1,175 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-36304-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36305-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 19BB99B4A15
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 13:48:01 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 318009B4A48
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 13:56:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9316A1F235AF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 12:48:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6386D1C2242D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 12:56:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 095791FF7D3;
-	Tue, 29 Oct 2024 12:47:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D4CF2076A9;
+	Tue, 29 Oct 2024 12:55:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="grEqHqb3"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H2pelnak"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D31B018F2DA;
-	Tue, 29 Oct 2024 12:47:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 398CC2076A6;
+	Tue, 29 Oct 2024 12:55:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730206035; cv=none; b=DY5xLzW7O+AnBc9rdyCpkfbomXHtButn9ZiUmVIa4J97qXxvEcrEyRAM2gv6DVgPMVyJib/HKbEJoUTBZAmXxWeZW7BbUUeu79CE7e4b+oXDxadXsynSFTJRmsetwiz6SxeWiPi1cKVB8jJ/Xe2TjCM3j70v47eilVgw2HnTchw=
+	t=1730206515; cv=none; b=s1eCuCNTfzEUsRmeoIpDXwjNCB3qYsS6ZCytZuwSvi/N3YT4XJ8gTY+aCugkBiNykyOCwC8MQnGlW4ERlD0/SrRLtWRB4n+HhyN6mXx6ec37cF5dKsbwr7afYPM5qOasxcYuO0wTPdNKla/faDva3YMilL/PexGmCXJ7ASd8uDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730206035; c=relaxed/simple;
-	bh=SwsunBtjrZbri3hAylUzPOIUDYgtF7CP6xBOZrUXuA0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qbrE2E+5z9QH/mhPuwow2zj0ZpFzVXSnBfHDjtMIwRAIg3cctDq7XCdVFLLsYv+9ckxaEEQ9J3MPoU7w+8LuYmK4Fl719H38YsIR53g/xIEWWj0yeuh4OMOY05igSDJceAFtlPiOCtfbzEFtj/u0pqW9epXo6Y8cM/TQW1RIqJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=grEqHqb3; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC86DC4CEE5;
-	Tue, 29 Oct 2024 12:47:12 +0000 (UTC)
+	s=arc-20240116; t=1730206515; c=relaxed/simple;
+	bh=mWVAxP270eizg+NnieHw5y6Ei6lA/IiWWZmJ1Makxbg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=CkWfGxix1xnbzq1AX5AKuhF4fcDTUcGf0Ydy5s8QGna6pDia0BxDewYEmzQcToK819fhjFJJ5SIrJjC79gN5xWSGu22uF2cJ63Wztlow1NxppfWub5pV35zvQDCgZ+cDoq04IcPyoFqQxJrUlNfg8eyFmAWoCLuJLVlvmhrjV7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H2pelnak; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43C19C4CEE5;
+	Tue, 29 Oct 2024 12:55:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730206035;
-	bh=SwsunBtjrZbri3hAylUzPOIUDYgtF7CP6xBOZrUXuA0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=grEqHqb34q2Br+OfciWA6dQOLn03eOIEyrqrkwNaem055ApMOoTtD3oEfjhz8GPIw
-	 JlBFHab7zcEdSCkua0Cz+indSxmbyH1DQ6ErPjUJxQd3jcX24T2c2rT5og0tmJtxfo
-	 uBGQQml1WAQnDFDT2JOIOjxs5XVTBfq1a9P6B8tquYmT9XeI8akUgoKSNYsA8mLvrO
-	 iNtBo1vOtZ6GdfN5Zj1/xSwrxnJjWdH+6DJ6dG8yD7M33v0pFfwgT30D2B+uqRsGSI
-	 lodysMmO+TqFRUmbbr2AsK1azC0au5/w/pwaVuDCjeXCmUeNeJnDz09GEL5wlO4lJC
-	 q6YFrovw5n7HA==
-Date: Tue, 29 Oct 2024 12:47:09 +0000
-From: Will Deacon <will@kernel.org>
-To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-Cc: robdclark@gmail.com, robin.murphy@arm.com, joro@8bytes.org,
-	jgg@ziepe.ca, jsnitsel@redhat.com, robh@kernel.org,
-	krzysztof.kozlowski@linaro.org, quic_c_gdjako@quicinc.com,
-	dmitry.baryshkov@linaro.org, iommu@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: Re: [PATCH v16 1/5] iommu/arm-smmu: re-enable context caching in
- smmu reset operation
-Message-ID: <20241029124708.GA4241@willie-the-truck>
-References: <20241008125410.3422512-1-quic_bibekkum@quicinc.com>
- <20241008125410.3422512-2-quic_bibekkum@quicinc.com>
- <20241024125241.GD30704@willie-the-truck>
- <092db44e-f254-4abd-abea-e9a64e70df12@quicinc.com>
+	s=k20201202; t=1730206514;
+	bh=mWVAxP270eizg+NnieHw5y6Ei6lA/IiWWZmJ1Makxbg=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=H2pelnakTKlk91z2Oy+go1anhetr5jiOh/51ynxgYpaUibkLynvJMAjd/F7HusRnR
+	 iDrU5wZNAUf3DehV17HWij2rfvnNOEJ4kjNKQMm8H3KOdSdihZb+9AGGf1eyw4sBIV
+	 53123ycLY94LhauPASR4vXGKaQqXW/Wbkq6gFLNunJEUgRi+hLI9vTEjk7j6DCW++d
+	 A/m6qlELFLBBrW4lh+5Iwl/44HsxmApapiHi+IlwfAqaVTI32mx2lhiH1F5UONO1Hg
+	 miL+IdC2chO/l4WzvCL5npEM3Ulo567TU+x0pHJdKDE/hh6x7Z+I5Nwoy5rU48BEI0
+	 cGONbjzuyxo/w==
+From: Frederic Weisbecker <frederic@kernel.org>
+To: LKML <linux-kernel@vger.kernel.org>
+Cc: Frederic Weisbecker <frederic@kernel.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Anna-Maria Behnsen <anna-maria@linutronix.de>,
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH 09/10] clocksource/drivers/qcom: Remove clockevents shutdown call on offlining
+Date: Tue, 29 Oct 2024 13:54:50 +0100
+Message-ID: <20241029125451.54574-10-frederic@kernel.org>
+X-Mailer: git-send-email 2.46.0
+In-Reply-To: <20241029125451.54574-1-frederic@kernel.org>
+References: <20241029125451.54574-1-frederic@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <092db44e-f254-4abd-abea-e9a64e70df12@quicinc.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 
-On Fri, Oct 25, 2024 at 07:51:22PM +0530, Bibek Kumar Patro wrote:
-> 
-> 
-> On 10/24/2024 6:22 PM, Will Deacon wrote:
-> > On Tue, Oct 08, 2024 at 06:24:06PM +0530, Bibek Kumar Patro wrote:
-> > > Default MMU-500 reset operation disables context caching in
-> > > prefetch buffer. It is however expected for context banks using
-> > > the ACTLR register to retain their prefetch value during reset
-> > > and runtime suspend.
-> > > 
-> > > Replace default MMU-500 reset operation with Qualcomm specific reset
-> > > operation which envelope the default reset operation and re-enables
-> > > context caching in prefetch buffer for Qualcomm SoCs.
-> > > 
-> > > Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> > > Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-> > > ---
-> > >   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 45 ++++++++++++++++++++--
-> > >   1 file changed, 42 insertions(+), 3 deletions(-)
-> > > 
-> > > diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> > > index 087fb4f6f4d3..0cb10b354802 100644
-> > > --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> > > +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> > > @@ -16,6 +16,16 @@
-> > > 
-> > >   #define QCOM_DUMMY_VAL	-1
-> > > 
-> > > +/*
-> > > + * SMMU-500 TRM defines BIT(0) as CMTLB (Enable context caching in the
-> > > + * macro TLB) and BIT(1) as CPRE (Enable context caching in the prefetch
-> > > + * buffer). The remaining bits are implementation defined and vary across
-> > > + * SoCs.
-> > > + */
-> > > +
-> > > +#define CPRE			(1 << 1)
-> > > +#define CMTLB			(1 << 0)
-> > > +
-> > >   static struct qcom_smmu *to_qcom_smmu(struct arm_smmu_device *smmu)
-> > >   {
-> > >   	return container_of(smmu, struct qcom_smmu, smmu);
-> > > @@ -396,11 +406,40 @@ static int qcom_smmu_def_domain_type(struct device *dev)
-> > >   	return match ? IOMMU_DOMAIN_IDENTITY : 0;
-> > >   }
-> > > 
-> > > +static int qcom_smmu500_reset(struct arm_smmu_device *smmu)
-> > > +{
-> > > +	int ret;
-> > > +	u32 val;
-> > > +	int i;
-> > > +
-> > > +	ret = arm_mmu500_reset(smmu);
-> > > +	if (ret)
-> > > +		return ret;
-> > > +
-> > > +	/*
-> > > +	 * arm_mmu500_reset() disables CPRE which is re-enabled here.
-> > > +	 * The errata for MMU-500 before the r2p2 revision requires CPRE to be
-> > > +	 * disabled. The arm_mmu500_reset function disables CPRE to accommodate all
-> > > +	 * RTL revisions. Since all Qualcomm SoCs are on the r2p4 revision, where
-> > > +	 * the CPRE bit can be enabled, the qcom_smmu500_reset function re-enables
-> > > +	 * the CPRE bit for the next-page prefetcher to retain the prefetch value
-> > > +	 * during reset and runtime suspend operations.
-> > > +	 */
-> > > +
-> > > +	for (i = 0; i < smmu->num_context_banks; ++i) {
-> > > +		val = arm_smmu_cb_read(smmu, i, ARM_SMMU_CB_ACTLR);
-> > > +		val |= CPRE;
-> > > +		arm_smmu_cb_write(smmu, i, ARM_SMMU_CB_ACTLR, val);
-> > > +	}
-> > 
-> > If CPRE only needs to be disabled prior to r2p2, then please teach the
-> > MMU-500 code about that instead of adding qualcomm-specific logic here.
-> > 
-> 
-> Doing this on MMU-500 code would make it generic and reflect for SoC of all
-> the vendors on this platform.
-> We can make sure that it won't cause any problems in Qualcomm SoCs as we
-> have been enabling this since for some years now and could not
-> observe/reproduce any issues around these errata.
+The clockevents core already detached and unregistered it at this stage.
 
-Unless you can explain definitively hy that's the case, I still don't
-think we should be second-guessing the core SMMU driver code in the
-Qualcomm backend.
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
+---
+ drivers/clocksource/timer-qcom.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-> But we won't be able to guarantee the same behavior in SoC for other vendors
-> where these errata might still be applicable as per [1] and [2].
-> So as per my understanding it's safe to include in Qualcomm specific
-> implementation and not changing the default behavior in all other vendors'
-> SoC even if they are not prior to r2p2 revision [3].
+diff --git a/drivers/clocksource/timer-qcom.c b/drivers/clocksource/timer-qcom.c
+index eac4c95c6127..ddb1debe6a6b 100644
+--- a/drivers/clocksource/timer-qcom.c
++++ b/drivers/clocksource/timer-qcom.c
+@@ -130,7 +130,6 @@ static int msm_local_timer_dying_cpu(unsigned int cpu)
+ {
+ 	struct clock_event_device *evt = per_cpu_ptr(msm_evt, cpu);
+ 
+-	evt->set_state_shutdown(evt);
+ 	disable_percpu_irq(evt->irq);
+ 	return 0;
+ }
+-- 
+2.46.0
 
-If you want to gate the errata workarounds on policy, then please follow
-what we do for the CPU: add a Kconfig option (e.g.
-ARM_SMMU_WORKAROUND_BROKEN_CPRE) which defaults to "on" (assuming that
-the relevant errata aren't all "rare") and update silicon-errata.rst
-accordingly.
-
-Then you can choose to disable them in your .config if you're happy to
-pick up the pieces.
-
-As an aside, I'm happy with the rest of the series now.
-
-Will
 
