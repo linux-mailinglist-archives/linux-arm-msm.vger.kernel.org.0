@@ -1,146 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-36274-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36275-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id BCECC9B471D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 11:42:16 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 814369B472A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 11:44:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 72F551F23F9D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 10:42:16 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0B7D6B22CE9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 10:44:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8BC1204F69;
-	Tue, 29 Oct 2024 10:41:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F427204952;
+	Tue, 29 Oct 2024 10:44:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="g6Deb+Ph"
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=helen.koike@collabora.com header.b="SI8rp66E"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF205204934;
-	Tue, 29 Oct 2024 10:41:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730198495; cv=none; b=aX5bbFOoQO9yJZ/HVbnCm90jq5hUB3S3ptD8NE2MhiMbFLFph4ySCjsr7+w8VZcAJxbJxTJcdrqeBWdVPw2okqvxq/XOMACY94DMz/DgXllhkYL2CZYcoYv09j+ijY/3jAA9fA+NzX4j/jRU/OqTnDD3nBA5x2hxWJTEqT4JXJ0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730198495; c=relaxed/simple;
-	bh=CDxDPheZuIShbTxvGcnHynCpCSV2PBe5TGcpJ6O4hxw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=LtvZnoi3PRg3QAjfbIiHYIrgfx/K+Gd2A9fQaRqhBFsJCPy+kCxYidhR9psm/7xTCUHQv2SpCxqmtVDlBfMrAZ37MGLU9fftSTbblbGBzo7F0AmbU5uC7yntkhsNiLnMNPDAfUcOKQgUJ/KOjGla7ZXx/0ol/nkNwmW3XEtybtQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=g6Deb+Ph; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49T9QgvS004569;
-	Tue, 29 Oct 2024 10:41:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Hw0jxCeBaOwpy4JuP/bVGCjHkrcw66Z/6+sqZuhTue4=; b=g6Deb+Phxt14ZxHr
-	RrA2Tx7gOxMtj4Iv8v83XBsATdCwgVUJ+Z8VLL/4l91kIHNAb8n1ZMQz+yItDQ5x
-	bpRTkOdU+DB6r2P6AlPFhKHGiIPE8AGlTDzjIy38eLZTQryEtkLwSy2/zyK0hJAO
-	1KdXqfwzdbNZy8Jkx8J7wFr2EFTbZ24MaWtQYAc+zzcyMD9Z6MUs89t9dh64Uynw
-	QlGEyDrHWKc7AZscTKFKttz1YmiovGSU1BeyaSxZzfTPu5OFMER3v2ILhamdKzJl
-	ySJg80R2cc5U9hnDa4di3tuy5F4yU5wPTvjtGiILFoSBF/Y01MerSPiGLn3fjaNu
-	1eop/w==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42gs6e81nt-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 29 Oct 2024 10:41:30 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49TAfUFf027210
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 29 Oct 2024 10:41:30 GMT
-Received: from [10.239.133.118] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 29 Oct
- 2024 03:41:25 -0700
-Message-ID: <4d5d3c4d-098f-48ca-ba3a-289f5447e63a@quicinc.com>
-Date: Tue, 29 Oct 2024 18:41:22 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5687D1DF985;
+	Tue, 29 Oct 2024 10:44:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1730198695; cv=pass; b=hyo9RJtcsig+nyl1Qm1WA+u4qEMzzqIe7wNHzsd974OZeSzlN50vkPI3eg6S/GJ6bCGfI33pEyP2EvRDR39xoMfPeyJ6PpVoRaPKSeQKQfogMRR+ehk8Zf7WPaAjhCtj+JqpXj4rCgdmg2vPoCk5OxN4LZzmRiEjQqSpKA6+DOI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1730198695; c=relaxed/simple;
+	bh=5nHn8CB0Y3lWK9zBXhqixj8Gu4zWhwv3Pigv9vF0HYk=;
+	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type; b=b3gtIPElBaa9GlSQqwIWm8PAdc4nuKJj6Dw2bDsRGKeOlWUoFwLWOdEc5kgRjedFeOkZEEa/iAk5hexqQzZKUjKiqvwd4Gx1on9ky12ddc229IyeZyNzebey9BQpjNsAIdvMD31o6BDU+WgdaN0KrCciQS+R6eM5ZIZjvjZEUbQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=helen.koike@collabora.com header.b=SI8rp66E; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+ARC-Seal: i=1; a=rsa-sha256; t=1730198680; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=Q18rsKf+PSMXkucCDhTyrDVQqlW4qf23y/LMNBCJpzaX8+chM7tV32YF8bIGpB7ENyK70258cN4fmMjdnwY2DTU+EineFbpoTHEgygo6bq4PLxX+fe8XJPtI8moRhjig9scoHfK32SG0Vu66T+XFI3YPrL+k0kSq6/DQZr0KxNU=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1730198680; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=9N2zS3pa6quP5FMUvhF1UomFbmmHT/cflj3VVEtps0U=; 
+	b=QzorSkkDoz6DciB9mvwZvPJ+eSp5FnKAx58IuFhLGBjMFBS9XCspIJzZ0zR4voXdMZzRp2U/FDICxkbZPNrE5lygi3zYe+0JFohYo9TzkZVvThU/J62eoA/mJWjLZI9O1C50QGVpO/b6E90CnX06ghcNvx2QOEG98ci+LVHzHhY=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=helen.koike@collabora.com;
+	dmarc=pass header.from=<helen.koike@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1730198680;
+	s=zohomail; d=collabora.com; i=helen.koike@collabora.com;
+	h=Date:Date:From:From:To:To:Cc:Cc:Message-ID:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=9N2zS3pa6quP5FMUvhF1UomFbmmHT/cflj3VVEtps0U=;
+	b=SI8rp66EglzB5AZq6rQSuuAzjl7Kvekanr/db0MhBVxZ+u5/zCq6hTZ/FYCIW38r
+	7lcByavhGf2AGIYbKz3LH9QktzsLvn0vL0NVrKtVjP69y+79zpDh1XIg1eZkGs3S04e
+	NwoXyEKs5pdWFIUi8Nd6mVE7i8n+Ut5zVRmeJkz0=
+Received: from mail.zoho.com by mx.zohomail.com
+	with SMTP id 1730198679207597.7472577126418; Tue, 29 Oct 2024 03:44:39 -0700 (PDT)
+Date: Tue, 29 Oct 2024 07:44:39 -0300
+From: Helen Mae Koike Fornazier <helen.koike@collabora.com>
+To: "Vignesh Raman" <vignesh.raman@collabora.com>
+Cc: "dri-devel" <dri-devel@lists.freedesktop.org>,
+	"daniels" <daniels@collabora.com>, "airlied" <airlied@gmail.com>,
+	"daniel" <daniel@ffwll.ch>, "robdclark" <robdclark@gmail.com>,
+	"guilherme.gallo" <guilherme.gallo@collabora.com>,
+	"sergi.blanch.torne" <sergi.blanch.torne@collabora.com>,
+	"deborah.brouwer" <deborah.brouwer@collabora.com>,
+	"dmitry.baryshkov" <dmitry.baryshkov@linaro.org>,
+	"quic_abhinavk" <quic_abhinavk@quicinc.com>,
+	"linux-arm-msm" <linux-arm-msm@vger.kernel.org>,
+	"intel-gfx" <intel-gfx@lists.freedesktop.org>,
+	"virtualization" <virtualization@lists.linux.dev>,
+	"linux-kernel" <linux-kernel@vger.kernel.org>
+Message-ID: <192d7e0ae4b.b23506ab1050252.6351811084971091951@collabora.com>
+In-Reply-To: <20241022094509.85510-1-vignesh.raman@collabora.com>
+References: <20241022094509.85510-1-vignesh.raman@collabora.com>
+Subject: Re: [PATCH v2 0/2] drm/ci: add new devices for testing
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: qcs615: Add LLCC support for QCS615
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>
-CC: <kernel@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20241011-add_llcc_dts_node_for_qcs615-v1-1-e7aa45244c36@quicinc.com>
- <c81b26dc-1c52-42b6-ba68-95906b9c524c@oss.qualcomm.com>
-Content-Language: en-US
-From: Song Xue <quic_songxue@quicinc.com>
-In-Reply-To: <c81b26dc-1c52-42b6-ba68-95906b9c524c@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 6kdHWveVhken_w6xJ8NvfNRpP8SuBgJ-
-X-Proofpoint-GUID: 6kdHWveVhken_w6xJ8NvfNRpP8SuBgJ-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 mlxscore=0
- priorityscore=1501 lowpriorityscore=0 mlxlogscore=999 phishscore=0
- malwarescore=0 impostorscore=0 adultscore=0 spamscore=0 suspectscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410290083
+Importance: Medium
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
 
 
 
-On 10/26/2024 1:46 AM, Konrad Dybcio wrote:
-> On 11.10.2024 12:41 PM, Song Xue wrote:
->> The QCS615 platform has LLCC(Last Level Cache Controller) as the system
->> cache controller. It includes 1 LLCC instance and 1 LLCC broadcast
->> interface.
->>
->> Add LLCC node support for the QCS615 platform.
->>
->> Signed-off-by: Song Xue <quic_songxue@quicinc.com>
->> ---
->> This patch series depends on below patch series:
->> https://lore.kernel.org/all/20240926-add_initial_support_for_qcs615-v3-0-e37617e91c62@quicinc.com/
->> https://lore.kernel.org/linux-arm-msm/20241010-add_llcc_support_for_qcs615-v2-1-044432450a75@quicinc.com/
->> ---
->>   arch/arm64/boot/dts/qcom/qcs615.dtsi | 8 ++++++++
->>   1 file changed, 8 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/qcs615.dtsi b/arch/arm64/boot/dts/qcom/qcs615.dtsi
->> index ac4c4c751da1fbb28865877555ba317677bc6bd2..b718a4d2270d64ed43c2eca078bfe52b78ff680c 100644
->> --- a/arch/arm64/boot/dts/qcom/qcs615.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/qcs615.dtsi
->> @@ -495,6 +495,14 @@ dc_noc: interconnect@9160000 {
->>   			qcom,bcm-voters = <&apps_bcm_voter>;
->>   		};
->>   
->> +		llcc: system-cache-controller@9200000 {
->> +			compatible = "qcom,qcs615-llcc";
->> +			reg = <0x0 0x9200000 0x0 0x50000>,
->> +			      <0x0 0x9600000 0x0 0x50000>;
-> 
-> Please pad both addresses to 8 hex digits (e.g. 0x09200000)
-> 
-> With that:
-> 
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> 
-> Konrad
-> 
-let me fix it.
 
-Thanks,
-Song
 
+---- On Tue, 22 Oct 2024 06:45:03 -0300 Vignesh Raman  wrote ---
+
+ > Add jobs that execute the IGT test suite for sm8350-hdk and dedede. 
+ >  
+ > Dropped the refactor software-driver stage jobs patch from this series. 
+ > I will send it as a separate patch. 
+ >  
+ > Successful pipeline link, 
+ > https://gitlab.freedesktop.org/vigneshraman/linux/-/pipelines/1294877 
+ >  
+ > Vignesh Raman (2): 
+ >  drm/ci: add dedede 
+ >  drm/ci: add sm8350-hdk 
+ >  
+ >  drivers/gpu/drm/ci/arm64.config               |   7 +- 
+ >  drivers/gpu/drm/ci/build.sh                   |   1 + 
+ >  drivers/gpu/drm/ci/test.yml                   |  25 +++ 
+ >  drivers/gpu/drm/ci/xfails/i915-jsl-fails.txt  |  51 +++++ 
+ >  drivers/gpu/drm/ci/xfails/i915-jsl-flakes.txt |  13 ++ 
+ >  drivers/gpu/drm/ci/xfails/i915-jsl-skips.txt  |  20 ++ 
+ >  .../drm/ci/xfails/msm-sm8350-hdk-fails.txt    |  15 ++ 
+ >  .../drm/ci/xfails/msm-sm8350-hdk-flakes.txt   |   6 + 
+ >  .../drm/ci/xfails/msm-sm8350-hdk-skips.txt    | 211 ++++++++++++++++++ 
+ >  9 files changed, 348 insertions(+), 1 deletion(-) 
+ >  create mode 100644 drivers/gpu/drm/ci/xfails/i915-jsl-fails.txt 
+ >  create mode 100644 drivers/gpu/drm/ci/xfails/i915-jsl-flakes.txt 
+ >  create mode 100644 drivers/gpu/drm/ci/xfails/i915-jsl-skips.txt 
+ >  create mode 100644 drivers/gpu/drm/ci/xfails/msm-sm8350-hdk-fails.txt 
+ >  create mode 100644 drivers/gpu/drm/ci/xfails/msm-sm8350-hdk-flakes.txt 
+ >  create mode 100644 drivers/gpu/drm/ci/xfails/msm-sm8350-hdk-skips.txt 
+ >  
+ > -- 
+ > 2.43.0 
+ >  
+ > 
+
+Applied to drm-misc-next
+
+Thanks
+Helen
 
