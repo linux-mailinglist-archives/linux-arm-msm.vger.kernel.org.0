@@ -1,118 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-36345-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36346-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A28F99B549A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 22:01:05 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4585E9B54F9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 22:22:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D3F581C22606
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 21:01:04 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E1AB31F237B7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 21:22:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6291D1917E6;
-	Tue, 29 Oct 2024 21:01:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1B8A209F24;
+	Tue, 29 Oct 2024 21:22:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="doEVh31d"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bddh8TeW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55EC057C9F;
-	Tue, 29 Oct 2024 21:00:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02C641DAC8E;
+	Tue, 29 Oct 2024 21:22:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730235661; cv=none; b=TAgTz94xGiNzXv8ydLE4h54PLt+xseiAqk7tytn7mq3vloD8+6l6LBYV1s4jug5xCVGXZU7isPU8tZO3AdQKYgUZlbVHg1qUYllNmrCkdhhTWWj2q6Mskn2ctkeFiGuQSnnoJLq+q8lhsI86uvweO4aeWefg6nqmCQyhkSJeWds=
+	t=1730236972; cv=none; b=XaZ2dbT76PnTx2V4vSmyuttjk4w+qva/9VcqPsIMEDPrYzvnNOmyeFoGHdntlKQadwpVq6618+OJwdcTM1Mzwzpz+ee4oXplDprLYSw8TvweY+czRnj6u0lPUwyBmKQsbDItfrDH6qmXiLZUNfK/WkOytzKuLCb79B4+vgMUjiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730235661; c=relaxed/simple;
-	bh=gZM2sai99kzSW0wBJXo/cr2FOJYRZ/NYJBC1V8aih9I=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=NpC5nSjzicH9U16obAE+FwVU6VcFHcZIhWBgQCY9EkHCRFYvau0NDGyM2+VbjJVYgZBWVGCfBxPaC0MuNxS7mDlpr/3PjFuyEBvlfH2vYvPBPYEyh+WsaMAPOtq7yX/8atIIclzVDyjMwi0UN0XrCeZCNV+DUBRXWUfeTrTPrg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=doEVh31d; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49TKgIDL024838;
-	Tue, 29 Oct 2024 21:00:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	GS2nJ5D8tlo393fykSnwYGwKmzi6IPtZcQnXSIp+6qE=; b=doEVh31dN1Ym27fz
-	dg8F75P35uktjcYO6XsO1ZBOkiNPVNbW+2Wic5sBTIUa1ynVCjDic2d5KfTnKHOd
-	mUcpAjXOS8FR03FjOc9BrToA8OnFNQKtNd0Ny0oBsCEO8+ZZ/r5toCG+5Pj9YjPf
-	zAjQaTefrFbyI93aa0FWlfeMMZ45j6dveZ/A6EPPZFPpqLb4BMHxZIxijrve4jWA
-	BJn5PPR7IaYPahi3ttO02AJE0M3C3H/T1cSD4Y9vOwtSVanZ9aRw7j6lwFTGPZuk
-	7am2wFW9forD5+GuE0dChj8+GnCxVMu6iq4Danw0vHecr33KPMuf78qScWylc0fm
-	LhG9BQ==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42grguhrvx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 29 Oct 2024 21:00:51 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49TL0nWr024315
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 29 Oct 2024 21:00:49 GMT
-Received: from [10.134.71.247] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 29 Oct
- 2024 14:00:47 -0700
-Message-ID: <f9a6762b-f7f1-402e-b9a0-3e31b60b1a83@quicinc.com>
-Date: Tue, 29 Oct 2024 14:00:46 -0700
+	s=arc-20240116; t=1730236972; c=relaxed/simple;
+	bh=kqiqj5w/Vbl4ym0X5ZAgwX+gC6vFA/z8wsDzbYqbOBw=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JNf6tkozUQFJFLFkqttFZwv7ixmeb3jPqrs+cUe5cOM1vGeeE0AvDxtl3uWeD+WMAErhpPinNK4rRBUJkx5TK36w3f9FSz5WSQoOioMp19mcmUhp9LrUPqW/hy90jbTObDJ7AufJga83X1OllueP0AdkzIj2bQWkwNUvAETvYmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bddh8TeW; arc=none smtp.client-ip=209.85.222.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-7b15eadee87so432457085a.2;
+        Tue, 29 Oct 2024 14:22:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1730236970; x=1730841770; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=bXG3uAnR8xUGDWWZqqgTv3bWvp45oe+e7aGU+Lgvdes=;
+        b=bddh8TeWMfkhVssOyjrUs4ikLJyrr8YeFaNDrI110WPacTWEuHiFpBfjG0H46le1Jh
+         A1FRn3lpXV1baJ5QGXXJ+SF36MVPh6LSdoeo+3Qv69t/73hzLhbl8of7t/wktl2kK9wE
+         U6zhVgxYLQTMsrqoxlg2TrBaOn35mOqh7vzhur744uZxC5GDF49mMoNYF+DiZyWEu/vp
+         jm9tSqe1XVDYbl4ErN+3yOPfgDtxzRHxd/6F4kM+hK8WQEZpaq4CVIyEF/5yGpB6Lg8U
+         J4GxX8NctGtbaY+SMCu/DlvSP79dK71pb+VeWu5GQIuEZxNA1JT0kB7qQNaHVMA1M6i1
+         F+bg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730236970; x=1730841770;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bXG3uAnR8xUGDWWZqqgTv3bWvp45oe+e7aGU+Lgvdes=;
+        b=HmCpkD+pjy6vc59V7K2327LimWi7WPE6N1GeuKqhKy7YsoouJ5ga+kNWT8BTuuVUqD
+         jnkBmxlgHoAgjAcEoQVUT0lASa4BOfNd0QAzrNZO4pQt19tJSz7klhK+r+yyAEVfnF1P
+         0Vw2CF5jWzWFH8DhhXtkfkH706NFLHHzNuT2/fEWYqArdGhA+I4Z7c5V/+0UykTzeMur
+         GTaxPMNXz+F0LoGOibhlfBCbgIe2rf/AgVsvF5QF6mlDzgFUhYLrpYj5SzjMZ4QN1WtU
+         7oJBnOGdQ/PrsSXm7tGCi06zRhrlHXS5l32u7os3o/UstgTfIIWCy3mG7OAhKQUHjLtd
+         VpKA==
+X-Forwarded-Encrypted: i=1; AJvYcCUFbkF8OwerT3l+goSN++Rbdmj0MpKm+s/CTGI/r68C2jg+so1j4HAfsmvH2/CmxRK0p52nxoxZkkg3@vger.kernel.org, AJvYcCX3c3Vh+NK3QpaauibuBwlLrLXVbW/ObxNnz7uom9rYLDD+1RrN5F6msq1OUFOhlBoqJDXWAKsLSo6hLyW0BA==@vger.kernel.org
+X-Gm-Message-State: AOJu0YxgoWwplyLXUx3WSKcC9RIGkySmX/Apm4Oe4J+6LbyEiOIAPMNh
+	MfEEYSRYsVHa7vQqrQ9riEJHpu4TnsPXihQMJCfO6dvUNWDwo9Wb
+X-Google-Smtp-Source: AGHT+IGvPaY6eHkYtHcRujijpGZOkw5olQHZ+nTec+dmVsgZDErM8pZ7dmQgEqITB0HkJ64Bv404AQ==
+X-Received: by 2002:a05:620a:4621:b0:7b1:49cb:5842 with SMTP id af79cd13be357-7b193eeb9d4mr2054633985a.15.1730236969778;
+        Tue, 29 Oct 2024 14:22:49 -0700 (PDT)
+Received: from localhost ([2607:fea8:52a3:d200::98bd])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7b18d32b9a2sm454857185a.82.2024.10.29.14.22.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Oct 2024 14:22:49 -0700 (PDT)
+Date: Tue, 29 Oct 2024 17:22:46 -0400
+From: Richard Acayan <mailingradian@gmail.com>
+To: Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+	Joerg Roedel <joro@8bytes.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Rob Clark <robdclark@gmail.com>,
+	linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 0/2] iommu/arm-smmu-qcom: Add SDM670 SMMU v2
+Message-ID: <ZyFSJjO2fkqCwzWm@radian>
+References: <20240730013820.41702-4-mailingradian@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 6/9] drm/msm/dpu: move rot90 checking to
- dpu_plane_atomic_check_sspp()
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark
-	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona
- Vetter <simona@ffwll.ch>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-References: <20241025-dpu-virtual-wide-v6-0-0310fd519765@linaro.org>
- <20241025-dpu-virtual-wide-v6-6-0310fd519765@linaro.org>
-Content-Language: en-US
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20241025-dpu-virtual-wide-v6-6-0310fd519765@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: nZFp9OW4gW_K9zOSklZh0qI__3LoWGE9
-X-Proofpoint-GUID: nZFp9OW4gW_K9zOSklZh0qI__3LoWGE9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1015
- lowpriorityscore=0 adultscore=0 mlxscore=0 bulkscore=0 suspectscore=0
- phishscore=0 spamscore=0 malwarescore=0 mlxlogscore=749 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2410290158
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240730013820.41702-4-mailingradian@gmail.com>
 
-
-
-On 10/24/2024 5:20 PM, Dmitry Baryshkov wrote:
-> Move a call to dpu_plane_check_inline_rotation() to the
-> dpu_plane_atomic_check_sspp() function, so that the rot90 constraints
-> are checked for both SSPP blocks. Also move rotation field from struct
-> dpu_plane_state to struct dpu_sw_pipe_cfg.
+On Mon, Jul 29, 2024 at 09:38:21PM -0400, Richard Acayan wrote:
+> This adds the SMMU v2 for the Snapdragon 670, used for the Adreno GPU.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h |  2 ++
->   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c   | 55 +++++++++++++++--------------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h   |  2 --
->   3 files changed, 31 insertions(+), 28 deletions(-)
+> Richard Acayan (2):
+>   dt-bindings: iommu: arm,smmu: add sdm670 adreno iommu compatible
+>   iommu/arm-smmu-qcom: add sdm670 adreno iommu compatible
 > 
+>  Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 1 +
+>  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c            | 1 +
+>  2 files changed, 2 insertions(+)
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Hi, I'm wondering if this is still being considered.
+
+The NAK doesn't really make sense here, as there's a warning/BUG at the
+bottom of the qcom SMMU driver that occurs when the compatible isn't
+added:
+
+	/*
+	 * If you hit this WARN_ON() you are missing an entry in the
+	 * qcom_smmu_impl_of_match[] table, and GPU per-process page-
+	 * tables will be broken.
+	 */
+	WARN(of_device_is_compatible(np, "qcom,adreno-smmu"),
+	     "Missing qcom_smmu_impl_of_match entry for: %s",
+	     dev_name(smmu->dev));
+
+DTS change for context (pending):
+https://lore.kernel.org/linux-arm-msm/20240806214452.16406-10-mailingradian@gmail.com
 
