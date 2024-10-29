@@ -1,188 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-36265-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36266-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 226819B4392
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 08:54:02 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E40C59B43B3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 09:03:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D7B65283A8B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 07:54:00 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6F758B22996
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 08:03:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 877F9202F6E;
-	Tue, 29 Oct 2024 07:53:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C7F6C2036E6;
+	Tue, 29 Oct 2024 08:03:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e4KhMT1X"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=sntech.de header.i=@sntech.de header.b="E9WrE7ko"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from gloria.sntech.de (gloria.sntech.de [185.11.138.130])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 586A92010F4;
-	Tue, 29 Oct 2024 07:53:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7C8B1DF99F;
+	Tue, 29 Oct 2024 08:03:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.11.138.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730188430; cv=none; b=OBOAq9HWTofAEtkwuJJT2Si7tZzeUjetOA5qDew7MNiYXEFFp3wzC44DJG9OIk1Vi9x1LcNtfIx7RmkwB8ASXKDRocdriraXW7sf6BPyeW5AoDOj/cwJbmeghPr1MAPyVt5SVfiu+LHUfJHW8uuiKlxoLinCHoSBTEIg41iveg8=
+	t=1730188994; cv=none; b=LUpsgsaTYFhopOeuMBNr9Z3HFCT+LIgEqSEkCQ6WfMeyGfZ4kGAGaXHgF8ZVJwDZtqN7AGrNExCta37uyB7u1z2ZHuCCGPb9QEFKuBlagxLnxcoA012ck6k0BHjA4Jo9gamNcefiFiMNG/+cNmejaPZ1f+dnZoXNbRPg8FR+38w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730188430; c=relaxed/simple;
-	bh=rYKLJG/cGy6PWVHFLv8OcSjLD+SMiwoShTSmF2XtG7I=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Nvx0KzWpjNxWZCey5Ini7b0HsEM289SwX+tlBCh/wNMdzsxGr9luplpCiOfLauVqgKx2/pvAnVCmdVsiBrefOHjFOGq+jhGDHJjLWDZs2eK/++mxBSoHGI6y1tFTx57TCY56+7PyBI4t3zdB5uPxWL1YH5W0SiabqV7szvsulV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e4KhMT1X; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2B6AC4CECD;
-	Tue, 29 Oct 2024 07:53:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730188429;
-	bh=rYKLJG/cGy6PWVHFLv8OcSjLD+SMiwoShTSmF2XtG7I=;
-	h=From:To:Cc:Subject:Date:From;
-	b=e4KhMT1XFmyQP9rLTR1paaw4xQ/HGRLlixTAL5qcbS1HymUrTToiIEc0IfZepgFL2
-	 eIjTVRQkQw6yVHDyEz6maRNsySlc6gI1DSiSNbY/ZTgYRYM5WpFxcmXiJplOEXVN8V
-	 kFKDF2B2L5nLXxe/fwt37QYZA/tkP2VvEaU4tkgX9zPx1MnXb5C9b6Flwbp3fby2b9
-	 fxEFe6f0+cC3KEZsdWpzq9c4VNGK2nMsttlsXPfAWpT8cGbWY2KiScdYTJNZD0Vv19
-	 +NoL02863UEjLl7mzvXevR5pfQxYMA3w85v3Rz+RKM3XcJIM5Z6OyXM3B7btcK4w4K
-	 qP0iqhA5LQ4hg==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan+linaro@kernel.org>)
-	id 1t5h3I-0000000058U-25Z4;
-	Tue, 29 Oct 2024 08:54:08 +0100
-From: Johan Hovold <johan+linaro@kernel.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>
-Cc: Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH v2] arm64: dts: x1e80100-crd: describe HID supplies
-Date: Tue, 29 Oct 2024 08:52:58 +0100
-Message-ID: <20241029075258.19642-1-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.45.2
+	s=arc-20240116; t=1730188994; c=relaxed/simple;
+	bh=/xUZ3coZ6gf0W/FIhSNP+3W6dQQSH6hXnIrXeTA8pgs=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=FZB2fumrZmBax9sQHnCqvLqJ6RiBu6FoXlc6V+19GTYLIi6UNv9Vjti3nxDcuR7eXCT2CFnotX/OgDlsAcOuP0jVpgQONAsgpFyUQMMomDp6KWFqmw8psSIlU7oLa7S7EiE9R2orQLNPNeoDPK+IUav2xHiwtekRcTW0O/5BXSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sntech.de; spf=pass smtp.mailfrom=sntech.de; dkim=pass (2048-bit key) header.d=sntech.de header.i=@sntech.de header.b=E9WrE7ko; arc=none smtp.client-ip=185.11.138.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sntech.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sntech.de
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=sntech.de;
+	s=gloria202408; h=Content-Type:Content-Transfer-Encoding:MIME-Version:
+	References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=iFdAzUkd+0GcTyGkQ9/oIIo1dvmqpp5hrlTc3EhXZOY=; b=E9WrE7kocNrMH0KBtISYyOsT32
+	PSMSsRWWc5ttyuBz9k08bNtdV2pmnSIxLwf8TSavrfVanzPnFH+vFeWHa8X18XX4W7rs2HhWaEF39
+	lMenGv8tWDu71gfI8++INuZmUySPZj8ECT1w4N5VRO5xYI/DzO+6lz3e6/1j5NgdinKJL8R+6sYWF
+	eWDftBCWLy1wRDPEblOrOj+6ShySW3PiIVJ9DC83Ds6qlsvQRzdWknfrBAB0lg5znZL0QsVoR8zpi
+	LB5SGxCh96C1CN9NxF/9ho2aS0Rb79rGDcq/QHH7rG9oiG32K6IP9wBS4BK0I3BhMQOOMdoFjeky8
+	DpvOJkLg==;
+Received: from [185.156.123.69] (helo=phil.localnet)
+	by gloria.sntech.de with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <heiko@sntech.de>)
+	id 1t5hAk-0002ap-A3; Tue, 29 Oct 2024 09:01:50 +0100
+From: Heiko Stuebner <heiko@sntech.de>
+To: Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
+ Uwe =?ISO-8859-1?Q?Kleine=2DK=F6nig?= <u.kleine-koenig@baylibre.com>
+Cc: Joel Stanley <joel@jms.id.au>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Christophe Leroy <christophe.leroy@csgroup.eu>,
+ Herve Codina <herve.codina@bootlin.com>, Qiang Zhao <qiang.zhao@nxp.com>,
+ Hitomi Hasegawa <hasegawa-hitomi@fujitsu.com>,
+ Huisong Li <lihuisong@huawei.com>, Linus Walleij <linusw@kernel.org>,
+ Imre Kaloz <kaloz@openwrt.org>, Karol Gugala <kgugala@antmicro.com>,
+ Mateusz Holenko <mholenko@antmicro.com>, Gabriel Somlo <gsomlo@gmail.com>,
+ Yinbo Zhu <zhuyinbo@loongson.cn>, Matthias Brugger <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Conor Dooley <conor.dooley@microchip.com>,
+ Daire McNamara <daire.mcnamara@microchip.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Alim Akhtar <alim.akhtar@samsung.com>,
+ Thierry Reding <thierry.reding@gmail.com>,
+ Jonathan Hunter <jonathanh@nvidia.com>, Nishanth Menon <nm@ti.com>,
+ Santosh Shilimkar <ssantosh@kernel.org>, Michal Simek <michal.simek@amd.com>,
+ Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+ Duje =?utf-8?B?TWloYW5vdmnEhw==?= <duje.mihanovic@skole.hr>,
+ Mark Brown <broonie@kernel.org>, David Wu <david.wu@rock-chips.com>,
+ Jianqun Xu <jay.xu@rock-chips.com>,
+ Jay Buddhabhatti <jay.buddhabhatti@amd.com>,
+ Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+ Izhar Ameer Shaikh <izhar.ameer.shaikh@amd.com>,
+ Naman Trivedi Manojbhai <naman.trivedimanojbhai@amd.com>,
+ linux-arm-kernel@lists.infradead.org, soc@lists.linux.dev,
+ linux-aspeed@lists.ozlabs.org, linux-kernel@vger.kernel.org,
+ linuxppc-dev@lists.ozlabs.org, loongarch@lists.linux.dev,
+ linux-mediatek@lists.infradead.org, linux-riscv@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org,
+ linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
+ linux-pm@vger.kernel.org
+Subject: Re: [PATCH] soc: Switch back to struct platform_driver::remove()
+Date: Tue, 29 Oct 2024 09:01:46 +0100
+Message-ID: <5089490.31r3eYUQgx@phil>
+In-Reply-To: <20241029074859.509587-2-u.kleine-koenig@baylibre.com>
+References: <20241029074859.509587-2-u.kleine-koenig@baylibre.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="iso-8859-1"
 
-Add the missing HID supplies to avoid relying on other consumers to keep
-them on.
-
-This also avoids the following warnings on boot:
-
-	i2c_hid_of 0-0010: supply vdd not found, using dummy regulator
-	i2c_hid_of 0-0010: supply vddl not found, using dummy regulator
-	i2c_hid_of 1-0015: supply vdd not found, using dummy regulator
-	i2c_hid_of 1-0015: supply vddl not found, using dummy regulator
-	i2c_hid_of 1-003a: supply vdd not found, using dummy regulator
-	i2c_hid_of 1-003a: supply vddl not found, using dummy regulator
-
-Note that VREG_MISC_3P3 is also used for things like the fingerprint
-reader which are not yet fully described so mark the regulator as always
-on for now.
-
-Fixes: d7e03cce0400 ("arm64: dts: qcom: x1e80100-crd: Enable more support")
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
-
-Changes in v2:
- - amend the pin config in order not to rely on the boot firmware
+Am Dienstag, 29. Oktober 2024, 08:48:58 CET schrieb Uwe Kleine-K=F6nig:
+> After commit 0edb555a65d1 ("platform: Make platform_driver::remove()
+> return void") .remove() is (again) the right callback to implement for
+> platform drivers.
+>=20
+> Convert all platform drivers below drivers/soc to use .remove(), with
+> the eventual goal to drop struct platform_driver::remove_new(). As
+> .remove() and .remove_new() have the same prototypes, conversion is done
+> by just changing the structure member name in the driver initializer.
+>=20
+> On the way do a few whitespace changes to make indention consistent.
+>=20
+> Signed-off-by: Uwe Kleine-K=F6nig <u.kleine-koenig@baylibre.com>
 
 
- arch/arm64/boot/dts/qcom/x1e80100-crd.dts | 40 +++++++++++++++++++++++
- 1 file changed, 40 insertions(+)
+>  drivers/soc/rockchip/io-domain.c            | 8 ++++----
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-index b50accb220e5..c5478fd08e51 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-@@ -8,6 +8,7 @@
- #include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/input/gpio-keys.h>
- #include <dt-bindings/input/input.h>
-+#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- 
- #include "x1e80100.dtsi"
-@@ -277,6 +278,23 @@ vreg_edp_3p3: regulator-edp-3p3 {
- 		regulator-boot-on;
- 	};
- 
-+	vreg_misc_3p3: regulator-misc-3p3 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_MISC_3P3";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		gpio = <&pm8550ve_8_gpios 6 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&misc_3p3_reg_en>;
-+
-+		regulator-boot-on;
-+		regulator-always-on;
-+	};
-+
- 	vreg_nvme: regulator-nvme {
- 		compatible = "regulator-fixed";
- 
-@@ -691,6 +709,9 @@ touchpad@15 {
- 		hid-descr-addr = <0x1>;
- 		interrupts-extended = <&tlmm 3 IRQ_TYPE_LEVEL_LOW>;
- 
-+		vdd-supply = <&vreg_misc_3p3>;
-+		vddl-supply = <&vreg_l12b_1p2>;
-+
- 		pinctrl-0 = <&tpad_default>;
- 		pinctrl-names = "default";
- 
-@@ -704,6 +725,9 @@ keyboard@3a {
- 		hid-descr-addr = <0x1>;
- 		interrupts-extended = <&tlmm 67 IRQ_TYPE_LEVEL_LOW>;
- 
-+		vdd-supply = <&vreg_misc_3p3>;
-+		vddl-supply = <&vreg_l12b_1p2>;
-+
- 		pinctrl-0 = <&kybd_default>;
- 		pinctrl-names = "default";
- 
-@@ -723,6 +747,9 @@ touchscreen@10 {
- 		hid-descr-addr = <0x1>;
- 		interrupts-extended = <&tlmm 51 IRQ_TYPE_LEVEL_LOW>;
- 
-+		vdd-supply = <&vreg_misc_3p3>;
-+		vddl-supply = <&vreg_l15b_1p8>;
-+
- 		pinctrl-0 = <&ts0_default>;
- 		pinctrl-names = "default";
- 	};
-@@ -856,6 +883,19 @@ &pcie6a_phy {
- 	status = "okay";
- };
- 
-+&pm8550ve_8_gpios {
-+	misc_3p3_reg_en: misc-3p3-reg-en-state {
-+		pins = "gpio6";
-+		function = "normal";
-+		bias-disable;
-+		input-disable;
-+		output-enable;
-+		drive-push-pull;
-+		power-source = <1>; /* 1.8 V */
-+		qcom,drive-strength = <PMIC_GPIO_STRENGTH_LOW>;
-+	};
-+};
-+
- &pmc8380_3_gpios {
- 	edp_bl_en: edp-bl-en-state {
- 		pins = "gpio4";
--- 
-2.45.2
+=46or the Rockchip part:
+Acked-by: Heiko Stuebner <heiko@sntech.de>
+
 
 
