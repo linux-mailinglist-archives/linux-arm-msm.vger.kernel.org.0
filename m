@@ -1,123 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-36266-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36267-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E40C59B43B3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 09:03:29 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BFCE69B444D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 09:34:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6F758B22996
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 08:03:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C023D1C213B3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 08:34:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C7F6C2036E6;
-	Tue, 29 Oct 2024 08:03:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 940202038C1;
+	Tue, 29 Oct 2024 08:34:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=sntech.de header.i=@sntech.de header.b="E9WrE7ko"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="EOE6uoRA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from gloria.sntech.de (gloria.sntech.de [185.11.138.130])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7C8B1DF99F;
-	Tue, 29 Oct 2024 08:03:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.11.138.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0CFF2038B2;
+	Tue, 29 Oct 2024 08:33:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730188994; cv=none; b=LUpsgsaTYFhopOeuMBNr9Z3HFCT+LIgEqSEkCQ6WfMeyGfZ4kGAGaXHgF8ZVJwDZtqN7AGrNExCta37uyB7u1z2ZHuCCGPb9QEFKuBlagxLnxcoA012ck6k0BHjA4Jo9gamNcefiFiMNG/+cNmejaPZ1f+dnZoXNbRPg8FR+38w=
+	t=1730190840; cv=none; b=g0L09BiK8Dj5l06l8jqLhxUcig+K8zoQEUKvA0sQd3S5IWxJeAsj2ePetybPvDFUpLS6XkRsRQCRGBse6irEazYLUab3KsJd9R8N1viI7VF2rufYXOFlaIEHuNszvTdGpGeOJj52iWf1r5Y5jEY9T/SRD0FTiWKnZt9AUfyAse8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730188994; c=relaxed/simple;
-	bh=/xUZ3coZ6gf0W/FIhSNP+3W6dQQSH6hXnIrXeTA8pgs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FZB2fumrZmBax9sQHnCqvLqJ6RiBu6FoXlc6V+19GTYLIi6UNv9Vjti3nxDcuR7eXCT2CFnotX/OgDlsAcOuP0jVpgQONAsgpFyUQMMomDp6KWFqmw8psSIlU7oLa7S7EiE9R2orQLNPNeoDPK+IUav2xHiwtekRcTW0O/5BXSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sntech.de; spf=pass smtp.mailfrom=sntech.de; dkim=pass (2048-bit key) header.d=sntech.de header.i=@sntech.de header.b=E9WrE7ko; arc=none smtp.client-ip=185.11.138.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sntech.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sntech.de
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=sntech.de;
-	s=gloria202408; h=Content-Type:Content-Transfer-Encoding:MIME-Version:
-	References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=iFdAzUkd+0GcTyGkQ9/oIIo1dvmqpp5hrlTc3EhXZOY=; b=E9WrE7kocNrMH0KBtISYyOsT32
-	PSMSsRWWc5ttyuBz9k08bNtdV2pmnSIxLwf8TSavrfVanzPnFH+vFeWHa8X18XX4W7rs2HhWaEF39
-	lMenGv8tWDu71gfI8++INuZmUySPZj8ECT1w4N5VRO5xYI/DzO+6lz3e6/1j5NgdinKJL8R+6sYWF
-	eWDftBCWLy1wRDPEblOrOj+6ShySW3PiIVJ9DC83Ds6qlsvQRzdWknfrBAB0lg5znZL0QsVoR8zpi
-	LB5SGxCh96C1CN9NxF/9ho2aS0Rb79rGDcq/QHH7rG9oiG32K6IP9wBS4BK0I3BhMQOOMdoFjeky8
-	DpvOJkLg==;
-Received: from [185.156.123.69] (helo=phil.localnet)
-	by gloria.sntech.de with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <heiko@sntech.de>)
-	id 1t5hAk-0002ap-A3; Tue, 29 Oct 2024 09:01:50 +0100
-From: Heiko Stuebner <heiko@sntech.de>
-To: Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
- Uwe =?ISO-8859-1?Q?Kleine=2DK=F6nig?= <u.kleine-koenig@baylibre.com>
-Cc: Joel Stanley <joel@jms.id.au>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Christophe Leroy <christophe.leroy@csgroup.eu>,
- Herve Codina <herve.codina@bootlin.com>, Qiang Zhao <qiang.zhao@nxp.com>,
- Hitomi Hasegawa <hasegawa-hitomi@fujitsu.com>,
- Huisong Li <lihuisong@huawei.com>, Linus Walleij <linusw@kernel.org>,
- Imre Kaloz <kaloz@openwrt.org>, Karol Gugala <kgugala@antmicro.com>,
- Mateusz Holenko <mholenko@antmicro.com>, Gabriel Somlo <gsomlo@gmail.com>,
- Yinbo Zhu <zhuyinbo@loongson.cn>, Matthias Brugger <matthias.bgg@gmail.com>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Conor Dooley <conor.dooley@microchip.com>,
- Daire McNamara <daire.mcnamara@microchip.com>,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Alim Akhtar <alim.akhtar@samsung.com>,
- Thierry Reding <thierry.reding@gmail.com>,
- Jonathan Hunter <jonathanh@nvidia.com>, Nishanth Menon <nm@ti.com>,
- Santosh Shilimkar <ssantosh@kernel.org>, Michal Simek <michal.simek@amd.com>,
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
- Duje =?utf-8?B?TWloYW5vdmnEhw==?= <duje.mihanovic@skole.hr>,
- Mark Brown <broonie@kernel.org>, David Wu <david.wu@rock-chips.com>,
- Jianqun Xu <jay.xu@rock-chips.com>,
- Jay Buddhabhatti <jay.buddhabhatti@amd.com>,
- Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
- Izhar Ameer Shaikh <izhar.ameer.shaikh@amd.com>,
- Naman Trivedi Manojbhai <naman.trivedimanojbhai@amd.com>,
- linux-arm-kernel@lists.infradead.org, soc@lists.linux.dev,
- linux-aspeed@lists.ozlabs.org, linux-kernel@vger.kernel.org,
- linuxppc-dev@lists.ozlabs.org, loongarch@lists.linux.dev,
- linux-mediatek@lists.infradead.org, linux-riscv@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org,
- linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
- linux-pm@vger.kernel.org
-Subject: Re: [PATCH] soc: Switch back to struct platform_driver::remove()
-Date: Tue, 29 Oct 2024 09:01:46 +0100
-Message-ID: <5089490.31r3eYUQgx@phil>
-In-Reply-To: <20241029074859.509587-2-u.kleine-koenig@baylibre.com>
-References: <20241029074859.509587-2-u.kleine-koenig@baylibre.com>
+	s=arc-20240116; t=1730190840; c=relaxed/simple;
+	bh=zB2Jl6hczHCHC1wpS1Pn1Atha4MhL20ltR4tkQnVqrM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=PBeCLvDx8PMhDZ5YA2zHVOMWCghv17qJKpz+SiDuDaLg8w+z1X/5t+J0NvG+WQj9iL0MJQPHpuF0FZEOHbUU6z1us9nJFmzBsTeTDWEUJjX9bF5aagAK97+8WTpt8uDLVa3CQb8cmAD+MiOrmqXco5e/IVhMklUohpMZI6hSrQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=EOE6uoRA; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49SKcU5b005279;
+	Tue, 29 Oct 2024 08:33:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	6t2w3Ox8lV5vmpE+PsDatVx+nTRRO2j8dexru7oBdio=; b=EOE6uoRAP9mCs3+n
+	H8UI9woLykZGV6tACvEGnhARTvLjD3tnkfoDKEy2OnFn/O90k8eXc0IoilFNBuaI
+	eap31huYr7dGeQiMrSOI6OvjnC9Y8jhmHhD+Yca6HjehnXR0LeelZvQ8ZJQ9rQVg
+	9wm+LQmlQXwPrv6NX5oriyO00cGHPv/PvRJqBrE9PrOSEciOLgejUJUidRZwhv0D
+	uMwYF3vJnlVSfdNjAiHPNP/m9FG0JLxj5GBRMjI6+5ckr4Ni/6V1cniN6ZzUdU2T
+	1iK/AOlhqHQS2npgEHQU8fO7Kn0a/+QbUANUnBstBsy9mckFIL+HM3+apZoSfVMx
+	AB7I6Q==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42gp4dyxy0-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 29 Oct 2024 08:33:45 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49T8XiQA011654
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 29 Oct 2024 08:33:44 GMT
+Received: from [10.217.217.81] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 29 Oct
+ 2024 01:33:40 -0700
+Message-ID: <79d94176-c6ca-49ad-83a7-f98cb2e9e688@quicinc.com>
+Date: Tue, 29 Oct 2024 14:03:37 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="iso-8859-1"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 11/11] clk: qcom: add SAR2130P GPU Clock Controller
+ support
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen
+ Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Neil Armstrong
+	<neil.armstrong@linaro.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Konrad
+ Dybcio <konradybcio@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>
+References: <20241021-sar2130p-clocks-v2-0-383e5eb123a2@linaro.org>
+ <20241021-sar2130p-clocks-v2-11-383e5eb123a2@linaro.org>
+Content-Language: en-US
+From: Taniya Das <quic_tdas@quicinc.com>
+In-Reply-To: <20241021-sar2130p-clocks-v2-11-383e5eb123a2@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: hGRYku6-0R_dzn0_Pp7PPCfQUUk3DVRx
+X-Proofpoint-GUID: hGRYku6-0R_dzn0_Pp7PPCfQUUk3DVRx
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ priorityscore=1501 mlxlogscore=999 clxscore=1011 spamscore=0
+ lowpriorityscore=0 malwarescore=0 bulkscore=0 adultscore=0 phishscore=0
+ mlxscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410290067
 
-Am Dienstag, 29. Oktober 2024, 08:48:58 CET schrieb Uwe Kleine-K=F6nig:
-> After commit 0edb555a65d1 ("platform: Make platform_driver::remove()
-> return void") .remove() is (again) the right callback to implement for
-> platform drivers.
->=20
-> Convert all platform drivers below drivers/soc to use .remove(), with
-> the eventual goal to drop struct platform_driver::remove_new(). As
-> .remove() and .remove_new() have the same prototypes, conversion is done
-> by just changing the structure member name in the driver initializer.
->=20
-> On the way do a few whitespace changes to make indention consistent.
->=20
-> Signed-off-by: Uwe Kleine-K=F6nig <u.kleine-koenig@baylibre.com>
 
 
->  drivers/soc/rockchip/io-domain.c            | 8 ++++----
+On 10/21/2024 4:00 PM, Dmitry Baryshkov wrote:
+> +static int gpu_cc_sar2130p_probe(struct platform_device *pdev)
+> +{
+> +	struct device *dev = &pdev->dev;
+> +	struct regmap *regmap;
+> +	int ret;
+> +
+> +	regmap = qcom_cc_map(pdev, &gpu_cc_sar2130p_desc);
+> +	if (IS_ERR(regmap))
+> +		return dev_err_probe(dev, PTR_ERR(regmap), "Couldn't map GPU_CC\n");
+> +
+> +	clk_lucid_ole_pll_configure(&gpu_cc_pll0, regmap, &gpu_cc_pll0_config);
+> +	clk_lucid_ole_pll_configure(&gpu_cc_pll1, regmap, &gpu_cc_pll1_config);
+> +
+> +	/* Keep some clocks always-on */
+> +	qcom_branch_set_clk_en(regmap, 0x900c); /* GPU_CC_DEMET_CLK */
+> +
+> +	ret = qcom_cc_really_probe(dev, &gpu_cc_sar2130p_desc, regmap);
+> +	if (ret)
+> +		return dev_err_probe(dev, ret, "Failed to register GPU_CC\n");
+> +
+nit-pick:
+return qcom_cc_really_probe(dev, &gpu_cc_sar2130p_desc, regmap);
 
-=46or the Rockchip part:
-Acked-by: Heiko Stuebner <heiko@sntech.de>
+> +	return ret;
+> +}
 
-
+-- 
+Thanks & Regards,
+Taniya Das.
 
