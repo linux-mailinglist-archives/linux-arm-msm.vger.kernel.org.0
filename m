@@ -1,88 +1,107 @@
-Return-Path: <linux-arm-msm+bounces-36242-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36243-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 286229B3EA0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 00:46:17 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C9C239B4027
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 03:09:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C9A5F1F230EE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2024 23:46:16 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8EB76280C69
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 02:09:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D384E1F4261;
-	Mon, 28 Oct 2024 23:45:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 768AD31A89;
+	Tue, 29 Oct 2024 02:09:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="So+x5pGh"
+	dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b="uLK5GKVf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out30-118.freemail.mail.aliyun.com (out30-118.freemail.mail.aliyun.com [115.124.30.118])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A68761DDC06;
-	Mon, 28 Oct 2024 23:45:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B8E68BE8;
+	Tue, 29 Oct 2024 02:09:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=115.124.30.118
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730159152; cv=none; b=hd54tPZHDY4pjk1fUPOGcpVIXbGEySCF7vR+KCdVML4k0XcSeiX9JAJ/NylndQn6/oiJBgxB5xmIuG2xRmO2W9mTiKIRIkd84+L7JGpkz4JhxWU5MwK0uowbCJavOKCVYuGR+1PQXFScM0htbYVX0JzOkzNhAkm2VKziLvCB2+c=
+	t=1730167789; cv=none; b=P7tE8aR39zdDMPYUv9u+GH9TcO/IpR0y2g3sUOybENOPNM7a3JLrM8Fdi5gdiNlwySqqcHEXfjogjZcOvOhCKTelaxtC5bssjHOUpLv53/5B/OBQX7WNcCQ8Hk9Ho6yxyVpq6+5q1HLJKc20fgRsS5up6Q2B85jaXmJa1XSCA8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730159152; c=relaxed/simple;
-	bh=fL4xTGUyjfaIDRvymwtjnaUIh4XT0RoVRXEu3I7MQUU=;
-	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
-	 Subject:From:Cc:To:Date; b=VP3cpuCLtWW0SW+TNmYxfxEBbNKHltCHlkzWV0Gj8FJtbs4SOagUmsfpTATzM0cIQ3FGSKxGPwBCudPUN0xPcSZGoW89XiU5m/E6ZZcpukoKsa9tYWOdJSWi7F55rOgDs2indd9MX2PUjCLlEph7k9er9V5upHc/+Uv5DO9U1OI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=So+x5pGh; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2065FC4CECD;
-	Mon, 28 Oct 2024 23:45:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730159152;
-	bh=fL4xTGUyjfaIDRvymwtjnaUIh4XT0RoVRXEu3I7MQUU=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=So+x5pGhmoF9fU73rar06TWH9HdR2XSmcUY09wKCcXg0hXaL9wojmm2c+BFXEt0dY
-	 fWMB0CJAW4hrUsepmOEMu/QEuRXdP+M13HzXhYv5gTqdpdQCrIu46twPVDkHT7jQU+
-	 GbalZmEwKEruCiEW8jh3+jyWI2da1n9sEI4dLCaBjvePGqnjeR1i8CC23Xig0SutEF
-	 YYyNtw4DkWkJEl4WmPLdVOLo9LdHWahBKYmkEX0w5H4RtCdiP3BAampJtDUceGiEUW
-	 ts1K4oa5idp7smysH59F1e+8YvK7/D4hwTBczZtpdpTilelxkCmrL/gMF/aZqvDFmj
-	 plVhSTlyPiy0w==
-Message-ID: <cad19645bf903f6647b7634d942b961d.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1730167789; c=relaxed/simple;
+	bh=XHhfaqqMiTpKWA1JbdNg5fGXzoeVnAuiHLtBpbjUa/8=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=HvhmX/OJbQPLE11zMudK8fLjGq4ax+r+6FqNyaklFKIBTDoXNtHufK95fNgP2d9y8P/7rjzUq14J1/Qzyu0neegtL/D0qKmks+0JmUltuss+2eekWg26+Nu0DhIpY8LcxT4pFnbBtWAdUpI0g0QSyzeQ1MQfJZre6a4KBQ8vBWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com; spf=pass smtp.mailfrom=linux.alibaba.com; dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b=uLK5GKVf; arc=none smtp.client-ip=115.124.30.118
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.alibaba.com
+DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=linux.alibaba.com; s=default;
+	t=1730167778; h=From:To:Subject:Date:Message-Id:MIME-Version:Content-Type;
+	bh=UZQ4vTEAFGdHKT4zvnIqMlcj0U5DV0sNZfjPCj5XolQ=;
+	b=uLK5GKVfLVhHe65nGU6i0FRdHZOuv2FSyIC3NUA1r+w59Fc6Wa/96UZM0qXhM3J/VoVeDDZoSfcb39y6RDYWst4gJ94lknLJmpGreIBNCl9DA2oYKE4zNUhpxXl4hLrd0qVDDlQVgL/Jo/EdobUhGjmZHAO95HXw9yMF+suszZs=
+Received: from localhost(mailfrom:jiapeng.chong@linux.alibaba.com fp:SMTPD_---0WI8QfWi_1730167772 cluster:ay36)
+          by smtp.aliyun-inc.com;
+          Tue, 29 Oct 2024 10:09:38 +0800
+From: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
+To: loic.poulain@linaro.org
+Cc: rfoss@kernel.org,
+	andi.shyti@kernel.org,
+	linux-i2c@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Jiapeng Chong <jiapeng.chong@linux.alibaba.com>,
+	Abaci Robot <abaci@linux.alibaba.com>
+Subject: [PATCH v2 -next] i2c: qcom-cci: Remove the unused variable cci_clk_rate
+Date: Tue, 29 Oct 2024 10:09:31 +0800
+Message-Id: <20241029020931.42311-1-jiapeng.chong@linux.alibaba.com>
+X-Mailer: git-send-email 2.32.0.3.g01195cf9f
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20241024-starqltechn_integration_upstream-v7-1-78eaf21ecee9@gmail.com>
-References: <20241024-starqltechn_integration_upstream-v7-0-78eaf21ecee9@gmail.com> <20241024-starqltechn_integration_upstream-v7-1-78eaf21ecee9@gmail.com>
-Subject: Re: [PATCH v7 1/3] clk: qcom: clk-rcg2: document calc_rate function
-From: Stephen Boyd <sboyd@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, Dzmitry Sankouski <dsankouski@gmail.com>
-To: Bjorn Andersson <andersson@kernel.org>, Dzmitry Sankouski <dsankouski@gmail.com>, Michael Turquette <mturquette@baylibre.com>
-Date: Mon, 28 Oct 2024 16:45:50 -0700
-User-Agent: alot/0.10
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Quoting Dzmitry Sankouski (2024-10-24 03:13:09)
-> diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-> index bf26c5448f00..0fc23a87b432 100644
-> --- a/drivers/clk/qcom/clk-rcg2.c
-> +++ b/drivers/clk/qcom/clk-rcg2.c
-> @@ -153,7 +153,14 @@ static int clk_rcg2_set_parent(struct clk_hw *hw, u8=
- index)
->   *
->   *          parent_rate     m
->   *   rate =3D ----------- x  ---
-> - *            hid_div       n
-> + *            pre_div       n
-> + *
-> + * @param rate - Parent rate.
-> + * @param m - Multiplier.
-> + * @param n - Divisor.
-> + * @param mode - Use zero to ignore m/n calculation.
-> + * @param hid_div - Pre divisor register value. Pre divisor value
-> + *                  relates to hid_div as pre_div =3D (hid_div + 1) / 2
+Variable ret is not effectively used, so delete it.
 
-Can you use kernel-doc instead? Then our tooling can easily extract it.
+drivers/i2c/busses/i2c-qcom-cci.c:526:16: warning: variable ‘cci_clk_rate’ set but not used.
 
->   */
->  static unsigned long
->  calc_rate(unsigned long rate, u32 m, u32 n, u32 mode, u32 hid_div)
->
+Reported-by: Abaci Robot <abaci@linux.alibaba.com>
+Closes: https://bugzilla.openanolis.cn/show_bug.cgi?id=11532
+Signed-off-by: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
+---
+Changes in v2:
+  -Remove redundant code.
+
+ drivers/i2c/busses/i2c-qcom-cci.c | 9 ---------
+ 1 file changed, 9 deletions(-)
+
+diff --git a/drivers/i2c/busses/i2c-qcom-cci.c b/drivers/i2c/busses/i2c-qcom-cci.c
+index 5cc791b3b57d..a0ef43e99751 100644
+--- a/drivers/i2c/busses/i2c-qcom-cci.c
++++ b/drivers/i2c/busses/i2c-qcom-cci.c
+@@ -523,7 +523,6 @@ static const struct dev_pm_ops qcom_cci_pm = {
+ static int cci_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+-	unsigned long cci_clk_rate = 0;
+ 	struct device_node *child;
+ 	struct resource *r;
+ 	struct cci *cci;
+@@ -594,14 +593,6 @@ static int cci_probe(struct platform_device *pdev)
+ 		return dev_err_probe(dev, -EINVAL, "not enough clocks in DT\n");
+ 	cci->nclocks = ret;
+ 
+-	/* Retrieve CCI clock rate */
+-	for (i = 0; i < cci->nclocks; i++) {
+-		if (!strcmp(cci->clocks[i].id, "cci")) {
+-			cci_clk_rate = clk_get_rate(cci->clocks[i].clk);
+-			break;
+-		}
+-	}
+-
+ 	ret = cci_enable_clocks(cci);
+ 	if (ret < 0)
+ 		return ret;
+-- 
+2.32.0.3.g01195cf9f
+
 
