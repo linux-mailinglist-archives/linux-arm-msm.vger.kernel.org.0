@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-36340-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36341-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6D6859B53AF
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CA81A9B53B0
 	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 21:32:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DCABEB21ADC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 20:32:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id ED2B91C223E4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 20:32:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93868207A3A;
-	Tue, 29 Oct 2024 20:28:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5374B209F2D;
+	Tue, 29 Oct 2024 20:28:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XT+slQHH"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Rga5CBmz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4407209684
-	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Oct 2024 20:28:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F14C209695
+	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Oct 2024 20:28:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730233718; cv=none; b=aCQNQE3R2Bu/3PzTNqgx4yP3MQRN52RPer8c5OyR0rYisuFwMiu3xMZ8sr1++k3KEcUwkkqiuAN1IZ9uvBxI9HEskS48U12/bSBHP+7IymePRlQ/+d3X0hzcuAvlEydv2i0PGeuxeXSZ7fcBNUp0EkRKVquRsu7yN0P6d1ZIvXo=
+	t=1730233719; cv=none; b=Ize7gdAZYyBonrzYqLxrnDszfPjQo5j1FGrzmV5bh5TBTQBjXxiAlDpKMyBMiN9dQqUpe63CbBWwD/wp619o3iiDFOg/XWuX13q7+GzUB6VuDjmH68fxda8CeiWDP49R0Mb+uVgWp6btpc0eeqBOOC6KILv0cJZwnt8KQ2hj7T0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730233718; c=relaxed/simple;
-	bh=F+8jifR+xPt2YPVuJz3hU8WMRLTwfsEcnnvlZI6xjCs=;
+	s=arc-20240116; t=1730233719; c=relaxed/simple;
+	bh=0CfbxTye5gSogyDuujv60SUYTMbj7IHTroKhJCVLqZY=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ss39wn+YEZUYLN++vJ2Ht178nODG5nPyKlJlRlWgNxhTG6XmNe6dogOVwF0B5stDCdnQpVF35DjFmd0NTQ5LUPRxQY9a5Vq+Twp19p3jqdFUVnSK72DsnaWH1mcdynkqNLi8tLoksSzmjTnbPwPPFgG/1FdjQoHKXaEiMpGYfW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XT+slQHH; arc=none smtp.client-ip=209.85.167.48
+	 In-Reply-To:To:Cc; b=ttJOmszZlJ6dK9bPWukAXFLeXBcScCRCK8Q6Il7LoZYDeDMxxspqVh7uh+vBRpFbA3W3g0yCKO5UYxFYVhlFNeTENd8PQm16WtFPxJlTrzGk4dFtH9b+tRnMeIpppdFJ95HbMomz2cCfceWLvbtxIwCWbkzFlROdtJBZOBOd8FM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Rga5CBmz; arc=none smtp.client-ip=209.85.167.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-53b9406ace1so429622e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Oct 2024 13:28:35 -0700 (PDT)
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-539e6c754bdso5349454e87.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Oct 2024 13:28:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1730233714; x=1730838514; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1730233715; x=1730838515; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=okL6Htptn3WmNRDIbzbj3SlxrMQsUP6Is5kTunjhLD4=;
-        b=XT+slQHH0QM/KtpEfBtoF22wTvnHBw5awCA2PJFOl1RvNo8/5wYJWfqZR98Zqwj1Ex
-         GGCftNdHcHqP/MtgfWRTOvE1+7rNMI2GkTwCl3a7fYD8ri492dhdhUI7v5GHHBBihaAo
-         j2efGAB94bIy5XPN4dEofFzjDAsOpL+zx/Gn+ohCbBCy5cGCt6N6/rpNPkcoMRD9IZQx
-         FM+musgivAP/ybciL43HawWT3cfDzBQVfCawN3PPfkJHD9xiUiuGutSMDT9BAhQ6IXQq
-         uZ5RrvMmZF1m5FT4nKDV9uQ6dgaWJ+A67X1j5QwxAXE3uYp1D+ARtUpKQ7+Yeuv/3Rne
-         +tzA==
+        bh=SEtPoch1KoR98uLkD2M/MwAujNigB9ri8LwRUBc+TqU=;
+        b=Rga5CBmzEA9IJZO+XSWNB93ZYRwcR9+980gIrbM1u4AIqVfkNzIjtcjS0q3qw46ftf
+         SmCM9ZVGBgw1EEoZzHpkzqMP/pZH1qvb0tOGUp9nBtWZdw16J7zRYPwC48fF/Pa26n/u
+         J5JXlCouq/tTpRw63pjaz9b+X0AD8RfEjosP2S9/7QI7XTcZ8ZyljhDZOnFWaxP5nbsI
+         ZeGVNWJBHNFNGq2feZQjRv/qYErZdAdSN0YtLZs9jYxvKRwVoCCsbq0mTxP5tEooq0L9
+         DWViO+mZ2UyyVrnllDiBWziH7ikK/Q/WzlbrMYPWEqb0ZxkzdFGrXDUaWOlZxaar48Ap
+         WSgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730233714; x=1730838514;
+        d=1e100.net; s=20230601; t=1730233715; x=1730838515;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=okL6Htptn3WmNRDIbzbj3SlxrMQsUP6Is5kTunjhLD4=;
-        b=FsYhNo5g8JUANMgqN2i+rjsrrK8IAFjrj7d7cv6eqMMoRUXrLVLWyoZoZ8FOo1velb
-         SlvXk7EDGXpZshSlOZ/DX8HvkGD8EQmGuu6SmD/kaOndeuvMiAFQUjaYKhM5XgNPhXSo
-         6t0LoOrSCHo74uuCWtJ7gJhziNwdY53TA6ipFO96sgCRK7UFqgA8BUTQUd17QL/DUMVw
-         ezppGg2tCaLi1b1r1pO785sMYODybwksqBfCYbQ93Hjzgit6Pi7KI2SCY9J3xELGH3Lw
-         sugMajfK0QG+lldmHMTAw3ETmH/iBhm+miNGuuJExENX4twpzp4ROwoHs/L/WLLBpjEp
-         ChOw==
-X-Gm-Message-State: AOJu0YxLb4jf4rjgv4Lbh6a/zRWe0w5rrp3RaBJP5JFXpcoPXCGaJJye
-	bfG8OQvRA4QYDKQP+EOnaUKv3jxesAgTch6AovHfXGm3qOhfGLc61/LdvvsaWpA=
-X-Google-Smtp-Source: AGHT+IEGGoPq8Pa3p6m1L3sUcznppS2fepgRVEY6jETOOfJxL5W0VkhZKZXj/xj79xujkJe5wpdemQ==
-X-Received: by 2002:a05:6512:3d14:b0:539:fc86:ce0e with SMTP id 2adb3069b0e04-53b348e58c7mr6398176e87.35.1730233713882;
-        Tue, 29 Oct 2024 13:28:33 -0700 (PDT)
+        bh=SEtPoch1KoR98uLkD2M/MwAujNigB9ri8LwRUBc+TqU=;
+        b=TW1NaWQJCmv32+U/Kalk+FoVcH5LjsvtoG3CAL3tclQoTd/7FHSzg+zl1Bb0RH+936
+         S1U+VWnRnKZ20BKhNGlQIm9btWKEfSVz1jOPz0ZaHon+bsYH8P6op2JZCp82JCCFlmpt
+         1V5QLp4gMtHGY8Fr/26rEJck5CY/fOaAPyE6GL7aljqSS8lEElI0y0dsNTz4PJGxapB9
+         M6dDPuZdVIV1UgUPDR/3blFbxIhm9WLNrS5nqBgjKNPFS5pNeqqjU4GMu60NQyFN0sJJ
+         Rvebsgc/xcHwKd6d34IogMcJG85h2TWNUvVRQ3L458hOsz6Qgl9BljPs8EKTj3e2X6UC
+         JlZQ==
+X-Gm-Message-State: AOJu0YzRqm+dKWjQOc2/MVwSQy63/aw/o3EmqOGX4MG/pcJDpDk6EenE
+	wzk312zBiwRgQRzWMDOxm3/2iKVJ2hhCA/MP90zcpSXFT7Obc1i7g+gIHKfZfp8=
+X-Google-Smtp-Source: AGHT+IERcizDS9gxoPr08iGXhgpfd8+mcHYlosMRiOwuvcl9jqLkC4m+bfUVOpVFHaRSyvQMCWY9Zw==
+X-Received: by 2002:a05:6512:1310:b0:535:d4e6:14e2 with SMTP id 2adb3069b0e04-53b348f1399mr7054410e87.36.1730233714555;
+        Tue, 29 Oct 2024 13:28:34 -0700 (PDT)
 Received: from umbar.lan ([192.130.178.90])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53bb81a597fsm46449e87.96.2024.10.29.13.28.31
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53bb81a597fsm46449e87.96.2024.10.29.13.28.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Oct 2024 13:28:32 -0700 (PDT)
+        Tue, 29 Oct 2024 13:28:34 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 29 Oct 2024 22:28:25 +0200
-Subject: [PATCH v2 2/3] drm/msm/dp: rename edp_ bridge functions and struct
+Date: Tue, 29 Oct 2024 22:28:26 +0200
+Subject: [PATCH v2 3/3] drm/msm/dp: tidy up platform data names
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,7 +77,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241029-msm-dp-rename-v2-2-13c5c03fad44@linaro.org>
+Message-Id: <20241029-msm-dp-rename-v2-3-13c5c03fad44@linaro.org>
 References: <20241029-msm-dp-rename-v2-0-13c5c03fad44@linaro.org>
 In-Reply-To: <20241029-msm-dp-rename-v2-0-13c5c03fad44@linaro.org>
 To: Rob Clark <robdclark@gmail.com>, 
@@ -87,151 +87,116 @@ To: Rob Clark <robdclark@gmail.com>,
 Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
  freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
 X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6066;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4881;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=F+8jifR+xPt2YPVuJz3hU8WMRLTwfsEcnnvlZI6xjCs=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnIUVs8pWc8w67OUVciezGOH4i6/g69J03OEa/G
- kCw7sVcWOSJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZyFFbAAKCRCLPIo+Aiko
- 1W8pCACtflGcGZZiN1kFzjfpSrI1bUCnzAkG9wwFNa6jeRpIhPRHtnXsNmgSUJnhsjpyBZvMjtH
- Wwc5E9a540J0L6d9BzZvxzjVzzv4G0Gc4HU24yKauG5CdE2MZ1uCBTBjBBWn8w8lwtjWLMdsbzW
- OHhP9EfzDdvloKZkdDVe1ymT1Qe9XQ9lqduH1wO49a6qpmJO5K28+kVR2MYnhCrb5fh0XmqwkZU
- LQI8ZE6kIRbzyIyb1E/bULQZgKBYAS9tLl7hA2zV8iRHxgIAjnOn1yEsZvwhvnD3tdQZoTla2wt
- CL/5S6lDMMm0akifTXizP1Ak/+Yd+BJbcbZ08DtV+1+mBrZA
+ bh=0CfbxTye5gSogyDuujv60SUYTMbj7IHTroKhJCVLqZY=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnIUVsQmH5ZyvBTVveOX4cpYYZmmle+02lT6ir+
+ LVDzfff9taJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZyFFbAAKCRCLPIo+Aiko
+ 1U93B/9aUs8eRWL0sH+TrGv6cp4qJ4qgz5KlVwtLFTcx0c1vWf2ymgh2i5qdzkCQKXKX7jpzBEM
+ P6rEmCdUBf+qStZ214uuiq+SrpAVndKKqlbRCway/G4Jynbul0P3KptzufTPAEbz39JzXEbFvVh
+ V+OS7amu4cGdjEnf14moA6HSGl82rOauaXzZJe5FzzCx7nL5i3XTN2bnYJEH+j2rqDad1fiWg6i
+ zO2PR/jZh4ChFnMp2e0bWg/ca4yG0YpWd5nFmqykGNtICOsnf0z0fs1CTj8XAYnG9/OK02yXNGb
+ 3X/5RUhfPLXO2iekx3tSsiOPF/JH68lDxRjJYegZDSZMyqnF
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-Follow the estalished prefix and rename eDP bridge symbols to use
-msm_edp_ prefix, moving the edp to the end of the symbol name.
+Follow the established symbol name pattern and rename platform data
+structures.
 
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/dp/dp_drm.c | 36 ++++++++++++++++++------------------
- 1 file changed, 18 insertions(+), 18 deletions(-)
+ drivers/gpu/drm/msm/dp/dp_display.c | 38 ++++++++++++++++++-------------------
+ 1 file changed, 19 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
-index 6a0840266c0f..d3e241ea6941 100644
---- a/drivers/gpu/drm/msm/dp/dp_drm.c
-+++ b/drivers/gpu/drm/msm/dp/dp_drm.c
-@@ -115,7 +115,7 @@ static const struct drm_bridge_funcs msm_dp_bridge_ops = {
- 	.debugfs_init = msm_dp_bridge_debugfs_init,
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index 5cc349f672c0..aba925aab7ad 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -118,7 +118,7 @@ struct msm_dp_desc {
+ 	bool wide_bus_supported;
  };
  
--static int edp_bridge_atomic_check(struct drm_bridge *drm_bridge,
-+static int msm_edp_bridge_atomic_check(struct drm_bridge *drm_bridge,
- 				   struct drm_bridge_state *bridge_state,
- 				   struct drm_crtc_state *crtc_state,
- 				   struct drm_connector_state *conn_state)
-@@ -136,7 +136,7 @@ static int edp_bridge_atomic_check(struct drm_bridge *drm_bridge,
- 	return 0;
- }
- 
--static void edp_bridge_atomic_enable(struct drm_bridge *drm_bridge,
-+static void msm_edp_bridge_atomic_enable(struct drm_bridge *drm_bridge,
- 				     struct drm_bridge_state *old_bridge_state)
- {
- 	struct drm_atomic_state *atomic_state = old_bridge_state->base.state;
-@@ -147,7 +147,7 @@ static void edp_bridge_atomic_enable(struct drm_bridge *drm_bridge,
- 
- 	/*
- 	 * Check the old state of the crtc to determine if the panel
--	 * was put into psr state previously by the edp_bridge_atomic_disable.
-+	 * was put into psr state previously by the msm_edp_bridge_atomic_disable.
- 	 * If the panel is in psr, just exit psr state and skip the full
- 	 * bridge enable sequence.
- 	 */
-@@ -166,7 +166,7 @@ static void edp_bridge_atomic_enable(struct drm_bridge *drm_bridge,
- 	msm_dp_bridge_atomic_enable(drm_bridge, old_bridge_state);
- }
- 
--static void edp_bridge_atomic_disable(struct drm_bridge *drm_bridge,
-+static void msm_edp_bridge_atomic_disable(struct drm_bridge *drm_bridge,
- 				      struct drm_bridge_state *old_bridge_state)
- {
- 	struct drm_atomic_state *atomic_state = old_bridge_state->base.state;
-@@ -194,7 +194,7 @@ static void edp_bridge_atomic_disable(struct drm_bridge *drm_bridge,
- 	 * If old crtc state is active, then this is a display disable
- 	 * call while the sink is in psr state. So, exit psr here.
- 	 * The eDP controller will be disabled in the
--	 * edp_bridge_atomic_post_disable function.
-+	 * msm_edp_bridge_atomic_post_disable function.
- 	 *
- 	 * We observed sink is stuck in self refresh if psr exit is skipped
- 	 * when display disable occurs while the sink is in psr state.
-@@ -211,7 +211,7 @@ static void edp_bridge_atomic_disable(struct drm_bridge *drm_bridge,
- 	msm_dp_bridge_atomic_disable(drm_bridge, old_bridge_state);
- }
- 
--static void edp_bridge_atomic_post_disable(struct drm_bridge *drm_bridge,
-+static void msm_edp_bridge_atomic_post_disable(struct drm_bridge *drm_bridge,
- 				struct drm_bridge_state *old_bridge_state)
- {
- 	struct drm_atomic_state *atomic_state = old_bridge_state->base.state;
-@@ -228,7 +228,7 @@ static void edp_bridge_atomic_post_disable(struct drm_bridge *drm_bridge,
- 		return;
- 
- 	/*
--	 * Self refresh mode is already set in edp_bridge_atomic_disable.
-+	 * Self refresh mode is already set in msm_edp_bridge_atomic_disable.
- 	 */
- 	if (new_crtc_state->self_refresh_active)
- 		return;
-@@ -237,13 +237,13 @@ static void edp_bridge_atomic_post_disable(struct drm_bridge *drm_bridge,
- }
- 
- /**
-- * edp_bridge_mode_valid - callback to determine if specified mode is valid
-+ * msm_edp_bridge_mode_valid - callback to determine if specified mode is valid
-  * @bridge: Pointer to drm bridge structure
-  * @info: display info
-  * @mode: Pointer to drm mode structure
-  * Returns: Validity status for specified mode
-  */
--static enum drm_mode_status edp_bridge_mode_valid(struct drm_bridge *bridge,
-+static enum drm_mode_status msm_edp_bridge_mode_valid(struct drm_bridge *bridge,
- 					  const struct drm_display_info *info,
- 					  const struct drm_display_mode *mode)
- {
-@@ -268,24 +268,24 @@ static enum drm_mode_status edp_bridge_mode_valid(struct drm_bridge *bridge,
- 	return MODE_OK;
- }
- 
--static void edp_bridge_debugfs_init(struct drm_bridge *bridge, struct dentry *root)
-+static void msm_edp_bridge_debugfs_init(struct drm_bridge *bridge, struct dentry *root)
- {
- 	struct msm_dp *dp = to_dp_bridge(bridge)->msm_dp_display;
- 
- 	msm_dp_display_debugfs_init(dp, root, true);
- }
- 
--static const struct drm_bridge_funcs edp_bridge_ops = {
--	.atomic_enable = edp_bridge_atomic_enable,
--	.atomic_disable = edp_bridge_atomic_disable,
--	.atomic_post_disable = edp_bridge_atomic_post_disable,
-+static const struct drm_bridge_funcs msm_edp_bridge_ops = {
-+	.atomic_enable = msm_edp_bridge_atomic_enable,
-+	.atomic_disable = msm_edp_bridge_atomic_disable,
-+	.atomic_post_disable = msm_edp_bridge_atomic_post_disable,
- 	.mode_set = msm_dp_bridge_mode_set,
--	.mode_valid = edp_bridge_mode_valid,
-+	.mode_valid = msm_edp_bridge_mode_valid,
- 	.atomic_reset = drm_atomic_helper_bridge_reset,
- 	.atomic_duplicate_state = drm_atomic_helper_bridge_duplicate_state,
- 	.atomic_destroy_state = drm_atomic_helper_bridge_destroy_state,
--	.atomic_check = edp_bridge_atomic_check,
--	.debugfs_init = edp_bridge_debugfs_init,
-+	.atomic_check = msm_edp_bridge_atomic_check,
-+	.debugfs_init = msm_edp_bridge_debugfs_init,
+-static const struct msm_dp_desc sa8775p_dp_descs[] = {
++static const struct msm_dp_desc msm_dp_desc_sa8775p[] = {
+ 	{ .io_start = 0x0af54000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true },
+ 	{ .io_start = 0x0af5c000, .id = MSM_DP_CONTROLLER_1, .wide_bus_supported = true },
+ 	{ .io_start = 0x22154000, .id = MSM_DP_CONTROLLER_2, .wide_bus_supported = true },
+@@ -126,25 +126,25 @@ static const struct msm_dp_desc sa8775p_dp_descs[] = {
+ 	{}
  };
  
- int msm_dp_bridge_init(struct msm_dp *msm_dp_display, struct drm_device *dev,
-@@ -302,7 +302,7 @@ int msm_dp_bridge_init(struct msm_dp *msm_dp_display, struct drm_device *dev,
- 	msm_dp_bridge->msm_dp_display = msm_dp_display;
+-static const struct msm_dp_desc sc7180_dp_descs[] = {
++static const struct msm_dp_desc msm_dp_desc_sc7180[] = {
+ 	{ .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true },
+ 	{}
+ };
  
- 	bridge = &msm_dp_bridge->bridge;
--	bridge->funcs = msm_dp_display->is_edp ? &edp_bridge_ops : &msm_dp_bridge_ops;
-+	bridge->funcs = msm_dp_display->is_edp ? &msm_edp_bridge_ops : &msm_dp_bridge_ops;
- 	bridge->type = msm_dp_display->connector_type;
- 	bridge->ycbcr_420_allowed = yuv_supported;
+-static const struct msm_dp_desc sc7280_dp_descs[] = {
++static const struct msm_dp_desc msm_dp_desc_sc7280[] = {
+ 	{ .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true },
+ 	{ .io_start = 0x0aea0000, .id = MSM_DP_CONTROLLER_1, .wide_bus_supported = true },
+ 	{}
+ };
+ 
+-static const struct msm_dp_desc sc8180x_dp_descs[] = {
++static const struct msm_dp_desc msm_dp_desc_sc8180x[] = {
+ 	{ .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true },
+ 	{ .io_start = 0x0ae98000, .id = MSM_DP_CONTROLLER_1, .wide_bus_supported = true },
+ 	{ .io_start = 0x0ae9a000, .id = MSM_DP_CONTROLLER_2, .wide_bus_supported = true },
+ 	{}
+ };
+ 
+-static const struct msm_dp_desc sc8280xp_dp_descs[] = {
++static const struct msm_dp_desc msm_dp_desc_sc8280xp[] = {
+ 	{ .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true },
+ 	{ .io_start = 0x0ae98000, .id = MSM_DP_CONTROLLER_1, .wide_bus_supported = true },
+ 	{ .io_start = 0x0ae9a000, .id = MSM_DP_CONTROLLER_2, .wide_bus_supported = true },
+@@ -156,12 +156,12 @@ static const struct msm_dp_desc sc8280xp_dp_descs[] = {
+ 	{}
+ };
+ 
+-static const struct msm_dp_desc sm8650_dp_descs[] = {
++static const struct msm_dp_desc msm_dp_desc_sm8650[] = {
+ 	{ .io_start = 0x0af54000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true },
+ 	{}
+ };
+ 
+-static const struct msm_dp_desc x1e80100_dp_descs[] = {
++static const struct msm_dp_desc msm_dp_desc_x1e80100[] = {
+ 	{ .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true },
+ 	{ .io_start = 0x0ae98000, .id = MSM_DP_CONTROLLER_1, .wide_bus_supported = true },
+ 	{ .io_start = 0x0ae9a000, .id = MSM_DP_CONTROLLER_2, .wide_bus_supported = true },
+@@ -170,18 +170,18 @@ static const struct msm_dp_desc x1e80100_dp_descs[] = {
+ };
+ 
+ static const struct of_device_id msm_dp_dt_match[] = {
+-	{ .compatible = "qcom,sa8775p-dp", .data = &sa8775p_dp_descs },
+-	{ .compatible = "qcom,sc7180-dp", .data = &sc7180_dp_descs },
+-	{ .compatible = "qcom,sc7280-dp", .data = &sc7280_dp_descs },
+-	{ .compatible = "qcom,sc7280-edp", .data = &sc7280_dp_descs },
+-	{ .compatible = "qcom,sc8180x-dp", .data = &sc8180x_dp_descs },
+-	{ .compatible = "qcom,sc8180x-edp", .data = &sc8180x_dp_descs },
+-	{ .compatible = "qcom,sc8280xp-dp", .data = &sc8280xp_dp_descs },
+-	{ .compatible = "qcom,sc8280xp-edp", .data = &sc8280xp_dp_descs },
+-	{ .compatible = "qcom,sdm845-dp", .data = &sc7180_dp_descs },
+-	{ .compatible = "qcom,sm8350-dp", .data = &sc7180_dp_descs },
+-	{ .compatible = "qcom,sm8650-dp", .data = &sm8650_dp_descs },
+-	{ .compatible = "qcom,x1e80100-dp", .data = &x1e80100_dp_descs },
++	{ .compatible = "qcom,sa8775p-dp", .data = &msm_dp_desc_sa8775p },
++	{ .compatible = "qcom,sc7180-dp", .data = &msm_dp_desc_sc7180 },
++	{ .compatible = "qcom,sc7280-dp", .data = &msm_dp_desc_sc7280 },
++	{ .compatible = "qcom,sc7280-edp", .data = &msm_dp_desc_sc7280 },
++	{ .compatible = "qcom,sc8180x-dp", .data = &msm_dp_desc_sc8180x },
++	{ .compatible = "qcom,sc8180x-edp", .data = &msm_dp_desc_sc8180x },
++	{ .compatible = "qcom,sc8280xp-dp", .data = &msm_dp_desc_sc8280xp },
++	{ .compatible = "qcom,sc8280xp-edp", .data = &msm_dp_desc_sc8280xp },
++	{ .compatible = "qcom,sdm845-dp", .data = &msm_dp_desc_sc7180 },
++	{ .compatible = "qcom,sm8350-dp", .data = &msm_dp_desc_sc7180 },
++	{ .compatible = "qcom,sm8650-dp", .data = &msm_dp_desc_sm8650 },
++	{ .compatible = "qcom,x1e80100-dp", .data = &msm_dp_desc_x1e80100 },
+ 	{}
+ };
  
 
 -- 
