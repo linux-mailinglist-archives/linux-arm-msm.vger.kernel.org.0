@@ -1,74 +1,40 @@
-Return-Path: <linux-arm-msm+bounces-36308-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36309-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id F37BA9B4AA8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 14:12:22 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7FB9D9B4ADD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 14:25:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 77BEA1F21627
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 13:12:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A27361C22820
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 13:25:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 391E2205E17;
-	Tue, 29 Oct 2024 13:12:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EH4Pvtd9"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9AC0C206514;
+	Tue, 29 Oct 2024 13:25:33 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF8CE1F9A99
-	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Oct 2024 13:12:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4D12206078;
+	Tue, 29 Oct 2024 13:25:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730207538; cv=none; b=bxxcxy5lRTfdCmoTRBHDfhyzey5WnlrrDLv2EA3pYdfI4D/8Py9mS4k7uFsxalm6xPalHCvBnNMBAd2S/vDRbcS+1iLXmug+InQ/xsAUk/gGsi4r2uUaWEGkA9C1IR8uRkSpqzgoNfgsQ940XejnofxRdNjCUjf7EJ9EvZGK6oc=
+	t=1730208333; cv=none; b=ZfVRNQBou2LntztaDqkp8MG9aMv7UJBZyg+8+lHQV1OfeyUjgN8B5rT49EJqbx3M4cjT5IUPfhVTgIOShAAfRtwTjbhAxUx49RakBqzFrptarRTpQ3gY4cGfHgkdgqYYplwh65bx2aa8Q2sB7VR6daZByUyMmKNIhGUUt/j8+1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730207538; c=relaxed/simple;
-	bh=DalTr6KSesO2fNEh/7GLFOsPw4W4aPg7jZFRMiFZBME=;
+	s=arc-20240116; t=1730208333; c=relaxed/simple;
+	bh=pspKFGNpCiKI9E9FTOSk/kFZTLdatmjvJ0xgyFev+m0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SV0Of/Q7oeZMuGCmvu7tkbjfBREQ0InDcmPSBR1DirJCo8LutKtzm4Zx0RG22vg7tDVJVLaurir7b48Gz8cUeaNTl7vvkL7MouocdScVuCANIXOKwA+vewmd36AYSI9I7yYf+ZFCOHFsy9HRIlosr8RMaKfBGVQiSWoQI1u/Ak0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EH4Pvtd9; arc=none smtp.client-ip=209.85.167.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-539ee1acb86so5449992e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Oct 2024 06:12:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1730207534; x=1730812334; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=AsUvFzGFORfkYDgAVvQACC5zCdmfXYvvTdPQxvM3XIE=;
-        b=EH4Pvtd9RruuZb2/XhmkTTbdSsIIXTMQHPr45DQsBHUuVnrlj0SVhCedoKMBTYvzYa
-         cCOEjUEBRAFWvPsFzRuYJx2FcFsIzeyqiXnNBEIhYoBUHgH/7iYMfdk+GTZAaQxGjaY+
-         YoUOupcJOAw5nGeRtIqS1i0lzQGgN4CL+DNtOMLDtF9xrKf9Qp5/fgQHaSu0h4fWZL2Q
-         FE1uvATN0+jHgOBVySHXq21qDlBcvmxJaRILsyDp5oGD200Ko/ls84EPTuu+rYVgiOsQ
-         mraQZ+7w8PpER9XE5h7+u05Drhml7UGQnia/gw8+YO7Iht3RIKZVVoUP7YGIqzBPcD4a
-         +qTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730207534; x=1730812334;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AsUvFzGFORfkYDgAVvQACC5zCdmfXYvvTdPQxvM3XIE=;
-        b=XBYc+mTGAoKcx/ENWOCw7U2n3c50+g3OoymfB1mYdwAOy+ShylvXl5ZFtQaVXuxAEW
-         AlvyLxktgxNeElWPtM94gVJ+C6SJRIInHyqQf8cgwuvjdJBfZ37F6cyF1PCSA8/M0HCa
-         WuhTGPuQtT+lNi8bz45DlwyKKq4hZEdRdjdunP5iGC8g5HL8CyyAsNIvbZ81VNiAvlqw
-         VfWIPrnzI0LlCVsSKxBf70lVaOx3yJ49fCxD/kUDndV71u9X5CVuShSkV3gK9HRsXzTQ
-         Bv5f1RxG4Esndre+NS0I8HZa/wbFE3HCCn7zdamvY3EeVdkRSHiNclUrQHWxNB6HeARG
-         Kq6Q==
-X-Forwarded-Encrypted: i=1; AJvYcCX4TINwvfIr4cnPIvoM/jnwgxiHXVqv3yn7bUayZ4lDrq9xJU4nVKfw0G0Frphmk8u8C2aEB5t9WkSD4FzV@vger.kernel.org
-X-Gm-Message-State: AOJu0YwHIng2EoFuKw5AJugd/aoLVnhYFyez9KopNWrCtY+T5uMSBODB
-	hjuJ9ZqXtWKq5B6G5vaR5zCXyUjv75YAvJUwG1wd5c7RhPiH5U62YYBya+QIbUU=
-X-Google-Smtp-Source: AGHT+IGFp00dxkBL2I0cIJ+CyKncogPa4or3is/rSrNWQLlvdCOjjwDeXdQdY9wXicLggr4Q9p/N4A==
-X-Received: by 2002:a05:6512:4023:b0:539:d428:fbdd with SMTP id 2adb3069b0e04-53b34a31123mr4419550e87.53.1730207533943;
-        Tue, 29 Oct 2024 06:12:13 -0700 (PDT)
-Received: from [192.168.0.140] ([82.76.24.202])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38058b8ffecsm12441925f8f.91.2024.10.29.06.12.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 29 Oct 2024 06:12:13 -0700 (PDT)
-Message-ID: <6f14d8d7-7b9a-49e3-8aa8-5c99571a7104@linaro.org>
-Date: Tue, 29 Oct 2024 15:12:12 +0200
+	 In-Reply-To:Content-Type; b=NSHZdIhQZ0112KwTyQwEUT/BRZITcRcrGpzAjnCKyaoXeizuGmdaYkxZwC3M8LGiPDynVeAZXAwP1dQ51FDWsy3VZWcL+bHElxraHbyZVoqpbK9I6Cisa9Db2VQBbMn2HhJhHj1WnbJ4vyNr1wu8sCPevV1OMj52eT9IaqfS6aM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id B296C13D5;
+	Tue, 29 Oct 2024 06:25:59 -0700 (PDT)
+Received: from [10.57.89.81] (unknown [10.57.89.81])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 715433F528;
+	Tue, 29 Oct 2024 06:25:27 -0700 (PDT)
+Message-ID: <f9a4ead4-b109-4c70-a08d-2e86cfb3fe11@arm.com>
+Date: Tue, 29 Oct 2024 13:25:17 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,79 +42,140 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] soc: qcom: Rework BCM_TCS_CMD macro
-To: Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org
-Cc: andersson@kernel.org, konradybcio@kernel.org,
- linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
- linux-pm@vger.kernel.org, djakov@kernel.org, mturquette@baylibre.com
-References: <20241028163403.522001-1-eugen.hristev@linaro.org>
- <bb5d855954d5ff8694a3978a9f87a9d2.sboyd@kernel.org>
-Content-Language: en-US
-From: Eugen Hristev <eugen.hristev@linaro.org>
-In-Reply-To: <bb5d855954d5ff8694a3978a9f87a9d2.sboyd@kernel.org>
+Subject: Re: [PATCH v16 1/5] iommu/arm-smmu: re-enable context caching in smmu
+ reset operation
+To: Will Deacon <will@kernel.org>,
+ Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+Cc: robdclark@gmail.com, joro@8bytes.org, jgg@ziepe.ca, jsnitsel@redhat.com,
+ robh@kernel.org, krzysztof.kozlowski@linaro.org, quic_c_gdjako@quicinc.com,
+ dmitry.baryshkov@linaro.org, iommu@lists.linux.dev,
+ linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>
+References: <20241008125410.3422512-1-quic_bibekkum@quicinc.com>
+ <20241008125410.3422512-2-quic_bibekkum@quicinc.com>
+ <20241024125241.GD30704@willie-the-truck>
+ <092db44e-f254-4abd-abea-e9a64e70df12@quicinc.com>
+ <20241029124708.GA4241@willie-the-truck>
+From: Robin Murphy <robin.murphy@arm.com>
+Content-Language: en-GB
+In-Reply-To: <20241029124708.GA4241@willie-the-truck>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-
-
-On 10/28/24 19:56, Stephen Boyd wrote:
-> Quoting Eugen Hristev (2024-10-28 09:34:03)
->> diff --git a/include/soc/qcom/tcs.h b/include/soc/qcom/tcs.h
->> index 3acca067c72b..152947a922c0 100644
->> --- a/include/soc/qcom/tcs.h
->> +++ b/include/soc/qcom/tcs.h
->> @@ -60,22 +63,19 @@ struct tcs_request {
->>          struct tcs_cmd *cmds;
->>   };
->>   
->> -#define BCM_TCS_CMD_COMMIT_SHFT                30
->> -#define BCM_TCS_CMD_COMMIT_MASK                0x40000000
->> -#define BCM_TCS_CMD_VALID_SHFT         29
->> -#define BCM_TCS_CMD_VALID_MASK         0x20000000
->> -#define BCM_TCS_CMD_VOTE_X_SHFT                14
->> -#define BCM_TCS_CMD_VOTE_MASK          0x3fff
->> -#define BCM_TCS_CMD_VOTE_Y_SHFT                0
->> -#define BCM_TCS_CMD_VOTE_Y_MASK                0xfffc000
->> +#define BCM_TCS_CMD_COMMIT_MASK                BIT(30)
->> +#define BCM_TCS_CMD_VALID_MASK         BIT(29)
->> +#define BCM_TCS_CMD_VOTE_MASK          GENMASK(13, 0)
->> +#define BCM_TCS_CMD_VOTE_Y_MASK                GENMASK(13, 0)
->> +#define BCM_TCS_CMD_VOTE_X_MASK                GENMASK(27, 14)
->>   
->>   /* Construct a Bus Clock Manager (BCM) specific TCS command */
->>   #define BCM_TCS_CMD(commit, valid, vote_x, vote_y)             \
->> -       (((commit) << BCM_TCS_CMD_COMMIT_SHFT) |                \
->> -       ((valid) << BCM_TCS_CMD_VALID_SHFT) |                   \
->> -       ((cpu_to_le32(vote_x) &                                 \
->> -       BCM_TCS_CMD_VOTE_MASK) << BCM_TCS_CMD_VOTE_X_SHFT) |    \
->> -       ((cpu_to_le32(vote_y) &                                 \
->> -       BCM_TCS_CMD_VOTE_MASK) << BCM_TCS_CMD_VOTE_Y_SHFT))
->> +       (le32_encode_bits(commit, BCM_TCS_CMD_COMMIT_MASK) |    \
->> +       le32_encode_bits(valid, BCM_TCS_CMD_VALID_MASK) |       \
->> +       le32_encode_bits(vote_x,        \
->> +                       BCM_TCS_CMD_VOTE_X_MASK) |              \
->> +       le32_encode_bits(vote_y,        \
->> +                       BCM_TCS_CMD_VOTE_Y_MASK))
+On 2024-10-29 12:47 pm, Will Deacon wrote:
+> On Fri, Oct 25, 2024 at 07:51:22PM +0530, Bibek Kumar Patro wrote:
+>>
+>>
+>> On 10/24/2024 6:22 PM, Will Deacon wrote:
+>>> On Tue, Oct 08, 2024 at 06:24:06PM +0530, Bibek Kumar Patro wrote:
+>>>> Default MMU-500 reset operation disables context caching in
+>>>> prefetch buffer. It is however expected for context banks using
+>>>> the ACTLR register to retain their prefetch value during reset
+>>>> and runtime suspend.
+>>>>
+>>>> Replace default MMU-500 reset operation with Qualcomm specific reset
+>>>> operation which envelope the default reset operation and re-enables
+>>>> context caching in prefetch buffer for Qualcomm SoCs.
+>>>>
+>>>> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>>> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+>>>> ---
+>>>>    drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 45 ++++++++++++++++++++--
+>>>>    1 file changed, 42 insertions(+), 3 deletions(-)
+>>>>
+>>>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>>>> index 087fb4f6f4d3..0cb10b354802 100644
+>>>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>>>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>>>> @@ -16,6 +16,16 @@
+>>>>
+>>>>    #define QCOM_DUMMY_VAL	-1
+>>>>
+>>>> +/*
+>>>> + * SMMU-500 TRM defines BIT(0) as CMTLB (Enable context caching in the
+>>>> + * macro TLB) and BIT(1) as CPRE (Enable context caching in the prefetch
+>>>> + * buffer). The remaining bits are implementation defined and vary across
+>>>> + * SoCs.
+>>>> + */
+>>>> +
+>>>> +#define CPRE			(1 << 1)
+>>>> +#define CMTLB			(1 << 0)
+>>>> +
+>>>>    static struct qcom_smmu *to_qcom_smmu(struct arm_smmu_device *smmu)
+>>>>    {
+>>>>    	return container_of(smmu, struct qcom_smmu, smmu);
+>>>> @@ -396,11 +406,40 @@ static int qcom_smmu_def_domain_type(struct device *dev)
+>>>>    	return match ? IOMMU_DOMAIN_IDENTITY : 0;
+>>>>    }
+>>>>
+>>>> +static int qcom_smmu500_reset(struct arm_smmu_device *smmu)
+>>>> +{
+>>>> +	int ret;
+>>>> +	u32 val;
+>>>> +	int i;
+>>>> +
+>>>> +	ret = arm_mmu500_reset(smmu);
+>>>> +	if (ret)
+>>>> +		return ret;
+>>>> +
+>>>> +	/*
+>>>> +	 * arm_mmu500_reset() disables CPRE which is re-enabled here.
+>>>> +	 * The errata for MMU-500 before the r2p2 revision requires CPRE to be
+>>>> +	 * disabled. The arm_mmu500_reset function disables CPRE to accommodate all
+>>>> +	 * RTL revisions. Since all Qualcomm SoCs are on the r2p4 revision, where
+>>>> +	 * the CPRE bit can be enabled, the qcom_smmu500_reset function re-enables
+>>>> +	 * the CPRE bit for the next-page prefetcher to retain the prefetch value
+>>>> +	 * during reset and runtime suspend operations.
+>>>> +	 */
+>>>> +
+>>>> +	for (i = 0; i < smmu->num_context_banks; ++i) {
+>>>> +		val = arm_smmu_cb_read(smmu, i, ARM_SMMU_CB_ACTLR);
+>>>> +		val |= CPRE;
+>>>> +		arm_smmu_cb_write(smmu, i, ARM_SMMU_CB_ACTLR, val);
+>>>> +	}
+>>>
+>>> If CPRE only needs to be disabled prior to r2p2, then please teach the
+>>> MMU-500 code about that instead of adding qualcomm-specific logic here.
+>>>
+>>
+>> Doing this on MMU-500 code would make it generic and reflect for SoC of all
+>> the vendors on this platform.
+>> We can make sure that it won't cause any problems in Qualcomm SoCs as we
+>> have been enabling this since for some years now and could not
+>> observe/reproduce any issues around these errata.
 > 
-> Why is cpu_to_le32() inside BCM_TCS_CMD at all? Is struct tcs_cmd::data
-> supposed to be marked as __le32?
+> Unless you can explain definitively hy that's the case, I still don't
+> think we should be second-guessing the core SMMU driver code in the
+> Qualcomm backend.
+
+Of the still-open errata, #562869 could be safely mitigated by nobbling 
+ARM_SMMU_FEAT_FMT_AARCH32_S, but #1047329 is the one which worries me, 
+since even if we don't support nesting within Linux, I'm wary of the 
+firmware hypervisor sticking its own S2 under any S1 context we set up. 
+I guess we could try the alternate SMMU_ACR.IPA2PA_CEN workaround for 
+that, however it's not obvious that the performance impact in that case 
+wouldn't be worse than whatever benefit may be gained from keeping CPRE.
+
+Thanks,
+Robin.
+
+>> But we won't be able to guarantee the same behavior in SoC for other vendors
+>> where these errata might still be applicable as per [1] and [2].
+>> So as per my understanding it's safe to include in Qualcomm specific
+>> implementation and not changing the default behavior in all other vendors'
+>> SoC even if they are not prior to r2p2 revision [3].
 > 
-> Can the whole u32 be constructed and turned into an __le32 after setting
-> all the bit fields instead of using le32_encode_bits() multiple times?
-
-I believe no. The fields inside the constructed TCS command should be 
-little endian. If we construct the whole u32 and then convert it from 
-cpu endinaness to little endian, this might prove to be incorrect as it 
-would swap the bytes at the u32 level, while originally, the bytes for 
-each field that was longer than 1 byte were swapped before being added 
-to the constructed u32.
-So I would say that the fields inside the constructed item are indeed 
-le32, but the result as a whole is an u32 which would be sent to the 
-hardware using an u32 container , and no byte swapping should be done 
-there, as the masks already place the fields at the required offsets.
-So the tcs_cmd.data is not really a le32, at least my acception of it.
-Does this make sense ?
-
-Eugen
+> If you want to gate the errata workarounds on policy, then please follow
+> what we do for the CPU: add a Kconfig option (e.g.
+> ARM_SMMU_WORKAROUND_BROKEN_CPRE) which defaults to "on" (assuming that
+> the relevant errata aren't all "rare") and update silicon-errata.rst
+> accordingly.
+> 
+> Then you can choose to disable them in your .config if you're happy to
+> pick up the pieces.
+> 
+> As an aside, I'm happy with the rest of the series now.
+> 
+> Will
 
 
