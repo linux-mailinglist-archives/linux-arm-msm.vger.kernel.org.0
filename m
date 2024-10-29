@@ -1,40 +1,40 @@
-Return-Path: <linux-arm-msm+bounces-36309-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36310-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7FB9D9B4ADD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 14:25:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 627C99B4AEA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 14:29:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A27361C22820
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 13:25:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 85C381C226C5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 13:29:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9AC0C206514;
-	Tue, 29 Oct 2024 13:25:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 343B8205E1C;
+	Tue, 29 Oct 2024 13:29:42 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4D12206078;
-	Tue, 29 Oct 2024 13:25:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC143BA2D;
+	Tue, 29 Oct 2024 13:29:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730208333; cv=none; b=ZfVRNQBou2LntztaDqkp8MG9aMv7UJBZyg+8+lHQV1OfeyUjgN8B5rT49EJqbx3M4cjT5IUPfhVTgIOShAAfRtwTjbhAxUx49RakBqzFrptarRTpQ3gY4cGfHgkdgqYYplwh65bx2aa8Q2sB7VR6daZByUyMmKNIhGUUt/j8+1Y=
+	t=1730208582; cv=none; b=aKPE0Eo4zIWYVtAf61n6nh3AbMLHJuO2XNJIE1RxvDyS+4bkxnX1wkEncFsfWHoUIXBN11sfGgz/9O8yV7UoYw3e6x8ZL4f8YZ95TXZfWFMH8SgB2xfqbtNFWUaahMT9N5EP/wBULprQgm9NQcJ9B2V+FI15VSR5MkCC2VsZno4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730208333; c=relaxed/simple;
-	bh=pspKFGNpCiKI9E9FTOSk/kFZTLdatmjvJ0xgyFev+m0=;
+	s=arc-20240116; t=1730208582; c=relaxed/simple;
+	bh=2awKTLzz8M7vo7Lqed+B7tlCtsgLkR0n6t8D5tFjYn4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NSHZdIhQZ0112KwTyQwEUT/BRZITcRcrGpzAjnCKyaoXeizuGmdaYkxZwC3M8LGiPDynVeAZXAwP1dQ51FDWsy3VZWcL+bHElxraHbyZVoqpbK9I6Cisa9Db2VQBbMn2HhJhHj1WnbJ4vyNr1wu8sCPevV1OMj52eT9IaqfS6aM=
+	 In-Reply-To:Content-Type; b=cEAL7Bx+Yja+eUYV9o8JxsErQPrO5HO9e16EHmYp+fyyawtyM60Dc80iNOO6EdMRcWvB7K+myV6XpeG9+Xp5sWcX9NmVfWE2pgr7LZ5KZs5k3Lx2bKnUbxDYK5lOnX/cXCbXKnGOk26HQwtKlU8bqd/LoLoXhOPgIC7M7fqK2A8=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id B296C13D5;
-	Tue, 29 Oct 2024 06:25:59 -0700 (PDT)
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id E0AA3113E;
+	Tue, 29 Oct 2024 06:30:07 -0700 (PDT)
 Received: from [10.57.89.81] (unknown [10.57.89.81])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 715433F528;
-	Tue, 29 Oct 2024 06:25:27 -0700 (PDT)
-Message-ID: <f9a4ead4-b109-4c70-a08d-2e86cfb3fe11@arm.com>
-Date: Tue, 29 Oct 2024 13:25:17 +0000
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 1430F3F528;
+	Tue, 29 Oct 2024 06:29:35 -0700 (PDT)
+Message-ID: <2d651f1b-4f51-4984-903f-7f5a14151f84@arm.com>
+Date: Tue, 29 Oct 2024 13:29:35 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -42,140 +42,152 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v16 1/5] iommu/arm-smmu: re-enable context caching in smmu
- reset operation
-To: Will Deacon <will@kernel.org>,
- Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-Cc: robdclark@gmail.com, joro@8bytes.org, jgg@ziepe.ca, jsnitsel@redhat.com,
+Subject: Re: [PATCH v16 3/5] iommu/arm-smmu: add support for PRR bit setup
+To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>, robdclark@gmail.com,
+ will@kernel.org, joro@8bytes.org, jgg@ziepe.ca, jsnitsel@redhat.com,
  robh@kernel.org, krzysztof.kozlowski@linaro.org, quic_c_gdjako@quicinc.com,
- dmitry.baryshkov@linaro.org, iommu@lists.linux.dev,
- linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>
+ dmitry.baryshkov@linaro.org
+Cc: iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
 References: <20241008125410.3422512-1-quic_bibekkum@quicinc.com>
- <20241008125410.3422512-2-quic_bibekkum@quicinc.com>
- <20241024125241.GD30704@willie-the-truck>
- <092db44e-f254-4abd-abea-e9a64e70df12@quicinc.com>
- <20241029124708.GA4241@willie-the-truck>
+ <20241008125410.3422512-4-quic_bibekkum@quicinc.com>
 From: Robin Murphy <robin.murphy@arm.com>
 Content-Language: en-GB
-In-Reply-To: <20241029124708.GA4241@willie-the-truck>
+In-Reply-To: <20241008125410.3422512-4-quic_bibekkum@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 2024-10-29 12:47 pm, Will Deacon wrote:
-> On Fri, Oct 25, 2024 at 07:51:22PM +0530, Bibek Kumar Patro wrote:
->>
->>
->> On 10/24/2024 6:22 PM, Will Deacon wrote:
->>> On Tue, Oct 08, 2024 at 06:24:06PM +0530, Bibek Kumar Patro wrote:
->>>> Default MMU-500 reset operation disables context caching in
->>>> prefetch buffer. It is however expected for context banks using
->>>> the ACTLR register to retain their prefetch value during reset
->>>> and runtime suspend.
->>>>
->>>> Replace default MMU-500 reset operation with Qualcomm specific reset
->>>> operation which envelope the default reset operation and re-enables
->>>> context caching in prefetch buffer for Qualcomm SoCs.
->>>>
->>>> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>>> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
->>>> ---
->>>>    drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 45 ++++++++++++++++++++--
->>>>    1 file changed, 42 insertions(+), 3 deletions(-)
->>>>
->>>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->>>> index 087fb4f6f4d3..0cb10b354802 100644
->>>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->>>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->>>> @@ -16,6 +16,16 @@
->>>>
->>>>    #define QCOM_DUMMY_VAL	-1
->>>>
->>>> +/*
->>>> + * SMMU-500 TRM defines BIT(0) as CMTLB (Enable context caching in the
->>>> + * macro TLB) and BIT(1) as CPRE (Enable context caching in the prefetch
->>>> + * buffer). The remaining bits are implementation defined and vary across
->>>> + * SoCs.
->>>> + */
->>>> +
->>>> +#define CPRE			(1 << 1)
->>>> +#define CMTLB			(1 << 0)
->>>> +
->>>>    static struct qcom_smmu *to_qcom_smmu(struct arm_smmu_device *smmu)
->>>>    {
->>>>    	return container_of(smmu, struct qcom_smmu, smmu);
->>>> @@ -396,11 +406,40 @@ static int qcom_smmu_def_domain_type(struct device *dev)
->>>>    	return match ? IOMMU_DOMAIN_IDENTITY : 0;
->>>>    }
->>>>
->>>> +static int qcom_smmu500_reset(struct arm_smmu_device *smmu)
->>>> +{
->>>> +	int ret;
->>>> +	u32 val;
->>>> +	int i;
->>>> +
->>>> +	ret = arm_mmu500_reset(smmu);
->>>> +	if (ret)
->>>> +		return ret;
->>>> +
->>>> +	/*
->>>> +	 * arm_mmu500_reset() disables CPRE which is re-enabled here.
->>>> +	 * The errata for MMU-500 before the r2p2 revision requires CPRE to be
->>>> +	 * disabled. The arm_mmu500_reset function disables CPRE to accommodate all
->>>> +	 * RTL revisions. Since all Qualcomm SoCs are on the r2p4 revision, where
->>>> +	 * the CPRE bit can be enabled, the qcom_smmu500_reset function re-enables
->>>> +	 * the CPRE bit for the next-page prefetcher to retain the prefetch value
->>>> +	 * during reset and runtime suspend operations.
->>>> +	 */
->>>> +
->>>> +	for (i = 0; i < smmu->num_context_banks; ++i) {
->>>> +		val = arm_smmu_cb_read(smmu, i, ARM_SMMU_CB_ACTLR);
->>>> +		val |= CPRE;
->>>> +		arm_smmu_cb_write(smmu, i, ARM_SMMU_CB_ACTLR, val);
->>>> +	}
->>>
->>> If CPRE only needs to be disabled prior to r2p2, then please teach the
->>> MMU-500 code about that instead of adding qualcomm-specific logic here.
->>>
->>
->> Doing this on MMU-500 code would make it generic and reflect for SoC of all
->> the vendors on this platform.
->> We can make sure that it won't cause any problems in Qualcomm SoCs as we
->> have been enabling this since for some years now and could not
->> observe/reproduce any issues around these errata.
+On 2024-10-08 1:54 pm, Bibek Kumar Patro wrote:
+> Add an adreno-smmu-priv interface for drm/msm to call
+> into arm-smmu-qcom and initiate the PRR bit setup or reset
+> sequence as per request.
 > 
-> Unless you can explain definitively hy that's the case, I still don't
-> think we should be second-guessing the core SMMU driver code in the
-> Qualcomm backend.
+> This will be used by GPU to setup the PRR bit and related
+> configuration registers through adreno-smmu private
+> interface instead of directly poking the smmu hardware.
+> 
+> Suggested-by: Rob Clark <robdclark@gmail.com>
+> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+> ---
+>   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 37 ++++++++++++++++++++++
+>   drivers/iommu/arm/arm-smmu/arm-smmu.h      |  2 ++
+>   include/linux/adreno-smmu-priv.h           | 10 +++++-
+>   3 files changed, 48 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> index 6e0a2a43e45a..38ac9cab763b 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> @@ -25,6 +25,7 @@
+> 
+>   #define CPRE			(1 << 1)
+>   #define CMTLB			(1 << 0)
+> +#define GFX_ACTLR_PRR		(1 << 5)
+> 
+>   static struct qcom_smmu *to_qcom_smmu(struct arm_smmu_device *smmu)
+>   {
+> @@ -109,6 +110,40 @@ static void qcom_adreno_smmu_resume_translation(const void *cookie, bool termina
+>   	arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_RESUME, reg);
+>   }
+> 
+> +static void qcom_adreno_smmu_set_prr_bit(const void *cookie, bool set)
+> +{
+> +	struct arm_smmu_domain *smmu_domain = (void *)cookie;
+> +	struct arm_smmu_device *smmu = smmu_domain->smmu;
+> +	const struct device_node *np = smmu->dev->of_node;
+> +	struct arm_smmu_cfg *cfg = &smmu_domain->cfg;
+> +	u32 reg = 0;
+> +
+> +	if (of_device_is_compatible(np, "qcom,smmu-500") &&
+> +			of_device_is_compatible(np, "qcom,adreno-smmu")) {
 
-Of the still-open errata, #562869 could be safely mitigated by nobbling 
-ARM_SMMU_FEAT_FMT_AARCH32_S, but #1047329 is the one which worries me, 
-since even if we don't support nesting within Linux, I'm wary of the 
-firmware hypervisor sticking its own S2 under any S1 context we set up. 
-I guess we could try the alternate SMMU_ACR.IPA2PA_CEN workaround for 
-that, however it's not obvious that the performance impact in that case 
-wouldn't be worse than whatever benefit may be gained from keeping CPRE.
+These conditions aren't going to change between calls - wouldn't it make 
+more sense to conditionally assign the callbacks in the first place? Not 
+the biggest deal if this is a one-off context-setup type thing, just 
+that it looks a little funky.
 
 Thanks,
 Robin.
 
->> But we won't be able to guarantee the same behavior in SoC for other vendors
->> where these errata might still be applicable as per [1] and [2].
->> So as per my understanding it's safe to include in Qualcomm specific
->> implementation and not changing the default behavior in all other vendors'
->> SoC even if they are not prior to r2p2 revision [3].
+> +		reg =  arm_smmu_cb_read(smmu, cfg->cbndx, ARM_SMMU_CB_ACTLR);
+> +		reg &= ~GFX_ACTLR_PRR;
+> +		if (set)
+> +			reg |= FIELD_PREP(GFX_ACTLR_PRR, 1);
+> +		arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_ACTLR, reg);
+> +	}
+> +}
+> +
+> +static void qcom_adreno_smmu_set_prr_addr(const void *cookie, phys_addr_t page_addr)
+> +{
+> +	struct arm_smmu_domain *smmu_domain = (void *)cookie;
+> +	struct arm_smmu_device *smmu = smmu_domain->smmu;
+> +	const struct device_node *np = smmu->dev->of_node;
+> +
+> +	if (of_device_is_compatible(np, "qcom,smmu-500") &&
+> +			of_device_is_compatible(np, "qcom,adreno-smmu")) {
+> +		writel_relaxed(lower_32_bits(page_addr),
+> +					smmu->base + ARM_SMMU_GFX_PRR_CFG_LADDR);
+> +
+> +		writel_relaxed(upper_32_bits(page_addr),
+> +					smmu->base + ARM_SMMU_GFX_PRR_CFG_UADDR);
+> +	}
+> +}
+> +
+>   #define QCOM_ADRENO_SMMU_GPU_SID 0
 > 
-> If you want to gate the errata workarounds on policy, then please follow
-> what we do for the CPU: add a Kconfig option (e.g.
-> ARM_SMMU_WORKAROUND_BROKEN_CPRE) which defaults to "on" (assuming that
-> the relevant errata aren't all "rare") and update silicon-errata.rst
-> accordingly.
+>   static bool qcom_adreno_smmu_is_gpu_device(struct device *dev)
+> @@ -249,6 +284,8 @@ static int qcom_adreno_smmu_init_context(struct arm_smmu_domain *smmu_domain,
+>   	priv->get_fault_info = qcom_adreno_smmu_get_fault_info;
+>   	priv->set_stall = qcom_adreno_smmu_set_stall;
+>   	priv->resume_translation = qcom_adreno_smmu_resume_translation;
+> +	priv->set_prr_bit = qcom_adreno_smmu_set_prr_bit;
+> +	priv->set_prr_addr = qcom_adreno_smmu_set_prr_addr;
 > 
-> Then you can choose to disable them in your .config if you're happy to
-> pick up the pieces.
+>   	return 0;
+>   }
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/arm/arm-smmu/arm-smmu.h
+> index e2aeb511ae90..2dbf3243b5ad 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
+> @@ -154,6 +154,8 @@ enum arm_smmu_cbar_type {
+>   #define ARM_SMMU_SCTLR_M		BIT(0)
 > 
-> As an aside, I'm happy with the rest of the series now.
+>   #define ARM_SMMU_CB_ACTLR		0x4
+> +#define ARM_SMMU_GFX_PRR_CFG_LADDR	0x6008
+> +#define ARM_SMMU_GFX_PRR_CFG_UADDR	0x600C
 > 
-> Will
+>   #define ARM_SMMU_CB_RESUME		0x8
+>   #define ARM_SMMU_RESUME_TERMINATE	BIT(0)
+> diff --git a/include/linux/adreno-smmu-priv.h b/include/linux/adreno-smmu-priv.h
+> index c637e0997f6d..03466eb16933 100644
+> --- a/include/linux/adreno-smmu-priv.h
+> +++ b/include/linux/adreno-smmu-priv.h
+> @@ -49,7 +49,13 @@ struct adreno_smmu_fault_info {
+>    *                 before set_ttbr0_cfg().  If stalling on fault is enabled,
+>    *                 the GPU driver must call resume_translation()
+>    * @resume_translation: Resume translation after a fault
+> - *
+> + * @set_prr_bit:   Extendible interface to be used by GPU to modify the
+> + *		   ACTLR register bits, currently used to configure
+> + *		   Partially-Resident-Region (PRR) bit for feature's
+> + *		   setup and reset sequence as requested.
+> + * @set_prr_addr:  Configure the PRR_CFG_*ADDR register with the
+> + *		   physical address of PRR page passed from
+> + *		   GPU driver.
+>    *
+>    * The GPU driver (drm/msm) and adreno-smmu work together for controlling
+>    * the GPU's SMMU instance.  This is by necessity, as the GPU is directly
+> @@ -67,6 +73,8 @@ struct adreno_smmu_priv {
+>       void (*get_fault_info)(const void *cookie, struct adreno_smmu_fault_info *info);
+>       void (*set_stall)(const void *cookie, bool enabled);
+>       void (*resume_translation)(const void *cookie, bool terminate);
+> +    void (*set_prr_bit)(const void *cookie, bool set);
+> +    void (*set_prr_addr)(const void *cookie, phys_addr_t page_addr);
+>   };
+> 
+>   #endif /* __ADRENO_SMMU_PRIV_H */
+> --
+> 2.34.1
+> 
 
 
