@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-36343-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36344-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4EABE9B5438
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 21:44:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5BA9D9B5448
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 21:46:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 12AE5285743
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 20:44:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C0F28285BD7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 20:46:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CEE1820822D;
-	Tue, 29 Oct 2024 20:39:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D38AE20C010;
+	Tue, 29 Oct 2024 20:42:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZxPgDyXP"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="PbbCfCuT"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CDD1208968;
-	Tue, 29 Oct 2024 20:39:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F69D20966C;
+	Tue, 29 Oct 2024 20:42:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730234385; cv=none; b=HFjX8018Gb2VLDVC7UG2DG042LS1L7/KmqOA1GcQNae/s3WRlwP5KXQ5XfBI4xYLzUY678XmpB9uf/EHOlh4QKnn3QldCBGBR+Ez9BYy4wOTTMFspVmeVk8+Zv/qYQyWQwQ4i1QINtcu9dbgUQ51ZVqfGCHxgZjDx+nTyndDC1g=
+	t=1730234544; cv=none; b=K+Knq2UgwgHCZB1h4zy0lXRfdZ0OrPRNZslK5cjki1NuvtDXTY7RpghEDxIfDJhkjWWcksJOggyCobvwSawsCIiNCGxwFkUAMa7jjERAqOkfbagdOhot9xDK3AFYsE+FTbrHZjk+bBk7OVTlLrXd66twq1+FpRbUzguhZNUs/7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730234385; c=relaxed/simple;
-	bh=P2r7FVu9gmkCkbpkLPVLnxXL+ot5pQ4WfUYR4i9wFAE=;
+	s=arc-20240116; t=1730234544; c=relaxed/simple;
+	bh=aTawZXewGPTkmIjT76pi9VgTW3Cgj973HXq7pZBU2x4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=COPm1RTERz/kAHu5VJTMMzQdaw5k2aGz1A60Uim41pWE4WkQ+++bF8puGSfEyvOMmXd3HVt8YW1xYIHimYVdSYTYj9JUcKYA/9ayFhLd0qWdoKhPva5BVBRe6m13XEYEqc9II0qbibd99BCjWe2RFYRYFrOLbA86tsYGuaF6lC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZxPgDyXP; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=SgWrwHjqiO0k3iXDIf+uXZUJ9KfXwwZSwgsyonwf/h406es5uUlCz53/IbxBsTKgytF2a236b+xjwy2oa5hYya1idg490W3e7N2Mbe3d9AoVMu+tApvwkv9uXvBNqhRBWJ5tg4vELaWtrRi3XuxPvvlmqyZa5kQvQcattR98A54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=PbbCfCuT; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49TKRPXm012841;
-	Tue, 29 Oct 2024 20:39:32 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49TKRBk1012700;
+	Tue, 29 Oct 2024 20:42:15 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Trw1wRvZ9jDquLyXUweN4WS1PG1v/WqPfv/Q/6OQiIo=; b=ZxPgDyXPvQ50xR7K
-	EEqkB8+51A70EIK/vEenmMSm8hfTPTu8R55cLghudEEeMN0zSDwvuFo92u+hL6S7
-	IVMs1xTl8Layk7kFsBDRdgmDAkclxCEuWSgUDg8pB6iwCRua73NqsVdizGilvPrX
-	78morgdO2IlP7DCS+1KVYy+vfhrlSb1a1WqbsdMdHqOV4OoocQe5ubEYyfLpYNiY
-	e4ROv/7ldzOyiJrX+au1PriQ4iJ2T2BAqtf4ehnFyFunicr0RLjRTXeBxo5Sv0vq
-	UA+4w/DN1mkdBGQw2IXBpFpplHCo72dij1ulEuT5HGqZQLFEMY+xZpBgB4hYhrAa
-	Z2gs2w==
+	oO2c0S6h3Wlg9m7DoVs4IYzyXoU2r6zhEy+H2tcDFlM=; b=PbbCfCuTxRQa01Zr
+	9tRzAuf/r2whr8VwQ3VsNKAxR6vai5tnq8KYhNhwu/0oI2IvpjAgRw0TFRaHoAag
+	eG57ygFWaaUBjAcbqohwwwwMtTdeWQiOKhmV3cZ1DlqxUqtF0bIPJ/i2d7LXijqV
+	u409vp5mA1RgccXTZUK9O2YV3rSth9+lcpItz08X70U6tdzB33XkAlPXiQ8oonaR
+	jx2LzJD9fg1UrZ03EFAJlos4063d3uXQWooeFqinknbo9/c2HGY1704cY26zB2mf
+	of0WXfjSz/DLwr7fXE3M1mJYCej/XWATqOmvpc7Aljic0z36mR6XPpXKcprXlk07
+	DSMTmw==
 Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42k6rpg0xv-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42k6rpg15q-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 29 Oct 2024 20:39:32 +0000 (GMT)
+	Tue, 29 Oct 2024 20:42:14 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49TKdVTn021525
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49TKgEBZ025105
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 29 Oct 2024 20:39:31 GMT
+	Tue, 29 Oct 2024 20:42:14 GMT
 Received: from [10.134.71.247] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 29 Oct
- 2024 13:39:30 -0700
-Message-ID: <db7bcfce-e649-4c87-9723-b5af5696bc3e@quicinc.com>
-Date: Tue, 29 Oct 2024 13:39:29 -0700
+ 2024 13:42:12 -0700
+Message-ID: <30f4a216-acbf-41e6-beb0-03ef692dc692@quicinc.com>
+Date: Tue, 29 Oct 2024 13:42:11 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,52 +65,134 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] drm/msm/dp: rename edp_ bridge functions and
- struct
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark
-	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona
- Vetter <simona@ffwll.ch>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+Subject: Re: [PATCH v6 2/9] drm/msm/dpu: move pstate->pipe initialization to
+ dpu_plane_atomic_check
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn
+ Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
         <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-References: <20241029-msm-dp-rename-v2-0-13c5c03fad44@linaro.org>
- <20241029-msm-dp-rename-v2-2-13c5c03fad44@linaro.org>
+References: <20241025-dpu-virtual-wide-v6-0-0310fd519765@linaro.org>
+ <20241025-dpu-virtual-wide-v6-2-0310fd519765@linaro.org>
+ <1dcf786e-463f-4e51-af71-66ee6077b5f1@quicinc.com>
+ <jk4tfzg3zw4g23pg7rpre2pn32h6h46u2rc5ydnzuwo7mk3mam@ybw64lkaidyb>
 Content-Language: en-US
 From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20241029-msm-dp-rename-v2-2-13c5c03fad44@linaro.org>
+In-Reply-To: <jk4tfzg3zw4g23pg7rpre2pn32h6h46u2rc5ydnzuwo7mk3mam@ybw64lkaidyb>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: SjLrSfNWOhEkp_Fw_AkPkXnct6C5LIjV
-X-Proofpoint-GUID: SjLrSfNWOhEkp_Fw_AkPkXnct6C5LIjV
+X-Proofpoint-ORIG-GUID: -K5laccATL1S7-qME9359vAM7Efj-jgE
+X-Proofpoint-GUID: -K5laccATL1S7-qME9359vAM7Efj-jgE
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 bulkscore=0
- clxscore=1015 mlxlogscore=814 priorityscore=1501 spamscore=0
+ clxscore=1015 mlxlogscore=999 priorityscore=1501 spamscore=0
  malwarescore=0 impostorscore=0 mlxscore=0 lowpriorityscore=0
  suspectscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
  scancount=1 engine=8.19.0-2409260000 definitions=main-2410290156
 
 
 
-On 10/29/2024 1:28 PM, Dmitry Baryshkov wrote:
-> Follow the estalished prefix and rename eDP bridge symbols to use
-> msm_edp_ prefix, moving the edp to the end of the symbol name.
+On 10/28/2024 3:46 AM, Dmitry Baryshkov wrote:
+> On Fri, Oct 25, 2024 at 12:00:20PM -0700, Abhinav Kumar wrote:
+>>
+>>
+>> On 10/24/2024 5:20 PM, Dmitry Baryshkov wrote:
+>>> In preparation for virtualized planes support, move pstate->pipe
+>>> initialization from dpu_plane_reset() to dpu_plane_atomic_check(). In
+>>> case of virtual planes the plane's pipe will not be known up to the
+>>> point of atomic_check() callback.
+>>>
+>>
+>> I had R-bed this in v5. Did anything change in v6?
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/gpu/drm/msm/dp/dp_drm.c | 36 ++++++++++++++++++------------------
->   1 file changed, 18 insertions(+), 18 deletions(-)
+> No, nothing. I'm sorry for forgetting to run `b4 trailers -u`.
+> 
+>> But one comment below.
+>>
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> ---
+>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 25 +++++++++++--------------
+>>>    1 file changed, 11 insertions(+), 14 deletions(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>>> index 37faf5b238b0..725c9a5826fd 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>>> @@ -797,13 +797,22 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+>>>    	uint32_t max_linewidth;
+>>>    	unsigned int rotation;
+>>>    	uint32_t supported_rotations;
+>>> -	const struct dpu_sspp_cfg *pipe_hw_caps = pstate->pipe.sspp->cap;
+>>> -	const struct dpu_sspp_sub_blks *sblk = pstate->pipe.sspp->cap->sblk;
+>>> +	const struct dpu_sspp_cfg *pipe_hw_caps;
+>>> +	const struct dpu_sspp_sub_blks *sblk;
+>>>    	if (new_plane_state->crtc)
+>>>    		crtc_state = drm_atomic_get_new_crtc_state(state,
+>>>    							   new_plane_state->crtc);
+>>> +	pipe->sspp = dpu_rm_get_sspp(&kms->rm, pdpu->pipe);
+>>> +	r_pipe->sspp = NULL;
+>>> +
+>>> +	if (!pipe->sspp)
+>>> +		return -EINVAL;
+>>> +
+>>> +	pipe_hw_caps = pipe->sspp->cap;
+>>> +	sblk = pipe->sspp->cap->sblk;
+>>> +
+>>>    	min_scale = FRAC_16_16(1, sblk->maxupscale);
+>>>    	ret = drm_atomic_helper_check_plane_state(new_plane_state, crtc_state,
+>>>    						  min_scale,
+>>
+>> Do you think it will be better to move the get_sspp() call after the
+>> drm_atomic_helper_check_plane_state()?
+> 
+> I'd say, it makes no difference. I'll check your suggestion if I have to
+> send another iteration.
 > 
 
-Thanks,
+Ok, its a minor comment, I am fine with this change otherwise,
 
 Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+
+If you do need to push another version, you can explore that.
+
+>>
+>>> @@ -820,7 +829,6 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+>>>    	pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+>>>    	r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+>>>    	r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+>>> -	r_pipe->sspp = NULL;
+>>>    	pstate->stage = DPU_STAGE_0 + pstate->base.normalized_zpos;
+>>>    	if (pstate->stage >= pdpu->catalog->caps->max_mixer_blendstages) {
+>>> @@ -1286,7 +1294,6 @@ static void dpu_plane_reset(struct drm_plane *plane)
+>>>    {
+>>>    	struct dpu_plane *pdpu;
+>>>    	struct dpu_plane_state *pstate;
+>>> -	struct dpu_kms *dpu_kms = _dpu_plane_get_kms(plane);
+>>>    	if (!plane) {
+>>>    		DPU_ERROR("invalid plane\n");
+>>> @@ -1308,16 +1315,6 @@ static void dpu_plane_reset(struct drm_plane *plane)
+>>>    		return;
+>>>    	}
+>>> -	/*
+>>> -	 * Set the SSPP here until we have proper virtualized DPU planes.
+>>> -	 * This is the place where the state is allocated, so fill it fully.
+>>> -	 */
+>>> -	pstate->pipe.sspp = dpu_rm_get_sspp(&dpu_kms->rm, pdpu->pipe);
+>>> -	pstate->pipe.multirect_index = DPU_SSPP_RECT_SOLO;
+>>> -	pstate->pipe.multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+>>> -
+>>> -	pstate->r_pipe.sspp = NULL;
+>>> -
+>>>    	__drm_atomic_helper_plane_reset(plane, &pstate->base);
+>>>    }
+>>>
+> 
 
