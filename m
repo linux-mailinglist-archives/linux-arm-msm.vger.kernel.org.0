@@ -1,137 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-36306-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36307-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CF9F29B4A6E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 14:01:16 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 989EC9B4A9D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 14:08:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7AC6D1F23A45
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 13:01:16 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CA36E1C224B8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2024 13:08:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E555206067;
-	Tue, 29 Oct 2024 13:00:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8CB48205E17;
+	Tue, 29 Oct 2024 13:08:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="y7KpE/W2"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ypGWqM0X"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
+Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com [209.85.219.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22FF6206055
-	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Oct 2024 13:00:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76E8CDF78
+	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Oct 2024 13:07:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730206834; cv=none; b=bB9EJVA3IxBJkM8UCFHng0rq0ofkdu0sN+yczwHo1sXQHG8f5N4pJy/vaRRVn6/TxkDB25vPjLI1J5qbYJ18cbuV/+nv8NTaexm40QMKKZrg3maqWohbAszfy6ufJwI6jODTIX+/dgZpRyBxTxE+ue5faMLfUWIMQSvP99QoFUI=
+	t=1730207282; cv=none; b=pFC+0T3xtv6lDeHnaDGT500sJirau2Jha1ZrQhx/LfcP9f3snNT+YguH+9POSHu60AVhU9sov0IirO3yEcGQZEhDPJn220zHpeFeK8dvlDTr3V8PsvCr5uF3kWIl1YkzQeMXLvUZ13E+HpgmEY2yPvUdtat98AI7+IaqOK/XQoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730206834; c=relaxed/simple;
-	bh=YmsNP2KTqCdcVBZwhpdMQVUtMGwCTgWv9lgMj09bDmQ=;
+	s=arc-20240116; t=1730207282; c=relaxed/simple;
+	bh=85Ye0r9TZOBVlQMo4R1ybVd4JlhVObsGwckkiekjpnM=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CwCFa8dNemtBPDq4TBg1uyL+Zaruq+5nVGLbfMURELJaXbN/PPDzf2ES+QsumROODgGkcrUU4KCD1nwz7eBu+jkiM90zbr8lKLR1i4QGx8mAHcnC1uZSqU9VMvBS0nAGg0pMGpxvtBIaCg698NvMZ+RjnOPCNjKjKRMYnNkZy2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=y7KpE/W2; arc=none smtp.client-ip=209.85.128.169
+	 To:Cc:Content-Type; b=XVVDzf3SXBLkD3KYrnr25YzjJ4D9GSJbHii70zZ4Az8UFa5opX/kXXAWEP9+G9YdquuhsW+5PSnvr18Au6MN2sfsnbAIugfGyI+tzZjTER/TvcjSVp+wbgjtiqMgKm5lbqBWnKK4kw6nNzALZk+9uOsyD6TjHA3+xTdnLF/ihOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ypGWqM0X; arc=none smtp.client-ip=209.85.219.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-6e5ef7527deso59277887b3.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Oct 2024 06:00:31 -0700 (PDT)
+Received: by mail-yb1-f182.google.com with SMTP id 3f1490d57ef6-e2e444e355fso4816116276.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Oct 2024 06:07:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1730206831; x=1730811631; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1730207278; x=1730812078; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=9olNTqPKz+laBr1M4W4FfYgdBmMaq3StAwgPxtx+j7k=;
-        b=y7KpE/W2J/V0XD9GX9GmgPy8CUx/KHXFf2sQ4k06bZ7l9/NriFqUGUvXgYTxJ9Lihx
-         jYIGdVoAKMPJAftYqxPdjYB0LJ3DF+yTcGUsgF0A1u+vPivG1RjnSCtNT8rOMyS1h8Uc
-         Xn/ihMR7nMS5XwK4csTc6fX0xOneZWjbvBplDpujZwR3nj+UmSlkzWRuIkJWpahjieJb
-         XLrVsqRIteaYU2j6XEcMcwQeArsWRwD19hSJ9Ktl5KAmPaKql+B9zE63Ci6caPiLU3eM
-         ig/DNRU8OqdNDgZXfbdgM2yKE9bZxfWZXun2bXubkUZgtHvMvkNB1uNiF4qz4Qanohde
-         +UXw==
+        bh=KXHekSwgT6SRlnWvXoVmeTYgjWGAZcjIx97S+vgepj0=;
+        b=ypGWqM0X/r6N9XIEbO8nAzX9LxzWTJZ5r3QZ8F72pI/0qhlx2sh26kzvz4NFNpOcts
+         gQVwkNROD4du3bvfYAFb7v/xLHd0OKRKKMziqjv+G/E+zmT5yJBY46SqhZiED5MTtszT
+         aGMW6CSNnk8dWBbrCdPu5L9Cn4y4jiGd0a1iAsdghVtLWSLWfq5oSiI1H97V9cBxS6qv
+         e4dD3KJMd6ZuOjA1Zvj8k5CCN1S1edOYpNjfcXEU9GE3n7ccnEAuODgSraa/z9Hp/zf0
+         u+MttfZRf5AOVxQrO3++8MFwpNsBz0N3nRUdrM5k8CIQ/QHe0TodqJOb+RpF7aFX0p8g
+         Ce/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730206831; x=1730811631;
+        d=1e100.net; s=20230601; t=1730207278; x=1730812078;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=9olNTqPKz+laBr1M4W4FfYgdBmMaq3StAwgPxtx+j7k=;
-        b=ruG0/QvqGu9dRPiNX37zp3K8sPOCvMW+BO6Irme2Y4/2C4ViZpUVXsKGODE/OAYmNq
-         7alqf+9/jy17tP8KElef3/A9QsyJEkT6SJmgf3veysF2WaFICdT3U4UsxI7d8G1cqk5+
-         g7NmJcGzaQfkrqjJO0wWZvQxow+kz1qPzrNhk56WO3y1kpvZAoOasclgoMNhbys9txtI
-         5DxASJvYqZ9wC2aGdAAPmzbac//g07pd7/kcldEerh8q444cBQ6t9g0glf2YphFCuJiu
-         SmaOA8nVqzJ2rXEf2Oh7iMeNpfWL/ExIIm1XhjmSDSqMWlEWBZOJ5dKW1guCcQGxF/Yy
-         crDQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX6tsxps47XBeWuDJcSeeFEPU1/sEJUSWnRLQvU4oyiHsFCs8+/YeOL2ktERB6q1Jv/1VJvicOfGUbn0/bk@vger.kernel.org
-X-Gm-Message-State: AOJu0YwcMuEeOmNLSfQf/7IyPJisUB1dsZfRudrqA1FpysULYdGi2XeN
-	GLcENcW/3flMR0hiwKB7CgbkbfqK/rhU1F5CXg35gewUnX+OXmyX9SbmKOX1TBHsSH1UYLJy2Oz
-	yMErsJfS8w/XvG5rvhsBE3VSI4hQpAe9uR8XHwg==
-X-Google-Smtp-Source: AGHT+IFbKndRQHp+7RzFAeO0rylRtbyrpK9kh0Zw4o5eR2NycLUcgLYSm3N60gfqGUIcaqo/gsLqHGbK1ZMtf/8ZCd0=
-X-Received: by 2002:a05:690c:385:b0:64b:5cc7:bcbc with SMTP id
- 00721157ae682-6e9d8aa8014mr135400007b3.32.1730206826513; Tue, 29 Oct 2024
- 06:00:26 -0700 (PDT)
+        bh=KXHekSwgT6SRlnWvXoVmeTYgjWGAZcjIx97S+vgepj0=;
+        b=FFK4wEUFsl67/fAhjS8FeLKd+oUpwtt0HWUgF5Ny7rSaMRdW2FdFtCkjJe+RHXjPaB
+         MIk5Q+9dIGkctD4AX947Q41LaCtFWZjyRWm986nrmN51DyFcIUuY7FXgvdOLhgwe3EOU
+         OW5NWn8i2AnzOCFtJx9qhvqWo/o3Svj/l8CP+35iWripwsNZD6rCfXq6dhnVMkkCyv06
+         vBG2lznb3Lj8s/vtoaZ/lASy2ClQ6FbkyUQoVZFIa024EQyQcf5Vtz/eT4IXhinyd2rQ
+         nA9ddWEMH0irfNFlcSBtquP8lTSwP20QeW1tgHhskLSgUjL157dT1JidPjBC4BJFMD9A
+         mM/w==
+X-Forwarded-Encrypted: i=1; AJvYcCX6OIuP/AlYeBKm/xcsUux6NdH0rzUFWFAyKIpHIpmQHMh17j/xq/v/tKwRNkicZs5H1+OIbNdQGAHLjA6a@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx5NvhdKrcNBNg7XTFOxUEtulN/fhpi0ybHF5HoEAxikV76Dzd/
+	xxcQToNCUpsQv0mz09K+0cfF5/TeeJEWrU6vuWUWsPPUXsGFCZQbvC+fESvUkIjfN8bymiLCIdj
+	1jaEeBVdE/yWIXKLj49bfaxw9x5OL7/7dE8eOpw==
+X-Google-Smtp-Source: AGHT+IHj9OTlxdJR8GjjT0lj9iYWjEfWV85e5BvOY8AhmVekrLVQxaevX3rMPvyJoLnemY99zIOi0kIpjYdxeNaL9eA=
+X-Received: by 2002:a05:690c:488a:b0:6e3:c92c:1d57 with SMTP id
+ 00721157ae682-6ea2b66687dmr12809857b3.2.1730207278483; Tue, 29 Oct 2024
+ 06:07:58 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241008112516.17702-1-quic_mukhopad@quicinc.com>
- <20241008112516.17702-3-quic_mukhopad@quicinc.com> <zluuezrywecffsh3f7yzrtvd2sa3nyzl52sk6bluvjch5icvuu@noecozosseko>
- <e7543055-316e-447e-ab0e-15d2fdd19dca@quicinc.com> <CAA8EJpqcnxbZAUJm0fdbQNjZ3Dw189oDMkC+0pMLz1XGO7HhnQ@mail.gmail.com>
- <fad3508a-bb02-4162-8803-fba5de25e752@quicinc.com>
-In-Reply-To: <fad3508a-bb02-4162-8803-fba5de25e752@quicinc.com>
+References: <20241028-adds-spmi-pmic-peripherals-for-qcs615-v3-0-f0778572ee41@quicinc.com>
+ <20241028-adds-spmi-pmic-peripherals-for-qcs615-v3-2-f0778572ee41@quicinc.com>
+ <j4ggfrynyoriseef5r5x6uwgo6cespll2np7uitc64yagoa6pz@r3ro2cpqrrry>
+ <38cceae8-5203-4057-bd8b-f20fe3656474@quicinc.com> <ZyBF3ygQnIdr/k/N@hu-bjorande-lv.qualcomm.com>
+In-Reply-To: <ZyBF3ygQnIdr/k/N@hu-bjorande-lv.qualcomm.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 29 Oct 2024 15:00:11 +0200
-Message-ID: <CAA8EJprTc=kviF=MYQFqnE4g0Xk+jmT96=ihm3D75Me1Yw-WQA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: sa8775p-ride: Enable Display Port
-To: Soutrik Mukhopadhyay <quic_mukhopad@quicinc.com>
-Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org, 
-	krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	quic_riteshk@quicinc.com, quic_vproddut@quicinc.com, 
-	quic_abhinavk@quicinc.com
+Date: Tue, 29 Oct 2024 15:07:47 +0200
+Message-ID: <CAA8EJpp27RJa=6s2W6ks0aeaDONkYXq6xetSbepF7zR4zrFnWQ@mail.gmail.com>
+Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: qcs615-ride: Enable PMIC peripherals
+To: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Cc: Tingguo Cheng <quic_tingguoc@quicinc.com>, quic_fenglinw@quicinc.com, 
+	quic_tingweiz@quicinc.com, kernel@quicinc.com, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Tue, 29 Oct 2024 at 08:08, Soutrik Mukhopadhyay
-<quic_mukhopad@quicinc.com> wrote:
+On Tue, 29 Oct 2024 at 04:18, Bjorn Andersson
+<bjorn.andersson@oss.qualcomm.com> wrote:
 >
->
-> On 10/28/2024 3:15 PM, Dmitry Baryshkov wrote:
-> > On Mon, 28 Oct 2024 at 10:49, Soutrik Mukhopadhyay
-> > <quic_mukhopad@quicinc.com> wrote:
-> >>
-> >> On 10/8/2024 5:46 PM, Dmitry Baryshkov wrote:
-> >>> On Tue, Oct 08, 2024 at 04:55:16PM GMT, Soutrik Mukhopadhyay wrote:
-> >>>> Enable DPTX0 and DPTX1 along with their corresponding PHYs for
-> >>>> sa8775p-ride platform.
-> >>> What is connected to those DP lanes? If they are routed directly to the
-> >>> DisplayPort connectors, please add corresponding devices (see
-> >>> dp-connector).
-> >>
-> >> We are defining the functionality of gpio101 and gpio102 as "edp0_hot"
-> >> and "edp1_hot"
-> >>
-> >> respectively. This ensures that the hot plug will be directly routed via
-> >> the display interrupt
-> >>
-> >> line "mdss0" to the display port driver and no external dependencies on
-> >> dp-connector is
-> >>
-> >> necessary.
-> > Please describe the hardware, not the driver necessities.
-> > If the board has a DP connector, please add the node. E.g. it allows
-> > one to specify the label and the type used by the connector.
+> On Mon, Oct 28, 2024 at 04:40:36PM +0800, Tingguo Cheng wrote:
 > >
-> > Also could you please fix your email client so that you don't have
-> > strange/unnecessary line wraps and empty lines?
+> >
+> > On 10/28/2024 4:23 PM, Dmitry Baryshkov wrote:
+> > > On Mon, Oct 28, 2024 at 04:03:25PM +0800, Tingguo Cheng wrote:
+> > > > Enable PMIC and PMIC peripherals for qcs615-ride board.
+> > > >
+> > > > Signed-off-by: Tingguo Cheng <quic_tingguoc@quicinc.com>
+> > > > ---
+> > > >   arch/arm64/boot/dts/qcom/qcs615-ride.dts | 15 +++++++++++++++
+> > > >   1 file changed, 15 insertions(+)
+> > > >
+> > > > diff --git a/arch/arm64/boot/dts/qcom/qcs615-ride.dts b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
+> > > > index ee6cab3924a6d71f29934a8debba3a832882abdd..37358f080827bbe4484c14c5f159e813810c2119 100644
+> > > > --- a/arch/arm64/boot/dts/qcom/qcs615-ride.dts
+> > > > +++ b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
+> > > > @@ -6,6 +6,7 @@
+> > > >   #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+> > > >   #include "qcs615.dtsi"
+> > > > +#include "pm8150.dtsi"
+> > > >   / {
+> > > >           model = "Qualcomm Technologies, Inc. QCS615 Ride";
+> > > >           compatible = "qcom,qcs615-ride", "qcom,qcs615";
+> > > > @@ -210,6 +211,20 @@ &rpmhcc {
+> > > >           clocks = <&xo_board_clk>;
+> > > >   };
+> > > > +&pon {
+> > > > + /delete-property/ mode-bootloader;
+> > > > + /delete-property/ mode-recovery;
+> > >
+> > > Why?
+> > Because boot modes will be supported on PSCI module from another patch,
+> > reboot-modes are required to remove from PMIC side.
 >
-> Addition of DP connector node with the hpd-gpio property does not allow
-> hpd to be detected since the gpio
->
-> 101/102 have the "edp0_hot" as function. If the hpd-gpio property is
-> removed from the DP connector node,
->
-> the probe of DP connector will fail.
+> That implies that the reboot mode implementation is device-specific, if
+> so we should probably not define them in the shared file.
 
-No, it wont. It uses devm_gpiod_get_optional(). And if it does fail,
-it is a bug which needs to be fixed.
-
-And please, fix your email client so that it doesn't insert stray empty lines.
+Most likely. Let's collect some more data points first. It's probably
+not worth doing that just for qcs615-ride, I'd like to check how it is
+really handled on the SAR platform.
 
 -- 
 With best wishes
