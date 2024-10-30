@@ -1,412 +1,232 @@
-Return-Path: <linux-arm-msm+bounces-36487-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36488-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B2FD69B6C69
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 19:58:32 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id CCD829B6C70
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 20:00:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 424D51F222B0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 18:58:32 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4B020B218E1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 19:00:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3FEC1D0E1B;
-	Wed, 30 Oct 2024 18:57:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F262E1CEEA3;
+	Wed, 30 Oct 2024 19:00:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MkJUbm6n"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="n2plqsMZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F19341D0967;
-	Wed, 30 Oct 2024 18:57:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D52A1BD9DB;
+	Wed, 30 Oct 2024 19:00:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730314675; cv=none; b=fUhkA/PNLphGyx9l/724AVJC3yb82k+hlE42WQsqUhSqQsuTssSU8SfGaon2yThXVi6W0J5WjY3waDarJwU2IN9TeUD3XE4uHdpZlddhfWN9MdeUEetZtcqLKe8Bhfdw3H5frU7dxCTQQYs+1gD+i+GcoSxlyb2lCnEdW+/RarI=
+	t=1730314819; cv=none; b=FJwlwy8NMBKooO4GHzSNJqoc7nTGCEsi+JuznBo1dUczXXiCMx5tGQvocllWDdLmQjtmZ+mhUxYv1yoO+Q63/jmJJfcz6TIxYFDAaBxcrm9DhW2GwgcLYPGgSIm46hTFaaXLt02DaXqTpuUFhanXiQvH+Dpzrli80ByCW4lkzPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730314675; c=relaxed/simple;
-	bh=TH30VyqA7OU9YqATMjryFauBN4pQYazeqI+zTeF8qaU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=dC/1mLx8YIKJutgX4NkEZeDfo+zi6WljeXk+B8aOWVoA9qgzfqs0nCjjckzt6dI2Y+/C7G4rqUXwz6LVWfVQpPo6k5liwhES3vYKSp9TJsqAORRhrlLryPzq8MErA7e8HxZShWCEsXu8N6shxV9SrbkTQldt52nhYcixUhYMabE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MkJUbm6n; arc=none smtp.client-ip=209.85.208.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-5c941623a5aso2262302a12.0;
-        Wed, 30 Oct 2024 11:57:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730314671; x=1730919471; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=YdKa5z3twiIQe8AUFC1Fbj5IBy2mDQVy5MB2Z28mCTw=;
-        b=MkJUbm6nMw2w8qixQ4g1xgRsLDm6s+ng2aFXItWJrHiXO5vEolMXn7gFPUEMqemsD2
-         9QnS5teEy0RbGRMtmR+P7AIpxpaO+VhgJ9FCFxX3yQUwNUXv+hOxvFGz18hmwTS1DPlR
-         mOSSqca3VfyKEHrsLdiiy01FtLPWKNH6H2z4qJlWusZCfd3sj/f+U5tYjsrVX2qvM2vF
-         mT/ZW7at+rnFSW2gzUkr8amDgbHt6lin5mEL4Xwk9knWw7UK4YwE9tS2Bsy/buIq1mq+
-         IvUZLmwUw1S1saZMYAfLi/7yH6jnISNKT6Fez3yGWd9thSZ2dtz+A0fD6EH0TklA4qaQ
-         kE9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730314671; x=1730919471;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YdKa5z3twiIQe8AUFC1Fbj5IBy2mDQVy5MB2Z28mCTw=;
-        b=VQSsyl0Qhv9yuKUdvDLjDQKNoc4QwOhd3IZ1fLOFTLqlu/+KWEcEuTMaoIkPgcxjOX
-         ZPo5YQKmbQVOoEqUlg+kQXNFKudLbyDAyFAnPPpD6Q32BcbWNQrSGLI2yfqadlxmz9UW
-         vWr0vHh+0ajPHwEZkT8s9S7y7TYI2af6agU4X61MNVALowKPei+orDjoqL/mkj5pfKBp
-         uFuFJn422IWbePG2UMhFaRbTSXABLfllO9ZJPUCTi+d4nk8/RhcRS4xdZa1O4+xnZFtV
-         Fp6yiw+J6iDNloN/PJ+Kpo4+6UwtZ8L4beZnjqla06vwnToRs6uc9XLvZafCyHBe4TfO
-         AXdg==
-X-Forwarded-Encrypted: i=1; AJvYcCUx0hVODwWrVN+XmvYMy1pyc4TUjSwtDz4mfR+ecfgsB35ngGyP/yWDNtdX1xCBU767QIqi4e/K6KmjyMyW@vger.kernel.org, AJvYcCVBthQEp4la/m6VWfBfJk5TSOGdfSoG0PJQyxQ9wKk6i9M28ahhY2pcZYbzNLjY9YJL3uTvCHn0XZ4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxoUExvZy1Ou7ng14VB7XVloC1teMPR668n3n8NGfrZNWlXTMoY
-	vwMQs2+Ki4yeN+Ah8UvdvUsBcawkMlU27ZfhrZ1dZVpnftd4CY6OUB875g==
-X-Google-Smtp-Source: AGHT+IEzJVd1GXFUme12ZMJyOhBQig42aLyDkpnyudUaJ4JMJR57bxj/nxnfhL5Si6cnFrkkONsAHg==
-X-Received: by 2002:a05:6402:50cb:b0:5cb:991d:c51e with SMTP id 4fb4d7f45d1cf-5cd2e35309cmr6145619a12.15.1730314670588;
-        Wed, 30 Oct 2024 11:57:50 -0700 (PDT)
-Received: from [127.0.1.1] (leased-line-46-53-189-50.telecom.by. [46.53.189.50])
-        by smtp.googlemail.com with ESMTPSA id 4fb4d7f45d1cf-5cbb62c20dasm4970447a12.46.2024.10.30.11.57.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Oct 2024 11:57:50 -0700 (PDT)
-From: Dzmitry Sankouski <dsankouski@gmail.com>
-Date: Wed, 30 Oct 2024 21:57:39 +0300
-Subject: [PATCH v8 3/3] gcc-sdm845: Add general purpose clock ops
+	s=arc-20240116; t=1730314819; c=relaxed/simple;
+	bh=OF3jxYif7OIgiU0uGPXB90IJD6pEaA045G2FkwvF+Og=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=flZq5DrR5IiRFRvYpvP5aLJCPgv7iiTqf4sE6o6e6paCUV+wxrIbY76Wx2Z1g940rH5QPxoLKvgURcVlmmgDED96nUlbTQxHYh4XSAj0BUkd3yv4ViQyWrO4hmaVPEF3JO+nLDnbtyyhwF6PfNoqo62g6a73pV24spZk5zxp9Mo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=n2plqsMZ; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49UDWOMZ004039;
+	Wed, 30 Oct 2024 18:59:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=nOQH/QELfolESQZEn7JiGe
+	aI3UaVZB0XdZlKYFkG05I=; b=n2plqsMZTiXziUf7EgnsX5/s50uWp1TYEUjOyq
+	K9pyJpPqzbr3rBz9aLW3ENETO4Qc2neguQnZMvmHWQKJ2lw7re/YBWH4OsGj/TUh
+	fJeTWjhVO7UwgIVT4K3FhKvUXsNWxvN+Q3T+jhhrQp0dSjWEUN5fEVqTkW2MYZ3X
+	NqrBTMJ2RkDv08l/MnKUT2NuBSLlP3mEHXh0ryOLm5Mwzivqg/fq9syYem+2WxD8
+	HfeCyejWadUEMUujCFSTBNKxlD6T0b/If2sRG94/UENNH8dZdSY3kiugJyvfb2ch
+	mqdSeoTxHwgRq2uKvirSrlMfGGc+TZDYyWebr+xR+Vx/wnLw==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42kns3gwbe-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 30 Oct 2024 18:59:46 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49UIxj7v011940
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 30 Oct 2024 18:59:45 GMT
+Received: from hu-jprakash-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 30 Oct 2024 11:59:37 -0700
+From: Jishnu Prakash <quic_jprakash@quicinc.com>
+To: <jic23@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <dmitry.baryshkov@linaro.org>, <konrad.dybcio@linaro.org>,
+        <daniel.lezcano@linaro.org>, <sboyd@kernel.org>,
+        <quic_subbaram@quicinc.com>, <quic_collinsd@quicinc.com>,
+        <quic_amelende@quicinc.com>, <quic_kamalw@quicinc.com>,
+        <amitk@kernel.org>
+CC: <lee@kernel.org>, <rafael@kernel.org>, <rui.zhang@intel.com>,
+        <lukasz.luba@arm.com>, <lars@metafoo.de>, <quic_skakitap@quicinc.com>,
+        <neil.armstrong@linaro.org>, <devicetree@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-iio@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <cros-qcom-dts-watchers@chromium.org>,
+        Jishnu Prakash
+	<quic_jprakash@quicinc.com>
+Subject: [PATCH V4 0/4] Add support for QCOM SPMI PMIC5 Gen3 ADC
+Date: Thu, 31 Oct 2024 00:28:50 +0530
+Message-ID: <20241030185854.4015348-1-quic_jprakash@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241030-starqltechn_integration_upstream-v8-3-40f8d5e47062@gmail.com>
-References: <20241030-starqltechn_integration_upstream-v8-0-40f8d5e47062@gmail.com>
-In-Reply-To: <20241030-starqltechn_integration_upstream-v8-0-40f8d5e47062@gmail.com>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Dzmitry Sankouski <dsankouski@gmail.com>
-X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1730314661; l=9804;
- i=dsankouski@gmail.com; s=20240619; h=from:subject:message-id;
- bh=TH30VyqA7OU9YqATMjryFauBN4pQYazeqI+zTeF8qaU=;
- b=ieSG9DH0e1S1luDrgXGgIInFruF5WdeyD/fjiisyCX4LS3BZbpMS/v36t7aZNMvpZbnpr06Zo
- VUqnE8kb7S0AB5KRbN8Yexy1Mf2PVpVMvbj7k8hfbI/4m8uSSLTgXgp
-X-Developer-Key: i=dsankouski@gmail.com; a=ed25519;
- pk=YJcXFcN1EWrzBYuiE2yi5Mn6WLn6L1H71J+f7X8fMag=
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 8B-XN7OGf2zLa-78uRoAtlexlZkdwSux
+X-Proofpoint-ORIG-GUID: 8B-XN7OGf2zLa-78uRoAtlexlZkdwSux
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
+ adultscore=0 spamscore=0 phishscore=0 mlxlogscore=999 malwarescore=0
+ bulkscore=0 clxscore=1011 lowpriorityscore=0 impostorscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410300150
 
-SDM845 has "General Purpose" clocks that can be muxed to
-SoC pins to clock various external devices.
-Those clocks may be used as e.g. PWM sources for external peripherals.
+PMIC5 Gen3 has a similar ADC architecture to that on PMIC5 Gen2,
+with all SW communication to ADC going through PMK8550 which
+communicates with other PMICs through PBS. The major difference is
+that the register interface used here is that of an SDAM present on
+PMK8550, rather than a dedicated ADC peripheral. There may be more than one
+SDAM used for ADC5 Gen3. Each ADC SDAM has eight channels, each of which may
+be used for either immediate reads (same functionality as previous PMIC5 and
+PMIC5 Gen2 ADC peripherals) or recurring measurements (same as PMIC5 and PMIC5
+Gen2 ADC_TM functionality). In this case, we have VADC and ADC_TM functionality
+combined into the same driver.
 
-GPCLK can in theory have arbitrary value depending on the use case, so
-the concept of frequency tables, used in rcg2 clock driver, is not
-efficient, because it allows only defined frequencies.
+Patch 1 is a cleanup, to move the QCOM ADC dt-bindings files from
+dt-bindings/iio to dt-bindings/iio/adc folder, as they are
+specifically for ADC devices. It also fixes all compilation errors
+with this change in driver and devicetree files and similar errors
+in documentation for dtbinding check.
 
-Introduce clk_rcg2_gp_ops, which automatically calculate clock
-mnd values for arbitrary clock rate. The calculation done as follows:
-- upon determine rate request, we calculate m/n/pre_div as follows:
-  - find parent(from our client's assigned-clock-parent) rate
-  - find scaled rates by dividing rates on its greatest common divisor
-  - assign requested scaled rate to m
-  - factorize scaled parent rate, put multipliers to n till max value
-    (determined by mnd_width)
-- validate calculated values with *_width:
-  - if doesn't fit, delete divisor and multiplier by 2 until fit
-- return determined rate
+Patch 2 adds bindings for ADC5 Gen3 peripheral.
 
-Limitations:
-- The driver doesn't select a parent clock (it may be selected by client
-  in device tree with assigned-clocks, assigned-clock-parents properties)
+Patch 3 adds the main driver for ADC5 Gen3.
 
-Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
+Patch 4 adds the auxiliary thermal driver which supports the ADC_TM
+functionality of ADC5 Gen3.
 
----
-Changes in v8:
-- format kernel-doc
-- test with scripts/kernel-doc
+Changes since v3:
+- Updated files affected by adc file path change in /arch/arm folder,
+  which were missed earlier.
+- Added ADC5 Gen3 documentation changes in existing qcom,spmi-vadc.yaml file
+  instead of adding separate file and addressed reviewer comments for all bindings.
+- Addressed review comments in driver patch. Split out TM functionality into
+  auxiliary driver in separate patch and added required changes in main driver.
+- Link to v3: https://lore.kernel.org/all/20231231171237.3322376-1-quic_jprakash@quicinc.com/
 
-Changes in v7:
-- split patch on gp and non gp changes
-- use /**/ comment for kernel doc
-- clk_rcg2_determine_gp_rate: put freq_tbl to the stack
-- clk_rcg2_calc_mnd: if impossible to lower scale, return
-  after setting max divisors values
+Changes since v2:
+- Reordered patches to keep cleanup change for ADC files first.
+- Moved ADC5 Gen3 documentation into a separate file
 
-Changes in v6:
-- remove unused count variable
-- run sparse and smatch
+Changes since v1:
+- Dropped patches 1-5 for changing 'ADC7' peripheral name to 'ADC5 Gen2'.
+- Addressed reviewer comments for binding and driver patches for ADC5 Gen3.
+- Combined patches 8-11 into a single patch as requested by reviewers to make
+  the change clearer and made all fixes required in same patch.
 
-Changes in v5:
-- replace '/' to div64_u64 to fix 32 bit gcc error
-- fix empty scalar initializer
----
- drivers/clk/qcom/clk-rcg.h    |   1 +
- drivers/clk/qcom/clk-rcg2.c   | 146 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- drivers/clk/qcom/gcc-sdm845.c |  11 +++--------
- 3 files changed, 150 insertions(+), 8 deletions(-)
+Jishnu Prakash (4):
+  dt-bindings: iio/adc: Move QCOM ADC bindings to iio/adc folder
+  dt-bindings: iio: adc: Add support for QCOM PMIC5 Gen3 ADC
+  iio: adc: Add support for QCOM PMIC5 Gen3 ADC
+  thermal: qcom: add support for PMIC5 Gen3 ADC thermal monitoring
 
-diff --git a/drivers/clk/qcom/clk-rcg.h b/drivers/clk/qcom/clk-rcg.h
-index 8e0f3372dc7a..8817d14bbda4 100644
---- a/drivers/clk/qcom/clk-rcg.h
-+++ b/drivers/clk/qcom/clk-rcg.h
-@@ -189,6 +189,7 @@ struct clk_rcg2_gfx3d {
- 	container_of(to_clk_rcg2(_hw), struct clk_rcg2_gfx3d, rcg)
- 
- extern const struct clk_ops clk_rcg2_ops;
-+extern const struct clk_ops clk_rcg2_gp_ops;
- extern const struct clk_ops clk_rcg2_floor_ops;
- extern const struct clk_ops clk_rcg2_fm_ops;
- extern const struct clk_ops clk_rcg2_mux_closest_ops;
-diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-index 714ab79e11d6..75617cc8f0c4 100644
---- a/drivers/clk/qcom/clk-rcg2.c
-+++ b/drivers/clk/qcom/clk-rcg2.c
-@@ -8,11 +8,13 @@
- #include <linux/err.h>
- #include <linux/bug.h>
- #include <linux/export.h>
-+#include <linux/clk.h>
- #include <linux/clk-provider.h>
- #include <linux/delay.h>
- #include <linux/rational.h>
- #include <linux/regmap.h>
- #include <linux/math64.h>
-+#include <linux/gcd.h>
- #include <linux/minmax.h>
- #include <linux/slab.h>
- 
-@@ -32,6 +34,7 @@
- 
- #define CFG_REG			0x4
- #define CFG_SRC_DIV_SHIFT	0
-+#define CFG_SRC_DIV_LENGTH	8
- #define CFG_SRC_SEL_SHIFT	8
- #define CFG_SRC_SEL_MASK	(0x7 << CFG_SRC_SEL_SHIFT)
- #define CFG_MODE_SHIFT		12
-@@ -148,6 +151,17 @@ static int clk_rcg2_set_parent(struct clk_hw *hw, u8 index)
- 	return update_config(rcg);
- }
- 
-+/**
-+ * convert_to_reg_val() - Convert divisor values to hardware values.
-+ *
-+ * @f: Frequency table with pure m/n/pre_div parameters.
-+ */
-+static void convert_to_reg_val(struct freq_tbl *f)
-+{
-+	f->pre_div *= 2;
-+	f->pre_div -= 1;
-+}
-+
- /**
-  * calc_rate() - Calculate rate based on m/n:d values
-  *
-@@ -402,6 +416,90 @@ static int clk_rcg2_fm_determine_rate(struct clk_hw *hw,
- 	return _freq_tbl_fm_determine_rate(hw, rcg->freq_multi_tbl, req);
- }
- 
-+/**
-+ * clk_rcg2_split_div() - Split multiplier that doesn't fit in n neither in pre_div.
-+ *
-+ * @multiplier: Multiplier to split between n and pre_div.
-+ * @pre_div: Pointer to pre divisor value.
-+ * @n: Pointer to n divisor value.
-+ * @pre_div_max: Pre divisor maximum value.
-+ */
-+static inline void clk_rcg2_split_div(int multiplier, unsigned int *pre_div,
-+				      u16 *n, unsigned int pre_div_max)
-+{
-+	*n = mult_frac(multiplier * *n, *pre_div, pre_div_max);
-+	*pre_div = pre_div_max;
-+}
-+
-+static void clk_rcg2_calc_mnd(u64 parent_rate, u64 rate, struct freq_tbl *f,
-+			unsigned int mnd_max, unsigned int pre_div_max)
-+{
-+	int i = 2;
-+	unsigned int pre_div = 1;
-+	unsigned long rates_gcd, scaled_parent_rate;
-+	u16 m, n = 1, n_candidate = 1, n_max;
-+
-+	rates_gcd = gcd(parent_rate, rate);
-+	m = div64_u64(rate, rates_gcd);
-+	scaled_parent_rate = div64_u64(parent_rate, rates_gcd);
-+	while (scaled_parent_rate > (mnd_max + m) * pre_div_max) {
-+		// we're exceeding divisor's range, trying lower scale.
-+		if (m > 1) {
-+			m--;
-+			scaled_parent_rate = mult_frac(scaled_parent_rate, m, (m + 1));
-+		} else {
-+			// cannot lower scale, just set max divisor values.
-+			f->n = mnd_max + m;
-+			f->pre_div = pre_div_max;
-+			f->m = m;
-+			return;
-+		}
-+	}
-+
-+	n_max = m + mnd_max;
-+
-+	while (scaled_parent_rate > 1) {
-+		while (scaled_parent_rate % i == 0) {
-+			n_candidate *= i;
-+			if (n_candidate < n_max)
-+				n = n_candidate;
-+			else if (pre_div * i < pre_div_max)
-+				pre_div *= i;
-+			else
-+				clk_rcg2_split_div(i, &pre_div, &n, pre_div_max);
-+
-+			scaled_parent_rate /= i;
-+		}
-+		i++;
-+	}
-+
-+	f->m = m;
-+	f->n = n;
-+	f->pre_div = pre_div > 1 ? pre_div : 0;
-+}
-+
-+static int clk_rcg2_determine_gp_rate(struct clk_hw *hw,
-+				   struct clk_rate_request *req)
-+{
-+	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
-+	struct freq_tbl f_tbl = {}, *f = &f_tbl;
-+	int mnd_max = BIT(rcg->mnd_width) - 1;
-+	int hid_max = BIT(rcg->hid_width) - 1;
-+	struct clk_hw *parent;
-+	u64 parent_rate;
-+
-+	parent = clk_hw_get_parent(hw);
-+	parent_rate = clk_get_rate(parent->clk);
-+	if (!parent_rate)
-+		return -EINVAL;
-+
-+	clk_rcg2_calc_mnd(parent_rate, req->rate, f, mnd_max, hid_max / 2);
-+	convert_to_reg_val(f);
-+	req->rate = calc_rate(parent_rate, f->m, f->n, f->n, f->pre_div);
-+
-+	return 0;
-+}
-+
- static int __clk_rcg2_configure_parent(struct clk_rcg2 *rcg, u8 src, u32 *_cfg)
- {
- 	struct clk_hw *hw = &rcg->clkr.hw;
-@@ -499,6 +597,26 @@ static int clk_rcg2_configure(struct clk_rcg2 *rcg, const struct freq_tbl *f)
- 	return update_config(rcg);
- }
- 
-+static int clk_rcg2_configure_gp(struct clk_rcg2 *rcg, const struct freq_tbl *f)
-+{
-+	u32 cfg;
-+	int ret;
-+
-+	ret = regmap_read(rcg->clkr.regmap, RCG_CFG_OFFSET(rcg), &cfg);
-+	if (ret)
-+		return ret;
-+
-+	ret = __clk_rcg2_configure_mnd(rcg, f, &cfg);
-+	if (ret)
-+		return ret;
-+
-+	ret = regmap_write(rcg->clkr.regmap, RCG_CFG_OFFSET(rcg), cfg);
-+	if (ret)
-+		return ret;
-+
-+	return update_config(rcg);
-+}
-+
- static int __clk_rcg2_set_rate(struct clk_hw *hw, unsigned long rate,
- 			       enum freq_policy policy)
- {
-@@ -552,6 +670,22 @@ static int clk_rcg2_set_rate(struct clk_hw *hw, unsigned long rate,
- 	return __clk_rcg2_set_rate(hw, rate, CEIL);
- }
- 
-+static int clk_rcg2_set_gp_rate(struct clk_hw *hw, unsigned long rate,
-+			    unsigned long parent_rate)
-+{
-+	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
-+	int mnd_max = BIT(rcg->mnd_width) - 1;
-+	int hid_max = BIT(rcg->hid_width) - 1;
-+	struct freq_tbl f_tbl = {}, *f = &f_tbl;
-+	int ret;
-+
-+	clk_rcg2_calc_mnd(parent_rate, rate, f, mnd_max, hid_max / 2);
-+	convert_to_reg_val(f);
-+	ret = clk_rcg2_configure_gp(rcg, f);
-+
-+	return ret;
-+}
-+
- static int clk_rcg2_set_floor_rate(struct clk_hw *hw, unsigned long rate,
- 				   unsigned long parent_rate)
- {
-@@ -679,6 +813,18 @@ const struct clk_ops clk_rcg2_ops = {
- };
- EXPORT_SYMBOL_GPL(clk_rcg2_ops);
- 
-+const struct clk_ops clk_rcg2_gp_ops = {
-+	.is_enabled = clk_rcg2_is_enabled,
-+	.get_parent = clk_rcg2_get_parent,
-+	.set_parent = clk_rcg2_set_parent,
-+	.recalc_rate = clk_rcg2_recalc_rate,
-+	.determine_rate = clk_rcg2_determine_gp_rate,
-+	.set_rate = clk_rcg2_set_gp_rate,
-+	.get_duty_cycle = clk_rcg2_get_duty_cycle,
-+	.set_duty_cycle = clk_rcg2_set_duty_cycle,
-+};
-+EXPORT_SYMBOL_GPL(clk_rcg2_gp_ops);
-+
- const struct clk_ops clk_rcg2_floor_ops = {
- 	.is_enabled = clk_rcg2_is_enabled,
- 	.get_parent = clk_rcg2_get_parent,
-diff --git a/drivers/clk/qcom/gcc-sdm845.c b/drivers/clk/qcom/gcc-sdm845.c
-index dc3aa7014c3e..0def0fc0e009 100644
---- a/drivers/clk/qcom/gcc-sdm845.c
-+++ b/drivers/clk/qcom/gcc-sdm845.c
-@@ -284,11 +284,6 @@ static struct clk_rcg2 gcc_sdm670_cpuss_rbcpr_clk_src = {
- };
- 
- static const struct freq_tbl ftbl_gcc_gp1_clk_src[] = {
--	F(19200000, P_BI_TCXO, 1, 0, 0),
--	F(25000000, P_GPLL0_OUT_EVEN, 12, 0, 0),
--	F(50000000, P_GPLL0_OUT_EVEN, 6, 0, 0),
--	F(100000000, P_GPLL0_OUT_MAIN, 6, 0, 0),
--	F(200000000, P_GPLL0_OUT_MAIN, 3, 0, 0),
- 	{ }
- };
- 
-@@ -302,7 +297,7 @@ static struct clk_rcg2 gcc_gp1_clk_src = {
- 		.name = "gcc_gp1_clk_src",
- 		.parent_data = gcc_parent_data_1,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_1),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_gp_ops,
- 	},
- };
- 
-@@ -316,7 +311,7 @@ static struct clk_rcg2 gcc_gp2_clk_src = {
- 		.name = "gcc_gp2_clk_src",
- 		.parent_data = gcc_parent_data_1,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_1),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_gp_ops,
- 	},
- };
- 
-@@ -330,7 +325,7 @@ static struct clk_rcg2 gcc_gp3_clk_src = {
- 		.name = "gcc_gp3_clk_src",
- 		.parent_data = gcc_parent_data_1,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_1),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_gp_ops,
- 	},
- };
- 
+ .../bindings/iio/adc/qcom,spmi-vadc.yaml      | 226 +++++-
+ .../bindings/mfd/qcom,spmi-pmic.yaml          |   2 +-
+ .../bindings/thermal/qcom-spmi-adc-tm-hc.yaml |   2 +-
+ .../bindings/thermal/qcom-spmi-adc-tm5.yaml   |   6 +-
+ arch/arm/boot/dts/qcom/pm8226.dtsi            |   2 +-
+ arch/arm/boot/dts/qcom/pm8941.dtsi            |   2 +-
+ arch/arm/boot/dts/qcom/pma8084.dtsi           |   2 +-
+ arch/arm/boot/dts/qcom/pmx55.dtsi             |   2 +-
+ arch/arm64/boot/dts/qcom/pm4125.dtsi          |   2 +-
+ arch/arm64/boot/dts/qcom/pm6125.dtsi          |   2 +-
+ arch/arm64/boot/dts/qcom/pm6150.dtsi          |   2 +-
+ arch/arm64/boot/dts/qcom/pm6150l.dtsi         |   2 +-
+ arch/arm64/boot/dts/qcom/pm660.dtsi           |   2 +-
+ arch/arm64/boot/dts/qcom/pm660l.dtsi          |   2 +-
+ arch/arm64/boot/dts/qcom/pm7250b.dtsi         |   2 +-
+ arch/arm64/boot/dts/qcom/pm8150.dtsi          |   2 +-
+ arch/arm64/boot/dts/qcom/pm8150b.dtsi         |   2 +-
+ arch/arm64/boot/dts/qcom/pm8150l.dtsi         |   2 +-
+ arch/arm64/boot/dts/qcom/pm8916.dtsi          |   2 +-
+ arch/arm64/boot/dts/qcom/pm8950.dtsi          |   2 +-
+ arch/arm64/boot/dts/qcom/pm8953.dtsi          |   2 +-
+ arch/arm64/boot/dts/qcom/pm8994.dtsi          |   2 +-
+ arch/arm64/boot/dts/qcom/pm8998.dtsi          |   2 +-
+ arch/arm64/boot/dts/qcom/pmi632.dtsi          |   2 +-
+ arch/arm64/boot/dts/qcom/pmi8950.dtsi         |   2 +-
+ arch/arm64/boot/dts/qcom/pmm8155au_1.dtsi     |   2 +-
+ arch/arm64/boot/dts/qcom/pmp8074.dtsi         |   2 +-
+ arch/arm64/boot/dts/qcom/pms405.dtsi          |   2 +-
+ .../boot/dts/qcom/qcm6490-fairphone-fp5.dts   |   4 +-
+ .../boot/dts/qcom/qcm6490-shift-otter.dts     |   4 +-
+ arch/arm64/boot/dts/qcom/sc7280-idp.dts       |   2 +-
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi      |   2 +-
+ arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi    |   4 +-
+ arch/arm64/boot/dts/qcom/sc8180x-pmics.dtsi   |   2 +-
+ .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    |   2 +-
+ arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi  |   6 +-
+ .../boot/dts/qcom/sm7225-fairphone-fp4.dts    |   2 +-
+ .../boot/dts/qcom/sm7325-nothing-spacewar.dts |   6 +-
+ arch/arm64/boot/dts/qcom/sm8450-hdk.dts       |   8 +-
+ drivers/iio/adc/Kconfig                       |  25 +
+ drivers/iio/adc/Makefile                      |   1 +
+ drivers/iio/adc/qcom-spmi-adc5-gen3.c         | 724 ++++++++++++++++++
+ drivers/iio/adc/qcom-spmi-adc5.c              |   2 +-
+ drivers/iio/adc/qcom-spmi-vadc.c              |   2 +-
+ drivers/thermal/qcom/Kconfig                  |  11 +
+ drivers/thermal/qcom/Makefile                 |   1 +
+ drivers/thermal/qcom/qcom-spmi-adc-tm5-gen3.c | 489 ++++++++++++
+ .../iio/adc/qcom,spmi-adc5-gen3-pm8550.h      |  46 ++
+ .../iio/adc/qcom,spmi-adc5-gen3-pm8550b.h     |  85 ++
+ .../iio/adc/qcom,spmi-adc5-gen3-pm8550vx.h    |  22 +
+ .../iio/adc/qcom,spmi-adc5-gen3-pmk8550.h     |  52 ++
+ .../iio/{ => adc}/qcom,spmi-adc7-pm7325.h     |   2 +-
+ .../iio/{ => adc}/qcom,spmi-adc7-pm8350.h     |   2 +-
+ .../iio/{ => adc}/qcom,spmi-adc7-pm8350b.h    |   2 +-
+ .../iio/{ => adc}/qcom,spmi-adc7-pmk8350.h    |   2 +-
+ .../iio/{ => adc}/qcom,spmi-adc7-pmr735a.h    |   2 +-
+ .../iio/{ => adc}/qcom,spmi-adc7-pmr735b.h    |   2 +-
+ .../iio/{ => adc}/qcom,spmi-adc7-smb139x.h    |   2 +-
+ .../iio/{ => adc}/qcom,spmi-vadc.h            |  81 ++
+ include/linux/iio/adc/qcom-adc5-gen3-common.h | 233 ++++++
+ 60 files changed, 2032 insertions(+), 82 deletions(-)
+ create mode 100644 drivers/iio/adc/qcom-spmi-adc5-gen3.c
+ create mode 100644 drivers/thermal/qcom/qcom-spmi-adc-tm5-gen3.c
+ create mode 100644 include/dt-bindings/iio/adc/qcom,spmi-adc5-gen3-pm8550.h
+ create mode 100644 include/dt-bindings/iio/adc/qcom,spmi-adc5-gen3-pm8550b.h
+ create mode 100644 include/dt-bindings/iio/adc/qcom,spmi-adc5-gen3-pm8550vx.h
+ create mode 100644 include/dt-bindings/iio/adc/qcom,spmi-adc5-gen3-pmk8550.h
+ rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pm7325.h (98%)
+ rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pm8350.h (98%)
+ rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pm8350b.h (99%)
+ rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pmk8350.h (97%)
+ rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pmr735a.h (95%)
+ rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pmr735b.h (95%)
+ rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-smb139x.h (93%)
+ rename include/dt-bindings/iio/{ => adc}/qcom,spmi-vadc.h (77%)
+ create mode 100644 include/linux/iio/adc/qcom-adc5-gen3-common.h
 
+
+base-commit: 6fb2fa9805c501d9ade047fc511961f3273cdcb5
 -- 
-2.39.2
+2.25.1
 
 
