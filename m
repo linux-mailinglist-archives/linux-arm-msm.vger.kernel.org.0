@@ -1,162 +1,277 @@
-Return-Path: <linux-arm-msm+bounces-36417-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36418-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F8539B6165
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 12:23:43 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 055F69B61D0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 12:32:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 00ADE1F214C1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 11:23:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 292C81C2089B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 11:32:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B597D1E4928;
-	Wed, 30 Oct 2024 11:23:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 317501E767D;
+	Wed, 30 Oct 2024 11:29:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CeBC6LFB"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ustrsrEZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CB1C1E47D9
-	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Oct 2024 11:23:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBE401E5000
+	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Oct 2024 11:29:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730287417; cv=none; b=YeZXLzpwpwQPjA8CPdgHQ/6fYJQ914izCM3sd6oi81CTanS6Eu5cwpQoH5mdTi453WSWbC1sMQQTlgSFpBUjE8G2WCUbm8CR/Ah0vQgbORk/F0sRIgGI25z2niN8xM4jLMNYLSDPC6EDrueTsuoDyOstVmtWdHaiYli/I5gKu4I=
+	t=1730287759; cv=none; b=P1ZXrySeNE4u2vtVsSEzdMjlwpkk6MY6K/7F0OT8edbmMYw4CZHIbDXrx1rGiHB60VijGz/xOvXVSY83y5KUrKaPwV9I+q9jsyFjEonzVI64hq0PLxjHo8HxeShtaUebDmgInCUZ8geqMhiE5eTO/u4sV5TNJ8T7vDnRbnu1NMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730287417; c=relaxed/simple;
-	bh=zHgIwEWfPk4yyvPCEPt5Azic6gPbJHaNqF2Poifr9rs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dHTZn+JAwPDe9Bf80hYu4cOzVP/wxELIyoXpmvfXPjEFT3QInBEDXavZIAp7HbmDkoGbG3Dy8y7Rtoxpc3rQu+7exA7p697pKwhH6/sbHSBt2AkWC/Pdtjt9si9djDlKHbAVih6Y41SnekyrKzyW1208UR4QOydK9A9hWVe4QQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CeBC6LFB; arc=none smtp.client-ip=209.85.167.41
+	s=arc-20240116; t=1730287759; c=relaxed/simple;
+	bh=Ok/ZgMhS3QqWbhoqGvYYxN0jmiHdH4h2aMc5rX14/RQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dppVe2J56JhQTY2Iowz+Eyuz3h35QJsAOARiWqltJJbr1oKl9y5uLa7uB6VMcgkIcYuiGIENZwpOGkd+kSurhq+QrRM6vYYeE7/xSNrr7p8lr327PK4+7g83Wb6WkESqDk6jzPiSZjgKP5rihhrPGASecAAAcn7yWwX74If+nOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ustrsrEZ; arc=none smtp.client-ip=209.85.167.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-53c779ef19cso217851e87.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Oct 2024 04:23:34 -0700 (PDT)
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-53b13eae3b3so852379e87.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Oct 2024 04:29:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1730287412; x=1730892212; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=wfR1CwiWgHND2Gsj8zReFr51weqymmRbQbInKm0uI9k=;
-        b=CeBC6LFBKaJ16PRXHNyrCq1BiV7k2jdIqjNpUvt0+xk2lXbhNBbQeicoQR2sbSdtwo
-         MHip/VwLfxhU4kdlDjjZA1LWw0BQGbaIGVy/OC2/o9sjIca/wXj4eb2v+Gc+tujc4nN6
-         YoV7csrSVTaVGMp6hfmMm3LluRqMlXQ7eW3KU0eHI69Voha8dTB8tpFhrV1QukUeMsvi
-         25dB32IgY4t162i9kKVXzB3qbUKkADQiP9Y9NTssfrr51ApcbCE8m3EecNFtjrHUDH9m
-         OCp4+x/KVaqArdraXk+yJDmA9imnjU05p3+zQ0szJXh/0WyPVDoV4aiSNUoLhBYFJx/0
-         jCzg==
+        d=linaro.org; s=google; t=1730287754; x=1730892554; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=kOujfd/jy87aIKSPb/EWr7De3J+KJ9M7N5naEu8TlmM=;
+        b=ustrsrEZfqFWhmG9DXsK3pMbUoDdprM4c9YgUkCKD9bXn4MkGKG12nJmjWgpIdSOZe
+         /DMf4lIiu4yn1pdKrZ0k0cBouV7aXGqvaKQMDGuIkh/9QEN1ZK90hgjECCDixjbC4fPN
+         tzkK9KtZDP0KOGFFwW/oY64GRWNN1y9DdVaTdaSkwIGBdOoR9Yjnq9qC/NZ88utanyOq
+         3C5COZ9fneDqvZm+k82He1sRYmRIauPsERmAjHo0tboe4convuyAsf39Tqg5fk8mzUqO
+         Ccw/mg+P+CzbFuxiSK1+P3ByNs823fyxfx6f4LyEiSFoNfElRDxBbSURQGESysHMW5nU
+         o2HA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730287412; x=1730892212;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20230601; t=1730287754; x=1730892554;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wfR1CwiWgHND2Gsj8zReFr51weqymmRbQbInKm0uI9k=;
-        b=TogzGJMEDcQhKjSZ5sH8elB5WBSZGR8qUQ7KWIjH42p9Alc3mlXTBFd1qzawSmBsv6
-         lYLOuIfAp60/psZvQu4jQX0MzDsN/7cOSZ6Jzov5xb5BKtfdk6Y841gxpul+stwclJfP
-         6AYH18pR+U9VyPlvUg0Rsc+zM+PdumiE4jcbm1QEQiNK8qbYnm6founHqZolYYJi8OK8
-         ArNSFHMDqkzZohbK5k8ztKv/njQaEFE+nxC1zJ5gV1eVxh3wYVpc7fRDFuItf7Zi6VLz
-         bWqKzYsbGvQ7gIXsXB8booiFdx3G7yPjt3/40xt/hzbhrfnVUa+xHRe9PlKSFLbErF0U
-         KfoQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUw08bDO7FXoEIeWay1XD5+uiz8tg+RKCipU6cnwWtyda6UWUgco0oJIdlqYIEHrv/U9tNvQJE7vlERth73@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw0PTT4wz6637jQLAB9HJcW64B69fQ0vjJk9Jx1ts2nCeIsvPFH
-	MjiMFTDzjqEROjIIbeM3WA/v2jctWz0+8NZpy5inGjMu8MDhSTGvhcxvZ4yrXgVprdA/BuUEE+5
-	c
-X-Google-Smtp-Source: AGHT+IHFi2VTNyFiaZV+LcQXM7FIAG/G39oW0UZ1SN9GGWF/bKTG4Q4CtRRvHoAZoaRoZWs4e3EpGA==
-X-Received: by 2002:a05:6512:ba1:b0:539:fd33:abd2 with SMTP id 2adb3069b0e04-53b348d6148mr6291979e87.25.1730287412407;
-        Wed, 30 Oct 2024 04:23:32 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53bb838e351sm224601e87.99.2024.10.30.04.23.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Oct 2024 04:23:31 -0700 (PDT)
-Date: Wed, 30 Oct 2024 13:23:30 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Imran Shaik <quic_imrashai@quicinc.com>, 
-	Bjorn Andersson <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
-	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Ajit Pandey <quic_ajipan@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>, 
-	Jagadeesh Kona <quic_jkona@quicinc.com>, Satya Priya Kakitapalli <quic_skakitap@quicinc.com>, 
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 1/6] dt-bindings: clock: qcom: Add GPU clocks for
- QCS8300
-Message-ID: <ixnqjfb6l7cz4qp23zevtbwws72rjo25cfgvntyiauzdg2yisw@vr2t4qy4k6iq>
-References: <20241024-qcs8300-mm-patches-v2-0-76c905060d0a@quicinc.com>
- <20241024-qcs8300-mm-patches-v2-1-76c905060d0a@quicinc.com>
- <jhwf2slcwvkpxggqt42mfmnyiibhbnvwtqk3to7ueq3ppla7q7@23qrl2z56ygu>
- <0487791a-f31b-4427-b13b-b7ab6a80378b@quicinc.com>
- <ae61b485-d3af-4226-b2f8-e89ef5b4ed71@kernel.org>
- <fff416f9-4ea7-4117-87b0-986087f8e142@quicinc.com>
- <9bd4c63b-7c68-4e40-9995-9d569eed15b5@kernel.org>
- <f7551a7a-885c-4f74-8f74-10f1c0ebe6ad@quicinc.com>
- <46c19729-b31e-42e3-a6dd-6b43b27348d8@kernel.org>
+        bh=kOujfd/jy87aIKSPb/EWr7De3J+KJ9M7N5naEu8TlmM=;
+        b=JSSXKuBseXdKpu9++Sd68CqY+QZn7G7hec9sKo10k9+axqAlo0WVSdl3bFfmylsds3
+         iaT/CSKJO2k8LLNZik7iM0HP2Kbw3WVrJYMS64BPnMSA5sll3RjYm8BpCNnNHw3iM3b8
+         mib4cDYUiX+6pNkikDfWP+DG1z66ipakAKfdXkMObWwb3yvhTSBO7NMVPJ3S/KfU0p/Y
+         8BpjaRZVyxeLfIKcgMoqKQznMGpwLN4vOKmAfWMPkCe+JwCqcumanzsmwy911FugzUaO
+         EVIXxPwWAFMCOqjYDMmJH1twiNIztEYTQG7WZ0pg+lAE+Zao+MBiPjh919sZ5KELX6M5
+         bsrw==
+X-Forwarded-Encrypted: i=1; AJvYcCWewwcyVgbEF0oyCqy/B9JSaAL1ii5S+VSCJY5JulJVu6JT4e79CdpSjI7//okEB3KNVzJO6yHxmQ1VgHEf@vger.kernel.org
+X-Gm-Message-State: AOJu0YwpV0OPTt10EnEMy0mamKr3sq4ufm0851ZmvO15Y1c/a4dfhoKh
+	Xo6Kjz1gDmXLyeBIxlYV4nFGKt8aBt6ycn1nSw5Whc6e6BRyFBTlP6fHkod545o=
+X-Google-Smtp-Source: AGHT+IEs+M3/oYcPjpUBi7NneafgUbQNOPFL1rEspdaMuGFpvZkF8vlz4NG+YG9NTMCNUDafH8g+Sw==
+X-Received: by 2002:a05:6512:3b85:b0:539:e0e6:cf4d with SMTP id 2adb3069b0e04-53b34b3c2fbmr2092672e87.11.1730287753768;
+        Wed, 30 Oct 2024 04:29:13 -0700 (PDT)
+Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53bc0d52e61sm224296e87.120.2024.10.30.04.29.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 30 Oct 2024 04:29:13 -0700 (PDT)
+Message-ID: <cce5f27d-912c-4386-babe-b963aa65deda@linaro.org>
+Date: Wed, 30 Oct 2024 13:29:11 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <46c19729-b31e-42e3-a6dd-6b43b27348d8@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 6/6] arm64: dts: qcom:
+ qcs6490-rb3gen2-vision-mezzanine: Add vision mezzanine
+Content-Language: en-US
+To: Vikram Sharma <quic_vikramsa@quicinc.com>, rfoss@kernel.org,
+ todor.too@gmail.com, bryan.odonoghue@linaro.org, mchehab@kernel.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ akapatra@quicinc.com, hariramp@quicinc.com, andersson@kernel.org,
+ konradybcio@kernel.org, hverkuil-cisco@xs4all.nl,
+ cros-qcom-dts-watchers@chromium.org, catalin.marinas@arm.com, will@kernel.org
+Cc: linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, kernel@quicinc.com
+References: <20241030105347.2117034-1-quic_vikramsa@quicinc.com>
+ <20241030105347.2117034-7-quic_vikramsa@quicinc.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20241030105347.2117034-7-quic_vikramsa@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Oct 30, 2024 at 08:30:59AM +0100, Krzysztof Kozlowski wrote:
-> On 30/10/2024 07:59, Imran Shaik wrote:
-> > 
-> > 
-> > On 10/29/2024 3:06 PM, Krzysztof Kozlowski wrote:
-> >> On 29/10/2024 10:23, Imran Shaik wrote:
-> >>>
-> >>>
-> >>> On 10/28/2024 12:35 PM, Krzysztof Kozlowski wrote:
-> >>>> On 28/10/2024 06:15, Imran Shaik wrote:
-> >>>>>
-> >>>>>
-> >>>>> On 10/26/2024 5:50 PM, Krzysztof Kozlowski wrote:
-> >>>>>> On Thu, Oct 24, 2024 at 07:01:14PM +0530, Imran Shaik wrote:
-> >>>>>>> The QCS8300 GPU clock controller is mostly identical to SA8775P, but
-> >>>>>>> QCS8300 has few additional clocks and minor differences. Hence, reuse
-> >>>>>>> SA8775P gpucc bindings and add additional clocks required for QCS8300.
-> >>>>>>
-> >>>>>> IIUC, these clocks are not valid for SA8775p. How do we deal with such
-> >>>>>> cases for other Qualcomm SoCs?
-> >>>>>>
-> >>>>>
-> >>>>> These newly added clocks are not applicable to SA8755P. In the
-> >>>>> gpucc-sa8775p driver, these clocks are marked to NULL for the SA8755P,
-> >>>>> ensuring they are not registered to the CCF.
-> >>>>
-> >>>> I meant bindings. And existing practice.
-> >>>>
-> >>>
-> >>> In the bindings, the same approach is followed in other Qualcomm SoCs as
-> >>> well, where additional clocks are added to the existing identical SoC’s
-> >>> bindings.
-> >>>
-> >>> https://lore.kernel.org/r/20240818204348.197788-2-danila@jiaxyga.com
-> >>
-> >> Exactly, defines are very different, so no, it is not the same approach.
-> >>
-> > 
-> > I believe the QCS8300 approach is same as that of SM8475. In the SM8475 
-> > SoC, GPLL2 and GPLL3 are the additional clock bindings compared to the 
-> > SM8450. Similarly, in the QCS8300, the GPU_CC_*_ACCU_SHIFT_CLK clock 
-> > bindings are additional to the SA8775P.
-> > 
-> > We are also following this approach across all SoCs in the downstream 
-> > msm-kernel as well.
-> > 
-> > Please let me know if I am missing anything here.
+On 10/30/24 12:53, Vikram Sharma wrote:
+> The Vision Mezzanine for the RB3 ships with an imx577 camera sensor.
+> Enable the IMX577 on the vision mezzanine.
 > 
-> Not sure, please take the same approach as SM8475, not a different one.
+> An example media-ctl pipeline for the imx577 is:
+> 
+> media-ctl --reset
+> media-ctl -v -V '"imx577 '19-001a'":0[fmt:SRGGB10/4056x3040 field:none]'
+> media-ctl -V '"msm_csiphy3":0[fmt:SRGGB10/4056x3040]'
+> media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
+> media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
+> media-ctl -l '"msm_csiphy3":1->"msm_csid0":0[1]'
+> media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+> 
+> yavta -B capture-mplane -c -I -n 5 -f SRGGB10P -s 4056x3040 -F /dev/video0
+> 
+> Signed-off-by: Hariram Purushothaman <quic_hariramp@quicinc.com>
+> Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
+> Signed-off-by: Trishansh Bhardwaj <quic_tbhardwa@quicinc.com>
+> ---
+>   arch/arm64/boot/dts/qcom/Makefile             |  4 +
+>   .../qcs6490-rb3gen2-vision-mezzanine.dtso     | 73 +++++++++++++++++++
+>   arch/arm64/boot/dts/qcom/sc7280.dtsi          | 33 +++++++++
+>   3 files changed, 110 insertions(+)
+>   create mode 100644 arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-vision-mezzanine.dtso
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index ac199f809b0d..186768f7c696 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -111,6 +111,10 @@ dtb-$(CONFIG_ARCH_QCOM)	+= qcm6490-shift-otter.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2.dtb
+> +
+> +qcs6490-rb3gen2-vision-mezzanine-dtbs := qcs6490-rb3gen2.dtb qcs6490-rb3gen2-vision-mezzanine.dtbo
+> +
+> +dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2-vision-mezzanine.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= qcs8550-aim300-aiot.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= qdu1000-idp.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= qrb2210-rb1.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-vision-mezzanine.dtso b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-vision-mezzanine.dtso
+> new file mode 100644
+> index 000000000000..cd3fe65fa971
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-vision-mezzanine.dtso
+> @@ -0,0 +1,73 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +/*
+> + * Camera Sensor overlay on top of rb3gen2 core kit.
+> + */
+> +
+> +#include <dt-bindings/gpio/gpio.h>
+> +#include <dt-bindings/clock/qcom,camcc-sc7280.h>
+> +
+> +/dts-v1/;
+> +/plugin/;
+> +
+> +&camcc {
+> +	status = "okay";
+> +};
+> +
+> +&camss {
+> +	vdda-phy-supply = <&vreg_l10c_0p88>;
+> +	vdda-pll-supply = <&vreg_l6b_1p2>;
+> +	status = "okay";
+> +
+> +	ports {
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		/* The port index denotes CSIPHY id i.e. csiphy3 */
+> +		port@3 {
+> +			reg = <3>;
+> +			csiphy3_ep: endpoint {
+> +				clock-lanes = <7>;
+> +				data-lanes = <0 1 2 3>;
+> +				remote-endpoint = <&imx577_ep>;
+> +			};
+> +		};
+> +	};
+> +};
+> +
+> +&cci1 {
+> +	status = "okay";
+> +};
+> +
+> +&cci1_i2c1 {
+> +	#address-cells = <1>;
+> +	#size-cells = <0>;
+> +
+> +	camera@1a {
+> +		compatible = "sony,imx577";
+> +		reg = <0x1a>;
+> +
+> +		reset-gpios = <&tlmm 78 GPIO_ACTIVE_LOW>;
+> +		pinctrl-names = "default", "suspend";
+> +		pinctrl-0 = <&cam2_default>;
+> +		pinctrl-1 = <&cam2_suspend>;
+> +
+> +		clocks = <&camcc CAM_CC_MCLK3_CLK>;
+> +		assigned-clocks = <&camcc CAM_CC_MCLK3_CLK>;
+> +		assigned-clock-rates = <24000000>;
+> +
+> +		dovdd-supply  = <&vreg_l18b_1p8>;
+> +
+> +		port {
+> +			imx577_ep: endpoint {
+> +				clock-lanes = <7>;
+> +				link-frequencies = /bits/ 64 <600000000>;
+> +				data-lanes = <0 1 2 3>;
+> +				remote-endpoint = <&csiphy3_ep>;
+> +			};
+> +		};
+> +	};
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index 690051708dec..8130c1374722 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -5115,6 +5115,39 @@ tlmm: pinctrl@f100000 {
+>   			gpio-ranges = <&tlmm 0 0 175>;
+>   			wakeup-parent = <&pdc>;
+>   
+> +			cam2_default: cam2-default-state {
+> +				rst-pins {
+> +					pins = "gpio78";
+> +					function = "gpio";
+> +					drive-strength = <2>;
+> +					bias-disable;
+> +				};
+> +
+> +				mclk-pins {
+> +					pins = "gpio67";
+> +					function = "cam_mclk";
+> +					drive-strength = <2>;
+> +					bias-disable;
+> +				};
+> +			};
 
-Just for my understanding, are you proposing to prefix the
-platform-specific defines with platform name (like it was done for
-SM8475)?
+SoC-specific change of adding new pin functions into the platform dtsi
+file shall be separated from the rest of the mezzanine board change,
+send it as its own change, you may wish add all MCLK pins at once.
 
--- 
-With best wishes
-Dmitry
+And the camera sensor reset "gpio" pin goes into the mezzanine specific
+change.
+
+> +
+> +			cam2_suspend: cam2-suspend-state {
+> +				rst-pins {
+> +					pins = "gpio78";
+> +					function = "gpio";
+> +					drive-strength = <2>;
+> +					bias-pull-down;
+> +					output-low;
+> +				};
+> +
+> +				mclk-pins {
+> +					pins = "gpio67";
+> +					function = "cam_mclk";
+> +					drive-strength = <2>;
+> +					bias-pull-down;
+> +				};
+> +			};
+> +
+
+Same as above.
+
+>   			cci0_default: cci0-default-state {
+>   				pins = "gpio69", "gpio70";
+>   				function = "cci_i2c";
+
+--
+Best wishes,
+Vladimir
 
