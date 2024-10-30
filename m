@@ -1,63 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-36364-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36365-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4D4E69B5C36
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 08:03:47 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id A5ED39B5C3A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 08:04:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6FE931C20F67
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 07:03:46 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 04B90B22E80
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 07:04:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8C2D1DE4FF;
-	Wed, 30 Oct 2024 07:03:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3A031DFD81;
+	Wed, 30 Oct 2024 07:03:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="eIDSyPEa"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LM4Mvl7P"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B73D51D1309;
-	Wed, 30 Oct 2024 07:02:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8E8F1DDA32;
+	Wed, 30 Oct 2024 07:03:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730271780; cv=none; b=Mvvq+aFrnAA75luommJTAUun/fSDWwS8tYpnVBp8TveGJueVh9kcggehQLKFtX6B+m2MyVgD5CAmbHg2CG2gdd07o3wtEm0QJ4MV1m8jlF6811xyE2kAAZJUBWycpZAD7njwN+VN9qCcvTcmLMv5rZjiHBmKXIwdmvUbpJqdZ7c=
+	t=1730271783; cv=none; b=UeNlPMWXi8Bg1pZF/LpfMPp+EPsBYPqA5ZSSuaRl0qjq5yBMgZAXhnfiS0g7uC1V5GECKtvZDLh3m59w3W6NIsHjH+OOw2I7rllyy/RzYsoAutLo4Xym5H1CJXrieKDc5dQJaIX2EoEevJYPfEDjfiqfQC8S9e660yVzXKoCa4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730271780; c=relaxed/simple;
-	bh=HBHqqFJwlLZrnHKzABOXS58x4463lPh4o709iKwhKMo=;
-	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=InLGuLCeIoe5PBq08ZKhGpJRcqhaB7ZOssykdZ+tz6uU0+wD2blHpoXdl5YxStYnryiPgtSsEgDEfD6REvJLI1Oj/yT6RgyGiSvzWkTRIckqs1urgXWIHRNuPDSp6Q2Aly+Gjhp0kmnEDdtMa+d9zKJ6tUS2ywrw61bXgWOsQ14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=eIDSyPEa; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1730271783; c=relaxed/simple;
+	bh=VDpcV+DrJdtcU9LObjEhhOVgw+q7nFHrnM8wB7QOCvo=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
+	 In-Reply-To:To:CC; b=RNi7HmT5nsSkoZbvbJbKCbNrHg3j0kY6myWcFzpFBa6SR7dfAekKJbLgxqiDFnLpIs6gdhRIOz0HKVxYybja0j8zEJBLQOBP4Mbrmf/mpqX8VmFstJPBMKnLZEPeTg+XcEmq3H5mGb+YKiOwONp7vcgz9AF4rbWBv0ESd9e41SQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LM4Mvl7P; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49TM0ebj012773;
-	Wed, 30 Oct 2024 07:02:43 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49TKRhtd013341;
+	Wed, 30 Oct 2024 07:02:45 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=/g/BCeSyts2ynUtbS5uAaJ
-	lBY7+gxxbs+JXVEycwaMs=; b=eIDSyPEaZZcYyWl/6pKz1MPw3hgOTlBEOMjn9+
-	WuBR5EBsgYVLmm5Ra4p9prNJmSqVmyOhuJj21FJ+UM4z1vdW0UOTbsTwOMlc3zRH
-	JpopOd6rViqm/+twvwJQagD2fWhG1Ab+5dLJiSFluOUKD2pqospAwQYScKJnrLtV
-	Azg34g6JZuHeI6hfRjg2GxQ4X/GDCx3027+zdST2Mth2oLhVUc6HXkRwA13rqkaH
-	wn62GWFuHBAfOmu6dTHt3RxgdeCP593ap8KqUylcXhfnRKC5TJ6YkWyRt1QCfZlW
-	AuTqmGEIWZGIJ7TDAw6aKewU4WUg6WuFLWxQUTxjKGzDOSfA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42grguk1g5-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	9XigFcGTkSXpIWiJ7GVbbF27oFVt/qsEQLqVU4zraR0=; b=LM4Mvl7PoJlT9Nx7
+	/6eVrsNuNfZFlc2sEnC5QIVFrQypmM7eQoyWtzWE7MGnGgkI1vQGmWxsSk3UYiMm
+	F/A/sc5aLl8xVawDv9Qm8jKj6H0PtUncfPbRTmdliTBy4yi/yLuK1T3syUbgOxSF
+	vbrrBV8SDye14sQU5j2A1DpXV2hP43AT0HT///KHW24y+XU09skA7PcF/ZPCJK28
+	kTxdH69OwZs4PJHJgF+B771QDiAJuE+3QCvZlcQAOPJHisOWBC45XB9SUsUalemx
+	5pt1m82031WefhOERgcdMnQ7k1sZrHFjUmfFSlC8gvIyQ/hNmyPrMITYQ92VfYVg
+	qnlX+g==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42k6rpha98-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 30 Oct 2024 07:02:42 +0000 (GMT)
+	Wed, 30 Oct 2024 07:02:45 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49U72bxQ019577
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49U72iYr008631
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 30 Oct 2024 07:02:41 GMT
+	Wed, 30 Oct 2024 07:02:44 GMT
 Received: from [10.213.111.143] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 30 Oct
- 2024 00:02:32 -0700
+ 2024 00:02:38 -0700
 From: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Subject: [PATCH v3 0/2] DRM/MSM: Support for Adreno 663 GPU
-Date: Wed, 30 Oct 2024 12:32:01 +0530
-Message-ID: <20241030-a663-gpu-support-v3-0-bdf1d9ce6021@quicinc.com>
+Date: Wed, 30 Oct 2024 12:32:02 +0530
+Subject: [PATCH v3 1/2] arm64: dts: qcom: sa8775p: Add gpu and gmu nodes
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,11 +67,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAOnZIWcC/23OwW7DIAwG4FeJOI8JbEKgp73HtAMB0/rQJIMk2
- lT13UdbbdK0Hf/f8mdfRKXCVMWhu4hCO1eepxbwqRPxFKYjSU4tC1BglNeDDNaiPC6brNuyzGW
- VozZDHx04q6xoa0uhzB938vWt5RPXdS6f9wu7vrXfmPuL7VoqCX2mgBmTNenlfePIU3yO81ncu
- B1+CK0A/iGgEehSQAdorB9+E9fHi4VaW3l9/CnGUEm2+ZnXQ5ds0iEhJKUGbShmn7X3Vg8Ybfa
- ODMZ+bLcbdv0C3b6D00EBAAA=
+Message-ID: <20241030-a663-gpu-support-v3-1-bdf1d9ce6021@quicinc.com>
+References: <20241030-a663-gpu-support-v3-0-bdf1d9ce6021@quicinc.com>
+In-Reply-To: <20241030-a663-gpu-support-v3-0-bdf1d9ce6021@quicinc.com>
 To: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         "Konrad
  Dybcio" <konradybcio@kernel.org>,
@@ -95,100 +94,148 @@ CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
 	<quic_pvgtejas@quicinc.com>,
         Akhil P Oommen <quic_akhilpo@quicinc.com>
 X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1730271752; l=2737;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1730271752; l=3611;
  i=quic_akhilpo@quicinc.com; s=20240726; h=from:subject:message-id;
- bh=HBHqqFJwlLZrnHKzABOXS58x4463lPh4o709iKwhKMo=;
- b=b+O+SWbc5uNySP8IKgSjq59mK1j53b1d4Qv2fmU0O7EZJ1aWkNpmv7wFP2se/3uwfBvU5harC
- B7jjQeoW9PIBM/eZ4bXvp8OrK2qoSvWuWsaaOq7GDVwHRhAEQz+BSJL
+ bh=VTCm+F27K1yv6y1MYRPGE7yPOUbUt+X+kLt4UI3bQl8=;
+ b=AjfqqqVzdbckxh+6TOC3ZoTfbYtXo+NoODdszrwSc7CqArNfoNv6zSkxdd5Z4EwOvu9ULoZ0z
+ 8NQuVJVaoigCt3BdZKZgkAOv5jWcAs76wVaOaX2AQl/PbG8SQTJd5fA
 X-Developer-Key: i=quic_akhilpo@quicinc.com; a=ed25519;
  pk=lmVtttSHmAUYFnJsQHX80IIRmYmXA4+CzpGcWOOsfKA=
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 3jArTnuVb_XlOuygw0eKXEAfGdlT_19q
-X-Proofpoint-GUID: 3jArTnuVb_XlOuygw0eKXEAfGdlT_19q
+X-Proofpoint-ORIG-GUID: k0G79Q9IcSTSmcdi2cgFuOlce7wUMQ1Z
+X-Proofpoint-GUID: k0G79Q9IcSTSmcdi2cgFuOlce7wUMQ1Z
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1015
- lowpriorityscore=0 adultscore=0 mlxscore=0 bulkscore=0 suspectscore=0
- phishscore=0 spamscore=0 malwarescore=0 mlxlogscore=999 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2410300054
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 bulkscore=0
+ clxscore=1011 mlxlogscore=963 priorityscore=1501 spamscore=0
+ malwarescore=0 impostorscore=0 mlxscore=0 lowpriorityscore=0
+ suspectscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2409260000 definitions=main-2410300054
 
-This series adds support for Adreno 663 gpu found in SA8775P chipsets.
-The closest gpu which is currently supported in drm-msm is A660.
-Following are the major differences with that:
-	1. gmu/zap firmwares
-	2. Recommended to disable Level2 swizzling
+From: Puranam V G Tejaswi <quic_pvgtejas@quicinc.com>
 
-Verified kmscube/weston/glmark2-es2 with the below Mesa change [1].
-This series is rebased on top of msm-next.
+Add gpu and gmu nodes for sa8775p chipset. As of now all
+SKUs have the same GPU fmax, so there is no requirement of
+speed bin support.
 
-Since they are already picked up, I have dropped the patches for msm-next
-in this revision. Remaining 2 devicetree patches are for Bjorn.
-
-Devicetree changes have a runtime dependency on the Display DT change [2].
-
-[1] https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/31211
-[2] https://patchwork.freedesktop.org/patch/620500/?series=140216
-
-To: Rob Clark <robdclark@gmail.com>
-To: Sean Paul <sean@poorly.run>
-To: Konrad Dybcio <konradybcio@kernel.org>
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Marijn Suijten <marijn.suijten@somainline.org>
-To: David Airlie <airlied@gmail.com>
-To: Simona Vetter <simona@ffwll.ch>
-To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-To: Maxime Ripard <mripard@kernel.org>
-To: Thomas Zimmermann <tzimmermann@suse.de>
-To: Rob Herring <robh@kernel.org>
-To: Krzysztof Kozlowski <krzk+dt@kernel.org>
-To: Conor Dooley <conor+dt@kernel.org>
-To: Bjorn Andersson <andersson@kernel.org>
-To: Connor Abbott <cwabbott0@gmail.com>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: dri-devel@lists.freedesktop.org
-Cc: freedreno@lists.freedesktop.org
-Cc: linux-kernel@vger.kernel.org
-Cc: devicetree@vger.kernel.org
-
--Akhil
-
+Signed-off-by: Puranam V G Tejaswi <quic_pvgtejas@quicinc.com>
+Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
-Changes in v3:
-- Rebased on the latest msm-next tip
-- Added R-b tags from Dmitry
-- Dropped patch #1 and #2 from v2 revision since they are already
-picked up in msm-next
-- Link to v2: https://lore.kernel.org/r/20241022-a663-gpu-support-v2-0-38da38234697@quicinc.com
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi | 94 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 94 insertions(+)
 
-Changes in v2:
-- Fixed ubwc configuration (dimtry)
-- Split out platform dt patch (dimtry)
-- Fix formatting in the dt patch (dimtry)
-- Updated Opp table to include all levels
-- Updated bw IB votes to match downstream
-- Rebased on top of msm-next tip
-- Link to v1: https://lore.kernel.org/r/20240918-a663-gpu-support-v1-0-25fea3f3d64d@quicinc.com
+diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+index e8dbc8d820a6..c6cb18193787 100644
+--- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
++++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+@@ -3072,6 +3072,100 @@ tcsr_mutex: hwlock@1f40000 {
+ 			#hwlock-cells = <1>;
+ 		};
+ 
++		gpu: gpu@3d00000 {
++			compatible = "qcom,adreno-663.0", "qcom,adreno";
++			reg = <0x0 0x03d00000 0x0 0x40000>,
++			      <0x0 0x03d9e000 0x0 0x1000>,
++			      <0x0 0x03d61000 0x0 0x800>;
++			reg-names = "kgsl_3d0_reg_memory",
++				    "cx_mem",
++				    "cx_dbgc";
++			interrupts = <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH>;
++			iommus = <&adreno_smmu 0 0xc00>,
++				 <&adreno_smmu 1 0xc00>;
++			operating-points-v2 = <&gpu_opp_table>;
++			qcom,gmu = <&gmu>;
++			interconnects = <&gem_noc MASTER_GFX3D QCOM_ICC_TAG_ALWAYS
++					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>;
++			interconnect-names = "gfx-mem";
++			#cooling-cells = <2>;
++
++			status = "disabled";
++
++			gpu_zap_shader: zap-shader {
++				memory-region = <&pil_gpu_mem>;
++			};
++
++			gpu_opp_table: opp-table {
++				compatible = "operating-points-v2";
++
++				opp-405000000 {
++					opp-hz = /bits/ 64 <405000000>;
++					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
++					opp-peak-kBps = <5285156>;
++				};
++
++				opp-676000000 {
++					opp-hz = /bits/ 64 <676000000>;
++					opp-level = <RPMH_REGULATOR_LEVEL_NOM>;
++					opp-peak-kBps = <8171875>;
++				};
++
++				opp-778000000 {
++					opp-hz = /bits/ 64 <778000000>;
++					opp-level = <RPMH_REGULATOR_LEVEL_TURBO>;
++					opp-peak-kBps = <10687500>;
++				};
++
++				opp-800000000 {
++					opp-hz = /bits/ 64 <800000000>;
++					opp-level = <RPMH_REGULATOR_LEVEL_TURBO_L1>;
++					opp-peak-kBps = <12484375>;
++				};
++			};
++		};
++
++		gmu: gmu@3d6a000 {
++			compatible = "qcom,adreno-gmu-663.0", "qcom,adreno-gmu";
++			reg = <0x0 0x03d6a000 0x0 0x34000>,
++			      <0x0 0x03de0000 0x0 0x10000>,
++			      <0x0 0x0b290000 0x0 0x10000>;
++			reg-names = "gmu", "rscc", "gmu_pdc";
++			interrupts = <GIC_SPI 304 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 305 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "hfi", "gmu";
++			clocks = <&gpucc GPU_CC_CX_GMU_CLK>,
++				 <&gpucc GPU_CC_CXO_CLK>,
++				 <&gcc GCC_DDRSS_GPU_AXI_CLK>,
++				 <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
++				 <&gpucc GPU_CC_AHB_CLK>,
++				 <&gpucc GPU_CC_HUB_CX_INT_CLK>,
++				 <&gpucc GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK>;
++			clock-names = "gmu",
++				      "cxo",
++				      "axi",
++				      "memnoc",
++				      "ahb",
++				      "hub",
++				      "smmu_vote";
++			power-domains = <&gpucc GPU_CC_CX_GDSC>,
++					<&gpucc GPU_CC_GX_GDSC>;
++			power-domain-names = "cx",
++					     "gx";
++			iommus = <&adreno_smmu 5 0xc00>;
++			operating-points-v2 = <&gmu_opp_table>;
++
++			gmu_opp_table: opp-table {
++				compatible = "operating-points-v2";
++
++				opp-200000000 {
++					opp-hz = /bits/ 64 <200000000>;
++					opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
++				};
++			};
++		};
++
++
+ 		gpucc: clock-controller@3d90000 {
+ 			compatible = "qcom,sa8775p-gpucc";
+ 			reg = <0x0 0x03d90000 0x0 0xa000>;
 
----
-Puranam V G Tejaswi (2):
-      arm64: dts: qcom: sa8775p: Add gpu and gmu nodes
-      arm64: dts: qcom: sa8775p-ride: Enable Adreno 663 GPU
-
- arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi |  8 +++
- arch/arm64/boot/dts/qcom/sa8775p.dtsi      | 94 ++++++++++++++++++++++++++++++
- 2 files changed, 102 insertions(+)
----
-base-commit: d6d1ad32d00714ecf9f1996173c6f98e43c5b022
-change-id: 20240917-a663-gpu-support-b1475c828606
-
-Best regards,
 -- 
-Akhil P Oommen <quic_akhilpo@quicinc.com>
+2.45.2
 
 
