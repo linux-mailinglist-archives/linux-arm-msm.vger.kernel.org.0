@@ -1,63 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-36380-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36381-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9AB5E9B5D8A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 09:22:19 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 028DF9B5DD8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 09:28:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 45DD81F2323D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 08:22:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8525E1F23F63
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 08:28:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5859B1E0DFF;
-	Wed, 30 Oct 2024 08:22:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 023E11E0E12;
+	Wed, 30 Oct 2024 08:28:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="MvH14qhl"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wJOpCx1G"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36D0C1DFE16;
-	Wed, 30 Oct 2024 08:22:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 994B11E0E1D
+	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Oct 2024 08:28:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730276533; cv=none; b=d1TqLzyU8I0M/Z6u0mpRNUIPTfxUNZ5pB0iqzrGZ3TsIxEyD7y2NgONJpxTZyLzl21giYqtcJlpSe7KLOfFQTd4zc4sxHtSvmPx1PVWrMONQa3hAPLX7Z6M+1TfuhbzBcekrrTmqK1TJrLAZ/GdOPmd8y7EHf69g8ybyFYesDCo=
+	t=1730276899; cv=none; b=avf/ircZ+ojFvdG+IOvyTpe4PRQGDDh4++5rBsNVa+Qc0/8FaLIDIKRL0ZEGQ+IlQ6jYCibVCz+ZINS05258Cs3KD7x8ZQkVyJi045Cr3do2GaG1iZJWbKxIhgrrNLkExZiadI7VhMvk1ptFzntRB1DWiapbMfhgM6MNCbBASyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730276533; c=relaxed/simple;
-	bh=DWYnLGkiN2PMlXa8wdKXfPzpxErN/Zr77L6vOtX6ac8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=kkVKEo+EIdG6RyY1ysRdeNqOEx/CwAngFy/b5gwqKk31TqqyCbFvqJyZUQWW5K40BmNz8kqe67IHZZuUVFiLjhVMMsnNQo+PJKTBleZuZV7OUdvxzRu1dRYbfPoRVQX1LIgaSWBTB6Gh/UMkL3epDeOEMAMZxGPo5twPr3gMRxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=MvH14qhl; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49TLdvfu030537;
-	Wed, 30 Oct 2024 08:22:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	XzuxKdU4ZRLT2MY1cC4a93fwZsOuoHolMj42z3Aar/0=; b=MvH14qhlDZa2yKE+
-	PzeD8HjvSg4YwLPWfiG6hFgc4H17u7Iqow0KzhPhE+0cI3XkmcFs0xmvb1q+OXh0
-	u9yWgxhzC8twtWCVTOHWEEbQ189ctpvmHng6bFR1/RFymEKIRXUdVTRjYV9h3kB1
-	b71he4xjYL85xMujjcW0IPzue0neSL+RTghufA2US6Y1nIp7ELQDXCKIRbZdctyH
-	dpoxUh/BgmG/QvS1uL5LQm4P/zcPJz1zoD8c6oiiwCIhUGPnN24mtR+xmilvZHn7
-	pIO/HhKJ2bcPtIlCGThXKa2ZGuqM4kqiKuoxDPYkISOyoXkph6gQmhSAMdprG0aU
-	ZlTaiw==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42gsq8k6u0-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 30 Oct 2024 08:22:00 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49U8LxjH024621
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 30 Oct 2024 08:21:59 GMT
-Received: from [10.239.132.41] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 30 Oct
- 2024 01:21:55 -0700
-Message-ID: <197f3520-70a0-4056-b4b4-5325de520ab2@quicinc.com>
-Date: Wed, 30 Oct 2024 16:21:52 +0800
+	s=arc-20240116; t=1730276899; c=relaxed/simple;
+	bh=intKQltl8qe04sX6ih8WJjx4/6q7A5aJSvz7oVoo5PQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=mQEitHKuuwIjkfAg29Ox4xj4/HHNsj51wMJt4cwjDj+3bkek5sOz1Elbpxj/pFcRlWTwVQMgdrgO4OGNqMHBtn7A8FT0Up6GBWA7QDHv7Wshe/gQh1MR8sEkcXQegyLhrk2Pcgt7AnhgucDYrCVreqhNshFHBCcKzQzrjEs8sAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wJOpCx1G; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4315f24a6bbso59679885e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Oct 2024 01:28:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1730276896; x=1730881696; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=UL2HqkuSmHQ7OPeQE/93gQ+LDrEwS9SDaauaieTM4CQ=;
+        b=wJOpCx1Gaf8LTArqtp2fT6X+gmETexc+s9V98CpqALLzROINVQ7PV9/CjxJt6h9rFZ
+         ipiJi4zQ0FsCZv3jfXY+SjUfDzS6g+I/SgFF8jwTBJlmYl5XHBUGiasLTLdOFeMlkm2R
+         HFBRPfbzPOh1eVRnaq+wfJiei4iPe5KPMfFAnb5+/OjQ8j/58rDX5G6k+J+5wLqpPruE
+         bj3qyVa/00LWMvgi3lBA4vpFKMVDNQO0q5+RcrEca+0GmBlacnqewODf7OG6jXHCHHRs
+         spYq1/Ldcqd5fT6U9lQrgdKUdSdLilUplA+1yRVTyrvghVJXm+QT/BXhDVfHVo9PBZfo
+         H6+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730276896; x=1730881696;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=UL2HqkuSmHQ7OPeQE/93gQ+LDrEwS9SDaauaieTM4CQ=;
+        b=bo1H6DKo3V8361RVlr8Htn6v2I5B9sdPtHHn8/DkJlka6r6MNy8MM3psbR6LtWLbo9
+         3M/1Vgela37VDskB+enWw+Zmw8XMNrvsY1jcTjZfuP4GMO3Faocz0+xqzio9yOZoRbfu
+         2URSdg1fTGnD40L3r2ZdEd/Kzs4KwboqQ5P2B/COdon5xHJqfp9VGGKFcCdFtdCYyfzs
+         iyucSIKeAeGjIN4lR7wLXiAeEDAqeXQnr/QsE8Xe3u82C+B5N5YX2ytsm6SvpZORCG+F
+         bx09qDcNEhIzzTypF3Hvizn6gmNjG1EKyMoNRGvvNDdpzkQ8jGOUCdtS18iLpEkkXp3R
+         vmgw==
+X-Forwarded-Encrypted: i=1; AJvYcCXx1k+5r1nVcZg7N5ERXCelbGL5csVgRQF/1/BlGnvz/QAj5qCenzAsJUOVlNMYxUEiyfK4Cwj8WHpH4UuW@vger.kernel.org
+X-Gm-Message-State: AOJu0YzpUlANhUAoJk3uHQFv9/evovKVgtobnfYV8guMXALKCdwu8Qgv
+	K/bjS5RKfOvMCHGoDN6M0jekHXBUQ72cGqhmcE0J+ydWdtVhirmsWXU3P/qmlr0=
+X-Google-Smtp-Source: AGHT+IF2VwBune3eYE6REO5H1xO9vZLSDRXCcz1HESbflFaHLwuvzmPQ13IVdJ+0j1WTo7gHVfIs0g==
+X-Received: by 2002:a05:600c:524c:b0:426:5e91:3920 with SMTP id 5b1f17b1804b1-4319ad24a7fmr142258435e9.29.1730276895897;
+        Wed, 30 Oct 2024 01:28:15 -0700 (PDT)
+Received: from [192.168.0.140] ([82.76.24.202])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-431bd8e8549sm13853315e9.10.2024.10.30.01.28.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 30 Oct 2024 01:28:15 -0700 (PDT)
+Message-ID: <7b57ccc2-7060-4adf-b896-8992ec05125c@linaro.org>
+Date: Wed, 30 Oct 2024 10:28:14 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,73 +76,93 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/4] arm64: dts: qcom: qcs615: add the APPS SMMU node
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>
-CC: <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <robimarko@gmail.com>,
-        <will@kernel.org>, <robin.murphy@arm.com>, <joro@8bytes.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <iommu@lists.linux.dev>
-References: <20241025030732.29743-1-quic_qqzhou@quicinc.com>
- <20241025030732.29743-5-quic_qqzhou@quicinc.com>
- <8a60b729-b312-4afc-835b-a18060ad3f03@oss.qualcomm.com>
- <zsphor7rpbwx4km6uxpepky2h7atbgjn2435puygmpssfc36mc@wkquqxud2yij>
- <8c9804f2-ef4d-412b-97ea-f521dfd35ec2@oss.qualcomm.com>
- <nhthg2rlfatc2pyhsuoulvo5447cxg7buv4aq3r7r5amsmjjoq@pgfyvvegfron>
- <828c465f-684b-4257-86cb-d9c753fc30f1@oss.qualcomm.com>
-From: Qingqing Zhou <quic_qqzhou@quicinc.com>
-In-Reply-To: <828c465f-684b-4257-86cb-d9c753fc30f1@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: l6jd9oubk9CrZXNtnlo1NWgmNnS3jJrp
-X-Proofpoint-ORIG-GUID: l6jd9oubk9CrZXNtnlo1NWgmNnS3jJrp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 bulkscore=0
- adultscore=0 mlxscore=0 priorityscore=1501 mlxlogscore=721 impostorscore=0
- lowpriorityscore=0 malwarescore=0 clxscore=1011 spamscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2410300064
+Subject: Re: [PATCH v2] soc: qcom: Rework BCM_TCS_CMD macro
+To: Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org
+Cc: andersson@kernel.org, konradybcio@kernel.org,
+ linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-pm@vger.kernel.org, djakov@kernel.org, mturquette@baylibre.com,
+ evgreen@chromium.org
+References: <20241028163403.522001-1-eugen.hristev@linaro.org>
+ <bb5d855954d5ff8694a3978a9f87a9d2.sboyd@kernel.org>
+ <6f14d8d7-7b9a-49e3-8aa8-5c99571a7104@linaro.org>
+ <b587012e868f8936463c46915b8588c3.sboyd@kernel.org>
+Content-Language: en-US
+From: Eugen Hristev <eugen.hristev@linaro.org>
+In-Reply-To: <b587012e868f8936463c46915b8588c3.sboyd@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
 
 
-在 10/28/2024 11:46 PM, Konrad Dybcio 写道:
-> On 26.10.2024 8:18 PM, Dmitry Baryshkov wrote:
->> On Fri, Oct 25, 2024 at 06:45:01PM +0200, Konrad Dybcio wrote:
->>> On 25.10.2024 1:06 PM, Dmitry Baryshkov wrote:
->>>> On Fri, Oct 25, 2024 at 10:54:24AM +0200, Konrad Dybcio wrote:
->>>>> On 25.10.2024 5:07 AM, Qingqing Zhou wrote:
->>>>>> Add the APPS SMMU node for QCS615 platform. Add the dma-ranges
->>>>>> to limit DMA address range to 36bit width to align with system
->>>>>> architecture.
->>>>>>
->>>>>> Signed-off-by: Qingqing Zhou <quic_qqzhou@quicinc.com>
->>>>>> ---
->>>>>
->>>>> You probably also want to mark it `dma-coherent` (see e.g.
->>>>> x1e80100.dtsi)
->>>>
->>>> Is it? I don't think SM6150 had dma-coherent SMMU, at least it wasn't
->>>> marked as such.
+On 10/30/24 02:40, Stephen Boyd wrote:
+> Quoting Eugen Hristev (2024-10-29 06:12:12)
+>> On 10/28/24 19:56, Stephen Boyd wrote:
+>>> Quoting Eugen Hristev (2024-10-28 09:34:03)
+>>>> diff --git a/include/soc/qcom/tcs.h b/include/soc/qcom/tcs.h
+>>>> index 3acca067c72b..152947a922c0 100644
+>>>> --- a/include/soc/qcom/tcs.h
+>>>> +++ b/include/soc/qcom/tcs.h
+> [....]
+>>>>    /* Construct a Bus Clock Manager (BCM) specific TCS command */
+>>>>    #define BCM_TCS_CMD(commit, valid, vote_x, vote_y)             \
+>>>> -       (((commit) << BCM_TCS_CMD_COMMIT_SHFT) |                \
+>>>> -       ((valid) << BCM_TCS_CMD_VALID_SHFT) |                   \
+>>>> -       ((cpu_to_le32(vote_x) &                                 \
+>>>> -       BCM_TCS_CMD_VOTE_MASK) << BCM_TCS_CMD_VOTE_X_SHFT) |    \
+>>>> -       ((cpu_to_le32(vote_y) &                                 \
+>>>> -       BCM_TCS_CMD_VOTE_MASK) << BCM_TCS_CMD_VOTE_Y_SHFT))
+>>>> +       (le32_encode_bits(commit, BCM_TCS_CMD_COMMIT_MASK) |    \
+>>>> +       le32_encode_bits(valid, BCM_TCS_CMD_VALID_MASK) |       \
+>>>> +       le32_encode_bits(vote_x,        \
+>>>> +                       BCM_TCS_CMD_VOTE_X_MASK) |              \
+>>>> +       le32_encode_bits(vote_y,        \
+>>>> +                       BCM_TCS_CMD_VOTE_Y_MASK))
 >>>
->>> I don't think I have any documentation on this, so.. one way to find out!
+>>> Why is cpu_to_le32() inside BCM_TCS_CMD at all? Is struct tcs_cmd::data
+>>> supposed to be marked as __le32?
+>>>
+>>> Can the whole u32 be constructed and turned into an __le32 after setting
+>>> all the bit fields instead of using le32_encode_bits() multiple times?
 >>
->> I don't have qcs615 at hand, so a purely theoretical question. But how
->> should it break if we mark it as dma-coherent, while it is not?
+>> I believe no. The fields inside the constructed TCS command should be
+>> little endian. If we construct the whole u32 and then convert it from
+>> cpu endinaness to little endian, this might prove to be incorrect as it
+>> would swap the bytes at the u32 level, while originally, the bytes for
+>> each field that was longer than 1 byte were swapped before being added
+>> to the constructed u32.
+>> So I would say that the fields inside the constructed item are indeed
+>> le32, but the result as a whole is an u32 which would be sent to the
+>> hardware using an u32 container , and no byte swapping should be done
+>> there, as the masks already place the fields at the required offsets.
+>> So the tcs_cmd.data is not really a le32, at least my acception of it.
+>> Does this make sense ?
+>>
 > 
-> The board will hang rather quickly
+> Sort of? But I thought that the RPMh hardware was basically 32-bit
+> little-endian registers. That's why write_tcs_*() APIs in
+> drivers/soc/qcom/rpmh-rsc.c use writel() and readl(), right? The
+> cpu_to_le32() code that's there today is doing nothing, because the CPU
+> is little-endian 99% of the time. It's likely doing the wrong thing on
+> big-endian machines. Looking at commit 6311b6521bcc ("drivers: qcom: Add
+> BCM vote macro to header") it seems to have picked the macro version
+> from interconnect vs. clk subsystem. And commit b5d2f741077a
+> ("interconnect: qcom: Add sdm845 interconnect provider driver") used
+> cpu_to_le32() but I can't figure out why.
 > 
-> Konrad
-Thanks for review comments from Konrad and Dmitry!
-QCS615 SMMU hardware supports IO-coherency after confirming with Qualcomm hardware team.
-We also try to add "dma-coherent" for APPS SMMU node and test some SMMU clients, such as UFS and Ethernet, these SMMU clients work well on QCS615.
-Do you advise and agree to add "dma-coherent" for SMMU node?
+> If the rpmh-rsc code didn't use writel() or readl() I'd believe that the
+> data member is simply a u32 container. But those writel() and readl()
+> functions are doing a byte swap, which seems to imply that the data
+> member is a native CPU endian u32 that needs to be converted to
+> little-endian. Sounds like BCM_TCS_CMD() should just pack things into a
+> u32 and we can simply remove the cpu_to_l32() stuff in the macro?
+
+This review [1] from Evan Green on the original patch submission 
+requested the use of cpu_to_le32
+
+So that's how it ended up there.
+
+
+[1] 
+https://lore.kernel.org/linux-kernel//20180806225252.GQ30024@minitux/T/#mab6b799b3f9b51725c804a65f3580ef8894205f2
 
 
