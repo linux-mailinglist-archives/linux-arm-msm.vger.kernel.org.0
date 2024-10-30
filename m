@@ -1,187 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-36436-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36438-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 23E889B62F7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 13:22:09 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7C98F9B6319
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 13:31:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8E98FB21BD0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 12:22:06 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2976F1F21AD2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 12:31:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC75D1EF936;
-	Wed, 30 Oct 2024 12:20:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D32421E8849;
+	Wed, 30 Oct 2024 12:31:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LkGONrG6"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wJOAeuW+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE2861EF0AE;
-	Wed, 30 Oct 2024 12:20:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A5BE1E9065
+	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Oct 2024 12:31:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730290838; cv=none; b=ucG01XGGsNIyDHRp1HeM2gYRxzBgiiGsmp9GmfYWFV6qLk56Q9J0qnyRqWTkupx86EeXkgHrQJL2kLUUf/ApxKeoR9raucucLe9PkTxSe8NiYDlPaKj1qh7sRuroo1LNiJc3iLmnufkUaNOB4i1EtdUL5lsl3eGSrYHrK0GWHu0=
+	t=1730291494; cv=none; b=LJ5Pii7Fnv1PSlP35T90dkOG/PiiM1JAHR5/6HHWQH1St3coI0nlk9rDBrk73EQSzTDb8Rkxn6UxjGLNRcis/Jld9j4zI5RyLT5NKmCmplZ5nYrCi7Sdd2hPUaQLy4ooND5IRDnOabiYDItbERK2Q9N8OmmrMeXc5DL9Xb1xkfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730290838; c=relaxed/simple;
-	bh=esnZ/WUMhCBQXUMRbAGWMLNa7kL8sal0QQHDsx1Izx4=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EpvQ7ZahNNtkQVMiWeOk6Nn0/nmPAjQpcb5fjkjTWCbrYBFHBAsAVAcso8U4NA0D97dcUP9jdSNwdcNEpbTMSYLVvtoNWRVzBpLUaGBOFSQMmNJ7NXiPL/FQBYcIT8nUpssF99wdjgvcljb7jsAkr/FaQDp3PKkqgW6X6Uafujc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LkGONrG6; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49UCH968019847;
-	Wed, 30 Oct 2024 12:20:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	IuB0eUQbkbzpEAymP4QNA7JJ5H04aMJuPqmc51iNaR0=; b=LkGONrG66CIkMlXt
-	lssRhWARJoZ9KYAXYVCqijIDTf5r1mg4hUn6Al8dkMMzkPhm/h3RyOnYmFrjn4ok
-	wzNR7+vePfnZyoUUHFSVo9rh+vcINbB98hVgT77oYbgVOTzG83RRh9UgJ1VS/XPI
-	MigcoWyG8g4gNG+93MqIQAq1Lx3Mji615zdBQKM0MPwzVDu6DdYiS3lOUG1GaBRA
-	9vNJqdbjzVf6bUh2Las/Pn6ZmAZeBZTSRISY2UWnHEwXMeh2xAhdIU8kAPt9aAOM
-	GMpcsDQ/DuuPPmX4jQuLc5eFTEHNJSZgPdLe5tG7kUqvMut+wFfNljSEmo4V6ICx
-	98vytw==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42kmp0g098-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 30 Oct 2024 12:20:27 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49UCKQ2w015344
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 30 Oct 2024 12:20:26 GMT
-Received: from hu-mdalam-blr.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 30 Oct 2024 05:20:21 -0700
-From: Md Sadre Alam <quic_mdalam@quicinc.com>
-To: <broonie@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>, <miquel.raynal@bootlin.com>,
-        <richard@nod.at>, <vigneshr@ti.com>,
-        <manivannan.sadhasivam@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-spi@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-mtd@lists.infradead.org>
-CC: <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>,
-        <quic_mdalam@quicinc.com>
-Subject: [PATCH v13 8/8] arm64: dts: qcom: ipq9574: Remove eMMC node
-Date: Wed, 30 Oct 2024 17:49:19 +0530
-Message-ID: <20241030121919.865716-9-quic_mdalam@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241030121919.865716-1-quic_mdalam@quicinc.com>
-References: <20241030121919.865716-1-quic_mdalam@quicinc.com>
+	s=arc-20240116; t=1730291494; c=relaxed/simple;
+	bh=c5UhKQdavJdtLfcrTrc0Pq+QbHSzwUAht7VSpXUFBO4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=j452lEj1Uo82IqY83uca8jpGhU4hHjZShNBXsc9h2FMjvJwH8YtUrZefd9KxyFBapDQcBw13KvJVYZPPzEc5tAvkqm2BMQc63N5ohi7vvybe1D1Cb1OCFqt5o1ueNGXlLSOzjbu8jxo8TxmlwCIW4/a5YPxsML/KgFcyE8p1bkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wJOAeuW+; arc=none smtp.client-ip=209.85.167.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-539f1292a9bso7830329e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Oct 2024 05:31:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1730291489; x=1730896289; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=g2HB1B4iN3oWUrHv8ly8KNSVGjXRFIReK/a7cFEEc1o=;
+        b=wJOAeuW+dtoZXFHLxSEn9k/sKyJL505R0VNBz7W1P7TIjiAfgu5JeL4Fyh6Czefzfy
+         JgbsT9pqt4B9lJ42kLQzR8gu7+3nDh9kUt44+lDXS5LZ3B9Pu3X/w2xuQP+IsPtPydfq
+         j9jbir8eoCWLpWlbX3YcTJbICMdq2ZognTZrWILEOz7fxUx09q49fy/CdYqdE6pX00cs
+         CwTfjIl8dFDYU6e7IdMOKm04CDOzhYqvrlnXifmDKshWF/CfH9kOKKrbzBqjL2RU89T7
+         4I5untgoEb0fMRYcXExhHKuEpIVnT3QE1gh3LqDEaQuWlhV3+0FvIUddYUGQUyQllSVw
+         iPJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730291489; x=1730896289;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=g2HB1B4iN3oWUrHv8ly8KNSVGjXRFIReK/a7cFEEc1o=;
+        b=cN5GmzI6OwHP3I/WK2ECLnIcbMIkSYKYf4BwlmEIur/D02ZLAhSnFgctXRWSA3S2RO
+         Vs4F1arJV2z+XVev/DvUtwl98MBlEpjgjtDkT47HjzF+CBga6WUfuiNDtkk0/ACsDv3V
+         bAv1gkNnceGaFr7l9vzAckUOT3cLgX+EeqDQssMxFYcMkqr6Dmm8xdDAccJsKaRtpZnF
+         96ex9w+jrLVU9i0fZKSnsD3eTEWsFYDqts7dqsXzaY2jLQdviiIEz22qVNa5mudrs6cm
+         ipdhIhCtfbNurEAvpkNJ9eE85I7lfAlA/lK4SQOeqa8+fdDwOpBBnGYP5AeIUIHV7He0
+         KTsQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXwsJrZxRXt3sx+E+e4qJDsZ86weQoNp1TkDTkXOwpO8BWGkuRKmymHs7niM4kKpzc9NNwYmhoZohuCUS9L@vger.kernel.org
+X-Gm-Message-State: AOJu0YxJwb8O9Bq2XbE5HqzInQBRDo2x9+C5nv/uaEozknxJ2ihtGxt7
+	4bq3YoiG2RQfzgBQ9Sl6IINc5HY47cLqmCxLaPXzeyTAVUJwKsh8ihulPETCK4k=
+X-Google-Smtp-Source: AGHT+IHLsrclSbDZwTl8mE7Mv4WoPP51WcILZWPPR/8gPywvqqqPPStO6/6vIkVUcLPPU1u+wGiErQ==
+X-Received: by 2002:a05:6512:4022:b0:539:e333:1822 with SMTP id 2adb3069b0e04-53b348b7dc7mr7783566e87.4.1730291489365;
+        Wed, 30 Oct 2024 05:31:29 -0700 (PDT)
+Received: from [192.168.0.40] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-431bd947d3csm20053725e9.11.2024.10.30.05.31.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 30 Oct 2024 05:31:28 -0700 (PDT)
+Message-ID: <7446e285-f311-42bd-bf0c-a6fe54a862e0@linaro.org>
+Date: Wed, 30 Oct 2024 12:31:28 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: R0ZnfBVhFRSpJuKJKFpd_1eh7D_schIY
-X-Proofpoint-ORIG-GUID: R0ZnfBVhFRSpJuKJKFpd_1eh7D_schIY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- bulkscore=0 malwarescore=0 impostorscore=0 mlxscore=0 suspectscore=0
- adultscore=0 clxscore=1015 phishscore=0 spamscore=0 mlxlogscore=986
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410300096
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] usb: typec: qcom-pmic: init value of hdr_len/txbuf_len
+ earlier
+To: Rex Nie <rex.nie@jaguarmicro.com>, heikki.krogerus@linux.intel.com
+Cc: gregkh@linuxfoundation.org, linux@roeck-us.net,
+ caleb.connolly@linaro.org, linux-arm-msm@vger.kernel.org,
+ linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+ angus.chen@jaguarmicro.com, stable@vger.kernel.org
+References: <20241030022753.2045-1-rex.nie@jaguarmicro.com>
+ <20241030103256.2087-1-rex.nie@jaguarmicro.com>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20241030103256.2087-1-rex.nie@jaguarmicro.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Remove eMMC node for rdp433, since rdp433
-default boot mode is norplusnand
-
-Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
----
-
-Change in [v13]
-
-* No change
-
-Change in [v12]
-
-* Updated commit header and commit message
-
-* Removed sdhci node from rdp433.dts file
- 
-Change in [v11]
-
-* No change
-
-Change in [v10]
-
-* No change
-
-Change in [v9]
-
-* No change
-
-Change in [v8]
-
-* No change
-
-Change in [v7]
-
-* No Change
-
-Change in [v6]
-
-* Updated commit message
-
-Change in [v5]
-
-* No Change
-
-Change in [v4]
-
-* No change
-
-Change in [v3]
-
-* Removed co-developed by 
-
-Change in [v2]
-
-* Posted as initial eMMC disable patch
-
-Change in [v1]
-
-* This patch was not included in v1
-
- arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts | 12 ------------
- 1 file changed, 12 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
-index 1bb8d96c9a82..7b5e417f9b8d 100644
---- a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
-+++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
-@@ -15,18 +15,6 @@ / {
- 	compatible = "qcom,ipq9574-ap-al02-c7", "qcom,ipq9574";
- };
- 
--&sdhc_1 {
--	pinctrl-0 = <&sdc_default_state>;
--	pinctrl-names = "default";
--	mmc-ddr-1_8v;
--	mmc-hs200-1_8v;
--	mmc-hs400-1_8v;
--	mmc-hs400-enhanced-strobe;
--	max-frequency = <384000000>;
--	bus-width = <8>;
--	status = "okay";
--};
--
- &tlmm {
- 	sdc_default_state: sdc-default-state {
- 		clk-pins {
--- 
-2.34.1
+On 30/10/2024 10:32, Rex Nie wrote:
+> If the read of USB_PDPHY_RX_ACKNOWLEDGE_REG failed, then hdr_len and
+> txbuf_len are uninitialized. This commit stops to print uninitialized
+> value and misleading/false data.
+> 
+> ---
+> V2 -> V3:
+> - add changelog, add Fixes tag, add Cc stable ml. Thanks heikki
+> - Link to v2: https://lore.kernel.org/all/20241030022753.2045-1-rex.nie@jaguarmicro.com/
+> V1 -> V2:
+> - keep printout when data didn't transmit, thanks Bjorn, bod, greg k-h
+> - Links: https://lore.kernel.org/all/b177e736-e640-47ed-9f1e-ee65971dfc9c@linaro.org/
+> 
+> Cc: stable@vger.kernel.org
+> Fixes: a4422ff22142 (" usb: typec: qcom: Add Qualcomm PMIC Type-C driver")
+> Signed-off-by: Rex Nie <rex.nie@jaguarmicro.com>
+> ---
+>   drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
+> index 5b7f52b74a40..726423684bae 100644
+> --- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
+> +++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
+> @@ -227,6 +227,10 @@ qcom_pmic_typec_pdphy_pd_transmit_payload(struct pmic_typec_pdphy *pmic_typec_pd
+>   
+>   	spin_lock_irqsave(&pmic_typec_pdphy->lock, flags);
+>   
+> +	hdr_len = sizeof(msg->header);
+> +	txbuf_len = pd_header_cnt_le(msg->header) * 4;
+> +	txsize_len = hdr_len + txbuf_len - 1;
+> +
+>   	ret = regmap_read(pmic_typec_pdphy->regmap,
+>   			  pmic_typec_pdphy->base + USB_PDPHY_RX_ACKNOWLEDGE_REG,
+>   			  &val);
+> @@ -244,10 +248,6 @@ qcom_pmic_typec_pdphy_pd_transmit_payload(struct pmic_typec_pdphy *pmic_typec_pd
+>   	if (ret)
+>   		goto done;
+>   
+> -	hdr_len = sizeof(msg->header);
+> -	txbuf_len = pd_header_cnt_le(msg->header) * 4;
+> -	txsize_len = hdr_len + txbuf_len - 1;
+> -
+>   	/* Write message header sizeof(u16) to USB_PDPHY_TX_BUFFER_HDR_REG */
+>   	ret = regmap_bulk_write(pmic_typec_pdphy->regmap,
+>   				pmic_typec_pdphy->base + USB_PDPHY_TX_BUFFER_HDR_REG,
+Acked-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
 
