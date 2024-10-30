@@ -1,121 +1,95 @@
-Return-Path: <linux-arm-msm+bounces-36376-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36377-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 345BE9B5D0F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 08:39:36 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B28DF9B5D15
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 08:41:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ED6CB2839CD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 07:39:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E40661C20D54
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 07:41:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 66D001DFD81;
-	Wed, 30 Oct 2024 07:39:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B3C011DFDAB;
+	Wed, 30 Oct 2024 07:41:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b="Ovx/kF/E"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BFQHKEWn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.135])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 244CD85931;
-	Wed, 30 Oct 2024 07:39:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.126.135
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AC3954BD4;
+	Wed, 30 Oct 2024 07:41:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730273971; cv=none; b=sMTrXGpMJoYgnAVLoZ5+CbOISho10IjYD/gqp7Y+gPEXs4Bd617FbN6P/VP6gQo1GEoM2kiqN89DOUxa3Fy7c76nFK8hkpVowzG4Q+tSkO8woyVP+KlEQEVg6vfiexNRT1Vlot4lQDgk2ELEWIrgnWtPLECGcW9uScZQq/JM67M=
+	t=1730274101; cv=none; b=RnWnjg/iZD+I8rPZiHcm6HiHYaB0CdqS3y7RAmsAHKOVK9PkX0F2lUZ/yg5vRK0OcUDC5ltznIjUSv9TkSC3RZmqsy1EbJzFgwOd4BGVBsNQzommHoiJSvtidVlYfnjmoR3tjGF7uWdtnoSJTCwd9ryMgjxAjzQS2TDL7t3Wzl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730273971; c=relaxed/simple;
-	bh=nEc8gOaRix6UvtSNUq9rl1lK52vlDUP26tV9LTP2Eb4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=h9qCXS2JlRVaA+VZctbhwq/Q4wYpBBO6LduoDxLCRthZiitz9NRZIhovpHderAMIEXFWbHYmOnX9H7B0dLnLEb9/ijmSrmF94fzC3V0622OwfL/8Y+U2GZjie0u/8y4oplVVWNidfKRyeA/rAuysw/6uDrt2I8+qjSXpQA32WVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz; spf=pass smtp.mailfrom=oldschoolsolutions.biz; dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b=Ovx/kF/E; arc=none smtp.client-ip=212.227.126.135
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oldschoolsolutions.biz
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=oldschoolsolutions.biz; s=s1-ionos; t=1730273948; x=1730878748;
-	i=jens.glathe@oldschoolsolutions.biz;
-	bh=nEc8gOaRix6UvtSNUq9rl1lK52vlDUP26tV9LTP2Eb4=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=Ovx/kF/Eaut9Xd3+ViszWFHGCmBQ1yQzZf2O+cqbQHveE2D8UGJHQUI6GZShXAxu
-	 J/bg/ThEjSFs5UaeCsgX8gx1KikFk0RewCPh1ZQsemDZ/tjDJrleZx58iI3uQBEAG
-	 d2J4c11uvukwA0/pDhA2jeh4oKiA6yAEnYQZT8rpJSRb7FcpQP5l5ZwnIs++ZZ7qJ
-	 rDR5MbJ1Yu111MgUJmFKqvakGz/a9c0PXORIaE1SYhvRzqNaCL3h9Tx3EJbcU9B7l
-	 guwGy4PNeuqiYo27YNj/aez4wiXNOHi430GDyhm4SCTA8NLe4XbxKlq/U/dNrzxx7
-	 91B5B+09G9++d7SuHw==
-X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
-Received: from [192.168.0.174] ([91.64.229.215]) by mrelayeu.kundenserver.de
- (mreue009 [212.227.15.167]) with ESMTPSA (Nemesis) id
- 1MKKdD-1tRAXs3Ho7-00VMfH; Wed, 30 Oct 2024 08:39:07 +0100
-Message-ID: <482522d0-49f4-4c13-9f2e-8e74a21f1fa3@oldschoolsolutions.biz>
-Date: Wed, 30 Oct 2024 08:39:06 +0100
+	s=arc-20240116; t=1730274101; c=relaxed/simple;
+	bh=FsOVZqSRJU7cZMV54PKXbTGF5CocTT15s1Oyg7KJL6s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bdvIeuSGJleFpRxdiWb7TwbYwuyDjCRr9DeqBqsyUiMMBNa8FpT6TOdxWpR6eZl7sdedxCoq9QA7MB4Flf58sDPorByZa2JeI+zRKcFmGImkpg6T2kL03JATuaB1ehisBgAmnPcdZQ9rihtvjXpp1bXwzqY9ErLIdWnahiZsh18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BFQHKEWn; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6DB0C4CEE4;
+	Wed, 30 Oct 2024 07:41:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1730274100;
+	bh=FsOVZqSRJU7cZMV54PKXbTGF5CocTT15s1Oyg7KJL6s=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=BFQHKEWnVjk42ISHNCC4SuQvjKoQJ52XE4I39Xi6QUgp2APgmzTAwQbZ895OHemqq
+	 OalGvu4zbNRq54ND0010sOsTloLBSXpH6cMqm5LqjylXXGZuInbgYhWLNjaCzoIW2F
+	 XL7Aa4Bym7PDTYzu3MiOd0/Y/hgze35cIKyWDp+Wv7Eu2RCUcRqX5aYVGTt9cZ2oLB
+	 Qkipq4Bm/I/QCSOdbwCo72bIlhOGjl52YoJqGCam3+jf3olBtrKMWSHPvGFpwMkl7d
+	 S1f35A2qAuFf+NeCno1I0ZhH3eET9rJ8NuHXn90Usqo+Me7OjPO0ZyINoouvtRsPe7
+	 NQMr0nAMZGW4w==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1t63L6-000000007fm-1iFO;
+	Wed, 30 Oct 2024 08:42:00 +0100
+Date: Wed, 30 Oct 2024 08:42:00 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Qiang Yu <quic_qianyu@quicinc.com>, vkoul@kernel.org, kishon@kernel.org,
+	robh@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
+	krzk+dt@kernel.org, conor+dt@kernel.org, mturquette@baylibre.com,
+	sboyd@kernel.org, abel.vesa@linaro.org, quic_msarkar@quicinc.com,
+	quic_devipriy@quicinc.com, dmitry.baryshkov@linaro.org,
+	kw@linux.com, lpieralisi@kernel.org, neil.armstrong@linaro.org,
+	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-clk@vger.kernel.org,
+	johan+linaro@kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH v7 6/7] PCI: qcom: Disable ASPM L0s and remove BDF2SID
+ mapping config for X1E80100 SoC
+Message-ID: <ZyHjSCWGYLDu27ys@hovoldconsulting.com>
+References: <20241017030412.265000-1-quic_qianyu@quicinc.com>
+ <20241017030412.265000-7-quic_qianyu@quicinc.com>
+ <ZxJrUQDGMDw3wI3Q@hovoldconsulting.com>
+ <91395c5e-22a0-4117-a4b5-4985284289ab@quicinc.com>
+ <250bce05-a095-4eb3-a445-70bbf4366526@quicinc.com>
+ <ZyHc-TkRtKxLU5-p@hovoldconsulting.com>
+ <20241030071851.sdm3fu6ecaddoiit@thinkpad>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: [PATCH v5 1/3] dt-bindings: arm: qcom: Add Microsoft Windows Dev
- Kit 2023
-To: Krzysztof Kozlowski <krzk@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Merck Hung <merckhung@gmail.com>
-References: <20241030-jg-blackrock-for-upstream-v5-0-830c938437ad@oldschoolsolutions.biz>
- <20241030-jg-blackrock-for-upstream-v5-1-830c938437ad@oldschoolsolutions.biz>
- <ca46a692-3ec4-4b83-abd7-3fb82817940c@kernel.org>
-Content-Language: en-US
-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-In-Reply-To: <ca46a692-3ec4-4b83-abd7-3fb82817940c@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:koOHil8b+q13ExNc3lAAgPM4oeJSkwUSz0WNRMj0ObxVCwFp+13
- UBmv8fRV192f+KsCUst7lQncUamRrPwSsH4QxC4JZ0KrjBoFrlLRhEbsyUOEMIJcN7yfXcc
- 2amJMtMxJ+Qcyw1FmmuQRBmYyBdK4fuJXaPLC96su3bD9KRLlw6BQ1Zw6+kULaHTvZLnIFt
- zwy/fd2OESNEG41FcyK5g==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:vA+c6s76AlY=;r9vRNa/sivZb56WkrHqTOCFR1aU
- iRuUByT9okjzWz9lICb9n8mOhkwgDJwpF99GpOJg4BPrjON+x9AAeKWe4wjZv4K3nSFuqjG7j
- zf9fYrVu+O7WSxSTOeFY0bS2h183lBq/ZrsRr/lbXIvscY2Lzhq5a5htb7WN8mMvItFqy8aeu
- K8zcFmUHWZUBXjEKBQRCkjIaIZSSCYisTLvcdqW952J9qJmxcLeMtlk4eCKcXnFX6yZRADa8K
- BIuMoOP1501Uhn2hnXsdGoWvzf0tzJ96Syw/wAkPHITkSepLw2N1RqhxwwM+NJiSmzAOjuIiB
- CzYIKqxN5RW9ELfDY4WddIXIZlrEXEtKrtbXyHPtEXh8z+jsBf959/Mt/I6Yq34wIlgpdiu85
- +ketsWgJtwI9JJ8/r7DzcJp6jYB/ymrHIETRffuuG34agj6Xc04DrZIeaW77VQ5eSXMWAzhvb
- xq5dfJPsvPgfWRYoeQR1WQeEue9ArJ4osKwYY31LwbeY0zgtvAAlc+4KyWddXAfzkVNHmQSpo
- ODYyjstJz1W+gWNOgJMWUss739FFl1L7Mninu0WrGFha2jEzAyCKWLWo1NPcV0dUyeAlCoKJL
- 265FwInFJjKFL9/jweW5P1FeyYYR/7sftaFEdDApzWnG08vkW3h/Yc6qFSxODTjtHPivVSJho
- 7rch1MIAYSJdotWYZA1BPNV+vHRD8w92wDl61mwOniHPnebSavxnkg1fEvKKhD3h10YEB6dX0
- UCWiXNoYOEc/yodAQFrK6VjPIoiMiWMbg==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241030071851.sdm3fu6ecaddoiit@thinkpad>
 
-On 30.10.24 08:25, Krzysztof Kozlowski wrote:
+On Wed, Oct 30, 2024 at 12:48:51PM +0530, Manivannan Sadhasivam wrote:
+> On Wed, Oct 30, 2024 at 08:15:05AM +0100, Johan Hovold wrote:
 
-> On 30/10/2024 08:09, Jens Glathe via B4 Relay wrote:
->> From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
->>
->> Add compatible values for the Microsoft Windows Dev Kit (WDK2023)
->> with its codename "blackrock". The Dev kit is a small desktop box
->> based on the mainboard of the Surface pro 9 5G, intended for
->> developers to test/build arm64-based Windows software.
->> Link: https://learn.microsoft.com/en-us/windows/arm/dev-kit/
->>
->> Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-> You got one reply, then another with bigger instruction, yet you ignored
-> both of them.
->
-> Best regards,
-> Krzysztof
->
-Sorry, misunderstanding. Will be there in v6.
+> > Also, are there any Qualcomm platforms that actually support L0s?
+> > Perhaps we should just disable it everywhere?
+> 
+> Most of the mobile chipsets from Qcom support L0s. It is not supported only on
+> the compute ones. So we cannot disable it everywhere.
+> 
+> Again, it is not the hw issue but the PHY init sequence not tuned support L0s.
 
-with best regards
+Right, this should be mentioned in the commit message.
 
-Jens
-
-
+Johan
 
