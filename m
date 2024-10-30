@@ -1,122 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-36498-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36499-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1BBAE9B6E13
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 21:49:48 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E718F9B6E5F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 22:07:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C79EF1F2464F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 20:49:47 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AB9962820BA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 21:07:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F001215018;
-	Wed, 30 Oct 2024 20:48:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B06B214406;
+	Wed, 30 Oct 2024 21:07:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="e2OzAGta"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dhaxK59A"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F1501EC016;
-	Wed, 30 Oct 2024 20:48:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEF4120E31C;
+	Wed, 30 Oct 2024 21:07:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730321323; cv=none; b=MPZu1YCWOdEaVOfkYDbfkiEC3KApyoSWMY+8au5aDgF1xYKCVdnJBWrIVshcfb0Psh/uDNPbR7JHdrUpYV/Xqa63nhboyCJL/G1BRSOQnB4/xunv8EO1JfJYInbhEYfTD+vb2rF1HmeLQ8ZWe3D21p9w7UZj6zMOagWW7t1Cb9Q=
+	t=1730322427; cv=none; b=TEfUfxdFlFa/114PySXllj89WIW9m0/KlnGyqmSdleiO7zle9wRjMH3McTvysgT+vuUwvLyoObZPxUaQOz+JlfMs5RgG9bMuDHh2ZW3Ahiv+OX0QGvAXMH8/NwqGStzpFQPBeEHglBTcPrIsggHAMkzM6Kq9sAgUG081+gbPflg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730321323; c=relaxed/simple;
-	bh=dQZjc7y8gqIlBQhCFx4XdLHsvRVBdaQFmbtnY4ikP9k=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
-	 In-Reply-To:Content-Type; b=eDrGb94qCGNfy7ZZ3aUvtZIvS6LtLAM11wFNsuMtSq0n6WcdmWIrApZvNXMHre0ycU7X0qRGfVLy/qc+yuyw2F7DOmONSwariwomH7rmFU5E/YiwEMYXCt+MZAmMaUzIw42QdVDb/XMcg/9fBS0zkJ4q8DUvhgh9kMh5mgNrCV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=e2OzAGta; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49UJDuh5007329;
-	Wed, 30 Oct 2024 20:48:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	BdPiftZCGikrsqw0/qKY5H5erpVvYTx3MSTxwYAodRs=; b=e2OzAGtaMD9+PYr9
-	9ze+VoTOIdq82fgm4ygcs0EMeiYxOUwH/qHfV3PP3moPM1xUUA/EoKlqg31zJbW/
-	YR9goLkVeiqSwgHuCUjUNVZazM7qeISmc78ZAvLN+s7WMJEv/yRFA3/0WlO2xHYd
-	IGjK0ArzV3H8FImmViyaTE5n1Cnjj5WLYVpbrLPCvnHfhzHzfOMaBcYRUYBpnxEY
-	4v0UWHlg5E3GqiHolj2QLr3YP8HwSXV4bqmLVSQ+jvBPJssiLWQEhpEowHsHnogm
-	YxcMOIYFxoY46v5Ob+2Qg7C62GfrAqcwaRVpFvjm31p1TsfceksOjSU5DkF32+Pd
-	SqDg2Q==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42khqbsxb3-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 30 Oct 2024 20:48:33 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49UKmWEV032026
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 30 Oct 2024 20:48:32 GMT
-Received: from [10.48.242.156] (10.49.16.6) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 30 Oct
- 2024 13:48:31 -0700
-Message-ID: <d3f1b608-8549-4846-866e-81f785ee5a59@quicinc.com>
-Date: Wed, 30 Oct 2024 13:48:30 -0700
+	s=arc-20240116; t=1730322427; c=relaxed/simple;
+	bh=eSQq1qchd0T6J0SF3pXHyDhEE1tGbRiS7s/DtBWP/wY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=kvCOOUwHjwsKgIKrDqD3UQcfoMEpd5M+gg0Wx4pW/wY2/6HHZE8s7KcXDb19jIHoUdvH1hMGa7uE1pYzY6z7cVBxaFdeQUUb4zkNC0KT5MqvpTu4bLa65BQRS5CdV/xnLBtQWJO4CqOzNf+O/Z3OnnD7YGDysmJC8PN4hHlYXRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dhaxK59A; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0FD7C4CED4;
+	Wed, 30 Oct 2024 21:07:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1730322426;
+	bh=eSQq1qchd0T6J0SF3pXHyDhEE1tGbRiS7s/DtBWP/wY=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=dhaxK59AhxUWSGE0qVqR48afMXgNELz0vVSpjGR4GGVZehhyR5hk715A+VP3KTjp7
+	 3o6AVCn1Qzv9JVgasdAkgqHmapy4Jy6S7jaZgh6BP9YRV6wPbQfFEhQMH56eRdW3hg
+	 Sn7UKbr0AT+r4iXufB5GzkatzRjPt1QcIX3prWrffX24i24m7ZM272aTFKoXDlEzIW
+	 CxMCscPM7W3tLVKcevPinFv5EBUDPSTbB9ebX0cZQfXYChhtMtMMTEno1xG3qxWT0Q
+	 jAkWBRSk15ZUpOy+iknj13JUwiczhKCCZ7FvI6pnMrrlNdT+WaSjjd5h/tvzh/8FoY
+	 S2v3Wi/YNUusQ==
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-539e3f35268so348240e87.3;
+        Wed, 30 Oct 2024 14:07:06 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCUOS3LM9i+cPlxxC0/m94Itbg/emD60TDGVVlOYPmxMU0j3q/7NnyAtjRV36QNUFUFeoxonDGGCmTUO@vger.kernel.org, AJvYcCUeBRsz0diR/s0i4O1Z56QKpFr/q29UzgAa+rqPAyS/bclMWFT4jJEB2ZLhsk9UgawDIyilgPxptnBZ@vger.kernel.org, AJvYcCUh5Go6UYxuW1MgIIAB870n1WZ1fU4Y1Z0bcMZdvfZn+CUaQbdF2X6oK+zUP0txRYaJ9wY/HtafUR5PC4M=@vger.kernel.org, AJvYcCUklqXzPjhTrifcYwoX4TVqyrjVHew+aO8UO+OjYQwKsnMtL9cVPSy9lGr6ShZjfSdwtMaHE5A5msFT9+brmw==@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx/u1msdA/hwHfYBlWPYcCkfRIFjwu7EgwIYHKtNU1OwGALwIli
+	zsVPAmp1kfqgzTryb1/xdDZdfF6ud5X4jJvUCny/3DnTSHq1asbiKLokyRSwFnYLqNKxe83JFEt
+	CS08PevjqwN5pqflYt+wWL/sAHw==
+X-Google-Smtp-Source: AGHT+IElbE1waZq4jbLbcYT0FxbyU1JsFHf8saya3+ecSWebGEuEuDKE6Vo1Pyz/h0NPpt6XIuuCxB7ZorOOyqFcGRs=
+X-Received: by 2002:a05:6512:401a:b0:52b:de5b:1b30 with SMTP id
+ 2adb3069b0e04-53b3491cb17mr7922635e87.44.1730322424999; Wed, 30 Oct 2024
+ 14:07:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 1/5] dt-bindings: net: wireless: ath12k: describe
- WSI properties for QCN9274
-From: Jeff Johnson <quic_jjohnson@quicinc.com>
-To: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>, <ath12k@lists.infradead.org>
-CC: <linux-wireless@vger.kernel.org>, Kalle Valo <kvalo@kernel.org>,
-        "Rob
- Herring" <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        "Conor
- Dooley" <conor+dt@kernel.org>,
-        Jeff Johnson <jjohnson@kernel.org>,
-        "Bjorn
- Andersson" <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-References: <20241029173050.2188150-1-quic_rajkbhag@quicinc.com>
- <20241029173050.2188150-2-quic_rajkbhag@quicinc.com>
- <4d273cac-8955-4850-bd8a-0bad318c1e4f@quicinc.com>
-Content-Language: en-US
-In-Reply-To: <4d273cac-8955-4850-bd8a-0bad318c1e4f@quicinc.com>
+References: <20241011023724.614584-7-mailingradian@gmail.com>
+ <20241011023724.614584-9-mailingradian@gmail.com> <785c82d5-549d-454b-86bf-a00a39e6f521@linaro.org>
+ <a230de8f-a11d-41c1-9bc6-7e06e850b51d@linaro.org> <20241011144129.GA2295617-robh@kernel.org>
+ <ca89bbae-193b-4636-b1a6-ff0c9cecae58@linaro.org>
+In-Reply-To: <ca89bbae-193b-4636-b1a6-ff0c9cecae58@linaro.org>
+From: Rob Herring <robh@kernel.org>
+Date: Wed, 30 Oct 2024 16:06:51 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqKwaT4q-VHqfLXAabdGtKvRtnh7SFiELpyXDGVRRpOoYQ@mail.gmail.com>
+Message-ID: <CAL_JsqKwaT4q-VHqfLXAabdGtKvRtnh7SFiELpyXDGVRRpOoYQ@mail.gmail.com>
+Subject: Re: [PATCH v6 2/5] dt-bindings: media: camss: Add qcom,sdm670-camss
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, Richard Acayan <mailingradian@gmail.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
+	Stephen Boyd <sboyd@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Robert Foss <rfoss@kernel.org>, 
+	Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-media@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: mRYVMkxKpQp7PA2ctfUAP0fhLQ3TBN2d
-X-Proofpoint-ORIG-GUID: mRYVMkxKpQp7PA2ctfUAP0fhLQ3TBN2d
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxlogscore=848
- lowpriorityscore=0 bulkscore=0 adultscore=0 mlxscore=0 suspectscore=0
- malwarescore=0 spamscore=0 impostorscore=0 clxscore=1015
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410300163
+Content-Transfer-Encoding: quoted-printable
 
-On 10/30/2024 12:04 PM, Jeff Johnson wrote:
-> in the description above you have two different diagrams:
-> - one that shows 3 pcie* devices in a single group with apparently one port
-> per device
-> - one that shows 4 pcie* devices split into two groups of two, again with
-> apparently one port per device
-> 
-> but in the representation that follows you describe three pcie* devices, each
-> with two distinct ports, all 6 of which are part of group 0.
-> 
-> can we have diagrams that match the actual bindings. does the real product
-> actually have 6 ports in one group?
+On Wed, Oct 30, 2024 at 9:20=E2=80=AFAM Vladimir Zapolskiy
+<vladimir.zapolskiy@linaro.org> wrote:
+>
+> Hi Rob.
+>
+> On 10/11/24 17:41, Rob Herring wrote:
+> > On Fri, Oct 11, 2024 at 09:31:06AM +0100, Bryan O'Donoghue wrote:
+> >> On 11/10/2024 08:14, Vladimir Zapolskiy wrote:
+> >>>
+> >>> Two most recently added CAMSS IP descriptions (qcom,sm8250-camss.yaml=
+ and
+> >>> qcom,sc8280xp-camss.yaml) do implement sorting by reg values, I belie=
+ve
+> >>> from now on
+> >>> it should be assumed that all subsequently added CAMSS IP description=
+s
+> >>> to follow
+> >>> the same established policy.
+> >>
+> >> My preference is sort by address not sort by name =3D> we sort the dev=
+ice
+> >> nodes themselves by address so it seems more consistent to sort by add=
+ress
+> >> inside of the devices too.
+> >
+> > Strictly speaking, the values of addresses are unknown to the binding,
+> > so you can't sort by address. However, if something is truly a single
+> > block, then the offsets are probably fixed in order by offset makes
+> > sense. But when a block is changed, any rule on sorting may go out
+> > the window since we add new regions on the end.
+>
+> Exactly, and this is an argument why the sorting is a subject to a device
+> driver policy, kind of any sorting order is equally bad. Sorting 'reg'
+> values by addresses helps to avoid a notorious problem with unit addresse=
+s.
 
-After stepping away and then coming back and reading the dts change I now
-understand that each device has two ports, a tx and an rx port.
+What notorious problem?
 
-/jeff
+>
+> > This one in particular I have to wonder why csiphy is not a separate
+> > node.
+>
+> There were dicussions about it in the past, and kind of enforced outcome =
+of
+> the discussions is to keep all CAMSS IP components together under one hug=
+e
+> plain device tree node. I personally dislike this approach, but obedience
+> is the way to get things merged.
+
+Who are you saying would be in the way to get things merged? DT
+maintainers? I feel certain I would have pushed for separate blocks,
+but I'll defer to people that know the h/w. I can't learn the details
+of everyone's h/w. If they get it wrong, it's their problem not mine.
+
+> >> Which means sorting reg by address and irq too.
+> >
+> > IRQs make little sense to sort IMO.
+>
+> For all non-reg properties with a present *-names property the sorting
+> order should be done by *-names property. Only 'reg' is very special.
+
+No. If you had 'main' and 'error', I'd put 'main' first. If they are
+somewhat equal (e.g. rx, tx), then sure, sort them however you like
+(assuming no existing binding). The only real rules here are how new
+entries should be added (on the end). Otherwise, there is no policy.
+
+Rob
 
