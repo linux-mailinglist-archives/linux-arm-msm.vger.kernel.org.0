@@ -1,227 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-36420-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36419-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 42DB09B61E9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 12:35:08 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id BF3389B61DF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 12:34:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0104F281DFA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 11:35:07 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4F1D9B23416
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 11:34:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD49D1F12F9;
-	Wed, 30 Oct 2024 11:32:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 311731EABDD;
+	Wed, 30 Oct 2024 11:31:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WHb6oIUO"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Fy4uWG9x"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B8101EF952;
-	Wed, 30 Oct 2024 11:32:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 649071EABB0
+	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Oct 2024 11:31:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730287937; cv=none; b=HwnixElgwoa825E/HolyW34YG/9b5yEGiABS8wNr+0vqyoLwS1X1BIVGbNx8700PfN/4zwDQfxNyAC+N2Ey/3j+MgC4NGXu2Fa/+/7qD5JGQV5zb2ycVjuWB8IQw60/ixlzgwSb4+kv3lBhc/gZMkCrgvl+2y0SicN3jujW5Czw=
+	t=1730287888; cv=none; b=UgRqbKV89KQE41LnOai0C0xGxXp+Z/mH/rTX0AIl2BPVA4kys8T5ERSfJWFrAv1QQKKIwIneq6EjvBCJesAQJutM6EvzVD1h3yH1UFjKDpAcXU6WYOgD1L2qfrAqIN5u2ct06rLPGz/lKGtkWcD4e6KbAVYiIC8EuaUdm7xTvuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730287937; c=relaxed/simple;
-	bh=w6H7Qq42d5eP8LdVc2TdnqklE3NAyDo0h846LZs1ff4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=T5wb1l1fSPokktKatG+TEpt5fIDBISR/+hbdbPsocC4a7VdXPRI9rRJj8YsayRptFmmZP7L43zQEnjFEea+uPeds3UkaollXwjy3x/mMkdmWZCK41xatpntVO2bYttpSsxJ8OrUWyF+aft5gw//L/JaoKg2vHFava1LHlVkWNIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WHb6oIUO; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49U4msrZ027408;
-	Wed, 30 Oct 2024 11:31:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	eOlC8HDfJ7U71PYiyPB7unuvlzouylxbI0NzZJCY39o=; b=WHb6oIUOBDKD0AvU
-	MC6BTJhP5meNs9Y3bn+QHSm4gHOfHUQaZvZWRE2yXSqWDhEtDAuQwS81ICGdHR1k
-	Z6ukYv9LdFWdUd4M/pE6ilRVMtNGfp5G84A0ibCJ6V2yKGXQkIB4KezA3u6AqQfT
-	Nc9DlQU7qYPr9UWhHFbaBKbJn1u4+kw/qZgzXOn/f9oOGlSdZabAKz5hMLhJ2HQ3
-	LGzShfcHtVyV++aGkitwmYqGUNmwlZhW+KAFGj5rD2nuB5BFzirLlsnAQyXA9UGs
-	qHuaCzOkvHz9uzvkrn0g/B4GmI7QL6sBXVsFUxR/fzkrduRBgds6UtjLqb9+oAkF
-	ehv8IA==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42k1p33483-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 30 Oct 2024 11:31:57 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49UBVtK7027520
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 30 Oct 2024 11:31:56 GMT
-Received: from [10.214.66.253] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 30 Oct
- 2024 04:31:08 -0700
-Message-ID: <e7a8e786-d67d-4ee7-a4d1-d9d02fd08bda@quicinc.com>
-Date: Wed, 30 Oct 2024 17:00:13 +0530
+	s=arc-20240116; t=1730287888; c=relaxed/simple;
+	bh=sxaelGT4Idpj3BClN0eoO2elk6zpAu4e/9ginvYJ+4U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=oVCPe7L1x3WCClpnyOjoTz26AGACIEFuKXNf4D5gJsc+kqaqF0joxNQlu3Kw8HTrPaS/t6iy2QsWtXKxPMNNUMaRZO7hsr8MT9l8B7uyT87dhRyPbaPzLmXl/SvjuX0cf09Cfiza5YXo2Iv0I3ln2mFr9u1Bea70OQq89y8ofBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Fy4uWG9x; arc=none smtp.client-ip=209.85.167.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-539e8607c2aso6683093e87.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Oct 2024 04:31:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1730287883; x=1730892683; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=cX+ON3ydOpBhTY6o2Rbqes4QOxAe5cTgNGKeiB9S9mM=;
+        b=Fy4uWG9xdnh4BLS2yJeB3ZHbBdUc0ILLrxm2OSQ/T2OmB3pkIkx+/RXDO2OaoDlv1L
+         pM3c3Qd92xzHkaBBEL7J6vxc2+Q0/AdWepcit3Fqfq4ia8o6ijvRc7fwrtzz0r7ORBmn
+         5hxE/w/hnXZCHB7e+2a0lZA+EKQkCgJPHq7hvnufdLR/7PN5Z6KEBUEztfASseSXPsPu
+         k8TgCxXjyZGiHqZ3v6h8EY1ijmAay0stCcrq25ZvH3/hNSIfc/j5E9VelH8dHfRo5jRe
+         XdjU/2FkN5FlkF+kRmnx9w2RggjEYetRjU/+2Gq37jt2axyxY/WmXUnWIQVhAhlwlx/K
+         mwqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730287883; x=1730892683;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cX+ON3ydOpBhTY6o2Rbqes4QOxAe5cTgNGKeiB9S9mM=;
+        b=aZjklz7JtsbeX1QeGshZ3nsRySAzox5UK4rXQF/+3fWiaAn0og7ihKu17e/JvZLgql
+         lJqrrWSR6CUeXGY60XOcQbIdNI/KSAiOXQJoBJ4Cfo1jAA9clYaFLm9jSrSHKTb1jBic
+         fQvRJs677i+gj0XLBn72OmbrAEptsVJHdNUroG14Yuv3EUDWmZfV5qwJLWaM4c8NNEF2
+         WWX8bFcmukmq37tEL7ZB2Npxc82/sJSW8MGTZSYpt+ePUBGRnS7vxYCob3GYm7evGinD
+         0TYJlgv9q9FkJnM/PMEUHqDJPqvSrshyVMGENr4oAq+7Gf9UBaDktro3HNYF/VMqQlGO
+         GHBA==
+X-Forwarded-Encrypted: i=1; AJvYcCXgFvfL6ipv8UeZ7yl0KO6qegq7h5i7abgjVgSVc//SNHqdWicO9VJj9f5baOtpfwHrXv7vyZWc+qnceiJK@vger.kernel.org
+X-Gm-Message-State: AOJu0YxvjurpDLlgN1mgRQ2bqRE+aRC5UgSbiNZWS1PaZCMyJ/UzR7Jk
+	SYed6Vw7m6TsXpFaFr67x+/JEJy8vdLmW/oc3qQ09h7I5NNtKRQ5AaD3LmzbP9E=
+X-Google-Smtp-Source: AGHT+IEenLKvMDS8jmV4t5I3gxQ4u0flSc2k6Tm9NyWl2kHf7+zqlwDZsVHgTGFOMNvFzMYwSoNqqQ==
+X-Received: by 2002:a05:6512:baa:b0:539:f1ad:b7a6 with SMTP id 2adb3069b0e04-53b3491c819mr7479539e87.37.1730287883506;
+        Wed, 30 Oct 2024 04:31:23 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53bb8190cdasm229410e87.23.2024.10.30.04.31.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 30 Oct 2024 04:31:23 -0700 (PDT)
+Date: Wed, 30 Oct 2024 13:31:21 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>, 
+	Daniel Lezcano <daniel.lezcano@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>, Stephan Gerhold <stephan@gerhold.net>, 
+	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	stable@vger.kernel.org
+Subject: Re: [PATCH 1/2] cpuidle: qcom-spm: fix device node release in
+ spm_cpuidle_register
+Message-ID: <qpnqvvrv4lfmhavrt6apn2gajd3ugnd4k6ombcuejzmy2eczxq@3pgxhvac6eyv>
+References: <20241030-cpuidle-qcom-spm-cleanup-v1-0-04416fcca7de@gmail.com>
+ <20241030-cpuidle-qcom-spm-cleanup-v1-1-04416fcca7de@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v16 1/5] iommu/arm-smmu: re-enable context caching in smmu
- reset operation
-To: Will Deacon <will@kernel.org>
-CC: <robdclark@gmail.com>, <robin.murphy@arm.com>, <joro@8bytes.org>,
-        <jgg@ziepe.ca>, <jsnitsel@redhat.com>, <robh@kernel.org>,
-        <krzysztof.kozlowski@linaro.org>, <quic_c_gdjako@quicinc.com>,
-        <dmitry.baryshkov@linaro.org>, <iommu@lists.linux.dev>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-References: <20241008125410.3422512-1-quic_bibekkum@quicinc.com>
- <20241008125410.3422512-2-quic_bibekkum@quicinc.com>
- <20241024125241.GD30704@willie-the-truck>
- <092db44e-f254-4abd-abea-e9a64e70df12@quicinc.com>
- <20241029124708.GA4241@willie-the-truck>
-Content-Language: en-US
-From: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-In-Reply-To: <20241029124708.GA4241@willie-the-truck>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: yI_kZ8z9PhJ4xMO0zQsOvTIwldSf4Fn1
-X-Proofpoint-ORIG-GUID: yI_kZ8z9PhJ4xMO0zQsOvTIwldSf4Fn1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- adultscore=0 spamscore=0 lowpriorityscore=0 mlxscore=0 malwarescore=0
- phishscore=0 clxscore=1015 impostorscore=0 mlxlogscore=999 suspectscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410300090
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241030-cpuidle-qcom-spm-cleanup-v1-1-04416fcca7de@gmail.com>
 
-
-
-On 10/29/2024 6:17 PM, Will Deacon wrote:
-> On Fri, Oct 25, 2024 at 07:51:22PM +0530, Bibek Kumar Patro wrote:
->>
->>
->> On 10/24/2024 6:22 PM, Will Deacon wrote:
->>> On Tue, Oct 08, 2024 at 06:24:06PM +0530, Bibek Kumar Patro wrote:
->>>> Default MMU-500 reset operation disables context caching in
->>>> prefetch buffer. It is however expected for context banks using
->>>> the ACTLR register to retain their prefetch value during reset
->>>> and runtime suspend.
->>>>
->>>> Replace default MMU-500 reset operation with Qualcomm specific reset
->>>> operation which envelope the default reset operation and re-enables
->>>> context caching in prefetch buffer for Qualcomm SoCs.
->>>>
->>>> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>>> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
->>>> ---
->>>>    drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 45 ++++++++++++++++++++--
->>>>    1 file changed, 42 insertions(+), 3 deletions(-)
->>>>
->>>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->>>> index 087fb4f6f4d3..0cb10b354802 100644
->>>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->>>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->>>> @@ -16,6 +16,16 @@
->>>>
->>>>    #define QCOM_DUMMY_VAL	-1
->>>>
->>>> +/*
->>>> + * SMMU-500 TRM defines BIT(0) as CMTLB (Enable context caching in the
->>>> + * macro TLB) and BIT(1) as CPRE (Enable context caching in the prefetch
->>>> + * buffer). The remaining bits are implementation defined and vary across
->>>> + * SoCs.
->>>> + */
->>>> +
->>>> +#define CPRE			(1 << 1)
->>>> +#define CMTLB			(1 << 0)
->>>> +
->>>>    static struct qcom_smmu *to_qcom_smmu(struct arm_smmu_device *smmu)
->>>>    {
->>>>    	return container_of(smmu, struct qcom_smmu, smmu);
->>>> @@ -396,11 +406,40 @@ static int qcom_smmu_def_domain_type(struct device *dev)
->>>>    	return match ? IOMMU_DOMAIN_IDENTITY : 0;
->>>>    }
->>>>
->>>> +static int qcom_smmu500_reset(struct arm_smmu_device *smmu)
->>>> +{
->>>> +	int ret;
->>>> +	u32 val;
->>>> +	int i;
->>>> +
->>>> +	ret = arm_mmu500_reset(smmu);
->>>> +	if (ret)
->>>> +		return ret;
->>>> +
->>>> +	/*
->>>> +	 * arm_mmu500_reset() disables CPRE which is re-enabled here.
->>>> +	 * The errata for MMU-500 before the r2p2 revision requires CPRE to be
->>>> +	 * disabled. The arm_mmu500_reset function disables CPRE to accommodate all
->>>> +	 * RTL revisions. Since all Qualcomm SoCs are on the r2p4 revision, where
->>>> +	 * the CPRE bit can be enabled, the qcom_smmu500_reset function re-enables
->>>> +	 * the CPRE bit for the next-page prefetcher to retain the prefetch value
->>>> +	 * during reset and runtime suspend operations.
->>>> +	 */
->>>> +
->>>> +	for (i = 0; i < smmu->num_context_banks; ++i) {
->>>> +		val = arm_smmu_cb_read(smmu, i, ARM_SMMU_CB_ACTLR);
->>>> +		val |= CPRE;
->>>> +		arm_smmu_cb_write(smmu, i, ARM_SMMU_CB_ACTLR, val);
->>>> +	}
->>>
->>> If CPRE only needs to be disabled prior to r2p2, then please teach the
->>> MMU-500 code about that instead of adding qualcomm-specific logic here.
->>>
->>
->> Doing this on MMU-500 code would make it generic and reflect for SoC of all
->> the vendors on this platform.
->> We can make sure that it won't cause any problems in Qualcomm SoCs as we
->> have been enabling this since for some years now and could not
->> observe/reproduce any issues around these errata.
+On Wed, Oct 30, 2024 at 07:38:32AM +0100, Javier Carrasco wrote:
+> If of_find_device_by_node() fails, its error path does not include a
+> call to of_node_put(cpu_node), which has been successfully acquired at
+> this point.
 > 
-> Unless you can explain definitively hy that's the case, I still don't
-> think we should be second-guessing the core SMMU driver code in the
-> Qualcomm backend.
+> Move the existing of_node_put(cpu_node) to the point where cpu_node is
+> no longer required, covering all code paths and avoiding leaking the
+> resource in any case.
 > 
->> But we won't be able to guarantee the same behavior in SoC for other vendors
->> where these errata might still be applicable as per [1] and [2].
->> So as per my understanding it's safe to include in Qualcomm specific
->> implementation and not changing the default behavior in all other vendors'
->> SoC even if they are not prior to r2p2 revision [3].
+> Cc: stable@vger.kernel.org
+> Fixes: 60f3692b5f0b ("cpuidle: qcom_spm: Detach state machine from main SPM handling")
+> Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+> ---
+>  drivers/cpuidle/cpuidle-qcom-spm.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> If you want to gate the errata workarounds on policy, then please follow
-> what we do for the CPU: add a Kconfig option (e.g.
-> ARM_SMMU_WORKAROUND_BROKEN_CPRE) which defaults to "on" (assuming that
-> the relevant errata aren't all "rare") and update silicon-errata.rst
-> accordingly.
-> 
-> Then you can choose to disable them in your .config if you're happy to
-> pick up the pieces.
-
-This seems to be a good idea to me . I am thinking of this approach 
-based on your suggestion,
-i.e. we can bind the original workaround in
-arm_mmu500_reset implementation within ARM_SMMU_WORKAROUND_BROKEN_CPRE
-config (defualts to on, CPRE would be disabled) and in QCOM SoCs default 
-it to off
-(when ARM_SMMU_QCOM=Y -> switch ARM_SMMU_WORKAROUND_BROKEN_CPRE=N).
-
-In silicon-errata.rst would updating ARM_SMMU_WORKAROUND_BROKEN_CPRE be 
-okay , as the config names are based on erratum number.
-
-Thanks & regards,
-Bibek
 
 
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-> 
-> As an aside, I'm happy with the rest of the series now.
-> 
-> Will
-
+-- 
+With best wishes
+Dmitry
 
