@@ -1,54 +1,71 @@
-Return-Path: <linux-arm-msm+bounces-36456-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36454-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E113A9B643D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 14:35:55 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2299A9B6428
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 14:32:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A5CAF280EF9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 13:35:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 464271C212C1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 13:32:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 130BC1EBA1B;
-	Wed, 30 Oct 2024 13:35:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E00F1EBFEF;
+	Wed, 30 Oct 2024 13:32:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YFyqHMYq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-m49197.qiye.163.com (mail-m49197.qiye.163.com [45.254.49.197])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 127253FB31;
-	Wed, 30 Oct 2024 13:35:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DED321EABD0;
+	Wed, 30 Oct 2024 13:32:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730295340; cv=none; b=GDDgI0EgeNMvaM5boBIWyZmFpdcs4xvHJ5FZ6QfARCOrkGtxC9Vw/5KXJ8HEC8Ro6ZIAqU48QTamNVNB0LDVNBE3BCmuTdW4uXoyeqZUPtH6w4dbxQdwqg3KXVe6NUW56lKZAjuBRvt/ORxm+eToM5iUh+xEECEg5B2CGumgLV8=
+	t=1730295138; cv=none; b=ef03it4nHa6RXbL/+9Zv2mRPO4ELEGmzq2ADY5IUuLimS2rKNWJGIUnpYEYAgCLZWHjU+aMIl+MN7EA+gBMfEmP3r58wWzPLVXGdvUxKc45PGS/42aSsgag0gNP3tdMSeIAVc9f25ZTQm+KRTiQ0D1ECh/a7PeN6uJBb6Hq94No=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730295340; c=relaxed/simple;
-	bh=2bRRoStRcxTL3xVH545sz64x9ShvC5EiYQ0AmGxIfzc=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Uovfh8keqjJtod56oCHE11z5v10A4nkpujKhwC8gp4BKWy+9eNij1wozL3JH8WbDPVoESgZX1gCDH0c8VtzwMrSktYRxVwAOw4PBOUHdGj4q8zr7jnVUNvdPBgpnWlru6Zb4al49EQq3hlkAPY8k1V/yFCu8KKXutDcEtuQtbPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=45.254.49.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
-Received: from amadeus-Vostro-3710.lan (unknown [116.25.95.211])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 150888e4;
-	Wed, 30 Oct 2024 21:30:19 +0800 (GMT+08:00)
-From: Chukun Pan <amadeus@jmu.edu.cn>
-To: dmitry.baryshkov@linaro.org
-Cc: amadeus@jmu.edu.cn,
-	andersson@kernel.org,
-	conor+dt@kernel.org,
-	devicetree@vger.kernel.org,
-	konradybcio@kernel.org,
-	krzk+dt@kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	robh@kernel.org
-Subject: Re: [PATCH v3 1/4] arm64: dts: qcom: ipq6018: add 1.2GHz CPU Frequency
-Date: Wed, 30 Oct 2024 21:30:15 +0800
-Message-Id: <20241030133015.487183-1-amadeus@jmu.edu.cn>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <xmqyp2rgd3nozuiqu44iwidjnnwsidls3mxaqhmy3sshd4nok5@n552fd5tkjoc>
-References: <xmqyp2rgd3nozuiqu44iwidjnnwsidls3mxaqhmy3sshd4nok5@n552fd5tkjoc>
+	s=arc-20240116; t=1730295138; c=relaxed/simple;
+	bh=b0OnCQghW9QVElgOiB0/VJEnC3vVic8d6AT2sPgDfIo=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=EgZ8nll/kMpTgf+Ah0s0tll8vWuGV7zQnmXdNkonfAQ+x0CoD0OKeiv/R0JpPt7XnC8p+WSrW2ty/GvJO+F9ios2fEO/6w58T5iyQcCKz2r/JIPZsx+hpYRQPY+buND9s1gvmGJMjr+G9OFaZfebHKL4nx0MOHG3hsKdcLGGTt0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YFyqHMYq; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49U9ZbpQ012778;
+	Wed, 30 Oct 2024 13:31:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=vyOiJymB0nnDRku/t4g1pc
+	FvAC1IuzmaO9Rq+PhkWF0=; b=YFyqHMYqsy32ma3bzD6CprZA/SAH1Cmd8qLTvj
+	hlb0GqfJ3ghxdn3dkRzhFCwN0XM5kpUHAieYdu+FfENrhC0jX5iX7kl853RP/IcL
+	3QuvRFbtZINuiNIl4/vdqSNEdm1skMRj1RlL3BZO/M5aZCSP38SorpRfbmA7A90j
+	EJQo7Bmsxgi0x/0+7Ql4AelcaTf+zVoouZLQg+D//7RGgBh1rQMKr41qsIGUAv1f
+	TRfFnHoigMhMG8flqnN6rWQkoJAJruFt1WxOksUdiYCe88hz6jSHT5+ae+w3jh25
+	OzrOfYWuOm5Fog7ItpZyGWQXe7SPwSoIgWAY9qtT2VFjIl5w==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42k6rpjf9a-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 30 Oct 2024 13:31:59 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49UDVwZi006387
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 30 Oct 2024 13:31:58 GMT
+Received: from hu-sibis-blr.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 30 Oct 2024 06:31:53 -0700
+From: Sibi Sankar <quic_sibis@quicinc.com>
+To: <sudeep.holla@arm.com>, <cristian.marussi@arm.com>, <rafael@kernel.org>,
+        <viresh.kumar@linaro.org>, <morten.rasmussen@arm.com>,
+        <dietmar.eggemann@arm.com>, <lukasz.luba@arm.com>,
+        <pierre.gondois@arm.com>, <vincent.guittot@linaro.org>
+CC: <linux-arm-kernel@lists.infradead.org>, <linux-pm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_mdtipton@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>
+Subject: [PATCH V6 0/1] firmware: arm_scmi: Register and handle limits change notification
+Date: Wed, 30 Oct 2024 19:01:32 +0530
+Message-ID: <20241030133133.2932722-1-quic_sibis@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,48 +73,60 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkZGUkfVkkaTEIZGklCGUMaSlYeHw5VEwETFhoSFy
-	QUDg9ZV1kYEgtZQVlKSk1VSU5VQk5VSUpKWVdZFhoPEhUdFFlBWU9LSFVKS0hJTEJLVUpLS1VKQk
-	tLWQY+
-X-HM-Tid: 0a92dd9eb68b03a2kunm150888e4
-X-HM-MType: 10
-X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6NE06EQw5ETIaEwEyCjoaL0I2
-	DQEKCzJVSlVKTEhLSUJOS0pCQ0lJVTMWGhIXVRoWGh8eDgg7ERYOVR4fDlUYFUVZV1kSC1lBWUpK
-	TVVJTlVCTlVJSkpZV1kIAVlBSkpMSTcG
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: usyqeks7XHTCpeLJzJIGkPIOknqe9vir
+X-Proofpoint-GUID: usyqeks7XHTCpeLJzJIGkPIOknqe9vir
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 bulkscore=0
+ clxscore=1011 mlxlogscore=875 priorityscore=1501 spamscore=0
+ malwarescore=0 impostorscore=0 mlxscore=0 lowpriorityscore=0
+ suspectscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2409260000 definitions=main-2410300106
 
-Hi,
-> You can respond here and post new iteration once we settle on something.
+This series registers for scmi limits change notifications to determine
+the throttled frequency and apply HW pressure.
 
-Sorry for the late reply. There are two versions of ipq6000 SoCs:
-(1) Earlier version: soc_id: IPQ6018; fuse: BIT(1); SBL version: BOOT.XF.0.3-00077-IPQ60xxLZB-2
-(2) Final   version: soc_id: IPQ6000; fuse: BIT(1); SBL version: BOOT.XF.0.3-00086-IPQ60xxLZB-1
+V6:
+* Unregister the notifier in the exit path to make sure
+  the cpus work across suspend/resume cycles.
 
-The soc_id is related to the sbl version, but it is written by the
-manufacturer. On the qsdk kernel, early version could reach 1.5GHz,
-while the final version was limited to 1.2GHz.
+V5:
+* Drop patch 1 and use pm_qos to update constraints. [Vincent]
+* Use sdev instead of cpu_dev in dev_warn. [Christian]
+* Pass sdev directly through private data. [Christian]
+* Dropping Rb's for now.
 
-So I think the commit message can be written like below:
+V4:
+* Use EXPORT_SYMBOL_GPL instead. [Trilok]
+* Use a interim variable to show the khz calc. [Lukasz]
+* Use driver_data to pass on the handle and scmi_dev instead of using
+  global variables. Dropped Lukasz's Rb due to adding these minor
+  changes.
 
-    arm64: dts: qcom: ipq6018: add 1.2GHz CPU Frequency
+V3:
+* Sanitize range_max received from the notifier. [Pierre]
+* Drop patches 1/2 from v2. [Cristian]
+* Update commit message in patch 2.
 
-        The final version of IPQ6000 (soc id: IPQ6000, SBL version:
-        BOOT.XF.0.3-00086-IPQ60xxLZB-1) has a max design frequency
-        of 1.2GHz, so add this CPU frequency.
+V2:
+* Rename opp_xlate -> freq_xlate [Viresh]
+* Export cpufreq_update_pressure and use it directly [Lukasz]
 
+base: next-20241029
 
-    arm64: dts: qcom: ipq6018: add 1.5GHz CPU Frequency
+Sibi Sankar (1):
+  cpufreq: scmi: Register for limit change notifications
 
-        The early version of IPQ6000 (soc id: IPQ6018, SBL version:
-        BOOT.XF.0.3-00086-IPQ60xxLZB-1) and IPQ6005 SoCs can reach
-        a max frequency of 1.5GHz, so add this CPU frequency.
-
-Do you think this is appropriate?
-
-Thanks,
-Chukun
+ drivers/cpufreq/scmi-cpufreq.c | 38 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 38 insertions(+)
 
 -- 
-2.25.1
+2.34.1
 
 
