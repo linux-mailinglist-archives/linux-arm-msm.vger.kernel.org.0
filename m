@@ -1,153 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-36357-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36358-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DF9E59B5B7D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 06:55:34 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E40A79B5BCF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 07:38:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 641E0B228D0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 05:55:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 214731C208CC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 06:38:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA1DC1D0E1C;
-	Wed, 30 Oct 2024 05:55:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A5B9A1D1F6B;
+	Wed, 30 Oct 2024 06:38:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kHGcqmDR"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D/5gW3kS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92B7A199949;
-	Wed, 30 Oct 2024 05:55:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F6A63CB;
+	Wed, 30 Oct 2024 06:38:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730267727; cv=none; b=XsCF36D7IlXjum8RxcGo2bkBvDXSN/fnZXrtx41JbZaVDR/XQHPa2IDZUtmKcjWI3JB/JBVftkmdcmvlPfpvo1dc/qcf8zOIBMbyDJCbX3wjosHUks9IQ2Lnsp9nxL2+/l1YlbbyULd4aaNcB9hNSaCofkMa4bn/eSSBh4ZYBC8=
+	t=1730270334; cv=none; b=aXqfBSMi/6ZKlF2c+Hf2H001yPX6bF27tWdQ3D1r7hI+jjhSCzdjGOl1h52xv7MfmsDkqPiKTfxEqPXrWwQBLXecpwOQQo74qWcweZfXKcO2Zu4Gj6Wh0r0g9dU3+zNBLE264BQtt26VS7rAHM9y5vgKeVQH3JMq22LSziXk1Ws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730267727; c=relaxed/simple;
-	bh=NWD+81n0gt6UiKT+LFWmdI5wMpW4m6OsIQWgMh29+1E=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
-	 In-Reply-To:Content-Type; b=Z7zHBmwZi7vu3m2NL3+Ut20rTPThxu+LAyPtAVZ5BfRCqZX82ddBlGqKoZphPCgnbyv0BCKENLpRPMyw9+M6K7yLY4nl/S/cPW2NJdcCT7zX+vV2E/meHvVaSRbi4O6nd3nuWnFfqVM54sXMB7wLsu2m2ONubjwjp3DQSmw3l9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=kHGcqmDR; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49TLjetW025437;
-	Wed, 30 Oct 2024 05:55:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	EdzhGzA2id7A/ZpD+TWeWQODIXZxwAyvIC+fzDbNVrU=; b=kHGcqmDRTeCjoT4b
-	r5fNCONUTqK/BQjTXBoZTCLwd2XhTNzbYNN5OGodWzUiv4xjttmChJ2fSkald0r5
-	EWH/ijF0P/GDZcvAt60vPTGAOssWU0A3Znro7jH0Kt4Ni+8IitI2SE6IyUrkEDVg
-	l81khw2do4GCt7MSmmp/6myN8Ca+hjU1RM50fFyt/NHkfeFHmGEG/HILdT67BXGw
-	l6KUw3+IbDmWW7BN6XLfECInnMzcijP/wmJzSK7cr3x5j8600kelk8I7BCfWW+YJ
-	Ir3yMib1iTdlXRoY1bRIKdh1QA0S04ys9wWMD/ZSDJrMGiooI3fdC6o2PTVRh2dT
-	nVRBSQ==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42gsq8jsgq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 30 Oct 2024 05:55:08 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49U5t7io027161
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 30 Oct 2024 05:55:08 GMT
-Received: from [10.239.29.179] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 29 Oct
- 2024 22:55:02 -0700
-Message-ID: <250bce05-a095-4eb3-a445-70bbf4366526@quicinc.com>
-Date: Wed, 30 Oct 2024 13:54:59 +0800
+	s=arc-20240116; t=1730270334; c=relaxed/simple;
+	bh=9hv4oiZP/E3lwiZ5K3IdQqCCQA3rZPXvKf9qjI/ZlEE=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=lUBPsn1rZmcAxvUxJ1sU1Fas86Vb6mn7/vx4yIr2pEWF9h+HHy8k/aMmcBk18OsR5LIuq+ddTO0OeE0F43mc+kL4prTE04x8bmwWi5sjRp7pj2AE8g1BZFDSGhXFl9p8mCNpRzbtLYz3ooTfjHeO/JF40a1B8Snej6YueIsALjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D/5gW3kS; arc=none smtp.client-ip=209.85.208.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-5c95a962c2bso7593062a12.2;
+        Tue, 29 Oct 2024 23:38:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1730270331; x=1730875131; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Jzqz2XOsU9I04oP6WRhYoAWHaZRwNYZPIUD+5gjKlFk=;
+        b=D/5gW3kSjsnmrVTXZSZek61EWEwpOqKGvgQwqRD2gOASfVsCllawgO+XSl5mKdsSXF
+         CXUmdbSmmnDF2se3eGDDdDK9ZVr8X1ExvWbGoG8PWBlnjoizNrIdVzU44OBrLK3iVJNE
+         gQ5UGzGiSVJICvb89uKuTOan/3/nXuP01odg0yl5U7bKT41RWDnJ8KG6dxgwxHHd76kB
+         TRz/vroJt0Ox4F7TJ53cncKLbW1osYOJmeO9rLBMK0qXGCKjdW+/xMr0Z//wDukFEISM
+         vBlxSgvSFtUoBcQfbXFAvG6wPihwC2kycl6H75YT0UM/cufo4btYgXGNVAhtJ/n/U8IB
+         IjKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730270331; x=1730875131;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Jzqz2XOsU9I04oP6WRhYoAWHaZRwNYZPIUD+5gjKlFk=;
+        b=eqh1OKKS/yZ0ORis31D7WxwtyFBXu/ijEDVCOW/DbCbyJTqsN9mY1U780Je/1mlaFL
+         quu/NgevbTPWAb92i3WYpR9+7LHM6uMLjpo9mkR817OMvbCFnHuRM1DsQEy7vRNDRQhX
+         xDdO2E97twMzDnAWUy76OV2DalbJ0j3w0koySgVeBwZQmyvKydS3SDW/oUyor9/ZKOol
+         15DOXFm0LsQ7fK7BXQKwRsjBLlvDDWcU36D0QEe8ZvixK0Y51BX9wVehONz7Ks8eOAWn
+         x5nr9JTqT/6Du+/URVC8aJ3qMZYTItKxjbXFgb4U2FNxgN7CZpKba3cgkl2urOlROnw5
+         44EA==
+X-Forwarded-Encrypted: i=1; AJvYcCVICKIaiAVPCbofXXG27KRaFcdoWikt28A9eFlvwi1z3473C/oXaI+/78dnCajT1VWVBeptZSIGAVBRqks=@vger.kernel.org, AJvYcCWLAQsYCcYBX9cr57xkrp9JjN2hlZ4qFllSx8+WVsa5awRVXYozGlS6eOeJBjnZ29SfVHZzYrShidQ=@vger.kernel.org, AJvYcCX7iLRR0JiS7K5QBP6dUbjSzk8FJe0k/mce08njS4gCWnldvH+rX8758hojSMbOyT4qBDKR2u/D@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy4OUeCftASat/AXqJRCZKLu3mkbWz02ZQ6iAiRa2oRkzzOoCCM
+	rGFAQpTnH4veI6+ru4cbJkdcLidlRQQxwXsQ3zR9UXi7tRv6QPYw
+X-Google-Smtp-Source: AGHT+IF36EhAREbixa1zMQsy9eKlpMey+y0N5AWW+f8RgWv+ec40U6Sz4X8yC2pxKwFEcTv8ZriEGQ==
+X-Received: by 2002:a05:6402:350c:b0:5c9:72c7:95a2 with SMTP id 4fb4d7f45d1cf-5cbbfa6223dmr9981183a12.22.1730270330474;
+        Tue, 29 Oct 2024 23:38:50 -0700 (PDT)
+Received: from [127.0.1.1] ([213.208.157.67])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5cbb62c14c4sm4473498a12.44.2024.10.29.23.38.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Oct 2024 23:38:49 -0700 (PDT)
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Subject: [PATCH 0/2] cpuidle: qcom-spm: fix resource release in
+ spm_cpuidle_register
+Date: Wed, 30 Oct 2024 07:38:31 +0100
+Message-Id: <20241030-cpuidle-qcom-spm-cleanup-v1-0-04416fcca7de@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 6/7] PCI: qcom: Disable ASPM L0s and remove BDF2SID
- mapping config for X1E80100 SoC
-From: Qiang Yu <quic_qianyu@quicinc.com>
-To: Johan Hovold <johan@kernel.org>
-CC: <manivannan.sadhasivam@linaro.org>, <vkoul@kernel.org>,
-        <kishon@kernel.org>, <robh@kernel.org>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>, <abel.vesa@linaro.org>,
-        <quic_msarkar@quicinc.com>, <quic_devipriy@quicinc.com>,
-        <dmitry.baryshkov@linaro.org>, <kw@linux.com>, <lpieralisi@kernel.org>,
-        <neil.armstrong@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pci@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <johan+linaro@kernel.org>,
-        <stable@vger.kernel.org>
-References: <20241017030412.265000-1-quic_qianyu@quicinc.com>
- <20241017030412.265000-7-quic_qianyu@quicinc.com>
- <ZxJrUQDGMDw3wI3Q@hovoldconsulting.com>
- <91395c5e-22a0-4117-a4b5-4985284289ab@quicinc.com>
-Content-Language: en-US
-In-Reply-To: <91395c5e-22a0-4117-a4b5-4985284289ab@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 6otyPrzF45iN6J6U6RMBnPJR0HbuqtmZ
-X-Proofpoint-ORIG-GUID: 6otyPrzF45iN6J6U6RMBnPJR0HbuqtmZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 bulkscore=0
- adultscore=0 mlxscore=0 priorityscore=1501 mlxlogscore=659 impostorscore=0
- lowpriorityscore=0 malwarescore=0 clxscore=1015 spamscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2410300045
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAGjUIWcC/x3MQQ5AMBBA0avIrE1SJRWuIhZMB5NQ1YZIxN01l
+ m/x/wORg3CENnsg8CVRdpdQ5BnQMriZUWwyaKWrQukGyZ9iV8aD9g2j35BWHtzp0UyqNKYZydY
+ KUu4DT3L/665/3w+KztggagAAAA==
+To: "Rafael J. Wysocki" <rafael@kernel.org>, 
+ Daniel Lezcano <daniel.lezcano@linaro.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>, 
+ Stephan Gerhold <stephan@gerhold.net>
+Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Javier Carrasco <javier.carrasco.cruz@gmail.com>, stable@vger.kernel.org
+X-Mailer: b4 0.14-dev
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1730270327; l=951;
+ i=javier.carrasco.cruz@gmail.com; s=20240312; h=from:subject:message-id;
+ bh=9hv4oiZP/E3lwiZ5K3IdQqCCQA3rZPXvKf9qjI/ZlEE=;
+ b=MczZxuOZmmgT5NN2RIwod60ZGPQLIqnoSGKvHr2U1rSG1OE271LjqraSuVRo2RhX4U/jQ0ZDX
+ TP8Rh5W/opKBCWDx/fTsAD6wAY0XnCwObvG8JSKKZpkdXP9lKjxDSIL
+X-Developer-Key: i=javier.carrasco.cruz@gmail.com; a=ed25519;
+ pk=lzSIvIzMz0JhJrzLXI0HAdPwsNPSSmEn6RbS+PTS9aQ=
 
+This series addresses two issues in spm_cpuidle_register: a missing
+device_node release in an error path, and releasing a reference to a
+device after its usage.
 
-On 10/24/2024 2:42 PM, Qiang Yu wrote:
->
-> On 10/18/2024 10:06 PM, Johan Hovold wrote:
->> Please use a more concise subject (e.g. try to stay within 72 chars)
->> than:
->>
->>     PCI: qcom: Disable ASPM L0s and remove BDF2SID mapping config for 
->> X1E80100 SoC
->>
->> Here you could drop "SoC", maybe "ASPM" and "config" for example.
->>
->> On Wed, Oct 16, 2024 at 08:04:11PM -0700, Qiang Yu wrote:
->>> Currently, the cfg_1_9_0 which is being used for X1E80100 has 
->>> config_sid
->>> callback in its ops and doesn't disable ASPM L0s. However, as same as
->>> SC8280X, PCIe controllers on X1E80100 are connected to SMMUv3, hence 
->>> don't
->>> need config_sid() callback and hardware team has recommended to disable
->>> L0s as it is broken in the controller. Hence reuse cfg_sc8280xp for
->>> X1E80100.
->> Since the x1e80100 dtsi, like sc8280xp, do not specify an iommu-map,
->> that bit is effectively just a cleanup and all this patch does is to
->> disable L0s.
->>
->> Please rephrase to make this clear. This will also allow you to make the
->> Subject even shorter (no need to mention the SID bit in Subject).
->>
->> Also say something about how L0s is broken so that it is more clear what
->> the effect of this patch is. On sc8280xp enabling L0s lead to
->> correctable errors for example.
-> Need more time to confirm the exact reason about disabling L0s.
-> Will update if get any progress
-Hi Johan Hovold
+These issues were found while analyzing the code, and the patches have
+been successfully compiled and statically analyzed, but not tested on
+real hardware as I don't have access to it. Any volunteering for testing
+is always more than welcome.
 
-I confirmed with HW team and SW team. L0s is not supported on X1E80100, 
-it is not fully verified. So we don't want to enable it.
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+---
+Javier Carrasco (2):
+      cpuidle: qcom-spm: fix device node release in spm_cpuidle_register
+      cpuidle: qcom-spm: fix platform device release in spm_cpuidle_register
 
-Thanks,
-Qiang Yu
->
-> Thanks,
-> Qiang
->>
->>> Fixes: 6d0c39324c5f ("PCI: qcom: Add X1E80100 PCIe support")
->>> Cc: stable@vger.kernel.org
->> Johan
+ drivers/cpuidle/cpuidle-qcom-spm.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+---
+base-commit: 6fb2fa9805c501d9ade047fc511961f3273cdcb5
+change-id: 20241029-cpuidle-qcom-spm-cleanup-6f03669bcd70
+
+Best regards,
+-- 
+Javier Carrasco <javier.carrasco.cruz@gmail.com>
+
 
