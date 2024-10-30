@@ -1,175 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-36375-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36376-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 845989B5D06
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 08:37:07 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 345BE9B5D0F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 08:39:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B61541C216E2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 07:37:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ED6CB2839CD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 07:39:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 24DF11E0DAC;
-	Wed, 30 Oct 2024 07:36:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 66D001DFD81;
+	Wed, 30 Oct 2024 07:39:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GQ44T0Of"
+	dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b="Ovx/kF/E"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.135])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB2F885931;
-	Wed, 30 Oct 2024 07:36:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 244CD85931;
+	Wed, 30 Oct 2024 07:39:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.126.135
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730273801; cv=none; b=YlmxGF73z4VndlSZYIE0MMBEh5ufUrndYjg0fuo4U46QkRjESQzZcNcieRMz+8EPtq4dNKUR/fwKbptrOK5jLRdvZ7wTW4vwnLQtFhzmGQ0SmXziDujWLGIy/DoWFt4+nozFErNahJT998DSs5PlR4n0LMrr86o9DAi6NtSGJ/w=
+	t=1730273971; cv=none; b=sMTrXGpMJoYgnAVLoZ5+CbOISho10IjYD/gqp7Y+gPEXs4Bd617FbN6P/VP6gQo1GEoM2kiqN89DOUxa3Fy7c76nFK8hkpVowzG4Q+tSkO8woyVP+KlEQEVg6vfiexNRT1Vlot4lQDgk2ELEWIrgnWtPLECGcW9uScZQq/JM67M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730273801; c=relaxed/simple;
-	bh=j2+oBpfnOxfoZv3A2oAIAab8c4yY5+hmdm19bV/Pioo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lubO7PVbZILVfk9BA/EUe6V4X/ffH2nQVaRIoAwBuhjAjPkcp797MjdXeJ9TCu0Civ0F780rvCbj3TE/uvfle1+71uFJgZIzVbNN3aMBF3bH0tUm+CtPmsT003viZIy2Xd0HGTX6XwdUvfG4rws1Q4IvFjOW3EivKtYZZF6LT3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GQ44T0Of; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63923C4CEE4;
-	Wed, 30 Oct 2024 07:36:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730273799;
-	bh=j2+oBpfnOxfoZv3A2oAIAab8c4yY5+hmdm19bV/Pioo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=GQ44T0OfRUNMMz553RO/cNPlyOLavlBQMszjMUkwX6544yFSwFJz4vC6VGGC7ocZc
-	 1Uw2Ag0VbiWhZd/ZIiItoCpuPR7qxjFaBVCcGauzKq9lOxWR4wM7eYtjz7W3BOHUyI
-	 ytessGfyB4GbX3JI/fMNsYEL1ckIEh1D9EviCgC7ByzrhFtX9AwqvwsygNl1m3Ov5G
-	 B4hPn3z03ywVd5xCuX/r5SS8emvM75BHOHbVfu/I3h4e+kv0iPeAS6ogrghIISBpgW
-	 GaPNaQTIkO66LEsLyMgycbkL5wImixMOK4gIoyw8quo6RDFcZl07+X5JrJVpQu2uD7
-	 XEm8ZO2qxQ2lQ==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1t63GE-000000007b9-1i1P;
-	Wed, 30 Oct 2024 08:36:59 +0100
-Date: Wed, 30 Oct 2024 08:36:58 +0100
-From: Johan Hovold <johan@kernel.org>
-To: jens.glathe@oldschoolsolutions.biz
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Merck Hung <merckhung@gmail.com>
-Subject: Re: [PATCH v5 3/3] arm64: dts: qcom: sc8280xp-blackrock: dt
- definition for WDK2023
-Message-ID: <ZyHiGlDnC8uqk_LG@hovoldconsulting.com>
-References: <20241030-jg-blackrock-for-upstream-v5-0-830c938437ad@oldschoolsolutions.biz>
- <20241030-jg-blackrock-for-upstream-v5-3-830c938437ad@oldschoolsolutions.biz>
+	s=arc-20240116; t=1730273971; c=relaxed/simple;
+	bh=nEc8gOaRix6UvtSNUq9rl1lK52vlDUP26tV9LTP2Eb4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=h9qCXS2JlRVaA+VZctbhwq/Q4wYpBBO6LduoDxLCRthZiitz9NRZIhovpHderAMIEXFWbHYmOnX9H7B0dLnLEb9/ijmSrmF94fzC3V0622OwfL/8Y+U2GZjie0u/8y4oplVVWNidfKRyeA/rAuysw/6uDrt2I8+qjSXpQA32WVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz; spf=pass smtp.mailfrom=oldschoolsolutions.biz; dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b=Ovx/kF/E; arc=none smtp.client-ip=212.227.126.135
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oldschoolsolutions.biz
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=oldschoolsolutions.biz; s=s1-ionos; t=1730273948; x=1730878748;
+	i=jens.glathe@oldschoolsolutions.biz;
+	bh=nEc8gOaRix6UvtSNUq9rl1lK52vlDUP26tV9LTP2Eb4=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=Ovx/kF/Eaut9Xd3+ViszWFHGCmBQ1yQzZf2O+cqbQHveE2D8UGJHQUI6GZShXAxu
+	 J/bg/ThEjSFs5UaeCsgX8gx1KikFk0RewCPh1ZQsemDZ/tjDJrleZx58iI3uQBEAG
+	 d2J4c11uvukwA0/pDhA2jeh4oKiA6yAEnYQZT8rpJSRb7FcpQP5l5ZwnIs++ZZ7qJ
+	 rDR5MbJ1Yu111MgUJmFKqvakGz/a9c0PXORIaE1SYhvRzqNaCL3h9Tx3EJbcU9B7l
+	 guwGy4PNeuqiYo27YNj/aez4wiXNOHi430GDyhm4SCTA8NLe4XbxKlq/U/dNrzxx7
+	 91B5B+09G9++d7SuHw==
+X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
+Received: from [192.168.0.174] ([91.64.229.215]) by mrelayeu.kundenserver.de
+ (mreue009 [212.227.15.167]) with ESMTPSA (Nemesis) id
+ 1MKKdD-1tRAXs3Ho7-00VMfH; Wed, 30 Oct 2024 08:39:07 +0100
+Message-ID: <482522d0-49f4-4c13-9f2e-8e74a21f1fa3@oldschoolsolutions.biz>
+Date: Wed, 30 Oct 2024 08:39:06 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241030-jg-blackrock-for-upstream-v5-3-830c938437ad@oldschoolsolutions.biz>
+User-Agent: Mozilla Thunderbird Beta
+Subject: Re: [PATCH v5 1/3] dt-bindings: arm: qcom: Add Microsoft Windows Dev
+ Kit 2023
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Merck Hung <merckhung@gmail.com>
+References: <20241030-jg-blackrock-for-upstream-v5-0-830c938437ad@oldschoolsolutions.biz>
+ <20241030-jg-blackrock-for-upstream-v5-1-830c938437ad@oldschoolsolutions.biz>
+ <ca46a692-3ec4-4b83-abd7-3fb82817940c@kernel.org>
+Content-Language: en-US
+From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+In-Reply-To: <ca46a692-3ec4-4b83-abd7-3fb82817940c@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K1:koOHil8b+q13ExNc3lAAgPM4oeJSkwUSz0WNRMj0ObxVCwFp+13
+ UBmv8fRV192f+KsCUst7lQncUamRrPwSsH4QxC4JZ0KrjBoFrlLRhEbsyUOEMIJcN7yfXcc
+ 2amJMtMxJ+Qcyw1FmmuQRBmYyBdK4fuJXaPLC96su3bD9KRLlw6BQ1Zw6+kULaHTvZLnIFt
+ zwy/fd2OESNEG41FcyK5g==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:vA+c6s76AlY=;r9vRNa/sivZb56WkrHqTOCFR1aU
+ iRuUByT9okjzWz9lICb9n8mOhkwgDJwpF99GpOJg4BPrjON+x9AAeKWe4wjZv4K3nSFuqjG7j
+ zf9fYrVu+O7WSxSTOeFY0bS2h183lBq/ZrsRr/lbXIvscY2Lzhq5a5htb7WN8mMvItFqy8aeu
+ K8zcFmUHWZUBXjEKBQRCkjIaIZSSCYisTLvcdqW952J9qJmxcLeMtlk4eCKcXnFX6yZRADa8K
+ BIuMoOP1501Uhn2hnXsdGoWvzf0tzJ96Syw/wAkPHITkSepLw2N1RqhxwwM+NJiSmzAOjuIiB
+ CzYIKqxN5RW9ELfDY4WddIXIZlrEXEtKrtbXyHPtEXh8z+jsBf959/Mt/I6Yq34wIlgpdiu85
+ +ketsWgJtwI9JJ8/r7DzcJp6jYB/ymrHIETRffuuG34agj6Xc04DrZIeaW77VQ5eSXMWAzhvb
+ xq5dfJPsvPgfWRYoeQR1WQeEue9ArJ4osKwYY31LwbeY0zgtvAAlc+4KyWddXAfzkVNHmQSpo
+ ODYyjstJz1W+gWNOgJMWUss739FFl1L7Mninu0WrGFha2jEzAyCKWLWo1NPcV0dUyeAlCoKJL
+ 265FwInFJjKFL9/jweW5P1FeyYYR/7sftaFEdDApzWnG08vkW3h/Yc6qFSxODTjtHPivVSJho
+ 7rch1MIAYSJdotWYZA1BPNV+vHRD8w92wDl61mwOniHPnebSavxnkg1fEvKKhD3h10YEB6dX0
+ UCWiXNoYOEc/yodAQFrK6VjPIoiMiWMbg==
 
-On Wed, Oct 30, 2024 at 08:09:21AM +0100, Jens Glathe via B4 Relay wrote:
+On 30.10.24 08:25, Krzysztof Kozlowski wrote:
 
-> +&pcie2a {
-> +	aspm-no-l0s;
+> On 30/10/2024 08:09, Jens Glathe via B4 Relay wrote:
+>> From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+>>
+>> Add compatible values for the Microsoft Windows Dev Kit (WDK2023)
+>> with its codename "blackrock". The Dev kit is a small desktop box
+>> based on the mainboard of the Surface pro 9 5G, intended for
+>> developers to test/build arm64-based Windows software.
+>> Link: https://learn.microsoft.com/en-us/windows/arm/dev-kit/
+>>
+>> Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+> You got one reply, then another with bigger instruction, yet you ignored
+> both of them.
+>
+> Best regards,
+> Krzysztof
+>
+Sorry, misunderstanding. Will be there in v6.
 
-There is no such property in the binding (or driver) and L0s is disabled
-for all controllers on sc8280xp.
+with best regards
 
-(I think I used a property like this in an early version of the patches
-that ultimately disabled L0s however).
+Jens
 
-> +	max-link-speed = <16>;
 
-That's pretty fast. And not supported as this would indicate PCIe
-Gen16...
-
-> +
-> +	perst-gpios = <&tlmm 143 GPIO_ACTIVE_LOW>;
-> +	wake-gpios = <&tlmm 145 GPIO_ACTIVE_LOW>;
-> +
-> +	vddpe-3v3-supply = <&vreg_nvme>;
-> +	vdda-supply = <&vreg_l7d>;
-> +
-> +	pinctrl-0 = <&pcie2a_default>;
-> +	pinctrl-names = "default";
-> +
-> +	status = "okay";
-> +};
-> +
-> +&pcie2a_phy {
-> +	vdda-phy-supply = <&vreg_l4d>;
-> +	vdda-pll-supply = <&vreg_l6d>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&pcie4 {
-> +	aspm-no-l0s;
-
-As above.
-
-> +	max-link-speed = <2>;
-> +
-> +	perst-gpios = <&tlmm 141 GPIO_ACTIVE_LOW>;
-> +	wake-gpios = <&tlmm 139 GPIO_ACTIVE_LOW>;
-> +
-> +	vddpe-3v3-supply = <&vreg_wlan>;
-> +	vdda-supply = <&vreg_l7d>;
-> +
-> +	pinctrl-0 = <&pcie4_default>;
-> +	pinctrl-names = "default";
-> +
-> +	status = "okay";
-> +};
-> +
-> +&pcie4_port0 {
-> +	wifi@0 {
-> +		compatible = "pci17cb,1103";
-> +		reg = <0x10000 0x0 0x0 0x0 0x0>;
-> +
-> +		vddrfacmn-supply = <&vreg_pmu_rfa_cmn_0p8>;
-> +		vddaon-supply = <&vreg_pmu_aon_0p8>;
-> +		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
-> +		vddwlmx-supply = <&vreg_pmu_wlmx_0p8>;
-> +		vddpcie1p8-supply = <&vreg_pmu_pcie_1p8>;
-> +		vddpcie0p9-supply = <&vreg_pmu_pcie_0p9>;
-> +		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
-> +		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
-> +		vddrfa1p8-supply = <&vreg_pmu_rfa_1p7>;
-> +
-> +		qcom,ath11k-calibration-variant = "volterra";
-
-IIRC the other calibration variants use all upper case here. And is
-Volterra sufficient? No vendor prefix or similar needed?
-
-I think you need to get this acked by the ath11k maintainer (Kalle Valo)
-first.
-
-> +	};
-> +};
-
-> +&remoteproc_adsp {
-> +	firmware-name = "qcom/sc8280xp/microsoft/blackrock/qcadsp8280.mbn";
-
-Shouldn't these paths reflect the DMI values as on the X13s?
-
-> +&usb_0_hsphy {
-> +	vdda-pll-supply = <&vreg_l9d>;
-> +	vdda-phy-supply = <&vreg_l4d>;
-
-The binding does not include a vdda-phy supply (same for the other HS
-PHYs).
-
-Where did this come from?
-
-> +	vdda18-supply = <&vreg_l1c>;
-> +	vdda33-supply = <&vreg_l7d>;
-> +
-> +	status = "okay";
-> +};
-
-Johan
 
