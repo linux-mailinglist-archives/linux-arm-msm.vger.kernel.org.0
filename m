@@ -1,167 +1,194 @@
-Return-Path: <linux-arm-msm+bounces-36363-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36364-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D30D9B5C20
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 07:59:46 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4D4E69B5C36
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 08:03:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 513B82842C0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 06:59:45 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6FE931C20F67
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 07:03:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8DA771DC184;
-	Wed, 30 Oct 2024 06:59:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8C2D1DE4FF;
+	Wed, 30 Oct 2024 07:03:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="caMjyRok"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="eIDSyPEa"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87BE31CFEA0;
-	Wed, 30 Oct 2024 06:59:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B73D51D1309;
+	Wed, 30 Oct 2024 07:02:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730271580; cv=none; b=tDK96ZIWMU0+1NnwiB7vSZpXJP56IEZDCnZlKMpmPBLiryQmiypEFAY7wRJnR0E55UahTl4pkR7OpCrWS8ADSlnuW2aJ83+4UrAXhcy0Oent7zgiRxNtDVCcyHNkpc4yv1IYkfSlMZ9DYEilEczrY8XeLJmF+ta8Pp/fFlOUCwc=
+	t=1730271780; cv=none; b=Mvvq+aFrnAA75luommJTAUun/fSDWwS8tYpnVBp8TveGJueVh9kcggehQLKFtX6B+m2MyVgD5CAmbHg2CG2gdd07o3wtEm0QJ4MV1m8jlF6811xyE2kAAZJUBWycpZAD7njwN+VN9qCcvTcmLMv5rZjiHBmKXIwdmvUbpJqdZ7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730271580; c=relaxed/simple;
-	bh=hYef1UAdkNfUtjKckYGh47Zsrm0EAjXPBUz8fPcgNaU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=p45u77GHRuLKE4lof+aEl85x1thoiCeJEIqaTvgoBkM0Bc8hnKeehUHKaFKHseZ5ugrDw3ecQac+qJ/CdWRV/YRSL2dBceK5JoVpSp5NV8NgelLeLwjgCA7ip/1noBwZVnsegwuKM4m7pb/YaaN5mAGpo13jzbC6U2VnXCLSyn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=caMjyRok; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1730271780; c=relaxed/simple;
+	bh=HBHqqFJwlLZrnHKzABOXS58x4463lPh4o709iKwhKMo=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=InLGuLCeIoe5PBq08ZKhGpJRcqhaB7ZOssykdZ+tz6uU0+wD2blHpoXdl5YxStYnryiPgtSsEgDEfD6REvJLI1Oj/yT6RgyGiSvzWkTRIckqs1urgXWIHRNuPDSp6Q2Aly+Gjhp0kmnEDdtMa+d9zKJ6tUS2ywrw61bXgWOsQ14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=eIDSyPEa; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49TLJumd017530;
-	Wed, 30 Oct 2024 06:59:34 GMT
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49TM0ebj012773;
+	Wed, 30 Oct 2024 07:02:43 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	5ljvihIfFExUH52EvOk/obUHsk368hEW128UZHcAR3c=; b=caMjyRokjvNvwT2V
-	v833STgrm7pXwfDWZ2+hZDBbRKbBelnyS3KW+DOwJn36fQDSRr8MrB+RiWCclbPr
-	//Fcjld+8aIOitCXuNRtsFs8GLclS3i5JeuiMaNYGVKpMl6eIbzoW4JELIIQZq5R
-	7BZUv9MZuA03AduMVyptWX5TpIappm2wrYqPi7EkBiJEueK8fpbaCsZda5FBL/hi
-	ceQagn6PuVcrXWoU5D7YUP5i7HYMPSckNrS3dqjn6tCFx79GSb35D26ZUGuK3pdG
-	F4iefR7TEbiEwfLJi7u6zX5rzKORb1fk1F5+OErAlh7d1IyTLjDVoiJxcLbtRETb
-	tVvdlw==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42grt72vh0-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=/g/BCeSyts2ynUtbS5uAaJ
+	lBY7+gxxbs+JXVEycwaMs=; b=eIDSyPEaZZcYyWl/6pKz1MPw3hgOTlBEOMjn9+
+	WuBR5EBsgYVLmm5Ra4p9prNJmSqVmyOhuJj21FJ+UM4z1vdW0UOTbsTwOMlc3zRH
+	JpopOd6rViqm/+twvwJQagD2fWhG1Ab+5dLJiSFluOUKD2pqospAwQYScKJnrLtV
+	Azg34g6JZuHeI6hfRjg2GxQ4X/GDCx3027+zdST2Mth2oLhVUc6HXkRwA13rqkaH
+	wn62GWFuHBAfOmu6dTHt3RxgdeCP593ap8KqUylcXhfnRKC5TJ6YkWyRt1QCfZlW
+	AuTqmGEIWZGIJ7TDAw6aKewU4WUg6WuFLWxQUTxjKGzDOSfA==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42grguk1g5-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 30 Oct 2024 06:59:34 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49U6xXJo003223
+	Wed, 30 Oct 2024 07:02:42 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49U72bxQ019577
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 30 Oct 2024 06:59:33 GMT
-Received: from [10.216.48.13] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 29 Oct
- 2024 23:59:28 -0700
-Message-ID: <f7551a7a-885c-4f74-8f74-10f1c0ebe6ad@quicinc.com>
-Date: Wed, 30 Oct 2024 12:29:17 +0530
+	Wed, 30 Oct 2024 07:02:41 GMT
+Received: from [10.213.111.143] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 30 Oct
+ 2024 00:02:32 -0700
+From: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Subject: [PATCH v3 0/2] DRM/MSM: Support for Adreno 663 GPU
+Date: Wed, 30 Oct 2024 12:32:01 +0530
+Message-ID: <20241030-a663-gpu-support-v3-0-bdf1d9ce6021@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/6] dt-bindings: clock: qcom: Add GPU clocks for
- QCS8300
-To: Krzysztof Kozlowski <krzk@kernel.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette
-	<mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring
-	<robh@kernel.org>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAOnZIWcC/23OwW7DIAwG4FeJOI8JbEKgp73HtAMB0/rQJIMk2
+ lT13UdbbdK0Hf/f8mdfRKXCVMWhu4hCO1eepxbwqRPxFKYjSU4tC1BglNeDDNaiPC6brNuyzGW
+ VozZDHx04q6xoa0uhzB938vWt5RPXdS6f9wu7vrXfmPuL7VoqCX2mgBmTNenlfePIU3yO81ncu
+ B1+CK0A/iGgEehSQAdorB9+E9fHi4VaW3l9/CnGUEm2+ZnXQ5ds0iEhJKUGbShmn7X3Vg8Ybfa
+ ODMZ+bLcbdv0C3b6D00EBAAA=
+To: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        "Konrad
+ Dybcio" <konradybcio@kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, "Simona
+ Vetter" <simona@ffwll.ch>,
+        Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Ajit Pandey <quic_ajipan@quicinc.com>,
-        Taniya Das
-	<quic_tdas@quicinc.com>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>,
-        "Satya
- Priya Kakitapalli" <quic_skakitap@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20241024-qcs8300-mm-patches-v2-0-76c905060d0a@quicinc.com>
- <20241024-qcs8300-mm-patches-v2-1-76c905060d0a@quicinc.com>
- <jhwf2slcwvkpxggqt42mfmnyiibhbnvwtqk3to7ueq3ppla7q7@23qrl2z56ygu>
- <0487791a-f31b-4427-b13b-b7ab6a80378b@quicinc.com>
- <ae61b485-d3af-4226-b2f8-e89ef5b4ed71@kernel.org>
- <fff416f9-4ea7-4117-87b0-986087f8e142@quicinc.com>
- <9bd4c63b-7c68-4e40-9995-9d569eed15b5@kernel.org>
-Content-Language: en-US
-From: Imran Shaik <quic_imrashai@quicinc.com>
-In-Reply-To: <9bd4c63b-7c68-4e40-9995-9d569eed15b5@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Connor Abbott <cwabbott0@gmail.com>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>,
+        Puranam V G Tejaswi
+	<quic_pvgtejas@quicinc.com>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>
+X-Mailer: b4 0.14.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1730271752; l=2737;
+ i=quic_akhilpo@quicinc.com; s=20240726; h=from:subject:message-id;
+ bh=HBHqqFJwlLZrnHKzABOXS58x4463lPh4o709iKwhKMo=;
+ b=b+O+SWbc5uNySP8IKgSjq59mK1j53b1d4Qv2fmU0O7EZJ1aWkNpmv7wFP2se/3uwfBvU5harC
+ B7jjQeoW9PIBM/eZ4bXvp8OrK2qoSvWuWsaaOq7GDVwHRhAEQz+BSJL
+X-Developer-Key: i=quic_akhilpo@quicinc.com; a=ed25519;
+ pk=lmVtttSHmAUYFnJsQHX80IIRmYmXA4+CzpGcWOOsfKA=
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: k1kK1gxglV9b29xdG4fiIjcCcTKNzPeP
-X-Proofpoint-GUID: k1kK1gxglV9b29xdG4fiIjcCcTKNzPeP
+X-Proofpoint-ORIG-GUID: 3jArTnuVb_XlOuygw0eKXEAfGdlT_19q
+X-Proofpoint-GUID: 3jArTnuVb_XlOuygw0eKXEAfGdlT_19q
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 bulkscore=0
- adultscore=0 clxscore=1011 impostorscore=0 malwarescore=0
- priorityscore=1501 phishscore=0 mlxscore=0 suspectscore=0 mlxlogscore=554
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410300053
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1015
+ lowpriorityscore=0 adultscore=0 mlxscore=0 bulkscore=0 suspectscore=0
+ phishscore=0 spamscore=0 malwarescore=0 mlxlogscore=999 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2410300054
 
+This series adds support for Adreno 663 gpu found in SA8775P chipsets.
+The closest gpu which is currently supported in drm-msm is A660.
+Following are the major differences with that:
+	1. gmu/zap firmwares
+	2. Recommended to disable Level2 swizzling
 
+Verified kmscube/weston/glmark2-es2 with the below Mesa change [1].
+This series is rebased on top of msm-next.
 
-On 10/29/2024 3:06 PM, Krzysztof Kozlowski wrote:
-> On 29/10/2024 10:23, Imran Shaik wrote:
->>
->>
->> On 10/28/2024 12:35 PM, Krzysztof Kozlowski wrote:
->>> On 28/10/2024 06:15, Imran Shaik wrote:
->>>>
->>>>
->>>> On 10/26/2024 5:50 PM, Krzysztof Kozlowski wrote:
->>>>> On Thu, Oct 24, 2024 at 07:01:14PM +0530, Imran Shaik wrote:
->>>>>> The QCS8300 GPU clock controller is mostly identical to SA8775P, but
->>>>>> QCS8300 has few additional clocks and minor differences. Hence, reuse
->>>>>> SA8775P gpucc bindings and add additional clocks required for QCS8300.
->>>>>
->>>>> IIUC, these clocks are not valid for SA8775p. How do we deal with such
->>>>> cases for other Qualcomm SoCs?
->>>>>
->>>>
->>>> These newly added clocks are not applicable to SA8755P. In the
->>>> gpucc-sa8775p driver, these clocks are marked to NULL for the SA8755P,
->>>> ensuring they are not registered to the CCF.
->>>
->>> I meant bindings. And existing practice.
->>>
->>
->> In the bindings, the same approach is followed in other Qualcomm SoCs as
->> well, where additional clocks are added to the existing identical SoC’s
->> bindings.
->>
->> https://lore.kernel.org/r/20240818204348.197788-2-danila@jiaxyga.com
-> 
-> Exactly, defines are very different, so no, it is not the same approach.
-> 
+Since they are already picked up, I have dropped the patches for msm-next
+in this revision. Remaining 2 devicetree patches are for Bjorn.
 
-I believe the QCS8300 approach is same as that of SM8475. In the SM8475 
-SoC, GPLL2 and GPLL3 are the additional clock bindings compared to the 
-SM8450. Similarly, in the QCS8300, the GPU_CC_*_ACCU_SHIFT_CLK clock 
-bindings are additional to the SA8775P.
+Devicetree changes have a runtime dependency on the Display DT change [2].
 
-We are also following this approach across all SoCs in the downstream 
-msm-kernel as well.
+[1] https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/31211
+[2] https://patchwork.freedesktop.org/patch/620500/?series=140216
 
-Please let me know if I am missing anything here.
+To: Rob Clark <robdclark@gmail.com>
+To: Sean Paul <sean@poorly.run>
+To: Konrad Dybcio <konradybcio@kernel.org>
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Marijn Suijten <marijn.suijten@somainline.org>
+To: David Airlie <airlied@gmail.com>
+To: Simona Vetter <simona@ffwll.ch>
+To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+To: Maxime Ripard <mripard@kernel.org>
+To: Thomas Zimmermann <tzimmermann@suse.de>
+To: Rob Herring <robh@kernel.org>
+To: Krzysztof Kozlowski <krzk+dt@kernel.org>
+To: Conor Dooley <conor+dt@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>
+To: Connor Abbott <cwabbott0@gmail.com>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: dri-devel@lists.freedesktop.org
+Cc: freedreno@lists.freedesktop.org
+Cc: linux-kernel@vger.kernel.org
+Cc: devicetree@vger.kernel.org
 
-Thanks,
-Imran
+-Akhil
 
-> Best regards,
-> Krzysztof
-> 
+---
+Changes in v3:
+- Rebased on the latest msm-next tip
+- Added R-b tags from Dmitry
+- Dropped patch #1 and #2 from v2 revision since they are already
+picked up in msm-next
+- Link to v2: https://lore.kernel.org/r/20241022-a663-gpu-support-v2-0-38da38234697@quicinc.com
+
+Changes in v2:
+- Fixed ubwc configuration (dimtry)
+- Split out platform dt patch (dimtry)
+- Fix formatting in the dt patch (dimtry)
+- Updated Opp table to include all levels
+- Updated bw IB votes to match downstream
+- Rebased on top of msm-next tip
+- Link to v1: https://lore.kernel.org/r/20240918-a663-gpu-support-v1-0-25fea3f3d64d@quicinc.com
+
+---
+Puranam V G Tejaswi (2):
+      arm64: dts: qcom: sa8775p: Add gpu and gmu nodes
+      arm64: dts: qcom: sa8775p-ride: Enable Adreno 663 GPU
+
+ arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi |  8 +++
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi      | 94 ++++++++++++++++++++++++++++++
+ 2 files changed, 102 insertions(+)
+---
+base-commit: d6d1ad32d00714ecf9f1996173c6f98e43c5b022
+change-id: 20240917-a663-gpu-support-b1475c828606
+
+Best regards,
+-- 
+Akhil P Oommen <quic_akhilpo@quicinc.com>
 
 
