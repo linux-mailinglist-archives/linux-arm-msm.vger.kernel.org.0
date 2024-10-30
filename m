@@ -1,142 +1,179 @@
-Return-Path: <linux-arm-msm+bounces-36468-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36469-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 068D49B696A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 17:42:57 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 46B5E9B6A3B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 18:08:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B96EA281ECB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 16:42:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 787951C22A17
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2024 17:08:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CE1B215005;
-	Wed, 30 Oct 2024 16:42:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B44421A6FA;
+	Wed, 30 Oct 2024 16:58:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a0g7pG/M"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ThTJtD6V"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
+Received: from mail-il1-f173.google.com (mail-il1-f173.google.com [209.85.166.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D1E628F7;
-	Wed, 30 Oct 2024 16:42:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D68821745E;
+	Wed, 30 Oct 2024 16:58:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730306572; cv=none; b=PLlnN7mA6yftBF/oFF/yGY+t41nTC3XlzX3zSLiUB8SvyJd+7uhFmX+st53PqqIfsu4TYvBcnsiIe1JdBYM5qtof+4WJvWY8t/8Bh7M/ZZ7mZ2Ply/LlRdEHfDNwIAE/xFy4R988UOd2TcJsM6GfIf4LD+e9jG+Fh7kCOD9+/Yw=
+	t=1730307533; cv=none; b=c0+yVoUF6Atg/KPa3reGIKwDSy0i35Kqj59jbGR1Q8iE5otoAAUfTsr9W5egAW2SYRpKWLJPmUoNXAou9YM0GLJnG90hjzJyBxSFc0zKSZubReMxLc9Lm9WcewLjxKG0kEsZhz5t6IHdWMGmhTFAQSNbPdCbPUZUBRU59nYyr34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730306572; c=relaxed/simple;
-	bh=5xjpOCeLDUgrrz6mIFaffw2Gl/gRe/dRQDUDilNTcpU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CoHYqfHd094AUQCzUplG5XYBDNQLWRzPUvexxlQ/NG+I8NNg4SaqgctmVDmelWAfW/EiHV2E+XQ3+aRHs1tVujdtOyebGl+EcRg2aukuFD9Hoqbsq5oNmPWcPGs2OSUkziDNCER8TSMTSYLCP3g3PYErzHbnYHHQmBnJfY/4COc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a0g7pG/M; arc=none smtp.client-ip=209.85.167.176
+	s=arc-20240116; t=1730307533; c=relaxed/simple;
+	bh=ZaNj72bHwwAgPrYGtNeBr2dlriKJWTyEW9RryZ6X9Ok=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=g0jftW0n/ceL2gE0diQNRb+heoaTyJrCGmpKAJLbQTxSeabhMMMFevwsQ7YB4sReYJImhnvz06CooisoYlm9/eqQBbIgX1UpB2P7rBGYH3iWKGp151KBggLoEUB2KRCskAZwYr69xfGDmPVoPFXAm8N3BIl3wM8Gzsw0AO2zbEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ThTJtD6V; arc=none smtp.client-ip=209.85.166.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oi1-f176.google.com with SMTP id 5614622812f47-3e6005781c0so33961b6e.3;
-        Wed, 30 Oct 2024 09:42:50 -0700 (PDT)
+Received: by mail-il1-f173.google.com with SMTP id e9e14a558f8ab-3a3a5cd2a3bso69755ab.3;
+        Wed, 30 Oct 2024 09:58:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730306569; x=1730911369; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=upSDuC1ThIa1MLUW5v1BgSDrV6IlSUCAGHtCh8ZshGc=;
-        b=a0g7pG/MWkkJrWBf/iTLq3i9j8kOhP18Q5qWF/X2R+e8bj4Sm/pgaOxaNRaWQn65xQ
-         LyRhQ91sS51QUWpVh4SUydgHybmYd+hj1d0g+SoLCtEjR6Dr9OIqgdLHvI/lc3dq9gue
-         yAXh60TYOy9TrlqA4scOrcZF99P6gfH8UN+iCCDqggQJXmb/AKikLDSkUUnrIw6x2OOQ
-         ESicDIsRiuHKJ02R9X0mQ7FJq0/hF984F1DdGn1F92mrdEQ7vo9BlzE1G7eas1XXrvLK
-         sCD1nh6Cs/4ySv6FhjihCMVnKohI71x/PoyGeNs2QHKhJD2I5COsDNVZIkq/Lvsyai32
-         7vGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730306569; x=1730911369;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1730307530; x=1730912330; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=upSDuC1ThIa1MLUW5v1BgSDrV6IlSUCAGHtCh8ZshGc=;
-        b=n6AhcpR6WUih8qj80hw1VxsPyie2u0GJFt/Vw1qkOXmpF6VpIJnseH+35gz2fgQ6UH
-         RADAQXSd4AWTbGp8xIxvnXoqRyQjja4tVMmRjVGeOTDsQ+t4yLpdYY2mO5gO2GSVs/Y0
-         ZGDPFnGzKLMlHHeL1LdIXOerEmpyyEAS315ALYwMobwZjkAzzBlGFBBrxdcdJky3SRNm
-         5xb4fBqj5M6V2UarzTSfkmP7RzHFEwbUv+2NuV7tE+pEXK3sieojbHF6Asc2tYGDmuFm
-         CeRH24yaN9dBoeP7kZKJtbr4YK0RJeTOW/K3zmyPay99tcsxdbKiuYWgfv8GN76cuxS4
-         p7cA==
-X-Forwarded-Encrypted: i=1; AJvYcCUeDeZQ6A/AyMJSsrXfJirubOk1wNEtsD1Da2uQExoTDxQ4r9evwaNwdsXa3tAPcjZRavvkoi5+gg==@vger.kernel.org, AJvYcCWFaLqXnMm96sK0Q5JKCsNty2xIKtijn3KA2jUFNr674SXVUsPEdR6FPFJ7pmNaBnNIIqnealpObhhfXgqnZQ==@vger.kernel.org, AJvYcCXy13PBTvDSkmqijHve1i23y028gQ7j941QqqDjsA4a2GoxY1B9ZD9pui6CkYq6AP3Bz78RlEkXkVE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwNe0ClpPnBDc6U7uKPhLZ3OFiUAJYvUFcah5vEzY+lN7mbAzAX
-	E0nI892rpqhhuvu4az+ZOJheS/YTpqujV1tETGvlUgKfijUN4eeE
-X-Google-Smtp-Source: AGHT+IHL1aIqEXulP9B4SfFxolZuQqmmUNNlYSLSaXx4g8iw5vjflDUjFis9TIxnhkRmWiBuQlo1PA==
-X-Received: by 2002:a05:6808:30a9:b0:3e6:1473:19d6 with SMTP id 5614622812f47-3e6583bdbcemr4558447b6e.29.1730306569452;
-        Wed, 30 Oct 2024 09:42:49 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6d1798a84absm53560346d6.39.2024.10.30.09.42.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Oct 2024 09:42:47 -0700 (PDT)
-Message-ID: <f4142cda-c8e0-48c8-aff3-4dfa942b37fa@gmail.com>
-Date: Wed, 30 Oct 2024 09:42:44 -0700
+        bh=TSgEGqLSHYW5dJnL+akJvNntnbwcTcLxiNTHrobsiFM=;
+        b=ThTJtD6VFpkxuTR7Ql0rZp4tZQA/KDkFD5UzJvMbPXAH2yfktUbo5Q/TRKENFftReg
+         cJDZ32GdUs7yFjuPyFce+phj8ctR/+aM0EP581K0t0/K1BIWKPEXYR2hiGrI/dTKrf4+
+         ARd872PbZ551kFlfBIWwMwiXcHAtYIgQsUxoxjdiBlSDxoFhVpWVRHlT3xYAgDeogr/t
+         mPYIAhObsksslxjdCKT2LruBNbD17X3zn6/nsksceqOQTTBETvegRJi8rdNEyl6pRByF
+         /xpG/rLSNgz7Xu8ku2TpIGSdUi55n6pxyH5y1MhX/gVgxq82FKKX8H2phPsJZrI9TYBx
+         bTjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730307530; x=1730912330;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=TSgEGqLSHYW5dJnL+akJvNntnbwcTcLxiNTHrobsiFM=;
+        b=iKAoYClNQgNWI0DW6WhVyTMZDs9SNPXI0qR1e4m9sdJ2gxcEJARd5rF1oN8DVMYx1g
+         TluCaPc5RWBXNGvtnGE5lE9vgsuIttN3FcnpBJFJemO9b60TXBNYkrg5Yvj/kCsZBqcj
+         HEaQF+0Zii4YK8GQhir3H51fEtx9+Ue714fmnoIOBbCi6GgXRIlEdZSKf5CcjK1czPYx
+         zMlSb4b1XiyLZdxMSR2z+9LzWg8SBiu2GsTzSvTjlq3ZWfyCM/ht3Kt4pLny4exm5isH
+         YMyFJumm3m1x7rLACA2IOUE3X1qQjfKjH9BvIapBZFY22Rwj+36rjXo6RvUBC80AYcXD
+         i9aw==
+X-Forwarded-Encrypted: i=1; AJvYcCVyPV+u8+UZB+SBcRYZBHZQVQ2kUrQDpACRHYq36f6VNE7M2VKLNJIkwkq5l592LgwdFwJNFoma4PSDJljD@vger.kernel.org, AJvYcCWT6tZBSa2nRsahlD9BtP3uc1sVSMkLY1Vq1jA5uJpQYFJbHAeAFWyeimn8PS/1n9n27fojN7OegdohTEdn@vger.kernel.org
+X-Gm-Message-State: AOJu0YzcXwpby+ErBld9fdUEo6QGnqfgRkd7+nQgZmTVPlWlAZrBaakb
+	YcgQBOFo9wbh+EmtiCATc4utT4fp3S6JSnMTHB6K9jixsJRg6ZQqV7VOcH2SLN2ainjimtfR6In
+	Mxcbxm5TqkugjOa3x9C2wwUCZ5lk=
+X-Google-Smtp-Source: AGHT+IGmbmSXox8oAVQKBdxqprSBcxGpJ91Xocq6QrwRiJgePmhF7ve9q4dPiAMajWeQWmKzteD5uHeTwomcrUrLAXY=
+X-Received: by 2002:a05:6e02:1a4e:b0:3a3:b4ec:b400 with SMTP id
+ e9e14a558f8ab-3a4ed2df0f2mr181154985ab.17.1730307530123; Wed, 30 Oct 2024
+ 09:58:50 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V5 3/6] firmware: arm_scmi: Report duplicate opps as
- firmware bugs
-To: Sibi Sankar <quic_sibis@quicinc.com>, sudeep.holla@arm.com,
- cristian.marussi@arm.com, johan@kernel.org, ulf.hansson@linaro.org,
- jassisinghbrar@gmail.com, dmitry.baryshkov@linaro.org
-Cc: linux-kernel@vger.kernel.org, arm-scmi@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- konradybcio@kernel.org, linux-pm@vger.kernel.org, tstrudel@google.com,
- rafael@kernel.org, Johan Hovold <johan+linaro@kernel.org>
-References: <20241030125512.2884761-1-quic_sibis@quicinc.com>
- <20241030125512.2884761-4-quic_sibis@quicinc.com>
-Content-Language: en-US
-From: Florian Fainelli <f.fainelli@gmail.com>
-Autocrypt: addr=f.fainelli@gmail.com; keydata=
- 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
- HGuUuzv+GKZ6nsysJw==
-In-Reply-To: <20241030125512.2884761-4-quic_sibis@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20241008125410.3422512-1-quic_bibekkum@quicinc.com>
+ <20241008125410.3422512-4-quic_bibekkum@quicinc.com> <2d651f1b-4f51-4984-903f-7f5a14151f84@arm.com>
+ <531d0144-e027-4589-b4ef-79f02583df8b@quicinc.com> <65132b36-49f6-4b08-8e7d-6d6cb8da5960@arm.com>
+In-Reply-To: <65132b36-49f6-4b08-8e7d-6d6cb8da5960@arm.com>
+From: Rob Clark <robdclark@gmail.com>
+Date: Wed, 30 Oct 2024 09:58:38 -0700
+Message-ID: <CAF6AEGvAYeY-fuk1Dg-0gsrod7Dy91qifKvChCd03=bs_zfs-g@mail.gmail.com>
+Subject: Re: [PATCH v16 3/5] iommu/arm-smmu: add support for PRR bit setup
+To: Robin Murphy <robin.murphy@arm.com>
+Cc: Bibek Kumar Patro <quic_bibekkum@quicinc.com>, will@kernel.org, joro@8bytes.org, 
+	jgg@ziepe.ca, jsnitsel@redhat.com, robh@kernel.org, 
+	krzysztof.kozlowski@linaro.org, quic_c_gdjako@quicinc.com, 
+	dmitry.baryshkov@linaro.org, iommu@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 10/30/24 05:55, Sibi Sankar wrote:
-> Duplicate opps reported by buggy SCP firmware currently show up
-> as warnings even though the only functional impact is that the
-> level/index remain inaccessible. Make it less scary for the end
-> user by using dev_info instead, along with FW_BUG tag.
-> 
-> Suggested-by: Johan Hovold <johan+linaro@kernel.org>
-> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+On Wed, Oct 30, 2024 at 8:23=E2=80=AFAM Robin Murphy <robin.murphy@arm.com>=
+ wrote:
+>
+> On 30/10/2024 1:14 pm, Bibek Kumar Patro wrote:
+> >
+> >
+> > On 10/29/2024 6:59 PM, Robin Murphy wrote:
+> >> On 2024-10-08 1:54 pm, Bibek Kumar Patro wrote:
+> >>> Add an adreno-smmu-priv interface for drm/msm to call
+> >>> into arm-smmu-qcom and initiate the PRR bit setup or reset
+> >>> sequence as per request.
+> >>>
+> >>> This will be used by GPU to setup the PRR bit and related
+> >>> configuration registers through adreno-smmu private
+> >>> interface instead of directly poking the smmu hardware.
+> >>>
+> >>> Suggested-by: Rob Clark <robdclark@gmail.com>
+> >>> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+> >>> ---
+> >>>   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 37 +++++++++++++++++++=
++++
+> >>>   drivers/iommu/arm/arm-smmu/arm-smmu.h      |  2 ++
+> >>>   include/linux/adreno-smmu-priv.h           | 10 +++++-
+> >>>   3 files changed, 48 insertions(+), 1 deletion(-)
+> >>>
+> >>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/
+> >>> iommu/arm/arm-smmu/arm-smmu-qcom.c
+> >>> index 6e0a2a43e45a..38ac9cab763b 100644
+> >>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> >>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> >>> @@ -25,6 +25,7 @@
+> >>>
+> >>>   #define CPRE            (1 << 1)
+> >>>   #define CMTLB            (1 << 0)
+> >>> +#define GFX_ACTLR_PRR        (1 << 5)
+> >>>
+> >>>   static struct qcom_smmu *to_qcom_smmu(struct arm_smmu_device *smmu)
+> >>>   {
+> >>> @@ -109,6 +110,40 @@ static void
+> >>> qcom_adreno_smmu_resume_translation(const void *cookie, bool termina
+> >>>       arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_RESUME, reg);
+> >>>   }
+> >>>
+> >>> +static void qcom_adreno_smmu_set_prr_bit(const void *cookie, bool se=
+t)
+> >>> +{
+> >>> +    struct arm_smmu_domain *smmu_domain =3D (void *)cookie;
+> >>> +    struct arm_smmu_device *smmu =3D smmu_domain->smmu;
+> >>> +    const struct device_node *np =3D smmu->dev->of_node;
+> >>> +    struct arm_smmu_cfg *cfg =3D &smmu_domain->cfg;
+> >>> +    u32 reg =3D 0;
+> >>> +
+> >>> +    if (of_device_is_compatible(np, "qcom,smmu-500") &&
+> >>> +            of_device_is_compatible(np, "qcom,adreno-smmu")) {
+> >>
+> >> These conditions aren't going to change between calls - wouldn't it
+> >> make more sense to conditionally assign the callbacks in the first
+> >> place? Not the biggest deal if this is a one-off context-setup type
+> >> thing, just that it looks a little funky.
+> >>
+> >
+> > Let me know if you want to pursue this still.
+> >  From the current PRR implementation in the graphics
+> > vendor layer, this seems to be just setup kind-of thing.
+> > Also if we keep this conditional check before assigning callbacks,
+> > and vendor layer caller won't be having any such check,
+> > wouldn't it be an issue in unsupported platforms (!qcom,smmu-500 or
+> > !qcom,adreno-smmu)
+> > as the callbacks won't be assigned?
+> > So as per my understanding I think it would be safe to keep the
+> > condition check here?
+>
+> Like I say, it makes more sense to me personally if SMMUs which don't
+> have a PRR don't offer a callback for setting the PRR which they don't
+> have, and for it to be the caller's responsibility not to call a NULL
+> callback where they wouldn't need to call one anyway. But the
+> adreno_priv interface is kind of Rob's thing, so I'll leave it to his
+> preference.
 
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
+We can go the route of NULL cb if it is not supported (but should make
+note of that in the adreno-smmu-priv.h header comment)
+
+BR,
+-R
+
+> Thanks,
+> Robin.
 
