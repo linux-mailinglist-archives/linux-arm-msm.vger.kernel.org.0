@@ -1,64 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-36536-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36537-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 60FDF9B7672
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 09:26:55 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6CD369B767A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 09:29:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 932FF1C21B17
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 08:26:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 17C861F2332E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 08:29:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7963C1591E8;
-	Thu, 31 Oct 2024 08:26:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D609B16E860;
+	Thu, 31 Oct 2024 08:29:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mmn+VOHJ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pmoC2mo0"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4642415574C;
-	Thu, 31 Oct 2024 08:26:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A80BB148832;
+	Thu, 31 Oct 2024 08:29:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730363205; cv=none; b=ui7l/ZbjfS4Wqnr+nEgZcFlfTR+06cGPO5wov7Aro6RqcQ1sat31oq9OlqJvH15VV/2Wa7ZwQqMe2LrxpV8h6Jssw8ItvltKaomAqunDd1Sn3J845BO1mxeWBDtJTiAUKw0rD0Jjc7HnLdCnNJfk9Bdj09+OiyxCH5MitO/zzxQ=
+	t=1730363355; cv=none; b=SBSqbBS5AwM/oc9tD3dBlssX8HOOndT2Iq46szNCpWg6nM00LJ4w+iOce5Lc8mKZRDmmKQ8SZxfg7dfXBJqLvi0c1JJmqPMg9j3xQ8aSM3LiD8NZE+Rv1JJT0nSB8UN7kuea0gKNWeyJarODiFdqxseuW4OOIRLuyLR1G/mv3ZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730363205; c=relaxed/simple;
-	bh=8uB0xeZj8MIs5nP/n7CthToLpfCqShDh88AQhvVlYI0=;
+	s=arc-20240116; t=1730363355; c=relaxed/simple;
+	bh=HUJKSjVqr/C9IyyCjAqJ8nw6R24KeTevM9EzbDzH414=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=vAH2ZjUmn9IgA9ejE7IGooZvrlkjL97LjCpwCr2lhUmGtJH2uW6y4K4L9oKJN+mHjUl9IlSL0YXrBaKz6/oxVC8muVSFUo2L6gZ2t1KWGZiqa7dZ2aQmO1kNItdIXCAdSRNhzuI6zoMLUSj43CewhXI45iI2N3Rnd/sfQGTtAZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mmn+VOHJ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 141C2C4CEC3;
-	Thu, 31 Oct 2024 08:26:43 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=kN05K6+PRhIeVdRaXc/ZNVTWvtMTM0rBZe/Thpi67b9stljF6FWDov1LHq4chERogDx6UBHxFnqO3z2UvitS+SC3laHs2aa3WU8ayJVXJ1ME4Gm+q8tzX5Lnz13pgRH/1Dl48wSLC+AWpqWKKxHPE7odYvSFp9uosMpmMvuM+jo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pmoC2mo0; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B5ACC4CED2;
+	Thu, 31 Oct 2024 08:29:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730363204;
-	bh=8uB0xeZj8MIs5nP/n7CthToLpfCqShDh88AQhvVlYI0=;
+	s=k20201202; t=1730363355;
+	bh=HUJKSjVqr/C9IyyCjAqJ8nw6R24KeTevM9EzbDzH414=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=mmn+VOHJxIWNaWpsKwX1iUy2kD4oXN8a+MmnkH+8V4wKQt+Bf4qVxAAUtflJhwkNS
-	 7qO/K4AOwLHwpVwo/elm94gbuA1etS5TzbEMmubqsbvUVWFXPIdeVPMigSX/i+bBCE
-	 JVGUG04dxoc8zHh75+uHpOLpHVVXS4a61wsy7n322ZjeDFSsWDTnLBnM4brd2I/J0h
-	 24SwW0Ch4LFQtEa3QTqRVex8XF3gMSFytkGSQsQimBousL7GtgoSsASP2qvFubzEMN
-	 TlXKaYKp5BtHR6q0nMcrVnViJ3G2WeGLuLXR59Ebw/9gPU9DVLSd+9DLytPC8/Z/RC
-	 0MT4z+phn3u3A==
-Date: Thu, 31 Oct 2024 09:26:41 +0100
+	b=pmoC2mo0J3M/qIU1U/SMCdyF1ptX5aYWAPYcvOJbdd7nE6wipU78blWRyaJfyCuPh
+	 X8UTrjZvw5WJf1qUs9HUvvlwIgKUeg5RJ9VSLMViS6OhnUWCpLN8SfSs+OL2jOeI9x
+	 yYWdeMsC/kX9S3YhBYwcr9IbI/dmC9PtB7e37m7Yjuxr9iA4GhoE0Ea9wjnhFRFX+q
+	 nBUk8g93cvcSrxifpgasc+xSHtgtS79RYA+DwlS8wbdUYl9pv3bq30GQWZkFlhNFqk
+	 0ZKvkPxrtVa7IZd5/ejnaZwF6+9CBjgwEw+S2YK8LW7EKAFldwT3D3ZXynh003nAtA
+	 dTm2Ei+rs05JA==
+Date: Thu, 31 Oct 2024 09:29:11 +0100
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: =?utf-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <barnabas.czeman@mainlining.org>
+To: Gabor Juhos <j4g8y7@gmail.com>
 Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Lee Jones <lee@kernel.org>, Amit Kucheria <amitk@kernel.org>, 
-	Thara Gopinath <thara.gopinath@gmail.com>, "Rafael J. Wysocki" <rafael@kernel.org>, 
-	Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, 
-	Lukasz Luba <lukasz.luba@arm.com>, Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>, 
-	Robin Murphy <robin.murphy@arm.com>, Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
-	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, iommu@lists.linux.dev
-Subject: Re: [PATCH v2 11/15] dt-bindings: iommu: qcom,iommu: Add MSM8917
- IOMMU to SMMUv1 compatibles
-Message-ID: <ueag7zoppjxkczs55hnsrg7bdakel4rm5w6j5yurf5bcbj64cs@eq6xhuqctbnc>
-References: <20241031-msm8917-v2-0-8a075faa89b1@mainlining.org>
- <20241031-msm8917-v2-11-8a075faa89b1@mainlining.org>
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: arm: qcom: add missing elements to the SoC
+ list
+Message-ID: <hmk4d4dzasvas6o6xzdmvevdxmpaw6aszejt65ele4gqseljtz@njj52e4n24xd>
+References: <20241029-qcom-missing-socs-v1-1-c5bf587b0afc@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,20 +60,17 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20241031-msm8917-v2-11-8a075faa89b1@mainlining.org>
+In-Reply-To: <20241029-qcom-missing-socs-v1-1-c5bf587b0afc@gmail.com>
 
-On Thu, Oct 31, 2024 at 02:19:52AM +0100, Barnab=C3=A1s Cz=C3=A9m=C3=A1n wr=
-ote:
-> Add MSM8917 compatible string with "qcom,msm-iommu-v1" as fallback
-> for the MSM8917 IOMMU which is compatible with Qualcomm's secure
-> fw "SMMU v1" implementation.
->=20
-> Signed-off-by: Barnab=C3=A1s Cz=C3=A9m=C3=A1n <barnabas.czeman@mainlining=
-=2Eorg>
+On Tue, Oct 29, 2024 at 06:35:25PM +0100, Gabor Juhos wrote:
+> There are multiple compatible strings defined in the json schema
+> for SoCs which are not included in the SoC elements list. Extend
+> the list with those items for completeness.
+> 
+> Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
 > ---
->  Documentation/devicetree/bindings/iommu/qcom,iommu.yaml | 1 +
->  1 file changed, 1 insertion(+)
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
 
 Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
