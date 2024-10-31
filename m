@@ -1,61 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-36527-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36528-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 06F679B7575
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 08:36:53 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3BF9D9B761B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 09:13:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BE6A228307C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 07:36:51 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BEEEAB20F26
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 08:13:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 71C63149C69;
-	Thu, 31 Oct 2024 07:36:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D3916153565;
+	Thu, 31 Oct 2024 08:13:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ahwbu6H5"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TgaO/6gd"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20864149C54;
-	Thu, 31 Oct 2024 07:36:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C5221514CE;
+	Thu, 31 Oct 2024 08:13:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730360207; cv=none; b=dEAYdqcqW61SiV8Cp6csR4fFdiR7Gr2Xym77MSerUY1O3clL0/c17Dtv1CX2nHFh7UX8GrjbLXGlWu7U9hRJH5bPpKUURPFe8i5iEBgkTKOvW0Ofdw9vOgTykE/YQBYxCUDTgSo8cHof/VLwP7ULzpiEPj5qE3uIgd4iNLqJMMU=
+	t=1730362412; cv=none; b=IeFj4jQatkxwUGOh4BG8E7M2RuTLB+DfcchZ2AdaOC5fGDg7fqftdk2QILwUbNDg88vilzUqEYiwTGLD1jJEMbZ1s1YQaDZOsLxoMzYqKf/TaS2r4L/WMwtUodoYyLEl+BEF5lWqGOfijHXa9RgrhJbqvpep/JKrPIULYlAdneo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730360207; c=relaxed/simple;
-	bh=Q1aV6rGqCQlq2aELxThGs+q8I/yjm7V3satrDVXpHi0=;
+	s=arc-20240116; t=1730362412; c=relaxed/simple;
+	bh=7ETzBfcmI5lFNi0VEqJWRXsfMXxJ4zVNS1TzFSIy1/Y=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BXcwJKC+t816Q+ZxReX7HnusTreKXyoCdkee3wVIlcKm2mcez02rhKhGa5Bpe5S3zBivbFevl8CUPeJQfovl4b3xFLl7w08nitLi9ggk0YdQieSYdaCpA4G7dmJL6mmU5F2p6lpVqymka1img1/jY5kQlL0jPFP0jQZSNbGRmSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ahwbu6H5; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D789EC4CEC3;
-	Thu, 31 Oct 2024 07:36:45 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=ocGO4uhkZEpUkp0dyWxShpKnbG9TgvJAiS7YhyQyGkyxrj/71ieB5PRR61i4g2YHJuaB8r8vrg0bkeF812DfFYqER+rw3YRbIAW2KdlktJjBkH6tyHXmw4CXysHK2lymxR+S4LpHd6vhO6hstWziBLb0UgaCNe1qpIq8QmhP4QY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TgaO/6gd; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45721C4CEC3;
+	Thu, 31 Oct 2024 08:13:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730360206;
-	bh=Q1aV6rGqCQlq2aELxThGs+q8I/yjm7V3satrDVXpHi0=;
+	s=k20201202; t=1730362412;
+	bh=7ETzBfcmI5lFNi0VEqJWRXsfMXxJ4zVNS1TzFSIy1/Y=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Ahwbu6H5HG9lVu/5J77HI7tAOJuawifD1MFA/FuGxixJWdC+IRfrWJZl9Cop3NInD
-	 diUILWcIGV0F/JEejh/7cyibK7MBCjEJiHBeKqm5sE5qvb+uoXv8oiAti3YowG/TCA
-	 1FVdGDI3eJczqHNO6DeBd4lNTR7dLAMqwZb+6ISwmKAuefrq8yfbod3Mr3B8/KVizy
-	 QjZlCcjP9vzRJMn5Tc1JF8sqRWFjZXToego7Np9jlF8dw9CGvkdMt4llSA2d62Y6FO
-	 0yBpy5iHb/7AAStQ984O/fU8jGOvvMEJ/PViIutiM+Ei6Q/BtOknEHYbEzry9pH0Na
-	 aEBc7HQO5HMjw==
-Date: Thu, 31 Oct 2024 08:36:43 +0100
+	b=TgaO/6gdAu+crswbMGatp5O3XBeYDUfYPccVUBMSORYU3Iym+W4s2FY49I1iyb7fB
+	 SI+5gbKheKE7o6PMWCt6ZKVnw2XeKoSYPKw4id4ZXxfq9K81/TMs0+ezdvmExSjmZs
+	 sbb/NVVXDpG01/Iw/139LgTWD0dZ5Cj9Td3w3xbQMIW3qfv58+LBb2r/D/m1hswJrI
+	 Q8Na5sgP0c0p5tYicDIVD2fxb0m9bkKrZLWEqO+/D0gGelJfwvG/jwGV+RPQX7A5aw
+	 jJk6WAkTXqQrfzuRtG/PxIh/7A03lGq6xZwAsFUbSEl6qb1kACYENyt3Bn4xi+IjVR
+	 zoMLTTgCNttYQ==
+Date: Thu, 31 Oct 2024 09:13:27 +0100
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Jishnu Prakash <quic_jprakash@quicinc.com>
-Cc: jic23@kernel.org, robh+dt@kernel.org, 
-	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, agross@kernel.org, andersson@kernel.org, 
-	dmitry.baryshkov@linaro.org, konrad.dybcio@linaro.org, daniel.lezcano@linaro.org, 
-	sboyd@kernel.org, quic_subbaram@quicinc.com, quic_collinsd@quicinc.com, 
-	quic_amelende@quicinc.com, quic_kamalw@quicinc.com, amitk@kernel.org, lee@kernel.org, 
-	rafael@kernel.org, rui.zhang@intel.com, lukasz.luba@arm.com, lars@metafoo.de, 
-	quic_skakitap@quicinc.com, neil.armstrong@linaro.org, devicetree@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-pm@vger.kernel.org, cros-qcom-dts-watchers@chromium.org
-Subject: Re: [PATCH V4 0/4] Add support for QCOM SPMI PMIC5 Gen3 ADC
-Message-ID: <f2c2zxxmsk74rbgbhus7nyrxppwdeq2esgifigt7c326zzlmla@6vdb2rmbjptl>
-References: <20241030185854.4015348-1-quic_jprakash@quicinc.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Krishna Kurapati <quic_kriskura@quicinc.com>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 1/4] dt-bindings: arm: qcom-soc: extend to support
+ SAR2130P platform
+Message-ID: <23i2t2jsnm4mcnaxlzk2x6gyipu3fexw3d452wxrxgyzewkdtg@l5bxqhzcrwsw>
+References: <20241030-sar2130p-dt-v2-0-027364ca0e86@linaro.org>
+ <20241030-sar2130p-dt-v2-1-027364ca0e86@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,38 +62,54 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20241030185854.4015348-1-quic_jprakash@quicinc.com>
+In-Reply-To: <20241030-sar2130p-dt-v2-1-027364ca0e86@linaro.org>
 
-On Thu, Oct 31, 2024 at 12:28:50AM +0530, Jishnu Prakash wrote:
-> PMIC5 Gen3 has a similar ADC architecture to that on PMIC5 Gen2,
-> with all SW communication to ADC going through PMK8550 which
-> communicates with other PMICs through PBS. The major difference is
-> that the register interface used here is that of an SDAM present on
-> PMK8550, rather than a dedicated ADC peripheral. There may be more than one
-> SDAM used for ADC5 Gen3. Each ADC SDAM has eight channels, each of which may
-> be used for either immediate reads (same functionality as previous PMIC5 and
-> PMIC5 Gen2 ADC peripherals) or recurring measurements (same as PMIC5 and PMIC5
-> Gen2 ADC_TM functionality). In this case, we have VADC and ADC_TM functionality
-> combined into the same driver.
+On Wed, Oct 30, 2024 at 01:50:54PM +0200, Dmitry Baryshkov wrote:
+> Extend the patterns in qcom-soc.yaml to support Qualcomm SAR2130P
+> platform.
 > 
-> Patch 1 is a cleanup, to move the QCOM ADC dt-bindings files from
-> dt-bindings/iio to dt-bindings/iio/adc folder, as they are
-> specifically for ADC devices. It also fixes all compilation errors
-> with this change in driver and devicetree files and similar errors
-> in documentation for dtbinding check.
-> 
-> Patch 2 adds bindings for ADC5 Gen3 peripheral.
-> 
-> Patch 3 adds the main driver for ADC5 Gen3.
-> 
-> Patch 4 adds the auxiliary thermal driver which supports the ADC_TM
-> functionality of ADC5 Gen3.
-> 
-> Changes since v3:
-> - Updated files affected by adc file path change in /arch/arm folder,
->   which were missed earlier.
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/arm/qcom-soc.yaml | 4 ++--
 
-I don't think this was tested afterwards...
+This should be squashed with next patch, adding SAR2130P. It's logically
+one change: you bring bindings for SA2130P.
+
+
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/arm/qcom-soc.yaml b/Documentation/devicetree/bindings/arm/qcom-soc.yaml
+> index d0751a572af39eecbbd2f8323a6c3c94b3fdeeac..1add7267f541a24e82e0cec62af6f0c839aca267 100644
+> --- a/Documentation/devicetree/bindings/arm/qcom-soc.yaml
+> +++ b/Documentation/devicetree/bindings/arm/qcom-soc.yaml
+> @@ -23,7 +23,7 @@ description: |
+>  select:
+>    properties:
+>      compatible:
+> -      pattern: "^qcom,.*(apq|ipq|mdm|msm|qcm|qcs|q[dr]u|sa|sc|sd[amx]|sm|x1e)[0-9]+.*$"
+> +      pattern: "^qcom,.*(apq|ipq|mdm|msm|qcm|qcs|q[dr]u|sa|sar|sc|sd[amx]|sm|x1e)[0-9]+.*$"
+
+Instead:
+s/sa/sar?/
+
+
+>    required:
+>      - compatible
+>  
+> @@ -31,7 +31,7 @@ properties:
+>    compatible:
+>      oneOf:
+>        # Preferred naming style for compatibles of SoC components:
+> -      - pattern: "^qcom,(apq|ipq|mdm|msm|qcm|qcs|q[dr]u|sa|sc|sd[amx]|sm|x1e)[0-9]+(pro)?-.*$"
+> +      - pattern: "^qcom,(apq|ipq|mdm|msm|qcm|qcs|q[dr]u|sa|sar|sc|sd[amx]|sm|x1e)[0-9]+(p|pro)?-.*$"
+
+This breaks patterns. p|pro should stay as before. 8775p is below:
+
+>        - pattern: "^qcom,(sa|sc)8[0-9]+[a-z][a-z]?-.*$"
+
+so this pattern could cover your sar, e.g. split:
+"^qcom,sc8[0-9]+[a-z][a-z]-.*$"
+"^qcom,sar?[0-9]+[a-z]-.*$"
 
 Best regards,
 Krzysztof
