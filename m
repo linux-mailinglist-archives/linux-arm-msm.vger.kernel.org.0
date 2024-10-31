@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-36546-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36547-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2F8B49B793F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 12:01:00 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E72869B7945
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 12:03:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E39BF2859A0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 11:00:58 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 760A21F240FA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 11:03:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4FEC19A2BD;
-	Thu, 31 Oct 2024 11:00:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4AB16199FAF;
+	Thu, 31 Oct 2024 11:03:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fYY8gZLs"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NTBPMv1Z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 574B213D899
-	for <linux-arm-msm@vger.kernel.org>; Thu, 31 Oct 2024 11:00:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00D5513D899
+	for <linux-arm-msm@vger.kernel.org>; Thu, 31 Oct 2024 11:03:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730372448; cv=none; b=KJUocM4/h3M9MqpA7mCEC8GoiyMbEp64XuQbsud7Hum8SLv+5GhNz1xOFJH7T97VQ5YoZy9sd8RdwDaXWiPoi7F83XfHBIwDP9xy8Zg3rK6SHyXuAJ2dBPDyZt7+zEqQzGzzmmRt2bPOMjejqRIiklyUS+HRRl+ZzYvQmhyv8Q4=
+	t=1730372592; cv=none; b=bHBe4wqlK/6MzQB9qDboE4ii9g9+r7wvoRSvPaTMthiKyq7t8GMJpaMs1hVHpJno3w2fMofy1wEoze8YmFjJb+aLl7rtdG0oZJkelyj0crKfDq3Wkmj3rBggNc3GoBtjwLZ/zABIdOyuE/MuJJ+WVFOtLE7vKVGustwZ5rtf+Jo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730372448; c=relaxed/simple;
-	bh=znI1vLHdg694qB8laV1SorOSj4KUX3ztgE1UtmuEJsU=;
+	s=arc-20240116; t=1730372592; c=relaxed/simple;
+	bh=0Bt5LTg7vL5N+VdcE6SWBvlJfb0aEl6cLE8AigdCTpc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=f4WBYF7E4wW1qMfALIOtHosNP1vG0nUqzThxMCvPFp7NQpNuiByuNqyAI6AthCUGuKxEOfUMwEt3Wl5NqYKRhrLsL42C81qoKI49HhC5hgiL+skQqFO/gJtiUwfNOiszMBD7nO4DwKhMTv+P36Xw1b4D6oCvpKoiA4XdevBeb4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fYY8gZLs; arc=none smtp.client-ip=209.85.128.42
+	 In-Reply-To:Content-Type; b=sN9yc+prT1Ys7Hw2lyhaHoWDi/vgoilGtxOU8ZsHEWvMScB62KVKTz2xmE/eQuPFX/7+dDe8+aBPMLPuhmoGHIaAKaSHhShoNWOBF4GppkR4u7AH5bbTtm3pv1iM82UJpNXE6AKVIq1tRu2WVngYmDHcloQAvjFrrS9PY6U79dQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NTBPMv1Z; arc=none smtp.client-ip=209.85.221.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-43159469053so900365e9.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Oct 2024 04:00:45 -0700 (PDT)
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-37d4eac48d8so36836f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Oct 2024 04:03:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1730372444; x=1730977244; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1730372588; x=1730977388; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=uqnuHXpehAaCSgUNGFqejz7JGIz1jRi00c1HK4MJ/D4=;
-        b=fYY8gZLsZMdArjs65zPUpJA4YddYUKDVD1glIVsEvq8mLipGe/n4j6UAn2vfBTQ3hh
-         m8+bP9ZAh3Bij9XjOZ6P9+KzQPmDp4cDQ8Hm2lhtZaEpKoBLN+NP7p044+GmASC/HK79
-         MoJnrEVfybqSCRHpNiiLbO4MN9MxsPW6dcdpxqcNR1yLW1uKjHo/8mkQNJyk77J+/zyt
-         lFUurSorEDOtW1n+NV9SqqUoj4OXNfY32Q4eb/Jql/0Pr6j8IDM0cEx69dWIH6ydFfWZ
-         XLMREvACSzbRr1gxlVjgqtK95UT0FwKHIcy/dK3iJs8LqmVOPID1fjbETfoj12x80JIh
-         nT9A==
+        bh=Qo88u10AiueQwvU4VBGK/VQSQWRw8gLUSxPNaLTjLm4=;
+        b=NTBPMv1ZDG60bgl7AbiVpYnSEdf2BilnpJbKMdZuwKhw51ynkm+inMPR/EiqJF6r1M
+         CC7NFSwTwEa8CELBmMYjfQiqZtyFbDQ+2O5AeZEfHHfVSCXZGoaki3a+rCSUPJdR9db1
+         T87pzdwFHINMTRTrocnRT3bldJzMvWI6dmldmCw35WeesVFgnRZLIouQh2u55nT8mABK
+         t3Y9NLxi3gMzYOw6UnD+jNIrb25WvZXsilWLTeZ99uGBsLXxUw49rhMIjOonvELQORgx
+         KtlgFHn8+pjQRG7NC8N3d7XRe8BSfXyFZDygUNLTGzB0+Md025uxbVkmAvHN62Yq8RcK
+         DvoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730372444; x=1730977244;
+        d=1e100.net; s=20230601; t=1730372588; x=1730977388;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=uqnuHXpehAaCSgUNGFqejz7JGIz1jRi00c1HK4MJ/D4=;
-        b=Rq6Au2DJ6S4mmtmuS+d2hmVH6ZMgkxhGyIG6twNlgzNqw2ibTpD9vvfdNUwTdyPCwb
-         6ZYhQz0voEvF6CyL0Hf5BbRlThx/EgSsDbtCFAjOz968/AGBzK0QekXVR/XDyFR0tiAO
-         VPu6dkULu7+gw8sUW7zFud/g7Q3Pe6/vnSO538pvRu4vjzbjHTih4v8HzTsxg8vF1B8z
-         VTVXzyoVmnfTMvQRCRiM34Oj2bGG2sBOuks9w9fqDC2Lk2PMq1kbhVaDeC8xmmLtmTXw
-         yd52UGUzg1ROFYcZyRrUh9S0IoQRR/1PWlr5hrynFOVMjKCrewm4/68CTjsFXqUfRwNG
-         /1qA==
-X-Forwarded-Encrypted: i=1; AJvYcCVDwHIxuj4z9YFSKhmQ5LscQ0VO0AbDx2QhsBf+Vgmn3vOz+i6Li/LuWh5R8kWd1ePo1fevqvlwaujFfOPB@vger.kernel.org
-X-Gm-Message-State: AOJu0YxSikidLAdJ2H2+W9C1Lq329OY9JHBkFpEoLFi2gVPJ+Vvsya9Z
-	bkKvs2fPyrridEsHHV6ct25kUIGSgT3MENiMzW65qf3C0MY79eC7wATXZIbGSq8=
-X-Google-Smtp-Source: AGHT+IG0KFcN9hdgvm8g/CsXnz19OMrqMBupD0bXUqxM/Gnjtl1mLZA2FWFgQxYEZFoGMEs6Y1XxNQ==
-X-Received: by 2002:a05:600c:4f10:b0:42c:ba6c:d9b1 with SMTP id 5b1f17b1804b1-4319ad236dcmr73681605e9.4.1730372443738;
-        Thu, 31 Oct 2024 04:00:43 -0700 (PDT)
+        bh=Qo88u10AiueQwvU4VBGK/VQSQWRw8gLUSxPNaLTjLm4=;
+        b=A2JAf77Z8igXiL/w2jhXKS3P8TcxzrMaJ67/vJDEAemNcbIkojo+spJ3Vbi7EkvlHz
+         PZMUZBvXdu+51pxOfeTVcmAsAjMzuT233cOj+2vBvpUlIQ7+P8+SoH2d5+wXLJKNlsD/
+         UZr08zkuAHg/uMgej+tYwYCnJwa050/21qJbvzW2ay/SF1KdwnSfS9rctzz7MUEb7GoJ
+         vvfRQoUzwej7xAXoMdikWK0ebSbf9VJyDsOQ03TM8Z93G3iUXnGpFJhtgM2I0hDssCW8
+         Iv4QdzoxKtjaDy20QFM+w0Au+8zb8YtaZKe9ZNkqNrsxT2TT3GVXVXYGKWP70AwRKwON
+         ftyQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUzx4IeG0fi8kiV6hcIZC3JWo6qm405xzfXnrrmecL8erXmioAEksMZ+GcJ4qqxuwIIBJ92ErMtvj/BRn9b@vger.kernel.org
+X-Gm-Message-State: AOJu0YxcZ+6GpnwYdYf6VzyH1xOaXhvEp5Q/2y+Rw+o704UmK5omCkPl
+	/S+cl/okRQCF7xwwwCUJH3cEzKK1k46otzVReMWdGRfg6skoMVzlcHY+EDdoTNY=
+X-Google-Smtp-Source: AGHT+IGpz05VAvoftrmqHGfIqbT6FeVhxMMAZYmAw+E/a0Z2XhM7QtyYiu84O24YpcEKqkICIt9TLg==
+X-Received: by 2002:a05:6000:2a3:b0:37c:f388:cd48 with SMTP id ffacd0b85a97d-380611a4f13mr7093799f8f.8.1730372588137;
+        Thu, 31 Oct 2024 04:03:08 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.211.167])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-431bd910357sm54052595e9.11.2024.10.31.04.00.41
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381c113e6aasm1797059f8f.67.2024.10.31.04.03.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 31 Oct 2024 04:00:43 -0700 (PDT)
-Message-ID: <8556e116-a8ac-404e-b0ba-2f35dd081dfe@linaro.org>
-Date: Thu, 31 Oct 2024 12:00:40 +0100
+        Thu, 31 Oct 2024 04:03:07 -0700 (PDT)
+Message-ID: <d0511a78-8eca-4342-949b-9dea293e064f@linaro.org>
+Date: Thu, 31 Oct 2024 12:03:04 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,8 +77,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V4 4/4] thermal: qcom: add support for PMIC5 Gen3 ADC
- thermal monitoring
+Subject: Re: [PATCH V4 3/4] iio: adc: Add support for QCOM PMIC5 Gen3 ADC
 To: Jishnu Prakash <quic_jprakash@quicinc.com>, jic23@kernel.org,
  robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
  agross@kernel.org, andersson@kernel.org, dmitry.baryshkov@linaro.org,
@@ -92,7 +91,7 @@ Cc: lee@kernel.org, rafael@kernel.org, rui.zhang@intel.com,
  linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
  cros-qcom-dts-watchers@chromium.org
 References: <20241030185854.4015348-1-quic_jprakash@quicinc.com>
- <20241030185854.4015348-5-quic_jprakash@quicinc.com>
+ <20241030185854.4015348-4-quic_jprakash@quicinc.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Content-Language: en-US
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
@@ -139,83 +138,80 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20241030185854.4015348-5-quic_jprakash@quicinc.com>
+In-Reply-To: <20241030185854.4015348-4-quic_jprakash@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 30/10/2024 19:58, Jishnu Prakash wrote:
-> Add support for ADC_TM part of PMIC5 Gen3.
-> 
-> This is an auxiliary driver under the Gen3 ADC driver, which
-> implements the threshold setting and interrupt generating
-> functionalities of QCOM ADC_TM drivers, used to support thermal
-> trip points.
-> 
-> Signed-off-by: Jishnu Prakash <quic_jprakash@quicinc.com>
-> ---
->  drivers/thermal/qcom/Kconfig                  |  11 +
->  drivers/thermal/qcom/Makefile                 |   1 +
->  drivers/thermal/qcom/qcom-spmi-adc-tm5-gen3.c | 489 ++++++++++++++++++
->  3 files changed, 501 insertions(+)
->  create mode 100644 drivers/thermal/qcom/qcom-spmi-adc-tm5-gen3.c
-> 
-> diff --git a/drivers/thermal/qcom/Kconfig b/drivers/thermal/qcom/Kconfig
-> index 2c7f3f9a26eb..f9876fb8606d 100644
-> --- a/drivers/thermal/qcom/Kconfig
-> +++ b/drivers/thermal/qcom/Kconfig
-> @@ -21,6 +21,17 @@ config QCOM_SPMI_ADC_TM5
->  	  Thermal client sets threshold temperature for both warm and cool and
->  	  gets updated when a threshold is reached.
->  
-> +config QCOM_SPMI_ADC_TM5_GEN3
-> +	tristate "Qualcomm SPMI PMIC Thermal Monitor ADC5 Gen3"
-> +	depends on OF && SPMI && IIO && QCOM_SPMI_ADC5_GEN3
-
-|| COMPILE_TEST won't work?
-
-> +	select REGMAP_SPMI
-> +	select QCOM_VADC_COMMON
-> +	help
-> +	  This enables the auxiliary thermal driver for the ADC5 Gen3 thermal
-> +	  monitoring device. It shows up as a thermal zone with multiple trip points.
-> +	  Thermal client sets threshold temperature for both warm and cool and
-> +	  gets updated when a threshold is reached.
 > +
-
-
-...
-
-> +
-> +static const struct auxiliary_device_id adctm5_auxiliary_id_table[] = {
-> +	{ .name = "qcom_spmi_adc5_gen3.adc5_tm_gen3", },
-> +	{},
-> +};
-> +
-> +MODULE_DEVICE_TABLE(auxiliary, adctm5_auxiliary_id_table);
-> +
-> +static struct adc_tm5_auxiliary_drv adctm5gen3_auxiliary_drv = {
-> +	.adrv = {
-> +		.id_table = adctm5_auxiliary_id_table,
-> +		.probe = adc_tm5_probe,
-> +	},
-> +	.tm_event_notify = adctm_event_handler,
-> +};
-> +
-> +static int __init adctm5_init_module(void)
+> +static int adc5_gen3_read(struct adc5_device_data *adc, unsigned int sdam_index,
+> +			  u16 offset, u8 *data, int len)
 > +{
-> +	return auxiliary_driver_register(&adctm5gen3_auxiliary_drv.adrv);
+> +	return regmap_bulk_read(adc->regmap, adc->base[sdam_index].base_addr + offset, data, len);
 > +}
 > +
-> +static void __exit adctm5_exit_module(void)
+> +static int adc5_gen3_write(struct adc5_device_data *adc, unsigned int sdam_index,
+> +			   u16 offset, u8 *data, int len)
 > +{
-> +	auxiliary_driver_unregister(&adctm5gen3_auxiliary_drv.adrv);
+> +	return regmap_bulk_write(adc->regmap, adc->base[sdam_index].base_addr + offset, data, len);
 > +}
 > +
-> +module_init(adctm5_init_module);
-> +module_exit(adctm5_exit_module);
+> +/*
+> + * Worst case delay from PBS in readying handshake bit
+> + * can be up to 15ms, when PBS is busy running other
+> + * simultaneous transactions, while in the best case, it is
+> + * already ready at this point. Assigning polling delay and
+> + * retry count accordingly.
+> + */
+> +
+> +#define ADC5_GEN3_HS_DELAY_MIN_US		100
+> +#define ADC5_GEN3_HS_DELAY_MAX_US		110
+> +#define ADC5_GEN3_HS_RETRY_COUNT		150
+> +
+> +static int adc5_gen3_poll_wait_hs(struct adc5_device_data *adc,
+> +				  unsigned int sdam_index)
+> +{
+> +	u8 conv_req = ADC5_GEN3_CONV_REQ_REQ;
+> +	int ret, count;
+> +	u8 status = 0;
+> +
+> +	for (count = 0; count < ADC5_GEN3_HS_RETRY_COUNT; count++) {
+> +		ret = adc5_gen3_read(adc, sdam_index, ADC5_GEN3_HS, &status, 1);
+> +		if (ret)
+> +			return ret;
+> +
+> +		if (status == ADC5_GEN3_HS_READY) {
+> +			ret = adc5_gen3_read(adc, sdam_index, ADC5_GEN3_CONV_REQ,
+> +					     &conv_req, 1);
+> +			if (ret)
+> +				return ret;
+> +
+> +			if (!conv_req)
+> +				return 0;
+> +		}
+> +
+> +		usleep_range(ADC5_GEN3_HS_DELAY_MIN_US, ADC5_GEN3_HS_DELAY_MAX_US);
+> +	}
+> +
+> +	pr_err("Setting HS ready bit timed out, sdam_index:%d, status:%#x\n", sdam_index, status);
+> +	return -ETIMEDOUT;
+> +}
+> +
+> +static void adc5_gen3_update_dig_param(struct adc5_channel_common_prop *prop, u8 *data)
+> +{
+> +	/* Update calibration select and decimation ratio select */
+> +	*data &= ~(ADC5_GEN3_DIG_PARAM_CAL_SEL_MASK | ADC5_GEN3_DIG_PARAM_DEC_RATIO_SEL_MASK);
+> +	*data |= FIELD_PREP(ADC5_GEN3_DIG_PARAM_CAL_SEL_MASK, prop->cal_method);
+> +	*data |= FIELD_PREP(ADC5_GEN3_DIG_PARAM_DEC_RATIO_SEL_MASK, prop->decimation);
+> +}
+> +
+> +static int adc5_gen3_status_clear(struct adc5_device_data *adc,
+> +				  int sdam_index, u16 offset, u8 *val, int len)
+> +{
 
-Why not module_auxiliary_driver?
-
+Wait, what? Why are you defining functions in header causing multiple
+copies of them? And even if: why this is not inline? But regardless:
+this is a strong NAK from me.
 
 Best regards,
 Krzysztof
