@@ -1,360 +1,193 @@
-Return-Path: <linux-arm-msm+bounces-36540-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36541-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D1949B7822
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 10:59:26 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6D0CD9B783B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 11:01:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B0C111C20FA1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 09:59:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2D02128805E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 10:01:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14D4A198A2F;
-	Thu, 31 Oct 2024 09:59:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 618701991CF;
+	Thu, 31 Oct 2024 10:01:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PmGBbOJ0"
+	dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b="FvFtVW8d"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mout.kundenserver.de (mout.kundenserver.de [217.72.192.73])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7D82197A9A;
-	Thu, 31 Oct 2024 09:59:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83EC91991BE;
+	Thu, 31 Oct 2024 10:01:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730368762; cv=none; b=d9bBWBjZonuNyels0AVt4r1KwG68LknV9jXmBfpPpUyuSe+V/YWhxvJlYq6puZpIlj7WiZZ21T9twjTftR+oCiy6H7UMNClX2UEHONel+YrNHcbf7DQtHvUpWe/AeFHKChpkmF96tYMpeS2bPVmnBkDWi5CsqpZxL26V/oFEJvI=
+	t=1730368868; cv=none; b=mpeDGDxwe6e4czKyS05yWSHlguwx5+fTObpR9NG+4wdJSM6kPjv4iSmCBQepHMWhacwrx5Wzb+KSTpP6Ju+x2zJdPjmgiMbOTUzMNnqSlYkaZhdJuXtsMmr0RCuVwv/0NGCQMPClk/YfPio7OMcdLaRF40ScXP6Ree/hUFTyJgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730368762; c=relaxed/simple;
-	bh=0Z/Ae2UNtxEs3oOIzL9noQbt9KWPAGJ+Ppa2XVlpXeU=;
+	s=arc-20240116; t=1730368868; c=relaxed/simple;
+	bh=cFDTkS/Sa+PzAEz7WhmTzdLNszjGc6G/uOYhgfigvhc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uKZjlYRH/9WWnzPkz6zJbYt2uIjYyDQzJAWq/yLqJsQPRnQrBanN4RJKLj8oGJm8uYPnO5p1PnzPyfqYGts7+zTsBDm/8bcJ2W6MNl/m/9IrfMg6aT/b0uCgr+KJJyvXU+FJ4lQhE9Z78eHziuF2Ku1bkRan2UlYV+9yEOOkLG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PmGBbOJ0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06069C4CEC3;
-	Thu, 31 Oct 2024 09:59:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730368761;
-	bh=0Z/Ae2UNtxEs3oOIzL9noQbt9KWPAGJ+Ppa2XVlpXeU=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=PmGBbOJ0DKa25hH+c1NLm5IW6UAQOPuqujiGj89c+Dmkl9+bri+eg6qS8wnnXSXud
-	 HduqN9MsQsDJiHd1E6FqtGnpgikzYv4vXhYymJDHNWcyv0BvGesK3LdaW+IrkEUox+
-	 Kb4xLAsh2aLrzLbOn1qHAxuAP6v6unc816JgeplfgO4QyBxXtYXTUH6u9Xc30DagaT
-	 Y01NeeLyCEZcvkv1GzH5/2HrD+IdpVJcIsK9lN8+hu6m4KSns8146sCQ5uy8C8nKNN
-	 ED2MFbA8ebI8UEGkBDs/KparCPlu/s1J7APBi3pDIe4bKyPVr87hJG/rBFdxrj+3cQ
-	 MbpxQWun36q6g==
-Message-ID: <f11f1a3c-0626-4f6c-9bfd-1bf6fb37388e@kernel.org>
-Date: Thu, 31 Oct 2024 10:59:12 +0100
+	 In-Reply-To:Content-Type; b=V5nKP5IOklR8b9kRPXY1doZVO7MrGg495mTBvvT+/OQYCi4zByAdQJ0jKr9E3uhfzh42qPusbBKZJgdGKYJV+ZR1fFdLJoKqAht2zps+Zh/IR137Ph6G8rQONpFJeuk5eV3THk8M6SHM7304MshozOQ5zDdA9zp8rPT7SWN4P3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz; spf=pass smtp.mailfrom=oldschoolsolutions.biz; dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b=FvFtVW8d; arc=none smtp.client-ip=217.72.192.73
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oldschoolsolutions.biz
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=oldschoolsolutions.biz; s=s1-ionos; t=1730368843; x=1730973643;
+	i=jens.glathe@oldschoolsolutions.biz;
+	bh=w6KxghVJUqBJRJO3HvVS8uKSOJoergi/DuFpwoGgi7M=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=FvFtVW8dGneQNojsB2SOOoe8FADGFj0gBGE3V+YVKj1xo7sxV7G4wx3tinbih3+1
+	 WAhvJxIiE02mfw3seH2ni1++OfIR9FJMT6/ZrmYYkJjpNl87q4Wh7lIQJGctrV6Jh
+	 35obAz7TBMpjvprIr8mHlNZEeWl1TB6g40o1WJ9YsbT9yK2ioCuQxZ03Yq5e/fAmD
+	 y9ode3lkxCUXrSrgQ5q6wEph52qCgpWA98kVD1WJFWjoFXT+GG88/GNFPOiWFrqxy
+	 D61LVp8QkzVfezu9rdIbs+XPpoW0fDDxUSd6umLOqp+08Yt+SxRZ5mc+0b/FGjqlm
+	 OqpiNLDqORCgthuMkA==
+X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
+Received: from [192.168.0.174] ([91.64.229.215]) by mrelayeu.kundenserver.de
+ (mreue107 [212.227.15.183]) with ESMTPSA (Nemesis) id
+ 1MuUWi-1twlgW3ZgY-00xZEv; Thu, 31 Oct 2024 11:00:42 +0100
+Message-ID: <5d8ec8c4-f473-4849-a428-f7a7283ff478@oldschoolsolutions.biz>
+Date: Thu, 31 Oct 2024 11:00:40 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] ASoC: dt-bindings: wcd937x-sdw: Add static channel
- mapping support
-To: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
- Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
- Bard Liao <yung-chuan.liao@linux.intel.com>, Jaroslav Kysela
- <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
- Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
- Sanyog Kale <sanyog.r.kale@intel.com>, linux-arm-msm@vger.kernel.org,
- linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com, kernel@quicinc.com
-References: <20241023061326.3871877-1-quic_mohs@quicinc.com>
- <20241023061326.3871877-2-quic_mohs@quicinc.com>
- <qzjbiby7w6a7m4e324hdatgklmejlcxfwv7tszzfmdqahgrbu2@bcwsdlrpncxq>
- <d98bff34-d7ea-2b05-0c0d-eaf0392aef3f@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+User-Agent: Mozilla Thunderbird Beta
+Subject: Re: [PATCH V3 0/3] X1E001DE Snapdragon Devkit for Windows
+To: Abel Vesa <abel.vesa@linaro.org>, Marc Zyngier <maz@kernel.org>
+Cc: Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
+ konradybcio@kernel.org, krzk+dt@kernel.org, robh+dt@kernel.org,
+ dmitry.baryshkov@linaro.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ conor+dt@kernel.org, srinivas.kandagatla@linaro.org,
+ quic_jjohnson@quicinc.com
+References: <20241025123227.3527720-1-quic_sibis@quicinc.com>
+ <86y1251q3b.wl-maz@kernel.org> <ZyNR5MD/HAS5w7N/@linaro.org>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <d98bff34-d7ea-2b05-0c0d-eaf0392aef3f@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+In-Reply-To: <ZyNR5MD/HAS5w7N/@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:DE26g/zePNYl7lt3v0o9/f8BjRVz9bk0Vw03sLytJZszJHXgnNP
+ 9VIPB6kK+G6UxA8R03AIqL6jsTKMRwlMKlMLuA4qUAkrx/WYgnO1Jdm0TW73O/T8wEkF2O7
+ grjD7Z6v6KiX9ULuX5iUgZ8vCZN9YBK5FFjBnMokqKcQBNOJerLoQgdUnPDTcYwCdWFmlyN
+ LeVt4gmN2clnKIVk1Xqxg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:MTf5hyfXXWA=;wXxb0MhGplrUnuMDME6kxlFa8qN
+ yXjJWsFLiAuV7z/FK10V5sv2pqx7VP14GS78j/y6ONJzaiQgnPrWSAMsVxHGlxYbt8DWFaMmh
+ 9wzexyxzcYgZqkpKsyuqDyV+AqvU6XWs+9eDVseHE7TIDK0Zpp+pw2cR0b3PFn46av+dA12Pb
+ apjVZaR2eZCEL9todm467T/EKb0GOHTMJfyEI5M/aBWsRY8wej7E+immnkNdyD0mfRpVEfXca
+ SD0K/xhCtWVK7D11aMzuIvf5zEDbzx5xGGi47oy7t+45kGooUDhSnHdUPPnI7K/rP9r5p1fqH
+ mP6x8DKsVt3n9ZnydFNGIoFoQhkV8rNXp1cWAj6Z5lW3JYjO6/K+dx6WaH2aQ5nB7nWBnVWRw
+ le0Ului5bxMviIN/RMU61vlzT56DRip+g7etGMPHDOe9Hu1uFbaTHU4L2dr4sEfcX/UP9M5LD
+ Q2Y2tNqvyKuPKX3K8/mt51sFJUxTTrVi8nshrRWD6Ks8UjyLHgW5+ayWpnloP/p5M786ulEwn
+ 7zMoPViydnxwPPTEe0oQb7yEpgWbvfRfrtjZffmZuRRrfR0ypvrKyZtDqmZwTpydXeSVUnDLY
+ s+luIOo+SQwQFYfCDhWflskxQ01TsOhM7qN1R7yQVv7VF8gXskNbTm8HAg9wHwq6FfiNfsUQ1
+ DOGnB8gNBAdvwriOBzkKXHiOEMw6o7GwJ27pq+wYRhnHdXCP762DFLY4uwmlw99rS57kmLHJ0
+ zSL/3KR1KEmyJcelqJaj9Gf4Pb+cXNWUg==
 
-On 30/10/2024 06:07, Mohammad Rafi Shaik wrote:
-> On 10/23/2024 1:22 PM, Krzysztof Kozlowski wrote:
->> On Wed, Oct 23, 2024 at 11:43:23AM +0530, Mohammad Rafi Shaik wrote:
->>> Add static channel mapping between master and slave rx/tx ports for
->>> Qualcomm wcd937x soundwire codec.
+On 31.10.24 10:46, Abel Vesa wrote:
+> On 24-10-30 17:02:32, Marc Zyngier wrote:
+>> On Fri, 25 Oct 2024 13:32:24 +0100,
+>> Sibi Sankar <quic_sibis@quicinc.com> wrote:
+>>> Add initial support for X1E001DE Snapdragon Devkit for Windows. X1E001=
+DE
+>>> is the speed binned variant of X1E80100 that supports turbo boost up t=
+o
+>>> 4.3 Ghz. The initial support includes the following:
 >>>
->>> Currently, the channel mask for each soundwire port is hardcoded in the
->>> wcd937x-sdw driver, and the same channel mask value is configured in the
->>> soundwire master.
+>>> -DSPs
+>>> -Ethernet (RTL8125BG) over the pcie 5 instance.
+>>> -NVme
+>>> -Wifi
+>>> -USB-C ports
 >>>
->>> The Qualcomm boards like the QCM6490-IDP require different channel mask settings
->>> for the soundwire master and slave ports.
+>>> V3:
+>>> * Asked around and looked at the firmware, couldn't find a codename so
+>>>    will keep it as DEVKIT. Will update it if someone from the communit=
+y
+>>>    finds something else.
+>> My machine has the following information as part of its DMI tables:
 >>
->> Different than what? Other wcd937x? Which are these?
+>> Handle 0x0005, DMI type 1, 27 bytes
+>> System Information
+>> 	Manufacturer: Qualcomm
+>> 	Product Name: Snapdragon-Devkit
+>> 	Version: 2.1
+>> 	Serial Number: 5
+>> 	UUID: 63b5fc8b-9c50-89aa-fd0f-3fcef93dc291
+>> 	Wake-up Type: Power Switch
+>> 	SKU Number: 6
+>> 	Family: SCP_HAMOA
 >>
-> For Qualcomm QCM6490-IDP board soundwire master needs a different 
-> channel mask setting.
+>> So I guess that Snapdragon-Devkit is another possible name. But given
+>> that it is a bit of a mouthful, devkit, Devkit, or any other variation
+>> on the case would work for me.
+> The point was to have something unique A codename would be unique.
+> Naming it Snapdragon-Devkit (or just devkit) will be confusing since
+> there was already a 2023 devkit (from Microsoft) with the Snapdragon
+> 8cx Gen 3, and probably the next compute platform will also have a devki=
+t
+> as well. So probably "X Elite devkit" could be the right option..
+As for The Windows Dev Kit 2023, dmidecode says this:
 
-I understand, but I asked different than which board? Maybe all boards
-needs this different channel setting, so basically it is "not different".
+Handle 0x0009, DMI type 1, 27 bytes
+System Information
+ =C2=A0=C2=A0 =C2=A0Manufacturer: Microsoft Corporation
+ =C2=A0=C2=A0 =C2=A0Product Name: Windows Dev Kit 2023
+ =C2=A0=C2=A0 =C2=A0Version: 124I:00097T:000M:0200000B:07
+ =C2=A0=C2=A0 =C2=A0Serial Number: 0F01C4F22373F6
+ =C2=A0=C2=A0 =C2=A0UUID: e4a4662c-8367-75d0-a54f-1d04bd404860
+ =C2=A0=C2=A0 =C2=A0Wake-up Type: Unknown
+ =C2=A0=C2=A0 =C2=A0SKU Number: 2043
+ =C2=A0=C2=A0 =C2=A0Family: Surface
 
-> 
-> The wcd937x channel mask values are hardcoded in wcd driver.
-> https://elixir.bootlin.com/linux/v6.12-rc5/source/sound/soc/codecs/wcd937x-sdw.c#L35
-> https://elixir.bootlin.com/linux/v6.12-rc5/source/sound/soc/codecs/wcd938x-sdw.c#L37
-> 
-> In case of QCM6490-IDP the soundwire master and wcd937x require 
-> different channel mask settings, not the same.
-> For Example, wcd937x ADC2 connection
-> 
->                            Master                 Slave (wcd937x)
->                       +--------------+           +--------------+
->                       |  +--------+  |           |  +--------+  |
->           ADC1  ----->|  | PORT1  |  |           |  |   TX1  | 
-> |<-----------ADC1
->           ADC2  ----->|  |        |  |           |  |        |  |
->                       |  +--------+  |           |  +--------+  |
->                       |              |           |              |
->           ADC3  ----->|  +--------+  |           |  +--------+  |
->                       |  |  PORT2 |  |           |  |   TX2  | 
-> |<-----------ADC2
->                       |  |        |  |           |  |        | 
-> |<-----------ADC3
->                       |  +--------+  |           |  +--------+  |
->                       |              |           |              |
->                       |  +--------+  |           |  +--------+  |
->   DMIC0...DMIC3------>|  |  PORT3 |  |           |  |   TX3  | 
-> |<-----------DMIC0...DMIC3
->                       |  |        |  |           |  |        | 
-> |<-----------MBHC
->                       |  +--------+  |           |  +--------+  |
->                       |              |           |              |
->                       |  +--------+  |           |  +--------+  |
->   DMIC4...DMIC3 ----->|  |  PORT4 |  |           |  |   TX4  | 
-> |<-----------DMIC4...DMIC7
->                       |  |        |  |           |  |        |  |
->                       |  +--------+  |           |  +--------+  |
->                       |              |           |              |
->                       +------------- +           +--------------+
-> 
-> 					
-> For ADC2, The Slave needs to configure TX2 Port with channel mask value 
-> 1 and
-> For Master, it required PORT1 with channel mask  value 2.
-> 
-> 
-> In existing design master and slave configured with same channel mask, 
-> it will fail ADC2.
-> The new design will help to configure channel mapping between master and 
-> slave from DT.
-> 
+That's also really a mouthful. In my patchset for it there were some
+name / path changes, microsoft/blackrock it is now. Would be cool to
+have short and unique names. In the end, whatever works and is unique.
+Like those UUIDs?
+
+>>> * Update type c roles as reported by ucsi. [Dmitry]
+>>> * Update THUNDERCOMM to Thundercomm. [Dmitry]
+>>> * Update regulator names and sort Order. [Dmitry]
+>>> * Add x1e001DE devkit to the safe list.
+>>> * Mark regulator-nmve as boot enabled.
 >>>
->>> With the introduction of the following channel mapping properties, it is now possible
->>> to configure the master channel mask directly from the device tree.
 >>>
->>> The qcom,tx-channel-mapping property specifies the static channel mapping between the slave
->>> and master tx ports in the order of slave port channels which is adc1, adc2, adc3, adc4,
->>> dmic0, dmic1, mbhc, dmic2, dmic3, dmci4, dmic5, dmic6, dmic7.
->>
->> I still don't get what is the channel here.
->>
-> Typo error,
-> 
-> The qcom,tx-channel-mapping property specifies the static channel 
-> mapping between the slave
-> 
-> and master tx ports in the order of slave port channel index which are 
-> adc1, adc2, adc3, adc4,
-> 
-> dmic0, dmic1, mbhc, dmic2, dmic3, dmci4, dmic5, dmic6, dmic7.
-> 
-> 
-> 
-> https://elixir.bootlin.com/linux/v6.12-rc5/source/sound/soc/codecs/wcd937x.h#L599
-> 
-> 
-> 
-> Will be fixed in the next version
-> 
+>>> V2:
+>>> * Fix Ghz -> GHz  [Jeff]
+>>> * Pick up Ab tag from Rob.
+>>> * Use Vendor in ADSP/CDSP firmware path [Dmitry]
+>>> * Fix reserved gpios [Dmitry]
+>>> * Only port0 supports DRD update the dt accordingly [Dmitry]
 >>>
->>> The qcom,rx-channel-mapping property specifies static channel mapping between the slave
->>> and master rx ports in the order of slave port channels which is hph_l, hph_r, clsh,
->>> comp_l, comp_r, lo, dsd_r, dsd_l.
->>
->> And this description copies binding :/.
->>
->> Please wrap commit message according to Linux coding style / submission
->> process (neither too early nor over the limit):
->> https://elixir.bootlin.com/linux/v6.4-rc1/source/Documentation/process/submitting-patches.rst#L597
->>
-> 
-> Ack
-> 
+>>> Sibi Sankar (3):
+>>>    dt-bindings: arm: qcom: Add Snapdragon Devkit for Windows
+>>>    firmware: qcom: uefisecapp: Allow X1E Devkit devices
+>>>    arm64: dts: qcom: Add X1E001DE Snapdragon Devkit for Windows
 >>>
->>> Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
->>> ---
->>>   .../bindings/sound/qcom,wcd937x-sdw.yaml      | 36 +++++++++++++++++++
->>>   1 file changed, 36 insertions(+)
->>>
->>> diff --git a/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml b/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml
->>> index d3cf8f59cb23..a6bc9b391db0 100644
->>> --- a/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml
->>> +++ b/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml
->>> @@ -58,6 +58,38 @@ properties:
->>>       items:
->>>         enum: [1, 2, 3, 4, 5]
->>>   
->>> +  qcom,tx-channel-mapping:
->>> +    description: |
->>> +      Specifies static channel mapping between slave and master tx port
->>> +      channels.
->>> +      In the order of slave port channels which is adc1, adc2, adc3, adc4,
->>> +      dmic0, dmic1, mbhc, dmic2, dmic3, dmci4, dmic5, dmic6, dmic7.
->>> +      ch_mask1 ==> bit mask value 1
->>> +      ch_mask2 ==> bit mask value 2
->>> +      ch_mask3 ==> bit mask value 4
->>> +      ch_mask4 ==> bit mask value 8
->>> +    $ref: /schemas/types.yaml#/definitions/uint8-array
->>> +    minItems: 8
->>> +    maxItems: 13
+>>>   .../devicetree/bindings/arm/qcom.yaml         |   6 +
+>>>   arch/arm64/boot/dts/qcom/Makefile             |   1 +
+>>>   arch/arm64/boot/dts/qcom/x1e001de-devkit.dts  | 814 ++++++++++++++++=
+++
+>>>   drivers/firmware/qcom/qcom_scm.c              |   1 +
+>>>   4 files changed, 822 insertions(+)
+>>>   create mode 100644 arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
+>> FWIW, I'm running this as part of my KVM test rig with minor changes
+>> to expose the SMMU and allow the ITS on pcie5, and things work as well
+>> as you can expect. FWIW:
 >>
->> Why size is variable? This device has fixed amount of slave ports, I
->> think.
+>> Acked-by: Marc Zyngier <maz@kernel.org>
+>> Tested-by: Marc Zyngier <maz@kernel.org>
 >>
-> 
-> yes will check modify
-> 
->>> +    items:
->>> +      enum: [1, 2, 4, 8]
+>> 	M.
 >>
->> What is the point of using bits if you cannot actually create a bit mask
->> out of it? Why this cannot be 7?
->>
-> Actually, these values should be fixed: 1 (0001), 2 (0010), 4(0100), 
-> 8(1000).
-
-What is fixed here?
-
-I asked why these look like bitmasks but they cannot be used as bitmask.
-This is a mapping, so index is channel slave port channel number and the
-value is master port channel number, no?
-
-> 
-> 
-> If required to set 7, it is handled in wcd driver based on mixer commands.
-> https://elixir.bootlin.com/linux/v6.12-rc5/source/sound/soc/codecs/wcd937x.c#L1199
-
-I talk about binding. Why you are not allowing value of 7 if this is a
-mask? If this is not a mask - property says it is channel mapping - then
-these should be [1-4].
-
-> 
-> 
-> Example:
-> WCD937X_HPH_L -> channel mask value is 1
-> WCD937X_HPH_R -> channel mask value is 2
-
-
-
-> 
-> 
-> The final channel mask for that specific port is 3
->>> +
->>> +  qcom,rx-channel-mapping:
->>> +    description: |
->>> +      Specifies static channels mapping between slave and master rx port
->>> +      channels.
->>> +      In the order of slave port channels, which is
->>> +      hph_l, hph_r, clsh, comp_l, comp_r, lo, dsd_r, dsd_l.
->>> +      ch_mask1 ==> bit mask value 1
->>> +      ch_mask2 ==> bit mask value 2
->>> +      ch_mask3 ==> bit mask value 4
->>> +      ch_mask4 ==> bit mask value 8
->>
->> and the value is what exactly? Index is channel, but what does "ch_mask4 ==> bit
->> mask value 8" mean? I don't understand this at all.
->>
-> 
->                            Master
->                       +--------------+
->                       |  +--------+  |
->            ADC1 ----->|  | PORT1  |  |
->            ADC2 ----->|  |        |  |
->                       |  +--------+  |
->                       |              |
->            ADC3 ----->|  +--------+  |
->                       |  |  PORT2 |  |
->                       |  |        |  |
->                       |  +--------+  |
->                       |              |
->                       |  +--------+  |
->    DMIC0...DMIC3 ---->|  |  PORT3 |  |
->                       |  |        |  |
->                       |  +--------+  |
->                       |              |
->                       |  +--------+  |
->    DMIC4...DMIC7----->|  |  PORT4 |  |
->                       |  |        |  |
->                       |  +--------+  |
->                       |              |
->                       +------------- +
-> 
-> 
-> The PORT1 has 2 ADC connections,
-> 
-> ADC1 -> PORT1 ch_mask index 1 -> channel mask value 1 (0001)
-> ADC2 -> PORT1 ch_mask index 2 -> channel mask value 2 (0010)
-> 
-> 
-> DMIC0 -> PORT3 ch_mask index 1 -> channel mask value 1 (0001)
-> DMIC1 -> PORT3 ch_mask index 2 -> channel mask value 2 (0010)
-> DMIC2 -> PORT3 ch_mask index 3 -> channel mask value 4 (0100)
-> DMIC3 -> PORT3 ch_mask index 4 -> channel mask value 8 (1000)
-> 
-> 
-> Will check and add a proper description.
-
-
-Best regards,
-Krzysztof
-
+>> --
+>> Without deviation from the norm, progress is not possible.
 
