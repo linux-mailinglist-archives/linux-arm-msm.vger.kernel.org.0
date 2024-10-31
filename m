@@ -1,90 +1,90 @@
-Return-Path: <linux-arm-msm+bounces-36636-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36637-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C3C79B86F1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 00:18:10 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E22569B86F3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 00:18:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 001A7281C23
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 23:18:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 994131F22807
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 23:18:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 309A51E571B;
-	Thu, 31 Oct 2024 23:17:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5FF61E885F;
+	Thu, 31 Oct 2024 23:17:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zEN9+VpJ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="i/NYc58F"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34CFE1E2007
-	for <linux-arm-msm@vger.kernel.org>; Thu, 31 Oct 2024 23:17:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C591D1E2829
+	for <linux-arm-msm@vger.kernel.org>; Thu, 31 Oct 2024 23:17:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730416677; cv=none; b=mKwKiiSBzwc4LqdLPH1JQrnMr5cbru/2/ZcOAzJen+YiVQ04MSb4aU2udiAt6pG1+favY/jMfOxzTLCsuC0H4G7sJSQKTKPsV++ipz0teuMM8qYgrINeT64ra2VZxWgrBGEHZE8iYDVkXQTdf0Dt3DSmosnZ2MN0zsFDGNP0YlY=
+	t=1730416679; cv=none; b=HiTifDSAEQfL1lnxvfdLRJ29wAX0aww+CuiYHEzPg3U8LON4rXFOjXnSS8YFEBZcbNDfTWqNlECMlJ5y7k9FvBAu5vwhWxz/mCvQNbQllGVvk3D3tVjC5X3xRMwONw18hsPyHaY34hXjUcrnQy+raybqyzw7f+cD6B5WYCPakpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730416677; c=relaxed/simple;
-	bh=zEuzDU9Hs/Ppg5PEjhCjDAMSLN48boI9R2fQhtzK3Fg=;
+	s=arc-20240116; t=1730416679; c=relaxed/simple;
+	bh=ERs2v0Kb7VmMC3UlqBeHps9Wp4dnSwv9XPM7aasFPRI=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iFOzMTh5ZlJGYmZK2SDNXtyV2C73oKvU/PSHCXgbavu6Nu4h6DXIQZI9UwozL6SYLhnPvh8/rqayFOIH/6MLM7TfPUemhAIJZt/Ol7ahvGCreQH9rwAyuxRrhNMIlK4VzAbf6EPKYvE4mcxHgtiemWXEdd+RivHRcHGEgPJNt3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zEN9+VpJ; arc=none smtp.client-ip=209.85.208.177
+	 MIME-Version:Content-Type; b=TPVh6u5fvuUCp8VmYB+iYLTdLEBfqLOkM/Ed1INwfEP3TmmCIpYLGpbWctpqfFRER30PmrF6t7JoD1kY8BBKDhMK5eoiXh4qK32xF/bms+LrjgAP4PoRMKER2HfDGV4CVwY7nY9pUhsto0zdFsAmiUP1Fr+oTgaEDqXZa/wLMCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=i/NYc58F; arc=none smtp.client-ip=209.85.208.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2fb559b0b00so12133461fa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Oct 2024 16:17:50 -0700 (PDT)
+Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2fb5014e2daso13425131fa.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Oct 2024 16:17:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1730416669; x=1731021469; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1730416672; x=1731021472; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=lll2oecR05rxr53p0AjzsKoWCjFTY3cjM1CQZ34f94Y=;
-        b=zEN9+VpJWnGThPaLwxviArsd7kQyDDBxWnbLDTrUxfP7GNpAcXawp/vsFlNJH9LnfN
-         pswpGfqbMXPAzIbXM917DmHCpuUKB/p+7NdkFCEgv6IrSRM3ZAjmg2FI67y22VupXEbD
-         avZ9gecWfqm+fEtu3f6Mh/st5F+ebz/7WaCjGUgieHUFJpgVQUfFprG6rYX9Q5YjBbn4
-         81WsdafLDBbraryDFYE7UgEoIJRPIVAGsjHhve97yh2/uKtPuORPq2srZaEqGeelp7HH
-         Ef0MpSwYBzU7IcwMNlKtgKj4mKvx09fBDgMxlCk+ogOsgccl+cCiDBI0E+uzQ6rfVSra
-         tmgg==
+        bh=QukKNK+swCpoqF+HL/k+UqRGIlVJDx2v2LMxJfV7rAA=;
+        b=i/NYc58FQblK2/RxRtVl5Zy4eVbpj/lhwtJrJMclAo2+mR4By05aF0EZS1CmkynUQq
+         x75kbNP3O3hrMeKyXEqBRsBiFhE1sAOiCQ/fTyqAom4Sy8GNvdXvi3tqATBzZ2RI3Fce
+         NVoF/TnViv2HntpS5hF5K9VDVP911Qbsyn7ejt6BtEZElOtsO84ICbkD+Cx1uAxntRBM
+         PTHRRveZcf5/nfEwpbWvRcYulzy8uX48PAJgFNSuYbfZjXzkX94dxJXjdXuuAMPX/C0U
+         E9H3yhO1iJlBh+rY2d3xzxPOhRHDAKdDJlkcx0g6CfuZVh9uQKN3C8ioW6ssl/fdNr9t
+         imgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730416669; x=1731021469;
+        d=1e100.net; s=20230601; t=1730416672; x=1731021472;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=lll2oecR05rxr53p0AjzsKoWCjFTY3cjM1CQZ34f94Y=;
-        b=mvyODQNHxiA62PaP4Exr8UldekmcgTJtj/v8wgqSqdGzlS8OFHBEO62DvF2JkfQII8
-         biY2dfRVLT7igEn/YAx4UR8xiROu9jaKzAM4uO9QE8GI/H1tmlZ8mQBVaTMYwYgJ91IT
-         wwI1dNwzNrOn+0Ghr5XU6VQTLykeMHkizYPzAQ6PRLaaBqUXUQDGZQIfmgOTohfzKu2c
-         fZTC8Dcbxt9Hb1pbkzJmnOxR93jx5gm3PModtKKfnyoolQtWfW4GW6c29Kq+Cz7NIVa1
-         W6hESMVIRFeEE3d7h9pJ03e6G6ARoCAVIvboOcDq3AJvNFBIPgKiGPcuG0f+vTNo67JO
-         JKiQ==
-X-Gm-Message-State: AOJu0YxV+AIEahMic84SGH4AG88TH/qz1CBR38ScVv821sfSj6iIjkW7
-	kuINdfz5QrCuxTn5qzxl+WlBUMld/gZAbHYYgNk5LsXKHCpZ6lRNlTlRXOWZLpA=
-X-Google-Smtp-Source: AGHT+IHu3vlLdbVEh7NZJQs0I2jnIdpwbBUwg2vKoG77QJiTFiqvwPTZ8gS1SAL6o71LYqNS7hbRag==
-X-Received: by 2002:a05:651c:160f:b0:2f7:64b9:ff90 with SMTP id 38308e7fff4ca-2fedb7964a1mr8398921fa.9.1730416669178;
-        Thu, 31 Oct 2024 16:17:49 -0700 (PDT)
+        bh=QukKNK+swCpoqF+HL/k+UqRGIlVJDx2v2LMxJfV7rAA=;
+        b=LmzlBC9dB0UByJs/3+mPyPJMfxQ4yEKpwn+6qq4VepoPLpFX/krFVljkjmWRJaaUAc
+         sNHbad8/DNKJmKday9TaXMXc8u8edC6eSOy233HeQrZuB6d7GymLpoVMuxWRewtzMIqY
+         dp+SW4UWXss7Cv5h8Tl1xY/GooDJV/kAIC3GKra8YeBrJjoZY/zDDEsWHIL0ICx4yR0E
+         Ou7cbJNTsA6vROFNX9J+lc/iNN78ngQNuJjvYJc/3JJsQltjec7JWUmoKE2OZlH24qn6
+         wT6arwRVsAeLDiTJVfxUJ7FxWYVwST4oegk++rxY54YWDZTCHCAVH6BZ8gCUHFaTHthY
+         U+2w==
+X-Gm-Message-State: AOJu0YxYEtqSZSDXDn+dDk9Alh6A0OjxSi1fdWJaJ/sS7v4/slmuwnQl
+	bPDHI5Jbc+1f6l4Sduqsukk9pjpViC3rDYvBml4V+/Xq27iO1pwcvXowJpgXzKk9T+b0cJ2lq4w
+	U
+X-Google-Smtp-Source: AGHT+IGY+bXC9GKLBWpNC3xXaDr+4+ypv19ingMJcsVR+qr1WR4TEu2fAF7irBNg2lVAiRV/ZDvuzQ==
+X-Received: by 2002:a2e:bd08:0:b0:2fa:cf5b:1e8e with SMTP id 38308e7fff4ca-2fedb758b32mr8745941fa.2.1730416671740;
+        Thu, 31 Oct 2024 16:17:51 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.90])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2fdef617ad0sm3536041fa.67.2024.10.31.16.17.46
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2fdef617ad0sm3536041fa.67.2024.10.31.16.17.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Oct 2024 16:17:47 -0700 (PDT)
+        Thu, 31 Oct 2024 16:17:50 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: robdclark@gmail.com,
+	quic_abhinavk@quicinc.com,
+	sean@poorly.run,
+	marijn.suijten@somainline.org,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	quic_kalyant@quicinc.com,
+	Gax-c <zichenxie0106@gmail.com>
 Cc: linux-arm-msm@vger.kernel.org,
 	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org,
-	kernel test robot <lkp@intel.com>
-Subject: Re: [PATCH v2 0/3] drm/msm/dp: mass-rename symbols
-Date: Fri,  1 Nov 2024 01:17:42 +0200
-Message-Id: <173041664077.3797608.9986077411364114965.b4-ty@linaro.org>
+	freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v2] drm/msm/dpu: cast crtc_clk calculation to u64 in _dpu_core_perf_calc_clk()
+Date: Fri,  1 Nov 2024 01:17:43 +0200
+Message-Id: <173041664077.3797608.9275029444644452074.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241029-msm-dp-rename-v2-0-13c5c03fad44@linaro.org>
-References: <20241029-msm-dp-rename-v2-0-13c5c03fad44@linaro.org>
+In-Reply-To: <20241029194209.23684-1-zichenxie0106@gmail.com>
+References: <20241029194209.23684-1-zichenxie0106@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -95,24 +95,22 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Tue, 29 Oct 2024 22:28:23 +0200, Dmitry Baryshkov wrote:
-> The LKP reported [1] a symbol clash between the drm/msm/dp and the HIMBC
-> driver being sumbitted, because both of them use a generic dp_ prefix
-> for a lot of symbols. It's a hight time we made msm/dp driver use
-> something less generic, like msm_dp.
-> 
-> [1] https://lore.kernel.org/oe-kbuild-all/202410250305.UHKDhtxy-lkp@intel.com/
+On Tue, 29 Oct 2024 14:42:10 -0500, Gax-c wrote:
+> There may be a potential integer overflow issue in
+> _dpu_core_perf_calc_clk(). crtc_clk is defined as u64, while
+> mode->vtotal, mode->hdisplay, and drm_mode_vrefresh(mode) are defined as
+> a smaller data type. The result of the calculation will be limited to
+> "int" in this case without correct casting. In screen with high
+> resolution and high refresh rate, integer overflow may happen.
+> So, we recommend adding an extra cast to prevent potential
+> integer overflow.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/3] drm/msm/dp: prefix all symbols with msm_dp_
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/fb7d509b1710
-[2/3] drm/msm/dp: rename edp_ bridge functions and struct
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/f47e87b07935
-[3/3] drm/msm/dp: tidy up platform data names
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/c36a410780a3
+[1/1] drm/msm/dpu: cast crtc_clk calculation to u64 in _dpu_core_perf_calc_clk()
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/20c7b42d9dbd
 
 Best regards,
 -- 
