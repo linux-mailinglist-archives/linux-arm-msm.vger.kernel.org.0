@@ -1,160 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-36634-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36635-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1C7819B8642
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 23:48:13 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id AB3749B86EE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 00:17:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CAA282846C1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 22:48:11 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DC7ED1C20B1E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 23:17:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 77E601D0F54;
-	Thu, 31 Oct 2024 22:48:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB7971DFD81;
+	Thu, 31 Oct 2024 23:17:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BIQkmEMx"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cI8nZhkJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADBCD1CDFCD
-	for <linux-arm-msm@vger.kernel.org>; Thu, 31 Oct 2024 22:48:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E0B91CC8B7
+	for <linux-arm-msm@vger.kernel.org>; Thu, 31 Oct 2024 23:17:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730414889; cv=none; b=bdrolbYuBnwLLpnuQEROq2l+TWRmF9HLT+KbmSaiu+E7NLqWBAqP2Z2c+oK664F2RgJYSVbn0aKLNXfoyDQ0xdbZUUhupXNiIL4UFq/0yeMkG/NGqHHFGFyxHJxsoyJDDzY4A5J3qL3/VeozJ0HpjTetLxXYJuE+S+0BMGFbmFQ=
+	t=1730416674; cv=none; b=MkuSl0PeL4GjUinorJbUro/dyrJNOwSSY32jRmfzPNfo8/YRgoUkYAPT3pX2Y55baz+1nc8hkDrb57pmQXEVAtfy5IwzmUUjN9NVKkRzqWHDyFvoDcAo6r98M2VqyHh1c6b7ZWBdngzqz+YjmoELcfk9zwWl8gj7HqkSw/5ght0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730414889; c=relaxed/simple;
-	bh=dKICqskpU+lDAaVFQjimpvgZuImNCCQ5RSIvqwp71xE=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=JJpmeNVW7wAkWREQzO15qDOFLA9Lsth+rPSOrGLSVWW2KLnWVeshVvCzN9gbg6i7P27mJazZ/AMdMfc3p3y2QPJiAA9aqdO6ptpPlnowd9Rgw9Gl8YXb/4+v8gtExnbkEYZ0GCZvf0Uff06fMJBdEC4jB9sWsjYHj0mNSJ05HPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BIQkmEMx; arc=none smtp.client-ip=209.85.128.45
+	s=arc-20240116; t=1730416674; c=relaxed/simple;
+	bh=iIpPnqL50A/jarcK5/fv4DxrO6sb+ob1MtvXevZUq04=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=qm7cXq8wC+pB4iEBB8M1V9H9DZZkBZKbAx+jcfMlT338PYT4R6Um/JLs8ic1sWxTdCZYRnF554wZjIZeJ6VPlcQasV3/JFCkYJAuTVRip9JXZ0g+SZVb0N/M5+2reF0ofXUZ3XDiu/UNanb7a3bUKK4EVP5fFrbA6v8+oYHyXMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cI8nZhkJ; arc=none smtp.client-ip=209.85.208.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4315c1c7392so12108065e9.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Oct 2024 15:48:02 -0700 (PDT)
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2fb6110c8faso15579111fa.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Oct 2024 16:17:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1730414881; x=1731019681; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+        d=linaro.org; s=google; t=1730416667; x=1731021467; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=eTGe9PwYvoojfRJpUZgUhAxbJHxiXthHeHJW83hgHu8=;
-        b=BIQkmEMxnpj+5iaC/CJK6UU8d4cJ8C2yB2NauBlOmp03k5MYdgr0yGjGgJ4m9NuWES
-         GUT8TX45unHLjBQeFEYD/WamKwJd2vFET+aei9cV9AIr1HXEhTPjpREZg5bfC6HQXCg6
-         MY6r1yA2I8lmH5qLl+FL22iPSe9e9O/wzCm3UrBm545gl/m//I39pVbxaGmEsE9f1xCl
-         EQbE5dZ20ks+BeeMnDM6uUmCVUPCARw9OZVt6BnRlc8HaIsIUJZpC93MlhPEbV5mN/gg
-         HBo3lFlQpn1cENHD2ssErDLurTFB3v/qqwOwOwNQWPSc9JIynweHYAEqadAms0CojruC
-         KH3g==
+        bh=frsp46Okfb5QiVmFNAXVWYtRI09WjPuac7vIqiSQUO4=;
+        b=cI8nZhkJXSD23lR0RpW4XXpm3jDRZAZVp/+CehJI68wKvUzJuAdC9h/4F2gEz5+R55
+         ANtzqDEYbNA+6e/0fjeKvgUI+AGdJc4++pN+9BrkJ7vcHC3BGvGC6jXRXXKZ+3s9BRMS
+         KDvO7MzCctklT6NG2kR6ZwYH/l+9utQ6uwmcztG0uyykz/5QUR976jI5xxzPV58BwmPn
+         AktBpSZ7E+F1ZH2BhPtzsN2xDwi7jhEuWGcBk1aiT1McaR1X3VxdWkto5yijd5CBMKgT
+         ecBEKY9QAGV9NFYCobpv9DRxi7sX6nKlKf0td7buuKcYpL0Z/hR6jsqZrTWMFoxdVyiR
+         9B8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730414881; x=1731019681;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=eTGe9PwYvoojfRJpUZgUhAxbJHxiXthHeHJW83hgHu8=;
-        b=CJuWfNt5avne6m8e+VYKpL7bCGsZXA/NEkwCZFeLiT1BRVS4jIpi4wJbZMvP4zbvDK
-         FGv9msgfdboMmvXk6E3/vAvoKYIX+lzTvWoWrNgF0ypTWtBf5AnvbvlOB8ioq0GHdLXi
-         UG4LGrm2VptYMdZJkL5/kEjOS3WZSkeOj8hh0o5DkEGsSWnnkeOeVlMi55Kx8IFjfrrg
-         BfENo+DLscGyHntLJZewUdIMdk/njT0AJdnO5tUGIMSQv9ndXrZejOorTirmGx3y3S6V
-         F/o+4EAViqVcHdFxWLg7cpEQhw1EMcM6tyLILZHE9D+QxGT+kT+d5GvY+LjjFaVFgl1M
-         hIKg==
-X-Forwarded-Encrypted: i=1; AJvYcCWKKzGzLlZbmxeQB4ANC3LccJF6oxizIG0P1D01DPuzio9xyfXJOB/jCc5dJnJCU6kNMM2OWLHDuqczHDN9@vger.kernel.org
-X-Gm-Message-State: AOJu0YwCzIs7+wDJ6YlKn2VEsIBrhvZA82JO8ZyMwAy3EsFxyhSdFr41
-	RWUn6fmzFyWFU4RbUHcuj9Fes5/iMYlp/juX9RQzZUX1/ObVa0FGeeDuhf2y8Lk=
-X-Google-Smtp-Source: AGHT+IEmzHNzE7hvDqBmKYm1F0qTKl7W/SJiQtEF8C1xj5fDoK069HdbTE+fuTkxJTbnplMq+3q1PA==
-X-Received: by 2002:a05:600c:1d21:b0:431:518a:683b with SMTP id 5b1f17b1804b1-43283255a45mr13080605e9.18.1730414880954;
-        Thu, 31 Oct 2024 15:48:00 -0700 (PDT)
-Received: from localhost ([2.222.231.247])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381c10d439esm3327963f8f.44.2024.10.31.15.47.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 31 Oct 2024 15:47:59 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1730416667; x=1731021467;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=frsp46Okfb5QiVmFNAXVWYtRI09WjPuac7vIqiSQUO4=;
+        b=cNcfQVj+0p9/4MIcm5jHorOb1/lXSyNS/WeTiKnkJJvNj0z87N0+ucYs3gTfJmo3jv
+         P4CeqAtZXci94C2KQlHtrWNw5sXZKhwHdyDjcJgS1BGApN8qbAIU0S8jBXcNVJvWE7CA
+         C+zndNnVeV+JzxJi6vcHa05OFE/kWZH3d5jpQW6p5y6CQuR3c0ZmMSy0deaAVl5ndQBF
+         jJeVK5yeMjrnLj9VzZ2Mn/xEV70rE1v8Ab82UW8NE32cuwfStywHqNgBkqHg1e9RVOFZ
+         qZUF26x46BVEtRl6Dxj/HkPdm8KVHMYxyU7vCOGSVoxuKPQSUwefX2tm2CtwaCp69s2K
+         fBtA==
+X-Gm-Message-State: AOJu0YxkN5lAXRdJWEzSlm03XOssfoFTeAxB3YAqbLEIJImXtav6cOWv
+	SqcjpbeYq8/uUi+kddQOauQekVNxdpk+sgO2paE7ODeYiqru+2FtCRZF1Lqv3tE=
+X-Google-Smtp-Source: AGHT+IErIn+8tk3gc2319GvFqnOquZWc1mPt8zpg0mrwwWOluM01t+jVj4/jowjH3KFQAqp0pQvtuw==
+X-Received: by 2002:a2e:5109:0:b0:2fb:4428:e0fa with SMTP id 38308e7fff4ca-2fcbe04f435mr79462881fa.36.1730416666587;
+        Thu, 31 Oct 2024 16:17:46 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.90])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2fdef617ad0sm3536041fa.67.2024.10.31.16.17.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 31 Oct 2024 16:17:45 -0700 (PDT)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/3] drm/msm: minor msm_drv.h cleanup
+Date: Fri,  1 Nov 2024 01:17:41 +0200
+Message-Id: <173041664077.3797608.17754324846652823290.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20241031-dpu-move-topology-v1-0-8ffa8122d3b6@linaro.org>
+References: <20241031-dpu-move-topology-v1-0-8ffa8122d3b6@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 31 Oct 2024 22:47:58 +0000
-Message-Id: <D5ACVOXF0KJK.1ZUDOAK4X9EP8@linaro.org>
-Cc: <lgirdwood@gmail.com>, <robh@kernel.org>, <krzk+dt@kernel.org>,
- <conor+dt@kernel.org>, <andersson@kernel.org>, <konradybcio@kernel.org>,
- <perex@perex.cz>, <tiwai@suse.com>, <linux-arm-msm@vger.kernel.org>,
- <devicetree@vger.kernel.org>, <dmitry.baryshkov@linaro.org>,
- <krzysztof.kozlowski@linaro.org>, <caleb.connolly@linaro.org>,
- <linux-kernel@vger.kernel.org>, <a39.skl@gmail.com>
-Subject: Re: [PATCH v3 5/5] arm64: dts: qcom: qrb4210-rb2: add HDMI audio
- playback support
-From: "Alexey Klimov" <alexey.klimov@linaro.org>
-To: "Konrad Dybcio" <konrad.dybcio@oss.qualcomm.com>,
- <linux-sound@vger.kernel.org>, <srinivas.kandagatla@linaro.org>,
- <broonie@kernel.org>
-X-Mailer: aerc 0.18.2
-References: <20241018025452.1362293-1-alexey.klimov@linaro.org>
- <20241018025452.1362293-6-alexey.klimov@linaro.org>
- <33736e2e-7ac2-4ec1-9d83-eb8360942bbb@oss.qualcomm.com>
-In-Reply-To: <33736e2e-7ac2-4ec1-9d83-eb8360942bbb@oss.qualcomm.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On Fri Oct 25, 2024 at 8:09 PM BST, Konrad Dybcio wrote:
-> On 18.10.2024 4:54 AM, Alexey Klimov wrote:
-> > Add sound node and dsp-related piece to enable HDMI audio
-> > playback support on Qualcomm QRB4210 RB2 board. That is the
-> > only sound output supported for now.
-> >=20
-> > The audio playback is verified using the following commands:
-> >=20
-> > amixer -c0 cset iface=3DMIXER,name=3D'SEC_MI2S_RX Audio Mixer MultiMedi=
-a1' 1
-> > aplay -D hw:0,0 /usr/share/sounds/alsa/Front_Center.wav
-> >=20
-> > Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
-> > ---
-> >  arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 55 ++++++++++++++++++++++++
-> >  1 file changed, 55 insertions(+)
-> >=20
-> > diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot=
-/dts/qcom/qrb4210-rb2.dts
-> > index 1888d99d398b..5f671b9c8fb9 100644
-> > --- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-> > +++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-> > @@ -6,6 +6,8 @@
-> >  /dts-v1/;
-> > =20
-> >  #include <dt-bindings/leds/common.h>
-> > +#include <dt-bindings/sound/qcom,q6afe.h>
-> > +#include <dt-bindings/sound/qcom,q6asm.h>
-> >  #include <dt-bindings/usb/pd.h>
-> >  #include "sm4250.dtsi"
-> >  #include "pm6125.dtsi"
-> > @@ -103,6 +105,51 @@ led-wlan {
-> >  		};
-> >  	};
-> > =20
-> > +	sound {
-> > +		compatible =3D "qcom,qrb4210-rb2-sndcard";
-> > +		pinctrl-0 =3D <&lpi_i2s2_active>;
-> > +		pinctrl-names =3D "default";
-> > +		model =3D "Qualcomm-RB2-WSA8815-Speakers-DMIC0";
-> > +		audio-routing =3D "MM_DL1",  "MultiMedia1 Playback",
-> > +				"MM_DL2",  "MultiMedia2 Playback";
->
-> I'm seeing a lot of double spaces in this patch
->
-> > +
-> > +		mm1-dai-link {
-> > +			link-name =3D "MultiMedia1";
-> > +			cpu {
->
-> Please add a newline between the subnode
->
-> Looks nice otherwise
 
-Thanks for noticing this! I'll update it and resend.
-I put one space between audio-routing widgets, not sure if even one
-is needed though, maybe there should be no space at all.
+On Thu, 31 Oct 2024 23:44:05 +0200, Dmitry Baryshkov wrote:
+> As I stumbled upon msm_display_topology define, perform minor cleanup of
+> msm_drv.h incldue file.
+> 
+> 
+
+Applied, thanks!
+
+[1/3] drm/msm: move msm_display_topology to the DPU driver
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/f8706bff68cb
+[2/3] drm/msm: move MAX_H_TILES_PER_DISPLAY to the DPU driver
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/858b64e21217
+[3/3] drm/msm: drop MAX_BRIDGES define
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/26d841fd1c15
 
 Best regards,
-Alexey
+-- 
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
