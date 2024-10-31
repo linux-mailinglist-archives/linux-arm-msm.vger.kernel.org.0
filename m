@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-36501-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36502-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id A6FD39B7155
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 01:49:58 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id CA3C69B717D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 02:10:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 13299B2178B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 00:49:56 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C894F1C20B7B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 01:10:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A2A61DFED;
-	Thu, 31 Oct 2024 00:49:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 986983C463;
+	Thu, 31 Oct 2024 01:10:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="g/AnwqZ3"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="EpvHI4EF"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD33943AD9;
-	Thu, 31 Oct 2024 00:49:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4221D186A;
+	Thu, 31 Oct 2024 01:09:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730335787; cv=none; b=PtgKTeZSzR0TPTUuEKMhFpuiVBiB6ry95/gg7Uz1oye33DOajP1JQjlp/Dsg6s+JsGNNAOMAulyorFj6Ulc4SIQhC8174IXo481CcwEvLMT8kVmoOK6GaZgyK/fPhKnJKoAXpbuAXfZ+BVOFgRFLEaG8UswqbCqthPfRBTFtucE=
+	t=1730337001; cv=none; b=hTwG7CpIafAz2WVWBkylT0oUzRZhVNypodP3I06JbF1La1qjEp0wLZTWrvN11626euHE9QwZRaOw7qb9QG1FkGPqhscZk8cohM6JtSA5SO6VxDIDx3MU+KIYA5Jv3Fqgpt/HCWml3zVq2EVhMM/nY2+EsCP6ObtacTn1Kg7N/0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730335787; c=relaxed/simple;
-	bh=AouGVQ2CRkjpEWM70bUJlCu0V+yKP2XQnmW+HAZ45c8=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
-	 In-Reply-To:Content-Type; b=FiP3h2rh3ORjD+jgKuVqQNsDW+8FcI9Pxm5WU/di2rTGrTHU3OOjug5LarxJ8LaTMJ+8CXz0omag0PJ12CTa/DQCcm2lDbQl8JEA7ClDJ1pG0P1NzJW9QPm/B+t5R5UnTWCwlFVRFcy7yLkAXn5NbpitsND0lGBVO8uy6hBqB0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=g/AnwqZ3; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1730337001; c=relaxed/simple;
+	bh=yYhWaamNjlqFFpqW425S0NndidrwKuVwYYQUsXnnGNw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=FhRPNoqwBBoX1gatW6PhyfWL/nBEw1kKT14u8ydPoAzK+eDNZDkxqGK3U3Z+DoUzPIynkZmf12p0HLhOKIZoIdHF2Bt87YLB0sTk359tQ1p8UBFy3cctZRLF9h5tubOdulQ6iCi7FESOVdyisgQfaD0xKJMwP+26PlT3ty1sd+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=EpvHI4EF; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49UCH9ug019847;
-	Thu, 31 Oct 2024 00:49:21 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49UDqCSK032239;
+	Thu, 31 Oct 2024 01:09:54 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	7xhMTx79uWJ0oHC0IxM8Ok0hQb/h6nRSursI6CrKMEE=; b=g/AnwqZ3Yif4Pzs9
-	KNW5jnZUznCrIQweqAJPN2eBbylguIg9A+Lb3oIoZ/6PVJ+K6OE8qFGSS9kW39i4
-	jqRrPlz4uQIfbSHSlMIx8YFg+l1p4wMsEfNbfVfakFk7UPY7S4X9vMPJp3WGVB4v
-	LFe3/fhmghYYimkF1MItCwkWuigpuJI+FLXRIgLjNp7PcRPXfD4H/XfNYZ+3kUyW
-	XHMhMBbexVYS9emVN69riDIRc+7EIVogY99NrtMJc3BSMjm8WRQ8ftxFZTKMg0bE
-	0YYLsxaAasl1dM/MhkJZ/KY22YvtnOhIUiZ3MwgrhVJbfTv7a9JnSkI8K5FumQ4R
-	hCFDCQ==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42kmp0ht14-1
+	ikH4uFBlJjlet4b79cIIFpIAty3aXL85MXeU+eUJ9DI=; b=EpvHI4EFQjtGOEMi
+	dUdajScTt7ttuYYMQbUO6NltnaoW0Wb7SFeM4oTdr66aHcW2LujJErOJ29cCFrMn
+	BgLakobwN8d/rETQhB9fgU0UPx8GrLrOX20HRAw+hfT7VCN0VIoVkF+7wBK5Hfaw
+	2AN17wJiZ844oJX+u8wQAwBRc6p6eftvytF6vcCypPU7qVfVsxVl4M1TmEwl4f2J
+	I/FJ3TJrSIa/KbGbPJnZ+YlA+HTV+VvuBsEuSw3KrkQLgaSYIQNbj2Ed4k8Buxr4
+	bWQyZLZkX/AoBAYVFH+UO5gjXY+XhpPMn25T8WbGh/WdkJxnJ2JVI5YMCzAdRjGQ
+	qY5vTw==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42kp2g9jwd-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 31 Oct 2024 00:49:20 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49V0nKMA010497
+	Thu, 31 Oct 2024 01:09:54 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49V19rlp029422
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 31 Oct 2024 00:49:20 GMT
-Received: from [10.71.115.184] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+	Thu, 31 Oct 2024 01:09:53 GMT
+Received: from [10.216.12.123] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 30 Oct
- 2024 17:49:19 -0700
-Message-ID: <07d5a8b5-e985-45c1-95e0-1def6695ba9b@quicinc.com>
-Date: Wed, 30 Oct 2024 17:49:18 -0700
+ 2024 18:09:48 -0700
+Message-ID: <d25ee628-7a05-4d53-ad4a-e4feddfe6591@quicinc.com>
+Date: Thu, 31 Oct 2024 06:39:38 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,149 +65,60 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v29 04/33] xhci: sideband: add initial api to register a
- sideband entity
-From: Wesley Cheng <quic_wcheng@quicinc.com>
-To: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-CC: "srinivas.kandagatla@linaro.org" <srinivas.kandagatla@linaro.org>,
-        "mathias.nyman@intel.com" <mathias.nyman@intel.com>,
-        "perex@perex.cz"
-	<perex@perex.cz>,
-        "conor+dt@kernel.org" <conor+dt@kernel.org>,
-        "dmitry.torokhov@gmail.com" <dmitry.torokhov@gmail.com>,
-        "corbet@lwn.net"
-	<corbet@lwn.net>,
-        "lgirdwood@gmail.com" <lgirdwood@gmail.com>,
-        "tiwai@suse.com" <tiwai@suse.com>,
-        "krzk+dt@kernel.org" <krzk+dt@kernel.org>,
-        "pierre-louis.bossart@linux.intel.com"
-	<pierre-louis.bossart@linux.intel.com>,
-        "broonie@kernel.org"
-	<broonie@kernel.org>,
-        "bgoswami@quicinc.com" <bgoswami@quicinc.com>,
-        "robh@kernel.org" <robh@kernel.org>,
-        "gregkh@linuxfoundation.org"
-	<gregkh@linuxfoundation.org>,
-        "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>,
-        "devicetree@vger.kernel.org"
-	<devicetree@vger.kernel.org>,
-        "linux-sound@vger.kernel.org"
-	<linux-sound@vger.kernel.org>,
-        "linux-input@vger.kernel.org"
-	<linux-input@vger.kernel.org>,
-        "linux-usb@vger.kernel.org"
-	<linux-usb@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org"
-	<linux-arm-msm@vger.kernel.org>,
-        "linux-doc@vger.kernel.org"
-	<linux-doc@vger.kernel.org>,
-        "alsa-devel@alsa-project.org"
-	<alsa-devel@alsa-project.org>,
-        Mathias Nyman <mathias.nyman@linux.intel.com>
-References: <20241015212915.1206789-1-quic_wcheng@quicinc.com>
- <20241015212915.1206789-5-quic_wcheng@quicinc.com>
- <20241025232252.wsk4lviqzyzqjzuh@synopsys.com>
- <52ea0b32-79c7-42e8-8e2c-192d08f41e64@quicinc.com>
+Subject: Re: [PATCH v4 4/4] clk: qcom: gcc: Add support for QCS615 GCC clocks
+To: Taniya Das <quic_tdas@quicinc.com>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        "Stephen
+ Boyd" <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Richard Cochran
+	<richardcochran@gmail.com>
+CC: Ajit Pandey <quic_ajipan@quicinc.com>,
+        Jagadeesh Kona
+	<quic_jkona@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20241022-qcs615-clock-driver-v4-0-3d716ad0d987@quicinc.com>
+ <20241022-qcs615-clock-driver-v4-4-3d716ad0d987@quicinc.com>
 Content-Language: en-US
-In-Reply-To: <52ea0b32-79c7-42e8-8e2c-192d08f41e64@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
+From: Imran Shaik <quic_imrashai@quicinc.com>
+In-Reply-To: <20241022-qcs615-clock-driver-v4-4-3d716ad0d987@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: OqRiUjmTcddOaQjqdwLe-IzQ-UetsT-M
-X-Proofpoint-ORIG-GUID: OqRiUjmTcddOaQjqdwLe-IzQ-UetsT-M
+X-Proofpoint-ORIG-GUID: v6NDmE9WzrAc2MEA6LAr8yETYietvM_Z
+X-Proofpoint-GUID: v6NDmE9WzrAc2MEA6LAr8yETYietvM_Z
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- bulkscore=0 malwarescore=0 impostorscore=0 mlxscore=0 suspectscore=0
- adultscore=0 clxscore=1015 phishscore=0 spamscore=0 mlxlogscore=999
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410310005
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 bulkscore=0
+ mlxscore=0 priorityscore=1501 clxscore=1011 suspectscore=0 impostorscore=0
+ mlxlogscore=939 adultscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2410310008
 
-On 10/29/2024 11:58 AM, Wesley Cheng wrote:
-> Hi Thinh,
->
-> On 10/25/2024 4:22 PM, Thinh Nguyen wrote:
->> Hi,
->>
->> On Tue, Oct 15, 2024, Wesley Cheng wrote:
->>> From: Mathias Nyman <mathias.nyman@linux.intel.com>
->>>
->>> Introduce XHCI sideband, which manages the USB endpoints being requested by
->>> a client driver.  This is used for when client drivers are attempting to
->>> offload USB endpoints to another entity for handling USB transfers.  XHCI
->>> sideband will allow for drivers to fetch the required information about the
->>> transfer ring, so the user can submit transfers independently.  Expose the
->>> required APIs for drivers to register and request for a USB endpoint and to
->>> manage XHCI secondary interrupters.
->>>
->>> Multiple ring segment page linking, proper endpoint clean up, and allowing
->>> module compilation added by Wesley Cheng to complete original concept code
->>> by Mathias Nyman.
->>>
->>> Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
->>> Co-developed-by: Wesley Cheng <quic_wcheng@quicinc.com>
->>> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
->>> ---
->>>  drivers/usb/host/Kconfig          |   9 +
->>>  drivers/usb/host/Makefile         |   2 +
->>>  drivers/usb/host/xhci-sideband.c  | 424 ++++++++++++++++++++++++++++++
->>>  drivers/usb/host/xhci.h           |   4 +
->>>  include/linux/usb/xhci-sideband.h |  70 +++++
->>>  5 files changed, 509 insertions(+)
->>>  create mode 100644 drivers/usb/host/xhci-sideband.c
->>>  create mode 100644 include/linux/usb/xhci-sideband.h
->>>
->>> diff --git a/drivers/usb/host/Kconfig b/drivers/usb/host/Kconfig
->>> index 4448d0ab06f0..96659efa4be5 100644
->>> --- a/drivers/usb/host/Kconfig
->>> +++ b/drivers/usb/host/Kconfig
->>> @@ -104,6 +104,15 @@ config USB_XHCI_RZV2M
->>>  	  Say 'Y' to enable the support for the xHCI host controller
->>>  	  found in Renesas RZ/V2M SoC.
->>>  
->>> +config USB_XHCI_SIDEBAND
->>> +	tristate "xHCI support for sideband"
->>> +	help
->>> +	  Say 'Y' to enable the support for the xHCI sideband capability.
->>> +	  Provide a mechanism for a sideband datapath for payload associated
->> Please correct me if I'm wrong, but this doesn't look like the actual
->> xHCI Audio Sideband capability described in the xHCI spec section 7.9
->> but rather a specific implementation for Qcom right? For the xHCI Audio
->> Sideband xHCI capability, the driver should detect this capability
->> through the xHCI get extended capability. If this is not xHCI Audio
->> Sideband capability, we should properly clarify this in the
->> documentation and the naming of things to avoid any confusion.
-> Sure, that's a good point.  It does still currently rely on utilizing the system memory for USB IO transfers.  I can add some comments and update some of the documentation to reflect that this is different. 
 
-Hi Mathias,
 
-Would it make sense to rename the APIs and driver to something other than "sideband" so that users don't get confused with the audio sideband that is mentioned above by Thinh?  How about using something like xhci-sec-intr to signify that this driver has APIs that will help support the use of xHCI secondary interrupters?
+On 10/22/2024 5:22 PM, Taniya Das wrote:
+> Add the global clock controller support for QCS615 SoC.
+> 
+> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> ---
+>   drivers/clk/qcom/Kconfig      |    9 +
+>   drivers/clk/qcom/Makefile     |    1 +
+>   drivers/clk/qcom/gcc-qcs615.c | 3034 +++++++++++++++++++++++++++++++++++++++++
+>   3 files changed, 3044 insertions(+)
+> 
 
-Thanks
+Reviewed-by: Imran Shaik <quic_imrashai@quicinc.com>
 
-Wesley Cheng
-
-> Thanks
->
-> Wesley Cheng
->
->> I believe your implementation still needs to provide the data to the
->> host controller through the system memory right? The xHCI Audio Sideband
->> capability may pass the data to the xHC other than the main memory.
->>
->> BR,
->> Thinh
->>
->>> +	  with audio class endpoints. This allows for an audio DSP to use
->>> +	  xHCI USB endpoints directly, allowing CPU to sleep while playing
->>> +	  audio.
->>> +
->>>  config USB_XHCI_TEGRA
->>>  	tristate "xHCI support for NVIDIA Tegra SoCs"
->>>  	depends on PHY_TEGRA_XUSB
+Thanks,
+Imran
 
