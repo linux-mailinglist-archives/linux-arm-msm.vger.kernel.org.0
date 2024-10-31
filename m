@@ -1,141 +1,373 @@
-Return-Path: <linux-arm-msm+bounces-36592-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36593-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB4429B81F1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 18:58:12 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D1EEB9B81FE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 18:59:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 630CD1F22E07
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 17:58:12 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EE4C01C219BA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 17:59:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 853C81C579D;
-	Thu, 31 Oct 2024 17:58:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 461D41C463F;
+	Thu, 31 Oct 2024 17:59:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TE3YMvI3"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HZJffybf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DF961C2443
-	for <linux-arm-msm@vger.kernel.org>; Thu, 31 Oct 2024 17:58:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FCCE1BC069
+	for <linux-arm-msm@vger.kernel.org>; Thu, 31 Oct 2024 17:58:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730397485; cv=none; b=H/iQJbXMDcAmSx3mJcT2gF/NPg6VU2y2NCy6ckxXdmLU7xipfm//6T5NCJso3D9e7CC8Lnga7GT49TReYs5a1a+0nhZ9z6TTGCKoVlpJLUVDq7nJPUZWk6KFBcfdgLBDUhF5JJkDzHYoRGK2c6BoIbxyFu6SCeY08yIdThkRlcM=
+	t=1730397542; cv=none; b=T29aoSNbr+6/cl1r7uuSc/hGjAdBoIbwoVWjSg2kV7CzZeyYubSexI+1OE+fX910jPTI2v4iLTobB3L5HOSnpdUJq3z4eZ9dxay2Xqw1MU8+lxdoP0HkN1FTgBWNGfaMTdYOn2NFjGLO0z2pCz7EibqQMr7F7LUloxrXjT9sITI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730397485; c=relaxed/simple;
-	bh=s98ZX28OsVpUZzWaaWrFm/+3vCU+Pr78M3qXyvNi430=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XVupOeSnnef/nDJcdBBkg9LPdiPBpqhv3uKoLwtI7aJLN7sTfafmSNAlJIRtottzdFjzDoGiS5N9Zqy5+8ax997c501nv0ZRSm47KQ/cyV8KbvETvLqy+i0YfzTQzy16wLl6inNMvzPSjlqEAkIi29V9UKLNDi1Fu1ZJvbB5PdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TE3YMvI3; arc=none smtp.client-ip=209.85.167.54
+	s=arc-20240116; t=1730397542; c=relaxed/simple;
+	bh=VcPhg/lN+FcqsNlnQk/AR8TKjXox62BIIeVmO1/jB5Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=nBunwveZ1DxBk5PY5DhYUGPEioR1bZBDpm8PX4aXBiq8TTfhICj6xcag6GXa0guSPRPAo+4HMxfdX1r3gRWJ0dTjepUKu0jW5GO28NBuCYkJLB4Td8403TOLIDzwh/33yCg2vgzeierK6qUw6/CiKH4u4T/AmOrskngKcBQSBgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HZJffybf; arc=none smtp.client-ip=209.85.221.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-539f1292a9bso1536545e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Oct 2024 10:58:02 -0700 (PDT)
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-37d4ba20075so915831f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Oct 2024 10:58:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1730397481; x=1731002281; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=P83QC4divwjdwrOkzc0beaK7x66pdeMqgQ1qbe4pGZQ=;
-        b=TE3YMvI3gX8v3czSKkqhq73RscaYYFOYVzLdo4u52ig90xybOIIpbe5iR1r5IMPxdr
-         0qMZaYYfEaEbr88BieHkHhE1TBpfSZ1mJtr4bwI6Tfk9x9bzfu/3GRanxP+wSSZeHAqc
-         8zTnpenvflZw391sG/a3Yp7wHaDJs0xbWcnxo0kJAByYxCvZsZVF7O6BwsuV9xan8VJW
-         DHqdjRep895ikJ+hbw53gWmZRtii3CwsSSuWV9tklMhJN0rLiCUTaGusecGgMUtXvyF9
-         o345UfGapyOlYSOAGu4P7gQtZ/mAxFl2vbnw4mKEBIDsLdX1K2gXKWyNw4iUtrGk0Wrp
-         H3oQ==
+        d=linaro.org; s=google; t=1730397538; x=1731002338; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=VuifK9ssbByZoxkDSJx5oYjnqJDuMVfVzL90tw7nJak=;
+        b=HZJffybfshMryuHJM1vW8oQdxOYOaDpAB5HCdwvmq/P/IIDn/9SYfoTRq9DLPNJgjD
+         mimxTGbn1gLTxG4f9K/iFBNvLa01NCXAqQqYWEjQEHZ+fKYt48ww4FshYy/GDLZv/Igu
+         1q/G2J7+HhPuQuduVgmaKQGu77RnYOKFBORTV69Zueipw/uqMwcQc9t9kIs2NiNoBTWo
+         urEwUEdS/j9eX7CGrO70EH784niZHoe2nhcpJ37oghOWoVmWSMxGE4D/Wg3sLERAF/u1
+         Tsuou8kZ4P3LhcKFIMQjECDmNjuAe7LInpaRwJCPeiQOFXO7bEb0nswURvQqOrCwOOlZ
+         F5cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730397481; x=1731002281;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=P83QC4divwjdwrOkzc0beaK7x66pdeMqgQ1qbe4pGZQ=;
-        b=NA1Z+n7aaq9hJ1L1yi5Zwav8FEdHe/3xMYiFrQEr2aenTTwakqr4C6lh7QWz+U8XUs
-         fb3rZgP4mChx/z+Ezxr8TMNRRn+OtOi0PPWs7yI/qC0VWmmHqOcDIpnGdipuAaCQyCb5
-         XSWPsw5Q7YreCm0XWs5SD3uQx2FByeHXXNSAnre+UTniMYjjXGP6QrwWyU1WjrOsLSU4
-         jxkr1H/xgneKvSul0YORpJHb3fC5m43SZ+jq8Fuvp/TmiW1d74cSgKas93gWV/ofu+qP
-         bZnfSlgbQaUwfcuD0blnhX3u5z2E4hGDRpx2CEDw2oeYe/gksKAg7bcHa0irYjPTPiTr
-         3OeQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUzabGWJNUwkCfyZo5RsW2KYWcYVjC2Onxx6rx2IRYUAy3vPvaYChte5pEdsePdslr16bMH1I4YVacEqNTe@vger.kernel.org
-X-Gm-Message-State: AOJu0YztDtMe7XUMJxr1OTDfZ0UN17RYb1Wlq2/VOcBOqc3/JT301nSZ
-	40Ya82jiIQvcsGAEzDEnLPJi/R+0nu/VLA3w0UNZgi9rnez+aSt4JpVzrDjr3vA=
-X-Google-Smtp-Source: AGHT+IGSV5srlEIwYq4ukshM4Ah7sMYFPuqhx1GlJEoXoE2aV6eQnDSC8Wx080gm6OXkRcNzRUro1A==
-X-Received: by 2002:a05:6512:687:b0:536:581c:9d9f with SMTP id 2adb3069b0e04-53b348d6ademr10336086e87.24.1730397481275;
-        Thu, 31 Oct 2024 10:58:01 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53c7bc9c9f3sm282595e87.116.2024.10.31.10.57.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Oct 2024 10:58:00 -0700 (PDT)
-Date: Thu, 31 Oct 2024 19:57:58 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Jishnu Prakash <quic_jprakash@quicinc.com>
-Cc: jic23@kernel.org, robh+dt@kernel.org, 
-	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, agross@kernel.org, andersson@kernel.org, 
-	konrad.dybcio@linaro.org, daniel.lezcano@linaro.org, sboyd@kernel.org, 
-	quic_subbaram@quicinc.com, quic_collinsd@quicinc.com, quic_amelende@quicinc.com, 
-	quic_kamalw@quicinc.com, amitk@kernel.org, lee@kernel.org, rafael@kernel.org, 
-	rui.zhang@intel.com, lukasz.luba@arm.com, lars@metafoo.de, quic_skakitap@quicinc.com, 
-	neil.armstrong@linaro.org, devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, 
-	cros-qcom-dts-watchers@chromium.org
-Subject: Re: [PATCH V4 2/4] dt-bindings: iio: adc: Add support for QCOM PMIC5
- Gen3 ADC
-Message-ID: <ag3wqsjdec7ujcba2jpvhzgcbbc5vnyjyes5ljyyf5b4edw7j3@rj23a25wvoyd>
-References: <20241030185854.4015348-1-quic_jprakash@quicinc.com>
- <20241030185854.4015348-3-quic_jprakash@quicinc.com>
+        d=1e100.net; s=20230601; t=1730397538; x=1731002338;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=VuifK9ssbByZoxkDSJx5oYjnqJDuMVfVzL90tw7nJak=;
+        b=H/YMh48tqB4V9HaoMEZybN3rxMLbDK2EV3IPjD5xpqkisfSEXgwvEfKDJ+qoWba15H
+         Do/G0Aj0MauSe4kzt2oXe6AgOIbh6FJU0Phbp3E84hC/YrkJkcLXLJgrS6ChZIA14bZH
+         nieBQ16JDStDWmBs9ideICGfemShHrZWYHc/B9WfPZJLb1cK8EM6wwhdz6+n6mJ1r4zd
+         CbUi3jSMmVnDgSXHcRE0vlTeMEDICbSbGb3fPJgqag06B3LKwbDgIDpxd76HMlvcYCgJ
+         57phEvB9/5RIuyGIsHhBjEpqMKQ3G2e4n6FqGsMZ+qLQ4LvQeMwqsENaXGERCXyFpxZb
+         3Xig==
+X-Forwarded-Encrypted: i=1; AJvYcCUpw8h3JI/Q1LAInfz1KbBtU1GAQb5TpFsRM09WsBetP28RXMBHRQ07e9B6k5FGjnK8JeKEhZci0Z6ZhlsZ@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx0DitC1xdMcWEBh3VxNH/4zN69f9QQG4WH7FUtM1pXAm7uPP3w
+	3nK42GhOIIIhMSUmsfsrJPF4g+i51O90KpTwkQwqNzNQeLUmcIWOnFAiX/FJQtg=
+X-Google-Smtp-Source: AGHT+IHVFS3EEahXMmwf1uXc498PntDJFpAi99I26Hiqrk9r31i5G0llOXVhvkN/yJFqVWGq3yU2SA==
+X-Received: by 2002:a05:6000:4013:b0:37d:4517:acdb with SMTP id ffacd0b85a97d-381be783511mr3580290f8f.20.1730397537669;
+        Thu, 31 Oct 2024 10:58:57 -0700 (PDT)
+Received: from [192.168.0.17] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381c113e856sm2777954f8f.87.2024.10.31.10.58.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 31 Oct 2024 10:58:57 -0700 (PDT)
+Message-ID: <b3fb76d2-5433-438e-accb-f62fca130ab8@linaro.org>
+Date: Thu, 31 Oct 2024 17:58:55 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241030185854.4015348-3-quic_jprakash@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 3/6] media: qcom: camss: Add support for camss driver
+ on SC7280
+To: Vikram Sharma <quic_vikramsa@quicinc.com>, rfoss@kernel.org,
+ todor.too@gmail.com, mchehab@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, akapatra@quicinc.com,
+ hariramp@quicinc.com, andersson@kernel.org, konradybcio@kernel.org,
+ hverkuil-cisco@xs4all.nl, cros-qcom-dts-watchers@chromium.org,
+ catalin.marinas@arm.com, will@kernel.org
+Cc: linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, kernel@quicinc.com
+References: <20241030105347.2117034-1-quic_vikramsa@quicinc.com>
+ <20241030105347.2117034-4-quic_vikramsa@quicinc.com>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20241030105347.2117034-4-quic_vikramsa@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Oct 31, 2024 at 12:28:52AM +0530, Jishnu Prakash wrote:
-> For the PMIC5-Gen3 type PMICs, ADC peripheral is present in HW for the
-> following PMICs: PMK8550, PM8550, PM8550B and PM8550VX PMICs.
+On 30/10/2024 10:53, Vikram Sharma wrote:
+> From: Suresh Vankadara <quic_svankada@quicinc.com>
 > 
-> It is similar to PMIC5-Gen2, with SW communication to ADCs on all PMICs
-> going through PBS(Programmable Boot Sequence) firmware through a single
-> register interface. This interface is implemented on an SDAM (Shared
-> Direct Access Memory) peripheral on the master PMIC PMK8550 rather
-> than a dedicated ADC peripheral.
+> Add support for the camss driver on the SC7280 SoC.
 > 
-> Add documentation for PMIC5 Gen3 ADC and macro definitions for ADC
-> channels and virtual channels (combination of ADC channel number and
-> PMIC SID number) per PMIC, to be used by clients of this device.
-> 
-> Co-developed-by: Anjelique Melendez <quic_amelende@quicinc.com>
-> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
-> Signed-off-by: Jishnu Prakash <quic_jprakash@quicinc.com>
+> Signed-off-by: Suresh Vankadara <quic_svankada@quicinc.com>
+> Signed-off-by: Trishansh Bhardwaj <quic_tbhardwa@quicinc.com>
+> Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
 > ---
-> Changes since v3:
-> - Added ADC5 Gen3 documentation changes in existing qcom,spmi-vadc.yaml file
->   instead of adding separate file and updated top-level constraints in documentation
->   file based on discussion with reviewers.
-
-I think it has been better, when it was a separate file. Krzysztof asked
-for rationale, not for merging it back. Two different things.
-
-> - Dropped default SID definitions.
-> - Addressed other reviewer comments.
+>   .../media/platform/qcom/camss/camss-csid.c    |   1 -
+>   .../qcom/camss/camss-csiphy-3ph-1-0.c         |   5 +
+>   .../media/platform/qcom/camss/camss-csiphy.c  |   5 +
+>   .../media/platform/qcom/camss/camss-csiphy.h  |   1 +
+>   drivers/media/platform/qcom/camss/camss-vfe.c |   2 +
+>   drivers/media/platform/qcom/camss/camss.c     | 339 ++++++++++++++++++
+>   drivers/media/platform/qcom/camss/camss.h     |   1 +
+>   7 files changed, 353 insertions(+), 1 deletion(-)
 > 
-> Changes since v2:
-> - Moved ADC5 Gen3 documentation into a separate new file.
-> 
-> Changes since v1:
-> - Updated properties separately for all compatibles to clarify usage
->   of new properties and updates in usage of old properties for ADC5 Gen3.
-> - Avoided updating 'adc7' name to 'adc5 gen2' and just left a comment
->   mentioning this convention.
-> - Used predefined channel IDs in individual PMIC channel definitions
->   instead of numeric IDs.
-> - Addressed other comments from reviewers.
-> 
+> diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
+> index 858db5d4ca75..8d3dc26e2af4 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csid.c
+> +++ b/drivers/media/platform/qcom/camss/camss-csid.c
+> @@ -1028,7 +1028,6 @@ int msm_csid_subdev_init(struct camss *camss, struct csid_device *csid,
+>   	csid->res->hw_ops->subdev_init(csid);
+>   
+>   	/* Memory */
+> -
 
--- 
-With best wishes
-Dmitry
+Extraneous deletion.
+
+>   	if (camss->res->version == CAMSS_8250) {
+>   		/* for titan 480, CSID registers are inside the VFE region,
+>   		 * between the VFE "top" and "bus" registers. this requires
+> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> index 7d2490c9de01..f341f7b7fd8a 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> +++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> @@ -505,6 +505,10 @@ static void csiphy_gen2_config_lanes(struct csiphy_device *csiphy,
+>   	u32 val;
+>   
+>   	switch (csiphy->camss->res->version) {
+> +	case CAMSS_7280:
+> +		r = &lane_regs_sm8250[0][0];
+> +		array_size = ARRAY_SIZE(lane_regs_sm8250[0]);
+> +		break;
+>   	case CAMSS_8250:
+>   		r = &lane_regs_sm8250[0][0];
+>   		array_size = ARRAY_SIZE(lane_regs_sm8250[0]);
+> @@ -557,6 +561,7 @@ static bool csiphy_is_gen2(u32 version)
+>   	bool ret = false;
+>   
+>   	switch (version) {
+> +	case CAMSS_7280:
+>   	case CAMSS_8250:
+>   	case CAMSS_8280XP:
+>   	case CAMSS_845:
+> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.c b/drivers/media/platform/qcom/camss/camss-csiphy.c
+> index 68a3ea1ba2a5..9722cee4143f 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csiphy.c
+> +++ b/drivers/media/platform/qcom/camss/camss-csiphy.c
+> @@ -108,6 +108,11 @@ const struct csiphy_formats csiphy_formats_sdm845 = {
+>   	.formats = formats_sdm845
+>   };
+>   
+> +const struct csiphy_formats csiphy_formats_sc7280 = {
+> +	.nformats = ARRAY_SIZE(formats_sdm845),
+> +	.formats = formats_sdm845
+> +};
+> +
+>   /*
+>    * csiphy_get_bpp - map media bus format to bits per pixel
+>    * @formats: supported media bus formats array
+> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.h b/drivers/media/platform/qcom/camss/camss-csiphy.h
+> index eebc1ff1cfab..67a96ef55bb6 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csiphy.h
+> +++ b/drivers/media/platform/qcom/camss/camss-csiphy.h
+> @@ -112,6 +112,7 @@ void msm_csiphy_unregister_entity(struct csiphy_device *csiphy);
+>   extern const struct csiphy_formats csiphy_formats_8x16;
+>   extern const struct csiphy_formats csiphy_formats_8x96;
+>   extern const struct csiphy_formats csiphy_formats_sdm845;
+> +extern const struct csiphy_formats csiphy_formats_sc7280;
+>   
+>   extern const struct csiphy_hw_ops csiphy_ops_2ph_1_0;
+>   extern const struct csiphy_hw_ops csiphy_ops_3ph_1_0;
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
+> index ffcb1e2ec417..61f6815a3756 100644
+> --- a/drivers/media/platform/qcom/camss/camss-vfe.c
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+> @@ -334,6 +334,7 @@ static u32 vfe_src_pad_code(struct vfe_line *line, u32 sink_code,
+>   		}
+>   		break;
+>   	case CAMSS_660:
+> +	case CAMSS_7280:
+>   	case CAMSS_8x96:
+>   	case CAMSS_8250:
+>   	case CAMSS_8280XP:
+> @@ -1692,6 +1693,7 @@ static int vfe_bpl_align(struct vfe_device *vfe)
+>   	int ret = 8;
+>   
+>   	switch (vfe->camss->res->version) {
+> +	case CAMSS_7280:
+>   	case CAMSS_8250:
+>   	case CAMSS_8280XP:
+>   	case CAMSS_845:
+> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+> index e8cd8afe7bee..addaed8f77cb 100644
+> --- a/drivers/media/platform/qcom/camss/camss.c
+> +++ b/drivers/media/platform/qcom/camss/camss.c
+> @@ -1480,6 +1480,330 @@ static const struct resources_icc icc_res_sc8280xp[] = {
+>   	},
+>   };
+>   
+> +static const struct camss_subdev_resources csiphy_res_7280[] = {
+> +	/* CSIPHY0 */
+> +	{
+> +		.regulators = {},
+> +		.clock = { "csiphy0", "csiphy0_timer"},
+> +		.clock_rate = {
+> +			{ 300000000 },
+> +			{ 300000000 }
+> +		},
+> +		.reg = { "csiphy0" },
+> +		.interrupt = { "csiphy0" },
+> +		.csiphy = {
+> +			.hw_ops = &csiphy_ops_3ph_1_0,
+> +			.formats = &csiphy_formats_sc7280
+> +		}
+> +	},
+> +	/* CSIPHY1 */
+> +	{
+> +		.regulators = {},
+> +		.clock = { "csiphy1", "csiphy1_timer"},
+> +		.clock_rate = {
+> +			{ 300000000 },
+> +			{ 300000000 }
+> +		},
+> +		.reg = { "csiphy1" },
+> +		.interrupt = { "csiphy1" },
+> +		.csiphy = {
+> +			.hw_ops = &csiphy_ops_3ph_1_0,
+> +			.formats = &csiphy_formats_sc7280
+> +		}
+> +	},
+> +	/* CSIPHY2 */
+> +	{
+> +		.regulators = {},
+> +		.clock = { "csiphy2", "csiphy2_timer"},
+> +		.clock_rate = {
+> +			{ 300000000 },
+> +			{ 300000000 }
+> +		},
+> +		.reg = { "csiphy2" },
+> +		.interrupt = { "csiphy2" },
+> +		.csiphy = {
+> +			.hw_ops = &csiphy_ops_3ph_1_0,
+> +			.formats = &csiphy_formats_sc7280
+> +		}
+> +	},
+> +	/* CSIPHY3 */
+> +	{
+> +		.regulators = {},
+> +		.clock = { "csiphy3", "csiphy3_timer"},
+> +		.clock_rate = {
+> +			{ 300000000 },
+> +			{ 300000000 }
+> +		},
+> +		.reg = { "csiphy3" },
+> +		.interrupt = { "csiphy3" },
+> +		.csiphy = {
+> +			.hw_ops = &csiphy_ops_3ph_1_0,
+> +			.formats = &csiphy_formats_sc7280
+> +		}
+> +	},
+> +	/* CSIPHY4 */
+> +	{
+> +		.regulators = {},
+> +		.clock = { "csiphy4", "csiphy4_timer"},
+> +		.clock_rate = {
+> +			{ 300000000 },
+> +			{ 300000000 }
+> +		},
+> +		.reg = { "csiphy4" },
+> +		.interrupt = { "csiphy4" },
+> +		.csiphy = {
+> +			.hw_ops = &csiphy_ops_3ph_1_0,
+> +			.formats = &csiphy_formats_sc7280
+> +		}
+> +	},
+> +};
+> +
+> +static const struct camss_subdev_resources csid_res_7280[] = {
+> +	/* CSID0 */
+> +	{
+> +		.regulators = { "vdda-phy", "vdda-pll" },
+> +
+> +		.clock = { "csi0", "vfe0_cphy_rx", "vfe0", "soc_ahb"},
+
+csi0 should probably be named vfe0_csid, same with the other csiX clocks 
+here.
+
+7280 is similar/derived from 8250 so the naming convention should be 
+followed.
+
+> +		.clock_rate = {
+> +			{ 300000000, 0, 380000000, 0},
+> +			{ 400000000, 0, 510000000, 0},
+> +			{ 400000000, 0, 637000000, 0},
+> +			{ 400000000, 0, 760000000, 0}
+> +		},
+> +
+> +		.reg = { "csid0" },
+> +		.interrupt = { "csid0" },
+> +		.csid = {
+> +			.is_lite = false,
+> +			.hw_ops = &csid_ops_gen2,
+> +			.parent_dev_ops = &vfe_parent_dev_ops,
+> +			.formats = &csid_formats_gen2
+> +		}
+> +	},
+> +	/* CSID1 */
+> +	{
+> +		.regulators = { "vdda-phy", "vdda-pll" },
+> +
+> +		.clock = { "csi1", "vfe1_cphy_rx", "vfe1", "soc_ahb"},
+> +		.clock_rate = {
+> +			{ 300000000, 0, 380000000, 0},
+> +			{ 400000000, 0, 510000000, 0},
+> +			{ 400000000, 0, 637000000, 0},
+> +			{ 400000000, 0, 760000000, 0}
+> +		},
+> +
+> +		.reg = { "csid1" },
+> +		.interrupt = { "csid1" },
+> +		.csid = {
+> +			.is_lite = false,
+> +			.hw_ops = &csid_ops_gen2,
+> +			.parent_dev_ops = &vfe_parent_dev_ops,
+> +			.formats = &csid_formats_gen2
+> +		}
+> +	},
+> +	/* CSID2 */
+> +	{
+> +		.regulators = { "vdda-phy", "vdda-pll" },
+> +
+> +		.clock = { "csi2", "vfe2_cphy_rx", "vfe2", "soc_ahb"},
+> +		.clock_rate = {
+> +			{ 300000000, 0, 380000000, 0},
+> +			{ 400000000, 0, 510000000, 0},
+> +			{ 400000000, 0, 637000000, 0},
+> +			{ 400000000, 0, 760000000, 0}
+> +		},
+> +
+> +		.reg = { "csid2" },
+> +		.interrupt = { "csid2" },
+> +		.csid = {
+> +			.is_lite = false,
+> +			.hw_ops = &csid_ops_gen2,
+> +			.parent_dev_ops = &vfe_parent_dev_ops,
+> +			.formats = &csid_formats_gen2
+> +		}
+> +	},
+> +	/* CSID3 */
+> +	{
+> +		.regulators = { "vdda-phy", "vdda-pll" },
+> +
+> +		.clock = { "csi3", "vfe0_lite_cphy_rx", "vfe0_lite", "soc_ahb"},
+
+As with 8250 I'd expect "lite" to appear in the clock name
+
+When fixed please add.
+
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+
+---
+bod
 
