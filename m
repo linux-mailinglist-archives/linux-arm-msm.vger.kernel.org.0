@@ -1,59 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-36528-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36529-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3BF9D9B761B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 09:13:40 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 91C379B7643
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 09:21:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BEEEAB20F26
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 08:13:37 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 489381F22D20
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 08:21:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D3916153565;
-	Thu, 31 Oct 2024 08:13:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E3C02153BE8;
+	Thu, 31 Oct 2024 08:20:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TgaO/6gd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X230h09V"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C5221514CE;
-	Thu, 31 Oct 2024 08:13:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA55414F9F4;
+	Thu, 31 Oct 2024 08:20:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730362412; cv=none; b=IeFj4jQatkxwUGOh4BG8E7M2RuTLB+DfcchZ2AdaOC5fGDg7fqftdk2QILwUbNDg88vilzUqEYiwTGLD1jJEMbZ1s1YQaDZOsLxoMzYqKf/TaS2r4L/WMwtUodoYyLEl+BEF5lWqGOfijHXa9RgrhJbqvpep/JKrPIULYlAdneo=
+	t=1730362854; cv=none; b=eMRieOm55U7AhT/q2nDxioxvFXW+2vY9AtU2VH7VpAW9zSnMSxu3bwhm/Nr2ivGLJTCzx4OfsSQrJPUo9vQXMMriu8/Cy67wIgwxySh7CjfCtlWB79b7nCOeuE0+dxKQRfSeHeCi1UvGwsk97+VFuCmGiFGNQ+o/0UU7wXSrhfs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730362412; c=relaxed/simple;
-	bh=7ETzBfcmI5lFNi0VEqJWRXsfMXxJ4zVNS1TzFSIy1/Y=;
+	s=arc-20240116; t=1730362854; c=relaxed/simple;
+	bh=FEGPr7eoy84GzZDQ3he5fsI7b5IYOckek+ZGUdMQ3zo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ocGO4uhkZEpUkp0dyWxShpKnbG9TgvJAiS7YhyQyGkyxrj/71ieB5PRR61i4g2YHJuaB8r8vrg0bkeF812DfFYqER+rw3YRbIAW2KdlktJjBkH6tyHXmw4CXysHK2lymxR+S4LpHd6vhO6hstWziBLb0UgaCNe1qpIq8QmhP4QY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TgaO/6gd; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45721C4CEC3;
-	Thu, 31 Oct 2024 08:13:30 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=FSScZTH6PAQy5LcS7W3fYLvf6eU00L0I7/sZLbTIrdgxjejYgKc5TApHjmVvhdWfkWJW7ei6y7m81QQkOdH6dvzlfco2fgNg58IvtjMNd71Vei7NV6J4zeuKBJxWOvk+i6/Or3NUKOe+fHx5qC2GvBwYGwYvKZ0z97W/lFdSWm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X230h09V; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07FB9C4CEC3;
+	Thu, 31 Oct 2024 08:20:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730362412;
-	bh=7ETzBfcmI5lFNi0VEqJWRXsfMXxJ4zVNS1TzFSIy1/Y=;
+	s=k20201202; t=1730362854;
+	bh=FEGPr7eoy84GzZDQ3he5fsI7b5IYOckek+ZGUdMQ3zo=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=TgaO/6gdAu+crswbMGatp5O3XBeYDUfYPccVUBMSORYU3Iym+W4s2FY49I1iyb7fB
-	 SI+5gbKheKE7o6PMWCt6ZKVnw2XeKoSYPKw4id4ZXxfq9K81/TMs0+ezdvmExSjmZs
-	 sbb/NVVXDpG01/Iw/139LgTWD0dZ5Cj9Td3w3xbQMIW3qfv58+LBb2r/D/m1hswJrI
-	 Q8Na5sgP0c0p5tYicDIVD2fxb0m9bkKrZLWEqO+/D0gGelJfwvG/jwGV+RPQX7A5aw
-	 jJk6WAkTXqQrfzuRtG/PxIh/7A03lGq6xZwAsFUbSEl6qb1kACYENyt3Bn4xi+IjVR
-	 zoMLTTgCNttYQ==
-Date: Thu, 31 Oct 2024 09:13:27 +0100
+	b=X230h09VEu91FWvNPPdlulJt5QeNPUDnihiqxFwcSSI3VQ3KYfTLwJz5+O6KWdkEp
+	 swSZlf14rQZ3qsqSihlLlHkBlAtOh8GGN0x8s25LTwdm6bclvRBSDrLHSYyGVwlgjR
+	 t/7qEO46rz7oHJVe0nOcklX+cJy7VfhhaZHIc2e+JbpqrQczOQJS+7YYLYWWi0IB7h
+	 R1kWVWjqKntwD2IsCZbr3q/YOF5KaaLUUSUgiADjkLoodhYdQQOfFOXdQ6BKlaTn+s
+	 3KL7M1bn4HQ3E6sT0XQ8BVjPj69uFpA0FG4FKI5EjOEOmGN4AMtufRYm4PSUtAc8cM
+	 iPjXuFBhmm/AQ==
+Date: Thu, 31 Oct 2024 09:20:50 +0100
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: =?utf-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <barnabas.czeman@mainlining.org>
 Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>, 
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Krishna Kurapati <quic_kriskura@quicinc.com>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 1/4] dt-bindings: arm: qcom-soc: extend to support
- SAR2130P platform
-Message-ID: <23i2t2jsnm4mcnaxlzk2x6gyipu3fexw3d452wxrxgyzewkdtg@l5bxqhzcrwsw>
-References: <20241030-sar2130p-dt-v2-0-027364ca0e86@linaro.org>
- <20241030-sar2130p-dt-v2-1-027364ca0e86@linaro.org>
+	Konrad Dybcio <konradybcio@kernel.org>, Lee Jones <lee@kernel.org>, Amit Kucheria <amitk@kernel.org>, 
+	Thara Gopinath <thara.gopinath@gmail.com>, "Rafael J. Wysocki" <rafael@kernel.org>, 
+	Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, 
+	Lukasz Luba <lukasz.luba@arm.com>, Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>, 
+	Robin Murphy <robin.murphy@arm.com>, Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
+	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, iommu@lists.linux.dev
+Subject: Re: [PATCH v2 01/15] dt-bindings: pinctrl: qcom,pmic-gpio: add PM8937
+Message-ID: <6xwnrlxyladajzp4oqgksxzsvwuff3p3zpw46kogxen4hdamig@zbvgrcqetpmo>
+References: <20241031-msm8917-v2-0-8a075faa89b1@mainlining.org>
+ <20241031-msm8917-v2-1-8a075faa89b1@mainlining.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,54 +66,21 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20241030-sar2130p-dt-v2-1-027364ca0e86@linaro.org>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20241031-msm8917-v2-1-8a075faa89b1@mainlining.org>
 
-On Wed, Oct 30, 2024 at 01:50:54PM +0200, Dmitry Baryshkov wrote:
-> Extend the patterns in qcom-soc.yaml to support Qualcomm SAR2130P
-> platform.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On Thu, Oct 31, 2024 at 02:19:42AM +0100, Barnab=C3=A1s Cz=C3=A9m=C3=A1n wr=
+ote:
+> Document the 8 GPIOs found on PM8937. It has holes on
+> 3,4 and 6 pins.
+>=20
+> Signed-off-by: Barnab=C3=A1s Cz=C3=A9m=C3=A1n <barnabas.czeman@mainlining=
+=2Eorg>
 > ---
->  Documentation/devicetree/bindings/arm/qcom-soc.yaml | 4 ++--
+>  Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml | 3 +++
+>  1 file changed, 3 insertions(+)
 
-This should be squashed with next patch, adding SAR2130P. It's logically
-one change: you bring bindings for SA2130P.
-
-
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/arm/qcom-soc.yaml b/Documentation/devicetree/bindings/arm/qcom-soc.yaml
-> index d0751a572af39eecbbd2f8323a6c3c94b3fdeeac..1add7267f541a24e82e0cec62af6f0c839aca267 100644
-> --- a/Documentation/devicetree/bindings/arm/qcom-soc.yaml
-> +++ b/Documentation/devicetree/bindings/arm/qcom-soc.yaml
-> @@ -23,7 +23,7 @@ description: |
->  select:
->    properties:
->      compatible:
-> -      pattern: "^qcom,.*(apq|ipq|mdm|msm|qcm|qcs|q[dr]u|sa|sc|sd[amx]|sm|x1e)[0-9]+.*$"
-> +      pattern: "^qcom,.*(apq|ipq|mdm|msm|qcm|qcs|q[dr]u|sa|sar|sc|sd[amx]|sm|x1e)[0-9]+.*$"
-
-Instead:
-s/sa/sar?/
-
-
->    required:
->      - compatible
->  
-> @@ -31,7 +31,7 @@ properties:
->    compatible:
->      oneOf:
->        # Preferred naming style for compatibles of SoC components:
-> -      - pattern: "^qcom,(apq|ipq|mdm|msm|qcm|qcs|q[dr]u|sa|sc|sd[amx]|sm|x1e)[0-9]+(pro)?-.*$"
-> +      - pattern: "^qcom,(apq|ipq|mdm|msm|qcm|qcs|q[dr]u|sa|sar|sc|sd[amx]|sm|x1e)[0-9]+(p|pro)?-.*$"
-
-This breaks patterns. p|pro should stay as before. 8775p is below:
-
->        - pattern: "^qcom,(sa|sc)8[0-9]+[a-z][a-z]?-.*$"
-
-so this pattern could cover your sar, e.g. split:
-"^qcom,sc8[0-9]+[a-z][a-z]-.*$"
-"^qcom,sar?[0-9]+[a-z]-.*$"
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
