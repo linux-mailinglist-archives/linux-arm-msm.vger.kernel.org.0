@@ -1,75 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-36547-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36548-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E72869B7945
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 12:03:14 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E7F819B796E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 12:13:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 760A21F240FA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 11:03:14 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 267251C21ACD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 11:13:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4AB16199FAF;
-	Thu, 31 Oct 2024 11:03:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 92EBD19ABAC;
+	Thu, 31 Oct 2024 11:13:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NTBPMv1Z"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Bp4jGK0o"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00D5513D899
-	for <linux-arm-msm@vger.kernel.org>; Thu, 31 Oct 2024 11:03:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 826E113A869
+	for <linux-arm-msm@vger.kernel.org>; Thu, 31 Oct 2024 11:13:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730372592; cv=none; b=bHBe4wqlK/6MzQB9qDboE4ii9g9+r7wvoRSvPaTMthiKyq7t8GMJpaMs1hVHpJno3w2fMofy1wEoze8YmFjJb+aLl7rtdG0oZJkelyj0crKfDq3Wkmj3rBggNc3GoBtjwLZ/zABIdOyuE/MuJJ+WVFOtLE7vKVGustwZ5rtf+Jo=
+	t=1730373212; cv=none; b=igAhzlsZMy1N0A2KDkFWyvjnKX6QyfxkwHD9b8aHFS+O8ITj7j2qMSnWujN7jhAP7or+xlqXPkmOPiFouB/ptHLuU1lPgdBzP4eDvHFkn5UK8v91hblfRp9s6BYGGE7k7eMh0y3Eq6goK35KjrbYCxeLEhAnAcYxhfmorNU7nCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730372592; c=relaxed/simple;
-	bh=0Bt5LTg7vL5N+VdcE6SWBvlJfb0aEl6cLE8AigdCTpc=;
+	s=arc-20240116; t=1730373212; c=relaxed/simple;
+	bh=UR+AZkACxbATXx2sqIfcnbBjwtoC++48d+OLHhNINNA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sN9yc+prT1Ys7Hw2lyhaHoWDi/vgoilGtxOU8ZsHEWvMScB62KVKTz2xmE/eQuPFX/7+dDe8+aBPMLPuhmoGHIaAKaSHhShoNWOBF4GppkR4u7AH5bbTtm3pv1iM82UJpNXE6AKVIq1tRu2WVngYmDHcloQAvjFrrS9PY6U79dQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NTBPMv1Z; arc=none smtp.client-ip=209.85.221.47
+	 In-Reply-To:Content-Type; b=RQ8Op0NJWxnVW1WqCywxQhKIWxr74Ub3IppI223ayFbP4YM7DlXRkLBvsdvfJnyaa9wU8M8AbdoW1RgA8OBlVwbnqZAHx3x2YquaXGz+dmMRozOHrcYS1Y332CqVKhwUuPCrVc2ass29ZRjH9FlY71a2z7XCtEsGTcXu9Kdb17U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Bp4jGK0o; arc=none smtp.client-ip=209.85.167.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-37d4eac48d8so36836f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Oct 2024 04:03:09 -0700 (PDT)
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-539e4488012so107971e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Oct 2024 04:13:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1730372588; x=1730977388; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Qo88u10AiueQwvU4VBGK/VQSQWRw8gLUSxPNaLTjLm4=;
-        b=NTBPMv1ZDG60bgl7AbiVpYnSEdf2BilnpJbKMdZuwKhw51ynkm+inMPR/EiqJF6r1M
-         CC7NFSwTwEa8CELBmMYjfQiqZtyFbDQ+2O5AeZEfHHfVSCXZGoaki3a+rCSUPJdR9db1
-         T87pzdwFHINMTRTrocnRT3bldJzMvWI6dmldmCw35WeesVFgnRZLIouQh2u55nT8mABK
-         t3Y9NLxi3gMzYOw6UnD+jNIrb25WvZXsilWLTeZ99uGBsLXxUw49rhMIjOonvELQORgx
-         KtlgFHn8+pjQRG7NC8N3d7XRe8BSfXyFZDygUNLTGzB0+Md025uxbVkmAvHN62Yq8RcK
-         DvoQ==
+        d=linaro.org; s=google; t=1730373208; x=1730978008; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Qz71vnw5/+cff0GcfCxZkyXlF45Rde5KArOUta65nkg=;
+        b=Bp4jGK0o7hpPwx/1bZUYwawQetPkA2Wvce3xZ7KQYt7kbltgWTZTFEbxtEeGjQt8M+
+         p9ExZ3y1vg1tIwghJudEyH4PlQw3fDoWEw3/f7XkUTCaMfAcEdi9+dWYHjmo8KIaFmLS
+         lxk7Pn/KaLoumkaQr2o7EhM48aPXV2gtFH9gYT9l25L67CvOXhUbi39Rq2SP1thA3RA6
+         csbfv4AEWEGEteOj5K6znzEorNOOWn9aozGTng9njKeJlxbBDm1EUm6di5T5iIb9Ap5B
+         ucdh4BntFTqjj8SggV2ENOdCJTnSaLVGMSEZkfEqxJk6/SEW8IpMnz87FIllJnXfAd9s
+         VsvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730372588; x=1730977388;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Qo88u10AiueQwvU4VBGK/VQSQWRw8gLUSxPNaLTjLm4=;
-        b=A2JAf77Z8igXiL/w2jhXKS3P8TcxzrMaJ67/vJDEAemNcbIkojo+spJ3Vbi7EkvlHz
-         PZMUZBvXdu+51pxOfeTVcmAsAjMzuT233cOj+2vBvpUlIQ7+P8+SoH2d5+wXLJKNlsD/
-         UZr08zkuAHg/uMgej+tYwYCnJwa050/21qJbvzW2ay/SF1KdwnSfS9rctzz7MUEb7GoJ
-         vvfRQoUzwej7xAXoMdikWK0ebSbf9VJyDsOQ03TM8Z93G3iUXnGpFJhtgM2I0hDssCW8
-         Iv4QdzoxKtjaDy20QFM+w0Au+8zb8YtaZKe9ZNkqNrsxT2TT3GVXVXYGKWP70AwRKwON
-         ftyQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUzx4IeG0fi8kiV6hcIZC3JWo6qm405xzfXnrrmecL8erXmioAEksMZ+GcJ4qqxuwIIBJ92ErMtvj/BRn9b@vger.kernel.org
-X-Gm-Message-State: AOJu0YxcZ+6GpnwYdYf6VzyH1xOaXhvEp5Q/2y+Rw+o704UmK5omCkPl
-	/S+cl/okRQCF7xwwwCUJH3cEzKK1k46otzVReMWdGRfg6skoMVzlcHY+EDdoTNY=
-X-Google-Smtp-Source: AGHT+IGpz05VAvoftrmqHGfIqbT6FeVhxMMAZYmAw+E/a0Z2XhM7QtyYiu84O24YpcEKqkICIt9TLg==
-X-Received: by 2002:a05:6000:2a3:b0:37c:f388:cd48 with SMTP id ffacd0b85a97d-380611a4f13mr7093799f8f.8.1730372588137;
-        Thu, 31 Oct 2024 04:03:08 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.211.167])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381c113e6aasm1797059f8f.67.2024.10.31.04.03.05
+        d=1e100.net; s=20230601; t=1730373208; x=1730978008;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Qz71vnw5/+cff0GcfCxZkyXlF45Rde5KArOUta65nkg=;
+        b=BxJhtq9Fr0sP/LSWgCIYsnsyA7KLtpsVpBNNuRP4eE9eL2ikOKxHNvLlWw2JSwwGNK
+         wIV/zKtMo2GqVtL0ameWnjZ58e4na4ahZgeUj+PGjtKKEuya1iEGpVbftzYHnoWKNKsX
+         tGvoCUHUO8PlEt/rSV+uMDRM6Rwf59p1tnX88GWa0zNxWx5eHjAZS0/l3MTp4rklNiwg
+         zVHYGUXKnLAr+nPe1d+W2TWcXNdb7oLz3R12nR9ZMF7n+UO2TM7cm08GX+GpkW/JQH8t
+         imlNAcfTipfa3KyJvUyNzjRJzfayd4KFC0Q8WBi7LiG5D558u/C7oS7chJ/AzUhiqVI1
+         pvZw==
+X-Forwarded-Encrypted: i=1; AJvYcCUlWgFqQZxONlyaLlT7CZVNRSifzkNJnb+tLoDKg505ZP3pZsQAPcLdB5AHrwEJjCyPbU7v9Z6thcurxLKg@vger.kernel.org
+X-Gm-Message-State: AOJu0YzqxNnxXeUJN/HT4MKEHDNGktDAPwIS/6mHeMtSW1lCQ8fwZsYt
+	F/ewDwA3d4vcCqFJkOJHL8+g5+OGA3eUAOe9E2COEjsSkl0svlxa7CzG1KF+7A8=
+X-Google-Smtp-Source: AGHT+IHMRW3LKj7hVd13fw0NA8R8RK3iFhWEx0wtfxCzkNV7xvC+GUbQfnGNOuOyF4KN9HvNqZ7bTA==
+X-Received: by 2002:a05:651c:b0a:b0:2fb:591d:3de1 with SMTP id 38308e7fff4ca-2fcbe0c1d42mr30158671fa.7.1730373207464;
+        Thu, 31 Oct 2024 04:13:27 -0700 (PDT)
+Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2fdef61837dsm1875871fa.70.2024.10.31.04.13.24
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 31 Oct 2024 04:03:07 -0700 (PDT)
-Message-ID: <d0511a78-8eca-4342-949b-9dea293e064f@linaro.org>
-Date: Thu, 31 Oct 2024 12:03:04 +0100
+        Thu, 31 Oct 2024 04:13:26 -0700 (PDT)
+Message-ID: <f06dea2e-893b-4de5-89a3-e25af56afb31@linaro.org>
+Date: Thu, 31 Oct 2024 13:13:24 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,143 +76,48 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V4 3/4] iio: adc: Add support for QCOM PMIC5 Gen3 ADC
-To: Jishnu Prakash <quic_jprakash@quicinc.com>, jic23@kernel.org,
- robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
- agross@kernel.org, andersson@kernel.org, dmitry.baryshkov@linaro.org,
- konrad.dybcio@linaro.org, daniel.lezcano@linaro.org, sboyd@kernel.org,
- quic_subbaram@quicinc.com, quic_collinsd@quicinc.com,
- quic_amelende@quicinc.com, quic_kamalw@quicinc.com, amitk@kernel.org
-Cc: lee@kernel.org, rafael@kernel.org, rui.zhang@intel.com,
- lukasz.luba@arm.com, lars@metafoo.de, quic_skakitap@quicinc.com,
- neil.armstrong@linaro.org, devicetree@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
- cros-qcom-dts-watchers@chromium.org
-References: <20241030185854.4015348-1-quic_jprakash@quicinc.com>
- <20241030185854.4015348-4-quic_jprakash@quicinc.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v2 -next] i2c: qcom-cci: Remove the unused variable
+ cci_clk_rate
 Content-Language: en-US
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20241030185854.4015348-4-quic_jprakash@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+To: Andi Shyti <andi.shyti@kernel.org>,
+ Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
+Cc: loic.poulain@linaro.org, rfoss@kernel.org, linux-i2c@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Abaci Robot <abaci@linux.alibaba.com>
+References: <20241029020931.42311-1-jiapeng.chong@linux.alibaba.com>
+ <rql2u5k3esavdmpdzgo4l4up4ir7yjpdzc3qlmsvjvqalqzvjc@xspprcohlout>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <rql2u5k3esavdmpdzgo4l4up4ir7yjpdzc3qlmsvjvqalqzvjc@xspprcohlout>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On 30/10/2024 19:58, Jishnu Prakash wrote:
-> +
-> +static int adc5_gen3_read(struct adc5_device_data *adc, unsigned int sdam_index,
-> +			  u16 offset, u8 *data, int len)
-> +{
-> +	return regmap_bulk_read(adc->regmap, adc->base[sdam_index].base_addr + offset, data, len);
-> +}
-> +
-> +static int adc5_gen3_write(struct adc5_device_data *adc, unsigned int sdam_index,
-> +			   u16 offset, u8 *data, int len)
-> +{
-> +	return regmap_bulk_write(adc->regmap, adc->base[sdam_index].base_addr + offset, data, len);
-> +}
-> +
-> +/*
-> + * Worst case delay from PBS in readying handshake bit
-> + * can be up to 15ms, when PBS is busy running other
-> + * simultaneous transactions, while in the best case, it is
-> + * already ready at this point. Assigning polling delay and
-> + * retry count accordingly.
-> + */
-> +
-> +#define ADC5_GEN3_HS_DELAY_MIN_US		100
-> +#define ADC5_GEN3_HS_DELAY_MAX_US		110
-> +#define ADC5_GEN3_HS_RETRY_COUNT		150
-> +
-> +static int adc5_gen3_poll_wait_hs(struct adc5_device_data *adc,
-> +				  unsigned int sdam_index)
-> +{
-> +	u8 conv_req = ADC5_GEN3_CONV_REQ_REQ;
-> +	int ret, count;
-> +	u8 status = 0;
-> +
-> +	for (count = 0; count < ADC5_GEN3_HS_RETRY_COUNT; count++) {
-> +		ret = adc5_gen3_read(adc, sdam_index, ADC5_GEN3_HS, &status, 1);
-> +		if (ret)
-> +			return ret;
-> +
-> +		if (status == ADC5_GEN3_HS_READY) {
-> +			ret = adc5_gen3_read(adc, sdam_index, ADC5_GEN3_CONV_REQ,
-> +					     &conv_req, 1);
-> +			if (ret)
-> +				return ret;
-> +
-> +			if (!conv_req)
-> +				return 0;
-> +		}
-> +
-> +		usleep_range(ADC5_GEN3_HS_DELAY_MIN_US, ADC5_GEN3_HS_DELAY_MAX_US);
-> +	}
-> +
-> +	pr_err("Setting HS ready bit timed out, sdam_index:%d, status:%#x\n", sdam_index, status);
-> +	return -ETIMEDOUT;
-> +}
-> +
-> +static void adc5_gen3_update_dig_param(struct adc5_channel_common_prop *prop, u8 *data)
-> +{
-> +	/* Update calibration select and decimation ratio select */
-> +	*data &= ~(ADC5_GEN3_DIG_PARAM_CAL_SEL_MASK | ADC5_GEN3_DIG_PARAM_DEC_RATIO_SEL_MASK);
-> +	*data |= FIELD_PREP(ADC5_GEN3_DIG_PARAM_CAL_SEL_MASK, prop->cal_method);
-> +	*data |= FIELD_PREP(ADC5_GEN3_DIG_PARAM_DEC_RATIO_SEL_MASK, prop->decimation);
-> +}
-> +
-> +static int adc5_gen3_status_clear(struct adc5_device_data *adc,
-> +				  int sdam_index, u16 offset, u8 *val, int len)
-> +{
+Hi Andi,
 
-Wait, what? Why are you defining functions in header causing multiple
-copies of them? And even if: why this is not inline? But regardless:
-this is a strong NAK from me.
+On 10/31/24 12:44, Andi Shyti wrote:
+> Hi Jiapeng,
+> 
+> On Tue, Oct 29, 2024 at 10:09:31AM +0800, Jiapeng Chong wrote:
+>> Variable ret is not effectively used, so delete it.
+>>
+>> drivers/i2c/busses/i2c-qcom-cci.c:526:16: warning: variable ‘cci_clk_rate’ set but not used.
+>>
+>> Reported-by: Abaci Robot <abaci@linux.alibaba.com>
+>> Closes: https://bugzilla.openanolis.cn/show_bug.cgi?id=11532
+>> Signed-off-by: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
+> 
+> thanks for your patch! Applied to i2c/i2c-host
+> 
+> Thanks,
+> Andi
+> 
 
-Best regards,
-Krzysztof
+FWIW I've noticed that my Reviewed-by tag was added to the accepted change,
+while it was the conditional one... Actually I don't know how to be aware
+of such nuances, if only b4 tool is used, likely there is no way for it.
 
+Hopefully I'm not too picky with it.
+
+--
+Best wishes,
+Vladimir
 
