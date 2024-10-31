@@ -1,93 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-36630-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36631-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9E4669B85D9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 23:02:44 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E4D209B85EF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 23:12:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 25A43B2120A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 22:02:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 906DC1F2231A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 22:12:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FDA91CC8A8;
-	Thu, 31 Oct 2024 22:02:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8278D1CEE86;
+	Thu, 31 Oct 2024 22:12:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IENUavJD"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZfJlibne"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51C7D1BF311;
-	Thu, 31 Oct 2024 22:02:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 601A81CC16B;
+	Thu, 31 Oct 2024 22:12:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730412156; cv=none; b=up8loMF4VSqzR/8DW1hfvYInL3hLJwTZFKldk9LLoPDFijlv5MV30rMPvI/SmEg3G2UIDUyxkXg/xKdIfpYjZ+hhy46ljcfN8ZIKjkPiegPoOt0LPLcZG0CBXQs9eDF2qUSHIkxr47BOt8hqK+Vf+M7xThKQXkPzznsjPgDfJOk=
+	t=1730412774; cv=none; b=M7HIyLsvyuf/aUudDXABzWKPvphT3JI20+J5u+LzDZEHxKC59n/RVHkV4lJGIHKIy+zVpK08TiyVYhZTIG9fcrZef/rUoka2ZZLdEb5Gfmn0z0dj0YIuaBPh0Rqo59WNmPGnMFW419yflnXJTzPRN9L/OzvurVuielHtlUzz06A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730412156; c=relaxed/simple;
-	bh=yXjcnYDbW6cs4JdSdgAFfrjgG8tV2mNpirE2iwKgsek=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=P7D9MyTI3DPJFaRXPEd2tnCzlSvu61xMoUnwXlmvoQ0QUCU2grxZUsF1hF4QA6fm/B1+zJC69G31ikdlqJos6GX3ajcse1NVxP5V5xfyrqYc1+4YJwHS7p5FcP4WhZ6zoOB6oJujundbF0EHisA+MNne7zRvOhmHVaqo+yN2A8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IENUavJD; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C85DC4CEC3;
-	Thu, 31 Oct 2024 22:02:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730412155;
-	bh=yXjcnYDbW6cs4JdSdgAFfrjgG8tV2mNpirE2iwKgsek=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=IENUavJDRVR8jJh3bbbtGcaeZmYTWnK1zmSDg7eFKrILcchM6a/aRge7UA8ARykIa
-	 us01mCPlojSgPwFL++CusENRuAsuWr6LGTDFegChA/wQGARr7GUsJRoXP6+taeUoEX
-	 QYAgsxQszZ/OjFdEj7E8IKTyZzzZt83j5WJOSnBjExj2hhbyj2W9q0zoGDWyzoFJYM
-	 QaUfz9xq/7ZNRcRFULJRqmMwQeXEOfM+G9y0+xQGfOAZbdtN+9DmvpPRPbdV9500zX
-	 zvGEWFuRXA4xb4WR0iBczT8XmMQ4T9SutEnyd2nZbOjKioOU9HvlKvX6o1AH/movyx
-	 3276MU0l8OPYA==
-Date: Thu, 31 Oct 2024 23:02:31 +0100
-From: Andi Shyti <andi.shyti@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>, 
-	loic.poulain@linaro.org, rfoss@kernel.org, linux-i2c@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Abaci Robot <abaci@linux.alibaba.com>
-Subject: Re: [PATCH v3 -next] i2c: qcom-cci: Remove the unused variable
- cci_clk_rate
-Message-ID: <ywuvj7wpchcjktc6sxjmiitxv225qzg3cvxt5bwrx5wurabqhj@r23pyeg53z3j>
-References: <20241031095339.76535-1-jiapeng.chong@linux.alibaba.com>
- <jt5d3473zg34yhgykgqftlvk6fqekankuyjj57uxl56sqa3xvm@nvfv7kwtcwex>
+	s=arc-20240116; t=1730412774; c=relaxed/simple;
+	bh=Mnps1z9CZtcTCg/nw8sc3JoBrVpV1M2y3lSJa3PYIrI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=KL+Q30PC3xWPTwfutAOTGCZsm5E3ZY/69uYuvUMsOsGxFCbFPc3+cZWszJYEvCNcuVjiIMhxzweFCnjjF7kyhBDS4B67SPAfZkmGBOwbdnF4ihbCBRl5+/FPBKMxR4KVTSjLRIOs3FeSo037v7uoYEBC0sVZ9ClRAc8Q9SJzA3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZfJlibne; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49VHf4dV004296;
+	Thu, 31 Oct 2024 22:12:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Qazp29QFIHfzgw2taJxyDQXXd2ZNnIt+g2Q+yY9pOes=; b=ZfJlibneOalJElAB
+	skxx8vAuePmAU8qv5jC+ysfauIn53a2H8VRbRjgvtFzvRRKWVLoFG2HdtRov7jN7
+	l214IcFSggXBaKwZS5/m7yDfdTULAYdI3G2IU4IhIHVtD7HoqfdYGK+Zhl7p2LAg
+	fnmHCd56lomkQqkTPehPXRwfN9YjEapYwPV7lAePpzFDuVjpVyX1+Oy0KeqNOYkc
+	5mX1dRVqTFl8/0H/2urOV3iP9FG8Y00sl32UbiFPipOR1aYmK/Daq3PSkbEBB4DN
+	6YtRTNI8eaz5ZvmrHvkPGE7x04MSRl9Cvsfn4m+CGOy424tDr9gBVxgHtkvR+8KC
+	bWaRTw==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42m65pa7sf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 31 Oct 2024 22:12:39 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49VMCdpg003479
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 31 Oct 2024 22:12:39 GMT
+Received: from [10.134.71.247] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 31 Oct
+ 2024 15:12:36 -0700
+Message-ID: <5ff5e7fe-0901-4099-9e9a-890c2001b46e@quicinc.com>
+Date: Thu, 31 Oct 2024 15:12:35 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <jt5d3473zg34yhgykgqftlvk6fqekankuyjj57uxl56sqa3xvm@nvfv7kwtcwex>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] drm/msm: move msm_display_topology to the DPU driver
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark
+	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona
+ Vetter <simona@ffwll.ch>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20241031-dpu-move-topology-v1-0-8ffa8122d3b6@linaro.org>
+ <20241031-dpu-move-topology-v1-1-8ffa8122d3b6@linaro.org>
+Content-Language: en-US
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20241031-dpu-move-topology-v1-1-8ffa8122d3b6@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: t9xJaZ_xNQO7h3tl6vMk-C5Dr7vKhoN3
+X-Proofpoint-GUID: t9xJaZ_xNQO7h3tl6vMk-C5Dr7vKhoN3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
+ phishscore=0 malwarescore=0 clxscore=1015 priorityscore=1501
+ mlxlogscore=893 suspectscore=0 lowpriorityscore=0 bulkscore=0 adultscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410310168
 
-Hi Dmitry,
 
-On Thu, Oct 31, 2024 at 06:51:13PM +0200, Dmitry Baryshkov wrote:
-> On Thu, Oct 31, 2024 at 05:53:39PM +0800, Jiapeng Chong wrote:
-> > Variable cci_clk_rate is not effectively used, so delete it.
-> > 
-> > drivers/i2c/busses/i2c-qcom-cci.c:526:16: warning: variable ‘cci_clk_rate’ set but not used.
-> > 
-> > Reported-by: Abaci Robot <abaci@linux.alibaba.com>
-> > Closes: https://bugzilla.openanolis.cn/show_bug.cgi?id=11532
-> > Fixes: 823dfb7bdb21 ("i2c: qcom-cci: Stop complaining about DT set clock rate")
-> > Signed-off-by: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
-> > ---
-> > Changes in v3:
-> >   -Modify the commit message.
+
+On 10/31/2024 2:44 PM, Dmitry Baryshkov wrote:
+> The struct msm_display_topology is only used by the DPU driver. Remove
+> it from the global header and move it to DPU-specific header.
 > 
-> Modify how?
-> What was the reason for ignoring the R-B tag?
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h | 16 ++++++++++++++++
+>   drivers/gpu/drm/msm/msm_drv.h          | 16 ----------------
+>   2 files changed, 16 insertions(+), 16 deletions(-)
+> 
 
-This patch has already been taken and I have added the R-B's as
-they were given.
 
-However, Jiapeng, please, next time try to be a bit more specific
-with the changelog, consider that people really read it.
-
-Andi
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
