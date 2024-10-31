@@ -1,223 +1,222 @@
-Return-Path: <linux-arm-msm+bounces-36558-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36559-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7EAAF9B7BB0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 14:28:46 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F1F4E9B7BC2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 14:35:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BD2D5B20F0D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 13:28:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 203E41C21189
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 13:35:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9AFE19F471;
-	Thu, 31 Oct 2024 13:28:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8DFB19D06A;
+	Thu, 31 Oct 2024 13:35:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="COoHFsfq"
+	dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b="gtlgxNme"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mout.kundenserver.de (mout.kundenserver.de [217.72.192.75])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 860F71531F2;
-	Thu, 31 Oct 2024 13:28:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD5A7195FF1;
+	Thu, 31 Oct 2024 13:35:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.75
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730381303; cv=none; b=gFc4q+Z4z0yEg9kJDDfDFrSFjAoPZm88P4qeYV83sxBl++m4bb/ylQw3mnfv43lxsunp9qpua2AOZu2ioFkwRrYbp5l0AnvJlvgbk+0Aojpx3q9zvS4uVw7Y3THqtnUBxW/Px1Mb9cdZcuMG6qgpuvFlUxfRYkKbETqAPJbQbjM=
+	t=1730381714; cv=none; b=sNtC1r5UX59b4r8x4c/s3unAIuzfMXBMCFQdb802167y5ghtb06KvuVi0y3ApOUJKbOX25wSs9CEcMmBEP3YAgM98jAy55TrYXo8FxNhBQsZg/5VNvYXURZ05aBZddyoJhAE05DziJeYF2QnkKpNSlVna4Zbl5KGPMPiNXoPEGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730381303; c=relaxed/simple;
-	bh=PYDuYToY7QWYyYJvMiYKKulYNmBF+4nvvRjbuis2mS4=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZCHNHKckRbhagH9+Iu9BAIhmSorug5jUSTPO/O8mP0sLtlAHw84vDEowRExDmdHVhFAcgFzgNFCYPHSn0WvoAwQKbA47iR3hYQ/F5OnX2FuQAPKafi8vyaDLOPX8phLIqjl5UqwvyNP5RVICdZxSYalkJp1TKEAItwUDHIkgOBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=COoHFsfq; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49VD1tgJ027387;
-	Thu, 31 Oct 2024 13:28:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ir45z+XSQ8wQE2H15d0e+YQETH3XktiPMA4VVa38kx0=; b=COoHFsfq9euAr7yk
-	QqhrHyTuTruBWEbrHRlKC1vKl6uh6e+/tXCgLd4G5jVhloOAYgHu4w6Eds8PPlT8
-	C5AX3R8P6b4f34SZYiFxe5C1IiBXFLpN4TkaScVlW/jtuVDlsUNUDUxNbzl+Tgle
-	dElCjZByx8kQ0u6Dtgjf+PfuYlGvwq76HLcbUqCWVq9kHivZtGt5Sn0VUo7KV6Zk
-	1Lk4MkmpqXQ3jNEfO/DL/4/LkDDfJNwXuSussYMW9zy5/FuSSBdVh0uKQakiPrrd
-	WqX9YDUU+sQiupQfLPFptp9o1LOSQMVAEXvomnT0EpDwv/0NRqGauEJaHXwgsl2b
-	JodeHg==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42k1p37304-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 31 Oct 2024 13:28:13 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49VDSC2G003273
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 31 Oct 2024 13:28:12 GMT
-Received: from hu-sibis-blr.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 31 Oct 2024 06:28:07 -0700
-From: Sibi Sankar <quic_sibis@quicinc.com>
-To: <sudeep.holla@arm.com>, <cristian.marussi@arm.com>, <rafael@kernel.org>,
-        <viresh.kumar@linaro.org>, <morten.rasmussen@arm.com>,
-        <dietmar.eggemann@arm.com>, <lukasz.luba@arm.com>,
-        <pierre.gondois@arm.com>, <vincent.guittot@linaro.org>
-CC: <linux-arm-kernel@lists.infradead.org>, <linux-pm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_mdtipton@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>
-Subject: [PATCH V7 2/2] cpufreq: scmi: Register for limit change notifications
-Date: Thu, 31 Oct 2024 18:57:45 +0530
-Message-ID: <20241031132745.3765612-3-quic_sibis@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241031132745.3765612-1-quic_sibis@quicinc.com>
-References: <20241031132745.3765612-1-quic_sibis@quicinc.com>
+	s=arc-20240116; t=1730381714; c=relaxed/simple;
+	bh=4dbg22oJxgFIQr7IhM3WJb51OgVei87HnggpeB+27G4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WJ6AxJMXusn/Kw6xKecTFvZ2gmqy7U324+BhnvGwMP+H2XkobwtdnECXPDO74xN19ZDO0l12l18fi4AUOL6kVfMxS6AC2VBNkkcOkaX2mX/sa1AVGJfoyoAfPdb1/JTAo219ZB3nZCFWiYcthvo5/WZuY7C2DU4MdcSDwnS1mK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz; spf=pass smtp.mailfrom=oldschoolsolutions.biz; dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b=gtlgxNme; arc=none smtp.client-ip=217.72.192.75
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oldschoolsolutions.biz
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=oldschoolsolutions.biz; s=s1-ionos; t=1730381688; x=1730986488;
+	i=jens.glathe@oldschoolsolutions.biz;
+	bh=HnVIWYyh5SSTBuS05jlgSgBJMtjuDXUCz1fJ1wGiIIs=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=gtlgxNmeQiebV8mvjTD3OMgKGTEAt7mbAqT81+mzkdo1UWpZthAhNlcYqN7Wj93r
+	 laka7XIqzrBIA/bVMcp+TlzOtSaWpP9RVgvIilnFB6Kgi/7GUezofEPnv35yHfQKy
+	 yfEVFt64CLPSjB5YorGRiRPfEi48kA0k/r0J5Y5Jm6i4FbtkkDXFWD7OVAUKrgLaA
+	 KzRWg4iCcUJIqKQgjael62+KzqJBf4AOHi6VVqG2OznePgGLDZPMMQ/M8++iV5Uln
+	 ozl/OzqQxxX+NHlgKlgJQejUkKhx9b+SUEbFcgfAvY55Sdzul0UpTwXBkkzIAoOJT
+	 DdmQ/4l3KbmQ6SNyXg==
+X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
+Received: from [192.168.0.174] ([91.64.229.215]) by mrelayeu.kundenserver.de
+ (mreue106 [212.227.15.183]) with ESMTPSA (Nemesis) id
+ 1MILnm-1t3Fee2Afk-00A5KL; Thu, 31 Oct 2024 14:34:48 +0100
+Message-ID: <01394872-50c6-4fe2-85c5-3d788a463434@oldschoolsolutions.biz>
+Date: Thu, 31 Oct 2024 14:34:46 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 4IL5pyBerTaXeq4h4BKEZblqqo_afWgz
-X-Proofpoint-ORIG-GUID: 4IL5pyBerTaXeq4h4BKEZblqqo_afWgz
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- adultscore=0 spamscore=0 lowpriorityscore=0 mlxscore=0 malwarescore=0
- phishscore=0 clxscore=1015 impostorscore=0 mlxlogscore=999 suspectscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410310102
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V3 0/3] X1E001DE Snapdragon Devkit for Windows
+To: Marc Zyngier <maz@kernel.org>, Abel Vesa <abel.vesa@linaro.org>
+Cc: Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
+ konradybcio@kernel.org, krzk+dt@kernel.org, robh+dt@kernel.org,
+ dmitry.baryshkov@linaro.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ conor+dt@kernel.org, srinivas.kandagatla@linaro.org,
+ quic_jjohnson@quicinc.com
+References: <20241025123227.3527720-1-quic_sibis@quicinc.com>
+ <86y1251q3b.wl-maz@kernel.org> <ZyNR5MD/HAS5w7N/@linaro.org>
+ <5d8ec8c4-f473-4849-a428-f7a7283ff478@oldschoolsolutions.biz>
+ <86v7x81mmj.wl-maz@kernel.org>
+Content-Language: en-US
+From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+In-Reply-To: <86v7x81mmj.wl-maz@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:pdti6fVNCb7qkzx6ySOznTh/4Czndr91ed0UhCW93w5Ejkl/9FU
+ SpG1L/7uZfhXgpxxq8DoJC4xJsEji/DFgyg3kTsHvhCjO8hUuYEfMgOQDYWgpbjyji2NI+J
+ hQtcDb3bbBLYo4YOjB89FKCqEUiL4JAWh+9NxmTrey5h9SVooKjF/adCMNuj73L2xHxI1Tu
+ gEoDlYSJa8SX+SQYecG9Q==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:x3lYC06g+ZA=;4EptWSExEEx4nVqo5VPUlmN4tos
+ 5TOIoE6xl4ymXuXftA3SX3By8iskhnV2plPJlbXDY0Ve+YtPUpoob+MUTvgxMFMXQAxCV2awx
+ YFlhkcM7BxIXw/Tu0uJnHCX2aJlDW/WcA3huysRzgPDM7G8NDEmSn1KyiGnqPz4jAg/1tN6L3
+ kdDJly/9+GeDwx7zYfGJuhueQ2medi+/TSlcmh7QCIiaSsENIGY+VK2+R7pI0Eatds29E4uki
+ nlOccYX8558JFmoRMxlBqWtAm0YmxitKwamxZ/4r8VkqWAYHEV4R/mfRq5RqfoHNHxONglRdn
+ AIvoofMs2F/zEw45Z44Vojcj1ks1zKUuIvB4SnodHbefdUvNpTbsuXh8GvGl2TaxjoqcdmwsM
+ tfkjVnceJo7ekGW7JXeFyHaR2kT7BdVs2oLRGS0YzK8ujQjI90VEKHpuaOTSarAyWElPK7DRW
+ T+dyLY7kK1KmJhesBL3FScBDIQFQ5ag7wwsEEWC7Te0bnT8cElGriGWhNgL+4+Z4fFo1dIGQ4
+ w85/sJHsVsf755sRVALBBUTH2DoQGGfATNbohr2uz89QI/xrYfLO24vXn5iK9LnH3VaK5aM9U
+ 9++Z0m/X1Hc90chNUY+B9W3t7dJ5+x2mX+zyceZAPkU7wcsHXTQ6UgD/X31KXQDiOFdvQDPwm
+ I0rFeHFtwBbNdgo+1+ZH1h05f+6mYGlRapxuI8XGM2WyLtmCGYDq3jMLy7/oQZrN/mLMAjYEh
+ xN9lqu8mKB5tm/9e/ppL5w0ZC9hKlHpBw==
 
-Register for limit change notifications if supported and use the throttled
-frequency from the notification to apply HW pressure.
+On 31.10.24 13:29, Marc Zyngier wrote:
+> On Thu, 31 Oct 2024 10:00:40 +0000,
+> Jens Glathe <jens.glathe@oldschoolsolutions.biz> wrote:
+>> On 31.10.24 10:46, Abel Vesa wrote:
+>>> On 24-10-30 17:02:32, Marc Zyngier wrote:
+>>>> On Fri, 25 Oct 2024 13:32:24 +0100,
+>>>> Sibi Sankar <quic_sibis@quicinc.com> wrote:
+>>>>> Add initial support for X1E001DE Snapdragon Devkit for Windows. X1E0=
+01DE
+>>>>> is the speed binned variant of X1E80100 that supports turbo boost up=
+ to
+>>>>> 4.3 Ghz. The initial support includes the following:
+>>>>>
+>>>>> -DSPs
+>>>>> -Ethernet (RTL8125BG) over the pcie 5 instance.
+>>>>> -NVme
+>>>>> -Wifi
+>>>>> -USB-C ports
+>>>>>
+>>>>> V3:
+>>>>> * Asked around and looked at the firmware, couldn't find a codename =
+so
+>>>>>     will keep it as DEVKIT. Will update it if someone from the commu=
+nity
+>>>>>     finds something else.
+>>>> My machine has the following information as part of its DMI tables:
+>>>>
+>>>> Handle 0x0005, DMI type 1, 27 bytes
+>>>> System Information
+>>>> 	Manufacturer: Qualcomm
+>>>> 	Product Name: Snapdragon-Devkit
+>>>> 	Version: 2.1
+>>>> 	Serial Number: 5
+>>>> 	UUID: 63b5fc8b-9c50-89aa-fd0f-3fcef93dc291
+>>>> 	Wake-up Type: Power Switch
+>>>> 	SKU Number: 6
+>>>> 	Family: SCP_HAMOA
+>>>>
+>>>> So I guess that Snapdragon-Devkit is another possible name. But given
+>>>> that it is a bit of a mouthful, devkit, Devkit, or any other variatio=
+n
+>>>> on the case would work for me.
+>>> The point was to have something unique A codename would be unique.
+>>> Naming it Snapdragon-Devkit (or just devkit) will be confusing since
+>>> there was already a 2023 devkit (from Microsoft) with the Snapdragon
+>>> 8cx Gen 3, and probably the next compute platform will also have a dev=
+kit
+>>> as well. So probably "X Elite devkit" could be the right option..
+> Odd, I didn't get that email.
+>
+> My point was the the HW already comes with a full description as part
+> of the existing tables. If you really want something that is truly
+> unique to that platform and that can be used by a tool (be it
+> firmware, kernel or userspace) to understand what it is running on,
+> then you cannot have *less* information.
+>
+> At the very least, you would need Manufacturer, Product Name, Version
+> and Family.
+>
+> But does it really matter? I don't think it is *that* crucial. At the
+> end of the day, this is only used to pick the correct DT out of a set
+> for a given SoC, or worse case a family of SoCs that are closely
+> related.
+>
+>> As for The Windows Dev Kit 2023, dmidecode says this:
+>>
+>> Handle 0x0009, DMI type 1, 27 bytes
+>> System Information
+>>  =C2=A0=C2=A0 =C2=A0Manufacturer: Microsoft Corporation
+>>  =C2=A0=C2=A0 =C2=A0Product Name: Windows Dev Kit 2023
+>>  =C2=A0=C2=A0 =C2=A0Version: 124I:00097T:000M:0200000B:07
+>>  =C2=A0=C2=A0 =C2=A0Serial Number: 0F01C4F22373F6
+>>  =C2=A0=C2=A0 =C2=A0UUID: e4a4662c-8367-75d0-a54f-1d04bd404860
+>>  =C2=A0=C2=A0 =C2=A0Wake-up Type: Unknown
+>>  =C2=A0=C2=A0 =C2=A0SKU Number: 2043
+>>  =C2=A0=C2=A0 =C2=A0Family: Surface
+>>
+>> That's also really a mouthful. In my patchset for it there were some
+>> name / path changes, microsoft/blackrock it is now. Would be cool to
+>> have short and unique names. In the end, whatever works and is unique.
+>> Like those UUIDs?
+> Are those actually per platform? or per unit? On my box, the serial
+> number is probably a dud. What does the UUID reports on your X1E box?
+>
+> Thanks,
+>
+> 	M.
+>
+Looks like the UUIDs are System UUIDs (unique). They are not the same as
+/etc/machine-id either.
 
-Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-Tested-by: Mike Tipton <quic_mdtipton@quicinc.com>
-Reviewed-by: Cristian Marussi <cristian.marussi@arm.com>
-Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
----
+X1E DevKit:
 
-v7:
-* Add a new request instead of reusing the max_freq_req [Vincent]
-* Use the non-devm versions of register/unregister of event notifier
-  since we have to remove them when the cpus get removed anyway.
-* Add new patch to fix cleanup path on boost enablement failure.
+Handle 0x0005, DMI type 1, 27 bytes
+System Information
+ =C2=A0=C2=A0=C2=A0 Manufacturer: Qualcomm
+ =C2=A0=C2=A0=C2=A0 Product Name: Snapdragon-Devkit
+ =C2=A0=C2=A0=C2=A0 Version: 2.1
+ =C2=A0=C2=A0=C2=A0 Serial Number: 5
+ =C2=A0=C2=A0=C2=A0 UUID: eadc72c0-a0bd-cced-025c-c3a1494d433c
+ =C2=A0=C2=A0=C2=A0 Wake-up Type: Power Switch
+ =C2=A0=C2=A0=C2=A0 SKU Number: 6
+ =C2=A0=C2=A0=C2=A0 Family: SCP_HAMOA
 
- drivers/cpufreq/scmi-cpufreq.c | 51 ++++++++++++++++++++++++++++++++++
- 1 file changed, 51 insertions(+)
 
-diff --git a/drivers/cpufreq/scmi-cpufreq.c b/drivers/cpufreq/scmi-cpufreq.c
-index 07d6f9a9b7c8..ff13f7d4b2c9 100644
---- a/drivers/cpufreq/scmi-cpufreq.c
-+++ b/drivers/cpufreq/scmi-cpufreq.c
-@@ -16,6 +16,7 @@
- #include <linux/export.h>
- #include <linux/module.h>
- #include <linux/pm_opp.h>
-+#include <linux/pm_qos.h>
- #include <linux/slab.h>
- #include <linux/scmi_protocol.h>
- #include <linux/types.h>
-@@ -25,7 +26,10 @@ struct scmi_data {
- 	int domain_id;
- 	int nr_opp;
- 	struct device *cpu_dev;
-+	struct cpufreq_policy *policy;
- 	cpumask_var_t opp_shared_cpus;
-+	struct notifier_block limit_notify_nb;
-+	struct freq_qos_request	limits_freq_req;
- };
- 
- static struct scmi_protocol_handle *ph;
-@@ -174,6 +178,25 @@ static struct freq_attr *scmi_cpufreq_hw_attr[] = {
- 	NULL,
- };
- 
-+static int scmi_limit_notify_cb(struct notifier_block *nb, unsigned long event, void *data)
-+{
-+	struct scmi_data *priv = container_of(nb, struct scmi_data, limit_notify_nb);
-+	struct scmi_perf_limits_report *limit_notify = data;
-+	struct cpufreq_policy *policy = priv->policy;
-+	unsigned int limit_freq_khz;
-+	int ret;
-+
-+	limit_freq_khz = limit_notify->range_max_freq / HZ_PER_KHZ;
-+
-+	policy->max = clamp(limit_freq_khz, policy->cpuinfo.min_freq, policy->cpuinfo.max_freq);
-+
-+	ret = freq_qos_update_request(&priv->limits_freq_req, policy->max);
-+	if (ret < 0)
-+		pr_warn("failed to update freq constraint: %d\n", ret);
-+
-+	return NOTIFY_OK;
-+}
-+
- static int scmi_cpufreq_init(struct cpufreq_policy *policy)
- {
- 	int ret, nr_opp, domain;
-@@ -181,6 +204,7 @@ static int scmi_cpufreq_init(struct cpufreq_policy *policy)
- 	struct device *cpu_dev;
- 	struct scmi_data *priv;
- 	struct cpufreq_frequency_table *freq_table;
-+	struct scmi_device *sdev = cpufreq_get_driver_data();
- 
- 	cpu_dev = get_cpu_device(policy->cpu);
- 	if (!cpu_dev) {
-@@ -294,6 +318,25 @@ static int scmi_cpufreq_init(struct cpufreq_policy *policy)
- 		}
- 	}
- 
-+	ret = freq_qos_add_request(&policy->constraints, &priv->limits_freq_req, FREQ_QOS_MAX,
-+				   FREQ_QOS_MAX_DEFAULT_VALUE);
-+	if (ret < 0) {
-+		dev_err(cpu_dev, "failed to add qos limits request: %d\n", ret);
-+		goto out_free_table;
-+	}
-+
-+	priv->limit_notify_nb.notifier_call = scmi_limit_notify_cb;
-+	ret = sdev->handle->notify_ops->event_notifier_register(sdev->handle, SCMI_PROTOCOL_PERF,
-+							SCMI_EVENT_PERFORMANCE_LIMITS_CHANGED,
-+							&priv->domain_id,
-+							&priv->limit_notify_nb);
-+	if (ret)
-+		dev_warn(&sdev->dev,
-+			 "failed to register for limits change notifier for domain %d\n",
-+			 priv->domain_id);
-+
-+	priv->policy = policy;
-+
- 	return 0;
- 
- out_free_table:
-@@ -313,7 +356,13 @@ static int scmi_cpufreq_init(struct cpufreq_policy *policy)
- static void scmi_cpufreq_exit(struct cpufreq_policy *policy)
- {
- 	struct scmi_data *priv = policy->driver_data;
-+	struct scmi_device *sdev = cpufreq_get_driver_data();
- 
-+	sdev->handle->notify_ops->event_notifier_unregister(sdev->handle, SCMI_PROTOCOL_PERF,
-+							    SCMI_EVENT_PERFORMANCE_LIMITS_CHANGED,
-+							    &priv->domain_id,
-+							    &priv->limit_notify_nb);
-+	freq_qos_remove_request(&priv->limits_freq_req);
- 	dev_pm_opp_free_cpufreq_table(priv->cpu_dev, &policy->freq_table);
- 	dev_pm_opp_remove_all_dynamic(priv->cpu_dev);
- 	free_cpumask_var(priv->opp_shared_cpus);
-@@ -372,6 +421,8 @@ static int scmi_cpufreq_probe(struct scmi_device *sdev)
- 	if (!handle)
- 		return -ENODEV;
- 
-+	scmi_cpufreq_driver.driver_data = sdev;
-+
- 	perf_ops = handle->devm_protocol_get(sdev, SCMI_PROTOCOL_PERF, &ph);
- 	if (IS_ERR(perf_ops))
- 		return PTR_ERR(perf_ops);
--- 
-2.34.1
+Second Windows Dev Kit 2023:
+
+Handle 0x0009, DMI type 1, 27 bytes
+System Information
+ =C2=A0=C2=A0=C2=A0 Manufacturer: Microsoft Corporation
+ =C2=A0=C2=A0=C2=A0 Product Name: Windows Dev Kit 2023
+ =C2=A0=C2=A0=C2=A0 Version: 124I:00097T:000M:0200000B:07
+ =C2=A0=C2=A0=C2=A0 Serial Number: 0F004PD22363F6
+ =C2=A0=C2=A0=C2=A0 UUID: 35b94307-ddb5-e0c5-1c9a-ffc43fdf60ba
+ =C2=A0=C2=A0=C2=A0 Wake-up Type: Unknown
+ =C2=A0=C2=A0=C2=A0 SKU Number: 2043
+ =C2=A0=C2=A0=C2=A0 Family: Surface
+
+Looks like maybe using the manufacturer for directory and product name
+for subdirectory could do. But that long name everywhere?
+
+with best regards
+
+Jens
 
 
