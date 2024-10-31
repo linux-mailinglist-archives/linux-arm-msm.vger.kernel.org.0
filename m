@@ -1,138 +1,475 @@
-Return-Path: <linux-arm-msm+bounces-36544-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36545-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 247A89B7923
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 11:56:12 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3DF019B7935
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 11:58:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9D1351F21420
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 10:56:11 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6282D1C243C0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 10:58:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43F77199E93;
-	Thu, 31 Oct 2024 10:56:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA810199FDE;
+	Thu, 31 Oct 2024 10:58:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="lIdPDcS9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HzKQ0jA3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 951D51494AB;
-	Thu, 31 Oct 2024 10:56:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C431C199E9F
+	for <linux-arm-msm@vger.kernel.org>; Thu, 31 Oct 2024 10:58:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730372169; cv=none; b=fyrKlSVS63SEMt76B8JD4e4pf1sjzvmjBcqwbsk1RxXhizC2avMuzuAUOT1T/IeKILZ35ps8QVgZDj4/hiHQCbhkwxR8EU3mLlAOp3quEkDUzV/gJ/dDhidFgI1fBceByaF1XZXn9oOIh1LHkN1UenvYx6ZNky7lkft3qcrECws=
+	t=1730372313; cv=none; b=SYyqGQhWOMPcB/J2XQ0XAXp6LxEo57jh3Hp1xpVnAGLtkRGI30MDmXsIndlJ+i1RFgcIXmrBlJlXvOjhE7xqH3hPjJWgNL1fjYGVyEwPkd0zjFTvOqKMbrv0FovnpFiIqVVxhmKZgLgP02qmJjd33ahkWovrgKHHzj1sknfvYqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730372169; c=relaxed/simple;
-	bh=MA12dVLrm+VqZ/ae3pjPtbILpAB3JA5KVkEPvjBUlMY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gMbuCce4qWU7loVzqY2i7VRCjCWRbH+V5Qt7k0tmns+PozY3AnnrFVVsND4T26q1XpmsrhZgja3oFX88cigTLxfbP+deWRMD4bPTJ76DeCEFStwntf740SMvbbyWa49dDwJAFxhFM2sHxQJn1DfquEG83TsH2APM/uLDU1ngBx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=lIdPDcS9; arc=none smtp.client-ip=192.198.163.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1730372167; x=1761908167;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=MA12dVLrm+VqZ/ae3pjPtbILpAB3JA5KVkEPvjBUlMY=;
-  b=lIdPDcS9U3VcNuj2INuN98I0Zj0S9aqku5ZeZFML+CpD5KVl69X+DLle
-   7VyzzK8W+wwJoAaZEK1R/PzLMwxrUGPmrFc+ct91oPq/bwWrgQQo6IKO8
-   oz92BKwaM1tkmY/qAZv6RN7o8rY3PC306Kabs9K6Vxb3sghBP6AsYNMUc
-   uP6lAd7QxLvqSZGSPCTVVnZliQdVJTkkRjANWz+LMZcEkiQRYPPhJCZkB
-   KZnSTof/03PLR1agf7h5S4+dVvBwz7yzSBgGjCLu71hBl8Oigh4ktiMLj
-   Ffla2qxNTTeUe1MAhKk75VPI7rJQacO1yU5Ll0/32XMgzdPSvAn0UPBmI
-   Q==;
-X-CSE-ConnectionGUID: 9Tf0XJjERCGaxilXzrvqnQ==
-X-CSE-MsgGUID: Z8SmUm50QraIjaRmjY0Crg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11241"; a="41473384"
-X-IronPort-AV: E=Sophos;i="6.11,247,1725346800"; 
-   d="scan'208";a="41473384"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Oct 2024 03:56:06 -0700
-X-CSE-ConnectionGUID: 0kV5mYYyTy2NRvL6hEOUhw==
-X-CSE-MsgGUID: hnSDvds3SZmG+Nxh0hgtLQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,247,1725346800"; 
-   d="scan'208";a="82245396"
-Received: from kuha.fi.intel.com ([10.237.72.152])
-  by fmviesa007.fm.intel.com with SMTP; 31 Oct 2024 03:56:02 -0700
-Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Thu, 31 Oct 2024 12:56:01 +0200
-Date: Thu, 31 Oct 2024 12:56:01 +0200
-From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-To: Rex Nie <rex.nie@jaguarmicro.com>
-Cc: bryan.odonoghue@linaro.org, gregkh@linuxfoundation.org,
-	linux@roeck-us.net, caleb.connolly@linaro.org,
-	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-	linux-kernel@vger.kernel.org, angus.chen@jaguarmicro.com,
-	stable@vger.kernel.org
-Subject: Re: [PATCH v4] usb: typec: qcom-pmic: init value of
- hdr_len/txbuf_len earlier
-Message-ID: <ZyNiQUKPdUwE8EQZ@kuha.fi.intel.com>
-References: <20241030022753.2045-1-rex.nie@jaguarmicro.com>
- <20241030133632.2116-1-rex.nie@jaguarmicro.com>
+	s=arc-20240116; t=1730372313; c=relaxed/simple;
+	bh=bfOfHojxd+DS+uO+0NiH49kE0XS1cWBsQ0Jkau1iuBc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=kAZrUBrfFIwamQQ2NjsjXekttS/iJISg5az63xMGEgT5SZG4mQB8UCAMW77ZnaRO393WS7B6+s3PNjOkwLE0oy+V8BRFqJVRlWyktJwiMkIxWrpgBDCkl5TDAeZ+qVuBZr0nvLJmCM42I+MYH9xTCNl7uQYRV1jekHjX+U1QqhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HzKQ0jA3; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4315b957ae8so905195e9.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Oct 2024 03:58:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1730372308; x=1730977108; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=5uloUCtajTWqeXsTlCEgyg+k7SvpEJDLJv2PzPAA1U0=;
+        b=HzKQ0jA3iVSeFdLRvmHrzEpQi70QmPz+TOWCQ41U8HkdAiXpAmmFgUJVo3O5vRC9qy
+         4nkgPcPMFyBHr7uc5PI3Ofox3Qbw8fB/aZMbC2FW/IPtFozS6nSXk3IF3fXb2s1U0I8N
+         sizVy3PzT6HyoH7uXVBUyzNqca3zG9sjkgLl/O1Kn9GVV6rwuw92CebtpTl14ZOsnBdA
+         iQH/UfEm/qCaq0ur/PaBJ86GmUJVMBOphA5qKyV5bYwPOWqx8gxZMp4fBr/IvqBLa5ch
+         E9yoUvqBdOlipkKHcqzK6U998PooNsjnHa+gAYIrYg1LEgyJvYEf8UmV3QoJ2u/wmWUe
+         u8Ow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730372308; x=1730977108;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5uloUCtajTWqeXsTlCEgyg+k7SvpEJDLJv2PzPAA1U0=;
+        b=WvIsbfV1fSR8G0ticfpMXMR9WCnPsU0p9X4FlgqEX+hfYPp/bul+u1WYdAW1nIvLSo
+         5J3gmXBwFCfU7+ma083BflTZCUVxvXCjjDwLt1HXr0vNrjfCzi81whA28Uaw9FPl8veA
+         jpPlEbZqU6mraIg3WOGmYIX6psAl+e9iRGbKZz6wuWuKAv3kVJhp0Hsl3yHRXpuNiD6Z
+         ob27+WGwVrvtrM92gPAAYkMkfMVRTwGDUEeCL8cj9JExnk+qaRH5DyXiumESUrWdPW7E
+         SmTWo7KzlyNsg+VB2Re/zLU6qUWQKGiQXiwGXuqSIJBu0jTvTOtJ6wnScJaQXpyVPPUh
+         L1PQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX/0/CvTGTpjjA46o9a/XAMA6+J/FlrPkW0lSaYUk8VreK5gCgZcvv9j2s7bzTNVrbLlUI/kwh/P+4tWalg@vger.kernel.org
+X-Gm-Message-State: AOJu0YxBL919XljdYtVmuPYbrj8D17HoRf3k4ywdDHQYt9uTqsWUQcfz
+	EaZWbI+gimku7loxk8IMt2+U/ODNQBbTUdcRf3tYh4NQFRi94Els0xN8abAmetQ=
+X-Google-Smtp-Source: AGHT+IFN8GAhtwC5u9nGhsLRzqJuD+JbfHKmRd05w+Hp8Wt8hvX1b/p4ngqQDN1H3073nE2rTZnWPQ==
+X-Received: by 2002:a05:600c:450f:b0:42c:baba:13cb with SMTP id 5b1f17b1804b1-4319ac72da8mr73793865e9.2.1730372308023;
+        Thu, 31 Oct 2024 03:58:28 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.211.167])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-431bd910357sm53981465e9.11.2024.10.31.03.58.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 31 Oct 2024 03:58:27 -0700 (PDT)
+Message-ID: <6daaee01-36a0-4dc5-86c7-106aabbfff4e@linaro.org>
+Date: Thu, 31 Oct 2024 11:58:24 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241030133632.2116-1-rex.nie@jaguarmicro.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V4 2/4] dt-bindings: iio: adc: Add support for QCOM PMIC5
+ Gen3 ADC
+To: Jishnu Prakash <quic_jprakash@quicinc.com>, jic23@kernel.org,
+ robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+ agross@kernel.org, andersson@kernel.org, dmitry.baryshkov@linaro.org,
+ konrad.dybcio@linaro.org, daniel.lezcano@linaro.org, sboyd@kernel.org,
+ quic_subbaram@quicinc.com, quic_collinsd@quicinc.com,
+ quic_amelende@quicinc.com, quic_kamalw@quicinc.com, amitk@kernel.org
+Cc: lee@kernel.org, rafael@kernel.org, rui.zhang@intel.com,
+ lukasz.luba@arm.com, lars@metafoo.de, quic_skakitap@quicinc.com,
+ neil.armstrong@linaro.org, devicetree@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+ cros-qcom-dts-watchers@chromium.org
+References: <20241030185854.4015348-1-quic_jprakash@quicinc.com>
+ <20241030185854.4015348-3-quic_jprakash@quicinc.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Content-Language: en-US
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
+ cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
+ JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
+ gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
+ J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
+ NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
+ BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
+ vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
+ Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
+ TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzTRLcnp5c3p0b2Yg
+ S296bG93c2tpIDxrcnp5c3p0b2Yua296bG93c2tpQGxpbmFyby5vcmc+wsGUBBMBCgA+FiEE
+ m9B+DgxR+NWWd7dUG5NDfTtBYpsFAmI+BxMCGwMFCRRfreEFCwkIBwIGFQoJCAsCBBYCAwEC
+ HgECF4AACgkQG5NDfTtBYptgbhAAjAGunRoOTduBeC7V6GGOQMYIT5n3OuDSzG1oZyM4kyvO
+ XeodvvYv49/ng473E8ZFhXfrre+c1olbr1A8pnz9vKVQs9JGVa6wwr/6ddH7/yvcaCQnHRPK
+ mnXyP2BViBlyDWQ71UC3N12YCoHE2cVmfrn4JeyK/gHCvcW3hUW4i5rMd5M5WZAeiJj3rvYh
+ v8WMKDJOtZFXxwaYGbvFJNDdvdTHc2x2fGaWwmXMJn2xs1ZyFAeHQvrp49mS6PBQZzcx0XL5
+ cU9ZjhzOZDn6Apv45/C/lUJvPc3lo/pr5cmlOvPq1AsP6/xRXsEFX/SdvdxJ8w9KtGaxdJuf
+ rpzLQ8Ht+H0lY2On1duYhmro8WglOypHy+TusYrDEry2qDNlc/bApQKtd9uqyDZ+rx8bGxyY
+ qBP6bvsQx5YACI4p8R0J43tSqWwJTP/R5oPRQW2O1Ye1DEcdeyzZfifrQz58aoZrVQq+innR
+ aDwu8qDB5UgmMQ7cjDSeAQABdghq7pqrA4P8lkA7qTG+aw8Z21OoAyZdUNm8NWJoQy8m4nUP
+ gmeeQPRc0vjp5JkYPgTqwf08cluqO6vQuYL2YmwVBIbO7cE7LNGkPDA3RYMu+zPY9UUi/ln5
+ dcKuEStFZ5eqVyqVoZ9eu3RTCGIXAHe1NcfcMT9HT0DPp3+ieTxFx6RjY3kYTGLOwU0EVUNc
+ NAEQAM2StBhJERQvgPcbCzjokShn0cRA4q2SvCOvOXD+0KapXMRFE+/PZeDyfv4dEKuCqeh0
+ hihSHlaxTzg3TcqUu54w2xYskG8Fq5tg3gm4kh1Gvh1LijIXX99ABA8eHxOGmLPRIBkXHqJY
+ oHtCvPc6sYKNM9xbp6I4yF56xVLmHGJ61KaWKf5KKWYgA9kfHufbja7qR0c6H79LIsiYqf92
+ H1HNq1WlQpu/fh4/XAAaV1axHFt/dY/2kU05tLMj8GjeQDz1fHas7augL4argt4e+jum3Nwt
+ yupodQBxncKAUbzwKcDrPqUFmfRbJ7ARw8491xQHZDsP82JRj4cOJX32sBg8nO2N5OsFJOcd
+ 5IE9v6qfllkZDAh1Rb1h6DFYq9dcdPAHl4zOj9EHq99/CpyccOh7SrtWDNFFknCmLpowhct9
+ 5ZnlavBrDbOV0W47gO33WkXMFI4il4y1+Bv89979rVYn8aBohEgET41SpyQz7fMkcaZU+ok/
+ +HYjC/qfDxT7tjKXqBQEscVODaFicsUkjheOD4BfWEcVUqa+XdUEciwG/SgNyxBZepj41oVq
+ FPSVE+Ni2tNrW/e16b8mgXNngHSnbsr6pAIXZH3qFW+4TKPMGZ2rZ6zITrMip+12jgw4mGjy
+ 5y06JZvA02rZT2k9aa7i9dUUFggaanI09jNGbRA/ABEBAAHCwXwEGAEKACYCGwwWIQSb0H4O
+ DFH41ZZ3t1Qbk0N9O0FimwUCYDzvagUJFF+UtgAKCRAbk0N9O0Fim9JzD/0auoGtUu4mgnna
+ oEEpQEOjgT7l9TVuO3Qa/SeH+E0m55y5Fjpp6ZToc481za3xAcxK/BtIX5Wn1mQ6+szfrJQ6
+ 59y2io437BeuWIRjQniSxHz1kgtFECiV30yHRgOoQlzUea7FgsnuWdstgfWi6LxstswEzxLZ
+ Sj1EqpXYZE4uLjh6dW292sO+j4LEqPYr53hyV4I2LPmptPE9Rb9yCTAbSUlzgjiyyjuXhcwM
+ qf3lzsm02y7Ooq+ERVKiJzlvLd9tSe4jRx6Z6LMXhB21fa5DGs/tHAcUF35hSJrvMJzPT/+u
+ /oVmYDFZkbLlqs2XpWaVCo2jv8+iHxZZ9FL7F6AHFzqEFdqGnJQqmEApiRqH6b4jRBOgJ+cY
+ qc+rJggwMQcJL9F+oDm3wX47nr6jIsEB5ZftdybIzpMZ5V9v45lUwmdnMrSzZVgC4jRGXzsU
+ EViBQt2CopXtHtYfPAO5nAkIvKSNp3jmGxZw4aTc5xoAZBLo0OV+Ezo71pg3AYvq0a3/oGRG
+ KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
+ fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20241030185854.4015348-3-quic_jprakash@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Oct 30, 2024 at 09:36:32PM +0800, Rex Nie wrote:
-> If the read of USB_PDPHY_RX_ACKNOWLEDGE_REG failed, then hdr_len and
-> txbuf_len are uninitialized. This commit stops to print uninitialized
-> value and misleading/false data.
+On 30/10/2024 19:58, Jishnu Prakash wrote:
+> For the PMIC5-Gen3 type PMICs, ADC peripheral is present in HW for the
+> following PMICs: PMK8550, PM8550, PM8550B and PM8550VX PMICs.
 > 
-> Cc: stable@vger.kernel.org
-> Fixes: a4422ff22142 (" usb: typec: qcom: Add Qualcomm PMIC Type-C driver")
-> Signed-off-by: Rex Nie <rex.nie@jaguarmicro.com>
-
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-
-> ---
-> V2 -> V3:
-> - add changelog, add Fixes tag, add Cc stable ml. Thanks heikki
-> - Link to v2: https://lore.kernel.org/all/20241030022753.2045-1-rex.nie@jaguarmicro.com/
-> V1 -> V2:
-> - keep printout when data didn't transmit, thanks Bjorn, bod, greg k-h
-> - Links: https://lore.kernel.org/all/b177e736-e640-47ed-9f1e-ee65971dfc9c@linaro.org/
-> ---
->  drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
+> It is similar to PMIC5-Gen2, with SW communication to ADCs on all PMICs
+> going through PBS(Programmable Boot Sequence) firmware through a single
+> register interface. This interface is implemented on an SDAM (Shared
+> Direct Access Memory) peripheral on the master PMIC PMK8550 rather
+> than a dedicated ADC peripheral.
 > 
-> diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
-> index 5b7f52b74a40..726423684bae 100644
-> --- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
-> +++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
-> @@ -227,6 +227,10 @@ qcom_pmic_typec_pdphy_pd_transmit_payload(struct pmic_typec_pdphy *pmic_typec_pd
+> Add documentation for PMIC5 Gen3 ADC and macro definitions for ADC
+> channels and virtual channels (combination of ADC channel number and
+> PMIC SID number) per PMIC, to be used by clients of this device.
+> 
+> Co-developed-by: Anjelique Melendez <quic_amelende@quicinc.com>
+> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
+> Signed-off-by: Jishnu Prakash <quic_jprakash@quicinc.com>
+> ---
+
+This has still test failures, so limited review follows.
+
+>  properties:
+>    compatible:
+> @@ -23,14 +27,20 @@ properties:
+>            - const: qcom,pms405-adc
+>            - const: qcom,spmi-adc-rev2
+>        - enum:
+> -          - qcom,spmi-vadc
+> -          - qcom,spmi-adc5
+>            - qcom,spmi-adc-rev2
+> +          - qcom,spmi-adc5
+> +          - qcom,spmi-adc5-gen3
+>            - qcom,spmi-adc7
+> +          - qcom,spmi-vadc
 >  
->  	spin_lock_irqsave(&pmic_typec_pdphy->lock, flags);
+>    reg:
+> -    description: VADC base address in the SPMI PMIC register map
+> -    maxItems: 1
+> +    description:
+> +      For compatible properties "qcom,spmi-vadc", "qcom,spmi-adc5", "qcom,spmi-adc-rev2"
+> +      and "qcom,spmi-adc7", reg is the VADC base address in the SPMI PMIC register map.
+> +      For compatible property "qcom,spmi-adc5-gen3", each reg corresponds to an SDAM
+> +      peripheral base address that is being used for ADC functionality.
+
+This description is not really needed. You need to provide constraints
+in schema.
+
+> +    minItems: 1
+> +    maxItems: 2
 >  
-> +	hdr_len = sizeof(msg->header);
-> +	txbuf_len = pd_header_cnt_le(msg->header) * 4;
-> +	txsize_len = hdr_len + txbuf_len - 1;
+>    '#address-cells':
+>      const: 1
+> @@ -38,20 +48,28 @@ properties:
+>    '#size-cells':
+>      const: 0
+>  
+> +  "#thermal-sensor-cells":
+> +    const: 1
+> +    description:
+> +      Number of cells required to uniquely identify the thermal sensors.
+
+Drop, redundant.
+
+> +      For compatible property "qcom,spmi-adc5-gen3", this property is
+> +      required for if any channels under it are used for ADC_TM.
+> +      Since we have multiple sensors this is set to 1.
+
+Drop sentence, redundant.
+
 > +
->  	ret = regmap_read(pmic_typec_pdphy->regmap,
->  			  pmic_typec_pdphy->base + USB_PDPHY_RX_ACKNOWLEDGE_REG,
->  			  &val);
-> @@ -244,10 +248,6 @@ qcom_pmic_typec_pdphy_pd_transmit_payload(struct pmic_typec_pdphy *pmic_typec_pd
->  	if (ret)
->  		goto done;
+>    '#io-channel-cells':
+>      const: 1
 >  
-> -	hdr_len = sizeof(msg->header);
-> -	txbuf_len = pd_header_cnt_le(msg->header) * 4;
-> -	txsize_len = hdr_len + txbuf_len - 1;
-> -
->  	/* Write message header sizeof(u16) to USB_PDPHY_TX_BUFFER_HDR_REG */
->  	ret = regmap_bulk_write(pmic_typec_pdphy->regmap,
->  				pmic_typec_pdphy->base + USB_PDPHY_TX_BUFFER_HDR_REG,
-> -- 
-> 2.17.1
+>    interrupts:
+> -    maxItems: 1
+>      description:
+>        End of conversion interrupt.
+> +      For compatible property "qcom,spmi-adc5-gen3", interrupts are defined
+> +      for each SDAM being used.
 
--- 
-heikki
+Drop descriptions and instead rather list and describe items. You keep
+repeating schema in free form text. That's not the point.
+
+> +    minItems: 1
+> +    maxItems: 2
+>  
+> -required:
+> -  - compatible
+> -  - reg
+> -  - '#address-cells'
+> -  - '#size-cells'
+> -  - '#io-channel-cells'
+> +  interrupt-names:
+> +    minItems: 1
+> +    maxItems: 2
+>  
+>  patternProperties:
+>    "^channel@[0-9a-f]+$":
+> @@ -71,8 +89,8 @@ patternProperties:
+>          description: |
+>            ADC channel number.
+>            See include/dt-bindings/iio/adc/qcom,spmi-vadc.h
+> -          For PMIC7 ADC, the channel numbers are specified separately per PMIC
+> -          in the PMIC-specific files in include/dt-bindings/iio/adc.
+> +          For PMIC7 and PMIC5 Gen3 ADC, the channel numbers are specified separately
+> +          per PMIC in the PMIC-specific files in include/dt-bindings/iio/adc.
+>  
+>        label:
+>          description: |
+> @@ -113,11 +131,11 @@ patternProperties:
+>                channel calibration. If property is not found, channel will be
+>                calibrated with 0.625V and 1.25V reference channels, also
+>                known as absolute calibration.
+> -            - For compatible property "qcom,spmi-adc5", "qcom,spmi-adc7" and
+> -              "qcom,spmi-adc-rev2", if this property is specified VADC will use
+> -              the VDD reference (1.875V) and GND for channel calibration. If
+> -              property is not found, channel will be calibrated with 0V and 1.25V
+> -              reference channels, also known as absolute calibration.
+> +            - For compatible property "qcom,spmi-adc5", "qcom,spmi-adc7",
+> +              "qcom,spmi-adc-rev2" and "qcom,spmi-adc5-gen3", if this property is
+> +              specified VADC will use the VDD reference (1.875V) and GND for channel
+> +              calibration. If property is not found, channel will be calibrated with
+> +              0V and 1.25V reference channels, also known as absolute calibration.
+>          type: boolean
+>  
+>        qcom,hw-settle-time:
+> @@ -135,9 +153,24 @@ patternProperties:
+>              from the ADC that is an average of multiple samples. The value
+>              selected is 2^(value).
+>  
+> +      qcom,adc-tm:
+> +        description:
+> +          Indicates if ADC_TM monitoring is done on this channel.
+
+What is "ADC_TM"? Why this would be property of a board? This does not
+look like suitable for DT, at least based on such very vague explanation.
+
+> +          Defined for compatible property "qcom,spmi-adc5-gen3".
+
+Drop redundant.
+
+> +          This is the same functionality as in the existing QCOM ADC_TM
+> +          device, documented at devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml.
+
+What does it mean? How property can represent functionality of entire
+binding?
+
+BTW, use full paths when refering to files.
+
+> +        type: boolean
+> +
+>      required:
+>        - reg
+>  
+> +required:
+> +  - compatible
+> +  - reg
+> +  - '#address-cells'
+> +  - '#size-cells'
+> +  - '#io-channel-cells'
+> +
+>  allOf:
+>    - if:
+>        properties:
+> @@ -146,6 +179,15 @@ allOf:
+>              const: qcom,spmi-vadc
+>  
+>      then:
+> +      properties:
+> +        reg:
+> +          minItems: 1
+
+min is redundant.
+
+> +          maxItems: 1
+> +        interrupts:
+> +          minItems: 1
+> +          maxItems: 1
+
+So here you list and describe items instead.
+
+> +        "#thermal-sensor-cells": false
+> +        interrupt-names: false
+
+Keep things properly ordered. xxx-names is always next to xxx.
+
+>        patternProperties:
+>          "^channel@[0-9a-f]+$":
+>            properties:
+> @@ -162,6 +204,8 @@ allOf:
+>                enum: [ 1, 2, 4, 8, 16, 32, 64, 128, 256, 512 ]
+>                default: 1
+>  
+> +            qcom,adc-tm: false
+> +
+>    - if:
+>        properties:
+>          compatible:
+> @@ -169,6 +213,15 @@ allOf:
+>              const: qcom,spmi-adc-rev2
+>  
+>      then:
+> +      properties:
+> +        reg:
+> +          minItems: 1
+> +          maxItems: 1
+> +        interrupts:
+> +          minItems: 1
+> +          maxItems: 1
+> +        "#thermal-sensor-cells": false
+> +        interrupt-names: false
+>        patternProperties:
+>          "^channel@[0-9a-f]+$":
+>            properties:
+> @@ -185,6 +238,8 @@ allOf:
+>                enum: [ 1, 2, 4, 8, 16 ]
+>                default: 1
+>  
+> +            qcom,adc-tm: false
+> +
+>    - if:
+>        properties:
+>          compatible:
+> @@ -192,6 +247,15 @@ allOf:
+>              const: qcom,spmi-adc5
+>  
+>      then:
+> +      properties:
+> +        reg:
+> +          minItems: 1
+> +          maxItems: 1
+> +        interrupts:
+> +          minItems: 1
+> +          maxItems: 1
+> +        "#thermal-sensor-cells": false
+> +        interrupt-names: false
+>        patternProperties:
+>          "^channel@[0-9a-f]+$":
+>            properties:
+> @@ -208,6 +272,8 @@ allOf:
+>                enum: [ 1, 2, 4, 8, 16 ]
+>                default: 1
+>  
+> +            qcom,adc-tm: false
+> +
+>    - if:
+>        properties:
+>          compatible:
+> @@ -215,6 +281,59 @@ allOf:
+>              const: qcom,spmi-adc7
+>  
+>      then:
+> +      properties:
+> +        reg:
+> +          minItems: 1
+> +          maxItems: 1
+> +        interrupts:
+> +          minItems: 1
+> +          maxItems: 1
+> +        "#thermal-sensor-cells": false
+> +        interrupt-names: false
+> +      patternProperties:
+> +        "^channel@[0-9a-f]+$":
+> +          properties:
+> +            qcom,decimation:
+> +              enum: [ 85, 340, 1360 ]
+> +              default: 1360
+> +
+> +            qcom,hw-settle-time:
+> +              enum: [ 15, 100, 200, 300, 400, 500, 600, 700, 1000, 2000, 4000,
+> +                      8000, 16000, 32000, 64000, 128000 ]
+> +              default: 15
+> +
+> +            qcom,avg-samples:
+> +              enum: [ 1, 2, 4, 8, 16 ]
+> +              default: 1
+> +
+> +            qcom,adc-tm: false
+> +
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            const: qcom,spmi-adc5-gen3
+> +
+> +    then:
+> +      properties:
+> +        reg:
+> +          minItems: 1
+
+Why this is flexible?
+
+> +          items:
+> +            - description: SDAM0 base address in the SPMI PMIC register map
+> +            - description: SDAM1 base address
+> +        interrupts:
+> +          minItems: 1
+
+
+Why this is flexible?
+
+
+> +          items:
+> +            - description: SDAM0 end of conversion (EOC) interrupt
+> +            - description: SDAM1 EOC interrupt
+> +        interrupt-names:
+> +          minItems: 1
+> +          items:
+> +            - const: adc-sdam0
+
+sdam0
+
+> +            - const: adc-sdam1
+
+sdam1
+
+> +      required:
+> +        - interrupts
+> +        - interrupt-names
+>        patternProperties:
+>          "^channel@[0-9a-f]+$":
+>            properties:
+> @@ -307,3 +426,64 @@ examples:
+
+
+
+Best regards,
+Krzysztof
+
 
