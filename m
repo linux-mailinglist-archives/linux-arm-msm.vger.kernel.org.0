@@ -1,169 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-36521-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36522-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C10C9B728F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 03:38:00 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7CBCC9B72AA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 03:58:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BEA201F23F19
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 02:37:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3A6DE286026
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 02:58:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C9D57581F;
-	Thu, 31 Oct 2024 02:37:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ElM02GhI"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A23FC84A39;
+	Thu, 31 Oct 2024 02:58:24 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from dggsgout12.his.huawei.com (dggsgout12.his.huawei.com [45.249.212.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4969E85656
-	for <linux-arm-msm@vger.kernel.org>; Thu, 31 Oct 2024 02:37:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2526E77112;
+	Thu, 31 Oct 2024 02:58:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730342276; cv=none; b=OP5CMw6fiQWZldhCuTKhtPIuICKtViYzf8bj3p/d5bd2wuhLTQQLHXFffDjUSYEH5/suMetMH/tlVlH27bO5ob2KtMGdNx8AXu3FxI9HeAi56pLMod0H4K37Y25zyv62vCF8vVgg+8n0a41jfZrW/ze3hZUSKbaVKpEg4TrEFmM=
+	t=1730343504; cv=none; b=au8PEfLfCUsAboTnBcROI3QsK+RJKoNFZA/z0NMRYRJY+AWL5bSUl5+1nrqv8L3ewBWnT9BIJFcFx5N+ySaS3MNx7HWylfcDSyRxwfYz0D6YT1wDVYX8JFsX7Tjwn5C1OcQGi/NO9lV3eSl4QUoiOkn6vnMpym93aK6u4DaZFOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730342276; c=relaxed/simple;
-	bh=3wlJ4WYEWLeICusG89vq4fKj2EstA6rn36oo+NmkyZg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fek62fpX1Q82qBfiz4ZO7E3Mwa4eEg4yuSRpNi4xFYH0GvI44sk0wOGB4GUHlM986AV6+y0qUTRvCRoUOVosIvmxkMFFdPr5IWy4Vcm9H4JwzVT7LbMpDm4JmlmfQHwr4Ym5nyWOBtTR9scfk/fZ0/LyWSdxlW62qkcljwBaNok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=fail smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ElM02GhI; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49UL5lqM006026
-	for <linux-arm-msm@vger.kernel.org>; Thu, 31 Oct 2024 02:37:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=UVicVPbOPvmlNYl6KOV/QcaU
-	Rfasslr7taJrI75SLl8=; b=ElM02GhIkKBpB/GxxG76mHlZa4+6YhgpFLT8Ktq6
-	b2RZ3uO5oHlCzd+FsnsQyDY/A4q/2oKYkKCK5ZjiwHMCg6/MDQwhw/r7T/OkicIq
-	YZz1W9VWM6DE/ed5+cO4vGfFS6Wme29hZjNF56E3xr6iMrxePkU4KoVuBmyCz4eW
-	bK05fouQBjaTRoTjDlmfUuRpNsg2+RAtkLqINJZjGrQJixYfoIMvody83APuKidY
-	OVDm7Or5e4dKCcbV0upFu/22FzWiRwdXd/Ay8nrqrHPI1kijHDdp2RDUcI3No/Hl
-	kJ8wrhDAFELivRIDx8jm7aoxti24enU+Dx5fcndBfSyq+A==
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42grgup0yu-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 31 Oct 2024 02:37:52 +0000 (GMT)
-Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-20e6dc85472so4397725ad.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Oct 2024 19:37:52 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730342271; x=1730947071;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UVicVPbOPvmlNYl6KOV/QcaURfasslr7taJrI75SLl8=;
-        b=qkXAMvAdIguQUqgW6MmdNyJ+UjogYmli6jzBcfdhVyGfJgfFKy6fHZYFivgAoYxqGB
-         iLsWNKU6UBykBlhixI/2tAtSVU9JTBXdlFa4sEyhTEyTOsXwVvrmnkUWm5/kHBLBxRRO
-         YvciRRPOBnOzf6Ad3STD4nDTLBD//W/PJ7syvQbJYvmuBh+c/9HhoLaGiSEwUzpxRRi8
-         r54WpEeeMEdz9qPIhCbeaAekDp36vy8M9nRne26DTzEIdjiB7Y0lxewIXOqtHNiDSoxc
-         mnLIp/XPouZPaBpB4XgDIlIGBeBOKQZBP9NX1oBM47WIkarRFTlaw4+INZNyWogOE8iF
-         Ui/g==
-X-Forwarded-Encrypted: i=1; AJvYcCWsNQigx+8pooKWcs2f5Z2jPDkW2kr7fyq511O3t1IzoPUu+RR3dOvZpi1pMO6NHQHPYaw/WyD5oNobyYxC@vger.kernel.org
-X-Gm-Message-State: AOJu0YyG6oFtXpbm/qYcdOBSrSgyfRKCar8jt01LtPGbsQaucR5nWGMM
-	Dsx+trLyJWsL3HS//KskjftYqV6WiAPPMXB+s9J0FMUsuit90pmZOzBWXr6f0NKlaCkHZON9k5V
-	ov3iUPtAO2omU1I3F3yeY2xeFHL40X+LBVNygRjbGVMotcVaVJq624lX1Er+Pn2kq
-X-Received: by 2002:a17:902:dace:b0:20c:eb89:4881 with SMTP id d9443c01a7336-210c6c34819mr216011885ad.37.1730342271405;
-        Wed, 30 Oct 2024 19:37:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGMwtV2E8QO+5/HInTKTfmwtQs0DyYM8k+NPyg7a6285R0AAxM991MQhGdAvCZ2YmYW8IDUWg==
-X-Received: by 2002:a17:902:dace:b0:20c:eb89:4881 with SMTP id d9443c01a7336-210c6c34819mr216011705ad.37.1730342271058;
-        Wed, 30 Oct 2024 19:37:51 -0700 (PDT)
-Received: from hu-bjorande-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-211057c0e67sm2395875ad.203.2024.10.30.19.37.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Oct 2024 19:37:50 -0700 (PDT)
-Date: Wed, 30 Oct 2024 19:37:48 -0700
-From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-To: shaojiedong <quic_shaojied@quicinc.com>
-Cc: kernel@quicinc.com, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v3] um: Remove double zero check
-Message-ID: <ZyLtfD7KUMRZ2H1t@hu-bjorande-lv.qualcomm.com>
-References: <20241025-upstream_branch-v3-1-f6ec670e0206@quicinc.com>
+	s=arc-20240116; t=1730343504; c=relaxed/simple;
+	bh=0fwWPorxaFWzsOmK7UK8zkWC9QYzifxF8yRESwfoIlQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=Ea7Y7jZJZRl1hhdpAHZCVlYQbNiAH3woYcFvMMdtH5W5g6RsYg5k4KNVWF/jOpM+h8nk4PDmbIJYObDmckXIVypRtLlzEyAXUZQauNA9qxQaoWwjIHl+EUirquHOipr9QBRbA+o9kEp22wY3kL6NnlX8VOgGy503Meq3yDaOnTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.19.163.235])
+	by dggsgout12.his.huawei.com (SkyGuard) with ESMTP id 4Xf7w72MQxz4f3jXT;
+	Thu, 31 Oct 2024 10:57:59 +0800 (CST)
+Received: from mail02.huawei.com (unknown [10.116.40.128])
+	by mail.maildlp.com (Postfix) with ESMTP id 103161A06D7;
+	Thu, 31 Oct 2024 10:58:17 +0800 (CST)
+Received: from [10.67.109.79] (unknown [10.67.109.79])
+	by APP4 (Coremail) with SMTP id gCh0CgA3X4NI8iJnlQazAQ--.15701S2;
+	Thu, 31 Oct 2024 10:58:16 +0800 (CST)
+Message-ID: <261937bc-af3d-4328-b0f9-990e00620ed4@huaweicloud.com>
+Date: Thu, 31 Oct 2024 10:58:16 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241025-upstream_branch-v3-1-f6ec670e0206@quicinc.com>
-X-Proofpoint-ORIG-GUID: WqMBG50K8h_-YDYd3y2vazlE5o8Ys_nU
-X-Proofpoint-GUID: WqMBG50K8h_-YDYd3y2vazlE5o8Ys_nU
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1015
- lowpriorityscore=0 adultscore=0 mlxscore=0 bulkscore=0 suspectscore=0
- phishscore=0 spamscore=0 malwarescore=0 mlxlogscore=999 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2410310019
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] media: Fix pm_runtime_set_suspended() with runtime pm
+ enabled
+To: Jinjie Ruan <ruanjinjie@huawei.com>, sakari.ailus@linux.intel.com,
+ mchehab@kernel.org, ming.qian@nxp.com, eagle.zhou@nxp.com,
+ stanimir.k.varbanov@gmail.com, quic_vgarodia@quicinc.com,
+ bryan.odonoghue@linaro.org, hans.verkuil@cisco.com,
+ linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
+References: <20240923035115.3008900-1-ruanjinjie@huawei.com>
+Content-Language: en-US
+From: Chen Ridong <chenridong@huaweicloud.com>
+In-Reply-To: <20240923035115.3008900-1-ruanjinjie@huawei.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:gCh0CgA3X4NI8iJnlQazAQ--.15701S2
+X-Coremail-Antispam: 1UD129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7v73
+	VFW2AGmfu7bjvjm3AaLaJ3UjIYCTnIWjp_UUUYV7kC6x804xWl14x267AKxVW8JVW5JwAF
+	c2x0x2IEx4CE42xK8VAvwI8IcIk0rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII
+	0Yj41l84x0c7CEw4AK67xGY2AK021l84ACjcxK6xIIjxv20xvE14v26F1j6w1UM28EF7xv
+	wVC0I7IYx2IY6xkF7I0E14v26r4UJVWxJr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4
+	x0Y4vEx4A2jsIEc7CjxVAFwI0_GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG
+	64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v26r
+	1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwACI402YVCY1x02628vn2kI
+	c2xKxwCF04k20xvY0x0EwIxGrwCF54CYxVCY1x0262kKe7AKxVWUtVW8ZwCFx2IqxVCFs4
+	IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1r
+	MI8E67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJV
+	WUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j
+	6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYx
+	BIdaVFxhVjvjDU0xZFpf9x07UQzVbUUUUU=
+X-CM-SenderInfo: hfkh02xlgr0w46kxt4xhlfz01xgou0bp/
 
-On Fri, Oct 25, 2024 at 02:45:37PM +0800, shaojiedong wrote:
 
-Dmitry asked you to not send multiple versions of a patch within 24
-hours, and you seem to have sent the next version 5 hours later...
 
-Perhaps you are unaware that you are Cc'ing the public list
-(linux-arm-msm@)? Please do get your patches reviewed on the internal
-list before sending more.
-
-> free_pages() performs a parameter null check inside
-> therefore remove double zero check here.
+On 2024/9/23 11:51, Jinjie Ruan wrote:
+> Fix pm_runtime_set_suspended() with runtime pm enabled.
+> 
+> Jinjie Ruan (3):
+>   media: i2c: dw9768: Fix pm_runtime_set_suspended() with runtime pm
+>     enabled
+>   media: amphion: Fix pm_runtime_set_suspended() with runtime pm enabled
+>   media: venus: Fix pm_runtime_set_suspended() with runtime pm enabled
+> 
+>  drivers/media/i2c/dw9768.c               | 6 +++---
+>  drivers/media/platform/amphion/vpu_drv.c | 2 +-
+>  drivers/media/platform/qcom/venus/core.c | 2 +-
+>  3 files changed, 5 insertions(+), 5 deletions(-)
 > 
 
-It seems correct that the check is unnecessary, but is the impact of
-this change worth sending and getting four versions reviewed?
+LGTM.
 
-> Signed-off-by: Shaojie Dong <quic_shaojied@quicinc.com>
+Thanks,
+Ridong
 
-The author of the commit doesn't match the signed-off-by.
-
-> ---
-> Changes in v3:
-> - EDITME: fit the git setup and simplify commit description
-
-Drop the EDITME: from the changelog.
-
-> - Link to v2: https://lore.kernel.org/r/20241025-upstream_branch-v2-1-072009bfa7d0@quicinc.com
-> 
-> Changes in v2:
-> - EDITME: describe what is new in this series revision.
-> - EDITME: use bulletpoints and terse descriptions.
-
-This wasn't updated at all.
-
-Regards,
-Bjorn
-
-> - Link to v1: https://lore.kernel.org/r/20241025-upstream_branch-v1-1-4829506c7cdb@quicinc.com
-> ---
->  arch/um/kernel/skas/mmu.c | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
-> 
-> diff --git a/arch/um/kernel/skas/mmu.c b/arch/um/kernel/skas/mmu.c
-> index d3fb506d5bd6084046cf5903c629432cd42b5ab3..0eb5a1d3ba70134f75d9b2af18544fca7248c6d6 100644
-> --- a/arch/um/kernel/skas/mmu.c
-> +++ b/arch/um/kernel/skas/mmu.c
-> @@ -46,8 +46,7 @@ int init_new_context(struct task_struct *task, struct mm_struct *mm)
->  	return 0;
->  
->   out_free:
-> -	if (new_id->stack != 0)
-> -		free_pages(new_id->stack, ilog2(STUB_DATA_PAGES));
-> +	free_pages(new_id->stack, ilog2(STUB_DATA_PAGES));
->   out:
->  	return ret;
->  }
-> 
-> ---
-> base-commit: fd21fa4a912ebbf8a6a341c31d8456f61e7d4170
-> change-id: 20241025-upstream_branch-06a9ea92948d
-> 
-> Best regards,
-> -- 
-> shaojiedong <quic_shaojied@quicinc.com>
-> 
 
