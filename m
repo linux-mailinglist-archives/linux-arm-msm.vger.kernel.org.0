@@ -1,109 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-36553-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36554-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 99F839B7A70
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 13:23:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A08F49B7A82
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 13:29:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 584CD2858AC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 12:23:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 66753284740
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 12:29:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 093FA19CC29;
-	Thu, 31 Oct 2024 12:23:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 63B9719CC1F;
+	Thu, 31 Oct 2024 12:29:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="agU3snlv"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MaehoI2R"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCBEE19CC08;
-	Thu, 31 Oct 2024 12:23:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3563319CC1D;
+	Thu, 31 Oct 2024 12:29:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730377431; cv=none; b=BoOrCVJqWZIKeG/mU6ajXb/ZRnwMdX1PTM3I3KkowkNCZpgYx8q2NNpVon1gQFJ//EYENiOyQX1RDFgIWd4maINZ8v2n03VZm9GAjLKMlgWmqhOjDwNtbk9NpvSN+Y1wHl9kziPPBfQLM7gw7138ExD7kByWcnW9LhHxMp7TZA0=
+	t=1730377784; cv=none; b=YYF06nNP/T3n2xNRrmCkz0SJRxLXyVOqUC12X05PVa6aZSc5P02KstSWenTjcXAb+kvbCLAie3ntsuJqVtliyyK6XnfQycWNskEBwQ2MQgPlWMaXJ/MtZxppWuX8HOxvatrgPzOzdJNoK/37ME11Vj54Vb8zvHGzab1YBk8jcec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730377431; c=relaxed/simple;
-	bh=dADoK+rRwsBwxgt5AIiHceJswYu86JTOLxIc0/c0PvU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Omdu/GZmbnVOOduZIY1K4vJUaLwUazPlKXdYkPnTYUlzPgCvR1iBQKogY3giZ8D/lN7ten3///XXigZpz7WSyYxFjEQ/+ikUaIVM3lJ97RN8IXSSSMKl2vpt29XnBrbBnrPuHuwQD/kPEnV6MHpZfjTdGLBZDzJF7zB2koxHwZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=agU3snlv; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FB3FC4E690;
-	Thu, 31 Oct 2024 12:23:50 +0000 (UTC)
+	s=arc-20240116; t=1730377784; c=relaxed/simple;
+	bh=0pgnrKFCd7krk9HzGqlDXM26z+itSZVYEdeZBHDof1g=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=VPVsWh+ygioITjaRfCcauSYUr0qSKgoizo6XU0kl0NDZongt5Lojw/6OiJYhkR7F0UZ6MgkfzUTVgmpVRD5/AUALydcNfj2mUPhjRZp/2pYlH0G0mHn2yRf+PjQ422uzDKJc9FuE7u2STaUYIVKN2CAZ5Se2QRBYJ3ejcFjzjS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MaehoI2R; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5382C4DDED;
+	Thu, 31 Oct 2024 12:29:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730377431;
-	bh=dADoK+rRwsBwxgt5AIiHceJswYu86JTOLxIc0/c0PvU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=agU3snlv+qwGyOip3i1LoYpsf9DE7GWMD6JxwsADinyv4FIDj+y6zC5dhAXWTbk9c
-	 4ekVdggT4vRdbS8x4bawN/gBDxhpZbPY9wFYlkr3ZfUtPkamKtIk3i+8PdTpws06Jf
-	 +WOBXaYhp1SvaPwtiKi6n/flznsmgDGCwycBtCgIj05+VHXOMeoMU59tDSWNFyEIRt
-	 rHUi6KsDsWKD97lGalkZSbcwx0wvh1SZpCKgZeKAdr71hxV3POpcM6/CRDlr33GWM2
-	 kLcTbJ4B1UBs64VprCfE05hR+K8PwDs3sIUg52Fxmj6fG1yESHiS7LhBcOzd7QIoaY
-	 ZNHPt4lMBtrng==
-Date: Thu, 31 Oct 2024 13:23:46 +0100
-From: Andi Shyti <andi.shyti@kernel.org>
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>, 
-	loic.poulain@linaro.org, rfoss@kernel.org, linux-i2c@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Abaci Robot <abaci@linux.alibaba.com>
-Subject: Re: [PATCH v2 -next] i2c: qcom-cci: Remove the unused variable
- cci_clk_rate
-Message-ID: <auvqypvayvlhzi6n6jp3r6swq4sik3jvcxxafvu67i2y3r337m@uy33er3gujk2>
-References: <20241029020931.42311-1-jiapeng.chong@linux.alibaba.com>
- <rql2u5k3esavdmpdzgo4l4up4ir7yjpdzc3qlmsvjvqalqzvjc@xspprcohlout>
- <f06dea2e-893b-4de5-89a3-e25af56afb31@linaro.org>
- <7f5amyf7ljvtfjyksfe7cad25wu7qdg4e45mdite6bdxx63ge5@ov37ohc7qtai>
- <e1c55403-55ee-4742-b7e6-8f0a4387ce9e@linaro.org>
+	s=k20201202; t=1730377783;
+	bh=0pgnrKFCd7krk9HzGqlDXM26z+itSZVYEdeZBHDof1g=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=MaehoI2R2yl2V53Xv7oZeuswyGfMw7HTFfLGktq2oxSMwXSi/PmmLutEYJGJDGnmK
+	 MnkZTXH8ytwV4XK/UXmv03vEHrs9p5ZCZkQ5T7roMAN2HgYbeBzMzAx+NigK92oloe
+	 ahPylV40f9+BPXY1+1SSoMXkAhyJcBVta+Kpb1PL6D0X+/XCGTzE7uNECjdVcH1mNC
+	 RpqMSC25ktseTmZZvtyETRhZfTsWN1hl7KAkkRpuL21iQ1Tnn7YNJxQcTWNIqDDCXS
+	 Afq3t1HxSPoaS4thfeSEat5WJs6XoZyhWtS+K2UzckYFyqrmUANgHBmkUfqo0V29+G
+	 TRQR+IMfw86vQ==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <maz@kernel.org>)
+	id 1t6UJ3-008YcM-DV;
+	Thu, 31 Oct 2024 12:29:41 +0000
+Date: Thu, 31 Oct 2024 12:29:40 +0000
+Message-ID: <86v7x81mmj.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Abel Vesa <abel.vesa@linaro.org>, Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+Cc: 	Sibi Sankar <quic_sibis@quicinc.com>,
+	andersson@kernel.org,
+	konradybcio@kernel.org,
+	krzk+dt@kernel.org,
+	robh+dt@kernel.org,
+	dmitry.baryshkov@linaro.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	conor+dt@kernel.org,
+	srinivas.kandagatla@linaro.org,
+	quic_jjohnson@quicinc.com
+Subject: Re: [PATCH V3 0/3] X1E001DE Snapdragon Devkit for Windows
+In-Reply-To: <5d8ec8c4-f473-4849-a428-f7a7283ff478@oldschoolsolutions.biz>
+References: <20241025123227.3527720-1-quic_sibis@quicinc.com>
+	<86y1251q3b.wl-maz@kernel.org>
+	<ZyNR5MD/HAS5w7N/@linaro.org>
+	<5d8ec8c4-f473-4849-a428-f7a7283ff478@oldschoolsolutions.biz>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/29.4
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <e1c55403-55ee-4742-b7e6-8f0a4387ce9e@linaro.org>
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: abel.vesa@linaro.org, jens.glathe@oldschoolsolutions.biz, quic_sibis@quicinc.com, andersson@kernel.org, konradybcio@kernel.org, krzk+dt@kernel.org, robh+dt@kernel.org, dmitry.baryshkov@linaro.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org, srinivas.kandagatla@linaro.org, quic_jjohnson@quicinc.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-Hi Vladimir,
+On Thu, 31 Oct 2024 10:00:40 +0000,
+Jens Glathe <jens.glathe@oldschoolsolutions.biz> wrote:
+>=20
+> On 31.10.24 10:46, Abel Vesa wrote:
+> > On 24-10-30 17:02:32, Marc Zyngier wrote:
+> >> On Fri, 25 Oct 2024 13:32:24 +0100,
+> >> Sibi Sankar <quic_sibis@quicinc.com> wrote:
+> >>> Add initial support for X1E001DE Snapdragon Devkit for Windows. X1E00=
+1DE
+> >>> is the speed binned variant of X1E80100 that supports turbo boost up =
+to
+> >>> 4.3 Ghz. The initial support includes the following:
+> >>>=20
+> >>> -DSPs
+> >>> -Ethernet (RTL8125BG) over the pcie 5 instance.
+> >>> -NVme
+> >>> -Wifi
+> >>> -USB-C ports
+> >>>=20
+> >>> V3:
+> >>> * Asked around and looked at the firmware, couldn't find a codename so
+> >>>    will keep it as DEVKIT. Will update it if someone from the communi=
+ty
+> >>>    finds something else.
+> >> My machine has the following information as part of its DMI tables:
+> >>=20
+> >> Handle 0x0005, DMI type 1, 27 bytes
+> >> System Information
+> >> 	Manufacturer: Qualcomm
+> >> 	Product Name: Snapdragon-Devkit
+> >> 	Version: 2.1
+> >> 	Serial Number: 5
+> >> 	UUID: 63b5fc8b-9c50-89aa-fd0f-3fcef93dc291
+> >> 	Wake-up Type: Power Switch
+> >> 	SKU Number: 6
+> >> 	Family: SCP_HAMOA
+> >>=20
+> >> So I guess that Snapdragon-Devkit is another possible name. But given
+> >> that it is a bit of a mouthful, devkit, Devkit, or any other variation
+> >> on the case would work for me.
+> > The point was to have something unique A codename would be unique.
+> > Naming it Snapdragon-Devkit (or just devkit) will be confusing since
+> > there was already a 2023 devkit (from Microsoft) with the Snapdragon
+> > 8cx Gen 3, and probably the next compute platform will also have a devk=
+it
+> > as well. So probably "X Elite devkit" could be the right option..
 
-On Thu, Oct 31, 2024 at 01:59:45PM +0200, Vladimir Zapolskiy wrote:
-> On 10/31/24 13:41, Andi Shyti wrote:
-> > On Thu, Oct 31, 2024 at 01:13:24PM +0200, Vladimir Zapolskiy wrote:
-> > > On 10/31/24 12:44, Andi Shyti wrote:
-> > > > On Tue, Oct 29, 2024 at 10:09:31AM +0800, Jiapeng Chong wrote:
-> > > > > Variable ret is not effectively used, so delete it.
-> > > > > 
-> > > > > drivers/i2c/busses/i2c-qcom-cci.c:526:16: warning: variable ‘cci_clk_rate’ set but not used.
-> > > > > 
-> > > > > Reported-by: Abaci Robot <abaci@linux.alibaba.com>
-> > > > > Closes: https://bugzilla.openanolis.cn/show_bug.cgi?id=11532
-> > > > > Signed-off-by: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
-> > > > 
-> > > > thanks for your patch! Applied to i2c/i2c-host
-> > > > 
-> > > > Thanks,
-> > > > Andi
-> > > > 
-> > > 
-> > > FWIW I've noticed that my Reviewed-by tag was added to the accepted change,
-> > > while it was the conditional one... Actually I don't know how to be aware
-> > > of such nuances, if only b4 tool is used, likely there is no way for it.
-> > 
-> > I thought the change that made your r-b conditional was the
-> > Fixes tag, right? That is added. Have I missed anything?
-> 
-> ah, no, it was about the copy-pasted commit message, which mentions a much
-> more popular 'ret' local variable.
+Odd, I didn't get that email.
 
-oh yes, the new commit message says:
+My point was the the HW already comes with a full description as part
+of the existing tables. If you really want something that is truly
+unique to that platform and that can be used by a tool (be it
+firmware, kernel or userspace) to understand what it is running on,
+then you cannot have *less* information.
 
-"Variable cci_clk_rate is not effectively used, so delete it."
+At the very least, you would need Manufacturer, Product Name, Version
+and Family.
 
-I'm sorry, I will fix it.
+But does it really matter? I don't think it is *that* crucial. At the
+end of the day, this is only used to pick the correct DT out of a set
+for a given SoC, or worse case a family of SoCs that are closely
+related.
+
+> As for The Windows Dev Kit 2023, dmidecode says this:
+>=20
+> Handle 0x0009, DMI type 1, 27 bytes
+> System Information
+> =C2=A0=C2=A0 =C2=A0Manufacturer: Microsoft Corporation
+> =C2=A0=C2=A0 =C2=A0Product Name: Windows Dev Kit 2023
+> =C2=A0=C2=A0 =C2=A0Version: 124I:00097T:000M:0200000B:07
+> =C2=A0=C2=A0 =C2=A0Serial Number: 0F01C4F22373F6
+> =C2=A0=C2=A0 =C2=A0UUID: e4a4662c-8367-75d0-a54f-1d04bd404860
+> =C2=A0=C2=A0 =C2=A0Wake-up Type: Unknown
+> =C2=A0=C2=A0 =C2=A0SKU Number: 2043
+> =C2=A0=C2=A0 =C2=A0Family: Surface
+>=20
+> That's also really a mouthful. In my patchset for it there were some
+> name / path changes, microsoft/blackrock it is now. Would be cool to
+> have short and unique names. In the end, whatever works and is unique.
+> Like those UUIDs?
+
+Are those actually per platform? or per unit? On my box, the serial
+number is probably a dud. What does the UUID reports on your X1E box?
 
 Thanks,
-Andi
+
+	M.
+
+--=20
+Without deviation from the norm, progress is not possible.
 
