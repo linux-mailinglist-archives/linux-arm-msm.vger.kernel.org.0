@@ -1,139 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-36596-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36597-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id DE3769B82ED
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 19:57:09 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7C4999B82F5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 19:59:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1B9331C21CC6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 18:57:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D53C01F234B0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2024 18:59:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85CCE1C9EAA;
-	Thu, 31 Oct 2024 18:57:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 184821C9EC4;
+	Thu, 31 Oct 2024 18:59:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hIylKOPj"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="i5tSsegI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5690213A865
-	for <linux-arm-msm@vger.kernel.org>; Thu, 31 Oct 2024 18:57:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6F6514264A
+	for <linux-arm-msm@vger.kernel.org>; Thu, 31 Oct 2024 18:59:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730401024; cv=none; b=jpWOwG8mRxBoh1zO4QXRs+2Bop5Ye5I7KEQbtLZECb6SO5CTA99egU6GbNBRMi+PGJPUL55tvc9EQZkqdoMuuREV92VyBcDWZOtxQ+IpvqABtHF3mTmK8Zjm2vqwwJdj3XIzbr59l5Oa7w8wyxY62Bbden5Y6KUdQj1ME2knHQA=
+	t=1730401171; cv=none; b=pODLgQt3XoPIBI4VWVUfv/Pngf1id4mTmv6+sD2N879r9Z75IWMdI58RhWwfy/BVcOYcTj7enErErqAYWCUS+Bdj+Fx/q11gsNDpwRgMzzlkiAuD6rF23CCAROX677qPBBcinV3AWCEALtbQQ/zNUzK4CbhOaDEMny+Ou+JZjU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730401024; c=relaxed/simple;
-	bh=xMu6QWNdKFvJUqlA5KkzFsPtFC7j7Kqh7tHTVasaSCs=;
+	s=arc-20240116; t=1730401171; c=relaxed/simple;
+	bh=MaQ7UJ0znbDI8GaESKtvVvk6UKE+EeaPRHIJ9cBtDlQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YpgHpOYUZeQoPRuS/syBR6TAL9saCKjOXfjLBM039nxhpAu6AOydg13g75i2wDs8orfESH11gbGrHPIpGmacsrK8lEGBEdxxRtJU8908NqHOgpaEwFNp0lBgxad07g4YWF5gOEZOaQs2o2gGlE80tTrClV/eq0WFYmDiNOb6dXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hIylKOPj; arc=none smtp.client-ip=209.85.167.52
+	 Content-Type:Content-Disposition:In-Reply-To; b=r5fwwg7N7Zmiccx/zkvsfhPwYhA1iEEutqLOVB+JBZ0HRbDxxLcxls8sKZCW8P+xz3jHEIANn+ki0HdHsCpiCrUmbCe0W66oNEgaVH/EkEWXdBZc/BzjKK6/R+l7pNy6nIkKxcQATLBVb6RpL6SXplqx9u4tRoYQLu4l5Uy/ZN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=i5tSsegI; arc=none smtp.client-ip=209.85.167.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-539f4d8ef66so1692018e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Oct 2024 11:57:02 -0700 (PDT)
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-539e8607c2aso1410344e87.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Oct 2024 11:59:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1730401020; x=1731005820; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=pJND4kIqSn03jp/YKXMT+NaJTpO4BmVDS9cnPvfoOGE=;
-        b=hIylKOPjMMUBFiOJSj8y783Yg2DPFvs5g76aS3jivSGlZwOm0dND5rCzH9Aruwcjj+
-         D1C8gNq3igs6zdSPzqWyhMKcbKbKSmy97+6jWM3uRpIegomTE6MZ4cwU8vmMtwLMNOi9
-         8aYBWX2OKQd73gNkOJvyEDD167aXn4xdvEQH1yVoDFUeNisRJJ7sRNIR/dEYty0ou5VR
-         E2Q8OM22peXdCmtFNNXSD1ejr1W/6aeP8dSKvUMgBcfIt94Rmavnz9+tDrPvUtiPCUxE
-         93VaVqA8c0a+1ndHebgW1aq2HeUwrnnxn1IRKpWFXCctQ1y1PxAn/iiHvopFrc+z/OLF
-         1Q6g==
+        d=linaro.org; s=google; t=1730401167; x=1731005967; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=QgMMTxWGZldXwHbAmueNqIX4cPV4+6ZGXkoMeFqofw0=;
+        b=i5tSsegIVG312zsdiw59fj/f6z4tprjDjLFNRff92TP05bxHzlDd0S2B5SDY8Dglfa
+         uyUnXeyFJUm6vZm6WwGSlnWDcX0xRmhggnk5ThCJwzAAamBO7stA4BY9mWx6IwRi7hRi
+         m6QzR0mpW+nkfDJLGr/aFB6WJjG5y4T9ZsbcoXGYyBMGDzHI1z1Vtl0ep9LazYPiopTR
+         wIwecmOM0xwqxALvW3SBqzEYUgZjhlzbEjchKavEGvqILQzW/OCyeoXb5gaeiu848xAF
+         /tu0+TQ9wKj/SB8TwxPhVYOlzGOWGUp6P2iHKRX8NaA6C/F0C7uJsL6o7G1PQlZqsrEX
+         TS8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730401020; x=1731005820;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pJND4kIqSn03jp/YKXMT+NaJTpO4BmVDS9cnPvfoOGE=;
-        b=jqloR6Q3PPLDJQHG/uduEYGEvOiEqD4k7o3exl2rOWeo2esCgvTzzg6jX/7jNZTRc3
-         QtCEo+J1tGwGIN6wmMTgZSEyEQbOJfMvYbNnLS9PQAngHR0G78VZ6rUV8Asp57Tn9cut
-         pDbQQ7bOZszZsd3fp9/Z2B5GIU9CGV0YJ49TEV9K+SrWx1tQrDKKQb9AtuPTjcqOlwo7
-         7r+dyM6chozA5YkVU8VkD8VI8ExCuD7U99sb7FXdl6p7Lhr6RHdPIhjyOoftseOAxxvQ
-         7jSrEo9+coZPf83mUDaFzMQAhlQfIUnAxRC67YFDiexjBFe9we5hTdknrlH8N0pWl2z6
-         a/CA==
-X-Forwarded-Encrypted: i=1; AJvYcCUuG+cn22q+5yX64yBdpIPP9oRTnWB8qzBw55Wz4tGOEYONcYTaZqHwejuGvSSfXKGfBQR8V7nj9AZ22k3H@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy8NtGrhSVDO5jVIbV6YWjTSZO7UKinHERKTYJS+i5q5KQAex8i
-	M16+Ndc12T6G1rI1e/+JtdECMBT/qZv0sV/rTqOTsZPQJnjRI8wMQKP47l6cC3o=
-X-Google-Smtp-Source: AGHT+IHqyWCnz9PxeWHFvHwzUWmLNPQbCOVNeC8Xy/vaiXFFXbcvmZZ7cUBpzlpnQcRKUtVF/gMlcg==
-X-Received: by 2002:a05:6512:304e:b0:53b:1f90:576f with SMTP id 2adb3069b0e04-53b348fadbdmr11024344e87.22.1730401020413;
-        Thu, 31 Oct 2024 11:57:00 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1730401167; x=1731005967;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QgMMTxWGZldXwHbAmueNqIX4cPV4+6ZGXkoMeFqofw0=;
+        b=Q8C+BhZvmSHpih6kYwR4dSOrkykldgMDH6n42Zd8bEmgiXcfDUooC8UoCkhnGoYz6e
+         bdYu9k0ZCIbtvxiXgN5lEef4dEVcAxb4gA+UVBd84uzo+Qd8qWGht3kJTmm8N+EAPQIG
+         cKdrHxU7Wb+W+alep29+XUJR25y1upQI84sC8KzAOa9Harecr61imCLVF0DOrqTtVUrR
+         HAnkA0YFZ+Cl/zr55F1FtrCLXcAo6FkUQt6SZ7091hLgIkXs45fZ09IIqmwG/VENG2l7
+         frkpYHAEEnKBnISeQxveGek4XozoCkZ4M22jibB5zGlaI1Pcr1cMvNwfWblYLI4YN9s2
+         BfLQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXR4RcLpWhGBcqLiZfoLMFse380+cyPCyXkujXfAFKTNdSqJKWunssXN/2JyDBOZjmsKNZW7S5Wt0dFWlud@vger.kernel.org
+X-Gm-Message-State: AOJu0YyZQPbrlN1fjfMDwr21D+teGZHVwlwALPJ6tONqK9GR9Gh62Aa6
+	rRE7iH2d94eza61Z06vInZWqk76PBQsFyGZpZV1oKSXhdcHuUJzY5gX3X/8+2C0=
+X-Google-Smtp-Source: AGHT+IGW9STTQx4r02UXSW1XZr4ikTd/Ykqy7h0AGLPXWxytIkZq4an4HuinOyjghB3c2xYpRcpeZQ==
+X-Received: by 2002:a05:6512:3087:b0:539:fb49:c47d with SMTP id 2adb3069b0e04-53b348b7bfcmr9402266e87.12.1730401166932;
+        Thu, 31 Oct 2024 11:59:26 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53c7bc96141sm298657e87.62.2024.10.31.11.56.57
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53c7bcce473sm293371e87.160.2024.10.31.11.59.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Oct 2024 11:56:58 -0700 (PDT)
-Date: Thu, 31 Oct 2024 20:56:55 +0200
+        Thu, 31 Oct 2024 11:59:25 -0700 (PDT)
+Date: Thu, 31 Oct 2024 20:59:22 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
-Cc: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Sibi Sankar <quic_sibis@quicinc.com>, linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Odelu Kukatla <quic_okukatla@quicinc.com>, Mike Tipton <quic_mdtipton@quicinc.com>
-Subject: Re: [PATCH V2 1/3] dt-bindings: interconnect: Add EPSS L3 compatible
- for SA8775P
-Message-ID: <vljb7wwqaaqgdcm6whf5ymhnh4jbtswyibto4qpqmbgwvshudy@unh3jhbyeac6>
-References: <20241026123058.28258-1-quic_rlaggysh@quicinc.com>
- <20241026123058.28258-2-quic_rlaggysh@quicinc.com>
- <7k2vnjop6xyshquqlbe22gm7o5empeluvsohfmq5ulnaas3keb@yzomhzi4w7vf>
- <2ac4604c-a765-48b1-84b2-8979f18c29a7@quicinc.com>
+To: Qingqing Zhou <quic_qqzhou@quicinc.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org, 
+	krzk+dt@kernel.org, conor+dt@kernel.org, robimarko@gmail.com, will@kernel.org, 
+	robin.murphy@arm.com, joro@8bytes.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, iommu@lists.linux.dev
+Subject: Re: [PATCH v3 3/4] arm64: dts: qcom: qcs615: add the SCM node
+Message-ID: <vuz5mvmi4srbwdopivu543cdndybjy5cswc3zmukztldyv22ql@27les6xz7r74>
+References: <20241025030732.29743-1-quic_qqzhou@quicinc.com>
+ <20241025030732.29743-4-quic_qqzhou@quicinc.com>
+ <flk7n534gfqyivlbl72qco4k5d3c6ravevumjfoh6464pe3qg4@r7ns6zr2i3bv>
+ <645c9887-4df2-4ab2-a048-ba79a97b8d2f@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <2ac4604c-a765-48b1-84b2-8979f18c29a7@quicinc.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <645c9887-4df2-4ab2-a048-ba79a97b8d2f@quicinc.com>
 
-On Wed, Oct 30, 2024 at 12:23:57PM +0530, Raviteja Laggyshetty wrote:
+On Wed, Oct 30, 2024 at 04:42:19PM +0800, Qingqing Zhou wrote:
 > 
 > 
-> On 10/26/2024 8:15 PM, Dmitry Baryshkov wrote:
-> > On Sat, Oct 26, 2024 at 12:30:56PM +0000, Raviteja Laggyshetty wrote:
-> >> Add Epoch Subsystem (EPSS) L3 interconnect provider binding on
-> >> SA8775P SoCs.
+> 在 10/25/2024 2:02 PM, Dmitry Baryshkov 写道:
+> > On Fri, Oct 25, 2024 at 08:37:31AM +0530, Qingqing Zhou wrote:
+> >> Add the SCM node for QCS615 platform. It is an interface to
+> >> communicate to the secure firmware.
 > >>
-> >> Signed-off-by: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
+> >> Signed-off-by: Qingqing Zhou <quic_qqzhou@quicinc.com>
 > >> ---
-> >>  .../devicetree/bindings/interconnect/qcom,osm-l3.yaml         | 4 ++++
-> >>  1 file changed, 4 insertions(+)
+> >>  arch/arm64/boot/dts/qcom/qcs615.dtsi | 7 +++++++
+> >>  1 file changed, 7 insertions(+)
 > >>
-> >> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml b/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
-> >> index 21dae0b92819..042ca44c32ec 100644
-> >> --- a/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
-> >> +++ b/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
-> >> @@ -34,6 +34,10 @@ properties:
-> >>                - qcom,sm8250-epss-l3
-> >>                - qcom,sm8350-epss-l3
-> >>            - const: qcom,epss-l3
-> >> +      - items:
-> >> +          - enum:
-> >> +              - qcom,sa8775p-epss-l3
-> >> +          - const: qcom,epss-l3-perf
-> > 
-> > Why is it -perf? What's so different about it?
-> 
-> The EPSS instance in SA8775P uses PERF_STATE register instead of REG_L3_VOTE to scale L3 clocks.
-> So adding new generic compatible "qcom,epss-l3-perf" for PERF_STATE register based l3 scaling.
-
-Neither sm8250 nor sc7280 use this compatible, while they also use
-PERF_STATE register.
-
-> 
-> 
-> > 
+> >> diff --git a/arch/arm64/boot/dts/qcom/qcs615.dtsi b/arch/arm64/boot/dts/qcom/qcs615.dtsi
+> >> index ac4c4c751da1..027c5125f36b 100644
+> >> --- a/arch/arm64/boot/dts/qcom/qcs615.dtsi
+> >> +++ b/arch/arm64/boot/dts/qcom/qcs615.dtsi
+> >> @@ -278,6 +278,13 @@
+> >>  		reg = <0 0x80000000 0 0>;
+> >>  	};
 > >>  
-> >>    reg:
-> >>      maxItems: 1
+> >> +	firmware {
+> >> +		scm {
+> >> +			compatible = "qcom,scm-qcs615", "qcom,scm";
+> >> +			qcom,dload-mode = <&tcsr 0x13000>;
+> > 
+> > No CRYPTO clock?
+> NO, response from Qualcomm clock team is "the current QCS615 RPMH code does not have the clock support for CE clock", so we don't configure clocks here.
+
+Is this going to change in future?
+
+> > 
+> >> +		};
+> >> +	};
+> >> +
+> >>  	camnoc_virt: interconnect-0 {
+> >>  		compatible = "qcom,qcs615-camnoc-virt";
+> >>  		#interconnect-cells = <2>;
 > >> -- 
-> >> 2.39.2
+> >> 2.17.1
 > >>
 > > 
 > 
