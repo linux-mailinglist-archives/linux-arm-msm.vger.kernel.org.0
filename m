@@ -1,187 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-36752-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36753-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A678E9B930A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 15:23:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7C62A9B9312
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 15:24:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C9A721C204E8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 14:22:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AE96D1C20C97
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 14:24:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2064528FC;
-	Fri,  1 Nov 2024 14:22:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3493F1A0708;
+	Fri,  1 Nov 2024 14:24:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="mSs2a7/b"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bDT1OGHA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D71371A2545
-	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Nov 2024 14:22:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F7E119CC29
+	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Nov 2024 14:24:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730470964; cv=none; b=INutNlk1ni4EfAdVfCky7eyUsAg1vLKDvK0+7OhptI1yITN7mU+WlpzP9GE+FtW+1Tfr1c2RrCScaIj7SjaByT6bdtg4ML8NAwFH4xuXWpzFlIs9GrKwlwYQksc9Pd984OllxrzJ71UKL5SrgcvHAMPGzMDL+/kFiylh0zViy/s=
+	t=1730471057; cv=none; b=XJ8CnANhvnq42xd4PHAKUAZtdtmkFs2brU7+8IpL0+I3ovWY3ePULgAEnlKolXLvHj52SHvu3PMLA4p0nU2tusgqBx3Fc1vekDkIQg7TLGhEV5aQrq8BGHAL+2QFIXzcP6XiEl+UUc1gDZbB3NAn1MnIZrDc8bhWlRWAlsVoPYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730470964; c=relaxed/simple;
-	bh=eaoYM3+CQf0qMzz9k7+znlcR8JA5fJSdnCEIFmJglng=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=KGGTgHlQG0uawEUu7/RDy0K8NXCj5s76AYakGk1d9nXBmPzQcU+km1m5TvINoNN+xQiDIzcNGrIGLBOxCrnRgQU0EGCgSP2/xsL7cFCveJ3txMoUSa5tY0GT9n9AMyjRkF/6aKFMRZj3fycFEjw/EUOdBfDqyNAca4kY5be2v5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=mSs2a7/b; arc=none smtp.client-ip=209.85.208.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2fb388e64b0so20463141fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Nov 2024 07:22:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1730470960; x=1731075760; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3NkzkjFi+fXP94uSTTPmiY1l/XjdYqeKRey3P/qytSM=;
-        b=mSs2a7/bfjbqtCSa68hEl/jz5zQnFEh/dt1n+TQbDxWg+amTxuL1Q0mnP0CXCOPjQa
-         BQo/rMDF67nqjLxZOfV7U2fRk2spcVM3o2c+A+zRZP+3VNcUOdbNzVLsCdfeP+xZscki
-         8OruUlC0rs/jjriwJf3JVvrnoCXdEGQTUeYQuyLPsqwtSU3wKcQ36CmO02q89xagBIUF
-         1ukBPMMxsfO+arT/0ejYXPo5wa8yEXPNe20Y8tWpCeSaCMJuT7KY+wLIiesH7Bja+1to
-         e1ilL9bjAIPTp6wasxSpxbm7i1q4fPQ8z/lcjFJb7AcZd0fpDoC/gxCyTiQI2oHnTSyI
-         fYbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730470960; x=1731075760;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3NkzkjFi+fXP94uSTTPmiY1l/XjdYqeKRey3P/qytSM=;
-        b=RSNAlWGafRxx/8WLABC7J6888Np0SOjXTSgGRYQFI/+QtsJIc991x9W3Thykuy/H7N
-         2n1nCrqI5NyiX1s3MxWTBSPPyZbQvfgJJldbbc5XYz9LLA/QubjK4dvHF8th5RdZ9TN0
-         bp1tJ5EFFt6j77diUcD5x5hHOw4LajBNTCdzSJy8UlJms7D7tIqMDtGY+FVHmGAvovam
-         wWBln/daiWr9yPkKL0w6d8iE+eTpQSiaxHavLmAX+eHMAJ/Iw71JzslWfq7S50Uxd3Fl
-         NFuHTLUMi8+xsEy4NZpXXH3UT/MxhPehBlcKY4JX6kM5Et68Xmf/pk6N1YakQOgNGgPG
-         jTbA==
-X-Gm-Message-State: AOJu0YzIyI1pX5k5pGDkgFQmOHKZmQvJyCRtn+dmfBEMND8GDm9DIi9Q
-	N8LlZMaXkhXu2iq4TSKv5kfKgFLMvCF0d511rVk4apgSjDRDePlFrnSTsa/l8CdmcYQ1N7gA0Ye
-	UXTlKUzLoTtASwl2XL+Ct5JDrufERrRvEbgnCnA==
-X-Google-Smtp-Source: AGHT+IFlDvjJIvDi2HZUP2QxWHPvwa8yzlrKeA5Te1yyulTITJs/lklicGzd4spG4MJlVOtyOjGQ7leC0jF/L+Hoijg=
-X-Received: by 2002:a05:651c:12c3:b0:2f9:c337:aca9 with SMTP id
- 38308e7fff4ca-2fed6de9eb3mr30677851fa.44.1730470960066; Fri, 01 Nov 2024
- 07:22:40 -0700 (PDT)
+	s=arc-20240116; t=1730471057; c=relaxed/simple;
+	bh=9eJSBsDX1KEPOrBzjZskYTFJm1CTJz8fA/XLt1OpIv8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=XDDTQK6HSjdSv6P8R+E+Ea1RWOBODgxXFPCS1+Q3/34kAL+feo2plsdmRmjKhG+dFbkQCTwgAKySnc2TjgbC/a4mu8j14dpW+BKiOcxj8TRcmMzp2ScaG4oOchXocmtaPoAXme821eePOh+KvaW1Yjf4wdcbepbA6z+l3bgMju0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bDT1OGHA; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05869C4CECD;
+	Fri,  1 Nov 2024 14:24:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1730471056;
+	bh=9eJSBsDX1KEPOrBzjZskYTFJm1CTJz8fA/XLt1OpIv8=;
+	h=From:To:Cc:Subject:Date:From;
+	b=bDT1OGHAuCUOX83geBDrrex/2Wbius8C9uJlBz1UQpqHeZqsUPBIwBpxVqPSHrU9h
+	 AIR5lz2JerpzIgrxCc/kcer0CTjgsK2e73bLndAHIi1YA0tHosN2V/ayjwe7sf5PED
+	 ScN9b1YIZuUx8aQHJa/+tME+rBj1Iq9LqPE/9qSMPfjwaSafGFXVHwhdevWU/do0Hl
+	 E0A6JMTZok+dpFXkOIVpS5HazoP+ipRD/WJsgR6ZV1SSYeslu+ZaA4zBULkdsO8M1U
+	 koGS/Eg3/8tdGrAtGs2U3tsUwJh6/bgBO57BfFwvc/Uotui33XyKvqk4YOtlIUqhxu
+	 y/ZbpgMIoqVgg==
+From: Bjorn Andersson <andersson@kernel.org>
+To: arm@kernel.org,
+	soc@kernel.org
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	Arnd Bergmann <arnd@arndb.de>,
+	Olof Johansson <olof@lixom.net>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Fabien Parent <fabien.parent@linaro.org>
+Subject: [GIT PULL] Qualcomm Arm64 DeviceTree fix for v6.12
+Date: Fri,  1 Nov 2024 09:24:13 -0500
+Message-ID: <20241101142414.737828-1-andersson@kernel.org>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241018-sc8280xp-pwrseq-v6-0-8da8310d9564@linaro.org>
-In-Reply-To: <20241018-sc8280xp-pwrseq-v6-0-8da8310d9564@linaro.org>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Fri, 1 Nov 2024 15:22:28 +0100
-Message-ID: <CAMRc=Md=ChXtdAY5_ZGtWQCk06mvtA2pMM2DF03-pb2StvHR7g@mail.gmail.com>
-Subject: Re: [PATCH v6 0/6] arm64: dts: qcom: enable Bluetooth and WLAN on
- sc8280xp and sm8450 boards
-To: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bartosz Golaszewski <brgl@bgdev.pl>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Johan Hovold <johan+linaro@kernel.org>, 
-	Kalle Valo <kvalo@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Abel Vesa <abel.vesa@linaro.org>, Manivannan Sadhasivam <mani@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-pm@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Steev Klimaszewski <steev@kali.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Fri, Oct 18, 2024 at 2:49=E2=80=AFPM Bartosz Golaszewski <brgl@bgdev.pl>=
- wrote:
->
-> This series previously only concerned sc8280xp but while enabling
-> WLAN/BT on sm8450 I noticed some more changes will be required so I
-> folded the latter into this series and updated the sc8280xp CRD and X13
-> patches.
->
-> =3D=3D
->
-> This models the WLAN and Bluetooth modules on several boards using the
-> WCN6855 module.
->
-> The wcn6855 (also known as qca6490) is a bit different from the qca6390
-> so modify the power sequencing driver to support it with separate device
-> match data.
->
-> For the sc8280xp-crd and sm8450-hdk we add the PMU, wifi and bluetooth
-> nodes with the correctly modelled wiring between them. For the X13s, we
-> rework existing nodes so that they align with the new DT bindings
-> contract.
->
-> On sm8450-hdk we require some additional toggling of the XO-CLK signal
-> so add that to the driver as well and update the bindings.
->
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> ---
-> Changes in v6:
-> - add the xo-clk signal handling to the pwrseq-qcom-wcn driver
-> - add a patch enabling wifi and bluetooth on sm8450-hdk
-> - add missing supplies to the PMUs on sc8280xp boards
-> - Link to v5: https://lore.kernel.org/all/20241008102545.40003-1-brgl@bgd=
-ev.pl/
->
-> Changes in v5:
-> - put vreg_s10b under the "B" PMIC on the CRD instead of modeling it as a
->   fixed regulator
-> - order pinctrl nodes alphabetically
-> - restore the drive-strength property for all pins to what bootfw sets it=
- to
-> - disable bias on wlan-en pin on the CRD
-> - remove stray newline
-> - add the swctrl pins to the PMU node
->
-> Changes in v4:
-> - bind bluetooth pins on X13s in patch 3/3
-> - only drop the regulator-always-on properties for vreg_s11b and vreg_s12=
-b
->   and fold this change into patch 3/3
->
-> Changes in v3:
-> - move adding the bt-enable-gpios to the PMU on the CRD to patch 2/4
-> - add a patch removing the regulator-always-on property from regulators
->   on X13s that no longer need it
->
-> Changes in v2:
-> - fix commit message in patch 1/3
-> - drop drive-strength from the wlan enable pin function
-> - drop the calibration variant property from the wifi node of the CRD
->
-> ---
-> Bartosz Golaszewski (6):
->       regulator: dt-bindings: qcom,qca6390-pmu: add more properties for w=
-cn6855
->       power: sequencing: qcom-wcn: improve support for wcn6855
->       arm64: dts: qcom: sc8280xp-crd: model the PMU of the on-board wcn68=
-55
->       arm64: dts: qcom: sc8280xp-crd: enable bluetooth
->       arm64: dts: qcom: sc8280xp-x13s: model the PMU of the on-board wcn6=
-855
->       arm64: dts: qcom: sm8450-hdk: model the PMU of the on-board wcn6855
->
->  .../bindings/regulator/qcom,qca6390-pmu.yaml       |  12 ++
->  arch/arm64/boot/dts/qcom/sc8280xp-crd.dts          | 169 +++++++++++++++=
-++++++
->  .../dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts     | 103 +++++++++++--
->  arch/arm64/boot/dts/qcom/sm8450-hdk.dts            | 157 +++++++++++++++=
-++++
->  arch/arm64/boot/dts/qcom/sm8450.dtsi               |   2 +-
->  drivers/power/sequencing/pwrseq-qcom-wcn.c         | 101 +++++++++++-
->  6 files changed, 526 insertions(+), 18 deletions(-)
-> ---
-> base-commit: f2493655d2d3d5c6958ed996b043c821c23ae8d3
-> change-id: 20240807-sc8280xp-pwrseq-7b6859d846c5
->
-> Best regards,
-> --
-> Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->
 
-It's been two weeks. If there are no objections to the DTS changes,
-can the remainder of this series be picked up for v6.13?
+The following changes since commit dfbe93f32c12f5628bd83303e10ba63621c259ae:
 
-Thanks,
-Bartosz
+  arm64: dts: qcom: x1e80100: Fix Adreno SMMU global interrupt (2024-08-14 21:36:45 -0500)
+
+are available in the Git repository at:
+
+  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-fixes-for-6.12
+
+for you to fetch changes up to d92e9ea2f0f918d7b01cbacb838288bffccc8954:
+
+  arm64: dts: qcom: msm8939: revert use of APCS mbox for RPM (2024-09-04 15:36:17 -0500)
+
+----------------------------------------------------------------
+Qualcomm Arm64 DeviceTree fix for v6.12
+
+This reverts the conversion to use the mailbox binding for RPM IPC
+interrupts, as this broke boot on msm8939.
+
+----------------------------------------------------------------
+Fabien Parent (1):
+      arm64: dts: qcom: msm8939: revert use of APCS mbox for RPM
+
+ arch/arm64/boot/dts/qcom/msm8939.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
