@@ -1,128 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-36754-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36755-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8901D9B9342
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 15:32:12 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 25D649B9385
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 15:44:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3CB9C1F22E9F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 14:32:12 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DE357283058
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 14:44:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EFC74156F4C;
-	Fri,  1 Nov 2024 14:32:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD6981A7274;
+	Fri,  1 Nov 2024 14:44:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HgIZvRn8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S5Gg10zn"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAE0149620
-	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Nov 2024 14:32:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ACA41A7271;
+	Fri,  1 Nov 2024 14:44:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730471528; cv=none; b=pnJ2xbPiPMyKwZKSHPgICiHxYmeP5O13QXcpugjkfb/skXeWqxmehYQ3H/UFVKeR9/pehLnGIzmfyIYFcooEq+spVfoH5QNQ1/APPpjUpc9y0oWhEprzIZYeE8cDt3vwBX8ZlYyq+gzth3y5zyW1FQYgbWSKXChza5XIClBwoMM=
+	t=1730472240; cv=none; b=NhSm5bdxKm+BSD3sgRS2masxfP/azslVXYSmRi2IJupz/x1ZDyyyDp2Ramz3zNWTO6xIEoEXyN96oRco+QzurRdbGWarJaB6itrLJW0SAK6lXZ+iTpe92wk1qysNmAEkN2ZXXzKoxzcZQGY/07/YnsDhW+fzPZ2uIi5qUY7bGhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730471528; c=relaxed/simple;
-	bh=QkWKnBsAHTldTBGGifsX0KtIWA5PIk3Dk4/LyfzY414=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Lz+rUr3riWDM+afcPUrDqcgBkwFMtSgIl9qWdfXjOJEDv6thzuKVEtmSYDgV7YR7taVLxykx56+QfdYQaMyBNLK+AJCLUCv9ekJ1znBLbcVQR8KRZ2lu0xSmk5vLS+XBOO8rfTP4hL2Ke0aapXqaoE88jdreCzeFxuvnk0nmTpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HgIZvRn8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 870BAC4CECD;
-	Fri,  1 Nov 2024 14:32:07 +0000 (UTC)
+	s=arc-20240116; t=1730472240; c=relaxed/simple;
+	bh=BfZ54nZXYSx9DrFFTqsNvZ3Z94SLwnCC+hmY5NYFoEQ=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=T6vf541ZBSUq/RtXG9Lc/3XxN4SBgm8s0Msacg2ScabViBkIcFiYLE59xie4hKjFpWrWhHPw8UJKEDub/AiBh3G20yP1Fai2kvNdqeEF7ollwFjYpLAky54EbYoKsH2jUuHRU8bA86dkVWF3+hIaQVr09/oXHz6orTZdY1J/mGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S5Gg10zn; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2364CC4CECD;
+	Fri,  1 Nov 2024 14:44:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730471528;
-	bh=QkWKnBsAHTldTBGGifsX0KtIWA5PIk3Dk4/LyfzY414=;
-	h=From:To:Cc:Subject:Date:From;
-	b=HgIZvRn8R8dJPQqs23jKUno8Euzdg3MJUjF2PThFtuAyTIIReX4VRZ2L+gudQNc6b
-	 PMJiO4ZKelQSI3JxbrvLmh6Ulp1qozlxu+jPXkgiOZxQUVE2DvkseVQxFh1FI/qUwL
-	 0aKxpeyZ46Rbqvui9qquQe0uj8YHdERaLiAuLjQb9MQ3h4HQQUGR1scy/eUcv/MraO
-	 lX695GGOfYco7FF/V5Z2JE2KfCHz7buYFDZOA+GuBkZt0EYAaEpwecdvCb72Ri+uiZ
-	 F7nPsuSHfZU4Jzmf0A35aQpKoHK0SbWHHRx6c8q9HqE5TjhUQegj7/c8yIDqEJlF0D
-	 6i+5vGT1Yn7Pw==
-From: Bjorn Andersson <andersson@kernel.org>
-To: arm@kernel.org,
-	soc@kernel.org
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	Arnd Bergmann <arnd@arndb.de>,
-	Olof Johansson <olof@lixom.net>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Maya Matuszczyk <maccraft123mc@gmail.com>
-Subject: [GIT PULL] More Qualcomm Arm64 DeviceTree fixes for v6.12
-Date: Fri,  1 Nov 2024 09:32:05 -0500
-Message-ID: <20241101143206.738617-1-andersson@kernel.org>
-X-Mailer: git-send-email 2.45.2
+	s=k20201202; t=1730472240;
+	bh=BfZ54nZXYSx9DrFFTqsNvZ3Z94SLwnCC+hmY5NYFoEQ=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=S5Gg10znQkc4t6BRhjJm5KMFVD02TVC7qI8GcJcHtkPvK3f/D/sWnZkwMJPycfn4E
+	 mivURJeiQQWQnJ+I9xHVBqxl38sMNgaxf1Np1C4m20yhXz7cMqZ5GjzMDPHXpgSfMj
+	 X4Lgqoz4utwswUS7m/3vJMcsfOabxY2bIOmLjdkCdxrl5kjpVFMyIasqLzVIpa4Cu5
+	 yIFSHS0xsZmMcB1DROaQAsrvLcZbdSGdHLnnvLyXeH+WGkXFHU37lQqPLRysOs2h0A
+	 7J8fT1RrqvYOmT0Napogb/WtBi6nOezeu+mde8RE3T3HauLCbQGV8MgDSGeDRD9tWJ
+	 fgVw+pwbWBrug==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <maz@kernel.org>)
+	id 1t6ssX-008thx-Uj;
+	Fri, 01 Nov 2024 14:43:58 +0000
+Date: Fri, 01 Nov 2024 14:43:57 +0000
+Message-ID: <86o72z10b6.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Johan Hovold <johan@kernel.org>
+Cc: Sibi Sankar <quic_sibis@quicinc.com>,
+	sudeep.holla@arm.com,
+	cristian.marussi@arm.com,
+	andersson@kernel.org,
+	konrad.dybcio@linaro.org,
+	robh+dt@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org,
+	dmitry.baryshkov@linaro.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	quic_rgottimu@quicinc.com,
+	quic_kshivnan@quicinc.com,
+	conor+dt@kernel.org,
+	quic_nkela@quicinc.com,
+	quic_psodagud@quicinc.com,
+	abel.vesa@linaro.org
+Subject: Re: [PATCH V7 0/2] qcom: x1e80100: Enable CPUFreq
+In-Reply-To: <ZyTjiiGc2ApoID9Y@hovoldconsulting.com>
+References: <20241030130840.2890904-1-quic_sibis@quicinc.com>
+	<ZyTQ9QD1tEkhQ9eu@hovoldconsulting.com>
+	<86plnf11yf.wl-maz@kernel.org>
+	<ZyTjiiGc2ApoID9Y@hovoldconsulting.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/29.4
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: johan@kernel.org, quic_sibis@quicinc.com, sudeep.holla@arm.com, cristian.marussi@arm.com, andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, dmitry.baryshkov@linaro.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, quic_rgottimu@quicinc.com, quic_kshivnan@quicinc.com, conor+dt@kernel.org, quic_nkela@quicinc.com, quic_psodagud@quicinc.com, abel.vesa@linaro.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
+On Fri, 01 Nov 2024 14:19:54 +0000,
+Johan Hovold <johan@kernel.org> wrote:
+> 
+> On Fri, Nov 01, 2024 at 02:08:24PM +0000, Marc Zyngier wrote:
+> 
+> > I'm seeing similar things indeed. Randomly grepping in cpufreq/policy*
+> > results in hard resets, although I don't get much on the serial
+> > console when that happens. Interestingly, I also see some errors in
+> > dmesg at boot time:
+> > 
+> > maz@semi-fraudulent:~$ dmesg| grep -i scmi
+> > [    0.966175] scmi_core: SCMI protocol bus registered
+> > [    7.929710] arm-scmi arm-scmi.2.auto: Using scmi_mailbox_transport
+> > [    7.939059] arm-scmi arm-scmi.2.auto: SCMI max-rx-timeout: 30ms
+> > [    7.945567] arm-scmi arm-scmi.2.auto: SCMI RAW Mode initialized for instance 0
+> > [    7.958348] arm-scmi arm-scmi.2.auto: SCMI RAW Mode COEX enabled !
+> > [    7.978303] arm-scmi arm-scmi.2.auto: SCMI Notifications - Core Enabled.
+> > [    7.985351] arm-scmi arm-scmi.2.auto: SCMI Protocol v2.0 'Qualcomm:' Firmware version 0x20000
+> > [    8.033774] arm-scmi arm-scmi.2.auto: Failed to add opps_by_lvl at 3801600 for NCC - ret:-16
+> > [    8.033902] arm-scmi arm-scmi.2.auto: Failed to add opps_by_lvl at 3801600 for NCC - ret:-16
+> > [    8.036528] arm-scmi arm-scmi.2.auto: Failed to add opps_by_lvl at 3801600 for NCC - ret:-16
+> > [    8.036744] arm-scmi arm-scmi.2.auto: Failed to add opps_by_lvl at 3801600 for NCC - ret:-16
+> > [    8.171232] scmi-perf-domain scmi_dev.4: Initialized 3 performance domains
+> > 
+> > All these "Failed" are a bit worrying. Happy to put any theory to the
+> > test.
+> 
+> Yes, those warnings indeed look troubling. Fortunately they appear to be
+> mostly benign and only indicate that the firmware is reporting duplicate
+> OPPs, which the kernel is now ignoring without any other side effects
+> than the warnings.
 
-The following changes since commit 9852d85ec9d492ebef56dc5f229416c925758edc:
+Right. Not something that would explain the hard reset behaviour then.
 
-  Linux 6.12-rc1 (2024-09-29 15:06:19 -0700)
+> 
+> The side-effects and these remaining warnings are addressed by this
+> series:
+> 
+> 	https://lore.kernel.org/all/20241030125512.2884761-1-quic_sibis@quicinc.com/
+> 
+> but I think we should try to make the warnings a bit more informative
+> (and less scary) by printing something along the lines of:
+> 
+> 	arm-scmi arm-scmi.0.auto: [Firmware Bug]: Ignoring duplicate OPP 3417600 for NCC
+> 
+> instead.
 
-are available in the Git repository at:
+Indeed. Seeing [Firmware Bug] has a comforting feeling of
+familiarity... :)
 
-  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-fixes-for-6.12-2
+I wonder whether the same sort of reset happen on more "commercial"
+systems (such as some of the laptops). You expect that people look at
+the cpufreq stuff closely, and don't see things exploding like we are.
 
-for you to fetch changes up to 54376fe116ef69c9e58794589c044abb2555169e:
+	M.
 
-  arm64: dts: qcom: x1e80100: fix PCIe5 interconnect (2024-10-24 12:36:36 -0500)
-
-----------------------------------------------------------------
-More Qualcomm Arm64 DeviceTree fixes for v6.12
-
-Bring a range of PCIe fixes across the X Elite platform, as well as
-marking the NVMe power supply boot-on to avoid glitching the power
-supply during boot.
-
-The X Elite CRD audio configuration sees a spelling mistake corrected.
-
-On SM8450 the PCIe 1 PIPE clock definition is corrected, to fix a
-regression where this isn't able to acquire it's clocks.
-
-----------------------------------------------------------------
-Abel Vesa (2):
-      arm64: dts: qcom: x1e80100: Add Broadcast_AND region in LLCC block
-      arm64: dts: qcom: x1e80100: Fix PCIe 6a lanes description
-
-Dmitry Baryshkov (1):
-      arm64: dts: qcom: sm8450 fix PIPE clock specification for pcie1
-
-Johan Hovold (10):
-      arm64: dts: qcom: x1e80100: fix PCIe4 and PCIe6a PHY clocks
-      arm64: dts: qcom: x1e80100: fix PCIe5 PHY clocks
-      arm64: dts: qcom: x1e78100-t14s: fix nvme regulator boot glitch
-      arm64: dts: qcom: x1e80100-crd: fix nvme regulator boot glitch
-      arm64: dts: qcom: x1e80100-vivobook-s15: fix nvme regulator boot glitch
-      arm64: dts: qcom: x1e80100-yoga-slim7x: fix nvme regulator boot glitch
-      arm64: dts: qcom: x1e80100-microsoft-romulus: fix nvme regulator boot glitch
-      arm64: dts: qcom: x1e80100-qcp: fix nvme regulator boot glitch
-      arm64: dts: qcom: x1e80100: fix PCIe4 interconnect
-      arm64: dts: qcom: x1e80100: fix PCIe5 interconnect
-
-Konrad Dybcio (1):
-      arm64: dts: qcom: x1e80100: Fix up BAR spaces
-
-Maya Matuszczyk (1):
-      arm64: dts: qcom: x1e80100-crd Rename "Twitter" to "Tweeter"
-
- arch/arm64/boot/dts/qcom/sm8450.dtsi               |  2 +-
- .../dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts     |  2 +
- .../boot/dts/qcom/x1e80100-asus-vivobook-s15.dts   |  2 +
- arch/arm64/boot/dts/qcom/x1e80100-crd.dts          | 10 ++--
- .../boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts  |  2 +
- .../boot/dts/qcom/x1e80100-microsoft-romulus.dtsi  |  2 +
- arch/arm64/boot/dts/qcom/x1e80100-qcp.dts          |  2 +
- arch/arm64/boot/dts/qcom/x1e80100.dtsi             | 53 +++++++++++++---------
- 8 files changed, 49 insertions(+), 26 deletions(-)
+-- 
+Without deviation from the norm, progress is not possible.
 
