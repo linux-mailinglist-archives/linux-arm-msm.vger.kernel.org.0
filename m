@@ -1,72 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-36651-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36652-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2B4F89B8851
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 02:23:14 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3602F9B8857
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 02:23:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CA40C1F229DE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 01:23:13 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 89CF5B2218A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 01:23:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6231A8248C;
-	Fri,  1 Nov 2024 01:23:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CCBBA1369BC;
+	Fri,  1 Nov 2024 01:23:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Mys92O3J"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PZXFQY+n"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 539564C3D0
-	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Nov 2024 01:22:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBCD13CF73
+	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Nov 2024 01:22:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730424180; cv=none; b=tGc8Tp+QaK/M93Mc71ZPxEZIK7/t3PB20weSIqG4JcjROw+TKSudg8JBgAQgtyL3etCgp7O4Q8K+l8WReogPe3aEmrJbrOHdFiavjtWM+NeOy56O6cYJNbDmAU8zzENT22e7lr/QsMjFF9d+vkyScxfDH4lHFVFXJbgFPgU6IDc=
+	t=1730424182; cv=none; b=UkRp8Oeh6WsCtgf4lalzrVP1Ni8jXlRev1stghBWECow+4GVzXw/to7Xg8lnJw2nFBXnhjAyKnKsSVuyzmgEX4GBRzGRYX6Cjg4EkAs20TE2j2A8nKrJGAR+BNvytqTW9qXQyxfPKv3Sfjd58wtt7B2PPlMO0l4tBhO+YoxOPeg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730424180; c=relaxed/simple;
-	bh=VSz6u0OmMTsrtnLmZvPYijuoFZ3V2heCXlt5BgEegSg=;
+	s=arc-20240116; t=1730424182; c=relaxed/simple;
+	bh=elGVOqEqBXSN04+uVRWcq0gO8Yb65PX1oVNXx6Cxivo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rXvZZD/e62xnY9efQxU8qE7hjznOdDDdnatGVyblALklnRsLEiDBsyGOcTX468p9iSMqoTuFWnHR/rcYpPzkyKdsq9WOJURSPEd3Z9vG5ggRelytb7qCYCBU/YAIHI0ZYig5LDVORy0ZVcp/LqYqX5r7NHGauNLtl5u8SBYpQu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Mys92O3J; arc=none smtp.client-ip=209.85.128.52
+	 MIME-Version; b=adHNrd1To6dA8CyziwHOW4AOybofGosNN7Hfs8dTmK8wWvNDst927JB7zFI81F22pGAQkQO/kn/VPMBYwLNbsIXmIlDeO7hXRZaMBY4CNw8F+XAO0+oGt293kSTO+pJst+Bp4dyzV5E44x7ETkQfHPPlHLgLJbj44UprbbPYiPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PZXFQY+n; arc=none smtp.client-ip=209.85.221.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4315e62afe0so13271275e9.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Oct 2024 18:22:53 -0700 (PDT)
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-37d4fd00574so984298f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Oct 2024 18:22:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1730424172; x=1731028972; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1730424173; x=1731028973; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2CwB4Qts6MAXahbsrdAc/r1Nx/s61A4u9eeqlNVrd8M=;
-        b=Mys92O3J0aXg8B3v49tWuW178+7jHV2LOwX470/ffWPkgRRqfj6Qt0MckUuGrfdRgZ
-         Q8ihdtOJrNbnflfkqGB+fUhnNbpbiCiJAJvD8bUuGY4YOwFwc9zBlaa0V0Z4OTphdg2G
-         An/BSTgvsgLce4k5d0GdyoGJ6MBOL9A5zBvvzx8Iq30WbmkOyYDH1XLRbllORKny5uBp
-         1hRo5XXn6L2yAT1pE+lJHeRHQcwfnqp58ku5WzrjFJlnysRFSDCPD+j0RWTjL3lJvQEZ
-         3vxLe0+E05qRDyu3gs3sfQV+TchhMud4PXIb7nFEzevvxS/Iry6/Dp/mnjSRIkOIP1ut
-         0lHw==
+        bh=gWMomMxtacvJ4sOZNR5yx4C6TBNkoG2Q0q3PqLoenP4=;
+        b=PZXFQY+nBDeQVFuroHUArKR+Yne8JKZsQxlZQpAyYTDJDD++w/N+rFYPVtiwia8z4Y
+         r+cT2oo4hoG0otY2IxyUkmq0AQZug/FSlNcrp6yhBjZ0ipOxwMG776w8B41Jafae2mLu
+         Ht1ySGBZ4WJHshnVHGapHuSAFqAGfiY/gqg7c4n4raRw76lcNKasSDyrBl2nnrXELT3Q
+         3/7pDaGcXDnvlTOlRwXtpUFFdLtFuxZq//PztKgo7BMpbx95DHq9L9ON3C7uNbYzU6dS
+         KfYSsnAVrdBlNv3jT4BBOH10Vbl/oryg8etZthbMKWyjQiphkBYuCl80LoJIABXJkONG
+         S/3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730424172; x=1731028972;
+        d=1e100.net; s=20230601; t=1730424173; x=1731028973;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=2CwB4Qts6MAXahbsrdAc/r1Nx/s61A4u9eeqlNVrd8M=;
-        b=hSBzBZCJyH81feTZKGPWuo8WsctzZqbLLfZvR8cNBoDywfmcqOPDz1GaoDSGRtQ4U2
-         eCw9GTMhS7dM1oBQw6XEEP94EGQ5+OoYDkRIi8v+gsFDaEH3r4iVtxU3nmCHPjI90Jnv
-         PgfGYBibQclordFt+MB03SgJ7urhxjHZ52wpgIpKybiKbXLDZZeLg+925SOM+KJ8pdSg
-         IOUYgJyFZv4Iw9EiFTL8rhby90WPKR/UGlaIoDJC1Y2RcybNw13UKl/5vQAB1uPIC0j9
-         D+nPHquEOog4cT1EacGpLuhLWG9/F5a3poYMOnjepmTlOqL44cQ+GKstZpXBHWCHdl6m
-         c81A==
-X-Forwarded-Encrypted: i=1; AJvYcCXg3rvDjc/xYRDsDAUYl/I9bI0WiIXqyRBrb/VGGvevPlTd/dkQZJ1/pPfQ/AsgWmoWZJJVeozc/HVU+WLf@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy4qnAS626DkK+EZc0J8fcWcvfSELue3LBN2zDMi9Xdnq5+f+I0
-	qIj2tudsMKN9p2DLub5ZinnCOMhyEiBBXScYdOok5gDA/TXvwMmLj2HwH9aa9YI=
-X-Google-Smtp-Source: AGHT+IEtemOwpedOmfVlJL21AxprSY5tnd5BjFNat2smNw6pLx0lFewLg+wqDtkiiHAaI9fxvvtOeg==
-X-Received: by 2002:a05:600c:4f4a:b0:42c:b9c8:2bb0 with SMTP id 5b1f17b1804b1-4319ac70637mr175039615e9.4.1730424171652;
-        Thu, 31 Oct 2024 18:22:51 -0700 (PDT)
+        bh=gWMomMxtacvJ4sOZNR5yx4C6TBNkoG2Q0q3PqLoenP4=;
+        b=cTe7go+0ejLOoNTZJvXsIBT5+ksXZ5JzaGgpdtpjNZT3CmtAgZFZt6pnVEC57LLHJm
+         qy7+c+3UPU4V+PZenHDNF7Wy69qINyG6USNiwPuuPP1f4yjj1dNHna7SWZmVAA36MM5m
+         z0wChp4hW4GZN3pFgSYsn4HPxhUBvJcVmRdut96qJrXufkQDiW+CKEXrZ6mK8qZ3BueT
+         bMPGuvvnNmpjUAOawmMBDFyhhqHjwht9hNFac3NQeh3tuxrBn67hsrF/W1mPON9zYJts
+         7cxKfgBDb6XChHrGlK4QclzYaHKZFAOpxqBWhI4uyHB8RFSyfkoYIhy4qW6vu8TCAd5T
+         dhqQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUn+oK6uTqmjngB2tMF0b/iJeDdqVml9rdDCiFFEw1I8ewJ7khGmR59kthukn5Ddh/QAz8HprJ5fTeusJv0@vger.kernel.org
+X-Gm-Message-State: AOJu0Yydo8hPN81nmyYboV8XT6UDc1OyLDJxX5Fwznrn+UBzUnKWiiDi
+	vkHSDE64RX1rlwonrwyd13Ac8UDp4zoncDgtdZifmp1ikwIPWsRe7G167eXYFWU=
+X-Google-Smtp-Source: AGHT+IFuL9Q07yTcsOaTlM9yCAi2Sq10Vfal5nmkc6A5s4iCIddgdM5+DCgpbmtvZDvAH4IhvlctSw==
+X-Received: by 2002:a5d:47c5:0:b0:37c:cc7c:761c with SMTP id ffacd0b85a97d-381c130731fmr3735779f8f.3.1730424173123;
+        Thu, 31 Oct 2024 18:22:53 -0700 (PDT)
 Received: from localhost.localdomain ([2.222.231.247])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381c116ad3fsm3501622f8f.95.2024.10.31.18.22.49
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381c116ad3fsm3501622f8f.95.2024.10.31.18.22.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Oct 2024 18:22:50 -0700 (PDT)
+        Thu, 31 Oct 2024 18:22:52 -0700 (PDT)
 From: Alexey Klimov <alexey.klimov@linaro.org>
 To: konradybcio@kernel.org,
 	konrad.dybcio@oss.qualcomm.com,
@@ -82,9 +82,9 @@ Cc: robh@kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	dmitry.baryshkov@linaro.org
-Subject: [PATCH v2 1/2] dt-bindings: clock: Add Qualcomm SM6115 LPASS clock controller
-Date: Fri,  1 Nov 2024 01:22:46 +0000
-Message-ID: <20241101012247.216825-2-alexey.klimov@linaro.org>
+Subject: [PATCH v2 2/2] clk: qcom: Add SM6115 LPASSCC
+Date: Fri,  1 Nov 2024 01:22:47 +0000
+Message-ID: <20241101012247.216825-3-alexey.klimov@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241101012247.216825-1-alexey.klimov@linaro.org>
 References: <20241101012247.216825-1-alexey.klimov@linaro.org>
@@ -101,95 +101,145 @@ From: Konrad Dybcio <konrad.dybcio@linaro.org>
 SM6115 (and its derivatives or similar SoCs) has an LPASS clock
 controller block which provides audio-related resets.
 
-Add bindings for it.
+Add the required code to support them.
 
 Cc: Konrad Dybcio <konradybcio@kernel.org>
 Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-[alexey.klimov] slightly changed the commit message
+[alexey.klimov] fixed compilation errors after rebase,
+slightly changed the commit message
 Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
 ---
- .../bindings/clock/qcom,sm6115-lpasscc.yaml   | 46 +++++++++++++++++++
- .../dt-bindings/clock/qcom,sm6115-lpasscc.h   | 15 ++++++
- 2 files changed, 61 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm6115-lpasscc.yaml
- create mode 100644 include/dt-bindings/clock/qcom,sm6115-lpasscc.h
+ drivers/clk/qcom/Kconfig          |  9 ++++
+ drivers/clk/qcom/Makefile         |  1 +
+ drivers/clk/qcom/lpasscc-sm6115.c | 85 +++++++++++++++++++++++++++++++
+ 3 files changed, 95 insertions(+)
+ create mode 100644 drivers/clk/qcom/lpasscc-sm6115.c
 
-diff --git a/Documentation/devicetree/bindings/clock/qcom,sm6115-lpasscc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm6115-lpasscc.yaml
+diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+index 953589e07c59..26021166e329 100644
+--- a/drivers/clk/qcom/Kconfig
++++ b/drivers/clk/qcom/Kconfig
+@@ -1193,6 +1193,15 @@ config SM_GPUCC_8650
+ 	  Say Y if you want to support graphics controller devices and
+ 	  functionality such as 3D graphics.
+ 
++config SM_LPASSCC_6115
++	tristate "SM6115 Low Power Audio Subsystem (LPASS) Clock Controller"
++	depends on ARM64 || COMPILE_TEST
++	select SM_GCC_6115
++	help
++	  Support for the LPASS clock controller on SM6115 devices.
++	  Say Y if you want to toggle LPASS-adjacent resets within
++	  this clock controller to reset the LPASS subsystem.
++
+ config SM_TCSRCC_8550
+ 	tristate "SM8550 TCSR Clock Controller"
+ 	depends on ARM64 || COMPILE_TEST
+diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
+index fac4b9b61e55..784434febd4c 100644
+--- a/drivers/clk/qcom/Makefile
++++ b/drivers/clk/qcom/Makefile
+@@ -150,6 +150,7 @@ obj-$(CONFIG_SM_GPUCC_8350) += gpucc-sm8350.o
+ obj-$(CONFIG_SM_GPUCC_8450) += gpucc-sm8450.o
+ obj-$(CONFIG_SM_GPUCC_8550) += gpucc-sm8550.o
+ obj-$(CONFIG_SM_GPUCC_8650) += gpucc-sm8650.o
++obj-$(CONFIG_SM_LPASSCC_6115) += lpasscc-sm6115.o
+ obj-$(CONFIG_SM_TCSRCC_8550) += tcsrcc-sm8550.o
+ obj-$(CONFIG_SM_TCSRCC_8650) += tcsrcc-sm8650.o
+ obj-$(CONFIG_SM_VIDEOCC_7150) += videocc-sm7150.o
+diff --git a/drivers/clk/qcom/lpasscc-sm6115.c b/drivers/clk/qcom/lpasscc-sm6115.c
 new file mode 100644
-index 000000000000..247b6b0a9f5a
+index 000000000000..8ffdab71b948
 --- /dev/null
-+++ b/Documentation/devicetree/bindings/clock/qcom,sm6115-lpasscc.yaml
-@@ -0,0 +1,46 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/clock/qcom,sm6115-lpasscc.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm LPASS Core & Audio Clock Controller on SM6115
-+
-+maintainers:
-+  - Konrad Dybcio <konrad.dybcio@linaro.org>
-+  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-+
-+description: |
-+  Qualcomm LPASS core and audio clock controllers provide audio-related resets
-+  on SM6115 and its derivatives.
-+
-+  See also::
-+    include/dt-bindings/clock/qcom,sm6115-lpasscc.h
-+
-+properties:
-+  compatible:
-+    enum:
-+      - qcom,sm6115-lpassaudiocc
-+      - qcom,sm6115-lpasscc
-+
-+  reg:
-+    maxItems: 1
-+
-+  '#reset-cells':
-+    const: 1
-+
-+required:
-+  - compatible
-+  - reg
-+  - '#reset-cells'
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    lpass_audiocc: clock-controller@a6a9000 {
-+        compatible = "qcom,sm6115-lpassaudiocc";
-+        reg = <0x0a6a9000 0x1000>;
-+        #reset-cells = <1>;
-+    };
-+...
-diff --git a/include/dt-bindings/clock/qcom,sm6115-lpasscc.h b/include/dt-bindings/clock/qcom,sm6115-lpasscc.h
-new file mode 100644
-index 000000000000..799274517c9a
---- /dev/null
-+++ b/include/dt-bindings/clock/qcom,sm6115-lpasscc.h
-@@ -0,0 +1,15 @@
-+/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
++++ b/drivers/clk/qcom/lpasscc-sm6115.c
+@@ -0,0 +1,85 @@
++// SPDX-License-Identifier: GPL-2.0-only
 +/*
-+ * Copyright (c) 2023, Linaro Ltd.
++ * Copyright (c) 2022, 2023 Linaro Limited
 + */
 +
-+#ifndef _DT_BINDINGS_CLK_QCOM_LPASSCC_SM6115_H
-+#define _DT_BINDINGS_CLK_QCOM_LPASSCC_SM6115_H
++#include <linux/clk-provider.h>
++#include <linux/err.h>
++#include <linux/kernel.h>
++#include <linux/module.h>
++#include <linux/mod_devicetable.h>
++#include <linux/platform_device.h>
++#include <linux/regmap.h>
 +
-+/* LPASS CC */
-+#define LPASS_SWR_TX_CONFIG_CGCR		0
++#include <dt-bindings/clock/qcom,sm6115-lpasscc.h>
 +
-+/* LPASS_AUDIO CC */
-+#define LPASS_AUDIO_SWR_RX_CGCR			0
++#include "common.h"
++#include "reset.h"
 +
-+#endif
++static const struct qcom_reset_map lpass_audiocc_sm6115_resets[] = {
++	[LPASS_AUDIO_SWR_RX_CGCR] =  { .reg = 0x98, .bit = 1, .udelay = 500 },
++};
++
++static struct regmap_config lpass_audiocc_sm6115_regmap_config = {
++	.reg_bits = 32,
++	.reg_stride = 4,
++	.val_bits = 32,
++	.name = "lpass-audio-csr",
++	.max_register = 0x1000,
++};
++
++static const struct qcom_cc_desc lpass_audiocc_sm6115_reset_desc = {
++	.config = &lpass_audiocc_sm6115_regmap_config,
++	.resets = lpass_audiocc_sm6115_resets,
++	.num_resets = ARRAY_SIZE(lpass_audiocc_sm6115_resets),
++};
++
++static const struct qcom_reset_map lpasscc_sm6115_resets[] = {
++	[LPASS_SWR_TX_CONFIG_CGCR] = { .reg = 0x100, .bit = 1, .udelay = 500 },
++};
++
++static struct regmap_config lpasscc_sm6115_regmap_config = {
++	.reg_bits = 32,
++	.reg_stride = 4,
++	.val_bits = 32,
++	.name = "lpass-tcsr",
++	.max_register = 0x1000,
++};
++
++static const struct qcom_cc_desc lpasscc_sm6115_reset_desc = {
++	.config = &lpasscc_sm6115_regmap_config,
++	.resets = lpasscc_sm6115_resets,
++	.num_resets = ARRAY_SIZE(lpasscc_sm6115_resets),
++};
++
++static const struct of_device_id lpasscc_sm6115_match_table[] = {
++	{
++		.compatible = "qcom,sm6115-lpassaudiocc",
++		.data = &lpass_audiocc_sm6115_reset_desc,
++	}, {
++		.compatible = "qcom,sm6115-lpasscc",
++		.data = &lpasscc_sm6115_reset_desc,
++	},
++	{ },
++};
++MODULE_DEVICE_TABLE(of, lpasscc_sm6115_match_table);
++
++static int lpasscc_sm6115_probe(struct platform_device *pdev)
++{
++	const struct qcom_cc_desc *desc = of_device_get_match_data(&pdev->dev);
++
++	return qcom_cc_probe_by_index(pdev, 0, desc);
++}
++
++static struct platform_driver lpasscc_sm6115_driver = {
++	.probe = lpasscc_sm6115_probe,
++	.driver = {
++		.name = "lpasscc-sm6115",
++		.of_match_table = lpasscc_sm6115_match_table,
++	},
++};
++
++module_platform_driver(lpasscc_sm6115_driver);
++
++MODULE_DESCRIPTION("QTI LPASSCC SM6115 Driver");
++MODULE_LICENSE("GPL");
 -- 
 2.45.2
 
