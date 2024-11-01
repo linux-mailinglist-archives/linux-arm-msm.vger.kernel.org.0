@@ -1,301 +1,193 @@
-Return-Path: <linux-arm-msm+bounces-36653-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36655-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B91D39B8886
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 02:33:03 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 520DD9B8997
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 04:09:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 214E71C21A70
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 01:33:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CF5C228310D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 03:09:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 28E5D1A28C;
-	Fri,  1 Nov 2024 01:33:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60FFA13F42A;
+	Fri,  1 Nov 2024 03:09:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="C2/EUBvV"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Y7CPeVHT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4B5627473;
-	Fri,  1 Nov 2024 01:32:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15F254C79;
+	Fri,  1 Nov 2024 03:09:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730424781; cv=none; b=gu81JWi58TtteoylCNkqZWlGkqLb10u8beIdxaL3dIrvQxqHrLj62NSOi9HFcApLFAGVKKQorL5WltDHpHUx13amIdSqn2Jz9LyLD/5j3pMuCecUa519kK8Dx0O/xyZi8b/C1uYN7CaItbUncaE95ioWd+T4KT9lv5tDglVOUGg=
+	t=1730430562; cv=none; b=S58VgQGQF0ShSyKha6ib9bW2gcmq5xE2y44hsaJx4hcR+Wg66njniw0BZUfAqHMAgJ6y5Kzi3srwSdJgrI5ug9nTtgFSRRLRSw3n/PdWWQGZSDR7/YN7jr7EK27fAwVJaLY92EOnHQeIfM8TONHsz1mFV4cS1fc5hJjKSj/yE5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730424781; c=relaxed/simple;
-	bh=E0aXj+6yccqkcviulQjqqSi+OkjivzWg/QX+ShkqelU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=gTyG6CabjQH0MOxkeYBzzoGFGPcu4pfQfnuM7xJ2a5y5p5bioKHKUPcrkeXjh65zN2BRiMmHlqifbYBbOcJ3NKQ9hmPMFQ/bvMtIWVrR85YPc1tvoeOaTAtZ8JST/aqScG+o8b0wbGv5mSpPr+qXUkLDREqv9GL6DDakptu/J8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=C2/EUBvV; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1730430562; c=relaxed/simple;
+	bh=Jt3ci2BG6wCeTi9u1JvKT8sz76i5YQW3mooxIrCeEHM=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=WheI/cxsXtKnvX+qSUO7090AE5/b8e1fZEtx5+auSog1/GxMyyjl3zjTnDPV0oPuE8YFPkkuJ+Nwl+ZhWd50WpnftffJMz+wJuwuG7CSP34g5EWc5SBHxd7hqiWOzlkmFYFbgqPSXYfkXIw4YMxXdKHuY/haARxSqvz95AyD58c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Y7CPeVHT; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49VCk51U003883;
-	Fri, 1 Nov 2024 01:32:42 GMT
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A11h0ZV009582;
+	Fri, 1 Nov 2024 03:09:08 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	PevRws9lWahN3nDSBG5OMAd+WeRoNqqEizhnVsb/dHc=; b=C2/EUBvVqtZ1U91E
-	kJzn2opTY8m9h1Wj0CZmuvq2qEDe78acaSLpVQwIMnzEtJ4t2QBkGzyo93lpEIlo
-	hqhMcVd0Y4p+vq28/ud2wkrcK+n+Nu79lBR8/vzWAP7ZYl0fawONBFwCHRDL9go0
-	hsHOl5NxMv/PyYUKMsAYWJnaWXpGuQMJfftLAL2QYsH8rni19IWureBauVNRGIUf
-	ZzGGV4eq/KLetFkYr1Qa4cRLj3aj/szefDZ5jpzXZgj2TvhhMrrteE7HryUvTPnT
-	QWiUb1Axhl4EZwRPjwPkGey4Kz7huaHMxR2/yyR32uDoaBq+jVazC088ofzP78/7
-	iARvfA==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42kns3n9s5-1
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=1t5Vw4D11RFv2UJphxxylQgWXk9PBbdkbH+
+	Ov4onbvw=; b=Y7CPeVHTJ8VU/qq7T3ePU/e6Jbp+dcnBMNHUhxPL0A8LDGMmYyW
+	aGmmQn9UJbSpONSV0+b3gskI3zgSuTU1APr018oVAJCdwbzFrI/6jFsXBhqOM+ZS
+	O+IldNeyWCBkiWMSzKcIp1DiUgRzj69ZO5V/1jxTmOCysC/n+7M+saTOe90wX8VC
+	UN4w4lbnRZ66sKIPuPU5COBY5kvypV8kcAvUHpMx2rmsaaM+YuyfpAV43paB6kX3
+	rO62p37TrFz2TRXkiFYe+h2P6JkIqHBFMvnkhrswBit9QaXfkPSS2GVMKuh07AQZ
+	4AA8TmDkiAUIC6wD3vejo0818WRARacZ9bw==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42kjm1dyqx-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 01 Nov 2024 01:32:42 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4A11Wf3F021935
+	Fri, 01 Nov 2024 03:09:07 +0000 (GMT)
+Received: from pps.filterd (NALASPPMTA05.qualcomm.com [127.0.0.1])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 4A13967d007979;
+	Fri, 1 Nov 2024 03:09:06 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by NALASPPMTA05.qualcomm.com (PPS) with ESMTPS id 42khwpyumj-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 1 Nov 2024 01:32:41 GMT
-Received: from [10.231.216.207] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 31 Oct
- 2024 18:32:39 -0700
-Message-ID: <3dd897cb-5cc3-409d-a310-66e71847d58f@quicinc.com>
-Date: Fri, 1 Nov 2024 09:32:37 +0800
+	Fri, 01 Nov 2024 03:09:06 +0000
+Received: from NALASPPMTA05.qualcomm.com (NALASPPMTA05.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4A137UOe005970;
+	Fri, 1 Nov 2024 03:09:05 GMT
+Received: from hu-devc-lv-u22-c.qualcomm.com (hu-qianyu-lv.qualcomm.com [10.81.25.114])
+	by NALASPPMTA05.qualcomm.com (PPS) with ESMTPS id 4A1395r5007961
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 01 Nov 2024 03:09:05 +0000
+Received: by hu-devc-lv-u22-c.qualcomm.com (Postfix, from userid 4098150)
+	id 1633765D; Thu, 31 Oct 2024 20:09:05 -0700 (PDT)
+From: Qiang Yu <quic_qianyu@quicinc.com>
+To: manivannan.sadhasivam@linaro.org, vkoul@kernel.org, kishon@kernel.org,
+        robh@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
+        krzk+dt@kernel.org, conor+dt@kernel.org, mturquette@baylibre.com,
+        sboyd@kernel.org, abel.vesa@linaro.org, quic_msarkar@quicinc.com,
+        quic_devipriy@quicinc.com
+Cc: dmitry.baryshkov@linaro.org, kw@linux.com, lpieralisi@kernel.org,
+        neil.armstrong@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-clk@vger.kernel.org, johan+linaro@kernel.org,
+        Qiang Yu <quic_qianyu@quicinc.com>
+Subject: [PATCH v8 0/5] Add support for PCIe3 on x1e80100
+Date: Thu, 31 Oct 2024 20:08:57 -0700
+Message-Id: <20241101030902.579789-1-quic_qianyu@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] wifi: ath11k: support board-specific firmware
- overrides
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <kvalo@kernel.org>, <quic_jjohnson@quicinc.com>,
-        <ath11k@lists.infradead.org>, <linux-wireless@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <quic_zhichen@quicinc.com>
-References: <46de0bfe-ebdd-4b37-a957-3c64e30a1376@quicinc.com>
- <CAA8EJpr4zgV4Sa4sPdCToQWs+CFJu6Xz6CPcPyHDhDczmuzj=g@mail.gmail.com>
- <06ff37ef-dfda-470f-80f7-0f54bae25686@quicinc.com>
- <CAA8EJppFCXeUAZax+jv42JrKYgLmaPQNpXhn-06q_K_uB9JZLQ@mail.gmail.com>
- <46b18b39-9e88-42f8-aa88-5b527fc92a9f@quicinc.com>
- <xp5j6kkpggfhxvzuozqcvs2ugon5xexjgzl24zjlen7kggdaju@vd3okew4vcsy>
- <49313be4-b0e2-4ec4-8663-bd4daf20f78a@quicinc.com>
- <ksyukz7oouw2ilxxpx5nhnshu3zmnd5rtgeloea2vykzzn6ii5@unvpx26neirt>
- <590b729b-a921-4ed7-af2d-326cf596ae1f@quicinc.com>
- <73916bc3-f3c8-4ef9-ab8b-d1497f228d13@quicinc.com>
- <csqlwll36viejkp7k57r3jdejpt2kkttmzawq6y6q7i7qs25ht@n3mazu6owblv>
-Content-Language: en-US
-From: Miaoqing Pan <quic_miaoqing@quicinc.com>
-In-Reply-To: <csqlwll36viejkp7k57r3jdejpt2kkttmzawq6y6q7i7qs25ht@n3mazu6owblv>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: PoiHM9QdpBOLbAxERmVTpj8U4bo0ifsT
-X-Proofpoint-ORIG-GUID: PoiHM9QdpBOLbAxERmVTpj8U4bo0ifsT
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 9mRq5dBWInlCED2qd9g3EoKZVPRIRGhH
+X-Proofpoint-ORIG-GUID: 9mRq5dBWInlCED2qd9g3EoKZVPRIRGhH
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
- adultscore=0 spamscore=0 phishscore=0 mlxlogscore=863 malwarescore=0
- bulkscore=0 clxscore=1015 lowpriorityscore=0 impostorscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411010009
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 phishscore=0
+ priorityscore=1501 malwarescore=0 lowpriorityscore=0 adultscore=0
+ mlxscore=0 mlxlogscore=999 spamscore=0 suspectscore=0 clxscore=1015
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411010021
 
+This series add support for PCIe3 on x1e80100.
 
+PCIe3 needs additional set of clocks, regulators and new set of PCIe QMP
+PHY configuration compare other PCIe instances on x1e80100. Hence add
+required resource configuration and usage for PCIe3.
 
-On 10/28/2024 9:45 PM, Dmitry Baryshkov wrote:
-> On Mon, Oct 28, 2024 at 06:32:58PM +0800, Miaoqing Pan wrote:
->>
->>
->> On 10/26/2024 10:31 AM, Miaoqing Pan wrote:
->>>
->>>
->>> On 10/25/2024 11:27 PM, Dmitry Baryshkov wrote:
->>>> On Fri, Oct 25, 2024 at 10:23:45PM +0800, Miaoqing Pan wrote:
->>>>>
->>>>>
->>>>> On 10/25/2024 10:01 PM, Dmitry Baryshkov wrote:
->>>>>> On Fri, Oct 25, 2024 at 09:43:04PM +0800, Miaoqing Pan wrote:
->>>>>>>
->>>>>>>
->>>>>>> On 10/25/2024 8:21 PM, Dmitry Baryshkov wrote:
->>>>>>>> On Fri, 25 Oct 2024 at 15:03, Miaoqing Pan
->>>>>>>> <quic_miaoqing@quicinc.com> wrote:
->>>>>>>>>
->>>>>>>>>
->>>>>>>>>
->>>>>>>>> On 10/25/2024 6:20 PM, Dmitry Baryshkov wrote:
->>>>>>>>>> On Fri, 25 Oct 2024 at 10:23, Miaoqing Pan
->>>>>>>>>> <quic_miaoqing@quicinc.com> wrote:
->>>>>>>>>>>
->>>>>>>>>>>
->>>>>>>>>>>
->>>>>>>>>>> On 10/25/2024 2:01 PM, Dmitry Baryshkov wrote:
->>>>>>>>>>>> On Fri, Oct 25, 2024 at 10:56:02AM +0800, Miaoqing Pan wrote:
->>>>>>>>>>>>>
->>>>>>>>>>>>>
->>>>>>>>>>>>> On 10/25/2024 3:39 AM, Dmitry Baryshkov wrote:
->>>>>>>>>>>>>> On Thu, Oct 24, 2024 at 08:25:14AM +0800, Miaoqing Pan wrote:
->>>>>>>>>>>>>>> QCA6698AQ IP core is the
->>>>>>>>>>>>>>> same as WCN6855 hw2.1,
->>>>>>>>>>>>>>> but it has different RF,
->>>>>>>>>>>>>>> IPA, thermal, RAM size
->>>>>>>>>>>>>>> and etc, so new firmware
->>>>>>>>>>>>>>> files used. This change
->>>>>>>>>>>>>>> allows board DT files to
->>>>>>>>>>>>>>> override the subdir of
->>>>>>>>>>>>>>> the firmware directory
->>>>>>>>>>>>>>> used to lookup the amss.bin and m3.bin.
->>>>>>>>>>>>>>
->>>>>>>>>>>>>> I have slight concerns
->>>>>>>>>>>>>> regarding the _board_ DT
->>>>>>>>>>>>>> files overriding the
->>>>>>>>>>>>>> subdir. This opens a can of
->>>>>>>>>>>>>> worms, allowing per-board
->>>>>>>>>>>>>> firmware sets,
->>>>>>>>>>>>>> which (as far as I
->>>>>>>>>>>>>> understand) is far from
->>>>>>>>>>>>>> being what driver
->>>>>>>>>>>>>> maintainers
->>>>>>>>>>>>>> would like to see. This was
->>>>>>>>>>>>>> required for ath10k-snoc
->>>>>>>>>>>>>> devices, since
->>>>>>>>>>>>>> firmware for those platforms
->>>>>>>>>>>>>> is signed by the vendor keys
->>>>>>>>>>>>>> and it is
->>>>>>>>>>>>>> limited to a particular SoC
->>>>>>>>>>>>>> or SoC family. For
->>>>>>>>>>>>>> ath11k-pci there is no
->>>>>>>>>>>>>> such limitation.
->>>>>>>>>>>>>>
->>>>>>>>>>>>>> Would it be possible to use
->>>>>>>>>>>>>> PCI subvendor / subdev to
->>>>>>>>>>>>>> identify affected
->>>>>>>>>>>>>> cards? PCI Revision? Any
->>>>>>>>>>>>>> other way to identify the
->>>>>>>>>>>>>> device?  Please
->>>>>>>>>>>>>> provide lspci -nnvv for the
->>>>>>>>>>>>>> affected device kind. Is
->>>>>>>>>>>>>> there a way to
->>>>>>>>>>>>>> identify the RF part somehow?
->>>>>>>>>>>>>
->>>>>>>>>>>>> It's rather difficult, for
->>>>>>>>>>>>> WCN685x, there are multiple
->>>>>>>>>>>>> evolved subseries for
->>>>>>>>>>>>> customized products. e.g.
->>>>>>>>>>>>>
->>>>>>>>>>>>> QCA6698AQ/hw2.1
->>>>>>>>>>>>> QCA2066/hw2.1
->>>>>>>>>>>>> WCN6855/hw2.0/hw2.1
->>>>>>>>>>>>> WCN6856/hw2.1
->>>>>>>>>>>>>
->>>>>>>>>>>>> They have the same PCIe ID
->>>>>>>>>>>>> (17cb:1103), the commit
->>>>>>>>>>>>> 5dc9d1a55e95 ("wifi:
->>>>>>>>>>>>> ath11k: add support for
->>>>>>>>>>>>> QCA2066") reads
->>>>>>>>>>>>> TCSR_SOC_HW_SUB_VER to enumerate
->>>>>>>>>>>>> all
->>>>>>>>>>>>> QCA2066 cards, it lacks of
->>>>>>>>>>>>> flexibility, as the list will
->>>>>>>>>>>>> become longer and
->>>>>>>>>>>>> longer. But it's the only choice
->>>>>>>>>>>>> for QCA2066, as it's customized
->>>>>>>>>>>>> for X86
->>>>>>>>>>>>> platform which without DT files.
->>>>>>>>>>>>
->>>>>>>>>>>> I guess, this is closer to Kalle's
->>>>>>>>>>>> expectations: being able to detect
->>>>>>>>>>>> the hardware instead of adding DT properties.
->>>>>>>>>>>>
->>>>>>>>>>>>> So for MSM those have DT file
->>>>>>>>>>>>> platforms, like SA8775P-RIDE/
->>>>>>>>>>>>> QCS8300-RIDE both
->>>>>>>>>>>>> attached to QCA6698AQ, we can specify the correct firmware to
->>>>>>>>>>>>> 'ath11k/WCN6855/hw2.1/qca6698aq',
->>>>>>>>>>>>> so it's not per-board firmware,
->>>>>>>>>>>>> it depends
->>>>>>>>>>>>> on the type of the products(x86 windows, IoT products or AUTO).
->>>>>>>>>>>>
->>>>>>>>>>>> No-no-no and no. The firmware used
->>>>>>>>>>>> must not be specific to the product
->>>>>>>>>>>> type.  This is what everybody here is trying to avoid. Please try
->>>>>>>>>>>> following the QCA2066 approach
->>>>>>>>>>>> instead. And note that it could use
->>>>>>>>>>>> new
->>>>>>>>>>>> TLD as it perfectly shows itself as a different hardware kind.
->>>>>>>>>>>
->>>>>>>>>>> Actually, TCSR_SOC_HW_SUB_VER is not SOC register, it's a TLMM hw
->>>>>>>>>>> revision register in BAR0 space, it's hard to maintain the list.
->>>>>>>>>>
->>>>>>>>>> How is it so?
->>>>>>>>>
->>>>>>>>> I think QCA2066 approach is just a workaround.
->>>>>>>>> Different batches of chip
->>>>>>>>> manufacture has different value in TCSR_SOC_HW_SUB_VER.
->>>>>>>>
->>>>>>>> Ok. So, subvendor / subdevice?
->>>>>>>
->>>>>>> The 'subvendor' is fixed to 0x17cb, so it's useless. And
->>>>>>> I don't have enough
->>>>>>> samples to decide to use 'subdevice', it's a risk for
->>>>>>> existing devices.
->>>>>>
->>>>>> What kind of risk? If subvendor is fixed, then it's Qualcomm who
->>>>>> enumerates subdevices.
->>>>>
->>>>> It's risk for there is not enough sample card to verify.
->>>>> Subdevice is never
->>>>> used by ath1xk drivers.
->>>>
->>>> Oh, so it's just about development. I'd say, please discuss such risks
->>>> with your management, unless Kalle or Jeff disagree with using the
->>>> subdevice for identification.
->>>
->>> Kalle & Jeff, any idea to introduce subdevice ?
->>>
->>>
->>
->> Whether 'QCA2066 approach' or 'subdevice approach', all need to introduce
->> lots of redundant code, as they share the same IP code.
->>
->> 'DT approach' only needs minor change, brings great flexibility. It's only
->> for Snapdragon boards, will not affect default firmware for X86 platforms.
->>
->>>>
->>>>>
->>>>>>
->>>>>> I'm really reluctant to bringing more DT usage into the PCIe space.
->>>>>> Especially if the user is able to swap cards.
->>>>>
->>>>> Understand your concern, automatic adaptation is always the best
->>>>> choice. But
->>>>> it may not work for MSM boards, the PCIe card (non m.2) is
->>>>> customized, which
->>>>> has special PMU control. User can't swap cards. And that's why power
->>>>> sequencing module was introduced.
->>>>
->>>> I know. Still, it's better to have less unnecessary data there for
->>>> autodiscoverable devices.
->>>
->>
->> We discussed internally, we have no other choice to enable NFA765 for non
->> X86 boards. Could you please approve this 'DT' approach ?
-> 
-> If you can't use subdevice approach for some reason, then we have no
-> other choice that I can imagine.
-> 
+v7->v8:
+1. Add Reviewed-by tags
+2. Rephrase commit message and remove Fix tags
+3. Add Synopsis IP revision and put ops_1_21_0 after ops_1_9_0.
+4. Remove  [PATCH v7 1/7] and [PATCH v7 4/7] as they were applied
+5. Link to v7: https://lore.kernel.org/all/20241017030412.265000-1-quic_qianyu@quicinc.com/
 
-A new patch was submitted: 
-https://lore.kernel.org/linux-wireless/20241031000541.3331606-1-quic_miaoqing@quicinc.com/. 
-This patch will add QCA6698AQ support, which follows the approach done 
-in commit 5dc9d1a55e95 ("wifi: ath11k: add support for QCA2066"), 
-enumerates the subversion number to identify the specific card.
+v6->v7:
+1. Add Acked-by and Reviewed-by tags
+2. Use 70574511f3f ("PCI: qcom: Add support for SC8280XP") in Fixes tag
+3. Keep minItem of interrupt as 8 in buindings
+4. Reword commit msg 
+5. Remove [PATCH v6 5/8] clk: qcom: gcc-x1e80100: Fix halt_check for
+   pipediv2 clocks as it was applied
+6. Link to v6: https://lore.kernel.org/linux-pci/20241011104142.1181773-1-quic_qianyu@quicinc.com/
 
-But there is still a problem enabling NFA765 m.2 card for IoT platforms, 
-which requires ath11k to support board-specific firmware overrides.
+v5->v6:
+1. Add Fixes tag
+2. Split [PATCH v5 6/7] into two patches
+3. Reword commit msg
+4. Link to v5: https://lore.kernel.org/linux-pci/20241009091540.1446-1-quic_qianyu@quicinc.com/
 
+v4->v5:
+1. Add Reviewed-by tag
+2. Expand and clarify usage of txz/rxz in commit message
+3. Add comments that txz/rxz must be programmed before tx/rx
+4. Change the sort order for phy register tbls
+5. Use the order defined in struct qmp_phy_cfg_tbls for phy register tbls
+   presented in x1e80100_qmp_gen4x8_pciephy_cfg
+6. Add Fixes and CC stable tag
+7. Fix ops for SC8280X and X1E80100
+8. Document global interrupt in bindings
+9. Link to v4: https://lore.kernel.org/all/20240924101444.3933828-1-quic_qianyu@quicinc.com/
 
+v3->v4:
+1. Reword commit msg of [PATCH v3 5/6]
+2. Drop opp-table property from qcom,pcie-sm8450.yaml
+3. Add Reviewed-by tag
+4. Link to v3: https://lore.kernel.org/all/20240923125713.3411487-1-quic_qianyu@quicinc.com/
+
+v2->v3:
+1. Use 'Gen 4 x8' in commit msg
+2. Move opp-table property to qcom,pcie-common.yaml
+3. Add Reviewed-by tag
+4. Add global interrupt and use GIC_SPI for the parent interrupt specifier
+5. Use 0x0 in reg property and use pcie@ for pcie3 device node
+6. Show different IP version v6.30 in commit msg
+7. Add logic in controller driver to have new ops for x1e80100
+8. Link to v2: https://lore.kernel.org/all/20240913083724.1217691-1-quic_qianyu@quicinc.com/
+
+v2->v1:
+1. Squash [PATCH 1/8], [PATCH 2/8],[PATCH 3/8] into one patch and make the
+   indentation consistent.
+2. Put dts patch at the end of the patchset.
+3. Put dt-binding patch at the first of the patchset.
+4. Add a new patch where opp-table is added in dt-binding to avoid dtbs
+   checking error.
+5. Remove GCC_PCIE_3_AUX_CLK, RPMH_CXO_CLK, put in TCSR_PCIE_8L_CLKREF_EN
+   as ref.
+6. Remove lane_broadcasting.
+7. Add 64 bit bar, Remove GCC_PCIE_3_PIPE_CLK_SRC, 
+   GCC_CFG_NOC_PCIE_ANOC_SOUTH_AHB_CLK is changed to
+   GCC_CFG_NOC_PCIE_ANOC_NORTH_AHB_CLK.
+8. Add Reviewed-by tag.
+9. Remove [PATCH 7/8], [PATCH 8/8].
+10. Link to v1: https://lore.kernel.org/all/20240827063631.3932971-1-quic_qianyu@quicinc.com/ 
+
+Qiang Yu (5):
+  dt-bindings: PCI: qcom: Move OPP table to qcom,pcie-common.yaml
+  dt-bindings: PCI: qcom,pcie-x1e80100: Add 'global' interrupt
+  PCI: qcom: Remove BDF2SID mapping config for SC8280X family SoC
+  PCI: qcom: Disable ASPM L0s for X1E80100
+  arm64: dts: qcom: x1e80100: Add support for PCIe3 on x1e80100
+
+ .../bindings/pci/qcom,pcie-common.yaml        |   4 +
+ .../bindings/pci/qcom,pcie-sm8450.yaml        |   4 -
+ .../bindings/pci/qcom,pcie-x1e80100.yaml      |   9 +-
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi        | 204 +++++++++++++++++-
+ drivers/pci/controller/dwc/pcie-qcom.c        |  14 +-
+ 5 files changed, 225 insertions(+), 10 deletions(-)
+
+-- 
+2.34.1
 
 
