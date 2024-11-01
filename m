@@ -1,192 +1,214 @@
-Return-Path: <linux-arm-msm+bounces-36789-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36792-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6209C9B972F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 19:14:39 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E6C529B976D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 19:26:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 85C451C20FBC
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 18:14:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2E3F21F21F8A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 18:26:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29A071CDA35;
-	Fri,  1 Nov 2024 18:14:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5CD391CEAB0;
+	Fri,  1 Nov 2024 18:26:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oK3u5xBy"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bxoI/Odb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7514A13B7A3;
-	Fri,  1 Nov 2024 18:14:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E21F1CDFAE;
+	Fri,  1 Nov 2024 18:26:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730484874; cv=none; b=R2U0s+uNmiGz1GBornFcPJRsu7vJe7hbNYELumLvOWoEAsxwU0DMjBhzQbYTi5Ub51C5P7PhTGwjmcakE4nyyiOiON+e4zjFxPKTHUz3B9h4XxkF1LB3KLVaUzoNhN+jFXdje/7aHDfxb8dV4xedKcyUSJ6K2Dek11bQViLGkq4=
+	t=1730485564; cv=none; b=ghijEnztAYRLWLu3CW4gbwuiTiFkD9szQZG8vEzTcHBNfEGDZ6joGjNrOPf9bgfRqbHDpPZeNq6hSfJ76q1L9EwY/tMGoO35uL1dw7cTliabQuNnuS+R6BAWwWjKtF0bbANT4i9FRbfAHEBOPfmgQuR5DVCoaRngggDakP3H5eQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730484874; c=relaxed/simple;
-	bh=3+93vesMWQyfGnfGk5GJMh6n05pwKrzpr5yD8ZLBTEU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=a3tU3bJT/ncvzPUMbl/J/miVNgZj5G6teWwEL8RhvvTgdOyhWTDpVDXC3zhwXzNeb/ERSWHkc9sC+YWnIxuAYNGYaekMdit+1SJD9Md72E9xalEWjAcKfBVLdnQnPcJDkeME+wkl7olBXMiMJ4sLRLdgYcu5h1DCGIeO5ILFOf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=oK3u5xBy; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A1CFnES005716;
-	Fri, 1 Nov 2024 18:14:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	1A+76fLJ1cCVwHO1FE3TMyQQvN8+HfYW+6T23oY8E6I=; b=oK3u5xBy9N+SZWCp
-	c2oFJeZls3egs0DxOgXSKx2ZkPbE0fLiV7Nmms2ymgkRNgvfQlJ2SQTHb0j/KACg
-	65uGSCpntWYNwGgLMAUK2hbVhqBK0vPIjH79Q10KdYoDB33UVV9m/hMlH9A8CREQ
-	Wv4NcyhgxQ5Dvf0ryKQu0Hz70Q5+K+dZxjdmgZbZMAYav5C25bcGkmxcX9jp6Bpi
-	wGtdasN6hWDppJ6UzcDUCigNuW45iDcDqWnYqc+BfADcFVoHeel2EElmPoZXte3y
-	muWeF6I/jqeyJ0PbwRdJp5ylZqLEJUMSESXbMFLl24ePgyVqXMagF3rRmDRtSzIj
-	Q11IrQ==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42m1xce61b-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 01 Nov 2024 18:14:27 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4A1IEQA8010349
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 1 Nov 2024 18:14:26 GMT
-Received: from [10.110.33.199] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 1 Nov 2024
- 11:14:26 -0700
-Message-ID: <0782c956-361b-4109-a8a1-58b8ad396e0b@quicinc.com>
-Date: Fri, 1 Nov 2024 11:14:25 -0700
+	s=arc-20240116; t=1730485564; c=relaxed/simple;
+	bh=5kBH6+2r4C8QbxO+hFiEt6sBvYfxzBlWkAB5Bf8ASmg=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=ZkGu6vRW2ls1KG4XqsBbC73Vpjq/GQeWMeKB1y0gQS6aeRw6G6lIpU12hFZzFatFf/qwJLPNezp8hlvX19UleH6v8LejeruYOOSEKebZuwHbRBynRafRIKenBDR1Rrz4qBNle/DmGriwSFtTQI1DrIRumXys1rMmzHUx8mL/mEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bxoI/Odb; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id AF4EDC4CECD;
+	Fri,  1 Nov 2024 18:26:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1730485563;
+	bh=5kBH6+2r4C8QbxO+hFiEt6sBvYfxzBlWkAB5Bf8ASmg=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=bxoI/Odbg9Fl/AArqRJqSUEVX+dLIW2rXigJXVSYlI+/fS9u+XZdesT8vKXoDgUd9
+	 zKjKYdynafDWmTsNpGYc0W1MScNweuJWfzOJuSQzLnHFgvNSOnzdIFHPJ5RlV4HpnA
+	 vtpo+/Pmjd1URaC0/7fkJyAhLFIhLP8LV6JcULyt4thq8ojOhq0jvD0XxzJq1EP549
+	 11UT2a5IhThGstIpo1Amvctv6OJApGzEtWv+EkkViMA1JDiDsY7CMYw1WdjQr1YqNE
+	 iSGlJOkBU/ONK2yJbLyroxEnMEl9Lo/2yxBKmpmEWfKnKVAhWT/VbtyPCC0crsSlST
+	 yawP/S77G3YnQ==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A1015E6F068;
+	Fri,  1 Nov 2024 18:26:03 +0000 (UTC)
+From: Jens Glathe via B4 Relay <devnull+jens.glathe.oldschoolsolutions.biz@kernel.org>
+Subject: [PATCH v7 0/3] arm64: dts: qcom: sc8280xp-blackrock: dt definition
+ for Windows Dev Kit 2023
+Date: Fri, 01 Nov 2024 19:26:00 +0100
+Message-Id: <20241101-jg-blackrock-for-upstream-v7-0-8295e9f545d9@oldschoolsolutions.biz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] arm64: dts: qcom: sm8750: Add IPCC, SMP2P, AOSS and
- ADSP
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Satya Durga Srinivasu Prabhala
-	<quic_satyap@quicinc.com>,
-        Srinivas Kandagatla
-	<srinivas.kandagatla@linaro.org>
-References: <20241101-sm8750-audio-v1-0-730aec176459@linaro.org>
- <20241101-sm8750-audio-v1-1-730aec176459@linaro.org>
-Content-Language: en-US
-From: Melody Olvera <quic_molvera@quicinc.com>
-In-Reply-To: <20241101-sm8750-audio-v1-1-730aec176459@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: xQaPixnRuagtCXyO4xD2_6JS2h7fJyVb
-X-Proofpoint-ORIG-GUID: xQaPixnRuagtCXyO4xD2_6JS2h7fJyVb
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 spamscore=0
- malwarescore=0 suspectscore=0 phishscore=0 mlxlogscore=725 clxscore=1015
- priorityscore=1501 adultscore=0 mlxscore=0 lowpriorityscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2411010130
+X-B4-Tracking: v=1; b=H4sIADgdJWcC/43QTW7DIBAF4KtErDsVDBCgq96j6gLzk9C4IQLHa
+ hv57sVeVNkUZflGmm+e5kZqKClU8rK7kRLmVFM+t6CedsQd7fkQIPmWCVIU1CCFjwMMo3Wnkt0
+ JYi5wvdSpBPsJyinrLNKgOZK2fykhpq/Nfntv+ZjqlMv3dmpm65TIKIVWgUEQUoOw3IKNFMFJD
+ JI6y8xevObRV3fMeax5vE6tX30e0g9ZyRk35oFyMwIFM0SMbEBmmOuy/I9llPEeyxurufFcaG5
+ 1UF1W3LGoeqxorKJ8QCmiMzJ2WXnH8u4T5NaWOsO14Mr6Lrt/mN2vbZ1XUXntjfr/t8uy/AKJs
+ CxNcgIAAA==
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Kalle Valo <kvalo@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Merck Hung <merckhung@gmail.com>, 
+ Jens Glathe <jens.glathe@oldschoolsolutions.biz>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1730485562; l=5799;
+ i=jens.glathe@oldschoolsolutions.biz; s=20240919;
+ h=from:subject:message-id;
+ bh=5kBH6+2r4C8QbxO+hFiEt6sBvYfxzBlWkAB5Bf8ASmg=;
+ b=j+ZNKWkg5+V6TqeYGxaKYFPc6tfEGPR50pqO9DAy0Wt/ps6c/ELO8rgvvcPnMB8O5XwsSplgc
+ 93PHkJrE1JdCytI0XcR5uKfsItR0chyDYjPaFgbV61vjCSwRB+XY5Mm
+X-Developer-Key: i=jens.glathe@oldschoolsolutions.biz; a=ed25519;
+ pk=JcRJqJc/y8LsxOlPakALD3juGfOKmFBWtO+GfELMJVg=
+X-Endpoint-Received: by B4 Relay for
+ jens.glathe@oldschoolsolutions.biz/20240919 with auth_id=216
+X-Original-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+Reply-To: jens.glathe@oldschoolsolutions.biz
 
+"Microsoft Windows Dev Kit 2023" aka "Blackrock" aka "Project Volterra"
 
+Device tree for the Microsoft Windows Dev Kit 2023. This work
+is based on the initial work of Merck Hung <merckhung@gmail.com>.
 
-On 11/1/2024 10:19 AM, Krzysztof Kozlowski wrote:
-> Add nodes for IPCC mailbox, SMP2P for ADSP, AOSS and the ADSP remoteproc
-> PAS loader (compatible with SM8550).
->
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->   arch/arm64/boot/dts/qcom/sm8750.dtsi | 140 +++++++++++++++++++++++++++++++++++
->   1 file changed, 140 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sm8750.dtsi b/arch/arm64/boot/dts/qcom/sm8750.dtsi
-> index 98ab82caa007ee63c395a3ce0f517e2bbeb0aecb..eb826b154dcb2d8165426ba2225548efd7547da8 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8750.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8750.dtsi
-[...]
->   
-> @@ -538,6 +566,17 @@ gcc: clock-controller@100000 {
->   			#power-domain-cells = <1>;
->   		};
->   
-> +		ipcc: mailbox@406000 {
-> +			compatible = "qcom,sm8750-ipcc", "qcom,ipcc";
-> +			reg = <0 0x00406000 0 0x1000>;
+The Windows Dev Kit 2023 is a nice little desktop based on sc8280xp.
+Link: https://learn.microsoft.com/en-us/windows/arm/dev-kit/
 
-nit: unsure, but should thse be 0x0?
+Supported features:
+- USB type-c and type-a ports
+- minidp connector
+- built-in r8152 Ethernet adapter
+- PCIe devices
+- nvme
+- ath11k WiFi (WCN6855)
+- WCN6855 Bluetooth
+- A690 GPU
+- ADSP and CDSP
+- GPIO keys
+- Audio definition (works via USB)
 
-> +
-> +			interrupts = <GIC_SPI 229 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-controller;
-> +			#interrupt-cells = <3>;
-> +
-> +			#mbox-cells = <2>;
-> +		};
-> +
->   		gpi_dma2: dma-controller@800000 {
->   			compatible = "qcom,sm8750-gpi-dma", "qcom,sm6350-gpi-dma";
->   			reg = <0x0 0x00800000 0x0 0x60000>;
-> @@ -1975,6 +2014,19 @@ pdc: interrupt-controller@b220000 {
->   			interrupt-controller;
->   		};
->   
-> +		aoss_qmp: power-management@c300000 {
-> +			compatible = "qcom,sm8750-aoss-qmp", "qcom,aoss-qmp";
-> +			reg = <0 0x0c300000 0 0x400>;
+Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
 
-Same as above.
+Original work: https://github.com/merckhung/linux_ms_dev_kit/blob/ms-dev-kit-2023-v6.3.0/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-dev-kit-2023.dts
 
-> +
-> +			interrupt-parent = <&ipcc>;
-> +			interrupts-extended = <&ipcc IPCC_CLIENT_AOP IPCC_MPROC_SIGNAL_GLINK_QMP
-> +						     IRQ_TYPE_EDGE_RISING>;
-> +
-> +			mboxes = <&ipcc IPCC_CLIENT_AOP IPCC_MPROC_SIGNAL_GLINK_QMP>;
-> +
-> +			#clock-cells = <0>;
-> +		};
-> +
->   		spmi_bus: spmi@c400000 {
->   			compatible = "qcom,spmi-pmic-arb";
->   			reg = <0x0 0xc400000 0x0 0x3000>,
-> @@ -2884,6 +2936,94 @@ gem_noc: interconnect@24100000 {
->   			#interconnect-cells = <2>;
->   		};
->   
-> +		remoteproc_adsp: remoteproc@30000000 {
-> +			compatible = "qcom,sm8750-adsp-pas", "qcom,sm8550-adsp-pas";
-> +			reg = <0 0x30000000 0 0x100>;
+This dt is more or less deducted from the Thinkpad X13s.
+It contains a lot of guesswork, and also a lot of research on
+what works with the Windows Dev Kit.
 
-Same as above.
+The WiFi definition references qcom,ath11k-calibration-variant = "MS_Volterra"
+which is unfortunately not yet in the linux-firmware. The ath11k driver finds
+the default one for 
+"bus=pci,vendor=17cb,device=1103,subsystem-vendor=17cb,subsystem-device=0108,qmi-chip-id=2|18,qmi-board-id=255"
+when the entry with the variant is not found which is quite sub-optimal. I 
+have placed a pr on github/qca-swiss-army-knife:
+https://github.com/qca/qca-swiss-army-knife/pull/9 that provides an amended 
+board-2.bin and a board-2.json to generate it. 
 
-> +
-> +			interrupts-extended = <&pdc 6 IRQ_TYPE_EDGE_RISING>,
-> +					      <&smp2p_adsp_in 0 IRQ_TYPE_EDGE_RISING>,
-> +					      <&smp2p_adsp_in 1 IRQ_TYPE_EDGE_RISING>,
-> +					      <&smp2p_adsp_in 2 IRQ_TYPE_EDGE_RISING>,
-> +					      <&smp2p_adsp_in 3 IRQ_TYPE_EDGE_RISING>,
-> +					      <&smp2p_adsp_in 7 IRQ_TYPE_EDGE_RISING>;
-[...]
+pcie2 (nvme) is intentionally specified as max-link-speed = <4>. The 
+interface is capable of it, most current nvme ssds are capable of it, 
+but the physical slot isn't. This leads to a silent downgrade to <3> instead 
+of the "device is limited by bus, capable of..." message.
 
-Otherwise, LGTM.
-Reviewed-by: Melody Olvera <quic_molvera@quicinc.com>
+It is in use and under development since May 2023, pretty stable now.
 
-Thanks,
-Melody
+---
+Changes in v7:
+- re-checked and amended the usb_2_dwc3 definition as pointed out by Krishna. 
+  The SoC definition already has most of it, reduced to enable node and pinctrl
+- re-worked the sound definition - this box has no mics or speakers or jacks 
+  for them AFAIK. There needs to be something done regarding Soundwire on DP, 
+  but this isn't working yet.(Konrad)
+- rebased the patch onto <20241018-sc8280xp-pwrseq-v6-0-8da8310d9564@linaro.org>
+  and updated wcn-6855-pmu accordingly. (Konrad)
+- re-sorted the pmc8280_1_gpios (Konrad)
+- removed the gpio-reserved-ranges since I don't know what they are for. Best I 
+  could do is refer to the X13s dt, but it's not the same hardware. (Konrad)
+- ath11k: opened a bug https://bugzilla.kernel.org/show_bug.cgi?id=219454 
+  to add the board id with variant to board-2.bin
+- Link to v6: https://lore.kernel.org/r/20241030-jg-blackrock-for-upstream-v6-0-7cd7f7d8d97c@oldschoolsolutions.biz
+
+Changes in v6:
+- added missing acked-by tag from Krzysztof
+- removed aspm-no-l0s from the PCIe ports as suggested by Johan
+- corrected max-link-speed to <4> on PCIe2 as suggested by Johan
+- changed WLAN variant description to "MS_Volterra", added Kalle Valo 
+  for approval / guidance
+- trimmed the supply statements on hsphy and other pcie ports for what 
+  is known and defined on the Thinkpad X13s
+- Link to v5: https://lore.kernel.org/r/20241030-jg-blackrock-for-upstream-v5-0-830c938437ad@oldschoolsolutions.biz
+
+Changes in v5:
+- removed s-o-b from Merck Hung as suggested by Bjorn Andersson. The credits
+  for the original work are in the cover letter and in the dts commit
+- removed Venus codec from the list of supported features. It is, but that
+  part is not in this patch set.
+- Link to v4: https://lore.kernel.org/r/20241027-jg-blackrock-for-upstream-v4-0-703b254fc95f@oldschoolsolutions.biz
+
+Changes in v4:
+- removed the redundant regulator definitions
+- changed the pinctrl property order
+- use microsoft instead of MICROSOFT as subdirectory and device name component
+- amend spacing in audio nodes
+- change external connector dp1 for mini-dp to DP-3 for consistency
+- Link to v3: https://lore.kernel.org/r/20241013-jg-blackrock-for-upstream-v3-0-839d3483a8e7@oldschoolsolutions.biz
+
+Changes in v3:
+- tried to heed all advice and comments given - thank you
+- re-ordered patches to definition before use
+- added "microsoft,blackrock" as compatible in QSEECOM driver
+- removed the qseecom node
+- ordered nodes alphabetically {address, node name, label}
+- amended indentation
+- consistently used blackrock as identifier / directory name
+- sorted identifiers by the same order for multiple instances
+- added some explanation re WiFi
+- added definition for PMU on the WCN6855
+- added some explanation for pcie2 max-link-speed
+- Link to v2: https://lore.kernel.org/r/20240920-jg-blackrock-for-upstream-v2-0-9bf2f1b2191c@oldschoolsolutions.biz
+
+Changes in v2:
+- removed whitespaces and breaks
+- added compatibility binding
+- added feature list
+- reformatted Signed-off list
+- Link to v1: https://lore.kernel.org/r/5f5487e1-e458-4a3a-af02-c52e50ca1964@oldschoolsolutions.biz
+
+---
+Jens Glathe (3):
+      dt-bindings: arm: qcom: Add Microsoft Windows Dev Kit 2023
+      firmware: qcom: scm: Allow QSEECOM for Windows Dev Kit 2023
+      arm64: dts: qcom: sc8280xp-blackrock: dt definition for WDK2023
+
+ Documentation/devicetree/bindings/arm/qcom.yaml    |    1 +
+ arch/arm64/boot/dts/qcom/Makefile                  |    1 +
+ .../boot/dts/qcom/sc8280xp-microsoft-blackrock.dts | 1353 ++++++++++++++++++++
+ drivers/firmware/qcom/qcom_scm.c                   |    1 +
+ 4 files changed, 1356 insertions(+)
+---
+base-commit: bddda360b78a17a18002320bf2fc467f6b89f019
+change-id: 20240920-jg-blackrock-for-upstream-7c7aca20e832
+
+Best regards,
+-- 
+Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+
 
 
