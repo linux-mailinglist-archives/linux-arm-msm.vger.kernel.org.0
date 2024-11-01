@@ -1,117 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-36726-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36727-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F5819B8FE1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 12:02:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 14E789B9027
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 12:22:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 519BE28292C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 11:02:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CE8F32826EF
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 11:22:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 479BA158875;
-	Fri,  1 Nov 2024 11:02:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F250019924A;
+	Fri,  1 Nov 2024 11:21:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F8STDRVf"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="D0+H3b1C"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BDAE2A1B2;
-	Fri,  1 Nov 2024 11:02:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB16B1991AA
+	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Nov 2024 11:21:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730458945; cv=none; b=dCVLCvkMOSXyW8ID07u0EMoGkbfSvfUeSqEyGSa7qnYtLcRUdaCBiNXFsGe9qi6Qdf2BRJW4tyak7XldAQ8c9sLEqjC+aDmtJbW7lHSSYSMDbv+UciCkmVYvFFX/Qa15SQ0KOoxOBaPKVfRh+IxLrh5T6+CZB/u5RR73diCbYkc=
+	t=1730460117; cv=none; b=qSy/dFdrsEUHRf8JlX0M2Uhx0MdqVpiesdFu5fyA84/00l33C3xQwtfdmACwbRa3hapAQTKJEF8WbcLhX2O9ps+QpaLGZ5P94BYgl0Tpa2yPVCqmTDqyR/u81jqyy+2JYwGaicOUhF5I+kSu0Sm050J3uVw2f3p666TnJOBOiB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730458945; c=relaxed/simple;
-	bh=TofF4oGit+kVNFhJTdorwKxx+vOtPtL+bvcmp2ULECU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=O/BN7ajHxVaIwyUlC6Suj/sqIfJsWH5da6lZN3UHQvWrf9ywXTWR6pi9I+KtdQrkcOOINEKypw40GbOPZwuDeVOqU6Mt7B3fiHrUX8ERV8BRT8InNogu6B7lP1yNHs3p8AWPidw0V2h6tsZUz4KIGC6JAsZAU6XyHgzOlhFgfPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F8STDRVf; arc=none smtp.client-ip=209.85.167.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-539f0f9ee49so2184543e87.1;
-        Fri, 01 Nov 2024 04:02:22 -0700 (PDT)
+	s=arc-20240116; t=1730460117; c=relaxed/simple;
+	bh=KoTvzO8VKEqtuA3KrJa8XxyQcDEmRjc9CaAtz8YICLQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GyiA1Nwq2pZevB5LS1Hx6TmbVXjv1XXLROV6WJEjlqALnaGBywiDopv4U8Gy4UVgN5QjXhASrMjWOVqcEPNj0gtPxEENGCQDa1Zc5Ta0aF21wBWaAf6nCoqeTKi4d1dIi5VgrmzqXMOugfxUWGOO3Rk5SAazgX7PVvtrt2Bghdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=D0+H3b1C; arc=none smtp.client-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3807dd08cfcso1467026f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Nov 2024 04:21:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730458941; x=1731063741; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Kihzc34kXx/NFKsEmVBQvaMpJykR7yHUggsrDFyErHg=;
-        b=F8STDRVfZQdmi3rpC8jF744MvOIyOg2xyRwdNCmyv7cE5cbSoGfSIOTqiiW+ZldEru
-         oHPZ2PB9jzrM63/0wffmzPlmEvTxtYNe7yRJCmcmrbwWUaLvsZul+iEqROydUuKL7REp
-         wEOhgURyfhkLlannpMGRAG6pOZ9Q+ASQoUDdhYfWQLPIeRRtFnIhRkL0QomjNwYRS9q9
-         L8j2bkUH3FDtb/HP2MI03hFxmb0EJmDDnhuoypkDhpWnM0SmH2AfNUEj425S35RboKKA
-         +5evY5kd4V4FFIapWiCeoXK6aSB1Pe8kUEOh2JCnHwchSaZ/PRi90WqTwpL4bF8ZUnLA
-         m95Q==
+        d=linaro.org; s=google; t=1730460114; x=1731064914; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=eXKsOWR/wJ8s/vomPLhl+IstAtu8+B4WWYmjYIcAfF8=;
+        b=D0+H3b1CJsHsW37MQ9JBJ/6HJLHuK1ZM8h2nikhAD8L8bG8AqhMBJ/rvNlKvvOG+bL
+         6b0PSWwpp1Zx2qFi+p301nVQAd9H5/9W8Crdi5yBiWEfMz7ppIIRzDI3iCgCxiBHqTgc
+         20D0trc1YBuF/zNdp7TGWFPqbffhk7rDm+PUdEIAny07XC5HvoawO/0Tk242VBQQ7I4y
+         lSpQ1rTUtbeEjQ/SpSnwwURJuPaEhg1c1DnExTPnpXQm0s39OWBSWA6b3TZrqKtmxDhX
+         gWqYa3+6ByhQKu9mtWJWJu85StsKS2kq6MG6oeiQcnlh+jD0bCGvILDQSyDaiD1VwcA9
+         nzwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730458941; x=1731063741;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Kihzc34kXx/NFKsEmVBQvaMpJykR7yHUggsrDFyErHg=;
-        b=Udx2bQrk50QRTDsSxqbpA4gxELnm3v1LgQQkISMn7/X8BDNhIi8pxRAFlggA97nP5c
-         FnZpPg2PEmORyMOr6CSAZfshI30jTwkouyCgTr8FsGQFFOhyr17CXkqaRWBafFaooyb/
-         /UWDSDo+JJ1AUo8CUkO8XbCGbIRlMQxy5cjVYEMAhRyaotMTvbmg4drgt/DYf/hcnfyH
-         cpzthQeOdbjuvmRyMg7UM2acFV8FQoEbJlmczskVUA46mR5xJfUoTxqR0eG1IDW5nOnF
-         9xvLG91fdmyv9UgMa28Kyg+oORIQnOtgPtBbTnjQHhXSpW5b4THAzmbF54qYd2xKgXoK
-         rK1Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUUXTWHRLA0MF/vBlTjj/91uEc3Bp+pSSlZYDh3E1r7P7hcDz6TWeOvMaACycfs9ApwJy4jf9dQdcd0Y+4=@vger.kernel.org, AJvYcCVuZtU0gzQ37yZ6s4GyDWV5SN5QMvH1nAk3mAI9hjMcGBqw5eAtT1VvVI4NBi+lo9KcE1eBbddGlmIzoFto@vger.kernel.org, AJvYcCW38eAvvGbGNS0HdTDlnzQkW6E8WJAc8zBL5zPqD2VUk3EOSZ6q5JJmIE1dPRKfCb1r5deLKSjhDpHx17Ml@vger.kernel.org
-X-Gm-Message-State: AOJu0YyCDqnYyHLv3AyLeEP9yuk6GDJIqxYwyr/8EBTJEGXaYKP+TWiE
-	8nCwfZkc2K1UrokrBw3qJyI7iGl3P1ilUwBoknzfV0quRi2A1NaH
-X-Google-Smtp-Source: AGHT+IG7gqlfm/DA2MelrdUrZW2vdNjxw9dwV2mm8qKhoGeD/IF/bobhYVNyPgEOeew+aDvXlM1agg==
-X-Received: by 2002:a05:6512:3b2b:b0:52e:f99e:5dd1 with SMTP id 2adb3069b0e04-53b3491cd1emr11826340e87.47.1730458940826;
-        Fri, 01 Nov 2024 04:02:20 -0700 (PDT)
-Received: from [192.168.1.19] (79-100-30-28.ip.btc-net.bg. [79.100.30.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381c10d4141sm4730507f8f.28.2024.11.01.04.02.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 01 Nov 2024 04:02:20 -0700 (PDT)
-Message-ID: <71f68515-235f-4e6d-a401-f2745763f9cc@gmail.com>
-Date: Fri, 1 Nov 2024 13:02:18 +0200
+        d=1e100.net; s=20230601; t=1730460114; x=1731064914;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=eXKsOWR/wJ8s/vomPLhl+IstAtu8+B4WWYmjYIcAfF8=;
+        b=DAI9KEvMzxupYt4veuJh8uTZOWSZusA4E0tfyWsgmDLkPYGwGO6Oms1TXZ7Z0vp6id
+         SJ1EEx96eHSQIOP+O5oaokT8NlxOUqxi7SDQEjpLG/WTkF0AZrjGLXhGKE02Xe+K7oE0
+         6GMC/fPR40Md+o1q1SUX7vJTWPpzdGJ9QjXnW+vWwXecLw0mJ88R3TTGb0w0ZKmPG9rh
+         DbInFRUHfhjpJEqwnhM7MVETWb3U3z9rYCmG/6WaoSEQl5DcJ9I/l85Mbl53YTC+i+XL
+         9GLj+Wo3uw+TqXVJ/H7Eg9OQEaw8Od8T0aI76s2nYc2dWF8CUbv/kKSYdOOkrVg8HX38
+         7TsQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXjuh1EDCkvTGR+sAdHhPvOCy1i5KNgF64LnOxm+Rfv1gf2tBNijMFxsPg1nsaZQymacrtYrPScTLPDU0p5@vger.kernel.org
+X-Gm-Message-State: AOJu0YwWxIQDCv+YswsIG5sfCfNdILusTfq6du2tgccoM7QcEm7TAPK2
+	SYUaTrq7BcDxClU/uOLFXBqp5lNyDnNiUqnsJzzzplmQqMjXZHr1dtzHSB/dAA+w7iTbh3a2UwS
+	U
+X-Google-Smtp-Source: AGHT+IF1Hi3RvwWs7DSq+spdpzYUhwOwwmzTbkypHgqr1nBe6xd71RG+VXm6t9yCvd53dDUoi1AkKw==
+X-Received: by 2002:a5d:5a13:0:b0:37c:fbf8:fc4 with SMTP id ffacd0b85a97d-381c7af3be3mr3201528f8f.59.1730460114103;
+        Fri, 01 Nov 2024 04:21:54 -0700 (PDT)
+Received: from linaro.org ([82.76.168.176])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381c113e89csm4808765f8f.74.2024.11.01.04.21.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 01 Nov 2024 04:21:53 -0700 (PDT)
+Date: Fri, 1 Nov 2024 13:21:52 +0200
+From: Abel Vesa <abel.vesa@linaro.org>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Johan Hovold <johan@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v3 2/3] arm64: dts: qcom: x1e80100: Describe TLMM pins
+ for SDC2
+Message-ID: <ZyS50DFLhHVlnRtd@linaro.org>
+References: <20241022-x1e80100-qcp-sdhc-v3-0-46c401e32cbf@linaro.org>
+ <20241022-x1e80100-qcp-sdhc-v3-2-46c401e32cbf@linaro.org>
+ <a282021f-5e61-480c-84c4-272049e28244@oss.qualcomm.com>
+ <Zx9P+HQMOkJsJGcj@linaro.org>
+ <327507d8-2dc7-4645-ac3d-d68ff31a84dd@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] media: venus: Fix pm_runtime_set_suspended() with
- runtime pm enabled
-To: Jinjie Ruan <ruanjinjie@huawei.com>, sakari.ailus@linux.intel.com,
- mchehab@kernel.org, ming.qian@nxp.com, eagle.zhou@nxp.com,
- quic_vgarodia@quicinc.com, bryan.odonoghue@linaro.org, shijie.qin@nxp.com,
- hverkuil-cisco@xs4all.nl, linux-media@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc: chenridong@huawei.com
-References: <20241101094050.2421038-1-ruanjinjie@huawei.com>
- <20241101094050.2421038-4-ruanjinjie@huawei.com>
-Content-Language: en-US, bg-BG
-From: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
-In-Reply-To: <20241101094050.2421038-4-ruanjinjie@huawei.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <327507d8-2dc7-4645-ac3d-d68ff31a84dd@oss.qualcomm.com>
 
-
-
-On 1.11.24 г. 11:40 ч., Jinjie Ruan wrote:
-> It is not valid to call pm_runtime_set_suspended() for devices
-> with runtime PM enabled because it returns -EAGAIN if it is enabled
-> already and working. So, call pm_runtime_disable() before to fix it.
+On 24-10-28 14:10:54, Konrad Dybcio wrote:
+> On 28.10.2024 9:48 AM, Abel Vesa wrote:
+> > On 24-10-25 20:34:19, Konrad Dybcio wrote:
+> >> On 22.10.2024 12:46 PM, Abel Vesa wrote:
+> >>> Describe the SDC2 default and sleep state pins configuration
+> >>> in TLMM. Do this in SoC dtsi file since they will be shared
+> >>> across multiple boards.
+> >>>
+> >>> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> >>> ---
+> >>
+> >> Not very useful on its own but okay..
+> > 
+> > Fair enough. For some reason, I'm not able to get sdc4 pinconf
+> > to work.
 > 
-> Cc: stable@vger.kernel.org
-> Fixes: af2c3834c8ca ("[media] media: venus: adding core part and helper functions")
-> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-> ---
-> v2:
-> - Add Cc stable.
-> ---
->   drivers/media/platform/qcom/venus/core.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+> Any chance you tried to define 'sdc4_cmd' etc.? This one seems to have
+> sdc4 pins on gpio127..=132
 
-Acked-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
+Yes.
 
--- 
-regards,
-Stan
+But since the sdc4 pins can have other functions and since there is no
+device that uses them (yet). Shouldn't we just skip describing the sdc4
+pinconf entirely as that should be done on a per-board basis?
+
+> 
+> Konrad
 
