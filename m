@@ -1,45 +1,45 @@
-Return-Path: <linux-arm-msm+bounces-36753-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36754-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7C62A9B9312
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 15:24:19 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8901D9B9342
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 15:32:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AE96D1C20C97
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 14:24:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3CB9C1F22E9F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 14:32:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3493F1A0708;
-	Fri,  1 Nov 2024 14:24:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EFC74156F4C;
+	Fri,  1 Nov 2024 14:32:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bDT1OGHA"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HgIZvRn8"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F7E119CC29
-	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Nov 2024 14:24:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAE0149620
+	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Nov 2024 14:32:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730471057; cv=none; b=XJ8CnANhvnq42xd4PHAKUAZtdtmkFs2brU7+8IpL0+I3ovWY3ePULgAEnlKolXLvHj52SHvu3PMLA4p0nU2tusgqBx3Fc1vekDkIQg7TLGhEV5aQrq8BGHAL+2QFIXzcP6XiEl+UUc1gDZbB3NAn1MnIZrDc8bhWlRWAlsVoPYQ=
+	t=1730471528; cv=none; b=pnJ2xbPiPMyKwZKSHPgICiHxYmeP5O13QXcpugjkfb/skXeWqxmehYQ3H/UFVKeR9/pehLnGIzmfyIYFcooEq+spVfoH5QNQ1/APPpjUpc9y0oWhEprzIZYeE8cDt3vwBX8ZlYyq+gzth3y5zyW1FQYgbWSKXChza5XIClBwoMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730471057; c=relaxed/simple;
-	bh=9eJSBsDX1KEPOrBzjZskYTFJm1CTJz8fA/XLt1OpIv8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=XDDTQK6HSjdSv6P8R+E+Ea1RWOBODgxXFPCS1+Q3/34kAL+feo2plsdmRmjKhG+dFbkQCTwgAKySnc2TjgbC/a4mu8j14dpW+BKiOcxj8TRcmMzp2ScaG4oOchXocmtaPoAXme821eePOh+KvaW1Yjf4wdcbepbA6z+l3bgMju0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bDT1OGHA; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05869C4CECD;
-	Fri,  1 Nov 2024 14:24:15 +0000 (UTC)
+	s=arc-20240116; t=1730471528; c=relaxed/simple;
+	bh=QkWKnBsAHTldTBGGifsX0KtIWA5PIk3Dk4/LyfzY414=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Lz+rUr3riWDM+afcPUrDqcgBkwFMtSgIl9qWdfXjOJEDv6thzuKVEtmSYDgV7YR7taVLxykx56+QfdYQaMyBNLK+AJCLUCv9ekJ1znBLbcVQR8KRZ2lu0xSmk5vLS+XBOO8rfTP4hL2Ke0aapXqaoE88jdreCzeFxuvnk0nmTpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HgIZvRn8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 870BAC4CECD;
+	Fri,  1 Nov 2024 14:32:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730471056;
-	bh=9eJSBsDX1KEPOrBzjZskYTFJm1CTJz8fA/XLt1OpIv8=;
+	s=k20201202; t=1730471528;
+	bh=QkWKnBsAHTldTBGGifsX0KtIWA5PIk3Dk4/LyfzY414=;
 	h=From:To:Cc:Subject:Date:From;
-	b=bDT1OGHAuCUOX83geBDrrex/2Wbius8C9uJlBz1UQpqHeZqsUPBIwBpxVqPSHrU9h
-	 AIR5lz2JerpzIgrxCc/kcer0CTjgsK2e73bLndAHIi1YA0tHosN2V/ayjwe7sf5PED
-	 ScN9b1YIZuUx8aQHJa/+tME+rBj1Iq9LqPE/9qSMPfjwaSafGFXVHwhdevWU/do0Hl
-	 E0A6JMTZok+dpFXkOIVpS5HazoP+ipRD/WJsgR6ZV1SSYeslu+ZaA4zBULkdsO8M1U
-	 koGS/Eg3/8tdGrAtGs2U3tsUwJh6/bgBO57BfFwvc/Uotui33XyKvqk4YOtlIUqhxu
-	 y/ZbpgMIoqVgg==
+	b=HgIZvRn8R8dJPQqs23jKUno8Euzdg3MJUjF2PThFtuAyTIIReX4VRZ2L+gudQNc6b
+	 PMJiO4ZKelQSI3JxbrvLmh6Ulp1qozlxu+jPXkgiOZxQUVE2DvkseVQxFh1FI/qUwL
+	 0aKxpeyZ46Rbqvui9qquQe0uj8YHdERaLiAuLjQb9MQ3h4HQQUGR1scy/eUcv/MraO
+	 lX695GGOfYco7FF/V5Z2JE2KfCHz7buYFDZOA+GuBkZt0EYAaEpwecdvCb72Ri+uiZ
+	 F7nPsuSHfZU4Jzmf0A35aQpKoHK0SbWHHRx6c8q9HqE5TjhUQegj7/c8yIDqEJlF0D
+	 6i+5vGT1Yn7Pw==
 From: Bjorn Andersson <andersson@kernel.org>
 To: arm@kernel.org,
 	soc@kernel.org
@@ -48,10 +48,14 @@ Cc: linux-arm-msm@vger.kernel.org,
 	Arnd Bergmann <arnd@arndb.de>,
 	Olof Johansson <olof@lixom.net>,
 	Kevin Hilman <khilman@baylibre.com>,
-	Fabien Parent <fabien.parent@linaro.org>
-Subject: [GIT PULL] Qualcomm Arm64 DeviceTree fix for v6.12
-Date: Fri,  1 Nov 2024 09:24:13 -0500
-Message-ID: <20241101142414.737828-1-andersson@kernel.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Maya Matuszczyk <maccraft123mc@gmail.com>
+Subject: [GIT PULL] More Qualcomm Arm64 DeviceTree fixes for v6.12
+Date: Fri,  1 Nov 2024 09:32:05 -0500
+Message-ID: <20241101143206.738617-1-andersson@kernel.org>
 X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -62,28 +66,63 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
 
-The following changes since commit dfbe93f32c12f5628bd83303e10ba63621c259ae:
+The following changes since commit 9852d85ec9d492ebef56dc5f229416c925758edc:
 
-  arm64: dts: qcom: x1e80100: Fix Adreno SMMU global interrupt (2024-08-14 21:36:45 -0500)
+  Linux 6.12-rc1 (2024-09-29 15:06:19 -0700)
 
 are available in the Git repository at:
 
-  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-fixes-for-6.12
+  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-fixes-for-6.12-2
 
-for you to fetch changes up to d92e9ea2f0f918d7b01cbacb838288bffccc8954:
+for you to fetch changes up to 54376fe116ef69c9e58794589c044abb2555169e:
 
-  arm64: dts: qcom: msm8939: revert use of APCS mbox for RPM (2024-09-04 15:36:17 -0500)
-
-----------------------------------------------------------------
-Qualcomm Arm64 DeviceTree fix for v6.12
-
-This reverts the conversion to use the mailbox binding for RPM IPC
-interrupts, as this broke boot on msm8939.
+  arm64: dts: qcom: x1e80100: fix PCIe5 interconnect (2024-10-24 12:36:36 -0500)
 
 ----------------------------------------------------------------
-Fabien Parent (1):
-      arm64: dts: qcom: msm8939: revert use of APCS mbox for RPM
+More Qualcomm Arm64 DeviceTree fixes for v6.12
 
- arch/arm64/boot/dts/qcom/msm8939.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Bring a range of PCIe fixes across the X Elite platform, as well as
+marking the NVMe power supply boot-on to avoid glitching the power
+supply during boot.
+
+The X Elite CRD audio configuration sees a spelling mistake corrected.
+
+On SM8450 the PCIe 1 PIPE clock definition is corrected, to fix a
+regression where this isn't able to acquire it's clocks.
+
+----------------------------------------------------------------
+Abel Vesa (2):
+      arm64: dts: qcom: x1e80100: Add Broadcast_AND region in LLCC block
+      arm64: dts: qcom: x1e80100: Fix PCIe 6a lanes description
+
+Dmitry Baryshkov (1):
+      arm64: dts: qcom: sm8450 fix PIPE clock specification for pcie1
+
+Johan Hovold (10):
+      arm64: dts: qcom: x1e80100: fix PCIe4 and PCIe6a PHY clocks
+      arm64: dts: qcom: x1e80100: fix PCIe5 PHY clocks
+      arm64: dts: qcom: x1e78100-t14s: fix nvme regulator boot glitch
+      arm64: dts: qcom: x1e80100-crd: fix nvme regulator boot glitch
+      arm64: dts: qcom: x1e80100-vivobook-s15: fix nvme regulator boot glitch
+      arm64: dts: qcom: x1e80100-yoga-slim7x: fix nvme regulator boot glitch
+      arm64: dts: qcom: x1e80100-microsoft-romulus: fix nvme regulator boot glitch
+      arm64: dts: qcom: x1e80100-qcp: fix nvme regulator boot glitch
+      arm64: dts: qcom: x1e80100: fix PCIe4 interconnect
+      arm64: dts: qcom: x1e80100: fix PCIe5 interconnect
+
+Konrad Dybcio (1):
+      arm64: dts: qcom: x1e80100: Fix up BAR spaces
+
+Maya Matuszczyk (1):
+      arm64: dts: qcom: x1e80100-crd Rename "Twitter" to "Tweeter"
+
+ arch/arm64/boot/dts/qcom/sm8450.dtsi               |  2 +-
+ .../dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts     |  2 +
+ .../boot/dts/qcom/x1e80100-asus-vivobook-s15.dts   |  2 +
+ arch/arm64/boot/dts/qcom/x1e80100-crd.dts          | 10 ++--
+ .../boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts  |  2 +
+ .../boot/dts/qcom/x1e80100-microsoft-romulus.dtsi  |  2 +
+ arch/arm64/boot/dts/qcom/x1e80100-qcp.dts          |  2 +
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi             | 53 +++++++++++++---------
+ 8 files changed, 49 insertions(+), 26 deletions(-)
 
