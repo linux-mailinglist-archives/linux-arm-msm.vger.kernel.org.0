@@ -1,55 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-36778-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36777-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id F26519B95FE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 17:57:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C58E99B95F8
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 17:57:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 761FF1F21CB7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 16:57:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4B0771F222BB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 16:57:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3AFAE1CBE84;
-	Fri,  1 Nov 2024 16:57:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E3AF1CB526;
+	Fri,  1 Nov 2024 16:56:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b="PLBnomvS"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ygvqZm65"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.smtpout.orange.fr (smtp-13.smtpout.orange.fr [80.12.242.13])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B93291CACC8;
-	Fri,  1 Nov 2024 16:57:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.12.242.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E1D01C9ECC
+	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Nov 2024 16:56:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730480245; cv=none; b=eQeXRpy9hlsR0mKzXhIGJUc6vuF4xYvJYziAUQK6H2S37jZAySzoJCcFBXYegdVxdzUHW9nwi63+xUja7T0XHp47Egwc7k+t/ijbn5qRXT/mlFVBip0z8A1WUJKFbGLNSB892NJW+Spdh6r250Fb+5BN7OG5f/ny2FXEa3xxnK0=
+	t=1730480218; cv=none; b=hJH8edhxri5c7xcAxVjqkk2fP2/eDaABI6pyVL109svu/WrvyzReO13y9Xa1jK/pOInO82boSOs6A7z+y4JxoKZ/PJ9DZWVE+oW9fsmWu1Vaw+O7tWcCtMgVgIRhfAXRg8jHaDNxSt/5LUy+Q4Kr7NXHzjPb/y5RmHMoeRVdQlk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730480245; c=relaxed/simple;
-	bh=k47s0P2wz9OqG4UpxM357DUA+y89omV5a3jUPb/uFgk=;
-	h=Message-ID:Date:MIME-Version:Subject:References:From:Cc:To:
-	 In-Reply-To:Content-Type; b=Ieamy5S6S8InbtMABtQ2SEmJ7wMxD3PZ+EYaYBjcgpQK0dzoqDLG3G2peiq/0v+YYY8xyzPGY1HqyeyaAuoZ4usk2AXdec486b14PRt31Kbl2w9k8/BN5fao+mKCiue0PT4vbhEP0MDwhFtWXyKuexLYuQhyo8dOdt15ecAf5JY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr; spf=pass smtp.mailfrom=wanadoo.fr; dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b=PLBnomvS; arc=none smtp.client-ip=80.12.242.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wanadoo.fr
-Received: from [192.168.1.37] ([90.11.132.44])
-	by smtp.orange.fr with ESMTPA
-	id 6uwOtzLoVNFce6uwPthwSZ; Fri, 01 Nov 2024 17:56:07 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
-	s=t20230301; t=1730480167;
-	bh=MLkITH4B9BxZcDOsi8Bl2aCO3pgd38XzocbFtMgv/Vc=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To;
-	b=PLBnomvSOtJH/II639x9Ir+kK3CEymccyvAFh6HuCTE+tz/Jug0OjtW7RcPl6Chuc
-	 fUhCol+KyceKYbRniyMEiOSUG1wpUM8kPMhp4i41wdnuDsWBvT7Vzaoxi8+oKzWS+W
-	 fuAsv3T4EZDwdKDSxjKMjO3TIS0g8D6zvTxkIkUphVJcGk0YFoWNI/0GpKN6cjdl6q
-	 MfzhqBjo5Hs+7l++B7cOJ7/CDVgVWoEUfBFb2WxL659zOsVnc3swElv4qymeM9pON1
-	 kPk6Cj2r01rRskuS7nDuDBfefNURvAuaBe9ZYrlRM0sT8kMRd+IN61VT4lYbeFsOA1
-	 70dWnkTnhquSg==
-X-ME-Helo: [192.168.1.37]
-X-ME-Auth: bWFyaW9uLmphaWxsZXRAd2FuYWRvby5mcg==
-X-ME-Date: Fri, 01 Nov 2024 17:56:07 +0100
-X-ME-IP: 90.11.132.44
-Message-ID: <90ff31e5-3bed-40d2-8476-1ebb772c03f3@wanadoo.fr>
-Date: Fri, 1 Nov 2024 17:56:04 +0100
+	s=arc-20240116; t=1730480218; c=relaxed/simple;
+	bh=Hh3ePTY5eOcO+ABQ/OXH98joFD3cozVtNgiDQKTCotU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=szzd+7Y70LVeBKsR0uMAZKQxbPHe3qKq2HOQEVj87/rNIxNfmDkemc0ROYQrDFMoezwvztzUj5fdrY3RRVUapT9GCPkEMgTgs4VdtA98q95m/hqYMUdxKBbyHI+MWfq1UrhV8Yy8rZJFDdeGksmOO1qK/uhsyGPxq1fmV9sUxf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ygvqZm65; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4314f38d274so23303265e9.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Nov 2024 09:56:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1730480214; x=1731085014; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=aFhDCeB3natVan6jLDOhEB/ZUWcslmFFkqQfAi6PeEk=;
+        b=ygvqZm65v0KtwPny7+Mpu2ue3htDY+ZHtttD5TqNMSxd7mXSMOwDmjMKvY1f+wPqAM
+         QlxI+tDYY9cWehfATHzSNLoIWQSmNMABanjQZzflY/qsl9CHwu3XL56VBjbTWoowpJPC
+         GDU5JVHNKyP5oZvbNCXfncxbZ0jdPh4LqazLM+k+xqjIcPC0qhXdI0fYf9Li14NVpocp
+         KXqWDMSqASVDXSEZC9Eyn4IhFN6oHZV5/JJ9QjPH7p3uYz1oxPVb4tHpWVD5AG7Bi7x5
+         Lv4ziyfj5VSO0pvqWRqT5TU6wY0wHIiHndLK6XFCS+xt1yFpuYv0mkKVi7l+1PYyf5oK
+         ph4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730480214; x=1731085014;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=aFhDCeB3natVan6jLDOhEB/ZUWcslmFFkqQfAi6PeEk=;
+        b=A5x1E6jLKC1fr6pqDrk4Pj/XepgogUt06BBuh3GOUwdXTL9UbDGIlVW3bU7tq1MioF
+         WaZST/05G9j0M3R+WUR9Rel08CQ8AJ+4xWV0koeUYIeR67/2SPOGtXSMQKZ3xj3kq7Y3
+         yn23VehqxD7E7eVXkoaV1EP/yc42Dxs1MUtAz77fd1iOW0XJKXl/VxcdELbGsa+008/j
+         CdBnwDim1BPllEa16Gmw4b6GBbdvwaGqSn01EcD9ftCkw48st707/RtHVP5z9QkYvNij
+         MGfuBVvvveHB1AKk0DeFzYh+846ogCWLZ1Es8Y7mZih2VRPf32W9ANXSojlrruWRFv1f
+         Bd3w==
+X-Forwarded-Encrypted: i=1; AJvYcCWVYPpLRuxn4PWiUPNql2Mi46D0WgrFNwGsrW2wmbS6GQCWIi5tD7UF+ve2iYB2stjj8zBzYDExzcgcwzqc@vger.kernel.org
+X-Gm-Message-State: AOJu0YwlB06ymZItn/ZCS1h7IpPF/aa/RMWQxQ9ie71BDUpdqPeGkBpf
+	O59CWa2lHrDqqLRJUNKeCtgZ6Bd4rEPyUpBJfmss1L84ee7nyEe+bEYACwJoTOc=
+X-Google-Smtp-Source: AGHT+IGodZAjfXp4tUmW6YwVSDdFFc+bf9aUskO6cp3Cw2yMrR8Copf5ovge8NjE8dTSGJzo/GiB7Q==
+X-Received: by 2002:a05:600c:444d:b0:42f:75e0:780e with SMTP id 5b1f17b1804b1-4328324ad00mr38414295e9.10.1730480213676;
+        Fri, 01 Nov 2024 09:56:53 -0700 (PDT)
+Received: from [192.168.0.35] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-431bd9ca6f8sm97929315e9.39.2024.11.01.09.56.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 01 Nov 2024 09:56:53 -0700 (PDT)
+Message-ID: <9bd7753d-0f59-4ef9-ba58-93c6f6c23f5e@linaro.org>
+Date: Fri, 1 Nov 2024 16:56:51 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -57,257 +76,257 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/4] usb: typec: Add support for Parade PS8830 Type-C
- Retimer
-References: <20241101-x1e80100-ps8830-v4-0-f0f7518b263e@linaro.org>
- <20241101-x1e80100-ps8830-v4-2-f0f7518b263e@linaro.org>
-Content-Language: en-US, fr-FR
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Cc: linux-arm-msm@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Rajendra Nayak <quic_rjendra@quicinc.com>,
- Sibi Sankar <quic_sibis@quicinc.com>, Johan Hovold <johan@kernel.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Trilok Soni <quic_tsoni@quicinc.com>, linux-kernel@vger.kernel.org,
- linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
- Abel Vesa <abel.vesa@linaro.org>,
- Heikki Krogerus <heikki.krogerus@linux.intel.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>
-To: Abel Vesa <abel.vesa@linaro.org>
-In-Reply-To: <20241101-x1e80100-ps8830-v4-2-f0f7518b263e@linaro.org>
+Subject: Re: [PATCH 2/3] media: dt-bindings: media: camss: Add
+ qcom,msm8953-camss binding
+To: =?UTF-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <barnabas.czeman@mainlining.org>,
+ Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+References: <20241101-camss-msm8953-v1-0-4012559fcbc2@mainlining.org>
+ <20241101-camss-msm8953-v1-2-4012559fcbc2@mainlining.org>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20241101-camss-msm8953-v1-2-4012559fcbc2@mainlining.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-Le 01/11/2024 à 17:29, Abel Vesa a écrit :
-> The Parade PS8830 is a USB4, DisplayPort and Thunderbolt 4 retimer,
-> controlled over I2C. It usually sits between a USB/DisplayPort PHY
-> and the Type-C connector, and provides orientation and altmode handling.
+On 01/11/2024 13:47, Barnabás Czémán wrote:
+> Add bindings for qcom,msm8953-camss in order to support the camera
+> subsystem for MSM8953/SDM450/SDM632.
 > 
-> The boards that use this retimer are the ones featuring the Qualcomm
-> Snapdragon X Elite SoCs.
-> 
-> Add a driver with support for the following modes:
->   - DisplayPort 4-lanes
->   - DisplayPort 2-lanes + USB3
->   - USB3
-> 
-> There is another variant of this retimer which is called PS8833. It seems
-> to be really similar to the PS8830, so future-proof this driver by
-> naming it ps883x.
-> 
-> Signed-off-by: Abel Vesa <abel.vesa-QSEj5FYQhm4dnm+yROfE0A@public.gmane.org>
+> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
 > ---
+>   .../bindings/media/qcom,msm8953-camss.yaml         | 320 +++++++++++++++++++++
+>   1 file changed, 320 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/media/qcom,msm8953-camss.yaml b/Documentation/devicetree/bindings/media/qcom,msm8953-camss.yaml
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..39b9c58e2a2ea2e1ad434aa35bf6ee128d3a0649
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/media/qcom,msm8953-camss.yaml
+> @@ -0,0 +1,320 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/media/qcom,msm8953-camss.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm CAMSS ISP
+> +
+> +maintainers:
+> +  - Barnabas Czeman <barnabas.czeman@mainlining.org>
+> +
+> +description: |
+> +  The CAMSS IP is a CSI decoder and ISP present on Qualcomm platforms
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,msm8953-camss
+> +
+> +  clocks:
+> +    minItems: 30
+> +    maxItems: 30
+> +
+> +  clock-names:
+> +    items:
+> +      - const: top_ahb
+> +      - const: ispif_ahb
+> +      - const: micro_ahb
+> +      - const: csiphy0_timer
+> +      - const: csiphy1_timer
+> +      - const: csiphy2_timer
+> +      - const: csi0_ahb
+> +      - const: csi0
+> +      - const: csi0_phy
+> +      - const: csi0_pix
+> +      - const: csi0_rdi
+> +      - const: csi1_ahb
+> +      - const: csi1
+> +      - const: csi1_phy
+> +      - const: csi1_pix
+> +      - const: csi1_rdi
+> +      - const: csi2_ahb
+> +      - const: csi2
+> +      - const: csi2_phy
+> +      - const: csi2_pix
+> +      - const: csi2_rdi
+> +      - const: ahb
+> +      - const: vfe0
+> +      - const: csi_vfe0
+> +      - const: vfe0_ahb
+> +      - const: vfe0_axi
+> +      - const: vfe1
+> +      - const: csi_vfe1
+> +      - const: vfe1_ahb
+> +      - const: vfe1_axi
 
-Hi,
-
-...
-
-> +static void ps883x_disable_vregs(struct ps883x_retimer *retimer)
-> +{
-> +	regulator_disable(retimer->vddio_supply);
-> +	regulator_disable(retimer->vddat_supply);
-> +	regulator_disable(retimer->vddar_supply);
-> +	regulator_disable(retimer->vdd_supply);
-> +	regulator_disable(retimer->vdd33_cap_supply);
-> +	regulator_disable(retimer->vdd33_supply);
-> +}
-> +
-> +static int ps883x_get_vregs(struct ps883x_retimer *retimer)
-
-This could maybe be replaced by a
-devm_regulator_bulk_get() call?
-(and use the bulk API in other places)
-
-> +{
-> +	struct device *dev = &retimer->client->dev;
-> +
-> +	retimer->vdd_supply = devm_regulator_get(dev, "vdd");
-> +	if (IS_ERR(retimer->vdd_supply))
-> +		return dev_err_probe(dev, PTR_ERR(retimer->vdd_supply),
-> +				     "failed to get VDD\n");
-> +
-> +	retimer->vdd33_supply = devm_regulator_get(dev, "vdd33");
-> +	if (IS_ERR(retimer->vdd33_supply))
-> +		return dev_err_probe(dev, PTR_ERR(retimer->vdd33_supply),
-> +				     "failed to get VDD 3.3V\n");
-> +
-> +	retimer->vdd33_cap_supply = devm_regulator_get(dev, "vdd33-cap");
-> +	if (IS_ERR(retimer->vdd33_cap_supply))
-> +		return dev_err_probe(dev, PTR_ERR(retimer->vdd33_cap_supply),
-> +				     "failed to get VDD CAP 3.3V\n");
-> +
-> +	retimer->vddat_supply = devm_regulator_get(dev, "vddat");
-> +	if (IS_ERR(retimer->vddat_supply))
-> +		return dev_err_probe(dev, PTR_ERR(retimer->vddat_supply),
-> +				     "failed to get VDD AT\n");
-> +
-> +	retimer->vddar_supply = devm_regulator_get(dev, "vddar");
-> +	if (IS_ERR(retimer->vddar_supply))
-> +		return dev_err_probe(dev, PTR_ERR(retimer->vddar_supply),
-> +				     "failed to get VDD AR\n");
-> +
-> +	retimer->vddio_supply = devm_regulator_get(dev, "vddio");
-> +	if (IS_ERR(retimer->vddio_supply))
-> +		return dev_err_probe(dev, PTR_ERR(retimer->vddio_supply),
-> +				     "failed to get VDD IO\n");
-> +
-> +	return 0;
-> +}
-
-...
-
-> +static int ps883x_retimer_probe(struct i2c_client *client)
-> +{
-> +	struct device *dev = &client->dev;
-> +	struct typec_switch_desc sw_desc = { };
-> +	struct typec_retimer_desc rtmr_desc = { };
-> +	struct ps883x_retimer *retimer;
-> +	int ret;
-> +
-> +	retimer = devm_kzalloc(dev, sizeof(*retimer), GFP_KERNEL);
-> +	if (!retimer)
-> +		return -ENOMEM;
-> +
-> +	retimer->client = client;
-> +
-> +	mutex_init(&retimer->lock);
-> +
-> +	retimer->regmap = devm_regmap_init_i2c(client, &ps883x_retimer_regmap);
-> +	if (IS_ERR(retimer->regmap)) {
-> +		ret = PTR_ERR(retimer->regmap);
-> +		dev_err(dev, "failed to allocate register map: %d\n", ret);
-
-Maybe dev_err_probe() as below?
-
-> +		return ret;
-> +	}
-> +
-> +	ret = ps883x_get_vregs(retimer);
-> +	if (ret)
-> +		return ret;
-> +
-> +	retimer->xo_clk = devm_clk_get(dev, NULL);
-> +	if (IS_ERR(retimer->xo_clk))
-> +		return dev_err_probe(dev, PTR_ERR(retimer->xo_clk),
-> +				     "failed to get xo clock\n");
-> +
-> +	retimer->reset_gpio = devm_gpiod_get(dev, "reset", GPIOD_ASIS);
-> +	if (IS_ERR(retimer->reset_gpio))
-> +		return dev_err_probe(dev, PTR_ERR(retimer->reset_gpio),
-> +				     "failed to get reset gpio\n");
-> +
-> +	retimer->typec_switch = typec_switch_get(dev);
-> +	if (IS_ERR(retimer->typec_switch))
-> +		return dev_err_probe(dev, PTR_ERR(retimer->typec_switch),
-> +				     "failed to acquire orientation-switch\n");
-> +
-> +	retimer->typec_mux = typec_mux_get(dev);
-> +	if (IS_ERR(retimer->typec_mux)) {
-> +		ret = dev_err_probe(dev, PTR_ERR(retimer->typec_mux),
-> +				    "failed to acquire mode-mux\n");
-> +		goto err_switch_put;
-> +	}
-> +
-> +	ret = drm_aux_bridge_register(dev);
-> +	if (ret)
-> +		goto err_mux_put;
-> +
-> +	ret = clk_prepare_enable(retimer->xo_clk);
-> +	if (ret) {
-> +		dev_err(dev, "failed to enable XO: %d\n", ret);
-> +		goto err_mux_put;
-> +	}
-> +
-> +	ret = ps883x_enable_vregs(retimer);
-> +	if (ret)
-> +		goto err_clk_disable;
-> +
-> +	sw_desc.drvdata = retimer;
-> +	sw_desc.fwnode = dev_fwnode(dev);
-> +	sw_desc.set = ps883x_sw_set;
-> +
-> +	retimer->sw = typec_switch_register(dev, &sw_desc);
-> +	if (IS_ERR(retimer->sw)) {
-> +		ret = PTR_ERR(retimer->sw);
-> +		dev_err(dev, "failed to register typec switch: %d\n", ret);
-
-Maybe dev_err_probe() as above?
-
-> +		goto err_vregs_disable;
-> +	}
-> +
-> +	rtmr_desc.drvdata = retimer;
-> +	rtmr_desc.fwnode = dev_fwnode(dev);
-> +	rtmr_desc.set = ps883x_retimer_set;
-> +
-> +	retimer->retimer = typec_retimer_register(dev, &rtmr_desc);
-> +	if (IS_ERR(retimer->retimer)) {
-> +		ret = PTR_ERR(retimer->retimer);
-> +		dev_err(dev, "failed to register typec retimer: %d\n", ret);
-
-Maybe dev_err_probe() as above?
-
-> +		goto err_switch_unregister;
-> +	}
-> +
-> +	/* skip resetting if already configured */
-> +	if (regmap_test_bits(retimer->regmap, 0x00, BIT(0)))
-> +		return 0;
-> +
-> +	gpiod_direction_output(retimer->reset_gpio, 1);
-> +
-> +	/* VDD IO supply enable to reset release delay */
-> +	usleep_range(4000, 14000);
-> +
-> +	gpiod_set_value(retimer->reset_gpio, 0);
-> +
-> +	/* firmware initialization delay */
-> +	msleep(60);
-> +
-> +	return 0;
-> +
-> +err_switch_unregister:
-> +	typec_switch_unregister(retimer->sw);
-> +err_vregs_disable:
-> +	ps883x_disable_vregs(retimer);
-> +err_clk_disable:
-> +	clk_disable_unprepare(retimer->xo_clk);
-> +err_mux_put:
-> +	typec_mux_put(retimer->typec_mux);
-> +err_switch_put:
-> +	typec_switch_put(retimer->typec_switch);
-> +
-> +	return ret;
-> +}
-> +
-> +static void ps883x_retimer_remove(struct i2c_client *client)
-> +{
-> +	struct ps883x_retimer *retimer = i2c_get_clientdata(client);
-> +
-> +	typec_retimer_unregister(retimer->retimer);
-> +	typec_switch_unregister(retimer->sw);
-> +
-> +	gpiod_set_value(retimer->reset_gpio, 1);
-> +
-> +	regulator_disable(retimer->vddio_supply);
-> +	regulator_disable(retimer->vddat_supply);
-> +	regulator_disable(retimer->vddar_supply);
-> +	regulator_disable(retimer->vdd_supply);
-> +	regulator_disable(retimer->vdd33_cap_supply);
-> +	regulator_disable(retimer->vdd33_supply);
-
-ps883x_disable_vregs()?
+These should be sorted alphanumerically, take sm8250-camss.yaml as the 
+reference.
 
 > +
-> +	clk_disable_unprepare(retimer->xo_clk);
+> +  interrupts:
+> +    minItems: 9
+> +    maxItems: 9
 > +
-> +	typec_mux_put(retimer->typec_mux);
-> +	typec_switch_put(retimer->typec_switch);
-> +}
+> +  interrupt-names:
+> +    items:
+> +      - const: csiphy0
+> +      - const: csiphy1
+> +      - const: csiphy2
+> +      - const: csid0
+> +      - const: csid1
+> +      - const: csid2
+> +      - const: ispif
+> +      - const: vfe0
+> +      - const: vfe1
+> +
+> +  iommus:
+> +    maxItems: 1
+> +
+> +  power-domains:
+> +    items:
+> +      - description: VFE0 GDSC - Video Front End, Global Distributed Switch Controller.
+> +      - description: VFE1 GDSC - Video Front End, Global Distributed Switch Controller.
+> +
 
-...
+Please name your power-domains.
 
-CJ
+> +  ports:
+> +    $ref: /schemas/graph.yaml#/properties/ports
+> +
+> +    description:
+> +      CSI input ports.
+> +
+> +    properties:
+> +      port@0:
+> +        $ref: /schemas/graph.yaml#/$defs/port-base
+> +        unevaluatedProperties: false
+> +        description:
+> +          Input port for receiving CSI data.
+> +
+> +        properties:
+> +          endpoint:
+> +            $ref: video-interfaces.yaml#
+> +            unevaluatedProperties: false
+> +
+> +            properties:
+> +              data-lanes:
+> +                description:
+> +                  An array of physical data lanes indexes.
+> +                  Position of an entry determines the logical
+> +                  lane number, while the value of an entry
+> +                  indicates physical lane index. Lane swapping
+> +                  is supported. Physical lane indexes;
+> +                  0, 2, 3, 4.
+> +                minItems: 1
+> +                maxItems: 4
+> +
+> +            required:
+> +              - data-lanes
+> +
+> +      port@1:
+> +        $ref: /schemas/graph.yaml#/$defs/port-base
+> +        unevaluatedProperties: false
+> +        description:
+> +          Input port for receiving CSI data.
+> +
+> +        properties:
+> +          endpoint:
+> +            $ref: video-interfaces.yaml#
+> +            unevaluatedProperties: false
+> +
+> +            properties:
+> +              data-lanes:
+> +                minItems: 1
+> +                maxItems: 4
+> +
+> +            required:
+> +              - data-lanes
+> +
+> +      port@2:
+> +        $ref: /schemas/graph.yaml#/$defs/port-base
+> +        unevaluatedProperties: false
+> +        description:
+> +          Input port for receiving CSI data.
+> +
+> +        properties:
+> +          endpoint:
+> +            $ref: video-interfaces.yaml#
+> +            unevaluatedProperties: false
+> +
+> +            properties:
+> +              data-lanes:
+> +                minItems: 1
+> +                maxItems: 4
+> +
+> +            required:
+> +              - data-lanes
+> +
+> +  reg:
+> +    minItems: 13
+> +    maxItems: 13
+> +
+> +  reg-names:
+> +    items:
+> +      - const: csiphy0
+> +      - const: csiphy0_clk_mux
+> +      - const: csiphy1
+> +      - const: csiphy1_clk_mux
+> +      - const: csiphy2
+> +      - const: csiphy2_clk_mux
+> +      - const: csid0
+> +      - const: csid1
+> +      - const: csid2
+> +      - const: ispif
+> +      - const: csi_clk_mux
+> +      - const: vfe0
+> +      - const: vfe1
+
+Please sort these alphanumerically too.
+
+> +
+> +  vdda-supply:
+> +    description:
+> +      Definition of the regulator used as analog power supply.
+> +
+> +required:
+> +  - clock-names
+> +  - clocks
+> +  - compatible
+> +  - interrupt-names
+> +  - interrupts
+> +  - iommus
+> +  - power-domains
+> +  - reg
+> +  - reg-names
+> +  - vdda-supply
+
+These are out of order, please see:
+
+Documentation/devicetree/bindings/dts-coding-style.rst
+
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +    #include <dt-bindings/clock/qcom,gcc-msm8953.h>
+> +
+> +    camss: camss@1b00000 {
+> +
+> +      compatible = "qcom,msm8953-camss";
+> +
+> +      clocks = <&gcc GCC_CAMSS_TOP_AHB_CLK>,
+> +        <&gcc GCC_CAMSS_ISPIF_AHB_CLK>,
+
+Your example indentation is broken, likely copy/paste from your dtsi 
+without updating for characters instead of tabs.
+
+---
+bod
 
