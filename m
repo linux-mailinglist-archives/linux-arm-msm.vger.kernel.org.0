@@ -1,193 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-36685-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36686-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7E86A9B8C24
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 08:41:03 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A50619B8C4D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 08:48:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 986501C21DFE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 07:41:02 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1D9A9B21832
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 07:48:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00FB41547C9;
-	Fri,  1 Nov 2024 07:40:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0AB6C15530C;
+	Fri,  1 Nov 2024 07:47:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kndf8JpZ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="w6HmAhee"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7D3455896;
-	Fri,  1 Nov 2024 07:40:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEBCB16A930
+	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Nov 2024 07:47:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730446858; cv=none; b=HzBOle3t3ju92sqnb66uGBbhUbUv4mjdd1QdQjMprcgO/2yzuFte5i/ZYtWwo19+7V6L66CFnr4I9YZdTcwshUyUCTQaeP9pzkxUVqKib4wgZdTEMj4YKfwIua/9FKuem9HdwyrWpU9u1VqUuE7NCd/EmcJ7HZichO3Fktt4qFs=
+	t=1730447227; cv=none; b=RA7b5wqITNvdeaI3H+op1o1Z0Or9TGvUu/7F9qxWpnl5Kkd4+fkXzbN3pKeP3nTOAZmzbsvVsuiHSmUwT4LomSxTBKyQOzyJ9cezQAKUU1mlHUdGgCRjAJ1/zr1XZ7qn4DJMg17Rez1yjGZvG2Qy6FlHACEfo+ivlsWKRrztoW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730446858; c=relaxed/simple;
-	bh=mU0VMdm104wjRtXVgEZ+lSglLurcb/kByS+gvz22oYQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ezoW/YP/yqSNzCqcx+5go1jlEupvBuwjir4B2ihvanUuTsXKqi8w+lRaYxEwnxsVEESFeGplsdv3D/iDlAZEOdssUKsSJvrnpo0jM/pg5e+kYdZauDXPrGn8uyYNFT0KDCl6VNjsAEWyyU4IDrKSReFRBVwf5ES0WXcukLvIhJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kndf8JpZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 481CDC4CECD;
-	Fri,  1 Nov 2024 07:40:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730446858;
-	bh=mU0VMdm104wjRtXVgEZ+lSglLurcb/kByS+gvz22oYQ=;
-	h=From:To:Cc:Subject:Date:From;
-	b=kndf8JpZMuw9uSCjbF0JPSc2ffqCm95tneDc4TjMoWczMtX/0pFUesBTleAp+/eeT
-	 /wScMeTnMYh2gulgTSSLCYpD2W+Jkb9QqF/MFzja+spe3lPSeSw0QauSrdait5WBc1
-	 AQqahsuRRPyHSUbWgf0NNDtqV9y9BF1fZXJMDX5I0rd4Ta/C6KzfSc78rvLVoFmTPB
-	 DPvaK2JcBVRhbfhZx+hKLpM4cYQwhfs7y2O92BWEX6esIm4L8J7g562wCKgS+uciwe
-	 O0AIU9EYScS+D3Clzvd83gR6v36FzAW/B62or1dQhEz0ewJZkOx9BFJunm1Ry6HD5u
-	 UIzpzjfE3SPpg==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan+linaro@kernel.org>)
-	id 1t6mHA-000000005q3-1KoG;
-	Fri, 01 Nov 2024 08:40:56 +0100
-From: Johan Hovold <johan+linaro@kernel.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>
-Cc: Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: [PATCH v3] arm64: dts: x1e80100-crd: describe HID supplies
-Date: Fri,  1 Nov 2024 08:40:06 +0100
-Message-ID: <20241101074006.22390-1-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.45.2
+	s=arc-20240116; t=1730447227; c=relaxed/simple;
+	bh=WWEShY4euKxE7zczVzstNb7RApQpM/nsWLVDUKZgZV4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=r9zWD+gOtimrKbCmPcte2lWD4jMavqWNmTlvr0Iig6zF4Yt7KyiYk7zX/uPyk/IuwYQb6YojGi+PnkrQHebF0WG2zH4zdkrblGD9K65fdpEeBmNlzYjBJx3wSN24fvTsvU7zfJXW/zPb3pstxh2yOFnACLRKmMYuhB7kzXe+Yxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=w6HmAhee; arc=none smtp.client-ip=209.85.208.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2fb5638dd57so17053451fa.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Nov 2024 00:47:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1730447224; x=1731052024; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=3QfmYrjTtt0LfprwqBQtK+1fdf0eWDg7ZLSaat2tCLk=;
+        b=w6HmAheeWvu9um9tWzMOTRULdhgWgTv2oqNiwPAsYwqVxemjD2HQwkOqSc7x41frsU
+         vAJnLmZ3hdGLInK/6+asg/7SEHgQD7qdVeS6518pbdXYtjsxUZbvMfcaKz/Ko/9F4Bvi
+         RuNeL2lYgxpcy0nTUf9LpS30mu6tzKp1ko1l/yyK4VD+3VoNolv4+lmdeRwWJvWEe/H+
+         j3AJkaKHKb2VrYq1Mo3WIaTKCWymo+E9sh7iTcYdj2vyJEUfP/b5DmKIzNgpgAPnjAy4
+         AfmGtw31lC/cw3jHiN4rsHJi9q8nKd6K6IG++anFxdCSl9OheU+nglWH4kORBgJX09vW
+         vCWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730447224; x=1731052024;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3QfmYrjTtt0LfprwqBQtK+1fdf0eWDg7ZLSaat2tCLk=;
+        b=I8aiePZqsXw5YNyEd61mIUK3v33K5LsjRCPvS6qChYV7vKIzPuOL6IU35oBd1Vq9kX
+         EZDAArJFxsGDg9xTl1/rs9Jipkw0UcWWQKS+iV6U5/tDazm9q7cQJ1N0zgPJ1FWb6Imk
+         fFDsHmoF3ywzw2RJb/eiOnR4JlU3t6mRs4Hp5BQKU/VCDjus7RrfBAyYSfTtxzZ7qz/r
+         KoX6oZgAajgA8+WFjiFJC/TIbcoE9GKM+iBMcicrYPSpLuiLk7NW8XE8qvMg+kE6ykP9
+         gT0UUGAiz3tUjnkTPG8EMIsanv4TFZDtPkF+5btuovReP+ot7Sbtf9tcvR15E0XbvJOg
+         QGdg==
+X-Forwarded-Encrypted: i=1; AJvYcCX2O8daopCmefmVAD5mTIwIpvjMiy+pQv416YwKwNQEa2ccyYttEWBq1oTS/LbKBePr6V6w8MdxRjpzZRk2@vger.kernel.org
+X-Gm-Message-State: AOJu0YxL14WV4/hbY01iwAcjWhahCjXshvsY3+DzkTg/b8+V3ktKtw9B
+	fKIoCa/jziNWUomwk1IlXc6OXC6uLWZMIceeLRT+GwqnZccgFZZfJzVFtH4N3m4=
+X-Google-Smtp-Source: AGHT+IGG6mDJzCk5XMjM5Zd1FqUmWkJsjFyLoQYcp+YZdU3HVj3eejfBgRnLxvAnC4qg+sDoR4YgJw==
+X-Received: by 2002:a2e:a984:0:b0:2fb:5d41:bdac with SMTP id 38308e7fff4ca-2fcbdf5faa7mr130593981fa.1.1730447223553;
+        Fri, 01 Nov 2024 00:47:03 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2fdef3aeb4dsm4859691fa.12.2024.11.01.00.47.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 01 Nov 2024 00:47:03 -0700 (PDT)
+Date: Fri, 1 Nov 2024 09:47:00 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Krishna Kurapati <quic_kriskura@quicinc.com>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 1/4] dt-bindings: arm: qcom-soc: simplify SoC-matching
+ patterns
+Message-ID: <iixsrpkyzae5mpwsa2qm5jdyftzgav52ryficoizlhfzw54xbi@gdfxwmjutqp2>
+References: <20241101-sar2130p-dt-v3-0-61597eaf0c37@linaro.org>
+ <20241101-sar2130p-dt-v3-1-61597eaf0c37@linaro.org>
+ <pmgutki3fjqbka5ozalevpw7qptmzykhqxiaofqc2nh4gpnn4f@bgmz6fknavbf>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <pmgutki3fjqbka5ozalevpw7qptmzykhqxiaofqc2nh4gpnn4f@bgmz6fknavbf>
 
-Add the missing HID supplies to avoid relying on other consumers to keep
-them on.
+On Fri, Nov 01, 2024 at 08:26:04AM +0100, Krzysztof Kozlowski wrote:
+> On Fri, Nov 01, 2024 at 02:49:22AM +0200, Dmitry Baryshkov wrote:
+> > The patterns for individual SoC families grew up to be pretty complex,
+> > containing lots of special cases and optional suffixes. Split them per
+> > the suffix to make it easier to extend SoC patterns.
+> 
+> This is doing something quite different - split is not important here.
+> Instead you narrow the patterns significantly and disallow things like
+> msm8994pro, sc8280p or sc8280px, and allow things like sa5200p.
 
-This also avoids the following warnings on boot:
+Just for the sake of correctness, msm8994pro is still allowed, if I'm
+not mistaken.
 
-	i2c_hid_of 0-0010: supply vdd not found, using dummy regulator
-	i2c_hid_of 0-0010: supply vddl not found, using dummy regulator
-	i2c_hid_of 1-0015: supply vdd not found, using dummy regulator
-	i2c_hid_of 1-0015: supply vddl not found, using dummy regulator
-	i2c_hid_of 1-003a: supply vdd not found, using dummy regulator
-	i2c_hid_of 1-003a: supply vddl not found, using dummy regulator
+> I don't see here much of pattern simplifying - dropping (pro)? really
+> makes little difference.
 
-Note that VREG_MISC_3P3 is also used for things like the fingerprint
-reader which are not yet fully described so mark the regulator as always
-on for now.
+Patterns are simplified by being explicit. E.g. in the previous
+iteration I completely didn't notice the intersection of the |p that I
+have added with the existing [a-z][a-z]? pattern. If you think that
+sa5200p should be disallowed, I can tune the numeric part of the
+pattern. And sc8280p / sc8280px should not be allowed in the first
+place, such platforms don't exist.
 
-Fixes: d7e03cce0400 ("arm64: dts: qcom: x1e80100-crd: Enable more support")
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
-
-Changes in v3
- - move 'pinctrl-names' after 'pinctrl-0'
-
-Changes in v2:
- - amend the pin config in order not to rely on the boot firmware
-
-
- arch/arm64/boot/dts/qcom/x1e80100-crd.dts | 40 +++++++++++++++++++++++
- 1 file changed, 40 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-index b50accb220e5..88f6b1fa7c74 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-@@ -8,6 +8,7 @@
- #include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/input/gpio-keys.h>
- #include <dt-bindings/input/input.h>
-+#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- 
- #include "x1e80100.dtsi"
-@@ -277,6 +278,23 @@ vreg_edp_3p3: regulator-edp-3p3 {
- 		regulator-boot-on;
- 	};
- 
-+	vreg_misc_3p3: regulator-misc-3p3 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_MISC_3P3";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		gpio = <&pm8550ve_8_gpios 6 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&misc_3p3_reg_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-boot-on;
-+		regulator-always-on;
-+	};
-+
- 	vreg_nvme: regulator-nvme {
- 		compatible = "regulator-fixed";
- 
-@@ -691,6 +709,9 @@ touchpad@15 {
- 		hid-descr-addr = <0x1>;
- 		interrupts-extended = <&tlmm 3 IRQ_TYPE_LEVEL_LOW>;
- 
-+		vdd-supply = <&vreg_misc_3p3>;
-+		vddl-supply = <&vreg_l12b_1p2>;
-+
- 		pinctrl-0 = <&tpad_default>;
- 		pinctrl-names = "default";
- 
-@@ -704,6 +725,9 @@ keyboard@3a {
- 		hid-descr-addr = <0x1>;
- 		interrupts-extended = <&tlmm 67 IRQ_TYPE_LEVEL_LOW>;
- 
-+		vdd-supply = <&vreg_misc_3p3>;
-+		vddl-supply = <&vreg_l12b_1p2>;
-+
- 		pinctrl-0 = <&kybd_default>;
- 		pinctrl-names = "default";
- 
-@@ -723,6 +747,9 @@ touchscreen@10 {
- 		hid-descr-addr = <0x1>;
- 		interrupts-extended = <&tlmm 51 IRQ_TYPE_LEVEL_LOW>;
- 
-+		vdd-supply = <&vreg_misc_3p3>;
-+		vddl-supply = <&vreg_l15b_1p8>;
-+
- 		pinctrl-0 = <&ts0_default>;
- 		pinctrl-names = "default";
- 	};
-@@ -856,6 +883,19 @@ &pcie6a_phy {
- 	status = "okay";
- };
- 
-+&pm8550ve_8_gpios {
-+	misc_3p3_reg_en: misc-3p3-reg-en-state {
-+		pins = "gpio6";
-+		function = "normal";
-+		bias-disable;
-+		drive-push-pull;
-+		input-disable;
-+		output-enable;
-+		power-source = <1>; /* 1.8 V */
-+		qcom,drive-strength = <PMIC_GPIO_STRENGTH_LOW>;
-+	};
-+};
-+
- &pmc8380_3_gpios {
- 	edp_bl_en: edp-bl-en-state {
- 		pins = "gpio4";
 -- 
-2.45.2
-
+With best wishes
+Dmitry
 
