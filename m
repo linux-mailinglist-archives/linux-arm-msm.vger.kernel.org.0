@@ -1,48 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-36709-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36710-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 40C3F9B8E2C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 10:50:02 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id AC4039B8E78
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 11:01:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C628F1F225CA
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 09:50:01 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DA0D41C20DC3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 10:01:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F1A1D15A85A;
-	Fri,  1 Nov 2024 09:49:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A66515CD46;
+	Fri,  1 Nov 2024 10:00:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lI29fNDX"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FlIy/8L0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A779B42C0B;
-	Fri,  1 Nov 2024 09:49:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50E4D1D555
+	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Nov 2024 10:00:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730454595; cv=none; b=DBokZghq4QuFOSSNBJjtgK08tlHoRaKi40s95dwfRe1ZSWw4pWoyTy2njveQ1IIugmy8dpcfkL488uPybOp19rgxHWYatPmUee9deu6Vu9tmTKv1pbmkmNZql8PamSmgc2d6/FFI37+2vHi18nvAdXkeLQgkCJ2AuPRzC5RvExo=
+	t=1730455202; cv=none; b=nU1x+IYiPCovB1XNK4n+WSCjqnbRgqtheiG00psGqKcaR02m7GWxA5ekzE7k69HQUmiCYQ1x8jLPOLSo45rHLzB+EIM+7I7patMcW55/8BwFgIOcXVITxjTLNuF2IPwkmXavus+6PGZueUvlw6K8psSBaRZz8QC5CZ7Mlphb4VQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730454595; c=relaxed/simple;
-	bh=8mybr+g573QLB8vi326Tn05dtythG0Dyy/nIGzAho5k=;
+	s=arc-20240116; t=1730455202; c=relaxed/simple;
+	bh=ZkIHuit9XH/WbkdUw4J0iAuXlse9CJHtPB9iDLM0soo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pXei0YlwnC9LUZXDDn34XomXTtjcPshAYmj99cKojN5KNCVbAPN7G2Z6ApSR0EljZVcSkUnEjjzOhJ+QhsW3CRT5T6Nb+P2ZA48n4F251HsOrk/rb1Z4tA/TgeDyttg1o89ChSjuqg6L/cN9C2ptkAP4OCl7FdOlL2rMsFkwuKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lI29fNDX; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B279C4CECD;
-	Fri,  1 Nov 2024 09:49:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730454595;
-	bh=8mybr+g573QLB8vi326Tn05dtythG0Dyy/nIGzAho5k=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=lI29fNDXU+HohwL3YUi0vas036YAZZxwp5EWkCZqjC5fwXGVV6YbGq4sX3+OZlVdX
-	 TXFFg3+lMsGlWc8r5UhwnLVsSl87OTKQlzvzuBpA/V6Fdf1eqyjfYsBXrPGwQLXI26
-	 QGRFlF2ScHHmJSdVbDjSEOUGkLjFu4A9wWX5NnP9/ApMLKx1dg+mu7kCAJmAHAosmK
-	 btJHVjKapexzYM7noaFru/4zg+GMDAzn99+LU2o0cc6vyFtwo/3QU1bp/5SoT2F1Pe
-	 111tZ+ShHSHSmyKHJwuVxjGuy2mjf+NZYGhg+hiyjvIIuRpqR3c2jfa/S3P1mozc6n
-	 8aB2IZq4Y4O2g==
-Message-ID: <a7809641-c92f-4d03-aa59-a6714f19dc48@kernel.org>
-Date: Fri, 1 Nov 2024 10:49:47 +0100
+	 In-Reply-To:Content-Type; b=EOI91napgTL8az4u/tQGBLgXIBQz8rNv7x8MOk7N3TxXdmrMl4ey2sBRDSQqAbw3jR8wIQOOkyeZY4bVmKmjuOi57ge0SxokVSB/yx+kTWfrdsHcSpMe+cISi2S7VYdIIjUmnIYHxcwdmvrYWP/fiy1BcEl3ar4oC6QFXrbFAnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FlIy/8L0; arc=none smtp.client-ip=209.85.221.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-37d808ae924so1020659f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Nov 2024 03:00:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1730455198; x=1731059998; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=kCMYxsENI5KzW+rkth2c1UykDj87pqP/pFjISR1rPF0=;
+        b=FlIy/8L0sfKqvUXy3lvLzupC8nboS0ldmM0VdAMLYCYe+CkMzxceUqMuNNrifBpTDh
+         BQoW+BTg+f8Ic6KuCg6gUBqLzDO+v/krXH3Glmf6prBtauSGuN+JO0vb7kTXq5Jgxp33
+         KzUtLIie66NGhuD+1AP46+GnKaDLcr7WXLbn9X3pu6KZBeV0gkG4OnBYNPi2zb7ySjST
+         3VS4NiR1yUJjvM32Px5v2rzJjXud9z7a48wn3jMvlP8uwKUYFo688+AV+R0k6qwnGdBC
+         AmF0EBs2xzlT7r4+75AN+K9cg4ZwUOdgfCfRCMJFxeVEJOd0mW99GKr96qxzDD/HfbPj
+         ozWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730455198; x=1731059998;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=kCMYxsENI5KzW+rkth2c1UykDj87pqP/pFjISR1rPF0=;
+        b=xQt3UpTRUfuk+cwInJ5UP/7kXklB4YVD8BpR7X9WxTUWZAUZZAnEQ79QjgjRImhjyf
+         HRipTVrN55pwcho0tTIzf5ol5oIydVRBRjrge97wNKGqvb/w1iL1PJtVCqMql2oxX7dP
+         M1zGQQvAodlK1vbutKTvtWrRc2fQyMfitozjj8SFX7pOy5aCyalXsfspwNgQXpDCrH+f
+         jK1Ou0xvV/oXTfHOqwUKlAo35e0RneM6ukv5rmDeNgqdLk5txgpggn30IXZ+wks/tPnE
+         UqufXOjXv2F6N7N0sjTLENE0sGmA7UR38k5ZOV7BvHSHNsJ1T5f8A2OeGc+y7U626219
+         redw==
+X-Forwarded-Encrypted: i=1; AJvYcCWYs6T3DbAcDHMsmsz/aVIu7T9Y/rejDm8tgUDx687pTt3eYau2DMuc7ZK7ytIr6lGgnxJN1AhGMwH3KDmY@vger.kernel.org
+X-Gm-Message-State: AOJu0YyrDKxqOWG52ScIIBSKkSpFCVFHJm/x4tO+MLDJ9pP17ysUhve5
+	4WLayXGWc9MTYww82zkH4V+Jl1lGJIUbry4+FcW58eXJSPeQCBf6SETux7QH4dg=
+X-Google-Smtp-Source: AGHT+IHPedYLVwzy/bVIibNk6iPvacu9rvmCe3Ib1wQ1oV/5dOpF8xEpg5pq4bozzuGmgbu3MZNKhw==
+X-Received: by 2002:a5d:6a51:0:b0:37d:5301:6edb with SMTP id ffacd0b85a97d-38061221e7bmr14762555f8f.57.1730455198581;
+        Fri, 01 Nov 2024 02:59:58 -0700 (PDT)
+Received: from [192.168.0.17] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381c11898easm4569503f8f.117.2024.11.01.02.59.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 01 Nov 2024 02:59:58 -0700 (PDT)
+Message-ID: <a7975bd0-8593-4ecc-91d4-cbf2113037f4@linaro.org>
+Date: Fri, 1 Nov 2024 09:59:56 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,115 +76,51 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 2/5] dt-bindings: media: camss: Add qcom,sdm670-camss
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc: Richard Acayan <mailingradian@gmail.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Robert Foss <rfoss@kernel.org>,
- Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab
- <mchehab@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-media@vger.kernel.org
-References: <20241011023724.614584-7-mailingradian@gmail.com>
- <20241011023724.614584-9-mailingradian@gmail.com>
- <785c82d5-549d-454b-86bf-a00a39e6f521@linaro.org>
- <jcqgsgp4ivbokn545sy2rvfllm3vnygfpbufxagotuicacfmgd@v2hlnohlwzdf>
- <b054116e-c6a4-48c3-8162-571d653788a4@linaro.org>
- <6ce1f20b-1efb-408f-ac28-e8c35162643a@kernel.org>
- <fde8fd81-f9f5-4885-8dc1-5ccb115b856b@linaro.org>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v2 3/3] media: venus: Fix pm_runtime_set_suspended() with
+ runtime pm enabled
+To: Jinjie Ruan <ruanjinjie@huawei.com>, sakari.ailus@linux.intel.com,
+ mchehab@kernel.org, ming.qian@nxp.com, eagle.zhou@nxp.com,
+ stanimir.k.varbanov@gmail.com, quic_vgarodia@quicinc.com,
+ shijie.qin@nxp.com, hverkuil-cisco@xs4all.nl, linux-media@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Cc: chenridong@huawei.com
+References: <20241101094050.2421038-1-ruanjinjie@huawei.com>
+ <20241101094050.2421038-4-ruanjinjie@huawei.com>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <fde8fd81-f9f5-4885-8dc1-5ccb115b856b@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20241101094050.2421038-4-ruanjinjie@huawei.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 01/11/2024 10:36, Bryan O'Donoghue wrote:
-> On 01/11/2024 09:17, Krzysztof Kozlowski wrote:
->> On 31/10/2024 16:42, Bryan O'Donoghue wrote:
->>> On 11/10/2024 15:29, Krzysztof Kozlowski wrote:
->>>> How do you imagine writing drivers and request items by order (not by
->>>> name) if the order is different in each flavor?
->>>
->>> I don't think I'd be much in favour of relying on declaration order in
->>> the dts, favouring names to find resources instead, tbh.
->>>
->>> The 8250 has regs that sort by address and name in the same order. For
->>> 8280xp we preferred sort by address and you're right the interrupt
->>> sorting isn't consistent.
->>>
->>> However the latest applied dts for CAMSS is sort by address/irq not sort
->>> by reg-name irq-name.
->>>
->>> Unless its a NAK from yourself and Rob, that would certainly be my
->>> preference for any _new_ additions subsequent.
->>
->> It's not a NAK as long you keep the same order in new bindings, which I
->> think it is not possible. I repeat myself: there is no rule/style that
->> list should be ordered by values, but there is a rule that all devices
->> from the same family should have the same order of items in the list. I
->> don't think it is achievable with your approach - sorting by value.
+On 01/11/2024 09:40, Jinjie Ruan wrote:
+> It is not valid to call pm_runtime_set_suspended() for devices
+> with runtime PM enabled because it returns -EAGAIN if it is enabled
+> already and working. So, call pm_runtime_disable() before to fix it.
 > 
-> Grand.
+> Cc: stable@vger.kernel.org
+> Fixes: af2c3834c8ca ("[media] media: venus: adding core part and helper functions")
+> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+> ---
+> v2:
+> - Add Cc stable.
+> ---
+>   drivers/media/platform/qcom/venus/core.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> I'm happy enough to sort by IP alpha TBH.
+> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+> index 84e95a46dfc9..cabcf710c046 100644
+> --- a/drivers/media/platform/qcom/venus/core.c
+> +++ b/drivers/media/platform/qcom/venus/core.c
+> @@ -412,8 +412,8 @@ static int venus_probe(struct platform_device *pdev)
+>   	of_platform_depopulate(dev);
+>   err_runtime_disable:
+>   	pm_runtime_put_noidle(dev);
+> -	pm_runtime_set_suspended(dev);
+>   	pm_runtime_disable(dev);
+> +	pm_runtime_set_suspended(dev);
+>   	hfi_destroy(core);
+>   err_core_deinit:
+>   	hfi_core_deinit(core, false);
 
-I actually missed that Rob responded here clarifying his point of view.
-Two of DT maintainers expressed their dislike for such coding style of
-sorting by value.
-
-Regardless whether it is helping or not, it is not even possible to
-implement. Binding does not know the addresses and one could add a
-binding without DTS and drivers for some other user or future
-implementation. It's not even possible to implement that coding style.
-
-Best regards,
-Krzysztof
-
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
