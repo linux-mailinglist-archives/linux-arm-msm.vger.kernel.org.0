@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-36733-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36734-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B0529B9079
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 12:42:46 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F3C859B907D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 12:43:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D8A67B21D7D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 11:42:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8CDD8282934
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 11:42:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C97219CCEC;
-	Fri,  1 Nov 2024 11:42:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03B6D19E82A;
+	Fri,  1 Nov 2024 11:42:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ENUWM9t2"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JhzaQ5yb"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02A8919C54E;
-	Fri,  1 Nov 2024 11:42:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6BE419B586;
+	Fri,  1 Nov 2024 11:42:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730461341; cv=none; b=ptUtOGAXEPocwfWm/jHksSCUnFE90i5qUM3RfFb0mSMOn65iEoZKzO/bFUaaVZS2NXMHabyNJJG+x/3XimfTCbxE615OFPYUzSgJ9mp+tw5VDnYdNYDP5T1Uq7fYs5NAxC7PYYBK20YB8GzB92lNtF4gkHBn5EuJcnEjtPqKzU8=
+	t=1730461342; cv=none; b=fCUr3kLDF+Zz1BdquZoBK/7tZEJm7op4NAYmve1sDSocHFCwumD6NsrzLTSv82u5MWpOHlL2A3PIy3/ZZVnmJkgHTniI42IE4GT82vZWC9keMXpNsV5dEkzAKrcuN9qpMWnIqWe5V0iqRzMtv0uIkwU3RpDbs3aQfuhKEQROiyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730461341; c=relaxed/simple;
-	bh=TJK4dvAq0cz5a570yGOqBOxxnqLlaSDmkpM6PTTcWBY=;
+	s=arc-20240116; t=1730461342; c=relaxed/simple;
+	bh=bKQhNZTPEmk8K4/4hX6A5+BjPeSQ5IWyhVduxqcPwfA=;
 	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=f/uPLMzWih0itWdM8Qu7iHFX9xCsEITcQM2PbY+AurEJcX+/+yEaWxB0NCI+L8P/TJHaeyZLGiAVj0r849J1ZhA4xd7QoNNunvUp2lXeMnLniOk0Zk1lQmklVPNm4vdT153zZPWYdZ1r45oFnTdS0F+O7S41eaxSLoNuGEz7RfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ENUWM9t2; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97595C4CED4;
-	Fri,  1 Nov 2024 11:42:20 +0000 (UTC)
+	 Message-Id:Subject; b=EXOthBTNSQAOBw9q0xPfjuUq04mBZ+8zhN5O0V1ttPN4YaGa6awoSe2t0fhxuD7ZaSI+DWTzzwMKjpfdUff6r65QTa4cbuMpsY3WslZLjrJTaXHTwp4WRKcLOR9S96wwN+oLMx1kGPvClrbqUk4oCdNmkcCEZLuUPp9+yFfillw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JhzaQ5yb; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 051DFC4CECF;
+	Fri,  1 Nov 2024 11:42:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730461340;
-	bh=TJK4dvAq0cz5a570yGOqBOxxnqLlaSDmkpM6PTTcWBY=;
+	s=k20201202; t=1730461342;
+	bh=bKQhNZTPEmk8K4/4hX6A5+BjPeSQ5IWyhVduxqcPwfA=;
 	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=ENUWM9t2Lyk0GNAbn7+NOtEzufxSgi09o+n/O83j6np1IJD3Ir7W1cJ1pzYMFQScf
-	 HnP51rUltsb2LKa1W062b4R1G0srozLt1zG+paEH7aefdq8R2WQVoFbxm9lQyzmeee
-	 I7xrl7eKV3iQiQmLLiqmzsOGiYxuZsRDRbTP3hepUXptoDMTvCoYpUu1fDVxaWY0sP
-	 HG7HKbL8OCU5cE4P/oirvxu7DM9uQWToVTs389FgUe92YLCKJrakBz06eQMCdKhdoK
-	 NJQgix9I9pWzwoaHFAlD7KHIIVK536Wi4XwP0To0hKIyl+3MLbZJMhCCMt+Hmw/bxw
-	 I6upao3711Iig==
-Date: Fri, 01 Nov 2024 06:42:19 -0500
+	b=JhzaQ5ybUYLB2oHf4/2Z/D9etOS/kDCGWPxBJ7k+t22HdJdIiSmHwl09CDWVd7quJ
+	 EoovQtlAT0jsLOQFuEXQj2mtulvbI7kWeSqh2NR8/du0VDPLiBORcokeAHk2CI3WzV
+	 n7fYFbrXUVNtH7vQL423Qmz90Sh4RY7iBqWR4No03B/CIVayMmKTZ7ffK2dGvHki4i
+	 hENyC7yNFg7+lJama3ucfcnr6UlyDZ2NIfdG7tX0Cxyon4OBUwKuVlIgvvVp3Dcxdt
+	 Q6vbNu0mP6oGMKv3Jbf4Hztxg6Lxnimg9G+K4A8m5D6o1JtkXo+wj/8ThlmMsCLdJv
+	 brCrojhIFNT/Q==
+Date: Fri, 01 Nov 2024 06:42:21 -0500
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -52,32 +52,34 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 From: "Rob Herring (Arm)" <robh@kernel.org>
 To: Taniya Das <quic_tdas@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
- Catalin Marinas <catalin.marinas@arm.com>, linux-arm-msm@vger.kernel.org, 
- Jagadeesh Kona <quic_jkona@quicinc.com>, linux-clk@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Michael Turquette <mturquette@baylibre.com>, 
- Abhishek Sahu <absahu@codeaurora.org>, Stephen Boyd <sboyd@kernel.org>, 
- Will Deacon <will@kernel.org>, Ajit Pandey <quic_ajipan@quicinc.com>, 
+Cc: Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- linux-arm-kernel@lists.infradead.org, Conor Dooley <conor+dt@kernel.org>, 
- Imran Shaik <quic_imrashai@quicinc.com>, devicetree@vger.kernel.org
-In-Reply-To: <20241101-qcs615-mm-clockcontroller-v2-7-d1a4870a4aed@quicinc.com>
+ Imran Shaik <quic_imrashai@quicinc.com>, linux-clk@vger.kernel.org, 
+ Catalin Marinas <catalin.marinas@arm.com>, 
+ Conor Dooley <conor+dt@kernel.org>, Stephen Boyd <sboyd@kernel.org>, 
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+ Jagadeesh Kona <quic_jkona@quicinc.com>, 
+ Abhishek Sahu <absahu@codeaurora.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Ajit Pandey <quic_ajipan@quicinc.com>, linux-arm-kernel@lists.infradead.org, 
+ Bjorn Andersson <andersson@kernel.org>
+In-Reply-To: <20241101-qcs615-mm-clockcontroller-v2-9-d1a4870a4aed@quicinc.com>
 References: <20241101-qcs615-mm-clockcontroller-v2-0-d1a4870a4aed@quicinc.com>
- <20241101-qcs615-mm-clockcontroller-v2-7-d1a4870a4aed@quicinc.com>
-Message-Id: <173046133636.2741841.14625258150070202056.robh@kernel.org>
-Subject: Re: [PATCH v2 07/11] dt-bindings: clock: Add Qualcomm QCS615
- Graphics clock controller
+ <20241101-qcs615-mm-clockcontroller-v2-9-d1a4870a4aed@quicinc.com>
+Message-Id: <173046133733.2741917.9488977607112926104.robh@kernel.org>
+Subject: Re: [PATCH v2 09/11] dt-bindings: clock: Add Qualcomm QCS615 Video
+ clock controller
 
 
-On Fri, 01 Nov 2024 16:08:19 +0530, Taniya Das wrote:
-> Add DT bindings for the Graphics clock on QCS615 platforms. Add the
+On Fri, 01 Nov 2024 16:08:21 +0530, Taniya Das wrote:
+> Add DT bindings for the Video clock on QCS615 platforms. Add the
 > relevant DT include definitions as well.
 > 
 > Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
 > ---
->  .../bindings/clock/qcom,qcs615-gpucc.yaml          | 66 ++++++++++++++++++++++
->  include/dt-bindings/clock/qcom,qcs615-gpucc.h      | 39 +++++++++++++
->  2 files changed, 105 insertions(+)
+>  .../bindings/clock/qcom,qcs615-videocc.yaml        | 64 ++++++++++++++++++++++
+>  include/dt-bindings/clock/qcom,qcs615-videocc.h    | 30 ++++++++++
+>  2 files changed, 94 insertions(+)
 > 
 
 My bot found errors running 'make dt_binding_check' on your patch:
@@ -85,11 +87,12 @@ My bot found errors running 'make dt_binding_check' on your patch:
 yamllint warnings/errors:
 
 dtschema/dtc warnings/errors:
-
+Documentation/devicetree/bindings/clock/qcom,qcs615-gpucc.example.dts:19:18: fatal error: dt-bindings/clock/qcom,qcs615-gcc.h: No such file or directory
+make[2]: *** [scripts/Makefile.dtbs:129: Documentation/devicetree/bindings/clock/qcom,qcs615-gpucc.example.dtb] Error 1
 
 doc reference errors (make refcheckdocs):
 
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20241101-qcs615-mm-clockcontroller-v2-7-d1a4870a4aed@quicinc.com
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20241101-qcs615-mm-clockcontroller-v2-9-d1a4870a4aed@quicinc.com
 
 The base for the series is generally the latest rc1. A different dependency
 should be noted in *this* patch.
