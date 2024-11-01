@@ -1,131 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-36737-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36738-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 41F2F9B9121
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 13:29:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 600419B912A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 13:34:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 736161C21062
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 12:29:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 83CE41C20EEA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 12:34:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 539A819D088;
-	Fri,  1 Nov 2024 12:29:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C42D019C54E;
+	Fri,  1 Nov 2024 12:33:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xdH0TcYZ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kEF+sB1a"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+Received: from mail-il1-f173.google.com (mail-il1-f173.google.com [209.85.166.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7152319AD97
-	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Nov 2024 12:29:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C43CF194ACC;
+	Fri,  1 Nov 2024 12:33:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730464171; cv=none; b=GEk8WOfoCnZ9P2ZcA16euKqFid4xcgrSd/bX9TYWSZvR/z6gL02Vkwsc+nX6U0453BNeZG5CBcEyqNPQyKL/Z2uiE4AjOuCNBMarY4mhDw+nf3w606XlXC9gpY+Ed1zXT0EUyqyrXDM38l+PTngsSS90pVaxXz4kE18CgPJKBvA=
+	t=1730464439; cv=none; b=tekSU6BrrV6P/5p2xSfXScHELZGN80dbYgp/134djE/tAA44RDgUNaFmmtBBMuFdn0yPkuDMyo3OE7cyN+81jovlJkwYrrdu+RqeiTr3kEwPYULEc469CB6UMV4TdEG7LZVdQpfeydITrTgzoAEAyV1bGFqClFdW3QoUt3dQ2yw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730464171; c=relaxed/simple;
-	bh=LfkUxi30J7XZTgC+jEuHIwl8b+Zfd3uc3w+dbK/9Uss=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uC9NNSi5jJpbz1w+cVVMXRO6My7f7s8wp9lNB5hbO4SFAsxJ3kK+uJDwoNcArtUrPQJil9iDPZXY9WzupLbfnpn4OjdJm44kN6AJyKRq7eiYXj0F8dyInRtlPx1okEbR/paNdNyl3RQJtzw3lZTY+8j6PSTFBtMS7w2BQRkJDCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xdH0TcYZ; arc=none smtp.client-ip=209.85.221.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-37d808ae924so1086347f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Nov 2024 05:29:28 -0700 (PDT)
+	s=arc-20240116; t=1730464439; c=relaxed/simple;
+	bh=NLZgXQly6/JBYeaoMI2Gj4UqVeX9adEe2V/e7lQ8X5I=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Z8I/FzOatnBrS5Aw6WGR77Uhv+Rw0Lnsn2mFOED0bx/zWCDZh8wuPewUxZa2fa3tJ9KbUz2d5Ylf9VqoPzDvYqEvgBxbiOocnBGx8QEq2HmS0gy4aWDvUZSPXrC35AuMGxOPiCjX7wjUn1lzHeT/lcmII9tgqLVrQ3wzrYymcfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kEF+sB1a; arc=none smtp.client-ip=209.85.166.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-il1-f173.google.com with SMTP id e9e14a558f8ab-3a5075ed279so7628925ab.0;
+        Fri, 01 Nov 2024 05:33:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1730464167; x=1731068967; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6PYW2VODU+6ARkfOsKMX9HiT8wjTVrQXTg+TMoq0+tk=;
-        b=xdH0TcYZXLSOgycmYCeVtfz7T2HP+D5xDSUlUqkgvahpqIser0DzGGkeaaCG29mDRj
-         8kTGP0umKMlh5DRXmBmRxG7+a9nFozGjVt9+UxYevzjqgXL4wAoPFT1/+lYb4bxioFDr
-         qdU64qSES4EVgBLgI1u41W4E0y1RllrOozl94MaMDxEBVa6h4djreY+IsIn/n9w0PEBj
-         DjEvy43H8hDH7kiHIhVvg62RSw8G0decDybb0fVqsg9ZRgZlSwvwZFZAZ6v5oN8igjcB
-         p+vaISDIN3JFle2cryIjxt/GuYEyhPwwrg6+d7ZUVExaC842TdJuGBwAQVSajswpnknU
-         kq8Q==
+        d=gmail.com; s=20230601; t=1730464437; x=1731069237; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=luTIfl8fjfaYqdOzb0XicGQ8fkkc3h4j7fSA6fwqKtI=;
+        b=kEF+sB1a4/r9IryvNFDlcF30DzX0h5gQ6Z9wjcKhbFOJY1YO/UwPVE1ztABM/reY1I
+         W7n9xtNrETydxZxZhiM+ahWgRZhGrc4By6bqU0Hm3+zcJhmjQtRytkwLU9x3eC2N4Fb0
+         fi2GnibXNLGLLPYKXO/vracNhfxceK1o05CfeqCIJfVyo5heEQLLBH9MFuMFFmHExgRj
+         jQWWvoKOKZPzwtemwiqv5gSME39hUvN2flIr5iuZdFvAVnqya+g5HH5kT98dmTUIzdVq
+         KZMo7Jt7Kk9knxJF1AOTZeOzARZN8FewQzIljnGoBljSE7IkAZU9IDxxRCT9Bh8aK7kj
+         1B3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730464167; x=1731068967;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6PYW2VODU+6ARkfOsKMX9HiT8wjTVrQXTg+TMoq0+tk=;
-        b=s6f2K+55nWzE8D764E7MZ04HTnZDrrMQozVo521a+Bvrd3hANm7gCNXTVWPoXFJXE2
-         3AJYaRZDnWe28ijKEVzGHdSlfe/Jg5vHI+ZgIz91qWm3gquot15f2BOWHMOtG3KMYQK7
-         iJqiUTPazFbxZK8LIMZ1INczOvhk6CNWPdKp0Qq1xzYORBVp7pj2Lams1GoOifP7M+ap
-         S+79+aIrK65I4nelYHQoLnLh7ArvbcvCpX8c/BSfOBw+k9i/obibXzbtww1GwNRFa/Ir
-         QW0CEimerDXvAEaQ5283F82VnKmHf4jDCUWCjb7M46uofb3rEJtujJF0oLyjyx1ktYvE
-         h4pA==
-X-Forwarded-Encrypted: i=1; AJvYcCXT0BvXYJZ7S16oRzVJtdLsFk7RZGCpg4scW+u4l/mdT7ee6WK60VJwMxqKUbpQwGMpEceSZtsvrk/ZhXTj@vger.kernel.org
-X-Gm-Message-State: AOJu0YxMk/781kXCQQLArT6UgDsWpQK6XpErREOIDMR81doVIQ4MGj4F
-	zxzrUtmJCkL4MAEdKvYNN/GklOGF032abdUK3MHgyCcpFn1D2XWJx+j/eeJf6WI=
-X-Google-Smtp-Source: AGHT+IEexgLpdNZzNx7qKEixOWvz0WoBXAOf4WpMS8azuyv76BwBUIhQnnmrQYq6kNbYJFzHI4wWCA==
-X-Received: by 2002:a5d:4fc4:0:b0:37d:52e3:e3f0 with SMTP id ffacd0b85a97d-38061200becmr16575623f8f.44.1730464166764;
-        Fri, 01 Nov 2024 05:29:26 -0700 (PDT)
-Received: from [192.168.0.40] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381c10e734csm4981745f8f.60.2024.11.01.05.29.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 01 Nov 2024 05:29:26 -0700 (PDT)
-Message-ID: <7be231c6-a5b6-41ec-b43d-cbba07e7c448@linaro.org>
-Date: Fri, 1 Nov 2024 12:29:25 +0000
+        d=1e100.net; s=20230601; t=1730464437; x=1731069237;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=luTIfl8fjfaYqdOzb0XicGQ8fkkc3h4j7fSA6fwqKtI=;
+        b=xPGfXkfOV08Ft/uizmT3F2tEEDnsqULsoa/2dRN6PQiwUdcomx62jPTcH8YKcJrXZz
+         gZMg4Zls6h+35yYswuid+l3+MhuZOc42cZt8/5otylR8cyeZ8D1AbKfR42Hz920r/BJx
+         sZY7EV5YLeSHd/vWaqX4qrOquxpRSunjb1Hqdpzaz3SXf85zG6Gl8BXuopF9PZgLvYcA
+         ypx84isEwlgljXAOjk4G55XcKqJv6EjXOUQwZoI4kVXqnnJ+U8fQtVmFlMg3Cz1mB4Pu
+         51DYHqzqlEmoK4iYWz5sQrOBbW5sAWkfC5JdwDZkaQYQq+pMzsp8U2xa3CGQyXYVfW7Q
+         PJbA==
+X-Forwarded-Encrypted: i=1; AJvYcCUTdtddbld5udZRSRHnVNt2x1gPbpc7vbhsxIArhgJ3cvkLEgZQd64lvs1Rl1/h3Js8rML968wCshN5@vger.kernel.org, AJvYcCUhQCHNXD01RgEMVTcpaBD3BDCKq2VA9BIn2hJyd0p+pyQz0rmbnJypo2VVxIvcaD6kFZzS3tRNic9c1JmN@vger.kernel.org, AJvYcCWuqsgmzFoU1C5dvzUjln1uciX4SlhW99t01vX91lZHXiKRpzhGMHHQOyiwv8K+h9OzWBHJ/smWO3gSIuFEXw==@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywzj3UuEYv4g2SHiDsRlUWjRErHNl9HF+CBiA3jZ0XxEE3tGSai
+	kEVUoiefWAWZ7nRSOzo3pFb2uvitsOy4YCGizHq9QBfAZXk5y3FSTPdzJ45EqaVtn3rIvhL+b7u
+	SjAhAMT5lOxHz1stS5vetIxAtXPg=
+X-Google-Smtp-Source: AGHT+IHROmGFY4O7d8AzmJAHmAMWlbgwtTWlJERIniDbvCooTOD9qLFdaEGNBi0WQhCjbz4p3oj41XFMGb3QjjueJBk=
+X-Received: by 2002:a05:6e02:1e07:b0:3a4:e9b3:22ad with SMTP id
+ e9e14a558f8ab-3a602f7fbabmr77904845ab.0.1730464436782; Fri, 01 Nov 2024
+ 05:33:56 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 04/11] clk: qcom: camcc-qcs615: Add QCS615 camera clock
- controller driver
-To: Taniya Das <quic_tdas@quicinc.com>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Abhishek Sahu <absahu@codeaurora.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>,
- Will Deacon <will@kernel.org>
-Cc: Ajit Pandey <quic_ajipan@quicinc.com>,
- Imran Shaik <quic_imrashai@quicinc.com>,
- Jagadeesh Kona <quic_jkona@quicinc.com>, linux-arm-msm@vger.kernel.org,
- linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-References: <20241101-qcs615-mm-clockcontroller-v2-0-d1a4870a4aed@quicinc.com>
- <20241101-qcs615-mm-clockcontroller-v2-4-d1a4870a4aed@quicinc.com>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20241101-qcs615-mm-clockcontroller-v2-4-d1a4870a4aed@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20241025-b4-linux-next-24-10-25-camss-dts-fixups-v1-0-cdff2f1a5792@linaro.org>
+ <20241025-b4-linux-next-24-10-25-camss-dts-fixups-v1-6-cdff2f1a5792@linaro.org>
+In-Reply-To: <20241025-b4-linux-next-24-10-25-camss-dts-fixups-v1-6-cdff2f1a5792@linaro.org>
+From: Rob Clark <robdclark@gmail.com>
+Date: Fri, 1 Nov 2024 05:33:44 -0700
+Message-ID: <CAF6AEGu_qJYV3TnprJsqsWV_GoLhiBFQ8LNwfYDjczDparvZCA@mail.gmail.com>
+Subject: Re: [PATCH 6/6] arm64: dts: qcom: sdm845-db845c-navigation-mezzanine:
+ Add cma heap for libcamera softisp support
+To: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Depeng Shao <quic_depengs@quicinc.com>, Vikram Sharma <quic_vikramsa@quicinc.com>, 
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 01/11/2024 10:38, Taniya Das wrote:
-> +	.vco_val = 0x2 << 20,
+On Fri, Oct 25, 2024 at 8:49=E2=80=AFAM Bryan O'Donoghue
+<bryan.odonoghue@linaro.org> wrote:
+>
+> libcamera softisp requires a linux,cma heap export in order to support
+> user-space debayering, 3a and export to other system components such as
+> pipewire, Firefox/Chromium - Hangouts, Zoom etc.
 
-vco_val = BIT(21)
+AFAIU libcamera could use udmabuf, etc, and there is no hw requirement
+for CMA.  So it doesn't seem we should be adding this to dt.  And I'd
+really prefer that we not be using CMA just for lolz.
 
-> +	.vco_mask = 0x3 << 20,
+BR,
+-R
 
-Instead of bit shifting couldn't we just use GENMASK ?
-
-Aside from anything else shifting a hex value by a decimal value isn't 
-the clearest code in the world.
-
-vco_mask = GENMASK(21, 20)
-
-Much cleaner.
-
-drivers/clk/qcom/gcc-sm6115.c
-
-Same comment for all of the bit-shifts in the series, I appreciate the 
-shifts are what the downstream code does but BIT/GENMASK does this job 
-better.
-
-Once fixed you can add my
-
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-
-to this file
-
----
-bod
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+>  .../boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso     | 11 +++++=
+++++++
+>  1 file changed, 11 insertions(+)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.=
+dtso b/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
+> index d62a20f018e7a7e1c7e77f0c927c2d9fe7ae8509..c8507afcd1e0d1f9b14b6e4ed=
+cbc646032e7b6c9 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
+> @@ -9,6 +9,17 @@
+>  #include <dt-bindings/clock/qcom,camcc-sdm845.h>
+>  #include <dt-bindings/gpio/gpio.h>
+>
+> +/ {
+> +       reserved-memory {
+> +               linux,cma {
+> +                       compatible =3D "shared-dma-pool";
+> +                       size =3D <0x0 0x8000000>;
+> +                       reusable;
+> +                       linux,cma-default;
+> +               };
+> +       };
+> +};
+> +
+>  &camss {
+>         vdda-phy-supply =3D <&vreg_l1a_0p875>;
+>         vdda-pll-supply =3D <&vreg_l26a_1p2>;
+>
+> --
+> 2.47.0
+>
+>
 
