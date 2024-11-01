@@ -1,132 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-36759-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36760-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C00199B943B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 16:18:46 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7B2EF9B945D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 16:26:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7FA31282EAB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 15:18:45 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2352D1F21BA3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 15:26:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8EE641C305A;
-	Fri,  1 Nov 2024 15:18:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E572B1C6F43;
+	Fri,  1 Nov 2024 15:26:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="nBr1idrK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l17+oQiR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 365AB1C303A;
-	Fri,  1 Nov 2024 15:18:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B718A1A3031;
+	Fri,  1 Nov 2024 15:26:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730474320; cv=none; b=VGK9NHbp9A1z6llxi6kNpeYg/K30TwCkxE8C/H4YvPJM8IE6RM2ogAJvS5WyAyJ9x3H+MQAEtRl+r2jNQ2Oxgph4Ssm9K2AXf5Katjfxw1+uqFrrXqjtEMd+5ZO2DIwEr/J6iUxwo+eK+E2BihoX4K7bEQSa5nSaTHTwc1uI8Wc=
+	t=1730474801; cv=none; b=IZxfCuUHAYkR3zagp/CS0xxZv342fySe8aVp7cMoM55v6BdIKJfVeiTz00ArjD7z8TZWSbq2tv7QXl7w+pWMjRKc9Cg7pg59oLqwS+nTTIHnHL+HfTVB45+hK0Ib6XqlNchyoQJNBjnS3jJfx6/WX4dFkw3jaEPaweLKN92zVSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730474320; c=relaxed/simple;
-	bh=zuN5R7hbuH1BvhVCVBt/zGaYDCvPjEZM0tpyzDA8ZVA=;
-	h=Content-Type:MIME-Version:In-Reply-To:References:Subject:From:To:
-	 Cc:Date:Message-ID; b=gW4AsvfJrzwXo4UPb6HKunBEFFmEcFh2gYwUQVcO4Vu0jQ37AwpjlNjLMymywXbeqWxHIgzeCv6PjU6LtwCpyjhOJQo17fPD6MZNA7SKuMY6dzrmCHIn/xqL7k2vsD5y7cfkQLiGl4e6v6Z/xaTPTABeI407Z63mazOdqJQUziM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=nBr1idrK; arc=none smtp.client-ip=213.167.242.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ideasonboard.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
-Received: from pendragon.ideasonboard.com (cpc89244-aztw30-2-0-cust6594.18-1.cable.virginm.net [86.31.185.195])
-	by perceval.ideasonboard.com (Postfix) with ESMTPSA id 5602B3D4;
-	Fri,  1 Nov 2024 16:18:31 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-	s=mail; t=1730474311;
-	bh=zuN5R7hbuH1BvhVCVBt/zGaYDCvPjEZM0tpyzDA8ZVA=;
-	h=In-Reply-To:References:Subject:From:To:Cc:Date:From;
-	b=nBr1idrKB+P9AyQS+0sPM+y+7bN56hXVF9CuFlueWKUjipSZFbS7lN/BfUDeTnwJF
-	 uPGrPgUylvhy8jz0FmPQfT2eAWO5DQJGVCTcVIynpxYP/QlyuoUrDtJtvgnXj8Rr5F
-	 BQ/3fYdj9U+abtbwYQJhqqxe8h51my0DbYNHGGeM=
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1730474801; c=relaxed/simple;
+	bh=vI/NQjc09w3VuPnsKmwpWg7tRMQmr0hd6fA4o85RJow=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=r3syZRa+oZQxKnh1BWGU+TM/sOqk+s158cDrNonOqT8RTaTjP1OrBjiJNJhL9hWCod/FiZr0emBbMsZRBDICdvceL1Amjx2qp9lRSUm2fuZ8JMHn/HW0+GmDOuzA7WiyBo/JOqgDujnUuPa3yc4ulahCGJD8qzyqe+BJJTWimlQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l17+oQiR; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9997AC4CECD;
+	Fri,  1 Nov 2024 15:26:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1730474801;
+	bh=vI/NQjc09w3VuPnsKmwpWg7tRMQmr0hd6fA4o85RJow=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=l17+oQiRKK/3oQp/BNFD92/hhW0liTn0T4m/LgT3ZXrAvEFH1q+HhjWU8KvzZqMjB
+	 X3A/XR0gqiVN8nyxDO8hvEV4W97WPyPepjKr4b/1Z541TBKc0QIygoYa+jFKp6CI8I
+	 6UPt6Iz2Sa0LTiuQ/DM2uCh6SQMQw2e/KXwH1/NvZB+ZC0ZoKyU/vxRsz6EbdHRbS2
+	 X8DTxMdS1Fi51Ao+MYqkQdty4QP/+j1jLX/G1RY5q+XiBbcfa81prhYdQxEIY6gbCt
+	 TRahNAjSOoOhC+gh+P8ULxS2iIR3zFxedEVwOVOebmJ8yGuO10cyU1n3VVHLHrfw/r
+	 2csGzlh+TMC2A==
+Date: Fri, 1 Nov 2024 10:26:38 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc: Jingoo Han <jingoohan1@gmail.com>, 
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>, Rob Herring <robh@kernel.org>, 
+	Bjorn Helgaas <bhelgaas@google.com>, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, quic_mrana@quicinc.com, quic_vbadigan@quicinc.com
+Subject: Re: [PATCH v3 1/3] PCI: dwc: Skip waiting for link up if vendor
+ drivers can detect Link up event
+Message-ID: <ywuqtydbapfumelfu66237h65q2xb3rmvjtstiwvd24whn7rju@bcxldl2l4bv2>
+References: <20241101-remove_wait-v3-0-7accf27f7202@quicinc.com>
+ <20241101-remove_wait-v3-1-7accf27f7202@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CAF6AEGu_qJYV3TnprJsqsWV_GoLhiBFQ8LNwfYDjczDparvZCA@mail.gmail.com>
-References: <20241025-b4-linux-next-24-10-25-camss-dts-fixups-v1-0-cdff2f1a5792@linaro.org> <20241025-b4-linux-next-24-10-25-camss-dts-fixups-v1-6-cdff2f1a5792@linaro.org> <CAF6AEGu_qJYV3TnprJsqsWV_GoLhiBFQ8LNwfYDjczDparvZCA@mail.gmail.com>
-Subject: Re: [PATCH 6/6] arm64: dts: qcom: sdm845-db845c-navigation-mezzanine: Add cma heap for libcamera softisp support
-From: Kieran Bingham <kieran.bingham@ideasonboard.com>
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Rob Clark <robdclark@gmail.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Depeng Shao <quic_depengs@quicinc.com>, Vikram Sharma <quic_vikramsa@quicinc.com>, Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-Date: Fri, 01 Nov 2024 15:18:33 +0000
-Message-ID: <173047431366.2974136.175546053701391124@ping.linuxembedded.co.uk>
-User-Agent: alot/0.10
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241101-remove_wait-v3-1-7accf27f7202@quicinc.com>
 
-+Cc Laurent
+On Fri, Nov 01, 2024 at 05:04:12PM GMT, Krishna chaitanya chundru wrote:
+> If the vendor drivers can detect the Link up event using mechanisms
+> such as Link up IRQ and can the driver can enumerate downstream devices
+> instead of waiting here, then waiting for Link up during probe is not
+> needed here, which optimizes the boot time.
+> 
+> So skip waiting for link to be up if the driver supports 'linkup_irq'.
+> 
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> ---
+>  drivers/pci/controller/dwc/pcie-designware-host.c | 10 ++++++++--
+>  drivers/pci/controller/dwc/pcie-designware.h      |  1 +
+>  2 files changed, 9 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+> index 3e41865c7290..26418873ce14 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
+> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+> @@ -530,8 +530,14 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
+>  			goto err_remove_edma;
+>  	}
+>  
+> -	/* Ignore errors, the link may come up later */
+> -	dw_pcie_wait_for_link(pci);
+> +	/*
+> +	 * Note: The link up delay is skipped only when a link up IRQ is present.
+> +	 * This flag should not be used to bypass the link up delay for arbitrary
+> +	 * reasons.
 
-Quoting Rob Clark (2024-11-01 12:33:44)
-> On Fri, Oct 25, 2024 at 8:49=E2=80=AFAM Bryan O'Donoghue
-> <bryan.odonoghue@linaro.org> wrote:
-> >
-> > libcamera softisp requires a linux,cma heap export in order to support
-> > user-space debayering, 3a and export to other system components such as
-> > pipewire, Firefox/Chromium - Hangouts, Zoom etc.
->=20
-> AFAIU libcamera could use udmabuf, etc, and there is no hw requirement
-> for CMA.  So it doesn't seem we should be adding this to dt.  And I'd
-> really prefer that we not be using CMA just for lolz.
+Perhaps by improving the naming of the variable, you don't need 3 lines
+of comment describing the conditional.
 
-I agree here. Otherwise this theoretically locks this memory to the pool
-'forever'. It's not something we should define in device tree.
+> +	 */
+> +	if (!pp->linkup_irq)
+> +		/* Ignore errors, the link may come up later */
 
-udmabuf provides a means to get memfd allocated memory which is not
-physically contiguous - but /is/ managed by a dmabuf handle.
+Does this mean that we will be able to start handling these errors?
 
-Presently with SoftISP being CPU only - physically contiguous memory is
-not required.
+> +		dw_pcie_wait_for_link(pci);
+>  
+>  	bridge->sysdata = pp;
+>  
+> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+> index 347ab74ac35a..539c6d106bb0 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware.h
+> +++ b/drivers/pci/controller/dwc/pcie-designware.h
+> @@ -379,6 +379,7 @@ struct dw_pcie_rp {
+>  	bool			use_atu_msg;
+>  	int			msg_atu_index;
+>  	struct resource		*msg_res;
+> +	bool			linkup_irq;
 
-Bryan, will this still be true when you have a GPU based ISP ? Will that
-require physically contiguous memory ? Or will the mapping into the GPU
-handle any required translations?
+Please name this for what it is, rather than some property from which
+some other decision should be derived. (And then you need a comment to
+describe how people should interpret and use it)
 
---
-Kieran
+Also, "linkup_irq" sound like an int carrying the interrupt number, not
+a boolean.
 
 
->=20
-> BR,
-> -R
->=20
-> > Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> > ---
-> >  .../boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso     | 11 +++=
-++++++++
-> >  1 file changed, 11 insertions(+)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanin=
-e.dtso b/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
-> > index d62a20f018e7a7e1c7e77f0c927c2d9fe7ae8509..c8507afcd1e0d1f9b14b6e4=
-edcbc646032e7b6c9 100644
-> > --- a/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
-> > +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
-> > @@ -9,6 +9,17 @@
-> >  #include <dt-bindings/clock/qcom,camcc-sdm845.h>
-> >  #include <dt-bindings/gpio/gpio.h>
-> >
-> > +/ {
-> > +       reserved-memory {
-> > +               linux,cma {
-> > +                       compatible =3D "shared-dma-pool";
-> > +                       size =3D <0x0 0x8000000>;
-> > +                       reusable;
-> > +                       linux,cma-default;
-> > +               };
-> > +       };
-> > +};
-> > +
-> >  &camss {
-> >         vdda-phy-supply =3D <&vreg_l1a_0p875>;
-> >         vdda-pll-supply =3D <&vreg_l26a_1p2>;
-> >
-> > --
-> > 2.47.0
-> >
-> >
+Please call it "use_async_linkup", "use_linkup_irq" or something.
+
+Regards,
+Bjorn
+
+>  };
+>  
+>  struct dw_pcie_ep_ops {
+> 
+> -- 
+> 2.34.1
+> 
+> 
 
