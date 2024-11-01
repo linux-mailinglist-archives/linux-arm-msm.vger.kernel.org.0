@@ -1,174 +1,110 @@
-Return-Path: <linux-arm-msm+bounces-36748-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36749-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D884A9B92D0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 15:08:32 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 231E09B92D3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 15:09:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 23F1FB20C80
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 14:08:30 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DAA092828B4
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 14:09:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 66DCC17C7BD;
-	Fri,  1 Nov 2024 14:08:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E2471A0B16;
+	Fri,  1 Nov 2024 14:09:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IcO/vy3p"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oVhaYgZs"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A4F1168DA;
-	Fri,  1 Nov 2024 14:08:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63DEC15855D;
+	Fri,  1 Nov 2024 14:09:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730470107; cv=none; b=k65kc7VmTvF+5qK6dGSMrQsB2wHKQN4x3TWFClivVCBQwsiLptupLGE7EzBB1VgZSpXOmVQq1ecxVG8evOy384JycsPSi4qBSsICJtoJiTmgOMmOuDxV04mPxnskxfRbiDM5rOW+BeDX8cprtOe55lyxMfODEbH2HZGHY80xuBY=
+	t=1730470146; cv=none; b=S5jiU8O7Drz1G0KHC4QwTNDfRTwyFoBQW6Y0RCE3wcbrLuX7M9EfaxPqvW86R80l3ukpN67ev6rVoyYDisL7a/sHpW2bGJypkLUW1V69Le6B/EMNMOqVuS+7Rb5HOVYwG12uoWQ1QzLxjD28fwr/8gi1tiqmHNNRVr5o0fWt+ks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730470107; c=relaxed/simple;
-	bh=IyJCYsGxG/Uh8pfdwqgQ0399gtR9nQ5xhOoICTeHV6Y=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OcaZs2ywxsxGTNWTcx90/sxUPpNItrbAQYotLdRK3yS/4Yq8ouPxdjRTN4kDuhWK05fnzyho28QkB2UlixpyJcSVKOmWm7lsBfAkP1ai2QgHehE3/9jf8R8P+LQRCXUZsfUaKopy7wwl5VFpRieqmoG+Taa20kNFJ0mAGSfIuZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IcO/vy3p; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1658C4CECD;
-	Fri,  1 Nov 2024 14:08:26 +0000 (UTC)
+	s=arc-20240116; t=1730470146; c=relaxed/simple;
+	bh=V1lHT+M0hVf8y3QEJQ9Y5vnOyPZcmjeWG3D2SQpniHI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=S5U4DkXYtTmDuSid46YBhEn5qnRgTAL5RZWa8OPmFO2Nq6gjq/pfAH2bgKWkht1Jj/M+VATtFIrU3/TYCxByiCwn9R4TTnb0y1a/eTd4mZ+j5YWS/ldtjHDpUWKJNQjn91/QXpmAPoVjDveRjrqmpRjrCtZpqvC0kdSTqewMQpg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oVhaYgZs; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E050DC4CECD;
+	Fri,  1 Nov 2024 14:09:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730470107;
-	bh=IyJCYsGxG/Uh8pfdwqgQ0399gtR9nQ5xhOoICTeHV6Y=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=IcO/vy3potDm31dXKhF+DOg+c609wAQPpjXws1zyo6Qi5bIseThT+ejPCozwwNCbp
-	 S9pRE8hOBkQzIYRV35GTNSB2L8uBUuIUz1jqL4dVDTtrxGkBxVqGxkEUqkqDAvYrbk
-	 ZiQu/P5b1vYmJuik5S8L6GQkucCZIfE8mI33sNnlpqbsRhUvr+htMMk0Y82Uf0IK6+
-	 J036WTST5GBDEwDRWf1R2dYFtQcWeY41AQ81xM0OfreeyrXiHy6NjpePT/+SQb1SH/
-	 cNvPXO1jcMU2klUsereYsWlu/hbMahCXeerydS4SSSVnn3XGMVMdBgr3DuzoE57qDa
-	 0dQQVso/LoX7A==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
-	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.95)
-	(envelope-from <maz@kernel.org>)
-	id 1t6sK8-008t1R-Mp;
-	Fri, 01 Nov 2024 14:08:24 +0000
-Date: Fri, 01 Nov 2024 14:08:24 +0000
-Message-ID: <86plnf11yf.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
-To: Johan Hovold <johan@kernel.org>
-Cc: Sibi Sankar <quic_sibis@quicinc.com>,
-	sudeep.holla@arm.com,
-	cristian.marussi@arm.com,
-	andersson@kernel.org,
-	konrad.dybcio@linaro.org,
-	robh+dt@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org,
-	dmitry.baryshkov@linaro.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	quic_rgottimu@quicinc.com,
-	quic_kshivnan@quicinc.com,
-	conor+dt@kernel.org,
-	quic_nkela@quicinc.com,
-	quic_psodagud@quicinc.com,
-	abel.vesa@linaro.org
-Subject: Re: [PATCH V7 0/2] qcom: x1e80100: Enable CPUFreq
-In-Reply-To: <ZyTQ9QD1tEkhQ9eu@hovoldconsulting.com>
-References: <20241030130840.2890904-1-quic_sibis@quicinc.com>
-	<ZyTQ9QD1tEkhQ9eu@hovoldconsulting.com>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/29.4
- (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+	s=k20201202; t=1730470146;
+	bh=V1lHT+M0hVf8y3QEJQ9Y5vnOyPZcmjeWG3D2SQpniHI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=oVhaYgZse3lMJvuJEkmIOrlzosfBzD3lhMSHwGYeeZFK4qL9cuJ7bAxDJIV38WzpX
+	 ml0u+DWHbWIML5Qs5h7G7clpJQN4xzOBOF//wa3XwUiM6G6d7pPzhKzL608g8+n9DW
+	 vhrw84lpWizMsRMQkdw8w7iPjpe/2eFSxpU/N4empIL6yVXUhDh3H+KCgbabmQeigB
+	 G7TmWJWrqT3hbGy4QoVAT02nf95JHTmGbsxRWomK8DuWVRvM1/2jkwMVCYwcF6J3G4
+	 i8ad4X6AUL2iEiMG9cNfF+4qD2wD/boI0rJzM1eQvtsl22qYHbbkyv92ilMF5IaI16
+	 pgEYnAflSDjDw==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1t6sKm-000000005cY-06Fr;
+	Fri, 01 Nov 2024 15:09:04 +0100
+Date: Fri, 1 Nov 2024 15:09:04 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Sibi Sankar <quic_sibis@quicinc.com>
+Cc: sudeep.holla@arm.com, cristian.marussi@arm.com, ulf.hansson@linaro.org,
+	jassisinghbrar@gmail.com, dmitry.baryshkov@linaro.org,
+	linux-kernel@vger.kernel.org, arm-scmi@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	konradybcio@kernel.org, linux-pm@vger.kernel.org,
+	tstrudel@google.com, rafael@kernel.org,
+	Johan Hovold <johan+linaro@kernel.org>
+Subject: Re: [PATCH V5 3/6] firmware: arm_scmi: Report duplicate opps as
+ firmware bugs
+Message-ID: <ZyThAFbOHKaBIgLg@hovoldconsulting.com>
+References: <20241030125512.2884761-1-quic_sibis@quicinc.com>
+ <20241030125512.2884761-4-quic_sibis@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: johan@kernel.org, quic_sibis@quicinc.com, sudeep.holla@arm.com, cristian.marussi@arm.com, andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, dmitry.baryshkov@linaro.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, quic_rgottimu@quicinc.com, quic_kshivnan@quicinc.com, conor+dt@kernel.org, quic_nkela@quicinc.com, quic_psodagud@quicinc.com, abel.vesa@linaro.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241030125512.2884761-4-quic_sibis@quicinc.com>
 
-On Fri, 01 Nov 2024 13:00:37 +0000,
-Johan Hovold <johan@kernel.org> wrote:
+On Wed, Oct 30, 2024 at 06:25:09PM +0530, Sibi Sankar wrote:
+> Duplicate opps reported by buggy SCP firmware currently show up
+> as warnings even though the only functional impact is that the
+> level/index remain inaccessible. Make it less scary for the end
+> user by using dev_info instead, along with FW_BUG tag.
 > 
-> [ +CC: Marc, who I think I saw reporting something similar even if I can
->   seem to find where right now ]
+> Suggested-by: Johan Hovold <johan+linaro@kernel.org>
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> ---
+>  drivers/firmware/arm_scmi/perf.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/firmware/arm_scmi/perf.c b/drivers/firmware/arm_scmi/perf.c
+> index 32f9a9acd3e9..c7e5a34b254b 100644
+> --- a/drivers/firmware/arm_scmi/perf.c
+> +++ b/drivers/firmware/arm_scmi/perf.c
+> @@ -387,7 +387,7 @@ process_response_opp(struct device *dev, struct perf_dom_info *dom,
+>  
+>  	ret = xa_insert(&dom->opps_by_lvl, opp->perf, opp, GFP_KERNEL);
+>  	if (ret) {
+> -		dev_warn(dev, "Failed to add opps_by_lvl at %d for %s - ret:%d\n",
+> +		dev_info(dev, FW_BUG "Failed to add opps_by_lvl at %d for %s - ret:%d\n",
+>  			 opp->perf, dom->info.name, ret);
 
-It was on IRC.
+I was hoping you could make the error message a bit more informative as
+well, for example, by saying that a duplicate opp level was ignored:
 
-> 
-> On Wed, Oct 30, 2024 at 06:38:38PM +0530, Sibi Sankar wrote:
-> > This series enables CPUFreq support on the X1E SoC using the SCMI perf
-> > protocol. This was originally part of the RFC: firmware: arm_scmi:
-> > Qualcomm Vendor Protocol [1]. I've split it up so that this part can
-> > land earlier. Warnings Introduced by the series are fixed by [2]
-> 
->  Sibi Sankar (2):
-> >   arm64: dts: qcom: x1e80100: Add cpucp mailbox and sram nodes
-> >   arm64: dts: qcom: x1e80100: Enable cpufreq
-> 
-> I've been running with v6 of these for a while now, without noticing any
-> issues, and just updated to v7 to be able to provide a Tested-by tag.
-> 
-> I wanted to run a compilation and see how the frequencies varied, but
-> before I got around to that I just grepped the cpufreq sysfs attributes
-> for CPU0 four times. And this triggered a reset of the machine (x1e80100
-> CRD).
-> 
-> The last values output were:
-> 
-> 	affected_cpus:0 1 2 3
-> 	cpuinfo_cur_freq:<unknown>
-> 	cpuinfo_max_freq:3417600
-> 	cpuinfo_min_freq:710400
-> 	cpuinfo_transition_latency:30000
-> 	related_cpus:0 1 2 3
-> 	scaling_available_frequencies:710400 806400 998400 1190400 1440000 1670400 1920000 2188800 2515200 2707200 2976000 320
-> 	scaling_available_governors:ondemand userspace performance schedutil
-> 	scaling_cur_freq:806400
-> 	scaling_driver:scmi
-> 	scaling_governor:schedutil
-> 	scaling_max_freq:3417600
-> 	scaling_min_freq:710400
-> 	scaling_setspeed:<unsupported>
-> 
-> Notice the <unknown> current frequency (the previous greps said 710400
-> and 2515200).
-> 
-> The last thing I see on the serial console, presumably just before
-> the reset, is:
-> 
-> 	[  196.268025] arm-scmi arm-scmi.0.auto: timed out in resp(caller: do_xfer+0x164/0x564)
-> 
-> I just rebooted and grepped again and it triggered on the first attempt
-> (cur_freq also said '<unknown>'). Same error in the log, printed when
-> grepping.
+	arm-scmi arm-scmi.0.auto: [Firmware Bug]: Ignoring duplicate OPP 3417600 for NCC
 
-I'm seeing similar things indeed. Randomly grepping in cpufreq/policy*
-results in hard resets, although I don't get much on the serial
-console when that happens. Interestingly, I also see some errors in
-dmesg at boot time:
+or similar (e.g. as the current message looks like an error, with errno
+and all, that indeed warrants warning level).
 
-maz@semi-fraudulent:~$ dmesg| grep -i scmi
-[    0.966175] scmi_core: SCMI protocol bus registered
-[    7.929710] arm-scmi arm-scmi.2.auto: Using scmi_mailbox_transport
-[    7.939059] arm-scmi arm-scmi.2.auto: SCMI max-rx-timeout: 30ms
-[    7.945567] arm-scmi arm-scmi.2.auto: SCMI RAW Mode initialized for instance 0
-[    7.958348] arm-scmi arm-scmi.2.auto: SCMI RAW Mode COEX enabled !
-[    7.978303] arm-scmi arm-scmi.2.auto: SCMI Notifications - Core Enabled.
-[    7.985351] arm-scmi arm-scmi.2.auto: SCMI Protocol v2.0 'Qualcomm:' Firmware version 0x20000
-[    8.033774] arm-scmi arm-scmi.2.auto: Failed to add opps_by_lvl at 3801600 for NCC - ret:-16
-[    8.033902] arm-scmi arm-scmi.2.auto: Failed to add opps_by_lvl at 3801600 for NCC - ret:-16
-[    8.036528] arm-scmi arm-scmi.2.auto: Failed to add opps_by_lvl at 3801600 for NCC - ret:-16
-[    8.036744] arm-scmi arm-scmi.2.auto: Failed to add opps_by_lvl at 3801600 for NCC - ret:-16
-[    8.171232] scmi-perf-domain scmi_dev.4: Initialized 3 performance domains
+Perhaps with such a message you could even keep the warning level to
+make it stand out more (if that's desirable) without the risk of scaring
+users.
 
-All these "Failed" are a bit worrying. Happy to put any theory to the
-test.
-
-Thanks,
-
-	M.
-
--- 
-Without deviation from the norm, progress is not possible.
+Johan
 
