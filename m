@@ -1,189 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-36782-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36783-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id F42009B9636
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 18:03:45 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7F4F19B9664
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 18:19:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5F4CAB229ED
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 17:03:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 10C6E1F22D34
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2024 17:19:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A2641CC8AE;
-	Fri,  1 Nov 2024 17:03:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 843DD1CB512;
+	Fri,  1 Nov 2024 17:19:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hS5vwtwe"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oIa6f0uL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BEE21CBE95
-	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Nov 2024 17:03:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B48301CACF2
+	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Nov 2024 17:19:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730480598; cv=none; b=nyvozAZZ8sY08LC7/nCvyzZ3hCB40axw7nwjV7Y2uHP2Vn6HD7JfV+gjwuh4fk4j/VMC2EQl1PUxW7g065lS6zWRuMDt9TfxNspSVbwZQ6WOabJuBCfO6kiMX72qOYA1sTLeltmoTCjLUI/okZilYTgNsVDPqMcCqvYqOargAyA=
+	t=1730481567; cv=none; b=tGDn4rLcFWDXhKlBSsQcvmkxubz5zqR7iOXFkccOd7Gp3U8tgg6IjAvmJ8BvJXIagoHR9zGrUdjPgPkF03VHz7itnW9NA02NNAr+94vq0V/Gqj5HQSMMtAvVXdD08yl4f+Z8G8my2GonnisWnAUpCjqvqojM5hY9OEL1fR2hG0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730480598; c=relaxed/simple;
-	bh=hMCCbLDioYy+Gyryrg/qDlm9Q8ImU8TUBBfa89jXyLk=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=U2zDhu/BO5EPO16y0XgpDNj/b8f6fwO4sp+W14Q8FHQnwMcQQwc6s4ozP5t6bmiX9SLnuwr2g6wt5i2iRobsTGSl++HpK4zkFkAx9r91iDCg3PWApeYEovESsKUSeR/d2O29X5mKoZ8Cfh8LS4+JtnVGjazkVu/mBdvHRt49CNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hS5vwtwe; arc=none smtp.client-ip=209.85.221.51
+	s=arc-20240116; t=1730481567; c=relaxed/simple;
+	bh=rt8kjqYI4hECPN+GbzUP+TlVy0J28k2Oz2llBOlBl6I=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=MM5e7HnFMgzQ0bEMbw3OXv3mmrY17u7JOiw/2UXyr5f+LBzYbPvnOmc4iAxpc9msr5NIQkuAzBFHiCp2dbKrYRi32XQBljWoV1VNq748aJEyqoTtBpY7Furoqs0C8YuAIM7b19vAHlcFZpYs/KXFOzsYpfzeHbW4mmjG4bu22Rg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oIa6f0uL; arc=none smtp.client-ip=209.85.128.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-37d5045987dso176606f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Nov 2024 10:03:14 -0700 (PDT)
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4315dfa3e0bso2199535e9.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Nov 2024 10:19:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1730480592; x=1731085392; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=q3NYpsGTgrceer71ppOAoBgRk89YYUeZ50Pg0gfV+Bk=;
-        b=hS5vwtwemZXn2RA1q8n+A5yKbG/9BhXrrWJEZEY7lizErSQ1SQTyMWi4mK86yF3Vhw
-         6um7XUf/CPCMX6LEOwSp6UKSNMETv2BtkUbJSmFipA5dLW7MNrsrltsPuEko+thPzTAD
-         g7kwrE3CuFrz/uEVHcoHvGJlmksXMUfxex47G9OGFPTVWPHjSC60qKx0h4KjO7YfQ9U9
-         M+X4sfedy9Vd3+hklxLII6mcRUQKdcZBy2zTZgSTm1ZwOSoC1QphMpIxclFmm0dghh0b
-         Gfi4igFFRE46twprPHiXRH0TySIyQY0RjAiNVUT7YbRuU62q6IO9F8QHgFgvzlXQpt5h
-         bKDg==
+        d=linaro.org; s=google; t=1730481564; x=1731086364; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=yyz45xnW9rVPfU/62f8rIc8WFlRolqjmAGKe3fVtKbg=;
+        b=oIa6f0uLQal1DUglT/A85Pwxw1SfB+/TZnQsduZmT1q+WwCvVQwMnxTBUqiPyIIzmw
+         1aUrtE01fm3c8R6RqjiuJDqtSJ6xHgdAl6ypqvno5NHHOPfvPHuBfRIHmw7B47bv/UZY
+         CFi1DOjRG+NpzGH/FJxR+WytV/Ja0SxtoY7J1XAJlqmIKnmNDLubqBIgaws3CMi2KhQW
+         3BKpnU4wCinRjt+oOXFXTKxBts6LRSldj6iSYd4j33q6O0D2XPn+1cemFNSVcrYbzzlB
+         o8LMOS5Z1fMwnslTSP2Bj49wo5uRwvl4NDtbit+sOFrru11ecEnjKtQ1DnBYxOKlmMHK
+         Oo5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730480592; x=1731085392;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1730481564; x=1731086364;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=q3NYpsGTgrceer71ppOAoBgRk89YYUeZ50Pg0gfV+Bk=;
-        b=HznqT65GgM9oUZMTV86+rbC8tDQ1IbZwp1U55DW+47HdpSPW1al69Yld/RXDPI1+Sv
-         OHONd3Zu5VIMrWxhPA6fpLTK3+VvVZ4+dA8Fi6P9jEsDLRZvaoBOWthqcP0Mj3NBtakx
-         eLDyNa7XMx1UGvVhEVnJ1pho25w3VKcBjfGj3JOVwEi+wbLYCQQQHMWb3uM2xAM3UMYV
-         Focca9pSQtRKAq64zZCo1XpssGeBnxHe4rTmHYLUZx1m3wE5nSDfAgkU5y2D3bYy2/0y
-         uslAadr6uFadSGdrKfk/5YEwkJu+K0SOqsZLyzkDTNBmTPbVtwEiV5PRaGMoOXCEgxl/
-         tpfA==
-X-Forwarded-Encrypted: i=1; AJvYcCVE2BfSmS0IzL60EreAHjUnMlOkjjl2F+4pbFZrsSqIX+/F3/4uHmybhHz7KMkqqnSLvAguXYQF+FrKvDR8@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw151L3v39TYTnkmge2fj1Pt6Kx+emMtHVIoAzXCfU7I2VFo0UX
-	2zdqMmeP4ygqnEKL/OKSv5OgnwFVlfPwfabEQW3dHB93gdCgObD25jV3WwtvZJr3RZWksXXxB12
-	A
-X-Google-Smtp-Source: AGHT+IFCZ23WEBwwcLfQP4WYBJ1WQPAvLjnNpkz+Y58FV/YsX35Y9/WCJ4gXDC+pJP7nEDi262mLrg==
-X-Received: by 2002:a5d:5f46:0:b0:37d:4aa2:5cfe with SMTP id ffacd0b85a97d-38061173287mr8248808f8f.6.1730480592542;
-        Fri, 01 Nov 2024 10:03:12 -0700 (PDT)
-Received: from krzk-bin.. ([178.197.211.167])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381c116ae82sm5687923f8f.93.2024.11.01.10.03.10
+        bh=yyz45xnW9rVPfU/62f8rIc8WFlRolqjmAGKe3fVtKbg=;
+        b=cxpwGeJK3wyO323b3CWeKlh8QRtcXQBUsV5BGswny4nRCVg4wkha4ZPGG9L/8V5rkU
+         C1xtcpvksLWZZ/NO/mZMwSir/RILFT/PUynmuNR+SAA5s4IxejXsMzbfvXLmy9tu+BQw
+         ZB0a+arXAhjywk557NYGJbq5RaNtTl9jsMj2UktHsEhW5lHEDg6xVAdi4sqs5IhxiqIU
+         pLgh3WYiFsLQVVASSdZ0Z2U4YPT8fRm4tl3b+BA0gRGv4JUeYm+QDsEoVTICvBgE0lXf
+         JMnmUVBVj29dugl118mY9fV4a2I3h8GAhG9ya+oJ/McfBZxyLtusd4UgRueVFWUceQhW
+         9MzQ==
+X-Gm-Message-State: AOJu0YzKTDEpX3l9M6h/Pi3EPiigIoGJbUZn+tcm9sVg/q8FRn8/G5SZ
+	n3Rm3WswF6ZLuoNpkudhn4hVmyG3WUVxUpiw4sPYtJ2F6rwIO/f/oF1kGGqgKxv99HiTjsvms2O
+	L
+X-Google-Smtp-Source: AGHT+IGyPwXyvUs9k5FWzP5oA9fjobpRUwqCYaIqND9lEL4Ls9AMutUr54tuWclkLAuV5EP1fHzX8w==
+X-Received: by 2002:a05:600c:1c91:b0:42c:b9c8:2ba9 with SMTP id 5b1f17b1804b1-4319ad2b318mr90729495e9.6.1730481563682;
+        Fri, 01 Nov 2024 10:19:23 -0700 (PDT)
+Received: from [127.0.1.1] ([178.197.211.167])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4327d5ab305sm68536785e9.7.2024.11.01.10.19.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Nov 2024 10:03:11 -0700 (PDT)
+        Fri, 01 Nov 2024 10:19:23 -0700 (PDT)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-remoteproc@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Melody Olvera <quic_molvera@quicinc.com>,
-	Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH] dt-bindings: remoteproc: qcom,sm8550-pas: Add SM8750 ADSP
-Date: Fri,  1 Nov 2024 18:03:09 +0100
-Message-ID: <20241101170309.382782-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.43.0
+Subject: [PATCH 0/4] arm64: dts: qcom: sm8750: Initial audio support (not
+ yet complete)
+Date: Fri, 01 Nov 2024 18:19:10 +0100
+Message-Id: <20241101-sm8750-audio-v1-0-730aec176459@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAI4NJWcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxNDAyMj3eJcC3NTA93E0pTMfN0U41TztCQzczNzQzMloJaCotS0zAqwcdG
+ xtbUAb67ME14AAAA=
+X-Change-ID: 20241022-sm8750-audio-d3e7fb676716
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Melody Olvera <quic_molvera@quicinc.com>, 
+ Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>, 
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1645;
+ i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
+ bh=rt8kjqYI4hECPN+GbzUP+TlVy0J28k2Oz2llBOlBl6I=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBnJQ2TmiZvkJQoDkX55Rjiwz/a1WrAk0xdH5zwN
+ b6sQi/nhTKJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZyUNkwAKCRDBN2bmhouD
+ 1zSTD/9tONy9wEoWga1J8kwKe1bn3QgaK2JKnnaS8CppKnO3/HadhLdKAxLT6aTLhCFSHvmySsa
+ R5QtDNh5BB6U1j3EaSe1lBr9NGgYm663x3Qvnzv4+gDbm7a2vi2kgmwAeL7QHrW4uATSZVdepuv
+ GsG7obxrc8+GFVyCaeuXc4hN5EONNGxBMD6hUnJ0CLQouzRUJRegeZbnZR1U0fTYbfoVnVBil0s
+ Bl81s7Mpyx6/pYJRmhjjeiJ1HhbqZDVox+O+rTVkgvnF4SZ0QSbnwVPvZTLD6OVh/qOBE2DO7dG
+ nESk8KZHAfTcg9al6f4ZGOg4L9CUyKIto2ryTHWoAIwvnlxUUCs5kLJnfUKKOEyh4eTZfaq4Ru9
+ VLmX0klNXIU4iMRZfxwEE3xpJYJn+swuTAw8wyAoP3r/VtkZAEPj4/hWZVxAzTYzolacnh+rt5S
+ 7M/cs+9Fon0wTm9kr7R2LE4I9QD/KR8E52D0Zz2tkWHxPeCKRXadXNsej/zx0h+1k4zq5+WWlAp
+ FHo+PbkcGD10G+fQU3BI6+3uhZOyg92NuqOiG+OQgZTJH6ve/f7N+E3b2Zg0Tr9qesnTIFcRL1q
+ dBHkMn2ll2aqBMK3tTQGHc29BAGC1MpPEs/UC3CFC+w9y14M0h+GSDWsSVhA8nmy6XHptMQgQ7P
+ kS4FQpJT80B0C/A==
+X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
+ fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
-Document compatible for Qualcomm SM8750 SoC ADSP PAS which looks fully
-compatible with SM8550 variant.  The only difference from bindings point
-of view is one more interrupt ("shutdown-ack").  Marking devices as
-compatible, using SM8550 ADSP PAS fallback, requires changing some of
-the conditionals in "if:then:" to "contains".
+Hi,
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Dependencies
+============
+Depends on: https://lore.kernel.org/all/20241021232114.2636083-1-quic_molvera@quicinc.com/
+
+Bindings for these
+==================
+All DTS added here have corresponding bindings, on the list:
+https://lore.kernel.org/all/20241022064238.22941-1-krzysztof.kozlowski@linaro.org/
+https://lore.kernel.org/all/20241101170309.382782-1-krzysztof.kozlowski@linaro.org/
+
+Applied bindings:
+https://lore.kernel.org/all/20241022064214.22868-1-krzysztof.kozlowski@linaro.org/
+https://lore.kernel.org/all/20241022064155.22800-1-krzysztof.kozlowski@linaro.org/
+https://lore.kernel.org/all/20241022064245.22983-1-krzysztof.kozlowski@linaro.org/
+
+Description
+===========
+Add necessary SoC components for sound on SM8750: ADSP and relates
+blocks, LPASS pin controller and macro codecs.
+
+This is an early release, as I don't have sound yet fully ready, but
+speakers and DMICs work with these patches on my WIP branch.
+
+Best regards,
+Krzysztof
 
 ---
+Krzysztof Kozlowski (4):
+      arm64: dts: qcom: sm8750: Add IPCC, SMP2P, AOSS and ADSP
+      arm64: dts: qcom: sm8750: Add LPASS macro codecs and pinctrl
+      arm64: dts: qcom: sm8750-mtp: Enable ADSP
+      arm64: dts: qcom: sm8750-qrd: Enable ADSP
 
-Cc: Melody Olvera <quic_molvera@quicinc.com>
-Cc: Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+ arch/arm64/boot/dts/qcom/sm8750-mtp.dts |   7 +
+ arch/arm64/boot/dts/qcom/sm8750-qrd.dts |   7 +
+ arch/arm64/boot/dts/qcom/sm8750.dtsi    | 342 ++++++++++++++++++++++++++++++++
+ 3 files changed, 356 insertions(+)
 ---
- .../bindings/remoteproc/qcom,sm8550-pas.yaml  | 48 +++++++++++++------
- 1 file changed, 34 insertions(+), 14 deletions(-)
+base-commit: 79a3183ceb8e6f3607f138733786b5022dc2001e
+change-id: 20241022-sm8750-audio-d3e7fb676716
 
-diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml
-index d7fad7b3c2c6..a24cbb61bda7 100644
---- a/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml
-+++ b/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml
-@@ -15,16 +15,20 @@ description:
- 
- properties:
-   compatible:
--    enum:
--      - qcom,sdx75-mpss-pas
--      - qcom,sm8550-adsp-pas
--      - qcom,sm8550-cdsp-pas
--      - qcom,sm8550-mpss-pas
--      - qcom,sm8650-adsp-pas
--      - qcom,sm8650-cdsp-pas
--      - qcom,sm8650-mpss-pas
--      - qcom,x1e80100-adsp-pas
--      - qcom,x1e80100-cdsp-pas
-+    oneOf:
-+      - enum:
-+          - qcom,sdx75-mpss-pas
-+          - qcom,sm8550-adsp-pas
-+          - qcom,sm8550-cdsp-pas
-+          - qcom,sm8550-mpss-pas
-+          - qcom,sm8650-adsp-pas
-+          - qcom,sm8650-cdsp-pas
-+          - qcom,sm8650-mpss-pas
-+          - qcom,x1e80100-adsp-pas
-+          - qcom,x1e80100-cdsp-pas
-+      - items:
-+          - const: qcom,sm8750-adsp-pas
-+          - const: qcom,sm8550-adsp-pas
- 
-   reg:
-     maxItems: 1
-@@ -82,6 +86,20 @@ allOf:
-           maxItems: 5
-         memory-region:
-           maxItems: 2
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,sm8750-adsp-pas
-+    then:
-+      properties:
-+        interrupts:
-+          maxItems: 6
-+        interrupt-names:
-+          maxItems: 6
-+        memory-region:
-+          maxItems: 2
-   - if:
-       properties:
-         compatible:
-@@ -129,10 +147,12 @@ allOf:
-   - if:
-       properties:
-         compatible:
--          enum:
--            - qcom,sm8550-adsp-pas
--            - qcom,sm8650-adsp-pas
--            - qcom,x1e80100-adsp-pas
-+          contains:
-+            enum:
-+              - qcom,sm8550-adsp-pas
-+              - qcom,sm8650-adsp-pas
-+              - qcom,sm8750-adsp-pas
-+              - qcom,x1e80100-adsp-pas
-     then:
-       properties:
-         power-domains:
+Best regards,
 -- 
-2.43.0
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 
