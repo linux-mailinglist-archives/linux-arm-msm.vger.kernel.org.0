@@ -1,274 +1,106 @@
-Return-Path: <linux-arm-msm+bounces-36826-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36827-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 82B149B9F64
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Nov 2024 12:39:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4B5CF9B9F6A
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Nov 2024 12:41:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 41A56281D4E
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Nov 2024 11:39:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0D23A28225B
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Nov 2024 11:41:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A3D8317799F;
-	Sat,  2 Nov 2024 11:39:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ADAA117ADF7;
+	Sat,  2 Nov 2024 11:41:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Ezw7D+uQ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hs+apn1o"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AEBE140E50;
-	Sat,  2 Nov 2024 11:39:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F35D6140E50
+	for <linux-arm-msm@vger.kernel.org>; Sat,  2 Nov 2024 11:41:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730547582; cv=none; b=PBdSBMxNQJaVPJdXuyU306IS0tVNQFLyMqCvv+mztqBLj8/dmAQsn9x0G8psWJ1v0thrsCDgovo8wAgX8tfimwfxtwpiwIPb6hvaPfamG4yb941t1wy8b9HXUXRQpr/BYR61mIFS/cQeAIsNYbTfyPj80nTUveyie0qtSFgE94A=
+	t=1730547666; cv=none; b=CrBp893fuxfulrs8ExAA0H4BQsKDNwX1uIx8Zs1NaRD8arjOqNztep4rLWQUzXc8o+jWihDwPEX4JKUOr9PZcTgXGZeCmMflO6rIIzDwyK3t4lfxUBomXEFP72xe9V5GA8Yv5mkxQMUiXghdfnjQJXAcMmfdpY1l18JHmagTmbk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730547582; c=relaxed/simple;
-	bh=AMrjIY8dJeUvVWVkGizF8Yx7actymBoa3uQKiOySwbk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KR3b6yJAcuOesxMNNcHGPm/tfQRoTKnOGAlgdsBHJwZq9PvNpwBqwl6ecUTxXNShvTQ0rzUBurLM6OZNM8IQN2ezkAr2zrx90LUDWfpOj1fxvLWBQua1ZpOHDIvf3jfdJXjhH0So5OaI4SLoJAHFA1+vEQFYALUfxvwLitKi+rU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Ezw7D+uQ; arc=none smtp.client-ip=192.198.163.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1730547581; x=1762083581;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=AMrjIY8dJeUvVWVkGizF8Yx7actymBoa3uQKiOySwbk=;
-  b=Ezw7D+uQWBuQhvvVcQIytkE7IDsnX/PDNjEHMDJgfQj9RtLS/BYYS2rm
-   T90GeqYIKj/W+nUcR78J6DHrqa1FypgwF+lwobuNphoptS9AFDGJ34uCm
-   gwCDXTBkhrSRGbPVa6ybbrra734SqkRtqrjzK3YXfQ0/jMq3bzhvt+Zm/
-   gYc5+sYy4K04ZzPNw0YCI+BjNy8pFz36HSmrndDF6V8d8pXn0Od++XnKT
-   Kp20S6IWKJemfwGZUd6hvrrV01H8QmYGyZ6Gklz83P/rbLZfoygeZvJ3b
-   WTixpQPaYgnfZxApFWayhJpT+E+bk5JIIr5M/V1/iZ5rX55OouuehpmTp
-   g==;
-X-CSE-ConnectionGUID: MIqcMlbsQrqkj1xDLoXdZQ==
-X-CSE-MsgGUID: w/MScjDsT1urTyYEsDwpng==
-X-IronPort-AV: E=McAfee;i="6700,10204,11243"; a="30414481"
-X-IronPort-AV: E=Sophos;i="6.11,252,1725346800"; 
-   d="scan'208";a="30414481"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
-  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Nov 2024 04:39:40 -0700
-X-CSE-ConnectionGUID: RlAAphZrTJaTT0VA4y0i8g==
-X-CSE-MsgGUID: yH3ycratQoe/iycCHmTR7A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,252,1725346800"; 
-   d="scan'208";a="114017845"
-Received: from lkp-server01.sh.intel.com (HELO a48cf1aa22e8) ([10.239.97.150])
-  by fmviesa001.fm.intel.com with ESMTP; 02 Nov 2024 04:39:33 -0700
-Received: from kbuild by a48cf1aa22e8 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1t7CTb-000is3-1W;
-	Sat, 02 Nov 2024 11:39:31 +0000
-Date: Sat, 2 Nov 2024 19:39:05 +0800
-From: kernel test robot <lkp@intel.com>
-To: Jishnu Prakash <quic_jprakash@quicinc.com>, jic23@kernel.org,
-	robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-	conor+dt@kernel.org, agross@kernel.org, andersson@kernel.org,
-	dmitry.baryshkov@linaro.org, konrad.dybcio@linaro.org,
-	daniel.lezcano@linaro.org, sboyd@kernel.org,
-	quic_subbaram@quicinc.com, quic_collinsd@quicinc.com,
-	quic_amelende@quicinc.com, quic_kamalw@quicinc.com,
-	amitk@kernel.org
-Cc: oe-kbuild-all@lists.linux.dev, lee@kernel.org, rafael@kernel.org,
-	rui.zhang@intel.com, lukasz.luba@arm.com, lars@metafoo.de,
-	quic_skakitap@quicinc.com, neil.armstrong@linaro.org,
-	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-pm@vger.kernel.org, cros-qcom-dts-watchers@chromium.org,
-	Jishnu Prakash <quic_jprakash@quicinc.com>
-Subject: Re: [PATCH V4 4/4] thermal: qcom: add support for PMIC5 Gen3 ADC
- thermal monitoring
-Message-ID: <202411021924.bHINpnCr-lkp@intel.com>
-References: <20241030185854.4015348-5-quic_jprakash@quicinc.com>
+	s=arc-20240116; t=1730547666; c=relaxed/simple;
+	bh=GMLYsyPr4xumLfGGfYRjRM3ZXtmHZmJVFx7uijw7R9Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=isU1IiFttdhe4HeNPb9CwpQrPe5QbgcRpBceHgTpO9LVoW818AE4QPQrw/lAx6FNv4firLpprqXIlbrIkjCv45cpjQP0iFlA5cWp0rLl9cq+nZrRuEsdWUM6X723Mb0rHlUtOVJz6eR5SIW/3HHeXwzyadVHQJDlKut1hPpFhfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hs+apn1o; arc=none smtp.client-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-37d47eff9acso1789292f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Nov 2024 04:41:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1730547663; x=1731152463; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=GMLYsyPr4xumLfGGfYRjRM3ZXtmHZmJVFx7uijw7R9Q=;
+        b=hs+apn1oEkYHALiFkALDU+4DsKeI9p1q/7abUILcNjkgFniFTr+tSgxOyU7EkBxuiQ
+         nIeJekaVIMMjWFC9WpmHGuTTOt8bqBeKfs2xoBRGLxXLbTSW1ajbHg3F58dMYRs9qUAW
+         cd7zWeCH1jHRSttgzSTO6sytjUFaWP7ESxkEO7fkTREEPBgOtwxMf3j4NsY2n+zktI6W
+         GFbS6GUZrZkdXxepPdLZr47fxWB6M+PL5NM73oO6YZb6Hf8ED1GyhQiFLstam/MtXnbr
+         GIeoacV6EzrRY5dQdhNMCgYDV6LCw48MT4cnpxkedljoXKFZtvAKt3k/aexDb9w+gEGh
+         FbMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730547663; x=1731152463;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=GMLYsyPr4xumLfGGfYRjRM3ZXtmHZmJVFx7uijw7R9Q=;
+        b=U9RH9hADVf3eLSEljWH1IVYVlEi+5FkKXHcrJubLpKbG2jk2axe9Vh6o5Qc3gC1UPg
+         PKckwAHy1n4rKh+KmATwQUrmp3V3GJhDHt1rh3IdAe698m+CErf2uu1aR+US2mc23UK1
+         TfR/0BUfOgQAmP24GdBpR7/CohbUYWi17th3Z5ilZSkL1HLEWqvyAbEHWggjKO6koN3o
+         N8Gu2btuuWHkF5xx/Xi8WjwrqiT7M7a9UJZ49fO/nwC3VZuHw+NpIiwgY5fT73Ic936I
+         LYxZ//hkm4y8FEcEJ2/IstPp+sG4ZKDdx2lwYSRpQVRlCVie7vMTrHcVCubFdmk3Cxrz
+         cxSg==
+X-Forwarded-Encrypted: i=1; AJvYcCVz8ZapSfHjyPYPTxWXPz71h1vIB8KkOmxZ8O6L89sIB1y2eayd8cSO0CYqySUmQ9mcQ5QLzTPp+H/UdecD@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxdiy7ydOjOQQeznOldll3S2LTF18Rz8BejaaAEMaMfs7SwmCk8
+	w7fQ7DqLU0jYRheYOGxOYumW93nlB38UpKFom3JhQQnkLzGUWXFiuqmhNhwe1W4=
+X-Google-Smtp-Source: AGHT+IHGujsdxA97CT882qkCpdMoVH8GsT1n46/t2DVN9orVppO/tTsrbNq0fjx3WgBIeTcFlLazow==
+X-Received: by 2002:a05:6000:4029:b0:37e:d2b7:acd5 with SMTP id ffacd0b85a97d-381c7a476a8mr5356689f8f.8.1730547663353;
+        Sat, 02 Nov 2024 04:41:03 -0700 (PDT)
+Received: from [192.168.0.35] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381c113e694sm7879785f8f.86.2024.11.02.04.41.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 02 Nov 2024 04:41:02 -0700 (PDT)
+Message-ID: <1d24c5a4-5059-4420-ad69-a72cceb5657a@linaro.org>
+Date: Sat, 2 Nov 2024 11:41:01 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241030185854.4015348-5-quic_jprakash@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/3] media: camss: vfe: implement pm domain ops for
+ v4.1
+To: =?UTF-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <barnabas.czeman@mainlining.org>,
+ Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+References: <20241102-camss-msm8953-v2-0-837310e4541c@mainlining.org>
+ <20241102-camss-msm8953-v2-1-837310e4541c@mainlining.org>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20241102-camss-msm8953-v2-1-837310e4541c@mainlining.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Hi Jishnu,
+On 02/11/2024 01:32, Barnabás Czémán wrote:
+> have to be power on/off explicitly.
 
-kernel test robot noticed the following build warnings:
+"powered on/off"
 
-[auto build test WARNING on 6fb2fa9805c501d9ade047fc511961f3273cdcb5]
+Pardon me I missed this @ v1.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Jishnu-Prakash/dt-bindings-iio-adc-Move-QCOM-ADC-bindings-to-iio-adc-folder/20241031-030237
-base:   6fb2fa9805c501d9ade047fc511961f3273cdcb5
-patch link:    https://lore.kernel.org/r/20241030185854.4015348-5-quic_jprakash%40quicinc.com
-patch subject: [PATCH V4 4/4] thermal: qcom: add support for PMIC5 Gen3 ADC thermal monitoring
-config: i386-allyesconfig (https://download.01.org/0day-ci/archive/20241102/202411021924.bHINpnCr-lkp@intel.com/config)
-compiler: gcc-12 (Debian 12.2.0-14) 12.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20241102/202411021924.bHINpnCr-lkp@intel.com/reproduce)
+Please amend.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202411021924.bHINpnCr-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
-   In file included from include/linux/printk.h:599,
-                    from include/asm-generic/bug.h:22,
-                    from arch/x86/include/asm/bug.h:99,
-                    from include/linux/bug.h:5,
-                    from include/linux/fortify-string.h:6,
-                    from include/linux/string.h:390,
-                    from arch/x86/include/asm/page_32.h:18,
-                    from arch/x86/include/asm/page.h:14,
-                    from arch/x86/include/asm/processor.h:20,
-                    from include/linux/sched.h:13,
-                    from include/linux/ratelimit.h:6,
-                    from include/linux/dev_printk.h:16,
-                    from include/linux/device.h:15,
-                    from include/linux/auxiliary_bus.h:11,
-                    from include/linux/iio/adc/qcom-adc5-gen3-common.h:12,
-                    from drivers/thermal/qcom/qcom-spmi-adc-tm5-gen3.c:7:
-   drivers/thermal/qcom/qcom-spmi-adc-tm5-gen3.c: In function 'adctm5_gen3_isr':
->> drivers/thermal/qcom/qcom-spmi-adc-tm5-gen3.c:103:31: warning: format '%x' expects argument of type 'unsigned int', but argument 5 has type 'u8 *' {aka 'unsigned char *'} [-Wformat=]
-     103 |         dev_dbg(adc_tm5->dev, "Interrupt status:%#x, TM status:%#x, high:%#x, low:%#x\n",
-         |                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   include/linux/dynamic_debug.h:224:29: note: in definition of macro '__dynamic_func_call_cls'
-     224 |                 func(&id, ##__VA_ARGS__);                       \
-         |                             ^~~~~~~~~~~
-   include/linux/dynamic_debug.h:250:9: note: in expansion of macro '_dynamic_func_call_cls'
-     250 |         _dynamic_func_call_cls(_DPRINTK_CLASS_DFLT, fmt, func, ##__VA_ARGS__)
-         |         ^~~~~~~~~~~~~~~~~~~~~~
-   include/linux/dynamic_debug.h:273:9: note: in expansion of macro '_dynamic_func_call'
-     273 |         _dynamic_func_call(fmt, __dynamic_dev_dbg,              \
-         |         ^~~~~~~~~~~~~~~~~~
-   include/linux/dev_printk.h:165:9: note: in expansion of macro 'dynamic_dev_dbg'
-     165 |         dynamic_dev_dbg(dev, dev_fmt(fmt), ##__VA_ARGS__)
-         |         ^~~~~~~~~~~~~~~
-   include/linux/dev_printk.h:165:30: note: in expansion of macro 'dev_fmt'
-     165 |         dynamic_dev_dbg(dev, dev_fmt(fmt), ##__VA_ARGS__)
-         |                              ^~~~~~~
-   drivers/thermal/qcom/qcom-spmi-adc-tm5-gen3.c:103:9: note: in expansion of macro 'dev_dbg'
-     103 |         dev_dbg(adc_tm5->dev, "Interrupt status:%#x, TM status:%#x, high:%#x, low:%#x\n",
-         |         ^~~~~~~
-   drivers/thermal/qcom/qcom-spmi-adc-tm5-gen3.c:103:66: note: format string is defined here
-     103 |         dev_dbg(adc_tm5->dev, "Interrupt status:%#x, TM status:%#x, high:%#x, low:%#x\n",
-         |                                                                ~~^
-         |                                                                  |
-         |                                                                  unsigned int
-         |                                                                %#hhn
---
->> drivers/thermal/qcom/qcom-spmi-adc-tm5-gen3.c:22: warning: Cannot understand  * @adc_tm: indicates if the channel is used for TM measurements.
-    on line 22 - I thought it was a doc line
-
-
-vim +103 drivers/thermal/qcom/qcom-spmi-adc-tm5-gen3.c
-
-   > 7	#include <linux/iio/adc/qcom-adc5-gen3-common.h>
-     8	#include <linux/iio/consumer.h>
-     9	#include <linux/interrupt.h>
-    10	#include <linux/module.h>
-    11	#include <linux/of.h>
-    12	#include <linux/platform_device.h>
-    13	#include <linux/regmap.h>
-    14	#include <linux/thermal.h>
-    15	#include <linux/unaligned.h>
-    16	
-    17	#include "../thermal_hwmon.h"
-    18	
-    19	struct adc_tm5_gen3_chip;
-    20	
-    21	/**
-  > 22	 * @adc_tm: indicates if the channel is used for TM measurements.
-    23	 * @tm_chan_index: TM channel number used (ranging from 1-7).
-    24	 * @timer: time period of recurring TM measurement.
-    25	 * @tzd: pointer to thermal device corresponding to TM channel.
-    26	 * @high_thr_en: TM high threshold crossing detection enabled.
-    27	 * @low_thr_en: TM low threshold crossing detection enabled.
-    28	 * @last_temp: last temperature that caused threshold violation,
-    29	 *	or a thermal TM channel.
-    30	 * @last_temp_set: indicates if last_temp is stored.
-    31	 */
-    32	
-    33	struct adc_tm5_gen3_channel_props {
-    34		struct device			*dev;
-    35		unsigned int			timer;
-    36		unsigned int			tm_chan_index;
-    37		unsigned int			sdam_index;
-    38		struct adc5_channel_common_prop common_props;
-    39		bool			high_thr_en;
-    40		bool			low_thr_en;
-    41		bool			meas_en;
-    42		struct adc_tm5_gen3_chip	*chip;
-    43		struct thermal_zone_device *tzd;
-    44		int				last_temp;
-    45		bool				last_temp_set;
-    46	};
-    47	
-    48	struct adc_tm5_gen3_chip {
-    49		struct adc5_device_data	*dev_data;
-    50		struct adc_tm5_gen3_channel_props	*chan_props;
-    51		unsigned int		nchannels;
-    52		struct device		*dev;
-    53		struct work_struct		tm_handler_work;
-    54	};
-    55	
-    56	static int get_sdam_from_irq(struct adc_tm5_gen3_chip *adc_tm5, int irq)
-    57	{
-    58		int i;
-    59	
-    60		for (i = 0; i < adc_tm5->dev_data->num_sdams; i++) {
-    61			if (adc_tm5->dev_data->base[i].irq == irq)
-    62				return i;
-    63		}
-    64		return -ENOENT;
-    65	}
-    66	
-    67	static irqreturn_t adctm5_gen3_isr(int irq, void *dev_id)
-    68	{
-    69		struct adc_tm5_gen3_chip *adc_tm5 = dev_id;
-    70		u8 status, tm_status[2], val;
-    71		int ret, sdam_num;
-    72	
-    73		sdam_num = get_sdam_from_irq(adc_tm5, irq);
-    74		if (sdam_num < 0) {
-    75			dev_err(adc_tm5->dev, "adc irq %d not associated with an sdam\n", irq);
-    76			return IRQ_HANDLED;
-    77		}
-    78	
-    79		ret = adc5_gen3_read(adc_tm5->dev_data, sdam_num, ADC5_GEN3_STATUS1, &status, 1);
-    80		if (ret) {
-    81			dev_err(adc_tm5->dev, "adc read status1 failed with %d\n", ret);
-    82			return IRQ_HANDLED;
-    83		}
-    84	
-    85		if (status & ADC5_GEN3_STATUS1_CONV_FAULT) {
-    86			dev_err_ratelimited(adc_tm5->dev, "Unexpected conversion fault, status:%#x\n",
-    87					    status);
-    88			val = ADC5_GEN3_CONV_ERR_CLR_REQ;
-    89			adc5_gen3_status_clear(adc_tm5->dev_data, sdam_num, ADC5_GEN3_CONV_ERR_CLR, &val,
-    90					       1);
-    91			return IRQ_HANDLED;
-    92		}
-    93	
-    94		ret = adc5_gen3_read(adc_tm5->dev_data, sdam_num, ADC5_GEN3_TM_HIGH_STS, tm_status, 2);
-    95		if (ret) {
-    96			dev_err(adc_tm5->dev, "adc read TM status failed with %d\n", ret);
-    97			return IRQ_HANDLED;
-    98		}
-    99	
-   100		if (tm_status[0] || tm_status[1])
-   101			schedule_work(&adc_tm5->tm_handler_work);
-   102	
- > 103		dev_dbg(adc_tm5->dev, "Interrupt status:%#x, TM status:%#x, high:%#x, low:%#x\n",
-   104			status, tm_status, tm_status[0], tm_status[1]);
-   105	
-   106		return IRQ_HANDLED;
-   107	}
-   108	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+---
+bod
 
