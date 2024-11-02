@@ -1,72 +1,71 @@
-Return-Path: <linux-arm-msm+bounces-36806-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36807-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6DE189B9BCB
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Nov 2024 02:08:21 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 220099B9BD0
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Nov 2024 02:08:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A028C1C20CA3
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Nov 2024 01:08:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E2D6B2829FE
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Nov 2024 01:08:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F95820311;
-	Sat,  2 Nov 2024 01:08:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 026EA3B1A1;
+	Sat,  2 Nov 2024 01:08:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BcztG1ET"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KIlhzROy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B801F18E2A
-	for <linux-arm-msm@vger.kernel.org>; Sat,  2 Nov 2024 01:08:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43A0B1B960
+	for <linux-arm-msm@vger.kernel.org>; Sat,  2 Nov 2024 01:08:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730509697; cv=none; b=J5zYi3bpDfHeFlaU9ox3068RnCbrZRQhku5z5z+UjFx5mGVfXTUyY88wsG1vlexj1wLOJH145NXdbN52znwCYH1zwyrzE9XQjz95mH15wpjAugjyymtaGc0cCNqL18ECR/w5qG4rONhrXDRtYF7+Rsav8FgMnXxoYPLefphHtPA=
+	t=1730509698; cv=none; b=n5W4Wy3peleq1dYRUfzTdFOMmNauKclhmFMKMC95NeKsAc5x9mUgMnsXXRxE9s4tkeNvGq8zVU6kU4ERawYCCEtP83zcfgnDQRNzFWWOLuUAODO9V1csuPS/p7njU1ylYUvgs3prqKIytNhuS9yMr3VgqIf+0a4EpNiQ6TtPFwk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730509697; c=relaxed/simple;
-	bh=SM0OkiIvX9DV0zqzqtbOMacYN0x9bMHIMUlDZ4XBF7M=;
+	s=arc-20240116; t=1730509698; c=relaxed/simple;
+	bh=F6ymcuXC32jN2HYeBzTyvgez8PwGDNSbJuLLYYtxoA4=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=H2UxuF0NbQUDQ7E8H93J+z0xRsEHLSec++mCtO6nJrmmbYn4tICe/Bnup6wwL1hqmU+SddXdmaNHfHPwu9T+PGpVypQ2wOYq5TZCrVW9V5F8UViE+9Tp6CIzeUhTexUUxE3Jg6jHlCm69bvEGdKWrjXTznBNASx5ekCF3J7ImfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BcztG1ET; arc=none smtp.client-ip=209.85.167.47
+	 MIME-Version:Content-Type; b=Y8SeD9PWikrhmdyRDTUV77f/MQF/fAD8alI5e2Q+JnQ0f8x+fI1fJptrho0ipJ0qsE0ngt0qgD0SAca8Aj4ss73jstUj3LY53IMGMcf6O74j59G8xxYAqowbj0lMI9CAvCGc0vEGXYeFXPPZfjRJczsxmH3meazFSHngaxeujss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KIlhzROy; arc=none smtp.client-ip=209.85.167.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-539fe76e802so3089845e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Nov 2024 18:08:15 -0700 (PDT)
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-539f7606199so287659e87.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Nov 2024 18:08:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1730509694; x=1731114494; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1730509695; x=1731114495; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=yNi7KL5oTvSaRVd2CVSk0POLJY7+DXarGDd2A7rzOBY=;
-        b=BcztG1ET1VlV0KzWSvJHMnn/PblM0SFycdrm2qoGe5hRJE6qGNuy0eZXGJna2JOrqe
-         3fZkxy6M4luZuMO+FWCFcX1U8DR25HQDcNc0/cGVhn7V5iFDV3L4UL6idKwRAOGtwNI/
-         AwJL69P0mWAl9qgittgXOv7sqZZfjYOqtz7kd65oVAcyHU4XYFwJtx8+4ghIOqYc2SIS
-         WI8WDod3/5nrluMB4SQwvbHcZKEMcfiAY9GbFN8S90T0WuFd4RGTaAOVbV5Z3s/dpPrU
-         g587u2z4y9ovHXh8GMSObEh6QMbjj3fK1BMdtIev3eECIT/tipdDeub7+YN8OEX9c28v
-         jqOg==
+        bh=fQ73LcOfKQHGeSfhVnzEL1HHx0W3Qb8KYGmPSTFzc30=;
+        b=KIlhzROyKmrnj/Z73veLgIYe1uNEgzXJDVghIOvVJOtLbEfxkcN3yjo7FEyc4fQvyA
+         Wcg7mPo+8avZyMY1gvh2l10T+XWe6N41KBKwtt+WWTod+59FAQ0BWSpMGgJl9ksYfFqx
+         tCP0ZUNAFlUty1AZCIgZUVS7Bv51eqXG0sVtY3QeHvaMnJ3hvEAWddeIY2HBCus4Onqk
+         R7lyPw8ah2kftW5u5GFwZUPM252XxCO4jfqZpxsW8ex6o9ptruvSp/0TLLlyT9A/cQa+
+         xO9ORTEwzfB5Qmmy6TlOmLJqW7F2WGGcZwd6osoxD5IojVNL7s6mjsydnOqTuvayFzVF
+         quhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730509694; x=1731114494;
+        d=1e100.net; s=20230601; t=1730509695; x=1731114495;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=yNi7KL5oTvSaRVd2CVSk0POLJY7+DXarGDd2A7rzOBY=;
-        b=sLrzS3FunFGMRqXBLDDjGTdc5k1tLB2Qf86ccVcXrh0vY/au3Lrpcs/hVtYfb1UoiK
-         dnsY3oJos/wtl5ZDyrcj/y/glvEyH8rK8HiilOjiL5hv1DKLxpyglrSzn7QIpYO3c/8C
-         qTVuG7yMd5eV2gD5s72ai/UEAYt2LNSlRc5GnH6D5i5LLdq+06dSgGSEpExN6QRNEXPD
-         O9xpKdnSkQPnVOL1hDpNqn+xYSOthpqHTmiuhtTG8gvGMzoIJg+gzpgjV0miBBi0Zt8C
-         NISLedtFGOF/g2Igfy6MFYH11TUJG98arSBsfOztxcqEejoHrQ8rWU7SX2+ciGzUMMhU
-         u7sA==
-X-Forwarded-Encrypted: i=1; AJvYcCXmpT0RSCRG/MPJnGgboSaLMvmIdTAJsAu+Z1lRV4ienO2mshw4rKyck11KsVBsE4R7atQkWOe3KlHR9LVL@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz5NbIVClTsW5K0irGLnogVuyYSfVuJ6qfOKpwmn0umZE/UR13Z
-	ZjwbBnybfmht7hmrkvL9KKOsXeVOnnwPINK4wR5tUNxmfUzVsrsJSwAKLJmHuDw=
-X-Google-Smtp-Source: AGHT+IHM740K9855r2HwwbYCwldEiJj9hjIN3g4eSOoQ52s3xQKsJW/CUnRxXysFTMeDEvNAcLKIsg==
-X-Received: by 2002:a05:6512:b98:b0:533:43e2:6ac4 with SMTP id 2adb3069b0e04-53d65e1730cmr2518003e87.49.1730509693778;
-        Fri, 01 Nov 2024 18:08:13 -0700 (PDT)
+        bh=fQ73LcOfKQHGeSfhVnzEL1HHx0W3Qb8KYGmPSTFzc30=;
+        b=RlxUB7be+IG0+Lx6VO3KbHZdheN/yakhptEZOBgxYq/OurswggAR3L7gzWY+dSnV6h
+         SnFMW2AYSTj3AWHrH/o6MGKTm5UeLvB9Te9QMu16oKt9nnNklNv60a7c/TK1pkiQI9Zd
+         3E4s/NUB+OMyvIbsuZJ4guiI/gynp2MhqGApOKPyDJOUTXjMqtF1Ojk9xg+SF4wrvkpV
+         zJKg83wRi6zLIHZZCEugzE+EoJlr09gHS+EDBlhQZa9sXr7FWgV33rBZly+FHPoH6KYA
+         4wTaUR2JnPCuPtjiWsV43L6EZWIYI97umce2O/z+j/f+OrrfYcx3zUcwZq0KOq0qjppV
+         XVTA==
+X-Gm-Message-State: AOJu0YzSTrtxd60KJiTRwi857HlQtbr3NW5BKV/u1nDjeZ2NPHXGqUpW
+	ammTinhldk+a53onG2GbGXJ1tq/Nbp+UyT2PzHrecMvudMvsxFbf5FdY/lWj1FU=
+X-Google-Smtp-Source: AGHT+IHgtubYy+4UJyb+Qi1jP+QjT2/Oa51KR/0SwdWfoTIIE/48Rgn4AUpWinMbyqlRwrE/EnDG7w==
+X-Received: by 2002:a19:7404:0:b0:53d:6b77:4fc6 with SMTP id 2adb3069b0e04-53d6b775575mr59549e87.43.1730509695326;
+        Fri, 01 Nov 2024 18:08:15 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.90])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53c7bcce6b5sm718678e87.122.2024.11.01.18.08.11
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53c7bcce6b5sm718678e87.122.2024.11.01.18.08.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Nov 2024 18:08:12 -0700 (PDT)
+        Fri, 01 Nov 2024 18:08:14 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Rob Clark <robdclark@gmail.com>,
 	Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -75,16 +74,16 @@ To: Rob Clark <robdclark@gmail.com>,
 	David Airlie <airlied@gmail.com>,
 	Simona Vetter <simona@ffwll.ch>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
+Cc: linux-arm-msm@vger.kernel.org,
 	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org
-Subject: Re: [PATCH 0/4] drm/msm/mdss: rework UBWC registers programming
-Date: Sat,  2 Nov 2024 03:08:09 +0200
-Message-Id: <173050960724.2285086.13238539859529430953.b4-ty@linaro.org>
+	freedreno@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v6 0/9] drm/msm/dpu: support virtual wide planes
+Date: Sat,  2 Nov 2024 03:08:10 +0200
+Message-Id: <173050960724.2285086.13738775113532570270.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20240921-msm-mdss-ubwc-v1-0-411dcf309d05@linaro.org>
-References: <20240921-msm-mdss-ubwc-v1-0-411dcf309d05@linaro.org>
+In-Reply-To: <20241025-dpu-virtual-wide-v6-0-0310fd519765@linaro.org>
+References: <20241025-dpu-virtual-wide-v6-0-0310fd519765@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -95,22 +94,38 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Sat, 21 Sep 2024 11:17:28 +0300, Dmitry Baryshkov wrote:
-> Current way of programming of the UBWC-related registers has been
-> inherited from vendor's drivers. The ubwc_static was supposed to contain
-> raw data to be programmed to the hardware, but was later repurposed to
-> define of the bits. As it can be seen by the commit 3e30296b374a
-> ("drm/msm: fix the highest_bank_bit for sc7180") sometimes this data
-> gets out of sync.
+On Fri, 25 Oct 2024 03:20:07 +0300, Dmitry Baryshkov wrote:
+> As promised in the basic wide planes support ([1]) here comes a series
+> supporting 2*max_linewidth for all the planes.
+> 
+> Note: Unlike v1 and v2 this series finally includes support for
+> additional planes - having more planes than the number of SSPP blocks.
+> 
+> Note: this iteration features handling of rotation and reflection of the
+> wide plane. However rot90 is still not tested: it is enabled on sc7280
+> and it only supports UBWC (tiled) framebuffers, it was quite low on my
+> priority list.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/4] drm/msm: move MDSS registers to separate header file
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/92de8137d619
-[2/4] drm/msm/mdss: use register definitions instead of hand-coding them
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/d742f7e06840
+After additional consideration, apply only basic patches, leaving the virtual
+planes enablement into the 6.14 material in order to be able to get more
+testing for those patches.
+
+[1/9] drm/msm/dpu: use drm_rect_fp_to_int()
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/50024444c44c
+[2/9] drm/msm/dpu: move pstate->pipe initialization to dpu_plane_atomic_check
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/31f7148fd370
+[3/9] drm/msm/dpu: drop virt_formats from SSPP subblock configuration
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/b96ca23fdd03
+[4/9] drm/msm/dpu: move scaling limitations out of the hw_catalog
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/8f15005783b8
+[5/9] drm/msm/dpu: split dpu_plane_atomic_check()
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/dbbf57dfd04e
+[6/9] drm/msm/dpu: move rot90 checking to dpu_plane_atomic_check_sspp()
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/ab52d2717ac0
 
 Best regards,
 -- 
