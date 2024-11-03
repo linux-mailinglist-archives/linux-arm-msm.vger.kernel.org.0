@@ -1,387 +1,221 @@
-Return-Path: <linux-arm-msm+bounces-36848-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36849-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 341989BA4F5
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Nov 2024 10:47:05 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C39E49BA654
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Nov 2024 16:13:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8237CB21680
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Nov 2024 09:46:43 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C13B7B20C5C
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Nov 2024 15:13:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E629175D38;
-	Sun,  3 Nov 2024 09:46:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8FAD417DFE9;
+	Sun,  3 Nov 2024 15:13:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="KmRFNG7D"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KmuEO33r"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7114516BE0B;
-	Sun,  3 Nov 2024 09:46:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE4A32582
+	for <linux-arm-msm@vger.kernel.org>; Sun,  3 Nov 2024 15:13:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730627164; cv=none; b=fy67cSQi1w1jXXBA6Xv+zHsHMsHkKcabeANkwrwID8dZ6qEGxL1D86vmlhR0Xm/UrKF8Kg8CgG55JtQ6oskEFKP0qTl5AO9cmbQ1mgB1wtADozRCtCcWCX9293Z2lLnMBBmcKI7JddxHDQCHCXhVe3DFoYhqvwX60rg9T6+wqk4=
+	t=1730646784; cv=none; b=Bnqy8JGtNIxOTEui3bNNFrWdshBu6a9kHyl+2nCqfoUENwvZ5gsyKbowOfX4hhflBlT4rD6ALIFus8WF03SegM9tb/+ZG+J6IPAxJswyY+7kZHWYZHWBKUFhZeodgSMNDC2U9eXtxu5jF4mSS8EovyT1HYBU0QupPygLqEjyC9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730627164; c=relaxed/simple;
-	bh=8uapuhzcoEEROc/m3t3yzzxEVVf0sVrzaxgbMRbq6Mg=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=QKj27yIUcZy8U5xrg1WIdjDm/asbLjYvTv8w7w+eOYlMDFR/OQBvtJwsj6s6n+9mOhOrThWasoCLA5asn3FNtsDyUTQ/V7Ew1g8EqQEkA6DUCGOcgirIgj/0GQMeEF18Ek/yjhUR8xKJstgb+WbKzDvmnD8a28zOfKSq6L6k6LU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=KmRFNG7D; arc=none smtp.client-ip=5.75.144.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
-Received: from [192.168.0.162] (254C1CEE.nat.pool.telekom.hu [37.76.28.238])
-	by mail.mainlining.org (Postfix) with ESMTPSA id D812EE45BE;
-	Sun,  3 Nov 2024 09:45:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mainlining.org;
-	s=psm; t=1730627160;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=aWlhsEsm/LLraQLpzm4h4Y3dCktYQ70fSrM1iKEi9dQ=;
-	b=KmRFNG7DwNmS2a1HYKv3KPbtuHB8/nAe2PY5HtLRNgf4WtkTNazewZ/DRcDVjKB0sXVM5K
-	HTz1hVVaGFibqu4MwHw48YSLCvz9vIA8XO/132CyKsRxNAnuDFU2v/AQn9Uo4yTMNxv1lV
-	EYJSMffe/zPPEOD66CybUKOw6XMXqEDQLct5XY6raiwp2IQaaKl9+uVI/q8MMVbkzY8UKZ
-	uU3VRVDCwTixd5wH4xJDqdyVStihYZ6fA3YPmlSeDWgI4mIcMa30cXLaS64IXfdhO1fbOG
-	X5VgoWbOK4SbNTfQVOyimpNNiCt5Y9YEZdE9SV7MVOpr81cq9ptqM0EbyZlc+Q==
-From: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
-Date: Sun, 03 Nov 2024 10:45:36 +0100
-Subject: [PATCH v4 3/3] media: qcom: camss: Add MSM8953 resources
+	s=arc-20240116; t=1730646784; c=relaxed/simple;
+	bh=wYAoJRD7v8jrHJmEguNTQmd3c50c8FjNbmBzvtkQOFI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=BgqJFxv2nWrsDTRqYdDLp0nV5mRTbCj9o+MnT9l/e2Ev+o5w0RK1MiLM20YnvkgHkEYOzTY3fWm7+zDft6MbbvzRVyOb7RaSbQYEU7US4TmB7RKQ+h1GZnj4b34O6CwHP1H66Zp8bhZGTIi+qly25mgEfgIO9weFvMJN1Te1KPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KmuEO33r; arc=none smtp.client-ip=209.85.216.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-2e2e87153a3so2352434a91.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 03 Nov 2024 07:13:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1730646782; x=1731251582; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=eHQktcKdIhna5z27pQ3PuyXhlPaLntIaSmvbBw7PwoE=;
+        b=KmuEO33ruVGkb98SLj0/8QwsYF8UCpg2ZnuF8gixbV9yOGxOOAjaWkD11fs+B88fyg
+         gIkYtCcdVWgHBSTRvjc3fpdZH/586CRwDV1T8/9k8b1qwsYOGCuNg/jMFDFQri9+02pe
+         4Epb/FJEt3LITMpeVtCDIjKLTnX49poPfTRBIoB4TWZHgrXhadgjIBt3XgAzWTY5n6AM
+         vvaWCcBJATS9yXY087GCjCXzIBvxv8P+CZXCijntxBx808anG7vefZqtPKU8pDNkZ3zN
+         l5igR3zKEynRk1jUongAU31yy01QveR8D4zf+f4j7yBFP7f0vn8JSxIj+dHg3BbmWnSd
+         Eocw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730646782; x=1731251582;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=eHQktcKdIhna5z27pQ3PuyXhlPaLntIaSmvbBw7PwoE=;
+        b=Nm/dLgYNUkhM08FrplCxJcn3hSeOcYg3NDU6k0bjDkhBOvlQv1H2FTAOqElr+mbX0W
+         8F2+MwhVy7Y/fDVyQ3IElUo0IqT+h2nr4CBtGljcSsSkzvrRVfV2u59lwIcX2GZl6yth
+         uF4FxjEzrIUzG4zO8+MpHOvdP1jdN7Wezg1IBmM9apCZJ7HuUeLpEpI16ix0dbwN+5s/
+         NpQUnHUVeCBTyS8K6mLQTpmxAqt82XCOB7Q7j0rALmljyNa1wD50B5eDCuvCwm8vESfI
+         KpzjzcYiNdCuJPinmeSNuy3sdaCZUmRbZSTUJYd7xO0U3aoP9otIFCY7iOWWDrbD1jen
+         uqyA==
+X-Forwarded-Encrypted: i=1; AJvYcCXNPVwUMNuXqYvKESQMS9Qtd26kzB4tpOEz8pGFW2MkfksICMakN3KOa4oFM1piURlvIhkyivKNOEkIrcL7@vger.kernel.org
+X-Gm-Message-State: AOJu0YyNDd39faj//vTWmupgkNPna2iuymC5PCt6am5+TulIQZwddQ5y
+	ne1a5HMqLH1h92m+dxHM7lwc6D8wIslqqhvbCRMTubF9XlPzzpzbhy/667Sknc1eig190nogOeh
+	piMQ6Qa3QSh46k9iKWC5IKCvE/sZrDiiyCoo7xw==
+X-Google-Smtp-Source: AGHT+IHRIh1ITCIAJ4M7w1UM8me5MLqRixS/tsHhgXfawiZDUkumg9GSz+T7fPFwKnIa+4k1jBzouIXTP6K8KhWz3Do=
+X-Received: by 2002:a17:90b:4a86:b0:2e1:ce7b:6069 with SMTP id
+ 98e67ed59e1d1-2e94c529acamr15224146a91.33.1730646782163; Sun, 03 Nov 2024
+ 07:13:02 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20241103-camss-msm8953-v4-3-48d0ec75958d@mainlining.org>
-References: <20241103-camss-msm8953-v4-0-48d0ec75958d@mainlining.org>
-In-Reply-To: <20241103-camss-msm8953-v4-0-48d0ec75958d@mainlining.org>
-To: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Barnabas Czeman <barnabas.czeman@mainlining.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
- Vladimir Lypak <vladimir.lypak@gmail.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1730627156; l=10199;
- i=barnabas.czeman@mainlining.org; s=20240730; h=from:subject:message-id;
- bh=0ZFaFBNFOmvZEnGfKS4IFJZ6Ufox5bd2zyapf/sD3pA=;
- b=vnGjKsoTpf3QQxasztltZJo/ZGdrO9WHZi40iGBiMRRO4ZKQn92MpfMRINPLkRF/PD8Rn57Ll
- ngsrOUfU+UBD4JJRI/6YPm4vL2tFV33erzMxojF4q3UDpZNXlw1S202
-X-Developer-Key: i=barnabas.czeman@mainlining.org; a=ed25519;
- pk=TWUSIGgwW/Sn4xnX25nw+lszj1AT/A3bzkahn7EhOFc=
+References: <20241031132745.3765612-1-quic_sibis@quicinc.com> <20241031132745.3765612-3-quic_sibis@quicinc.com>
+In-Reply-To: <20241031132745.3765612-3-quic_sibis@quicinc.com>
+From: Vincent Guittot <vincent.guittot@linaro.org>
+Date: Sun, 3 Nov 2024 16:12:50 +0100
+Message-ID: <CAKfTPtDNBPC8QQzFBNDKNW_sJfkoShSsxo7iMC8Wga+wixyHzA@mail.gmail.com>
+Subject: Re: [PATCH V7 2/2] cpufreq: scmi: Register for limit change notifications
+To: Sibi Sankar <quic_sibis@quicinc.com>
+Cc: sudeep.holla@arm.com, cristian.marussi@arm.com, rafael@kernel.org, 
+	viresh.kumar@linaro.org, morten.rasmussen@arm.com, dietmar.eggemann@arm.com, 
+	lukasz.luba@arm.com, pierre.gondois@arm.com, 
+	linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, quic_mdtipton@quicinc.com, 
+	linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-From: Vladimir Lypak <vladimir.lypak@gmail.com>
+On Thu, 31 Oct 2024 at 14:28, Sibi Sankar <quic_sibis@quicinc.com> wrote:
+>
+> Register for limit change notifications if supported and use the throttled
+> frequency from the notification to apply HW pressure.
+>
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> Tested-by: Mike Tipton <quic_mdtipton@quicinc.com>
+> Reviewed-by: Cristian Marussi <cristian.marussi@arm.com>
+> Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+> ---
+>
+> v7:
+> * Add a new request instead of reusing the max_freq_req [Vincent]
+> * Use the non-devm versions of register/unregister of event notifier
+>   since we have to remove them when the cpus get removed anyway.
+> * Add new patch to fix cleanup path on boost enablement failure.
+>
+>  drivers/cpufreq/scmi-cpufreq.c | 51 ++++++++++++++++++++++++++++++++++
+>  1 file changed, 51 insertions(+)
+>
+> diff --git a/drivers/cpufreq/scmi-cpufreq.c b/drivers/cpufreq/scmi-cpufreq.c
+> index 07d6f9a9b7c8..ff13f7d4b2c9 100644
+> --- a/drivers/cpufreq/scmi-cpufreq.c
+> +++ b/drivers/cpufreq/scmi-cpufreq.c
+> @@ -16,6 +16,7 @@
+>  #include <linux/export.h>
+>  #include <linux/module.h>
+>  #include <linux/pm_opp.h>
+> +#include <linux/pm_qos.h>
+>  #include <linux/slab.h>
+>  #include <linux/scmi_protocol.h>
+>  #include <linux/types.h>
+> @@ -25,7 +26,10 @@ struct scmi_data {
+>         int domain_id;
+>         int nr_opp;
+>         struct device *cpu_dev;
+> +       struct cpufreq_policy *policy;
+>         cpumask_var_t opp_shared_cpus;
+> +       struct notifier_block limit_notify_nb;
+> +       struct freq_qos_request limits_freq_req;
+>  };
+>
+>  static struct scmi_protocol_handle *ph;
+> @@ -174,6 +178,25 @@ static struct freq_attr *scmi_cpufreq_hw_attr[] = {
+>         NULL,
+>  };
+>
+> +static int scmi_limit_notify_cb(struct notifier_block *nb, unsigned long event, void *data)
+> +{
+> +       struct scmi_data *priv = container_of(nb, struct scmi_data, limit_notify_nb);
+> +       struct scmi_perf_limits_report *limit_notify = data;
+> +       struct cpufreq_policy *policy = priv->policy;
+> +       unsigned int limit_freq_khz;
+> +       int ret;
+> +
+> +       limit_freq_khz = limit_notify->range_max_freq / HZ_PER_KHZ;
+> +
+> +       policy->max = clamp(limit_freq_khz, policy->cpuinfo.min_freq, policy->cpuinfo.max_freq);
 
-This commit describes the hardware layout for the MSM8953
-for the following hardware blocks:
+I don't think that the above is needed or correct, the cpufreq qos
+notifier will take care of updating policy->max with handle_update()
 
-- 2 x VFE, 3 RDI per VFE
-- 3 x CSID
-- 3 x CSI PHY
-
-Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
-Acked-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
----
- drivers/media/platform/qcom/camss/camss-csiphy.c |   1 +
- drivers/media/platform/qcom/camss/camss-ispif.c  |   5 +
- drivers/media/platform/qcom/camss/camss-vfe.c    |   1 +
- drivers/media/platform/qcom/camss/camss.c        | 170 +++++++++++++++++++++++
- drivers/media/platform/qcom/camss/camss.h        |   1 +
- 5 files changed, 178 insertions(+)
-
-diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.c b/drivers/media/platform/qcom/camss/camss-csiphy.c
-index 68a3ea1ba2a5299cf28289dfdb958cfdff3c91e0..5af2b382a843c2b8857339ba28930fe1682c9412 100644
---- a/drivers/media/platform/qcom/camss/camss-csiphy.c
-+++ b/drivers/media/platform/qcom/camss/camss-csiphy.c
-@@ -596,6 +596,7 @@ int msm_csiphy_subdev_init(struct camss *camss,
- 		return PTR_ERR(csiphy->base);
- 
- 	if (camss->res->version == CAMSS_8x16 ||
-+	    camss->res->version == CAMSS_8x53 ||
- 	    camss->res->version == CAMSS_8x96) {
- 		csiphy->base_clk_mux =
- 			devm_platform_ioremap_resource_byname(pdev, res->reg[1]);
-diff --git a/drivers/media/platform/qcom/camss/camss-ispif.c b/drivers/media/platform/qcom/camss/camss-ispif.c
-index a12dcc7ff438c55167bc2981fd399dbf178181df..2dc585c6123dd248a5bacd9c7a88cb5375644311 100644
---- a/drivers/media/platform/qcom/camss/camss-ispif.c
-+++ b/drivers/media/platform/qcom/camss/camss-ispif.c
-@@ -830,6 +830,7 @@ static int ispif_set_stream(struct v4l2_subdev *sd, int enable)
- 		ispif_select_cid(ispif, intf, cid, vfe, 1);
- 		ispif_config_irq(ispif, intf, vfe, 1);
- 		if (camss->res->version == CAMSS_8x96 ||
-+		    camss->res->version == CAMSS_8x53 ||
- 		    camss->res->version == CAMSS_660)
- 			ispif_config_pack(ispif,
- 					  line->fmt[MSM_ISPIF_PAD_SINK].code,
-@@ -848,6 +849,7 @@ static int ispif_set_stream(struct v4l2_subdev *sd, int enable)
- 
- 		mutex_lock(&ispif->config_lock);
- 		if (camss->res->version == CAMSS_8x96 ||
-+		    camss->res->version == CAMSS_8x53 ||
- 		    camss->res->version == CAMSS_660)
- 			ispif_config_pack(ispif,
- 					  line->fmt[MSM_ISPIF_PAD_SINK].code,
-@@ -1111,6 +1113,7 @@ int msm_ispif_subdev_init(struct camss *camss,
- 	if (camss->res->version == CAMSS_8x16)
- 		ispif->line_num = 2;
- 	else if (camss->res->version == CAMSS_8x96 ||
-+		 camss->res->version == CAMSS_8x53 ||
- 		 camss->res->version == CAMSS_660)
- 		ispif->line_num = 4;
- 	else
-@@ -1130,6 +1133,7 @@ int msm_ispif_subdev_init(struct camss *camss,
- 			ispif->line[i].nformats =
- 					ARRAY_SIZE(ispif_formats_8x16);
- 		} else if (camss->res->version == CAMSS_8x96 ||
-+			   camss->res->version == CAMSS_8x53 ||
- 			   camss->res->version == CAMSS_660) {
- 			ispif->line[i].formats = ispif_formats_8x96;
- 			ispif->line[i].nformats =
-@@ -1162,6 +1166,7 @@ int msm_ispif_subdev_init(struct camss *camss,
- 		ret = devm_request_irq(dev, ispif->irq, ispif_isr_8x16,
- 			       IRQF_TRIGGER_RISING, ispif->irq_name, ispif);
- 	else if (camss->res->version == CAMSS_8x96 ||
-+		 camss->res->version == CAMSS_8x53 ||
- 		 camss->res->version == CAMSS_660)
- 		ret = devm_request_irq(dev, ispif->irq, ispif_isr_8x96,
- 			       IRQF_TRIGGER_RISING, ispif->irq_name, ispif);
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
-index 83c5a36d071fcc32c4b8a89e4e429dc1820df139..80a62ba11295042802cbaec617fb87c492ea6a55 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe.c
-@@ -285,6 +285,7 @@ static u32 vfe_src_pad_code(struct vfe_line *line, u32 sink_code,
- 
- 	switch (vfe->camss->res->version) {
- 	case CAMSS_8x16:
-+	case CAMSS_8x53:
- 		switch (sink_code) {
- 		case MEDIA_BUS_FMT_YUYV8_1X16:
- 		{
-diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-index fabe034081ed0a7c0e0fcd8bc76c4eb396cb0067..9fb31f4c18adee886cd0bcf84438a8f27635e07f 100644
---- a/drivers/media/platform/qcom/camss/camss.c
-+++ b/drivers/media/platform/qcom/camss/camss.c
-@@ -152,6 +152,160 @@ static const struct camss_subdev_resources vfe_res_8x16[] = {
- 	}
- };
- 
-+static const struct camss_subdev_resources csid_res_8x53[] = {
-+	/* CSID0 */
-+	{
-+		.regulators = { "vdda" },
-+		.clock = { "top_ahb", "ispif_ahb", "csi0_ahb", "ahb",
-+			   "csi0", "csi0_phy", "csi0_pix", "csi0_rdi" },
-+		.clock_rate = { { 0 },
-+				{ 0 },
-+				{ 0 },
-+				{ 0 },
-+				{ 100000000, 200000000, 310000000,
-+				  400000000, 465000000 },
-+				{ 0 },
-+				{ 0 },
-+				{ 0 } },
-+		.reg = { "csid0" },
-+		.interrupt = { "csid0" },
-+		.csid = {
-+			.hw_ops = &csid_ops_4_7,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
-+			.formats = &csid_formats_4_7
-+		}
-+	},
-+
-+	/* CSID1 */
-+	{
-+		.regulators = { "vdda" },
-+		.clock = { "top_ahb", "ispif_ahb", "csi1_ahb", "ahb",
-+			   "csi1", "csi1_phy", "csi1_pix", "csi1_rdi" },
-+		.clock_rate = { { 0 },
-+				{ 0 },
-+				{ 0 },
-+				{ 0 },
-+				{ 100000000, 200000000, 310000000,
-+				  400000000, 465000000 },
-+				{ 0 },
-+				{ 0 },
-+				{ 0 } },
-+		.reg = { "csid1" },
-+		.interrupt = { "csid1" },
-+		.csid = {
-+			.hw_ops = &csid_ops_4_7,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
-+			.formats = &csid_formats_4_7
-+		}
-+	},
-+
-+	/* CSID2 */
-+	{
-+		.regulators = { "vdda" },
-+		.clock = { "top_ahb", "ispif_ahb", "csi2_ahb", "ahb",
-+			   "csi2", "csi2_phy", "csi2_pix", "csi2_rdi" },
-+		.clock_rate = { { 0 },
-+				{ 0 },
-+				{ 0 },
-+				{ 0 },
-+				{ 100000000, 200000000, 310000000,
-+				  400000000, 465000000 },
-+				{ 0 },
-+				{ 0 },
-+				{ 0 } },
-+		.reg = { "csid2" },
-+		.interrupt = { "csid2" },
-+		.csid = {
-+			.hw_ops = &csid_ops_4_7,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
-+			.formats = &csid_formats_4_7
-+		}
-+	},
-+};
-+
-+static const struct camss_subdev_resources ispif_res_8x53 = {
-+	/* ISPIF */
-+	.clock = { "top_ahb", "ahb", "ispif_ahb",
-+		   "csi0", "csi0_pix", "csi0_rdi",
-+		   "csi1", "csi1_pix", "csi1_rdi",
-+		   "csi2", "csi2_pix", "csi2_rdi" },
-+	.clock_for_reset = { "vfe0", "csi_vfe0", "vfe1", "csi_vfe1" },
-+	.reg = { "ispif", "csi_clk_mux" },
-+	.interrupt = { "ispif" },
-+};
-+
-+static const struct camss_subdev_resources vfe_res_8x53[] = {
-+	/* VFE0 */
-+	{
-+		.regulators = {},
-+		.clock = { "top_ahb", "ahb", "ispif_ahb",
-+			   "vfe0", "csi_vfe0", "vfe0_ahb", "vfe0_axi" },
-+		.clock_rate = { { 0 },
-+				{ 0 },
-+				{ 0 },
-+				{ 50000000, 100000000, 133330000,
-+				  160000000, 200000000, 266670000,
-+				  310000000, 400000000, 465000000 },
-+				{ 0 },
-+				{ 0 },
-+				{ 0 } },
-+		.reg = { "vfe0" },
-+		.interrupt = { "vfe0" },
-+		.vfe = {
-+			.line_num = 3,
-+			.has_pd = true,
-+			.pd_name = "vfe0",
-+			.hw_ops = &vfe_ops_4_1,
-+			.formats_rdi = &vfe_formats_rdi_8x16,
-+			.formats_pix = &vfe_formats_pix_8x16
-+		}
-+	},
-+
-+	/* VFE1 */
-+	{
-+		.regulators = {},
-+		.clock = { "top_ahb", "ahb", "ispif_ahb",
-+			   "vfe1", "csi_vfe1", "vfe1_ahb", "vfe1_axi" },
-+		.clock_rate = { { 0 },
-+				{ 0 },
-+				{ 0 },
-+				{ 50000000, 100000000, 133330000,
-+				  160000000, 200000000, 266670000,
-+				  310000000, 400000000, 465000000 },
-+				{ 0 },
-+				{ 0 },
-+				{ 0 } },
-+		.reg = { "vfe1" },
-+		.interrupt = { "vfe1" },
-+		.vfe = {
-+			.line_num = 3,
-+			.has_pd = true,
-+			.pd_name = "vfe1",
-+			.hw_ops = &vfe_ops_4_1,
-+			.formats_rdi = &vfe_formats_rdi_8x16,
-+			.formats_pix = &vfe_formats_pix_8x16
-+		}
-+	}
-+};
-+
-+static const struct resources_icc icc_res_8x53[] = {
-+	{
-+		.name = "cam_ahb",
-+		.icc_bw_tbl.avg = 38400,
-+		.icc_bw_tbl.peak = 76800,
-+	},
-+	{
-+		.name = "cam_vfe0_mem",
-+		.icc_bw_tbl.avg = 939524,
-+		.icc_bw_tbl.peak = 1342177,
-+	},
-+	{
-+		.name = "cam_vfe1_mem",
-+		.icc_bw_tbl.avg = 939524,
-+		.icc_bw_tbl.peak = 1342177,
-+	},
-+};
-+
- static const struct camss_subdev_resources csiphy_res_8x96[] = {
- 	/* CSIPHY0 */
- 	{
-@@ -2248,6 +2402,7 @@ static int camss_probe(struct platform_device *pdev)
- 		return -ENOMEM;
- 
- 	if (camss->res->version == CAMSS_8x16 ||
-+	    camss->res->version == CAMSS_8x53 ||
- 	    camss->res->version == CAMSS_8x96) {
- 		camss->ispif = devm_kcalloc(dev, 1, sizeof(*camss->ispif), GFP_KERNEL);
- 		if (!camss->ispif)
-@@ -2389,6 +2544,20 @@ static const struct camss_resources msm8916_resources = {
- 	.link_entities = camss_link_entities
- };
- 
-+static const struct camss_resources msm8953_resources = {
-+	.version = CAMSS_8x53,
-+	.icc_res = icc_res_8x53,
-+	.icc_path_num = ARRAY_SIZE(icc_res_8x53),
-+	.csiphy_res = csiphy_res_8x96,
-+	.csid_res = csid_res_8x53,
-+	.ispif_res = &ispif_res_8x53,
-+	.vfe_res = vfe_res_8x53,
-+	.csiphy_num = ARRAY_SIZE(csiphy_res_8x96),
-+	.csid_num = ARRAY_SIZE(csid_res_8x53),
-+	.vfe_num = ARRAY_SIZE(vfe_res_8x53),
-+	.link_entities = camss_link_entities
-+};
-+
- static const struct camss_resources msm8996_resources = {
- 	.version = CAMSS_8x96,
- 	.csiphy_res = csiphy_res_8x96,
-@@ -2455,6 +2624,7 @@ static const struct camss_resources sc8280xp_resources = {
- 
- static const struct of_device_id camss_dt_match[] = {
- 	{ .compatible = "qcom,msm8916-camss", .data = &msm8916_resources },
-+	{ .compatible = "qcom,msm8953-camss", .data = &msm8953_resources },
- 	{ .compatible = "qcom,msm8996-camss", .data = &msm8996_resources },
- 	{ .compatible = "qcom,sdm660-camss", .data = &sdm660_resources },
- 	{ .compatible = "qcom,sdm845-camss", .data = &sdm845_resources },
-diff --git a/drivers/media/platform/qcom/camss/camss.h b/drivers/media/platform/qcom/camss/camss.h
-index 0ce84fcbbd25c7825212beb74073ffd4c70858a8..9da7f48f5dd762d27521d449051892e956693970 100644
---- a/drivers/media/platform/qcom/camss/camss.h
-+++ b/drivers/media/platform/qcom/camss/camss.h
-@@ -78,6 +78,7 @@ enum pm_domain {
- 
- enum camss_version {
- 	CAMSS_8x16,
-+	CAMSS_8x53,
- 	CAMSS_8x96,
- 	CAMSS_660,
- 	CAMSS_845,
-
--- 
-2.47.0
-
+> +
+> +       ret = freq_qos_update_request(&priv->limits_freq_req, policy->max);
+> +       if (ret < 0)
+> +               pr_warn("failed to update freq constraint: %d\n", ret);
+> +
+> +       return NOTIFY_OK;
+> +}
+> +
+>  static int scmi_cpufreq_init(struct cpufreq_policy *policy)
+>  {
+>         int ret, nr_opp, domain;
+> @@ -181,6 +204,7 @@ static int scmi_cpufreq_init(struct cpufreq_policy *policy)
+>         struct device *cpu_dev;
+>         struct scmi_data *priv;
+>         struct cpufreq_frequency_table *freq_table;
+> +       struct scmi_device *sdev = cpufreq_get_driver_data();
+>
+>         cpu_dev = get_cpu_device(policy->cpu);
+>         if (!cpu_dev) {
+> @@ -294,6 +318,25 @@ static int scmi_cpufreq_init(struct cpufreq_policy *policy)
+>                 }
+>         }
+>
+> +       ret = freq_qos_add_request(&policy->constraints, &priv->limits_freq_req, FREQ_QOS_MAX,
+> +                                  FREQ_QOS_MAX_DEFAULT_VALUE);
+> +       if (ret < 0) {
+> +               dev_err(cpu_dev, "failed to add qos limits request: %d\n", ret);
+> +               goto out_free_table;
+> +       }
+> +
+> +       priv->limit_notify_nb.notifier_call = scmi_limit_notify_cb;
+> +       ret = sdev->handle->notify_ops->event_notifier_register(sdev->handle, SCMI_PROTOCOL_PERF,
+> +                                                       SCMI_EVENT_PERFORMANCE_LIMITS_CHANGED,
+> +                                                       &priv->domain_id,
+> +                                                       &priv->limit_notify_nb);
+> +       if (ret)
+> +               dev_warn(&sdev->dev,
+> +                        "failed to register for limits change notifier for domain %d\n",
+> +                        priv->domain_id);
+> +
+> +       priv->policy = policy;
+> +
+>         return 0;
+>
+>  out_free_table:
+> @@ -313,7 +356,13 @@ static int scmi_cpufreq_init(struct cpufreq_policy *policy)
+>  static void scmi_cpufreq_exit(struct cpufreq_policy *policy)
+>  {
+>         struct scmi_data *priv = policy->driver_data;
+> +       struct scmi_device *sdev = cpufreq_get_driver_data();
+>
+> +       sdev->handle->notify_ops->event_notifier_unregister(sdev->handle, SCMI_PROTOCOL_PERF,
+> +                                                           SCMI_EVENT_PERFORMANCE_LIMITS_CHANGED,
+> +                                                           &priv->domain_id,
+> +                                                           &priv->limit_notify_nb);
+> +       freq_qos_remove_request(&priv->limits_freq_req);
+>         dev_pm_opp_free_cpufreq_table(priv->cpu_dev, &policy->freq_table);
+>         dev_pm_opp_remove_all_dynamic(priv->cpu_dev);
+>         free_cpumask_var(priv->opp_shared_cpus);
+> @@ -372,6 +421,8 @@ static int scmi_cpufreq_probe(struct scmi_device *sdev)
+>         if (!handle)
+>                 return -ENODEV;
+>
+> +       scmi_cpufreq_driver.driver_data = sdev;
+> +
+>         perf_ops = handle->devm_protocol_get(sdev, SCMI_PROTOCOL_PERF, &ph);
+>         if (IS_ERR(perf_ops))
+>                 return PTR_ERR(perf_ops);
+> --
+> 2.34.1
+>
 
