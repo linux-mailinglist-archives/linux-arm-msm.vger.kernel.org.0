@@ -1,192 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-36841-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36842-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 31D509BA304
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Nov 2024 00:20:00 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 017649BA48D
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Nov 2024 09:04:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A78551F2195F
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Nov 2024 23:19:59 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6A866B21089
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Nov 2024 08:04:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3EE9218593A;
-	Sat,  2 Nov 2024 23:19:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D7A8A15688C;
+	Sun,  3 Nov 2024 08:03:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V8ph0RKJ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t3ugWj83"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17C7F1714CA
-	for <linux-arm-msm@vger.kernel.org>; Sat,  2 Nov 2024 23:19:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 949222628D;
+	Sun,  3 Nov 2024 08:03:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730589597; cv=none; b=QVUL4sOvIRJa8P5aGMqGt28ExBqpbBoKk9TfxGtDPlZhBWtmydmU1c2+hJJ/8Rgh4CtS6fEb5c7++Fkg9kjduemOudLVTTcyxmIBNQc2mmBimIHzQpDOWFXENzvRv9byEVj6iAqo7YVGV1RS1zM8DjQTYnd3nJnPKFcV+TPXlRU=
+	t=1730621036; cv=none; b=GHMAd73aXvhZd7c4xVkuSReE59be2zEwpzoGgP4qyUQAqcEmrn0UxW84hiEeSSnAlqxD+NtzCjnKdsRPAAOxvUuA+UKek7uHP9dZwJtfOZJfKzfcXFnk5pfe4dedr8+knLDjptqVJIUcIyMKdT/Gm/ghVSctDA7hW6KrU7xXJgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730589597; c=relaxed/simple;
-	bh=/BnZgvaqjscf0IvYfmdX4PIdhBAXfbRaWA+hx7RV3fE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=txAaYL7oT6WY2KZl94WjHw+0MYVh544rXNqKNvzjOQ1ooXX84NKqika73aV1+5q867l0gekm6ZNIGJplx6z+noXHjTdv1a5VPj8M8vMvAD21PJgvz0c9N83lt+wz+Dqfdibadrd36WO/xKr1SZZwN//g5NS14AaUuFT9XZ5qqIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V8ph0RKJ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B57CC4CEC3;
-	Sat,  2 Nov 2024 23:19:54 +0000 (UTC)
+	s=arc-20240116; t=1730621036; c=relaxed/simple;
+	bh=nvAf8GTIV/8JCsOU6Rof/enufImCxOjzOcAhet3YJlU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=i66V8juhL8p35LY1Nsan/w+NOScsGRUyPadEzM/lfq29K0OQ4r5tAWN7wd8JO90pFzSTX39NktFYHPoZthsLR44iq8itHgRPid2LZn1A7CzLYcFpTkjkpVlrBRhnaI9E91UvgkxOxn+7UA98gh8ELwttwmpvEuBsux2XAg1mH4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t3ugWj83; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62C45C4CECD;
+	Sun,  3 Nov 2024 08:03:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730589596;
-	bh=/BnZgvaqjscf0IvYfmdX4PIdhBAXfbRaWA+hx7RV3fE=;
-	h=From:To:Cc:Subject:Date:From;
-	b=V8ph0RKJ9/nHSPRyxYP8hMtmj3Jfq+78V3LGhWV0DZ2GKHOA4oQ/iSHPWq/0F1mSW
-	 f/eAernmmhsbQ/TyHwv6YWNliDuuEEsSy7YA653OHm1uQtvx5wYWScMWU6/deMdKg3
-	 pczg76sQ3lCtXoinx625QxBpmzCai+SQZzdq61ByXhWdP/r9aUgxDqo8AqB/Gg7T5X
-	 CR7FZyUvy88+hj8x8siUyAJPlFBPkGNVmBD+kAZ724H3CqJVTbiw59FqTPaR12X2Qp
-	 0dbROLlF91p+NDq/i674qvhQRFyYsK2RtpPrMVYDUh1hylA0d3//IyxE3Sqwov/ZQY
-	 dx4HGdMnS6MFQ==
-From: Bjorn Andersson <andersson@kernel.org>
-To: arm@kernel.org,
-	soc@kernel.org
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	Arnd Bergmann <arnd@arndb.de>,
-	Olof Johansson <olof@lixom.net>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Nikunj Kela <quic_nkela@quicinc.com>,
-	Zhang Zekun <zhangzekun11@huawei.com>,
-	Lijuan Gao <quic_lijuang@quicinc.com>,
-	Tengfei Fan <quic_tengfan@quicinc.com>,
-	Aleksandrs Vinarskis <alex.vinarskis@gmail.com>,
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Jingyi Wang <quic_jingyw@quicinc.com>,
-	Julia Lawall <Julia.Lawall@inria.fr>,
-	=?UTF-8?q?J=C3=A9r=C3=B4me=20de=20Bretagne?= <jerome.debretagne@gmail.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Konrad Dybcio <quic_kdybcio@quicinc.com>,
-	Kyle Deng <quic_chunkaid@quicinc.com>,
-	Maya Matuszczyk <maccraft123mc@gmail.com>,
-	Zhenhua Huang <quic_zhenhuah@quicinc.com>
-Subject: [GIT PULL] Qualcomm driver updates for v6.13
-Date: Sat,  2 Nov 2024 18:19:48 -0500
-Message-ID: <20241102231953.871067-1-andersson@kernel.org>
-X-Mailer: git-send-email 2.45.2
+	s=k20201202; t=1730621036;
+	bh=nvAf8GTIV/8JCsOU6Rof/enufImCxOjzOcAhet3YJlU=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=t3ugWj833LmFbZhaoK5hjalJvd0m2Szc3LkmIKbY+V8VW+tylIwCWI62hPof+DPNl
+	 zu379es3B6n262LmHN6P6fCJGjBrDWdtuH4xVjD0KC6JQ5znnyMxXQGpk8rA7Bfa87
+	 XWWwJHPSkD5UlL1f/lUG4vi/zdX5uJhFQ513fWMCK6Gbzhh+ZIxd3f9HgBK+c9xvGq
+	 ByfhKUBPuSBovdG6yD6CBiSd8nXLmzuYh7yxAbSqkXFiJ7kycAZwxiCJUOL6LKNgp1
+	 iAuSlhWwqHnCR3m02fSlf3x3Q8EVWHhWQa1ckuYuewSx7DB4TupxZOPrWKwkYiFfJP
+	 unO3OsipYxnhQ==
+Message-ID: <5fc19470-dc8c-4c12-b3f5-822bac97f38c@kernel.org>
+Date: Sun, 3 Nov 2024 09:03:48 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/3] media: dt-bindings: media: camss: Add
+ qcom,msm8953-camss
+To: =?UTF-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <barnabas.czeman@mainlining.org>,
+ Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+References: <20241102-camss-msm8953-v3-0-7041c9fa7a58@mainlining.org>
+ <20241102-camss-msm8953-v3-2-7041c9fa7a58@mainlining.org>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20241102-camss-msm8953-v3-2-7041c9fa7a58@mainlining.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
+On 02/11/2024 23:39, Barnabás Czémán wrote:
+> Add bindings for qcom,msm8953-camss in order to support the camera
+> subsystem for MSM8953.
+> 
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
 
-The following changes since commit 9852d85ec9d492ebef56dc5f229416c925758edc:
+Subject did not improve much. Why do you need to say twice that this is
+a media subsystem? See DT submitting patches document:
+https://elixir.bootlin.com/linux/v6.11-rc3/source/Documentation/devicetree/bindings/submitting-patches.rst
 
-  Linux 6.12-rc1 (2024-09-29 15:06:19 -0700)
+Best regards,
+Krzysztof
 
-are available in the Git repository at:
-
-  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-drivers-for-6.13
-
-for you to fetch changes up to d088afa7de3cbe689954dad49e7058d2c4b8944c:
-
-  soc: qcom: socinfo: add QCS9100 ID (2024-10-29 15:09:02 -0500)
-
-----------------------------------------------------------------
-Qualcomm driver updates for v6.13
-
-Enable QSEECOM, and thereby access to EFI variables, for Lenovo Yoga
-Slim 7x, Dell XPS 13, Microsoft Surface Pro 9.
-
-Last Level Cache Controller (LLCC) driver code is shuffled, to improve
-readability of the tables.
-
-The Qualcomm socinfo driver gains support for QCS615, QCS9100, SAR1130P,
-SAR2130P, and SA8255P.
-
-A few drivers are simplified using dev_err_probe() and guard(), and a
-few kernel-doc issues are corrected.
-
-Mentioning of the #linux-msm IRC channel is added to the MAINTAINERS
-file.
-
-----------------------------------------------------------------
-Aleksandrs Vinarskis (1):
-      firmware: qcom: scm: Allow QSEECOM on Dell XPS 13 9345
-
-Bjorn Andersson (1):
-      soc: qcom: pd-mapper: Add QCM6490 PD maps
-
-Dan Carpenter (1):
-      soc: qcom: geni-se: fix array underflow in geni_se_clk_tbl_get()
-
-Dmitry Baryshkov (4):
-      dt-bindings: arm: qcom,ids: add SoC ID for SAR2130P and SAR1130P
-      soc: qcom: socinfo: add SoC IDs for SAR1130P and SAR2130P
-      dt-bindings: firmware: qcom,scm: Add SAR2130P compatible
-      dt-bindings: soc: qcom,aoss-qmp: Add SAR2130P compatible
-
-Jingyi Wang (1):
-      dt-bindings: soc: qcom: add qcom,qcs8300-imem compatible
-
-Julia Lawall (1):
-      soc: qcom: qmi: Reorganize kerneldoc parameter names
-
-Jérôme de Bretagne (1):
-      firmware: qcom: scm: Allow QSEECOM on Microsoft Surface Pro 9 5G
-
-Konrad Dybcio (2):
-      soc: qcom: llcc: Use designated initializers for LLC settings
-      soc: qcom: smem: Fix up kerneldoc
-
-Krzysztof Kozlowski (4):
-      qcom: MAINTAINERS: add linux-msm IRC on OFTC
-      soc: qcom: pbs: simplify locking with guard()
-      soc: qcom: smem_state: simplify locking with guard()
-      dt-bindings: soc: qcom: aoss-qmp: Add SM8750
-
-Kyle Deng (1):
-      dt-bindings: soc: qcom,aoss-qmp: Document the QCS8300 AOSS channel
-
-Lijuan Gao (2):
-      dt-bindings: arm: qcom,ids: add SoC ID for QCS615
-      soc: qcom: socinfo: Add QCS615 SoC ID table entry
-
-Maya Matuszczyk (1):
-      firmware: qcom: scm:  Allow QSEECOM on Lenovo Yoga Slim 7x
-
-Nikunj Kela (4):
-      dt-bindings: firmware: qcom,scm: document support for SA8255p
-      dt-bindings: soc: qcom: aoss-qmp: document support for SA8255p
-      dt-bindings: arm: qcom: add the SoC ID for SA8255P
-      soc: qcom: socinfo: add support for SA8255P
-
-Tengfei Fan (2):
-      dt-bindings: arm: qcom,ids: add SoC ID for QCS9100
-      soc: qcom: socinfo: add QCS9100 ID
-
-Zhang Zekun (3):
-      soc: qcom: rpmh-rsc: Simplify code with dev_err_probe()
-      soc: qcom: smem: Simplify code with dev_err_probe()
-      soc: qcom: smp2p: Simplify code with dev_err_probe()
-
-Zhenhua Huang (1):
-      dt-bindings: firmware: qcom,scm: document SCM on QCS8300 SoCs
-
- .../devicetree/bindings/firmware/qcom,scm.yaml     |    4 +
- .../bindings/soc/qcom/qcom,aoss-qmp.yaml           |    4 +
- .../devicetree/bindings/sram/qcom,imem.yaml        |    1 +
- MAINTAINERS                                        |    3 +
- drivers/firmware/qcom/qcom_scm.c                   |    3 +
- drivers/soc/qcom/llcc-qcom.c                       | 2644 ++++++++++++++++++--
- drivers/soc/qcom/qcom-geni-se.c                    |    3 +-
- drivers/soc/qcom/qcom-pbs.c                        |   22 +-
- drivers/soc/qcom/qcom_pd_mapper.c                  |    1 +
- drivers/soc/qcom/qmi_interface.c                   |    2 +-
- drivers/soc/qcom/rpmh-rsc.c                        |    9 +-
- drivers/soc/qcom/smem.c                            |   16 +-
- drivers/soc/qcom/smem_state.c                      |   12 +-
- drivers/soc/qcom/smp2p.c                           |    9 +-
- drivers/soc/qcom/socinfo.c                         |    5 +
- include/dt-bindings/arm/qcom,ids.h                 |    5 +
- 16 files changed, 2432 insertions(+), 311 deletions(-)
 
