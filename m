@@ -1,70 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-36856-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36857-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 39CFD9BA7FD
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Nov 2024 21:37:27 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A56EC9BA80F
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Nov 2024 21:53:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B870BB20B9E
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Nov 2024 20:37:24 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D80F21C20BF1
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Nov 2024 20:53:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A395A18B497;
-	Sun,  3 Nov 2024 20:37:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B14E918BC05;
+	Sun,  3 Nov 2024 20:53:35 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28DAC18B462;
-	Sun,  3 Nov 2024 20:37:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25D6D83CD3;
+	Sun,  3 Nov 2024 20:53:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730666239; cv=none; b=rErR2ZxyN91k+0LgjF3ZJCzBz4tExjyo9VN4T713Hk7xfgXlOefPZeYt1nkkT5SuBY0heavH4F5vki5BXiZyPan7xZ8Ip7mtiQymUR0BldAoWsI78bPPv9UxkCjJrXw2yIz2IcVLd00HEAv0/uYa3QOhVe3+cGey5C43Q2GXqqo=
+	t=1730667215; cv=none; b=AdzOOnPhtd4aWM61fVzfFa1ftWqacBkbPF2F2j8tsPdjyaxn3F8lq4EtpnOmScW2eBE2y9g9mnI5j967wcIzdk53GzDZPFGrj3cgCb60AF1xt1H42+LYFVXmvHJX04NwGssVF5nCN+Xq4lGkB5FmorbAc6dGvra2yNzmxH9wHpE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730666239; c=relaxed/simple;
-	bh=A9EOa4JBXmYSS3mlfar36oAEApc9f8pq693+5pqpFOY=;
+	s=arc-20240116; t=1730667215; c=relaxed/simple;
+	bh=ZWYCQQ51VNGgkG/ayFISd1Iy4D0oOcizhMsB9SzyMoI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=I5rZ4Z0GM4BN4bJDXnzNRB3NioTfG65v0OyrUgT0MMKJnNjSmDOoHLg0Rdo7fKtzWVnJJJELt41ppb1f3Hxw29fJjnxAwXS4XVYDzxhx4Da7vvE+gR6Ya77w4+04suNH/35FXVghPEx5+JRISyqp6MnJQB6KX8lvQclK/TiX8/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.216.42
+	 Content-Type:Content-Disposition:In-Reply-To; b=rNrvuEK2wNkhy5KPZFJf0tbsmwF2NDrJfWZtDWTwKVQ3ZNI7ZoQCr1ZzhXaiyXI6Ljdsi/G9axegLklztAk/h9QuXJxYGxw1HfQK8Zvqy+Zi/h03yvQX4QDU4FfJQkkBOlMnc7Joqb9pHsbhl98DsFjKIZ/iZrX/UImsoNpHLV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.210.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-2e3d523a24dso2728199a91.0;
-        Sun, 03 Nov 2024 12:37:17 -0800 (PST)
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-71e70c32cd7so3245381b3a.1;
+        Sun, 03 Nov 2024 12:53:33 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730666237; x=1731271037;
+        d=1e100.net; s=20230601; t=1730667213; x=1731272013;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8ap+wpMERUFPUBtGPkZlL7XELI5aXcin9wACcBysLF4=;
-        b=Y7J6dI8hkBXCaaw/9p9AAtoOSsBCUaiXGvTl4dGL7gPAP6PLhWYTQMP2WD7h7U9HUd
-         MxUZ8/aZVNvRh48guIPgTL+nwMQIxLv/1890A4QWHoaFtt86a2n5g44kij5kIYS8EJVG
-         SV+zkcQj025FLdhT98HXz5n64dEz9HU+pLy89C7A8PUdk5Mk/A3boQXKJ/4Z4J+Ja2oi
-         x/NXGsCRXLr4NpDMrr7cdq/Du6K8PtDykqBAMFDuhUHuAEO62dAXxXaG0u4AzSfiTsQv
-         QzZGVotzFDNULsSxcRgMTV8OPnvVQmjUHajEU9BUA2KYjxcAw1zvf0BDqBq2+a8w6h77
-         U1LA==
-X-Forwarded-Encrypted: i=1; AJvYcCVDBFPt4VHQjv6MIKgeOF+0vPLaL0W0nc7UJ9UVKzL7gLuOkefXUg2tGyzZ2Zeh+Z0QR6sbBjN9MCxZ@vger.kernel.org, AJvYcCWar2xuE2hGe5exlzO3k0FRLTvf5SSvMfvTLYB/bzBtDleIWZBaTY5rhHJQwHwz7ULmXmk22ESvrklkbqmW@vger.kernel.org, AJvYcCXDB02S4NQltQB9rloJmTs85G+EmTn3yDACLrweHOQq/XVWEYkKz2J4T6cZJu60i1gem2CT3FlCn42DL/XL@vger.kernel.org
-X-Gm-Message-State: AOJu0YyYs/9DAqNxV+oQoeFdRRhl96yB4ipniF/gvVcXoEcc5bkKBbNs
-	Tefj+zpbx/2DaMv/IWkuXn05jf5GmgHQU+rVxY36UgJQrbzRd5vzzQtMKfiz
-X-Google-Smtp-Source: AGHT+IG5esVoMq/DaiOQmxqQEXp3jMVEBPKwUD7klezgZxrekNOSjh60GNrmUcy5NcNXROlqRPek/g==
-X-Received: by 2002:a17:90b:3848:b0:2e0:5748:6ea1 with SMTP id 98e67ed59e1d1-2e8f11dcec5mr33727475a91.37.1730666237381;
-        Sun, 03 Nov 2024 12:37:17 -0800 (PST)
+        bh=InjzJWxwQf1lmaUOg5rdT3QQjnZuPbY63EFFbzsRveo=;
+        b=UCX5FZ/ARJ9fUGRDErv6WpEdIOTcACcoNGYWg4u4Kyj4mL0zsv75XWXl1lmFwwPCQG
+         fbESQ1BStvP+tfqWF+lhc0WAmbm/dlpv2n3E8NBHbOaKMmRJITLrGdHWa76J3KG0P6pV
+         Io2Jp40LVTpIQuNzw1aJfrnSGnQoD4Ap2Hn3XwRrKsJwyOJDIWjMBtLFiHyJTenI3+uT
+         O5434mOOSHKM8vTGuLiIAw2qCo4mtQ3g7PS51eIRgey3q3lVaXUCxT66kkmQ9+06B2XO
+         POOi4MJtPo+ADK+5cE8y3vf/5RgO0Z2PdizaCg0UliptSDO1gXmNMn28xOCQSloRVP3T
+         i9MQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUFax9ry2G9W2Ifs9S74omI2Q+5tOEtOXcsg4bBHZ1fKXFvliBtZl5Jlx+7xwVIkd5myWAuk15zbm84CvY=@vger.kernel.org, AJvYcCVLm0xSOyGAr+cDgzzmIolX1+rDLP4y7Ebb9tmYLnLd8zz8WLTJi5nEfk/CU2oGXTHGQeC6bDHjuTYtIjcy@vger.kernel.org, AJvYcCW2ehvsw/xzxi7yXbpERyywCOiL/bZtUWWmQNEY9bNQE0ws/ibIMDhm1XuY7Sex4rxKfpOo6+b0Ulwk@vger.kernel.org, AJvYcCWW152Sop0uoDfbtVONC/fKsaT6k0eAP61R9Fz59mpCSWOtkC/4gXOmHXFtx9YZqpaf1GMXoeu6bEtDW6Na@vger.kernel.org
+X-Gm-Message-State: AOJu0YwbCDQ2mqAy4tkal1vlljsftfCMlwT3BxIfpiyCHkQUWOJIOZQz
+	xLd3CgwimPiO8m7Rfm4IBNaRb6Owz85P2dvzpI39dxF6yREQWBru
+X-Google-Smtp-Source: AGHT+IHupF8efOyDp7E1SVzfTrPRVCc42EJestRDTVJ2U870NUJIU5+bitobgYTeGa9U5qW2FEm3AQ==
+X-Received: by 2002:a05:6a20:e30b:b0:1d8:abf3:58be with SMTP id adf61e73a8af0-1d9a8402d5emr41221754637.21.1730667213369;
+        Sun, 03 Nov 2024 12:53:33 -0800 (PST)
 Received: from localhost (fpd11144dd.ap.nuro.jp. [209.17.68.221])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e92fc0084asm8461758a91.51.2024.11.03.12.37.16
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-720bc1b8f9esm6139630b3a.8.2024.11.03.12.53.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 03 Nov 2024 12:37:16 -0800 (PST)
-Date: Mon, 4 Nov 2024 05:37:14 +0900
+        Sun, 03 Nov 2024 12:53:32 -0800 (PST)
+Date: Mon, 4 Nov 2024 05:53:31 +0900
 From: Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: lpieralisi@kernel.org, robh@kernel.org, bhelgaas@google.com,
-	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, quic_qianyu@quicinc.com,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH v2] PCI: qcom: Enable MSI interrupts together with Link
- up if 'Global IRQ' is supported
-Message-ID: <20241103203714.GC237624@rocinante>
-References: <20241007051255.4378-1-manivannan.sadhasivam@linaro.org>
+To: manivannan.sadhasivam@linaro.org
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Vidya Sagar <vidyas@nvidia.com>, linux-pci@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Thierry Reding <treding@nvidia.com>, linux-tegra@vger.kernel.org
+Subject: Re: [PATCH 1/2] PCI: qcom-ep: Move controller cleanups to
+ qcom_pcie_perst_deassert()
+Message-ID: <20241103205331.GG237624@rocinante>
+References: <20240817-pci-qcom-ep-cleanup-v1-0-d6b958226559@linaro.org>
+ <20240817-pci-qcom-ep-cleanup-v1-1-d6b958226559@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -73,35 +76,42 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241007051255.4378-1-manivannan.sadhasivam@linaro.org>
+In-Reply-To: <20240817-pci-qcom-ep-cleanup-v1-1-d6b958226559@linaro.org>
 
 Hello,
 
-> Currently, if 'Global IRQ' is supported by the platform, only the Link up
-> interrupt is enabled in the PARF_INT_ALL_MASK register. This masks MSIs
-> on some platforms. The MSI bits in PARF_INT_ALL_MASK register are enabled
-> by default in the hardware, but commit 4581403f6792 ("PCI: qcom: Enumerate
-> endpoints based on Link up event in 'global_irq' interrupt") disabled them
-> and enabled only the Link up interrupt. While MSI continued to work on the
-> SM8450 platform that was used to test the offending commit, on other
-> platforms like SM8250, X1E80100, MSIs are getting masked. And they require
-> enabling the MSI interrupt bits in the register to unmask (enable) the
-> MSIs.
+> Currently, the endpoint cleanup function dw_pcie_ep_cleanup() and EPF
+> deinit notify function pci_epc_deinit_notify() are called during the
+> execution of qcom_pcie_perst_assert() i.e., when the host has asserted
+> PERST#. But quickly after this step, refclk will also be disabled by the
+> host.
 > 
-> Even though the MSI interrupt enable bits in PARF_INT_ALL_MASK are
-> described as 'diagnostic' interrupts in the internal documentation,
-> disabling them masks MSI on these platforms. Due to this, MSIs were not
-> reported to be received these platforms while supporting 'Global IRQ'.
+> All of the Qcom endpoint SoCs supported as of now depend on the refclk from
+> the host for keeping the controller operational. Due to this limitation,
+> any access to the hardware registers in the absence of refclk will result
+> in a whole endpoint crash. Unfortunately, most of the controller cleanups
+> require accessing the hardware registers (like eDMA cleanup performed in
+> dw_pcie_ep_cleanup(), powering down MHI EPF etc...). So these cleanup
+> functions are currently causing the crash in the endpoint SoC once host
+> asserts PERST#.
 > 
-> So enable the MSI interrupts along with the Link up interrupt in the
-> PARF_INT_ALL_MASK register if 'Global IRQ' is supported. This ensures that
-> the MSIs continue to work and also the driver is able to catch the Link
-> up interrupt for enumerating endpoint devices.
+> One way to address this issue is by generating the refclk in the endpoint
+> itself and not depending on the host. But that is not always possible as
+> some of the endpoint designs do require the endpoint to consume refclk from
+> the host (as I was told by the Qcom engineers).
+> 
+> So let's fix this crash by moving the controller cleanups to the start of
+> the qcom_pcie_perst_deassert() function. qcom_pcie_perst_deassert() is
+> called whenever the host has deasserted PERST# and it is guaranteed that
+> the refclk would be active at this point. So at the start of this function
+> (after enabling resources), the controller cleanup can be performed. Once
+> finished, rest of the code execution for PERST# deassert can continue as
+> usual.
 
 Applied to controller/qcom, thank you!
 
-[01/01] PCI: qcom: Enable MSI interrupts together with Link up if 'Global IRQ' is supported
-        https://git.kernel.org/pci/pci/c/ba4a2e2317b9
+[01/01] PCI: qcom-ep: Move controller cleanups to qcom_pcie_perst_deassert()
+        https://git.kernel.org/pci/pci/c/7d7cf89b119a
 
 	Krzysztof
 
