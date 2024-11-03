@@ -1,221 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-36849-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36850-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C39E49BA654
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Nov 2024 16:13:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6024C9BA664
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Nov 2024 16:37:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C13B7B20C5C
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Nov 2024 15:13:07 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 385A7B20FD3
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Nov 2024 15:37:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8FAD417DFE9;
-	Sun,  3 Nov 2024 15:13:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F1BB17A597;
+	Sun,  3 Nov 2024 15:37:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KmuEO33r"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DlfiuaJH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE4A32582
-	for <linux-arm-msm@vger.kernel.org>; Sun,  3 Nov 2024 15:13:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD8BE170A01
+	for <linux-arm-msm@vger.kernel.org>; Sun,  3 Nov 2024 15:37:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730646784; cv=none; b=Bnqy8JGtNIxOTEui3bNNFrWdshBu6a9kHyl+2nCqfoUENwvZ5gsyKbowOfX4hhflBlT4rD6ALIFus8WF03SegM9tb/+ZG+J6IPAxJswyY+7kZHWYZHWBKUFhZeodgSMNDC2U9eXtxu5jF4mSS8EovyT1HYBU0QupPygLqEjyC9s=
+	t=1730648258; cv=none; b=MRkHO+90fJqKHYJrGkTCkYeB5FUmov/E/k1NxYysV9s8K2M/pjGYk56wwHqYyna4ZQjYlbbdf8op0ooq/xa9sOb1hyfHglPqZqQm03HdsHLS990PHn8DABt4EOZY/tgLO9PvVuLIKoxL2wwOwDpFVhWsI/fN8tBzamRCY/gV3nY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730646784; c=relaxed/simple;
-	bh=wYAoJRD7v8jrHJmEguNTQmd3c50c8FjNbmBzvtkQOFI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BgqJFxv2nWrsDTRqYdDLp0nV5mRTbCj9o+MnT9l/e2Ev+o5w0RK1MiLM20YnvkgHkEYOzTY3fWm7+zDft6MbbvzRVyOb7RaSbQYEU7US4TmB7RKQ+h1GZnj4b34O6CwHP1H66Zp8bhZGTIi+qly25mgEfgIO9weFvMJN1Te1KPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KmuEO33r; arc=none smtp.client-ip=209.85.216.46
+	s=arc-20240116; t=1730648258; c=relaxed/simple;
+	bh=A/WnptpcEaCydNEwHhCYy3nsOgAQBjpitbug4N2yRps=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=WqyJtkjJRzIVHHiUP+2CbazeUqZnuNvGlPv+gcSPMPMHxNlOUJqmE9fIKLrIPn6vyDMeDgEE86bnMiMp6Jm/C/r8Wl6aYG/M4pFGNGqmYVdJQRYarlPsgj4+fa0Tk1IsEU/dOpzxFl5nUsoqi17xmgQcIAZ/STZLvaFXFt20Sfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DlfiuaJH; arc=none smtp.client-ip=209.85.167.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-2e2e87153a3so2352434a91.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 03 Nov 2024 07:13:02 -0800 (PST)
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-53a007743e7so3689210e87.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 03 Nov 2024 07:37:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1730646782; x=1731251582; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=eHQktcKdIhna5z27pQ3PuyXhlPaLntIaSmvbBw7PwoE=;
-        b=KmuEO33ruVGkb98SLj0/8QwsYF8UCpg2ZnuF8gixbV9yOGxOOAjaWkD11fs+B88fyg
-         gIkYtCcdVWgHBSTRvjc3fpdZH/586CRwDV1T8/9k8b1qwsYOGCuNg/jMFDFQri9+02pe
-         4Epb/FJEt3LITMpeVtCDIjKLTnX49poPfTRBIoB4TWZHgrXhadgjIBt3XgAzWTY5n6AM
-         vvaWCcBJATS9yXY087GCjCXzIBvxv8P+CZXCijntxBx808anG7vefZqtPKU8pDNkZ3zN
-         l5igR3zKEynRk1jUongAU31yy01QveR8D4zf+f4j7yBFP7f0vn8JSxIj+dHg3BbmWnSd
-         Eocw==
+        d=linaro.org; s=google; t=1730648254; x=1731253054; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ecRjHWyEMPV8C3gd1Is18U/kDaXQ6jei97bXitPNEX0=;
+        b=DlfiuaJHmCCXShePfBlRVd4RF+QLRrNHKrjlEqdx3OOsfs3K9EewqzRATQFcpD9//b
+         Y3fKOmfLcu2mE1+fcDCXdWK4imm7dWEY05rPooL0wekHnzprlnT0blasmZ1nhDFAct1Z
+         d06U/f8ppMyQkweNDuFfPg20YKLKsnhNhc2Tepyo8+v2gt6ntxMCbu2BTeNwn9s0BInr
+         YcLkQqiC4KLmyLA4iOe5UxhA9pHfK8EuwqJ30p+Y9iwdNPYRG6k/ZMyGsDczI3n2Pf4P
+         GBHil7TAUIh9tp0QHGoQwO/L+LUE0XUk5fWGPzT4o1Zbyx+kfqjb34yIE3oTujb/AYpW
+         MiHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730646782; x=1731251582;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1730648254; x=1731253054;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=eHQktcKdIhna5z27pQ3PuyXhlPaLntIaSmvbBw7PwoE=;
-        b=Nm/dLgYNUkhM08FrplCxJcn3hSeOcYg3NDU6k0bjDkhBOvlQv1H2FTAOqElr+mbX0W
-         8F2+MwhVy7Y/fDVyQ3IElUo0IqT+h2nr4CBtGljcSsSkzvrRVfV2u59lwIcX2GZl6yth
-         uF4FxjEzrIUzG4zO8+MpHOvdP1jdN7Wezg1IBmM9apCZJ7HuUeLpEpI16ix0dbwN+5s/
-         NpQUnHUVeCBTyS8K6mLQTpmxAqt82XCOB7Q7j0rALmljyNa1wD50B5eDCuvCwm8vESfI
-         KpzjzcYiNdCuJPinmeSNuy3sdaCZUmRbZSTUJYd7xO0U3aoP9otIFCY7iOWWDrbD1jen
-         uqyA==
-X-Forwarded-Encrypted: i=1; AJvYcCXNPVwUMNuXqYvKESQMS9Qtd26kzB4tpOEz8pGFW2MkfksICMakN3KOa4oFM1piURlvIhkyivKNOEkIrcL7@vger.kernel.org
-X-Gm-Message-State: AOJu0YyNDd39faj//vTWmupgkNPna2iuymC5PCt6am5+TulIQZwddQ5y
-	ne1a5HMqLH1h92m+dxHM7lwc6D8wIslqqhvbCRMTubF9XlPzzpzbhy/667Sknc1eig190nogOeh
-	piMQ6Qa3QSh46k9iKWC5IKCvE/sZrDiiyCoo7xw==
-X-Google-Smtp-Source: AGHT+IHRIh1ITCIAJ4M7w1UM8me5MLqRixS/tsHhgXfawiZDUkumg9GSz+T7fPFwKnIa+4k1jBzouIXTP6K8KhWz3Do=
-X-Received: by 2002:a17:90b:4a86:b0:2e1:ce7b:6069 with SMTP id
- 98e67ed59e1d1-2e94c529acamr15224146a91.33.1730646782163; Sun, 03 Nov 2024
- 07:13:02 -0800 (PST)
+        bh=ecRjHWyEMPV8C3gd1Is18U/kDaXQ6jei97bXitPNEX0=;
+        b=UpStaEuvxb0YxBfjPwF1XLn0qNaO3y6gKmd+0x4+0CHo5LlyVVWc9FC2o4/Z6bAnQG
+         y8zwneYWS1iya5jCJ8D7k8xD5dFVHT/gwXSY3Ba78nnoj2BFfl1KPjB08zYKlRWk6xEg
+         XW7E69xOqCrXLZ3wtdIP5a9VDJvUsxsDsWUeVIHfnpe3UvTsldt49gDsuJCmMuDnFqDT
+         tWeH+srm9WTqfFR0zILN4u4AXk+od1VcePYZlVBf3/Frzx03ETeAVA9rqgbNdaygOI+x
+         5nh5gV4MpD28lEcVf5CKwHyggkM+Z5cMc//X+hw19V3+KlqoDMnsTJv/hfdtQONZ3TF7
+         y27w==
+X-Gm-Message-State: AOJu0Yxp0qYiTOV4QgtcgaudoPEbwyXOqVB2I8RSNoCQd/TiEyfJlOLg
+	BvYm6Qoe4BpCR7ggpjwEGCpmchi4uWsXJoK/ZZkffEkYMbhg1GOBwcAciX+aPqDKqB+/CIRzWTJ
+	/np0=
+X-Google-Smtp-Source: AGHT+IGIt5DFZkUasqecPwXsJRY0RTzQQk5JB5KmItEGGn8gWIQb9/8PWSzMLcHOvIroSJdHI8yb3Q==
+X-Received: by 2002:a05:6512:3b0c:b0:539:e85c:c888 with SMTP id 2adb3069b0e04-53c79e8ecafmr6388050e87.40.1730648253640;
+        Sun, 03 Nov 2024 07:37:33 -0800 (PST)
+Received: from umbar.lan ([192.130.178.90])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53c7bcce4fbsm1321133e87.128.2024.11.03.07.37.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 03 Nov 2024 07:37:32 -0800 (PST)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH 0/2] firmware: scm: rework allowlist to be more scalable
+Date: Sun, 03 Nov 2024 17:37:28 +0200
+Message-Id: <20241103-rework-qseecom-v1-0-1d75d4eedc1e@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241031132745.3765612-1-quic_sibis@quicinc.com> <20241031132745.3765612-3-quic_sibis@quicinc.com>
-In-Reply-To: <20241031132745.3765612-3-quic_sibis@quicinc.com>
-From: Vincent Guittot <vincent.guittot@linaro.org>
-Date: Sun, 3 Nov 2024 16:12:50 +0100
-Message-ID: <CAKfTPtDNBPC8QQzFBNDKNW_sJfkoShSsxo7iMC8Wga+wixyHzA@mail.gmail.com>
-Subject: Re: [PATCH V7 2/2] cpufreq: scmi: Register for limit change notifications
-To: Sibi Sankar <quic_sibis@quicinc.com>
-Cc: sudeep.holla@arm.com, cristian.marussi@arm.com, rafael@kernel.org, 
-	viresh.kumar@linaro.org, morten.rasmussen@arm.com, dietmar.eggemann@arm.com, 
-	lukasz.luba@arm.com, pierre.gondois@arm.com, 
-	linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, quic_mdtipton@quicinc.com, 
-	linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIALiYJ2cC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxNDQwNj3aLU8vyibN3C4tTU5Pxc3USzZIvk1LS0ZBMjEyWgpoKi1LTMCrC
+ B0bG1tQBxYCB7YAAAAA==
+X-Change-ID: 20241103-rework-qseecom-a6c8ceffc424
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1157;
+ i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
+ bh=A/WnptpcEaCydNEwHhCYy3nsOgAQBjpitbug4N2yRps=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnJ5i6FjaM+w+WPOC3ywHvvDcD3GRSCA3UrIkX6
+ RsPPT6G+3aJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZyeYugAKCRCLPIo+Aiko
+ 1WjwB/475sOCgbKLXYG63fx0QaG9MuSPQO90tGasQK9GuCuT+9izd8RQfnD/ja45h5EDEubcd0V
+ sCGqRHZjeWhXm5+32ad98lBGZfA51mwK6Q12AzrS+nMKTv+RpCnXqxNhe+SnWsbnC51HXM7UNpp
+ A8kOuQm4RPXk16pyttCnhu9iWqrWzkw9gjFDlF0Is9vvdr2Zn6F0/n/RZy2ywPyIQ8BDqv4dUBD
+ ShDDPZutEaGL5Azih98ETfczldkUaWKETFcHArADCqlh5qYJLn6rMX2/LekOwXhvQbMMawLqrM2
+ sDlHLRbmbRQTh4CcFhx87zbFqRPm6PEf6EZbgq1gzgrD+Bxm
+X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-On Thu, 31 Oct 2024 at 14:28, Sibi Sankar <quic_sibis@quicinc.com> wrote:
->
-> Register for limit change notifications if supported and use the throttled
-> frequency from the notification to apply HW pressure.
->
-> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-> Tested-by: Mike Tipton <quic_mdtipton@quicinc.com>
-> Reviewed-by: Cristian Marussi <cristian.marussi@arm.com>
-> Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
-> ---
->
-> v7:
-> * Add a new request instead of reusing the max_freq_req [Vincent]
-> * Use the non-devm versions of register/unregister of event notifier
->   since we have to remove them when the cpus get removed anyway.
-> * Add new patch to fix cleanup path on boost enablement failure.
->
->  drivers/cpufreq/scmi-cpufreq.c | 51 ++++++++++++++++++++++++++++++++++
->  1 file changed, 51 insertions(+)
->
-> diff --git a/drivers/cpufreq/scmi-cpufreq.c b/drivers/cpufreq/scmi-cpufreq.c
-> index 07d6f9a9b7c8..ff13f7d4b2c9 100644
-> --- a/drivers/cpufreq/scmi-cpufreq.c
-> +++ b/drivers/cpufreq/scmi-cpufreq.c
-> @@ -16,6 +16,7 @@
->  #include <linux/export.h>
->  #include <linux/module.h>
->  #include <linux/pm_opp.h>
-> +#include <linux/pm_qos.h>
->  #include <linux/slab.h>
->  #include <linux/scmi_protocol.h>
->  #include <linux/types.h>
-> @@ -25,7 +26,10 @@ struct scmi_data {
->         int domain_id;
->         int nr_opp;
->         struct device *cpu_dev;
-> +       struct cpufreq_policy *policy;
->         cpumask_var_t opp_shared_cpus;
-> +       struct notifier_block limit_notify_nb;
-> +       struct freq_qos_request limits_freq_req;
->  };
->
->  static struct scmi_protocol_handle *ph;
-> @@ -174,6 +178,25 @@ static struct freq_attr *scmi_cpufreq_hw_attr[] = {
->         NULL,
->  };
->
-> +static int scmi_limit_notify_cb(struct notifier_block *nb, unsigned long event, void *data)
-> +{
-> +       struct scmi_data *priv = container_of(nb, struct scmi_data, limit_notify_nb);
-> +       struct scmi_perf_limits_report *limit_notify = data;
-> +       struct cpufreq_policy *policy = priv->policy;
-> +       unsigned int limit_freq_khz;
-> +       int ret;
-> +
-> +       limit_freq_khz = limit_notify->range_max_freq / HZ_PER_KHZ;
-> +
-> +       policy->max = clamp(limit_freq_khz, policy->cpuinfo.min_freq, policy->cpuinfo.max_freq);
+Listing individual devices in the qcom_scm_qseecom_allowlist table
+doesn't really scale. For each new device we have to add both DT and an
+entry in the table. This way handling new devices by distributions
+becomes more complicated: it's not enough to add new DT, the qcom_scm
+also has to be patched.
 
-I don't think that the above is needed or correct, the cpufreq qos
-notifier will take care of updating policy->max with handle_update()
+Replace a machine-based allowlist with the platform-based table. If a
+particular device has buggy or incompatible firmware, it still can be
+disabled in the table. And while the patch to disable it is pending,
+make it possible to use qcom_scm.qseecom kernel argument to forcebly
+enable or disable usage of QSEECOM.
 
-> +
-> +       ret = freq_qos_update_request(&priv->limits_freq_req, policy->max);
-> +       if (ret < 0)
-> +               pr_warn("failed to update freq constraint: %d\n", ret);
-> +
-> +       return NOTIFY_OK;
-> +}
-> +
->  static int scmi_cpufreq_init(struct cpufreq_policy *policy)
->  {
->         int ret, nr_opp, domain;
-> @@ -181,6 +204,7 @@ static int scmi_cpufreq_init(struct cpufreq_policy *policy)
->         struct device *cpu_dev;
->         struct scmi_data *priv;
->         struct cpufreq_frequency_table *freq_table;
-> +       struct scmi_device *sdev = cpufreq_get_driver_data();
->
->         cpu_dev = get_cpu_device(policy->cpu);
->         if (!cpu_dev) {
-> @@ -294,6 +318,25 @@ static int scmi_cpufreq_init(struct cpufreq_policy *policy)
->                 }
->         }
->
-> +       ret = freq_qos_add_request(&policy->constraints, &priv->limits_freq_req, FREQ_QOS_MAX,
-> +                                  FREQ_QOS_MAX_DEFAULT_VALUE);
-> +       if (ret < 0) {
-> +               dev_err(cpu_dev, "failed to add qos limits request: %d\n", ret);
-> +               goto out_free_table;
-> +       }
-> +
-> +       priv->limit_notify_nb.notifier_call = scmi_limit_notify_cb;
-> +       ret = sdev->handle->notify_ops->event_notifier_register(sdev->handle, SCMI_PROTOCOL_PERF,
-> +                                                       SCMI_EVENT_PERFORMANCE_LIMITS_CHANGED,
-> +                                                       &priv->domain_id,
-> +                                                       &priv->limit_notify_nb);
-> +       if (ret)
-> +               dev_warn(&sdev->dev,
-> +                        "failed to register for limits change notifier for domain %d\n",
-> +                        priv->domain_id);
-> +
-> +       priv->policy = policy;
-> +
->         return 0;
->
->  out_free_table:
-> @@ -313,7 +356,13 @@ static int scmi_cpufreq_init(struct cpufreq_policy *policy)
->  static void scmi_cpufreq_exit(struct cpufreq_policy *policy)
->  {
->         struct scmi_data *priv = policy->driver_data;
-> +       struct scmi_device *sdev = cpufreq_get_driver_data();
->
-> +       sdev->handle->notify_ops->event_notifier_unregister(sdev->handle, SCMI_PROTOCOL_PERF,
-> +                                                           SCMI_EVENT_PERFORMANCE_LIMITS_CHANGED,
-> +                                                           &priv->domain_id,
-> +                                                           &priv->limit_notify_nb);
-> +       freq_qos_remove_request(&priv->limits_freq_req);
->         dev_pm_opp_free_cpufreq_table(priv->cpu_dev, &policy->freq_table);
->         dev_pm_opp_remove_all_dynamic(priv->cpu_dev);
->         free_cpumask_var(priv->opp_shared_cpus);
-> @@ -372,6 +421,8 @@ static int scmi_cpufreq_probe(struct scmi_device *sdev)
->         if (!handle)
->                 return -ENODEV;
->
-> +       scmi_cpufreq_driver.driver_data = sdev;
-> +
->         perf_ops = handle->devm_protocol_get(sdev, SCMI_PROTOCOL_PERF, &ph);
->         if (IS_ERR(perf_ops))
->                 return PTR_ERR(perf_ops);
-> --
-> 2.34.1
->
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+Dmitry Baryshkov (2):
+      firmware: qcom: scm: add modparam to control QSEECOM enablement
+      firmware: qcom: scm: rework QSEECOM allowlist
+
+ drivers/firmware/qcom/qcom_scm.c | 54 ++++++++++++++++++++++++++--------------
+ 1 file changed, 36 insertions(+), 18 deletions(-)
+---
+base-commit: c88416ba074a8913cf6d61b789dd834bbca6681c
+change-id: 20241103-rework-qseecom-a6c8ceffc424
+
+Best regards,
+-- 
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
 
