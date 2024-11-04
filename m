@@ -1,82 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-36923-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36924-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 96A159BB337
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 12:27:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C17C59BB346
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 12:29:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1B9841F22B4A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 11:27:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 44A961F23088
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 11:29:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9AEA1C2325;
-	Mon,  4 Nov 2024 11:19:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A909A1B394F;
+	Mon,  4 Nov 2024 11:24:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="XS5i/5yS"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="oKCb5aEI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 649431C07D8
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Nov 2024 11:19:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D0C81B0F2A
+	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Nov 2024 11:24:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730719149; cv=none; b=gPI+voIUny5/S2GHJgn5m6T/SW0x2E35Uip9sq4eKqBx2BFoBv+5NrjJu5NETJBvXStdmUQN6E7yT8H5NKy0p/Rrw6ONIxNHK9Lv7Jm14KcI9WGkpLogZaFlYWoQB1LliI3+7Zjp1VakaEd8aA6DevsbMakvxDhW1fCcW8TZ+Ts=
+	t=1730719443; cv=none; b=rZCG/POrSsYqHR2YEcrCbrT0TElWBa1Dr0tY1CbECjv+7tCPiICny4CY5einn7SEgnjECSeNmSadG4e1InQQn3pLvNVGDT44xZBw/jJjVGwpHsfkDb3gLkaGarqE69qebsqhXoJiSsZksyj/Nry3aEfqxK65WllncuexGLESWdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730719149; c=relaxed/simple;
-	bh=JgGFqZMz2Caxo/bqJtXtplmuZg+Kq0OfABkegunbOdc=;
+	s=arc-20240116; t=1730719443; c=relaxed/simple;
+	bh=xLzCK0gJ1iwWKUvurBIKQQtzsGZGYgwutypt1J8FGNE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QnJFZXmxUS8o924y6WLVcRddarb3D0AFf1lcJtyui+DJHd9wGq9dgw8BkxNSQfpwQ6bNHyGVLrMCjaxTh4ieeSfMXa/4KXBKu894XzDqNhp3eLfKYQG7d6BJH3IEYDrv409ULki4YN7JzUzsfoxeoosg4fdWlQ3w3HQtrs7dyy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=fail smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=XS5i/5yS; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=VHMEIzg1sS+FNksbmvmAUfZT5Fv3ONEVCG9+0yWcyZWFiyH18IQ641osytqoorPmj5RImD23Ok8xTlJSUjkhljOFIzXEGyH3DwhMRvjsnlnOiYzHKJKn3Lxbd/Hbrp1aQ/moSmNNPNEuQkxiL/pEZMrG2l4pxYyGLnHx1IaPMRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=fail smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=oKCb5aEI; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A3Nb4pL030989
-	for <linux-arm-msm@vger.kernel.org>; Mon, 4 Nov 2024 11:19:07 GMT
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A3N02u4008025
+	for <linux-arm-msm@vger.kernel.org>; Mon, 4 Nov 2024 11:24:01 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	A2oqrkGjzA/cLsOTZU66EH16Yp67C8bgxn8gSXmYQkc=; b=XS5i/5ySL9/dX/ot
-	PaFTZCwraJhzf8Z8uQxKTavoDl709y+gKABp/+cdX0BjDp01PZ8HSu/opEETfVQc
-	yF7f+FZUFbJfG+pDvSLXa0w7zHSPbaXVdW+r0sC9aZLJj/H1dxVRtvWvVMzoGYWF
-	5q1a0I3IlN59SHkSQpjT/LTVNYEjLgb6MdK7raUqOeGhUqJal974T6jLZnQz45LW
-	y5QMWSQzwWSDYPzIm2b61uTT7RNBCnf1eqAu8OKsjbFKRH6di/SKPosSNwk4XU4H
-	DTwJGb6ejJUj3hpKPhDAhkL50vm3n5uoZkd1uVI92SxauoH1eR3kIqyDpL0zthe6
-	lYdH7g==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42p5ye22ca-1
+	TF+iiDcvK+zCyJegCXN17oSb8UYE+XcwDcU3Zz59S2s=; b=oKCb5aEIL3RMlioR
+	qa6Jk0ECHpAlh74CH8u6uPvxd34+mkBwEidnYLk7byz+iXo1BkIS+7K7f/q7zL4b
+	VrMgVcJABrFfFUCG9/09uPhbHThiHHkxw/5iOp+iYBN40PWyOovVa7YaiYctwPOW
+	7qg864oYiyy4aJubfIrQl7lRBMqhuQvh+h5u2jqkeffmnff0DqwZYX7rVr88ORmX
+	tnx0Q5oI0PaX79vDJHg/rJRVsnhyYO7ziS13DtCyFzHslb9YKsNfgPIUZoNFBFsV
+	aaGqS6gh+Ye9aXsC7o51GxGP7WCWRihsnirpld4ROF74DnjlSeh3oMZhcUMbRWAc
+	Q9N04w==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42nd11uywg-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 04 Nov 2024 11:19:07 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-460aca6d5e9so10890821cf.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Nov 2024 03:19:07 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 04 Nov 2024 11:24:00 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-6cbe993f230so15005606d6.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Nov 2024 03:24:00 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730719146; x=1731323946;
+        d=1e100.net; s=20230601; t=1730719440; x=1731324240;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=A2oqrkGjzA/cLsOTZU66EH16Yp67C8bgxn8gSXmYQkc=;
-        b=uBAvOli1zsLptdML/5a1XR4zhEQ1CoRprY/+r5KzMnS0CfT93TwqBvGFGZImKaEMmb
-         KjM87EKCwOfkdM7YypmEWyt7DLXA3t4oCMZhhcwRPzUoPZPAczZwkVhxHRgNpTnXDrRU
-         611ezDFVjDWPljKTgNK5ukKN/Csq6+eg0PxL8ngRRH0GlR56VkJoNtN2y81Pr0pVr1zu
-         juTxX59KUdrDLFKaogxrtGVW//VJVHiPV5aRd9P6+11NNEgOBp5A7080X2ibL/b3/Ygz
-         daYT+h9ndd0t31Wt5Vrr+ZO0EldT/VYBdhQmjho53Ua5at6Os+CbboSG+jcMuzggpzmG
-         v+dQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWYZVox7W3hRpdiRbuDQ+krv6u2Nt32pgsDaemXJMjqbyCcxtnphkphKLtOHGTAILNtM9DonXh0fCfu0YCm@vger.kernel.org
-X-Gm-Message-State: AOJu0YygF+L0tOR+lAEi+Cv1Fq4FYLsJJHWzMNH+AMd1+x01lENkwkU/
-	XI7USlbzfzVLPoJgXt6ahW3WpFX8mU0BgAid3lr17YJgnA9gu6G1YNwYt0U0R2cmfmJdz+/3SSQ
-	bZXv476+jbx7zWmjOw3GuVY3xs2Bwza+AY4MFWZa+K+kd0QhLFJaNTncBT2wuUIY7
-X-Received: by 2002:a05:620a:3181:b0:7b1:2242:e3e0 with SMTP id af79cd13be357-7b193ef409amr1999301885a.4.1730719146238;
-        Mon, 04 Nov 2024 03:19:06 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFYmjI7Jslj3eJ0wFw7ek9WtoDBg7hvIWPiFS3CeTaEvgboxht0RJg92uZc82vxdJNXaDmrMg==
-X-Received: by 2002:a05:620a:3181:b0:7b1:2242:e3e0 with SMTP id af79cd13be357-7b193ef409amr1999300485a.4.1730719145792;
-        Mon, 04 Nov 2024 03:19:05 -0800 (PST)
+        bh=TF+iiDcvK+zCyJegCXN17oSb8UYE+XcwDcU3Zz59S2s=;
+        b=FKh2tThR8uNkATCGtawhlFpKA8dh5XM9JOukOo31XuamqtXyTnBB6NB0yw9spJD0K8
+         WVSpRCFrgKghVqLq0PTXS/QLx1yrUsvlw1H2NPbWO7J9LUMd/ZtX0FdwYG2mtpryDxv3
+         ECiQP58mG+wIfa5Fwq4xCzM7V+CeUVGc5OX/tMh4tgQbhc2jNmwhMlH+Hehn9jQl1Ofc
+         lh1+nMIbSsVEofdKDqiaaVIWYk9ckI4JdTm6COzNMJ7Sl/lnHeuHpcJOqwQhQEZrnL6e
+         S8GPipBegr1OhQGkzQI1SdgYWKzqg9l6jK8i+oXXjgaz5jqajRhj4KtWmuBuc3oIbCGR
+         XpwQ==
+X-Gm-Message-State: AOJu0Yy8D9Jcw9pEg2TCV6sxN5+sZ+py4VTkTNHPVH/KSPuqTP/o7FNf
+	s6IAAVOarmqRlvGIi5HFxivYEidpOWirasua5JIfs6rtXhyrfbhLgKe7+D76dBl4sNCSQvfcOAX
+	6NJH2SlbeKKgwFhryM+BOi1Z/t4m0rcpKyev7XVAD1hPjKPtjTQ0a64eSpil7H9hw
+X-Received: by 2002:a05:620a:1a24:b0:7b1:49d7:85cb with SMTP id af79cd13be357-7b193ee1bd5mr2223295085a.3.1730719440166;
+        Mon, 04 Nov 2024 03:24:00 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGInlOz/Y42e9WPGujlcn2EJYqzxHGUS5ONoZMnslvOpro7KQzonYFvCMnoymHwPLtzE5RZuA==
+X-Received: by 2002:a05:620a:1a24:b0:7b1:49d7:85cb with SMTP id af79cd13be357-7b193ee1bd5mr2223294185a.3.1730719439852;
+        Mon, 04 Nov 2024 03:23:59 -0800 (PST)
 Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9e565df949sm540724366b.121.2024.11.04.03.19.03
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9e565df8c2sm540383866b.102.2024.11.04.03.23.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 04 Nov 2024 03:19:05 -0800 (PST)
-Message-ID: <33174321-d81d-472a-b267-ed2cdd691b74@oss.qualcomm.com>
-Date: Mon, 4 Nov 2024 12:19:02 +0100
+        Mon, 04 Nov 2024 03:23:59 -0800 (PST)
+Message-ID: <02171841-acd3-4f26-987d-1376caf11481@oss.qualcomm.com>
+Date: Mon, 4 Nov 2024 12:23:57 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,64 +83,91 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 10/10] ASoC: qcom: sm8250: force single channel via
- RX_1 output
-To: Alexey Klimov <alexey.klimov@linaro.org>, broonie@kernel.org,
-        konradybcio@kernel.org, konrad.dybcio@oss.qualcomm.com,
-        andersson@kernel.org, srinivas.kandagatla@linaro.org
-Cc: tiwai@suse.com, lgirdwood@gmail.com, perex@perex.cz, robh@kernel.org,
-        krzk+dt@kernel.org, conor+dt@kernel.org, dmitry.baryshkov@linaro.org,
-        linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20241101053154.497550-1-alexey.klimov@linaro.org>
- <20241101053154.497550-11-alexey.klimov@linaro.org>
+Subject: Re: [PATCH 2/2] firmware: qcom: scm: rework QSEECOM allowlist
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20241103-rework-qseecom-v1-0-1d75d4eedc1e@linaro.org>
+ <20241103-rework-qseecom-v1-2-1d75d4eedc1e@linaro.org>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20241101053154.497550-11-alexey.klimov@linaro.org>
+In-Reply-To: <20241103-rework-qseecom-v1-2-1d75d4eedc1e@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: sw889enHwGJVIkJNFSRRMIau4lSA_h9_
-X-Proofpoint-GUID: sw889enHwGJVIkJNFSRRMIau4lSA_h9_
+X-Proofpoint-GUID: Jsl-rXGdyl0DJu7uifsg2lYbzvWviK2I
+X-Proofpoint-ORIG-GUID: Jsl-rXGdyl0DJu7uifsg2lYbzvWviK2I
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
- mlxscore=0 spamscore=0 lowpriorityscore=0 adultscore=0 malwarescore=0
- suspectscore=0 priorityscore=1501 clxscore=1015 mlxlogscore=999
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411040099
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=999
+ mlxscore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
+ priorityscore=1501 impostorscore=0 spamscore=0 bulkscore=0 suspectscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411040100
 
-On 1.11.2024 6:31 AM, Alexey Klimov wrote:
-> In case of mono configurations we need to enforce single channel
-> output. This is required for audio playback on QRB4210 RB2 board.
+On 3.11.2024 4:37 PM, Dmitry Baryshkov wrote:
+> Listing individual machines in qcom_scm_qseecom_allowlist doesn't scale.
+> Allow it to function as allow and disallow list at the same time by the
+> means of the match->data and list the SoC families instead of devices.
 > 
-> Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+> In case a particular device has buggy or incompatible firmware user
+> still can disable QSEECOM by specifying qcom_scm.qseecom=off kernel
+> param and (in the longer term) adding machine-specific entry to the
+> qcom_scm_qseecom_allowlist table.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  sound/soc/qcom/sm8250.c | 10 ++++++++++
->  1 file changed, 10 insertions(+)
+>  drivers/firmware/qcom/qcom_scm.c | 37 ++++++++++++++++++++-----------------
+>  1 file changed, 20 insertions(+), 17 deletions(-)
 > 
-> diff --git a/sound/soc/qcom/sm8250.c b/sound/soc/qcom/sm8250.c
-> index 45e0c33fc3f3..7994488d7998 100644
-> --- a/sound/soc/qcom/sm8250.c
-> +++ b/sound/soc/qcom/sm8250.c
-> @@ -39,10 +39,20 @@ static int sm8250_be_hw_params_fixup(struct snd_soc_pcm_runtime *rtd,
->  					SNDRV_PCM_HW_PARAM_RATE);
->  	struct snd_interval *channels = hw_param_interval(params,
->  					SNDRV_PCM_HW_PARAM_CHANNELS);
-> +	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
+> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+> index 9fed03d0a4b7e5709edf2db9a58b5326301008b4..6f70fbb0ddfbf88542ff2b3ed2bc372c2f3ce9eb 100644
+> --- a/drivers/firmware/qcom/qcom_scm.c
+> +++ b/drivers/firmware/qcom/qcom_scm.c
+> @@ -1743,28 +1743,23 @@ module_param(qseecom, charp, 0);
 >  
->  	rate->min = rate->max = 48000;
->  	channels->min = channels->max = 2;
->  
-> +	/* Maybe should be moved to driver data variant */
-> +	switch (cpu_dai->id) {
-> +	case RX_CODEC_DMA_RX_1:
-> +		channels->min = channels->max = 1;
-> +		break;
+>  /*
+>   * We do not yet support re-entrant calls via the qseecom interface. To prevent
+> - * any potential issues with this, only allow validated machines for now. Users
+> + * any potential issues with this, only allow validated platforms for now. Users
+>   * still can manually enable or disable it via the qcom_scm.qseecom modparam.
+> + *
+> + * To disable QSEECOM for a particular machine, add compatible entry and set
+                                                       ^ a
 
-This doesn't seem to be specific to either 8250 or 6115. It looks like
-this is board specific.
+> + * data to (void *)false.
+>   */
+>  static const struct of_device_id qcom_scm_qseecom_allowlist[] __maybe_unused = {
+> -	{ .compatible = "dell,xps13-9345" },
+> -	{ .compatible = "lenovo,flex-5g" },
+> -	{ .compatible = "lenovo,thinkpad-t14s" },
+> -	{ .compatible = "lenovo,thinkpad-x13s", },
+> -	{ .compatible = "lenovo,yoga-slim7x" },
+> -	{ .compatible = "microsoft,arcata", },
+> -	{ .compatible = "microsoft,romulus13", },
+> -	{ .compatible = "microsoft,romulus15", },
+> -	{ .compatible = "qcom,sc8180x-primus" },
+> -	{ .compatible = "qcom,x1e80100-crd" },
+> -	{ .compatible = "qcom,x1e80100-qcp" },
+> +	{ .compatible = "qcom,sc8180x", .data = (void *)true },
+> +	{ .compatible = "qcom,sc8280xp", .data = (void *)true },
+> +	{ .compatible = "qcom,x1e80100", .data = (void *)true },
+>  	{ }
+>  };
+
++ Steev I think you had some unhappy machine
+
+And maybe 8180 Primus?
+
+>  
+>  static bool qcom_scm_qseecom_machine_is_allowed(struct device *scm_dev)
+>  {
+>  	struct device_node *np;
+> -	bool match;
+> +	const struct of_device_id *match;
+
+Reverse-Christmas-tree?
 
 Konrad
 
