@@ -1,161 +1,312 @@
-Return-Path: <linux-arm-msm+bounces-36879-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36880-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CBD879BACA7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 07:40:47 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 326E39BACD2
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 07:47:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8E4462815CF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 06:40:46 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 568F41C2166B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 06:47:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F1F8818C90E;
-	Mon,  4 Nov 2024 06:40:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 91BA0185936;
+	Mon,  4 Nov 2024 06:47:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="IyPipN0X"
+	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="V4OidpIG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29E3838F97;
-	Mon,  4 Nov 2024 06:40:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E5D38F97
+	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Nov 2024 06:47:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730702441; cv=none; b=f/XbBbM+R0wfyViouDfRApf9b5C1hDTU6JmbBCr0QbRpNxVHNRmjT0NARL9JmtyDHfRhqsjqv6JSZbh8ZCIxbuCzJnnIQl7wbH1JI9dU2n8ep6YhQssjmiQqR83i4GdttuxLzuwy9pJY2ZF6/r/ttjyxNPssF+MmJbeHpce/ZJA=
+	t=1730702825; cv=none; b=dKQJ3duz+4kdQq07kCfgqDRFMzgnYy/oIXSWUHfxDTVt09iULPOfnewppFjxIZoUNOTi+6H0vVXEmhXbQTvrwpOVJLv+9lLALlgOs3h1RKdDcG7OeiBPsvl8x7YXWyHOTb0iKttZjTHBLSafz+Q6N8qWAXz/w3TmDgT1oBdJP/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730702441; c=relaxed/simple;
-	bh=WRlbfbH8V+ZVE5u00EimMugItUuIhEkRBSYgoDOJvQs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=ahy58lcwz0HrY5NTIhPjTnjDk+mE5GOaaUAKjH/MxgdH83KPAHGJNeyzx8Q7UnefuX55xxJ3Y7xxwesXlABVl8wf6fju/nxXCHBnEg8rl0l1TfmQ78oPGv2qoI78y/fplY+In1Qa2qkfH/fRBtR9pV65R9nwMEVE5nUS4RppDsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=IyPipN0X; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A40LNam028863;
-	Mon, 4 Nov 2024 06:40:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	akmgyX4ei7Y+AGwadML9tnYPiiiqBalW/jXlHP/suPU=; b=IyPipN0Xm0kihKs4
-	fsnj4YLeaRYyYajsa+LySURhrtKT4HAXicA/sWhS2n77NEA6EuJJcmYb65usP6xP
-	b73gXq2ifK9FHLcbzuw4LcVUWEqfMEOQ96/W14j48/HGj6Gt/mWspAl0OwmDB9vg
-	9dIBLbREUx/cfy3HKDKNM0Vp8vlSgf2sPAmhezK8MwPkTe5CyvaoCBeEF39OGT7S
-	YwJV5G/ROmdIFEz4iDqrWT3DHlB3GOgf+CYvJ2OPqcIqT03AUja1TeChrvSkFQAd
-	wIhGT9zZf7SZJ6Ym/KKPbz6bwxBjtT5OWvkCQ/XV7oSeQemFEfwvoe/lH7YMRDF9
-	4SqF0A==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42nd2s39sx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 04 Nov 2024 06:40:35 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4A46eYru032661
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 4 Nov 2024 06:40:34 GMT
-Received: from [10.218.15.248] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 3 Nov 2024
- 22:40:30 -0800
-Message-ID: <00c9feac-722a-481a-9c57-36463fe0b3ff@quicinc.com>
-Date: Mon, 4 Nov 2024 12:10:27 +0530
+	s=arc-20240116; t=1730702825; c=relaxed/simple;
+	bh=QuoOFd8I0O91IyHHYYbLVeeFKUGtvwexJyPQTlJsxKA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=gV3Z1qbfPT3hisWvcjsIqSAtDHAe0YkiN/sPtqqZtxJQLSiyYqflkFq6P9Fas36VCJuH9J+aS7ER2ER6XwN+VSBrG6ecgeNq5rj735zp+QAvOEsjIyKHww3gKCpkIdn0ffd5UOuN0dSrXZBp3DXR/A1JMady/lGPBJVGLGGzVz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=V4OidpIG; arc=none smtp.client-ip=209.85.218.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-a99fa009adcso260145366b.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 03 Nov 2024 22:47:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1730702819; x=1731307619; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZcL58p8mF5Zl49nS7NSGvMtz/EmRjz2p/naj2ImhMnk=;
+        b=V4OidpIGWUx6Dt8CTFiWzdw5FBf9aPdAlQywiyPBIiMH0F4YXMzI46fgEsnDJMiP45
+         gpJiZGcgUtdPIfcSsf4u/yBWzkZYfauM5Nw1blWjyve6anyA0v/7c/HFfhJaxXUQe5tP
+         rKh60sJ0N/zetnD2QCzRcxOxOLcC6W1BdL+soks+l1a17O0KkKqtbqiR4zGXnJ9v6ffx
+         wivVmECFkGwEdBRqu1fj1lbeIKMSybNCUIgOdvgmmRZodhlMbjRqKL99+PBj3VPhiqPg
+         xqxRxMrtZcryhqB6p3EI+caWHj2/3IKuUTEx3pKoafIv8MaISmeWgb6L72frpGPKG5CW
+         USbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730702819; x=1731307619;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZcL58p8mF5Zl49nS7NSGvMtz/EmRjz2p/naj2ImhMnk=;
+        b=iDdGNsAqtNpkVTT3OSq0deT/YhShVDHG7qqzysRySDbDmAYa0urSHygqog34qtkpDv
+         YlgDIgBBKGS1oELifDcsHSuViRygBs5uEz+Lv06fy1yqNsu3L+i6Dz1yMCKaAxQvOy3/
+         4seyPoTklYZLM5o8SFif6ajZBw2oWaukuzYLe16MBusD/E054hOmWFioX+pFne+uk9it
+         f/d+4agZd90rLK3Q5AdiwRKe8qAYqJCOxWr1312UQFm2QjAYHAAl5AENwuBWOAtthIz0
+         t80f5QIkX7FaZ9/vuZ0FONC1CmUKdJhlfK1ZUMZaVLWejyuLt3q7TiOxEcg7Vw+W3lhb
+         en3w==
+X-Forwarded-Encrypted: i=1; AJvYcCXR9LA38+3V3/qOODZYLWoEQINnyy4oNqpHAJx4GnAVjti8no24XGYNxvj1RrU2xA8xmw6KesJjgWYPhEev@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz5vCO4inzXsahMwfWaTFoLbQOjSnSZfM6JPEe85T8hGlclFyXG
+	LwOX50jY4c2PQOPqHfisdG9Q7oil/A/Xxw6WjixEgni3lAih2Z24bT+jFAWrRMo=
+X-Google-Smtp-Source: AGHT+IFowEnMiDO/pTu4Oi8MLHthjGUPLyPZfFAjymH1tOvJMXm1s7ycGi2CQBqddOThNxzPIZCpmQ==
+X-Received: by 2002:a05:6402:524b:b0:5ce:afba:f48a with SMTP id 4fb4d7f45d1cf-5ceb935bbc3mr15128807a12.27.1730702819312;
+        Sun, 03 Nov 2024 22:46:59 -0800 (PST)
+Received: from localhost ([2a02:8071:b783:6940:6752:e162:c76c:a99b])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9e565ef55bsm509953566b.137.2024.11.03.22.46.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 03 Nov 2024 22:46:58 -0800 (PST)
+From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+To: Joerg Roedel <joro@8bytes.org>,
+	Will Deacon <will@kernel.org>
+Cc: Hector Martin <marcan@marcan.st>,
+	Sven Peter <sven@svenpeter.dev>,
+	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Rob Clark <robdclark@gmail.com>,
+	Yong Wu <yong.wu@mediatek.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Tomasz Jeznach <tjeznach@rivosinc.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Orson Zhai <orsonzhai@gmail.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Chunyan Zhang <zhang.lyra@gmail.com>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Michael Shavit <mshavit@google.com>,
+	Mostafa Saleh <smostafa@google.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Georgi Djakov <quic_c_gdjako@quicinc.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	asahi@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org,
+	iommu@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-mediatek@lists.infradead.org,
+	linux-riscv@lists.infradead.org
+Subject: [PATCH] iommu: Switch back to struct platform_driver::remove()
+Date: Mon,  4 Nov 2024 07:46:50 +0100
+Message-ID: <20241104064650.799122-2-u.kleine-koenig@baylibre.com>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 1/3] dt-bindings: interconnect: Add EPSS L3 compatible
- for SA8775P
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>,
-        Sibi Sankar <quic_sibis@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Odelu Kukatla
-	<quic_okukatla@quicinc.com>,
-        Mike Tipton <quic_mdtipton@quicinc.com>
-References: <20241026123058.28258-1-quic_rlaggysh@quicinc.com>
- <20241026123058.28258-2-quic_rlaggysh@quicinc.com>
- <7k2vnjop6xyshquqlbe22gm7o5empeluvsohfmq5ulnaas3keb@yzomhzi4w7vf>
- <2ac4604c-a765-48b1-84b2-8979f18c29a7@quicinc.com>
- <vljb7wwqaaqgdcm6whf5ymhnh4jbtswyibto4qpqmbgwvshudy@unh3jhbyeac6>
-Content-Language: en-US
-From: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
-In-Reply-To: <vljb7wwqaaqgdcm6whf5ymhnh4jbtswyibto4qpqmbgwvshudy@unh3jhbyeac6>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: I_gM5_C0gQt9lcVl808fXY9dU4LOc6an
-X-Proofpoint-GUID: I_gM5_C0gQt9lcVl808fXY9dU4LOc6an
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0
- lowpriorityscore=0 mlxlogscore=999 clxscore=1015 suspectscore=0
- adultscore=0 priorityscore=1501 bulkscore=0 mlxscore=0 malwarescore=0
- spamscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2409260000 definitions=main-2411040057
+Content-Type: text/plain; charset=UTF-8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=7687; i=u.kleine-koenig@baylibre.com; h=from:subject; bh=QuoOFd8I0O91IyHHYYbLVeeFKUGtvwexJyPQTlJsxKA=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBnKG3bdCqjD+kFfznlIAVOFLi0hJACxdKIJdHQs d8zimMeLKiJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZyht2wAKCRCPgPtYfRL+ TgZmCAC7iVNHyJXfgq1NuwUsLEKQCs0OdbK3FGJTFb087AzN3L8qoZWNQ/7naPMqAa/iO/4+GLC A2oKxi5X2YXXvN/Kvagsv2AIKk6AJIWZRiPsBFWj+Ps3gBnDLZgJ06lC7qiV+1i1/uGlT8iiVLZ vs03Vk0J5Z4QLsasSAI4jMdHc1DWGQ36eUKWoCE7UlpS9fKMTuh/6l7xI0DRyMSQbZ5jne7oyV6 iVuUCy8OTrl+hiJM3OKc27D8c5vO2QwVNuS2BuC/pmSLLBWDQ8MYAT0JekQ3ByC2urzrPcTq7QI fMrzr4D5inlV9p1UPCJQFs7/4VeLVbptwDWaOxKfcLSVvoUj
+X-Developer-Key: i=u.kleine-koenig@baylibre.com; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+Content-Transfer-Encoding: 8bit
 
+After commit 0edb555a65d1 ("platform: Make platform_driver::remove()
+return void") .remove() is (again) the right callback to implement for
+platform drivers.
 
+Convert all platform drivers below drivers/iommu to use .remove(), with
+the eventual goal to drop struct platform_driver::remove_new(). As
+.remove() and .remove_new() have the same prototypes, conversion is done
+by just changing the structure member name in the driver initializer.
 
-On 11/1/2024 12:26 AM, Dmitry Baryshkov wrote:
-> On Wed, Oct 30, 2024 at 12:23:57PM +0530, Raviteja Laggyshetty wrote:
->>
->>
->> On 10/26/2024 8:15 PM, Dmitry Baryshkov wrote:
->>> On Sat, Oct 26, 2024 at 12:30:56PM +0000, Raviteja Laggyshetty wrote:
->>>> Add Epoch Subsystem (EPSS) L3 interconnect provider binding on
->>>> SA8775P SoCs.
->>>>
->>>> Signed-off-by: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
->>>> ---
->>>>  .../devicetree/bindings/interconnect/qcom,osm-l3.yaml         | 4 ++++
->>>>  1 file changed, 4 insertions(+)
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml b/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
->>>> index 21dae0b92819..042ca44c32ec 100644
->>>> --- a/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
->>>> +++ b/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
->>>> @@ -34,6 +34,10 @@ properties:
->>>>                - qcom,sm8250-epss-l3
->>>>                - qcom,sm8350-epss-l3
->>>>            - const: qcom,epss-l3
->>>> +      - items:
->>>> +          - enum:
->>>> +              - qcom,sa8775p-epss-l3
->>>> +          - const: qcom,epss-l3-perf
->>>
->>> Why is it -perf? What's so different about it?
->>
->> The EPSS instance in SA8775P uses PERF_STATE register instead of REG_L3_VOTE to scale L3 clocks.
->> So adding new generic compatible "qcom,epss-l3-perf" for PERF_STATE register based l3 scaling.
-> 
-> Neither sm8250 nor sc7280 use this compatible, while they also use
-> PERF_STATE register.
-> 
-That is correct, both sm8250 and sc7280 use perf state register.
-The intention for adding "qcom,epss-l3-perf" generic compatible is to use it for the chipsets which use perf state register for l3 scaling.
-Using generic compatible avoids the need for adding chipset specific compatible in match table.
->>
->>
->>>
->>>>  
->>>>    reg:
->>>>      maxItems: 1
->>>> -- 
->>>> 2.39.2
->>>>
->>>
->>
-> 
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+---
+Hello,
+
+I did a single patch for all of drivers/iommu. While I usually prefer to
+do one logical change per patch, this seems to be overengineering here
+as the individual changes are really trivial and shouldn't be much in
+the way for stable backports. But I'll happily split the patch if you
+prefer it split.
+
+This is based on today's next, if conflicts arise when you apply it at
+some later time and don't want to resolve them, feel free to just drop
+the changes to the conflicting files. I'll notice and followup at a
+later time then. Or ask me for a fixed resend. (Having said that, I
+recommend b4 am -3 + git am -3 which should resolve most conflicts just
+fine.)
+
+Best regards
+Uwe
+
+ drivers/iommu/apple-dart.c                  | 2 +-
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 2 +-
+ drivers/iommu/arm/arm-smmu/arm-smmu.c       | 2 +-
+ drivers/iommu/arm/arm-smmu/qcom_iommu.c     | 4 ++--
+ drivers/iommu/ipmmu-vmsa.c                  | 2 +-
+ drivers/iommu/msm_iommu.c                   | 2 +-
+ drivers/iommu/mtk_iommu.c                   | 2 +-
+ drivers/iommu/mtk_iommu_v1.c                | 2 +-
+ drivers/iommu/omap-iommu.c                  | 2 +-
+ drivers/iommu/riscv/iommu-platform.c        | 2 +-
+ drivers/iommu/sprd-iommu.c                  | 2 +-
+ 11 files changed, 12 insertions(+), 12 deletions(-)
+
+diff --git a/drivers/iommu/apple-dart.c b/drivers/iommu/apple-dart.c
+index eb1e62cd499a..c5bde50d1c42 100644
+--- a/drivers/iommu/apple-dart.c
++++ b/drivers/iommu/apple-dart.c
+@@ -1352,7 +1352,7 @@ static struct platform_driver apple_dart_driver = {
+ 		.pm			= pm_sleep_ptr(&apple_dart_pm_ops),
+ 	},
+ 	.probe	= apple_dart_probe,
+-	.remove_new = apple_dart_remove,
++	.remove	= apple_dart_remove,
+ };
+ 
+ module_platform_driver(apple_dart_driver);
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+index 826db8894fb7..efbc78bffd33 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -4679,7 +4679,7 @@ static struct platform_driver arm_smmu_driver = {
+ 		.suppress_bind_attrs	= true,
+ 	},
+ 	.probe	= arm_smmu_device_probe,
+-	.remove_new = arm_smmu_device_remove,
++	.remove	= arm_smmu_device_remove,
+ 	.shutdown = arm_smmu_device_shutdown,
+ };
+ module_driver(arm_smmu_driver, platform_driver_register,
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+index 8321962b3714..4e9bb9f4c4bd 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+@@ -2372,7 +2372,7 @@ static struct platform_driver arm_smmu_driver = {
+ 		.suppress_bind_attrs    = true,
+ 	},
+ 	.probe	= arm_smmu_device_probe,
+-	.remove_new = arm_smmu_device_remove,
++	.remove = arm_smmu_device_remove,
+ 	.shutdown = arm_smmu_device_shutdown,
+ };
+ module_platform_driver(arm_smmu_driver);
+diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+index b98a7a598b89..9ce2fe50b22c 100644
+--- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
++++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+@@ -759,7 +759,7 @@ static struct platform_driver qcom_iommu_ctx_driver = {
+ 		.of_match_table	= ctx_of_match,
+ 	},
+ 	.probe	= qcom_iommu_ctx_probe,
+-	.remove_new = qcom_iommu_ctx_remove,
++	.remove	= qcom_iommu_ctx_remove,
+ };
+ 
+ static bool qcom_iommu_has_secure_context(struct qcom_iommu_dev *qcom_iommu)
+@@ -931,7 +931,7 @@ static struct platform_driver qcom_iommu_driver = {
+ 		.pm		= &qcom_iommu_pm_ops,
+ 	},
+ 	.probe	= qcom_iommu_device_probe,
+-	.remove_new = qcom_iommu_device_remove,
++	.remove	= qcom_iommu_device_remove,
+ };
+ 
+ static int __init qcom_iommu_init(void)
+diff --git a/drivers/iommu/ipmmu-vmsa.c b/drivers/iommu/ipmmu-vmsa.c
+index ff55b8c30712..074daf1aac4e 100644
+--- a/drivers/iommu/ipmmu-vmsa.c
++++ b/drivers/iommu/ipmmu-vmsa.c
+@@ -1159,6 +1159,6 @@ static struct platform_driver ipmmu_driver = {
+ 		.pm = pm_sleep_ptr(&ipmmu_pm),
+ 	},
+ 	.probe = ipmmu_probe,
+-	.remove_new = ipmmu_remove,
++	.remove = ipmmu_remove,
+ };
+ builtin_platform_driver(ipmmu_driver);
+diff --git a/drivers/iommu/msm_iommu.c b/drivers/iommu/msm_iommu.c
+index 989e0869d805..ce40f0a419ea 100644
+--- a/drivers/iommu/msm_iommu.c
++++ b/drivers/iommu/msm_iommu.c
+@@ -838,6 +838,6 @@ static struct platform_driver msm_iommu_driver = {
+ 		.of_match_table = msm_iommu_dt_match,
+ 	},
+ 	.probe		= msm_iommu_probe,
+-	.remove_new	= msm_iommu_remove,
++	.remove		= msm_iommu_remove,
+ };
+ builtin_platform_driver(msm_iommu_driver);
+diff --git a/drivers/iommu/mtk_iommu.c b/drivers/iommu/mtk_iommu.c
+index c45313c43b9e..72b68d037b95 100644
+--- a/drivers/iommu/mtk_iommu.c
++++ b/drivers/iommu/mtk_iommu.c
+@@ -1794,7 +1794,7 @@ MODULE_DEVICE_TABLE(of, mtk_iommu_of_ids);
+ 
+ static struct platform_driver mtk_iommu_driver = {
+ 	.probe	= mtk_iommu_probe,
+-	.remove_new = mtk_iommu_remove,
++	.remove	= mtk_iommu_remove,
+ 	.driver	= {
+ 		.name = "mtk-iommu",
+ 		.of_match_table = mtk_iommu_of_ids,
+diff --git a/drivers/iommu/mtk_iommu_v1.c b/drivers/iommu/mtk_iommu_v1.c
+index ee4e55b6b190..480e57ea6635 100644
+--- a/drivers/iommu/mtk_iommu_v1.c
++++ b/drivers/iommu/mtk_iommu_v1.c
+@@ -745,7 +745,7 @@ static const struct dev_pm_ops mtk_iommu_v1_pm_ops = {
+ 
+ static struct platform_driver mtk_iommu_v1_driver = {
+ 	.probe	= mtk_iommu_v1_probe,
+-	.remove_new = mtk_iommu_v1_remove,
++	.remove	= mtk_iommu_v1_remove,
+ 	.driver	= {
+ 		.name = "mtk-iommu-v1",
+ 		.of_match_table = mtk_iommu_v1_of_ids,
+diff --git a/drivers/iommu/omap-iommu.c b/drivers/iommu/omap-iommu.c
+index 3f72aef8bd5b..b8ced5d0581c 100644
+--- a/drivers/iommu/omap-iommu.c
++++ b/drivers/iommu/omap-iommu.c
+@@ -1285,7 +1285,7 @@ static const struct of_device_id omap_iommu_of_match[] = {
+ 
+ static struct platform_driver omap_iommu_driver = {
+ 	.probe	= omap_iommu_probe,
+-	.remove_new = omap_iommu_remove,
++	.remove	= omap_iommu_remove,
+ 	.driver	= {
+ 		.name	= "omap-iommu",
+ 		.pm	= &omap_iommu_pm_ops,
+diff --git a/drivers/iommu/riscv/iommu-platform.c b/drivers/iommu/riscv/iommu-platform.c
+index da336863f152..382ba2841849 100644
+--- a/drivers/iommu/riscv/iommu-platform.c
++++ b/drivers/iommu/riscv/iommu-platform.c
+@@ -81,7 +81,7 @@ static const struct of_device_id riscv_iommu_of_match[] = {
+ 
+ static struct platform_driver riscv_iommu_platform_driver = {
+ 	.probe = riscv_iommu_platform_probe,
+-	.remove_new = riscv_iommu_platform_remove,
++	.remove = riscv_iommu_platform_remove,
+ 	.driver = {
+ 		.name = "riscv,iommu",
+ 		.of_match_table = riscv_iommu_of_match,
+diff --git a/drivers/iommu/sprd-iommu.c b/drivers/iommu/sprd-iommu.c
+index a2f4ffe6d949..e84806eee281 100644
+--- a/drivers/iommu/sprd-iommu.c
++++ b/drivers/iommu/sprd-iommu.c
+@@ -531,7 +531,7 @@ static struct platform_driver sprd_iommu_driver = {
+ 		.suppress_bind_attrs = true,
+ 	},
+ 	.probe	= sprd_iommu_probe,
+-	.remove_new = sprd_iommu_remove,
++	.remove	= sprd_iommu_remove,
+ };
+ module_platform_driver(sprd_iommu_driver);
+ 
+base-commit: c88416ba074a8913cf6d61b789dd834bbca6681c
+-- 
+2.45.2
 
 
