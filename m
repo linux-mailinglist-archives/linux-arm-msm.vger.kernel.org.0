@@ -1,165 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-36983-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36984-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C56C89BBE36
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 20:45:06 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 312649BBEFF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 21:48:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 487B6B21431
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 19:45:04 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 62E6E1C21DCA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 20:48:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42D0D1CBE84;
-	Mon,  4 Nov 2024 19:44:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27F261F7087;
+	Mon,  4 Nov 2024 20:48:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RLz5OuVk"
+	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="qRa8bjlJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DEEA192D7D;
-	Mon,  4 Nov 2024 19:44:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C36C19F42F;
+	Mon,  4 Nov 2024 20:48:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730749499; cv=none; b=jblBmS4AzRqjhHpBLT20bl3mlCZf/GkVtBASzFKWjKuSDJFDacF9g2EnZ3mwPiY5UMpKpT/qG4KHvUHnTaoVnX8pXu8YPzEnrhGYnWrMuDbVS/XrnUmRrgzb8EkMMVxnPIzFDdarsv5Q0hLBstvOxQnmtspGE7ZUre+6MX1EMx8=
+	t=1730753305; cv=none; b=R3/+o6PIXaFxnghmgqfDmOr8fKJsmbJSbuVrFR203sXEVI+6ZcXUzghGcQWAQqDs8Xv6O32cPJkPDCDsJnLR2HrEgSZUYLycDdUQSbhFEfbtonC3vvvJO6LIFOgC3Fy7SvJN/r5U/neWGeAZJFpC1/ilUplGWmpWEWGOctE5E7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730749499; c=relaxed/simple;
-	bh=F5TDY0edd5TOHVsa9nkfCI0QHkRWt0Z3g03kUM0+sNk=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=E19btv7SlLMYhXcZ6aeJRBeWMkVtcAlDRrB691tzhjMo1/b2vvXZzRKRHEO+uid7Uo+gOxiss6n0txyffFRCqftqx1aA1FikDfADYOj3O/mAS8DFEx6HzrLD6OQvhPlLtOQK/+tMc92lCd4OmX+ov9bi3+QVYLBQRFKiV5Pmnjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RLz5OuVk; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EC41C4CECE;
-	Mon,  4 Nov 2024 19:44:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730749498;
-	bh=F5TDY0edd5TOHVsa9nkfCI0QHkRWt0Z3g03kUM0+sNk=;
-	h=From:To:Cc:Subject:Date:From;
-	b=RLz5OuVkuX++yabdrw8OTb4uivH8QsfN8MtSBZHD/UmXGolQzm9oaF8mAWREN1ReF
-	 lUavWhmSllSFtUf4kUiA7qITxyI8NWuN6Zv3yr5Kf/xYa3heQv+yQ5zy/NItKasbWo
-	 caJ7EaHbaemuliRdYu9yYe1la2ev1lpOZaeaE8NCVbFEdVRR2sPT6Qaicv6R5yjtfa
-	 tTuemsKzoUBFNenXGj1oCHY64MS7sddDZQD1E4tdBsEKzui8MvxFH8XG2EYMBrQD5l
-	 YAjNIXGifj9fCvvlle477Iabq93ni1tZzQzLJUzeG9J2lCU7bFXFbBsxOcCDTR9xlg
-	 gSc0e7Oh6IVSQ==
-From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Dong Aisheng <aisheng.dong@nxp.com>,
-	Fabio Estevam <festevam@gmail.com>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Jacky Bai <ping.bai@nxp.com>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	NXP S32 Linux Team <s32@nxp.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Bjorn Andersson <andersson@kernel.org>
-Cc: linux-gpio@vger.kernel.org,
-	imx@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH] pinctrl: Use of_property_present() for non-boolean properties
-Date: Mon,  4 Nov 2024 13:44:36 -0600
-Message-ID: <20241104194437.327430-1-robh@kernel.org>
-X-Mailer: git-send-email 2.45.2
+	s=arc-20240116; t=1730753305; c=relaxed/simple;
+	bh=Z8UDWsXrUthXbSmeoHROE3eOTBPFWR2aQNgiSEx7+/c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jab18Bco6gYLTgOKHKwhaT/lVbY/5n3A2lwjdwcwPwDNst7xZNjrwC1bjoTSVHpidejwoN2AR/hhFSYLMFP4Qhhc1pdhgSutUzANa/rhIZKrrr8FH7k19ZKyvnmP45sWliSlKvsAzZUP8czjOeNa0RGeL5cl8U1gcdfqDEJ8Hko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=qRa8bjlJ; arc=none smtp.client-ip=213.167.242.64
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ideasonboard.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
+Received: from pendragon.ideasonboard.com (81-175-209-231.bb.dnainternet.fi [81.175.209.231])
+	by perceval.ideasonboard.com (Postfix) with ESMTPSA id 94634526;
+	Mon,  4 Nov 2024 21:48:12 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+	s=mail; t=1730753292;
+	bh=Z8UDWsXrUthXbSmeoHROE3eOTBPFWR2aQNgiSEx7+/c=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=qRa8bjlJHdsP4URju4XjamGR0cDwZ/9WMzT8jEelFrDm9iZpi4jSd77MULcNMOshM
+	 XvAvmNfy2uIGTWhDgBpFnntaekTXQT0zoToLaqMUVabgjysmMdBGv/tLosSIqq0qhP
+	 hp3zyDEN+kILVwxwmfHEXveT4u7wp0Swhgnv511c=
+Date: Mon, 4 Nov 2024 22:48:14 +0200
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: Phong LE <ple@baylibre.com>, Neil Armstrong <neil.armstrong@linaro.org>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Robert Foss <rfoss@kernel.org>, Jonas Karlman <jonas@kwiboo.se>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH] drm: Use of_property_present() for non-boolean properties
+Message-ID: <20241104204814.GC27775@pendragon.ideasonboard.com>
+References: <20241104190636.274926-1-robh@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20241104190636.274926-1-robh@kernel.org>
 
-The use of of_property_read_bool() for non-boolean properties is
-deprecated in favor of of_property_present() when testing for property
-presence.
+Hi Rob,
 
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
----
- drivers/pinctrl/freescale/pinctrl-imx.c  | 6 +++---
- drivers/pinctrl/pinctrl-xway.c           | 2 +-
- drivers/pinctrl/qcom/pinctrl-msm.c       | 2 +-
- drivers/pinctrl/qcom/pinctrl-spmi-gpio.c | 2 +-
- drivers/pinctrl/qcom/pinctrl-ssbi-gpio.c | 2 +-
- 5 files changed, 7 insertions(+), 7 deletions(-)
+Thank you for the patch.
 
-diff --git a/drivers/pinctrl/freescale/pinctrl-imx.c b/drivers/pinctrl/freescale/pinctrl-imx.c
-index d05c2c478e79..842a1e6cbfc4 100644
---- a/drivers/pinctrl/freescale/pinctrl-imx.c
-+++ b/drivers/pinctrl/freescale/pinctrl-imx.c
-@@ -633,11 +633,11 @@ static int imx_pinctrl_parse_functions(struct device_node *np,
- static bool imx_pinctrl_dt_is_flat_functions(struct device_node *np)
- {
- 	for_each_child_of_node_scoped(np, function_np) {
--		if (of_property_read_bool(function_np, "fsl,pins"))
-+		if (of_property_present(function_np, "fsl,pins"))
- 			return true;
- 
- 		for_each_child_of_node_scoped(function_np, pinctrl_np) {
--			if (of_property_read_bool(pinctrl_np, "fsl,pins"))
-+			if (of_property_present(pinctrl_np, "fsl,pins"))
- 				return false;
- 		}
- 	}
-@@ -746,7 +746,7 @@ int imx_pinctrl_probe(struct platform_device *pdev,
- 		if (IS_ERR(ipctl->base))
- 			return PTR_ERR(ipctl->base);
- 
--		if (of_property_read_bool(dev_np, "fsl,input-sel")) {
-+		if (of_property_present(dev_np, "fsl,input-sel")) {
- 			np = of_parse_phandle(dev_np, "fsl,input-sel", 0);
- 			if (!np) {
- 				dev_err(&pdev->dev, "iomuxc fsl,input-sel property not found\n");
-diff --git a/drivers/pinctrl/pinctrl-xway.c b/drivers/pinctrl/pinctrl-xway.c
-index f4256a918165..48f8aabf3bfa 100644
---- a/drivers/pinctrl/pinctrl-xway.c
-+++ b/drivers/pinctrl/pinctrl-xway.c
-@@ -1524,7 +1524,7 @@ static int pinmux_xway_probe(struct platform_device *pdev)
- 	 * files which don't set the "gpio-ranges" property or systems that
- 	 * utilize ACPI the driver has to call gpiochip_add_pin_range().
- 	 */
--	if (!of_property_read_bool(pdev->dev.of_node, "gpio-ranges")) {
-+	if (!of_property_present(pdev->dev.of_node, "gpio-ranges")) {
- 		/* finish with registering the gpio range in pinctrl */
- 		xway_gpio_range.npins = xway_chip.ngpio;
- 		xway_gpio_range.base = xway_chip.base;
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-index aeaf0d1958f5..ec913c2e200f 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-@@ -1457,7 +1457,7 @@ static int msm_gpio_init(struct msm_pinctrl *pctrl)
- 	 * files which don't set the "gpio-ranges" property or systems that
- 	 * utilize ACPI the driver has to call gpiochip_add_pin_range().
- 	 */
--	if (!of_property_read_bool(pctrl->dev->of_node, "gpio-ranges")) {
-+	if (!of_property_present(pctrl->dev->of_node, "gpio-ranges")) {
- 		ret = gpiochip_add_pin_range(&pctrl->chip,
- 			dev_name(pctrl->dev), 0, 0, chip->ngpio);
- 		if (ret) {
-diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-index d2dd66769aa8..33384f52f55a 100644
---- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-+++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-@@ -1169,7 +1169,7 @@ static int pmic_gpio_probe(struct platform_device *pdev)
- 	 * files which don't set the "gpio-ranges" property or systems that
- 	 * utilize ACPI the driver has to call gpiochip_add_pin_range().
- 	 */
--	if (!of_property_read_bool(dev->of_node, "gpio-ranges")) {
-+	if (!of_property_present(dev->of_node, "gpio-ranges")) {
- 		ret = gpiochip_add_pin_range(&state->chip, dev_name(dev), 0, 0,
- 					     npins);
- 		if (ret) {
-diff --git a/drivers/pinctrl/qcom/pinctrl-ssbi-gpio.c b/drivers/pinctrl/qcom/pinctrl-ssbi-gpio.c
-index 9cd5247ea574..87301a2445ac 100644
---- a/drivers/pinctrl/qcom/pinctrl-ssbi-gpio.c
-+++ b/drivers/pinctrl/qcom/pinctrl-ssbi-gpio.c
-@@ -832,7 +832,7 @@ static int pm8xxx_gpio_probe(struct platform_device *pdev)
- 	 * files which don't set the "gpio-ranges" property or systems that
- 	 * utilize ACPI the driver has to call gpiochip_add_pin_range().
- 	 */
--	if (!of_property_read_bool(pctrl->dev->of_node, "gpio-ranges")) {
-+	if (!of_property_present(pctrl->dev->of_node, "gpio-ranges")) {
- 		ret = gpiochip_add_pin_range(&pctrl->chip, dev_name(pctrl->dev),
- 					     0, 0, pctrl->chip.ngpio);
- 		if (ret) {
+On Mon, Nov 04, 2024 at 01:06:35PM -0600, Rob Herring (Arm) wrote:
+> The use of of_property_read_bool() for non-boolean properties is
+> deprecated in favor of of_property_present() when testing for property
+> presence.
+> 
+> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+
+> ---
+>  drivers/gpu/drm/bridge/ite-it66121.c | 2 +-
+>  drivers/gpu/drm/bridge/sii902x.c     | 2 +-
+>  drivers/gpu/drm/drm_panel.c          | 2 +-
+>  drivers/gpu/drm/msm/dsi/dsi_host.c   | 2 +-
+>  4 files changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/bridge/ite-it66121.c b/drivers/gpu/drm/bridge/ite-it66121.c
+> index 925e42f46cd8..0eae7c01b975 100644
+> --- a/drivers/gpu/drm/bridge/ite-it66121.c
+> +++ b/drivers/gpu/drm/bridge/ite-it66121.c
+> @@ -1480,7 +1480,7 @@ static int it66121_audio_codec_init(struct it66121_ctx *ctx, struct device *dev)
+>  
+>  	dev_dbg(dev, "%s\n", __func__);
+>  
+> -	if (!of_property_read_bool(dev->of_node, "#sound-dai-cells")) {
+> +	if (!of_property_present(dev->of_node, "#sound-dai-cells")) {
+>  		dev_info(dev, "No \"#sound-dai-cells\", no audio\n");
+>  		return 0;
+>  	}
+> diff --git a/drivers/gpu/drm/bridge/sii902x.c b/drivers/gpu/drm/bridge/sii902x.c
+> index 7f91b0db161e..f73e1174a5ad 100644
+> --- a/drivers/gpu/drm/bridge/sii902x.c
+> +++ b/drivers/gpu/drm/bridge/sii902x.c
+> @@ -850,7 +850,7 @@ static int sii902x_audio_codec_init(struct sii902x *sii902x,
+>  	u8 lanes[4];
+>  	int num_lanes, i;
+>  
+> -	if (!of_property_read_bool(dev->of_node, "#sound-dai-cells")) {
+> +	if (!of_property_present(dev->of_node, "#sound-dai-cells")) {
+>  		dev_dbg(dev, "%s: No \"#sound-dai-cells\", no audio\n",
+>  			__func__);
+>  		return 0;
+> diff --git a/drivers/gpu/drm/drm_panel.c b/drivers/gpu/drm/drm_panel.c
+> index 19ab0a794add..46d61cc871ca 100644
+> --- a/drivers/gpu/drm/drm_panel.c
+> +++ b/drivers/gpu/drm/drm_panel.c
+> @@ -413,7 +413,7 @@ bool drm_is_panel_follower(struct device *dev)
+>  	 * don't bother trying to parse it here. We just need to know if the
+>  	 * property is there.
+>  	 */
+> -	return of_property_read_bool(dev->of_node, "panel");
+> +	return of_property_present(dev->of_node, "panel");
+>  }
+>  EXPORT_SYMBOL(drm_is_panel_follower);
+>  
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> index 185d7de0bf37..78cac4ecc58f 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> @@ -1831,7 +1831,7 @@ static int dsi_host_parse_dt(struct msm_dsi_host *msm_host)
+>  		msm_dsi->te_source = devm_kstrdup(dev, te_source, GFP_KERNEL);
+>  	ret = 0;
+>  
+> -	if (of_property_read_bool(np, "syscon-sfpb")) {
+> +	if (of_property_present(np, "syscon-sfpb")) {
+>  		msm_host->sfpb = syscon_regmap_lookup_by_phandle(np,
+>  					"syscon-sfpb");
+>  		if (IS_ERR(msm_host->sfpb)) {
+
 -- 
-2.45.2
+Regards,
 
+Laurent Pinchart
 
