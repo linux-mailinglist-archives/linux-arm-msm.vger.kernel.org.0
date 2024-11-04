@@ -1,154 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-36948-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36949-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A04A69BB718
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 15:06:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1D79C9BB732
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 15:08:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 26D001F21759
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 14:06:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BE0261F2240B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 14:08:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A32D1144D21;
-	Mon,  4 Nov 2024 14:06:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="WKfJfpDD"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 319A279FD;
+	Mon,  4 Nov 2024 14:08:15 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2345813C9DE
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Nov 2024 14:06:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 476F3139D13;
+	Mon,  4 Nov 2024 14:08:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730729197; cv=none; b=SIGFxuY1m78cwxfkiKN8dRpKPswzCxxDdvlaatbWIXTa5vmic24rOZyIpVq+XzPx0ELSIA2PwdHaaq4vnfWg5xgtp+a7QVdwG0eVmelGExk8qnvT0xzAojYcH512gKhd7AICh+tbuzx9cwyXMUHWCxrunKCY8qBam9Qau00VksE=
+	t=1730729295; cv=none; b=Cp0r2Tt9cos/NImhWzUKbb9pLUEVA4ArBRTJwqy7IKatIf8SYAn/E904A0nk96lo06YAYLhkn1ocaK51Xc7Gqro3CYi7hb4pZr7amCgry3vAx4gQx8La/lXE880xZaafnI+sdzMvhg6W0aEqA951glparj/5JdR8btkstAduqUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730729197; c=relaxed/simple;
-	bh=boLrYQ9e50YIzisfXirgfR9tZGcXWIEEhT8FxZQYTz0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=InMgCL/YRoRE/TnUUAHgHz/F4Jun49TjLYhsNNOv6vGFlmjecKo4CKEE3D1K94TPH0yAbfI859fNFSHNmjl/zeFPnumi8iuZmt0x4sMhC1tb4fe0x/0Ip0EFYJ3VRFxURBgzB9YhgvBmNziu7UzmvLmweo1KXtYqv6AtTHuNsI8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=fail smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=WKfJfpDD; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A4Bw6tS016007
-	for <linux-arm-msm@vger.kernel.org>; Mon, 4 Nov 2024 14:06:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	xJUr+78OsAjR1XkAqPodG3wXnB3Itpx7Wgqz/RR6KeU=; b=WKfJfpDDPTvb8Bkl
-	9rpgsFi4VTGHxnKZ+WHe4uZKxFHdcZW4ovAHE6N8v4btl1kmyRGiBqwY+MH8Zuc1
-	9jIk67u6y/0Nknfu93ZzaWU2/TFiyYGfagsLg8Vw83nU1fiDYge0xLwv/rsDIBwX
-	tGLebyFSbcs/JPhfQVUwA60hrKnPaxAc81aCnR6ijtDlBjlOfWlcjaYIi7jmJq+V
-	2zJUf2i9fNvGtXaWL+8IkI2l2muEjsykMzUXe7z7SCqhW91onhWLFyYbD79ryF/G
-	VmTMWaMzaiZ8gntvd4Pcwe+DAPKsWoyKudij3cVBiliRRHPjbTV3d/96+fQ/H4fX
-	gagcaA==
-Received: from mail-oo1-f72.google.com (mail-oo1-f72.google.com [209.85.161.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42ndc6vetp-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 04 Nov 2024 14:06:34 +0000 (GMT)
-Received: by mail-oo1-f72.google.com with SMTP id 006d021491bc7-5eb75d21d3eso348502eaf.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Nov 2024 06:06:34 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730729194; x=1731333994;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xJUr+78OsAjR1XkAqPodG3wXnB3Itpx7Wgqz/RR6KeU=;
-        b=EzgITJOUOXG8cntpvUuIgn766RDXiGAeBVdq3caQy6ar5N3qZG878fHhElq/BRBXTs
-         lcNvM2b8Cjx2q0qLLHGsuDe/wnmzotVCAuCq03YoOcMZ5v8UJlHbQp91y7FDHbdQlMYV
-         SrEv/miAzZcBzZNtXe5o2F758VfijQJhSB41wMHEOKfKDeuU38I/7GdqiCHfj158K6zO
-         dnLwn6yRPuU2wjbKqQxqyBJBb1rwo4RiLPtJROpYhcPN9g53UvlKza9bZgAMuPqlxCtb
-         Q9zQG/QjthsTAaT8pD1hKQz02U+gjdpCHL7GsHAsrbUSFC/6/4vG+EJTATT3NIRatmtx
-         PBtQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU5kz1U8j2m79rAmDCTqrVSSYXKY1eH+UkIuev6ec2Wk0I3d5u2s8A0w5MoHOVWb3JZbuBGsBCy4twQaiQe@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx5t51Hrb2jVLS9x6VIwjImXkt9KPrPFFCiR0h2wiBnAHTNTV4N
-	4adwHwoJ1ssSW6E7xCTPNNRG4B/Hk57PTUjHe9lnW3kD8o3ZkLfX99y0KEeVBGpVYvsk4pM/l4Q
-	GTpenc19Q0tccwOxyhml6RD0jAyK7aqPHCjPj9kzn5VEExXeS12Ufzwtf4Z66wiIc
-X-Received: by 2002:a05:6808:1811:b0:3e5:f9a6:ff5 with SMTP id 5614622812f47-3e638248adamr8268465b6e.2.1730729194023;
-        Mon, 04 Nov 2024 06:06:34 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG3glwYPgrrn3bLA20SfuRtohDBCQZR/xk2xWQCdWoU3C+XBiGNvqk7NsOLh+xpn27lknn8Tg==
-X-Received: by 2002:a05:6808:1811:b0:3e5:f9a6:ff5 with SMTP id 5614622812f47-3e638248adamr8268451b6e.2.1730729193733;
-        Mon, 04 Nov 2024 06:06:33 -0800 (PST)
-Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9e564c6150sm551280266b.81.2024.11.04.06.06.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 04 Nov 2024 06:06:32 -0800 (PST)
-Message-ID: <c6f8ff2e-bcc1-480a-9ca6-0b55991c099e@oss.qualcomm.com>
-Date: Mon, 4 Nov 2024 15:06:29 +0100
+	s=arc-20240116; t=1730729295; c=relaxed/simple;
+	bh=a9s0pcem8w3lxwWtyVVytPGNG3+oR268c7vvouYKUKY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pMd4NOv9M/AtUilDVzSwV9DzGcthx82vAOLlwiHKARj4fZL69Gn+jj7T+7jdbOUe2wLbWwBVZuBjbnWer2nde6RQYx7/u0sKm9XMS4bPxGJcQ0LL3RxNw32sLn8L5fSNp+GKCbo8laAxqnnwQo1wCGOUaYbobC76jNbHpYanR4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 46138FEC;
+	Mon,  4 Nov 2024 06:08:40 -0800 (PST)
+Received: from pluto (usa-sjc-mx-foss1.foss.arm.com [172.31.20.19])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id E3DB03F6A8;
+	Mon,  4 Nov 2024 06:08:07 -0800 (PST)
+Date: Mon, 4 Nov 2024 14:07:56 +0000
+From: Cristian Marussi <cristian.marussi@arm.com>
+To: Sibi Sankar <quic_sibis@quicinc.com>
+Cc: Johan Hovold <johan@kernel.org>, sudeep.holla@arm.com,
+	cristian.marussi@arm.com, ulf.hansson@linaro.org,
+	jassisinghbrar@gmail.com, dmitry.baryshkov@linaro.org,
+	linux-kernel@vger.kernel.org, arm-scmi@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	konradybcio@kernel.org, linux-pm@vger.kernel.org,
+	tstrudel@google.com, rafael@kernel.org,
+	Johan Hovold <johan+linaro@kernel.org>
+Subject: Re: [PATCH V5 3/6] firmware: arm_scmi: Report duplicate opps as
+ firmware bugs
+Message-ID: <ZyjVMBtm0eLoDlYK@pluto>
+References: <20241030125512.2884761-1-quic_sibis@quicinc.com>
+ <20241030125512.2884761-4-quic_sibis@quicinc.com>
+ <ZyThAFbOHKaBIgLg@hovoldconsulting.com>
+ <e173058b-57e7-7fd0-dab7-7398bf9d66ec@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/3] arm64: dts: qcom: x1e80100: Describe TLMM pins for
- SDC2
-To: Abel Vesa <abel.vesa@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Johan Hovold <johan@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20241022-x1e80100-qcp-sdhc-v3-0-46c401e32cbf@linaro.org>
- <20241022-x1e80100-qcp-sdhc-v3-2-46c401e32cbf@linaro.org>
- <a282021f-5e61-480c-84c4-272049e28244@oss.qualcomm.com>
- <Zx9P+HQMOkJsJGcj@linaro.org>
- <327507d8-2dc7-4645-ac3d-d68ff31a84dd@oss.qualcomm.com>
- <ZyS50DFLhHVlnRtd@linaro.org>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <ZyS50DFLhHVlnRtd@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: 0oRTFEtjFVDjsYGJSfuxSv9D1OBJC1WP
-X-Proofpoint-GUID: 0oRTFEtjFVDjsYGJSfuxSv9D1OBJC1WP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- lowpriorityscore=0 mlxlogscore=984 adultscore=0 clxscore=1015 mlxscore=0
- phishscore=0 impostorscore=0 suspectscore=0 malwarescore=0 bulkscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411040123
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e173058b-57e7-7fd0-dab7-7398bf9d66ec@quicinc.com>
 
-On 1.11.2024 12:21 PM, Abel Vesa wrote:
-> On 24-10-28 14:10:54, Konrad Dybcio wrote:
->> On 28.10.2024 9:48 AM, Abel Vesa wrote:
->>> On 24-10-25 20:34:19, Konrad Dybcio wrote:
->>>> On 22.10.2024 12:46 PM, Abel Vesa wrote:
->>>>> Describe the SDC2 default and sleep state pins configuration
->>>>> in TLMM. Do this in SoC dtsi file since they will be shared
->>>>> across multiple boards.
->>>>>
->>>>> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
->>>>> ---
->>>>
->>>> Not very useful on its own but okay..
->>>
->>> Fair enough. For some reason, I'm not able to get sdc4 pinconf
->>> to work.
->>
->> Any chance you tried to define 'sdc4_cmd' etc.? This one seems to have
->> sdc4 pins on gpio127..=132
+On Mon, Nov 04, 2024 at 07:20:01PM +0530, Sibi Sankar wrote:
 > 
-> Yes.
 > 
-> But since the sdc4 pins can have other functions and since there is no
-> device that uses them (yet). Shouldn't we just skip describing the sdc4
-> pinconf entirely as that should be done on a per-board basis?
+> On 11/1/24 19:39, Johan Hovold wrote:
+> > On Wed, Oct 30, 2024 at 06:25:09PM +0530, Sibi Sankar wrote:
+> > > Duplicate opps reported by buggy SCP firmware currently show up
+> > > as warnings even though the only functional impact is that the
+> > > level/index remain inaccessible. Make it less scary for the end
+> > > user by using dev_info instead, along with FW_BUG tag.
+> > > 
+> > > Suggested-by: Johan Hovold <johan+linaro@kernel.org>
+> > > Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> > > ---
+> > >   drivers/firmware/arm_scmi/perf.c | 4 ++--
+> > >   1 file changed, 2 insertions(+), 2 deletions(-)
+> > > 
+> > > diff --git a/drivers/firmware/arm_scmi/perf.c b/drivers/firmware/arm_scmi/perf.c
+> > > index 32f9a9acd3e9..c7e5a34b254b 100644
+> > > --- a/drivers/firmware/arm_scmi/perf.c
+> > > +++ b/drivers/firmware/arm_scmi/perf.c
+> > > @@ -387,7 +387,7 @@ process_response_opp(struct device *dev, struct perf_dom_info *dom,
+> > >   	ret = xa_insert(&dom->opps_by_lvl, opp->perf, opp, GFP_KERNEL);
+> > >   	if (ret) {
+> > > -		dev_warn(dev, "Failed to add opps_by_lvl at %d for %s - ret:%d\n",
+> > > +		dev_info(dev, FW_BUG "Failed to add opps_by_lvl at %d for %s - ret:%d\n",
+> > >   			 opp->perf, dom->info.name, ret);
+> > 
+> > I was hoping you could make the error message a bit more informative as
+> > well, for example, by saying that a duplicate opp level was ignored:
+> > 
+> > 	arm-scmi arm-scmi.0.auto: [Firmware Bug]: Ignoring duplicate OPP 3417600 for NCC
+> 
+> I did think about doing something similar but xa_insert can fail
+> with both -EXIST (duplicate) and -ENOMEM, so the we can't really
+> use term duplicate when insert fails. I can add the perf level
+> though to the message though.
+> 
 
-By that argument, why describe the controller in the first place :|
+It is the caller iter_perf_levels_process_response() of the above
+helpers that is in charge to check the retval and decide what to do:
+if it is a -EBUSY it just bails out returning 0 (SKIP) otherwise returns
+the error... (and anyway the warn/info had already been given)
 
-The possible pins are predefined and physically wired up inside the soc
+Originally the message was generic exactly for this reason...making some
+noise to have fw/guys fix it and carry on...or fail completely the otehr
+way...
 
-Konrad
+I suppose you should move the error message in the caller if you want
+to attain this level of information for the user...if not you are also
+making noise potentially for nothing by saying FW_BUG on an -ENOMEM...
+
+....anyway, on the otehr side, on the -ENOMEM path there is probably
+really no need to say anything in any case...things are going terribly
+wrong and you will notice soon in the form of a total failure of the stack,
+most probably.
+
+Thanks,
+Cristian
 
