@@ -1,82 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-36911-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36912-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4D9FB9BB26A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 12:09:13 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id AD6939BB29E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 12:13:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E4B6A1F2121B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 11:09:12 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DF0371C2178C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 11:13:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E3B31EB9E9;
-	Mon,  4 Nov 2024 10:55:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E168E1F76DB;
+	Mon,  4 Nov 2024 10:55:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ehvVF8Ab"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iDKKxYOT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A7A71EB9EC
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Nov 2024 10:55:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C067F1F80AA
+	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Nov 2024 10:55:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730717705; cv=none; b=kTzIjAedTJYVVc4eeBZeGUlq9dxvRJNn04+cFaWJdvGYhIdlny2UU9RcpLDBoyitg0oXEpG5BfZYoBtc7FGQEebf678H16NUILcZU3bOyEPf+JffSQb1BjGtANTODXSK2tKx9u4Tf4mi1xrO731k5rWRsxCcJZ9Q+jB3Ng6e/VI=
+	t=1730717752; cv=none; b=cTI6RpNDYa/OjV9nY1rzOFXWduUq0KnWFwT6k3LZFBheh8tci0N7gFeu7ExinX5LKIul5PpWr7MitOEPdlrwINIlLUNghzWOXE002Xo9bKUj5vGyeyhDIlZl/IyhIE74WjsJFex81sde5HQxsJgChQi2fsFzgb34ZhKKBDB6Ji8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730717705; c=relaxed/simple;
-	bh=I9OiWUCyKv2i9D1CwAcyraCsNGRc6/tNnnnAMUwXakI=;
+	s=arc-20240116; t=1730717752; c=relaxed/simple;
+	bh=c8wGjkPlYVNRPfGqZMa6pSmboLrkZFgSexB+/+qfnkY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tB19jJkKZ3TSSZCvPOi8vr1PLANhuXXQRai46ceUyaqWYhCJiSmvEMrjSo8gsw3H5cGzx8IAKWdzAovlCcuH4Elrz1h3bHxqC6GlqXxPJLey4E6p24Q06rpOzXT5tG6XXSj5PXXfc4cMCoWJiZMDV+pShZtTDzoIWwi1dHY/WyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ehvVF8Ab; arc=none smtp.client-ip=209.85.167.52
+	 Content-Type:Content-Disposition:In-Reply-To; b=Lh+Gp1QFmETD5mjq/h2A+KAxOUwPTnDEYPBV81L51xIDGn7+DrNzOK7a3djXLkb7Q4DjCLCOXAnqvdL7ajANxZfi+BJ2kCXmfUIDvpB7CcuLtAnpjmyXKYtyaFTb5+5mqCzRB0RTYF+arRG0xfCs0IQpV1fDQtJ2cBKW86qfb4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iDKKxYOT; arc=none smtp.client-ip=209.85.208.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-53a0c160b94so4470790e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Nov 2024 02:55:02 -0800 (PST)
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2fc968b3545so36634801fa.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Nov 2024 02:55:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1730717701; x=1731322501; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1730717749; x=1731322549; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=upe7MW1samf6eEWvfqgJG4VdfRS5tGsncnrDJbr4CFw=;
-        b=ehvVF8Abiyfq0cgPrRjJP2WUEJidSxnLx2yAPiqikwx+hPBxsxdzyGtv9WwnfHNIvJ
-         AWm4yO2A2GufN+3Jk5qRQTHTb2NM5PV1oNp2W0PwRfJaLzUQ0RpOFXyznX3LE6kLknzs
-         8M1rKwTD7XEd8AZQfsuwruJzbFJBm3o1/Cx0b+lyxWruJAoyx1YIHb+ZOqoZmvezyIiS
-         YNtsm22wD0i/NE5IbBSjStg6eYgnoi8MRYlHtuBNioStR7C9jc0Oc8ZqQHtwF2044rku
-         J6OTEPJuVupVxKl2JU8hSQT4XubuPSlM/r35HoCjYYPOlU+i1Bp7HruFsjrZ5x6UVpx7
-         Pv6w==
+        bh=waBTGTBlHfd2MNV2pSDkGRfLXdLzKoYk2Pq0OYzBkOU=;
+        b=iDKKxYOTav3FlKlyvCIY9PRTCGFxKIM8oKRD4scy+A4gwAo3AwXDGcf6AQV2+kKSTO
+         O6c787h44MtAcNmgIjxibirN+4iT07SYswIJXN08I6F3XhY2owDrgAiUSTAInFhlmCec
+         Eobu8WCPM+jBTx+R2tIM3D9M9HzJYCO/j/a1aKx9rgFPQDm5lc56499g99bRq9W2Hi/x
+         cxnSijgQ/fncTOUoDIKFKJV0eHyUBz+8Jn6fB8z+xQr9czjluCpvc46HzW3WHGVKJR31
+         zp4G0LeloJpgy3rE9DzgKTCyic78TDu5l/SK45flm4pxaYs9yQGhWZFI9xPh5Zet2332
+         VOaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730717701; x=1731322501;
+        d=1e100.net; s=20230601; t=1730717749; x=1731322549;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=upe7MW1samf6eEWvfqgJG4VdfRS5tGsncnrDJbr4CFw=;
-        b=ng2QHLKV9VW1Hsje6vkowaV0piVs3UdcG+LnLJq7cWsm+f7fSbS8yazHgVOs9EL8Y/
-         6GiAhKJQ9K8xN1F7Zec4uUEI0OdYtXMWbq67mFLF2/qiwtigicvuTQnnj92AXKZeXTCS
-         eUVc58h9vMTRnd5YLKih3fAfRkIJJ+zNSme9jyQEkHx0bi517Dhv64Wo6WF+8778aZ2A
-         yyQ9ihgfOr8Qw5LSIQMs48/BmCB5O8zOcsEQfGstlBS9yw34fplAtwzJ4O1/vd/6+bbi
-         8NsLML2uXuvkooMDlb4C5aGfP9huafCk1yIet257TNuFtVnph6c/Z28PR4sDrtJpV/vt
-         FycA==
-X-Forwarded-Encrypted: i=1; AJvYcCXSYOYKd7MYBKngWh06bP3g/7+qN4IkQlCvC8GcGF9KTxe0jCzy/kA78sF07jm3K2ArdEO3LEOmcnNH62/O@vger.kernel.org
-X-Gm-Message-State: AOJu0YzEXUX6GyUQyKXb0qnLm1goQS8yYh69Wq87f7hCc/ITNo/xxGKr
-	AGUrLNRyDetts5oPXZNc7iVwuzkPab3UDTWtmvyxYjB74OwVggiyi///l0ype4x+yOOq+LxgLav
-	MaaM=
-X-Google-Smtp-Source: AGHT+IHUBwMeOaPmp1xgOzS0MycFuKWOfrs4hmJDzT6l2IQ76clWN20uWq7MD2t7TvXn3CfLtTD79Q==
-X-Received: by 2002:a05:6512:6cd:b0:536:52ed:a23f with SMTP id 2adb3069b0e04-53d65d945a9mr5861120e87.0.1730717700730;
-        Mon, 04 Nov 2024 02:55:00 -0800 (PST)
+        bh=waBTGTBlHfd2MNV2pSDkGRfLXdLzKoYk2Pq0OYzBkOU=;
+        b=l1pu2XGRin1dJR7gdT0U0hPa832SXpGLGnnC5ZaGIVmuoBC4DtYOKpEC4UZtTGXA7c
+         9efRmnhWBoy35z2yLvDiADzLbSQ0lnQGK9o29J9DPFzMInvtGtqJlo4lDV9xrb0JZWyn
+         phcEA8Ds4fpiqRMhtLEdlmTLOboeWUN7zC2tYYQdpzX+rt2GYEdF1pEqC+TfYdIdIr+r
+         b4gmqyoQD7Qr/w0tPCLpiHQ3cLmvP+OTAp98oM9QI+C8CX3q6UhBsddI5//8RpGlyfOA
+         VJ/VEN5AFcuF0TbZvmYNSghnailt5QL9jdBhOlVi6xrn2q3eKhW/7EUvIMzoMt4Oa3ZH
+         ZYtA==
+X-Forwarded-Encrypted: i=1; AJvYcCVZUbJ4XDxZVZVLJTWGFVCm5k6LzmS2NBEpLBf7WrPRQJkdKC7HYpE2n3NI0oS8ZuCVN/crFngy1yAFOz1T@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy9OaCNS7V6eBKB2ILP+7jF7Rs5XLhN4ga595/GZu7mJFSAPmyl
+	ELbUBhfxqHDWu0S3sixXE+UwWT8CRzAzDgTQ+oJDNJxkT54jpSTR+z9dYGYDlEE=
+X-Google-Smtp-Source: AGHT+IFIdshEtjyMvc0qsRzAdG4WZnPMu9TjKvznb5pP5VfP0Yu1NA7g4L56eiwhpWFlir9ooEF7gg==
+X-Received: by 2002:a2e:4c12:0:b0:2f6:6074:db71 with SMTP id 38308e7fff4ca-2fdec5f831amr53140821fa.17.1730717748783;
+        Mon, 04 Nov 2024 02:55:48 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53c7bc96136sm1631523e87.10.2024.11.04.02.54.59
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2fdef8a6404sm15870731fa.84.2024.11.04.02.55.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Nov 2024 02:54:59 -0800 (PST)
-Date: Mon, 4 Nov 2024 12:54:57 +0200
+        Mon, 04 Nov 2024 02:55:47 -0800 (PST)
+Date: Mon, 4 Nov 2024 12:55:46 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Bartosz Golaszewski <brgl@bgdev.pl>
 Cc: Bjorn Andersson <andersson@kernel.org>, 
 	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
 	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH 2/2] soc: qcom: rmtfs: constify rmtfs_class
-Message-ID: <c2agcw3hnwknxtsp5al4bfyjlzauyrz6d43imcbagp2wm5rmrd@y3t5kmbxuxgo>
+Subject: Re: [PATCH 1/2] soc: qcom: rmtfs: allow building the module with
+ COMPILE_TEST=y
+Message-ID: <eac2ese3gmzkdxhmgoj7qfs35izrgb3oze5es5kr6wn64t5guy@bpbolwqttdui>
 References: <20241014130303.123394-1-brgl@bgdev.pl>
- <20241014130303.123394-2-brgl@bgdev.pl>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,16 +84,17 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241014130303.123394-2-brgl@bgdev.pl>
+In-Reply-To: <20241014130303.123394-1-brgl@bgdev.pl>
 
-On Mon, Oct 14, 2024 at 03:03:03PM +0200, Bartosz Golaszewski wrote:
+On Mon, Oct 14, 2024 at 03:03:02PM +0200, Bartosz Golaszewski wrote:
 > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > 
-> The rmtfs class object is never modified and can be made constant.
+> Make it possible to build the module when COMPILE_TEST is enabled for
+> better build coverage.
 > 
 > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > ---
->  drivers/soc/qcom/rmtfs_mem.c | 2 +-
+>  drivers/soc/qcom/Kconfig | 2 +-
 >  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 
