@@ -1,63 +1,69 @@
-Return-Path: <linux-arm-msm+bounces-36868-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36869-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 928939BABBF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 05:15:06 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A2FC69BABC3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 05:15:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 51700281A41
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 04:15:05 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A696FB2304F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 04:15:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27A3618FDAC;
-	Mon,  4 Nov 2024 04:13:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DBEF0199935;
+	Mon,  4 Nov 2024 04:13:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YR8RoZW1"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ubFKgnV1"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E3818E37D;
-	Mon,  4 Nov 2024 04:13:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B076E1991A9;
+	Mon,  4 Nov 2024 04:13:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730693636; cv=none; b=GJ2kVZd3IUFAAW/XfSMqKU0O7n+frkVwBAmh6hg9bmdmNr+XPjft8lSjeq1UaMtbleKVCWSxhl/3yPVGRtCItf3d/9LNAafuojBG8vWc1RAbtcLZgFVxrlj/HGUgiTKRfNTPqIuoHNYuY29lC8mUMu1DOtMLz5c7HxJzFvObyTk=
+	t=1730693637; cv=none; b=EZSQB9YfifWoQGfmcZH7u2WWCm56pQ+VGWYYuuybWZe4jUXjpZwk54K5Dr4Xlvq5oL5vV0M+kAkwAYGXVN/xKvc7nrkwMd5t3A/6Cpwps76dMljejJl+wFLFBSuZDlbdO1dVgPLOC/8kZ/sYC8+4dOSCrYZfUwkVqdwr/uiBJbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730693636; c=relaxed/simple;
-	bh=3bhpqJLpFskArMW0nCOqg6POEfvKfl3dMRL/dC9SyT0=;
+	s=arc-20240116; t=1730693637; c=relaxed/simple;
+	bh=IvJQdDE3Cn1heqlvzf5ZmdYNo5Flrbj094QOkxbLsg4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dzP3BEHCGJt/XkEFq10doLqHo/dtvC2knmdouUblth3QsiahauhnPTKZozW4RPsrJJXfxIoTh1F/ygiTyAvFtza/XUDPmfub4lMdRXEPwnry/kc8h3mLVHWL5AeGF8VMcyh9gqcDqX5ea/kQGEHK6F5RhoSbUryXCOvfN6phgNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YR8RoZW1; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01340C4CED6;
-	Mon,  4 Nov 2024 04:13:54 +0000 (UTC)
+	 MIME-Version:Content-Type; b=N3bC6aWLzfHenn4+8OiHJ1s9ILxMVstyFHWjiqWFp0AI3YkyTkhZp1RnumPnJx19zf7u+BnKBE1YW1UsZ0/32zhzEYQLzVe9RRJmUrVci9Z5OHB6fCP1DjWoJBVHqOEVELJZe1P/LwavSgC0q72F45cC8v1ttMF1ms7e4INwFxE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ubFKgnV1; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D630C4CECE;
+	Mon,  4 Nov 2024 04:13:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730693635;
-	bh=3bhpqJLpFskArMW0nCOqg6POEfvKfl3dMRL/dC9SyT0=;
+	s=k20201202; t=1730693637;
+	bh=IvJQdDE3Cn1heqlvzf5ZmdYNo5Flrbj094QOkxbLsg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YR8RoZW1MR5lua7q0pXjFYLHjQc65PxU4TOB1YUYMBnCI5yYOsJuz7UyVtLMYDv/A
-	 sH2VTaOmzgD/unEjvOOk0h4WcSoL995eD6mJRH+ciAveIsbQxOoo6ujH58HzOSF6uC
-	 JeOXwSd9pBjobHx1MoeyS/blyNi1i7EJSs3kG5wE3orqp7ZTe47iswXXvH+soDSS/Q
-	 qBL4kczgkkzL3xAsCcgaOZQ3mP53kQi6yULMgUVXsFrIEM+jUj5KwFSwPq9jZgikT5
-	 NDykeHganeAoRt7b3qhakGX0nWM4cDge+VtLWM4FguDIRPZY37OFzbPtA8YQ0+C0tu
-	 WxK98XllWgIig==
+	b=ubFKgnV11Fjwn2e+0zl9YbL+3oitPCMpATGiCZsZ1LIpSi0uvs3VLBnzvVXRqveUZ
+	 MDjXVHYcwgqiL3gM+jnS6hVizmD7JHXlkK0yhlrt3rTwrN4qNgiooU9xTIokm2OAe6
+	 FXwwG99j3PcJQZVX77ZVEhmSrrSOBIgBNOvOzS3njPcvq92Z+ViCqxugWV/NS5jFa8
+	 dwzJfBGeYY2qVKs871CaVkvecUka+naEa1wyQY68pKGnTGN6Xhff7Irj4ziBoKE2iB
+	 wBcQ2BjyogZkbzDUWsk9JrfrEFKgESyvjpz0FfAlk9O7wH4mi5q7xk28DbAu9XDMLu
+	 gDRSOFO2mSxTQ==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Konrad Dybcio <konradybcio@kernel.org>,
-	Johan Hovold <johan+linaro@kernel.org>
-Cc: Rob Herring <robh@kernel.org>,
+	Conor Dooley <conor@kernel.org>,
+	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Jingyi Wang <quic_jingyw@quicinc.com>
+Cc: quic_tengfan@quicinc.com,
 	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] arm64: dts: x1e80100-crd: describe HID supplies
-Date: Sun,  3 Nov 2024 22:13:42 -0600
-Message-ID: <173069362369.23540.17529214305304554724.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org,
+	quic_tingweiz@quicinc.com,
+	quic_aiquny@quicinc.com,
+	20240925-qcs8300_initial_dtsi-v2-0-494c40fa2a42@quicinc.com,
+	20241026-sar2130p-llcc-v3-0-2a58fa1b4d12@linaro.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: (subset) [PATCH v3 0/3] soc: qcom: llcc: Add LLCC support for the QCS8300 platform
+Date: Sun,  3 Nov 2024 22:13:43 -0600
+Message-ID: <173069362375.23540.185749212387703093.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241029075258.19642-1-johan+linaro@kernel.org>
-References: <20241029075258.19642-1-johan+linaro@kernel.org>
+In-Reply-To: <20241031-qcs8300_llcc-v3-0-bb56952cb83b@quicinc.com>
+References: <20241031-qcs8300_llcc-v3-0-bb56952cb83b@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,25 +74,24 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Tue, 29 Oct 2024 08:52:58 +0100, Johan Hovold wrote:
-> Add the missing HID supplies to avoid relying on other consumers to keep
-> them on.
+On Thu, 31 Oct 2024 15:14:35 +0800, Jingyi Wang wrote:
+> The QCS8300 platform has LLCC(Last Level Cache Controller) as the system
+> cache controller. Add binding, configuration and device tree node to
+> support this. There is an errata to get the number of the banks of the
+> LLCC on QCS8300 platform, hardcode it as a workaround.
 > 
-> This also avoids the following warnings on boot:
-> 
-> 	i2c_hid_of 0-0010: supply vdd not found, using dummy regulator
-> 	i2c_hid_of 0-0010: supply vddl not found, using dummy regulator
-> 	i2c_hid_of 1-0015: supply vdd not found, using dummy regulator
-> 	i2c_hid_of 1-0015: supply vddl not found, using dummy regulator
-> 	i2c_hid_of 1-003a: supply vdd not found, using dummy regulator
-> 	i2c_hid_of 1-003a: supply vddl not found, using dummy regulator
+> This series depends on below patch series:
+> https://lore.kernel.org/all/20240925-qcs8300_initial_dtsi-v2-0-494c40fa2a42@quicinc.com/ - Reviewed
+> https://lore.kernel.org/all/20241026-sar2130p-llcc-v3-0-2a58fa1b4d12@linaro.org/ - Reviewed
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: x1e80100-crd: describe HID supplies
-      commit: 266cb58f08f3ca4674ef976166b49c3a60b60463
+[1/3] dt-bindings: cache: qcom,llcc: Document the QCS8300 LLCC
+      commit: a83e18ca83583ce191848ee73975894d43093cde
+[2/3] soc: qcom: llcc: Add LLCC configuration for the QCS8300 platform
+      commit: 584e936feedfcf678510a749f407115bdc811fbd
 
 Best regards,
 -- 
