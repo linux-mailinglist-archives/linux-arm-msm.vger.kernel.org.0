@@ -1,130 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-36959-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36960-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2E4869BB834
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 15:46:22 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id ED2A49BB854
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 15:57:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 608651C22159
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 14:46:21 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 93D05B22994
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 14:57:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EEF7E1BBBD7;
-	Mon,  4 Nov 2024 14:46:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="dnUrk4ps"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0AF941B85E4;
+	Mon,  4 Nov 2024 14:57:08 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9FC570839
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Nov 2024 14:46:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DC05469D;
+	Mon,  4 Nov 2024 14:57:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730731570; cv=none; b=pA7eKJNyBeJG0/devngRGvQGpzn/guqqIkSZm6Drvnc/9E6JNNFWfnAcBk+tcEkpgkGZ/g+Yhie2UG5DMLKjSdZP3xN0n7EOglaZSPC/HAnXB58Sk2O9Y6uj1GpRMWG0VHfotgkklx4yUMrgajHULGwimBstNKntqlTuxT8fQ40=
+	t=1730732227; cv=none; b=Ljd/gGpB/3K1kZ6m3lK0cLWnth0YjBa6XMWY06Pl+uWZNVVuZflItLyUz8KxGYzHzPlzWZyvRJY21Q8XvNxB4ZIY37rFOGchH0P+uf+liHQahTifkpCw4eHWSWwYE1U25ScJnnSxv9kSrFXYIcq9gOBBvQadg/hb+VqxtVGQ73I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730731570; c=relaxed/simple;
-	bh=ri5gKANv6TvUTPl9+9xRfhB8LDqHtD0yB8YlHumIS9c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=h2P0rvdECkCMd9QH47FITj4L6Wj6AE7UaWHmD2tlmzD46pMqKqoRdvzheJNBrv1Anb5P6ubKyC50cKmikojdGYTq99rHq3PX4w/ddcMXjXvPG8L93Fdq7InDJEnv13jdL1OEZ3lxiEAsZLqkG84im68/Q3Lqp2bRxSp+/+7xAro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=fail smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=dnUrk4ps; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A4BjXjx005057
-	for <linux-arm-msm@vger.kernel.org>; Mon, 4 Nov 2024 14:46:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	iEq/Fez3KiO14L7XUIPT1fn4g59MvDWGnwPCbPiCdc8=; b=dnUrk4psxz61ql1d
-	XTAu50K15rdAPnpWd0A9Whx7RVc9UH+Mog/DM6oiw4kFxB5A4tgQugcPW4hr5erg
-	1ICb6mCY68H1TP9y+GLQPnf5K2Rzx528BCfaegzZWkXRhDZNYBelfjr9C1ZEZLaz
-	FpRvlTe0OPOMsT1zGwpO1W6a4/2E4TuGk0AZrPM3ZFIoOEbAcnSaODX9TrStjGKD
-	+Do0voXrDhMTadRVzNq8wNFrcEvcK6sU0sFUr3NGfb94WXKW6td6ahHPfV0XdyRK
-	9nWKXdmtUiYiMW1bHYdvOfDNWO6YxhrEcLEjGcFZRcBcxoC9PlPIBzH2kvzr66QG
-	SXNkHg==
-Received: from mail-oi1-f200.google.com (mail-oi1-f200.google.com [209.85.167.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42nd284kas-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 04 Nov 2024 14:46:06 +0000 (GMT)
-Received: by mail-oi1-f200.google.com with SMTP id 5614622812f47-3e6069ec8fbso49832b6e.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Nov 2024 06:46:06 -0800 (PST)
+	s=arc-20240116; t=1730732227; c=relaxed/simple;
+	bh=RpCsSPbF9hPLxFknEQeCKjaWyspggWrBLgvsrjR4QVM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rIydfXI0fa/MvSdvVTw6sgMktnjNYp4ti/AyiuxUoKQeb35V5iSA6wVcY76vXpEdA3+QbGpthyLBmY1YtxPT5RIX+iGmUkM5ThoS77JHr4iPMCKy8ryMN4rCsQ2ANZpKYGdN5pf4tYehwlQI3KMsJxI9IaxrgsDoGPGdN8LMsNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.215.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-7cd8803fe0aso2956390a12.0;
+        Mon, 04 Nov 2024 06:57:06 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730731565; x=1731336365;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=iEq/Fez3KiO14L7XUIPT1fn4g59MvDWGnwPCbPiCdc8=;
-        b=WyIwh8PQO27RadCEVgwghSNMPSuq/BTJIrMFFQ+e0vNhPfcRNiiE1XJxwscW0SpH7b
-         +zV4umyGUaa3UsQHnE/ocv+5G+8XOdiQBBjbxAn9v1reojvh4xR7mkh/kRkA4QHsHaBK
-         HEx1EYScNdbJqDXhOPP4awf34SVZZvyWP9u56FeaQW/sQkC72BCzHHO3rOqnkXMI+LFO
-         R1dSIfD9LqkEzdhbwxzu5lhuAWvNT+x++g+/8wMpZi1Hqy6rueBMOwDijy0IzViopjWa
-         D7EZT6HGMXFajXeTzCiSC44xO4C92gXjRZRcfXPyELOKZDZNjEokNgA20dci971xVfur
-         CHag==
-X-Forwarded-Encrypted: i=1; AJvYcCVwkmfWXfPz71dbHCwm3CCYCtaCIAaTGpDd5Az5/Ij8yy/ctuhTgPATHtx6bX0dml912TNZq3X3MHgYwcOt@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw65+yD0Hl7Lg1pa9eIUZ+Bl16eT8zPyl562LWFv4wLVgU/vhND
-	WnhaMVs8WNjRXmMr2kGSA3PPtnObxxdOhKn0hX5h30ChVBlt+r5cHWJ3szn8D+Ll5Au/Onrb18P
-	PVLIO8GOhH8FBjRKBJNz0z28MtpGdJBuphma+q57sig/YP+3A7qNvYv2roaXPv4vv
-X-Received: by 2002:a54:4713:0:b0:3e4:d640:7449 with SMTP id 5614622812f47-3e638443fcamr7064337b6e.4.1730731565118;
-        Mon, 04 Nov 2024 06:46:05 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGjt7yLH7obj2yJY5lX8bMi7SMYsNafpSge3M0yoLdMOlcEwQ3eZbty9K7EcZfKV6+orGjU0w==
-X-Received: by 2002:a54:4713:0:b0:3e4:d640:7449 with SMTP id 5614622812f47-3e638443fcamr7064299b6e.4.1730731563300;
-        Mon, 04 Nov 2024 06:46:03 -0800 (PST)
-Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9e566797a7sm561800866b.190.2024.11.04.06.46.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 04 Nov 2024 06:46:02 -0800 (PST)
-Message-ID: <f0863c6a-44cc-4709-aaab-a089fb6620e6@oss.qualcomm.com>
-Date: Mon, 4 Nov 2024 15:45:59 +0100
+        d=1e100.net; s=20230601; t=1730732225; x=1731337025;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=I82zg0d+bkgUiX2hBjnFGtZo3rhclu02If6kmZ3e1WY=;
+        b=FMBM+Ul/CT98agBN7YvkdMLT4xYNCfcRET1fMiA4lJ3F08SuXZCZy+UXtVesjpIZ1m
+         Sr1KTmA+S01pNfrRw0tl2GstY5JaihsK5Vp/VVBTnVCAgbQCc9tlA9cdFJCCFcXm7uBC
+         xr3qcdWySnWayar6Umuec9RRh8wiTzC07YPualOghoAiDmZlqIyHm552CqLkqsYhrK40
+         up5a1dVhq1MOcQ3pIXeSFNGpWyD78i/MqZBc8ufYZnW6JJc08Iletp7+tGYx3EReaaxK
+         fo1UloLQvuLKDFC7vn+Zua1Biq7dBLict5mhsFzPaYg4is3cFp/z2UugBlVlsVckrMlH
+         T8rw==
+X-Forwarded-Encrypted: i=1; AJvYcCU1hQ6xkKKEMZUeu0MzoFVBwiZOrwgNo2RxBROkEUY/W3qz9REHzTLdYvgffU/+tFXDOecEzJYDfuiDYqJFmg==@vger.kernel.org, AJvYcCXD8uWlaohnRgY1xc8ZxlWpBLy4qQTIlDlgYamhZDSEzTkO/JKfOpct8GildQEwWEgVsCro7dJ348QT@vger.kernel.org, AJvYcCXSIZ7wG3ewNuQUUv20HUWpJpiS4iGJ0+iDO5VTV0AcwpwqLbJUjHAtC6lj7GSwmfyoqqaT+OaWfbXK@vger.kernel.org, AJvYcCXUptw8K0Hc5PgEe+q7vJlf4WYAcrLv2pYGd+0nkx5vTcGoCYjQrOCzQlpHH1WgilPUlgEp0/W4nCprTbBN@vger.kernel.org, AJvYcCXY4uPYhHSTub+Ggg8UPBL9wLqJzbzFBLUDq6/Ni/p+aLRlEo/wpPHqxHT2Oe7GPU7/dboVNwJcm3JE@vger.kernel.org
+X-Gm-Message-State: AOJu0YwmmZ0oXdhyEKwAxMMsXP7DWPwPPqDFGE+hbKiWJ5jqvpeMjSjN
+	wLhc+ghErU53jf/1VaySW8Qj5fKYI56ADlOh8Sc7ulJ14j+aBT3n
+X-Google-Smtp-Source: AGHT+IG3+xbG1bGzU9fXWzq5gkcZkhfNYx/bQR3aEaPasmlEwVSOmKYE5BbIW0BlHnhDq7GVCfPmTg==
+X-Received: by 2002:a05:6a20:6a21:b0:1db:db2f:f3a5 with SMTP id adf61e73a8af0-1dbdb3025c0mr5103280637.21.1730732225497;
+        Mon, 04 Nov 2024 06:57:05 -0800 (PST)
+Received: from localhost (fpd11144dd.ap.nuro.jp. [209.17.68.221])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-720bc2c3996sm7532967b3a.106.2024.11.04.06.57.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Nov 2024 06:57:05 -0800 (PST)
+Date: Mon, 4 Nov 2024 23:57:03 +0900
+From: Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>
+To: Johan Hovold <johan@kernel.org>
+Cc: Qiang Yu <quic_qianyu@quicinc.com>, manivannan.sadhasivam@linaro.org,
+	vkoul@kernel.org, kishon@kernel.org, robh@kernel.org,
+	andersson@kernel.org, konradybcio@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
+	abel.vesa@linaro.org, quic_msarkar@quicinc.com,
+	quic_devipriy@quicinc.com, dmitry.baryshkov@linaro.org,
+	lpieralisi@kernel.org, neil.armstrong@linaro.org,
+	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-clk@vger.kernel.org,
+	johan+linaro@kernel.org
+Subject: Re: [PATCH v8 3/5] PCI: qcom: Remove BDF2SID mapping config for
+ SC8280X family SoC
+Message-ID: <20241104145703.GA3230448@rocinante>
+References: <20241101030902.579789-1-quic_qianyu@quicinc.com>
+ <20241101030902.579789-4-quic_qianyu@quicinc.com>
+ <ZyjZE-U_7YZhScfG@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: sm8650: Fix CDSP context banks unit
- addresses
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>, Ling Xu <quic_lxu5@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20241104144204.114279-1-krzysztof.kozlowski@linaro.org>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20241104144204.114279-1-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: TaO5NVZfC8rlZKpSB3JLn368rBVpwHq9
-X-Proofpoint-GUID: TaO5NVZfC8rlZKpSB3JLn368rBVpwHq9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=999
- clxscore=1015 lowpriorityscore=0 impostorscore=0 priorityscore=1501
- spamscore=0 phishscore=0 bulkscore=0 malwarescore=0 suspectscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411040128
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZyjZE-U_7YZhScfG@hovoldconsulting.com>
 
-On 4.11.2024 3:42 PM, Krzysztof Kozlowski wrote:
-> There is a mismatch between 'reg' property and unit address for last
-> there CDSP compute context banks.  Current values were taken as-is from
-> downstream source.  Considering that 'reg' is used by Linux driver as
-> SID of context bank and that least significant bytes of IOMMU value
-> match the 'reg', assume the unit-address is wrong and needs fixing.
-> This also won't have any practical impact, except adhering to Devicetree
-> spec.
+Hello,
+
+[...]
+> Would have been good to say something about why there are no 'iommu-map'
+> properties on sc8280xp (e.g. since it uses an SMMUv3) as Bjorn
+> suggested.
+
+Happy to update the commit log directly if there is a consensus about how
+the final wording should look like.
+
+> > struct, namely ops_1_21_0 which is same as ops_1_9_0 except that it
+> > doesn't have config_sid() callback to clean it up.
+> > 
+> > Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > 
-> Fixes: dae8cdb0a9e1 ("arm64: dts: qcom: sm8650: Add three missing fastrpc-compute-cb nodes")
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
+> I see that this patch has been picked up now. The above is already much
+> better and I guess this is good enough for now:
+> 
+> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Added.  Thank you!
 
-Konrad
+	Krzysztof
 
