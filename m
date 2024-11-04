@@ -1,48 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-36947-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36948-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E7C809BB709
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 15:04:08 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A04A69BB718
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 15:06:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 173CB1C21C4E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 14:04:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 26D001F21759
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 14:06:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8EF1414D719;
-	Mon,  4 Nov 2024 14:03:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A32D1144D21;
+	Mon,  4 Nov 2024 14:06:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SNv9aOuc"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="WKfJfpDD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5823479FD;
-	Mon,  4 Nov 2024 14:03:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2345813C9DE
+	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Nov 2024 14:06:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730729033; cv=none; b=TW4WFyU688V9XWk2SjHSH7zLcnmyRosWcx4BkJGdNMmbQhydPilXAfLZT4UfxJCKsIku3Lx6mZ/uy70zzh6yfLkSN+HuAuQ5qAYV9ehPbqmW+DBFji6r1PClEteYEodzKHp2oYxt2Ev5bCWIpUvt55RVv7TZ+Yu1icpfvyFN+SU=
+	t=1730729197; cv=none; b=SIGFxuY1m78cwxfkiKN8dRpKPswzCxxDdvlaatbWIXTa5vmic24rOZyIpVq+XzPx0ELSIA2PwdHaaq4vnfWg5xgtp+a7QVdwG0eVmelGExk8qnvT0xzAojYcH512gKhd7AICh+tbuzx9cwyXMUHWCxrunKCY8qBam9Qau00VksE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730729033; c=relaxed/simple;
-	bh=Es7SovyKCYcHYnpFDoSqTBsJx27R1XCshX7bTOsxyh8=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=dPRC9N2acGqP9IwSyttVJ7GmFistEEXLZUe25Du1JWFcQtKiAR8SCFBoKTzbqkxNT2M+DU/4PCJ/ZouUepSFbRd8ADLxEG+mh8lL8g1yOFgHKBgkI1HLYuXB9wQ86WwF3sq0EBIwWYFVBx/X+28wZl3N1TaY5rvmIvZiDTjMjSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SNv9aOuc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD533C4CED5;
-	Mon,  4 Nov 2024 14:03:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730729032;
-	bh=Es7SovyKCYcHYnpFDoSqTBsJx27R1XCshX7bTOsxyh8=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=SNv9aOucuUvEb0ZqFsqDoEuekZ2vVS0HRIq43+q9nBZvv7AnIKCCOC8lPOyEVMRMI
-	 Ghkk61OA3BtGSlLXzLm9tBNokmtp795r3/W866XqChiGx+59eN9bJpXNBGl8RAxtRY
-	 9YmbwOiog5c8SbeX/Zcyrz9JwVgpDgtyAFfKW3Vk4Y0aosLv1zMw/g2oMAeGqKhH81
-	 PJpsheLiJrdJTN5j1sMzTpAlBBQxmbBrc3NTj69EApVPfeTu+hhQSmD3wk3yLH9aKZ
-	 bPCF96n+XhblXHQZzhYSE/v9twxiiUpg/EIW6l1B8OOEQx5wVHmcwvk7AJZejas9Bd
-	 l05216w+8GvHQ==
-Message-ID: <6c06456c-0501-45ec-95b4-324f45ae2c5b@kernel.org>
-Date: Mon, 4 Nov 2024 16:03:46 +0200
+	s=arc-20240116; t=1730729197; c=relaxed/simple;
+	bh=boLrYQ9e50YIzisfXirgfR9tZGcXWIEEhT8FxZQYTz0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=InMgCL/YRoRE/TnUUAHgHz/F4Jun49TjLYhsNNOv6vGFlmjecKo4CKEE3D1K94TPH0yAbfI859fNFSHNmjl/zeFPnumi8iuZmt0x4sMhC1tb4fe0x/0Ip0EFYJ3VRFxURBgzB9YhgvBmNziu7UzmvLmweo1KXtYqv6AtTHuNsI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=fail smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=WKfJfpDD; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A4Bw6tS016007
+	for <linux-arm-msm@vger.kernel.org>; Mon, 4 Nov 2024 14:06:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	xJUr+78OsAjR1XkAqPodG3wXnB3Itpx7Wgqz/RR6KeU=; b=WKfJfpDDPTvb8Bkl
+	9rpgsFi4VTGHxnKZ+WHe4uZKxFHdcZW4ovAHE6N8v4btl1kmyRGiBqwY+MH8Zuc1
+	9jIk67u6y/0Nknfu93ZzaWU2/TFiyYGfagsLg8Vw83nU1fiDYge0xLwv/rsDIBwX
+	tGLebyFSbcs/JPhfQVUwA60hrKnPaxAc81aCnR6ijtDlBjlOfWlcjaYIi7jmJq+V
+	2zJUf2i9fNvGtXaWL+8IkI2l2muEjsykMzUXe7z7SCqhW91onhWLFyYbD79ryF/G
+	VmTMWaMzaiZ8gntvd4Pcwe+DAPKsWoyKudij3cVBiliRRHPjbTV3d/96+fQ/H4fX
+	gagcaA==
+Received: from mail-oo1-f72.google.com (mail-oo1-f72.google.com [209.85.161.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42ndc6vetp-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 04 Nov 2024 14:06:34 +0000 (GMT)
+Received: by mail-oo1-f72.google.com with SMTP id 006d021491bc7-5eb75d21d3eso348502eaf.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Nov 2024 06:06:34 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730729194; x=1731333994;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xJUr+78OsAjR1XkAqPodG3wXnB3Itpx7Wgqz/RR6KeU=;
+        b=EzgITJOUOXG8cntpvUuIgn766RDXiGAeBVdq3caQy6ar5N3qZG878fHhElq/BRBXTs
+         lcNvM2b8Cjx2q0qLLHGsuDe/wnmzotVCAuCq03YoOcMZ5v8UJlHbQp91y7FDHbdQlMYV
+         SrEv/miAzZcBzZNtXe5o2F758VfijQJhSB41wMHEOKfKDeuU38I/7GdqiCHfj158K6zO
+         dnLwn6yRPuU2wjbKqQxqyBJBb1rwo4RiLPtJROpYhcPN9g53UvlKza9bZgAMuPqlxCtb
+         Q9zQG/QjthsTAaT8pD1hKQz02U+gjdpCHL7GsHAsrbUSFC/6/4vG+EJTATT3NIRatmtx
+         PBtQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU5kz1U8j2m79rAmDCTqrVSSYXKY1eH+UkIuev6ec2Wk0I3d5u2s8A0w5MoHOVWb3JZbuBGsBCy4twQaiQe@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx5t51Hrb2jVLS9x6VIwjImXkt9KPrPFFCiR0h2wiBnAHTNTV4N
+	4adwHwoJ1ssSW6E7xCTPNNRG4B/Hk57PTUjHe9lnW3kD8o3ZkLfX99y0KEeVBGpVYvsk4pM/l4Q
+	GTpenc19Q0tccwOxyhml6RD0jAyK7aqPHCjPj9kzn5VEExXeS12Ufzwtf4Z66wiIc
+X-Received: by 2002:a05:6808:1811:b0:3e5:f9a6:ff5 with SMTP id 5614622812f47-3e638248adamr8268465b6e.2.1730729194023;
+        Mon, 04 Nov 2024 06:06:34 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG3glwYPgrrn3bLA20SfuRtohDBCQZR/xk2xWQCdWoU3C+XBiGNvqk7NsOLh+xpn27lknn8Tg==
+X-Received: by 2002:a05:6808:1811:b0:3e5:f9a6:ff5 with SMTP id 5614622812f47-3e638248adamr8268451b6e.2.1730729193733;
+        Mon, 04 Nov 2024 06:06:33 -0800 (PST)
+Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9e564c6150sm551280266b.81.2024.11.04.06.06.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 04 Nov 2024 06:06:32 -0800 (PST)
+Message-ID: <c6f8ff2e-bcc1-480a-9ca6-0b55991c099e@oss.qualcomm.com>
+Date: Mon, 4 Nov 2024 15:06:29 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,237 +84,71 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] usb: dwc3: core: Fix system suspend on TI AM62
- platforms
-From: Roger Quadros <rogerq@kernel.org>
-To: William McVicker <willmcvicker@google.com>,
- Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
- Chris Morgan <macroalpha82@gmail.com>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>, Len Brown <len.brown@intel.com>,
- Pavel Machek <pavel@ucw.cz>, Greg Kroah-Hartman
- <gregkh@linuxfoundation.org>, Nishanth Menon <nm@ti.com>,
- Tero Kristo <kristo@kernel.org>, Santosh Shilimkar <ssantosh@kernel.org>,
- Dhruva Gole <d-gole@ti.com>, Vishal Mahaveer <vishalm@ti.com>,
- msp@baylibre.com, srk@ti.com, linux-pm@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-usb@vger.kernel.org, stable@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20241011-am62-lpm-usb-v3-1-562d445625b5@kernel.org>
- <ZyVfcUuPq56R2m1Y@google.com>
- <f35aa5a1-96fd-4e9a-9ecc-5e900d440d4c@kernel.org>
- <8df97a64-ab88-4bc6-b015-3995546172a7@kernel.org>
- <dc534e9f-05c3-4f42-afdb-7d7cbe8cac6d@kernel.org>
+Subject: Re: [PATCH v3 2/3] arm64: dts: qcom: x1e80100: Describe TLMM pins for
+ SDC2
+To: Abel Vesa <abel.vesa@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Johan Hovold <johan@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20241022-x1e80100-qcp-sdhc-v3-0-46c401e32cbf@linaro.org>
+ <20241022-x1e80100-qcp-sdhc-v3-2-46c401e32cbf@linaro.org>
+ <a282021f-5e61-480c-84c4-272049e28244@oss.qualcomm.com>
+ <Zx9P+HQMOkJsJGcj@linaro.org>
+ <327507d8-2dc7-4645-ac3d-d68ff31a84dd@oss.qualcomm.com>
+ <ZyS50DFLhHVlnRtd@linaro.org>
 Content-Language: en-US
-In-Reply-To: <dc534e9f-05c3-4f42-afdb-7d7cbe8cac6d@kernel.org>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <ZyS50DFLhHVlnRtd@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: 0oRTFEtjFVDjsYGJSfuxSv9D1OBJC1WP
+X-Proofpoint-GUID: 0oRTFEtjFVDjsYGJSfuxSv9D1OBJC1WP
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ lowpriorityscore=0 mlxlogscore=984 adultscore=0 clxscore=1015 mlxscore=0
+ phishscore=0 impostorscore=0 suspectscore=0 malwarescore=0 bulkscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411040123
 
-Hi,
-
-On 04/11/2024 14:30, Roger Quadros wrote:
-> Hi,
-> 
-> On 02/11/2024 14:34, Roger Quadros wrote:
->> Hi William & Chris,
->>
->> On 02/11/2024 13:50, Roger Quadros wrote:
->>> Hi William,
->>>
->>> On 02/11/2024 01:08, William McVicker wrote:
->>>> +linux-arm-msm@vger.kernel.org
->>>>
->>>> Hi Roger,
->>>>
->>>> On 10/11/2024, Roger Quadros wrote:
->>>>> Since commit 6d735722063a ("usb: dwc3: core: Prevent phy suspend during init"),
->>>>> system suspend is broken on AM62 TI platforms.
+On 1.11.2024 12:21 PM, Abel Vesa wrote:
+> On 24-10-28 14:10:54, Konrad Dybcio wrote:
+>> On 28.10.2024 9:48 AM, Abel Vesa wrote:
+>>> On 24-10-25 20:34:19, Konrad Dybcio wrote:
+>>>> On 22.10.2024 12:46 PM, Abel Vesa wrote:
+>>>>> Describe the SDC2 default and sleep state pins configuration
+>>>>> in TLMM. Do this in SoC dtsi file since they will be shared
+>>>>> across multiple boards.
 >>>>>
->>>>> Before that commit, both DWC3_GUSB3PIPECTL_SUSPHY and DWC3_GUSB2PHYCFG_SUSPHY
->>>>> bits (hence forth called 2 SUSPHY bits) were being set during core
->>>>> initialization and even during core re-initialization after a system
->>>>> suspend/resume.
->>>>>
->>>>> These bits are required to be set for system suspend/resume to work correctly
->>>>> on AM62 platforms.
->>>>>
->>>>> Since that commit, the 2 SUSPHY bits are not set for DEVICE/OTG mode if gadget
->>>>> driver is not loaded and started.
->>>>> For Host mode, the 2 SUSPHY bits are set before the first system suspend but
->>>>> get cleared at system resume during core re-init and are never set again.
->>>>>
->>>>> This patch resovles these two issues by ensuring the 2 SUSPHY bits are set
->>>>> before system suspend and restored to the original state during system resume.
->>>>>
->>>>> Cc: stable@vger.kernel.org # v6.9+
->>>>> Fixes: 6d735722063a ("usb: dwc3: core: Prevent phy suspend during init")
->>>>> Link: https://lore.kernel.org/all/1519dbe7-73b6-4afc-bfe3-23f4f75d772f@kernel.org/
->>>>> Signed-off-by: Roger Quadros <rogerq@kernel.org>
->>>>> Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+>>>>> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 >>>>> ---
->>>>> Changes in v3:
->>>>> - Fix single line comment style
->>>>> - add DWC3_GUSB3PIPECTL_SUSPHY to documentation of susphy_state
->>>>> - Added Acked-by tag
->>>>> - Link to v2: https://lore.kernel.org/r/20241009-am62-lpm-usb-v2-1-da26c0cd2b1e@kernel.org
->>>>>
->>>>> Changes in v2:
->>>>> - Fix comment style
->>>>> - Use both USB3 and USB2 SUSPHY bits to determine susphy_state during system suspend/resume.
->>>>> - Restore SUSPHY bits at system resume regardless if it was set or cleared before system suspend.
->>>>> - Link to v1: https://lore.kernel.org/r/20241001-am62-lpm-usb-v1-1-9916b71165f7@kernel.org
->>>>> ---
->>>>>  drivers/usb/dwc3/core.c | 19 +++++++++++++++++++
->>>>>  drivers/usb/dwc3/core.h |  3 +++
->>>>>  2 files changed, 22 insertions(+)
->>>>>
->>>>> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
->>>>> index 9eb085f359ce..ca77f0b186c4 100644
->>>>> --- a/drivers/usb/dwc3/core.c
->>>>> +++ b/drivers/usb/dwc3/core.c
->>>>> @@ -2336,6 +2336,11 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
->>>>>  	u32 reg;
->>>>>  	int i;
->>>>>  
->>>>> +	dwc->susphy_state = (dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0)) &
->>>>> +			    DWC3_GUSB2PHYCFG_SUSPHY) ||
->>>>> +			    (dwc3_readl(dwc->regs, DWC3_GUSB3PIPECTL(0)) &
->>>>> +			    DWC3_GUSB3PIPECTL_SUSPHY);
->>>>> +
 >>>>
->>>> I'm running into an issue on my Pixel 6 device with this change when the
->>>> dwc3-exynos device has runtime PM enabled. Basically, after the device boots up
->>>> and I disconnect USB, the dwc3-exynos device enters runtime suspend followed by
->>>> system suspend 15 seconds later. On system suspend, the clocks powering these
->>>> dwc3 registers are off which results in an SError. I have verified that
->>>> reverting this change fixes the issue.
->>>>
->>>> I noticed that dwc3-qcom.c also supports runtime PM for their dwc3 device and
->>>> most likely is affected by this as well. It would be great if someone with a
->>>> Qualcomm device could test out dwc3 suspend as well.
+>>>> Not very useful on its own but okay..
 >>>
->>> Chris was facing another issue with this patch on Rockchip RK3566 [1]
->>>
->>> Looks like we totally missed the runtime suspended case
->>> I'll think about a solution and send something by today.
->>>
->>> [1] - https://lore.kernel.org/all/671bef75.050a0220.e4bcd.1821@mx.google.com/
->>>
->>>>
->>>> Here is the crash stack:
->>>>
->>>>   SError Interrupt on CPU7, code 0x00000000be000011 -- SError
->>>>   CPU: 7 UID: 1000 PID: 5661 Comm: binder:477_1 Tainted: G        W  OE      6.12.0-rc3-android16-0-maybe-dirty-4k #1 0439eacb3cff642033630df7ee2e250e0625f2f0
->>>>   96 irq, BUS_DATA0 group, 0x0
->>>>   Tainted: [W]=WARN, [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
->>>>   Hardware name: Raven DVT (DT)
->>>>   pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
->>>>   pc : readl+0x40/0x80
->>>>   lr : readl+0x38/0x80
->>>>   sp : ffffffc08baa39a0
->>>>   x29: ffffffc08baa39a0 x28: ffffffd4dd140000 x27: ffffffd4dd140d70
->>>>   x26: ffffffd4dd2b2000 x25: ffffff800cef2410 x24: ffffff800cef24c0
->>>>   x23: ffffffd4dd24e000 x22: ffffff887df59440 x21: ffffffc085298100
->>>>   x20: ffffffd4db8acf60 x19: ffffffc085298200 x18: ffffffc091b730b0
->>>>   x17: 000000002a703c0b x16: 000000002a703c0b x15: 0000000000953000
->>>>   x14: 0000000000000000 x13: 0000000000000030 x12: 0101010101010101
->>>>   x11: 7f7f7f7f7f7fffff x10: 0000000000000000 x9 : ffffffd4dc0d7d48
->>>>   x8 : 0000000000000000 x7 : 0000000000008000 x6 : 0000000000000000
->>>>   x5 : 500020737562ffff x4 : 500020737562ffff x3 : ffffffd4db8acf60
->>>>   x2 : ffffffd4db8a7bac x1 : ffffffc085298200 x0 : 0000000000000020
->>>>   Kernel panic - not syncing: Asynchronous SError Interrupt
->>>>   CPU: 7 UID: 1000 PID: 5661 Comm: binder:477_1 Tainted: G        W  OE      6.12.0-rc3-android16-0-maybe-dirty-4k #1 0439eacb3cff642033630df7ee2e250e0625f2f0
->>>>   Tainted: [W]=WARN, [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
->>>>   Hardware name: Raven DVT (DT)
->>>>   Call trace:
->>>>    dump_backtrace+0xec/0x128
->>>>    show_stack+0x18/0x28
->>>>    dump_stack_lvl+0x40/0x88
->>>>    dump_stack+0x18/0x24
->>>>    panic+0x134/0x45c
->>>>    nmi_panic+0x3c/0x88
->>>>    arm64_serror_panic+0x64/0x8c
->>>>    do_serror+0xc4/0xc8
->>>>    el1h_64_error_handler+0x34/0x48
->>>>    el1h_64_error+0x68/0x6c
->>>>    readl+0x40/0x80
->>>>    dwc3_suspend_common+0x34/0x454
->>>>    dwc3_suspend+0x20/0x40
->>>>    platform_pm_suspend+0x40/0x90
->>>>    dpm_run_callback+0x60/0x250
->>>>    device_suspend+0x334/0x614
->>>>    dpm_suspend+0xc4/0x368
->>>>    dpm_suspend_start+0x90/0x100
->>>>    suspend_devices_and_enter+0x128/0xad0
->>>>    pm_suspend+0x354/0x650
->>>>    state_store+0x104/0x144
->>>>    kobj_attr_store+0x30/0x48
->>>>    sysfs_kf_write+0x54/0x6c
->>>>    kernfs_fop_write_iter+0x104/0x1e4
->>>>    vfs_write+0x3bc/0x50c
->>>>    ksys_write+0x78/0xe8
->>>>    __arm64_sys_write+0x1c/0x2c
->>>>    invoke_syscall+0x58/0x10c
->>>>    el0_svc_common+0xa8/0xdc
->>>>    do_el0_svc+0x1c/0x28
->>>>    el0_svc+0x38/0x6c
->>>>    el0t_64_sync_handler+0x70/0xbc
->>>>    el0t_64_sync+0x1a8/0x1ac
->>>>
+>>> Fair enough. For some reason, I'm not able to get sdc4 pinconf
+>>> to work.
 >>
->> Does this patch fix it for you?
->>
->> From ee8b353523556a29a423261af9c15be261941ff8 Mon Sep 17 00:00:00 2001
->> From: Roger Quadros <rogerq@kernel.org>
->> Date: Sat, 2 Nov 2024 14:14:47 +0200
->> Subject: [PATCH] usb: dwc3: fix fault at system suspend if device was already
->>  runtime suspended
->>
->> If the device was already runtime suspended then during system suspend
->> we cannot access the device registers else it will crash.
->>
->> Cc: stable@vger.kernel.org # v5.15+
->> Reported-by: William McVicker <willmcvicker@google.com>
->> Closes: https://lore.kernel.org/all/ZyVfcUuPq56R2m1Y@google.com
->> Fixes: 705e3ce37bcc ("usb: dwc3: core: Fix system suspend on TI AM62 platforms")
->> Signed-off-by: Roger Quadros <rogerq@kernel.org>
->> ---
->>  drivers/usb/dwc3/core.c | 10 ++++++----
->>  1 file changed, 6 insertions(+), 4 deletions(-)
->>
->> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
->> index 427e5660f87c..4933f1b4d9c6 100644
->> --- a/drivers/usb/dwc3/core.c
->> +++ b/drivers/usb/dwc3/core.c
->> @@ -2342,10 +2342,12 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
->>  	u32 reg;
->>  	int i;
->>  
->> -	dwc->susphy_state = (dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0)) &
->> -			    DWC3_GUSB2PHYCFG_SUSPHY) ||
->> -			    (dwc3_readl(dwc->regs, DWC3_GUSB3PIPECTL(0)) &
->> -			    DWC3_GUSB3PIPECTL_SUSPHY);
->> +	if (!pm_runtime_suspended(dwc->dev)) {
->> +		dwc->susphy_state = (dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0)) &
->> +				    DWC3_GUSB2PHYCFG_SUSPHY) ||
->> +				    (dwc3_readl(dwc->regs, DWC3_GUSB3PIPECTL(0)) &
->> +				    DWC3_GUSB3PIPECTL_SUSPHY);
->> +	}
->>  
->>  	switch (dwc->current_dr_role) {
->>  	case DWC3_GCTL_PRTCAP_DEVICE:
->>
->> base-commit: 4b57d665bce1306a2a887cb760aa0c0e7efb42ab
+>> Any chance you tried to define 'sdc4_cmd' etc.? This one seems to have
+>> sdc4 pins on gpio127..=132
 > 
-> I think this is not sufficient to fix the issue as there is still a call
-> to dwc3_enable_susphy() in the end which needs to be avoided
-> if already runtime suspended.
+> Yes.
 > 
+> But since the sdc4 pins can have other functions and since there is no
+> device that uses them (yet). Shouldn't we just skip describing the sdc4
+> pinconf entirely as that should be done on a per-board basis?
 
-I've sent a new patch [1]. Please test and give your feedback there. Thanks.
+By that argument, why describe the controller in the first place :|
 
-[1]- https://lore.kernel.org/all/20241104-am62-lpm-usb-fix-v1-1-e93df73a4f0d@kernel.org/
+The possible pins are predefined and physically wired up inside the soc
 
--- 
-cheers,
--roger
+Konrad
 
