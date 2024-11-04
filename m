@@ -1,63 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-36866-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36867-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 17DA19BABB9
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 05:14:37 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8F4269BABBC
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 05:14:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BF9F01F214A5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 04:14:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0CC2F281792
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 04:14:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E45D18C351;
-	Mon,  4 Nov 2024 04:13:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1219618D65F;
+	Mon,  4 Nov 2024 04:13:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kQ9C1ARX"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G1ErGYEp"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 320C418C33C;
-	Mon,  4 Nov 2024 04:13:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC86A18D633;
+	Mon,  4 Nov 2024 04:13:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730693634; cv=none; b=UTvQ9RjJgq8T9K7exJYUhKswEVgBTMZfDydEHqNCWTyIGtS6e6pTtQ5Vq9faC0DTaxkCGWK/A66hpiDNFd32aO4wNln7pR6DQQ3kJ/bhjthGEkL/ISNuTKaYaF+GKIpWv4sd3v2zsxJ6nhPw36vEySFeH2zoAaEFVQuk2zamZIs=
+	t=1730693635; cv=none; b=lkGahIILb1+Fl8RO/ww7gZV2CipOXYJbQIcAjxeSm5LeWos+M3gP+E3z/HBJnOm0l4lQMhkw3Sk9IjRm3IHizuj6E53LGZDesPmm0OUi6pseDG+G7NxAVI5vbS6D4Or5Fi0EYNsWAlbaLy7ugACAR1s+o5CGNA/sLpwE6rjfIlQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730693634; c=relaxed/simple;
-	bh=hR8qcoNemZdW0Y+Uob5zc5biWMB9U4alJ6LDVcwou0I=;
+	s=arc-20240116; t=1730693635; c=relaxed/simple;
+	bh=azTJev3j0aYSCUlE+4pXquSIQAAENlVvUjar8ppBjHg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=U8JTXw4dFv/JImcPGOqg17qbZIhum+ckiHKWaWf8tEYflsufZtu3D+xdxL53vMRPRJqBU+8U+TLKPuyN/XNzJkxWZnpovb1LQtyflCqUwpdbJIbXvrTzuom1dYxLQs9AAD+ZX5sS95wkf82q+XKGUjwxAt2OpUCQKcUBaUoJ5ZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kQ9C1ARX; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E730DC4CECE;
-	Mon,  4 Nov 2024 04:13:52 +0000 (UTC)
+	 MIME-Version:Content-Type; b=e/MoQSEnltgIcRqxg3mdURDG7M606JMVsabQHZNMbvo7HMw2bL5ZtY8Jow92uSuIGAs8IpbblDLGCj5Q4Hm66ILnWyDaGUfN4XvxC2f3b0Rex6nvjFarG8obbStOvO1m7SDhk8qusZuvNyCCEpj4YV+01zUL1OIMJee1UM3/hNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G1ErGYEp; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 016B2C4CED3;
+	Mon,  4 Nov 2024 04:13:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730693633;
-	bh=hR8qcoNemZdW0Y+Uob5zc5biWMB9U4alJ6LDVcwou0I=;
+	s=k20201202; t=1730693634;
+	bh=azTJev3j0aYSCUlE+4pXquSIQAAENlVvUjar8ppBjHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kQ9C1ARXTxYrOIRoenH8S4aaAuexYlL9NmxeLzYzMLVqGPXYfY69itYdPk7jADVZR
-	 ezMYpC9F3djwYc3eanBHa9how7+JdgeseBH9ox1dOb408b5mZV9Ct83xXia8w85bBP
-	 FdTnoFO5cxVo8Qmz5/AFyPePiJFAdhxgYnL6JgCrbed9wB1bi1aNVJ0wZGBSZXjSUK
-	 gBLu3b6zD5KODgQ643/1c/+ZjSt1qCblOY+k/h9mBIuS3/d0mydiksSvdnb8Iz7KZC
-	 Y4RS2i6vkD1+m0SrHGVrUx8pk9oL5SQeF7/trJqYIbwdZwrTZSOMKDNCMUkxtBIQLs
-	 +A/6wI37sf4DA==
+	b=G1ErGYEpAP2wPKlHYE+ZOpy6t3joSEzM9HbAhNhQfX7xzdze57bUd2a5TUUMQaFBl
+	 HC+fhEFm3bc7niu0IiRYPlFNJxd/zXDV1+LF6AjBa2jOSXKlyYN1ldOeBqgqHRz8wQ
+	 gkVwLGBpRm+uNemKqDiFhDp2Tm3J4oGQk8dN3Jn5mxFQL2gHTeDE0+g5IwtmiN5iX1
+	 jDqK902+0LFHi+NOXOv9IT4Q8hg8RnXNO2cXVuzC8CUAAArWnaBW8TyNObglr5as24
+	 cRBYRp4QXjk3LFYNmPpgvA4yMQ9HbDPUO07yC6n1rsxxsnIkDMRViEct9Ok1AYMHs8
+	 dDd/tcgqaSJ1w==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Rob Herring <robh@kernel.org>,
+To: Konrad Dybcio <konradybcio@kernel.org>,
+	Conor Dooley <conor@kernel.org>,
+	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	linux-arm-msm@vger.kernel.org,
+Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Kalle Valo <kvalo@kernel.org>
-Subject: Re: [PATCH v2 0/5] arm64: dts: qcom: improve Lenovo Miix 630 support
-Date: Sun,  3 Nov 2024 22:13:40 -0600
-Message-ID: <173069362368.23540.2393619921098776177.b4-ty@kernel.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v3 0/3] soc: qcom: llcc: add support for SAR2130P and SAR1130P platforms
+Date: Sun,  3 Nov 2024 22:13:41 -0600
+Message-ID: <173069362374.23540.7269942391053238978.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20240723-miix630-support-v2-0-7d98f6047a17@linaro.org>
-References: <20240723-miix630-support-v2-0-7d98f6047a17@linaro.org>
+In-Reply-To: <20241026-sar2130p-llcc-v3-0-2a58fa1b4d12@linaro.org>
+References: <20241026-sar2130p-llcc-v3-0-2a58fa1b4d12@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,24 +67,21 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Tue, 23 Jul 2024 14:28:27 +0300, Dmitry Baryshkov wrote:
-> Enable some low-hanging fruits growing on the Lenovo Miix 630 laptop,
-> but not being enabled for some reason.
+On Sat, 26 Oct 2024 18:43:30 +0300, Dmitry Baryshkov wrote:
+> Add support for LLCC programming on Qualcomm SAR2130P and SAR1130P
+> platforms. These platforms require few additional quirks in order to be
+> handled properly.
 > 
 > 
 
 Applied, thanks!
 
-[1/5] arm64: dts: qcom: msm8998-lenovo-miix-630: enable touchscreen
-      commit: 50b2a9c39661e57d9bbdaedd10890279d3cc17d1
-[2/5] arm64: dts: qcom: msm8998-lenovo-miix-630: enable aDSP and SLPI
-      commit: 08cc19ba96b54ee741d67698bbeccd5ad1732043
-[3/5] arm64: dts: qcom: msm8998-lenovo-miix-630: enable VolumeUp button
-      commit: 31a31cd74de6a2408d907630a7294cadc7e32049
-[4/5] arm64: dts: qcom: msm8998-clamshell: enable resin/VolDown
-      commit: ac6adde8d540c5db12f903c9cb439921df4f4966
-[5/5] arm64: dts: qcom: msm8998-lenovo-miix-630: add WiFi calibration variant
-      commit: 1a24c290a593f65954df3c7d9ea1d5410f2f1544
+[1/3] dt-bindings: cache: qcom,llcc: document SAR2130P and SAR1130P
+      commit: 53b3e2e0c9a36263be6874203c68bd7bd104663f
+[2/3] soc: qcom: llcc: use deciman integers for bit shift values
+      commit: 6dd3f08c72d607372db9b96df95fc6f462981ee2
+[3/3] soc: qcom: llcc: add support for SAR2130P and SAR1130P
+      commit: 1685f685ff8036c74c3b5e9006ec7ceda5bafefa
 
 Best regards,
 -- 
