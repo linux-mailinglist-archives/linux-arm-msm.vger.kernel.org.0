@@ -1,89 +1,96 @@
-Return-Path: <linux-arm-msm+bounces-36862-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36863-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DA54E9BAB9F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 04:57:15 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B11169BABAF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 05:13:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4A502281AD1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 03:57:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 50C0A1F21604
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 04:13:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 224571667DA;
-	Mon,  4 Nov 2024 03:57:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C98D4176AD8;
+	Mon,  4 Nov 2024 04:13:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SQeq8t+B"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="boyrvFy0"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A3F165F04
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Nov 2024 03:57:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AE294C6C;
+	Mon,  4 Nov 2024 04:13:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730692632; cv=none; b=H66iABEz/xdI60KYDdLbhopX0Hh2Povy8O/SQAHbzStB4CPRbR+RYZOJZLwizqt4vN3dHcDrKWAa7a8Er7gFRo8T+mrtfK7ZFFMe39GMif5gcwUkYrqyDm1cHqxK+yWLtixIweeE13SE+S015qo0yzkzWqilPXkWVz5eCaGuy60=
+	t=1730693630; cv=none; b=TRzCOHbdG77tpsGyzuQl3OnoS/gy5fF9i7iMq/H8ynZ9+5YojJxPakNWcb6if9Ud1mJSti7XS2Mx8UUU+hYs8vycntw5X+iOvnK+XUpD7nQyrQ0ED3xaVVvx25N6Ih25qbXxGZt6KbJj9UXgUqztXs2dpyLjZBNvKXYlrEIOcjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730692632; c=relaxed/simple;
-	bh=mA+q+8QPE2k8hM9ZLaMOj/rQw3D4xoupILk2RpZ7enM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=WpaI8QRN69jh4WXJBrWQmfoYElD36BGi0HGmL3PafVvXGHdBGZB90J6Nx7SRXWGG50BNsklNweh7J4woh20VLng6lmpMIf+Nmj/5oJuDx+IhMVdhvFlQJGNLg+tdGjUbRvGA8lYMy/AGVJ9opaTXLmcKZptGugd/LZ1BmJDxXAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SQeq8t+B; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8ED8C4CECE;
-	Mon,  4 Nov 2024 03:57:10 +0000 (UTC)
+	s=arc-20240116; t=1730693630; c=relaxed/simple;
+	bh=y9MUnlS3ecSYXvvZ1j0sMTSR/e+uubshMnnKUKejncw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=TQlP+hYzftRdeDjX4qaogsIkMhAkHRtvMshRh1c1jSyQ5+gjo5KhlkLCFRHzoB1/EPl0uaz3vIfMmmZ1R3i/kZziYBRvDn9Jo0NWaEqXZu0vLR9QYfDzBF9CJB2jFlghixkyD5J70bwg9sEHxt64dat0/0kwtsSfEqUQyGVq09s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=boyrvFy0; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C82C2C4CECE;
+	Mon,  4 Nov 2024 04:13:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730692631;
-	bh=mA+q+8QPE2k8hM9ZLaMOj/rQw3D4xoupILk2RpZ7enM=;
-	h=From:To:Cc:Subject:Date:From;
-	b=SQeq8t+BSTkTGs+E0cEy83bRdGF1lZxagBmo9IDH4sigRZ0V1ocfaZnynwcoiL0SN
-	 0NYS12R9LvreAT6Bzaepm1haPQpvtROFDWl8bbQzgv6zSDDh/ABLmV1I5s1IOWWe2w
-	 fK6R+jNfzoRT2WhtKDXvvU7YRDDtgWziuCh193RSgIYidsw2uxAuxKE3ue+x1KMnOh
-	 V0cL2KU0CQ0QmiRfm1C2pFJ5QTRuEW49oLpGsGH0Mjn7NtCgqulsCE9CVcvCEm+7Ru
-	 q0dsRGej7hu/0AEoPfEsLZQv79X9rWNQ+h+5Ey2DNCepDbbOYs5IMz3vv+JQkMPnOp
-	 VWTh3dH8NpmAw==
+	s=k20201202; t=1730693630;
+	bh=y9MUnlS3ecSYXvvZ1j0sMTSR/e+uubshMnnKUKejncw=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=boyrvFy0rxrMdrSaQUfrRAtw8RFDRL/qL6uv6sxwsEJlYbYF1bC0XsFtlgeIN4rVY
+	 6mXXUyqAN7Sjk8YAarMzpzzbK0JfgS0IKv2+1RZZPGjkIxn94FmLpQGFeDCGSuLVwA
+	 XuvDVSx4oawIHEptRwf4s9BPXkvNe7QVqumyo1C5mW7VwP8Jy0I6BlhfArEcpL4AZ+
+	 tq376nynbv1deqAIGbv1qKujyLJQupGAOOU8qy4JQtOWEn1GfmsmDaSr5kek15y0yS
+	 Ahd8RGjQ1H9OHQUuAmSIEP1nUOQ+IIc6myeDe0J7ucxruYZ+DvEWR8+0XzDzUtYPFC
+	 hQz6v2/Om56Mg==
 From: Bjorn Andersson <andersson@kernel.org>
-To: arm@kernel.org,
-	soc@kernel.org
+To: Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Kalle Valo <kvalo@kernel.org>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Bartosz Golaszewski <brgl@bgdev.pl>
 Cc: linux-arm-msm@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	Arnd Bergmann <arnd@arndb.de>,
-	Olof Johansson <olof@lixom.net>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Taniya Das <quic_tdas@quicinc.com>
-Subject: [GIT PULL] Qualcomm Arm64 defconfig updates for v6.13
-Date: Sun,  3 Nov 2024 21:57:09 -0600
-Message-ID: <20241104035709.19094-1-andersson@kernel.org>
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH v5 0/3] arm64: dts: qcom: sc8280xp: enable WLAN and Bluetooth
+Date: Sun,  3 Nov 2024 22:13:37 -0600
+Message-ID: <173069362371.23540.11806758740923582100.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20241008102545.40003-1-brgl@bgdev.pl>
+References: <20241008102545.40003-1-brgl@bgdev.pl>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-The following changes since commit 9852d85ec9d492ebef56dc5f229416c925758edc:
+On Tue, 08 Oct 2024 12:25:41 +0200, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> 
+> This correctly models the WLAN and Bluetooth modules on two boards using
+> the sc8280xp SoC. For the sc8280xp-crd we add the PMU, wifi and bluetooth
+> nodes with the correctly modelled wiring between them. For the X13s, we
+> rework existing nodes so that they align with the new DT bindings
+> contract.
+> 
+> [...]
 
-  Linux 6.12-rc1 (2024-09-29 15:06:19 -0700)
+Applied, thanks!
 
-are available in the Git repository at:
+[1/3] arm64: dts: qcom: sc8280xp-crd: model the PMU of the on-board wcn6855
+      commit: e848528bdfc2a933590498c326d3320d85078c93
+[2/3] arm64: dts: qcom: sc8280xp-crd: enable bluetooth
+      commit: 38439741623c5fede0c171da801bf0a8b6a2e293
+[3/3] arm64: dts: qcom: sc8280xp-x13s: model the PMU of the on-board wcn6855
+      commit: 36937845ce2ab3a645e27c6a11642cc0b4f038fe
 
-  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-defconfig-for-6.13
-
-for you to fetch changes up to 9c957ebbcdd131a890cf163875d4493414f84eca:
-
-  arm64: defconfig: Enable sc7280 clock controllers (2024-10-15 11:04:50 -0500)
-
-----------------------------------------------------------------
-Qualcomm Arm64 defconfig updates for v6.13
-
-This enables multimedia clock controllers used by SC7280-based devices,
-such as the QCS6490 RB3Gen2.
-
-----------------------------------------------------------------
-Taniya Das (1):
-      arm64: defconfig: Enable sc7280 clock controllers
-
- arch/arm64/configs/defconfig | 3 +++
- 1 file changed, 3 insertions(+)
+Best regards,
+-- 
+Bjorn Andersson <andersson@kernel.org>
 
