@@ -1,65 +1,71 @@
-Return-Path: <linux-arm-msm+bounces-36863-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36864-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B11169BABAF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 05:13:57 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 48BCC9BABB1
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 05:14:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 50C0A1F21604
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 04:13:57 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7A5D91C20915
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 04:14:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C98D4176AD8;
-	Mon,  4 Nov 2024 04:13:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E1C8186612;
+	Mon,  4 Nov 2024 04:13:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="boyrvFy0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Yz7JR7oL"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AE294C6C;
-	Mon,  4 Nov 2024 04:13:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2A3C185952;
+	Mon,  4 Nov 2024 04:13:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730693630; cv=none; b=TRzCOHbdG77tpsGyzuQl3OnoS/gy5fF9i7iMq/H8ynZ9+5YojJxPakNWcb6if9Ud1mJSti7XS2Mx8UUU+hYs8vycntw5X+iOvnK+XUpD7nQyrQ0ED3xaVVvx25N6Ih25qbXxGZt6KbJj9UXgUqztXs2dpyLjZBNvKXYlrEIOcjQ=
+	t=1730693632; cv=none; b=G8JuDwYuU6/RjkaueSsHezO/iYa+c7Bk9AkCNYLbdloz/fzDnzGiqoxP1rDARybnywR2q/rmVOvuKkM+/mlas+MfMOuahrC7K2h4rs6JP7fmC4NA0BBrGVmkOsVYX6DBpYeZx3LNrSloZNmqUYmGIRrpazIU6DMqDp7uC9+dVrg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730693630; c=relaxed/simple;
-	bh=y9MUnlS3ecSYXvvZ1j0sMTSR/e+uubshMnnKUKejncw=;
+	s=arc-20240116; t=1730693632; c=relaxed/simple;
+	bh=GXvtWXMoN06vkqwKrBdNU3Qoig0XTOVvUiraEOSA7Sc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TQlP+hYzftRdeDjX4qaogsIkMhAkHRtvMshRh1c1jSyQ5+gjo5KhlkLCFRHzoB1/EPl0uaz3vIfMmmZ1R3i/kZziYBRvDn9Jo0NWaEqXZu0vLR9QYfDzBF9CJB2jFlghixkyD5J70bwg9sEHxt64dat0/0kwtsSfEqUQyGVq09s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=boyrvFy0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C82C2C4CECE;
-	Mon,  4 Nov 2024 04:13:48 +0000 (UTC)
+	 MIME-Version:Content-Type; b=ftO16q7z1aCuesQseIInrexs6Qv/jozuuBwXhvzwdqcpttUY3S098H/xJ6DwlYYDacmbhvA1GzZ/XaFwr8MZlphVUQj0CWguMXyRW8+4z37XJNLCjimbPQKXJDfEKjsL5pudweQ3x22N+DP7PkDwCXCiw+LMY2OoXIKQoWYvUM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Yz7JR7oL; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42BFFC4CED6;
+	Mon,  4 Nov 2024 04:13:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730693630;
-	bh=y9MUnlS3ecSYXvvZ1j0sMTSR/e+uubshMnnKUKejncw=;
+	s=k20201202; t=1730693631;
+	bh=GXvtWXMoN06vkqwKrBdNU3Qoig0XTOVvUiraEOSA7Sc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=boyrvFy0rxrMdrSaQUfrRAtw8RFDRL/qL6uv6sxwsEJlYbYF1bC0XsFtlgeIN4rVY
-	 6mXXUyqAN7Sjk8YAarMzpzzbK0JfgS0IKv2+1RZZPGjkIxn94FmLpQGFeDCGSuLVwA
-	 XuvDVSx4oawIHEptRwf4s9BPXkvNe7QVqumyo1C5mW7VwP8Jy0I6BlhfArEcpL4AZ+
-	 tq376nynbv1deqAIGbv1qKujyLJQupGAOOU8qy4JQtOWEn1GfmsmDaSr5kek15y0yS
-	 Ahd8RGjQ1H9OHQUuAmSIEP1nUOQ+IIc6myeDe0J7ucxruYZ+DvEWR8+0XzDzUtYPFC
-	 hQz6v2/Om56Mg==
+	b=Yz7JR7oL7gy+CIdQG+VtpIWmsIK30cMUuk+tTGXxGBfaKB0M2Z9LcU0WLujIQVaIg
+	 9DJ/wsaSZKKo53KAwPNQyEKZw7nDCnV77KWOvqPnA6SuyBXkaqo0Bv+/gwsERjmeGP
+	 TP3TcDiclbGPTknJpuXdYj0AHwZoFCcjZlAWCHhhyWjBtdDfvosdN+/31JVsv48woV
+	 0qhNJ85uyTORf+pWYimQGUMJn0tfEkYPp/57bIMZkJjSItZsvH41yJQy6wx67xFof2
+	 OsclTHCQFboI9qkaPdzC/vAuAbuOHDOeTuVBnTVBkQsQrcA+tqfdWm5caLRPw1g85w
+	 oW69ot+1595Nw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
+To: Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
 	Johan Hovold <johan+linaro@kernel.org>,
 	Kalle Valo <kvalo@kernel.org>,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Bartosz Golaszewski <brgl@bgdev.pl>
 Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v5 0/3] arm64: dts: qcom: sc8280xp: enable WLAN and Bluetooth
-Date: Sun,  3 Nov 2024 22:13:37 -0600
-Message-ID: <173069362371.23540.11806758740923582100.b4-ty@kernel.org>
+	devicetree@vger.kernel.org,
+	linux-pm@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Steev Klimaszewski <steev@kali.org>
+Subject: Re: (subset) [PATCH v6 0/6] arm64: dts: qcom: enable Bluetooth and WLAN on sc8280xp and sm8450 boards
+Date: Sun,  3 Nov 2024 22:13:38 -0600
+Message-ID: <173069362372.23540.7321635486876743738.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241008102545.40003-1-brgl@bgdev.pl>
-References: <20241008102545.40003-1-brgl@bgdev.pl>
+In-Reply-To: <20241018-sc8280xp-pwrseq-v6-0-8da8310d9564@linaro.org>
+References: <20241018-sc8280xp-pwrseq-v6-0-8da8310d9564@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,25 +76,26 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Tue, 08 Oct 2024 12:25:41 +0200, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On Fri, 18 Oct 2024 14:49:10 +0200, Bartosz Golaszewski wrote:
+> This series previously only concerned sc8280xp but while enabling
+> WLAN/BT on sm8450 I noticed some more changes will be required so I
+> folded the latter into this series and updated the sc8280xp CRD and X13
+> patches.
 > 
-> This correctly models the WLAN and Bluetooth modules on two boards using
-> the sc8280xp SoC. For the sc8280xp-crd we add the PMU, wifi and bluetooth
-> nodes with the correctly modelled wiring between them. For the X13s, we
-> rework existing nodes so that they align with the new DT bindings
-> contract.
+> ==
 > 
 > [...]
 
 Applied, thanks!
 
-[1/3] arm64: dts: qcom: sc8280xp-crd: model the PMU of the on-board wcn6855
+[3/6] arm64: dts: qcom: sc8280xp-crd: model the PMU of the on-board wcn6855
       commit: e848528bdfc2a933590498c326d3320d85078c93
-[2/3] arm64: dts: qcom: sc8280xp-crd: enable bluetooth
+[4/6] arm64: dts: qcom: sc8280xp-crd: enable bluetooth
       commit: 38439741623c5fede0c171da801bf0a8b6a2e293
-[3/3] arm64: dts: qcom: sc8280xp-x13s: model the PMU of the on-board wcn6855
+[5/6] arm64: dts: qcom: sc8280xp-x13s: model the PMU of the on-board wcn6855
       commit: 36937845ce2ab3a645e27c6a11642cc0b4f038fe
+[6/6] arm64: dts: qcom: sm8450-hdk: model the PMU of the on-board wcn6855
+      commit: fe79fbce6efd25414e626036c9382a8019184064
 
 Best regards,
 -- 
