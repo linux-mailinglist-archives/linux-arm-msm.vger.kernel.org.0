@@ -1,144 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-36957-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36958-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F6109BB7EE
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 15:36:05 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 125C39BB827
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 15:42:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 784531C231B7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 14:36:04 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7ABEBB2136D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 14:42:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8C801BDABE;
-	Mon,  4 Nov 2024 14:35:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C11A3B791;
+	Mon,  4 Nov 2024 14:42:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y8U5cxqK"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ONxtur4F"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8563B1B3F3D;
-	Mon,  4 Nov 2024 14:35:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A76781369B6
+	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Nov 2024 14:42:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730730928; cv=none; b=kEtDjaMuly/n8ftQrEXu5NmcuffF1Xdw9SYfeTh6nArZXdm/Gej5ZzdbARs7rB1FPnK2T6F8fZ3h5DylDZ31rNxFUxZhy1d3p7V57UeHMbL94El+44HlbW9o3QfAdA5QTHIKqbCgRVq7QgQi0vlmIgQXSa4JuGY1dLjDDgkZGzY=
+	t=1730731330; cv=none; b=ccK69TJRqntp78CWTLlIQNGuTGfTfLfg4MFZFNJKo3FAXRnbb7APm3oSQHz9Sp6L2DRWrmvYIskEXj/OKhzfVQdhhIDNv7n579WV5/X245rqH6SBIpJuDldsWFEr7etDHg+IuPj1Jh09Rc6PsydawwRyOJsFcywnEscghpoNWbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730730928; c=relaxed/simple;
-	bh=eXPI8qxXkARRJv6XlO2w7vOxmVFZ4CQ/UGlKNBeaFLc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Y7I5zAAVbny3KUBykSPf/L/TkEyVzp6b68T8TZ/BHbMUxCWHDxToEpgOA9qdRlAsBtLJUMjOp9Uv5HsMg4DEFE0pf/BRJhErrRBcCysk09QV5+CYw9zWQoS1uy1JZuy/yPCfme8UYzAs5Ci/oReJ/DGyOG9B/uJQ0mj3735bzRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y8U5cxqK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFF07C4CECE;
-	Mon,  4 Nov 2024 14:35:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730730926;
-	bh=eXPI8qxXkARRJv6XlO2w7vOxmVFZ4CQ/UGlKNBeaFLc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Y8U5cxqKgBeidDWvBqbZfYkcFafSMpOczE+HNoD2bqT3hSp7UMnGBt8X0yIKFflXI
-	 PBDDSHxD8STQoB3gDLCgH2gGSZsUUbv4Zgj/px9xSXRU5XKYqcRCmdKyNNYHI9CoO/
-	 DrW6pbmwYf5LfA7FL0KGAvYPSiOkgF+wBcn/Wjh3z3j/yerMwP2tTSDo53lPc1khtN
-	 +DmwKWPfnM055gQqegq3VNdigIGf/WRgaY+DOibRZR0syX9P+ZAx9y4egmqsYgepWe
-	 fFeem8xZkRkedmH75K+6KyzQEmaApbRe3sWIJYCkZNgSLb/Ozgqi+lQgy/ZGixQRqa
-	 tm71nlPo+M2Aw==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1t7yAu-000000008HJ-1mv2;
-	Mon, 04 Nov 2024 15:35:24 +0100
-Date: Mon, 4 Nov 2024 15:35:24 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Qiang Yu <quic_qianyu@quicinc.com>
-Cc: manivannan.sadhasivam@linaro.org, vkoul@kernel.org, kishon@kernel.org,
-	robh@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
-	krzk+dt@kernel.org, conor+dt@kernel.org, mturquette@baylibre.com,
-	sboyd@kernel.org, abel.vesa@linaro.org, quic_msarkar@quicinc.com,
-	quic_devipriy@quicinc.com, dmitry.baryshkov@linaro.org,
-	kw@linux.com, lpieralisi@kernel.org, neil.armstrong@linaro.org,
-	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-clk@vger.kernel.org,
-	johan+linaro@kernel.org
-Subject: Re: [PATCH v8 5/5] arm64: dts: qcom: x1e80100: Add support for PCIe3
- on x1e80100
-Message-ID: <ZyjbrLEn8oSJjaZN@hovoldconsulting.com>
-References: <20241101030902.579789-1-quic_qianyu@quicinc.com>
- <20241101030902.579789-6-quic_qianyu@quicinc.com>
+	s=arc-20240116; t=1730731330; c=relaxed/simple;
+	bh=SO84wGYFqTt+rUJm2RCZaiMvDvMTJZ/y9NNnuC1FJVk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=L6oVFSv6rZdsHAwXpp6zsBIRtHREmBgL0dYhgUuHGqiKMCtCkkZp8b0kLq+st69LHPS/v4MyuLA3944PbDSwaoYK3jq6mRIiuUCHZ/4UOwq8aYR7wJDvPKLUcaCzd2/m34lL2ddDxiqk3QkHH60aHja10UWJk+kY1t/AtOKAreU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ONxtur4F; arc=none smtp.client-ip=209.85.221.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-37d4ddd7ac1so368825f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Nov 2024 06:42:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1730731327; x=1731336127; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=xse+8Y0ibORmsTXcFf9GAQ7JBYEUIvDbYNRpRr9Ulac=;
+        b=ONxtur4F0Uc/Lj2z4Dh0/gNIiyTzOyvdC13RTYFL5xgOdtqFAM7d+rcd2sun182n6r
+         v94furB8hvnbViOoqPhn3A5b+GHoDZlSCXnaYpz0EzrpBlHgWiG5/p120pCvPVDW+Mzu
+         bJMd5IZnTPx29zKDhpZEHPf7wwGtCbrVkKLSeemRLh07263//KfpdIesmDvPjy0V0Akn
+         CKVbOofAM2T3dIcpkMcx5ZRlWn6cIqYvTCXgM3BAOClPz9m7zrr7MAVNXZQ6sq6JXQ33
+         6C1n6AGdFtz7JsS557EVvTnSYy54+kE4zFrcja+3Q2HPhYs7oBh93G2VnvLvUAjUNGCy
+         g0tg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730731327; x=1731336127;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xse+8Y0ibORmsTXcFf9GAQ7JBYEUIvDbYNRpRr9Ulac=;
+        b=D5OEFM2U69EMhkCAZqL+kOx0sk6HaYy5uME/i2oAT+7Cw//Z+ju3B72N5ZOXPzIlvz
+         HcFscXqQd1+6Cpu/mkiHxkPDpaNEmgqBdC7fyL+1ZimhtaK0ww1qQBpHfhzxClwLUQv1
+         bx8GtvO9yNlOpg+1WtfiIbGPVgYRBeHj4qZ4+5jLNW99br5SAd1mxgb3o74I4srI6xww
+         W50FwAw1OHuYqMR+TepwWpwOrvrLz8AXnNfCc1FUHAO/xKXjEUAKzD+zqMTj4xokV/dV
+         Q69VDQEavuMEoUaqcSI1/gtUs4HmXEq4qRT04sk4EfAnTAnBag276mI/g0/k7tX8gj4R
+         Sy9A==
+X-Forwarded-Encrypted: i=1; AJvYcCXxd3iQEhuW3pcyDe5IjQPy1S41xbwJx3+BYVvqhY9vBKjX/s4NzQRKibckwnHKSdWr/M+572d+2HH1dJ5f@vger.kernel.org
+X-Gm-Message-State: AOJu0YwWYXTgR/eAQV+bHzFmS0h9dDUJ0Uu4Rwm5JxvfJFAj4nitRirx
+	4sxbRuDSjHEaVW8h0o9oAsV/BlYYhaiYripZ7T+yQt77FLnX17SIjW0cTD3ElamBT5+Uly4yhV5
+	f
+X-Google-Smtp-Source: AGHT+IESYHxXdCiy8abyGwDONyQaWjmIt1sRqKhV+PO4KcL3AbtW4so9yq3KTHkBFOIwm2tU7Vmelw==
+X-Received: by 2002:a5d:5f94:0:b0:374:bde8:3b46 with SMTP id ffacd0b85a97d-380611a7665mr12316766f8f.2.1730731326951;
+        Mon, 04 Nov 2024 06:42:06 -0800 (PST)
+Received: from krzk-bin.. ([178.197.211.167])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4327d5bf225sm154433685e9.11.2024.11.04.06.42.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Nov 2024 06:42:06 -0800 (PST)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Ling Xu <quic_lxu5@quicinc.com>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH] arm64: dts: qcom: sm8650: Fix CDSP context banks unit addresses
+Date: Mon,  4 Nov 2024 15:42:04 +0100
+Message-ID: <20241104144204.114279-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241101030902.579789-6-quic_qianyu@quicinc.com>
+Content-Transfer-Encoding: 8bit
 
-On Thu, Oct 31, 2024 at 08:09:02PM -0700, Qiang Yu wrote:
-> Describe PCIe3 controller and PHY. Also add required system resources like
-> regulators, clocks, interrupts and registers configuration for PCIe3.
-> 
-> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+There is a mismatch between 'reg' property and unit address for last
+there CDSP compute context banks.  Current values were taken as-is from
+downstream source.  Considering that 'reg' is used by Linux driver as
+SID of context bank and that least significant bytes of IOMMU value
+match the 'reg', assume the unit-address is wrong and needs fixing.
+This also won't have any practical impact, except adhering to Devicetree
+spec.
+
+Fixes: dae8cdb0a9e1 ("arm64: dts: qcom: sm8650: Add three missing fastrpc-compute-cb nodes")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sm8650.dtsi | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+index 3d8a807a81c9..367fdd090768 100644
+--- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+@@ -5622,7 +5622,7 @@ compute-cb@8 {
  
-> +		pcie3: pcie@1bd0000 {
-> +			device_type = "pci";
-> +			compatible = "qcom,pcie-x1e80100";
-> +			reg = <0x0 0x01bd0000 0x0 0x3000>,
-> +			      <0x0 0x78000000 0x0 0xf1d>,
-> +			      <0x0 0x78000f40 0x0 0xa8>,
-> +			      <0x0 0x78001000 0x0 0x1000>,
-> +			      <0x0 0x78100000 0x0 0x100000>,
-> +			      <0x0 0x01bd3000 0x0 0x1000>;
-> +			reg-names = "parf",
-> +				    "dbi",
-> +				    "elbi",
-> +				    "atu",
-> +				    "config",
-> +				    "mhi";
-> +			#address-cells = <3>;
-> +			#size-cells = <2>;
-> +			ranges = <0x01000000 0x0 0x00000000 0x0 0x78200000 0x0 0x100000>,
-> +				 <0x02000000 0x0 0x78300000 0x0 0x78300000 0x0 0x3d00000>,
+ 					/* note: secure cb9 in downstream */
+ 
+-					compute-cb@10 {
++					compute-cb@12 {
+ 						compatible = "qcom,fastrpc-compute-cb";
+ 						reg = <12>;
+ 
+@@ -5632,7 +5632,7 @@ compute-cb@10 {
+ 						dma-coherent;
+ 					};
+ 
+-					compute-cb@11 {
++					compute-cb@13 {
+ 						compatible = "qcom,fastrpc-compute-cb";
+ 						reg = <13>;
+ 
+@@ -5642,7 +5642,7 @@ compute-cb@11 {
+ 						dma-coherent;
+ 					};
+ 
+-					compute-cb@12 {
++					compute-cb@14 {
+ 						compatible = "qcom,fastrpc-compute-cb";
+ 						reg = <14>;
+ 
+-- 
+2.43.0
 
-Can you double check the size here so that it is indeed correct and not
-just copied from the other nodes which initially got it wrong:
-
-	https://lore.kernel.org/lkml/20240710-topic-barman-v1-1-5f63fca8d0fc@linaro.org/
-
-> +				 <0x03000000 0x7 0x40000000 0x7 0x40000000 0x0 0x40000000>;
-> +			bus-range = <0x00 0xff>;
-
-> +			clocks = <&gcc GCC_PCIE_3_AUX_CLK>,
-> +				 <&gcc GCC_PCIE_3_CFG_AHB_CLK>,
-> +				 <&gcc GCC_PCIE_3_MSTR_AXI_CLK>,
-> +				 <&gcc GCC_PCIE_3_SLV_AXI_CLK>,
-> +				 <&gcc GCC_PCIE_3_SLV_Q2A_AXI_CLK>,
-> +				 <&gcc GCC_CFG_NOC_PCIE_ANOC_NORTH_AHB_CLK>,
-> +				 <&gcc GCC_CNOC_PCIE_NORTH_SF_AXI_CLK>;
-> +			clock-names = "aux",
-> +				      "cfg",
-> +				      "bus_master",
-> +				      "bus_slave",
-> +				      "slave_q2a",
-> +				      "noc_aggr",
-> +				      "cnoc_sf_axi";
-> +
-> +			assigned-clocks = <&gcc GCC_PCIE_3_AUX_CLK>;
-> +			assigned-clock-rates = <19200000>;
-> +
-> +			interconnects = <&pcie_south_anoc MASTER_PCIE_3 QCOM_ICC_TAG_ALWAYS
-
-This should be &pcie_north_anoc
-
-> +					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
-> +					<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
-> +					 &cnoc_main SLAVE_PCIE_3 QCOM_ICC_TAG_ALWAYS>;
-> +			interconnect-names = "pcie-mem",
-> +					     "cpu-pcie";
-
-With the above addressed, feel free to keep my Reviewed-by tag.
-
-Johan
 
