@@ -1,264 +1,382 @@
-Return-Path: <linux-arm-msm+bounces-36974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36975-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id BEAE29BBCBF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 19:02:08 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6DCD19BBD6F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 19:45:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5017D1F21F5C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 18:02:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9F9021F238F7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 18:45:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 040491CB533;
-	Mon,  4 Nov 2024 18:01:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93D1F1CDA26;
+	Mon,  4 Nov 2024 18:45:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="H8FHttoM"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hpEfNnLm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E9EB1632E4;
-	Mon,  4 Nov 2024 18:01:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E5351C4A1F;
+	Mon,  4 Nov 2024 18:45:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730743308; cv=none; b=KZClPmP3wIFImrlxgYMS9mLtlVFZbypL71PSp12vTNb4gpeGmmQ7SbaziIUX2AYDZnmfrPjqGEppePL/YF89S2U04P9rBcYQl0kOgqILD17OumZmBNAzgyjmXsEuvnJHbBJKcn1Y4xqlJz7bDzSYdw9BhgfE6mnjU2625J5R7kQ=
+	t=1730745906; cv=none; b=lqW7SEv7kwX+TGDK23CiOvDrA35nWh9oitFlyOOWOkeT3y1pGESFnX9dlvT25yFOh0UBP1zujBnzAQgRPC7j1cFy1lMDE602qrNsdMtRKdZ1txRh2jywd3D66cLgHios5WLy2KiWWRg/WeWuCMyinNA8ycMp6k6BhCLGvJ1I+mU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730743308; c=relaxed/simple;
-	bh=m6/fbTZEI8yEHQ9JL7M97NwJ/n//CAduzu0Ma3S/uhA=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=rtr5VHRChnR8ZtLWGufULdfpsxIHxT9JL6zZMv22DFiUO++62tYndmw9h3smYYw+stwqBtvzlQRovwzRFO6P/CODoNcrRWXb0zgAmeD1+E4H0ZuwR7Sf/e49OkxvpLGjkG53M8qBacpw/JL6RjmA79h67wfbFvzB+u6sOR9CiWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=H8FHttoM; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1730745906; c=relaxed/simple;
+	bh=cGfS1wEE+stDuU+Je6YO8Qvw5hRFhHUIGUGDv/UCH74=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:CC:References:
+	 In-Reply-To:Content-Type; b=EPNnZvT3EeCTO8DFtThjw1Lc6nytoiR2vHY9BUfMKd0qTvlDQ2QFD+qGKZav7X2v6Yg6++bxnyvt0JKXOK7RCRs19+3Hs8NOtzYl561/HzdWQBZHc4h7L54Ze3BHQQV5RCRcNcpoiSkFoXk09iiAOOX2eVps/3RuhuAF6+zjh54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hpEfNnLm; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A4BxpRD023005;
-	Mon, 4 Nov 2024 18:01:43 GMT
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A4BuUHx019557;
+	Mon, 4 Nov 2024 18:44:57 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=BeXi20mKL95
-	nKl1yd0np8hkCnAQ4nkyEQFZ3ZhTOhNA=; b=H8FHttoMdLNJQVaDAjy+/rEzyD6
-	ArnXiIT+jmSU4cncc4plTR3fsEi4DlXuU2MpdDB09wLToPVGtmi3+X+3w9eS5rsO
-	BPWelWGU9zgdYBv5TpqWElaQakzgDfxBLSpOkxd1zNpgzb1rHuzvBRW2nbwKVKtb
-	+REcthvUyRYPdJ5UmwbFOsaCE5ZJpl4OucwrsOeAFBEQ/139bD5ttjMR+hiDNbYN
-	djfq/u19/gIBLcC7hUVWDPn1fn1R8of0b69T7r6fUl3cpL9Ne2KdXOaWXGtkwfEo
-	M+MW+bDfsqOc+ApXGN/TJgkiaX6bxFi8MQE4WDDxcgAt30RtTOrQHtwGA4w==
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	+EKER39zPEEyrog9bTlCNvHU3yEaS6S/WnsUz/voEIE=; b=hpEfNnLm+CNWHZFX
+	FLdGIc4hSjOhEcLsdThb7HmS2VXnFQhdD01ipaIe06srmuqDZ1ht5J4lK3UDeST6
+	L2BqEiXd/N5KVfaPow2cw1Nw3ILlwkB+25X08NakFGJqq/1dfNCSq6S84YHK9Lam
+	pEuLP6J+M6f6h/48R6AK4wOHSFzcQ20b3fr4wlzhBwl7wpje07e+I++ftcd/uBH1
+	U8Lz4puZE+ADlOVsFCOOScvuB85sdSq+psXfPRpfo+fy3JdZBVWv8ZG5GEPXu+VV
+	IDXJjUBg3390u1j0KJH2YslnDVzHA++x5mSqZzoVesZdF4TjE63X6Jxd7JkFlP2A
+	o2f/Kg==
 Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42ncyxw280-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42p5ye3b0q-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 04 Nov 2024 18:01:42 +0000 (GMT)
-Received: from pps.filterd (NALASPPMTA02.qualcomm.com [127.0.0.1])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 4A4Hm14p028071;
-	Mon, 4 Nov 2024 18:01:41 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by NALASPPMTA02.qualcomm.com (PPS) with ESMTPS id 42nd5m3ggp-1
+	Mon, 04 Nov 2024 18:44:56 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4A4IiuS5010046
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 04 Nov 2024 18:01:41 +0000
-Received: from NALASPPMTA02.qualcomm.com (NALASPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4A4Hx84e009558;
-	Mon, 4 Nov 2024 18:01:41 GMT
-Received: from hu-devc-lv-u22-c.qualcomm.com (hu-uchalich-lv.qualcomm.com [10.81.89.1])
-	by NALASPPMTA02.qualcomm.com (PPS) with ESMTPS id 4A4I1f91014663
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 04 Nov 2024 18:01:41 +0000
-Received: by hu-devc-lv-u22-c.qualcomm.com (Postfix, from userid 4184210)
-	id 24A31641; Mon,  4 Nov 2024 10:01:41 -0800 (PST)
-From: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: Unnathi Chalicheemala <quic_uchalich@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        kernel@quicinc.com
-Subject: [PATCH v4 2/2] firmware: qcom_scm: Support multiple waitq contexts
-Date: Mon,  4 Nov 2024 10:01:38 -0800
-Message-Id: <4ff6a63a3e957ea768763b459e1e4ace5a10cf6b.1730742637.git.quic_uchalich@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <cover.1730742637.git.quic_uchalich@quicinc.com>
-References: <cover.1730742637.git.quic_uchalich@quicinc.com>
+	Mon, 4 Nov 2024 18:44:56 GMT
+Received: from [10.216.7.198] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 4 Nov 2024
+ 10:44:51 -0800
+Message-ID: <cb69c30f-8230-4a8f-a538-3ec964b79084@quicinc.com>
+Date: Tue, 5 Nov 2024 00:14:28 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
+User-Agent: Mozilla Thunderbird
+From: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
+Subject: Re: [RFC PATCH v2 1/5] dt-bindings: net: wireless: ath12k: describe
+ WSI properties for QCN9274
+To: Krzysztof Kozlowski <krzk@kernel.org>, <ath12k@lists.infradead.org>
+CC: <linux-wireless@vger.kernel.org>, Kalle Valo <kvalo@kernel.org>,
+        Rob
+ Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor
+ Dooley <conor+dt@kernel.org>,
+        Jeff Johnson <jjohnson@kernel.org>,
+        Bjorn
+ Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
+References: <20241029173050.2188150-1-quic_rajkbhag@quicinc.com>
+ <20241029173050.2188150-2-quic_rajkbhag@quicinc.com>
+ <764f8f22-146d-4edc-9d46-7fe3c7d9a2f2@kernel.org>
+Content-Language: en-US
+In-Reply-To: <764f8f22-146d-4edc-9d46-7fe3c7d9a2f2@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: -l3Q7mx7uitxEJdXmabImB1WAS7-cw8d
-X-Proofpoint-GUID: -l3Q7mx7uitxEJdXmabImB1WAS7-cw8d
+X-Proofpoint-ORIG-GUID: 0oQN_Dq4FfIAfAQUG9kFWelPC3LdiSAV
+X-Proofpoint-GUID: 0oQN_Dq4FfIAfAQUG9kFWelPC3LdiSAV
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 suspectscore=0
- malwarescore=0 bulkscore=0 impostorscore=0 priorityscore=1501
- lowpriorityscore=0 mlxscore=0 phishscore=0 adultscore=0 mlxlogscore=999
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411040149
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
+ mlxscore=0 spamscore=0 lowpriorityscore=0 adultscore=0 malwarescore=0
+ suspectscore=0 priorityscore=1501 clxscore=1015 mlxlogscore=999
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411040153
 
-Currently, only a single waitqueue context exists, with waitqueue id zero.
-Multi-waitqueue mechanism is added in firmware to support the case when
-multiple VMs make SMC calls or single VM making multiple calls on same CPU.
+On 10/29/2024 11:22 PM, Krzysztof Kozlowski wrote:
+> On 29/10/2024 18:30, Raj Kumar Bhagat wrote:
+>> QCN9274 device has WSI support. WSI stands for WLAN Serial Interface.
+>> It is used for the exchange of specific control information across
+>> radios based on the doorbell mechanism. This WSI connection is
+>> essential to exchange control information among these devices
+>>
+>> Hence, describe WSI interface supported in QCN9274 with the following
+>> properties:
+>>
+>>  - qcom,wsi-group-id: It represents the identifier assigned to the WSI
+>>    connection. All the ath12k devices connected to same WSI connection
+>>    have the same wsi-group-id.
+>>
+>>  - qcom,wsi-master: Indicates if this device is the WSI master.
+>>
+>>  - ports: This is a graph ports schema that has two ports: TX (port@0)
+>>    and RX (port@1). This represents the actual WSI connection among
+>>    multiple devices.
+> 
+> Describe the hardware, not the contents of the patch/binding. We see it
+> easily, but what we do not see is the hardware.
+> 
 
-When VMs make SMC call, firmware will allocate waitqueue context assuming
-the SMC call to be a blocking call. SMC calls that cannot acquire resources
-are returned to sleep in the calling VM. When resource is available, VM
-will be notified to wake sleeping thread and resume SMC call.
-SM8650 firmware can allocate two such waitq contexts so create these two
-waitqueue contexts.
+sure will update the commit log.
 
-Unique waitqueue contexts are supported by a dynamically sized array where
-each unique wq_ctx is associated with a struct completion variable for easy
-lookup. To get the number of waitqueue contexts directly from firmware,
-qcom_scm_query_waitq_cnt() is introduced. On older targets which support
-only a single waitqueue, wq_cnt is set to 1 as SCM call for
-query_waitq_cnt() is not implemented for single waitqueue case.
+>>
+>> Also, describe the ath12k device property
+>> "qcom,ath12k-calibration-variant". This is a common property among
+>> ath12k devices.
+> 
+> Why do you describe it? What you do is easily visible. We do not see why.
+> 
 
-Signed-off-by: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
----
- drivers/firmware/qcom/qcom_scm.c | 76 +++++++++++++++++++++++---------
- 1 file changed, 54 insertions(+), 22 deletions(-)
+will remove this description in next version.
 
-diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-index 4cffd0684b78..91c3f57ddf41 100644
---- a/drivers/firmware/qcom/qcom_scm.c
-+++ b/drivers/firmware/qcom/qcom_scm.c
-@@ -49,7 +49,7 @@ struct qcom_scm {
- 	struct clk *iface_clk;
- 	struct clk *bus_clk;
- 	struct icc_path *path;
--	struct completion waitq_comp;
-+	struct completion *waitq;
- 	struct reset_controller_dev reset;
- 
- 	/* control access to the interconnect path */
-@@ -59,6 +59,7 @@ struct qcom_scm {
- 	u64 dload_mode_addr;
- 
- 	struct qcom_tzmem_pool *mempool;
-+	unsigned int wq_cnt;
- };
- 
- struct qcom_scm_current_perm_info {
-@@ -1856,6 +1857,26 @@ static int qcom_scm_fill_irq_fwspec_params(struct irq_fwspec *fwspec, u32 virq)
- 	return 0;
- }
- 
-+static int qcom_scm_query_waitq_count(void)
-+{
-+	int ret;
-+	struct qcom_scm_desc desc = {
-+		.svc = QCOM_SCM_SVC_WAITQ,
-+		.cmd = QCOM_SCM_WAITQ_GET_INFO,
-+		.owner = ARM_SMCCC_OWNER_SIP
-+	};
-+	struct qcom_scm_res res;
-+
-+	if (!__qcom_scm_is_call_available(__scm->dev, QCOM_SCM_SVC_WAITQ, QCOM_SCM_WAITQ_GET_INFO))
-+		return 1;
-+
-+	ret = qcom_scm_call_atomic(__scm->dev, &desc, &res);
-+	if (ret)
-+		return ret;
-+
-+	return res.result[0] & GENMASK(7, 0);
-+}
-+
- static int qcom_scm_get_waitq_irq(void)
- {
- 	int ret;
-@@ -1882,42 +1903,40 @@ static int qcom_scm_get_waitq_irq(void)
- 	return ret;
- }
- 
--static int qcom_scm_assert_valid_wq_ctx(u32 wq_ctx)
-+static struct completion *qcom_scm_get_completion(u32 wq_ctx)
- {
--	/* FW currently only supports a single wq_ctx (zero).
--	 * TODO: Update this logic to include dynamic allocation and lookup of
--	 * completion structs when FW supports more wq_ctx values.
--	 */
--	if (wq_ctx != 0) {
--		dev_err(__scm->dev, "Firmware unexpectedly passed non-zero wq_ctx\n");
--		return -EINVAL;
--	}
-+	struct completion *wq;
- 
--	return 0;
-+	if (WARN_ON_ONCE(wq_ctx >= __scm->wq_cnt))
-+		return ERR_PTR(-EINVAL);
-+
-+	wq = &__scm->waitq[wq_ctx];
-+
-+	return wq;
- }
- 
- int qcom_scm_wait_for_wq_completion(u32 wq_ctx)
- {
--	int ret;
-+	struct completion *wq;
- 
--	ret = qcom_scm_assert_valid_wq_ctx(wq_ctx);
--	if (ret)
--		return ret;
-+	wq = qcom_scm_get_completion(wq_ctx);
-+	if (IS_ERR(wq))
-+		return PTR_ERR(wq);
- 
--	wait_for_completion(&__scm->waitq_comp);
-+	wait_for_completion(wq);
- 
- 	return 0;
- }
- 
- static int qcom_scm_waitq_wakeup(unsigned int wq_ctx)
- {
--	int ret;
-+	struct completion *wq;
- 
--	ret = qcom_scm_assert_valid_wq_ctx(wq_ctx);
--	if (ret)
--		return ret;
-+	wq = qcom_scm_get_completion(wq_ctx);
-+	if (IS_ERR(wq))
-+		return PTR_ERR(wq);
- 
--	complete(&__scm->waitq_comp);
-+	complete(wq);
- 
- 	return 0;
- }
-@@ -1993,6 +2012,7 @@ static int qcom_scm_probe(struct platform_device *pdev)
- 	struct qcom_tzmem_pool_config pool_config;
- 	struct qcom_scm *scm;
- 	int irq, ret;
-+	int i;
- 
- 	scm = devm_kzalloc(&pdev->dev, sizeof(*scm), GFP_KERNEL);
- 	if (!scm)
-@@ -2003,7 +2023,19 @@ static int qcom_scm_probe(struct platform_device *pdev)
- 	if (ret < 0)
- 		return ret;
- 
--	init_completion(&scm->waitq_comp);
-+	ret = qcom_scm_query_waitq_count();
-+	if (ret < 0)
-+		return ret;
-+
-+	scm->wq_cnt = ret;
-+
-+	scm->waitq = devm_kcalloc(&pdev->dev, scm->wq_cnt, sizeof(*scm->waitq), GFP_KERNEL);
-+	if (!scm->waitq)
-+		return -ENOMEM;
-+
-+	for (i = 0; i < scm->wq_cnt; i++)
-+		init_completion(&scm->waitq[i]);
-+
- 	mutex_init(&scm->scm_bw_lock);
- 
- 	scm->path = devm_of_icc_get(&pdev->dev, NULL);
--- 
-2.34.1
+>>
+>> Signed-off-by: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
+>> ---
+>>  .../bindings/net/wireless/qcom,ath12k.yaml    | 241 +++++++++++++++++-
+>>  1 file changed, 232 insertions(+), 9 deletions(-)
+>>
+>> diff --git a/Documentation/devicetree/bindings/net/wireless/qcom,ath12k.yaml b/Documentation/devicetree/bindings/net/wireless/qcom,ath12k.yaml
+>> index 1b5884015b15..42bcd73dd159 100644
+>> --- a/Documentation/devicetree/bindings/net/wireless/qcom,ath12k.yaml
+>> +++ b/Documentation/devicetree/bindings/net/wireless/qcom,ath12k.yaml
+>> @@ -1,5 +1,6 @@
+>>  # SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>>  # Copyright (c) 2024 Linaro Limited
+>> +# Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+>>  %YAML 1.2
+>>  ---
+>>  $id: http://devicetree.org/schemas/net/wireless/qcom,ath12k.yaml#
+>> @@ -18,10 +19,17 @@ properties:
+>>    compatible:
+>>      enum:
+>>        - pci17cb,1107  # WCN7850
+>> +      - pci17cb,1109  # QCN9274
+> 
+> I asked for separate binding because it is quite a different device.
+> Unless it is not... but then commit msg is quite not precise here.
+> 
+
+sure, will create a separate binding, may be "qcom,ath12k_wsi.yaml".
+This will be for ath21k PCI device with WSI interface.
+
+>>  
+>>    reg:
+>>      maxItems: 1
+>>  
+>> +  qcom,ath12k-calibration-variant:
+>> +    $ref: /schemas/types.yaml#/definitions/string
+>> +    description: |
+> 
+> Do not need '|' unless you need to preserve formatting.
+> 
+
+thanks will remove "|"
+
+>> +      string to uniquely identify variant of the calibration data for designs
+>> +      with colliding bus and device ids
+>> +
+>>    vddaon-supply:
+>>      description: VDD_AON supply regulator handle
+>>  
+>> @@ -49,21 +57,100 @@ properties:
+>>    vddpcie1p8-supply:
+>>      description: VDD_PCIE_1P8 supply regulator handle
+>>  
+>> +  wsi:
+> 
+> Not much improved here. I asked to drop the node.
+> 
+
+In next version will remove "wsi". The properties under wsi (ports,
+qcom,wsi-master, etc) will be directly under ath12k device node.
+
+>> +    type: object
+>> +    description: |
+>> +      The ath12k devices (QCN9274) feature WSI support. WSI stands for
+>> +      WLAN Serial Interface. It is used for the exchange of specific
+>> +      control information across radios based on the doorbell mechanism.
+>> +      This WSI connection is essential to exchange control information
+>> +      among these devices.
+>> +
+>> +      Diagram to represent one WSI connection (one WSI group) among
+>> +      three devices.
+>> +
+>> +               +-------+        +-------+        +-------+
+>> +               | pcie2 |        | pcie3 |        | pcie1 |
+>> +               |       |        |       |        |       |
+>> +        +----->|  wsi  |------->|  wsi  |------->|  wsi  |-----+
+>> +        |      | grp 0 |        | grp 0 |        | grp 2 |     |
+>> +        |      +-------+        +-------+        +-------+     |
+>> +        +------------------------------------------------------+
+>> +
+>> +      Diagram to represent two WSI connections (two separate WSI groups)
+>> +      among four devices.
+>> +
+>> +           +-------+    +-------+          +-------+    +-------+
+>> +           | pcie2 |    | pcie3 |          | pcie1 |    | pcie0 |
+>> +           |       |    |       |          |       |    |       |
+>> +       +-->|  wsi  |--->|  wsi  |--+   +-->|  wsi  |--->|  wsi  |--+
+>> +       |   | grp 0 |    | grp 0 |  |   |   | grp 1 |    | grp 1 |  |
+>> +       |   +-------+    +-------+  |   |   +-------+    +-------+  |
+>> +       +---------------------------+   +---------------------------+
+>> +
+>> +    properties:
+>> +      qcom,wsi-group-id:
+>> +        $ref: /schemas/types.yaml#/definitions/uint32
+>> +        description:
+>> +          It represents the identifier assigned to the WSI connection. All
+>> +          the ath12k devices connected to same WSI connection have the
+>> +          same wsi-group-id.
+> 
+> That's not needed according to description. Entire group is defined by
+> graph.
+> 
+
+So this mean "qcom,wsi-group-id" to be dropped and we can assign the
+group ID (in ath12k driver implementation) by using the graph?
+
+>> +
+>> +      qcom,wsi-master:
+>> +        type: boolean
+>> +        description:
+>> +          Indicates if this device is the WSI master.
+>> +
+> 
+> This copies property name. Why being master is important?
+> 
+
+The master device in the WSI group aids (is capable) to synchronize the Timing
+Synchronization Function (TSF) clock across all devices in the group. Will include
+this information in next version.
+
+> Also, use some different name: see preferred names in kernel coding style.
+> 
+
+Thanks for pointing out, will use "qcom,wsi-controller"
+
+>> +      ports:
+>> +        $ref: /schemas/graph.yaml#/properties/ports
+>> +        description:
+>> +          These ports are used to connect multiple WSI supported devices to
+>> +          form the WSI group.
+>> +
+>> +        properties:
+>> +          port@0:
+>> +            $ref: /schemas/graph.yaml#/properties/port
+>> +            description:
+>> +              This is the TX port of WSI interface. It is attached to the RX
+>> +              port of the next device in the WSI connection.
+>> +
+>> +          port@1:
+>> +            $ref: /schemas/graph.yaml#/properties/port
+>> +            description:
+>> +              This is the RX port of WSI interface. It is attached to the TX
+>> +              port of the previous device in the WSI connection.
+>> +
+>> +    required:
+>> +      - qcom,wsi-group-id
+>> +      - ports
+>> +
+>> +    additionalProperties: false
+>> +
+>>  required:
+>>    - compatible
+>>    - reg
+>> -  - vddaon-supply
+>> -  - vddwlcx-supply
+>> -  - vddwlmx-supply
+>> -  - vddrfacmn-supply
+>> -  - vddrfa0p8-supply
+>> -  - vddrfa1p2-supply
+>> -  - vddrfa1p8-supply
+>> -  - vddpcie0p9-supply
+>> -  - vddpcie1p8-supply
+>>  
+>>  additionalProperties: false
+>>  
+>> +allOf:
+>> +  - if:
+>> +      properties:
+>> +        compatible:
+>> +          contains:
+>> +            enum:
+>> +              - pci17cb,1107
+>> +    then:
+>> +      required:
+>> +        - vddaon-supply
+>> +        - vddwlcx-supply
+>> +        - vddwlmx-supply
+>> +        - vddrfacmn-supply
+>> +        - vddrfa0p8-supply
+>> +        - vddrfa1p2-supply
+>> +        - vddrfa1p8-supply
+>> +        - vddpcie0p9-supply
+>> +        - vddpcie1p8-supply
+> 
+> Commit says WSI applies only to new variant, so properties should be
+> disallowed... or just follow my feedback last time: separate binding.
+> 
+
+Sure, we will have separate binding in next version.
+
+>> +
+>>  examples:
+>>    - |
+>>      #include <dt-bindings/clock/qcom,rpmh.h>
+>> @@ -97,3 +184,139 @@ examples:
+>>              };
+>>          };
+>>      };
+>> +
+>> +  - |
+>> +    pcie1 {
+> 
+> pcie {
+> and keep all nodes here
+> 
+
+sure
+
+>> +        #address-cells = <3>;
+>> +        #size-cells = <2>;
+>> +
+>> +        pcie@0 {
+>> +            device_type = "pci";
+>> +            reg = <0x0 0x0 0x0 0x0 0x0>;
+>> +            #address-cells = <3>;
+>> +            #size-cells = <2>;
+>> +            ranges;
+>> +
+>> +            wifi1@0 {
+> 
+> wifi@
+> 
+> Same in other places.
+> 
+
+Thanks, will update.
+
+>> +                compatible = "pci17cb,1109";
+>> +                reg = <0x0 0x0 0x0 0x0 0x0>;
+>> +
+>> +                qcom,ath12k-calibration-variant = "RDP433_1";
+>> +
+>> +                wsi {
+> 
+> No resources here? Not a bus? You already got comment about it.
+> 
+
+sure will remove wsi node and directly define ports and other properties
+inside wifi.
+
 
 
