@@ -1,271 +1,237 @@
-Return-Path: <linux-arm-msm+bounces-36963-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36964-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9A12F9BB8A0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 16:11:04 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6C0069BB946
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 16:45:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 258AB1F21F7C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 15:11:04 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B4AA0B20E88
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 15:45:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37CBA1B21B7;
-	Mon,  4 Nov 2024 15:11:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B87A21C07E3;
+	Mon,  4 Nov 2024 15:45:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pmkuydGB"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="N+zZ1j05"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EC034A08;
-	Mon,  4 Nov 2024 15:10:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9CC51BFE03
+	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Nov 2024 15:45:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730733061; cv=none; b=GaAsv9wYP32vaH+NyZA22JkWUTa7I9Js3F1RCiI9/LJkeUzX1i31LrLFqw6Ta/qkDmSVfyvueH4G3r95An3QMiM9NoEJINGXezE+RLp1oMthcQTpwxBJLNhOmUpcU5dT20LTy2+s3gxgtz9q1eYolmFohjaZDrzaindkF4LLve8=
+	t=1730735103; cv=none; b=ISq0q1a4a6kKUe29lUJG+wT9KZaSCf+tUz6QsBemuwg0POgI+Gy3B2sI6psdFHr3poDpb1SQEfE7cGtW/iLhTzHttPUkqpISf1aCgUu7QkjTvxuHW5RT/obNlZZyH3Ehe159ijR+LoBBS9DokSbbE80gzUCpDArGS8d4WlD5op0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730733061; c=relaxed/simple;
-	bh=bbxL55ej1fJpzc5IyybWkBIoqYVKwxL4tVm6wKg2dIM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=kcF5ZPfZnLn7Lbw9Oae8nv1C6EQ67jYfgqA9LsAuSMCEqTbaq3MGLYhmiAOA2M1qB7oJXWY5dimI2L5IxzuqGR7fnRpj5MQdzxmhYGb3N4YdErrWStxhBeyB7r6FcmnVqeuuj5cL2BWeOySqN8QKBJRSjcJYF1jnO6yVo9+Z2Yo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pmkuydGB; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0FC5C4CED1;
-	Mon,  4 Nov 2024 15:10:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730733059;
-	bh=bbxL55ej1fJpzc5IyybWkBIoqYVKwxL4tVm6wKg2dIM=;
-	h=From:Date:Subject:To:Cc:From;
-	b=pmkuydGBlpLuaueHhAaRhlDARdbZx7m6D6suikrwWAtMVYWbAEolrHUfLHTBDUjkk
-	 w4u4HmLhWxdAD+J1fMYvjCj73ICJyxHBzOByZfEbhJL9PQyWBkv7SuLl8UcrmZqzYk
-	 nhzHiKQISaQgUDt6ehLVG9h2JmF14tLwqKdFvRxR/SC/3AmgdH27rIzo5KPG8z+WS+
-	 2ZMxlZYGg+DKbQiJQ6paYv6nPJ2X/KD7JgKU0mJnm8BYoSdYBpzBqgbgGop/7+KVmB
-	 u0jWPVwcvoXXrWxI/bkgeRpMCotE3M8dphIVBY2sPI3wPqIF1LfpbtkI86U7X5rmBA
-	 10+LlnoTYt2ww==
-From: Konrad Dybcio <konradybcio@kernel.org>
-Date: Mon, 04 Nov 2024 16:10:53 +0100
-Subject: [PATCH] soc: qcom: llcc: Flip the manual slice configuration
- condition
+	s=arc-20240116; t=1730735103; c=relaxed/simple;
+	bh=ZImVIlkdahA1BEn/O7w5yhYnv0OQtgKBmXJEhQFwCgs=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=oEPMvVSAShM9YX0oNkXUunBUHSfiXF2CnBO3CuvAVquJcc2ZnspmHTWqSE/SivuXxHCAmbK5rUtiJt/5P6Uk9atf5l3Py/L/hLsBo1BjLZimsUSaOZkL0R5cWjEqfCfvn1Mq+5L7DJ549TMku/cYOlkHLwyuxet8EK2Py8sQo78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=N+zZ1j05; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-43168d9c6c9so35897525e9.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Nov 2024 07:45:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1730735100; x=1731339900; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ftipUFfbQyrbYTtkBKFzCTCmVmhbNpyQ5+49w8VdR7M=;
+        b=N+zZ1j05mJfgzs4ALMsQePW6aocYibv0ErBsoDiWek4tBlkLK/JNV8Utb09bRzsLiF
+         O9hF7javQEluU5lfujBeSKe9USF2kV416Avgz/gfEg9d2o654oel0SPy8z9+AyJCAmWK
+         pAMr8kjEBO0KFY8/vUtMlRnQvQupOabHfWCMjug5gplvyA8gC6VYx1FU/pnAgjRwlr5l
+         5DO6aYClpqYqJ4dctJYXXDfutw8DWs4E1wc87qRXkYaVsJzaplFjaV5XCquEYw9lU2Vv
+         TAe3S9u4/v6owi1zvkvRZLni1rh0WPpJRZGr9OW0tbidO949+3PatTlTlq3zY9kZrFKD
+         JMOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730735100; x=1731339900;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=ftipUFfbQyrbYTtkBKFzCTCmVmhbNpyQ5+49w8VdR7M=;
+        b=MPnXYg2ueY3jYC+66XEWwl6xKCU5JbFuR0ltLiPheU8bsKfttd3wmCfhJ9X0xEk2GA
+         LLwF3waPwJr+qsEsimeyBIY4q06MKrtghHn70GSr7daaSfqppFlybVCXF0u4XHejttng
+         gV/Nuwhhb4Hy+hN2sjeW+v/gkUBNUqLSQ3jb3OkrCQANBh0IwCxXpd+SwehqujbrKfb2
+         vcE37qV5jAwXQjO5917RQNkZFm/16QcAIoyqcDr6XNghNEZe26JeXVwZcDA4Ldto8nPJ
+         meCwksZZUS91VaPvVyPlidi9xwyJ//Ur6wlfTC1OIG82Y+l5JpgrmLxYuUMf2AjYa0nl
+         RoIg==
+X-Gm-Message-State: AOJu0Yxyg/5Qfb3xgABEq/UpyxXKn/INSLcH83XjEnTA/8Mqv9Or3/fD
+	pBLeHf2tWn5aqj2zY0w/oxuHM5SuCRPr8f89YyWzGAOS9Q646FQwoBN+LPA+eHQ=
+X-Google-Smtp-Source: AGHT+IEt227mWEkJ2KUldJ6cNcu5CXzPjyiwcrBv4UbMZfjjnIxrvAGFeU/8XnhL8EXXaevw1ExOPw==
+X-Received: by 2002:a05:600c:3c8c:b0:431:4fa0:2e0b with SMTP id 5b1f17b1804b1-4319ad146b1mr263095595e9.28.1730735100145;
+        Mon, 04 Nov 2024 07:45:00 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:5b00:c640:4c96:8a97? ([2a01:e0a:982:cbb0:5b00:c640:4c96:8a97])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4327d6852c3sm157054515e9.38.2024.11.04.07.44.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 04 Nov 2024 07:44:59 -0800 (PST)
+Message-ID: <4aeec9f1-720b-400c-9582-d02847db2ac7@linaro.org>
+Date: Mon, 4 Nov 2024 16:44:56 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+From: neil.armstrong@linaro.org
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH RFC 1/3] drm/msm/adreno: Add support for ACD
+To: Akhil P Oommen <quic_akhilpo@quicinc.com>, Rob Clark
+ <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+ Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ linux-pm@vger.kernel.org, devicetree@vger.kernel.org
+References: <20241012-gpu-acd-v1-0-1e5e91aa95b6@quicinc.com>
+ <20241012-gpu-acd-v1-1-1e5e91aa95b6@quicinc.com>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20241012-gpu-acd-v1-1-1e5e91aa95b6@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241104-topic-llcc_flip-v1-1-3003c846d131@oss.qualcomm.com>
-X-B4-Tracking: v=1; b=H4sIAPzjKGcC/x3MQQqAIBBA0avErBNULKOrRERNYw2IiUYE0d2Tl
- m/x/wOZElOGvnog0cWZj1Cg6gpwn8NGgtdi0FIbpaQR5xEZhfeIk/McBXZWS2zaxToNpYqJHN/
- /cRjf9wMCbrMSYQAAAA==
-X-Change-ID: 20241104-topic-llcc_flip-c8720c56b7f2
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1730733057; l=6838;
- i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=F+Rslf0SZN+x3vFZjIvMAPqOTSQCYVtS+KPD8ujn5bs=;
- b=iy6Qp9kzOWDOArZ1GA3bIgkZlPoyycq64a5hc7PPlUP9qP7KrSH5pmQmw5YEXGIlAEwnbk9bw
- 0vOm57cCf4lDIrl5hGC9l6d3Q7gnqqooxRuR5AnVeip98uCIOj6a3lW
-X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+On 11/10/2024 22:29, Akhil P Oommen wrote:
+> ACD a.k.a Adaptive Clock Distribution is a feature which helps to reduce
+> the power consumption. In some chipsets, it is also a requirement to
+> support higher GPU frequencies. This patch adds support for GPU ACD by
+> sending necessary data to GMU and AOSS. The feature support for the
+> chipset is detected based on devicetree data.
+> 
+> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+> ---
+>   drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 81 ++++++++++++++++++++++++++++-------
+>   drivers/gpu/drm/msm/adreno/a6xx_gmu.h |  1 +
+>   drivers/gpu/drm/msm/adreno/a6xx_hfi.c | 36 ++++++++++++++++
+>   drivers/gpu/drm/msm/adreno/a6xx_hfi.h | 21 +++++++++
+>   4 files changed, 124 insertions(+), 15 deletions(-)
+> 
 
-Commit c14e64b46944 ("soc: qcom: llcc: Support chipsets that can write
-to llcc") made the code not configure certain registers on SDM845 due
-to firmware security policies. That turned out only to concern SDM845,
-but the condition was chosen such that all other entries (for SoCs that
-didnot need it) were required to set .need_llcc_cfg = true.
+<snip>
 
-Flip the condition, so the default is "doesn't need the workaround".
+> +
+> +static int a6xx_hfi_enable_acd(struct a6xx_gmu *gmu)
+> +{
+> +	struct a6xx_hfi_acd_table *acd_table = &gmu->acd_table;
+> +	struct a6xx_hfi_msg_feature_ctrl msg = {
+> +		.feature = HFI_FEATURE_ACD,
+> +		.enable = 1,
+> +		.data = 0,
+> +	};
+> +	int ret;
+> +
+> +	if (!acd_table->enable_by_level)
+> +		return 0;
+> +
+> +	/* Enable ACD feature at GMU */
+> +	ret = a6xx_hfi_send_msg(gmu, HFI_H2F_FEATURE_CTRL, &msg, sizeof(msg), NULL, 0);
+> +	if (ret) {
+> +		DRM_DEV_ERROR(gmu->dev, "Unable to enable ACD (%d)\n", ret);
+> +		return ret;
+> +	}
+> +
+> +	/* Send ACD table to GMU */
+> +	ret = a6xx_hfi_send_msg(gmu, HFI_H2F_MSG_ACD, &msg, sizeof(msg), NULL, 0);
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
----
- drivers/soc/qcom/llcc-qcom.c | 25 ++++---------------------
- 1 file changed, 4 insertions(+), 21 deletions(-)
+This looks wrong, in this exact code, you never use the acd_table... perhaps it should be acd_table here
 
-diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-index a470285f54a875bf2262aac7b0f84ed8fd028ef1..560c2e5d0b6bbaca32a7cc54fd086b22017be22a 100644
---- a/drivers/soc/qcom/llcc-qcom.c
-+++ b/drivers/soc/qcom/llcc-qcom.c
-@@ -137,7 +137,7 @@ struct qcom_llcc_config {
- 	const u32 *reg_offset;
- 	const struct llcc_edac_reg_offset *edac_reg_offset;
- 	int size;
--	bool need_llcc_cfg;
-+	bool skip_llcc_cfg;
- 	bool no_edac;
- 	bool irq_configured;
- };
-@@ -2650,28 +2650,24 @@ static const struct qcom_llcc_config qdu1000_cfg[] = {
- 	{
- 		.sct_data       = qdu1000_data_8ch,
- 		.size		= ARRAY_SIZE(qdu1000_data_8ch),
--		.need_llcc_cfg	= true,
- 		.reg_offset	= llcc_v2_1_reg_offset,
- 		.edac_reg_offset = &llcc_v2_1_edac_reg_offset,
- 	},
- 	{
- 		.sct_data       = qdu1000_data_4ch,
- 		.size           = ARRAY_SIZE(qdu1000_data_4ch),
--		.need_llcc_cfg  = true,
- 		.reg_offset     = llcc_v2_1_reg_offset,
- 		.edac_reg_offset = &llcc_v2_1_edac_reg_offset,
- 	},
- 	{
- 		.sct_data       = qdu1000_data_4ch,
- 		.size           = ARRAY_SIZE(qdu1000_data_4ch),
--		.need_llcc_cfg  = true,
- 		.reg_offset     = llcc_v2_1_reg_offset,
- 		.edac_reg_offset = &llcc_v2_1_edac_reg_offset,
- 	},
- 	{
- 		.sct_data       = qdu1000_data_2ch,
- 		.size           = ARRAY_SIZE(qdu1000_data_2ch),
--		.need_llcc_cfg  = true,
- 		.reg_offset     = llcc_v2_1_reg_offset,
- 		.edac_reg_offset = &llcc_v2_1_edac_reg_offset,
- 	},
-@@ -2681,7 +2677,6 @@ static const struct qcom_llcc_config sa8775p_cfg[] = {
- 	{
- 		.sct_data	= sa8775p_data,
- 		.size		= ARRAY_SIZE(sa8775p_data),
--		.need_llcc_cfg	= true,
- 		.reg_offset	= llcc_v2_1_reg_offset,
- 		.edac_reg_offset = &llcc_v2_1_edac_reg_offset,
- 	},
-@@ -2691,7 +2686,6 @@ static const struct qcom_llcc_config sc7180_cfg[] = {
- 	{
- 		.sct_data	= sc7180_data,
- 		.size		= ARRAY_SIZE(sc7180_data),
--		.need_llcc_cfg	= true,
- 		.reg_offset	= llcc_v1_reg_offset,
- 		.edac_reg_offset = &llcc_v1_edac_reg_offset,
- 	},
-@@ -2701,7 +2695,6 @@ static const struct qcom_llcc_config sc7280_cfg[] = {
- 	{
- 		.sct_data	= sc7280_data,
- 		.size		= ARRAY_SIZE(sc7280_data),
--		.need_llcc_cfg	= true,
- 		.reg_offset	= llcc_v1_reg_offset,
- 		.edac_reg_offset = &llcc_v1_edac_reg_offset,
- 	},
-@@ -2711,7 +2704,6 @@ static const struct qcom_llcc_config sc8180x_cfg[] = {
- 	{
- 		.sct_data	= sc8180x_data,
- 		.size		= ARRAY_SIZE(sc8180x_data),
--		.need_llcc_cfg	= true,
- 		.reg_offset	= llcc_v1_reg_offset,
- 		.edac_reg_offset = &llcc_v1_edac_reg_offset,
- 	},
-@@ -2721,7 +2713,6 @@ static const struct qcom_llcc_config sc8280xp_cfg[] = {
- 	{
- 		.sct_data	= sc8280xp_data,
- 		.size		= ARRAY_SIZE(sc8280xp_data),
--		.need_llcc_cfg	= true,
- 		.reg_offset	= llcc_v1_reg_offset,
- 		.edac_reg_offset = &llcc_v1_edac_reg_offset,
- 	},
-@@ -2731,7 +2722,7 @@ static const struct qcom_llcc_config sdm845_cfg[] = {
- 	{
- 		.sct_data	= sdm845_data,
- 		.size		= ARRAY_SIZE(sdm845_data),
--		.need_llcc_cfg	= false,
-+		.skip_llcc_cfg	= true,
- 		.reg_offset	= llcc_v1_reg_offset,
- 		.edac_reg_offset = &llcc_v1_edac_reg_offset,
- 		.no_edac	= true,
-@@ -2742,7 +2733,6 @@ static const struct qcom_llcc_config sm6350_cfg[] = {
- 	{
- 		.sct_data	= sm6350_data,
- 		.size		= ARRAY_SIZE(sm6350_data),
--		.need_llcc_cfg	= true,
- 		.reg_offset	= llcc_v1_reg_offset,
- 		.edac_reg_offset = &llcc_v1_edac_reg_offset,
- 	},
-@@ -2752,7 +2742,6 @@ static const struct qcom_llcc_config sm7150_cfg[] = {
- 	{
- 		.sct_data       = sm7150_data,
- 		.size           = ARRAY_SIZE(sm7150_data),
--		.need_llcc_cfg	= true,
- 		.reg_offset	= llcc_v1_reg_offset,
- 		.edac_reg_offset = &llcc_v1_edac_reg_offset,
- 	},
-@@ -2762,7 +2751,6 @@ static const struct qcom_llcc_config sm8150_cfg[] = {
- 	{
- 		.sct_data       = sm8150_data,
- 		.size           = ARRAY_SIZE(sm8150_data),
--		.need_llcc_cfg	= true,
- 		.reg_offset	= llcc_v1_reg_offset,
- 		.edac_reg_offset = &llcc_v1_edac_reg_offset,
- 	},
-@@ -2772,7 +2760,6 @@ static const struct qcom_llcc_config sm8250_cfg[] = {
- 	{
- 		.sct_data       = sm8250_data,
- 		.size           = ARRAY_SIZE(sm8250_data),
--		.need_llcc_cfg	= true,
- 		.reg_offset	= llcc_v1_reg_offset,
- 		.edac_reg_offset = &llcc_v1_edac_reg_offset,
- 	},
-@@ -2782,7 +2769,6 @@ static const struct qcom_llcc_config sm8350_cfg[] = {
- 	{
- 		.sct_data       = sm8350_data,
- 		.size           = ARRAY_SIZE(sm8350_data),
--		.need_llcc_cfg	= true,
- 		.reg_offset	= llcc_v1_reg_offset,
- 		.edac_reg_offset = &llcc_v1_edac_reg_offset,
- 	},
-@@ -2792,7 +2778,6 @@ static const struct qcom_llcc_config sm8450_cfg[] = {
- 	{
- 		.sct_data       = sm8450_data,
- 		.size           = ARRAY_SIZE(sm8450_data),
--		.need_llcc_cfg	= true,
- 		.reg_offset	= llcc_v2_1_reg_offset,
- 		.edac_reg_offset = &llcc_v2_1_edac_reg_offset,
- 	},
-@@ -2802,7 +2787,6 @@ static const struct qcom_llcc_config sm8550_cfg[] = {
- 	{
- 		.sct_data       = sm8550_data,
- 		.size           = ARRAY_SIZE(sm8550_data),
--		.need_llcc_cfg	= true,
- 		.reg_offset	= llcc_v2_1_reg_offset,
- 		.edac_reg_offset = &llcc_v2_1_edac_reg_offset,
- 	},
-@@ -2812,7 +2796,6 @@ static const struct qcom_llcc_config sm8650_cfg[] = {
- 	{
- 		.sct_data       = sm8650_data,
- 		.size           = ARRAY_SIZE(sm8650_data),
--		.need_llcc_cfg	= true,
- 		.reg_offset	= llcc_v2_1_reg_offset,
- 		.edac_reg_offset = &llcc_v2_1_edac_reg_offset,
- 	},
-@@ -2822,7 +2805,6 @@ static const struct qcom_llcc_config x1e80100_cfg[] = {
- 	{
- 		.sct_data	= x1e80100_data,
- 		.size		= ARRAY_SIZE(x1e80100_data),
--		.need_llcc_cfg	= true,
- 		.reg_offset	= llcc_v2_1_reg_offset,
- 		.edac_reg_offset = &llcc_v2_1_edac_reg_offset,
- 		.irq_configured = true,
-@@ -3175,7 +3157,8 @@ static int _qcom_llcc_cfg_program(const struct llcc_slice_config *config,
- 			return ret;
- 	}
- 
--	if (cfg->need_llcc_cfg) {
-+	/* At least SDM845 disallows non-secure writes to these registers */
-+	if (!cfg->skip_llcc_cfg) {
- 		u32 disable_cap_alloc, retain_pc;
- 
- 		disable_cap_alloc = config->dis_cap_alloc << config->slice_id;
+> +	if (ret) {
+> +		DRM_DEV_ERROR(gmu->dev, "Unable to ACD table (%d)\n", ret);
+> +		return ret;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+>   static int a6xx_hfi_send_test(struct a6xx_gmu *gmu)
+>   {
+>   	struct a6xx_hfi_msg_test msg = { 0 };
+> @@ -756,6 +788,10 @@ int a6xx_hfi_start(struct a6xx_gmu *gmu, int boot_state)
+>   	if (ret)
+>   		return ret;
+>   
+> +	ret = a6xx_hfi_enable_acd(gmu);
+> +	if (ret)
+> +		return ret;
+> +
+>   	ret = a6xx_hfi_send_core_fw_start(gmu);
+>   	if (ret)
+>   		return ret;
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.h b/drivers/gpu/drm/msm/adreno/a6xx_hfi.h
+> index 528110169398..51864c8ad0e6 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.h
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.h
+> @@ -151,12 +151,33 @@ struct a6xx_hfi_msg_test {
+>   	u32 header;
+>   };
+>   
+> +#define HFI_H2F_MSG_ACD 7
+> +#define MAX_ACD_STRIDE 2
+> +
+> +struct a6xx_hfi_acd_table {
+> +	u32 header;
+> +	u32 version;
+> +	u32 enable_by_level;
+> +	u32 stride;
+> +	u32 num_levels;
+> +	u32 data[16 * MAX_ACD_STRIDE];
+> +};
+> +
+>   #define HFI_H2F_MSG_START 10
+>   
+>   struct a6xx_hfi_msg_start {
+>   	u32 header;
+>   };
+>   
+> +#define HFI_H2F_FEATURE_CTRL 11
+> +
+> +struct a6xx_hfi_msg_feature_ctrl {
+> +	u32 header;
+> +	u32 feature;
+> +	u32 enable;
+> +	u32 data;
+> +};
+> +
+>   #define HFI_H2F_MSG_CORE_FW_START 14
+>   
+>   struct a6xx_hfi_msg_core_fw_start {
+> 
 
----
-base-commit: 1ffec08567f426a1c593e038cadc61bdc38cb467
-change-id: 20241104-topic-llcc_flip-c8720c56b7f2
-
-Best regards,
--- 
-Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-
+Thanks,
+Neil
 
