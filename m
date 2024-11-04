@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-36955-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36956-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 48E0E9BB7A0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 15:24:29 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 40B069BB7C4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 15:29:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 00CF61F23904
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 14:24:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0438F2849F6
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 14:29:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BEDB418595F;
-	Mon,  4 Nov 2024 14:24:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 269AD1A76A4;
+	Mon,  4 Nov 2024 14:29:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SDkIXJjU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VI6LSM0r"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E6C714D2B1;
-	Mon,  4 Nov 2024 14:24:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E56F72AEFE;
+	Mon,  4 Nov 2024 14:29:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730730263; cv=none; b=bZNrxAsG/DRPdOr56A5q88ymT0w9Av7/xkgPIo9yieQebQmArqo8mdGyPwJXkZrAmRAEdiT7BKccjipM/mXCrxCY9VbBuyqzSkYbZlAVepro7lrGtjIaxW2dXxK20+ewSqH535KzaGg6mh0Prul1gZVN+xpykliDYvTub2DvFtA=
+	t=1730730562; cv=none; b=mhaRqLfuaz4z6RYWJOELftbD9wC6o/87QDJhYc2g9wceFENrOzUpLnWI7L6wInRzt3knR2X05+VsNJAOivMXKQx+LjUIEoZx2PcbNGJrrX4iOQvpgy+zkouzxpaE8ByXzz89TGNC3buGrw8lfvsfnU3UhGoklDTfNGr+reszbBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730730263; c=relaxed/simple;
-	bh=xu/jVyvAFcaTT86i2w/CmQDbYhthYBNARz5ujHg8xP4=;
+	s=arc-20240116; t=1730730562; c=relaxed/simple;
+	bh=EXddGjljuXfiyst3teC3kH4+6NzpEAOhemaF87o1HEE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SMV+JrksVruosNouttEFJyzppa+H5m8bibEBd1d1grnWq8Mdf1yKFsWJK5kU1a3vrveVHzdROay/vLmegDsgu1XyadHPHthkpUW24FmMfuNLd8R1Ffj2hK8A7F8ydPZb2JuM4sb/iIrj9AuRSDIq9NQPu+pAUyfC+IyhcYBenSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SDkIXJjU; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 033FCC4CED0;
-	Mon,  4 Nov 2024 14:24:23 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=HPXi1QezbWb6c5W5Q4siHcHgO6jtVmmx+cgibA4C4gQXSmsmp7UhTH/ZsHkrZKk3vqtuS/oEVvPhoBp08vMig3amzI1ghA9w6MsvG+IL282eLGFVEAyk82iBLi6xtqRiBwObBhOe69f8oizMQzvQGVapi0uyFnyWgSzUfYjSd3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VI6LSM0r; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D4ADC4CECE;
+	Mon,  4 Nov 2024 14:29:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730730263;
-	bh=xu/jVyvAFcaTT86i2w/CmQDbYhthYBNARz5ujHg8xP4=;
+	s=k20201202; t=1730730561;
+	bh=EXddGjljuXfiyst3teC3kH4+6NzpEAOhemaF87o1HEE=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=SDkIXJjUqI8v65KuM7S0M3PNEJPSnroUHZ06u2jFVG4lS5fEazbocaYJ4NOqQS0g0
-	 7yCtHwOzd1De1r+WB/6AX7+giDketoP1aVZ10dWwC5eBy2u26VQxxaJhY0mTG4w7OF
-	 p6HwSLWMwbhdPwzoxZHDeuNz5kP4602+FPHb8lN7RnixdW01ddfYvQY69SvPOiGBZd
-	 KH+WXeeX46KbPW8sb4hLI6WnLk3qCmRhuAUkactaqXuIsXDdz/hLFcv3SyEi5IA7GL
-	 DjXa8ynJmuEUszLbxL4evzBfakrMG2xgl8O7d/dIdYv6xi3d23GFaaJiyFUS8Irna5
-	 9smLFvnEwr3Qg==
+	b=VI6LSM0rNQv+75kEV8qCjeTF/lBf5PCB1iwVeAFYrDNCyw0yWDtIx0iBL4qJIBo25
+	 w8TW5FpmWM/N67WF8UWtQihC+CaXwAMN6/TFERLSNW50+ffDQLSKD4s+nc5CgMJWCE
+	 fjdJcsNldAlHHwXuMlD8oDawBI/9rMVrNFAbIeRh3HXKz1nophDh1nUNnpa5qvyGDe
+	 cZKn/6lsOF2ptEXxcLVlvlB7UaKemEq30MqnxxW69dH01/XdghIDGarEGGpdbsWbuH
+	 i/kg9r6SQm3BmPTTntIEvjwDmqXV1EgMeCUzvzObmLN5Tr/rxMyk2jXFsJNkjVzlZW
+	 IUuKPhAtpBUOQ==
 Received: from johan by xi.lan with local (Exim 4.97.1)
 	(envelope-from <johan@kernel.org>)
-	id 1t7y0B-000000007zq-2QQ4;
-	Mon, 04 Nov 2024 15:24:20 +0100
-Date: Mon, 4 Nov 2024 15:24:19 +0100
+	id 1t7y50-0000000087N-0Es2;
+	Mon, 04 Nov 2024 15:29:18 +0100
+Date: Mon, 4 Nov 2024 15:29:18 +0100
 From: Johan Hovold <johan@kernel.org>
 To: Qiang Yu <quic_qianyu@quicinc.com>
 Cc: manivannan.sadhasivam@linaro.org, vkoul@kernel.org, kishon@kernel.org,
@@ -58,11 +58,10 @@ Cc: manivannan.sadhasivam@linaro.org, vkoul@kernel.org, kishon@kernel.org,
 	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
 	devicetree@vger.kernel.org, linux-clk@vger.kernel.org,
 	johan+linaro@kernel.org
-Subject: Re: [PATCH v8 3/5] PCI: qcom: Remove BDF2SID mapping config for
- SC8280X family SoC
-Message-ID: <ZyjZE-U_7YZhScfG@hovoldconsulting.com>
+Subject: Re: [PATCH v8 4/5] PCI: qcom: Disable ASPM L0s for X1E80100
+Message-ID: <ZyjaPtGtRlsIO64b@hovoldconsulting.com>
 References: <20241101030902.579789-1-quic_qianyu@quicinc.com>
- <20241101030902.579789-4-quic_qianyu@quicinc.com>
+ <20241101030902.579789-5-quic_qianyu@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -71,25 +70,27 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241101030902.579789-4-quic_qianyu@quicinc.com>
+In-Reply-To: <20241101030902.579789-5-quic_qianyu@quicinc.com>
 
-On Thu, Oct 31, 2024 at 08:09:00PM -0700, Qiang Yu wrote:
-> The SC8280XP PCIe devicetree nodes do not specify an 'iommu-map' so the
-> config_sid() callback is effectively a no-op. Hence introduce a new ops
-
-Would have been good to say something about why there are no 'iommu-map'
-properties on sc8280xp (e.g. since it uses an SMMUv3) as Bjorn
-suggested.
-
-> struct, namely ops_1_21_0 which is same as ops_1_9_0 except that it
-> doesn't have config_sid() callback to clean it up.
+On Thu, Oct 31, 2024 at 08:09:01PM -0700, Qiang Yu wrote:
+> Currently, the cfg_1_9_0 which is being used for X1E80100 doesn't disable
+> ASPM L0s. However, hardware team recommends to disable L0s as the PHY init
+> sequence is not tuned support L0s. Hence reuse cfg_sc8280xp for X1E80100.
+> 
+> Note that the config_sid() callback is not present in cfg_sc8280xp, don't
+> concern about this because config_sid() callback is originally a no-op
+> for X1E80100.
 > 
 > Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
 > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-I see that this patch has been picked up now. The above is already much
-better and I guess this is good enough for now:
+This one should also have been marked for backporting:
+
+Fixes: 6d0c39324c5f ("PCI: qcom: Add X1E80100 PCIe support")
+Cc: stable@vger.kernel.org	# 6.9
+
+Looks much better now either way:
 
 Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
 
