@@ -1,157 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-36898-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36899-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 73CF59BB0C7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 11:16:55 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5FA429BB0E2
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 11:22:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A58E71C20A82
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 10:16:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1E8702812D0
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 10:22:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC95A1B0F1E;
-	Mon,  4 Nov 2024 10:16:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 343FB1AF0DD;
+	Mon,  4 Nov 2024 10:22:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kEc+KOto"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RDWvKhHz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF0E7189510
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Nov 2024 10:16:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C8C018C020;
+	Mon,  4 Nov 2024 10:22:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730715404; cv=none; b=CC9bAq9RtDb/Jzijt1xcIu6Uazfd6dw+MB7eMDDyAF7izDevlJO3+qokHIJ6nO2ClJjVV8aH3F0Hb0rN/jCpk8MZlXM0E8yNy52Nq7Diu4pNDH22kkbIXhNhfWkpBPVoqvzC6Njm9jeOkWFMBywn83JbGkAHrWAuiGvE2j6HxFU=
+	t=1730715739; cv=none; b=LliKT2JKw6mPNsmvVVMQubj460c2SXC5/iKCYzdSLVP3uIDnD20r+h3P7msaL+OmB/UcWbVWkSNoULMTpAtcrsWcha+wWRhpf62XyB3kJ9OoY14W0izLrXWyJeBrPShDDumlSmAUXqQz6T0dK/HYBdYcnZhy0AxpZtd8au95S+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730715404; c=relaxed/simple;
-	bh=MFYm2GRmaUQp2/58mK5nGraJsS/gP/S9kgUwW7wae7o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Y9HnagjBUCW9USh+zLT2Umfu0IrM3ppJ9wOxTuVMfsjD+BrDeg3fhkUlNnyCBVMR+GuQPsb8GB6V9gYiK7Nh9oAJgC399ChV/8R+jw50K2Ooyc8q2hwZ4TxMWRFCZIRfCn66dzh1WrfL6gJCvQ9RiLY3EBIEjVufmbzXa7+zI0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kEc+KOto; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4314b316495so34003875e9.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Nov 2024 02:16:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1730715400; x=1731320200; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=qWd3s2txJjKIcGqSsEzcZhgewqAr7nI1yjXYF52OaVo=;
-        b=kEc+KOtofhsAInMhOEU+F/FD2EwL+vAyt/fZQCSdfZpBQ1RmDTuBDDuiTopS1eLP0n
-         2qLgKF5AclTtYzqOc/CiTUz2Yx/Yo8m+KM6ZhWevCBuF7Yc0HDn1u8KaGMMAKWNsP3n0
-         qWV+hT+vW5h3m7wouAyUTTeKgP8XOMhb0qkieTqNU1BgDvvkwHg5+RNmYz6iNGKVuXZ5
-         6vFGHLhp5N/58bBjphvLXqkpe2ecWXDakyxK8+Og0+2cE9XftPUOZhEy0gJ2Zd35DdD/
-         SXElWXeIrkds9eOG6+fnpgNgvC+opf8DXvb4eROVVxxZmY0iO1sXR+10vK4NCMEBqm3v
-         t3aw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730715400; x=1731320200;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qWd3s2txJjKIcGqSsEzcZhgewqAr7nI1yjXYF52OaVo=;
-        b=Q3s786U+QjwRHekMg3MuNmA+gdKxc4QdhF/f3VhMBu2bnjxf5u8A52z8j2IXxMztoW
-         Iu4bj64IhmRzHrvi1+kvMp3U5q9Uf6Y+h71s7y/7M2vKn9LxHvXWaShRQBfa0SaNgj37
-         60gK8tOhSzusB63sAtKVnDIW8xut28E8ioBGDYvVai/TFv4D4XBXpFY3uyBWvlCb4fmo
-         SpTI/k3G3cXZMECHyc+vZcwTyIZVnsq0B5oO4QUsuQajBHVYR9BS8d8yg3hEXKjroyuf
-         N4ET1oi8RQ/fH1A2n2B/GVUvShTkrsRVTm+YAAMCEsHl/M80goy4ZD5J5cSakG5wDeXO
-         VlmA==
-X-Forwarded-Encrypted: i=1; AJvYcCVAvLYvbRqKH1oPjoObY4rWMLRUrmsZOTg9PEzORo0yvihS0oVvBeQQ6sluBBGbk+fqpetyhxlONzx1zMmL@vger.kernel.org
-X-Gm-Message-State: AOJu0YzV8nzp/6I6TzLbZ+85f97fQ/WZ7jfbEJEMzJe3+R7gyOdixM1A
-	L4bRqgySXH1KZwRdLaGrTK3pMgLQ9OqKHnZcs/Y+u1dyL0504Unx2cWR7VxKu9s=
-X-Google-Smtp-Source: AGHT+IFDt2BrLBERph12kJZnQ8qLb/mhirfwAnqIBiRvvP7cAKfzV040B2ULebp4Q7UF7nG800Bryw==
-X-Received: by 2002:a05:600c:4688:b0:431:5957:27e8 with SMTP id 5b1f17b1804b1-4327b7ea52dmr117711305e9.28.1730715399974;
-        Mon, 04 Nov 2024 02:16:39 -0800 (PST)
-Received: from linaro.org ([82.76.168.176])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4327d6983f6sm152688085e9.45.2024.11.04.02.16.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Nov 2024 02:16:39 -0800 (PST)
-Date: Mon, 4 Nov 2024 12:16:37 +0200
-From: Abel Vesa <abel.vesa@linaro.org>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rajendra Nayak <quic_rjendra@quicinc.com>,
-	Sibi Sankar <quic_sibis@quicinc.com>,
-	Johan Hovold <johan@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Trilok Soni <quic_tsoni@quicinc.com>, linux-kernel@vger.kernel.org,
-	linux-usb@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v4 2/4] usb: typec: Add support for Parade PS8830 Type-C
- Retimer
-Message-ID: <ZyifBejZtb7x0Vyc@linaro.org>
-References: <20241101-x1e80100-ps8830-v4-0-f0f7518b263e@linaro.org>
- <20241101-x1e80100-ps8830-v4-2-f0f7518b263e@linaro.org>
- <ed0c77bd-770c-406d-851f-8589e53cde8b@oss.qualcomm.com>
+	s=arc-20240116; t=1730715739; c=relaxed/simple;
+	bh=kh5QtwjbRWBwwF0Hou4I7K9sJhsih+FO7clvh+maj8Y=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Ab2uNGEJIe88DXklutj2zD7bKwhj9+q51Tm+FfagAMjGlw7K0zWktcX7LA02iJWFoHmQVecLOTOSHHZPjyXJJG/8dRhUQ6yT9ddwt013Z4ofgLLtqPVP/U+1Yi5MffLQmbqGI4rHBsEMRn1fGOu5jy3MSXrT9wHqMixTod9Obqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RDWvKhHz; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A3Mo2Uu031707;
+	Mon, 4 Nov 2024 10:21:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	0Nn0WorU6l2jJYLx45HO5FWgM6QDg3c9c5+U561I2mE=; b=RDWvKhHzcdxfC29i
+	u7+n1kB9lTQb9a3ubtALdFWRuNooLB6iEUyG+/ypJTobXgxaZ0Ix4bF6ZdFKByg8
+	0JrgxdWg8MJ7vePfg4XCYeDT6eKWURruL86VUA4mCklIikZGXldvbx6ZN/C9pj5o
+	6Sg1eqzTalNGfikgXXRKlbmYUAQQEHzK5Sls9TwpWlNba4HRN3kl/5dsZ80ur1Na
+	6D+38TPhKCu7NDv3ogFUu/WJ9MkKAVzQwdMn779iWcL7MwXf7M6+F7bOdh9FdKB8
+	Fu3WZjEG+Xh1iumKW3Ldfs6xVg222LKzHH75BbaxPKBthKKkOmAxFTxydRL4lrci
+	9B3v+g==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42nd1fkudw-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 04 Nov 2024 10:21:54 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4A4ALro9001503
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 4 Nov 2024 10:21:53 GMT
+Received: from [10.217.217.28] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 4 Nov 2024
+ 02:21:45 -0800
+Message-ID: <16aaae04-4fe8-4227-9374-0919960a4ca2@quicinc.com>
+Date: Mon, 4 Nov 2024 15:51:36 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ed0c77bd-770c-406d-851f-8589e53cde8b@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V4 1/4] dt-bindings: iio/adc: Move QCOM ADC bindings to
+ iio/adc folder
+To: "Rob Herring (Arm)" <robh@kernel.org>
+CC: <quic_skakitap@quicinc.com>, <daniel.lezcano@linaro.org>,
+        <andersson@kernel.org>, <lee@kernel.org>,
+        <cros-qcom-dts-watchers@chromium.org>, <linux-kernel@vger.kernel.org>,
+        <lars@metafoo.de>, <robh+dt@kernel.org>, <quic_subbaram@quicinc.com>,
+        <rafael@kernel.org>, <quic_kamalw@quicinc.com>, <agross@kernel.org>,
+        <amitk@kernel.org>, <linux-pm@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <quic_amelende@quicinc.com>, <neil.armstrong@linaro.org>,
+        <conor+dt@kernel.org>, <linux-iio@vger.kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <quic_collinsd@quicinc.com>,
+        <konrad.dybcio@linaro.org>, <jic23@kernel.org>,
+        <devicetree@vger.kernel.org>, <lukasz.luba@arm.com>,
+        <rui.zhang@intel.com>, <sboyd@kernel.org>
+References: <20241030185854.4015348-1-quic_jprakash@quicinc.com>
+ <20241030185854.4015348-2-quic_jprakash@quicinc.com>
+ <173031962644.1844672.11198879616520852521.robh@kernel.org>
+Content-Language: en-US
+From: Jishnu Prakash <quic_jprakash@quicinc.com>
+In-Reply-To: <173031962644.1844672.11198879616520852521.robh@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: nwFSCJpt7OlT4ZFwLopJb1OaMawAdfgn
+X-Proofpoint-ORIG-GUID: nwFSCJpt7OlT4ZFwLopJb1OaMawAdfgn
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 adultscore=0
+ impostorscore=0 bulkscore=0 mlxlogscore=999 spamscore=0 phishscore=0
+ malwarescore=0 mlxscore=0 clxscore=1015 lowpriorityscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411040092
 
-On 24-11-02 10:17:56, Konrad Dybcio wrote:
-> On 1.11.2024 5:29 PM, Abel Vesa wrote:
-> > The Parade PS8830 is a USB4, DisplayPort and Thunderbolt 4 retimer,
-> > controlled over I2C. It usually sits between a USB/DisplayPort PHY
-> > and the Type-C connector, and provides orientation and altmode handling.
-> > 
-> > The boards that use this retimer are the ones featuring the Qualcomm
-> > Snapdragon X Elite SoCs.
-> > 
-> > Add a driver with support for the following modes:
-> >  - DisplayPort 4-lanes
-> >  - DisplayPort 2-lanes + USB3
-> >  - USB3
-> > 
-> > There is another variant of this retimer which is called PS8833. It seems
-> > to be really similar to the PS8830, so future-proof this driver by
-> > naming it ps883x.
-> > 
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > ---
+Hi Rob,
+
+On 10/31/2024 1:50 AM, Rob Herring (Arm) wrote:
 > 
-> [...]
+> On Thu, 31 Oct 2024 00:28:51 +0530, Jishnu Prakash wrote:
+>> There are several files containing QCOM ADC macros for channel names
+>> right now in the include/dt-bindings/iio folder. Since all of these
+>> are specifically for adc, move the files to the
+>> include/dt-bindings/iio/adc folder.
+>>
+>> Also update all affected devicetree and driver files to fix compilation
+>> errors seen with this move and update documentation files to fix
+>> dtbinding check errors for the same.
+>>
+>> Acked-by: Lee Jones <lee@kernel.org>
+>> Acked-by: Rob Herring <robh@kernel.org>
+>> Signed-off-by: Jishnu Prakash <quic_jprakash@quicinc.com>
+>> ---
+>> Changes since v3:
+>> - Updated files affected by adc file path change in /arch/arm, which
+>>   were missed earlier. Updated some more new devicetree files requiring
+>>   this change in /arch/arm64.
+>>
+
+
+>>  rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-smb139x.h (93%)
+>>  rename include/dt-bindings/iio/{ => adc}/qcom,spmi-vadc.h (100%)
+>>
 > 
-> > +static void ps883x_configure(struct ps883x_retimer *retimer, int cfg0, int cfg1, int cfg2)
-> > +{
-> > +	regmap_write(retimer->regmap, 0x0, cfg0);
-> > +	regmap_write(retimer->regmap, 0x1, cfg1);
-> > +	regmap_write(retimer->regmap, 0x2, cfg2);
-> > +}
+> My bot found errors running 'make dt_binding_check' on your patch:
 > 
-> Somewhere between introducing regcache and dropping it, you removed
-> muxing to a safe mode during _configure()
-
-Oh, yeah, I forgot to mention that in the change log, it seems.
-
-Configuring to safe mode is not needed since we always do that on 
-unplug anyway.
-
+> yamllint warnings/errors:
 > 
-> [...]
+> dtschema/dtc warnings/errors:
+> In file included from Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.example.dts:80:
+> ./scripts/dtc/include-prefixes/dt-bindings/iio/adc/qcom,spmi-adc7-pmk8350.h:13:10: fatal error: dt-bindings/iio/adc/qcom,spmi-vadc.h: No such file or directory
+>    13 | #include <dt-bindings/iio/adc/qcom,spmi-vadc.h>
+>       |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+I think there must be some mistake here because my patch does add the file include/dt-bindings/iio/adc/qcom,spmi-vadc.h, through a rename. This is seen at the very end of my patch:
+
+> diff --git a/include/dt-bindings/iio/qcom,spmi-vadc.h b/include/dt-bindings/iio/adc/qcom,spmi-vadc.h
+> similarity index 100%
+> rename from include/dt-bindings/iio/qcom,spmi-vadc.h
+> rename to include/dt-bindings/iio/adc/qcom,spmi-vadc.h
+
+This patch moves our ADC-related header files from 'include/dt-bindings/iio/' folder to 'include/dt-bindings/iio/adc' folder
+and fixes this path change in all affected files in the same patch....I think this should be expected to pass compilation.
+
+Is it possible something went wrong from your end in this case? I see that both the files mentioned in the above error, qcom,spmi-adc7-pmk8350.h and qcom,spmi-vadc.h
+are moved from 'include/dt-bindings/iio/' folder to 'include/dt-bindings/iio/adc' folder in my patch, could the tool be confused due to qcom,spmi-adc7-pmk8350.h
+containing the updated path of qcom,spmi-vadc.h?
+
+
+> compilation terminated.
+> make[2]: *** [scripts/Makefile.dtbs:129: Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.example.dtb] Error 1
+> make[2]: *** Waiting for unfinished jobs....
+> make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1442: dt_binding_check] Error 2
+> make: *** [Makefile:224: __sub-make] Error 2
 > 
-> > +	/* skip resetting if already configured */
-> > +	if (regmap_test_bits(retimer->regmap, 0x00, BIT(0)))
-> > +		return 0;
+> doc reference errors (make refcheckdocs):
 > 
-> What is that register and what does BIT(0) mean?
-
-Looking at the documentation, the first register is
-REG_USB_PORT_CONN_STATUS and spans over the first 4 bytes.
-
-But it doesn't really help here.
-
-BIT(0) doesn't really have a name, it just says "Connection present".
-
+> See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20241030185854.4015348-2-quic_jprakash@quicinc.com
 > 
-> Konrad
+> The base for the series is generally the latest rc1. A different dependency
+> should be noted in *this* patch.
+> 
+> If you already ran 'make dt_binding_check' and didn't see the above
+> error(s), then make sure 'yamllint' is installed and dt-schema is up to
+> date:
+> 
+> pip3 install dtschema --upgrade
+> 
+
+I have also followed the above instructions to update dt-schema and run 'make dt_binding_check' again and I did not see the above error.
+I'm also not getting any errors when building with this patch applied.
+
+Thanks,
+Jishnu
+
+> Please check and re-submit after running the above command yourself. Note
+> that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+> your schema. However, it must be unset to test all examples with your schema.
+> 
+
 
