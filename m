@@ -1,53 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-36978-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36979-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 015609BBDBF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 20:08:35 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 19F7E9BBDC1
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 20:08:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 71AAE1F22F79
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 19:08:34 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D343A2834CD
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 19:08:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8421F1CCEC9;
-	Mon,  4 Nov 2024 19:08:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 58BDF1CC8A6;
+	Mon,  4 Nov 2024 19:08:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b3BonnUb"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HdKZJ063"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 582171CC899;
-	Mon,  4 Nov 2024 19:08:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 267AC1C9DDF;
+	Mon,  4 Nov 2024 19:08:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730747297; cv=none; b=Y1cFqWyszYXU2i0mXXbuB8mSdLMLHGdt42NyzwzlOyy0fUx5EVGUqqVEobHfF0yaL3IcNftZRwVRFyIzUsCdTm2DhHWLiN6oy7BKrQTymvQnX9yCHtnf/7bIo2pCRq85ZmY6cKpZnBwUoFKvo5t8bfXwGc5ww2hhUMeMVnjNoxA=
+	t=1730747314; cv=none; b=IMdjXYbsxLhjMa6LV7Nkn+xTadxgEIkYi6j1YKtvt/Fa8CMrCOoYhU9IiRE5BPJdHF8BKihqiEYIdFqQ1wED6K7R3WG0PkKMyee0V7kIJo6osTOVKwdjMDE0JacIwVWMGQ+BJDZwoC7xavKsIcQ2HDjGl/9h9MDEW/HkEYAu7yA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730747297; c=relaxed/simple;
-	bh=byWXfqOzyItB0XDO7CHWIRppOPCIsx9LfjgTgf+kgto=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Ssj1AKMDkqR2quEILZWGaPRjL8UfdfbeOa3cwJa2j5Dli7XYl13huwlpHUgd0b2SI59YaIxQoZXj0NyKbSHySRFyg7TPUElTP41JBmjtjvuNu/wl2ejrYx5pBHUZa5Z984gE/mBTyTgQg7WH0Ac64Vy8VFh6ATzJyu+JwFxEXN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b3BonnUb; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEC7BC4CECE;
-	Mon,  4 Nov 2024 19:08:16 +0000 (UTC)
+	s=arc-20240116; t=1730747314; c=relaxed/simple;
+	bh=j7klqenx4annFQS56VxG5XYt0rD6Z/IoBUva+ojwv4E=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=pTdi0a+M+ygDWx2usk+vdsOcjIuTLyGZpFUx9DbrUgNVcW9Czy5mAxrjTc6Oof8ca0F0dkbJi2ik9SzRZ/bSj7Lp/ONAGHvTYdeb5fqBx9HbzUUhJ0QfdiiQqsxX2FCP5rWvfH60/NN1GlKULwpMVGyViJ0zPYtEN+Ch7S9egYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HdKZJ063; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64C6EC4CECE;
+	Mon,  4 Nov 2024 19:08:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730747296;
-	bh=byWXfqOzyItB0XDO7CHWIRppOPCIsx9LfjgTgf+kgto=;
+	s=k20201202; t=1730747313;
+	bh=j7klqenx4annFQS56VxG5XYt0rD6Z/IoBUva+ojwv4E=;
 	h=From:To:Cc:Subject:Date:From;
-	b=b3BonnUb9sj9IUI87wtN77U2CJGSMrpe/uz8eFNe4DvXdHHkFbAlx5XYiQ5R8icqj
-	 gEckYtu4VM+LzGW/lM0itT5A0q2y63XUp4LhQN/FE9loQN24XAof35GPW5lUBUaec5
-	 otQlZyWhhAWDPhZ54CdIaBIxS3DR+lbiEH52t9IlKfcNnl/yOgy3PhCmCJsj7LuX4M
-	 +tNkag5bZ4PGZHKsYOjsAzk0fl8FgigKf5Keyqq8oOG9iYEntt3/s1M/b3yzxitl5t
-	 A+UdbfLESU6trdqiA4qTfynzsa6FeOoBsNVLLoTYqyUTCH/GLam48suB0pR7GKzlg2
-	 mi3dvf2rk5Isg==
+	b=HdKZJ063PdQWe4KE3HDKzbd3TrFv6VyHEc+ElSkkrX68ltrXZnmwnA2VKN2tG455J
+	 76wgJeHu5PV6lrlCt6dpcmZ2SxyRK9hD2vv0FQ8OwOYUrvnnqcRLccV3mmXsWNEGWg
+	 kbFqNzXelXllXntRtsDbWP1nDPUO95rC5JKwGpnChuUttI765wrVh3SkZwOpcJUpGO
+	 h2DjbTXBQWoW7ys4r+PSOiCIEEdWFjvtdOuQOEn1V83R2ajOQiPmWs0+yiNc6nvrm3
+	 oKv0k9eGkelA0p+H9PpucsqzNsRU5y8zrLnLHtsi9Zgv9eOvVtRgBOS7qwrX9TOsbK
+	 HAPUU/i1XfzFw==
 From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Mark Brown <broonie@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-spi@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] spi: Use of_property_present() for non-boolean properties
-Date: Mon,  4 Nov 2024 13:07:59 -0600
-Message-ID: <20241104190759.277184-2-robh@kernel.org>
+To: Peter Chen <peter.chen@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Chunfeng Yun <chunfeng.yun@mediatek.com>
+Cc: linux-usb@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-omap@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org
+Subject: [PATCH] usb: Use (of|device)_property_present() for non-boolean properties
+Date: Mon,  4 Nov 2024 13:08:18 -0600
+Message-ID: <20241104190820.277702-1-robh@kernel.org>
 X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -57,56 +63,112 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The use of of_property_read_bool() for non-boolean properties is
-deprecated in favor of of_property_present() when testing for property
-presence.
+The use of (of|device)_property_read_bool() for non-boolean properties
+is deprecated in favor of of_property_present() when testing for
+property presence.
 
 Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 ---
- drivers/spi/spi-qcom-qspi.c | 2 +-
- drivers/spi/spi-ti-qspi.c   | 2 +-
- drivers/spi/spi.c           | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/usb/chipidea/core.c        | 2 +-
+ drivers/usb/dwc3/core.c            | 2 +-
+ drivers/usb/dwc3/dwc3-omap.c       | 2 +-
+ drivers/usb/dwc3/dwc3-qcom.c       | 2 +-
+ drivers/usb/mtu3/mtu3_plat.c       | 2 +-
+ drivers/usb/phy/phy.c              | 2 +-
+ drivers/usb/renesas_usbhs/common.c | 2 +-
+ 7 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/spi/spi-qcom-qspi.c b/drivers/spi/spi-qcom-qspi.c
-index 49b775134485..2b5cd9fee1a2 100644
---- a/drivers/spi/spi-qcom-qspi.c
-+++ b/drivers/spi/spi-qcom-qspi.c
-@@ -771,7 +771,7 @@ static int qcom_qspi_probe(struct platform_device *pdev)
- 	host->prepare_message = qcom_qspi_prepare_message;
- 	host->transfer_one = qcom_qspi_transfer_one;
- 	host->handle_err = qcom_qspi_handle_err;
--	if (of_property_read_bool(pdev->dev.of_node, "iommus"))
-+	if (of_property_present(pdev->dev.of_node, "iommus"))
- 		host->can_dma = qcom_qspi_can_dma;
- 	host->auto_runtime_pm = true;
- 	host->mem_ops = &qcom_qspi_mem_ops;
-diff --git a/drivers/spi/spi-ti-qspi.c b/drivers/spi/spi-ti-qspi.c
-index 0fe6899e78dd..c615ad56c676 100644
---- a/drivers/spi/spi-ti-qspi.c
-+++ b/drivers/spi/spi-ti-qspi.c
-@@ -824,7 +824,7 @@ static int ti_qspi_probe(struct platform_device *pdev)
- 	}
+diff --git a/drivers/usb/chipidea/core.c b/drivers/usb/chipidea/core.c
+index 835bf2428dc6..18ecfcc08b97 100644
+--- a/drivers/usb/chipidea/core.c
++++ b/drivers/usb/chipidea/core.c
+@@ -765,7 +765,7 @@ static int ci_get_platdata(struct device *dev,
  
+ 	ext_id = ERR_PTR(-ENODEV);
+ 	ext_vbus = ERR_PTR(-ENODEV);
+-	if (of_property_read_bool(dev->of_node, "extcon")) {
++	if (of_property_present(dev->of_node, "extcon")) {
+ 		/* Each one of them is not mandatory */
+ 		ext_vbus = extcon_get_edev_by_phandle(dev, 0);
+ 		if (IS_ERR(ext_vbus) && PTR_ERR(ext_vbus) != -ENODEV)
+diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+index 9eb085f359ce..e1beb760e913 100644
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -1935,7 +1935,7 @@ static struct extcon_dev *dwc3_get_extcon(struct dwc3 *dwc)
+ 	struct extcon_dev *edev = NULL;
+ 	const char *name;
  
--	if (of_property_read_bool(np, "syscon-chipselects")) {
-+	if (of_property_present(np, "syscon-chipselects")) {
- 		qspi->ctrl_base =
- 		syscon_regmap_lookup_by_phandle(np,
- 						"syscon-chipselects");
-diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
-index c1dad30a4528..e6063e536298 100644
---- a/drivers/spi/spi.c
-+++ b/drivers/spi/spi.c
-@@ -2454,7 +2454,7 @@ static int of_spi_parse_dt(struct spi_controller *ctlr, struct spi_device *spi,
- 			nc, rc);
- 		return rc;
- 	}
--	if ((of_property_read_bool(nc, "parallel-memories")) &&
-+	if ((of_property_present(nc, "parallel-memories")) &&
- 	    (!(ctlr->flags & SPI_CONTROLLER_MULTI_CS))) {
- 		dev_err(&ctlr->dev, "SPI controller doesn't support multi CS\n");
- 		return -EINVAL;
+-	if (device_property_read_bool(dev, "extcon"))
++	if (device_property_present(dev, "extcon"))
+ 		return extcon_get_edev_by_phandle(dev, 0);
+ 
+ 	/*
+diff --git a/drivers/usb/dwc3/dwc3-omap.c b/drivers/usb/dwc3/dwc3-omap.c
+index 2a11fc0ee84f..c2d7582c151a 100644
+--- a/drivers/usb/dwc3/dwc3-omap.c
++++ b/drivers/usb/dwc3/dwc3-omap.c
+@@ -416,7 +416,7 @@ static int dwc3_omap_extcon_register(struct dwc3_omap *omap)
+ 	struct device_node	*node = omap->dev->of_node;
+ 	struct extcon_dev	*edev;
+ 
+-	if (of_property_read_bool(node, "extcon")) {
++	if (of_property_present(node, "extcon")) {
+ 		edev = extcon_get_edev_by_phandle(omap->dev, 0);
+ 		if (IS_ERR(edev)) {
+ 			dev_vdbg(omap->dev, "couldn't get extcon device\n");
+diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+index c1d4b52f25b0..649166e2a8b8 100644
+--- a/drivers/usb/dwc3/dwc3-qcom.c
++++ b/drivers/usb/dwc3/dwc3-qcom.c
+@@ -161,7 +161,7 @@ static int dwc3_qcom_register_extcon(struct dwc3_qcom *qcom)
+ 	struct extcon_dev	*host_edev;
+ 	int			ret;
+ 
+-	if (!of_property_read_bool(dev->of_node, "extcon"))
++	if (!of_property_present(dev->of_node, "extcon"))
+ 		return 0;
+ 
+ 	qcom->edev = extcon_get_edev_by_phandle(dev, 0);
+diff --git a/drivers/usb/mtu3/mtu3_plat.c b/drivers/usb/mtu3/mtu3_plat.c
+index 6858ed9fc3b2..2380552025e4 100644
+--- a/drivers/usb/mtu3/mtu3_plat.c
++++ b/drivers/usb/mtu3/mtu3_plat.c
+@@ -307,7 +307,7 @@ static int get_ssusb_rscs(struct platform_device *pdev, struct ssusb_mtk *ssusb)
+ 	if (otg_sx->role_sw_used || otg_sx->manual_drd_enabled)
+ 		goto out;
+ 
+-	if (of_property_read_bool(node, "extcon")) {
++	if (of_property_present(node, "extcon")) {
+ 		otg_sx->edev = extcon_get_edev_by_phandle(ssusb->dev, 0);
+ 		if (IS_ERR(otg_sx->edev)) {
+ 			return dev_err_probe(dev, PTR_ERR(otg_sx->edev),
+diff --git a/drivers/usb/phy/phy.c b/drivers/usb/phy/phy.c
+index 06e0fb23566c..130f86a043ad 100644
+--- a/drivers/usb/phy/phy.c
++++ b/drivers/usb/phy/phy.c
+@@ -365,7 +365,7 @@ static int usb_add_extcon(struct usb_phy *x)
+ {
+ 	int ret;
+ 
+-	if (of_property_read_bool(x->dev->of_node, "extcon")) {
++	if (of_property_present(x->dev->of_node, "extcon")) {
+ 		x->edev = extcon_get_edev_by_phandle(x->dev, 0);
+ 		if (IS_ERR(x->edev))
+ 			return PTR_ERR(x->edev);
+diff --git a/drivers/usb/renesas_usbhs/common.c b/drivers/usb/renesas_usbhs/common.c
+index edc43f169d49..e4adfe692164 100644
+--- a/drivers/usb/renesas_usbhs/common.c
++++ b/drivers/usb/renesas_usbhs/common.c
+@@ -632,7 +632,7 @@ static int usbhs_probe(struct platform_device *pdev)
+ 	if (IS_ERR(priv->base))
+ 		return PTR_ERR(priv->base);
+ 
+-	if (of_property_read_bool(dev_of_node(dev), "extcon")) {
++	if (of_property_present(dev_of_node(dev), "extcon")) {
+ 		priv->edev = extcon_get_edev_by_phandle(dev, 0);
+ 		if (IS_ERR(priv->edev))
+ 			return PTR_ERR(priv->edev);
 -- 
 2.45.2
 
