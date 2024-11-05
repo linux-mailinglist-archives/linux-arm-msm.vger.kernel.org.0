@@ -1,335 +1,289 @@
-Return-Path: <linux-arm-msm+bounces-36986-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36987-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD1E39BC1B1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 00:54:34 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 622369BC1FF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 01:26:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0CB991C20C6D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2024 23:54:34 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C000BB215C8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 00:26:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 645AC1FA272;
-	Mon,  4 Nov 2024 23:54:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 152D48F62;
+	Tue,  5 Nov 2024 00:26:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=synopsys.com header.i=@synopsys.com header.b="CisLYoJc";
-	dkim=pass (2048-bit key) header.d=synopsys.com header.i=@synopsys.com header.b="Y2zP5gTh";
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=synopsys.com header.i=@synopsys.com header.b="EzClJCSA"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jtbsMO7Q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-00230701.pphosted.com (mx0b-00230701.pphosted.com [148.163.158.9])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 106D418C015;
-	Mon,  4 Nov 2024 23:54:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=148.163.158.9
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730764472; cv=fail; b=phkxPYWSuS1gtY2HBnV2dxdGAKNkOurctTuh8ZZeqze4x8qwYYFzYACOg8gi7llSHDU5j67JWaZyJft8MiiOpVXmqbN2MtNXwTazMclO+CJ9x9aOu282n0GmZtFxZcN25g9gsStZazGOK7jN/5JzfsTwh3yTs/g30l90/W4k6Ow=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730764472; c=relaxed/simple;
-	bh=mOjNnv1VUYfJ6YJXj5XMJNWayziKYYvi9KOqSfIInzU=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=Pe/OPKlxA5p6H+HM8H/DNCct0GOrF1hPhBU+uaPLAVPXEzdymLAK0rrH9t+qYEeyEIbBAqBVB0Coco64/U6l/fOxwaE2LBq4H6s1pGu1uec2J+cD22fBCkisLetMkbqvhqxoKYNtg6aD2+Cpv4q8B+W4KK94GFiwul4p/oqIueI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=synopsys.com; spf=pass smtp.mailfrom=synopsys.com; dkim=pass (2048-bit key) header.d=synopsys.com header.i=@synopsys.com header.b=CisLYoJc; dkim=pass (2048-bit key) header.d=synopsys.com header.i=@synopsys.com header.b=Y2zP5gTh; dkim=fail (1024-bit key) header.d=synopsys.com header.i=@synopsys.com header.b=EzClJCSA reason="signature verification failed"; arc=fail smtp.client-ip=148.163.158.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=synopsys.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=synopsys.com
-Received: from pps.filterd (m0098572.ppops.net [127.0.0.1])
-	by mx0b-00230701.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A4HVZoq007284;
-	Mon, 4 Nov 2024 15:54:15 -0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=synopsys.com; h=
-	cc:content-id:content-transfer-encoding:content-type:date:from
-	:in-reply-to:message-id:mime-version:references:subject:to; s=
-	pfptdkimsnps; bh=mOjNnv1VUYfJ6YJXj5XMJNWayziKYYvi9KOqSfIInzU=; b=
-	CisLYoJcu41Oigyxz7gbbHnHxK3/sUNrimCR8FBNZt6XkHL8RYLUVf09FxwqtJtc
-	fBnvXWLY32YD+p7H4I8nlslGmA2aP5dazbfBJPBpKjjuNLvNDb64965AT7pBoGuP
-	zzzI10EHY/Bj1LTHN6a1khRSjSo2Krh2gsa5X4YyftutQ7br4fhmxwEXQ7bhJpec
-	tWA+wjMvuj/cwI5P3VmEqw9/Wa8GPFMWtbaVbIyoy8b3MlURMCSmTE2o/GZeT7r5
-	jGgxuvckLDDsqBo2aZuYazxyaTb4oemUciA4PDLgJxhGEXlH+DRW8QAJMwQNJ5Ud
-	2NvWU7lBlM2kOouze/wa3g==
-Received: from smtprelay-out1.synopsys.com (smtprelay-out1.synopsys.com [149.117.87.133])
-	by mx0b-00230701.pphosted.com (PPS) with ESMTPS id 42njqetn7x-1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1E3223BE;
+	Tue,  5 Nov 2024 00:26:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1730766384; cv=none; b=I660gmvMYcee/FNkA51le8f6+l15Vp6i6dw7Lv890bUCkzEf5RJ+X4S4/HtU4Hq+HzvMeGn1azbtq4uq7evpWsdcsDS1mo0Scee6+K89pv3opEzQirXIW+gcykFFJoVbInDXh0kAMHlLXeZA8bE6YMOnWhPHURhU8lFiScVLDgA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1730766384; c=relaxed/simple;
+	bh=EdIcR1fMwyzrH8F/FF+qgFhuLFr0NwEScRS317/AAPc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=HwH9GDUmCtZjPsaymqQu4WBLQtJFQSW6/nRNsHzxNVyrji0UpFWccqdIl3XAyv4nkQHTQmU2/+0ZK5Tuxgilctk1Klt69/SEg3mBT4zKJ/TeLWrbJVh2NrosimscSdNG3rx3YbZtrf0X62fjpkoMxrnFX457L4HDtsU2WyjzII4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jtbsMO7Q; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A4LIe2a015613;
+	Tue, 5 Nov 2024 00:26:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	PBN3T4Vgmqp57QrQMRJMBEh0Fc1TKbJGeO9Gl1LpGHY=; b=jtbsMO7QNkK8SaJ3
+	hIrdRSYcKrqeKH28AbjhABP5gXXVt6imPIb8UMBZfYcMeHIsF3Aj1Q9sIq6+Ho+n
+	1KSkVT+YboVPKXLel+7u8Y415c7hTmwZ9Sxg9JOppMrYbMjJwtmoV0aTpZcDG9ms
+	rOHQbzb3Fdwk5mk3uqlKRQPqQVxQdoPikbEsYQsLQvzQt8OGRBZSOd8GyiMUdC1N
+	IMEMdLmRL0W9F9Sz8eqxL0/te1cxTtA2xDXpKcZKbeiUZL8V0XXL1hUmpmtr8+mK
+	7JIoB7jV2qz9jHqRriidrhn8L118GUSP5w5VznOrV86/2zfEwAJZXydJkPGtj90E
+	beu09g==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42q5n8gcb0-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 04 Nov 2024 15:54:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=synopsys.com; s=mail;
-	t=1730764453; bh=mOjNnv1VUYfJ6YJXj5XMJNWayziKYYvi9KOqSfIInzU=;
-	h=From:To:CC:Subject:Date:References:In-Reply-To:From;
-	b=Y2zP5gThKfo+EP2t5uFN1Gs+Que36XKOJbUdERNOSd6Lr3m6aXELjKw9dcuwdXCv5
-	 EiV7M5HRvBTO06rOXuqOBF7mnOgi7ThHLG1BcfD7A95EsL07wfqSqZrZl0GXE/ftw3
-	 bauCI/fvlHY63OGp2Ppg07+i8Z01UK2mGYG26qUL2WORxlwevXRlZs+mZpvyJhFsPS
-	 oOVI37KnBK2BUwc8/BJ92CGOauWLHsHZ9i5INd+jOS9bZkHEUkJUiAqOyrC/Qzd3Km
-	 jiSa5UO+GYBZE/CqsBHJBZLnJCqDlwLB69OPKg7mUVQ7nV3qT+zBzZoLe52iLWoLue
-	 BQkTfJDLXH3/w==
-Received: from mailhost.synopsys.com (sv1-mailhost1.synopsys.com [10.205.2.131])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits)
-	 client-signature RSA-PSS (2048 bits))
-	(Client CN "mailhost.synopsys.com", Issuer "SNPSica2" (verified OK))
-	by smtprelay-out1.synopsys.com (Postfix) with ESMTPS id 58ADD4012B;
-	Mon,  4 Nov 2024 23:54:12 +0000 (UTC)
-Received: from o365relay-in.synopsys.com (us03-o365relay1.synopsys.com [10.4.161.137])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-	(Client CN "o365relay-in.synopsys.com", Issuer "Entrust Certification Authority - L1K" (not verified))
-	by mailhost.synopsys.com (Postfix) with ESMTPS id 0C067A0092;
-	Mon,  4 Nov 2024 23:54:12 +0000 (UTC)
-Authentication-Results: o365relay-in.synopsys.com; dmarc=pass (p=reject dis=none) header.from=synopsys.com
-Authentication-Results: o365relay-in.synopsys.com; spf=pass smtp.mailfrom=synopsys.com
-Authentication-Results: o365relay-in.synopsys.com;
-	dkim=pass (1024-bit key; unprotected) header.d=synopsys.com header.i=@synopsys.com header.a=rsa-sha256 header.s=selector1 header.b=EzClJCSA;
-	dkim-atps=neutral
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11lp2174.outbound.protection.outlook.com [104.47.58.174])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-384) server-signature RSA-PSS (2048 bits)
-	 client-signature RSA-PSS (2048 bits))
-	(Client CN "mail.protection.outlook.com", Issuer "DigiCert Cloud Services CA-1" (verified OK))
-	by o365relay-in.synopsys.com (Postfix) with ESMTPS id E9A7B40110;
-	Mon,  4 Nov 2024 23:54:09 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=liy9qu2paV8tHahKUoErk0d4vbz7t6xSeULvOOpkq73MnfaBlkqhHODDHg5+eBU7NhKInCaDCNqFFcdMIV0v4gJzncSx7EQkCAlhOnok6S+0NBxQZa1w47xu1iwqWFLHks1JIwvan3yZRgQAbVqcsLeUy+hdnttLmn30kG2IoS2NGDGQvFvSJxz8DUbIXwOTZjlwAuEnydPVA3BTXV0Oo6foCL4HSx9FNF34QEhZpW7NQmnoJJolTTozAK4atE7lHpgJJamDm6zUOALULtZ/dvJbq20PicsMAWJGmEpg/Qmn0R1xAGm6trN1lf/YqlC9snpOfamR1FyFh3vK/blfWA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=mOjNnv1VUYfJ6YJXj5XMJNWayziKYYvi9KOqSfIInzU=;
- b=m7V20HPcSUcJ5FlVwBPTjwb8aMHrRugXJnwF+CXmXKozVkNSvvVV/LFqgGLpOmqx5n8sdP/9VJ5BeUi+Te4VJ7ws3MsKYe0P9o2/03o8yyWs+nGvKltudf/kRsar4z2iLU5ubVJfqtYhzNMN6IPiMq+YTj63bfE24AyCoPnNLg0QrS/y6AlfE3J2gsGNCUrxDPUnzYWtA/IHpZ41IZGlGyQcgNwGqOc1XI4VwOdQneVDtxGK25nhO69jTTsbHhnl9WAjN24PuHxOXa2duGPIP7X2gP74kZGReDiXpIKNXlMLwQQlGXnorx7GXQBpV3Y3kQvjn2IgMXXbY9WCqNVNCg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=synopsys.com; dmarc=pass action=none header.from=synopsys.com;
- dkim=pass header.d=synopsys.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=synopsys.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=mOjNnv1VUYfJ6YJXj5XMJNWayziKYYvi9KOqSfIInzU=;
- b=EzClJCSAdNuDjpDKvttJhEnwTxa6vWkeCeM1Sn1KBmejE8kbNJI4CAn5XVnrDfWNISMpo8ATr0owDLKM8jIYjBuemIbSVAKXuDlHNdptzmLNNyrS/QOk6R4fdAGk/ga3HqIvAHDbBpoXPgc2rvPirhM26biCQDCTMShpOq6ZLXs=
-Received: from LV2PR12MB5990.namprd12.prod.outlook.com (2603:10b6:408:170::16)
- by CH3PR12MB8709.namprd12.prod.outlook.com (2603:10b6:610:17c::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8114.31; Mon, 4 Nov
- 2024 23:54:06 +0000
-Received: from LV2PR12MB5990.namprd12.prod.outlook.com
- ([fe80::3d09:f15f:d888:33a8]) by LV2PR12MB5990.namprd12.prod.outlook.com
- ([fe80::3d09:f15f:d888:33a8%4]) with mapi id 15.20.8114.028; Mon, 4 Nov 2024
- 23:54:04 +0000
-X-SNPS-Relay: synopsys.com
-From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-To: "Rob Herring (Arm)" <robh@kernel.org>
-CC: Peter Chen <peter.chen@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Chunfeng Yun <chunfeng.yun@mediatek.com>,
-        "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "linux-omap@vger.kernel.org" <linux-omap@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
-        "linux-mediatek@lists.infradead.org" <linux-mediatek@lists.infradead.org>
-Subject: Re: [PATCH] usb: Use (of|device)_property_present() for non-boolean
- properties
-Thread-Topic: [PATCH] usb: Use (of|device)_property_present() for non-boolean
- properties
-Thread-Index: AQHbLuz1G3IsNyw6Q0y89s78a5g6pbKny7mA
-Date: Mon, 4 Nov 2024 23:54:04 +0000
-Message-ID: <20241104235347.sybl6gvcxmcwse3m@synopsys.com>
-References: <20241104190820.277702-1-robh@kernel.org>
-In-Reply-To: <20241104190820.277702-1-robh@kernel.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: LV2PR12MB5990:EE_|CH3PR12MB8709:EE_
-x-ms-office365-filtering-correlation-id: 8c0f64f9-b803-48e5-6002-08dcfd2bf6e6
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|1800799024|366016|376014|7416014|38070700018;
-x-microsoft-antispam-message-info:
- =?utf-8?B?N2VyWFo2MXJaOHRXY1FjbHc1eTMvdW1GcVgvZldyS0JFVnQybFdmTzROOUpj?=
- =?utf-8?B?aUlmREpOSStEbWFTVWVPajBVdnppU3V2dnFtU2ZzbytuZDZmdFFHaXJyanBx?=
- =?utf-8?B?NG15WnU1N25xUWVpYkxneGRxNDdLRUFmem9WL3ptYi9KNkN0Z2l5eGs1cWoz?=
- =?utf-8?B?MWRnMVNiMzAvUjdUWm1wd0pJYzNFUmFYUEd1Nk40Wk5UNHlDV0Q2MTY0ZFAv?=
- =?utf-8?B?WTFQL0RJakpCa3lXcCtlZksrTDVNMG5SV3lqWXVCcE8xREZRcHEvK3ZXTE11?=
- =?utf-8?B?MElCL0JXOHpQdE1ZZ1lsWjFubUpwbGN0eTdJR0YvRnQrZXZqQktnVmRVcDVH?=
- =?utf-8?B?cmxqSnZwZFRBMkVMbHV5TFBOcEczZHpJM2I1eWZVaWhFYmtMcTBSTmV6b0ow?=
- =?utf-8?B?aEhoV2xEclZHeFcrYTlUbkJUUzJMSjcrUWpDL25xTjY3ajBvbmljT1Y2T20w?=
- =?utf-8?B?bE93WXM2VEo5TndUdlhzTk5Ob3VWTG1iYUxabTJlbXh2U2hQcXZUbXZJUUxH?=
- =?utf-8?B?aksyR3k4YnI5V3E0WlBpQXZFNGcrdjNnc0R0OWFyNVdMdW80QStsaXBtbGcr?=
- =?utf-8?B?dzZhRTRUYXZjbWttUStwbGJYdHJvYjFXVjR0Um9RQmJtLzF6R1RndUtNMlhX?=
- =?utf-8?B?QjY4OUc2QWpkbDQzcmJRUmVSSXErWFl3L2RWRzFCMm5UUmdFMjNaYWtoSzlO?=
- =?utf-8?B?Z2xFMXNEYjUzOUNUK2k5WmN5cnIrQXpybkVrTjIwNCtHUDE4Qlh0R3JpbGRN?=
- =?utf-8?B?Q0ZydzVaOVU5MG9ESG93eGtxSEVONzBRcE1jMGswT1grZy9HQWYrZEtvdWV1?=
- =?utf-8?B?bGV0UGwwRWlKUUtsL0lCanN0MlZDS3hibjh3QVhIYllVaU8xSng3SXVXcUpt?=
- =?utf-8?B?WDNmb1F1c3dHTE1ucjJhMFVBUkRENGZTV3dUdVdrRGJxSnUxUzhSVE50WFhT?=
- =?utf-8?B?T0NVREdsUnF0RjUwWWpVZzhSYUdiMU1YWEE2a3NmYWxmWExmbjR0SE5nZU9I?=
- =?utf-8?B?MXIwenBacmlsRUJXcnpkb2hqd0JCTjAvZGFWbmRZVnhNNGR6eVZpVzdQcVla?=
- =?utf-8?B?ZWVrcVp4YU94SDhzdWt1YUJlNW5WNmVnUWprWmwwNmVHRjN1WWtpL0t5VHF2?=
- =?utf-8?B?SlQ0NSt6VmgzbDFNeDdPYU9ndVVPV0hzZE16ZDN3TGsyMy9zVnl0dnN6dlFK?=
- =?utf-8?B?NWhHeXFtZWdRYzZIcUdPTE10cU5RaitoNTFsVk5QWUpRSnQ4cEp0T21OWCtv?=
- =?utf-8?B?MWxLZ0Z5NjRzOEtuVFROVlVueEFZbksza3RaRHNta2M1Ym9jNWdGMEVBRjNR?=
- =?utf-8?B?dUNIOEIxQ1NpTklyUVBNWEJOVlF3UkFLQlA4c3AzY2NQQVhPS3pjVnNlZzFC?=
- =?utf-8?B?QVNTb0NzbTY1eWxMQ1V3MWVyWXNBTEV0OWx2VWpTU2tGSGMvanFIY2NGUUo2?=
- =?utf-8?B?L2cwVnpqNTJySUQ5L3hwTlBGLzZma2QwQ2pNVU1iNFh3ZWpxeGdZNnh0VjdJ?=
- =?utf-8?B?dnRpaDREaWEyZjc1VThFQ3A2Zi9zaStyY1NwWlNHbDE3bURvS0pKbldkclVl?=
- =?utf-8?B?QzlqR28vZnAxVVl0WWNPem9zZ3gwT1RPdVRSZXBsU1U1ay9jS1llQmF6WHBI?=
- =?utf-8?B?eVFNVGliY2ZMVHZlZyt0N0Y0TWRHMWExR3lhWmp2eGlYRGNFOUt6eC9rV3Zh?=
- =?utf-8?B?YnhaZnJCUGgvdG1JWTJXWm1oeEhzUXl4ZGQwSG1QSDIyR0hwVHNSbTFCNTJa?=
- =?utf-8?B?T0dEaFVLVktrcnp2OWRRS3BFdzRZNzNPSDZVTXNxblhPdkpTTUg4aTlwU2M5?=
- =?utf-8?Q?Z6xrk/S6FMEOZJS7RKS0xWKfWEhMEebXj3Zrg=3D?=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5990.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(7416014)(38070700018);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?QjhiTm04RTZOR2pJUjdPWEh0aGJqNkVlaUVSVmNvOG4zREhFSWxuZDcyZ2kr?=
- =?utf-8?B?Mm5FY2hhaDRMcldKZVd2Q2hObnA0eVI4Z3V3VmdtN1hlaWpLUCtKOVV1d3B5?=
- =?utf-8?B?eFdjdG9ib0c0WlpRTWNISVo4RWZJNGIzN3RFM0laZktETnlRVllDdTAzbHBo?=
- =?utf-8?B?MldIM0NYSG5VL2FoV3JzNzlBYStmQUM2Y21FMUgzNFg2UjRLVUZrSkVPdUh6?=
- =?utf-8?B?T0wxYTFYcEhPQ3p6b2w2SXovUmppaU0rcnhEd28xbmtKRUxXZ3JHWjF2dEVu?=
- =?utf-8?B?a3hlZE5JL1pZWThFQnJQcG9yNExlTzNIdGpabU1wNEwwTDQ0WDZFa2J0YkJv?=
- =?utf-8?B?V3pxL0x3RFFCZDFJdmRKM1IyaWI4NlJUczhMUEFGMlNXNEJkZ2Y1NkJKMXNh?=
- =?utf-8?B?WmZMbm5KUnpVV3BseGRLcmF5MzVpMkZ3c2pCTE9YTVR2L3lBOHA5Qld2MTZH?=
- =?utf-8?B?clpJcGZHQjY2d0dESlh2V2tQbjA0RTd2Ylh6K0Z0ZlJzUWlldGFMV1ZlbTBx?=
- =?utf-8?B?YlloZ0xVVWJ2bDl1aFNmeGRIR0xqQWFBYmU2RWZiY0dKWTZXWmlEcEFkUm5X?=
- =?utf-8?B?Q29KWGRzNHFESkpWWnAya1Q1L0h5WTRFVlJOTm9OZ2FscVRxZFpEME14ODFi?=
- =?utf-8?B?Q3VTNFJybVZtNmo1ZEx0R0lyMDl1amN0bDZzU0l3TlR0K3cwNS96ZDJRWUll?=
- =?utf-8?B?cEhWWnpPZHFMVFZJcVVXYzlONzJNTncwUEJOQVVoQnQ0OVRGZk1LL2QwaGxr?=
- =?utf-8?B?Ulg2a0VXYzhtd01rWlplblFzMFZwY1huRTB1OE90SE5USFNGWVlpbWRBNUZ5?=
- =?utf-8?B?dkM3ekdHYTRFZEZrTElPSXd1QmcydUJ0SkJoM042RXhwM3ZlM3U3VllzZUNl?=
- =?utf-8?B?QjNxaFFOU1lhUHN1ODE3TUwzYUoyazdteVo2QlVtLzdDRUdmNk9rMkpHK2Jj?=
- =?utf-8?B?WmFZbjc4NVVoTlJlTG9sRGIrQ292NG9zQWl1aW1ob0thK1A4ZjRkdy91NzZX?=
- =?utf-8?B?eWsxbEM1aWhJY0s2ZUxUK1RLazh4VWVYamZYdmZxQWxOZkhCWSswdFhCRmRz?=
- =?utf-8?B?V0lWcjNXUGI3WUlPZDEwS3BTM1AvYVkvNXJxbUhTUEFnRXdlZE1FVlVsUDl2?=
- =?utf-8?B?eElRK1QxWmRobjVaYjl1OUZpeHNJazNkbnZBd3dCeEwwdWp1Z05aZTJjWFFR?=
- =?utf-8?B?aG9GYW5lL3hqR2F5dWZJMzlRcFdGazJjNFUraCsvNHpuRExuZExockk1a1E4?=
- =?utf-8?B?Z0NZdzhyQjJYK00weFN4RjlCM3oySzlsa1VOQjhTcEFMNWdJWHgyeGVtRUE5?=
- =?utf-8?B?NWVSVjYvbm9vSkdPWDk2WFB0QXVIS0FQelRONXVqMktWUUUzYnR6Vlc5OFZD?=
- =?utf-8?B?dWdveUlPNGx1aFc2VVlTZklBY2o0dmZwdnpkV0xaTldtaTFLUzVMaXg2RkJ0?=
- =?utf-8?B?Y2NxdjNvNmozWXdtWmVucHZhaVVFRXZJMUlUOWFTQzI1TndqQVNiajNQanNs?=
- =?utf-8?B?Q0xYdUR3Ris0WUhld2kxVSs5RlkrZnc2Y3ZuYWo1K05PT1BNTTZEdUl1UEpj?=
- =?utf-8?B?TVBHVHpGNUo0MGIzSS9vM1lIOWJyU0FvbW5mVnVJVVVGQStOK0t6a21qRFJF?=
- =?utf-8?B?L1QxQ3JNbVU2aUQ3WjEwMWxZT2JjOXFzcDNRSlAyYjVFeFVSSGZpZlU5clIz?=
- =?utf-8?B?QWFxdGlXdmMycmhPMDl1YVk4STN0Um11Y2hsTEtmazFPNEprZW9QTk1yM1V6?=
- =?utf-8?B?R0tZdjladjE4dzZPeStHV3dQYkthOHFGWGpsb3VJS25nMUJQOCtqVmFtd3pS?=
- =?utf-8?B?ek5veGI3LzNxUk5nQWhzN09aWTRLY01pNC93MXYvK0hRM2cweFcyWlp3NVhW?=
- =?utf-8?B?dDlMM2lWZ1RsSldaZjVtRHMwTHJ1bE5sUVB5RG1WUVJ2cm4xMmJUOEsrSHVm?=
- =?utf-8?B?ODMyTlBEbWxJODYxcStuWDdQRWRlSXZyVEQzTlF3b3FZM0dBNHJoN2l0SGZ1?=
- =?utf-8?B?ZFB6V1FOZGhwa0RSeTROdDN4M2FLQ1NET203NGhsK2VmSUlkWW9IZk5HbG5B?=
- =?utf-8?B?ZnZEMzRJVCtuRGc3NDBNY2JzeEhHY3NjZEJBL0xsczI4bTRlRzJoNG1VN1NX?=
- =?utf-8?Q?UeHdEIJByA+FvzHlpGi0AMoiB?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <7DD0DD92FE17924499F98B5E771A6656@namprd12.prod.outlook.com>
-Content-Transfer-Encoding: base64
+	Tue, 05 Nov 2024 00:26:17 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4A50QGB6016077
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 5 Nov 2024 00:26:16 GMT
+Received: from [10.71.115.177] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 4 Nov 2024
+ 16:26:16 -0800
+Message-ID: <da2bc665-5010-4d92-b9ac-7c442859cd10@quicinc.com>
+Date: Mon, 4 Nov 2024 16:26:15 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
-	tsrZCxp4ykFgagxcU1fPfVNnd9EI8jYEl2qpzwALS3jGMqGnp/47pjsdVvHHR6lBNf47hi8kZYip7XrIWp/o2xHzgHPP0lLfykfrZlK5tPqAf6ErGuv7RRTRCjuYXTB1DtmovgyAYHCyjT/hoc2VSvEQgRxseup9jQ6S4YPX7efZVK36/KEjLxSAS8VJ9hCyqM6oleMa4mHOimgzXzPRXGzrhg6VFxUWBR7ZN4aTFGKZVytpolrEGCrXzK1V6n+MFn0Jy/702r40O0jAau8WJJVgE9gx2LBQuZxJr/0qJHakXIkXN6zj8qVhcI836SO4ysWJMOFRI4jrt1n4EOqxElWAEj+U+QsLpyP8K4DA+26nfEMRx+Tvg8I5N4OVz+2aU8+KrvwE765+BoyY4hqpzXNCnn/wPEXWcuvUZKblghIYJN9IKzGPp4QaZgB0SI4bprBmPadhzPiDrNXrP0s6WjI2r4nw1N+YFhh2z9YTAJ4mW55OiR7fHNvHRNmkGlLuqFwQxd/dgJTH/H9JbU2U9W4jPq6edU2YZjrZoCvecS+wCJpDqGo5bRd3yr5kNOLdmLIWtD/XfvThyiUJ+LJfKcvB0bdA0163kMUmx8yMxmYs/MND6q/Af5qpfjjKHIFDbGWJNJcaSQCGB2C1IHQwBw==
-X-OriginatorOrg: synopsys.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB5990.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8c0f64f9-b803-48e5-6002-08dcfd2bf6e6
-X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Nov 2024 23:54:04.7021
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: c33c9f88-1eb7-4099-9700-16013fd9e8aa
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 4EUD7idWxwIG8jhvtBe1sM9bZWKlm8qUfwTZhN/CpdQ5yUKPow3Jpcyz4JWpfN37jIFY5IeVyF2Bn3qMu2rQZg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8709
-X-Proofpoint-GUID: htVRj5OLoRZX_WwV55jaGjSg_wrW_RAl
-X-Proofpoint-ORIG-GUID: htVRj5OLoRZX_WwV55jaGjSg_wrW_RAl
-X-Authority-Analysis: v=2.4 cv=T5reTOKQ c=1 sm=1 tr=0 ts=67295ea6 cx=c_pps a=t4gDRyhI9k+KZ5gXRQysFQ==:117 a=t4gDRyhI9k+KZ5gXRQysFQ==:17 a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=VlfZXiiP6vEA:10 a=nEwiWwFL_bsA:10
- a=qPHU084jO2kA:10 a=VwQbUJbxAAAA:8 a=jIQo8A4GAAAA:8 a=G54nGU-1IwTxQiG81aEA:9 a=QEXdDO2ut3YA:10 a=Lf5xNeLK5dgiOs8hzIjU:22
+User-Agent: Mozilla Thunderbird
+Subject: Re: qrtr/mhi: NULL-deref with in-kernel pd-mapper
+To: Johan Hovold <johan@kernel.org>,
+        Manivannan Sadhasivam
+	<manivannan.sadhasivam@linaro.org>,
+        Bjorn Andersson
+	<bjorn.andersson@oss.qualcomm.com>
+CC: Qiang Yu <quic_qianyu@quicinc.com>, Jeffrey Hugo <quic_jhugo@quicinc.com>,
+        Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>, <mhi@lists.linux.dev>,
+        <linux-arm-msm@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <ZyTtVdkCCES0lkl4@hovoldconsulting.com>
+Content-Language: en-US
+From: Chris Lew <quic_clew@quicinc.com>
+In-Reply-To: <ZyTtVdkCCES0lkl4@hovoldconsulting.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: kOFPgUbwC95y-qgApyhP6RF_-v3_KOak
+X-Proofpoint-ORIG-GUID: kOFPgUbwC95y-qgApyhP6RF_-v3_KOak
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_active_cloned_notspam policy=outbound_active_cloned score=0
- bulkscore=0 clxscore=1011 mlxlogscore=999 mlxscore=0 lowpriorityscore=0
- impostorscore=0 phishscore=0 malwarescore=0 suspectscore=0
- priorityscore=1501 spamscore=0 adultscore=0 classifier=spam authscore=0
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2411040191
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 impostorscore=0
+ suspectscore=0 lowpriorityscore=0 mlxlogscore=999 mlxscore=0
+ priorityscore=1501 bulkscore=0 adultscore=0 malwarescore=0 phishscore=0
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411050001
 
-T24gTW9uLCBOb3YgMDQsIDIwMjQsIFJvYiBIZXJyaW5nIChBcm0pIHdyb3RlOg0KPiBUaGUgdXNl
-IG9mIChvZnxkZXZpY2UpX3Byb3BlcnR5X3JlYWRfYm9vbCgpIGZvciBub24tYm9vbGVhbiBwcm9w
-ZXJ0aWVzDQo+IGlzIGRlcHJlY2F0ZWQgaW4gZmF2b3Igb2Ygb2ZfcHJvcGVydHlfcHJlc2VudCgp
-IHdoZW4gdGVzdGluZyBmb3INCj4gcHJvcGVydHkgcHJlc2VuY2UuDQo+IA0KPiBTaWduZWQtb2Zm
-LWJ5OiBSb2IgSGVycmluZyAoQXJtKSA8cm9iaEBrZXJuZWwub3JnPg0KPiAtLS0NCj4gIGRyaXZl
-cnMvdXNiL2NoaXBpZGVhL2NvcmUuYyAgICAgICAgfCAyICstDQo+ICBkcml2ZXJzL3VzYi9kd2Mz
-L2NvcmUuYyAgICAgICAgICAgIHwgMiArLQ0KPiAgZHJpdmVycy91c2IvZHdjMy9kd2MzLW9tYXAu
-YyAgICAgICB8IDIgKy0NCj4gIGRyaXZlcnMvdXNiL2R3YzMvZHdjMy1xY29tLmMgICAgICAgfCAy
-ICstDQo+ICBkcml2ZXJzL3VzYi9tdHUzL210dTNfcGxhdC5jICAgICAgIHwgMiArLQ0KPiAgZHJp
-dmVycy91c2IvcGh5L3BoeS5jICAgICAgICAgICAgICB8IDIgKy0NCj4gIGRyaXZlcnMvdXNiL3Jl
-bmVzYXNfdXNiaHMvY29tbW9uLmMgfCAyICstDQo+ICA3IGZpbGVzIGNoYW5nZWQsIDcgaW5zZXJ0
-aW9ucygrKSwgNyBkZWxldGlvbnMoLSkNCj4gDQo+IGRpZmYgLS1naXQgYS9kcml2ZXJzL3VzYi9j
-aGlwaWRlYS9jb3JlLmMgYi9kcml2ZXJzL3VzYi9jaGlwaWRlYS9jb3JlLmMNCj4gaW5kZXggODM1
-YmYyNDI4ZGM2Li4xOGVjZmNjMDhiOTcgMTAwNjQ0DQo+IC0tLSBhL2RyaXZlcnMvdXNiL2NoaXBp
-ZGVhL2NvcmUuYw0KPiArKysgYi9kcml2ZXJzL3VzYi9jaGlwaWRlYS9jb3JlLmMNCj4gQEAgLTc2
-NSw3ICs3NjUsNyBAQCBzdGF0aWMgaW50IGNpX2dldF9wbGF0ZGF0YShzdHJ1Y3QgZGV2aWNlICpk
-ZXYsDQo+ICANCj4gIAlleHRfaWQgPSBFUlJfUFRSKC1FTk9ERVYpOw0KPiAgCWV4dF92YnVzID0g
-RVJSX1BUUigtRU5PREVWKTsNCj4gLQlpZiAob2ZfcHJvcGVydHlfcmVhZF9ib29sKGRldi0+b2Zf
-bm9kZSwgImV4dGNvbiIpKSB7DQo+ICsJaWYgKG9mX3Byb3BlcnR5X3ByZXNlbnQoZGV2LT5vZl9u
-b2RlLCAiZXh0Y29uIikpIHsNCj4gIAkJLyogRWFjaCBvbmUgb2YgdGhlbSBpcyBub3QgbWFuZGF0
-b3J5ICovDQo+ICAJCWV4dF92YnVzID0gZXh0Y29uX2dldF9lZGV2X2J5X3BoYW5kbGUoZGV2LCAw
-KTsNCj4gIAkJaWYgKElTX0VSUihleHRfdmJ1cykgJiYgUFRSX0VSUihleHRfdmJ1cykgIT0gLUVO
-T0RFVikNCj4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvdXNiL2R3YzMvY29yZS5jIGIvZHJpdmVycy91
-c2IvZHdjMy9jb3JlLmMNCj4gaW5kZXggOWViMDg1ZjM1OWNlLi5lMWJlYjc2MGU5MTMgMTAwNjQ0
-DQo+IC0tLSBhL2RyaXZlcnMvdXNiL2R3YzMvY29yZS5jDQo+ICsrKyBiL2RyaXZlcnMvdXNiL2R3
-YzMvY29yZS5jDQo+IEBAIC0xOTM1LDcgKzE5MzUsNyBAQCBzdGF0aWMgc3RydWN0IGV4dGNvbl9k
-ZXYgKmR3YzNfZ2V0X2V4dGNvbihzdHJ1Y3QgZHdjMyAqZHdjKQ0KPiAgCXN0cnVjdCBleHRjb25f
-ZGV2ICplZGV2ID0gTlVMTDsNCj4gIAljb25zdCBjaGFyICpuYW1lOw0KPiAgDQo+IC0JaWYgKGRl
-dmljZV9wcm9wZXJ0eV9yZWFkX2Jvb2woZGV2LCAiZXh0Y29uIikpDQo+ICsJaWYgKGRldmljZV9w
-cm9wZXJ0eV9wcmVzZW50KGRldiwgImV4dGNvbiIpKQ0KPiAgCQlyZXR1cm4gZXh0Y29uX2dldF9l
-ZGV2X2J5X3BoYW5kbGUoZGV2LCAwKTsNCj4gIA0KPiAgCS8qDQo+IGRpZmYgLS1naXQgYS9kcml2
-ZXJzL3VzYi9kd2MzL2R3YzMtb21hcC5jIGIvZHJpdmVycy91c2IvZHdjMy9kd2MzLW9tYXAuYw0K
-PiBpbmRleCAyYTExZmMwZWU4NGYuLmMyZDc1ODJjMTUxYSAxMDA2NDQNCj4gLS0tIGEvZHJpdmVy
-cy91c2IvZHdjMy9kd2MzLW9tYXAuYw0KPiArKysgYi9kcml2ZXJzL3VzYi9kd2MzL2R3YzMtb21h
-cC5jDQo+IEBAIC00MTYsNyArNDE2LDcgQEAgc3RhdGljIGludCBkd2MzX29tYXBfZXh0Y29uX3Jl
-Z2lzdGVyKHN0cnVjdCBkd2MzX29tYXAgKm9tYXApDQo+ICAJc3RydWN0IGRldmljZV9ub2RlCSpu
-b2RlID0gb21hcC0+ZGV2LT5vZl9ub2RlOw0KPiAgCXN0cnVjdCBleHRjb25fZGV2CSplZGV2Ow0K
-PiAgDQo+IC0JaWYgKG9mX3Byb3BlcnR5X3JlYWRfYm9vbChub2RlLCAiZXh0Y29uIikpIHsNCj4g
-KwlpZiAob2ZfcHJvcGVydHlfcHJlc2VudChub2RlLCAiZXh0Y29uIikpIHsNCj4gIAkJZWRldiA9
-IGV4dGNvbl9nZXRfZWRldl9ieV9waGFuZGxlKG9tYXAtPmRldiwgMCk7DQo+ICAJCWlmIChJU19F
-UlIoZWRldikpIHsNCj4gIAkJCWRldl92ZGJnKG9tYXAtPmRldiwgImNvdWxkbid0IGdldCBleHRj
-b24gZGV2aWNlXG4iKTsNCj4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvdXNiL2R3YzMvZHdjMy1xY29t
-LmMgYi9kcml2ZXJzL3VzYi9kd2MzL2R3YzMtcWNvbS5jDQo+IGluZGV4IGMxZDRiNTJmMjViMC4u
-NjQ5MTY2ZTJhOGI4IDEwMDY0NA0KPiAtLS0gYS9kcml2ZXJzL3VzYi9kd2MzL2R3YzMtcWNvbS5j
-DQo+ICsrKyBiL2RyaXZlcnMvdXNiL2R3YzMvZHdjMy1xY29tLmMNCj4gQEAgLTE2MSw3ICsxNjEs
-NyBAQCBzdGF0aWMgaW50IGR3YzNfcWNvbV9yZWdpc3Rlcl9leHRjb24oc3RydWN0IGR3YzNfcWNv
-bSAqcWNvbSkNCj4gIAlzdHJ1Y3QgZXh0Y29uX2RldgkqaG9zdF9lZGV2Ow0KPiAgCWludAkJCXJl
-dDsNCj4gIA0KPiAtCWlmICghb2ZfcHJvcGVydHlfcmVhZF9ib29sKGRldi0+b2Zfbm9kZSwgImV4
-dGNvbiIpKQ0KPiArCWlmICghb2ZfcHJvcGVydHlfcHJlc2VudChkZXYtPm9mX25vZGUsICJleHRj
-b24iKSkNCj4gIAkJcmV0dXJuIDA7DQo+ICANCj4gIAlxY29tLT5lZGV2ID0gZXh0Y29uX2dldF9l
-ZGV2X2J5X3BoYW5kbGUoZGV2LCAwKTsNCj4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvdXNiL210dTMv
-bXR1M19wbGF0LmMgYi9kcml2ZXJzL3VzYi9tdHUzL210dTNfcGxhdC5jDQo+IGluZGV4IDY4NThl
-ZDlmYzNiMi4uMjM4MDU1MjAyNWU0IDEwMDY0NA0KPiAtLS0gYS9kcml2ZXJzL3VzYi9tdHUzL210
-dTNfcGxhdC5jDQo+ICsrKyBiL2RyaXZlcnMvdXNiL210dTMvbXR1M19wbGF0LmMNCj4gQEAgLTMw
-Nyw3ICszMDcsNyBAQCBzdGF0aWMgaW50IGdldF9zc3VzYl9yc2NzKHN0cnVjdCBwbGF0Zm9ybV9k
-ZXZpY2UgKnBkZXYsIHN0cnVjdCBzc3VzYl9tdGsgKnNzdXNiKQ0KPiAgCWlmIChvdGdfc3gtPnJv
-bGVfc3dfdXNlZCB8fCBvdGdfc3gtPm1hbnVhbF9kcmRfZW5hYmxlZCkNCj4gIAkJZ290byBvdXQ7
-DQo+ICANCj4gLQlpZiAob2ZfcHJvcGVydHlfcmVhZF9ib29sKG5vZGUsICJleHRjb24iKSkgew0K
-PiArCWlmIChvZl9wcm9wZXJ0eV9wcmVzZW50KG5vZGUsICJleHRjb24iKSkgew0KPiAgCQlvdGdf
-c3gtPmVkZXYgPSBleHRjb25fZ2V0X2VkZXZfYnlfcGhhbmRsZShzc3VzYi0+ZGV2LCAwKTsNCj4g
-IAkJaWYgKElTX0VSUihvdGdfc3gtPmVkZXYpKSB7DQo+ICAJCQlyZXR1cm4gZGV2X2Vycl9wcm9i
-ZShkZXYsIFBUUl9FUlIob3RnX3N4LT5lZGV2KSwNCj4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvdXNi
-L3BoeS9waHkuYyBiL2RyaXZlcnMvdXNiL3BoeS9waHkuYw0KPiBpbmRleCAwNmUwZmIyMzU2NmMu
-LjEzMGY4NmEwNDNhZCAxMDA2NDQNCj4gLS0tIGEvZHJpdmVycy91c2IvcGh5L3BoeS5jDQo+ICsr
-KyBiL2RyaXZlcnMvdXNiL3BoeS9waHkuYw0KPiBAQCAtMzY1LDcgKzM2NSw3IEBAIHN0YXRpYyBp
-bnQgdXNiX2FkZF9leHRjb24oc3RydWN0IHVzYl9waHkgKngpDQo+ICB7DQo+ICAJaW50IHJldDsN
-Cj4gIA0KPiAtCWlmIChvZl9wcm9wZXJ0eV9yZWFkX2Jvb2woeC0+ZGV2LT5vZl9ub2RlLCAiZXh0
-Y29uIikpIHsNCj4gKwlpZiAob2ZfcHJvcGVydHlfcHJlc2VudCh4LT5kZXYtPm9mX25vZGUsICJl
-eHRjb24iKSkgew0KPiAgCQl4LT5lZGV2ID0gZXh0Y29uX2dldF9lZGV2X2J5X3BoYW5kbGUoeC0+
-ZGV2LCAwKTsNCj4gIAkJaWYgKElTX0VSUih4LT5lZGV2KSkNCj4gIAkJCXJldHVybiBQVFJfRVJS
-KHgtPmVkZXYpOw0KPiBkaWZmIC0tZ2l0IGEvZHJpdmVycy91c2IvcmVuZXNhc191c2Jocy9jb21t
-b24uYyBiL2RyaXZlcnMvdXNiL3JlbmVzYXNfdXNiaHMvY29tbW9uLmMNCj4gaW5kZXggZWRjNDNm
-MTY5ZDQ5Li5lNGFkZmU2OTIxNjQgMTAwNjQ0DQo+IC0tLSBhL2RyaXZlcnMvdXNiL3JlbmVzYXNf
-dXNiaHMvY29tbW9uLmMNCj4gKysrIGIvZHJpdmVycy91c2IvcmVuZXNhc191c2Jocy9jb21tb24u
-Yw0KPiBAQCAtNjMyLDcgKzYzMiw3IEBAIHN0YXRpYyBpbnQgdXNiaHNfcHJvYmUoc3RydWN0IHBs
-YXRmb3JtX2RldmljZSAqcGRldikNCj4gIAlpZiAoSVNfRVJSKHByaXYtPmJhc2UpKQ0KPiAgCQly
-ZXR1cm4gUFRSX0VSUihwcml2LT5iYXNlKTsNCj4gIA0KPiAtCWlmIChvZl9wcm9wZXJ0eV9yZWFk
-X2Jvb2woZGV2X29mX25vZGUoZGV2KSwgImV4dGNvbiIpKSB7DQo+ICsJaWYgKG9mX3Byb3BlcnR5
-X3ByZXNlbnQoZGV2X29mX25vZGUoZGV2KSwgImV4dGNvbiIpKSB7DQo+ICAJCXByaXYtPmVkZXYg
-PSBleHRjb25fZ2V0X2VkZXZfYnlfcGhhbmRsZShkZXYsIDApOw0KPiAgCQlpZiAoSVNfRVJSKHBy
-aXYtPmVkZXYpKQ0KPiAgCQkJcmV0dXJuIFBUUl9FUlIocHJpdi0+ZWRldik7DQo+IC0tIA0KPiAy
-LjQ1LjINCj4gDQoNCkZvciBkd2MzIHJlbGF0ZWQgY2hhbmdlczoNCg0KQWNrZWQtYnk6IFRoaW5o
-IE5ndXllbiA8VGhpbmguTmd1eWVuQHN5bm9wc3lzLmNvbT4NCg0KVGhhbmtzLA0KVGhpbmg=
+
+
+On 11/1/2024 8:01 AM, Johan Hovold wrote:
+> Hi,
+> 
+> I just ran into a NULL-deref in a qrts/mhi path during boot of the
+> x1e80100 CRD for the second time.
+> 
+> First time was with a 6.11 kernel (but I never got around to reporting
+> it) and today it happened again with 6.12-rc5.
+> 
+> Both times I was using the in-kernel pd-mapper, which has exposed a
+> number of bugs elsewhere due to changes in timing, but I'm not sure if
+> the pd-mapper is involved here or not.
+> 
+> See serial console log below.
+> 
+> Last time I think the machine survived so that I could save a cleaner
+> log of the oops. That one is included after the serial log for
+> completeness.
+> 
+> Johan
+> 
+> 
+> [    8.531773] remoteproc remoteproc1: remote processor 32300000.remoteproc is now up
+> 
+> [    8.825593] Unable to handle kernel NULL pointer dereference at virtual
+> address 0000000000000034
+> .
+> [    8.838623] Mem abort info:
+> [    8.838626]   ESR = 0x0000000096000004
+> [    8.838628]   EC = 0x25: DABT (current EL), IL = 32 bits
+> [    8.838630]   SET = 0, FnV = 0
+> [    8.838632]   EA = 0, S1PTW = 0
+> [    8.838633]   FSC = 0x04: level 0 translation fault
+> [    8.838635] Data abort info:
+> [    8.838637]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+> [    8.838639]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+> [    8.838641]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+> [    8.838643] user pgtable: 4k pages, 48-bit VAs, pgdp=00000008813bf000
+> [    8.838645] [0000000000000034] pgd=0000000000000000, p4d=0000000000000000
+> [    8.838777] Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
+> [    8.857297] Modules linked in: mhi_wwan_ctrl(+) wwan qrtr_mhi(+) mhi_net(+) rpmsg_ctrl(+) rpmsg_char pmic_glink_altm
+> ode qcom_pd_mapper ucsi_glink aux_hpd_bridge qcom_battmgr typec_ucsi hci_uart btqca phy_qcom_eusb2_repeater qcom_spmi_t
+> emp_alarm(+) qcom_pon bluetooth sm3_ce ps8830 ath12k(+)
+> [    8.864039]  industrialio sm3 reboot_mode nvmem_qcom_spmi_sdam mac80211 snd_soc_x1e80100 phy_qcom_qmp_combo regmap_i
+> 2c sha3_ce ecdh_generic pci_pwrctl_pwrseq ecc aux_bridge
+> [    8.872648]  snd_soc_qcom_common libarc4 sha512_ce pci_pwrctl_core pwrseq_qcom_wcn sha512_arm64 snd_soc_qcom_sdw typ
+> ec pwrseq_core qcom_q6v5_pas qcom_stats
+> [    8.880892]  snd_soc_wcd938x input_leds mhi_pci_generic snd_soc_wcd_classh qcom_pil_info snd_soc_wcd938x_sdw qcom_co
+> mmon dispcc_x1e80100 snd_soc_lpass_rx_macro led_class qcom_glink_smem
+> [    8.889499]  snd_soc_lpass_tx_macro snd_soc_lpass_va_macro regmap_sdw snd_soc_lpass_wsa_macro mhi phy_qcom_edp pinct
+> rl_sm8550_lpass_lpi snd_soc_wcd_mbhc soundwire_qcom snd_soc_lpass_macro_common
+> [    8.900156]  qcom_glink phy_qcom_qmp_usb phy_qcom_snps_eusb2 pinctrl_lpass_lpi lpasscc_sc8280xp qrtr snd_soc_core qc
+> om_q6v5 cfg80211 gpucc_x1e80100
+> [    8.913754]  qcom_sysmon
+> [    8.933436]  pmic_glink snd_compress rfkill icc_bwmon rpmsg_core snd_pcm pdr_interface qcom_cpucp_mbox snd_timer soc
+> info arm_smccc_trng qcom_pdr_msg qmi_helpers snd rng_core soundcore soundwire_bus fuse dm_mod ip_tables
+> [    8.960019] qcom-snps-eusb2-hsphy fde000.phy: Registered Qcom-eUSB2 phy
+> [    8.972985]  x_tables ipv6 autofs4 msm mdt_loader drm_exec gpu_sched drm_display_helper drm_kms_helper drm_dp_aux_bu
+> s llcc_qcom pcie_qcom crc8
+> [    9.002021]  phy_qcom_qmp_pcie tcsrcc_x1e80100 nvme nvme_core hid_multitouch i2c_qcom_geni i2c_hid_of i2c_hid drm i2
+> c_core
+> [    9.002030] CPU: 10 UID: 0 PID: 11 Comm: kworker/u48:0 Not tainted 6.12.0-rc5 #4
+> [    9.029550] Hardware name: Qualcomm CRD, BIOS 6.0.231221.BOOT.MXF.2.4-00348.1-HAMOA-1 12/21/2023
+> [    9.029552] Workqueue: qrtr_ns_handler qrtr_ns_worker [qrtr]
+> [    9.061350] pstate: a1400005 (NzCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+> [    9.061353] pc : mhi_gen_tre+0x44/0x224 [mhi]
+> [    9.090573] qcom_pmic_glink pmic-glink: Failed to create device link (0x180) with 2-0008
+> [    9.106931] lr : mhi_gen_tre+0x40/0x224 [mhi]
+> [    9.106934] sp : ffff8000800fb7d0
+> [    9.106935] x29: ffff8000800fb7d0 x28: ffff6db7852bd000 x27: ffff800082490188
+> [    9.120382] dwc3 a000000.usb: Adding to iommu group 5
+> [    9.133750]
+> [    9.133752] x26: 0000000000000000 x25: ffff6db783e65080 x24: ffff80008248ff88
+> [    9.133754] x23: 0000000000000000 x22: ffff80008248ff80 x21: ffff8000800fb890
+> [    9.133756] x20: 0000000000000000 x19: 0000000000000002 x18: 000000000005cf20
+> [    9.133758] x17: 0000000000000028 x16: 0000000000000000
+> [    9.172738]  x15: ffffa5834131fbd0
+> [    9.172741] x14: ffffa5834137caf0 x13: 000000000000ce30 x12: ffff6db7808bc028
+> [    9.172743] x11: ffffa58341993000 x10: 0000000000000000 x9 : 00000000cf3f2b90
+> [    9.172745] x8 : 0000000094e5072b x7 : 00000000000404ce x6 : ffffa5834162cfb0
+> [    9.172747] x5 : 000000000000008b x4 : ffffa583419cddf0 x3 : 0000000000000007
+> [    9.172750] x2 : 0000000000000000
+> [    9.192697]  x1 : 000000000000000a x0 : ffff6db7808bb700
+> [    9.192700] Call trace:
+> [    9.192701]  mhi_gen_tre+0x44/0x224 [mhi]
+> [    9.192704]  mhi_queue+0x74/0x194 [mhi]
+> [    9.192706]  mhi_queue_skb+0x5c/0x8c [mhi]
+> [    9.210985]  qcom_mhi_qrtr_send+0x6c/0x160 [qrtr_mhi]
+> [    9.210989]  qrtr_node_enqueue+0xd0/0x4a0 [qrtr]
+> [    9.210992]  qrtr_bcast_enqueue+0x78/0xe8 [qrtr]
+> [    9.225530]  qrtr_sendmsg+0x15c/0x33c [qrtr]
+> [    9.225532]  sock_sendmsg+0xc0/0xec
+> [    9.240436]  kernel_sendmsg+0x30/0x40
+> [    9.240438]  service_announce_new+0xbc/0x1c4 [qrtr]
+> [    9.240440]  qrtr_ns_worker+0x714/0x794 [qrtr]
+> [    9.240441]  process_one_work+0x210/0x614
+> [    9.254527]  worker_thread+0x23c/0x378
+> [    9.254529]  kthread+0x124/0x128
+> [    9.254531]  ret_from_fork+0x10/0x20
+> [    9.254534] Code: aa0003f9 aa1b03e0 94001a4d f9401b14 (3940d280)
+> [    9.267369] ---[ end trace 0000000000000000 ]---
+> [    9.267371] Kernel panic - not syncing: Oops: Fatal exception in interrupt
+> 
+
+Thanks for reporting this.
+
+I'm not sure the in-kernel pd-mapper should be affecting this path. I 
+think this is for WLAN since it is the mhi qrtr and I'm not aware of 
+WLAN needing to listen to the pd-mapper framework.
+
+The offset seems to be mapped back to 
+linux/drivers/bus/mhi/host/main.c:1220, I had some extra debug configs 
+enabled so not sure the offset is still valid.
+
+	WARN_ON(buf_info->used);
+	buf_info->pre_mapped = info->pre_mapped;
+
+This looks like the null pointer would happen if qrtr tried to send 
+before mhi_channel_prepare() is called.
+
+I think we have a patch that might fix this, let me dig it up and send 
+it out.
+
+> 
+> [    9.408420] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000034
+> [    9.408429] Mem abort info:
+> [    9.408431]   ESR = 0x0000000096000004
+> [    9.408434]   EC = 0x25: DABT (current EL), IL = 32 bits
+> [    9.408437]   SET = 0, FnV = 0
+> [    9.408439]   EA = 0, S1PTW = 0
+> [    9.408441]   FSC = 0x04: level 0 translation fault
+> [    9.408444] Data abort info:
+> [    9.408446]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+> [    9.408448]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+> [    9.408450]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+> [    9.408453] user pgtable: 4k pages, 48-bit VAs, pgdp=0000000882f43000
+> [    9.408456] [0000000000000034] pgd=0000000000000000, p4d=0000000000000000
+> [    9.408476] Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
+> [    9.408479] Modules linked in: mhi_wwan_ctrl(+) wwan qrtr_mhi(+) mhi_net(+) qcom_pd_mapper(+) ucsi_glink pmic_glink_
+> altmode sm3_ce qcom_battmgr(+) aux_hpd_bridge typec_ucsi ath12k(+) sm3 sha3_ce mac80211 snd_soc_x1e80100 sha512_ce liba
+> rc4 phy_qcom_eusb2_repeater nvmem_qcom_spmi_sdam sha512_arm64 ps8830(+) snd_soc_qcom_common qcom_spmi_temp_alarm snd_so
+> c_qcom_sdw qcom_pon qcom_q6v5_pas regmap_i2c phy_qcom_qmp_combo reboot_mode aux_bridge qcom_pil_info industrialio typec
+>   cfg80211 phy_qcom_snps_eusb2 qcom_stats phy_qcom_edp dispcc_x1e80100 qcom_common pinctrl_sm8550_lpass_lpi snd_soc_lpas
+> s_va_macro qcom_glink_smem pinctrl_lpass_lpi lpasscc_sc8280xp snd_soc_wcd938x snd_soc_lpass_tx_macro snd_soc_lpass_wsa_
+> macro snd_soc_lpass_rx_macro qcom_glink snd_soc_wcd_classh soundwire_qcom snd_soc_lpass_macro_common snd_soc_wcd938x_sd
+> w qcom_q6v5 regmap_sdw mhi_pci_generic gpucc_x1e80100 snd_soc_wcd_mbhc qcom_sysmon mhi icc_bwmon snd_soc_core rfkill sn
+> d_compress qrtr snd_pcm qcom_cpucp_mbox snd_timer input_leds pmic_glink snd
+> [    9.408524]  led_class arm_smccc_trng rng_core rpmsg_core soundcore pdr_interface soundwire_bus qcom_pdr_msg socinfo
+>   qmi_helpers fuse dm_mod ip_tables x_tables ipv6 autofs4 msm mdt_loader drm_exec gpu_sched drm_display_helper drm_kms_h
+> elper drm_dp_aux_bus llcc_qcom pcie_qcom crc8 phy_qcom_qmp_pcie tcsrcc_x1e80100 nvme nvme_core hid_multitouch i2c_qcom_
+> geni i2c_hid_of i2c_hid drm i2c_core
+> [    9.408548] CPU: 4 UID: 0 PID: 94 Comm: kworker/u48:1 Not tainted 6.11.0 #185
+> [    9.408550] Hardware name: Qualcomm CRD, BIOS 6.0.231221.BOOT.MXF.2.4-00348.1-HAMOA-1 12/21/2023
+> [    9.408551] Workqueue: qrtr_ns_handler qrtr_ns_worker [qrtr]
+> [    9.408556] pstate: a1400005 (NzCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+> [    9.408558] pc : mhi_gen_tre+0x44/0x224 [mhi]
+> [    9.408563] lr : mhi_gen_tre+0x40/0x224 [mhi]
+> [    9.408566] sp : ffff800080d637d0
+> [    9.408567] x29: ffff800080d637d0 x28: ffff65434505a380 x27: ffff8000827ee188
+> [    9.408570] x26: 0000000000000000 x25: ffff65434ad59080 x24: ffff8000827edf88
+> [    9.408572] x23: 0000000000000000 x22: ffff8000827edf80 x21: ffff800080d63890
+> [    9.408575] x20: 0000000000000000 x19: 0000000000000002 x18: 00000000000506c0
+> [    9.408577] x17: 0000000000000028 x16: 0000000000000000 x15: ffffb0aa21cdac88
+> [    9.408579] x14: ffffb0aa21d2b348 x13: 000000000000a9ac x12: ffff654341700928
+> [    9.408582] x11: ffffb0aa2234ecc8 x10: fffffffffffffd20 x9 : 0000000089ad6b58
+> [    9.408585] x8 : 00000000d944ea76 x7 : 00000000000404a8 x6 : ffffb0aa21fd49a8
+> [    9.408587] x5 : 0000000000000084 x4 : ffffb0aa223883b8 x3 : 000000001fffffff
+> [    9.408589] x2 : 0000000000000000 x1 : 0000000000000004 x0 : ffff654341700000
+> [    9.408592] Call trace:
+> [    9.408593]  mhi_gen_tre+0x44/0x224 [mhi]
+> [    9.408596]  mhi_queue+0x74/0x194 [mhi]
+> [    9.408598]  mhi_queue_skb+0x5c/0x8c [mhi]
+> [    9.408601]  qcom_mhi_qrtr_send+0x6c/0x160 [qrtr_mhi]
+> [    9.408604]  qrtr_node_enqueue+0xd0/0x4a0 [qrtr]
+> [    9.408606]  qrtr_bcast_enqueue+0x78/0xdc [qrtr]
+> [    9.408609]  qrtr_sendmsg+0x15c/0x33c [qrtr]
+> [    9.408612]  sock_sendmsg+0xc0/0xec
+> [    9.408617]  kernel_sendmsg+0x30/0x40
+> [    9.408619]  service_announce_new+0xbc/0x1c4 [qrtr]
+> [    9.408621]  qrtr_ns_worker+0x714/0x794 [qrtr]
+> [    9.408622]  process_one_work+0x210/0x614
+> [    9.408626]  worker_thread+0x23c/0x378
+> [    9.408627]  kthread+0x124/0x128
+> [    9.408628]  ret_from_fork+0x10/0x20
+> [    9.408631] Code: aa0003f9 aa1b03e0 94001a51 f9401b14 (3940d280)
+> [    9.408633] ---[ end trace 0000000000000000 ]---
 
