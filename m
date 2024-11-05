@@ -1,83 +1,95 @@
-Return-Path: <linux-arm-msm+bounces-37064-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37065-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 87EC99BCE6F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 14:58:43 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A46AF9BCF22
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 15:23:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 12D89B21BD1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 13:58:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5BD001F210CB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 14:23:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 378CB1D6DBB;
-	Tue,  5 Nov 2024 13:58:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EFEBF1DD0E4;
+	Tue,  5 Nov 2024 14:22:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="V8keVdc9"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m2GW47Uc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
+Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71BDC1D45FD
-	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Nov 2024 13:58:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B87D1DD0C1;
+	Tue,  5 Nov 2024 14:22:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730815118; cv=none; b=XdgMyNlA1OEVjKtTxlNDNVpHlQwqjxFgmcZmNJfi1/9P0a/eqkFKRe+ls4PjXc64OHXPKsAYNSm9/CQn0OtghtszzHnMx2rcAwl0F+vqd/edVXYdaWXLve2wRvXbgXxcx2i3qeTuH9G7qLNOUvHxidKF3aMGg287FYulfLF43yg=
+	t=1730816537; cv=none; b=aZfPDRcrHlz1y9gdQgadYLBEA883PPKa95bmIU0EBOC3x/gSBAEP7L5O8yA6dp7Yi3zI+m+h1H6bgtjjxLFRjdwT8Cj5CG4mvPEjkvyGe5/+36X6iImiXRvg4S+97XxAn0VnA0iMJa/S7aajlAwFYZWlFyp2lew1c71rur+pUoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730815118; c=relaxed/simple;
-	bh=V63t4pvhRFbfBGHeJ8KN/yUWANqDhwLslKgn+5Wn2vs=;
+	s=arc-20240116; t=1730816537; c=relaxed/simple;
+	bh=sP5RMY8hxe6DXxClXbSAAF5UnVZF/3YYdW1ecNvnqvs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ndVzoW0wfilofwHtIIL/SZbT9x7xgBxM3qsqniGfhFnTjjhdtV2RH9s58nt/rxq6NSI5f6Er9UrlkquPqXRcgcRaAn6Qx9KZ/01E6eL/uJ8x+Sq6TfafRKCx0iVjzUBjTCyechZVBwJXNeRkAVPkZM4sRzCr/vfsQnjbGMQPFks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=V8keVdc9; arc=none smtp.client-ip=209.85.208.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2fb59652cb9so49428771fa.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Nov 2024 05:58:36 -0800 (PST)
+	 Content-Type:Content-Disposition:In-Reply-To; b=GBQ2oGUqB/nSZHf/NkB9IB+vUr0rtpkKP5zcvQxokWRCx/zcTtQwitNO52ieZE5MD0HUMKiZQG7TxyRQRWbj7gsqH9VqHpfx4ywn8yVhurl8DhA+FFH3I2QOVQM6taNZXJznPxAQj9lYen3q3SuPZjphQbzj2xtEuvAg1ZXXwzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m2GW47Uc; arc=none smtp.client-ip=209.85.216.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-2e2e050b1c3so4817298a91.0;
+        Tue, 05 Nov 2024 06:22:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1730815115; x=1731419915; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1730816536; x=1731421336; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=EcCSA4vz0FwBZVePOHpQk1Nupy1Yh2zKcJd0XIdACvM=;
-        b=V8keVdc9daO84+ND7OtsskJVZuF9V6tNtYCTKWi+dneWvdDDljLHL+WIRwyLmW3zEl
-         dY7xLw+E4XwKG6qwqlICG/N2EDyAesAdIQSvSdzE8o8HyvLZZ1sTuRv6Fo0///egVl7R
-         EK8QLdQY7yBq1PFc6kkWB7tYpRN8ft+UkrV0B805f7gpoa2dd918WwAQh4ZNWmpO56dr
-         +RwJXZbDK0qHn/sCJxpj4zJshaGBIBKR70eu3a9DIh0QGCSBYkTRKkP+/i/E6UOB2ymK
-         eqEh0KOi9SMt2uLYAUuG7QnbOK0IJk9tj855+1EMaP6ScID/y9/eExMj8JuMT17Ob48H
-         sUjw==
+        bh=u9W36PJD1WQmA4X2SxmQGflBy5FWr2N7Wbdhri0Rtxk=;
+        b=m2GW47Uct+7plhpksxcFwsXPRlEqXUfBx5thBG1BW8PH5CgEZ7vKqSDJkyYOz8cJkA
+         CIsatIcQVAGHJcHBSxuu/eSghnbRRcQcnbbMhtrlmVScJLOw9MZtmk3MyqlFuX0myOUr
+         pEDtjA/4rjLxApMBX0pNmSa1sR23td/stfXQmS8jvSWuleYCqSSGco2W2ZGLkEuvWu/a
+         Crct6OWugt/ZkrIt551QZ2pVnuzEoov3Z5zSxV5dLZ/UvqdL7eG4m4Bsn4YSxfFcly03
+         qW+RszgQSHIy/qR1JxyqjdkvS1BfyqP1Cdw4YcFsBHiXeRPzB6InrFUmHgqSMhIb6/1H
+         7uiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730815115; x=1731419915;
+        d=1e100.net; s=20230601; t=1730816536; x=1731421336;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=EcCSA4vz0FwBZVePOHpQk1Nupy1Yh2zKcJd0XIdACvM=;
-        b=pEKON3iTl9IlZTduteJ8mvaLelKBcULLM7MtSkdZP9NNKLLVnc/xM+AYo3vFebkVwu
-         rR9zcZJjEIrlkGm3Z8aBcEuaDpbhzoVHQFzHUkwR7R9ZuS1nwuKveJbrhrgaIVeFzTWr
-         BhacsGdZ+dqwxd7NHoegc6y+WNqHQgcvY9MQGPNGR9XiqnROBSx8W3WOvQHgQQz/UGGb
-         P5YCdEGN0jRcOf9KcUec3JrXROo8fD1WnkLIpBEuGeu+XiBl50j03d6+EkGtYgqOCjcM
-         PyqHukZGMBgh1i1NMxwyoc5DX4dHSwV0FRdNyY/MIegyCtkU6ET4sUldiUT96xH9q9bR
-         DT+Q==
-X-Forwarded-Encrypted: i=1; AJvYcCX2FV2McEXWndRAgBCztuQmiHX6ChkSIWsRJ5su2g1bZz2Anim40QWJPD4dICmoUrR+l9UAvuZisyM792c1@vger.kernel.org
-X-Gm-Message-State: AOJu0YxMJmb2YpOVN1b+LpyiFq0DTUMOATyKQlmlgMYTU1bSgl4EfWhh
-	Qt4nEtOPXCIvYdM8aNLBTBUHO2E2YaThp5jG6QTUo/fVNZ8Tjci77D1qlKtko9s=
-X-Google-Smtp-Source: AGHT+IGiGe2ltuoXZLk1KaJTuzqgfBHcsNoa1UMEXJNNJdEx6qmiUXxLSizaNHVF+37tGwj2h5Wa5A==
-X-Received: by 2002:a05:651c:556:b0:2f6:649e:bf5c with SMTP id 38308e7fff4ca-2fdec726444mr87441111fa.17.1730815114600;
-        Tue, 05 Nov 2024 05:58:34 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2fdef8c3367sm20261101fa.103.2024.11.05.05.58.32
+        bh=u9W36PJD1WQmA4X2SxmQGflBy5FWr2N7Wbdhri0Rtxk=;
+        b=q1buMBjVW3p1VFgiy+bUb7HHseB0iowYXfVZ+HfYP8mNT8f7svZTXsOxkaf8NnGEQW
+         tmCzMo2OdW7Db39+Syfh+HXOhQHmGKj+SfC0YX99P6W/vNnpOB49fqIc26IXUEalKMow
+         BBW/h9QMX/5w7i2DNP/yH0wTH/dOVx8wSPLqQbxB8tnHNIakGMmS/f6rLrYf9ypX45do
+         uXMulT6SuZp0B9CdoWqhpTnAPP86M8nV22P2pRArisbWpPeGlEB98fYlzSbfkeUBvd5u
+         +9cgpEZo2Jc3pKAQnzsYcwkJqx60An2nORtubzSOf1hdStsVtTjwX6UwdaMb+hYqviYD
+         a1sQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUAP3rNa/hmaXQlbx43Cj+T3spEqjFM2Jvh1OeGpwcSjYRNlj4+HrLRm4vzFACwFAVD/Ueci5kqyfoYBwQO7g==@vger.kernel.org, AJvYcCVNWXscCvOwOTLmWQTEUg5QTQ1bNSn1sbnYtmLFT3J7pZHHevfOaY3X+TJ3mZBXmT3SeDoOyH3qF9StN64=@vger.kernel.org, AJvYcCWoBFeJxzmHL2SD2YbVgPMfdKlAawwnG6Ma1fbR9MYJnxCfyCCGPKpggr6DhmlU0zv8GtBqr0VPOGZP@vger.kernel.org, AJvYcCXsIA/y3yyy/+lRWZmYzZevO/UvGLCumwhy9o+WE7+BbP06FqUHqEHACHj/eWVUnH4TCyssL5gmruIiKIo6@vger.kernel.org
+X-Gm-Message-State: AOJu0YwhZMDQJhd+G1EVgaMayiS53lbWExg/41uBh92M3hPvEm70QB8A
+	bE13YtoDXxAKbARVDm4SiNDmSD/IQdqgIpMpbXCf5rpKgkv2Kt19
+X-Google-Smtp-Source: AGHT+IG0S61a2XP28pDo7uNGhJL5Hq4TKSAS4dmj/2FNbmAX8sRwFnS/wYTX7SQYzyioWWZyUUpcDQ==
+X-Received: by 2002:a17:90b:3147:b0:2e2:b94a:b6a9 with SMTP id 98e67ed59e1d1-2e94b7c6439mr26354314a91.0.1730816535597;
+        Tue, 05 Nov 2024 06:22:15 -0800 (PST)
+Received: from localhost.localdomain ([103.149.249.231])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-211057d45cfsm78606595ad.260.2024.11.05.06.22.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Nov 2024 05:58:32 -0800 (PST)
-Date: Tue, 5 Nov 2024 15:58:31 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Vikash Garodia <quic_vgarodia@quicinc.com>
-Cc: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, 
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
-	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	stable@vger.kernel.org
-Subject: Re: [PATCH 4/4] media: venus: hfi: add a check to handle OOB in sfr
- region
-Message-ID: <mthuolorbcsykmetqpfaaoyuxgjskwvtvtv4mfl235enlq7win@jdhn2s2cgmui>
-References: <20241105-venus_oob-v1-0-8d4feedfe2bb@quicinc.com>
- <20241105-venus_oob-v1-4-8d4feedfe2bb@quicinc.com>
+        Tue, 05 Nov 2024 06:22:15 -0800 (PST)
+Date: Tue, 5 Nov 2024 22:22:17 +0800
+From: Jianhua Lu <lujianhua000@gmail.com>
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Cc: Vikash Garodia <quic_vgarodia@quicinc.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
+	Sebastian Fricke <sebastian.fricke@collabora.com>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Nicolas Dufresne <nicolas@ndufresne.ca>,
+	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@baylibre.com>,
+	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5 27/28] media: iris: enable video driver probe of
+ SM8250 SoC
+Message-ID: <ZyoqGaSMc2z9xsr1@localhost.localdomain>
+References: <20241105-qcom-video-iris-v5-0-a88e7c220f78@quicinc.com>
+ <20241105-qcom-video-iris-v5-27-a88e7c220f78@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -86,60 +98,49 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241105-venus_oob-v1-4-8d4feedfe2bb@quicinc.com>
+In-Reply-To: <20241105-qcom-video-iris-v5-27-a88e7c220f78@quicinc.com>
 
-On Tue, Nov 05, 2024 at 02:24:57PM +0530, Vikash Garodia wrote:
-> sfr->buf_size is in shared memory and can be modified by malicious user.
-> OOB write is possible when the size is made higher than actual sfr data
-> buffer.
+On Tue, Nov 05, 2024 at 12:25:47PM +0530, Dikshita Agarwal wrote:
+> Initialize the platform data and enable video driver probe of SM8250
+> SoC. Add a kernel param to select between venus and iris drivers for
+> platforms supported by both drivers, for ex: SM8250.
 > 
-> Cc: stable@vger.kernel.org
-> Fixes: d96d3f30c0f2 ("[media] media: venus: hfi: add Venus HFI files")
-> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
 > ---
->  drivers/media/platform/qcom/venus/hfi_venus.c | 9 +++++++--
->  1 file changed, 7 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
-> index 50d92214190d88eff273a5ba3f95486f758bcc05..c19d6bf686d0f31c6a2f551de3f7eb08031bde85 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_venus.c
-> +++ b/drivers/media/platform/qcom/venus/hfi_venus.c
-> @@ -1041,18 +1041,23 @@ static void venus_sfr_print(struct venus_hfi_device *hdev)
->  {
->  	struct device *dev = hdev->core->dev;
->  	struct hfi_sfr *sfr = hdev->sfr.kva;
-> +	u32 size;
->  	void *p;
->  
->  	if (!sfr)
->  		return;
->  
-> -	p = memchr(sfr->data, '\0', sfr->buf_size);
-> +	size = sfr->buf_size;
-> +	if (size > ALIGNED_SFR_SIZE)
-> +		return;
+[..]
+> --- a/drivers/media/platform/qcom/iris/iris_platform_common.h
+> +++ b/drivers/media/platform/qcom/iris/iris_platform_common.h
+[..]
+> +struct iris_platform_data sm8250_data = {
 
-Why can't you just limit size to ALIGNED_SFR_SIZE, still allowing the
-data to be captured?
+You should qualitfy it with static too.
 
+> +	.get_instance = iris_hfi_gen1_get_instance,
+> +	.init_hfi_command_ops = &iris_hfi_gen1_command_ops_init,
+> +	.init_hfi_response_ops = iris_hfi_gen1_response_ops_init,
+[..]
+> diff --git a/drivers/media/platform/qcom/iris/iris_probe.c b/drivers/media/platform/qcom/iris/iris_probe.c
+> index 7b7378b7abb3..4cbaa889322e 100644
+> --- a/drivers/media/platform/qcom/iris/iris_probe.c
+> +++ b/drivers/media/platform/qcom/iris/iris_probe.c
+[..]
+> +static bool video_drv_should_bind(struct device *dev, bool iris_driver)
+
+Variable name iris_driver isn't good enough, rename it to
+is_iris_driver please.
+
+> +{
+> +	if (of_device_compatible_match(dev->of_node, iris_only_platforms))
+> +		return iris_driver;
 > +
-> +	p = memchr(sfr->data, '\0', size);
->  	/*
->  	 * SFR isn't guaranteed to be NULL terminated since SYS_ERROR indicates
->  	 * that Venus is in the process of crashing.
->  	 */
->  	if (!p)
-> -		sfr->data[sfr->buf_size - 1] = '\0';
-> +		sfr->data[size - 1] = '\0';
->  
->  	dev_err_ratelimited(dev, "SFR message from FW: %s\n", sfr->data);
->  }
-> 
+> +	/* If it is not in the migration list, use venus */
+> +	if (!of_device_compatible_match(dev->of_node, venus_to_iris_migration))
+> +		return !iris_driver;
+> +
+> +	return prefer_venus ? !iris_driver : iris_driver;
+> +}
+> +
 > -- 
 > 2.34.1
 > 
-
--- 
-With best wishes
-Dmitry
 
