@@ -1,103 +1,105 @@
-Return-Path: <linux-arm-msm+bounces-37067-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37068-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 03DC39BD1B7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 17:08:43 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id CEBBA9BD290
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 17:38:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 92FC8B24F3D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 16:08:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9379828219B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 16:38:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA54D16D4E6;
-	Tue,  5 Nov 2024 16:07:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D07D41DD86F;
+	Tue,  5 Nov 2024 16:38:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZGJQOmvx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 378ED13AD0F;
-	Tue,  5 Nov 2024 16:07:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1F651DD0FC;
+	Tue,  5 Nov 2024 16:38:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730822847; cv=none; b=mRy98GPQlAvTQpbV+sfBFtLDxLj8ztmq7r6hgdeb/s/6empstuZBjJjslTX74+lNZ/hICFzbx2fxE7t7yDUJd1RsFDzQqxTS5cbgklk+j1PbGgZkwz6GRjeuIVjYRriiKpXOL0RRNDCOJVhLdzV2k0tk3K2Jg7nkrqBn0xtUaaQ=
+	t=1730824700; cv=none; b=smsEDVTmHXUaogQNsWjFn1Y3Wz8qf+l5YF9jOqcBUoJlfjUxXfS6FlAq5jgXLMYWh48l3211FSMe8LFk4mCdI1lowDDs0uR1M4gby9OhZ1bkjKPuV0HB1Iqr4uaXKVfHKBbXq36xCaSGbCWYnJvHTKiW49dftM8Lnb/7HNLknpA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730822847; c=relaxed/simple;
-	bh=VOFgJkIl2yKGWNfdb8bTJ6DOkAjPvxkFk3z/mhG/aTo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EXb4SQp/wDwXfN0u7FNA+kp3ThSOJTlTdihJcO2xtFwClDTk1giBHV+ao6i8LdExBJ4eotQsVixrxBaKWkth8MWh3MqBqWOXshaSd7WKDBTKfsDaEJQJtbk2w1aXtvj7PPW11nch5+9so30bSxTt+8QbQEGLlpiLkDse41d5rGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.210.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-720b2d8bcd3so4583074b3a.2;
-        Tue, 05 Nov 2024 08:07:26 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730822845; x=1731427645;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Ogf0K/Q34hA3Cxoo6TgX4WGjXQUWYD7sZ9PLkWwfk60=;
-        b=e3QkcgVRRlsla5j/t2pLx5ckmSFcb/OiVJkpCEIYZiORPp8ItGc0+zDTjRbO63Q+mA
-         VzEHi0BftS1BBF/nJnCIN2QGgvxM+Uzgf1/FK+WSM2bUjzX69FY3+BClVmqJYSHpBePq
-         8OrW9QfS/CcwvTXVsINvU9GCgCcYPhtgyv6fzmmo4dhoRvnrnPcon94WYSRTAZNReeHA
-         I/PXOAMCv+C4uDRk6h/4LeFJHGNcbUN58umz9zkVMo6v4FsR+r/5d/zwCG5+csX1H+PD
-         fFUyEnT83ptZmLM9b/6TbCPlPkth7iIraoX6ymHtV5ClcEDmiSQtvbnFV4bNVmcIw5TH
-         TVCw==
-X-Forwarded-Encrypted: i=1; AJvYcCX+WPmuomtm1rUg4T9u3RNLmjtbbH8jibzAl/Od83ZTBmbTqroNjCoSjQ4/c1+F9++Dl2RtLpuPJSzlc6U7@vger.kernel.org, AJvYcCXMROGKR8dvQVEWBZ6Vc25OP919ut1dztYI77qfmsGDLlexuHvQpkIodlF1FPpvVB+HJbldotFw6sEx@vger.kernel.org, AJvYcCXdJlKnjLJmqPw4/38QUxpbiNl5cVTYr/LPOcpzRztfpN85w423P7Ay3hLrKD0vpJbVEcDrF0d2I5wGTgWm@vger.kernel.org
-X-Gm-Message-State: AOJu0YzHkjluD+4Iob9lB/vf+YysATHTdUr0bZFtdv2wpk9fh7JECajy
-	JlJfCoJ676jYjBfwTB984YukUY0NlvvzBiQPCGEo1O99It7MwOWo
-X-Google-Smtp-Source: AGHT+IEnlS+/GQcAHPve3vyaQ7sB9wUbUDXU8ulNK8i1FEUHfJF4hri3CQgbF697cHOdDs7H4fpD4g==
-X-Received: by 2002:a05:6a00:b86:b0:71e:7c92:a192 with SMTP id d2e1a72fcca58-72063093594mr47302502b3a.24.1730822845521;
-        Tue, 05 Nov 2024 08:07:25 -0800 (PST)
-Received: from localhost (fpd11144dd.ap.nuro.jp. [209.17.68.221])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-720bc2057f2sm9877889b3a.87.2024.11.05.08.07.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Nov 2024 08:07:24 -0800 (PST)
-Date: Wed, 6 Nov 2024 01:07:22 +0900
-From: Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>
-To: Niklas Cassel <cassel@kernel.org>
-Cc: Zhongqiu Han <quic_zhonhan@quicinc.com>,
-	manivannan.sadhasivam@linaro.org, kishon@kernel.org,
-	bhelgaas@google.com, lpieralisi@kernel.org, dlemoal@kernel.org,
-	mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] PCI: epf-mhi: Fix potential NULL dereference in
- pci_epf_mhi_bind()
-Message-ID: <20241105160722.GA448500@rocinante>
-References: <20241105120735.1240728-1-quic_zhonhan@quicinc.com>
- <ZyofRAZoAE5IgCVi@ryzen>
+	s=arc-20240116; t=1730824700; c=relaxed/simple;
+	bh=X8hYb6RBCYK9495zyoYmXa26zE6IO19upKOSziGx0MQ=;
+	h=From:To:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=W5jfb3afsh50WMaBqMQeiWyshNvFe1CWWyuW6xyzdqdljuGfpDwkspteAU9E7H99NkvVPNADbH3IQXCOs0cGFUn0V425iejEuosWqeLmP5K2Y83LL7ydc5+TxwLc59aFY3TjeygMRH/mMzL2jWou8DsLjkN7UmttNxF/usZD348=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZGJQOmvx; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 387ECC4CED5;
+	Tue,  5 Nov 2024 16:38:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1730824700;
+	bh=X8hYb6RBCYK9495zyoYmXa26zE6IO19upKOSziGx0MQ=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=ZGJQOmvxwqXjlOS+rTITdHoA4FGyRD3GXgP+R2tm9jFp1joz3SuvcR0mKF8OPGU04
+	 6ytKxaDVANCp8Q4W074xUyGD/11Q2R6afZZ+pyrBAPsJOpr0l4DzAhChxEe98VeYFZ
+	 rJ34djLZB5DzSGRmlv7H4AJWwG1+95ZcuEUCMudP4zj+pjyNlq7ApNHsbPO0vpocHd
+	 KmWm9Nl3mscCpLrACeWK4/mDy80Dbop2L3QiK9rt2Wvo0QS0hLBck7gDMyW9FKuyWy
+	 rNMdVBBQDTSQEVasDUitXtlH8KSL0HKgMHMoy9h8kHK4GRp471TsQgkjoyhklgbYz9
+	 iYVe6TY8lhSvQ==
+From: Mark Brown <broonie@kernel.org>
+To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
+ Liam Girdwood <lgirdwood@gmail.com>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>, 
+ Takashi Iwai <tiwai@suse.com>, linux-sound@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20241101165159.370619-1-krzysztof.kozlowski@linaro.org>
+References: <20241101165159.370619-1-krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH 1/2] ASoC: dt-bindings: qcom,sm8250: Add SM8750 sound
+ card
+Message-Id: <173082469795.77847.14820990076674451218.b4-ty@kernel.org>
+Date: Tue, 05 Nov 2024 16:38:17 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZyofRAZoAE5IgCVi@ryzen>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.15-dev-9b746
 
-Hello,
-
-[...]
-> >  	/* Get MMIO base address from Endpoint controller */
-> >  	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "mmio");
-> > +	if (!res) {
-> > +		dev_err(&pdev->dev, "Failed to get MMIO base address\n");
+On Fri, 01 Nov 2024 17:51:58 +0100, Krzysztof Kozlowski wrote:
+> Add bindings for SM8750 sound card, compatible with older SM8450
+> variant.
 > 
-> dev_err(&epf->dev, "Failed to get mmio resource\n");
-> or
-> dev_err(&epf->dev, "Failed to get \"mmio\" resource\n");
 > 
-> Note: &epf->dev instead of &pdev->dev in order to be consistent with other
-> EPF ->bind() functions.
-> 
-> With that, feel free to add:
-> Reviewed-by: Niklas Cassel <cassel@kernel.org>
 
-Thank you Niklas!
+Applied to
 
-No need to send a new version of this patch.  I will update it on the
-branch when applying.  Thank you!
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
 
-	Krzysztof
+Thanks!
+
+[1/2] ASoC: dt-bindings: qcom,sm8250: Add SM8750 sound card
+      commit: 393de01870bcf2ea1eadd21ad12f927d78cbb726
+[2/2] ASoC: qcom: sc8280xp Add SM8750 sound card
+      commit: 4b9f02b6c5376b65dac398c4f06804c914cbb7be
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
 
