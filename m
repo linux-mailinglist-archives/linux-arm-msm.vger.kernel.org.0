@@ -1,144 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-36995-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36996-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B73DA9BC464
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 05:42:07 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9585B9BC48B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 06:08:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D7A671C212FD
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 04:42:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2554C282C32
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 05:08:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41C1618E02B;
-	Tue,  5 Nov 2024 04:42:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C20DC1AB505;
+	Tue,  5 Nov 2024 05:08:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SqdWNhUv"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AK6VuxFZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 874C118EAD;
-	Tue,  5 Nov 2024 04:42:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E08A3987D;
+	Tue,  5 Nov 2024 05:08:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730781723; cv=none; b=UwtGYkF7yX/fxwUk4F+3LdYINxaWIhP9EHR7fxtvDNQnDwz/NDhH+r/qLI+mOJr/gWPY553XKpkQ4pDaqKH9pu+YGrlK/vN0e49owH3ciPTfm9WFEmMgg9gQDBK29iicrb7y7QCHY+ZJ3yXz+pNQZzDGkMRGpGQ8N+kI/U2+3o4=
+	t=1730783285; cv=none; b=qGDeLWvr0+fMEzOE3MoT0Dfk/Oq5PuAfuqxYK8You6FftIIueC/tXrmkl7LEHE5YY0Z0kumRHSF7Qw1BJVcynna3T/cW/NaT+dIRi7Z7/zb0Kno3lIZOIUQvWZdHkek3qITPpLX5JAa1JCSjnxvbJoSvvUzQfPpySVYujA6XyQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730781723; c=relaxed/simple;
-	bh=GERzyHXG1j7vDe7Sv3QECeL9y4wkacoKyJifFZB5SCc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=GzsFiCinvSaW8kwqgLNDxZTu0UNH1MCmTjeUiqK19aWxqYA51Enua7/jcK6B2UAzEkaRIBsC3fZp+RcjrO3rxiLKT1PVnbtVeBh6H02RenpY3pkgGu59HjPzD1zdowz03b4skI+Er/iRVUdUomdumt72pXUSVjPl/XhhDXYO3K4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=SqdWNhUv; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A4LJNlO001852;
-	Tue, 5 Nov 2024 04:41:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	M/A196zbFjuy+n7rnSJl+Mcogsu5xntqgmxXdF4fZTc=; b=SqdWNhUvqOV68GuA
-	M+B3Yx6C0xtwx8oCoeH8lA7w43IFzUQr1Ori1HeLfRrTUbEkc+xIDnDL1gHRtpuP
-	C06rfqfx4rxevl6r7v7WzmHkTozmC/kjCixl1bH9a+McYbbgvkWH3AO9xfEggOWk
-	gOhtviKBNgJXw+GuucF5rbcay3VK9rMWrFkdlua5EOaZdctE/YaZvz9XV9HRZ2mm
-	PYR0Hz1fKqp9pfdJ7cwQ1kSwaQWjo4aUwg6XEV1+mX7Eie/0o7izztbRInFbbnlu
-	NDa3Q9aL6KOMOqqXvoVovF/Imhn8r0Hr6V9FKMgav2hwe1ahk1jirXANPG7WYpmG
-	Yk+0Qg==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42nd2s6bj8-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 05 Nov 2024 04:41:56 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4A54ftuD010042
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 5 Nov 2024 04:41:55 GMT
-Received: from [10.216.1.57] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 4 Nov 2024
- 20:41:50 -0800
-Message-ID: <59562d2d-936e-4a96-b9de-d152a503e552@quicinc.com>
-Date: Tue, 5 Nov 2024 10:11:42 +0530
+	s=arc-20240116; t=1730783285; c=relaxed/simple;
+	bh=Woa5l/TBzfjnbejfeJNuhIdCkk1UOKkNCSAnyW42mrA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=M1grtJj0b3kRBueslMfacPkJGTah5y1XaeeiIFqSXQ5vCwu7wM/8dlhEuERtMkf4yz107/zbbkHvYCBA5MeWm6OIpbznlr5Nphx2lbHGvkmUl5Eq11y+OiVyk5yqrPbJXFJE2cPgrtk+a851XG/t/Zu3Fd3/3V4NFA/kC+P3VWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AK6VuxFZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14238C4CECF;
+	Tue,  5 Nov 2024 05:08:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1730783285;
+	bh=Woa5l/TBzfjnbejfeJNuhIdCkk1UOKkNCSAnyW42mrA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=AK6VuxFZ1qdb1ASJhFnrWnZ+gjqjzhn5itjDiDIbY6oA5hQ/MVC4po0h7T9x4iP+d
+	 ZTy31PQzwIe/YAjF9RT1WtQqVMAeK6En6Glkchdb81Q2pbUuJg/JQPr97aGEp218Rd
+	 S1h0+VwuCtaRmMAUzkWkQ0B5XtN6QSU30D9wOE+Mlj14S59wGMPw64CVqiAl07TwQh
+	 FQoCXxXydhukNne/RoKvirXXRse1ke8F4PM9ckEZDPOmVR31KvQ27NSPYDZFjIblNi
+	 /0KQcuc36UIzD9Joar7eKBo5yMAgB0+hohgNAoFwnjzsACSGwdL9QNvYwvnelBb6eE
+	 /Amp0A3yUXSnA==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1t8BnO-000000005Bi-3WGR;
+	Tue, 05 Nov 2024 06:08:03 +0100
+Date: Tue, 5 Nov 2024 06:08:02 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Chris Lew <quic_clew@quicinc.com>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+	Qiang Yu <quic_qianyu@quicinc.com>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+	Konrad Dybcio <konradybcio@kernel.org>, mhi@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: qrtr/mhi: NULL-deref with in-kernel pd-mapper
+Message-ID: <ZymoMlSCQQScpRIZ@hovoldconsulting.com>
+References: <ZyTtVdkCCES0lkl4@hovoldconsulting.com>
+ <da2bc665-5010-4d92-b9ac-7c442859cd10@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/6] dt-bindings: clock: qcom: Add GPU clocks for
- QCS8300
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Krzysztof Kozlowski
-	<krzk@kernel.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette
-	<mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Ajit Pandey <quic_ajipan@quicinc.com>,
-        Taniya Das
-	<quic_tdas@quicinc.com>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>,
-        "Satya
- Priya Kakitapalli" <quic_skakitap@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20241024-qcs8300-mm-patches-v2-0-76c905060d0a@quicinc.com>
- <20241024-qcs8300-mm-patches-v2-1-76c905060d0a@quicinc.com>
- <jhwf2slcwvkpxggqt42mfmnyiibhbnvwtqk3to7ueq3ppla7q7@23qrl2z56ygu>
- <f5d24079-58e4-4ca2-a910-4e4b3feb04f7@linaro.org>
-Content-Language: en-US
-From: Imran Shaik <quic_imrashai@quicinc.com>
-In-Reply-To: <f5d24079-58e4-4ca2-a910-4e4b3feb04f7@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: GAP70G87Svtfkkwp3wIctEdBRA--Hh2W
-X-Proofpoint-GUID: GAP70G87Svtfkkwp3wIctEdBRA--Hh2W
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0
- lowpriorityscore=0 mlxlogscore=962 clxscore=1011 suspectscore=0
- adultscore=0 priorityscore=1501 bulkscore=0 mlxscore=0 malwarescore=0
- spamscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2409260000 definitions=main-2411050031
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <da2bc665-5010-4d92-b9ac-7c442859cd10@quicinc.com>
 
+On Mon, Nov 04, 2024 at 04:26:15PM -0800, Chris Lew wrote:
+> On 11/1/2024 8:01 AM, Johan Hovold wrote:
 
+> > [    8.825593] Unable to handle kernel NULL pointer dereference at virtual
+> > address 0000000000000034
+> > .
 
-On 10/30/2024 4:29 PM, Vladimir Zapolskiy wrote:
-> On 10/26/24 15:20, Krzysztof Kozlowski wrote:
->> On Thu, Oct 24, 2024 at 07:01:14PM +0530, Imran Shaik wrote:
->>> The QCS8300 GPU clock controller is mostly identical to SA8775P, but
->>> QCS8300 has few additional clocks and minor differences. Hence, reuse
->>> SA8775P gpucc bindings and add additional clocks required for QCS8300.
->>
->> IIUC, these clocks are not valid for SA8775p. How do we deal with such
->> cases for other Qualcomm SoCs?
->>
+> > [    9.002030] CPU: 10 UID: 0 PID: 11 Comm: kworker/u48:0 Not tainted 6.12.0-rc5 #4
+> > [    9.029550] Hardware name: Qualcomm CRD, BIOS 6.0.231221.BOOT.MXF.2.4-00348.1-HAMOA-1 12/21/2023
+> > [    9.029552] Workqueue: qrtr_ns_handler qrtr_ns_worker [qrtr]
+> > [    9.061350] pstate: a1400005 (NzCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+> > [    9.061353] pc : mhi_gen_tre+0x44/0x224 [mhi]
+> > [    9.106931] lr : mhi_gen_tre+0x40/0x224 [mhi]
+> > [    9.106934] sp : ffff8000800fb7d0
+> > [    9.106935] x29: ffff8000800fb7d0 x28: ffff6db7852bd000 x27: ffff800082490188
+> > [    9.120382] dwc3 a000000.usb: Adding to iommu group 5
+> > [    9.133750]
+> > [    9.133752] x26: 0000000000000000 x25: ffff6db783e65080 x24: ffff80008248ff88
+> > [    9.133754] x23: 0000000000000000 x22: ffff80008248ff80 x21: ffff8000800fb890
+> > [    9.133756] x20: 0000000000000000 x19: 0000000000000002 x18: 000000000005cf20
+> > [    9.133758] x17: 0000000000000028 x16: 0000000000000000
+> > [    9.172738]  x15: ffffa5834131fbd0
+> > [    9.172741] x14: ffffa5834137caf0 x13: 000000000000ce30 x12: ffff6db7808bc028
+> > [    9.172743] x11: ffffa58341993000 x10: 0000000000000000 x9 : 00000000cf3f2b90
+> > [    9.172745] x8 : 0000000094e5072b x7 : 00000000000404ce x6 : ffffa5834162cfb0
+> > [    9.172747] x5 : 000000000000008b x4 : ffffa583419cddf0 x3 : 0000000000000007
+> > [    9.172750] x2 : 0000000000000000
+> > [    9.192697]  x1 : 000000000000000a x0 : ffff6db7808bb700
+> > [    9.192700] Call trace:
+> > [    9.192701]  mhi_gen_tre+0x44/0x224 [mhi]
+> > [    9.192704]  mhi_queue+0x74/0x194 [mhi]
+> > [    9.192706]  mhi_queue_skb+0x5c/0x8c [mhi]
+> > [    9.210985]  qcom_mhi_qrtr_send+0x6c/0x160 [qrtr_mhi]
+> > [    9.210989]  qrtr_node_enqueue+0xd0/0x4a0 [qrtr]
+> > [    9.210992]  qrtr_bcast_enqueue+0x78/0xe8 [qrtr]
+> > [    9.225530]  qrtr_sendmsg+0x15c/0x33c [qrtr]
+> > [    9.225532]  sock_sendmsg+0xc0/0xec
+> > [    9.240436]  kernel_sendmsg+0x30/0x40
+> > [    9.240438]  service_announce_new+0xbc/0x1c4 [qrtr]
+> > [    9.240440]  qrtr_ns_worker+0x714/0x794 [qrtr]
+> > [    9.240441]  process_one_work+0x210/0x614
+> > [    9.254527]  worker_thread+0x23c/0x378
+> > [    9.254529]  kthread+0x124/0x128
+> > [    9.254531]  ret_from_fork+0x10/0x20
+> > [    9.254534] Code: aa0003f9 aa1b03e0 94001a4d f9401b14 (3940d280)
+> > [    9.267369] ---[ end trace 0000000000000000 ]---
+> > [    9.267371] Kernel panic - not syncing: Oops: Fatal exception in interrupt
 > 
-> It always possible to add a new platform specific header file and
-> include the old one.
+> Thanks for reporting this.
+
+Thanks for taking a look, Chris.
+
+> I'm not sure the in-kernel pd-mapper should be affecting this path. I 
+> think this is for WLAN since it is the mhi qrtr and I'm not aware of 
+> WLAN needing to listen to the pd-mapper framework.
+
+This function is called for both the WWAN and WLAN on this machine, and
+it seems like the modem is typically probed first and around the time
+when I saw the NULL-deref.
+
+[    8.802728] mhi-pci-generic 0005:01:00.0: mhi_gen_tre - buf_info = ffff800080d75000, offsetof(buf_info->used) = 0x34
+...
+[    9.980638] ath12k_pci 0004:01:00.0: mhi_gen_tre - buf_info = ffff800081d35000, offsetof(buf_info->used) = 0x34
+ 
+> The offset seems to be mapped back to 
+> linux/drivers/bus/mhi/host/main.c:1220, I had some extra debug configs 
+> enabled so not sure the offset is still valid.
 > 
-> For reference see commit a6a61b9701d1 ("dt-bindings: clock: qcom: Add
-> SM8650 video clock controller"), I believe that's the preferred way
-> of adding new platform clocks whenever technically possible.
+> 	WARN_ON(buf_info->used);
+> 	buf_info->pre_mapped = info->pre_mapped;
 > 
+> This looks like the null pointer would happen if qrtr tried to send 
+> before mhi_channel_prepare() is called.
 
-Sure, I will follow the same approach as the commit a6a61b9701d1 and 
-post next series.
+I didn't look closely at the code, but I can confirm that the offset of
+buf_info->used is indeed 0x34, which could indicate that it's the
 
-Thanks,
-Imran
+	buf_info = buf_ring->wp;
 
-> -- 
-> Best wishes,
-> Vladimir
+pointer that was NULL.
 
+> I think we have a patch that might fix this, let me dig it up and send 
+> it out.
+
+Would that patch still help?
+
+	https://lore.kernel.org/lkml/20241104-qrtr_mhi-v1-1-79adf7e3bba5@quicinc.com/
+
+I naively tried adding a sleep after registering the endpoint, but that
+is at least not sufficient to trigger the NULL-deref.
+
+Johan
 
