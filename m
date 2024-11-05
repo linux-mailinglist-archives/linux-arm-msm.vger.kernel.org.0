@@ -1,96 +1,71 @@
-Return-Path: <linux-arm-msm+bounces-37066-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37067-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9BB819BCF6E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 15:34:13 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 03DC39BD1B7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 17:08:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B95581C23E3D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 14:34:12 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 92FC8B24F3D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 16:08:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7229B1D8DE2;
-	Tue,  5 Nov 2024 14:34:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RnHDbG9R"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA54D16D4E6;
+	Tue,  5 Nov 2024 16:07:27 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6A7514A91;
-	Tue,  5 Nov 2024 14:34:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 378ED13AD0F;
+	Tue,  5 Nov 2024 16:07:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730817245; cv=none; b=MjkIJcEufWebqkxq+zA4Suu2cEdBKKIKNJ3VY6dWil74IUoBgo0vu/OZv9YpQ+pOeOKLD4eU+4lO6fC8g7chg0n3VLnnqhRWmfrijQcqLsIxPXArfijadHLHdk3h5UlX58mdwD0AHLLXqUY2qmIcrqFR+inbHSmNhZA5XIuKRNI=
+	t=1730822847; cv=none; b=mRy98GPQlAvTQpbV+sfBFtLDxLj8ztmq7r6hgdeb/s/6empstuZBjJjslTX74+lNZ/hICFzbx2fxE7t7yDUJd1RsFDzQqxTS5cbgklk+j1PbGgZkwz6GRjeuIVjYRriiKpXOL0RRNDCOJVhLdzV2k0tk3K2Jg7nkrqBn0xtUaaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730817245; c=relaxed/simple;
-	bh=YQGq8BeG/Fp5PyaG/BAkgPdJeomV8W8Km5kHMMWU1Ok=;
+	s=arc-20240116; t=1730822847; c=relaxed/simple;
+	bh=VOFgJkIl2yKGWNfdb8bTJ6DOkAjPvxkFk3z/mhG/aTo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FEkrFH79xnLkLPq/PYL6GnIKqf0zyA2O0DfrwdpM9xPhyzMWs9+TyK0KYui7Mz1lBJXTqmhOvr+8PB56GSeBn2m9wgHLd9t2d0uBYUoqHojIKuBNmR2qXnKbR9+BsvvfIGoCfZCLvr0Y5F+uuLb2Tc/ZabPhXtntV5vlWQF7hPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RnHDbG9R; arc=none smtp.client-ip=209.85.210.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=EXb4SQp/wDwXfN0u7FNA+kp3ThSOJTlTdihJcO2xtFwClDTk1giBHV+ao6i8LdExBJ4eotQsVixrxBaKWkth8MWh3MqBqWOXshaSd7WKDBTKfsDaEJQJtbk2w1aXtvj7PPW11nch5+9so30bSxTt+8QbQEGLlpiLkDse41d5rGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.210.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-720d5ada03cso4358926b3a.1;
-        Tue, 05 Nov 2024 06:34:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730817243; x=1731422043; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=+wkZkgieCQJSdGFL1nFVjSANilf4JopahWQIFB2y57g=;
-        b=RnHDbG9RKxkQdmdNXyRgBU+IT25U/o6j50oq/pkoQQnMuc7oUwcYWUZ5W3IO0ypfP6
-         sot2PeOVAFl+jUb/SYizsVTIbFOsB9OS5wwv92IbcafbZw6yA57M4mcQktKbr+0q/TTD
-         iOCIvjsUbhCqEpXwIMWIXG/iuMyPFFqOZ1mYe1Eo5+9KHXRat8FhnUEV2aUtwqFAvJai
-         P96SgxTM8p1HxZQzhnFHh5b3epVp6uCZShuDh5P0o2wnuiJLWuhrrWNheHlqE4Hq5Faw
-         1Y+w2+We8GygkUlBzPoiJeux4etP4s4xC/CanYMSUX5y+OL3/vAyYAbyGQ8bx3mYkgDB
-         8vqw==
+Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-720b2d8bcd3so4583074b3a.2;
+        Tue, 05 Nov 2024 08:07:26 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730817243; x=1731422043;
+        d=1e100.net; s=20230601; t=1730822845; x=1731427645;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=+wkZkgieCQJSdGFL1nFVjSANilf4JopahWQIFB2y57g=;
-        b=sCVRInOXD6YviuapQ/95MENKZTXD1fNqGy3EL3GHbxt1hEP8WfLWB6N4zySN7osZII
-         E1JMB8oHE4ZlBtXnK0+TachmRozmOV+5OMoW/u5tHqw22OYEDMJrIiRcdCNZr0xfED6X
-         QwKAogPNS3dZcmaMYoVm57U1mOKfqlYe9Olu6Fy9bSu3UUN3xU440e9wxM2ZwXqaxp25
-         pJG62JUKOslA12Ym95+aDMZAMJFbD8bBBr6rbkKmxD84fYlmvdqfA02DK8Xhq+LpeWx5
-         a4OB7r/sxeTNnXLSV/c+wZT+3ozbsdiF/3PzQJv50Mq9y4xnr5P0/CnD6YmOajnRGRyN
-         YoAA==
-X-Forwarded-Encrypted: i=1; AJvYcCU7clMYCTbHIl8DzhXf/CTAvXwGlA7/pjzuEc7I1xX5wXkTbKnNSOu47zq4Id0yMTZf72FVH3euWPW4kY7ggw==@vger.kernel.org, AJvYcCVf/4ZzgYVz7f1L4cvkXugaHKexsp3Uz8WDvMes19W5whFGL8ur1GDRhHkgG5rtzwmmQQv33x8PDkfPp4Fs@vger.kernel.org, AJvYcCWFQlpMXXCFOOmQr09dbM4z4iNJYs1O/BIgoPmBjMao6v7yIGvty1TjWxENW6EtMpBGcMmq7JOVfWWpeb0=@vger.kernel.org, AJvYcCWrvvGj4W1oBrWp3qHOXn84VTtgEKcP7L2LeBn007+J7GlkhWtTPuJLYRhnDO+ZdEOD0Noo4kFn4bgG@vger.kernel.org
-X-Gm-Message-State: AOJu0YwSY2NWqG319/x5Cs220/QpcXqdyERoLdd6H6K1HMXE25wLmtFV
-	YHl/uYPtyzCpw0x/f91TlAjIcsrcxD6Vyz1W1+c7RfR2zI873BjBNwOZnQ==
-X-Google-Smtp-Source: AGHT+IF6Jhd8ae1eb4MRSXHY+M5pbxaJWy0HAbzhTRzH9XRbPEvOHf4v9oASvTrDMZVFx5DA3DfGjQ==
-X-Received: by 2002:a05:6a00:148f:b0:71e:4296:2e with SMTP id d2e1a72fcca58-720b9c942damr23160857b3a.11.1730817243149;
-        Tue, 05 Nov 2024 06:34:03 -0800 (PST)
-Received: from localhost.localdomain ([103.149.249.231])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-720bc2c54acsm9685528b3a.124.2024.11.05.06.33.54
+        bh=Ogf0K/Q34hA3Cxoo6TgX4WGjXQUWYD7sZ9PLkWwfk60=;
+        b=e3QkcgVRRlsla5j/t2pLx5ckmSFcb/OiVJkpCEIYZiORPp8ItGc0+zDTjRbO63Q+mA
+         VzEHi0BftS1BBF/nJnCIN2QGgvxM+Uzgf1/FK+WSM2bUjzX69FY3+BClVmqJYSHpBePq
+         8OrW9QfS/CcwvTXVsINvU9GCgCcYPhtgyv6fzmmo4dhoRvnrnPcon94WYSRTAZNReeHA
+         I/PXOAMCv+C4uDRk6h/4LeFJHGNcbUN58umz9zkVMo6v4FsR+r/5d/zwCG5+csX1H+PD
+         fFUyEnT83ptZmLM9b/6TbCPlPkth7iIraoX6ymHtV5ClcEDmiSQtvbnFV4bNVmcIw5TH
+         TVCw==
+X-Forwarded-Encrypted: i=1; AJvYcCX+WPmuomtm1rUg4T9u3RNLmjtbbH8jibzAl/Od83ZTBmbTqroNjCoSjQ4/c1+F9++Dl2RtLpuPJSzlc6U7@vger.kernel.org, AJvYcCXMROGKR8dvQVEWBZ6Vc25OP919ut1dztYI77qfmsGDLlexuHvQpkIodlF1FPpvVB+HJbldotFw6sEx@vger.kernel.org, AJvYcCXdJlKnjLJmqPw4/38QUxpbiNl5cVTYr/LPOcpzRztfpN85w423P7Ay3hLrKD0vpJbVEcDrF0d2I5wGTgWm@vger.kernel.org
+X-Gm-Message-State: AOJu0YzHkjluD+4Iob9lB/vf+YysATHTdUr0bZFtdv2wpk9fh7JECajy
+	JlJfCoJ676jYjBfwTB984YukUY0NlvvzBiQPCGEo1O99It7MwOWo
+X-Google-Smtp-Source: AGHT+IEnlS+/GQcAHPve3vyaQ7sB9wUbUDXU8ulNK8i1FEUHfJF4hri3CQgbF697cHOdDs7H4fpD4g==
+X-Received: by 2002:a05:6a00:b86:b0:71e:7c92:a192 with SMTP id d2e1a72fcca58-72063093594mr47302502b3a.24.1730822845521;
+        Tue, 05 Nov 2024 08:07:25 -0800 (PST)
+Received: from localhost (fpd11144dd.ap.nuro.jp. [209.17.68.221])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-720bc2057f2sm9877889b3a.87.2024.11.05.08.07.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Nov 2024 06:34:02 -0800 (PST)
-Date: Tue, 5 Nov 2024 22:34:06 +0800
-From: Jianhua Lu <lujianhua000@gmail.com>
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>
-Cc: Vikash Garodia <quic_vgarodia@quicinc.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
-	Sebastian Fricke <sebastian.fricke@collabora.com>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Nicolas Dufresne <nicolas@ndufresne.ca>,
-	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@baylibre.com>,
-	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 27/28] media: iris: enable video driver probe of
- SM8250 SoC
-Message-ID: <Zyos3pGYWfUSTlxV@localhost.localdomain>
-References: <20241105-qcom-video-iris-v5-0-a88e7c220f78@quicinc.com>
- <20241105-qcom-video-iris-v5-27-a88e7c220f78@quicinc.com>
- <ZyoqGaSMc2z9xsr1@localhost.localdomain>
+        Tue, 05 Nov 2024 08:07:24 -0800 (PST)
+Date: Wed, 6 Nov 2024 01:07:22 +0900
+From: Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>
+To: Niklas Cassel <cassel@kernel.org>
+Cc: Zhongqiu Han <quic_zhonhan@quicinc.com>,
+	manivannan.sadhasivam@linaro.org, kishon@kernel.org,
+	bhelgaas@google.com, lpieralisi@kernel.org, dlemoal@kernel.org,
+	mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] PCI: epf-mhi: Fix potential NULL dereference in
+ pci_epf_mhi_bind()
+Message-ID: <20241105160722.GA448500@rocinante>
+References: <20241105120735.1240728-1-quic_zhonhan@quicinc.com>
+ <ZyofRAZoAE5IgCVi@ryzen>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -99,53 +74,30 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZyoqGaSMc2z9xsr1@localhost.localdomain>
+In-Reply-To: <ZyofRAZoAE5IgCVi@ryzen>
 
-On Tue, Nov 05, 2024 at 10:22:17PM +0800, Jianhua Lu wrote:
-> On Tue, Nov 05, 2024 at 12:25:47PM +0530, Dikshita Agarwal wrote:
-> > Initialize the platform data and enable video driver probe of SM8250
-> > SoC. Add a kernel param to select between venus and iris drivers for
-> > platforms supported by both drivers, for ex: SM8250.
-> > 
-> > Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-> > ---
-> [..]
-> > --- a/drivers/media/platform/qcom/iris/iris_platform_common.h
-> > +++ b/drivers/media/platform/qcom/iris/iris_platform_common.h
-> [..]
-> > +struct iris_platform_data sm8250_data = {
-> 
-> You should qualitfy it with static too.
+Hello,
 
-Sorry, I overlooked some code above, please ignore this comment.
+[...]
+> >  	/* Get MMIO base address from Endpoint controller */
+> >  	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "mmio");
+> > +	if (!res) {
+> > +		dev_err(&pdev->dev, "Failed to get MMIO base address\n");
+> 
+> dev_err(&epf->dev, "Failed to get mmio resource\n");
+> or
+> dev_err(&epf->dev, "Failed to get \"mmio\" resource\n");
+> 
+> Note: &epf->dev instead of &pdev->dev in order to be consistent with other
+> EPF ->bind() functions.
+> 
+> With that, feel free to add:
+> Reviewed-by: Niklas Cassel <cassel@kernel.org>
 
-> 
-> > +	.get_instance = iris_hfi_gen1_get_instance,
-> > +	.init_hfi_command_ops = &iris_hfi_gen1_command_ops_init,
-> > +	.init_hfi_response_ops = iris_hfi_gen1_response_ops_init,
-> [..]
-> > diff --git a/drivers/media/platform/qcom/iris/iris_probe.c b/drivers/media/platform/qcom/iris/iris_probe.c
-> > index 7b7378b7abb3..4cbaa889322e 100644
-> > --- a/drivers/media/platform/qcom/iris/iris_probe.c
-> > +++ b/drivers/media/platform/qcom/iris/iris_probe.c
-> [..]
-> > +static bool video_drv_should_bind(struct device *dev, bool iris_driver)
-> 
-> Variable name iris_driver isn't good enough, rename it to
-> is_iris_driver please.
-> 
-> > +{
-> > +	if (of_device_compatible_match(dev->of_node, iris_only_platforms))
-> > +		return iris_driver;
-> > +
-> > +	/* If it is not in the migration list, use venus */
-> > +	if (!of_device_compatible_match(dev->of_node, venus_to_iris_migration))
-> > +		return !iris_driver;
-> > +
-> > +	return prefer_venus ? !iris_driver : iris_driver;
-> > +}
-> > +
-> > -- 
-> > 2.34.1
-> > 
+Thank you Niklas!
+
+No need to send a new version of this patch.  I will update it on the
+branch when applying.  Thank you!
+
+	Krzysztof
 
