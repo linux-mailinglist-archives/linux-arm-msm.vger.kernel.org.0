@@ -1,131 +1,260 @@
-Return-Path: <linux-arm-msm+bounces-37084-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37085-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 275999BD52D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 19:46:09 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8BA7C9BD622
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 20:53:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 57D7F1C22B4F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 18:46:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1B3BC1F2339A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 19:53:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98BBE1EABCD;
-	Tue,  5 Nov 2024 18:42:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D7D9A213153;
+	Tue,  5 Nov 2024 19:53:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rivosinc-com.20230601.gappssmtp.com header.i=@rivosinc-com.20230601.gappssmtp.com header.b="quRqXxyQ"
+	dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b="SZ9iZapw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-il1-f182.google.com (mail-il1-f182.google.com [209.85.166.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4C251EABB4
-	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Nov 2024 18:42:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEBC321314B;
+	Tue,  5 Nov 2024 19:53:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.126.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730832159; cv=none; b=rCTeRnLrNEnG8fPJTyeB45SZXVCIDa2Y/W5LO7jzHWT0wRHXLKRTZiWja0u354XXNeExJEB8q4M9q/hWe+CcRJ95t177QviNtT3Fr9O8fLf7Wud7kep2szcbiiAjRix9rkrAqjcBBeJ64/7xKiaPdeIIDk4ZNUtfPG723qDBIy0=
+	t=1730836401; cv=none; b=UL6t7As4nwKEOkj5RxFiH2eq019iCSO8+mSyMJ+Kb1MMn1XdSMqAbN6JZU2YFRI0qkyytYuXOLIxjGup1FII7EY3Lc+0hrg1sYza95mNiMFlE+zBvn1fe9mtKKqiYIkGvuRAN2fopjeSaGPhiLE3X2rZp5ARCu/PMORqoYRzYoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730832159; c=relaxed/simple;
-	bh=uRFSGSp6I5JuMM4uZmsg8At2nGyRL0YDNEodwAq8/EY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZgvctCqFTHtrZdJdLP0CT0WanYShDa+RbHzFT8bkxHtcGgQDSuZx4lSY+UhXneJ/tS0MjgiW3ydz+gIq8ZUdfK2MmyVlCvVXgxNdBK3+Bwr94nu5TDIq+Rj3SaFxPUPeVQXHDIqgiQqSakclpBH+yyTr+8+CIydA4i8LcefO26o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rivosinc.com; spf=pass smtp.mailfrom=rivosinc.com; dkim=pass (2048-bit key) header.d=rivosinc-com.20230601.gappssmtp.com header.i=@rivosinc-com.20230601.gappssmtp.com header.b=quRqXxyQ; arc=none smtp.client-ip=209.85.166.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rivosinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rivosinc.com
-Received: by mail-il1-f182.google.com with SMTP id e9e14a558f8ab-3a6bf539cabso12011515ab.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Nov 2024 10:42:36 -0800 (PST)
+	s=arc-20240116; t=1730836401; c=relaxed/simple;
+	bh=A8sY0W3/xH15Ghe7igmFjisVKhZ0uB8+fwINpSSIbL8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Yhi430Pf6U39oUZwLODA14HKos2NWHL4KUKb/43mCUGq6YbberCxYhlY9Qbhn6MQdOZkwl/u2G5FSKXov/dJixJTqNN2fsfozCjFq5qR3WweGGic1DruQnPUmMMwOdDUCiJU54PgWhkYZJQ5iiWgu4rYwAToQahIZ78EttokJSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz; spf=pass smtp.mailfrom=oldschoolsolutions.biz; dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b=SZ9iZapw; arc=none smtp.client-ip=212.227.126.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oldschoolsolutions.biz
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1730832156; x=1731436956; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Q/5k2rLKTo7KgnD4BR9+2dIjyjzlQVVkq8ThtV9wFto=;
-        b=quRqXxyQcW2ur/r6B/n0BVaC+lLlki4s2hSmLr2FCPBpd7q8940fec2BUoloLWEOAd
-         abxx/qi2UiiLELk9VimGFf+uW8ftTZtPIfXYJ0L+EH3we1Qzq3vOX3LwCbg93+WY1uPj
-         35XSO84/fId6m1UKZOmcj5Q4jPXCIqoOSYi5pFADfxxFqsyTZ1/EETZTNXk/7fw702Yc
-         6x2VAIeeGHC1PnWlqFC6q0CHqZnG1iiDgluwIIr1bndtSQTQQ81AMl4T4/u/LuK0hfuO
-         mWBHTseM70oMxLKLnGGvaVgJtPY/liXSk6QO3IuBL3RZjAG0cLRiS1Pnnr3NtUsFQuT+
-         1T9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730832156; x=1731436956;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Q/5k2rLKTo7KgnD4BR9+2dIjyjzlQVVkq8ThtV9wFto=;
-        b=mKYc12fWe4+UOij89cWoNLabHccPrYqb1CSr5/LH8Hpo392fR7535zslHZf+yVNYRv
-         BEMbKnLqPvAFE0mXbiW7CKQ5x8t6D4a20+U/eplLRLu45VnZ1Uluy4tf5PNglgKZyECC
-         nPEHfKHYeRpuWqwCdAo+r16lbaXn9aPR1Kn2wk+wDh3ZeYW1Ca54ScSrV19AwMLyWuf6
-         kCDs7bOfuopI4MBuhkp0FVpbqEiZWYmspiPm4dCZ9Q50sZZS59VEpbLMCM9fNuh/TIoC
-         ACFNU4qygGlyRkzRu5JT7lAeZu/iXKFPmjh1N1/jovRidssC1a/vM54dG/eU6FX30p8Z
-         /NIg==
-X-Forwarded-Encrypted: i=1; AJvYcCUSqT164rFvf9NXb00qbhyT8MHOmFfcxa1wdcf7i6WwTagLIXqpYSA7DRGyUA1dcK0xL5P9VqD7rcT6IWwh@vger.kernel.org
-X-Gm-Message-State: AOJu0YzVjNu6JSqT1JlQBdMsUkpwjCvOdWq0ph+CLANnqxatv8AL8JZa
-	5lb2LH4CCTelc6wXQ93U9nV2NnsDFOOSshwyFFoGu1wELCDQZhZ8YeMBZ5zgWBWjcyx1sGEFQn0
-	kKhLf/wdJxO10tZkQELArfX9msKlGevLnPECTMg==
-X-Google-Smtp-Source: AGHT+IHafiE56RLycAX61PwBNuvy4TPzSnAPrcXkk0qt/3LnY4O4q/UmngQM9Vlm/dj0VEmvvCeNfFq4tqlEFF5LAvc=
-X-Received: by 2002:a05:6e02:152e:b0:3a6:b445:dc9c with SMTP id
- e9e14a558f8ab-3a6b445decemr144631815ab.3.1730832155951; Tue, 05 Nov 2024
- 10:42:35 -0800 (PST)
+	d=oldschoolsolutions.biz; s=s1-ionos; t=1730836391; x=1731441191;
+	i=jens.glathe@oldschoolsolutions.biz;
+	bh=A8sY0W3/xH15Ghe7igmFjisVKhZ0uB8+fwINpSSIbL8=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=SZ9iZapwhiqR7ZdytEKm+h21pFY1iWpRTsq70+wUk4/f9oxeXZNr5SBKz47eVaHB
+	 lZWoVOFXfLgJIIb9J9LWRqeM6UNGEdYyF6nTp70pGuhdC7IMSPCtmaniVFYup18i0
+	 tcAhxMv+dc8nslereXronTEyir1WxlatJMeo0CuckbgIyul9dwaAa4idAK924nwws
+	 5eWskr81BaNtadRsH4lbzopUMBBA1V8MH7ovjTDWORSdbfutcRe18upmVByKb+8y0
+	 0eMgpanlF70CGwYcm02ze7VxMjg805omUocH0VzpWdIXIvHOoenrJvE9fVh4vGXzG
+	 u5X1Gw1FLC/2OY+HRQ==
+X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
+Received: from [192.168.0.174] ([91.64.229.215]) by mrelayeu.kundenserver.de
+ (mreue011 [212.227.15.167]) with ESMTPSA (Nemesis) id
+ 1MEmIl-1t1UOJ2CPD-007mpn; Tue, 05 Nov 2024 20:27:20 +0100
+Message-ID: <dd5bad7b-d062-4028-b78a-3888dec4f934@oldschoolsolutions.biz>
+Date: Tue, 5 Nov 2024 20:27:19 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241104064650.799122-2-u.kleine-koenig@baylibre.com> <6b5b4f25-0f42-4f83-b6b5-82c1adbefe83@arm.com>
-In-Reply-To: <6b5b4f25-0f42-4f83-b6b5-82c1adbefe83@arm.com>
-From: Tomasz Jeznach <tjeznach@rivosinc.com>
-Date: Tue, 5 Nov 2024 10:42:25 -0800
-Message-ID: <CAH2o1u77TViePZ2eh+FY7oQXxFAp+SEVM38ROP1uKfeMZ9E7hg@mail.gmail.com>
-Subject: Re: [PATCH] iommu: Switch back to struct platform_driver::remove()
-To: Robin Murphy <robin.murphy@arm.com>
-Cc: =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <u.kleine-koenig@baylibre.com>, 
-	Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>, Hector Martin <marcan@marcan.st>, 
-	Sven Peter <sven@svenpeter.dev>, Alyssa Rosenzweig <alyssa@rosenzweig.io>, 
-	Rob Clark <robdclark@gmail.com>, Yong Wu <yong.wu@mediatek.com>, 
-	Matthias Brugger <matthias.bgg@gmail.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
-	Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
-	Albert Ou <aou@eecs.berkeley.edu>, Orson Zhai <orsonzhai@gmail.com>, 
-	Baolin Wang <baolin.wang@linux.alibaba.com>, Chunyan Zhang <zhang.lyra@gmail.com>, 
-	Jason Gunthorpe <jgg@ziepe.ca>, Nicolin Chen <nicolinc@nvidia.com>, Michael Shavit <mshavit@google.com>, 
-	Mostafa Saleh <smostafa@google.com>, Lu Baolu <baolu.lu@linux.intel.com>, 
-	Georgi Djakov <quic_c_gdjako@quicinc.com>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, asahi@lists.linux.dev, 
-	linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-mediatek@lists.infradead.org, linux-riscv@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 3/3] arm64: dts: qcom: sc8280xp-blackrock: dt
+ definition for WDK2023
+To: Krishna Kurapati <quic_kriskura@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Merck Hung <merckhung@gmail.com>,
+ Kalle Valo <kvalo@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>,
+ xlazom00@gmail.com
+References: <20241101-jg-blackrock-for-upstream-v7-0-8295e9f545d9@oldschoolsolutions.biz>
+ <20241101-jg-blackrock-for-upstream-v7-3-8295e9f545d9@oldschoolsolutions.biz>
+ <945f3eae-0a68-4738-af07-74e228039508@quicinc.com>
+Content-Language: en-US
+From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+In-Reply-To: <945f3eae-0a68-4738-af07-74e228039508@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:oHZwOWfWPJYJHONEoS+B+Po6BnPWWhoS5QkGiZ+0Ogh1S+XW33e
+ Y6dYvD/PBeALXhPRKkol3oWmlsWpnEg6jfe+4zo4KsepjXKVUjTLbaBycKev2NEnKPPVKUf
+ HkwmStYlkXn9uwI8xCzrAHIECmXJLMyu4UgMBYutAQSClf/7TZNO0hXs3DRaaiUi/+3+tJp
+ 8WGB5RlBWczAGrB3GXOJw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:OmPmKdgqu3k=;4DGAUmM2cgZck8LnScFr2wIoCrT
+ HAEnrfMaD5gShbtlkRY9d29YcHV6Q7pEdYf87ywyMG1/Kz90fMhhMzHNjYBR6T21C7BkENsCj
+ d1Hdok7HIAoYf9ZGNff7SlW82caw9cMPngQh6CtYIbYiOcsn210+JP1GWSpIlznnPFNypYYkt
+ qpMwmhS/XhaQ3Di4NrKBLPV76LW8AwfXVFzf0qLMHKTAVWx/UwZ8gasceDPIZxGIonHn+aNHK
+ 9vpV7JedKMcwRiGtu3GKkF+9hRPyz4mzdF283JVSdARA7TPhgEcIsApQO5t8575b8TIZlWdUc
+ 7XaW53WQamWBXJnX34ml7KzMpPnYkJgRdAh8XaoYwf+JRkAL4YZMK9cxFuYDrbR53UVWs1Cry
+ V3oh0O59uCHSxow2GP25rcxbnJNY/T5HMYMATCSbY5QLsauN9/o9DrqxjFnAWEzFvM1f+JfYP
+ azyBHmH5t1xRSQtsTw4mwbWNUB18vH146FFOolfDhtq9EHl35mxQv5+b1fSkZi+ddUckEZqgu
+ XYKl8T8JKoe6LI1yE4SUZApmY9PXt2X7qJjLmRENJVBYAQ6r378OgP1BBIQ/DJkzKFN9fok/K
+ 5qL/datSyZEERTTwpHhEuu/x4AjAY4nnwyh1ZnTKs78iS9wPmTNttoQU66J/5iTUJ9iOe4xry
+ IgvP25T5dFmrdGg4mPGSq5iaC5M3EiAi+kG5p9hTmysFiQD7evPET75ikPVSPaHIrYXAXYVsY
+ UpissMEOF/Lyqxr+0fFPxbXHi22NxhVTQ==
 
-> > diff --git a/drivers/iommu/riscv/iommu-platform.c b/drivers/iommu/riscv/iommu-platform.c
-> > index da336863f152..382ba2841849 100644
-> > --- a/drivers/iommu/riscv/iommu-platform.c
-> > +++ b/drivers/iommu/riscv/iommu-platform.c
-> > @@ -81,7 +81,7 @@ static const struct of_device_id riscv_iommu_of_match[] = {
-> >
-> >   static struct platform_driver riscv_iommu_platform_driver = {
-> >       .probe = riscv_iommu_platform_probe,
-> > -     .remove_new = riscv_iommu_platform_remove,
-> > +     .remove = riscv_iommu_platform_remove,
-> >       .driver = {
-> >               .name = "riscv,iommu",
-> >               .of_match_table = riscv_iommu_of_match,
-> > diff --git a/drivers/iommu/sprd-iommu.c b/drivers/iommu/sprd-iommu.c
-> > index a2f4ffe6d949..e84806eee281 100644
-> > --- a/drivers/iommu/sprd-iommu.c
-> > +++ b/drivers/iommu/sprd-iommu.c
-> > @@ -531,7 +531,7 @@ static struct platform_driver sprd_iommu_driver = {
-> >               .suppress_bind_attrs = true,
-> >       },
-> >       .probe  = sprd_iommu_probe,
-> > -     .remove_new = sprd_iommu_remove,
-> > +     .remove = sprd_iommu_remove,
-> >   };
-> >   module_platform_driver(sprd_iommu_driver);
-> >
-> > base-commit: c88416ba074a8913cf6d61b789dd834bbca6681c
+On 04.11.24 05:31, Krishna Kurapati wrote:
 >
+>
+> On 11/1/2024 11:56 PM, Jens Glathe via B4 Relay wrote:
+>> From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+>>
+>> Device tree for the Microsoft Windows Dev Kit 2023. This work
+>> is based on the initial work of Merck Hung <merckhung@gmail.com>.
+>>
+>> Original work:
+>> https://github.com/merckhung/linux_ms_dev_kit/blob/ms-dev-kit-2023-v6.3=
+.0/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-dev-kit-2023.dts
+>>
+>> The Windows Dev Kit 2023 is a nice little desktop based on sc8280xp.
+>> Link: https://learn.microsoft.com/en-us/windows/arm/dev-kit/
+>>
+>> Supported features:
+>> - USB type-c and type-a ports
+>> - minidp connector
+>> - built-in r8152 Ethernet adapter
+>> - PCIe devices
+>> - nvme
+>> - ath11k WiFi (WCN6855)
+>> - WCN6855 Bluetooth
+>> - A690 GPU
+>> - ADSP and CDSP
+>> - GPIO keys
+>> - Audio definition (works via USB)
+>>
+>> Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+>> ---
+>
+> [...]
+>
+>> +&usb_2 {
+>> +=C2=A0=C2=A0=C2=A0 pinctrl-0 =3D <&usb2_en_state>;
+>> +=C2=A0=C2=A0=C2=A0 pinctrl-names =3D "default";
+>> +
+>
+> On the blackrock platform, for this controller, are there all 4 ports
+> given out for use or only one ?
+>
+> Because if all 4 are there, you might need to give all 4 pinctrls (one
+> for each TS3USB221A mux select) here for usb_2 node. If only one port
+> is given out for use on the platform, then only one phy (of the 4
+> activated below) needs to be marked as active.
+>
+> In my case, in [1] on the ADP platform, I marked them as always on for
+> all gpios on multiport controller since driver had no support added yet.
+>
+> [1]:
+> https://lore.kernel.org/all/20240707085624.3411961-1-quic_kriskura@quici=
+nc.com/
+>
+Hi Krishna,
 
-Thanks, LGTM for iommu/riscv part of the patch.
+thank you for the hints. Unfortunately, I don't have any schematics for
+the box. But I tested out activation combinations for all the
+usb_2_hsphy and usb_2_qmpphy listed. All of these are also listed in the
+usb_2 node in sc8280xp.dtsi. And they all need to be activated to get
+the whole usb_2 node up. Leaving out one lets the whole node vanish.
+Maybe it is possible to define fewer phys in the usb_2_dwc3 node, I
+don't know. The definition as it is now appears to be a safe bet.
+What I noticed in the tests was that the pinctrl usb2_en_state had no
+effect here. Although, it apparently was required when it was introduced
+[1] by Merck Hung and xlazom00@gmail.com. Therefore I am hesitant to
+remove it. Also, there may be a hint that it is the enable pin of a hub:
 
-Reviewed-by: Tomasz Jeznach <tjeznach@rivosinc.com>
+$lsusb -tv
+[...]
+/:=C2=A0 Bus 005.Port 001: Dev 001, Class=3Droot_hub, Driver=3Dxhci-hcd/4p=
+, 480M
+ =C2=A0=C2=A0=C2=A0 ID 1d6b:0002 Linux Foundation 2.0 root hub
+ =C2=A0=C2=A0=C2=A0 |__ Port 001: Dev 002, If 0, Class=3DHub, Driver=3Dhub=
+/4p, 480M
+ =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ID 045e:0c5f Microsoft Corp.
+/:=C2=A0 Bus 006.Port 001: Dev 001, Class=3Droot_hub, Driver=3Dxhci-hcd/2p=
+, 10000M
+ =C2=A0=C2=A0=C2=A0 ID 1d6b:0003 Linux Foundation 3.0 root hub
+ =C2=A0=C2=A0=C2=A0 |__ Port 001: Dev 002, If 0, Class=3DHub, Driver=3Dhub=
+/4p, 10000M
+ =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ID 045e:0c60 Microsoft Corp.
+ =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |__ Port 001: Dev 003, If 0, C=
+lass=3DVendor Specific Class,
+Driver=3Dr8152, 5000M
+ =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ID 045=
+e:0c5e Microsoft Corp.
+
+For the IDs 045e:0c5e..045e:c60 there isnot much info, only that its
+usually a 10/100/1000 r8152 ethernet adapter, and a USB3.2 /USB2.1 4
+port hub. How this is wired, though, no idea. In the face of this I
+would suggest to keep the definition as it is now.
+
+[1]:
+https://github.com/linux-surface/surface-pro-x/issues/43#issuecomment-1536=
+848253
+
+>> +=C2=A0=C2=A0=C2=A0 status =3D "okay";
+>> +};
+>> +
+>> +&usb_2_hsphy0 {
+>> +=C2=A0=C2=A0=C2=A0 vdda-pll-supply =3D <&vreg_l1b>;
+>> +=C2=A0=C2=A0=C2=A0 vdda18-supply =3D <&vreg_l1c>;
+>> +=C2=A0=C2=A0=C2=A0 vdda33-supply =3D <&vreg_l7d>;
+>> +
+>> +=C2=A0=C2=A0=C2=A0 status =3D "okay";
+>> +};
+>> +
+>> +&usb_2_hsphy1 {
+>> +=C2=A0=C2=A0=C2=A0 vdda-pll-supply =3D <&vreg_l8d>;
+>> +=C2=A0=C2=A0=C2=A0 vdda18-supply =3D <&vreg_l1c>;
+>> +=C2=A0=C2=A0=C2=A0 vdda33-supply =3D <&vreg_l7d>;
+>> +
+>> +=C2=A0=C2=A0=C2=A0 status =3D "okay";
+>> +};
+>> +
+>> +&usb_2_hsphy2 {
+>> +=C2=A0=C2=A0=C2=A0 vdda-pll-supply =3D <&vreg_l10d>;
+>> +=C2=A0=C2=A0=C2=A0 vdda18-supply =3D <&vreg_l8c>;
+>> +=C2=A0=C2=A0=C2=A0 vdda33-supply =3D <&vreg_l2d>;
+>> +
+>> +=C2=A0=C2=A0=C2=A0 status =3D "okay";
+>> +};
+>> +
+>> +&usb_2_hsphy3 {
+>> +=C2=A0=C2=A0=C2=A0 vdda-pll-supply =3D <&vreg_l10d>;
+>> +=C2=A0=C2=A0=C2=A0 vdda18-supply =3D <&vreg_l8c>;
+>> +=C2=A0=C2=A0=C2=A0 vdda33-supply =3D <&vreg_l2d>;
+>> +
+>> +=C2=A0=C2=A0=C2=A0 status =3D "okay";
+>> +};
+>> +
+>> +&usb_2_qmpphy0 {
+>> +=C2=A0=C2=A0=C2=A0 vdda-phy-supply =3D <&vreg_l1b>;
+>> +=C2=A0=C2=A0=C2=A0 vdda-pll-supply =3D <&vreg_l4d>;
+>> +
+>> +=C2=A0=C2=A0=C2=A0 status =3D "okay";
+>> +};
+>> +
+>> +&usb_2_qmpphy1 {
+>> +=C2=A0=C2=A0=C2=A0 vdda-phy-supply =3D <&vreg_l8d>;
+>> +=C2=A0=C2=A0=C2=A0 vdda-pll-supply =3D <&vreg_l4d>;
+>> +
+>> +=C2=A0=C2=A0=C2=A0 status =3D "okay";
+>> +};
+>> +
+>
+> [...]
+>
+>> +=C2=A0=C2=A0=C2=A0 usb2_en_state: usb2-en-state {
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* TS3USB221A USB2.0 mux se=
+lect */
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 pins =3D "gpio24";
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 function =3D "gpio";
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 drive-strength =3D <2>;
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 bias-disable;
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 output-low;
+>> +=C2=A0=C2=A0=C2=A0 };
+>> +
+>
+> Regards,
+> Krishna,
 
