@@ -1,99 +1,109 @@
-Return-Path: <linux-arm-msm+bounces-37060-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37061-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 54ABA9BCD3E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 14:01:39 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 63C539BCE11
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 14:38:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 154AE28257E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 13:01:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 17DE21F22BDC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 13:38:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D2431D318C;
-	Tue,  5 Nov 2024 13:01:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D2E161E1310;
+	Tue,  5 Nov 2024 13:36:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c5x4nBJv"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Aq8RmetU"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2C251AA785;
-	Tue,  5 Nov 2024 13:01:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A14861D9A49;
+	Tue,  5 Nov 2024 13:36:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730811696; cv=none; b=HAySRoYGQgks8Hw5BkUMjdyCz6jgJ9wrger0sa63PAu/itvq9IgDIYkjPw7xYWyVY4xeMSaoIQrC4zIDNNZbiiW2v6IonkPjHXqUEvBVrtQ8aCAsyyQTjNo+sOBJ2sxNxpAGI4HGYkIf1SjtViv25h+rKa/0r8CBOG0qUvB9/5s=
+	t=1730813769; cv=none; b=LzftmKCHMi8rHs2Xo+WVxFxbgH8baWXeIn1Jqjt+i1Ece5kS+MAsTfyBx+bqZ7od/gdvV+yeaR2v27DyDb2bU0fA6EcdkjahZKd6jAt84YZGYhubqSjf/Ps6pTsyEkv0v/dXuI4VLLYsjj5SmXlhhA0gyC7WZMVli3TDeuJ1Rlo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730811696; c=relaxed/simple;
-	bh=fJOSYsDtK+XglPzzlc6b+Xmzm7eSaqChjegMKNDSpQQ=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=nnTyJKKIIg02RNN1LKqghTNO1J4HITPy10WjCFzjW94OgCJmWcLnxwd/7Qboc/HWasxCaFSooIwXElR9si0jmROE2oSsZMyHu2dZkwkBtXJxj9Jr+BJI8aUMMf7H09OoMBpWPcokGydHUpYNHSf/A0zNpiebpOk4DFfIhAQkL3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c5x4nBJv; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 781D0C4CED0;
-	Tue,  5 Nov 2024 13:01:35 +0000 (UTC)
+	s=arc-20240116; t=1730813769; c=relaxed/simple;
+	bh=YykurtqbGlWC9tC8MPh6nSJFQYNjqf+WGkBn+I5mJYQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hs4DthfZVwYNHbDfy++1aOr+Ywg2XKhRfF0Z1bDGfp0NNKe4VG+iTLgJbZz38tbrPUSuab8UmcC+Txvvuj+ZmLXGCcXaGXHKZvq0/AQy6zSScXdx+tEuVAxPCt55Q0x1W4ZsBjkGVxAmOro7lhO75PwRnTdiuowPkAgOoeV4bbY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Aq8RmetU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3784C4CED0;
+	Tue,  5 Nov 2024 13:36:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730811696;
-	bh=fJOSYsDtK+XglPzzlc6b+Xmzm7eSaqChjegMKNDSpQQ=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=c5x4nBJvD8A2mSltiCdva68UvikJDBMsUiqiaaA9BanjLedIdNlcReP6qZBpFzxVY
-	 ZtTe17DQ0t2VEpg5RXv/+DMP5I9qMYsYWvoT2Yb+WUbJ5k3k2nYQOHH9GG8zz32VOm
-	 Vr98ve3eupQiCPSQv2AHiJVWimOM7jMH1N07LaMNrI3TiYSl2DDCteJ/ZCvkonX7Aa
-	 r+WqCaJk1DysgAuxh1aNuqC7RQIiH1Ex5JZagvafYGnJMTYJe0CN3mbNnZiSUjvnsG
-	 BK1ygP1L3Rir8wIqzAyPRsCiZ+xqb/ym0yeR8aR+Av8ECeLFR4JJZNT4M7mMohJoM2
-	 TncVJHdCHIy4A==
-From: Mark Brown <broonie@kernel.org>
-To: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org, 
- linux-kernel@vger.kernel.org
-In-Reply-To: <20241104190759.277184-2-robh@kernel.org>
-References: <20241104190759.277184-2-robh@kernel.org>
-Subject: Re: [PATCH] spi: Use of_property_present() for non-boolean
- properties
-Message-Id: <173081169520.26412.3733026868948680541.b4-ty@kernel.org>
-Date: Tue, 05 Nov 2024 13:01:35 +0000
+	s=k20201202; t=1730813769;
+	bh=YykurtqbGlWC9tC8MPh6nSJFQYNjqf+WGkBn+I5mJYQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Aq8RmetUQet0Oe/6LcyzzN3BxazNTjdvaGJIMl5uqsxjhtrCwkJWYZTjAE/T+UKGB
+	 shHnhJmSM/NnmNs6yAxLy0jTYVPTFwDZcAlWV3nRtWkLIFvbMeVSYGjSwGTeu+UvRn
+	 ZVm9vZhnU9kI4rQsCUlx6qM3XXp7B/K9l68J5vNtuNtaAUH3iR83r1Aykl31wsCRDs
+	 1vVcj9Lf9p2PKAtYcPqo/Y9MVgGINk4czg/X4sNJWosdTq0rAXaGltCvLfaqY0ISwa
+	 ex4AtMNv145cmsfwiMgYmtPJzznN477DWGnW0NKSG72MH5yQfkWFKMYUc3zwkOIKic
+	 GOe1BBLrJ35tg==
+Date: Tue, 5 Nov 2024 14:36:04 +0100
+From: Niklas Cassel <cassel@kernel.org>
+To: Zhongqiu Han <quic_zhonhan@quicinc.com>
+Cc: manivannan.sadhasivam@linaro.org, kw@linux.com, kishon@kernel.org,
+	bhelgaas@google.com, lpieralisi@kernel.org, dlemoal@kernel.org,
+	mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] PCI: epf-mhi: Fix potential NULL dereference in
+ pci_epf_mhi_bind()
+Message-ID: <ZyofRAZoAE5IgCVi@ryzen>
+References: <20241105120735.1240728-1-quic_zhonhan@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.15-dev-9b746
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241105120735.1240728-1-quic_zhonhan@quicinc.com>
 
-On Mon, 04 Nov 2024 13:07:59 -0600, Rob Herring (Arm) wrote:
-> The use of of_property_read_bool() for non-boolean properties is
-> deprecated in favor of of_property_present() when testing for property
-> presence.
+On Tue, Nov 05, 2024 at 08:07:35PM +0800, Zhongqiu Han wrote:
+> If platform_get_resource_byname() fails and returns NULL, dereferencing
+> res->start will cause a NULL pointer access. Add a check to prevent it.
 > 
+> Fixes: 1bf5f25324f7 ("PCI: endpoint: Add PCI Endpoint function driver for MHI bus")
+> Signed-off-by: Zhongqiu Han <quic_zhonhan@quicinc.com>
+> ---
+>  drivers/pci/endpoint/functions/pci-epf-mhi.c | 5 +++++
+>  1 file changed, 5 insertions(+)
 > 
+> diff --git a/drivers/pci/endpoint/functions/pci-epf-mhi.c b/drivers/pci/endpoint/functions/pci-epf-mhi.c
+> index 7d070b1def11..2712026733ab 100644
+> --- a/drivers/pci/endpoint/functions/pci-epf-mhi.c
+> +++ b/drivers/pci/endpoint/functions/pci-epf-mhi.c
+> @@ -873,6 +873,11 @@ static int pci_epf_mhi_bind(struct pci_epf *epf)
+>  
+>  	/* Get MMIO base address from Endpoint controller */
+>  	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "mmio");
+> +	if (!res) {
+> +		dev_err(&pdev->dev, "Failed to get MMIO base address\n");
 
-Applied to
+dev_err(&epf->dev, "Failed to get mmio resource\n");
+or
+dev_err(&epf->dev, "Failed to get \"mmio\" resource\n");
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
+Note: &epf->dev instead of &pdev->dev in order to be consistent with other
+EPF ->bind() functions.
 
-Thanks!
+With that, feel free to add:
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
 
-[1/1] spi: Use of_property_present() for non-boolean properties
-      commit: 270ddc23914ed79aa117373f4b3413c34cdabf12
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+Kind regards,
+Niklas
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
-
+> +		return -ENODEV;
+> +	}
+> +
+>  	epf_mhi->mmio_phys = res->start;
+>  	epf_mhi->mmio_size = resource_size(res);
+>  
+> -- 
+> 2.25.1
+> 
 
