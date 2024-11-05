@@ -1,149 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-37037-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37038-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 881F09BC86E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 09:56:45 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4AB859BC95B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 10:36:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B9E051C224B9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 08:56:44 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id F0B6F1F2315E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 09:36:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25B701D1F50;
-	Tue,  5 Nov 2024 08:55:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AFB0D1D2784;
+	Tue,  5 Nov 2024 09:35:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="f9WIva65"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UtfvhuZC"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 898D11D1E99;
-	Tue,  5 Nov 2024 08:55:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C305C1D1F54;
+	Tue,  5 Nov 2024 09:35:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730796954; cv=none; b=naTQvQMZbiyO2RrsXUckvcgxXaMq7kwA8FXD6R29BSmyrwOtIyraOyEQd6T4ek5qsSoOz4ATUZKYONVeEJZaUQutZYbo1o67EJ1WWyolgRrkhlh/Wqhbx4B32aPfKK23B8Js6keIM0cltnM+xnwMVbN9PuyWwizvEJnyqXQ0y6A=
+	t=1730799324; cv=none; b=VrSbN79VEwHPjFGkSolv8Z9+V/hvq2gXBlnvzNrc1/Y3dtxqKo6ephFi9vn42MbxFjYQBPUZLt64w9e6sMwmXn3gwczt5KiObtynrR2LThSiScNBKdeLtZQlOInZ7eFjVcCWI882x4U8812slClAmMX96HyKgN8YQ7XUue0xze4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730796954; c=relaxed/simple;
-	bh=iGPouEmRZkxRAybaw+1alorRqCjGkzNm0yXj2nsE44M=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=YofQ5F6GTY4jIer72HdU8Xn9jt6P3hWdGb78q0FVPMHKt9ODtZmCyLujc4qsEmoD8xOW0TQ09EKe5tEOpkDLlTCePDJiHKuFppp+pu4dopGD151y3e9dnSMjGYt1SPQ2fRBJ0/fZfrpcCXNwKPnbmcmbmQw5aBRc7CM76ax1aNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=f9WIva65; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1730799324; c=relaxed/simple;
+	bh=g+y6xSTDDc/4iOIBVWx79ClWRqfmXl4RFvMLEW9wxR8=;
+	h=From:To:Cc:Subject:Date:Message-Id; b=RBApoV35Q1jMWYoVFG3vPUkq8J7nJ1FflzLhtnKSyqBkKhlxy6YVkx9KL8nANGQqPzz2bTub2jgzTjZTlUesd2hIQjmBeTUjkp0XT0ryrRH1+5zyYkdHlLcM7ma1JvzacwRTuJp0Adj+/RwYT/OaM60EpRuOgqx83AxhN706QE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UtfvhuZC; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A4LIiad012119;
-	Tue, 5 Nov 2024 08:55:49 GMT
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A59WBmw021458;
+	Tue, 5 Nov 2024 09:35:19 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	DIlIQ93Yx7bC1OfENFyyT9yNN8jknFcjVFrhZxojJSs=; b=f9WIva65JBvh9V6+
-	9EsiYyGWDnNCFtzEriDg2bmrViMSOnSxMLlFK7MfPX2NQyAYTB27pXYkNqwKuic4
-	qSMdJGT+H1mVN51N2dZ123iwXElrfRn5zToxK/ScnXE4mFYK/5IEcVW5fOqw+tmt
-	n8DeN7UmDMuoWrGov1bsMReKaVY7hE3jPwrWeDKjmWcwh+7k8zwdky6kDZ3pJx1U
-	QsOQeSxcSKqEjk09aKoK4S2e96WCyycBHwhdycY9mhjsjhGsjV0Miqh9CFoSLRRa
-	ZS/1pMkgK0zb05lb4na2xA5ZAOCXhSwEPlOFnzxkVsPzdSG/C2qp6EDclsSqPZaB
-	vANRyQ==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42nd11y08e-1
+	cc:date:from:message-id:subject:to; s=qcppdkim1; bh=+3mobtsCqfmg
+	gYkUHIHhRo0d7QRYbP9IuytZtXf6vV8=; b=UtfvhuZCDEGTe4pG19vjvOUSi6Sz
+	IF+taeNNSOfak91Q7un4pFvDs7IRABjpO0PbNU1/iJuDOYJsFB7FXKFziyckLtuY
+	dp7b75e6CKe2ecqsYsCihxQZRJF6vRI+K9f+RhFPHY9bQ1sOhgUaAAQpL1YiWI0a
+	bNUFNF44oCI3gXvcqtddFEwxxmPBS/gwDDebplvCGOi50pYwNDUSzUVQujcJVIwk
+	ElSdQ0PyMPy23NVs68oL+1wr0/bKX/TrrL8DZU3Gv4n9IRCwq+ywg5ZoCIb2vf1A
+	47JeeMzOYZW2B61TH3LKka+C9RsXaIjL4hBVOPGiOYyZxFAx7KekDB1VEQ==
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42ncyxy25x-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 05 Nov 2024 08:55:48 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4A58tlU1029707
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 5 Nov 2024 08:55:47 GMT
-Received: from hu-vgarodia-hyd.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 5 Nov 2024 00:55:45 -0800
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-Date: Tue, 5 Nov 2024 14:24:57 +0530
-Subject: [PATCH 4/4] media: venus: hfi: add a check to handle OOB in sfr
- region
+	Tue, 05 Nov 2024 09:35:19 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 4A59ZGj5018185;
+	Tue, 5 Nov 2024 09:35:16 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 42nd5m734r-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+	Tue, 05 Nov 2024 09:35:16 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4A59ZFp9018172;
+	Tue, 5 Nov 2024 09:35:15 GMT
+Received: from hu-maiyas-hyd.qualcomm.com (hu-sartgarg-hyd.qualcomm.com [10.213.105.147])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 4A59ZFfu018171;
+	Tue, 05 Nov 2024 09:35:15 +0000
+Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 2339771)
+	id 8BE8F5001CF; Tue,  5 Nov 2024 15:05:14 +0530 (+0530)
+From: Sarthak Garg <quic_sartgarg@quicinc.com>
+To: Adrian Hunter <adrian.hunter@intel.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>
+Cc: linux-mmc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
+        quic_nguyenb@quicinc.com, quic_rampraka@quicinc.com,
+        quic_pragalla@quicinc.com, quic_sayalil@quicinc.com,
+        quic_nitirawa@quicinc.com, quic_sachgupt@quicinc.com,
+        quic_bhaskarv@quicinc.com, quic_narepall@quicinc.com,
+        kernel@quicinc.com, Sarthak Garg <quic_sartgarg@quicinc.com>
+Subject: [PATCH V1] mmc: sdhci-msm: Ensure SD card power isn't ON when card removed
+Date: Tue,  5 Nov 2024 15:05:13 +0530
+Message-Id: <20241105093513.16800-1-quic_sartgarg@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: x9aDHvmvt2y_Csly4ndLBcZzAdca7YmA
+X-Proofpoint-GUID: x9aDHvmvt2y_Csly4ndLBcZzAdca7YmA
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 suspectscore=0
+ malwarescore=0 bulkscore=0 impostorscore=0 priorityscore=1501
+ lowpriorityscore=0 mlxscore=0 phishscore=0 adultscore=0 mlxlogscore=999
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411050071
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20241105-venus_oob-v1-4-8d4feedfe2bb@quicinc.com>
-References: <20241105-venus_oob-v1-0-8d4feedfe2bb@quicinc.com>
-In-Reply-To: <20241105-venus_oob-v1-0-8d4feedfe2bb@quicinc.com>
-To: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Bryan O'Donoghue
-	<bryan.odonoghue@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>
-CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>, <stable@vger.kernel.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1730796934; l=1440;
- i=quic_vgarodia@quicinc.com; s=20241104; h=from:subject:message-id;
- bh=iGPouEmRZkxRAybaw+1alorRqCjGkzNm0yXj2nsE44M=;
- b=rLbc6Bfe3C74h4smkOpubA7BtYi2kaq5os4+rs0TiJWGM8MMkseIBgcRdyRqXTK/6qns2ab7L
- nWheDsumLi1Dxoo1CMX2n00VGojrfrt0+OTPvnFItm5yMqrnTJD5SLV
-X-Developer-Key: i=quic_vgarodia@quicinc.com; a=ed25519;
- pk=LY9Eqp4KiHWxzGNKGHbwRFEJOfRCSzG/rxQNmvZvaKE=
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 3S6C3G7qV9mkRoP5yUzZ8KFy-QCtXGNX
-X-Proofpoint-ORIG-GUID: 3S6C3G7qV9mkRoP5yUzZ8KFy-QCtXGNX
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=760
- mlxscore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
- priorityscore=1501 impostorscore=0 spamscore=0 bulkscore=0 suspectscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411050063
 
-sfr->buf_size is in shared memory and can be modified by malicious user.
-OOB write is possible when the size is made higher than actual sfr data
-buffer.
+Make sure SD card power is not enabled when the card is
+being removed.
+On multi-card tray designs, the same card-tray would be used for SD
+card and SIM cards. If SD card is placed at the outermost location
+in the tray, then SIM card may come in contact with SD card power-
+supply while removing the tray. It may result in SIM damage.
+So in sdhci_msm_handle_pwr_irq we skip the BUS_ON request when the
+SD card is removed to be in consistent with the MGPI hardware fix to
+prevent any damage to the SIM card in case of mult-card tray designs.
+But we need to have a similar check in sdhci_msm_check_power_status to
+be in consistent with the sdhci_msm_handle_pwr_irq function.
+Also reset host->pwr and POWER_CONTROL register accordingly since we
+are not turning ON the power actually.
 
-Cc: stable@vger.kernel.org
-Fixes: d96d3f30c0f2 ("[media] media: venus: hfi: add Venus HFI files")
-Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+Signed-off-by: Sarthak Garg <quic_sartgarg@quicinc.com>
 ---
- drivers/media/platform/qcom/venus/hfi_venus.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/mmc/host/sdhci-msm.c | 20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
-index 50d92214190d88eff273a5ba3f95486f758bcc05..c19d6bf686d0f31c6a2f551de3f7eb08031bde85 100644
---- a/drivers/media/platform/qcom/venus/hfi_venus.c
-+++ b/drivers/media/platform/qcom/venus/hfi_venus.c
-@@ -1041,18 +1041,23 @@ static void venus_sfr_print(struct venus_hfi_device *hdev)
+diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+index e00208535bd1..443526c56194 100644
+--- a/drivers/mmc/host/sdhci-msm.c
++++ b/drivers/mmc/host/sdhci-msm.c
+@@ -1516,10 +1516,11 @@ static void sdhci_msm_check_power_status(struct sdhci_host *host, u32 req_type)
  {
- 	struct device *dev = hdev->core->dev;
- 	struct hfi_sfr *sfr = hdev->sfr.kva;
-+	u32 size;
- 	void *p;
+ 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+ 	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
+-	bool done = false;
+-	u32 val = SWITCHABLE_SIGNALING_VOLTAGE;
+ 	const struct sdhci_msm_offset *msm_offset =
+ 					msm_host->offset;
++	struct mmc_host *mmc = host->mmc;
++	bool done = false;
++	u32 val = SWITCHABLE_SIGNALING_VOLTAGE;
  
- 	if (!sfr)
- 		return;
- 
--	p = memchr(sfr->data, '\0', sfr->buf_size);
-+	size = sfr->buf_size;
-+	if (size > ALIGNED_SFR_SIZE)
-+		return;
+ 	pr_debug("%s: %s: request %d curr_pwr_state %x curr_io_level %x\n",
+ 			mmc_hostname(host->mmc), __func__, req_type,
+@@ -1573,6 +1574,13 @@ static void sdhci_msm_check_power_status(struct sdhci_host *host, u32 req_type)
+ 				 "%s: pwr_irq for req: (%d) timed out\n",
+ 				 mmc_hostname(host->mmc), req_type);
+ 	}
 +
-+	p = memchr(sfr->data, '\0', size);
- 	/*
- 	 * SFR isn't guaranteed to be NULL terminated since SYS_ERROR indicates
- 	 * that Venus is in the process of crashing.
- 	 */
- 	if (!p)
--		sfr->data[sfr->buf_size - 1] = '\0';
-+		sfr->data[size - 1] = '\0';
- 
- 	dev_err_ratelimited(dev, "SFR message from FW: %s\n", sfr->data);
++	if (mmc->card && mmc->ops && mmc->ops->get_cd &&
++		!mmc->ops->get_cd(mmc) && (req_type & REQ_BUS_ON)) {
++		sdhci_writeb(host, 0, SDHCI_POWER_CONTROL);
++		host->pwr = 0;
++	}
++
+ 	pr_debug("%s: %s: request %d done\n", mmc_hostname(host->mmc),
+ 			__func__, req_type);
  }
-
+@@ -1631,6 +1639,14 @@ static void sdhci_msm_handle_pwr_irq(struct sdhci_host *host, int irq)
+ 		udelay(10);
+ 	}
+ 
++	if (mmc->card && mmc->ops && mmc->ops->get_cd &&
++		!mmc->ops->get_cd(mmc) && irq_status & CORE_PWRCTL_BUS_ON) {
++		irq_ack = CORE_PWRCTL_BUS_FAIL;
++		msm_host_writel(msm_host, irq_ack, host,
++				msm_offset->core_pwrctl_ctl);
++		return;
++	}
++
+ 	/* Handle BUS ON/OFF*/
+ 	if (irq_status & CORE_PWRCTL_BUS_ON) {
+ 		pwr_state = REQ_BUS_ON;
 -- 
-2.34.1
+2.17.1
 
 
