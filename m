@@ -1,143 +1,257 @@
-Return-Path: <linux-arm-msm+bounces-37046-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37047-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0AE309BCB25
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 12:01:50 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8D3AD9BCB69
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 12:15:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 39AF61C224F2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 11:01:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1FA0628115D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 11:15:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 10ED01D2F5C;
-	Tue,  5 Nov 2024 11:01:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 22EDD1D45F0;
+	Tue,  5 Nov 2024 11:15:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NRhk9/9k"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yCrfsbXo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3687F1CB53F
-	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Nov 2024 11:01:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0986D1D45EA
+	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Nov 2024 11:15:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730804504; cv=none; b=d3UW9Oiz8yDuUj6UI2JK0jpchPRnODyWTFeDoopkCJC/UvtRTUaKWme08bPEjRf0TkXTM85a6YgA7Yeuh3wGa09GQF7gKwXLmJdhtXznW9fBxXERQZIzSuSxREsdJesZpxiK8NLpgBsi2GKwihaXcc+Nh84QkBK/Q9ytltYQwG0=
+	t=1730805324; cv=none; b=YwQYSuM4X+1zCgVT0sfU3I8h12iiqWJExBCroUTl93TQBNem4sQ5MGKAIpAZLd3ieUuZfjreE31+MP3LoqnqkLMhXh7mLDWrPGNe/2Oo3gKsOxRMtyoxwNBl3v4+3g5AMVx8wWcYGXOm86Uj+k/Wxvp1Ox70rcFITQ5XCU+bXX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730804504; c=relaxed/simple;
-	bh=5WNY4BTKpyqkgfx/aIHK+uOWMIt2dKDdpsq+9SR0ycc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VRne442D/CkUxDi0W1wVL7DJyZnAw+B/xnkGQAGAK60+YQxxXt1HjPszv9OybxHUU9abu9FB5Ashi6uxcrs8QK0BpQY27WfcGx9Isoc2UVmOGTDle4iv+BZw7m57Zy/uvYcYvqdbBsn/c5DdczQpDdl4gCJTNTL6vF5nNbqU3LQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NRhk9/9k; arc=none smtp.client-ip=209.85.128.52
+	s=arc-20240116; t=1730805324; c=relaxed/simple;
+	bh=k1//woTIU/hrkn6HxpkQgKFs3K74L+BoMNL8LPeXwjE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=tSvIFMTklAcYLXsMOfI0GEjIFEef2lNZONfYooNlNjfHnWMOdTmbuvaOt3e7JV+rOZir8b/HYl1ihFXhOU/K6C0y59kNcB0ZjlXzOYf9G+C2ctuZslDxZ83xFZOmFA+DKg3xJ7XVUNu4+z/P0V12jkSkulU+Nn72t6nT2wcUtB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yCrfsbXo; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4315abed18aso44805285e9.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Nov 2024 03:01:41 -0800 (PST)
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4315c1c7392so47058425e9.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Nov 2024 03:15:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1730804500; x=1731409300; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=0mqp3tTDVEC0dYJejZacw/zr4PmWIksNztPnZtcH9gY=;
-        b=NRhk9/9ky3OpCsUFsZ7o+vtgA5mPyaF+o4hS1iKfShuA/6MBNA+WR8+RsgT2vixms9
-         ZgHT/KL3jAnc3pPZin9tYOeyPTqzUslxeFKFW+WSA1HSwa90etqK92iR8oRnIX/SKJGY
-         85LSH7ux87tJPdJmVMWCpolQL9L9qKx85Se/gcPyxxf6pyFtXPiW7RSrs+xrbqQKI5rL
-         3dMgb0iNuEiE51OpLcsNMfN/ElmexXiQ4GM15biajn9gR4N3iig6ZkD6GUeujh1f/aDJ
-         dAD+Sn7bYRSU+/I7L4YKJt42b0Uiwxy9CVJod8R6N9zsdnr5shTASDNzvWfqHImXM7fq
-         8EZQ==
+        d=linaro.org; s=google; t=1730805320; x=1731410120; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=XAUW7RPOeXwiKeLMnI883KAxUeeVxpO3A/xF2LaW6Sw=;
+        b=yCrfsbXoGEKGgxBeD3lEMN+OLnck8CJ6LyLPV6RG2HBe5AMaGWpghxI9yDtZS+CYcq
+         UG+qDTqK+vVBFzRO16CxKVdccznERUxkPYqjhZuz9NJZhk4gE+N/5XtCiDk0/j+78uV2
+         NOSJYVXiI35jf+xMiF8LcVR+1lm6Bsr6rhF6gIeXbeLvVWelFaLmMPoYSchYFOe7B0lP
+         DY5vta7VGoROpKS6r9Pb5Xsd9m9haErHcVcnmI+VB584F/+9JocIBf7/iJFPHfcPl9UJ
+         7qKI2nBMt3QtZfznIFW5nDht8sOpqQJGUD7WBkqPNN93mZaddovbfPgCLp9WAHbvNbFG
+         ckkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730804500; x=1731409300;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0mqp3tTDVEC0dYJejZacw/zr4PmWIksNztPnZtcH9gY=;
-        b=HMW3eMPY5cW/kKzY/WzP9APVgm5Xt4Krlv+SMAEQgKkhlHM9HJczN0Rb03ojPYnWxm
-         164fCSs5R5uaOxJyt1u3Bs1a6WUZ6WVtlRyq4NbrtoguFKrfveelRgQzBUAs50lAmmHg
-         VRUnpkTz2R4D0m24K+TCHlHf5ikiGI86q/n7YAY6SlGwYGb064/TJ5w6q3p8h2XJW1Gz
-         aCzHN4zSkj4Z/RybS56RO57Lxdr5oW6fDxk9s0tUMjq6+Cf6SkshjV9/7VSgWzwhJt/i
-         NAYcfAuvPuY1zot/MbbMWF+ryNdjg/mYrIrk9FVojOWJLVPNBcWDxmc+bh0vbPN6j108
-         M7Fg==
-X-Forwarded-Encrypted: i=1; AJvYcCVh+5Q/rSfJBi+Ht9snobiKQgDWjWtA04o2srGXMUL0VDpUQuc74+lqb5ne/rYHfk0B8+nLLVnIeB1/q81r@vger.kernel.org
-X-Gm-Message-State: AOJu0YzV2QNjW6zjrKyBwMpZmu7j9OtHPk0+NX+EHK3oNsNakklifZJq
-	bQbgZMluWOTe7Ge8UiCU49wM7RU1BFF5CCKEO32MD7mLlmoNv0ibEt0c4jmTzEM=
-X-Google-Smtp-Source: AGHT+IHNIaTXDGPayDWrZncCkF8QcYlSviGx9GZU1YCBv4OUqG//R4A/X9nBYttt6C5Vr4YVKwEhEg==
-X-Received: by 2002:a05:600c:3150:b0:431:5ce5:4864 with SMTP id 5b1f17b1804b1-432832aa0b1mr120332515e9.35.1730804500460;
-        Tue, 05 Nov 2024 03:01:40 -0800 (PST)
-Received: from linaro.org ([82.76.168.176])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4327d5e7c8bsm188611715e9.26.2024.11.05.03.01.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Nov 2024 03:01:39 -0800 (PST)
-Date: Tue, 5 Nov 2024 13:01:38 +0200
-From: Abel Vesa <abel.vesa@linaro.org>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Johan Hovold <johan@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v3 2/3] arm64: dts: qcom: x1e80100: Describe TLMM pins
- for SDC2
-Message-ID: <Zyn7Em1HqTwysZsh@linaro.org>
-References: <20241022-x1e80100-qcp-sdhc-v3-0-46c401e32cbf@linaro.org>
- <20241022-x1e80100-qcp-sdhc-v3-2-46c401e32cbf@linaro.org>
- <a282021f-5e61-480c-84c4-272049e28244@oss.qualcomm.com>
- <Zx9P+HQMOkJsJGcj@linaro.org>
- <327507d8-2dc7-4645-ac3d-d68ff31a84dd@oss.qualcomm.com>
- <ZyS50DFLhHVlnRtd@linaro.org>
- <c6f8ff2e-bcc1-480a-9ca6-0b55991c099e@oss.qualcomm.com>
+        d=1e100.net; s=20230601; t=1730805320; x=1731410120;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=XAUW7RPOeXwiKeLMnI883KAxUeeVxpO3A/xF2LaW6Sw=;
+        b=A65j2X4CpI2zYBe21J2CD0kwYkJ+jQXv/csDUvat9orANsxHOcY0vA5Kc7k7IgtT36
+         HoAyHu0oVo9D1w5MDawHweA4dJCY9oUnmLEQzSFHKeXfP8USBp6T3YjCgBya9rORFwVi
+         PWv8ovHCMElgabEOoFZ+fvPYyMCBfz46yj9bBZxGdFw5zFBcIt1m/yNhKWfhL/brAZIi
+         aV24rUNzBO0dIn2GZTiU8RoWoAT2nAK0MxHwg/vGduxsX2T9KkyX/1op/KQTfwY5nnzM
+         7OvHG81RhB2IT5SBJghxnAuHXu6wnQO9lrxgSGSeiNqahgsP3k08iFSLkMN9MhlCPuKN
+         Ud+w==
+X-Forwarded-Encrypted: i=1; AJvYcCWBOHmLGY0ap39SFWviwMq0Z3q5W69CnGE7zujelCPqgfxFZEItskQsIB2oRKTUpIcmhc/4l0YeiziO+Tt0@vger.kernel.org
+X-Gm-Message-State: AOJu0YwLrd4SX9ialM6QdHXfZdnp4+/0qZwU0GuizzsSRiHMendTLS4u
+	K/sP8TrXvyTw250ywNQLqLs2Q6p2HTSiDyljBw9b0/j8WsEOgB3vpTHCVH4OURE=
+X-Google-Smtp-Source: AGHT+IFxj5fSafC8gyEjZqCHdS86tjb6pALa9TeX7VspQtKSyrZ7noAYA8Z/wRxw84X9ChaBBEOulg==
+X-Received: by 2002:a05:600c:3054:b0:431:44fe:fd9f with SMTP id 5b1f17b1804b1-4328327ec3cmr113149925e9.23.1730805320278;
+        Tue, 05 Nov 2024 03:15:20 -0800 (PST)
+Received: from [192.168.0.40] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-431bd947c26sm218210655e9.26.2024.11.05.03.15.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 05 Nov 2024 03:15:19 -0800 (PST)
+Message-ID: <474d3c62-5747-45b9-b5c3-253607b0c17a@linaro.org>
+Date: Tue, 5 Nov 2024 11:15:19 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <c6f8ff2e-bcc1-480a-9ca6-0b55991c099e@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/4] media: venus: hfi_parser: avoid OOB access beyond
+ payload word count
+To: Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, stable@vger.kernel.org
+References: <20241105-venus_oob-v1-0-8d4feedfe2bb@quicinc.com>
+ <20241105-venus_oob-v1-2-8d4feedfe2bb@quicinc.com>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20241105-venus_oob-v1-2-8d4feedfe2bb@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 24-11-04 15:06:29, Konrad Dybcio wrote:
-> On 1.11.2024 12:21 PM, Abel Vesa wrote:
-> > On 24-10-28 14:10:54, Konrad Dybcio wrote:
-> >> On 28.10.2024 9:48 AM, Abel Vesa wrote:
-> >>> On 24-10-25 20:34:19, Konrad Dybcio wrote:
-> >>>> On 22.10.2024 12:46 PM, Abel Vesa wrote:
-> >>>>> Describe the SDC2 default and sleep state pins configuration
-> >>>>> in TLMM. Do this in SoC dtsi file since they will be shared
-> >>>>> across multiple boards.
-> >>>>>
-> >>>>> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> >>>>> ---
-> >>>>
-> >>>> Not very useful on its own but okay..
-> >>>
-> >>> Fair enough. For some reason, I'm not able to get sdc4 pinconf
-> >>> to work.
-> >>
-> >> Any chance you tried to define 'sdc4_cmd' etc.? This one seems to have
-> >> sdc4 pins on gpio127..=132
-> > 
-> > Yes.
-> > 
-> > But since the sdc4 pins can have other functions and since there is no
-> > device that uses them (yet). Shouldn't we just skip describing the sdc4
-> > pinconf entirely as that should be done on a per-board basis?
+On 05/11/2024 08:54, Vikash Garodia wrote:
+> words_count denotes the number of words in total payload, while data
+> points to payload of various property within it. When words_count
+> reaches last word, data can access memory beyond the total payload.
+> Avoid this case by not allowing the loop for the last word count.
 > 
-> By that argument, why describe the controller in the first place :|
+> Cc: stable@vger.kernel.org
+> Fixes: 1a73374a04e5 ("media: venus: hfi_parser: add common capability parser")
+> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+> ---
+>   drivers/media/platform/qcom/venus/hfi_parser.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> The possible pins are predefined and physically wired up inside the soc
-
-Right, unlike the sdc2 ones, these can be muxed to a different function.
-
-This is why I their pinconf need to be described in the board dts rather
-than SoC dtsi. Since there is no board that supports it, we don't
-describe them at all.
-
-As for the controller, we should still describe it even if we don't have
-ways to test it yet.
-
+> diff --git a/drivers/media/platform/qcom/venus/hfi_parser.c b/drivers/media/platform/qcom/venus/hfi_parser.c
+> index 27d0172294d5154f4839e8cef172f9a619dfa305..20d9ea3626e9c4468d5f7dbd678743135f027c86 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_parser.c
+> +++ b/drivers/media/platform/qcom/venus/hfi_parser.c
+> @@ -303,7 +303,7 @@ u32 hfi_parser(struct venus_core *core, struct venus_inst *inst, void *buf,
+>   		memset(core->caps, 0, sizeof(core->caps));
+>   	}
+>   
+> -	while (words_count) {
+> +	while (words_count > 1) {
+>   		data = word + 1;
+>   
+>   		switch (*word) {
 > 
-> Konrad
+
+How is it the right thing to do to _not_ process the last u32 ?
+
+How does this overrun ? while (words_count) should be fine because it 
+decrements at the bottom of the loop...
+
+assuming your buffer is word aligned obvs
+
+=>
+
+#include <stdio.h>
+#include <stdint.h>
+
+char somebuf[64];
+
+void init(char *buf, int len)
+{
+         int i;
+         char c = 0;
+
+         for (i = 0; i < len; i++)
+                 buf[i] = c++;
+}
+
+int hfi_parser(void *buf, int size)
+{
+         int word_count = size >> 2;
+         uint32_t *my_word = (uint32_t*)buf;
+
+         printf("Size %d word_count %d\n", size, word_count);
+
+         while(word_count) {
+                 printf("Myword %d == 0x%08x\n", word_count, *my_word);
+                 my_word++;
+                 word_count--;
+         }
+}
+
+int main(int argc, char *argv[])
+{
+         int i;
+
+         init(somebuf, sizeof(somebuf));
+         for (i = 0; i < sizeof(somebuf); i++)
+                 printf("%x = %x\n", i, somebuf[i]);
+
+         hfi_parser(somebuf, sizeof(somebuf));
+
+         return 0;
+}
+
+0 = 0
+1 = 1
+2 = 2
+3 = 3
+4 = 4
+5 = 5
+6 = 6
+7 = 7
+8 = 8
+9 = 9
+a = a
+b = b
+c = c
+d = d
+e = e
+f = f
+10 = 10
+11 = 11
+12 = 12
+13 = 13
+14 = 14
+15 = 15
+16 = 16
+17 = 17
+18 = 18
+19 = 19
+1a = 1a
+1b = 1b
+1c = 1c
+1d = 1d
+1e = 1e
+1f = 1f
+20 = 20
+21 = 21
+22 = 22
+23 = 23
+24 = 24
+25 = 25
+26 = 26
+27 = 27
+28 = 28
+29 = 29
+2a = 2a
+2b = 2b
+2c = 2c
+2d = 2d
+2e = 2e
+2f = 2f
+30 = 30
+31 = 31
+32 = 32
+33 = 33
+34 = 34
+35 = 35
+36 = 36
+37 = 37
+38 = 38
+39 = 39
+3a = 3a
+3b = 3b
+3c = 3c
+3d = 3d
+3e = 3e
+3f = 3f
+Size 64 word_count 16
+Myword 16 == 0x03020100
+Myword 15 == 0x07060504
+Myword 14 == 0x0b0a0908
+Myword 13 == 0x0f0e0d0c
+Myword 12 == 0x13121110
+Myword 11 == 0x17161514
+Myword 10 == 0x1b1a1918
+Myword 9 == 0x1f1e1d1c
+Myword 8 == 0x23222120
+Myword 7 == 0x27262524
+Myword 6 == 0x2b2a2928
+Myword 5 == 0x2f2e2d2c
+Myword 4 == 0x33323130
+Myword 3 == 0x37363534
+Myword 2 == 0x3b3a3938
+Myword 1 == 0x3f3e3d3c
+
+---
+bod
 
