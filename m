@@ -1,61 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-37068-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37069-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id CEBBA9BD290
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 17:38:51 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D60869BD293
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 17:39:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9379828219B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 16:38:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8DD691F232C9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 16:39:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D07D41DD86F;
-	Tue,  5 Nov 2024 16:38:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F3AE1E00BE;
+	Tue,  5 Nov 2024 16:38:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZGJQOmvx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t0ug9P1x"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1F651DD0FC;
-	Tue,  5 Nov 2024 16:38:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 230291DF965;
+	Tue,  5 Nov 2024 16:38:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730824700; cv=none; b=smsEDVTmHXUaogQNsWjFn1Y3Wz8qf+l5YF9jOqcBUoJlfjUxXfS6FlAq5jgXLMYWh48l3211FSMe8LFk4mCdI1lowDDs0uR1M4gby9OhZ1bkjKPuV0HB1Iqr4uaXKVfHKBbXq36xCaSGbCWYnJvHTKiW49dftM8Lnb/7HNLknpA=
+	t=1730824703; cv=none; b=qO2gvuO5WfXI1ql3ja5HJ+LQ0Tg4yoKkRv9/5C202/oUpN+gLukPvKw1M8gbnLjqomohc/XKZAw25uzDIqAOxpCamXN2a019dYknQCl3srEJ/TdPwhV5HSoQoks9kdzivR5OfNGPNHQAOOqmaNQG0CwyE76IHyq3BDOF2xpqsEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730824700; c=relaxed/simple;
-	bh=X8hYb6RBCYK9495zyoYmXa26zE6IO19upKOSziGx0MQ=;
+	s=arc-20240116; t=1730824703; c=relaxed/simple;
+	bh=Fma6XFgCqfjYGnYfDtMUvnzfc/WI0JtMlx9ImAuLeyc=;
 	h=From:To:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=W5jfb3afsh50WMaBqMQeiWyshNvFe1CWWyuW6xyzdqdljuGfpDwkspteAU9E7H99NkvVPNADbH3IQXCOs0cGFUn0V425iejEuosWqeLmP5K2Y83LL7ydc5+TxwLc59aFY3TjeygMRH/mMzL2jWou8DsLjkN7UmttNxF/usZD348=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZGJQOmvx; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 387ECC4CED5;
-	Tue,  5 Nov 2024 16:38:18 +0000 (UTC)
+	 MIME-Version:Content-Type; b=AjH2L1xiRfKXgfqvZ5vcZonZC2IqiwLqMel72Tvb4jHE1v3+fbfQad/boC7glXnAy5VPKXUUQN+b6bRy/Ofsu+3wpNmAmLEfhbBCWng2Qubd0GnuuDSLx43ZhUz7zKHvXUebZN4x8PD8LbEu8fa4f+vFuNxG+yhoz5i3iYNm2yo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t0ug9P1x; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2DF8C4CED3;
+	Tue,  5 Nov 2024 16:38:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730824700;
-	bh=X8hYb6RBCYK9495zyoYmXa26zE6IO19upKOSziGx0MQ=;
+	s=k20201202; t=1730824702;
+	bh=Fma6XFgCqfjYGnYfDtMUvnzfc/WI0JtMlx9ImAuLeyc=;
 	h=From:To:In-Reply-To:References:Subject:Date:From;
-	b=ZGJQOmvxwqXjlOS+rTITdHoA4FGyRD3GXgP+R2tm9jFp1joz3SuvcR0mKF8OPGU04
-	 6ytKxaDVANCp8Q4W074xUyGD/11Q2R6afZZ+pyrBAPsJOpr0l4DzAhChxEe98VeYFZ
-	 rJ34djLZB5DzSGRmlv7H4AJWwG1+95ZcuEUCMudP4zj+pjyNlq7ApNHsbPO0vpocHd
-	 KmWm9Nl3mscCpLrACeWK4/mDy80Dbop2L3QiK9rt2Wvo0QS0hLBck7gDMyW9FKuyWy
-	 rNMdVBBQDTSQEVasDUitXtlH8KSL0HKgMHMoy9h8kHK4GRp471TsQgkjoyhklgbYz9
-	 iYVe6TY8lhSvQ==
+	b=t0ug9P1xSRFfLjOY8qw7KoTG8Fpae8qE/dbeKDyC1DjIKlLX3htFFn3SMh58rk7eG
+	 PhGvNEVy0DMnZu6UB7LchNEfudNim7MlKhR4eiUn80BDyimNE1Qz061uHHaT32bU5t
+	 caTdOvSuNmkrqtlMUJBenL06t6BrqWL5uH2XqzB+z6rZWmpBzKFJxesshaAqJar9f8
+	 S4InGPH3r3c5DsMgchCD/go/h1cTnXMB8rQXKlSWS4Gl2lXaMciVicEuvVci+VknNU
+	 YJrdrQpmUY44Susjv6Ovt0QK+U+qPYpZt1NavRmjUAsprQnDiPEwXgMv5H6R5XsrSk
+	 2eVp9TMAororw==
 From: Mark Brown <broonie@kernel.org>
 To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
- Liam Girdwood <lgirdwood@gmail.com>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>, 
- Takashi Iwai <tiwai@suse.com>, linux-sound@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ Liam Girdwood <lgirdwood@gmail.com>, Jaroslav Kysela <perex@perex.cz>, 
+ Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org, 
+ linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org, 
  linux-kernel@vger.kernel.org, 
  Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20241101165159.370619-1-krzysztof.kozlowski@linaro.org>
-References: <20241101165159.370619-1-krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH 1/2] ASoC: dt-bindings: qcom,sm8250: Add SM8750 sound
- card
-Message-Id: <173082469795.77847.14820990076674451218.b4-ty@kernel.org>
-Date: Tue, 05 Nov 2024 16:38:17 +0000
+In-Reply-To: <20241023124152.130706-1-krzysztof.kozlowski@linaro.org>
+References: <20241023124152.130706-1-krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH] ASoC: qcom: x1e80100: Support boards with two speakers
+Message-Id: <173082470066.77847.3145634719799599408.b4-ty@kernel.org>
+Date: Tue, 05 Nov 2024 16:38:20 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,11 +63,16 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.15-dev-9b746
 
-On Fri, 01 Nov 2024 17:51:58 +0100, Krzysztof Kozlowski wrote:
-> Add bindings for SM8750 sound card, compatible with older SM8450
-> variant.
+On Wed, 23 Oct 2024 14:41:52 +0200, Krzysztof Kozlowski wrote:
+> Some Qualcomm X1E laptops have only two speakers.  Regardless whether
+> this sound card driver is suitable for them (we could re-use one for
+> some older SoC), we should set reasonable channel map depending on the
+> number of channels, not always 4-speaker setup.
 > 
+> This change is necessary for bringing audio support on Lenovo Thinkpad
+> T14s with Qualcomm X1E78100 and only two speakers.
 > 
+> [...]
 
 Applied to
 
@@ -78,10 +80,8 @@ Applied to
 
 Thanks!
 
-[1/2] ASoC: dt-bindings: qcom,sm8250: Add SM8750 sound card
-      commit: 393de01870bcf2ea1eadd21ad12f927d78cbb726
-[2/2] ASoC: qcom: sc8280xp Add SM8750 sound card
-      commit: 4b9f02b6c5376b65dac398c4f06804c914cbb7be
+[1/1] ASoC: qcom: x1e80100: Support boards with two speakers
+      commit: 159098859bf6d46b34a1e1f7d44d28987b875878
 
 All being well this means that it will be integrated into the linux-next
 tree (usually sometime in the next 24 hours) and sent to Linus during
