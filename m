@@ -1,183 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-36988-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36989-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 118759BC22D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 01:49:27 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id F3B859BC23C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 01:58:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C7C67282CAA
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 00:49:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B5E912824FF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 00:58:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E7E3DF5C;
-	Tue,  5 Nov 2024 00:49:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A75BB125B9;
+	Tue,  5 Nov 2024 00:58:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JAtNlfRE"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RxYvmMZO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D11FDB667;
-	Tue,  5 Nov 2024 00:49:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3D4CDF5C;
+	Tue,  5 Nov 2024 00:58:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730767761; cv=none; b=GGU4f60FodvECfPHNIP+rSdNNYxd21GtykjeEbDf/5f6KyGQBcS2xLiB3bZnUvY+czvWgZn6zeCc8Vv77hha4pVFJRnQynp41qlCekmHSSX1Uj6vwpKtms2VHZmnadt11rGTsml5ganT68vzl216qiH0lzCvV0JYlGesobOUwAY=
+	t=1730768308; cv=none; b=Og0lOrrCDxSagWxgMsy6MxgHV3EIBUn2rhh94FWsbPSQCx6oZ7Hqd/c3FGVGPtpz6laifsRho2WkeK/3qPGS+jD5EfhK1TwtSXwVYJN5SGZZpX2xwiQx3zx1C9EO/s6zcgCGCKYTOoavl0u8NcbkwLj/MTtSevI5C7EjohB7zPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730767761; c=relaxed/simple;
-	bh=WIqZTsHOsvR2cFhpx5SuKyMp6tJGa9n+Huix9B8qTm0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=g8fPg0msWUISmTdmlq0ZoToOvwFszC7/lfs4j7r5VFHWKYhZEweaURgs3mHL/8s3O/zxCZAakq+i7RTZ3/9OzmXu/H3lAESoSH+jCtApM1Rhczj35Ti5/Tg3CBKUCXzjQFdHxLo3iNBefD8PPWu0kz2dLBy8LpY2AWSu6MKsXQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JAtNlfRE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F15FC4CECE;
-	Tue,  5 Nov 2024 00:49:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730767761;
-	bh=WIqZTsHOsvR2cFhpx5SuKyMp6tJGa9n+Huix9B8qTm0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=JAtNlfREYYQHlbtaxoOJUWP8Iq2IDfDC22EX7yDKjiMQf2n4lIjBPR3ZlEibVlNaB
-	 GYzNgLSVCk7/gCV1ar8+cIUQtZE6fqr4uU2h3e6XLKPXBXfT1dqWhM9Qv4vLq/bZNB
-	 RbOzzk91S+Ibel9U9LiZD3bbRAZTcVBWrGI8eVt/5DO3zEnNDo0sn1/y2Fa2JplG1G
-	 IEI9N8vHGcoyz+nFGpZSMwixFPy8CoaCAoOwwu/UFa+N04vXZM4qIGsCXpRtaK8y5G
-	 40iy0u7zMTCncyv7ik6mta9XvtWRwewhy+LakW/BCLfqloo3VhBupJfGw8ao+JJTIC
-	 aQRUutQDlbEZQ==
-Date: Tue, 5 Nov 2024 08:49:12 +0800
-From: Peter Chen <peter.chen@kernel.org>
-To: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Chunfeng Yun <chunfeng.yun@mediatek.com>, linux-usb@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-omap@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org
-Subject: Re: [PATCH] usb: Use (of|device)_property_present() for non-boolean
- properties
-Message-ID: <20241105004912.GA125226@nchen-desktop>
-References: <20241104190820.277702-1-robh@kernel.org>
+	s=arc-20240116; t=1730768308; c=relaxed/simple;
+	bh=8HpIzpr8QQrsiK3rCz7mOPHzonGBwf+dtMEHHOXHVJo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=S1Dk2lkXNCZQBdTtvetPVtWwSBCE+bZTRqf1f7tlnaw1B7BtxkiAFnlnivDxBOVt32cp45pvrSsT7LjVB0i4WeAlwm1KM5LoPq6DB6ZC1YGzPaH9k2lb91s4YTpcpngmzj3oMpxolEpVWXuxt6pOzwn0vqnHslQ26qymvWR9fuY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RxYvmMZO; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A4LIxSM001479;
+	Tue, 5 Nov 2024 00:58:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	thFT9R4zawQwXZDNXsi0vhiGW8TpNWoJBJ1cYQq1QF0=; b=RxYvmMZObB4ufg8q
+	P3WOfZA46hsW6Hv0zDtq9v69t8iGbkXbvebFPGTgtvGZaI+9SEA1IAtXEYRC1JDJ
+	D3EyS1JF3lzVAFafXmG7d25DgzDTOv90N5t8Q/KAZQuqOz1U2yy+YJfNhYiBGAk6
+	DcSWKPBaTAFdYzkb1AxX2Rd08EhYWCDUjre/A4DqQUMLeOo44nqyXZZJXWGUetrF
+	3r1uDejHM5c2IZqGTUvQk7eqQDoJiSiATzoTreyn5/MOo7atGcuCXnjvusWfZgFR
+	RiyQtKoIN1DbsEB0CCyZYT/CTeCNe0FHVmyeGgPMOyQ93YsC0l/Bb80m0P0T08oS
+	awaM0A==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42nd2s5w3n-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 05 Nov 2024 00:58:18 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4A50wHqn028893
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 5 Nov 2024 00:58:17 GMT
+Received: from [10.64.68.153] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 4 Nov 2024
+ 16:58:13 -0800
+Message-ID: <9591930f-6ead-46d1-9dbb-114f2310f5f4@quicinc.com>
+Date: Tue, 5 Nov 2024 08:58:10 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241104190820.277702-1-robh@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: Add coresight nodes for QCS615
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Jinlong Mao
+	<quic_jinlmao@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>
+References: <20241017030005.893203-1-quic_jiegan@quicinc.com>
+ <69be09ec-e9a5-4fb6-890e-74a65f3ce404@oss.qualcomm.com>
+ <3f90b3d6-9637-47b7-ad8a-ff43cb28ad32@quicinc.com>
+ <e263d461-9e2b-4ffe-8221-cd9ecdd142c9@quicinc.com>
+ <a41e3aeb-43b9-49c0-8243-29a78a3b1602@oss.qualcomm.com>
+Content-Language: en-US
+From: Jie Gan <quic_jiegan@quicinc.com>
+In-Reply-To: <a41e3aeb-43b9-49c0-8243-29a78a3b1602@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 8XpJwqKuY7iMpw8mz6MBWuYrp6i_-Pvz
+X-Proofpoint-GUID: 8XpJwqKuY7iMpw8mz6MBWuYrp6i_-Pvz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0
+ lowpriorityscore=0 mlxlogscore=999 clxscore=1015 suspectscore=0
+ adultscore=0 priorityscore=1501 bulkscore=0 mlxscore=0 malwarescore=0
+ spamscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2409260000 definitions=main-2411050005
 
-On 24-11-04 13:08:18, Rob Herring (Arm) wrote:
-> The use of (of|device)_property_read_bool() for non-boolean properties
-> is deprecated in favor of of_property_present() when testing for
-> property presence.
+
+
+On 11/4/2024 10:11 PM, Konrad Dybcio wrote:
+> On 28.10.2024 3:53 AM, Jie Gan wrote:
+>>
+>>
+>> On 10/28/2024 8:54 AM, Jie Gan wrote:
+>>>
+>>>
+>>> On 10/26/2024 2:47 AM, Konrad Dybcio wrote:
+>>>> On 17.10.2024 5:00 AM, Jie Gan wrote:
+>>>>> Add following coresight components on QCS615, EUD, TMC/ETF, TPDM, dynamic
+>>>>> Funnel, TPDA, Replicator and ETM.
+>>>>>
+>>>>> Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
+>>>>> ---
+>>>>> Already checked by command:dtbs_check W=1.
+>>>>>
+>>>>> Dependencies:
+>>>>> 1. Depends on qcs615 base dtsi change:
+>>>>> https://lore.kernel.org/all/20240926-add_initial_support_for_qcs615- v3-5-e37617e91c62@quicinc.com/
+>>>>> 2. Depends on qcs615 AOSS_QMP change:
+>>>>> https://lore.kernel.org/linux-arm-msm/20241017025313.2028120-4- quic_chunkaid@quicinc.com/
+>>>>> ---
+>>>>>    arch/arm64/boot/dts/qcom/qcs615.dtsi | 1632 ++++++++++++++++++++++++++
+>>>>>    1 file changed, 1632 insertions(+)
+>>>>>
+>>>>> diff --git a/arch/arm64/boot/dts/qcom/qcs615.dtsi b/arch/arm64/boot/ dts/qcom/qcs615.dtsi
+>>>>> index 856b40e20cf3..87cca5de018e 100644
+>>>>> --- a/arch/arm64/boot/dts/qcom/qcs615.dtsi
+>>>>> +++ b/arch/arm64/boot/dts/qcom/qcs615.dtsi
+>>>>> @@ -202,6 +202,18 @@ l3_0: l3-cache {
+>>>>>            };
+>>>>>        };
+>>>>> +    dummy_eud: dummy_sink {
+>>>>
+>>>> Node names (after the ':' and before the '{' signs) can't contain
+>>>> underscores, use '-' instead.
+>>> Sure, will fix it.
+>>>
+>>>>
+>>>> [...]
+>>>>
+>>>>> +        stm@6002000 {
+>>>>> +            compatible = "arm,coresight-stm", "arm,primecell";
+>>>>> +            reg = <0x0 0x6002000 0x0 0x1000>,
+>>>>
+>>>> Please pad the non-zero address part to 8 hex digits with leading
+>>>> zeroes, across the board
+>>> Will fix it.
+>>>
+>>>>
+>>>> This looks like a lot of nodes, all enabled by default. Will this run
+>>>> on a production-fused device?
+>>> Yes, usually Coresight nodes are enabled by default. Those nodes can run on the commercial devices.
+>> Sorry, my last clarification is not clearly. The Coresight nodes are enabled by default for commercial devices(fused), but only part of functions can run with commercial devices because it needs check fuse data before running.
+>>
+>> If we want enable all debug functions related to coresight nodes on commercial devices, we need APDP override(APPS debug policy override) procedure first. The APDP override procedure will override some fuse data to allow debug sessions.
 > 
-> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
-> ---
->  drivers/usb/chipidea/core.c        | 2 +-
->  drivers/usb/dwc3/core.c            | 2 +-
->  drivers/usb/dwc3/dwc3-omap.c       | 2 +-
->  drivers/usb/dwc3/dwc3-qcom.c       | 2 +-
->  drivers/usb/mtu3/mtu3_plat.c       | 2 +-
->  drivers/usb/phy/phy.c              | 2 +-
->  drivers/usb/renesas_usbhs/common.c | 2 +-
->  7 files changed, 7 insertions(+), 7 deletions(-)
+> In other words, will a production fused device boot with this patch
+> applied?
 > 
-> diff --git a/drivers/usb/chipidea/core.c b/drivers/usb/chipidea/core.c
-> index 835bf2428dc6..18ecfcc08b97 100644
-> --- a/drivers/usb/chipidea/core.c
-> +++ b/drivers/usb/chipidea/core.c
-> @@ -765,7 +765,7 @@ static int ci_get_platdata(struct device *dev,
->  
->  	ext_id = ERR_PTR(-ENODEV);
->  	ext_vbus = ERR_PTR(-ENODEV);
-> -	if (of_property_read_bool(dev->of_node, "extcon")) {
-> +	if (of_property_present(dev->of_node, "extcon")) {
->  		/* Each one of them is not mandatory */
->  		ext_vbus = extcon_get_edev_by_phandle(dev, 0);
->  		if (IS_ERR(ext_vbus) && PTR_ERR(ext_vbus) != -ENODEV)
-> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-> index 9eb085f359ce..e1beb760e913 100644
-> --- a/drivers/usb/dwc3/core.c
-> +++ b/drivers/usb/dwc3/core.c
-> @@ -1935,7 +1935,7 @@ static struct extcon_dev *dwc3_get_extcon(struct dwc3 *dwc)
->  	struct extcon_dev *edev = NULL;
->  	const char *name;
->  
-> -	if (device_property_read_bool(dev, "extcon"))
-> +	if (device_property_present(dev, "extcon"))
->  		return extcon_get_edev_by_phandle(dev, 0);
->  
->  	/*
-> diff --git a/drivers/usb/dwc3/dwc3-omap.c b/drivers/usb/dwc3/dwc3-omap.c
-> index 2a11fc0ee84f..c2d7582c151a 100644
-> --- a/drivers/usb/dwc3/dwc3-omap.c
-> +++ b/drivers/usb/dwc3/dwc3-omap.c
-> @@ -416,7 +416,7 @@ static int dwc3_omap_extcon_register(struct dwc3_omap *omap)
->  	struct device_node	*node = omap->dev->of_node;
->  	struct extcon_dev	*edev;
->  
-> -	if (of_property_read_bool(node, "extcon")) {
-> +	if (of_property_present(node, "extcon")) {
->  		edev = extcon_get_edev_by_phandle(omap->dev, 0);
->  		if (IS_ERR(edev)) {
->  			dev_vdbg(omap->dev, "couldn't get extcon device\n");
-> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-> index c1d4b52f25b0..649166e2a8b8 100644
-> --- a/drivers/usb/dwc3/dwc3-qcom.c
-> +++ b/drivers/usb/dwc3/dwc3-qcom.c
-> @@ -161,7 +161,7 @@ static int dwc3_qcom_register_extcon(struct dwc3_qcom *qcom)
->  	struct extcon_dev	*host_edev;
->  	int			ret;
->  
-> -	if (!of_property_read_bool(dev->of_node, "extcon"))
-> +	if (!of_property_present(dev->of_node, "extcon"))
->  		return 0;
->  
->  	qcom->edev = extcon_get_edev_by_phandle(dev, 0);
-> diff --git a/drivers/usb/mtu3/mtu3_plat.c b/drivers/usb/mtu3/mtu3_plat.c
-> index 6858ed9fc3b2..2380552025e4 100644
-> --- a/drivers/usb/mtu3/mtu3_plat.c
-> +++ b/drivers/usb/mtu3/mtu3_plat.c
-> @@ -307,7 +307,7 @@ static int get_ssusb_rscs(struct platform_device *pdev, struct ssusb_mtk *ssusb)
->  	if (otg_sx->role_sw_used || otg_sx->manual_drd_enabled)
->  		goto out;
->  
-> -	if (of_property_read_bool(node, "extcon")) {
-> +	if (of_property_present(node, "extcon")) {
->  		otg_sx->edev = extcon_get_edev_by_phandle(ssusb->dev, 0);
->  		if (IS_ERR(otg_sx->edev)) {
->  			return dev_err_probe(dev, PTR_ERR(otg_sx->edev),
-> diff --git a/drivers/usb/phy/phy.c b/drivers/usb/phy/phy.c
-> index 06e0fb23566c..130f86a043ad 100644
-> --- a/drivers/usb/phy/phy.c
-> +++ b/drivers/usb/phy/phy.c
-> @@ -365,7 +365,7 @@ static int usb_add_extcon(struct usb_phy *x)
->  {
->  	int ret;
->  
-> -	if (of_property_read_bool(x->dev->of_node, "extcon")) {
-> +	if (of_property_present(x->dev->of_node, "extcon")) {
->  		x->edev = extcon_get_edev_by_phandle(x->dev, 0);
->  		if (IS_ERR(x->edev))
->  			return PTR_ERR(x->edev);
-> diff --git a/drivers/usb/renesas_usbhs/common.c b/drivers/usb/renesas_usbhs/common.c
-> index edc43f169d49..e4adfe692164 100644
-> --- a/drivers/usb/renesas_usbhs/common.c
-> +++ b/drivers/usb/renesas_usbhs/common.c
-> @@ -632,7 +632,7 @@ static int usbhs_probe(struct platform_device *pdev)
->  	if (IS_ERR(priv->base))
->  		return PTR_ERR(priv->base);
->  
-> -	if (of_property_read_bool(dev_of_node(dev), "extcon")) {
-> +	if (of_property_present(dev_of_node(dev), "extcon")) {
->  		priv->edev = extcon_get_edev_by_phandle(dev, 0);
->  		if (IS_ERR(priv->edev))
->  			return PTR_ERR(priv->edev);
-> -- 
-> 2.45.2
-> 
+Yes, a fused device can boot with this patch.
 
-For chipidea part:
+Thanks,
+Jie
 
-Acked-by: Peter Chen <peter.chen@kernel.org>
-
-Peter
 
