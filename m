@@ -1,174 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-36997-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-36998-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AF3469BC4B3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 06:29:04 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id CA7E89BC574
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 07:34:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D2C711C213AD
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 05:29:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 07E461C20F90
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2024 06:34:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14E351B78F3;
-	Tue,  5 Nov 2024 05:29:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1FFB219047D;
+	Tue,  5 Nov 2024 06:33:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UNrqmaKF"
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="DS1U727c"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4509A76C61;
-	Tue,  5 Nov 2024 05:28:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 593352A1A4;
+	Tue,  5 Nov 2024 06:33:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730784540; cv=none; b=rxlMGHSjdH7M6hGpfnphPqfZSTUhE4gJal8lWO7JJXjsSPIezykkk4IwiFdZujbJx4E4TU/GTzwDjUJADbN3qfUQS9nPAPPeS092OijQnPxZClOzbZf2eS8r5gW3aY4gmkTAsuixXNo2qUIqYnxqCyIkvi/BkL2bsryihXIJ5LI=
+	t=1730788438; cv=none; b=FeWAqpd87D5EtPIgjsCEfvcJJSbb6HfZmPbSV1VBUnTAYdirK1Kf8czhhKtGs+12MO/zR1KkFBf7AWuIYkRP4GEldyfMOqe6F1yD1zLDy+fz/mwuSwMehXF6E5vfPTbNHwiQpg3smC0ZJcPdzCS5r/Ep5ixO3s1qr7eAYCR8bCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730784540; c=relaxed/simple;
-	bh=6F2AfV2KDVQjs5OaTPOzNEGAArtar9LRx4uPjN1pzno=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=VJ4EtojHdL3a6Q5IukpElRpqb3+HsYscqBHZVbjTL41FbatWFQTwz4xjZzToKGipVHGRRSRHIN5rKu+hHDhnrTlBlQ7ytGfrTIFyVWHn3KhCWSKDlTWMq8Qe3b+SmJhndReAQpElER6avW8n1U2q0NxbRiLyU6uTacApYIpTRpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UNrqmaKF; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A4LJlT2031387;
-	Tue, 5 Nov 2024 05:28:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	gXEhXPOP+Mqn4mzjrY2u7twKAWMpRp+PxdP/brBj3vk=; b=UNrqmaKFH6dJRFym
-	CoLtg8xFinKShF/9fKYl3AsqdmMpaOq+J9lOuzCLzwMeOYqTUZ46yI2vxLudaL46
-	MGB422BDxQk2KJqdg/nxDWZINGAQEKP9v4Z6dzkMVzQcCGtw+LBkWdJAmiS6Apt2
-	xOMXlSMiB14iPH7/PNBVugPtq/jJQdZaeEei1GxrRJy8ZW1aYj+QEeWtCrovCBBp
-	ngaCqd5wztQgBd9XYStwz7LIsAQzp81m8vlCZ8YGo0jv/IrD5VpT/abNyf39iYEW
-	0PtIGm1bmaKA87tMxCTSyVoG8EZoni9Iw1KI+0gNVn02C5WFt6P+jgRxXp95ajfr
-	czwmvw==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42nd286fje-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 05 Nov 2024 05:28:48 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4A55Slwb010713
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 5 Nov 2024 05:28:47 GMT
-Received: from [10.239.29.179] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 4 Nov 2024
- 21:28:41 -0800
-Message-ID: <de5f40ab-90b7-4c75-b981-dd5824650660@quicinc.com>
-Date: Tue, 5 Nov 2024 13:28:26 +0800
+	s=arc-20240116; t=1730788438; c=relaxed/simple;
+	bh=R1utXRDZTq1k1v/1QRoa/HB0u8Grz0KqdusrKSnhVaI=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=R6pfZ27rz0yqVw1Wzn3jzOHZh8o5JWyBXrJssawx4JzJn9c5meYAp81Mms1fOQrJvYcIm1sMh+0CNg04oryJztlGm32STsKo/UX2UggBhrAf8s7AGBX32HYVBfes8WPjYiYdimAs3eRUo0vd96BQ152wCRH6QRBhw3lfYmc+Tgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=DS1U727c; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 5/5] arm64: dts: qcom: x1e80100: Add support for PCIe3
- on x1e80100
-To: Johan Hovold <johan@kernel.org>
-CC: <manivannan.sadhasivam@linaro.org>, <vkoul@kernel.org>,
-        <kishon@kernel.org>, <robh@kernel.org>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>, <abel.vesa@linaro.org>,
-        <quic_msarkar@quicinc.com>, <quic_devipriy@quicinc.com>,
-        <dmitry.baryshkov@linaro.org>, <kw@linux.com>, <lpieralisi@kernel.org>,
-        <neil.armstrong@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pci@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <johan+linaro@kernel.org>
-References: <20241101030902.579789-1-quic_qianyu@quicinc.com>
- <20241101030902.579789-6-quic_qianyu@quicinc.com>
- <ZyjbrLEn8oSJjaZN@hovoldconsulting.com>
-Content-Language: en-US
-From: Qiang Yu <quic_qianyu@quicinc.com>
-In-Reply-To: <ZyjbrLEn8oSJjaZN@hovoldconsulting.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1730788434;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=aTAKhxSFE8FvW11nxBit6CA7OkWpY8iwgm9r8H8Xrpg=;
+	b=DS1U727cQQMKiGKjgi2ySybSh4sSk1DLW74/mB4SFQndpIqZSVN9n2j3+nXkmTPOuBRegb
+	aA5s0UDKAOW3aMIUF2+0upqJriMxm2OMYgf4bfFIIe/IPGnUJlG7nJlsJHkzxI/rWNpVDU
+	EfN5SJha5Nr6CjWfQIjbQYpVToL8XtrOAT6bIrMeKjRy4wBXxi8+uETESOSHISskujzuLC
+	f1NWpEGJe3wnaTf6M9QZ9ZIurGL82YDS9nEj25ywbtKmQWwvVg91CtFjgtZ/lWovt0YqKM
+	Heqy5jDSjKvF/hrql62SqOniX0/mTOU4GuHVWnlSxmMkVd1w9CGi6HClfE2OAQ==
+Date: Tue, 05 Nov 2024 07:33:53 +0100
+From: Dragan Simic <dsimic@manjaro.org>
+To: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: Phong LE <ple@baylibre.com>, Neil Armstrong <neil.armstrong@linaro.org>,
+ Andrzej Hajda <andrzej.hajda@intel.com>, Robert Foss <rfoss@kernel.org>,
+ Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, Jonas Karlman
+ <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, Maarten
+ Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard
+ <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, David Airlie
+ <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Jessica Zhang
+ <quic_jesszhan@quicinc.com>, Rob Clark <robdclark@gmail.com>, Abhinav Kumar
+ <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
+ dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH] drm: Use of_property_present() for non-boolean properties
+In-Reply-To: <20241104190636.274926-1-robh@kernel.org>
+References: <20241104190636.274926-1-robh@kernel.org>
+Message-ID: <16acf71de2a7d23f979ce286b2d8f606@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: zf0OywGt1z_V4G9bDkX0nPa9tCHrXwCY
-X-Proofpoint-GUID: zf0OywGt1z_V4G9bDkX0nPa9tCHrXwCY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=999
- clxscore=1015 lowpriorityscore=0 impostorscore=0 priorityscore=1501
- spamscore=0 phishscore=0 bulkscore=0 malwarescore=0 suspectscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411050038
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
+Hello Rob,
 
-On 11/4/2024 10:35 PM, Johan Hovold wrote:
-> On Thu, Oct 31, 2024 at 08:09:02PM -0700, Qiang Yu wrote:
->> Describe PCIe3 controller and PHY. Also add required system resources like
->> regulators, clocks, interrupts and registers configuration for PCIe3.
->>
->> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
->> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
->   
->> +		pcie3: pcie@1bd0000 {
->> +			device_type = "pci";
->> +			compatible = "qcom,pcie-x1e80100";
->> +			reg = <0x0 0x01bd0000 0x0 0x3000>,
->> +			      <0x0 0x78000000 0x0 0xf1d>,
->> +			      <0x0 0x78000f40 0x0 0xa8>,
->> +			      <0x0 0x78001000 0x0 0x1000>,
->> +			      <0x0 0x78100000 0x0 0x100000>,
->> +			      <0x0 0x01bd3000 0x0 0x1000>;
->> +			reg-names = "parf",
->> +				    "dbi",
->> +				    "elbi",
->> +				    "atu",
->> +				    "config",
->> +				    "mhi";
->> +			#address-cells = <3>;
->> +			#size-cells = <2>;
->> +			ranges = <0x01000000 0x0 0x00000000 0x0 0x78200000 0x0 0x100000>,
->> +				 <0x02000000 0x0 0x78300000 0x0 0x78300000 0x0 0x3d00000>,
-> Can you double check the size here so that it is indeed correct and not
-> just copied from the other nodes which initially got it wrong:
->
-> 	https://lore.kernel.org/lkml/20240710-topic-barman-v1-1-5f63fca8d0fc@linaro.org/
- From memory maps, region of PCIe3 is 64MB, the size here is correct.
+On 2024-11-04 20:06, Rob Herring (Arm) wrote:
+> The use of of_property_read_bool() for non-boolean properties is
+> deprecated in favor of of_property_present() when testing for property
+> presence.
+> 
+> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 
-Thanks,
-Qiang Yu
->
->> +				 <0x03000000 0x7 0x40000000 0x7 0x40000000 0x0 0x40000000>;
->> +			bus-range = <0x00 0xff>;
->> +			clocks = <&gcc GCC_PCIE_3_AUX_CLK>,
->> +				 <&gcc GCC_PCIE_3_CFG_AHB_CLK>,
->> +				 <&gcc GCC_PCIE_3_MSTR_AXI_CLK>,
->> +				 <&gcc GCC_PCIE_3_SLV_AXI_CLK>,
->> +				 <&gcc GCC_PCIE_3_SLV_Q2A_AXI_CLK>,
->> +				 <&gcc GCC_CFG_NOC_PCIE_ANOC_NORTH_AHB_CLK>,
->> +				 <&gcc GCC_CNOC_PCIE_NORTH_SF_AXI_CLK>;
->> +			clock-names = "aux",
->> +				      "cfg",
->> +				      "bus_master",
->> +				      "bus_slave",
->> +				      "slave_q2a",
->> +				      "noc_aggr",
->> +				      "cnoc_sf_axi";
->> +
->> +			assigned-clocks = <&gcc GCC_PCIE_3_AUX_CLK>;
->> +			assigned-clock-rates = <19200000>;
->> +
->> +			interconnects = <&pcie_south_anoc MASTER_PCIE_3 QCOM_ICC_TAG_ALWAYS
-> This should be &pcie_north_anoc
->
->> +					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
->> +					<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
->> +					 &cnoc_main SLAVE_PCIE_3 QCOM_ICC_TAG_ALWAYS>;
->> +			interconnect-names = "pcie-mem",
->> +					     "cpu-pcie";
-> With the above addressed, feel free to keep my Reviewed-by tag.
->
-> Johan
+Looking good to me, thanks for the patch!
+
+Reviewed-by: Dragan Simic <dsimic@manjaro.org>
+
+> ---
+>  drivers/gpu/drm/bridge/ite-it66121.c | 2 +-
+>  drivers/gpu/drm/bridge/sii902x.c     | 2 +-
+>  drivers/gpu/drm/drm_panel.c          | 2 +-
+>  drivers/gpu/drm/msm/dsi/dsi_host.c   | 2 +-
+>  4 files changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/bridge/ite-it66121.c
+> b/drivers/gpu/drm/bridge/ite-it66121.c
+> index 925e42f46cd8..0eae7c01b975 100644
+> --- a/drivers/gpu/drm/bridge/ite-it66121.c
+> +++ b/drivers/gpu/drm/bridge/ite-it66121.c
+> @@ -1480,7 +1480,7 @@ static int it66121_audio_codec_init(struct
+> it66121_ctx *ctx, struct device *dev)
+> 
+>  	dev_dbg(dev, "%s\n", __func__);
+> 
+> -	if (!of_property_read_bool(dev->of_node, "#sound-dai-cells")) {
+> +	if (!of_property_present(dev->of_node, "#sound-dai-cells")) {
+>  		dev_info(dev, "No \"#sound-dai-cells\", no audio\n");
+>  		return 0;
+>  	}
+> diff --git a/drivers/gpu/drm/bridge/sii902x.c 
+> b/drivers/gpu/drm/bridge/sii902x.c
+> index 7f91b0db161e..f73e1174a5ad 100644
+> --- a/drivers/gpu/drm/bridge/sii902x.c
+> +++ b/drivers/gpu/drm/bridge/sii902x.c
+> @@ -850,7 +850,7 @@ static int sii902x_audio_codec_init(struct sii902x 
+> *sii902x,
+>  	u8 lanes[4];
+>  	int num_lanes, i;
+> 
+> -	if (!of_property_read_bool(dev->of_node, "#sound-dai-cells")) {
+> +	if (!of_property_present(dev->of_node, "#sound-dai-cells")) {
+>  		dev_dbg(dev, "%s: No \"#sound-dai-cells\", no audio\n",
+>  			__func__);
+>  		return 0;
+> diff --git a/drivers/gpu/drm/drm_panel.c b/drivers/gpu/drm/drm_panel.c
+> index 19ab0a794add..46d61cc871ca 100644
+> --- a/drivers/gpu/drm/drm_panel.c
+> +++ b/drivers/gpu/drm/drm_panel.c
+> @@ -413,7 +413,7 @@ bool drm_is_panel_follower(struct device *dev)
+>  	 * don't bother trying to parse it here. We just need to know if the
+>  	 * property is there.
+>  	 */
+> -	return of_property_read_bool(dev->of_node, "panel");
+> +	return of_property_present(dev->of_node, "panel");
+>  }
+>  EXPORT_SYMBOL(drm_is_panel_follower);
+> 
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> index 185d7de0bf37..78cac4ecc58f 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> @@ -1831,7 +1831,7 @@ static int dsi_host_parse_dt(struct msm_dsi_host
+> *msm_host)
+>  		msm_dsi->te_source = devm_kstrdup(dev, te_source, GFP_KERNEL);
+>  	ret = 0;
+> 
+> -	if (of_property_read_bool(np, "syscon-sfpb")) {
+> +	if (of_property_present(np, "syscon-sfpb")) {
+>  		msm_host->sfpb = syscon_regmap_lookup_by_phandle(np,
+>  					"syscon-sfpb");
+>  		if (IS_ERR(msm_host->sfpb)) {
 
