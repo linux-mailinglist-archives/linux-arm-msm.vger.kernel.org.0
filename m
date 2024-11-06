@@ -1,167 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-37108-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37110-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 843579BDF57
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2024 08:24:28 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4A94A9BDF5F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2024 08:25:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B5D121C22DFE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2024 07:24:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6DE031C22DFD
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2024 07:25:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E99FC1CC8BC;
-	Wed,  6 Nov 2024 07:24:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E0D5D1CC887;
+	Wed,  6 Nov 2024 07:25:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LTDZcL8A"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dznXUx5B"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 415181C7B7F;
-	Wed,  6 Nov 2024 07:24:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DBF3192580;
+	Wed,  6 Nov 2024 07:25:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730877859; cv=none; b=EihVehwCK6XfO2C0XuaN4FxZ78hD6/ovEhQIcSjEd8aiVHfJB6RN//Ojsfa4JJ1TXv20SwNWFTOOhxLtAIX3mn3mFP2LZnH5c1LKqripnLnfoYGTUImIL8dy63PpA3kROZ4nee+DwCZduPw+zJnfLoK/75t0CVXCVdtSVnAHPbw=
+	t=1730877921; cv=none; b=QDjJ/4ePZPXYL2vYFHM75Q4zkg7I69o1jdIn9xlFUjRg3irebzFqLE9zcm5IJOR1erjymZkXEt2EAP5jpSU6C190lupq9R1564FeniT/JBCvn66zFcf2eBdMLcFETFlfCDZ1biwm0dNoFad8Kyub4oVHgFOxq8Bb/qaIfqU0sX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730877859; c=relaxed/simple;
-	bh=d9FgkX8sRWc6GVjPqzzDapvQlGKSVVVBoIMOOqg3yh4=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=pxfYkdF79gYqN7sz+vamXL6GqNESSpWMEx2TI/cVg+IlUWy8bhNp+cA0TMw9IheAlt69wQdRjlahCiuGC9YmliCZfx/n4gyP2WNWBbTY5wlO9kgZej1QN53UyvMO8R8gGLh/cf/xmXkwcaQyUeGO5XDmXnaGjX7bSaajutKa4zQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LTDZcL8A; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1730877921; c=relaxed/simple;
+	bh=h+xI1yT8ky/b19/GpzaLaSMrzWTHCXmCe32fyxlq3rw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=NAgq7XqO0jLqRgW6MtYuZebT9Ra21CCBD+wn05AvP+R8Y7KaYLSCq7QP5OQSMtwjHto/CpOTnQypFegLLXn9ykPM1nzrbH4juy/IXCoS8p6CJAGa4KFe59V/TxB2b2M9KxbJ25yDat0tEOhNJ7/l4r0hoEiajMjcanwmEJVZv84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dznXUx5B; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A5LDFMt003794;
-	Wed, 6 Nov 2024 07:24:14 GMT
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A632p7D002132;
+	Wed, 6 Nov 2024 07:25:14 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=3054MTo/moP
-	LYYPFzHL4TpJLVqcLSu8FE5MTqtNj/AM=; b=LTDZcL8AoszO+6YxjPSBX6ePMe0
-	3hcLvu2ikouKQs00lcKBgXythJg5u+mJd+zAzHMH7wm8NBBHAKR0qPi43RoNdSE4
-	kY2q4HXwdUNk4T5/iNelGd4V8fVA6RacHumUrS2+Z1C2jNpOi2S1a3GhgsY5WBlC
-	PMyHzAu+MLMZ313N9q/DCrrpnS2kUXCa0lTicPQbEcatM0G/d7pPcr9Ga9jy1DBX
-	vt1xZPtYzHFuwa65eX/mMjG3BdpFlR1dnMXSCLMJMFG4d8QioHkC0PAlHF401WlF
-	s7ouPYGuUlsOadAg79LO5e5Wjm4v6QaWb+HtTAfYG0VlWsxhrZr8TZ09lXg==
-Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42qhbub2jh-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	frs4vFdaLlG0LWU4uuZE7Vj/cManDFo4GpodHieHqA0=; b=dznXUx5BD/LgZxyN
+	PvAZVmgqFnNM0yPAZQCQ6N/OjnfDGS55vBfUMifpZzT/LSloW8EF6OonAqBYZOaO
+	3KkKkVkqFHOpaD2nb1GqKgx5MvQU5fbpXx/+sOlxaK8WDpdYUBZkgg1jNA5g76vj
+	dphUjZj357FPRJ8j+HK7H/5wOj6Ezl2jqd+uF5akCgeI+JO45oCONuFnAx+MhJx+
+	vE934/KgActleiyiO+yodkR613JfRm/f1FD7l3pfJUS3A8tAJA8sCdHNpD7vAL9c
+	NH6pb3gW2XrAMEmcBzrR1cT3stW59PioJYYcQGsa/Jh5uesuoAF39p1Hnh6dG5xV
+	Z4y9ZA==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42r072gjbj-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 06 Nov 2024 07:24:13 +0000 (GMT)
-Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-	by APTAIPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 4A67OA4T025646;
-	Wed, 6 Nov 2024 07:24:10 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 42nd5ktsg8-1
+	Wed, 06 Nov 2024 07:25:14 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4A67PD9d026050
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 06 Nov 2024 07:24:10 +0000
-Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4A67OAEP025629;
-	Wed, 6 Nov 2024 07:24:10 GMT
-Received: from cse-cd02-lnx.ap.qualcomm.com (cse-cd02-lnx.qualcomm.com [10.64.75.246])
-	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 4A67O9XT025624
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 06 Nov 2024 07:24:10 +0000
-Received: by cse-cd02-lnx.ap.qualcomm.com (Postfix, from userid 4571896)
-	id 408C6159E; Wed,  6 Nov 2024 15:24:08 +0800 (CST)
-From: Yuanjie Yang <quic_yuanjiey@quicinc.com>
-To: ulf.hansson@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
-        conor+dt@kernel.org, bhupesh.sharma@linaro.org, andersson@kernel.org,
-        konradybcio@kernel.org
-Cc: linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        quic_tingweiz@quicinc.com, quic_yuanjiey@quicinc.com
-Subject: [PATCH v2 2/2] arm64: dts: qcom: qcs615-ride: Enable SDHC1 and SDHC2
-Date: Wed,  6 Nov 2024 15:23:43 +0800
-Message-Id: <20241106072343.2070933-3-quic_yuanjiey@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241106072343.2070933-1-quic_yuanjiey@quicinc.com>
-References: <20241106072343.2070933-1-quic_yuanjiey@quicinc.com>
+	Wed, 6 Nov 2024 07:25:14 GMT
+Received: from [10.204.100.69] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 5 Nov 2024
+ 23:25:11 -0800
+Message-ID: <7f350d73-65dd-097e-8b4a-e9a23472aa28@quicinc.com>
+Date: Wed, 6 Nov 2024 12:55:08 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH 1/4] media: venus: hfi_parser: add check to avoid out of
+ bound access
+Content-Language: en-US
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Stanimir Varbanov
+	<stanimir.k.varbanov@gmail.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>
+CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <stable@vger.kernel.org>
+References: <20241105-venus_oob-v1-0-8d4feedfe2bb@quicinc.com>
+ <20241105-venus_oob-v1-1-8d4feedfe2bb@quicinc.com>
+ <640fe933-078d-4bf5-815c-7db0eb8b9de4@linaro.org>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <640fe933-078d-4bf5-815c-7db0eb8b9de4@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: VMQqOirSQgst-xe0SJ3OuLRdRsRWqS0w
-X-Proofpoint-GUID: VMQqOirSQgst-xe0SJ3OuLRdRsRWqS0w
+X-Proofpoint-ORIG-GUID: lAKpfWxI9Ioun-drb3uv5PPw7371Dlk1
+X-Proofpoint-GUID: lAKpfWxI9Ioun-drb3uv5PPw7371Dlk1
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- mlxlogscore=872 clxscore=1015 priorityscore=1501 adultscore=0 bulkscore=0
- suspectscore=0 phishscore=0 lowpriorityscore=0 spamscore=0 malwarescore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ priorityscore=1501 mlxscore=0 suspectscore=0 mlxlogscore=999 spamscore=0
+ adultscore=0 malwarescore=0 phishscore=0 impostorscore=0 bulkscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2409260000 definitions=main-2411060059
 
-Enable SDHC1 and SDHC2 on the Qualcomm QCS615 Ride platform.
 
-Signed-off-by: Yuanjie Yang <quic_yuanjiey@quicinc.com>
----
- arch/arm64/boot/dts/qcom/qcs615-ride.dts | 31 ++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+On 11/5/2024 4:21 PM, Bryan O'Donoghue wrote:
+> On 05/11/2024 08:54, Vikash Garodia wrote:
+>> There is a possibility that init_codecs is invoked multiple times during
+>> manipulated payload from video firmware. In such case, if codecs_count
+>> can get incremented to value more than MAX_CODEC_NUM, there can be OOB
+>> access. Keep a check for max accessible memory before accessing it.
+>>
+>> Cc: stable@vger.kernel.org
+>> Fixes: 1a73374a04e5 ("media: venus: hfi_parser: add common capability parser")
+>> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+>> ---
+>>   drivers/media/platform/qcom/venus/hfi_parser.c | 4 ++++
+>>   1 file changed, 4 insertions(+)
+>>
+>> diff --git a/drivers/media/platform/qcom/venus/hfi_parser.c
+>> b/drivers/media/platform/qcom/venus/hfi_parser.c
+>> index
+>> 3df241dc3a118bcdeb2c28a6ffdb907b644d5653..27d0172294d5154f4839e8cef172f9a619dfa305 100644
+>> --- a/drivers/media/platform/qcom/venus/hfi_parser.c
+>> +++ b/drivers/media/platform/qcom/venus/hfi_parser.c
+>> @@ -23,6 +23,8 @@ static void init_codecs(struct venus_core *core)
+>>           return;
+>>         for_each_set_bit(bit, &core->dec_codecs, MAX_CODEC_NUM) {
+>> +        if (core->codecs_count >= MAX_CODEC_NUM)
+>> +            return;
+>>           cap = &caps[core->codecs_count++];
+>>           cap->codec = BIT(bit);
+>>           cap->domain = VIDC_SESSION_TYPE_DEC;
+>> @@ -30,6 +32,8 @@ static void init_codecs(struct venus_core *core)
+>>       }
+>>         for_each_set_bit(bit, &core->enc_codecs, MAX_CODEC_NUM) {
+>> +        if (core->codecs_count >= MAX_CODEC_NUM)
+>> +            return;
+>>           cap = &caps[core->codecs_count++];
+>>           cap->codec = BIT(bit);
+>>           cap->domain = VIDC_SESSION_TYPE_ENC;
+>>
+> 
+> I don't see how codecs_count could be greater than the control, since you
+> increment by one on each loop but >= is fine too I suppose.
+Assume the payload from malicious firmware is packed like below
+HFI_PROPERTY_PARAM_CODEC_SUPPORTED
+HFI_PROPERTY_PARAM_CODEC_SUPPORTED
+HFI_PROPERTY_PARAM_CODEC_SUPPORTED
+.....
+for 32 or more instances of above type
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs615-ride.dts b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-index ee6cab3924a6..308fd741a467 100644
---- a/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-+++ b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-@@ -5,6 +5,7 @@
- /dts-v1/;
- 
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-+#include <dt-bindings/gpio/gpio.h>
- #include "qcs615.dtsi"
- / {
- 	model = "Qualcomm Technologies, Inc. QCS615 Ride";
-@@ -12,6 +13,8 @@ / {
- 	chassis-type = "embedded";
- 
- 	aliases {
-+		mmc0 = &sdhc_1;
-+		mmc1 = &sdhc_2;
- 		serial0 = &uart0;
- 	};
- 
-@@ -210,6 +213,34 @@ &rpmhcc {
- 	clocks = <&xo_board_clk>;
- };
- 
-+&sdhc_1 {
-+	pinctrl-0 = <&sdc1_state_on>;
-+	pinctrl-1 = <&sdc1_state_off>;
-+	pinctrl-names = "default", "sleep";
-+
-+	vmmc-supply = <&vreg_l17a>;
-+	vqmmc-supply = <&vreg_s4a>;
-+
-+	non-removable;
-+	no-sd;
-+	no-sdio;
-+
-+	status = "okay";
-+};
-+
-+&sdhc_2 {
-+	pinctrl-0 = <&sdc2_state_on>;
-+	pinctrl-1 = <&sdc2_state_off>;
-+	pinctrl-names = "default", "sleep";
-+
-+	cd-gpios = <&tlmm 99 GPIO_ACTIVE_LOW>;
-+
-+	vmmc-supply = <&vreg_l10a>;
-+	vqmmc-supply = <&vreg_s4a>;
-+
-+	status = "okay";
-+};
-+
- &uart0 {
- 	status = "okay";
- };
--- 
-2.34.1
-
+Regards,
+Vikash
+> 
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
