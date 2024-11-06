@@ -1,148 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-37168-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37183-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 81ACE9BF6F9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2024 20:39:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B474F9BF7BE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2024 21:03:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 439702846D0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2024 19:39:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 75F0F2832B8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2024 20:03:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1CF2B21216A;
-	Wed,  6 Nov 2024 19:34:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pv4jW5RR"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D58E20A5F6;
+	Wed,  6 Nov 2024 20:03:50 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E1A220F5A0;
-	Wed,  6 Nov 2024 19:34:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50B52204086;
+	Wed,  6 Nov 2024 20:03:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730921696; cv=none; b=TRKVCR5SlkuVuEwBR6ski+vf5oE19WwbXqVxz4hvoXk5p8Nw0AWMj+eXZBtCSibk2qV0/2o4A7azHdLEYRWWZM/DqVS+lKnBqaIuhF+9D9gyaq5Hpikt6FC8NppfxlGriDE0HpsqmjPZROM/VTfu4PZ7nZ7AnEa9tLk4y5wxi3I=
+	t=1730923430; cv=none; b=WhQG4/F/o1M4Ty6Vgdkt+fjcP8E4arz6hPkLWTFpVCoGZk7ZJQXiZCNcfndpXUXCco6qPL3UEHsrZfOkdcdjp+y/NlKnojWvZLB2DELMNn1MmUZb/IKdJYQLu4AzNiOqM8MsxjlaAuF1B4BBT9psyXVAVIy5myY27S7SteLa2Ec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730921696; c=relaxed/simple;
-	bh=qU0dUNxFUuN/ND2hfWc0/b53f/OYr4+0HIcF9EoyLxI=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=l2XzjlcQ8xN3IEdKI7XrwU2bg+ZxV9RhAuIzembmsd2yu9CXtBePvL5wx2ZLe6XAtDY/Fq9aI/KCPc1FGKB1/wZAI+iu5Tc0P7iYyxyfrX6ft1L+rV3RtI/xWN8jeW9tbYLh96gS4+I66jgj2vGDXwBkT5ok1TNNwrgq4WrCPIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pv4jW5RR; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A6FSE90010532;
-	Wed, 6 Nov 2024 19:34:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	M4IGsOidRHFIubeJL9OdlEYfFZx1GNBQBMy1HdndUaw=; b=pv4jW5RRyIvL6ava
-	hCQfd0sCzbyQKhkd2E0ibF7DkVfko9yM0KcY/5/1CyvJ6Qy25mhXCT5loLnVu5aK
-	qatFJYqXqMG560c0kBEC3/LdhEjM44ml7h7ukvnhrBrwhqcHc7DmiEO2i324PvhS
-	TaQklQo3g1/v0PmpCcDKBruFkezvsulGI4VWwwwo/XTlj3scZKt52Zu5n5D54tNv
-	vUWNZltUBqbVOFSawGtQ7ZdSthoHt9+RkLVG7OgAf9oleWno75TQKmp5ekrW8s9f
-	R+AzGhPa0ugbXwJjy2kQWT0xCj6j8KeGYqZ6C8NtxUIgHOez2U8oxG7CZ9gAi1ZH
-	tAGNHA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42qn73c51y-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 06 Nov 2024 19:34:38 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4A6JYcuR008680
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 6 Nov 2024 19:34:38 GMT
-Received: from hu-wcheng-lv.qualcomm.com (10.49.16.6) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 6 Nov 2024 11:34:37 -0800
-From: Wesley Cheng <quic_wcheng@quicinc.com>
-To: <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
-        <perex@perex.cz>, <conor+dt@kernel.org>, <dmitry.torokhov@gmail.com>,
-        <corbet@lwn.net>, <broonie@kernel.org>, <lgirdwood@gmail.com>,
-        <krzk+dt@kernel.org>, <pierre-louis.bossart@linux.intel.com>,
-        <Thinh.Nguyen@synopsys.com>, <tiwai@suse.com>, <robh@kernel.org>,
-        <gregkh@linuxfoundation.org>
-CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-input@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>
-Subject: [PATCH v30 30/30] ASoC: usb: Rediscover USB SND devices on USB port add
-Date: Wed, 6 Nov 2024 11:34:13 -0800
-Message-ID: <20241106193413.1730413-31-quic_wcheng@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241106193413.1730413-1-quic_wcheng@quicinc.com>
-References: <20241106193413.1730413-1-quic_wcheng@quicinc.com>
+	s=arc-20240116; t=1730923430; c=relaxed/simple;
+	bh=ivX4CiQTotWMPINucszsfz9xCMxcsuzikA7zdx2o5fA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gP3GN2PJpIaKP6ucR6PUEa5u3Fjtms0ghV+Cf2rVw1Hs/GoCFQZ3JKeCLjQK0v3oPEOpJErwh1fyv2QZjB6gfKSzMlvqI6nle2oh2I2TgxWylsj9EDUx57r6EORdGzE9M9DgP5eGXIgqnHjL4o70rADe2lhndKjpHHRMgd/fB9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 2ADD7497;
+	Wed,  6 Nov 2024 12:04:16 -0800 (PST)
+Received: from pluto (usa-sjc-mx-foss1.foss.arm.com [172.31.20.19])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 490D43F528;
+	Wed,  6 Nov 2024 12:03:43 -0800 (PST)
+Date: Wed, 6 Nov 2024 20:03:30 +0000
+From: Cristian Marussi <cristian.marussi@arm.com>
+To: Johan Hovold <johan@kernel.org>
+Cc: Sibi Sankar <quic_sibis@quicinc.com>, sudeep.holla@arm.com,
+	cristian.marussi@arm.com, andersson@kernel.org,
+	konrad.dybcio@linaro.org, robh+dt@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, quic_rgottimu@quicinc.com,
+	quic_kshivnan@quicinc.com, conor+dt@kernel.org,
+	arm-scmi@vger.kernel.org
+Subject: Re: [PATCH V4 0/5] arm_scmi: vendors: Qualcomm Generic Vendor
+ Extensions
+Message-ID: <ZyvLktLUZOGP-LH5@pluto>
+References: <20241007061023.1978380-1-quic_sibis@quicinc.com>
+ <ZytnRc94iKUfMYH0@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: g1i3eKsspLBYWBAVOgEWpK8QO6Teuz8z
-X-Proofpoint-GUID: g1i3eKsspLBYWBAVOgEWpK8QO6Teuz8z
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- mlxlogscore=999 suspectscore=0 spamscore=0 clxscore=1015 phishscore=0
- lowpriorityscore=0 mlxscore=0 adultscore=0 priorityscore=1501 bulkscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411060149
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZytnRc94iKUfMYH0@hovoldconsulting.com>
 
-In case the USB backend device has not been initialized/probed, USB SND
-device connections can still occur.  When the USB backend is eventually
-made available, previous USB SND device connections are not communicated to
-the USB backend.  Call snd_usb_rediscover_devices() to generate the connect
-callbacks for all USB SND devices connected.  This will allow for the USB
-backend to be updated with the current set of devices available.
+On Wed, Nov 06, 2024 at 01:55:33PM +0100, Johan Hovold wrote:
+> On Mon, Oct 07, 2024 at 11:40:18AM +0530, Sibi Sankar wrote:
+> > The QCOM SCMI vendor protocol provides a generic way of exposing a
+> > number of Qualcomm SoC specific features (like memory bus scaling)
+> > through a mixture of pre-determined algorithm strings and param_id
+> > pairs hosted on the SCMI controller. Introduce a client driver that
+> > uses the memlat algorithm string hosted on QCOM SCMI Vendor Protocol
+> > to detect memory latency workloads and control frequency/level of
+> > the various memory buses (DDR/LLCC/DDR_QOS).
+> > 
+> > QCOM SCMI Generic Vendor protocol background:
+> > It was found that a lot of the vendor protocol used internally was
+> > for debug/internal development purposes that would either be super
+> > SoC specific or had to be disabled because of some features being
+> > fused out during production. This lead to a large number of vendor
+> > protocol numbers being quickly consumed and were never released
+> > either. Using a generic vendor protocol with functionality abstracted
+> > behind algorithm strings gave us the flexibility of allowing such
+> > functionality exist during initial development/debugging while
+> > still being able to expose functionality like memlat once they have
+> > matured enough. The param-ids are certainly expected to act as ABI
+> > for algorithms strings like MEMLAT.
+> 
+> I wanted to give this series a quick spin on the x1e80100 CRD, but ran
+> into some issues.
+> 
+> First, I expected the drivers to be loaded automatically when built as
+> modules, but that did not happen so something appears to be missing.
+> 
 
-The chip array entries are all populated and removed while under the
-register_mutex, so going over potential race conditions:
+Hi Johan,
 
-Thread#1:
-  q6usb_component_probe()
-    --> snd_soc_usb_add_port()
-      --> snd_usb_rediscover_devices()
-        --> mutex_lock(register_mutex)
+so the SCMI stack is fully modularizable as of this release, i.e.
 
-Thread#2
-  --> usb_audio_disconnect()
-    --> mutex_lock(register_mutex)
+ - SCMI core (scmi-core + scmi-module)
+ - SCMI transports (scmi_transport_{mailbox,virtio,smc,optee}
+ - optional SCMI Vendor protos
+ - Std and Vendor SCMI Drivers on top of protos
 
-So either thread#1 or thread#2 will complete first.  If
+....on the other side the SCMI standard protocols are still embedded
+in scmi-module (or builtin) as of now...
 
-Thread#1 completes before thread#2:
-  SOC USB will notify DPCM backend of the device connection.  Shortly
-  after, once thread#2 runs, we will get a disconnect event for the
-  connected device.
+Even though, module usage is tracked by the core AND when an SCMI Vendor
+driver tries to use protocol_X, it causes protocol_X to be initialized
+(calling its protocol_init), there is NO auto-loading for SCMI Vendor
+Protocols when bult as LKM...because there were really no ask till now
+and this stuff is in general needed so very early dburing boot...so the
+usecase of all these LKM modules is just debug/test as in your case
+(or in mine frequently)....
 
-Thread#2 completes before thread#1:
-  Then during snd_usb_rediscover_devices() it won't notify of any
-  connection for that particular chip index.
+...and I am NOT saying with this that is necessarily right or must be
+stay like this...just explaining how it is now....
 
-Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
----
- sound/soc/soc-usb.c | 2 ++
- 1 file changed, 2 insertions(+)
+....anyway...it is mostly trivial to add vendor/protocols autoloading
+transparently...today I was experimenting with a patch that triggers
+autoloading based on a generic common alias pattern in the form
+'scmi-protocol-0x<NN>' (with NN the specific protocol ID of course)
+that triggers the loading as soon as the SCMI Vendor driver tries to
+access the protocol during its probe...
 
-diff --git a/sound/soc/soc-usb.c b/sound/soc/soc-usb.c
-index e56826f1df71..ee566ca7c675 100644
---- a/sound/soc/soc-usb.c
-+++ b/sound/soc/soc-usb.c
-@@ -279,6 +279,8 @@ void snd_soc_usb_add_port(struct snd_soc_usb *usb)
- 	mutex_lock(&ctx_mutex);
- 	list_add_tail(&usb->list, &usb_ctx_list);
- 	mutex_unlock(&ctx_mutex);
-+
-+	snd_usb_rediscover_devices();
- }
- EXPORT_SYMBOL_GPL(snd_soc_usb_add_port);
- 
+....I will post it for the next cycle once it is clean.
+(unless I am missing something else that you want to add...)
+
+> Second, after loading the protocol and client drivers manually (in that
+> order, shouldn't the client driver pull in the protocol?), I got:
+> 
+> 	scmi_module: Loaded SCMI Vendor Protocol 0x80 - Qualcomm  20000
+> 	arm-scmi arm-scmi.0.auto: QCOM Generic Vendor Version 1.0
+> 	scmi-qcom-generic-ext-memlat scmi_dev.5: error -EOPNOTSUPP: failed to configure common events
+> 	scmi-qcom-generic-ext-memlat scmi_dev.5: probe with driver scmi-qcom-generic-ext-memlat failed with error -95
+> 
+> which seems to suggest that the firmware on my CRD does not support this
+> feature. Is that the way this should be interpreted? And does that mean
+> that non of the commercial laptops supports this either?
+
+This seems like FW rejecting the command, maybe just only for the specific
+Linux OSPM agent since it is not allowed to ask for that specific setup,
+and only Sibi can shed a light here :D
+
+...but this Vendor protocol, if I am not mistaken, AFAIU, uses a bunch
+of "algo strings" coming from tokens it picks from DT and use thsoe as
+params for the set_param() VendorProtocol ops...cannot be that a bad/missing
+DT value could cause the FW to reject the command due to the params ?
+(even if the command is supported)...
+
+...just a guess ah... I have no real knowledge of this venndor proto...
+
+
+Thanks,
+Cristian
+
 
