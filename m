@@ -1,186 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-37116-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37117-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C0CA99BE155
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2024 09:53:50 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id AD3C89BE209
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2024 10:12:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 73EE21F22EEC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2024 08:53:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5E89B283DDA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2024 09:12:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 666EE1D54D1;
-	Wed,  6 Nov 2024 08:53:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD6D01DC194;
+	Wed,  6 Nov 2024 09:11:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b="DYhq2lNn"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hGDUXrcY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A66DD1922EF;
-	Wed,  6 Nov 2024 08:53:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.126.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADA671DB94F
+	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Nov 2024 09:11:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730883224; cv=none; b=Uv+jVm1meBSW5W8D81sMiV3wRbajxVWRJBCtb+XTZR9YnwVfdovra/HZBOf0rF5taBM25uyLByyKy8vrha61x6pTzS+mUl2pZX+kuDMzw/TF/KXmsFTniTjD6CX690KRvKPBGA7DCUM/IC1HpswE2lF2mjFfuVXuoXZZo3ffG/Q=
+	t=1730884266; cv=none; b=QRN9mlI00IVzmoz2ILAoBsgVZLOGg5k4EYLxa/FQN08mu1QOjT3A9OzEukUDhpUnJf/uzjMy8qBL6VzAX6gDttZPEZ5pPIuagA+UO18YvinSiuv+CY1jJ1g7ZSIbYzHZO/2yWsa6psvHDAtRNMS4HrmeDbp4TlYrPXNMO9n9mKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730883224; c=relaxed/simple;
-	bh=oCMN3cBxlHj1BYfN99NGQKvB16Znqro3+q9AMHvUKYw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kiayHb1PTGfoCBGng0Kq1WLI1MwuOD5Q4ewEtCdP3y9GApSLJE31nnIdL8Rhd9am8DBqd3vJq4bhqVerD7yXbKK+QmJ68ysMjUHk1q/oHi0l5RMM5RNN4NfG6kE6RnAPCO8oxFMDVKLmt5R/qohJace4g9Ba/l+preq3Xz1vYAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz; spf=pass smtp.mailfrom=oldschoolsolutions.biz; dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b=DYhq2lNn; arc=none smtp.client-ip=212.227.126.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oldschoolsolutions.biz
+	s=arc-20240116; t=1730884266; c=relaxed/simple;
+	bh=1zAzLkW/f2nboF9qbLPIqlx5xCQjSwlZVzYtvjCOkKc=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
+	 MIME-Version:Content-Type; b=AmtscPrVc+h1cUsR/ZOHqs7Id164gNmn+WgLTw4NG5HdU3yyxQMMtU/txnHjys6MqyfYQDrflKsgfZuzM3Evq3JVs288d5MeS7jN928Pj1kSOwNmmct5fA2Y8rXBMBr2Rx9BgngVVh4Vzh+8aQAin2xfmx6/dhJPz6WcRpAfjDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hGDUXrcY; arc=none smtp.client-ip=209.85.167.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-53c779ef19cso170341e87.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Nov 2024 01:11:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=oldschoolsolutions.biz; s=s1-ionos; t=1730883204; x=1731488004;
-	i=jens.glathe@oldschoolsolutions.biz;
-	bh=oCMN3cBxlHj1BYfN99NGQKvB16Znqro3+q9AMHvUKYw=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=DYhq2lNnFSg+jqieWH/CzvfsS15tmT7O7p0kD7yOvjQ3RF/SS+wD37GE+BjFetvb
-	 MHi+iKtSxumltVoo36uZOYzC3DCTtFMYP+WjEs3R4sv5R/VourzOUlTeolV82oalR
-	 S+VO9zmTaCzDJYp+jjo4arD2qHB5XQ0UWuLpUaK14AtUJkGj1jGjGIct25LYtJhjb
-	 qUSwsYDwYey9CbjMOaCiWBWtECfp78N7jCppEp4BqzQw0V9GyH1RV5rGpOpOQcYhJ
-	 1fRaHSFfMD/f/XuhHvvg5Fk9YB86ov/yHQcWfV5bIJw1PkAKSRsD6zd6yuNzJVLRF
-	 qq1OFgb3eTpceyafAQ==
-X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
-Received: from [192.168.0.174] ([91.64.229.215]) by mrelayeu.kundenserver.de
- (mreue012 [212.227.15.167]) with ESMTPSA (Nemesis) id
- 1MKuGD-1tOtDt0nEb-00TQbR; Wed, 06 Nov 2024 09:53:24 +0100
-Message-ID: <e13488a3-5f45-44b2-950d-5a29307d4ec4@oldschoolsolutions.biz>
-Date: Wed, 6 Nov 2024 09:53:22 +0100
+        d=linaro.org; s=google; t=1730884263; x=1731489063; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=/QYPghorRcTYN0shVQYwBn/dY0r8tY2xwb/60ofT3BI=;
+        b=hGDUXrcYOboR5kZaxvzBlo0hUQDiO1fwHMCA26CQNd811FkpJF9O0qcuWpo1U1hnYg
+         9sPq6iolq42LziI5H9sm4U7VL6Vpd1oNzxMBNUJS+dTmgGoJ5rihZERcAwXG/ez5lhWb
+         NcE9Av0Do7PnQlqTwsIP7qBk2cpNPuLhIF8WSNzTbZP2okeCaIru6+IpMD/8dZ++yH1R
+         ijCesYew4KytenuW9aJCQwBH0EN5DKtLLjwERBG13osRbQMRPKl3AYhoCZSe78PCKumO
+         fsQwN4KOzkEz9E1BO7ASEpnSV3xMXR453Poq73OFDTi3Z7tycy0LHkKLM2x8QIzrYxqk
+         VK3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730884263; x=1731489063;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/QYPghorRcTYN0shVQYwBn/dY0r8tY2xwb/60ofT3BI=;
+        b=OekLAB5bzfBJU6ef54FVTYznhzo1sZwqndfDnH7KIGqXAhdAyESiegkpfR9VYOBnFJ
+         qQHrdP87F257RwtrsWHOqMBjpA8bhndgT81Of7/XMG8qm0FAR/IUggHeyNhNofRmSNcK
+         PqRaNIIcVuay2XD5M+nBIkVaKCfOA5vahjOrevFP/KGPdBnt5HuhmOGKyJBHb4AWw5cU
+         ORxkoiY7i08s/qepFnkF4OgPjxqi5q5mOwv9Yfd6DgtFJsQSrvRIi8IstDbM5/1/AriS
+         kcszWfyqgHOd8vC7Vkh1BYq45825PJ+bmL5Js8XnFNAdAGlv6XbX+cQLuc66Sj4lRogj
+         xkkw==
+X-Forwarded-Encrypted: i=1; AJvYcCWXpcWSTWqf9XU2U4o4exg5HNCWBLVU/A6yHRYgcog7r4KDKT2odMr5TnOSJkXkKNRXYfKG6L6ZI9FB92/e@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx56umcVcfBck7dTuRZ5zbBH8p532VUJy4TBi7B6Us8jS+vTnQE
+	lLjZheDp+TGUqVkKMC4ag8l9+u4P+xDV7Sqv+Z9RuJEsQOvakHxvSB5aERD235w=
+X-Google-Smtp-Source: AGHT+IFgFtkTNxczGyqzn7wYXW9ZEAg3W8OYU60DWsR7AGwkgCQzgf+QKFtY9ICn2zYQFSnBE45QLQ==
+X-Received: by 2002:a05:6512:3c9f:b0:539:dc87:fd3a with SMTP id 2adb3069b0e04-53c79e16040mr11342042e87.6.1730884262780;
+        Wed, 06 Nov 2024 01:11:02 -0800 (PST)
+Received: from [127.0.0.1] (85-76-77-12-nat.elisa-mobile.fi. [85.76.77.12])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53c7bc957aasm2443358e87.42.2024.11.06.01.10.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 06 Nov 2024 01:11:01 -0800 (PST)
+Date: Wed, 06 Nov 2024 09:10:57 +0000
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Yuanjie Yang <quic_yuanjiey@quicinc.com>, ulf.hansson@linaro.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ bhupesh.sharma@linaro.org, andersson@kernel.org, konradybcio@kernel.org
+CC: linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ quic_tingweiz@quicinc.com, quic_yuanjiey@quicinc.com
+Subject: Re: [PATCH v2 1/2] arm64: dts: qcom: qcs615: add SDHC1 and SDHC2
+User-Agent: Thunderbird for Android
+In-Reply-To: <ZyshSbJgLHTRaps1@cse-cd02-lnx.ap.qualcomm.com>
+References: <20241106072343.2070933-1-quic_yuanjiey@quicinc.com> <20241106072343.2070933-2-quic_yuanjiey@quicinc.com> <347uhs7apex3usmfpzrpwakrzchxactwtc7gs45indkzez2vfj@n75dc3ovl3g2> <ZyshSbJgLHTRaps1@cse-cd02-lnx.ap.qualcomm.com>
+Message-ID: <FF5BD9CD-8E5E-4C40-906C-8552C067AE8C@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 3/3] arm64: dts: qcom: sc8280xp-blackrock: dt
- definition for WDK2023
-To: Krishna Kurapati <quic_kriskura@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Merck Hung <merckhung@gmail.com>,
- Kalle Valo <kvalo@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>,
- xlazom00@gmail.com
-References: <20241101-jg-blackrock-for-upstream-v7-0-8295e9f545d9@oldschoolsolutions.biz>
- <20241101-jg-blackrock-for-upstream-v7-3-8295e9f545d9@oldschoolsolutions.biz>
- <945f3eae-0a68-4738-af07-74e228039508@quicinc.com>
- <dd5bad7b-d062-4028-b78a-3888dec4f934@oldschoolsolutions.biz>
- <f8697f7f-f6ac-4b6d-954b-a0777770dc8e@quicinc.com>
-Content-Language: en-US
-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-In-Reply-To: <f8697f7f-f6ac-4b6d-954b-a0777770dc8e@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain;
+ charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:Zo4m0JyoMSCFitOflkdfGTjh/dyTQ3ARcYFfpnp/fINWJ0U4iB1
- cIUgnOZcS0RJYWT2bc9auS4vi/e/Ec1rE2MQCjhzgfeADSZBD6jzDNArt5Sws5xXndGEYSj
- KJ5mxKN51+gAuzM/NhlX7zuhiazwPOU7+y2VsR0q7vLAH9RsDVxSRzhsdP8lmTbdRwTgMXp
- 8BrXj/uxB+hXTS7gIAY1w==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:kmthrl3YMSI=;upKPsfLSvhA6X6z4Q2GZ+pnipmv
- TLdJmAi2wcz5iu3vQ79gtVEgVBa3cHnPpZ9c+GtGN2cdYa0HFxuYaSV8HVudO/L+ViHrxOsTR
- MaDbfBRmwvcDBinFCE/adelS5i9BDSKpdZOKl8yv+0lGnHfEi4/NdOszCFPmX2YOEH2gQ/UmQ
- Q6KidggjIx5rbLNsWzoX2fSgfealnhtIsqT/e0qs7NKRq0cKQY0lZ3zx+cLhODX3HtCIz1Kwh
- dvjoBk5bxqzDRZtbWlQoNNSEh/2ajwRW6JncwhbD4zTccNYXlP7FQXQl/4tQmWIitXa7cqYrS
- zDR7EDGx5x30TVus7JbYhBlK6tx59Z6Gxd1IlJJvHPTDahqxOdOKhLGaKjtrj9CPd+zwE45TN
- xOhxTNVxgY6t+J+xDULk+KR4v+uVFd8EdFFvtqqcVGjQRbI1s4r3mKbBz0nuo0dzSAvGW4SEj
- q4NYwCg3b4lZON9eWJ8nWmq66d0WsxFlM7OWvllo3tMMvlJWIpfrO2qPSa53X8BX4ybHwkD3t
- 8SG6yonV8ElRXjR6896ygz2ZDtblZpJOxa+6015rz7p/pppoDNjNVVHldwvmzZj6zAkG2SBKh
- gNTw8AuLJNZHib4lSqf3haV9VqrOh5/8rWp4STyzxVmNd3k7wHE3SFGsmOienn8ZbzsuUR1xr
- dmbbJvwC6XZY85CfeFYYv9QTEgmLbxBFsDczVSMFmykh0Dc3818GCxWbMKe+ethjBxdId+6pF
- 3718EVkvYSthqhsehj0dNCvJ3ZxDzSCMw==
 
+On 6 November 2024 07:56:57 GMT, Yuanjie Yang <quic_yuanjiey@quicinc=2Ecom>=
+ wrote:
+>On Wed, Nov 06, 2024 at 09:36:56AM +0200, Dmitry Baryshkov wrote:
+>> On Wed, Nov 06, 2024 at 03:23:42PM +0800, Yuanjie Yang wrote:
+>> > Add SDHC1 and SDHC2 support to the QCS615 Ride platform=2E The SDHC1
+>> > and SDHC2 of QCS615 are derived from SM6115=2E Include the relevant
+>> > binding documents accordingly=2E
+>>=20
+>> Which binding documents?
+>Thanks, the binding documents is sdhci-msm=2Eyaml=2E
+>I have modified this yaml patch in patch v1, and this yaml patch is
+>applied, so I remove this yaml patch in patch v2=2E
+>link:https://lore=2Ekernel=2Eorg/all/CAPDyKFr-Gzd3Mzn+vN6DXO9C4Xrvpv4z5V2=
+G_VRTzOa=3D89Fd3w@mail=2Egmail=2Ecom/
 
-On 06.11.24 05:46, Krishna Kurapati wrote:
+The question is why do you mention bindings in the DTSI commit message? Pl=
+ease don't just C&P your texts=2E
+
 >
+>> > Additionally, configure SDHC1-related
+>> > and SDHC2-related opp, power, and interconnect settings in the device
+>> > tree=2E
+>> >=20
+>> > Signed-off-by: Yuanjie Yang <quic_yuanjiey@quicinc=2Ecom>
+>> > ---
+>> >  arch/arm64/boot/dts/qcom/qcs615=2Edtsi | 198 +++++++++++++++++++++++=
+++++
+>> >  1 file changed, 198 insertions(+)
+>> >=20
+>>=20
+>> --=20
+>> With best wishes
+>> Dmitry
 >
-> On 11/6/2024 12:57 AM, Jens Glathe wrote:
->> On 04.11.24 05:31, Krishna Kurapati wrote:
->>>
->>>
->>> On 11/1/2024 11:56 PM, Jens Glathe via B4 Relay wrote:
->>>> From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
->>>>
->>>> Device tree for the Microsoft Windows Dev Kit 2023. This work
->>>> is based on the initial work of Merck Hung <merckhung@gmail.com>.
->>>>
->>>> Original work:
->>>> https://github.com/merckhung/linux_ms_dev_kit/blob/ms-dev-kit-2023-v6=
-.3.0/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-dev-kit-2023.dts
->>>>
->>>>
->>>> The Windows Dev Kit 2023 is a nice little desktop based on sc8280xp.
->>>> Link: https://learn.microsoft.com/en-us/windows/arm/dev-kit/
->>>>
->>>> Supported features:
->>>> - USB type-c and type-a ports
->>>> - minidp connector
->>>> - built-in r8152 Ethernet adapter
->>>> - PCIe devices
->>>> - nvme
->>>> - ath11k WiFi (WCN6855)
->>>> - WCN6855 Bluetooth
->>>> - A690 GPU
->>>> - ADSP and CDSP
->>>> - GPIO keys
->>>> - Audio definition (works via USB)
->>>>
->>>> Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
->>>> ---
->>>
->>> [...]
->>>
->>>> +&usb_2 {
->>>> +=C2=A0=C2=A0=C2=A0 pinctrl-0 =3D <&usb2_en_state>;
->>>> +=C2=A0=C2=A0=C2=A0 pinctrl-names =3D "default";
->>>> +
->>>
->>> On the blackrock platform, for this controller, are there all 4 ports
->>> given out for use or only one ?
->>>
->>> Because if all 4 are there, you might need to give all 4 pinctrls (one
->>> for each TS3USB221A mux select) here for usb_2 node. If only one port
->>> is given out for use on the platform, then only one phy (of the 4
->>> activated below) needs to be marked as active.
->>>
->>> In my case, in [1] on the ADP platform, I marked them as always on for
->>> all gpios on multiport controller since driver had no support added
->>> yet.
->>>
->>> [1]:
->>> https://lore.kernel.org/all/20240707085624.3411961-1-quic_kriskura@qui=
-cinc.com/
->>>
->>>
->> Hi Krishna,
->>
->> thank you for the hints. Unfortunately, I don't have any schematics for
->> the box. But I tested out activation combinations for all the
->
-> My point is little different.
-> Third controller supports upto 4 physical ports. How many of them have
-> been exposed on this WDK2023 ? Depending on that, the phys have to be
-> enabled in DT.
->
-Okay I took the jump and reduced usb_2_dwc3 to only one qmpphy and one
-hsphy. It works, the USB nodes look the same and work. What an odd
-design, though, but why not.
+>Thanks,
+>Yuanjie
 
-&usb_2_dwc3 {
- =C2=A0=C2=A0=C2=A0 phys =3D <&usb_2_hsphy0>, <&usb_2_qmpphy0>;
- =C2=A0=C2=A0=C2=A0 phy-names =3D "usb2-0", "usb3-0";
-};
-
-I will do an amended V8 of the patch. Thank you for the hint again.
-
-with best regards
-
-Jens
 
