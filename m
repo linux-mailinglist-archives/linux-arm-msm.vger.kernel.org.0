@@ -1,102 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-37105-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37106-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7A8D09BDF41
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2024 08:20:31 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 840CE9BDF47
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2024 08:21:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 30BCC1F24533
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2024 07:20:31 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E61CEB236D0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2024 07:21:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C37291C4A3A;
-	Wed,  6 Nov 2024 07:20:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EBBAE1BDAB1;
+	Wed,  6 Nov 2024 07:21:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BP8788lp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C827192B61;
-	Wed,  6 Nov 2024 07:20:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5F64192B61;
+	Wed,  6 Nov 2024 07:21:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730877627; cv=none; b=fcYR7tmaEOLG74rOzMrh0eC7gTfxelxYhi6D9R7YfxEKJL5LvMzgiTxJ4nVsOLzRKy3XXJwVHYKcLZ6vQfo7RXAosiVEkTsDMg1LorsFHOFxbirWw7kTFx+q3YGo53lPtn0Kok1GsbORwx77QnGaEqeBTcw2Nq7B5YPL9zPO+QE=
+	t=1730877703; cv=none; b=N79ydiPY6nAZbD/yW6jvkCO4Rn8cz8OzktWY8TdGWn8QbrijdO+XCw9JhR8+9GeOpB88MNDgJgsCFyZWCGfo3OoejbzyTwxYzSxOvCuCiOrM7qWBWCcYwrsdEXG/Ruc6SECSMg52ZNuiDxltzz+ey+G8RzlFwiMsVIU1zChINgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730877627; c=relaxed/simple;
-	bh=/mEdkmb4i1pd4wl+jSu8sjFkQAOoedX+OBM66cNaNUw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uODCmfRMFG7vqTU2g7r1qOaMw/V2cIJVn/4YiPhYJizHTRSmpFZhAj+y8TtTGbKIXdGVmWfceybarEHvmbooW2woJxjxnigLsGJ/gTsteMb2Sc8BzxM+SSTr+GZo7YQ1E1eXQLwz5NhMeh0i6jnx55LX55TK/1FHL62E96BpyaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 70CE11063;
-	Tue,  5 Nov 2024 23:20:54 -0800 (PST)
-Received: from bogus (unknown [10.57.64.60])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id B9C3A3F66E;
-	Tue,  5 Nov 2024 23:20:16 -0800 (PST)
-Date: Wed, 6 Nov 2024 07:20:01 +0000
-From: Sudeep Holla <sudeep.holla@arm.com>
-To: Johan Hovold <johan@kernel.org>
-Cc: Sibi Sankar <quic_sibis@quicinc.com>, cristian.marussi@arm.com,
-	ulf.hansson@linaro.org, jassisinghbrar@gmail.com,
-	dmitry.baryshkov@linaro.org, linux-kernel@vger.kernel.org,
-	arm-scmi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org, konradybcio@kernel.org,
-	linux-pm@vger.kernel.org, tstrudel@google.com, rafael@kernel.org,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: Re: [PATCH V5 3/6] firmware: arm_scmi: Report duplicate opps as
- firmware bugs
-Message-ID: <20241106072001.5jrbbctj7ud5uaxd@bogus>
-References: <20241030125512.2884761-1-quic_sibis@quicinc.com>
- <20241030125512.2884761-4-quic_sibis@quicinc.com>
- <ZyThAFbOHKaBIgLg@hovoldconsulting.com>
- <e173058b-57e7-7fd0-dab7-7398bf9d66ec@quicinc.com>
- <ZyjViCVtPwe-tmMq@hovoldconsulting.com>
+	s=arc-20240116; t=1730877703; c=relaxed/simple;
+	bh=YNKf3BZI3u1WrgngoCNtp79cRg1OCQ5Qdn+2ucp/2K8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=oADkUBRbo04HFS8VEsplUiI9QLnppBM/YzvPabcmJsGHHTW13Od2POXMwbJK+0rbdxSSUOUiZol8Vjezem9GHu06bipUtaQ6690p5H1A746YjsqzNcR+zHOw+A/vHW8KhNaQFj5hbEUvisvQR/1uJ/Jqzc1u1wPYoW3bIJv8nEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BP8788lp; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A5KpQqj004167;
+	Wed, 6 Nov 2024 07:21:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	En6P/4Ux2VmeApA4xvzacrYMsGlncN/pQo65ukkibtg=; b=BP8788lpTZT7ZsrI
+	kzHvJVHT6ju0Xbltd4GnFJwCFx+m8un0EGfpEIIBtHxGFNlXBK1PBPkCfJQUulcz
+	SlWQkvSaNfbFuGbYhfnpZbFbVzpaZ9kKIRNURRm1QbPEacONC62Qvb+Co84pEOwu
+	xMfiinPJcTXCwk5r8GpRTv/JTihkIJ5ZyA9D5zdlXYYnCzl/wkvxdWj9ngRFLXqe
+	9F8S1aRS8NnmSqWWVAQAbI40jaDY2cvhE4/t2ZL3BnNy1rZKu3S2kaG3oIyTKg0Q
+	royVoKtNPquGKgMoc8ua15TcPEjvxHEb4mPFP9M5o0XZW+1fDK07f6aKQgC6874V
+	YVnyxw==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42qhbub2bs-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 06 Nov 2024 07:21:25 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4A67LOpx006493
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 6 Nov 2024 07:21:24 GMT
+Received: from [10.204.100.69] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 5 Nov 2024
+ 23:21:22 -0800
+Message-ID: <1016831e-f3fc-2724-5005-4929badf4994@quicinc.com>
+Date: Wed, 6 Nov 2024 12:51:19 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZyjViCVtPwe-tmMq@hovoldconsulting.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH 4/4] media: venus: hfi: add a check to handle OOB in sfr
+ region
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Bryan O'Donoghue
+	<bryan.odonoghue@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <stable@vger.kernel.org>
+References: <20241105-venus_oob-v1-0-8d4feedfe2bb@quicinc.com>
+ <20241105-venus_oob-v1-4-8d4feedfe2bb@quicinc.com>
+ <mthuolorbcsykmetqpfaaoyuxgjskwvtvtv4mfl235enlq7win@jdhn2s2cgmui>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <mthuolorbcsykmetqpfaaoyuxgjskwvtvtv4mfl235enlq7win@jdhn2s2cgmui>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Ov67Aba6V2GYB1ge-DlSnOSSDUgjM1jM
+X-Proofpoint-GUID: Ov67Aba6V2GYB1ge-DlSnOSSDUgjM1jM
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ mlxlogscore=932 clxscore=1015 priorityscore=1501 adultscore=0 bulkscore=0
+ suspectscore=0 phishscore=0 lowpriorityscore=0 spamscore=0 malwarescore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411060057
 
-On Mon, Nov 04, 2024 at 03:09:12PM +0100, Johan Hovold wrote:
-> On Mon, Nov 04, 2024 at 07:20:01PM +0530, Sibi Sankar wrote:
-> > On 11/1/24 19:39, Johan Hovold wrote:
-> > > On Wed, Oct 30, 2024 at 06:25:09PM +0530, Sibi Sankar wrote:
-> 
-> > >> @@ -387,7 +387,7 @@ process_response_opp(struct device *dev, struct perf_dom_info *dom,
-> > >>   
-> > >>   	ret = xa_insert(&dom->opps_by_lvl, opp->perf, opp, GFP_KERNEL);
-> > >>   	if (ret) {
-> > >> -		dev_warn(dev, "Failed to add opps_by_lvl at %d for %s - ret:%d\n",
-> > >> +		dev_info(dev, FW_BUG "Failed to add opps_by_lvl at %d for %s - ret:%d\n",
-> > >>   			 opp->perf, dom->info.name, ret);
-> > > 
-> > > I was hoping you could make the error message a bit more informative as
-> > > well, for example, by saying that a duplicate opp level was ignored:
-> > > 
-> > > 	arm-scmi arm-scmi.0.auto: [Firmware Bug]: Ignoring duplicate OPP 3417600 for NCC
-> > 
-> > I did think about doing something similar but xa_insert can fail
-> > with both -EXIST (duplicate) and -ENOMEM, so the we can't really
-> > use term duplicate when insert fails. I can add the perf level
-> > though to the message though.
-> 
-> We generally don't log errors for memory allocation failures (e.g. as
-> that would already have been taken care of by the allocators, if that is
-> the source of the -ENOMEM).
-> 
-> But either way you should be able to check the errno to determine if
-> this is due to a duplicate entry or not.
 
-Everyone has valid reasons for their argument here, so we need to find
-a safe middle ground. Will stating it as [Possible Firmware Bug] be any
-useful ? If there is -ENOMEM, other error messages will be seen before
-this and user can ignore this error until that memory issue is fixed ?
+On 11/5/2024 7:28 PM, Dmitry Baryshkov wrote:
+> On Tue, Nov 05, 2024 at 02:24:57PM +0530, Vikash Garodia wrote:
+>> sfr->buf_size is in shared memory and can be modified by malicious user.
+>> OOB write is possible when the size is made higher than actual sfr data
+>> buffer.
+>>
+>> Cc: stable@vger.kernel.org
+>> Fixes: d96d3f30c0f2 ("[media] media: venus: hfi: add Venus HFI files")
+>> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+>> ---
+>>  drivers/media/platform/qcom/venus/hfi_venus.c | 9 +++++++--
+>>  1 file changed, 7 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
+>> index 50d92214190d88eff273a5ba3f95486f758bcc05..c19d6bf686d0f31c6a2f551de3f7eb08031bde85 100644
+>> --- a/drivers/media/platform/qcom/venus/hfi_venus.c
+>> +++ b/drivers/media/platform/qcom/venus/hfi_venus.c
+>> @@ -1041,18 +1041,23 @@ static void venus_sfr_print(struct venus_hfi_device *hdev)
+>>  {
+>>  	struct device *dev = hdev->core->dev;
+>>  	struct hfi_sfr *sfr = hdev->sfr.kva;
+>> +	u32 size;
+>>  	void *p;
+>>  
+>>  	if (!sfr)
+>>  		return;
+>>  
+>> -	p = memchr(sfr->data, '\0', sfr->buf_size);
+>> +	size = sfr->buf_size;
+>> +	if (size > ALIGNED_SFR_SIZE)
+>> +		return;
+> 
+> Why can't you just limit size to ALIGNED_SFR_SIZE, still allowing the
+> data to be captured?
+That should do as well. Updating above check to below would take care of it.
+if (size > ALIGNED_SFR_SIZE)
+    size = ALIGNED_SFR_SIZE;
 
--- 
 Regards,
-Sudeep
+Vikash
+> 
+>> +
+>> +	p = memchr(sfr->data, '\0', size);
+>>  	/*
+>>  	 * SFR isn't guaranteed to be NULL terminated since SYS_ERROR indicates
+>>  	 * that Venus is in the process of crashing.
+>>  	 */
+>>  	if (!p)
+>> -		sfr->data[sfr->buf_size - 1] = '\0';
+>> +		sfr->data[size - 1] = '\0';
+>>  
+>>  	dev_err_ratelimited(dev, "SFR message from FW: %s\n", sfr->data);
+>>  }
+>>
+>> -- 
+>> 2.34.1
+>>
+> 
 
