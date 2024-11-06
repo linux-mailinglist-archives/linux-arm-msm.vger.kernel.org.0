@@ -1,58 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-37091-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37092-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1C8CF9BDAA3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2024 01:54:21 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E9429BDAA4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2024 01:54:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A00D8B21B72
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2024 00:54:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 42B64284B0F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2024 00:54:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 76BA6155A52;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D66F915E5B8;
 	Wed,  6 Nov 2024 00:53:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D3RDTl4b"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HM8NUuRd"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E27015573A;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9030157A5C;
 	Wed,  6 Nov 2024 00:53:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730854434; cv=none; b=h3L/QQFkkqE79HBmrVSz9DaKNu9YPMd2HhPTKb91OZM4jXBaYm1Donotz56eNp+M0v3eH45dCeHMHt7uE+tN2/GKS0eOfv3oPeDySDPwPkv6Cuy0hpzJ8l6ajxyTcZvVWl3DVKu9Jz1X1R1TNHuJqW5X3N68higcR0cOCOcUPyg=
+	t=1730854434; cv=none; b=Z+hhe7A0bqzItrjZ/Tw2Q+eTtKMwd8mT9RmHynyRnbb77Pdwdj24tB63PZSJSyP1GyB82k/b8ccLqDE6Wie9fS18nPvdWSh2ecrRCqIwWhVZMKpnXdjynC/bhhCErRfDO7HouVyINJPGRIwwRITgskdFM2uJ0QMvXoeIfUOXPNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1730854434; c=relaxed/simple;
-	bh=zxKFgLZr5hu4ZPyiXE4850EXcyzJJjsKOR4t17a8334=;
+	bh=+gM1GTdysQV4ivKek/c2tvldf0AqZcouwGkz7I8pGxA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SUBY9F5wqNUWhaFrNM3cX4nzmp5NoY01DdWXvOs9ExXvoAnVxOshPcu0+Ot7Kkp8EwP/WhLC+6QjJfx4zNq9+NtRbQfsO+zwnSjgrjBTvHOrQBPd7bdPc8VuiZHER+YDzjb9LDEQLmaiwX5XMwrJcDzUuLSwouJ8RyMm58ZKH50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D3RDTl4b; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A15F1C4CED3;
-	Wed,  6 Nov 2024 00:53:53 +0000 (UTC)
+	 MIME-Version:Content-Type; b=EnwFrpixx5LvHZf+b5Iia0+KfLwhIZPpTolKZYlr6TYGSEmyiPAi0/R1f4x/F+cTQbk2rg1juTGtMoRXUg3SIfZYU8HeboSVn18PISJyvMTsJ/J4HxiL6kUupjAdQhUcW6rnr+ytZIAe9WNblrxCdgQbD5sLFUdK7w78WIDAM3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HM8NUuRd; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 121FBC4CEDB;
+	Wed,  6 Nov 2024 00:53:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730854433;
-	bh=zxKFgLZr5hu4ZPyiXE4850EXcyzJJjsKOR4t17a8334=;
+	s=k20201202; t=1730854434;
+	bh=+gM1GTdysQV4ivKek/c2tvldf0AqZcouwGkz7I8pGxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D3RDTl4b/TSVdPecMm5f/yXBUBO5tUcMJ6XFtvb7Bhx6DA/NJfb19xK30IkWtijtl
-	 8LrwkTmoLaCsBGIiSBhECNq11o3o6EIHTII3kb962+IMvP7YXrO5VXnY8kanMMio28
-	 dzlQfDdAlUO6g4KtP24zEN88Kn2Vi4LEoXs2rIggJwyYjwV5oZDkTqztJINTJVDOST
-	 U3tP6IH0jlCf/eiwZjDRFp5iFY/V0XHSbQc4YaQxVK2qa8N5SVR1KGXo15JeVE0VJT
-	 4g5OmjF5trimjxLU/dwr4AHNXwDFaF58i4huBV61lKbSnwCI9Af4zVnaNHHsy7VQlA
-	 TTik3jOVdo+CA==
+	b=HM8NUuRd/oKgpSqdUtYM9IzWzFoF1eKuar3AnpbPvZBViOTeBukgmLAf/pCeMFbGZ
+	 wP0zhKEHMsXlRw4r9EEIxjZ34DE0Iss9Nn1Fb9TbqzMaEC6E/mKVXPZ4Z0uUeDNcTy
+	 aerE59QEQw+QRzqgzkR1fMHEz4ijQEnFBvNIm3g3a0OsCkdbbEEc1Jq/nbearxIOSe
+	 uxUZV1NUdq0itTMg97FFm5Hr1VxXz5x9MKfFFM23clRQMHVpZ5TFiHSpFyzEx9UhWh
+	 IDhvFFCyMa3saX1LgE1Qu59tg8RXYMU52o81BDKn53ddmgNdoQc/OpbgErq+sgz8hw
+	 uLWn9YfkWSV8Q==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>,
+To: konradybcio@kernel.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
 	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH] soc: qcom: llcc: Flip the manual slice configuration condition
-Date: Tue,  5 Nov 2024 16:53:44 -0800
-Message-ID: <173085441666.26510.14579873707259072400.b4-ty@kernel.org>
+	Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+Cc: quic_srichara@quicinc.com,
+	quic_varada@quicinc.com
+Subject: Re: (subset) [PATCH 0/3] Add IPQ5424 and IPQ5404 SOC IDs
+Date: Tue,  5 Nov 2024 16:53:45 -0800
+Message-ID: <173085441673.26510.11292687921842246596.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241104-topic-llcc_flip-v1-1-3003c846d131@oss.qualcomm.com>
-References: <20241104-topic-llcc_flip-v1-1-3003c846d131@oss.qualcomm.com>
+In-Reply-To: <20241016151528.2893599-1-quic_mmanikan@quicinc.com>
+References: <20241016151528.2893599-1-quic_mmanikan@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,21 +68,20 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 04 Nov 2024 16:10:53 +0100, Konrad Dybcio wrote:
-> Commit c14e64b46944 ("soc: qcom: llcc: Support chipsets that can write
-> to llcc") made the code not configure certain registers on SDM845 due
-> to firmware security policies. That turned out only to concern SDM845,
-> but the condition was chosen such that all other entries (for SoCs that
-> didnot need it) were required to set .need_llcc_cfg = true.
+On Wed, 16 Oct 2024 20:45:25 +0530, Manikanta Mylavarapu wrote:
+> Add SOC IDs for IPQ5424 and IPQ5404, and add smem, tcsr_mutex nodes
+> for the socinfo driver probe to execute.
 > 
-> Flip the condition, so the default is "doesn't need the workaround".
+> This series depends on the following patches
+> https://lore.kernel.org/linux-arm-msm/20241004102342.2414317-1-quic_srichara@quicinc.com/
+> https://lore.kernel.org/linux-arm-msm/20241016144852.2888679-1-quic_mmanikan@quicinc.com/
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] soc: qcom: llcc: Flip the manual slice configuration condition
-      commit: 92f3397c8c8d63fefe0d045425ad54c5ee5d57bb
+[3/3] arm64: dts: qcom: ipq5424: Add smem and tcsr_mutex nodes
+      commit: 35e0a4f0a39651a6a6009f516847721cfdc633b7
 
 Best regards,
 -- 
