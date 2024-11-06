@@ -1,121 +1,231 @@
-Return-Path: <linux-arm-msm+bounces-37097-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37098-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 10ABD9BDB46
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2024 02:40:33 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C6CF59BDB62
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2024 02:45:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BC9C11F23E63
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2024 01:40:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EA1211C22307
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2024 01:45:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B845188917;
-	Wed,  6 Nov 2024 01:40:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D26F0156962;
+	Wed,  6 Nov 2024 01:45:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D/ae5x6X"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JuOMeicq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 417A8185B6E;
-	Wed,  6 Nov 2024 01:40:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 128F733F3;
+	Wed,  6 Nov 2024 01:45:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730857227; cv=none; b=dh6V0HVz711zfvKjFfXtxqc/dV6Mg0ysZlecT8xnczwUK+LtKwWXqLc7pqSeu5sndU5vngvAqqGV99PES9xzoUVdeUUWyhfe93GBMEydR5qKOY2HbtCVDp+ChNXIbbAoQ1VHW/NxLbVC2s5Yrgp+z+RNt443Gop3CIvPyjnW1kU=
+	t=1730857549; cv=none; b=NXF6BQaIW7OoI7RuZGftFxynVmqV6n11BSDZTr4apaIyBlXxmcAKYUNOO4fPmFRXZI/6EXhn2tx1WftM5b4IzL7c7ZlHX1YG3j4NUIO+Hb++J21ta28+4oKMQMJKmjpAfNRKfitH0YdoK3WhqQF0ItZJj+Q3CJiBOy9ZsyosXzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730857227; c=relaxed/simple;
-	bh=2qZF0UH8un2sU3i+H0aULvDk3LSIb2B4gJQw/wg2RWY=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=FUYTKpqShGy9pH+pdSHFDwUKGTZVCIPS3epXnoVKm4ELZGVlPPBcJ6TfxmzvBhX5O4oEseatFEtfL5aYUu+QJVC4I+qhpFSKHT5gZN4d1JDMbAolEm6XT48CR4a4LkdTodGhE/0WxWCxnJ5DxWfWja1/zbT9egIME/0L++8smvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D/ae5x6X; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99BFAC4CECF;
-	Wed,  6 Nov 2024 01:40:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730857226;
-	bh=2qZF0UH8un2sU3i+H0aULvDk3LSIb2B4gJQw/wg2RWY=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=D/ae5x6XQivZmlQd7HUdaCNYSMauQxnhSTaij4PDtzFJDvcnKuDMp93nQHW5BPr4Q
-	 yj1kDMRhtuY4pZeaMtgqr4r1g7v+oxW14PEMpKO7ZvuYvK0Fv/JEzkv5ZsZYJ4D2rg
-	 QwM0CgC+nFKubQnOt/IwVn29z6TNx+I2Ms3ApCYwMAKIlOSXbsUA5FgoVPW9jDRdwA
-	 11pYEpBupBzvm3lC/7dBvv4bXA7FWZqqOP1PBRrA0B1PpOC6K4uCY6sNT7JKqZb/81
-	 oQvM+wgTn15tXXfAK6pnLf2GH9wF2yrFgvDkqjC7cy/rBbxK1JrZ7fGO9TW4Z9SUgE
-	 tILw97FdTNqcQ==
-Date: Tue, 5 Nov 2024 19:40:24 -0600
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Sricharan R <quic_srichara@quicinc.com>
-Cc: bhelgaas@google.com, lpieralisi@kernel.org, kw@linux.com,
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-	andersson@kernel.org, konrad.dybcio@linaro.org,
-	manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH V7 4/4] PCI: qcom: Add support for IPQ9574
-Message-ID: <20241106014024.GA1499855@bhelgaas>
+	s=arc-20240116; t=1730857549; c=relaxed/simple;
+	bh=7KPkQH9Kl2MyqR+ranMRwoJmktaWsZKAeGEDxtAWyu0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=TGa5hl8mFWcvSFstjedy3jETUCQbP4l/wac1pcpV4FprlL+HktmO05HJpt2XStefSUWIL96KDvDWn8VsPGap7xSAte8t+/IT8iMpp9gh5e9YRJCGhAqRCGOf+wAMEP45aZnpB3ggOVzxmecMU793ta98n+E+jF4AuCzkR/4fFVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JuOMeicq; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A5KIMJG004966;
+	Wed, 6 Nov 2024 01:44:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Z5Jv3Ed7XXZHWZLDW8oApx97KGEiepVHnuihRZtI6kc=; b=JuOMeicqNpZNNLSM
+	OwHF7tOGhhAwjHpPAZoHNm0IxF/4bzXD/afmF+nlPSD/E8vPG301kkhygiE3KonO
+	Qc5TyF76Lj+EopSwZxDv2uy3th4kiWSFai2BsYuY49if8wYGX1JYCOLJqclBNq6m
+	yJEi0YW76p/qHDDKukczulbOC8Lg/Qs+2jo1lsbk3JjlXq7b1Mf6tmZCaVS+leZ/
+	lijzurCdo4NKH0r9X12rUKgZ6zp+94bCVMyPmFI2HkEXbdGUuKpVZjrRXGRz2h0C
+	K4A921tIlp9MvUuvtPINsHOC1GSnVyyU9614RwxfKQovlKCWmXlmzsuDjewJfDPq
+	qo7cww==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42ndc71hyv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 06 Nov 2024 01:44:38 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4A61ibAW017863
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 6 Nov 2024 01:44:37 GMT
+Received: from [10.216.20.210] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 5 Nov 2024
+ 17:44:30 -0800
+Message-ID: <43404449-1830-4651-a85a-54404b1d35bc@quicinc.com>
+Date: Wed, 6 Nov 2024 07:14:27 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240801054803.3015572-5-quic_srichara@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC 1/3] drm/msm/adreno: Add support for ACD
+To: <neil.armstrong@linaro.org>, Rob Clark <robdclark@gmail.com>,
+        Sean Paul
+	<sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
+        Abhinav Kumar
+	<quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie
+	<airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Viresh Kumar
+	<vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd
+	<sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>
+References: <20241012-gpu-acd-v1-0-1e5e91aa95b6@quicinc.com>
+ <20241012-gpu-acd-v1-1-1e5e91aa95b6@quicinc.com>
+ <4aeec9f1-720b-400c-9582-d02847db2ac7@linaro.org>
+Content-Language: en-US
+From: Akhil P Oommen <quic_akhilpo@quicinc.com>
+In-Reply-To: <4aeec9f1-720b-400c-9582-d02847db2ac7@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Na1zWvxix9JPntdFw7-EW3kC17gUUl4y
+X-Proofpoint-GUID: Na1zWvxix9JPntdFw7-EW3kC17gUUl4y
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ lowpriorityscore=0 mlxlogscore=999 adultscore=0 clxscore=1015 mlxscore=0
+ phishscore=0 impostorscore=0 suspectscore=0 malwarescore=0 bulkscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411060012
 
-On Thu, Aug 01, 2024 at 11:18:03AM +0530, Sricharan R wrote:
-> From: devi priya <quic_devipriy@quicinc.com>
+On 11/4/2024 9:14 PM, neil.armstrong@linaro.org wrote:
+> On 11/10/2024 22:29, Akhil P Oommen wrote:
+>> ACD a.k.a Adaptive Clock Distribution is a feature which helps to reduce
+>> the power consumption. In some chipsets, it is also a requirement to
+>> support higher GPU frequencies. This patch adds support for GPU ACD by
+>> sending necessary data to GMU and AOSS. The feature support for the
+>> chipset is detected based on devicetree data.
+>>
+>> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 81 +++++++++++++++++++++++++
+>> +++-------
+>>   drivers/gpu/drm/msm/adreno/a6xx_gmu.h |  1 +
+>>   drivers/gpu/drm/msm/adreno/a6xx_hfi.c | 36 ++++++++++++++++
+>>   drivers/gpu/drm/msm/adreno/a6xx_hfi.h | 21 +++++++++
+>>   4 files changed, 124 insertions(+), 15 deletions(-)
+>>
 > 
-> The IPQ9574 platform has four Gen3 PCIe controllers:
-> two single-lane and two dual-lane based on SNPS core 5.70a.
+> <snip>
 > 
-> QCOM IP rev is 1.27.0 and Synopsys IP rev is 5.80a.
-> Reuse all the members of 'ops_2_9_0'.
-
-Wow, this is confusing.
-
-"Based on SNPS core 5.70a", but "Synopsys IP rev is 5.80a."
-Are those supposed to match?  Or is it 5.70a of one thing but 5.80a of
-a different thing?
-
-And where does ops_2_9_0 come in?  The code comment says:
-
-  /* Qcom IP rev.: 2.9.0  Synopsys IP rev.: 5.00a */
-  static const struct qcom_pcie_ops ops_2_9_0 = {
-
-which doesn't match 1.27.0 or 5.70a or 5.80a.  In fact there's nothing
-in the file that matches 1.*27.*0
-
-Honestly, I don't really care if you have all the versions here in the
-commit log.  But if the versions *are* here, can we make them make
-sense?
-
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
-> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
-> Signed-off-by: devi priya <quic_devipriy@quicinc.com>
-> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-> ---
->  [V7] Rebased on top of [1] to avoid DBI/ATU mirroring. With that dropped
->       the need for separate ops.
->  [1] https://lore.kernel.org/linux-arm-msm/a01404d2-2f4d-4fb8-af9d-3db66d39acf7@quicinc.com/
+>> +
+>> +static int a6xx_hfi_enable_acd(struct a6xx_gmu *gmu)
+>> +{
+>> +    struct a6xx_hfi_acd_table *acd_table = &gmu->acd_table;
+>> +    struct a6xx_hfi_msg_feature_ctrl msg = {
+>> +        .feature = HFI_FEATURE_ACD,
+>> +        .enable = 1,
+>> +        .data = 0,
+>> +    };
+>> +    int ret;
+>> +
+>> +    if (!acd_table->enable_by_level)
+>> +        return 0;
+>> +
+>> +    /* Enable ACD feature at GMU */
+>> +    ret = a6xx_hfi_send_msg(gmu, HFI_H2F_FEATURE_CTRL, &msg,
+>> sizeof(msg), NULL, 0);
+>> +    if (ret) {
+>> +        DRM_DEV_ERROR(gmu->dev, "Unable to enable ACD (%d)\n", ret);
+>> +        return ret;
+>> +    }
+>> +
+>> +    /* Send ACD table to GMU */
+>> +    ret = a6xx_hfi_send_msg(gmu, HFI_H2F_MSG_ACD, &msg, sizeof(msg),
+>> NULL, 0);
 > 
->  drivers/pci/controller/dwc/pcie-qcom.c | 1 +
->  1 file changed, 1 insertion(+)
+> This looks wrong, in this exact code, you never use the acd_table...
+> perhaps it should be acd_table here
+
+Whoops! Weirdly gmu didn't explode when I tested.
+
+Thanks for your keen eye.
+
+-Akhil.
+
 > 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index 6976efb8e2f0..e9371f945900 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -1752,6 +1752,7 @@ static const struct of_device_id qcom_pcie_match[] = {
->  	{ .compatible = "qcom,pcie-ipq8064-v2", .data = &cfg_2_1_0 },
->  	{ .compatible = "qcom,pcie-ipq8074", .data = &cfg_2_3_3 },
->  	{ .compatible = "qcom,pcie-ipq8074-gen3", .data = &cfg_2_9_0 },
-> +	{ .compatible = "qcom,pcie-ipq9574", .data = &cfg_2_9_0 },
->  	{ .compatible = "qcom,pcie-msm8996", .data = &cfg_2_3_2 },
->  	{ .compatible = "qcom,pcie-qcs404", .data = &cfg_2_4_0 },
->  	{ .compatible = "qcom,pcie-sa8540p", .data = &cfg_sc8280xp },
-> -- 
-> 2.34.1
+>> +    if (ret) {
+>> +        DRM_DEV_ERROR(gmu->dev, "Unable to ACD table (%d)\n", ret);
+>> +        return ret;
+>> +    }
+>> +
+>> +    return 0;
+>> +}
+>> +
+>>   static int a6xx_hfi_send_test(struct a6xx_gmu *gmu)
+>>   {
+>>       struct a6xx_hfi_msg_test msg = { 0 };
+>> @@ -756,6 +788,10 @@ int a6xx_hfi_start(struct a6xx_gmu *gmu, int
+>> boot_state)
+>>       if (ret)
+>>           return ret;
+>>   +    ret = a6xx_hfi_enable_acd(gmu);
+>> +    if (ret)
+>> +        return ret;
+>> +
+>>       ret = a6xx_hfi_send_core_fw_start(gmu);
+>>       if (ret)
+>>           return ret;
+>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.h b/drivers/gpu/drm/
+>> msm/adreno/a6xx_hfi.h
+>> index 528110169398..51864c8ad0e6 100644
+>> --- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.h
+>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.h
+>> @@ -151,12 +151,33 @@ struct a6xx_hfi_msg_test {
+>>       u32 header;
+>>   };
+>>   +#define HFI_H2F_MSG_ACD 7
+>> +#define MAX_ACD_STRIDE 2
+>> +
+>> +struct a6xx_hfi_acd_table {
+>> +    u32 header;
+>> +    u32 version;
+>> +    u32 enable_by_level;
+>> +    u32 stride;
+>> +    u32 num_levels;
+>> +    u32 data[16 * MAX_ACD_STRIDE];
+>> +};
+>> +
+>>   #define HFI_H2F_MSG_START 10
+>>     struct a6xx_hfi_msg_start {
+>>       u32 header;
+>>   };
+>>   +#define HFI_H2F_FEATURE_CTRL 11
+>> +
+>> +struct a6xx_hfi_msg_feature_ctrl {
+>> +    u32 header;
+>> +    u32 feature;
+>> +    u32 enable;
+>> +    u32 data;
+>> +};
+>> +
+>>   #define HFI_H2F_MSG_CORE_FW_START 14
+>>     struct a6xx_hfi_msg_core_fw_start {
+>>
 > 
+> Thanks,
+> Neil
+
 
