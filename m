@@ -1,63 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-37115-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37116-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E32E99BE148
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2024 09:47:45 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C0CA99BE155
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2024 09:53:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A7694283FD2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2024 08:47:44 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 73EE21F22EEC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2024 08:53:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2D641D4615;
-	Wed,  6 Nov 2024 08:47:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 666EE1D54D1;
+	Wed,  6 Nov 2024 08:53:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jqYoCV4H"
+	dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b="DYhq2lNn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.130])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 232141922EF;
-	Wed,  6 Nov 2024 08:47:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A66DD1922EF;
+	Wed,  6 Nov 2024 08:53:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.126.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730882860; cv=none; b=TrQolV5KNcp1FmsGSlFZHSIX4HPb10OvUb8Xgcic/6rBHAlIaI06fmUq7iLywwMNJSedo+sh62ZXTousDKLgqCuERIMTF+tqzhrKyQdypv0tgFuTiTgmqlfZvExan7lc6xoZ6lRiwr1l6pOHibBu8OCpJpfIcRK3qDUJIiggzhI=
+	t=1730883224; cv=none; b=Uv+jVm1meBSW5W8D81sMiV3wRbajxVWRJBCtb+XTZR9YnwVfdovra/HZBOf0rF5taBM25uyLByyKy8vrha61x6pTzS+mUl2pZX+kuDMzw/TF/KXmsFTniTjD6CX690KRvKPBGA7DCUM/IC1HpswE2lF2mjFfuVXuoXZZo3ffG/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730882860; c=relaxed/simple;
-	bh=si7vGcVBaSlXRYG1n0v/ZEP3Y38EpJ7U0VNz8c7EAUU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=G8L05uVlql1t4fCnYBamF2TA2+r5/e2gCQRN8fV6BjP/udgmY1L1dKxKmvBUYERl678ERzQ4Z21deFw8MpstRdC7XZe4GDksHYYMrzWZ2vgmpcQdD3SSDkxG+0AlZQcEDLFeG+8JExsQ8GgDaBFrNvoEfFpOXVimejrllvb0m/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jqYoCV4H; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A632e3W001983;
-	Wed, 6 Nov 2024 08:47:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	/UJAN+H99QW21UZAbynexOkZQpDqUFyAoB5dSaqnB+A=; b=jqYoCV4HgVT1pOpL
-	iZcgNWu5m1heuBJ1Hq5FIqLy4ELirNrNg/WumA2oZuB5MYLTDDqSXkzCQ/8JjH/o
-	25Fi6lT0AATue7ojTfkLm2r/SbwDjTIXFw6D2cJj/yIom+bNdAXPFmUGFLG4FtX1
-	mpYAgM88Yg6D21AH/xVP6nQ9unr1ZbKhM21k1CW6pdwHnNPgw/SrEPdQMrahaDru
-	bANqBdiZJXSWcQGrHxAwkKV27Cs4CkgoQrCz2HIU2sZRIYH1UYAprWagSZPXPNyn
-	iJy3ypjslqTAvGDUx3Q7iS8EdoCyqV3dcx5F7Gtp2MsFq0JetjO2AwBUIKe97vIL
-	SFnhew==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42r072grrp-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 06 Nov 2024 08:47:28 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4A68lRci000942
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 6 Nov 2024 08:47:27 GMT
-Received: from [10.152.195.140] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 6 Nov 2024
- 00:47:21 -0800
-Message-ID: <8cb665f5-4885-4853-804a-7313decc719c@quicinc.com>
-Date: Wed, 6 Nov 2024 14:17:18 +0530
+	s=arc-20240116; t=1730883224; c=relaxed/simple;
+	bh=oCMN3cBxlHj1BYfN99NGQKvB16Znqro3+q9AMHvUKYw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=kiayHb1PTGfoCBGng0Kq1WLI1MwuOD5Q4ewEtCdP3y9GApSLJE31nnIdL8Rhd9am8DBqd3vJq4bhqVerD7yXbKK+QmJ68ysMjUHk1q/oHi0l5RMM5RNN4NfG6kE6RnAPCO8oxFMDVKLmt5R/qohJace4g9Ba/l+preq3Xz1vYAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz; spf=pass smtp.mailfrom=oldschoolsolutions.biz; dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b=DYhq2lNn; arc=none smtp.client-ip=212.227.126.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oldschoolsolutions.biz
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=oldschoolsolutions.biz; s=s1-ionos; t=1730883204; x=1731488004;
+	i=jens.glathe@oldschoolsolutions.biz;
+	bh=oCMN3cBxlHj1BYfN99NGQKvB16Znqro3+q9AMHvUKYw=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=DYhq2lNnFSg+jqieWH/CzvfsS15tmT7O7p0kD7yOvjQ3RF/SS+wD37GE+BjFetvb
+	 MHi+iKtSxumltVoo36uZOYzC3DCTtFMYP+WjEs3R4sv5R/VourzOUlTeolV82oalR
+	 S+VO9zmTaCzDJYp+jjo4arD2qHB5XQ0UWuLpUaK14AtUJkGj1jGjGIct25LYtJhjb
+	 qUSwsYDwYey9CbjMOaCiWBWtECfp78N7jCppEp4BqzQw0V9GyH1RV5rGpOpOQcYhJ
+	 1fRaHSFfMD/f/XuhHvvg5Fk9YB86ov/yHQcWfV5bIJw1PkAKSRsD6zd6yuNzJVLRF
+	 qq1OFgb3eTpceyafAQ==
+X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
+Received: from [192.168.0.174] ([91.64.229.215]) by mrelayeu.kundenserver.de
+ (mreue012 [212.227.15.167]) with ESMTPSA (Nemesis) id
+ 1MKuGD-1tOtDt0nEb-00TQbR; Wed, 06 Nov 2024 09:53:24 +0100
+Message-ID: <e13488a3-5f45-44b2-950d-5a29307d4ec4@oldschoolsolutions.biz>
+Date: Wed, 6 Nov 2024 09:53:22 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,99 +59,128 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 7/7] arm64: dts: qcom: ipq5424: Add thermal zone nodes
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        <srinivas.kandagatla@linaro.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <amitk@kernel.org>,
-        <thara.gopinath@gmail.com>, <rafael@kernel.org>,
-        <daniel.lezcano@linaro.org>, <rui.zhang@intel.com>,
-        <lukasz.luba@arm.com>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>
-CC: <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
-References: <20241104124413.2012794-1-quic_mmanikan@quicinc.com>
- <20241104124413.2012794-8-quic_mmanikan@quicinc.com>
- <91ea0f03-9bbe-491d-9056-ebd9fdc73bfa@oss.qualcomm.com>
+Subject: Re: [PATCH v7 3/3] arm64: dts: qcom: sc8280xp-blackrock: dt
+ definition for WDK2023
+To: Krishna Kurapati <quic_kriskura@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Merck Hung <merckhung@gmail.com>,
+ Kalle Valo <kvalo@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>,
+ xlazom00@gmail.com
+References: <20241101-jg-blackrock-for-upstream-v7-0-8295e9f545d9@oldschoolsolutions.biz>
+ <20241101-jg-blackrock-for-upstream-v7-3-8295e9f545d9@oldschoolsolutions.biz>
+ <945f3eae-0a68-4738-af07-74e228039508@quicinc.com>
+ <dd5bad7b-d062-4028-b78a-3888dec4f934@oldschoolsolutions.biz>
+ <f8697f7f-f6ac-4b6d-954b-a0777770dc8e@quicinc.com>
 Content-Language: en-US
-From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-In-Reply-To: <91ea0f03-9bbe-491d-9056-ebd9fdc73bfa@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: J3vNvvZ2O1ycsqR0KMq8FWZSJU2SoSjE
-X-Proofpoint-GUID: J3vNvvZ2O1ycsqR0KMq8FWZSJU2SoSjE
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- priorityscore=1501 mlxscore=0 suspectscore=0 mlxlogscore=744 spamscore=0
- adultscore=0 malwarescore=0 phishscore=0 impostorscore=0 bulkscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411060071
+From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+In-Reply-To: <f8697f7f-f6ac-4b6d-954b-a0777770dc8e@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:Zo4m0JyoMSCFitOflkdfGTjh/dyTQ3ARcYFfpnp/fINWJ0U4iB1
+ cIUgnOZcS0RJYWT2bc9auS4vi/e/Ec1rE2MQCjhzgfeADSZBD6jzDNArt5Sws5xXndGEYSj
+ KJ5mxKN51+gAuzM/NhlX7zuhiazwPOU7+y2VsR0q7vLAH9RsDVxSRzhsdP8lmTbdRwTgMXp
+ 8BrXj/uxB+hXTS7gIAY1w==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:kmthrl3YMSI=;upKPsfLSvhA6X6z4Q2GZ+pnipmv
+ TLdJmAi2wcz5iu3vQ79gtVEgVBa3cHnPpZ9c+GtGN2cdYa0HFxuYaSV8HVudO/L+ViHrxOsTR
+ MaDbfBRmwvcDBinFCE/adelS5i9BDSKpdZOKl8yv+0lGnHfEi4/NdOszCFPmX2YOEH2gQ/UmQ
+ Q6KidggjIx5rbLNsWzoX2fSgfealnhtIsqT/e0qs7NKRq0cKQY0lZ3zx+cLhODX3HtCIz1Kwh
+ dvjoBk5bxqzDRZtbWlQoNNSEh/2ajwRW6JncwhbD4zTccNYXlP7FQXQl/4tQmWIitXa7cqYrS
+ zDR7EDGx5x30TVus7JbYhBlK6tx59Z6Gxd1IlJJvHPTDahqxOdOKhLGaKjtrj9CPd+zwE45TN
+ xOhxTNVxgY6t+J+xDULk+KR4v+uVFd8EdFFvtqqcVGjQRbI1s4r3mKbBz0nuo0dzSAvGW4SEj
+ q4NYwCg3b4lZON9eWJ8nWmq66d0WsxFlM7OWvllo3tMMvlJWIpfrO2qPSa53X8BX4ybHwkD3t
+ 8SG6yonV8ElRXjR6896ygz2ZDtblZpJOxa+6015rz7p/pppoDNjNVVHldwvmzZj6zAkG2SBKh
+ gNTw8AuLJNZHib4lSqf3haV9VqrOh5/8rWp4STyzxVmNd3k7wHE3SFGsmOienn8ZbzsuUR1xr
+ dmbbJvwC6XZY85CfeFYYv9QTEgmLbxBFsDczVSMFmykh0Dc3818GCxWbMKe+ethjBxdId+6pF
+ 3718EVkvYSthqhsehj0dNCvJ3ZxDzSCMw==
 
 
-
-On 11/4/2024 7:21 PM, Konrad Dybcio wrote:
-> On 4.11.2024 1:44 PM, Manikanta Mylavarapu wrote:
->> Add thermal zone nodes for sensors present in IPQ5424.
+On 06.11.24 05:46, Krishna Kurapati wrote:
+>
+>
+> On 11/6/2024 12:57 AM, Jens Glathe wrote:
+>> On 04.11.24 05:31, Krishna Kurapati wrote:
+>>>
+>>>
+>>> On 11/1/2024 11:56 PM, Jens Glathe via B4 Relay wrote:
+>>>> From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+>>>>
+>>>> Device tree for the Microsoft Windows Dev Kit 2023. This work
+>>>> is based on the initial work of Merck Hung <merckhung@gmail.com>.
+>>>>
+>>>> Original work:
+>>>> https://github.com/merckhung/linux_ms_dev_kit/blob/ms-dev-kit-2023-v6=
+.3.0/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-dev-kit-2023.dts
+>>>>
+>>>>
+>>>> The Windows Dev Kit 2023 is a nice little desktop based on sc8280xp.
+>>>> Link: https://learn.microsoft.com/en-us/windows/arm/dev-kit/
+>>>>
+>>>> Supported features:
+>>>> - USB type-c and type-a ports
+>>>> - minidp connector
+>>>> - built-in r8152 Ethernet adapter
+>>>> - PCIe devices
+>>>> - nvme
+>>>> - ath11k WiFi (WCN6855)
+>>>> - WCN6855 Bluetooth
+>>>> - A690 GPU
+>>>> - ADSP and CDSP
+>>>> - GPIO keys
+>>>> - Audio definition (works via USB)
+>>>>
+>>>> Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+>>>> ---
+>>>
+>>> [...]
+>>>
+>>>> +&usb_2 {
+>>>> +=C2=A0=C2=A0=C2=A0 pinctrl-0 =3D <&usb2_en_state>;
+>>>> +=C2=A0=C2=A0=C2=A0 pinctrl-names =3D "default";
+>>>> +
+>>>
+>>> On the blackrock platform, for this controller, are there all 4 ports
+>>> given out for use or only one ?
+>>>
+>>> Because if all 4 are there, you might need to give all 4 pinctrls (one
+>>> for each TS3USB221A mux select) here for usb_2 node. If only one port
+>>> is given out for use on the platform, then only one phy (of the 4
+>>> activated below) needs to be marked as active.
+>>>
+>>> In my case, in [1] on the ADP platform, I marked them as always on for
+>>> all gpios on multiport controller since driver had no support added
+>>> yet.
+>>>
+>>> [1]:
+>>> https://lore.kernel.org/all/20240707085624.3411961-1-quic_kriskura@qui=
+cinc.com/
+>>>
+>>>
+>> Hi Krishna,
 >>
->> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
->> ---
-> [...]
-> 
->> +
->> +		cpu3-thermal {
->> +			polling-delay-passive = <0>;
->> +			polling-delay = <0>;
->> +			thermal-sensors = <&tsens 13>;
->> +
->> +			trips {
->> +				cpu-critical {
->> +					temperature = <120000>;
->> +					hysteresis = <9000>;
->> +					type = "critical";
->> +				};
->> +
->> +				cpu-passive {
->> +					temperature = <110000>;
->> +					hysteresis = <9000>;
->> +					type = "passive";
-> 
-> You have a passive trip point without passive polling
-> 
+>> thank you for the hints. Unfortunately, I don't have any schematics for
+>> the box. But I tested out activation combinations for all the
+>
+> My point is little different.
+> Third controller supports upto 4 physical ports. How many of them have
+> been exposed on this WDK2023 ? Depending on that, the phys have to be
+> enabled in DT.
+>
+Okay I took the jump and reduced usb_2_dwc3 to only one qmpphy and one
+hsphy. It works, the USB nodes look the same and work. What an odd
+design, though, but why not.
 
-Okay, will remove this.
+&usb_2_dwc3 {
+ =C2=A0=C2=A0=C2=A0 phys =3D <&usb_2_hsphy0>, <&usb_2_qmpphy0>;
+ =C2=A0=C2=A0=C2=A0 phy-names =3D "usb2-0", "usb3-0";
+};
 
->> +				};
->> +			};
->> +		};
->> +
->> +		wcss-tile2-thermal {
->> +			polling-delay-passive = <0>;
->> +			polling-delay = <0>;
-> 
-> These are the defaults
-> 
+I will do an amended V8 of the patch. Thank you for the hint again.
 
-Okay, sure. I will remove.
+with best regards
 
->> +			thermal-sensors = <&tsens 9>;
->> +
->> +			trips {
->> +				wcss_tile2-critical {
-> 
-> Node names must not contain underscores
-> 
-
-Okay, sure. I will remove.
-
-Thanks & Regards,
-Manikanta.
-
-
-
+Jens
 
