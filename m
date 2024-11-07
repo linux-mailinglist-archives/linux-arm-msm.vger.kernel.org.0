@@ -1,123 +1,317 @@
-Return-Path: <linux-arm-msm+bounces-37261-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37262-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4A9819C0905
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 15:35:08 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 08B749C090D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 15:36:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7C8711C228ED
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 14:35:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 806E12816A6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 14:36:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE167212F14;
-	Thu,  7 Nov 2024 14:34:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B655A212D0B;
+	Thu,  7 Nov 2024 14:36:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LQ7zv3BP"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pZQ12oA0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C75F212D00
-	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Nov 2024 14:34:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DB88212175;
+	Thu,  7 Nov 2024 14:36:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730990082; cv=none; b=DhrCT5oaT3fRG8gInwbyorkFN4O1lYbpRG34IN01SMwIuRpOsfiflDDWUnO1lFDQsf7QdNxmfx8fC+btouQMBuSEoX3zdUm9ASzzMN9r7HSo4JTlfUHD1Pmae5yZIfqvHiqNH7qM8+ih7Jzc/sQEuZS3z0gL0Fso+/HabkoBLGg=
+	t=1730990189; cv=none; b=kL2gPEH9FyhGy0PLmyV04T7D+T7z+Q68OpzgwI/YnZpmJ7WoyYFwnWDqtfIcFGpDc08RnudRlF3jhSE0DikIB19u9RKAzBpK4RVIuhZYRI6x7Q26HDHvf8mi0VWw6NcyqBMbT+51BiKC+1perXU8Hvm7Jb+Ubs+Ff5QYTBWwe3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730990082; c=relaxed/simple;
-	bh=sYdP0JlYzj4mQQL95qniZ5n95iC6ImunCygdVJuw3YU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dDgNZ+bcW3+MPIOfj5FPLtomVDDV57lPZgqQh70ztpEsIa9/QBF5mN8rAAjPWzSmZDWZhFKvYvMVHt41r9ylQn9Nl8lrPY5L0dYtv3CDdYOdL1O+qLMlMTf1eI+ULCalgxsZFw8xVceWnjj9X+OsC41NWSXpiwbyaOd8epszY50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LQ7zv3BP; arc=none smtp.client-ip=209.85.208.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2fb498a92f6so8863271fa.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Nov 2024 06:34:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1730990079; x=1731594879; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=sFw8yXJLqrkXU5hRV9LHBA5xHB7hRhKhK9JeN1oXec4=;
-        b=LQ7zv3BPWWliXdprNS1MplJaIxFfxajUzC0nK9ukyhAgWq6YJ8kZY65cNQJg4k/LNR
-         zRF5fAkN+AWbuYr2+4/l+2DmyfxX5nQ0IDv+fA3oGWi/COhL6fziKX3FO6qnQ3cDbJfb
-         6X4WUUYeMAdWj9QEKJ1wMCc3yyztCQQ8O71ecxiwyKm+nzd7jFu9Fk8rUpH7AB2zPP0s
-         dQWgg0H7ZJotHECOlV61oyUdBKMpBfhMXQGH4uBTqeCBm4KGxd0T5YSykqPOvRPXDu49
-         cLEKOMYC5Y4m10eCzXKyNOj8ye2FqWFs5CJrJt7fJx/LCGAFjdmTOgirknC9cOLNQoqa
-         yt2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730990079; x=1731594879;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=sFw8yXJLqrkXU5hRV9LHBA5xHB7hRhKhK9JeN1oXec4=;
-        b=spa87iaWItriu9WHrbIem+J/FckrYiDL4bg7D7U3HHN3/SQfXT9XfAuvQoX6ekbUhv
-         HyjAzP+hyrRmo7v5Z1ErPY9QAirruKfdPcQN8Pgr1/wKryATzDti3xGKo+0yA0LDqNPu
-         Pqxq6A3RiZn3WhghK848s3yI4ydV1dA+iYup1iJsYueXIX5ReAU6nQimF7fCVmBio608
-         1eWySXwuW0Bl8uWeaxzEOWXcFHqQXmJqgVBI/hiaKq3ozKeHumRgUK9BxwCAN2aSYfvT
-         DDxkIsOaqkf0/hIGtaxCeNyxw831Nz0Uhd6ck3FsIMJw4F21hJrU+KNxo5EB/Ap9MWfe
-         N/BA==
-X-Forwarded-Encrypted: i=1; AJvYcCXyHG12peeD4DjGHx3mbHQviRS/VEe+7s71Z/uL9PJoSw0CSAWn59Fd4uM77ffFebQfn4g1YzQdQQUiuuna@vger.kernel.org
-X-Gm-Message-State: AOJu0YyRXcmt7ynQEu8fWf0C3CViW8QokBB3nvh6WrLlPQZrxMJ5ClR2
-	pVCu0+wcPamUZPyBAuO3ikrFdil2LYm7fYJzbZcRDyjIkGPtcpnT9E8slLNiSjQ=
-X-Google-Smtp-Source: AGHT+IE6u/vwpetFFBTpREnEATNArVxMnib3hilqhpSQwRreBBwE7Un+H8iFwlJKP4tC/3/OAp4Img==
-X-Received: by 2002:a2e:a1ca:0:b0:2fb:9180:250f with SMTP id 38308e7fff4ca-2fcbdfd77bfmr168671801fa.18.1730990079154;
-        Thu, 07 Nov 2024 06:34:39 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ff179d7d5dsm2406701fa.108.2024.11.07.06.34.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Nov 2024 06:34:37 -0800 (PST)
-Date: Thu, 7 Nov 2024 16:34:36 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Linus Walleij <linus.walleij@linaro.org>
-Cc: Sudeep Holla <sudeep.holla@arm.com>, Ard Biesheuvel <ardb@kernel.org>, 
-	Russell King <linux@armlinux.org.uk>, linux-arm-kernel@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Arnd Bergmann <arnd@arndb.de>
-Subject: Re: [PATCH v2 0/2] ARM: implement cacheinfo support (for v7/v7m)
-Message-ID: <lkxm6m2u25o4qfvpja7qsldqm7zjxejkn6d5qihyxbg2zvntwh@icvun74e6rll>
-References: <20241014-armv7-cacheinfo-v2-0-38ab76d2b7fa@linaro.org>
- <CACRpkdbfckBBW5W5sEvz1LwzdOvTKi_fi7tDu+9nPeKumYkPeA@mail.gmail.com>
+	s=arc-20240116; t=1730990189; c=relaxed/simple;
+	bh=QzVkdpJnt/ZuRmSGunY3JW7fmbO2fr/0K6tHnuLCOfY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Mzv+tzaqUxXnR8Hu+rR3WIlYWty2OqiRPPMJfCibj5QSOhTQtsviM2Kfy8LIUkVWuNi1Wc8caC8j3XqgMXCYQeJYATTN+LYJ5FEmCzUEVYg1Uhql9pBVfDpmBe3UqZ6O5zIq/Fj6Pk1U+H3IUSOmFHyWb1AkWoSA6nFKS1JLdV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pZQ12oA0; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A75hrql002118;
+	Thu, 7 Nov 2024 14:36:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	z+3wHS3gqApFtMhQvOyrWRXfCH4jhD5FMxIgxyYjq3c=; b=pZQ12oA0yQWZatlq
+	gf8DsHhL3z6BoGYBmgVrPBBD3dW26JuFT263GX94ZvdN3oGDivQmEFL5E4a148rR
+	SIQ/NznCtP3AWX4Ne8GfDjEi9pC5qWeoIWIHHKFCxjMx7tNuTeh59ijZ/jCmmhcb
+	7F57vI+XY/VLffCVW9xyAZEF0nC9ro5U4XdcpxnhLwa+HsMMygCjk/Bccnd1/O4+
+	/OTtdLQpKMUqYjTVeaupa+eI77ISu9sO7KE18nNaFKkXPkgBSdqU9n8t0EAEU26b
+	CtS/RF8OIwi5+BX7YR+DkaeBYAF8Y/rUbwYXEuLkMNfXTyG6Bpl63cIY3aQ3gRot
+	vPhlfA==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42r072n2r0-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 07 Nov 2024 14:36:15 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4A7EZwUs009870
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 7 Nov 2024 14:35:58 GMT
+Received: from [10.206.104.82] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 7 Nov 2024
+ 06:35:52 -0800
+Message-ID: <6e67ae77-a116-422c-a07b-77e991a664ea@quicinc.com>
+Date: Thu, 7 Nov 2024 20:05:49 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC 1/3] drm/msm/adreno: Add support for ACD
+To: <neil.armstrong@linaro.org>, Rob Clark <robdclark@gmail.com>,
+        Sean Paul
+	<sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
+        Abhinav Kumar
+	<quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie
+	<airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Viresh Kumar
+	<vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd
+	<sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>
+References: <20241012-gpu-acd-v1-0-1e5e91aa95b6@quicinc.com>
+ <20241012-gpu-acd-v1-1-1e5e91aa95b6@quicinc.com>
+ <4aeec9f1-720b-400c-9582-d02847db2ac7@linaro.org>
+ <43404449-1830-4651-a85a-54404b1d35bc@quicinc.com>
+ <56a976d6-7dd6-4001-b6a8-268ed7d787d2@linaro.org>
+ <49e1a6b6-683f-4826-b67e-8354a10a785d@quicinc.com>
+ <85eaeaca-850d-47d4-b81d-b23f25084d81@linaro.org>
+Content-Language: en-US
+From: Akhil P Oommen <quic_akhilpo@quicinc.com>
+In-Reply-To: <85eaeaca-850d-47d4-b81d-b23f25084d81@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACRpkdbfckBBW5W5sEvz1LwzdOvTKi_fi7tDu+9nPeKumYkPeA@mail.gmail.com>
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: ifBweuF2nDAoe7kEjNp7oTRinqJqKB89
+X-Proofpoint-GUID: ifBweuF2nDAoe7kEjNp7oTRinqJqKB89
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ priorityscore=1501 mlxscore=0 suspectscore=0 mlxlogscore=999 spamscore=0
+ adultscore=0 malwarescore=0 phishscore=0 impostorscore=0 bulkscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411070114
 
-On Thu, Nov 07, 2024 at 02:55:55PM +0100, Linus Walleij wrote:
-> Hi Dmitry,
+On 11/7/2024 8:01 PM, neil.armstrong@linaro.org wrote:
+> On 07/11/2024 13:46, Akhil P Oommen wrote:
+>> On 11/7/2024 2:25 PM, neil.armstrong@linaro.org wrote:
+>>> On 06/11/2024 02:44, Akhil P Oommen wrote:
+>>>> On 11/4/2024 9:14 PM, neil.armstrong@linaro.org wrote:
+>>>>> On 11/10/2024 22:29, Akhil P Oommen wrote:
+>>>>>> ACD a.k.a Adaptive Clock Distribution is a feature which helps to
+>>>>>> reduce
+>>>>>> the power consumption. In some chipsets, it is also a requirement to
+>>>>>> support higher GPU frequencies. This patch adds support for GPU
+>>>>>> ACD by
+>>>>>> sending necessary data to GMU and AOSS. The feature support for the
+>>>>>> chipset is detected based on devicetree data.
+>>>>>>
+>>>>>> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+>>>>>> ---
+>>>>>>     drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 81 +++++++++++++++++++
+>>>>>> ++++++
+>>>>>> +++-------
+>>>>>>     drivers/gpu/drm/msm/adreno/a6xx_gmu.h |  1 +
+>>>>>>     drivers/gpu/drm/msm/adreno/a6xx_hfi.c | 36 ++++++++++++++++
+>>>>>>     drivers/gpu/drm/msm/adreno/a6xx_hfi.h | 21 +++++++++
+>>>>>>     4 files changed, 124 insertions(+), 15 deletions(-)
+>>>>>>
+>>>>>
+>>>>> <snip>
+>>>>>
+>>>>>> +
+>>>>>> +static int a6xx_hfi_enable_acd(struct a6xx_gmu *gmu)
+>>>>>> +{
+>>>>>> +    struct a6xx_hfi_acd_table *acd_table = &gmu->acd_table;
+>>>>>> +    struct a6xx_hfi_msg_feature_ctrl msg = {
+>>>>>> +        .feature = HFI_FEATURE_ACD,
+>>>>>> +        .enable = 1,
+>>>>>> +        .data = 0,
+>>>>>> +    };
+>>>>>> +    int ret;
+>>>>>> +
+>>>>>> +    if (!acd_table->enable_by_level)
+>>>>>> +        return 0;
+>>>>>> +
+>>>>>> +    /* Enable ACD feature at GMU */
+>>>>>> +    ret = a6xx_hfi_send_msg(gmu, HFI_H2F_FEATURE_CTRL, &msg,
+>>>>>> sizeof(msg), NULL, 0);
+>>>>>> +    if (ret) {
+>>>>>> +        DRM_DEV_ERROR(gmu->dev, "Unable to enable ACD (%d)\n", ret);
+>>>>>> +        return ret;
+>>>>>> +    }
+>>>>>> +
+>>>>>> +    /* Send ACD table to GMU */
+>>>>>> +    ret = a6xx_hfi_send_msg(gmu, HFI_H2F_MSG_ACD, &msg, sizeof(msg),
+>>>>>> NULL, 0);
+>>>>>
+>>>>> This looks wrong, in this exact code, you never use the acd_table...
+>>>>> perhaps it should be acd_table here
+>>>>
+>>>> Whoops! Weirdly gmu didn't explode when I tested.
+>>>>
+>>>> Thanks for your keen eye.
+>>>
+>>> You're welcome !
+>>>
+>>> I've been trying to enable this on SM8650, but HFI_H2F_MSG_ACD fails.
+>>>
+>>> My changes:
+>>> ================><================================
+>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c b/drivers/gpu/drm/
+>>> msm/adreno/a6xx_hfi.c
+>>> index 7c96d6f8aaa9..bd9d586f245e 100644
+>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+>>> @@ -682,7 +682,7 @@ static int a6xx_hfi_enable_acd(struct a6xx_gmu *gmu)
+>>>          }
+>>>
+>>>          /* Send ACD table to GMU */
+>>> -       ret = a6xx_hfi_send_msg(gmu, HFI_H2F_MSG_ACD, &acd_table,
+>>> sizeof(*acd_table), NULL, 0);
+>>> +       ret = a6xx_hfi_send_msg(gmu, HFI_H2F_MSG_ACD, &acd_table,
+>>
+>> &acd_table -> acd_table here?
 > 
-> On Mon, Oct 14, 2024 at 3:55 PM Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
+> Damn, good catch !
 > 
-> > Follow the ARM64 platform and implement simple cache information driver.
-> > As it reads data from CTR (ARMv6+) and CLIDR (ARMv7+) registers, it is
-> > limited to the ARMv7 / ARMv7M, providing simple fallback or just
-> > returning -EOPNOTSUPP in case of older platforms.
-> >
-> > In theory we should be able to skip CLIDR reading and assume that Dcache
-> > and Icache (or unified L1 cache) always exist if CTR is supported and
-> > returns sensible value. However I think this better be handled by the
-> > maintainers of corresponding platforms.
-> >
-> > Other than just providing information to the userspace, this patchset is
-> > required in order to implement L2 cache driver (and in the end CPU
-> > frequency scaling) on ARMv7-based Qualcomm devices.
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Ok so it didn't explode anymore, but still fails:
+> =====
+> [    7.083258] platform 3d6a000.gmu: [drm:a6xx_hfi_send_msg.constprop.0
+> [msm]] *ERROR* Message HFI_H2F_MSG_GX_BW_PERF_VOTE id 7 timed out
+> waiting for response
+> [    7.149709] platform 3d6a000.gmu: [drm:a6xx_hfi_send_msg.constprop.0
+> [msm]] *ERROR* Unexpected message id 7 on the response queue
+> [    7.149744] platform 3d6a000.gmu: [drm:a6xx_hfi_send_msg.constprop.0
+> [msm]] *ERROR* The HFI response queue is unexpectedly empty
+> [    7.165163] platform 3d6a000.gmu: [drm:a6xx_hfi_send_msg.constprop.0
+> [msm]] *ERROR* Unexpected message id 8 on the response queue
+> [    7.165188] platform 3d6a000.gmu: [drm:a6xx_hfi_send_msg.constprop.0
+> [msm]] *ERROR* The HFI response queue is unexpectedly empty
+> ====
 > 
-> I added my review tags to the v2 patches, can you put them
-> into Russell's patch tracker?
+> Seems with ACD enabled, first vote can take up to 100ms, and downstream
+> has 1s timeout, with a larger timeout I got it to work !
 
-Done, 9432/1 and 9433/1, thank you!
+Yes, there is an additional overhead during first perf vote. Thanks for
+the heads up. I am yet to test with fixes.
 
--- 
-With best wishes
-Dmitry
+-Akhil.
+
+> 
+> Thanks,
+> Neil
+>>
+>> -Akhil
+>>
+>>> sizeof(struct a6xx_hfi_acd_table), NULL, 0);
+>>>          if (ret) {
+>>>                  DRM_DEV_ERROR(gmu->dev, "Unable to send ACD table
+>>> (%d)\n", ret);
+>>>                  return ret;
+>>> ================><================================
+>>>
+>>> with the appropriate qcom,opp-acd-level in DT taken from downstream,
+>>> I get:
+>>> [    6.946184] platform 3d6a000.gmu: [drm:a6xx_hfi_send_msg.constprop.0
+>>> [msm]] *ERROR* Message (null) id 4 timed out waiting for response
+>>> [    6.958697] platform 3d6a000.gmu: [drm:a6xx_hfi_start [msm]] *ERROR*
+>>> Unable to send ACD table (-110)
+>>>
+>>> is there something missing ?
+>>>
+>>> Neil
+>>>
+>>>>
+>>>> -Akhil.
+>>>>
+>>>>>
+>>>>>> +    if (ret) {
+>>>>>> +        DRM_DEV_ERROR(gmu->dev, "Unable to ACD table (%d)\n", ret);
+>>>>>> +        return ret;
+>>>>>> +    }
+>>>>>> +
+>>>>>> +    return 0;
+>>>>>> +}
+>>>>>> +
+>>>>>>     static int a6xx_hfi_send_test(struct a6xx_gmu *gmu)
+>>>>>>     {
+>>>>>>         struct a6xx_hfi_msg_test msg = { 0 };
+>>>>>> @@ -756,6 +788,10 @@ int a6xx_hfi_start(struct a6xx_gmu *gmu, int
+>>>>>> boot_state)
+>>>>>>         if (ret)
+>>>>>>             return ret;
+>>>>>>     +    ret = a6xx_hfi_enable_acd(gmu);
+>>>>>> +    if (ret)
+>>>>>> +        return ret;
+>>>>>> +
+>>>>>>         ret = a6xx_hfi_send_core_fw_start(gmu);
+>>>>>>         if (ret)
+>>>>>>             return ret;
+>>>>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.h b/drivers/gpu/drm/
+>>>>>> msm/adreno/a6xx_hfi.h
+>>>>>> index 528110169398..51864c8ad0e6 100644
+>>>>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.h
+>>>>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.h
+>>>>>> @@ -151,12 +151,33 @@ struct a6xx_hfi_msg_test {
+>>>>>>         u32 header;
+>>>>>>     };
+>>>>>>     +#define HFI_H2F_MSG_ACD 7
+>>>>>> +#define MAX_ACD_STRIDE 2
+>>>>>> +
+>>>>>> +struct a6xx_hfi_acd_table {
+>>>>>> +    u32 header;
+>>>>>> +    u32 version;
+>>>>>> +    u32 enable_by_level;
+>>>>>> +    u32 stride;
+>>>>>> +    u32 num_levels;
+>>>>>> +    u32 data[16 * MAX_ACD_STRIDE];
+>>>>>> +};
+>>>>>> +
+>>>>>>     #define HFI_H2F_MSG_START 10
+>>>>>>       struct a6xx_hfi_msg_start {
+>>>>>>         u32 header;
+>>>>>>     };
+>>>>>>     +#define HFI_H2F_FEATURE_CTRL 11
+>>>>>> +
+>>>>>> +struct a6xx_hfi_msg_feature_ctrl {
+>>>>>> +    u32 header;
+>>>>>> +    u32 feature;
+>>>>>> +    u32 enable;
+>>>>>> +    u32 data;
+>>>>>> +};
+>>>>>> +
+>>>>>>     #define HFI_H2F_MSG_CORE_FW_START 14
+>>>>>>       struct a6xx_hfi_msg_core_fw_start {
+>>>>>>
+>>>>>
+>>>>> Thanks,
+>>>>> Neil
+>>>>
+>>>
+>>
+> 
+
 
