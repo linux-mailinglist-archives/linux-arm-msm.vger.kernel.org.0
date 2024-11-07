@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-37237-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37239-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 20F6C9C0577
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 13:17:06 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AC64A9C0596
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 13:22:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3F4B71C21F49
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 12:17:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DE39F1C222C8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 12:22:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D5671DE4E9;
-	Thu,  7 Nov 2024 12:17:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B9C01F4FBB;
+	Thu,  7 Nov 2024 12:22:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ryA6Q4qV"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AyH8oLa/"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEBDD17BB0D;
-	Thu,  7 Nov 2024 12:17:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 574D215B0F2;
+	Thu,  7 Nov 2024 12:22:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730981822; cv=none; b=KXDuHM+BtHYHCN2r6ZKTWmoewZ/hWc+9oz5Epg+OM/+/jYJdp2Bt80DfZaoNhVbv8JWTuaU2UAa7g0rR5Y0UhfEeN7YXcEZTnhnt0JkzWL0iEJgPzPJ6P/cYECmTxg2GX8/uqX7mvP4VTy4EHWneCnyCBgN8d+P3k8Ox7dWb/7c=
+	t=1730982149; cv=none; b=apaTtoapT0KaYlDJVPLz88IVcRBnAldQ2QsAoo7I71FqvRKcTh7v4Cqmx6USoZuwhvIwyP5wjZKL8NAqcqPct/HYVSu0qMfYjNsN6HL7BKnqubujgPcbO4R/mx+0o5LuzjQd6MzBztacaDbjINgNY9bADjb3zU+VV76KfFy7HQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730981822; c=relaxed/simple;
-	bh=EIyzkWslkWt3z9X5/Kx+ztKigmF58WmnDqUUe3ffxEY=;
+	s=arc-20240116; t=1730982149; c=relaxed/simple;
+	bh=0ehXCKHIOPCCq9mrRk5qMzO/ClbaBbTy81K+ZzoNS7w=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=d4sy5lTyJWBysne6jpuaou+0vLEVbMiMEkb2C8X6Y8WfDMUVXknJwLFffiYjcJemkPhaSRhLB/JsgQLsZG4Vb4gYlyJF/fvB8ane34vXnYl8DhAYmV2EiAIyghf6seKDYz6Fp/+sFl1uaQga/HH6uyVycOB5RMGb1MoPIdmpMC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ryA6Q4qV; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7019C4CECC;
-	Thu,  7 Nov 2024 12:16:58 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=orkHLHcAvIlnyrxydnxHVVlq6xmLnREyd73gwn19hxLHF+UOVhbrvECOAuqhWNyxOthBv3b/3Tj8JUTCTFLkI/NZckpUH3934qrWu9H+YAyIj8IcoVf+Gjlnc1Ej+LxR09CRXb/HAyF6m4kNUZ698RUWIJPP2Lx0o3GrRk/qBFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AyH8oLa/; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EAC4C4CECC;
+	Thu,  7 Nov 2024 12:22:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730981822;
-	bh=EIyzkWslkWt3z9X5/Kx+ztKigmF58WmnDqUUe3ffxEY=;
+	s=k20201202; t=1730982149;
+	bh=0ehXCKHIOPCCq9mrRk5qMzO/ClbaBbTy81K+ZzoNS7w=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=ryA6Q4qV9QVvx2vOqi74IWrkCacGjAuIxRVyqu/QjCx+tvBBGd6zjYLU5VPC4N2gV
-	 Sxq5nOE55+AlNfP0Rzgp8uQv0rDVkm9+TxCwd01JdNW+C+5ni7TPWWDXvMUVzD0kOV
-	 2/JOWUw6WtWObo1PQEdVUCL3dOPW5TWRrP+n3HoF6WuJpckNlACbf1ZTcr3DnR1HAC
-	 8WNLwPcs2hqXZvhCGLIKCTpOkzJThdc9CMQl8Y1vjFSCmyHG48GKPRZsih2s85pbne
-	 tNF2pUqBdlXfnUzHIjSWZlau2+UdUG2A1zrc9v1dXncSdgJeJUfY1cAWVWOZ04DsWi
-	 Ek2zC2CQ87zjw==
-Message-ID: <9d158c25-197a-49fd-b639-45287a46438f@kernel.org>
-Date: Thu, 7 Nov 2024 13:16:56 +0100
+	b=AyH8oLa/oDuDBmvyjFTKWTkfPaf6Yd8yvo/PJQY9fYDxO2evuC+oqskGGVZ/9Lx9f
+	 JwC0/4nvbCse0R4iXjzFbdtGvS1KJPEojsLBnslgumuV2RP7L9xKbT7DWan6kma2yM
+	 h6zbfsSyZknsSW4mtUEh6duJfSH4fQEawQLASbNLqa0Ha5WK/NVaQE83mHddWhD/+Y
+	 7UUoVCkGjfxvgvMuztGwA5WhvFPFjok3t6+VRehTyFNz3SzTqTopYHdWHuMxZVNX3T
+	 gPJqn9VcUzlGDK9O20hg+4gJfNQfOs9ZhvNJa0yH/4nfZru8MwqPLvFxjQZndnBylI
+	 zsieX2o2S7n3g==
+Message-ID: <4009f4ee-2c55-4a4f-8805-eafe7efc0147@kernel.org>
+Date: Thu, 7 Nov 2024 13:22:23 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,21 +50,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 0/5] wifi: ath12k: Add wifi device node with WSI
- for QCN9274 in RDP433
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>, ath12k@lists.infradead.org,
- linux-wireless@vger.kernel.org, Kalle Valo <kvalo@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Jeff Johnson <jjohnson@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20241105180444.770951-1-quic_rajkbhag@quicinc.com>
- <49a6ec0d-8a0b-49aa-a9eb-1174cff930f6@kernel.org>
- <cmvfpctliqggra33u6ituguoxh3jxcuxiyjpbtcjbcgpu6lhoi@4zdthfkc2ed3>
- <692503b8-cf39-4d6b-b70e-910fcc710d69@kernel.org>
- <CAA8EJpqMCbyK0dodMNyfs8dNjV2QoB2nyWm233eOS9xo8BaFJg@mail.gmail.com>
+Subject: Re: [PATCH V2 2/2] arm64: dts: qcom: qcs8300: add TRNG node
+To: Yuvaraj Ranganathan <quic_yrangana@quicinc.com>,
+ Herbert Xu <herbert@gondor.apana.org.au>,
+ "David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Vinod Koul <vkoul@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ quic_sravank@quicinc.com
+References: <20241107121513.641281-1-quic_yrangana@quicinc.com>
+ <20241107121513.641281-3-quic_yrangana@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -110,62 +107,31 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <CAA8EJpqMCbyK0dodMNyfs8dNjV2QoB2nyWm233eOS9xo8BaFJg@mail.gmail.com>
+In-Reply-To: <20241107121513.641281-3-quic_yrangana@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 07/11/2024 13:03, Dmitry Baryshkov wrote:
-> On Thu, 7 Nov 2024 at 11:29, Krzysztof Kozlowski <krzk@kernel.org> wrote:
->>
->> On 07/11/2024 12:06, Dmitry Baryshkov wrote:
->>> On Thu, Nov 07, 2024 at 11:23:20AM +0100, Krzysztof Kozlowski wrote:
->>>> On 05/11/2024 19:04, Raj Kumar Bhagat wrote:
->>>>> The RDP433 is a Qualcomm Reference Design Platform based on the
->>>>> IPQ9574. It features three QCN9274 WiFi devices connected to PCIe1,
->>>>> PCIe2, and PCIe3. These devices are also interconnected via a WLAN
->>>>> Serial Interface (WSI) connection. This WSI connection is essential
->>>>> for exchanging control information among these devices.
->>>>>
->>>>> This patch series describes the WSI interface found in QCN9274 in
->>>>> device tree and uses this device tree node in the Ath12k driver to get the
->>>>> details of WSI connection for Multi Link Operation (MLO) among multiple
->>>>> QCN9274 devices.
->>>>>
->>>>> NOTES:
->>>>> 1. As ath12k MLO patches are not ready yet, this patchset does not apply
->>>>>    to the ath.git ath-next branch and that's why the patchset is marked
->>>>>    as RFC. These are the work-in-progress patches we have at the moment.
->>>>>    The full set of MLO patches is available at:
->>>>>    https://git.kernel.org/pub/scm/linux/kernel/git/ath/ath.git/log/?h=ath12k-mlo-qcn9274
->>>>>
->>>>> 2. The dependency marked below applies only to the DTS patch. The
->>>>>    dt-bindings patches do not have this dependency.
->>>>>
->>>>> Depends-On: [PATCH V7 0/4] Add PCIe support for IPQ9574
->>>>> Link: https://lore.kernel.org/linux-pci/20240801054803.3015572-1-quic_srichara@quicinc.com/
->>>>>
->>>>> v3:
->>>>> - Created a separate binding "qcom,ath12k-wsi.yaml" to describe ath12k PCI
->>>>>   devices with WSI interface.
->>>>
->>>> Thanks for the changes. When you finish with testing/RFC, please send
->>>> proper version for review (just remember to keep numbering, next one is
->>>> v4 regardless whether this is RFC or not).
->>>
->>> Isn't the 'RFC' being an invitation for review per the nature of the tag
->>> itself?
->>
->> No, RFC means patch is not ready, might change. This was brought on the
->> lists multiple times and some maintainers clearly ignore RFC. Including me.
+On 07/11/2024 13:15, Yuvaraj Ranganathan wrote:
+> The qcs8300 SoC has a True Random Number Generator, add the node with
+> the correct compatible set.
 > 
-> Thanks, point noted. I'll stop marking my patches with RFC tag.
+> Signed-off-by: Yuvaraj Ranganathan <quic_yrangana@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/qcs8300.dtsi | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/qcs8300.dtsi b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
+> index 2c35f96c3f28..39c0c6b8516d 100644
+> --- a/arch/arm64/boot/dts/qcom/qcs8300.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
+> @@ -588,6 +588,11 @@ &clk_virt SLAVE_QUP_CORE_0 0>,
+>  			};
+>  		};
+> 
+> +		rng: rng@10d2000 {
 
-Wait, you can keep marking them RFC! It all depends what do you want to
-achieve. Get some comments on early work or actual review for something
-you believe is a finished work.
+Drop unused label.
 
-I looked here briefly, no comments from me and I assume that was the
-intention of RFC.
 
 Best regards,
 Krzysztof
