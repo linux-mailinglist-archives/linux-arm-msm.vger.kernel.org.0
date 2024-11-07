@@ -1,108 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-37219-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37220-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0D2B59C01D9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 11:05:03 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 381549C01E1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 11:06:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3EC491C21D54
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 10:05:02 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E2A621F21C1A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 10:06:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9AFC1E25ED;
-	Thu,  7 Nov 2024 10:04:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0C611E7C21;
+	Thu,  7 Nov 2024 10:06:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CcmWDrCW"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hmkWbxHs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20F0B1E5714
-	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Nov 2024 10:04:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C5EC1E25ED;
+	Thu,  7 Nov 2024 10:06:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730973892; cv=none; b=eHSPaKJ+g916uYX5GLd2flLnAHnLWV0A3XIfDLXmnP6c5gSllyaTA4PoV5vVUEgQQJYORe/3RM86AjyNZVD8I7Zb5J115+HPgDUnwSX3aXUfNG5qrKuofsIEzORfk+amhEkwQcVae3aONCl2LUOe/weODKqIWNCXk+EvrBeqzs8=
+	t=1730973968; cv=none; b=JZyaZ1+JhHCyIqDnvQgC8PLykOaatCy1vdc0flxXMPpr6NxdEUsHLsp4wVXcOcFFoRDhY93YH/QYLuc9C037IAS//GZXL0sMMyUoes4Y+NM1Z5gb+gHr55tnQCrfsX8b+H2cqBxOWaDj0Mo48o/ktZkHWzFaRr3Qs3nPefta3GU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730973892; c=relaxed/simple;
-	bh=FSD5q91Z5M97/KUQMP8P2AN+XSUMd5DKoahhKdY4m/E=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=myCnw5/kXA7B/4BtuCHH3BR0QoBnjRPRL+1WkYgrvNPjZvd0a7jcqo6U59t4GDZ5nBwbUckyxXY7ZQEz/9KX7iDQVmB7gEHZQwYU2A2gigoHLty+ECWRdsQP4TYqVUwUi5WUc0xJCQnqyY62CzqnuWLBBu1bVoeBlhyNAHjfUx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CcmWDrCW; arc=none smtp.client-ip=209.85.167.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-539f1292a9bso726193e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Nov 2024 02:04:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1730973889; x=1731578689; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=RNrRvn+cAcwon+U+/CNcXQAra1a+3pdXa58qFXl6K4w=;
-        b=CcmWDrCWnmGKbMxwal+CbK6EktpxS5demWchjiAyxM7tY8P1sWYx+uSx79RrTyoW4X
-         JikpeVZVeLUkZuaoaUuKAI6mZba163fkI2WNgJBRWMiqYt3aH3lu3pRBRNGZZPDLgwOH
-         cn3YGVkAmoAXMSZ8Ek16U//ZbK7oKEiH1zwoDm2zEesxKxeoDH4fC+dBLjUqBzaH6nhg
-         lulrpIhUBdTimis4KCI7Srer8DrsnW1I28JiOwHvN9rc8DuoS8hxmu/6I4kirwfM+hyy
-         9j4+sEBijh8rZ6amN2y8LMvylq2VOcsMVlRQETrjKgwidBLLoUl+P/BP/B0YqBLhwCFC
-         it4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730973889; x=1731578689;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RNrRvn+cAcwon+U+/CNcXQAra1a+3pdXa58qFXl6K4w=;
-        b=esRrjHNtapq0X8y/cfpPiUzF8yJ7eS2tyi+tZK9LtgS/EMJCWVNPRcl6xLDwBj3cNS
-         XIPT3pnrZXUzWxhfjl5q+7sEpdGYV4+DDfgnSf2qMzr2seFYiRDFuOpa/Z9ZjU5mKe1V
-         c1XvVLnrxTU1Y1FrizmR/iePsxPDQoIuFCIGuZCdYzcI4iBsnOx8OpVlNtabSBhiE9bk
-         jGyMYwc438wHE/fVgRvkPKmjTSOsTKZDKITFkw/A8JigYlUzVZ4hUsiCzY4Iv1Er2lc5
-         iHqcrEmE3wHMCwAWEBrFzF1RRHVBDoRB0gkwf6YhMdre1aSgUqszJa3Qpj1jWwuAXquw
-         P8wQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUW7tWaR9BkoU2ob47PyBfCbJYfaCd6F17A5oNJQZdpy5dOTsvLEDmvwWDjr3tngZN1DJBI+1yab51q8fg7@vger.kernel.org
-X-Gm-Message-State: AOJu0YyRPPmtRrcOkPsPL8JPlAZK7+iRNVe9/BEJA+y2n/jlmqOz55Jq
-	1pJj0zzEf5D2DaAfXhPQmh/20yOa2qUkV0cKJcoUGyBlEWyeygog4wfoqzxaE2Y=
-X-Google-Smtp-Source: AGHT+IGfQc/m8nvutNLjLulZId4wRz3gyPjE3WTSiXdeZ1GwLBnKgID+Ladwa+ZMi0aHaDpNN77JQw==
-X-Received: by 2002:a05:6512:401f:b0:52c:9383:4c16 with SMTP id 2adb3069b0e04-53b348cea2amr22905811e87.22.1730973889174;
-        Thu, 07 Nov 2024 02:04:49 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53d82685739sm151588e87.61.2024.11.07.02.04.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Nov 2024 02:04:47 -0800 (PST)
-Date: Thu, 7 Nov 2024 12:04:45 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Sricharan R <quic_srichara@quicinc.com>
-Cc: andersson@kernel.org, mturquette@baylibre.com, sboyd@kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] clk: qcom: Remove unused freq_tbl definitions
-Message-ID: <xvkvhu3qvlsjnlkiinbm6wguttpozyvlyy5mbbjcpg7vnhrp7w@trjvrm2zpylk>
-References: <20241106184949.801819-1-quic_srichara@quicinc.com>
+	s=arc-20240116; t=1730973968; c=relaxed/simple;
+	bh=UMsXvjqCc0ohkufDTxdIQ9m/VnQfqESwQr5bQfyXaYo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=IwDfbR7ONUK1uojgN0gowNhcnrNxHYnwhhM2A/CG1m2+S8E9aCzpBgqznLBwuYgf/iiRGLAAU9My33SuK6tfzgTDacBPPMZS4Jj21hhVEw2ohAHQgsp5gWOcmC+oUa+U3l6Nt+7Fyh0dTR5EfSOIpTVBpU9Btm16y7FqQdUkvgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hmkWbxHs; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A71lY9E009544;
+	Thu, 7 Nov 2024 10:05:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	M+PEGw14V1gqeDo8dVIj0twYB8BsEsS4mAYW6zqcgF4=; b=hmkWbxHsaDJfulKr
+	+ub0iGrvSEqCPq/SL6W2wK3xTpQ0gFhEcoxan1E/ROo0k/SK6FoWk4PGMzmHBrXq
+	r8hu/uGPNaukRJGmn31ma88Qq+5WgmAhLd78F5kYmcxHyG0CEXRmVa8FGt/lfDTm
+	7beSycISxlVg6ms5E/rmMGxkwvRhGuIsDly4ZbZVaOzQ3cUCAmOlUCFRhAfK47+F
+	gUI1umCSNv2zZVPpN7T8orcAzsqWBEQC8Yb+T2PPgNVrZ7GYknYajMxXNVj8ZsEf
+	6ocvBGsYfabrkFWRjwghASN7Ex9xMMOuGJrIX5g6F8D2aCDkqnOdi10vNxPvQDdP
+	nwfYHg==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42rm6vs4h5-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 07 Nov 2024 10:05:30 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4A7A5Tc7001418
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 7 Nov 2024 10:05:29 GMT
+Received: from [10.216.36.39] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 7 Nov 2024
+ 02:05:24 -0800
+Message-ID: <27d09dbb-184d-40ac-8cbb-abec7799cb8e@quicinc.com>
+Date: Thu, 7 Nov 2024 15:35:20 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241106184949.801819-1-quic_srichara@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 02/11] clk: qcom: clk-alpha-pll: Add support for
+ dynamic update for slewing PLLs
+To: Taniya Das <quic_tdas@quicinc.com>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        "Stephen
+ Boyd" <sboyd@kernel.org>,
+        Abhishek Sahu <absahu@codeaurora.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon
+	<will@kernel.org>
+CC: Ajit Pandey <quic_ajipan@quicinc.com>,
+        Jagadeesh Kona
+	<quic_jkona@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+References: <20241101-qcs615-mm-clockcontroller-v2-0-d1a4870a4aed@quicinc.com>
+ <20241101-qcs615-mm-clockcontroller-v2-2-d1a4870a4aed@quicinc.com>
+Content-Language: en-US
+From: Imran Shaik <quic_imrashai@quicinc.com>
+In-Reply-To: <20241101-qcs615-mm-clockcontroller-v2-2-d1a4870a4aed@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: GtAbI3-UQ35YA5lJ0fGj9a2XeY6-yRLW
+X-Proofpoint-GUID: GtAbI3-UQ35YA5lJ0fGj9a2XeY6-yRLW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 spamscore=0
+ clxscore=1011 phishscore=0 malwarescore=0 lowpriorityscore=0
+ priorityscore=1501 mlxscore=0 adultscore=0 mlxlogscore=999 impostorscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411070077
 
-On Thu, Nov 07, 2024 at 12:19:49AM +0530, Sricharan R wrote:
-> From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+On 11/1/2024 4:08 PM, Taniya Das wrote:
+> The alpha PLLs which slew to a new frequency at runtime would require
+> the PLL to calibrate at the mid point of the VCO. Add the new PLL ops
+> which can support the slewing of the PLL to a new frequency.
 > 
-> Q6 clocks are managed by Q6 itself, hence ftbl_gcc_q6_axi_clk_src
-> is unused. ftbl_gcc_qpic_clk_src and ftbl_gcc_qupv3_2x_core_clk_src
-> are unused. Hence removing all the three.
-> 
-> Fixes: 21b5d5a4a311 ("clk: qcom: add Global Clock controller (GCC) driver for IPQ5424 SoC")
-> Reported-by: kernel test robot <lkp@intel.com>
-> Closes: https://lore.kernel.org/oe-kbuild-all/202411061537.anSkNwoR-lkp@intel.com
-> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
 > ---
->  drivers/clk/qcom/gcc-ipq5424.c | 18 ------------------
->  1 file changed, 18 deletions(-)
-> 
+>   drivers/clk/qcom/clk-alpha-pll.c | 170 +++++++++++++++++++++++++++++++++++++++
+>   drivers/clk/qcom/clk-alpha-pll.h |   1 +
+>   2 files changed, 171 insertions(+)
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Imran Shaik <quic_imrashai@quicinc.com>
 
--- 
-With best wishes
-Dmitry
+Thanks,
+Imran
 
