@@ -1,161 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-37228-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37231-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 13F799C03F7
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 12:29:26 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 779209C050C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 12:58:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 97AA01F22B10
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 11:29:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A97291C21266
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 11:58:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C89912003BF;
-	Thu,  7 Nov 2024 11:29:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D9AF20EA33;
+	Thu,  7 Nov 2024 11:58:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hBfEVEY5"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nd3VY7Aj"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 659351FCC5D;
-	Thu,  7 Nov 2024 11:29:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FF9020CCD1;
+	Thu,  7 Nov 2024 11:58:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730978952; cv=none; b=gFW2P7PcjbJty8WWkqaHn8AKtKl80mdPwUR4rPYTBqjCXAY9H0WQ3RqB9pr4oQ35bmt3ro23nRqxmihOpI0K2gwJCCl9SBRW6BiAe2FmwjdQ48ehl/ZWXi6my+zELfgV9TzMJZRnpa85WqEkTSjTTkv4oGqdrb8N74e+BMOKubs=
+	t=1730980696; cv=none; b=QA/WhC+S+JqRgst3v4tZxJdrE0ai21su36qXn76gBLXQQ3aJdsrX+7O/Ddinoi7vQubyy3zV5gghdr9RpH3WjEU4Pb3QdZd2EdkCa6KSaoqY5c+2sFgcTTf/XyUvR1I7dIiKzsDxPtHy/Zyv0uzZQW9E6F0BExVtnNrEgRygLjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730978952; c=relaxed/simple;
-	bh=hn/LWCWM3d5rbXF/Ku8OlDD6oDQ8ir5pxuttNeX7L0U=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mqfZQJkbdSknjihypbYmbJx9CIVKBJAtKZvUAmyxzU05cWf0Fx0IXK5OIAQK7p2syhtM6oiyo4xKtEhmdyOBG+DqDJoNjhvNWgK7Zuq0tlNMnHZKr1xmIJD8flcMiF/A4FsNi9OpLYancgDF9uAKaD9kuNAm3IlVhn4YJEwIFJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hBfEVEY5; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8174BC4CECC;
-	Thu,  7 Nov 2024 11:29:08 +0000 (UTC)
+	s=arc-20240116; t=1730980696; c=relaxed/simple;
+	bh=Gh/ompZkwURn0PwOkifty4Ajs5DMdgzLZxjoSuHPK3g=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=m8/vRrql6I2Yys3Jum57cgiaexR/V44b510tsRzGtlK1WsdEJAZMx9GdOV94efwVYYR9YYOlRrR0gVQlDbweZ27qX0r7lHG0MDw8JsG+AVSqeAn759o9RbTDOlH8Gb0pyFdUk0Ty9e2Sm7AjLIVCQiwiAOwKFU6FDFjs2LBrQIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nd3VY7Aj; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id A9452C4CECE;
+	Thu,  7 Nov 2024 11:58:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730978951;
-	bh=hn/LWCWM3d5rbXF/Ku8OlDD6oDQ8ir5pxuttNeX7L0U=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=hBfEVEY5iGXU8zSBj+aGKyoImpil09OAqQaSS/0AbHfvA9Gg/VNkhBkYVsNfnTc56
-	 f92ARaTJ4ZAet7OCjJgRbeAmUVOQCt+ZHDUE3q+8gxmzZsX9y2+fN06Ps1BsEWpCi9
-	 OvAK99XdyrslGFk229NIfFKszurvlEF+lPsmdaCncOaf1rxJ5TkCsKdUuucKp3WGU5
-	 uLzpUt4Pd1O0s3F4ShEjd40zQWhPQVKooiTxbdhJye9zj6qi7XtOSIwKc3VmsudQNX
-	 VEutFFCX1fKBrac+se+EIlmYtSN5CwZUc3QmvRdrZ9kValAIvJsykv7IVpX7uQyzmZ
-	 lb9o1+MwjEyMg==
-Message-ID: <692503b8-cf39-4d6b-b70e-910fcc710d69@kernel.org>
-Date: Thu, 7 Nov 2024 12:29:03 +0100
+	s=k20201202; t=1730980695;
+	bh=Gh/ompZkwURn0PwOkifty4Ajs5DMdgzLZxjoSuHPK3g=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=nd3VY7Aja2UhjCkdssEGJAn8WYU0/vn8jv5UgOSkD/HjAXbTssVVPy0hqXs87VwlG
+	 AHu52Cx1kMuLMZZ4Y0V6JKnVGHprvgINzuR9/qtUrVDjQD1GNp7alw+KpJ50pWNKK9
+	 SuA0Bja2bNSGiZ9/aLDECTDabmpxVwX6Q/dabRyQEVk43O9nxQceU6ql89BmN1MrCG
+	 X3RUF4+enipJe8GLixJrj/jaksQ/OAtYKEbRhK2Z1XVk7e2DXvFtRQrpCD0lbzWb/+
+	 tYZYjPG1o6dY3Pzqwo6sMbhKRd/W6RXq+Orfzb4OIk2nczJcYeFnKuANMkPrtUB1A8
+	 JFZvoYfr/SJng==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97515D43352;
+	Thu,  7 Nov 2024 11:58:15 +0000 (UTC)
+From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.linaro.org@kernel.org>
+Subject: [PATCH 0/2] clk: qcom: gcc-{sm8550/sm8650}: Fix UFS resume from
+ suspend issue
+Date: Thu, 07 Nov 2024 11:58:08 +0000
+Message-Id: <20241107-ufs-clk-fix-v1-0-6032ff22a052@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 0/5] wifi: ath12k: Add wifi device node with WSI
- for QCN9274 in RDP433
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>, ath12k@lists.infradead.org,
- linux-wireless@vger.kernel.org, Kalle Valo <kvalo@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Jeff Johnson <jjohnson@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20241105180444.770951-1-quic_rajkbhag@quicinc.com>
- <49a6ec0d-8a0b-49aa-a9eb-1174cff930f6@kernel.org>
- <cmvfpctliqggra33u6ituguoxh3jxcuxiyjpbtcjbcgpu6lhoi@4zdthfkc2ed3>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <cmvfpctliqggra33u6ituguoxh3jxcuxiyjpbtcjbcgpu6lhoi@4zdthfkc2ed3>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAFCrLGcC/x2MQQqAIBAAvyJ7bkHFEPtKdAhbaykslCIQ/550n
+ IGZApkSU4ZBFEj0cOYzNlCdAL/NcSXkpTFoqY1S0uIdMvpjx8AvknFEWjrbOwOtuBI1/d/GqdY
+ PcoxysV0AAAA=
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+ Neil Armstrong <neil.armstrong@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Amit Pundir <amit.pundir@linaro.org>, 
+ Nitin Rawat <quic_nitirawa@quicinc.com>, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+ stable@vger.kernel.org
+X-Mailer: b4 0.14.1
+X-Developer-Signature: v=1; a=openpgp-sha256; l=806;
+ i=manivannan.sadhasivam@linaro.org; h=from:subject:message-id;
+ bh=Gh/ompZkwURn0PwOkifty4Ajs5DMdgzLZxjoSuHPK3g=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBnLKtReLRazqpEK4DZPuTzY71FdYMrbx2WEhOnt
+ pZm60uhuSqJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCZyyrUQAKCRBVnxHm/pHO
+ 9VgjB/4iieean0IziLGHHrJI59WIFDmy9utZzqMMwJ049ru36KmxBmdBfCp/UH9YzV1W8wEZal3
+ AdKLjERvX+l+N16/j05L32RWjxq3y9usqz12ulTYMA4k9qi07uZEq4CRaYBNz505MdzGdxosVJq
+ LcZZfRQMYTylWvl9rwXw5FcyDcmQ5Y//uRQLutgxRznjTOMEwAybvCLjt/qSDs8zUrEZ9aC2Nc+
+ P87+TBbDA4mw/Y/90cJpPBEXoVLa2MgjzhUboLaQaMMZzXA448r8Fp+DL60/m4/U1dKveuK1NUN
+ 8UTh6pljk9YPKANcqyUalQkye156zFnanrZkGNU5VCYEfm65
+X-Developer-Key: i=manivannan.sadhasivam@linaro.org; a=openpgp;
+ fpr=C668AEC3C3188E4C611465E7488550E901166008
+X-Endpoint-Received: by B4 Relay for
+ manivannan.sadhasivam@linaro.org/default with auth_id=185
+X-Original-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reply-To: manivannan.sadhasivam@linaro.org
 
-On 07/11/2024 12:06, Dmitry Baryshkov wrote:
-> On Thu, Nov 07, 2024 at 11:23:20AM +0100, Krzysztof Kozlowski wrote:
->> On 05/11/2024 19:04, Raj Kumar Bhagat wrote:
->>> The RDP433 is a Qualcomm Reference Design Platform based on the
->>> IPQ9574. It features three QCN9274 WiFi devices connected to PCIe1,
->>> PCIe2, and PCIe3. These devices are also interconnected via a WLAN
->>> Serial Interface (WSI) connection. This WSI connection is essential
->>> for exchanging control information among these devices.
->>>
->>> This patch series describes the WSI interface found in QCN9274 in
->>> device tree and uses this device tree node in the Ath12k driver to get the
->>> details of WSI connection for Multi Link Operation (MLO) among multiple
->>> QCN9274 devices.
->>>
->>> NOTES:
->>> 1. As ath12k MLO patches are not ready yet, this patchset does not apply
->>>    to the ath.git ath-next branch and that's why the patchset is marked
->>>    as RFC. These are the work-in-progress patches we have at the moment.
->>>    The full set of MLO patches is available at:
->>>    https://git.kernel.org/pub/scm/linux/kernel/git/ath/ath.git/log/?h=ath12k-mlo-qcn9274
->>>
->>> 2. The dependency marked below applies only to the DTS patch. The
->>>    dt-bindings patches do not have this dependency.
->>>
->>> Depends-On: [PATCH V7 0/4] Add PCIe support for IPQ9574
->>> Link: https://lore.kernel.org/linux-pci/20240801054803.3015572-1-quic_srichara@quicinc.com/
->>>
->>> v3:
->>> - Created a separate binding "qcom,ath12k-wsi.yaml" to describe ath12k PCI
->>>   devices with WSI interface.
->>
->> Thanks for the changes. When you finish with testing/RFC, please send
->> proper version for review (just remember to keep numbering, next one is
->> v4 regardless whether this is RFC or not).
-> 
-> Isn't the 'RFC' being an invitation for review per the nature of the tag
-> itself?
+Hi,
 
-No, RFC means patch is not ready, might change. This was brought on the
-lists multiple times and some maintainers clearly ignore RFC. Including me.
+This series fixes the UFS resume from suspend issue by marking the UFS PHY GDSCs
+as ALWAYS_ON. Starting from SM8550, UFS PHY GDSCs doesn't support retention
+state. So we should keep them always on so that they don't loose the state
+during suspend.
 
-> 
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+Manivannan Sadhasivam (2):
+      clk: qcom: gcc-sm8550: Keep UFS PHY GDSCs ALWAYS_ON
+      clk: qcom: gcc-sm8650: Keep UFS PHY GDSCs ALWAYS_ON
+
+ drivers/clk/qcom/gcc-sm8550.c | 4 ++--
+ drivers/clk/qcom/gcc-sm8650.c | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+---
+base-commit: 9852d85ec9d492ebef56dc5f229416c925758edc
+change-id: 20241107-ufs-clk-fix-e49ee2097594
 
 Best regards,
-Krzysztof
+-- 
+Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+
 
 
