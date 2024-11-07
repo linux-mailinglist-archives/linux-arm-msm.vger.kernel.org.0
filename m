@@ -1,160 +1,100 @@
-Return-Path: <linux-arm-msm+bounces-37247-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37248-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 094969C07A0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 14:35:33 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id F28639C0819
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 14:51:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 283941C22871
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 13:35:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 307611C22768
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 13:51:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E99352076A5;
-	Thu,  7 Nov 2024 13:35:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9AD152101B0;
+	Thu,  7 Nov 2024 13:51:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="o7sDvttj"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dWYuPazp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4472F1DDA3B;
-	Thu,  7 Nov 2024 13:35:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4CBF20FA81
+	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Nov 2024 13:51:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730986527; cv=none; b=e3aY1uNbqYyZeTvnTuGxa32CUSLH7StPKsvDABX31g8TKD6Ge/YptpcyVT3kAkfTFXuSRlDkb7GC9vHLGtIy3ewDH4PBBQMeUJQy1tcBC9rYp4b2i0vO20BrwdlxLWTs8kM93eHWlH0CFBmOaCXKMtTnK9viPh0wd78uUnb8Gxo=
+	t=1730987477; cv=none; b=OzT79Nc31a4W3YKTdVPSayHk5XzE7323T5zzUr9ygRHhfsv5rLqGAvbQoCf4kNZ9LyuXNAqv8ehcSQq4i3yfbpcC3eryVTfg5t6olJ5aTNodFxiFIMduD+2fJWO//ZRRXr9uUx1w9oIVw1PaD4+eIY2rI/w5lybuRWPpsQIp+vA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730986527; c=relaxed/simple;
-	bh=t/8insjH7bY+cYWvmL+WQJVYVpnLLyzddSxl6LIwJJw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=jO3FcsTnqb6SqBBZ2ASNgiwk9lbgf2Tt9VKLW3tL9jjSZeC8JJKl+hVOGywMcngKN5NZm1Rfrx4a+X5g7FTuS7HzPi3QKbj/mTsxYNLprvCdBOPJlpKs+9OzBVkTo+MrseXBQawbKqjmVxMMWEDk75MVWD+4Gq0gf2Mf9r11c34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=o7sDvttj; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A794YCn003803;
-	Thu, 7 Nov 2024 13:35:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	LZIOvvGsRXn0/wnKpU8mvrnl8iQ5RNd08gSeOGXnT9w=; b=o7sDvttjUN7UssHT
-	i48jDHvj4uysSK9ZEvPsnMtKyoUckcVoLlZzS8yWksVVV7alnscV2Uoq1afpGq6/
-	C02DR5pzPJBsbeEdqi11NJmM/4eIvp+V6NZqvU8UcOYLbjKptMNXpWZI5Yu09/Zr
-	j53aADYYPdkqGxjMQLPed0QTPWjmQ08OUIwHSEoujRdqlovUEv7ClOjPnhFg2pj0
-	a52qKmAnX0G8eNhis/9et3Nf2qhc/F8dCWHbr/u7nc1LJ02gwaSNF3cDK0J0UqcN
-	n3/anhlguEARNUpR2M88CTb/1iubdv4qH+lkWeO0KPdV0FrNtm+nRU4EPIi7Z9a1
-	qx5CCQ==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42qfdx7p0x-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 07 Nov 2024 13:35:21 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4A7DZLgt008228
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 7 Nov 2024 13:35:21 GMT
-Received: from [10.204.100.69] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 7 Nov 2024
- 05:35:18 -0800
-Message-ID: <781ea2fd-637f-b896-aad4-d70f43ad245c@quicinc.com>
-Date: Thu, 7 Nov 2024 19:05:15 +0530
+	s=arc-20240116; t=1730987477; c=relaxed/simple;
+	bh=NcVjILp/caZepFFB60+3XLNmk+XNW05BoJNj51Dg95o=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fvC3uG0FVmUN1ZMuFEKbm4R0CoN5BVnlL6eV+6Wr55F2YytiXq6doUqSsKyw+7PJbOtyUfdtfNPJRosyRHovC8o6aYCurjWgT+wDjv8lTDJXPWuTAyiDUlzD9+CFY5uRq9PlqLaAHp9/So1cRUww037ZtYu25WSWECOBxDkDbUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dWYuPazp; arc=none smtp.client-ip=209.85.208.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2fb587d0436so10360691fa.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Nov 2024 05:51:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1730987474; x=1731592274; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NcVjILp/caZepFFB60+3XLNmk+XNW05BoJNj51Dg95o=;
+        b=dWYuPazp9WM/9vSSOM4D3EsSjWlJhI0SMs7FoOP5jm9yR4CWngxyCWOwYzy7RcP+X0
+         QUipNMMuUFOq73NTu7IrUOa9gXvShW91Y99VNupmDZ6GX0DCRGUA6F6H4iIClU+soubf
+         B+tJYfjToPeIvtqaoETJuO2xOQl6vaVxFtbwnrpwJo5lSTcmimu6F1zJRmDn+521mJUY
+         A1KxpZ3A860jwm5j0ZzE3OlDlftdswJfEUTU6cpwOolZbhujR0GBMiStNEYXNCPPX7Ok
+         K4IMqkSCOUTGwoWvayYcX0c1CUsKNYjO/ekW55yY9HLT1jb9XkSo0gRGjzr5LfzEogAF
+         2fvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730987474; x=1731592274;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=NcVjILp/caZepFFB60+3XLNmk+XNW05BoJNj51Dg95o=;
+        b=SGXMmpKDFNLOLm6AgVNwqYJO54aYBhgTDN2KxHnjnI+TJYBH5vCvJemzulAPA2s1Vs
+         FAMNF0r5YNyhqnKY2DGW+4AmEsMDSaTIi4/34YzjQABNfDnEyb9aP5ccqM3/lxDzEYUi
+         KzPKe4psmSue3x8La236kQpHzU0GfLcKbaJkGStf9r00aFEQerUsB8YiniW6PHP+9pYo
+         SrFSYUyFILrc360vz7oDqLGHqDL9u/fLegZexIyiWWEIAdEo3mV2SHAp0e/y17KAVtmm
+         qdfeW6T3d9XuIcD/R++3CQjzyx/Fl8U78X0vKx/42rx3WX7fkhp0ZpfG+DWHv1lFFore
+         1/Tg==
+X-Forwarded-Encrypted: i=1; AJvYcCUQNu+eyPm12b/51dPgVSN9N80d4O4ZUmaOzJ7V4qWlDsjO96K8siPBbkOrPstde/J9tQtIdnXJ3xNT658N@vger.kernel.org
+X-Gm-Message-State: AOJu0YyoH2kgnlywJ7dYEvYU1OpDNSCUvmeZyk3+UWy2ObCf/4aWaD+P
+	bxXvY6wkvtuOPxm2KNn+TJviWZT+ZRV2ufxO5OQeJpyx2S9PW/qgwORvUDAIOfDCi7QOXZdPXkY
+	T5/up7opMJuzvwNNn4x+p2wVtmdSB2V2bzlOTIw==
+X-Google-Smtp-Source: AGHT+IGiWq7PtiVgzCFFWXw5DpnT7owotNtkDOgrZOKmEF+j8eLRrqW6X8/sDWUO8xLANvzfCAOHbn0yaa5j804ukJc=
+X-Received: by 2002:a05:651c:1596:b0:2fc:ba7a:c97a with SMTP id
+ 38308e7fff4ca-2fedb83155emr127846251fa.39.1730987473829; Thu, 07 Nov 2024
+ 05:51:13 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH 1/4] media: venus: hfi_parser: add check to avoid out of
- bound access
-Content-Language: en-US
+References: <20241014-armv7-cacheinfo-v2-0-38ab76d2b7fa@linaro.org> <20241014-armv7-cacheinfo-v2-1-38ab76d2b7fa@linaro.org>
+In-Reply-To: <20241014-armv7-cacheinfo-v2-1-38ab76d2b7fa@linaro.org>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Thu, 7 Nov 2024 14:51:02 +0100
+Message-ID: <CACRpkdZ8--4fKxT6+AbYSvTbA7-7EM_HutNVPT7yS90NN1r5nw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] ARM: add CLIDR accessor functions
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Stanimir Varbanov
-	<stanimir.k.varbanov@gmail.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <stable@vger.kernel.org>
-References: <20241105-venus_oob-v1-0-8d4feedfe2bb@quicinc.com>
- <20241105-venus_oob-v1-1-8d4feedfe2bb@quicinc.com>
- <b2yvyaycylsxo2bmynlrqp3pzhge2tjvtvzhmpvon2lzyx3bb4@747g3erapcro>
- <81d6a054-e02a-7c98-0479-0e17076fabd7@quicinc.com>
- <ndlf4bsijb723cctkvd7hkwmo7plbzr3q2dhqc3tpyujbfcr3z@g4rvg5p7vhfs>
- <975f4ecd-2029-469a-8ecf-fbd6397547d4@linaro.org>
- <57544d01-a7c6-1ea6-d408-ffe1678e0b5e@quicinc.com>
- <ql6hftuo7udkqachofws6lcpwx7sbjakonoehm7zsh43kqndsf@rwmiwqngldn2>
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <ql6hftuo7udkqachofws6lcpwx7sbjakonoehm7zsh43kqndsf@rwmiwqngldn2>
+Cc: Sudeep Holla <sudeep.holla@arm.com>, Ard Biesheuvel <ardb@kernel.org>, 
+	Russell King <linux@armlinux.org.uk>, linux-arm-kernel@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Arnd Bergmann <arnd@arndb.de>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ccWNCJ483Y6ywBFH9EoYBJhldZv5z73l
-X-Proofpoint-ORIG-GUID: ccWNCJ483Y6ywBFH9EoYBJhldZv5z73l
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 malwarescore=0
- lowpriorityscore=0 suspectscore=0 phishscore=0 priorityscore=1501
- impostorscore=0 mlxscore=0 bulkscore=0 spamscore=0 mlxlogscore=810
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411070105
+Content-Transfer-Encoding: quoted-printable
 
+On Mon, Oct 14, 2024 at 3:55=E2=80=AFPM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
 
-On 11/7/2024 6:52 PM, Dmitry Baryshkov wrote:
-> On Thu, Nov 07, 2024 at 06:32:33PM +0530, Vikash Garodia wrote:
->>
->> On 11/7/2024 5:37 PM, Bryan O'Donoghue wrote:
->>> On 07/11/2024 10:41, Dmitry Baryshkov wrote:
->>>>> init_codecs() parses the payload received from firmware and . I don't think we
->>>>> can control this part when we have something like this from a malicious firmware
->>>>> payload
->>>>> HFI_PROPERTY_PARAM_CODEC_SUPPORTED
->>>>> HFI_PROPERTY_PARAM_CODEC_SUPPORTED
->>>>> HFI_PROPERTY_PARAM_CODEC_SUPPORTED
->>>>> ...
->>>>> Limiting it to second iteration would restrict the functionality when property
->>>>> HFI_PROPERTY_PARAM_CODEC_SUPPORTED is sent for supported number of codecs.
->>>> If you can have a malicious firmware (which is owned and signed by
->>>> Qualcomm / OEM), then you have to be careful and skip duplicates. So
->>>> instead of just adding new cap to core->caps, you have to go through
->>>> that array, check that you are not adding a duplicate (and report a
->>>> [Firmware Bug] for duplicates), check that there is an empty slot, etc.
->>>>
->>>> Just ignoring the "extra" entries is not enough.
->> Thinking of something like this
->>
->> for_each_set_bit(bit, &core->dec_codecs, MAX_CODEC_NUM) {
->>     if (core->codecs_count >= MAX_CODEC_NUM)
->>         return;
->>     cap = &caps[core->codecs_count++];
->>     if (cap->codec == BIT(bit)) --> each code would have unique bitfield
->>         return;
-> 
-> This won't work and it's pretty obvious why.
-Could you please elaborate what would break in above logic ?
+> Add functions to read the CLIDR, Cache Level ID Register.
+>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-> 
->>> +1
->>>
->>> This is a more rational argument. If you get a second message, you should surely
->>> reinit the whole array i.e. update the array with the new list, as opposed to
->>> throwing away the second message because it over-indexes your local storage..
->> That would be incorrect to overwrite the array with new list, whenever new
->> payload is received.
-> 
-> I'd say, don't overwrite the array. Instead the driver should extend it
-> with the new information.
-That is exactly the existing patch is currently doing.
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 
-Regards,
-Vikash
-> 
->>
->> Regards,
->> Vikash
-> 
+Yours,
+Linus Walleij
 
