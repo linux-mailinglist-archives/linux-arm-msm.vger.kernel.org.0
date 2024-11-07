@@ -1,76 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-37206-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37207-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E2A5E9C0022
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 09:37:54 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 11BE39C0054
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 09:46:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 747AE1F2199B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 08:37:54 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 65C8BB23774
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 08:46:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0FFA71D9341;
-	Thu,  7 Nov 2024 08:37:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A8E21DF728;
+	Thu,  7 Nov 2024 08:45:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dURYm47l"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sK8os7CO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DD9B1993BA
-	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Nov 2024 08:37:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6035C1DE8BF
+	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Nov 2024 08:45:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730968664; cv=none; b=OJ3J6T9Y0QhQeVp7QgCeUCyNYQ3Pvks6snPUXCFVEqwk4JM2AysWsoV0aRPSpLF79wATv3ldADGWSk8zmNSJwcheP0OBqGihVUDcjLIHxqZaGhQk7qzu2/9q9untOZSivhrVE+mvtQ+hISmvHkEB3iFNS7ELryLTUilQt9t6Cjg=
+	t=1730969111; cv=none; b=Qu8QtvOCQcytJLQyHxjcl9pw2iSJfPxYE5hiKdcGn6BhghTnBpSW7I89Wo2YbI448Uqf/scqdqsgBoYt5C9JKq+EzFATlQFV1Wiec7jfAjNKb8XCHRcLv7ofps5VJ00HZ0SepmLGYp8Wi4O++YzW3dvngobAqpKbitx2i2E/1wY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730968664; c=relaxed/simple;
-	bh=5KKm7vNWJgWghFT5nNLhjDOshGpxtnvHC9TFhJK13ak=;
+	s=arc-20240116; t=1730969111; c=relaxed/simple;
+	bh=YmdxF7vbu8dJM4MGBbkY7vzPYBSxi5Z267Sqc1A988I=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=TPZ4vrIQQ83+kZUW0YtYw0B0vTARRbhkID5dffe8pj6McpnTpedi77hICPXJEQ9D2lpFymb0zDzcqwR4GCP/1K42YuLJ+ZNVCi2beu53i4RZBb+hSTKRm+twAxxs0DlMsA0M9NcxQwn/7XcT2NS1Ry0V61Vti6ePvxM5iJIHKTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dURYm47l; arc=none smtp.client-ip=209.85.218.47
+	 In-Reply-To:Content-Type; b=DyeC+0q2mOheik/gYGjK58DwH5jNTIg+KsH/SDQa3OencFqkNeUn5pVcZKrz2nYSI1WXRY2epArdo7SwQ9EvAhNiVZjXjGxbG8trFIZdnr9q0PEMhM2pdga5aa40vnOZ98L3mrhujNtgyE2m9hCADcYT7PvAFvDgx0+mrOJO8TM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sK8os7CO; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-a9ed0ec0e92so82290466b.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Nov 2024 00:37:41 -0800 (PST)
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4314f38d274so8247945e9.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Nov 2024 00:45:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1730968660; x=1731573460; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1730969108; x=1731573908; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=fZao1C6pV4fJNRNyMk7syEnimVtRpaNTazE2wh1+Hz4=;
-        b=dURYm47lbCyeC5NypEX5uV4OBnpz9uEk6rcszAWN4Ytbr7Ez74r5gkGWQ0Rduumxo2
-         y8vh2y6RAsPFfe1IsdeVEcKjSceLEB00gvBDQ438RU1M/NN0Dvqyo3jaRPNB7xoXMNJE
-         L5oWMBc/8QFFdMwrQwIxXaGXFcwNjQGMwrljFQY2ixUg22c2QSrlJGGfPiASF95qedDf
-         TSATJjbi8tOE48vAM7Hrz9M1HzTqNxsMRJlzUrNzhbLtSYwwswkW06r794lEA2XkGhI2
-         bbrkOJu44OBXyopfGJjAR+IuwWuni2d62fwn3ViyuiN4kbg0PRBwRFb9OwilODd8R4Qk
-         uzkA==
+        bh=Ptk/prbXj2qZpsXfE6umlu//+z1stLb6ou6X7W8u0q8=;
+        b=sK8os7COJauabbfX/hui0HPiHWLzXQd0aFalbUph2+0ik6FBVQlPVEtB9xonOoaHuQ
+         wBHM1PvM8zsvKlmQjYI+QL1g6n44vl36sV8G3dqKGpSdbbbDh3ammH8FSoCLvZyqb4BT
+         uruiZqPbrTOoh3sw08zT/0K5GYLMP/p4AstJMSeqDF930JLcwBaMQuZLC3pxNb7EcaTN
+         eU7tBwjcVfqWX2oufpsrenPLUUA1VyJapu15QUUnKEe9xqsVUNxHVCTUKbKIhdwUITOX
+         oFMJbv6ypdojN8+U9JzLbgfnuqb6leysvnUqGKNsl5is1EgBhGf9leQ+z8x4blNP5VWD
+         gdyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730968660; x=1731573460;
+        d=1e100.net; s=20230601; t=1730969108; x=1731573908;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=fZao1C6pV4fJNRNyMk7syEnimVtRpaNTazE2wh1+Hz4=;
-        b=q6P4Vc6KA/sNDO1Tl8UyD+SbjpySeUKhI2lkx37yJ/0wAwKazqkQ7exWu9mV613uTJ
-         x5GjwnZSWEaqcVR4XUfvLFpUIjS9Y1aMprC9/mut93tsrgOsKzHjSSwLCTCw/cOOPNQs
-         85I+tjUHTGFWgGe2nXY3I4V+NyP82bU7/zQhtYIgVr0XSQ2iL4o8rRHxR3VsMMmsTnax
-         IzjRKh/6YuifHdkl5jJhbCS5w0f1OS0RfMAtVKd9fncdhUPKSlNMDO+HXcyft7RZN3wp
-         2Cs0stYIn3/MJ4UlHQ0yv7VqABrBV2R8vR2mBbGtYQ+OTXq/vPaNVhZTbLzBWtnWrNpJ
-         bKsw==
-X-Forwarded-Encrypted: i=1; AJvYcCXwWvcmCP4Ky7TTwMuKqlbtqhZCekIyMH/vxbjONDnIroLTr4vUn70pavO+TXtNFcLGw/+AtMJ7+wgVwzzD@vger.kernel.org
-X-Gm-Message-State: AOJu0YyrisxWPj12kxtN/w1RFDxV5ioL2FEFKQbrF3jiR7jY248DUKsm
-	nnQuAvBHENpLmu+2rbkUZaNn2AdrUdGOUi+BRWpZbDT0oTYs3dl29v8m9JlwohI=
-X-Google-Smtp-Source: AGHT+IEhNtLHXpW2UW43FhKyRoSS3ZfYfyhsgWLjpZCVbTjlt3IsJUPg3RMTYn5vGgbY89sMKtA8FA==
-X-Received: by 2002:a17:907:7290:b0:a9a:7f84:93e3 with SMTP id a640c23a62f3a-a9e654cda4amr2101061966b.14.1730968659934;
-        Thu, 07 Nov 2024 00:37:39 -0800 (PST)
-Received: from [172.16.23.252] ([154.14.63.34])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9ee0a17651sm60652766b.38.2024.11.07.00.37.38
+        bh=Ptk/prbXj2qZpsXfE6umlu//+z1stLb6ou6X7W8u0q8=;
+        b=wcZaeJ1jWfMdX5GUiR740tWUb/2OaFW1HOESYk14hBY79Zicltf8SivzK0twuUhNOZ
+         0YBcVxUst0pmVnHtupjGJ4NheKV11WWvujxK4W9W3BZ/6K7fHcdfgSRwho3iL+OXJlAc
+         f5nBo39hcXtv54BX9VWsUwc49seWVdteGatHpEo/CNcgC0NFNbeh7e5Ily3hI/K+Wi6S
+         nRW8DEgj91dcavfivaiZiZz/CBN7E0u2PTi06wFQRRqc3snWyMpUmQM6zRViQYkOjmwf
+         RJu4ycbXX8RJhipn62Rz877OfDLWDKxmdOACP54D5dL3ayOgblhzVgRj3agI4mqEdrnM
+         F1gg==
+X-Forwarded-Encrypted: i=1; AJvYcCWy0Itb2hz4jqY68vfz4XT0DuMpaSa9TovtarC7NybB37wCOwtrCexsuzDItO0uV6gpiNogEha9/rceYkBt@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz2ssbCHtgdAsvGAdcXMAhtOa5FE5wfF/rP2Ss5+8rh7G7biyjt
+	PPV8cNJ8hy8tDhF86mXGvOKoHDBVzC6bsjBkn7grFUUQ4rWu7CkJymh2PMIASIA=
+X-Google-Smtp-Source: AGHT+IF0iK8ZjS53YGkJV1UqpdJmYPay52KWYJpFa25L7QQvig5tLM86CqKdyPC9HssVdqkQsGoQwg==
+X-Received: by 2002:a05:600c:3148:b0:431:557e:b40c with SMTP id 5b1f17b1804b1-4328327ce1fmr236778325e9.27.1730969107679;
+        Thu, 07 Nov 2024 00:45:07 -0800 (PST)
+Received: from [172.16.23.252] ([89.101.134.25])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432b054b3fesm15331845e9.17.2024.11.07.00.45.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 07 Nov 2024 00:37:39 -0800 (PST)
-Message-ID: <f681e30e-35b6-42de-88d4-8ae9effb49ed@linaro.org>
-Date: Thu, 7 Nov 2024 09:37:38 +0100
+        Thu, 07 Nov 2024 00:45:07 -0800 (PST)
+Message-ID: <a1f03a33-22b2-4023-8185-d15abc72bc8a@linaro.org>
+Date: Thu, 7 Nov 2024 09:45:06 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -80,17 +80,15 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: neil.armstrong@linaro.org
 Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 2/2] usb: typec: ucsi: glink: be more precise on
- orientation-aware ports
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Heikki Krogerus <heikki.krogerus@linux.intel.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Heikki Krogerus <heikki.krogeurs@linux.intel.com>,
- linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>,
- Johan Hovold <johan+linaro@kernel.org>
-References: <20241106-ucsi-glue-fixes-v1-0-d0183d78c522@linaro.org>
- <20241106-ucsi-glue-fixes-v1-2-d0183d78c522@linaro.org>
+Subject: Re: [PATCH v3 4/4] PCI: qcom: Add Qualcomm SA8255p based PCIe root
+ complex functionality
+To: Mayank Rana <quic_mrana@quicinc.com>, jingoohan1@gmail.com,
+ manivannan.sadhasivam@linaro.org, will@kernel.org, lpieralisi@kernel.org,
+ kw@linux.com, robh@kernel.org, bhelgaas@google.com, krzk@kernel.org
+Cc: linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, quic_krichai@quicinc.com
+References: <20241106221341.2218416-1-quic_mrana@quicinc.com>
+ <20241106221341.2218416-5-quic_mrana@quicinc.com>
 Content-Language: en-US, fr
 Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
@@ -117,43 +115,239 @@ Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
  QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
 Organization: Linaro
-In-Reply-To: <20241106-ucsi-glue-fixes-v1-2-d0183d78c522@linaro.org>
+In-Reply-To: <20241106221341.2218416-5-quic_mrana@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 06/11/2024 16:45, Dmitry Baryshkov wrote:
-> Instead of checking if any of the USB-C ports have orientation GPIO and
-> thus is orientation-aware, check for the GPIO for the port being
-> registered.
+Hi,
+
+On 06/11/2024 23:13, Mayank Rana wrote:
+> On SA8255p ride platform, PCIe root complex is firmware managed as well
+> configured into ECAM compliant mode. This change adds functionality to
+> enable resource management (system resource as well PCIe controller and
+> PHY configuration) through firmware, and enumerating ECAM compliant root
+> complex.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Mayank Rana <quic_mrana@quicinc.com>
 > ---
->   drivers/usb/typec/ucsi/ucsi_glink.c | 10 +++++-----
->   1 file changed, 5 insertions(+), 5 deletions(-)
+>   drivers/pci/controller/dwc/Kconfig     |   1 +
+>   drivers/pci/controller/dwc/pcie-qcom.c | 116 +++++++++++++++++++++++--
+>   2 files changed, 108 insertions(+), 9 deletions(-)
 > 
-> diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
-> index 2e12758000a7d2d62f6e0b273cb29eafa631122c..90948cd6d2972402465a2adaba3e1ed055cf0cfa 100644
-> --- a/drivers/usb/typec/ucsi/ucsi_glink.c
-> +++ b/drivers/usb/typec/ucsi/ucsi_glink.c
-> @@ -172,12 +172,12 @@ static int pmic_glink_ucsi_async_control(struct ucsi *__ucsi, u64 command)
->   static void pmic_glink_ucsi_update_connector(struct ucsi_connector *con)
->   {
->   	struct pmic_glink_ucsi *ucsi = ucsi_get_drvdata(con->ucsi);
-> -	int i;
+> diff --git a/drivers/pci/controller/dwc/Kconfig b/drivers/pci/controller/dwc/Kconfig
+> index b6d6778b0698..0fe76bd39d69 100644
+> --- a/drivers/pci/controller/dwc/Kconfig
+> +++ b/drivers/pci/controller/dwc/Kconfig
+> @@ -275,6 +275,7 @@ config PCIE_QCOM
+>   	select PCIE_DW_HOST
+>   	select CRC8
+>   	select PCIE_QCOM_COMMON
+> +	select PCI_HOST_COMMON
+>   	help
+>   	  Say Y here to enable PCIe controller support on Qualcomm SoCs. The
+>   	  PCIe controller uses the DesignWare core plus Qualcomm-specific
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index ef44a82be058..2cb74f902baf 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -21,7 +21,9 @@
+>   #include <linux/limits.h>
+>   #include <linux/init.h>
+>   #include <linux/of.h>
+> +#include <linux/of_pci.h>
+>   #include <linux/pci.h>
+> +#include <linux/pci-ecam.h>
+>   #include <linux/pm_opp.h>
+>   #include <linux/pm_runtime.h>
+>   #include <linux/platform_device.h>
+> @@ -254,10 +256,12 @@ struct qcom_pcie_ops {
+>     * @ops: qcom PCIe ops structure
+>     * @override_no_snoop: Override NO_SNOOP attribute in TLP to enable cache
+>     * snooping
+> +  * @firmware_managed: Set if PCIe root complex is firmware managed
+>     */
+>   struct qcom_pcie_cfg {
+>   	const struct qcom_pcie_ops *ops;
+>   	bool override_no_snoop;
+> +	bool firmware_managed;
+>   	bool no_l0s;
+>   };
 >   
-> -	for (i = 0; i < PMIC_GLINK_MAX_PORTS; i++) {
-> -		if (ucsi->port_orientation[i])
-> -			con->typec_cap.orientation_aware = true;
-> -	}
-> +	if (con->num > PMIC_GLINK_MAX_PORTS ||
-> +	    !ucsi->port_orientation[con->num - 1])
-> +		return;
+> @@ -1415,6 +1419,10 @@ static const struct qcom_pcie_cfg cfg_sc8280xp = {
+>   	.no_l0s = true,
+>   };
+>   
+> +static const struct qcom_pcie_cfg cfg_fw_managed = {
+> +	.firmware_managed = true,
+> +};
 > +
-> +	con->typec_cap.orientation_aware = true;
+>   static const struct dw_pcie_ops dw_pcie_ops = {
+>   	.link_up = qcom_pcie_link_up,
+>   	.start_link = qcom_pcie_start_link,
+> @@ -1566,6 +1574,51 @@ static irqreturn_t qcom_pcie_global_irq_thread(int irq, void *data)
+>   	return IRQ_HANDLED;
 >   }
 >   
->   static void pmic_glink_ucsi_connector_status(struct ucsi_connector *con)
-> 
+> +static void qcom_pci_free_msi(void *ptr)
+> +{
+> +	struct dw_pcie_rp *pp = (struct dw_pcie_rp *)ptr;
+> +
+> +	if (pp && pp->has_msi_ctrl)
+> +		dw_pcie_free_msi(pp);
+> +}
+> +
+> +static int qcom_pcie_ecam_host_init(struct pci_config_window *cfg)
+> +{
+> +	struct device *dev = cfg->parent;
+> +	struct dw_pcie_rp *pp;
+> +	struct dw_pcie *pci;
+> +	int ret;
+> +
+> +	pci = devm_kzalloc(dev, sizeof(*pci), GFP_KERNEL);
+> +	if (!pci)
+> +		return -ENOMEM;
+> +
+> +	pci->dev = dev;
+> +	pp = &pci->pp;
+> +	pci->dbi_base = cfg->win;
+> +	pp->num_vectors = MSI_DEF_NUM_VECTORS;
+> +
+> +	ret = dw_pcie_msi_host_init(pp);
+> +	if (ret)
+> +		return ret;
+> +
+> +	pp->has_msi_ctrl = true;
+> +	dw_pcie_msi_init(pp);
+> +
+> +	ret = devm_add_action_or_reset(dev, qcom_pci_free_msi, pp);
+> +	return ret;
+> +}
+> +
+> +/* ECAM ops */
+> +const struct pci_ecam_ops pci_qcom_ecam_ops = {
+> +	.init		= qcom_pcie_ecam_host_init,
+> +	.pci_ops	= {
+> +		.map_bus	= pci_ecam_map_bus,
+> +		.read		= pci_generic_config_read,
+> +		.write		= pci_generic_config_write,
+> +	}
+> +};
+> +
+>   static int qcom_pcie_probe(struct platform_device *pdev)
+>   {
+>   	const struct qcom_pcie_cfg *pcie_cfg;
+> @@ -1580,11 +1633,52 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>   	char *name;
+>   
+>   	pcie_cfg = of_device_get_match_data(dev);
+> -	if (!pcie_cfg || !pcie_cfg->ops) {
+> -		dev_err(dev, "Invalid platform data\n");
+> +	if (!pcie_cfg) {
+> +		dev_err(dev, "No platform data\n");
+> +		return -EINVAL;
+> +	}
+> +
+> +	if (!pcie_cfg->firmware_managed && !pcie_cfg->ops) {
+> +		dev_err(dev, "No platform ops\n");
+>   		return -EINVAL;
+>   	}
+>   
+> +	pm_runtime_enable(dev);
+> +	ret = pm_runtime_get_sync(dev);
+> +	if (ret < 0)
+> +		goto err_pm_runtime_put;
+> +
+> +	if (pcie_cfg->firmware_managed) {
+> +		struct pci_host_bridge *bridge;
+> +		struct pci_config_window *cfg;
+> +
+> +		bridge = devm_pci_alloc_host_bridge(dev, 0);
+> +		if (!bridge) {
+> +			ret = -ENOMEM;
+> +			goto err_pm_runtime_put;
+> +		}
+> +
+> +		of_pci_check_probe_only();
+> +		/* Parse and map our Configuration Space windows */
+> +		cfg = gen_pci_init(dev, bridge, &pci_qcom_ecam_ops);
+> +		if (IS_ERR(cfg)) {
+> +			ret = PTR_ERR(cfg);
+> +			goto err_pm_runtime_put;
+> +		}
+> +
+> +		bridge->sysdata = cfg;
+> +		bridge->ops = (struct pci_ops *)&pci_qcom_ecam_ops.pci_ops;
+> +		bridge->msi_domain = true;
+> +
+> +		ret = pci_host_probe(bridge);
+> +		if (ret) {
+> +			dev_err(dev, "pci_host_probe() failed:%d\n", ret);
+> +			goto err_pm_runtime_put;
+> +		}
+> +
+> +		return ret;
+> +	}
+> +
+>   	pcie = devm_kzalloc(dev, sizeof(*pcie), GFP_KERNEL);
+>   	if (!pcie)
+>   		return -ENOMEM;
+> @@ -1593,11 +1687,6 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>   	if (!pci)
+>   		return -ENOMEM;
+>   
+> -	pm_runtime_enable(dev);
+> -	ret = pm_runtime_get_sync(dev);
+> -	if (ret < 0)
+> -		goto err_pm_runtime_put;
+> -
+>   	pci->dev = dev;
+>   	pci->ops = &dw_pcie_ops;
+>   	pp = &pci->pp;
+> @@ -1739,9 +1828,13 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>   
+>   static int qcom_pcie_suspend_noirq(struct device *dev)
+>   {
+> -	struct qcom_pcie *pcie = dev_get_drvdata(dev);
+> +	struct qcom_pcie *pcie;
+>   	int ret = 0;
+>   
+> +	if (of_device_is_compatible(dev->of_node, "qcom,pcie-sa8255p"))
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Can't you use if (pcie_cfg->firmware_managed) here instead ?
+
+> +		return 0;
+> +
+> +	pcie = dev_get_drvdata(dev);
+>   	/*
+>   	 * Set minimum bandwidth required to keep data path functional during
+>   	 * suspend.
+> @@ -1795,9 +1888,13 @@ static int qcom_pcie_suspend_noirq(struct device *dev)
+>   
+>   static int qcom_pcie_resume_noirq(struct device *dev)
+>   {
+> -	struct qcom_pcie *pcie = dev_get_drvdata(dev);
+> +	struct qcom_pcie *pcie;
+>   	int ret;
+>   
+> +	if (of_device_is_compatible(dev->of_node, "qcom,pcie-sa8255p"))
+
+Ditto
+
+> +		return 0;
+> +
+> +	pcie = dev_get_drvdata(dev);
+>   	if (pm_suspend_target_state != PM_SUSPEND_MEM) {
+>   		ret = icc_enable(pcie->icc_cpu);
+>   		if (ret) {
+> @@ -1830,6 +1927,7 @@ static const struct of_device_id qcom_pcie_match[] = {
+>   	{ .compatible = "qcom,pcie-ipq8074-gen3", .data = &cfg_2_9_0 },
+>   	{ .compatible = "qcom,pcie-msm8996", .data = &cfg_2_3_2 },
+>   	{ .compatible = "qcom,pcie-qcs404", .data = &cfg_2_4_0 },
+> +	{ .compatible = "qcom,pcie-sa8255p", .data = &cfg_fw_managed },
+>   	{ .compatible = "qcom,pcie-sa8540p", .data = &cfg_sc8280xp },
+>   	{ .compatible = "qcom,pcie-sa8775p", .data = &cfg_1_34_0},
+>   	{ .compatible = "qcom,pcie-sc7280", .data = &cfg_1_9_0 },
+
+Thanks,
+Neil
 
