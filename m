@@ -1,74 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-37240-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37241-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35CD09C05AF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 13:25:24 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 43D8D9C05B7
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 13:27:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BB0501F23BCA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 12:25:23 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 679C71C21C15
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 12:27:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4899020371D;
-	Thu,  7 Nov 2024 12:25:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD0F320F5B8;
+	Thu,  7 Nov 2024 12:26:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gsW5RuK/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="B0z7mIqD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DE74200B93
-	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Nov 2024 12:25:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 193EC193070
+	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Nov 2024 12:26:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730982320; cv=none; b=F2agiRCAqkyTRefVGdBV7adLUO3RT3a0cc8DayzQqjjYOe2Q8GYboGk/jDuecMUqqS70ax76qPimH3yZ8WxcrtoiNEzD3+9NPEv3IK2Nkf1MqqFQd0RNiEiMZ5Xb9sbHKcqi8871Ip5nWnlw77SFwnA2DM9S1ZbXzYaLlQhwJVg=
+	t=1730982416; cv=none; b=FAdvVTh2vvgu9ly3lITbI8IHOQ+jhFSpruKz8U428N1KROCaAmROhINgfNs+z2H0jnqoCODltSTXjlkjtE2/gwEjHVBq7nbfCGqhF48bkFHPvYSK8g/dy94L13RBhBhtFGHr3tsM93MVgvJThsOd8ggepz50pOz9HyYErHqAzWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730982320; c=relaxed/simple;
-	bh=uOHtoOGSDgDkow1wLA2awmZ3A8Qe3ptAdpnofZDjgqc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BuLBItW0mFQr/X+//XWgYwuSeFUYOyRhfq5axhAD0bvbvnCCgj2nZDpUZ3PHpW4ojD09KNivy7RmddlWdfYSE3o1mM885/Xz5wGe4z4pOBnPyu0O5F7mSSFbKNWrvjimf4yLIJGEJ3GRQObQ724B5LjPgg0i8Qxjvb1hnYGKdEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gsW5RuK/; arc=none smtp.client-ip=209.85.221.51
+	s=arc-20240116; t=1730982416; c=relaxed/simple;
+	bh=WVMN927o4qkeYTXILdzvcIvO1X/LpqgECegr3MVyyb8=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=JZqHfbwEFRoX+fGwP0IbIhswCINQbalBYUuF1lrFGKOYcxU2GpCkbrIkC3XxCZQUuJL8R/5BIYv3wBFeD5P/Z4R3UlTu6FsUmBEdLdqNhgS+LN3sYKp3L0Q2RR2gXtKjBit73qBi4S6PV9pFQEafwkKjQU0eroE7VKyq3OhitXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=B0z7mIqD; arc=none smtp.client-ip=209.85.128.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-3807e72c468so134410f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Nov 2024 04:25:18 -0800 (PST)
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-431481433bdso7805905e9.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Nov 2024 04:26:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1730982317; x=1731587117; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=lzbdXmjU7p6o20uBK8Vs/ZUnlHfeyC3jV0YTi+RLdZs=;
-        b=gsW5RuK/QVDvjg+NYAX3GtP5VTunCSDJIGe0M5t3ED9PufbRLLGCEYp7BKtAoIoKwg
-         k1ziHzQxjJWkq1QgynrKATcUyjVCu1Go/r2KFM6XGhaLgvojxIIQf0p4SjpMfUQe6OaZ
-         wcQ9AaE6to2Q20J8bZ1KwaH0UF2SvBRTS98XRch6vxmxABwXhwQ6FfB5kBPVnBiRgN5t
-         mrrh3HOoDTBkDfOXi9aMAsXe/LlfUZsYsm8KWLbNHlTlwkLlQhtT03MtZcw3VqGRHl4N
-         1GqjAi7hrdDOsFWtq0So6qjnNZWVHBO8fGAcInoOtr6wvsptaQ1VQZpFBOQg8ZJn9NRt
-         TDWQ==
+        d=linaro.org; s=google; t=1730982413; x=1731587213; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7vkRS/H+ZdcXDiRwjEKgfNuTb5DcFuR2X48KVwuB62o=;
+        b=B0z7mIqDmVX4/Gz7SvAHjihbaVC8eihQyE6WN7DBAObfMSM5LKwwBp480YdrgE4tM5
+         sbcEMumaB9CQXu9sGBVf0+f11oNImuHxKZ3XkU8kqgbuUMpeh5HcbYuS0+DQhGV0CYuM
+         2wxZFn3MV7R2HeTuleImMi10tBWM8Tf8H8byBHjtdjzR8eWmcMoheUknCQQPxQKiJnCl
+         61ES3yKUZpu5FSe1utIsxtdCJb9wL5GKQLtdPR/GQMP+2du7AXq2xGJ7gXEF0zw9bGnI
+         CEYIJPco+oD2fXB2dzUv+pvA2FgPlvCZ2eKQLkr/NoOXbEE7fjw3p1CWhxqGVUvY4Cj+
+         CIww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730982317; x=1731587117;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=lzbdXmjU7p6o20uBK8Vs/ZUnlHfeyC3jV0YTi+RLdZs=;
-        b=rXIH1CMHRnKiDllPcfBhAS97+vQPvKr30dwRSafhXJxkGQbUQyL5jVH8XYe+NAR4+6
-         +14Chl6oksyUVVzb7AU0MFX9EWPoN15ltJjfXswzEAOOLH4bM+eTt7iy8fP0MTDGCb81
-         AZxLL2h6aF28UXlb+tflcTb91v9rYJ59/3ydOnNf6j20xbOZIHmByEhG62634m/vLoXR
-         AFtt1woZJI5Mkw9fnK66WLNs7OI5wrrHBAWybwcpRKjAz5LEiBMLttxvU4y/oQIItT7H
-         O4YO3RhHNnmizEgmUp6SCQpboV83FQMe7aQR8EFZNL9hyPEixnz3wrVi7ajaHw8KNwYf
-         KfqA==
-X-Forwarded-Encrypted: i=1; AJvYcCWXvlXgoU49Cm2WiXASQqvrpUmSGUghmqlkFUSy/WQnIOhxNT6ST0khf20Si+7v17U+10xGPnPJl9TrBgYB@vger.kernel.org
-X-Gm-Message-State: AOJu0YypoWBvZ3gLC+3iT3Xhe9jr4SjijXiRFlUKKdSFIx1Pfq/OHgKM
-	kUqI7erdap33Id9rSixzcJ7D7R2QJr9JhfzrX9V+t+4PQyWwqoIlk1ZlO75C+mY=
-X-Google-Smtp-Source: AGHT+IFOgPssWZsDH1j5T86iLoVp1PjuAQf1YJ308gU5MuuoGMyMeA0iydRzzX36J0FJAIprsNb+6w==
-X-Received: by 2002:a05:6000:400b:b0:37e:d940:a9fe with SMTP id ffacd0b85a97d-381ef746475mr362301f8f.13.1730982316616;
-        Thu, 07 Nov 2024 04:25:16 -0800 (PST)
-Received: from [172.20.144.41] ([89.101.134.25])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381ed9ea5c1sm1625361f8f.81.2024.11.07.04.25.15
+        d=1e100.net; s=20230601; t=1730982413; x=1731587213;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=7vkRS/H+ZdcXDiRwjEKgfNuTb5DcFuR2X48KVwuB62o=;
+        b=EliQlXOqlDSKIChfjibEcFqUNpOmP+ZwNLJ6lKDb7FLDmMikUzYbxJBNdBUGcUa5HH
+         0ArClQz+wtgAP40ebXpOOULN+NsPdUmnRFTMieBzU+Svfb+ffBvQDTblgSUwSnQQmvlP
+         JpNtUgC+wuirJb1GDWvjgrc2RunewKT6SFJ9v1BB071Xx140BytcN6VD85IkoqMMN49c
+         F5qihm8OWVslRwag2ptr9M0VkIMdA9SEXT4SHQE/K+4mTrUns+ty6gymnmHoQTQnHlGp
+         2uNQ+zJWt0JRJu7YpO8/ZXuo2nXBntzus2p2kjMDZ7enGwgek4g3D9sPZQWTL+GfQ3A8
+         IKaw==
+X-Gm-Message-State: AOJu0Yz7S8eBeB9/75aS4hU4iWi5m9gVhZfk8qaydKuSK7xH2qX3yGBE
+	azDepi6X+W0LvAqL2n9mFmfhMJzZUb1azdWtsSFcxI9DvA+sSASm6oo9rlRgUM4=
+X-Google-Smtp-Source: AGHT+IFGWO5UdFCxajEysApkqvgppvf4I2d7N66E3WZTxWr029LJD2QTc2dczG2SHK/UBdlZ/06AjQ==
+X-Received: by 2002:a05:600c:1f0f:b0:431:5043:87c3 with SMTP id 5b1f17b1804b1-432b307b3efmr10799445e9.22.1730982413518;
+        Thu, 07 Nov 2024 04:26:53 -0800 (PST)
+Received: from [172.16.23.252] ([154.14.63.34])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381ed99a34bsm1580393f8f.54.2024.11.07.04.26.52
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 07 Nov 2024 04:25:16 -0800 (PST)
-Message-ID: <0ce2df56-85be-44da-af23-cc5bee98e14d@linaro.org>
-Date: Thu, 7 Nov 2024 12:25:00 +0000
+        Thu, 07 Nov 2024 04:26:53 -0800 (PST)
+Message-ID: <b9ac677b-e237-45ea-a121-de5e1ca177cb@linaro.org>
+Date: Thu, 7 Nov 2024 13:26:51 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,90 +77,98 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/6] dt-bindings: clock: qcom: Add CAMCC clocks for
- QCS8300
-To: Imran Shaik <quic_imrashai@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH 1/2] clk: qcom: gcc-sm8550: Keep UFS PHY GDSCs ALWAYS_ON
+To: manivannan.sadhasivam@linaro.org, Bjorn Andersson <andersson@kernel.org>,
  Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: Ajit Pandey <quic_ajipan@quicinc.com>, Taniya Das
- <quic_tdas@quicinc.com>, Jagadeesh Kona <quic_jkona@quicinc.com>,
- Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20241106-qcs8300-mm-patches-v3-0-f611a8f87f15@quicinc.com>
- <20241106-qcs8300-mm-patches-v3-3-f611a8f87f15@quicinc.com>
-Content-Language: en-US
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20241106-qcs8300-mm-patches-v3-3-f611a8f87f15@quicinc.com>
+ <sboyd@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Amit Pundir <amit.pundir@linaro.org>,
+ Nitin Rawat <quic_nitirawa@quicinc.com>, stable@vger.kernel.org
+References: <20241107-ufs-clk-fix-v1-0-6032ff22a052@linaro.org>
+ <20241107-ufs-clk-fix-v1-1-6032ff22a052@linaro.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20241107-ufs-clk-fix-v1-1-6032ff22a052@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 11/6/24 11:51, Imran Shaik wrote:
-> The QCS8300 camera clock controller is mostly identical to SA8775P, but
-> QCS8300 has one additional clock and minor differences. Hence, reuse the
-> SA8775P camera bindings and add additional clock required for QCS8300.
+On 07/11/2024 12:58, Manivannan Sadhasivam via B4 Relay wrote:
+> From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > 
-> Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
+> Starting from SM8550, UFS PHY GDSCs doesn't support hardware retention. So
+> using RETAIN_FF_ENABLE is wrong. Moreover, without ALWAYS_ON flag, GDSCs
+> will get powered down during suspend, causing the UFS PHY to loose its
+> state. And this will lead to below UFS error during resume as observed on
+> SM8550-QRD:
+> 
+> ufshcd-qcom 1d84000.ufs: ufshcd_uic_hibern8_exit: hibern8 exit failed. ret = 5
+> ufshcd-qcom 1d84000.ufs: __ufshcd_wl_resume: hibern8 exit failed 5
+> ufs_device_wlun 0:0:0:49488: ufshcd_wl_resume failed: 5
+> ufs_device_wlun 0:0:0:49488: PM: dpm_run_callback(): scsi_bus_resume+0x0/0x84 returns 5
+> ufs_device_wlun 0:0:0:49488: PM: failed to resume async: error 5
+> 
+> Cc: stable@vger.kernel.org # 6.8
+> Fixes: 1fe8273c8d40 ("clk: qcom: gcc-sm8550: Add the missing RETAIN_FF_ENABLE GDSC flag")
+> Reported-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Suggested-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > ---
->   .../devicetree/bindings/clock/qcom,sa8775p-camcc.yaml    |  6 +++++-
->   include/dt-bindings/clock/qcom,qcs8300-camcc.h           | 16 ++++++++++++++++
->   2 files changed, 21 insertions(+), 1 deletion(-)
+>   drivers/clk/qcom/gcc-sm8550.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,sa8775p-camcc.yaml b/Documentation/devicetree/bindings/clock/qcom,sa8775p-camcc.yaml
-> index 36a60d8f5ae3..81623f59d11d 100644
-> --- a/Documentation/devicetree/bindings/clock/qcom,sa8775p-camcc.yaml
-> +++ b/Documentation/devicetree/bindings/clock/qcom,sa8775p-camcc.yaml
-> @@ -8,16 +8,20 @@ title: Qualcomm Camera Clock & Reset Controller on SA8775P
+> diff --git a/drivers/clk/qcom/gcc-sm8550.c b/drivers/clk/qcom/gcc-sm8550.c
+> index 5abaeddd6afc..7dd08e175820 100644
+> --- a/drivers/clk/qcom/gcc-sm8550.c
+> +++ b/drivers/clk/qcom/gcc-sm8550.c
+> @@ -3046,7 +3046,7 @@ static struct gdsc ufs_phy_gdsc = {
+>   		.name = "ufs_phy_gdsc",
+>   	},
+>   	.pwrsts = PWRSTS_OFF_ON,
+> -	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+> +	.flags = POLL_CFG_GDSCR | ALWAYS_ON,
+>   };
 >   
->   maintainers:
->     - Taniya Das <quic_tdas@quicinc.com>
-> +  - Imran Shaik <quic_imrashai@quicinc.com>
+>   static struct gdsc ufs_mem_phy_gdsc = {
+> @@ -3055,7 +3055,7 @@ static struct gdsc ufs_mem_phy_gdsc = {
+>   		.name = "ufs_mem_phy_gdsc",
+>   	},
+>   	.pwrsts = PWRSTS_OFF_ON,
+> -	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+> +	.flags = POLL_CFG_GDSCR | ALWAYS_ON,
+>   };
 >   
->   description: |
->     Qualcomm camera clock control module provides the clocks, resets and power
->     domains on SA8775p.
->   
-> -  See also: include/dt-bindings/clock/qcom,sa8775p-camcc.h
-> +  See also:
-> +    include/dt-bindings/clock/qcom,qcs8300-camcc.h
-> +    include/dt-bindings/clock/qcom,sa8775p-camcc.h
->   
->   properties:
->     compatible:
->       enum:
-> +      - qcom,qcs8300-camcc
->         - qcom,sa8775p-camcc
->   
->     clocks:
-> diff --git a/include/dt-bindings/clock/qcom,qcs8300-camcc.h b/include/dt-bindings/clock/qcom,qcs8300-camcc.h
-> new file mode 100644
-> index 000000000000..fc535c847859
-> --- /dev/null
-> +++ b/include/dt-bindings/clock/qcom,qcs8300-camcc.h
-> @@ -0,0 +1,16 @@
-> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
-> +/*
-> + * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#ifndef _DT_BINDINGS_CLK_QCOM_QCS8300_CAM_CC_H
-> +#define _DT_BINDINGS_CLK_QCOM_QCS8300_CAM_CC_H
-> +
-> +#include "qcom,sa8775p-camcc.h"
-> +
-> +/* QCS8300 introduces below new clocks compared to SA8775P */
-> +
-> +/* CAM_CC clocks */
-> +#define CAM_CC_TITAN_TOP_ACCU_SHIFT_CLK				86
-> +
-> +#endif
+>   static struct gdsc usb30_prim_gdsc = {
 > 
 
-Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-HDK
 
---
-Best wishes,
-Vladimir
+Thanks,
+Neil
 
