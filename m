@@ -1,53 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-37231-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37230-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 779209C050C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 12:58:23 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6FC269C0509
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 12:58:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A97291C21266
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 260161F236AE
 	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 11:58:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D9AF20EA33;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 66E2620EA2B;
 	Thu,  7 Nov 2024 11:58:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nd3VY7Aj"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fLOu15BO"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FF9020CCD1;
-	Thu,  7 Nov 2024 11:58:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FE9F20C48C;
+	Thu,  7 Nov 2024 11:58:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730980696; cv=none; b=QA/WhC+S+JqRgst3v4tZxJdrE0ai21su36qXn76gBLXQQ3aJdsrX+7O/Ddinoi7vQubyy3zV5gghdr9RpH3WjEU4Pb3QdZd2EdkCa6KSaoqY5c+2sFgcTTf/XyUvR1I7dIiKzsDxPtHy/Zyv0uzZQW9E6F0BExVtnNrEgRygLjI=
+	t=1730980696; cv=none; b=EWeYmUGyK1eGip54tqEsmM9DwalGybEmZrcDG8lvMbelWTvPm6BZyeP/Dd6XqGdmdiWBOcLCf8FuUTH75tRrTL//OLW1X8x47znTUtbBD7vyaMlPPI7+MeIZ85Oe9oPEAnyRHhn6Wu36vyJPApWElZe064zM8AwiTimUA0QoolI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1730980696; c=relaxed/simple;
-	bh=Gh/ompZkwURn0PwOkifty4Ajs5DMdgzLZxjoSuHPK3g=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=m8/vRrql6I2Yys3Jum57cgiaexR/V44b510tsRzGtlK1WsdEJAZMx9GdOV94efwVYYR9YYOlRrR0gVQlDbweZ27qX0r7lHG0MDw8JsG+AVSqeAn759o9RbTDOlH8Gb0pyFdUk0Ty9e2Sm7AjLIVCQiwiAOwKFU6FDFjs2LBrQIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nd3VY7Aj; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id A9452C4CECE;
+	bh=WCUKuX4maFHRyx+sxrpXCTzsud3pXHBXfStxFHvUR00=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=pApJXM/LFaxWZmO3UJIqFlNWbP+HHfC+P6xDoqtlk3+nzfIuutM1zdDzs+MPJJhNNM0/LuFBVg6yK9ix3bKI4eJ/E8mfO5kRv3QUvipBx370tTnibYrepoFJIZJz5ZOYc7haBCW0f3onJFq1kK8oGEBEs7w8HwXsznkA/+v7Sr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fLOu15BO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id CC0E9C4CED2;
 	Thu,  7 Nov 2024 11:58:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1730980695;
-	bh=Gh/ompZkwURn0PwOkifty4Ajs5DMdgzLZxjoSuHPK3g=;
-	h=From:Subject:Date:To:Cc:Reply-To:From;
-	b=nd3VY7Aja2UhjCkdssEGJAn8WYU0/vn8jv5UgOSkD/HjAXbTssVVPy0hqXs87VwlG
-	 AHu52Cx1kMuLMZZ4Y0V6JKnVGHprvgINzuR9/qtUrVDjQD1GNp7alw+KpJ50pWNKK9
-	 SuA0Bja2bNSGiZ9/aLDECTDabmpxVwX6Q/dabRyQEVk43O9nxQceU6ql89BmN1MrCG
-	 X3RUF4+enipJe8GLixJrj/jaksQ/OAtYKEbRhK2Z1XVk7e2DXvFtRQrpCD0lbzWb/+
-	 tYZYjPG1o6dY3Pzqwo6sMbhKRd/W6RXq+Orfzb4OIk2nczJcYeFnKuANMkPrtUB1A8
-	 JFZvoYfr/SJng==
+	bh=WCUKuX4maFHRyx+sxrpXCTzsud3pXHBXfStxFHvUR00=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=fLOu15BOdKdDE+BugZVoj4tH5bz4KDWLw+rwo0bqf0yg3ehgpdh0MHNsbfiaKvMkG
+	 SmObaaihyRO4ZiGA3fey2Hw/v++lxeEzJKbGlmTgUKGOGqsXoarPW+9U7zQEowQ2Tt
+	 urhBLlC5YzYZrdu2ObYXecOBuougo4nLsgUBdNPid4DOsYS3zrRTPrTxUq5I1H1t0k
+	 7UDAEmo1hr9A8qOr2ZfRcwEiek7kV2WLMPdEPJ7dms6npvddR+VNvhM6bYgcoAeW9f
+	 4gU5cf9EfyF8eq9XUX7SnNF+l2h6Tece2ftSA+tGDJ9msPo8TzFFzHXa+b7E63W0aR
+	 JDHgCyxUoGxlA==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97515D43352;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BAD2CD43350;
 	Thu,  7 Nov 2024 11:58:15 +0000 (UTC)
 From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.linaro.org@kernel.org>
-Subject: [PATCH 0/2] clk: qcom: gcc-{sm8550/sm8650}: Fix UFS resume from
- suspend issue
-Date: Thu, 07 Nov 2024 11:58:08 +0000
-Message-Id: <20241107-ufs-clk-fix-v1-0-6032ff22a052@linaro.org>
+Date: Thu, 07 Nov 2024 11:58:09 +0000
+Subject: [PATCH 1/2] clk: qcom: gcc-sm8550: Keep UFS PHY GDSCs ALWAYS_ON
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,9 +55,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAFCrLGcC/x2MQQqAIBAAvyJ7bkHFEPtKdAhbaykslCIQ/550n
- IGZApkSU4ZBFEj0cOYzNlCdAL/NcSXkpTFoqY1S0uIdMvpjx8AvknFEWjrbOwOtuBI1/d/GqdY
- PcoxysV0AAAA=
+Message-Id: <20241107-ufs-clk-fix-v1-1-6032ff22a052@linaro.org>
+References: <20241107-ufs-clk-fix-v1-0-6032ff22a052@linaro.org>
+In-Reply-To: <20241107-ufs-clk-fix-v1-0-6032ff22a052@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Michael Turquette <mturquette@baylibre.com>, 
  Stephen Boyd <sboyd@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
@@ -69,16 +68,16 @@ Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
  stable@vger.kernel.org
 X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=806;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1811;
  i=manivannan.sadhasivam@linaro.org; h=from:subject:message-id;
- bh=Gh/ompZkwURn0PwOkifty4Ajs5DMdgzLZxjoSuHPK3g=;
- b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBnLKtReLRazqpEK4DZPuTzY71FdYMrbx2WEhOnt
- pZm60uhuSqJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCZyyrUQAKCRBVnxHm/pHO
- 9VgjB/4iieean0IziLGHHrJI59WIFDmy9utZzqMMwJ049ru36KmxBmdBfCp/UH9YzV1W8wEZal3
- AdKLjERvX+l+N16/j05L32RWjxq3y9usqz12ulTYMA4k9qi07uZEq4CRaYBNz505MdzGdxosVJq
- LcZZfRQMYTylWvl9rwXw5FcyDcmQ5Y//uRQLutgxRznjTOMEwAybvCLjt/qSDs8zUrEZ9aC2Nc+
- P87+TBbDA4mw/Y/90cJpPBEXoVLa2MgjzhUboLaQaMMZzXA448r8Fp+DL60/m4/U1dKveuK1NUN
- 8UTh6pljk9YPKANcqyUalQkye156zFnanrZkGNU5VCYEfm65
+ bh=HLNXhxeA0d1kaDOGx2ZDq/GyczbnxDOYCBJsf8padcs=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBnLKtWlMyTFtfeKixW/Ry1GRcw0Wc5ZeIShmfST
+ ljUoOuh8CCJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCZyyrVgAKCRBVnxHm/pHO
+ 9dUECACmLYKmlwTa3vNIOh8c2A9iQNTlvtbUop9MU+loAitzIM7cVs4ieKxbIdbNIV2OKoJpeDZ
+ VaBcbVCrOjtKb0OcshplAXBbO+ev5HC1Vk/SRBf6SfZMF2JT0m1I6MpPP4g0HHnRaSuaJZFkGGa
+ zNlEJZQyx/E1b03Tu0EOqnpdC4vLyN8YTB4YKukAtWBiEdHN/5mY4OreyvRzb/EBG3IfPB4DKJm
+ LQ9VDOBMNRG7Y7Hr1M0le04AlUaiz+MD8r+ReV3GyCu0NYhbV2p7qnSEq1lf66BDZ9kop5lDJzR
+ oNv6e5rrm5Tyz6/9DuQpTxNmYITg+BOTcM6QDTVvdu8cjqkh
 X-Developer-Key: i=manivannan.sadhasivam@linaro.org; a=openpgp;
  fpr=C668AEC3C3188E4C611465E7488550E901166008
 X-Endpoint-Received: by B4 Relay for
@@ -86,29 +85,54 @@ X-Endpoint-Received: by B4 Relay for
 X-Original-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Reply-To: manivannan.sadhasivam@linaro.org
 
-Hi,
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-This series fixes the UFS resume from suspend issue by marking the UFS PHY GDSCs
-as ALWAYS_ON. Starting from SM8550, UFS PHY GDSCs doesn't support retention
-state. So we should keep them always on so that they don't loose the state
-during suspend.
+Starting from SM8550, UFS PHY GDSCs doesn't support hardware retention. So
+using RETAIN_FF_ENABLE is wrong. Moreover, without ALWAYS_ON flag, GDSCs
+will get powered down during suspend, causing the UFS PHY to loose its
+state. And this will lead to below UFS error during resume as observed on
+SM8550-QRD:
 
+ufshcd-qcom 1d84000.ufs: ufshcd_uic_hibern8_exit: hibern8 exit failed. ret = 5
+ufshcd-qcom 1d84000.ufs: __ufshcd_wl_resume: hibern8 exit failed 5
+ufs_device_wlun 0:0:0:49488: ufshcd_wl_resume failed: 5
+ufs_device_wlun 0:0:0:49488: PM: dpm_run_callback(): scsi_bus_resume+0x0/0x84 returns 5
+ufs_device_wlun 0:0:0:49488: PM: failed to resume async: error 5
+
+Cc: stable@vger.kernel.org # 6.8
+Fixes: 1fe8273c8d40 ("clk: qcom: gcc-sm8550: Add the missing RETAIN_FF_ENABLE GDSC flag")
+Reported-by: Neil Armstrong <neil.armstrong@linaro.org>
+Suggested-by: Nitin Rawat <quic_nitirawa@quicinc.com>
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
-Manivannan Sadhasivam (2):
-      clk: qcom: gcc-sm8550: Keep UFS PHY GDSCs ALWAYS_ON
-      clk: qcom: gcc-sm8650: Keep UFS PHY GDSCs ALWAYS_ON
-
  drivers/clk/qcom/gcc-sm8550.c | 4 ++--
- drivers/clk/qcom/gcc-sm8650.c | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
----
-base-commit: 9852d85ec9d492ebef56dc5f229416c925758edc
-change-id: 20241107-ufs-clk-fix-e49ee2097594
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Best regards,
+diff --git a/drivers/clk/qcom/gcc-sm8550.c b/drivers/clk/qcom/gcc-sm8550.c
+index 5abaeddd6afc..7dd08e175820 100644
+--- a/drivers/clk/qcom/gcc-sm8550.c
++++ b/drivers/clk/qcom/gcc-sm8550.c
+@@ -3046,7 +3046,7 @@ static struct gdsc ufs_phy_gdsc = {
+ 		.name = "ufs_phy_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
++	.flags = POLL_CFG_GDSCR | ALWAYS_ON,
+ };
+ 
+ static struct gdsc ufs_mem_phy_gdsc = {
+@@ -3055,7 +3055,7 @@ static struct gdsc ufs_mem_phy_gdsc = {
+ 		.name = "ufs_mem_phy_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
++	.flags = POLL_CFG_GDSCR | ALWAYS_ON,
+ };
+ 
+ static struct gdsc usb30_prim_gdsc = {
+
 -- 
-Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+2.25.1
 
 
 
