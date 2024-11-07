@@ -1,63 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-37262-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37263-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 08B749C090D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 15:36:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 371AD9C0933
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 15:48:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 806E12816A6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 14:36:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EB313284343
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 14:48:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B655A212D0B;
-	Thu,  7 Nov 2024 14:36:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 814F3212F0F;
+	Thu,  7 Nov 2024 14:47:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pZQ12oA0"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="pYsKAIp2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DB88212175;
-	Thu,  7 Nov 2024 14:36:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5AB2212EF1
+	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Nov 2024 14:47:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730990189; cv=none; b=kL2gPEH9FyhGy0PLmyV04T7D+T7z+Q68OpzgwI/YnZpmJ7WoyYFwnWDqtfIcFGpDc08RnudRlF3jhSE0DikIB19u9RKAzBpK4RVIuhZYRI6x7Q26HDHvf8mi0VWw6NcyqBMbT+51BiKC+1perXU8Hvm7Jb+Ubs+Ff5QYTBWwe3E=
+	t=1730990868; cv=none; b=CRahbuiieWOs94dJ8sKn5wqKwocR0NgiXfZLKLuXe71bHfwV3Q+7OEsgJQ+lAeVk7hFRBbvPElne7IaFiGeIHB/YPuiVKCYWg17bvdUyMIs681dW70Ds/eUoVhMxWu9bNhHkquKcBeji/jIGkhvQ08otu15DiLGp9LZ0Wi4ZoH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730990189; c=relaxed/simple;
-	bh=QzVkdpJnt/ZuRmSGunY3JW7fmbO2fr/0K6tHnuLCOfY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Mzv+tzaqUxXnR8Hu+rR3WIlYWty2OqiRPPMJfCibj5QSOhTQtsviM2Kfy8LIUkVWuNi1Wc8caC8j3XqgMXCYQeJYATTN+LYJ5FEmCzUEVYg1Uhql9pBVfDpmBe3UqZ6O5zIq/Fj6Pk1U+H3IUSOmFHyWb1AkWoSA6nFKS1JLdV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pZQ12oA0; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A75hrql002118;
-	Thu, 7 Nov 2024 14:36:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	s=arc-20240116; t=1730990868; c=relaxed/simple;
+	bh=ibu2RSkOtegzXegdPneOrz9OnjOT7hzMRGrzeeSwskU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WDwvXXbX8i3inuiIZLlFc/KAHqdOYsWBcO6kTKLsRThYBCybz1pJFVkp8JdZEdYEtRxP2upVW7ZSysFH+WnPw/CW6Ikwu4m2tp+yvBWwtcDY/09CwXqpaurBYLEfGko0zboTp5Cavo5ULN+iEND2HW9cxks0GkeUACtj1D7F2po=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=fail smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=pYsKAIp2; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A76oj0q013219
+	for <linux-arm-msm@vger.kernel.org>; Thu, 7 Nov 2024 14:47:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	z+3wHS3gqApFtMhQvOyrWRXfCH4jhD5FMxIgxyYjq3c=; b=pZQ12oA0yQWZatlq
-	gf8DsHhL3z6BoGYBmgVrPBBD3dW26JuFT263GX94ZvdN3oGDivQmEFL5E4a148rR
-	SIQ/NznCtP3AWX4Ne8GfDjEi9pC5qWeoIWIHHKFCxjMx7tNuTeh59ijZ/jCmmhcb
-	7F57vI+XY/VLffCVW9xyAZEF0nC9ro5U4XdcpxnhLwa+HsMMygCjk/Bccnd1/O4+
-	/OTtdLQpKMUqYjTVeaupa+eI77ISu9sO7KE18nNaFKkXPkgBSdqU9n8t0EAEU26b
-	CtS/RF8OIwi5+BX7YR+DkaeBYAF8Y/rUbwYXEuLkMNfXTyG6Bpl63cIY3aQ3gRot
-	vPhlfA==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42r072n2r0-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 07 Nov 2024 14:36:15 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4A7EZwUs009870
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 7 Nov 2024 14:35:58 GMT
-Received: from [10.206.104.82] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 7 Nov 2024
- 06:35:52 -0800
-Message-ID: <6e67ae77-a116-422c-a07b-77e991a664ea@quicinc.com>
-Date: Thu, 7 Nov 2024 20:05:49 +0530
+	xbDNBEZF+ivxTJrlQcBDGbzMiej5Dmf5hJPNwms2OQ8=; b=pYsKAIp2GMvy17lb
+	er+1YLkbGiRK/G+W6pw8GjSprmC0eGZ3dQtboU6D+crepbVW9SDpxS1CKf+ahq8O
+	Mck8LaK5lJEri+ViusI+pxrUeaIolgQslr1nT2rNyeZECxkYZQlvarVztrBtgEtl
+	pVANzNhJBDXodMVF1iRiZU/nIEwWO8tvcNj+xOph8GFceAdVeTQo1mESgQ4kq0dM
+	aOXhrQnnXdaEMDaHu2G6S1TauWnuUoWHIy0z5Ue/3mM/10x1p7Ye7P7YDtRSm3mv
+	BeMyiSptgYUFtJGlFHoB08NXGU7o2fluHZuSvmWgjrBlG0l/E80CcwTloHyBFOwt
+	MotClw==
+Received: from mail-ua1-f71.google.com (mail-ua1-f71.google.com [209.85.222.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42qp2rxma6-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 07 Nov 2024 14:47:44 +0000 (GMT)
+Received: by mail-ua1-f71.google.com with SMTP id a1e0cc1a2514c-84fba3e0787so29269241.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Nov 2024 06:47:44 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730990864; x=1731595664;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xbDNBEZF+ivxTJrlQcBDGbzMiej5Dmf5hJPNwms2OQ8=;
+        b=GzGZkh4l1yt+AwwfECwE2l1Q+7OXfKdo5LTYB7GEedwvbCedaqz+zhxrJra0Jsiext
+         Fmp04z1Bcz5hd/5EUO0ifkHs3VgsdeUnYfftBQkN4Y3uSwYiBreoLGhZPtC3TLvQUCiG
+         fb7bMwDgvbTZy86o9g19Qr5MzGtjzYJXc/OsfQJEoAPlAERXD+jKs3To2wXk2efuyN0h
+         Ya+mePSnJyFcWcZrSMToCG7P9rLr1eITWiwKoWJ/ri32cEnc+MniN3fg/BpsNsOyXytl
+         ogCSg1+J+sViaMGED1rfP0QqrffVS7K6r3iV6aMkhs+bf/6Ivkvc/DbB4w6SzgFmlArP
+         CxVA==
+X-Forwarded-Encrypted: i=1; AJvYcCXZemDforDbESk6Qyw40awSSmnL9MpSz7KKSIOf0E8l+arD7s7heJSlWIRTRzvcbqGZUtWBC5G+kYmjKMx8@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywgw1Kh7eZlHcPvdFxB7y0pvL0goE5Y+l2tF4PLcW9UblmPgZCW
+	tuYDn9s1tiREnjofMX5fysnEetHa6EKpSGkdSovBQ4mExF5Gz0BIKQUeENoyv8/TBw/buf/qo3z
+	P+x58g7mby9bSb6FfL/dEPnpMT8viuVExXc3FTGs8q7FkFXTdAl+gnuh2tWok6jF3
+X-Received: by 2002:a05:6102:3c94:b0:49b:ba74:f7d0 with SMTP id ada2fe7eead31-4aadebc2f6fmr164475137.4.1730990863719;
+        Thu, 07 Nov 2024 06:47:43 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFFnySNUt52yfwbYGtiZv6pMalDbRXaP/F5VF0eyl6nq8yvshxs/YJIBsx+RY4YtpLEbZPyUA==
+X-Received: by 2002:a05:6102:3c94:b0:49b:ba74:f7d0 with SMTP id ada2fe7eead31-4aadebc2f6fmr164457137.4.1730990863224;
+        Thu, 07 Nov 2024 06:47:43 -0800 (PST)
+Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9ee0a4c3f5sm103014066b.76.2024.11.07.06.47.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 07 Nov 2024 06:47:42 -0800 (PST)
+Message-ID: <9bd3d4e2-aba1-423c-946a-f5c60da71497@oss.qualcomm.com>
+Date: Thu, 7 Nov 2024 15:47:39 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,253 +84,92 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 1/3] drm/msm/adreno: Add support for ACD
-To: <neil.armstrong@linaro.org>, Rob Clark <robdclark@gmail.com>,
-        Sean Paul
-	<sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
-        Abhinav Kumar
-	<quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie
-	<airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Viresh Kumar
-	<vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd
-	<sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>
-References: <20241012-gpu-acd-v1-0-1e5e91aa95b6@quicinc.com>
- <20241012-gpu-acd-v1-1-1e5e91aa95b6@quicinc.com>
- <4aeec9f1-720b-400c-9582-d02847db2ac7@linaro.org>
- <43404449-1830-4651-a85a-54404b1d35bc@quicinc.com>
- <56a976d6-7dd6-4001-b6a8-268ed7d787d2@linaro.org>
- <49e1a6b6-683f-4826-b67e-8354a10a785d@quicinc.com>
- <85eaeaca-850d-47d4-b81d-b23f25084d81@linaro.org>
+Subject: Re: [PATCH v6 7/7] arm64: dts: qcom: ipq5424: Add thermal zone nodes
+To: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>,
+        Konrad Dybcio <konradybcio@gmail.com>, srinivas.kandagatla@linaro.org,
+        robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+        amitk@kernel.org, thara.gopinath@gmail.com, rafael@kernel.org,
+        daniel.lezcano@linaro.org, rui.zhang@intel.com, lukasz.luba@arm.com,
+        andersson@kernel.org, konradybcio@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
+Cc: quic_srichara@quicinc.com, quic_varada@quicinc.com
+References: <20241104124413.2012794-1-quic_mmanikan@quicinc.com>
+ <20241104124413.2012794-8-quic_mmanikan@quicinc.com>
+ <91ea0f03-9bbe-491d-9056-ebd9fdc73bfa@oss.qualcomm.com>
+ <8cb665f5-4885-4853-804a-7313decc719c@quicinc.com>
+ <2c7ece9d-95e8-4d01-a9da-c1d5d7388771@gmail.com>
+ <fc676574-ffac-40d2-aa47-8d7cb61b5e3f@quicinc.com>
 Content-Language: en-US
-From: Akhil P Oommen <quic_akhilpo@quicinc.com>
-In-Reply-To: <85eaeaca-850d-47d4-b81d-b23f25084d81@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <fc676574-ffac-40d2-aa47-8d7cb61b5e3f@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ifBweuF2nDAoe7kEjNp7oTRinqJqKB89
-X-Proofpoint-GUID: ifBweuF2nDAoe7kEjNp7oTRinqJqKB89
+X-Proofpoint-GUID: AGSurXFcRhoUz9ulh_0PnrpqnzMTRieA
+X-Proofpoint-ORIG-GUID: AGSurXFcRhoUz9ulh_0PnrpqnzMTRieA
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- priorityscore=1501 mlxscore=0 suspectscore=0 mlxlogscore=999 spamscore=0
- adultscore=0 malwarescore=0 phishscore=0 impostorscore=0 bulkscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411070114
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 clxscore=1015
+ bulkscore=0 priorityscore=1501 impostorscore=0 lowpriorityscore=0
+ mlxlogscore=999 suspectscore=0 spamscore=0 mlxscore=0 phishscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411070115
 
-On 11/7/2024 8:01 PM, neil.armstrong@linaro.org wrote:
-> On 07/11/2024 13:46, Akhil P Oommen wrote:
->> On 11/7/2024 2:25 PM, neil.armstrong@linaro.org wrote:
->>> On 06/11/2024 02:44, Akhil P Oommen wrote:
->>>> On 11/4/2024 9:14 PM, neil.armstrong@linaro.org wrote:
->>>>> On 11/10/2024 22:29, Akhil P Oommen wrote:
->>>>>> ACD a.k.a Adaptive Clock Distribution is a feature which helps to
->>>>>> reduce
->>>>>> the power consumption. In some chipsets, it is also a requirement to
->>>>>> support higher GPU frequencies. This patch adds support for GPU
->>>>>> ACD by
->>>>>> sending necessary data to GMU and AOSS. The feature support for the
->>>>>> chipset is detected based on devicetree data.
->>>>>>
->>>>>> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
->>>>>> ---
->>>>>>     drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 81 +++++++++++++++++++
->>>>>> ++++++
->>>>>> +++-------
->>>>>>     drivers/gpu/drm/msm/adreno/a6xx_gmu.h |  1 +
->>>>>>     drivers/gpu/drm/msm/adreno/a6xx_hfi.c | 36 ++++++++++++++++
->>>>>>     drivers/gpu/drm/msm/adreno/a6xx_hfi.h | 21 +++++++++
->>>>>>     4 files changed, 124 insertions(+), 15 deletions(-)
->>>>>>
->>>>>
->>>>> <snip>
->>>>>
->>>>>> +
->>>>>> +static int a6xx_hfi_enable_acd(struct a6xx_gmu *gmu)
->>>>>> +{
->>>>>> +    struct a6xx_hfi_acd_table *acd_table = &gmu->acd_table;
->>>>>> +    struct a6xx_hfi_msg_feature_ctrl msg = {
->>>>>> +        .feature = HFI_FEATURE_ACD,
->>>>>> +        .enable = 1,
->>>>>> +        .data = 0,
->>>>>> +    };
->>>>>> +    int ret;
->>>>>> +
->>>>>> +    if (!acd_table->enable_by_level)
->>>>>> +        return 0;
->>>>>> +
->>>>>> +    /* Enable ACD feature at GMU */
->>>>>> +    ret = a6xx_hfi_send_msg(gmu, HFI_H2F_FEATURE_CTRL, &msg,
->>>>>> sizeof(msg), NULL, 0);
->>>>>> +    if (ret) {
->>>>>> +        DRM_DEV_ERROR(gmu->dev, "Unable to enable ACD (%d)\n", ret);
->>>>>> +        return ret;
->>>>>> +    }
->>>>>> +
->>>>>> +    /* Send ACD table to GMU */
->>>>>> +    ret = a6xx_hfi_send_msg(gmu, HFI_H2F_MSG_ACD, &msg, sizeof(msg),
->>>>>> NULL, 0);
->>>>>
->>>>> This looks wrong, in this exact code, you never use the acd_table...
->>>>> perhaps it should be acd_table here
->>>>
->>>> Whoops! Weirdly gmu didn't explode when I tested.
->>>>
->>>> Thanks for your keen eye.
->>>
->>> You're welcome !
->>>
->>> I've been trying to enable this on SM8650, but HFI_H2F_MSG_ACD fails.
->>>
->>> My changes:
->>> ================><================================
->>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c b/drivers/gpu/drm/
->>> msm/adreno/a6xx_hfi.c
->>> index 7c96d6f8aaa9..bd9d586f245e 100644
->>> --- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
->>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
->>> @@ -682,7 +682,7 @@ static int a6xx_hfi_enable_acd(struct a6xx_gmu *gmu)
->>>          }
->>>
->>>          /* Send ACD table to GMU */
->>> -       ret = a6xx_hfi_send_msg(gmu, HFI_H2F_MSG_ACD, &acd_table,
->>> sizeof(*acd_table), NULL, 0);
->>> +       ret = a6xx_hfi_send_msg(gmu, HFI_H2F_MSG_ACD, &acd_table,
+On 6.11.2024 11:25 AM, Manikanta Mylavarapu wrote:
+> 
+> 
+> On 11/6/2024 2:42 PM, Konrad Dybcio wrote:
 >>
->> &acd_table -> acd_table here?
-> 
-> Damn, good catch !
-> 
-> Ok so it didn't explode anymore, but still fails:
-> =====
-> [    7.083258] platform 3d6a000.gmu: [drm:a6xx_hfi_send_msg.constprop.0
-> [msm]] *ERROR* Message HFI_H2F_MSG_GX_BW_PERF_VOTE id 7 timed out
-> waiting for response
-> [    7.149709] platform 3d6a000.gmu: [drm:a6xx_hfi_send_msg.constprop.0
-> [msm]] *ERROR* Unexpected message id 7 on the response queue
-> [    7.149744] platform 3d6a000.gmu: [drm:a6xx_hfi_send_msg.constprop.0
-> [msm]] *ERROR* The HFI response queue is unexpectedly empty
-> [    7.165163] platform 3d6a000.gmu: [drm:a6xx_hfi_send_msg.constprop.0
-> [msm]] *ERROR* Unexpected message id 8 on the response queue
-> [    7.165188] platform 3d6a000.gmu: [drm:a6xx_hfi_send_msg.constprop.0
-> [msm]] *ERROR* The HFI response queue is unexpectedly empty
-> ====
-> 
-> Seems with ACD enabled, first vote can take up to 100ms, and downstream
-> has 1s timeout, with a larger timeout I got it to work !
-
-Yes, there is an additional overhead during first perf vote. Thanks for
-the heads up. I am yet to test with fixes.
-
--Akhil.
-
-> 
-> Thanks,
-> Neil
 >>
->> -Akhil
->>
->>> sizeof(struct a6xx_hfi_acd_table), NULL, 0);
->>>          if (ret) {
->>>                  DRM_DEV_ERROR(gmu->dev, "Unable to send ACD table
->>> (%d)\n", ret);
->>>                  return ret;
->>> ================><================================
+>> On 11/6/24 09:47, Manikanta Mylavarapu wrote:
 >>>
->>> with the appropriate qcom,opp-acd-level in DT taken from downstream,
->>> I get:
->>> [    6.946184] platform 3d6a000.gmu: [drm:a6xx_hfi_send_msg.constprop.0
->>> [msm]] *ERROR* Message (null) id 4 timed out waiting for response
->>> [    6.958697] platform 3d6a000.gmu: [drm:a6xx_hfi_start [msm]] *ERROR*
->>> Unable to send ACD table (-110)
 >>>
->>> is there something missing ?
->>>
->>> Neil
->>>
->>>>
->>>> -Akhil.
->>>>
+>>> On 11/4/2024 7:21 PM, Konrad Dybcio wrote:
+>>>> On 4.11.2024 1:44 PM, Manikanta Mylavarapu wrote:
+>>>>> Add thermal zone nodes for sensors present in IPQ5424.
 >>>>>
->>>>>> +    if (ret) {
->>>>>> +        DRM_DEV_ERROR(gmu->dev, "Unable to ACD table (%d)\n", ret);
->>>>>> +        return ret;
->>>>>> +    }
->>>>>> +
->>>>>> +    return 0;
->>>>>> +}
->>>>>> +
->>>>>>     static int a6xx_hfi_send_test(struct a6xx_gmu *gmu)
->>>>>>     {
->>>>>>         struct a6xx_hfi_msg_test msg = { 0 };
->>>>>> @@ -756,6 +788,10 @@ int a6xx_hfi_start(struct a6xx_gmu *gmu, int
->>>>>> boot_state)
->>>>>>         if (ret)
->>>>>>             return ret;
->>>>>>     +    ret = a6xx_hfi_enable_acd(gmu);
->>>>>> +    if (ret)
->>>>>> +        return ret;
->>>>>> +
->>>>>>         ret = a6xx_hfi_send_core_fw_start(gmu);
->>>>>>         if (ret)
->>>>>>             return ret;
->>>>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.h b/drivers/gpu/drm/
->>>>>> msm/adreno/a6xx_hfi.h
->>>>>> index 528110169398..51864c8ad0e6 100644
->>>>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.h
->>>>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.h
->>>>>> @@ -151,12 +151,33 @@ struct a6xx_hfi_msg_test {
->>>>>>         u32 header;
->>>>>>     };
->>>>>>     +#define HFI_H2F_MSG_ACD 7
->>>>>> +#define MAX_ACD_STRIDE 2
->>>>>> +
->>>>>> +struct a6xx_hfi_acd_table {
->>>>>> +    u32 header;
->>>>>> +    u32 version;
->>>>>> +    u32 enable_by_level;
->>>>>> +    u32 stride;
->>>>>> +    u32 num_levels;
->>>>>> +    u32 data[16 * MAX_ACD_STRIDE];
->>>>>> +};
->>>>>> +
->>>>>>     #define HFI_H2F_MSG_START 10
->>>>>>       struct a6xx_hfi_msg_start {
->>>>>>         u32 header;
->>>>>>     };
->>>>>>     +#define HFI_H2F_FEATURE_CTRL 11
->>>>>> +
->>>>>> +struct a6xx_hfi_msg_feature_ctrl {
->>>>>> +    u32 header;
->>>>>> +    u32 feature;
->>>>>> +    u32 enable;
->>>>>> +    u32 data;
->>>>>> +};
->>>>>> +
->>>>>>     #define HFI_H2F_MSG_CORE_FW_START 14
->>>>>>       struct a6xx_hfi_msg_core_fw_start {
->>>>>>
->>>>>
->>>>> Thanks,
->>>>> Neil
+>>>>> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+>>>>> ---
+>>>> [...]
+>>>>
+>>>>> +
+>>>>> +        cpu3-thermal {
+>>>>> +            polling-delay-passive = <0>;
+>>>>> +            polling-delay = <0>;
+>>>>> +            thermal-sensors = <&tsens 13>;
+>>>>> +
+>>>>> +            trips {
+>>>>> +                cpu-critical {
+>>>>> +                    temperature = <120000>;
+>>>>> +                    hysteresis = <9000>;
+>>>>> +                    type = "critical";
+>>>>> +                };
+>>>>> +
+>>>>> +                cpu-passive {
+>>>>> +                    temperature = <110000>;
+>>>>> +                    hysteresis = <9000>;
+>>>>> +                    type = "passive";
+>>>>
+>>>> You have a passive trip point without passive polling
 >>>>
 >>>
+>>> Okay, will remove this.
 >>
+>> You most likely want to preserve it, while keeping a sensible
+>> polling frequency, so that userspace will be aware of the current
+>> CPU temperature. <100> sounds like a sensible value here.
+>>
+>> Konrad
 > 
+> Temperature sensor's present in IPQ5424 supports interrupts.
 
+Correct.
+
+> Hence no need to configure polling frequency.
+
+No, that interrupt firing signifies crossing the temp threshold (meaning
+no updates beyond that) or the tsens watchdog barking.
+
+Konrad
 
