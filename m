@@ -1,76 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-37207-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37208-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 11BE39C0054
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 09:46:12 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 77B1A9C009C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 09:56:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 65C8BB23774
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 08:46:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 03AA61F22C1E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 08:56:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A8E21DF728;
-	Thu,  7 Nov 2024 08:45:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 221FD194A67;
+	Thu,  7 Nov 2024 08:56:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sK8os7CO"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vvuvDYwR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6035C1DE8BF
-	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Nov 2024 08:45:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1448A1DE88D
+	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Nov 2024 08:55:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730969111; cv=none; b=Qu8QtvOCQcytJLQyHxjcl9pw2iSJfPxYE5hiKdcGn6BhghTnBpSW7I89Wo2YbI448Uqf/scqdqsgBoYt5C9JKq+EzFATlQFV1Wiec7jfAjNKb8XCHRcLv7ofps5VJ00HZ0SepmLGYp8Wi4O++YzW3dvngobAqpKbitx2i2E/1wY=
+	t=1730969761; cv=none; b=pSgEWjyEJiZh1dKzqTevGcnBoeRBj5vxtGaiTyDMq8C+SFwCQRoaeOfZ1WeBrIsLvxuba1rtp1trRkeGj/F4vIHema0ET91nl3zahsQUn+H2CCMsDw53xrPeMG/qre0fMVt2j+DLpT+FLMjUSPRBNTvjrDJtAddLG4TjnxelWZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730969111; c=relaxed/simple;
-	bh=YmdxF7vbu8dJM4MGBbkY7vzPYBSxi5Z267Sqc1A988I=;
+	s=arc-20240116; t=1730969761; c=relaxed/simple;
+	bh=oUKXS1Trx2oLd1tIewxL57LIdNPU6w5il/qAiXfM5dQ=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=DyeC+0q2mOheik/gYGjK58DwH5jNTIg+KsH/SDQa3OencFqkNeUn5pVcZKrz2nYSI1WXRY2epArdo7SwQ9EvAhNiVZjXjGxbG8trFIZdnr9q0PEMhM2pdga5aa40vnOZ98L3mrhujNtgyE2m9hCADcYT7PvAFvDgx0+mrOJO8TM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sK8os7CO; arc=none smtp.client-ip=209.85.128.45
+	 In-Reply-To:Content-Type; b=U46/+qXKvPCL9ooxQR/ew7vKDMBadeqsSsDTFURc7nPeWgFi+U9nfYQHvWhsjeLMmxOyv3ktpL+QBp7tSrz9Z9YdTGhnBFZMsUuWFTyilJX7Jpn1csyoi2e5qX2l0Rn9z0SIluBaRWePyW2xelhAXbb2tBWNy+maUGJC1BpOFqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vvuvDYwR; arc=none smtp.client-ip=209.85.167.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4314f38d274so8247945e9.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Nov 2024 00:45:09 -0800 (PST)
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-539e6c754bdso528001e87.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Nov 2024 00:55:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1730969108; x=1731573908; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1730969757; x=1731574557; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Ptk/prbXj2qZpsXfE6umlu//+z1stLb6ou6X7W8u0q8=;
-        b=sK8os7COJauabbfX/hui0HPiHWLzXQd0aFalbUph2+0ik6FBVQlPVEtB9xonOoaHuQ
-         wBHM1PvM8zsvKlmQjYI+QL1g6n44vl36sV8G3dqKGpSdbbbDh3ammH8FSoCLvZyqb4BT
-         uruiZqPbrTOoh3sw08zT/0K5GYLMP/p4AstJMSeqDF930JLcwBaMQuZLC3pxNb7EcaTN
-         eU7tBwjcVfqWX2oufpsrenPLUUA1VyJapu15QUUnKEe9xqsVUNxHVCTUKbKIhdwUITOX
-         oFMJbv6ypdojN8+U9JzLbgfnuqb6leysvnUqGKNsl5is1EgBhGf9leQ+z8x4blNP5VWD
-         gdyg==
+        bh=22XbHSdxTpfYFI6FS3XwYfdVJJn+nc1ZTuC9aza1c+M=;
+        b=vvuvDYwRUC1QcTXDMu76yTY8bE1U2mxXjUaGFQ4GYKhfBHlgr27MPTEwQbfnUYtw4t
+         rNpx55QL83knreDxCVJE/xf2fuiSmvWL922L2AFsl896bjCj8P+twKaXky9uh5gVZmon
+         9enIIBVuHWdjylgRs0IqSSOrD3zChoSGxjXhwYDblwtMdHdvPUxd4r/zILV1RV8wSTJp
+         y66IGTm8FfgknX3QTm4DS4UpDEpdB48fwbT64oBTlF4tDiMJeAj06tW2VjEkt18auEz9
+         Hv6nqIIN3u/S3K+1alQBLQGbgdVxd4Fj28Ljcqxi2qdnJpcGGK0N3F8T+e5wXC3+pQrp
+         iBtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730969108; x=1731573908;
+        d=1e100.net; s=20230601; t=1730969757; x=1731574557;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=Ptk/prbXj2qZpsXfE6umlu//+z1stLb6ou6X7W8u0q8=;
-        b=wcZaeJ1jWfMdX5GUiR740tWUb/2OaFW1HOESYk14hBY79Zicltf8SivzK0twuUhNOZ
-         0YBcVxUst0pmVnHtupjGJ4NheKV11WWvujxK4W9W3BZ/6K7fHcdfgSRwho3iL+OXJlAc
-         f5nBo39hcXtv54BX9VWsUwc49seWVdteGatHpEo/CNcgC0NFNbeh7e5Ily3hI/K+Wi6S
-         nRW8DEgj91dcavfivaiZiZz/CBN7E0u2PTi06wFQRRqc3snWyMpUmQM6zRViQYkOjmwf
-         RJu4ycbXX8RJhipn62Rz877OfDLWDKxmdOACP54D5dL3ayOgblhzVgRj3agI4mqEdrnM
-         F1gg==
-X-Forwarded-Encrypted: i=1; AJvYcCWy0Itb2hz4jqY68vfz4XT0DuMpaSa9TovtarC7NybB37wCOwtrCexsuzDItO0uV6gpiNogEha9/rceYkBt@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz2ssbCHtgdAsvGAdcXMAhtOa5FE5wfF/rP2Ss5+8rh7G7biyjt
-	PPV8cNJ8hy8tDhF86mXGvOKoHDBVzC6bsjBkn7grFUUQ4rWu7CkJymh2PMIASIA=
-X-Google-Smtp-Source: AGHT+IF0iK8ZjS53YGkJV1UqpdJmYPay52KWYJpFa25L7QQvig5tLM86CqKdyPC9HssVdqkQsGoQwg==
-X-Received: by 2002:a05:600c:3148:b0:431:557e:b40c with SMTP id 5b1f17b1804b1-4328327ce1fmr236778325e9.27.1730969107679;
-        Thu, 07 Nov 2024 00:45:07 -0800 (PST)
-Received: from [172.16.23.252] ([89.101.134.25])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432b054b3fesm15331845e9.17.2024.11.07.00.45.06
+        bh=22XbHSdxTpfYFI6FS3XwYfdVJJn+nc1ZTuC9aza1c+M=;
+        b=NlRoOVQf6pOqJJTALlnhWLxPVk17c6Y0XJ45JeZu2Fwj8CFri5k97LUDF+EP1g4oVh
+         F0VbZfO/II9zsh1HqU99FAHKrM7MU23JchdFdKqNGCaosBfj4HNkE8G4WQU0l/6M4TD7
+         ammfkZNqCTCao8SXiDTzMG7MXoC4hlagHC0Qbl874nlmooJyXfsE2nzgff/svbKqAFvl
+         AmacXJkwqfV72Uwh4xuI1+E0h62e9bN0nTcpcwIZM/2dpgMsp3JwfoKw9y00kkOf0NXS
+         NBSxODevufH2bzjQmJlyz47rNPPEpzOq7u2Aj0aYGTtuhaajjRtIp293QweLoFGYYiyT
+         f1Yg==
+X-Gm-Message-State: AOJu0Ywx7svJJvcvQLxkdggXUT7+vOINLbBrvc1P1WQploLTwc3d5Tqv
+	PX8PG9kpunLIiRjPMQXMnhzfKfr9gLeA/KYKLKgdjfm47i7NhgVUB4z7MJOHUvA=
+X-Google-Smtp-Source: AGHT+IHLCitCgygItsIvrBIVb0mwAMkG7nEKi2gvAEQviQ2+FqlmxeJnYgE7zjwr6oiTTX/4e230MQ==
+X-Received: by 2002:a05:6512:3c97:b0:539:e12c:bba7 with SMTP id 2adb3069b0e04-53d8405ca28mr171761e87.12.1730969756964;
+        Thu, 07 Nov 2024 00:55:56 -0800 (PST)
+Received: from [172.16.23.252] ([154.14.63.34])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432b05c2161sm15522375e9.31.2024.11.07.00.55.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 07 Nov 2024 00:45:07 -0800 (PST)
-Message-ID: <a1f03a33-22b2-4023-8185-d15abc72bc8a@linaro.org>
-Date: Thu, 7 Nov 2024 09:45:06 +0100
+        Thu, 07 Nov 2024 00:55:56 -0800 (PST)
+Message-ID: <56a976d6-7dd6-4001-b6a8-268ed7d787d2@linaro.org>
+Date: Thu, 7 Nov 2024 09:55:53 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -80,15 +79,25 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: neil.armstrong@linaro.org
 Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v3 4/4] PCI: qcom: Add Qualcomm SA8255p based PCIe root
- complex functionality
-To: Mayank Rana <quic_mrana@quicinc.com>, jingoohan1@gmail.com,
- manivannan.sadhasivam@linaro.org, will@kernel.org, lpieralisi@kernel.org,
- kw@linux.com, robh@kernel.org, bhelgaas@google.com, krzk@kernel.org
-Cc: linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, quic_krichai@quicinc.com
-References: <20241106221341.2218416-1-quic_mrana@quicinc.com>
- <20241106221341.2218416-5-quic_mrana@quicinc.com>
+Subject: Re: [PATCH RFC 1/3] drm/msm/adreno: Add support for ACD
+To: Akhil P Oommen <quic_akhilpo@quicinc.com>, Rob Clark
+ <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+ Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ linux-pm@vger.kernel.org, devicetree@vger.kernel.org
+References: <20241012-gpu-acd-v1-0-1e5e91aa95b6@quicinc.com>
+ <20241012-gpu-acd-v1-1-1e5e91aa95b6@quicinc.com>
+ <4aeec9f1-720b-400c-9582-d02847db2ac7@linaro.org>
+ <43404449-1830-4651-a85a-54404b1d35bc@quicinc.com>
 Content-Language: en-US, fr
 Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
@@ -115,239 +124,158 @@ Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
  QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
 Organization: Linaro
-In-Reply-To: <20241106221341.2218416-5-quic_mrana@quicinc.com>
+In-Reply-To: <43404449-1830-4651-a85a-54404b1d35bc@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hi,
-
-On 06/11/2024 23:13, Mayank Rana wrote:
-> On SA8255p ride platform, PCIe root complex is firmware managed as well
-> configured into ECAM compliant mode. This change adds functionality to
-> enable resource management (system resource as well PCIe controller and
-> PHY configuration) through firmware, and enumerating ECAM compliant root
-> complex.
+On 06/11/2024 02:44, Akhil P Oommen wrote:
+> On 11/4/2024 9:14 PM, neil.armstrong@linaro.org wrote:
+>> On 11/10/2024 22:29, Akhil P Oommen wrote:
+>>> ACD a.k.a Adaptive Clock Distribution is a feature which helps to reduce
+>>> the power consumption. In some chipsets, it is also a requirement to
+>>> support higher GPU frequencies. This patch adds support for GPU ACD by
+>>> sending necessary data to GMU and AOSS. The feature support for the
+>>> chipset is detected based on devicetree data.
+>>>
+>>> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+>>> ---
+>>>    drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 81 +++++++++++++++++++++++++
+>>> +++-------
+>>>    drivers/gpu/drm/msm/adreno/a6xx_gmu.h |  1 +
+>>>    drivers/gpu/drm/msm/adreno/a6xx_hfi.c | 36 ++++++++++++++++
+>>>    drivers/gpu/drm/msm/adreno/a6xx_hfi.h | 21 +++++++++
+>>>    4 files changed, 124 insertions(+), 15 deletions(-)
+>>>
+>>
+>> <snip>
+>>
+>>> +
+>>> +static int a6xx_hfi_enable_acd(struct a6xx_gmu *gmu)
+>>> +{
+>>> +    struct a6xx_hfi_acd_table *acd_table = &gmu->acd_table;
+>>> +    struct a6xx_hfi_msg_feature_ctrl msg = {
+>>> +        .feature = HFI_FEATURE_ACD,
+>>> +        .enable = 1,
+>>> +        .data = 0,
+>>> +    };
+>>> +    int ret;
+>>> +
+>>> +    if (!acd_table->enable_by_level)
+>>> +        return 0;
+>>> +
+>>> +    /* Enable ACD feature at GMU */
+>>> +    ret = a6xx_hfi_send_msg(gmu, HFI_H2F_FEATURE_CTRL, &msg,
+>>> sizeof(msg), NULL, 0);
+>>> +    if (ret) {
+>>> +        DRM_DEV_ERROR(gmu->dev, "Unable to enable ACD (%d)\n", ret);
+>>> +        return ret;
+>>> +    }
+>>> +
+>>> +    /* Send ACD table to GMU */
+>>> +    ret = a6xx_hfi_send_msg(gmu, HFI_H2F_MSG_ACD, &msg, sizeof(msg),
+>>> NULL, 0);
+>>
+>> This looks wrong, in this exact code, you never use the acd_table...
+>> perhaps it should be acd_table here
 > 
-> Signed-off-by: Mayank Rana <quic_mrana@quicinc.com>
-> ---
->   drivers/pci/controller/dwc/Kconfig     |   1 +
->   drivers/pci/controller/dwc/pcie-qcom.c | 116 +++++++++++++++++++++++--
->   2 files changed, 108 insertions(+), 9 deletions(-)
+> Whoops! Weirdly gmu didn't explode when I tested.
 > 
-> diff --git a/drivers/pci/controller/dwc/Kconfig b/drivers/pci/controller/dwc/Kconfig
-> index b6d6778b0698..0fe76bd39d69 100644
-> --- a/drivers/pci/controller/dwc/Kconfig
-> +++ b/drivers/pci/controller/dwc/Kconfig
-> @@ -275,6 +275,7 @@ config PCIE_QCOM
->   	select PCIE_DW_HOST
->   	select CRC8
->   	select PCIE_QCOM_COMMON
-> +	select PCI_HOST_COMMON
->   	help
->   	  Say Y here to enable PCIe controller support on Qualcomm SoCs. The
->   	  PCIe controller uses the DesignWare core plus Qualcomm-specific
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index ef44a82be058..2cb74f902baf 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -21,7 +21,9 @@
->   #include <linux/limits.h>
->   #include <linux/init.h>
->   #include <linux/of.h>
-> +#include <linux/of_pci.h>
->   #include <linux/pci.h>
-> +#include <linux/pci-ecam.h>
->   #include <linux/pm_opp.h>
->   #include <linux/pm_runtime.h>
->   #include <linux/platform_device.h>
-> @@ -254,10 +256,12 @@ struct qcom_pcie_ops {
->     * @ops: qcom PCIe ops structure
->     * @override_no_snoop: Override NO_SNOOP attribute in TLP to enable cache
->     * snooping
-> +  * @firmware_managed: Set if PCIe root complex is firmware managed
->     */
->   struct qcom_pcie_cfg {
->   	const struct qcom_pcie_ops *ops;
->   	bool override_no_snoop;
-> +	bool firmware_managed;
->   	bool no_l0s;
->   };
->   
-> @@ -1415,6 +1419,10 @@ static const struct qcom_pcie_cfg cfg_sc8280xp = {
->   	.no_l0s = true,
->   };
->   
-> +static const struct qcom_pcie_cfg cfg_fw_managed = {
-> +	.firmware_managed = true,
-> +};
-> +
->   static const struct dw_pcie_ops dw_pcie_ops = {
->   	.link_up = qcom_pcie_link_up,
->   	.start_link = qcom_pcie_start_link,
-> @@ -1566,6 +1574,51 @@ static irqreturn_t qcom_pcie_global_irq_thread(int irq, void *data)
->   	return IRQ_HANDLED;
->   }
->   
-> +static void qcom_pci_free_msi(void *ptr)
-> +{
-> +	struct dw_pcie_rp *pp = (struct dw_pcie_rp *)ptr;
-> +
-> +	if (pp && pp->has_msi_ctrl)
-> +		dw_pcie_free_msi(pp);
-> +}
-> +
-> +static int qcom_pcie_ecam_host_init(struct pci_config_window *cfg)
-> +{
-> +	struct device *dev = cfg->parent;
-> +	struct dw_pcie_rp *pp;
-> +	struct dw_pcie *pci;
-> +	int ret;
-> +
-> +	pci = devm_kzalloc(dev, sizeof(*pci), GFP_KERNEL);
-> +	if (!pci)
-> +		return -ENOMEM;
-> +
-> +	pci->dev = dev;
-> +	pp = &pci->pp;
-> +	pci->dbi_base = cfg->win;
-> +	pp->num_vectors = MSI_DEF_NUM_VECTORS;
-> +
-> +	ret = dw_pcie_msi_host_init(pp);
-> +	if (ret)
-> +		return ret;
-> +
-> +	pp->has_msi_ctrl = true;
-> +	dw_pcie_msi_init(pp);
-> +
-> +	ret = devm_add_action_or_reset(dev, qcom_pci_free_msi, pp);
-> +	return ret;
-> +}
-> +
-> +/* ECAM ops */
-> +const struct pci_ecam_ops pci_qcom_ecam_ops = {
-> +	.init		= qcom_pcie_ecam_host_init,
-> +	.pci_ops	= {
-> +		.map_bus	= pci_ecam_map_bus,
-> +		.read		= pci_generic_config_read,
-> +		.write		= pci_generic_config_write,
-> +	}
-> +};
-> +
->   static int qcom_pcie_probe(struct platform_device *pdev)
->   {
->   	const struct qcom_pcie_cfg *pcie_cfg;
-> @@ -1580,11 +1633,52 @@ static int qcom_pcie_probe(struct platform_device *pdev)
->   	char *name;
->   
->   	pcie_cfg = of_device_get_match_data(dev);
-> -	if (!pcie_cfg || !pcie_cfg->ops) {
-> -		dev_err(dev, "Invalid platform data\n");
-> +	if (!pcie_cfg) {
-> +		dev_err(dev, "No platform data\n");
-> +		return -EINVAL;
-> +	}
-> +
-> +	if (!pcie_cfg->firmware_managed && !pcie_cfg->ops) {
-> +		dev_err(dev, "No platform ops\n");
->   		return -EINVAL;
->   	}
->   
-> +	pm_runtime_enable(dev);
-> +	ret = pm_runtime_get_sync(dev);
-> +	if (ret < 0)
-> +		goto err_pm_runtime_put;
-> +
-> +	if (pcie_cfg->firmware_managed) {
-> +		struct pci_host_bridge *bridge;
-> +		struct pci_config_window *cfg;
-> +
-> +		bridge = devm_pci_alloc_host_bridge(dev, 0);
-> +		if (!bridge) {
-> +			ret = -ENOMEM;
-> +			goto err_pm_runtime_put;
-> +		}
-> +
-> +		of_pci_check_probe_only();
-> +		/* Parse and map our Configuration Space windows */
-> +		cfg = gen_pci_init(dev, bridge, &pci_qcom_ecam_ops);
-> +		if (IS_ERR(cfg)) {
-> +			ret = PTR_ERR(cfg);
-> +			goto err_pm_runtime_put;
-> +		}
-> +
-> +		bridge->sysdata = cfg;
-> +		bridge->ops = (struct pci_ops *)&pci_qcom_ecam_ops.pci_ops;
-> +		bridge->msi_domain = true;
-> +
-> +		ret = pci_host_probe(bridge);
-> +		if (ret) {
-> +			dev_err(dev, "pci_host_probe() failed:%d\n", ret);
-> +			goto err_pm_runtime_put;
-> +		}
-> +
-> +		return ret;
-> +	}
-> +
->   	pcie = devm_kzalloc(dev, sizeof(*pcie), GFP_KERNEL);
->   	if (!pcie)
->   		return -ENOMEM;
-> @@ -1593,11 +1687,6 @@ static int qcom_pcie_probe(struct platform_device *pdev)
->   	if (!pci)
->   		return -ENOMEM;
->   
-> -	pm_runtime_enable(dev);
-> -	ret = pm_runtime_get_sync(dev);
-> -	if (ret < 0)
-> -		goto err_pm_runtime_put;
-> -
->   	pci->dev = dev;
->   	pci->ops = &dw_pcie_ops;
->   	pp = &pci->pp;
-> @@ -1739,9 +1828,13 @@ static int qcom_pcie_probe(struct platform_device *pdev)
->   
->   static int qcom_pcie_suspend_noirq(struct device *dev)
->   {
-> -	struct qcom_pcie *pcie = dev_get_drvdata(dev);
-> +	struct qcom_pcie *pcie;
->   	int ret = 0;
->   
-> +	if (of_device_is_compatible(dev->of_node, "qcom,pcie-sa8255p"))
+> Thanks for your keen eye.
 
-Can't you use if (pcie_cfg->firmware_managed) here instead ?
+You're welcome !
 
-> +		return 0;
-> +
-> +	pcie = dev_get_drvdata(dev);
->   	/*
->   	 * Set minimum bandwidth required to keep data path functional during
->   	 * suspend.
-> @@ -1795,9 +1888,13 @@ static int qcom_pcie_suspend_noirq(struct device *dev)
->   
->   static int qcom_pcie_resume_noirq(struct device *dev)
->   {
-> -	struct qcom_pcie *pcie = dev_get_drvdata(dev);
-> +	struct qcom_pcie *pcie;
->   	int ret;
->   
-> +	if (of_device_is_compatible(dev->of_node, "qcom,pcie-sa8255p"))
+I've been trying to enable this on SM8650, but HFI_H2F_MSG_ACD fails.
 
-Ditto
+My changes:
+================><================================
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+index 7c96d6f8aaa9..bd9d586f245e 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+@@ -682,7 +682,7 @@ static int a6xx_hfi_enable_acd(struct a6xx_gmu *gmu)
+         }
 
-> +		return 0;
-> +
-> +	pcie = dev_get_drvdata(dev);
->   	if (pm_suspend_target_state != PM_SUSPEND_MEM) {
->   		ret = icc_enable(pcie->icc_cpu);
->   		if (ret) {
-> @@ -1830,6 +1927,7 @@ static const struct of_device_id qcom_pcie_match[] = {
->   	{ .compatible = "qcom,pcie-ipq8074-gen3", .data = &cfg_2_9_0 },
->   	{ .compatible = "qcom,pcie-msm8996", .data = &cfg_2_3_2 },
->   	{ .compatible = "qcom,pcie-qcs404", .data = &cfg_2_4_0 },
-> +	{ .compatible = "qcom,pcie-sa8255p", .data = &cfg_fw_managed },
->   	{ .compatible = "qcom,pcie-sa8540p", .data = &cfg_sc8280xp },
->   	{ .compatible = "qcom,pcie-sa8775p", .data = &cfg_1_34_0},
->   	{ .compatible = "qcom,pcie-sc7280", .data = &cfg_1_9_0 },
+         /* Send ACD table to GMU */
+-       ret = a6xx_hfi_send_msg(gmu, HFI_H2F_MSG_ACD, &acd_table, sizeof(*acd_table), NULL, 0);
++       ret = a6xx_hfi_send_msg(gmu, HFI_H2F_MSG_ACD, &acd_table, sizeof(struct a6xx_hfi_acd_table), NULL, 0);
+         if (ret) {
+                 DRM_DEV_ERROR(gmu->dev, "Unable to send ACD table (%d)\n", ret);
+                 return ret;
+================><================================
 
-Thanks,
+with the appropriate qcom,opp-acd-level in DT taken from downstream, I get:
+[    6.946184] platform 3d6a000.gmu: [drm:a6xx_hfi_send_msg.constprop.0 [msm]] *ERROR* Message (null) id 4 timed out waiting for response
+[    6.958697] platform 3d6a000.gmu: [drm:a6xx_hfi_start [msm]] *ERROR* Unable to send ACD table (-110)
+
+is there something missing ?
+
 Neil
+
+> 
+> -Akhil.
+> 
+>>
+>>> +    if (ret) {
+>>> +        DRM_DEV_ERROR(gmu->dev, "Unable to ACD table (%d)\n", ret);
+>>> +        return ret;
+>>> +    }
+>>> +
+>>> +    return 0;
+>>> +}
+>>> +
+>>>    static int a6xx_hfi_send_test(struct a6xx_gmu *gmu)
+>>>    {
+>>>        struct a6xx_hfi_msg_test msg = { 0 };
+>>> @@ -756,6 +788,10 @@ int a6xx_hfi_start(struct a6xx_gmu *gmu, int
+>>> boot_state)
+>>>        if (ret)
+>>>            return ret;
+>>>    +    ret = a6xx_hfi_enable_acd(gmu);
+>>> +    if (ret)
+>>> +        return ret;
+>>> +
+>>>        ret = a6xx_hfi_send_core_fw_start(gmu);
+>>>        if (ret)
+>>>            return ret;
+>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.h b/drivers/gpu/drm/
+>>> msm/adreno/a6xx_hfi.h
+>>> index 528110169398..51864c8ad0e6 100644
+>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.h
+>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.h
+>>> @@ -151,12 +151,33 @@ struct a6xx_hfi_msg_test {
+>>>        u32 header;
+>>>    };
+>>>    +#define HFI_H2F_MSG_ACD 7
+>>> +#define MAX_ACD_STRIDE 2
+>>> +
+>>> +struct a6xx_hfi_acd_table {
+>>> +    u32 header;
+>>> +    u32 version;
+>>> +    u32 enable_by_level;
+>>> +    u32 stride;
+>>> +    u32 num_levels;
+>>> +    u32 data[16 * MAX_ACD_STRIDE];
+>>> +};
+>>> +
+>>>    #define HFI_H2F_MSG_START 10
+>>>      struct a6xx_hfi_msg_start {
+>>>        u32 header;
+>>>    };
+>>>    +#define HFI_H2F_FEATURE_CTRL 11
+>>> +
+>>> +struct a6xx_hfi_msg_feature_ctrl {
+>>> +    u32 header;
+>>> +    u32 feature;
+>>> +    u32 enable;
+>>> +    u32 data;
+>>> +};
+>>> +
+>>>    #define HFI_H2F_MSG_CORE_FW_START 14
+>>>      struct a6xx_hfi_msg_core_fw_start {
+>>>
+>>
+>> Thanks,
+>> Neil
+> 
+
 
