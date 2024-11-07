@@ -1,315 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-37260-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37261-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D7529C08E9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 15:31:18 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4A9819C0905
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 15:35:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C1B9D1C2486D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 14:31:17 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7C8711C228ED
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 14:35:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0EBD2212622;
-	Thu,  7 Nov 2024 14:31:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE167212F14;
+	Thu,  7 Nov 2024 14:34:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kmoD10Sq"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LQ7zv3BP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90597210196
-	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Nov 2024 14:31:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C75F212D00
+	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Nov 2024 14:34:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730989872; cv=none; b=CAj1AuHJBGYN5SLHASJVj4n3+I6UzrYyVJ08eXM9NWvBb39A+nMgGbgy1i0gpCMULly5ongKC64eohEHoiVziMt1f9+hEkw3e/9xflRRkIJBnhMAKj9Dlm4OliAPA1g64Ym1SfoCJE//nFX7LMlgZ3Gi6yu3PnQ7SftYj3pzJLE=
+	t=1730990082; cv=none; b=DhrCT5oaT3fRG8gInwbyorkFN4O1lYbpRG34IN01SMwIuRpOsfiflDDWUnO1lFDQsf7QdNxmfx8fC+btouQMBuSEoX3zdUm9ASzzMN9r7HSo4JTlfUHD1Pmae5yZIfqvHiqNH7qM8+ih7Jzc/sQEuZS3z0gL0Fso+/HabkoBLGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730989872; c=relaxed/simple;
-	bh=BZ5oTKHBKMEtyTEuiNUO32t+G7u472nOePKIEpkjFPk=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=lJzCbaUvc/hVlmhyLNAR5btN8YevS7o6vEedYvuhrL/sdxU5nA65dup0qAkQrsWl4DBJD2msOFgT9I0EG5uTxvP3PsfIoDGCDRYpkOwxW9ZKIY6t5XnCJFzUF6Ru1dYbBoy8+NhCovz/gRIsdVMkcFpV19LtTTVkTD4CoXoYYmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kmoD10Sq; arc=none smtp.client-ip=209.85.221.44
+	s=arc-20240116; t=1730990082; c=relaxed/simple;
+	bh=sYdP0JlYzj4mQQL95qniZ5n95iC6ImunCygdVJuw3YU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dDgNZ+bcW3+MPIOfj5FPLtomVDDV57lPZgqQh70ztpEsIa9/QBF5mN8rAAjPWzSmZDWZhFKvYvMVHt41r9ylQn9Nl8lrPY5L0dYtv3CDdYOdL1O+qLMlMTf1eI+ULCalgxsZFw8xVceWnjj9X+OsC41NWSXpiwbyaOd8epszY50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LQ7zv3BP; arc=none smtp.client-ip=209.85.208.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-37ed3bd6114so616814f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Nov 2024 06:31:09 -0800 (PST)
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2fb498a92f6so8863271fa.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Nov 2024 06:34:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1730989868; x=1731594668; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=52spWhmFBKhhJZSyR9FLJzET+EvHavBhysGOe9CL+hQ=;
-        b=kmoD10SqEQEhXpS+YHThSaRuHI7ncIVELSNULAtZ8RQl0OV3H+h/zqxFvezQU+NUNV
-         7pDwdr/AbsefB6xhhnpUsnUXo5tKuToSSjHKiHOl9juGKQX65bHngPygpt8gQfMUtIPX
-         uhRObp7DuEknttOlDO+/LhDTsMPnCxzxNyzFBxMgM7N4+SQREe4yuZ79nNUk9PEOAkok
-         BhWiMEp62m8sCVdt1yd7cGXUUndFWa+zLkCCey2zBHZVJy/RIJLY2Qz6q26Tzt5EbPX7
-         ao+ZY1GeVfmLkAWKkahXrJESpyDv9dU6QMHPir5Clru8WWo/77xkBWTcoUbGcMcTr1BB
-         WUcg==
+        d=linaro.org; s=google; t=1730990079; x=1731594879; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=sFw8yXJLqrkXU5hRV9LHBA5xHB7hRhKhK9JeN1oXec4=;
+        b=LQ7zv3BPWWliXdprNS1MplJaIxFfxajUzC0nK9ukyhAgWq6YJ8kZY65cNQJg4k/LNR
+         zRF5fAkN+AWbuYr2+4/l+2DmyfxX5nQ0IDv+fA3oGWi/COhL6fziKX3FO6qnQ3cDbJfb
+         6X4WUUYeMAdWj9QEKJ1wMCc3yyztCQQ8O71ecxiwyKm+nzd7jFu9Fk8rUpH7AB2zPP0s
+         dQWgg0H7ZJotHECOlV61oyUdBKMpBfhMXQGH4uBTqeCBm4KGxd0T5YSykqPOvRPXDu49
+         cLEKOMYC5Y4m10eCzXKyNOj8ye2FqWFs5CJrJt7fJx/LCGAFjdmTOgirknC9cOLNQoqa
+         yt2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730989868; x=1731594668;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=52spWhmFBKhhJZSyR9FLJzET+EvHavBhysGOe9CL+hQ=;
-        b=Sr6hj/AEay90AzcFsiK10bC7O18d7y4mlucrV3SucUhQw5SPcfJksQ6JsGOyGcZMlU
-         p7H+MyoW/lc5MBIx5kVNuACZUfCvn8DDJ3ceoJzNfkhkgLyrSTTzabt/GALbi/3VyK+X
-         wuT9wAMGw+wFQ2QwvSsB91glh9hSA/eYzbYfEZx5qQntbIx3kdkoiwFVdowvnZpTE2A5
-         Y00PhSbIBywONTvTOy5KWZRWToL4ldJL4coRxA8gNfdoikaZFYyp+hOcclIPH5zliTz1
-         HF2aXLY/FnhpDmPCNyp6zZZJqEuFqiHDAjVUciih4R9zqR5Ikb4pWKfsvPc+yY1phea9
-         8ysA==
-X-Gm-Message-State: AOJu0YwGLRNIgsNFHRbbfWwNBsFxHFqRBuhgBqQ7pMUtKfE4/o3ua+nq
-	buLhvQQZ9CVXDclrPfZV3Uk4wMWdWftkc95QYDNvKiUTYp2jMLcSijS1X/FnYJI=
-X-Google-Smtp-Source: AGHT+IH1XW54uNic2Zsxikuj4la1QpramzsNuBrwv0oti7++/bg6c3Sof5I5A2uO5KaEWXSxgWOsoA==
-X-Received: by 2002:a05:6000:1569:b0:37d:5103:8894 with SMTP id ffacd0b85a97d-381c7aa4a56mr20990212f8f.42.1730989867777;
-        Thu, 07 Nov 2024 06:31:07 -0800 (PST)
-Received: from [172.16.23.252] ([89.101.134.25])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381ed9719easm1930183f8f.9.2024.11.07.06.31.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 07 Nov 2024 06:31:07 -0800 (PST)
-Message-ID: <85eaeaca-850d-47d4-b81d-b23f25084d81@linaro.org>
-Date: Thu, 7 Nov 2024 15:31:05 +0100
+        d=1e100.net; s=20230601; t=1730990079; x=1731594879;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=sFw8yXJLqrkXU5hRV9LHBA5xHB7hRhKhK9JeN1oXec4=;
+        b=spa87iaWItriu9WHrbIem+J/FckrYiDL4bg7D7U3HHN3/SQfXT9XfAuvQoX6ekbUhv
+         HyjAzP+hyrRmo7v5Z1ErPY9QAirruKfdPcQN8Pgr1/wKryATzDti3xGKo+0yA0LDqNPu
+         Pqxq6A3RiZn3WhghK848s3yI4ydV1dA+iYup1iJsYueXIX5ReAU6nQimF7fCVmBio608
+         1eWySXwuW0Bl8uWeaxzEOWXcFHqQXmJqgVBI/hiaKq3ozKeHumRgUK9BxwCAN2aSYfvT
+         DDxkIsOaqkf0/hIGtaxCeNyxw831Nz0Uhd6ck3FsIMJw4F21hJrU+KNxo5EB/Ap9MWfe
+         N/BA==
+X-Forwarded-Encrypted: i=1; AJvYcCXyHG12peeD4DjGHx3mbHQviRS/VEe+7s71Z/uL9PJoSw0CSAWn59Fd4uM77ffFebQfn4g1YzQdQQUiuuna@vger.kernel.org
+X-Gm-Message-State: AOJu0YyRXcmt7ynQEu8fWf0C3CViW8QokBB3nvh6WrLlPQZrxMJ5ClR2
+	pVCu0+wcPamUZPyBAuO3ikrFdil2LYm7fYJzbZcRDyjIkGPtcpnT9E8slLNiSjQ=
+X-Google-Smtp-Source: AGHT+IE6u/vwpetFFBTpREnEATNArVxMnib3hilqhpSQwRreBBwE7Un+H8iFwlJKP4tC/3/OAp4Img==
+X-Received: by 2002:a2e:a1ca:0:b0:2fb:9180:250f with SMTP id 38308e7fff4ca-2fcbdfd77bfmr168671801fa.18.1730990079154;
+        Thu, 07 Nov 2024 06:34:39 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ff179d7d5dsm2406701fa.108.2024.11.07.06.34.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 Nov 2024 06:34:37 -0800 (PST)
+Date: Thu, 7 Nov 2024 16:34:36 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Linus Walleij <linus.walleij@linaro.org>
+Cc: Sudeep Holla <sudeep.holla@arm.com>, Ard Biesheuvel <ardb@kernel.org>, 
+	Russell King <linux@armlinux.org.uk>, linux-arm-kernel@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Arnd Bergmann <arnd@arndb.de>
+Subject: Re: [PATCH v2 0/2] ARM: implement cacheinfo support (for v7/v7m)
+Message-ID: <lkxm6m2u25o4qfvpja7qsldqm7zjxejkn6d5qihyxbg2zvntwh@icvun74e6rll>
+References: <20241014-armv7-cacheinfo-v2-0-38ab76d2b7fa@linaro.org>
+ <CACRpkdbfckBBW5W5sEvz1LwzdOvTKi_fi7tDu+9nPeKumYkPeA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH RFC 1/3] drm/msm/adreno: Add support for ACD
-To: Akhil P Oommen <quic_akhilpo@quicinc.com>, Rob Clark
- <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
- Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- linux-pm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20241012-gpu-acd-v1-0-1e5e91aa95b6@quicinc.com>
- <20241012-gpu-acd-v1-1-1e5e91aa95b6@quicinc.com>
- <4aeec9f1-720b-400c-9582-d02847db2ac7@linaro.org>
- <43404449-1830-4651-a85a-54404b1d35bc@quicinc.com>
- <56a976d6-7dd6-4001-b6a8-268ed7d787d2@linaro.org>
- <49e1a6b6-683f-4826-b67e-8354a10a785d@quicinc.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <49e1a6b6-683f-4826-b67e-8354a10a785d@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACRpkdbfckBBW5W5sEvz1LwzdOvTKi_fi7tDu+9nPeKumYkPeA@mail.gmail.com>
 
-On 07/11/2024 13:46, Akhil P Oommen wrote:
-> On 11/7/2024 2:25 PM, neil.armstrong@linaro.org wrote:
->> On 06/11/2024 02:44, Akhil P Oommen wrote:
->>> On 11/4/2024 9:14 PM, neil.armstrong@linaro.org wrote:
->>>> On 11/10/2024 22:29, Akhil P Oommen wrote:
->>>>> ACD a.k.a Adaptive Clock Distribution is a feature which helps to
->>>>> reduce
->>>>> the power consumption. In some chipsets, it is also a requirement to
->>>>> support higher GPU frequencies. This patch adds support for GPU ACD by
->>>>> sending necessary data to GMU and AOSS. The feature support for the
->>>>> chipset is detected based on devicetree data.
->>>>>
->>>>> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
->>>>> ---
->>>>>     drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 81 +++++++++++++++++++++++++
->>>>> +++-------
->>>>>     drivers/gpu/drm/msm/adreno/a6xx_gmu.h |  1 +
->>>>>     drivers/gpu/drm/msm/adreno/a6xx_hfi.c | 36 ++++++++++++++++
->>>>>     drivers/gpu/drm/msm/adreno/a6xx_hfi.h | 21 +++++++++
->>>>>     4 files changed, 124 insertions(+), 15 deletions(-)
->>>>>
->>>>
->>>> <snip>
->>>>
->>>>> +
->>>>> +static int a6xx_hfi_enable_acd(struct a6xx_gmu *gmu)
->>>>> +{
->>>>> +    struct a6xx_hfi_acd_table *acd_table = &gmu->acd_table;
->>>>> +    struct a6xx_hfi_msg_feature_ctrl msg = {
->>>>> +        .feature = HFI_FEATURE_ACD,
->>>>> +        .enable = 1,
->>>>> +        .data = 0,
->>>>> +    };
->>>>> +    int ret;
->>>>> +
->>>>> +    if (!acd_table->enable_by_level)
->>>>> +        return 0;
->>>>> +
->>>>> +    /* Enable ACD feature at GMU */
->>>>> +    ret = a6xx_hfi_send_msg(gmu, HFI_H2F_FEATURE_CTRL, &msg,
->>>>> sizeof(msg), NULL, 0);
->>>>> +    if (ret) {
->>>>> +        DRM_DEV_ERROR(gmu->dev, "Unable to enable ACD (%d)\n", ret);
->>>>> +        return ret;
->>>>> +    }
->>>>> +
->>>>> +    /* Send ACD table to GMU */
->>>>> +    ret = a6xx_hfi_send_msg(gmu, HFI_H2F_MSG_ACD, &msg, sizeof(msg),
->>>>> NULL, 0);
->>>>
->>>> This looks wrong, in this exact code, you never use the acd_table...
->>>> perhaps it should be acd_table here
->>>
->>> Whoops! Weirdly gmu didn't explode when I tested.
->>>
->>> Thanks for your keen eye.
->>
->> You're welcome !
->>
->> I've been trying to enable this on SM8650, but HFI_H2F_MSG_ACD fails.
->>
->> My changes:
->> ================><================================
->> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c b/drivers/gpu/drm/
->> msm/adreno/a6xx_hfi.c
->> index 7c96d6f8aaa9..bd9d586f245e 100644
->> --- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
->> +++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
->> @@ -682,7 +682,7 @@ static int a6xx_hfi_enable_acd(struct a6xx_gmu *gmu)
->>          }
->>
->>          /* Send ACD table to GMU */
->> -       ret = a6xx_hfi_send_msg(gmu, HFI_H2F_MSG_ACD, &acd_table,
->> sizeof(*acd_table), NULL, 0);
->> +       ret = a6xx_hfi_send_msg(gmu, HFI_H2F_MSG_ACD, &acd_table,
+On Thu, Nov 07, 2024 at 02:55:55PM +0100, Linus Walleij wrote:
+> Hi Dmitry,
 > 
-> &acd_table -> acd_table here?
-
-Damn, good catch !
-
-Ok so it didn't explode anymore, but still fails:
-=====
-[    7.083258] platform 3d6a000.gmu: [drm:a6xx_hfi_send_msg.constprop.0 [msm]] *ERROR* Message HFI_H2F_MSG_GX_BW_PERF_VOTE id 7 timed out waiting for response
-[    7.149709] platform 3d6a000.gmu: [drm:a6xx_hfi_send_msg.constprop.0 [msm]] *ERROR* Unexpected message id 7 on the response queue
-[    7.149744] platform 3d6a000.gmu: [drm:a6xx_hfi_send_msg.constprop.0 [msm]] *ERROR* The HFI response queue is unexpectedly empty
-[    7.165163] platform 3d6a000.gmu: [drm:a6xx_hfi_send_msg.constprop.0 [msm]] *ERROR* Unexpected message id 8 on the response queue
-[    7.165188] platform 3d6a000.gmu: [drm:a6xx_hfi_send_msg.constprop.0 [msm]] *ERROR* The HFI response queue is unexpectedly empty
-====
-
-Seems with ACD enabled, first vote can take up to 100ms, and downstream has 1s timeout, with a larger timeout I got it to work !
-
-Thanks,
-Neil
+> On Mon, Oct 14, 2024 at 3:55 PM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
 > 
-> -Akhil
+> > Follow the ARM64 platform and implement simple cache information driver.
+> > As it reads data from CTR (ARMv6+) and CLIDR (ARMv7+) registers, it is
+> > limited to the ARMv7 / ARMv7M, providing simple fallback or just
+> > returning -EOPNOTSUPP in case of older platforms.
+> >
+> > In theory we should be able to skip CLIDR reading and assume that Dcache
+> > and Icache (or unified L1 cache) always exist if CTR is supported and
+> > returns sensible value. However I think this better be handled by the
+> > maintainers of corresponding platforms.
+> >
+> > Other than just providing information to the userspace, this patchset is
+> > required in order to implement L2 cache driver (and in the end CPU
+> > frequency scaling) on ARMv7-based Qualcomm devices.
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > 
->> sizeof(struct a6xx_hfi_acd_table), NULL, 0);
->>          if (ret) {
->>                  DRM_DEV_ERROR(gmu->dev, "Unable to send ACD table
->> (%d)\n", ret);
->>                  return ret;
->> ================><================================
->>
->> with the appropriate qcom,opp-acd-level in DT taken from downstream, I get:
->> [    6.946184] platform 3d6a000.gmu: [drm:a6xx_hfi_send_msg.constprop.0
->> [msm]] *ERROR* Message (null) id 4 timed out waiting for response
->> [    6.958697] platform 3d6a000.gmu: [drm:a6xx_hfi_start [msm]] *ERROR*
->> Unable to send ACD table (-110)
->>
->> is there something missing ?
->>
->> Neil
->>
->>>
->>> -Akhil.
->>>
->>>>
->>>>> +    if (ret) {
->>>>> +        DRM_DEV_ERROR(gmu->dev, "Unable to ACD table (%d)\n", ret);
->>>>> +        return ret;
->>>>> +    }
->>>>> +
->>>>> +    return 0;
->>>>> +}
->>>>> +
->>>>>     static int a6xx_hfi_send_test(struct a6xx_gmu *gmu)
->>>>>     {
->>>>>         struct a6xx_hfi_msg_test msg = { 0 };
->>>>> @@ -756,6 +788,10 @@ int a6xx_hfi_start(struct a6xx_gmu *gmu, int
->>>>> boot_state)
->>>>>         if (ret)
->>>>>             return ret;
->>>>>     +    ret = a6xx_hfi_enable_acd(gmu);
->>>>> +    if (ret)
->>>>> +        return ret;
->>>>> +
->>>>>         ret = a6xx_hfi_send_core_fw_start(gmu);
->>>>>         if (ret)
->>>>>             return ret;
->>>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.h b/drivers/gpu/drm/
->>>>> msm/adreno/a6xx_hfi.h
->>>>> index 528110169398..51864c8ad0e6 100644
->>>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.h
->>>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.h
->>>>> @@ -151,12 +151,33 @@ struct a6xx_hfi_msg_test {
->>>>>         u32 header;
->>>>>     };
->>>>>     +#define HFI_H2F_MSG_ACD 7
->>>>> +#define MAX_ACD_STRIDE 2
->>>>> +
->>>>> +struct a6xx_hfi_acd_table {
->>>>> +    u32 header;
->>>>> +    u32 version;
->>>>> +    u32 enable_by_level;
->>>>> +    u32 stride;
->>>>> +    u32 num_levels;
->>>>> +    u32 data[16 * MAX_ACD_STRIDE];
->>>>> +};
->>>>> +
->>>>>     #define HFI_H2F_MSG_START 10
->>>>>       struct a6xx_hfi_msg_start {
->>>>>         u32 header;
->>>>>     };
->>>>>     +#define HFI_H2F_FEATURE_CTRL 11
->>>>> +
->>>>> +struct a6xx_hfi_msg_feature_ctrl {
->>>>> +    u32 header;
->>>>> +    u32 feature;
->>>>> +    u32 enable;
->>>>> +    u32 data;
->>>>> +};
->>>>> +
->>>>>     #define HFI_H2F_MSG_CORE_FW_START 14
->>>>>       struct a6xx_hfi_msg_core_fw_start {
->>>>>
->>>>
->>>> Thanks,
->>>> Neil
->>>
->>
-> 
+> I added my review tags to the v2 patches, can you put them
+> into Russell's patch tracker?
 
+Done, 9432/1 and 9433/1, thank you!
+
+-- 
+With best wishes
+Dmitry
 
