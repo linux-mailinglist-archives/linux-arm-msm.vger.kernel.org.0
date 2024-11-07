@@ -1,136 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-37229-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37232-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id ECCBE9C0508
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 12:58:21 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 183A09C0533
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 13:04:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A240E1F23153
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 11:58:21 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9A42DB21285
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 12:04:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 650E020E317;
-	Thu,  7 Nov 2024 11:58:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3D8820F5BD;
+	Thu,  7 Nov 2024 12:04:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ndTVSh5K"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="URPzzogG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FF3D20C48E;
-	Thu,  7 Nov 2024 11:58:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47B6020B1E7
+	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Nov 2024 12:04:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730980696; cv=none; b=VJvXhCw5FBo23X+270Joodj2LKiLyECdaSRm6NOEvPJDV9qU/njr33ylp9Ml+rdUiFsR25RxXrNdumfmvHiRy/EUIIm8/IZl9U2SFXJxNNPiGJCn2Q2dOd6pVo8RNfgtpFCRDgqFlrLOe5T5k0vpf0LzaW2VQK4LDypnIxHQihc=
+	t=1730981051; cv=none; b=lPlAvaqDfC4A1E/HodpCuW1gjSWwV52Tk4xko+P0pvkCCtFqzd4iiMLT3EnaTSttr/ORJhXNNLkr9fpbydI9bCEe05ITwdcgY/a9idtDIuJFJiO37egQnyaPtB2hj7viyqmZMgBZ5sC8bQuu1XRU8+/NN2IWtG1B4IZt/tRPRso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730980696; c=relaxed/simple;
-	bh=a0ycLHX32lthYYvuPhQaJWZI+SHyq+QSK7Hxoq+vmgI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=TzPbLt5vHqSByFtdexOaIegBq8n6KzALrCmODf85VYkx+038yman/f56ANepeu9GFwy5qYF5nR3nA43QJM5JKvTfRJXUBSVXc9ZSbf1nWhUi9+w+RgvUOQ+X3D+kepXxkvXKVLbFEDIJmUdSi81yCtY5SAS/b9+5ifc+jDGR5Vk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ndTVSh5K; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id D0E08C4CED6;
-	Thu,  7 Nov 2024 11:58:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730980695;
-	bh=a0ycLHX32lthYYvuPhQaJWZI+SHyq+QSK7Hxoq+vmgI=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=ndTVSh5KOfkTxmzKvSiQVxTkasb6+J8blBs+UQsy1Z+XspZOBD0U3nBTkmsvDnkHD
-	 /zFAjV8notv5v8+xHE4frXFbFPaQpFDRVR9QebS3jGlTKJbgPHDO8qy/TqR3B1/IGQ
-	 k6icSAW7A93+limCQN8LdqzK5N3DZoQ+hfHpmIMq8DE6DTfMulb0700I9O7hfMV222
-	 WDKJ+ACFLtH9gYJ2cCR73eqU1qmGcsX2Jolsy5KQ5mGY98XPY4anv9GoW0pjbjykNj
-	 aDWof5NamV2vBbIVvmhfYirIRD2pUSaTqQZi78/VOfaqb0p/Mod7o0/RCa5h+vX6Ry
-	 VcYCQ0ZQxwrpg==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C8E62D43354;
-	Thu,  7 Nov 2024 11:58:15 +0000 (UTC)
-From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.linaro.org@kernel.org>
-Date: Thu, 07 Nov 2024 11:58:10 +0000
-Subject: [PATCH 2/2] clk: qcom: gcc-sm8650: Keep UFS PHY GDSCs ALWAYS_ON
+	s=arc-20240116; t=1730981051; c=relaxed/simple;
+	bh=FD9SybItjrWYCxkvJ10uBzmtydWDzUdUjR+CbBgU2z4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=TpFyqKePEF7Hy1gcIGwOidYOYa9zDGWKYx6W5n+r30Ix7N9GMEVK5qKZ0jbLfv2UVhYHwbvnzXSxC4pSCFFHSSFTNNXY5e2LYQtdBkX8RnLau3zwjTvriYtEhxoRhTEK28lEck0bCF+sey9xEmsoazMxrBONb7awWj/TlEZZ+Ds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=URPzzogG; arc=none smtp.client-ip=209.85.128.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-6ea0b25695dso7186157b3.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Nov 2024 04:04:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1730981049; x=1731585849; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=NSPWmvzriU7n4zt5eFjV3QM91IvIEi4Is4DeNEfxm2U=;
+        b=URPzzogGZXqR3LeNLyVEpXgIKQVLMXcyS4Bnh5CpQjV4LnwmW3w+aaaMyImetYPqG/
+         Qn3iLtTZtm6D23NFtq07fykN7jnmyQaoh2Ogi+BhSqcm2/o8owZwsDk4DE6I7APQn0Oo
+         ghQIfGfTXSZRcPhZsni7CmAbGKHuA8Ib0HrS/MWKXt5odw/BfFQPsL8qFSOyBsJ6IeHh
+         vHA5Iqt6AOHIX1Ei9eXg1wXJl6lTx3TosSX8ov5EQ156d5+JTNSqjO5ZA8By669VLfxS
+         AaN7qTexAahzU8frZOQ1FnQn4mT0vlgmEk6Qcc6C4Ngyj0M6m7vdwfeFZ99Tx/8MKkZb
+         ijqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730981049; x=1731585849;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NSPWmvzriU7n4zt5eFjV3QM91IvIEi4Is4DeNEfxm2U=;
+        b=HH+bBJ+cNqGz/04PzP6XSEfEbeA4RwTwYKt5cRkEWHOchp14AMF5MKlCK0Gyn1Y5ZP
+         oi45sc5SnC1iYBUoNtGy+Ll3OYWoO/JpcI12MqG7VH/PX5RUHafegbus31y35D6Z5tiP
+         86B1wPNHx+P5XKlzJvDZKhOfrNFOxnhYCITHhWO6ZOYUsh9TNz9PX/ovc9tnBi50PDrJ
+         r44ylRh53OYlNjCXybm+qwGh37/KW9B/aLJzU7AqOoYLqgCnBXr4HkYGMWwOuZGaJfaC
+         6woZlDAYzoUHPKEJ7LvsnBBxxyuwkohZDcVXPmd+PNQwN4GYJOG7+A2jBXEk7HtAqLmf
+         Vq7A==
+X-Forwarded-Encrypted: i=1; AJvYcCW6lF/lX1Pt4R1B5a9Ro/pnVvLfmI7XMj1oTerF/5sDWuiKLP6qu6cNrh1yXEBKq7aSynFdjjFU6Yw5KFc7@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz+vwo1E46ZwQBXlGdCmc6bt14+xwaok0nDAWvDj4mvzG3cNNAc
+	TVqC0XeXhNzawbKFlyYC3MmItm4oFYfkQ54vV/8+QbUOwaJY+h86sc3w+86R/KUw9Gg41pCRGnw
+	dpzOma3nCcMpHeHbol57rqApfhoLhlsbZBjgNjA==
+X-Google-Smtp-Source: AGHT+IHv9mgUbimlGT5mX5UyhqitGAJmHvxVkXQPT0TuyKjaYEJSoXqczA0NpCvvlC2PQwJhFcmZoanLH7+Ypxxf7Kc=
+X-Received: by 2002:a05:690c:b98:b0:6ea:7015:99c2 with SMTP id
+ 00721157ae682-6ea70159addmr188580517b3.40.1730981049268; Thu, 07 Nov 2024
+ 04:04:09 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241107-ufs-clk-fix-v1-2-6032ff22a052@linaro.org>
-References: <20241107-ufs-clk-fix-v1-0-6032ff22a052@linaro.org>
-In-Reply-To: <20241107-ufs-clk-fix-v1-0-6032ff22a052@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
- Neil Armstrong <neil.armstrong@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Amit Pundir <amit.pundir@linaro.org>, 
- Nitin Rawat <quic_nitirawa@quicinc.com>, 
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
- stable@vger.kernel.org
-X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1726;
- i=manivannan.sadhasivam@linaro.org; h=from:subject:message-id;
- bh=FYMKCEEuacXk+42R8P6zQhXoxh2cvI/j+fmsSrjKCbU=;
- b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBnLKtWTSaVN7myne/t1gzjS1A1koyo4Svt/P6RF
- qn/vo26NbCJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCZyyrVgAKCRBVnxHm/pHO
- 9YJhCACEM11P1PgwtQ5SOpPd5K0j4R0YiML/G5exG9X1Il6TFhcWi1gOKtfe4Qxa7PV18rq871H
- Xxt4v9fyAZrR/sO4kIzKE9UE4VjUOx7uEQLx0mfHjYVhSfmFOA1+IwvNz0QSJZxSmJbMA4Ngl+N
- 3fytbwtVJfLD+L9+Sj0jrezK4xc9JdTSEETyRcPXhKIcQxEY98Y8uUuzpsR8SOWuu7mtyAYUgcz
- pFh8mQwrmT+8zHpPb5PYhmHc91rJjy1c99aflBgmCL2X66hc7UuL4LMwBK5XTtuf48lKjxEMcVC
- jdv+PWToC5RWqj30LLEY2qpW8fWoRw4isIOtSEm2Si7KmCfi
-X-Developer-Key: i=manivannan.sadhasivam@linaro.org; a=openpgp;
- fpr=C668AEC3C3188E4C611465E7488550E901166008
-X-Endpoint-Received: by B4 Relay for
- manivannan.sadhasivam@linaro.org/default with auth_id=185
-X-Original-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reply-To: manivannan.sadhasivam@linaro.org
+References: <20241105180444.770951-1-quic_rajkbhag@quicinc.com>
+ <49a6ec0d-8a0b-49aa-a9eb-1174cff930f6@kernel.org> <cmvfpctliqggra33u6ituguoxh3jxcuxiyjpbtcjbcgpu6lhoi@4zdthfkc2ed3>
+ <692503b8-cf39-4d6b-b70e-910fcc710d69@kernel.org>
+In-Reply-To: <692503b8-cf39-4d6b-b70e-910fcc710d69@kernel.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Thu, 7 Nov 2024 12:03:57 +0000
+Message-ID: <CAA8EJpqMCbyK0dodMNyfs8dNjV2QoB2nyWm233eOS9xo8BaFJg@mail.gmail.com>
+Subject: Re: [RFC PATCH v3 0/5] wifi: ath12k: Add wifi device node with WSI
+ for QCN9274 in RDP433
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>, ath12k@lists.infradead.org, 
+	linux-wireless@vger.kernel.org, Kalle Valo <kvalo@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Jeff Johnson <jjohnson@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+On Thu, 7 Nov 2024 at 11:29, Krzysztof Kozlowski <krzk@kernel.org> wrote:
+>
+> On 07/11/2024 12:06, Dmitry Baryshkov wrote:
+> > On Thu, Nov 07, 2024 at 11:23:20AM +0100, Krzysztof Kozlowski wrote:
+> >> On 05/11/2024 19:04, Raj Kumar Bhagat wrote:
+> >>> The RDP433 is a Qualcomm Reference Design Platform based on the
+> >>> IPQ9574. It features three QCN9274 WiFi devices connected to PCIe1,
+> >>> PCIe2, and PCIe3. These devices are also interconnected via a WLAN
+> >>> Serial Interface (WSI) connection. This WSI connection is essential
+> >>> for exchanging control information among these devices.
+> >>>
+> >>> This patch series describes the WSI interface found in QCN9274 in
+> >>> device tree and uses this device tree node in the Ath12k driver to get the
+> >>> details of WSI connection for Multi Link Operation (MLO) among multiple
+> >>> QCN9274 devices.
+> >>>
+> >>> NOTES:
+> >>> 1. As ath12k MLO patches are not ready yet, this patchset does not apply
+> >>>    to the ath.git ath-next branch and that's why the patchset is marked
+> >>>    as RFC. These are the work-in-progress patches we have at the moment.
+> >>>    The full set of MLO patches is available at:
+> >>>    https://git.kernel.org/pub/scm/linux/kernel/git/ath/ath.git/log/?h=ath12k-mlo-qcn9274
+> >>>
+> >>> 2. The dependency marked below applies only to the DTS patch. The
+> >>>    dt-bindings patches do not have this dependency.
+> >>>
+> >>> Depends-On: [PATCH V7 0/4] Add PCIe support for IPQ9574
+> >>> Link: https://lore.kernel.org/linux-pci/20240801054803.3015572-1-quic_srichara@quicinc.com/
+> >>>
+> >>> v3:
+> >>> - Created a separate binding "qcom,ath12k-wsi.yaml" to describe ath12k PCI
+> >>>   devices with WSI interface.
+> >>
+> >> Thanks for the changes. When you finish with testing/RFC, please send
+> >> proper version for review (just remember to keep numbering, next one is
+> >> v4 regardless whether this is RFC or not).
+> >
+> > Isn't the 'RFC' being an invitation for review per the nature of the tag
+> > itself?
+>
+> No, RFC means patch is not ready, might change. This was brought on the
+> lists multiple times and some maintainers clearly ignore RFC. Including me.
 
-In SM8650, UFS PHY GDSCs doesn't support hardware retention. So using
-RETAIN_FF_ENABLE is wrong. Moreover, without ALWAYS_ON flag, GDSCs will get
-powered down during suspend, causing the UFS PHY to loose its state. And
-this will lead to UFS error similar to below during resume:
-
-ufshcd-qcom 1d84000.ufs: ufshcd_uic_hibern8_exit: hibern8 exit failed. ret = 5
-ufshcd-qcom 1d84000.ufs: __ufshcd_wl_resume: hibern8 exit failed 5
-ufs_device_wlun 0:0:0:49488: ufshcd_wl_resume failed: 5
-ufs_device_wlun 0:0:0:49488: PM: dpm_run_callback(): scsi_bus_resume+0x0/0x84 returns 5
-ufs_device_wlun 0:0:0:49488: PM: failed to resume async: error 5
-
-Cc: stable@vger.kernel.org # 6.8
-Fixes: c58225b7e3d7 ("clk: qcom: add the SM8650 Global Clock Controller driver, part 1")
-Suggested-by: Nitin Rawat <quic_nitirawa@quicinc.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/clk/qcom/gcc-sm8650.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/clk/qcom/gcc-sm8650.c b/drivers/clk/qcom/gcc-sm8650.c
-index fd9d6544bdd5..ddc38caf7160 100644
---- a/drivers/clk/qcom/gcc-sm8650.c
-+++ b/drivers/clk/qcom/gcc-sm8650.c
-@@ -3480,7 +3480,7 @@ static struct gdsc ufs_phy_gdsc = {
- 		.name = "ufs_phy_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
--	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
-+	.flags = POLL_CFG_GDSCR | ALWAYS_ON,
- };
- 
- static struct gdsc ufs_mem_phy_gdsc = {
-@@ -3489,7 +3489,7 @@ static struct gdsc ufs_mem_phy_gdsc = {
- 		.name = "ufs_mem_phy_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
--	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
-+	.flags = POLL_CFG_GDSCR | ALWAYS_ON,
- };
- 
- static struct gdsc usb30_prim_gdsc = {
+Thanks, point noted. I'll stop marking my patches with RFC tag.
 
 -- 
-2.25.1
-
-
+With best wishes
+Dmitry
 
