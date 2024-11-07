@@ -1,161 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-37202-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37203-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 314739BFFAA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 09:06:07 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id CFA129BFFCB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 09:17:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DE65F2831F3
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 08:06:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0CCD51C214E7
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2024 08:17:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF0681DC745;
-	Thu,  7 Nov 2024 08:05:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88D031993B6;
+	Thu,  7 Nov 2024 08:17:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nOENropn"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lA3jTYDu"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D5A51DB372;
-	Thu,  7 Nov 2024 08:05:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDEE619882F;
+	Thu,  7 Nov 2024 08:17:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730966725; cv=none; b=OR7gMfRodkU41jv8UrWOWzXkjNNNn0spRiCY7T7nCGlQj3IM0YtlDCO/1KkgtfSv9gCSQMsoYEdg1bnbZzApFXwkOO7VG83nmi9EvqTV4MFei3DvJjJf/PU4F9ZkSdhrM7StE/fa5fnrBqnBaxGK0OhKAVVH0xmB35MaJT8NCuU=
+	t=1730967452; cv=none; b=Q6Uq1/tZRdc9MtKgbox+ZVHHfDhfvNNzc3mqUULSqu2PVWsvyUoFupY5oUfJbQtxOoQtyaCak66AJ6ToFvdtWzTIaeXLPbcza1pAJhYvwSKJfKIFLxxWZxoN3oz3UaAOfi94kZ8kU/FlC5v9IUZEelSpyFQv4LkbSZ/DcASc37s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730966725; c=relaxed/simple;
-	bh=+Qv4Z6158Iv+7BItSSfBSo/w9yMs1NxgL3uRJbM2cjc=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References; b=HcAxrCdtB9RIiSuKIDKhVNPcnHEbPLNhUG1BtCyPBaqWcGao9BVMBwd9x8pAVunKLYGYE3oLJb6UWD1VQU0HSYRGNfHBnU8dHh3shKYGI+g45bypPq9wo0HjRE7nFfKZ2HfrxENUBTSrb5X9rPXo94xa1RXhfct8Quq4VYEg6as=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nOENropn; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1730967452; c=relaxed/simple;
+	bh=X7f13c01wcIqZN9xK58W05Kg4OvhN1Ix2HGVrWucGZs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=ReoWQq0xb9rQ74eJ4KpzXv/c6aqj5MVs4yGRbW0iG0oxGfdfzlh9oULXmBFNQpGWwkqrS5MlCU+el7iNyMlhy7epleqGnNplPoc9B9DoShOfZUseqzyNGetrlbxNklMiTGRTFUdFBn/ZS+SU6BE5Q2Pg/8ShVtaHWIBj+aI3HaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lA3jTYDu; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A71HEOr005306;
-	Thu, 7 Nov 2024 08:05:21 GMT
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A75hrCs002118;
+	Thu, 7 Nov 2024 08:17:27 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:date:from:in-reply-to:message-id:references:subject:to; s=
-	qcppdkim1; bh=MNn9gnfQccnQWE3qEzReoQ4ozshVH41Oucj/8xiR6Lc=; b=nO
-	ENropnDKqLHTrBHMAZCNnWViyfAo5E1a/k72vD+BCmq9IOMYawtUMchOuRwNUC/R
-	HdxgHZiyZpMaijq08wZ5c6hVNTgdQkOUpKNAE7ZuoXoZJUsnJMcazWAdEoJo/MTn
-	P6hZ4CcA2M32mnXag/5fjfn9vGES8/iLtfSZUnfmd5jATwouQkiDHAyJftgf/G1p
-	Tf+tfV4CyflFvLCKiUXNajvRTZlMNXOpBM/WUEZKKh0hs7RaBCMUqpLWGCmMwgNw
-	akcP56rLv+Y7QKOD7XN6/YEq4cDSKCqwLfKJqVw1ZtmpjvP1BhWj00K8nsv8fsOW
-	YE93ojAWREWSL40W71Cg==
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42qvg3vf9j-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	0bzIDI1oq6c7V1yAm5VpFt7nqfwKuGFUHYtt7LlyWvE=; b=lA3jTYDurv1gKG/b
+	mBpi7ZFmP2wbFfftO1eHeWQ3X6qVPDad92YkpI+LAuVOM3/s4+wRLGajl6cpTjsS
+	u4h54jIoooZlCjI2CLkes5+ylZ0mdJFSa/hFqm7HJ5svtsY8378njFQQdqGcIIg8
+	zX0X58JrsmPERpusJ4haZQFLmzdHemnhHR2awnrYB2mz94g32GXLZxCvowGweF+F
+	HMDZrU8Pv5KHHZKjlALIfUu+Xx7Ow9Q4JGQtfJ9S8xYefBVptlZ63UIWIqp5wVF5
+	/dm/GNvKqmTxj342ZlgRlMWrf5jMigFeNuxTRYeIY2blP+DsuN7etMeDlv6T1j53
+	CzlcwA==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42r072m207-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 07 Nov 2024 08:05:20 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 4A785G1d004533;
-	Thu, 7 Nov 2024 08:05:16 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 42nd5mu5nw-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-	Thu, 07 Nov 2024 08:05:16 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4A785DfI004498;
-	Thu, 7 Nov 2024 08:05:15 GMT
-Received: from hu-maiyas-hyd.qualcomm.com (hu-sartgarg-hyd.qualcomm.com [10.213.105.147])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 4A785FUa004527;
-	Thu, 07 Nov 2024 08:05:15 +0000
-Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 2339771)
-	id E2F105013D2; Thu,  7 Nov 2024 13:35:14 +0530 (+0530)
-From: Sarthak Garg <quic_sartgarg@quicinc.com>
-To: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc: linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        quic_cang@quicinc.com, quic_nguyenb@quicinc.com,
-        quic_rampraka@quicinc.com, quic_pragalla@quicinc.com,
-        quic_sayalil@quicinc.com, quic_nitirawa@quicinc.com,
-        quic_sachgupt@quicinc.com, quic_bhaskarv@quicinc.com,
-        quic_narepall@quicinc.com, kernel@quicinc.com,
-        Sarthak Garg <quic_sartgarg@quicinc.com>
-Subject: [PATCH V1 3/3] mmc: sdhci-msm: Limit HS mode frequency to 37.5MHz
-Date: Thu,  7 Nov 2024 13:35:05 +0530
-Message-Id: <20241107080505.29244-4-quic_sartgarg@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20241107080505.29244-1-quic_sartgarg@quicinc.com>
-References: <20241107080505.29244-1-quic_sartgarg@quicinc.com>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: LkANyD9lYgCDZA9MYRePx1y3Fhq-FenZ
-X-Proofpoint-GUID: LkANyD9lYgCDZA9MYRePx1y3Fhq-FenZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
- lowpriorityscore=0 priorityscore=1501 clxscore=1015 mlxscore=0 spamscore=0
- suspectscore=0 bulkscore=0 phishscore=0 adultscore=0 impostorscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411070060
+	Thu, 07 Nov 2024 08:17:26 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4A78HQgq021882
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 7 Nov 2024 08:17:26 GMT
+Received: from [10.204.100.69] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 7 Nov 2024
+ 00:17:23 -0800
+Message-ID: <81d6a054-e02a-7c98-0479-0e17076fabd7@quicinc.com>
+Date: Thu, 7 Nov 2024 13:47:20 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH 1/4] media: venus: hfi_parser: add check to avoid out of
+ bound access
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Bryan O'Donoghue
+	<bryan.odonoghue@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <stable@vger.kernel.org>
+References: <20241105-venus_oob-v1-0-8d4feedfe2bb@quicinc.com>
+ <20241105-venus_oob-v1-1-8d4feedfe2bb@quicinc.com>
+ <b2yvyaycylsxo2bmynlrqp3pzhge2tjvtvzhmpvon2lzyx3bb4@747g3erapcro>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <b2yvyaycylsxo2bmynlrqp3pzhge2tjvtvzhmpvon2lzyx3bb4@747g3erapcro>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: tx54v66Ncn0rJPLLi36zAWVStXwpQu4v
+X-Proofpoint-GUID: tx54v66Ncn0rJPLLi36zAWVStXwpQu4v
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ priorityscore=1501 mlxscore=0 suspectscore=0 mlxlogscore=999 spamscore=0
+ adultscore=0 malwarescore=0 phishscore=0 impostorscore=0 bulkscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411070062
 
-For Qualcomm SoCs with level shifter delays are seen on receivers data
-path due to latency added by level shifter.
 
-To bring these delays in normal range and avoid CMD CRC errors
-reduce frequency for HS mode SD cards to 37.5MHz for targets which has
-level shifter.
+On 11/5/2024 7:25 PM, Dmitry Baryshkov wrote:
+> On Tue, Nov 05, 2024 at 02:24:54PM +0530, Vikash Garodia wrote:
+>> There is a possibility that init_codecs is invoked multiple times during
+>> manipulated payload from video firmware. In such case, if codecs_count
+>> can get incremented to value more than MAX_CODEC_NUM, there can be OOB
+>> access. Keep a check for max accessible memory before accessing it.
+> 
+> No. Please make sure that init_codecs() does a correct thing, so that
+> core->codecs_count isn't incremented that much (or even better that
+> init_codecs() doesn't do anything if it is executed second time).
+init_codecs() parses the payload received from firmware and . I don't think we
+can control this part when we have something like this from a malicious firmware
+payload
+HFI_PROPERTY_PARAM_CODEC_SUPPORTED
+HFI_PROPERTY_PARAM_CODEC_SUPPORTED
+HFI_PROPERTY_PARAM_CODEC_SUPPORTED
+...
+Limiting it to second iteration would restrict the functionality when property
+HFI_PROPERTY_PARAM_CODEC_SUPPORTED is sent for supported number of codecs.
 
-Signed-off-by: Sarthak Garg <quic_sartgarg@quicinc.com>
----
- drivers/mmc/host/sdhci-msm.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
-
-diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-index 16325c21de52..5e1dc06c4707 100644
---- a/drivers/mmc/host/sdhci-msm.c
-+++ b/drivers/mmc/host/sdhci-msm.c
-@@ -138,6 +138,8 @@
- /* Max load for eMMC Vdd-io supply */
- #define MMC_VQMMC_MAX_LOAD_UA	325000
- 
-+#define LEVEL_SHIFTER_HIGH_SPEED_FREQ	37500000
-+
- #define msm_host_readl(msm_host, host, offset) \
- 	msm_host->var_ops->msm_readl_relaxed(host, offset)
- 
-@@ -287,6 +289,7 @@ struct sdhci_msm_host {
- 	bool use_cdr;
- 	u32 transfer_mode;
- 	bool updated_ddr_cfg;
-+	bool uses_level_shifter;
- 	bool uses_tassadar_dll;
- 	u32 dll_config;
- 	u32 ddr_config;
-@@ -366,6 +369,11 @@ static void msm_set_clock_rate_for_bus_mode(struct sdhci_host *host,
- 
- 	mult = msm_get_clock_mult_for_bus_mode(host);
- 	desired_rate = clock * mult;
-+
-+	if (curr_ios.timing == MMC_TIMING_SD_HS && desired_rate == 50000000
-+		&& msm_host->uses_level_shifter)
-+		desired_rate = LEVEL_SHIFTER_HIGH_SPEED_FREQ;
-+
- 	rc = dev_pm_opp_set_rate(mmc_dev(host->mmc), desired_rate);
- 	if (rc) {
- 		pr_err("%s: Failed to set clock at rate %u at timing %d\n",
-@@ -2372,6 +2380,8 @@ static inline void sdhci_msm_get_of_property(struct platform_device *pdev,
- 
- 	of_property_read_u32(node, "qcom,dll-config", &msm_host->dll_config);
- 
-+	msm_host->uses_level_shifter = of_property_read_bool(node, "qcom,use-level-shifter");
-+
- 	if (of_device_is_compatible(node, "qcom,msm8916-sdhci"))
- 		host->quirks2 |= SDHCI_QUIRK2_BROKEN_64_BIT_DMA;
- }
--- 
-2.17.1
-
+Regards,
+Vikash
+>>
+>> Cc: stable@vger.kernel.org
+>> Fixes: 1a73374a04e5 ("media: venus: hfi_parser: add common capability parser")
+>> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+>> ---
+>>  drivers/media/platform/qcom/venus/hfi_parser.c | 4 ++++
+>>  1 file changed, 4 insertions(+)
+>>
+>> diff --git a/drivers/media/platform/qcom/venus/hfi_parser.c b/drivers/media/platform/qcom/venus/hfi_parser.c
+>> index 3df241dc3a118bcdeb2c28a6ffdb907b644d5653..27d0172294d5154f4839e8cef172f9a619dfa305 100644
+>> --- a/drivers/media/platform/qcom/venus/hfi_parser.c
+>> +++ b/drivers/media/platform/qcom/venus/hfi_parser.c
+>> @@ -23,6 +23,8 @@ static void init_codecs(struct venus_core *core)
+>>  		return;
+>>  
+>>  	for_each_set_bit(bit, &core->dec_codecs, MAX_CODEC_NUM) {
+>> +		if (core->codecs_count >= MAX_CODEC_NUM)
+>> +			return;
+>>  		cap = &caps[core->codecs_count++];
+>>  		cap->codec = BIT(bit);
+>>  		cap->domain = VIDC_SESSION_TYPE_DEC;
+>> @@ -30,6 +32,8 @@ static void init_codecs(struct venus_core *core)
+>>  	}
+>>  
+>>  	for_each_set_bit(bit, &core->enc_codecs, MAX_CODEC_NUM) {
+>> +		if (core->codecs_count >= MAX_CODEC_NUM)
+>> +			return;
+>>  		cap = &caps[core->codecs_count++];
+>>  		cap->codec = BIT(bit);
+>>  		cap->domain = VIDC_SESSION_TYPE_ENC;
+>>
+>> -- 
+>> 2.34.1
+>>
+> 
 
