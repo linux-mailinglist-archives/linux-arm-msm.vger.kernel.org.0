@@ -1,91 +1,99 @@
-Return-Path: <linux-arm-msm+bounces-37358-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37359-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 215939C26F3
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2024 22:13:30 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 875EC9C2714
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2024 22:41:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CB66E1F229D6
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2024 21:13:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5000C2836B6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2024 21:41:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECEC61DE896;
-	Fri,  8 Nov 2024 21:13:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDFCB1C1F34;
+	Fri,  8 Nov 2024 21:41:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JiRAIUQ/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GUXaO3hr"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC8801AA1F9;
-	Fri,  8 Nov 2024 21:13:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 958D329CF4;
+	Fri,  8 Nov 2024 21:41:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731100404; cv=none; b=bAY4M3YTmH4OaDYc870YbY7xOol++2GNshQmzegztpGxHiY/0HWgoqNim0TVK6kWFOFyHx4yxgBhLJ6iEi+5ugLv1A/iKL4gweYYxKBGT/xMFpq2rLv0+cuxNOJ1NyMzko4Vk8OFlyrHAipuxzzlFVu/tAa0VdAGS8TnOFOkkgk=
+	t=1731102083; cv=none; b=YpjCb+bP+pGApuW12mTsQ3jKC1ntYKUMK/KFdnZv8dT4UnII4vatFHEc+p3Iyt3MY3n8Yed15bEHPHCBVcb4S6M8iLbtM2HUTAv94RJjxsOM3/zFLMkRa70fkjcDY8dpJXZjRLax4lLWtRSLFGXlW9jcT0zv+42d0f/V21Vpb2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731100404; c=relaxed/simple;
-	bh=JqqUEnZISSBjlEVJHEp2gifVmpZJR6UqrvGG5n6Q1+0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CsNbT8RCgqTAtcqsHk1MPVgx9acg5olyZpKTK0dPb6P4ZZ9K6YppWatxrddAsox9qn3GAWHZlE6q6C0LIZp9bPWEkUmrQxR/+p39pUmyDczZbVxusGwTE3ZT9/2/4sSnO50ZlSTUCyOD4GUihws2Hg7QloHX34wUHodFI7jkEF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JiRAIUQ/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A3E3C4CECD;
-	Fri,  8 Nov 2024 21:13:23 +0000 (UTC)
+	s=arc-20240116; t=1731102083; c=relaxed/simple;
+	bh=Fc7x2e49eRNe2PcnnAqLpxs6d9cdEu0pLWh8RwaMBfo=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=XJ8pfjv1zdUVSIG9nkC1YmhZUjEeaBw0EP1PR1ploMrlpbvszoLbUuTW+rFh3+e2bIdnU2OZe1hHvMOSygqojmFvIxRaJ/0S79e8PZ8asIasKL1mEbFyrLx4UwHFIzHRSaQpTqgehJtdtpE1laNY97eP5SGc8pXs32krhfSUjRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GUXaO3hr; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47066C4CED7;
+	Fri,  8 Nov 2024 21:41:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1731100404;
-	bh=JqqUEnZISSBjlEVJHEp2gifVmpZJR6UqrvGG5n6Q1+0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=JiRAIUQ/h06A0rEMbeXI/r8p8Kfuo2FICZju2ct0mlIkRlDgbUSp62XHeNGSoP391
-	 b39k1H+ynNiYKtDnxlTsP8SzP8ls+0CPDDDxz01Iu0YlDogZ/RWuDz8Ql9pwAr3Qvl
-	 GoTm2Ccz979UG0FfqFqYbidFEcJalNW0SZRMs2fgtpgak0sUMltrX8K/OWQkuJa5Vw
-	 lj/SnjOYCucS7BYXhY+87eSzFOOqqzNX96u0zXRRIv3jOCcQ681djs0fZdQtwTmkcX
-	 2dvO993Nf3fKV6CtDen6x+FNghz3WO29zzlqiRAjz/deZHRGlz3rAzr7WX4bwv2/BG
-	 W1rOX/B7kxDgg==
-Date: Fri, 8 Nov 2024 15:13:22 -0600
-From: Rob Herring <robh@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: interrupt-controller: qcom,pdc: Add
- SAR2130P compatible
-Message-ID: <20241108211322.GA2849214-robh@kernel.org>
-References: <20241017-sar2130p-pdc-v1-1-cf9ccd9c37da@linaro.org>
- <t2trcojqskryzbuh6cbuqev35eioduarneskwtcm5aeeqlvbkv@3kj4x36ebkqk>
+	s=k20201202; t=1731102083;
+	bh=Fc7x2e49eRNe2PcnnAqLpxs6d9cdEu0pLWh8RwaMBfo=;
+	h=From:Subject:Date:To:Cc:From;
+	b=GUXaO3hrUddhIbiP209FXXBqdYiUnp3m3f758LE+F5JFiUiDzbyrjWofAHvl9/92c
+	 yN+vajjmmDiq+ADvDDBPUz/DGSmU2NZ9gcN/rCf4qzfaCyYZ/dM6aq6uR5eSvUVCCx
+	 Qclqgut4uU/XcIfITTcXniwbGst6oDAr4BAi1rBwJkKvnWiy1vBacTaJ8zja7442AB
+	 lIE5eqdkwYFRH+flvHjCd3F1fkpp/NtJoIJTQbFXmFi2SU9Lcx5rbXlC03gilXNjEl
+	 0oM4K19M/Lemo6Yf3NDvlzgYeVkm+D9IZKafYsXW0pe3TfwKyG/3LF6eHEzfhjNI7M
+	 qIrueaOU+Clwg==
+From: Konrad Dybcio <konradybcio@kernel.org>
+Subject: [PATCH 0/2] Add SA8775P GPI DMA compatible
+Date: Fri, 08 Nov 2024 22:41:16 +0100
+Message-Id: <20241108-topic-sa8775_dma2-v1-0-1d3b0d08d153@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <t2trcojqskryzbuh6cbuqev35eioduarneskwtcm5aeeqlvbkv@3kj4x36ebkqk>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAHyFLmcC/2WNywrCMBBFf6VkbWSSPiZ25X+IyCSZasBa22lFE
+ P/d+Ng5iwvnwj3zUMJTYlFt8VAT35Kk4ZLBrAoVTnQ5sk4xs7JgK2PA6Xm4pqCFHGJ9iD1ZbR1
+ Y33WdCxRU3l0n7tL949ztvzzxuGT1/C1VzyL0UbfFT4x/Yn0z2mj2TVkyoAfA7SCyHhc6h6Hv1
+ zne3zwJ63eR5rbACitDUIPHTSxNdNFyPmMDIpZNvWkiUOOt2j+fL3TdMCj7AAAA
+X-Change-ID: 20241108-topic-sa8775_dma2-2802bfff8cac
+To: Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Viken Dadhaniya <quic_vdadhani@quicinc.com>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
+ linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1731102079; l=791;
+ i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
+ bh=Fc7x2e49eRNe2PcnnAqLpxs6d9cdEu0pLWh8RwaMBfo=;
+ b=PRZIDdsEil2u0ih14ylgtr8AgvXPzinOh7j2IGgR4mj3QA9CpbmL3f3ZQDVXhXpwKEcXz6Bt5
+ 2GcB90QlSQlCBBd8MAy3+4QLyiSnVd7lgVhXv2ze9P7QKlGaPrUlpDL
+X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-On Thu, Oct 31, 2024 at 07:34:41PM +0200, Dmitry Baryshkov wrote:
-> On Thu, Oct 17, 2024 at 09:13:01PM +0300, Dmitry Baryshkov wrote:
-> > Document compatible for PDC interrupt controller on SAR2130P platform.
-> > 
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >  Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml | 1 +
-> >  1 file changed, 1 insertion(+)
-> 
-> Gracious ping, the patch has been acked by DT maintainers, but is still
-> not present in linux-next and got no other reviews.
+Fill in the missing parts of the initial submission
 
-Applied.
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+---
+Konrad Dybcio (2):
+      dt-bindings: dma: qcom,gpi: Add SA8775P compatible
+      arm64: dts: qcom: sa8775p: Use a SoC-specific compatible for GPI DMA
 
-> Krzysztof mentioned that the patch should be picked up by Bjorn, but all
-> previous patches for PDC schema were picked up by Rob Herring or by Marc
-> Zyngier (and one stray patch was picked up by Linus Walleij).
+ Documentation/devicetree/bindings/dma/qcom,gpi.yaml | 1 +
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi               | 8 ++++----
+ 2 files changed, 5 insertions(+), 4 deletions(-)
+---
+base-commit: 74741a050b79d31d8d2eeee12c77736596d0a6b2
+change-id: 20241108-topic-sa8775_dma2-2802bfff8cac
+prerequisite-message-id: 20241107-topic-sa8775_dma-v1-1-eb633e07b007@oss.qualcomm.com
+prerequisite-patch-id: f4eea36e64f43f421b6f1bae15d802f7dd514768
 
-My preference is for it to be applied with the driver or dts changes. 
-For standalone patches, I only pick them up if the $subsystem maintainer 
-does not.
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-Rob
 
