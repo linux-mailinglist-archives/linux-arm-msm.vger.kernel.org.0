@@ -1,126 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-37340-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37341-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9E9839C1AB2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2024 11:35:34 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id F35579C1C48
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2024 12:40:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 637622860F2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2024 10:35:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AA3B01F225AB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2024 11:40:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A8361E32BC;
-	Fri,  8 Nov 2024 10:32:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FDDF1E47A1;
+	Fri,  8 Nov 2024 11:40:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jw6VeM7M"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YRHy3NH7"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B4F91E32B2;
-	Fri,  8 Nov 2024 10:32:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49B3E1E378D;
+	Fri,  8 Nov 2024 11:39:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731061959; cv=none; b=Xrt8AmF+xkWE/Qri6yGBsJ+ghNLjIrBbFb3o7uMBKKE+zhaglAQYHxqp3zldeca8UkxmdJfZmOXu39YE6bwmccUkh8Xp3tCKRHVLjiHuESDGAYTI30V7bvt6m25x4NPVLhPIU9SsMw3E3XhEd27jaw+fSM0Z++QtBFX5nIzaMmc=
+	t=1731066000; cv=none; b=eZc+Pm7hN+TwKAX6cx9xBgk+Cbchw9A1O9HdxTorX5ALGowXMVw3ai0UCXIqZ8G/kxFJN2Hq4g2I3RS5L0a9GeBqqWdzrgySsIz7SYVS0Ky3EPAFS3ueuiP0A324VK5K1QiTBMd8RZvff8XyypN0WjA+yK3PZKcXwprRgUjcqjY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731061959; c=relaxed/simple;
-	bh=Y1DchAs7VMC2A3AGrg36PWB96mQ+5c2bZIG4uYsYJGI=;
+	s=arc-20240116; t=1731066000; c=relaxed/simple;
+	bh=530C77pHMSYwx7wryvABLre4iXGbGSVU8Iaii1O2Cy0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AA3SlFgbgQcVYU+XBBBNBHVSL1IQri5vtRwaOsczu2Q8Mq71ODD1OQwXzooO4Yz1XoI+gJgByIJUtWJmpQuOVSE1310AlD4CYb4shf3OWKVEZaCHRwsSjju1YJL9pIAiZu/OuxfoF+N2ZMwuVZ9JilU93X08Pq4DOwwRI2w9IB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jw6VeM7M; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99DE6C4AF49;
-	Fri,  8 Nov 2024 10:32:38 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=IkL/71SpmF3IumFgxqhn5QwF7mhQVho2+Q0bTvHMjIE3RYGHAowrKP67Ek7Dc3ghgCh/ypNdNg+YMwr/sEESApFddJU7IuX6gvXpZgf5q4gGFbG1tq4wg/uLUP1JqteQEkW/fb+0PMVhPd94JQcVyx8NF2GJd5S+Ii5t0h9Jn5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YRHy3NH7; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5222BC4CECD;
+	Fri,  8 Nov 2024 11:39:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1731061958;
-	bh=Y1DchAs7VMC2A3AGrg36PWB96mQ+5c2bZIG4uYsYJGI=;
+	s=k20201202; t=1731065999;
+	bh=530C77pHMSYwx7wryvABLre4iXGbGSVU8Iaii1O2Cy0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=jw6VeM7MaoKm+BRhRuHk3uLHXcMx10Mp43ZXO8qkVP07TcVCTGaaKCCf1ISwKQF+E
-	 ODf8D5xssLYaBDXUmqde42crwmLhEN4FwkeWH0HFoD6jk4r0WXjv6NkGusQQY86P5z
-	 cooUnndltc6JqeV9A1WrmJACVsETpoOl2+rJx/uZ3zOMHqXjr2MWS7dhUYI2qIVHIl
-	 UqxrRWAV/AmdfgARnJvMhDGuf9viIVi57RRSwNGeFMygGoKm7EmqMu0ONkoVXP2H0J
-	 dIEg1K6q8VZxXHnRSguReDmSdElq5qwCuacw4DLT0U3OGArQpEGo26cjXGwdK12BQZ
-	 aFZWVfmb4ZbwA==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1t9MIC-0000000081z-29in;
-	Fri, 08 Nov 2024 11:32:40 +0100
-Date: Fri, 8 Nov 2024 11:32:40 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Chris Lew <quic_clew@quicinc.com>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	Hemant Kumar <quic_hemantk@quicinc.com>,
-	Loic Poulain <loic.poulain@linaro.org>,
-	Maxim Kochetkov <fido_max@inbox.ru>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
-	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org, Bhaumik Bhatt <bbhatt@codeaurora.org>
-Subject: Re: [PATCH] net: qrtr: mhi: synchronize qrtr and mhi preparation
-Message-ID: <Zy3oyGLdsnDY9C0p@hovoldconsulting.com>
-References: <20241104-qrtr_mhi-v1-1-79adf7e3bba5@quicinc.com>
+	b=YRHy3NH7ogg5lgWteZRyQaQOGeuc4yz8zUMIxhr6LmrH17cIZnmIfkzHrKvyBeA5z
+	 nIhDySh7yt+7v5B3jo7ISrCc39mTpGjqh0YIN1F1qK9zCM8VrGmcmj88JP5veHx135
+	 gcGw31avgtXGmfagXTt1xQeUysCSBWaCZ8jm9Une0WKmFC457qPhukugy16fSgcbnk
+	 Lbn/ZbFPZXzkPUpPX+w0fq8VXJLA7zkZNwvGKNQhZregl7xOKjydvZ4jk4dC57fZ+B
+	 RUdrnDa41Sp9Kx67esLqFfV4oceLM6fvP0wR7V5qC/bhs4p8RgCc1TGem9u/o66b73
+	 8dfUM2slJVcAw==
+Date: Fri, 8 Nov 2024 12:39:56 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: Taniya Das <quic_tdas@quicinc.com>, Will Deacon <will@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Abhishek Sahu <absahu@codeaurora.org>, 
+	Jagadeesh Kona <quic_jkona@quicinc.com>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Stephen Boyd <sboyd@kernel.org>, 
+	Imran Shaik <quic_imrashai@quicinc.com>, Catalin Marinas <catalin.marinas@arm.com>, 
+	Conor Dooley <conor+dt@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
+	Ajit Pandey <quic_ajipan@quicinc.com>
+Subject: Re: [PATCH v3 05/11] dt-bindings: clock: Add Qualcomm QCS615 Display
+ clock controller
+Message-ID: <s5rie2osuh2ngkwd2jinly7ulogqqeqois724h3e54a7rqrn2w@wn3yypxi7wca>
+References: <20241108-qcs615-mm-clockcontroller-v3-0-7d3b2d235fdf@quicinc.com>
+ <20241108-qcs615-mm-clockcontroller-v3-5-7d3b2d235fdf@quicinc.com>
+ <173104478441.565041.9851772057058427001.robh@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20241104-qrtr_mhi-v1-1-79adf7e3bba5@quicinc.com>
+In-Reply-To: <173104478441.565041.9851772057058427001.robh@kernel.org>
 
-On Mon, Nov 04, 2024 at 05:29:37PM -0800, Chris Lew wrote:
-> From: Bhaumik Bhatt <bbhatt@codeaurora.org>
+On Thu, Nov 07, 2024 at 11:46:26PM -0600, Rob Herring (Arm) wrote:
 > 
-> The call to qrtr_endpoint_register() was moved before
-> mhi_prepare_for_transfer_autoqueue() to prevent a case where a dl
-> callback can occur before the qrtr endpoint is registered.
+> On Fri, 08 Nov 2024 09:39:22 +0530, Taniya Das wrote:
+> > Add DT bindings for the Display clock on QCS615 platforms. Add the
+> > relevant DT include definitions as well.
+> > 
+> > Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> > ---
+> >  .../bindings/clock/qcom,qcs615-dispcc.yaml         | 73 ++++++++++++++++++++++
+> >  include/dt-bindings/clock/qcom,qcs615-dispcc.h     | 52 +++++++++++++++
+> >  2 files changed, 125 insertions(+)
+> > 
 > 
-> Now the reverse can happen where qrtr will try to send a packet
-> before the channels are prepared. Add a wait in the sending path to
-> ensure the channels are prepared before trying to do a ul transfer.
+> My bot found errors running 'make dt_binding_check' on your patch:
 > 
-> Fixes: 68a838b84eff ("net: qrtr: start MHI channel after endpoit creation")
-> Reported-by: Johan Hovold <johan@kernel.org>
-> Closes: https://lore.kernel.org/linux-arm-msm/ZyTtVdkCCES0lkl4@hovoldconsulting.com/
-> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-> Signed-off-by: Chris Lew <quic_clew@quicinc.com>
+> yamllint warnings/errors:
+> 
+> dtschema/dtc warnings/errors:
+> Documentation/devicetree/bindings/clock/qcom,qcs615-dispcc.example.dts:19:18: fatal error: dt-bindings/clock/qcom,qcs615-gcc.h: No such file or directory
+>    19 |         #include <dt-bindings/clock/qcom,qcs615-gcc.h>
+>       |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> compilation terminated.
+> make[2]: *** [scripts/Makefile.dtbs:129: Documentation/devicetree/bindings/clock/qcom,qcs615-dispcc.example.dtb] Error 1
+> make[2]: *** Waiting for unfinished jobs....
+> make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1442: dt_binding_check] Error 2
+> make: *** [Makefile:224: __sub-make] Error 2
+> 
+> doc reference errors (make refcheckdocs):
+> 
+> See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20241108-qcs615-mm-clockcontroller-v3-5-7d3b2d235fdf@quicinc.com
+> 
+> The base for the series is generally the latest rc1. A different dependency
+> should be noted in *this* patch.
 
-> @@ -53,6 +54,10 @@ static int qcom_mhi_qrtr_send(struct qrtr_endpoint *ep, struct sk_buff *skb)
->  	if (skb->sk)
->  		sock_hold(skb->sk);
->  
-> +	rc = wait_for_completion_interruptible(&qdev->prepared);
-> +	if (rc)
-> +		goto free_skb;
-> +
->  	rc = skb_linearize(skb);
->  	if (rc)
->  		goto free_skb;
-> @@ -85,6 +90,7 @@ static int qcom_mhi_qrtr_probe(struct mhi_device *mhi_dev,
->  	qdev->mhi_dev = mhi_dev;
->  	qdev->dev = &mhi_dev->dev;
->  	qdev->ep.xmit = qcom_mhi_qrtr_send;
-> +	init_completion(&qdev->prepared);
->  
->  	dev_set_drvdata(&mhi_dev->dev, qdev);
->  	rc = qrtr_endpoint_register(&qdev->ep, QRTR_EP_NID_AUTO);
-> @@ -97,6 +103,7 @@ static int qcom_mhi_qrtr_probe(struct mhi_device *mhi_dev,
->  		qrtr_endpoint_unregister(&qdev->ep);
->  		return rc;
->  	}
-> +	complete_all(&qdev->prepared);
->  
->  	dev_dbg(qdev->dev, "Qualcomm MHI QRTR driver probed\n");
+I see this patchset being sent again without changes and receiving same
+errors again, so maybe you expect different results, like some review? I
+don't know, but just in case that's the case please carefully read
+message you got.
 
-While this probably works, it still looks like a bit of a hack.
+If lack of review is expected, then of course no problem here.
 
-Why can't you restructure the code so that the channels are fully
-initialised before you register or enable them instead?
+Best regards,
+Krzysztof
 
-Johan
 
