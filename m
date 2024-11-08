@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-37307-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37308-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D35129C1329
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2024 01:24:59 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4E9F89C132B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2024 01:25:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 027FF1C20A00
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2024 00:24:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 142BA281509
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2024 00:25:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 72246194082;
-	Fri,  8 Nov 2024 00:22:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C4522194A49;
+	Fri,  8 Nov 2024 00:22:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ylC3AnVd"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="x3lKpOtM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11A0C193060
-	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Nov 2024 00:22:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9271940B2
+	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Nov 2024 00:22:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731025334; cv=none; b=Qys4cOdhB6LSCQKIXlBKsmntMrB1Z+C7OYCedMtgwrCuBFuGegOtuhNnJS4uA67eNeltbaP8hFb2YlUhogaQEdgdiSmGXk3ZyrayzVns46KZY/FEhBq7E1j9tnHM3X4917i4ZZhYTk5ErGFbrAgn9xA8wDQd7t3FsILGVnNPp10=
+	t=1731025336; cv=none; b=sDTHdClyQhLRVEgLHJnTFEFLVixI5ujakDoD0j5sgbqu3X4wcNHCNCg2bveAwrhggqohiPYo0zZhyOIhNSM9MxSChJddmc9sVF+dtMJxQN1edRF5He343MC/Nkp62MmQzqrZk4tvIW8USq+khBZew5YiGeOSLzW2rsMLxNuakuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731025334; c=relaxed/simple;
-	bh=+g9SNORbUVqTNMWLsJKHyxMmmD7Ice6ep+SokQX8YuI=;
+	s=arc-20240116; t=1731025336; c=relaxed/simple;
+	bh=+MBwJhJ+kWsOd4zG8stBduLkJa3ofaC7qfvHFVuut/U=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=UuOSVuSqkzwfZpaGjBX20GVafbeySJEUhA0Ur0T54eDGvASR138t4OUqIxqb/jqe7u2pF9adM3ZraxVxmORocWu8NjSwWGxfXn9aRhC2h5y/W3mCcqVmuYs7aEoqcuUvCxAfjHUkJHr92X3jdCtjaUOhauRNLpID/Vk/DTR8Zpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ylC3AnVd; arc=none smtp.client-ip=209.85.208.178
+	 In-Reply-To:To:Cc; b=c1prFODxkLl3U/IQgVkXFKA0jmYvR0J2MEWXjUbR+0jlEHPoRncp5bAYMjq5fpk95VEX0N+MLzKg+NdR0sQt9y/kNhGSWHdb9CNLib3KD9yayIIeIhkOoIUDY3Nf7u7INZKbN/GnIton+KDfYPflbfuMET/usLjewX6DOEPPzX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=x3lKpOtM; arc=none smtp.client-ip=209.85.167.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2fb3110b964so13619761fa.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Nov 2024 16:22:11 -0800 (PST)
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-53b34ed38easo1473378e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Nov 2024 16:22:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731025330; x=1731630130; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1731025333; x=1731630133; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=P3FcUdu5c+V3DJbRxSyEvVH5fbzS/hW0EAke8SyhLmQ=;
-        b=ylC3AnVd4GTqZIv58mQ0f+gvbCpHmhuwMYVWSMlc+Ojl2Yq/yi6shDWKzTd1gf+MeT
-         2G9nnCmVTV0Mi0NMq+FGgc5d8QBxgg3UxkrQPAMbNADoaQ50tsJvsLUxlWM1gZUQZ2gM
-         75KJ75CPXKcj0H3WaRgK/ZTEMPKVGeIk3LdCgfhlrKo3DJeSSWT+Hhfk7QrMmRJb+FZz
-         LQT9zN4xf3xbN9l7LSqcbG8ln3v4rCYNBz9eUaYwP8AQtcotoDXzn85y/wzcJ0qRTnDz
-         ooOWnJ3CP1/3Zi7yc/Taf4d82UJnO4XN1SLeSVyKIgErb1ceBRa/nme1wvfV2eMg5Fb1
-         IvKQ==
+        bh=H3tHYib9bOsjsCSxYQbmNPxmjHFq56TfU4OCDc5PW2A=;
+        b=x3lKpOtMquBlIE2d0717z+Ef4w6vKw7ci1Hlgpj1uLzXxKyjTWK0hicKSWQ43Yxa7k
+         8luV9I2rRbxywkJ1LAujS+GWm6Z0gdFd2O9KCcPJPwzXR23iky1A+OSOS3w7VDXLIfpb
+         uUkXIRwL4Ssn84TsAoq2I5BBCJfdyD8gEITXHuaM/xiyb/eluTxFeHzrcBILQPHyDLtE
+         q61emIQwQJ0ADy5+a6hQUVHlqKI8StPq9lVjqDalDBCnkSueUy4pFIvc9SSBwthCayCo
+         TN/mm9tHdX4BkO1u5xhL1hYGKRj1nkTlJ23GdoezaghdmRHtgVE52ExTp2R2ZEAVNxPR
+         K8/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731025330; x=1731630130;
+        d=1e100.net; s=20230601; t=1731025333; x=1731630133;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=P3FcUdu5c+V3DJbRxSyEvVH5fbzS/hW0EAke8SyhLmQ=;
-        b=jkNXH3s3HYeFQUu5m9tXh1mia/NfmoSapRscTTuQRQmzBSQF44l8imX4XuDcnjeZZo
-         2g0jhl/kgFIxZ3n6VeHr3HpyCq8ci5435msEu0+Z6J95afNJuVuaWhoGp0Zv4n4joFHf
-         VIwReylt9QYCV5CF5WX6/GzN1YBCRCso9vXdHV6ro4IKzMFAVmAK9msUbwIMjNT1oI6F
-         FX5q5PjC1dw61+QmWLnSurOK1s2mo820rYw0IXKxrz/jD/ss+0ul0yyZkeCFHTcSdAx1
-         oevcXsXMolbYbiH8FeiL9uYEOCI066HBBmCccYUwZrdAvLmJpkDovQnkbySNdN8hAWRa
-         sfAQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUUMRywz9sjZHW9FLePgVsE0MhLSkIeDWIz4A0sOa0sFCU8Om5aHA0Blxnc0UROQJHGYopWJuPN3E2sQnQC@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx05dco6uF3qSL2Sx8Y2VZgew5OSsIeQUFggg2g3Pwidd23y0cu
-	x1+lAbtwloR3L20JseuSFWJ8R+JzrJIX/iTcnxI+GdF3VdG106ozCGtZGO+PgzM=
-X-Google-Smtp-Source: AGHT+IHB046njVT2Lb5htSxgBV3oWSZNIGnCFE1+fyuLAToCEwxXEEUxqxoOHCmpHBJXQgFM+0O2nQ==
-X-Received: by 2002:a2e:bd84:0:b0:2fa:dbf1:5b2d with SMTP id 38308e7fff4ca-2ff202c2350mr3830641fa.39.1731025330179;
-        Thu, 07 Nov 2024 16:22:10 -0800 (PST)
+        bh=H3tHYib9bOsjsCSxYQbmNPxmjHFq56TfU4OCDc5PW2A=;
+        b=vi/dOChqQlO9z8Dzd7ti1WAVdnTBE66O2CcGnhhcO4hW/RxFjX6gfWP74dsl6ZDBzQ
+         lY2aU5nCjqlGcgIskQlTKqGMRZOaGJ6U0ksaWLLN2fxATuLRB0k1SltW1A/AFfQmaNMc
+         djERCHqL2X3+H+oryZAHUmKXa+UjSYQTCRv/ZK5NSStN1zZFs0D1MT21udIK8qohDF+N
+         1RNIF/9u3Zj9TpY7DTER9JnF4m21PkY2P576XRLwS/sBvpS+d3ASpO7aeT5wQ8HTifay
+         0SNZEFcwHvBiQ9Wuce9fiak60kENPx+e1tNOUkvGH9bVbZbQ5qhThGDMcmWc1DA4F15R
+         6BoQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUOSCIglRfm/zup40OEYA1yU+Vo/tH5hgf5KMKuK58txfeVeMXSX2JQQYXN7idd67AA94/yTMql9DYJs+S/@vger.kernel.org
+X-Gm-Message-State: AOJu0YznuVDI5wZT01AXmmQaXChYlIgsGKTa3RT2sX/3HFY4//tHGIx6
+	5ZM8HPrFYRS5ODQXnp1vnCtxbxPlGdtx9rUQF1f5elgykAstfwHvwwz8E8Hnnx4=
+X-Google-Smtp-Source: AGHT+IH7NpwR+EtpupNJY1T4XFQnZfGFyrAFdQKX3vDkAZgHm3HUYKz++E/GmQxGdczzNngFriYsnQ==
+X-Received: by 2002:a05:651c:1589:b0:2fb:5bb8:7c24 with SMTP id 38308e7fff4ca-2ff20152825mr3776181fa.8.1731025332771;
+        Thu, 07 Nov 2024 16:22:12 -0800 (PST)
 Received: from umbar.lan ([192.130.178.90])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ff17900a63sm4195191fa.47.2024.11.07.16.22.07
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ff17900a63sm4195191fa.47.2024.11.07.16.22.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Nov 2024 16:22:08 -0800 (PST)
+        Thu, 07 Nov 2024 16:22:11 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 08 Nov 2024 02:21:43 +0200
-Subject: [PATCH 12/14] drm/msm/dp: move more AUX functions to dp_aux.c
+Date: Fri, 08 Nov 2024 02:21:44 +0200
+Subject: [PATCH 13/14] drm/msm/dp: drop struct msm_dp_panel_in
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,7 +78,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241108-fd-dp-audio-fixup-v1-12-40c8eeb60cf5@linaro.org>
+Message-Id: <20241108-fd-dp-audio-fixup-v1-13-40c8eeb60cf5@linaro.org>
 References: <20241108-fd-dp-audio-fixup-v1-0-40c8eeb60cf5@linaro.org>
 In-Reply-To: <20241108-fd-dp-audio-fixup-v1-0-40c8eeb60cf5@linaro.org>
 To: Rob Clark <robdclark@gmail.com>, 
@@ -92,359 +92,122 @@ Cc: Douglas Anderson <dianders@chromium.org>,
  linux-kernel@vger.kernel.org, 
  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=14070;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3781;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=+g9SNORbUVqTNMWLsJKHyxMmmD7Ice6ep+SokQX8YuI=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnLVmQcahJoRYJXF4rGBEDoYzqCVcGX2WVZXT0g
- Dbpi8m/S1yJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZy1ZkAAKCRCLPIo+Aiko
- 1VjUCACzTuPIUZj0V2D96LiTDtRACKz9LksFbND0WmBL94jAXHYpPFu+9qkJIrThUKBdCrm6JNn
- 4c9og09lVDWE2HdiGVKL78qqnIvbKxzdikXZgOypsEWIXWEZe7TfBY4X6bsKaKE8rkmtub1uOx1
- zh1Pt3efQ3ekZ9/CA12J5vV/+3clL7gC1TJZAtZ3ItO9gI2Ac5vWKH8h7rsDdUdZMF68/SFnmd8
- eQjSAVF1I9silrW6RLPJoh/y5gi0DbHz3k0ZPLcCWwKJT8HvS+Xrmuc+9K/87uXI2f4GK0jwxCb
- uJqkNymVuSKWK0OLA/20M1RMQ4xahL4IBxsHLTBVlhr/zK+c
+ bh=+MBwJhJ+kWsOd4zG8stBduLkJa3ofaC7qfvHFVuut/U=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnLVmQ9emA0NkGmbuBJO5bIw1pGCdfRbWpJGcGv
+ U6PeakRvW2JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZy1ZkAAKCRCLPIo+Aiko
+ 1YmnB/49tkHi3iF28qy6bExEcNimP6jsHsacWo0NUj1XuyiFiP3oYDLQGvFLZu6s2PVL23RU5JE
+ 9JsdhEpt5pG7SZ6KjqSq7PmnFiVVxp36o1q3JISx2UBwZrYrASwGaxkOp0Hq/neGeAulv0kxuVw
+ zAgk0d2PPqsxnPfELVHoUGbjIzYapnTA9JdRxtTAziRCJax6tem27cmRrL6X719xDSc+Lzx3R/1
+ ixy49WLJ5DcCfUvEyfIvFeiyUnY5j7JugfHm/R4mHFOsRn3Pb277Ew+mUhvl7XEOxZa5WcsA+un
+ 4ltybwYS/VxOvjhtMxdGtM4/9ClixltO+HR2cIos04m2fnnk
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-Move several misnamed functions accessing AUX bus to dp_aux.c, further
-cleaning up dp_catalog submodule.
+All other submodules pass arguments directly. Drop struct
+msm_dp_panel_in that is used to wrap dp_panel's submodule args and pass
+all data to msm_dp_panel_get() directly.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/dp/dp_aux.c     | 88 ++++++++++++++++++++++++++++++++++++-
- drivers/gpu/drm/msm/dp/dp_aux.h     |  7 +++
- drivers/gpu/drm/msm/dp/dp_catalog.c | 75 +------------------------------
- drivers/gpu/drm/msm/dp/dp_catalog.h |  6 ---
- drivers/gpu/drm/msm/dp/dp_ctrl.c    |  4 +-
- drivers/gpu/drm/msm/dp/dp_display.c | 18 ++++----
- drivers/gpu/drm/msm/dp/dp_panel.c   |  2 +-
- 7 files changed, 107 insertions(+), 93 deletions(-)
+ drivers/gpu/drm/msm/dp/dp_display.c |  9 +--------
+ drivers/gpu/drm/msm/dp/dp_panel.c   | 15 ++++++++-------
+ drivers/gpu/drm/msm/dp/dp_panel.h   | 10 ++--------
+ 3 files changed, 11 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_aux.c b/drivers/gpu/drm/msm/dp/dp_aux.c
-index 46e8a2e13ac1d1249fbad9b50a6d64c52d51cf38..7228955019b31f80257b86a470c9ef305b2549a0 100644
---- a/drivers/gpu/drm/msm/dp/dp_aux.c
-+++ b/drivers/gpu/drm/msm/dp/dp_aux.c
-@@ -405,7 +405,7 @@ static ssize_t msm_dp_aux_transfer(struct drm_dp_aux *msm_dp_aux,
- 				phy_calibrate(aux->phy);
- 		}
- 		/* reset aux if link is in connected state */
--		if (msm_dp_catalog_link_is_connected(aux->catalog))
-+		if (msm_dp_aux_is_link_connected(msm_dp_aux))
- 			msm_dp_aux_reset(aux);
- 	} else {
- 		aux->retry_cnt = 0;
-@@ -593,6 +593,92 @@ static int msm_dp_wait_hpd_asserted(struct drm_dp_aux *msm_dp_aux,
- 	return ret;
- }
- 
-+void msm_dp_aux_hpd_enable(struct drm_dp_aux *msm_dp_aux)
-+{
-+	struct msm_dp_aux_private *aux = container_of(msm_dp_aux, struct msm_dp_aux_private, msm_dp_aux);
-+	struct msm_dp_catalog *msm_dp_catalog = aux->catalog;
-+	u32 reg;
-+
-+	/* Configure REFTIMER and enable it */
-+	reg = msm_dp_read_aux(msm_dp_catalog, REG_DP_DP_HPD_REFTIMER);
-+	reg |= DP_DP_HPD_REFTIMER_ENABLE;
-+	msm_dp_write_aux(msm_dp_catalog, REG_DP_DP_HPD_REFTIMER, reg);
-+
-+	/* Enable HPD */
-+	msm_dp_write_aux(msm_dp_catalog, REG_DP_DP_HPD_CTRL, DP_DP_HPD_CTRL_HPD_EN);
-+}
-+
-+void msm_dp_aux_hpd_disable(struct drm_dp_aux *msm_dp_aux)
-+{
-+	struct msm_dp_aux_private *aux = container_of(msm_dp_aux, struct msm_dp_aux_private, msm_dp_aux);
-+	struct msm_dp_catalog *msm_dp_catalog = aux->catalog;
-+	u32 reg;
-+
-+	reg = msm_dp_read_aux(msm_dp_catalog, REG_DP_DP_HPD_REFTIMER);
-+	reg &= ~DP_DP_HPD_REFTIMER_ENABLE;
-+	msm_dp_write_aux(msm_dp_catalog, REG_DP_DP_HPD_REFTIMER, reg);
-+
-+	msm_dp_write_aux(msm_dp_catalog, REG_DP_DP_HPD_CTRL, 0);
-+}
-+
-+void msm_dp_aux_hpd_intr_enable(struct drm_dp_aux *msm_dp_aux)
-+{
-+	struct msm_dp_aux_private *aux = container_of(msm_dp_aux, struct msm_dp_aux_private, msm_dp_aux);
-+	struct msm_dp_catalog *msm_dp_catalog = aux->catalog;
-+	u32 reg;
-+
-+	reg = msm_dp_read_aux(msm_dp_catalog, REG_DP_DP_HPD_INT_MASK);
-+	reg |= DP_DP_HPD_INT_MASK;
-+	msm_dp_write_aux(msm_dp_catalog, REG_DP_DP_HPD_INT_MASK,
-+		     reg & DP_DP_HPD_INT_MASK);
-+}
-+
-+void msm_dp_aux_hpd_intr_disable(struct drm_dp_aux *msm_dp_aux)
-+{
-+	struct msm_dp_aux_private *aux = container_of(msm_dp_aux, struct msm_dp_aux_private, msm_dp_aux);
-+	struct msm_dp_catalog *msm_dp_catalog = aux->catalog;
-+	u32 reg;
-+
-+	reg = msm_dp_read_aux(msm_dp_catalog, REG_DP_DP_HPD_INT_MASK);
-+	reg &= ~DP_DP_HPD_INT_MASK;
-+	msm_dp_write_aux(msm_dp_catalog, REG_DP_DP_HPD_INT_MASK,
-+		     reg & DP_DP_HPD_INT_MASK);
-+}
-+
-+u32 msm_dp_aux_get_hpd_intr_status(struct drm_dp_aux *msm_dp_aux)
-+{
-+	struct msm_dp_aux_private *aux = container_of(msm_dp_aux, struct msm_dp_aux_private, msm_dp_aux);
-+	struct msm_dp_catalog *msm_dp_catalog = aux->catalog;
-+	int isr, mask;
-+
-+	isr = msm_dp_read_aux(msm_dp_catalog, REG_DP_DP_HPD_INT_STATUS);
-+	msm_dp_write_aux(msm_dp_catalog, REG_DP_DP_HPD_INT_ACK,
-+				 (isr & DP_DP_HPD_INT_MASK));
-+	mask = msm_dp_read_aux(msm_dp_catalog, REG_DP_DP_HPD_INT_MASK);
-+
-+	/*
-+	 * We only want to return interrupts that are unmasked to the caller.
-+	 * However, the interrupt status field also contains other
-+	 * informational bits about the HPD state status, so we only mask
-+	 * out the part of the register that tells us about which interrupts
-+	 * are pending.
-+	 */
-+	return isr & (mask | ~DP_DP_HPD_INT_MASK);
-+}
-+
-+u32 msm_dp_aux_is_link_connected(struct drm_dp_aux *msm_dp_aux)
-+{
-+	struct msm_dp_aux_private *aux = container_of(msm_dp_aux, struct msm_dp_aux_private, msm_dp_aux);
-+	struct msm_dp_catalog *msm_dp_catalog = aux->catalog;
-+	u32 status;
-+
-+	status = msm_dp_read_aux(msm_dp_catalog, REG_DP_DP_HPD_INT_STATUS);
-+	status >>= DP_DP_HPD_STATE_STATUS_BITS_SHIFT;
-+	status &= DP_DP_HPD_STATE_STATUS_BITS_MASK;
-+
-+	return status;
-+}
-+
- struct drm_dp_aux *msm_dp_aux_get(struct device *dev, struct msm_dp_catalog *catalog,
- 			      struct phy *phy,
- 			      bool is_edp)
-diff --git a/drivers/gpu/drm/msm/dp/dp_aux.h b/drivers/gpu/drm/msm/dp/dp_aux.h
-index 39c5b4c8596ab28d822493a6b4d479f5f786cdee..624395a41ed0a75ead4826e78d05ca21e8fb8967 100644
---- a/drivers/gpu/drm/msm/dp/dp_aux.h
-+++ b/drivers/gpu/drm/msm/dp/dp_aux.h
-@@ -17,6 +17,13 @@ void msm_dp_aux_init(struct drm_dp_aux *msm_dp_aux);
- void msm_dp_aux_deinit(struct drm_dp_aux *msm_dp_aux);
- void msm_dp_aux_reconfig(struct drm_dp_aux *msm_dp_aux);
- 
-+void msm_dp_aux_hpd_enable(struct drm_dp_aux *msm_dp_aux);
-+void msm_dp_aux_hpd_disable(struct drm_dp_aux *msm_dp_aux);
-+void msm_dp_aux_hpd_intr_enable(struct drm_dp_aux *msm_dp_aux);
-+void msm_dp_aux_hpd_intr_disable(struct drm_dp_aux *msm_dp_aux);
-+u32 msm_dp_aux_get_hpd_intr_status(struct drm_dp_aux *msm_dp_aux);
-+u32 msm_dp_aux_is_link_connected(struct drm_dp_aux *msm_dp_aux);
-+
- struct phy;
- struct drm_dp_aux *msm_dp_aux_get(struct device *dev, struct msm_dp_catalog *catalog,
- 			      struct phy *phy,
-diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
-index 60ba6e0a204f536fd050591e891add17d286fb2d..754b30e35039618453df9ce863c0d2561fce2fda 100644
---- a/drivers/gpu/drm/msm/dp/dp_catalog.c
-+++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
-@@ -81,8 +81,8 @@ u32 msm_dp_catalog_aux_get_irq(struct msm_dp_catalog *msm_dp_catalog)
- 	intr &= ~DP_INTERRUPT_STATUS1_MASK;
- 	intr_ack = (intr & DP_INTERRUPT_STATUS1)
- 			<< DP_INTERRUPT_STATUS_ACK_SHIFT;
--	msm_dp_write_ahb(msm_dp_catalog, REG_DP_INTR_STATUS, intr_ack |
--			DP_INTERRUPT_STATUS1_MASK);
-+	msm_dp_write_ahb(msm_dp_catalog, REG_DP_INTR_STATUS,
-+		     intr_ack | DP_INTERRUPT_STATUS1_MASK);
- 
- 	return intr;
- 
-@@ -115,77 +115,6 @@ void msm_dp_catalog_ctrl_enable_irq(struct msm_dp_catalog *msm_dp_catalog,
- 	}
- }
- 
--void msm_dp_catalog_hpd_config_intr(struct msm_dp_catalog *msm_dp_catalog,
--			u32 intr_mask, bool en)
--{
--	struct msm_dp_catalog_private *catalog = container_of(msm_dp_catalog,
--				struct msm_dp_catalog_private, msm_dp_catalog);
--
--	u32 config = msm_dp_read_aux(msm_dp_catalog, REG_DP_DP_HPD_INT_MASK);
--
--	config = (en ? config | intr_mask : config & ~intr_mask);
--
--	drm_dbg_dp(catalog->drm_dev, "intr_mask=%#x config=%#x\n",
--					intr_mask, config);
--	msm_dp_write_aux(msm_dp_catalog, REG_DP_DP_HPD_INT_MASK,
--				config & DP_DP_HPD_INT_MASK);
--}
--
--void msm_dp_catalog_ctrl_hpd_enable(struct msm_dp_catalog *msm_dp_catalog)
--{
--	u32 reftimer = msm_dp_read_aux(msm_dp_catalog, REG_DP_DP_HPD_REFTIMER);
--
--	/* Configure REFTIMER and enable it */
--	reftimer |= DP_DP_HPD_REFTIMER_ENABLE;
--	msm_dp_write_aux(msm_dp_catalog, REG_DP_DP_HPD_REFTIMER, reftimer);
--
--	/* Enable HPD */
--	msm_dp_write_aux(msm_dp_catalog, REG_DP_DP_HPD_CTRL, DP_DP_HPD_CTRL_HPD_EN);
--}
--
--void msm_dp_catalog_ctrl_hpd_disable(struct msm_dp_catalog *msm_dp_catalog)
--{
--	u32 reftimer = msm_dp_read_aux(msm_dp_catalog, REG_DP_DP_HPD_REFTIMER);
--
--	reftimer &= ~DP_DP_HPD_REFTIMER_ENABLE;
--	msm_dp_write_aux(msm_dp_catalog, REG_DP_DP_HPD_REFTIMER, reftimer);
--
--	msm_dp_write_aux(msm_dp_catalog, REG_DP_DP_HPD_CTRL, 0);
--}
--
--u32 msm_dp_catalog_link_is_connected(struct msm_dp_catalog *msm_dp_catalog)
--{
--	struct msm_dp_catalog_private *catalog = container_of(msm_dp_catalog,
--				struct msm_dp_catalog_private, msm_dp_catalog);
--	u32 status;
--
--	status = msm_dp_read_aux(msm_dp_catalog, REG_DP_DP_HPD_INT_STATUS);
--	drm_dbg_dp(catalog->drm_dev, "aux status: %#x\n", status);
--	status >>= DP_DP_HPD_STATE_STATUS_BITS_SHIFT;
--	status &= DP_DP_HPD_STATE_STATUS_BITS_MASK;
--
--	return status;
--}
--
--u32 msm_dp_catalog_hpd_get_intr_status(struct msm_dp_catalog *msm_dp_catalog)
--{
--	int isr, mask;
--
--	isr = msm_dp_read_aux(msm_dp_catalog, REG_DP_DP_HPD_INT_STATUS);
--	msm_dp_write_aux(msm_dp_catalog, REG_DP_DP_HPD_INT_ACK,
--				 (isr & DP_DP_HPD_INT_MASK));
--	mask = msm_dp_read_aux(msm_dp_catalog, REG_DP_DP_HPD_INT_MASK);
--
--	/*
--	 * We only want to return interrupts that are unmasked to the caller.
--	 * However, the interrupt status field also contains other
--	 * informational bits about the HPD state status, so we only mask
--	 * out the part of the register that tells us about which interrupts
--	 * are pending.
--	 */
--	return isr & (mask | ~DP_DP_HPD_INT_MASK);
--}
--
- u32 msm_dp_catalog_ctrl_read_psr_interrupt_status(struct msm_dp_catalog *msm_dp_catalog)
- {
- 	u32 intr, intr_ack;
-diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.h b/drivers/gpu/drm/msm/dp/dp_catalog.h
-index e2fdccc332f874458709593c68a1d1a46b6cc406..830d9164188c0f7520809a99fa409b473bbfbfa4 100644
---- a/drivers/gpu/drm/msm/dp/dp_catalog.h
-+++ b/drivers/gpu/drm/msm/dp/dp_catalog.h
-@@ -122,12 +122,6 @@ u32 msm_dp_catalog_aux_get_irq(struct msm_dp_catalog *msm_dp_catalog);
- /* DP Controller APIs */
- u32 msm_dp_catalog_hw_revision(const struct msm_dp_catalog *msm_dp_catalog);
- void msm_dp_catalog_ctrl_enable_irq(struct msm_dp_catalog *msm_dp_catalog, bool enable);
--void msm_dp_catalog_hpd_config_intr(struct msm_dp_catalog *msm_dp_catalog,
--			u32 intr_mask, bool en);
--void msm_dp_catalog_ctrl_hpd_enable(struct msm_dp_catalog *msm_dp_catalog);
--void msm_dp_catalog_ctrl_hpd_disable(struct msm_dp_catalog *msm_dp_catalog);
--u32 msm_dp_catalog_link_is_connected(struct msm_dp_catalog *msm_dp_catalog);
--u32 msm_dp_catalog_hpd_get_intr_status(struct msm_dp_catalog *msm_dp_catalog);
- int msm_dp_catalog_ctrl_get_interrupt(struct msm_dp_catalog *msm_dp_catalog);
- void msm_dp_catalog_ctrl_config_psr_interrupt(struct msm_dp_catalog *msm_dp_catalog);
- u32 msm_dp_catalog_ctrl_read_psr_interrupt_status(struct msm_dp_catalog *msm_dp_catalog);
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-index cde667bf8eeec95035b2feb3661686c99acf5b7d..5f32ee2fa0438cd12726540a59ab4849d47ee8c2 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-@@ -2162,7 +2162,7 @@ int msm_dp_ctrl_on_link(struct msm_dp_ctrl *msm_dp_ctrl)
- 			break;
- 		} else if (training_step == DP_TRAINING_1) {
- 			/* link train_1 failed */
--			if (!msm_dp_catalog_link_is_connected(ctrl->catalog))
-+			if (!msm_dp_aux_is_link_connected(ctrl->aux))
- 				break;
- 
- 			msm_dp_ctrl_read_link_status(ctrl, link_status);
-@@ -2187,7 +2187,7 @@ int msm_dp_ctrl_on_link(struct msm_dp_ctrl *msm_dp_ctrl)
- 			}
- 		} else if (training_step == DP_TRAINING_2) {
- 			/* link train_2 failed */
--			if (!msm_dp_catalog_link_is_connected(ctrl->catalog))
-+			if (!msm_dp_aux_is_link_connected(ctrl->aux))
- 				break;
- 
- 			msm_dp_ctrl_read_link_status(ctrl, link_status);
 diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index aba925aab7ad7c6652e81004043864c1cb3ac370..72a46e9e319486bc4ec1f5c842d733bd55ce0a67 100644
+index 72a46e9e319486bc4ec1f5c842d733bd55ce0a67..8f8fa0cb8af67383ecfce026ee8840f70b82e6da 100644
 --- a/drivers/gpu/drm/msm/dp/dp_display.c
 +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -1145,7 +1145,7 @@ static irqreturn_t msm_dp_display_irq_handler(int irq, void *dev_id)
- 		return IRQ_NONE;
+@@ -722,9 +722,6 @@ static int msm_dp_init_sub_modules(struct msm_dp_display_private *dp)
+ {
+ 	int rc = 0;
+ 	struct device *dev = &dp->msm_dp_display.pdev->dev;
+-	struct msm_dp_panel_in panel_in = {
+-		.dev = dev,
+-	};
+ 	struct phy *phy;
+ 
+ 	phy = devm_phy_get(dev, "dp");
+@@ -765,11 +762,7 @@ static int msm_dp_init_sub_modules(struct msm_dp_display_private *dp)
+ 		goto error_link;
  	}
  
--	hpd_isr_status = msm_dp_catalog_hpd_get_intr_status(dp->catalog);
-+	hpd_isr_status = msm_dp_aux_get_hpd_intr_status(dp->aux);
- 
- 	if (hpd_isr_status & 0x0F) {
- 		drm_dbg_dp(dp->drm_dev, "type=%d isr=0x%x\n",
-@@ -1360,7 +1360,7 @@ static int msm_dp_pm_runtime_suspend(struct device *dev)
- 
- 	if (dp->msm_dp_display.is_edp) {
- 		msm_dp_display_host_phy_exit(dp);
--		msm_dp_catalog_ctrl_hpd_disable(dp->catalog);
-+		msm_dp_aux_hpd_disable(dp->aux);
- 	}
- 	msm_dp_display_host_deinit(dp);
- 
-@@ -1381,7 +1381,7 @@ static int msm_dp_pm_runtime_resume(struct device *dev)
- 	 */
- 	msm_dp_display_host_init(dp);
- 	if (dp->msm_dp_display.is_edp) {
--		msm_dp_catalog_ctrl_hpd_enable(dp->catalog);
-+		msm_dp_aux_hpd_enable(dp->aux);
- 		msm_dp_display_host_phy_init(dp);
- 	}
- 
-@@ -1668,10 +1668,8 @@ void msm_dp_bridge_hpd_enable(struct drm_bridge *bridge)
- 		return;
- 	}
- 
--	msm_dp_catalog_ctrl_hpd_enable(dp->catalog);
+-	panel_in.aux = dp->aux;
+-	panel_in.catalog = dp->catalog;
+-	panel_in.link = dp->link;
 -
--	/* enable HDP interrupts */
--	msm_dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_INT_MASK, true);
-+	msm_dp_aux_hpd_enable(dp->aux);
-+	msm_dp_aux_hpd_intr_enable(dp->aux);
- 
- 	msm_dp_display->internal_hpd = true;
- 	mutex_unlock(&dp->event_mutex);
-@@ -1684,9 +1682,9 @@ void msm_dp_bridge_hpd_disable(struct drm_bridge *bridge)
- 	struct msm_dp_display_private *dp = container_of(msm_dp_display, struct msm_dp_display_private, msm_dp_display);
- 
- 	mutex_lock(&dp->event_mutex);
--	/* disable HDP interrupts */
--	msm_dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_INT_MASK, false);
--	msm_dp_catalog_ctrl_hpd_disable(dp->catalog);
-+
-+	msm_dp_aux_hpd_intr_disable(dp->aux);
-+	msm_dp_aux_hpd_disable(dp->aux);
- 
- 	msm_dp_display->internal_hpd = false;
- 
+-	dp->panel = msm_dp_panel_get(&panel_in);
++	dp->panel = msm_dp_panel_get(dev, dp->aux, dp->link, dp->catalog);
+ 	if (IS_ERR(dp->panel)) {
+ 		rc = PTR_ERR(dp->panel);
+ 		DRM_ERROR("failed to initialize panel, rc = %d\n", rc);
 diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
-index 7903606fc9c249b4ec21949fe51240df90492103..58045d9a52e9a4d39362c3de623fa34acd5784ec 100644
+index 58045d9a52e9a4d39362c3de623fa34acd5784ec..6e6dc3169e9c2f84273e599100602583550f521c 100644
 --- a/drivers/gpu/drm/msm/dp/dp_panel.c
 +++ b/drivers/gpu/drm/msm/dp/dp_panel.c
-@@ -165,7 +165,7 @@ int msm_dp_panel_read_sink_caps(struct msm_dp_panel *msm_dp_panel,
- 	if (!msm_dp_panel->drm_edid) {
- 		DRM_ERROR("panel edid read failed\n");
- 		/* check edid read fail is due to unplug */
--		if (!msm_dp_catalog_link_is_connected(panel->catalog)) {
-+		if (!msm_dp_aux_is_link_connected(panel->aux)) {
- 			rc = -ETIMEDOUT;
- 			goto end;
- 		}
+@@ -549,25 +549,26 @@ static int msm_dp_panel_parse_dt(struct msm_dp_panel *msm_dp_panel)
+ 	return 0;
+ }
+ 
+-struct msm_dp_panel *msm_dp_panel_get(struct msm_dp_panel_in *in)
++struct msm_dp_panel *msm_dp_panel_get(struct device *dev, struct drm_dp_aux *aux,
++			      struct msm_dp_link *link, struct msm_dp_catalog *catalog)
+ {
+ 	struct msm_dp_panel_private *panel;
+ 	struct msm_dp_panel *msm_dp_panel;
+ 	int ret;
+ 
+-	if (!in->dev || !in->catalog || !in->aux || !in->link) {
++	if (!dev || !catalog || !aux || !link) {
+ 		DRM_ERROR("invalid input\n");
+ 		return ERR_PTR(-EINVAL);
+ 	}
+ 
+-	panel = devm_kzalloc(in->dev, sizeof(*panel), GFP_KERNEL);
++	panel = devm_kzalloc(dev, sizeof(*panel), GFP_KERNEL);
+ 	if (!panel)
+ 		return ERR_PTR(-ENOMEM);
+ 
+-	panel->dev = in->dev;
+-	panel->aux = in->aux;
+-	panel->catalog = in->catalog;
+-	panel->link = in->link;
++	panel->dev = dev;
++	panel->aux = aux;
++	panel->catalog = catalog;
++	panel->link = link;
+ 
+ 	msm_dp_panel = &panel->msm_dp_panel;
+ 	msm_dp_panel->max_bw_code = DP_LINK_BW_8_1;
+diff --git a/drivers/gpu/drm/msm/dp/dp_panel.h b/drivers/gpu/drm/msm/dp/dp_panel.h
+index 332ac79594e71157e2b087dc5268c50a87993d83..482ead77e7c01e6d611dbdce37f82a8dfbc4e3e4 100644
+--- a/drivers/gpu/drm/msm/dp/dp_panel.h
++++ b/drivers/gpu/drm/msm/dp/dp_panel.h
+@@ -21,13 +21,6 @@ struct msm_dp_display_mode {
+ 	bool out_fmt_is_yuv_420;
+ };
+ 
+-struct msm_dp_panel_in {
+-	struct device *dev;
+-	struct drm_dp_aux *aux;
+-	struct msm_dp_link *link;
+-	struct msm_dp_catalog *catalog;
+-};
+-
+ struct msm_dp_panel_psr {
+ 	u8 version;
+ 	u8 capabilities;
+@@ -93,6 +86,7 @@ static inline bool is_lane_count_valid(u32 lane_count)
+ 		lane_count == 4);
+ }
+ 
+-struct msm_dp_panel *msm_dp_panel_get(struct msm_dp_panel_in *in);
++struct msm_dp_panel *msm_dp_panel_get(struct device *dev, struct drm_dp_aux *aux,
++			      struct msm_dp_link *link, struct msm_dp_catalog *catalog);
+ void msm_dp_panel_put(struct msm_dp_panel *msm_dp_panel);
+ #endif /* _DP_PANEL_H_ */
 
 -- 
 2.39.5
