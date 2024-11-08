@@ -1,76 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-37296-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37297-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id DAE9B9C1300
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2024 01:21:57 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3290C9C130C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2024 01:22:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6E2151F23192
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2024 00:21:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EE49D2841E1
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2024 00:22:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D7CB51BD9E7;
-	Fri,  8 Nov 2024 00:21:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBB241BD9F6;
+	Fri,  8 Nov 2024 00:21:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JJ9G7SV9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Xm7hdksO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 093232C9D
-	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Nov 2024 00:21:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4E951BD9E3
+	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Nov 2024 00:21:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731025305; cv=none; b=gkmsEMze81EL6VM5+TAmOv+cWA1gHEjuiYt7J18Am12icqw4e69/m7KBSk4vtdd8IHs5yoRCr4u1H93jnojxxjmfZjbqEKB/qjXHHYydncdZAg0k56ZtVpeVaSIIf15uBNG4WU9qHTfhYD7dHwy1oSbZj6yhKwCUvXccoyMLNwY=
+	t=1731025307; cv=none; b=n1ltC7NLrsApZmI7T3IuOWAtKp3W+7Amage9r9ZenY2/ndlwO9uYxO5TkELaUxjv4YturFv2zmW4tq3KW+c1fBFG7TG63k+/THFSqc6hdfoTWfzcfUGLb4X/I2zc/NSvdapOC4A5DE/umSGFIa29qp2LN6k2AE3I5G3SJ7Xp5lo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731025305; c=relaxed/simple;
-	bh=abn+V/VW2R04+ivG5L+16aCpi+lS1tSzUvuSfrCga00=;
+	s=arc-20240116; t=1731025307; c=relaxed/simple;
+	bh=AR2ot2ScldeaKrjr/qeTAbSFGVp+4LY+MmiRX3d+ewg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=l6z96WShU9Xm6jRsw2ku9Sw3Q+xIdAifytYcIGKneTj6eQj5kq3zndHFZkoblPLK5GNQFj7BVE3h9gfDi7RVDusEAQD/PZqOLCerRImelMxk3pQ3vWCUuYsXeU7tcvA9JA+YyVxLnt6J06VcJj1fQu5nbUl79YN7dZi1GMZcD1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JJ9G7SV9; arc=none smtp.client-ip=209.85.167.41
+	 In-Reply-To:To:Cc; b=Qh9unKNJo7hiHgHjlvT2PH5Rehk1hiAeKVnCCLr5c76G7N/boAC9Zw+n5JAMVIcrfcbFyYHMHOoWEwKBoDtXqfyusn40cm3EeLt6S5URj5YQWuEXp5HGEBp17Sz6zKriczCqSeF/7RoUv44Vz8Iu10kCLSGBJRXH1bhgoyytLFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Xm7hdksO; arc=none smtp.client-ip=209.85.208.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-539f58c68c5so2599858e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Nov 2024 16:21:43 -0800 (PST)
+Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2fb5740a03bso15160451fa.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Nov 2024 16:21:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731025302; x=1731630102; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1731025304; x=1731630104; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=xY822JqISKSBvZvj0s20BCeD1NcNyIjNyABXPzWHxOc=;
-        b=JJ9G7SV990NJxjx0lxK6m2Lacoau/XDcAeTDN/WvO2o8ysJwv22aGkUOcsJ4a0tjl5
-         uzV3Mc+9qcS22a3iFMxYQSZRynPs9XuEqP3gpx1ElHjygVpVsijKA3d3g1/3RCEwvnpk
-         XYYWCah7H4NEspXG+2XDy0yIZ5lS7WSwa0FydPnbVyS5RxPJTb9ma/Yfprdizc2bGm7y
-         0TfDYnTFQ7KF6KdxIKM+tP7BStRbOa+6VOFOQEUgAmAh0AJTbPySUizz/CnNsdBwNhwT
-         LyYcscVKT+0V7xENC21r5oYnmSgyQquaCWTM2ct7CNQZnDx/PXP5lFHE7oeWn7QknP6K
-         ONfg==
+        bh=VKmZ4meMm9nE0dI/BvNTGi28DshZDKFMZdPFX/d5o80=;
+        b=Xm7hdksOKjzH5kl73OofaeoBfqPwoPu/eycVz8zLKMKY/tnIvxl8akbhHxmBo499PC
+         wLVcAXZGaQH9h6en4GMqNxa+NtWvHE0cTdsvtpRyPy6DV/KVmjAXPHO93iWdCcgoPAQo
+         w0T0WcP8hdaou7Bzydl/kIxzpBQqbE23V3lwELzRnAJy+antHH+eUVn/yYPgg951zM5A
+         LUG/toZm8DFZae6r75QJhpk7jfQTJJB6b9Ng8dJOLDE2bnR/r78dThmhyP0O1p1kgUfr
+         ep0zC6di4Nc6gPGVn2mHMlkMV6HOhHbh7JO7/YZdL9HxPLGpBhnBjKpcZUejdkAM7MxV
+         zOCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731025302; x=1731630102;
+        d=1e100.net; s=20230601; t=1731025304; x=1731630104;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=xY822JqISKSBvZvj0s20BCeD1NcNyIjNyABXPzWHxOc=;
-        b=sTpQ/fVgBxWcbiZRsHDh9mZ8L6PSsw3fsdxs9Nyc++pZb9jLkGEYqx6IEcW7lwEKh6
-         OItRYSZIC1dt56FTjHPLckRXoVZPm6Oxb4WSFc8ctSOqp1xXQiNiTPpxIOHCgjFl0Acz
-         INRz2u50RXsDP6Aea4HC/bbfho8kEfFccgWvWPzItolwFxxVkvZ4sZe2BGjAVcaoJyqF
-         FR281P71oF3ZQvTI9d99qFD5uF6OKCVNemLlBLroKs8r4on8g1ChYomgTmBQITwbuOBK
-         ONSjB1v4y1tAtWRANyPqtcz4Oq7rFgfqMI3HF8zz8R+ic3Yx91AV95SnvFn1vkX8E/Eb
-         6+oA==
-X-Forwarded-Encrypted: i=1; AJvYcCUjuOU5DsuBdXz7ly5urJJ5yJXdq5HOdgb8CP5eb14N9+kSzsk8A2+9nVBKNlkgCvFBMHFD5WtUFzm9SD8T@vger.kernel.org
-X-Gm-Message-State: AOJu0YwO6h6yIAggWDz8HrYHhpToCSuKHxem8kT0FywMbkX8dvqqtC/D
-	bCPdkzKKXpszPmA19gpcxetGB87NPeWHhjmWq5es9XJcr6cHaCInNqMWvjvcOVU=
-X-Google-Smtp-Source: AGHT+IEq6ivfN+wJwzSVr2+2EsfSbjnKIpmoB5DdUoek2Tpc2v2YqRfcEYVZeYyjXtOgbLpQYY7sVQ==
-X-Received: by 2002:a2e:a803:0:b0:2f7:6653:8053 with SMTP id 38308e7fff4ca-2ff201c7cc0mr7133511fa.18.1731025302111;
-        Thu, 07 Nov 2024 16:21:42 -0800 (PST)
+        bh=VKmZ4meMm9nE0dI/BvNTGi28DshZDKFMZdPFX/d5o80=;
+        b=Sbl7cAyOlb730abQMUW/14YLYgnl7VHLayqra9jaPzJHtRLkzYlkJamdRZRaUi0GGk
+         95nLF2w7L7vEi+cJUCpLNvBswHwXVnybjr5ADhi//VDcSJhXlmFFUL0cqe71ptylY8Jb
+         3BnY9mw30j9V9mBgSuugFwvzO7TT/uTPULvMhjBne1lzRI1wAs4GoZf3hin8ADIlV21V
+         aPA550qGMrmDJfyLo2Rqz5bfVB1Y2QE/L0+JBWrldpPVtBv5rnEKhFPyiUk9X8qSPyHP
+         pRptmtCtNRTwbZ1TTERDXjFXnHaOdi9LdzG2Cb/n4qHYSyYADEyo8EJGhXZpuC3mXGby
+         /ViA==
+X-Forwarded-Encrypted: i=1; AJvYcCW9wewuOHFKskjkzEJC1ouLutyx2x3MyRdrD19/pBEv6BzCiCaTraG2eTc6TCXy7HJh+QBkbeI2i0031RJN@vger.kernel.org
+X-Gm-Message-State: AOJu0YzfBeg3yeR9lm7ojkG7o0glxCXWVjp801MnsOA4GJadIsoj2QpK
+	f5f6M+tD8JHQfeOBxiePkf6HhV96Kfuk7Pcx+p6CgfAcfBJX4JRDGvPuCWCODwE=
+X-Google-Smtp-Source: AGHT+IGOBd1C2/u1sDhdEsw4b6WynLug8IcEk/4yg0nbhikVEpWeMtzi6UwH0Mu9GqYs0elB/cDwkw==
+X-Received: by 2002:a05:651c:158f:b0:2fb:54d7:71b5 with SMTP id 38308e7fff4ca-2ff20280ab0mr3598621fa.22.1731025303838;
+        Thu, 07 Nov 2024 16:21:43 -0800 (PST)
 Received: from umbar.lan ([192.130.178.90])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ff17900a63sm4195191fa.47.2024.11.07.16.21.39
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ff17900a63sm4195191fa.47.2024.11.07.16.21.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Nov 2024 16:21:40 -0800 (PST)
+        Thu, 07 Nov 2024 16:21:43 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 08 Nov 2024 02:21:32 +0200
-Subject: [PATCH 01/14] drm/msm/dp: fix msm_dp_utils_pack_sdp_header
- interface
+Date: Fri, 08 Nov 2024 02:21:33 +0200
+Subject: [PATCH 02/14] drm/msm/dp: drop msm_dp_panel_dump_regs() and
+ msm_dp_catalog_dump_regs()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,7 +79,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241108-fd-dp-audio-fixup-v1-1-40c8eeb60cf5@linaro.org>
+Message-Id: <20241108-fd-dp-audio-fixup-v1-2-40c8eeb60cf5@linaro.org>
 References: <20241108-fd-dp-audio-fixup-v1-0-40c8eeb60cf5@linaro.org>
 In-Reply-To: <20241108-fd-dp-audio-fixup-v1-0-40c8eeb60cf5@linaro.org>
 To: Rob Clark <robdclark@gmail.com>, 
@@ -93,74 +93,125 @@ Cc: Douglas Anderson <dianders@chromium.org>,
  linux-kernel@vger.kernel.org, 
  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2535;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4566;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=abn+V/VW2R04+ivG5L+16aCpi+lS1tSzUvuSfrCga00=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnLVmOlTL82Q+yU+jTYQJ2nDrxLnq8YKm4nBQrW
- XWQ3vKXdO6JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZy1ZjgAKCRCLPIo+Aiko
- 1aVAB/wMp1GUIzKR0e0Z7EmL6OhYO8pzNKgXmJzLpBJHGsb3lAkcVB8stTyd7yx4NyeObcSp0dN
- FEXTHPvI4cEqqpzxMjTMzvERHuhHalCM/N4bmNMEg9aBigDEDFFeyVoIOgrOVrYPe1PsFL6ibG7
- BxcCRw1Xe4T0Dzdcj5708UB0Ejd54RFOjX7lfeC+JAryOMN05sG3b+S2NJsOHi4fq/Dhk6HGu5T
- wLyg+ob9chEYbWjZvDgaixAMyFsah9l5WnBj4IFCcWOlbJ1H9d3cTnpnv+W7PG7VxzJFk3b+kNn
- tUJRuMx5kL6Wa/PvEsa2clV8XVeqacZ/osSRe8CjnyW1wkLD
+ bh=AR2ot2ScldeaKrjr/qeTAbSFGVp+4LY+MmiRX3d+ewg=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnLVmOYKBgfvb+d+khmE2/qFL9b8EIYfJneeqrr
+ jL0XRP1qqiJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZy1ZjgAKCRCLPIo+Aiko
+ 1UqCB/9UqsIYfGSTs8f23lHRsCMhL86Oo4W2rAeToZsOGj4vggqbsrTchD5BS0MY37Y1/hS+J5O
+ GCsz81GpFHoHZQJtdaLtEZVLTOSrE553BDARSYVosWT6W1jTafsxubFHe6I8z+GzWUUkJf4yIHK
+ Ov0GcWbCGLTWvC0hHhqZDASPwv3Tj19Y9Xt6m2W5OxMZy803VmL55RTOboq9vEu3NHXil6bYyG0
+ iNWgF/MeU52rpM68MheZAKRvbVC4AI74HhVBxC8beI7vHzf0kDmH9m1gWVNvr2W7amU/7kMRXWO
+ mXPjOXDTAW/11X3Ay/sbgkwiTc4m8G7z2fLFwrjHW/jfBhMB
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-The msm_dp_utils_pack_sdp_header() accepts an unlimited-size u32 pointer
-for the header output, while it expects a two-element array. It performs
-a sizeof check which is always true on 64-bit platforms (since
-sizeof(u32*) is 8) and is always falce on 32-bit platforms. It returns
-an error code which nobody actually checks.
+The msm_dp_panel_dump_regs() and msm_dp_catalog_dump_regs() are not
+called anywhere. If there is a necessity to dump registers, the
+snapshotting should be used instead. Drop these two functions.
 
-Fix the function interface to accept u32[2] and return void, skipping
-all the checks.
-
-Fixes: 55fb8ffc1802 ("drm/msm/dp: add VSC SDP support for YUV420 over DP")
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/dp/dp_utils.c | 10 +---------
- drivers/gpu/drm/msm/dp/dp_utils.h |  2 +-
- 2 files changed, 2 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/msm/dp/dp_catalog.c | 37 -------------------------------------
+ drivers/gpu/drm/msm/dp/dp_catalog.h |  1 -
+ drivers/gpu/drm/msm/dp/dp_panel.c   | 11 -----------
+ drivers/gpu/drm/msm/dp/dp_panel.h   |  1 -
+ 4 files changed, 50 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_utils.c b/drivers/gpu/drm/msm/dp/dp_utils.c
-index 2a40f07fe2d5e20114a7692d1269bb8fd5bddbbd..4a5ebb0c33b85e3d55eb974d74c1f54591301b35 100644
---- a/drivers/gpu/drm/msm/dp/dp_utils.c
-+++ b/drivers/gpu/drm/msm/dp/dp_utils.c
-@@ -74,14 +74,8 @@ u8 msm_dp_utils_calculate_parity(u32 data)
- 	return parity_byte;
+diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
+index b4c8856fb25d01dd1b30c5ec33ce821aafa9551d..0357dec1acd5773f25707e7ebdfca4b1d2b1bb4e 100644
+--- a/drivers/gpu/drm/msm/dp/dp_catalog.c
++++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
+@@ -276,43 +276,6 @@ int msm_dp_catalog_aux_wait_for_hpd_connect_state(struct msm_dp_catalog *msm_dp_
+ 				min(wait_us, 2000), wait_us);
  }
  
--ssize_t msm_dp_utils_pack_sdp_header(struct dp_sdp_header *sdp_header, u32 *header_buff)
-+void msm_dp_utils_pack_sdp_header(struct dp_sdp_header *sdp_header, u32 header_buff[2])
+-static void dump_regs(void __iomem *base, int len)
+-{
+-	int i;
+-	u32 x0, x4, x8, xc;
+-	u32 addr_off = 0;
+-
+-	len = DIV_ROUND_UP(len, 16);
+-	for (i = 0; i < len; i++) {
+-		x0 = readl_relaxed(base + addr_off);
+-		x4 = readl_relaxed(base + addr_off + 0x04);
+-		x8 = readl_relaxed(base + addr_off + 0x08);
+-		xc = readl_relaxed(base + addr_off + 0x0c);
+-
+-		pr_info("%08x: %08x %08x %08x %08x", addr_off, x0, x4, x8, xc);
+-		addr_off += 16;
+-	}
+-}
+-
+-void msm_dp_catalog_dump_regs(struct msm_dp_catalog *msm_dp_catalog)
+-{
+-	struct msm_dp_catalog_private *catalog = container_of(msm_dp_catalog,
+-		struct msm_dp_catalog_private, msm_dp_catalog);
+-	struct dss_io_data *io = &catalog->io;
+-
+-	pr_info("AHB regs\n");
+-	dump_regs(io->ahb.base, io->ahb.len);
+-
+-	pr_info("AUXCLK regs\n");
+-	dump_regs(io->aux.base, io->aux.len);
+-
+-	pr_info("LCLK regs\n");
+-	dump_regs(io->link.base, io->link.len);
+-
+-	pr_info("P0CLK regs\n");
+-	dump_regs(io->p0.base, io->p0.len);
+-}
+-
+ u32 msm_dp_catalog_aux_get_irq(struct msm_dp_catalog *msm_dp_catalog)
  {
--	size_t length;
--
--	length = sizeof(header_buff);
--	if (length < DP_SDP_HEADER_SIZE)
--		return -ENOSPC;
--
- 	header_buff[0] = FIELD_PREP(HEADER_0_MASK, sdp_header->HB0) |
- 		FIELD_PREP(PARITY_0_MASK, msm_dp_utils_calculate_parity(sdp_header->HB0)) |
- 		FIELD_PREP(HEADER_1_MASK, sdp_header->HB1) |
-@@ -91,6 +85,4 @@ ssize_t msm_dp_utils_pack_sdp_header(struct dp_sdp_header *sdp_header, u32 *head
- 		FIELD_PREP(PARITY_2_MASK, msm_dp_utils_calculate_parity(sdp_header->HB2)) |
- 		FIELD_PREP(HEADER_3_MASK, sdp_header->HB3) |
- 		FIELD_PREP(PARITY_3_MASK, msm_dp_utils_calculate_parity(sdp_header->HB3));
--
--	return length;
+ 	struct msm_dp_catalog_private *catalog = container_of(msm_dp_catalog,
+diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.h b/drivers/gpu/drm/msm/dp/dp_catalog.h
+index e932b17eecbf514070cd8cd0b98ca0fefbe81ab7..62a401d8f75a6af06445a42af657d65e3fe542c5 100644
+--- a/drivers/gpu/drm/msm/dp/dp_catalog.h
++++ b/drivers/gpu/drm/msm/dp/dp_catalog.h
+@@ -104,7 +104,6 @@ int msm_dp_catalog_panel_timing_cfg(struct msm_dp_catalog *msm_dp_catalog, u32 t
+ 				u32 sync_start, u32 width_blanking, u32 msm_dp_active);
+ void msm_dp_catalog_panel_enable_vsc_sdp(struct msm_dp_catalog *msm_dp_catalog, struct dp_sdp *vsc_sdp);
+ void msm_dp_catalog_panel_disable_vsc_sdp(struct msm_dp_catalog *msm_dp_catalog);
+-void msm_dp_catalog_dump_regs(struct msm_dp_catalog *msm_dp_catalog);
+ void msm_dp_catalog_panel_tpg_enable(struct msm_dp_catalog *msm_dp_catalog,
+ 				struct drm_display_mode *drm_mode);
+ void msm_dp_catalog_panel_tpg_disable(struct msm_dp_catalog *msm_dp_catalog);
+diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
+index 5d7eaa31bf3176566f40f01ff636bee64e81c64f..7d122496723a32fd591d094269397a9fdd51fe44 100644
+--- a/drivers/gpu/drm/msm/dp/dp_panel.c
++++ b/drivers/gpu/drm/msm/dp/dp_panel.c
+@@ -317,17 +317,6 @@ static int msm_dp_panel_setup_vsc_sdp_yuv_420(struct msm_dp_panel *msm_dp_panel)
+ 	return 0;
  }
-diff --git a/drivers/gpu/drm/msm/dp/dp_utils.h b/drivers/gpu/drm/msm/dp/dp_utils.h
-index 88d53157f5b59e352a29075e4e8deb044a6de3bd..2e4f98a863c4cb971e621ac24b8b58f035236e73 100644
---- a/drivers/gpu/drm/msm/dp/dp_utils.h
-+++ b/drivers/gpu/drm/msm/dp/dp_utils.h
-@@ -31,6 +31,6 @@
- u8 msm_dp_utils_get_g0_value(u8 data);
- u8 msm_dp_utils_get_g1_value(u8 data);
- u8 msm_dp_utils_calculate_parity(u32 data);
--ssize_t msm_dp_utils_pack_sdp_header(struct dp_sdp_header *sdp_header, u32 *header_buff);
-+void msm_dp_utils_pack_sdp_header(struct dp_sdp_header *sdp_header, u32 header_buff[2]);
  
- #endif /* _DP_UTILS_H_ */
+-void msm_dp_panel_dump_regs(struct msm_dp_panel *msm_dp_panel)
+-{
+-	struct msm_dp_catalog *catalog;
+-	struct msm_dp_panel_private *panel;
+-
+-	panel = container_of(msm_dp_panel, struct msm_dp_panel_private, msm_dp_panel);
+-	catalog = panel->catalog;
+-
+-	msm_dp_catalog_dump_regs(catalog);
+-}
+-
+ int msm_dp_panel_timing_cfg(struct msm_dp_panel *msm_dp_panel)
+ {
+ 	u32 data, total_ver, total_hor;
+diff --git a/drivers/gpu/drm/msm/dp/dp_panel.h b/drivers/gpu/drm/msm/dp/dp_panel.h
+index 0e944db3adf2f187f313664fe80cf540ec7a19f2..47c1d349be470b60596b64a7bc8c7c39d2e8fdd1 100644
+--- a/drivers/gpu/drm/msm/dp/dp_panel.h
++++ b/drivers/gpu/drm/msm/dp/dp_panel.h
+@@ -55,7 +55,6 @@ struct msm_dp_panel {
+ int msm_dp_panel_init_panel_info(struct msm_dp_panel *msm_dp_panel);
+ int msm_dp_panel_deinit(struct msm_dp_panel *msm_dp_panel);
+ int msm_dp_panel_timing_cfg(struct msm_dp_panel *msm_dp_panel);
+-void msm_dp_panel_dump_regs(struct msm_dp_panel *msm_dp_panel);
+ int msm_dp_panel_read_sink_caps(struct msm_dp_panel *msm_dp_panel,
+ 		struct drm_connector *connector);
+ u32 msm_dp_panel_get_mode_bpp(struct msm_dp_panel *msm_dp_panel, u32 mode_max_bpp,
 
 -- 
 2.39.5
