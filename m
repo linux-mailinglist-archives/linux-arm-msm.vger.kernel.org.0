@@ -1,76 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-37364-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37365-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B7EB29C274D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2024 23:05:35 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id AB01E9C274F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2024 23:05:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E97AB1C221CE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2024 22:05:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3CCFD1F22351
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2024 22:05:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D7EB20B7F2;
-	Fri,  8 Nov 2024 22:05:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B531020B804;
+	Fri,  8 Nov 2024 22:05:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CP3M4rWD"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AKI5SVJy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8CF71F26DD
-	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Nov 2024 22:05:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D2CD20B7E7
+	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Nov 2024 22:05:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731103511; cv=none; b=SUEuOAKfj4QRki9mqUFzCrQQ2mutcq12qVHMtOvWe3c3mBVbJVbBeVUE7AXh+D2kueVxzLICIw+H0lN29xPJZQdsbzeV6sWi2Bqd2j8ypFaQRD0Q1PFVmf5PUqeK33E1mRSRSs070sNeUDhSYpUMDaDbgv8RQeEEDPZskU18QZU=
+	t=1731103512; cv=none; b=ZNN+RpN2KQp+iiScde51edPKvII55+98mDTiD7zLVu9uUbRTmthgbAp84RaZNk1G5nQRTkh6Y5JzBZGjQ2EIsqiuSc6Xr00YqTSWiLIOB5dOhBZZ2wmpHhq+7kXyaP2kMpVnTD3VfQ0rYUDAoWQnaQKgMWcL985wET3Qy02Sah4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731103511; c=relaxed/simple;
-	bh=Az9J2UP1mu0XRiDGxanJoUIHnlD5Edqm6sLePuQhlsk=;
+	s=arc-20240116; t=1731103512; c=relaxed/simple;
+	bh=6FfVkGoM9m7NA8q+wP0onySbK3VrJrkurSiyu5AGpkk=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=tO/ChXjdwqWxvkrQOf38RNXHQKDo87ZWkHaYRzFO4P8ipZbA6fQQiJbIer5vFrVWY/dj5GEH1I3DG0AXR95Ht7xM32BfcStQJHtKR3x/XDSW9k6C3wtkgViX2+mIIGqjBdIZciQ2TkNmhIXgzBrYxkpMQ85fX8gxnuVjJOWaD6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CP3M4rWD; arc=none smtp.client-ip=209.85.221.50
+	 In-Reply-To:To:Cc; b=hzY18JcV4nPgiVFfRwmdZO0bBEYo4KGA5MEYmeOxgplRtcNWo47lOOm/z+dP4dZQSTbvRHVXyTQHQjS+sORIMPj2MkOLQ8LONMEabLuk7dXeyuvFAZITYYEea4Ey3CABtLlVClf0qovAwIPP5EYyivAVAmqeFYwbUX++V/6fH3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AKI5SVJy; arc=none smtp.client-ip=209.85.128.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-37ed3bd6114so1521561f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Nov 2024 14:05:09 -0800 (PST)
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-431695fa98bso20709185e9.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Nov 2024 14:05:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731103508; x=1731708308; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1731103509; x=1731708309; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=OzmLOtTwZ7weJNVBomnXbzf01xp3RZEzWqeJqXh6Ehs=;
-        b=CP3M4rWDthntWL3nMlnhm7oCzFtKJ9SDOcqS2DWqI6U7XV8i/x3iVsl2g4eZCMXeXf
-         islBNoYuP+HJWE+fsBkeK8h2I/2SWeDCSMxTpcbo2sq+eFeeXbj14Rop5wAoPfvUjBfU
-         s0zl71K4fqV3Y0LOA6OCqECg5+dAA75EKjZlqgZ2O1PRudGdkstTL6fIlpsH+8zaGAjb
-         43M33zlE679y2uLmaU9LAmi8Ywj8/b3n75znLjwwLLGpAAp2F8xrjUbqVp98C4Cv6nax
-         beIrwOOlZMpXIFm2EFsYziGZza8UC/mFihY/HL3ZQIXta5MVtwKShkJubbRVQG9Bf0J4
-         Flkw==
+        bh=OorCPkMPlsXTIjmTQ3ybPTnkn5w3sqMZVgbEJ14Cx7g=;
+        b=AKI5SVJywggxQemlHQMaK2jXZRt2vaqoQf8EDmzajbGPmBf9HDul4BGrScg0qEWOUz
+         Es12eHSoCblftVnsFjzN+5UxHSrkioGN83+OtPbmuudjrUR+68xSA/JJekd6+DxYNJIH
+         PJl6TbTv5D3KEYa/0JxEkPKBo7v87fgBMmJU4o4iILU3zXMEx/5YN8geHiuDVXlzpyrx
+         sS1RIrp7YEC560Y06CRVkbgFLHkRXv2kukjOEpfgbsBJK7/iJbYAy6wrwFyh47iN51Kg
+         hxwKyknH9Dv/p1Nq9P3KyCo1VG+8EtdPI+o0LiDILhteydmOp2fwXjFrTmSOnIf0toCI
+         4eTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731103508; x=1731708308;
+        d=1e100.net; s=20230601; t=1731103509; x=1731708309;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=OzmLOtTwZ7weJNVBomnXbzf01xp3RZEzWqeJqXh6Ehs=;
-        b=CcGBQEPmQCN/xQtGOwCKFgK9YUnTfer8lHAh7vJxbHClclq4qBA73A3YSP4JosqG6c
-         XnM13JsAumhZtkBxq8bLM0VIIjLGnyWr7Em19RUqihI8aSLdQJuIA+UlfZkkoo408xNh
-         CtFMG9gp3xQwX8WpM93xgPea7WCRtJmx70rfAExQ57yTKpLVvZwmAUxwWxBTDfnMuUxd
-         sbHBNGkbPbBhUY4ByY90ev+u90yP1ZiL/bfCUSkZCOiJek8la7EFw2fnET+XmY+jhqz9
-         vsg7RFxU2vm6WdsXy071Cz2AA1A9U/3auLHhBe21tf+iOwcIe9QMn2azBE1+6nX1jhYJ
-         ziNg==
-X-Forwarded-Encrypted: i=1; AJvYcCWBcLtySpGz2WQ5cpvaPt0JthrT1G6i5X/cWok543xQ2J0k5FBEnaO9olFjKMCnRjkYMcem2gwvex9CBneR@vger.kernel.org
-X-Gm-Message-State: AOJu0YznsDrKMMc9atXO/hko++7VqyAvC5l1DHhbao5TBQyUPsph1Lmj
-	ETOSeCXiIs9MJed8H1LoBDA/hRGUyLaSaOp7RwsxUpSdUvpg/Qawj2tT41Ay/jw=
-X-Google-Smtp-Source: AGHT+IHrwFKov63Ik27xiBV754Qf0dWcVyxOfFT4HMivHtHRF8QArSe1qiWFrNtACqgWjVKB3kd9sw==
-X-Received: by 2002:a05:6000:2101:b0:381:f5c2:df24 with SMTP id ffacd0b85a97d-381f5c2e053mr742679f8f.57.1731103508026;
-        Fri, 08 Nov 2024 14:05:08 -0800 (PST)
+        bh=OorCPkMPlsXTIjmTQ3ybPTnkn5w3sqMZVgbEJ14Cx7g=;
+        b=gNnixN7r+67xQKHwcIA4rAGruOr092Gu0Hm+b9fvMvJ6nWRuamE6ioPl7sN7P8SZFl
+         cDsE99Qs71frIUnDQlMSIx3sc1Qys9sPjISNX9ToU14fl+kIPOSK4DQU3fyZa7Zwsgkz
+         R0KIJ9Iqcr89o2hnyhfTxPwCBpqhtcDVAMKdaSPEZOrAdE+shq2C9P2gYKRLvKCCLOyT
+         sdrbl9aedH79byshUQbdh6j4vSzM5GnDnbCvGvR7BWOhAkz9TdpQHxmN168DabzzfqPt
+         Po0SaK/Knvsmkna/tG1RZwrx6EIxr2oRuE8xQGpe5Qtfi69RIGU7DLBi2JhMgSFgncIo
+         w7hg==
+X-Forwarded-Encrypted: i=1; AJvYcCU3b4/mNF9Izqk8otxcw4D4xcDoPJ30g2kfIusCaGGZs3NwCT4GkTnGBSQaUG9r/hWQVO4NF0Y+EwKseDFY@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw0gxD9FEybc58rRDlG6jg8tjt8TkDGBKprRSST5bL8ZT/pZbmB
+	+4NJbVUvJReqLfs2IgFkdfxsJ01C+TJEehIpvvViUSmKjK45hs8tpqPZDEFXiezt/xSeYFaRHYN
+	i9LM=
+X-Google-Smtp-Source: AGHT+IHYvR3Zr2VxeiXvHxbHhpcUYpUMmNtEBPIqvSo0oVTypU3PFxQ9syTsoriOH5ZTDAvnEEyI8w==
+X-Received: by 2002:a05:600c:1e89:b0:426:60b8:d8ba with SMTP id 5b1f17b1804b1-432b751dc3cmr33988935e9.28.1731103509497;
+        Fri, 08 Nov 2024 14:05:09 -0800 (PST)
 Received: from [127.0.1.1] ([82.76.168.176])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432b054ad23sm81676125e9.13.2024.11.08.14.05.05
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432b054ad23sm81676125e9.13.2024.11.08.14.05.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Nov 2024 14:05:06 -0800 (PST)
+        Fri, 08 Nov 2024 14:05:09 -0800 (PST)
 From: Abel Vesa <abel.vesa@linaro.org>
-Date: Sat, 09 Nov 2024 00:04:43 +0200
-Subject: [PATCH 2/3] arm64: dts: qcom: x1e80100: Add missing
- #address-cells/#size-cells to ADSP GPR nodes
+Date: Sat, 09 Nov 2024 00:04:44 +0200
+Subject: [PATCH 3/3] arm64: dts: qcom: x1e80100-pmics: Add missing
+ #address-cells/#size-cells to pmk8550_pon
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,7 +80,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241109-x1e80100-fix-address-size-cells-missing-warnings-v1-2-c1e173369657@linaro.org>
+Message-Id: <20241109-x1e80100-fix-address-size-cells-missing-warnings-v1-3-c1e173369657@linaro.org>
 References: <20241109-x1e80100-fix-address-size-cells-missing-warnings-v1-0-c1e173369657@linaro.org>
 In-Reply-To: <20241109-x1e80100-fix-address-size-cells-missing-warnings-v1-0-c1e173369657@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -93,20 +94,20 @@ Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
  Abel Vesa <abel.vesa@linaro.org>, stable+noautosel@kernel.org
 X-Mailer: b4 0.15-dev-dedf8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1489; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=Az9J2UP1mu0XRiDGxanJoUIHnlD5Edqm6sLePuQhlsk=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBnLosKnBa8xFqtyhLLtDN+doC2iJcThkHkGLB4X
- LsP6S44yveJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZy6LCgAKCRAbX0TJAJUV
- VoBAD/9wkrvhYlJ/zQiBbVEzmRj/lPsvVZkyhsoWO926ZW7iSX27GyaIbX1N8ZYjUYgDOAzahvA
- taTz81QSbi1/pR3WymEVDR9+/F/B6zQmXekIQmgk4qgP41kmJVE3UrVDYKRCjxwKeUbYZa0LZxK
- DlRT+ejuWH12MvK51JMXgbvKATPDkIdI6axiOdX1eCFH91SOEwWX+/Wk0BA1CSlosRl1JiLlNty
- OLinK8k/loQ45ycqHHPQZOgNLoKIs00aTaADcjuvXsKKXLMIoeAyxMTcxBjKCsU54VgPOLivUzH
- ZMDaPHh9hPPktN7twKdWqaVK6asv1BTFpOEJWKghygTDM3aLC587fZzp18OwNnRY+Y1QyHZB3d4
- 06GPqSr6qpxmm1mTNJypOhrhTMjYil2VbfzUdsaFOAfTtUTHeONKIMhFJD+CnpkUb2ehD6lijV0
- yK1BMrFSu9G3F2RHfTyPZZ94UAYvZs+VIWKBB0DX+3ug4+y+FpLh9Famg45w3ehJq/U45x6ZIfQ
- MDYaM54QPozcE0BGoR0r/Te0l3DRTWoR5JELujluGGAQVwpjsnxmi+JYQvWgIIs4drw5MJcdhEA
- DtHIOYcxmpXYvW8RvBTPgN4qxlLXW+64DXoh3Oew4sDvggEEF7gNpNkNAkURMtXI4LRNY0GVsI3
- ZBK7tRCr2b7dycw==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1212; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=6FfVkGoM9m7NA8q+wP0onySbK3VrJrkurSiyu5AGpkk=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBnLosMAycjy9sHfpqKAzouUCeKJONhm74eM6Je8
+ Nv1zDIWdmGJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZy6LDAAKCRAbX0TJAJUV
+ Vg6TD/45x3TVpXEwEjvmda4GKIFdK4JGFqqL4S9RtBBT/UpeshaE4ZGnMnDMDpsZrboby8esnVc
+ JorP0GNyqyH0r07QBTcPwDKyQ5O/ogRe83j/Z90SGEQPdLmHvakPpwsLYO0KtQ88kKNh6kjepSF
+ 9ghlXk09iAab3XoHwcSsg3VFMxAojwUkmcAbccUAxTSRWln0zXjWob6m61PmEme0IMPZrFXtbl/
+ 0++qQTGC4bmc7jJC7bapT/1lAFtAKQ0QruGoYW5RW90SYITT0pH3RdIhtVMcOqqcIToNTFQ9fng
+ Db9wvCO9If2ZKVNmfMNqvDhx4x3B7bNiOhuGJ67zCBuB0joM+6JYJCx0HO3CZYfG7hbUB7oT5ss
+ A/cWH1ewvAI1MzxsvvjD4jWHdq96eGpbZGsjrytfw1T0NP6Jz8nwFaWei+qX0H64kM4XR2hcy6a
+ r0ILlTu8ADr3OI8q8oWTIfu7r809kucDlAUsTzF34Kn5sWGdV6edsGYWkByPnMfFcWdKQRoCStG
+ Cb+ZwaNo+PMeXx0+Y61M44fM/cf6dFDzHYMc+eNJ+LgVmF5sujOU2J+QFUkF3k7z5qxP3bJiYzj
+ 9d0ZQzkdmqoU//73u0SsVs8hN7f7RsXpsGi/MkAlJNpElWpJXDMSLa9tC9pPKjg6o2vdy1Hc5C4
+ zN0Cagp766TNDjw==
 X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
  fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
@@ -114,38 +115,30 @@ The commit 4b28a0dec185 ("of: WARN on deprecated #address-cells/#size-cells
 handling") now forces the parent nodes to specify #adddress-cells
 and #size-cells, otherwise it will throw a warning.
 
-So add the #address-cells and #size-cells properties to the ADSP GPR nodes
-(q6apm and q6prm) to get rid of those warnings.
+So add the #address-cells and #size-cells properties to the pmk8550_pon node
+to get rid of those warnings.
 
 Cc: <stable+noautosel@kernel.org> # Depends on commit 4b28a0dec185
-Fixes: 99f63aea9149 ("arm64: dts: qcom: x1e80100: add ADSP GPR")
+Fixes: 2559e61e7ef4 ("arm64: dts: qcom: x1e80100-pmics: Add the missing PMICs")
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/x1e80100.dtsi | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-index c6b554bac616b9ea6a183e894d4e3d58516fbcd7..568f9a295e497533344ba47ed1e4ae7aa3d2ab16 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-@@ -6232,6 +6232,8 @@ q6apm: service@1 {
- 						#sound-dai-cells = <0>;
- 						qcom,protection-domain = "avs/audio",
- 									 "msm/adsp/audio_pd";
-+						#address-cells = <1>;
-+						#size-cells = <0>;
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi b/arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi
+index 5b54ee79f048e3208cbcd6f91e0cec073420fe63..5b9d67c340dc7a4550c9c7f16269542e400e4ee4 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi
+@@ -205,6 +205,9 @@ pmk8550_pon: pon@1300 {
+ 			reg = <0x1300>, <0x800>;
+ 			reg-names = "hlos", "pbs";
  
- 						q6apmbedai: bedais {
- 							compatible = "qcom,q6apm-lpass-dais";
-@@ -6250,6 +6252,8 @@ q6prm: service@2 {
- 						reg = <GPR_PRM_MODULE_IID>;
- 						qcom,protection-domain = "avs/audio",
- 									 "msm/adsp/audio_pd";
-+						#address-cells = <1>;
-+						#size-cells = <0>;
- 
- 						q6prmcc: clock-controller {
- 							compatible = "qcom,q6prm-lpass-clocks";
++			#address-cells = <1>;
++			#size-cells = <0>;
++
+ 			pon_pwrkey: pwrkey {
+ 				compatible = "qcom,pmk8350-pwrkey";
+ 				interrupts = <0x0 0x13 0x7 IRQ_TYPE_EDGE_BOTH>;
 
 -- 
 2.34.1
