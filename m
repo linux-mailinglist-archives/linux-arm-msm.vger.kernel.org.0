@@ -1,82 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-37332-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37333-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A7E129C1779
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2024 09:08:13 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 77A509C177F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2024 09:08:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 24C34B20F00
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2024 08:08:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3DB882837F6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2024 08:08:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8D7E1D3578;
-	Fri,  8 Nov 2024 08:08:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D7361D9A47;
+	Fri,  8 Nov 2024 08:08:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ct4C7n03"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Unj7k1IP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
+Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3C281D0E0E
-	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Nov 2024 08:08:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D15541DA31F
+	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Nov 2024 08:08:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731053282; cv=none; b=Shu5CJRLncW+qjT49k9d9au2HG0g493b70+7rQy3dKTEW6v8kIUjYAfiJRiKJA96l2Uwnlx3KZ4qzf0CYqvhNMIluccn3wJ01euIjdVGstWP9WWiVM2EySvx5yjbi8HFU+P8VE9XqSHjij1AgS5lXQutzqbENW8dJZQG4W7D8Cc=
+	t=1731053315; cv=none; b=a40kV7kh1qwwAKYD7hPj79NPXtNM5io7U3GrBxgsmtyLryhnKf35PbA4J0VcnjJPThdKfCNulID5c6VcZKtpMqJMLy4x0lrtkxq1nDZy05lueTsiwZq/QyNxnIS6EB/iEiSX+v1sW1VljVN58qPjCMnOrmKYkDLoCK0NGIVBGvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731053282; c=relaxed/simple;
-	bh=BxCAif6wBpfReu8TvZw3mVT33TIGWApsV+3A+vA2nTg=;
+	s=arc-20240116; t=1731053315; c=relaxed/simple;
+	bh=X564kijAujdsjjH0ORI4+g4gIz95ERPYBq8cJzyP8DY=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fpmtyHRcDuAQPdhLa/sPsCnNgXLR2P+tX9zSgnBxTHFBHjSeH65ypKG5/eRIwyXSbD8Q4Voi2tSBJRDdL9BUOlL+MCsFpMaEAhPc248Dn3crxpwQlBLUhA6FLontvIbQ+HrtJB3/zX9K4aKhiQOwsaUacfMSY57r152zOpolfLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Ct4C7n03; arc=none smtp.client-ip=209.85.208.174
+	 To:Cc:Content-Type; b=UeW+mdifw/HbTPwIxDO0tDHk4FsxVuF8nHMxbC3lxodh+JVjfTLdj6qY/LnrE6XuhjubFk3aaWPOwFJWApjhLCzQ5ud7y2MG+0Yttu2mIavsbA1YgAJgZ9wVJG0YAO0Am28pOB5UB0/RzfzgX7Uk+F7uHQ1uHKGJcP8RpTaZ0do=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Unj7k1IP; arc=none smtp.client-ip=209.85.208.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2fb51e00c05so27701351fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Nov 2024 00:08:00 -0800 (PST)
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2fb3ce15172so28278121fa.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Nov 2024 00:08:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731053279; x=1731658079; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1731053311; x=1731658111; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=BxCAif6wBpfReu8TvZw3mVT33TIGWApsV+3A+vA2nTg=;
-        b=Ct4C7n03xwW94PDgpvQkF+5YOyVeIkYaZwLrR8pRkli26DXB9U+Hy5l9Sd/oVyICIP
-         PyYN+L6zFhdKaybMwISi3RQ59YwTUX/cVHRaoA5Mbm5R7OSQ7N4OnmVViWdTYTUNazf9
-         GIO45C8LSdkO336imguOwIRxHnmxukTiBYUQaBG7llcF57HW44z6f8Ld46meaDcC7r9U
-         a4sJD7r7GCuKn5BtrEKiaAOkFadablpcIkIqAi95oxeVH2PzbYYYxW0TxFWsmK7Xa7Fm
-         gCPfw/ryTSqe/b5R9RL0gBft/gge+a3x7aCcpvSop8MBOT3aDmNwOZW6Gqk6e22uiM+Z
-         43vw==
+        bh=X564kijAujdsjjH0ORI4+g4gIz95ERPYBq8cJzyP8DY=;
+        b=Unj7k1IPA8USxudDC3cRW4Xobxipgr54vxfkjmjCO/kd7Z+TP2IW/K9qVD7kvMtchG
+         OKkloX6r1lS3mir5QonKdt2j0VwHqIikULg/3MzQph6VVeKBf0+Bvfb+VbEJ1SgZXluL
+         oE0mX2G+3fneKYH9aV9wLXSvdJ6JyPWDl2dj/JRudMOdszWXa1ol0m0+88LC/CsytsYg
+         A+a+kzWWGdIvKPtnMxi0P9SD8cUfbEavaPzYrERlLaKduEKicJz0nOtpQNM7EfYKH8Sd
+         3RAj0chKavOpve/jj8//3Hl89UYgmI4yyzs4HIGuCKHZDyH3QyFqMQzfoB4+DFGyiBUb
+         jeeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731053279; x=1731658079;
+        d=1e100.net; s=20230601; t=1731053311; x=1731658111;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=BxCAif6wBpfReu8TvZw3mVT33TIGWApsV+3A+vA2nTg=;
-        b=LKlKTS5lEEghbZTEWtxcNuNV1gdcOW+ByTDVMXHhmNjUbf3tj1ZNu+kvXCp7+3Z/MU
-         Lt61Jz5zWbPePZIx9YA28b/Uk8pPxmlyjw/+9hA52/Hvqp5x9j7NQXIlgpWKUkOCey1h
-         tMuD1cBHaVprdfk3vK4M6rr189zYH4kJDsbLRc0uIQ0DXklkpp3gQFdYTaabWP1RzdFC
-         4524Jq/FABupxhEVF5VKlXYiH2wwuvfYkvMr0MOY1Q4ij+U6w9bqHPtjqIb3InDHq48l
-         shGxDLAKdnEHWOX2+Y6CE5T7eV+1EB9uL5kh/P/pQm9up0sAd8QGdRdnrW86LFI5fxKo
-         JKDw==
-X-Forwarded-Encrypted: i=1; AJvYcCU+4LF88q1UEfB+1okIB585Euc5u6zyhqd17+1uxaSYgM37PTkPmZmBiQei0Ur/aLhKZX7LSvZCmjRxb7Sq@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxt5IeWAlFGeS6n2QVZZkB+h+VMrmSJvbayTRz9v8ElqnEd2bLy
-	WKpTu5/8/VdUZmdHOinTOJFs7Jz1V4O9kCsv7baHH9v6SHS6CpuwkUHzktlh1vuxVTZeq+LDcNX
-	QwbFLb8LxEaj8vnbTqSHFzZ9DdZCAJWz8I+QFXA==
-X-Google-Smtp-Source: AGHT+IECFYZgmqXq90uc6fU+GhsZFrNHgfgkpCoMfSI20MKSS84Aidx6qe2DptwPr7H2EP4ELmSvQSeK05aPSJkA+5k=
-X-Received: by 2002:a2e:a10e:0:b0:2fb:510c:7237 with SMTP id
- 38308e7fff4ca-2ff202c3c9bmr11587911fa.41.1731053278604; Fri, 08 Nov 2024
- 00:07:58 -0800 (PST)
+        bh=X564kijAujdsjjH0ORI4+g4gIz95ERPYBq8cJzyP8DY=;
+        b=M7yzQ0fMxBCJE4ZaQiPHegr5JV55OzMt0r5b3BUI6sG4GxxklZYOpK1C3mIHG+9JFE
+         8dHZlxohWbGWgZv+xBYGZuAJgOAW83cIqJYfZ+5GT5tn79KU5KdOpbATuRDIbieaKgve
+         C2AnLgs0ykbTn9SUfXj4vtVo3qI+G9h+VQVBqUNcwf2yNQbsAN3vjl8Ce7ujqC01VqxA
+         5SPAwc90+aOCjzkBDevV0J209T/EKkKb73S7XucFEWD3+neybTUo4KyZmj3NN3CKoZr1
+         Z+Hmwh6drBuntQUonDMmFJJoo19+bLYB2rTYw/YDivP2HsA80wVhqc3Zik+tIbjnUPu0
+         Yifw==
+X-Forwarded-Encrypted: i=1; AJvYcCXr40m0WbLdG25pXa61XUI1iZ042tPgn22dU24tph/8rljvsfYMJXksy10cx3v7/y267KhlYSuokizy/WVb@vger.kernel.org
+X-Gm-Message-State: AOJu0YyflTi7wFxIaKlhmJKW/0OB1mOyIQDG65DswH0VoiaUpjsiuAc3
+	B1w9bxe40hSngFgJeZVtuUAYEQPVli2gJm9aOZYDi0XGHLXP1HcZ6LCqhLgB5AzXBWpzLCtSMyp
+	69crx31Ddts5Z4m0fPlrPPYwDhIGSRfbBjrA+9g==
+X-Google-Smtp-Source: AGHT+IHDMtC5ejvi+6P/FwbMQP1yLzs4dvzuAfHzOLWut4QZAFsV0vqXGWBvtrbNy55PKvK+RsMl0V/8jbQgCQMUUQM=
+X-Received: by 2002:a2e:be22:0:b0:2f7:6062:a0a9 with SMTP id
+ 38308e7fff4ca-2ff20963c8dmr4983211fa.7.1731053310923; Fri, 08 Nov 2024
+ 00:08:30 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241031-msm8917-v2-0-8a075faa89b1@mainlining.org> <20241031-msm8917-v2-2-8a075faa89b1@mainlining.org>
-In-Reply-To: <20241031-msm8917-v2-2-8a075faa89b1@mainlining.org>
+References: <20241031-msm8917-v2-0-8a075faa89b1@mainlining.org> <20241031-msm8917-v2-3-8a075faa89b1@mainlining.org>
+In-Reply-To: <20241031-msm8917-v2-3-8a075faa89b1@mainlining.org>
 From: Linus Walleij <linus.walleij@linaro.org>
-Date: Fri, 8 Nov 2024 09:07:47 +0100
-Message-ID: <CACRpkdZJmetNUHhBOfoZuygEXW7VO0Go2bmngxciVeOoyzVaxA@mail.gmail.com>
-Subject: Re: [PATCH v2 02/15] pinctrl: qcom-pmic-gpio: add support for PM8937
+Date: Fri, 8 Nov 2024 09:08:20 +0100
+Message-ID: <CACRpkdaWEc8=5CdBMuGdfcSzneR+ODrVvyw8pOFv-6++_JUzqQ@mail.gmail.com>
+Subject: Re: [PATCH v2 03/15] dt-bindings: pinctrl: qcom,pmic-mpp: Document
+ PM8937 compatible
 To: =?UTF-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <barnabas.czeman@mainlining.org>
 Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
@@ -94,7 +95,7 @@ Content-Transfer-Encoding: quoted-printable
 On Thu, Oct 31, 2024 at 2:19=E2=80=AFAM Barnab=C3=A1s Cz=C3=A9m=C3=A1n
 <barnabas.czeman@mainlining.org> wrote:
 
-> PM8937 has 8 GPIO-s with holes on GPIO3, GPIO4 and GPIO6.
+> Document the Device Tree binding for PM8937 MPPs.
 >
 > Signed-off-by: Barnab=C3=A1s Cz=C3=A9m=C3=A1n <barnabas.czeman@mainlining=
 .org>
