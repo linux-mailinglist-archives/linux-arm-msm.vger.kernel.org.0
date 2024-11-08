@@ -1,181 +1,369 @@
-Return-Path: <linux-arm-msm+bounces-37338-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37339-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A51E19C1A12
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2024 11:13:09 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D927D9C1A56
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2024 11:23:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 362301F25F1A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2024 10:13:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8DC00283E29
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2024 10:23:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8AA391E1C07;
-	Fri,  8 Nov 2024 10:13:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3DBB61E25FE;
+	Fri,  8 Nov 2024 10:22:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="jRt8yXNt"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jNd4qUvU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02C621D3625;
-	Fri,  8 Nov 2024 10:13:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22AE51CC160
+	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Nov 2024 10:22:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731060785; cv=none; b=RfbQH+PqgqxBU4fPR1y84AKPwPVM3oF14o8JFYF7izIK9yeB0kc/3V1V0xiPQBiX8kxbIVYlvr2/n8BAM9KZea8bRH1LsFDYRrLhONcBuwDcV4qOZHm6er2AeKDu9297YOlY+37FTAQ3VTCoYIlcjvr5QujRaQ0cQYCrOUhgwT0=
+	t=1731061379; cv=none; b=KPfhbCQWjri/uq2em/z/Zt4zVjHQ1rUp3e7tTNUnA80GJQQvyWj1tYbfGTtJ7QIB9+heVq1L7i/kXyZJPIh/oNP1RyUbYS89D2iAIY8xJoHsvOynjlXoZBlBrmxr/BoAUDc3vy/jTeMrzk2tWB3rXiiciiVqIXRot5qJ+G5KtWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731060785; c=relaxed/simple;
-	bh=Er/tiXvYNotlGr/mneGDlszAar7ahjAVj3NcCM7/bH0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ceQcpyp49RACRM9iJ8fU9qQSCwmZF5ZOzvtwdUMVhR1WzLE8g+k6Hz4lezKPvuJVvosdXmXE5zj8QSoRYB0H37MbKNrHdfe1P2otvcC+RSY9PfYKmfpw8uoJny3Up3l/uMx5MHzQp4XEZ0TrQAw2gGB2s67rbRwtvVV7PlCye/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=jRt8yXNt; arc=none smtp.client-ip=198.175.65.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1731060784; x=1762596784;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=Er/tiXvYNotlGr/mneGDlszAar7ahjAVj3NcCM7/bH0=;
-  b=jRt8yXNtvWL1zFBoUr2JnOw3u5/uWMGs8yHgGo3/XDDuvr/pa4RWEFDH
-   befAvK6HqEMqXJcO3tiyuA6ZhRhNrOOPN+pTJfuXHeq8xWawdXWETH1ew
-   MdwDCEXzksLQUrcE5pbd8hGX5IcJ8fwiaRNtLVWohV14gHk/UdYkgUoSz
-   5BBlWCGnYJ/oTAbaAEVL9VHFB/iYw1Tum0u0EDmMX23eT1uB9lj6chlYt
-   J8BH+X4OAHqaJDYNZG2cc/W3wGo5duvqEqAHoi+q6Pbb9JZR++7uAeJZd
-   nj1oVnnJGN1pLvWrngcHuhIeVPOKS3u5Fuw6A/41H9IWi8V3xu91YdLGz
-   g==;
-X-CSE-ConnectionGUID: 3FgmCCXcQwGbYAximJwcNw==
-X-CSE-MsgGUID: evb36DKpRXmH0+fTiuixhQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="31107460"
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; 
-   d="scan'208";a="31107460"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
-  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Nov 2024 02:13:03 -0800
-X-CSE-ConnectionGUID: jUkMLQ6oRBObxq1OX6AHXA==
-X-CSE-MsgGUID: G7grHtHIRay2/KDuPft3zA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,137,1728975600"; 
-   d="scan'208";a="85629448"
-Received: from lkp-server01.sh.intel.com (HELO a48cf1aa22e8) ([10.239.97.150])
-  by fmviesa008.fm.intel.com with ESMTP; 08 Nov 2024 02:12:58 -0800
-Received: from kbuild by a48cf1aa22e8 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1t9Lz6-000rIQ-1U;
-	Fri, 08 Nov 2024 10:12:56 +0000
-Date: Fri, 8 Nov 2024 18:12:26 +0800
-From: kernel test robot <lkp@intel.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Paloma Arellano <quic_parellan@quicinc.com>
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Stephen Boyd <swboyd@chromium.org>, linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH 11/14] drm/msm/dp: move/inline audio related functions
-Message-ID: <202411081748.0PPL9MIj-lkp@intel.com>
-References: <20241108-fd-dp-audio-fixup-v1-11-40c8eeb60cf5@linaro.org>
+	s=arc-20240116; t=1731061379; c=relaxed/simple;
+	bh=2XSVJ7MRTDYMhaOEh1VDyoXnJKjt44IvmM+Bblei2CE=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=XUkpoknmAC7+sgN4CiSOCvHrCuNDpu/4sCjUW8H3t/BMZHiOttPsKLj3F6VvQ+M7mu9gh1VIjjfXV5SerespcSptBY6mG+EkXeRo2HNW1Setx15UUXGFPnIZPXNs635ShAxGoWKmUGw/RsYrOoTMkvyBbGoV7Szc29xm6e0gn58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jNd4qUvU; arc=none smtp.client-ip=209.85.221.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-37d4d1b48f3so1146556f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Nov 2024 02:22:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1731061375; x=1731666175; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=d5/7vgXiVWHft41t+5SnbWXBDVF//wXy8Ork/OVe6xM=;
+        b=jNd4qUvUWp9LPx7AgDqEn2YYEkCOq2LKnjPZJT3wihviHPkdxwMlaz3ov0KW7R0px/
+         r+93jCYp5XR8RcOtJl/5TWwte3bDZ1Fn01b5NBomqsZUtB8ZIuoTV15GYNOBolWKm5yJ
+         F8m55G9eNKkUi71cokU8UdpfhBLq5Yzua2zLrbAl2wLJMdVc6k7aLmdZBNntEfHz8Pjc
+         1f/v6vhF+afx+J1NvfDD4X26EaWa8kk7X50ZN/IreH+l8uSWOEKPPMOBPFCSX+9H5ZOn
+         uyywsXYu7VySfQL0vj+TI0bTMF1nJMFF7FNbS9OX8BbLKym6vjRdoyBzPKL+4SiDEDyh
+         fBaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731061375; x=1731666175;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=d5/7vgXiVWHft41t+5SnbWXBDVF//wXy8Ork/OVe6xM=;
+        b=dMSlRj4eA/C6BDW+yhAP8YMHavnKBwyCuWlEmpeFWpjZ4yFaJWQTx73Y8fTFS9w//s
+         XNDd8xcvmPZH9wsZsVTex6XnciHkDx19PMNUGcTrwu4nTjSmI5hZYNMaZpri2+vmebr2
+         uFD4ZTAA4owb8pD5jkthtxepdLYU5mKQDnQkutI7WmmFIMJljq4GvFoTx6WY/+IxT5VG
+         3tnGNXNSK9a56v0GSd3POOAyYi5g0MNrRptxZ2JHLE7jOWObQWFmmojPD5UUjY372pQk
+         0QzrRupQ1HvfTXTn3MPUasAExVmaL/TtM1GbtVzwSPudOex0pD7fXNVyUDQ9fKFRFk9L
+         eigQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXtkSvmEBVA4aVbUKgNXWFzlQvdKRUzK26oBJhra89hcRS0J8PEwHM27/5d5MnKo6/3yT99TK4A+1jOwXA4@vger.kernel.org
+X-Gm-Message-State: AOJu0YyhTA5SkXQeJzNFRjfUGiSv6260duSaxn5SvP1Ij5q7sOH1OR9I
+	CN9toVChxPVtKpReHQ8yHWg0Lkzk8Jc+86EW7R4fQB7cX33EwJg3hZBTz4dB+II=
+X-Google-Smtp-Source: AGHT+IFobP8XLxwPTAvv6JZbrKXqmGWSnKxS/agpTk5Grqdj3cevU1nFc4cgLboS4JThUKNPgo0nfQ==
+X-Received: by 2002:a5d:64e5:0:b0:37d:41cd:ba4e with SMTP id ffacd0b85a97d-381f1852777mr1996931f8f.48.1731061375336;
+        Fri, 08 Nov 2024 02:22:55 -0800 (PST)
+Received: from [172.16.23.252] ([154.14.63.34])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381ed99681csm4253706f8f.49.2024.11.08.02.22.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 08 Nov 2024 02:22:54 -0800 (PST)
+Message-ID: <dffb4a49-9295-4ce3-af96-802f10c600e1@linaro.org>
+Date: Fri, 8 Nov 2024 11:22:52 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241108-fd-dp-audio-fixup-v1-11-40c8eeb60cf5@linaro.org>
+User-Agent: Mozilla Thunderbird
+From: neil.armstrong@linaro.org
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v3 4/4] PCI: qcom: Add Qualcomm SA8255p based PCIe root
+ complex functionality
+To: Mayank Rana <quic_mrana@quicinc.com>, jingoohan1@gmail.com,
+ manivannan.sadhasivam@linaro.org, will@kernel.org, lpieralisi@kernel.org,
+ kw@linux.com, robh@kernel.org, bhelgaas@google.com, krzk@kernel.org
+Cc: linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, quic_krichai@quicinc.com
+References: <20241106221341.2218416-1-quic_mrana@quicinc.com>
+ <20241106221341.2218416-5-quic_mrana@quicinc.com>
+ <a1f03a33-22b2-4023-8185-d15abc72bc8a@linaro.org>
+ <7cfc0657-e8f4-45a8-95e2-668476ffce17@quicinc.com>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <7cfc0657-e8f4-45a8-95e2-668476ffce17@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Hi Dmitry,
+On 07/11/2024 18:45, Mayank Rana wrote:
+> 
+> 
+> On 11/7/2024 12:45 AM, neil.armstrong@linaro.org wrote:
+>> Hi,
+>>
+>> On 06/11/2024 23:13, Mayank Rana wrote:
+>>> On SA8255p ride platform, PCIe root complex is firmware managed as well
+>>> configured into ECAM compliant mode. This change adds functionality to
+>>> enable resource management (system resource as well PCIe controller and
+>>> PHY configuration) through firmware, and enumerating ECAM compliant root
+>>> complex.
+>>>
+>>> Signed-off-by: Mayank Rana <quic_mrana@quicinc.com>
+>>> ---
+>>>   drivers/pci/controller/dwc/Kconfig     |   1 +
+>>>   drivers/pci/controller/dwc/pcie-qcom.c | 116 +++++++++++++++++++++++--
+>>>   2 files changed, 108 insertions(+), 9 deletions(-)
+>>>
+>>> diff --git a/drivers/pci/controller/dwc/Kconfig b/drivers/pci/controller/dwc/Kconfig
+>>> index b6d6778b0698..0fe76bd39d69 100644
+>>> --- a/drivers/pci/controller/dwc/Kconfig
+>>> +++ b/drivers/pci/controller/dwc/Kconfig
+>>> @@ -275,6 +275,7 @@ config PCIE_QCOM
+>>>       select PCIE_DW_HOST
+>>>       select CRC8
+>>>       select PCIE_QCOM_COMMON
+>>> +    select PCI_HOST_COMMON
+>>>       help
+>>>         Say Y here to enable PCIe controller support on Qualcomm SoCs. The
+>>>         PCIe controller uses the DesignWare core plus Qualcomm-specific
+>>> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+>>> index ef44a82be058..2cb74f902baf 100644
+>>> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+>>> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+>>> @@ -21,7 +21,9 @@
+>>>   #include <linux/limits.h>
+>>>   #include <linux/init.h>
+>>>   #include <linux/of.h>
+>>> +#include <linux/of_pci.h>
+>>>   #include <linux/pci.h>
+>>> +#include <linux/pci-ecam.h>
+>>>   #include <linux/pm_opp.h>
+>>>   #include <linux/pm_runtime.h>
+>>>   #include <linux/platform_device.h>
+>>> @@ -254,10 +256,12 @@ struct qcom_pcie_ops {
+>>>     * @ops: qcom PCIe ops structure
+>>>     * @override_no_snoop: Override NO_SNOOP attribute in TLP to enable cache
+>>>     * snooping
+>>> +  * @firmware_managed: Set if PCIe root complex is firmware managed
+>>>     */
+>>>   struct qcom_pcie_cfg {
+>>>       const struct qcom_pcie_ops *ops;
+>>>       bool override_no_snoop;
+>>> +    bool firmware_managed;
+>>>       bool no_l0s;
+>>>   };
+>>> @@ -1415,6 +1419,10 @@ static const struct qcom_pcie_cfg cfg_sc8280xp = {
+>>>       .no_l0s = true,
+>>>   };
+>>> +static const struct qcom_pcie_cfg cfg_fw_managed = {
+>>> +    .firmware_managed = true,
+>>> +};
+>>> +
+>>>   static const struct dw_pcie_ops dw_pcie_ops = {
+>>>       .link_up = qcom_pcie_link_up,
+>>>       .start_link = qcom_pcie_start_link,
+>>> @@ -1566,6 +1574,51 @@ static irqreturn_t qcom_pcie_global_irq_thread(int irq, void *data)
+>>>       return IRQ_HANDLED;
+>>>   }
+>>> +static void qcom_pci_free_msi(void *ptr)
+>>> +{
+>>> +    struct dw_pcie_rp *pp = (struct dw_pcie_rp *)ptr;
+>>> +
+>>> +    if (pp && pp->has_msi_ctrl)
+>>> +        dw_pcie_free_msi(pp);
+>>> +}
+>>> +
+>>> +static int qcom_pcie_ecam_host_init(struct pci_config_window *cfg)
+>>> +{
+>>> +    struct device *dev = cfg->parent;
+>>> +    struct dw_pcie_rp *pp;
+>>> +    struct dw_pcie *pci;
+>>> +    int ret;
+>>> +
+>>> +    pci = devm_kzalloc(dev, sizeof(*pci), GFP_KERNEL);
+>>> +    if (!pci)
+>>> +        return -ENOMEM;
+>>> +
+>>> +    pci->dev = dev;
+>>> +    pp = &pci->pp;
+>>> +    pci->dbi_base = cfg->win;
+>>> +    pp->num_vectors = MSI_DEF_NUM_VECTORS;
+>>> +
+>>> +    ret = dw_pcie_msi_host_init(pp);
+>>> +    if (ret)
+>>> +        return ret;
+>>> +
+>>> +    pp->has_msi_ctrl = true;
+>>> +    dw_pcie_msi_init(pp);
+>>> +
+>>> +    ret = devm_add_action_or_reset(dev, qcom_pci_free_msi, pp);
+>>> +    return ret;
+>>> +}
+>>> +
+>>> +/* ECAM ops */
+>>> +const struct pci_ecam_ops pci_qcom_ecam_ops = {
+>>> +    .init        = qcom_pcie_ecam_host_init,
+>>> +    .pci_ops    = {
+>>> +        .map_bus    = pci_ecam_map_bus,
+>>> +        .read        = pci_generic_config_read,
+>>> +        .write        = pci_generic_config_write,
+>>> +    }
+>>> +};
+>>> +
+>>>   static int qcom_pcie_probe(struct platform_device *pdev)
+>>>   {
+>>>       const struct qcom_pcie_cfg *pcie_cfg;
+>>> @@ -1580,11 +1633,52 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>>>       char *name;
+>>>       pcie_cfg = of_device_get_match_data(dev);
+>>> -    if (!pcie_cfg || !pcie_cfg->ops) {
+>>> -        dev_err(dev, "Invalid platform data\n");
+>>> +    if (!pcie_cfg) {
+>>> +        dev_err(dev, "No platform data\n");
+>>> +        return -EINVAL;
+>>> +    }
+>>> +
+>>> +    if (!pcie_cfg->firmware_managed && !pcie_cfg->ops) {
+>>> +        dev_err(dev, "No platform ops\n");
+>>>           return -EINVAL;
+>>>       }
+>>> +    pm_runtime_enable(dev);
+>>> +    ret = pm_runtime_get_sync(dev);
+>>> +    if (ret < 0)
+>>> +        goto err_pm_runtime_put;
+>>> +
+>>> +    if (pcie_cfg->firmware_managed) {
+>>> +        struct pci_host_bridge *bridge;
+>>> +        struct pci_config_window *cfg;
+>>> +
+>>> +        bridge = devm_pci_alloc_host_bridge(dev, 0);
+>>> +        if (!bridge) {
+>>> +            ret = -ENOMEM;
+>>> +            goto err_pm_runtime_put;
+>>> +        }
+>>> +
+>>> +        of_pci_check_probe_only();
+>>> +        /* Parse and map our Configuration Space windows */
+>>> +        cfg = gen_pci_init(dev, bridge, &pci_qcom_ecam_ops);
+>>> +        if (IS_ERR(cfg)) {
+>>> +            ret = PTR_ERR(cfg);
+>>> +            goto err_pm_runtime_put;
+>>> +        }
+>>> +
+>>> +        bridge->sysdata = cfg;
+>>> +        bridge->ops = (struct pci_ops *)&pci_qcom_ecam_ops.pci_ops;
+>>> +        bridge->msi_domain = true;
+>>> +
+>>> +        ret = pci_host_probe(bridge);
+>>> +        if (ret) {
+>>> +            dev_err(dev, "pci_host_probe() failed:%d\n", ret);
+>>> +            goto err_pm_runtime_put;
+>>> +        }
+>>> +
+>>> +        return ret;
+>>> +    }
+>>> +
+>>>       pcie = devm_kzalloc(dev, sizeof(*pcie), GFP_KERNEL);
+>>>       if (!pcie)
+>>>           return -ENOMEM;
+>>> @@ -1593,11 +1687,6 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>>>       if (!pci)
+>>>           return -ENOMEM;
+>>> -    pm_runtime_enable(dev);
+>>> -    ret = pm_runtime_get_sync(dev);
+>>> -    if (ret < 0)
+>>> -        goto err_pm_runtime_put;
+>>> -
+>>>       pci->dev = dev;
+>>>       pci->ops = &dw_pcie_ops;
+>>>       pp = &pci->pp;
+>>> @@ -1739,9 +1828,13 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>>>   static int qcom_pcie_suspend_noirq(struct device *dev)
+>>>   {
+>>> -    struct qcom_pcie *pcie = dev_get_drvdata(dev);
+>>> +    struct qcom_pcie *pcie;
+>>>       int ret = 0;
+>>> +    if (of_device_is_compatible(dev->of_node, "qcom,pcie-sa8255p"))
+>>
+>> Can't you use if (pcie_cfg->firmware_managed) here instead ?
+> yes, although with firmware managed mode, struct qcom_pcie *pcie is not allocated, and just
+> to get access to pcie_cfg for this check, I took this approach. I am thiking to do allocating struct qcom_pcie *pcie and using it in future if we need more other related functionality which needs usage of this structure for functionality like global interrupt etc.
+> 
+> Although if you still prefer to allocate struct qcom_pcie based memory to access pcie_cfg, then I can consider to update in next patchset. Please suggest.
 
-kernel test robot noticed the following build warnings:
+I understand, but running of_device_is_compatible() in runtime PM is not something we should do,
+so either allocate pcie_cfg, or add a firmware_managed bool to qcom_pcie copied from pcie_cfg,
+or move runtime pm callbacks in qcom_pcie_ops and don't declare any in cfg_fw_managed->ops.
 
-[auto build test WARNING on 74741a050b79d31d8d2eeee12c77736596d0a6b2]
+I think the latter would be more scalable so we could add runtime pm variant handling
+for each IP versions. But it may be quite quite useless for now.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Dmitry-Baryshkov/drm-msm-dp-fix-msm_dp_utils_pack_sdp_header-interface/20241108-082302
-base:   74741a050b79d31d8d2eeee12c77736596d0a6b2
-patch link:    https://lore.kernel.org/r/20241108-fd-dp-audio-fixup-v1-11-40c8eeb60cf5%40linaro.org
-patch subject: [PATCH 11/14] drm/msm/dp: move/inline audio related functions
-config: x86_64-buildonly-randconfig-002-20241108 (https://download.01.org/0day-ci/archive/20241108/202411081748.0PPL9MIj-lkp@intel.com/config)
-compiler: clang version 19.1.3 (https://github.com/llvm/llvm-project ab51eccf88f5321e7c60591c5546b254b6afab99)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20241108/202411081748.0PPL9MIj-lkp@intel.com/reproduce)
+I'll leave Mani comment on that.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202411081748.0PPL9MIj-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
-   In file included from drivers/gpu/drm/msm/dp/dp_audio.c:11:
-   In file included from include/drm/display/drm_dp_helper.h:27:
-   In file included from include/linux/i2c.h:19:
-   In file included from include/linux/regulator/consumer.h:35:
-   In file included from include/linux/suspend.h:5:
-   In file included from include/linux/swap.h:9:
-   In file included from include/linux/memcontrol.h:21:
-   In file included from include/linux/mm.h:2223:
-   include/linux/vmstat.h:518:36: warning: arithmetic between different enumeration types ('enum node_stat_item' and 'enum lru_list') [-Wenum-enum-conversion]
-     518 |         return node_stat_name(NR_LRU_BASE + lru) + 3; // skip "nr_"
-         |                               ~~~~~~~~~~~ ^ ~~~
->> drivers/gpu/drm/msm/dp/dp_audio.c:213:5: warning: variable 'safe_to_exit_level' is uninitialized when used here [-Wuninitialized]
-     213 |                                 safe_to_exit_level);
-         |                                 ^~~~~~~~~~~~~~~~~~
-   include/drm/drm_print.h:636:59: note: expanded from macro 'drm_dbg_dp'
-     636 |         drm_dev_dbg((drm) ? (drm)->dev : NULL, DRM_UT_DP, fmt, ##__VA_ARGS__)
-         |                                                                  ^~~~~~~~~~~
-   include/drm/drm_print.h:540:39: note: expanded from macro 'drm_dev_dbg'
-     540 |         __drm_dev_dbg(NULL, dev, cat, fmt, ##__VA_ARGS__)
-         |                                              ^~~~~~~~~~~
-   drivers/gpu/drm/msm/dp/dp_audio.c:198:24: note: initialize the variable 'safe_to_exit_level' to silence this warning
-     198 |         u32 safe_to_exit_level, mainlink_levels;
-         |                               ^
-         |                                = 0
-   2 warnings generated.
+Neil
 
 
-vim +/safe_to_exit_level +213 drivers/gpu/drm/msm/dp/dp_audio.c
+>>> +        return 0;
+>>> +
+>>> +    pcie = dev_get_drvdata(dev);
+>>>       /*
+>>>        * Set minimum bandwidth required to keep data path functional during
+>>>        * suspend.
+>>> @@ -1795,9 +1888,13 @@ static int qcom_pcie_suspend_noirq(struct device *dev)
+>>>   static int qcom_pcie_resume_noirq(struct device *dev)
+>>>   {
+>>> -    struct qcom_pcie *pcie = dev_get_drvdata(dev);
+>>> +    struct qcom_pcie *pcie;
+>>>       int ret;
+>>> +    if (of_device_is_compatible(dev->of_node, "qcom,pcie-sa8255p"))
+>>
+>> Ditto
+>>
+>>> +        return  0;
+>>> +
+>>> +    pcie = dev_get_drvdata(dev);
+>>>       if (pm_suspend_target_state != PM_SUSPEND_MEM) {
+>>>           ret = icc_enable(pcie->icc_cpu);
+>>>           if (ret) {
+>>> @@ -1830,6 +1927,7 @@ static const struct of_device_id qcom_pcie_match[] = {
+>>>       { .compatible = "qcom,pcie-ipq8074-gen3", .data = &cfg_2_9_0 },
+>>>       { .compatible = "qcom,pcie-msm8996", .data = &cfg_2_3_2 },
+>>>       { .compatible = "qcom,pcie-qcs404", .data = &cfg_2_4_0 },
+>>> +    { .compatible = "qcom,pcie-sa8255p", .data = &cfg_fw_managed },
+>>>       { .compatible = "qcom,pcie-sa8540p", .data = &cfg_sc8280xp },
+>>>       { .compatible = "qcom,pcie-sa8775p", .data = &cfg_1_34_0},
+>>>       { .compatible = "qcom,pcie-sc7280", .data = &cfg_1_9_0 },
+>>
+>> Thanks,
+>> Neil
+> 
+> Regards,
+> Mayank
 
-d13e36d7d2227e Abhinav Kumar    2020-09-12  195  
-fb7d509b1710d1 Dmitry Baryshkov 2024-10-29  196  static void msm_dp_audio_safe_to_exit_level(struct msm_dp_audio_private *audio)
-d13e36d7d2227e Abhinav Kumar    2020-09-12  197  {
-568837beeb38ef Dmitry Baryshkov 2024-11-08  198  	u32 safe_to_exit_level, mainlink_levels;
-d13e36d7d2227e Abhinav Kumar    2020-09-12  199  
-fb7d509b1710d1 Dmitry Baryshkov 2024-10-29  200  	switch (audio->msm_dp_audio.lane_count) {
-d13e36d7d2227e Abhinav Kumar    2020-09-12  201  	case 1:
-d13e36d7d2227e Abhinav Kumar    2020-09-12  202  		safe_to_exit_level = 14;
-d13e36d7d2227e Abhinav Kumar    2020-09-12  203  		break;
-d13e36d7d2227e Abhinav Kumar    2020-09-12  204  	case 2:
-d13e36d7d2227e Abhinav Kumar    2020-09-12  205  		safe_to_exit_level = 8;
-d13e36d7d2227e Abhinav Kumar    2020-09-12  206  		break;
-d13e36d7d2227e Abhinav Kumar    2020-09-12  207  	case 4:
-d13e36d7d2227e Abhinav Kumar    2020-09-12  208  		safe_to_exit_level = 5;
-d13e36d7d2227e Abhinav Kumar    2020-09-12  209  		break;
-d13e36d7d2227e Abhinav Kumar    2020-09-12  210  	default:
-202aceac8bb3ae Kuogee Hsieh     2022-02-17  211  		drm_dbg_dp(audio->drm_dev,
-202aceac8bb3ae Kuogee Hsieh     2022-02-17  212  				"setting the default safe_to_exit_level = %u\n",
-d13e36d7d2227e Abhinav Kumar    2020-09-12 @213  				safe_to_exit_level);
-d13e36d7d2227e Abhinav Kumar    2020-09-12  214  		safe_to_exit_level = 14;
-d13e36d7d2227e Abhinav Kumar    2020-09-12  215  		break;
-d13e36d7d2227e Abhinav Kumar    2020-09-12  216  	}
-d13e36d7d2227e Abhinav Kumar    2020-09-12  217  
-568837beeb38ef Dmitry Baryshkov 2024-11-08  218  	mainlink_levels = msm_dp_read_link(audio->catalog, REG_DP_MAINLINK_LEVELS);
-568837beeb38ef Dmitry Baryshkov 2024-11-08  219  	mainlink_levels &= 0xFE0;
-568837beeb38ef Dmitry Baryshkov 2024-11-08  220  	mainlink_levels |= safe_to_exit_level;
-568837beeb38ef Dmitry Baryshkov 2024-11-08  221  
-568837beeb38ef Dmitry Baryshkov 2024-11-08  222  	drm_dbg_dp(audio->drm_dev,
-568837beeb38ef Dmitry Baryshkov 2024-11-08  223  		   "mainlink_level = 0x%x, safe_to_exit_level = 0x%x\n",
-568837beeb38ef Dmitry Baryshkov 2024-11-08  224  		   mainlink_levels, safe_to_exit_level);
-568837beeb38ef Dmitry Baryshkov 2024-11-08  225  
-568837beeb38ef Dmitry Baryshkov 2024-11-08  226  	msm_dp_write_link(audio->catalog, REG_DP_MAINLINK_LEVELS, mainlink_levels);
-d13e36d7d2227e Abhinav Kumar    2020-09-12  227  }
-d13e36d7d2227e Abhinav Kumar    2020-09-12  228  
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
 
