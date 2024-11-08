@@ -1,111 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-37335-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37336-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 246FD9C18AF
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2024 10:03:42 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E10089C1A03
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2024 11:10:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DE368282ECD
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2024 09:03:40 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 92A7C1F25F7E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2024 10:10:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42DFF1CFEC0;
-	Fri,  8 Nov 2024 09:03:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D8EE1E2618;
+	Fri,  8 Nov 2024 10:10:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SVT1cdzd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IEusAy3P"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78E551D1F4B
-	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Nov 2024 09:03:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4902E13A27D;
+	Fri,  8 Nov 2024 10:10:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731056595; cv=none; b=ntH2mW8F2lM8mkz3DTCrHzIZw2Ykaqc0NBq8w2lICaEIFAm55dOYMEwFnX8WBloHPiKm6Z2wXmVZehaij4CcGBNjg7ufoIIUSnEYYZsXODUaQlDR57aIkixeXnjntOXzBH2bACBKSSKbbozDSwgmi65ZkGYleDujQXFR9UiiRhA=
+	t=1731060601; cv=none; b=BhMQa+Xr2P5kPWXLCrUWW01IiXbPMsiePDoRPz2CjIlcnOxom2ZjXyJrJ2lq/ilei4gdPFXx3D+ImwP7/SlmSnrUiOhbgvK9kfnCi08kWfPRZGk3h3flf2etT0fV+njkQgWPX2tK3iM8O92VXo0RFuTlCLzr3Boq2Cm+oXrVDaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731056595; c=relaxed/simple;
-	bh=mM1q+PpNsdlYYSy0+MS7uMGw3FOxO3A/2cgbrpd+lLQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WX8mCeiFBGFy9SerpfSjd3r7IP9bxEhLvxQSCqJDghPtzWZQEEdjwKIUhBxrOkBegooy5WduWBjy6hQyHz6LZZBxGeotDXi85Nyzk8xRbcvBzvJA9nKYBpDdTeuOgFDj/z3WFVDMPfN6gh1U9X4dzOoMOBD+5rKN5IM4szRHRHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=SVT1cdzd; arc=none smtp.client-ip=209.85.208.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2fb5014e2daso17608561fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Nov 2024 01:03:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731056592; x=1731661392; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mM1q+PpNsdlYYSy0+MS7uMGw3FOxO3A/2cgbrpd+lLQ=;
-        b=SVT1cdzdHhk8J4vvzGfl0QSWqf9+mWHG3SdlfAcDe9PjrxutdF5yiF8H95Z1PFjvVR
-         GTmsbsD0XnFwCGEKTzto5xvS2OxItki3d1o1cm8eUr+gZLdGA+sAFnuHWk3w8sbcNC+3
-         b9wLr0OBz1fgjWSD53mNY6LbkFSyahQAcf4Z4qO63FdHY+L+7DHZMtDLrMbnQ+94DPGK
-         CAQYHFb5eiloltk+gXe+2L3cxVcYB1LOHMX2k3f+acxunE1gpqKlW7is/68uX04CrIFU
-         fWwYS5kjAFp6Ts3Q1F+ya1tUp4jTozE573WTZiPx1j/fvRj2+FnTUFy5htVNjJjBSVrq
-         Y+1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731056592; x=1731661392;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mM1q+PpNsdlYYSy0+MS7uMGw3FOxO3A/2cgbrpd+lLQ=;
-        b=kchZd3OfmiRiix0iM9VnY3iYIhjnCIjvyhya6Qq7WwNIuRh5uxqZhsSjAhjAOzuALl
-         BXReES40s5u0GSBLhIu9HJsFZqKI2/W7DM3lTtu/t71vLCiUV/ShZljnTAZPfjWnuGr9
-         HuEK33NNBcnOwbClVrkDSTKcSKJ+6NSrIRHy4uDAzESpajVvBR2LK82cT5WzYTfWwoZg
-         YQ//wxyqjvTjGrDcWcGXBnBdU694g2mBLYz3z3Ldw3NgNZ7FN0go7WcpIfjVpUg1Xrk+
-         FYGkhOGSerOzJ/S5o7KgxH61u0gWKjtbcG7Usf/L6oudMwJy3GJCId4TLFbIBF33IPBV
-         tJmw==
-X-Forwarded-Encrypted: i=1; AJvYcCXNt/cEqQuOr+w/lwERTtUMgGdiqn0mBuUalMfe1AxRMLuRUrXdGQxIaanZx/NSftEZYcm8jgbtvIuM7DIz@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy4qcqj0mi73U9WDMT2o7fm/eH9C6185fkPrZBbYOX6ZxSit0mS
-	BzZChIvvu0x1DLFFW6PIFaDbZDneZCtKPlxBONcHUbsuz+lNC3W+JKzb1pqN1peyEk/voI3vMZ7
-	tyHwzGfPhwN2a2+GRquT4ZdtKBP/FB7C/hYe1LA==
-X-Google-Smtp-Source: AGHT+IE8znKU2mORtpqCkmsGs3P+cyt3qFPqf5rFKSs3v09PAE6qN06MrjzRnmT+Va62FCJoM1OHaIoEnk1727lsx7Y=
-X-Received: by 2002:a05:651c:554:b0:2fb:4ca9:8f4 with SMTP id
- 38308e7fff4ca-2ff20209f08mr9538661fa.23.1731056591608; Fri, 08 Nov 2024
- 01:03:11 -0800 (PST)
+	s=arc-20240116; t=1731060601; c=relaxed/simple;
+	bh=GcaTVnuhZPHI8Rduj8Qe+ffknyFZam6gp7wslPFdY2I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZiK5AFunfMQkrvuE2yJHdr/cTXkQnXHQzPCiI4R5r40Un1GgeIgyczuKRCfHk4wIwguRYB+zTY5CEzsYrH/NuwhetkZKD8K8bjQJ5vY5U1n0pdQzX4NHuV8zlkrK57EBGS2d0fQPGYbmTm7wDMp2VQRvMhc3IaboArI6KiAKIE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IEusAy3P; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5132C4CECD;
+	Fri,  8 Nov 2024 10:10:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1731060600;
+	bh=GcaTVnuhZPHI8Rduj8Qe+ffknyFZam6gp7wslPFdY2I=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=IEusAy3PJK3H/26X6rm4R9BqsxpVKaCxmuXEpycNAeCqAS+9ELigYuuAQSwt3ZImt
+	 O6jdqBMbbZIgj/IRuETaARd2OP/bBkgRsswTIJm0GtGyc5TKLvRSHuHJmEM2gNTs3O
+	 RMuzmFRbmoyROUHrYN7PmFbgcKSZVCM4pDoBq7JcqCyPUWUi2qkEzK9YrYHbFmfqyL
+	 yNlOMaSl1se3fpiCtE4x1/ONpNveXcsHwnUfebc6Cb7/qjxOSeHf++PyOfX011C9ZA
+	 d/cnUIv8NmCCPrfuJpYW7aMX9T+N4190GhfKybvq56LDWA9U4zeLAj1e19XMhyEZDH
+	 I1yBKQn5P2DzQ==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1t9LwI-000000007VS-0qHO;
+	Fri, 08 Nov 2024 11:10:02 +0100
+Date: Fri, 8 Nov 2024 11:10:02 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Chris Lew <quic_clew@quicinc.com>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+	Qiang Yu <quic_qianyu@quicinc.com>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+	Konrad Dybcio <konradybcio@kernel.org>, mhi@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: qrtr/mhi: NULL-deref with in-kernel pd-mapper
+Message-ID: <Zy3jeixo2uTooRGo@hovoldconsulting.com>
+References: <ZyTtVdkCCES0lkl4@hovoldconsulting.com>
+ <da2bc665-5010-4d92-b9ac-7c442859cd10@quicinc.com>
+ <ZymoMlSCQQScpRIZ@hovoldconsulting.com>
+ <730a6e17-04f5-41b5-a0d8-7220b8c59b58@quicinc.com>
+ <Zyzoh0zv1Z7LDfjW@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241107-msm8917-v3-0-6ddc5acd978b@mainlining.org>
-In-Reply-To: <20241107-msm8917-v3-0-6ddc5acd978b@mainlining.org>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Fri, 8 Nov 2024 10:03:00 +0100
-Message-ID: <CACRpkdamugexe6y24Tk2fDYPP_t7QLynibdGQrUMFMwF4y90cw@mail.gmail.com>
-Subject: Re: [PATCH v3 00/14] Add MSM8917/PM8937/Redmi 5A
-To: =?UTF-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <barnabas.czeman@mainlining.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Lee Jones <lee@kernel.org>, 
-	Amit Kucheria <amitk@kernel.org>, Thara Gopinath <thara.gopinath@gmail.com>, 
-	"Rafael J. Wysocki" <rafael@kernel.org>, Daniel Lezcano <daniel.lezcano@linaro.org>, 
-	Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>, 
-	Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, 
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, linux-arm-msm@vger.kernel.org, 
-	linux-gpio@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, iommu@lists.linux.dev, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Dang Huynh <danct12@riseup.net>, 
-	=?UTF-8?Q?Otto_Pfl=C3=BCger?= <otto.pflueger@abscue.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Zyzoh0zv1Z7LDfjW@hovoldconsulting.com>
 
-On Thu, Nov 7, 2024 at 6:02=E2=80=AFPM Barnab=C3=A1s Cz=C3=A9m=C3=A1n
-<barnabas.czeman@mainlining.org> wrote:
+On Thu, Nov 07, 2024 at 05:19:19PM +0100, Johan Hovold wrote:
+> On Tue, Nov 05, 2024 at 10:26:40AM -0800, Chris Lew wrote:
+> > On 11/4/2024 9:08 PM, Johan Hovold wrote:
 
-> This patch series add support for MSM8917 soc with PM8937 and
-> Xiaomi Redmi 5A (riva).
->
-> Signed-off-by: Barnab=C3=A1s Cz=C3=A9m=C3=A1n <barnabas.czeman@mainlining=
-.org>
+> > > I naively tried adding a sleep after registering the endpoint, but that
+> > > is at least not sufficient to trigger the NULL-deref.
 
-I merged patch 1-4 from the v2 series, don't think the have any differences
-in v3.
+> No, neither tqftpserv or diag-router are used here, but after digging
+> through the code it seems my hunch about this being related to the
+> in-kernel pd-mapper was correct.
+> 
+> The qrtr worker, qrtr_ns_worker(), is called when the in-kernel
+> pd-mapper adds the server, and processing the QRTR_TYPE_NEW_SERVER
+> command eventually ends up in mhi_gen_tre() for the modem:
+> 
+> [    9.026694] qcom_pdm_start - adding server
+> [    9.034684] ctrl_cmd_new_server - service = 0x40, instance = 0x101, node_id = 1, port = 0
+> [    9.042155] mhi-pci-generic 0005:01:00.0: mhi_gen_tre - buf_info = ffff800080d4d038, offset_of(buf_info->used) = 34
 
-Yours,
-Linus Walleij
+> And I can indeed imagine that leading to the NULL deref in case the
+> endpoint is registered before being fully set up.
+
+I've been able to reproduce the issue twice now by instrumenting the
+code to increase the race window. Specifically, I added a sleep in
+mhi_init_chan_ctxt() after allocating the ring buffers but before
+initialising the wp pointers. And when the in-kernel pd-mapper is
+started in that window, we hit the NULL-deref:
+
+        [    8.593582] mhi-pci-generic 0005:01:00.0: mhi_init_chan_ctxt - ring allocated (IPCR:20), buf_ring->base = ffff800080d55000
+        [    8.598902] mhi_net mhi0_IP_SW0: mhi_prepare_channel - channel started (46), dir = 1
+        [    8.612888] mhi_net mhi0_IP_SW0: mhi_prepare_channel - channel started (47), dir = 2
+        [    8.614767] qcom_pdm_start - adding server
+        [    8.615302] ctrl_cmd_new_server - service = 0x40, instance = 0x101, node_id = 1, port = 0
+        [    8.615388] mhi-pci-generic 0005:01:00.0: mhi_gen_tre - buf_info = 0000000000000000 (IPCR:20)
+        [    8.615402] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000034
+        ...
+        [    8.615541] Call trace:
+        [    8.615542]  mhi_gen_tre+0x68/0x248 [mhi]
+        [    8.615544]  mhi_queue+0x74/0x194 [mhi]
+        [    8.615546]  mhi_queue_skb+0x5c/0x8c [mhi]
+        [    8.615549]  qcom_mhi_qrtr_send+0x6c/0x160 [qrtr_mhi]
+        [    8.615551]  qrtr_node_enqueue+0xd0/0x4a0 [qrtr]
+        [    8.615553]  qrtr_bcast_enqueue+0x78/0xe8 [qrtr]
+        [    8.615554]  qrtr_sendmsg+0x15c/0x33c [qrtr]
+        [    8.615555]  sock_sendmsg+0xc0/0xec
+        [    8.615560]  kernel_sendmsg+0x30/0x40
+        [    8.615561]  service_announce_new+0xbc/0x1c4 [qrtr]
+        [    8.615563]  qrtr_ns_worker+0x754/0x7d4 [qrtr]
+
+Johan
 
