@@ -1,81 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-37347-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37348-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1819B9C2147
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2024 16:57:52 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 072AF9C228F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2024 17:58:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 478CF1C23369
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2024 15:57:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 86C131F23500
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2024 16:58:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2908221B432;
-	Fri,  8 Nov 2024 15:57:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BAE51922EE;
+	Fri,  8 Nov 2024 16:58:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K1KbV+pu"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="bMKljHRs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFA621F5820;
-	Fri,  8 Nov 2024 15:57:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1E131E9091
+	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Nov 2024 16:58:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731081467; cv=none; b=hOuVhedP0y2NQKEDpPaIuZifoqpy2l1b/Lx46sT0f7aXQGzt7K/f66Lk9DCEiTFBjc2mJPUh5gizS5xnUzdV9WG0FfidlBXbLzYYj7AKrenV6BF4LV9DXGXgRngeqpS7T7urt7A1dTslrFBZ59G1I/hwWjGsCMc+esDwW3bi8RU=
+	t=1731085087; cv=none; b=kEtsMRGX0v8BwV/WzrvJN33ddpclSHzR+gO7zkA31Dci2vWTFHFfwcMFxhsz+Yd7b/v1xZ7lhdp+Jjfkf1DNOfRcfMYlgMHfhEF8iAQZ49NUZdUJuQ0UtvPc98HGRxwNRqXDXjWBhC9NRC00CKIF01ar7CjCbHCO8xCGCAUa0RE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731081467; c=relaxed/simple;
-	bh=iljCFR+MPEEFqcxrwc+bb1ttqOuXLhJV5eEIz3l1Xlk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rSz2ZEhhSCfUPF6yrhTR+mKL6kQiEnCdoMLcuyqnLCcMzoUwwhsbHmV64MoyECg/mvfqHHejs1IJDYFsdnY6tFwbU1y3N/qcbDsGVsUQAWwWBE8kGOSsD9SpMursszz/3i2c4Ven31gaBOKFYRN4T9pB0A+xBG21dfLrOqAhatQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K1KbV+pu; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 827B8C4CECD;
-	Fri,  8 Nov 2024 15:57:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1731081466;
-	bh=iljCFR+MPEEFqcxrwc+bb1ttqOuXLhJV5eEIz3l1Xlk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=K1KbV+pu6eu1WRDxN6lY+PRZ72jCU0nblPktyVtaIpYIE4TeB+AR6aD4oUkU/YuKg
-	 ZW7Lw3oWCvVd1koyqA3OaKjIl69pBtchVUZS+75EXVGELq9soV2n4HAtAk4sZn45FB
-	 ge2Oa1IjckGuGNsuLO2y7/qw6iCfgQiVNjdMx1rG6HZCJL50k9vnZf9HXpi/VG53Ws
-	 33dqWLjxtnv1O1UpG+NiMG8e8OKPx1drdGeL5BnyUGqamENbIXB3PKcBMkK85Yb0Dn
-	 vdjeKHwyPIWO7W16XF37ywYvHiwMcSw0vB2anZozMMlm62bfT9rd7zEsUXwGoKIsIl
-	 m3ZsivwuQxb9g==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1t9RMr-000000008Vg-1sJz;
-	Fri, 08 Nov 2024 16:57:49 +0100
-Date: Fri, 8 Nov 2024 16:57:49 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Heikki Krogerus <heikki.krogeurs@linux.intel.com>,
-	linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: Re: [PATCH 2/2] usb: typec: ucsi: glink: be more precise on
- orientation-aware ports
-Message-ID: <Zy40_aLiETXFGMmR@hovoldconsulting.com>
-References: <20241106-ucsi-glue-fixes-v1-0-d0183d78c522@linaro.org>
- <20241106-ucsi-glue-fixes-v1-2-d0183d78c522@linaro.org>
+	s=arc-20240116; t=1731085087; c=relaxed/simple;
+	bh=rR6oxh4TsPeJEFTyjlpe/mmrrtWMwgdViIyTgLo9Ezs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ShmqcsomBxI8kAYF6XT6NVTmJ7Td6ljvOAWrdwjRz3h5tGluZ+UqqLqEGEvPenTgIJ4OmkhiACF8uWiqyWIhw9qw6wZa8tR2ltHbgVKGoYh1Z3AVv1vXBqB7HxS+tSOkyxoDTlX3sAtkQE2bixBymGEGxys1AACiFyzpXU0kXcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=fail smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=bMKljHRs; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4A8EVomd001951
+	for <linux-arm-msm@vger.kernel.org>; Fri, 8 Nov 2024 16:58:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	HWI14o00dzdsEyLD1xZkH5uhQvD1CWU2kS6AnH4E94s=; b=bMKljHRsJuTHnWCe
+	/bvKdX1jaZ07Q5YIJUalHojqML7Bb6NmjDMkjBUtGFrre2svtF+xCVlPYxRaA/Bc
+	p+IMbbgQuU4fCJMUmb7Ae3L15fzuZdzqwjxdpegfJUYgQf+3VJUy0b0wk7Gpzww2
+	3sAGb29W5aipYDq4yLHQPuK9Pk4uNye4hKfiVUZmzhKowrnNfzVEhIrOC5NHbXUG
+	625z+7D2ygNWTnHlaugTQqjKz8IMnOvztAxf8R6wtlqquEwtSTLEorqZM3GvlrVZ
+	9YVajFEv4emHvvakQ3KRoNPK8IEscmrssetDw20OoIOA7zQeJANwaYHb8VPnhlLU
+	Jx9RHQ==
+Received: from mail-ua1-f70.google.com (mail-ua1-f70.google.com [209.85.222.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42s6gkt6jq-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 08 Nov 2024 16:58:04 +0000 (GMT)
+Received: by mail-ua1-f70.google.com with SMTP id a1e0cc1a2514c-84fcaad02eeso85007241.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Nov 2024 08:58:04 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731085083; x=1731689883;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=HWI14o00dzdsEyLD1xZkH5uhQvD1CWU2kS6AnH4E94s=;
+        b=bkcfOehYdRFS8eho6Cwi3r5yZE/4eksfJzHo5mU2wslBjCc+Ls3SKn39i5Kac/VZXZ
+         Wwyt0GWWKXEOl6HHQ5xK7nvPh5LBq7oWdApDPL285qoSGou7h9V5lV9KkA//3mfxcBmw
+         ACzWbUWk+z2RKKI8BsFSuWrNVx0xMu6DM5OUQsHe6CLguOmEQrXzIRg78gjH5LJDC8da
+         eCvAFHsCRPXFRvF3G2R73N3wVN3NnUcbdyHu/AuhsfgRmA1W5F7EXOux87aSZtEDFfQS
+         VRFQGl+vvIbyhNZ6xtHBys3WfNm1KvEMoO7ZvkepdRjTcdY/5Ek5HbU/z2r2qhZLNWG5
+         n5fw==
+X-Gm-Message-State: AOJu0Yzxisnj5Ti3THaWebcXt7kNNp98udawarA2WNNReEVsDsHM9mjU
+	TTkklYNu2xswdpZd6NfDgXBMyqv+RE0b6/10nVrFPLvVuqueNXNUdxx5AskX7bDtfaPv7kOkTSj
+	vlXYyyjme+ofozROkP/O4DJrJgbT/x3ceJFhjJ9VekyOiPf34JEogy2ZpWmZC11b9
+X-Received: by 2002:a05:6102:3311:b0:4a4:8268:9a65 with SMTP id ada2fe7eead31-4aae138b9cbmr1471544137.3.1731085083636;
+        Fri, 08 Nov 2024 08:58:03 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFY/osSz3UlDBbQ0ox84O5Rchw1d3JTWrCxq8eAaHipugtEjyXcxITf9weaSejsQ7bLHn/nnw==
+X-Received: by 2002:a05:6102:3311:b0:4a4:8268:9a65 with SMTP id ada2fe7eead31-4aae138b9cbmr1471530137.3.1731085083296;
+        Fri, 08 Nov 2024 08:58:03 -0800 (PST)
+Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9ee0a184dasm254433666b.30.2024.11.08.08.58.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 08 Nov 2024 08:58:02 -0800 (PST)
+Message-ID: <3bc06d82-7443-4c89-947b-8931cabd787f@oss.qualcomm.com>
+Date: Fri, 8 Nov 2024 17:57:58 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241106-ucsi-glue-fixes-v1-2-d0183d78c522@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 09/14] thermal/drivers/qcom/tsens-v1: Add support for
+ MSM8937 tsens
+To: =?UTF-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <barnabas.czeman@mainlining.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Lee Jones <lee@kernel.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
+        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, iommu@lists.linux.dev,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+References: <20241107-msm8917-v3-0-6ddc5acd978b@mainlining.org>
+ <20241107-msm8917-v3-9-6ddc5acd978b@mainlining.org>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20241107-msm8917-v3-9-6ddc5acd978b@mainlining.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: S31JzEX9RHVqDQIoyw0xhlqVVYF3ad6i
+X-Proofpoint-GUID: S31JzEX9RHVqDQIoyw0xhlqVVYF3ad6i
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ priorityscore=1501 adultscore=0 phishscore=0 malwarescore=0
+ impostorscore=0 mlxlogscore=999 suspectscore=0 lowpriorityscore=0
+ spamscore=0 mlxscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2409260000 definitions=main-2411080141
 
-On Wed, Nov 06, 2024 at 05:45:55PM +0200, Dmitry Baryshkov wrote:
-> Instead of checking if any of the USB-C ports have orientation GPIO and
-> thus is orientation-aware, check for the GPIO for the port being
-> registered.
+On 7.11.2024 6:02 PM, Barnabás Czémán wrote:
+> Add support for tsens v1.4 block what can be found in
+> MSM8937 and MSM8917.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+> ---
+>  drivers/thermal/qcom/tsens-v1.c | 13 +++++++++++++
+>  drivers/thermal/qcom/tsens.c    |  3 +++
+>  drivers/thermal/qcom/tsens.h    |  2 +-
+>  3 files changed, 17 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/thermal/qcom/tsens-v1.c b/drivers/thermal/qcom/tsens-v1.c
+> index dc1c4ae2d8b01b42a0edbb7f12a5780b25d0c8ac..50787cf68bfae48da6061d8e75956308f41053be 100644
+> --- a/drivers/thermal/qcom/tsens-v1.c
+> +++ b/drivers/thermal/qcom/tsens-v1.c
+> @@ -162,6 +162,19 @@ struct tsens_plat_data data_tsens_v1 = {
+>  	.fields	= tsens_v1_regfields,
+>  };
+>  
+> +static const struct tsens_ops ops_8937 = {
+> +	.init		= init_common,
+> +	.calibrate	= tsens_calibrate_common,
+> +	.get_temp	= get_temp_tsens_valid,
+> +};
 
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
+Rename ops_8976 to ops_common and reuse it
+
+Konrad
+
 
