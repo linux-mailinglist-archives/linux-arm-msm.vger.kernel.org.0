@@ -1,235 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-37408-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37409-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 42D0C9C3013
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Nov 2024 00:32:05 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 14AC79C301F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Nov 2024 00:46:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AB664B21746
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Nov 2024 23:32:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3F23C1C20B3A
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Nov 2024 23:46:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C68741A2C3A;
-	Sat,  9 Nov 2024 23:31:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2CF041A08C6;
+	Sat,  9 Nov 2024 23:46:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kruces-com.20230601.gappssmtp.com header.i=@kruces-com.20230601.gappssmtp.com header.b="dRWCy2Ew"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="mkNnBGwF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 923751E4BE
-	for <linux-arm-msm@vger.kernel.org>; Sat,  9 Nov 2024 23:31:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DC0319F411;
+	Sat,  9 Nov 2024 23:46:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731195114; cv=none; b=K7c+g7FvdNYfnG/YkMnGdpMpSuWhk6cqegf+168IMCoJp/5ubmaX8dK3p4rdGlelYH6vrOBQCkgQW4udWBEdgfbkybjbt/IydX6n6dmZKpVkrA6MvzAdX7x6Y3HDfuUggECQC4hoaMJxOPY3Jscb1Qca/MoV5xZOqmkkjUFg5fs=
+	t=1731195971; cv=none; b=TR3audH/RGREwaJeE4SeLd/EXAZThlgbew4jJzRIzA0HyqLpSTjJ3iRKskFy7Z+1Gj7aScIJcpMoprnNu6DvqPrCNVm5AwbY1abs+PeTxw6zU8tzv0xC2i+zXCBOk+K13uFri5AM5+oUSsPZAiWwb7MBKtnlhhpO9pn5KDWOzug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731195114; c=relaxed/simple;
-	bh=pymxjzEm6Lhvwp4mUDTpE9i10Lufs3nfZipuuthsxww=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:To:From:Subject:
-	 References:In-Reply-To; b=Mgxylw9Gkot8VYHEEwJif5Y5fTC9ZvBhL6M/aFj060hgj/yjWsXVfYU+AaOLXgKU7ue7M37bFlFhKUFVrSM7CwEfZ6zFUKnIjQYY7jX8rEe4VBahP/Upgv71dceuVN7FDHNB/CWHChjI6O14kErOuoOlgVmcrqA9bDt5D160Fww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kruces.com; spf=pass smtp.mailfrom=kruces.com; dkim=pass (2048-bit key) header.d=kruces-com.20230601.gappssmtp.com header.i=@kruces-com.20230601.gappssmtp.com header.b=dRWCy2Ew; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kruces.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kruces.com
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4314f38d274so41638555e9.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 09 Nov 2024 15:31:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kruces-com.20230601.gappssmtp.com; s=20230601; t=1731195110; x=1731799910; darn=vger.kernel.org;
-        h=in-reply-to:references:subject:from:to:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xXefZuNiUme2LqYfCd3jj+JYJ6NFPXXl60F1M5w4QPE=;
-        b=dRWCy2EwEtBiFZRy20wqlW7tbsPzhAvKieWNhvIHRPd0fbZmxwDPqSja9UmKTvULRp
-         mAlf/Q8B9JLWTWEVyDcoFfW5sMVAYVQc9Smniw2xJH9+UFzoJEofjRPpiw0yTYtzAQr8
-         NIDEq7yp/Cwsj3esFghT1Mz/nvPth8deFjIyoDRdGBxcXhEaTx+ZxYmKORv15loXQZYG
-         vNefdC+VcbxfZ77ZnHYD4AonkdVqZmvtNxXV81BJ5+vBmi7ONbdVBSYVatHDmfr4WGVh
-         Z8viVjFcZqfXSXc2x4g1f/upaYwIud93mFQLxZdog8GhhsWmROXNz5tRGNbEKV0Nywl+
-         9uHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731195110; x=1731799910;
-        h=in-reply-to:references:subject:from:to:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=xXefZuNiUme2LqYfCd3jj+JYJ6NFPXXl60F1M5w4QPE=;
-        b=gUGtOJ80o3lrwr/ZYHigi8hcY0zlVILty+gtoV2ZBGQI9QhH69s1Z7NKsXDqDcz2jV
-         fLOPev1V0xi6yX8Q1svte4kRHFjH4jSq+qdL1nUuJSGseb5v2u2/UPhllsYo6bhasruI
-         arb6rynekNuyb+tvPxe2Soe0bpxCztlyxkUE+pX7JUnip5+PC5xArWz5bIbnE361DSg4
-         iJ7lOCPtg6e5TtOiBBQblFFuI4XPyuqd9WiFeamkb/si4Nh72VxMiVBxsSX/s6WVt934
-         Pctoss9AkKvaCpHS+146O28u6ivnWTqWTZ2daFQ8eCff/IRgiT/4ERgHOsAP6FCTNKHv
-         zDsA==
-X-Forwarded-Encrypted: i=1; AJvYcCV5B2urxF+oHiKegIGpdCMTyi/TqKH+CjP5R+rQa9rDlLpBwLbPd5cExdoTKJaXt4b1/1G+ExeFl0/IfE95@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz/ePVKeElsrWkQ8IWBuUTUrAfx7snbe252mmEUGk2A+vcgWig4
-	J4tbCvXyMlTFh/kJTDy/vJCjBv/+q/sEWgzOorAxHCn5caryKy/geBKxaGHTQ7g=
-X-Google-Smtp-Source: AGHT+IGrTxPd6AbPrewOKapTMXeIDNB6k1NOzYVtEtw766khzfIJoPkxkQ5IvxY0rEmc3mXiJHIsJA==
-X-Received: by 2002:a05:6000:1acc:b0:381:eb8a:b81b with SMTP id ffacd0b85a97d-381f1872402mr8821444f8f.33.1731195109725;
-        Sat, 09 Nov 2024 15:31:49 -0800 (PST)
-Received: from localhost (89-23-255-189.ip4.fiberby.net. [89.23.255.189])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9ee0e2f3cdsm418712966b.185.2024.11.09.15.31.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 09 Nov 2024 15:31:49 -0800 (PST)
+	s=arc-20240116; t=1731195971; c=relaxed/simple;
+	bh=pYLrqg0RBAlLP/P2QvwUbnmxPxiYUQ+kcVAYOcIZwxE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=B5G1cB7J/wq4BWcNFz4QoZ574rsK++IZ+k+aJWxbTM5A+6ddLNkbbAe+m4P88JQ1NVD0U2+oU/mhKTwRvyAc1U+wZ2ExGAfZPcldtCWf9Xj+DfEslKYLOFZMQZQuQCbxvOqbNivGTJTZpzbK9+5xDOsa8mbJJBZuAf+Gp4etAIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=mkNnBGwF; arc=none smtp.client-ip=198.175.65.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1731195969; x=1762731969;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=pYLrqg0RBAlLP/P2QvwUbnmxPxiYUQ+kcVAYOcIZwxE=;
+  b=mkNnBGwFB01WYZGC2QpJ9FeaoqfW2Mqw+ID3Nh/UqVGYbp44AyhycZTl
+   V1fbrwsRvnvq3u3KlpFjzbLwuXAAOZ/jDghX47YstsUx3OBirvfaQ0O3u
+   2XEE8zuqHbX6svsix6rybGE1SawXyu81h0e9f4SYXJTpmerYi9+4Lu2+3
+   NVlZV8heiD+HL1jKIK6eGfIU5TfZ2CYFMNf0WIRRXBif3UCv0gwW+LZX8
+   VYKd40hRbG+ouhlZdcxwkzdDC9spL8LlUtUHdOkgs80h+0++D+F8520DO
+   IASp+btaYxNN6liFy0fz9+J2z0xllxr0wo2mlYjfk7wd2Um+qJl9ocoSk
+   A==;
+X-CSE-ConnectionGUID: Ff+ILeE9RgO0J4Fvplw5PQ==
+X-CSE-MsgGUID: 1fUHTcHPSVKdvZekRb4czQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="53608772"
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; 
+   d="scan'208";a="53608772"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Nov 2024 15:46:09 -0800
+X-CSE-ConnectionGUID: x6nyOXvNS5aYX9Aia9e2fg==
+X-CSE-MsgGUID: eo7rNjmZR0K0Dz6J4HwabA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,142,1728975600"; 
+   d="scan'208";a="86303661"
+Received: from lkp-server01.sh.intel.com (HELO a48cf1aa22e8) ([10.239.97.150])
+  by orviesa006.jf.intel.com with ESMTP; 09 Nov 2024 15:46:05 -0800
+Received: from kbuild by a48cf1aa22e8 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1t9v9X-000smE-0F;
+	Sat, 09 Nov 2024 23:46:03 +0000
+Date: Sun, 10 Nov 2024 07:45:48 +0800
+From: kernel test robot <lkp@intel.com>
+To: Mayank Rana <quic_mrana@quicinc.com>, jingoohan1@gmail.com,
+	manivannan.sadhasivam@linaro.org, will@kernel.org,
+	lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
+	bhelgaas@google.com, krzk@kernel.org
+Cc: oe-kbuild-all@lists.linux.dev, linux-pci@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	quic_krichai@quicinc.com, Mayank Rana <quic_mrana@quicinc.com>
+Subject: Re: [PATCH v3 4/4] PCI: qcom: Add Qualcomm SA8255p based PCIe root
+ complex functionality
+Message-ID: <202411100738.kCgjRkIv-lkp@intel.com>
+References: <20241106221341.2218416-5-quic_mrana@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Sun, 10 Nov 2024 00:31:48 +0100
-Message-Id: <D5I1G5K85QLC.FP6NF7M20KXQ@kruces.com>
-Cc: "Bjorn Andersson" <andersson@kernel.org>, "Rob Herring"
- <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor
- Dooley" <conor+dt@kernel.org>, "Marijn Suijten"
- <marijn.suijten@somainline.org>, <linux-arm-msm@vger.kernel.org>,
- <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>, "Abel Vesa"
- <abel.vesa@linaro.org>, "Johan Hovold" <johan@kernel.org>
-To: "Marcus Glocker" <marcus@nazgul.ch>, "Konrad Dybcio"
- <konradybcio@kernel.org>
-From: "Daniel Gomez" <d@kruces.com>
-Subject: Re: [PATCH v5 4/6] arm64: dts: qcom: Add UFS node
-X-Mailer: aerc HEAD-434ca29
-References: <p3mhtj2rp6y2ezuwpd2gu7dwx5cbckfu4s4pazcudi4j2wogtr@4yecb2bkeyms> <g5vlxrttgvfqkktlkhu4uzhtvnp3qtjcbr7l2uztapzqwhrsem@wg574xldh5ar> <cd9d5a7c-ec0b-4f0a-bac2-f747799bf295@kernel.org> <l5vwputpefdkweti56em37i5asrd3vb7pxhwlzir7webfuk3fl@afcqm3faq2gt>
-In-Reply-To: <l5vwputpefdkweti56em37i5asrd3vb7pxhwlzir7webfuk3fl@afcqm3faq2gt>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241106221341.2218416-5-quic_mrana@quicinc.com>
 
-On Fri Aug 30, 2024 at 7:25 PM CEST, Marcus Glocker wrote:
-> On Fri, Aug 30, 2024 at 02:05:48AM +0200, Konrad Dybcio wrote:
->
->> On 17.08.2024 10:38 PM, Marcus Glocker wrote:
->> > Add the UFS Host Controller node.  This was basically copied from the
->> > arch/arm64/boot/dts/qcom/sc7180.dtsi file.
->> >
->> > Signed-off-by: Marcus Glocker <marcus@nazgul.ch>
->> > Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> > ---
->> >  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 72 +++++++++++++++++++++++++=
-+
->> >  1 file changed, 72 insertions(+)
->> >
->> > diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi=20
->> > b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
->> > index 7bca5fcd7d52..9f01b3ff3737 100644
->> > --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
->> > +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
->> > @@ -2878,6 +2878,78 @@ mmss_noc: interconnect@1780000 {
->> >  			#interconnect-cells =3D <2>;
->> >  		};
->> >
->> > +		ufs_mem_hc: ufs@1d84000 {
->> > +			compatible =3D "qcom,x1e80100-ufshc", "qcom,ufshc",
->> > +				     "jedec,ufs-2.0";
->> > +			reg =3D <0 0x01d84000 0 0x3000>;
->> > +			interrupts =3D <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
->> > +			phys =3D <&ufs_mem_phy>;
->> > +			phy-names =3D "ufsphy";
->> > +			lanes-per-direction =3D <1>;
->> > +			#reset-cells =3D <1>;
->> > +			resets =3D <&gcc GCC_UFS_PHY_BCR>;
->> > +			reset-names =3D "rst";
->> > +
->> > +			power-domains =3D <&gcc GCC_UFS_PHY_GDSC>;
->> > +
->> > +			iommus =3D <&apps_smmu 0xa0 0x0>;
->>=20
->> Looks like this should be 0x1a0 maybe
->> > +
->> > +			clock-names =3D "core_clk",
->> > +				      "bus_aggr_clk",
->> > +				      "iface_clk",
->> > +				      "core_clk_unipro",
->> > +				      "ref_clk",
->> > +				      "tx_lane0_sync_clk",
->> > +				      "rx_lane0_sync_clk";
->> > +			clocks =3D <&gcc GCC_UFS_PHY_AXI_CLK>,
->> > +				 <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
->> > +				 <&gcc GCC_UFS_PHY_AHB_CLK>,
->> > +				 <&gcc GCC_UFS_PHY_UNIPRO_CORE_CLK>,
->> > +				 <&rpmhcc RPMH_CXO_CLK>,
->> > +				 <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
->> > +				 <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>;
->>=20
->> You also want
->>=20
->> <&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>
->>=20
->> > +			freq-table-hz =3D <50000000 200000000>,
->> 25000000 300000000
->>=20
->> > +					<0 0>,
->> > +					<0 0>,
->> > +					<37500000 150000000>,
->> 75000000 300000000
->>=20
->> > +					<0 0>,
->> > +					<0 0>,
->> > +					<0 0>;
->> > +
->> > +			interconnects =3D <&aggre1_noc MASTER_UFS_MEM QCOM_ICC_TAG_ALWAYS
->> > +					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
->> > +					<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
->> > +					 &config_noc SLAVE_UFS_MEM_CFG QCOM_ICC_TAG_ALWAYS>;
->> > +			interconnect-names =3D "ufs-ddr", "cpu-ufs";
->> > +
->> > +			qcom,ice =3D <&ice>;
->> > +
->> > +			status =3D "disabled";
->> > +		};
->> > +
->> > +		ufs_mem_phy: phy@1d87000 {
->> > +			compatible =3D "qcom,x1e80100-qmp-ufs-phy";
->> > +			reg =3D <0 0x01d87000 0 0x1000>;
->>=20
->> most definitely should be 0x01d80000 with a size of 0x2000
->>=20
->> > +			clocks =3D <&rpmhcc RPMH_CXO_CLK>,
->> > +				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>,
->> > +				 <&tcsr TCSR_UFS_PHY_CLKREF_EN>;
->> > +			clock-names =3D "ref",
->> > +				      "ref_aux",
->> > +				      "qref";
->> > +			power-domains =3D <&gcc GCC_UFS_PHY_GDSC>;
->> > +			resets =3D <&ufs_mem_hc 0>;
->> > +			reset-names =3D "ufsphy";
->> > +			#phy-cells =3D <0>;
->> > +			status =3D "disabled";
->> > +		};
->> > +
->> > +		ice: crypto@1d90000 {
->> > +			compatible =3D "qcom,x1e80100-inline-crypto-engine",
->> > +				     "qcom,inline-crypto-engine";
->> > +			reg =3D <0 0x01d90000 0 0x8000>;
->>=20
->> 0x1d88000
->>=20
->>=20
->> All this combined means you probably wrote your init sequence into some
->> free(?) register space and the one left over from the bootloader was
->> good enough :P
->>=20
->> Konrad
->
-> I have not done anything special in our sub-system to boot this DTB.
-> Changing the values as suggested by you also doesn't make any difference
-> to me.
->
-> Anyway, I think I'll give up at this point, since this process is
-> getting too time consuming for me.  We'll go ahead with out downstream
-> patches, which works for us so far.
+Hi Mayank,
 
-Hi Marcus,
+kernel test robot noticed the following build warnings:
 
-I came across this and I'd be interested in picking up the patches for test=
-ing.
-Is there any guide or documentation available that I could follow to boot L=
-inux
-on this machine using this patchset? Also, could you share where I might be=
- able
-to find those downstream patches?
+[auto build test WARNING on pci/next]
+[also build test WARNING on pci/for-linus mani-mhi/mhi-next robh/for-next linus/master v6.12-rc6 next-20241108]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-Thanks,
-Daniel
+url:    https://github.com/intel-lab-lkp/linux/commits/Mayank-Rana/PCI-dwc-Export-dwc-MSI-controller-related-APIs/20241107-061634
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/pci/pci.git next
+patch link:    https://lore.kernel.org/r/20241106221341.2218416-5-quic_mrana%40quicinc.com
+patch subject: [PATCH v3 4/4] PCI: qcom: Add Qualcomm SA8255p based PCIe root complex functionality
+config: powerpc-randconfig-r131-20241109 (https://download.01.org/0day-ci/archive/20241110/202411100738.kCgjRkIv-lkp@intel.com/config)
+compiler: clang version 20.0.0git (https://github.com/llvm/llvm-project 592c0fe55f6d9a811028b5f3507be91458ab2713)
+reproduce: (https://download.01.org/0day-ci/archive/20241110/202411100738.kCgjRkIv-lkp@intel.com/reproduce)
 
->
-> Cheers,
-> Marcus
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202411100738.kCgjRkIv-lkp@intel.com/
 
+sparse warnings: (new ones prefixed by >>)
+>> drivers/pci/controller/dwc/pcie-qcom.c:1613:27: sparse: sparse: symbol 'pci_qcom_ecam_ops' was not declared. Should it be static?
+
+vim +/pci_qcom_ecam_ops +1613 drivers/pci/controller/dwc/pcie-qcom.c
+
+  1611	
+  1612	/* ECAM ops */
+> 1613	const struct pci_ecam_ops pci_qcom_ecam_ops = {
+  1614		.init		= qcom_pcie_ecam_host_init,
+  1615		.pci_ops	= {
+  1616			.map_bus	= pci_ecam_map_bus,
+  1617			.read		= pci_generic_config_read,
+  1618			.write		= pci_generic_config_write,
+  1619		}
+  1620	};
+  1621	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
