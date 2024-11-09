@@ -1,190 +1,303 @@
-Return-Path: <linux-arm-msm+bounces-37406-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37407-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E424C9C2ECB
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Nov 2024 18:32:49 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id B5EE39C2EE5
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Nov 2024 18:47:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 957F3280F42
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Nov 2024 17:32:48 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D25251C20935
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Nov 2024 17:47:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB4EA13CA95;
-	Sat,  9 Nov 2024 17:32:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4BA019D06A;
+	Sat,  9 Nov 2024 17:47:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cQeV18nC"
+	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="pqgGVyCx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E16F72556E
-	for <linux-arm-msm@vger.kernel.org>; Sat,  9 Nov 2024 17:32:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16DF9198E78
+	for <linux-arm-msm@vger.kernel.org>; Sat,  9 Nov 2024 17:47:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731173558; cv=none; b=AIXOaGslQcLCzZL12DLP+1ZAUlsr4Fcta9X1c7aIeQW3yvK7OejtjYesPfpd2vpl0oxOwhfesKp8+RO75Dg7Yi4dYLe4dc771TQnCTB88fPtOJG1uGGqK4PuyMjkZdbCNAz0ih2xgw2i0PwjqIHFgNfvqUYpoMLl0r7dqSYAjPw=
+	t=1731174446; cv=none; b=IOYp8CAF/4Xp3yT3GrLXqnbyqMR6yaOAut5v4tCW1BT4PwLrkfRAPlJeQTAjD67yX78ycCKr2lJsnd+sw4NYinss+leqrSfGr8neOss7pM9b7DEF87aPNgNd4ptQaL/61K9lAQGNgu5dtQ6ULk3JN1s3X0RgwXshdYZfArdYj/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731173558; c=relaxed/simple;
-	bh=oZjEXKpbPtj7ttMs05EhUXZ+US9I3Z5OX+ylmkahyFk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=j/U13YacMxCmXVPODu8nMZ3uek8XqHvdnMlabOJVeSRERBT4zohPV1lFc/v7+AStkE4fJ6ET2kYZqTc68wN5oReHNdp9QMUVjNZXDQuGMZSl+7y6nfFiWstmUZohW4kI1c8LzOWDuJ4RcnMt0hS3R8+ce68t1DE9/iZk85p25Ko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cQeV18nC; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4315839a7c9so29968365e9.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 09 Nov 2024 09:32:36 -0800 (PST)
+	s=arc-20240116; t=1731174446; c=relaxed/simple;
+	bh=E2geTdbXiQmLaAty8/2EMgECF6diNU8eKtMXb4ZB/kM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=r3Hocm3692VxuEdYy7/tBPtt1UC/cdh4LLY4BDlW/nKngREiuSwOFVL4L3c6XShD7LXFPTbm9k2DwnXy+mOxIzfhL46pBVGFd6igzZanVFEmX3UW/Ub7/6IHiD5cdBfVNVPHnGN2IJSavGMsGPxy6Bkr70jL6UJXqKPtz9KdVUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=pqgGVyCx; arc=none smtp.client-ip=209.85.208.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-5c9693dc739so4565382a12.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 09 Nov 2024 09:47:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731173555; x=1731778355; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=qrd7Q+hT4RWLlTYkRiopljgomDNa2/49Dcp33gRQK8U=;
-        b=cQeV18nC7uVSAi+wt2y2rgNNLVrKRwnhu0Zy8xXi/YHMbhXPvA33Dkkmfcfxj1EXKa
-         WIeOYwN4YiaqaNaSmPiqW8ihUJUnBd9cZ9VgFryxOo3GyLMJ7stOb2KNixkUpA4yL/BA
-         QeEve/5jjUAvJV1nuHzcZnoayoBizYPWtDsYqrJT+47lzCL8aLRCvDk30CCgs96SRYW+
-         CxIxRdEQKh4NZLkxcbgkWr1JYfKLqBXOQFZpPC0ne3DuVA8ykzU4+JQPgtAtMNAwCmso
-         j4XyMfdbJkbXmfbKEG+o4jy4pOHXb2ZqehZ00yVsViEZzn1RODt0d51S2hXi0o9a9WYn
-         GDcQ==
+        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1731174442; x=1731779242; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=mS9pz7F1aaDN/ZOdRUw2lCD3EzMHHJ9M85Tk+LBqBLI=;
+        b=pqgGVyCxwUl79K2AnrIVtFfl9QmqShcR93qOBN4ju680ZPEYd4o6H0Z81IDXii9Tq3
+         vR+rIbN4N6bjjAQoLLGyZlLqM04N6/gTCxkovtvUPLPqVR8tIdvUeuR6qP8WDojfDzDP
+         bF/5feiztnfJqgKXTtJMLCxVT7f3u+fxFhFSk+udEUsYIG4Hp79TCmD1JpYF69hvOhum
+         82jG/OZWOaZbjd7ms0y+mnmx9HijXgW/uJOq2WmiR0FpmZmI5uIbq0Ij9+ET8oQQFHyf
+         4gzGKffHtM25LvmpPkFGlgT0vPUvHuLGvjQMXH6aadCyk8+Grn7unm8y480/xeBAXrsv
+         gffg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731173555; x=1731778355;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qrd7Q+hT4RWLlTYkRiopljgomDNa2/49Dcp33gRQK8U=;
-        b=BRSiJcUsTosRF1++Gzfgzc7PrcjzUTikzkMQRtNVxAFgimGTfQ1XKpSakAFXpUpLo4
-         2cHnns/tP0bT1xRjdZzpKIHrW7fLRLDgqQpQpYANx1I+1yqW7gSFcQUjDAHwhbbP0zOg
-         D4Yjvf3KnEm1P12ihkGbjefyhd7vqOoLxX4WRdtRV5QPLvlEtOiCxjQTO2TClQqUY/fP
-         i0VIDKU+9dhbfOwOnfqFXdHO88M28VSjZpJx+rXt07gWMyf/UWeXfRHRr5AmMdcW7c3Y
-         bny/0NfFxG35BEmnkF6BIGMu+324MLVPPZm55nKga2Rtgmqlv5eNjwMU6ArxE2vU266B
-         J77Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWnCNV+33YuOw0XMoh173qTQZYKAPjpuJY1ET2wp6HlU6sU3SNPaMzUDQ9FkuhWYoI5KtE7fFbjzVDwq3QZ@vger.kernel.org
-X-Gm-Message-State: AOJu0YwGpSsHzahP/As0S2iSYZ0zmXGWtADYY+TBVUDNxbgLyY8ppzNJ
-	XPDnbKH6ILEt+BMOtvvxIJUm7hnSxpOody4ayeCTEE70Kctw4Gf2CtEmGCPmyCg=
-X-Google-Smtp-Source: AGHT+IE1q8fwdQ3BkqSY4LENvnUv/wVEuo+qnF+jrEdQYc+Aa1DTDS756o74ILXyq3lGqKpHh72kRA==
-X-Received: by 2002:a05:6000:78a:b0:37d:4ebe:164b with SMTP id ffacd0b85a97d-381f1885557mr5901995f8f.44.1731173555210;
-        Sat, 09 Nov 2024 09:32:35 -0800 (PST)
-Received: from [192.168.0.48] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381ed9707d3sm8132812f8f.19.2024.11.09.09.32.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 09 Nov 2024 09:32:34 -0800 (PST)
-Message-ID: <ab4b80fa-6321-462a-ba1d-151424d1c94f@linaro.org>
-Date: Sat, 9 Nov 2024 17:32:32 +0000
+        d=1e100.net; s=20230601; t=1731174442; x=1731779242;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mS9pz7F1aaDN/ZOdRUw2lCD3EzMHHJ9M85Tk+LBqBLI=;
+        b=q3r1q7Hrio9qibptpvg2S0mF+NNKp4RN4aZJl/i+Ay8J8fZwCte2naeRytjhCby5R7
+         tWdgJoWSl3IWQ/e6FxlAmuMeyfOkFf9e2TIoQZVLRfWbrOLjzZkETtci8NQYx2t4YaRS
+         Bfypx3jQHgmgUqvh2yLpVkcqP+YiI50AmM+O5UY7Ii3lZEf0Z9xnQCejcjJFJqX1LdH8
+         WXp36OvaalHB+IWYefJymiD1ml1RjcGMnySK/SDGL+xFSFDXgaLr914tlZ5ReIBWJ1JW
+         GYsbYj3sCZzvCSxpGwXqudnvie+ue5lINMOZF3gYYbuR6m2bc/qsIzoVYRdABq+sCexv
+         t8mQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXVub7wX8B9Hijx8u3gmZiB53ZT21vkuBHeShkwiH701H35pvHO0ZkiqaXV0+YTQr2Uqd6SsAT77g3jVbKc@vger.kernel.org
+X-Gm-Message-State: AOJu0YyYdS4N/V/FRW98VjXjQW74/jG3hiqEu7oLbA9ZKULZIKXrK8Rq
+	J33AAYfFHWpoEpGCpGhcRYHvy53/w8tYpFpLLneCrN6PZBDDlQ+tbqng4d6Odbk=
+X-Google-Smtp-Source: AGHT+IGJCTMOIjftfGiK2wILQrVE69oNLiwz7mzb5YOsUCHt/S1Cp1slGT50grlnlMbHdWGpyNa4Cg==
+X-Received: by 2002:a05:6402:5203:b0:5cb:6ca3:af96 with SMTP id 4fb4d7f45d1cf-5cf0a3245camr5846634a12.19.1731174442127;
+        Sat, 09 Nov 2024 09:47:22 -0800 (PST)
+Received: from localhost ([2a02:8071:b783:6940:36f3:9aff:fec2:7e46])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5cf03bb7530sm3155853a12.43.2024.11.09.09.47.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 09 Nov 2024 09:47:20 -0800 (PST)
+From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+To: Lee Jones <lee@kernel.org>,
+	Daniel Thompson <daniel.thompson@linaro.org>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Helge Deller <deller@gmx.de>
+Cc: Michael Hennerich <michael.hennerich@analog.com>,
+	Support Opensource <support.opensource@diasemi.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	dri-devel@lists.freedesktop.org,
+	linux-fbdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH] backlight: Switch back to struct platform_driver::remove()
+Date: Sat,  9 Nov 2024 18:47:10 +0100
+Message-ID: <20241109174710.292128-2-u.kleine-koenig@baylibre.com>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 02/28] media: iris: add platform driver for iris video
- device
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>
-Cc: Hans Verkuil <hverkuil@xs4all.nl>,
- Sebastian Fricke <sebastian.fricke@collabora.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Nicolas Dufresne <nicolas@ndufresne.ca>,
- =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
- Jianhua Lu <lujianhua000@gmail.com>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20241105-qcom-video-iris-v5-0-a88e7c220f78@quicinc.com>
- <20241105-qcom-video-iris-v5-2-a88e7c220f78@quicinc.com>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20241105-qcom-video-iris-v5-2-a88e7c220f78@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=8119; i=u.kleine-koenig@baylibre.com; h=from:subject; bh=E2geTdbXiQmLaAty8/2EMgECF6diNU8eKtMXb4ZB/kM=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBnL6Afi/iMzSDb+OigQAp+L7XwwVJGKjDySz/NY fOeD6CGpd2JATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZy+gHwAKCRCPgPtYfRL+ ThzhB/sGt+oJ4HQwFpd3iQmQbVXTZGNqc/ag8Kv0rc6jUt1eEG9M5LKySpZneqakogzueVU12Aa 9N0pkYhmrph8F9iskLUhrowJwEHPzvNF4d+iGb9bPMs9eqPDf03T05qiQNDtdviMl8AA8CViwX9 ksWE4uE5+HNIPq9mW0fMoOhukaYrROQ0dpkv8cEOIp91zyifjxlRL9RVU4qXAQqZ0wLZgDTXeiL ePV5Bn6e4r/pjQsX4kwvMKRoIvRrKEEq5+d1+/uVFQktjYLUDsntM8jr2fYt3llq/zxho1zr8vY MSJV4DO3Jt/OSOYcuWtM3vsFxpQBOF0yE6jwqCrXNEsStJGm
+X-Developer-Key: i=u.kleine-koenig@baylibre.com; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+Content-Transfer-Encoding: 8bit
 
-On 05/11/2024 06:55, Dikshita Agarwal wrote:
-> In preparation of adding H264 decode functionality, add probe and remove
-> functions and platform data to initialize iris resources, which are
-> clocks, interconnects, power domains, reset clocks, and clock
-> frequencies used for iris hardware.
-> 
-> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-> ---
->   drivers/media/platform/qcom/Kconfig                |   1 +
->   drivers/media/platform/qcom/Makefile               |   1 +
->   drivers/media/platform/qcom/iris/Kconfig           |   9 +
->   drivers/media/platform/qcom/iris/Makefile          |   4 +
->   drivers/media/platform/qcom/iris/iris_core.h       |  54 +++++
->   .../platform/qcom/iris/iris_platform_common.h      |  35 +++
->   .../platform/qcom/iris/iris_platform_sm8550.c      |  37 ++++
->   drivers/media/platform/qcom/iris/iris_probe.c      | 237 +++++++++++++++++++++
->   8 files changed, 378 insertions(+)
-> 
-> diff --git a/drivers/media/platform/qcom/Kconfig b/drivers/media/platform/qcom/Kconfig
-> index cc5799b9ea00..4f4d3a68e6e5 100644
-> --- a/drivers/media/platform/qcom/Kconfig
-> +++ b/drivers/media/platform/qcom/Kconfig
-> @@ -3,4 +3,5 @@
->   comment "Qualcomm media platform drivers"
->   
->   source "drivers/media/platform/qcom/camss/Kconfig"
-> +source "drivers/media/platform/qcom/iris/Kconfig"
->   source "drivers/media/platform/qcom/venus/Kconfig"
-> diff --git a/drivers/media/platform/qcom/Makefile b/drivers/media/platform/qcom/Makefile
-> index 4f055c396e04..ea2221a202c0 100644
-> --- a/drivers/media/platform/qcom/Makefile
-> +++ b/drivers/media/platform/qcom/Makefile
-> @@ -1,3 +1,4 @@
->   # SPDX-License-Identifier: GPL-2.0-only
->   obj-y += camss/
-> +obj-y += iris/
->   obj-y += venus/
-> diff --git a/drivers/media/platform/qcom/iris/Kconfig b/drivers/media/platform/qcom/iris/Kconfig
-> new file mode 100644
-> index 000000000000..34a2f81c5db3
-> --- /dev/null
-> +++ b/drivers/media/platform/qcom/iris/Kconfig
-> @@ -0,0 +1,9 @@
-> +config VIDEO_QCOM_IRIS
-> +        tristate "Qualcomm iris V4L2 decoder driver"
-> +        depends on VIDEO_DEV
-> +        depends on ARCH_QCOM || COMPILE_TEST
-> +        help
-> +          This is a V4L2 driver for Qualcomm iris video accelerator
-> +          hardware. It accelerates decoding operations on various
-> +          Qualcomm SoCs.
-> +          To compile this driver as a module choose m here.
-> diff --git a/drivers/media/platform/qcom/iris/Makefile b/drivers/media/platform/qcom/iris/Makefile
-> new file mode 100644
-> index 000000000000..7e701361492e
-> --- /dev/null
-> +++ b/drivers/media/platform/qcom/iris/Makefile
-> @@ -0,0 +1,4 @@
-> +iris-objs += iris_platform_sm8550.o \
-> +             iris_probe.o \
-> +
-> +obj-$(CONFIG_VIDEO_QCOM_IRIS) += iris.o
-> diff --git a/drivers/media/platform/qcom/iris/iris_core.h b/drivers/media/platform/qcom/iris/iris_core.h
-> new file mode 100644
-> index 000000000000..dd0e2650641a
-> --- /dev/null
-> +++ b/drivers/media/platform/qcom/iris/iris_core.h
-> @@ -0,0 +1,54 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
-> +/*
-> + * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#ifndef _IRIS_CORE_H_
-> +#define _IRIS_CORE_H_
+After commit 0edb555a65d1 ("platform: Make platform_driver::remove()
+return void") .remove() is (again) the right callback to implement for
+platform drivers.
 
-Its more usual to do two underscores __LIKE_SO__
+Convert all platform drivers below drivers/backlight to use .remove(),
+with the eventual goal to drop struct platform_driver::remove_new(). As
+.remove() and .remove_new() have the same prototypes, conversion is done
+by just changing the structure member name in the driver initializer.
 
-Once amended.
-
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-
-Please remember to similarly update other headers in your series.
-
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 ---
-bod
+Hello,
+
+I did a single patch for all of drivers/video/backlight. While I usually
+prefer to do one logical change per patch, this seems to be
+overengineering here as the individual changes are really trivial and
+shouldn't be much in the way for stable backports. But I'll happily
+split the patch if you prefer it split. Also if you object the
+indentation stuff, I can rework that.
+
+This is based on yesterday's next, if conflicts arise when you apply it
+at some later time and don't want to resolve them, feel free to just
+drop the changes to the conflicting files. I'll notice and followup at a
+later time then. Or ask me for a fixed resend. (Having said that, I
+recommend b4 am -3 + git am -3 which should resolve most conflicts just
+fine.)
+
+Best regards
+Uwe
+
+ drivers/video/backlight/aat2870_bl.c         | 2 +-
+ drivers/video/backlight/adp5520_bl.c         | 2 +-
+ drivers/video/backlight/da9052_bl.c          | 2 +-
+ drivers/video/backlight/hp680_bl.c           | 2 +-
+ drivers/video/backlight/led_bl.c             | 2 +-
+ drivers/video/backlight/lm3533_bl.c          | 2 +-
+ drivers/video/backlight/lp8788_bl.c          | 2 +-
+ drivers/video/backlight/mt6370-backlight.c   | 2 +-
+ drivers/video/backlight/pwm_bl.c             | 2 +-
+ drivers/video/backlight/qcom-wled.c          | 2 +-
+ drivers/video/backlight/rt4831-backlight.c   | 2 +-
+ drivers/video/backlight/sky81452-backlight.c | 2 +-
+ 12 files changed, 12 insertions(+), 12 deletions(-)
+
+diff --git a/drivers/video/backlight/aat2870_bl.c b/drivers/video/backlight/aat2870_bl.c
+index 68d327ee4b2e..8b790df1e842 100644
+--- a/drivers/video/backlight/aat2870_bl.c
++++ b/drivers/video/backlight/aat2870_bl.c
+@@ -186,7 +186,7 @@ static struct platform_driver aat2870_bl_driver = {
+ 		.name	= "aat2870-backlight",
+ 	},
+ 	.probe		= aat2870_bl_probe,
+-	.remove_new	= aat2870_bl_remove,
++	.remove		= aat2870_bl_remove,
+ };
+ 
+ static int __init aat2870_bl_init(void)
+diff --git a/drivers/video/backlight/adp5520_bl.c b/drivers/video/backlight/adp5520_bl.c
+index 8e0e9cfe5fe9..aa5c15e8db86 100644
+--- a/drivers/video/backlight/adp5520_bl.c
++++ b/drivers/video/backlight/adp5520_bl.c
+@@ -375,7 +375,7 @@ static struct platform_driver adp5520_bl_driver = {
+ 		.pm	= &adp5520_bl_pm_ops,
+ 	},
+ 	.probe		= adp5520_bl_probe,
+-	.remove_new	= adp5520_bl_remove,
++	.remove		= adp5520_bl_remove,
+ };
+ 
+ module_platform_driver(adp5520_bl_driver);
+diff --git a/drivers/video/backlight/da9052_bl.c b/drivers/video/backlight/da9052_bl.c
+index b8ff7046510e..5e13ef96b717 100644
+--- a/drivers/video/backlight/da9052_bl.c
++++ b/drivers/video/backlight/da9052_bl.c
+@@ -165,7 +165,7 @@ MODULE_DEVICE_TABLE(platform, da9052_wled_ids);
+ 
+ static struct platform_driver da9052_wled_driver = {
+ 	.probe		= da9052_backlight_probe,
+-	.remove_new	= da9052_backlight_remove,
++	.remove		= da9052_backlight_remove,
+ 	.id_table	= da9052_wled_ids,
+ 	.driver	= {
+ 		.name	= "da9052-wled",
+diff --git a/drivers/video/backlight/hp680_bl.c b/drivers/video/backlight/hp680_bl.c
+index ddb7ab4df77e..fa9a983533b2 100644
+--- a/drivers/video/backlight/hp680_bl.c
++++ b/drivers/video/backlight/hp680_bl.c
+@@ -130,7 +130,7 @@ static void hp680bl_remove(struct platform_device *pdev)
+ 
+ static struct platform_driver hp680bl_driver = {
+ 	.probe		= hp680bl_probe,
+-	.remove_new	= hp680bl_remove,
++	.remove		= hp680bl_remove,
+ 	.driver		= {
+ 		.name	= "hp680-bl",
+ 		.pm	= &hp680bl_pm_ops,
+diff --git a/drivers/video/backlight/led_bl.c b/drivers/video/backlight/led_bl.c
+index c7aefcd6e4e3..ae34d1ecbfbe 100644
+--- a/drivers/video/backlight/led_bl.c
++++ b/drivers/video/backlight/led_bl.c
+@@ -246,7 +246,7 @@ static struct platform_driver led_bl_driver = {
+ 		.of_match_table	= led_bl_of_match,
+ 	},
+ 	.probe		= led_bl_probe,
+-	.remove_new	= led_bl_remove,
++	.remove		= led_bl_remove,
+ };
+ 
+ module_platform_driver(led_bl_driver);
+diff --git a/drivers/video/backlight/lm3533_bl.c b/drivers/video/backlight/lm3533_bl.c
+index 5d06f8ca976c..babfd3ceec86 100644
+--- a/drivers/video/backlight/lm3533_bl.c
++++ b/drivers/video/backlight/lm3533_bl.c
+@@ -387,7 +387,7 @@ static struct platform_driver lm3533_bl_driver = {
+ 		.pm	= &lm3533_bl_pm_ops,
+ 	},
+ 	.probe		= lm3533_bl_probe,
+-	.remove_new	= lm3533_bl_remove,
++	.remove		= lm3533_bl_remove,
+ 	.shutdown	= lm3533_bl_shutdown,
+ };
+ module_platform_driver(lm3533_bl_driver);
+diff --git a/drivers/video/backlight/lp8788_bl.c b/drivers/video/backlight/lp8788_bl.c
+index 0b7663519fa5..f61a64905a02 100644
+--- a/drivers/video/backlight/lp8788_bl.c
++++ b/drivers/video/backlight/lp8788_bl.c
+@@ -177,7 +177,7 @@ static void lp8788_backlight_remove(struct platform_device *pdev)
+ 
+ static struct platform_driver lp8788_bl_driver = {
+ 	.probe = lp8788_backlight_probe,
+-	.remove_new = lp8788_backlight_remove,
++	.remove = lp8788_backlight_remove,
+ 	.driver = {
+ 		.name = LP8788_DEV_BACKLIGHT,
+ 	},
+diff --git a/drivers/video/backlight/mt6370-backlight.c b/drivers/video/backlight/mt6370-backlight.c
+index 94422c956453..e55f26888d0f 100644
+--- a/drivers/video/backlight/mt6370-backlight.c
++++ b/drivers/video/backlight/mt6370-backlight.c
+@@ -340,7 +340,7 @@ static struct platform_driver mt6370_bl_driver = {
+ 		.of_match_table = mt6370_bl_of_match,
+ 	},
+ 	.probe = mt6370_bl_probe,
+-	.remove_new = mt6370_bl_remove,
++	.remove = mt6370_bl_remove,
+ };
+ module_platform_driver(mt6370_bl_driver);
+ 
+diff --git a/drivers/video/backlight/pwm_bl.c b/drivers/video/backlight/pwm_bl.c
+index e942908d1275..237d3d3f3bb1 100644
+--- a/drivers/video/backlight/pwm_bl.c
++++ b/drivers/video/backlight/pwm_bl.c
+@@ -697,7 +697,7 @@ static struct platform_driver pwm_backlight_driver = {
+ 		.of_match_table	= of_match_ptr(pwm_backlight_of_match),
+ 	},
+ 	.probe		= pwm_backlight_probe,
+-	.remove_new	= pwm_backlight_remove,
++	.remove		= pwm_backlight_remove,
+ 	.shutdown	= pwm_backlight_shutdown,
+ };
+ 
+diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
+index 10129095a4c1..9afe701b2a1b 100644
+--- a/drivers/video/backlight/qcom-wled.c
++++ b/drivers/video/backlight/qcom-wled.c
+@@ -1741,7 +1741,7 @@ MODULE_DEVICE_TABLE(of, wled_match_table);
+ 
+ static struct platform_driver wled_driver = {
+ 	.probe = wled_probe,
+-	.remove_new = wled_remove,
++	.remove = wled_remove,
+ 	.driver	= {
+ 		.name = "qcom,wled",
+ 		.of_match_table	= wled_match_table,
+diff --git a/drivers/video/backlight/rt4831-backlight.c b/drivers/video/backlight/rt4831-backlight.c
+index c2f6fb29e1d0..7ead75929a43 100644
+--- a/drivers/video/backlight/rt4831-backlight.c
++++ b/drivers/video/backlight/rt4831-backlight.c
+@@ -224,7 +224,7 @@ static struct platform_driver rt4831_bl_driver = {
+ 		.of_match_table = rt4831_bl_of_match,
+ 	},
+ 	.probe = rt4831_bl_probe,
+-	.remove_new = rt4831_bl_remove,
++	.remove = rt4831_bl_remove,
+ };
+ module_platform_driver(rt4831_bl_driver);
+ 
+diff --git a/drivers/video/backlight/sky81452-backlight.c b/drivers/video/backlight/sky81452-backlight.c
+index 935043b67786..2749231f0385 100644
+--- a/drivers/video/backlight/sky81452-backlight.c
++++ b/drivers/video/backlight/sky81452-backlight.c
+@@ -337,7 +337,7 @@ static struct platform_driver sky81452_bl_driver = {
+ 		.of_match_table = of_match_ptr(sky81452_bl_of_match),
+ 	},
+ 	.probe = sky81452_bl_probe,
+-	.remove_new = sky81452_bl_remove,
++	.remove = sky81452_bl_remove,
+ };
+ 
+ module_platform_driver(sky81452_bl_driver);
+
+base-commit: 929beafbe7acce3267c06115e13e03ff6e50548a
+-- 
+2.45.2
+
 
