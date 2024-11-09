@@ -1,239 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-37377-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37378-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 168AA9C28C4
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Nov 2024 01:23:58 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6D6C29C2953
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Nov 2024 02:48:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 992841F22B48
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Nov 2024 00:23:57 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1395A1F226B4
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Nov 2024 01:48:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC3E24A00;
-	Sat,  9 Nov 2024 00:23:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D47B200A9;
+	Sat,  9 Nov 2024 01:48:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="psn2xyuq"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QlD3jwbU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A3A18C07
-	for <linux-arm-msm@vger.kernel.org>; Sat,  9 Nov 2024 00:23:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AEFD53A7;
+	Sat,  9 Nov 2024 01:48:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731111832; cv=none; b=VXkt1L7w/BD+HWt8nxC8np/TGEqJuxIT70AyeoXpS4m5eJ/S2+wPPpNig7Ixrh88bCapm7PY+GPBsqASgWe6ZLsH/KMD5Oh3+tQEExf+TlfXRMX/xDK3Vf99diUUbel6BVbVExyG6SvCMgICeMQ4ZuH+tuDcrWXval8agZoeOII=
+	t=1731116921; cv=none; b=Nk8JrcGRi5mBJxNqOibpUjnE0VmWivp68nZNKmSPNP12ydTQ/qAx6/2t7nVMJLILmf44mLeGn10E0hygVWuk2XSwyxWr/X7kf6YWX8DgIy/lgGlm8pVRaxWhisG0HCAVyGETMu0iwgx2at6MrC/i7tGuxUtz3V7b4GH25YvoIKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731111832; c=relaxed/simple;
-	bh=m5snUBzSF9Zk9uwVyfFeARa+ZNDvJoKukKw2KaQMHHU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=f9o0TQM2c1nI0MI29V9znvasu1EMh3Jozz3lwNJVvW3uxV6hk333JDBvotBVnsmix9Ta37KI6xmbX5JGptX4iTkkk0um9LpJ+Wua4+7rxSGM0io/LnZy99giEuI0xPbDop9jkj5TKVUvfVmrzK2do4AoE2OWKH8FqGAdHIzq0sY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=psn2xyuq; arc=none smtp.client-ip=209.85.208.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2fb5638dd57so22591151fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Nov 2024 16:23:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731111829; x=1731716629; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=gCUSp8vZt+etdZ/oJELhkYG4M5ycIKVOibuDoFx6fIU=;
-        b=psn2xyuqZjkVKoauKQImB1HSMc00iEKaUAmLhVY6xKLiqSMNcgxTNVg7eKDu7e5o3t
-         Z5QN8EOHSdmRfzR9kU6cllF2CfdmaKB4UO6W66ZmYIBuHZy7fv20iF28JYyi9DPaGgK5
-         j1EWKXmLwx/IWQv6jzDDX8h24ROC40ZWnwuNMc5nrpzskM9tNXuztr6r541ZfOdUhVLL
-         64Y4S/ZyTEC0IOZeRZ7Grre4yUB7eMhky4B2uB591rVVe5GkVk7Gbs4Rw8PM/3qMagor
-         SlJTD1de+DtwTEhO+snMgvMIbuI4fpwX2QM5FWmlyeXgGnPWU3H5Fxzh6X25BrrwZ98y
-         Vcaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731111829; x=1731716629;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gCUSp8vZt+etdZ/oJELhkYG4M5ycIKVOibuDoFx6fIU=;
-        b=Xvqm+qu8CKyOzG0DySlqyJsmcZnXYZQKQEJ5e2Yf9D76w8OMQPuiIOuVQY3YXTYQsp
-         6So+4RNP0eiW6CvzRBv5MEvWiAD9tf4HDySfnXAVGjk3sHeA0wc3KbrPBc+kRpBVE/2f
-         tFxXdh/RmPccQgJVPScXO/FDpI5/k5ehxuuWgtuzObevViXx/lUZPC5s+pKoHGwKfZ95
-         FMZgPalAh20seKFUhSTgNmn9A71AAS5p8xRyHYIOzhy5gzG+PxKzolwYQEWQ6hwc+n7j
-         tzTRuUrN14EmJqNnX4cUBok850Ywt7/ODHCwbCztgaWNbV5J1qRCAVk/B1+yiFzolo9H
-         2VLQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUFYCxhzDrMGpjM6Jwz65mvBVyZxTO1pqDIooqnYPqZyqsTwnO8dhk/oCqMSLcoanSNgZfqk+kSymXF6tbJ@vger.kernel.org
-X-Gm-Message-State: AOJu0YxdWYW5Wlj0wvu2tAQ45rNhnKAQRlRuEM2CPBUd4vxxYgjWSKwr
-	E11/mjXf45RYuPvb6XKg9o66RABrJSa0WPbSdSF4ZFJOpZBaVV4OYgFLNzFgY9M=
-X-Google-Smtp-Source: AGHT+IFRWk001tkq1A4/3uIoY4IY1UFsTqMCK1GVPAMXfalK9z2bqEPusxsZuSeSFQxPzDkOgwfPkQ==
-X-Received: by 2002:a05:651c:549:b0:2fa:dadf:aad5 with SMTP id 38308e7fff4ca-2ff202683eamr27805411fa.28.1731111829101;
-        Fri, 08 Nov 2024 16:23:49 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ff17910e1csm8492181fa.68.2024.11.08.16.23.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Nov 2024 16:23:47 -0800 (PST)
-Date: Sat, 9 Nov 2024 02:23:45 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-Cc: srinivas.kandagatla@linaro.org, robh@kernel.org, krzk+dt@kernel.org, 
-	conor+dt@kernel.org, amitk@kernel.org, thara.gopinath@gmail.com, rafael@kernel.org, 
-	daniel.lezcano@linaro.org, rui.zhang@intel.com, lukasz.luba@arm.com, andersson@kernel.org, 
-	konradybcio@kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, quic_srichara@quicinc.com, 
-	quic_varada@quicinc.com
-Subject: Re: [PATCH v7 3/7] thermal/drivers/tsens: Add TSENS enable and
- calibration support for V2
-Message-ID: <z24xwwdtd6rytktxtuagiwbiukwd5tvfhotbbydizwsjtlnaob@q3ujwf2eiwds>
-References: <20241107140550.3260859-1-quic_mmanikan@quicinc.com>
- <20241107140550.3260859-4-quic_mmanikan@quicinc.com>
+	s=arc-20240116; t=1731116921; c=relaxed/simple;
+	bh=hclgpLx1u2thY5Z106IKKLi95qjbn5TRUXM80nF2DhQ=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=DAiw4/dlJLghUrD9lzgr5vLmuq1ZgsPM3hkgRO/BiC/ksaPIrQWOa8pSSsvhqTo6eGkYNmoecsSvbbD8/zzL7FYbXFTL/xBa+ZCawMfI1Ur7Lr3CWDw+a9mePlyCdpzFnbTAr8H4a5MKDuklMIdgv1clG92DajeORC5Nz2ZgZOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QlD3jwbU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A569FC4CECD;
+	Sat,  9 Nov 2024 01:48:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1731116920;
+	bh=hclgpLx1u2thY5Z106IKKLi95qjbn5TRUXM80nF2DhQ=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=QlD3jwbUPMhO0wAmxenZoBqw4+Iv7j8dLfsMK7H5PIx/RPu9Aj8ZnLwvgfN43KDaI
+	 +5t9l8KLlPt4+QSXCmrpjUnSQqrBM5Mep7BGsv/bBEudHkGL7B5f8c04qwdH+a+CCQ
+	 ++7RfQSiYMNtSS+mPa+yh7oZhFQX2WbVowoIa5ek/O5tUVBsl8gAZIlZX9k6tYbBma
+	 N2cVM+c+nrgVN4EWSOA4HWBHus+HDtUpZT7cY+NQOTpPZTh+2nlDuMo0lQTkeNfAYT
+	 +nr/iw0DRnj8uwTJgtPu7xVeTVm1To1ANHJ8ulJjI+0A8HS3J7lMK/oTvMvyf5ZoeN
+	 KEGReDo9Q+Ihg==
+From: Mark Brown <broonie@kernel.org>
+To: linux-sound@vger.kernel.org, srinivas.kandagatla@linaro.org, 
+ Alexey Klimov <alexey.klimov@linaro.org>
+Cc: lgirdwood@gmail.com, robh@kernel.org, krzk+dt@kernel.org, 
+ conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org, 
+ perex@perex.cz, tiwai@suse.com, linux-arm-msm@vger.kernel.org, 
+ devicetree@vger.kernel.org, dmitry.baryshkov@linaro.org, 
+ krzysztof.kozlowski@linaro.org, caleb.connolly@linaro.org, 
+ linux-kernel@vger.kernel.org, a39.skl@gmail.com
+In-Reply-To: <20241018025452.1362293-1-alexey.klimov@linaro.org>
+References: <20241018025452.1362293-1-alexey.klimov@linaro.org>
+Subject: Re: (subset) [PATCH v3 0/5] rb4210-rb2: add HDMI audio playback
+ support
+Message-Id: <173111691639.152465.4987333033665920086.b4-ty@kernel.org>
+Date: Sat, 09 Nov 2024 01:48:36 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241107140550.3260859-4-quic_mmanikan@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.15-dev-9b746
 
-On Thu, Nov 07, 2024 at 07:35:46PM +0530, Manikanta Mylavarapu wrote:
-> From: Praveenkumar I <quic_ipkumar@quicinc.com>
+On Fri, 18 Oct 2024 03:54:46 +0100, Alexey Klimov wrote:
+> Rebased on top of -next, re-tested.
 > 
-> SoCs without RPM need to enable sensors and calibrate them from the kernel.
-> The IPQ5332 and IPQ5424 use the tsens v2.3.3 IP and do not have RPM.
-> Therefore, add a new calibration function for V2, as the tsens.c calib
-> function only supports V1. Also add new feature_config, ops and data for
-> IPQ5332, IPQ5424.
+> Changes since v2:
+> -- added tags, updated commit messages, added Cc;
+> -- updated LT9611 -> LT9611UXC comment in qrb4210-rb2.dts;
+> -- updated addresses in DT to 8 hex digits as requested by Dmitry;
+> -- added lpass pinctrl to sm6115.dtsi as suggested by Dmitry;
+> -- added lpass pinctrl override and pins description to sm4250.dtsi,
+> pins are the property of sm4250;
+> -- verified with make dtbs_check as suggested by Krzysztof and Rob's bot.
+> -- dropped two patches (they seem to be merged):
+> [PATCH v2 1/7] ASoC: dt-bindings: qcom,sm8250: add qrb4210-rb2-sndcard
+> [PATCH v2 2/7] ASoC: qcom: sm8250: add qrb4210-rb2-sndcard compatible string
+> -- stopped Cc-ing out-of-date emails;
 > 
-> Although the TSENS IP supports 16 sensors, not all are used. The hw_id
-> is used to enable the relevant sensors.
-> 
-> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-> ---
-> Changes in V7:
-> 	- Move val calculation out of switch-case and assign default
-> 	  values to shift, slope and czero and then change them under
-> 	  switch-case in tsens_v2_calibrate_sensor().
-> 
->  drivers/thermal/qcom/tsens-v2.c | 176 ++++++++++++++++++++++++++++++++
->  drivers/thermal/qcom/tsens.c    |   8 +-
->  drivers/thermal/qcom/tsens.h    |   4 +-
->  3 files changed, 186 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/thermal/qcom/tsens-v2.c b/drivers/thermal/qcom/tsens-v2.c
-> index 0cb7301eca6e..6d2783577139 100644
-> --- a/drivers/thermal/qcom/tsens-v2.c
-> +++ b/drivers/thermal/qcom/tsens-v2.c
-> @@ -4,13 +4,32 @@
->   * Copyright (c) 2018, Linaro Limited
->   */
->  
-> +#include <linux/bitfield.h>
->  #include <linux/bitops.h>
->  #include <linux/regmap.h>
-> +#include <linux/nvmem-consumer.h>
->  #include "tsens.h"
->  
->  /* ----- SROT ------ */
->  #define SROT_HW_VER_OFF	0x0000
->  #define SROT_CTRL_OFF		0x0004
-> +#define SROT_MEASURE_PERIOD	0x0008
-> +#define SROT_Sn_CONVERSION	0x0060
-> +#define V2_SHIFT_DEFAULT	0x0003
-> +#define V2_SLOPE_DEFAULT	0x0cd0
-> +#define V2_CZERO_DEFAULT	0x016a
-> +#define ONE_PT_SLOPE		0x0cd0
-> +#define TWO_PT_SHIFTED_GAIN	921600
-> +#define ONE_PT_CZERO_CONST	94
-> +#define SW_RST_DEASSERT		0x0
-> +#define SW_RST_ASSERT		0x1
-> +#define MEASURE_PERIOD_2mSEC	0x1
-> +#define RSEULT_FORMAT_TEMP	0x1
-> +#define TSENS_ENABLE		0x1
-> +#define SENSOR_CONVERSION(n)	(((n) * 4) + SROT_Sn_CONVERSION)
-> +#define CONVERSION_SHIFT_MASK	GENMASK(24, 23)
-> +#define CONVERSION_SLOPE_MASK	GENMASK(22, 10)
-> +#define CONVERSION_CZERO_MASK	GENMASK(9, 0)
->  
->  /* ----- TM ------ */
->  #define TM_INT_EN_OFF			0x0004
-> @@ -50,6 +69,17 @@ static struct tsens_features ipq8074_feat = {
->  	.trip_max_temp	= 204000,
->  };
->  
-> +static struct tsens_features ipq5332_feat = {
-> +	.ver_major	= VER_2_X_NO_RPM,
-> +	.crit_int	= 1,
-> +	.combo_int	= 1,
-> +	.adc		= 0,
-> +	.srot_split	= 1,
-> +	.max_sensors	= 16,
-> +	.trip_min_temp	= 0,
-> +	.trip_max_temp	= 204000,
-> +};
-> +
->  static const struct reg_field tsens_v2_regfields[MAX_REGFIELDS] = {
->  	/* ----- SROT ------ */
->  	/* VERSION */
-> @@ -59,6 +89,10 @@ static const struct reg_field tsens_v2_regfields[MAX_REGFIELDS] = {
->  	/* CTRL_OFF */
->  	[TSENS_EN]     = REG_FIELD(SROT_CTRL_OFF,    0,  0),
->  	[TSENS_SW_RST] = REG_FIELD(SROT_CTRL_OFF,    1,  1),
-> +	[SENSOR_EN]    = REG_FIELD(SROT_CTRL_OFF,    3,  18),
-> +	[CODE_OR_TEMP] = REG_FIELD(SROT_CTRL_OFF,    21, 21),
-> +
-> +	[MAIN_MEASURE_PERIOD] = REG_FIELD(SROT_MEASURE_PERIOD, 0, 7),
->  
->  	/* ----- TM ------ */
->  	/* INTERRUPT ENABLE */
-> @@ -104,6 +138,126 @@ static const struct reg_field tsens_v2_regfields[MAX_REGFIELDS] = {
->  	[TRDY] = REG_FIELD(TM_TRDY_OFF, 0, 0),
->  };
->  
-> +static int tsens_v2_calibrate_sensor(struct device *dev, struct tsens_sensor *sensor,
-> +				     struct regmap *map,  u32 mode, u32 base0, u32 base1)
-> +{
-> +	u32 shift = V2_SHIFT_DEFAULT;
-> +	u32 slope = V2_SLOPE_DEFAULT, czero = V2_CZERO_DEFAULT, val;
-> +	char name[8];
-> +	int ret;
-> +
-> +	/* Read offset value */
-> +	ret = snprintf(name, sizeof(name), "s%d", sensor->hw_id);
-> +	if (ret < 0)
-> +		return ret;
-> +
-> +	ret = nvmem_cell_read_variable_le_u32(dev, name, &sensor->offset);
-> +	if (ret)
-> +		return ret;
-> +
-> +	/* Based on calib mode, program SHIFT, SLOPE and CZERO */
-> +	switch (mode) {
-> +	case TWO_PT_CALIB:
-> +		slope = (TWO_PT_SHIFTED_GAIN / (base1 - base0));
-> +
-> +		czero = (base0 + sensor->offset - ((base1 - base0) / 3));
-> +
-> +		fallthrough;
-> +	case ONE_PT_CALIB2:
-> +		czero = base0 + sensor->offset - ONE_PT_CZERO_CONST;
+> [...]
 
-THis will override czero calculation from TWO_PT_CALIB case.
+Applied to
 
-> +
-> +		slope = ONE_PT_SLOPE;
-> +
-> +		break;
-> +	default:
-> +		dev_dbg(dev, "calibrationless mode\n");
-> +	}
-> +
-> +	val =	FIELD_PREP(CONVERSION_SHIFT_MASK, shift) |
-> +		FIELD_PREP(CONVERSION_SLOPE_MASK, slope) |
-> +		FIELD_PREP(CONVERSION_CZERO_MASK, czero);
-> +
-> +	regmap_write(map, SENSOR_CONVERSION(sensor->hw_id), val);
-> +
-> +	return 0;
-> +}
-> +
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
 
--- 
-With best wishes
-Dmitry
+Thanks!
+
+[1/5] ASoC: qcom: sm8250: add handling of secondary MI2S clock
+      commit: ed7bca5b2b891caedf2ed3ffc427eba23559da95
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
 
