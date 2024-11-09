@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-37405-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37406-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A0F299C2EB8
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Nov 2024 18:22:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E424C9C2ECB
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Nov 2024 18:32:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 64F81281CF0
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Nov 2024 17:22:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 957F3280F42
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Nov 2024 17:32:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A1B019E967;
-	Sat,  9 Nov 2024 17:22:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB4EA13CA95;
+	Sat,  9 Nov 2024 17:32:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oM+ZguEX"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cQeV18nC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FFFBECF
-	for <linux-arm-msm@vger.kernel.org>; Sat,  9 Nov 2024 17:22:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E16F72556E
+	for <linux-arm-msm@vger.kernel.org>; Sat,  9 Nov 2024 17:32:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731172933; cv=none; b=GswAj/UJes/r8KM8AmEnEDH7iTUV0S4YNX+kJLfGKS7HCjGCWDO5828J0O4Lvvt4pp7Ptob3MFtf7cyAa6eoJmOjTGYCLdU8tTZML6DxQWTkjlmkN8+k1Sz2zztcC44cVGaagb9CKkodY4RwSYtPAJG68v9Mh+/Nip34aNiRkzg=
+	t=1731173558; cv=none; b=AIXOaGslQcLCzZL12DLP+1ZAUlsr4Fcta9X1c7aIeQW3yvK7OejtjYesPfpd2vpl0oxOwhfesKp8+RO75Dg7Yi4dYLe4dc771TQnCTB88fPtOJG1uGGqK4PuyMjkZdbCNAz0ih2xgw2i0PwjqIHFgNfvqUYpoMLl0r7dqSYAjPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731172933; c=relaxed/simple;
-	bh=pgL8gsiXuEpe78oaOwjEtqdG8Xlsm054EJXb7d6pd7Q=;
+	s=arc-20240116; t=1731173558; c=relaxed/simple;
+	bh=oZjEXKpbPtj7ttMs05EhUXZ+US9I3Z5OX+ylmkahyFk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ESZPcRuMcrCQjNBlWsItjS/KW5EDl2GcGqRy7HHBEpUID1nq/rghUDju3rMKx+m/nQ/wKCSI1qldKm91cv0SKg+sAnVylM5B9bXAdxLvFyhX+RQ13z/kLEvZRpovsTmgJl+KdAPlDbLKyTr+XHXW8pAV2VM8dBsZYj1woAU69r8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oM+ZguEX; arc=none smtp.client-ip=209.85.221.52
+	 In-Reply-To:Content-Type; b=j/U13YacMxCmXVPODu8nMZ3uek8XqHvdnMlabOJVeSRERBT4zohPV1lFc/v7+AStkE4fJ6ET2kYZqTc68wN5oReHNdp9QMUVjNZXDQuGMZSl+7y6nfFiWstmUZohW4kI1c8LzOWDuJ4RcnMt0hS3R8+ce68t1DE9/iZk85p25Ko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cQeV18nC; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-37d4a5ecc44so2064817f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 09 Nov 2024 09:22:09 -0800 (PST)
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4315839a7c9so29968365e9.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 09 Nov 2024 09:32:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731172928; x=1731777728; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1731173555; x=1731778355; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=5H+n8hKwMU/rFaCD0qvnq17NXDKqhdH26m0nFiBdOLY=;
-        b=oM+ZguEXfwzEOX3QoaBZ5AcZCNo3KI6oNA5P44mMKID10EwP9JZbM25g8mpw0Pge3m
-         xmz4TT4ncIYvgiKY9m/YnaJXaVXEc1aRf6/OnZZ28agEBr4iWdXXCzek21ODu6mXvDWV
-         bxTHhDfQHkuOUS1ejUnQpYvXxkEphxXk7IO5U81BKczVK2B43aRP3EeR+iQHhqnDMll+
-         anMkN6tqyqtnHugdP+h9EGdk0tu6uoJc8kpBiOP+PjxkyR+OEvtyIAlvpiEofuL5xcFy
-         +qj9REtU4d4J1NsHQfuMfTYNSg0eavkLLd2TcINy3UcFW+WXp0MoodbD0mkcIJOBBCFz
-         Casg==
+        bh=qrd7Q+hT4RWLlTYkRiopljgomDNa2/49Dcp33gRQK8U=;
+        b=cQeV18nC7uVSAi+wt2y2rgNNLVrKRwnhu0Zy8xXi/YHMbhXPvA33Dkkmfcfxj1EXKa
+         WIeOYwN4YiaqaNaSmPiqW8ihUJUnBd9cZ9VgFryxOo3GyLMJ7stOb2KNixkUpA4yL/BA
+         QeEve/5jjUAvJV1nuHzcZnoayoBizYPWtDsYqrJT+47lzCL8aLRCvDk30CCgs96SRYW+
+         CxIxRdEQKh4NZLkxcbgkWr1JYfKLqBXOQFZpPC0ne3DuVA8ykzU4+JQPgtAtMNAwCmso
+         j4XyMfdbJkbXmfbKEG+o4jy4pOHXb2ZqehZ00yVsViEZzn1RODt0d51S2hXi0o9a9WYn
+         GDcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731172928; x=1731777728;
+        d=1e100.net; s=20230601; t=1731173555; x=1731778355;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5H+n8hKwMU/rFaCD0qvnq17NXDKqhdH26m0nFiBdOLY=;
-        b=YGUPLcCDJakF80glLrl1dkj0x4/bR7UlSc6gEqf+Hy6P2MVhgbZvYBVAAk7zxWSyAN
-         DfoiueVbdNdTa/iHICYugfbz/Ykn5nri1F7/mr+Qj6WUxuBJcjnmGwSvWyWZzNt+uK71
-         m3KitQE/KDFBi+Cx0e7HYX1TThYREzaShHJiaxtOHR0E+RzQadXIBRGWzDlODkhlniAi
-         T6egs+gxzwP67hGaoKb+P7OM3rNnXyn6tZgfLoSQyEiQbzT1bv/efW9py/6Fjm0rqlt2
-         da/gP+ezwI86S+2Crsi6mfRdKhASNolwcu7ds63oywWwFqhvpHhRC/4OUImuiubLgAJG
-         eUaQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX9zG1m6Mn1CaOd3Gqs2bO4v9oLxZYIqfRNFgSETsN9IodKHqG//xNUnzaC++0xXowNTlxTXivflh3nj12n@vger.kernel.org
-X-Gm-Message-State: AOJu0YwgjpJFSiMBTSvCT+1DkhrkgD74kzEdRB8qqoigO4E/lyfWHHQQ
-	Zxx4F91BMPNc8SpBjXra6EwCmr+eiem26BRMOaphSRo91vKFkldEDj9wsBXDK3A=
-X-Google-Smtp-Source: AGHT+IE1RYOVGklIyE1IORLaNjLIY04lZliu8TKuSyMeu3g+/8dlg1C+LHnaQGhacvYdKXljs5Yrzg==
-X-Received: by 2002:a05:6000:418a:b0:374:cd3e:7d98 with SMTP id ffacd0b85a97d-381f186d1a8mr4237152f8f.19.1731172928458;
-        Sat, 09 Nov 2024 09:22:08 -0800 (PST)
+        bh=qrd7Q+hT4RWLlTYkRiopljgomDNa2/49Dcp33gRQK8U=;
+        b=BRSiJcUsTosRF1++Gzfgzc7PrcjzUTikzkMQRtNVxAFgimGTfQ1XKpSakAFXpUpLo4
+         2cHnns/tP0bT1xRjdZzpKIHrW7fLRLDgqQpQpYANx1I+1yqW7gSFcQUjDAHwhbbP0zOg
+         D4Yjvf3KnEm1P12ihkGbjefyhd7vqOoLxX4WRdtRV5QPLvlEtOiCxjQTO2TClQqUY/fP
+         i0VIDKU+9dhbfOwOnfqFXdHO88M28VSjZpJx+rXt07gWMyf/UWeXfRHRr5AmMdcW7c3Y
+         bny/0NfFxG35BEmnkF6BIGMu+324MLVPPZm55nKga2Rtgmqlv5eNjwMU6ArxE2vU266B
+         J77Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWnCNV+33YuOw0XMoh173qTQZYKAPjpuJY1ET2wp6HlU6sU3SNPaMzUDQ9FkuhWYoI5KtE7fFbjzVDwq3QZ@vger.kernel.org
+X-Gm-Message-State: AOJu0YwGpSsHzahP/As0S2iSYZ0zmXGWtADYY+TBVUDNxbgLyY8ppzNJ
+	XPDnbKH6ILEt+BMOtvvxIJUm7hnSxpOody4ayeCTEE70Kctw4Gf2CtEmGCPmyCg=
+X-Google-Smtp-Source: AGHT+IE1q8fwdQ3BkqSY4LENvnUv/wVEuo+qnF+jrEdQYc+Aa1DTDS756o74ILXyq3lGqKpHh72kRA==
+X-Received: by 2002:a05:6000:78a:b0:37d:4ebe:164b with SMTP id ffacd0b85a97d-381f1885557mr5901995f8f.44.1731173555210;
+        Sat, 09 Nov 2024 09:32:35 -0800 (PST)
 Received: from [192.168.0.48] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381ed997320sm8285603f8f.47.2024.11.09.09.22.06
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381ed9707d3sm8132812f8f.19.2024.11.09.09.32.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 09 Nov 2024 09:22:07 -0800 (PST)
-Message-ID: <d4afdd01-3147-4cfc-820a-f6004637e6bf@linaro.org>
-Date: Sat, 9 Nov 2024 17:22:06 +0000
+        Sat, 09 Nov 2024 09:32:34 -0800 (PST)
+Message-ID: <ab4b80fa-6321-462a-ba1d-151424d1c94f@linaro.org>
+Date: Sat, 9 Nov 2024 17:32:32 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,57 +76,115 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 10/11] clk: qcom: videocc-qcs615: Add QCS615 video
- clock controller driver
-To: Taniya Das <quic_tdas@quicinc.com>, Bjorn Andersson
- <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>,
- Stephen Boyd <sboyd@kernel.org>, Abhishek Sahu <absahu@codeaurora.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Catalin Marinas
- <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>
-Cc: Ajit Pandey <quic_ajipan@quicinc.com>,
- Imran Shaik <quic_imrashai@quicinc.com>,
- Jagadeesh Kona <quic_jkona@quicinc.com>, linux-arm-msm@vger.kernel.org,
- linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-References: <20241108-qcs615-mm-clockcontroller-v3-0-7d3b2d235fdf@quicinc.com>
- <20241108-qcs615-mm-clockcontroller-v3-10-7d3b2d235fdf@quicinc.com>
+Subject: Re: [PATCH v5 02/28] media: iris: add platform driver for iris video
+ device
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>
+Cc: Hans Verkuil <hverkuil@xs4all.nl>,
+ Sebastian Fricke <sebastian.fricke@collabora.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Nicolas Dufresne <nicolas@ndufresne.ca>,
+ =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+ Jianhua Lu <lujianhua000@gmail.com>, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20241105-qcom-video-iris-v5-0-a88e7c220f78@quicinc.com>
+ <20241105-qcom-video-iris-v5-2-a88e7c220f78@quicinc.com>
 Content-Language: en-US
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20241108-qcs615-mm-clockcontroller-v3-10-7d3b2d235fdf@quicinc.com>
+In-Reply-To: <20241105-qcom-video-iris-v5-2-a88e7c220f78@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 08/11/2024 04:09, Taniya Das wrote:
-> +static struct gdsc vcodec0_gdsc = {
-> +	.gdscr = 0x874,
-> +	.en_rest_wait_val = 0x2,
-> +	.en_few_wait_val = 0x2,
-> +	.clk_dis_wait_val = 0x6,
-> +	.pd = {
-> +		.name = "vcodec0_gdsc",
-> +	},
-> +	.pwrsts = PWRSTS_OFF_ON,
-> +	.flags = HW_CTRL_TRIGGER | POLL_CFG_GDSCR,
-> +};
+On 05/11/2024 06:55, Dikshita Agarwal wrote:
+> In preparation of adding H264 decode functionality, add probe and remove
+> functions and platform data to initialize iris resources, which are
+> clocks, interconnects, power domains, reset clocks, and clock
+> frequencies used for iris hardware.
+> 
+> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+> ---
+>   drivers/media/platform/qcom/Kconfig                |   1 +
+>   drivers/media/platform/qcom/Makefile               |   1 +
+>   drivers/media/platform/qcom/iris/Kconfig           |   9 +
+>   drivers/media/platform/qcom/iris/Makefile          |   4 +
+>   drivers/media/platform/qcom/iris/iris_core.h       |  54 +++++
+>   .../platform/qcom/iris/iris_platform_common.h      |  35 +++
+>   .../platform/qcom/iris/iris_platform_sm8550.c      |  37 ++++
+>   drivers/media/platform/qcom/iris/iris_probe.c      | 237 +++++++++++++++++++++
+>   8 files changed, 378 insertions(+)
+> 
+> diff --git a/drivers/media/platform/qcom/Kconfig b/drivers/media/platform/qcom/Kconfig
+> index cc5799b9ea00..4f4d3a68e6e5 100644
+> --- a/drivers/media/platform/qcom/Kconfig
+> +++ b/drivers/media/platform/qcom/Kconfig
+> @@ -3,4 +3,5 @@
+>   comment "Qualcomm media platform drivers"
+>   
+>   source "drivers/media/platform/qcom/camss/Kconfig"
+> +source "drivers/media/platform/qcom/iris/Kconfig"
+>   source "drivers/media/platform/qcom/venus/Kconfig"
+> diff --git a/drivers/media/platform/qcom/Makefile b/drivers/media/platform/qcom/Makefile
+> index 4f055c396e04..ea2221a202c0 100644
+> --- a/drivers/media/platform/qcom/Makefile
+> +++ b/drivers/media/platform/qcom/Makefile
+> @@ -1,3 +1,4 @@
+>   # SPDX-License-Identifier: GPL-2.0-only
+>   obj-y += camss/
+> +obj-y += iris/
+>   obj-y += venus/
+> diff --git a/drivers/media/platform/qcom/iris/Kconfig b/drivers/media/platform/qcom/iris/Kconfig
+> new file mode 100644
+> index 000000000000..34a2f81c5db3
+> --- /dev/null
+> +++ b/drivers/media/platform/qcom/iris/Kconfig
+> @@ -0,0 +1,9 @@
+> +config VIDEO_QCOM_IRIS
+> +        tristate "Qualcomm iris V4L2 decoder driver"
+> +        depends on VIDEO_DEV
+> +        depends on ARCH_QCOM || COMPILE_TEST
+> +        help
+> +          This is a V4L2 driver for Qualcomm iris video accelerator
+> +          hardware. It accelerates decoding operations on various
+> +          Qualcomm SoCs.
+> +          To compile this driver as a module choose m here.
+> diff --git a/drivers/media/platform/qcom/iris/Makefile b/drivers/media/platform/qcom/iris/Makefile
+> new file mode 100644
+> index 000000000000..7e701361492e
+> --- /dev/null
+> +++ b/drivers/media/platform/qcom/iris/Makefile
+> @@ -0,0 +1,4 @@
+> +iris-objs += iris_platform_sm8550.o \
+> +             iris_probe.o \
 > +
-> +static struct gdsc venus_gdsc = {
-> +	.gdscr = 0x814,
-> +	.en_rest_wait_val = 0x2,
-> +	.en_few_wait_val = 0x2,
-> +	.clk_dis_wait_val = 0x6,
-> +	.pd = {
-> +		.name = "venus_gdsc",
-> +	},
-> +	.pwrsts = PWRSTS_OFF_ON,
-> +	.flags = POLL_CFG_GDSCR,
-> +};
+> +obj-$(CONFIG_VIDEO_QCOM_IRIS) += iris.o
+> diff --git a/drivers/media/platform/qcom/iris/iris_core.h b/drivers/media/platform/qcom/iris/iris_core.h
+> new file mode 100644
+> index 000000000000..dd0e2650641a
+> --- /dev/null
+> +++ b/drivers/media/platform/qcom/iris/iris_core.h
+> @@ -0,0 +1,54 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
 > +
+> +#ifndef _IRIS_CORE_H_
+> +#define _IRIS_CORE_H_
 
-This looks good to me, except; could you please check if venus gdsc 
-should be the parent of vcodec0.
+Its more usual to do two underscores __LIKE_SO__
 
-If so, please add it in, otherwise.
+Once amended.
 
 Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+
+Please remember to similarly update other headers in your series.
+
+---
+bod
 
