@@ -1,190 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-37428-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37429-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 38DB29C33C3
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Nov 2024 17:06:26 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 978819C33D4
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Nov 2024 17:47:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6AB6B1C20A59
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Nov 2024 16:06:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 402C11F21071
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Nov 2024 16:47:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9DBC5C603;
-	Sun, 10 Nov 2024 16:06:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34A8E4D8D1;
+	Sun, 10 Nov 2024 16:47:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OrR+nUkJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-m17248.xmail.ntesmail.com (mail-m17248.xmail.ntesmail.com [45.195.17.248])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DE2D1BC2A;
-	Sun, 10 Nov 2024 16:06:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.195.17.248
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 098364778E;
+	Sun, 10 Nov 2024 16:47:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731254781; cv=none; b=qQmBIHKF7594KrE/upoQmyFkwL7bAEV2tpEjhFzF+n1Lhr7DUKYfKrlhJtnqY4MSVZPE2iRXwmsp2LAkYlU0luPMM1ND0oL/e4QWvR7P4rLea/g38zh/gn572HgGf7CrhNw/fHXtvl9oYXzCKAYRBrm4WBPe62SWrOdrLlUT6E4=
+	t=1731257237; cv=none; b=SjIzJVN/z0GdXyJvDw7a3vxujfkBouRjFAL8jrAQZjsVI1MU89iHEs0/EA1t96nNBEtx3CCKvXnUnGBvbBcO4YajddLampWdCtASmF3jHbl/yFY2e+5PTXeu5MoIIbB3eIOmWBwofkNzSpTwwKcFCJq034Gh4/solRNNxdpZ+dM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731254781; c=relaxed/simple;
-	bh=VEiCcVBUQAXwHu1ffrHgeG5LsZdIgEmHmhV+woKGDz4=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=ADQiof4dycjY30TWPoJ2TTH6aUXTnTEeU/PK9LBH57CAKwXbNJRaS5bu/pq3zu8FqU7L44FywiigaWrMPxjvemGBB60mH12qmwBunPHWY5iTL4N10aKM+T5bj/6dK/hMNQ6OsEqVVYDMej0PD6Wn05keiZzFQJ3MGLQ0qyS6qP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=45.195.17.248
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
-Received: from amadeus-Vostro-3710.lan (unknown [IPV6:240e:3b3:2c03:51e0::1])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 250d5e7c;
-	Sun, 10 Nov 2024 23:30:41 +0800 (GMT+08:00)
-From: Chukun Pan <amadeus@jmu.edu.cn>
-To: amadeus@jmu.edu.cn
-Cc: andersson@kernel.org,
-	conor+dt@kernel.org,
-	devicetree@vger.kernel.org,
-	konradybcio@kernel.org,
-	krzk+dt@kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v4 3/4] arm64: dts: qcom: ipq6018: move mp5496 regulator out of soc dtsi
-Date: Sun, 10 Nov 2024 23:30:36 +0800
-Message-Id: <20241110153036.3645169-2-amadeus@jmu.edu.cn>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20241110153036.3645169-1-amadeus@jmu.edu.cn>
-References: <20241110140019.3426181-1-amadeus@jmu.edu.cn>
- <20241110153036.3645169-1-amadeus@jmu.edu.cn>
+	s=arc-20240116; t=1731257237; c=relaxed/simple;
+	bh=VGC2pIhZ+IDQ2o0aJN8sRl69nsKEozNmQTG3IEvbxKU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=unmGPHKi/ej4x5zTQtRI73o6V2vSVHy47QvzLY0+CGXTTx7EFeNrK/knqQpZXWYfXjfBshw90OJvdUysbE1TTxzlwoim009m4By7e7rYyY3fm/5U05itlSfcoUAD7/lZiz6SXbtXLgN8BFL0UQ06s4Dx6NwWMBeEluLUtCrgtyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OrR+nUkJ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3878C4CECD;
+	Sun, 10 Nov 2024 16:47:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1731257236;
+	bh=VGC2pIhZ+IDQ2o0aJN8sRl69nsKEozNmQTG3IEvbxKU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=OrR+nUkJ3bVOgtiK8F1MkijjiLACCSt+qLcmc6zPGxUQtm1LEJUun/AWRwTNsF8rW
+	 A5uzZkGA3DKEANdXaWyq1dDgh3xgTXY5f5KjOsER55oVzsawGw0GgYQIjFsALsrAxP
+	 HNTmUchhgJvz64QjzxxgKqW6xHOzE3EwOvzQthgLDWr1mBNsprio1NrrgkzL6hc8ZZ
+	 3934oyHXrgar6FUUbFWCzHLuyR+tosfhLaCIBl5cw8AZMQv7hmZbi3EfifiggpsqbR
+	 Zr57jui04VqejufQbkRuCRGC3+53hYViEtgQt7lvL7xtCHC7lgYdOWdIX/P9eTI392
+	 bJF+yjnRIkY1w==
+Date: Sun, 10 Nov 2024 10:47:13 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Marc Zyngier <maz@kernel.org>
+Cc: Catalin Marinas <catalin.marinas@arm.com>, 
+	Will Deacon <will@kernel.org>, Linus Torvalds <torvalds@linux-foundation.org>, 
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Bjorn Andersson <quic_bjorande@quicinc.com>
+Subject: Re: [PATCH v2] arm64: Allow packing uncompressed images into distro
+ packages
+Message-ID: <el65ezf4w2rj67afgvspn3ehyatvbc7jllkcpfc23mfeo6fsni@4t5vytmetz2p>
+References: <20240910-uncompressed-distro-packages-v2-1-51538434787f@quicinc.com>
+ <86wmi83sl5.wl-maz@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlCQkoeVk8YTRhJThhLH0hOT1YeHw5VEwETFhoSFy
-	QUDg9ZV1kYEgtZQVlJT0seQUgZSEFJGEtIQU5KHktBQUpZV1kWGg8SFR0UWUFZT0tIVUpLSEpOTE
-	5VSktLVUpCS0tZBg++
-X-HM-Tid: 0a9316b2df5b03a2kunm250d5e7c
-X-HM-MType: 10
-X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6Kzo6TAw5GTIaPC0DMwssAkgc
-	NgIKCQtVSlVKTEhKSU5JTU9JSU9NVTMWGhIXVRoWGh8eDgg7ERYOVR4fDlUYFUVZV1kSC1lBWUlP
-	Sx5BSBlIQUkYS0hBTkoeS0FBSllXWQgBWUFIT0lNNwY+
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <86wmi83sl5.wl-maz@kernel.org>
 
-Some IPQ60xx SoCs don't come with the mp5496 pmic chip. The mp5496
-pmic was never part of the IPQ60xx SoC, it's optional, so we moved
-it out of the soc dtsi.
+On Wed, Oct 16, 2024 at 05:44:54PM +0100, Marc Zyngier wrote:
+> Hi Bjorn,
+> 
+> On Wed, 11 Sep 2024 03:53:16 +0100,
+> Bjorn Andersson <andersson@kernel.org> wrote:
+> > 
+> > From: Bjorn Andersson <quic_bjorande@quicinc.com>
+> > 
+> > The distro packages (deb-pkg, pacman-pkg, rpm-pkg) are generated using
+> > the compressed kernel image, which means that the kernel once installed
+> > can not be booted with systemd-boot.
+> 
+> Are you sure? I just installed a guest with systemd-boot
+> (252.30-1~deb12u, as shipped in Debian), and it is perfectly able to
+> boot a compressed kernel.
+> 
 
-Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
----
- arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts |  2 +-
- arch/arm64/boot/dts/qcom/ipq6018-mp5496.dtsi | 35 ++++++++++++++++++++
- arch/arm64/boot/dts/qcom/ipq6018.dtsi        | 14 --------
- 3 files changed, 36 insertions(+), 15 deletions(-)
- create mode 100644 arch/arm64/boot/dts/qcom/ipq6018-mp5496.dtsi
+Sorry for the late response, to verify I did "make defconfig bindeb-pkg"
+and crafted a disk image using mkosi. It contains:
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts b/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
-index f5f4827c0e17..9c69d3027b43 100644
---- a/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
-+++ b/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
-@@ -7,7 +7,7 @@
- 
- /dts-v1/;
- 
--#include "ipq6018.dtsi"
-+#include "ipq6018-mp5496.dtsi"
- 
- / {
- 	model = "Qualcomm Technologies, Inc. IPQ6018/AP-CP01-C1";
-diff --git a/arch/arm64/boot/dts/qcom/ipq6018-mp5496.dtsi b/arch/arm64/boot/dts/qcom/ipq6018-mp5496.dtsi
-new file mode 100644
-index 000000000000..fe2152df69f4
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/ipq6018-mp5496.dtsi
-@@ -0,0 +1,35 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
-+/*
-+ * ipq6018-mp5496.dtsi describes common properties (e.g. regulators) that
-+ * apply to most devices that make use of the IPQ6018 SoC and MP5496 PMIC.
-+ */
-+
-+#include "ipq6018.dtsi"
-+
-+&cpu0 {
-+	cpu-supply = <&ipq6018_s2>;
-+};
-+
-+&cpu1 {
-+	cpu-supply = <&ipq6018_s2>;
-+};
-+
-+&cpu2 {
-+	cpu-supply = <&ipq6018_s2>;
-+};
-+
-+&cpu3 {
-+	cpu-supply = <&ipq6018_s2>;
-+};
-+
-+&rpm_requests {
-+	regulators {
-+		compatible = "qcom,rpm-mp5496-regulators";
-+
-+		ipq6018_s2: s2 {
-+			regulator-min-microvolt = <725000>;
-+			regulator-max-microvolt = <1062500>;
-+			regulator-always-on;
-+		};
-+	};
-+};
-diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-index 7514919132b6..a02aa641cb90 100644
---- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-@@ -43,7 +43,6 @@ cpu0: cpu@0 {
- 			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
- 			clock-names = "cpu";
- 			operating-points-v2 = <&cpu_opp_table>;
--			cpu-supply = <&ipq6018_s2>;
- 			#cooling-cells = <2>;
- 		};
- 
-@@ -56,7 +55,6 @@ cpu1: cpu@1 {
- 			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
- 			clock-names = "cpu";
- 			operating-points-v2 = <&cpu_opp_table>;
--			cpu-supply = <&ipq6018_s2>;
- 			#cooling-cells = <2>;
- 		};
- 
-@@ -69,7 +67,6 @@ cpu2: cpu@2 {
- 			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
- 			clock-names = "cpu";
- 			operating-points-v2 = <&cpu_opp_table>;
--			cpu-supply = <&ipq6018_s2>;
- 			#cooling-cells = <2>;
- 		};
- 
-@@ -82,7 +79,6 @@ cpu3: cpu@3 {
- 			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
- 			clock-names = "cpu";
- 			operating-points-v2 = <&cpu_opp_table>;
--			cpu-supply = <&ipq6018_s2>;
- 			#cooling-cells = <2>;
- 		};
- 
-@@ -184,16 +180,6 @@ glink-edge {
- 			rpm_requests: rpm-requests {
- 				compatible = "qcom,rpm-ipq6018", "qcom,glink-smd-rpm";
- 				qcom,glink-channels = "rpm_requests";
--
--				regulators {
--					compatible = "qcom,rpm-mp5496-regulators";
--
--					ipq6018_s2: s2 {
--						regulator-min-microvolt = <725000>;
--						regulator-max-microvolt = <1062500>;
--						regulator-always-on;
--					};
--				};
- 			};
- 		};
- 	};
--- 
-2.25.1
+# apt info systemd-boot
+Package: systemd-boot
+Version: 257~rc1-4
 
+It fails to load my the compressed image:
+../src/boot/efi/boot.c:2557@image_start: Error loading \debian\6.12.0-rc6-next-20241108-00003-ga216563e3174-dirty\vmlinuz: Unsupported
+
+Which is expected per per this discussion:
+https://github.com/systemd/systemd/issues/23788
+
+> > 
+> > This differs from the packages generated by the distros themselves,
+> > which uses the uncompressed image.
+> > 
+> > Use the newly introduced CONFIG_COMPRESSED_INSTALL option to allow
+> > selection of which version of the kernel image should be packaged into
+> > the distro packages.
+> 
+> I'm normally building kernels as Debian packages, without any of
+> CONFIG_EFI_ZBOOT or CONFIG_COMPRESSED_INSTALL.
+> 
+
+My goal is to make "make defconfig bindeb-pkg" (and the other -pkg
+targets) boot out of the box in a "standard system".
+
+> As a result, the installed kernel image of a Debian package shoots up
+> from ~8M to an impressive 25M, since we're not picking the compressed
+> image anymore. Storage may be cheap, but still.
+> 
+
+No argument about this.
+
+> I really don't think CONFIG_COMPRESSED_INSTALL should change the
+> existing behaviours, and a new option would be better suited to enable
+> this new setup if deemed necessary.
+> 
+
+My main concern is that the "make *-pkg" targets create packages with
+the compressed image, while at least Arch Linux Arm, Debian, and Fedora
+are packaging uncompressed images in their official packages.
+
+Regards,
+Bjorn
+
+> Thanks,
+> 
+> 	M.
+> 
+> -- 
+> Without deviation from the norm, progress is not possible.
 
