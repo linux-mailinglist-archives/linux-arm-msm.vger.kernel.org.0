@@ -1,280 +1,629 @@
-Return-Path: <linux-arm-msm+bounces-37441-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37442-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 59FA69C3465
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Nov 2024 20:25:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7D65C9C34CD
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Nov 2024 22:37:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1ACB528212C
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Nov 2024 19:25:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3E0F32812DD
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Nov 2024 21:37:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E94B6155CA5;
-	Sun, 10 Nov 2024 19:24:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2541B156885;
+	Sun, 10 Nov 2024 21:37:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HHhaP79e"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uNPa1blX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 073BD155325;
-	Sun, 10 Nov 2024 19:24:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46D08156256
+	for <linux-arm-msm@vger.kernel.org>; Sun, 10 Nov 2024 21:37:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731266674; cv=none; b=DcRXwB2DqZ3RsppWsmy8UAdhXNqTZzQyEwMog12054AXMlLyaJh63sGDJQUlcbjFLDcMtdRQumLER6nRkXKRtHKDBa2vpxo7WgWdRYDO1HwU9LHhBdfkVSiSp34DXoANFVfOP3fYLTK7z9H+bCAtv64gdoeN3k6QsweIw1z3d7s=
+	t=1731274668; cv=none; b=FyU2qUW+31DWVgNjFvD76oIggzlm73J66G0RuKGvgkrxuG/PIGofPZE3i5k184LwvdbUwMWgyqNlQJS8ZEWC8/FezUBy36x9c1aHZ6FboygYfKrsDp9NO7I/NhQ4W6N0qjQM7rzHicA6nScA76D6pJxKzgvCiTG2f995RkMnziE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731266674; c=relaxed/simple;
-	bh=U4A1URsY+DSB9fqZhsXbXU4iN6/BssEpg8gHHdYuWhI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=FLKgIbDMwqElIM9F+DdU7hg8Ey95jNficMLrl7yBaLTZedAhtdgBhIow3w/X6uIgubFH5OdPFUBc+RGJDJV8PgJ6yXB5Rj5W4E3A75LXPoFXwKAzwgUeMpbJuxNOaR1CnUarUEEpddcVgFxB3aUqQDaHI1/pkG5IgWKE/NQIu8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HHhaP79e; arc=none smtp.client-ip=209.85.218.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a99f646ff1bso595165166b.2;
-        Sun, 10 Nov 2024 11:24:32 -0800 (PST)
+	s=arc-20240116; t=1731274668; c=relaxed/simple;
+	bh=9gBzSEQEadYKikF5EtPh2kdsYRbjpFtILtx4lVSppog=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=tfy/N9rusDHqE3p0UcquIcsZA4hZxUdChhopsZ4B58biZ2YEWDwjO7z4M0a9DnDUjmaLJaBJG5RPwPegX+4rtZO/Yltj3R8NKp6U82633Y1CP5GMbtJxMW6EvQnmdKIY4SdxdAgz3+NsgJxIZSP4YSopT1NQzWXk8qUyyaZQ57E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uNPa1blX; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4316a44d1bbso31336945e9.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 10 Nov 2024 13:37:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731266671; x=1731871471; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=QzjTpF4vcCvC+88m4NTYCvpBKv5iwpeXsY67V7asRZs=;
-        b=HHhaP79eLvp/+H5nqvVLvH8kqt2mE0wHRClVRnaVTd/z9Fdvb1rz3Yqb02z5QpOXGj
-         oHOFWYvKcEhkCdxy3GYYHdrnfw495Dm6erxdXKbmFpU9Cm7UooNdIpXOTzltt9T5Oo66
-         /3zfpl9lBnKDlxftfYz6qG5FewNOaaPr15b/qq9+3KAwg/abff/kiFdH8xCdfBWNhuEW
-         eKDbpR9sd7wzUDu4wSqlcNSZz1HShIZHVf2vz2NuaZrNzxGVhXaWGjLcvjd7XX7F0xbI
-         vaQBg+wT1HuGTPAYGls/j+0crGD/MTSGEF4KouKp7U2DeXXZDkDTA3Hr1oBjwbBveViN
-         EAFg==
+        d=linaro.org; s=google; t=1731274662; x=1731879462; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=JmYuAa6t8nGCE6+aRkzTSD0KnWIju2Fdo+/2ju5i0sY=;
+        b=uNPa1blXkjFC2/D63XeWQLu3lWuhzw5VrLhXkef/teElC/g5kBjpcSUFt0syF6JBN6
+         3d5OyzrkAmnty8Lro+fKQbLMR6P/8eGNFJBJYTct2Dgv5ZpeVlnawJfl/mtv5IORvdzL
+         7Kw3M5Bv6Q527I6Cp8WQqp4sFiV2DE9y1d7mkSua9+85qrZA1QKEKZrXxJSHwITpg/Dw
+         X0Tcd3ZwL3ktjc8Do5FxcfjG5HcvUs/zuewAIFrLFFdqXrMVAd2qF9tma93XgSCltx9Z
+         VGMSYCmDXiTWsROIQjjEwns1rHbJdXFKewcoHR9q6o9CwUAm9I3rxVt3HuAPCcOckjuy
+         1q9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731266671; x=1731871471;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QzjTpF4vcCvC+88m4NTYCvpBKv5iwpeXsY67V7asRZs=;
-        b=KJMSEP5dHxwdBZ0BIrLDIc3BCCLRFAvqxuN9/8V3RE240s/Ct0pT3EoE/EwukROk9q
-         /3xaTy9C6g4DazNAa+mLbmK8GW7S/eMq+aV/luZnG/EeTgMK2ZzA97vee8JvHabDmsCu
-         YZpSYJocx3KENQY8hpqLrSFYr5EScErnM0O4Gc2yglfBN3DfPmPTcZAX40G15LtleFdj
-         akBLZ7dVxcrltjDT3agQD1UBc8cnhUgBWLNWzZvTP31kW1dFmYobcfqQ2OiP1QTAOPo0
-         yxLg6qzF9QO6muo7f54lb8xG5xgFUxYls7tYSJ57u22pRjy5XkNyCkNLjRYvpWdRH3Lf
-         Ta+w==
-X-Forwarded-Encrypted: i=1; AJvYcCUBTtS6yKf68j85YvNLhGYMOlssBXpKE6Hr5ijwv8CQF+o/ObpnPluylc5+mM+RPEvdL7DjozCTH9YC7RNq@vger.kernel.org, AJvYcCWPjQbRWeMsjbZbxF0j1Ugt375ITSfo3z9KGwD3/hx98dreKHf0Co5nmBdSO7YRmtcvDN+JLHcjql4j@vger.kernel.org, AJvYcCWZ4ZpB46gBzHiuHMrR90HCsJJnMV3Zo1tTzBmAELFcvM2wwmP+MqAvmDnapa0tcx+6D6qR3kTpGueNy9FID3qrcys=@vger.kernel.org, AJvYcCXlO/hMZiWJVYpLkvZiwiychsh7ZhEjk7QdfYE9b7bnptUO0wYZGrZwgTnMLstdYlM/l9RhyVmpXhuBDYMK3g==@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx7unFqiPFS8pHrjVLXb5KZ4kz7Ud+NZGBr08JTUKWdhGTBBJxb
-	MmKmiaDPabIVZnwwi9jtLWWwfQY1xMN4lbxcpsqRKG1KeIpSHoWI
-X-Google-Smtp-Source: AGHT+IFHsrzKAH1JXGqmrjEG47YYUuWxOy0DeShOLNpqUqSJjuxWTT1PZUGZb3HouVX3vdnd7BOhRw==
-X-Received: by 2002:a17:907:7f28:b0:a9a:5cf8:9e40 with SMTP id a640c23a62f3a-a9eeff10a14mr923178466b.24.1731266670951;
-        Sun, 10 Nov 2024 11:24:30 -0800 (PST)
-Received: from [127.0.1.1] (leased-line-46-53-189-50.telecom.by. [46.53.189.50])
-        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-a9ee0e0fabesm502497666b.174.2024.11.10.11.24.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 10 Nov 2024 11:24:29 -0800 (PST)
-From: Dzmitry Sankouski <dsankouski@gmail.com>
-Date: Sun, 10 Nov 2024 22:24:16 +0300
-Subject: [PATCH v2 2/2] power: supply: max17042: add platform driver
- variant
+        d=1e100.net; s=20230601; t=1731274662; x=1731879462;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=JmYuAa6t8nGCE6+aRkzTSD0KnWIju2Fdo+/2ju5i0sY=;
+        b=bPKXW53GlsE7UV/JEfs1JrOtPKMTVdbk2m66DTez1QspTyza0bmm2N1VduysYTJj3L
+         gKi/V/QhNoUBKDpsUmH1LEF6cntnDzauPpwLq72gfOMlB930h7CvrvZw6JNNQ60ByqVE
+         dR2ldkQpK48ZFy2a8+4r3IS2tb/y0Uf8bsPX5TgOmoFP4+x8u7ChOSg3EYF3lIiqrcmA
+         /DJBCyXz3m5zrC1WYwT6G75H3WDIgPhF/b+0wG45TF84UyI6rS+cCE/W8ixq95y5t2X+
+         mceGY4HvvFyFZj7XAJflyUL7TadhqQx1gLZN5mJ8wUIZUywogAVy8QtCRApTPLuo0+oa
+         h1Pw==
+X-Forwarded-Encrypted: i=1; AJvYcCWPISEtZOmwXt1v21WpR+39o7xdiGrWnlXj2CHcklVotID7rMlHDAtGvP2yV6T3xlhYl3YG/IeAzmUWfOzq@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz0KVfkq6NFN6CjgmvQ56jbcmZNHtEf5a+7m5ov/s095kS5/qgN
+	6q2SckZ83idmrDZoTTsKm0oN9N5fujCwgemOJWAQ36nHwYnPtBEUSKtAPANvAjg=
+X-Google-Smtp-Source: AGHT+IESFYcuK4LbVK1mhuQglwRx3XCzxpihvpAxgd0lw6n74R3kjpaTp1shzNbqrRyh7vHGq7+19w==
+X-Received: by 2002:a05:600c:3ca4:b0:431:680e:95d9 with SMTP id 5b1f17b1804b1-432b7517221mr86608905e9.22.1731274662489;
+        Sun, 10 Nov 2024 13:37:42 -0800 (PST)
+Received: from [192.168.0.48] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381ed970d4fsm11456302f8f.5.2024.11.10.13.37.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 10 Nov 2024 13:37:41 -0800 (PST)
+Message-ID: <0d0e76ce-fac9-4cd9-b177-7180daffbf86@linaro.org>
+Date: Sun, 10 Nov 2024 21:37:39 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 04/28] media: iris: introduce iris core state
+ management with shared queues
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>
+Cc: Hans Verkuil <hverkuil@xs4all.nl>,
+ Sebastian Fricke <sebastian.fricke@collabora.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Nicolas Dufresne <nicolas@ndufresne.ca>,
+ =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+ Jianhua Lu <lujianhua000@gmail.com>, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20241105-qcom-video-iris-v5-0-a88e7c220f78@quicinc.com>
+ <20241105-qcom-video-iris-v5-4-a88e7c220f78@quicinc.com>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20241105-qcom-video-iris-v5-4-a88e7c220f78@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241108-b4-max17042-v2-2-f058f7a16bab@gmail.com>
-References: <20241108-b4-max17042-v2-0-f058f7a16bab@gmail.com>
-In-Reply-To: <20241108-b4-max17042-v2-0-f058f7a16bab@gmail.com>
-To: Hans de Goede <hdegoede@redhat.com>, 
- Krzysztof Kozlowski <krzk@kernel.org>, 
- Marek Szyprowski <m.szyprowski@samsung.com>, 
- Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>, 
- Purism Kernel Team <kernel@puri.sm>, Sebastian Reichel <sre@kernel.org>, 
- Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
- Alim Akhtar <alim.akhtar@samsung.com>, Shawn Guo <shawnguo@kernel.org>, 
- Sascha Hauer <s.hauer@pengutronix.de>, 
- Pengutronix Kernel Team <kernel@pengutronix.de>, 
- Fabio Estevam <festevam@gmail.com>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-pm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
- linux-samsung-soc@vger.kernel.org, imx@lists.linux.dev, 
- linux-arm-msm@vger.kernel.org, Dzmitry Sankouski <dsankouski@gmail.com>
-X-Mailer: b4 0.12.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1731266662; l=5546;
- i=dsankouski@gmail.com; s=20240619; h=from:subject:message-id;
- bh=U4A1URsY+DSB9fqZhsXbXU4iN6/BssEpg8gHHdYuWhI=;
- b=swSnXIKrCHvZ5yseK48cwBu0mSP/TUGzwXb8VhRn0lHC1PwRDPUPLDuPb9x3Y5JunOH2lOS9s
- 2asjCJJ555aCA3CYUHrWF0g0UhPt+3BUGGw3zNgbvGaWX3mirK5TGs9
-X-Developer-Key: i=dsankouski@gmail.com; a=ed25519;
- pk=YJcXFcN1EWrzBYuiE2yi5Mn6WLn6L1H71J+f7X8fMag=
 
-Maxim PMICs may include fuel gauge with additional features, which is
-out of single Linux power supply driver scope.
+On 05/11/2024 06:55, Dikshita Agarwal wrote:
+> Introduce core state management for iris driver with necessary queues
+> needed for host firmware communication.
+> 
+> There are 3 types of queues:
+> Command queue - driver to write any command to firmware.
+> Message queue - firmware to send any response to driver.
+> Debug queue - firmware to write debug messages.
+> Initialize and configire shared queues during probe.
+> 
+> Different states for core:
+> IRIS_CORE_DEINIT - default state.
+> IRIS_CORE_INIT - core state with core initialized. FW loaded and HW
+> brought out of reset, shared queues established between host driver and
+> firmware.
+> IRIS_CORE_ERROR - error state.
+>        -----------
+>             |
+>             V
+>         -----------
+>         | DEINIT  |
+>         -----------
+>             ^
+>            / \
+>           /   \
+>          /     \
+>         /       \
+>        v         v
+>   -----------   ----------.
+>   |  INIT  |-->|  ERROR  |
+>   -----------   ----------.
+> 
+> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+> ---
+>   drivers/media/platform/qcom/iris/Makefile          |   4 +-
+>   drivers/media/platform/qcom/iris/iris_core.c       |  46 ++++++
+>   drivers/media/platform/qcom/iris/iris_core.h       |  23 +++
+>   drivers/media/platform/qcom/iris/iris_hfi_queue.c  | 123 +++++++++++++++
+>   drivers/media/platform/qcom/iris/iris_hfi_queue.h  | 175 +++++++++++++++++++++
+>   .../platform/qcom/iris/iris_platform_common.h      |   1 +
+>   .../platform/qcom/iris/iris_platform_sm8550.c      |   1 +
+>   drivers/media/platform/qcom/iris/iris_probe.c      |  20 +++
+>   drivers/media/platform/qcom/iris/iris_state.h      |  41 +++++
+>   drivers/media/platform/qcom/iris/iris_vidc.c       |   6 +
+>   10 files changed, 439 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/media/platform/qcom/iris/Makefile b/drivers/media/platform/qcom/iris/Makefile
+> index 6de584090a3a..93711f108a77 100644
+> --- a/drivers/media/platform/qcom/iris/Makefile
+> +++ b/drivers/media/platform/qcom/iris/Makefile
+> @@ -1,5 +1,7 @@
+> -iris-objs += iris_hfi_gen1_command.o \
+> +iris-objs += iris_core.o \
+> +             iris_hfi_gen1_command.o \
+>                iris_hfi_gen2_command.o \
+> +             iris_hfi_queue.o \
+>                iris_platform_sm8550.o \
+>                iris_probe.o \
+>                iris_vidc.o \
+> diff --git a/drivers/media/platform/qcom/iris/iris_core.c b/drivers/media/platform/qcom/iris/iris_core.c
+> new file mode 100644
+> index 000000000000..360a54909ef6
+> --- /dev/null
+> +++ b/drivers/media/platform/qcom/iris/iris_core.c
+> @@ -0,0 +1,46 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#include "iris_core.h"
+> +#include "iris_state.h"
+> +
+> +void iris_core_deinit(struct iris_core *core)
+> +{
+> +	mutex_lock(&core->lock);
+> +	iris_hfi_queues_deinit(core);
+> +	core->state = IRIS_CORE_DEINIT;
+> +	mutex_unlock(&core->lock);
+> +}
+> +
+> +int iris_core_init(struct iris_core *core)
+> +{
+> +	int ret;
+> +
+> +	mutex_lock(&core->lock);
+> +	if (core->state == IRIS_CORE_INIT) {
+> +		ret = 0;
+> +		goto exit;
+> +	} else if (core->state == IRIS_CORE_ERROR) {
+> +		ret = -EINVAL;
+> +		goto error;
+> +	}
+> +
+> +	core->state = IRIS_CORE_INIT;
+> +
+> +	ret = iris_hfi_queues_init(core);
+> +	if (ret)
+> +		goto error;
+> +
+> +	mutex_unlock(&core->lock);
+> +
+> +	return 0;
+> +
+> +error:
+> +	core->state = IRIS_CORE_DEINIT;
+> +exit:
+> +	mutex_unlock(&core->lock);
+> +
+> +	return ret;
+> +}
+> diff --git a/drivers/media/platform/qcom/iris/iris_core.h b/drivers/media/platform/qcom/iris/iris_core.h
+> index 73c835bb6589..5fd11c3f99c5 100644
+> --- a/drivers/media/platform/qcom/iris/iris_core.h
+> +++ b/drivers/media/platform/qcom/iris/iris_core.h
+> @@ -9,7 +9,9 @@
+>   #include <linux/types.h>
+>   #include <media/v4l2-device.h>
+>   
+> +#include "iris_hfi_queue.h"
+>   #include "iris_platform_common.h"
+> +#include "iris_state.h"
+>   
+>   struct icc_info {
+>   	const char		*name;
+> @@ -34,6 +36,15 @@ struct icc_info {
+>    * @clk_count: count of iris clocks
+>    * @resets: table of iris reset clocks
+>    * @iris_platform_data: a structure for platform data
+> + * @state: current state of core
+> + * @iface_q_table_daddr: device address for interface queue table memory
+> + * @sfr_daddr: device address for SFR (Sub System Failure Reason) register memory
+> + * @iface_q_table_vaddr: virtual address for interface queue table memory
+> + * @sfr_vaddr: virtual address for SFR (Sub System Failure Reason) register memory
+> + * @command_queue: shared interface queue to send commands to firmware
+> + * @message_queue: shared interface queue to receive responses from firmware
+> + * @debug_queue: shared interface queue to receive debug info from firmware
+> + * @lock: a lock for this strucure
+>    */
+>   
+>   struct iris_core {
+> @@ -51,6 +62,18 @@ struct iris_core {
+>   	u32					clk_count;
+>   	struct reset_control_bulk_data		*resets;
+>   	const struct iris_platform_data		*iris_platform_data;
+> +	enum iris_core_state			state;
+> +	dma_addr_t				iface_q_table_daddr;
+> +	dma_addr_t				sfr_daddr;
+> +	void					*iface_q_table_vaddr;
+> +	void					*sfr_vaddr;
+> +	struct iris_iface_q_info		command_queue;
+> +	struct iris_iface_q_info		message_queue;
+> +	struct iris_iface_q_info		debug_queue;
+> +	struct mutex				lock; /* lock for core related operations */
+>   };
+>   
+> +int iris_core_init(struct iris_core *core);
+> +void iris_core_deinit(struct iris_core *core);
+> +
+>   #endif
+> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_queue.c b/drivers/media/platform/qcom/iris/iris_hfi_queue.c
+> new file mode 100644
+> index 000000000000..bb7e0d747f0f
+> --- /dev/null
+> +++ b/drivers/media/platform/qcom/iris/iris_hfi_queue.c
+> @@ -0,0 +1,123 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#include "iris_core.h"
+> +#include "iris_hfi_queue.h"
+> +
+> +static void iris_hfi_queue_set_header(struct iris_core *core, u32 queue_id,
+> +				      struct iris_iface_q_info *iface_q)
+> +{
+> +	iface_q->qhdr->status = 0x1;
 
-For example, in max77705 PMIC fuelgauge has additional registers,
-like IIN_REG, VSYS_REG, ISYS_REG. Those needed to measure PMIC input
-current, system voltage and current respectively. Those measurements
-cannot be bound to any of fuelgauge properties.
+What does 0x1 indicate ?
 
-The solution here add and option to use max17042 driver as a MFD
-sub device, thus allowing any additional functionality be implemented as
-another sub device. This will help to reduce code duplication in MFD
-fuel gauge drivers.
+Could this be a define instead of an assigned number ?
 
-Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
+> +	iface_q->qhdr->start_addr = iface_q->device_addr;
+> +	iface_q->qhdr->header_type = IFACEQ_DFLT_QHDR;
+> +	iface_q->qhdr->queue_type = queue_id;
+> +	iface_q->qhdr->q_size = IFACEQ_QUEUE_SIZE / sizeof(u32);
+> +	iface_q->qhdr->pkt_size = 0; /* variable packet size */
+> +	iface_q->qhdr->rx_wm = 0x1;
+> +	iface_q->qhdr->tx_wm = 0x1;
+> +	iface_q->qhdr->rx_req = 0x1;
+> +	iface_q->qhdr->tx_req = 0x0;
+> +	iface_q->qhdr->rx_irq_status = 0x0;
+> +	iface_q->qhdr->tx_irq_status = 0x0;
+> +	iface_q->qhdr->read_idx = 0x0;
+> +	iface_q->qhdr->write_idx = 0x0;
+> +
+> +	/*
+> +	 * Set receive request to zero on debug queue as there is no
+> +	 * need of interrupt from video hardware for debug messages
+> +	 */
+> +	if (queue_id == IFACEQ_DBGQ_ID)
+> +		iface_q->qhdr->rx_req = 0;
+> +}
+> +
+> +static void
+> +iris_hfi_queue_init(struct iris_core *core, u32 queue_id, struct iris_iface_q_info *iface_q)
+> +{
+> +	struct iris_hfi_queue_table_header *q_tbl_hdr = core->iface_q_table_vaddr;
+> +	u32 offset = sizeof(*q_tbl_hdr) + (queue_id * IFACEQ_QUEUE_SIZE);
+> +
+> +	iface_q->device_addr = core->iface_q_table_daddr + offset;
+> +	iface_q->kernel_vaddr =
+> +			(void *)((char *)core->iface_q_table_vaddr + offset);
+> +	iface_q->qhdr = &q_tbl_hdr->q_hdr[queue_id];
+> +
+> +	iris_hfi_queue_set_header(core, queue_id, iface_q);
+> +}
+> +
+> +static void iris_hfi_queue_deinit(struct iris_iface_q_info *iface_q)
+> +{
+> +	iface_q->qhdr = NULL;
+> +	iface_q->kernel_vaddr = NULL;
+> +	iface_q->device_addr = 0;
+> +}
+> +
+> +int iris_hfi_queues_init(struct iris_core *core)
+> +{
+> +	struct iris_hfi_queue_table_header *q_tbl_hdr;
+> +	u32 queue_size;
+> +
+> +	/* Iris hardware requires 4K queue alignment */
+> +	queue_size = ALIGN((sizeof(*q_tbl_hdr) + (IFACEQ_QUEUE_SIZE * IFACEQ_NUMQ)), SZ_4K);
+> +	core->iface_q_table_vaddr = dma_alloc_attrs(core->dev, queue_size,
+> +						    &core->iface_q_table_daddr,
+> +						    GFP_KERNEL, DMA_ATTR_WRITE_COMBINE);
+> +	if (!core->iface_q_table_vaddr) {
+> +		dev_err(core->dev, "queues alloc and map failed\n");
+> +		return -ENOMEM;
+> +	}
+> +
+> +	core->sfr_vaddr = dma_alloc_attrs(core->dev, SFR_SIZE,
+> +					  &core->sfr_daddr,
+> +					  GFP_KERNEL, DMA_ATTR_WRITE_COMBINE);
+> +	if (!core->sfr_vaddr) {
+> +		dev_err(core->dev, "sfr alloc and map failed\n");
+> +		dma_free_attrs(core->dev, sizeof(*q_tbl_hdr), core->iface_q_table_vaddr,
+> +			       core->iface_q_table_daddr, DMA_ATTR_WRITE_COMBINE);
+> +		return -ENOMEM;
+> +	}
+> +
+> +	iris_hfi_queue_init(core, IFACEQ_CMDQ_ID, &core->command_queue);
+> +	iris_hfi_queue_init(core, IFACEQ_MSGQ_ID, &core->message_queue);
+> +	iris_hfi_queue_init(core, IFACEQ_DBGQ_ID, &core->debug_queue);
+> +
+> +	q_tbl_hdr = (struct iris_hfi_queue_table_header *)core->iface_q_table_vaddr;
+> +	q_tbl_hdr->version = 0;
+> +	q_tbl_hdr->device_addr = (void *)core;
+> +	strscpy(q_tbl_hdr->name, "iris-hfi-queues", sizeof(q_tbl_hdr->name));
+> +	q_tbl_hdr->size = sizeof(*q_tbl_hdr);
+> +	q_tbl_hdr->qhdr0_offset = sizeof(*q_tbl_hdr) -
+> +		(IFACEQ_NUMQ * sizeof(struct iris_hfi_queue_header));
+> +	q_tbl_hdr->qhdr_size = sizeof(q_tbl_hdr->q_hdr[0]);
+> +	q_tbl_hdr->num_q = IFACEQ_NUMQ;
+> +	q_tbl_hdr->num_active_q = IFACEQ_NUMQ;
+> +
+> +	 /* Write sfr size in first word to be used by firmware */
+> +	*((u32 *)core->sfr_vaddr) = SFR_SIZE;
+> +
+> +	return 0;
+> +}
+> +
+> +void iris_hfi_queues_deinit(struct iris_core *core)
+> +{
+> +	if (!core->iface_q_table_vaddr)
+> +		return;
+> +
+> +	iris_hfi_queue_deinit(&core->debug_queue);
+> +	iris_hfi_queue_deinit(&core->message_queue);
+> +	iris_hfi_queue_deinit(&core->command_queue);
+> +
+> +	dma_free_attrs(core->dev, SFR_SIZE, core->sfr_vaddr,
+> +		       core->sfr_daddr, DMA_ATTR_WRITE_COMBINE);
+> +
+> +	core->sfr_vaddr = NULL;
+> +	core->sfr_daddr = 0;
+> +
+> +	dma_free_attrs(core->dev, sizeof(struct iris_hfi_queue_table_header),
+> +		       core->iface_q_table_vaddr, core->iface_q_table_daddr,
+> +		       DMA_ATTR_WRITE_COMBINE);
+> +
+> +	core->iface_q_table_vaddr = NULL;
+> +	core->iface_q_table_daddr = 0;
+> +}
+> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_queue.h b/drivers/media/platform/qcom/iris/iris_hfi_queue.h
+> new file mode 100644
+> index 000000000000..54994bb776f1
+> --- /dev/null
+> +++ b/drivers/media/platform/qcom/iris/iris_hfi_queue.h
+> @@ -0,0 +1,175 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#ifndef _IRIS_HFI_QUEUE_H_
+> +#define _IRIS_HFI_QUEUE_H_
+> +
+> +struct iris_core;
+> +
+> +/*
+> + * Maximum number of buffers which queue can hold until
+> + * hardware stops responding and driver times out.
+> + */
+> +#define IFACEQ_MAX_BUF_COUNT		50
+
+Is there any reason 50 is chosen here ?
+
+Could it be 32, 64 or another 0x10 aligned number ?
+
+> +/*
+> + * Max session supported are 16.
+> + * this value is used to calcualte the size of
+> + * individual shared queue.
+> + */
+> +#define IFACE_MAX_PARALLEL_SESSIONS	16
+> +#define IFACEQ_DFLT_QHDR		0x0101
+> +#define IFACEQ_MAX_PKT_SIZE		1024 /* Maximum size of a packet in the queue */
+> +
+> +/*
+> + * SFR: Subsystem Failure Reason
+> + * when hardware goes into bad state/failure, firmware fills this memory
+> + * and driver will get to know the actual failure reason from this SFR buffer.
+> + */
+> +#define SFR_SIZE			SZ_4K /* Iris hardware requires 4K queue alignment */
+> +
+> +#define IFACEQ_QUEUE_SIZE		(IFACEQ_MAX_PKT_SIZE * \
+> +					 IFACEQ_MAX_BUF_COUNT * IFACE_MAX_PARALLEL_SESSIONS)
+> +
+> +/*
+> + * Memory layout of the shared queues:
+> + *
+> + *   ||=================||  ^        ^         ^
+> + *   ||                 ||  |        |         |
+> + *   ||    Queue Table  || 288 Bytes |         |
+> + *   ||      Header     ||  |        |         |
+> + *   ||                 ||  |        |         |
+> + *   ||-----------------||  V        |         |
+> + *   ||-----------------||  ^        |         |
+> + *   ||                 ||  |        |         |
+> + *   ||  Command Queue  || 56 Bytes  |         |
+> + *   ||     Header      ||  |        |         |
+> + *   ||                 ||  |        |         |
+> + *   ||-----------------||  V       456 Bytes  |
+> + *   ||-----------------||  ^        |         |
+> + *   ||                 ||  |        |         |
+> + *   ||  Message Queue  || 56 Bytes  |         |
+> + *   ||     Header      ||  |        |         |
+> + *   ||                 ||  |        |         |
+> + *   ||-----------------||  V        |         Buffer size aligned to 4k
+> + *   ||-----------------||  ^        |         Overall Queue Size = 2,404 KB
+> + *   ||                 ||  |        |         |
+> + *   ||   Debug Queue   || 56 Bytes  |         |
+> + *   ||     Header      ||  |        |         |
+> + *   ||                 ||  |        |         |
+> + *   ||=================||  V        V         |
+> + *   ||=================||           ^         |
+> + *   ||                 ||           |         |
+> + *   ||     Command     ||         800 KB      |
+> + *   ||      Queue      ||           |         |
+> + *   ||                 ||           |         |
+> + *   ||=================||           V         |
+> + *   ||=================||           ^         |
+> + *   ||                 ||           |         |
+> + *   ||     Message     ||         800 KB      |
+> + *   ||      Queue      ||           |         |
+> + *   ||                 ||           |         |
+> + *   ||=================||           V         |
+> + *   ||=================||           ^         |
+> + *   ||                 ||           |         |
+> + *   ||      Debug      ||         800 KB      |
+> + *   ||      Queue      ||           |         |
+> + *   ||                 ||           |         |
+> + *   ||=================||           V         |
+> + *   ||                 ||                     |
+> + *   ||=================||                     V
+> + */
+> +
+> +/*
+> + * Shared queues are used for communication between driver and firmware.
+> + * There are 3 types of queues:
+> + * Command queue - driver to write any command to firmware.
+> + * Message queue - firmware to send any response to driver.
+> + * Debug queue - firmware to write debug message.
+> + */
+> +
+> +/* Host-firmware shared queue ids */
+> +enum iris_iface_queue {
+> +	IFACEQ_CMDQ_ID,
+> +	IFACEQ_MSGQ_ID,
+> +	IFACEQ_DBGQ_ID,
+> +	IFACEQ_NUMQ, /* not an index */
+> +};
+> +
+> +/**
+> + * struct iris_hfi_queue_header
+> + *
+> + * @status: Queue status, qhdr_state define possible status
+> + * @start_addr: Queue start address in non cached memory
+> + * @type: qhdr_tx, qhdr_rx, qhdr_q_id and priority defines qhdr type
+> + * @q_size: Queue size
+> + *		Number of queue packets if pkt_size is non-zero
+> + *		Queue size in bytes if pkt_size is zero
+> + * @pkt_size: Size of queue packet entries
+> + *		0x0: variable queue packet size
+> + *		non zero: size of queue packet entry, fixed
+> + * @pkt_drop_cnt: Number of packets dropped by sender
+> + * @rx_wm: Receiver watermark, applicable in event driven mode
+> + * @tx_wm: Sender watermark, applicable in event driven mode
+> + * @rx_req: Receiver sets this bit if queue is empty
+> + * @tx_req: Sender sets this bit if queue is full
+> + * @rx_irq_status: Receiver sets this bit and triggers an interrupt to
+> + *		the sender after packets are dequeued. Sender clears this bit
+> + * @tx_irq_status: Sender sets this bit and triggers an interrupt to
+> + *		the receiver after packets are queued. Receiver clears this bit
+> + * @read_idx: Index till where receiver has consumed the packets from the queue.
+> + * @write_idx: Index till where sender has written the packets into the queue.
+> + */
+> +struct iris_hfi_queue_header {
+> +	u32 status;
+> +	u32 start_addr;
+> +	u16 queue_type;
+> +	u16 header_type;
+> +	u32 q_size;
+> +	u32 pkt_size;
+> +	u32 pkt_drop_cnt;
+> +	u32 rx_wm;
+> +	u32 tx_wm;
+> +	u32 rx_req;
+> +	u32 tx_req;
+> +	u32 rx_irq_status;
+> +	u32 tx_irq_status;
+> +	u32 read_idx;
+> +	u32 write_idx;
+> +};
+> +
+> +/**
+> + * struct iris_hfi_queue_table_header
+> + *
+> + * @version: Queue table version number
+> + * @size: Queue table size from version to last parametr in qhdr entry
+> + * @qhdr0_offset: Offset to the start of first qhdr
+> + * @qhdr_size: Queue header size in bytes
+> + * @num_q: Total number of queues in Queue table
+> + * @num_active_q: Total number of active queues
+> + * @device_addr: Device address of the queue
+> + * @name: Queue name in characters
+> + */
+> +struct iris_hfi_queue_table_header {
+> +	u32 version;
+> +	u32 size;
+> +	u32 qhdr0_offset;
+> +	u32 qhdr_size;
+> +	u32 num_q;
+> +	u32 num_active_q;
+> +	void *device_addr;
+> +	char name[256]; /* NUL-terminated array of characters */
+> +	struct iris_hfi_queue_header q_hdr[IFACEQ_NUMQ];
+> +};
+> +
+> +struct iris_iface_q_info {
+> +	struct iris_hfi_queue_header *qhdr;
+> +	dma_addr_t	device_addr;
+> +	void		*kernel_vaddr;
+> +};
+> +
+> +int iris_hfi_queues_init(struct iris_core *core);
+> +void iris_hfi_queues_deinit(struct iris_core *core);
+> +
+> +#endif
+> diff --git a/drivers/media/platform/qcom/iris/iris_platform_common.h b/drivers/media/platform/qcom/iris/iris_platform_common.h
+> index b3a2903698ff..dac64ec4bf03 100644
+> --- a/drivers/media/platform/qcom/iris/iris_platform_common.h
+> +++ b/drivers/media/platform/qcom/iris/iris_platform_common.h
+> @@ -31,6 +31,7 @@ struct iris_platform_data {
+>   	unsigned int clk_tbl_size;
+>   	const char * const *clk_rst_tbl;
+>   	unsigned int clk_rst_tbl_size;
+> +	u64 dma_mask;
+>   };
+>   
+>   #endif
+> diff --git a/drivers/media/platform/qcom/iris/iris_platform_sm8550.c b/drivers/media/platform/qcom/iris/iris_platform_sm8550.c
+> index dba8d3c22ce5..9b305b8e2110 100644
+> --- a/drivers/media/platform/qcom/iris/iris_platform_sm8550.c
+> +++ b/drivers/media/platform/qcom/iris/iris_platform_sm8550.c
+> @@ -36,4 +36,5 @@ struct iris_platform_data sm8550_data = {
+>   	.opp_pd_tbl_size = ARRAY_SIZE(sm8550_opp_pd_table),
+>   	.clk_tbl = sm8550_clk_table,
+>   	.clk_tbl_size = ARRAY_SIZE(sm8550_clk_table),
+> +	.dma_mask = GENMASK(31, 29) - 1,
+>   };
+> diff --git a/drivers/media/platform/qcom/iris/iris_probe.c b/drivers/media/platform/qcom/iris/iris_probe.c
+> index ce16d894c809..0d858c7b015f 100644
+> --- a/drivers/media/platform/qcom/iris/iris_probe.c
+> +++ b/drivers/media/platform/qcom/iris/iris_probe.c
+> @@ -168,15 +168,21 @@ static void iris_remove(struct platform_device *pdev)
+>   	if (!core)
+>   		return;
+>   
+> +	iris_core_deinit(core);
+> +
+>   	video_unregister_device(core->vdev_dec);
+>   
+>   	v4l2_device_unregister(&core->v4l2_dev);
+> +
+> +	mutex_destroy(&core->lock);
+> +	core->state = IRIS_CORE_DEINIT;
+
+This setting of the state is redundant, you've already set the state @ 
+iris_core_deinit();
+
 ---
- drivers/power/supply/max17042_battery.c | 97 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++--------------
- 1 file changed, 83 insertions(+), 14 deletions(-)
-
-diff --git a/drivers/power/supply/max17042_battery.c b/drivers/power/supply/max17042_battery.c
-index 99bf6915aa23..e78c177802db 100644
---- a/drivers/power/supply/max17042_battery.c
-+++ b/drivers/power/supply/max17042_battery.c
-@@ -16,6 +16,7 @@
- #include <linux/i2c.h>
- #include <linux/delay.h>
- #include <linux/interrupt.h>
-+#include <linux/platform_device.h>
- #include <linux/pm.h>
- #include <linux/mod_devicetable.h>
- #include <linux/power_supply.h>
-@@ -1029,13 +1030,12 @@ static const struct power_supply_desc max17042_no_current_sense_psy_desc = {
- 	.num_properties	= ARRAY_SIZE(max17042_battery_props) - 2,
- };
- 
--static int max17042_probe(struct i2c_client *client)
-+static int max17042_probe(struct i2c_client *client, enum max170xx_chip_type chip_type)
- {
--	const struct i2c_device_id *id = i2c_client_get_device_id(client);
-+	pr_info("do probe!\n");
- 	struct i2c_adapter *adapter = client->adapter;
- 	const struct power_supply_desc *max17042_desc = &max17042_psy_desc;
- 	struct power_supply_config psy_cfg = {};
--	const struct acpi_device_id *acpi_id = NULL;
- 	struct device *dev = &client->dev;
- 	struct max17042_chip *chip;
- 	int ret;
-@@ -1050,15 +1050,6 @@ static int max17042_probe(struct i2c_client *client)
- 		return -ENOMEM;
- 
- 	chip->client = client;
--	if (id) {
--		chip->chip_type = id->driver_data;
--	} else {
--		acpi_id = acpi_match_device(dev->driver->acpi_match_table, dev);
--		if (!acpi_id)
--			return -ENODEV;
--
--		chip->chip_type = acpi_id->driver_data;
--	}
- 	chip->regmap = devm_regmap_init_i2c(client, &max17042_regmap_config);
- 	if (IS_ERR(chip->regmap)) {
- 		dev_err(&client->dev, "Failed to initialize regmap\n");
-@@ -1139,6 +1130,40 @@ static int max17042_probe(struct i2c_client *client)
- 	return 0;
- }
- 
-+static int max17042_i2c_probe(struct i2c_client *client)
-+{
-+	pr_info("i2c probe!\n");
-+	const struct i2c_device_id *id = i2c_client_get_device_id(client);
-+	const struct acpi_device_id *acpi_id = NULL;
-+	struct device *dev = &client->dev;
-+	enum max170xx_chip_type chip_type;
-+
-+	if (id) {
-+		chip_type = id->driver_data;
-+	} else {
-+		acpi_id = acpi_match_device(dev->driver->acpi_match_table, dev);
-+		if (!acpi_id)
-+			return -ENODEV;
-+
-+		chip_type = acpi_id->driver_data;
-+	}
-+
-+	return max17042_probe(client, chip_type);
-+}
-+
-+
-+static int max17042_platform_probe(struct platform_device *pdev)
-+{
-+	struct device *dev = &pdev->dev;
-+	struct i2c_client *i2c = dev_get_platdata(dev);
-+	const struct platform_device_id *id = platform_get_device_id(pdev);
-+
-+	if (!i2c)
-+		return -EINVAL;
-+
-+	return max17042_probe(i2c, id->driver_data);
-+}
-+
- #ifdef CONFIG_PM_SLEEP
- static int max17042_suspend(struct device *dev)
- {
-@@ -1204,6 +1229,16 @@ static const struct i2c_device_id max17042_id[] = {
- };
- MODULE_DEVICE_TABLE(i2c, max17042_id);
- 
-+static const struct platform_device_id max17042_platform_id[] = {
-+	{ "max17042", MAXIM_DEVICE_TYPE_MAX17042 },
-+	{ "max17047", MAXIM_DEVICE_TYPE_MAX17047 },
-+	{ "max17050", MAXIM_DEVICE_TYPE_MAX17050 },
-+	{ "max17055", MAXIM_DEVICE_TYPE_MAX17055 },
-+	{ "max77849-battery", MAXIM_DEVICE_TYPE_MAX17047 },
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(platform, max17042_platform_id);
-+
- static struct i2c_driver max17042_i2c_driver = {
- 	.driver	= {
- 		.name	= "max17042",
-@@ -1211,10 +1246,44 @@ static struct i2c_driver max17042_i2c_driver = {
- 		.of_match_table = of_match_ptr(max17042_dt_match),
- 		.pm	= &max17042_pm_ops,
- 	},
--	.probe		= max17042_probe,
-+	.probe		= max17042_i2c_probe,
- 	.id_table	= max17042_id,
- };
--module_i2c_driver(max17042_i2c_driver);
-+
-+static struct platform_driver max17042_platform_driver = {
-+	.driver	= {
-+		.name	= "max17042",
-+		.acpi_match_table = ACPI_PTR(max17042_acpi_match),
-+		.of_match_table = of_match_ptr(max17042_dt_match),
-+		.pm	= &max17042_pm_ops,
-+	},
-+	.probe		= max17042_platform_probe,
-+	.id_table	= max17042_platform_id,
-+};
-+
-+static int __init __driver_max17042_platform_init(void)
-+{
-+	int ret = 0;
-+
-+	ret = platform_driver_register(&max17042_platform_driver);
-+
-+	if (ret) {
-+		platform_driver_unregister(&max17042_platform_driver);
-+		return ret;
-+	}
-+
-+	ret = i2c_add_driver(&max17042_i2c_driver);
-+
-+	return ret;
-+}
-+module_init(__driver_max17042_platform_init);
-+
-+static void __exit __driver_max17042_platform_exit(void)
-+{
-+	i2c_del_driver(&max17042_i2c_driver);
-+	platform_driver_unregister(&max17042_platform_driver);
-+}
-+module_exit(__driver_max17042_platform_exit);
- 
- MODULE_AUTHOR("MyungJoo Ham <myungjoo.ham@samsung.com>");
- MODULE_DESCRIPTION("MAX17042 Fuel Gauge");
-
--- 
-2.39.2
-
+bod
 
