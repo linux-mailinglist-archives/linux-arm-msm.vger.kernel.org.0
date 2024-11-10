@@ -1,128 +1,189 @@
-Return-Path: <linux-arm-msm+bounces-37430-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37437-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 011949C33DB
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Nov 2024 17:55:18 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E02939C3432
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Nov 2024 19:37:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id ACF2C1F210D5
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Nov 2024 16:55:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 76CA02811A9
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Nov 2024 18:37:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B3FD712BF02;
-	Sun, 10 Nov 2024 16:55:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l/ferP/k"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F1FB1369AE;
+	Sun, 10 Nov 2024 18:36:57 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail-m25496.xmail.ntesmail.com (mail-m25496.xmail.ntesmail.com [103.129.254.96])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 842EE4778E;
-	Sun, 10 Nov 2024 16:55:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2A21200A0;
+	Sun, 10 Nov 2024 18:36:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.129.254.96
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731257713; cv=none; b=i0eLTtu+995lmt2ZF6w9azIzBFrRMjCgY2KENi2Q8h/Uc2dRX7DmWOG2+nXCu3+urejp+XTNpu7PANBJrHQZ44LLhrZiqPEM97f+8CR+3io+Bs1IRqK3CIA8btOIG7RYTmtkLRip1w2znzCbEnNkNpWY2Low0QpeU4ZZadFof0M=
+	t=1731263817; cv=none; b=au9l5+w12ZKVroaFrRA8F5F2a0nDTskME3zrf0/oI7N57hML+s9EhCXopLwnpCUCEKGpHkrP6cK2LuIO6WNGtHkswW6uJLQAsFBySHPWLF41///TQpwCwM5ru8v1FPcnfNARUOmaV/A83QPLFwrDQKB9kEFppNxaAYakyS1FZvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731257713; c=relaxed/simple;
-	bh=AUZskdJBYevNYTGe0KPeZyYfuq+MaJc1K9ZNMQotNl4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RDVsapV0s8jvdJ5IHAOg3tt8Ane/NdGgtnOHAY6bhosaacxxolMyBrxP5w36d+xqLszj0swOz7RVqEQ1SIRwkGw8jEHLKq1SKHAZ3lXI20gBu6K+XEhkNHg2mqf5Sa3cYsj8Zt75zcbU4GBWKd9h8zghoEDV3o1jeLK7Vd9dBwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l/ferP/k; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DFACC4CECD;
-	Sun, 10 Nov 2024 16:55:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1731257713;
-	bh=AUZskdJBYevNYTGe0KPeZyYfuq+MaJc1K9ZNMQotNl4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=l/ferP/khg0VXEakjcXIw7NF5yuPND+LsEIV15NV0+NvMWryrmeWMr162LPPXgj2h
-	 mdehU44PqpqDruH9xl+MOV6WSXeX4EN1Vo7lYrvOrubIbEF0Q0eh9aEVx7Y3nUyxg6
-	 0gXgBkIbnna7dGvQE/uueuNn8Xk11JBdjpywWR7Jea7cag7bkFoy1SPJRaJD5i4OvU
-	 A0AGRyUCu1kuwSXVWOCGwEWyg1h1brXEUzTHUrdQFd8Jj0hmOoDixpDW+HsrdXvNWB
-	 0oOv1hVZyhxAkfgSBy6PNioJBebTIXScAZUSYCwjojUTdX2OzKEv4lurwGArCSRF7x
-	 c231OwRtXn8cQ==
-Date: Sun, 10 Nov 2024 10:55:10 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: maud_spierings@hotmail.com
-Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] enable the gpu node
-Message-ID: <rfdg37xvvfqumw6xjk6fod5iwsrdq3okadsz62eygymllh3pv3@llvipo64oz37>
-References: <20241110-qcom-asus-gpu-v1-1-13d7b05784b8@hotmail.com>
+	s=arc-20240116; t=1731263817; c=relaxed/simple;
+	bh=VEiCcVBUQAXwHu1ffrHgeG5LsZdIgEmHmhV+woKGDz4=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=nZrWIk2IAtA31+MLUd3mKunralWVOy309EttKH/rxtwSdgDYPtsAu7NTIuHFLs7zLUCXpzzXbdwkWPmxyIS7HYEhk8Ln4F8m3yEDMN75iNBAjfD/ZuIrh0y+kEpRvgDwDRTbY8yTDodyXYZUdjic9GnS1Urk156/nNg5P6v9hFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=103.129.254.96
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
+Received: from amadeus-Vostro-3710.lan (unknown [113.116.6.44])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 24fe03a5;
+	Sun, 10 Nov 2024 22:00:41 +0800 (GMT+08:00)
+From: Chukun Pan <amadeus@jmu.edu.cn>
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	Chukun Pan <amadeus@jmu.edu.cn>
+Subject: [PATCH v4 3/4] arm64: dts: qcom: ipq6018: move mp5496 regulator out of soc dtsi
+Date: Sun, 10 Nov 2024 22:00:18 +0800
+Message-Id: <20241110140019.3426181-4-amadeus@jmu.edu.cn>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20241110140019.3426181-1-amadeus@jmu.edu.cn>
+References: <20241110140019.3426181-1-amadeus@jmu.edu.cn>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241110-qcom-asus-gpu-v1-1-13d7b05784b8@hotmail.com>
+Content-Transfer-Encoding: 8bit
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlDGElIVkJPQxpKTUgfTkMeQlYeHw5VEwETFhoSFy
+	QUDg9ZV1kYEgtZQVlKSkhVSkpNVU1VT09ZV1kWGg8SFR0UWUFZT0tIVUpLSUJNSEtVSktLVUtZBg
+	++
+X-HM-Tid: 0a93166077ea03a2kunm24fe03a5
+X-HM-MType: 10
+X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6OhQ6ARw6EzIsPC0BIz84Nygz
+	CgsKCTVVSlVKTEhKSU9MSU9KQ0JIVTMWGhIXVRoWGh8eDgg7ERYOVR4fDlUYFUVZV1kSC1lBWUpK
+	SFVKSk1VTVVPT1lXWQgBWUFIT0lNNwY+
 
-On Sun, Nov 10, 2024 at 01:46:12PM +0100, maud spierings via B4 Relay wrote:
+Some IPQ60xx SoCs don't come with the mp5496 pmic chip. The mp5496
+pmic was never part of the IPQ60xx SoC, it's optional, so we moved
+it out of the soc dtsi.
 
-Please run 
-  git log --oneline -- arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-and add a prefix to your subject line to make your change match others
-to this file.
+Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
+---
+ arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts |  2 +-
+ arch/arm64/boot/dts/qcom/ipq6018-mp5496.dtsi | 35 ++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi        | 14 --------
+ 3 files changed, 36 insertions(+), 15 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq6018-mp5496.dtsi
 
-Please also drop "node", as it's the GPU you're actually enabling.
+diff --git a/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts b/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
+index f5f4827c0e17..9c69d3027b43 100644
+--- a/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
++++ b/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
+@@ -7,7 +7,7 @@
+ 
+ /dts-v1/;
+ 
+-#include "ipq6018.dtsi"
++#include "ipq6018-mp5496.dtsi"
+ 
+ / {
+ 	model = "Qualcomm Technologies, Inc. IPQ6018/AP-CP01-C1";
+diff --git a/arch/arm64/boot/dts/qcom/ipq6018-mp5496.dtsi b/arch/arm64/boot/dts/qcom/ipq6018-mp5496.dtsi
+new file mode 100644
+index 000000000000..fe2152df69f4
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/ipq6018-mp5496.dtsi
+@@ -0,0 +1,35 @@
++// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
++/*
++ * ipq6018-mp5496.dtsi describes common properties (e.g. regulators) that
++ * apply to most devices that make use of the IPQ6018 SoC and MP5496 PMIC.
++ */
++
++#include "ipq6018.dtsi"
++
++&cpu0 {
++	cpu-supply = <&ipq6018_s2>;
++};
++
++&cpu1 {
++	cpu-supply = <&ipq6018_s2>;
++};
++
++&cpu2 {
++	cpu-supply = <&ipq6018_s2>;
++};
++
++&cpu3 {
++	cpu-supply = <&ipq6018_s2>;
++};
++
++&rpm_requests {
++	regulators {
++		compatible = "qcom,rpm-mp5496-regulators";
++
++		ipq6018_s2: s2 {
++			regulator-min-microvolt = <725000>;
++			regulator-max-microvolt = <1062500>;
++			regulator-always-on;
++		};
++	};
++};
+diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+index 7514919132b6..a02aa641cb90 100644
+--- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+@@ -43,7 +43,6 @@ cpu0: cpu@0 {
+ 			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
+ 			clock-names = "cpu";
+ 			operating-points-v2 = <&cpu_opp_table>;
+-			cpu-supply = <&ipq6018_s2>;
+ 			#cooling-cells = <2>;
+ 		};
+ 
+@@ -56,7 +55,6 @@ cpu1: cpu@1 {
+ 			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
+ 			clock-names = "cpu";
+ 			operating-points-v2 = <&cpu_opp_table>;
+-			cpu-supply = <&ipq6018_s2>;
+ 			#cooling-cells = <2>;
+ 		};
+ 
+@@ -69,7 +67,6 @@ cpu2: cpu@2 {
+ 			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
+ 			clock-names = "cpu";
+ 			operating-points-v2 = <&cpu_opp_table>;
+-			cpu-supply = <&ipq6018_s2>;
+ 			#cooling-cells = <2>;
+ 		};
+ 
+@@ -82,7 +79,6 @@ cpu3: cpu@3 {
+ 			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
+ 			clock-names = "cpu";
+ 			operating-points-v2 = <&cpu_opp_table>;
+-			cpu-supply = <&ipq6018_s2>;
+ 			#cooling-cells = <2>;
+ 		};
+ 
+@@ -184,16 +180,6 @@ glink-edge {
+ 			rpm_requests: rpm-requests {
+ 				compatible = "qcom,rpm-ipq6018", "qcom,glink-smd-rpm";
+ 				qcom,glink-channels = "rpm_requests";
+-
+-				regulators {
+-					compatible = "qcom,rpm-mp5496-regulators";
+-
+-					ipq6018_s2: s2 {
+-						regulator-min-microvolt = <725000>;
+-						regulator-max-microvolt = <1062500>;
+-						regulator-always-on;
+-					};
+-				};
+ 			};
+ 		};
+ 	};
+-- 
+2.25.1
 
-> From: maud spierings <maud_spierings@hotmail.com>
-> 
-> enable the gpu node on the snapdragon powered asus vivobook s15
-
-Looks good, please capitalize the 'e' at the beginning of your sentence.
-
-> 
-> ---
-
-Anything below the '---' line is omitted from the git history,
-including your Signed-off-by. So move that above this line (and remove
-the "enables..."-line below.
-
-> enables the gpu on the asus vivobook s15
-> 
-> Signed-off-by: maud spierings <maud_spierings@hotmail.com>
-
-It would make me happy if you capitalized the 'm' and 's' in your
-name...
-
-Regards,
-Bjorn
-
-> ---
->  arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts | 8 ++++++++
->  1 file changed, 8 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-> index 8515c254e15868a5d7f378b0dc0bf8f339fc7b19..f25991b887de3fca0092c5f81c881c5d8bd71aac 100644
-> --- a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-> +++ b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-> @@ -328,6 +328,14 @@ vreg_l3j_0p8: ldo3 {
->  	};
->  };
->  
-> +&gpu {
-> +	status = "okay";
-> +
-> +	zap-shader {
-> +		firmware-name = "qcom/x1e80100/ASUSTeK/vivobook-s15/qcdxkmsuc8380.mbn";
-> +	};
-> +};
-> +
->  &i2c0 {
->  	clock-frequency = <400000>;
->  	status = "okay";
-> 
-> ---
-> base-commit: 929beafbe7acce3267c06115e13e03ff6e50548a
-> change-id: 20241110-qcom-asus-gpu-870c7c22935c
-> 
-> Best regards,
-> -- 
-> maud spierings <maud_spierings@hotmail.com>
-> 
-> 
 
