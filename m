@@ -1,122 +1,92 @@
-Return-Path: <linux-arm-msm+bounces-37416-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37417-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6BB9C9C320E
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Nov 2024 13:46:41 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5EF129C32AD
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Nov 2024 15:00:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2BBD21F212F4
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Nov 2024 12:46:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 155381F20F12
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Nov 2024 14:00:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 52D1F15820C;
-	Sun, 10 Nov 2024 12:46:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u1fUOyOs"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A7C0A1DFE1;
+	Sun, 10 Nov 2024 14:00:44 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail-m6029.netease.com (mail-m6029.netease.com [210.79.60.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2512F142E7C;
-	Sun, 10 Nov 2024 12:46:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDA8D101EE;
+	Sun, 10 Nov 2024 14:00:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=210.79.60.29
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731242783; cv=none; b=a4BgKC4G/S9+G59UQEkYgFNd923c4R1c3q/QYBz+sPeu2xHIACiy6x8+LX2qeTmQ+0ip7TXvo0RGEx33g42knysFSOP02iRIa3bFwsy4a884n8QaWyGu9Q1HcvAflqZlxlgayzLFXh807RNzgN94Y7bXGrs3BIk8IJFul4ksD/M=
+	t=1731247244; cv=none; b=aNGIV3WLM8plxRBU8yTXwGhBYan667oy6Av2iiElRejfAIeVBibZkvshuIqgHAwVHERjGnH6wvqgzCBR0NuGnTUCGtGR4Fbi41bdFj7YdGvBYBRzGlR3VKjCUnJ5q0Xejq2B+xaXprTuv6FztyMemTVnVYrSpidr2cf7tk+w/bg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731242783; c=relaxed/simple;
-	bh=ElkLMRZRMv9XJWjsopnKZFC+Gem4zHcyAOxbtRxcg8g=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=kux9ZA2iKtSopVmrYThm19OMUA639Q50WsIti+JHDs7GUeXpJON0Ukk9aeOU2U1sxr4VnxpOEQNn0cAt0iwFy2l5tBduNf11JFGdddsZO6hJJY4T24PrD1z5ohg5qEa5H0u+/Y5xngubZAWo/VV0Sr2QDbuErXdYARD52MiIhDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u1fUOyOs; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id B156DC4CECD;
-	Sun, 10 Nov 2024 12:46:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1731242782;
-	bh=ElkLMRZRMv9XJWjsopnKZFC+Gem4zHcyAOxbtRxcg8g=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=u1fUOyOsGG1MHxtnIOBClBP5NVPdIeCrg7M+h2jl3w0joJVwtfW0rx1FlNuKi0eGG
-	 X1kIVwiNZ3v73cCO4HZeQU/viIYkR4S4jZDoyW2y5QFxoT5sq+8u4PANJd/O8B1bjW
-	 rch0ShXmIbB0EgxSTT6C06wn54jmWQR/JkIvOHTt6CvcVxU6wwY/LKpJyAtwep8Aq+
-	 vs+Pje3+km+zjXabYDCAOB7b+maZsRBUKKyWBiUN3Ia3ESeIvX5lEpbAtzaMaI401d
-	 9iUWemkLTCR5qkUe9g6lR7eV1qs1JSdahfaq+/kJuirlZXbxccJ+ihDp4dORhCFIO6
-	 0MkNwl8ap6a8A==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8270D5E382;
-	Sun, 10 Nov 2024 12:46:22 +0000 (UTC)
-From: maud spierings via B4 Relay <devnull+maud_spierings.hotmail.com@kernel.org>
-Date: Sun, 10 Nov 2024 13:46:12 +0100
-Subject: [PATCH] enable the gpu node
+	s=arc-20240116; t=1731247244; c=relaxed/simple;
+	bh=p0eEhEZTALt8y48BJJSgM4eOFjTiUNLHp0OHRuN0Z8c=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=lGUqbWYCmE4vLH9Ge6ysDczVQS7nSCCxT8lMRL9Qo1cRNV9V01ZsAm8SqpInmo/pBIc9rMOMU1WP+dmY3lAfxLtz4einrN0SX2jIxT3KZodvE2g/EzLNf8NlK/dVU5/4QO/gqrE88MkvvcDw1Op0IlowWPxVcQUcl2Y/887236s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=210.79.60.29
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
+Received: from amadeus-Vostro-3710.lan (unknown [113.116.6.44])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 24fe03a0;
+	Sun, 10 Nov 2024 22:00:30 +0800 (GMT+08:00)
+From: Chukun Pan <amadeus@jmu.edu.cn>
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	Chukun Pan <amadeus@jmu.edu.cn>
+Subject: [PATCH v4 0/4] arm64: dts: qcom: ipq6018: rework CPU Frequency
+Date: Sun, 10 Nov 2024 22:00:15 +0800
+Message-Id: <20241110140019.3426181-1-amadeus@jmu.edu.cn>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241110-qcom-asus-gpu-v1-1-13d7b05784b8@hotmail.com>
-X-B4-Tracking: v=1; b=H4sIABOrMGcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIxNDQ0MD3cLk/FzdxOLSYt30glJdC3ODZPNkIyNLY9NkJaCegqLUtMwKsHn
- RsbW1AMtWuORfAAAA
-X-Change-ID: 20241110-qcom-asus-gpu-870c7c22935c
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, maud spierings <maud_spierings@hotmail.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1731242781; l=1072;
- i=maud_spierings@hotmail.com; s=20241110; h=from:subject:message-id;
- bh=r3QqlTk6/PdijpA+1hzU7uSYno80RzxewgsClzl2Gxo=;
- b=uz7Ftt5vnXmdUh012LFdLEbFGUKoaVnsAceQDCjeb1yYRh2yL3NhijBx8qekuLKRIKLTrHVSj
- lohsU+0kM6CAzhd0g59n/a23dmGmQ5y+UirXSPhHAymGi1ZLnnu+LY0
-X-Developer-Key: i=maud_spierings@hotmail.com; a=ed25519;
- pk=CeFKVnZvRfX2QjB1DpdiAe2N+MEjwLEB9Yhx/OAcxRc=
-X-Endpoint-Received: by B4 Relay for maud_spierings@hotmail.com/20241110
- with auth_id=273
-X-Original-From: maud spierings <maud_spierings@hotmail.com>
-Reply-To: maud_spierings@hotmail.com
+Content-Transfer-Encoding: 8bit
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkaGUIZVhpNGB5KHhhKGh9NTVYeHw5VEwETFhoSFy
+	QUDg9ZV1kYEgtZQVlKSkhVSkpNVU1VT09ZV1kWGg8SFR0UWUFZT0tIVUpLSU9PT0tVSktLVUtZBg
+	++
+X-HM-Tid: 0a9316604eb103a2kunm24fe03a0
+X-HM-MType: 10
+X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6K1E6Ggw5ATIfGi0SIz8xNy0v
+	EjlPCxdVSlVKTEhKSU9MSUhKSEtLVTMWGhIXVRoWGh8eDgg7ERYOVR4fDlUYFUVZV1kSC1lBWUpK
+	SFVKSk1VTVVPT1lXWQgBWUFKS0xLNwY+
 
-From: maud spierings <maud_spierings@hotmail.com>
+Changes in v4:
+  Modify the commit message to further explain CPU Frequency of IPQ6000
+  Rename ipq6018-rdp.dtsi to ipq6018-mp5496.dtsi (inherit ipq6018.dtsi)
 
-enable the gpu node on the snapdragon powered asus vivobook s15
+Changes in v3:
+  Modify the commit message to further explain CPU Frequency of IPQ6000
+  Rename ipq6018-mp5496.dtsi to ipq6018-rdp.dtsi (common for RDP board)
 
----
-enables the gpu on the asus vivobook s15
+Changes in v2:
+  Add more CPU Frequencies in ipq6018.dtsi
+  Move mp5496 regulator to ipq6018-mp5496.dtsi
+  Add LDOA2 regulator to support SDCC voltage scaling
 
-Signed-off-by: maud spierings <maud_spierings@hotmail.com>
----
- arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts | 8 ++++++++
- 1 file changed, 8 insertions(+)
+Chukun Pan (4):
+  arm64: dts: qcom: ipq6018: add 1.2GHz CPU Frequency
+  arm64: dts: qcom: ipq6018: add 1.5GHz CPU Frequency
+  arm64: dts: qcom: ipq6018: move mp5496 regulator out of soc dtsi
+  arm64: dts: qcom: ipq6018: add LDOA2 regulator
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-index 8515c254e15868a5d7f378b0dc0bf8f339fc7b19..f25991b887de3fca0092c5f81c881c5d8bd71aac 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-@@ -328,6 +328,14 @@ vreg_l3j_0p8: ldo3 {
- 	};
- };
- 
-+&gpu {
-+	status = "okay";
-+
-+	zap-shader {
-+		firmware-name = "qcom/x1e80100/ASUSTeK/vivobook-s15/qcdxkmsuc8380.mbn";
-+	};
-+};
-+
- &i2c0 {
- 	clock-frequency = <400000>;
- 	status = "okay";
+ arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts |  2 +-
+ arch/arm64/boot/dts/qcom/ipq6018-mp5496.dtsi | 44 ++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi        | 28 ++++++-------
+ 3 files changed, 59 insertions(+), 15 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq6018-mp5496.dtsi
 
----
-base-commit: 929beafbe7acce3267c06115e13e03ff6e50548a
-change-id: 20241110-qcom-asus-gpu-870c7c22935c
-
-Best regards,
 -- 
-maud spierings <maud_spierings@hotmail.com>
-
+2.25.1
 
 
