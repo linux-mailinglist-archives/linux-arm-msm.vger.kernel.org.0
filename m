@@ -1,131 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-37409-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37410-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 14AC79C301F
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Nov 2024 00:46:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E06559C30B2
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Nov 2024 04:10:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3F23C1C20B3A
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Nov 2024 23:46:15 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 239631C20DA7
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Nov 2024 03:10:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2CF041A08C6;
-	Sat,  9 Nov 2024 23:46:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C26C614601F;
+	Sun, 10 Nov 2024 03:10:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="mkNnBGwF"
+	dkim=pass (2048-bit key) header.d=nexus-software-ie.20230601.gappssmtp.com header.i=@nexus-software-ie.20230601.gappssmtp.com header.b="cm2HOsUd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DC0319F411;
-	Sat,  9 Nov 2024 23:46:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EEF513E028
+	for <linux-arm-msm@vger.kernel.org>; Sun, 10 Nov 2024 03:10:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731195971; cv=none; b=TR3audH/RGREwaJeE4SeLd/EXAZThlgbew4jJzRIzA0HyqLpSTjJ3iRKskFy7Z+1Gj7aScIJcpMoprnNu6DvqPrCNVm5AwbY1abs+PeTxw6zU8tzv0xC2i+zXCBOk+K13uFri5AM5+oUSsPZAiWwb7MBKtnlhhpO9pn5KDWOzug=
+	t=1731208244; cv=none; b=q0h6NgNPmFGt0TtPtA99vY/h8x4XX9bEdP/YNpBuDDDMHbxpThH7R/F0mLkSO4qmx9SiWucWtbGthsw9aCZ93Bzrc6Kv7bVpIc1j647dPyCSnaIzcvRlUPZ0ZCYJ1PK2j2ao+P6zDBcF4bPPOCKtiHpjKFS6yQNhdiq2eFcjqlk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731195971; c=relaxed/simple;
-	bh=pYLrqg0RBAlLP/P2QvwUbnmxPxiYUQ+kcVAYOcIZwxE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=B5G1cB7J/wq4BWcNFz4QoZ574rsK++IZ+k+aJWxbTM5A+6ddLNkbbAe+m4P88JQ1NVD0U2+oU/mhKTwRvyAc1U+wZ2ExGAfZPcldtCWf9Xj+DfEslKYLOFZMQZQuQCbxvOqbNivGTJTZpzbK9+5xDOsa8mbJJBZuAf+Gp4etAIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=mkNnBGwF; arc=none smtp.client-ip=198.175.65.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1731195969; x=1762731969;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=pYLrqg0RBAlLP/P2QvwUbnmxPxiYUQ+kcVAYOcIZwxE=;
-  b=mkNnBGwFB01WYZGC2QpJ9FeaoqfW2Mqw+ID3Nh/UqVGYbp44AyhycZTl
-   V1fbrwsRvnvq3u3KlpFjzbLwuXAAOZ/jDghX47YstsUx3OBirvfaQ0O3u
-   2XEE8zuqHbX6svsix6rybGE1SawXyu81h0e9f4SYXJTpmerYi9+4Lu2+3
-   NVlZV8heiD+HL1jKIK6eGfIU5TfZ2CYFMNf0WIRRXBif3UCv0gwW+LZX8
-   VYKd40hRbG+ouhlZdcxwkzdDC9spL8LlUtUHdOkgs80h+0++D+F8520DO
-   IASp+btaYxNN6liFy0fz9+J2z0xllxr0wo2mlYjfk7wd2Um+qJl9ocoSk
-   A==;
-X-CSE-ConnectionGUID: Ff+ILeE9RgO0J4Fvplw5PQ==
-X-CSE-MsgGUID: 1fUHTcHPSVKdvZekRb4czQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="53608772"
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; 
-   d="scan'208";a="53608772"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Nov 2024 15:46:09 -0800
-X-CSE-ConnectionGUID: x6nyOXvNS5aYX9Aia9e2fg==
-X-CSE-MsgGUID: eo7rNjmZR0K0Dz6J4HwabA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,142,1728975600"; 
-   d="scan'208";a="86303661"
-Received: from lkp-server01.sh.intel.com (HELO a48cf1aa22e8) ([10.239.97.150])
-  by orviesa006.jf.intel.com with ESMTP; 09 Nov 2024 15:46:05 -0800
-Received: from kbuild by a48cf1aa22e8 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1t9v9X-000smE-0F;
-	Sat, 09 Nov 2024 23:46:03 +0000
-Date: Sun, 10 Nov 2024 07:45:48 +0800
-From: kernel test robot <lkp@intel.com>
-To: Mayank Rana <quic_mrana@quicinc.com>, jingoohan1@gmail.com,
-	manivannan.sadhasivam@linaro.org, will@kernel.org,
-	lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
-	bhelgaas@google.com, krzk@kernel.org
-Cc: oe-kbuild-all@lists.linux.dev, linux-pci@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	quic_krichai@quicinc.com, Mayank Rana <quic_mrana@quicinc.com>
-Subject: Re: [PATCH v3 4/4] PCI: qcom: Add Qualcomm SA8255p based PCIe root
- complex functionality
-Message-ID: <202411100738.kCgjRkIv-lkp@intel.com>
-References: <20241106221341.2218416-5-quic_mrana@quicinc.com>
+	s=arc-20240116; t=1731208244; c=relaxed/simple;
+	bh=cQlKNhd5NE6RwBmoxY0OcVryhkWPxYxqlNQtOR1DQls=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=MOT0bzFizLAicHn+fN3iFfuIMp6xRnNCW9GhUIWc0joCQv1dThCIxLQtrBw6h9l29xNk3lWGy9DbfqhXxGcxgQgYNbamMJF9pKjg2cWOB7/3YL5cR7O+6FO9AJ5DPGvNikJsfa+qV6O/fV+iFkSYAZoTjk+A/tWhrzDKRYFH45Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexus-software.ie; spf=none smtp.mailfrom=nexus-software.ie; dkim=pass (2048-bit key) header.d=nexus-software-ie.20230601.gappssmtp.com header.i=@nexus-software-ie.20230601.gappssmtp.com header.b=cm2HOsUd; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexus-software.ie
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=nexus-software.ie
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-431616c23b5so19703805e9.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 09 Nov 2024 19:10:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=nexus-software-ie.20230601.gappssmtp.com; s=20230601; t=1731208239; x=1731813039; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=zGxEFnmS5fq8tk5sA1fqqLEk9HyDO1wqcsP8ouvekQY=;
+        b=cm2HOsUdx85pqUS1bc98v3r/axAU0pzhBo3xU26kafhTwItiHw6oSE3PILQUg1oAqh
+         ICtQg4uEgJL8hg1nfrPsY+RwH+wpL2kGL03sw7GGb6arBjU0LSRtafn5SIDI7hrfaNXk
+         DORgyH/pJWgM052qdJp2ZOJ3WdE+uFqvPE+AzkJ7srIRsSb+kef2mf6YXNU/q7MQ7AJx
+         vykSPbxc7b0HHUB9mVYiTOx7eof1xQy3ZAppBazJvUcKX60k4b+FeWxvxuR/zhVw69E3
+         UzmP/l2yhVURF9B0Nqtj+JXznJUBaykZfiGAkAWYDtgU2omngUh7IRS/02VKrzyOuV+H
+         M7SQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731208239; x=1731813039;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=zGxEFnmS5fq8tk5sA1fqqLEk9HyDO1wqcsP8ouvekQY=;
+        b=Wp0/IqkkRSgwDsY5nv3Gd9TJx/MWmww2VCkbN4lFxTsP+XyEq1yt6yoMxg0JRVvd8P
+         gVVlK7tI5CHwvhivOHrP2iKAwmNv2vBMNyH3GcjW/1eOAZo5mPkmALRRG10G/WR+hlcn
+         SuxjgiF7rBVUPCzZzQQVWxIAMFmrz6D5fezicEaiAtFqOkyGCRNCZdFN+jq/YQLs5ac0
+         /IsXbg3WdOoI8ami+6OfE8mDQxsWd2eUiKMLZXHiCNRJ5XOCA2KrNLyVeiipGt5gAEoC
+         sfbyCSHZG69nPJ7MkppqNO7Yus3lHxm2SjBOa/jP22g+SvdbyDQfTercO2G0lEhQYASB
+         wF9Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXTYIqiK5k6Sn2iay2AKQPlvRIpcjF+xhT+bOoQ4ryXFC5KelyUok+G8+d8bmN9J/2EyYjQrQUklMNd1hQP@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyr78OChkbblwzSuCP+jMY0BgXGVD8lSpfU5orBMRGOaLAAwMuT
+	Md6YnUYAkeBBDyxW02imaRpOz4jM9o5gOPjstI5FWZunuQcFgICCKnFFr+/5h28=
+X-Google-Smtp-Source: AGHT+IH5aQ8aQ1R+iLcbezixKAMbiVAd6tXCGBPiuHyJUqk5Nwvv+Ivfc/HUeFLxpFg7fJTC26pjWw==
+X-Received: by 2002:a05:600c:4fc3:b0:42c:baf1:4c7 with SMTP id 5b1f17b1804b1-432b6858e60mr70055455e9.4.1731208239337;
+        Sat, 09 Nov 2024 19:10:39 -0800 (PST)
+Received: from [192.168.0.48] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432aa737721sm165333935e9.36.2024.11.09.19.10.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 09 Nov 2024 19:10:37 -0800 (PST)
+Message-ID: <841a9469-4fa1-443f-88a6-bfbe11b74487@nexus-software.ie>
+Date: Sun, 10 Nov 2024 03:10:36 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241106221341.2218416-5-quic_mrana@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 03/28] media: iris: implement iris v4l2 file ops
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>
+Cc: Hans Verkuil <hverkuil@xs4all.nl>,
+ Sebastian Fricke <sebastian.fricke@collabora.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Nicolas Dufresne <nicolas@ndufresne.ca>,
+ =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+ Jianhua Lu <lujianhua000@gmail.com>, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20241105-qcom-video-iris-v5-0-a88e7c220f78@quicinc.com>
+ <20241105-qcom-video-iris-v5-3-a88e7c220f78@quicinc.com>
+Content-Language: en-US
+From: Bryan O'Donoghue <pure.logic@nexus-software.ie>
+In-Reply-To: <20241105-qcom-video-iris-v5-3-a88e7c220f78@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi Mayank,
+On 05/11/2024 06:55, Dikshita Agarwal wrote:
+> Implement open, close and poll ops.
+> 
+> Open:
+> Configure the vb2 queue and v4l2 file handler. Allocate a video instance
+> and add the instance to core instance list.
+> 
+> Close:
+> Free the instance and remove it from core instance list.
 
-kernel test robot noticed the following build warnings:
+Its a bit odd that you describe the purpose of open and close but not 
+poll, despite listing poll along with open and close at the very top.
 
-[auto build test WARNING on pci/next]
-[also build test WARNING on pci/for-linus mani-mhi/mhi-next robh/for-next linus/master v6.12-rc6 next-20241108]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+Consider adding that text if you do a next version.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Mayank-Rana/PCI-dwc-Export-dwc-MSI-controller-related-APIs/20241107-061634
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/pci/pci.git next
-patch link:    https://lore.kernel.org/r/20241106221341.2218416-5-quic_mrana%40quicinc.com
-patch subject: [PATCH v3 4/4] PCI: qcom: Add Qualcomm SA8255p based PCIe root complex functionality
-config: powerpc-randconfig-r131-20241109 (https://download.01.org/0day-ci/archive/20241110/202411100738.kCgjRkIv-lkp@intel.com/config)
-compiler: clang version 20.0.0git (https://github.com/llvm/llvm-project 592c0fe55f6d9a811028b5f3507be91458ab2713)
-reproduce: (https://download.01.org/0day-ci/archive/20241110/202411100738.kCgjRkIv-lkp@intel.com/reproduce)
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202411100738.kCgjRkIv-lkp@intel.com/
-
-sparse warnings: (new ones prefixed by >>)
->> drivers/pci/controller/dwc/pcie-qcom.c:1613:27: sparse: sparse: symbol 'pci_qcom_ecam_ops' was not declared. Should it be static?
-
-vim +/pci_qcom_ecam_ops +1613 drivers/pci/controller/dwc/pcie-qcom.c
-
-  1611	
-  1612	/* ECAM ops */
-> 1613	const struct pci_ecam_ops pci_qcom_ecam_ops = {
-  1614		.init		= qcom_pcie_ecam_host_init,
-  1615		.pci_ops	= {
-  1616			.map_bus	= pci_ecam_map_bus,
-  1617			.read		= pci_generic_config_read,
-  1618			.write		= pci_generic_config_write,
-  1619		}
-  1620	};
-  1621	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+---
+bod
 
