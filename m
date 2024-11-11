@@ -1,304 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-37486-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37487-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id A06049C43E1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2024 18:41:32 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0FB489C4410
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2024 18:48:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2FAB51F21BD1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2024 17:41:32 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 968DB1F253EF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2024 17:48:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A0C71AA79A;
-	Mon, 11 Nov 2024 17:39:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C97111A9B33;
+	Mon, 11 Nov 2024 17:48:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BTxH4duz"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gfD79ezb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E2891AA788;
-	Mon, 11 Nov 2024 17:39:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 877501A0B15;
+	Mon, 11 Nov 2024 17:48:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731346755; cv=none; b=BEa3tE4mCffmuSJyzn3NtjS2/BkflLntkshBqUZ8Vc/mMrC2og0Naq0JDTyk6yr5BxTmJdXGVxsj0vxaE02MDqNZtNAFjO2rQURQtGBJl2AtbgpK/K4gHUfuCsYrJ1hdb/p0rP4HQ7Ua0AZAEw7yzvq+aXehP6S0DyvrL1d9pTM=
+	t=1731347318; cv=none; b=NOcqThDy5vuMM1wPQgWcXyDvX8m1UjGJ+88l7oYNcE8wJDGOSRUPKJ6pyl7XVfqVXtApE/dJG4DQ2AhyA6b29hlM2WvpqcdY/TGjMbindVV7y/Q56BUyx1/D1QZHuPalZPfAHzB59RN4c2lDEpvs1kuJfO/910kz1bdrJiZ5lZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731346755; c=relaxed/simple;
-	bh=lBbzUyMqfHeDD6ko8cw3TFL2RQtuO/mV4Rr1WqZ++08=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uV77hvBnixpf1gJwpkn0P2JFy0uUbivm6FyhTu5C+M62xL8XZHaB3nXeCLq0opmNSePi7bYU2HRTZWvgoYXSPpZioKdvb+8hlP+yJFWUk/YLtnEr9GKL4Vb+1o+nxnBveOOQ+fwd1ltezhFW69hm4E7bTBSCfrYfIof/3/bt4ZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BTxH4duz; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ABBUkq9027315;
-	Mon, 11 Nov 2024 17:39:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	nq2M7QKq6EEuAV62YaLr21VLlQSB1WvMDPSk2WFA9DE=; b=BTxH4duzTUmjDLjt
-	jbec2dWNfpnhOl9WU/i+HMOpX5ARjg3DvvLIrP680zHl7MbNEo8pq+FAA4ymH4Hh
-	jg1C8IrKjfnUxeZWiwOI4AGlUPrGIud6MM0OS29256XgUgJZywFQlCC/hjpEc3DS
-	2Epx9idLPxq2m0nCqlFyQpi23d/bROJiwYZLlqSQ9vW7HCtet/BFtALRLu9ych7d
-	GvD/2Ur94ERkoZ1jPPuXcvQzbat2u778O2OJYzhB4AOx0j222upzgfwxTRX31xcC
-	v2+VCSywJQxfiv1Uw3ozM0cKGv2hMwRfxOspzcaTM9Ubjvr7v+gDoqCjFKSaGdC+
-	aXlj1Q==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42sytsmxcw-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 11 Nov 2024 17:39:09 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4ABHd85m021957
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 11 Nov 2024 17:39:08 GMT
-Received: from hu-vikramsa-hyd.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Mon, 11 Nov 2024 09:39:02 -0800
-From: Vikram Sharma <quic_vikramsa@quicinc.com>
-To: <rfoss@kernel.org>, <todor.too@gmail.com>, <bryan.odonoghue@linaro.org>,
-        <krzk+dt@kernel.org>
-CC: <quic_vikramsa@quicinc.com>, <linux-media@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <kernel@quicinc.com>
-Subject: [PATCH v1 1/1] media: qcom: camss: Restructure camss_link_entities
-Date: Mon, 11 Nov 2024 23:08:45 +0530
-Message-ID: <20241111173845.1773553-2-quic_vikramsa@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20241111173845.1773553-1-quic_vikramsa@quicinc.com>
-References: <20241111173845.1773553-1-quic_vikramsa@quicinc.com>
+	s=arc-20240116; t=1731347318; c=relaxed/simple;
+	bh=Y+khpFiawXKLU/+l8e747ZP6KaaIIh+gTXQA+EIkgkY=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=DPvJemRwQJoQxtD+/E94bhT9QN6+UU1LAdIPV6I7E1YQg/QNDiOQGtiBMWXP/AWvW8M62xESym5SXM1C6xUn12aYWRhLmWobeje5FRusJjdF4dS/5QWxWsJ5vmzUY6/cHF/Be5CAIcX5FpYOiv2aT0Bv2qJHAm6LcgAgFyG0JQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gfD79ezb; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 143CEC4CECF;
+	Mon, 11 Nov 2024 17:48:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1731347318;
+	bh=Y+khpFiawXKLU/+l8e747ZP6KaaIIh+gTXQA+EIkgkY=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=gfD79ezbyqAT5rvKeu/bcNk+MqWjLhBgv82QIF/tIbz1tWRuHXO2hqhXMblEdVPjh
+	 uLWSskpTn0NmbCS8ovAvPJNwmOCD+sEvFuY5H39CXkmtdFWd5YC2nEieNxQRc/I99o
+	 U7IQ0t8lfGL6a9x7XtdAvZul3zH6DbCJ4SHk4BNHxN4qMgByWrPQNh+GNmgGwLVMFW
+	 5kFUqPoQTKfdsOEBglpmjDw8gP+n70gDwcBkSKANJClp4+04sSwRjT77we8vHjhqgq
+	 0YvS2zBf6EmIbdDpX54lBKmW1z/IT8syb8Ns1cZ4VY6Zjr0qNNt+7l5WToJMnaGMYb
+	 cYYNgkm1oOPEg==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF3C7D3ABD9;
+	Mon, 11 Nov 2024 17:48:37 +0000 (UTC)
+From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.linaro.org@kernel.org>
+Subject: [PATCH 0/5] scsi: ufs: Bug fixes for ufs core and platform drivers
+Date: Mon, 11 Nov 2024 23:18:29 +0530
+Message-Id: <20241111-ufs_bug_fix-v1-0-45ad8b62f02e@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: SV-byBueOOr2E40MG4ait_CY_ab7_2Ty
-X-Proofpoint-ORIG-GUID: SV-byBueOOr2E40MG4ait_CY_ab7_2Ty
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- priorityscore=1501 suspectscore=0 bulkscore=0 impostorscore=0 phishscore=0
- mlxlogscore=811 lowpriorityscore=0 malwarescore=0 spamscore=0 mlxscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411110143
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAG1DMmcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxNDINAtTSuOTypNj0/LrNA1SzE0TzO2TExLTDRRAuooKEoFCoNNi46trQU
+ ADEBy810AAAA=
+To: Alim Akhtar <alim.akhtar@samsung.com>, 
+ Avri Altman <avri.altman@wdc.com>, Bart Van Assche <bvanassche@acm.org>, 
+ "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>, 
+ "Martin K. Petersen" <martin.petersen@oracle.com>, 
+ Mike Bi <mikebi@micron.com>, Bean Huo <beanhuo@micron.com>, 
+ =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <linux@weissschuh.net>, 
+ Luca Porzio <lporzio@micron.com>, Asutosh Das <quic_asutoshd@quicinc.com>, 
+ Can Guo <quic_cang@quicinc.com>, Pedro Sousa <pedrom.sousa@synopsys.com>, 
+ Krzysztof Kozlowski <krzk@kernel.org>, Peter Wang <peter.wang@mediatek.com>, 
+ Stanley Jhu <chu.stanley@gmail.com>, 
+ Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>, 
+ Orson Zhai <orsonzhai@gmail.com>, 
+ Baolin Wang <baolin.wang@linux.alibaba.com>, 
+ Chunyan Zhang <zhang.lyra@gmail.com>, 
+ Matthias Brugger <matthias.bgg@gmail.com>, 
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+ Santosh Y <santoshsy@gmail.com>, Namjae Jeon <linkinjeon@gmail.com>
+Cc: linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+ linux-samsung-soc@vger.kernel.org, linux-mediatek@lists.infradead.org, 
+ linux-renesas-soc@vger.kernel.org, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+ stable@vger.kernel.org
+X-Mailer: b4 0.14.1
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1532;
+ i=manivannan.sadhasivam@linaro.org; h=from:subject:message-id;
+ bh=Y+khpFiawXKLU/+l8e747ZP6KaaIIh+gTXQA+EIkgkY=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBnMkNyVRymijja4WYsMTq3UufBBioidTEf49F/G
+ g6j4UfgEmiJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCZzJDcgAKCRBVnxHm/pHO
+ 9d0jB/449IToaB9ZcYdJONBd23MdNRpN9XTjoQ3UaKzzkCrBwemdD8ACugH5wLUaPzsStvYYt3C
+ 6oYkky5KzIlqwZMoQVr4rSs7t0C+05tD/fKah7PQkWE2sWw6qy5weu7aZdzMMLT4eewC1jVW+OJ
+ 6sDx7OKs23eLysMs5PpefkS/XDYDkowgBvPz0f1E11UQDoA4Ra1Wd84CkcdyqTh0XDMC0EV4D0p
+ fGBOBK0Tpegsz2LI686Q6vrLJQBtn6pZNWAx2GHhNxEGbg97Rg5kF/7FtcnvVdgcDc0CDrxeyOu
+ HAIwSVg9lV19dgsYP/y7m/iTY4qce8LrwLtHgy5oTwjONKG5
+X-Developer-Key: i=manivannan.sadhasivam@linaro.org; a=openpgp;
+ fpr=C668AEC3C3188E4C611465E7488550E901166008
+X-Endpoint-Received: by B4 Relay for
+ manivannan.sadhasivam@linaro.org/default with auth_id=185
+X-Original-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reply-To: manivannan.sadhasivam@linaro.org
 
-Refactor the camss_link_entities function by breaking it down into
-three distinct functions. Each function will handle the linking of
-a specific entity separately, enhancing readability.
+Hi,
 
-Signed-off-by: Suresh Vankadara <quic_svankada@quicinc.com>
-Signed-off-by: Trishansh Bhardwaj <quic_tbhardwa@quicinc.com>
-Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
+This series has several bug fixes that I encountered when the ufs-qcom driver
+was removed and inserted back. But the fixes are applicable to other platform
+glue drivers as well.
+
+This series is tested on Qcom RB5 development board based on SM8250 SoC.
+
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- drivers/media/platform/qcom/camss/camss.c | 159 ++++++++++++++--------
- 1 file changed, 105 insertions(+), 54 deletions(-)
+Manivannan Sadhasivam (5):
+      scsi: ufs: core: Cancel RTC work during ufshcd_remove()
+      scsi: ufs: qcom: Only free platform MSIs when ESI is enabled
+      scsi: ufs: pltfrm: Disable runtime PM during removal of glue drivers
+      scsi: ufs: pltfrm: Drop PM runtime reference count after ufshcd_remove()
+      scsi: ufs: pltfrm: Dellocate HBA during ufshcd_pltfrm_remove()
 
-diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-index fabe034081ed..1052c01b45f3 100644
---- a/drivers/media/platform/qcom/camss/camss.c
-+++ b/drivers/media/platform/qcom/camss/camss.c
-@@ -1840,14 +1840,66 @@ static int camss_init_subdevices(struct camss *camss)
- }
- 
- /*
-- * camss_link_entities - Register subdev nodes and create links
-+ * camss_link_entities_csid - Register subdev nodes and create links
-  * @camss: CAMSS device
-  *
-  * Return 0 on success or a negative error code on failure
-  */
--static int camss_link_entities(struct camss *camss)
-+static int camss_link_entities_csid(struct camss *camss)
- {
--	int i, j, k;
-+	int i, j;
-+	int ret, line_num;
-+	u16 src_pad;
-+	u16 sink_pad;
-+	struct media_entity *src_entity;
-+	struct media_entity *sink_entity;
-+
-+	for (i = 0; i < camss->res->csid_num; i++) {
-+		if (camss->ispif)
-+			line_num = camss->ispif->line_num;
-+		else
-+			line_num = camss->vfe[i].res->line_num;
-+
-+		src_entity = &camss->csid[i].subdev.entity;
-+		for (j = 0; j < line_num; j++) {
-+			if (camss->ispif) {
-+				sink_entity = &camss->ispif->line[j].subdev.entity;
-+				src_pad = MSM_CSID_PAD_SRC;
-+				sink_pad = MSM_ISPIF_PAD_SINK;
-+			} else {
-+				sink_entity = &camss->vfe[i].line[j].subdev.entity;
-+				src_pad = MSM_CSID_PAD_FIRST_SRC + j;
-+				sink_pad = MSM_VFE_PAD_SINK;
-+			}
-+
-+			ret = media_create_pad_link(src_entity,
-+						    src_pad,
-+						    sink_entity,
-+						    sink_pad,
-+						    0);
-+			if (ret < 0) {
-+				dev_err(camss->dev,
-+					"Failed to link %s->%s entities: %d\n",
-+					src_entity->name,
-+					sink_entity->name,
-+					ret);
-+				return ret;
-+			}
-+		}
-+	}
-+
-+	return 0;
-+}
-+
-+/*
-+ * camss_link_entities_csiphy - Register subdev nodes and create links
-+ * @camss: CAMSS device
-+ *
-+ * Return 0 on success or a negative error code on failure
-+ */
-+static int camss_link_entities_csiphy(struct camss *camss)
-+{
-+	int i, j;
- 	int ret;
- 
- 	for (i = 0; i < camss->res->csiphy_num; i++) {
-@@ -1868,71 +1920,70 @@ static int camss_link_entities(struct camss *camss)
- 		}
- 	}
- 
--	if (camss->ispif) {
--		for (i = 0; i < camss->res->csid_num; i++) {
--			for (j = 0; j < camss->ispif->line_num; j++) {
--				ret = media_create_pad_link(&camss->csid[i].subdev.entity,
--							    MSM_CSID_PAD_SRC,
--							    &camss->ispif->line[j].subdev.entity,
--							    MSM_ISPIF_PAD_SINK,
-+	return 0;
-+}
-+
-+/*
-+ * camss_link_entities_ispif - Register subdev nodes and create links
-+ * @camss: CAMSS device
-+ *
-+ * Return 0 on success or a negative error code on failure
-+ */
-+static int camss_link_entities_ispif(struct camss *camss)
-+{
-+	int i, j, k;
-+	int ret;
-+
-+	for (i = 0; i < camss->ispif->line_num; i++) {
-+		for (k = 0; k < camss->res->vfe_num; k++) {
-+			for (j = 0; j < camss->vfe[k].res->line_num; j++) {
-+				struct v4l2_subdev *ispif = &camss->ispif->line[i].subdev;
-+				struct v4l2_subdev *vfe = &camss->vfe[k].line[j].subdev;
-+
-+				ret = media_create_pad_link(&ispif->entity,
-+							    MSM_ISPIF_PAD_SRC,
-+							    &vfe->entity,
-+							    MSM_VFE_PAD_SINK,
- 							    0);
- 				if (ret < 0) {
- 					dev_err(camss->dev,
- 						"Failed to link %s->%s entities: %d\n",
--						camss->csid[i].subdev.entity.name,
--						camss->ispif->line[j].subdev.entity.name,
-+						ispif->entity.name,
-+						vfe->entity.name,
- 						ret);
- 					return ret;
- 				}
- 			}
- 		}
--
--		for (i = 0; i < camss->ispif->line_num; i++)
--			for (k = 0; k < camss->res->vfe_num; k++)
--				for (j = 0; j < camss->vfe[k].res->line_num; j++) {
--					struct v4l2_subdev *ispif = &camss->ispif->line[i].subdev;
--					struct v4l2_subdev *vfe = &camss->vfe[k].line[j].subdev;
--
--					ret = media_create_pad_link(&ispif->entity,
--								    MSM_ISPIF_PAD_SRC,
--								    &vfe->entity,
--								    MSM_VFE_PAD_SINK,
--								    0);
--					if (ret < 0) {
--						dev_err(camss->dev,
--							"Failed to link %s->%s entities: %d\n",
--							ispif->entity.name,
--							vfe->entity.name,
--							ret);
--						return ret;
--					}
--				}
--	} else {
--		for (i = 0; i < camss->res->csid_num; i++)
--			for (k = 0; k < camss->res->vfe_num; k++)
--				for (j = 0; j < camss->vfe[k].res->line_num; j++) {
--					struct v4l2_subdev *csid = &camss->csid[i].subdev;
--					struct v4l2_subdev *vfe = &camss->vfe[k].line[j].subdev;
--
--					ret = media_create_pad_link(&csid->entity,
--								    MSM_CSID_PAD_FIRST_SRC + j,
--								    &vfe->entity,
--								    MSM_VFE_PAD_SINK,
--								    0);
--					if (ret < 0) {
--						dev_err(camss->dev,
--							"Failed to link %s->%s entities: %d\n",
--							csid->entity.name,
--							vfe->entity.name,
--							ret);
--						return ret;
--					}
--				}
- 	}
- 
- 	return 0;
- }
- 
-+/*
-+ * camss_link_entities - Register subdev nodes and create links
-+ * @camss: CAMSS device
-+ *
-+ * Return 0 on success or a negative error code on failure
-+ */
-+static int camss_link_entities(struct camss *camss)
-+{
-+	int ret;
-+
-+	ret = camss_link_entities_csiphy(camss);
-+	if (ret < 0)
-+		return ret;
-+
-+	ret = camss_link_entities_csid(camss);
-+	if (ret < 0)
-+		return ret;
-+
-+	if (camss->ispif)
-+		ret = camss_link_entities_ispif(camss);
-+
-+	return ret;
-+}
-+
- /*
-  * camss_register_entities - Register subdev nodes and create links
-  * @camss: CAMSS device
+ drivers/ufs/core/ufshcd.c             |  1 +
+ drivers/ufs/host/cdns-pltfrm.c        |  4 +---
+ drivers/ufs/host/tc-dwc-g210-pltfrm.c |  5 +----
+ drivers/ufs/host/ufs-exynos.c         |  3 +--
+ drivers/ufs/host/ufs-hisi.c           |  4 +---
+ drivers/ufs/host/ufs-mediatek.c       |  5 +----
+ drivers/ufs/host/ufs-qcom.c           |  7 ++++---
+ drivers/ufs/host/ufs-renesas.c        |  4 +---
+ drivers/ufs/host/ufs-sprd.c           |  5 +----
+ drivers/ufs/host/ufshcd-pltfrm.c      | 16 ++++++++++++++++
+ drivers/ufs/host/ufshcd-pltfrm.h      |  1 +
+ 11 files changed, 29 insertions(+), 26 deletions(-)
+---
+base-commit: 59b723cd2adbac2a34fc8e12c74ae26ae45bf230
+change-id: 20241111-ufs_bug_fix-6d17f39afaa4
+
+Best regards,
 -- 
-2.25.1
+Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+
 
 
