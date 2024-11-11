@@ -1,132 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-37491-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37493-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AEE329C4418
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2024 18:49:09 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B72609C4446
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2024 18:58:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 665181F2581A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2024 17:49:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7C98828A1F1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2024 17:58:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 213F71AAE00;
-	Mon, 11 Nov 2024 17:48:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B56B1A76D5;
+	Mon, 11 Nov 2024 17:58:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c2yPXxfU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pwgmUV20"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C79E71A76DA;
-	Mon, 11 Nov 2024 17:48:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB0C14D283;
+	Mon, 11 Nov 2024 17:58:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731347318; cv=none; b=dq6RjEa12aJQYZZmOSk22SOtpZmJuMyVhpOjo7JXvxM3E7U+D/N6ji8c5GeQySbL0vDAs7pfq17N9imsmyhwlU9fHHChbXeqLrH0MI19HRM3SL1Gfcil3NiYAjiSjygbMDxNe5RUaw267HZJt+Cx4/Ss5Zxm9/ocYvxlbGc1owE=
+	t=1731347885; cv=none; b=YKMvvy/T09FBjpsqV2I91hoFdNWUnS3GCs9xaTLTCRIi91IL3LrgJ5LqyYurYVqfHTGtu6y47sCu34TayzjCyC8dMhgOyNP5u+QzelKOxav0ZcPDpF+EGhcz74AN0Fmm84VXufj/nNtbBiMLUt5XQ6y8eNyigVZilSO3dEWbNjM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731347318; c=relaxed/simple;
-	bh=9AGnp6ItSWGEIvcEPYHznGFKAqdl+UeCsmI5khCjdS4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=CXOm7OIK919H1U/3CxP+PvgbIdgoMoBHnHaksop7VooWKgPluz8Vvri5vIyLbPeyFsQmLpCGGljF4NC7HXHAe4VZn2n6FeYurGOS5Ym1zEagT4ATiO8TsHGUSLaWBOYCWvq9TB/gPhkduZvriqGFKSaASCdk2PkLBRFxlNFZ4qc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c2yPXxfU; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 7E462C4CED4;
-	Mon, 11 Nov 2024 17:48:38 +0000 (UTC)
+	s=arc-20240116; t=1731347885; c=relaxed/simple;
+	bh=o3CQlzBRpJV7aSV4DDZJsHMn6BJpLIqcjJ/aGt/TrPw=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=ld88jEZGV8e54PtKxDrp1xGBOJiGb7x7GmEzLOFkv6wYFZbyklkmvMKT93KbrOH4xV50RsTwUCIjNhakKk9IOEDGyuFjAxdyir+MS2C1cvcnSJyO4Wmvvu/5QACAJk+q3FjJxqeXviecGrAA/+6Tz+mT+m3M7rcZEYycE9X6CEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pwgmUV20; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97DC7C4CECF;
+	Mon, 11 Nov 2024 17:58:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1731347318;
-	bh=9AGnp6ItSWGEIvcEPYHznGFKAqdl+UeCsmI5khCjdS4=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=c2yPXxfUHlgwnZrp7qGKCLwqQZc+L/+2ddJpo751E4RCy8EIs4Ij7Ka8P3CxN0rgM
-	 JV0JkMFh83ttQ4ajP/K3Q87yt+g5CZWBQOxj8AAE0SBeXg6T4NHcHE3Gb9bybL/smS
-	 uPpgH6DjmDqUljRvBXspip4Pc9w3ocTEseJn4X9indc3hcj/s/jdwoGWT+l5TruKrx
-	 sUzNvn3eLVILCLlS+ImDoqSZa5Iv7xX5k8Q78jUk5BhSGh3M0+tf2nozGfxZ+Y9CG0
-	 +2L/1YOD6Ul71mcvdcHaYeGyAHaIvVAiXaUYUzh7pA4PMa5wbuU40lwG1LL9h0ejxp
-	 +vxbc+hVknnBw==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 745DCD3ABDC;
-	Mon, 11 Nov 2024 17:48:38 +0000 (UTC)
-From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.linaro.org@kernel.org>
-Date: Mon, 11 Nov 2024 23:18:34 +0530
-Subject: [PATCH 5/5] scsi: ufs: pltfrm: Dellocate HBA during
- ufshcd_pltfrm_remove()
+	s=k20201202; t=1731347884;
+	bh=o3CQlzBRpJV7aSV4DDZJsHMn6BJpLIqcjJ/aGt/TrPw=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+	b=pwgmUV20E5aFcgwiIvoi9A192iBJ8Zm9CVa0R7SLCKwUtHCxAbSDAhm7yBGz2lqNr
+	 jETq5UW1TzB8BWPmXi8TZ9WhuhNv5gfmYbIQmJTr83Mm/DKDsdONzg3sARLRzUTLWr
+	 XtqGGPVPnT812jB0Nw6XJ/yj6Yozw1dhC0of3Q98xk9yfk19deIkHKE2a+pfV4HYG1
+	 MWhjiyluh/cLJH6+4dSS2Z5awGosMnSLw+gxt4NuzZZJRbdS0MvpmJCqiO5NUSUSGw
+	 t18OJG06Wdk8UweroCF29N+UUt7Y7igbWNkx2Gl2hi43SzSmreioKTylBHJVD2u1LF
+	 LgbFFtHfTLqUQ==
+From: Kalle Valo <kvalo@kernel.org>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,  Raj Kumar Bhagat
+ <quic_rajkbhag@quicinc.com>,  ath12k@lists.infradead.org,
+  linux-wireless@vger.kernel.org,  Rob Herring <robh@kernel.org>,
+  Krzysztof Kozlowski <krzk+dt@kernel.org>,  Conor Dooley
+ <conor+dt@kernel.org>,  Jeff Johnson <jjohnson@kernel.org>,  Bjorn
+ Andersson <andersson@kernel.org>,  Konrad Dybcio <konradybcio@kernel.org>,
+  devicetree@vger.kernel.org,  linux-kernel@vger.kernel.org,
+  linux-arm-msm@vger.kernel.org
+Subject: Re: [RFC PATCH v3 0/5] wifi: ath12k: Add wifi device node with WSI
+ for QCN9274 in RDP433
+References: <20241105180444.770951-1-quic_rajkbhag@quicinc.com>
+	<49a6ec0d-8a0b-49aa-a9eb-1174cff930f6@kernel.org>
+	<cmvfpctliqggra33u6ituguoxh3jxcuxiyjpbtcjbcgpu6lhoi@4zdthfkc2ed3>
+	<692503b8-cf39-4d6b-b70e-910fcc710d69@kernel.org>
+	<CAA8EJpqMCbyK0dodMNyfs8dNjV2QoB2nyWm233eOS9xo8BaFJg@mail.gmail.com>
+	<9d158c25-197a-49fd-b639-45287a46438f@kernel.org>
+Date: Mon, 11 Nov 2024 19:57:59 +0200
+In-Reply-To: <9d158c25-197a-49fd-b639-45287a46438f@kernel.org> (Krzysztof
+	Kozlowski's message of "Thu, 7 Nov 2024 13:16:56 +0100")
+Message-ID: <87wmh94pqw.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241111-ufs_bug_fix-v1-5-45ad8b62f02e@linaro.org>
-References: <20241111-ufs_bug_fix-v1-0-45ad8b62f02e@linaro.org>
-In-Reply-To: <20241111-ufs_bug_fix-v1-0-45ad8b62f02e@linaro.org>
-To: Alim Akhtar <alim.akhtar@samsung.com>, 
- Avri Altman <avri.altman@wdc.com>, Bart Van Assche <bvanassche@acm.org>, 
- "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>, 
- "Martin K. Petersen" <martin.petersen@oracle.com>, 
- Mike Bi <mikebi@micron.com>, Bean Huo <beanhuo@micron.com>, 
- =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <linux@weissschuh.net>, 
- Luca Porzio <lporzio@micron.com>, Asutosh Das <quic_asutoshd@quicinc.com>, 
- Can Guo <quic_cang@quicinc.com>, Pedro Sousa <pedrom.sousa@synopsys.com>, 
- Krzysztof Kozlowski <krzk@kernel.org>, Peter Wang <peter.wang@mediatek.com>, 
- Stanley Jhu <chu.stanley@gmail.com>, 
- Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>, 
- Orson Zhai <orsonzhai@gmail.com>, 
- Baolin Wang <baolin.wang@linux.alibaba.com>, 
- Chunyan Zhang <zhang.lyra@gmail.com>, 
- Matthias Brugger <matthias.bgg@gmail.com>, 
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
- Santosh Y <santoshsy@gmail.com>, Namjae Jeon <linkinjeon@gmail.com>
-Cc: linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
- linux-samsung-soc@vger.kernel.org, linux-mediatek@lists.infradead.org, 
- linux-renesas-soc@vger.kernel.org, 
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
- stable@vger.kernel.org
-X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=858;
- i=manivannan.sadhasivam@linaro.org; h=from:subject:message-id;
- bh=Ni+UMeWf+BGon+9C+5L79ezS+b3LAVE2IIekW3iQ9ww=;
- b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBnMkNz9MkYBdX398GAmfAQsbBw3ppRcumSjtutx
- sOoQ3zoTZSJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCZzJDcwAKCRBVnxHm/pHO
- 9VkjB/49ADTQJu1nV/d8/ynBuBn+ItayJXBzyHg85nSVkxMlnER5vFjUX6+uT2sZalqVXL/QI8o
- 3OX7c+Wq8TTYC69nVWpjgtcBWy0B/ppoGuhVdk62pN1guua37AURco5SSqzjrJCBheHwQJkTa+s
- uIoNZuFlJhQT/wAUu/f6zmX6aMToz3Cz4NLYPC3mkyhLlZQ2CMY7lvqpRmVpFkGb8EZVcOc1RP6
- q1BB36FdG4dvO5e3jqx/ALyfnfapbycjFzXYZHXu9CNyUlesnt/Eglfz9XvclcQIzpgusXtqRxW
- 3+zVfvcoGPZP1DfDfFedH8LuL2Ykimb6v6PRL7/ry3dN066b
-X-Developer-Key: i=manivannan.sadhasivam@linaro.org; a=openpgp;
- fpr=C668AEC3C3188E4C611465E7488550E901166008
-X-Endpoint-Received: by B4 Relay for
- manivannan.sadhasivam@linaro.org/default with auth_id=185
-X-Original-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reply-To: manivannan.sadhasivam@linaro.org
+Content-Type: text/plain
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Krzysztof Kozlowski <krzk@kernel.org> writes:
 
-This will ensure that the scsi host is cleaned up properly using
-scsi_host_dev_release(). Otherwise, it may lead to memory leaks.
+> On 07/11/2024 13:03, Dmitry Baryshkov wrote:
+>
+>> On Thu, 7 Nov 2024 at 11:29, Krzysztof Kozlowski <krzk@kernel.org> wrote:
+>>>
+>>> On 07/11/2024 12:06, Dmitry Baryshkov wrote:
+>>>> On Thu, Nov 07, 2024 at 11:23:20AM +0100, Krzysztof Kozlowski wrote:
+>>>>> On 05/11/2024 19:04, Raj Kumar Bhagat wrote:
+>>>>>> The RDP433 is a Qualcomm Reference Design Platform based on the
+>>>>>> IPQ9574. It features three QCN9274 WiFi devices connected to PCIe1,
+>>>>>> PCIe2, and PCIe3. These devices are also interconnected via a WLAN
+>>>>>> Serial Interface (WSI) connection. This WSI connection is essential
+>>>>>> for exchanging control information among these devices.
+>>>>>>
+>>>>>> This patch series describes the WSI interface found in QCN9274 in
+>>>>>> device tree and uses this device tree node in the Ath12k driver to get the
+>>>>>> details of WSI connection for Multi Link Operation (MLO) among multiple
+>>>>>> QCN9274 devices.
+>>>>>>
+>>>>>> NOTES:
+>>>>>> 1. As ath12k MLO patches are not ready yet, this patchset does not apply
+>>>>>>    to the ath.git ath-next branch and that's why the patchset is marked
+>>>>>>    as RFC. These are the work-in-progress patches we have at the moment.
+>>>>>>    The full set of MLO patches is available at:
+>>>>>>    https://git.kernel.org/pub/scm/linux/kernel/git/ath/ath.git/log/?h=ath12k-mlo-qcn9274
+>>>>>>
+>>>>>> 2. The dependency marked below applies only to the DTS patch. The
+>>>>>>    dt-bindings patches do not have this dependency.
+>>>>>>
+>>>>>> Depends-On: [PATCH V7 0/4] Add PCIe support for IPQ9574
+>>>>>> Link: https://lore.kernel.org/linux-pci/20240801054803.3015572-1-quic_srichara@quicinc.com/
+>>>>>>
+>>>>>> v3:
+>>>>>> - Created a separate binding "qcom,ath12k-wsi.yaml" to describe ath12k PCI
+>>>>>>   devices with WSI interface.
+>>>>>
+>>>>> Thanks for the changes. When you finish with testing/RFC, please send
+>>>>> proper version for review (just remember to keep numbering, next one is
+>>>>> v4 regardless whether this is RFC or not).
+>>>>
+>>>> Isn't the 'RFC' being an invitation for review per the nature of the tag
+>>>> itself?
+>>>
+>>> No, RFC means patch is not ready, might change. This was brought on the
+>>> lists multiple times and some maintainers clearly ignore RFC. Including me.
+>> 
+>> Thanks, point noted. I'll stop marking my patches with RFC tag.
+>
+> Wait, you can keep marking them RFC! It all depends what do you want to
+> achieve. Get some comments on early work or actual review for something
+> you believe is a finished work.
+>
+> I looked here briefly, no comments from me and I assume that was the
+> intention of RFC.
 
-Cc: stable@vger.kernel.org # 4.4
-Fixes: 03b1781aa978 ("[SCSI] ufs: Add Platform glue driver for ufshcd")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/ufs/host/ufshcd-pltfrm.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/drivers/ufs/host/ufshcd-pltfrm.c b/drivers/ufs/host/ufshcd-pltfrm.c
-index b8dadd0a2f4c..505572d4fa87 100644
---- a/drivers/ufs/host/ufshcd-pltfrm.c
-+++ b/drivers/ufs/host/ufshcd-pltfrm.c
-@@ -534,6 +534,7 @@ void ufshcd_pltfrm_remove(struct platform_device *pdev)
- 
- 	pm_runtime_get_sync(&pdev->dev);
- 	ufshcd_remove(hba);
-+	ufshcd_dealloc_host(hba);
- 	pm_runtime_disable(&pdev->dev);
- 	pm_runtime_put_noidle(&pdev->dev);
- }
+Exactly, we just wanted to have early feedback how to handle this
+feature. We will now incorporate these changes to our work-in-progress
+ath12kl-mlo branches, test them and once everything else in ath12k is
+ready we will submit the next patchset without RFC tag.
 
 -- 
-2.25.1
+https://patchwork.kernel.org/project/linux-wireless/list/
 
-
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
