@@ -1,172 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-37462-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37463-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B6EB29C3DC2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2024 12:52:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0C0739C3E91
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2024 13:41:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 472D51F2256F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2024 11:52:03 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B73791F22303
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2024 12:41:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60DB218B493;
-	Mon, 11 Nov 2024 11:51:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0ED49189BA4;
+	Mon, 11 Nov 2024 12:41:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lip2pPS+"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eofYajba"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF3B918A925;
-	Mon, 11 Nov 2024 11:51:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB2914D70E
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Nov 2024 12:41:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731325919; cv=none; b=W2Ab9smrus1h+a4OT+Ze6zClfjJEg1/xiFHAAkkreA26pS5o1QbRlMMCvDEPbF1Nsts8UjhhRWzqLZZwM/psbp8LDe3Uc2oMnPWpK0QoC+X/2xDgRxmdo8GDeKh4LDrjmc/GshS60trlNOVozb0xHOVn1VhiE5B5NHIKOEu1DVk=
+	t=1731328871; cv=none; b=cyz91++PmSK9ycj3zCV4jNlUygZIxiE0enPlZcbW3NEySy+8ml3lIi0+HhZeqg0ZAkkA+ihOIYxNvgU4zbyII3r7DRz8bA4+7v7zZqfF3LXb0trO5ISw891tr7pTxzwdYBvDJL48b1Z+ONKEKj0j9IpwCrCTrprr9osRlz2hnZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731325919; c=relaxed/simple;
-	bh=2ZRdE/hklbN5yxNc4Bd8fkZA0OS4OFNYOt3zUxtbBFA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=n8dC0ETXGbIjoSuG9ciSQ228yHzNmJNTlGhpywW4NdxULy4Ay7pV7Cgr3qHDWltLJWGIbJ0jMivwNX3NhsDkS2kJar6CH8+4lqNMYRlgu75qKhMruGcLHEqJUCQOBc7BsESGT9u0Whdeimw5HGpa+n0ht7VzyI5OfjkAj8hB7bI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lip2pPS+; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AANhedH030322;
-	Mon, 11 Nov 2024 11:51:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	pi0JfNWi1w0WIDh6nzdtsGpavJ1rJC8KJdmTr5MweWo=; b=lip2pPS+DL/PkDGO
-	0yoB7G1TIsNWXxL2yHhjhWja+zU0Entp9Vcs/05BYsAR+SyMFW5NyRLR4cL4y5/+
-	7ABGKzOuel5CfhyUHKkzlUTx75qHP2sgVwKj7QCBAyFksFYxe5x36Z1qwWin9hQa
-	F1+AOnTLzWKRTjeH/WRrDGhX6WMQRKC7P/Xr7pyXrLMeKIm6TNUFOts7WtYDJZPz
-	MznZE2yquEOXHgR4Mjy9kwZgDIEb+6MElsU5i7NdBAlfiGx+5Pqoj1QBYQwrExUj
-	DoLNycWZ1PpqSdvt+AbLtzXFXEvL9dyn3ccKX4Myh2KEgoLOWa6MBcDxQbVGI83P
-	pHke3w==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42sytsm4ds-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 11 Nov 2024 11:51:34 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4ABBpX3o016228
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 11 Nov 2024 11:51:33 GMT
-Received: from [10.152.195.140] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 11 Nov
- 2024 03:51:27 -0800
-Message-ID: <f5ceee66-9d09-44f9-9217-3abd467d1086@quicinc.com>
-Date: Mon, 11 Nov 2024 17:21:23 +0530
+	s=arc-20240116; t=1731328871; c=relaxed/simple;
+	bh=oZtApR3Nvo8c5QYGJJ2/iy40iqXBsN8XPrQDDZjb0H0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=g1YV8/8YqG/oW1dBhFBLJuBmt5CRIOjgZgRtpNRpjGipjPDauTeVRJQVN/+LfObNpl7IlY5hK5uv1ImdNcadlMUG69Mm/WUDia/VNu838fdlWWT/t2B2uwgQ9vUvbglsUjKkBsdoFnJ5ySFIy98EifuLQRtNpos66JqAN3muVpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eofYajba; arc=none smtp.client-ip=209.85.208.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2fb51e00c05so48746731fa.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Nov 2024 04:41:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1731328868; x=1731933668; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=I4HfV0PqO8tzYHX6VGeaFbi66mw59nhOAbviLCfOiqI=;
+        b=eofYajbacxO7Qc2Sefc5ff8v5uoVgpoZNxq27Ktw8YmcH8oMadqUJn0/6ocTUXIPEn
+         nPEvgJvnpRJaooLJio91VyK0DQQLvoNezQJEIL7ZufctLtKcT+rZJ325eFThD5/Ag1wb
+         tLqYsevvjOX3GGcV9gGnHR8qKXYHRm0WZ/3hytwc3UR4g3KIBeISFrSMGXfNnfgzp1iy
+         jfaGqQPRUfr8hyjmu2g36Y78JVypEp+7pZHJxZSehouIY2orloHWX2rLbetpLUDinaJw
+         hgeJu7Ld5Q7cx/Gkj90NlvGTZ7GuZFAC0nBCRm3DKWSsvAFvLjTukFSxhFP0d0LOvD3k
+         RCYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731328868; x=1731933668;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=I4HfV0PqO8tzYHX6VGeaFbi66mw59nhOAbviLCfOiqI=;
+        b=d9qv3r2nI52AoVbkp8Aojm11nigzBYWp5pzRhPQGUrsi+EwVdxu1YtC/J30eSb30s9
+         YR5G3Ukc5cWmpkSUXqnAOLv60h3JVsuPJMjGDiz+GXTyP3s78WdWBip5b1yMnPLFTFm2
+         lWZlRR+POnGDjqGM3vviVPgOGMmRX/5KMcuUxbWgLuTd+0+PwPHZm5PfgU3KnkoXP3IT
+         X+whosgMvOFhpZgqi5pGkpt1FDuJO0snJHwxphojxwprbQhfxgbEN1GiTI7MAO+Ro8k8
+         VkP+W+XiEYzoSMjFc3cTBb+JKqWTe+qekXwvkEPGi2Ja1WA6+edhFNN/hRlKHIF7Yoxs
+         UNKg==
+X-Forwarded-Encrypted: i=1; AJvYcCUEj2UE7Ldf8lUzdRBjjkneCvSF9AextIn7T+JHahuIXVf7FG5LF+rxVoPDmXShXowsNboHBBvna/CQQhaE@vger.kernel.org
+X-Gm-Message-State: AOJu0YwUcV3mum6e//hjVQ9eumMYL2N92ffx8NVNxwh3JS2djeEkMaob
+	S/MrfUSp5TPFO8pdxOD/blSAA081X/+Nz7DuE3urmEiXwJ8+rl61YkeHDEEIZzw=
+X-Google-Smtp-Source: AGHT+IFDMxq8JQgZ3yOqv+TOrWdr8ZF25uS3cMX5x65ZUfZh/LXbHYlIqPk6dU3NKQ7IV2xJigL9fQ==
+X-Received: by 2002:a05:651c:1143:b0:2fb:8c9a:fe3f with SMTP id 38308e7fff4ca-2ff2020794bmr90292661fa.22.1731328868289;
+        Mon, 11 Nov 2024 04:41:08 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ff1790262fsm16754411fa.63.2024.11.11.04.41.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Nov 2024 04:41:07 -0800 (PST)
+Date: Mon, 11 Nov 2024 14:41:04 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Arnd Bergmann <arnd@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
+	Varadarajan Narayanan <quic_varada@quicinc.com>, Sricharan Ramabadhran <quic_srichara@quicinc.com>, 
+	Arnd Bergmann <arnd@arndb.de>, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+	Manikanta Mylavarapu <quic_mmanikan@quicinc.com>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] clk: qcom: remove unused data from gcc-ipq5424.c
+Message-ID: <r2se3v53h7pnx527bgsswpkjhkqx2csrwlxpzai7l6lanbjjty@e4nljcvgors3>
+References: <20241111103258.3336183-1-arnd@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 7/7] arm64: dts: qcom: ipq5424: Add thermal zone nodes
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Konrad Dybcio
-	<konradybcio@gmail.com>,
-        <srinivas.kandagatla@linaro.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <amitk@kernel.org>,
-        <thara.gopinath@gmail.com>, <rafael@kernel.org>,
-        <daniel.lezcano@linaro.org>, <rui.zhang@intel.com>,
-        <lukasz.luba@arm.com>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>
-CC: <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
-References: <20241104124413.2012794-1-quic_mmanikan@quicinc.com>
- <20241104124413.2012794-8-quic_mmanikan@quicinc.com>
- <91ea0f03-9bbe-491d-9056-ebd9fdc73bfa@oss.qualcomm.com>
- <8cb665f5-4885-4853-804a-7313decc719c@quicinc.com>
- <2c7ece9d-95e8-4d01-a9da-c1d5d7388771@gmail.com>
- <fc676574-ffac-40d2-aa47-8d7cb61b5e3f@quicinc.com>
- <9bd3d4e2-aba1-423c-946a-f5c60da71497@oss.qualcomm.com>
-Content-Language: en-US
-From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-In-Reply-To: <9bd3d4e2-aba1-423c-946a-f5c60da71497@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: B0ib5jzU4Lmhg0zbaLwMvGAC_4moaKeL
-X-Proofpoint-ORIG-GUID: B0ib5jzU4Lmhg0zbaLwMvGAC_4moaKeL
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- priorityscore=1501 suspectscore=0 bulkscore=0 impostorscore=0 phishscore=0
- mlxlogscore=999 lowpriorityscore=0 malwarescore=0 spamscore=0 mlxscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411110100
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241111103258.3336183-1-arnd@kernel.org>
 
-
-
-On 11/7/2024 8:17 PM, Konrad Dybcio wrote:
-> On 6.11.2024 11:25 AM, Manikanta Mylavarapu wrote:
->>
->>
->> On 11/6/2024 2:42 PM, Konrad Dybcio wrote:
->>>
->>>
->>> On 11/6/24 09:47, Manikanta Mylavarapu wrote:
->>>>
->>>>
->>>> On 11/4/2024 7:21 PM, Konrad Dybcio wrote:
->>>>> On 4.11.2024 1:44 PM, Manikanta Mylavarapu wrote:
->>>>>> Add thermal zone nodes for sensors present in IPQ5424.
->>>>>>
->>>>>> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
->>>>>> ---
->>>>> [...]
->>>>>
->>>>>> +
->>>>>> +        cpu3-thermal {
->>>>>> +            polling-delay-passive = <0>;
->>>>>> +            polling-delay = <0>;
->>>>>> +            thermal-sensors = <&tsens 13>;
->>>>>> +
->>>>>> +            trips {
->>>>>> +                cpu-critical {
->>>>>> +                    temperature = <120000>;
->>>>>> +                    hysteresis = <9000>;
->>>>>> +                    type = "critical";
->>>>>> +                };
->>>>>> +
->>>>>> +                cpu-passive {
->>>>>> +                    temperature = <110000>;
->>>>>> +                    hysteresis = <9000>;
->>>>>> +                    type = "passive";
->>>>>
->>>>> You have a passive trip point without passive polling
->>>>>
->>>>
->>>> Okay, will remove this.
->>>
->>> You most likely want to preserve it, while keeping a sensible
->>> polling frequency, so that userspace will be aware of the current
->>> CPU temperature. <100> sounds like a sensible value here.
->>>
->>> Konrad
->>
->> Temperature sensor's present in IPQ5424 supports interrupts.
+On Mon, Nov 11, 2024 at 11:32:51AM +0100, Arnd Bergmann wrote:
+> From: Arnd Bergmann <arnd@arndb.de>
 > 
-> Correct.
+> The newly added driver causes a warnings when enabling -Wunused-const-variables:
 > 
->> Hence no need to configure polling frequency.
+> drivers/clk/qcom/gcc-ipq5424.c:1064:30: error: 'ftbl_gcc_q6_axi_clk_src' defined but not used [-Werror=unused-const-variable=]
+>  1064 | static const struct freq_tbl ftbl_gcc_q6_axi_clk_src[] = {
+>       |                              ^~~~~~~~~~~~~~~~~~~~~~~
+> drivers/clk/qcom/gcc-ipq5424.c:957:30: error: 'ftbl_gcc_qpic_clk_src' defined but not used [-Werror=unused-const-variable=]
+>   957 | static const struct freq_tbl ftbl_gcc_qpic_clk_src[] = {
+>       |                              ^~~~~~~~~~~~~~~~~~~~~
+> drivers/clk/qcom/gcc-ipq5424.c:497:30: error: 'ftbl_gcc_qupv3_2x_core_clk_src' defined but not used [-Werror=unused-const-variable=]
+>   497 | static const struct freq_tbl ftbl_gcc_qupv3_2x_core_clk_src[] = {
+>       |                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 > 
-> No, that interrupt firing signifies crossing the temp threshold (meaning
-> no updates beyond that) or the tsens watchdog barking.
+> In order to hopefully enable this warning by default in the future,
+> remove the data for now. If it gets used in the future, it can
+> trivially get added back.
 > 
-> Konrad
+> Fixes: 21b5d5a4a311 ("clk: qcom: add Global Clock controller (GCC) driver for IPQ5424 SoC")
+> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+> ---
+>  drivers/clk/qcom/gcc-ipq5424.c | 18 ------------------
+>  1 file changed, 18 deletions(-)
+> 
 
-An interrupt fires when the temperature crosses a threshold.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Thanks & Regards,
-Manikanta.
+-- 
+With best wishes
+Dmitry
 
