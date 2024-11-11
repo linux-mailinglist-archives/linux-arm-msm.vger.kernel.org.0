@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-37449-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37450-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 693069C39F6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2024 09:46:59 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2CB179C39FE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2024 09:48:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C64C5B20392
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2024 08:46:56 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5D3A91C2121C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2024 08:48:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 659981531E2;
-	Mon, 11 Nov 2024 08:46:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A6CB154BE0;
+	Mon, 11 Nov 2024 08:48:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Dx8nOn0d"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="OercpXh1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D65183A8F7;
-	Mon, 11 Nov 2024 08:46:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 880393A8F7;
+	Mon, 11 Nov 2024 08:48:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731314814; cv=none; b=RXodKLlbq8LuP3r5gZOkO4s3m726rOWZ4shsuuqMEgEB302pBPLqh+itHPtffufNtz9aDsJ+yKDxkYd4rAYL0i9AzkbnXhqfKof8cCmIbbDjwADiF1oubzuYuP1m9nP9GtVcQTtg2t945TLInMd297xEzaU0nAz/kCQjHXoxbgU=
+	t=1731314933; cv=none; b=b86OJUarkCAKGF8LnEQawl7NK3D9BWPQWhM/5SQsODTeGJH91ty1ICPmorVGS7AVc/H3kUy+aCGHZqraLh6WBMxDHkjVh68EkhztGaI7nJPCg6E13TUVq2y99TWo6nI7cj6OvMkX93SJixSaLxcAVxxad3MWMkZCYMSIpC8zr8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731314814; c=relaxed/simple;
-	bh=zwJM+WDzyCcesBvItNnaHOXOWMmSas0F3+d6S1s2LUY=;
+	s=arc-20240116; t=1731314933; c=relaxed/simple;
+	bh=xQKt1lK8GwBq77cZBspA/bVJgEyRoTR8hrlSr+xVmeQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=dFjdDr8ylGrGx64Fa5wBhk5iYtSDpM+xh9Ch1nrozlYAfrwXVXVM59klHsUm2jqg0gj6OFcMB6y0kMRebZWlNba2eSBn5HTR/BwaZBz4AhaeHVPeGXWYrWdZxLyw9tjnH3/4lQycbBjY9fYhwq0FgM2ZcDevMyiJ0kYrWxkY0pU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Dx8nOn0d; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=A9lF0ShmwubBijCmtq5ZvVZRs+y822HTAjmSQEOMWAjdD7Ex3oQzxQ6G1AOorjB5bhalltOVBNJ0Bms25ym46sFnLu4l6z1xq8fL5aQvhEoPQYaDCmwMSQizpn8fsmoViRwSRsWGyorBG+w5DD5lrIIqfL6JlP9wX6mflhAteSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=OercpXh1; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AANfEjJ031648;
-	Mon, 11 Nov 2024 08:46:49 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AALwQNO015580;
+	Mon, 11 Nov 2024 08:48:44 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	tsZb2r3gQpOR9wTnRY8pa/ogh08OGJoadirzhdWyOII=; b=Dx8nOn0dBPmBg8nG
-	7oh6j8dRfGOEobQqfCoRVZt9sVtLvWyxNoE0h1LIjr/t2wTkgDMlVWuMJzlhyYz5
-	NsKWYKKSx9fwGQdmGvvFQ6pauGlcf7BWd89Me4yhuLlamLIVC73YHi/bF7p8Dp2P
-	nqWalDL/W4oTIkmDYBZQz6m5tANhql08vyxOVeap7youJsBPQVPNChOdj7q49uZ8
-	1bqP6ANCfgMHR9uXfngJm/4RVyyryFpGpILo2RtaeUtoVyAdB2ybgsqyLVnL0cuy
-	doZJEHLDWKsPyRtTKSUKwPtKT6llb5ROBbKXju9epfv4GxhKMrA4Wj4iXtKipLTo
-	J+uYmw==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42sweebvy7-1
+	qUkaK4V+txW5YUCCJsunixq9avxafCIj+kEcUtZK9ac=; b=OercpXh1ciL4fEwO
+	dVG4DuKhUkW8aG6/XMJ/JdPVMvPBhxjRI/qyzLa0USFjdn6o6BfmFAlQJBLETlni
+	Bbq8qaISA2azbSxtXLXpg9kFR4xD6UNABsIY9Fo8PU9nhyPEwsuTXXYW1qTchP6s
+	Ivk5xjVnZy8eI+q+J9jtgdYvGWhcaxyAbQEYZRNSHGWqcDU9d05xvWxFShN2ff3Z
+	OwAd3WqCCrMebdsVTiNxdmf0rK6ThcXkfn5jnA7Fff2b/7ovyCu6zvRraiLDiLC8
+	zR9ZDiJcyLGu3urRTcTKclmjJg/H7OHEpDg2mOinJAZ7hcHBE/zj4a659csQGiu2
+	9pFrVg==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42sxr5usb5-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 11 Nov 2024 08:46:49 +0000 (GMT)
+	Mon, 11 Nov 2024 08:48:43 +0000 (GMT)
 Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AB8kmHC018833
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AB8mgrL006646
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 11 Nov 2024 08:46:48 GMT
+	Mon, 11 Nov 2024 08:48:42 GMT
 Received: from [10.216.36.177] (10.80.80.8) by nalasex01b.na.qualcomm.com
  (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 11 Nov
- 2024 00:46:44 -0800
-Message-ID: <414199fd-c594-4325-8418-4f57d141b9cd@quicinc.com>
-Date: Mon, 11 Nov 2024 14:16:41 +0530
+ 2024 00:48:39 -0800
+Message-ID: <f3e49c6f-891d-4421-851a-25efa1d5b80c@quicinc.com>
+Date: Mon, 11 Nov 2024 14:18:36 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,116 +65,85 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] arm64: dts: qcom: qcs615: Add QUPv3 configuration
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Krzysztof Kozlowski
-	<krzk@kernel.org>
-CC: <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <konrad.dybcio@oss.qualcomm.com>,
+Subject: Re: [PATCH v1] arm64: dts: qcom: qcs615: Add QUPv3 configuration
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
         <quic_msavaliy@quicinc.com>, <quic_anupkulk@quicinc.com>
-References: <20241028112049.30734-1-quic_vdadhani@quicinc.com>
- <50a0a56d-55ce-4b59-a004-b8418309eb92@kernel.org>
- <hwan6cblfhvwmeos4izmhlzfaydxvs4s66wtjulk22aj3zhy6d@xkaqfgxe2sx2>
+References: <20241011103346.22925-1-quic_vdadhani@quicinc.com>
+ <15238992-4ede-4b85-9947-391baaa4c8a9@oss.qualcomm.com>
+ <332f7a0a-d9df-49bd-81d5-cc04c50183b9@quicinc.com>
+ <my3im4zjjozoze4s5vkwlraailrd6njbof75acn7lqt5oxzgor@eu6aq2754uqf>
 Content-Language: en-US
 From: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-In-Reply-To: <hwan6cblfhvwmeos4izmhlzfaydxvs4s66wtjulk22aj3zhy6d@xkaqfgxe2sx2>
+In-Reply-To: <my3im4zjjozoze4s5vkwlraailrd6njbof75acn7lqt5oxzgor@eu6aq2754uqf>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Z77tso6LbEVB8olppKqpIUyV0nXK1UBg
-X-Proofpoint-GUID: Z77tso6LbEVB8olppKqpIUyV0nXK1UBg
+X-Proofpoint-ORIG-GUID: 1bzX2aRKXUXs8H0bbYWwgP9E5q8Z-z1c
+X-Proofpoint-GUID: 1bzX2aRKXUXs8H0bbYWwgP9E5q8Z-z1c
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 adultscore=0
- mlxscore=0 bulkscore=0 malwarescore=0 suspectscore=0 phishscore=0
- priorityscore=1501 lowpriorityscore=0 mlxlogscore=999 clxscore=1015
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411110074
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 phishscore=0
+ mlxscore=0 malwarescore=0 priorityscore=1501 spamscore=0
+ lowpriorityscore=0 impostorscore=0 suspectscore=0 adultscore=0
+ mlxlogscore=999 clxscore=1015 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2409260000 definitions=main-2411110074
 
 
 
-On 10/28/2024 5:51 PM, Dmitry Baryshkov wrote:
-> On Mon, Oct 28, 2024 at 12:33:48PM +0100, Krzysztof Kozlowski wrote:
->> On 28/10/2024 12:20, Viken Dadhaniya wrote:
->>> Add DT support for QUPv3 Serial Engines.
->>>
->>> Co-developed-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
->>> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
->>> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
->>> ---
->>>
->>> Build Dependencies:
->>>
->>> Base:
->>> https://lore.kernel.org/linux-devicetree/20240926-add_initial_support_for_qcs615-v3-5-e37617e91c62@quicinc.com/
->>> https://lore.kernel.org/linux-devicetree/20240926-add_initial_support_for_qcs615-v3-6-e37617e91c62@quicinc.com/
->>>
->>> Clock: https://lore.kernel.org/linux-devicetree/20240920-qcs615-clock-driver-v2-3-2f6de44eb2aa@quicinc.com/
->>> ICC: https://lore.kernel.org/linux-devicetree/20240924143958.25-2-quic_rlaggysh@quicinc.com/
->>> Apps SMMU: https://lore.kernel.org/all/20241011063112.19087-1-quic_qqzhou@quicinc.com/
->>>
->>> v1 -> v2:
->>>
->>> - Add opp-shared property.
->>> - Use QCOM_ICC_TAG_ALWAYS flag in interconnect property.
->>>
->>> v1 Link: https://lore.kernel.org/all/20241011103346.22925-1-quic_vdadhani@quicinc.com/
->>> ---
->>>   arch/arm64/boot/dts/qcom/qcs615.dtsi | 642 ++++++++++++++++++++++++++-
->>>   1 file changed, 638 insertions(+), 4 deletions(-)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/qcs615.dtsi b/arch/arm64/boot/dts/qcom/qcs615.dtsi
->>> index 865ead601f85..1d1cdf6f9a74 100644
->>> --- a/arch/arm64/boot/dts/qcom/qcs615.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/qcs615.dtsi
->>> @@ -5,6 +5,7 @@
->>>   
->>>   #include <dt-bindings/clock/qcom,qcs615-gcc.h>
->>>   #include <dt-bindings/clock/qcom,rpmh.h>
->>> +#include <dt-bindings/dma/qcom-gpi.h>
->>>   #include <dt-bindings/interconnect/qcom,icc.h>
->>>   #include <dt-bindings/interconnect/qcom,qcs615-rpmh.h>
->>>   #include <dt-bindings/interrupt-controller/arm-gic.h>
->>> @@ -17,6 +18,21 @@
->>>   	#address-cells = <2>;
->>>   	#size-cells = <2>;
->>>   
->>> +	aliases {
->>> +		i2c1 = &i2c1;
->>> +		i2c2 = &i2c2;
->>> +		i2c3 = &i2c3;
->>> +		i2c4 = &i2c4;
->>> +		i2c5 = &i2c5;
->>> +		i2c6 = &i2c6;
->>> +		i2c7 = &i2c7;
->>> +		spi2 = &spi2;
->>> +		spi4 = &spi4;
->>> +		spi6 = &spi6;
->>> +		spi7 = &spi7;
->>> +		serial0 = &uart0;
+On 10/28/2024 5:58 PM, Dmitry Baryshkov wrote:
+> On Mon, Oct 28, 2024 at 04:49:43PM +0530, Viken Dadhaniya wrote:
 >>
->> Comments from v1 apply.
 >>
-> 
-> [...]
-> 
->>> @@ -392,6 +428,24 @@
->>>   			#size-cells = <1>;
->>>   		};
->>>   
->>> +		gpi_dma0: qcom,gpi-dma@800000  {
+>> On 10/26/2024 1:10 AM, Konrad Dybcio wrote:
+>>> On 11.10.2024 12:33 PM, Viken Dadhaniya wrote:
+>>>> Add DT support for QUPv3 Serial Engines.
+>>>>
+>>>> Co-developed-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+>>>> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+>>>> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+>>>> ---
+>>>
+>>> [...]
+>>>
+>>>> @@ -392,6 +427,24 @@
+>>>>    			#size-cells = <1>;
+>>>>    		};
+>>>> +		gpi_dma0: qcom,gpi-dma@800000  {
+>>>> +			compatible = "qcom,sdm845-gpi-dma";
+>>>
+>>> You must define a new compatible for qcs615, sdm845 is used as a fallback
+>>> (so that we don't have to add new driver entries). You will however need
+>>> to submit a separate dt-bindings change.
 >>
->> Nope. Don't post downstream code.
+>> We have added sdm845 in compatible due to below comment in driver file
+>>
+>> File: https://github.com/torvalds/linux/blob/81983758430957d9a5cb3333fe324fd70cf63e7e/drivers/dma/qcom/gpi.c#L2284
+>>
+>>    /*
+>>     * Do not grow the list for compatible devices. Instead use
+>>     * qcom,sdm845-gpi-dma (for ee_offset = 0x0) or qcom,sm6350-gpi-dma
+>>     * (for ee_offset = 0x10000).
+>>     */
+>>
+>> Do we still require new compatible for qcs615 ?
 > 
-> I'd say, as this has repeated the second time, please get the patches
-> reviewed internally, before sending them for the third time.
-> 
+> You are not living in the void space. `git grep qcom,sdm845-gpi-dma`
+> immediately shows what is being expected. Please don't ignore existing
+> work.
 
-Sure, updated in v3.
+Thanks, Pushed separate patch for GPI documentation patch.
+https://lore.kernel.org/all/w66ki7lwrqol24iptikn7ccna25ujqoywjena5ulekf6vynxny@dylbj2r34h7l/T/
+
+> 
+>>
+>>>
+> 
 
