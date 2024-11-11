@@ -1,74 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-37464-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37465-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 84B799C3F31
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2024 14:06:18 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A38EC9C3F4A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2024 14:10:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 487312859E0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2024 13:06:17 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D4E451C21953
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2024 13:10:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 526FC193092;
-	Mon, 11 Nov 2024 13:05:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7DA4D1850AF;
+	Mon, 11 Nov 2024 13:10:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oA1UE+5m"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="aZmqv6ae"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89F0A153BED
-	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Nov 2024 13:05:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6D47158558;
+	Mon, 11 Nov 2024 13:10:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731330307; cv=none; b=QuYaZmVrp+kFooaGFKj4uMwUE1j7ondlx+N/5ARAbNfT7T+FnQCfI9qPS9ximv00QTe3ao3fQ+D+5oeAUbvLNFZsrAP7WBitSGRF1Fzf19FS6urg3Qt+/okuzD5UVHfasl5eFoJaJFI9VWmWHHLXzJLTQsgGAFbvaXCVt4QmDX4=
+	t=1731330603; cv=none; b=Cw6oFFBHYw9mmTD895jXoSWEdYHLi096Z+rZGWci9QsbM9tlEI7WpGs4Tz2nUvwvibhMnkluRVKHZ180MrCxTIsdm7wTENRIeZRe227pIZvpHeahAzZSzD2CcWgmsYMK9SFE6hbDIIJP+Ywy4dN8gy8UEK7I6alxM9Dy56Oug8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731330307; c=relaxed/simple;
-	bh=gIPhYew7dzfquIW0CCemEl1LtulhjVUglcXI1l5PfbY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=phIeh8nshurLAo76qiuvXEZ1NvQ5n/TjKeeSnh4Gg3llfcwW+URFlKZjSnLi3hYT2ixAPk49T5VEEhumwFjH60WZyDkoTdQkpYd+YIpX0J+pRxaVH0kFHyhqDaw/sxckTxgLfhD7+7fIQgRpAfB4xUcfQJB9E1/M149bA4Yccks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oA1UE+5m; arc=none smtp.client-ip=209.85.208.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-5cb15b84544so6624838a12.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Nov 2024 05:05:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731330304; x=1731935104; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=0M43GhstcJGats4HNFv7GstWqj3W279xntuAhQhufno=;
-        b=oA1UE+5mpJEqj1na9Ax9ZIF5kFpz7EhkYtvHPrqjVCKz2HGSZ/hjwvj9Bz80HEf3uf
-         ZHdo9ZxvIlDRgxeC5a6wlAJ/t2xpx/mNxj4bQpNon6QkmsOdXVKO4q7jLZbjWFcivkAV
-         Se1pkaSC73ncEv0ZtZWMt/QxxKyeIrKqwwVs4Fe7JIiwl84FOGLO1HQRYSmPFz9DXr2s
-         dHGP4aw4rBEIchDShce+jXP6D6bKLDLBLyKADc9MrwCgtgoJElL0gS5r0bG/hIQk2/By
-         ot5ZJLsJ0pQBDFHdY4LS6w6QJ51GDZibZmy4MDQeOlWwhYLzSnKuJlEKE8E43tRaXLn0
-         9S/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731330304; x=1731935104;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0M43GhstcJGats4HNFv7GstWqj3W279xntuAhQhufno=;
-        b=sqtJaFXUS7H3IM2F1Y4jb/dHUf+kU1kdoTreo0btS/K8NjC6X2gqcTESFaClTEmY1m
-         +uOtFZUdBBahPGuhNo7150Vfl+8eDiBjvAdSP4/yGGo/VwaF/QHqgREeuyKR1Y1JF7EB
-         2JLeAmIJn6Ko0sXM6c8CYUnSoSyRbhwgv4bpCPshQFEO3LpUP6HIvIqv/KxvJrkKR8Qd
-         u0MvlwJKunNeTLuuvFes13wHZHakmagrWSnYWLDqLoQQ3fL2ZHo8JeQ/Hj91kXotTYbz
-         sMo+JugqFAPMueIu5SFu9LTDJwF5FseSUg+qIo8UY81wpx+DBKQUepiAXf0ksoTXy+Tm
-         cNDw==
-X-Forwarded-Encrypted: i=1; AJvYcCWsVXw62WyNtIW+N/dng4tFEeTpPM/xZ5LA/KMh+IZCYIVnobJ02FckLzcj4B4BEx2yLa4ZODUnttIzhZlV@vger.kernel.org
-X-Gm-Message-State: AOJu0YwfLwxNdXowwpxx4CFIsgCV2Z7MBEAW4GFVE6FObcrNsIP6Yb8e
-	qXKet0uTcTenMwN0FMNmyK+48uSIGFuYrtYWq+P4nefvNdj8Fgamo+wtYJt7U9Q=
-X-Google-Smtp-Source: AGHT+IF+Uy6vJ/mFt2X497WWSHDSPVF+ytSPMRVmm26PsJRMcXFRaq63mpfrNoy58mnodUPBbauLbA==
-X-Received: by 2002:a05:6402:3198:b0:5ce:c9ae:347e with SMTP id 4fb4d7f45d1cf-5cf0a45d167mr8162093a12.30.1731330303890;
-        Mon, 11 Nov 2024 05:05:03 -0800 (PST)
-Received: from [192.168.0.187] ([82.76.24.202])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5cf03b7f2b8sm4925807a12.32.2024.11.11.05.05.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Nov 2024 05:05:03 -0800 (PST)
-Message-ID: <14689f79-58fd-4be3-87ac-e56cba3deb26@linaro.org>
-Date: Mon, 11 Nov 2024 15:05:02 +0200
+	s=arc-20240116; t=1731330603; c=relaxed/simple;
+	bh=ousX+3GHB7wGIoraQ08Zoo2gBqx1LoCHpPOMTrH2VIk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=pFPb4C+ZI4CLos6n6jKCmivL4ejHeIkeZ+y/zELYtEA+RL6gLsvA9dWtg7VnZpF87DSuPv4rQ78gys2kHGfVkDJuZI5Yobv17o4F3HkTpZZ19OyG52SdCG0MZTF0TVfnT/nWED73oZ3bblUyMx8GFzj8zvxDpqrg+wz3Tbijmsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=aZmqv6ae; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ABCAQ8d032406;
+	Mon, 11 Nov 2024 13:09:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	kHv4y8gXFcsSx9Dqojo1tzxhO75dEf8tLjEd853vz/g=; b=aZmqv6aeQ4Hx+1H0
+	9Gg8zIlR3E+bqvAFJgstkcbf4Tcgy/VKHyRFcDR8HaPxDACQXeRW2T/bdMyJaDvU
+	LYAGeAQqTUxRutYeYROnZY53pxC6VxQcmHNo3RXbU5JRUIFTjEAz4zSf9fpqEgwJ
+	s3Jrru0qyAhkolZgulrkp62Wtkkw6S9UOJCGiW6KR8ft/x4u/FTQ8Nj4vl8CaI4s
+	Ouex+snmLddVTb24y6fG0VadFDQqO4xc2p1t5dqhDmNQO1+HPiagUCH+2mxPIc3+
+	OAjaZeY/G/9u2zQkRIwOLsXuCJc5MvI23e/12rTaXT487yxBAkn4ksM68nqHmAX2
+	P8GD1Q==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42syy248a2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 11 Nov 2024 13:09:57 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4ABD9u04030767
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 11 Nov 2024 13:09:56 GMT
+Received: from [10.217.216.47] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 11 Nov
+ 2024 05:09:51 -0800
+Message-ID: <9179759d-7af1-409f-8130-1136c9ae4ecd@quicinc.com>
+Date: Mon, 11 Nov 2024 18:39:48 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,67 +65,103 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] soc: qcom: Rework BCM_TCS_CMD macro
-To: Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org
-Cc: andersson@kernel.org, konradybcio@kernel.org,
- linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
- linux-pm@vger.kernel.org, djakov@kernel.org, mturquette@baylibre.com,
- evgreen@chromium.org
-References: <20241028163403.522001-1-eugen.hristev@linaro.org>
- <bb5d855954d5ff8694a3978a9f87a9d2.sboyd@kernel.org>
- <6f14d8d7-7b9a-49e3-8aa8-5c99571a7104@linaro.org>
- <b587012e868f8936463c46915b8588c3.sboyd@kernel.org>
- <7b57ccc2-7060-4adf-b896-8992ec05125c@linaro.org>
- <e6637dcc85ca23efaf72af906f364328.sboyd@kernel.org>
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: sa8775p: Add CPU OPP tables to
+ scale DDR/L3
+To: Brian Masney <bmasney@redhat.com>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Ajit Pandey <quic_ajipan@quicinc.com>,
+        "Imran
+ Shaik" <quic_imrashai@quicinc.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        "Satya Priya Kakitapalli" <quic_skakitap@quicinc.com>,
+        Shivnandan Kumar
+	<quic_kshivnan@quicinc.com>
+References: <20241017-sa8775p-cpufreq-l3-ddr-scaling-v1-0-074e0fb80b33@quicinc.com>
+ <20241017-sa8775p-cpufreq-l3-ddr-scaling-v1-2-074e0fb80b33@quicinc.com>
+ <ZxEwVShJuMH4J1Hp@x1>
 Content-Language: en-US
-From: Eugen Hristev <eugen.hristev@linaro.org>
-In-Reply-To: <e6637dcc85ca23efaf72af906f364328.sboyd@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Jagadeesh Kona <quic_jkona@quicinc.com>
+In-Reply-To: <ZxEwVShJuMH4J1Hp@x1>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 0xJapzRg2XawwIJthEUOccaVD2sA96hm
+X-Proofpoint-ORIG-GUID: 0xJapzRg2XawwIJthEUOccaVD2sA96hm
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ priorityscore=1501 mlxscore=0 mlxlogscore=889 suspectscore=0
+ lowpriorityscore=0 clxscore=1011 spamscore=0 adultscore=0 impostorscore=0
+ phishscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411110109
 
 
 
-On 11/8/24 21:00, Stephen Boyd wrote:
-> Quoting Eugen Hristev (2024-10-30 01:28:14)
->> On 10/30/24 02:40, Stephen Boyd wrote:
->>> 
->>> If the rpmh-rsc code didn't use writel() or readl() I'd believe
->>> that the data member is simply a u32 container. But those
->>> writel() and readl() functions are doing a byte swap, which
->>> seems to imply that the data member is a native CPU endian u32
->>> that needs to be converted to little-endian. Sounds like
->>> BCM_TCS_CMD() should just pack things into a u32 and we can
->>> simply remove the cpu_to_l32() stuff in the macro?
->> 
->> This review [1] from Evan Green on the original patch submission 
->> requested the use of cpu_to_le32
->> 
->> So that's how it ended up there.
->> 
+On 10/17/2024 9:12 PM, Brian Masney wrote:
+> On Thu, Oct 17, 2024 at 02:58:31PM +0530, Jagadeesh Kona wrote:
+>> +	cpu0_opp_table: opp-table-cpu0 {
+>> +		compatible = "operating-points-v2";
+>> +		opp-shared;
+>> +
+>> +		cpu0_opp_1267mhz: opp-1267200000 {
+>> +			opp-hz = /bits/ 64 <1267200000>;
+>> +			opp-peak-kBps = <6220800 29491200>;
+>> +		};
+>> +
+>> +		cpu0_opp_1363mhz: opp-1363200000 {
+>> +			opp-hz = /bits/ 64 <1363200000>;
+>> +			opp-peak-kBps = <6220800 29491200>;
+>> +		};
 > 
-> Thanks. I still don't see why this can't just be treated as a u32
-> and then we have writel() take care of it for us.
+> [snip]
+> 
+>> +	cpu4_opp_table: opp-table-cpu4 {
+>> +		compatible = "operating-points-v2";
+>> +		opp-shared;
+>> +
+>> +		cpu4_opp_1267mhz: opp-1267200000 {
+>> +			opp-hz = /bits/ 64 <1267200000>;
+>> +			opp-peak-kBps = <6220800 29491200>;
+>> +		};
+>> +
+>> +		cpu4_opp_1363mhz: opp-1363200000 {
+>> +			opp-hz = /bits/ 64 <1363200000>;
+>> +			opp-peak-kBps = <6220800 29491200>;
+>> +		};
+> 
+> There's no functional differences in the cpu0 and cpu4 opp tables. Can
+> a single table be used?
+> 
+> This aligns with my recollection that this particular SoC only has the
+> gold cores.
+> 
+> Brian
+> 
 
-If the values are in the wrong endianness, e.g. 0xff11 instead of 
-0x11ff, the corresponding field would be filled up wrongly, even 
-possibly writing unwanted bits. vote_x and vote_y have a mask of length 
-14, so there is one byte and another 6 more bits. If the endianness of 
-the value is not correct, the one byte might end up written over the 6 
-bits and 2 extra bits which are supposed to be for another field.
-In my example 0x11 should be in the first 6 bits and the 0xff in the 
-next byte, but if the endianness of the cpu is different, we might write 
-0xff on the 6 bit field.
-So we must ensure that the multi-byte fields are in the correct 
-endianness that the hardware expects.
+Thanks Brian for your review. Sorry for the delayed response.
 
-In other words, writel does not know about the multi-byte fields inside 
-this u32 which have a specific bit shift, and those fields are expected 
-to be in le32 order written to the hardware. Whether or not the cpu is 
-le32 is not important because using cpu_to_le32 will make it safe either 
-way.
+We require separate OPP tables for CPU0 and CPU4 to allow independent
+scaling of DDR and L3 frequencies for each CPU domain, with the final
+DDR and L3 frequencies being an aggregate of both.
 
-I apologize for my not so great explanation
+If we use a single OPP table for both CPU domains, then _allocate_opp_table() [1]
+won't be invoked for CPU4. As a result both CPU devices will end up in sharing
+the same ICC path handle, which could lead to one CPU device overwriting the bandwidth
+votes of other.
 
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/drivers/opp/core.c#n1588
 
-
+Thanks,
+Jagadeesh
+ 
 
