@@ -1,138 +1,411 @@
-Return-Path: <linux-arm-msm+bounces-37458-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37459-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 060D69C3C05
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2024 11:33:09 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EE80E9C3C54
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2024 11:46:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5D273B2228F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2024 10:33:06 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1EA5E1C215B7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2024 10:46:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 938E01581EE;
-	Mon, 11 Nov 2024 10:33:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E5E918A6AC;
+	Mon, 11 Nov 2024 10:44:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tVmw5MMb"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BSsVdZ1u"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63D00156676;
-	Mon, 11 Nov 2024 10:33:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E166F1802DD
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Nov 2024 10:44:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731321184; cv=none; b=OO1PXQgeKLiGdbmhHvocpzwpmPNQ71QAr4Dn+oqiR4UXX7amNYwA3/V+0MaK59QkvW5h98k2P07JpbcJdt/3MBIlQQ9TjWLq7qC/xaSyol/JukLmWSFMeOVnXF7y9/4tflXcfiqTgkXQCA7zLACQUy7fhVLjILIaolI8InvuovQ=
+	t=1731321854; cv=none; b=foL3t8TS0E2iNJer86rU2QqfTHXuufGLKu4T93K7OT2l7ChU3M+jEMt+Ul5X0GqTrxJPY2m0DOtoVApZEGH7Ecv0w4KZi48i9YXyQbQ1qcUDFtwIsNBTfCB9r2I868uhqkA5R7NfiT+HYP21Um0OjOlsgANHbWuG4F4DdScuSdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731321184; c=relaxed/simple;
-	bh=NjPJn+zfrKu3tcRhst3xGKHkantZhJOFnxnhWOpcfh0=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=oMJIXxiHJMP/9+vJjSTg/qtptGboeez5aXpB6j43YDi/zierFqqUgug1DdDLqosgFL4KPGz7i34fLJj0bYPrjkg0ovbd1c/IF6+5QWN/+bYZzZ9KvjDiRYyH6KSV3kpWUj91jgiLQz8ept7Z50mVmbK9ubPWhO4Klxw5ZhDiQWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tVmw5MMb; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56530C4CECF;
-	Mon, 11 Nov 2024 10:33:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1731321183;
-	bh=NjPJn+zfrKu3tcRhst3xGKHkantZhJOFnxnhWOpcfh0=;
-	h=From:To:Cc:Subject:Date:From;
-	b=tVmw5MMb3lf8EdeG/sOBDMHo/5P9xNH+eGqTG1Zia20nuVYLIP+kV/snNWmeA80nz
-	 LbRkQmJe0BfUsXbIk9vxCyHuxwOtBhC10X1Y9ZWeZZJSKhlVdt6lRV20swIG3GJnCZ
-	 4+D9CBMGyHc4iwOdLvNOX5NugJLal/ZER2HhJCLLv5JOHvlqVE/CAJwHxj7Y0iEWZJ
-	 S0EWrMOzmB898vY0oVouYB8WwWDl5o09vzY+/4S+tR9Lu32ZmJgd0/oBZb0OyTmHBC
-	 uuxxUA2iGi25V2RTXOm63AyIJqXPOvgEHAtsQFWhH6Rhu7dqRXVhbkjSsBkJx+cwBm
-	 9ZFnkiGdGCXpg==
-From: Arnd Bergmann <arnd@kernel.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Varadarajan Narayanan <quic_varada@quicinc.com>,
-	Sricharan Ramabadhran <quic_srichara@quicinc.com>
-Cc: Arnd Bergmann <arnd@arndb.de>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Manikanta Mylavarapu <quic_mmanikan@quicinc.com>,
-	linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] clk: qcom: remove unused data from gcc-ipq5424.c
-Date: Mon, 11 Nov 2024 11:32:51 +0100
-Message-Id: <20241111103258.3336183-1-arnd@kernel.org>
-X-Mailer: git-send-email 2.39.5
+	s=arc-20240116; t=1731321854; c=relaxed/simple;
+	bh=viI1zXUB7rgBr9BKaHg9ecokLINqTsbbL1vWFmyx5sA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LPP1ooy9qz7Olk+C6Y/6iH4xDlw4iU9WNTxE98nz1IA0LvjA+W40lpUa1vmyRgvyUspBLILdzMVxbapO1SqvcCun+uj6AL0uqzNXFG9xQwmhX8WDQgveyn1PPMKAe6VSE54CLeoykq/0WZCZduZJEExcDPkyM93ybjePC9ZEWBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BSsVdZ1u; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4315baa51d8so38334335e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Nov 2024 02:44:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1731321850; x=1731926650; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=uzxzm9xXLTbZgUXHxeJ9mNLyYRjtxj0f3W1XXKiT9+0=;
+        b=BSsVdZ1udYrSYrs7Uxf97JblrqPvOh1cfT3s1XK/iToj7ENuXtBenCrIW+xz6pUtqi
+         HGLwFNHl2NOFSB/JQIvYKs5DOYyADHNz9hU6tuP5AnsCUaXYivK0A6nBXmH7BWZkIChL
+         VHAOU7hXJgIXpJsrbYA3NfjlqVQlw8OHkxTbt5lEAP5mT4wLg6nAlzoAmSXWjEPOC00J
+         0Bl2reWpFE3hads8AAeYjkaydlUTiIDZI75p1tJCdKkkKKCAsTqKqPYHWgyALvX1lsyL
+         e2Dco15a9XKLWBN537BuwndSfFfcJYU4kDaLLx589ehy7RN/Mcqv2802wyXXZ4x/4io/
+         sU1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731321850; x=1731926650;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=uzxzm9xXLTbZgUXHxeJ9mNLyYRjtxj0f3W1XXKiT9+0=;
+        b=Em2b5zHXLtZ/2GR2ZUtCJ9bJEgB1PCNHK2Kc2eMmKhyj/1cQj/nOvY6bmEscM+PZFh
+         EgDi5nGZK3HFSgQaRemBOUdo7o+HSGnKUvWOYLfKRfnhFeEqruSc3JQzZxpxIv2A3j+7
+         9glAlCWayuYWUmm2g8sIftZ8Xyt+RWuLMxVKozjr0Il6hv1XLCT9qo95IAh3ULUklVtI
+         80QJLj8Jrcs1254y4Jf3Hgh3Ws7kmHGbP7DWrz8cv6vWfMNV6hU/vXfSpiQKNJbWNnx/
+         1hRFWJcYIkZ3G/mqZJ2rcS9TWumD2HHemuoGGgjekDDBh57dDx+X6QfQ2fHneVlk6fkV
+         1NLQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWFMs4jd0LFQ6bgorrd+hYBjljlqj2ti3xfopYfFfKvPFoHTIj6o7v4n16UKKD4jZHp+3nyvXsHCqHYXG0a@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw3cLd8NW2rQEGxia+dbR5SqluhKR4+GYIJkxHHqKywS5c00hDE
+	5q2hVQCC+BQoU3pBGxqpOa8E7wKqBCUsWa4ROe7GAZz/AFJ4wSOmyDXqL2BiUJI=
+X-Google-Smtp-Source: AGHT+IFWbm5G98XNys1mSFOeg/rULU9TcIwIPAzzQ5wDgRA27UVUt+JopDpTX1ttncoYAk1OkBdKHA==
+X-Received: by 2002:a05:600c:4f04:b0:431:5f1c:8359 with SMTP id 5b1f17b1804b1-432b75091cdmr85229145e9.15.1731321849412;
+        Mon, 11 Nov 2024 02:44:09 -0800 (PST)
+Received: from linaro.org ([2a02:2454:ff21:ef80:11f:3141:b8c5:27b4])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432aa6bee9asm213622655e9.19.2024.11.11.02.44.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Nov 2024 02:44:09 -0800 (PST)
+Date: Mon, 11 Nov 2024 11:44:04 +0100
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: =?iso-8859-1?B?QmFybmFi4XMgQ3rpbeFu?= <barnabas.czeman@mainlining.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Amit Kucheria <amitk@kernel.org>,
+	Thara Gopinath <thara.gopinath@gmail.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
+	Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+	linux-pm@vger.kernel.org, iommu@lists.linux.dev,
+	Otto =?iso-8859-1?Q?Pfl=FCger?= <otto.pflueger@abscue.de>
+Subject: Re: [PATCH v4 08/10] arm64: dts: qcom: Add initial support for
+ MSM8917
+Message-ID: <ZzHf9J0Y2uB7_vy4@linaro.org>
+References: <20241109-msm8917-v4-0-8be9904792ab@mainlining.org>
+ <20241109-msm8917-v4-8-8be9904792ab@mainlining.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20241109-msm8917-v4-8-8be9904792ab@mainlining.org>
 
-From: Arnd Bergmann <arnd@arndb.de>
+On Sat, Nov 09, 2024 at 01:08:10PM +0100, Barnabás Czémán wrote:
+> From: Otto Pflüger <otto.pflueger@abscue.de>
+> 
+> Add initial support for MSM8917 SoC.
+> 
+> Signed-off-by: Otto Pflüger <otto.pflueger@abscue.de>
+> [reword commit, rebase, fix schema errors]
+> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+> ---
+>  arch/arm64/boot/dts/qcom/msm8917.dtsi | 1997 +++++++++++++++++++++++++++++++++
+>  1 file changed, 1997 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/msm8917.dtsi b/arch/arm64/boot/dts/qcom/msm8917.dtsi
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..f866843772684c695069debfc764f7a0a58843bb
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/msm8917.dtsi
+> @@ -0,0 +1,1997 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +
+> +#include <dt-bindings/clock/qcom,gcc-msm8917.h>
+> +#include <dt-bindings/clock/qcom,rpmcc.h>
+> +#include <dt-bindings/interrupt-controller/arm-gic.h>
+> +#include <dt-bindings/power/qcom-rpmpd.h>
+> +#include <dt-bindings/soc/qcom,apr.h>
+> +#include <dt-bindings/sound/qcom,q6dsp-lpass-ports.h>
+> +#include <dt-bindings/thermal/thermal.h>
+> +
+> +/ {
+> +	interrupt-parent = <&intc>;
+> +
+> +	#address-cells = <2>;
+> +	#size-cells = <2>;
+> +
+> +	aliases {
+> +		mmc0 = &sdhc_1; /* SDC1 eMMC slot */
+> +		mmc1 = &sdhc_2; /* SDC2 SD card slot */
+> +	};
 
-The newly added driver causes a warnings when enabling -Wunused-const-variables:
+I think we put aliases in each board separately nowadays, see e.g.
+commit 154f23a8d70c ("arm64: dts: qcom: msm8916: Move aliases to
+boards").
 
-drivers/clk/qcom/gcc-ipq5424.c:1064:30: error: 'ftbl_gcc_q6_axi_clk_src' defined but not used [-Werror=unused-const-variable=]
- 1064 | static const struct freq_tbl ftbl_gcc_q6_axi_clk_src[] = {
-      |                              ^~~~~~~~~~~~~~~~~~~~~~~
-drivers/clk/qcom/gcc-ipq5424.c:957:30: error: 'ftbl_gcc_qpic_clk_src' defined but not used [-Werror=unused-const-variable=]
-  957 | static const struct freq_tbl ftbl_gcc_qpic_clk_src[] = {
-      |                              ^~~~~~~~~~~~~~~~~~~~~
-drivers/clk/qcom/gcc-ipq5424.c:497:30: error: 'ftbl_gcc_qupv3_2x_core_clk_src' defined but not used [-Werror=unused-const-variable=]
-  497 | static const struct freq_tbl ftbl_gcc_qupv3_2x_core_clk_src[] = {
-      |                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> [...]
+> +		domain-idle-states {
+> +			cluster_sleep_0: cluster-sleep-0 {
+> +				compatible = "domain-idle-state";
+> +				arm,psci-suspend-param = <0x41000023>;
+> +				entry-latency-us = <700>;
+> +				exit-latency-us = <650>;
+> +				min-residency-us = <1972>;
+> +			};
+> +
+> +			cluster_sleep_1: cluster-sleep-1 {
+> +				compatible = "domain-idle-state";
+> +				arm,psci-suspend-param = <0x41000043>;
+> +				entry-latency-us = <240>;
+> +				exit-latency-us = <280>;
+> +				min-residency-us = <806>;
+> +			};
 
-In order to hopefully enable this warning by default in the future,
-remove the data for now. If it gets used in the future, it can
-trivially get added back.
+This is strange, the deeper sleep state has lower timings than the
+previous one?
 
-Fixes: 21b5d5a4a311 ("clk: qcom: add Global Clock controller (GCC) driver for IPQ5424 SoC")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
----
- drivers/clk/qcom/gcc-ipq5424.c | 18 ------------------
- 1 file changed, 18 deletions(-)
+> +
+> +			cluster_sleep_2: cluster-sleep-2 {
+> +				compatible = "domain-idle-state";
+> +				arm,psci-suspend-param = <0x41000053>;
+> +				entry-latency-us = <700>;
+> +				exit-latency-us = <1000>;
+> +				min-residency-us = <6500>;
+> +			};
+> +		};
+> [...]
+> +
+> +	rpm: remoteproc {
+> +		compatible = "qcom,msm8917-rpm-proc", "qcom,rpm-proc";
+> +
+> +		smd-edge {
+> +			interrupts = <GIC_SPI 168 IRQ_TYPE_EDGE_RISING>;
+> +			qcom,ipc = <&apcs 8 0>;
 
-diff --git a/drivers/clk/qcom/gcc-ipq5424.c b/drivers/clk/qcom/gcc-ipq5424.c
-index 3458c1c98bb7..88a7d5b2e751 100644
---- a/drivers/clk/qcom/gcc-ipq5424.c
-+++ b/drivers/clk/qcom/gcc-ipq5424.c
-@@ -494,11 +494,6 @@ static struct clk_rcg2 gcc_pcie_aux_clk_src = {
- 	},
- };
- 
--static const struct freq_tbl ftbl_gcc_qupv3_2x_core_clk_src[] = {
--	F(200000000, P_GPLL0_OUT_MAIN, 4, 0, 0),
--	{ }
--};
--
- static const struct freq_tbl ftbl_gcc_qupv3_i2c0_clk_src[] = {
- 	F(4800000, P_XO, 5, 0, 0),
- 	F(9600000, P_XO, 2.5, 0, 0),
-@@ -954,13 +949,6 @@ static struct clk_rcg2 gcc_qpic_io_macro_clk_src = {
- 	},
- };
- 
--static const struct freq_tbl ftbl_gcc_qpic_clk_src[] = {
--	F(24000000, P_XO, 1, 0, 0),
--	F(100000000, P_GPLL0_OUT_MAIN, 8, 0, 0),
--	F(200000000, P_GPLL0_OUT_MAIN, 4, 0, 0),
--	{ }
--};
--
- static struct clk_rcg2 gcc_qpic_clk_src = {
- 	.cmd_rcgr = 0x32020,
- 	.mnd_width = 0,
-@@ -1061,12 +1049,6 @@ static struct clk_regmap_div gcc_qupv3_i2c1_div_clk_src = {
- 	},
- };
- 
--static const struct freq_tbl ftbl_gcc_q6_axi_clk_src[] = {
--	F(480000000, P_GPLL4_OUT_AUX, 2.5, 0, 0),
--	F(533333333, P_GPLL0_OUT_MAIN, 1.5, 0, 0),
--	{ }
--};
--
- static struct clk_regmap_div gcc_usb0_mock_utmi_div_clk_src = {
- 	.reg = 0x2c040,
- 	.shift = 0,
--- 
-2.39.5
+Can you use mboxes here?
 
+> +			qcom,smd-edge = <15>;
+> +
+> [...]
+> +
+> +		mpss_mem: mpss@86800000 {
+> +			/*
+> +			 * The memory region for the mpss firmware is generally
+> +			 * relocatable and could be allocated dynamically.
+> +			 * However, many firmware versions tend to fail when
+> +			 * loaded to some special addresses, so it is hard to
+> +			 * define reliable alloc-ranges.
+> +			 *
+> +			 * alignment = <0x0 0x400000>;
+> +			 * alloc-ranges = <0x0 0x86800000 0x0 0x8000000>;
+> +			 */
+
+Not sure how many devices you have access to, but have you tried if this
+is actually still the case? I'd have hoped they fixed those issues in
+the firmware.
+
+Thanks for using alloc-ranges instead of fixed addresses BTW :)
+
+> +			reg = <0x0 0x86800000 0x0 0>; /* size is device-specific */
+> +			no-map;
+> +			status = "disabled";
+> +		};
+> +
+> [...]
+> +	smp2p-adsp {
+> +		compatible = "qcom,smp2p";
+> +		qcom,smem = <443>, <429>;
+> +
+> +		interrupts = <GIC_SPI 291 IRQ_TYPE_EDGE_RISING>;
+> +
+> +		mboxes = <&apcs 10>;
+> +
+> +		qcom,local-pid = <0>;
+> +		qcom,remote-pid = <2>;
+> +
+> +		adsp_smp2p_out: master-kernel {
+> +			qcom,entry-name = "master-kernel";
+> +
+> +			#qcom,smem-state-cells = <1>;
+> +		};
+> +
+> +		adsp_smp2p_in: slave-kernel {
+> +			qcom,entry-name = "slave-kernel";
+> +
+> +			interrupt-controller;
+> +			#interrupt-cells = <2>;
+> +		};
+> +	};
+> +
+> +	smp2p-modem {
+> +		compatible = "qcom,smp2p";
+> +		qcom,smem = <435>, <428>;
+> +
+> +		interrupts = <GIC_SPI 27 IRQ_TYPE_EDGE_RISING>;
+> +
+> +		qcom,ipc = <&apcs 8 14>;
+
+You have mboxes for adsp above, what about modem and
+
+> +
+> +		qcom,local-pid = <0>;
+> +		qcom,remote-pid = <1>;
+> +
+> +		modem_smp2p_out: master-kernel {
+> +			qcom,entry-name = "master-kernel";
+> +
+> +			#qcom,smem-state-cells = <1>;
+> +		};
+> +
+> +		modem_smp2p_in: slave-kernel {
+> +			qcom,entry-name = "slave-kernel";
+> +
+> +			interrupt-controller;
+> +			#interrupt-cells = <2>;
+> +		};
+> +	};
+> +
+> +	smp2p-wcnss {
+> +		compatible = "qcom,smp2p";
+> +		qcom,smem = <451>, <431>;
+> +
+> +		interrupts = <GIC_SPI 143 IRQ_TYPE_EDGE_RISING>;
+> +
+> +		qcom,ipc = <&apcs 8 18>;
+
+... wcnss?
+
+> +
+> +		qcom,local-pid = <0>;
+> +		qcom,remote-pid = <4>;
+> +
+> +		wcnss_smp2p_out: master-kernel {
+> +			qcom,entry-name = "master-kernel";
+> +
+> +			#qcom,smem-state-cells = <1>;
+> +		};
+> +
+> +		wcnss_smp2p_in: slave-kernel {
+> +			qcom,entry-name = "slave-kernel";
+> +
+> +			interrupt-controller;
+> +			#interrupt-cells = <2>;
+> +		};
+> +	};
+> +
+> [...]
+> +
+> +		restart@4ab000 {
+> +			compatible = "qcom,pshold";
+> +			reg = <0x004ab000 0x4>;
+> +		};
+
+You have PSCI for shutting down, do you actually need this?
+
+> [...]
+> +		blsp_i2c4: i2c@78b8000 {
+> +			compatible = "qcom,i2c-qup-v2.2.1";
+> +			reg = <0x078b8000 0x500>;
+> +			interrupts = <GIC_SPI 98 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks = <&gcc GCC_BLSP1_QUP4_I2C_APPS_CLK>,
+> +				 <&gcc GCC_BLSP1_AHB_CLK>;
+> +			clock-names = "core", "iface";
+> +			dmas = <&blsp1_dma 10>, <&blsp1_dma 11>;
+> +			dma-names = "tx", "rx";
+> +			pinctrl-0 = <&i2c4_default>;
+> +			pinctrl-1 = <&i2c4_sleep>;
+> +			pinctrl-names = "default", "sleep";
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +			status = "disabled";
+> +		};
+> +
+> +		blsp_i2c5: i2c@7af5000 {
+
+Please use a full label here with the BLSP number and QUP instance
+(&blspX_i2cY). This corresponds to the name of the clock, so this node
+is actually
+
+> +			compatible = "qcom,i2c-qup-v2.2.1";
+> +			reg = <0x07af5000 0x600>;
+> +			interrupts = <GIC_SPI 299 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks = <&gcc GCC_BLSP2_QUP1_I2C_APPS_CLK>,
+
+... &blsp2_i2c1.
+
+I guess the current naming is taken from downstream, but I think they
+just assigned consecutive numbers to all the QUP instances they needed.
+This will cause headaches in the future if someone wants to add an
+instance that wasn't used by QC in the reference designs.
+
+> +				 <&gcc GCC_BLSP2_AHB_CLK>;
+> +			clock-names = "core", "iface";
+> +			dmas = <&blsp2_dma 4>, <&blsp2_dma 5>;
+> +			dma-names = "tx", "rx";
+> +			pinctrl-0 = <&i2c5_default>;
+> +			pinctrl-1 = <&i2c5_sleep>;
+
+&blsp2_i2c1_default/sleep for clarity
+
+> +			pinctrl-names = "default", "sleep";
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +			status = "disabled";
+> +		};
+> +
+> +		blsp_spi6: spi@7af6000 {
+
+&blsp2_spi2
+
+> +			compatible = "qcom,spi-qup-v2.2.1";
+> +			reg = <0x07af6000 0x600>;
+> +			interrupts = <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks = <&gcc GCC_BLSP2_QUP2_SPI_APPS_CLK>,
+> +				 <&gcc GCC_BLSP2_AHB_CLK>;
+> +			clock-names = "core", "iface";
+> +			dmas = <&blsp2_dma 6>, <&blsp2_dma 7>;
+> +			dma-names = "tx", "rx";
+> +			pinctrl-0 = <&spi6_default>;
+> +			pinctrl-1 = <&spi6_sleep>;
+
+&blsp2_spi2_default/sleep
+
+> +			pinctrl-names = "default", "sleep";
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +			status = "disabled";
+> +		};
+> +
+> [...]
+> +		timer@b120000 {
+> +			#address-cells = <1>;
+> +			#size-cells = <1>;
+> +			ranges;
+> +			compatible = "arm,armv7-timer-mem";
+> +			reg = <0x0b120000 0x1000>;
+> +			clock-frequency = <19200000>;
+
+Should be unneeded unless the firmware is broken. Can you try dropping
+it and see if you get a warning in dmesg?
+
+> [...]
+> +		};
+> +	};
+> +
+> +	timer {
+> +		compatible = "arm,armv8-timer";
+> +		interrupts = <GIC_PPI 2 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
+> +			     <GIC_PPI 3 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
+> +			     <GIC_PPI 4 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
+> +			     <GIC_PPI 1 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>;
+> +		clock-frequency = <19200000>;
+
+Same here.
+
+Thanks,
+Stephan
 
