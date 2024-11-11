@@ -1,149 +1,270 @@
-Return-Path: <linux-arm-msm+bounces-37476-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37477-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id CE2899C4083
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2024 15:17:18 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 305CD9C4111
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2024 15:36:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 23EAFB20B70
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2024 14:17:16 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E2466280E35
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2024 14:36:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 008C519E819;
-	Mon, 11 Nov 2024 14:17:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C13E219E7F7;
+	Mon, 11 Nov 2024 14:36:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Se5irdY5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from inva020.nxp.com (inva020.nxp.com [92.121.34.13])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF2719CC1C;
-	Mon, 11 Nov 2024 14:17:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=92.121.34.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0953014EC55;
+	Mon, 11 Nov 2024 14:36:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731334631; cv=none; b=OKXJ+xFaxeJ2Jly2EU6KC3BareEcB5gTHw20Jzt7daYj8z7EB0fuI44t5s7xhYn2KYA0np8395LbXyyEEYmO4Zh1qjvQKhPbVW7E2Towv9/NkiC3NNxfRYcPcILKiGSslarYYNyjsz/Zk2bUg/09twA+O3ru1V/uKPPUyvnCY84=
+	t=1731335784; cv=none; b=jrwQvGObug7ZOgodtP03ey00dLHx7PPc109U6W2rSMXEcZ+vknWKMgn27XcuxQ3zJishKDSelcd44aYGHgtxM2bUKRHorr/vrZuCwFSyYpgrmWvTup2kChIJ8VVHwaNxD+iNE1mp1ieOrdbnINqW0YJd/XsKZ7HN/xaUm1Tf/4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731334631; c=relaxed/simple;
-	bh=atKj27umbsbkvfy41nhNQunjFCIirqrEGyCUijGtQbM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gD4fZ9Dhty/gE33SmpQkebSYT/IEdWkscBo5lwGDw/I+yfeUWunkW8v6x5fB9QPFx+mW/ej1HNhw/EIAaRNRuMP64u9zssFTTNoJl93FifvDeADRQll3vpM2jjrsIJSNIGdDB/WIG2VjieTYNKYPsOG7PrTxp3dw7FtmhvkCqM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; arc=none smtp.client-ip=92.121.34.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
-Received: from inva020.nxp.com (localhost [127.0.0.1])
-	by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 7999E1A117E;
-	Mon, 11 Nov 2024 15:08:52 +0100 (CET)
-Received: from inva024.eu-rdc02.nxp.com (inva024.eu-rdc02.nxp.com [134.27.226.22])
-	by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 6CDCC1A1174;
-	Mon, 11 Nov 2024 15:08:52 +0100 (CET)
-Received: from lsv051416.swis.nl-cdc01.nxp.com (lsv051416.swis.nl-cdc01.nxp.com [10.168.48.122])
-	by inva024.eu-rdc02.nxp.com (Postfix) with ESMTP id 2C4EF2037A;
-	Mon, 11 Nov 2024 15:08:52 +0100 (CET)
-Date: Mon, 11 Nov 2024 15:08:52 +0100
-From: Jan Petrous <jan.petrous@oss.nxp.com>
-To: Andrew Lunn <andrew@lunn.ch>
-Cc: Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Jose Abreu <joabreu@synopsys.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Richard Cochran <richardcochran@gmail.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Russell King <linux@armlinux.org.uk>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Emil Renner Berthing <kernel@esmil.dk>,
-	Minda Chen <minda.chen@starfivetech.com>,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Iyappan Subramanian <iyappan@os.amperecomputing.com>,
-	Keyur Chudgar <keyur@os.amperecomputing.com>,
-	Quan Nguyen <quan@os.amperecomputing.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	imx@lists.linux.dev, devicetree@vger.kernel.org,
-	NXP S32 Linux Team <s32@nxp.com>
-Subject: Re: [PATCH v4 14/16] net: stmmac: dwmac-s32: add basic NXP S32G/S32R
- glue driver
-Message-ID: <ZzIP9OrIi+X/akgg@lsv051416.swis.nl-cdc01.nxp.com>
-References: <20241028-upstream_s32cc_gmac-v4-0-03618f10e3e2@oss.nxp.com>
- <20241028-upstream_s32cc_gmac-v4-14-03618f10e3e2@oss.nxp.com>
- <c902dc2a-9b2a-44a0-be1d-88fb150f4f17@lunn.ch>
+	s=arc-20240116; t=1731335784; c=relaxed/simple;
+	bh=tB+KD7zTi2f1hi6GxLePQ8a5nPfNIZ/EWne+PunmC2Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=QA9IRzNvhXv5Yb5XIPyVolLK3+dDPMy1jW//tuxU7uhdw3dLwNXi7KVYP4zCTtItuD0hw+WDonSe2v5rTbd24XUMn835XyHbvGoJGmqgSQwzUNhauWcOyCoAr23vSvDqRWCnVKPuzorFddgN0YkNQ0ZpfUx3yGwdaPoeSCoH+WE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Se5irdY5; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ABCBP2e007341;
+	Mon, 11 Nov 2024 14:36:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	8P259kAHltHcyLSDTVL2UZ/hP1y2gwLMMSlMpDppz3c=; b=Se5irdY5sisHJT00
+	01ghIdyB/1Qq8pwEJcf9rSj3LkaUGhADTrpl32unv21w2prqi77JCr6OUko8lxIA
+	PrRsnncV2jfDNgfnWuXDqmAACdvp1dYXA7htd5zWMUrI7gCHwouNQ7ruOgUAtbMj
+	wb6uDvluTlaLb1A8hTwPGWMvk8uIv+CGkTwph509pV1SSohsD70FHAlim0w+ubzI
+	Pw+GIyWL/cjIUVOv6Bazi2Xh4GVUC3YhjLY/L+JKgLmBhlnQm1givmTrYZMC+70i
+	9lVOZBQUjbfwGDd/mzRnlv0Hs8JMM0bzWGd1aoH1CTZrV16dG+MB0XQFWYuShTSX
+	6IaPUg==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42sweecky7-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 11 Nov 2024 14:36:17 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4ABEa5Rv018903
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 11 Nov 2024 14:36:05 GMT
+Received: from [10.204.100.69] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 11 Nov
+ 2024 06:36:03 -0800
+Message-ID: <9098b8ef-76e0-f976-2f4e-1c6370caf59e@quicinc.com>
+Date: Mon, 11 Nov 2024 20:06:00 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <c902dc2a-9b2a-44a0-be1d-88fb150f4f17@lunn.ch>
-X-Virus-Scanned: ClamAV using ClamSMTP
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH 2/4] media: venus: hfi_parser: avoid OOB access beyond
+ payload word count
+Content-Language: en-US
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Stanimir Varbanov
+	<stanimir.k.varbanov@gmail.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>
+CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <stable@vger.kernel.org>
+References: <20241105-venus_oob-v1-0-8d4feedfe2bb@quicinc.com>
+ <20241105-venus_oob-v1-2-8d4feedfe2bb@quicinc.com>
+ <474d3c62-5747-45b9-b5c3-253607b0c17a@linaro.org>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <474d3c62-5747-45b9-b5c3-253607b0c17a@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: E_qPzhYrSEEDDrOqgOK7QpFe_OjE27F1
+X-Proofpoint-GUID: E_qPzhYrSEEDDrOqgOK7QpFe_OjE27F1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 adultscore=0
+ mlxscore=0 bulkscore=0 malwarescore=0 suspectscore=0 phishscore=0
+ priorityscore=1501 lowpriorityscore=0 mlxlogscore=999 clxscore=1015
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411110121
 
-On Tue, Oct 29, 2024 at 01:15:52PM +0100, Andrew Lunn wrote:
-> > +#define GMAC_TX_RATE_125M	125000000	/* 125MHz */
-> > +#define GMAC_TX_RATE_25M	25000000	/* 25MHz */
-> > +#define GMAC_TX_RATE_2M5	2500000		/* 2.5MHz */
-> 
-> With the swap to the new helper, i think 25M and 2M5 are no longer
-> needed.
-> 
 
-Sure, I will fix it in v5.
-
-> > +static int s32_gmac_init(struct platform_device *pdev, void *priv)
-> > +{
-> > +	struct s32_priv_data *gmac = priv;
-> > +	int ret;
-> > +
-> > +	ret = clk_set_rate(gmac->tx_clk, GMAC_TX_RATE_125M);
-> > +	if (!ret)
-> > +		ret = clk_prepare_enable(gmac->tx_clk);
-> > +
-> > +	if (ret) {
-> > +		dev_err(&pdev->dev, "Can't set tx clock\n");
-> > +		return ret;
-> > +	}
-> > +
-> > +	ret = clk_prepare_enable(gmac->rx_clk);
-> > +	if (ret)
-> > +		dev_dbg(&pdev->dev, "Can't set rx, clock source is disabled.\n");
-> > +	else
-> > +		gmac->rx_clk_enabled = true;
+On 11/5/2024 4:45 PM, Bryan O'Donoghue wrote:
+> On 05/11/2024 08:54, Vikash Garodia wrote:
+>> words_count denotes the number of words in total payload, while data
+>> points to payload of various property within it. When words_count
+>> reaches last word, data can access memory beyond the total payload.
+>> Avoid this case by not allowing the loop for the last word count.
+>>
+>> Cc: stable@vger.kernel.org
+>> Fixes: 1a73374a04e5 ("media: venus: hfi_parser: add common capability parser")
+>> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+>> ---
+>>   drivers/media/platform/qcom/venus/hfi_parser.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/media/platform/qcom/venus/hfi_parser.c
+>> b/drivers/media/platform/qcom/venus/hfi_parser.c
+>> index
+>> 27d0172294d5154f4839e8cef172f9a619dfa305..20d9ea3626e9c4468d5f7dbd678743135f027c86 100644
+>> --- a/drivers/media/platform/qcom/venus/hfi_parser.c
+>> +++ b/drivers/media/platform/qcom/venus/hfi_parser.c
+>> @@ -303,7 +303,7 @@ u32 hfi_parser(struct venus_core *core, struct venus_inst
+>> *inst, void *buf,
+>>           memset(core->caps, 0, sizeof(core->caps));
+>>       }
+>>   -    while (words_count) {
+>> +    while (words_count > 1) {
+>>           data = word + 1;
+>>             switch (*word) {
+>>
 > 
-> Why would this fail? And if it does fail, why is it not fatal? Maybe a
-> comment here.
+> How is it the right thing to do to _not_ process the last u32 ?
 > 
-> > +static void s32_fix_mac_speed(void *priv, unsigned int speed, unsigned int mode)
-> > +{
-> > +	struct s32_priv_data *gmac = priv;
-> > +	long tx_clk_rate;
-> > +	int ret;
-> > +
-> > +	if (!gmac->rx_clk_enabled) {
-> > +		ret = clk_prepare_enable(gmac->rx_clk);
-> > +		if (ret) {
-> > +			dev_err(gmac->dev, "Can't set rx clock\n");
+> How does this overrun ? while (words_count) should be fine because it decrements
+> at the bottom of the loop...
 > 
-> dev_err(), so is failing now fatal, but since this is a void function,
-> you cannot report the error up the call stack?
+> assuming your buffer is word aligned obvs
 > 
+> =>
+> 
+> #include <stdio.h>
+> #include <stdint.h>
+> 
+> char somebuf[64];
+> 
+> void init(char *buf, int len)
+> {
+>         int i;
+>         char c = 0;
+> 
+>         for (i = 0; i < len; i++)
+>                 buf[i] = c++;
+> }
+> 
+> int hfi_parser(void *buf, int size)
+> {
+>         int word_count = size >> 2;
+>         uint32_t *my_word = (uint32_t*)buf;
+Make this as below and it should lead to OOB
+uint32_t *my_word = (uint32_t*)buf + 1
 
-I did a homework and checked the issue which was fixed by that 'lazy' rx
-clock enable procedure and got conslusion it is not needed anymore, as I
-was not able to reproduce the issue on the same board but with newer
-kernel version (6.6.32 versus 5.15.73).
-
-So I will simplify rx clock management in v5.
-
-BR.
-/Jan
+Regards,
+Vikash
+> 
+>         printf("Size %d word_count %d\n", size, word_count);
+> 
+>         while(word_count) {
+>                 printf("Myword %d == 0x%08x\n", word_count, *my_word);
+>                 my_word++;
+>                 word_count--;
+>         }
+> }
+> 
+> int main(int argc, char *argv[])
+> {
+>         int i;
+> 
+>         init(somebuf, sizeof(somebuf));
+>         for (i = 0; i < sizeof(somebuf); i++)
+>                 printf("%x = %x\n", i, somebuf[i]);
+> 
+>         hfi_parser(somebuf, sizeof(somebuf));
+> 
+>         return 0;
+> }
+> 
+> 0 = 0
+> 1 = 1
+> 2 = 2
+> 3 = 3
+> 4 = 4
+> 5 = 5
+> 6 = 6
+> 7 = 7
+> 8 = 8
+> 9 = 9
+> a = a
+> b = b
+> c = c
+> d = d
+> e = e
+> f = f
+> 10 = 10
+> 11 = 11
+> 12 = 12
+> 13 = 13
+> 14 = 14
+> 15 = 15
+> 16 = 16
+> 17 = 17
+> 18 = 18
+> 19 = 19
+> 1a = 1a
+> 1b = 1b
+> 1c = 1c
+> 1d = 1d
+> 1e = 1e
+> 1f = 1f
+> 20 = 20
+> 21 = 21
+> 22 = 22
+> 23 = 23
+> 24 = 24
+> 25 = 25
+> 26 = 26
+> 27 = 27
+> 28 = 28
+> 29 = 29
+> 2a = 2a
+> 2b = 2b
+> 2c = 2c
+> 2d = 2d
+> 2e = 2e
+> 2f = 2f
+> 30 = 30
+> 31 = 31
+> 32 = 32
+> 33 = 33
+> 34 = 34
+> 35 = 35
+> 36 = 36
+> 37 = 37
+> 38 = 38
+> 39 = 39
+> 3a = 3a
+> 3b = 3b
+> 3c = 3c
+> 3d = 3d
+> 3e = 3e
+> 3f = 3f
+> Size 64 word_count 16
+> Myword 16 == 0x03020100
+> Myword 15 == 0x07060504
+> Myword 14 == 0x0b0a0908
+> Myword 13 == 0x0f0e0d0c
+> Myword 12 == 0x13121110
+> Myword 11 == 0x17161514
+> Myword 10 == 0x1b1a1918
+> Myword 9 == 0x1f1e1d1c
+> Myword 8 == 0x23222120
+> Myword 7 == 0x27262524
+> Myword 6 == 0x2b2a2928
+> Myword 5 == 0x2f2e2d2c
+> Myword 4 == 0x33323130
+> Myword 3 == 0x37363534
+> Myword 2 == 0x3b3a3938
+> Myword 1 == 0x3f3e3d3c
+> 
+> ---
+> bod
 
