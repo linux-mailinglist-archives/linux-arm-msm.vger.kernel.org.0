@@ -1,232 +1,189 @@
-Return-Path: <linux-arm-msm+bounces-37497-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37498-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 487149C4927
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2024 23:36:41 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 55AB89C49B0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 00:29:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CD3861F2260B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2024 22:36:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 06C63288B02
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2024 23:29:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7DB2B1BD4F8;
-	Mon, 11 Nov 2024 22:36:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C00711BCA0D;
+	Mon, 11 Nov 2024 23:29:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nBBm2a0P"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QeZU9kVb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49D6F1BD4E2;
-	Mon, 11 Nov 2024 22:36:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA31F17623C
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Nov 2024 23:29:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731364574; cv=none; b=hPV6NRp0Y/V9sC6Em1qaHxrJD326n6X0orKW0k2oAeXW3UWQb8deFbu8F0B/q5Cd9/Zo5HapF0MfKlGiu2hplYYwAiW2smuDlB16NBj28f/D7VuI11GfaqL6vUDRvtG50VBzq9g+ugoAXD8TfOCHFjLss2gy+2K9f059ayS5Nwg=
+	t=1731367770; cv=none; b=HBsgqLtacRo+6+jw5x0bBF9YCt+5IPPazZOkhcPMpAGzVi6XD9aptAWqHnKLcnhcgs+zSApbuOwGHxDBmXBs3UZ5gDKn+b7frXr04h21FqL+B/L0TtDu8f1XSTMGCk3j3BMhxK8GXJE/aoe15HRBWV9Gg8DgrffWmveybE7+Y+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731364574; c=relaxed/simple;
-	bh=VTKOlFWEU9rOqd7gZBhNAomP4MX1h4GCfami6fw8+/Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WzuAiLRoDmAo6SG8weyNO/m+geziKTjTQM4e2zR/36ziEOTh18Vyjjizz8XJ9UVBU8zyTLAfpc6jYs0jZABz9BWKuATF6odGCrzFqzMrT02OHdL9jT82p2eS694zWKDdIuvucFyWpZcdI35xo2hNl4Vuoqn76zI7ftE7+VqP8oQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nBBm2a0P; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 496E2C4CECF;
-	Mon, 11 Nov 2024 22:36:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1731364573;
-	bh=VTKOlFWEU9rOqd7gZBhNAomP4MX1h4GCfami6fw8+/Q=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=nBBm2a0Pr5NIWYOXXdCLtj4EMDDSCHlucluq1dxm1h+bLuHxsdJd7zYrkj9ZyXfCH
-	 0A4lnLn8RKNJf8Q549CVDQxiXLaPQ9r+BVSRAFxbScVTg7VKlMECAT1SoAgWn746Hx
-	 V35WXqXKezaqHYOYSrjZlRNAUikqmN5VKzUa1clVDQpGJaelcp6Hoiu6EKWFWAbOni
-	 aZtZCYLmnLLyWNyuAP/0EDLTYCnFhwGf6IfxFo2rwC2Hu+yVXxb3AkQI8aUBCvVAZI
-	 MF6a8idmqoVdNa68SD3gzhwgZvBB0iWRcjYjjJYqhXYOt/oy0Nvcm+fErtxdMWD8xA
-	 VrXKt6UU1U8Mw==
-Date: Mon, 11 Nov 2024 23:36:10 +0100
-From: Andi Shyti <andi.shyti@kernel.org>
-To: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Sumit Semwal <sumit.semwal@linaro.org>, 
-	Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>, linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org, linux-media@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, linaro-mm-sig@lists.linaro.org, quic_msavaliy@quicinc.com, 
-	quic_vtanuku@quicinc.com
-Subject: Re: [PATCH v2 RESEND 1/3] dmaengine: qcom: gpi: Add GPI Block event
- interrupt support
-Message-ID: <cewuxwkn75cfnopvzidwmwp6rq7wjyewdjmiohx5jsntke5dym@oc5tgzp7km2t>
-References: <20241111140244.13474-1-quic_jseerapu@quicinc.com>
- <20241111140244.13474-2-quic_jseerapu@quicinc.com>
+	s=arc-20240116; t=1731367770; c=relaxed/simple;
+	bh=/tjIkWw4PvRqTQw5KuMuQOxcVJbv+JLJn8MTtCoNpt4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=nWUmsDUcOXRVJIz5VKahNV3j7NoM575OyUk9TdhdMQyHr7ATxCSuNbFwCgsOEFiCD8FIJ8ls6XXmjpDFm5xUpFm4F504yuoW15D7ypRg85VgPxMvM6qroZC4YKjveI64pihjdQzthDNuLy6sxqkqfl8qjkXINSvFm0wxM0CtY9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QeZU9kVb; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4314b316495so41489345e9.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Nov 2024 15:29:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1731367765; x=1731972565; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=oa1VJpZ4p6YGJ+WYpQ67ZD6EqkVJFeQvNAjNpkcu23s=;
+        b=QeZU9kVb2Nvfw15Z30RlGRxeJSRH52LnDR6y2I01KBFMyeK/fyeVnQLGu4JC5ZBSY4
+         IGJxhQHmQwFqo0CKQJst9P1KgUnEpm/66b6ztFv+lz89J/xay85eclZhKGX2tElHgdqq
+         7QAMk0G4/NaYe+d4eME3hN6yGTZbQ5nli4boGd1FHI2S2loxGT5weRDPBF6wNGfkKGnZ
+         wwio0Ro3fl3nVejk1OczKPyAcOeyH4FeNsn9IdpKeucWIpSx5RlhMdRPVcbqs7YMrdZ1
+         1AWdLpsV440VueAcki4x8NxscTn+WOBLlR6lYM5xG+onM+tiEdvC/8KGp1tS9nuNKmFY
+         gEIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731367765; x=1731972565;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=oa1VJpZ4p6YGJ+WYpQ67ZD6EqkVJFeQvNAjNpkcu23s=;
+        b=rv3zhl60aimd/w2nm8d0a/eM7ukSuJx/udklimX1i+bOGxDT0wUDLZUWz2aNpXxyF+
+         kV2gTKin0PS7xzfsggIHOWM6AWeOiInj2/I4ylj9FygT5yqMvAmHbPcX6Sz5OnmGDAHc
+         +LF7ZF2VWMPnBHEC/Z3pUOv/jE5G8EHz7/T2AhbqC8VHscOloe0+hmPSIGUVhR1XoQF/
+         VSosfNvAFZzBAesV1SQxxf5DtXVV9WNFb4TG/BXXzGI/nZhBPYOWw/96tlOMvrrbrIh3
+         FWQxOnwy0VXzW4QrWj26DdEuCMPw4nk5MH4SI3DAU0bpXCPSA/8nZuN0oMKYD7lwU5Eu
+         VxLw==
+X-Forwarded-Encrypted: i=1; AJvYcCXz0RAmSANEp0FKe9d+aAeyz5hU6YiYuV3gjwx5TUU2tcQQ+J9Iaq7yIbMK4Xgvavfn2I3MDf96+AicRhGO@vger.kernel.org
+X-Gm-Message-State: AOJu0YyTsSeo/XMvXtSSaqFuG6aUleC7VP0DmrlAlyXDKhjfKsEtHaBl
+	svW/IajlsxPsd0EyKYJPA0wn8oCOfIvECgPwmBo+mAp+i3QSn4JLa3ANWkY36i4=
+X-Google-Smtp-Source: AGHT+IFvD/ox9/nCVwmu4XWxmvWBYTITqDtdQxRKR2SUvFdgbcI8+lXS6e9fQXV+MStohPyjoA/YGg==
+X-Received: by 2002:a05:600c:4f4e:b0:431:57d2:d7b4 with SMTP id 5b1f17b1804b1-432b751726emr127710445e9.26.1731367764943;
+        Mon, 11 Nov 2024 15:29:24 -0800 (PST)
+Received: from [192.168.0.48] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432aa74abb9sm232417385e9.42.2024.11.11.15.29.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Nov 2024 15:29:23 -0800 (PST)
+Message-ID: <3ffdab33-4680-43ec-95d6-fe889619dbcc@linaro.org>
+Date: Mon, 11 Nov 2024 23:29:21 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241111140244.13474-2-quic_jseerapu@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/1] media: qcom: camss: Restructure
+ camss_link_entities
+To: Vikram Sharma <quic_vikramsa@quicinc.com>, rfoss@kernel.org,
+ todor.too@gmail.com, krzk+dt@kernel.org
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, kernel@quicinc.com
+References: <20241111173845.1773553-1-quic_vikramsa@quicinc.com>
+ <20241111173845.1773553-2-quic_vikramsa@quicinc.com>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20241111173845.1773553-2-quic_vikramsa@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Ping, Vinod :-)
-
-Andi
-
-On Mon, Nov 11, 2024 at 07:32:42PM +0530, Jyothi Kumar Seerapu wrote:
-> GSI hardware generates an interrupt for each transfer completion.
-> For multiple messages within a single transfer, this results
-> in receiving N interrupts for N messages, which can introduce
-> significant software interrupt latency. To mitigate this latency,
-> utilize Block Event Interrupt (BEI) only when an interrupt is necessary.
-> When using BEI, consider splitting a single multi-message transfer into
-> chunks of 8. This approach can enhance overall transfer time and
-> efficiency.
+On 11/11/2024 17:38, Vikram Sharma wrote:
+> Refactor the camss_link_entities function by breaking it down into
+> three distinct functions. Each function will handle the linking of
+> a specific entity separately, enhancing readability.
 > 
-> Signed-off-by: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
+> Signed-off-by: Suresh Vankadara <quic_svankada@quicinc.com>
+> Signed-off-by: Trishansh Bhardwaj <quic_tbhardwa@quicinc.com>
+> Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
 > ---
+>   drivers/media/platform/qcom/camss/camss.c | 159 ++++++++++++++--------
+>   1 file changed, 105 insertions(+), 54 deletions(-)
 > 
-> v1 -> v2: 
->    - Changed dma_addr type from array of pointers to array.
->    - To support BEI functionality with the TRE size of 64 defined in GPI driver,
->      updated QCOM_GPI_MAX_NUM_MSGS to 16 and NUM_MSGS_PER_IRQ to 8.
->  
->  drivers/dma/qcom/gpi.c           | 49 ++++++++++++++++++++++++++++++++
->  include/linux/dma/qcom-gpi-dma.h | 37 ++++++++++++++++++++++++
->  2 files changed, 86 insertions(+)
-> 
-> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
-> index 52a7c8f2498f..a98de3178764 100644
-> --- a/drivers/dma/qcom/gpi.c
-> +++ b/drivers/dma/qcom/gpi.c
-> @@ -1693,6 +1693,9 @@ static int gpi_create_i2c_tre(struct gchan *chan, struct gpi_desc *desc,
->  
->  		tre->dword[3] = u32_encode_bits(TRE_TYPE_DMA, TRE_FLAGS_TYPE);
->  		tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_IEOT);
+> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+> index fabe034081ed..1052c01b45f3 100644
+> --- a/drivers/media/platform/qcom/camss/camss.c
+> +++ b/drivers/media/platform/qcom/camss/camss.c
+> @@ -1840,14 +1840,66 @@ static int camss_init_subdevices(struct camss *camss)
+>   }
+>   
+>   /*
+> - * camss_link_entities - Register subdev nodes and create links
+> + * camss_link_entities_csid - Register subdev nodes and create links
+>    * @camss: CAMSS device
+>    *
+>    * Return 0 on success or a negative error code on failure
+>    */
+> -static int camss_link_entities(struct camss *camss)
+> +static int camss_link_entities_csid(struct camss *camss)
+>   {
+> -	int i, j, k;
+> +	int i, j;
+> +	int ret, line_num;
+> +	u16 src_pad;
+> +	u16 sink_pad;
+> +	struct media_entity *src_entity;
+> +	struct media_entity *sink_entity;
+
+Vikram.
+
+Thanks for the patch.
+
+Please reverse Christmas tree this declaration
+
+struct media_entity *sink_entity;
+struct media_entity *src_entity;
+int ret, line_num;
+u16 sink_pad;
+u16 src_pad;
+int i, j;
+
 > +
-> +		if (i2c->flags & QCOM_GPI_BLOCK_EVENT_IRQ)
-> +			tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_BEI);
->  	}
->  
->  	for (i = 0; i < tre_idx; i++)
-> @@ -2098,6 +2101,52 @@ static int gpi_find_avail_gpii(struct gpi_dev *gpi_dev, u32 seid)
->  	return -EIO;
->  }
->  
-> +/**
-> + * gpi_multi_desc_process() - Process received transfers from GSI HW
-> + * @dev: pointer to the corresponding dev node
-> + * @multi_xfer: pointer to the gpi_multi_xfer
-> + * @num_xfers: total number of transfers
-> + * @transfer_timeout_msecs: transfer timeout value
-> + * @transfer_comp: completion object of the transfer
-> + *
-> + * This function is used to process the received transfers based on the
-> + * completion events
-> + *
-> + * Return: On success returns 0, otherwise return error code
-> + */
-> +int gpi_multi_desc_process(struct device *dev, struct gpi_multi_xfer *multi_xfer,
-> +			   u32 num_xfers, u32 transfer_timeout_msecs,
-> +			   struct completion *transfer_comp)
-> +{
-> +	int i;
-> +	u32 max_irq_cnt, time_left;
+> +	for (i = 0; i < camss->res->csid_num; i++) {
+> +		if (camss->ispif)
+> +			line_num = camss->ispif->line_num;
+> +		else
+> +			line_num = camss->vfe[i].res->line_num;
 > +
-> +	max_irq_cnt = num_xfers / NUM_MSGS_PER_IRQ;
-> +	if (num_xfers % NUM_MSGS_PER_IRQ)
-> +		max_irq_cnt++;
-> +
-> +	/*
-> +	 * Wait for the interrupts of the processed transfers in multiple
-> +	 * of 64 and for the last transfer. If the hardware is fast and
-> +	 * already processed all the transfers then no need to wait.
-> +	 */
-> +	for (i = 0; i < max_irq_cnt; i++) {
-> +		reinit_completion(transfer_comp);
-> +		if (max_irq_cnt != multi_xfer->irq_cnt) {
-> +			time_left = wait_for_completion_timeout(transfer_comp,
-> +								transfer_timeout_msecs);
-> +			if (!time_left) {
-> +				dev_err(dev, "%s: Transfer timeout\n", __func__);
-> +				return -ETIMEDOUT;
+> +		src_entity = &camss->csid[i].subdev.entity;
+> +		for (j = 0; j < line_num; j++) {
+> +			if (camss->ispif) {
+> +				sink_entity = &camss->ispif->line[j].subdev.entity;
+> +				src_pad = MSM_CSID_PAD_SRC;
+> +				sink_pad = MSM_ISPIF_PAD_SINK;
+> +			} else {
+> +				sink_entity = &camss->vfe[i].line[j].subdev.entity;
+> +				src_pad = MSM_CSID_PAD_FIRST_SRC + j;
+> +				sink_pad = MSM_VFE_PAD_SINK;
 > +			}
-> +		}
-> +		if (num_xfers > multi_xfer->msg_idx_cnt)
-> +			return 0;
-> +	}
-> +	return 0;
-> +}
-> +EXPORT_SYMBOL_GPL(gpi_multi_desc_process);
 > +
->  /* gpi_of_dma_xlate: open client requested channel */
->  static struct dma_chan *gpi_of_dma_xlate(struct of_phandle_args *args,
->  					 struct of_dma *of_dma)
-> diff --git a/include/linux/dma/qcom-gpi-dma.h b/include/linux/dma/qcom-gpi-dma.h
-> index 6680dd1a43c6..1341ff0db808 100644
-> --- a/include/linux/dma/qcom-gpi-dma.h
-> +++ b/include/linux/dma/qcom-gpi-dma.h
-> @@ -15,6 +15,12 @@ enum spi_transfer_cmd {
->  	SPI_DUPLEX,
->  };
->  
-> +#define QCOM_GPI_BLOCK_EVENT_IRQ	BIT(0)
-> +
-> +#define QCOM_GPI_MAX_NUM_MSGS		16
-> +#define NUM_MSGS_PER_IRQ		8
-> +#define MIN_NUM_OF_MSGS_MULTI_DESC	4
-> +
->  /**
->   * struct gpi_spi_config - spi config for peripheral
->   *
-> @@ -51,6 +57,29 @@ enum i2c_op {
->  	I2C_READ,
->  };
->  
-> +/**
-> + * struct gpi_multi_xfer - Used for multi transfer support
-> + *
-> + * @msg_idx_cnt: message index for the transfer
-> + * @buf_idx: dma buffer index
-> + * @unmap_msg_cnt: unampped transfer index
-> + * @freed_msg_cnt: freed transfer index
-> + * @irq_cnt: received interrupt count
-> + * @irq_msg_cnt: transfer message count for the received irqs
-> + * @dma_buf: virtual address of the buffer
-> + * @dma_addr: dma address of the buffer
-> + */
-> +struct gpi_multi_xfer {
-> +	u32 msg_idx_cnt;
-> +	u32 buf_idx;
-> +	u32 unmap_msg_cnt;
-> +	u32 freed_msg_cnt;
-> +	u32 irq_cnt;
-> +	u32 irq_msg_cnt;
-> +	void *dma_buf[QCOM_GPI_MAX_NUM_MSGS];
-> +	dma_addr_t dma_addr[QCOM_GPI_MAX_NUM_MSGS];
-> +};
-> +
->  /**
->   * struct gpi_i2c_config - i2c config for peripheral
->   *
-> @@ -65,6 +94,8 @@ enum i2c_op {
->   * @rx_len: receive length for buffer
->   * @op: i2c cmd
->   * @muli-msg: is part of multi i2c r-w msgs
-> + * @flags: true for block event interrupt support
-> + * @multi_xfer: indicates transfer has multi messages
->   */
->  struct gpi_i2c_config {
->  	u8 set_config;
-> @@ -78,6 +109,12 @@ struct gpi_i2c_config {
->  	u32 rx_len;
->  	enum i2c_op op;
->  	bool multi_msg;
-> +	u8 flags;
-> +	struct gpi_multi_xfer multi_xfer;
->  };
->  
-> +int gpi_multi_desc_process(struct device *dev, struct gpi_multi_xfer *multi_xfer,
-> +			   u32 num_xfers, u32 tranfer_timeout_msecs,
-> +			   struct completion *transfer_comp);
-> +
->  #endif /* QCOM_GPI_DMA_H */
-> -- 
-> 2.17.1
-> 
+> +			ret = media_create_pad_link(src_entity,
+> +						    src_pad,
+> +						    sink_entity,
+> +						    sink_pad,
+> +						    0);
+> +			if (ret < 0) {
+> +				dev_err(camss->dev,
+> +					"Failed to link %s->%s entities: %d\n",
+> +					src_entity->name,
+> +					sink_entity->name,
+> +					ret);
+> +				return ret;
+
+We repeat this pattern over and over again.
+
+I realise that's how it has evolved in this code but since we are going 
+in with the knife we may as well fix this too.
+
+Please functionally decompose the "Failed to link" message down into a 
+function.
+
+Once both of those are done:
+
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+
+---
+bod
 
