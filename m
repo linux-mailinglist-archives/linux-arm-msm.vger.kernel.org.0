@@ -1,182 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-37475-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37476-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2B29D9C404B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2024 15:04:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CE2899C4083
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2024 15:17:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7D3EDB21ED5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2024 14:04:56 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 23EAFB20B70
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2024 14:17:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44CD319E960;
-	Mon, 11 Nov 2024 14:04:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cjmKNIGB"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 008C519E819;
+	Mon, 11 Nov 2024 14:17:12 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from inva020.nxp.com (inva020.nxp.com [92.121.34.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C384D19D881;
-	Mon, 11 Nov 2024 14:04:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF2719CC1C;
+	Mon, 11 Nov 2024 14:17:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=92.121.34.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731333856; cv=none; b=lf50ePUMso3a0PecN23DtZLJbWcmxRrIGgCEFs+uMm0PTkt5RNeYbHdKv/tYdxjD9mAD78oW1tv4+Qb1gBSv280ZejFcoSw+W7xnlQgi/xBV2kAHay5v5gHjXXZbU2Dx7d/PcA0nQBEAoAUD+McmvtskHfKfaBZUNFpOsdFbbC4=
+	t=1731334631; cv=none; b=OKXJ+xFaxeJ2Jly2EU6KC3BareEcB5gTHw20Jzt7daYj8z7EB0fuI44t5s7xhYn2KYA0np8395LbXyyEEYmO4Zh1qjvQKhPbVW7E2Towv9/NkiC3NNxfRYcPcILKiGSslarYYNyjsz/Zk2bUg/09twA+O3ru1V/uKPPUyvnCY84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731333856; c=relaxed/simple;
-	bh=Q09Jt7ZkFfl/xY7ARqjQ3NHnuShpjY3RpiJ1qkbipBw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=PbLQSI+WAhwUSPKsNVnaWD6WnrCoNa4fkxic2FX4UFKWLSFy0fdmlAb0t7gTLXcWb3bioXZuQM3b1hYH1PkC7g5PkuIy6oR6NDt9VvtpTNiKAu/eFtgOd7JDts3NJIeUlve1MkYUraqFElSx8k/yEziF2QLCCVq8KgkOLbXN+vE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cjmKNIGB; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ABB1ied028877;
-	Mon, 11 Nov 2024 14:04:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	W3CBRFMje3n7hspwjNJYn3C8cGZoyMfv5EGAAN+vScw=; b=cjmKNIGB2MCcfrO6
-	/lw3esQ6KMiZ3YsquAjapLa8n23KX5LPRlPwG4tj3eTcZp4aG9Hwj7yB3lqZo47q
-	AGE4oMJj/WJ8touIHKUxm4gHELOy4pbGOXRruHDTFyqerppHv/88kGQAnoBoQS4J
-	KEYN4bLlEA8yUvicWvTIf0LCU1FSJFyAmUHztwIbWfEE8KMyW+j1yNLvGv6Fmc/v
-	2tlIVE6mYbesERqL50c1loGbf30+aFOWHkY+3yLPE3cT3UYezz0+dI2TQIg8Emrq
-	uOGbG2cdfXLf55xls5VjBvhniHegpvEzHfKR7Dg3rNHCQ3uezV+jCiJrNGO1BQzH
-	RQpVVQ==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42sweecj12-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 11 Nov 2024 14:04:09 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4ABE49ns008114
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 11 Nov 2024 14:04:09 GMT
-Received: from [10.204.100.69] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 11 Nov
- 2024 06:04:06 -0800
-Message-ID: <6629313e-a4eb-cca0-ffaf-6aed399da20a@quicinc.com>
-Date: Mon, 11 Nov 2024 19:34:03 +0530
+	s=arc-20240116; t=1731334631; c=relaxed/simple;
+	bh=atKj27umbsbkvfy41nhNQunjFCIirqrEGyCUijGtQbM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gD4fZ9Dhty/gE33SmpQkebSYT/IEdWkscBo5lwGDw/I+yfeUWunkW8v6x5fB9QPFx+mW/ej1HNhw/EIAaRNRuMP64u9zssFTTNoJl93FifvDeADRQll3vpM2jjrsIJSNIGdDB/WIG2VjieTYNKYPsOG7PrTxp3dw7FtmhvkCqM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; arc=none smtp.client-ip=92.121.34.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+Received: from inva020.nxp.com (localhost [127.0.0.1])
+	by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 7999E1A117E;
+	Mon, 11 Nov 2024 15:08:52 +0100 (CET)
+Received: from inva024.eu-rdc02.nxp.com (inva024.eu-rdc02.nxp.com [134.27.226.22])
+	by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 6CDCC1A1174;
+	Mon, 11 Nov 2024 15:08:52 +0100 (CET)
+Received: from lsv051416.swis.nl-cdc01.nxp.com (lsv051416.swis.nl-cdc01.nxp.com [10.168.48.122])
+	by inva024.eu-rdc02.nxp.com (Postfix) with ESMTP id 2C4EF2037A;
+	Mon, 11 Nov 2024 15:08:52 +0100 (CET)
+Date: Mon, 11 Nov 2024 15:08:52 +0100
+From: Jan Petrous <jan.petrous@oss.nxp.com>
+To: Andrew Lunn <andrew@lunn.ch>
+Cc: Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Jose Abreu <joabreu@synopsys.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Richard Cochran <richardcochran@gmail.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Russell King <linux@armlinux.org.uk>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Emil Renner Berthing <kernel@esmil.dk>,
+	Minda Chen <minda.chen@starfivetech.com>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Iyappan Subramanian <iyappan@os.amperecomputing.com>,
+	Keyur Chudgar <keyur@os.amperecomputing.com>,
+	Quan Nguyen <quan@os.amperecomputing.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	imx@lists.linux.dev, devicetree@vger.kernel.org,
+	NXP S32 Linux Team <s32@nxp.com>
+Subject: Re: [PATCH v4 14/16] net: stmmac: dwmac-s32: add basic NXP S32G/S32R
+ glue driver
+Message-ID: <ZzIP9OrIi+X/akgg@lsv051416.swis.nl-cdc01.nxp.com>
+References: <20241028-upstream_s32cc_gmac-v4-0-03618f10e3e2@oss.nxp.com>
+ <20241028-upstream_s32cc_gmac-v4-14-03618f10e3e2@oss.nxp.com>
+ <c902dc2a-9b2a-44a0-be1d-88fb150f4f17@lunn.ch>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH 1/4] media: venus: hfi_parser: add check to avoid out of
- bound access
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Stanimir Varbanov
-	<stanimir.k.varbanov@gmail.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <stable@vger.kernel.org>
-References: <20241105-venus_oob-v1-0-8d4feedfe2bb@quicinc.com>
- <20241105-venus_oob-v1-1-8d4feedfe2bb@quicinc.com>
- <b2yvyaycylsxo2bmynlrqp3pzhge2tjvtvzhmpvon2lzyx3bb4@747g3erapcro>
- <81d6a054-e02a-7c98-0479-0e17076fabd7@quicinc.com>
- <ndlf4bsijb723cctkvd7hkwmo7plbzr3q2dhqc3tpyujbfcr3z@g4rvg5p7vhfs>
- <975f4ecd-2029-469a-8ecf-fbd6397547d4@linaro.org>
- <57544d01-a7c6-1ea6-d408-ffe1678e0b5e@quicinc.com>
- <ql6hftuo7udkqachofws6lcpwx7sbjakonoehm7zsh43kqndsf@rwmiwqngldn2>
- <781ea2fd-637f-b896-aad4-d70f43ad245c@quicinc.com>
- <oxbpd3tfemwci6aiv5gs6rleg6lmsuabvvccqibbqddczjklpi@aln6hfloqizo>
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <oxbpd3tfemwci6aiv5gs6rleg6lmsuabvvccqibbqddczjklpi@aln6hfloqizo>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: j0Vyqy3ZojGO7CW6VCEWh6uPCPNHeSEe
-X-Proofpoint-GUID: j0Vyqy3ZojGO7CW6VCEWh6uPCPNHeSEe
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 adultscore=0
- mlxscore=0 bulkscore=0 malwarescore=0 suspectscore=0 phishscore=0
- priorityscore=1501 lowpriorityscore=0 mlxlogscore=903 clxscore=1015
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411110116
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c902dc2a-9b2a-44a0-be1d-88fb150f4f17@lunn.ch>
+X-Virus-Scanned: ClamAV using ClamSMTP
 
+On Tue, Oct 29, 2024 at 01:15:52PM +0100, Andrew Lunn wrote:
+> > +#define GMAC_TX_RATE_125M	125000000	/* 125MHz */
+> > +#define GMAC_TX_RATE_25M	25000000	/* 25MHz */
+> > +#define GMAC_TX_RATE_2M5	2500000		/* 2.5MHz */
+> 
+> With the swap to the new helper, i think 25M and 2M5 are no longer
+> needed.
+> 
 
+Sure, I will fix it in v5.
 
-On 11/7/2024 7:24 PM, Dmitry Baryshkov wrote:
-> On Thu, Nov 07, 2024 at 07:05:15PM +0530, Vikash Garodia wrote:
->>
->> On 11/7/2024 6:52 PM, Dmitry Baryshkov wrote:
->>> On Thu, Nov 07, 2024 at 06:32:33PM +0530, Vikash Garodia wrote:
->>>>
->>>> On 11/7/2024 5:37 PM, Bryan O'Donoghue wrote:
->>>>> On 07/11/2024 10:41, Dmitry Baryshkov wrote:
->>>>>>> init_codecs() parses the payload received from firmware and . I don't think we
->>>>>>> can control this part when we have something like this from a malicious firmware
->>>>>>> payload
->>>>>>> HFI_PROPERTY_PARAM_CODEC_SUPPORTED
->>>>>>> HFI_PROPERTY_PARAM_CODEC_SUPPORTED
->>>>>>> HFI_PROPERTY_PARAM_CODEC_SUPPORTED
->>>>>>> ...
->>>>>>> Limiting it to second iteration would restrict the functionality when property
->>>>>>> HFI_PROPERTY_PARAM_CODEC_SUPPORTED is sent for supported number of codecs.
->>>>>> If you can have a malicious firmware (which is owned and signed by
->>>>>> Qualcomm / OEM), then you have to be careful and skip duplicates. So
->>>>>> instead of just adding new cap to core->caps, you have to go through
->>>>>> that array, check that you are not adding a duplicate (and report a
->>>>>> [Firmware Bug] for duplicates), check that there is an empty slot, etc.
->>>>>>
->>>>>> Just ignoring the "extra" entries is not enough.
->>>> Thinking of something like this
->>>>
->>>> for_each_set_bit(bit, &core->dec_codecs, MAX_CODEC_NUM) {
->>>>     if (core->codecs_count >= MAX_CODEC_NUM)
->>>>         return;
->>>>     cap = &caps[core->codecs_count++];
->>>>     if (cap->codec == BIT(bit)) --> each code would have unique bitfield
->>>>         return;
->>>
->>> This won't work and it's pretty obvious why.
->> Could you please elaborate what would break in above logic ?
+> > +static int s32_gmac_init(struct platform_device *pdev, void *priv)
+> > +{
+> > +	struct s32_priv_data *gmac = priv;
+> > +	int ret;
+> > +
+> > +	ret = clk_set_rate(gmac->tx_clk, GMAC_TX_RATE_125M);
+> > +	if (!ret)
+> > +		ret = clk_prepare_enable(gmac->tx_clk);
+> > +
+> > +	if (ret) {
+> > +		dev_err(&pdev->dev, "Can't set tx clock\n");
+> > +		return ret;
+> > +	}
+> > +
+> > +	ret = clk_prepare_enable(gmac->rx_clk);
+> > +	if (ret)
+> > +		dev_dbg(&pdev->dev, "Can't set rx, clock source is disabled.\n");
+> > +	else
+> > +		gmac->rx_clk_enabled = true;
 > 
-> After the "cap=&caps[core->codecs_count++]" line 'cap' will point to the
-> new entry, which should not contain valid data.
+> Why would this fail? And if it does fail, why is it not fatal? Maybe a
+> comment here.
 > 
-> Instead, when processing new 'bit' you should loop over the existing
-> caps and check that there is no match. And only if there is no match
-> the code should be allocating new entry, checking that codecs_count
-> doesn't overflow, etc.
-Got it.
+> > +static void s32_fix_mac_speed(void *priv, unsigned int speed, unsigned int mode)
+> > +{
+> > +	struct s32_priv_data *gmac = priv;
+> > +	long tx_clk_rate;
+> > +	int ret;
+> > +
+> > +	if (!gmac->rx_clk_enabled) {
+> > +		ret = clk_prepare_enable(gmac->rx_clk);
+> > +		if (ret) {
+> > +			dev_err(gmac->dev, "Can't set rx clock\n");
+> 
+> dev_err(), so is failing now fatal, but since this is a void function,
+> you cannot report the error up the call stack?
+> 
 
-Regards,
-Vikash
->>
->>>
->>>>> +1
->>>>>
->>>>> This is a more rational argument. If you get a second message, you should surely
->>>>> reinit the whole array i.e. update the array with the new list, as opposed to
->>>>> throwing away the second message because it over-indexes your local storage..
->>>> That would be incorrect to overwrite the array with new list, whenever new
->>>> payload is received.
->>>
->>> I'd say, don't overwrite the array. Instead the driver should extend it
->>> with the new information.
->> That is exactly the existing patch is currently doing.
-> 
-> _new_ information, not a copy of the existing information.
-> 
->>
->> Regards,
->> Vikash
->>>
->>>>
->>>> Regards,
->>>> Vikash
->>>
-> 
+I did a homework and checked the issue which was fixed by that 'lazy' rx
+clock enable procedure and got conslusion it is not needed anymore, as I
+was not able to reproduce the issue on the same board but with newer
+kernel version (6.6.32 versus 5.15.73).
+
+So I will simplify rx clock management in v5.
+
+BR.
+/Jan
 
