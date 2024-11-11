@@ -1,133 +1,390 @@
-Return-Path: <linux-arm-msm+bounces-37456-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37457-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id CE59B9C3A8D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2024 10:10:40 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 38A9A9C3B77
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2024 10:59:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8552D1F22005
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2024 09:10:40 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BBB771F23174
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2024 09:59:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85E2916F0D0;
-	Mon, 11 Nov 2024 09:10:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B166D1684B4;
+	Mon, 11 Nov 2024 09:59:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="RgZP3a8t"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YzKYiPEi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E758A16C6A1;
-	Mon, 11 Nov 2024 09:10:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A949A14600D
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Nov 2024 09:59:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731316236; cv=none; b=BbkytG0+fNKgmcRYe6FgqG75MrEvTS1eoZCKReQT2vhHJ860bsHvz96QIDiU2VxWxztaWJVNbqCBOs39SSUBciNYA+sp3BlhaD6qG4Dpitc5DsQhfvPCVRGzO/R20S6dQUgHv/WDzRbwvE5PM/BF1ZxrzEfBS2JfGOVeajypoM4=
+	t=1731319152; cv=none; b=bqB2bq2DE3IWQbFKxKdssQy8MWGmzWEpT4aHI5G9LbF5aITtM/Io098Voaul+qEFoY24Gtpck3wRqF2AgCaWc+SDdcMrWZNT6r97pgZpj/zca1pbcrLCdp2XK5eo692FHRwmdSWuaoZ4LZEka26jPXg3O8Qgp7QeefsmcilHbg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731316236; c=relaxed/simple;
-	bh=o1/gfen9NI6hjZYBmRSoret7R0kHPZnUAbizO7uo+84=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IDWzIzYc4EkeUsUAVFMgg9K3UcKwWUhpnS+/XD3KxDsuc2oD88wRDMjP1lhAa1OOC5MCimXsCNwdX44QXK58wlJuSJLgeZ3pHbRxsKzP3X8qlH9TRNBWvHuB/pe/CUvFbGfwNJjiRXhqaBS3wxMYd5pnAN6s0B4gjGI4uUvCGgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=RgZP3a8t; arc=none smtp.client-ip=198.175.65.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1731316235; x=1762852235;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=o1/gfen9NI6hjZYBmRSoret7R0kHPZnUAbizO7uo+84=;
-  b=RgZP3a8tAad/gEn1IuQEl86Z1hICym4t9mtSYPfGd+Xqhac1WAjAFu6h
-   b4enGdMsxNmwTxDUUcMzg4/GMeY0xKH75taMlfQLLaq+FAV7D2GbB5PEf
-   chWS7gkqla0ojDOv+d8WV8AS/eBx/GGSn54YErB04OhiqaEMOQCR2srMS
-   LqjFK5vDdjkFdYuCDiqXK6vF59SFXje8TG/9aTi2PBKA5oHBxX5Sqp2UI
-   Q1EVs6cGT5voCnAkd56+DA91dG3B0X4/UShb2ld8XHUJOBhOEfFPzzTwC
-   yJjqOHJHwZGyre6eTLu2q0Gxe/JTqphXUTfJ1841PfymynSqt8XbEY2kI
-   Q==;
-X-CSE-ConnectionGUID: VoBhO6ZVTSK/DSvGOny/nw==
-X-CSE-MsgGUID: lYa78zUeTL+e6/HKCpG9XQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="48563946"
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; 
-   d="scan'208";a="48563946"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
-  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Nov 2024 01:10:34 -0800
-X-CSE-ConnectionGUID: RYvbklKETdCGuCSSTGilkw==
-X-CSE-MsgGUID: JgFc1Iq5Sgqt10gTRNkYfg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,144,1728975600"; 
-   d="scan'208";a="86781793"
-Received: from kuha.fi.intel.com ([10.237.72.152])
-  by orviesa009.jf.intel.com with SMTP; 11 Nov 2024 01:10:31 -0800
-Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Mon, 11 Nov 2024 11:10:29 +0200
-Date: Mon, 11 Nov 2024 11:10:29 +0200
-From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Heikki Krogerus <heikki.krogeurs@linux.intel.com>,
-	linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v2 2/2] usb: typec: ucsi: glink: be more precise on
- orientation-aware ports
-Message-ID: <ZzHKBVmpDfiwxeCn@kuha.fi.intel.com>
-References: <20241109-ucsi-glue-fixes-v2-0-8b21ff4f9fbe@linaro.org>
- <20241109-ucsi-glue-fixes-v2-2-8b21ff4f9fbe@linaro.org>
+	s=arc-20240116; t=1731319152; c=relaxed/simple;
+	bh=rmX/8/j1+aqwk0jaNTPAzvUgUid7JEJqSEpvZONmTmc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=If259lZ+vgoMgGC4oOFKRlFzI4b8/c4K67iil5jA9LgkJ5k2fJ+SaxTf9w5YaZ80tPynwJKTFVZEnfY4elcfWjH8MvdgjQTZWwkkpmyQlIRtBX0DdnAlbJByzLS779e8mDHdt6xJkSgIfQbtbojVQ+QYewLvXGKL63h03aj01XU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YzKYiPEi; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4315baec69eso37491655e9.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Nov 2024 01:59:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1731319149; x=1731923949; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=En8YQ6NnS3SQvR0pBKbw5qKwcq7W7P9L7oOZLO3waWM=;
+        b=YzKYiPEimgkYJ8CM/LL8Q4NAsXwsC2M3uvVmm7D/7MRg1kUSgUfY1NkL9R3/tZAPIr
+         fWce1e564hzXSjL2c2jTMhf5jw8DDardiLL4zIpAAixGS6W+9/IST6IWkTFQ6hT6f9yJ
+         T+DsjC1x6x4gy4+bLDC6neBdT5nHoAP6OV61IfU86Zng2RV6hhwEqtb99wTzKX5Uo0Zn
+         4E0/HIYoJJoei7uded4TLncVvSlvX2QSOJhn2mudFhFUv0/h94Ln0LjHwE4T+wGlKSRb
+         fZ6aQ2fRyGlQwpG9+aN0gS2KTdDAwLf4RD7f3Td6p26MABSV5peojp1iG/uql9iDjx1q
+         ONjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731319149; x=1731923949;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=En8YQ6NnS3SQvR0pBKbw5qKwcq7W7P9L7oOZLO3waWM=;
+        b=uCJkq4nq05ieubZ2u6ZypxR4d+2mRfCbT01V5qXP7qNZUfr//WUAXgBArTnOnVlQId
+         cnAdLC5OPCxiH76i6sSvelTiYGnOIy+2l3SVYHmhQVnlaR6BUaKdFTRTc9sPlozSgOnp
+         TZyz7Cdu2fSjVF/FtzVF+jVokZvwNQr64H9PrKFxB+AuiSW2Yjg4u7LYSGayYs3SY5Z3
+         79+UhoEMrGwLZ28y7F2S+1kAJdszeQlHNt7gHYB7Gz5IarScI72rKnxHUHwZxzo5lI/F
+         ygqE6W2WwbGlizvxM3l+S+DPEY3/9vU2uf282FBOR5+Bn9CbVP+rhGbarduTUalZigZg
+         xLpQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW7BIBLs8YP+iNtqgHl4/eENo52ALh+HrLHSaME6yDZZScooXY5yI6icoFjeav/2e5tP1cN7oOX+Wuy4UNm@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw/Rx9NFMLmNzwD4pEEEsM4PKv3ROeSGnZZrJd7coNt6HFREA7o
+	ZDTwA0YXsMlH8JWjH2pzMhsxG8OCd2LlXU0OMAbu2hjZl4TaQeh5PEt2jcxDTc4=
+X-Google-Smtp-Source: AGHT+IEB3NLr9cE5q2bvYPX+LxKJvFqQcMVpePhl617hMa/TP7auC58aVN6Grg16i70Zv65pLjjzIw==
+X-Received: by 2002:a5d:47a4:0:b0:37d:4dcc:7fb4 with SMTP id ffacd0b85a97d-381f1863442mr7966807f8f.10.1731319148920;
+        Mon, 11 Nov 2024 01:59:08 -0800 (PST)
+Received: from [192.168.0.40] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381ed970e18sm12373713f8f.10.2024.11.11.01.59.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Nov 2024 01:59:08 -0800 (PST)
+Message-ID: <537ee97b-97d9-4ed8-9e11-eb3489eeff26@linaro.org>
+Date: Mon, 11 Nov 2024 09:59:07 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241109-ucsi-glue-fixes-v2-2-8b21ff4f9fbe@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 05/28] media: iris: implement video firmware
+ load/unload
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>
+Cc: Hans Verkuil <hverkuil@xs4all.nl>,
+ Sebastian Fricke <sebastian.fricke@collabora.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Nicolas Dufresne <nicolas@ndufresne.ca>,
+ =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+ Jianhua Lu <lujianhua000@gmail.com>, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20241105-qcom-video-iris-v5-0-a88e7c220f78@quicinc.com>
+ <20241105-qcom-video-iris-v5-5-a88e7c220f78@quicinc.com>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20241105-qcom-video-iris-v5-5-a88e7c220f78@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sat, Nov 09, 2024 at 02:04:15AM +0200, Dmitry Baryshkov wrote:
-> Instead of checking if any of the USB-C ports have orientation GPIO and
-> thus is orientation-aware, check for the GPIO for the port being
-> registered. There are no boards that are affected by this change at this
-> moment, so the patch is not marked as a fix, but it might affect other
-> boards in future.
+On 05/11/2024 06:55, Dikshita Agarwal wrote:
+> Load/unload firmware in memory via mdt loader. Firmware is loaded as
+> part of core initialization and unloaded as part of core
+> de-initialization.
 > 
-> Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-> Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-> Tested-by: Johan Hovold <johan+linaro@kernel.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-
+> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
 > ---
->  drivers/usb/typec/ucsi/ucsi_glink.c | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
+>   drivers/media/platform/qcom/iris/Kconfig           |   2 +
+>   drivers/media/platform/qcom/iris/Makefile          |   1 +
+>   drivers/media/platform/qcom/iris/iris_core.c       |   8 ++
+>   drivers/media/platform/qcom/iris/iris_firmware.c   | 108 +++++++++++++++++++++
+>   drivers/media/platform/qcom/iris/iris_firmware.h   |  14 +++
+>   .../platform/qcom/iris/iris_platform_common.h      |  12 +++
+>   .../platform/qcom/iris/iris_platform_sm8550.c      |  10 ++
+>   7 files changed, 155 insertions(+)
 > 
-> diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
-> index 2e12758000a7d2d62f6e0b273cb29eafa631122c..90948cd6d2972402465a2adaba3e1ed055cf0cfa 100644
-> --- a/drivers/usb/typec/ucsi/ucsi_glink.c
-> +++ b/drivers/usb/typec/ucsi/ucsi_glink.c
-> @@ -172,12 +172,12 @@ static int pmic_glink_ucsi_async_control(struct ucsi *__ucsi, u64 command)
->  static void pmic_glink_ucsi_update_connector(struct ucsi_connector *con)
->  {
->  	struct pmic_glink_ucsi *ucsi = ucsi_get_drvdata(con->ucsi);
-> -	int i;
->  
-> -	for (i = 0; i < PMIC_GLINK_MAX_PORTS; i++) {
-> -		if (ucsi->port_orientation[i])
-> -			con->typec_cap.orientation_aware = true;
-> -	}
-> +	if (con->num > PMIC_GLINK_MAX_PORTS ||
-> +	    !ucsi->port_orientation[con->num - 1])
-> +		return;
+> diff --git a/drivers/media/platform/qcom/iris/Kconfig b/drivers/media/platform/qcom/iris/Kconfig
+> index 8debddec87a5..f92cc7fe9378 100644
+> --- a/drivers/media/platform/qcom/iris/Kconfig
+> +++ b/drivers/media/platform/qcom/iris/Kconfig
+> @@ -3,6 +3,8 @@ config VIDEO_QCOM_IRIS
+>           depends on VIDEO_DEV
+>           depends on ARCH_QCOM || COMPILE_TEST
+>           select V4L2_MEM2MEM_DEV
+> +        select QCOM_MDT_LOADER if ARCH_QCOM
+> +        select QCOM_SCM
+>           help
+>             This is a V4L2 driver for Qualcomm iris video accelerator
+>             hardware. It accelerates decoding operations on various
+> diff --git a/drivers/media/platform/qcom/iris/Makefile b/drivers/media/platform/qcom/iris/Makefile
+> index 93711f108a77..6906caa2c481 100644
+> --- a/drivers/media/platform/qcom/iris/Makefile
+> +++ b/drivers/media/platform/qcom/iris/Makefile
+> @@ -1,4 +1,5 @@
+>   iris-objs += iris_core.o \
+> +             iris_firmware.o \
+>                iris_hfi_gen1_command.o \
+>                iris_hfi_gen2_command.o \
+>                iris_hfi_queue.o \
+> diff --git a/drivers/media/platform/qcom/iris/iris_core.c b/drivers/media/platform/qcom/iris/iris_core.c
+> index 360a54909ef6..8c7d53c57086 100644
+> --- a/drivers/media/platform/qcom/iris/iris_core.c
+> +++ b/drivers/media/platform/qcom/iris/iris_core.c
+> @@ -4,11 +4,13 @@
+>    */
+>   
+>   #include "iris_core.h"
+> +#include "iris_firmware.h"
+>   #include "iris_state.h"
+>   
+>   void iris_core_deinit(struct iris_core *core)
+>   {
+>   	mutex_lock(&core->lock);
+> +	iris_fw_unload(core);
+>   	iris_hfi_queues_deinit(core);
+>   	core->state = IRIS_CORE_DEINIT;
+>   	mutex_unlock(&core->lock);
+> @@ -33,10 +35,16 @@ int iris_core_init(struct iris_core *core)
+>   	if (ret)
+>   		goto error;
+>   
+> +	ret = iris_fw_load(core);
+> +	if (ret)
+> +		goto error_queue_deinit;
 > +
-> +	con->typec_cap.orientation_aware = true;
->  }
->  
->  static void pmic_glink_ucsi_connector_status(struct ucsi_connector *con)
-> 
-> -- 
-> 2.39.5
+>   	mutex_unlock(&core->lock);
+>   
+>   	return 0;
+>   
+> +error_queue_deinit:
+> +	iris_hfi_queues_deinit(core);
+>   error:
+>   	core->state = IRIS_CORE_DEINIT;
+>   exit:
+> diff --git a/drivers/media/platform/qcom/iris/iris_firmware.c b/drivers/media/platform/qcom/iris/iris_firmware.c
+> new file mode 100644
+> index 000000000000..58a0f532b862
+> --- /dev/null
+> +++ b/drivers/media/platform/qcom/iris/iris_firmware.c
+> @@ -0,0 +1,108 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#include <linux/firmware.h>
+> +#include <linux/firmware/qcom/qcom_scm.h>
+> +#include <linux/of_address.h>
+> +#include <linux/of_reserved_mem.h>
+> +#include <linux/soc/qcom/mdt_loader.h>
+> +
+> +#include "iris_core.h"
+> +#include "iris_firmware.h"
+> +
+> +#define MAX_FIRMWARE_NAME_SIZE	128
+> +
+> +static int iris_load_fw_to_memory(struct iris_core *core, const char *fw_name)
+> +{
+> +	u32 pas_id = core->iris_platform_data->pas_id;
+> +	const struct firmware *firmware = NULL;
+> +	struct device *dev = core->dev;
+> +	struct reserved_mem *rmem;
+> +	struct device_node *node;
+> +	phys_addr_t mem_phys;
+> +	size_t res_size;
+> +	ssize_t fw_size;
+> +	void *mem_virt;
+> +	int ret;
+> +
+> +	if (strlen(fw_name) >= MAX_FIRMWARE_NAME_SIZE - 4)
+> +		return -EINVAL;
+> +
+> +	node = of_parse_phandle(dev->of_node, "memory-region", 0);
+> +	if (!node)
+> +		return -EINVAL;
+> +
+> +	rmem = of_reserved_mem_lookup(node);
 
--- 
-heikki
+of_node_put(node);
+
+> +	if (!rmem) {
+> +		ret = -EINVAL;
+return -EINVAL;
+> +		goto err_put_node;
+
+remove
+
+> +	}
+> +
+> +	mem_phys = rmem->base;
+> +	res_size = rmem->size;
+> +
+> +	ret = request_firmware(&firmware, fw_name, dev);
+> +	if (ret)
+> +		goto err_put_node;
+
+return ret;
+
+> +
+> +	fw_size = qcom_mdt_get_size(firmware);
+> +	if (fw_size < 0 || res_size < (size_t)fw_size) {
+> +		ret = -EINVAL;
+> +		goto err_release_fw;
+> +	}
+> +
+> +	mem_virt = memremap(mem_phys, res_size, MEMREMAP_WC);
+> +	if (!mem_virt)
+> +		goto err_release_fw;
+> +
+> +	ret = qcom_mdt_load(dev, firmware, fw_name,
+> +			    pas_id, mem_virt, mem_phys, res_size, NULL);
+> +	if (ret)
+> +		goto err_mem_unmap;
+> +
+> +	ret = qcom_scm_pas_auth_and_reset(pas_id);
+> +	if (ret)
+> +		goto err_mem_unmap;
+> +
+> +	return ret;
+> +
+> +err_mem_unmap:
+> +	memunmap(mem_virt);
+> +err_release_fw:
+> +	release_firmware(firmware);
+> +err_put_node:
+> +	of_node_put(node);
+
+remove
+
+> +
+> +	return ret;
+> +}
+> +
+> +int iris_fw_load(struct iris_core *core)
+> +{
+> +	struct tz_cp_config *cp_config = core->iris_platform_data->tz_cp_config_data;
+> +	int ret;
+> +
+> +	ret = iris_load_fw_to_memory(core, core->iris_platform_data->fwname);
+> +	if (ret) {
+> +		dev_err(core->dev, "firmware download failed\n");
+> +		return -ENOMEM;
+> +	}
+> +
+> +	ret = qcom_scm_mem_protect_video_var(cp_config->cp_start,
+> +					     cp_config->cp_size,
+> +					     cp_config->cp_nonpixel_start,
+> +					     cp_config->cp_nonpixel_size);
+> +	if (ret) {
+> +		dev_err(core->dev, "protect memory failed\n");
+> +		qcom_scm_pas_shutdown(core->iris_platform_data->pas_id);
+> +		return ret;
+> +	}
+> +
+> +	return ret;
+> +}
+> +
+> +int iris_fw_unload(struct iris_core *core)
+> +{
+> +	return qcom_scm_pas_shutdown(core->iris_platform_data->pas_id);
+> +}
+> diff --git a/drivers/media/platform/qcom/iris/iris_firmware.h b/drivers/media/platform/qcom/iris/iris_firmware.h
+> new file mode 100644
+> index 000000000000..8d4f6b7f75c5
+> --- /dev/null
+> +++ b/drivers/media/platform/qcom/iris/iris_firmware.h
+> @@ -0,0 +1,14 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#ifndef _IRIS_FIRMWARE_H_
+> +#define _IRIS_FIRMWARE_H_
+> +
+> +struct iris_core;
+> +
+> +int iris_fw_load(struct iris_core *core);
+> +int iris_fw_unload(struct iris_core *core);
+> +
+> +#endif
+> diff --git a/drivers/media/platform/qcom/iris/iris_platform_common.h b/drivers/media/platform/qcom/iris/iris_platform_common.h
+> index dac64ec4bf03..04bef37b7b77 100644
+> --- a/drivers/media/platform/qcom/iris/iris_platform_common.h
+> +++ b/drivers/media/platform/qcom/iris/iris_platform_common.h
+> @@ -6,6 +6,8 @@
+>   #ifndef _IRIS_PLATFORM_COMMON_H_
+>   #define _IRIS_PLATFORM_COMMON_H_
+>   
+> +#define IRIS_PAS_ID				9
+> +
+>   extern struct iris_platform_data sm8550_data;
+>   
+>   enum platform_clk_type {
+> @@ -19,6 +21,13 @@ struct platform_clk_data {
+>   	const char *clk_name;
+>   };
+>   
+> +struct tz_cp_config {
+> +	u32 cp_start;
+> +	u32 cp_size;
+> +	u32 cp_nonpixel_start;
+> +	u32 cp_nonpixel_size;
+> +};
+> +
+>   struct iris_platform_data {
+>   	struct iris_inst *(*get_instance)(void);
+>   	const struct icc_info *icc_tbl;
+> @@ -32,6 +41,9 @@ struct iris_platform_data {
+>   	const char * const *clk_rst_tbl;
+>   	unsigned int clk_rst_tbl_size;
+>   	u64 dma_mask;
+> +	const char *fwname;
+> +	u32 pas_id;
+> +	struct tz_cp_config *tz_cp_config_data;
+>   };
+>   
+>   #endif
+> diff --git a/drivers/media/platform/qcom/iris/iris_platform_sm8550.c b/drivers/media/platform/qcom/iris/iris_platform_sm8550.c
+> index 9b305b8e2110..96d9d6e816a0 100644
+> --- a/drivers/media/platform/qcom/iris/iris_platform_sm8550.c
+> +++ b/drivers/media/platform/qcom/iris/iris_platform_sm8550.c
+> @@ -24,6 +24,13 @@ static const struct platform_clk_data sm8550_clk_table[] = {
+>   	{IRIS_HW_CLK,   "vcodec0_core" },
+>   };
+>   
+> +static struct tz_cp_config tz_cp_config_sm8550 = {
+> +	.cp_start = 0,
+> +	.cp_size = 0x25800000,
+> +	.cp_nonpixel_start = 0x01000000,
+> +	.cp_nonpixel_size = 0x24800000,
+> +};
+> +
+>   struct iris_platform_data sm8550_data = {
+>   	.get_instance = iris_hfi_gen2_get_instance,
+>   	.icc_tbl = sm8550_icc_table,
+> @@ -37,4 +44,7 @@ struct iris_platform_data sm8550_data = {
+>   	.clk_tbl = sm8550_clk_table,
+>   	.clk_tbl_size = ARRAY_SIZE(sm8550_clk_table),
+>   	.dma_mask = GENMASK(31, 29) - 1,
+> +	.fwname = "qcom/vpu/vpu30_p4.mbn",
+> +	.pas_id = IRIS_PAS_ID,
+> +	.tz_cp_config_data = &tz_cp_config_sm8550,
+>   };
+> 
+
 
