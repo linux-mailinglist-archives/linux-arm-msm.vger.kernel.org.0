@@ -1,532 +1,361 @@
-Return-Path: <linux-arm-msm+bounces-37679-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37682-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D406D9C5FF7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 19:11:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CE36B9C60DE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 19:54:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 10118BE0594
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 17:37:30 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C5928B831F5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 17:39:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70FAF21B430;
-	Tue, 12 Nov 2024 17:31:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8637D213120;
+	Tue, 12 Nov 2024 17:33:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="PVBA4Mah"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="uZsD40JD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C7F0218305;
-	Tue, 12 Nov 2024 17:31:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2459209664;
+	Tue, 12 Nov 2024 17:33:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731432702; cv=none; b=QEb3Sb9pHzWdLSn5IZf9tAkUNBZupfBSu+ftFqBvSHASOLV8I3lAzh2nKRQFmGBRTFhSJ5qaEuQocq+NkoGv6Gopk6m6ySuPC7WwoYw6tYZWhsFRVTVbYoumMq7+vB9x2lEhDnGiaMH/xrmFdcLiRcgZdZRV6oGwaFXRMgAPb4A=
+	t=1731432789; cv=none; b=kePQbzVA4LyM5hXCQjzkCcvl44nx6eYIpti7R3pYBNBY1o9x7MrolwDzOGTp0ciVmQhgBymPRWvX1sWqS2reeOjmZFpNxb4osCr/qs85wCAw5MTmv1K578XJLyKeTJAqp886XADr7+6OcorxK4+B7rliOnoPKqX+fdvH6pUV7Q8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731432702; c=relaxed/simple;
-	bh=TWQ6HDgLLsaDkHiJhJBV4Fbs7Jj0HoYhDzHsXIKO+sc=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ppCF9hnzFREzkf21GSoCYF98yqj6aj53c6d8JXbFYX3IZ5bU9oipQWzLrJ9dE1zSoZ71BNRDxgN8AOvF4lB0TMHw3jNcKuh/ZAf3nCPI4hoPoh8QWQxyjJKeFyPJ0SgH/Isgd1CTJniuoIWxOrZ3GlGaE13ACVJxKgJc8nqFW2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=PVBA4Mah; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ACCNMRV005359;
-	Tue, 12 Nov 2024 17:31:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	+MFtPC8nDliNcdIKl/af1FqaDptBSedQg4wXouYSIHM=; b=PVBA4MahmPXTO6eQ
-	z2kWVZNmlxF6qcbl3CXQdIHQq4YdO8/8A9Itry64W21UislmeMUv8oiiGWnZ2B0T
-	RX6Z1aDvN8wEUK0RaDBSrUFmWwQ98nKe2QALT8aGhPyzBkhy5UlR36RScnkjEIyq
-	qFnQ0csraehBYH55d+r+jBWthxIlEaFxSjOSMDkq23UeXZ8e9LdDvolZlpP5Uory
-	2WUP6lPGb1cZ8MQ5+oSlQKhRm17WkyaoAgV+CvuEGjxUYDGTZA3jAEO0eA7/lBNZ
-	rS6eDPUlKiLe3y5DJB+tQG5rO5vsojQ2MUd4PXa2N7UQM35EEPfG541NMk3vrcM+
-	Q5l1yQ==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42uwt5ja7j-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 12 Nov 2024 17:31:29 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4ACHVSSa019448
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 12 Nov 2024 17:31:28 GMT
-Received: from hu-vikramsa-hyd.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 12 Nov 2024 09:31:20 -0800
-From: Vikram Sharma <quic_vikramsa@quicinc.com>
-To: <rfoss@kernel.org>, <todor.too@gmail.com>, <bryan.odonoghue@linaro.org>,
-        <mchehab@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <akapatra@quicinc.com>, <hariramp@quicinc.com>,
-        <andersson@kernel.org>, <konradybcio@kernel.org>,
-        <hverkuil-cisco@xs4all.nl>, <cros-qcom-dts-watchers@chromium.org>,
-        <catalin.marinas@arm.com>, <will@kernel.org>
-CC: <linux-arm-kernel@lists.infradead.org>, <quic_vikramsa@quicinc.com>,
-        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <kernel@quicinc.com>
-Subject: [PATCH v5 3/5] media: qcom: camss: Add support for camss driver on sc7280
-Date: Tue, 12 Nov 2024 23:00:30 +0530
-Message-ID: <20241112173032.2740119-4-quic_vikramsa@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20241112173032.2740119-1-quic_vikramsa@quicinc.com>
-References: <20241112173032.2740119-1-quic_vikramsa@quicinc.com>
+	s=arc-20240116; t=1731432789; c=relaxed/simple;
+	bh=ZMippwGJIxIyDlx7CchqU2+81i9sMtpxdtNshqEH+FA=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=rvoTc8Hk+ZpX0s5a78myB8hmVwbPiG9buPqbvvyWvZmwpe6H8HRg4lLx3qZh+aT9PKeyvtxkUQEmsyArYZAneJ6uygbd5DqTzTUKv+R4awR9hlQpPuqS2sPRvL1p6X4vL8eWv+gNcL/Aoar8zPuO6t0fCGqSyEfWwJ9ZhK1+7+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=uZsD40JD; arc=none smtp.client-ip=5.75.144.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
+Received: from localhost (docker-mailserver-web-1.docker-mailserver_default [172.22.0.5])
+	by mail.mainlining.org (Postfix) with ESMTPSA id 460B6E45C8;
+	Tue, 12 Nov 2024 17:33:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mainlining.org;
+	s=psm; t=1731432784;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Z2MTZMjG68b3T6cJYBnCLBnnuL4jBK+EhuaLspP8FtU=;
+	b=uZsD40JDUj+xKRaOPkpL6nf3J8klFmsRTOn6vreQuN1wSp87ovX6mpEFCQOBx58K8QYta7
+	VzVeaQ4h8EQJbmNZQR+3u28BgKJQqiIQ0wd/2yJ5UmCqdzO49ZieHlQVATtN9X/viRhm5C
+	AUV+br4PKChFi23R1r9xuXklYwx3712wZPJxv46CzHpYZklv7+Oe2u+rTRzoIQ//eVZ0Lv
+	cEqWoiXSf3J2nKS3tXALl0/PqfhhoPBizRmQRGV2ZBEXo3Ih9UrwyCPjV+BH13swivY/EO
+	WX28pBohIXGSjWiBqxQgD7VOTo/Kymv3m11hIsYqhRGe8YX1N9lteGUehAvx8g==
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Date: Tue, 12 Nov 2024 18:33:04 +0100
+From: barnabas.czeman@mainlining.org
+To: Stephan Gerhold <stephan.gerhold@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio
+ <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski
+ <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Linus Walleij
+ <linus.walleij@linaro.org>, Amit Kucheria <amitk@kernel.org>, Thara Gopinath
+ <thara.gopinath@gmail.com>, "Rafael J. Wysocki" <rafael@kernel.org>, Daniel
+ Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, Lukasz
+ Luba <lukasz.luba@arm.com>, Joerg Roedel <joro@8bytes.org>, Will Deacon
+ <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, Srinivas Kandagatla
+ <srinivas.kandagatla@linaro.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-gpio@vger.kernel.org, linux-pm@vger.kernel.org, iommu@lists.linux.dev,
+ =?UTF-8?Q?Otto_Pfl=C3=BCger?= <otto.pflueger@abscue.de>
+Subject: Re: [PATCH v5 08/10] arm64: dts: qcom: Add initial support for
+ MSM8917
+In-Reply-To: <ZzOQEgLLhkH-IymV@linaro.org>
+References: <20241112-msm8917-v5-0-3ca34d33191b@mainlining.org>
+ <20241112-msm8917-v5-8-3ca34d33191b@mainlining.org>
+ <ZzOQEgLLhkH-IymV@linaro.org>
+Message-ID: <8d4cddf01b29cbd4b86c13081bb1ce0d@mainlining.org>
+X-Sender: barnabas.czeman@mainlining.org
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: HAt2PXnY_B7fpz96DvO4nXVNLLi3hB0a
-X-Proofpoint-ORIG-GUID: HAt2PXnY_B7fpz96DvO4nXVNLLi3hB0a
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxlogscore=999
- priorityscore=1501 lowpriorityscore=0 bulkscore=0 clxscore=1015
- malwarescore=0 impostorscore=0 adultscore=0 suspectscore=0 mlxscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411120140
 
-From: Suresh Vankadara <quic_svankada@quicinc.com>
-
-Add support for the camss driver on the sc7280 soc.
-
-Signed-off-by: Suresh Vankadara <quic_svankada@quicinc.com>
-Signed-off-by: Trishansh Bhardwaj <quic_tbhardwa@quicinc.com>
-Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
----
- .../qcom/camss/camss-csiphy-3ph-1-0.c         |   5 +
- .../media/platform/qcom/camss/camss-csiphy.c  |   5 +
- .../media/platform/qcom/camss/camss-csiphy.h  |   1 +
- drivers/media/platform/qcom/camss/camss-vfe.c |   2 +
- drivers/media/platform/qcom/camss/camss.c     | 309 ++++++++++++++++++
- drivers/media/platform/qcom/camss/camss.h     |   1 +
- 6 files changed, 323 insertions(+)
-
-diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-index 7d2490c9de01..f341f7b7fd8a 100644
---- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-+++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-@@ -505,6 +505,10 @@ static void csiphy_gen2_config_lanes(struct csiphy_device *csiphy,
- 	u32 val;
- 
- 	switch (csiphy->camss->res->version) {
-+	case CAMSS_7280:
-+		r = &lane_regs_sm8250[0][0];
-+		array_size = ARRAY_SIZE(lane_regs_sm8250[0]);
-+		break;
- 	case CAMSS_8250:
- 		r = &lane_regs_sm8250[0][0];
- 		array_size = ARRAY_SIZE(lane_regs_sm8250[0]);
-@@ -557,6 +561,7 @@ static bool csiphy_is_gen2(u32 version)
- 	bool ret = false;
- 
- 	switch (version) {
-+	case CAMSS_7280:
- 	case CAMSS_8250:
- 	case CAMSS_8280XP:
- 	case CAMSS_845:
-diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.c b/drivers/media/platform/qcom/camss/camss-csiphy.c
-index 5af2b382a843..3791c2d8a6cf 100644
---- a/drivers/media/platform/qcom/camss/camss-csiphy.c
-+++ b/drivers/media/platform/qcom/camss/camss-csiphy.c
-@@ -103,6 +103,11 @@ const struct csiphy_formats csiphy_formats_8x96 = {
- 	.formats = formats_8x96
- };
- 
-+const struct csiphy_formats csiphy_formats_sc7280 = {
-+	.nformats = ARRAY_SIZE(formats_sdm845),
-+	.formats = formats_sdm845
-+};
-+
- const struct csiphy_formats csiphy_formats_sdm845 = {
- 	.nformats = ARRAY_SIZE(formats_sdm845),
- 	.formats = formats_sdm845
-diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.h b/drivers/media/platform/qcom/camss/camss-csiphy.h
-index eebc1ff1cfab..b6209bddfb61 100644
---- a/drivers/media/platform/qcom/camss/camss-csiphy.h
-+++ b/drivers/media/platform/qcom/camss/camss-csiphy.h
-@@ -111,6 +111,7 @@ void msm_csiphy_unregister_entity(struct csiphy_device *csiphy);
- 
- extern const struct csiphy_formats csiphy_formats_8x16;
- extern const struct csiphy_formats csiphy_formats_8x96;
-+extern const struct csiphy_formats csiphy_formats_sc7280;
- extern const struct csiphy_formats csiphy_formats_sdm845;
- 
- extern const struct csiphy_hw_ops csiphy_ops_2ph_1_0;
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
-index f9e64cbacb20..152ca984663c 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe.c
-@@ -335,6 +335,7 @@ static u32 vfe_src_pad_code(struct vfe_line *line, u32 sink_code,
- 		}
- 		break;
- 	case CAMSS_660:
-+	case CAMSS_7280:
- 	case CAMSS_8x96:
- 	case CAMSS_8250:
- 	case CAMSS_8280XP:
-@@ -1693,6 +1694,7 @@ static int vfe_bpl_align(struct vfe_device *vfe)
- 	int ret = 8;
- 
- 	switch (vfe->camss->res->version) {
-+	case CAMSS_7280:
- 	case CAMSS_8250:
- 	case CAMSS_8280XP:
- 	case CAMSS_845:
-diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-index 2d8efed51912..e1cda082a3b8 100644
---- a/drivers/media/platform/qcom/camss/camss.c
-+++ b/drivers/media/platform/qcom/camss/camss.c
-@@ -1266,6 +1266,300 @@ static const struct resources_icc icc_res_sm8250[] = {
- 	},
- };
- 
-+static const struct camss_subdev_resources csiphy_res_7280[] = {
-+	/* CSIPHY0 */
-+	{
-+		.regulators = {},
-+		.clock = { "csiphy0", "csiphy0_timer" },
-+		.clock_rate = { { 300000000, 400000000 },
-+				{ 300000000 } },
-+		.reg = { "csiphy0" },
-+		.interrupt = { "csiphy0" },
-+		.csiphy = {
-+			.hw_ops = &csiphy_ops_3ph_1_0,
-+			.formats = &csiphy_formats_sc7280
-+		}
-+	},
-+	/* CSIPHY1 */
-+	{
-+		.regulators = {},
-+		.clock = { "csiphy1", "csiphy1_timer" },
-+		.clock_rate = { { 300000000, 400000000 },
-+				{ 300000000 } },
-+		.reg = { "csiphy1" },
-+		.interrupt = { "csiphy1" },
-+		.csiphy = {
-+			.hw_ops = &csiphy_ops_3ph_1_0,
-+			.formats = &csiphy_formats_sc7280
-+		}
-+	},
-+	/* CSIPHY2 */
-+	{
-+		.regulators = {},
-+		.clock = { "csiphy2", "csiphy2_timer" },
-+		.clock_rate = { { 300000000, 400000000 },
-+				{ 300000000 } },
-+		.reg = { "csiphy2" },
-+		.interrupt = { "csiphy2" },
-+		.csiphy = {
-+			.hw_ops = &csiphy_ops_3ph_1_0,
-+			.formats = &csiphy_formats_sc7280
-+		}
-+	},
-+	/* CSIPHY3 */
-+	{
-+		.regulators = {},
-+		.clock = { "csiphy3", "csiphy3_timer" },
-+		.clock_rate = { { 300000000, 400000000 },
-+				{ 300000000 } },
-+		.reg = { "csiphy3" },
-+		.interrupt = { "csiphy3" },
-+		.csiphy = {
-+			.hw_ops = &csiphy_ops_3ph_1_0,
-+			.formats = &csiphy_formats_sc7280
-+		}
-+	},
-+	/* CSIPHY4 */
-+	{
-+		.regulators = {},
-+		.clock = { "csiphy4", "csiphy4_timer" },
-+		.clock_rate = { { 300000000, 400000000 },
-+				{ 300000000 } },
-+		.reg = { "csiphy4" },
-+		.interrupt = { "csiphy4" },
-+		.csiphy = {
-+			.hw_ops = &csiphy_ops_3ph_1_0,
-+			.formats = &csiphy_formats_sc7280
-+		}
-+	},
-+};
-+
-+static const struct camss_subdev_resources csid_res_7280[] = {
-+	/* CSID0 */
-+	{
-+		.regulators = { "vdda-phy", "vdda-pll" },
-+
-+		.clock = { "vfe0_csid", "vfe0_cphy_rx", "vfe0" },
-+		.clock_rate = { { 300000000, 400000000 },
-+				{ 0 },
-+				{ 380000000, 510000000, 637000000, 760000000 }
-+		},
-+
-+		.reg = { "csid0" },
-+		.interrupt = { "csid0" },
-+		.csid = {
-+			.is_lite = false,
-+			.hw_ops = &csid_ops_gen2,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
-+			.formats = &csid_formats_gen2
-+		}
-+	},
-+	/* CSID1 */
-+	{
-+		.regulators = { "vdda-phy", "vdda-pll" },
-+
-+		.clock = { "vfe1_csid", "vfe1_cphy_rx", "vfe1" },
-+		.clock_rate = { { 300000000, 400000000 },
-+				{ 0 },
-+				{ 380000000, 510000000, 637000000, 760000000 }
-+		},
-+
-+		.reg = { "csid1" },
-+		.interrupt = { "csid1" },
-+		.csid = {
-+			.is_lite = false,
-+			.hw_ops = &csid_ops_gen2,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
-+			.formats = &csid_formats_gen2
-+		}
-+	},
-+	/* CSID2 */
-+	{
-+		.regulators = { "vdda-phy", "vdda-pll" },
-+
-+		.clock = { "vfe2_csid", "vfe2_cphy_rx", "vfe2" },
-+		.clock_rate = { { 300000000, 400000000 },
-+				{ 0 },
-+				{ 380000000, 510000000, 637000000, 760000000 }
-+		},
-+
-+		.reg = { "csid2" },
-+		.interrupt = { "csid2" },
-+		.csid = {
-+			.is_lite = false,
-+			.hw_ops = &csid_ops_gen2,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
-+			.formats = &csid_formats_gen2
-+		}
-+	},
-+	/* CSID3 */
-+	{
-+		.regulators = { "vdda-phy", "vdda-pll" },
-+
-+		.clock = { "vfe0_lite_csid", "vfe0_lite_cphy_rx", "vfe0_lite" },
-+		.clock_rate = { { 300000000, 400000000 },
-+				{ 0 },
-+				{ 320000000, 400000000, 480000000, 600000000 }
-+		},
-+
-+		.reg = { "csid0_lite" },
-+		.interrupt = { "csid0_lite" },
-+		.csid = {
-+			.is_lite = true,
-+			.hw_ops = &csid_ops_gen2,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
-+			.formats = &csid_formats_gen2
-+		}
-+	},
-+	/* CSID4 */
-+	{
-+		.regulators = { "vdda-phy", "vdda-pll" },
-+
-+		.clock = { "vfe1_lite_csid", "vfe1_lite_cphy_rx", "vfe1_lite" },
-+		.clock_rate = { { 300000000, 400000000 },
-+				{ 0 },
-+				{ 320000000, 400000000, 480000000, 600000000 }
-+		},
-+
-+		.reg = { "csid1_lite" },
-+		.interrupt = { "csid1_lite" },
-+		.csid = {
-+			.is_lite = true,
-+			.hw_ops = &csid_ops_gen2,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
-+			.formats = &csid_formats_gen2
-+		}
-+	},
-+};
-+
-+static const struct camss_subdev_resources vfe_res_7280[] = {
-+	/* VFE0 */
-+	{
-+		.regulators = {},
-+
-+		.clock = { "camnoc_axi", "soc_ahb", "vfe0",
-+			   "vfe0_axi", "gcc_cam_hf_axi" },
-+		.clock_rate = { { 150000000, 240000000, 320000000, 400000000, 480000000 },
-+				{ 80000000 },
-+				{ 380000000, 510000000, 637000000, 760000000 },
-+				{ 0 },
-+				{ 0 } },
-+
-+		.reg = { "vfe0" },
-+		.interrupt = { "vfe0" },
-+		.vfe = {
-+			.line_num = 3,
-+			.is_lite = false,
-+			.has_pd = true,
-+			.pd_name = "ife0",
-+			.hw_ops = &vfe_ops_170,
-+			.formats_rdi = &vfe_formats_rdi_845,
-+			.formats_pix = &vfe_formats_pix_845
-+		}
-+	},
-+	/* VFE1 */
-+	{
-+		.regulators = {},
-+
-+		.clock = { "camnoc_axi", "soc_ahb", "vfe1",
-+			   "vfe1_axi", "gcc_cam_hf_axi" },
-+		.clock_rate = { { 150000000, 240000000, 320000000, 400000000, 480000000 },
-+				{ 80000000 },
-+				{ 380000000, 510000000, 637000000, 760000000 },
-+				{ 0 },
-+				{ 0 } },
-+
-+		.reg = { "vfe1" },
-+		.interrupt = { "vfe1" },
-+		.vfe = {
-+			.line_num = 3,
-+			.is_lite = false,
-+			.has_pd = true,
-+			.pd_name = "ife1",
-+			.hw_ops = &vfe_ops_170,
-+			.formats_rdi = &vfe_formats_rdi_845,
-+			.formats_pix = &vfe_formats_pix_845
-+		}
-+	},
-+	/* VFE2 */
-+	{
-+		.regulators = {},
-+
-+		.clock = { "camnoc_axi", "soc_ahb", "vfe2",
-+			   "vfe2_axi", "gcc_cam_hf_axi" },
-+		.clock_rate = { { 150000000, 240000000, 320000000, 400000000, 480000000 },
-+				{ 80000000 },
-+				{ 380000000, 510000000, 637000000, 760000000 },
-+				{ 0 },
-+				{ 0 } },
-+
-+		.reg = { "vfe2" },
-+		.interrupt = { "vfe2" },
-+		.vfe = {
-+			.line_num = 3,
-+			.is_lite = false,
-+			.hw_ops = &vfe_ops_170,
-+			.has_pd = true,
-+			.pd_name = "ife2",
-+			.formats_rdi = &vfe_formats_rdi_845,
-+			.formats_pix = &vfe_formats_pix_845
-+		}
-+	},
-+	/* VFE3 (lite) */
-+	{
-+		.clock = { "camnoc_axi", "soc_ahb",
-+			   "vfe0_lite", "gcc_cam_hf_axi" },
-+		.clock_rate = { { 150000000, 240000000, 320000000, 400000000, 480000000 },
-+				{ 80000000 },
-+				{ 320000000, 400000000, 480000000, 600000000 },
-+				{ 0 } },
-+
-+		.regulators = {},
-+		.reg = { "vfe0_lite" },
-+		.interrupt = { "vfe0_lite" },
-+		.vfe = {
-+			.line_num = 4,
-+			.is_lite = true,
-+			.hw_ops = &vfe_ops_170,
-+			.formats_rdi = &vfe_formats_rdi_845,
-+			.formats_pix = &vfe_formats_pix_845
-+		}
-+	},
-+	/* VFE4 (lite) */
-+	{
-+		.clock = { "camnoc_axi", "soc_ahb",
-+			   "vfe1_lite", "gcc_cam_hf_axi" },
-+		.clock_rate = { { 150000000, 240000000, 320000000, 400000000, 480000000 },
-+				{ 80000000 },
-+				{ 320000000, 400000000, 480000000, 600000000 },
-+				{ 0 } },
-+
-+		.regulators = {},
-+		.reg = { "vfe1_lite" },
-+		.interrupt = { "vfe1_lite" },
-+		.vfe = {
-+			.line_num = 4,
-+			.is_lite = true,
-+			.hw_ops = &vfe_ops_170,
-+			.formats_rdi = &vfe_formats_rdi_845,
-+			.formats_pix = &vfe_formats_pix_845
-+		}
-+	},
-+};
-+
-+static const struct resources_icc icc_res_sc7280[] = {
-+	{
-+		.name = "ahb",
-+		.icc_bw_tbl.avg = 38400,
-+		.icc_bw_tbl.peak = 76800,
-+	},
-+	{
-+		.name = "hf_0",
-+		.icc_bw_tbl.avg = 2097152,
-+		.icc_bw_tbl.peak = 2097152,
-+	},
-+};
-+
- static const struct camss_subdev_resources csiphy_res_sc8280xp[] = {
- 	/* CSIPHY0 */
- 	{
-@@ -2688,10 +2982,25 @@ static const struct camss_resources sc8280xp_resources = {
- 	.link_entities = camss_link_entities
- };
- 
-+static const struct camss_resources sc7280_resources = {
-+	.version = CAMSS_7280,
-+	.pd_name = "top",
-+	.csiphy_res = csiphy_res_7280,
-+	.csid_res = csid_res_7280,
-+	.vfe_res = vfe_res_7280,
-+	.icc_res = icc_res_sc7280,
-+	.icc_path_num = ARRAY_SIZE(icc_res_sc7280),
-+	.csiphy_num = ARRAY_SIZE(csiphy_res_7280),
-+	.csid_num = ARRAY_SIZE(csid_res_7280),
-+	.vfe_num = ARRAY_SIZE(vfe_res_7280),
-+	.link_entities = camss_link_entities
-+};
-+
- static const struct of_device_id camss_dt_match[] = {
- 	{ .compatible = "qcom,msm8916-camss", .data = &msm8916_resources },
- 	{ .compatible = "qcom,msm8953-camss", .data = &msm8953_resources },
- 	{ .compatible = "qcom,msm8996-camss", .data = &msm8996_resources },
-+	{ .compatible = "qcom,sc7280-camss", .data = &sc7280_resources },
- 	{ .compatible = "qcom,sc8280xp-camss", .data = &sc8280xp_resources },
- 	{ .compatible = "qcom,sdm660-camss", .data = &sdm660_resources },
- 	{ .compatible = "qcom,sdm845-camss", .data = &sdm845_resources },
-diff --git a/drivers/media/platform/qcom/camss/camss.h b/drivers/media/platform/qcom/camss/camss.h
-index bdc11d6d2203..9294da832bc4 100644
---- a/drivers/media/platform/qcom/camss/camss.h
-+++ b/drivers/media/platform/qcom/camss/camss.h
-@@ -78,6 +78,7 @@ enum pm_domain {
- 
- enum camss_version {
- 	CAMSS_660,
-+	CAMSS_7280,
- 	CAMSS_8x16,
- 	CAMSS_8x53,
- 	CAMSS_8x96,
--- 
-2.25.1
-
+On 2024-11-12 18:27, Stephan Gerhold wrote:
+> On Tue, Nov 12, 2024 at 04:49:38PM +0100, Barnabás Czémán wrote:
+>> From: Otto Pflüger <otto.pflueger@abscue.de>
+>> 
+>> Add initial support for MSM8917 SoC.
+>> 
+>> Signed-off-by: Otto Pflüger <otto.pflueger@abscue.de>
+>> [reword commit, rebase, fix schema errors]
+>> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+>> ---
+>>  arch/arm64/boot/dts/qcom/msm8917.dtsi | 1974 
+>> +++++++++++++++++++++++++++++++++
+>>  1 file changed, 1974 insertions(+)
+>> 
+>> diff --git a/arch/arm64/boot/dts/qcom/msm8917.dtsi 
+>> b/arch/arm64/boot/dts/qcom/msm8917.dtsi
+>> new file mode 100644
+>> index 
+>> 0000000000000000000000000000000000000000..cf0a0eec1141e11faca0ee9705d6348ab32a0f50
+>> --- /dev/null
+>> +++ b/arch/arm64/boot/dts/qcom/msm8917.dtsi
+>> @@ -0,0 +1,1974 @@
+>> [...]
+>> +		domain-idle-states {
+>> +			cluster_sleep_0: cluster-sleep-0 {
+>> +				compatible = "domain-idle-state";
+>> +				arm,psci-suspend-param = <0x41000023>;
+>> +				entry-latency-us = <700>;
+>> +				exit-latency-us = <650>;
+>> +				min-residency-us = <1972>;
+>> +			};
+>> +
+>> +			cluster_sleep_1: cluster-sleep-1 {
+>> +				compatible = "domain-idle-state";
+>> +				arm,psci-suspend-param = <0x41000043>;
+>> +				entry-latency-us = <240>;
+>> +				exit-latency-us = <280>;
+>> +				min-residency-us = <806>;
+>> +			};
+> 
+> I think my comment here is still open:
+> 
+> This is strange, the deeper sleep state has lower timings than the
+> previous one?
+> 
+>> +
+>> +			cluster_sleep_2: cluster-sleep-2 {
+>> +				compatible = "domain-idle-state";
+>> +				arm,psci-suspend-param = <0x41000053>;
+>> +				entry-latency-us = <700>;
+>> +				exit-latency-us = <1000>;
+>> +				min-residency-us = <6500>;
+>> +			};
+>> +		};
+>> +
+>> [...]
+>> +		restart@4ab000 {
+>> +			compatible = "qcom,pshold";
+>> +			reg = <0x004ab000 0x4>;
+>> +		};
+> 
+> This one too:
+> 
+> You have PSCI for shutting down, do you actually need this?
+Yes, power off is not working without this.
+> 
+>> +
+>> +		tlmm: pinctrl@1000000 {
+>> +			compatible = "qcom,msm8917-pinctrl";
+>> +			reg = <0x01000000 0x300000>;
+>> +			interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
+>> +			gpio-controller;
+>> +			gpio-ranges = <&tlmm 0 0 134>;
+>> +			#gpio-cells = <2>;
+>> +			interrupt-controller;
+>> +			#interrupt-cells = <2>;
+>> +
+>> [...]
+>> +			sdc1_clk_on: sdc1-clk-on-state {
+>> +				pins = "sdc1_clk";
+>> +				bias-disable;
+>> +				drive-strength = <16>;
+>> +			};
+>> +
+>> +			sdc1_clk_off: sdc1-clk-off-state {
+>> +				pins = "sdc1_clk";
+>> +				bias-disable;
+>> +				drive-strength = <2>;
+>> +			};
+>> +
+>> +			sdc1_cmd_on: sdc1-cmd-on-state {
+>> +				pins = "sdc1_cmd";
+>> +				bias-disable;
+>> +				drive-strength = <10>;
+>> +			};
+>> +
+>> +			sdc1_cmd_off: sdc1-cmd-off-state {
+>> +				pins = "sdc1_cmd";
+>> +				bias-disable;
+>> +				drive-strength = <2>;
+>> +			};
+>> +
+>> +			sdc1_data_on: sdc1-data-on-state {
+>> +				pins = "sdc1_data";
+>> +				bias-pull-up;
+>> +				drive-strength = <10>;
+>> +			};
+>> +
+>> +			sdc1_data_off: sdc1-data-off-state {
+>> +				pins = "sdc1_data";
+>> +				bias-pull-up;
+>> +				drive-strength = <2>;
+>> +			};
+>> +
+>> +			sdc1_rclk_on: sdc1-rclk-on-state {
+>> +				pins = "sdc1_rclk";
+>> +				bias-pull-down;
+>> +			};
+>> +
+>> +			sdc1_rclk_off: sdc1-rclk-off-state {
+>> +				pins = "sdc1_rclk";
+>> +				bias-pull-down;
+>> +			};
+>> +
+>> +			sdc2_clk_on: sdc2-clk-on-state {
+>> +				pins = "sdc2_clk";
+>> +				drive-strength = <16>;
+>> +				bias-disable;
+>> +			};
+>> +
+>> +			sdc2_clk_off: sdc2-clk-off-state {
+>> +				pins = "sdc2_clk";
+>> +				bias-disable;
+>> +				drive-strength = <2>;
+>> +			};
+>> +
+>> +			sdc2_cmd_on: sdc2-cmd-on-state {
+>> +				pins = "sdc2_cmd";
+>> +				bias-pull-up;
+>> +				drive-strength = <10>;
+>> +			};
+>> +
+>> +			sdc2_cmd_off: sdc2-cmd-off-state {
+>> +				pins = "sdc2_cmd";
+>> +				bias-pull-up;
+>> +				drive-strength = <2>;
+>> +			};
+> 
+> These are not referenced anywhere? Not here in the sdhc_X nodes, and
+> also not in your msm8917-xiaomi-riva.dts. Would also recommend
+> consolidating these to a single node like in msm8916.dtsi, see commit
+> c943e4c58b2f ("arm64: dts: qcom: msm8916/39: Consolidate SDC pinctrl").
+> 
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c943e4c58b2ffb0dcd497f8b12f284f5e8fc477e
+> 
+>> +
+>> +			sdc2_cd_on: cd-on-state {
+>> +				pins = "gpio67";
+>> +				function = "gpio";
+>> +				drive-strength = <2>;
+>> +				bias-pull-up;
+>> +			};
+>> +
+>> +			sdc2_cd_off: cd-off-state {
+>> +				pins = "gpio67";
+>> +				function = "gpio";
+>> +				drive-strength = <2>;
+>> +				bias-disable;
+>> +			};
+> 
+> It does not make sense to have different on/off states for the card
+> detect (CD) pin of the SD card. It needs to work even when the SD card
+> is suspended so we can detect insertions/removals. Also should be 
+> placed
+> in the board-specific DT part.
+> 
+> See commit dfbda20dabaa ("arm64: dts: qcom: msm8916/39: Fix SD card
+> detect pinctrl").
+> 
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=dfbda20dabaa1f284abd550035db5887384c8e4c
+> 
+> 
+>> +
+>> +			sdc2_data_on: sdc2-data-on-state {
+>> +				pins = "sdc2_data";
+>> +				bias-pull-up;
+>> +				drive-strength = <10>;
+>> +			};
+>> +
+>> +			sdc2_data_off: sdc2-data-off-state {
+>> +				pins = "sdc2_data";
+>> +				bias-pull-up;
+>> +				drive-strength = <2>;
+>> +			};
+>> +
+>> [...]
+>> +		blsp1_i2c4: i2c@78b8000 {
+>> +			compatible = "qcom,i2c-qup-v2.2.1";
+>> +			reg = <0x078b8000 0x500>;
+>> +			interrupts = <GIC_SPI 98 IRQ_TYPE_LEVEL_HIGH>;
+>> +			clocks = <&gcc GCC_BLSP1_QUP4_I2C_APPS_CLK>,
+>> +				 <&gcc GCC_BLSP1_AHB_CLK>;
+>> +			clock-names = "core", "iface";
+>> +			dmas = <&blsp1_dma 10>, <&blsp1_dma 11>;
+>> +			dma-names = "tx", "rx";
+>> +			pinctrl-0 = <&blsp1_i2c4_default>;
+>> +			pinctrl-1 = <&blsp1_i2c4_sleep>;
+>> +			pinctrl-names = "default", "sleep";
+>> +			#address-cells = <1>;
+>> +			#size-cells = <0>;
+>> +			status = "disabled";
+>> +		};
+>> +
+>> +		blsp2_i2c5: i2c@7af5000 {
+> 
+> This is actually blsp2_i2c1 if you look at the clock name below:
+> 
+>> +			compatible = "qcom,i2c-qup-v2.2.1";
+>> +			reg = <0x07af5000 0x600>;
+>> +			interrupts = <GIC_SPI 299 IRQ_TYPE_LEVEL_HIGH>;
+>> +			clocks = <&gcc GCC_BLSP2_QUP1_I2C_APPS_CLK>,
+> 
+> here ^
+> 
+> But I realize now that the pinctrl functions are consecutively numbered
+> without the BLSP number. Sorry for the confusion.
+> 
+> Basically:
+>   - blsp1_i2c2 == blsp_i2c2
+>   - blsp2_i2c1 == blsp_i2c5
+> 
+> Looking at some other examples upstream I guess you can choose between
+> one of the following options:
+> 
+>  1. msm8974/msm8976/msm8996/msm8998: Use &blspX_i2cY labels for the 
+> i2c@
+>     node and pinctrl and only have the slightly confusing pinctrl
+>     function. E.g. this in msm8976.dtsi:
+> 
+> 			/* 4 (not 6!) interfaces per QUP, BLSP2 indexes are numbered (n)+4 
+> */
+> 			blsp2_i2c2_default: blsp2-i2c2-default-state {
+> 				pins = "gpio22", "gpio23";
+> 				function = "blsp_i2c6";
+> 				drive-strength = <2>;
+> 				bias-disable;
+> 			};
+> 
+>     Note how blsp2_i2c2 == blsp_i2c6.
+> 
+>  2. msm8994: Use &blspX_i2cY labels for the i2c@ node, but keep pinctrl
+>     named &i2cN_default. E.g. this in msm8994.dtsi:
+> 
+> 		blsp2_i2c1: i2c@f9963000 {
+> 			/* ... */
+> 			pinctrl-names = "default", "sleep";
+> 			pinctrl-0 = <&i2c7_default>;
+> 			pinctrl-1 = <&i2c7_sleep>;
+> 			/* ... */
+> 		};
+> 
+>     Note how blsp2_i2c1 == i2c7_default here.
+> 
+>  3. msm8953: Use &i2c_N labels everywhere like on downstream. E.g. this
+>     in msm8953.dtsi. This is pretty much what you had originally:
+> 
+> 		i2c_5: i2c@7af5000 {
+> 			/* ... */
+> 			pinctrl-names = "default", "sleep";
+> 			pinctrl-0 = <&i2c_5_default>;
+> 			pinctrl-1 = <&i2c_5_sleep>;
+> 			/* ... */
+> 		};
+> 
+> All of these are fine for me. Feel free to pick the one you prefer. But
+> let's not introduce a new confusing variant of this. :-)
+> 
+> Thanks,
+> Stephan
 
