@@ -1,76 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-37662-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37663-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 08E2F9C5E2C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 18:04:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id AC3589C5E32
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 18:05:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8F8ED1F22E02
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 17:04:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3C05D1F23010
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 17:05:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 317D521642F;
-	Tue, 12 Nov 2024 17:01:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9BD0220DD76;
+	Tue, 12 Nov 2024 17:01:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AyXaaj3X"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bAZWML+V"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6659020CCDD
-	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Nov 2024 17:01:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78606215F58
+	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Nov 2024 17:01:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731430901; cv=none; b=jzkfHNo/ZzmB1+VX9yuQszUzRi5D4dSGSjx9EiyB8e6mYSscU97CUi++yEFhOD0hPnHlp3oHghueoWWqycclCFusioMskzC8kpqzEvaZIjNw1cWWhmnvLVSRAqS8a2v/bPzRNVDzYJLS0rZIeAfEjCtPffqq7xbGs1i2RasSrE4=
+	t=1731430903; cv=none; b=LdJpXKjbBs7prxgRopC0UkDy6jZJPJZnN7RnJvaKsayFjDx8GUWk0lVzvMDoZCwLZMNHh5Tap1UX1iVQJ12zS6C+4Coo1OmNQaK1G3dAXnRKru2m/DzLMduJqN5/x50CK7tdYkYjkyBQptzbr7Haru9srJNsjfvWEgyzG2XBrK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731430901; c=relaxed/simple;
-	bh=LDXOT+vCpdfHr57VcKzzMGulBvMnZO9j8Q9XwJpAIIM=;
+	s=arc-20240116; t=1731430903; c=relaxed/simple;
+	bh=61WnwVbjQzp4sdxYNyL76ZP03AeRz4wvh/vA8IL+uU0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=M3IxP0SEpbEwtjIZZFnCJBFsMdqaGs+2ksvKblRbM+I3K0rIfXc7Qy//KSdsTn+98oOcd1RkCtXOFPvOiZia9Mm2uCN7pSjP3xjC+MpZkX4RmQZLNAdOAtqpoMigJqZ31H7mTSCwcWN6Mol4SSzNKgIk9xtpEgnp5YzK1mh0Slg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AyXaaj3X; arc=none smtp.client-ip=209.85.128.49
+	 In-Reply-To:To:Cc; b=gFtw1IJIL4ZFDdR/dgCxMybeVLRa/h5vF/ZF32eI2L31ZCiYyBo7jeqwRSOHNH8oFDBle131EqkyewgeQ69d7hpLmA/lWPWfEzmTk0wW9KwZiP/e8WyiYEcSvCin/tqcoBckhG6mz0AR+5egoJHr7fZe262KWn1HESqk/9b+xxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bAZWML+V; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4315f24a6bbso47014225e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Nov 2024 09:01:38 -0800 (PST)
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-43162cf1eaaso74627905e9.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Nov 2024 09:01:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731430897; x=1732035697; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1731430899; x=1732035699; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=KQKCZ6YELnRXsg7GEQibOUEH/1jvz7J79Z8uSNgEggA=;
-        b=AyXaaj3XAimpkb2WjxaOxTrU01OyrwtF5/nYN/FF0ZUMajpb1MNTMudfHLSEMdfrAz
-         XRmzH7I2kIIJjzUNO5QddISEs4dzhgRmy+rdxRiUMQ8YSpb6ltq1zfdUgBdk0r7qZhE0
-         Bvpm87grZIZIwgvAMmRWsPJ3FFYy1ribdcmQJgT4dvBt3fxU5rbKsB80ThdRDSgtoE90
-         boSOnVth5BTBwYtmpadCPkxFuQHyKxzepgo59/mii0KSDlUOPmi8UWwH++Z4nYyH+ka4
-         Qph9h8d4ReXVR2mfMwfXlUG7cxHgcUyEEnBgACOjpSx9JeUYf6XtRL0ZMIRa4U0A+xve
-         jgZg==
+        bh=dYRD1gad+A7WK3AqsJ4xVAH4bMsbdKZx89vtQ5+7n0I=;
+        b=bAZWML+VIXjh3U79ZvnDaZZoJ3D87nPnak7uivNsFknHttiWC7sNxWvv+1sg66HIwz
+         +fmySNDKlBMOIefLLbhk+6L9K0z7dSCSRL7Sz2c9Mtz9QawMHc8vXptX2QQgQwAChkWm
+         1gY7XzxpbLQL606CYhtMTmVRugUckJKCjS4egWrVvHdmOV9q1mJHweB8GbAQJeRUO+fA
+         kxo+ffPQx1/T0a5mAo+OV71ZAl+BHg4fEKCct1OoAXg/5+kD0VgcTWby/SIdrt522uCV
+         XQThQOGk5DWa3y24BMDu8IQDydUMMrWS/p59G8daT2N2BTMz23qapp/iCzJBQ+Mq3+zf
+         m5+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731430897; x=1732035697;
+        d=1e100.net; s=20230601; t=1731430899; x=1732035699;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=KQKCZ6YELnRXsg7GEQibOUEH/1jvz7J79Z8uSNgEggA=;
-        b=wUyvKqWiyDXAEdVqhpvQjmyO3+ZOP6x0pklmXVM12zZtnyOTkSGHZpg/CcTxM7NXb0
-         yHj3paNRIqAergtGrOJCxgLU4KkiFuzrAU9LqHYCSAhnZRaRdDrswxu+/YLATT4uC1yL
-         +4vqn2/o979RgNHA3g/VEVsFgt7i5B2fJo3eIBL6MGS1qz9EoGuUWslBatue3Z0VKsAE
-         JK0b5Bj4sXglc6jH/NheHQ4oQXa6QsMSa8Htb2bFAtJhhbcFNIKSmK2mA2Tg0ugLXamd
-         Vb1nKpo3XLBup0OeFS0yrvgBDjn6QU83052f8QoLnR+N/Rj/GF2IaSyj2Zvsilv2T2EA
-         4WmQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWkRXcN5ZBx8MTvy7ZETPmo8N297tQh8p1jMbBkbTk2kW8+6BPCcnjD8j37a5LpI9Nn2c5Vj6+xYTb9p+aB@vger.kernel.org
-X-Gm-Message-State: AOJu0YzyKArgPp/LD5DJpfEXSX19+whijfXEu6+O7MyI7pHi2gfdbKmJ
-	ZFVQp44QuW1qGeOLU98sDFC1OvjFuKT95MUXzs8Xv0kB9N1Bnp4IHwxyTZ5EwoE=
-X-Google-Smtp-Source: AGHT+IHKYqOaDXcqy68er/UTZkhx8ANA7OhW2W0nfkWLDHJiDvt/gZEX67dr4fqnYuIHDbOS7QnVIg==
-X-Received: by 2002:a05:600c:1e18:b0:431:5d4f:73b9 with SMTP id 5b1f17b1804b1-432b751826fmr155416015e9.26.1731430896575;
-        Tue, 12 Nov 2024 09:01:36 -0800 (PST)
+        bh=dYRD1gad+A7WK3AqsJ4xVAH4bMsbdKZx89vtQ5+7n0I=;
+        b=P91fdxSkrXAcD33f7dXZggGpbY8RQ0A/sAW7vmK6ff2WUsi902dxBoIUHlN2cXMY3P
+         yX4Ueg29vycEJnrOibYmXG07Y6HneJi8WRplLlJMh1txuGR+ddlPwezZ3oAIg+kNIoth
+         4rLUahJbvTPy3BqydFGRqk1x9AoXpwejsxjSAwMjQotk3SqcLbcbtBXZquRvv7t4e48R
+         JoedjrF868+gGQcuv6GA4a2UFYHuO3vdCJDTepxZmspQmMF7n+Mlt3PS9Z9gkRZgWOtE
+         Mf9mDJrKEaxvc2A6JIKKYKgFlyOYPUdXyU3R1DdYZO5xDe7vYcZGfQl1yHaK8s/n//dI
+         7DcQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUcUfbpLEPtgRy42jgEPScLDhatdTH7SdbuKyHwplCM/DdmfpyrJ2tTkIi7zUFalDGd/n2JNcl8fQoMtHr2@vger.kernel.org
+X-Gm-Message-State: AOJu0YxSX/D4mPf5tJ51OgwF+hSMGasVuBwO49erJnvCWvohgHz5oBQX
+	K1bDcuBpPQ1HyBUTHdMVKDJXX0AFcqfZFj+2g1oEjWHLMvgUIIVqS0xw2YfwRCc=
+X-Google-Smtp-Source: AGHT+IFRI1nSBBUOOm70z9ztdLYYEKagW/puF644Av2YsVVaUflDEGEHwRbpcW8H+zBcoRUTYBUMUA==
+X-Received: by 2002:a05:600c:468b:b0:431:b264:bad9 with SMTP id 5b1f17b1804b1-432b7505af7mr190894665e9.14.1731430898243;
+        Tue, 12 Nov 2024 09:01:38 -0800 (PST)
 Received: from [127.0.1.1] ([82.76.168.176])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432b053051fsm215018895e9.6.2024.11.12.09.01.34
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432b053051fsm215018895e9.6.2024.11.12.09.01.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Nov 2024 09:01:36 -0800 (PST)
+        Tue, 12 Nov 2024 09:01:37 -0800 (PST)
 From: Abel Vesa <abel.vesa@linaro.org>
-Date: Tue, 12 Nov 2024 19:01:12 +0200
-Subject: [PATCH v5 3/6] arm64: dts: qcom: x1e80100-crd: Describe the Parade
- PS8830 retimers
+Date: Tue, 12 Nov 2024 19:01:13 +0200
+Subject: [PATCH v5 4/6] arm64: dts: qcom: x1e80100-crd: Enable external
+ DisplayPort support
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,7 +79,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241112-x1e80100-ps8830-v5-3-4ad83af4d162@linaro.org>
+Message-Id: <20241112-x1e80100-ps8830-v5-4-4ad83af4d162@linaro.org>
 References: <20241112-x1e80100-ps8830-v5-0-4ad83af4d162@linaro.org>
 In-Reply-To: <20241112-x1e80100-ps8830-v5-0-4ad83af4d162@linaro.org>
 To: Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
@@ -96,580 +96,73 @@ Cc: Rajendra Nayak <quic_rjendra@quicinc.com>,
  linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
  Abel Vesa <abel.vesa@linaro.org>
 X-Mailer: b4 0.15-dev-dedf8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=12392; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=LDXOT+vCpdfHr57VcKzzMGulBvMnZO9j8Q9XwJpAIIM=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBnM4nlcdo3Krkik8Uqt1LHe4qObBdGEaNYStkfK
- loNdRS36qiJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZzOJ5QAKCRAbX0TJAJUV
- VqT0EACGSnhe2er2P6z2hPzMa2DROyR2H9AHF5Hx431x9gDIdGUkx9xBzr7DalPOMiEiUBn2Vm+
- ElrtcpRhqgkpZdiqN4rrt2DsRyCbW/SdV59cluEYJ2B2eCBSuDbUU+H8CJ3TU/GbOEjTPVP3nX+
- shfILu2macpM91Mo3fB6ibtNjN4jDWm/B/gbb3LX+pwb9O103O+btemtg69zZzg9itv98LbLIRI
- yxRMx9SkRJSJHLl8PAhwVq2GZFm2PL+ek17+1Ezdu+B4/rDLhUAef0c3a9JnOPfypGMTTFxjWkp
- WAKM4kcUCIxZawCLjqqOkrYUP5ENVvd1IYu9/LxLCJjyMfCghvKYfRfNOX9Am3Uy5MmmDbBMRm7
- JtEsclCfVq0X5rlv/VnhN/+5f/8fY0t+tDlBywSgpRghArmcmg1nWYbY8a2FOiNU1pzZhPfKgYG
- 6KoRGVdpkKMaXJBe1cRWBV0t2ItM2lZNJ4Wur4Tuuw8nwRjZSaBkTGBBRYP8/X2Ju0IoxjizVnw
- UvRyrgPoL43tI6IaDwb48CornwGgN7Kug4l59XNth76O1rPY7s+nv1zx7YJs3DSBQVq4Sw9k4S4
- MKbNwQXt0jZGNDn6d5TfTsRoyD5NaZB8AqgLKv7ZZjZCk9sYjNURC6Ml+ODSvg0+6IFNqI/xGlB
- Mjl2VmN46IoN9nA==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1260; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=61WnwVbjQzp4sdxYNyL76ZP03AeRz4wvh/vA8IL+uU0=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBnM4nmmDgldP/glKsTHkbX++wwc5N9TyBQC4yC+
+ k/EAA0NK6SJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZzOJ5gAKCRAbX0TJAJUV
+ VslqEAC8D2lePTSPVdQqNHrYKysszkW5UzOSdbryyHJWs97y6VXRd9o5Lc9MdmE36iJM6PNCwvo
+ XMa72Zq15ARGhezN1mM1IQkUpE2Ka4sx9JjnvO+0AKW/sizgTh3wSjeh65f/RRoozAukvG43D44
+ nzNZ8OzbwtPdNtmRt1Q64cjQv2qE3IlsvxRjxVZ/oxsStrPazBQbwfLq9Fp6d2T80uPBJMDatyx
+ MX2pXtqYMfJb5TljsLwasUwUC4enuCx+DgLr1VlshtRF6s6L8cjIPeJEGaS73gj5loeyinga7j5
+ 1CKtnE8q9uZcAgxM0P3RtGS7ZRzR8OXdUcU3X1PbFI3ewPP7wlAUNz4L0t7dU/DB8LLcC08gJAl
+ I14095b+wAawtMqfnsG4PZYeggkbHNN/dSST8TQX9dZA9w1DybS78luRrkQoTqJCx90uFlPlW3B
+ R7dComZadi06GGWJxMGiIdumFTtUbwqBPpFRJRUa0vCup+FvSEop+lCLLPzf3nffShENhWtHC6O
+ kFLEyJeQnKSlJBxJxqWz9C1+zfmTdRI+/8ZE3W/GvMPyQyrYCJFnAQOdJYxJ8d/Da5GZq7GSRZz
+ ra5+sguzD/G3kroWeAUsorXxKkEpnpK1tK/Rde1gyHMU4ua5HHNM+xjqrlFBiLYcANn4Z4gvEb7
+ njjUKTOSfJDTO8g==
 X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
  fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-The X Elite CRD board comes with 3 Parade PS8830 retimers, one for each
-Type-C port. These handle the orientation and altmode switching and are
-controlled over I2C. In the connection chain, they sit between the
-USB/DisplayPort combo PHY and the Type-C connector.
+The X Elite CRD provides external DisplayPort on all 3 USB Type-C ports.
+Each one of this ports is connected to a dedicated DisplayPort
+controller.
 
-Describe the retimers and all gpio controlled voltage regulators used by
-each retimer. Also, modify the pmic glink graph to include the retimers in
-between the SuperSpeed/Sideband in endpoints and the QMP PHY out endpoints.
+Due to support missing in the USB/DisplayPort combo PHY driver,
+the external DisplayPort is limited to 2 lanes.
+
+So enable all 3 remaining DisplayPort controllers and limit their data
+lanes number to 2.
 
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/x1e80100-crd.dts | 450 +++++++++++++++++++++++++++++-
- 1 file changed, 444 insertions(+), 6 deletions(-)
+ arch/arm64/boot/dts/qcom/x1e80100-crd.dts | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-index 39f9d9cdc10d8e79824b72288e2529536144fa9e..659520404adec33c3551f8d0a5ae3db9e0a18d44 100644
+index 659520404adec33c3551f8d0a5ae3db9e0a18d44..6dc2ebbf6d27fbbf0f224e58cd39ffd33792c6a1 100644
 --- a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
 +++ b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-@@ -100,7 +100,15 @@ port@1 {
- 					reg = <1>;
- 
- 					pmic_glink_ss0_ss_in: endpoint {
--						remote-endpoint = <&usb_1_ss0_qmpphy_out>;
-+						remote-endpoint = <&retimer_ss0_ss_out>;
-+					};
-+				};
-+
-+				port@2 {
-+					reg = <2>;
-+
-+					pmic_glink_ss0_con_sbu_in: endpoint {
-+						remote-endpoint = <&retimer_ss0_con_sbu_out>;
- 					};
- 				};
- 			};
-@@ -129,7 +137,15 @@ port@1 {
- 					reg = <1>;
- 
- 					pmic_glink_ss1_ss_in: endpoint {
--						remote-endpoint = <&usb_1_ss1_qmpphy_out>;
-+						remote-endpoint = <&retimer_ss1_ss_out>;
-+					};
-+				};
-+
-+				port@2 {
-+					reg = <2>;
-+
-+					pmic_glink_ss1_con_sbu_in: endpoint {
-+						remote-endpoint = <&retimer_ss1_con_sbu_out>;
- 					};
- 				};
- 			};
-@@ -158,7 +174,15 @@ port@1 {
- 					reg = <1>;
- 
- 					pmic_glink_ss2_ss_in: endpoint {
--						remote-endpoint = <&usb_1_ss2_qmpphy_out>;
-+						remote-endpoint = <&retimer_ss2_ss_out>;
-+					};
-+				};
-+
-+				port@2 {
-+					reg = <2>;
-+
-+					pmic_glink_ss2_con_sbu_in: endpoint {
-+						remote-endpoint = <&retimer_ss2_con_sbu_out>;
- 					};
- 				};
- 			};
-@@ -311,6 +335,150 @@ vreg_nvme: regulator-nvme {
- 		regulator-boot-on;
- 	};
- 
-+	vreg_rtmr0_1p15: regulator-rtmr0-1p15 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_RTMR0_1P15";
-+		regulator-min-microvolt = <1150000>;
-+		regulator-max-microvolt = <1150000>;
-+
-+		gpio = <&pmc8380_5_gpios 8 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&usb0_pwr_1p15_reg_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-boot-on;
-+	};
-+
-+	vreg_rtmr0_1p8: regulator-rtmr0-1p8 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_RTMR0_1P8";
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+
-+		gpio = <&pm8550ve_9_gpios 8 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&usb0_1p8_reg_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-boot-on;
-+	};
-+
-+	vreg_rtmr0_3p3: regulator-rtmr0-3p3 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_RTMR0_3P3";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		gpio = <&pm8550_gpios 11 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&usb0_3p3_reg_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-boot-on;
-+	};
-+
-+	vreg_rtmr1_1p15: regulator-rtmr1-1p15 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_RTMR1_1P15";
-+		regulator-min-microvolt = <1150000>;
-+		regulator-max-microvolt = <1150000>;
-+
-+		gpio = <&tlmm 188 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&usb1_pwr_1p15_reg_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-boot-on;
-+	};
-+
-+	vreg_rtmr1_1p8: regulator-rtmr1-1p8 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_RTMR1_1P8";
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+
-+		gpio = <&tlmm 175 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&usb1_pwr_1p8_reg_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-boot-on;
-+	};
-+
-+	vreg_rtmr1_3p3: regulator-rtmr1-3p3 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_RTMR1_3P3";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		gpio = <&tlmm 186 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&usb1_pwr_3p3_reg_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-boot-on;
-+	};
-+
-+	vreg_rtmr2_1p15: regulator-rtmr2-1p15 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_RTMR2_1P15";
-+		regulator-min-microvolt = <1150000>;
-+		regulator-max-microvolt = <1150000>;
-+
-+		gpio = <&tlmm 189 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&usb2_pwr_1p15_reg_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-boot-on;
-+	};
-+
-+	vreg_rtmr2_1p8: regulator-rtmr2-1p8 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_RTMR2_1P8";
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+
-+		gpio = <&tlmm 126 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&usb2_pwr_1p8_reg_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-boot-on;
-+	};
-+
-+	vreg_rtmr2_3p3: regulator-rtmr2-3p3 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_RTMR2_3P3";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		gpio = <&tlmm 187 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&usb2_pwr_3p3_reg_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-boot-on;
-+	};
-+
- 	vph_pwr: regulator-vph-pwr {
- 		compatible = "regulator-fixed";
- 
-@@ -735,6 +903,178 @@ keyboard@3a {
- 	};
- };
- 
-+&i2c1 {
-+	clock-frequency = <400000>;
-+
-+	status = "okay";
-+
-+	typec-mux@8 {
-+		compatible = "parade,ps8830";
-+		reg = <0x08>;
-+
-+		clocks = <&rpmhcc RPMH_RF_CLK5>;
-+
-+		vdd-supply = <&vreg_rtmr2_1p15>;
-+		vdd33-supply = <&vreg_rtmr2_3p3>;
-+		vdd33-cap-supply = <&vreg_rtmr2_3p3>;
-+		vddar-supply = <&vreg_rtmr2_1p15>;
-+		vddat-supply = <&vreg_rtmr2_1p15>;
-+		vddio-supply = <&vreg_rtmr2_1p8>;
-+
-+		reset-gpios = <&tlmm 185 GPIO_ACTIVE_LOW>;
-+
-+		pinctrl-0 = <&rtmr2_default>;
-+		pinctrl-names = "default";
-+
-+		orientation-switch;
-+		retimer-switch;
-+
-+		ports {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			port@0 {
-+				reg = <0>;
-+
-+				retimer_ss2_ss_out: endpoint {
-+					remote-endpoint = <&pmic_glink_ss2_ss_in>;
-+				};
-+			};
-+
-+			port@1 {
-+				reg = <1>;
-+
-+				retimer_ss2_ss_in: endpoint {
-+					remote-endpoint = <&usb_1_ss2_qmpphy_out>;
-+				};
-+			};
-+
-+			port@2 {
-+				reg = <2>;
-+
-+				retimer_ss2_con_sbu_out: endpoint {
-+					remote-endpoint = <&pmic_glink_ss2_con_sbu_in>;
-+				};
-+			};
-+		};
-+	};
-+};
-+
-+&i2c3 {
-+	clock-frequency = <400000>;
-+
-+	status = "okay";
-+
-+	typec-mux@8 {
-+		compatible = "parade,ps8830";
-+		reg = <0x08>;
-+
-+		clocks = <&rpmhcc RPMH_RF_CLK3>;
-+
-+		vdd-supply = <&vreg_rtmr0_1p15>;
-+		vdd33-supply = <&vreg_rtmr0_3p3>;
-+		vdd33-cap-supply = <&vreg_rtmr0_3p3>;
-+		vddar-supply = <&vreg_rtmr0_1p15>;
-+		vddat-supply = <&vreg_rtmr0_1p15>;
-+		vddio-supply = <&vreg_rtmr0_1p8>;
-+
-+		reset-gpios = <&pm8550_gpios 10 GPIO_ACTIVE_LOW>;
-+
-+		pinctrl-0 = <&rtmr0_default>;
-+		pinctrl-names = "default";
-+
-+		retimer-switch;
-+		orientation-switch;
-+
-+		ports {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			port@0 {
-+				reg = <0>;
-+
-+				retimer_ss0_ss_out: endpoint {
-+					remote-endpoint = <&pmic_glink_ss0_ss_in>;
-+				};
-+			};
-+
-+			port@1 {
-+				reg = <1>;
-+
-+				retimer_ss0_ss_in: endpoint {
-+					remote-endpoint = <&usb_1_ss0_qmpphy_out>;
-+				};
-+			};
-+
-+			port@2 {
-+				reg = <2>;
-+
-+				retimer_ss0_con_sbu_out: endpoint {
-+					remote-endpoint = <&pmic_glink_ss0_con_sbu_in>;
-+				};
-+			};
-+		};
-+	};
-+};
-+
-+&i2c7 {
-+	clock-frequency = <400000>;
-+
-+	status = "okay";
-+
-+	typec-mux@8 {
-+		compatible = "parade,ps8830";
-+		reg = <0x8>;
-+
-+		clocks = <&rpmhcc RPMH_RF_CLK4>;
-+
-+		vdd-supply = <&vreg_rtmr1_1p15>;
-+		vdd33-supply = <&vreg_rtmr1_3p3>;
-+		vdd33-cap-supply = <&vreg_rtmr1_3p3>;
-+		vddar-supply = <&vreg_rtmr1_1p15>;
-+		vddat-supply = <&vreg_rtmr1_1p15>;
-+		vddio-supply = <&vreg_rtmr1_1p8>;
-+
-+		reset-gpios = <&tlmm 176 GPIO_ACTIVE_LOW>;
-+
-+		pinctrl-0 = <&rtmr1_default>;
-+		pinctrl-names = "default";
-+
-+		retimer-switch;
-+		orientation-switch;
-+
-+		ports {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			port@0 {
-+				reg = <0>;
-+
-+				retimer_ss1_ss_out: endpoint {
-+					remote-endpoint = <&pmic_glink_ss1_ss_in>;
-+				};
-+			};
-+
-+			port@1 {
-+				reg = <1>;
-+
-+				retimer_ss1_ss_in: endpoint {
-+					remote-endpoint = <&usb_1_ss1_qmpphy_out>;
-+				};
-+			};
-+
-+			port@2 {
-+				reg = <2>;
-+
-+				retimer_ss1_con_sbu_out: endpoint {
-+					remote-endpoint = <&pmic_glink_ss1_con_sbu_in>;
-+				};
-+			};
-+
-+		};
-+	};
-+};
-+
- &i2c8 {
- 	clock-frequency = <400000>;
- 
-@@ -883,6 +1223,26 @@ &pcie6a_phy {
+@@ -1125,6 +1125,30 @@ &mdss {
  	status = "okay";
  };
  
-+&pm8550_gpios {
-+	rtmr0_default: rtmr0-reset-n-active-state {
-+		pins = "gpio10";
-+		function = "normal";
-+		power-source = <1>; /* 1.8V */
-+		bias-disable;
-+		input-disable;
-+		output-enable;
-+	};
-+
-+	usb0_3p3_reg_en: usb0-3p3-reg-en-state {
-+		pins = "gpio11";
-+		function = "normal";
-+		power-source = <1>; /* 1.8V */
-+		bias-disable;
-+		input-disable;
-+		output-enable;
-+	};
++&mdss_dp0 {
++	status = "okay";
 +};
 +
- &pm8550ve_8_gpios {
- 	misc_3p3_reg_en: misc-3p3-reg-en-state {
- 		pins = "gpio6";
-@@ -896,6 +1256,17 @@ misc_3p3_reg_en: misc-3p3-reg-en-state {
- 	};
- };
- 
-+&pm8550ve_9_gpios {
-+	usb0_1p8_reg_en: usb0-1p8-reg-en-state {
-+		pins = "gpio8";
-+		function = "normal";
-+		power-source = <1>; /* 1.8V */
-+		bias-disable;
-+		input-disable;
-+		output-enable;
-+	};
++&mdss_dp0_out {
++	data-lanes = <0 1>;
 +};
 +
- &pmc8380_3_gpios {
- 	edp_bl_en: edp-bl-en-state {
- 		pins = "gpio4";
-@@ -906,6 +1277,17 @@ edp_bl_en: edp-bl-en-state {
- 	};
- };
- 
-+&pmc8380_5_gpios {
-+	usb0_pwr_1p15_reg_en: usb0-pwr-1p15-reg-en-state {
-+		pins = "gpio8";
-+		function = "normal";
-+		power-source = <1>; /* 1.8V */
-+		bias-disable;
-+		input-disable;
-+		output-enable;
-+	};
++&mdss_dp1 {
++	status = "okay";
 +};
 +
- &qupv3_0 {
- 	status = "okay";
- };
-@@ -1135,6 +1517,20 @@ wake-n-pins {
- 		};
- 	};
- 
-+	rtmr1_default: rtmr1-reset-n-active-state {
-+		pins = "gpio176";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
++&mdss_dp1_out {
++	data-lanes = <0 1>;
++};
 +
-+	rtmr2_default: rtmr2-reset-n-active-state {
-+		pins = "gpio185";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
++&mdss_dp2 {
++	status = "okay";
++};
 +
- 	tpad_default: tpad-default-state {
- 		pins = "gpio3";
- 		function = "gpio";
-@@ -1156,6 +1552,48 @@ reset-n-pins {
- 		};
- 	};
- 
-+	usb1_pwr_1p15_reg_en: usb1-pwr-1p15-reg-en-state {
-+		pins = "gpio188";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
++&mdss_dp2_out {
++	data-lanes = <0 1>;
++};
 +
-+	usb1_pwr_1p8_reg_en: usb1-pwr-1p8-reg-en-state {
-+		pins = "gpio175";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	usb1_pwr_3p3_reg_en: usb1-pwr-3p3-reg-en-state {
-+		pins = "gpio186";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	usb2_pwr_1p15_reg_en: usb2-pwr-1p15-reg-en-state {
-+		pins = "gpio189";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	usb2_pwr_1p8_reg_en: usb2-pwr-1p8-reg-en-state {
-+		pins = "gpio126";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	usb2_pwr_3p3_reg_en: usb2-pwr-3p3-reg-en-state {
-+		pins = "gpio187";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
- 	wcd_default: wcd-reset-n-active-state {
- 		pins = "gpio191";
- 		function = "gpio";
-@@ -1202,7 +1640,7 @@ &usb_1_ss0_dwc3_hs {
- };
- 
- &usb_1_ss0_qmpphy_out {
--	remote-endpoint = <&pmic_glink_ss0_ss_in>;
-+	remote-endpoint = <&retimer_ss0_ss_in>;
- };
- 
- &usb_1_ss1_hsphy {
-@@ -1230,7 +1668,7 @@ &usb_1_ss1_dwc3_hs {
- };
- 
- &usb_1_ss1_qmpphy_out {
--	remote-endpoint = <&pmic_glink_ss1_ss_in>;
-+	remote-endpoint = <&retimer_ss1_ss_in>;
- };
- 
- &usb_1_ss2_hsphy {
-@@ -1258,5 +1696,5 @@ &usb_1_ss2_dwc3_hs {
- };
- 
- &usb_1_ss2_qmpphy_out {
--	remote-endpoint = <&pmic_glink_ss2_ss_in>;
-+	remote-endpoint = <&retimer_ss2_ss_in>;
- };
+ &mdss_dp3 {
+ 	compatible = "qcom,x1e80100-dp";
+ 	/delete-property/ #sound-dai-cells;
 
 -- 
 2.34.1
