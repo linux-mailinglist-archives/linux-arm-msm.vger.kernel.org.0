@@ -1,378 +1,534 @@
-Return-Path: <linux-arm-msm+bounces-37674-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37677-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A23539C5EE7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 18:28:22 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B966F9C5F24
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 18:36:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 33D691F21B5B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 17:28:22 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A97FE1F21B5B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 17:36:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A76B2139B6;
-	Tue, 12 Nov 2024 17:27:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2610C219E57;
+	Tue, 12 Nov 2024 17:31:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rV9TyvPT"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZEYC5A4u"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9329521262C
-	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Nov 2024 17:27:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46D57219E47;
+	Tue, 12 Nov 2024 17:31:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731432479; cv=none; b=Yxzf6BDg+mjf/hALFob0Q5/je5PUGLmhc3C1BlFWmcjSpjOa4IcvHj/xDcN57Sd1VQKKS3+zYyBF0T/jblsLPlLnAjnLsyT4v6eUiXThg5W6Xzo/KuUkhRLZjpmv+M1Rna7vaKh86iNxzoxWSg8/TIJz8cn7SyJQD1i/X08yuJU=
+	t=1731432691; cv=none; b=kkVcy/hP3Hwu5w//8hIQgj0fxAS5incbkYEZy8Aji6KbFB90sjG17MvCKzTXbtW3hnjIRpVsdqIfdAIte5HmVjGk5M4QeGxGIQjHHvbivIO6LVR7hgSz0T/3ZUyHC3BTBY+s9zpCe2RC7/JkOheIQm6l2YziZ3XEPKrvNZgwkvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731432479; c=relaxed/simple;
-	bh=/r0OYPqICBFR5VtOll1qmVLyzaVPdEQeWZCbK4/E4WU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=vDyAOIpBjepFyffFrLD4nJMhuN+hb5rd6eyq75rrCaSW0cNf8PDZo/FbAsJmGj5JfzV84j1qCFO4fJulitKhxldtmJjPL2Xo7BwGAOOL0tAjoNQ64W2W1ci8RfRsSnhYblzMkHOz/S2xCJAliJmebwKL3JnSJkUaBA6rwPE8n+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rV9TyvPT; arc=none smtp.client-ip=209.85.221.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-37d5aedd177so3469476f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Nov 2024 09:27:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731432475; x=1732037275; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=r9C7zut+QQcjHwHSGcJuOPsgWncFr28LdU47xW3z+sc=;
-        b=rV9TyvPToWZXbti6zhU50Nssa/1nt+aI3m+cDC9gH7nTFmfhY37gB2I2NxNOZwAxGd
-         QoJ4aWK6mY+iIeWK2VkmyqMnRUdr39031pMN5g1Nr1pRf6V2NguTyhd2zbhq+kiBj/d3
-         he0X3IaHIZwaLTNDFGU9MLGRDI1+a90r8g1EtIw6O4JQokNPs1kxaswxXD1Qy6JQtkFU
-         huqWYZpgD7VKggtMM9hVfNUKDwVZQae6Dtl7iHV8vMymeRgr0E30sMj/6mwrLlOaV+CS
-         adhdInBmajpmXP6MGHGtyrwShCnakpT1QFb8M8j+DR6buTIFAeA0BK6PywRrDdiDDMWI
-         ygfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731432475; x=1732037275;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=r9C7zut+QQcjHwHSGcJuOPsgWncFr28LdU47xW3z+sc=;
-        b=JJrFWppvLB86VguIY8hCifxz7T/j9VJCeSp/GXWxnE9jW2l/sklMhGybgQGnT4cJM1
-         lEyfGaRBipc5jQMhClYdapFL31FZyIMLDNSeLihYfAnKHe1C4PkXJSwTGLCI7xm/4EAU
-         6ZbfeVQ9QkWOoLkV9UXYrLu7h7ibNosigCPeieyQl25/YhuOHcqiNVy01fFd1Yr3MnK2
-         L9ivhHmR1sIcXMUgY5xRRhD10dtceo4qrXy+E19LKyDh/RMxIjX1DuKUOP2MnW3sePrI
-         gy7oDFEYWHl36rHlfSHEo4qKT8gLZZjMXoxlmdRC5lpKiAHq3R52R7Mqvuk6AVGvh0ri
-         7IUA==
-X-Forwarded-Encrypted: i=1; AJvYcCX3mz0JF/zjL/GDT7VuEUxSeKxwBPgRd6TuEIWGm6OGfzhuJActNjI+ud32y1xK18cntD1X/bG2GH5qa2wi@vger.kernel.org
-X-Gm-Message-State: AOJu0YxF6UrLxMEG1mVUabgbkN2Gp+mXb7bXDcjSDDMDz9KvJQ4qosb3
-	Jmjp5TZIB1CVS1zmYroZHeD5FcWJ+KQmrEGapaBQR6qVg8o0pfoKClhLnsne3W0=
-X-Google-Smtp-Source: AGHT+IH5vPmQaPivGg0an3CBEX+0qooI5KTDMC56HM1MBHvWy2i4JiGZmehqc8VpzCO1+qgEokzUkg==
-X-Received: by 2002:a5d:6d03:0:b0:37c:cfeb:e612 with SMTP id ffacd0b85a97d-381f17261e1mr14714587f8f.1.1731432474567;
-        Tue, 12 Nov 2024 09:27:54 -0800 (PST)
-Received: from linaro.org ([2a02:2454:ff21:ef80:f548:3a80:2990:6de4])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381ed9f8984sm16180830f8f.71.2024.11.12.09.27.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Nov 2024 09:27:54 -0800 (PST)
-Date: Tue, 12 Nov 2024 18:27:46 +0100
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: =?iso-8859-1?B?QmFybmFi4XMgQ3rpbeFu?= <barnabas.czeman@mainlining.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Amit Kucheria <amitk@kernel.org>,
-	Thara Gopinath <thara.gopinath@gmail.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
-	Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
-	linux-pm@vger.kernel.org, iommu@lists.linux.dev,
-	Otto =?iso-8859-1?Q?Pfl=FCger?= <otto.pflueger@abscue.de>
-Subject: Re: [PATCH v5 08/10] arm64: dts: qcom: Add initial support for
- MSM8917
-Message-ID: <ZzOQEgLLhkH-IymV@linaro.org>
-References: <20241112-msm8917-v5-0-3ca34d33191b@mainlining.org>
- <20241112-msm8917-v5-8-3ca34d33191b@mainlining.org>
+	s=arc-20240116; t=1731432691; c=relaxed/simple;
+	bh=cDeootdgXFCItMKH2EoqOPWP6LpkiYfptGvmzGlDe3c=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=RvlAR5TutFhqtFLIS3ZHDi+8ZafzAgtkKv9ROpNCTZew8pyFTBBjvZO0FlIEt754cd4Hae+KeQTp0lTkvPjRoPi+jRzQxVz/+I+M5vDyO3fvUtqyAsZkjN5ZiDtGP1glsSpSNbEOP8i/l8efyTLSJIALV5ifFfCh18hSEyRMdNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZEYC5A4u; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ACFm1ZM004274;
+	Tue, 12 Nov 2024 17:31:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	gKieqR2agRsNj4DJAMxckmxfKmBOOVNEF1G4OS/szT4=; b=ZEYC5A4uRa1hm5Ii
+	Hlgdsh7d6lt4T1vGasAexuehTvS9UzlDt5KF0A4atgQdfXbN+p26WxTIpCc9DquB
+	wVU1XS8K5lQQhWzLahFrDqxhzzJwdfG7xdcax6WKeDlR4k7UySEX75hfHDDUdeeg
+	A+9s0P26j8kkLM7PYnpRvnMvZ9YKDdBpoeKLMrxHRxVSWoCbuJBtHUjg2hXAJwDc
+	tAVNQzIbSlTblucOQT4hCINjHsa1kQ2Unqf3mUSana9S/gJ68nmBIPEDTtydTLMD
+	vcCXj/KAwJcCTnDu0I5j4PBTWSAF972pwJ2dFkrDwhDTlwe7kfyhm2DiAN3R3lfb
+	cJqTTg==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42v1h6huvy-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 12 Nov 2024 17:31:17 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4ACHVGDP023525
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 12 Nov 2024 17:31:16 GMT
+Received: from hu-vikramsa-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 12 Nov 2024 09:31:07 -0800
+From: Vikram Sharma <quic_vikramsa@quicinc.com>
+To: <rfoss@kernel.org>, <todor.too@gmail.com>, <bryan.odonoghue@linaro.org>,
+        <mchehab@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <akapatra@quicinc.com>, <hariramp@quicinc.com>,
+        <andersson@kernel.org>, <konradybcio@kernel.org>,
+        <hverkuil-cisco@xs4all.nl>, <cros-qcom-dts-watchers@chromium.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>
+CC: <linux-arm-kernel@lists.infradead.org>, <quic_vikramsa@quicinc.com>,
+        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <kernel@quicinc.com>
+Subject: [PATCH v5 1/5] media: dt-bindings: Add qcom,sc7280-camss
+Date: Tue, 12 Nov 2024 23:00:28 +0530
+Message-ID: <20241112173032.2740119-2-quic_vikramsa@quicinc.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20241112173032.2740119-1-quic_vikramsa@quicinc.com>
+References: <20241112173032.2740119-1-quic_vikramsa@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241112-msm8917-v5-8-3ca34d33191b@mainlining.org>
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: l1DRmnG9-qX6cUqgptEySlU5DHTEbN_E
+X-Proofpoint-GUID: l1DRmnG9-qX6cUqgptEySlU5DHTEbN_E
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
+ phishscore=0 adultscore=0 priorityscore=1501 mlxscore=0 clxscore=1015
+ lowpriorityscore=0 impostorscore=0 spamscore=0 mlxlogscore=999
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411120140
 
-On Tue, Nov 12, 2024 at 04:49:38PM +0100, Barnabás Czémán wrote:
-> From: Otto Pflüger <otto.pflueger@abscue.de>
-> 
-> Add initial support for MSM8917 SoC.
-> 
-> Signed-off-by: Otto Pflüger <otto.pflueger@abscue.de>
-> [reword commit, rebase, fix schema errors]
-> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
-> ---
->  arch/arm64/boot/dts/qcom/msm8917.dtsi | 1974 +++++++++++++++++++++++++++++++++
->  1 file changed, 1974 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8917.dtsi b/arch/arm64/boot/dts/qcom/msm8917.dtsi
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..cf0a0eec1141e11faca0ee9705d6348ab32a0f50
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/msm8917.dtsi
-> @@ -0,0 +1,1974 @@
-> [...]
-> +		domain-idle-states {
-> +			cluster_sleep_0: cluster-sleep-0 {
-> +				compatible = "domain-idle-state";
-> +				arm,psci-suspend-param = <0x41000023>;
-> +				entry-latency-us = <700>;
-> +				exit-latency-us = <650>;
-> +				min-residency-us = <1972>;
-> +			};
-> +
-> +			cluster_sleep_1: cluster-sleep-1 {
-> +				compatible = "domain-idle-state";
-> +				arm,psci-suspend-param = <0x41000043>;
-> +				entry-latency-us = <240>;
-> +				exit-latency-us = <280>;
-> +				min-residency-us = <806>;
-> +			};
+Add bindings for qcom,sc7280-camss to support the camera subsystem
+on the SC7280 platform.
 
-I think my comment here is still open:
+Signed-off-by: Suresh Vankadara <quic_svankada@quicinc.com>
+Signed-off-by: Trishansh Bhardwaj <quic_tbhardwa@quicinc.com>
+Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
+---
+ .../bindings/media/qcom,sc7280-camss.yaml     | 415 ++++++++++++++++++
+ 1 file changed, 415 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/media/qcom,sc7280-camss.yaml
 
-This is strange, the deeper sleep state has lower timings than the
-previous one?
+diff --git a/Documentation/devicetree/bindings/media/qcom,sc7280-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sc7280-camss.yaml
+new file mode 100644
+index 000000000000..b27d4af8a64e
+--- /dev/null
++++ b/Documentation/devicetree/bindings/media/qcom,sc7280-camss.yaml
+@@ -0,0 +1,415 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm SC7280 CAMSS ISP
++
++maintainers:
++  - Azam Sadiq Pasha Kapatrala Syed <akapatra@quicinc.com>
++  - Hariram Purushothaman <hariramp@quicinc.com>
++
++description:
++  The CAMSS IP is a CSI decoder and ISP present on Qualcomm platforms.
++
++properties:
++  compatible:
++    const: qcom,sc7280-camss
++
++  clocks:
++    maxItems: 32
++
++  clock-names:
++    items:
++      - const: camnoc_axi
++      - const: csiphy0
++      - const: csiphy0_timer
++      - const: csiphy1
++      - const: csiphy1_timer
++      - const: csiphy2
++      - const: csiphy2_timer
++      - const: csiphy3
++      - const: csiphy3_timer
++      - const: csiphy4
++      - const: csiphy4_timer
++      - const: gcc_camera_ahb
++      - const: gcc_cam_hf_axi
++      - const: soc_ahb
++      - const: vfe0
++      - const: vfe0_axi
++      - const: vfe0_cphy_rx
++      - const: vfe0_csid
++      - const: vfe0_lite
++      - const: vfe0_lite_cphy_rx
++      - const: vfe0_lite_csid
++      - const: vfe1
++      - const: vfe1_axi
++      - const: vfe1_cphy_rx
++      - const: vfe1_csid
++      - const: vfe1_lite
++      - const: vfe1_lite_cphy_rx
++      - const: vfe1_lite_csid
++      - const: vfe2
++      - const: vfe2_axi
++      - const: vfe2_cphy_rx
++      - const: vfe2_csid
++
++  interrupts:
++    maxItems: 15
++
++  interrupt-names:
++    items:
++      - const: csid0
++      - const: csid0_lite
++      - const: csid1
++      - const: csid1_lite
++      - const: csid2
++      - const: csiphy0
++      - const: csiphy1
++      - const: csiphy2
++      - const: csiphy3
++      - const: csiphy4
++      - const: vfe0
++      - const: vfe0_lite
++      - const: vfe1
++      - const: vfe1_lite
++      - const: vfe2
++
++  interconnects:
++    maxItems: 2
++
++  interconnect-names:
++    items:
++      - const: ahb
++      - const: hf_0
++
++  iommus:
++    maxItems: 1
++
++  power-domains:
++    items:
++      - description: IFE0 GDSC - Image Front End, Global Distributed Switch Controller.
++      - description: IFE1 GDSC - Image Front End, Global Distributed Switch Controller.
++      - description: IFE2 GDSC - Image Front End, Global Distributed Switch Controller.
++      - description: Titan GDSC - Titan ISP Block, Global Distributed Switch Controller.
++
++  power-domain-names:
++    items:
++      - const: ife0
++      - const: ife1
++      - const: ife2
++      - const: top
++
++  ports:
++    $ref: /schemas/graph.yaml#/properties/ports
++
++    description:
++      CSI input ports.
++
++    properties:
++      port@0:
++        $ref: /schemas/graph.yaml#/$defs/port-base
++        unevaluatedProperties: false
++        description:
++          Input port for receiving CSI data.
++
++        properties:
++          endpoint:
++            $ref: video-interfaces.yaml#
++            unevaluatedProperties: false
++
++            properties:
++              data-lanes:
++                minItems: 1
++                maxItems: 4
++
++            required:
++              - data-lanes
++
++      port@1:
++        $ref: /schemas/graph.yaml#/$defs/port-base
++        unevaluatedProperties: false
++        description:
++          Input port for receiving CSI data.
++
++        properties:
++          endpoint:
++            $ref: video-interfaces.yaml#
++            unevaluatedProperties: false
++
++            properties:
++              data-lanes:
++                minItems: 1
++                maxItems: 4
++
++            required:
++              - data-lanes
++
++      port@2:
++        $ref: /schemas/graph.yaml#/$defs/port-base
++        unevaluatedProperties: false
++        description:
++          Input port for receiving CSI data.
++
++        properties:
++          endpoint:
++            $ref: video-interfaces.yaml#
++            unevaluatedProperties: false
++
++            properties:
++              data-lanes:
++                minItems: 1
++                maxItems: 4
++
++            required:
++              - data-lanes
++
++      port@3:
++        $ref: /schemas/graph.yaml#/$defs/port-base
++        unevaluatedProperties: false
++        description:
++          Input port for receiving CSI data.
++
++        properties:
++          endpoint:
++            $ref: video-interfaces.yaml#
++            unevaluatedProperties: false
++
++            properties:
++              data-lanes:
++                minItems: 1
++                maxItems: 4
++
++            required:
++              - data-lanes
++
++      port@4:
++        $ref: /schemas/graph.yaml#/$defs/port-base
++        unevaluatedProperties: false
++        description:
++          Input port for receiving CSI data.
++
++        properties:
++          endpoint:
++            $ref: video-interfaces.yaml#
++            unevaluatedProperties: false
++
++            properties:
++              data-lanes:
++                minItems: 1
++                maxItems: 4
++
++            required:
++              - data-lanes
++
++  reg:
++    maxItems: 15
++
++  reg-names:
++    items:
++      - const: csid0
++      - const: csid0_lite
++      - const: csid1
++      - const: csid1_lite
++      - const: csid2
++      - const: csiphy0
++      - const: csiphy1
++      - const: csiphy2
++      - const: csiphy3
++      - const: csiphy4
++      - const: vfe0
++      - const: vfe0_lite
++      - const: vfe1
++      - const: vfe1_lite
++      - const: vfe2
++
++  vdda-phy-supply:
++    description:
++      Phandle to a regulator supply to PHY core block.
++
++  vdda-pll-supply:
++    description:
++      Phandle to 1.8V regulator supply to PHY refclk pll block.
++
++required:
++  - compatible
++  - reg
++  - reg-names
++  - clocks
++  - clock-names
++  - interrupts
++  - interrupt-names
++  - interconnects
++  - interconnect-names
++  - iommus
++  - power-domains
++  - power-domain-names
++  - vdda-phy-supply
++  - vdda-pll-supply
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/clock/qcom,camcc-sc7280.h>
++    #include <dt-bindings/clock/qcom,gcc-sc7280.h>
++    #include <dt-bindings/interconnect/qcom,sc7280.h>
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++    #include <dt-bindings/power/qcom-rpmpd.h>
++
++    soc {
++        #address-cells = <2>;
++        #size-cells = <2>;
++
++        camss: camss@acaf000 {
++            compatible = "qcom,sc7280-camss";
++
++            reg = <0x0 0x0acb3000 0x0 0x1000>,
++                  <0x0 0x0acc8000 0x0 0x1000>,
++                  <0x0 0x0acba000 0x0 0x1000>,
++                  <0x0 0x0accf000 0x0 0x1000>,
++                  <0x0 0x0acc1000 0x0 0x1000>,
++                  <0x0 0x0ace0000 0x0 0x2000>,
++                  <0x0 0x0ace2000 0x0 0x2000>,
++                  <0x0 0x0ace4000 0x0 0x2000>,
++                  <0x0 0x0ace6000 0x0 0x2000>,
++                  <0x0 0x0ace8000 0x0 0x2000>,
++                  <0x0 0x0acaf000 0x0 0x4000>,
++                  <0x0 0x0acc4000 0x0 0x4000>,
++                  <0x0 0x0acb6000 0x0 0x4000>,
++                  <0x0 0x0accb000 0x0 0x4000>,
++                  <0x0 0x0acbd000 0x0 0x4000>;
++            reg-names = "csid0",
++                        "csid0_lite",
++                        "csid1",
++                        "csid1_lite",
++                        "csid2",
++                        "csiphy0",
++                        "csiphy1",
++                        "csiphy2",
++                        "csiphy3",
++                        "csiphy4",
++                        "vfe0",
++                        "vfe0_lite",
++                        "vfe1",
++                        "vfe1_lite",
++                        "vfe2";
++
++            clocks = <&camcc CAM_CC_CAMNOC_AXI_CLK>,
++                     <&camcc CAM_CC_CSIPHY0_CLK>,
++                     <&camcc CAM_CC_CSI0PHYTIMER_CLK>,
++                     <&camcc CAM_CC_CSIPHY1_CLK>,
++                     <&camcc CAM_CC_CSI1PHYTIMER_CLK>,
++                     <&camcc CAM_CC_CSIPHY2_CLK>,
++                     <&camcc CAM_CC_CSI2PHYTIMER_CLK>,
++                     <&camcc CAM_CC_CSIPHY3_CLK>,
++                     <&camcc CAM_CC_CSI3PHYTIMER_CLK>,
++                     <&camcc CAM_CC_CSIPHY4_CLK>,
++                     <&camcc CAM_CC_CSI4PHYTIMER_CLK>,
++                     <&gcc GCC_CAMERA_AHB_CLK>,
++                     <&gcc GCC_CAMERA_HF_AXI_CLK>,
++                     <&camcc CAM_CC_CPAS_AHB_CLK>,
++                     <&camcc CAM_CC_IFE_0_CLK>,
++                     <&camcc CAM_CC_IFE_0_AXI_CLK>,
++                     <&camcc CAM_CC_IFE_0_CPHY_RX_CLK>,
++                     <&camcc CAM_CC_IFE_0_CSID_CLK>,
++                     <&camcc CAM_CC_IFE_LITE_0_CLK>,
++                     <&camcc CAM_CC_IFE_LITE_0_CPHY_RX_CLK>,
++                     <&camcc CAM_CC_IFE_LITE_0_CSID_CLK>,
++                     <&camcc CAM_CC_IFE_1_CLK>,
++                     <&camcc CAM_CC_IFE_1_AXI_CLK>,
++                     <&camcc CAM_CC_IFE_1_CPHY_RX_CLK>,
++                     <&camcc CAM_CC_IFE_1_CSID_CLK>,
++                     <&camcc CAM_CC_IFE_LITE_1_CLK>,
++                     <&camcc CAM_CC_IFE_LITE_1_CPHY_RX_CLK>,
++                     <&camcc CAM_CC_IFE_LITE_1_CSID_CLK>,
++                     <&camcc CAM_CC_IFE_2_CLK>,
++                     <&camcc CAM_CC_IFE_2_AXI_CLK>,
++                     <&camcc CAM_CC_IFE_2_CPHY_RX_CLK>,
++                     <&camcc CAM_CC_IFE_2_CSID_CLK>;
++            clock-names = "camnoc_axi",
++                          "csiphy0",
++                          "csiphy0_timer",
++                          "csiphy1",
++                          "csiphy1_timer",
++                          "csiphy2",
++                          "csiphy2_timer",
++                          "csiphy3",
++                          "csiphy3_timer",
++                          "csiphy4",
++                          "csiphy4_timer",
++                          "gcc_camera_ahb",
++                          "gcc_cam_hf_axi",
++                          "soc_ahb",
++                          "vfe0",
++                          "vfe0_axi",
++                          "vfe0_cphy_rx",
++                          "vfe0_csid",
++                          "vfe0_lite",
++                          "vfe0_lite_cphy_rx",
++                          "vfe0_lite_csid",
++                          "vfe1",
++                          "vfe1_axi",
++                          "vfe1_cphy_rx",
++                          "vfe1_csid",
++                          "vfe1_lite",
++                          "vfe1_lite_cphy_rx",
++                          "vfe1_lite_csid",
++                          "vfe2",
++                          "vfe2_axi",
++                          "vfe2_cphy_rx",
++                          "vfe2_csid";
++
++            interrupts = <GIC_SPI 464 IRQ_TYPE_EDGE_RISING>,
++                         <GIC_SPI 468 IRQ_TYPE_EDGE_RISING>,
++                         <GIC_SPI 466 IRQ_TYPE_EDGE_RISING>,
++                         <GIC_SPI 359 IRQ_TYPE_EDGE_RISING>,
++                         <GIC_SPI 640 IRQ_TYPE_EDGE_RISING>,
++                         <GIC_SPI 477 IRQ_TYPE_EDGE_RISING>,
++                         <GIC_SPI 478 IRQ_TYPE_EDGE_RISING>,
++                         <GIC_SPI 479 IRQ_TYPE_EDGE_RISING>,
++                         <GIC_SPI 448 IRQ_TYPE_EDGE_RISING>,
++                         <GIC_SPI 122 IRQ_TYPE_EDGE_RISING>,
++                         <GIC_SPI 465 IRQ_TYPE_EDGE_RISING>,
++                         <GIC_SPI 469 IRQ_TYPE_EDGE_RISING>,
++                         <GIC_SPI 467 IRQ_TYPE_EDGE_RISING>,
++                         <GIC_SPI 360 IRQ_TYPE_EDGE_RISING>,
++                         <GIC_SPI 641 IRQ_TYPE_EDGE_RISING>;
++            interrupt-names = "csid0",
++                              "csid0_lite",
++                              "csid1",
++                              "csid1_lite",
++                              "csid2",
++                              "csiphy0",
++                              "csiphy1",
++                              "csiphy2",
++                              "csiphy3",
++                              "csiphy4",
++                              "vfe0",
++                              "vfe0_lite",
++                              "vfe1",
++                              "vfe1_lite",
++                              "vfe2";
++
++            interconnects = <&gem_noc MASTER_APPSS_PROC 0 &cnoc2 SLAVE_CAMERA_CFG 0>,
++                            <&mmss_noc MASTER_CAMNOC_HF 0 &mc_virt SLAVE_EBI1 0>;
++            interconnect-names = "ahb", "hf_0";
++
++            iommus = <&apps_smmu 0x800 0x4e0>;
++
++            power-domains = <&camcc CAM_CC_IFE_0_GDSC>,
++                            <&camcc CAM_CC_IFE_1_GDSC>,
++                            <&camcc CAM_CC_IFE_2_GDSC>,
++                            <&camcc CAM_CC_TITAN_TOP_GDSC>;
++            power-domain-names = "ife0", "ife1", "ife2", "top";
++
++            vdda-phy-supply = <&vreg_l10c_0p88>;
++            vdda-pll-supply = <&vreg_l6b_1p2>;
++
++            ports {
++                #address-cells = <1>;
++                #size-cells = <0>;
++            };
++        };
++    };
+-- 
+2.25.1
 
-> +
-> +			cluster_sleep_2: cluster-sleep-2 {
-> +				compatible = "domain-idle-state";
-> +				arm,psci-suspend-param = <0x41000053>;
-> +				entry-latency-us = <700>;
-> +				exit-latency-us = <1000>;
-> +				min-residency-us = <6500>;
-> +			};
-> +		};
-> +
-> [...]
-> +		restart@4ab000 {
-> +			compatible = "qcom,pshold";
-> +			reg = <0x004ab000 0x4>;
-> +		};
-
-This one too:
-
-You have PSCI for shutting down, do you actually need this?
-
-> +
-> +		tlmm: pinctrl@1000000 {
-> +			compatible = "qcom,msm8917-pinctrl";
-> +			reg = <0x01000000 0x300000>;
-> +			interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
-> +			gpio-controller;
-> +			gpio-ranges = <&tlmm 0 0 134>;
-> +			#gpio-cells = <2>;
-> +			interrupt-controller;
-> +			#interrupt-cells = <2>;
-> +
-> [...]
-> +			sdc1_clk_on: sdc1-clk-on-state {
-> +				pins = "sdc1_clk";
-> +				bias-disable;
-> +				drive-strength = <16>;
-> +			};
-> +
-> +			sdc1_clk_off: sdc1-clk-off-state {
-> +				pins = "sdc1_clk";
-> +				bias-disable;
-> +				drive-strength = <2>;
-> +			};
-> +
-> +			sdc1_cmd_on: sdc1-cmd-on-state {
-> +				pins = "sdc1_cmd";
-> +				bias-disable;
-> +				drive-strength = <10>;
-> +			};
-> +
-> +			sdc1_cmd_off: sdc1-cmd-off-state {
-> +				pins = "sdc1_cmd";
-> +				bias-disable;
-> +				drive-strength = <2>;
-> +			};
-> +
-> +			sdc1_data_on: sdc1-data-on-state {
-> +				pins = "sdc1_data";
-> +				bias-pull-up;
-> +				drive-strength = <10>;
-> +			};
-> +
-> +			sdc1_data_off: sdc1-data-off-state {
-> +				pins = "sdc1_data";
-> +				bias-pull-up;
-> +				drive-strength = <2>;
-> +			};
-> +
-> +			sdc1_rclk_on: sdc1-rclk-on-state {
-> +				pins = "sdc1_rclk";
-> +				bias-pull-down;
-> +			};
-> +
-> +			sdc1_rclk_off: sdc1-rclk-off-state {
-> +				pins = "sdc1_rclk";
-> +				bias-pull-down;
-> +			};
-> +
-> +			sdc2_clk_on: sdc2-clk-on-state {
-> +				pins = "sdc2_clk";
-> +				drive-strength = <16>;
-> +				bias-disable;
-> +			};
-> +
-> +			sdc2_clk_off: sdc2-clk-off-state {
-> +				pins = "sdc2_clk";
-> +				bias-disable;
-> +				drive-strength = <2>;
-> +			};
-> +
-> +			sdc2_cmd_on: sdc2-cmd-on-state {
-> +				pins = "sdc2_cmd";
-> +				bias-pull-up;
-> +				drive-strength = <10>;
-> +			};
-> +
-> +			sdc2_cmd_off: sdc2-cmd-off-state {
-> +				pins = "sdc2_cmd";
-> +				bias-pull-up;
-> +				drive-strength = <2>;
-> +			};
-
-These are not referenced anywhere? Not here in the sdhc_X nodes, and
-also not in your msm8917-xiaomi-riva.dts. Would also recommend
-consolidating these to a single node like in msm8916.dtsi, see commit
-c943e4c58b2f ("arm64: dts: qcom: msm8916/39: Consolidate SDC pinctrl").
-
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c943e4c58b2ffb0dcd497f8b12f284f5e8fc477e
-
-> +
-> +			sdc2_cd_on: cd-on-state {
-> +				pins = "gpio67";
-> +				function = "gpio";
-> +				drive-strength = <2>;
-> +				bias-pull-up;
-> +			};
-> +
-> +			sdc2_cd_off: cd-off-state {
-> +				pins = "gpio67";
-> +				function = "gpio";
-> +				drive-strength = <2>;
-> +				bias-disable;
-> +			};
-
-It does not make sense to have different on/off states for the card
-detect (CD) pin of the SD card. It needs to work even when the SD card
-is suspended so we can detect insertions/removals. Also should be placed
-in the board-specific DT part.
-
-See commit dfbda20dabaa ("arm64: dts: qcom: msm8916/39: Fix SD card
-detect pinctrl").
-
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=dfbda20dabaa1f284abd550035db5887384c8e4c
-
-
-> +
-> +			sdc2_data_on: sdc2-data-on-state {
-> +				pins = "sdc2_data";
-> +				bias-pull-up;
-> +				drive-strength = <10>;
-> +			};
-> +
-> +			sdc2_data_off: sdc2-data-off-state {
-> +				pins = "sdc2_data";
-> +				bias-pull-up;
-> +				drive-strength = <2>;
-> +			};
-> +
-> [...]
-> +		blsp1_i2c4: i2c@78b8000 {
-> +			compatible = "qcom,i2c-qup-v2.2.1";
-> +			reg = <0x078b8000 0x500>;
-> +			interrupts = <GIC_SPI 98 IRQ_TYPE_LEVEL_HIGH>;
-> +			clocks = <&gcc GCC_BLSP1_QUP4_I2C_APPS_CLK>,
-> +				 <&gcc GCC_BLSP1_AHB_CLK>;
-> +			clock-names = "core", "iface";
-> +			dmas = <&blsp1_dma 10>, <&blsp1_dma 11>;
-> +			dma-names = "tx", "rx";
-> +			pinctrl-0 = <&blsp1_i2c4_default>;
-> +			pinctrl-1 = <&blsp1_i2c4_sleep>;
-> +			pinctrl-names = "default", "sleep";
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +			status = "disabled";
-> +		};
-> +
-> +		blsp2_i2c5: i2c@7af5000 {
-
-This is actually blsp2_i2c1 if you look at the clock name below:
-
-> +			compatible = "qcom,i2c-qup-v2.2.1";
-> +			reg = <0x07af5000 0x600>;
-> +			interrupts = <GIC_SPI 299 IRQ_TYPE_LEVEL_HIGH>;
-> +			clocks = <&gcc GCC_BLSP2_QUP1_I2C_APPS_CLK>,
-
-here ^
-
-But I realize now that the pinctrl functions are consecutively numbered
-without the BLSP number. Sorry for the confusion.
-
-Basically:
-  - blsp1_i2c2 == blsp_i2c2
-  - blsp2_i2c1 == blsp_i2c5
-
-Looking at some other examples upstream I guess you can choose between
-one of the following options:
-
- 1. msm8974/msm8976/msm8996/msm8998: Use &blspX_i2cY labels for the i2c@
-    node and pinctrl and only have the slightly confusing pinctrl
-    function. E.g. this in msm8976.dtsi:
-
-			/* 4 (not 6!) interfaces per QUP, BLSP2 indexes are numbered (n)+4 */
-			blsp2_i2c2_default: blsp2-i2c2-default-state {
-				pins = "gpio22", "gpio23";
-				function = "blsp_i2c6";
-				drive-strength = <2>;
-				bias-disable;
-			};
-
-    Note how blsp2_i2c2 == blsp_i2c6.
-
- 2. msm8994: Use &blspX_i2cY labels for the i2c@ node, but keep pinctrl
-    named &i2cN_default. E.g. this in msm8994.dtsi:
-
-		blsp2_i2c1: i2c@f9963000 {
-			/* ... */
-			pinctrl-names = "default", "sleep";
-			pinctrl-0 = <&i2c7_default>;
-			pinctrl-1 = <&i2c7_sleep>;
-			/* ... */
-		};
-
-    Note how blsp2_i2c1 == i2c7_default here.
-
- 3. msm8953: Use &i2c_N labels everywhere like on downstream. E.g. this
-    in msm8953.dtsi. This is pretty much what you had originally:
-
-		i2c_5: i2c@7af5000 {
-			/* ... */
-			pinctrl-names = "default", "sleep";
-			pinctrl-0 = <&i2c_5_default>;
-			pinctrl-1 = <&i2c_5_sleep>;
-			/* ... */
-		};
-
-All of these are fine for me. Feel free to pick the one you prefer. But
-let's not introduce a new confusing variant of this. :-)
-
-Thanks,
-Stephan
 
