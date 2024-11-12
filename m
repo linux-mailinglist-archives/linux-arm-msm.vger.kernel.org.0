@@ -1,94 +1,68 @@
-Return-Path: <linux-arm-msm+bounces-37667-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37668-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id A283C9C5E67
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 18:10:38 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id BF41A9C5EB5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 18:21:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5A3171F210EF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 17:10:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 719BC1F2262C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 17:21:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4C6B20D515;
-	Tue, 12 Nov 2024 17:05:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1B3520EA29;
+	Tue, 12 Nov 2024 17:20:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ff0h8z1s"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CyZrv9MG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F39F920DD76
-	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Nov 2024 17:05:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95EB620D51D;
+	Tue, 12 Nov 2024 17:20:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731431134; cv=none; b=K2drE8ocKhm/UP8x4kDQ8Gk/ez3EQV+jpNNUlsIwMlHqWZ10Cm20QnqF9otXeW+Ew1uyfRdU9W0u1ZpWXo6xNcPndouvM17/M+YdwCfKvbnx+s50T1csIn71OD7OSpo8TBfxsEVE5DatidXixRIQkFxjCk+LJnCwxnUDMhQpmSE=
+	t=1731432001; cv=none; b=TzOiKcfLQQo38P1HHka3ADA45iLK4SXuF8QdKL/+f/LXLXO4MIIiRPgb8SE0vhg8Jd1uqJyWEw5H4AY/uyqzXH9gNbcMNw/CLp2OchhgNccsKLFMfbJ6uum8u6eGJssmQr0gsJBVQn/w0yN8FAvjX/AXBsiZgYjseJ+6TXeSmRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731431134; c=relaxed/simple;
-	bh=zbJlwKwjpmGDmOG6xUAsiPq7n6gvG1qs07CGKyuQyUc=;
+	s=arc-20240116; t=1731432001; c=relaxed/simple;
+	bh=WLVOfxqes1xc6tPBqvZff21GY8qOJvM0DeYgwViWALM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=R2Y15Weo9rZUFRssoSJi1C0G5CqPuznq9VOwCp0TSqcj0Pg73ZyqtkBoWVCHOvYAGsEV5jLXBKtoDtmOKTofnICzD6L7BlKWXvRHpDCcCC5c+HOnb/JywSa9X2YybolKkI+affqGAsNYUtChqABSPS9DB1cWGJdJ1jSslVTiu4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Ff0h8z1s; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4315839a7c9so56283835e9.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Nov 2024 09:05:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731431131; x=1732035931; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZA76HvsVqGyFKQBWOeklNEgPCKp4WQaY8k4DOslFroY=;
-        b=Ff0h8z1spVOyCkvLhQohl8vuurx+TfC8PtHqFgAEspUkM9S7RNFCWU0Pz/n0POXBzh
-         e5oroWTkbExh4Hc32MF4ugiINkCa4gqAqxpviGa2PtRB0dEIN7J3pIQyPUsJVnn0iAEF
-         ZFTT3zWxh5CFGTbDBMwP9Z0Nu7XQZaDYnt43LgJhRI3jlRFVhtSwzAz/ggJLadeqqpnC
-         XOGLWAGo8woB6VT4MsCso29I8e0QykI+ihT/Uq/L/hjrRoSdGFPjj1gz90FRPFOVZgbH
-         ilQ6XKkuS2coz4rl6fQE5M6xX9OxXx8N2poNx/VGUrYrTfPqXDVEGzR3IF+4VgM7vQqw
-         Ax9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731431131; x=1732035931;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZA76HvsVqGyFKQBWOeklNEgPCKp4WQaY8k4DOslFroY=;
-        b=cK+1ACMdtotCer5dGt3//6pRXDu0qKi139kX1wdtUTVzk8qDk41pzCvSGMNmtj+BV+
-         QF3v/2QMj9z1XNNJSBIAIH1FE2PwMaJKcG++QKf2aa1s1PlKKGF2vzxMCYWDllWFupC8
-         AcL5lmdl+wIE+b8gSAVBkukQKn1/Y6YAhUpUBGVPlpPoKVekH9F0O/sJUktqlJmTiX3v
-         cZZr1HXEKDWM2hrEQd2SxGut9nDybfrJ25M6ly5y6adaqoT2vzJNyKstR25Y9WBMB6B2
-         rukBuoruAVRfuHMb5ysJpuxKHJyNOK/GCIJWSWq1OP5x10dFFQaRA0XAneGCz4xxvLRo
-         tBqw==
-X-Forwarded-Encrypted: i=1; AJvYcCWyikoaLLeykw/qZ+uUP1hoM0MeoVuIFJ0wu2/6cga2pLiovXmZe85v6RiXMr5D0up56mxhSZTZsvNuua2y@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywx+nlx1pvY58yY8qSyGCa+F1xO0x9Qpcozqi2hsxcj2gkGT2g0
-	iWRbQ86e7J9kp01uCHSwoZrkQ2zNqcLw0GGEH71sAT8Xd8aaqaOy5Egfdhlw16kLCkHYP4W0EN/
-	/
-X-Google-Smtp-Source: AGHT+IF27nbwJEoFDjdSQfRglRNAF1hMrTs5hW3PeUftsDTpAady6wFHBQXm8zI24xcocfJrzZxOkQ==
-X-Received: by 2002:a05:600c:3ca8:b0:42c:c003:edd1 with SMTP id 5b1f17b1804b1-432b7501d59mr149247325e9.10.1731431131236;
-        Tue, 12 Nov 2024 09:05:31 -0800 (PST)
-Received: from linaro.org ([82.76.168.176])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381ed9ea4c5sm16147042f8f.76.2024.11.12.09.05.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Nov 2024 09:05:30 -0800 (PST)
-Date: Tue, 12 Nov 2024 19:05:29 +0200
-From: Abel Vesa <abel.vesa@linaro.org>
-To: Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>
-Cc: Rajendra Nayak <quic_rjendra@quicinc.com>,
+	 Content-Type:Content-Disposition:In-Reply-To; b=b5Y3uQPWFlN+Eu2fp9LIXufPW+vRogrbHY2KgF+z3Y5rtVHxu+TtyqYzalfnxwDGP9+JeRRBpLo4Tku6CrQGVGioezlcrqtzL5mwmp4ijJh0FD/m12OufAsthsdVlEUHG/aayZ14I12ZchDzk/YsK8ZRsNgEkEQgUAkOSlBmEQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CyZrv9MG; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D933C4CECD;
+	Tue, 12 Nov 2024 17:20:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1731432001;
+	bh=WLVOfxqes1xc6tPBqvZff21GY8qOJvM0DeYgwViWALM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=CyZrv9MGookTYoVLPGHnA9463Vw96aWB1Y5hzIo/d7BXLAL8IxQOZ/Bkq/B4bwZm+
+	 RYgaIlDvET8ZTAzJjVsqboZOsB4kXJq8srd3YccdvW6zhYsqjKrZN5i04r33LkVDS1
+	 Dz/nODORvkdfTCm+dY+8q2xAFGcoW8yuL0IDB8GeyvqKZDbGJLfIvfJwAXBptKerhF
+	 LuLo0WFS9xRsMXKGProcWh7O2e9rqQCNoLmFy2f5GwR7RemNx4E6AM3UbVcjGIXIBX
+	 4ro9tWq6HRkLq5ktF8Uktj/liMiiLuOa10+2pnnsA6/zRXc40mgQOdK+W1/RRyDXXP
+	 QbRQsdiXLGWPw==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1tAuYW-000000007i6-1ILX;
+	Tue, 12 Nov 2024 18:19:56 +0100
+Date: Tue, 12 Nov 2024 18:19:56 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Ulf Hansson <ulf.hansson@linaro.org>
+Cc: Sudeep Holla <sudeep.holla@arm.com>,
 	Sibi Sankar <quic_sibis@quicinc.com>,
-	Johan Hovold <johan@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Trilok Soni <quic_tsoni@quicinc.com>,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v5 4/6] arm64: dts: qcom: x1e80100-crd: Enable external
- DisplayPort support
-Message-ID: <ZzOK2Xz1QQvugGnG@linaro.org>
-References: <20241112-x1e80100-ps8830-v5-0-4ad83af4d162@linaro.org>
- <20241112-x1e80100-ps8830-v5-4-4ad83af4d162@linaro.org>
+	Cristian Marussi <cristian.marussi@arm.com>,
+	jassisinghbrar@gmail.com, dmitry.baryshkov@linaro.org,
+	linux-kernel@vger.kernel.org, arm-scmi@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	konradybcio@kernel.org, linux-pm@vger.kernel.org,
+	tstrudel@google.com, rafael@kernel.org
+Subject: Re: [PATCH V5 0/6] firmware: arm_scmi: Misc Fixes
+Message-ID: <ZzOOPJ_gI9TGadzV@hovoldconsulting.com>
+References: <20241030125512.2884761-1-quic_sibis@quicinc.com>
+ <CAPDyKFoY8CnxF7JXzkT9_WXyM-TJhW4kmTw=H8NEzch32N1_7Q@mail.gmail.com>
+ <ZyJeuVIbWkohymW5@pluto>
+ <20241106071215.jhnzcn4vkdfr3peg@bogus>
+ <CAPDyKFr-pmXEhgUgCapzQX3Hn_UAM632TaG8SdkQXaCn5-y42g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -97,68 +71,58 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241112-x1e80100-ps8830-v5-4-4ad83af4d162@linaro.org>
+In-Reply-To: <CAPDyKFr-pmXEhgUgCapzQX3Hn_UAM632TaG8SdkQXaCn5-y42g@mail.gmail.com>
 
-On 24-11-12 19:01:13, Abel Vesa wrote:
-> The X Elite CRD provides external DisplayPort on all 3 USB Type-C ports.
-> Each one of this ports is connected to a dedicated DisplayPort
-> controller.
-> 
-> Due to support missing in the USB/DisplayPort combo PHY driver,
-> the external DisplayPort is limited to 2 lanes.
-> 
-> So enable all 3 remaining DisplayPort controllers and limit their data
-> lanes number to 2.
-> 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+On Tue, Nov 12, 2024 at 04:56:26PM +0100, Ulf Hansson wrote:
+> On Wed, 6 Nov 2024 at 08:12, Sudeep Holla <sudeep.holla@arm.com> wrote:
+> > On Wed, Oct 30, 2024 at 04:28:41PM +0000, Cristian Marussi wrote:
+> > > On Wed, Oct 30, 2024 at 05:19:39PM +0100, Ulf Hansson wrote:
+> > > > On Wed, 30 Oct 2024 at 13:55, Sibi Sankar <quic_sibis@quicinc.com> wrote:
+> > > > >
+> > > > > The series addresses the kernel warnings reported by Johan at [1] and are
+> > > > > are required to X1E cpufreq device tree changes to land.
+> > > > >
+> > > > > [1] - https://lore.kernel.org/lkml/ZoQjAWse2YxwyRJv@hovoldconsulting.com/
+> > > > >
+> > > > > Duplicate levels:
+> > > > > arm-scmi arm-scmi.0.auto: Level 2976000 Power 218062 Latency 30us Ifreq 2976000 Index 10
+> > > > > arm-scmi arm-scmi.0.auto: Level 3206400 Power 264356 Latency 30us Ifreq 3206400 Index 11
+> > > > > arm-scmi arm-scmi.0.auto: Level 3417600 Power 314966 Latency 30us Ifreq 3417600 Index 12
+> > > > > arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
+> > > > > arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
+> > > > > arm-scmi arm-scmi.0.auto: Level 4012800 Power 528848 Latency 30us Ifreq 4012800 Index 15
+> > > > >
+> > > > > ^^ exist because SCP reports duplicate values for the highest sustainable
+> > > > > freq for perf domains 1 and 2. These are the only freqs that appear as
+> > > > > duplicates and will be fixed with a firmware update. FWIW the warnings
+> > > > > that we are addressing in this series will also get fixed by a firmware
+> > > > > update but they still have to land for devices already out in the wild.
+> > > > >
+> > > > > V4:
+> > > > > * Rework debugfs node creation patch [Ulf/Dmitry]
+> > > > > * Reduce report level to dev_info and tag it with FW_BUG [Johan/Dmitry]
+> > > > > * Add cc stable and err logs to patch 1 commit message [Johan]
 
-Please do not merge this specific patch.
+> Sorry for the delay. I have picked up the remaining patches from this
+> series. All applied for fixes and by adding stable tags to them,
+> thanks!
 
-It is provided just for context and testing purposes.
+As I reported here:
 
-See the cover note for more details.
+	https://lore.kernel.org/lkml/ZyTQ9QD1tEkhQ9eu@hovoldconsulting.com/
 
-> ---
->  arch/arm64/boot/dts/qcom/x1e80100-crd.dts | 24 ++++++++++++++++++++++++
->  1 file changed, 24 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-> index 659520404adec33c3551f8d0a5ae3db9e0a18d44..6dc2ebbf6d27fbbf0f224e58cd39ffd33792c6a1 100644
-> --- a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-> +++ b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-> @@ -1125,6 +1125,30 @@ &mdss {
->  	status = "okay";
->  };
->  
-> +&mdss_dp0 {
-> +	status = "okay";
-> +};
-> +
-> +&mdss_dp0_out {
-> +	data-lanes = <0 1>;
-> +};
-> +
-> +&mdss_dp1 {
-> +	status = "okay";
-> +};
-> +
-> +&mdss_dp1_out {
-> +	data-lanes = <0 1>;
-> +};
-> +
-> +&mdss_dp2 {
-> +	status = "okay";
-> +};
-> +
-> +&mdss_dp2_out {
-> +	data-lanes = <0 1>;
-> +};
-> +
->  &mdss_dp3 {
->  	compatible = "qcom,x1e80100-dp";
->  	/delete-property/ #sound-dai-cells;
-> 
-> -- 
-> 2.34.1
-> 
+I'm seeing a hard reset on the x1e80100 CRD and Lenovo ThinkPad T14s
+when accessing the cpufreq sysfs attributes.
+
+Sibi tracked it down to the first patch in this series ("firmware:
+arm_scmi: Ensure that the message-id supports fastchannel") and
+reverting that one indeed fixes the reset.
+
+Unfortunately this was only discussed on IRC and was never reported in
+this thread.
+
+Ulf, could you please drop the first patch again until we've figured out
+how best to handle this?
+
+Johan
 
