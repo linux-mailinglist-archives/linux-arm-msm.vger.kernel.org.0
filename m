@@ -1,120 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-37615-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37616-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id DC1FE9C590F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 14:30:23 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id BA98C9C58BB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 14:15:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 041A4B3948C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 13:14:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 43AC51F236F6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 13:15:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6AF8114F9FD;
-	Tue, 12 Nov 2024 13:13:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7292361FCE;
+	Tue, 12 Nov 2024 13:15:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="D7IxsDAf"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HY6XVhRO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
+Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5201433C0
-	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Nov 2024 13:13:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFBEE42AA4
+	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Nov 2024 13:15:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731417239; cv=none; b=t0W2ZvrqRurRlhCte5ApRAVe3+XkkL3EwTXn275HLEvSfK+kDfLf4ttpUIZ9NFFX+te3ojedTQTSsXefw9t84N1UnJjJ5NqYalMfxiEK7vxUgBhYyeMh2fdoUDYNGYCwf5NWRRgpQwSNy3MyNi1CcYq9yTcaNIaQPDRhxKnQjPc=
+	t=1731417315; cv=none; b=jMnkKV+zoW3rBlg+ov7jV4NvAestEX4Zz0szi6HFPWmw8Rpxi+si8oIXAu82ihcSQSoPYpp8hfdGNvLp4lqe1iu8JVNMA+3RgLs3Gb89O77b4z4XVplfaYnKg5urS0trZYuAGS45uwNMb2AhaLnuzK4kuCsySh//zPOcPYIVf2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731417239; c=relaxed/simple;
-	bh=R0ap3SAItWplZeYoD85VtDznS4USEItbV/zIMLvZGlg=;
+	s=arc-20240116; t=1731417315; c=relaxed/simple;
+	bh=WtaRJKgDEoVmddlel65SoHhMdd+VmSQDSCD/pTtFpTo=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=V3ZUiEB1fjhl2lGSfMmhMT4RXik9d0RDVwM3PMtaPJUdJhSHJUMb797UpZ8euiFHb7BWxXsToJUkAu4LDc0Fsu3bb6g+Qzh7VVkYO/tbeXUOAcx1cwv83/NHjYYzv3QUvE0enJ1aNp8LN41WegQikzJgGDTEf5bLShx8NQHzKsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=D7IxsDAf; arc=none smtp.client-ip=209.85.219.174
+	 To:Cc:Content-Type; b=rd7RmannvHPeUL5rPPk25/2Fq5qogYCVhP8a/aPjoQbypgLzomPVM4IIDnp8X2DqFjYIYBTm+VVqrUM/vpG2DUoBkG/KZgw6dQiXJsqZ+2VfadwCmMLNlHXhAubvE0SKvyiUacEc6TRvXNnZeE/px6WpMvRH61AFecrZQ+mBxUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HY6XVhRO; arc=none smtp.client-ip=209.85.128.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-e2bdbdee559so5392187276.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Nov 2024 05:13:56 -0800 (PST)
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-6e9f69cc576so41060277b3.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Nov 2024 05:15:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731417236; x=1732022036; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1731417312; x=1732022112; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=1It9fi+t+M6AhVlg3Wzgar/wjJMVUKxS6BvTyqKsiZw=;
-        b=D7IxsDAflFgFyqYqB87r8pRf3vl4HrAhlkQ781FEdeGhXy+R+hvEj7h418YU40kSUT
-         Q2sxDva9l4HtM7SMH3mvejhJQCeU2yEZDuLfWBV+nckiQ68WQ0I7vuiHgr5DW4W6fIyK
-         lxxa373lqsQHhx7/LPU2zN3/pVBLfC66/9m5Dx7HXklBlm5MWbZaPmfh07rszKyLrT0F
-         5qj561rJqmpkncR5kHJCSn/aDcR/Plbk3KpfvvLCOF3hQdHoSASFw/Y6Q22uoejPFPuM
-         dKTirDJ+QSNrhD8NgxSOC8PH3tCto+T8NEeB5nZM02IdvXwH0POVRsZvM1WD6MN77uiE
-         VSDw==
+        bh=RjMFUcCJ2PMcOh++QmaV4FSg4hd5bf5ZwUL8svAZiGU=;
+        b=HY6XVhRO5P6+59owMD4r00SxgV1hTOBqKbFDVAeXkyiOm4te06RL6riX/rhuJaCN/3
+         OIw/ZfIU/l/XwtCewQIQCOVs9BkCtTHLZc95NEtHKAZe9ebZvjD6Igd+U0N91ujI/9tb
+         OXv3bBYqj5a7BpXPAfdcAKh62+RoLKVK2WCzESgHT1qNX7ywZ1/tMcCHdzdmotWYEfiQ
+         lJIW7a45b4uqwfE0F7tn/v4q6FV8pZMoJRKA/FX1x0+f+dX5ozjOAyCkgyYMoGjyUHhr
+         CUlHUGM+MQ+tZeL+CzDzYFfU9+Rl3ZYElYK2b2cxvytoNOYG74qGY44SlG6LK3xUyj2B
+         ihKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731417236; x=1732022036;
+        d=1e100.net; s=20230601; t=1731417312; x=1732022112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=1It9fi+t+M6AhVlg3Wzgar/wjJMVUKxS6BvTyqKsiZw=;
-        b=N8iegp/S95+AQJAZnP1M0pCEScJ8F/hIgM3XNarp9JlSIY8NQL+eQf/Ej2uyzi/vPY
-         8Qnr4adDNs94gGmLnHB+Kx+NtRvPaLMYRv25ltoZL/JeI96GYWEB/X4BSOaOE6ytti7d
-         Z9Sxmb5hQFsdYsHZ+bJ53BmoN/yYiL9SB/e419nNQ+xe95buriaNpNPrA2W488q/28Ib
-         Qate5g1iXQbXob6C+rH0Enhppjtr4QLkvBg3eEGc/cSfibiuIL5n7OLOsrtR7anpiZ22
-         zqTIYjaIg7N2fexDabiKi6gt24AZANFGrvMUqGjk0SgT7vCxbMZpjlC1QcMUdGQcEB+0
-         z69A==
-X-Forwarded-Encrypted: i=1; AJvYcCXdLwlgd1ArZmuq6qVHx8zRs4tvVxxq8MTBiFIMNFJuZGg6YlW6PJeRsr75aiXCOI+hFw4nL9EjuPIIdwH+@vger.kernel.org
-X-Gm-Message-State: AOJu0YwoDqMnEQfA/NXDzAcTWAH0PqCOvoMRvCbDuJ0eFoi/yqMTJZZE
-	+QZspOICzid1KDxFBOV2x7w4whEVywIMAVZycUeUJddcntIu2jOU23jLvLnWpiUjuj+Km+AQ9Gh
-	mjlglLAR4E7pbEufcidwEB6omw/1yPz+EZU2/HA==
-X-Google-Smtp-Source: AGHT+IGwm6LQcl3bbBYTV/i0blyM2mY5ueTBIKTBAfvD+NL74sm096VC0xqni2fhQwmA2z1qTkrWHWuH3ei6PUdsxQA=
-X-Received: by 2002:a05:690c:6c91:b0:6e3:1fbe:9aa8 with SMTP id
- 00721157ae682-6eaddda1013mr166450737b3.15.1731417235945; Tue, 12 Nov 2024
- 05:13:55 -0800 (PST)
+        bh=RjMFUcCJ2PMcOh++QmaV4FSg4hd5bf5ZwUL8svAZiGU=;
+        b=No+gV5UaIJeVF/uRDM/YBPSfZbv1w9iJHroJ9guY+eGZDEUO60zFp5rsdfRHl2Pn9d
+         ghW4ojhEKmQBl4mzgdx1k7+h8VwfyTl1AB6paMX3yPfsQNnfnWdPtA6XrcTANhw1ksOg
+         BPqQfJP9izJpMGVAeOcA5xXpT6znywCuhwZxhaBafQFjLH9WGvVVv4x4kzLxouJIDz9/
+         TJvmZLZOh2hmUkAh05C9gCqIZWCqsgCIduFFisGpyoG6Lhpk63LG7eh0qdrxe8VjlgsJ
+         V8qE8bty1eEAxXn9nndEn4hN+9Dp8IppFEf3xOT9p1bvkmYa0u4qkh6a9gHyceEUbWi2
+         Kjgg==
+X-Forwarded-Encrypted: i=1; AJvYcCWVF9Cyt/mLsT5Ywoa7lewNw8OgStGXI+5jcKX75Wa60wHoQGpZYp+OhKmvqlzYRdlHFC5/xdToLt/GhDUO@vger.kernel.org
+X-Gm-Message-State: AOJu0YxEMEzRIphcS5TjfrOnaown+m1sWqEWgmj1iT6PSsCw34IVvNF2
+	iHFcdOWi+rz9VIdTzRgHjclTfaobDsDnyI1Z7tGlFbZkgnDFxvLKqLZQffr1L4zT/qhNW8q/6p7
+	B9Jn4plirCjlhx92WPZUNE6WZzT1gs27ZTbCMpg==
+X-Google-Smtp-Source: AGHT+IHXjXnnSh4cfhalObRmFjWIlKplKbXL511dM4znTgK/qAvBdvKZqt3NvA/NCChuF/Jz1MpD8Bjt8ZPwU1Hyt0g=
+X-Received: by 2002:a05:690c:9b08:b0:6e3:1f02:407b with SMTP id
+ 00721157ae682-6eaddda0ec6mr157284817b3.11.1731417312627; Tue, 12 Nov 2024
+ 05:15:12 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241004-venus_sc7280-v1-1-4d7d8fd7e95b@quicinc.com>
- <kezh3lmysij56g2tjwwuas5r26ro5i777yxxitsdcjeg7zp67v@oknrdbkzison> <78e6ff6b-efe1-496c-a1fb-c9a0a4aba2d2@quicinc.com>
-In-Reply-To: <78e6ff6b-efe1-496c-a1fb-c9a0a4aba2d2@quicinc.com>
+References: <20241112-fd-dp-fux-warning-v2-1-8cc4960094bd@linaro.org> <643d2935-65ce-4d86-9be6-c2faa1956365@quicinc.com>
+In-Reply-To: <643d2935-65ce-4d86-9be6-c2faa1956365@quicinc.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 12 Nov 2024 15:13:46 +0200
-Message-ID: <CAA8EJpqqZL7xybcbJMsbTQB+ht5-A+ocNs+Sq30j=v1zM3JL9g@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sc7280: enable venus node
-To: Vedang Nagar <quic_vnagar@quicinc.com>
-Cc: cros-qcom-dts-watchers@chromium.org, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+Date: Tue, 12 Nov 2024 15:15:03 +0200
+Message-ID: <CAA8EJpqBouv-f-QMpZ+hrA-vF4ojhUWBn5yMqYYB9LpW0TACdg@mail.gmail.com>
+Subject: Re: [PATCH v2] dt-bindings: display/msm: qcom,sa8775p-mdss: fix the example
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
 	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
+	Mahadevan <quic_mahap@quicinc.com>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Tue, 12 Nov 2024 at 08:17, Vedang Nagar <quic_vnagar@quicinc.com> wrote:
+On Tue, 12 Nov 2024 at 05:40, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
 >
 >
 >
-> On 10/7/2024 1:20 AM, Dmitry Baryshkov wrote:
-> > On Fri, Oct 04, 2024 at 04:22:31PM GMT, Vedang Nagar wrote:
-> >> Enable the venus node on Qualcomm sc7280. It was made disabled
-> >> earlier to avoid bootup crash, which is fixed now with [1].
+> On 11/11/2024 7:21 PM, Dmitry Baryshkov wrote:
+> > Add p1 region to the list of DP registers in the SA8775p example. This
+> > fixes the following warning:
 > >
-> > NAK, there might be other reasons to keep venus disabled, like the lack
-> > of the vendor-signed firmware for the particular device.
-> Can you pls elaborate more on this? Any device with sc7280 SOC can use
-> venus.mbn which is already present in linux-firmware git.
+> > Documentation/devicetree/bindings/display/msm/qcom,sa8775p-mdss.example.dtb: displayport-controller@af54000: reg: [[183844864, 260], [183845376, 192], [183848960, 1904], [183853056, 156]] is too short
+> >
+> > Fixes: 409685915f00 ("dt-bindings: display/msm: Document MDSS on SA8775P")
+> > Reported-by: Rob Herring <robh@kernel.org>
+> > Closes: https://lore.kernel.org/dri-devel/CAL_JsqJ0zoyaZAgZtyJ8xMsPY+YzrbF-YG1vPN6tFoFXQaW09w@mail.gmail.com/c
+>
+> Thanks for the patch.
+>
+> I think this link has an extra 'c' at the end.
 
-Can it though if the device is fused to use vendor keys and to check
-the trust chain?
+Oh.. Can you fix that when picking it up for -fixes or would you
+prefer to have a clean version in patchwork?
 
 >
-> Regards,
-> Vedang Nagar
+> With that fixed,
+>
+> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+>
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> > Changes in v2:
+> > - EDITME: describe what is new in this series revision.
+> > - EDITME: use bulletpoints and terse descriptions.
+> > - Link to v1: https://lore.kernel.org/r/20241112-fd-dp-fux-warning-v1-1-705b527f5a63@linaro.org
+> > ---
+> >   Documentation/devicetree/bindings/display/msm/qcom,sa8775p-mdss.yaml | 3 ++-
+> >   1 file changed, 2 insertions(+), 1 deletion(-)
 > >
-> >>
-> >> [1]
-> >> https://lore.kernel.org/linux-media/20231201-sc7280-venus-pas-v3-2-bc132dc5fc30@fairphone.com/
-> >>
-> >> Signed-off-by: Vedang Nagar <quic_vnagar@quicinc.com>
-> >> ---
-> >>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 2 --
-> >>  1 file changed, 2 deletions(-)
+> > diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sa8775p-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sa8775p-mdss.yaml
+> > index 58f8a01f29c7aaa9dc943c232363075686c06a7c..4536bb2f971f3b7173b8807f90c9af3e460bb01c 100644
+> > --- a/Documentation/devicetree/bindings/display/msm/qcom,sa8775p-mdss.yaml
+> > +++ b/Documentation/devicetree/bindings/display/msm/qcom,sa8775p-mdss.yaml
+> > @@ -168,7 +168,8 @@ examples:
+> >               reg = <0xaf54000 0x104>,
+> >                     <0xaf54200 0x0c0>,
+> >                     <0xaf55000 0x770>,
+> > -                  <0xaf56000 0x09c>;
+> > +                  <0xaf56000 0x09c>,
+> > +                  <0xaf57000 0x09c>;
 > >
+> >               interrupt-parent = <&mdss0>;
+> >               interrupts = <12>;
+> >
+> > ---
+> > base-commit: ff2ce06d5e28be5ee399a2ff894d6a551c70a318
+> > change-id: 20241112-fd-dp-fux-warning-c8764c93f787
+> >
+> > Best regards,
 
 
 
