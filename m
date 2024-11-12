@@ -1,84 +1,95 @@
-Return-Path: <linux-arm-msm+bounces-37557-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37558-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8130D9C4FF4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 08:52:15 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0A1F39C500B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 08:57:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 469FD284FBC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 07:52:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B4D0C1F2246C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 07:57:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF98820B808;
-	Tue, 12 Nov 2024 07:50:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04F8A1CEEB3;
+	Tue, 12 Nov 2024 07:56:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JfSy6wFf"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LcAa/IQc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEF0A1534EC;
-	Tue, 12 Nov 2024 07:50:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FA695234;
+	Tue, 12 Nov 2024 07:56:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731397809; cv=none; b=OJHjj2cCGuvDgrcGN3JDZCBXU/bheZ2tMo1YxWGvvbsScfWfTtJnsqCbfKxa9RaKnlwQ6y7xotqZhfOUQPg+4I51FfiSKMuXECF0YOFramlFUbNX0ZHuV5HYCbLTUu2qWrEaODqxmmIUgA2JUaGzCVYpEgmcBTdDi6Y0eUS8tUo=
+	t=1731398191; cv=none; b=XMuMnbuIs5QWlsVYFN1cpJylI1QUKPHw2DGlzZs7/oTWipzqHAfJkCoORn6FwhYSuJJa7eTIp9KVAY5P/CLaKizfcBNK04l8x8qWS2gwdMBHB0gyrTA90h47lXP+RJvU2dYTj59txrbx8t+u2rrlGEyLo+phpu73DsPEeieVq7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731397809; c=relaxed/simple;
-	bh=KTjNL6Mlwilqba5V1gn5bkYFPoDYAjhd+CGB/chkZ9M=;
+	s=arc-20240116; t=1731398191; c=relaxed/simple;
+	bh=25O1AxlRpWs+3gu/vbg8zcYP/wwTZeoTz8rYqGhb2PU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UBxN7VhSdVs/LZmLNPabeegFJ3fWAoplOU1cjbRW0DbZa2HpBDk/3Ig6BawngBqli4jb5EiEZSCSapgMlI8No+dArdmssu52Ef30MnCuCH84798//ocA2OtZPCNu3RoOMd5gjo9oHLvxqKoVBMhTL/pLNVY0/9gPPC1an5UNIZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JfSy6wFf; arc=none smtp.client-ip=209.85.210.176
+	 Content-Type:Content-Disposition:In-Reply-To; b=lAK+B8FDlpwKZv0lW+iGyYLkHdVsn8kJmt8BFuFqk3scM9JKBNNw/YEvwvx3fdhMV/L0hx4A7a/Djo8MDAzktRrz4JW+Nu6YgdwESVpzL0OcO55Y+kKRDSD8PlQwkDWb6F4KBY8kVWK8WupM5oc9QUaMPHz9sdXgRbAD8fo/rUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LcAa/IQc; arc=none smtp.client-ip=209.85.214.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-71e592d7f6eso3971093b3a.3;
-        Mon, 11 Nov 2024 23:50:07 -0800 (PST)
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-20cd76c513cso44816515ad.3;
+        Mon, 11 Nov 2024 23:56:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731397807; x=1732002607; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1731398190; x=1732002990; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=tExBEVwLwwV3qvwCXok4hCaStQCdAlqHUzJglsGHEK0=;
-        b=JfSy6wFfs9ITwtDrKjvRDuInjPM+RVIiDhN0/N5++jTm7e9C1PyXpZMG+cOv7MJcb6
-         NmncLSzD5KU+anwiMyEOADPOmf3TtksCtFITQ6/DdMyGcTWii/yaWwQs3bpfq5lgpj7N
-         fDCz+qIQp635FH3WbjYYnjv7H/XcjXCEAuwz5JyhpgpWJOAIHTHfppcKSH1qr+aJZz0W
-         ustNVH2gGNRQkx8X5R/b/INgqvVjaT1nKguxEy32NgXiQ8pUqUNSSW5JsJpiyOmMEwz+
-         n5KY+MY05BaZOOiq6xp+wcLucaxEIFu/LPDoIedUucgWTYpCfVL/3ZVCQGEZzBgSwEYb
-         kJyw==
+        bh=NefPRLN+h9TOgssrrobmBkWbrfPIcMnQcGv5XGBIdzk=;
+        b=LcAa/IQcF6s5r78Xa2x1ThRraghDkaRdIWLg0tlxJbsxuZnw7fq3LHOGVDMBDWII7k
+         ugOZ1caWr9yfKKosPOuw+Y6PRq3y13Vr/4uBbQKv6DCrd8oduk0+7zoWRvc8podWFrHR
+         6ZiyetQWHEZwR15FaF2fV4zSSOfpxvl9oyRRioO4RkL/qvpIrCVRsyehJGPVqiy0/qge
+         prL55ZPtGI2zvvtBBPHzmTCubOmxP4KFtscaE/ym0lM+/xeUuLAeW3/G5X/q6BSR+kL4
+         kUJc3PCbOYdG8barHwA2hSs95++2rMndWx10JF9PW6+ZIB7RVOmkC6Hv2p/C5DpJsZxq
+         LVYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731397807; x=1732002607;
+        d=1e100.net; s=20230601; t=1731398190; x=1732002990;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tExBEVwLwwV3qvwCXok4hCaStQCdAlqHUzJglsGHEK0=;
-        b=pyh4ZtnBLMFP9BaU9GGlE70p/uFMqwQc/y1r6xreQ44ONwMK/q6pmX7Fy4Na4iTx0t
-         Yozz0a7G63uN4cFpR4dQbymt6g6vBzDtBL6U6FNhCJ67eBYitZxO9pSCs5u9UWDrJNWM
-         li1Di42nwzVJkMNZVAQMPnJmQ1UTdYGC+vXjKAsmA2ciEcoobNklKsqv/qCgjjRsruN0
-         M8qNA18cQa1m23HKKojqk2VSubUDBktr+SwbQtXqLEkiiC0zAjMSjaxGdFJDzTDiT0eO
-         O73qVyyXW3dS4ZQpZgxlsElP/50lQX5aYNsK0r4d1LGNtRB35zuEFrQPVHC2R6m/+YY4
-         aRLA==
-X-Forwarded-Encrypted: i=1; AJvYcCUAf7EzVpC2ebTbu0syUPwl61tIH2CvxaVFXM+N3tn9xDvgp3LZd/2VSBDAOH2S4nlKrSYqQP4jM2mGIg==@vger.kernel.org, AJvYcCVdxIjKbb5tlVAepTfq3tp4Xl1cWl9vSiPXJ1zvc6sX7GQ0mmNANH6ItgJja+JMw8UUughEzfprzbmkNgT0@vger.kernel.org, AJvYcCXaTI0SOVVti989bcDD34vBJYc6uE0tlPEXAH8lhzl/AgVqOFfLpVFfdtBMKUx6+3SXq5Qfj+LbRKKHa22x@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywl3ggYqnRRh2hbk9uhSCGNNUnCNe+8rOhzbrXEZX1saLI8Fdbq
-	aw+Srx3aNf4XWb0XhdczAqS9U0a846kLsoCgDhl47nmr8vbw1dnG
-X-Google-Smtp-Source: AGHT+IGsjGIAC+EKfaG5Y0Te1Uwj8kqNbyd8cIEupZrS98ZAWi/K3a6EzNwJxHziLH6w1cJ30cNXIg==
-X-Received: by 2002:a05:6a00:3d55:b0:71d:f821:1981 with SMTP id d2e1a72fcca58-7241327b787mr21711887b3a.4.1731397807117;
-        Mon, 11 Nov 2024 23:50:07 -0800 (PST)
+        bh=NefPRLN+h9TOgssrrobmBkWbrfPIcMnQcGv5XGBIdzk=;
+        b=DW/2Um4wIPpAuqQCXfqXyNTRWoP5op3nNoD0dmNK5IYvbck+RlRyQXYjwGm3uXDJgY
+         zKSli6iFHfxlUrELjvZo7KRrZL9AdjhfBLrcFtlKKPDOPOob04Amqguq9+GtJ5G8AYNN
+         e6/XsZUuUghGRdA9501U0RVWOu7Q0/nxFz0pA0W+v44mCCCnv/BKXs6QADRAkJm5E0Q2
+         4QJT1BglIqxDEIgHUY7OdOASDwv9YIw+FOSb2ZdIjxK6sYzTWqJlRW3DBRWo9f1ztuIE
+         AyMK8AhEtTCCgOHQl4wsciqrd7cZBjXNrWhVJORc5M25LUs3oYKFzHs5wIVGfFDCLuVR
+         s0HA==
+X-Forwarded-Encrypted: i=1; AJvYcCVRAxJmZ0vs6EFuDlUGQnzMPStuteCzz29MLG1gF9mS528Iw2lFw8UHStf/BEDh6OMs3E6k3qMYjdKgM3luQg==@vger.kernel.org, AJvYcCVzIKTXzjN4aeVzX1alUXNh633P2L8NgngA6EaMj/VI9/C0yu4hIr00bS6JRKqWKeIvvgsEL2wSplvo/A==@vger.kernel.org, AJvYcCX3+q8wrwlsKApwocy7WXCNsZIQ/bTqNI+q2UrrXCrnVSpP6DNzDCW4H07E3JHwrffIJeI4W6eXrGGH@vger.kernel.org, AJvYcCXiGqg7flPVbjR5aab+7FSCCJ1zoJYs0J7VDntXp7TnEuGbj/njD+BaGYQFjB+FaNBgOmE9GS7zu5JnaLWu@vger.kernel.org
+X-Gm-Message-State: AOJu0YyA5d2fCGAPf3b5e5N+tHQVeW32WQzsJr34BYVYy81p+wTjZ5HP
+	M4x/9ICtG05hwPn8H+NTbaIeWCMEH01k/bQxhaPqfsJKZyXKwBpf
+X-Google-Smtp-Source: AGHT+IE0KS2NS7V7DN97gZCWihhMgbFp+BwZ71PDpPLPGgxlj/Wy496iueX09Dw83yU62q37vMBjQw==
+X-Received: by 2002:a17:902:ce91:b0:20c:da98:d752 with SMTP id d9443c01a7336-211ab929e3fmr18904925ad.16.1731398189634;
+        Mon, 11 Nov 2024 23:56:29 -0800 (PST)
 Received: from thinkpad ([117.213.103.248])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72407a1fd2bsm10450163b3a.167.2024.11.11.23.50.04
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21177e41717sm85733995ad.122.2024.11.11.23.56.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Nov 2024 23:50:06 -0800 (PST)
-Date: Tue, 12 Nov 2024 13:20:00 +0530
+        Mon, 11 Nov 2024 23:56:29 -0800 (PST)
+Date: Tue, 12 Nov 2024 13:26:19 +0530
 From: Manivannan Sadhasivam <manisadhasivam.linux@gmail.com>
-To: Manish Pandey <quic_mapa@quicinc.com>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-	linux-kernel@vger.kernel.org, quic_nitirawa@quicinc.com
-Subject: Re: [PATCH 0/3] scsi: ufs-qcom: Enable Dumping of Hibern8, MCQ, and
- Testbus Registers
-Message-ID: <20241112075000.vausf7ulr2t5svmg@thinkpad>
-References: <20241025055054.23170-1-quic_mapa@quicinc.com>
+To: Xin Liu <quic_liuxin@quicinc.com>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Avri Altman <avri.altman@wdc.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-scsi@vger.kernel.org,
+	quic_jiegan@quicinc.com, quic_aiquny@quicinc.com,
+	quic_tingweiz@quicinc.com, quic_sayalil@quicinc.com
+Subject: Re: [PATCH v1 2/4] dt-bindings: ufs: qcom: Add UFS Host Controller
+ for QCS615
+Message-ID: <20241112075619.2ilsccnnk4leqmdy@thinkpad>
+References: <20241017042300.872963-1-quic_liuxin@quicinc.com>
+ <20241017042300.872963-3-quic_liuxin@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,32 +99,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241025055054.23170-1-quic_mapa@quicinc.com>
+In-Reply-To: <20241017042300.872963-3-quic_liuxin@quicinc.com>
 
-On Fri, Oct 25, 2024 at 11:20:51AM +0530, Manish Pandey wrote:
-> Submitting a series of patches aimed at enhancing the debugging and monitoring capabilities
-> of the UFS-QCOM driver. These patches introduce new functionalities that will significantly
-> aid in diagnosing and resolving issues related to hardware and software operations.
+On Thu, Oct 17, 2024 at 12:22:58PM +0800, Xin Liu wrote:
+> From: Sayali Lokhande <quic_sayalil@quicinc.com>	
+> 	
+> Document the Universal Flash Storage(UFS) Host Controller on the Qualcomm
+> QCS615 Platform.
 > 
+> Signed-off-by: Sayali Lokhande <quic_sayalil@quicinc.com>
+> Co-developed-by: Xin Liu <quic_liuxin@quicinc.com>
+> Signed-off-by: Xin Liu <quic_liuxin@quicinc.com>
 
-TBH, the current state of dumping UFSHC registers itself is just annoying as it
-pollutes the kernel ring buffer. I don't think any peripheral driver in the
-kernel does this. Please dump only relevant registers, not everything that you
-feel like dumping.
+Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
 - Mani
 
-> Manish Pandey (3):
->   scsi: ufs-qcom: Add support for dumping HW and SW hibern8 count
->   scsi: ufs-qcom: Add support for dumping MCQ registers
->   scsi: ufs-qcom: Add support for testbus registers
+> ---
+>  Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
 > 
->  drivers/ufs/host/ufs-qcom.c | 141 ++++++++++++++++++++++++++++++++++++
->  drivers/ufs/host/ufs-qcom.h |  11 +++
->  2 files changed, 152 insertions(+)
-> 
+> diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+> index cde334e3206b..a03fff5df5ef 100644
+> --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+> +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+> @@ -26,6 +26,7 @@ properties:
+>            - qcom,msm8994-ufshc
+>            - qcom,msm8996-ufshc
+>            - qcom,msm8998-ufshc
+> +          - qcom,qcs615-ufshc
+>            - qcom,qcs8300-ufshc
+>            - qcom,sa8775p-ufshc
+>            - qcom,sc7180-ufshc
+> @@ -243,6 +244,7 @@ allOf:
+>          compatible:
+>            contains:
+>              enum:
+> +              - qcom,qcs615-ufshc
+>                - qcom,sm6115-ufshc
+>                - qcom,sm6125-ufshc
+>      then:
 > -- 
-> 2.17.1
+> 2.34.1
 > 
 > 
 
