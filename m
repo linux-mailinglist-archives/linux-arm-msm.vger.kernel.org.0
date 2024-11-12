@@ -1,141 +1,201 @@
-Return-Path: <linux-arm-msm+bounces-37624-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37625-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 267859C5AA6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 15:42:54 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id EB2399C5B3E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 16:04:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CC92C1F22783
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 14:42:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AA317281724
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 15:04:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AFD292003DE;
-	Tue, 12 Nov 2024 14:40:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE8F5200BB1;
+	Tue, 12 Nov 2024 15:02:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="haNrY6Yt"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Ran5wv6z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E608D20012F;
-	Tue, 12 Nov 2024 14:40:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF17156F5E;
+	Tue, 12 Nov 2024 15:02:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731422423; cv=none; b=qYm3+T6ggzoZ+GYUVNIA09c+goS1InV2BePAtU03yH1oCJFrmxJ9Si0PrZJ6AjM80LJAVSINfOLLf1se/G5txMLY6X6h6OXveXHNlnlp399pmdfJnbp0UjNOkxryFvg1UpMm46XOiwn30+NF2Wp7IeKheLBX6ggmhAFasEniwu0=
+	t=1731423730; cv=none; b=n0HNMyQLmC6FwvX7+urr83/clyv7QfIswWR8DNvt8L1yirTMdW7wsa2JJS97wJCg0Kdf1q8GvgH/vzM8x0TbEE6wibgMMMn+Zq372VBciUvBhh6E2+cyFk4Z6ZxihSi9KEkRZwzNqlBmRwKtSunxmMMrc2RJcy9OnXSFyke+y+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731422423; c=relaxed/simple;
-	bh=CLr0HGkZeFBXBnP18a0LyyAjTPOgjFpYKhmNq5cmbxw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=X4f4PZZURpwxLIMmhmoggmLakhfonOTNuBRVgjVowJHKQi3Wq8EXSk6gfUyyyfg9ZdyNYumtONSIiZBwXffBc9kyGx4Erdw2jhsR5ZXT+Wpoj1D6fDbsKzDs+CzorcArRKMRaqdzVQnZJzfssIepeqWGhFlEOGO9SXUiI1PXWm0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=haNrY6Yt; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1731423730; c=relaxed/simple;
+	bh=XicoZdgnxqoa6iyD0Wx1G4v2zeKKeMj5rBKvOrY16Lg=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=b1qvwkt2jxMmmAwyMJH5cdWaiQA9rT8thHAmccG6K4ot2G10cCyuiXxaHLOjLy5FDeFmQ329EFPqkNOF6U1pd+XL8OAute8Yy4g89CUIgTmzVyr1fHWA69d7mn7f8ei0ZpvYc4NoNcZWpC7yyTZYOtPKafrblL8Ri0VXKAwo+vo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Ran5wv6z; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AC9FpI2003095;
-	Tue, 12 Nov 2024 14:40:05 GMT
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ACD4D99032436;
+	Tue, 12 Nov 2024 15:01:57 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	RJfLzC9hap2ILnE6XCIOx3NoKYnuYRVXuoqBo7tTnnI=; b=haNrY6YtU4wwrvj5
-	L1lhM+TWUJK/qaz3J+w4LcdYjy/g8tgw4pnHWRpb/73xAJn1WA92xg6p94lm388Q
-	rfdE78Aia7iTXMeGo0lPTz94WakJx4SjRa4+XoXt7Ynhgz9y+GPquj2hQyC9v2R6
-	8MhaaN7Ckv+3TO+G+4y9uez1AxO+hF2vKcikjkWYGDk6jyXIFUbIYrzhKDC5gy97
-	DcF+kv37rzaG9h10P+4u72dRKRaHFGiA8pl3WwAnUFchjnopcegVxfXUtz6eXoFG
-	1ty9hRQUJVzYF+y69oyvRvbCiJ2lLYrKQo1EvMg+K9ykdyJpcBItnyZ/WsCESKoI
-	FKu6ww==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42v47y0txe-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=AscinKziCCkdyt6iqdRGcy
+	PxQork5Edfm3oore+GAh0=; b=Ran5wv6zz9FTMWwV3YEbTHDE8I0pjl904wZZe6
+	wNFUQPNgx8j69hGsAbgUgsnPxHN66Q8xbtLMSim0KJadqEZaZJIne4XCKT5gmaqo
+	DsMDNm1CLoK4+7NJN2hXRPo1Re0Egu2EZeaxjBUJ2C2E+mlecoLgaUTaiGAW2WxI
+	J/a9OsoiLq7keIjOlwAbVWwiu4MgFMdUWpecVkT+eAvwc3y3Ip7QxU2kYXSUGB2O
+	iLvMK6fJLlZAxtCvoHWuvLC1qfbc336UPkG5gLi3gbwWQvuATIFFvbneYpyISlZw
+	Ca0jrGb1jLppE3vb+K7VJGC/rLYYJf5/mf1lks48kCQpHqYw==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42sxpqfpyq-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 12 Nov 2024 14:40:05 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4ACEe4Ew012312
+	Tue, 12 Nov 2024 15:01:57 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4ACF1uEm001241
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 12 Nov 2024 14:40:04 GMT
-Received: from [10.216.59.81] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 12 Nov
- 2024 06:40:00 -0800
-Message-ID: <fbba794a-ba04-4790-b5e9-b4df3cba35b2@quicinc.com>
-Date: Tue, 12 Nov 2024 20:09:57 +0530
+	Tue, 12 Nov 2024 15:01:56 GMT
+Received: from hu-krichai-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 12 Nov 2024 07:01:51 -0800
+From: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Subject: [PATCH v3 0/6] PCI: Enable Power and configure the QPS615 PCIe
+ switch
+Date: Tue, 12 Nov 2024 20:31:32 +0530
+Message-ID: <20241112-qps615_pwr-v3-0-29a1e98aa2b0@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: sc7280: enable venus node
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <cros-qcom-dts-watchers@chromium.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20241004-venus_sc7280-v1-1-4d7d8fd7e95b@quicinc.com>
- <kezh3lmysij56g2tjwwuas5r26ro5i777yxxitsdcjeg7zp67v@oknrdbkzison>
- <78e6ff6b-efe1-496c-a1fb-c9a0a4aba2d2@quicinc.com>
- <CAA8EJpqqZL7xybcbJMsbTQB+ht5-A+ocNs+Sq30j=v1zM3JL9g@mail.gmail.com>
-Content-Language: en-US
-From: Vedang Nagar <quic_vnagar@quicinc.com>
-In-Reply-To: <CAA8EJpqqZL7xybcbJMsbTQB+ht5-A+ocNs+Sq30j=v1zM3JL9g@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAMxtM2cC/1WMyw6CMBBFf8XM2ppOB1riyv8wxmApMgt5tFo1h
+ H+3kBjl7s5NzhkhOM8uwH4zgneRA3dtAtpuwDZle3WCq8SgpMpQKiWGPmjMz/3Ti6KigkytsXQ
+ WktB7V/NriR1PiRsO986/l3bE+f1m6D8TUUhhdVUqbVBj5g7Dgy23dme7G8yhSD85bSVTkg3aC
+ xUZ5dKYtTxN0wep0g4M4wAAAA==
+To: <andersson@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+        "Lorenzo
+ Pieralisi" <lpieralisi@kernel.org>,
+        =?utf-8?q?Krzysztof_Wilczy=C5=84ski?=
+	<kw@linux.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        "Rob Herring" <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        "Conor Dooley" <conor+dt@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        <cros-qcom-dts-watchers@chromium.org>,
+        Jingoo Han <jingoohan1@gmail.com>, Bartosz Golaszewski <brgl@bgdev.pl>
+CC: <quic_vbadigan@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pci@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Krishna chaitanya chundru
+	<quic_krichai@quicinc.com>
+X-Mailer: b4 0.14.1
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1731423711; l=4593;
+ i=quic_krichai@quicinc.com; s=20230907; h=from:subject:message-id;
+ bh=XicoZdgnxqoa6iyD0Wx1G4v2zeKKeMj5rBKvOrY16Lg=;
+ b=YOezNxp+95XHinCFyeVwFtWcKZvnqwL+WvfWIH6vHOzLCqNBYbd9Ft6yifcw+3xBVe/GY1hqb
+ SH34m+Kdu5SCwVYe50sU2RkI3FERDhLL3ih2H82Sdo06WXz4ILO/Rv1
+X-Developer-Key: i=quic_krichai@quicinc.com; a=ed25519;
+ pk=10CL2pdAKFyzyOHbfSWHCD0X0my7CXxj8gJScmn1FAg=
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 1AAVZbR4Wwk48MFlXHN92GTZfMvqUV4J
-X-Proofpoint-GUID: 1AAVZbR4Wwk48MFlXHN92GTZfMvqUV4J
+X-Proofpoint-GUID: 0tF1UD8sOiWZou-0PsFIalsMY6DAK4dZ
+X-Proofpoint-ORIG-GUID: 0tF1UD8sOiWZou-0PsFIalsMY6DAK4dZ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=1 priorityscore=1501 mlxscore=1
- mlxlogscore=183 spamscore=1 bulkscore=0 malwarescore=0 suspectscore=0
- impostorscore=0 lowpriorityscore=0 phishscore=0 adultscore=0 clxscore=1015
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 bulkscore=0
+ lowpriorityscore=0 malwarescore=0 spamscore=0 mlxlogscore=999 phishscore=0
+ suspectscore=0 impostorscore=0 mlxscore=0 priorityscore=1501 adultscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2411120118
+ definitions=main-2411120121
 
+QPS615 is the PCIe switch which has one upstream and three downstream
+ports. To one of the downstream ports ethernet MAC is connected as endpoint
+device. Other two downstream ports are supposed to connect to external
+device. One Host can connect to QPS615 by upstream port.
 
+QPS615 switch power is controlled by the GPIO's. After powering on
+the switch will immediately participate in the link training. if the
+host is also ready by that time PCIe link will established. 
 
-On 11/12/2024 6:43 PM, Dmitry Baryshkov wrote:
-> On Tue, 12 Nov 2024 at 08:17, Vedang Nagar <quic_vnagar@quicinc.com> wrote:
->>
->>
->>
->> On 10/7/2024 1:20 AM, Dmitry Baryshkov wrote:
->>> On Fri, Oct 04, 2024 at 04:22:31PM GMT, Vedang Nagar wrote:
->>>> Enable the venus node on Qualcomm sc7280. It was made disabled
->>>> earlier to avoid bootup crash, which is fixed now with [1].
->>>
->>> NAK, there might be other reasons to keep venus disabled, like the lack
->>> of the vendor-signed firmware for the particular device.
->> Can you pls elaborate more on this? Any device with sc7280 SOC can use
->> venus.mbn which is already present in linux-firmware git.
-> 
-> Can it though if the device is fused to use vendor keys and to check
-> the trust chain?
-Yes, infact the existing ones are signed and works with trustzone authentication.
-> 
->>
->> Regards,
->> Vedang Nagar
->>>
->>>>
->>>> [1]
->>>> https://lore.kernel.org/linux-media/20231201-sc7280-venus-pas-v3-2-bc132dc5fc30@fairphone.com/
->>>>
->>>> Signed-off-by: Vedang Nagar <quic_vnagar@quicinc.com>
->>>> ---
->>>>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 2 --
->>>>  1 file changed, 2 deletions(-)
->>>
-> 
-> 
-> 
+The QPS615 needs to configured certain parameters like de-emphasis,
+disable unused port etc before link is established.
+
+As the controller starts link training before the probe of pwrctl driver,
+the PCIe link may come up as soon as we power on the switch. Due to this
+configuring the switch itself through i2c will not have any effect as
+this configuration needs to done before link training. To avoid this
+introduce two functions in pci_ops to start_link() & stop_link() which
+will disable the link training if the PCIe link is not up yet.
+
+Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+---
+Changes in v2:
+- As per offline discussions with rob i2c-parent is best suitable to
+  use i2c client device. So use i2c-parent as suggested and remove i2c
+  client node reference from the dt-bindings & devicetree.
+- Remove "PCI: Change the parent to correctly represent pcie hierarchy"
+  as this requires seperate discussions.
+- Remove bdf logic to identify the dsp's and usp's to make it generic
+  by using the logic that downstream devices will always child of
+  upstream node and dsp1, dsp2 will always in same order (dmitry)
+- Remove recursive function for parsing devicetree instead parse
+  only for required devicetree nodes (dmitry)
+- Fix the issue in be & le conversion (dmitry).
+- Call put_device for i2c device once done with the usage (dmitry)
+- Use $defs to describe common properties between upstream port and
+  downstream properties. and remove unneccessary if then. (Krzysztof)
+- Place the qcom,qps615 compatibility in dt-binding document in alphabatic order (Krzysztof)
+- Rename qcom,no-dfe to describe it as hardware capability and change
+  qcom,nfts description to reflect hardware details (Krzysztof)
+- Fix the indentation in the example in dt binding (dmitry)
+- Add more description to qcom,nfts (dmitry)
+- Remove nanosec from the property description (dmitry)
+- Link to v2: https://lore.kernel.org/r/linux-arm-msm/20240803-qps615-v2-0-9560b7c71369@quicinc.com/T/
+Changes in v1:
+- Instead of referencing whole i2c-bus add i2c-client node and reference it (Dmitry)
+- Change the regulator's as per the schematics as per offline review
+(bjorn Andresson)
+- Remove additional host check in bus.c (Bart)
+- For stop_link op change return type from int to void (Bart)
+- Remove firmware based approach for configuring sequence as suggested
+by multiple reviewers.
+- Introduce new dt-properties for the switch to configure the switch
+as we are replacing the firmware based approach.
+- The downstream ports add properties in the child nodes which will
+represented in PCIe hierarchy format.
+- Removed D3cold D0 sequence in suspend resume for now as it needs
+separate discussion.
+- Link to v1: https://lore.kernel.org/linux-pci/20240626-qps615-v1-4-2ade7bd91e02@quicinc.com/T/
+
+---
+Krishna chaitanya chundru (6):
+      dt-bindings: PCI: Add binding for qps615
+      arm64: dts: qcom: qcs6490-rb3gen2: Add node for qps615
+      PCI: Add new start_link() & stop_link function ops
+      PCI: dwc: Add support for new pci function op
+      PCI: qcom: Add support for host_stop_link() & host_start_link()
+      PCI: pwrctl: Add power control driver for qps615
+
+ .../devicetree/bindings/pci/qcom,qps615.yaml       | 205 +++++++
+ arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts       | 115 ++++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi               |   2 +-
+ drivers/pci/controller/dwc/pcie-designware-host.c  |  18 +
+ drivers/pci/controller/dwc/pcie-designware.h       |  16 +
+ drivers/pci/controller/dwc/pcie-qcom.c             |  39 ++
+ drivers/pci/pwrctl/Kconfig                         |   8 +
+ drivers/pci/pwrctl/Makefile                        |   1 +
+ drivers/pci/pwrctl/pci-pwrctl-qps615.c             | 630 +++++++++++++++++++++
+ include/linux/pci.h                                |   2 +
+ 10 files changed, 1035 insertions(+), 1 deletion(-)
+---
+base-commit: ae43de0875223d271eb6004cfb08be697520f55c
+change-id: 20241022-qps615_pwr-8d3837f61aec
+
+Best regards,
+-- 
+Krishna chaitanya chundru <quic_krichai@quicinc.com>
+
 
