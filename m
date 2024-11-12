@@ -1,117 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-37652-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37655-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 73F379C5C99
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 16:59:44 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 60ED49C5DF7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 17:58:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 37EB82823A6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 15:59:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 17FE91F21029
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 16:58:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AEAF4205E21;
-	Tue, 12 Nov 2024 15:57:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF096214405;
+	Tue, 12 Nov 2024 16:55:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Cnlc05KE"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XBOqp5F7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4CA6205ADD
-	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Nov 2024 15:57:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 628462141C9;
+	Tue, 12 Nov 2024 16:55:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731427034; cv=none; b=Tt5M2UgpYW8RgH/gYa9aJnKgVOecH/IJnI5Wt8STlUZ+cUUCo6zktuz/a0rJdmDsxtQEip/vF2BF0Wp/9ysJjtxXS2zkkB/AuNiA3nyaSKLmsR8bNyHn5kjWrKzY4JQ2XM4w8RXc4OpZEJvPpjux7EUcQCBOpwbqfXYWYmw+vMA=
+	t=1731430556; cv=none; b=AAYJ/7WsGZoPEpTmolPWo5PSlH70dBM0y7oU7V/U9BaXQohZona3wluWLSksioJiUJU+aGN/PJqDp1JvIh3Nuwl7M86L8/Iclppxh/FQz8IxLE+Nc9HDZS+oO1BSSq6h36j1KolM/DSiZYzi1oJuWrt3wbLw5D9w1my5ihxznl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731427034; c=relaxed/simple;
-	bh=1jjU2f1tjrQe5+VqBCl3RvHzuSsE0kITI7vbRrSnONc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RdzTobhWKj8fL/P9GbNYPIO40hZCCRlRbGnBrBER6ZwPZcUefZ17wl9iiUvTVzOmBh1+Hf48U+ucif9e7RZ7ixpxzpnkf9/5roNwFg4BDHlXo7pHJ9qKeLS9HQOX0Jl/bcQGiyP1tN0CL/grU5U0ruxB7LkLEwM+seeD6Gsh09M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Cnlc05KE; arc=none smtp.client-ip=209.85.219.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-e2903a48ef7so5379703276.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Nov 2024 07:57:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731427032; x=1732031832; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=TUxAz/Z2gbXGo+S6Wkm3HXVMQ/72U6UPILm/sEMm+BM=;
-        b=Cnlc05KEeO0fHQVvfFGc1hVDKVn4IPxTmHNYs6vXf//JRS02xDzU0//9TzcYvthLKF
-         6rNKopAlTHGee3Hg0hwLaGharxA46/XreYD/tmgl36f+Nvk+sdnqEKX1r0S5Dgm+n0Ay
-         8KBuRK8oM0uO2cJdZ2+Cenk7pxj3n6z0vG/tlH45N0/82wD6FXE8GQpDRjgwLJ7tzCH4
-         zLVkTif0/yjLpxAXMxv0a3i1fOT8aJah8DeEuEwvIWRxq+24pR+yv7l9h68XCoMBrCXB
-         tO/l+osPhoxNyfGEnumfrVXXNIBe3EaRy/DLzy0dxuQqUHFVGGNCkfCyhzkJuH+4nncd
-         NhDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731427032; x=1732031832;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=TUxAz/Z2gbXGo+S6Wkm3HXVMQ/72U6UPILm/sEMm+BM=;
-        b=O8/fG25C6rNCWwmi5f7NWXz92Jzf4U+TXRZnDMEjfRZIwBqIiG45yHPGsX6qAQAruY
-         k29H5EjJAJ/Zz+lqXrCdfUFaUuXIjcONYaMafeDoLW1ueEfzCxwtDtKL6Vx6LA3B0z1u
-         WWWu7xrq45F5UaQoymgyY7UGzehdimcnCZTLnzwPu9FWbAOneP6ocghLlXQzJT7Lv6+c
-         cr/4JGm+seN9LySUV+a87SiyJ0lgkSbIYo3YmO8W0K1xJvHyrpRX47Sxg5gDiRQ3GUV+
-         kDSKyMFl3r2vWuOFVB4+TIV5W3Yr5s5t3WIFqJT0AITDj7LoOdgz3cb5c/lfPdY8+WdJ
-         K0Ow==
-X-Forwarded-Encrypted: i=1; AJvYcCWd+7haS9kqGGpHd4nGRrDzzlw7wL71hkizSSZk9MMft/ou5YzCJM2kI9o/F1jfFZXHJ7LXduW/VtHjzFS3@vger.kernel.org
-X-Gm-Message-State: AOJu0YwISeAU4UJ9XHCovZaFOL7APmayfwgw381VKwiYRDcfCMn2Kjxc
-	X+3z0nHh1o9aDvWgizx4Tl4raAWSgMspSLkGZOZRHWQInRvv4vD1YGW/dtG5yZlOVE38fSYXQOa
-	08BzRqaqQFpThnwnEh5rzRQh3/VE1nL50Z+/jyg==
-X-Google-Smtp-Source: AGHT+IGxKvDCTnSu9K5GtsvLrHqik42J0uKIcJLRzwwShC9Gb+pV36cVlENq/Q4s/ju5EfTbb7FM2A5VXJd6NdZBAy8=
-X-Received: by 2002:a05:690c:710a:b0:6ea:7e37:8cec with SMTP id
- 00721157ae682-6eaddd74f16mr163974757b3.2.1731427031788; Tue, 12 Nov 2024
- 07:57:11 -0800 (PST)
+	s=arc-20240116; t=1731430556; c=relaxed/simple;
+	bh=bYBlmRZnSP1+6bbO6DyCu9HwcvNxZ82NbuYVPGaawCk=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=JEQdkDOO2OR+tHehYaAa8rkVJN8PpSyP2NP0257VtaACx743IlfRx+FLHe8G2kVzoxT9orhuaQopyecoN8mEMkW2mQj5/oNNROdE+8z9dfTh7RZ1VxSO1PX0A/YpxGDe0XgqTk3W+wgk5e4xb5vD9WwmmakWy2K7eZehTDFaJTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=XBOqp5F7; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AC9FoOL003032;
+	Tue, 12 Nov 2024 16:55:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	U0jvV2u/4nB0nNLZJ5fmuVk3Sm8TxGDd+eRh6fPI5u8=; b=XBOqp5F7RHcgxXFW
+	OgGWwNYqs37Fmgx7f3Ioagt3UUVkNZwIhv9cF07HBFVtYzNu+KNaZZHqz7H/qXCi
+	Ya5Yr2emm+0+ElHXq4YI79naniIj2ve+BGYJLef81zjZbITamfkgXhKWNCLEcq2q
+	sml7Bm+op1YRvm3rzMiYtj2Y3+aIVORxdy9DOtVGiz3+nPlPFb+c03AJ0hgKTF/g
+	AuUlwkyEaE9hVVf3j81D33lRKSbpViECLzBDHsyBlaJhGkPVGnTkiHC9eARxQ5yU
+	5VbC/2XLofuafHSun4Bt61Nw5gIE7UlMDpbcBwQyi3W8/boOZnAcG2gj3okwuCZy
+	98nkCA==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42v47y1auv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 12 Nov 2024 16:55:41 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4ACGteNi029119
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 12 Nov 2024 16:55:40 GMT
+Received: from hu-bibekkum-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 12 Nov 2024 08:55:35 -0800
+From: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+To: <robdclark@gmail.com>, <will@kernel.org>, <robin.murphy@arm.com>,
+        <joro@8bytes.org>, <jgg@ziepe.ca>, <jsnitsel@redhat.com>,
+        <robh@kernel.org>, <krzysztof.kozlowski@linaro.org>,
+        <quic_c_gdjako@quicinc.com>, <dmitry.baryshkov@linaro.org>
+CC: <iommu@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+        <quic_bibekkum@quicinc.com>
+Subject: [PATCH v17 2/5] iommu/arm-smmu: refactor qcom_smmu structure to include single pointer
+Date: Tue, 12 Nov 2024 22:24:51 +0530
+Message-ID: <20241112165454.2698269-3-quic_bibekkum@quicinc.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241112165454.2698269-1-quic_bibekkum@quicinc.com>
+References: <20241112165454.2698269-1-quic_bibekkum@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241112002444.2802092-1-quic_molvera@quicinc.com>
-In-Reply-To: <20241112002444.2802092-1-quic_molvera@quicinc.com>
-From: Ulf Hansson <ulf.hansson@linaro.org>
-Date: Tue, 12 Nov 2024 16:56:36 +0100
-Message-ID: <CAPDyKFptAh9fm8CBqKisQKg7Hb3sL_8XJC-GPdVXNJz5t2U4VA@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] pmdomain: qcom: Introduce power domains for SM8750
-To: Melody Olvera <quic_molvera@quicinc.com>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>, 
-	Tingguo Cheng <quic_tingguoc@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>, 
-	Luca Weiss <luca@lucaweiss.eu>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Bjorn Andersson <quic_bjorande@quicinc.com>, 
-	Jishnu Prakash <quic_jprakash@quicinc.com>, Trilok Soni <quic_tsoni@quicinc.com>, 
-	Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-pm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: TO5gAFzuUJvCdEyin8lFMYdaMILVOPcu
+X-Proofpoint-GUID: TO5gAFzuUJvCdEyin8lFMYdaMILVOPcu
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
+ mlxlogscore=999 spamscore=0 bulkscore=0 malwarescore=0 suspectscore=0
+ impostorscore=0 lowpriorityscore=0 phishscore=0 adultscore=0 clxscore=1015
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2411120135
 
-On Tue, 12 Nov 2024 at 01:25, Melody Olvera <quic_molvera@quicinc.com> wrote:
->
-> Add power domains needed for the SM8750 SoC.
->
-> The Qualcomm Technologies, Inc. SM8750 SoC is the latest in the line of
-> consumer mobile device SoCs. See more at:
-> https://www.qualcomm.com/content/dam/qcomm-martech/dm-assets/images/company/news-media/media-center/press-kits/snapdragon-summit-2024/day-1/documents/Snapdragon8EliteProductBrief.pdf
->
-> Changes in V2:
-> - squashed bindings into one patch
->
-> Jishnu Prakash (1):
->   pmdomain: qcom: rpmhpd: Add rpmhpd support for SM8750
->
-> Taniya Das (1):
->   dt-bindings: power: qcom,rpmpd: document the SM8750 RPMh Power Domains
->
->  .../devicetree/bindings/power/qcom,rpmpd.yaml |  1 +
->  drivers/pmdomain/qcom/rpmhpd.c                | 26 +++++++++++++++++++
->  include/dt-bindings/power/qcom-rpmpd.h        |  2 ++
->  3 files changed, 29 insertions(+)
+qcom_smmu_match_data is static and constant so refactor qcom_smmu
+to store single pointer to qcom_smmu_match_data instead of
+replicating multiple child members of the same and handle the further
+dereferences in the places that want them.
 
-Applied for next, thanks!
+Suggested-by: Robin Murphy <robin.murphy@arm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+---
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c | 2 +-
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c       | 2 +-
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h       | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-Kind regards
-Uffe
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c
+index 548783f3f8e8..d03b2239baad 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c
+@@ -73,7 +73,7 @@ void qcom_smmu_tlb_sync_debug(struct arm_smmu_device *smmu)
+ 	if (__ratelimit(&rs)) {
+ 		dev_err(smmu->dev, "TLB sync timed out -- SMMU may be deadlocked\n");
+
+-		cfg = qsmmu->cfg;
++		cfg = qsmmu->data->cfg;
+ 		if (!cfg)
+ 			return;
+
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+index 6372f3e25c4b..d26f5aea248e 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+@@ -507,7 +507,7 @@ static struct arm_smmu_device *qcom_smmu_create(struct arm_smmu_device *smmu,
+ 		return ERR_PTR(-ENOMEM);
+
+ 	qsmmu->smmu.impl = impl;
+-	qsmmu->cfg = data->cfg;
++	qsmmu->data = data;
+
+ 	return &qsmmu->smmu;
+ }
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h
+index 3c134d1a6277..b55cd3e3ae48 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h
+@@ -8,7 +8,7 @@
+
+ struct qcom_smmu {
+ 	struct arm_smmu_device smmu;
+-	const struct qcom_smmu_config *cfg;
++	const struct qcom_smmu_match_data *data;
+ 	bool bypass_quirk;
+ 	u8 bypass_cbndx;
+ 	u32 stall_enabled;
+--
+2.34.1
+
 
