@@ -1,65 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-37698-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37700-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C6EC69C63F4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 23:03:45 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2E2959C63F7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 23:04:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8AED1282FCA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 22:03:44 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DA23C1F23442
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 22:04:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8A9B21A6EE;
-	Tue, 12 Nov 2024 22:03:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CE0821B436;
+	Tue, 12 Nov 2024 22:03:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TQrr8D9/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dt3sFz3P"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B969C21A6E0;
-	Tue, 12 Nov 2024 22:03:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2154D21B424;
+	Tue, 12 Nov 2024 22:03:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731449012; cv=none; b=pl+d4nllM0H5gAYa84NB2AC95PrJHK1pe2aDCJCiABhDdRMiOz5jJYTLJV+ghL+7/S/s4+M9+0TeN5XMDjomiZrqOx0KYPxxR3z1rz+y2GTW9wv36ALLc1O6SlNqAUSw18ogHupMsf6UYPL+DyaNMWn6RlFGRI8qc3rkJDc3C6M=
+	t=1731449014; cv=none; b=oqzpZNpx/An3xDqEHdMUccL+ZDVaqeZnaFv2t0w2aeG8/yzUXjYyQpwEV36Z3ohQ/9r7MTztl2QnqxGPkqfQP36mxoj2p0GB2EVKf5cZYQqKP9bRJMj/A/oYoJhogBXM4LAcIufirEnhz49bqjTcVePGTih6fkni1fwt3LpW0V8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731449012; c=relaxed/simple;
-	bh=LbSbP0PRiua8I5A7NUpgiKh8EyVozbYXD8yG9qaleYc=;
+	s=arc-20240116; t=1731449014; c=relaxed/simple;
+	bh=VoyiItH2WzLyLZQuXSJwnl9oyXEH+P6ej+K6mLzRhBs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JqKfU/6axXluI+0EAHK3p7bgv4eBRlMKT0hxO3MXkaLJ01a0IIqpQMlUuFrP9o6ggV1aR2tfXbl4/lRRXm9g6jdaLZwMOxR8HxSQQsIcC9EFC9AQQlXei4VjqeFtz7VQf4/UmScylQYlWYgz2dzZ7UhwMq5yNoZO6R5YJPJqpB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TQrr8D9/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 616F0C4CED7;
-	Tue, 12 Nov 2024 22:03:31 +0000 (UTC)
+	 MIME-Version:Content-Type; b=syK79vz3umGRnDjg7ZyOcLgVxsI3CXrAYER+wxLHsHwhx5Da/gEx4f6aWr7v1FGfv3N7HlHa++e9TqUoTV67Ov9ez6E1VGn2oZa9cNB2nYMS/LGXYO8YY9wINsHtBPVcbljflpP/dtlXtX5pMQSMF9Qn1csz/608l1cxUmE84Cs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dt3sFz3P; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DF3CC4CEDD;
+	Tue, 12 Nov 2024 22:03:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1731449012;
-	bh=LbSbP0PRiua8I5A7NUpgiKh8EyVozbYXD8yG9qaleYc=;
+	s=k20201202; t=1731449013;
+	bh=VoyiItH2WzLyLZQuXSJwnl9oyXEH+P6ej+K6mLzRhBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TQrr8D9/ccepWOov6APxDpo8MxmxPr/DRrJz6vzNhh0BP4mBp909G6uABj/M3xpi3
-	 JCNbHn1V3wJaLt73fldERN7xNf4/0KIJUJlTIfe0rovLLT6NQofCRpp1QEV5RB8axv
-	 puy2Z7Nl078qmxAVVIqghlgOthIB6HrtZs0+gavGgyF9Ju0+3hg2gacWE4HWZ0adG4
-	 rikBxTNlLITPYbnHYJ11viqSYutnlLOvVOzclnedYU7ZDDcrTZ94zmZ1mKGRWlYQZr
-	 /t2PclcUqnX7/D/a1uYjrf+NqGHlP9ns+rGnXDAfad8BnfymFBJi5U4n6mF3aaoYKq
-	 xWRSvVeBpIVhg==
+	b=dt3sFz3P3Oc+XSmVHStBAHRgT/T/d4sV/0hlPA83AF1uWI3ifhghOFcCuKhxFmuDN
+	 oLdxG8sMbllOJ+qi1NG7Iszi4pEV637bK50DTkk9Xnuw3DjxZvwMZsU0qfYX6i+G5H
+	 Jm3BWRF361XUccp04psTF76b6u1F1B8+iJVj2rDg8q7rcOUT0Pw7aKQqzzsIcX9yC8
+	 WfywI8FRWfmD4NNQq/Sva7D/hw1e0UOe+L+ybP83pebzxnNGDNYlbjvxRlew8/+xUo
+	 4rUylMxVc8WOflLloPBhsbXctDHzBzN7UcryAVRJ1E5vhEPQ7Z46hXBQzkitfjKBy3
+	 yGgPBebCdw4Ww==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Varadarajan Narayanan <quic_varada@quicinc.com>,
-	Sricharan Ramabadhran <quic_srichara@quicinc.com>,
-	Arnd Bergmann <arnd@kernel.org>
-Cc: Arnd Bergmann <arnd@arndb.de>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Manikanta Mylavarapu <quic_mmanikan@quicinc.com>,
-	linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org,
+To: Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Gabor Juhos <j4g8y7@gmail.com>
+Cc: linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] clk: qcom: remove unused data from gcc-ipq5424.c
-Date: Tue, 12 Nov 2024 16:03:25 -0600
-Message-ID: <173144900024.331728.6908534437712999754.b4-ty@kernel.org>
+Subject: Re: [PATCH] dt-bindings: arm: qcom: add missing elements to the SoC list
+Date: Tue, 12 Nov 2024 16:03:26 -0600
+Message-ID: <173144900028.331728.332393464841439368.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241111103258.3336183-1-arnd@kernel.org>
-References: <20241111103258.3336183-1-arnd@kernel.org>
+In-Reply-To: <20241029-qcom-missing-socs-v1-1-c5bf587b0afc@gmail.com>
+References: <20241029-qcom-missing-socs-v1-1-c5bf587b0afc@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,25 +66,17 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 11 Nov 2024 11:32:51 +0100, Arnd Bergmann wrote:
-> The newly added driver causes a warnings when enabling -Wunused-const-variables:
+On Tue, 29 Oct 2024 18:35:25 +0100, Gabor Juhos wrote:
+> There are multiple compatible strings defined in the json schema
+> for SoCs which are not included in the SoC elements list. Extend
+> the list with those items for completeness.
 > 
-> drivers/clk/qcom/gcc-ipq5424.c:1064:30: error: 'ftbl_gcc_q6_axi_clk_src' defined but not used [-Werror=unused-const-variable=]
->  1064 | static const struct freq_tbl ftbl_gcc_q6_axi_clk_src[] = {
->       |                              ^~~~~~~~~~~~~~~~~~~~~~~
-> drivers/clk/qcom/gcc-ipq5424.c:957:30: error: 'ftbl_gcc_qpic_clk_src' defined but not used [-Werror=unused-const-variable=]
->   957 | static const struct freq_tbl ftbl_gcc_qpic_clk_src[] = {
->       |                              ^~~~~~~~~~~~~~~~~~~~~
-> drivers/clk/qcom/gcc-ipq5424.c:497:30: error: 'ftbl_gcc_qupv3_2x_core_clk_src' defined but not used [-Werror=unused-const-variable=]
->   497 | static const struct freq_tbl ftbl_gcc_qupv3_2x_core_clk_src[] = {
->       |                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 > 
-> [...]
 
 Applied, thanks!
 
-[1/1] clk: qcom: remove unused data from gcc-ipq5424.c
-      commit: f1f49cc505bc998d7c13e5a518d027419a21fbae
+[1/1] dt-bindings: arm: qcom: add missing elements to the SoC list
+      commit: 64d2571a3751b83cde7f4843fb2a69b8c19e168b
 
 Best regards,
 -- 
