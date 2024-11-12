@@ -1,85 +1,99 @@
-Return-Path: <linux-arm-msm+bounces-37553-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37555-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 60CA19C4FB3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 08:43:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A7B289C4FD9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 08:48:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E9ECFB2417F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 07:43:08 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 215DCB26879
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 07:48:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9FA5E20B81A;
-	Tue, 12 Nov 2024 07:39:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 384C320EA3C;
+	Tue, 12 Nov 2024 07:42:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ET+3KMnX"
+	dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b="VaNcyP43"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail-m25496.xmail.ntesmail.com (mail-m25496.xmail.ntesmail.com [103.129.254.96])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A33B20B80E;
-	Tue, 12 Nov 2024 07:39:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 282EE20C499;
+	Tue, 12 Nov 2024 07:42:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.129.254.96
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731397176; cv=none; b=nDwhZuinxTtTIl193Bg1+cVwYuwvhdMUBbfR8FqHhEuPP9olgfIN2hPyioKU0dUkMeQs5ii1t8/EzIuRunzdt7kiUVgFhIppmZVx1PmlfzdkVtVn9rtFxPEfNUZC373vMcSJpMVaxLZZGED1Iq59C1lP8sPWciTW210WQk+meFk=
+	t=1731397333; cv=none; b=HQrTFFhn4xA36d678vV1Y9d1DEhJmiCrz2FeHTOeDmi+IjFc91t4Od/Er9p/g55KA66l7JkRLMurfQ4EJeAUHMIuxjdg1JFvm7nq3f+tT3diTi9sxd5Wk5sI/tnghceWJnKZLaVXLP6rMb3PCwJOPIxldbmiqxW24j+yyrGialQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731397176; c=relaxed/simple;
-	bh=X861bD9yTjKInD07veeFX3rxfysmySwUT9SifqyILM8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DXryHUFTsEf4Rsp2BqBd9Sdq87c64EpQKTFQi2CdAkq63VqPhMVlgUfB4AGi5clJelK+TqQsY6NFN3cJXC+hZBMCSIQy5CjUs4ZfCq/OBRdW/Kz00cLDZsZlU+AUeZGDiKpXaCCaZOeWjALfzWJwxzs0RftzLXgFikoBLacmo4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ET+3KMnX; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFDB0C4CED7;
-	Tue, 12 Nov 2024 07:39:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1731397174;
-	bh=X861bD9yTjKInD07veeFX3rxfysmySwUT9SifqyILM8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ET+3KMnXsrc+/JFu8DwTeyKqr4nB27ZixC42quwtxF6YPWvSxQmYmj007hhO8CSU7
-	 08d2tHemusqb6PPMXOrWE//dmSncFN97z6ynMmR/jM9+wVUuYy0VhmUHuyIdiR23mS
-	 4J3HHFDYpo2l8IRIpu/l2wYd0K9Mb6/JARtPuHq+8F0UO9TEHJNrZIc+a1h1hLFRVm
-	 UoADCIG3VJkFz0g4kEDv5ehZJYWQsmZZHWe+bHvFLywVH5009eiNMIkRouUmBvvJnk
-	 sSWVSctQzVgfZeTyhp03dBbjI9Yu3aVkfTZ/xNNldPDtPZfpDOMTF3vbj7vcPipFvS
-	 Gg64m6isF53Tw==
-Date: Tue, 12 Nov 2024 13:09:21 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Slark Xiao <slark_xiao@163.com>
-Cc: rich hathaway <kcphonestores@gmail.com>, Duke.xin@quectel.com,
-	mani@kernel.org, loic.poulain@linaro.org, dnlplm@gmail.com,
-	yonglin.tan@outlook.com, fabio.porcedda@gmail.com,
-	mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	inux-kernel@vger.kernel.org, jerry.meng@quectel.com
-Subject: Re: Hi
-Message-ID: <20241112073921.6n2e2t3wpkkrazgm@thinkpad>
-References: <CANzkbjEcKMMdUgX8fSvKEKfHPpg1mGaeSQG5Xg+LFZnMhMPWoQ@mail.gmail.com>
- <cafd283.f64.1930956a9dd.Coremail.slark_xiao@163.com>
+	s=arc-20240116; t=1731397333; c=relaxed/simple;
+	bh=dBnJYwwKIgzcIjgyx5ZbrWtctPqBJ+GRz95RV8x2jAo=;
+	h=Message-ID:Date:MIME-Version:Cc:To:From:Subject:Content-Type; b=b9l0nqwsqgG1wPDGSNsvF/ZoerwojXJYfPU74yCo/c25N2tjcQ31h5cgSBaOtRu7FFrVJEWCIhmtgCHwcvmpVclE1NYJ3945HIF0TdT+qcJQpeyADGJSDIGcryAVn4dhb+dLfChsGfC4BOW48wqBAOAi/LDgqHJ+B2EQodA5kY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com; spf=pass smtp.mailfrom=rock-chips.com; dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b=VaNcyP43; arc=none smtp.client-ip=103.129.254.96
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
+Received: from [172.16.12.45] (unknown [58.22.7.114])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 28050541;
+	Tue, 12 Nov 2024 15:36:48 +0800 (GMT+08:00)
+Message-ID: <2276434c-8842-42ce-9cdb-929fc2c06b76@rock-chips.com>
+Date: Tue, 12 Nov 2024 15:36:48 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <cafd283.f64.1930956a9dd.Coremail.slark_xiao@163.com>
+User-Agent: Mozilla Thunderbird
+Cc: shawn.lin@rock-chips.com, linux-scsi@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ "linux-arm-kernel@lists.infradead.org"
+ <linux-arm-kernel@lists.infradead.org>, Alim Akhtar
+ <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>,
+ Bart Van Assche <bvanasscheartin.petersen@oracle.com>,
+ Mike Bi <mikebi@micron.com>, Bean Huo <beanhuo@micron.com>,
+ =?UTF-8?Q?Thomas_Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+ Luca Porzio <lporzio@micron.com>, Asutosh Das <quic_asutoshd@quicinc.com>,
+ Can Guo <quic_cang@quicinc.com>, Pedro Sousa <pedrom.sousa@synopsys.com>,
+ Krzysztof Kozlowski <krzk@kernel.org>, Peter Wang <peter.wang@mediatek.com>,
+ Stanley Jhu <chu.stanley@gmail.com>,
+ Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+ Orson Zhai <orsonzhai@gmail.com>, Baolin Wang
+ <baolin.wang@linux.alibaba.com>, Chunyan Zhang <zhang.lyra@gmail.com>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ "\"AngeloGioacchino Del Regno\"," <angelogioacchino.delregno@collabora.com>,
+ Santosh Y <santoshsy@gmail.com>, Namjae Jeon <linkinjeon@gmail.com>
+Content-Language: en-GB
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Shawn Lin <shawn.lin@rock-chips.com>
+Subject: Re: [PATCH 0/5] scsi: ufs: Bug fixes for ufs core and platform
+ drivers
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFDSUNOT01LS0k3V1ktWUFJV1kPCRoVCBIfWUFZGklNTVZPTE9NGRlLQhpOTh1WFRQJFh
+	oXVRMBExYaEhckFA4PWVdZGBILWUFZTkNVSUlVTFVKSk9ZV1kWGg8SFR0UWUFZT0tIVUpLSU9PT0
+	hVSktLVUpCS0tZBg++
+X-HM-Tid: 0a931f4dbe1609cckunm28050541
+X-HM-MType: 1
+X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6MDI6MTo5CTIvGhlLTiFJOBQw
+	GjYKCwpVSlVKTEhKSEJMS0pKT01LVTMWGhIXVQgTGgwVVRcSFTsJFBgQVhgTEgsIVRgUFkVZV1kS
+	C1lBWU5DVUlJVUxVSkpPWVdZCAFZQU9JSTcG
+DKIM-Signature:a=rsa-sha256;
+	b=VaNcyP43gs9wLB8ql74QChUl2E4KHbG97hymVTtaj1TJmMLA4m/SXWGvg3lfvdKXC0rhXppjbqjnQMJabET6k7SjGKauf3hC+zhmftoUopLZ5RhltoWgyI3DkukW7WsQpIicHNxfL3t0////UHSqWQ1RO66ufDDRyifnzGC7NC0=; c=relaxed/relaxed; s=default; d=rock-chips.com; v=1;
+	bh=W8wIrOJrtWi9wR0/zvQJRVrLG+fDpqQvqOPRmkLlgVs=;
+	h=date:mime-version:subject:message-id:from;
 
-On Fri, Nov 08, 2024 at 09:14:54AM +0800, Slark Xiao wrote:
-> 
-> 
-> Hi,
-> What's you met now?
-> I have this file but I have to know what's your problem.
-> If device mismatch and this may lead your device to un-bootable.
-> BTW, I share this file to Mani for upstreaming to linux-firmware. Do you ever search it
-> in that project?
-> 
+ > Hi,
+ >
+ > This series has several bug fixes that I encountered when the 
+ufs-qcom > driver was removed and inserted back. But the fixes are 
+applicable to
+ > other platform glue drivers as well.
+ >
+ > This series is tested on Qcom RB5 development board based on SM8250
+ > SoC.
+ >
 
-Slark, I haven't upstreamed it yet as I need to confirm the license
-compatibility. If you want, you can send it to Rich directly.
+Test this series against the under-reviewed ufshc
+for Rockchip, it works:
 
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+Tested-by: Shawn Lin <shawn.lin@rock-chips.com>
 
