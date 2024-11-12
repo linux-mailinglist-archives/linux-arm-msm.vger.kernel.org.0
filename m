@@ -1,123 +1,334 @@
-Return-Path: <linux-arm-msm+bounces-37564-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37565-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CF2099C5070
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 09:22:17 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 82C9F9C512D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 09:51:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 884BA1F228D2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 08:22:17 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5F356B2A055
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 08:36:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C970120CCDD;
-	Tue, 12 Nov 2024 08:21:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50A8720C01F;
+	Tue, 12 Nov 2024 08:35:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="0v5PZOew"
+	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="YxSo4ZTK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA0779C4
-	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Nov 2024 08:21:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E75220C01B
+	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Nov 2024 08:35:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731399690; cv=none; b=W9h/VOjvOf9Tv0uUgofa+CHj+qluFPjMnIRj8cfPdiGZsGaFcX0t8IWZDABAtLK9c2MXsjXuwNzri9gtEs9v9tcR27mVvMQBFncqoV3NoAIQaow827X4pizUrcux2B0+dSf5K0pswQssWhgfxacIKXwuZgtkVjh6xBsMsHkkLug=
+	t=1731400558; cv=none; b=gTWceBzbAJalKL+4f1Je335VuG2HdSg5uKfMy8Td4dNH9aSr8NsJUIf8+jVV1xgBih78nHJ4T2GQw8eSQ+4ckaPPAPTOboMu9mre02wFZkg+61V4GWb5o62XZLkWZbwgEz/g2ghWYI7sgGgGtnIs1DXR+o/n4j96koLo4VUu1mU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731399690; c=relaxed/simple;
-	bh=Uxzxm5ea5xyHccq62Yr8rtYysd3AkZ+x2y27FL++Qw4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OnnOs1ccCUCEQsaNQYf+YJHWHubRjatJ6MRLxG/UjRTTnEM+Y1B5RLlV7NTABKWT2nLVpZariJGjCgLiEAHb+RL9NPkCt3ulN3Irbv7KeV4Qd9f5ozCY80pX4AAnMB9SuITFbocGqF5QHbJWD4wZtjadQHiMAykU+5sQJRM6tC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=0v5PZOew; arc=none smtp.client-ip=209.85.208.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2fb518014b9so44015521fa.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Nov 2024 00:21:28 -0800 (PST)
+	s=arc-20240116; t=1731400558; c=relaxed/simple;
+	bh=rgLboLCaUdlJWjcAhhH52j9nJn/G65xEOruyM378a48=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=tbUBMwfAdv44mWYpGahPydZ+Mqw5Amv8zqIKmXIhdpDbK0lGEe9p3UCKvnqWDhe1HxV4FAwjbtqpvNPC2vrsxFn9iD+pdP6BAcyHX1pT+I0IHRI8RlHQUgilhGSJXM304Sm7iS2kWSg8LMU09u3e370KQ2OVHy9q0/4+3sDv24w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=YxSo4ZTK; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4315baa51d8so47398475e9.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Nov 2024 00:35:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1731399687; x=1732004487; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Uxzxm5ea5xyHccq62Yr8rtYysd3AkZ+x2y27FL++Qw4=;
-        b=0v5PZOewnXNMIdupPz+O1NmLMT+kOh55EY7kqbY8UxxOOViMlNzZF7NSjaHlbcJCCk
-         yRY+8Y7tz3V0PiVhVizAesF7nT0RMNw4fnKBn7or2ol75REiFLQTGzS84W9hIhaztz13
-         5q6+najOuboE+nlpxgvlifMvcYzaQx50kMKJP265PVot0qBragZD8LHioxL+VVMSd44a
-         6pu35zDBbvCBNla29XnRInO+AgVT2CPIvxXnSbNkDLDvuUkeg8hrbviRJLDP5XMVPGa2
-         avvwbNTPYa2huqbTf2o7RW0pd4q29i8m38X2Tdz5z2JUFw1Ua5UrlzMty0H3pHBACRoX
-         G4Yw==
+        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1731400554; x=1732005354; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=qJl6gQahQ6INKrNHbk0dBjtN96KRkbwEjYWLmPhvKrg=;
+        b=YxSo4ZTK8da2r+CZIRmynfNIbMhH5at8AFZQs9xEzbYlQ+7Kv1i9Jj76IW9xsPSvVX
+         r3nNrqfWrAuiDc+uW9lUI/ZaEhCWNqfjpsWKYqx6Ti6M795IqJzq9x2QnaPJvtnL25pW
+         3qWKGFTi0NlZkpdWuRUn3GL/VLYa+JUhP1M5ZN1ApwgvewDvQOx6ngNY9LrmGxM0aBv1
+         aLi794joOiSvXIjFXIzunKJR2i/O1SifobDeHzhyRPa8Z31j1aFjwubK9w64VQvgBixc
+         wZV6J/eATh+p4+yeM+iEHb4V373No3VzTKpxbqXtLVRGgEY1MrFyoLLqioqhZqlzbT3c
+         wGvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731399687; x=1732004487;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Uxzxm5ea5xyHccq62Yr8rtYysd3AkZ+x2y27FL++Qw4=;
-        b=Ly40CVDwe/qcPiFbxoYpHwQipcprH/ZywHJP9VhAsYK5hOKvUruBnlmexvft/MI/l+
-         CGS5Ji5sgwStPGMKHw9FKJr3KRwNFN7VMEM7X7/B6OOuzTKSBnQ06Ff2OFL3mvIQf4Hq
-         5EmDPpR+oQiXwBCJe1uAgMWXEEanbuVSn4vhPwCiqWMrLxb7KdGj7pac64Ga1M9E4lfd
-         nLyCkN1AEj5tGbazf38pzXh8+vlUtpm33ON3M/lft4nrvW+fqLv5JrINYV6Yug++ssFZ
-         yyUyovTAODp7ic148zI6ssbp2vvqqktdHOBePCD2wgirfyp1ec081hmpinEdfR+dWVGh
-         QX8Q==
-X-Gm-Message-State: AOJu0Ywu5S6Ujk8lLNXwDA3zX86oqAIhEJOzjzJycXU9MmIpFVU1liel
-	jVuYheWr9WiMp66pjORO6nMYVbxPO04GUQrPLz39EMZVTGGoERl6+AO8mV/zFcLtx2fWlIzL7/X
-	+DAQImplXbkhnMOcLVA0rvnU1CTqz1vHRrICBFg==
-X-Google-Smtp-Source: AGHT+IFVGYhhtVdJltvrb5Q3HzqGHbeIDyhkfpyNVBE5lnUQtDNCEzpgZ2uC+RjR4w6nR+0eNq+zBdPYraWQBKs5YAQ=
-X-Received: by 2002:a2e:a9a4:0:b0:2fb:4abb:6fe1 with SMTP id
- 38308e7fff4ca-2ff2015279fmr68829801fa.4.1731399686821; Tue, 12 Nov 2024
- 00:21:26 -0800 (PST)
+        d=1e100.net; s=20230601; t=1731400554; x=1732005354;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qJl6gQahQ6INKrNHbk0dBjtN96KRkbwEjYWLmPhvKrg=;
+        b=s+623P5EZpruymg+OB3vVBPgwJDTJI4/Z//I+pOyS4MDz5HQWilBAubJfQvUPuVsfA
+         vZH+YZt30tr8OUE2jbWovcw65bkKOvrKv18J3cRO7/G4vnWaTRkCeee1eA+KV3EPVVrM
+         9rJEKIyGmUxusfN4YddQ2DDPqAVYKygFVo0kZYg+1SOvR+zJ37EkEwB0AJ79l5UsPPR+
+         n0uIo2mRTLQeu/ntT33dxa9vVpbvwqOv0swDyy0Ut7FF0E77yUw/B4LCnjV2rKmZeTbx
+         mKqZH50JrIOrU3sxkqCIxVXiJjBOJdmYnVAcOWnvWkFBUbM6Xh9yL6PogESCrGAjdrxG
+         xxoQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU/2+A5+RhJy9Zqo5Pif4zvDTICnBrKslY04hip3Uv5EChbEvI4Eu5pI5kqYZJWQ8lKOPiw0i62XUsuQOOr@vger.kernel.org
+X-Gm-Message-State: AOJu0YyTpkPU7uRoIHF/OtlXZpvZ3yHk0Y79QRk1VjiwYeRmk0vvhZq2
+	7rVqH238pU13tvn7rhy724kCC8SND8odsDN8ZfYd8uxsJEKCvxcVDYEweLvAj3k=
+X-Google-Smtp-Source: AGHT+IGc0QiVA+jVnUwTo6TMUTaOQP8dwxrO1h8wUeEf48cEcgf/wVeBxK6XAbl4jJoqNqJWMj+z9g==
+X-Received: by 2002:a5d:5889:0:b0:37d:48ec:547 with SMTP id ffacd0b85a97d-381f17255c8mr15078629f8f.29.1731400553962;
+        Tue, 12 Nov 2024 00:35:53 -0800 (PST)
+Received: from localhost (p509159f1.dip0.t-ipconnect.de. [80.145.89.241])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432b05e5871sm202196645e9.37.2024.11.12.00.35.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Nov 2024 00:35:53 -0800 (PST)
+From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+To: Arnd Bergmann <arnd@arndb.de>
+Cc: Stuart Yoder <stuyoder@gmail.com>,
+	Laurentiu Tudor <laurentiu.tudor@nxp.com>,
+	Jay Fang <f.fangjian@huawei.com>,
+	Aaro Koskinen <aaro.koskinen@iki.fi>,
+	Andreas Kemnade <andreas@kemnade.info>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Roger Quadros <rogerq@kernel.org>,
+	Tony Lindgren <tony@atomide.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Chen-Yu Tsai <wens@csie.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Samuel Holland <samuel@sholland.org>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Andre Przywara <andre.przywara@arm.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Sumit Garg <sumit.garg@linaro.org>,
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Zhang Zekun <zhangzekun11@huawei.com>,
+	"Ricardo B. Marliere" <ricardo@marliere.net>,
+	Sean Young <sean@mess.org>,
+	linux-kernel@vger.kernel.org,
+	linux-omap@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-sunxi@lists.linux.dev,
+	linux-tegra@vger.kernel.org,
+	soc@lists.linux.dev
+Subject: [PATCH] bus: Switch back to struct platform_driver::remove()
+Date: Tue, 12 Nov 2024 09:35:19 +0100
+Message-ID:  <77ef3031ad2d27f4ae695245cf7f62b3f9dda859.1731397206.git.u.kleine-koenig@baylibre.com>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241008160947.81045-1-brgl@bgdev.pl> <55ecee09-196a-4c7a-b7cf-61c19737735b@linaro.org>
- <CAMRc=MeTgFaySBFya2e=CYnrXL6R7s9D1DRq+RxKcsf56xMc+g@mail.gmail.com> <CAMRc=MdVUtff7wLV7mxsoXEBY7pUvULuJH1GvJCJgCRj0OpCBg@mail.gmail.com>
-In-Reply-To: <CAMRc=MdVUtff7wLV7mxsoXEBY7pUvULuJH1GvJCJgCRj0OpCBg@mail.gmail.com>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Tue, 12 Nov 2024 09:21:15 +0100
-Message-ID: <CAMRc=McMA_iN4QH006-kBEpAwMUKa5=ke+iYpmJJvtihWLQAVQ@mail.gmail.com>
-Subject: Re: [PATCH] i2c: qup: use generic device property accessors
-To: Andi Shyti <andi.shyti@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, neil.armstrong@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=8332; i=u.kleine-koenig@baylibre.com; h=from:subject:message-id; bh=rgLboLCaUdlJWjcAhhH52j9nJn/G65xEOruyM378a48=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBnMxNVqYnKYsfMQYFqk+WxukXoIil0oOuioJU68 rc4Lnvd5h2JATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZzMTVQAKCRCPgPtYfRL+ Tk8sB/0aNAqsBtbPSP+Lj7YIcg4DYUH0S8Kqu7f/eS/cA0InWB6J2mcYPq2uv9DlsTgwK78O7QT cfETM/MRIpzCqXJlq6a8NsUrX1yhAdWpV0eYbgory/mSdNsNP1kypKWIFZqsDR1o5bQNfnyEod4 bzUOUK+g1lAuuVcG1I7V0j9u6zaOHQRNljBrlhbIvFrr9hlZk2WUil97+6y+ucmR98Y9Z0J8f4J o+r4fDsFdsR1ewqoFCYiTnGXaMxuGDJG3Hmjeqctqqg/3VwRh0RmXe+vp73pv72CpvnQzyh2Sci N6YYg4E9YDcBegCIZxWRPuxwCszNsJRwiNtU2TArRMENAfLQ
+X-Developer-Key: i=u.kleine-koenig@baylibre.com; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+Content-Transfer-Encoding: 8bit
 
-On Fri, Nov 1, 2024 at 3:20=E2=80=AFPM Bartosz Golaszewski <brgl@bgdev.pl> =
-wrote:
->
-> On Fri, Oct 25, 2024 at 10:04=E2=80=AFAM Bartosz Golaszewski <brgl@bgdev.=
-pl> wrote:
-> >
-> > On Tue, Oct 22, 2024 at 2:05=E2=80=AFPM <neil.armstrong@linaro.org> wro=
-te:
-> > >
-> > > On 08/10/2024 18:09, Bartosz Golaszewski wrote:
-> > > > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > > >
-> > > > There's no reason for this driver to use OF-specific property helpe=
-rs.
-> > > > Drop the last one in favor of the generic variant and no longer inc=
-lude
-> > > > of.h.
-> > > >
-> > > > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > >
-> > > LGTM
-> > >
-> > > Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-> >
-> > Andi, can you pick this up, please?
-> >
-> > Bart
->
-> Any reason why this simple change cannot be picked up?
->
-> Bartosz
+After commit 0edb555a65d1 ("platform: Make platform_driver::remove()
+return void") .remove() is (again) the right callback to implement for
+platform drivers.
 
-I'll take it through my tree for v6.13 if there's no response in the
-following days.
+Convert all platform drivers below drivers/bus to use .remove(), with
+the eventual goal to drop struct platform_driver::remove_new(). As
+.remove() and .remove_new() have the same prototypes, conversion is done
+by just changing the structure member name in the driver initializer.
 
-Bart
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+---
+Hello,
+
+I did a single patch for all of drivers/bus. While I usually prefer to
+do one logical change per patch, this seems to be overengineering here
+as the individual changes are really trivial and shouldn't be much in
+the way for stable backports. But I'll happily split the patch if you
+prefer it split. Also if you object the indentation stuff, I can rework
+that. There is no dedicated maintainer for drivers/bus, maybe Arnd can
+merge this via armsoc?
+
+This is based on yesterday's next, if conflicts arise when you apply it
+at some later time and don't want to resolve them, feel free to just
+drop the changes to the conflicting files. I'll notice and followup at a
+later time then. Or ask me for a fixed resend. (Having said that, I
+recommend b4 am -3 + git am -3 which should resolve most conflicts just
+fine.)
+
+Best regards
+Uwe
+
+ drivers/bus/fsl-mc/fsl-mc-bus.c  | 2 +-
+ drivers/bus/hisi_lpc.c           | 2 +-
+ drivers/bus/omap-ocp2scp.c       | 2 +-
+ drivers/bus/omap_l3_smx.c        | 2 +-
+ drivers/bus/qcom-ssc-block-bus.c | 2 +-
+ drivers/bus/simple-pm-bus.c      | 2 +-
+ drivers/bus/sun50i-de2.c         | 2 +-
+ drivers/bus/sunxi-rsb.c          | 2 +-
+ drivers/bus/tegra-aconnect.c     | 2 +-
+ drivers/bus/tegra-gmi.c          | 2 +-
+ drivers/bus/ti-pwmss.c           | 2 +-
+ drivers/bus/ti-sysc.c            | 2 +-
+ drivers/bus/ts-nbus.c            | 2 +-
+ 13 files changed, 13 insertions(+), 13 deletions(-)
+
+diff --git a/drivers/bus/fsl-mc/fsl-mc-bus.c b/drivers/bus/fsl-mc/fsl-mc-bus.c
+index 930d8a3ba722..2916d1333649 100644
+--- a/drivers/bus/fsl-mc/fsl-mc-bus.c
++++ b/drivers/bus/fsl-mc/fsl-mc-bus.c
+@@ -1210,7 +1210,7 @@ static struct platform_driver fsl_mc_bus_driver = {
+ 		   .acpi_match_table = fsl_mc_bus_acpi_match_table,
+ 		   },
+ 	.probe = fsl_mc_bus_probe,
+-	.remove_new = fsl_mc_bus_remove,
++	.remove = fsl_mc_bus_remove,
+ 	.shutdown = fsl_mc_bus_remove,
+ };
+ 
+diff --git a/drivers/bus/hisi_lpc.c b/drivers/bus/hisi_lpc.c
+index 09340adbacc2..53dd1573e323 100644
+--- a/drivers/bus/hisi_lpc.c
++++ b/drivers/bus/hisi_lpc.c
+@@ -689,6 +689,6 @@ static struct platform_driver hisi_lpc_driver = {
+ 		.acpi_match_table = hisi_lpc_acpi_match,
+ 	},
+ 	.probe = hisi_lpc_probe,
+-	.remove_new = hisi_lpc_remove,
++	.remove = hisi_lpc_remove,
+ };
+ builtin_platform_driver(hisi_lpc_driver);
+diff --git a/drivers/bus/omap-ocp2scp.c b/drivers/bus/omap-ocp2scp.c
+index 7d7479ba0a75..e4dfda7b3b10 100644
+--- a/drivers/bus/omap-ocp2scp.c
++++ b/drivers/bus/omap-ocp2scp.c
+@@ -101,7 +101,7 @@ MODULE_DEVICE_TABLE(of, omap_ocp2scp_id_table);
+ 
+ static struct platform_driver omap_ocp2scp_driver = {
+ 	.probe		= omap_ocp2scp_probe,
+-	.remove_new	= omap_ocp2scp_remove,
++	.remove		= omap_ocp2scp_remove,
+ 	.driver		= {
+ 		.name	= "omap-ocp2scp",
+ 		.of_match_table = of_match_ptr(omap_ocp2scp_id_table),
+diff --git a/drivers/bus/omap_l3_smx.c b/drivers/bus/omap_l3_smx.c
+index ee6d29925e4d..7f0a8f8b3f4c 100644
+--- a/drivers/bus/omap_l3_smx.c
++++ b/drivers/bus/omap_l3_smx.c
+@@ -273,7 +273,7 @@ static void omap3_l3_remove(struct platform_device *pdev)
+ 
+ static struct platform_driver omap3_l3_driver = {
+ 	.probe		= omap3_l3_probe,
+-	.remove_new     = omap3_l3_remove,
++	.remove         = omap3_l3_remove,
+ 	.driver         = {
+ 		.name   = "omap_l3_smx",
+ 		.of_match_table = of_match_ptr(omap3_l3_match),
+diff --git a/drivers/bus/qcom-ssc-block-bus.c b/drivers/bus/qcom-ssc-block-bus.c
+index 5931974a21fa..85d781a32df4 100644
+--- a/drivers/bus/qcom-ssc-block-bus.c
++++ b/drivers/bus/qcom-ssc-block-bus.c
+@@ -373,7 +373,7 @@ MODULE_DEVICE_TABLE(of, qcom_ssc_block_bus_of_match);
+ 
+ static struct platform_driver qcom_ssc_block_bus_driver = {
+ 	.probe = qcom_ssc_block_bus_probe,
+-	.remove_new = qcom_ssc_block_bus_remove,
++	.remove = qcom_ssc_block_bus_remove,
+ 	.driver = {
+ 		.name = "qcom-ssc-block-bus",
+ 		.of_match_table = qcom_ssc_block_bus_of_match,
+diff --git a/drivers/bus/simple-pm-bus.c b/drivers/bus/simple-pm-bus.c
+index 50870c827889..5dea31769f9a 100644
+--- a/drivers/bus/simple-pm-bus.c
++++ b/drivers/bus/simple-pm-bus.c
+@@ -128,7 +128,7 @@ MODULE_DEVICE_TABLE(of, simple_pm_bus_of_match);
+ 
+ static struct platform_driver simple_pm_bus_driver = {
+ 	.probe = simple_pm_bus_probe,
+-	.remove_new = simple_pm_bus_remove,
++	.remove = simple_pm_bus_remove,
+ 	.driver = {
+ 		.name = "simple-pm-bus",
+ 		.of_match_table = simple_pm_bus_of_match,
+diff --git a/drivers/bus/sun50i-de2.c b/drivers/bus/sun50i-de2.c
+index 3339311ce068..dfe588179aca 100644
+--- a/drivers/bus/sun50i-de2.c
++++ b/drivers/bus/sun50i-de2.c
+@@ -36,7 +36,7 @@ static const struct of_device_id sun50i_de2_bus_of_match[] = {
+ 
+ static struct platform_driver sun50i_de2_bus_driver = {
+ 	.probe = sun50i_de2_bus_probe,
+-	.remove_new = sun50i_de2_bus_remove,
++	.remove = sun50i_de2_bus_remove,
+ 	.driver = {
+ 		.name = "sun50i-de2-bus",
+ 		.of_match_table = sun50i_de2_bus_of_match,
+diff --git a/drivers/bus/sunxi-rsb.c b/drivers/bus/sunxi-rsb.c
+index a89d78925637..7a33c3b31d1e 100644
+--- a/drivers/bus/sunxi-rsb.c
++++ b/drivers/bus/sunxi-rsb.c
+@@ -832,7 +832,7 @@ MODULE_DEVICE_TABLE(of, sunxi_rsb_of_match_table);
+ 
+ static struct platform_driver sunxi_rsb_driver = {
+ 	.probe = sunxi_rsb_probe,
+-	.remove_new = sunxi_rsb_remove,
++	.remove = sunxi_rsb_remove,
+ 	.driver	= {
+ 		.name = RSB_CTRL_NAME,
+ 		.of_match_table = sunxi_rsb_of_match_table,
+diff --git a/drivers/bus/tegra-aconnect.c b/drivers/bus/tegra-aconnect.c
+index de80008bff92..90e3b0a10816 100644
+--- a/drivers/bus/tegra-aconnect.c
++++ b/drivers/bus/tegra-aconnect.c
+@@ -104,7 +104,7 @@ MODULE_DEVICE_TABLE(of, tegra_aconnect_of_match);
+ 
+ static struct platform_driver tegra_aconnect_driver = {
+ 	.probe = tegra_aconnect_probe,
+-	.remove_new = tegra_aconnect_remove,
++	.remove = tegra_aconnect_remove,
+ 	.driver = {
+ 		.name = "tegra-aconnect",
+ 		.of_match_table = tegra_aconnect_of_match,
+diff --git a/drivers/bus/tegra-gmi.c b/drivers/bus/tegra-gmi.c
+index f5d6414df9f2..9c09141961d8 100644
+--- a/drivers/bus/tegra-gmi.c
++++ b/drivers/bus/tegra-gmi.c
+@@ -303,7 +303,7 @@ MODULE_DEVICE_TABLE(of, tegra_gmi_id_table);
+ 
+ static struct platform_driver tegra_gmi_driver = {
+ 	.probe = tegra_gmi_probe,
+-	.remove_new = tegra_gmi_remove,
++	.remove = tegra_gmi_remove,
+ 	.driver = {
+ 		.name		= "tegra-gmi",
+ 		.of_match_table	= tegra_gmi_id_table,
+diff --git a/drivers/bus/ti-pwmss.c b/drivers/bus/ti-pwmss.c
+index 4969c556e752..1f2cab91e438 100644
+--- a/drivers/bus/ti-pwmss.c
++++ b/drivers/bus/ti-pwmss.c
+@@ -44,7 +44,7 @@ static struct platform_driver pwmss_driver = {
+ 		.of_match_table	= pwmss_of_match,
+ 	},
+ 	.probe	= pwmss_probe,
+-	.remove_new = pwmss_remove,
++	.remove	= pwmss_remove,
+ };
+ 
+ module_platform_driver(pwmss_driver);
+diff --git a/drivers/bus/ti-sysc.c b/drivers/bus/ti-sysc.c
+index 270a94a06e05..f67b927ae4ca 100644
+--- a/drivers/bus/ti-sysc.c
++++ b/drivers/bus/ti-sysc.c
+@@ -3345,7 +3345,7 @@ MODULE_DEVICE_TABLE(of, sysc_match);
+ 
+ static struct platform_driver sysc_driver = {
+ 	.probe		= sysc_probe,
+-	.remove_new	= sysc_remove,
++	.remove		= sysc_remove,
+ 	.driver         = {
+ 		.name   = "ti-sysc",
+ 		.of_match_table	= sysc_match,
+diff --git a/drivers/bus/ts-nbus.c b/drivers/bus/ts-nbus.c
+index b8af44c5cdbd..2328c48b9b12 100644
+--- a/drivers/bus/ts-nbus.c
++++ b/drivers/bus/ts-nbus.c
+@@ -336,7 +336,7 @@ MODULE_DEVICE_TABLE(of, ts_nbus_of_match);
+ 
+ static struct platform_driver ts_nbus_driver = {
+ 	.probe		= ts_nbus_probe,
+-	.remove_new	= ts_nbus_remove,
++	.remove		= ts_nbus_remove,
+ 	.driver		= {
+ 		.name	= "ts_nbus",
+ 		.of_match_table = ts_nbus_of_match,
+
+base-commit: 6d59cab07b8d74d0f0422b750038123334f6ecc2
+-- 
+2.45.2
+
 
