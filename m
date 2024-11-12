@@ -1,104 +1,241 @@
-Return-Path: <linux-arm-msm+bounces-37612-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37613-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CEDCC9C5849
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 13:51:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2A5799C5864
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 13:58:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9317B281F19
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 12:51:12 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DF093285129
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 12:58:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D9386F099;
-	Tue, 12 Nov 2024 12:49:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E17CF74BED;
+	Tue, 12 Nov 2024 12:58:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H+LxlPj8"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="eLq0XgtU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36CDC41746
-	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Nov 2024 12:49:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E328A70831;
+	Tue, 12 Nov 2024 12:58:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731415792; cv=none; b=SEwdFLudUnSIB7L9Vba62JZDhd2O8me/vztuC+v5G5mSxyQmdFDUDRxGtXNpC3a2+vqTMlN4adukTWFTIX2pI8va2EymbEOL6beHbw5i0cmftFgJQZlNf2kvYyB/G0iNorB4HHsqlSgqAYw7OBo7T5tWCHZcHUTz1p9Py+PtnOA=
+	t=1731416327; cv=none; b=B7gQNCczbRmzLpgQsva8EiMi0LsJIA4tVfNkBrokzmVJJVegnczRdVvV/h8NAhx2kCQ5Dlg8L08/vQe8Ss3DSMT+Ithb81Iv0w/+nAN2Hql8yiVkiJ/puWGn2J5Ly5wxJnwpsmjC4rb+E1lb/n5Uplrp67ZbU6Gt+neYHjgExws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731415792; c=relaxed/simple;
-	bh=dJ9M97T50lSd22qj+iVkBVqwUlNtioHRiNrgs3PDWqc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QwWp8hh72QYVTL3W17T5vQ9sU3QUCDnI5DzkCrN72D7YWDAyX4+iylE3dG/TN5foJTdqJUoXFOHPW29APRts+YMcWRDnrDNUqrMrmi4Ca/MtRuIVQBhuTmnO1e2fI9yV65KSxqbU+WFDGprtmEnN4N6kbCVM+ed0ghSySX9IPRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H+LxlPj8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3525C4CED5
-	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Nov 2024 12:49:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1731415791;
-	bh=dJ9M97T50lSd22qj+iVkBVqwUlNtioHRiNrgs3PDWqc=;
-	h=References:In-Reply-To:From:Date:Subject:To:List-Id:Cc:From;
-	b=H+LxlPj87beDzw3vZTDvo2A0Mf/qe931dgn1UDpLBb2ys4L7SXE0Lg7yJrGwHIWlf
-	 wynpJuLuxxU81GeUiUFgLlE+cUTHwahWq8/lMmYl/5aH7IdZDdI5nGrWdHSxTS7WPb
-	 KB1ghRUlgsIP+TYSzpT0e+b9dbZuKhCr4wYw+oziQQAaVT8wjpIx4J+3r1DMzihMDj
-	 4kyKaP8mIReOgHTGMYx51NXWlQFbwb5fCe5YQ4tiYSpY43Ntd8npJU6Id4KVqTyXbN
-	 JB0mWa5+I1kUq3AwtxIEoTBjjVpsWi6O0ZK6Np/ilk0EIsY26lvkcCczTfUV8Qvwxv
-	 lY3pk51Seiu/A==
-Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-6eb0bdf3cacso16910307b3.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Nov 2024 04:49:51 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCUhDUHBCgLuVC5ZBdQO58psV3C9kfA4fpJJ/pFwm5hve0V4y1epM+iQahTCghk0WzFHzr8LxAF+sn84Jx2l@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy17SQthIudlC4pDZGrnAljYUhNX4uUtR0cVzOvUahe+wdB4LTk
-	TmfYgt1wwrTEKcTcTJGv4gZba1icT591pP5KEpl4kXVDD4kK8UJZ6qtkF34nQShb/9CrnSHMSZ4
-	tN/FVdO/vRNYpKl0ySWafg9MUnAg=
-X-Google-Smtp-Source: AGHT+IFrhmd/G/nYB1NtcybnJnRF8PwwmRAoTlgcSaS6G+DFLZfGCRDwUMijJz1w+WZeBfKI7RYDCTO8SxxJSEREm1o=
-X-Received: by 2002:a05:690c:7444:b0:6db:e1e0:bf6a with SMTP id
- 00721157ae682-6eade40bf58mr133494877b3.7.1731415791023; Tue, 12 Nov 2024
- 04:49:51 -0800 (PST)
+	s=arc-20240116; t=1731416327; c=relaxed/simple;
+	bh=XsVrg/tycUyf1pge9uDquJ8kbJ4hI9A1otOr9vuWvsw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=G0eVK3yydQG2bKYTPsddzQjT7Anl7axOmafRHZ3BY8Hv0wiGFHl2Lf45/ZSUg9Y4vXkzS1P3xavCfmf67x1ndqpIU806xEXgkiGs3ODBYTbxzTC0scYjh46S5rTg9F4WEfOdGSOVywU/n516ttIqXmfkysAFVAIhSMycQtM7rYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=eLq0XgtU; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AC9FhLh002987;
+	Tue, 12 Nov 2024 12:58:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	6TFRQuks3xEPKLnmUVkx3quSMzhADnexEjI/TmNuYo4=; b=eLq0XgtU5E3qcGUO
+	78N+NPsqjatL+swhGTmIHtpvaykiNh+ys7s47Kcm7l3GPkGo4T4VKAwfKMVVZozR
+	DEvJCaUi0umrjgCXc6HhLQjCAMAN75JKdcxYDnyPhhqmliSwHY/n9NQ1RifAD6a7
+	jmF511bSfbL+3Qco103KFi2qvhZOo5BuC6NMXri1Y99DE2Lc0lVq3vYQ6KXKgMdU
+	gL6DQQ9YpOwZq/qZnO4vDfGq44uxFihiWkMLSOyS+z+uM7ELIhUMejcLkYawZQ30
+	nuc7iqTkcNSEMkowyrZqdbH6NrAEeRB10cK/9NSzyhwdlemviGbc3vTYxZ4JhKYG
+	PAWz0w==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42v47y0jd4-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 12 Nov 2024 12:58:41 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4ACCwend000586
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 12 Nov 2024 12:58:40 GMT
+Received: from [10.216.11.168] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 12 Nov
+ 2024 04:58:37 -0800
+Message-ID: <410e1531-6c1b-fb29-2748-eca57fc13481@quicinc.com>
+Date: Tue, 12 Nov 2024 18:28:34 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <a16c9d20-fddf-41ac-b04b-460b38db7d10@quicinc.com>
-In-Reply-To: <a16c9d20-fddf-41ac-b04b-460b38db7d10@quicinc.com>
-From: Josh Boyer <jwboyer@kernel.org>
-Date: Tue, 12 Nov 2024 07:49:39 -0500
-X-Gmail-Original-Message-ID: <CA+5PVA7B6ZHFW68mHZtZa0gp3Nbi2E1-MFs4OtHhyj-iqZUvJA@mail.gmail.com>
-Message-ID: <CA+5PVA7B6ZHFW68mHZtZa0gp3Nbi2E1-MFs4OtHhyj-iqZUvJA@mail.gmail.com>
-Subject: Re: [PULL]: Add firmware for Qualcomm QDU100
-To: Kishore Batta <quic_batta@quicinc.com>
-Cc: linux-firmware@kernel.org, linux-arm-msm@vger.kernel.org
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH 2/4] media: venus: hfi_parser: avoid OOB access beyond
+ payload word count
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Stanimir Varbanov
+	<stanimir.k.varbanov@gmail.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>
+CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <stable@vger.kernel.org>
+References: <20241105-venus_oob-v1-0-8d4feedfe2bb@quicinc.com>
+ <20241105-venus_oob-v1-2-8d4feedfe2bb@quicinc.com>
+ <474d3c62-5747-45b9-b5c3-253607b0c17a@linaro.org>
+ <9098b8ef-76e0-f976-2f4e-1c6370caf59e@quicinc.com>
+ <f53a359a-cffe-4c3a-9f83-9114d666bf04@linaro.org>
+ <c9783a99-724a-cdf0-7e76-7cbf2c77d63f@quicinc.com>
+ <f6e661da-6a8f-4555-881e-264e8518f50c@linaro.org>
+Content-Language: en-US
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <f6e661da-6a8f-4555-881e-264e8518f50c@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 68L1PboUyIa3j1Kv36ekw9PdVCYRr26j
+X-Proofpoint-GUID: 68L1PboUyIa3j1Kv36ekw9PdVCYRr26j
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
+ mlxlogscore=999 spamscore=0 bulkscore=0 malwarescore=0 suspectscore=0
+ impostorscore=0 lowpriorityscore=0 phishscore=0 adultscore=0 clxscore=1015
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2411120105
 
-On Tue, Nov 12, 2024 at 5:18=E2=80=AFAM Kishore Batta <quic_batta@quicinc.c=
-om> wrote:
->
-> The following changes since commit 6482750d396980a31f76edd5a84b03a96bbdf3=
-fe:
->
->   Merge branch 'verb' into 'main' (2024-11-11 20:01:00 +0000)
->
-> are available in the Git repository at:
->
->   https://github.com/quic-batta/linux-firmware/tree/qdu100_xbl_s_melf
 
-Merged and pushed out.
+On 11/12/2024 4:47 PM, Bryan O'Donoghue wrote:
+> On 12/11/2024 08:05, Vikash Garodia wrote:
+>> You did not printed the last iteration without the proposed fix. In the last
+>> iteration (Myword 1), it would access the data beyond allocated size of somebuf.
+>> So we can see how the fix protects from OOB situation.
+> 
+> Right but the loop _can't_ be correct. What's the point in fixing an OOB in a
+> loop that doesn't work ?
+> 
+> This is the loop:
+> 
+> #define BUF_SIZE 0x20  // BUF_SIZE doesn't really matter
+> 
+> char somebuf[BUF_SIZE];
+> u32 *word = somebuf[0];
+> u32 words = ARRAY_SIZE(somebuf);
+> 
+> while (words > 1) {
+>     data = word + 1;  // this
+>     word++;           // and this
+>     words--;
+> }
+> 
+> On the first loop
+> word = somebuf[0];
+> data = somebuf[3];
+> 
+> On the second loop
+> word = somebuf[3]; // the same value as *data in the previous loop
+> 
+> and that's just broken because on the second loop *word == *data in the first
+> loop !
+> 
+> That's what my program showed you
+> 
+> word 4 == 0x03020100 data=0x07060504
+> 
+> // word == data from previous loop
+> word 3 == 0x07060504 data=0x0b0a0908
+> 
+> // word == data from previous loop
+> word 2 == 0x0b0a0908 data=0x0f0e0d0c
+> 
+> The step size, the number of bytes this loop increments is fundamentally wrong
+> because
+> 
+> a) Its a fixed size [1]
+> b) *word in loop(n+1) == *data in loop(n)
+> 
+> Which cannot ever parse more than one data item - in effect never loop - in one go.
+In the second iteration, the loop would not match with any case and would try to
+match the case by incrementing word. Let say the first word is
+"HFI_PROPERTY_PARAM_CODEC_SUPPORTED" followed by 2 words (second and third word)
+of payload step size. At this point, now when the loop runs again with second
+word and third word, it would not match any case. Again at 4th word, it would
+match a case and process the payload.
+One thing that we can do here is to increment the word count with the step size
+of the data consumed ? This way 2nd and 3rd iteration can be skipped as we know
+that there would not be any case in those words.
 
-https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/368
-
-josh
-
->
-> for you to fetch changes up to 01842da45df0a9f862098d1597f6ae5774b3e48a:
->
->   qcom: Add QDU100 firmware image files. (2024-11-12 15:23:11 +0530)
->
-> ----------------------------------------------------------------
-> Kishore Batta (1):
->       qcom: Add QDU100 firmware image files.
->
->  WHENCE                 |   7 +++++++
->  qcom/qdu100/xbl_s.melf | Bin 0 -> 1424292 bytes
->  2 files changed, 7 insertions(+)
->  create mode 100644 qcom/qdu100/xbl_s.melf
->
+Regards,
+Vikash
+> 
+>> For the functionality part, packet from firmware would come as <prop type>
+>> followed by <payload for that prop> i.e
+>> *word = HFI_PROPERTY_PARAM_CODEC_SUPPORTED
+>> *data = payload --> hence here data is pointed to next u32 to point and parse
+>> payload for HFI_PROPERTY_PARAM_CODEC_SUPPORTED.
+>> likewise for other properties in the same packet
+> 
+> [1]
+> 
+> But we've established that word increments by one word.
+> We wouldn't fix this loop by just making it into
+> 
+> while (words > 1) {
+>     data = word + 1;
+>     word = data + 1;
+>     words -= 2;
+> }
+> 
+> Because the consumers of the data have different step sizes, different number of
+> bytes they consume for the structs they cast.
+> 
+> =>
+> 
+> case HFI_PROPERTY_PARAM_CODEC_SUPPORTED:
+>     parse_codecs(core, data);
+>     // consumes sizeof(struct hfi_codec_supported)
+>     struct hfi_codec_supported {
+>         u32 dec_codecs;
+>         u32 enc_codecs;
+>     };
+> 
+> 
+> case HFI_PROPERTY_PARAM_MAX_SESSIONS_SUPPORTED:
+>     parse_max_sessions(core, data);
+>     // consumes sizeof(struct hfi_max_sessions_supported)
+>     struct hfi_max_sessions_supported {
+>         u32 max_sessions;
+>     };
+> 
+> case HFI_PROPERTY_PARAM_CODEC_MASK_SUPPORTED:
+>     parse_codecs_mask(&codecs, &domain, data);
+>     // consumes sizeof(struct hfi_codec_mask_supported)
+>     struct hfi_codec_mask_supported {
+>             u32 codecs;
+>             u32 video_domains;
+>     };
+> 
+> case HFI_PROPERTY_PARAM_UNCOMPRESSED_FORMAT_SUPPORTED:
+>     parse_raw_formats(core, codecs, domain, data);
+>     // consumes sizeof(struct hfi_uncompressed_format_supported)
+>     struct hfi_uncompressed_format_supported {
+>         u32 buffer_type;
+>         u32 format_entries;
+>         struct hfi_uncompressed_plane_info plane_info;
+>     };
+> 
+> case HFI_PROPERTY_PARAM_CAPABILITY_SUPPORTED:
+>     parse_caps(core, codecs, domain, data);
+>     
+>     struct hfi_capabilities {
+>         u32 num_capabilities;
+>         struct hfi_capability data[];
+>     };
+> 
+>     where
+>     hfi_platform.h:#define MAX_CAP_ENTRIES        32
+> 
+> I'll stop there.
+> 
+> This routine needs a rewrite.
+> 
+> ---
+> bod
 
