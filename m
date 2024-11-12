@@ -1,129 +1,278 @@
-Return-Path: <linux-arm-msm+bounces-37688-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37693-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 25B1B9C617E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 20:32:12 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D58519C62C4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 21:43:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6BEFCB87FF7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 18:22:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 680F1285E0C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 20:43:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1EF0215C62;
-	Tue, 12 Nov 2024 18:22:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3CE92219E36;
+	Tue, 12 Nov 2024 20:43:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="de6F0h7+"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QwsVZCEm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 353A9213125;
-	Tue, 12 Nov 2024 18:22:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83C861FA829;
+	Tue, 12 Nov 2024 20:43:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731435742; cv=none; b=OxGeJSjWTqtAxCGB3Kx1ymibDkHJkEcTEjxo8iWBrNog4PS4khIK/Y4ut9uqVODmrOzlt+xOGPM3awflLuCyQcxvuYcOALKeLndNsErEMJNqTJQM3lV0qkObZuh4CqWxgheWHaW5ilfo1wgb7TgumOLiwE/pthbGgkN2AOVUaws=
+	t=1731444207; cv=none; b=lPqzHLLlVh7Zj1EW7Mo8DBwiPt+TvqbcchXlZZmlBJ/EYRb5aBA7FuS3Mkh++Y+8jiDlqfcyVS2UAsxzmc74EPoVMin2vbjsU9qsHmt6EkkxDjT7vq3fYP2CkhuNj/vsT1jhyP4EfcdG97QEVIspRE82b3nvu3hkdJuNNQoVTRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731435742; c=relaxed/simple;
-	bh=dm411aeuElhk98z7KlbEChgibpFt0Ls8H3nVP5qWzns=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=odd9561Wb0qYniyWBC1jtAEAtBPNonHvFj4YlWvE/BRNQnRaa+puKDVEqu7GIPQtYsbcI3gU1DweTjE0d8R6Wb4vWt6dKmh8F9afO7zryjMw7RlzFUrQIoA89bsid4UU0M5B/lnQyhSUr7TsUfua2r2epuP/hh+EC7FOBrdRYOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=de6F0h7+; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-431688d5127so47834425e9.0;
-        Tue, 12 Nov 2024 10:22:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731435739; x=1732040539; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=rGw8I43GoIEdw75f9gcID3EPkPrgfiDyB1X473+QaOg=;
-        b=de6F0h7+D7Aj+IXEmLqLMeI4+B+KJJYz5dtynCic+UpeeMiKkmsovwtwdINNnlXksQ
-         K/gY76AYXUknbhs+LvhEpqb1r4tLRPKn7ipSRoAghwz5kttCOq+CYEPdWTWM7D3IIo5i
-         d/FUBfoTAHgFi4kFTX0SrC6NR2OQweebFvd1fQW9DXt638JlvWSHeWPr6fp1JcInv2yZ
-         MMB0M9DTbplhAubksMlqawi8kk3wdqTEmA8tfxJSHJN/IwyNVF5+7x7W6qfYy/dUXo8F
-         VWYdpGEA0kcT0d17dHWm8WGvTdGnee06jgDliRDHxIKgOPGM/5uk2ibpDBulOTp45fRm
-         1fOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731435739; x=1732040539;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rGw8I43GoIEdw75f9gcID3EPkPrgfiDyB1X473+QaOg=;
-        b=riBfQCtkSeOMv2yGvObaMJgqEOfZut7kqbriO7wvhtrCNw8ML93t2BzkcvjR9sn6yC
-         dobrjjY/yaBsaxQknGSswXOWmln5Lf3vun34Ew+hLODB1dnrd4aWKydBWNcujA0yI5Ds
-         /L01ZiTNBkbw3NAAtANmc7uzEFgLYkux5w9qsyneJ+H486s/kLE2zCeesErHHxo7CzIc
-         L9K/Qg5c52hVCNOe7n9iTYbnfQDXdmy8Hqa0Oi4LPqP4VFxJFnGvMsAOdhKKB5Fhqw+I
-         avaW5nDF15ehxzqxiXX98ngBtsJuacDO5ixb0Cn9S912N2n8StGesp54rnVCxQvD6q0A
-         6YJQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVRE7Vr2cf4R8s0gIrf1ZXNR3zO+WvDWwLly1mB1XjnQf4nrshaiAAksLEcPLZSbvVvWl/jfNwDd04QJlZv@vger.kernel.org, AJvYcCVRuA8tQ8T+d2FTLUpALeH/Ta2EXgvbyhWegBWIGwMqaAE8y8dVLITstv1ZUJ+nGOCr3zjWqYmz0fW3K7CW@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw1OqhBFw5rJRuCHlDbaIJGyuFwGSf/jF+hVxH949u9VTir/jP8
-	qHriI++qSj4GRwPMkoCbJn3yIjX8iJnnTx+A+lAutSmmZfW2yMm6
-X-Google-Smtp-Source: AGHT+IHQJ9DcCw2M41pZGval9nx2PIlFgi2G38OFndiORIwfTgf0326SaoN/rywDWnrSrr2FwxlJzQ==
-X-Received: by 2002:a05:600c:4507:b0:431:5c1c:71b6 with SMTP id 5b1f17b1804b1-432b750a433mr165118395e9.17.1731435739344;
-        Tue, 12 Nov 2024 10:22:19 -0800 (PST)
-Received: from localhost ([194.120.133.65])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381ed97e62csm15903604f8f.37.2024.11.12.10.22.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Nov 2024 10:22:18 -0800 (PST)
-From: Colin Ian King <colin.i.king@gmail.com>
-To: Rob Clark <robdclark@gmail.com>,
-	Sean Paul <sean@poorly.run>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org
-Cc: kernel-janitors@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH][V2] drm/msm/a5xx: remove null pointer check on pdev
-Date: Tue, 12 Nov 2024 18:22:18 +0000
-Message-Id: <20241112182218.1119158-1-colin.i.king@gmail.com>
-X-Mailer: git-send-email 2.39.5
+	s=arc-20240116; t=1731444207; c=relaxed/simple;
+	bh=eQFjIXvFo0aAMOqFIQjIIr6aecQp+1X67XsBFscefIM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=HLl6CtDx63c26Qnsv+QiBo/uLFN1L/QZ6wwbgyqW+GSPLb2JKxXnn8WirioaJDun1o4F8/Z9kOrwhAXu0OXFabc0ZZI5XrFsTPg6oQfQXuILORJt/qI/qGNaz+ZTuKFlW0/4yc1/whkxlD+QbABgvaueq2ToSNPSx1c1c3Iz+m4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QwsVZCEm; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ACC2Z8F004914;
+	Tue, 12 Nov 2024 20:43:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	J8+6ZVF+prS9JLCj/yiR7Zf9qdZTC6blaLgmFTCViTU=; b=QwsVZCEmoSxRLWM3
+	vPTZH82u/xstyeZIpNJGcmD5Si28gVD/vticSG8WtGz2wTHHjErgino5BV0CgAZN
+	u8b+0U2QWmEQTegENDfs2jPZkzHD2qak2TD997u2oSonAoAx7wpUTkcKjvFAO8Gc
+	1ObPxKl8XBxZe3qMaLBDiGz5WotPE2GDmWfdgqKz5UGn+tJtJI9M6H+oA83AHpuf
+	Qu7/SJDgYayReNJkbcPDuVUCc8eDlt2Rl1dnJIEWZLOx5nmTLqLwxMWT0rigyZtI
+	qpv16wi6bxoWzPy7ce1zVui/u8N3jjYlckdCMhQfSerQ3ptUvTzeGrxUzLBOF1b9
+	aThI7A==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42uwt5jrtk-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 12 Nov 2024 20:43:16 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4ACKhF5b021398
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 12 Nov 2024 20:43:15 GMT
+Received: from [10.216.22.98] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 12 Nov
+ 2024 12:43:11 -0800
+Message-ID: <9c25d4b9-223d-4461-a611-05e65538f4a1@quicinc.com>
+Date: Wed, 13 Nov 2024 02:13:08 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] drm/msm/a6xx: Add support for Adreno 612
+To: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        "Konrad
+ Dybcio" <konradybcio@kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, "Simona
+ Vetter" <simona@ffwll.ch>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        Jie Zhang
+	<quic_jiezh@quicinc.com>
+References: <20241101-a612-gpu-support-v1-1-bdfe8f6d9306@quicinc.com>
+Content-Language: en-US
+From: Akhil P Oommen <quic_akhilpo@quicinc.com>
+In-Reply-To: <20241101-a612-gpu-support-v1-1-bdfe8f6d9306@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: mBAbCoRG80ljEhf-WCQuUyS18vBz6hUo
+X-Proofpoint-ORIG-GUID: mBAbCoRG80ljEhf-WCQuUyS18vBz6hUo
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxlogscore=999
+ priorityscore=1501 lowpriorityscore=0 bulkscore=0 clxscore=1015
+ malwarescore=0 impostorscore=0 adultscore=0 suspectscore=0 mlxscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411120167
 
-The call chain on a5xx_gpu_init is such that pdev is not going to be
-null, so the null check on pdev can be removed. This also cleans up
-a static analysis warning where pdev is dereferenced before the null
-check which cannot actually occur.
+On 11/1/2024 8:40 PM, Akhil P Oommen wrote:
+> From: Jie Zhang <quic_jiezh@quicinc.com>
+> 
+> Add support for Adreno 612 GPU found in SM6150/QCS615 chipsets.
+> A612 falls under ADRENO_6XX_GEN1 family and is a cut down version
+> of A615 GPU.
+> 
+> A612 has a new IP called Reduced Graphics Management Unit or RGMU
+> which is a small state machine which helps to toggle GX GDSC
+> (connected to CX rail) to implement IFPC feature. It doesn't support
+> any other features of a full fledged GMU like clock control, resource
+> voting to rpmh etc. So we need linux clock driver support like other
+> gmu-wrapper implementations to control gpu core clock and gpu GX gdsc.
+> Since there is no benefit with enabling RGMU at the moment, RGMU is
+> entirely skipped in this patch.
+> 
+> Signed-off-by: Jie Zhang <quic_jiezh@quicinc.com>
+> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+> ---
+> Mesa support is already available for A612. Verified Glmark2 with
+> weston.
+> 
+> Some dependencies for the devicetree change are not yet available
+> in the mailing lists. I will send it out as a separate patch later.
+> ---
+>  drivers/gpu/drm/msm/adreno/a6xx_catalog.c | 15 +++++++++++++++
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c     | 28 +++++++++++++++++++++-------
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.h   | 11 ++++++++---
+>  3 files changed, 44 insertions(+), 10 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+> index 0c560e84ad5a..234083b69844 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+> @@ -704,6 +704,21 @@ static const struct adreno_info a6xx_gpus[] = {
+>  			{ 157, 3 },
+>  			{ 127, 4 },
+>  		),
+> +	}, {
+> +		.chip_ids = ADRENO_CHIP_IDS(0x06010200),
+> +		.family = ADRENO_6XX_GEN1,
+> +		.fw = {
+> +			[ADRENO_FW_SQE] = "a630_sqe.fw",
+> +		},
+> +		.gmem = (SZ_128K + SZ_4K),
+> +		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
+> +		.init = a6xx_gpu_init,
+> +		.a6xx = &(const struct a6xx_info) {
+> +			.hwcg = a612_hwcg,
+> +			.protect = &a630_protect,
+> +			.gmu_cgc_mode = 0x00000022,
+> +			.prim_fifo_threshold = 0x00080000,
+> +		},
+>  	}, {
+>  		.chip_ids = ADRENO_CHIP_IDS(0x06010500),
+>  		.family = ADRENO_6XX_GEN1,
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> index 019610341df1..f69607267262 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -504,15 +504,26 @@ static void a6xx_set_hwcg(struct msm_gpu *gpu, bool state)
+>  
+>  	if (adreno_is_a630(adreno_gpu))
+>  		clock_cntl_on = 0x8aa8aa02;
+> -	else if (adreno_is_a610(adreno_gpu))
+> +	else if (adreno_is_a610(adreno_gpu) || adreno_is_a612(adreno_gpu))
+>  		clock_cntl_on = 0xaaa8aa82;
+>  	else if (adreno_is_a702(adreno_gpu))
+>  		clock_cntl_on = 0xaaaaaa82;
+>  	else
+>  		clock_cntl_on = 0x8aa8aa82;
+>  
+> -	cgc_delay = adreno_is_a615_family(adreno_gpu) ? 0x111 : 0x10111;
+> -	cgc_hyst = adreno_is_a615_family(adreno_gpu) ? 0x555 : 0x5555;
+> +	if (adreno_is_a612(adreno_gpu))
+> +		cgc_delay = 0x11;
+> +	else if (adreno_is_a615_family(adreno_gpu))
+> +		cgc_delay = 0x111;
+> +	else
+> +		cgc_delay = 0x10111;
+> +
+> +	if (adreno_is_a612(adreno_gpu))
+> +		cgc_hyst = 0x55;
+> +	else if (adreno_is_a615_family(adreno_gpu))
+> +		cgc_delay = 0x555;
+> +	else
+> +		cgc_delay = 0x5555;
+>  
+>  	gmu_write(&a6xx_gpu->gmu, REG_A6XX_GPU_GMU_AO_GMU_CGC_MODE_CNTL,
+>  			state ? adreno_gpu->info->a6xx->gmu_cgc_mode : 0);
+> @@ -600,6 +611,9 @@ static void a6xx_calc_ubwc_config(struct adreno_gpu *gpu)
+>  		gpu->ubwc_config.ubwc_swizzle = 0x7;
+>  	}
+>  
+> +	if (adreno_is_a612(gpu))
+> +		gpu->ubwc_config.highest_bank_bit = 13;
+> +
+>  	if (adreno_is_a618(gpu))
+>  		gpu->ubwc_config.highest_bank_bit = 14;
+>  
+> @@ -1165,7 +1179,7 @@ static int hw_init(struct msm_gpu *gpu)
+>  		gpu_write(gpu, REG_A6XX_CP_LPAC_PROG_FIFO_SIZE, 0x00000020);
+>  
+>  	/* Setting the mem pool size */
+> -	if (adreno_is_a610(adreno_gpu)) {
+> +	if (adreno_is_a610(adreno_gpu) || adreno_is_a612(adreno_gpu)) {
+>  		gpu_write(gpu, REG_A6XX_CP_MEM_POOL_SIZE, 48);
+>  		gpu_write(gpu, REG_A6XX_CP_MEM_POOL_DBG_ADDR, 47);
+>  	} else if (adreno_is_a702(adreno_gpu)) {
+> @@ -1199,7 +1213,7 @@ static int hw_init(struct msm_gpu *gpu)
+>  
+>  	/* Enable fault detection */
+>  	if (adreno_is_a730(adreno_gpu) ||
+> -	    adreno_is_a740_family(adreno_gpu))
+> +	    adreno_is_a740_family(adreno_gpu) || adreno_is_a612(adreno_gpu))
+>  		gpu_write(gpu, REG_A6XX_RBBM_INTERFACE_HANG_INT_CNTL, (1 << 30) | 0xcfffff);
+>  	else if (adreno_is_a690(adreno_gpu))
+>  		gpu_write(gpu, REG_A6XX_RBBM_INTERFACE_HANG_INT_CNTL, (1 << 30) | 0x4fffff);
+> @@ -1864,7 +1878,7 @@ static void a7xx_llc_activate(struct a6xx_gpu *a6xx_gpu)
+>  static void a6xx_llc_slices_destroy(struct a6xx_gpu *a6xx_gpu)
+>  {
+>  	/* No LLCC on non-RPMh (and by extension, non-GMU) SoCs */
+> -	if (adreno_has_gmu_wrapper(&a6xx_gpu->base))
+> +	if (adreno_has_gmu_wrapper(&a6xx_gpu->base) && !adreno_is_a612(&a6xx_gpu->base))
+>  		return;
+>  
+>  	llcc_slice_putd(a6xx_gpu->llc_slice);
+> @@ -1877,7 +1891,7 @@ static void a6xx_llc_slices_init(struct platform_device *pdev,
+>  	struct device_node *phandle;
+>  
+>  	/* No LLCC on non-RPMh (and by extension, non-GMU) SoCs */
+> -	if (adreno_has_gmu_wrapper(&a6xx_gpu->base))
+> +	if (adreno_has_gmu_wrapper(&a6xx_gpu->base) && !adreno_is_a612(&a6xx_gpu->base))
+>  		return;
+>  
+>  	/*
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> index e71f420f8b3a..5cde84817a03 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> @@ -420,6 +420,11 @@ static inline int adreno_is_a610(const struct adreno_gpu *gpu)
+>  	return adreno_is_revn(gpu, 610);
+>  }
+>  
+> +static inline int adreno_is_a612(const struct adreno_gpu *gpu)
+> +{
+> +	return gpu->info->chip_ids[0] == 0x06010200;
+> +}
+> +
+>  static inline int adreno_is_a618(const struct adreno_gpu *gpu)
+>  {
+>  	return adreno_is_revn(gpu, 618);
+> @@ -489,9 +494,9 @@ static inline int adreno_is_a610_family(const struct adreno_gpu *gpu)
+>  {
+>  	if (WARN_ON_ONCE(!gpu->info))
+>  		return false;
+> -
+> -	/* TODO: A612 */
+> -	return adreno_is_a610(gpu) || adreno_is_a702(gpu);
+> +	return adreno_is_a610(gpu) ||
+> +	       adreno_is_a702(gpu) ||
+> +	       adreno_is_a612(gpu);
+>  }
+>  
+>  /* TODO: 615/616 */
+> 
+> ---
+> base-commit: 4a6fd06643afa99989a0e6b848e125099674227b
+> change-id: 20241031-a612-gpu-support-d6330f17d01f
+> 
+> Best regards,
 
-Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+This patch requires a fix up related to llcc. I will send a v2 revision.
 
----
-
-V2: rewrite Subject, remove null check on pdev
-
----
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c | 5 -----
- 1 file changed, 5 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-index ee89db72e36e..4edf9109d1d8 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-@@ -1760,11 +1760,6 @@ struct msm_gpu *a5xx_gpu_init(struct drm_device *dev)
- 	unsigned int nr_rings;
- 	int ret;
- 
--	if (!pdev) {
--		DRM_DEV_ERROR(dev->dev, "No A5XX device is defined\n");
--		return ERR_PTR(-ENXIO);
--	}
--
- 	a5xx_gpu = kzalloc(sizeof(*a5xx_gpu), GFP_KERNEL);
- 	if (!a5xx_gpu)
- 		return ERR_PTR(-ENOMEM);
--- 
-2.39.5
-
+-Akhil.
 
