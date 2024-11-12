@@ -1,255 +1,362 @@
-Return-Path: <linux-arm-msm+bounces-37681-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37683-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E9F699C5F34
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 18:38:41 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E5EF9C5F46
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 18:40:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AA012282594
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 17:38:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3ECA3283AB6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 17:40:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E79421CFB0;
-	Tue, 12 Nov 2024 17:31:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC78B215C6D;
+	Tue, 12 Nov 2024 17:38:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LdcL0bKB"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="iiXG4ezv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8422321CFA1;
-	Tue, 12 Nov 2024 17:31:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7E07213ECD;
+	Tue, 12 Nov 2024 17:38:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731432714; cv=none; b=siPC0CbbpSxdi/fYNN3el40nsAPsevrOBcIxRIPB0FJTDE37iKsS6FJNOlIaQcGp+88rr+JKxrxn+Ls1Loh7oiAUASQowfWKYA8nLVfqSx+WKI5c+idDg6Kv/cRwWcrrb1swWBJ+eGyhRjCFnFM4zxGHyb3414OxZ1A1si99QZc=
+	t=1731433088; cv=none; b=ThU5JswJ3yt1zeC14Vig/R2BQ3LKQprpTaxc8c0fwbwIId1/fNwFuDEwYPGrtDH3I/hLkyOs1Z/WexxQgpy0GyyNZmrlXzr63qlHh8PAqYjOb47cEuF6EfoZdelyhC0DYza4v348fATKa1dhMqNLr9x8YTf+fhGAzB3TY7sSp60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731432714; c=relaxed/simple;
-	bh=3SkKpsd9JurwgvTS9kfmdxX2HkmMsxRIJqM2xEoEqVY=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Fnjc2z3lU5waHVXF7LuC7ImT1O5KXBQnH37sgGWc4XeJ0OQrFXMCViVZaQiDvXZnY3SwVKjfDIFyxLkpXtY4NDyh8q/X8Vk3Ofj2wO+udzpJHo8+hc4Ej38MzOkOP8S2b/P1OXu/14HPNv+9r826hTygALJYWU7z+gnjX0Mpq58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LdcL0bKB; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ACCnwCZ010994;
-	Tue, 12 Nov 2024 17:31:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	H0HzRmOKuxsDsObnHNtYOmXokfAPxgB5azaw2lQocr0=; b=LdcL0bKBBoJ/Kukp
-	1chQZ7+5MMWdSefbs09p60TLGBQ8lSvm11fv/1o50w7x+7QswVMC3Ii74crUtAKy
-	TObHdHAoAeS1MutG9fC3UcHMsCgSWos28vVRTjnCJjkWNbnNr5Z6JOSaI0O05hMO
-	LMxwm+G2jDDLHmapY6qfsGtLRBRz+tHLX99e3OvOCLBL0GsvDs3Vv//PXprzhfXY
-	lYfVXC2RznsMVWWaQ5nIqgvXpW+8iiMRFKYItpE80OO7BOGQ35tlLMDl+iRq4yMj
-	PyszRwLokXQZ2fnvbZ5i2OTKvyl0f6MsMR2Ns2sPV3a+sp5QEUpMYIPKn1m00pN8
-	nKEnDQ==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42t11884ux-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 12 Nov 2024 17:31:42 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4ACHVfgg008117
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 12 Nov 2024 17:31:41 GMT
-Received: from hu-vikramsa-hyd.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 12 Nov 2024 09:31:32 -0800
-From: Vikram Sharma <quic_vikramsa@quicinc.com>
-To: <rfoss@kernel.org>, <todor.too@gmail.com>, <bryan.odonoghue@linaro.org>,
-        <mchehab@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <akapatra@quicinc.com>, <hariramp@quicinc.com>,
-        <andersson@kernel.org>, <konradybcio@kernel.org>,
-        <hverkuil-cisco@xs4all.nl>, <cros-qcom-dts-watchers@chromium.org>,
-        <catalin.marinas@arm.com>, <will@kernel.org>
-CC: <linux-arm-kernel@lists.infradead.org>, <quic_vikramsa@quicinc.com>,
-        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <kernel@quicinc.com>
-Subject: [PATCH v5 5/5] arm64: dts: qcom: qcs6490-rb3gen2-vision-mezzanine: Add vision mezzanine
-Date: Tue, 12 Nov 2024 23:00:32 +0530
-Message-ID: <20241112173032.2740119-6-quic_vikramsa@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20241112173032.2740119-1-quic_vikramsa@quicinc.com>
-References: <20241112173032.2740119-1-quic_vikramsa@quicinc.com>
+	s=arc-20240116; t=1731433088; c=relaxed/simple;
+	bh=tBI/we5cobDpwZqrIAP8VPpPpJdJhS7JFNBxvv/QOZQ=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=ZttehIvATyYpwE6PCW/AyYRNZv8vSHA1al3kbrF2V5mvXJtOSItI1bxpTK1IUuWTUZjy1LmaZoVixTH/4UHcc8tAVI0HOXRfG18q00DNJ0+2vhgssqFOjRhfjYWatOhN4FhToUFHnK65RWUCFbcZvXkRklmITNGo1esoOkrAv28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=iiXG4ezv; arc=none smtp.client-ip=5.75.144.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
+Received: from localhost (docker-mailserver-web-1.docker-mailserver_default [172.22.0.5])
+	by mail.mainlining.org (Postfix) with ESMTPSA id 8DAA7E45C8;
+	Tue, 12 Nov 2024 17:38:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mainlining.org;
+	s=psm; t=1731433084;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Y18+Q1ZqjLCjhEM42biXLX0RAZwh7JK0eycDZZ0O8A8=;
+	b=iiXG4ezvnSWLdzZxkuJpyJk3g1GUNERFObVHqGgW7Mcskho3dVcdy5dWF5LAm85MdYltAH
+	qETgqzHAN5ZLAj/wxveW1mPEsx169OwBfKgYdIp/gbHh9B64re5skPKwQPktTFjPEOTDD5
+	hd+f5CKfzb+GyZElVdhQbmlcW/DjAdj2Q3Gwi2Po6tEXcCrLm7Gu08qhgrXEiLsNO2qDrw
+	V12n4LOiu7c8Pr0I6X13k91xdtXSumzImcgtNwajxnoKluvFrEoIAS7Dy/hFog2907usoE
+	O/d3NalFo68tQDiEeC7tPYklc5TnvYyd36burvq7FLqv/Eu893C5OGsq/BKrUA==
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Date: Tue, 12 Nov 2024 18:38:04 +0100
+From: barnabas.czeman@mainlining.org
+To: Stephan Gerhold <stephan.gerhold@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio
+ <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski
+ <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Linus Walleij
+ <linus.walleij@linaro.org>, Amit Kucheria <amitk@kernel.org>, Thara Gopinath
+ <thara.gopinath@gmail.com>, "Rafael J. Wysocki" <rafael@kernel.org>, Daniel
+ Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, Lukasz
+ Luba <lukasz.luba@arm.com>, Joerg Roedel <joro@8bytes.org>, Will Deacon
+ <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, Srinivas Kandagatla
+ <srinivas.kandagatla@linaro.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-gpio@vger.kernel.org, linux-pm@vger.kernel.org, iommu@lists.linux.dev,
+ =?UTF-8?Q?Otto_Pfl=C3=BCger?= <otto.pflueger@abscue.de>
+Subject: Re: [PATCH v5 08/10] arm64: dts: qcom: Add initial support for
+ MSM8917
+In-Reply-To: <ZzOQEgLLhkH-IymV@linaro.org>
+References: <20241112-msm8917-v5-0-3ca34d33191b@mainlining.org>
+ <20241112-msm8917-v5-8-3ca34d33191b@mainlining.org>
+ <ZzOQEgLLhkH-IymV@linaro.org>
+Message-ID: <4c34cb8eec5eab92501011e446b5362d@mainlining.org>
+X-Sender: barnabas.czeman@mainlining.org
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: LHU8qh1ONCMzHg5jb-IXRcNzSJ0RJvL_
-X-Proofpoint-GUID: LHU8qh1ONCMzHg5jb-IXRcNzSJ0RJvL_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxscore=0
- bulkscore=0 mlxlogscore=999 lowpriorityscore=0 malwarescore=0
- clxscore=1015 priorityscore=1501 adultscore=0 suspectscore=0 spamscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411120141
 
-The Vision Mezzanine for the RB3 ships with an imx577 camera sensor.
-Enable the IMX577 on the vision mezzanine.
-
-An example media-ctl pipeline for the imx577 is:
-
-media-ctl --reset
-media-ctl -v -V '"imx577 '19-001a'":0[fmt:SRGGB10/4056x3040 field:none]'
-media-ctl -V '"msm_csiphy3":0[fmt:SRGGB10/4056x3040]'
-media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
-media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
-media-ctl -l '"msm_csiphy3":1->"msm_csid0":0[1]'
-media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
-
-yavta -B capture-mplane -c -I -n 5 -f SRGGB10P -s 4056x3040 -F /dev/video0
-
-Signed-off-by: Hariram Purushothaman <quic_hariramp@quicinc.com>
-Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
-Signed-off-by: Trishansh Bhardwaj <quic_tbhardwa@quicinc.com>
----
- arch/arm64/boot/dts/qcom/Makefile             |   4 +
- .../qcs6490-rb3gen2-vision-mezzanine.dtso     | 108 ++++++++++++++++++
- 2 files changed, 112 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-vision-mezzanine.dtso
-
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 9bb8b191aeb5..4ee57b3871dd 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -114,6 +114,10 @@ dtb-$(CONFIG_ARCH_QCOM)	+= qcm6490-shift-otter.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2.dtb
-+
-+qcs6490-rb3gen2-vision-mezzanine-dtbs := qcs6490-rb3gen2.dtb qcs6490-rb3gen2-vision-mezzanine.dtbo
-+
-+dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2-vision-mezzanine.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qcs8550-aim300-aiot.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride-r3.dtb
-diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-vision-mezzanine.dtso b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-vision-mezzanine.dtso
-new file mode 100644
-index 000000000000..6e2fccca8f11
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-vision-mezzanine.dtso
-@@ -0,0 +1,108 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
-+ */
-+
-+/*
-+ * Camera Sensor overlay on top of rb3gen2 core kit.
-+ */
-+
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/clock/qcom,camcc-sc7280.h>
-+
-+/dts-v1/;
-+/plugin/;
-+
-+&camcc {
-+	status = "okay";
-+};
-+
-+&camss {
-+	vdda-phy-supply = <&vreg_l10c_0p88>;
-+	vdda-pll-supply = <&vreg_l6b_1p2>;
-+	status = "okay";
-+
-+	ports {
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		/* The port index denotes CSIPHY id i.e. csiphy3 */
-+		port@3 {
-+			reg = <3>;
-+			csiphy3_ep: endpoint {
-+				clock-lanes = <7>;
-+				data-lanes = <0 1 2 3>;
-+				remote-endpoint = <&imx577_ep>;
-+			};
-+		};
-+	};
-+};
-+
-+&cci1 {
-+	status = "okay";
-+};
-+
-+&cci1_i2c1 {
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+
-+	camera@1a {
-+		compatible = "sony,imx577";
-+		reg = <0x1a>;
-+
-+		reset-gpios = <&tlmm 78 GPIO_ACTIVE_LOW>;
-+		pinctrl-names = "default", "suspend";
-+		pinctrl-0 = <&cam2_default>;
-+		pinctrl-1 = <&cam2_suspend>;
-+
-+		clocks = <&camcc CAM_CC_MCLK3_CLK>;
-+		assigned-clocks = <&camcc CAM_CC_MCLK3_CLK>;
-+		assigned-clock-rates = <24000000>;
-+
-+		dovdd-supply  = <&vreg_l18b_1p8>;
-+
-+		port {
-+			imx577_ep: endpoint {
-+				clock-lanes = <7>;
-+				link-frequencies = /bits/ 64 <600000000>;
-+				data-lanes = <0 1 2 3>;
-+				remote-endpoint = <&csiphy3_ep>;
-+			};
-+		};
-+	};
-+};
-+
-+&tlmm {
-+	cam2_default: cam2-default-state {
-+		rst-pins {
-+			pins = "gpio78";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-disable;
-+		};
-+
-+		mclk-pins {
-+			pins = "gpio67";
-+			function = "cam_mclk";
-+			drive-strength = <2>;
-+			bias-disable;
-+		};
-+	};
-+
-+	cam2_suspend: cam2-suspend-state {
-+		rst-pins {
-+			pins = "gpio78";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-down;
-+			output-low;
-+		};
-+
-+		mclk-pins {
-+			pins = "gpio67";
-+			function = "cam_mclk";
-+			drive-strength = <2>;
-+			bias-pull-down;
-+		};
-+	};
-+};
--- 
-2.25.1
-
+On 2024-11-12 18:27, Stephan Gerhold wrote:
+> On Tue, Nov 12, 2024 at 04:49:38PM +0100, Barnabás Czémán wrote:
+>> From: Otto Pflüger <otto.pflueger@abscue.de>
+>> 
+>> Add initial support for MSM8917 SoC.
+>> 
+>> Signed-off-by: Otto Pflüger <otto.pflueger@abscue.de>
+>> [reword commit, rebase, fix schema errors]
+>> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+>> ---
+>>  arch/arm64/boot/dts/qcom/msm8917.dtsi | 1974 
+>> +++++++++++++++++++++++++++++++++
+>>  1 file changed, 1974 insertions(+)
+>> 
+>> diff --git a/arch/arm64/boot/dts/qcom/msm8917.dtsi 
+>> b/arch/arm64/boot/dts/qcom/msm8917.dtsi
+>> new file mode 100644
+>> index 
+>> 0000000000000000000000000000000000000000..cf0a0eec1141e11faca0ee9705d6348ab32a0f50
+>> --- /dev/null
+>> +++ b/arch/arm64/boot/dts/qcom/msm8917.dtsi
+>> @@ -0,0 +1,1974 @@
+>> [...]
+>> +		domain-idle-states {
+>> +			cluster_sleep_0: cluster-sleep-0 {
+>> +				compatible = "domain-idle-state";
+>> +				arm,psci-suspend-param = <0x41000023>;
+>> +				entry-latency-us = <700>;
+>> +				exit-latency-us = <650>;
+>> +				min-residency-us = <1972>;
+>> +			};
+>> +
+>> +			cluster_sleep_1: cluster-sleep-1 {
+>> +				compatible = "domain-idle-state";
+>> +				arm,psci-suspend-param = <0x41000043>;
+>> +				entry-latency-us = <240>;
+>> +				exit-latency-us = <280>;
+>> +				min-residency-us = <806>;
+>> +			};
+> 
+> I think my comment here is still open:
+> 
+> This is strange, the deeper sleep state has lower timings than the
+> previous one?
+> 
+>> +
+>> +			cluster_sleep_2: cluster-sleep-2 {
+>> +				compatible = "domain-idle-state";
+>> +				arm,psci-suspend-param = <0x41000053>;
+>> +				entry-latency-us = <700>;
+>> +				exit-latency-us = <1000>;
+>> +				min-residency-us = <6500>;
+>> +			};
+>> +		};
+>> +
+>> [...]
+>> +		restart@4ab000 {
+>> +			compatible = "qcom,pshold";
+>> +			reg = <0x004ab000 0x4>;
+>> +		};
+> 
+> This one too:
+> 
+> You have PSCI for shutting down, do you actually need this?
+> 
+>> +
+>> +		tlmm: pinctrl@1000000 {
+>> +			compatible = "qcom,msm8917-pinctrl";
+>> +			reg = <0x01000000 0x300000>;
+>> +			interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
+>> +			gpio-controller;
+>> +			gpio-ranges = <&tlmm 0 0 134>;
+>> +			#gpio-cells = <2>;
+>> +			interrupt-controller;
+>> +			#interrupt-cells = <2>;
+>> +
+>> [...]
+>> +			sdc1_clk_on: sdc1-clk-on-state {
+>> +				pins = "sdc1_clk";
+>> +				bias-disable;
+>> +				drive-strength = <16>;
+>> +			};
+>> +
+>> +			sdc1_clk_off: sdc1-clk-off-state {
+>> +				pins = "sdc1_clk";
+>> +				bias-disable;
+>> +				drive-strength = <2>;
+>> +			};
+>> +
+>> +			sdc1_cmd_on: sdc1-cmd-on-state {
+>> +				pins = "sdc1_cmd";
+>> +				bias-disable;
+>> +				drive-strength = <10>;
+>> +			};
+>> +
+>> +			sdc1_cmd_off: sdc1-cmd-off-state {
+>> +				pins = "sdc1_cmd";
+>> +				bias-disable;
+>> +				drive-strength = <2>;
+>> +			};
+>> +
+>> +			sdc1_data_on: sdc1-data-on-state {
+>> +				pins = "sdc1_data";
+>> +				bias-pull-up;
+>> +				drive-strength = <10>;
+>> +			};
+>> +
+>> +			sdc1_data_off: sdc1-data-off-state {
+>> +				pins = "sdc1_data";
+>> +				bias-pull-up;
+>> +				drive-strength = <2>;
+>> +			};
+>> +
+>> +			sdc1_rclk_on: sdc1-rclk-on-state {
+>> +				pins = "sdc1_rclk";
+>> +				bias-pull-down;
+>> +			};
+>> +
+>> +			sdc1_rclk_off: sdc1-rclk-off-state {
+>> +				pins = "sdc1_rclk";
+>> +				bias-pull-down;
+>> +			};
+>> +
+>> +			sdc2_clk_on: sdc2-clk-on-state {
+>> +				pins = "sdc2_clk";
+>> +				drive-strength = <16>;
+>> +				bias-disable;
+>> +			};
+>> +
+>> +			sdc2_clk_off: sdc2-clk-off-state {
+>> +				pins = "sdc2_clk";
+>> +				bias-disable;
+>> +				drive-strength = <2>;
+>> +			};
+>> +
+>> +			sdc2_cmd_on: sdc2-cmd-on-state {
+>> +				pins = "sdc2_cmd";
+>> +				bias-pull-up;
+>> +				drive-strength = <10>;
+>> +			};
+>> +
+>> +			sdc2_cmd_off: sdc2-cmd-off-state {
+>> +				pins = "sdc2_cmd";
+>> +				bias-pull-up;
+>> +				drive-strength = <2>;
+>> +			};
+> 
+> These are not referenced anywhere? Not here in the sdhc_X nodes, and
+> also not in your msm8917-xiaomi-riva.dts. Would also recommend
+> consolidating these to a single node like in msm8916.dtsi, see commit
+> c943e4c58b2f ("arm64: dts: qcom: msm8916/39: Consolidate SDC pinctrl").
+> 
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c943e4c58b2ffb0dcd497f8b12f284f5e8fc477e
+> 
+>> +
+>> +			sdc2_cd_on: cd-on-state {
+>> +				pins = "gpio67";
+>> +				function = "gpio";
+>> +				drive-strength = <2>;
+>> +				bias-pull-up;
+>> +			};
+>> +
+>> +			sdc2_cd_off: cd-off-state {
+>> +				pins = "gpio67";
+>> +				function = "gpio";
+>> +				drive-strength = <2>;
+>> +				bias-disable;
+>> +			};
+> 
+> It does not make sense to have different on/off states for the card
+> detect (CD) pin of the SD card. It needs to work even when the SD card
+> is suspended so we can detect insertions/removals. Also should be 
+> placed
+> in the board-specific DT part.
+I have made these based on this 
+https://git.codelinaro.org/clo/la/kernel/msm-4.9/-/blob/LA.UM.9.6.2.r1-04800-89xx.0/arch/arm64/boot/dts/qcom/msm8917-pinctrl.dtsi
+> 
+> See commit dfbda20dabaa ("arm64: dts: qcom: msm8916/39: Fix SD card
+> detect pinctrl").
+> 
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=dfbda20dabaa1f284abd550035db5887384c8e4c
+> 
+> 
+>> +
+>> +			sdc2_data_on: sdc2-data-on-state {
+>> +				pins = "sdc2_data";
+>> +				bias-pull-up;
+>> +				drive-strength = <10>;
+>> +			};
+>> +
+>> +			sdc2_data_off: sdc2-data-off-state {
+>> +				pins = "sdc2_data";
+>> +				bias-pull-up;
+>> +				drive-strength = <2>;
+>> +			};
+>> +
+>> [...]
+>> +		blsp1_i2c4: i2c@78b8000 {
+>> +			compatible = "qcom,i2c-qup-v2.2.1";
+>> +			reg = <0x078b8000 0x500>;
+>> +			interrupts = <GIC_SPI 98 IRQ_TYPE_LEVEL_HIGH>;
+>> +			clocks = <&gcc GCC_BLSP1_QUP4_I2C_APPS_CLK>,
+>> +				 <&gcc GCC_BLSP1_AHB_CLK>;
+>> +			clock-names = "core", "iface";
+>> +			dmas = <&blsp1_dma 10>, <&blsp1_dma 11>;
+>> +			dma-names = "tx", "rx";
+>> +			pinctrl-0 = <&blsp1_i2c4_default>;
+>> +			pinctrl-1 = <&blsp1_i2c4_sleep>;
+>> +			pinctrl-names = "default", "sleep";
+>> +			#address-cells = <1>;
+>> +			#size-cells = <0>;
+>> +			status = "disabled";
+>> +		};
+>> +
+>> +		blsp2_i2c5: i2c@7af5000 {
+> 
+> This is actually blsp2_i2c1 if you look at the clock name below:
+> 
+>> +			compatible = "qcom,i2c-qup-v2.2.1";
+>> +			reg = <0x07af5000 0x600>;
+>> +			interrupts = <GIC_SPI 299 IRQ_TYPE_LEVEL_HIGH>;
+>> +			clocks = <&gcc GCC_BLSP2_QUP1_I2C_APPS_CLK>,
+> 
+> here ^
+> 
+> But I realize now that the pinctrl functions are consecutively numbered
+> without the BLSP number. Sorry for the confusion.
+> 
+> Basically:
+>   - blsp1_i2c2 == blsp_i2c2
+>   - blsp2_i2c1 == blsp_i2c5
+> 
+> Looking at some other examples upstream I guess you can choose between
+> one of the following options:
+> 
+>  1. msm8974/msm8976/msm8996/msm8998: Use &blspX_i2cY labels for the 
+> i2c@
+>     node and pinctrl and only have the slightly confusing pinctrl
+>     function. E.g. this in msm8976.dtsi:
+> 
+> 			/* 4 (not 6!) interfaces per QUP, BLSP2 indexes are numbered (n)+4 
+> */
+> 			blsp2_i2c2_default: blsp2-i2c2-default-state {
+> 				pins = "gpio22", "gpio23";
+> 				function = "blsp_i2c6";
+> 				drive-strength = <2>;
+> 				bias-disable;
+> 			};
+> 
+>     Note how blsp2_i2c2 == blsp_i2c6.
+> 
+>  2. msm8994: Use &blspX_i2cY labels for the i2c@ node, but keep pinctrl
+>     named &i2cN_default. E.g. this in msm8994.dtsi:
+> 
+> 		blsp2_i2c1: i2c@f9963000 {
+> 			/* ... */
+> 			pinctrl-names = "default", "sleep";
+> 			pinctrl-0 = <&i2c7_default>;
+> 			pinctrl-1 = <&i2c7_sleep>;
+> 			/* ... */
+> 		};
+> 
+>     Note how blsp2_i2c1 == i2c7_default here.
+> 
+>  3. msm8953: Use &i2c_N labels everywhere like on downstream. E.g. this
+>     in msm8953.dtsi. This is pretty much what you had originally:
+> 
+> 		i2c_5: i2c@7af5000 {
+> 			/* ... */
+> 			pinctrl-names = "default", "sleep";
+> 			pinctrl-0 = <&i2c_5_default>;
+> 			pinctrl-1 = <&i2c_5_sleep>;
+> 			/* ... */
+> 		};
+> 
+> All of these are fine for me. Feel free to pick the one you prefer. But
+> let's not introduce a new confusing variant of this. :-)
+> 
+> Thanks,
+> Stephan
 
