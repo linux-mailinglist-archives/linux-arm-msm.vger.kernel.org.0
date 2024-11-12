@@ -1,204 +1,190 @@
-Return-Path: <linux-arm-msm+bounces-37593-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37594-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 027E89C5642
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 12:22:25 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D26E29C564F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 12:23:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B05C928FB0D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 11:22:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 93EE328FB06
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 11:23:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 97D511FB75F;
-	Tue, 12 Nov 2024 11:02:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E7DC1FA84B;
+	Tue, 12 Nov 2024 11:03:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="l4zM3z4L"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Zf7Wpbgl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5A231F77A7;
-	Tue, 12 Nov 2024 11:02:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1455A1FA82A
+	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Nov 2024 11:03:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731409324; cv=none; b=T62ak2TB0JsgqmD3BoebmiPH6qvvRzv8s6TU2B1a8Q5kcvuR8WAwMWN786c2Y8bVf1A19SaJeC/zeH3MtoDq4FWD3ux8H9J6yJ4BS6FN0b7ne/nzKAz5uNYapa8pYQ7y1Xn9z4QHJw2+KQg/ubCycJSsclP3sbD9e77KMCVYkds=
+	t=1731409425; cv=none; b=q0u8BBWHpWwNd4L4ypMdyphqBXT88g48m3/hl6P1mNonEcwFMpSS1nVcGL8iqjpghaV/+EubptntHbgle2lxe9QngJmeLFc5UvKji15vJqzyNJILiOq/QARogO16/Ps1y+C+chTgGhwQZo65uagUMfxKLI8LPob/VQnKrLXZvpo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731409324; c=relaxed/simple;
-	bh=5KfUg0YOsEzPPCGT9maCxQzQVsth/OgqTvMecB45+jI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=i/MynGebNzy6Hkn7I3Ap+0GN8qP+v1PKz/Uxgu5Lv1JnTfCbbc0cWjqERjMk/3PE5Q2tHYUV+gUniDDNO/DNn6MKdqmlhuYnqRGYfUYPH2a6YhmbGbjvsyCqCogLZWE8KCcZvju0XxlslkWFM6wtMa+SKfJJC8PMly7cnMr3YOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=l4zM3z4L; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AC2DtB6020024;
-	Tue, 12 Nov 2024 11:01:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=4eIblupSAURCtRr/i0Ikcl
-	C40xnjd6QYmYxBpcye40s=; b=l4zM3z4LdEoelNax/xsz7u8vDXyjaJMbyo46n+
-	dcTS7thFVQqDx9RNBHOBpI8Kq7+nBSs6AsKrDOmG5N1jyEtFmz2khxihuhVzxDXt
-	BXdNfda8P32r/iAkfPzD8ybrny1X/DYv7P/5erZ4FZ+2n9cziEnQqdTfQPdSdLNP
-	XvPPXm8rBVoUoh1Xh8b5vYfx91nWIXxFwbxcTKyyMICoYb1MnF2HAGLHGbjTI17/
-	9XfBtHLJJn4c8MnCIMIMv+9LJ+mXqHhxQgVKCeOO0VZOF8WUMKa+sDNISfiFNm2U
-	yB5yZoJPv1gxd6OiqjtusGgj957ZqM24N8yGrnzCkNbV4KRg==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42t1186xk5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 12 Nov 2024 11:01:58 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4ACB1wAB027366
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 12 Nov 2024 11:01:58 GMT
-Received: from hu-mkshah-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 12 Nov 2024 03:01:55 -0800
-From: Maulik Shah <quic_mkshah@quicinc.com>
-Date: Tue, 12 Nov 2024 16:31:51 +0530
-Subject: [PATCH] arm64: dts: qcom: sa8775p: Add CPUs to psci power domain
+	s=arc-20240116; t=1731409425; c=relaxed/simple;
+	bh=G0Qe2OADcAQsfACZt2BcP1eMIcjortGkp4YDbkFFOYU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=HxuEyWEvSrfJPfEnQBfYyfYytJ7JeowYfp5/gGF8xLKrhHY/5TuSi1NQMULo7rVwCFr7Rt3cdomL4TLk9QQeHAslXMb/VL7qoe4gOzygRn7pdylZt41gKst9BQNSvipU/XWkD6wK+hschgzYBfcxtXPB4xx7U75+0wNxmm87j0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=fail smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Zf7Wpbgl; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AC2dnkN017404
+	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Nov 2024 11:03:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	d7fGoZsQujJug+U+jHgYocLKquVR4HJgVH5ELiDsVtU=; b=Zf7WpbglOftzO5UU
+	RfZHbfYkITaFaGhwrV1yrBSs5M1xbbNUQsN9bUq3jv/mxRma5h2n9xa7b9OOge1p
+	JVBehQDw3O2+TXgrm2j/wjWhyvSmuEZLZah0sos6cURsHaY9x5d5sqcl3rRR72ez
+	1oE+dpjtDYrITI997+zOZhZnB3DapTO7XzzxaU2Z/sWCUmyxhvJJPycxes3QeMv0
+	hfBrCC7NEEDXIwTkRzAs6oobyqXTBHhY/gG60sXF778vhrVmr0cCm6jg06HYfQh/
+	Fd8p+aCBGwAnjzID8jAiY4GrYffP2HM527rmH+KATLNEctonMd76aFi/CJfPCvxg
+	L/KrcQ==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42syax7219-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Nov 2024 11:03:41 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-6cbe6e6bcf2so1409896d6.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Nov 2024 03:03:41 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731409421; x=1732014221;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=d7fGoZsQujJug+U+jHgYocLKquVR4HJgVH5ELiDsVtU=;
+        b=wUzz7pMxDCJA32QPFYfhmILiy+ncTxm+O3JB8H4TWq3CWmtN9jYQ84oVI4m0BzWaIn
+         jXFbnhR7UDroJcCCZ79hSh7U3vjWDmGuaGnrEOuDpVOdcGsjEXzVOYiGkkfqoMK0KomR
+         FHJetGDA1/iXE3gL9MFne8FqQPeVpi0DCPq80JqM4cekiuLo1ZWt2zV4dUdn/kw6V+5A
+         7W42GzqCDv0qLLEH23S+OwGM/x4r7sqErw13lz5lEj8DgScJiNxTOKFnYpDGTl+PpE3h
+         e4QJLHMyEy5TwJ8HeDrdI6NSu76ddi6IOw8UnmAi2mUMkYxftDkXlvsNZ5iAYQ3fFxJu
+         06MQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX6i7Smnn/ZFEpDj2PjvksdqxHffBIhuXCrFnTI3lVIIppwKyTT74iRf+WmcUjpVnqtfm+oCL5jdc1u2ZNJ@vger.kernel.org
+X-Gm-Message-State: AOJu0YwYPVWguYbQwIFBo+zaxQpe7LpbYED8vQo04fi6pDlQe2tLYNKM
+	jtfMhRLMYNIEKL24r2ibv5jGRXelrT+NnZfwp1ehcDhBUHWxVAr7CV0nenaJyXh/ZLhTtl4cEbP
+	ucW/IAN6fTUfxl4dJYVvGK0Ot1jNYQwZYDge+rDD/Ue4cknPRYNqkmhAjxYKtFIKq
+X-Received: by 2002:a05:620a:4441:b0:7b3:2107:397 with SMTP id af79cd13be357-7b331dc992cmr795518385a.15.1731409421127;
+        Tue, 12 Nov 2024 03:03:41 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF1fhQJCIFJPwzZ+PR7cMWjAglUJ/e3/68X4A0MvFsQcnHnwg/lt4fE0sGY44qyhmK5ZwJw9g==
+X-Received: by 2002:a05:620a:4441:b0:7b3:2107:397 with SMTP id af79cd13be357-7b331dc992cmr795515285a.15.1731409420681;
+        Tue, 12 Nov 2024 03:03:40 -0800 (PST)
+Received: from [192.168.123.190] (public-gprs527294.centertel.pl. [31.61.178.255])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5cf1d2cf5c5sm3562974a12.31.2024.11.12.03.03.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 12 Nov 2024 03:03:40 -0800 (PST)
+Message-ID: <6565a4ec-6db6-4442-a07f-ace467c47395@oss.qualcomm.com>
+Date: Tue, 12 Nov 2024 12:02:49 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20241112-sa8775p_cpuidle-v1-1-66ff3ba72464@quicinc.com>
-X-B4-Tracking: v=1; b=H4sIAJ41M2cC/x3M0QpAMBSA4VfRubZyDhpeRdJwximxtkhp7265/
- C7+/4XAXjhAl73g+ZYg55GAeQbzZo6VlSzJQAVViEgqmEbr2o2zu2TZWdW2nCyZVhO2kCrn2cr
- zH/shxg/IlJPBYQAAAA==
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bartosz Golaszewski
-	<bartosz.golaszewski@linaro.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_lsrao@quicinc.com>,
-        Maulik Shah
-	<quic_mkshah@quicinc.com>
-X-Mailer: b4 0.12.5-dev-2aabd
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1731409314; l=3117;
- i=quic_mkshah@quicinc.com; s=20240109; h=from:subject:message-id;
- bh=5KfUg0YOsEzPPCGT9maCxQzQVsth/OgqTvMecB45+jI=;
- b=B8HsMrlFyk5OPwp1yMHvOb+r3nRtzbs5/dSqt6PzNCoLsJb1EasRdnQ6lP6c7eadz3LfZCvbH
- RTzo/VDdufVAqkXLhnq7vKg9YzkbPw7KmV8pLwqQhp7I089DeOSoA42
-X-Developer-Key: i=quic_mkshah@quicinc.com; a=ed25519;
- pk=bd9h5FIIliUddIk8p3BlQWBlzKEQ/YW5V+fe759hTWQ=
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: uaGX6g4n-rNX8wGs1U7TukbF8gonsgZ5
-X-Proofpoint-GUID: uaGX6g4n-rNX8wGs1U7TukbF8gonsgZ5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 7/7] arm64: dts: qcom: ipq5424: Add thermal zone nodes
+To: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>,
+        Konrad Dybcio <konradybcio@gmail.com>, srinivas.kandagatla@linaro.org,
+        robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+        amitk@kernel.org, thara.gopinath@gmail.com, rafael@kernel.org,
+        daniel.lezcano@linaro.org, rui.zhang@intel.com, lukasz.luba@arm.com,
+        andersson@kernel.org, konradybcio@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
+Cc: quic_srichara@quicinc.com, quic_varada@quicinc.com
+References: <20241104124413.2012794-1-quic_mmanikan@quicinc.com>
+ <20241104124413.2012794-8-quic_mmanikan@quicinc.com>
+ <91ea0f03-9bbe-491d-9056-ebd9fdc73bfa@oss.qualcomm.com>
+ <8cb665f5-4885-4853-804a-7313decc719c@quicinc.com>
+ <2c7ece9d-95e8-4d01-a9da-c1d5d7388771@gmail.com>
+ <fc676574-ffac-40d2-aa47-8d7cb61b5e3f@quicinc.com>
+ <9bd3d4e2-aba1-423c-946a-f5c60da71497@oss.qualcomm.com>
+ <f5ceee66-9d09-44f9-9217-3abd467d1086@quicinc.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <f5ceee66-9d09-44f9-9217-3abd467d1086@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: kfexcH3RfFpIaWIjdHtUN2cQzH1a42Gj
+X-Proofpoint-GUID: kfexcH3RfFpIaWIjdHtUN2cQzH1a42Gj
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxscore=0
- bulkscore=0 mlxlogscore=826 lowpriorityscore=0 malwarescore=0
- clxscore=1011 priorityscore=1501 adultscore=0 suspectscore=0 spamscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
+ bulkscore=0 malwarescore=0 spamscore=0 suspectscore=0 mlxlogscore=999
+ lowpriorityscore=0 priorityscore=1501 clxscore=1015 phishscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2409260000 definitions=main-2411120090
 
-Commit 4f79d0deae37 ("arm64: dts: qcom: sa8775p: add CPU idle states")
-already added cpu and cluster idle-states but have not added CPU devices
-to psci power domain without which idle states do not get detected.
 
-Add CPUs to psci power domain.
 
-Fixes: 4f79d0deae37 ("arm64: dts: qcom: sa8775p: add CPU idle states")
-Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sa8775p.dtsi | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+On 11-Nov-24 12:51, Manikanta Mylavarapu wrote:
+> 
+> 
+> On 11/7/2024 8:17 PM, Konrad Dybcio wrote:
+>> On 6.11.2024 11:25 AM, Manikanta Mylavarapu wrote:
+>>>
+>>>
+>>> On 11/6/2024 2:42 PM, Konrad Dybcio wrote:
+>>>>
+>>>>
+>>>> On 11/6/24 09:47, Manikanta Mylavarapu wrote:
+>>>>>
+>>>>>
+>>>>> On 11/4/2024 7:21 PM, Konrad Dybcio wrote:
+>>>>>> On 4.11.2024 1:44 PM, Manikanta Mylavarapu wrote:
+>>>>>>> Add thermal zone nodes for sensors present in IPQ5424.
+>>>>>>>
+>>>>>>> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+>>>>>>> ---
+>>>>>> [...]
+>>>>>>
+>>>>>>> +
+>>>>>>> +        cpu3-thermal {
+>>>>>>> +            polling-delay-passive = <0>;
+>>>>>>> +            polling-delay = <0>;
+>>>>>>> +            thermal-sensors = <&tsens 13>;
+>>>>>>> +
+>>>>>>> +            trips {
+>>>>>>> +                cpu-critical {
+>>>>>>> +                    temperature = <120000>;
+>>>>>>> +                    hysteresis = <9000>;
+>>>>>>> +                    type = "critical";
+>>>>>>> +                };
+>>>>>>> +
+>>>>>>> +                cpu-passive {
+>>>>>>> +                    temperature = <110000>;
+>>>>>>> +                    hysteresis = <9000>;
+>>>>>>> +                    type = "passive";
+>>>>>>
+>>>>>> You have a passive trip point without passive polling
+>>>>>>
+>>>>>
+>>>>> Okay, will remove this.
+>>>>
+>>>> You most likely want to preserve it, while keeping a sensible
+>>>> polling frequency, so that userspace will be aware of the current
+>>>> CPU temperature. <100> sounds like a sensible value here.
+>>>>
+>>>> Konrad
+>>>
+>>> Temperature sensor's present in IPQ5424 supports interrupts.
+>>
+>> Correct.
+>>
+>>> Hence no need to configure polling frequency.
+>>
+>> No, that interrupt firing signifies crossing the temp threshold (meaning
+>> no updates beyond that) or the tsens watchdog barking.
+>>
+>> Konrad
+> 
+> An interrupt fires when the temperature crosses a threshold.
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-index 9f315a51a7c1..26290feb768f 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-@@ -44,6 +44,8 @@
- 			compatible = "qcom,kryo";
- 			reg = <0x0 0x0>;
- 			enable-method = "psci";
-+			power-domains = <&cpu_pd0>;
-+			power-domain-names = "psci";
- 			qcom,freq-domain = <&cpufreq_hw 0>;
- 			next-level-cache = <&l2_0>;
- 			capacity-dmips-mhz = <1024>;
-@@ -66,6 +68,8 @@
- 			compatible = "qcom,kryo";
- 			reg = <0x0 0x100>;
- 			enable-method = "psci";
-+			power-domains = <&cpu_pd1>;
-+			power-domain-names = "psci";
- 			qcom,freq-domain = <&cpufreq_hw 0>;
- 			next-level-cache = <&l2_1>;
- 			capacity-dmips-mhz = <1024>;
-@@ -83,6 +87,8 @@
- 			compatible = "qcom,kryo";
- 			reg = <0x0 0x200>;
- 			enable-method = "psci";
-+			power-domains = <&cpu_pd2>;
-+			power-domain-names = "psci";
- 			qcom,freq-domain = <&cpufreq_hw 0>;
- 			next-level-cache = <&l2_2>;
- 			capacity-dmips-mhz = <1024>;
-@@ -100,6 +106,8 @@
- 			compatible = "qcom,kryo";
- 			reg = <0x0 0x300>;
- 			enable-method = "psci";
-+			power-domains = <&cpu_pd3>;
-+			power-domain-names = "psci";
- 			qcom,freq-domain = <&cpufreq_hw 0>;
- 			next-level-cache = <&l2_3>;
- 			capacity-dmips-mhz = <1024>;
-@@ -117,6 +125,8 @@
- 			compatible = "qcom,kryo";
- 			reg = <0x0 0x10000>;
- 			enable-method = "psci";
-+			power-domains = <&cpu_pd4>;
-+			power-domain-names = "psci";
- 			qcom,freq-domain = <&cpufreq_hw 1>;
- 			next-level-cache = <&l2_4>;
- 			capacity-dmips-mhz = <1024>;
-@@ -140,6 +150,8 @@
- 			compatible = "qcom,kryo";
- 			reg = <0x0 0x10100>;
- 			enable-method = "psci";
-+			power-domains = <&cpu_pd5>;
-+			power-domain-names = "psci";
- 			qcom,freq-domain = <&cpufreq_hw 1>;
- 			next-level-cache = <&l2_5>;
- 			capacity-dmips-mhz = <1024>;
-@@ -157,6 +169,8 @@
- 			compatible = "qcom,kryo";
- 			reg = <0x0 0x10200>;
- 			enable-method = "psci";
-+			power-domains = <&cpu_pd6>;
-+			power-domain-names = "psci";
- 			qcom,freq-domain = <&cpufreq_hw 1>;
- 			next-level-cache = <&l2_6>;
- 			capacity-dmips-mhz = <1024>;
-@@ -174,6 +188,8 @@
- 			compatible = "qcom,kryo";
- 			reg = <0x0 0x10300>;
- 			enable-method = "psci";
-+			power-domains = <&cpu_pd7>;
-+			power-domain-names = "psci";
- 			qcom,freq-domain = <&cpufreq_hw 1>;
- 			next-level-cache = <&l2_7>;
- 			capacity-dmips-mhz = <1024>;
+Which means you can't monitor the temperature at runtime
+without polling..
 
----
-base-commit: 6d59cab07b8d74d0f0422b750038123334f6ecc2
-change-id: 20241112-sa8775p_cpuidle-5f3bf2a97219
-
-Best regards,
--- 
-Maulik Shah <quic_mkshah@quicinc.com>
-
+Konrad
 
