@@ -1,149 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-37558-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37559-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0A1F39C500B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 08:57:18 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9CF609C5011
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 08:58:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B4D0C1F2246C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 07:57:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5EA8E289F50
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 07:58:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04F8A1CEEB3;
-	Tue, 12 Nov 2024 07:56:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C7FC20A5EB;
+	Tue, 12 Nov 2024 07:58:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LcAa/IQc"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BqKN8gec"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FA695234;
-	Tue, 12 Nov 2024 07:56:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6762D1A726D;
+	Tue, 12 Nov 2024 07:58:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731398191; cv=none; b=XMuMnbuIs5QWlsVYFN1cpJylI1QUKPHw2DGlzZs7/oTWipzqHAfJkCoORn6FwhYSuJJa7eTIp9KVAY5P/CLaKizfcBNK04l8x8qWS2gwdMBHB0gyrTA90h47lXP+RJvU2dYTj59txrbx8t+u2rrlGEyLo+phpu73DsPEeieVq7c=
+	t=1731398327; cv=none; b=abYiTnsqWzHgMKTqupnhu4bg42dlEaCxcwIsSo9usjmVXMrGUHdW0FjLUhGNJzMRYEWQmMOxz0GppltC9KBp3F+PXOtfRKJpUUp5b+0Zlnz2FlYbtDMMkn6NPVsmvGMkSpNKnCvmt9zGHHegvyxHVJrM97SIn9AjCvb9cGIelQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731398191; c=relaxed/simple;
-	bh=25O1AxlRpWs+3gu/vbg8zcYP/wwTZeoTz8rYqGhb2PU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lAK+B8FDlpwKZv0lW+iGyYLkHdVsn8kJmt8BFuFqk3scM9JKBNNw/YEvwvx3fdhMV/L0hx4A7a/Djo8MDAzktRrz4JW+Nu6YgdwESVpzL0OcO55Y+kKRDSD8PlQwkDWb6F4KBY8kVWK8WupM5oc9QUaMPHz9sdXgRbAD8fo/rUo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LcAa/IQc; arc=none smtp.client-ip=209.85.214.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-20cd76c513cso44816515ad.3;
-        Mon, 11 Nov 2024 23:56:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731398190; x=1732002990; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=NefPRLN+h9TOgssrrobmBkWbrfPIcMnQcGv5XGBIdzk=;
-        b=LcAa/IQcF6s5r78Xa2x1ThRraghDkaRdIWLg0tlxJbsxuZnw7fq3LHOGVDMBDWII7k
-         ugOZ1caWr9yfKKosPOuw+Y6PRq3y13Vr/4uBbQKv6DCrd8oduk0+7zoWRvc8podWFrHR
-         6ZiyetQWHEZwR15FaF2fV4zSSOfpxvl9oyRRioO4RkL/qvpIrCVRsyehJGPVqiy0/qge
-         prL55ZPtGI2zvvtBBPHzmTCubOmxP4KFtscaE/ym0lM+/xeUuLAeW3/G5X/q6BSR+kL4
-         kUJc3PCbOYdG8barHwA2hSs95++2rMndWx10JF9PW6+ZIB7RVOmkC6Hv2p/C5DpJsZxq
-         LVYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731398190; x=1732002990;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NefPRLN+h9TOgssrrobmBkWbrfPIcMnQcGv5XGBIdzk=;
-        b=DW/2Um4wIPpAuqQCXfqXyNTRWoP5op3nNoD0dmNK5IYvbck+RlRyQXYjwGm3uXDJgY
-         zKSli6iFHfxlUrELjvZo7KRrZL9AdjhfBLrcFtlKKPDOPOob04Amqguq9+GtJ5G8AYNN
-         e6/XsZUuUghGRdA9501U0RVWOu7Q0/nxFz0pA0W+v44mCCCnv/BKXs6QADRAkJm5E0Q2
-         4QJT1BglIqxDEIgHUY7OdOASDwv9YIw+FOSb2ZdIjxK6sYzTWqJlRW3DBRWo9f1ztuIE
-         AyMK8AhEtTCCgOHQl4wsciqrd7cZBjXNrWhVJORc5M25LUs3oYKFzHs5wIVGfFDCLuVR
-         s0HA==
-X-Forwarded-Encrypted: i=1; AJvYcCVRAxJmZ0vs6EFuDlUGQnzMPStuteCzz29MLG1gF9mS528Iw2lFw8UHStf/BEDh6OMs3E6k3qMYjdKgM3luQg==@vger.kernel.org, AJvYcCVzIKTXzjN4aeVzX1alUXNh633P2L8NgngA6EaMj/VI9/C0yu4hIr00bS6JRKqWKeIvvgsEL2wSplvo/A==@vger.kernel.org, AJvYcCX3+q8wrwlsKApwocy7WXCNsZIQ/bTqNI+q2UrrXCrnVSpP6DNzDCW4H07E3JHwrffIJeI4W6eXrGGH@vger.kernel.org, AJvYcCXiGqg7flPVbjR5aab+7FSCCJ1zoJYs0J7VDntXp7TnEuGbj/njD+BaGYQFjB+FaNBgOmE9GS7zu5JnaLWu@vger.kernel.org
-X-Gm-Message-State: AOJu0YyA5d2fCGAPf3b5e5N+tHQVeW32WQzsJr34BYVYy81p+wTjZ5HP
-	M4x/9ICtG05hwPn8H+NTbaIeWCMEH01k/bQxhaPqfsJKZyXKwBpf
-X-Google-Smtp-Source: AGHT+IE0KS2NS7V7DN97gZCWihhMgbFp+BwZ71PDpPLPGgxlj/Wy496iueX09Dw83yU62q37vMBjQw==
-X-Received: by 2002:a17:902:ce91:b0:20c:da98:d752 with SMTP id d9443c01a7336-211ab929e3fmr18904925ad.16.1731398189634;
-        Mon, 11 Nov 2024 23:56:29 -0800 (PST)
-Received: from thinkpad ([117.213.103.248])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21177e41717sm85733995ad.122.2024.11.11.23.56.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Nov 2024 23:56:29 -0800 (PST)
-Date: Tue, 12 Nov 2024 13:26:19 +0530
-From: Manivannan Sadhasivam <manisadhasivam.linux@gmail.com>
-To: Xin Liu <quic_liuxin@quicinc.com>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Avri Altman <avri.altman@wdc.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-	linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-scsi@vger.kernel.org,
-	quic_jiegan@quicinc.com, quic_aiquny@quicinc.com,
-	quic_tingweiz@quicinc.com, quic_sayalil@quicinc.com
-Subject: Re: [PATCH v1 2/4] dt-bindings: ufs: qcom: Add UFS Host Controller
- for QCS615
-Message-ID: <20241112075619.2ilsccnnk4leqmdy@thinkpad>
-References: <20241017042300.872963-1-quic_liuxin@quicinc.com>
- <20241017042300.872963-3-quic_liuxin@quicinc.com>
+	s=arc-20240116; t=1731398327; c=relaxed/simple;
+	bh=WsdhACWt6fuMbeyExd4i9NBXMizv12EVtRlObsb7hyo=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=cqrEwAL14AosPDWW1ew3+xDFNh9VuA7mHksBmq3B2mf+cCASKQ7GFE75eb0lGTThsjTKYKavwJIeh0zA6Fy3GGYXatA7TV1FroCjCn3BLCB/3mpLGOKmlce8EYT+5UWofzidS5b0xM+Tj0WLZpq4zKvEp3PqmhSetTCQn8QIQ3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BqKN8gec; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AC1umjd004748;
+	Tue, 12 Nov 2024 07:58:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=Jr2KUsGP8HvkBibT1c1HcG
+	6Z0KdWlTMmYks6zfnlQl8=; b=BqKN8gecCve/D27qKr+yiW6waXe+TIO08rQGpm
+	Xzi/VM6R5udi/ftwx4041EIqGc5S03L3yaTKaXe4JsLGDjmEMhwBOA5hf7Mq69NQ
+	Yhpz5iGWXUVSZmPoA3QVRnK5YpGAFofzMxewVIbntFCss0V/gz2MaiL5lrpmSXnl
+	MPeAA+jI0xOvSeqzOY9FiLTfJ1kcc0VL07fmUW98Kixl82nUNaF/v/aIuUUiTC5j
+	3mRP58papABBIeQASOtjKdOgRaW/TdslwXAcWC3FI08a4sIRWKLNKWHnZLF46+Of
+	iYK+8EzNs7lwSm7OJcVg9kpwmv8HBGXUsaYRXZMitSsw49GQ==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42uwt5gqhe-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 12 Nov 2024 07:58:43 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AC7wh5v001115
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 12 Nov 2024 07:58:43 GMT
+Received: from 19197b7011e2.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Mon, 11 Nov 2024 23:58:39 -0800
+From: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
+To: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>
+CC: Sibi Sankar <quic_sibis@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Odelu Kukatla <quic_okukatla@quicinc.com>,
+        Mike Tipton <quic_mdtipton@quicinc.com>
+Subject: [PATCH V4 0/3] Add EPSS L3 provider support on SA8775P SoC
+Date: Tue, 12 Nov 2024 07:58:23 +0000
+Message-ID: <20241112075826.28296-1-quic_rlaggysh@quicinc.com>
+X-Mailer: git-send-email 2.39.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241017042300.872963-3-quic_liuxin@quicinc.com>
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ziEd9BRp-vTcgCtdpqo3DykwTFMxlQX6
+X-Proofpoint-ORIG-GUID: ziEd9BRp-vTcgCtdpqo3DykwTFMxlQX6
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxlogscore=999
+ priorityscore=1501 lowpriorityscore=0 bulkscore=0 clxscore=1015
+ malwarescore=0 impostorscore=0 adultscore=0 suspectscore=0 mlxscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411120064
 
-On Thu, Oct 17, 2024 at 12:22:58PM +0800, Xin Liu wrote:
-> From: Sayali Lokhande <quic_sayalil@quicinc.com>	
-> 	
-> Document the Universal Flash Storage(UFS) Host Controller on the Qualcomm
-> QCS615 Platform.
-> 
-> Signed-off-by: Sayali Lokhande <quic_sayalil@quicinc.com>
-> Co-developed-by: Xin Liu <quic_liuxin@quicinc.com>
-> Signed-off-by: Xin Liu <quic_liuxin@quicinc.com>
+Add Epoch Subsystem (EPSS) L3 provider support on SA8775P SoCs.
 
-Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Changes since v3:
+ - Removed epss-l3-perf generic compatible changes. These will be posted
+   as separate patch until then SoC specific compatible will be used for
+   probing.
 
-- Mani
+Changes since v2:
+ - Updated the commit text to reflect the reason for code change.
+ - Added SoC-specific and generic compatible to driver match table.
 
-> ---
->  Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> index cde334e3206b..a03fff5df5ef 100644
-> --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> @@ -26,6 +26,7 @@ properties:
->            - qcom,msm8994-ufshc
->            - qcom,msm8996-ufshc
->            - qcom,msm8998-ufshc
-> +          - qcom,qcs615-ufshc
->            - qcom,qcs8300-ufshc
->            - qcom,sa8775p-ufshc
->            - qcom,sc7180-ufshc
-> @@ -243,6 +244,7 @@ allOf:
->          compatible:
->            contains:
->              enum:
-> +              - qcom,qcs615-ufshc
->                - qcom,sm6115-ufshc
->                - qcom,sm6125-ufshc
->      then:
-> -- 
-> 2.34.1
-> 
-> 
+Changes since v1:
+ - Removed the usage of static IDs and implemented dynamic ID assignment
+   for icc nodes using IDA.
+ - Removed separate compatibles for cl0 and cl1. Both cl0 and cl1
+   devices use the same compatible.
+ - Added new generic compatible for epss-l3-perf.
+
+Raviteja Laggyshetty (3):
+  dt-bindings: interconnect: Add EPSS L3 compatible for SA8775P
+  arm64: dts: qcom: sa8775p: add EPSS l3 interconnect provider
+  interconnect: qcom: Add EPSS L3 support on SA8775P
+
+ .../bindings/interconnect/qcom,osm-l3.yaml    |  1 +
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi         | 19 ++++
+ drivers/interconnect/qcom/osm-l3.c            | 86 ++++++++++++++-----
+ 3 files changed, 84 insertions(+), 22 deletions(-)
 
 -- 
-மணிவண்ணன் சதாசிவம்
+2.39.2
+
 
