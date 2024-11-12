@@ -1,153 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-37616-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37617-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id BA98C9C58BB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 14:15:18 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 78D869C58D3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 14:20:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 43AC51F236F6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 13:15:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 55118281E9B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 13:20:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7292361FCE;
-	Tue, 12 Nov 2024 13:15:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C150140E5F;
+	Tue, 12 Nov 2024 13:20:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HY6XVhRO"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="blMduoZO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFBEE42AA4
-	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Nov 2024 13:15:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F925733A;
+	Tue, 12 Nov 2024 13:20:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731417315; cv=none; b=jMnkKV+zoW3rBlg+ov7jV4NvAestEX4Zz0szi6HFPWmw8Rpxi+si8oIXAu82ihcSQSoPYpp8hfdGNvLp4lqe1iu8JVNMA+3RgLs3Gb89O77b4z4XVplfaYnKg5urS0trZYuAGS45uwNMb2AhaLnuzK4kuCsySh//zPOcPYIVf2k=
+	t=1731417609; cv=none; b=rQMWeC4SArQzBxfIZz33L34gmsMqy8+sX+Tvwc3nagyRuxjMEQMO0ietLV5aNbTS93u4n+zqDgEyc2Kh2WU7RPoD5mPcfWrkLF4/GXqvfQugX+4/4b3q8O5lqWH2CEr/5btnUWOi1ORQ38jnYnPT1vYQ9a+20OMnDc0EWp8KNx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731417315; c=relaxed/simple;
-	bh=WtaRJKgDEoVmddlel65SoHhMdd+VmSQDSCD/pTtFpTo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rd7RmannvHPeUL5rPPk25/2Fq5qogYCVhP8a/aPjoQbypgLzomPVM4IIDnp8X2DqFjYIYBTm+VVqrUM/vpG2DUoBkG/KZgw6dQiXJsqZ+2VfadwCmMLNlHXhAubvE0SKvyiUacEc6TRvXNnZeE/px6WpMvRH61AFecrZQ+mBxUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HY6XVhRO; arc=none smtp.client-ip=209.85.128.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-6e9f69cc576so41060277b3.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Nov 2024 05:15:13 -0800 (PST)
+	s=arc-20240116; t=1731417609; c=relaxed/simple;
+	bh=8h7Fl9oMUi2VCz4h7F4dblb285tORc2irPA+J3oXbLc=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=HVraA78p5zqzQdNRQ+sK+kcoeXeqDb8vzNJ5T8HMxxC/pYadTJXYu/rvCPOStxROAiL+Cj2SHaAY3pM60ArIeE7msLhp/qF8QtQdNNq8u/mfTGulMo8vYtvd53f+70vQxS7wPsm+wQOfF+BN14+++EyKnqRvgIJq2ixz5bRo2pQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=blMduoZO; arc=none smtp.client-ip=209.85.221.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-37d538fe5f2so4135265f8f.2;
+        Tue, 12 Nov 2024 05:20:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731417312; x=1732022112; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=RjMFUcCJ2PMcOh++QmaV4FSg4hd5bf5ZwUL8svAZiGU=;
-        b=HY6XVhRO5P6+59owMD4r00SxgV1hTOBqKbFDVAeXkyiOm4te06RL6riX/rhuJaCN/3
-         OIw/ZfIU/l/XwtCewQIQCOVs9BkCtTHLZc95NEtHKAZe9ebZvjD6Igd+U0N91ujI/9tb
-         OXv3bBYqj5a7BpXPAfdcAKh62+RoLKVK2WCzESgHT1qNX7ywZ1/tMcCHdzdmotWYEfiQ
-         lJIW7a45b4uqwfE0F7tn/v4q6FV8pZMoJRKA/FX1x0+f+dX5ozjOAyCkgyYMoGjyUHhr
-         CUlHUGM+MQ+tZeL+CzDzYFfU9+Rl3ZYElYK2b2cxvytoNOYG74qGY44SlG6LK3xUyj2B
-         ihKg==
+        d=gmail.com; s=20230601; t=1731417606; x=1732022406; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=+RJ1NMa1jB4YevqeHSrW28hy579MbHP2ndXxmXrQdAk=;
+        b=blMduoZOcK4VEJ+60DjI0XpJ/5l0AgyqShAKRD3BraSF/l1x3+/mhUKiIob65de3IQ
+         SSlKeJNw5XWptJpPLUXegHpvqo7z4aBiF4ODt46+sn6NtKlPN0fE0adOAT1EAb+CMnhb
+         4bnDWmd/RhYjHwtBwGyAoVQATS+tCoGpMzm9UlrFlx4AmxOEejldd+VLDVauIMWFGps0
+         aabt/UipmzLb6Gz6Zv/puthrXzPhXU9sq8Yd1KCkT3KwvT2LgyCEo5JqbC2IM3A+70ls
+         GQuL7EfNQCI8ni9kpqj4n13LMv9Y5h4zCoT4psYtcEOQVHdXdoGv/OQzZiE1ZiD6W3lV
+         5cmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731417312; x=1732022112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1731417606; x=1732022406;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=RjMFUcCJ2PMcOh++QmaV4FSg4hd5bf5ZwUL8svAZiGU=;
-        b=No+gV5UaIJeVF/uRDM/YBPSfZbv1w9iJHroJ9guY+eGZDEUO60zFp5rsdfRHl2Pn9d
-         ghW4ojhEKmQBl4mzgdx1k7+h8VwfyTl1AB6paMX3yPfsQNnfnWdPtA6XrcTANhw1ksOg
-         BPqQfJP9izJpMGVAeOcA5xXpT6znywCuhwZxhaBafQFjLH9WGvVVv4x4kzLxouJIDz9/
-         TJvmZLZOh2hmUkAh05C9gCqIZWCqsgCIduFFisGpyoG6Lhpk63LG7eh0qdrxe8VjlgsJ
-         V8qE8bty1eEAxXn9nndEn4hN+9Dp8IppFEf3xOT9p1bvkmYa0u4qkh6a9gHyceEUbWi2
-         Kjgg==
-X-Forwarded-Encrypted: i=1; AJvYcCWVF9Cyt/mLsT5Ywoa7lewNw8OgStGXI+5jcKX75Wa60wHoQGpZYp+OhKmvqlzYRdlHFC5/xdToLt/GhDUO@vger.kernel.org
-X-Gm-Message-State: AOJu0YxEMEzRIphcS5TjfrOnaown+m1sWqEWgmj1iT6PSsCw34IVvNF2
-	iHFcdOWi+rz9VIdTzRgHjclTfaobDsDnyI1Z7tGlFbZkgnDFxvLKqLZQffr1L4zT/qhNW8q/6p7
-	B9Jn4plirCjlhx92WPZUNE6WZzT1gs27ZTbCMpg==
-X-Google-Smtp-Source: AGHT+IHXjXnnSh4cfhalObRmFjWIlKplKbXL511dM4znTgK/qAvBdvKZqt3NvA/NCChuF/Jz1MpD8Bjt8ZPwU1Hyt0g=
-X-Received: by 2002:a05:690c:9b08:b0:6e3:1f02:407b with SMTP id
- 00721157ae682-6eaddda0ec6mr157284817b3.11.1731417312627; Tue, 12 Nov 2024
- 05:15:12 -0800 (PST)
+        bh=+RJ1NMa1jB4YevqeHSrW28hy579MbHP2ndXxmXrQdAk=;
+        b=T0dX5QMH5v/IFWQTZV8QYs8zptAUnY9DhPvA1xRAMHL9O1JsmMHHhZzQL3cRsZVUrY
+         Rb7hu4WEzB5zCrj1skyqm0Xs0/Ekxl8y0nOK+PdzW9qFbYZY2PGcIdB9C4E7VqJo0gUy
+         yX+OxGyIj0RwN6GambaDJeS+7wXxUucG5WltCbkVahOzpM7jLtAbC//f9WGApxOCkofw
+         81RpGnXKIgmctcvRaboeUhk/wS92Nz5MsZMzoXe2xsSOE6mcGBzoCBGDZak1eZ9cDP4D
+         nsKzsUDaCHJy7p6yyasaGMf3pMuXUXLHvPb1E3TWOBAXdEmGPj7th+e/EiLczImLAt9m
+         cUQw==
+X-Forwarded-Encrypted: i=1; AJvYcCVu4fWuczE0iKUmN3BUHnNdDiR5vSLHENxQBbvfiZcvq/5uBwnByasrMa8riXfdjx/+Jc4CMCrsFytpqEA8@vger.kernel.org, AJvYcCX5cYTXs8nlqlcnJGrBSXpSw7J5Mm2gnAVTT5CYeZwa75VicXd30izNstcY4o1sNTGQwRqkJv4HecBklO6V@vger.kernel.org
+X-Gm-Message-State: AOJu0YydA5S6+tczc7WmQ/wa/3ENgSYdf4I/G0+dSJ5nGY8UljWXTdWj
+	xJzh6aiGglIyGrgtODTbrIGufKyQVqWJRJ0atycRWOnFs+gp8/iMtR+EQD/RjgXKyg==
+X-Google-Smtp-Source: AGHT+IFcy+h3FVW2hUep37o/iKMxNs6TxUByEJOBaG0afG7vcce/Vvw2QMhVc2yIJKrMe/bSSHTQzA==
+X-Received: by 2002:a05:6000:1a85:b0:37d:518f:995d with SMTP id ffacd0b85a97d-381f1835ba8mr15355680f8f.56.1731417605643;
+        Tue, 12 Nov 2024 05:20:05 -0800 (PST)
+Received: from localhost ([194.120.133.65])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381fc0f5f91sm6940911f8f.62.2024.11.12.05.20.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Nov 2024 05:20:05 -0800 (PST)
+From: Colin Ian King <colin.i.king@gmail.com>
+To: Rob Clark <robdclark@gmail.com>,
+	Sean Paul <sean@poorly.run>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org
+Cc: kernel-janitors@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] drm/msm/a5xx: Fix dereference of pointer pdev before null check on pdev
+Date: Tue, 12 Nov 2024 13:20:05 +0000
+Message-Id: <20241112132005.469357-1-colin.i.king@gmail.com>
+X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241112-fd-dp-fux-warning-v2-1-8cc4960094bd@linaro.org> <643d2935-65ce-4d86-9be6-c2faa1956365@quicinc.com>
-In-Reply-To: <643d2935-65ce-4d86-9be6-c2faa1956365@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 12 Nov 2024 15:15:03 +0200
-Message-ID: <CAA8EJpqBouv-f-QMpZ+hrA-vF4ojhUWBn5yMqYYB9LpW0TACdg@mail.gmail.com>
-Subject: Re: [PATCH v2] dt-bindings: display/msm: qcom,sa8775p-mdss: fix the example
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Mahadevan <quic_mahap@quicinc.com>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On Tue, 12 Nov 2024 at 05:40, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->
->
->
-> On 11/11/2024 7:21 PM, Dmitry Baryshkov wrote:
-> > Add p1 region to the list of DP registers in the SA8775p example. This
-> > fixes the following warning:
-> >
-> > Documentation/devicetree/bindings/display/msm/qcom,sa8775p-mdss.example.dtb: displayport-controller@af54000: reg: [[183844864, 260], [183845376, 192], [183848960, 1904], [183853056, 156]] is too short
-> >
-> > Fixes: 409685915f00 ("dt-bindings: display/msm: Document MDSS on SA8775P")
-> > Reported-by: Rob Herring <robh@kernel.org>
-> > Closes: https://lore.kernel.org/dri-devel/CAL_JsqJ0zoyaZAgZtyJ8xMsPY+YzrbF-YG1vPN6tFoFXQaW09w@mail.gmail.com/c
->
-> Thanks for the patch.
->
-> I think this link has an extra 'c' at the end.
+The pointer config is dereferencing pointer pdev before pdev is null
+checked, this could lead to a potential null pointer dereference on pdev.
+Fix this by only assinging config after pdev has been null checked.
 
-Oh.. Can you fix that when picking it up for -fixes or would you
-prefer to have a clean version in patchwork?
+Fixes: 736a93273656 ("drm/msm/a5xx: really check for A510 in a5xx_gpu_init")
+Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+---
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
->
-> With that fixed,
->
-> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
->
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> > Changes in v2:
-> > - EDITME: describe what is new in this series revision.
-> > - EDITME: use bulletpoints and terse descriptions.
-> > - Link to v1: https://lore.kernel.org/r/20241112-fd-dp-fux-warning-v1-1-705b527f5a63@linaro.org
-> > ---
-> >   Documentation/devicetree/bindings/display/msm/qcom,sa8775p-mdss.yaml | 3 ++-
-> >   1 file changed, 2 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sa8775p-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sa8775p-mdss.yaml
-> > index 58f8a01f29c7aaa9dc943c232363075686c06a7c..4536bb2f971f3b7173b8807f90c9af3e460bb01c 100644
-> > --- a/Documentation/devicetree/bindings/display/msm/qcom,sa8775p-mdss.yaml
-> > +++ b/Documentation/devicetree/bindings/display/msm/qcom,sa8775p-mdss.yaml
-> > @@ -168,7 +168,8 @@ examples:
-> >               reg = <0xaf54000 0x104>,
-> >                     <0xaf54200 0x0c0>,
-> >                     <0xaf55000 0x770>,
-> > -                  <0xaf56000 0x09c>;
-> > +                  <0xaf56000 0x09c>,
-> > +                  <0xaf57000 0x09c>;
-> >
-> >               interrupt-parent = <&mdss0>;
-> >               interrupts = <12>;
-> >
-> > ---
-> > base-commit: ff2ce06d5e28be5ee399a2ff894d6a551c70a318
-> > change-id: 20241112-fd-dp-fux-warning-c8764c93f787
-> >
-> > Best regards,
-
-
-
+diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+index ee89db72e36e..e83081346059 100644
+--- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+@@ -1753,7 +1753,7 @@ struct msm_gpu *a5xx_gpu_init(struct drm_device *dev)
+ {
+ 	struct msm_drm_private *priv = dev->dev_private;
+ 	struct platform_device *pdev = priv->gpu_pdev;
+-	struct adreno_platform_config *config = pdev->dev.platform_data;
++	struct adreno_platform_config *config;
+ 	struct a5xx_gpu *a5xx_gpu = NULL;
+ 	struct adreno_gpu *adreno_gpu;
+ 	struct msm_gpu *gpu;
+@@ -1764,6 +1764,7 @@ struct msm_gpu *a5xx_gpu_init(struct drm_device *dev)
+ 		DRM_DEV_ERROR(dev->dev, "No A5XX device is defined\n");
+ 		return ERR_PTR(-ENXIO);
+ 	}
++	config = pdev->dev.platform_data;
+ 
+ 	a5xx_gpu = kzalloc(sizeof(*a5xx_gpu), GFP_KERNEL);
+ 	if (!a5xx_gpu)
 -- 
-With best wishes
-Dmitry
+2.39.5
+
 
