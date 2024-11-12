@@ -1,383 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-37620-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37621-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 177599C5950
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 14:40:58 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D36939C5965
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 14:44:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8DF431F210FC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 13:40:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 837E7281ECA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2024 13:44:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B04E15B554;
-	Tue, 12 Nov 2024 13:39:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A87F715699D;
+	Tue, 12 Nov 2024 13:44:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="TZJzghY8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yQZxhrup"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4084156C6F;
-	Tue, 12 Nov 2024 13:39:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E17AD15572C
+	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Nov 2024 13:44:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731418758; cv=none; b=DuAmoADTM5V1krFQAcmZSmLPqAmug9zFhGyXDLAM+wQR9RSCsFbkBgEeLfvpOIJa44O2h0gAKdRyMvfJz2oLOX8rIgrlF0twLdHIU/44GeOJ8vOdqAgJVcFAYIsWZ+ZeVDzOowXa6KVRJkQjwFnnNb+o0MdD3T62zY74r6AA7N0=
+	t=1731419058; cv=none; b=di2z4e2ygKD0/GCJzDi3tz2tp2Rg0gvM0cVVja/qJkgWYMsRFTqIArdFYGCAOCRQ/JIWSnsj/3SZVBrkc2b/xyAAAW4+OSIMKBzE3ItCwcHTQe9FZcN4ywfLoYz4s2E9AbDZlQBUDsqquZZz6LfLLr8ObBUxid7LPC5zLuRfaHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731418758; c=relaxed/simple;
-	bh=DH5BtULdqSGhyU8QrENODLjP9GNOBGoxYdLX2tcrvuY=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pJpXmKRTUKiY/o26RgfOr9Oj0q8/XdtYqCEh3lP/Er4XRMZrC4Yf81YJyPx7MDy20Z7w96e6ASa2+By6+ZN/6SzARDxEBtfj1pPy6XCzNG2Pd0VhaseQVeOcakoPTzyJeZogbZBw6YgsG8FMlQToP8BWa2Dr2FNKr/I+JJmxnAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=TZJzghY8; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ACDVNL5030151;
-	Tue, 12 Nov 2024 13:39:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	vwVnNo1HF0Z4aXuQmffdkmLkvpVN2jTRJNM1hdMmzk4=; b=TZJzghY8Rw6xcH2z
-	UM7lfogPZaaQjvqMcAEGI8cBWtZeWv79RZjvLY/J8+AFmwrh3oVixK2fla66b2G+
-	CgVEPDMM8lBD0mfLd278Z3TM2Lb/+wOZs/OdO5b5XVGcf8PKpLatv5eiHETquEtg
-	jT4n+I8D5+ogITTK8iV5rRUWiW5cwAyiAUsev0H1M68+r2YxBM+5Ipd/DgpNd36l
-	Jgc2cZfnwldM9XyDGQuiPLYJH5F114ChgM5NX9GYn4gj/sa1uUp6Ni9d76NNX0dv
-	IPfCOMsUh673/BGF6xkTjZ3PgfhjyvXmO1la/8xD29/8L390p2Pk8bNGWDsNBnNU
-	WbNS8Q==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42t0gkyarb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 12 Nov 2024 13:39:12 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4ACDdBHe022959
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 12 Nov 2024 13:39:12 GMT
-Received: from hu-vikramsa-hyd.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 12 Nov 2024 05:39:05 -0800
-From: Vikram Sharma <quic_vikramsa@quicinc.com>
-To: <rfoss@kernel.org>, <todor.too@gmail.com>, <bryan.odonoghue@linaro.org>,
-        <krzk+dt@kernel.org>
-CC: <quic_vikramsa@quicinc.com>, <linux-media@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <kernel@quicinc.com>
-Subject: [PATCH v2 1/1] media: qcom: camss: Restructure camss_link_entities
-Date: Tue, 12 Nov 2024 19:08:46 +0530
-Message-ID: <20241112133846.2397017-2-quic_vikramsa@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20241112133846.2397017-1-quic_vikramsa@quicinc.com>
-References: <20241112133846.2397017-1-quic_vikramsa@quicinc.com>
+	s=arc-20240116; t=1731419058; c=relaxed/simple;
+	bh=QzGHxcfoOYe3xDN7+yhw9DxRuWlEvc/M4ObJ0BC2+E4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dM4jQBw1DUFRZ4NFexFMxrUNSL/Pbj/EKEz6WlieWDu2HelDkYxGkndxQChaleEDWYqaFqUA6og6m6JU5r5B2YoKZKmvrcGab4jz1x5UJEysFFv/YdQdx9Ynx5EfYmQ0cc73Kle/460EGetnfsxzk5sy7r2DpQouT5+Y2aFdzkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yQZxhrup; arc=none smtp.client-ip=209.85.167.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-539f4d8ef84so7166292e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Nov 2024 05:44:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1731419055; x=1732023855; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=iDZVjDz8WaHN7Uzdxa3K3Hi8mi6UCuBy7yMBk40iTWc=;
+        b=yQZxhrupCKwqVHrJ5yLk7Hnpl/hBVX1XuWMc3u5hZadPsWwccVgDATeRNmBAvUjJ05
+         8ztceHhmFLiPlAlR0FOPnY3B1n1PgJBMlZ/7CskrNFXvzTH1nwFN4lHkkML//hVWCEd/
+         W9nUj0EHZrC6PUSTVN+ppfQRxXa7mTIdbw3AAk8F6RMMxfHqAFfgYjafkl2lAXyjJtu1
+         RIaGc5eyB0hR1MuMfeHU7gt5tPCbnLK9LM3hN+CKlUOKEPoBW2hglSVwtJGfdFL6sXpg
+         E9IIKdkbNRq4ovsy8GKpLNHdR2AV5t4EycLwliojOzgo30hmDiWUJpu8CRSGBEYWDMK2
+         Jbtw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731419055; x=1732023855;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=iDZVjDz8WaHN7Uzdxa3K3Hi8mi6UCuBy7yMBk40iTWc=;
+        b=LOs+gPTUCuujZ+fxo7d210aK9SPct/2iydhQnm4YcApyKdP96Khbh4JL4eLOJq5pLy
+         k6MZ5asd2Rgp8DUU/3fAWhxkmhVkDYZV5Te+rNrChWp+a/oaINZ6D9EGSFS34mT/at+u
+         olYWqLfsI/bSmJji+bscpxoNVcp9hn9SUTeQB9NAKc4XgRFdF9uO31EYVBc+asob0vBH
+         bQWgb1rM9FgPLx+FC4kguiiqqKZQxFbDGdGd8qd7d9gPFU0FZZii7mgIJNycl7cWhskE
+         i6M6GqX7uG8uY1BXMYO1qC61TAuC7zRLqtYb09Azu4b16lHrf7KBPHT23RDFgpHmoqXU
+         ekQQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXZyQud/Ta7v37fYBwYPMIqWiKMwGiLX6yZNq87d3a5OVCswMZjvUzfQvMC1jNO6F1e1IUfBHs7emcVxOcv@vger.kernel.org
+X-Gm-Message-State: AOJu0YygJOtY3u6N8T1dUCZfy+Lyt3aOtTdBVrHVnU4l6KDkKoNb0Rmt
+	OreWAQBjKVCgtjAZqUVXSpZAY1EI+GdhGpFUyCuBC0fXdRroki+XZgeyFDMurpk=
+X-Google-Smtp-Source: AGHT+IF4DigzAsf4mgiTBlNcElKCvgjRc9RJrMYFwqjztVN7WEdLH0Y1ZR0nSSYwsHZKJQCBBLdvJw==
+X-Received: by 2002:a05:6512:3b9b:b0:539:fbd4:9c9a with SMTP id 2adb3069b0e04-53d8626c823mr8459877e87.35.1731419055072;
+        Tue, 12 Nov 2024 05:44:15 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53d8267859csm1886887e87.45.2024.11.12.05.44.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Nov 2024 05:44:13 -0800 (PST)
+Date: Tue, 12 Nov 2024 15:44:11 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc: vkoul@kernel.org, kishon@kernel.org, robh@kernel.org, 
+	krzk+dt@kernel.org, conor+dt@kernel.org, gregkh@linuxfoundation.org, 
+	andersson@kernel.org, konradybcio@kernel.org, mantas@8devices.com, 
+	quic_rohiagar@quicinc.com, johan+linaro@kernel.org, quic_kriskura@quicinc.com, 
+	abel.vesa@linaro.org, quic_kbajaj@quicinc.com, quic_wcheng@quicinc.com, 
+	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org
+Subject: Re: [PATCH v1 2/6] phy: qcom-qusb2: add QUSB2 support for IPQ5424
+Message-ID: <m2w5772mjsjaolawrfuhkmiq6iaagu746tqv5qtbrllvqpf75t@cykasimx4lff>
+References: <20241112091355.2028018-1-quic_varada@quicinc.com>
+ <20241112091355.2028018-3-quic_varada@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ChuYxnAFWV8sx_sMQK9n8oVEpcRK_LAZ
-X-Proofpoint-GUID: ChuYxnAFWV8sx_sMQK9n8oVEpcRK_LAZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
- spamscore=0 clxscore=1015 mlxscore=0 mlxlogscore=802 lowpriorityscore=0
- impostorscore=0 adultscore=0 priorityscore=1501 malwarescore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2411120109
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241112091355.2028018-3-quic_varada@quicinc.com>
 
-Refactor the camss_link_entities function by breaking it down into
-three distinct functions. Each function will handle the linking of
-a specific entity separately, enhancing readability.
+On Tue, Nov 12, 2024 at 02:43:51PM +0530, Varadarajan Narayanan wrote:
+> Add the phy init sequence for the Super Speed ports found
+> on IPQ5424.
+> 
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> ---
+>  drivers/phy/qualcomm/phy-qcom-qusb2.c | 28 +++++++++++++++++++++++++++
+>  1 file changed, 28 insertions(+)
+> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qusb2.c b/drivers/phy/qualcomm/phy-qcom-qusb2.c
+> index c52655a383ce..4513f0c81c50 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qusb2.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qusb2.c
+> @@ -151,6 +151,21 @@ static const struct qusb2_phy_init_tbl ipq6018_init_tbl[] = {
+>  	QUSB2_PHY_INIT_CFG(QUSB2PHY_PLL_AUTOPGM_CTL1, 0x9F),
+>  };
+>  
+> +static const struct qusb2_phy_init_tbl ipq5424_init_tbl[] = {
+> +	QUSB2_PHY_INIT_CFG(QUSB2PHY_PLL, 0x14),
+> +	QUSB2_PHY_INIT_CFG_L(QUSB2PHY_PORT_TUNE1, 0x00),
+> +	QUSB2_PHY_INIT_CFG_L(QUSB2PHY_PORT_TUNE2, 0x53),
+> +	QUSB2_PHY_INIT_CFG_L(QUSB2PHY_PORT_TUNE4, 0xC3),
+> +	QUSB2_PHY_INIT_CFG(QUSB2PHY_PLL_TUNE, 0x30),
+> +	QUSB2_PHY_INIT_CFG(QUSB2PHY_PLL_USER_CTL1, 0x79),
+> +	QUSB2_PHY_INIT_CFG(QUSB2PHY_PLL_USER_CTL2, 0x21),
+> +	QUSB2_PHY_INIT_CFG_L(QUSB2PHY_PORT_TUNE5, 0x00),
+> +	QUSB2_PHY_INIT_CFG(QUSB2PHY_PLL_PWR_CTRL, 0x00),
+> +	QUSB2_PHY_INIT_CFG_L(QUSB2PHY_PORT_TEST2, 0x14),
+> +	QUSB2_PHY_INIT_CFG(QUSB2PHY_PLL_TEST, 0x80),
+> +	QUSB2_PHY_INIT_CFG(QUSB2PHY_PLL_AUTOPGM_CTL1, 0x9F),
 
-Signed-off-by: Suresh Vankadara <quic_svankada@quicinc.com>
-Signed-off-by: Trishansh Bhardwaj <quic_tbhardwa@quicinc.com>
-Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
----
- drivers/media/platform/qcom/camss/camss-vfe.c |   6 +-
- drivers/media/platform/qcom/camss/camss.c     | 196 ++++++++++++------
- drivers/media/platform/qcom/camss/camss.h     |   4 +
- 3 files changed, 138 insertions(+), 68 deletions(-)
+Lowercase hex numbers please. LGTM otherwise.
 
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
-index 83c5a36d071f..446604cc7ef6 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe.c
-@@ -1794,9 +1794,9 @@ int msm_vfe_register_entities(struct vfe_device *vfe,
- 				&video_out->vdev.entity, 0,
- 				MEDIA_LNK_FL_IMMUTABLE | MEDIA_LNK_FL_ENABLED);
- 		if (ret < 0) {
--			dev_err(dev, "Failed to link %s->%s entities: %d\n",
--				sd->entity.name, video_out->vdev.entity.name,
--				ret);
-+			camss_link_err(vfe->camss, sd->entity.name,
-+				       video_out->vdev.entity.name,
-+				       ret);
- 			goto error_link;
- 		}
- 	}
-diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-index fabe034081ed..980cb1e337be 100644
---- a/drivers/media/platform/qcom/camss/camss.c
-+++ b/drivers/media/platform/qcom/camss/camss.c
-@@ -1840,14 +1840,83 @@ static int camss_init_subdevices(struct camss *camss)
- }
- 
- /*
-- * camss_link_entities - Register subdev nodes and create links
-+ * camss_link_err - print error in case link creation fails
-+ * @src_name: name for source of the link
-+ * @sink_name: name for sink of the link
-+ */
-+inline void camss_link_err(struct camss *camss,
-+			   const char *src_name,
-+			   const char *sink_name,
-+			   int ret)
-+{
-+	if (!camss || !src_name || !sink_name)
-+		return;
-+	dev_err(camss->dev,
-+		"Failed to link %s->%s entities: %d\n",
-+		src_name,
-+		sink_name,
-+		ret);
-+}
-+
-+/*
-+ * camss_link_entities_csid - Register subdev nodes and create links
-  * @camss: CAMSS device
-  *
-  * Return 0 on success or a negative error code on failure
-  */
--static int camss_link_entities(struct camss *camss)
-+static int camss_link_entities_csid(struct camss *camss)
- {
--	int i, j, k;
-+	struct media_entity *src_entity;
-+	struct media_entity *sink_entity;
-+	int ret, line_num;
-+	u16 sink_pad;
-+	u16 src_pad;
-+	int i, j;
-+
-+	for (i = 0; i < camss->res->csid_num; i++) {
-+		if (camss->ispif)
-+			line_num = camss->ispif->line_num;
-+		else
-+			line_num = camss->vfe[i].res->line_num;
-+
-+		src_entity = &camss->csid[i].subdev.entity;
-+		for (j = 0; j < line_num; j++) {
-+			if (camss->ispif) {
-+				sink_entity = &camss->ispif->line[j].subdev.entity;
-+				src_pad = MSM_CSID_PAD_SRC;
-+				sink_pad = MSM_ISPIF_PAD_SINK;
-+			} else {
-+				sink_entity = &camss->vfe[i].line[j].subdev.entity;
-+				src_pad = MSM_CSID_PAD_FIRST_SRC + j;
-+				sink_pad = MSM_VFE_PAD_SINK;
-+			}
-+
-+			ret = media_create_pad_link(src_entity,
-+						    src_pad,
-+						    sink_entity,
-+						    sink_pad,
-+						    0);
-+			if (ret < 0) {
-+				camss_link_err(camss, src_entity->name,
-+					       sink_entity->name,
-+					       ret);
-+				return ret;
-+			}
-+		}
-+	}
-+
-+	return 0;
-+}
-+
-+/*
-+ * camss_link_entities_csiphy - Register subdev nodes and create links
-+ * @camss: CAMSS device
-+ *
-+ * Return 0 on success or a negative error code on failure
-+ */
-+static int camss_link_entities_csiphy(struct camss *camss)
-+{
-+	int i, j;
- 	int ret;
- 
- 	for (i = 0; i < camss->res->csiphy_num; i++) {
-@@ -1858,81 +1927,77 @@ static int camss_link_entities(struct camss *camss)
- 						    MSM_CSID_PAD_SINK,
- 						    0);
- 			if (ret < 0) {
--				dev_err(camss->dev,
--					"Failed to link %s->%s entities: %d\n",
--					camss->csiphy[i].subdev.entity.name,
--					camss->csid[j].subdev.entity.name,
--					ret);
-+				camss_link_err(camss,
-+					       camss->csiphy[i].subdev.entity.name,
-+					       camss->csid[j].subdev.entity.name,
-+					       ret);
- 				return ret;
- 			}
- 		}
- 	}
- 
--	if (camss->ispif) {
--		for (i = 0; i < camss->res->csid_num; i++) {
--			for (j = 0; j < camss->ispif->line_num; j++) {
--				ret = media_create_pad_link(&camss->csid[i].subdev.entity,
--							    MSM_CSID_PAD_SRC,
--							    &camss->ispif->line[j].subdev.entity,
--							    MSM_ISPIF_PAD_SINK,
-+	return 0;
-+}
-+
-+/*
-+ * camss_link_entities_ispif - Register subdev nodes and create links
-+ * @camss: CAMSS device
-+ *
-+ * Return 0 on success or a negative error code on failure
-+ */
-+static int camss_link_entities_ispif(struct camss *camss)
-+{
-+	int i, j, k;
-+	int ret;
-+
-+	for (i = 0; i < camss->ispif->line_num; i++) {
-+		for (k = 0; k < camss->res->vfe_num; k++) {
-+			for (j = 0; j < camss->vfe[k].res->line_num; j++) {
-+				struct v4l2_subdev *ispif = &camss->ispif->line[i].subdev;
-+				struct v4l2_subdev *vfe = &camss->vfe[k].line[j].subdev;
-+
-+				ret = media_create_pad_link(&ispif->entity,
-+							    MSM_ISPIF_PAD_SRC,
-+							    &vfe->entity,
-+							    MSM_VFE_PAD_SINK,
- 							    0);
- 				if (ret < 0) {
--					dev_err(camss->dev,
--						"Failed to link %s->%s entities: %d\n",
--						camss->csid[i].subdev.entity.name,
--						camss->ispif->line[j].subdev.entity.name,
--						ret);
-+					camss_link_err(camss, ispif->entity.name,
-+						       vfe->entity.name,
-+						       ret);
- 					return ret;
- 				}
- 			}
- 		}
--
--		for (i = 0; i < camss->ispif->line_num; i++)
--			for (k = 0; k < camss->res->vfe_num; k++)
--				for (j = 0; j < camss->vfe[k].res->line_num; j++) {
--					struct v4l2_subdev *ispif = &camss->ispif->line[i].subdev;
--					struct v4l2_subdev *vfe = &camss->vfe[k].line[j].subdev;
--
--					ret = media_create_pad_link(&ispif->entity,
--								    MSM_ISPIF_PAD_SRC,
--								    &vfe->entity,
--								    MSM_VFE_PAD_SINK,
--								    0);
--					if (ret < 0) {
--						dev_err(camss->dev,
--							"Failed to link %s->%s entities: %d\n",
--							ispif->entity.name,
--							vfe->entity.name,
--							ret);
--						return ret;
--					}
--				}
--	} else {
--		for (i = 0; i < camss->res->csid_num; i++)
--			for (k = 0; k < camss->res->vfe_num; k++)
--				for (j = 0; j < camss->vfe[k].res->line_num; j++) {
--					struct v4l2_subdev *csid = &camss->csid[i].subdev;
--					struct v4l2_subdev *vfe = &camss->vfe[k].line[j].subdev;
--
--					ret = media_create_pad_link(&csid->entity,
--								    MSM_CSID_PAD_FIRST_SRC + j,
--								    &vfe->entity,
--								    MSM_VFE_PAD_SINK,
--								    0);
--					if (ret < 0) {
--						dev_err(camss->dev,
--							"Failed to link %s->%s entities: %d\n",
--							csid->entity.name,
--							vfe->entity.name,
--							ret);
--						return ret;
--					}
--				}
- 	}
- 
- 	return 0;
- }
- 
-+/*
-+ * camss_link_entities - Register subdev nodes and create links
-+ * @camss: CAMSS device
-+ *
-+ * Return 0 on success or a negative error code on failure
-+ */
-+static int camss_link_entities(struct camss *camss)
-+{
-+	int ret;
-+
-+	ret = camss_link_entities_csiphy(camss);
-+	if (ret < 0)
-+		return ret;
-+
-+	ret = camss_link_entities_csid(camss);
-+	if (ret < 0)
-+		return ret;
-+
-+	if (camss->ispif)
-+		ret = camss_link_entities_ispif(camss);
-+
-+	return ret;
-+}
-+
- /*
-  * camss_register_entities - Register subdev nodes and create links
-  * @camss: CAMSS device
-@@ -2073,9 +2138,10 @@ static int camss_subdev_notifier_complete(struct v4l2_async_notifier *async)
- 				input, MSM_CSIPHY_PAD_SINK,
- 				MEDIA_LNK_FL_IMMUTABLE | MEDIA_LNK_FL_ENABLED);
- 			if (ret < 0) {
--				dev_err(camss->dev,
--					"Failed to link %s->%s entities: %d\n",
--					sensor->name, input->name, ret);
-+				camss_link_err(camss,
-+					       sensor->name,
-+					       input->name,
-+					       ret);
- 				return ret;
- 			}
- 		}
-diff --git a/drivers/media/platform/qcom/camss/camss.h b/drivers/media/platform/qcom/camss/camss.h
-index 0ce84fcbbd25..2086000ad5c1 100644
---- a/drivers/media/platform/qcom/camss/camss.h
-+++ b/drivers/media/platform/qcom/camss/camss.h
-@@ -160,5 +160,9 @@ void camss_pm_domain_off(struct camss *camss, int id);
- int camss_vfe_get(struct camss *camss, int id);
- void camss_vfe_put(struct camss *camss, int id);
- void camss_delete(struct camss *camss);
-+void camss_link_err(struct camss *camss,
-+		    const char *src_name,
-+		    const char *sink_name,
-+		    int ret);
- 
- #endif /* QC_MSM_CAMSS_H */
+> +};
+> +
+>  static const unsigned int ipq6018_regs_layout[] = {
+>  	[QUSB2PHY_PLL_STATUS]              = 0x38,
+>  	[QUSB2PHY_PORT_TUNE1]              = 0x80,
+> @@ -331,6 +346,16 @@ static const struct qusb2_phy_cfg ipq6018_phy_cfg = {
+>  	.autoresume_en   = BIT(0),
+>  };
+>  
+> +static const struct qusb2_phy_cfg ipq5424_phy_cfg = {
+> +	.tbl            = ipq5424_init_tbl,
+> +	.tbl_num        = ARRAY_SIZE(ipq5424_init_tbl),
+> +	.regs           = ipq6018_regs_layout,
+> +
+> +	.disable_ctrl   = POWER_DOWN,
+> +	.mask_core_ready = PLL_LOCKED,
+> +	.autoresume_en   = BIT(0),
+> +};
+> +
+>  static const struct qusb2_phy_cfg qusb2_v2_phy_cfg = {
+>  	.tbl		= qusb2_v2_init_tbl,
+>  	.tbl_num	= ARRAY_SIZE(qusb2_v2_init_tbl),
+> @@ -905,6 +930,9 @@ static const struct phy_ops qusb2_phy_gen_ops = {
+>  
+>  static const struct of_device_id qusb2_phy_of_match_table[] = {
+>  	{
+> +		.compatible	= "qcom,ipq5424-qusb2-phy",
+> +		.data		= &ipq5424_phy_cfg,
+> +	}, {
+>  		.compatible	= "qcom,ipq6018-qusb2-phy",
+>  		.data		= &ipq6018_phy_cfg,
+>  	}, {
+> -- 
+> 2.34.1
+> 
+
 -- 
-2.25.1
-
+With best wishes
+Dmitry
 
