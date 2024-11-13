@@ -1,111 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-37799-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37800-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 642319C74AD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 15:45:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0C51C9C74F8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 16:00:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2A1102843C1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 14:45:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C58F428A6F7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 15:00:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94C22273F9;
-	Wed, 13 Nov 2024 14:44:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1EDE841C92;
+	Wed, 13 Nov 2024 15:00:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kbWijaMq"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fo74Cp5T"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC1F71DF272
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 14:44:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECB241C695
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 15:00:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731509075; cv=none; b=m5VKpPy5CoTvhGdPkr4bbbtW1j86ssu6idX+J12mwEgzrG+0xPSnYePABaTnDYqKra86vR6KPDCqIM2D8z+oGrycrzqPH6ic+4Cy150u47lL9HpCMBwSxbEFNtLkAEHcuNzMsARdlkIja1+Sg8tlLIR4ykyGIZzmXt0ERj+t4D4=
+	t=1731510011; cv=none; b=IcBnyecKb4yuyUndjmZosCdMXH3tL9Y7oZfPkQgdNHBUbEkEDDEJ7waVeYGWnKXB2p6YQZUXHHnlCWlmErTX76O3QieenKc6ipcLV7aqSwcBpbn+1W6lhl3VUGRwZQPGRvjDHTfgjf3Tj21XdfugNlDCZLUWjhLCig01EOjXj8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731509075; c=relaxed/simple;
-	bh=HeZeCSsJu84FolYvJGFPv741kcE6UC0oMqQJcpwtCIQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=M/xoa34dKy/8vI54bPSMDgxeFveBoGWGwT9iLbsB3LqOqu/8EXn04+N/qmjE+CZGBsPzvLk1hoiUu8bRwqIbvUvXuzSCJdsSB2xp/pQDFFEfrI4y9FoelB9fPaW/v61+9NbXTkF62hrzkHaXUeeZ78isyljCqO6PHogVmhO3S7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kbWijaMq; arc=none smtp.client-ip=209.85.167.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-53d9ff8ef3aso1035135e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 06:44:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731509072; x=1732113872; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=HQPpB0phrSoegtCutG0hX/vUb4mF3xNnw+0tCeNiRNA=;
-        b=kbWijaMqRvF0FLAsiyzDHAJHnHyM53T+CoAxKl2gQJ9VoCJqrAP26ArAEtpAHmbWGo
-         FSHwzIwFMKwLv/ipvlvPRNjTp3CuQNATdwRdvHoJkO7f8p23e2TfBUYS1OgQeKh8Pwl3
-         44CbROgyogDntTLw8c05wXfi/2Qssb4NQ1XQxl8lb12xHRBlFnaA0VjOTZc/1U6pXRXq
-         sYaD1XfX8di+KVnFDmvprJ8TXudfuE7qfpm+PbTwC7KAZdNtv4z7ReG1pGHUbs8bb+YC
-         geb438Pwjgt1OVFUUy8vd1O0aUCAgIGlC1p/H55E2su8FW4tHR9GOclQEmclMtNYlJO7
-         lPUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731509072; x=1732113872;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HQPpB0phrSoegtCutG0hX/vUb4mF3xNnw+0tCeNiRNA=;
-        b=kghPsJxwAPi/U3xY12ojwWmtBSqpRHYw92XnMZ0mfBM8kXQ5wRoJCWvNU0oYCxQaJF
-         HGGRK20Cf2cUTf2SDkncpktvqhtXVIttmtTaS994EZNZA2iVcSrS8x7fndahhpJgvgMW
-         inhq/yosVr/a0TDfWTeOArzLr3dbWpj2LqH3h/kohwFnmugf3CSfoQOB958egL+yu3h1
-         +j4rBWQgcRNa+ZWgVs6DNRa0h+mJaiL1gGs98LH3Uk1KFLj73hizQIKC9aoErvHojN/X
-         saMRHegwLy5zz734Zg/AXNvfW9+haYbBKHNx5d0yCT0yfQ//g0Tpb1awU+ihVoVstOHq
-         8QgQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW/nzcmz6cU3UI7jdtRX9q5p6jMR+zWKqVniVhZJsVVw56dBaTFNkeXM4uHIbDC5EY6zjYBZMQWbq7EPsUb@vger.kernel.org
-X-Gm-Message-State: AOJu0YwwibRnRdrdgG4TFhG2ptdw6PNdt37UUZ34+E0fZynQbGDazcnX
-	lQ3Aj7kgZGyOtPHSDCawy9IA7KnOpLsmsShMh4Nhl8g+70/0ww6EPdURgBjWPJM=
-X-Google-Smtp-Source: AGHT+IEI48XdiEjcdWrwwdwFWY3xjuTvfVBcKE/hPSJ/8GcfhyVPGSydhhwXBFZEyJFFyvXiYAdR6g==
-X-Received: by 2002:a05:6512:687:b0:539:f696:777c with SMTP id 2adb3069b0e04-53d862cb2e1mr10285422e87.29.1731509071994;
-        Wed, 13 Nov 2024 06:44:31 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53d826787ddsm2224961e87.18.2024.11.13.06.44.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Nov 2024 06:44:30 -0800 (PST)
-Date: Wed, 13 Nov 2024 16:44:29 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Varadarajan Narayanan <quic_varada@quicinc.com>
-Cc: vkoul@kernel.org, kishon@kernel.org, robh@kernel.org, 
-	krzk+dt@kernel.org, conor+dt@kernel.org, gregkh@linuxfoundation.org, 
-	andersson@kernel.org, konradybcio@kernel.org, mantas@8devices.com, 
-	quic_rohiagar@quicinc.com, quic_kriskura@quicinc.com, manivannan.sadhasivam@linaro.org, 
-	abel.vesa@linaro.org, quic_kbajaj@quicinc.com, quic_wcheng@quicinc.com, 
-	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org
-Subject: Re: [PATCH v2 2/6] phy: qcom-qusb2: add QUSB2 support for IPQ5424
-Message-ID: <3wacyipnmxdjdgp6rrpfwreh53zjlimjkpadpxqrclu2tdtjj4@enwogkt6wq2e>
-References: <20241113072316.2829050-1-quic_varada@quicinc.com>
- <20241113072316.2829050-3-quic_varada@quicinc.com>
+	s=arc-20240116; t=1731510011; c=relaxed/simple;
+	bh=rOTKgEN7AQTPtDYa90FhNhr0jkFxIaC9XwCYe1Rw9L8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=CZnVoTtZ1nTvdsLjvMABANvC5SHBUaQ+iWXK3K/GIbXKtd3DdoOqWbVJycV6lrWjaphTduEyrpctGvf5uwBzF8522vVTCo8HFgJz4jQUgAtaoTcj6pX+5AYR0l8OugzuC8Rdz39rCTAfYpWJHJpVvy/Tr5SSir22QwOYj5AZtAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fo74Cp5T; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DB09C4CECD
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 15:00:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1731510010;
+	bh=rOTKgEN7AQTPtDYa90FhNhr0jkFxIaC9XwCYe1Rw9L8=;
+	h=References:In-Reply-To:From:Date:Subject:To:List-Id:Cc:From;
+	b=fo74Cp5T20xGuBuJoWDCvx6LD5fW2whKrRrXb17TPB4OMRT1LOA9Us25T5mAjPlyR
+	 nrsDeXnaopY0k8Ts8b8Uqehjn1K7kYCdkInuP/6R4qlZ6RMGVxJn3ZlWL5HRVwU1lo
+	 TH61mvq5rxaTeCsP4wDNHeigL+beLbizUaOmrxwQCy1zRkBrlomPGLIpGt/UBAa/Nd
+	 wCyUoJ8za/wau7sCbE/qdEkPshIzaqKo5HYhYUI2c2JJ3pI5uyuZ8ifFp5qFCU/EWZ
+	 kYuNrF/luth8/mOtWqFwqnfKsrzKDtvkl4pdy+E+D9vp37Dx7HUnq7mCrz0fDclzoD
+	 qpSUYLOmwl9sA==
+Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-6ea50585bf2so69708477b3.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 07:00:10 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCVu3gcoP1V0sAig7+ZRmaKgWw3aUo2K7auWqn/w8Neq1UKg2HcLaKP4U3Gzy5bsxngbDcDAw3stugoHf/a/@vger.kernel.org
+X-Gm-Message-State: AOJu0YxDCXZpvltfgqYhItAZWfV8cQGf5M2Klfx2wfE3nsUyxMhCx0Wi
+	G9B4YpXmDacO60nr/wtTCTr22n3WG+a6YfydJYH0svBoJr0oDaP+JNiqDVn0w1YMJMB9O1xfui7
+	aeD+NERGVzMa7Ek4O8vvWgqP7ujc=
+X-Google-Smtp-Source: AGHT+IEmP17XOlHyVHoRfkmmhg8PsBNAz28CtWvLaddcY42EXpWkdkEdFUm+d5rnkoo6+m2flCQkGCHiYPvxN7tMfRM=
+X-Received: by 2002:a05:690c:6f88:b0:6e2:12e5:35b4 with SMTP id
+ 00721157ae682-6eaddc1e448mr203356657b3.0.1731510009127; Wed, 13 Nov 2024
+ 07:00:09 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241113072316.2829050-3-quic_varada@quicinc.com>
+References: <83153c5ab8374e008d62646f200f9a04@quicinc.com> <CA+5PVA6B6cJ4sTVF_HN84_ommsMJzK5OsuaG+ikrzV1Sm441Jg@mail.gmail.com>
+ <v7ltgyxqzrt7pmcgy7bfsanfxbuu5fr4rn7yxg7hal5londeqj@44v32zea44hg>
+In-Reply-To: <v7ltgyxqzrt7pmcgy7bfsanfxbuu5fr4rn7yxg7hal5londeqj@44v32zea44hg>
+From: Josh Boyer <jwboyer@kernel.org>
+Date: Wed, 13 Nov 2024 09:59:57 -0500
+X-Gmail-Original-Message-ID: <CA+5PVA79SNW6rPF7XCMTE5LswQu5Jxf+ajAzV+JWRpXz8EZc6w@mail.gmail.com>
+Message-ID: <CA+5PVA79SNW6rPF7XCMTE5LswQu5Jxf+ajAzV+JWRpXz8EZc6w@mail.gmail.com>
+Subject: Re: add venus firmware file for qcs615
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: "Renjiang Han (QUIC)" <quic_renjiang@quicinc.com>, 
+	"linux-firmware@kernel.org" <linux-firmware@kernel.org>, 
+	"Vikash Garodia (QUIC)" <quic_vgarodia@quicinc.com>, 
+	"Dikshita Agarwal (QUIC)" <quic_dikshita@quicinc.com>, "Qiwei Liu (QUIC)" <quic_qiweil@quicinc.com>, 
+	"quic_zhgao@quicinc.co" <quic_zhgao@quicinc.co>, linux-arm-msm@vger.kernel.org, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Nov 13, 2024 at 12:53:12PM +0530, Varadarajan Narayanan wrote:
-> Add the phy init sequence for the Super Speed ports found
-> on IPQ5424.
-> 
-> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> ---
-> v2: Change uppercase hexdigits to lowercase
-> ---
->  drivers/phy/qualcomm/phy-qcom-qusb2.c | 28 +++++++++++++++++++++++++++
->  1 file changed, 28 insertions(+)
+On Wed, Nov 13, 2024 at 9:43=E2=80=AFAM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On Wed, Nov 13, 2024 at 07:22:28AM -0500, Josh Boyer wrote:
+> > On Wed, Nov 13, 2024 at 5:50=E2=80=AFAM Renjiang Han (QUIC)
+> > <quic_renjiang@quicinc.com> wrote:
+> > >
+> > > Hello
+> > >
+> > >
+> > >
+> > > The following changes since commit 6482750d396980a31f76edd5a84b03a96b=
+bdf3fe:
+> > >
+> > >
+> > >
+> > >   Merge branch 'verb' into 'main' (2024-11-11 20:01:00 +0000)
+> > >
+> > >
+> > >
+> > > are available in the Git repository at:
+> > >
+> > >
+> > >
+> > >   git@git.codelinaro.org:clo/linux-kernel/linux-firmware.git video-fi=
+rmware-qcs615
+> >
+> > Merged and pushed out.
+> >
+> > https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/370
+>
+> Josh, it is very nice to see a promt merging of the firmware, thanks a
+> lot. However is there a chance that you can give reviewers a time to
+> react? Usually there are no issues, but I think it is important to let
+> the comminity to be able to review the patch / pull request.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Happy to let things sit for a while.  Out of curiosity, what exactly
+are you reviewing?  They're binary blobs.
 
-
-
--- 
-With best wishes
-Dmitry
+josh
 
