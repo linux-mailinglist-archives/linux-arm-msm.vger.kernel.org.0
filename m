@@ -1,76 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-37821-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37822-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1E7209C77BD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 16:49:44 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 544B39C77BE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 16:49:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A49681F211A3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 15:49:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0DE5B281A1F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 15:49:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1E1D16B38B;
-	Wed, 13 Nov 2024 15:48:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0AA2E1DFE06;
+	Wed, 13 Nov 2024 15:48:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="I/9IjzET"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wXE9sIXK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A15B1632CD
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 15:48:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABDE71632F6
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 15:48:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731512924; cv=none; b=mAU7NvxGbiAB0jhbN20AI0yMNp5dz3rEvCa9Zs2mQU2FseyQ+gyGDWHex/SBohDxP6oPKNXBXlyv0n61pPgFdcNz0alGaEnumQcAmluIJioIU5SqBK1tArNEEsgf2nsG1eb1+q+uQg6K+hwel1Mt9oXncgBx4HY/b4EbZ1FwI6k=
+	t=1731512925; cv=none; b=foO2LpqKmMeuvzE/V/EpUqM7CXqwdg/NihTuRB0gvk4mdrrJgaBQo9wJoSXfLuCziudSjpEoqQk7IIchSTZdSP8sov8tNph4qZ2V/DUJ4Nab7uSZxXKCqrYHhm7wK1J4VV71WD+F//C680WjI2YL0KYWACB/1SDaRqc4kQ8zNb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731512924; c=relaxed/simple;
-	bh=41pV7VncXoUSjJZEldcTv760siIrrc74sU051Klt3mA=;
+	s=arc-20240116; t=1731512925; c=relaxed/simple;
+	bh=7K41pu/MdkMTc+pP11XGCKZBexaQmRd+FCsZp0JDkpM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=E9ZDq9cH1oiTIWAN0bLL1pIPdaxMAwmnpctcJDlei0m+Ba0F5zUyNXA6ez7Lx6u5cDo+NEK7OCBI0uf3NWu3uTVn+gHC3DY3KHpmoPEA8jwSF6N7sjJAW9H17tfNRV2WFFbWFZ5voUuZjiJkuO6DjCup0oPX5XZebVkGJR+9cpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=I/9IjzET; arc=none smtp.client-ip=209.85.167.45
+	 In-Reply-To:To:Cc; b=h1uScsCIzBZeNB/9j2GCAbV/zGNhOmu48XbOTs/17w9QjQkGkCI37e3f2Orwp6KIx0Dza/v3l4eBWzbckQKFgLpUio4+rR8aCfgTqXdjEkM7eyXMjgGqiM/fqOZhuWa/OvRABh27UYP6EMtYAAfZXudDG8yZoIDf+fyZhfLKyps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wXE9sIXK; arc=none smtp.client-ip=209.85.128.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-53da2140769so831768e87.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 07:48:42 -0800 (PST)
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4315eeb2601so87604085e9.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 07:48:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731512921; x=1732117721; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1731512922; x=1732117722; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=j3dh+RRnrXxpNt67AmWfO1pJdHXzaJZVVjbZ4bYTSvE=;
-        b=I/9IjzET7Zt8dWUVL0xUGM7PF4bEs/eojWW2Q6XsUdFWxxbkvjIcZnk8ORlmxTEbzl
-         hEUnqpmyQUHorVhV0/tx+QqVM1Ah62pwpSPPBHLRTl8Lrv7t/bQme4tNcgQLfm4cKYtZ
-         1ptFaKzoinPucJqh9sejKpc8LId49u0TmrdoshY4VrIbDfKtlID7aPUBs3SpxlxS9bjd
-         yTI1+lGzUa/Gtl9Nvlc8W2VUdgq6uiPSWqq99Z2axzQr5N1iuVVhgAQqVa+C4D3BgbjG
-         /gHeA3PQMieo5sipvSat68idI33Fz0xODpWMLMYYR5O293xvJHUeVaQKuU58D8Bb4i2d
-         865g==
+        bh=9yi71EJcXV1TWxeijcAvxPwT2zxYkcPyTUpTjdKEPVU=;
+        b=wXE9sIXKESQpCtt+m+a6PEh1XNFTRVSR+gq/W+j4IQBCWIUbKL72bwl6HPqXpDpOpP
+         1awJP++gcQ8zQwYZc21yvN9yHgilQQ2NYGQj2Jp9VSWySG8eZxc8wdN8hb4kdvpFS3Ef
+         vOgMEI2AxM5aKgtyLAWqP7/CTANmSEkYVMz4VEzIFEOu5l7WF0KSRFcD7gnQ0nNN1Sc8
+         Maew7LtM+eqwt5Dq7DSO+wT4Ggd42thMGe94NJnyk0mcXvPUrS4CxMwvKameJoFWSFch
+         3CMsDMfz8SDTXXi73F46O9PIT54+XUEO/ETCf0jAlEYJDnjcRIIc65SFrEQyAfYKlQOd
+         5p8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731512921; x=1732117721;
+        d=1e100.net; s=20230601; t=1731512922; x=1732117722;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=j3dh+RRnrXxpNt67AmWfO1pJdHXzaJZVVjbZ4bYTSvE=;
-        b=XjeMzXYK8oQtNqVaPJUqGc7cKbocgH3mFWoN0nde/VrHh98a+OMrEdL3YrxzDByXYJ
-         /OIIUWvmMpQthyr6plsJp5VyZ38v/BcURNpmqGiy/W0kB+HBYO392YPdz9BFFnbK1V41
-         WF0bpgRD6pZnuZLuOzm1Z5mGxgRKEMg1LU+aVjbbjXLuz812ZhPr0xbDLS5DBKp88Vfa
-         hFJTGv4k5G7zCjvZiT0/3J5wR9Ck/K7zjHgRSLaHIk/skAdFxRMJj4Otst04IrYekAbL
-         YuISm1kZ3yKjwUeOrUerUWgTuAVOSD+gpwwlAjcAPBw1wffAhyaWiYNfpxrI66+c4ds9
-         tQEg==
-X-Forwarded-Encrypted: i=1; AJvYcCUwmmAvh42uxd2ZoSydTmZW2xV7rE1rWlFByXUrR1gbsGhzluRCKSeyJYyZck/RV/XvwuUZgAV/Vs20pweg@vger.kernel.org
-X-Gm-Message-State: AOJu0YyqWBxNfBGqkJKyBCvRr1X8g2j03OqiaHBz7YVjjpkZedw3ctPb
-	okEFjnevkeiSC0m6eEFnR3SCzT7Vb2rLraAih7suq+wkdF4P1bqw+9yBoMHL7po=
-X-Google-Smtp-Source: AGHT+IFUI2P/RTpwjlxKEXcTmZbFs5YTWCAwQQFsVAGl1KHVLVhThqfiSlbL2cx9fRoVgKbrbjsvSA==
-X-Received: by 2002:a05:6512:159b:b0:53d:a23d:37e6 with SMTP id 2adb3069b0e04-53da23d3963mr1255108e87.57.1731512920671;
-        Wed, 13 Nov 2024 07:48:40 -0800 (PST)
+        bh=9yi71EJcXV1TWxeijcAvxPwT2zxYkcPyTUpTjdKEPVU=;
+        b=ZwVguq7YOrRp8hgGB2Bwbjc7O7zhctYDZOD+75BsPsInmCqi5+7Gx2i3n0JoY7eVAe
+         1q2COWCF8vV4lN6JS6wmO3e7/xjejSTm6ulFtPkqf2Ht7I7iMgfID5cOG3CeGasBqiqG
+         +/GGlWf/Qdf0iNoYuKp3ws0ksCRKgJEbD1YEDZoMaK8vlsJVxAot6wKLl/NiSFT22/Fe
+         5Z9eX97/LP9elzPYVdthW1w4iyc8IX4p7u9uwEituVKfhdy8tB3qO/y6Xyny0QRAwLAW
+         rt6j5/3bP4g8ky62pW3dyXFLDk9eXqBXKceFpXYi521PwPtag+ziz1O+4u8ewq7slApK
+         6ZcQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVgBhXXAX2tiliebj7h0LpjbMFu7CtlT7qOIpkTuhPjVMPEkE4k6KzdDOfbTjmCIyWvjugjkZfiDZPHcidO@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy99E5ssutJ0Q5N35dJbi6gB93kHQFH/E+AQpLj0+O33XJTJCDg
+	U3uvDgJNUDGNvDDHKcFtttiAFv/5JKZLrCrVZ4K/QfMT6QEpdSyIxotHS+MBsqo=
+X-Google-Smtp-Source: AGHT+IES6Q3gFVxvFv45r9DKj6piTt03BszD+wRLQWz/QQ3VuXsvXleM3XM05/zuEc8R5flRq9d+Pw==
+X-Received: by 2002:a05:600c:474e:b0:42f:75e0:780e with SMTP id 5b1f17b1804b1-432b7505822mr227996115e9.10.1731512921963;
+        Wed, 13 Nov 2024 07:48:41 -0800 (PST)
 Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432d54f772asm28445345e9.18.2024.11.13.07.48.39
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432d54f772asm28445345e9.18.2024.11.13.07.48.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Nov 2024 07:48:40 -0800 (PST)
+        Wed, 13 Nov 2024 07:48:41 -0800 (PST)
 From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Wed, 13 Nov 2024 16:48:29 +0100
-Subject: [PATCH RFC 3/8] drm/msm: adreno: add plumbing to generate
- bandwidth vote table for GMU
+Date: Wed, 13 Nov 2024 16:48:30 +0100
+Subject: [PATCH RFC 4/8] drm/msm: adreno: dynamically generate GMU bw table
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,7 +78,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241113-topic-sm8x50-gpu-bw-vote-v1-3-3b8d39737a9b@linaro.org>
+Message-Id: <20241113-topic-sm8x50-gpu-bw-vote-v1-4-3b8d39737a9b@linaro.org>
 References: <20241113-topic-sm8x50-gpu-bw-vote-v1-0-3b8d39737a9b@linaro.org>
 In-Reply-To: <20241113-topic-sm8x50-gpu-bw-vote-v1-0-3b8d39737a9b@linaro.org>
 To: Akhil P Oommen <quic_akhilpo@quicinc.com>, 
@@ -99,299 +98,114 @@ Cc: Connor Abbott <cwabbott0@gmail.com>, linux-pm@vger.kernel.org,
  dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
  devicetree@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=8316;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3335;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=41pV7VncXoUSjJZEldcTv760siIrrc74sU051Klt3mA=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBnNMpRcWrYtzO1iYz1ZpMIIQSbIKY4y5MHVyzXS+1g
- US+0VaiJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZzTKUQAKCRB33NvayMhJ0V0pD/
- 0d5W6NcfH7ua6tXai7exd9EcsYbiMKWp/mmNVsj4PilWm/GqLlTW2kjVhm5Z04dK0Aa2hsB+AcDuW5
- mLHeUFkrtuRH9i8I9qdA69PT9mv0n2ZDsp49L3sAYW8pPGCvaFtcD71ijkNO2Kyb21CZ54n3/b3zt8
- iSdK9SpRsduWL8U8YAlFr8wOrgHMHZdq94VN+k9XU31SWTT4qMYZleQ7z0thwRrldE0ZxybwjIiu/R
- zRF+SjGUZ7KmZHuXds2OMGUKrK/EP5jZTFyWC0XXkVxaDJhNmPE/PME/CA2Ripkr3tG9KKMQJVLGxH
- nTXqvNdTmOqV4nGrSlWl4ZoE03rB7PI18nv2XA2wcZRV4TrIFeO/9O8ZGYGLroiYlpzsd6bcgSNOtS
- uVGfmYkn7wldonIYwNM4B09T9ebZM7RhE0r+arVuGUtN632mevjZwYNjki7X2Npp273/ieWOtHEZys
- qi1hrrce5KsI0jbCxDQYNI8Sre8GAgNBLzVFBHiQQa6MiekgqOGP/gKiWtThgv1Y3Ks4dZb/W/Tn+I
- jc3zDdQDQeYwZQjQBc5BGpz0mghZyR/OntqCmPUdEvPQSdLj8cXJvQ+kCK3fGQqrSrTUqNku/IWiL/
- +1T2aGAlypmUoGfVu6TuS3WZIN6r42EtIT3yDKOEPfx5XfGDsmcnzzNmJcHA==
+ bh=7K41pu/MdkMTc+pP11XGCKZBexaQmRd+FCsZp0JDkpM=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBnNMpR4aROl/zsRVrE/76RdFwaYDIpy5ZB0B0CbpsM
+ zK5QtAaJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZzTKUQAKCRB33NvayMhJ0feCD/
+ 4l0/ygQ9J/ZTWsmGAQBYfHwHbUbQMMRBiuXJIQ60HYhkeXbQz/dbeCpDQF+47n9Pe/JG7Fhn2TTIAU
+ zx6bOpinnL9hOxtjdph1WFE74J0BAXdW5SCe1UdiGYyFmYWVNnjkwg3BLdYL+2g2y7CWTLAx5shh/D
+ R/CTy+dUTTzA5uSclaDjeM29loobtUlc5yg5bGUKrlXbClcqvNmzPN7d+AO7G4EACs2Y8gmDQlym7y
+ CZkI+yg8TLVXN5qwCJ7fVu3FbtpLjhWFl14BSYF5MckLII0OD9wvnWqIQzbSfXDpa4MVqLgcuiht4/
+ sMEoWD7XnisAUyj/pNjI4WE9+vVNfxj19Hzgw2+5I9lPEgMjgb1nIHPrPh+KPatdYs2ErG72HWEUkv
+ UhUxIdySYl8HgV/kfoPkz0HwuUD1u3mnmlbrAEkMCL2nc+gIP0yo6nJrS1YjvHhrtSb4DrZAZyujFz
+ sfKj/EMUYX2T8C+gFIyUEVVZ8mq6h8rRjSqYXr1o467JWPgn5UHWpp6l2KzzgWt06iEg3g06aKRbti
+ 0Blkj/giSJNAGY5W3l0lF3er0NLNymBDgrlm8e+Tnv3cd0NlLb3g/ckf+ATH4ziQSh2O1WdHKU7uPf
+ djHMsNJcL6uAGRVD4fiX02AxrvgTz3rD2OdW8Er+f/t4VD4amnbhRQ1vHSvg==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
-The Adreno GMU Management Unit (GMU) can also scale DDR Bandwidth along
-the Frequency and Power Domain level, but by default we leave the
-OPP core scale the interconnect ddr path.
+The Adreno GPU Management Unit (GMU) can also scale the ddr
+bandwidth along the frequency and power domain level, but for
+now we statically fill the bw_table with values from the
+downstream driver.
 
-In order to get the vote values to be used by the GPU Management
-Unit (GMU), we need to parse all the possible OPP Bandwidths and
-create a vote value to be send to the appropriate Bus Control
-Modules (BCMs) declared in the GPU info struct.
+Only the first entry is used, which is a disable vote, so we
+currently rely on scaling via the linux interconnect paths.
 
-The vote array will be used to dynamically generate the GMU bw_table
-sent during the GMU power-up.
+Let's dynamically generate the bw_table with the vote values
+previously calculated from the OPPs.
+
+Those entried will then be used by the GMU when passing the
+appropriate bandwidth level when voting for a gpu frequency.
 
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 163 ++++++++++++++++++++++++++++++++++
- drivers/gpu/drm/msm/adreno/a6xx_gmu.h |  12 +++
- drivers/gpu/drm/msm/adreno/a6xx_gpu.h |   1 +
- 3 files changed, 176 insertions(+)
+ drivers/gpu/drm/msm/adreno/a6xx_hfi.c | 48 +++++++++++++++++++++++++++--------
+ 1 file changed, 37 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index 14db7376c712d19446b38152e480bd5a1e0a5198..504a7c5d5a9df4c787951f2ae3a69d566d205ad5 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -9,6 +9,7 @@
- #include <linux/pm_domain.h>
- #include <linux/pm_opp.h>
- #include <soc/qcom/cmd-db.h>
-+#include <soc/qcom/tcs.h>
- #include <drm/drm_gem.h>
- 
- #include "a6xx_gpu.h"
-@@ -1287,6 +1288,119 @@ static int a6xx_gmu_memory_probe(struct a6xx_gmu *gmu)
- 	return 0;
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+index cb8844ed46b29c4569d05eb7a24f7b27e173190f..9a89ba95843e7805d78f0e5ddbe328677b6431dd 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+@@ -596,22 +596,48 @@ static void a730_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
+ 	msg->cnoc_cmds_data[1][0] = 0x60000001;
  }
  
-+struct a6xx_bcm_data {
-+	u32 buswidth;
-+	unsigned int unit;
-+	unsigned int width;
-+	unsigned int vcd;
-+	bool fixed;
-+	unsigned int perfmode;
-+	unsigned int perfmode_bw;
-+};
-+
-+struct bcm_db {
-+	__le32 unit;
-+	__le16 width;
-+	u8 vcd;
-+	u8 reserved;
-+};
-+
-+static int a6xx_gmu_rpmh_get_bcm_data(const struct a6xx_bcm *bcm,
-+				      struct a6xx_bcm_data *bcm_data)
-+{
-+	const struct bcm_db *data;
-+	size_t count;
-+
-+	data = cmd_db_read_aux_data(bcm->name, &count);
-+	if (IS_ERR(data))
-+		return PTR_ERR(data);
-+
-+	if (!count)
-+		return -EINVAL;
-+
-+	bcm_data->unit = le32_to_cpu(data->unit);
-+	bcm_data->width = le16_to_cpu(data->width);
-+	bcm_data->vcd = data->vcd;
-+	bcm_data->fixed = bcm->fixed;
-+	bcm_data->perfmode = bcm->perfmode;
-+	bcm_data->perfmode_bw = bcm->perfmode_bw;
-+	bcm_data->buswidth = bcm->buswidth;
-+
-+	return 0;
-+}
-+
-+static void a6xx_gmu_rpmh_calc_bw_vote(struct a6xx_bcm_data *bcms,
-+				       int count, u32 bw, u32 *data)
-+{
-+	int i;
-+
-+	for (i = 0; i < count; i++) {
-+		bool valid = true;
-+		bool commit = false;
-+		u64 peak, y;
-+
-+		if (i == count - 1 || bcms[i].vcd != bcms[i + 1].vcd)
-+			commit = true;
-+
-+		if (bcms[i].fixed) {
-+			if (!bw)
-+				data[i] = BCM_TCS_CMD(commit, false, 0x0, 0x0);
-+			else
-+				data[i] = BCM_TCS_CMD(commit, true, 0x0,
-+					bw >= bcms[i].perfmode_bw ?
-+						bcms[i].perfmode : 0x0);
-+			continue;
-+		}
-+
-+		/* Multiple the bandwidth by the width of the connection */
-+		peak = (u64)bw * bcms[i].width;
-+		do_div(peak, bcms[i].buswidth);
-+
-+		/* Input bandwidth value is in KBps */
-+		y = peak * 1000ULL;
-+		do_div(y, bcms[i].unit);
-+
-+		/*
-+		 * If a bandwidth value was specified but the calculation ends
-+		 * rounding down to zero, set a minimum level
-+		 */
-+		if (bw && y == 0)
-+			y = 1;
-+
-+		y = min_t(u64, y, BCM_TCS_CMD_VOTE_MASK);
-+		if (!y)
-+			valid = false;
-+
-+		data[i] = BCM_TCS_CMD(commit, valid, y, y);
-+	}
-+}
-+
-+static int a6xx_gmu_rpmh_bw_votes_init(const struct a6xx_info *info, struct a6xx_gmu *gmu)
-+{
-+	struct a6xx_bcm_data bcms[3];
-+	unsigned int bcm_count = 0;
-+	int ret, index;
-+
-+	/* Retrieve BCM data from cmd-db and merge with a6xx_info bcm table */
-+	for (index = 0; index < 3; index++) {
-+		if (!info->bcm[index].name)
-+			continue;
-+
-+		ret = a6xx_gmu_rpmh_get_bcm_data(&info->bcm[index], &bcms[index]);
-+		if (ret)
-+			return ret;
-+
-+		++bcm_count;
-+	}
-+
-+	/* Generate BCM votes values for each bandwidth & bcm */
-+	for (index = 0; index < gmu->nr_gpu_bws; index++)
-+		a6xx_gmu_rpmh_calc_bw_vote(bcms, bcm_count, gmu->gpu_bw_table[index],
-+					   gmu->gpu_bw_votes[index]);
-+
-+	return 0;
-+}
-+
- /* Return the 'arc-level' for the given frequency */
- static unsigned int a6xx_gmu_get_arc_level(struct device *dev,
- 					   unsigned long freq)
-@@ -1390,12 +1504,15 @@ static int a6xx_gmu_rpmh_arc_votes_init(struct device *dev, u32 *votes,
-  * The GMU votes with the RPMh for itself and on behalf of the GPU but we need
-  * to construct the list of votes on the CPU and send it over. Query the RPMh
-  * voltage levels and build the votes
-+ * The GMU can also vote for DDR interconnects, use the OPP bandwidth entries
-+ * and BCM parameters to build the votes.
-  */
- 
- static int a6xx_gmu_rpmh_votes_init(struct a6xx_gmu *gmu)
+-static void a740_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
++static void a740_generate_bw_table(struct adreno_gpu *adreno_gpu, struct a6xx_gmu *gmu,
++				   struct a6xx_hfi_msg_bw_table *msg)
  {
- 	struct a6xx_gpu *a6xx_gpu = container_of(gmu, struct a6xx_gpu, gmu);
- 	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
+-	msg->bw_level_num = 1;
 +	const struct a6xx_info *info = adreno_gpu->info->a6xx;
- 	struct msm_gpu *gpu = &adreno_gpu->base;
- 	int ret;
++	unsigned int i, j;
  
-@@ -1407,6 +1524,10 @@ static int a6xx_gmu_rpmh_votes_init(struct a6xx_gmu *gmu)
- 	ret |= a6xx_gmu_rpmh_arc_votes_init(gmu->dev, gmu->cx_arc_votes,
- 		gmu->gmu_freqs, gmu->nr_gmu_freqs, "cx.lvl");
+-	msg->ddr_cmds_num = 3;
+ 	msg->ddr_wait_bitmask = 0x7;
  
-+	/* Build the interconnect votes */
-+	if (adreno_gpu->info->quirks & ADRENO_QUIRK_GMU_BW_VOTE)
-+		ret |= a6xx_gmu_rpmh_bw_votes_init(info, gmu);
-+
- 	return ret;
- }
- 
-@@ -1442,6 +1563,38 @@ static int a6xx_gmu_build_freq_table(struct device *dev, unsigned long *freqs,
- 	return index;
- }
- 
-+static int a6xx_gmu_build_bw_table(struct device *dev, unsigned long *bandwidths,
-+		u32 size)
-+{
-+	int count = dev_pm_opp_get_opp_count(dev);
-+	struct dev_pm_opp *opp;
-+	int i, index = 0;
-+	unsigned int bandwidth = 1;
-+
-+	/*
-+	 * The OPP table doesn't contain the "off" bandwidth level so we need to
-+	 * add 1 to the table size to account for it
-+	 */
-+
-+	if (WARN(count + 1 > size,
-+		"The GMU bandwidth table is being truncated\n"))
-+		count = size - 1;
-+
-+	/* Set the "off" bandwidth */
-+	bandwidths[index++] = 0;
-+
-+	for (i = 0; i < count; i++) {
-+		opp = dev_pm_opp_find_bw_ceil(dev, &bandwidth, 0);
-+		if (IS_ERR(opp))
+-	msg->ddr_cmds_addrs[0] = cmd_db_read_addr("SH0");
+-	msg->ddr_cmds_addrs[1] = cmd_db_read_addr("MC0");
+-	msg->ddr_cmds_addrs[2] = cmd_db_read_addr("ACV");
++	for (i = 0; i < 3; i++) {
++		if (!info->bcm[i].name)
 +			break;
-+
-+		dev_pm_opp_put(opp);
-+		bandwidths[index++] = bandwidth++;
++		msg->ddr_cmds_addrs[i] = cmd_db_read_addr(info->bcm[i].name);
 +	}
-+
-+	return index;
++	msg->ddr_cmds_num = i;
+ 
+-	msg->ddr_cmds_data[0][0] = 0x40000000;
+-	msg->ddr_cmds_data[0][1] = 0x40000000;
+-	msg->ddr_cmds_data[0][2] = 0x40000000;
++	for (i = 0; i < gmu->nr_gpu_bws; ++i)
++		for (j = 0; j < msg->ddr_cmds_num; j++)
++			msg->ddr_cmds_data[i][j] = gmu->gpu_bw_votes[i][j];
++	msg->bw_level_num = gmu->nr_gpu_bws;
 +}
 +
- static int a6xx_gmu_pwrlevels_probe(struct a6xx_gmu *gmu)
- {
- 	struct a6xx_gpu *a6xx_gpu = container_of(gmu, struct a6xx_gpu, gmu);
-@@ -1472,6 +1625,16 @@ static int a6xx_gmu_pwrlevels_probe(struct a6xx_gmu *gmu)
++static void a740_build_bw_table(struct adreno_gpu *adreno_gpu, struct a6xx_gmu *gmu,
++				struct a6xx_hfi_msg_bw_table *msg)
++{
++	if ((adreno_gpu->info->quirks & ADRENO_QUIRK_GMU_BW_VOTE) && gmu->nr_gpu_bws) {
++		a740_generate_bw_table(adreno_gpu, gmu, msg);
++	} else {
++		msg->bw_level_num = 1;
  
- 	gmu->current_perf_index = gmu->nr_gpu_freqs - 1;
- 
-+	/*
-+	 * The GMU also handles GPU Interconnect Votes so build a list
-+	 * of DDR bandwidths from the GPU OPP table
-+	 */
-+	if (adreno_gpu->info->quirks & ADRENO_QUIRK_GMU_BW_VOTE)
-+		gmu->nr_gpu_bws = a6xx_gmu_build_bw_table(&gpu->pdev->dev,
-+			gmu->gpu_bw_table, ARRAY_SIZE(gmu->gpu_bw_table));
+-	/* TODO: add a proper dvfs table */
++		msg->ddr_cmds_num = 3;
++		msg->ddr_wait_bitmask = 0x7;
 +
-+	gmu->current_perf_index = gmu->nr_gpu_freqs - 1;
++		msg->ddr_cmds_addrs[0] = cmd_db_read_addr("SH0");
++		msg->ddr_cmds_addrs[1] = cmd_db_read_addr("MC0");
++		msg->ddr_cmds_addrs[2] = cmd_db_read_addr("ACV");
 +
- 	/* Build the list of RPMh votes that we'll send to the GMU */
- 	return a6xx_gmu_rpmh_votes_init(gmu);
- }
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
-index b4a79f88ccf45cfe651c86d2a9da39541c5772b3..95c632d8987a517f067c48c61c6c06b9a4f61fc0 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
-@@ -19,6 +19,14 @@ struct a6xx_gmu_bo {
- 	u64 iova;
- };
- 
-+struct a6xx_bcm {
-+	char *name;
-+	unsigned int buswidth;
-+	bool fixed;
-+	unsigned int perfmode;
-+	unsigned int perfmode_bw;
-+};
++		msg->ddr_cmds_data[0][0] = 0x40000000;
++		msg->ddr_cmds_data[0][1] = 0x40000000;
++		msg->ddr_cmds_data[0][2] = 0x40000000;
 +
- /*
-  * These define the different GMU wake up options - these define how both the
-  * CPU and the GMU bring up the hardware
-@@ -82,6 +90,10 @@ struct a6xx_gmu {
- 	unsigned long gpu_freqs[16];
- 	u32 gx_arc_votes[16];
++		/* TODO: add a proper dvfs table */
++	}
  
-+	int nr_gpu_bws;
-+	unsigned long gpu_bw_table[16];
-+	u32 gpu_bw_votes[16][3];
-+
- 	int nr_gmu_freqs;
- 	unsigned long gmu_freqs[4];
- 	u32 cx_arc_votes[4];
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-index 4aceffb6aae89c781facc2a6e4a82b20b341b6cb..d779d700120cbd974ee87a67214739b1d85156e2 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-@@ -44,6 +44,7 @@ struct a6xx_info {
- 	u32 gmu_chipid;
- 	u32 gmu_cgc_mode;
- 	u32 prim_fifo_threshold;
-+	const struct a6xx_bcm bcm[3];
- };
+ 	msg->cnoc_cmds_num = 1;
+ 	msg->cnoc_wait_bitmask = 0x1;
+@@ -691,7 +717,7 @@ static int a6xx_hfi_send_bw_table(struct a6xx_gmu *gmu)
+ 	else if (adreno_is_a730(adreno_gpu))
+ 		a730_build_bw_table(msg);
+ 	else if (adreno_is_a740_family(adreno_gpu))
+-		a740_build_bw_table(msg);
++		a740_build_bw_table(adreno_gpu, gmu, msg);
+ 	else
+ 		a6xx_build_bw_table(msg);
  
- struct a6xx_gpu {
 
 -- 
 2.34.1
