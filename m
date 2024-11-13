@@ -1,126 +1,245 @@
-Return-Path: <linux-arm-msm+bounces-37748-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37749-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C14C99C6A46
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 09:05:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 36BF39C6A6C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 09:15:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 437C71F240E3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 08:05:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BB2191F22E42
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 08:15:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B622218595E;
-	Wed, 13 Nov 2024 08:05:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4BEC18A92A;
+	Wed, 13 Nov 2024 08:15:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dkesitUQ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gYKN+R0z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03CF212C484;
-	Wed, 13 Nov 2024 08:05:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9918189B8A
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 08:15:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731485121; cv=none; b=hLTyMRXIflJmjPiYIFvt5XCRAdz05hPQJLZ9ZlgibVQsCu+mU7sQR2tv6hEDm6klZpYVJUHQd+ZHTSAqwC4Tl1bpyVtmyHrfDiP1CZC/p7h8N3CUyXishVPEG1vEus144o4C0a6yfmtYCX6+2p3FeH+GiJKsj6vle0fJgkeNgSg=
+	t=1731485712; cv=none; b=hHPLrcA0pj9UgHnBLYK8SaQYy4qrc7DKiTljbOlvycS/slEZJO4abwAwIA1GSy4Y5CEVd1nyjVDvcD76wUsv/fEp22Ci8xW+Fho5k2eMji/gv8xgOZPWaGz7JKRlOHB3aeZE26ipdygI6LiAPVscRwQnyva+AGNJnkoYzwdFkS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731485121; c=relaxed/simple;
-	bh=BbYlp+HJymN34nOHTwQ5tcq4uE81eUVPohJV/y5A3EA=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=j65hc7ATXZpmwY2HOs0yO5D2zZl6drjXVSc4eo8jGiyBRKAHsM9Q6RZnyOegpysem62dBEqKK5feotdJitDHcgF5Y0ezsKrkcV7zr4/LlqQC0jbO2F+iw5yjTTAk+oRZ6d/i8P4cuhhQwDeCiWB1vbeTn3/NxKdU5Jag7PIF4Xg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dkesitUQ; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AD7ut4H030544;
-	Wed, 13 Nov 2024 08:05:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=lQxanDluSxqvmWm5O14ZZnAStn6c0dPWysX
-	MECpRP7E=; b=dkesitUQYhlreY1+gaw5DMMl/m6pJhBUeQD2OOz5OG285MpBhgs
-	pfAcoJZTH5RqLKMbZMWUqdjy/EZEgBAMcJmonX1kHofEZ+BCW3UqG97r4kRL8Kk8
-	YYk1qVK/fghRn39eI2jSRO0m+ehwR18F1TEG7Ecat26ancM4aAsuYI4Gjocer/BL
-	8km9m39dIS/ZKhenY/rKeecdtk0Do0w+tvJ9WdnZN2qIwuQGBRBQ82WlZUV34pIP
-	RDSTsQWcMVKtWhZEf5W2OR8yy1tVs+ifi7YNhSLCRuUgRJPhHshN16rVa4Tuh7HU
-	se6bdjjh2MMjcKww7JX0sgrIpMvkzf5FVOA==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42vr5y00s8-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 Nov 2024 08:05:17 +0000 (GMT)
-Received: from pps.filterd (NALASPPMTA05.qualcomm.com [127.0.0.1])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 4AD7gOwE022588;
-	Wed, 13 Nov 2024 08:05:16 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by NALASPPMTA05.qualcomm.com (PPS) with ESMTPS id 42v63mr33h-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 Nov 2024 08:05:16 +0000
-Received: from NALASPPMTA05.qualcomm.com (NALASPPMTA05.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4AD80sK2018232;
-	Wed, 13 Nov 2024 08:05:16 GMT
-Received: from hu-devc-lv-u22-c.qualcomm.com (hu-qianyu-lv.qualcomm.com [10.81.25.114])
-	by NALASPPMTA05.qualcomm.com (PPS) with ESMTPS id 4AD85Gvl024923
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 Nov 2024 08:05:16 +0000
-Received: by hu-devc-lv-u22-c.qualcomm.com (Postfix, from userid 4098150)
-	id D44DA4CE; Wed, 13 Nov 2024 00:05:15 -0800 (PST)
-From: Qiang Yu <quic_qianyu@quicinc.com>
-To: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
-        krzk+dt@kernel.org, conor+dt@kernel.org
-Cc: johan@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_cang@quicinc.com, quic_mrana@quicinc.com, quic_qianyu@quicinc.com,
-        stable@vger.kernel.org
-Subject: [PATCH 1/1] arm64: dts: qcom: x1e80100: Fix up BAR space size for PCIe6a
-Date: Wed, 13 Nov 2024 00:05:08 -0800
-Message-Id: <20241113080508.3458849-1-quic_qianyu@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1731485712; c=relaxed/simple;
+	bh=8Y0UPyHRHBU3AJ5BIj2LNvoRsdFm7+hymI+IvfPQzM0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LHol58A8obELDZTEwla3ns2M+oXC8uEIVCrvJSKuj4tho3cR/G6Mr4wrEfSL1Ds3FUTvG7XNU3MpeesAjUAXPcViLTXCDRmtSRUtlkSsFZEyHNW4KxWJG8Agap4QRDmdSvi+zO6lDP0Wvd7bclevJuSLpSQ6erL1QbSdAi/rxn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gYKN+R0z; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4315eeb2601so82386305e9.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 00:15:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1731485709; x=1732090509; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=fQbo2SNWl0pl3CFAm+W16lnOLJFykustp1lz60+nR4M=;
+        b=gYKN+R0zXaQl8gIC0e/U1UvIeObn4BCcsyHYqxsp7YBeMZJWwMp13hT2bp+B7taMQP
+         wTt+1TzIYDRLmkZtbu0kpK4EMJtiU/e9JOe2EfJO3Cjx9tXAhgjkzRceTj6auhNntPRz
+         TuxJPN/moJXHkDIn9Jg1WvXBv5xdoTxmOqt10jgUVokcFS+bHO4A/HQiAzq6tmnshpCF
+         sh16EELhrb+TRxcWpfRdGggOXymv6jpfr2/BhED2y9o9dzwKFF1+lZxmw46+s2A/mkHR
+         TV7KwdeQzUAcw8pdMAVtM8p/nrkrcxU0oaLvi4tKdPLCJoJr8Q+Laok+wSrO9WW2FEun
+         7yOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731485709; x=1732090509;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fQbo2SNWl0pl3CFAm+W16lnOLJFykustp1lz60+nR4M=;
+        b=ZSn7+R5FhS8LaAVxk1X3hkcEQdvgW68hK1in57rLGlAP9TkQs8KSCiWV3Ie78ZnleA
+         HAtXG/isy/iwz/VxKPCjB/jrJKA4EjTVJIGItciUvsU/XnrsOmnudcVxeGYy7l8ZdhMI
+         lYgMnFblHzGwZSQ59kK+yU8caZ3eUqWtxb7u3NKb/AKnr3tW1lQJggpBlGmypyemRkSH
+         eH0SbZxD/T6wgz7iWMgHlDOdRfJ4Ioc/jSGxUbtJ2hMgz0u1kprs1IMWjs2ZLJD78thZ
+         cmZkCDmNpHvoJ1OEZClM5Ik3yMWxWrmnFHrvIM9FzAzB8eU+USc03V490ZXrUvqUzwls
+         33Uw==
+X-Forwarded-Encrypted: i=1; AJvYcCXhqBLxS7FSahBOFN0FqGLDPkk6ev1TOg2VWhF9H3xbDEJJkmbzchhB2OFmoWRB5EAbiviRqc6R8zYug6vy@vger.kernel.org
+X-Gm-Message-State: AOJu0YzcKn9TiI2r0A4PFkT0cQmZ9KHL7Si1YVfT6Kdrbjup6wCC/3DB
+	SQAkPid8PI/DqeEm5EF2DeK0pcNKwtqbd/rMoUHb2CtUfDApXyZsIAfZDwYowDo=
+X-Google-Smtp-Source: AGHT+IFFYloC/8jCwGxKk66s8CV5KsxYaWdZM5UqRntsEzLJT6asKbsQu3Xzl7h4UFRchhvMK6KVFg==
+X-Received: by 2002:a05:6000:178c:b0:382:10dc:594b with SMTP id ffacd0b85a97d-38210dc5c10mr383607f8f.34.1731485708986;
+        Wed, 13 Nov 2024 00:15:08 -0800 (PST)
+Received: from linaro.org ([2a02:2454:ff21:ef80:fca:835c:70ab:eebc])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381ed9ea4f6sm17576494f8f.64.2024.11.13.00.15.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Nov 2024 00:15:08 -0800 (PST)
+Date: Wed, 13 Nov 2024 09:15:03 +0100
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: barnabas.czeman@mainlining.org
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Amit Kucheria <amitk@kernel.org>,
+	Thara Gopinath <thara.gopinath@gmail.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
+	Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+	linux-pm@vger.kernel.org, iommu@lists.linux.dev,
+	Otto =?iso-8859-1?Q?Pfl=FCger?= <otto.pflueger@abscue.de>
+Subject: Re: [PATCH v5 08/10] arm64: dts: qcom: Add initial support for
+ MSM8917
+Message-ID: <ZzRgB_U3qYtV7O0h@linaro.org>
+References: <20241112-msm8917-v5-0-3ca34d33191b@mainlining.org>
+ <20241112-msm8917-v5-8-3ca34d33191b@mainlining.org>
+ <ZzOQEgLLhkH-IymV@linaro.org>
+ <4c34cb8eec5eab92501011e446b5362d@mainlining.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 0wgi4zb_2IACUWpJ_d6C8sRH3twDIntb
-X-Proofpoint-GUID: 0wgi4zb_2IACUWpJ_d6C8sRH3twDIntb
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 priorityscore=1501
- adultscore=0 clxscore=1015 suspectscore=0 lowpriorityscore=0 bulkscore=0
- mlxlogscore=665 malwarescore=0 spamscore=0 impostorscore=0 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2411130070
+In-Reply-To: <4c34cb8eec5eab92501011e446b5362d@mainlining.org>
 
-As per memory map table, the region for PCIe6a is 64MByte. Hence, set the
-size of 32 bit non-prefetchable memory region beginning on address
-0x70300000 as 0x3d00000 so that BAR space assigned to BAR registers can be
-allocated from 0x70300000 to 0x74000000.
+On Tue, Nov 12, 2024 at 06:38:04PM +0100, barnabas.czeman@mainlining.org wrote:
+> On 2024-11-12 18:27, Stephan Gerhold wrote:
+> > On Tue, Nov 12, 2024 at 04:49:38PM +0100, Barnabás Czémán wrote:
+> > > From: Otto Pflüger <otto.pflueger@abscue.de>
+> > > 
+> > > Add initial support for MSM8917 SoC.
+> > > 
+> > > Signed-off-by: Otto Pflüger <otto.pflueger@abscue.de>
+> > > [reword commit, rebase, fix schema errors]
+> > > Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+> > > ---
+> > >  arch/arm64/boot/dts/qcom/msm8917.dtsi | 1974
+> > > +++++++++++++++++++++++++++++++++
+> > >  1 file changed, 1974 insertions(+)
+> > > 
+> > > diff --git a/arch/arm64/boot/dts/qcom/msm8917.dtsi
+> > > b/arch/arm64/boot/dts/qcom/msm8917.dtsi
+> > > new file mode 100644
+> > > index 0000000000000000000000000000000000000000..cf0a0eec1141e11faca0ee9705d6348ab32a0f50
+> > > --- /dev/null
+> > > +++ b/arch/arm64/boot/dts/qcom/msm8917.dtsi
+> > > @@ -0,0 +1,1974 @@
+> [...]
+> > > +			sdc1_clk_on: sdc1-clk-on-state {
+> > > +				pins = "sdc1_clk";
+> > > +				bias-disable;
+> > > +				drive-strength = <16>;
+> > > +			};
+> > > +
+> > > +			sdc1_clk_off: sdc1-clk-off-state {
+> > > +				pins = "sdc1_clk";
+> > > +				bias-disable;
+> > > +				drive-strength = <2>;
+> > > +			};
+> > > +
+> > > +			sdc1_cmd_on: sdc1-cmd-on-state {
+> > > +				pins = "sdc1_cmd";
+> > > +				bias-disable;
+> > > +				drive-strength = <10>;
+> > > +			};
+> > > +
+> > > +			sdc1_cmd_off: sdc1-cmd-off-state {
+> > > +				pins = "sdc1_cmd";
+> > > +				bias-disable;
+> > > +				drive-strength = <2>;
+> > > +			};
+> > > +
+> > > +			sdc1_data_on: sdc1-data-on-state {
+> > > +				pins = "sdc1_data";
+> > > +				bias-pull-up;
+> > > +				drive-strength = <10>;
+> > > +			};
+> > > +
+> > > +			sdc1_data_off: sdc1-data-off-state {
+> > > +				pins = "sdc1_data";
+> > > +				bias-pull-up;
+> > > +				drive-strength = <2>;
+> > > +			};
+> > > +
+> > > +			sdc1_rclk_on: sdc1-rclk-on-state {
+> > > +				pins = "sdc1_rclk";
+> > > +				bias-pull-down;
+> > > +			};
+> > > +
+> > > +			sdc1_rclk_off: sdc1-rclk-off-state {
+> > > +				pins = "sdc1_rclk";
+> > > +				bias-pull-down;
+> > > +			};
+> > > +
+> > > +			sdc2_clk_on: sdc2-clk-on-state {
+> > > +				pins = "sdc2_clk";
+> > > +				drive-strength = <16>;
+> > > +				bias-disable;
+> > > +			};
+> > > +
+> > > +			sdc2_clk_off: sdc2-clk-off-state {
+> > > +				pins = "sdc2_clk";
+> > > +				bias-disable;
+> > > +				drive-strength = <2>;
+> > > +			};
+> > > +
+> > > +			sdc2_cmd_on: sdc2-cmd-on-state {
+> > > +				pins = "sdc2_cmd";
+> > > +				bias-pull-up;
+> > > +				drive-strength = <10>;
+> > > +			};
+> > > +
+> > > +			sdc2_cmd_off: sdc2-cmd-off-state {
+> > > +				pins = "sdc2_cmd";
+> > > +				bias-pull-up;
+> > > +				drive-strength = <2>;
+> > > +			};
+> > 
+> > These are not referenced anywhere? Not here in the sdhc_X nodes, and
+> > also not in your msm8917-xiaomi-riva.dts. Would also recommend
+> > consolidating these to a single node like in msm8916.dtsi, see commit
+> > c943e4c58b2f ("arm64: dts: qcom: msm8916/39: Consolidate SDC pinctrl").
+> > 
+> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c943e4c58b2ffb0dcd497f8b12f284f5e8fc477e
+> > 
+> > > +
+> > > +			sdc2_cd_on: cd-on-state {
+> > > +				pins = "gpio67";
+> > > +				function = "gpio";
+> > > +				drive-strength = <2>;
+> > > +				bias-pull-up;
+> > > +			};
+> > > +
+> > > +			sdc2_cd_off: cd-off-state {
+> > > +				pins = "gpio67";
+> > > +				function = "gpio";
+> > > +				drive-strength = <2>;
+> > > +				bias-disable;
+> > > +			};
+> > 
+> > It does not make sense to have different on/off states for the card
+> > detect (CD) pin of the SD card. It needs to work even when the SD card
+> > is suspended so we can detect insertions/removals. Also should be placed
+> > in the board-specific DT part.
+> I have made these based on this https://git.codelinaro.org/clo/la/kernel/msm-4.9/-/blob/LA.UM.9.6.2.r1-04800-89xx.0/arch/arm64/boot/dts/qcom/msm8917-pinctrl.dtsi
 
-Fixes: 7af141850012 ("arm64: dts: qcom: x1e80100: Fix up BAR spaces")
-Cc: stable@vger.kernel.org
-Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
----
- arch/arm64/boot/dts/qcom/x1e80100.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Yes, msm8916-pinctrl.dtsi also has this in the downstream sources, but
+as I explain in the commit linked below I don't think this is right. You
+can probably just change it to bias-disable like I did for most of the
+boards. There is usually external pull up that keeps it working even in
+the "cd-off-state".
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-index f044921457d0..90ddac606719 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-@@ -3126,7 +3126,7 @@ pcie6a: pci@1bf8000 {
- 			#address-cells = <3>;
- 			#size-cells = <2>;
- 			ranges = <0x01000000 0x0 0x00000000 0x0 0x70200000 0x0 0x100000>,
--				 <0x02000000 0x0 0x70300000 0x0 0x70300000 0x0 0x1d00000>;
-+				 <0x02000000 0x0 0x70300000 0x0 0x70300000 0x0 0x3d00000>;
- 			bus-range = <0x00 0xff>;
- 
- 			dma-coherent;
--- 
-2.34.1
+> > 
+> > See commit dfbda20dabaa ("arm64: dts: qcom: msm8916/39: Fix SD card
+> > detect pinctrl").
+> > 
+> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=dfbda20dabaa1f284abd550035db5887384c8e4c
+> > 
 
+Thanks,
+Stephan
 
