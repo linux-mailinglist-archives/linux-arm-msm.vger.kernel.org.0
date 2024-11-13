@@ -1,138 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-37712-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37713-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B77109C67A6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 04:16:07 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B60779C67D2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 04:30:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 66E822854D4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 03:16:02 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6BF95B2A100
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 03:23:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED91B1632F7;
-	Wed, 13 Nov 2024 03:15:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 289C7166F1B;
+	Wed, 13 Nov 2024 03:23:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JX1qTyrT"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="TCWKlwmx"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 350BF7083B;
-	Wed, 13 Nov 2024 03:15:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82B682231C;
+	Wed, 13 Nov 2024 03:23:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731467756; cv=none; b=iNnQtiPKQpYGxqlCc0M2QX+9nU5034PfDwZQmakIKj11ZsCb8limn5dNdvP5zI0d4wN1CcwKrkkN71fXbaOWKjN1VL/ISmHjYzcki1nm+7vxQId5z2Iwy+ySdBcxGmnZmWivNajEGPxxWwLvoet/Upqlv1mptPcm7ht40CoJ4/g=
+	t=1731468204; cv=none; b=IqvGZlPwvPh6RES9GKJc08+f0Ct8xqnjRYCiywb5tgQxpYU21FciKNTWszSaxsPR5S93cQtKFARFML3C4c0zsb6TZCSvgDOwRJS3zNstVa5d81/jHYY9XzvNXrPy3NErr/DjBZCXT5A+tez4p8W+3RGphjgzu4GPUWeoLACrZpA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731467756; c=relaxed/simple;
-	bh=Kvtqt9CB3FwQ88prvtB4P/v91yBTj+PcYS64KOGOY3E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Vm6LoZkIpMLoCNqOFtkzSwDOIlULDIBAKzhLiDdVki5tu89d4FMk+ujKK3h2e/xUOKkj6tuN4idOSjlhi9hi5b/VBT6+nhJvGoPX+jilximrYEweQkuEpOfBoz70VTX2lUHoIAAycZQjfW32XuoeqcncgF5ojYznL7EHK6cRP1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JX1qTyrT; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1731468204; c=relaxed/simple;
+	bh=1tneCB0lrtWRviJiovN1a0CfYo4kk8aE3R6ZF9tg/Ww=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=Wmkrk/584Y+Cc1MmsdxEtXgbmXZAnEchlXEHRBlWzIpr8MvNy30OgV8JWEFkJl+hk0ugnh9uNYqzTKpK7g2qpkylOTiUie31Bawaep+1DoUBXnJt5kWtnvvbeOd31MafZMu8F3JBCugtYRlLs5tQKDsBMYC6qAD1mR3mFJnsmyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=TCWKlwmx; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ACMRgqn020160;
-	Wed, 13 Nov 2024 03:15:45 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ACMSPYP016376;
+	Wed, 13 Nov 2024 03:23:18 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	+0nLDjWPpDSaIUWRpCkibPRwNwq3e9MLwoKzDakWg+w=; b=JX1qTyrT7zAKVhlY
-	RlEkMRqXDsI6mLayZ37Tij6MjkOAABzd7vU7rTN3cRkaAMtIL4s6WtUbLWD2PE41
-	7858slkiUsa/VNI9mseBJ/vZsM51j5zzOL6gRMbxLVFsSnC21GbHiBZA19pMypFi
-	wVibfE9gQv/f7vwkeB8EcGQLETrSTm5Swok5GJdOvMwOhPGg93B3w4FuJTvwrqoc
-	IJbFbvtEZmzwWxFzmzGisGc7nmkxAoaH8Y9SQRuR8ToH+uUtYRj+QDfgPGHU3mxC
-	DLa9HJP/7g5zqt3p00icl279ejEt7J914d7Z0eqJm0PfaA5NANgwcMRi/V44ioIu
-	Ppdidw==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42uc60e0te-1
+	1tneCB0lrtWRviJiovN1a0CfYo4kk8aE3R6ZF9tg/Ww=; b=TCWKlwmxVY1W0vCj
+	USkYbUNm3ny/PYVhJAm68Ex+1tr+LKiYbz4+xpYH4d+jkGrs80lEQv/UIWNJM/P3
+	OwUL+C03sHeP5/E3MNKlqg2bIhcmZnGZzc/VNGxKqmQgR0Ye8uwMEAZwUi4AKfXv
+	7+7cs8jlkcicAYdbxIU7iaNMfhLA9b7kRbMLLQmJoL93wCOWWbzsKBXwOVCSEn9P
+	9R9j+zPnCm7ZZ/QEblZjZe8v1XO9d2Ot/WhqN2UkLi2kxwSM5bEvGX7mGu8xa69d
+	izyCAwIde4h7HmPYEsap8d2C1uSxzlTvcBfsKS8f3rPZatQYj457tyVNyoqb0FZp
+	CBicdQ==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42v1vfu3gk-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 Nov 2024 03:15:45 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AD3FiTU000592
+	Wed, 13 Nov 2024 03:23:17 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AD3NGKU015622
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 Nov 2024 03:15:44 GMT
-Received: from [10.239.29.179] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 12 Nov
- 2024 19:15:38 -0800
-Message-ID: <ef37236d-8856-4981-82fa-c0194d7b3dfc@quicinc.com>
-Date: Wed, 13 Nov 2024 11:15:35 +0800
+	Wed, 13 Nov 2024 03:23:16 GMT
+Received: from nalasex01c.na.qualcomm.com (10.47.97.35) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 12 Nov 2024 19:23:16 -0800
+Received: from nalasex01c.na.qualcomm.com ([fe80::dac3:ec8:4ce:6a85]) by
+ nalasex01c.na.qualcomm.com ([fe80::dac3:ec8:4ce:6a85%11]) with mapi id
+ 15.02.1544.009; Tue, 12 Nov 2024 19:23:16 -0800
+From: "Renjiang Han (QUIC)" <quic_renjiang@quicinc.com>
+To: "Rob Herring (Arm)" <robh@kernel.org>
+CC: Mauro Carvalho Chehab <mchehab@kernel.org>,
+        "bryan.odonoghue@linaro.org"
+	<bryan.odonoghue@linaro.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "Vikash
+ Garodia (QUIC)" <quic_vgarodia@quicinc.com>,
+        "linux-media@vger.kernel.org"
+	<linux-media@vger.kernel.org>,
+        Stanimir Varbanov
+	<stanimir.k.varbanov@gmail.com>,
+        "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Subject: RE: [PATCH v2 1/4] dt-bindings: qcom,qcs615-venus: document QCS615
+ venus
+Thread-Topic: [PATCH v2 1/4] dt-bindings: qcom,qcs615-venus: document QCS615
+ venus
+Thread-Index: AQHbNPjc6u9OdCowaE+nFUoyTjgZx7K0KVQAgABgmhA=
+Date: Wed, 13 Nov 2024 03:23:15 +0000
+Message-ID: <1abcb44b418d42b6b5e86fc4b75aad14@quicinc.com>
+References: <20241112-add-venus-for-qcs615-v2-0-e67947f957af@quicinc.com>
+ <20241112-add-venus-for-qcs615-v2-1-e67947f957af@quicinc.com>
+ <173141803295.771794.12897067124135705292.robh@kernel.org>
+In-Reply-To: <173141803295.771794.12897067124135705292.robh@kernel.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-Mentions: robh@kernel.org
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 5/5] arm64: dts: qcom: x1e80100: Add support for PCIe3
- on x1e80100
-To: Johan Hovold <johan@kernel.org>
-CC: <manivannan.sadhasivam@linaro.org>, <vkoul@kernel.org>,
-        <kishon@kernel.org>, <robh@kernel.org>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>, <abel.vesa@linaro.org>,
-        <quic_msarkar@quicinc.com>, <quic_devipriy@quicinc.com>,
-        <dmitry.baryshkov@linaro.org>, <kw@linux.com>, <lpieralisi@kernel.org>,
-        <neil.armstrong@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pci@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <johan+linaro@kernel.org>
-References: <20241101030902.579789-1-quic_qianyu@quicinc.com>
- <20241101030902.579789-6-quic_qianyu@quicinc.com>
- <ZyjbrLEn8oSJjaZN@hovoldconsulting.com>
- <de5f40ab-90b7-4c75-b981-dd5824650660@quicinc.com>
- <c558f9eb-d190-4b77-b5a3-7af6b7de68d8@quicinc.com>
- <ZzOQi0PpRZYts-B0@hovoldconsulting.com>
-Content-Language: en-US
-From: Qiang Yu <quic_qianyu@quicinc.com>
-In-Reply-To: <ZzOQi0PpRZYts-B0@hovoldconsulting.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: GcnROkpzv1BlU-MSswyL8At-npoyDzuB
-X-Proofpoint-ORIG-GUID: GcnROkpzv1BlU-MSswyL8At-npoyDzuB
+X-Proofpoint-GUID: LONNOqK6XVFI42cdYLy0dpZL0pgkqIxw
+X-Proofpoint-ORIG-GUID: LONNOqK6XVFI42cdYLy0dpZL0pgkqIxw
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 malwarescore=0
- phishscore=0 suspectscore=0 impostorscore=0 mlxlogscore=812 adultscore=0
- lowpriorityscore=0 priorityscore=1501 clxscore=1015 mlxscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2411130027
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
+ suspectscore=0 spamscore=0 clxscore=1015 phishscore=0 bulkscore=0
+ mlxlogscore=999 malwarescore=0 priorityscore=1501 lowpriorityscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411130028
 
-
-On 11/13/2024 1:29 AM, Johan Hovold wrote:
-> On Mon, Nov 11, 2024 at 11:44:17AM +0800, Qiang Yu wrote:
->> On 11/5/2024 1:28 PM, Qiang Yu wrote:
->>> On 11/4/2024 10:35 PM, Johan Hovold wrote:
->>>> On Thu, Oct 31, 2024 at 08:09:02PM -0700, Qiang Yu wrote:
->>>>> +            ranges = <0x01000000 0x0 0x00000000 0x0 0x78200000 0x0
->>>>> 0x100000>,
->>>>> +                 <0x02000000 0x0 0x78300000 0x0 0x78300000 0x0
->>>>> 0x3d00000>,
->>>> Can you double check the size here so that it is indeed correct and not
->>>> just copied from the other nodes which initially got it wrong:
->>>>
->>>>      https://lore.kernel.org/lkml/20240710-topic-barman-v1-1-5f63fca8d0fc@linaro.org/
->> BTW, regions of PCIe6a, PCIe4, PCIe5 are 64MB, 32MB, 32MB, respectively.
->> Why range size is set to 0x1d00000 for PCIe6a, any issue is reported on
->> PCIe6a?
-> Thanks for checking. It seems the patch linked to above was broken for
-> PCIe6a then.
->
-> We did see PCIe5 probe breaking due to the overlap with PCIe4 but the
-> patch predates PCIe5 support being posted and merged so it was probably
-> just based on inspection.
->
-> Could you send a fix for PCIe6a?
-Sure, will send the fix.
-
-Thanks,
-Qiang Yu
->
-> Johan
+SGkgQFJvYiBIZXJyaW5nIChBcm0pDQoNClRoYW5rcyBmb3IgeW91ciByZXBseS4NCiJkdC1iaW5k
+aW5ncy9jbG9jay9xY29tLHFjczYxNS12aWRlb2NjLmgiIGlzIGFkZGVkIGluIGh0dHBzOi8vbG9y
+ZS5rZXJuZWwub3JnL2FsbC8yMDI0MTEwOC1xY3M2MTUtbW0tY2xvY2tjb250cm9sbGVyLXYzLTAt
+N2QzYjJkMjM1ZmRmQHF1aWNpbmMuY29tLy4gSSB0aGluayB0aGlzIHBhdGNoIG1heSBub3QgYmUg
+aW5jbHVkZWQuDQoNCg0KQmVzdCBSZWdhcmRzLA0KUmVuamlhbmcNCg0KLS0tLS1PcmlnaW5hbCBN
+ZXNzYWdlLS0tLS0NCkZyb206IFJvYiBIZXJyaW5nIChBcm0pIDxyb2JoQGtlcm5lbC5vcmc+IA0K
+U2VudDogVHVlc2RheSwgTm92ZW1iZXIgMTIsIDIwMjQgOToyNyBQTQ0KVG86IFJlbmppYW5nIEhh
+biAoUVVJQykgPHF1aWNfcmVuamlhbmdAcXVpY2luYy5jb20+DQpDYzogTWF1cm8gQ2FydmFsaG8g
+Q2hlaGFiIDxtY2hlaGFiQGtlcm5lbC5vcmc+OyBicnlhbi5vZG9ub2dodWVAbGluYXJvLm9yZzsg
+S3J6eXN6dG9mIEtvemxvd3NraSA8a3J6aytkdEBrZXJuZWwub3JnPjsgZGV2aWNldHJlZUB2Z2Vy
+Lmtlcm5lbC5vcmc7IEJqb3JuIEFuZGVyc3NvbiA8YW5kZXJzc29uQGtlcm5lbC5vcmc+OyBDb25v
+ciBEb29sZXkgPGNvbm9yK2R0QGtlcm5lbC5vcmc+OyBsaW51eC1hcm0tbXNtQHZnZXIua2VybmVs
+Lm9yZzsgVmlrYXNoIEdhcm9kaWEgKFFVSUMpIDxxdWljX3ZnYXJvZGlhQHF1aWNpbmMuY29tPjsg
+bGludXgtbWVkaWFAdmdlci5rZXJuZWwub3JnOyBTdGFuaW1pciBWYXJiYW5vdiA8c3RhbmltaXIu
+ay52YXJiYW5vdkBnbWFpbC5jb20+OyBsaW51eC1rZXJuZWxAdmdlci5rZXJuZWwub3JnOyBLb25y
+YWQgRHliY2lvIDxrb25yYWR5YmNpb0BrZXJuZWwub3JnPg0KU3ViamVjdDogUmU6IFtQQVRDSCB2
+MiAxLzRdIGR0LWJpbmRpbmdzOiBxY29tLHFjczYxNS12ZW51czogZG9jdW1lbnQgUUNTNjE1IHZl
+bnVzDQoNCg0KT24gVHVlLCAxMiBOb3YgMjAyNCAxNzoxNzo1NyArMDUzMCwgUmVuamlhbmcgSGFu
+IHdyb3RlOg0KPiBBZGQgc3VwcG9ydCBmb3IgUXVhbGNvbW0gdmlkZW8gYWNjZWxlcmF0aW9uIGhh
+cmR3YXJlIHVzZWQgZm9yIHZpZGVvIA0KPiBzdHJlYW0gZGVjb2RpbmcgYW5kIGVuY29kaW5nIG9u
+IFFDT00gUUNTNjE1Lg0KPiANCj4gU2lnbmVkLW9mZi1ieTogUmVuamlhbmcgSGFuIDxxdWljX3Jl
+bmppYW5nQHF1aWNpbmMuY29tPg0KPiAtLS0NCj4gIC4uLi9iaW5kaW5ncy9tZWRpYS9xY29tLHFj
+czYxNS12ZW51cy55YW1sICAgICAgICAgIHwgMTgxICsrKysrKysrKysrKysrKysrKysrKw0KPiAg
+MSBmaWxlIGNoYW5nZWQsIDE4MSBpbnNlcnRpb25zKCspDQo+IA0KDQpNeSBib3QgZm91bmQgZXJy
+b3JzIHJ1bm5pbmcgJ21ha2UgZHRfYmluZGluZ19jaGVjaycgb24geW91ciBwYXRjaDoNCg0KeWFt
+bGxpbnQgd2FybmluZ3MvZXJyb3JzOg0KDQpkdHNjaGVtYS9kdGMgd2FybmluZ3MvZXJyb3JzOg0K
+RG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL21lZGlhL3Fjb20scWNzNjE1LXZlbnVz
+LmV4YW1wbGUuZHRzOjI1OjE4OiBmYXRhbCBlcnJvcjogZHQtYmluZGluZ3MvY2xvY2svcWNvbSxx
+Y3M2MTUtdmlkZW9jYy5oOiBObyBzdWNoIGZpbGUgb3IgZGlyZWN0b3J5DQogICAyNSB8ICAgICAg
+ICAgI2luY2x1ZGUgPGR0LWJpbmRpbmdzL2Nsb2NrL3Fjb20scWNzNjE1LXZpZGVvY2MuaD4NCiAg
+ICAgIHwgICAgICAgICAgICAgICAgICBefn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+
+fn5+fn5+fg0KY29tcGlsYXRpb24gdGVybWluYXRlZC4NCm1ha2VbMl06ICoqKiBbc2NyaXB0cy9N
+YWtlZmlsZS5kdGJzOjEyOTogRG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL21lZGlh
+L3Fjb20scWNzNjE1LXZlbnVzLmV4YW1wbGUuZHRiXSBFcnJvciAxDQptYWtlWzJdOiAqKiogV2Fp
+dGluZyBmb3IgdW5maW5pc2hlZCBqb2JzLi4uLg0KbWFrZVsxXTogKioqIFsvYnVpbGRzL3JvYmhl
+cnJpbmcvZHQtcmV2aWV3LWNpL2xpbnV4L01ha2VmaWxlOjE0NDI6IGR0X2JpbmRpbmdfY2hlY2td
+IEVycm9yIDINCm1ha2U6ICoqKiBbTWFrZWZpbGU6MjI0OiBfX3N1Yi1tYWtlXSBFcnJvciAyDQoN
+CmRvYyByZWZlcmVuY2UgZXJyb3JzIChtYWtlIHJlZmNoZWNrZG9jcyk6DQoNClNlZSBodHRwczov
+L3BhdGNod29yay5vemxhYnMub3JnL3Byb2plY3QvZGV2aWNldHJlZS1iaW5kaW5ncy9wYXRjaC8y
+MDI0MTExMi1hZGQtdmVudXMtZm9yLXFjczYxNS12Mi0xLWU2Nzk0N2Y5NTdhZkBxdWljaW5jLmNv
+bQ0KDQpUaGUgYmFzZSBmb3IgdGhlIHNlcmllcyBpcyBnZW5lcmFsbHkgdGhlIGxhdGVzdCByYzEu
+IEEgZGlmZmVyZW50IGRlcGVuZGVuY3kgc2hvdWxkIGJlIG5vdGVkIGluICp0aGlzKiBwYXRjaC4N
+Cg0KSWYgeW91IGFscmVhZHkgcmFuICdtYWtlIGR0X2JpbmRpbmdfY2hlY2snIGFuZCBkaWRuJ3Qg
+c2VlIHRoZSBhYm92ZSBlcnJvcihzKSwgdGhlbiBtYWtlIHN1cmUgJ3lhbWxsaW50JyBpcyBpbnN0
+YWxsZWQgYW5kIGR0LXNjaGVtYSBpcyB1cCB0bw0KZGF0ZToNCg0KcGlwMyBpbnN0YWxsIGR0c2No
+ZW1hIC0tdXBncmFkZQ0KDQpQbGVhc2UgY2hlY2sgYW5kIHJlLXN1Ym1pdCBhZnRlciBydW5uaW5n
+IHRoZSBhYm92ZSBjb21tYW5kIHlvdXJzZWxmLiBOb3RlIHRoYXQgRFRfU0NIRU1BX0ZJTEVTIGNh
+biBiZSBzZXQgdG8geW91ciBzY2hlbWEgZmlsZSB0byBzcGVlZCB1cCBjaGVja2luZyB5b3VyIHNj
+aGVtYS4gSG93ZXZlciwgaXQgbXVzdCBiZSB1bnNldCB0byB0ZXN0IGFsbCBleGFtcGxlcyB3aXRo
+IHlvdXIgc2NoZW1hLg0KDQo=
 
