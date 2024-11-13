@@ -1,128 +1,167 @@
-Return-Path: <linux-arm-msm+bounces-37851-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37853-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F3D2C9C7D93
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 22:22:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 610079C7E43
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 23:35:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A1914B2BF0C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 21:16:52 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C2756B22E34
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 22:35:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A96A420899D;
-	Wed, 13 Nov 2024 21:14:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 582C518C330;
+	Wed, 13 Nov 2024 22:34:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jCcWoUlO"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="OfM8qVxx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f65.google.com (mail-lf1-f65.google.com [209.85.167.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21976208982
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 21:14:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA3EF13959D;
+	Wed, 13 Nov 2024 22:34:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731532487; cv=none; b=Dds9tSt05QreyyHLC2P2ljIBEEG3V/4eWlaFngKBbLPPreWrd5m2wPUSe1rLx7qRH210YYLbFk1iUODOZ3e18ZdcmDyPG28r6SblgHHImY61+eMP1kQjEembwCLuPkplcHCm9OQUd8W671/Ot2h89C32lBatfe8i/kQ+zXtFja0=
+	t=1731537294; cv=none; b=crVfvvTn+YAuYSGv8Oy5KsWwM2PZDToKwVcyCudv6rU8vNLjtpBWtVTTwBW94MedmsTR9gHjvFVGwYkSoJNeLVR3orXA+XgOlUa1mPQi4RFtpdsYrAYH0IHTvW2qv0I1s7BJ7Ztmxrri0ZhwG+nysf2YyAy78GMPF0KONrd/Fqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731532487; c=relaxed/simple;
-	bh=y+NzpzejYDg4WwOMqqSlho5bizSCTIJ8a/DFv7RBwKo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AhiMsKepWFrSl5EujUZRKYNx1AL1BbfudexppZ/RpBGQeCE8CHJSkvZkzBaxd19kIXzz8fN4ss0CthR8L29oUDB5DDvHeM2ArEULcEIWl/L+7JdL+ZVQmJDF9qxOXjJ0lNR4lVISr/nhzeBwH6IWPNXtFfxydP+jf3b7MJEYSaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jCcWoUlO; arc=none smtp.client-ip=209.85.167.65
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f65.google.com with SMTP id 2adb3069b0e04-539e4488012so304246e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 13:14:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731532483; x=1732137283; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=MWW4xpmzM2Fe1J6uTpcvQOhcfcmzKCMrCiJfOhpikeI=;
-        b=jCcWoUlOSIEJzMqVqVAuyakW/kOeFOdvmx8GIVxu2F9+/s24CVonHzZkwfnOeeYxsW
-         InJofXlAMa9XGzNA/xk7pQWbd5spUUWNUPKzOMoPQckaEzyE/pHJz23b9n0ekaMjqHeZ
-         0786W6P2v7+swdBTtxiZrjp32yRgCQK113OX5hW2fpdS3mvpF5x3i9UaB+MM3Bvdf+Hs
-         +SYBDyqpvOn7VbWZaM7bP3dF24hfkgLslcIuMjjsKQC03ZDSi6TfxWcC2vjpu4cHEFM/
-         Wf5O1wTVl3mn/VGtoMsvNa2GbnToLDojkCKgXPG/0ALYaJpF9lbYkADiNf8+ORLl/So5
-         adRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731532483; x=1732137283;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MWW4xpmzM2Fe1J6uTpcvQOhcfcmzKCMrCiJfOhpikeI=;
-        b=CBmxT1lfL3Tg5gEppJMUF/+PRUVh4q2d+vGTSw/ieODQMX+NN93EAl9Mbt11U2JKgi
-         Y725jyv12XH/FXVm/fMRnVZKm+GOzNQebtoOr51SQUV5nHH9T5xqfOFAn3UN5gfU9QCc
-         2s2+Ahy7IAANg4tS5TBdA0/wIPWNyoC7radHznXK5Nufwja9m4Vi9mn6oFQeYcGTlUpU
-         GdQw5s5nYENrXhmSMQRcXAM60JRPVqbmDsCGZ8APGGUnlQgYibcRRj5P26ZabvFBORFc
-         aXcA7anqTPGSOtGg1816aGeqRsqy2en4D6hTCj0alSfnY4bHTAmMfBhWQpsIEx081RAM
-         t8hg==
-X-Forwarded-Encrypted: i=1; AJvYcCWjtaTaEUwZJUXpTb6BLzVOO8pWxK3Nwt/CiXUKoDVjxSBMGm6bf5yUV2dMHdAy62HCJiqaNo/c35Xv+KTt@vger.kernel.org
-X-Gm-Message-State: AOJu0YwIJuAKXp6PpuWchBVPhu2KLHGQL3CQz/hG65xmKqAV3V+4DD+w
-	R36xSeiQKu+2pUIbtHxCnpDbkl13+9YlWTkRoru2Vk/kh6Ix5hKSBZ3ejJtP5lY=
-X-Google-Smtp-Source: AGHT+IE/abjEKPW1/bwyS2SME/i+tt3LJv7ehOsjOAcpnovPFLmxI8e0bu/XOCMufARKSCnFQIPMNQ==
-X-Received: by 2002:a05:6512:2387:b0:536:9efb:bb19 with SMTP id 2adb3069b0e04-53d862628f1mr3057095e87.3.1731532483168;
-        Wed, 13 Nov 2024 13:14:43 -0800 (PST)
-Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53d826862f8sm2297338e87.101.2024.11.13.13.14.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Nov 2024 13:14:42 -0800 (PST)
-Message-ID: <8f07e440-8a56-4315-bb79-b630649a9116@linaro.org>
-Date: Wed, 13 Nov 2024 23:14:40 +0200
+	s=arc-20240116; t=1731537294; c=relaxed/simple;
+	bh=AOVX+Q3LP2qMURxMX1tJm7ekf6MwcEHpxO8hdpqc/3s=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=r8YyPrOEGUhGzvNI4eiQid/afEJHmOwf4GmITcvGPTWlmIQpju0FT4acNNBOKAop0Xci1GxH6s5Yy56n2z287wF//Ng413kH/Yoyv1y7Me91e9Gics1+iHLOHD0UizGtDKOZ7XPTqCsYPpJS55eFOv2SDgMe1EmfcGqMFscLVpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=OfM8qVxx; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ADHxknj027135;
+	Wed, 13 Nov 2024 22:34:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=BtXq4E+cGX3BSnPnoNAAsr
+	KGpw88rLXe/Rc0cHF3mes=; b=OfM8qVxx9vlTJMtOL/p+eK5Y+FODNdCZt23nNE
+	yQ2c4UragxbRFZpl4qqp4hNnfLtl1DvTI2su5t6rSN6Jc8IB0KUy7dD59rvRDRfO
+	nT8FRtPrLYSnf0IpTBuo3ByIg9miORIpXKpr5g2ICMu3molFSXVO4bTKS37uRWVU
+	4WtpMOy5WHlYraxXWhVR2XSZTlkaEiA59jplSK7bu7otnHVetlr8OAhBn+iBgQYj
+	ZRMcZ9LOy4b5RwO+9TET/Ko0D6ubk9bUY9oRMX7LvUE6DFZxjRxDK3rQMQPoqDed
+	ofTM8K+8PxK77KG3uhFqBnKDaJIMUWqZv8DNBNkWSD8CP3EQ==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42w10jrn10-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 13 Nov 2024 22:34:40 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4ADMYdxo006632
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 13 Nov 2024 22:34:39 GMT
+Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 13 Nov 2024 14:34:38 -0800
+From: Elliot Berman <quic_eberman@quicinc.com>
+Subject: [PATCH RFC v3 0/2] mm: Refactor KVM guest_memfd to introduce
+ guestmem library
+Date: Wed, 13 Nov 2024 14:34:35 -0800
+Message-ID: <20241113-guestmem-library-v3-0-71fdee85676b@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/3] media: qcom: camss: Add MSM8953 resources
-Content-Language: en-US
-To: barnabas.czeman@mainlining.org,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org, Vladimir Lypak <vladimir.lypak@gmail.com>
-References: <20241103-camss-msm8953-v4-0-48d0ec75958d@mainlining.org>
- <20241103-camss-msm8953-v4-3-48d0ec75958d@mainlining.org>
- <6833ebc6-9210-471a-8ca6-5f3605155f33@linaro.org>
- <412b3252f1ca795fbcfaf5e466e94642@mainlining.org>
- <67d014f1-9424-4b88-b031-096a5596c5c8@linaro.org>
- <eda3d0ae-50eb-43b2-a234-93b209fbcdeb@linaro.org>
- <ffa2a863c8a9b99582ad6648600d372b@mainlining.org>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <ffa2a863c8a9b99582ad6648600d372b@mainlining.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAHspNWcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyjHUUlJIzE
+ vPSU3UzU4B8JSMDIxNDQ0Mj3fTS1OKS3NRc3ZzMpKLEokpdMwtjM+PkJCNLQwszJaC2gqLUtMw
+ KsJHRSkFuzkqxtbUAnc24EmcAAAA=
+X-Change-ID: 20241112-guestmem-library-68363cb29186
+To: Paolo Bonzini <pbonzini@redhat.com>,
+        Andrew Morton
+	<akpm@linux-foundation.org>,
+        Sean Christopherson <seanjc@google.com>,
+        "Fuad
+ Tabba" <tabba@google.com>,
+        Ackerley Tng <ackerleytng@google.com>,
+        "Mike
+ Rapoport" <rppt@kernel.org>, "H. Peter Anvin" <hpa@zytor.com>
+CC: James Gowans <jgowans@amazon.com>, <linux-fsdevel@vger.kernel.org>,
+        <kvm@vger.kernel.org>, <linux-coco@lists.linux.dev>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-mm@kvack.org>, Elliot Berman <quic_eberman@quicinc.com>
+X-Mailer: b4 0.14.2
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: rGKUzBUjULE8r9lkutNxPo0AT6PlGYjw
+X-Proofpoint-GUID: rGKUzBUjULE8r9lkutNxPo0AT6PlGYjw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
+ suspectscore=0 spamscore=0 priorityscore=1501 bulkscore=0 mlxlogscore=849
+ impostorscore=0 lowpriorityscore=0 phishscore=0 clxscore=1011 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2411130185
 
-On 11/13/24 17:32, barnabas.czeman@mainlining.org wrote:
-> On 2024-11-13 16:23, Bryan O'Donoghue wrote:
->> On 13/11/2024 13:28, Vladimir Zapolskiy wrote:
->>> So, we have to rely on the documentation here. Bryan, can you please
->>> check, if VDDA_MIPI_CSI pad on MSM8916 and/or MSM8953 is related to
->>> CSIPHY or CSID power supply? Thank you in advance.
->>
->> No there's really no indication in the documents I have how the input
->> gets routed internally, CSID, CSIPHY, both.. not clear.
->>
->> I think Barnabás is right, the best source of information we have for
->> this one is the downstream dtsi => CSID.
-> I have found the regulator also in downstream msm_csid driver i hope it
-> helps a bit.
-> https://git.codelinaro.org/clo/la/kernel/msm-4.9/-/blob/LA.UM.10.6.2.c26-01500-89xx.0/drivers/media/platform/msm/camera_v2/sensor/csid/msm_csid.c#L73
-> 
+In preparation for adding more features to KVM's guest_memfd, refactor
+and introduce a library which abtracts some of the core-mm decisions
+about managing folios associated with guest memory. The goal of the
+refactor serves two purposes:
 
-Agreed, since the documentation is ambiguous about the voltage supply,
-the best deal is to follow the downstream code here.
+1. Provide an easier way to reason about memory in guest_memfd. KVM
+   needs to support multiple confidentiality models (TDX, SEV, pKVM, Arm
+   CCA). These models support different semantics for when the host
+   can(not) access guest memory. An abstraction for the allocator and
+   managing the state of pages will make it eaiser to reason about the
+   state of folios within the guest_memfd.
 
-Please fix the review findings in the dt-bindings, and rebase the driver
-changes on top of the linux-next, also please consider to add CCI and
-CAMSS device tree nodes into the msm8953.dtsi file.
+2. Provide a common implementation for other users such as Gunyah [1] and
+   guestmemfs [2].
 
---
-Best wishes,
-Vladimir
+In this initial series, I'm seeking comments for the line I'm drawing
+between library and user (KVM). I've not introduced new functionality in
+this series; the first new feature will probably be Fuad's mappability
+patches [3].
+
+I've decided to only bring out the address_space from guest_memfd as it
+seemed the simplest approach. In the current iteration, KVM "attaches"
+the guestmem to the inode. I expect we'll want to provide some helpers
+for inode, file, and vm operations when it's relevant to
+mappability/accessiblity/faultability.
+
+I'd appreciate any feedback, especially on how much we should pull into
+the guestmem library.
+
+[1]: https://lore.kernel.org/lkml/20240222-gunyah-v17-0-1e9da6763d38@quicinc.com/
+[2]: https://lore.kernel.org/all/20240805093245.889357-1-jgowans@amazon.com/
+[3]: https://lore.kernel.org/all/20241010085930.1546800-3-tabba@google.com/
+
+Changes in v3:
+ - Refactor/extract only the address_space
+ - Link to v2: https://lore.kernel.org/all/20240829-guest-memfd-lib-v2-0-b9afc1ff3656@quicinc.com/
+
+Changes in v2:
+- Significantly reworked to introduce "accessible" and "safe" reference
+  counters
+- Link to v1: https://lore.kernel.org/r/20240805-guest-memfd-lib-v1-0-e5a29a4ff5d7@quicinc.com
+
+Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+---
+Elliot Berman (2):
+      KVM: guest_memfd: Convert .free_folio() to .release_folio()
+      mm: guestmem: Convert address_space operations to guestmem library
+
+ MAINTAINERS              |   2 +
+ include/linux/guestmem.h |  33 +++++++
+ mm/Kconfig               |   3 +
+ mm/Makefile              |   1 +
+ mm/guestmem.c            | 232 +++++++++++++++++++++++++++++++++++++++++++++++
+ virt/kvm/Kconfig         |   1 +
+ virt/kvm/guest_memfd.c   | 107 +++++++---------------
+ 7 files changed, 305 insertions(+), 74 deletions(-)
+---
+base-commit: 5cb1659f412041e4780f2e8ee49b2e03728a2ba6
+change-id: 20241112-guestmem-library-68363cb29186
+
+Best regards,
+-- 
+Elliot Berman <quic_eberman@quicinc.com>
+
 
