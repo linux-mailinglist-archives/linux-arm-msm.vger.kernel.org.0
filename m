@@ -1,141 +1,181 @@
-Return-Path: <linux-arm-msm+bounces-37848-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37849-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 77B799C7AB8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 19:10:54 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 506569C7A92
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 19:03:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 69DF9B23EC5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 17:53:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D46B31F23379
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 18:03:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C6F12022D9;
-	Wed, 13 Nov 2024 17:53:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A0952040B0;
+	Wed, 13 Nov 2024 18:01:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="k2g2dSBw"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qnK8PjYR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95DC12AE69
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 17:53:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09872762D0
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 18:01:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731520431; cv=none; b=mPGvbx0Dt3CwgmYi/CgkTrmlZxSPSeMkqoYp94A/sniJOCzPDnx3Y6GgJROI0QRCpIAGbivxqXW/wmOF2DiL8SZfWcjKQLSLBsUMYahwBo8JsKDy1OUoE/1bCUGhw3Gw567BETuEnT8m2pDDq8tM0AZFw1bJE9f8/D2h0daVZ1I=
+	t=1731520890; cv=none; b=KfL045OOioK+4qdQxwtDJvvow+ViGQyZHQxrszVFxIJNPZ69eHDpL3Hyw/5M3Ootn+i6ZXYSwEeMWHHg+GvgxSYsuQZaLOCBQ4E35nsycGi2GZYyyIScfj06dR6wIKf9U1+mieWZHA5doDGu0ZL2YrospE+DgwpnWIhpmEQtZw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731520431; c=relaxed/simple;
-	bh=zm1fv7C9ZvMgmxoPVPmAEYJM5s2lGtTeZmY8+odA6jg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=f+O/kmSadHXJ2DMaxjsj0FH1Cl+wFa5qVVHkarcantv3djBphX19yQE2WeoUnMdEakUY4/UQJVWJkF7F66a4PaMOMpG0n+e7Itir5t7f5lsLQjAbx6NAiunsecNMJ+RX+R0OIgZ53G9Gf9zNAEokAIhxK9obVrIae7xUGQBA+dg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=k2g2dSBw; arc=none smtp.client-ip=209.85.219.179
+	s=arc-20240116; t=1731520890; c=relaxed/simple;
+	bh=mW8xeBOdl7cG7NVmuWN6uOIPoVBCoSszDsYNlTMIS+U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QThYxm8cJw/OVjEZ2iQ1F6JKope+pACXNzL/xs0p+TxTWKMT8FsvpGYK9DaIhu0FzwwbiHxzJy3gq8WwJtdL7kvan7SBm48LxR5TnI95ZnDnQgOJIfsuY4ynZXVrXZLKXzyoZsTS8cFqxCaxoL4lNf5ldmcf8LmLetihJpjXKdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qnK8PjYR; arc=none smtp.client-ip=209.85.167.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-e33a8c84b9aso3530582276.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 09:53:49 -0800 (PST)
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-539f84907caso8185426e87.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 10:01:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731520428; x=1732125228; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=V0HM892jiNpcUVDvngIW3uKBaNyn81wMonH3CRQInwM=;
-        b=k2g2dSBwJ0AkJTBs5TPOOS594JcbZvhj1lC3TLUDICB6VWeZqC8ZtsWvKvjwNs6gxd
-         7Q1p5EtH+Eb2laKStFi8YM9oJwF2jb2dtbnwGGTuku7hqDfiYD4cNk9Wf2XvxBijHnSX
-         vCnzyOIi4gEUjYxnTIjSWlaNZQ76XfECOGlwNiBeqUHH4m7gHPaf4dQ2KcSCyQc9bo9K
-         ndiAxckhh9GQO3rdSe/AT//emR+ewuzqTDCWP2Uhx+v7AdyaBrI+OA4qRbUANMt/5KUn
-         32ddkXcb1t+LvZybYecbByvsGP9qJWxStaxltI5xSYPLakRUenDWrdQ0oC+nRhmf1m+b
-         6OBA==
+        d=linaro.org; s=google; t=1731520887; x=1732125687; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=MZvMlsN0jo6eym0o1YhsLbFld5ubrjJXwf34VetdniI=;
+        b=qnK8PjYRg7HVxdF4JW5RgT2ONXkfT3LYTZJlX1+wkgHgSD6C7/+ETEYQ9W9HS6gwOJ
+         VPlvYfSgTJJpkeOS6BRLwWH8lWCc8eehntAp1nx+mzUntjyzHWZ+XW12LBTj9izlbck9
+         3uAV9XjUaPnMssE6CC2WsSlWe1NQNWyUG+vSt59uSbRYeADNpjj1KKOrXJPpdnVmdJrt
+         a1Lsw9jHkxTI1gPUAD94A8mVES3qga3AOCxMOkel8w7CQt9/XeUvSAu+aH4RUxW6fLcM
+         yrflRelxdJdNvxHmXplgAqFtqqRC86Py7KzLfHkUivOSG6VIVYWcUNvDYTlGjDs+O1zK
+         Nf+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731520428; x=1732125228;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=V0HM892jiNpcUVDvngIW3uKBaNyn81wMonH3CRQInwM=;
-        b=Qws8MKFDuv/GXW/uwRDxDLdqIrAaCMFJdnz8Lxtx0CX7/JOZ2qM1v1oRBiNFAYAbY5
-         N1CfA+5VMdIDS0LV3jhdsk2qeX5mQZ7DSHndYhAaxHg3jHVq4thz/i9ZpIxMkQtjkzzH
-         q3DKP+GScl4t1/C2pqMPgWUOshR5cSJfdi1XWnxETTHLLmbFyx2sromzz2RS+1rKWyof
-         alyKvVsETO+BEnI240vtJf6Au2OkhAgBlo2hTi7xJE7/t6z1lfNSS1tQoezhZr6GpFoy
-         ddSN8YCUp5URWJEOBrCvaIQ0ri0rovtFvKK1Ip9RqKpKkwkWhZ8M3COBI0WIrqAFQEqs
-         viIA==
-X-Forwarded-Encrypted: i=1; AJvYcCUcHxJtXXOeB7DLLMROU2ZpagsrFXfWE7Rp2ocxLWnb2EiNj0mG3o+o44XiLXt3VCjbgjStHNclBdCokdeU@vger.kernel.org
-X-Gm-Message-State: AOJu0YyjUneCP4dRQ1MEmNK9RHxmkGB233FrR/VMJxbN3w2Td9OZrlA0
-	kCp0CRL+y9b3n3aPiaUXT0cg21ptIzMSse3/NnFheYhJLbOedDDwYSGXCDpzAg7flBJE7Dt2mtL
-	OrM67SrEUIefSV4yfTrABL4s0TH8noXbiD2nMSdw1JDRaLq0q
-X-Google-Smtp-Source: AGHT+IG/FxsxAVZjA0S4w2yNDF7845ou6UQCRi8CzwPkPHrpGvfQjJZBg9L9DaEJfeAb1k1rHj0ZKAv66tVhrBp5EBw=
-X-Received: by 2002:a05:6902:2b01:b0:e35:e0c4:a06b with SMTP id
- 3f1490d57ef6-e35ecf0b3demr4644521276.25.1731520427281; Wed, 13 Nov 2024
- 09:53:47 -0800 (PST)
+        d=1e100.net; s=20230601; t=1731520887; x=1732125687;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=MZvMlsN0jo6eym0o1YhsLbFld5ubrjJXwf34VetdniI=;
+        b=uAi/TheqRM6HP5iE0f39tLEBPyjdjS3oAGWJCRXaNHVKa4oZLIUMYbOE4kgj/0zrK+
+         cQ2KbyHou5PTxEFQGhHewuIdViVO+mXZaOtZ2GEIlKsUk7Bps/N+xwtV+vghFOVueLQU
+         8qTCvkeK6iJFtRZ3l7k92sLJoYIDl8qekrVt+3zzQOVgNyKgOrtLwe8a8nXUeIvt9S7S
+         pxuWed00PBsc4SUtXjG7p+p/LvXWvEnhQlAjaqUPAjE+Kb8IwQvXoKm+n68hRdTwQLVO
+         /CkEWketiEg8zmF4pnim2FWzeDavE0ZszJ+UuxYT+nCEuiR9L8OvzYcbTdWd6uW0uHzs
+         mInQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXbQOtvxLy18GMxuxeA5n4/VwPBe21xrUYaskbABrj4BF/F0TxzSKANLY9jseeUHBLMgmePCxVbapl0f7+B@vger.kernel.org
+X-Gm-Message-State: AOJu0YwlNz9CdzFutM7A972euUd0HK20gKCJBB9ywaV3YZPPLnSVCJfP
+	uIKQtV8VewpQQfJNgiy0v4Q3Eu/TgRl22b2uYQ0WXLTAdX90TaNI1obH2PW2DzE=
+X-Google-Smtp-Source: AGHT+IETbRzY+I9uAERqiReGkk3idEQ+R5hg0H5mE4wjypNlx0pG/QizKr/RYs6BvY2mQyRC/uIflQ==
+X-Received: by 2002:a05:6512:b94:b0:52e:767a:ada3 with SMTP id 2adb3069b0e04-53d862f33cfmr11056499e87.47.1731520887019;
+        Wed, 13 Nov 2024 10:01:27 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53d826a9b50sm2256446e87.182.2024.11.13.10.01.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Nov 2024 10:01:25 -0800 (PST)
+Date: Wed, 13 Nov 2024 20:01:23 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Renjiang Han <quic_renjiang@quicinc.com>
+Cc: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, 
+	Vikash Garodia <quic_vgarodia@quicinc.com>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+	Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 2/4] media: venus: core: add qcs615 platform data
+Message-ID: <eldjwrookzs46mvxdp56uj2eytfeu5fuj4zs4yowcyilhra3pg@vc6v72klixem>
+References: <20241112-add-venus-for-qcs615-v2-0-e67947f957af@quicinc.com>
+ <20241112-add-venus-for-qcs615-v2-2-e67947f957af@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <83153c5ab8374e008d62646f200f9a04@quicinc.com> <CA+5PVA6B6cJ4sTVF_HN84_ommsMJzK5OsuaG+ikrzV1Sm441Jg@mail.gmail.com>
- <v7ltgyxqzrt7pmcgy7bfsanfxbuu5fr4rn7yxg7hal5londeqj@44v32zea44hg> <CA+5PVA79SNW6rPF7XCMTE5LswQu5Jxf+ajAzV+JWRpXz8EZc6w@mail.gmail.com>
-In-Reply-To: <CA+5PVA79SNW6rPF7XCMTE5LswQu5Jxf+ajAzV+JWRpXz8EZc6w@mail.gmail.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 13 Nov 2024 19:53:37 +0200
-Message-ID: <CAA8EJppUfGB4XcZXyG=ZUdKREo+x6yR=dAbahdjMvzShCmqoDQ@mail.gmail.com>
-Subject: Re: add venus firmware file for qcs615
-To: Josh Boyer <jwboyer@kernel.org>
-Cc: "Renjiang Han (QUIC)" <quic_renjiang@quicinc.com>, 
-	"linux-firmware@kernel.org" <linux-firmware@kernel.org>, 
-	"Vikash Garodia (QUIC)" <quic_vgarodia@quicinc.com>, 
-	"Dikshita Agarwal (QUIC)" <quic_dikshita@quicinc.com>, "Qiwei Liu (QUIC)" <quic_qiweil@quicinc.com>, 
-	"quic_zhgao@quicinc.co" <quic_zhgao@quicinc.co>, linux-arm-msm@vger.kernel.org, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241112-add-venus-for-qcs615-v2-2-e67947f957af@quicinc.com>
 
-On Wed, 13 Nov 2024 at 17:00, Josh Boyer <jwboyer@kernel.org> wrote:
->
-> On Wed, Nov 13, 2024 at 9:43=E2=80=AFAM Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
-> >
-> > On Wed, Nov 13, 2024 at 07:22:28AM -0500, Josh Boyer wrote:
-> > > On Wed, Nov 13, 2024 at 5:50=E2=80=AFAM Renjiang Han (QUIC)
-> > > <quic_renjiang@quicinc.com> wrote:
-> > > >
-> > > > Hello
-> > > >
-> > > >
-> > > >
-> > > > The following changes since commit 6482750d396980a31f76edd5a84b03a9=
-6bbdf3fe:
-> > > >
-> > > >
-> > > >
-> > > >   Merge branch 'verb' into 'main' (2024-11-11 20:01:00 +0000)
-> > > >
-> > > >
-> > > >
-> > > > are available in the Git repository at:
-> > > >
-> > > >
-> > > >
-> > > >   git@git.codelinaro.org:clo/linux-kernel/linux-firmware.git video-=
-firmware-qcs615
-> > >
-> > > Merged and pushed out.
-> > >
-> > > https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/37=
-0
-> >
-> > Josh, it is very nice to see a promt merging of the firmware, thanks a
-> > lot. However is there a chance that you can give reviewers a time to
-> > react? Usually there are no issues, but I think it is important to let
-> > the comminity to be able to review the patch / pull request.
->
-> Happy to let things sit for a while.  Out of curiosity, what exactly
-> are you reviewing?  They're binary blobs.
+On Tue, Nov 12, 2024 at 05:17:58PM +0530, Renjiang Han wrote:
+> Initialize the platform data and enable venus driver probe of QCS615
+> SoC.
+> 
+> Signed-off-by: Renjiang Han <quic_renjiang@quicinc.com>
+> ---
+>  drivers/media/platform/qcom/venus/core.c | 50 ++++++++++++++++++++++++++++++++
+>  1 file changed, 50 insertions(+)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+> index 423deb5e94dcb193974da23f9bd2d905bfeab2d9..39d8bcf62fe4f72674746b75994cce6cbaee94eb 100644
+> --- a/drivers/media/platform/qcom/venus/core.c
+> +++ b/drivers/media/platform/qcom/venus/core.c
+> @@ -630,6 +630,55 @@ static const struct venus_resources msm8998_res = {
+>  	.fwname = "qcom/venus-4.4/venus.mbn",
+>  };
+>  
+> +static const struct freq_tbl qcs615_freq_table[] = {
+> +	{ 0, 460000000 },
+> +	{ 0, 410000000 },
+> +	{ 0, 380000000 },
+> +	{ 0, 300000000 },
+> +	{ 0, 240000000 },
+> +	{ 0, 133333333 },
+> +};
+> +
+> +static const struct bw_tbl qcs615_bw_table_enc[] = {
+> +	{  972000,  951000, 0, 1434000, 0 },	/* 3840x2160@30 */
+> +	{  489600,  723000, 0,  973000, 0 },	/* 1920x1080@60 */
+> +	{  244800,  370000, 0,	495000, 0 },	/* 1920x1080@30 */
+> +};
+> +
+> +static const struct bw_tbl qcs615_bw_table_dec[] = {
+> +	{ 1036800, 1987000, 0, 2797000, 0 },	/* 4096x2160@30 */
+> +	{  489600, 1040000, 0, 1298000, 0 },	/* 1920x1080@60 */
+> +	{  244800,  530000, 0,  659000, 0 },	/* 1920x1080@30 */
+> +};
+> +
+> +static const struct venus_resources qcs615_res = {
+> +	.freq_tbl = qcs615_freq_table,
+> +	.freq_tbl_size = ARRAY_SIZE(qcs615_freq_table),
+> +	.bw_tbl_enc = qcs615_bw_table_enc,
+> +	.bw_tbl_enc_size = ARRAY_SIZE(qcs615_bw_table_enc),
+> +	.bw_tbl_dec = qcs615_bw_table_dec,
+> +	.bw_tbl_dec_size = ARRAY_SIZE(qcs615_bw_table_dec),
+> +	.clks = {"core", "iface", "bus" },
+> +	.clks_num = 3,
+> +	.vcodec0_clks = { "vcodec0_core", "vcodec0_bus" },
+> +	.vcodec_clks_num = 2,
+> +	.vcodec_pmdomains = (const char *[]) { "venus", "vcodec0" },
+> +	.vcodec_pmdomains_num = 2,
+> +	.opp_pmdomain = (const char *[]) { "cx" },
+> +	.vcodec_num = 1,
+> +	.hfi_version = HFI_VERSION_4XX,
+> +	.vpu_version = VPU_VERSION_AR50,
+> +	.vmem_id = VIDC_RESOURCE_NONE,
+> +	.vmem_size = 0,
+> +	.vmem_addr = 0,
+> +	.dma_mask = 0xe0000000 - 1,
+> +	.cp_start = 0,
+> +	.cp_size = 0x70800000,
+> +	.cp_nonpixel_start = 0x1000000,
+> +	.cp_nonpixel_size = 0x24800000,
+> +	.fwname = "qcom/venus-5.4/venus_s6.mbn",
 
-Yes. However sometimes they can be pushed to a disputable location or
-have other issues. In this case I'd like to understand whether this
-binary is specific to QCS615 (and thus it should be a separate binary)
-or it's just a somehow updated version of the existing binary.
+Why does it need a separate firmware file?
 
---=20
+> +};
+> +
+>  static const struct freq_tbl sdm660_freq_table[] = {
+>  	{ 979200, 518400000 },
+>  	{ 489600, 441600000 },
+> @@ -937,6 +986,7 @@ static const struct of_device_id venus_dt_match[] = {
+>  	{ .compatible = "qcom,msm8916-venus", .data = &msm8916_res, },
+>  	{ .compatible = "qcom,msm8996-venus", .data = &msm8996_res, },
+>  	{ .compatible = "qcom,msm8998-venus", .data = &msm8998_res, },
+> +	{ .compatible = "qcom,qcs615-venus", .data = &qcs615_res, },
+>  	{ .compatible = "qcom,sdm660-venus", .data = &sdm660_res, },
+>  	{ .compatible = "qcom,sdm845-venus", .data = &sdm845_res, },
+>  	{ .compatible = "qcom,sdm845-venus-v2", .data = &sdm845_res_v2, },
+> 
+> -- 
+> 2.34.1
+> 
+
+-- 
 With best wishes
 Dmitry
 
