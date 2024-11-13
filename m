@@ -1,122 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-37788-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37789-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD8689C70B3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 14:32:39 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 98C019C7129
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 14:44:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B198F28806E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 13:32:35 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5E138281BD4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 13:44:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 277481E04B3;
-	Wed, 13 Nov 2024 13:32:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BDDA31EF956;
+	Wed, 13 Nov 2024 13:39:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZJqt32Th"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="BrqjK3pt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F157617C68;
-	Wed, 13 Nov 2024 13:32:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22AAE1EBFF1
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 13:39:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731504751; cv=none; b=MFDEJA5Kn2pL6m2Ll8NGJ7wpURWBndFvjvHJeyMm8jWshA4tGMdWgB+k0Vd0UYKtBx2sQIksKiPCtduP0T2yqStennslvhdgWTzTpu0hNi7OoHWnAUq/FOtVXykPi1eFxCnPOOhEnFAp4HiVspngz3OxHgszJexq6cUMQhB0nIw=
+	t=1731505149; cv=none; b=PQfg5CYogmxq/0oW0GNtBOQ6z5iTZo+N1mXJgbBjbgSqU3bFvEJ8VOzlL5W0tJAnqT5fQ/VFilIufh5W1nsHgiMYm/WKORpbJN1rnL8HOAAorWR2ftWp1q5Op/ayBoYQvrwk1xCFWKzrglZ9dKypMbYoHguJuzcVVgq6TroQfAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731504751; c=relaxed/simple;
-	bh=gfCmgl3jagwHGldFjUB4K2gH4J6eJxXe8/I/qAemYJk=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=lgr8EQQ0A/D6S9sWiQ7VeATMs2W2T+mf5J3jwD+n2jgTXhRFUYy1VmwwIvQhFTYKoQEI3/m694PCua7THFFMn/o6JWNDlwWCJ7Y93BEQ0DjLFjQOOsfoVC3RF37gD79AvZFENhO4GDkl8lPuN3MsVEVmWDnFzkZLtQ429Yv+LPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZJqt32Th; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FCE1C4CECD;
-	Wed, 13 Nov 2024 13:32:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1731504750;
-	bh=gfCmgl3jagwHGldFjUB4K2gH4J6eJxXe8/I/qAemYJk=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=ZJqt32ThN/8+imW4Kgw6RaW3o7K6lP9reDKy572Iu31gEfEj6vKcOiUy7grZrUrLV
-	 4oBs8fS3SxU1SQ+2fzOLAygB+gwDSMU5s+kNXqO+5Dyi4GE0ZH+7Dd65HlNCwkHUMS
-	 UJUml5PZhst1zmCxBZigJFzCJVlLCXEnqukzdPvRpR0hcrrIU78SWJIPeIFwsSt8hu
-	 XyGPX7fYzyWSIL3eJ4brqSOtqTpPtGMC7+PZPxV3vdCK+WDTgwRigx0RartzZVT9fZ
-	 t2XT8pFt1mMkHRHxP6fqE28qR4UvBY82U4ZazE/zOIT4jWBOP/GDRE00uSRJ80/ZxB
-	 5MV5X6EP7fI3w==
-Date: Wed, 13 Nov 2024 07:32:28 -0600
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1731505149; c=relaxed/simple;
+	bh=w4ZbBnFXX56UZ+SeqmlOGMfU+jiHqM20ymrRVbvyxug=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=i8ZBaKN7zK9BeYBb6SxiwtNbEPCYRQwytcFycgxBi9A9Ls6wo6EU8vZp3lnxDfAsVy6lm3FeVnZhvwphnDWbSY5E7ued1rx/ITyJmJN1SCBjkZ6iWlH4a+cPT1ODimnzLk8DOgMTYgfHmLjWtjRXaFFJ0tnxulfWopppSP1XJjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=BrqjK3pt; arc=none smtp.client-ip=209.85.167.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-53c78ebe580so820810e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 05:39:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1731505146; x=1732109946; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=w4ZbBnFXX56UZ+SeqmlOGMfU+jiHqM20ymrRVbvyxug=;
+        b=BrqjK3ptxg3X8WOuta4XBOQLh2auTF9Vs757QPD6Il78Ur2NeShKNk99gkko9H6wFJ
+         Oq2OhI+SlC4q8b/ZzoNE03xtCM1wo/+0BnjSfg6BDh0ZJDwlSuDW9oeohONL3Pkkh2/V
+         eFUCfGAI1Qq+P6nRMhmwwR+CvkJXaHGv66xt9yGo2nPvkle6weDKJT1GOGrFKU8H+c+Z
+         eV7bxgG1xM5yUhuozt3oiNeiRZtFn2qsjdNXtW3t+N69NQ8r76Gfik9QfqreBD0RhJMe
+         HVY6iXfv/cCGTceJ+b1aRtrsGhocGnkvEdfItxdKEVkZQx96vo1zzGrlrKXKm/9F2FIR
+         RpKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731505146; x=1732109946;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=w4ZbBnFXX56UZ+SeqmlOGMfU+jiHqM20ymrRVbvyxug=;
+        b=qWi2hFEg5EhaIHkC/PrKa7mFQmF+pCqH8vhAUwQioe/65vuPxsJbBnH0GdR9YDXis3
+         BjleojRTOsqRB0KZ/rdCWhXSkbusaqPHUXmo512foVnZzhCV1p2f5GvlMKYDG5jW3QLM
+         PRhslor2eG51BSsoo2dPjacvf/Nv/hny/BVEHz+up243pRhBv8K30ZKcleTv2ag1bZHa
+         9KZyDmG8kW7Y0BBIKkWba5YnsARCoTvyov1ftWwQ6WWcCX8ay16fbpaqxNWIWg+2YaMJ
+         fMaGBYZpJXXc+6D8ApU3sG2sRnYp4yRj0umYNntM/48WrEv3CnOXSvGPPaGo+jo9oetU
+         uq7w==
+X-Forwarded-Encrypted: i=1; AJvYcCUsbIAKafW68IgslzOU4NSs33v3KbkGX6jSyva8bfkYTNoT23ra1NSg/EITAREMgESYGR2CtnikBF0Ig1mI@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy8adk3F54CLjhkv9oWd/l4EwexMhp9Ii98FhD29besd04Ar/LR
+	0inVECw5Oeh48cZvc7iHoIYe+Biic0UCqSiHJA+eJ0L79O4CfhGr8+mhXjjeqg/iSNF5od5b0sq
+	So4bdaQ/4Bcx2suKnwe3mpG888ZikN7lORaV/jg==
+X-Google-Smtp-Source: AGHT+IGiDGTr90XJTWFjW26zxq3XwznkWj05rlt1ePKBKG7HZ3q5XgpkaaMpoieowD3i/4IVTS83I9wYVjrq+DBeh0A=
+X-Received: by 2002:a05:6512:3e0a:b0:539:93e8:7ed8 with SMTP id
+ 2adb3069b0e04-53d85ef6c71mr7160108e87.15.1731505146122; Wed, 13 Nov 2024
+ 05:39:06 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
- Xiangxu Yin <quic_xiangxuy@quicinc.com>, linux-kernel@vger.kernel.org, 
- Simona Vetter <simona@ffwll.ch>, Sean Paul <sean@poorly.run>, 
- Catalin Marinas <catalin.marinas@arm.com>, 
- linux-arm-kernel@lists.infradead.org, Conor Dooley <conor+dt@kernel.org>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
- freedreno@lists.freedesktop.org, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- dri-devel@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>, 
- Maxime Ripard <mripard@kernel.org>, David Airlie <airlied@gmail.com>, 
- Thomas Zimmermann <tzimmermann@suse.de>, Li Liu <quic_lliu6@quicinc.com>, 
- Krishna Manikandan <quic_mkrishn@quicinc.com>, 
- Konrad Dybcio <konradybcio@kernel.org>, Will Deacon <will@kernel.org>, 
- devicetree@vger.kernel.org, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-To: Fange Zhang <quic_fangez@quicinc.com>
-In-Reply-To: <20241113-add-display-support-for-qcs615-platform-v2-3-2873eb6fb869@quicinc.com>
-References: <20241113-add-display-support-for-qcs615-platform-v2-0-2873eb6fb869@quicinc.com>
- <20241113-add-display-support-for-qcs615-platform-v2-3-2873eb6fb869@quicinc.com>
-Message-Id: <173150474841.4106927.5975815443901282337.robh@kernel.org>
-Subject: Re: [PATCH v2 3/9] dt-bindings: display/msm: Add QCS615 MDSS & DPU
+References: <20241112-qps615_pwr-v3-0-29a1e98aa2b0@quicinc.com> <20241112-qps615_pwr-v3-6-29a1e98aa2b0@quicinc.com>
+In-Reply-To: <20241112-qps615_pwr-v3-6-29a1e98aa2b0@quicinc.com>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Wed, 13 Nov 2024 14:38:55 +0100
+Message-ID: <CAMRc=McOaiLEfum0L1iEk8HzjXVjvjCqRq=29b_Mphdwi_cZEg@mail.gmail.com>
+Subject: Re: [PATCH v3 6/6] PCI: pwrctl: Add power control driver for qps615
+To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc: andersson@kernel.org, Bjorn Helgaas <bhelgaas@google.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, cros-qcom-dts-watchers@chromium.org, 
+	Jingoo Han <jingoohan1@gmail.com>, quic_vbadigan@quicinc.com, 
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-
-On Wed, 13 Nov 2024 19:51:45 +0800, Fange Zhang wrote:
-> From: Li Liu <quic_lliu6@quicinc.com>
-> 
-> Document the MDSS and DPU hardware found on the Qualcomm QCS615 platform.
-> 
-> Signed-off-by: Li Liu <quic_lliu6@quicinc.com>
-> Signed-off-by: Fange Zhang <quic_fangez@quicinc.com>
+On Tue, Nov 12, 2024 at 4:02=E2=80=AFPM Krishna chaitanya chundru
+<quic_krichai@quicinc.com> wrote:
+>
+> QPS615 is the PCIe switch which has one upstream and three downstream
+> ports. To one of the downstream ports ethernet MAC is connected as endpoi=
+nt
+> device. Other two downstream ports are supposed to connect to external
+> device. One Host can connect to QPS615 by upstream port. QPS615 switch
+> needs to be configured after powering on and before PCIe link was up.
+>
+> The PCIe controller driver already enables link training at the host side
+> even before qps615 driver probe happens, due to this when driver enables
+> power to the switch it participates in the link training and PCIe link
+> may come up before configuring the switch through i2c. To prevent the
+> host from participating in link training, disable link training on the
+> host side to ensure the link does not come up before the switch is
+> configured via I2C.
+>
+> Based up on dt property and type of the port, qps615 is configured
+> through i2c.
+>
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
 > ---
->  .../bindings/display/msm/qcom,qcs615-dpu.yaml      | 118 ++++++++++
->  .../bindings/display/msm/qcom,qcs615-mdss.yaml     | 252 +++++++++++++++++++++
->  2 files changed, 370 insertions(+)
-> 
 
-My bot found errors running 'make dt_binding_check' on your patch:
+Krishna,
 
-yamllint warnings/errors:
+This looks really good thanks.
 
-dtschema/dtc warnings/errors:
-Documentation/devicetree/bindings/display/msm/qcom,qcs615-mdss.example.dts:24:18: fatal error: dt-bindings/clock/qcom,qcs615-dispcc.h: No such file or directory
-   24 |         #include <dt-bindings/clock/qcom,qcs615-dispcc.h>
-      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-compilation terminated.
-make[2]: *** [scripts/Makefile.dtbs:129: Documentation/devicetree/bindings/display/msm/qcom,qcs615-mdss.example.dtb] Error 1
-make[2]: *** Waiting for unfinished jobs....
-make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1442: dt_binding_check] Error 2
-make: *** [Makefile:224: __sub-make] Error 2
+One nit: I'd rename qps615_pwrctl_power_on() to something else as most
+of its code does configure the switch, not power it up. Maybe
+qps615_pwrctl_bring_up()?
 
-doc reference errors (make refcheckdocs):
+With that and the build issue fixed:
 
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20241113-add-display-support-for-qcs615-platform-v2-3-2873eb6fb869@quicinc.com
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
+I'll test it once it compiles.
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+Bart
 
