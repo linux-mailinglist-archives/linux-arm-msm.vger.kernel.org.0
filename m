@@ -1,169 +1,180 @@
-Return-Path: <linux-arm-msm+bounces-37735-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37736-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 87BB39C6968
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 07:41:21 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id EC5779C699B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 08:01:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1B592B251D3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 06:41:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A7BD1283EF5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 07:01:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6827B17837A;
-	Wed, 13 Nov 2024 06:41:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2111A7081F;
+	Wed, 13 Nov 2024 07:01:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="O78RDty5"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ituE1g7E"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C8DF14F9FD;
-	Wed, 13 Nov 2024 06:41:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF3CA230996;
+	Wed, 13 Nov 2024 07:01:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731480074; cv=none; b=pDBflM3mJu0kVArnnKnJjPjG+yCjtQ4dHhczwwqKDDc4tzij2I+svDDNDv0VG4JVHZ6Js1Nb0srCsJEcZsLOuDJnqxnNnEdZuwfsSG674rjr1PtXpolPWTkp69muVS6x5NghXPFCuaxG/+R6yAVCRC7eD3WHOjbYxSfE99cxlqI=
+	t=1731481293; cv=none; b=iIkCRWMSRcqdI1ea1ygFQnJXH+cVPu7riVmHWFRC3gEwg+ssNhks1+B8QB8o3aoqa2d/bS71j2u/UVydYEBq+UNO1MYapWCsjoOmQZsnzsgJTHJnYGsKIgZ1c2XGyp/qaoednGd3j+emRENFx8TstWLGTSIgCk5MQp59aTwvCQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731480074; c=relaxed/simple;
-	bh=6jGzoZSTrqpxWOHffw4hjBmrzX5oJaoEQw/zhe8qKR8=;
+	s=arc-20240116; t=1731481293; c=relaxed/simple;
+	bh=OvoSxzFMjVXNWYaaBPZgty5xhAMgNhyNp01kIt1x0h4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=INkG8OuyUQjnH99j3CzufslrrC6zbKONFg4k3RBVGFpmtCnZIr3fxmZSE+bL8irgymMNKHTCMMDJBUKMjqH320P0EAlHLZP8aqwxvpPSawL2ZxpD45pxR35PYf2los1fTVjRDoS0DawAzmOHQeupjjniDLXwkPWKJhqVqwDIq8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=O78RDty5; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=Cxf4h8vbkQ8s3s0h/EDwnMp78bLqvseh95U7qhh0WAWYb0D4ZJqC4wRrsFDppaG9uJI57pNAHNhfYsbwan4u67uZsWLxTlzavmyzdrtyCQZKNBbkb+ecfZhnStxLrn5cRX1J117uto2spQTINoGH5AIPVkXwmTQfz2hswGO/OYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ituE1g7E; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ACMSE1q016853;
-	Wed, 13 Nov 2024 06:41:02 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ACMRV8W014618;
+	Wed, 13 Nov 2024 07:01:25 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	xjd0x4+aMePTPEPWOQbSIQ9vkSn/w8TthPteJF+RMPI=; b=O78RDty5pnVD+TgB
-	Bmj8dl2Z2A+Kx+iwlo1gjqRCE8Mntit+FJPBBqZjgF/JkO6UYrkbz5MnjaoxtUxS
-	hmp3TaqQhLdl7QCqtEXsFqjjGPzDXs7VHN9P0XiLTGtl688VPse7GNGewjfk4HjW
-	uNn8GXVE18vLdFsAaabr5ITQa9L/q3s66pf+nEyUi5H5LmS9taIgKa1hMYhHwRg+
-	qRqsyG0WeSnJxYxsBQ3egPAVe8iydVS5cO9qXroshGkjDsa3XiNjIEnWz42lEd4h
-	5+xQG9lJRYMwDu3qmlGbRlh8TH9H5+w5VQslscQYj0pfj4+g3+MbJB/hLhYVPx2r
-	vphcXQ==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42v47y33ce-1
+	xl+qy1frg7iRHr/ziTCUZNvFk33aKR2/mfAVqlVLUHU=; b=ituE1g7EBOlpTFX6
+	dg6ruD5kD20UY79UJJYErruIB8Pin4tM772gzCFbgrcfnkjJYOR3BNpSoeSoHJ79
+	CZORsemxtv/xdv9ha1lHH3R/S6Cfy8dmUmWkIFxwziqpuvNMCh67cyHY2B5Z9oBo
+	zFY9E0Mx1AxqRoF7zqtd9NackE3M68XCGLHSAcip1MVYp5HSVpcvu8Yg0YRlcB4y
+	j+PVXLlZ/wVcXT2Dvwxe4+jBO0CZof/6PLaRhZBCLmOkOvRet+7O+YQouQNIkv50
+	4F7QW9Xrrb82jFGRm7cp+bwHWWJWSnHbbWPayMSqCEX6bzNo4BP8O5l2wZ8+9ieW
+	+ycPug==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42v47y35cs-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 Nov 2024 06:41:02 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AD6f1Ux005034
+	Wed, 13 Nov 2024 07:01:24 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AD71LNU006382
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 Nov 2024 06:41:01 GMT
-Received: from [10.50.46.32] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+	Wed, 13 Nov 2024 07:01:21 GMT
+Received: from [10.206.111.70] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 12 Nov
- 2024 22:40:55 -0800
-Message-ID: <e068e3bf-cec3-13d0-8166-6e51f43f31df@quicinc.com>
-Date: Wed, 13 Nov 2024 12:10:52 +0530
+ 2024 23:01:17 -0800
+Message-ID: <39206687-6fb3-434f-b2ba-a028cf6f8ed3@quicinc.com>
+Date: Wed, 13 Nov 2024 12:31:15 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v5 27/28] media: iris: enable video driver probe of SM8250
- SoC
-Content-Language: en-US
-To: Jianhua Lu <lujianhua000@gmail.com>
-CC: Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Abhinav Kumar
-	<quic_abhinavk@quicinc.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        "Rob
- Herring" <robh@kernel.org>,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: sc7280: enable venus node
+To: Luca Weiss <luca.weiss@fairphone.com>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>
+CC: <cros-qcom-dts-watchers@chromium.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring
+	<robh@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        "Conor
- Dooley" <conor+dt@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        "Hans
- Verkuil" <hverkuil@xs4all.nl>,
-        Sebastian Fricke
-	<sebastian.fricke@collabora.com>,
-        Bryan O'Donoghue
-	<bryan.odonoghue@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Nicolas Dufresne
-	<nicolas@ndufresne.ca>,
-        =?UTF-8?Q?Uwe_Kleine-K=c3=b6nig?=
-	<u.kleine-koenig@baylibre.com>,
-        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20241105-qcom-video-iris-v5-0-a88e7c220f78@quicinc.com>
- <20241105-qcom-video-iris-v5-27-a88e7c220f78@quicinc.com>
- <ZyoqGaSMc2z9xsr1@localhost.localdomain>
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
-In-Reply-To: <ZyoqGaSMc2z9xsr1@localhost.localdomain>
+        Conor Dooley
+	<conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        "Vikash Garodia
+ (QUIC)" <quic_vgarodia@quicinc.com>
+References: <20241004-venus_sc7280-v1-1-4d7d8fd7e95b@quicinc.com>
+ <kezh3lmysij56g2tjwwuas5r26ro5i777yxxitsdcjeg7zp67v@oknrdbkzison>
+ <78e6ff6b-efe1-496c-a1fb-c9a0a4aba2d2@quicinc.com>
+ <CAA8EJpqqZL7xybcbJMsbTQB+ht5-A+ocNs+Sq30j=v1zM3JL9g@mail.gmail.com>
+ <fbba794a-ba04-4790-b5e9-b4df3cba35b2@quicinc.com>
+ <D5KAUZHYJHFS.1NXF5SVWYL03G@fairphone.com>
+Content-Language: en-US
+From: Vedang Nagar <quic_vnagar@quicinc.com>
+In-Reply-To: <D5KAUZHYJHFS.1NXF5SVWYL03G@fairphone.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: qOo9vppuYAzJm_Z_d0pOolJRdKMD0F1H
-X-Proofpoint-GUID: qOo9vppuYAzJm_Z_d0pOolJRdKMD0F1H
+X-Proofpoint-ORIG-GUID: b-dCiHkLTLHLX5ozQ9EC3OQzwfqLeP6F
+X-Proofpoint-GUID: b-dCiHkLTLHLX5ozQ9EC3OQzwfqLeP6F
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
- mlxlogscore=999 spamscore=0 bulkscore=0 malwarescore=0 suspectscore=0
- impostorscore=0 lowpriorityscore=0 phishscore=0 adultscore=0 clxscore=1015
+ mlxlogscore=513 spamscore=0 bulkscore=0 malwarescore=0 suspectscore=0
+ impostorscore=0 lowpriorityscore=0 phishscore=0 adultscore=0 clxscore=1011
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2411130057
+ definitions=main-2411130061
 
-
-
-On 11/5/2024 7:52 PM, Jianhua Lu wrote:
-> On Tue, Nov 05, 2024 at 12:25:47PM +0530, Dikshita Agarwal wrote:
->> Initialize the platform data and enable video driver probe of SM8250
->> SoC. Add a kernel param to select between venus and iris drivers for
->> platforms supported by both drivers, for ex: SM8250.
+Hi Luca,
+On 11/12/2024 8:49 PM, Luca Weiss wrote:
+> Hi Vedang,
+> 
+> On Tue Nov 12, 2024 at 3:39 PM CET, Vedang Nagar wrote:
 >>
->> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
->> ---
-> [..]
->> --- a/drivers/media/platform/qcom/iris/iris_platform_common.h
->> +++ b/drivers/media/platform/qcom/iris/iris_platform_common.h
-> [..]
->> +struct iris_platform_data sm8250_data = {
-> 
-> You should qualitfy it with static too.
-> 
->> +	.get_instance = iris_hfi_gen1_get_instance,
->> +	.init_hfi_command_ops = &iris_hfi_gen1_command_ops_init,
->> +	.init_hfi_response_ops = iris_hfi_gen1_response_ops_init,
-> [..]
->> diff --git a/drivers/media/platform/qcom/iris/iris_probe.c b/drivers/media/platform/qcom/iris/iris_probe.c
->> index 7b7378b7abb3..4cbaa889322e 100644
->> --- a/drivers/media/platform/qcom/iris/iris_probe.c
->> +++ b/drivers/media/platform/qcom/iris/iris_probe.c
-> [..]
->> +static bool video_drv_should_bind(struct device *dev, bool iris_driver)
-> 
-> Variable name iris_driver isn't good enough, rename it to
-> is_iris_driver please.
-Noted.
-
-Thanks,
-Dikshita
-> 
->> +{
->> +	if (of_device_compatible_match(dev->of_node, iris_only_platforms))
->> +		return iris_driver;
->> +
->> +	/* If it is not in the migration list, use venus */
->> +	if (!of_device_compatible_match(dev->of_node, venus_to_iris_migration))
->> +		return !iris_driver;
->> +
->> +	return prefer_venus ? !iris_driver : iris_driver;
->> +}
->> +
->> -- 
->> 2.34.1
 >>
+>> On 11/12/2024 6:43 PM, Dmitry Baryshkov wrote:
+>>> On Tue, 12 Nov 2024 at 08:17, Vedang Nagar <quic_vnagar@quicinc.com> wrote:
+>>>>
+>>>>
+>>>>
+>>>> On 10/7/2024 1:20 AM, Dmitry Baryshkov wrote:
+>>>>> On Fri, Oct 04, 2024 at 04:22:31PM GMT, Vedang Nagar wrote:
+>>>>>> Enable the venus node on Qualcomm sc7280. It was made disabled
+>>>>>> earlier to avoid bootup crash, which is fixed now with [1].
+>>>>>
+>>>>> NAK, there might be other reasons to keep venus disabled, like the lack
+>>>>> of the vendor-signed firmware for the particular device.
+>>>> Can you pls elaborate more on this? Any device with sc7280 SOC can use
+>>>> venus.mbn which is already present in linux-firmware git.
+>>>
+>>> Can it though if the device is fused to use vendor keys and to check
+>>> the trust chain?
+>> Yes, infact the existing ones are signed and works with trustzone authentication.
+> 
+> No, the venus firmware from linux-firmware does not work on a device
+> with secure boot on, like the (QCM6490) Fairphone 5 smartphone.
+Are you saying even after applying this [1] you are seeing the same ?
+
+[1]
+https://patchwork.kernel.org/project/linux-media/patch/20231201-sc7280-venus-pas-v3-2-bc132dc5fc30@fairphone.com/
+> 
+> $ rm /lib/firmware/qcom/qcm6490/fairphone5/venus.mbn
+> $ cp /lib/firmware/qcom/vpu-2.0/venus.mbn.zst /lib/firmware/qcom/qcm6490/fairphone5/venus.mbn.zst
+> 
+> leads to
+> 
+> [   10.848191] qcom-venus aa00000.video-codec: Adding to iommu group 13
+> [   10.863062] qcom-venus aa00000.video-codec: non legacy binding
+> [   10.909555] qcom-venus aa00000.video-codec: error -22 initializing firmware qcom/qcm6490/fairphone5/venus.mbn
+> [   10.910099] qcom-venus aa00000.video-codec: fail to load video firmware
+> [   10.910849] qcom-venus aa00000.video-codec: probe with driver qcom-venus failed with error -22
+> 
+> It's the same with e.g. adsp firmware, modem firmware, etc.
+> 
+> With secure boot off, yes, the hardware will load any firmware
+> regardless of the signature.
+> 
+> Regards
+> Luca
+> 
+>>>
+>>>>
+>>>> Regards,
+>>>> Vedang Nagar
+>>>>>
+>>>>>>
+>>>>>> [1]
+>>>>>> https://lore.kernel.org/linux-media/20231201-sc7280-venus-pas-v3-2-bc132dc5fc30@fairphone.com/
+>>>>>>
+>>>>>> Signed-off-by: Vedang Nagar <quic_vnagar@quicinc.com>
+>>>>>> ---
+>>>>>>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 2 --
+>>>>>>  1 file changed, 2 deletions(-)
+>>>>>
+>>>
+>>>
+>>>
+> 
 
