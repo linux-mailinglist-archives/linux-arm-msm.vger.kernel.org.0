@@ -1,124 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-37827-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37808-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3EAA49C77F7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 16:57:27 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B56A99C786A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 17:13:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E2D2D1F2372A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 15:57:26 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 621B0B389C0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 15:15:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49009156F3F;
-	Wed, 13 Nov 2024 15:56:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6534720606A;
+	Wed, 13 Nov 2024 15:12:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="N/96CZy8"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="O1ZP/3vt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FC74143744
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 15:56:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC9CE205AC3;
+	Wed, 13 Nov 2024 15:11:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731513412; cv=none; b=M45fj4zN2n+wXMfA2AfpAiRafselwHNDd2DiKjvkQsccngjEatqkpIwRWYhhZWoLsu8SRpkV2iRCzFxTNY/y+WAkOXlHesPkDWCJwzPYXempqFNZbD9mt9Fg5xrc8W7wGy62tlwO5vtx0mSEizkgq1hbDXJMvjz9k9pDHvbOxe4=
+	t=1731510720; cv=none; b=MQQar4fQTpRXASz4a42OJjNBuneC22O3aP2AGnJQ4p8LsAvzLBoGbGVdvxWVTGhrGEuYMbaRVV9XwAg0xcb9i7RVyvTsH7dkP46SWNI7Pjw330QJdv0Sq2wgXdGe/LP5fCUyLmyQAErXD86u9qUIlcd1DR0v3913+bFsexkli6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731513412; c=relaxed/simple;
-	bh=512PZ1dnQnEYJzYlH8f7M+VkBeSt4HIVjfj8UfzH2kw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=u43+zDv1xlpDT2gJq8wn6toBhg8PcW8IKjTFb0wX1KPdHzbx2UypoFfEDW7u0Zgmaqv+0w4W5+3HVrAZnCbDTNjwVNZIugQk3GW7U1FP3Q7PiDJNWfWDChBSXcR9Vj5Dk0cv29bSzp6O6xoIw22aaM6uhEq3G7rfApOp9XxVQlU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=N/96CZy8; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-43161e7bb25so57776815e9.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 07:56:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731513409; x=1732118209; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=j7XoIUNDgbIVKqvmpsghumU2FCCPcdZHNjSKRfDqBaQ=;
-        b=N/96CZy8r5NQWz78LFcWMnD/NqRWrqZYXn8emeRe+oYHh0Cgo9LKGYyVKHHK9vIGJk
-         BXVgF1LIaVYoL32GhFqa5EEEAR+tHdbtgfz2DUzCDmEx5DJjwB5ACnkja63PO6YDLtQG
-         0pAfYK49abAm/vU9CTjYBcy/j2c3mmOE6BNBmAmVgZ8SPz8wpXJTStjRem1l/f9dttbR
-         o3opD+wrtJ90/2OxN9Hx509Nx8C6zoZrxueKlZn5UL5q3oC+oCW8tR+1Hvhzg/ZsWYk0
-         hgSA5kHd6ijj5U1gTTvSIfYDfIaQ3lne7KzcLUVA57ezDoKorZXNMaMRJGu3wLWXT7yg
-         b1vw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731513409; x=1732118209;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=j7XoIUNDgbIVKqvmpsghumU2FCCPcdZHNjSKRfDqBaQ=;
-        b=fI1SUX6JWE0ZWRm9oEWkx7I6rrduT9IseXnkNABCuPH69ZBzgJzIFERBtdNflN0WB6
-         aSz2mf2Pwg6WgQjodlMJPYeGnO67ogVuLxKr7TBPFsQhWaOyYrtLCy4KC99sQqnnT3v+
-         uwtZxQs2ohwYTsv9URpNvAnOytc1K2UOAoubP2fy8XtpfdSNjfiiXg9zHgS/g/9Dlmf8
-         7KK8Y+MdHfkf0ck8a8BvnXRj3s9O77CBCgwmG+loRNfx5ImVx3iGqIStzWgRBbicHFGB
-         7TNZtOgqVM22VM71xlDGVQQJEPg99HdbdNr6KJga0Nwxra92ttuyPMQSyNtnDzRmZXc7
-         RxgQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWAHFEVyb5XiVSzc4No7A33FQ5F0h+CCbcka554wM0WUsOxyK0be61ML3XTY2QwDk8Zy1GAhQ2Zd4mtE84b@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx5sh/gVn3qNAE97xUvXCWyWKKf/xRDb7kbrDt9TFC9aUAayEkU
-	KdZUgPWNmqFWXnJNTDQPhBsDtbeqVHMfsdqfBRnECtzjgEsqNUY7thcw+dlXqvk=
-X-Google-Smtp-Source: AGHT+IGRiPY+evblCDCxVkg3CDOQ9hyE0qVJ4e+kMXiZjDE1ryJt8LXVAIOLtdfZSGuqwuFU9EWIWA==
-X-Received: by 2002:a05:600c:4e8d:b0:431:52b7:a485 with SMTP id 5b1f17b1804b1-432cce78a1fmr61686205e9.19.1731513408826;
-        Wed, 13 Nov 2024 07:56:48 -0800 (PST)
-Received: from [192.168.0.48] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381ed97ec9fsm18902490f8f.42.2024.11.13.07.56.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Nov 2024 07:56:48 -0800 (PST)
-Message-ID: <be7b67ce-f601-4c93-a8b6-b5660f0e753e@linaro.org>
-Date: Wed, 13 Nov 2024 15:56:46 +0000
+	s=arc-20240116; t=1731510720; c=relaxed/simple;
+	bh=9EpBDn6+VrUhl6s9RDziNCH5FD1n12+IVb+sGxL5HO0=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=jXBteY55PLJtXLZR5a2Ra/GI8gVe1MKnHVpZuHvWomjhujCksTV2FnoyZ6zyYCZ/58QPM/GOHHcfSiN7faohoswHqdEpT/Dmw5mbe91tnYzwOpAb0aDyUouixOSrk338yaRwHC8GvEu3SbdLMhbGMlW9LXxWEnBZ36kTWB9BJvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=O1ZP/3vt; arc=none smtp.client-ip=5.75.144.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
+Received: from [192.168.93.162] (254C230F.nat.pool.telekom.hu [37.76.35.15])
+	by mail.mainlining.org (Postfix) with ESMTPSA id ACBB3E44EF;
+	Wed, 13 Nov 2024 15:11:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mainlining.org;
+	s=psm; t=1731510716;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=kgTkMERpFtHVYtKjLiYY15MruMqcfI9oO4bj8B7L2VI=;
+	b=O1ZP/3vtZKV4E8ttzptLoc21k1+fcGTVSsnYIENVF62oJMZ9TTezVwGm0bOMm2S1l0iqm0
+	49/3K2ZckE7LdKSvDQC6Q2DA0bU1lL/fS7wmEo6D9k7gmlJz/1ATnQEVW+TUMujxTrz9l7
+	YazzOmPn4d295Zu3Mejhlwc0gv6u5g5b+Q2O/J9yZ1v7nJRwke+Cja8NvwP0npnRtMmyfU
+	iSFQg3oUnO0sVi854CG7mPAhvBprjUQXLeBaF3Jq4+jCxOHzx6XCYOEfwad03aIGR6o/Qb
+	f1lM6w3WAih4AKv+WBiPMk8TPVrJi0GKR6+rGG7B9YoPvjzUXOjf0x/mOw/IFw==
+From: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
+Date: Wed, 13 Nov 2024 16:11:47 +0100
+Subject: [PATCH v6 06/10] dt-bindings: iommu: qcom,iommu: Add MSM8917 IOMMU
+ to SMMUv1 compatibles
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 05/28] media: iris: implement video firmware
- load/unload
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>
-Cc: Hans Verkuil <hverkuil@xs4all.nl>,
- Sebastian Fricke <sebastian.fricke@collabora.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Nicolas Dufresne <nicolas@ndufresne.ca>,
- =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
- Jianhua Lu <lujianhua000@gmail.com>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20241105-qcom-video-iris-v5-0-a88e7c220f78@quicinc.com>
- <20241105-qcom-video-iris-v5-5-a88e7c220f78@quicinc.com>
- <537ee97b-97d9-4ed8-9e11-eb3489eeff26@linaro.org>
- <f16dac0e-aa0f-5984-2cee-3e4e684e93db@quicinc.com>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <f16dac0e-aa0f-5984-2cee-3e4e684e93db@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
+Message-Id: <20241113-msm8917-v6-6-c348fb599fef@mainlining.org>
+References: <20241113-msm8917-v6-0-c348fb599fef@mainlining.org>
+In-Reply-To: <20241113-msm8917-v6-0-c348fb599fef@mainlining.org>
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Linus Walleij <linus.walleij@linaro.org>, Amit Kucheria <amitk@kernel.org>, 
+ Thara Gopinath <thara.gopinath@gmail.com>, 
+ "Rafael J. Wysocki" <rafael@kernel.org>, 
+ Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, 
+ Lukasz Luba <lukasz.luba@arm.com>, Joerg Roedel <joro@8bytes.org>, 
+ Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, 
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, 
+ linux-pm@vger.kernel.org, iommu@lists.linux.dev, 
+ =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1731510705; l=1003;
+ i=barnabas.czeman@mainlining.org; s=20240730; h=from:subject:message-id;
+ bh=9EpBDn6+VrUhl6s9RDziNCH5FD1n12+IVb+sGxL5HO0=;
+ b=Bil65C+LDdeGfwzw4BLokUG4DpUA4NayQfcF9X8AsrlajXGCLci76zx4Yn/63Dk8ctMlPlzjU
+ +wnRMUqwghPDx2UWOfBFlEnaPd9wsok93Yz+50W9csOBnmFvWmz9rFJ
+X-Developer-Key: i=barnabas.czeman@mainlining.org; a=ed25519;
+ pk=TWUSIGgwW/Sn4xnX25nw+lszj1AT/A3bzkahn7EhOFc=
 
-On 13/11/2024 05:20, Dikshita Agarwal wrote:
->>> +err_put_node:
->>> +    of_node_put(node);
->> remove
-> Sure, Will make the change.
-> but are we just trying to avoid using "goto" here?
-> 
-> Thanks,
-> Dikshita
+Add MSM8917 compatible string with "qcom,msm-iommu-v1" as fallback
+for the MSM8917 IOMMU which is compatible with Qualcomm's secure
+fw "SMMU v1" implementation.
 
-Currently you'd be leaking because you only do the put on the error path.
-
- > +    rmem = of_reserved_mem_lookup(node);
-
-of_node_put(node);
-
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
 ---
-bod
+ Documentation/devicetree/bindings/iommu/qcom,iommu.yaml | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Documentation/devicetree/bindings/iommu/qcom,iommu.yaml b/Documentation/devicetree/bindings/iommu/qcom,iommu.yaml
+index f8cebc9e8cd9d46b449cd297153dbebe5c84bf3f..5ae9a628261fd251c1e991a70662c6d37ef2c4e3 100644
+--- a/Documentation/devicetree/bindings/iommu/qcom,iommu.yaml
++++ b/Documentation/devicetree/bindings/iommu/qcom,iommu.yaml
+@@ -21,6 +21,7 @@ properties:
+       - items:
+           - enum:
+               - qcom,msm8916-iommu
++              - qcom,msm8917-iommu
+               - qcom,msm8953-iommu
+           - const: qcom,msm-iommu-v1
+       - items:
+
+-- 
+2.47.0
+
 
