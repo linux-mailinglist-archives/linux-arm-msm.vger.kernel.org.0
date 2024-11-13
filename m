@@ -1,103 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-37846-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37847-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F1389C7933
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 17:46:13 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 323AA9C7A32
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 18:47:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 96B5A1F2362C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 16:46:12 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DEB301F23985
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 17:47:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49ADF1EF955;
-	Wed, 13 Nov 2024 16:46:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E851E2038BC;
+	Wed, 13 Nov 2024 17:47:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TAYt8T/V"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hy2Ag0n3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9156916EB5D
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 16:46:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B590F70835;
+	Wed, 13 Nov 2024 17:47:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731516369; cv=none; b=glpE+iHAwP6DohgxI2b1agqNLK8EpZEmM4vYtvHuccrsU9h7gd/AwVhBtL5b9KTAcl+9IgAXv7ljXqBWp9CHjN0iziCjyzMcKxVqUC6MHh9twXtPd6yZzwMfbVW8KfjLYbmWMTa314APF300nzx2oFQ6NDGiXKbeRC+iSvPY9K4=
+	t=1731520023; cv=none; b=Sjb2GrsNUNIQ0RAmCPEcNSPSbJd4oS/EH307oqKThiQse29cD8kpa7AP2S8XiHcUKCYu+0ku3OUw1mPs5mSRyUZGV6sibV2QvBqIUTPjmBKPIoaEAboGnZ+VDyGVfGne6/TwZJCYgqZb7IiydQtLFNjOrDSVqPtIx5UdBlYsbgA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731516369; c=relaxed/simple;
-	bh=Vwy1oSriyT+MIYawWcOFKmv9oUnxvII3WvkoO2ynRdA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cd5IvrBH8dQ+6VK6czr17jhtHAza306cJ0DR598RIlzmurhstpg/WoDHbZ4QYlt1XUMnC+c26HmuwRJNAFx/vKw0FS6+z+xZycUAcY2WGAP4XW+ewbCLDutVPbPLGtD/DhwWzeT2YQYbnN/zFvEiv1WTKl9L23N11xaTjHJemYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TAYt8T/V; arc=none smtp.client-ip=209.85.221.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-37d5689eea8so4220526f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 08:46:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731516366; x=1732121166; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=zmkd5V8HB7Q4sGbZtrxWGBf5+TlXsok1y0ywIIUCx9M=;
-        b=TAYt8T/VBfmVwMCjba5GcN4v2jybXER9dVX/mahXo99h1DFmIfuXjyx6P9cyIY0F2J
-         RLz+SVI16yoTq/JY+y3VN1TEp2jjnH/fsfA3BeJ85oSIRq0NhNWEEFeFj/7lGamjTabm
-         mXmWCHsNg4FFrcvtHkPi69VS3cSGVOZ6AmoD4RnMVc+xmSqxZ1VwkVieZLRSahbYkmJ8
-         KPEUArxU/wUl6R9xi9whVIvuzS/lCa/e2MpQq0fPHcb13M7wSnpkQodWxvlChQqYRW6j
-         BsU2g6zfiocV3Sl8gyAGorRTtyWF8zjhe2a0xvwA349SUTof2+R5tB/tBWH25hBqNbKo
-         cSQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731516366; x=1732121166;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zmkd5V8HB7Q4sGbZtrxWGBf5+TlXsok1y0ywIIUCx9M=;
-        b=MT9rfsL3Ac101y6ZQz/Nzw3n9LskN4Rj/99BjZhYvGxQWlSHMvHm1v6a6LnNGYZboH
-         qJnM/SNoOyX+xy+2ItLkjRPRnXptt01Kwrwfab9unuzKNU2CdThDGOagdEDQnYJoS9ZJ
-         vP8aLOl5tVjB1ppIxqFTDYEVAyyFsg3A4mjjeyqj9C+s1CNbjsn7bUL0f5FYyAr6+Q1Q
-         KaYTPmT2diiaElWKtF1EMclx+JTr+HuXdTqwMCZU7ZCbwEvfop0rST53wuHMFeKBiACW
-         ifpb0eQxT+nDX32IqLmf3MQMsjnPZokKvIKWcB3k3zm7J/yhHs2f15ds+CwLrktpN5Y3
-         4oEw==
-X-Forwarded-Encrypted: i=1; AJvYcCUGA4PZdURWN0TOuS27nPY9kdybnh2U7EJaLf/9Kwceq05W4rm6R0pFOJ4mAwRhcMNcciW8aFy0KpzWqkww@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyul5MXcTLu7K6HUrcc5J6pACqf5CaNGsss9YyZgoo1UbAbEkX1
-	oWkplZcYmnqdhgohzvmX5VYIqO5+Ccd1yYdl7G7b3uRWbOGhJIAZImNsA9FdyfE=
-X-Google-Smtp-Source: AGHT+IEPY0tVNdb8C+tYsDxL66F1F1lB+tkHPAObFKOXietn9feaRfTNcNYc2AdjkSxoREK/g4zzqw==
-X-Received: by 2002:a5d:5f81:0:b0:37d:4e74:684 with SMTP id ffacd0b85a97d-381f1888c09mr17565241f8f.52.1731516365863;
-        Wed, 13 Nov 2024 08:46:05 -0800 (PST)
-Received: from [192.168.0.48] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381eda0517csm18751675f8f.96.2024.11.13.08.46.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Nov 2024 08:46:05 -0800 (PST)
-Message-ID: <16d1f749-03e2-47fc-a7ff-d77ae0f30af9@linaro.org>
-Date: Wed, 13 Nov 2024 16:46:04 +0000
+	s=arc-20240116; t=1731520023; c=relaxed/simple;
+	bh=sp2Hn25t7hN6k+aTKbbqhD9q90LPBrBZkVKJf8hXhQA=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=QVfGmL0Xdt1XE+k+bNfrBDNXCgTOwLi+RmTVvwsKsXwjlHg0pVNdnSOagM5aBlscqlB8BiEDq4M3ybqRu2M3RMbw7TkauDuHWADcrvJMT/cIHfoh4obTe2GM7L+IaRLZLYdhgpJNndY0B7L6EI8/4VJpnjmp+z+97igTDRJAbrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hy2Ag0n3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13643C4CECF;
+	Wed, 13 Nov 2024 17:47:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1731520023;
+	bh=sp2Hn25t7hN6k+aTKbbqhD9q90LPBrBZkVKJf8hXhQA=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=hy2Ag0n3qR+jRMLfPsbJAOiC+wKBfeEZxk+PQg5skVRyHQ944oATib6Szx4ZZiS1q
+	 NxQLAwe8FHb4Bax6YLE2r3vDRE8i4hvnftF/tKTCiOCNC0fqK/JRVy13kRT37Q5F9Y
+	 jfdxdMY5RJVEbJOiliY9AaEfK6C+dD5L5Pj/fZDT0SFaGmwxp77YbUxvt0OsNz4oYa
+	 XueEQwuKAMSYUpi5lDltUa24qJepreGWAueDuAV1lMq2pEz8d7a6euiVTyFfa1LUed
+	 FLUeSp/M/q8DqK9ENTr5oxLyLvlZwWVD8jmHbqSmkuiSsPEXaZ5QExtpXZsEs8F3fg
+	 Z1kUU62fZRXyw==
+From: Mark Brown <broonie@kernel.org>
+To: Liam Girdwood <lgirdwood@gmail.com>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Abel Vesa <abel.vesa@linaro.org>, Trilok Soni <quic_tsoni@quicinc.com>, 
+ Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>, 
+ Melody Olvera <quic_molvera@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ devicetree@vger.kernel.org
+In-Reply-To: <20241112003544.2807368-1-quic_molvera@quicinc.com>
+References: <20241112003544.2807368-1-quic_molvera@quicinc.com>
+Subject: Re: [PATCH] regulator: dt-bindings: qcom,rpmh: Correct PM8550VE
+ supplies
+Message-Id: <173152002055.471967.17159431728276837850.b4-ty@kernel.org>
+Date: Wed, 13 Nov 2024 17:47:00 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: qcs615-ride: enable venus node
-To: Renjiang Han <quic_renjiang@quicinc.com>,
- Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20241112-add-venus-for-qcs615-v2-0-e67947f957af@quicinc.com>
- <20241112-add-venus-for-qcs615-v2-4-e67947f957af@quicinc.com>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20241112-add-venus-for-qcs615-v2-4-e67947f957af@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.15-dev-355e8
 
-On 12/11/2024 11:48, Renjiang Han wrote:
-> Enable the venus node so that the video codec will start working.
+On Mon, 11 Nov 2024 16:35:44 -0800, Melody Olvera wrote:
+> The PM8550VE has two more supplies (s1-8) than the PM8550VS (s1-6),
+> so move to a correct if:then: clause to accurately reflect that.
 > 
-> Signed-off-by: Renjiang Han <quic_renjiang@quicinc.com>
+> 
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Applied to
+
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
+
+Thanks!
+
+[1/1] regulator: dt-bindings: qcom,rpmh: Correct PM8550VE supplies
+      commit: 21ccadc64dae18bd092f1255bdbaf595f53381d5
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
 
