@@ -1,238 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-37756-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37757-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 97C2E9C6B73
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 10:27:40 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B21309C6C1B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 10:55:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 579AD281B8C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 09:27:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6B9A6289DCF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 09:55:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1208E1F80A3;
-	Wed, 13 Nov 2024 09:27:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7520A1F891C;
+	Wed, 13 Nov 2024 09:53:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="n2PxZcdY"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XzeYPeAk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oi1-f172.google.com (mail-oi1-f172.google.com [209.85.167.172])
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA3601F77BA
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 09:27:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91CD71F8901
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 09:53:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731490049; cv=none; b=oLOo0/G5b8GihvCzZMVSLxBs3wJRgqaRBJshu9gznVCUaNKcJutlEBswSznr5dBpkfg/bPUZIqeiJhpC2MRs6HJiDwc3v3GAR5WTZ/4pDNf/fUTKFuatEsMTkzG1MQUqx6gub+SUcrYzNjIMxTi6mwJz//R0JkF0oOfjfjEoxKw=
+	t=1731491607; cv=none; b=cXcd2SzsfWELOoxgAuNGKv7wNY45yiFO41pzU0ODBSkRt1FamHhBHB3f/hTm9SLgODoT/A0mWjxKyHm9feOz1dZjwLxV3AF6Y2B34uIIjpx8kS5AqQ/xe7lnsUwPJ9ZuVVRIkp6yh8XrZ8/JqlTkLjSLEAvqWe0KngfiqfAyFEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731490049; c=relaxed/simple;
-	bh=Woik8mGxHb8sDKp6LYHmg0VUPoY8l0PGA3nFglGEYPM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aMt+JdIPcCNFh1Fen4hfKxQ1H5HaXlIImMbcu0xc0V6kobymljhaHRZ2UxyShjAJVU21AWMz+41s4GmKUxxOYY7GQsZCRYm4SwUpE1kFwhTvm6m15KtTtqU0RAFEmP/wH/p4szjiOgrRf6GtFWwG5HnkmA21uWD9K+0cOLZ/r38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=n2PxZcdY; arc=none smtp.client-ip=209.85.167.172
+	s=arc-20240116; t=1731491607; c=relaxed/simple;
+	bh=Uug7HgmHCE18MUaMvJMyzBCDFL3S+vw07GzHBz1/g/c=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=bbty+/wtycsiknTbZzlor2/aaGn8IhzAGb3BGKipkRhnFmhP9W9o+fp2MpCL9CmOXGvH5pcGmbyCwZNMcqRxkxjjCiHyt2yfpcEqAZD9uRlo6+98/P9FFhqavrC/Zdy37idE+yCpUCDJKrZn/ql1mobheLo6F/ZX067aX1Ms08w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XzeYPeAk; arc=none smtp.client-ip=209.85.167.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-oi1-f172.google.com with SMTP id 5614622812f47-3e5fbc40239so3453668b6e.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 01:27:26 -0800 (PST)
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-53da0a1b1f6so499047e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 01:53:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731490046; x=1732094846; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=BvbMB4wNwdVnYSjLQzzIJ1JPopQ50W3YrXVI3V03iEQ=;
-        b=n2PxZcdYdMtfa+53JuLZp9xdnaPwj9dFWNbULDI2XMbrLsH20fw+93HgWKPaY14s4Q
-         HaX3U8sQkNMIbm+PoA9I5xQNb3O/QqhEBXyzin/B9MOGkuz47+Q89cURMsG6fIDWSpP5
-         DWqGvm3fEfF87CkhVIy+SQnLjm5RH2xNBqe/obCjodsQphKqx1T8WOGQH3m6qWXuP9Zk
-         cYeqVTcitVCKVQaKiacyi1kkPcqzU4shUtIDbXu4X4A3TmF7Y3cGBGe9dIazL7uvPLto
-         6hcbuOos9cOUThzhUC/qG5nrLaRG8H5yQ6ixW51nXWDsTynhO3w1aqk2MgDdMoifJLGq
-         RwSw==
+        d=linaro.org; s=google; t=1731491604; x=1732096404; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=kRiI8ug3AYbE8oUaAFF3LUV+ji3WnDg4RK6r/3kZnGA=;
+        b=XzeYPeAkMtcM/xTlsf0bb330SHvo1qoae5C5ycWP1mLxnAt8X5rU6Ni7WjKQFjN7r7
+         8KCUKxwY+DZ41/EM8qb5RVifMABJBrB6d1uFndxW4l5fLxrTI1YHObBtHeGbxx6ry7r/
+         Ap14PZS4zyAsxPv+tiZzmVt+xJUx0TNEWbh7ro5W2AcNLWS9cerpN0MyVr9iDRGDMLnS
+         dn9oH1zjc7gsO9/qzwFc4/uNDijse3DVhlk/WcorArNRzeUjZRYBLLxtBvKcVK0kM06c
+         xEW8miQ8xXw9/d5LEjvRiFrkyR5iNdPJZHxrRtd7RRUb34ivaK5Bfnqy73pndnFo2ojQ
+         Bklw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731490046; x=1732094846;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20230601; t=1731491604; x=1732096404;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BvbMB4wNwdVnYSjLQzzIJ1JPopQ50W3YrXVI3V03iEQ=;
-        b=I5yk1tdJFBJ/lzbbqBJTcPDiHbwwESj1W6QvwVsvqRnorEf5Izi44OYk8+01N/dyKH
-         rWZ+wpZvOormThVVqQcQwEV6CezE0IJmL2n2XgBYV+EE1X3NX8Yh4jcpdR2vSC3OEAo8
-         4UxWWqZBByb4nZUMVSAJX61JWtVMoXHW+b7Ccq5sLa9IWYLkpXFIgFHTWNTbteeaZvEw
-         iDFSrOWcbZCVG6M1lLYF81XjjSCRtBWIG5lQBPkDdgsgLWQS7ILyH8EDFnSwboMFcdJ+
-         fDQy14wdF960Kxjfiiu6xxSO/UuZy4kNjBFeC4SDBp2MkszvG5Q9fPbgj2xyMKwKBNsZ
-         NdYw==
-X-Forwarded-Encrypted: i=1; AJvYcCU69R9FD2VOCZuSrNRBcSxf11/uLzzbnS2euFrhMQwSXQTrp3LuWNAf6ELFlxI6yqgxU8fcOuQ8r2OTwNYE@vger.kernel.org
-X-Gm-Message-State: AOJu0YyGIYd58bUuBO94LCRxPCgT8IN0DGZykzeHWn9iBIuWMmmYYCio
-	gki62jdTAE8IsuXT1wYX11bmmWAc1kpSygKk637AmtnewBJRHG/ShNUPjR5bRA==
-X-Google-Smtp-Source: AGHT+IEx4uAAxtCoiiBH+++NqpeCtgOYTj3kESrEXYNyqknD9YqnWM0YpRT+Ci+UYLhuuKE7MSjOzg==
-X-Received: by 2002:a05:6808:219f:b0:3e6:366f:8e3b with SMTP id 5614622812f47-3e79475a747mr16256490b6e.39.1731490045743;
-        Wed, 13 Nov 2024 01:27:25 -0800 (PST)
-Received: from thinkpad ([117.213.103.244])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7f41f643e9asm11986600a12.59.2024.11.13.01.27.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Nov 2024 01:27:25 -0800 (PST)
-Date: Wed, 13 Nov 2024 14:57:16 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Xin Liu <quic_liuxin@quicinc.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Avri Altman <avri.altman@wdc.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-	linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-scsi@vger.kernel.org,
-	quic_jiegan@quicinc.com, quic_aiquny@quicinc.com,
-	quic_tingweiz@quicinc.com, quic_sayalil@quicinc.com
-Subject: Re: [PATCH v1 3/4] arm64: dts: qcom: qcs615: add UFS node
-Message-ID: <20241113092716.h3mabw4bzgc5gcha@thinkpad>
-References: <20241017042300.872963-1-quic_liuxin@quicinc.com>
- <20241017042300.872963-4-quic_liuxin@quicinc.com>
- <5fe37609-ed58-4617-bd5f-90edc90f5d8b@oss.qualcomm.com>
- <28069114-9893-486b-a8d8-4c8b9ada1b0c@quicinc.com>
+        bh=kRiI8ug3AYbE8oUaAFF3LUV+ji3WnDg4RK6r/3kZnGA=;
+        b=rnwRbAH1c20xAk5xr6Zli/afXUhSuIldEdqM1emTTCi2lqoDmLN9RIOr6Ql6majgbG
+         f0wTPrqTU8VXXKR2jG7wgstQKLZ7loZxYU4654f2zcVt+wZ/fWM2T3RWnbz2j3SZXT9K
+         uZ83H+xsEu+XaPMEvTTlp9qpeiRS+3SSCP7Rkppu7Ee1ruLgsp04Knc3MmjVCCIxxP8/
+         xO4r5TCWSVVPwqrYGL8KulT03ZiI31VooOHly5NCsJxFiBfXSasOQoIPdnF0iWzGe4ul
+         I189+4Gt/wu6eVxltNQIk5rLweNXp/p/O11H+CN3nb/lBC12sMgHtnKDj0B7DgywLrk0
+         RWUw==
+X-Forwarded-Encrypted: i=1; AJvYcCWvgb/Rw9ltCdkTDRc3wSYYNcO/u8v1drWx7dV7qYqLHrKOv99wKFp1hZMbmjnDO45NnPsmVV2uVoyCN5Hb@vger.kernel.org
+X-Gm-Message-State: AOJu0YyHxwjjOoLNqC4Xm1dpX5t5CUVRk0uGvKL9xTXLUiLtZqQlwbuI
+	393YTYsmr2Q2/x0tmGmfT3UEiTKp99GExWIhsTUmYBwV0NbF+tJ5wkOtTBFee+M=
+X-Google-Smtp-Source: AGHT+IFp2XO8/M1hfYDyTXRtoRIwGiCo6RswIKBUnV2CYhn1kxcSXeWiw9nYRa78XmlRcQ91ayRAOg==
+X-Received: by 2002:a19:7708:0:b0:53d:a000:1817 with SMTP id 2adb3069b0e04-53da000188emr717956e87.22.1731491603427;
+        Wed, 13 Nov 2024 01:53:23 -0800 (PST)
+Received: from [192.168.0.48] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432d55051easm18906635e9.24.2024.11.13.01.53.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 Nov 2024 01:53:23 -0800 (PST)
+Message-ID: <7f8172ee-8285-4e7c-8ba3-826a5516fa9b@linaro.org>
+Date: Wed, 13 Nov 2024 09:53:23 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 3/3] media: qcom: camss: Add MSM8953 resources
+To: barnabas.czeman@mainlining.org,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org, Vladimir Lypak <vladimir.lypak@gmail.com>
+References: <20241103-camss-msm8953-v4-0-48d0ec75958d@mainlining.org>
+ <20241103-camss-msm8953-v4-3-48d0ec75958d@mainlining.org>
+ <6833ebc6-9210-471a-8ca6-5f3605155f33@linaro.org>
+ <412b3252f1ca795fbcfaf5e466e94642@mainlining.org>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <412b3252f1ca795fbcfaf5e466e94642@mainlining.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <28069114-9893-486b-a8d8-4c8b9ada1b0c@quicinc.com>
 
-On Wed, Nov 13, 2024 at 05:19:49PM +0800, Xin Liu wrote:
-> 
-> 
-> 在 2024/10/26 3:24, Konrad Dybcio 写道:
-> > On 17.10.2024 6:22 AM, Xin Liu wrote:
-> > > From: Sayali Lokhande <quic_sayalil@quicinc.com>	
-> > > 	
-> > > Add the UFS Host Controller node and its PHY for QCS615 SoC.
-> > > 
-> > > Signed-off-by: Sayali Lokhande <quic_sayalil@quicinc.com>
-> > > Co-developed-by: Xin Liu <quic_liuxin@quicinc.com>
-> > > Signed-off-by: Xin Liu <quic_liuxin@quicinc.com>
-> > > ---
-> > 
-> > + Taniya (see below)
-> > 
-> > >   arch/arm64/boot/dts/qcom/qcs615.dtsi | 74 ++++++++++++++++++++++++++++
-> > >   1 file changed, 74 insertions(+)
-> > > 
-> > > diff --git a/arch/arm64/boot/dts/qcom/qcs615.dtsi b/arch/arm64/boot/dts/qcom/qcs615.dtsi
-> > > index fcba83fca7cf..689418466dc2 100644
-> > > --- a/arch/arm64/boot/dts/qcom/qcs615.dtsi
-> > > +++ b/arch/arm64/boot/dts/qcom/qcs615.dtsi
-> > > @@ -458,6 +458,80 @@ mmss_noc: interconnect@1740000 {
-> > >   			qcom,bcm-voters = <&apps_bcm_voter>;
-> > >   		};
-> > > +		ufs_mem_hc: ufs@1d84000 {
-> > 
-> > ufshc@ would be consistent with other files in dts/qcom
-> > 
-> I referred to qcom files such as sa8775p/sm8550/sm8650 etc.All use ufs@
+On 13/11/2024 08:01, barnabas.czeman@mainlining.org wrote:
+>> I see that you do reuse csiphy_res_8x16 for this platform support, in
+>> this case let me ask you to double check/test that the "vdda" regulator
+>> is actually a CSIPHY regulator, and if so, please move the registration
+>> of the regulators to csiphy_res_8x16 as a preceding change.
+> It is placed in CSID at downstream and this is the documentation of
+> the downstream property:
+> - qcom,mipi-csi-vdd-supply : should contain regulator to be used for
+>      this csid core
+> so it should be a csid regulator as i understand.
+> It is also placed at CSIDs in msm8953-camera.dtsi
 
-That's an oddity. But 'ufshc' is documented in the devicetree spec. So you
-should use it for UFSHC nodes.
+No, the regulator(s) supply voltage to the PHY.
 
-- Mani
+Make sure you have:
 
-> > 
-> > > +			compatible = "qcom,qcs615-ufshc", "qcom,ufshc", "jedec,ufs-2.0";
-> > > +			reg = <0x0 0x01d84000 0x0 0x3000>, <0x0 0x01d90000 0x0 0x8000>;
-> > > +			reg-names = "std", "ice";
-> > 
-> > One per line, please
-> Thank you, I will fix it next version.
-> > 
-> > > +			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
-> > > +			phys = <&ufs_mem_phy>;
-> > > +			phy-names = "ufsphy";
-> > > +			lanes-per-direction = <1>;
-> > > +			#reset-cells = <1>;
-> > > +			resets = <&gcc GCC_UFS_PHY_BCR>;
-> > > +			reset-names = "rst";
-> > > +
-> > > +			power-domains = <&gcc UFS_PHY_GDSC>;
-> > > +			required-opps = <&rpmhpd_opp_nom>;
-> > > +
-> > > +			iommus = <&apps_smmu 0x300 0x0>;
-> > > +			dma-coherent;
-> > > +
-> > > +			interconnects = <&aggre1_noc MASTER_UFS_MEM QCOM_ICC_TAG_ALWAYS
-> > > +					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
-> > > +					<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
-> > > +					 &config_noc SLAVE_UFS_MEM_CFG QCOM_ICC_TAG_ALWAYS>;
-> > > +			interconnect-names = "ufs-ddr",
-> > > +					     "cpu-ufs";
-> > > +
-> > > +			clocks = <&gcc GCC_UFS_PHY_AXI_CLK>,
-> > > +				 <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
-> > > +				 <&gcc GCC_UFS_PHY_AHB_CLK>,
-> > > +				 <&gcc GCC_UFS_PHY_UNIPRO_CORE_CLK>,
-> > > +				 <&rpmhcc RPMH_CXO_CLK>,
-> > > +				 <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
-> > > +				 <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
-> > > +				 <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
-> > > +			clock-names = "core_clk",
-> > > +				      "bus_aggr_clk",
-> > > +				      "iface_clk",
-> > > +				      "core_clk_unipro",
-> > > +				      "ref_clk",
-> > > +				      "tx_lane0_sync_clk",
-> > > +				      "rx_lane0_sync_clk",
-> > > +				      "ice_core_clk";
-> > > +			freq-table-hz = <50000000 200000000>,
-> > > +					<0 0>,
-> > > +					<0 0>,
-> > > +					<37500000 150000000>,
-> > > +					<0 0>,
-> > > +					<0 0>,
-> > > +					<0 0>,
-> > > +					<75000000 300000000>;
-> > 
-> > Please try to match the order of properties present in sm8650.dtsi
-> Thank you, I will fix it next version.
-> > 
-> > And please use an OPP table instead of freq-table-hz (see sm8*5*50.dtsi)
-> Thank you, I will fix it next version.
-> > 
-> > > +
-> > > +			status = "disabled";
-> > > +		};
-> > > +
-> > > +		ufs_mem_phy: phy@1d87000 {
-> > > +			compatible = "qcom,qcs615-qmp-ufs-phy", "qcom,sm6115-qmp-ufs-phy";
-> > > +			reg = <0x0 0x01d87000 0x0 0xe00>;
-> > 
-> > This register region is a bit longer
-> I just confirmed again, there's no problem here.
-> > 
-> > > +			clocks = <&rpmhcc RPMH_CXO_CLK>,
-> > > +				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>,
-> > > +				 <&gcc GCC_UFS_MEM_CLKREF_CLK>;
-> > > +			clock-names = "ref",
-> > > +				      "ref_aux",
-> > > +				      "qref";
-> > > +
-> > > +			power-domains = <&gcc UFS_PHY_GDSC>;
-> > > +
-> > > +			resets = <&ufs_mem_hc 0>;
-> > > +			reset-names = "ufsphy";
-> > > +
-> > > +			#clock-cells = <1>;
-> > 
-> > The PHY is a clock provider. Normally, it's a parent of
-> > gcc_ufs_phy_[rt]x_symbol_n clocks.
-> > 
-> > Taniya, could you please wire that up in your patchset?
-> > 
-> > Konrad
-> 
+commit 44fdbb9d1a3892db92b2c9cf5f46e32ca4095d92
+Author: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Date:   Fri Sep 27 00:19:56 2024 +0300
 
--- 
-மணிவண்ணன் சதாசிவம்
+     media: qcom: camss: add management of supply regulators to CSIPHY
+
+and give the change a try.
+
+---
+bod
 
