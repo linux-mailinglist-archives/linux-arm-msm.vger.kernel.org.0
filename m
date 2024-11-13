@@ -1,217 +1,233 @@
-Return-Path: <linux-arm-msm+bounces-37753-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37754-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8E0779C6B3D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 10:10:57 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F4769C6B56
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 10:20:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1C29B1F238B8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 09:10:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A62222836AC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 09:20:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E5EEE1BF328;
-	Wed, 13 Nov 2024 09:10:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B3101F77A6;
+	Wed, 13 Nov 2024 09:20:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DTQFPpRA"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="J248sb7c"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D281BDA95
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 09:10:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 328701F778A;
+	Wed, 13 Nov 2024 09:20:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731489046; cv=none; b=iAnz1ipCav2KC0I8o6bF8NGrX0n2F5dxJN9NduPBNvxBiP4B34pbNdSf/VFi6JYiQhcBGRMM7PveJtaVsOvacjG8TM0uy1GeyNUiK56bSLkEknoemNCpGQtZkVfwhUvQN5u0yKAeGkiPN/WfCUOb0rVGLckaWZJ85nI1/Ok0atQ=
+	t=1731489626; cv=none; b=Yyh3fgp51l/zUz1uFWAdsHSvmruXbsMtGjURmSmaLiThMUf3DnH5LNm3ZjEp8yupbCwHBiBxCbMdvRwx+YtCmyHDTkVrHc1FVG3vcuHqK4mOYwBX/aD9Ljtecvn0dbG+0CR7xEUdyj3FzN2JmbpWYvAGA9HBk+swBeavOwXKS2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731489046; c=relaxed/simple;
-	bh=41ETKmIi3rZzSC+/rwGhQWVrmi2LCfX+MHv4EyZ+MWk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HFWYJUabLoy6tsLstKrpKl1qGZBOpIeT6dAGNoj6CZbVMFuqtwKL04SU9wT0HPlSRG57Cz63BiorcOB1ZDvQY/hWBpCUR++j3w4j5Qgbz1V0p8AHdYtHsSPqBjw876Qio0msjpTAwIDd360XL7/JhwBgPvuaEn22YNOf3QY+CIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DTQFPpRA; arc=none smtp.client-ip=209.85.128.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-43163667f0eso57157925e9.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 01:10:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731489042; x=1732093842; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=LwD4oymmVslGH4NrMAKmK7EULNIhFHBAlUKHIqQhDQk=;
-        b=DTQFPpRAm0DaOnJvlTRGvwR1nEM6Up1gf0+/kf6V9Ij4ZUhJBPcYL6+WMqxX8uXvdL
-         fz5Y+P7tV0gsSraKeVMbk4N09iUsDSK828cutFKvsjHvKS055xKI+QYTRngq7Cdx8CFE
-         bk5syWu4fZYykyTs0V8rSnev9lo5dkBEgo0kWMGfaKWBTlCO+cwcyBdNFCJuHUhhwMR9
-         dZ4dtVmyJLadnAcaGibEr511uuNVzEPN88HdqfmSCSrdOZf3Ix3j+Mif+jcIZDHVjEQy
-         3dC6ruashYgf4WO47hbJIdM4eBbrmwwhQHeKKX1uUWDYwBzBF2lYAabksu5FsqZ8kdCr
-         A/NQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731489042; x=1732093842;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LwD4oymmVslGH4NrMAKmK7EULNIhFHBAlUKHIqQhDQk=;
-        b=GK1HsoRkojYvuRDGhsvl/foQd27RiEJAwKwuaTZ3knQfNEALH+qjXiDjTJo66IiJUr
-         CDatcLfpJl8Ope4ogWwuIHNOcpLPRM+zMmY5f64DSeiKr3pB68nVp2fX4SGe4ZAzrscO
-         j8bUybM0j9HKkBs1j6mm8kGn3iR8QIuF2WZo2GpvDsdhtm+hfITnLyuY0WJXQUipKQWp
-         7/aUAUyz9nyd1gz9M45hoPwngds2O7B41/k+3BzEKtiBylw5Wfo65B6FVoDyahTbUN8D
-         603K3JBJAb+XKrui/1cRsvn+i0t9swPN1X/9G/hMAQBpJMA/t9M/KF9my2yULIjlzU5d
-         NS8A==
-X-Forwarded-Encrypted: i=1; AJvYcCVmkXJHZ8rvqOWcpuULERbM0H8qhtBMsYp2Q9fLXXZZhr4QuytXoiyeKYPYCsaVSau0jN3vjDt5Xz6ssala@vger.kernel.org
-X-Gm-Message-State: AOJu0YwHjQKM9E8tXJjfY+6gtAtZfqlrzA78X4B9/BBcLQos9Mq8aLp8
-	0foU9pVsaPJo0+QOsd3RpBK0w02L8w2b8O3a/p8vmPI4bcWTu7+Q0b7QWxUvheo=
-X-Google-Smtp-Source: AGHT+IH09IsTVfhj1/VaTY74Lw93grA6LiugP7EfB7Jnoz9jG2gTVU3pLPEe79lc7dnOhtIBMB/wiw==
-X-Received: by 2002:a5d:648f:0:b0:37d:46fa:d1d3 with SMTP id ffacd0b85a97d-381f186d11amr17375012f8f.34.1731489042505;
-        Wed, 13 Nov 2024 01:10:42 -0800 (PST)
-Received: from linaro.org ([2a02:2454:ff21:ef80:fca:835c:70ab:eebc])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381ed97e206sm17553313f8f.25.2024.11.13.01.10.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Nov 2024 01:10:42 -0800 (PST)
-Date: Wed, 13 Nov 2024 10:10:40 +0100
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: barnabas.czeman@mainlining.org, Konrad Dybcio <konradybcio@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Amit Kucheria <amitk@kernel.org>,
-	Thara Gopinath <thara.gopinath@gmail.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
-	Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
-	linux-pm@vger.kernel.org, iommu@lists.linux.dev,
-	Otto =?iso-8859-1?Q?Pfl=FCger?= <otto.pflueger@abscue.de>
-Subject: Re: [PATCH v5 08/10] arm64: dts: qcom: Add initial support for
- MSM8917
-Message-ID: <ZzRtEHsC4MROxN3v@linaro.org>
-References: <20241112-msm8917-v5-0-3ca34d33191b@mainlining.org>
- <20241112-msm8917-v5-8-3ca34d33191b@mainlining.org>
- <ZzOQEgLLhkH-IymV@linaro.org>
- <0dae1cea420bd335be591e4b1be3d07c@mainlining.org>
+	s=arc-20240116; t=1731489626; c=relaxed/simple;
+	bh=O5B4rkqoM1HLtJD14rfhXRQ5yGxOyymMiwBeZ8fSqDE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=p75Rce7U/BcUbRrdMs6L8Bx40OL32hoSMxuxxAgcHO+TPFPusqh1lTCsnWPyQWMK5ayWcaUkyhOwRYB4nRL9pxKnrCSAov/TV94i/qKGm4exIFC9+2324/F4v8m9y5J4wmmk0sRoXpup9RIwSZ0Z74VnvNtSDFY32PDGrJoX/Y8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=J248sb7c; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AD70dmN019298;
+	Wed, 13 Nov 2024 09:19:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	+jlEdp9U4UAYgw1Y7c/ImZvXJkE28m4D+/dF8fc7XOk=; b=J248sb7cFUl1nTDA
+	sMFNX95fX4RZflfyRqUmFQEcVPvBHI+MFTWFvjkzinGzvEJ2ycnBKcmlXS5EosRj
+	Niqh2WvFC93d00VJgozbYf+aZ0734bjyW3AqHFeNYIYVUoT7/N1S36aVxP7n51vI
+	/ieeHdAawpNACvAQZkCFFW9OH4SixAwAY9d9jt3cWPJdCAvNNvGcvtur65UQ13Ys
+	aQYpyVVDj3zQpSdSTvJKFWmWtNCtERmNRWvc8eIVifoEw1XVGAoTGcMmJIeD3W/S
+	CtbYoEtICLlVZcUiKBw8hCjLGAoP7IwSUGys3/vIdlOj4CbGJS+MFuwW52O3URm/
+	Y/34Sg==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42vqbm0bdd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 13 Nov 2024 09:19:59 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AD9Jwvu004597
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 13 Nov 2024 09:19:58 GMT
+Received: from [10.64.68.72] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 13 Nov
+ 2024 01:19:52 -0800
+Message-ID: <28069114-9893-486b-a8d8-4c8b9ada1b0c@quicinc.com>
+Date: Wed, 13 Nov 2024 17:19:49 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 3/4] arm64: dts: qcom: qcs615: add UFS node
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Manivannan Sadhasivam
+	<manivannan.sadhasivam@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+CC: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>, Andy Gross <agross@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-scsi@vger.kernel.org>, <quic_jiegan@quicinc.com>,
+        <quic_aiquny@quicinc.com>, <quic_tingweiz@quicinc.com>,
+        <quic_sayalil@quicinc.com>
+References: <20241017042300.872963-1-quic_liuxin@quicinc.com>
+ <20241017042300.872963-4-quic_liuxin@quicinc.com>
+ <5fe37609-ed58-4617-bd5f-90edc90f5d8b@oss.qualcomm.com>
+From: Xin Liu <quic_liuxin@quicinc.com>
+In-Reply-To: <5fe37609-ed58-4617-bd5f-90edc90f5d8b@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <0dae1cea420bd335be591e4b1be3d07c@mainlining.org>
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: bi-SqTW8PKTJtqASsU22B0m18Sor4LXa
+X-Proofpoint-GUID: bi-SqTW8PKTJtqASsU22B0m18Sor4LXa
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ phishscore=0 impostorscore=0 priorityscore=1501 mlxlogscore=999
+ spamscore=0 bulkscore=0 suspectscore=0 malwarescore=0 adultscore=0
+ clxscore=1011 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411130081
 
-On Tue, Nov 12, 2024 at 07:49:18PM +0100, barnabas.czeman@mainlining.org wrote:
-> On 2024-11-12 18:27, Stephan Gerhold wrote:
-> > On Tue, Nov 12, 2024 at 04:49:38PM +0100, Barnabás Czémán wrote:
-> > > From: Otto Pflüger <otto.pflueger@abscue.de>
-> > > 
-> > > Add initial support for MSM8917 SoC.
-> > > 
-> > > Signed-off-by: Otto Pflüger <otto.pflueger@abscue.de>
-> > > [reword commit, rebase, fix schema errors]
-> > > Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
-> > > ---
-> > >  arch/arm64/boot/dts/qcom/msm8917.dtsi | 1974
-> > > +++++++++++++++++++++++++++++++++
-> > >  1 file changed, 1974 insertions(+)
-> > > 
-> > > diff --git a/arch/arm64/boot/dts/qcom/msm8917.dtsi
-> > > b/arch/arm64/boot/dts/qcom/msm8917.dtsi
-> > > new file mode 100644
-> > > index 0000000000000000000000000000000000000000..cf0a0eec1141e11faca0ee9705d6348ab32a0f50
-> > > --- /dev/null
-> > > +++ b/arch/arm64/boot/dts/qcom/msm8917.dtsi
-> > > @@ -0,0 +1,1974 @@
-> > > [...]
-> > > +		domain-idle-states {
-> > > +			cluster_sleep_0: cluster-sleep-0 {
-> > > +				compatible = "domain-idle-state";
-> > > +				arm,psci-suspend-param = <0x41000023>;
-> > > +				entry-latency-us = <700>;
-> > > +				exit-latency-us = <650>;
-> > > +				min-residency-us = <1972>;
-> > > +			};
-> > > +
-> > > +			cluster_sleep_1: cluster-sleep-1 {
-> > > +				compatible = "domain-idle-state";
-> > > +				arm,psci-suspend-param = <0x41000043>;
-> > > +				entry-latency-us = <240>;
-> > > +				exit-latency-us = <280>;
-> > > +				min-residency-us = <806>;
-> > > +			};
-> > 
-> > I think my comment here is still open:
-> > 
-> > This is strange, the deeper sleep state has lower timings than the
-> > previous one?
-> I was reordering based on Konrad comments when i have renamed the nodes
-> maybe it is not correct then.
-> I am searching for how to validate these levels, i have find these
-> https://git.codelinaro.org/clo/la/kernel/msm-4.9/-/blob/LA.UM.10.6.2.c26-01500-89xx.0/arch/arm64/boot/dts/qcom/msm8917-pm.dtsi#L45-91
 
-I think you translated them correctly. It feels like downstream is weird
-or even wrong here. Usually a higher psci-mode (retention = 2, gdhs = 4)
-also implies a deeper idle state. But at some point the
-perf-l2-retention and perf-l2-gdhs state were swapped downstream:
 
-https://git.codelinaro.org/clo/la/kernel/msm-3.18/-/commit/dea262a17a9e80dacb86b7c2f269bcc7b4df3a13
+åœ¨ 2024/10/26 3:24, Konrad Dybcio å†™é“:
+> On 17.10.2024 6:22 AM, Xin Liu wrote:
+>> From: Sayali Lokhande <quic_sayalil@quicinc.com>	
+>> 	
+>> Add the UFS Host Controller node and its PHY for QCS615 SoC.
+>>
+>> Signed-off-by: Sayali Lokhande <quic_sayalil@quicinc.com>
+>> Co-developed-by: Xin Liu <quic_liuxin@quicinc.com>
+>> Signed-off-by: Xin Liu <quic_liuxin@quicinc.com>
+>> ---
+> 
+> + Taniya (see below)
+> 
+>>   arch/arm64/boot/dts/qcom/qcs615.dtsi | 74 ++++++++++++++++++++++++++++
+>>   1 file changed, 74 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/qcs615.dtsi b/arch/arm64/boot/dts/qcom/qcs615.dtsi
+>> index fcba83fca7cf..689418466dc2 100644
+>> --- a/arch/arm64/boot/dts/qcom/qcs615.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/qcs615.dtsi
+>> @@ -458,6 +458,80 @@ mmss_noc: interconnect@1740000 {
+>>   			qcom,bcm-voters = <&apps_bcm_voter>;
+>>   		};
+>>   
+>> +		ufs_mem_hc: ufs@1d84000 {
+> 
+> ufshc@ would be consistent with other files in dts/qcom
+> 
+I referred to qcom files such as sa8775p/sm8550/sm8650 etc.All use ufs@
+> 
+>> +			compatible = "qcom,qcs615-ufshc", "qcom,ufshc", "jedec,ufs-2.0";
+>> +			reg = <0x0 0x01d84000 0x0 0x3000>, <0x0 0x01d90000 0x0 0x8000>;
+>> +			reg-names = "std", "ice";
+> 
+> One per line, please
+Thank you, I will fix it next version.
+> 
+>> +			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
+>> +			phys = <&ufs_mem_phy>;
+>> +			phy-names = "ufsphy";
+>> +			lanes-per-direction = <1>;
+>> +			#reset-cells = <1>;
+>> +			resets = <&gcc GCC_UFS_PHY_BCR>;
+>> +			reset-names = "rst";
+>> +
+>> +			power-domains = <&gcc UFS_PHY_GDSC>;
+>> +			required-opps = <&rpmhpd_opp_nom>;
+>> +
+>> +			iommus = <&apps_smmu 0x300 0x0>;
+>> +			dma-coherent;
+>> +
+>> +			interconnects = <&aggre1_noc MASTER_UFS_MEM QCOM_ICC_TAG_ALWAYS
+>> +					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+>> +					<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
+>> +					 &config_noc SLAVE_UFS_MEM_CFG QCOM_ICC_TAG_ALWAYS>;
+>> +			interconnect-names = "ufs-ddr",
+>> +					     "cpu-ufs";
+>> +
+>> +			clocks = <&gcc GCC_UFS_PHY_AXI_CLK>,
+>> +				 <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
+>> +				 <&gcc GCC_UFS_PHY_AHB_CLK>,
+>> +				 <&gcc GCC_UFS_PHY_UNIPRO_CORE_CLK>,
+>> +				 <&rpmhcc RPMH_CXO_CLK>,
+>> +				 <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
+>> +				 <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
+>> +				 <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
+>> +			clock-names = "core_clk",
+>> +				      "bus_aggr_clk",
+>> +				      "iface_clk",
+>> +				      "core_clk_unipro",
+>> +				      "ref_clk",
+>> +				      "tx_lane0_sync_clk",
+>> +				      "rx_lane0_sync_clk",
+>> +				      "ice_core_clk";
+>> +			freq-table-hz = <50000000 200000000>,
+>> +					<0 0>,
+>> +					<0 0>,
+>> +					<37500000 150000000>,
+>> +					<0 0>,
+>> +					<0 0>,
+>> +					<0 0>,
+>> +					<75000000 300000000>;
+> 
+> Please try to match the order of properties present in sm8650.dtsi
+Thank you, I will fix it next version.
+> 
+> And please use an OPP table instead of freq-table-hz (see sm8*5*50.dtsi)
+Thank you, I will fix it next version.
+> 
+>> +
+>> +			status = "disabled";
+>> +		};
+>> +
+>> +		ufs_mem_phy: phy@1d87000 {
+>> +			compatible = "qcom,qcs615-qmp-ufs-phy", "qcom,sm6115-qmp-ufs-phy";
+>> +			reg = <0x0 0x01d87000 0x0 0xe00>;
+> 
+> This register region is a bit longer
+I just confirmed again, there's no problem here.
+> 
+>> +			clocks = <&rpmhcc RPMH_CXO_CLK>,
+>> +				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>,
+>> +				 <&gcc GCC_UFS_MEM_CLKREF_CLK>;
+>> +			clock-names = "ref",
+>> +				      "ref_aux",
+>> +				      "qref";
+>> +
+>> +			power-domains = <&gcc UFS_PHY_GDSC>;
+>> +
+>> +			resets = <&ufs_mem_hc 0>;
+>> +			reset-names = "ufsphy";
+>> +
+>> +			#clock-cells = <1>;
+> 
+> The PHY is a clock provider. Normally, it's a parent of
+> gcc_ufs_phy_[rt]x_symbol_n clocks.
+> 
+> Taniya, could you please wire that up in your patchset?
+> 
+> Konrad
 
-I don't know if this is intended or just an oversight. If no one can
-clarify why this change was done I guess we can just choose between the
-following two options:
-
- 1. Describe it exactly like it was done downstream. In that case I
-    would suggest swapping the node order back to what you had in v1.
-    Even if that means that a lower idle state has the higher psci-mode
-    (arm,psci-suspend-param). That should match what downstream did.
-
-OR
-
- 2. Omit cluster-sleep-0 and cluster-sleep-1. I doubt anyone will notice
-    the minor difference in power consumption. The most important idle
-    state is the deepest "power collapse" (PC) state.
-
-@Konrad: Do you have any opinion here?
-
-> Do you know where can i find psci-suspend-param-s?
-
-You need to translate it like in this code here:
-https://git.codelinaro.org/clo/la/kernel/msm-4.9/-/blob/LA.UM.10.6.2.c26-01500-89xx.0/drivers/cpuidle/lpm-levels.c#L1337-1340
-
-Roughly described:
- - Set BIT(30) if the CPU state has qcom,is-reset
- - Affinity level is the hierarchy level that goes idle.
-   In your case: CPU = 0, L2 cache/cluster = 1.
-   Shift that to bit 24 (1 << 24 for cache/cluster)
- - For the state itself you need to combine the qcom,psci-cpu-mode and
-   qcom,psci-mode according to the qcom,psci-mode-shift.
-
-E.g. for the "perf-l2-pc" state, combined with the deepest CPU state
-("pc"):
-
- - BIT(30) is set because of qcom,is-reset
- - (1 << 24) because it's a L2 cache/cluster idle state
- - (qcom,psci-cpu-mode = <3>) << (qcom,psci-mode-shift = <0>) = (3 << 0)
- - (qcom,psci-mode = <5>) << (qcom,psci-mode-shift = <4>) = (5 << 4)
-
-All that combined: BIT(30) | (1 << 24) | (3 << 0) | (5 << 4)
-  = 0x41000053
-
-Which is what you have for cluster-sleep-2. The ones you have look
-correct to me. :-)
-
-> Should I also add wfi level?
-
-I think we usually omit those for the CPU at least. Not sure about the
-cache/cluster one. As I mentioned, at the end the most important idle
-state to have is the deepest ones. Those will get used during suspend
-and when you don't use the device. The others are more minor
-optimization for light usage, which will be less noticeable.
-
-Thanks,
-Stephan
 
