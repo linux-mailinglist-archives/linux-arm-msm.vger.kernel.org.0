@@ -1,112 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-37815-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37817-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A4AE89C76D5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 16:24:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C0E5A9C7778
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 16:41:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6A450283753
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 15:24:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8588C2816BC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 15:41:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D08AF158DC4;
-	Wed, 13 Nov 2024 15:23:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E3B2216130C;
+	Wed, 13 Nov 2024 15:39:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uwblCQ0f"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="Rzsn1zz8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22B6A156F36
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 15:23:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5914712BEBB
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 15:39:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731511434; cv=none; b=kV0PTKoT1tNil51B2z3dRL5WBV0TjE1eLRYJ03s2lCbhxLyHS046DeSYfYkrGxVPk9esTHL0/AiDqddV2lfvfVxW6rYFbxl+fRq3vv34PIEkPGWgOyRqxv8q6x/eImWTYXHWSWy7Gh/QP4OCrTI+JG7MHRRb2ZnvFGenTy1n3/g=
+	t=1731512369; cv=none; b=l5WHhL+1O8dMw31bu9WlYNAstrBoF1KqRdP8qZPFdVDZ09mEA+nVR/eXA4mKubqwLDMDHPQnSKG9hG9W9CZ7gGDRORANGSIFb6TeWHOClWD9WIKnBN5G4bnya+1hmgvIxaFFSgoqzawP8GRflYhavEhA1JoRAYE79i4HxkusWxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731511434; c=relaxed/simple;
-	bh=mkf92YvqqmYTWrtFZhtkksrDlENB5dZpTVzytU/uDC0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EnppUqOKwFJ5OQr6XV/RjquRznv78qLRISLfiR4EpyBwCgmNK5seY/VXTQ5NwE6HnttoA4izWoiBD+u4FFaXI3dK3zsMfT8hNPMDR+Vsqv2PcLcls6JjIXzoxUtIRWkpzF4av5GY6OaffoiWLYVZnzbYWfuLIk1CVNJ6iRUkpg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uwblCQ0f; arc=none smtp.client-ip=209.85.221.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-37d4fd00574so592559f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 07:23:52 -0800 (PST)
+	s=arc-20240116; t=1731512369; c=relaxed/simple;
+	bh=xAWJcl+eo8fDG63BX3szgOn6IaJOIPMK6Bb4yZDvNEY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=V337BnSznao+Inm+paOhv/63DVl/dL7JS/zj8BP0gd28liozNjoGEfaipSsEjJsjGLwFSo1Jwk6B/+ZifJHo3x+pF2fv6QIq7eG/+i4NRXwqnrt8a1hscDAP6Rl4oLO7Nrh9ekPpwkVsDBAZyZe0Z2fqVCAkNAHycCKXJp7pn8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=Rzsn1zz8; arc=none smtp.client-ip=209.85.208.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-5cedf5fe237so8530089a12.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 07:39:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731511431; x=1732116231; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=OOdKga0laMcAvUIFJVgngqKV8g3vjQo5W0ePdHvo9Xs=;
-        b=uwblCQ0f5j51wt6e4u/1wmSa9cQsZkHN6pdZK/auH2Ctt1I5gY2wFj28ic6uKMHML1
-         JwNEpWhqbt48in3sRFg69dOjs+BhMplk9nkxzmQUV7k70CuPZF0oUqVRwC1aOD8CT9h5
-         zv7lxPwj1SKrs7255Q64/8uMG1OfE72sS6MxGoyDXnJWCxDKmyj6B2bk7BJT4+ej3NOF
-         jTRGhZ9xYdth9VpAJ6xErOcJuNapqZ5Vwbep1GuaMqtkkIkckWOJ9XxkR/wpYXs7gGr/
-         ClwkQJRbFFesMUPXGw2rlVJgSePgc37/FUFx79ICT4AlBTgx2jAG/hF2TrJT+j1DDlmi
-         bohA==
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1731512366; x=1732117166; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SJEl/Mmjz/g2W7QrHkYPcZb6PPJpxdKufP7Duu2dNVc=;
+        b=Rzsn1zz8D7TT7QX9e9vkHZJOYM3ed/7eoQJjnRVfdvtagzRbeo4Bl8kZIkCcL/kK56
+         uegoCuAFJegeYki9wUYf/Nl+m04rSqQGdXzCSudTarkvkdyLRSyPk2SjkpRx1YE3C7mk
+         1z/1syFsZfV5iz3bLjvTISZmR1KhWK7XFU2bh/hRgDwXPcrs5mFZRFRExrLXsA1YIxaZ
+         PuNmrINyVXifaPhYkfouoswKyJsVSaRz6wImhuAS3ReaqnpJQZ6A5yUl4pRIdC/0+od1
+         waIaa05RA03H6haw29zChn9RF/eF17Ci3A5pyrbLHDNM6z6VzZ7ebcpJaR7d+6DFJpE9
+         fwhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731511431; x=1732116231;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OOdKga0laMcAvUIFJVgngqKV8g3vjQo5W0ePdHvo9Xs=;
-        b=vygMt1iWKLPl4Pe/7A4rQ897iAchAXFM1Ar4z0yRuStCPBqizPE+8OGi/pNbCWDGpZ
-         rthkvK+LicJubAvPySQRdNljyqko6Dp05NTd5kBG4uT/uQC1OkS+lRg1JhESGwRwt7lM
-         L1D1ursMGMjP9J/aj0nXGWZtU8k1zbR4m0/148VZvn6JQNezUpoHc4vE5wHIPPdz8TSj
-         wdXJFUeDpYrTADJy1SgPZHkZwrYYyC4/zkL2hJOCq5xn7VbFPc21wJz7BikiOYzdZlCF
-         V3hyhByGfi/PevFUixPtivvSq216jfy6JeCvNNvg3Ky22c8v2gUm6R8zriwpnYW2tR+L
-         SKkw==
-X-Forwarded-Encrypted: i=1; AJvYcCV3+JzpZX+vf5VrUAPRZ8Iq4vx6JFud8QD73FuGmOo5dE+W789JXneGsghMd5zoUDHs5JvtZoyYrtUjadqT@vger.kernel.org
-X-Gm-Message-State: AOJu0YyyQen8fgRe2wQ6Hs0WdNqj4kL9iBJ9zaN1S00cfjQcHWl4Mrjr
-	xH0URtOeD1ZlJ+DnGk5Que5op3AkIYAb6U4xJp8+cROZeuQKsv0mUh292udVTpg=
-X-Google-Smtp-Source: AGHT+IH/gfM9PGoYpJNGrFD5lZJnTGB4qUBvPUOWaiS4UbefcHZd3yGHfeCZ3TMkYSv3w6AbbLOVYA==
-X-Received: by 2002:a5d:588a:0:b0:367:8e57:8 with SMTP id ffacd0b85a97d-381f0f7f1abmr19457022f8f.19.1731511431496;
-        Wed, 13 Nov 2024 07:23:51 -0800 (PST)
-Received: from [192.168.0.40] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432d54e2e19sm28014685e9.3.2024.11.13.07.23.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Nov 2024 07:23:51 -0800 (PST)
-Message-ID: <eda3d0ae-50eb-43b2-a234-93b209fbcdeb@linaro.org>
-Date: Wed, 13 Nov 2024 15:23:50 +0000
+        d=1e100.net; s=20230601; t=1731512366; x=1732117166;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=SJEl/Mmjz/g2W7QrHkYPcZb6PPJpxdKufP7Duu2dNVc=;
+        b=q5RhHPpfb4VKh1CAtULBSIUf5fWQDcUOi9TYukj+B0B9QeyLtw/wDY7KIPn67Xu++l
+         ed9ztnSkequTAg3v4NeBeUqCNYo/DVswlz7UWyq1Toj5M3v2WvWc7Hb5B58/J59J80x2
+         RMWPc0vSb/r4gVQ3BqEGwn20rOOQOggkJKGJi5jWOtL7HnjDLawapDBIHk3Gsx0vTbG6
+         mJhQmRLpMtm2vgG+DCwSgNid5nG7ybe+hSe0hgR1nwAyzdz7fWbGeGMa8hC8sowW6TjX
+         dltLvzl7vJdA9O/nZtwCRBJIGj6PG+pzUw6ckJ1cE/wJGDPiXAJZhBfV/v5DvStjyDWr
+         xnsg==
+X-Forwarded-Encrypted: i=1; AJvYcCX36eQmnA5Cqc0yoebyP72UMtMq7vB4ECQxtb83r+sNKnsZxItSZZfdpTIZOH+avAzHxHGjGkj8Z36NIRGK@vger.kernel.org
+X-Gm-Message-State: AOJu0YwNcYdCXm2+q/MFvbyIhQrjZh5MHuIZp1n575LF8fUP+1TuwMcr
+	+1HXLZX6MkawqCx1fy/5LfMWMZBFVjOCJpdcEJDpKmXIfsD4Qm7fzfMm08tGv2A=
+X-Google-Smtp-Source: AGHT+IEH31trENazh65pWh+DuCi9K649WDgplI3ecb3+way3WoWqkg3GJ5Qx7vBZEHweQ+aIMZ3bWg==
+X-Received: by 2002:a17:907:7e8f:b0:a99:f887:ec09 with SMTP id a640c23a62f3a-a9eeff39e7amr2164151766b.35.1731512365541;
+        Wed, 13 Nov 2024 07:39:25 -0800 (PST)
+Received: from brgl-uxlite.home ([2a01:cb1d:dc:7e00:1b75:191:f7eb:da75])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9ee0def8ecsm876882866b.152.2024.11.13.07.39.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Nov 2024 07:39:25 -0800 (PST)
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+To: Andi Shyti <andi.shyti@kernel.org>,
+	Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-i2c@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] i2c: qup: use generic device property accessors
+Date: Wed, 13 Nov 2024 16:39:23 +0100
+Message-ID: <173151232541.92239.8233789832026323394.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241008160947.81045-1-brgl@bgdev.pl>
+References: <20241008160947.81045-1-brgl@bgdev.pl>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/3] media: qcom: camss: Add MSM8953 resources
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- barnabas.czeman@mainlining.org
-Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org, Vladimir Lypak <vladimir.lypak@gmail.com>
-References: <20241103-camss-msm8953-v4-0-48d0ec75958d@mainlining.org>
- <20241103-camss-msm8953-v4-3-48d0ec75958d@mainlining.org>
- <6833ebc6-9210-471a-8ca6-5f3605155f33@linaro.org>
- <412b3252f1ca795fbcfaf5e466e94642@mainlining.org>
- <67d014f1-9424-4b88-b031-096a5596c5c8@linaro.org>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <67d014f1-9424-4b88-b031-096a5596c5c8@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-On 13/11/2024 13:28, Vladimir Zapolskiy wrote:
-> So, we have to rely on the documentation here. Bryan, can you please
-> check, if VDDA_MIPI_CSI pad on MSM8916 and/or MSM8953 is related to
-> CSIPHY or CSID power supply? Thank you in advance.
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-No there's really no indication in the documents I have how the input 
-gets routed internally, CSID, CSIPHY, both.. not clear.
 
-I think Barnabás is right, the best source of information we have for 
-this one is the downstream dtsi => CSID.
+On Tue, 08 Oct 2024 18:09:47 +0200, Bartosz Golaszewski wrote:
+> There's no reason for this driver to use OF-specific property helpers.
+> Drop the last one in favor of the generic variant and no longer include
+> of.h.
+> 
+> 
 
----
-bod
+Applied, to the GPIO tree as the maintainer has been unresposive for two
+months and the change is trivial.
+
+[1/1] i2c: qup: use generic device property accessors
+      commit: 400913bd4edd76ef1775bfd95543846bd6f5ed71
+
+Best regards,
+-- 
+Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
