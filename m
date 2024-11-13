@@ -1,115 +1,97 @@
-Return-Path: <linux-arm-msm+bounces-37808-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37816-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B56A99C786A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 17:13:22 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 71D9D9C794F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 17:52:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 621B0B389C0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 15:15:51 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A8A25B3E171
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 15:40:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6534720606A;
-	Wed, 13 Nov 2024 15:12:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 113D320606E;
+	Wed, 13 Nov 2024 15:32:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="O1ZP/3vt"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="qanlvIH8"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC9CE205AC3;
-	Wed, 13 Nov 2024 15:11:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 658D81632CD;
+	Wed, 13 Nov 2024 15:32:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731510720; cv=none; b=MQQar4fQTpRXASz4a42OJjNBuneC22O3aP2AGnJQ4p8LsAvzLBoGbGVdvxWVTGhrGEuYMbaRVV9XwAg0xcb9i7RVyvTsH7dkP46SWNI7Pjw330QJdv0Sq2wgXdGe/LP5fCUyLmyQAErXD86u9qUIlcd1DR0v3913+bFsexkli6E=
+	t=1731511976; cv=none; b=TNHWeOP/LwLXgIfYjBz1SltpB7jIKHi66FKV+paeM3eslZZTNauAHxuxen3Sfnup1t5uGBuTxSi1RTsEL29C2UXldxjAXeKFCDhN/U1rXZm9aS5uTMl42XScowKJ+YzYB/fcdNOYSs9cFg3wUuwvEuETPsAnbrY3RTKN5hr1/FY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731510720; c=relaxed/simple;
-	bh=9EpBDn6+VrUhl6s9RDziNCH5FD1n12+IVb+sGxL5HO0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=jXBteY55PLJtXLZR5a2Ra/GI8gVe1MKnHVpZuHvWomjhujCksTV2FnoyZ6zyYCZ/58QPM/GOHHcfSiN7faohoswHqdEpT/Dmw5mbe91tnYzwOpAb0aDyUouixOSrk338yaRwHC8GvEu3SbdLMhbGMlW9LXxWEnBZ36kTWB9BJvM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=O1ZP/3vt; arc=none smtp.client-ip=5.75.144.95
+	s=arc-20240116; t=1731511976; c=relaxed/simple;
+	bh=HVF86oa8uPOdeY5CzEJ/p4wFpJYQxUgEkA5QxLg8r2I=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=WZYN9F6CJh+N4BFA2YKxrh7btJ2T9AuShW9jAVTDvGBE3WQi85wy+3Gilo7E222Ix7mDMiGocFmPULycNn9YhA7mNmeJPdTot8LQPZCjDBIvUqApvNnaJH9S4ZDlbje+NL+5SYgBvdsq+lB7CNpqatVobtTJq34WY98PFt1/TDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=qanlvIH8; arc=none smtp.client-ip=5.75.144.95
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
-Received: from [192.168.93.162] (254C230F.nat.pool.telekom.hu [37.76.35.15])
-	by mail.mainlining.org (Postfix) with ESMTPSA id ACBB3E44EF;
-	Wed, 13 Nov 2024 15:11:55 +0000 (UTC)
+Received: from localhost (docker-mailserver-web-1.docker-mailserver_default [172.22.0.5])
+	by mail.mainlining.org (Postfix) with ESMTPSA id 72372E44EA;
+	Wed, 13 Nov 2024 15:32:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mainlining.org;
-	s=psm; t=1731510716;
+	s=psm; t=1731511972;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=kgTkMERpFtHVYtKjLiYY15MruMqcfI9oO4bj8B7L2VI=;
-	b=O1ZP/3vtZKV4E8ttzptLoc21k1+fcGTVSsnYIENVF62oJMZ9TTezVwGm0bOMm2S1l0iqm0
-	49/3K2ZckE7LdKSvDQC6Q2DA0bU1lL/fS7wmEo6D9k7gmlJz/1ATnQEVW+TUMujxTrz9l7
-	YazzOmPn4d295Zu3Mejhlwc0gv6u5g5b+Q2O/J9yZ1v7nJRwke+Cja8NvwP0npnRtMmyfU
-	iSFQg3oUnO0sVi854CG7mPAhvBprjUQXLeBaF3Jq4+jCxOHzx6XCYOEfwad03aIGR6o/Qb
-	f1lM6w3WAih4AKv+WBiPMk8TPVrJi0GKR6+rGG7B9YoPvjzUXOjf0x/mOw/IFw==
-From: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
-Date: Wed, 13 Nov 2024 16:11:47 +0100
-Subject: [PATCH v6 06/10] dt-bindings: iommu: qcom,iommu: Add MSM8917 IOMMU
- to SMMUv1 compatibles
+	bh=lOqssupN+rXeOt25fdj2J/a1pUDEnX2cpTj+xiEHHj0=;
+	b=qanlvIH8/EIuGp+Cgf86ohGQ0rMdIERH9PTsExQxavQ6gT8Zlaj5eb5UPOKSujqTC7SZsL
+	iCgvGMSUs1cEirL5gp9IoRNCurZOYlvtURyy3fw0RDr+I1veaKTf+khlB0uq+LqAktb8gj
+	A+FVG1CC6NyVzlngiaatpjxgWLPbiHlWFksrbnIJ6pQ+OpZoHcrxAu0xIqbVG7SRfWeq1R
+	JswSoejmut7cxbV1gpAh6HlR80D8by6ThxE83kTJlD2IjmvHHlMSIr4GZfHlnUT+T17aJp
+	5R0nw1XwbBVLMBp3HSBr5RBA1ZyNrrOoresBGFTQTJ4xpvpRmQMxAgySn1d8kA==
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Date: Wed, 13 Nov 2024 16:32:52 +0100
+From: barnabas.czeman@mainlining.org
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, Robert Foss
+ <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab
+ <mchehab@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski
+ <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+ linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, Vladimir Lypak
+ <vladimir.lypak@gmail.com>
+Subject: Re: [PATCH v4 3/3] media: qcom: camss: Add MSM8953 resources
+In-Reply-To: <eda3d0ae-50eb-43b2-a234-93b209fbcdeb@linaro.org>
+References: <20241103-camss-msm8953-v4-0-48d0ec75958d@mainlining.org>
+ <20241103-camss-msm8953-v4-3-48d0ec75958d@mainlining.org>
+ <6833ebc6-9210-471a-8ca6-5f3605155f33@linaro.org>
+ <412b3252f1ca795fbcfaf5e466e94642@mainlining.org>
+ <67d014f1-9424-4b88-b031-096a5596c5c8@linaro.org>
+ <eda3d0ae-50eb-43b2-a234-93b209fbcdeb@linaro.org>
+Message-ID: <ffa2a863c8a9b99582ad6648600d372b@mainlining.org>
+X-Sender: barnabas.czeman@mainlining.org
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
 Content-Transfer-Encoding: 8bit
-Message-Id: <20241113-msm8917-v6-6-c348fb599fef@mainlining.org>
-References: <20241113-msm8917-v6-0-c348fb599fef@mainlining.org>
-In-Reply-To: <20241113-msm8917-v6-0-c348fb599fef@mainlining.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Linus Walleij <linus.walleij@linaro.org>, Amit Kucheria <amitk@kernel.org>, 
- Thara Gopinath <thara.gopinath@gmail.com>, 
- "Rafael J. Wysocki" <rafael@kernel.org>, 
- Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, 
- Lukasz Luba <lukasz.luba@arm.com>, Joerg Roedel <joro@8bytes.org>, 
- Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, 
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, 
- linux-pm@vger.kernel.org, iommu@lists.linux.dev, 
- =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1731510705; l=1003;
- i=barnabas.czeman@mainlining.org; s=20240730; h=from:subject:message-id;
- bh=9EpBDn6+VrUhl6s9RDziNCH5FD1n12+IVb+sGxL5HO0=;
- b=Bil65C+LDdeGfwzw4BLokUG4DpUA4NayQfcF9X8AsrlajXGCLci76zx4Yn/63Dk8ctMlPlzjU
- +wnRMUqwghPDx2UWOfBFlEnaPd9wsok93Yz+50W9csOBnmFvWmz9rFJ
-X-Developer-Key: i=barnabas.czeman@mainlining.org; a=ed25519;
- pk=TWUSIGgwW/Sn4xnX25nw+lszj1AT/A3bzkahn7EhOFc=
 
-Add MSM8917 compatible string with "qcom,msm-iommu-v1" as fallback
-for the MSM8917 IOMMU which is compatible with Qualcomm's secure
-fw "SMMU v1" implementation.
+On 2024-11-13 16:23, Bryan O'Donoghue wrote:
+> On 13/11/2024 13:28, Vladimir Zapolskiy wrote:
+>> So, we have to rely on the documentation here. Bryan, can you please
+>> check, if VDDA_MIPI_CSI pad on MSM8916 and/or MSM8953 is related to
+>> CSIPHY or CSID power supply? Thank you in advance.
+> 
+> No there's really no indication in the documents I have how the input 
+> gets routed internally, CSID, CSIPHY, both.. not clear.
+> 
+> I think Barnabás is right, the best source of information we have for 
+> this one is the downstream dtsi => CSID.
+I have found the regulator also in downstream msm_csid driver i hope it 
+helps a bit.
+https://git.codelinaro.org/clo/la/kernel/msm-4.9/-/blob/LA.UM.10.6.2.c26-01500-89xx.0/drivers/media/platform/msm/camera_v2/sensor/csid/msm_csid.c#L73
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
----
- Documentation/devicetree/bindings/iommu/qcom,iommu.yaml | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/Documentation/devicetree/bindings/iommu/qcom,iommu.yaml b/Documentation/devicetree/bindings/iommu/qcom,iommu.yaml
-index f8cebc9e8cd9d46b449cd297153dbebe5c84bf3f..5ae9a628261fd251c1e991a70662c6d37ef2c4e3 100644
---- a/Documentation/devicetree/bindings/iommu/qcom,iommu.yaml
-+++ b/Documentation/devicetree/bindings/iommu/qcom,iommu.yaml
-@@ -21,6 +21,7 @@ properties:
-       - items:
-           - enum:
-               - qcom,msm8916-iommu
-+              - qcom,msm8917-iommu
-               - qcom,msm8953-iommu
-           - const: qcom,msm-iommu-v1
-       - items:
-
--- 
-2.47.0
-
+> 
+> ---
+> bod
 
