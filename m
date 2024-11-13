@@ -1,69 +1,69 @@
-Return-Path: <linux-arm-msm+bounces-37780-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37781-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 76CAF9C6EF8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 13:23:00 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E6CF09C6F0D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 13:28:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3658A282267
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 12:22:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9E8311F225D7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 12:28:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E5F02022D4;
-	Wed, 13 Nov 2024 12:21:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88ECC200B82;
+	Wed, 13 Nov 2024 12:27:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IFFeFxte"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="htO+36ro"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com [209.85.219.170])
+Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E5A2201035
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 12:21:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D441FF605
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 12:27:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731500493; cv=none; b=LDvSzMjT/7/Wvq8WUCap1gYR+uGedWkcFoHQFHJvmzVGNsjLUfH51BTMz9MF0XX3U+Mqled9VzO5wb/R8l7Wb9lk+ZDx7U8gy6AHdk+oDhumvrhCETirlouztWlFupSZ7UzBQT7WyRBKlBzBu4EUBnlaze7vA+LlZmE95F0rwbg=
+	t=1731500879; cv=none; b=Vdy66rpsYv9i14gNMDp3fpceurklvZ0syim2mskfNm7LZ9j4qoZ28C9ZFqbhR640wm65U82kDAZY/7gOEzyiA0Z/P+VWdn/KSrqc1rCQWXFR6ApfqXXMJ1EUfog63JbA5lBOcoWQyuuuV4dpIGLUqzSPHva/90L2+wBuV5gTPT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731500493; c=relaxed/simple;
-	bh=Fjca1LWzFAdCd0y6iIxSu0s0Obt4f3zGnd1zEofN2SQ=;
+	s=arc-20240116; t=1731500879; c=relaxed/simple;
+	bh=f8CTOIqv4oLHKsLL/f0AGLbjfM+lAZW3RyafSe6Nqpg=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=uJ9Elav9soAPoxTGsIuEO16yI9NJ6A1SogQu4Ypd91mljlWLe5prc8ODpC+q90tXqRnQl5Ob4la/VxEyzO2lAkTClP/470Lqh+02z0naui5WdNZ9ehcmSlv+/VT/W6plqPelO/xeQUyAfDpN8Exn0qtigMoiAYH7MlqNnymcfjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IFFeFxte; arc=none smtp.client-ip=209.85.219.170
+	 To:Cc:Content-Type; b=q50+723AsUhoFGirB38x+enHZ929Z6zrhioD502NXM3ZJZxYvz7S6MwK7wmKWI6bS4TNRCkWC9gYcAFk4JQuAYBsFdW4uY87YXWvnLu+BrQfpaAINAmAt+yFCGecevmABQ2klhb1Tz7GBuNf5qC15dPjLrUhT/CncLRfkWrFTsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=htO+36ro; arc=none smtp.client-ip=209.85.128.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f170.google.com with SMTP id 3f1490d57ef6-e290222fdd0so6885351276.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 04:21:30 -0800 (PST)
+Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-6e5a5a59094so63286017b3.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 04:27:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731500489; x=1732105289; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1731500877; x=1732105677; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=JsE6HZ0BDIdFm8pHUV9wjAijdgzctcE9O8piDmD3bwk=;
-        b=IFFeFxte1uY32jKGhbDsyIdhtHi7tULp16Fe7422DFwk6FR4gOK6WbpC0mXh+jjcZB
-         Cj1nXPLNBAngJVnV5N8mXMpgREZQqI7L3Ey9haiiM7+Ey1xMIkgLyFA7W7PdaENhOEm1
-         EpODEMLFQiqW8JYty/Qti3C3a/YwlH7N9JpPjmk9KWGOOQuH0lx63OUX2oBLrKWXBEFE
-         kZYn0DyviLtnhaGLziA388+iLjpbn01hpubtmm8/c41prnHwPjFWPE3xuE6PdPVMhW1H
-         4zjaV7L7jyw81NQ05uqbhx95cQCiFjoR2HU9hE27EECHZesItmsctj1CL92OiV0wXwtA
-         K/4Q==
+        bh=KImKDqWq4s21FhX0T9TYJY9R8T8zry6WhOX4TLZUuNk=;
+        b=htO+36ro2eJGPyCSxaKqQ7zQU+EaqBNU0yYJGMr2z6JjExdfHQVGJMnHkcEZOPUK9Q
+         jDj1F1I2ThDqQIht3AWD+FkKF3sc9sM+mpWNCaQlF+bmcWbl4FZ/xnt2rQkxN/7kbIYL
+         oSp101zzKiBprGNK+DW13BmQqjADX15st5O6yxgRs031qROxSbA3CDmNkUTf9AjOc+YN
+         wMi/jA89aoSwr4AdpwGR4Gz5Q0YaGNaMawIEJeyjkNbOXHQrWxLC8Kshkjke5YAzSLU1
+         Yx3quytXe2dGKDXLm01DCVVgInJSWi7tmLN1YuvXRCWTUK+wyrJro7RV9HFH8FIJCelP
+         lrDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731500489; x=1732105289;
+        d=1e100.net; s=20230601; t=1731500877; x=1732105677;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=JsE6HZ0BDIdFm8pHUV9wjAijdgzctcE9O8piDmD3bwk=;
-        b=s6blAPF0Gqh96SsGdkYwsvjuTZL8KHc1pwdkAyZmiSu/bxWlJjwBikBEaJh4Rp3FrF
-         SEZxrYYSPU7LSAsIYVHE2ixo+yY409Edv6vxzQ0ZjSHwwsg6EcFPtR2UacWnom/c10zJ
-         ZQBghL0579ayQd5QE5RnV0y8xe+Ohy4JnnHV06q05dUMXlMpEzDKBqbbUp+Q9HDvoeyj
-         hG2FeeecZ/Py5pjx3l2AFhLmjwEYbysr2oHyyKVMdIJdI3dcqXidaPu2PwU/Sobcjw4M
-         ESgdDoflI23hIJCABzzFiJGPvemDzQ1rfovMBpXbKB7X2BTsovgEDPPrgVmo9d/Ho5MY
-         2srg==
-X-Forwarded-Encrypted: i=1; AJvYcCUsysEPJzaljb7vEipcfL9SIP5zUU8Lb3fQF7AuMURNeJSlCL4vJRnu+gsBHZVXyL6QlHXKospJG0gS4ZCB@vger.kernel.org
-X-Gm-Message-State: AOJu0YxagY1aLWLg7t1X4Xx4U28d0VtIUVgCC8U0TovIxKxdleeFLk9k
-	nOTMOaOrEceoCWQghoFfa2OEghxIseltVd6RrF7Emf4YLrw7wwTZS4XDNrvuJmnVGYLkq9Rb0Dk
-	QK2ZEV6AUUXfwERByhBmYssC563NkQz3ASAZjSA==
-X-Google-Smtp-Source: AGHT+IHlEW9Y6a6VKxz7Rj8wBbFwf85y1XuiF8DPZGiTfkNkpU73TSXFVeGlAI184r1k/vIlZa0la+oK03iLvn2Otwg=
-X-Received: by 2002:a05:6902:1101:b0:e30:d443:8490 with SMTP id
- 3f1490d57ef6-e337f8c6c9bmr18265860276.40.1731500489516; Wed, 13 Nov 2024
- 04:21:29 -0800 (PST)
+        bh=KImKDqWq4s21FhX0T9TYJY9R8T8zry6WhOX4TLZUuNk=;
+        b=R6Tcik7+fA4PmBIw7yNFufQG8bx2LahRVEzTnTWQLHcKnIse8oAB/llxNnogmHaMao
+         iOEkEG2dKZD0+O1AtgU0QHPMvREIsW4RKEGO/+NFOUszkbti2RX/Z3EY3gwLr2ve+XTn
+         pId8BT/BVK0fqMGM4yycbw9wA/Mag+MJDcXO5Ge6CJeqR1rGLFx43yTTlUCWX4XUTCvX
+         Posn9khz5NKt/HVoLr+EGjlDBcT0Id33uJNOuvg3QHt7SxAIEKY6KhnijDf/4QDgY+ih
+         Dx9hGMgIKwVAQ9WP2TKs/GN54aUg3bC96vDSuxi24OlkwuKSF0vXqiuv40k03tx4douy
+         bC/w==
+X-Forwarded-Encrypted: i=1; AJvYcCX5OFWlwBn98Y+LyQ0yT0NSOxwOF4p3bZ+Hep+pjvRRLnijnnxJrAj3wVkYBAq2SNq4hlBRqwJV11cUCmaE@vger.kernel.org
+X-Gm-Message-State: AOJu0YyM2C/6nYT4OcxNBtkoB6HWGhKCWhsjlZmNB4pId7qrVQLdxwH6
+	XN8uu0NV6c6OXMjAoASf4jbsfpagJ0aljZyFXbm8so8Jq/n57zunWgtWMqhIz8BrxoQ+iCh21BQ
+	c3KWX7doG5KuXKvN2g2+RyjP8d/3PPhB/3cD9mw==
+X-Google-Smtp-Source: AGHT+IHaAWOdAgML2ba4DzOA4z4U2wezC3VkawX20A2dPxMskv1IqJdFG+uwKU9K7bhxa9QyXticQbkM331fssKDcLk=
+X-Received: by 2002:a05:690c:30b:b0:6e3:16da:e74 with SMTP id
+ 00721157ae682-6eaddd9418emr194176117b3.16.1731500876873; Wed, 13 Nov 2024
+ 04:27:56 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -71,12 +71,13 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20241113-add-display-support-for-qcs615-platform-v2-0-2873eb6fb869@quicinc.com>
- <20241113-add-display-support-for-qcs615-platform-v2-9-2873eb6fb869@quicinc.com>
-In-Reply-To: <20241113-add-display-support-for-qcs615-platform-v2-9-2873eb6fb869@quicinc.com>
+ <20241113-add-display-support-for-qcs615-platform-v2-8-2873eb6fb869@quicinc.com>
+In-Reply-To: <20241113-add-display-support-for-qcs615-platform-v2-8-2873eb6fb869@quicinc.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 13 Nov 2024 14:21:18 +0200
-Message-ID: <CAA8EJpok20-7HXJJbcJi8YZYCU68g_DGThR_ckjBEz0e+gGBSA@mail.gmail.com>
-Subject: Re: [PATCH v2 9/9] arm64: defconfig: Enable SX150X for QCS615 ride board
+Date: Wed, 13 Nov 2024 14:27:45 +0200
+Message-ID: <CAA8EJprBxL0KuOm4f1peRCw9Y=bzXo=Vt-QEv37RzJ62zJriNw@mail.gmail.com>
+Subject: Re: [PATCH v2 8/9] arm64: dts: qcom: Add display support for QCS615
+ RIDE board
 To: Fange Zhang <quic_fangez@quicinc.com>
 Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
 	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
@@ -96,40 +97,21 @@ On Wed, 13 Nov 2024 at 13:53, Fange Zhang <quic_fangez@quicinc.com> wrote:
 >
 > From: Li Liu <quic_lliu6@quicinc.com>
 >
-> For the QCS615 ride board, enable the SX150X to activate the ANX7625
-> allowing the DSI to output to the mDP through the external bridge.
-> The ANX7625 relies on the SX150X chip to perform reset and HPD.
+> Add display MDSS and DSI configuration for QCS615.
+> QCS615 has a DP port, and DP support will be added in a later patch.
 >
 > Signed-off-by: Li Liu <quic_lliu6@quicinc.com>
 > Signed-off-by: Fange Zhang <quic_fangez@quicinc.com>
 > ---
->  arch/arm64/configs/defconfig | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-> index c0b8482ac6ad7498487718ba01d11b1c95e7543d..599a339a19435efbee7a5ef80c093b0e8c65f7ff 100644
-> --- a/arch/arm64/configs/defconfig
-> +++ b/arch/arm64/configs/defconfig
-> @@ -631,6 +631,7 @@ CONFIG_PINCTRL_SM8350=y
->  CONFIG_PINCTRL_SM8450=y
->  CONFIG_PINCTRL_SM8550=y
->  CONFIG_PINCTRL_SM8650=y
-> +CONFIG_PINCTRL_SX150X=y
+>  arch/arm64/boot/dts/qcom/qcs615-ride.dts | 109 +++++++++++++++++++++++++++++++
+>  1 file changed, 109 insertions(+)
 
-Your commit message doesn't describe why it needs to be disabled as a
-built-in. You are trying to enable it for all defconfig users.
-Also the placement of the symbol is not correct. You've added it to
-the section with msm pinctrl drivers, while the chip has nothing to do
-with msm.
 
->  CONFIG_PINCTRL_X1E80100=y
->  CONFIG_PINCTRL_QCOM_SPMI_PMIC=y
->  CONFIG_PINCTRL_LPASS_LPI=m
->
-> --
-> 2.34.1
->
-
+This patch has even more feedback that was ignored at v1. Please go to
+the v1 discussion, respond to _all_ the items, so that we can actually
+see what got ignored and why. Usually I don't require this (we can all
+make a mistake and miss an item or two), but with this patchset the
+number of the comments that were ignored is extremely high.
 
 -- 
 With best wishes
