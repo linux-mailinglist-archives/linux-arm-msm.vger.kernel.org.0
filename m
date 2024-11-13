@@ -1,169 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-37713-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37714-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B60779C67D2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 04:30:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A16FE9C67D3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 04:30:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6BF95B2A100
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 03:23:29 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4D75CB2B90D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 03:24:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 289C7166F1B;
-	Wed, 13 Nov 2024 03:23:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B70F6169AC5;
+	Wed, 13 Nov 2024 03:24:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="TCWKlwmx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UhY5xhK9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82B682231C;
-	Wed, 13 Nov 2024 03:23:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9209B166310
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 03:24:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731468204; cv=none; b=IqvGZlPwvPh6RES9GKJc08+f0Ct8xqnjRYCiywb5tgQxpYU21FciKNTWszSaxsPR5S93cQtKFARFML3C4c0zsb6TZCSvgDOwRJS3zNstVa5d81/jHYY9XzvNXrPy3NErr/DjBZCXT5A+tez4p8W+3RGphjgzu4GPUWeoLACrZpA=
+	t=1731468267; cv=none; b=XNyS6rs/EwGSZ8UjTIyt6avAYKdzKVmGgOIZX3b8jukI4Dx+KI65oDXuSL2rSq6+VU+4GOdKVDB8G4/sljTvnQ6xwS257Mlvl/RFzpZLrQDxAScMHXveLHgRfcl04ZfRAHi5MS2ubxSF8e0Hl1xNp43bMbnfuQPcD9o0xz9iMyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731468204; c=relaxed/simple;
-	bh=1tneCB0lrtWRviJiovN1a0CfYo4kk8aE3R6ZF9tg/Ww=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=Wmkrk/584Y+Cc1MmsdxEtXgbmXZAnEchlXEHRBlWzIpr8MvNy30OgV8JWEFkJl+hk0ugnh9uNYqzTKpK7g2qpkylOTiUie31Bawaep+1DoUBXnJt5kWtnvvbeOd31MafZMu8F3JBCugtYRlLs5tQKDsBMYC6qAD1mR3mFJnsmyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=TCWKlwmx; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ACMSPYP016376;
-	Wed, 13 Nov 2024 03:23:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	1tneCB0lrtWRviJiovN1a0CfYo4kk8aE3R6ZF9tg/Ww=; b=TCWKlwmxVY1W0vCj
-	USkYbUNm3ny/PYVhJAm68Ex+1tr+LKiYbz4+xpYH4d+jkGrs80lEQv/UIWNJM/P3
-	OwUL+C03sHeP5/E3MNKlqg2bIhcmZnGZzc/VNGxKqmQgR0Ye8uwMEAZwUi4AKfXv
-	7+7cs8jlkcicAYdbxIU7iaNMfhLA9b7kRbMLLQmJoL93wCOWWbzsKBXwOVCSEn9P
-	9R9j+zPnCm7ZZ/QEblZjZe8v1XO9d2Ot/WhqN2UkLi2kxwSM5bEvGX7mGu8xa69d
-	izyCAwIde4h7HmPYEsap8d2C1uSxzlTvcBfsKS8f3rPZatQYj457tyVNyoqb0FZp
-	CBicdQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42v1vfu3gk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 Nov 2024 03:23:17 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AD3NGKU015622
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 Nov 2024 03:23:16 GMT
-Received: from nalasex01c.na.qualcomm.com (10.47.97.35) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 12 Nov 2024 19:23:16 -0800
-Received: from nalasex01c.na.qualcomm.com ([fe80::dac3:ec8:4ce:6a85]) by
- nalasex01c.na.qualcomm.com ([fe80::dac3:ec8:4ce:6a85%11]) with mapi id
- 15.02.1544.009; Tue, 12 Nov 2024 19:23:16 -0800
-From: "Renjiang Han (QUIC)" <quic_renjiang@quicinc.com>
-To: "Rob Herring (Arm)" <robh@kernel.org>
-CC: Mauro Carvalho Chehab <mchehab@kernel.org>,
-        "bryan.odonoghue@linaro.org"
-	<bryan.odonoghue@linaro.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "Vikash
- Garodia (QUIC)" <quic_vgarodia@quicinc.com>,
-        "linux-media@vger.kernel.org"
-	<linux-media@vger.kernel.org>,
-        Stanimir Varbanov
-	<stanimir.k.varbanov@gmail.com>,
-        "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Subject: RE: [PATCH v2 1/4] dt-bindings: qcom,qcs615-venus: document QCS615
- venus
-Thread-Topic: [PATCH v2 1/4] dt-bindings: qcom,qcs615-venus: document QCS615
- venus
-Thread-Index: AQHbNPjc6u9OdCowaE+nFUoyTjgZx7K0KVQAgABgmhA=
-Date: Wed, 13 Nov 2024 03:23:15 +0000
-Message-ID: <1abcb44b418d42b6b5e86fc4b75aad14@quicinc.com>
-References: <20241112-add-venus-for-qcs615-v2-0-e67947f957af@quicinc.com>
- <20241112-add-venus-for-qcs615-v2-1-e67947f957af@quicinc.com>
- <173141803295.771794.12897067124135705292.robh@kernel.org>
-In-Reply-To: <173141803295.771794.12897067124135705292.robh@kernel.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-Mentions: robh@kernel.org
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	s=arc-20240116; t=1731468267; c=relaxed/simple;
+	bh=ZYSRn4jhHEScLQY/RV9Zp1TTf0al4w/RdxqA8X4W1h4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=D/46uaYNDXwo6K1p7EjdN0n48/thPC1P7Cz78gNd4R55Y52+VU4NkHeIFwSwQB3Z3O3phy3TIeOpNnFVGD4y3jhgerL+hPVq8kN7UBtyg3EETsdsxpaTHSV5DS71bsBHT1sijl8T7zGns1+q3hVV8Dt+vflkzZ1IYxNZRS3d/2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UhY5xhK9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1092FC4CECF;
+	Wed, 13 Nov 2024 03:24:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1731468267;
+	bh=ZYSRn4jhHEScLQY/RV9Zp1TTf0al4w/RdxqA8X4W1h4=;
+	h=From:To:Cc:Subject:Date:From;
+	b=UhY5xhK9SMnm68gF5pphZ74bThArxDM9WxtmB3hHSYWaoLtR7ZvDmyenHh/37OznC
+	 qE0w7bEtm6JMdk4q7K3abST8Zax8cpyM+X+znZipQkA5wDiu0GT9aQtvzrpAQruR0+
+	 zWF4yafDpe/cYEnupQsJ7LXn4VPij0fKi3XiLQOXDxUxkGDTV8P65W4mny0zlgBiyL
+	 t3l44w8g02txnAt4xYUWpqAPWQCxMfYwEy8rr1HS9edhliY+ifzrAA8F08rDuuAod7
+	 QKlHAOaSw3b+nYWcPOIgY4BHIjbgR0OXGErwa8fbFUIhRDyjOIwBH8ai93FsTCRzFW
+	 kSPkKy0XxhN1w==
+From: Bjorn Andersson <andersson@kernel.org>
+To: arm@kernel.org,
+	soc@kernel.org
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	Arnd Bergmann <arnd@arndb.de>,
+	Olof Johansson <olof@lixom.net>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+	Jingyi Wang <quic_jingyw@quicinc.com>,
+	Manikanta Mylavarapu <quic_mmanikan@quicinc.com>,
+	Song Xue <quic_songxue@quicinc.com>,
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Melody Olvera <quic_molvera@quicinc.com>,
+	Sibi Sankar <quic_sibis@quicinc.com>
+Subject: [GIT PULL] A few more Qualcomm driver updates for v6.13
+Date: Tue, 12 Nov 2024 21:24:22 -0600
+Message-ID: <20241113032425.356306-1-andersson@kernel.org>
+X-Mailer: git-send-email 2.47.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: LONNOqK6XVFI42cdYLy0dpZL0pgkqIxw
-X-Proofpoint-ORIG-GUID: LONNOqK6XVFI42cdYLy0dpZL0pgkqIxw
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
- suspectscore=0 spamscore=0 clxscore=1015 phishscore=0 bulkscore=0
- mlxlogscore=999 malwarescore=0 priorityscore=1501 lowpriorityscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411130028
+Content-Transfer-Encoding: 8bit
 
-SGkgQFJvYiBIZXJyaW5nIChBcm0pDQoNClRoYW5rcyBmb3IgeW91ciByZXBseS4NCiJkdC1iaW5k
-aW5ncy9jbG9jay9xY29tLHFjczYxNS12aWRlb2NjLmgiIGlzIGFkZGVkIGluIGh0dHBzOi8vbG9y
-ZS5rZXJuZWwub3JnL2FsbC8yMDI0MTEwOC1xY3M2MTUtbW0tY2xvY2tjb250cm9sbGVyLXYzLTAt
-N2QzYjJkMjM1ZmRmQHF1aWNpbmMuY29tLy4gSSB0aGluayB0aGlzIHBhdGNoIG1heSBub3QgYmUg
-aW5jbHVkZWQuDQoNCg0KQmVzdCBSZWdhcmRzLA0KUmVuamlhbmcNCg0KLS0tLS1PcmlnaW5hbCBN
-ZXNzYWdlLS0tLS0NCkZyb206IFJvYiBIZXJyaW5nIChBcm0pIDxyb2JoQGtlcm5lbC5vcmc+IA0K
-U2VudDogVHVlc2RheSwgTm92ZW1iZXIgMTIsIDIwMjQgOToyNyBQTQ0KVG86IFJlbmppYW5nIEhh
-biAoUVVJQykgPHF1aWNfcmVuamlhbmdAcXVpY2luYy5jb20+DQpDYzogTWF1cm8gQ2FydmFsaG8g
-Q2hlaGFiIDxtY2hlaGFiQGtlcm5lbC5vcmc+OyBicnlhbi5vZG9ub2dodWVAbGluYXJvLm9yZzsg
-S3J6eXN6dG9mIEtvemxvd3NraSA8a3J6aytkdEBrZXJuZWwub3JnPjsgZGV2aWNldHJlZUB2Z2Vy
-Lmtlcm5lbC5vcmc7IEJqb3JuIEFuZGVyc3NvbiA8YW5kZXJzc29uQGtlcm5lbC5vcmc+OyBDb25v
-ciBEb29sZXkgPGNvbm9yK2R0QGtlcm5lbC5vcmc+OyBsaW51eC1hcm0tbXNtQHZnZXIua2VybmVs
-Lm9yZzsgVmlrYXNoIEdhcm9kaWEgKFFVSUMpIDxxdWljX3ZnYXJvZGlhQHF1aWNpbmMuY29tPjsg
-bGludXgtbWVkaWFAdmdlci5rZXJuZWwub3JnOyBTdGFuaW1pciBWYXJiYW5vdiA8c3RhbmltaXIu
-ay52YXJiYW5vdkBnbWFpbC5jb20+OyBsaW51eC1rZXJuZWxAdmdlci5rZXJuZWwub3JnOyBLb25y
-YWQgRHliY2lvIDxrb25yYWR5YmNpb0BrZXJuZWwub3JnPg0KU3ViamVjdDogUmU6IFtQQVRDSCB2
-MiAxLzRdIGR0LWJpbmRpbmdzOiBxY29tLHFjczYxNS12ZW51czogZG9jdW1lbnQgUUNTNjE1IHZl
-bnVzDQoNCg0KT24gVHVlLCAxMiBOb3YgMjAyNCAxNzoxNzo1NyArMDUzMCwgUmVuamlhbmcgSGFu
-IHdyb3RlOg0KPiBBZGQgc3VwcG9ydCBmb3IgUXVhbGNvbW0gdmlkZW8gYWNjZWxlcmF0aW9uIGhh
-cmR3YXJlIHVzZWQgZm9yIHZpZGVvIA0KPiBzdHJlYW0gZGVjb2RpbmcgYW5kIGVuY29kaW5nIG9u
-IFFDT00gUUNTNjE1Lg0KPiANCj4gU2lnbmVkLW9mZi1ieTogUmVuamlhbmcgSGFuIDxxdWljX3Jl
-bmppYW5nQHF1aWNpbmMuY29tPg0KPiAtLS0NCj4gIC4uLi9iaW5kaW5ncy9tZWRpYS9xY29tLHFj
-czYxNS12ZW51cy55YW1sICAgICAgICAgIHwgMTgxICsrKysrKysrKysrKysrKysrKysrKw0KPiAg
-MSBmaWxlIGNoYW5nZWQsIDE4MSBpbnNlcnRpb25zKCspDQo+IA0KDQpNeSBib3QgZm91bmQgZXJy
-b3JzIHJ1bm5pbmcgJ21ha2UgZHRfYmluZGluZ19jaGVjaycgb24geW91ciBwYXRjaDoNCg0KeWFt
-bGxpbnQgd2FybmluZ3MvZXJyb3JzOg0KDQpkdHNjaGVtYS9kdGMgd2FybmluZ3MvZXJyb3JzOg0K
-RG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL21lZGlhL3Fjb20scWNzNjE1LXZlbnVz
-LmV4YW1wbGUuZHRzOjI1OjE4OiBmYXRhbCBlcnJvcjogZHQtYmluZGluZ3MvY2xvY2svcWNvbSxx
-Y3M2MTUtdmlkZW9jYy5oOiBObyBzdWNoIGZpbGUgb3IgZGlyZWN0b3J5DQogICAyNSB8ICAgICAg
-ICAgI2luY2x1ZGUgPGR0LWJpbmRpbmdzL2Nsb2NrL3Fjb20scWNzNjE1LXZpZGVvY2MuaD4NCiAg
-ICAgIHwgICAgICAgICAgICAgICAgICBefn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+
-fn5+fn5+fg0KY29tcGlsYXRpb24gdGVybWluYXRlZC4NCm1ha2VbMl06ICoqKiBbc2NyaXB0cy9N
-YWtlZmlsZS5kdGJzOjEyOTogRG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL21lZGlh
-L3Fjb20scWNzNjE1LXZlbnVzLmV4YW1wbGUuZHRiXSBFcnJvciAxDQptYWtlWzJdOiAqKiogV2Fp
-dGluZyBmb3IgdW5maW5pc2hlZCBqb2JzLi4uLg0KbWFrZVsxXTogKioqIFsvYnVpbGRzL3JvYmhl
-cnJpbmcvZHQtcmV2aWV3LWNpL2xpbnV4L01ha2VmaWxlOjE0NDI6IGR0X2JpbmRpbmdfY2hlY2td
-IEVycm9yIDINCm1ha2U6ICoqKiBbTWFrZWZpbGU6MjI0OiBfX3N1Yi1tYWtlXSBFcnJvciAyDQoN
-CmRvYyByZWZlcmVuY2UgZXJyb3JzIChtYWtlIHJlZmNoZWNrZG9jcyk6DQoNClNlZSBodHRwczov
-L3BhdGNod29yay5vemxhYnMub3JnL3Byb2plY3QvZGV2aWNldHJlZS1iaW5kaW5ncy9wYXRjaC8y
-MDI0MTExMi1hZGQtdmVudXMtZm9yLXFjczYxNS12Mi0xLWU2Nzk0N2Y5NTdhZkBxdWljaW5jLmNv
-bQ0KDQpUaGUgYmFzZSBmb3IgdGhlIHNlcmllcyBpcyBnZW5lcmFsbHkgdGhlIGxhdGVzdCByYzEu
-IEEgZGlmZmVyZW50IGRlcGVuZGVuY3kgc2hvdWxkIGJlIG5vdGVkIGluICp0aGlzKiBwYXRjaC4N
-Cg0KSWYgeW91IGFscmVhZHkgcmFuICdtYWtlIGR0X2JpbmRpbmdfY2hlY2snIGFuZCBkaWRuJ3Qg
-c2VlIHRoZSBhYm92ZSBlcnJvcihzKSwgdGhlbiBtYWtlIHN1cmUgJ3lhbWxsaW50JyBpcyBpbnN0
-YWxsZWQgYW5kIGR0LXNjaGVtYSBpcyB1cCB0bw0KZGF0ZToNCg0KcGlwMyBpbnN0YWxsIGR0c2No
-ZW1hIC0tdXBncmFkZQ0KDQpQbGVhc2UgY2hlY2sgYW5kIHJlLXN1Ym1pdCBhZnRlciBydW5uaW5n
-IHRoZSBhYm92ZSBjb21tYW5kIHlvdXJzZWxmLiBOb3RlIHRoYXQgRFRfU0NIRU1BX0ZJTEVTIGNh
-biBiZSBzZXQgdG8geW91ciBzY2hlbWEgZmlsZSB0byBzcGVlZCB1cCBjaGVja2luZyB5b3VyIHNj
-aGVtYS4gSG93ZXZlciwgaXQgbXVzdCBiZSB1bnNldCB0byB0ZXN0IGFsbCBleGFtcGxlcyB3aXRo
-IHlvdXIgc2NoZW1hLg0KDQo=
+
+The following changes since commit d088afa7de3cbe689954dad49e7058d2c4b8944c:
+
+  soc: qcom: socinfo: add QCS9100 ID (2024-10-29 15:09:02 -0500)
+
+are available in the Git repository at:
+
+  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-drivers-for-6.13-2
+
+for you to fetch changes up to 54a8cd0f92068a3718092f68c8ae99e2078f44b6:
+
+  soc: qcom: ice: Remove the device_link field in qcom_ice (2024-11-11 22:03:30 -0600)
+
+----------------------------------------------------------------
+A few more Qualcomm driver updates for v6.13
+
+Make the Adreno driver invoke the SMMU aperture setup firmware function,
+which is required to allow the GPU to manage per-process page tables in
+some firmware versions - as an example Rb3Gen2 has no GPU without this.
+
+Add X1E Devkit to the list of devices that has functional EFI variable
+access through the uefisecapp.
+
+Flip the "manual slice configuration quirk" in the Qualcomm LLCC driver,
+as this only applies to a single platform, and introduce support for
+QCS8300, QCS615, SAR2130P, and SAR1130P.
+
+Lastly, add IPQ5424 and IPQ5404 to the Qualcomm socinfo driver.
+
+----------------------------------------------------------------
+Bjorn Andersson (2):
+      firmware: qcom: scm: Introduce CP_SMMU_APERTURE_ID
+      drm/msm/adreno: Setup SMMU aparture for per-process page table
+
+Dmitry Baryshkov (3):
+      dt-bindings: cache: qcom,llcc: document SAR2130P and SAR1130P
+      soc: qcom: llcc: use deciman integers for bit shift values
+      soc: qcom: llcc: add support for SAR2130P and SAR1130P
+
+Jingyi Wang (2):
+      dt-bindings: cache: qcom,llcc: Document the QCS8300 LLCC
+      soc: qcom: llcc: Add LLCC configuration for the QCS8300 platform
+
+Joe Hattori (1):
+      soc: qcom: ice: Remove the device_link field in qcom_ice
+
+Konrad Dybcio (1):
+      soc: qcom: llcc: Flip the manual slice configuration condition
+
+Manikanta Mylavarapu (2):
+      dt-bindings: arm: qcom,ids: add SoC ID for IPQ5424/IPQ5404
+      soc: qcom: socinfo: add IPQ5424/IPQ5404 SoC ID
+
+Melody Olvera (1):
+      dt-bindings: firmware: qcom,scm: Document sm8750 SCM
+
+Sibi Sankar (1):
+      firmware: qcom: uefisecapp: Allow X1E Devkit devices
+
+Song Xue (2):
+      dt-bindings: cache: qcom,llcc: Document the QCS615 LLCC
+      soc: qcom: llcc: Add configuration data for QCS615
+
+ .../devicetree/bindings/cache/qcom,llcc.yaml       |  32 ++
+ .../devicetree/bindings/firmware/qcom,scm.yaml     |   2 +
+ drivers/firmware/qcom/qcom_scm.c                   |  27 +
+ drivers/firmware/qcom/qcom_scm.h                   |   1 +
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c            |  11 +
+ drivers/soc/qcom/ice.c                             |   6 +-
+ drivers/soc/qcom/llcc-qcom.c                       | 615 +++++++++++++++++++--
+ drivers/soc/qcom/socinfo.c                         |   2 +
+ include/dt-bindings/arm/qcom,ids.h                 |   2 +
+ include/linux/firmware/qcom/qcom_scm.h             |   2 +
+ include/linux/soc/qcom/llcc-qcom.h                 |  12 +
+ 11 files changed, 676 insertions(+), 36 deletions(-)
 
