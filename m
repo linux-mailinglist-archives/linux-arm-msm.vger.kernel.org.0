@@ -1,416 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-37746-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37747-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CFB2E9C6A3B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 09:02:01 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8B7259C6A40
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 09:03:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 692201F23B11
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 08:02:01 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A7B34B236A8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 08:03:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E5CB189917;
-	Wed, 13 Nov 2024 08:01:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E3BD4189B97;
+	Wed, 13 Nov 2024 08:03:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="vTARfy+e"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="5mQfxZnW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FFBE1F949;
-	Wed, 13 Nov 2024 08:01:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18E751F949
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 08:03:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731484914; cv=none; b=eRElVfGaOcY0ZZMi2NnFer/vEh972lSSN7pbIP9vTilQ9zu8EL3FUEIO32kTgRCbRmBcGZKbNGO8p2U+QFCHfWAPOuPDDRy3h4Y905efh+3oaRqqrRGj+JeV9Xc2RsaR8n3+V9Ady5h+s4JVvXuTdH61s+Ffl4RfWKQy2a5HGnw=
+	t=1731484992; cv=none; b=WOOpgGT4OyeZdWTEr9r3wPF7vt31YAHebLP1csaXDSdlbkenzkt1tW2l0gGelUbuEbtbJi8EWr3pxh4TeyK04CQyGS13TW78fTZ3cwOEpwHuAUn/oQXo3M3OzkE1hToYGeNfkUVsgnahE30ReobSjdEV3wBgevBCdXgBOXAaPdw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731484914; c=relaxed/simple;
-	bh=r75imx/STlUrWzI/9HsnXN/8/Lxs+xr0766NjZpIzNQ=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=CXuOjymrH2rZ/gwy6V6vgiQDo8NbsVX47qsOpIEPUXF1u4sfNiQX2sX7kdhHTkheLxjovbEBZmJr1EiON8EoJUdzXETqHISjPWahkSR1rbYtp2tFK0RIzKu7FWX0Z12lxZ2vBc9Cwv3nfNdHaOuIAns9fJfzN0AwWy5zr4sU/TA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=vTARfy+e; arc=none smtp.client-ip=5.75.144.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
-Received: from localhost (docker-mailserver-web-1.docker-mailserver_default [172.22.0.5])
-	by mail.mainlining.org (Postfix) with ESMTPSA id 78723E44EE;
-	Wed, 13 Nov 2024 08:01:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mainlining.org;
-	s=psm; t=1731484909;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=6UsIgajYwHT95th3P96TDZIKlx10RghvChQ+oCiy4Oo=;
-	b=vTARfy+elMUZFtn3kPuTHuer5uRvkSLZN6//ZPvFkQn0hqIO8RqKssdXg33tyI++SibeFS
-	inb5nfLbhjjgXFRf3eZoXUBigI3DjojqOm7z+US0xgDUbuAAmDTdhskUo023BUVu6KdsM2
-	m/WiZ5NUyxtkqhidCeVZKiOU7brJoIA/GQhjekMmycIGxqFcDqyfGBuKqZLwWMcvRWUKWT
-	Mdbjt3YEwrkvvIuG1mk865iac4f53AXy0U7sqVctp2b325y3RiscFMuiHtl2g67XPDcoBy
-	KZrfSz/znC8IMuI/I632RXuqkqepZTM3VeGlsScpu7IKICVjZh1yjo9QTXe4wA==
+	s=arc-20240116; t=1731484992; c=relaxed/simple;
+	bh=JtfJ/M8Fde3sq0t/X0kZEogyBD+h5DUxk1EyzuQfIiQ=;
+	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
+	 References:In-Reply-To; b=B7Fb7HCh85htDXksbZGVDTS7FGmyFPP0CUNGy1QRIYNmeTeGvGz6h/pKEa0At2qYjlorZmbw7hTLbkY4pGmV1Jc7/4DLZZXPONiJmC69IkKoTeCz82C+vfUab1PEerWF+GrZBRfnsyk8xqSS11jbqpmvJoMqOH3tS9Py4WN4L9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=5mQfxZnW; arc=none smtp.client-ip=209.85.221.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-37d462c91a9so4164188f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 00:03:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1731484988; x=1732089788; darn=vger.kernel.org;
+        h=in-reply-to:references:from:subject:cc:to:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jKyYktRQuJ/QeBC58+VEnoyS7t9UdeFDO97IPToRn1c=;
+        b=5mQfxZnWHR/zupZge//HJjN9lGSuo9Zau6+Dm1sAiKsUlpnk5fyvD79V1fUJ3mk85M
+         qFv02UpglU0aAjHWLp8tJQE54wpqxT+ny3q8TMl7MV5VUDQCIMs4AsnqBtieuADmlONN
+         7IP7ihPjPxvpJshQwck/36tvUiYp8oyMkXqdTm9FaHendhoDu2yLXxmeYKPwrbEK/rHX
+         E4UxKOyVzQZKO9jbxzfXsjR9CsnZ0O8GZ5ADXKJOqtEV9PGnCpwQuittgOdgytQ7jIgt
+         QAjwFkMGeRv6meR1ymtRBagZeVYfT8Jtd9RlJeaVVL+/6Qwvr2dMw1AQputrV2hrViv/
+         L4WQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731484988; x=1732089788;
+        h=in-reply-to:references:from:subject:cc:to:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=jKyYktRQuJ/QeBC58+VEnoyS7t9UdeFDO97IPToRn1c=;
+        b=dmqnbl6vdSxxxpec9zwSgqTQgmgLQGA2Q/IDSARrmA7Zb1Kmi3EU9Ya9FPHQ7n9TAR
+         2r/zJdoYP2QIrOtjUmasjHXfIol9MHOn+eOLGV6JHKuEPlgJeBwefuDncWD+uKwxXKqI
+         5W4FW9BoydhIEOvgDi8g9utU1Ku2O4c0S0ltGdhB8LE22eQGZFysuZwMlmICcrq3YmZ4
+         KjU2KEJ1H4d+zVO3wu1IKFbLRbMBPaQkynHZQhFd5hUgZkci9oeaznANVHfqRMRSKuxi
+         YkqNiNk4Pdn0qDfaWVG1h36XR5Q+ItblJTAB/r9UoPhGO5qxWd7R2g114oTHJKEaP0GG
+         tQhA==
+X-Forwarded-Encrypted: i=1; AJvYcCWY4LthxlDW+SXsIUPDgRoC5ti///2CNo3quSp0CHJQ/ZGwssfVGDXyQ5GeZ1FKNRk7c8GmqwmzuiNqA7lI@vger.kernel.org
+X-Gm-Message-State: AOJu0YwrtDD+nXQ63KB4kVpLglLXYtK4HOSYIAr/ARZFOXyHrT5gWDJd
+	JuX5xAdofesjFQuCscuUs905ILJEoX6Ii+JKibXQx5ZgIL7SwSc9TpWym6hv31Y=
+X-Google-Smtp-Source: AGHT+IFOEcn5QjxpPu724zso7ULSYt3uZMMHchhIsaHCQRGB1Ui88bJ4YmB3X+sf4mSWdm4RywdtVA==
+X-Received: by 2002:a5d:6daa:0:b0:37d:377d:c7b0 with SMTP id ffacd0b85a97d-38208110ab8mr4231577f8f.18.1731484988382;
+        Wed, 13 Nov 2024 00:03:08 -0800 (PST)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381eda03e8asm17571508f8f.90.2024.11.13.00.03.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 Nov 2024 00:03:08 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Date: Wed, 13 Nov 2024 09:01:49 +0100
-From: barnabas.czeman@mainlining.org
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, Bryan
- O'Donoghue <bryan.odonoghue@linaro.org>, Mauro Carvalho Chehab
- <mchehab@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski
- <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
- linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, Vladimir Lypak
- <vladimir.lypak@gmail.com>
-Subject: Re: [PATCH v4 3/3] media: qcom: camss: Add MSM8953 resources
-In-Reply-To: <6833ebc6-9210-471a-8ca6-5f3605155f33@linaro.org>
-References: <20241103-camss-msm8953-v4-0-48d0ec75958d@mainlining.org>
- <20241103-camss-msm8953-v4-3-48d0ec75958d@mainlining.org>
- <6833ebc6-9210-471a-8ca6-5f3605155f33@linaro.org>
-Message-ID: <412b3252f1ca795fbcfaf5e466e94642@mainlining.org>
-X-Sender: barnabas.czeman@mainlining.org
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 13 Nov 2024 09:03:07 +0100
+Message-Id: <D5KW7A8BZG6K.2L7FEV6SWRZ2D@fairphone.com>
+To: "Vedang Nagar" <quic_vnagar@quicinc.com>, "Dmitry Baryshkov"
+ <dmitry.baryshkov@linaro.org>
+Cc: <cros-qcom-dts-watchers@chromium.org>, "Bjorn Andersson"
+ <andersson@kernel.org>, "Konrad Dybcio" <konrad.dybcio@linaro.org>, "Rob
+ Herring" <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
+ "Conor Dooley" <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+ <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>, "Vikash
+ Garodia (QUIC)" <quic_vgarodia@quicinc.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7280: enable venus node
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+X-Mailer: aerc 0.18.2-0-ge037c095a049
+References: <20241004-venus_sc7280-v1-1-4d7d8fd7e95b@quicinc.com>
+ <kezh3lmysij56g2tjwwuas5r26ro5i777yxxitsdcjeg7zp67v@oknrdbkzison>
+ <78e6ff6b-efe1-496c-a1fb-c9a0a4aba2d2@quicinc.com>
+ <CAA8EJpqqZL7xybcbJMsbTQB+ht5-A+ocNs+Sq30j=v1zM3JL9g@mail.gmail.com>
+ <fbba794a-ba04-4790-b5e9-b4df3cba35b2@quicinc.com>
+ <D5KAUZHYJHFS.1NXF5SVWYL03G@fairphone.com>
+ <39206687-6fb3-434f-b2ba-a028cf6f8ed3@quicinc.com>
+In-Reply-To: <39206687-6fb3-434f-b2ba-a028cf6f8ed3@quicinc.com>
 
-On 2024-11-13 05:58, Vladimir Zapolskiy wrote:
-> On 11/3/24 11:45, Barnabás Czémán wrote:
->> From: Vladimir Lypak <vladimir.lypak@gmail.com>
->> 
->> This commit describes the hardware layout for the MSM8953
->> for the following hardware blocks:
->> 
->> - 2 x VFE, 3 RDI per VFE
->> - 3 x CSID
->> - 3 x CSI PHY
->> 
->> Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
->> Acked-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
->> ---
->>   drivers/media/platform/qcom/camss/camss-csiphy.c |   1 +
->>   drivers/media/platform/qcom/camss/camss-ispif.c  |   5 +
->>   drivers/media/platform/qcom/camss/camss-vfe.c    |   1 +
->>   drivers/media/platform/qcom/camss/camss.c        | 170 
->> +++++++++++++++++++++++
->>   drivers/media/platform/qcom/camss/camss.h        |   1 +
->>   5 files changed, 178 insertions(+)
->> 
->> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.c 
->> b/drivers/media/platform/qcom/camss/camss-csiphy.c
->> index 
->> 68a3ea1ba2a5299cf28289dfdb958cfdff3c91e0..5af2b382a843c2b8857339ba28930fe1682c9412 
->> 100644
->> --- a/drivers/media/platform/qcom/camss/camss-csiphy.c
->> +++ b/drivers/media/platform/qcom/camss/camss-csiphy.c
->> @@ -596,6 +596,7 @@ int msm_csiphy_subdev_init(struct camss *camss,
->>   		return PTR_ERR(csiphy->base);
->>     	if (camss->res->version == CAMSS_8x16 ||
->> +	    camss->res->version == CAMSS_8x53 ||
->>   	    camss->res->version == CAMSS_8x96) {
->>   		csiphy->base_clk_mux =
->>   			devm_platform_ioremap_resource_byname(pdev, res->reg[1]);
->> diff --git a/drivers/media/platform/qcom/camss/camss-ispif.c 
->> b/drivers/media/platform/qcom/camss/camss-ispif.c
->> index 
->> a12dcc7ff438c55167bc2981fd399dbf178181df..2dc585c6123dd248a5bacd9c7a88cb5375644311 
->> 100644
->> --- a/drivers/media/platform/qcom/camss/camss-ispif.c
->> +++ b/drivers/media/platform/qcom/camss/camss-ispif.c
->> @@ -830,6 +830,7 @@ static int ispif_set_stream(struct v4l2_subdev 
->> *sd, int enable)
->>   		ispif_select_cid(ispif, intf, cid, vfe, 1);
->>   		ispif_config_irq(ispif, intf, vfe, 1);
->>   		if (camss->res->version == CAMSS_8x96 ||
->> +		    camss->res->version == CAMSS_8x53 ||
->>   		    camss->res->version == CAMSS_660)
->>   			ispif_config_pack(ispif,
->>   					  line->fmt[MSM_ISPIF_PAD_SINK].code,
->> @@ -848,6 +849,7 @@ static int ispif_set_stream(struct v4l2_subdev 
->> *sd, int enable)
->>     		mutex_lock(&ispif->config_lock);
->>   		if (camss->res->version == CAMSS_8x96 ||
->> +		    camss->res->version == CAMSS_8x53 ||
->>   		    camss->res->version == CAMSS_660)
->>   			ispif_config_pack(ispif,
->>   					  line->fmt[MSM_ISPIF_PAD_SINK].code,
->> @@ -1111,6 +1113,7 @@ int msm_ispif_subdev_init(struct camss *camss,
->>   	if (camss->res->version == CAMSS_8x16)
->>   		ispif->line_num = 2;
->>   	else if (camss->res->version == CAMSS_8x96 ||
->> +		 camss->res->version == CAMSS_8x53 ||
->>   		 camss->res->version == CAMSS_660)
->>   		ispif->line_num = 4;
->>   	else
->> @@ -1130,6 +1133,7 @@ int msm_ispif_subdev_init(struct camss *camss,
->>   			ispif->line[i].nformats =
->>   					ARRAY_SIZE(ispif_formats_8x16);
->>   		} else if (camss->res->version == CAMSS_8x96 ||
->> +			   camss->res->version == CAMSS_8x53 ||
->>   			   camss->res->version == CAMSS_660) {
->>   			ispif->line[i].formats = ispif_formats_8x96;
->>   			ispif->line[i].nformats =
->> @@ -1162,6 +1166,7 @@ int msm_ispif_subdev_init(struct camss *camss,
->>   		ret = devm_request_irq(dev, ispif->irq, ispif_isr_8x16,
->>   			       IRQF_TRIGGER_RISING, ispif->irq_name, ispif);
->>   	else if (camss->res->version == CAMSS_8x96 ||
->> +		 camss->res->version == CAMSS_8x53 ||
->>   		 camss->res->version == CAMSS_660)
->>   		ret = devm_request_irq(dev, ispif->irq, ispif_isr_8x96,
->>   			       IRQF_TRIGGER_RISING, ispif->irq_name, ispif);
->> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c 
->> b/drivers/media/platform/qcom/camss/camss-vfe.c
->> index 
->> 83c5a36d071fcc32c4b8a89e4e429dc1820df139..80a62ba11295042802cbaec617fb87c492ea6a55 
->> 100644
->> --- a/drivers/media/platform/qcom/camss/camss-vfe.c
->> +++ b/drivers/media/platform/qcom/camss/camss-vfe.c
->> @@ -285,6 +285,7 @@ static u32 vfe_src_pad_code(struct vfe_line *line, 
->> u32 sink_code,
->>     	switch (vfe->camss->res->version) {
->>   	case CAMSS_8x16:
->> +	case CAMSS_8x53:
->>   		switch (sink_code) {
->>   		case MEDIA_BUS_FMT_YUYV8_1X16:
->>   		{
->> diff --git a/drivers/media/platform/qcom/camss/camss.c 
->> b/drivers/media/platform/qcom/camss/camss.c
->> index 
->> fabe034081ed0a7c0e0fcd8bc76c4eb396cb0067..9fb31f4c18adee886cd0bcf84438a8f27635e07f 
->> 100644
->> --- a/drivers/media/platform/qcom/camss/camss.c
->> +++ b/drivers/media/platform/qcom/camss/camss.c
->> @@ -152,6 +152,160 @@ static const struct camss_subdev_resources 
->> vfe_res_8x16[] = {
->>   	}
->>   };
->>   +static const struct camss_subdev_resources csid_res_8x53[] = {
->> +	/* CSID0 */
->> +	{
->> +		.regulators = { "vdda" },
-> 
-> I see that you do reuse csiphy_res_8x16 for this platform support, in
-> this case let me ask you to double check/test that the "vdda" regulator
-> is actually a CSIPHY regulator, and if so, please move the registration
-> of the regulators to csiphy_res_8x16 as a preceding change.
-It is placed in CSID at downstream and this is the documentation of
-the downstream property:
-- qcom,mipi-csi-vdd-supply : should contain regulator to be used for
-     this csid core
-so it should be a csid regulator as i understand.
-It is also placed at CSIDs in msm8953-camera.dtsi
+Hi Vedang,
 
-> 
-> In case if my ask is unclear, see commit 0567d0f1cc62 as a reference.
-> 
->> +		.clock = { "top_ahb", "ispif_ahb", "csi0_ahb", "ahb",
->> +			   "csi0", "csi0_phy", "csi0_pix", "csi0_rdi" },
->> +		.clock_rate = { { 0 },
->> +				{ 0 },
->> +				{ 0 },
->> +				{ 0 },
->> +				{ 100000000, 200000000, 310000000,
->> +				  400000000, 465000000 },
->> +				{ 0 },
->> +				{ 0 },
->> +				{ 0 } },
->> +		.reg = { "csid0" },
->> +		.interrupt = { "csid0" },
->> +		.csid = {
->> +			.hw_ops = &csid_ops_4_7,
->> +			.parent_dev_ops = &vfe_parent_dev_ops,
->> +			.formats = &csid_formats_4_7
->> +		}
->> +	},
->> +
->> +	/* CSID1 */
->> +	{
->> +		.regulators = { "vdda" },
->> +		.clock = { "top_ahb", "ispif_ahb", "csi1_ahb", "ahb",
->> +			   "csi1", "csi1_phy", "csi1_pix", "csi1_rdi" },
->> +		.clock_rate = { { 0 },
->> +				{ 0 },
->> +				{ 0 },
->> +				{ 0 },
->> +				{ 100000000, 200000000, 310000000,
->> +				  400000000, 465000000 },
->> +				{ 0 },
->> +				{ 0 },
->> +				{ 0 } },
->> +		.reg = { "csid1" },
->> +		.interrupt = { "csid1" },
->> +		.csid = {
->> +			.hw_ops = &csid_ops_4_7,
->> +			.parent_dev_ops = &vfe_parent_dev_ops,
->> +			.formats = &csid_formats_4_7
->> +		}
->> +	},
->> +
->> +	/* CSID2 */
->> +	{
->> +		.regulators = { "vdda" },
->> +		.clock = { "top_ahb", "ispif_ahb", "csi2_ahb", "ahb",
->> +			   "csi2", "csi2_phy", "csi2_pix", "csi2_rdi" },
->> +		.clock_rate = { { 0 },
->> +				{ 0 },
->> +				{ 0 },
->> +				{ 0 },
->> +				{ 100000000, 200000000, 310000000,
->> +				  400000000, 465000000 },
->> +				{ 0 },
->> +				{ 0 },
->> +				{ 0 } },
->> +		.reg = { "csid2" },
->> +		.interrupt = { "csid2" },
->> +		.csid = {
->> +			.hw_ops = &csid_ops_4_7,
->> +			.parent_dev_ops = &vfe_parent_dev_ops,
->> +			.formats = &csid_formats_4_7
->> +		}
->> +	},
->> +};
->> +
->> +static const struct camss_subdev_resources ispif_res_8x53 = {
->> +	/* ISPIF */
->> +	.clock = { "top_ahb", "ahb", "ispif_ahb",
->> +		   "csi0", "csi0_pix", "csi0_rdi",
->> +		   "csi1", "csi1_pix", "csi1_rdi",
->> +		   "csi2", "csi2_pix", "csi2_rdi" },
->> +	.clock_for_reset = { "vfe0", "csi_vfe0", "vfe1", "csi_vfe1" },
->> +	.reg = { "ispif", "csi_clk_mux" },
->> +	.interrupt = { "ispif" },
->> +};
->> +
->> +static const struct camss_subdev_resources vfe_res_8x53[] = {
->> +	/* VFE0 */
->> +	{
->> +		.regulators = {},
->> +		.clock = { "top_ahb", "ahb", "ispif_ahb",
->> +			   "vfe0", "csi_vfe0", "vfe0_ahb", "vfe0_axi" },
->> +		.clock_rate = { { 0 },
->> +				{ 0 },
->> +				{ 0 },
->> +				{ 50000000, 100000000, 133330000,
->> +				  160000000, 200000000, 266670000,
->> +				  310000000, 400000000, 465000000 },
->> +				{ 0 },
->> +				{ 0 },
->> +				{ 0 } },
->> +		.reg = { "vfe0" },
->> +		.interrupt = { "vfe0" },
->> +		.vfe = {
->> +			.line_num = 3,
->> +			.has_pd = true,
->> +			.pd_name = "vfe0",
->> +			.hw_ops = &vfe_ops_4_1,
->> +			.formats_rdi = &vfe_formats_rdi_8x16,
->> +			.formats_pix = &vfe_formats_pix_8x16
->> +		}
->> +	},
->> +
->> +	/* VFE1 */
->> +	{
->> +		.regulators = {},
->> +		.clock = { "top_ahb", "ahb", "ispif_ahb",
->> +			   "vfe1", "csi_vfe1", "vfe1_ahb", "vfe1_axi" },
->> +		.clock_rate = { { 0 },
->> +				{ 0 },
->> +				{ 0 },
->> +				{ 50000000, 100000000, 133330000,
->> +				  160000000, 200000000, 266670000,
->> +				  310000000, 400000000, 465000000 },
->> +				{ 0 },
->> +				{ 0 },
->> +				{ 0 } },
->> +		.reg = { "vfe1" },
->> +		.interrupt = { "vfe1" },
->> +		.vfe = {
->> +			.line_num = 3,
->> +			.has_pd = true,
->> +			.pd_name = "vfe1",
->> +			.hw_ops = &vfe_ops_4_1,
->> +			.formats_rdi = &vfe_formats_rdi_8x16,
->> +			.formats_pix = &vfe_formats_pix_8x16
->> +		}
->> +	}
->> +};
->> +
->> +static const struct resources_icc icc_res_8x53[] = {
->> +	{
->> +		.name = "cam_ahb",
->> +		.icc_bw_tbl.avg = 38400,
->> +		.icc_bw_tbl.peak = 76800,
->> +	},
->> +	{
->> +		.name = "cam_vfe0_mem",
->> +		.icc_bw_tbl.avg = 939524,
->> +		.icc_bw_tbl.peak = 1342177,
->> +	},
->> +	{
->> +		.name = "cam_vfe1_mem",
->> +		.icc_bw_tbl.avg = 939524,
->> +		.icc_bw_tbl.peak = 1342177,
->> +	},
->> +};
->> +
->>   static const struct camss_subdev_resources csiphy_res_8x96[] = {
->>   	/* CSIPHY0 */
->>   	{
->> @@ -2248,6 +2402,7 @@ static int camss_probe(struct platform_device 
->> *pdev)
->>   		return -ENOMEM;
->>     	if (camss->res->version == CAMSS_8x16 ||
->> +	    camss->res->version == CAMSS_8x53 ||
->>   	    camss->res->version == CAMSS_8x96) {
->>   		camss->ispif = devm_kcalloc(dev, 1, sizeof(*camss->ispif), 
->> GFP_KERNEL);
->>   		if (!camss->ispif)
->> @@ -2389,6 +2544,20 @@ static const struct camss_resources 
->> msm8916_resources = {
->>   	.link_entities = camss_link_entities
->>   };
->>   +static const struct camss_resources msm8953_resources = {
->> +	.version = CAMSS_8x53,
->> +	.icc_res = icc_res_8x53,
->> +	.icc_path_num = ARRAY_SIZE(icc_res_8x53),
->> +	.csiphy_res = csiphy_res_8x96,
->> +	.csid_res = csid_res_8x53,
->> +	.ispif_res = &ispif_res_8x53,
->> +	.vfe_res = vfe_res_8x53,
->> +	.csiphy_num = ARRAY_SIZE(csiphy_res_8x96),
->> +	.csid_num = ARRAY_SIZE(csid_res_8x53),
->> +	.vfe_num = ARRAY_SIZE(vfe_res_8x53),
->> +	.link_entities = camss_link_entities
->> +};
->> +
->>   static const struct camss_resources msm8996_resources = {
->>   	.version = CAMSS_8x96,
->>   	.csiphy_res = csiphy_res_8x96,
->> @@ -2455,6 +2624,7 @@ static const struct camss_resources 
->> sc8280xp_resources = {
->>     static const struct of_device_id camss_dt_match[] = {
->>   	{ .compatible = "qcom,msm8916-camss", .data = &msm8916_resources },
->> +	{ .compatible = "qcom,msm8953-camss", .data = &msm8953_resources },
->>   	{ .compatible = "qcom,msm8996-camss", .data = &msm8996_resources },
->>   	{ .compatible = "qcom,sdm660-camss", .data = &sdm660_resources },
->>   	{ .compatible = "qcom,sdm845-camss", .data = &sdm845_resources },
->> diff --git a/drivers/media/platform/qcom/camss/camss.h 
->> b/drivers/media/platform/qcom/camss/camss.h
->> index 
->> 0ce84fcbbd25c7825212beb74073ffd4c70858a8..9da7f48f5dd762d27521d449051892e956693970 
->> 100644
->> --- a/drivers/media/platform/qcom/camss/camss.h
->> +++ b/drivers/media/platform/qcom/camss/camss.h
->> @@ -78,6 +78,7 @@ enum pm_domain {
->>     enum camss_version {
->>   	CAMSS_8x16,
->> +	CAMSS_8x53,
->>   	CAMSS_8x96,
->>   	CAMSS_660,
->>   	CAMSS_845,
->> 
-> 
-> --
-> Best wishes,
-> Vladimir
+On Wed Nov 13, 2024 at 8:01 AM CET, Vedang Nagar wrote:
+> Hi Luca,
+> On 11/12/2024 8:49 PM, Luca Weiss wrote:
+> > Hi Vedang,
+> >=20
+> > On Tue Nov 12, 2024 at 3:39 PM CET, Vedang Nagar wrote:
+> >>
+> >>
+> >> On 11/12/2024 6:43 PM, Dmitry Baryshkov wrote:
+> >>> On Tue, 12 Nov 2024 at 08:17, Vedang Nagar <quic_vnagar@quicinc.com> =
+wrote:
+> >>>>
+> >>>>
+> >>>>
+> >>>> On 10/7/2024 1:20 AM, Dmitry Baryshkov wrote:
+> >>>>> On Fri, Oct 04, 2024 at 04:22:31PM GMT, Vedang Nagar wrote:
+> >>>>>> Enable the venus node on Qualcomm sc7280. It was made disabled
+> >>>>>> earlier to avoid bootup crash, which is fixed now with [1].
+> >>>>>
+> >>>>> NAK, there might be other reasons to keep venus disabled, like the =
+lack
+> >>>>> of the vendor-signed firmware for the particular device.
+> >>>> Can you pls elaborate more on this? Any device with sc7280 SOC can u=
+se
+> >>>> venus.mbn which is already present in linux-firmware git.
+> >>>
+> >>> Can it though if the device is fused to use vendor keys and to check
+> >>> the trust chain?
+> >> Yes, infact the existing ones are signed and works with trustzone auth=
+entication.
+> >=20
+> > No, the venus firmware from linux-firmware does not work on a device
+> > with secure boot on, like the (QCM6490) Fairphone 5 smartphone.
+> Are you saying even after applying this [1] you are seeing the same ?
+>
+> [1]
+> https://patchwork.kernel.org/project/linux-media/patch/20231201-sc7280-ve=
+nus-pas-v3-2-bc132dc5fc30@fairphone.com/
+
+That patch has been in mainline since v6.9 and my tree is newer, so yes.
+
+See e.g. Qualcomm doc KBA-161204232438 for some details.
+
+Regards
+Luca
+
+> >=20
+> > $ rm /lib/firmware/qcom/qcm6490/fairphone5/venus.mbn
+> > $ cp /lib/firmware/qcom/vpu-2.0/venus.mbn.zst /lib/firmware/qcom/qcm649=
+0/fairphone5/venus.mbn.zst
+> >=20
+> > leads to
+> >=20
+> > [   10.848191] qcom-venus aa00000.video-codec: Adding to iommu group 13
+> > [   10.863062] qcom-venus aa00000.video-codec: non legacy binding
+> > [   10.909555] qcom-venus aa00000.video-codec: error -22 initializing f=
+irmware qcom/qcm6490/fairphone5/venus.mbn
+> > [   10.910099] qcom-venus aa00000.video-codec: fail to load video firmw=
+are
+> > [   10.910849] qcom-venus aa00000.video-codec: probe with driver qcom-v=
+enus failed with error -22
+> >=20
+> > It's the same with e.g. adsp firmware, modem firmware, etc.
+> >=20
+> > With secure boot off, yes, the hardware will load any firmware
+> > regardless of the signature.
+> >=20
+> > Regards
+> > Luca
+> >=20
+> >>>
+> >>>>
+> >>>> Regards,
+> >>>> Vedang Nagar
+> >>>>>
+> >>>>>>
+> >>>>>> [1]
+> >>>>>> https://lore.kernel.org/linux-media/20231201-sc7280-venus-pas-v3-2=
+-bc132dc5fc30@fairphone.com/
+> >>>>>>
+> >>>>>> Signed-off-by: Vedang Nagar <quic_vnagar@quicinc.com>
+> >>>>>> ---
+> >>>>>>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 2 --
+> >>>>>>  1 file changed, 2 deletions(-)
+> >>>>>
+> >>>
+> >>>
+> >>>
+> >=20
+
 
