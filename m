@@ -1,155 +1,262 @@
-Return-Path: <linux-arm-msm+bounces-37764-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37765-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 692669C6E2C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 12:51:11 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 268FE9C6E52
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 12:55:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E86BB2828B5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 11:51:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A74E11F209B1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 11:55:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 460FA20013C;
-	Wed, 13 Nov 2024 11:51:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA021202F64;
+	Wed, 13 Nov 2024 11:53:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FUyaYKGv"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YVETseHF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71C812003C2
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 11:51:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAEC0202647;
+	Wed, 13 Nov 2024 11:53:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731498666; cv=none; b=iTpHW/zCyOZmR/Ct3jLlKoKkaqdBQ0JMeT4qISuf6HdBcUI1FWtfhpqI00dHFa5YTH6Q1iDgIcfhaQp/D/eASSfYazrvP+xg8sCJQjik56v4BSnXBlweH2ivzkfCXX4g2/W4+Z1iHMbL8eMNVMpoOCR5IonsWjDapV82sSeW1tU=
+	t=1731498791; cv=none; b=SrmH6ERMV74ncHnA3/rMDrS4PJLZulvDR+BHbFfsCoy25CbVreOXwFqQ/Lmw84AvJoLCPGlIzNjGfxv/fDLg/Ex429kVm5uRohJhwAIG6IZIJ99cpBWH9aW3B2veWnw/+DCT2FmWN96oy9TtxzAMH3IDoph5hE4zYCXwEdmAoU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731498666; c=relaxed/simple;
-	bh=oER26TiWJSFpXsVdQ6bGEIMRHGFwFM8nuUhPGvrwGHY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=m4+j8w8Z2KhEATk3Pn+e6wbh2gAojJqpsvn3UoGEso8aGT25aciBmnVh/fT7bhowBIPx/PK8ZziXP7k7h6YzLQcHH0mssHLfv43cOB3v21Cb3ugW1rrmmjpqVor/g7Nbk3y+1IieGbHrZ69w38HpJtSqtAP89y+VosChGv6KV2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FUyaYKGv; arc=none smtp.client-ip=209.85.219.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f178.google.com with SMTP id 3f1490d57ef6-e28fea0f5b8so6169996276.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 03:51:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731498663; x=1732103463; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=BsrLaWejC/ftmloCesoB/FYlHPJx14/EbyH4gPODitg=;
-        b=FUyaYKGvHHd0DYQ8UkBNyejlS3qCToLWy7RRmRSTgoBhJ+VFdgEgVKib/vVFp14xow
-         rppoWaMq9eRXtE5kW7C8MzaKBjuQlQUwWIzv5vmMs0zodxuyJPfGGUyfAkXI5PodW1VC
-         2Brc4V3eOLuZ2lR7e3T8sXS/oWxvuCV7ONxl+wc/xUBBVcW0aYVLOA00sOvzqdbCJSKv
-         Ix0cHhnHXTd83ogMfTXL+dpwniM2Pk3Xo93kOf9YEvidubDBMSmtIEbEsuio1vhwApHC
-         AN8Ek4TK5m0qSR8sHE6vEQUkZVvAHkLYO6DzaUSTe1l4lGkmPXnaZnZVEZHiEbe4JgFK
-         Q9XQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731498663; x=1732103463;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=BsrLaWejC/ftmloCesoB/FYlHPJx14/EbyH4gPODitg=;
-        b=gNGyfiNq22Gr2aW88rxJaMynBIeYyM88orMAWofWn8St0Z5SBEMNTVhZjhcF50+uEC
-         PjYwjbdgEPSGhXICSpjuEL2CeSHtdQ1m8EHEytC66buIwKRB3MmFowuu1xhiPOPBinHk
-         eFDlKLjbl/9yDjEmXSIi0LYAFds6IsHcZYERJwvOlmGB4ccCiqKh0IFvuJi8QH3nS6/T
-         9KOWXLGoN8CRsGl8lmD77ZPq2ryBWdjJIUY6TSOMApq9HrUWUox+B6pB4s5+F5mRVHxC
-         n1BsCFst2OCUwqL1sHoQ8UMFnwVKhHpQB8GiZ9Wb+gYy8mSX/tqj+6vltDsJa61NP/vg
-         ZWaA==
-X-Forwarded-Encrypted: i=1; AJvYcCWJorM/lItuX0b/9eTeqRRj1gjE78Q/xIvlwfJEupR7pLUAfNYsujvpCkvaam7aCzcSDOOmV3RXYDGop/9Y@vger.kernel.org
-X-Gm-Message-State: AOJu0YyX0fdr4fpJ4TqkNdaKyv3laNted/yEQK6Za+L0gYdn4u+qok6+
-	laDiIMMqQB2zZ1P4QPgREi9C+5+YxybMrXJbC4jkk3KlhQgVwuMAfsnZecYnKBNy48oVe5JQHcW
-	Ppy+Vup9FRHFGhOY2SJ0R0eUh9BOXYVIxp5Z2sQ==
-X-Google-Smtp-Source: AGHT+IHjDzgRAhLOx+8Hzt3WxFR+RaBIzyvPTo33dC4tsm88armcJo0nXWTHRRUPSz2V/gRlsfOfnics0nwKx6TjnQA=
-X-Received: by 2002:a05:6902:c11:b0:e29:1def:1032 with SMTP id
- 3f1490d57ef6-e337f8c7023mr17826557276.41.1731498663441; Wed, 13 Nov 2024
- 03:51:03 -0800 (PST)
+	s=arc-20240116; t=1731498791; c=relaxed/simple;
+	bh=46/Ey+YEHt4Pvbsre6EY4dkMGTbt3Z0H9At3392O4dk=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=CtxqXpXmfXrmvUDB764/axYQytH3uA/WeOproUYGwSWf+YHzOwjBt0MHZ5W20eWgYv++9U2we0p2dcrTqn6Xq8BQp5t+3Z6xr/VUf9l9IQ94Q3wos8QBsIa4drrOH23fEAl+mw2dNeiamKO89apVbqHuwkICSmH1lsXdKMIAVXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YVETseHF; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AD7usm5030530;
+	Wed, 13 Nov 2024 11:52:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=0BfW0mwwK/RB1gSytGAIpA
+	He7yoP9uFrYSI4uI6UUZ4=; b=YVETseHFCG8cug3yuQ0XMx2vgGGMoiQ9BSrcpU
+	LWSkFkCpEOdGmhoPP2T1j9T9p+Q1xFTUSAUxNy5cc8x/x/YyoYUGOYuWk0+vqU+n
+	yfZoei37uOdHTblWQ1rWs+AGxlhDeCVPo4iloZThaYVaKJitiSj0bZSBc+k27X2F
+	SrlQzdnEdAVv6Y4r0orZnibUBijEp44OhlZard+lgvuzkc0GXYS+LIVMwlE552xf
+	tZ4fOYrg5vC/CDaSTZWBOxZroZjLobCI+bD+ca0qV05M8GBDCn5XhmMNTKQZCXs8
+	yKV8ml2UOCL0wz8pnmdfSvVIoh8dHmHH/1t40rAV/4BchM8A==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42vr5y0k41-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 13 Nov 2024 11:52:47 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4ADBqkNv023365
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 13 Nov 2024 11:52:46 GMT
+Received: from robotics-lnxbld017.ap.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 13 Nov 2024 03:52:39 -0800
+From: Fange Zhang <quic_fangez@quicinc.com>
+Subject: [PATCH v2 0/9] Add display support for QCS615 platform
+Date: Wed, 13 Nov 2024 19:51:42 +0800
+Message-ID: <20241113-add-display-support-for-qcs615-platform-v2-0-2873eb6fb869@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241113050042.181028-1-quic_ekangupt@quicinc.com>
- <5oqzxppquoeppt6xnjfm2rdwm23hbui5k3caz5v5ffqzizepob@dz5ikvzgbd4x> <c1f0e56b-b489-4370-99e3-0973641410b8@quicinc.com>
-In-Reply-To: <c1f0e56b-b489-4370-99e3-0973641410b8@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 13 Nov 2024 13:50:52 +0200
-Message-ID: <CAA8EJprDTz7b4rNtR4e9A-=j9_z-aJGBg3+g5is8Bmy=cgTM1Q@mail.gmail.com>
-Subject: Re: [PATCH v1] arm64: dts: qcom: sc7280: Make ADSP a secure fastrpc domain
-To: Ekansh Gupta <quic_ekangupt@quicinc.com>
-Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org, 
-	krzk+dt@kernel.org, conor+dt@kernel.org, cros-qcom-dts-watchers@chromium.org, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, srinivas.kandagatla@linaro.org, 
-	quic_bkumar@quicinc.com, quic_chennak@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAOKSNGcC/5WS3YrbMBCFXyX4ugoa/dkOpfQ9lsXImlEjaluJ5
+ Jhul7x7ZSdL6c9FcnkG5jujo/NeZUqBcnXYvVeJlpBDnIoQn3aVO9rpG7GARVeCCwUAgllEhiG
+ fBvvG8uV0imlmPiZ2dtmAZmU+FzkyUytC4xoCzatCOyXy4cfm9PJ604nOl2I434bVSDnbzfCw+
+ 7z5cSE+uG6I7jvDFBZKbFFMMIk1GIsc26b+WkAuTG7v4vhldXuKpZ5lAVdrDl2Ywhzs0N1z6Mr
+ Du7vHohlnLSI1WPcN7/lDWM2lAF7vW61FOWtd6c7nn8d4eWS9ABolJeyFNsooyeBGWNBi+cvw0
+ AnNR0rjeAvKxWlOcRjWrGR5VI2yFyik9uifJuLMpoiU2QIF1QtjWmcdN0L9g+ptJlbEGObDrhV
+ tT9b3VFvnSApTlyUATSCJS+8Naa5VY6u1WseQ55jetk4vsHXrHpB8uL7bfeTqFkTrlVd/3Le5L
+ OI3mcOtEHfyfwuxAhV5Cy1gj/gX8Hq9/gKb8v4YjAMAAA==
+X-Change-ID: 20241112-add-display-support-for-qcs615-platform-674ed6c8e150
+To: Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar
+	<quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard
+	<mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie
+	<airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        "Bjorn
+ Andersson" <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, "Li
+ Liu" <quic_lliu6@quicinc.com>,
+        Fange Zhang <quic_fangez@quicinc.com>,
+        "Xiangxu Yin" <quic_xiangxuy@quicinc.com>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1731498757; l=6520;
+ i=quic_fangez@quicinc.com; s=20241014; h=from:subject:message-id;
+ bh=46/Ey+YEHt4Pvbsre6EY4dkMGTbt3Z0H9At3392O4dk=;
+ b=6GdQhj6KMBQNAYuNIJNpiHQtoIuTK338b3Rw1IX8rd3mzJvdK4uAC7VccJSAl1JZWAAz5lxml
+ Z0Ysi0MYuRwDL6FkZ8LWdNt9Ra/0Cu9ZSIOHi8acoyI/0rSEUOvqFs7
+X-Developer-Key: i=quic_fangez@quicinc.com; a=ed25519;
+ pk=tJv8Cz0npA34ynt53o5GaQfBC0ySFhyb2FGj+V2Use4=
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: DuMNqlqN2PUdarahakdHA5NO9rCAFoqr
+X-Proofpoint-GUID: DuMNqlqN2PUdarahakdHA5NO9rCAFoqr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 priorityscore=1501
+ adultscore=0 clxscore=1011 suspectscore=0 lowpriorityscore=0 bulkscore=0
+ mlxlogscore=963 malwarescore=0 spamscore=0 impostorscore=0 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2411130102
 
-On Wed, 13 Nov 2024 at 08:18, Ekansh Gupta <quic_ekangupt@quicinc.com> wrote:
->
->
->
-> On 11/13/2024 11:13 AM, Dmitry Baryshkov wrote:
-> > On Wed, Nov 13, 2024 at 10:30:42AM +0530, Ekansh Gupta wrote:
-> >> FastRPC framework treats ADSP as a secure domain on sc7280 SoC
-> >> which means that only secure fastrpc device node should be
-> >> created for ADSP remoteproc. Remove the non-secure-domain
-> >> property from ADSP fastrpc node.
-> > If this prevents the non-secure devices from being created, isn't that a
-> > regression from the userspace point of view?
-> The actual intention of having secure and non-secure domains is to utilize signed(high privilege)
-> and unsigned(low privilege) DSP processes properly.
->
-> Non-secure device node is intended to be used by untrusted/generic applications which needs to
-> offload tasks to DSP as unsignedPD. Only unsigned PD is expected to be allowed if the process is
-> using non-secure node.
->
-> Secure device is intended to be used by trusted processes like daemons or any application
-> which needs to offload as signed PD to DSP.
->
-> The ideal expectation from userspace is to first try to open secure device node and fall back to
-> non-secure node if the secure node is not accessible or absent.
->
-> I understand your concerns, can you please suggest how this can be improved/corrected?
+This series aims to enable display on the QCS615 platform
 
-Thank you for the explanation, and thanks for the description of the
-expected behaviour, but the question is different.
-Currently (with the property being present in DT) the driver creates a
-non-secure fastrpc device for the ADSP.
-Can it actually be used? Note: no mentioning of a particular userspace
-implementation or the (un)expected usage.
-If it could not and an attempt to use it resulted in some kind of an
-error, then the patch is a fix and it should be decribed accordingly.
-If it could be used and now you are removing this possibility, then it
-is a regression. Again, this must be clearly documented, but generally
-this is not allowed.
+1.Add MDSS & DPU support for QCS615     
+2.Add DSI support for QCS615            
 
->
-> --ekansh
-> >> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-> >> ---
-> >>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 1 -
-> >>  1 file changed, 1 deletion(-)
-> >>
-> >> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> >> index 3d8410683402..c633926c0f33 100644
-> >> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> >> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> >> @@ -3852,7 +3852,6 @@ fastrpc {
-> >>                                      compatible = "qcom,fastrpc";
-> >>                                      qcom,glink-channels = "fastrpcglink-apps-dsp";
-> >>                                      label = "adsp";
-> >> -                                    qcom,non-secure-domain;
-> >>                                      #address-cells = <1>;
-> >>                                      #size-cells = <0>;
-> >>
-> >> --
-> >> 2.34.1
-> >>
->
+Note:
+items still being confirmed
+- missing reg_bus_bw
+- missing refgen supply
 
+This patch series depends on below patch series:
+- rpmhcc
+https://lore.kernel.org/all/20241022-qcs615-clock-driver-v4-2-3d716ad0d987@quicinc.com/
+- gcc
+https://lore.kernel.org/all/20241022-qcs615-clock-driver-v4-4-3d716ad0d987@quicinc.com/
+- base
+https://lore.kernel.org/all/20241104-add_initial_support_for_qcs615-v5-0-9dde8d7b80b0@quicinc.com/
+- Apps SMMU
+https://lore.kernel.org/all/20241105032107.9552-4-quic_qqzhou@quicinc.com/
+- I2C
+https://lore.kernel.org/all/20241111084331.2564643-1-quic_vdadhani@quicinc.com/
+- dispcc
+https://lore.kernel.org/all/20241108-qcs615-mm-clockcontroller-v3-0-7d3b2d235fdf@quicinc.com/
+- dispcc dts
+https://lore.kernel.org/lkml/20241108-qcs615-mm-dt-nodes-v1-0-b2669cac0624@quicinc.com/
 
+Signed-off-by: Li Liu <quic_lliu6@quicinc.com>
+Signed-off-by: Fange Zhang <quic_fangez@quicinc.com>
+---
+Changes in v2:
+- Added b4 check and check passed
+- Added necessary blank line
+- Added correct S-o-B
+- Added correct maintainer
+- Added correct To&Cc
+- Added QCS615 DP controller comment in commit message
+- Added comments for dsi_dp_hpd_cfg_pins and dsi_dp_cdet_cfg_pins
+- Added missing port@1 for connector
+- Changed patch order
+- Changed 0 to QCOM_ICC_TAG_ALWAYS for mdss interconnects
+- Changed 0 to GPIO_ACTIVE_HIGH for GPIO flags
+- Fix indent issue
+- Fix sorted issue
+- Moved anx_7625 to same node
+- Moved status to last
+- Renamed dsi0_hpd_cfg_pins to dsi_dp_hpd_cfg_pins
+- Renamed dsi0_cdet_cfg_pins to dsi_dp_cdet_cfg_pins
+- Renamed anx_7625_1 to dsi_anx_7625
+- Removed extra blank line
+- Removed absent block
+- Removed merge_3d value
+- Removed redundant annotation
+- Removed unsupported dsi clk in dsi0_opp_table
+- Removed dp_hpd_cfg_pins node
+- Splited patch according to requirements
+- Link to v2: https://lore.kernel.org/r/20241014-add_display_support_for_qcs615-v1-0-4efa191dbdd4@quicinc.com
+
+---
+Li Liu (9):
+      dt-bindings: display/msm: Add QCS615 DSI phy
+      dt-bindings: display/msm: dsi-controller-main: Document QCS615
+      dt-bindings: display/msm: Add QCS615 MDSS & DPU
+      drm/msm/dpu: Add QCS615 support
+      drm/msm: mdss: Add QCS615 support
+      drm/msm/dsi: Add support for QCS615
+      arm64: dts: qcom: Add display support for QCS615
+      arm64: dts: qcom: Add display support for QCS615 RIDE board
+      arm64: defconfig: Enable SX150X for QCS615 ride board
+
+ .../bindings/display/msm/dsi-controller-main.yaml  |   1 +
+ .../bindings/display/msm/dsi-phy-14nm.yaml         |   1 +
+ .../bindings/display/msm/qcom,qcs615-dpu.yaml      | 118 +++++++++
+ .../bindings/display/msm/qcom,qcs615-mdss.yaml     | 252 ++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/qcs615-ride.dts           | 109 +++++++++
+ arch/arm64/boot/dts/qcom/qcs615.dtsi               | 186 ++++++++++++++-
+ arch/arm64/configs/defconfig                       |   1 +
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_qcs615.h | 263 +++++++++++++++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |   1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   1 +
+ drivers/gpu/drm/msm/dsi/dsi_cfg.c                  |  17 ++
+ drivers/gpu/drm/msm/dsi/dsi_cfg.h                  |   1 +
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.c              |   2 +
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.h              |   1 +
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c         |  21 ++
+ drivers/gpu/drm/msm/msm_mdss.c                     |   7 +
+ 17 files changed, 982 insertions(+), 1 deletion(-)
+---
+base-commit: 929beafbe7acce3267c06115e13e03ff6e50548a
+change-id: 20241112-add-display-support-for-qcs615-platform-674ed6c8e150
+prerequisite-message-id: <20241022-qcs615-clock-driver-v4-2-3d716ad0d987@quicinc.com>
+prerequisite-patch-id: cd9fc0a399ab430e293764d0911a38109664ca91
+prerequisite-patch-id: 07f2c7378c7bbd560f26b61785b6814270647f1b
+prerequisite-patch-id: a57054b890d767b45cca87e71b4a0f6bf6914c2f
+prerequisite-patch-id: 5a8e9ea15a2c3d60b4dbdf11b4e2695742d6333c
+prerequisite-message-id: <20241022-qcs615-clock-driver-v4-4-3d716ad0d987@quicinc.com>
+prerequisite-patch-id: cd9fc0a399ab430e293764d0911a38109664ca91
+prerequisite-patch-id: 07f2c7378c7bbd560f26b61785b6814270647f1b
+prerequisite-patch-id: a57054b890d767b45cca87e71b4a0f6bf6914c2f
+prerequisite-patch-id: 5a8e9ea15a2c3d60b4dbdf11b4e2695742d6333c
+prerequisite-message-id: <20241104-add_initial_support_for_qcs615-v5-0-9dde8d7b80b0@quicinc.com>
+prerequisite-patch-id: 09782474af7eecf1013425fd34f9d2f082fb3616
+prerequisite-patch-id: 04ca722967256efddc402b7bab94136a5174b0b9
+prerequisite-patch-id: 82481c82a20345548e2cb292d3098ed51843b809
+prerequisite-patch-id: 3bd8edd83297815fcb1b81fcd891d3c14908442f
+prerequisite-patch-id: fc1cfec4ecd56e669c161c4d2c3797fc0abff0ae
+prerequisite-message-id: <20241105032107.9552-4-quic_qqzhou@quicinc.com>
+prerequisite-patch-id: aaa7214fe86fade46ae5c245e0a44625fae1bad3
+prerequisite-patch-id: 4db9f55207af45c6b64fff4f8929648a7fb44669
+prerequisite-patch-id: 89ce719a863bf5e909989877f15f82b51552e449
+prerequisite-message-id: <20241111084331.2564643-1-quic_vdadhani@quicinc.com>
+prerequisite-patch-id: 3f9489c89f3e632abfc5c3ca2e8eca2ce23093b0
+prerequisite-message-id: <20241108-qcs615-mm-clockcontroller-v3-0-7d3b2d235fdf@quicinc.com>
+prerequisite-patch-id: 748a4e51bbedae9c6ebdbd642b2fd1badf958788
+prerequisite-patch-id: 72a894a3b19fdbd431e1cec9397365bc5b27abfe
+prerequisite-patch-id: da2b7a74f1afd58833c6a9a4544a0e271720641f
+prerequisite-patch-id: 40b79fe0b9101f5db3bddad23551c1123572aee5
+prerequisite-patch-id: cb93e5798f6bfe8cc3044c4ce973e3ae5f20dc6b
+prerequisite-patch-id: 13b0dbf97ac1865d241791afb4b46a28ca499523
+prerequisite-patch-id: 807019bedabd47c04f7ac78e9461d0b5a6e9131b
+prerequisite-patch-id: 8e2e841401fefbd96d78dd4a7c47514058c83bf2
+prerequisite-patch-id: 125bb8cb367109ba22cededf6e78754579e1ed03
+prerequisite-patch-id: b3cc42570d5826a4704f7702e7b26af9a0fe57b0
+prerequisite-patch-id: df8e2fdd997cbf6c0a107f1871ed9e2caaa97582
+prerequisite-message-id: <20241108-qcs615-mm-dt-nodes-v1-0-b2669cac0624@quicinc.com>
+prerequisite-patch-id: bcb1328b70868bb9c87c0e4c48e5c9d38853bc60
+prerequisite-patch-id: 8844a4661902eb44406639a3b7344416a0c88ed9
+
+Best regards,
 -- 
-With best wishes
-Dmitry
+fangez <quic_fangez@quicinc.com>
+
 
