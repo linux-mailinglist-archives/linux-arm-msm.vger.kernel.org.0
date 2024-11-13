@@ -1,245 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-37749-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37750-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 36BF39C6A6C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 09:15:21 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C5B599C6ABB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 09:41:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BB2191F22E42
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 08:15:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 853CD28180D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 08:41:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4BEC18A92A;
-	Wed, 13 Nov 2024 08:15:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D73F18A92A;
+	Wed, 13 Nov 2024 08:41:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gYKN+R0z"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="MYamTXmc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9918189B8A
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 08:15:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E046189F33;
+	Wed, 13 Nov 2024 08:41:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731485712; cv=none; b=hHPLrcA0pj9UgHnBLYK8SaQYy4qrc7DKiTljbOlvycS/slEZJO4abwAwIA1GSy4Y5CEVd1nyjVDvcD76wUsv/fEp22Ci8xW+Fho5k2eMji/gv8xgOZPWaGz7JKRlOHB3aeZE26ipdygI6LiAPVscRwQnyva+AGNJnkoYzwdFkS4=
+	t=1731487296; cv=none; b=EF0caYKcMtgshcz8v/Ij77irA5zbMPTut4UXiJ41Zjpji9J91FSFwuYUfURGy6B1Qd6wN4RnvkO55CcqkhPdSRxU9+QYH5jTw3INaUyouUHP1t61L3BY2hOJlGtSIIsq/dinP3uOhrLvpI83ZgCWfo5YcptOADNracOn2S8RLKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731485712; c=relaxed/simple;
-	bh=8Y0UPyHRHBU3AJ5BIj2LNvoRsdFm7+hymI+IvfPQzM0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LHol58A8obELDZTEwla3ns2M+oXC8uEIVCrvJSKuj4tho3cR/G6Mr4wrEfSL1Ds3FUTvG7XNU3MpeesAjUAXPcViLTXCDRmtSRUtlkSsFZEyHNW4KxWJG8Agap4QRDmdSvi+zO6lDP0Wvd7bclevJuSLpSQ6erL1QbSdAi/rxn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gYKN+R0z; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4315eeb2601so82386305e9.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2024 00:15:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731485709; x=1732090509; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=fQbo2SNWl0pl3CFAm+W16lnOLJFykustp1lz60+nR4M=;
-        b=gYKN+R0zXaQl8gIC0e/U1UvIeObn4BCcsyHYqxsp7YBeMZJWwMp13hT2bp+B7taMQP
-         wTt+1TzIYDRLmkZtbu0kpK4EMJtiU/e9JOe2EfJO3Cjx9tXAhgjkzRceTj6auhNntPRz
-         TuxJPN/moJXHkDIn9Jg1WvXBv5xdoTxmOqt10jgUVokcFS+bHO4A/HQiAzq6tmnshpCF
-         sh16EELhrb+TRxcWpfRdGggOXymv6jpfr2/BhED2y9o9dzwKFF1+lZxmw46+s2A/mkHR
-         TV7KwdeQzUAcw8pdMAVtM8p/nrkrcxU0oaLvi4tKdPLCJoJr8Q+Laok+wSrO9WW2FEun
-         7yOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731485709; x=1732090509;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fQbo2SNWl0pl3CFAm+W16lnOLJFykustp1lz60+nR4M=;
-        b=ZSn7+R5FhS8LaAVxk1X3hkcEQdvgW68hK1in57rLGlAP9TkQs8KSCiWV3Ie78ZnleA
-         HAtXG/isy/iwz/VxKPCjB/jrJKA4EjTVJIGItciUvsU/XnrsOmnudcVxeGYy7l8ZdhMI
-         lYgMnFblHzGwZSQ59kK+yU8caZ3eUqWtxb7u3NKb/AKnr3tW1lQJggpBlGmypyemRkSH
-         eH0SbZxD/T6wgz7iWMgHlDOdRfJ4Ioc/jSGxUbtJ2hMgz0u1kprs1IMWjs2ZLJD78thZ
-         cmZkCDmNpHvoJ1OEZClM5Ik3yMWxWrmnFHrvIM9FzAzB8eU+USc03V490ZXrUvqUzwls
-         33Uw==
-X-Forwarded-Encrypted: i=1; AJvYcCXhqBLxS7FSahBOFN0FqGLDPkk6ev1TOg2VWhF9H3xbDEJJkmbzchhB2OFmoWRB5EAbiviRqc6R8zYug6vy@vger.kernel.org
-X-Gm-Message-State: AOJu0YzcKn9TiI2r0A4PFkT0cQmZ9KHL7Si1YVfT6Kdrbjup6wCC/3DB
-	SQAkPid8PI/DqeEm5EF2DeK0pcNKwtqbd/rMoUHb2CtUfDApXyZsIAfZDwYowDo=
-X-Google-Smtp-Source: AGHT+IFFYloC/8jCwGxKk66s8CV5KsxYaWdZM5UqRntsEzLJT6asKbsQu3Xzl7h4UFRchhvMK6KVFg==
-X-Received: by 2002:a05:6000:178c:b0:382:10dc:594b with SMTP id ffacd0b85a97d-38210dc5c10mr383607f8f.34.1731485708986;
-        Wed, 13 Nov 2024 00:15:08 -0800 (PST)
-Received: from linaro.org ([2a02:2454:ff21:ef80:fca:835c:70ab:eebc])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381ed9ea4f6sm17576494f8f.64.2024.11.13.00.15.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Nov 2024 00:15:08 -0800 (PST)
-Date: Wed, 13 Nov 2024 09:15:03 +0100
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: barnabas.czeman@mainlining.org
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Amit Kucheria <amitk@kernel.org>,
-	Thara Gopinath <thara.gopinath@gmail.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
-	Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
-	linux-pm@vger.kernel.org, iommu@lists.linux.dev,
-	Otto =?iso-8859-1?Q?Pfl=FCger?= <otto.pflueger@abscue.de>
-Subject: Re: [PATCH v5 08/10] arm64: dts: qcom: Add initial support for
- MSM8917
-Message-ID: <ZzRgB_U3qYtV7O0h@linaro.org>
-References: <20241112-msm8917-v5-0-3ca34d33191b@mainlining.org>
- <20241112-msm8917-v5-8-3ca34d33191b@mainlining.org>
- <ZzOQEgLLhkH-IymV@linaro.org>
- <4c34cb8eec5eab92501011e446b5362d@mainlining.org>
+	s=arc-20240116; t=1731487296; c=relaxed/simple;
+	bh=3Xy7RmvnJhjsInhzwzGEhO79cRYr2kKRCLd3jTQyV4c=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=iMAVeB3CDJjpMMSU9M8fFTDre8LEO8e+RN5sgYSNUKj8TyInTg75jvMJjU1mAkC5PEQsGRBfLX9BIr30ktaZQTM0GIU+uCZIXj3qZSXsQ6oa6+6ZWGrVUI4SKZvUywXokotZdocWOSe4tjdljsc8CIWMUqoxPx1HpmAOsuXuaP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=MYamTXmc; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ACMUEOP011057;
+	Wed, 13 Nov 2024 08:41:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	JIiSOxCsrV9+my02m4jm+bEu5NWrTHZZqCu+q0C1YYQ=; b=MYamTXmcO2HxjNEm
+	Kf3v4EXSr/w4gsxRKaOXnwcftRLAGI7ldXKy91u+BC9QEvZ+kgxxCM19/5bI67yx
+	ZVUlxb1YhKI29bTuqb/cdkHdsmT5cTI7l+aO007jn5Hbiy+cadUkMZmd0gnFvllZ
+	8LMoFa2w2V/wnCF8fTBXoZFthF9YIHwlTRy6PeWMlpJXhzY293lMwzzG6vahxDz4
+	MvX/yLF6EJ5/FiVfjijRpWOZgpZY+g3a5nkCjQuKxBY4GiMfVvU/nirhJuWYdqNp
+	q25Ito7xfsw+Y/LverX7vI8Hedg2zBesew5+ONsPxNEYoAC11lZrB2aULhrYNyGe
+	wufXSg==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42sxpqj7xt-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 13 Nov 2024 08:41:25 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AD8fOx1012940
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 13 Nov 2024 08:41:24 GMT
+Received: from [10.216.46.238] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 13 Nov
+ 2024 00:41:19 -0800
+Message-ID: <02ddd6d3-283c-6e3d-ed00-37f18925c5f5@quicinc.com>
+Date: Wed, 13 Nov 2024 14:11:16 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <4c34cb8eec5eab92501011e446b5362d@mainlining.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v3 3/6] PCI: Add new start_link() & stop_link function ops
+Content-Language: en-US
+To: Bjorn Helgaas <helgaas@kernel.org>
+CC: <andersson@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+        "Lorenzo
+ Pieralisi" <lpieralisi@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?=
+	<kw@linux.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        "Rob Herring" <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        "Conor Dooley" <conor+dt@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        <cros-qcom-dts-watchers@chromium.org>,
+        Jingoo Han <jingoohan1@gmail.com>, Bartosz Golaszewski <brgl@bgdev.pl>,
+        <quic_vbadigan@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pci@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20241112234149.GA1868239@bhelgaas>
+From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+In-Reply-To: <20241112234149.GA1868239@bhelgaas>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Z2rNPFeWvzQUYEJU5qxjA7hy-0nxWiCC
+X-Proofpoint-ORIG-GUID: Z2rNPFeWvzQUYEJU5qxjA7hy-0nxWiCC
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 bulkscore=0
+ lowpriorityscore=0 malwarescore=0 spamscore=0 mlxlogscore=654 phishscore=0
+ suspectscore=0 impostorscore=0 mlxscore=0 priorityscore=1501 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2411130076
 
-On Tue, Nov 12, 2024 at 06:38:04PM +0100, barnabas.czeman@mainlining.org wrote:
-> On 2024-11-12 18:27, Stephan Gerhold wrote:
-> > On Tue, Nov 12, 2024 at 04:49:38PM +0100, Barnabás Czémán wrote:
-> > > From: Otto Pflüger <otto.pflueger@abscue.de>
-> > > 
-> > > Add initial support for MSM8917 SoC.
-> > > 
-> > > Signed-off-by: Otto Pflüger <otto.pflueger@abscue.de>
-> > > [reword commit, rebase, fix schema errors]
-> > > Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
-> > > ---
-> > >  arch/arm64/boot/dts/qcom/msm8917.dtsi | 1974
-> > > +++++++++++++++++++++++++++++++++
-> > >  1 file changed, 1974 insertions(+)
-> > > 
-> > > diff --git a/arch/arm64/boot/dts/qcom/msm8917.dtsi
-> > > b/arch/arm64/boot/dts/qcom/msm8917.dtsi
-> > > new file mode 100644
-> > > index 0000000000000000000000000000000000000000..cf0a0eec1141e11faca0ee9705d6348ab32a0f50
-> > > --- /dev/null
-> > > +++ b/arch/arm64/boot/dts/qcom/msm8917.dtsi
-> > > @@ -0,0 +1,1974 @@
-> [...]
-> > > +			sdc1_clk_on: sdc1-clk-on-state {
-> > > +				pins = "sdc1_clk";
-> > > +				bias-disable;
-> > > +				drive-strength = <16>;
-> > > +			};
-> > > +
-> > > +			sdc1_clk_off: sdc1-clk-off-state {
-> > > +				pins = "sdc1_clk";
-> > > +				bias-disable;
-> > > +				drive-strength = <2>;
-> > > +			};
-> > > +
-> > > +			sdc1_cmd_on: sdc1-cmd-on-state {
-> > > +				pins = "sdc1_cmd";
-> > > +				bias-disable;
-> > > +				drive-strength = <10>;
-> > > +			};
-> > > +
-> > > +			sdc1_cmd_off: sdc1-cmd-off-state {
-> > > +				pins = "sdc1_cmd";
-> > > +				bias-disable;
-> > > +				drive-strength = <2>;
-> > > +			};
-> > > +
-> > > +			sdc1_data_on: sdc1-data-on-state {
-> > > +				pins = "sdc1_data";
-> > > +				bias-pull-up;
-> > > +				drive-strength = <10>;
-> > > +			};
-> > > +
-> > > +			sdc1_data_off: sdc1-data-off-state {
-> > > +				pins = "sdc1_data";
-> > > +				bias-pull-up;
-> > > +				drive-strength = <2>;
-> > > +			};
-> > > +
-> > > +			sdc1_rclk_on: sdc1-rclk-on-state {
-> > > +				pins = "sdc1_rclk";
-> > > +				bias-pull-down;
-> > > +			};
-> > > +
-> > > +			sdc1_rclk_off: sdc1-rclk-off-state {
-> > > +				pins = "sdc1_rclk";
-> > > +				bias-pull-down;
-> > > +			};
-> > > +
-> > > +			sdc2_clk_on: sdc2-clk-on-state {
-> > > +				pins = "sdc2_clk";
-> > > +				drive-strength = <16>;
-> > > +				bias-disable;
-> > > +			};
-> > > +
-> > > +			sdc2_clk_off: sdc2-clk-off-state {
-> > > +				pins = "sdc2_clk";
-> > > +				bias-disable;
-> > > +				drive-strength = <2>;
-> > > +			};
-> > > +
-> > > +			sdc2_cmd_on: sdc2-cmd-on-state {
-> > > +				pins = "sdc2_cmd";
-> > > +				bias-pull-up;
-> > > +				drive-strength = <10>;
-> > > +			};
-> > > +
-> > > +			sdc2_cmd_off: sdc2-cmd-off-state {
-> > > +				pins = "sdc2_cmd";
-> > > +				bias-pull-up;
-> > > +				drive-strength = <2>;
-> > > +			};
-> > 
-> > These are not referenced anywhere? Not here in the sdhc_X nodes, and
-> > also not in your msm8917-xiaomi-riva.dts. Would also recommend
-> > consolidating these to a single node like in msm8916.dtsi, see commit
-> > c943e4c58b2f ("arm64: dts: qcom: msm8916/39: Consolidate SDC pinctrl").
-> > 
-> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c943e4c58b2ffb0dcd497f8b12f284f5e8fc477e
-> > 
-> > > +
-> > > +			sdc2_cd_on: cd-on-state {
-> > > +				pins = "gpio67";
-> > > +				function = "gpio";
-> > > +				drive-strength = <2>;
-> > > +				bias-pull-up;
-> > > +			};
-> > > +
-> > > +			sdc2_cd_off: cd-off-state {
-> > > +				pins = "gpio67";
-> > > +				function = "gpio";
-> > > +				drive-strength = <2>;
-> > > +				bias-disable;
-> > > +			};
-> > 
-> > It does not make sense to have different on/off states for the card
-> > detect (CD) pin of the SD card. It needs to work even when the SD card
-> > is suspended so we can detect insertions/removals. Also should be placed
-> > in the board-specific DT part.
-> I have made these based on this https://git.codelinaro.org/clo/la/kernel/msm-4.9/-/blob/LA.UM.9.6.2.r1-04800-89xx.0/arch/arm64/boot/dts/qcom/msm8917-pinctrl.dtsi
 
-Yes, msm8916-pinctrl.dtsi also has this in the downstream sources, but
-as I explain in the commit linked below I don't think this is right. You
-can probably just change it to bias-disable like I did for most of the
-boards. There is usually external pull up that keeps it working even in
-the "cd-off-state".
 
-> > 
-> > See commit dfbda20dabaa ("arm64: dts: qcom: msm8916/39: Fix SD card
-> > detect pinctrl").
-> > 
-> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=dfbda20dabaa1f284abd550035db5887384c8e4c
-> > 
+On 11/13/2024 5:11 AM, Bjorn Helgaas wrote:
+> On Tue, Nov 12, 2024 at 08:31:35PM +0530, Krishna chaitanya chundru wrote:
+>> Certain devices like QPS615 which uses PCI pwrctl framework
+>> needs to configure the device before PCI link is up.
+>>
+>> If the controller driver already enables link training as part of
+>> its probe, after the device is powered on, controller and device
+>> participates in the link training and link can come up immediately
+>> and maynot have time to configure the device.
+>>
+>> So we need to stop the link training by using stop_link() and enable
+>> them back after device is configured by using start_link().
+> 
+> s/maynot/may not/
+> 
+> I think I'm missing the point here.  My assumption is this:
+> 
+>    - device starts as powered off
+>    - pwrctl turns on the power
+>    - link trains automatically
+>    - qcom driver claims device
+>    - qcom needs to configure things that need to happen before link
+>      train
+> The flow is this way
+      - device starts as powered off
+      - qcom controller driver probes
+      - qcom controller driver enables resources and starts link training
+      - As device is powered off link will not be up
+      - qcom/dwc driver starts enumeration even if the link is not up
+      - pci detects root complex device and creates pci_dev for it
+      - As part of pci_dev creation pwrctl frameworks comes into picture
+      - pwrctl turns on the power.
 
-Thanks,
-Stephan
+The pwrctl driver is coming up only after qcom driver enables link
+training. Due to this flow we are trying add these stop_link() &
+start_link() so that before powering on the device stop the link
+training so that hw will not participate in the link training.
+Then power on the device do the required configurations and again start
+the link training.
+
+- Krishna Chaitanya.
+> but that can't be quite right because you wouldn't be able to fix it
+> by changing the qcom driver because it's not in the picture until the
+> link is already trained.
+> 
+> So maybe you can add a little more context here?
+>  >> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+>> ---
+>>   include/linux/pci.h | 2 ++
+>>   1 file changed, 2 insertions(+)
+>>
+>> diff --git a/include/linux/pci.h b/include/linux/pci.h
+>> index 573b4c4c2be6..fe6a9b4b22ee 100644
+>> --- a/include/linux/pci.h
+>> +++ b/include/linux/pci.h
+>> @@ -806,6 +806,8 @@ struct pci_ops {
+>>   	void __iomem *(*map_bus)(struct pci_bus *bus, unsigned int devfn, int where);
+>>   	int (*read)(struct pci_bus *bus, unsigned int devfn, int where, int size, u32 *val);
+>>   	int (*write)(struct pci_bus *bus, unsigned int devfn, int where, int size, u32 val);
+>> +	int (*start_link)(struct pci_bus *bus);
+>> +	void (*stop_link)(struct pci_bus *bus);
+>>   };
+>>   
+>>   /*
+>>
+>> -- 
+>> 2.34.1
+>>
 
