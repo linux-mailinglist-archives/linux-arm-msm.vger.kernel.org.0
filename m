@@ -1,55 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-37807-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37809-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD73F9C75D9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 16:15:27 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id C89629C75E4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 16:16:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9330F2888ED
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 15:15:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7D1441F2175E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2024 15:16:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D208205E06;
-	Wed, 13 Nov 2024 15:11:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF555206972;
+	Wed, 13 Nov 2024 15:12:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="SF6Aqp6q"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="JkAKzULE"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44E6C204096;
-	Wed, 13 Nov 2024 15:11:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 645D9206068;
+	Wed, 13 Nov 2024 15:12:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731510719; cv=none; b=Nacn+NxPn+MyyGbXOkzwlUqffu7IFwQjOqphLc4stDVYLv6jwqPuWXPYdnzvOMB9oi9mB/CnedRzLCchf+7Syl2z/1nY4EZpYNUwctBxjLE1duG/PB14YzFwIELozyqr3h+ydjjRccrvLDI/q9xxEUgCUF3EBGukpT29CiblzNY=
+	t=1731510721; cv=none; b=CIUfPx7QykM7K3hDag97yk46SM+8quv1qeCw+c7U1y1nn012Y69wAvI/Mk29gy+NtPsMgdsdSmjOQ2ZcZPKogmAeSyAjzLR1MT9AuDmjKqn7qhIiCujYLSJ9jYJJN5nMsucLDbDJx3HExzQ+dJ6/ZYjZ+dBnZAua2wTYm5syn3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731510719; c=relaxed/simple;
-	bh=Nrz9w5zBv/QnJ7uzu+/afmMrCtwXjWWUkRPBG4nE14g=;
+	s=arc-20240116; t=1731510721; c=relaxed/simple;
+	bh=oSFXD5koz0bnImj9AwyYkdxZ8tPIPU4UsWyonhEengo=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=LEij1c4Ek8DtJGWqrKV56H5JLsu8w6Z4IsrydaVeqtqjBFrxrmhr3inkxDwrJfK26IfHpemKuc7Vb73uylmM9+z1EJ5HRpfeC/POv0Z96qvh8yaZECF5lkLC8i9MOPejD610ACP4ix3XTz7hwrvBjZSNEA7Q8LI1bsrLt2BSAJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=SF6Aqp6q; arc=none smtp.client-ip=5.75.144.95
+	 In-Reply-To:To:Cc; b=AJ8XQ1GnDmWthqZK6WN8p34giFtM5QYRV5M7hs1s0QaJYrd3dTmfMTBj5B1oz8YqbNdwOOlB2jMVgrYzn9XJtqqkl2ktsVtLAI8MhdDhkscT6SA12MxSEk6TTWYmapwzcj57fPGQgwax7e371iPfqAWcdtVaTMnHSGQREyS96Xk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=JkAKzULE; arc=none smtp.client-ip=5.75.144.95
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
 Received: from [192.168.93.162] (254C230F.nat.pool.telekom.hu [37.76.35.15])
-	by mail.mainlining.org (Postfix) with ESMTPSA id 4BADAE44EA;
-	Wed, 13 Nov 2024 15:11:54 +0000 (UTC)
+	by mail.mainlining.org (Postfix) with ESMTPSA id 07AB9E44F1;
+	Wed, 13 Nov 2024 15:11:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mainlining.org;
-	s=psm; t=1731510715;
+	s=psm; t=1731510718;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=kbrXjZM+gi6Zbc2dB5/3D6eieJAq+E0T8kg8nHD8OLk=;
-	b=SF6Aqp6qgk0lBOKXUzXYmQ3G/ygejDZpeSjNEB/BUNXJHIaUX02xoFW3kMGo/dqK/QPhWp
-	etnqeZgyFqFjUsW2/MwC8aVtacnHAiv7o2j6uYXaseJYWxeMxJmsq5qtW2M+VYO+RalqTR
-	zmyy5SCHfTkhGM/FlyRdbImsluFDCxSq0057GUfCbqPCD3Qm8d9t/zha2o+jmOeaE4S0Xq
-	8l6gLnI4nAZsGHsCTBmVWXQp76e21oerPQ421YyM6XMVgyuTAz5Vsp/oQHH91oQtnLKTLH
-	6U7kCd/voCxYFyFj7Q1LqEIUPEe50FeCV1QKr1TK9eyIdNb3zyu6XqgH34bG1g==
+	bh=J8Y4yxwqnDss/PAt3TvJTQZaFUiFNkqCyH+WUzWqZ+0=;
+	b=JkAKzULEKXe/evGoS8X1fXAuf2HNIVAR/h/UiOhn+sH4jt2DgZqYcoJcyC6c7J0+uK40bd
+	xeJzajh+ysAS6QKT9l9sgXNWf89hNicFX8crtgikdvlJSaW7UtvF//4bAspQsZ/cuimQqv
+	cKIlROOix4XixOv0N17ApGYP4W6056LYGmeTTKGH20U8iv9lwfzMptUsBjGHD2vt3FQVWQ
+	bK9FCv7Se2BXFRM5/JdPkmY3/RM/jzydeTGXxmjnMin6SVMX65F8j/aWEbKZE1QlFk4eX5
+	Zen4ok65Fj3EkVGNCclv6ESZBFa1I5eKiTZ9OzN4zPa2GxfEYQD9r2gjo5z1cg==
 From: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
-Date: Wed, 13 Nov 2024 16:11:46 +0100
-Subject: [PATCH v6 05/10] thermal/drivers/qcom/tsens-v1: Add support for
- MSM8937 tsens
+Date: Wed, 13 Nov 2024 16:11:48 +0100
+Subject: [PATCH v6 07/10] dt-bindings: nvmem: Add compatible for MS8917
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -58,7 +57,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20241113-msm8917-v6-5-c348fb599fef@mainlining.org>
+Message-Id: <20241113-msm8917-v6-7-c348fb599fef@mainlining.org>
 References: <20241113-msm8917-v6-0-c348fb599fef@mainlining.org>
 In-Reply-To: <20241113-msm8917-v6-0-c348fb599fef@mainlining.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -76,101 +75,36 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, 
  linux-pm@vger.kernel.org, iommu@lists.linux.dev, 
  =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1731510705; l=2992;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1731510705; l=923;
  i=barnabas.czeman@mainlining.org; s=20240730; h=from:subject:message-id;
- bh=Nrz9w5zBv/QnJ7uzu+/afmMrCtwXjWWUkRPBG4nE14g=;
- b=j8TvLrS5DdLezJIJwH+TW/forAQyp0sOZYMMbBSAxWD/0/YsBPyR+BxLyJqTWcu4/KcWLwOWW
- UcJz3cmpU1uBiD8zSbI0O+3Poze+uniaGgxprJfTOyKfQ1N2150R2/d
+ bh=oSFXD5koz0bnImj9AwyYkdxZ8tPIPU4UsWyonhEengo=;
+ b=i5Oje4Mmoe2/rWV7CU2x6pYHxNagSFd8X+okeVGrxtPCS/ztzS1hKi3g8ma8iPlRrSZGWi3dR
+ LorO+vdz+ZKCIXNu0RagTzevVhGqDPijLASvI6av586pFkU6qQIR/fC
 X-Developer-Key: i=barnabas.czeman@mainlining.org; a=ed25519;
  pk=TWUSIGgwW/Sn4xnX25nw+lszj1AT/A3bzkahn7EhOFc=
 
-Add support for tsens v1.4 block what can be found in
-MSM8937 and MSM8917.
+Document the QFPROM block found on MSM8917.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
 ---
- drivers/thermal/qcom/tsens-v1.c | 21 ++++++++++++++-------
- drivers/thermal/qcom/tsens.c    |  3 +++
- drivers/thermal/qcom/tsens.h    |  2 +-
- 3 files changed, 18 insertions(+), 8 deletions(-)
+ Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/thermal/qcom/tsens-v1.c b/drivers/thermal/qcom/tsens-v1.c
-index dc1c4ae2d8b01b42a0edbb7f12a5780b25d0c8ac..1a7874676f68e456749faa1f8b6064f5bd38b146 100644
---- a/drivers/thermal/qcom/tsens-v1.c
-+++ b/drivers/thermal/qcom/tsens-v1.c
-@@ -162,28 +162,35 @@ struct tsens_plat_data data_tsens_v1 = {
- 	.fields	= tsens_v1_regfields,
- };
- 
--static const struct tsens_ops ops_8956 = {
--	.init		= init_8956,
-+static const struct tsens_ops ops_common = {
-+	.init		= init_common,
- 	.calibrate	= tsens_calibrate_common,
- 	.get_temp	= get_temp_tsens_valid,
- };
- 
--struct tsens_plat_data data_8956 = {
-+struct tsens_plat_data data_8937 = {
- 	.num_sensors	= 11,
--	.ops		= &ops_8956,
-+	.ops		= &ops_common,
- 	.feat		= &tsens_v1_feat,
- 	.fields		= tsens_v1_regfields,
- };
- 
--static const struct tsens_ops ops_8976 = {
--	.init		= init_common,
-+static const struct tsens_ops ops_8956 = {
-+	.init		= init_8956,
- 	.calibrate	= tsens_calibrate_common,
- 	.get_temp	= get_temp_tsens_valid,
- };
- 
-+struct tsens_plat_data data_8956 = {
-+	.num_sensors	= 11,
-+	.ops		= &ops_8956,
-+	.feat		= &tsens_v1_feat,
-+	.fields		= tsens_v1_regfields,
-+};
-+
- struct tsens_plat_data data_8976 = {
- 	.num_sensors	= 11,
--	.ops		= &ops_8976,
-+	.ops		= &ops_common,
- 	.feat		= &tsens_v1_feat,
- 	.fields		= tsens_v1_regfields,
- };
-diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-index 0b4421bf478544dfa071c792dc812ffaedc9c635..d2db804692f01d300b555d491e8a1acc597b3819 100644
---- a/drivers/thermal/qcom/tsens.c
-+++ b/drivers/thermal/qcom/tsens.c
-@@ -1119,6 +1119,9 @@ static const struct of_device_id tsens_table[] = {
- 	}, {
- 		.compatible = "qcom,msm8916-tsens",
- 		.data = &data_8916,
-+	}, {
-+		.compatible = "qcom,msm8937-tsens",
-+		.data = &data_8937,
- 	}, {
- 		.compatible = "qcom,msm8939-tsens",
- 		.data = &data_8939,
-diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
-index cab39de045b100030de6a1209c58bb09561a3224..7b36a0318fa6a078e73ce26dfe7387e4435148b4 100644
---- a/drivers/thermal/qcom/tsens.h
-+++ b/drivers/thermal/qcom/tsens.h
-@@ -647,7 +647,7 @@ extern struct tsens_plat_data data_8960;
- extern struct tsens_plat_data data_8226, data_8909, data_8916, data_8939, data_8974, data_9607;
- 
- /* TSENS v1 targets */
--extern struct tsens_plat_data data_tsens_v1, data_8976, data_8956;
-+extern struct tsens_plat_data data_tsens_v1, data_8937, data_8976, data_8956;
- 
- /* TSENS v2 targets */
- extern struct tsens_plat_data data_8996, data_ipq8074, data_tsens_v2;
+diff --git a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+index 80845c722ae46611c722effeaaf014a0caf76e4a..4d81f98ed37a3a12f01d444dbfa77badcc09c22d 100644
+--- a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
++++ b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+@@ -26,6 +26,7 @@ properties:
+           - qcom,ipq9574-qfprom
+           - qcom,msm8226-qfprom
+           - qcom,msm8916-qfprom
++          - qcom,msm8917-qfprom
+           - qcom,msm8974-qfprom
+           - qcom,msm8976-qfprom
+           - qcom,msm8996-qfprom
 
 -- 
 2.47.0
