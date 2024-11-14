@@ -1,76 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-37885-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37886-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F65E9C85FA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 10:23:20 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id B72889C85FD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 10:23:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 93C9C1F210FE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 09:23:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7AC46285156
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 09:23:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9EAB1DF73C;
-	Thu, 14 Nov 2024 09:23:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA9541DED72;
+	Thu, 14 Nov 2024 09:23:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="diZYwHVZ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="iqR4O7gM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D92501DA109
-	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2024 09:23:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03CDF1DD529;
+	Thu, 14 Nov 2024 09:23:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731576193; cv=none; b=Ft7xI6FUqP5UjzFtXeFcT5drrnjiw8HhfF80cXEfhEsgI11CU48PolAl/kJIcPCUtdecH0PUsNPxE+Bf0FnX8WVDctqeYyCNlGHARu2K953Q/Rm+1vgXyK3jgYm6QO3K1S2AszftSNwMw7It1waCA8kTQ/5q3T8mUlYLyyQ9Ejs=
+	t=1731576217; cv=none; b=FVF9xN8GqKC1pVa8de8fYx8xl70I66kfbgG3xrGjHO9Rglo18HcdChoVfBiOZeMb+RLwGBGOsi+5bGvC+k/ZyXlYKJ3bNUyQD1KTS2NVB+H5KwgQoQ5EOkTYJs6ysIL0AwRkE695vC5r9ElO/kWQrDz6j/X0mpfvj4r539qumEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731576193; c=relaxed/simple;
-	bh=aKi0+1sKEXobfNQZc5o0QxGdgLKu8VAEg01D+//FBDs=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=b489PWD0T44qIaZsrH9RRLS6YDgg2AKtjm+s38sjoKwOoT73fA3M/nuBvu+G6+QLPWPelELUu9k2K4Zy/f4XqepyR8lKL0dTtL3Wm4GOHoaoqkhtMAsWE8h0ap2ShEt795Goa4YvpEgWFhA5/8IUzHTLzgvYy1LUgc2q6P3twew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=diZYwHVZ; arc=none smtp.client-ip=209.85.208.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2fb561f273eso3497861fa.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2024 01:23:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731576190; x=1732180990; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=pKVskJH08XCjh0dvrOvGb7Xw0ql6HSZ5m3cIUFTJUOc=;
-        b=diZYwHVZdVYebC2nx6FICekvL2roVUjZejsz6hYpzcP6lH7QNqOywN26zTKw1mpYJj
-         07Rh8HoyC8aFU8wXpsFGq5aBAtqwfE+MOERSt/1xrOLHzDZWc1u/qQQM74zgeLW/wKdi
-         c0nElZOBh9eOdnU5+yHoTBSGaih/6eoLxHPJaaPAdzmEMseb1FFU6hv8ExgU/7Urc/pz
-         /yo+aSWaCiQfV7xnrEAxKfYxvRcrA10ft3oAwO4BzmmjpSVbyUZRFYGh8EjyErXKgNlI
-         mP5e93pRdBuLPIp9cmbIWkZrTDExYkqkAZ8b97be/turwbJosf2j1Ye3SInoGYgK6LBT
-         0/HA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731576190; x=1732180990;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=pKVskJH08XCjh0dvrOvGb7Xw0ql6HSZ5m3cIUFTJUOc=;
-        b=d0qhpUNn2gX9rVqu9muuFFV7LvVJKUYFn+FMzUwlYcSwpHLfaLFtwb0dKy+Sa+jjbm
-         z1YPNkJcsBMByWTAZLAPAD3tPvUKb2wQ0GmaAQtGtTyOxphE6ts0Ap7A/eaFuEaPb0Zu
-         L4FJevq4Obyyc1y70D6st2lURXhQ5t1FXh1PmEW2m5IWRdooFeRuM2Vxu9KyUXrCft9c
-         /F8vDXCCLl1oW5vl3RjUX5u9RYQqYS6DyDM8a/caZrMLovnjeqtZLjTA+YNAW4rYcJOl
-         BjGDwUwNRZc5rn4oETy3nhMVYoXGSydseW4ckY3COzR3ci2GKpsHgZrziiuqp4rW8LZf
-         7QQg==
-X-Forwarded-Encrypted: i=1; AJvYcCW2QNr0Y+aIAFAThq9w0qNeWNM1g6tMqRTI1vtI5dBdamsgz/7S1CbkVuHVgvBnKD54FL6YoJeL2K27kyki@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyi3GHC2dYiZhucC/EVVRebgLKdXVnPkSwCVNeSEzVB/vLxb/Gb
-	PAITVd9d+xBhMs/xp5aemswmFHJPNUlyNOR6NW93wcBvZjIub8/j7xZv+/tCfy4=
-X-Google-Smtp-Source: AGHT+IGErzUCoRrzEItkg1L3C/jktxdQuqW4d/nGFV/zoyOKtwAeZgerInrjMql5bO5vzmezrLU3dw==
-X-Received: by 2002:a05:651c:e15:b0:2ff:53c7:a79f with SMTP id 38308e7fff4ca-2ff53c7a8admr13442661fa.7.1731576189979;
-        Thu, 14 Nov 2024 01:23:09 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:a62a:6bba:b737:406e? ([2a01:e0a:982:cbb0:a62a:6bba:b737:406e])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432da298c81sm16941005e9.39.2024.11.14.01.23.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Nov 2024 01:23:09 -0800 (PST)
-Message-ID: <ff0ec93b-e2d0-4022-b8ae-8e4d9d1eac9f@linaro.org>
-Date: Thu, 14 Nov 2024 10:23:08 +0100
+	s=arc-20240116; t=1731576217; c=relaxed/simple;
+	bh=AkLGNV400kAQ639QB4827WuxWndPZZGH0KgWbLVMTR8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=V3vcHl+IoJD6z+ZKj/pJtPCzaKNlV5JlpTfYoWbqM1Zsjdlza8SpRbd00g0NxfnBA3m56JoSyoSp3TLzrzghuSYJM7eAnzczgLnaCH03Qy5nGvYD1TyR4SRFjW15PMDVnaa2LyA4pntLGggT2tQe6FA5b+WNRqoT3zO4DKu1luI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=iqR4O7gM; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ADNmR83025101;
+	Thu, 14 Nov 2024 09:23:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	4n60gCjwTB4k0vFnwjJ6c9cPHtkEDcPzYJRRyrfs6DE=; b=iqR4O7gMDDdiID1Q
+	R4M0ihdBJ/Xa1LlBE5dFeA6GYvHMqcjMGCb5pJAbXXRJuC9sSh/n8UXvtcSnf+2Z
+	CoWRu5nT5oJUY/Da+fk7EeslrZE28sRdPbKAgqJc9QCUK6pveaLrov4SPuZolAmR
+	90Y+kyLkuh2vvNcA4ep1L0/kUvEte6aBer1Hu9oX5FtwlSRG6tpT6fu+/Fin88oI
+	HWUnM+DPdbmDsrPNpyj26i9iuVHLRypwnKfc2mXEM6il0n7vvaxMZQ9Xif1jMvOT
+	TnRRAxJ1Y25j5rnpalEbSNKro/QyAZ+yJ1QlLeGVLikc3csNtrot4hXXwbwrmCfn
+	uNRu5A==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42va07ey1h-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 14 Nov 2024 09:23:31 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AE9NUEr029236
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 14 Nov 2024 09:23:30 GMT
+Received: from [10.233.21.53] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 14 Nov
+ 2024 01:23:27 -0800
+Message-ID: <1b405496-bba9-4fc9-833f-6d2f662068ba@quicinc.com>
+Date: Thu, 14 Nov 2024 17:23:25 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,137 +65,59 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH RFC 1/8] opp: core: implement dev_pm_opp_get_bandwidth
-To: Viresh Kumar <viresh.kumar@linaro.org>
-Cc: Akhil P Oommen <quic_akhilpo@quicinc.com>,
- Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
- Stephen Boyd <sboyd@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
- Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Connor Abbott <cwabbott0@gmail.com>,
- linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-References: <20241113-topic-sm8x50-gpu-bw-vote-v1-0-3b8d39737a9b@linaro.org>
- <20241113-topic-sm8x50-gpu-bw-vote-v1-1-3b8d39737a9b@linaro.org>
- <20241114041044.esfazw5mv6zfyrix@vireshk-i7>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20241114041044.esfazw5mv6zfyrix@vireshk-i7>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH v3] dt-bindings: remoteproc: qcom,sa8775p-pas: Document
+ QCS8300 remoteproc
+To: Bjorn Andersson <andersson@kernel.org>,
+        Mathieu Poirier
+	<mathieu.poirier@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "Bartosz
+ Golaszewski" <bartosz.golaszewski@linaro.org>
+CC: <quic_tengfan@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Xin Liu <quic_liuxin@quicinc.com>
+References: <20240925-qcs8300_remoteproc_binding-v3-1-21b0c52b142b@quicinc.com>
+Content-Language: en-US
+From: Jingyi Wang <quic_jingyw@quicinc.com>
+In-Reply-To: <20240925-qcs8300_remoteproc_binding-v3-1-21b0c52b142b@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: mFWyoFankoEldcRS3gY8BhGW97J-uxMh
+X-Proofpoint-ORIG-GUID: mFWyoFankoEldcRS3gY8BhGW97J-uxMh
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 malwarescore=0
+ mlxlogscore=555 clxscore=1011 adultscore=0 lowpriorityscore=0 spamscore=0
+ impostorscore=0 mlxscore=0 suspectscore=0 priorityscore=1501 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2411140071
 
-Hi,
 
-On 14/11/2024 05:10, Viresh Kumar wrote:
-> On 13-11-24, 16:48, Neil Armstrong wrote:
->> Add and implement the dev_pm_opp_get_bandwidth() to retrieve
->> the OPP's bandwidth in the same was as the dev_pm_opp_get_voltage()
+Hi Maintainers,
+
+On 9/25/2024 3:21 PM, Jingyi Wang wrote:
+> Document the components used to boot the ADSP, CDSP and GPDSP on the
+> Qualcomm QCS8300 SoC. Use fallback to indicate the compatibility of the
+> remoteproc on the QCS8300 with that on the SA8775P.
 > 
->                                    way
+> Co-developed-by: Xin Liu <quic_liuxin@quicinc.com>
+> Signed-off-by: Xin Liu <quic_liuxin@quicinc.com>
+> Signed-off-by: Jingyi Wang <quic_jingyw@quicinc.com>
+> ---
+<...>
 > 
->> helper.
->>
->> Retrieving bandwidth is required in the case of the Adreno GPU
->> where the GPU Management Unit can handle the Bandwidth scaling.
->>
->> The helper can get the peak or everage bandwidth for any of
-> 
->                                   average
+> Best regards,
 
-Aww, good catch, thanks
+Gentle ping for the patch apply.
 
-> 
->> the interconnect path.
->>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->> ---
->>   drivers/opp/core.c     | 25 +++++++++++++++++++++++++
->>   include/linux/pm_opp.h |  7 +++++++
->>   2 files changed, 32 insertions(+)
->>
->> diff --git a/drivers/opp/core.c b/drivers/opp/core.c
->> index 494f8860220d97fc690ebab5ed3b7f5f04f22d73..19fb82033de26b74e9604c33b9781689df2fe80a 100644
->> --- a/drivers/opp/core.c
->> +++ b/drivers/opp/core.c
->> @@ -106,6 +106,31 @@ static bool assert_single_clk(struct opp_table *opp_table)
->>   	return !WARN_ON(opp_table->clk_count > 1);
->>   }
->>   
->> +/**
->> + * dev_pm_opp_get_bandwidth() - Gets the peak bandwidth corresponding to an opp
-> 
-> s/peak bandwidth/bandwidth/
-
-Ack
-
-> 
->> + * @opp:	opp for which voltage has to be returned for
->> + * @peak:	select peak or average bandwidth
->> + * @index:	bandwidth index
->> + *
->> + * Return: peak bandwidth in kBps, else return 0
-> 
-> s/peak bandwidth/bandwidth/
-
-Ack
-
-> 
->> + */
->> +unsigned long dev_pm_opp_get_bandwidth(struct dev_pm_opp *opp, bool peak, int index)
->> +{
->> +	if (IS_ERR_OR_NULL(opp)) {
->> +		pr_err("%s: Invalid parameters\n", __func__);
->> +		return 0;
->> +	}
->> +
->> +	if (index > opp->opp_table->path_count)
->> +		return 0;
->> +
->> +	if (!opp->bandwidth)
->> +		return 0;
->> +
->> +	return peak ? opp->bandwidth[index].peak : opp->bandwidth[index].avg;
->> +}
->> +EXPORT_SYMBOL_GPL(dev_pm_opp_get_bandwidth);
-> 
-> All other bandwidth APIs are named as _bw, maybe do same here too ?
-> 
-
-Sure, I wasn't sure about that, will switch to _bw.
-
-Neil
-
+Thanks,
+Jingyi
 
