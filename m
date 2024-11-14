@@ -1,238 +1,202 @@
-Return-Path: <linux-arm-msm+bounces-37931-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37933-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D12D39C91E2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 19:51:11 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C84F9C9558
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 23:48:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 587341F22E32
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 18:51:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E013F281664
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 22:48:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA6A6199E8D;
-	Thu, 14 Nov 2024 18:51:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E851F1AC8A6;
+	Thu, 14 Nov 2024 22:48:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="czm1CKh4"
+	dkim=pass (2048-bit key) header.d=rocketmail.com header.i=@rocketmail.com header.b="F17U+qx+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sonic302-21.consmr.mail.ir2.yahoo.com (sonic302-21.consmr.mail.ir2.yahoo.com [87.248.110.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54E0817A583;
-	Thu, 14 Nov 2024 18:51:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14B7D1CABA
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2024 22:48:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=87.248.110.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731610268; cv=none; b=OdZjoSA6nsSR8pZQJue7UdaSolOdB6AFZ36VVRDtB1iB4pR8wzfn0mhIuUwByuXTyQm3aPO05ENzRTVJnpGK0o/oxijdbyQkYAh0bEed1V1aqkr7b2HNxzY/1a4rq1AFSTDgy+8XNxrxL2e0qQh/CQ8aqe8aiEKr2Q1HT/lwko8=
+	t=1731624486; cv=none; b=rPhXW6dKEfYHZebn+O8FGs1i2hDhE0y46EUkivF2rfKIphN9V7YJ7k8Sf5rMCrEXkl/QdLR5eh+mzzGfV/LFlBLd5PG4yMW2oTeo/kD7H1nNMoRt1ZN60tJWEl75rd/a3QJay4xw0LbsgdCJnEAiAzfOg/S3l1zqpD7cRIW2uQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731610268; c=relaxed/simple;
-	bh=m6WZ3ZIscIRi9/tdsz78w+z1a1PitZtcJfiPjaxj+Lc=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
-	 In-Reply-To:Content-Type; b=tMst+gugoFcNUamREZ1Q8+ueCOnBVnMV2CLcbeLx5jasL/ce662MS/KHTiz7q9S6bXLJPLM2HXXncjRn2wdLthfrBFR+bPPUmhhIDcPrkMhYL9gZl45zhCVkGuxaSiZLY8AHy79PY/+1CucYMDNy1OzsJPy4MeVvWuEO6FCZ95Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=czm1CKh4; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AEHIAYC027332;
-	Thu, 14 Nov 2024 18:50:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	gXdZRxBU5DgfexnP74xpDidLRkwnaa6lpw5QmSlsjYg=; b=czm1CKh4mq3DJHNw
-	OW9WRQYMlS5+uWQIoJtOBi3W/z56F68t3cf7AI7kxAUl6s/l5oRNqcAJpVsyB+gM
-	Y468ZEmukpRqIfGpiCArdNWiU0lnLSd091t40ItQMqCr52i1nDwQLNnD/M73tsyn
-	F4WdR0UAumNdHWooA6G/9NPDz5ONOmP2lTpP/16ZOUiL4bdNXoEziI9iMQ9mbO35
-	s8mqgJu3O3Dc1W8fVBNj6E0WFzGGoiqkiZJedLjeCJoYubaf7F9rAJjtZHGQm0L3
-	fQ6gE9iLt6YR2ZESjpLtPwyKYUZZaDQ8PVRNIfqjnhR53z1tp3cEPwwNGdtAICP0
-	1KdVkw==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42w66gusvk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 14 Nov 2024 18:50:54 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AEIorKX018846
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 14 Nov 2024 18:50:53 GMT
-Received: from [10.216.2.12] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 14 Nov
- 2024 10:50:45 -0800
-Message-ID: <278e62e1-02a4-4e33-8592-fb4fafcedf7e@quicinc.com>
-Date: Fri, 15 Nov 2024 00:20:42 +0530
+	s=arc-20240116; t=1731624486; c=relaxed/simple;
+	bh=8JzMaKrWlHH5Cvl6LgJr+4ysWctwILSWMc8f7gCR6pI=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:References; b=uV35p0/QLO5k/m8Fg+2UdsEbkWnn2qPzsaqOgvg5cgwEoDM+MmenYDDG3C/bi/m/kZjkDcJ9Byws17XtXOyIsPpaxprFRbnZxNr/jOC4eVrgPjhnsrq2lLLX9PA2tpgReI2loQMEPN8LOjGKE9Q7CINoW3u2AyC8t5Ss3mL/I9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=rocketmail.com; spf=pass smtp.mailfrom=rocketmail.com; dkim=pass (2048-bit key) header.d=rocketmail.com header.i=@rocketmail.com header.b=F17U+qx+; arc=none smtp.client-ip=87.248.110.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=rocketmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rocketmail.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rocketmail.com; s=s2048; t=1731624483; bh=VUBlByHueXDmXb9r+9Fa/bqlDMIi1BWz7KWtmRZf9Fs=; h=From:To:Cc:Subject:Date:References:From:Subject:Reply-To; b=F17U+qx+T9+FoXZm97FMTm/7aTsug8xQq0loJK/VQ2+LT4KWMugav+ZQMr3nwo8ecFyx4kx93C68P78UtNPDv4C6QKvjv6NjT3EKbURGpf/H7uW8syNJ+KuZiYmdCdxUqqmKU8x2STAnJejVvnEccq+wHTaQfrRKFB22yFwbCVZyCz3E/7+42fvkAhLaUglMNq9pHSc6+ZWqNu5Gbc3YblVOMb5pfM+RLMpHruj6QjfJ/Kq1wZvxbDNm30zLGMTVi6k1EN0HxnrtXijmucXxN93v64cqvUFnljHL6UVBQIh9WKwSCMUWKEnYbvXC02wrZWz+gW6D4uml170s7xgK9Q==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1731624483; bh=vBamw3v4m9MWPBwnSe470CSJfhkkSIz6kQPaPkWBOp4=; h=X-Sonic-MF:From:To:Subject:Date:From:Subject; b=DujjbeYKtmPLikmswOZkR5CO0beJMgP3dFVPC99rfU8o1fusQUVm4UeOnvMcwIydhvJWrUWdSVjtLGks8gXnhVLAyXgShg/HGVFskzdv8MpdRsraRT3x+nUky+g+RVNp/+xDcXkAfMhqdGl2+ZH1GGO2W1+fRpn62Xit+tuj9nCbk7an2AKuiYrD1NTaexP+XZpgDRTbZZOHfejZZTtTAp1N1S8Nl8brmEflyRYFiiGh1XiZ74Kqgc++FZKW40ockbDxEqi9ttHBPb34EGPAT3JfPK7MkJK5N0xJeEnKiDFqdzgT2AkqO/V8itnYc+vMc3gVHaM6evBIQz6cJGruBg==
+X-YMail-OSG: Q5hDKeAVM1kIdEWwfSbfZU5EqLlTt7208ibXW4yWSK6P8CnODAtAQ3rBrxBT.9m
+ 5L8xwbK6XDV5fyAYQHrs38e0PG63Ye0iR2M4L0vau8V1316kIqFqULxJ87LlPQZKROGAMkJICaz1
+ o5iNZm_5AKhxPHR9_ED9l.YExtYFSCJEfFMgNsPdoZ71ADc67U.TLIXiCMykeW.fDLuTCuuRs9vd
+ k0bF5cL3SP7Wf.qMpScuYKBSVfgsu4V5tkN1MUJTrf2a9AujJJWIDPG96p_oZXC9vakm7WBisFKL
+ Ym9pxyvySkk1drMx_B79Dun0gRr3A5ypQX5ktrUdviCrrnS.Ez_lEZlfZ64EUqXoYgywoQC6lYs5
+ esRab8Ljz3oFIm_fB8dd22dYLfktjVtJFUgsem2u50vTamqwnI2_96M4GJN.xONy_eAZkfPyzUpv
+ JfUIUR08KVZ7E4Moh8JZTRMSI9gLO8YLvtuHMN2i777uwyppVm4LUADxdjF6LbsmomFJqVzw9o0u
+ yFoE2xCJWHW5smKPhfWkXdZyMIdFXhtxF2KSK1bxoJUkR5RQaRO3EA3kNIi9B7n_qqDeNKpgv4lT
+ lH_p0eIk227_1TQXtzaHdbiKeD5eNdzyTXfSrMtYWKb5Klh_TwkwVbmYpJptuBhaPbmwTFpZ3hvM
+ RrrHP6RnzR2D8BWMVRvmeVse4_EvL2AYWPHLpvElIUhHBZJIdUJE3.xgxww.m120bgxUf.b4dfVy
+ YcGTEGlwEkZ1GahHOKLqUaOwNIPM6AGpk23VVzXokYnJcydLhWVl3VnjiPOZt6zZesq9JGOvfI.1
+ ZtoNqdkHYNB8aqD8ogu5RzZA.wJ.tBIbAZiZmjAKL5i8OLuE0qmlhDy2b9TTahs6Eef.4hJWGngv
+ Q8IplUrMAlHFlq3_.H80TuQtvtvkj6CaH_iApTlhgek99DygXyGFgOfkdbZg7URsxwGoTeY61.j_
+ x6Q2f_9jpNCnRKftkrLl4FkeLb4o2skI9tTqKXbkhE9NF9XL_cMSt4uEKVwiyr0MSGPm.Q.D8.Tj
+ eD7V_cSnngbTUbS7WQX4Bp3rTfHW11K9IdO5ECzvFXxf.k81Mv2jO1N87cW7mrlyBi3RqupL.P00
+ RCLN.C62AKxJX_YjYdVo1Qd3it_NjNuFU3BxQgqeyAHvssM2I2yp5HsxtTSJwr85_ZZeRL.7AA_P
+ 8UrnH8CaW2sjckjEOOXcK96YqsaxS.dHMdukkbC1CqUky3tHlQMdK9OVIDgZTSUxGSniBGnl_Tb6
+ REm6nkNGJ0ikvpH8mxBj5D5xrGHc4.hficfLDXnI7hUUVD4A.bCKabHliEaZ9fvSg9Jjef7LrZzD
+ GD76xBAKSlA_p67et7XFqTyaNum4bjsD7U0OyUNJuGOFDHGhS5A_r99iiakhtk_59kN8H2aGmZ.b
+ 3Y.TeEcGeJkyhuYYg4lZ2ANgGvrwV.J_TpnsQZ66SPPHPmbW3G3pMS0HuVZcJrKbIwG7hfsU2JVw
+ ZMVjQlSo0S9Wbx5Xu3h1t20jObAvlTplU8Xe49GXdDS1q8GR1xNit6h2v4eGRlvKd1QUN3DrSstJ
+ vg_GU_do_hyqr6emz5DScy28YTUT..PpbLI0dlmIHRBnfhAOhfgfv2j9JsLacrQ3Yb4yzq83lpdT
+ cedTSJdtWoHIBBvwSTuqQpmmBvoq4Ooef6KPg04V_BVGh1JRksam4iEo64PzGU2lAhV7OW9XBYst
+ klS.6S8hl7.S9QIrHK0kKn1rpej_1PnC0UWz1XMLOd0TRftL7t8h8Q0XU2xmVpkzb.hGoA7ZZpbQ
+ GL6vLgLL1g7iFfg2pLuNqt9HlB9CJTTp9M_hI_ctoybQCXl8HxGzjotrXxeGY5rF1NnbBDL8dd5S
+ KSNubgqsGhOw9md6XJoQCdq4j1QDHr.YKc_8ROkxk7x9uZFuPRhQ259jJPWVcJo4IQcSe8cXsRVi
+ YymSiuEFYzzVHz7Ip_sPoMRIMcfZ4zm2JPurrOph2wl52fzgl4bwIhjJquOrGJidH3gc0yxbOugh
+ SOlpqTxDm8Nf012Dm6TTUg.1kEzIV77S4A8DEo.MeMMM05DP1DlfOEJCLGprrLP7Rh81u1.h2xtD
+ lefhal02VEmW.1Cd_qTqY6uAXggKKnQheCWw_HEyw00eSZSdNaAp98zzn6Rszv.cOxAyJbRNCKtp
+ xD35gidCwJ5vH7XUGfoM.PRY7vpy2vp44CuA0PqjqoPKKRGIrQuZNziyEW8uqFZSAvcgm4XScwbj
+ 3xGptjnV8tOlW2WdeLyGg7oe3Bd.hzYbSmtlNF27omIsfYjuqltZUNKfms0VVVI7iUNvChYNPAMa
+ lXz5tsL4sj04mYE9un1XTEBZyGfmZH9_FwewnLCw-
+X-Sonic-MF: <jahau@rocketmail.com>
+X-Sonic-ID: cd958c09-780b-4501-906f-d67165ec7c2a
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic302.consmr.mail.ir2.yahoo.com with HTTP; Thu, 14 Nov 2024 22:48:03 +0000
+Received: by hermes--production-ir2-c694d79d9-mr45v (Yahoo Inc. Hermes SMTP Server) with ESMTPA ID 60a5376110f1aceebb11253fa288c199;
+          Thu, 14 Nov 2024 22:07:30 +0000 (UTC)
+From: Jakob Hauser <jahau@rocketmail.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>
+Cc: Stephan Gerhold <stephan@gerhold.net>,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	phone-devel@vger.kernel.org,
+	~postmarketos/upstreaming@lists.sr.ht,
+	Jakob Hauser <jahau@rocketmail.com>
+Subject: [PATCH] arm64: dts: qcom: msm8916-samsung-serranove: Add display panel
+Date: Thu, 14 Nov 2024 23:07:18 +0100
+Message-Id: <20241114220718.12248-1-jahau@rocketmail.com>
+X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] dt-bindings: opp: Add v2-qcom-adreno vendor
- bindings
-From: Akhil P Oommen <quic_akhilpo@quicinc.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Krzysztof Kozlowski
-	<krzk@kernel.org>
-CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        "Konrad
- Dybcio" <konradybcio@kernel.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie
-	<airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Viresh Kumar
-	<vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd
-	<sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>
-References: <20241021-gpu-acd-v2-0-9c25a62803bc@quicinc.com>
- <20241021-gpu-acd-v2-2-9c25a62803bc@quicinc.com>
- <mz4zpcr4tqh2w7vt75f4ofxjzfve54ozzgpdbi2jjzk5pdxbk7@t36tlt3mmprt>
- <d858dadb-4098-4c9f-b4f0-393dc988db5f@quicinc.com>
- <4426b4kybtac6rc4twa5pgm3hvlegofemvqjcrvh6ni7f5z2h6@5dnlv3hgywh5>
- <c5e868e1-2dae-466c-a6fc-ef0f247fa0ce@quicinc.com>
-Content-Language: en-US
-In-Reply-To: <c5e868e1-2dae-466c-a6fc-ef0f247fa0ce@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: u57XbCI0GTKf8TNdTMbBb-PagDkTp2eW
-X-Proofpoint-ORIG-GUID: u57XbCI0GTKf8TNdTMbBb-PagDkTp2eW
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxlogscore=999
- mlxscore=0 malwarescore=0 suspectscore=0 impostorscore=0
- priorityscore=1501 bulkscore=0 clxscore=1015 lowpriorityscore=0
- adultscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411140148
+Content-Transfer-Encoding: 8bit
+References: <20241114220718.12248-1-jahau.ref@rocketmail.com>
 
-On 11/1/2024 9:54 PM, Akhil P Oommen wrote:
-> On 10/25/2024 11:58 AM, Dmitry Baryshkov wrote:
->> On Thu, Oct 24, 2024 at 12:56:58AM +0530, Akhil P Oommen wrote:
->>> On 10/22/2024 11:19 AM, Krzysztof Kozlowski wrote:
->>>> On Mon, Oct 21, 2024 at 05:23:43PM +0530, Akhil P Oommen wrote:
->>>>> Add a new schema which extends opp-v2 to support a new vendor specific
->>>>> property required for Adreno GPUs found in Qualcomm's SoCs. The new
->>>>> property called "qcom,opp-acd-level" carries a u32 value recommended
->>>>> for each opp needs to be shared to GMU during runtime.
->>>>>
->>>>> Cc: Rob Clark <robdclark@gmail.com>
->>>>> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
->>>>> ---
->>>>>  .../bindings/opp/opp-v2-qcom-adreno.yaml           | 96 ++++++++++++++++++++++
->>>>>  1 file changed, 96 insertions(+)
->>>>>
->>>>> diff --git a/Documentation/devicetree/bindings/opp/opp-v2-qcom-adreno.yaml b/Documentation/devicetree/bindings/opp/opp-v2-qcom-adreno.yaml
->>>>> new file mode 100644
->>>>> index 000000000000..6d50c0405ef8
->>>>> --- /dev/null
->>>>> +++ b/Documentation/devicetree/bindings/opp/opp-v2-qcom-adreno.yaml
->>>>> @@ -0,0 +1,96 @@
->>>>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->>>>> +%YAML 1.2
->>>>> +---
->>>>> +$id: http://devicetree.org/schemas/opp/opp-v2-qcom-adreno.yaml#
->>>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>>>> +
->>>>> +title: Qualcomm Adreno compatible OPP supply
->>>>> +
->>>>> +description:
->>>>> +  Adreno GPUs present in Qualcomm's Snapdragon chipsets uses an OPP specific
->>>>> +  ACD related information tailored for the specific chipset. This binding
->>>>> +  provides the information needed to describe such a hardware value.
->>>>> +
->>>>> +maintainers:
->>>>> +  - Rob Clark <robdclark@gmail.com>
->>>>> +
->>>>> +allOf:
->>>>> +  - $ref: opp-v2-base.yaml#
->>>>> +
->>>>> +properties:
->>>>> +  compatible:
->>>>> +    items:
->>>>> +      - const: operating-points-v2-adreno
->>>>> +      - const: operating-points-v2
->>>>> +
->>>>> +patternProperties:
->>>>> +  '^opp-?[0-9]+$':
->>>>
->>>> '-' should not be optional. opp1 is not expected name.
->>>
->>> Agree. Will change this to '^opp-[0-9]+$'
->>>
->>>>
->>>>> +    type: object
->>>>> +    additionalProperties: false
->>>>> +
->>>>> +    properties:
->>>>> +      opp-hz: true
->>>>> +
->>>>> +      opp-level: true
->>>>> +
->>>>> +      opp-peak-kBps: true
->>>>> +
->>>>> +      opp-supported-hw: true
->>>>> +
->>>>> +      qcom,opp-acd-level:
->>>>> +        description: |
->>>>> +          A positive value representing the ACD (Adaptive Clock Distribution,
->>>>> +          a fancy name for clk throttling during voltage droop) level associated
->>>>> +          with this OPP node. This value is shared to a co-processor inside GPU
->>>>> +          (called Graphics Management Unit a.k.a GMU) during wake up. It may not
->>>>> +          be present for some OPPs and GMU will disable ACD while transitioning
->>>>> +          to that OPP. This value encodes a voltage threshold and few other knobs
->>>>> +          which are identified by characterization of the SoC. So, it doesn't have
->>>>> +          any unit.
->>>>
->>>> Thanks for explanation and other updates. I am still not happy with this
->>>> property. I do not see reason why DT should encode magic values in a
->>>> quite generic piece of code. This creates poor ABI, difficult to
->>>> maintain or understand.
->>>>
->>>
->>> Configuring GPU ACD block with its respective value is a requirement for each OPP.
->>> So OPP node seems like the natural place for this data.
->>>
->>> If it helps to resolve your concerns, I can elaborate the documentation with
->>> details on the GMU HFI interface where this value should be passed on to the
->>> hardware. Also replace "few other knobs" with "Delay cycles & Calibration margin"
->>> in the above doc.
->>
->> Usually the preference for DT is to specify data in a sensible way
->> rather than just the values being programmed to the register. Is it
->> possible to implement this approach for ACD values?
+From: Stephan Gerhold <stephan@gerhold.net>
 
-Krzysztof/Dmitry,
+Add the Samsung S6E88A0-AMS427AP24 panel to the device tree for the
+Samsung Galaxy S4 Mini Value Edition. By default the panel displays
+everything horizontally flipped, so add "flip-horizontal" to the panel
+node to correct that.
 
-BIT(0)-BIT(15) are static configurations which doesn't change between
-OPPs. We can move it to driver.
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+Co-developed-by: Jakob Hauser <jahau@rocketmail.com>
+Signed-off-by: Jakob Hauser <jahau@rocketmail.com>
+---
+Patch base is kernel/git/qcom/linux.git current branch "arm64-for-6.13".
 
-BIT(16)-BIT(31) indicates a threshold margin which triggers ACD. We can
-keep this in the devicetree. And the driver can construct the final
-value from both data and send it to GMU.
+The panel driver was recently added to linux-next:
+https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/log/drivers/gpu/drm/panel/panel-samsung-s6e88a0-ams427ap24.c?h=next-20241101
 
-If this is acceptable, I will send the v3 revision.
+The associated dt-binding in linux-next is:
+https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/Documentation/devicetree/bindings/display/panel/samsung,s6e88a0-ams427ap24.yaml?h=next-20241101
+---
+ .../dts/qcom/msm8916-samsung-serranove.dts    | 58 +++++++++++++++++++
+ 1 file changed, 58 insertions(+)
 
--Akhil.
-
-> 
-> I am still checking about this. Will get back.
-> 
-> -Akhil
-> 
->>
->>>  
->>>>
->>
-> 
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts b/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts
+index 5ce8f1350abc..caad1dead2e0 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts
++++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts
+@@ -321,6 +321,41 @@ &blsp_uart2 {
+ 	status = "okay";
+ };
+ 
++&gpu {
++	status = "okay";
++};
++
++&mdss {
++	status = "okay";
++};
++
++&mdss_dsi0 {
++	pinctrl-names = "default", "sleep";
++	pinctrl-0 = <&mdss_default>;
++	pinctrl-1 = <&mdss_sleep>;
++
++	panel@0 {
++		compatible = "samsung,s6e88a0-ams427ap24";
++		reg = <0>;
++
++		vdd3-supply = <&pm8916_l17>;
++		vci-supply = <&pm8916_l6>;
++		reset-gpios = <&tlmm 25 GPIO_ACTIVE_LOW>;
++		flip-horizontal;
++
++		port {
++			panel_in: endpoint {
++				remote-endpoint = <&mdss_dsi0_out>;
++			};
++		};
++	};
++};
++
++&mdss_dsi0_out {
++	data-lanes = <0 1>;
++	remote-endpoint = <&panel_in>;
++};
++
+ &mpss_mem {
+ 	reg = <0x0 0x86800000 0x0 0x5a00000>;
+ };
+@@ -330,6 +365,13 @@ &pm8916_resin {
+ 	linux,code = <KEY_VOLUMEDOWN>;
+ };
+ 
++&pm8916_rpm_regulators {
++	pm8916_l17: l17 {
++		regulator-min-microvolt = <2850000>;
++		regulator-max-microvolt = <2850000>;
++	};
++};
++
+ &pm8916_vib {
+ 	status = "okay";
+ };
+@@ -425,6 +467,22 @@ imu_irq_default: imu-irq-default-state {
+ 		bias-disable;
+ 	};
+ 
++	mdss_default: mdss-default-state {
++		pins = "gpio25";
++		function = "gpio";
++
++		drive-strength = <8>;
++		bias-disable;
++	};
++
++	mdss_sleep: mdss-sleep-state {
++		pins = "gpio25";
++		function = "gpio";
++
++		drive-strength = <2>;
++		bias-pull-down;
++	};
++
+ 	muic_i2c_default: muic-i2c-default-state {
+ 		pins = "gpio105", "gpio106";
+ 		function = "gpio";
+-- 
+2.39.5
 
 
