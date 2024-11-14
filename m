@@ -1,215 +1,214 @@
-Return-Path: <linux-arm-msm+bounces-37884-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37885-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E7ADF9C855D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 09:56:48 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1F65E9C85FA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 10:23:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0F7191F22A1A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 08:56:48 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 93C9C1F210FE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 09:23:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59A661F8183;
-	Thu, 14 Nov 2024 08:56:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9EAB1DF73C;
+	Thu, 14 Nov 2024 09:23:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MoZ3PHEb"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="diZYwHVZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A2061F77BF
-	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2024 08:56:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D92501DA109
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2024 09:23:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731574567; cv=none; b=aK8+3aWErxvE4oU8MdKpEQ1MdIXznZ6418okwP9x9q3tZ0wS8KCIlO6anm0jBN93wer3OeNNpPuyWkkev876vJf6DGYEpshnk2+IOZWniSNzVBZRVN63qRB+Mi4JysRZ/N/cREbz7a0oB+6ymFKVezB8BHCqlylr/3MOd1IgdbE=
+	t=1731576193; cv=none; b=Ft7xI6FUqP5UjzFtXeFcT5drrnjiw8HhfF80cXEfhEsgI11CU48PolAl/kJIcPCUtdecH0PUsNPxE+Bf0FnX8WVDctqeYyCNlGHARu2K953Q/Rm+1vgXyK3jgYm6QO3K1S2AszftSNwMw7It1waCA8kTQ/5q3T8mUlYLyyQ9Ejs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731574567; c=relaxed/simple;
-	bh=ZxWJ8WBxU1va09s+PNVRjoNLQYSuMg/4Aty32KPY1dM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cRPE9eUB4yCGRuJ+uQ0WMJzXLPVYbPpwpF+Kj4yEylQwJoQDVXTak5FmZb+GUUOtMiydktmqetB6ZsGDY+0O9e9O3YDorEzQKuSx6WAdPrAK7rHtvqZ3WKlPnj8fNbeh7gbpU2huWpfIeF0j1yrhapxgKxuKbDQ3ePrG7rRs8QM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MoZ3PHEb; arc=none smtp.client-ip=209.85.216.45
+	s=arc-20240116; t=1731576193; c=relaxed/simple;
+	bh=aKi0+1sKEXobfNQZc5o0QxGdgLKu8VAEg01D+//FBDs=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=b489PWD0T44qIaZsrH9RRLS6YDgg2AKtjm+s38sjoKwOoT73fA3M/nuBvu+G6+QLPWPelELUu9k2K4Zy/f4XqepyR8lKL0dTtL3Wm4GOHoaoqkhtMAsWE8h0ap2ShEt795Goa4YvpEgWFhA5/8IUzHTLzgvYy1LUgc2q6P3twew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=diZYwHVZ; arc=none smtp.client-ip=209.85.208.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-2e2eb9dde40so320801a91.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2024 00:56:05 -0800 (PST)
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2fb561f273eso3497861fa.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2024 01:23:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731574565; x=1732179365; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ToT77NODsvlbLTUvpom6vRLwi61ldhVszxA0ETyzPrk=;
-        b=MoZ3PHEbibvh0Z7Aq+HyeKV6xkaz1qU6Zgb1Bj8zh1gqkaHfXGPpTCBxfTbXVZL8/h
-         LSVjsP6uXlapf94dPEZ6DFvIZe+L9Ana5pXU9M7IrOE/fcd42vpixwGovTWJaiYEuB+b
-         J7QKXLHilX1QJhteA3vnTYCw/LqPG6nfv8CJrEHUd0matLR1R8Q7knknLS3rvme9Zx38
-         Oic3ceS3D9Fz0sKpsiCwT0If34fD0m61k/NieE0gAp5NLoz8n68uvubTia0W/D3II12g
-         6qO+un8hN4qLOAAOwpJpWyB8DbE0Mq9B5yUANQ89Az9YaaPssNxwfk/uwrLuwF2DAzTV
-         cqEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731574565; x=1732179365;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1731576190; x=1732180990; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ToT77NODsvlbLTUvpom6vRLwi61ldhVszxA0ETyzPrk=;
-        b=CayZVR9V6KTRO4JBY3n5IS8DviNVLZN7pdePbYj89gZHy0OYbH6ubzetaM34YpyVkm
-         SIv+qC2kp7VTEzzx3GUFB7DgIdEPg5ehVoKVXB0771rG4r7tmnrAjqDd4oIYR1MF4VBp
-         AqM73U7kp2LEp5iNRq3Rpsdy5q1w6zmWmisZzUTBAPXxfQ0OrPWrRDDb8eGGLalfptqc
-         NCK6qLxUgS2s+29FmWyeC5szoasqvelzS8a6oxirCDd1xPC5zHx9KHxBrIQ4f6pB6qxM
-         v4M5Q+w+adCWGLh6bJnJpfjp2Qdj5HeSBwSKOcdwlhxwQAJnN5peoXKdn4O+MhPDIpvC
-         ZJdA==
-X-Forwarded-Encrypted: i=1; AJvYcCU+wT38gUCQJ4/O2BdRZRbuzXQFj71fdodPG0e5VKCX2fmnfH0pmBdq/+UYKn/fzybfBG/rpENcFxiiktxK@vger.kernel.org
-X-Gm-Message-State: AOJu0YycXGIvP3FwrQBQTFCPExztG43OiRwdEo7eprlGcaJZ3mgSCH9e
-	UvrBZZaT3ecWRbZNYHgrsmPXh1F+BBiwkw71Y9EeoT8FUzs6x3gJZvQIuvvRoBCJtPslAoK2Eph
-	k43tQ025az6L7iYmE3LHde7X1o0266qle3wnQlA==
-X-Google-Smtp-Source: AGHT+IEF/+2QRuIhdeC8yK5JAR2WX1SxP2TpNFoDaoCNxUEcokJnn2HBF5GtJzruhPEUticVRg3x/kmVprSaln0zgc4=
-X-Received: by 2002:a17:90b:1647:b0:2e2:c6c2:b3d5 with SMTP id
- 98e67ed59e1d1-2e9f2c7476bmr7530583a91.9.1731574564784; Thu, 14 Nov 2024
- 00:56:04 -0800 (PST)
+        bh=pKVskJH08XCjh0dvrOvGb7Xw0ql6HSZ5m3cIUFTJUOc=;
+        b=diZYwHVZdVYebC2nx6FICekvL2roVUjZejsz6hYpzcP6lH7QNqOywN26zTKw1mpYJj
+         07Rh8HoyC8aFU8wXpsFGq5aBAtqwfE+MOERSt/1xrOLHzDZWc1u/qQQM74zgeLW/wKdi
+         c0nElZOBh9eOdnU5+yHoTBSGaih/6eoLxHPJaaPAdzmEMseb1FFU6hv8ExgU/7Urc/pz
+         /yo+aSWaCiQfV7xnrEAxKfYxvRcrA10ft3oAwO4BzmmjpSVbyUZRFYGh8EjyErXKgNlI
+         mP5e93pRdBuLPIp9cmbIWkZrTDExYkqkAZ8b97be/turwbJosf2j1Ye3SInoGYgK6LBT
+         0/HA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731576190; x=1732180990;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=pKVskJH08XCjh0dvrOvGb7Xw0ql6HSZ5m3cIUFTJUOc=;
+        b=d0qhpUNn2gX9rVqu9muuFFV7LvVJKUYFn+FMzUwlYcSwpHLfaLFtwb0dKy+Sa+jjbm
+         z1YPNkJcsBMByWTAZLAPAD3tPvUKb2wQ0GmaAQtGtTyOxphE6ts0Ap7A/eaFuEaPb0Zu
+         L4FJevq4Obyyc1y70D6st2lURXhQ5t1FXh1PmEW2m5IWRdooFeRuM2Vxu9KyUXrCft9c
+         /F8vDXCCLl1oW5vl3RjUX5u9RYQqYS6DyDM8a/caZrMLovnjeqtZLjTA+YNAW4rYcJOl
+         BjGDwUwNRZc5rn4oETy3nhMVYoXGSydseW4ckY3COzR3ci2GKpsHgZrziiuqp4rW8LZf
+         7QQg==
+X-Forwarded-Encrypted: i=1; AJvYcCW2QNr0Y+aIAFAThq9w0qNeWNM1g6tMqRTI1vtI5dBdamsgz/7S1CbkVuHVgvBnKD54FL6YoJeL2K27kyki@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyi3GHC2dYiZhucC/EVVRebgLKdXVnPkSwCVNeSEzVB/vLxb/Gb
+	PAITVd9d+xBhMs/xp5aemswmFHJPNUlyNOR6NW93wcBvZjIub8/j7xZv+/tCfy4=
+X-Google-Smtp-Source: AGHT+IGErzUCoRrzEItkg1L3C/jktxdQuqW4d/nGFV/zoyOKtwAeZgerInrjMql5bO5vzmezrLU3dw==
+X-Received: by 2002:a05:651c:e15:b0:2ff:53c7:a79f with SMTP id 38308e7fff4ca-2ff53c7a8admr13442661fa.7.1731576189979;
+        Thu, 14 Nov 2024 01:23:09 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:a62a:6bba:b737:406e? ([2a01:e0a:982:cbb0:a62a:6bba:b737:406e])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432da298c81sm16941005e9.39.2024.11.14.01.23.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 14 Nov 2024 01:23:09 -0800 (PST)
+Message-ID: <ff0ec93b-e2d0-4022-b8ae-8e4d9d1eac9f@linaro.org>
+Date: Thu, 14 Nov 2024 10:23:08 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241114022916.644899-1-quic_sibis@quicinc.com> <20241114022916.644899-2-quic_sibis@quicinc.com>
-In-Reply-To: <20241114022916.644899-2-quic_sibis@quicinc.com>
-From: Vincent Guittot <vincent.guittot@linaro.org>
-Date: Thu, 14 Nov 2024 09:55:53 +0100
-Message-ID: <CAKfTPtDnyDak1BsdufYuN=wQwhJ+XTJedjMEezAz1evhsB86Jg@mail.gmail.com>
-Subject: Re: [PATCH V8 1/1] cpufreq: scmi: Register for limit change notifications
-To: Sibi Sankar <quic_sibis@quicinc.com>
-Cc: sudeep.holla@arm.com, cristian.marussi@arm.com, rafael@kernel.org, 
-	viresh.kumar@linaro.org, morten.rasmussen@arm.com, dietmar.eggemann@arm.com, 
-	lukasz.luba@arm.com, pierre.gondois@arm.com, 
-	linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, quic_mdtipton@quicinc.com, 
-	linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH RFC 1/8] opp: core: implement dev_pm_opp_get_bandwidth
+To: Viresh Kumar <viresh.kumar@linaro.org>
+Cc: Akhil P Oommen <quic_akhilpo@quicinc.com>,
+ Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+ Stephen Boyd <sboyd@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
+ Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Connor Abbott <cwabbott0@gmail.com>,
+ linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+References: <20241113-topic-sm8x50-gpu-bw-vote-v1-0-3b8d39737a9b@linaro.org>
+ <20241113-topic-sm8x50-gpu-bw-vote-v1-1-3b8d39737a9b@linaro.org>
+ <20241114041044.esfazw5mv6zfyrix@vireshk-i7>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20241114041044.esfazw5mv6zfyrix@vireshk-i7>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, 14 Nov 2024 at 03:29, Sibi Sankar <quic_sibis@quicinc.com> wrote:
->
-> Register for limit change notifications if supported and use the throttled
-> frequency from the notification to apply HW pressure.
->
-> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-> Tested-by: Mike Tipton <quic_mdtipton@quicinc.com>
-> Reviewed-by: Cristian Marussi <cristian.marussi@arm.com>
-> Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+Hi,
 
-Looks good to me
-Acked-by: Vincent Guittot <vincent.guittot@linaro.org>
+On 14/11/2024 05:10, Viresh Kumar wrote:
+> On 13-11-24, 16:48, Neil Armstrong wrote:
+>> Add and implement the dev_pm_opp_get_bandwidth() to retrieve
+>> the OPP's bandwidth in the same was as the dev_pm_opp_get_voltage()
+> 
+>                                    way
+> 
+>> helper.
+>>
+>> Retrieving bandwidth is required in the case of the Adreno GPU
+>> where the GPU Management Unit can handle the Bandwidth scaling.
+>>
+>> The helper can get the peak or everage bandwidth for any of
+> 
+>                                   average
 
-> ---
->
-> v8:
-> * Drop patch 1 since it was picked up by Viresh
-> * Leave policy->max update to the cpufreq_qos notifier [Vincent]
-> * We sanitized the range_max from V3 since we dealt with
->   policy->max, now we can drop the check and policy member
->   from scmi_data.
->
->  drivers/cpufreq/scmi-cpufreq.c | 45 ++++++++++++++++++++++++++++++++++
->  1 file changed, 45 insertions(+)
->
-> diff --git a/drivers/cpufreq/scmi-cpufreq.c b/drivers/cpufreq/scmi-cpufreq.c
-> index 07d6f9a9b7c8..b8fe758aeb01 100644
-> --- a/drivers/cpufreq/scmi-cpufreq.c
-> +++ b/drivers/cpufreq/scmi-cpufreq.c
-> @@ -16,6 +16,7 @@
->  #include <linux/export.h>
->  #include <linux/module.h>
->  #include <linux/pm_opp.h>
-> +#include <linux/pm_qos.h>
->  #include <linux/slab.h>
->  #include <linux/scmi_protocol.h>
->  #include <linux/types.h>
-> @@ -26,6 +27,8 @@ struct scmi_data {
->         int nr_opp;
->         struct device *cpu_dev;
->         cpumask_var_t opp_shared_cpus;
-> +       struct notifier_block limit_notify_nb;
-> +       struct freq_qos_request limits_freq_req;
->  };
->
->  static struct scmi_protocol_handle *ph;
-> @@ -174,6 +177,22 @@ static struct freq_attr *scmi_cpufreq_hw_attr[] = {
->         NULL,
->  };
->
-> +static int scmi_limit_notify_cb(struct notifier_block *nb, unsigned long event, void *data)
-> +{
-> +       struct scmi_data *priv = container_of(nb, struct scmi_data, limit_notify_nb);
-> +       struct scmi_perf_limits_report *limit_notify = data;
-> +       unsigned int limit_freq_khz;
-> +       int ret;
-> +
-> +       limit_freq_khz = limit_notify->range_max_freq / HZ_PER_KHZ;
-> +
-> +       ret = freq_qos_update_request(&priv->limits_freq_req, limit_freq_khz);
-> +       if (ret < 0)
-> +               pr_warn("failed to update freq constraint: %d\n", ret);
-> +
-> +       return NOTIFY_OK;
-> +}
-> +
->  static int scmi_cpufreq_init(struct cpufreq_policy *policy)
->  {
->         int ret, nr_opp, domain;
-> @@ -181,6 +200,7 @@ static int scmi_cpufreq_init(struct cpufreq_policy *policy)
->         struct device *cpu_dev;
->         struct scmi_data *priv;
->         struct cpufreq_frequency_table *freq_table;
-> +       struct scmi_device *sdev = cpufreq_get_driver_data();
->
->         cpu_dev = get_cpu_device(policy->cpu);
->         if (!cpu_dev) {
-> @@ -294,6 +314,23 @@ static int scmi_cpufreq_init(struct cpufreq_policy *policy)
->                 }
->         }
->
-> +       ret = freq_qos_add_request(&policy->constraints, &priv->limits_freq_req, FREQ_QOS_MAX,
-> +                                  FREQ_QOS_MAX_DEFAULT_VALUE);
-> +       if (ret < 0) {
-> +               dev_err(cpu_dev, "failed to add qos limits request: %d\n", ret);
-> +               goto out_free_table;
-> +       }
-> +
-> +       priv->limit_notify_nb.notifier_call = scmi_limit_notify_cb;
-> +       ret = sdev->handle->notify_ops->event_notifier_register(sdev->handle, SCMI_PROTOCOL_PERF,
-> +                                                       SCMI_EVENT_PERFORMANCE_LIMITS_CHANGED,
-> +                                                       &priv->domain_id,
-> +                                                       &priv->limit_notify_nb);
-> +       if (ret)
-> +               dev_warn(&sdev->dev,
-> +                        "failed to register for limits change notifier for domain %d\n",
-> +                        priv->domain_id);
-> +
->         return 0;
->
->  out_free_table:
-> @@ -313,7 +350,13 @@ static int scmi_cpufreq_init(struct cpufreq_policy *policy)
->  static void scmi_cpufreq_exit(struct cpufreq_policy *policy)
->  {
->         struct scmi_data *priv = policy->driver_data;
-> +       struct scmi_device *sdev = cpufreq_get_driver_data();
->
-> +       sdev->handle->notify_ops->event_notifier_unregister(sdev->handle, SCMI_PROTOCOL_PERF,
-> +                                                           SCMI_EVENT_PERFORMANCE_LIMITS_CHANGED,
-> +                                                           &priv->domain_id,
-> +                                                           &priv->limit_notify_nb);
-> +       freq_qos_remove_request(&priv->limits_freq_req);
->         dev_pm_opp_free_cpufreq_table(priv->cpu_dev, &policy->freq_table);
->         dev_pm_opp_remove_all_dynamic(priv->cpu_dev);
->         free_cpumask_var(priv->opp_shared_cpus);
-> @@ -372,6 +415,8 @@ static int scmi_cpufreq_probe(struct scmi_device *sdev)
->         if (!handle)
->                 return -ENODEV;
->
-> +       scmi_cpufreq_driver.driver_data = sdev;
-> +
->         perf_ops = handle->devm_protocol_get(sdev, SCMI_PROTOCOL_PERF, &ph);
->         if (IS_ERR(perf_ops))
->                 return PTR_ERR(perf_ops);
-> --
-> 2.34.1
->
+Aww, good catch, thanks
+
+> 
+>> the interconnect path.
+>>
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>> ---
+>>   drivers/opp/core.c     | 25 +++++++++++++++++++++++++
+>>   include/linux/pm_opp.h |  7 +++++++
+>>   2 files changed, 32 insertions(+)
+>>
+>> diff --git a/drivers/opp/core.c b/drivers/opp/core.c
+>> index 494f8860220d97fc690ebab5ed3b7f5f04f22d73..19fb82033de26b74e9604c33b9781689df2fe80a 100644
+>> --- a/drivers/opp/core.c
+>> +++ b/drivers/opp/core.c
+>> @@ -106,6 +106,31 @@ static bool assert_single_clk(struct opp_table *opp_table)
+>>   	return !WARN_ON(opp_table->clk_count > 1);
+>>   }
+>>   
+>> +/**
+>> + * dev_pm_opp_get_bandwidth() - Gets the peak bandwidth corresponding to an opp
+> 
+> s/peak bandwidth/bandwidth/
+
+Ack
+
+> 
+>> + * @opp:	opp for which voltage has to be returned for
+>> + * @peak:	select peak or average bandwidth
+>> + * @index:	bandwidth index
+>> + *
+>> + * Return: peak bandwidth in kBps, else return 0
+> 
+> s/peak bandwidth/bandwidth/
+
+Ack
+
+> 
+>> + */
+>> +unsigned long dev_pm_opp_get_bandwidth(struct dev_pm_opp *opp, bool peak, int index)
+>> +{
+>> +	if (IS_ERR_OR_NULL(opp)) {
+>> +		pr_err("%s: Invalid parameters\n", __func__);
+>> +		return 0;
+>> +	}
+>> +
+>> +	if (index > opp->opp_table->path_count)
+>> +		return 0;
+>> +
+>> +	if (!opp->bandwidth)
+>> +		return 0;
+>> +
+>> +	return peak ? opp->bandwidth[index].peak : opp->bandwidth[index].avg;
+>> +}
+>> +EXPORT_SYMBOL_GPL(dev_pm_opp_get_bandwidth);
+> 
+> All other bandwidth APIs are named as _bw, maybe do same here too ?
+> 
+
+Sure, I wasn't sure about that, will switch to _bw.
+
+Neil
+
 
