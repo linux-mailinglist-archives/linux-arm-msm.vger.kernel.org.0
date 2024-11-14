@@ -1,88 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-37934-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37935-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EF9C69C9559
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 23:49:05 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 795889C9561
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 23:52:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 99B601F21EA5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 22:49:05 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0F083B22D50
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 22:52:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A51901AF0A9;
-	Thu, 14 Nov 2024 22:49:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B5FF1B0F01;
+	Thu, 14 Nov 2024 22:52:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="r3Mkiw4D"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="k/Vgn1Ju"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C88A21CABA
-	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2024 22:49:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E0BF1ABED8
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2024 22:52:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731624543; cv=none; b=SQ2cLDK+0d7UgbqWF5DhUlUEgh/I2dLhEhyQtXWoKQkOhmwn8Al9WGkfHp7ytKLs3NvE0E5jIOnAgbLiQgZFmmbinR0Edl2bqZvT0tHcpUBAJBleRm/j74Sq3N9LHccDTa60htPZkfL7cvTIi/yAb7UUrQOaj/nrgtFqkE2ARno=
+	t=1731624756; cv=none; b=UNAjRMN6VI0hfNmkIqjVUGccEMGw0n7qWMv0rL0MWbdqLndi1TlDpjzzjCwSy9LhdhZHAtjttG9wih80xKfjqq4Qd5z9Svidmt7pqnIgxbweFzaFV+UeX8CbPkZeyWY17Meljh1DQht6QXXTXL37RCnpEEjCaS6cRh08Q0r7l+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731624543; c=relaxed/simple;
-	bh=nw6VoUZvZNkdUACTTIdXm7iGFjKeQXD96Z3wjmO7E0E=;
+	s=arc-20240116; t=1731624756; c=relaxed/simple;
+	bh=m7oPMa5p3+A3gTDQzbTb0wlLn1g0hZsNiZTqmAqcIHI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=E/35lWaKvaW88pUCQdJ/CwLz6271d9UxHSzpqDvT9y1/m4JNrhAzQgTb0LMcpHeole/wWksAR6nsT7Cgov6F1fimvkSnwI/IZcMzC1GvAaGxC54D33UmzE33buu31qPW3wSSB/aKi0HPrfjpxEtJ3RE9zuYz1g+fvg/LVsjgV5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=r3Mkiw4D; arc=none smtp.client-ip=209.85.167.49
+	 Content-Type:Content-Disposition:In-Reply-To; b=tgUeoNhjfGvVut3v4oNu85vYnORqOwOh2qqQdaEAaPWgkG5IL/6peT7kwQKY/g18XhM+TssF96s+ucLAxtH+BZ2cHIFVzRcIXlOy8FxfVEN58xsC3lGts6b3SqqiWPTGsd1V9rMm0d//HoCFkgx+9OCkjdpl7GWC/nKY4ndbTP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=k/Vgn1Ju; arc=none smtp.client-ip=209.85.167.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-53c779ef19cso80705e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2024 14:49:01 -0800 (PST)
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-53da24e9673so1220975e87.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2024 14:52:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731624540; x=1732229340; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1731624753; x=1732229553; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=y+li1obQZDvHKH1dQ4Z+Cz98Hc0DiodhU7YwjL0CPgQ=;
-        b=r3Mkiw4DfNsvSchnyij6eK9tzqSgXetX8yAZa5otp2hWljvJ9iBbw59RhVAh+ts5uP
-         7+ERMi6FCxDhdmisJ1bYP3vtD8/5DGsi/bRIGwvg6+ivarwVC0c2R5zxLCJFDd5/O/V5
-         8R7UlEyeFsLifdc2iIn5qIBIIBVZ4ICiURXkoj0Z6J7PaM/S5p+ifNiG0MGjGdvMgNF/
-         Prj+HAfSbP4YQRlTuyQNoE3yW8E5kFCx9ib2Be+4xIr6R329MF0xedYv98BwWOjKofil
-         NrX+uv3uyXJm9Fkdv8qOS1qSZnhUFR9AUv9Z3p656YPU7twbQ1BgDuRNlok678S0rqyk
-         WzoQ==
+        bh=4NDs1P9XbNpOqNm+yiQqI/JC4xjIru8KSYOpS3Yol4k=;
+        b=k/Vgn1Ju5yJb+XQ7cdh4eDRzjXyWa+VSDT/J1+wxv7zJuXzcTOwc11TyAn3ruQxIZx
+         TTIke5NrCsSrZhG7w3+5fqmiSzgh0pmJ3T5P4lcoRsLfoWjjsTnZ3zZaTMP3Jy3F6ZeW
+         eqIZ09+HUI2YcFYS/OXwqNBC9UvZEjhWzeDlL2xgcE9hWM8bDbJ9J76k2lZXgtt1KGxu
+         M/BpxBWCaeACOVzNQxpEfwWvFklFmelK68oNr7IqPfveIpvqyP8wHz+t1wQ4eFGHLvNQ
+         B7tbVeArQYJ6fId9x0xeCDmqMthkrnCZHPojHsD3aAnDbPQbm1Ldn8g9bdOJVJoNcY9l
+         Cc+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731624540; x=1732229340;
+        d=1e100.net; s=20230601; t=1731624753; x=1732229553;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=y+li1obQZDvHKH1dQ4Z+Cz98Hc0DiodhU7YwjL0CPgQ=;
-        b=od6Cya6DM1IxGlq2rOSh4TPOlWqDcOozMUJ5K80oBU4CsrqLmwyhPl5gt31MA1o4HH
-         9P+ASJLZx+gVY6vfC3Ip7Rru//SSdBuELxYyNH0afLLFZjHtGAVfLQcPDMu565Fi/K8h
-         IVpwCQhJp9GJoZFaD8UOzUYE8OMMf74dXkJVbQG61SjWO2kHsEobKzkdel1m+pS3lNj3
-         n1FNkF9mTCUyhdhiOesV4giddW6lTBB3fwsvuW5oYCD+P9oQm4QYgS5mxTjUFG6Dr+ZB
-         ssp/z8UFxuAXbEMH8m1y2Vvl+aK4J9cKbksYGNTcavWaW2sS7Gtsikh5M8dsEsOBbp3g
-         qVtQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVVLV7jZ4tDr9OLOgP/HN0qn4tLz91NpY8gT6825laaiLcMBUhk4uQEt+XeXMjeOOH7Q6kcIMrY7iAaD7is@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyn1ciLqGXomns/iZrd6I0NOhFqX/+xEyUJ9SBkYs6xpJohJCVf
-	bu8tD2GNjlSg63eLYdebO3hFbD4OktSw1kdmzNaGCt6Yswf25ofnNkN5N9v7ITo=
-X-Google-Smtp-Source: AGHT+IEciwhn6WNJsfswVN08/jxN2a5HA4mqW9TSwasMhjNmEK4pBMTbGoHEAgA+zAKx/x+31BOCNw==
-X-Received: by 2002:a05:6512:e95:b0:53c:761c:2a14 with SMTP id 2adb3069b0e04-53dab2a9191mr155211e87.29.1731624539902;
-        Thu, 14 Nov 2024 14:48:59 -0800 (PST)
+        bh=4NDs1P9XbNpOqNm+yiQqI/JC4xjIru8KSYOpS3Yol4k=;
+        b=f6YfRhCYXHNOOrb5ob8qHlj3Xjpl2mfsIDKfxCuHziVzaqUbEZkD2VWEqghO4ZEn2f
+         WHCDPJjJDxWve/AWPfvon+ZPBAbV7CKmzuZ5dpMmRjjnENaQ8kDPlOKTP6FSPtnlS/kX
+         MBcfcppAMV0YZQV5nDPQy31WUljk1l7Rq7nN4TwPsV6qTMhsNyWeQMktLigwIZ9U7d+9
+         n/1Zx+qNtySQLaT6uCsUIeAiyJE/9ttuutgwTV1EgWA9bxKrf8vckUld1KbpHI7+Kouc
+         3BTAPVCvGd8BD1ZOWIlOwz2bg+5jnH+Z8f6rKyvkWdwKhdgFfLhMriUdoxz/STJ3YeP4
+         /8wA==
+X-Forwarded-Encrypted: i=1; AJvYcCVguxAN0yK6xuhPT+FEVXhA1WbUi2wTL4vHz9lWyV4tQfyzbUC4FpGk0wSQWe1yuscND9+DZWpri93YlVaV@vger.kernel.org
+X-Gm-Message-State: AOJu0Yycbr5LLkHxtyp5FLfAZctL/+aOFcZ0u58E8PHXz/Z5SnpT6tge
+	vh4HBVJJcoGAB6K1ZicYdYUf6AGB5G+4Ik7Rec0Yfy9CPVwZQg3qRwcHjrykjFA=
+X-Google-Smtp-Source: AGHT+IFuC70u0clLXzI+efCQgj8/nhkMPYj+HkxNyQR/JxhH3/4SZl0J6nunyzypEY45VN+oypMVNQ==
+X-Received: by 2002:a05:6512:1149:b0:539:fd10:f07b with SMTP id 2adb3069b0e04-53dab3bf0a2mr191638e87.55.1731624753180;
+        Thu, 14 Nov 2024 14:52:33 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53da65000a7sm332985e87.76.2024.11.14.14.48.57
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53da6500e39sm337161e87.93.2024.11.14.14.52.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Nov 2024 14:48:58 -0800 (PST)
-Date: Fri, 15 Nov 2024 00:48:55 +0200
+        Thu, 14 Nov 2024 14:52:31 -0800 (PST)
+Date: Fri, 15 Nov 2024 00:52:29 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Jagadeesh Kona <quic_jkona@quicinc.com>
-Cc: Brian Masney <bmasney@redhat.com>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Ajit Pandey <quic_ajipan@quicinc.com>, 
-	Imran Shaik <quic_imrashai@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>, 
-	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>, Shivnandan Kumar <quic_kshivnan@quicinc.com>
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: sa8775p: Add CPU OPP tables to
- scale DDR/L3
-Message-ID: <daqa3krsp6emdha6h7tlcelsggb6qeilnojgtfxjbp5zw4n6ow@xzwdmu55ygjf>
-References: <20241017-sa8775p-cpufreq-l3-ddr-scaling-v1-0-074e0fb80b33@quicinc.com>
- <20241017-sa8775p-cpufreq-l3-ddr-scaling-v1-2-074e0fb80b33@quicinc.com>
- <ZxEwVShJuMH4J1Hp@x1>
- <9179759d-7af1-409f-8130-1136c9ae4ecd@quicinc.com>
+To: Bartosz Golaszewski <brgl@bgdev.pl>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Andi Shyti <andi.shyti@kernel.org>, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] i2c: qup: use generic device property accessors
+Message-ID: <yce7vswjat2bhda2l4c4ji4idtozo24c7tbmpahz56tmedmpw7@fn2h2t4hv7dd>
+References: <20241008160947.81045-1-brgl@bgdev.pl>
+ <173151232541.92239.8233789832026323394.b4-ty@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -91,71 +85,27 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <9179759d-7af1-409f-8130-1136c9ae4ecd@quicinc.com>
+In-Reply-To: <173151232541.92239.8233789832026323394.b4-ty@linaro.org>
 
-On Mon, Nov 11, 2024 at 06:39:48PM +0530, Jagadeesh Kona wrote:
+On Wed, Nov 13, 2024 at 04:39:23PM +0100, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > 
 > 
-> On 10/17/2024 9:12 PM, Brian Masney wrote:
-> > On Thu, Oct 17, 2024 at 02:58:31PM +0530, Jagadeesh Kona wrote:
-> >> +	cpu0_opp_table: opp-table-cpu0 {
-> >> +		compatible = "operating-points-v2";
-> >> +		opp-shared;
-> >> +
-> >> +		cpu0_opp_1267mhz: opp-1267200000 {
-> >> +			opp-hz = /bits/ 64 <1267200000>;
-> >> +			opp-peak-kBps = <6220800 29491200>;
-> >> +		};
-> >> +
-> >> +		cpu0_opp_1363mhz: opp-1363200000 {
-> >> +			opp-hz = /bits/ 64 <1363200000>;
-> >> +			opp-peak-kBps = <6220800 29491200>;
-> >> +		};
+> On Tue, 08 Oct 2024 18:09:47 +0200, Bartosz Golaszewski wrote:
+> > There's no reason for this driver to use OF-specific property helpers.
+> > Drop the last one in favor of the generic variant and no longer include
+> > of.h.
 > > 
-> > [snip]
-> > 
-> >> +	cpu4_opp_table: opp-table-cpu4 {
-> >> +		compatible = "operating-points-v2";
-> >> +		opp-shared;
-> >> +
-> >> +		cpu4_opp_1267mhz: opp-1267200000 {
-> >> +			opp-hz = /bits/ 64 <1267200000>;
-> >> +			opp-peak-kBps = <6220800 29491200>;
-> >> +		};
-> >> +
-> >> +		cpu4_opp_1363mhz: opp-1363200000 {
-> >> +			opp-hz = /bits/ 64 <1363200000>;
-> >> +			opp-peak-kBps = <6220800 29491200>;
-> >> +		};
-> > 
-> > There's no functional differences in the cpu0 and cpu4 opp tables. Can
-> > a single table be used?
-> > 
-> > This aligns with my recollection that this particular SoC only has the
-> > gold cores.
-> > 
-> > Brian
 > > 
 > 
-> Thanks Brian for your review. Sorry for the delayed response.
+> Applied, to the GPIO tree as the maintainer has been unresposive for two
+> months and the change is trivial.
 > 
-> We require separate OPP tables for CPU0 and CPU4 to allow independent
-> scaling of DDR and L3 frequencies for each CPU domain, with the final
-> DDR and L3 frequencies being an aggregate of both.
-> 
-> If we use a single OPP table for both CPU domains, then _allocate_opp_table() [1]
-> won't be invoked for CPU4. As a result both CPU devices will end up in sharing
-> the same ICC path handle, which could lead to one CPU device overwriting the bandwidth
-> votes of other.
+> [1/1] i2c: qup: use generic device property accessors
+>       commit: 400913bd4edd76ef1775bfd95543846bd6f5ed71
 
-All of this should be a part of the commit message.
-
-> 
-> [1] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/drivers/opp/core.c#n1588
-> 
-> Thanks,
-> Jagadeesh
->  
+I think it's a bad idea to pull unrelated patches just because you have
+a GPIO tree.
 
 -- 
 With best wishes
