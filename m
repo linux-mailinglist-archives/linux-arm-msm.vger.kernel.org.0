@@ -1,212 +1,210 @@
-Return-Path: <linux-arm-msm+bounces-37896-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37898-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 95AED9C869D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 10:57:38 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6DDD69C88FC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 12:32:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 26BBF1F243EF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 09:57:38 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 70324B239EE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 11:06:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB3DF1F80C6;
-	Thu, 14 Nov 2024 09:55:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD62E1F77B8;
+	Thu, 14 Nov 2024 11:06:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hx6fiCA1"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NVzXNwh+"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 571AE1F76AF;
-	Thu, 14 Nov 2024 09:55:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 317A1189BA0;
+	Thu, 14 Nov 2024 11:06:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731578111; cv=none; b=c3dYc5O7QqGZaMYlcIXqPBaWHMoqF+LH+pwSDZpEOz+voKXh9NebsvhV6SK1j2sUouwJN5UjN9gceO8AvvY1TgVQl1tMah334PZI3gDUc7ONEYjpwxXwbxudCQ7u7Lez+lTVDb7sDu62qdk37RKuiooBU6v9lsLGZ4RgvdK0rAs=
+	t=1731582378; cv=none; b=CKuP2HsjLiu6mBHKY2mf3Fwdz18KH+4V3AbtLj9lBDF26sESDy1W1Hw4ZF0T/weESfqciicRUsQ5c8J6dyiecwRWYy3ciC6NDz5ncFg/oWXc+MqpVsI3eexYDf2CQjRfIIHolUiBAENjaDz/UK3L2zWZnPSBSTun1cWgl+nrbqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731578111; c=relaxed/simple;
-	bh=Sm0rX+FSTAdHbIUuipg8AflfiM27xqi8lxwbIDIKsyU=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References; b=WKOQJUVK/fvy1/eAlN1MtGyKOnkseYFwgHCMoirbvI0vLXEqxFDaoS573Y2OsDlVb+GfoezwgARfWQxNr1oSSvw6jE0ne/mbgueFa0ozv1Eeq7OjMXoUJgVxtuxT7ehLyvaill9hkJD+XA7cah43fYSpDjoXU+eNF3ZUWohMFNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hx6fiCA1; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1731582378; c=relaxed/simple;
+	bh=AZso2QVYImR1GGZkPip6idDqxJkv3xa62pqrqqeF4/U=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=EZ2A8Re2esyq7X/+THwS6H3MnEv/gysMHo4Z+saQObRjUlj49DmOoKM+A8u6H8bO+nGoaX76FTrFJiFcJ/XTJc5hmoh9Knjf1ievZDB//6Ktre9AXao2YKM0HPGy+1cYXQbApbhr+OcSWC/Q2ct1ZDv696hzO+1ol+LHzG/RzPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NVzXNwh+; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AE6AGsN015430;
-	Thu, 14 Nov 2024 09:55:07 GMT
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AE9oWj1021409;
+	Thu, 14 Nov 2024 11:06:14 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:date:from:in-reply-to:message-id:references:subject:to; s=
-	qcppdkim1; bh=uhOxfLJm7IAQxFMXnko7AWGcyTFeJVBwgwPDFqPcecM=; b=hx
-	6fiCA1yuNGs+WqHzbNNk33/hrcw8d2URrCYplBneT16f7iWNg50jKT2kMfJ1zkYI
-	znl1bAvwthyOKhQ4KXNiIwkVGwQ730CsDVJVwdz7QkOWm5181WmFaPXcvICTWzjH
-	uBhBjKYhu4vKHreNK3DDeMpkUKI4gX47g063CEKFPg8DqBZPTbtrYWvCvQr/Tenf
-	+SyBUHX6Ki0RkxwJDMGq66toWaHWXcZ6r6xOZIXJQsgjlySrvM0o6cvgFKQiNw6q
-	t8HizRCMSVL32tWz9QJ7NvlQDsZq5CMTDUL0JDZyIZs8yR4paGuKCpN/aMeKXR22
-	iEXDSbRll49LgVT4EFNw==
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42vsf34j3x-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=Dyuhwi9rHgnSBBlXYluMiR
+	+AjdINFNaR5pj7dyevPCk=; b=NVzXNwh+owclWHwxcxL5eRLc3P8FERVvhPOyfJ
+	WSmiI0ElOx3c5aCENI3uUVNs8nTGWZyVPGNiartTTcvr2ubihvUhVr6lur9tbqEM
+	s2BQgJOZIDb1bOEnYi5GxfH2QMPSPTtcWp4J6FbMlx4rjRM4qlyWhsdkt00nuOyQ
+	XkQ0LLMmAbSxvAsGdQx2IVqhFvvtLQI+6aKCyAOhrYxHdxnh8ybPnmK5EzWEogg1
+	601vmNJT2HETJjiJVPGxKY3TzGBN3/VLN/k3JpKIGH7SjDma5BD32ubXmdixj0vF
+	6Q1Pga2aPi1wiKEtST6AGftDQC7H1a7a2kx+WQwSUf42uliw==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42wex8r6r3-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 14 Nov 2024 09:55:07 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 4AE9t3dR002289;
-	Thu, 14 Nov 2024 09:55:03 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 42t0tm9vy3-1;
-	Thu, 14 Nov 2024 09:55:03 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4AE9pYDs031808;
-	Thu, 14 Nov 2024 09:55:03 GMT
-Received: from hu-maiyas-hyd.qualcomm.com (hu-mukhopad-hyd.qualcomm.com [10.147.244.250])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 4AE9t2nK002257;
-	Thu, 14 Nov 2024 09:55:02 +0000
-Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 3978529)
-	id 0F9145009E1; Thu, 14 Nov 2024 15:25:02 +0530 (+0530)
-From: Soutrik Mukhopadhyay <quic_mukhopad@quicinc.com>
-To: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
-        krzk+dt@kernel.org, conor+dt@kernel.org
-Cc: Soutrik Mukhopadhyay <quic_mukhopad@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_riteshk@quicinc.com,
-        quic_vproddut@quicinc.com, quic_abhinavk@quicinc.com
-Subject: [PATCH v3 2/2] arm64: dts: qcom: sa8775p-ride: Enable Display Port
-Date: Thu, 14 Nov 2024 15:25:00 +0530
-Message-Id: <20241114095500.18616-3-quic_mukhopad@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20241114095500.18616-1-quic_mukhopad@quicinc.com>
-References: <20241114095500.18616-1-quic_mukhopad@quicinc.com>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: BHPHuDT_VLfaY7chLxwWg8Fh1Nm2eblk
-X-Proofpoint-GUID: BHPHuDT_VLfaY7chLxwWg8Fh1Nm2eblk
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
- bulkscore=0 phishscore=0 malwarescore=0 suspectscore=0 priorityscore=1501
- clxscore=1015 mlxscore=0 spamscore=0 lowpriorityscore=0 mlxlogscore=999
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2411140076
+	Thu, 14 Nov 2024 11:06:14 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AEB6DiZ027509
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 14 Nov 2024 11:06:13 GMT
+Received: from hu-imrashai-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Thu, 14 Nov 2024 03:06:09 -0800
+From: Imran Shaik <quic_imrashai@quicinc.com>
+Date: Thu, 14 Nov 2024 16:35:55 +0530
+Subject: [PATCH] arm64: dts: qcom: qcs8300: Add support for clock
+ controllers
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-ID: <20241114-qcs8300-mm-cc-dt-patch-v1-1-7a974508c736@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAJLZNWcC/y3MSwrDMAxF0a0EjSuQk+B+tlI6EIraaJCf7ZaCy
+ d5jkgzPg3czRA2mER5VhqA/izaNBe5SgfQ8fhStK4aa6tY51+Ii8dYQ4TCgCHYJZ07SIzF7Fn9
+ lT3co5zno2/57+Pk6HHT5ln46x3XdAO/Tzct9AAAA
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC: Ajit Pandey <quic_ajipan@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>,
+        Satya Priya Kakitapalli
+	<quic_skakitap@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Imran Shaik
+	<quic_imrashai@quicinc.com>
+X-Mailer: b4 0.14.1
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 23p0LF8AKIh8pfGeqC-8XsginUEXizfs
+X-Proofpoint-ORIG-GUID: 23p0LF8AKIh8pfGeqC-8XsginUEXizfs
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
+ phishscore=0 bulkscore=0 mlxlogscore=999 lowpriorityscore=0 suspectscore=0
+ priorityscore=1501 malwarescore=0 spamscore=0 clxscore=1011 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2411140086
 
-Enable DPTX0 and DPTX1 along with their corresponding PHYs for
-sa8775p-ride platform.
+Add support for GPU, Video, Camera and Display clock controllers on
+Qualcomm QCS8300 platform.
 
-Signed-off-by: Soutrik Mukhopadhyay <quic_mukhopad@quicinc.com>
+Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
 ---
- arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 80 ++++++++++++++++++++++
- 1 file changed, 80 insertions(+)
+Please note that this series is dependent on [1] and [2], which adds support
+for QCS8300 initial device tree and QCS8300 multi media clock controllers respectively.
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-index adb71aeff339..4847e4942386 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-@@ -27,6 +27,30 @@
- 	chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
-+
-+	dp0-connector {
-+		compatible = "dp-connector";
-+		label = "DP0";
-+		type = "full-size";
-+
-+		port {
-+			dp0_connector_in: endpoint {
-+				remote-endpoint = <&mdss0_dp0_out>;
-+			};
+[1] https://lore.kernel.org/all/20240925-qcs8300_initial_dtsi-v2-0-494c40fa2a42@quicinc.com/
+[2] https://lore.kernel.org/all/20241106-qcs8300-mm-patches-v3-0-f611a8f87f15@quicinc.com/ 
+---
+ arch/arm64/boot/dts/qcom/qcs8300.dtsi | 59 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 59 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/qcs8300.dtsi b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
+index 2c35f96c3f28..e43fada4acb5 100644
+--- a/arch/arm64/boot/dts/qcom/qcs8300.dtsi
++++ b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
+@@ -5,6 +5,10 @@
+ 
+ #include <dt-bindings/clock/qcom,qcs8300-gcc.h>
+ #include <dt-bindings/clock/qcom,rpmh.h>
++#include <dt-bindings/clock/qcom,sa8775p-camcc.h>
++#include <dt-bindings/clock/qcom,sa8775p-dispcc.h>
++#include <dt-bindings/clock/qcom,sa8775p-gpucc.h>
++#include <dt-bindings/clock/qcom,sa8775p-videocc.h>
+ #include <dt-bindings/interconnect/qcom,icc.h>
+ #include <dt-bindings/interconnect/qcom,qcs8300-rpmh.h>
+ #include <dt-bindings/interrupt-controller/arm-gic.h>
+@@ -772,6 +776,20 @@ lpass_ag_noc: interconnect@3c40000 {
+ 			qcom,bcm-voters = <&apps_bcm_voter>;
+ 		};
+ 
++		gpucc: clock-controller@3d90000 {
++			compatible = "qcom,qcs8300-gpucc";
++			reg = <0x0 0x03d90000 0x0 0xa000>;
++			clocks = <&rpmhcc RPMH_CXO_CLK>,
++				 <&gcc GCC_GPU_GPLL0_CLK_SRC>,
++				 <&gcc GCC_GPU_GPLL0_DIV_CLK_SRC>;
++			clock-names = "bi_tcxo",
++				      "gcc_gpu_gpll0_clk_src",
++				      "gcc_gpu_gpll0_div_clk_src";
++			#clock-cells = <1>;
++			#reset-cells = <1>;
++			#power-domain-cells = <1>;
 +		};
-+	};
 +
-+	dp1-connector {
-+		compatible = "dp-connector";
-+		label = "DP1";
-+		type = "full-size";
-+
-+		port {
-+			dp1_connector_in: endpoint {
-+				remote-endpoint = <&mdss0_dp1_out>;
-+			};
+ 		pmu@9091000 {
+ 			compatible = "qcom,qcs8300-llcc-bwmon", "qcom,sc7280-llcc-bwmon";
+ 			reg = <0x0 0x9091000 0x0 0x1000>;
+@@ -882,6 +900,47 @@ gem_noc: interconnect@9100000 {
+ 			qcom,bcm-voters = <&apps_bcm_voter>;
+ 		};
+ 
++		videocc: clock-controller@abf0000 {
++			compatible = "qcom,qcs8300-videocc";
++			reg = <0x0 0x0abf0000 0x0 0x10000>;
++			clocks = <&gcc GCC_VIDEO_AHB_CLK>,
++				 <&rpmhcc RPMH_CXO_CLK>,
++				 <&rpmhcc RPMH_CXO_CLK_A>,
++				 <&sleep_clk>;
++			power-domains = <&rpmhpd RPMHPD_MMCX>;
++			#clock-cells = <1>;
++			#reset-cells = <1>;
++			#power-domain-cells = <1>;
 +		};
-+	};
- };
- 
- &apps_rsc {
-@@ -421,6 +445,50 @@
- 	status = "okay";
- };
- 
-+&mdss0 {
-+	status = "okay";
-+};
 +
-+&mdss0_dp0 {
-+	status = "okay";
++		camcc: clock-controller@ade0000 {
++			compatible = "qcom,qcs8300-camcc";
++			reg = <0x0 0x0ade0000 0x0 0x20000>;
++			clocks = <&gcc GCC_CAMERA_AHB_CLK>,
++				 <&rpmhcc RPMH_CXO_CLK>,
++				 <&rpmhcc RPMH_CXO_CLK_A>,
++				 <&sleep_clk>;
++			power-domains = <&rpmhpd RPMHPD_MMCX>;
++			#clock-cells = <1>;
++			#reset-cells = <1>;
++			#power-domain-cells = <1>;
++		};
 +
-+	pinctrl-0 = <&dp0_hot_plug_det>;
-+	pinctrl-names = "default";
-+};
++		dispcc: clock-controller@af00000 {
++			compatible = "qcom,sa8775p-dispcc0";
++			reg = <0x0 0x0af00000 0x0 0x20000>;
++			clocks = <&gcc GCC_DISP_AHB_CLK>,
++				 <&rpmhcc RPMH_CXO_CLK>,
++				 <&rpmhcc RPMH_CXO_CLK_A>,
++				 <&sleep_clk>,
++				 <0>, <0>, <0>, <0>,
++				 <0>, <0>, <0>, <0>;
++			power-domains = <&rpmhpd RPMHPD_MMCX>;
++			#clock-cells = <1>;
++			#reset-cells = <1>;
++			#power-domain-cells = <1>;
++		};
 +
-+&mdss0_dp0_out {
-+	data-lanes = <0 1 2 3>;
-+	link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
-+	remote-endpoint = <&dp0_connector_in>;
-+};
-+
-+&mdss0_dp0_phy {
-+	status = "okay";
-+
-+	vdda-phy-supply = <&vreg_l1c>;
-+	vdda-pll-supply = <&vreg_l4a>;
-+};
-+
-+&mdss0_dp1 {
-+	status = "okay";
-+
-+	pinctrl-0 = <&dp1_hot_plug_det>;
-+	pinctrl-names = "default";
-+};
-+
-+&mdss0_dp1_out {
-+	data-lanes = <0 1 2 3>;
-+	link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
-+	remote-endpoint = <&dp1_connector_in>;
-+};
-+
-+&mdss0_dp1_phy {
-+	status = "okay";
-+
-+	vdda-phy-supply = <&vreg_l1c>;
-+	vdda-pll-supply = <&vreg_l4a>;
-+};
-+
- &pmm8654au_0_gpios {
- 	gpio-line-names = "DS_EN",
- 			  "POFF_COMPLETE",
-@@ -527,6 +595,18 @@
- };
- 
- &tlmm {
-+	dp0_hot_plug_det: dp0-hot-plug-det-state {
-+		pins = "gpio101";
-+		function = "edp0_hot";
-+		bias-disable;
-+	};
-+
-+	dp1_hot_plug_det: dp1-hot-plug-det-state {
-+		pins = "gpio102";
-+		function = "edp1_hot";
-+		bias-disable;
-+	};
-+
- 	ethernet0_default: ethernet0-default-state {
- 		ethernet0_mdc: ethernet0-mdc-pins {
- 			pins = "gpio8";
+ 		pdc: interrupt-controller@b220000 {
+ 			compatible = "qcom,qcs8300-pdc", "qcom,pdc";
+ 			reg = <0x0 0xb220000 0x0 0x30000>,
+
+---
+base-commit: 78cd5a71d1cb4ca645294a1dbe603a8c356c86a7
+change-id: 20241114-qcs8300-mm-cc-dt-patch-0aa6ac67a609
+
+Best regards,
 -- 
-2.17.1
+Imran Shaik <quic_imrashai@quicinc.com>
 
 
