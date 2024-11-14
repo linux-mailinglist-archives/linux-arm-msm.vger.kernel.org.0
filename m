@@ -1,135 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-37906-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37907-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 276F69C8A16
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 13:36:06 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E88E99C8AB6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 13:48:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E1210283FC7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 12:36:04 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 62744B24725
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 12:47:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 39E441F8F17;
-	Thu, 14 Nov 2024 12:36:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5DFCE1FA851;
+	Thu, 14 Nov 2024 12:47:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hKRrgFNl"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="geSCMfng"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63B351FA242
-	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2024 12:36:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB4001F9AB6
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2024 12:47:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731587764; cv=none; b=dXJjCkpi/tjb4/9R1C6qvRoA8cFxP21UcihsGHVbAlwivrjxEhdixUtcbN1V/3KnvQ/nb7l7TeQi2vEuaf4ensmjv2AOnZ3IpyOCHHjAyrp456o4T3/n+vvrwQnNFbNBOAIUdOIMCOl2StQdQSDWQTBPZRnRbxTX8CqUpSJwhZk=
+	t=1731588468; cv=none; b=DhQgE5qnjNYs765R8MPY+4MHOagggpeO2f/D5rFF2b5h3UxdzRk9HOcUDuWpc4uaCSkNyJ/GIa1vuL8Sw3snR3/VHtSDUxTJ345+858M7KSZlk8+PNtpij5Va9WAt0pqZa4d29vMYzWacRo3zdmISC9KgWKo1fC7YuNWACNZDXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731587764; c=relaxed/simple;
-	bh=T+LDaEiPLaW2+KPSAG2c9PKXYlFwR3gPf0XLpn/LmK4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rsezSBbLgJ+y0OL+85ryhKUxPfHAZVXckNv79DHMQCSE+gKZNNhh2Q0cYGmgl7SYzMawJntrBNumOhx3ixrwsWHzALeLTIf5MEvM690IoXWmhTZhtqDF6Vf/uWlJeYhMcsYUMhAcS2548bg+4iSWIkDsqfHsesU0/HmrMRWwWNM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hKRrgFNl; arc=none smtp.client-ip=209.85.167.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-53da5a27771so572990e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2024 04:36:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731587760; x=1732192560; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=VolHPGwzyzWXHH7WDKvK/ITQahcEIxL1w6M06zCzGt8=;
-        b=hKRrgFNlooqZJotrlyxr782mroUorzeUjj7S7yt4JSZrgvTVcQgFOgtso9wfcsF/56
-         +Y0zxFyaF+AMsXGJhT+QwV3+vsiCt5uH+fhQUF8IxtR+ZHD60jzCY40A74w9BSunkSZ/
-         sAMNDadcgdn8+1jQfO9Tonx7pJHpi/7M8V4Q8NdAj2OspuZglmwhUM5T8GwbYYrf0sqx
-         4zztJ3IbaC1g9TCciE4jotzIuQ4GNxDGaHO4i222xICJUDMRbIKouadg4sHGUhdociFN
-         eFR9Og2izb6Ft0hC7PsqSGVDfIqIsAN3gWe/SeSLJ2t9i9tOqun4x9LaHRbzUprUea5w
-         NGyQ==
+	s=arc-20240116; t=1731588468; c=relaxed/simple;
+	bh=RTAd+3XLwNxGPeXfDfmBJBGafJ8wLyA2P1qPpPAMZfE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=dbsMEykMp0/BfZjwrrjA76hiUEVHA0NXJkPc9bWJFsJpedKYJOw12MMEZVNIgeR+uG8gmJx5rQXxBirlqpzFvkjvm2m/jkYv8Cj+6RnQ/7xD81Qh/2GpSPJjwbasYekupuM7wAgf0qWAyISztmhwLl7SpFiIhr4ywQwkO3CXt8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=fail smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=geSCMfng; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AE6LwAi026127
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2024 12:47:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	TirkE3p4MW042XA9VvghCJxqECC+Uiw5LWNZTmDaOsw=; b=geSCMfngvs5+4/9Z
+	5nLUGeut9W9AmVnQA8ac3nFsFJdZVelclqF+2DLmuOjlfo8AF2ZcIQSZKwm5XDcw
+	DiLoyz56XfsGzNCe30SDAYx/cnF24SzlN8FSy8QTcjWVi+D+90+SZCMs4kxrOQKJ
+	gN/Mn5PkOSdXPSh3TbAJ/DYXF9RqvtMh1mgoTUrKAe6PzZPExTwCgArFm8rvSowd
+	wSpXbMcJPcePuWQamp3hwzEhI9yafSbxRBxDnzREyWgslfVAOEQDPnkwHlGl+tCm
+	WW6fpPBoijit6+GGssj8ua/ruJTpJIbiKUNUxz1NmoYiFl3uFx330xZbiUALkT6R
+	2j+TWw==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42va07fgwe-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2024 12:47:45 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4609b352aa9so1290151cf.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2024 04:47:45 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731587760; x=1732192560;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VolHPGwzyzWXHH7WDKvK/ITQahcEIxL1w6M06zCzGt8=;
-        b=uCVnzl9lhD4P1WwyPyoLZxAzAlXCHOOjtJaEBJTHdSxh8fgqFfxixaHo4VOjQlfH/W
-         QmKdhpUxlLktp8/mWyfbqaPDSIj1Wq3HXm4B1bBmraAEmWzHff8SJDQgUV5uUb0fcPIU
-         X8JiBTGg7kzDlIv92jnQGhHWYgbWQkAvmB8JTlLvi3Kff8VyHgpG+UQhBSKw4b5iYU5h
-         I0DtI4X6uUzobnaJrPvb5Q8UAct0fEB8jHkmrD76aQE4ggYCR+la3wCif3L3aeNLANmu
-         A/NNwv/xWCwoWFjK4YdlYhTDaBot4lGJHX97eCw/izGcofGU+G++18zMIO0u+JpDoDtH
-         aoBw==
-X-Forwarded-Encrypted: i=1; AJvYcCX9T6cXO0BW8eVxm/NLfY8ckRt3yZHttkdY0OcM8KvSNSd0vOCxGpwFL+1dA6SdxIh9l4oumxtvMmrRxOZu@vger.kernel.org
-X-Gm-Message-State: AOJu0YwAuYv+cV9gwVb4myN6QeMCwB9QKv84F2f7YX3cnfzcRuL5jFAP
-	uYsiel89tzkiKalgAhxIJ5dw7crTARa8uYXBWVwbsnYiRtHeESIhJOZrlGWDb00=
-X-Google-Smtp-Source: AGHT+IGi7UOzSfwh72ihUwOGEexWy2JMnijNfqGBkqGRHqPGSrFGRfh6xQPHDoXZUsDQNmf4oTaytg==
-X-Received: by 2002:ac2:4c23:0:b0:53d:a86e:4f19 with SMTP id 2adb3069b0e04-53da86e4f40mr648491e87.25.1731587760466;
-        Thu, 14 Nov 2024 04:36:00 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53da6530f62sm170210e87.166.2024.11.14.04.35.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Nov 2024 04:35:59 -0800 (PST)
-Date: Thu, 14 Nov 2024 14:35:58 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Richard Acayan <mailingradian@gmail.com>
-Cc: Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, 
-	Joerg Roedel <joro@8bytes.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Rob Clark <robdclark@gmail.com>, linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev, 
-	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] iommu/arm-smmu-qcom: add sdm670 adreno iommu
- compatible
-Message-ID: <4lpz2sx3ikvdpb5dv7qdovpsfm724kc6ibjtbmmxaajtwemr5l@xtiaork4hy6e>
-References: <20241114004713.42404-4-mailingradian@gmail.com>
- <20241114004713.42404-6-mailingradian@gmail.com>
+        d=1e100.net; s=20230601; t=1731588465; x=1732193265;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=TirkE3p4MW042XA9VvghCJxqECC+Uiw5LWNZTmDaOsw=;
+        b=okmhnQS+3ZA74fvNrnuVoulA0U5UhXJVPT3roXC40QwVdJQZA9Nm8fVLnKckhw5rNK
+         3UBHvcK5spONIhD/f3pTLfER5kBTR/AIcO+DmFWAk/jnGmDHB/ooyaDq24+u7p7T/RWf
+         ZPQUfynCVF9ZiYPqOYhOlYFCwlvtgJmhnTGVBlsYRVPzd2I+AkRByskMeNRN5pg/cKoD
+         MxSYz1m0FdeGciZpUjC3RPIFW+ObXTgWt4XAVDskpMVf4qbnzx89wLmLIPUm+F31CHfk
+         6jaqU0AozdlbjT7x/0eb+l59tSa7tcjrFbu3rzfAguoRHAL01CZC3eCMSMT/Zw6rgqrC
+         kfOg==
+X-Forwarded-Encrypted: i=1; AJvYcCUpgCmAFqGTsptTcpSOnReucKGE/SHXEjZXfw93IvIhcgGYEZ7B7aVVmPXNDC+l8HL29YlYugkaafdC8tFP@vger.kernel.org
+X-Gm-Message-State: AOJu0YzW/4ykOBC5dpn6rVsGd5L603YUZ7JH+Hx9bI1eQfs4mb9xyWSN
+	mEPh6HaKNIXm8fnPAVdstPJKL3MnRrIxqOYYeFvY2r7a/XEg2vsD5EG66Z21t4NHFICMyXsTn2r
+	lI8N3dDQYD7Z3njrNVQf7xktqILRyOw3zJ9QGtPqskJHDKkQhUmMV1rAaFgk8XzXQ
+X-Received: by 2002:a05:622a:281:b0:461:5f08:e680 with SMTP id d75a77b69052e-463094018a8mr152959311cf.10.1731588464737;
+        Thu, 14 Nov 2024 04:47:44 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEsxDffnRImxMQgqIQ8TXOem5agf/yFgovxPS825RyYZPFwUerfkyI2ebwr6OsoRlLLmIc1hg==
+X-Received: by 2002:a05:622a:281:b0:461:5f08:e680 with SMTP id d75a77b69052e-463094018a8mr152959011cf.10.1731588464407;
+        Thu, 14 Nov 2024 04:47:44 -0800 (PST)
+Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa20e046c68sm59057466b.167.2024.11.14.04.47.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 14 Nov 2024 04:47:43 -0800 (PST)
+Message-ID: <7e293d68-73c1-425d-ae52-e0893c8e0a61@oss.qualcomm.com>
+Date: Thu, 14 Nov 2024 13:47:41 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241114004713.42404-6-mailingradian@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 4/6] phy: qcom: qmp: Enable IPQ5424 support
+To: Varadarajan Narayanan <quic_varada@quicinc.com>, vkoul@kernel.org,
+        kishon@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+        conor+dt@kernel.org, gregkh@linuxfoundation.org, andersson@kernel.org,
+        konradybcio@kernel.org, dmitry.baryshkov@linaro.org,
+        mantas@8devices.com, quic_kbajaj@quicinc.com,
+        quic_kriskura@quicinc.com, quic_rohiagar@quicinc.com,
+        abel.vesa@linaro.org, quic_wcheng@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-usb@vger.kernel.org
+References: <20241114074722.4085319-1-quic_varada@quicinc.com>
+ <20241114074722.4085319-5-quic_varada@quicinc.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20241114074722.4085319-5-quic_varada@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: uXjbHBBZCxEubmmvqFm-0-deppsn9y8J
+X-Proofpoint-ORIG-GUID: uXjbHBBZCxEubmmvqFm-0-deppsn9y8J
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 malwarescore=0
+ mlxlogscore=999 clxscore=1015 adultscore=0 lowpriorityscore=0 spamscore=0
+ impostorscore=0 mlxscore=0 suspectscore=0 priorityscore=1501 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2411140100
 
-On Wed, Nov 13, 2024 at 07:47:16PM -0500, Richard Acayan wrote:
-> Add the compatible for the separate IOMMU on SDM670 for the Adreno GPU.
+On 14.11.2024 8:47 AM, Varadarajan Narayanan wrote:
+> Enable QMP USB3 phy support for IPQ5424 SoC.
 > 
-> This IOMMU has the compatible strings:
-> 
-> 	"qcom,sdm670-smmu-v2", "qcom,adreno-smmu", "qcom,smmu-v2"
-> 
-> While the SMMU 500 doesn't need an entry for this specific SoC, the
-> SMMU v2 compatible should have its own entry, as the fallback entry in
-> arm-smmu.c handles "qcom,smmu-v2" without per-process page table support
-> unless there is an entry here. This entry can't be the
-> "qcom,adreno-smmu" compatible because dedicated GPU IOMMUs can also be
-> SMMU 500 with different handling.
-> 
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
 > ---
->  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 1 +
->  1 file changed, 1 insertion(+)
-
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-
+> v2: Add 'Reviewed-by: Dmitry Baryshkov'
+> ---
+>  drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 3 +++
+>  1 file changed, 3 insertions(+)
 > 
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> index 6372f3e25c4b..601fb878d0ef 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> @@ -567,6 +567,7 @@ static const struct of_device_id __maybe_unused qcom_smmu_impl_of_match[] = {
->  	{ .compatible = "qcom,sc8180x-smmu-500", .data = &qcom_smmu_500_impl0_data },
->  	{ .compatible = "qcom,sc8280xp-smmu-500", .data = &qcom_smmu_500_impl0_data },
->  	{ .compatible = "qcom,sdm630-smmu-v2", .data = &qcom_smmu_v2_data },
-> +	{ .compatible = "qcom,sdm670-smmu-v2", .data = &qcom_smmu_v2_data },
->  	{ .compatible = "qcom,sdm845-smmu-v2", .data = &qcom_smmu_v2_data },
->  	{ .compatible = "qcom,sdm845-smmu-500", .data = &sdm845_smmu_500_data },
->  	{ .compatible = "qcom,sm6115-smmu-500", .data = &qcom_smmu_500_impl0_data},
-> -- 
-> 2.47.0
-> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
+> index acd6075bf6d9..f43823539a3b 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
+> @@ -2298,6 +2298,9 @@ static int qmp_usb_probe(struct platform_device *pdev)
+>  
+>  static const struct of_device_id qmp_usb_of_match_table[] = {
+>  	{
+> +		.compatible = "qcom,ipq5424-qmp-usb3-phy",
+> +		.data = &ipq9574_usb3phy_cfg,
+> +	}, {
 
--- 
-With best wishes
-Dmitry
+If the software interface is the same, can this just use ipq9574 as a
+fallback compatible?
+
+Konrad
 
