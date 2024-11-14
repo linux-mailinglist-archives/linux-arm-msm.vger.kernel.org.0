@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-37930-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37931-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6FDC89C914F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 19:03:18 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D12D39C91E2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 19:51:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3426F283994
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 18:03:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 587341F22E32
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 18:51:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C2E918C933;
-	Thu, 14 Nov 2024 18:03:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA6A6199E8D;
+	Thu, 14 Nov 2024 18:51:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ayKDzBeu"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="czm1CKh4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6AC9AD5B;
-	Thu, 14 Nov 2024 18:03:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54E0817A583;
+	Thu, 14 Nov 2024 18:51:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731607396; cv=none; b=OgXTbnYt20N7cds34S+lN6giQKuROENS3VzTDFNfIVAlLKfC4VS6biiEeIYlJle9IO7BHBOEWf3Ooqs7nep1mCUudqMdaCWhTArmOGNFsYwMloFvjeAIFtPnmTqt+C5xi8vDjtPxVi+mMDox43RS5dNBP+b2mmo+qrV3xCPsMRw=
+	t=1731610268; cv=none; b=OdZjoSA6nsSR8pZQJue7UdaSolOdB6AFZ36VVRDtB1iB4pR8wzfn0mhIuUwByuXTyQm3aPO05ENzRTVJnpGK0o/oxijdbyQkYAh0bEed1V1aqkr7b2HNxzY/1a4rq1AFSTDgy+8XNxrxL2e0qQh/CQ8aqe8aiEKr2Q1HT/lwko8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731607396; c=relaxed/simple;
-	bh=zJvIEoZunBTCy85yhHewfc0bMrsW09T9C/K+xnDIZCE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=BtuUzpDNvRhaJrrXIYtocZllFfNv9u4SFuP68fbRqTxdywzKXmuTZvXisRdDHAvyfOJPfhIB0+Q6fBbL7AlMY3KbxZm0AekBOyyIe9WHZyu/oATNh5AJdc2n3FyFll1hfToUh4JAzvB9Ei5pSlG1WfVh17ofz7PutfKdpvolGk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ayKDzBeu; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1731610268; c=relaxed/simple;
+	bh=m6WZ3ZIscIRi9/tdsz78w+z1a1PitZtcJfiPjaxj+Lc=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
+	 In-Reply-To:Content-Type; b=tMst+gugoFcNUamREZ1Q8+ueCOnBVnMV2CLcbeLx5jasL/ce662MS/KHTiz7q9S6bXLJPLM2HXXncjRn2wdLthfrBFR+bPPUmhhIDcPrkMhYL9gZl45zhCVkGuxaSiZLY8AHy79PY/+1CucYMDNy1OzsJPy4MeVvWuEO6FCZ95Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=czm1CKh4; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AEHHvqX013436;
-	Thu, 14 Nov 2024 18:03:04 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AEHIAYC027332;
+	Thu, 14 Nov 2024 18:50:54 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	WPAYMJWo3f8zQDT0GQK415PBZz2HjsisECbUAqr83y0=; b=ayKDzBeuCaZWunKC
-	7OzC2L4tttc5glZqLuainlHUTF/bQiAuAViuYRFJkF0E/ODH6MULHkBizx3z7/vJ
-	DZA9MkulieLHKGW0ZSIKnUxVFCrUwQl+yPrUA1L/R7jymmLno5LUgbORMYK3LS4y
-	G69AA9QsYjM+1a93ZILV2jMLIYcMPDVsJ1JOaCbkQ52lwCZr1ORKrxBM5MQo9pce
-	6S7SLbGpBW396Xiujukp58P4A7mqTJPefnn3WA3wA4iHiS/jq/3YcPPLwFN/t5KN
-	4z3MY42A5jM8ENEtwL/7dzMZBHciR8GJzA733qfkfpwRgjcZvyC4QK5+BgzyYRhb
-	pQpdwQ==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42w7ekkhrk-1
+	gXdZRxBU5DgfexnP74xpDidLRkwnaa6lpw5QmSlsjYg=; b=czm1CKh4mq3DJHNw
+	OW9WRQYMlS5+uWQIoJtOBi3W/z56F68t3cf7AI7kxAUl6s/l5oRNqcAJpVsyB+gM
+	Y468ZEmukpRqIfGpiCArdNWiU0lnLSd091t40ItQMqCr52i1nDwQLNnD/M73tsyn
+	F4WdR0UAumNdHWooA6G/9NPDz5ONOmP2lTpP/16ZOUiL4bdNXoEziI9iMQ9mbO35
+	s8mqgJu3O3Dc1W8fVBNj6E0WFzGGoiqkiZJedLjeCJoYubaf7F9rAJjtZHGQm0L3
+	fQ6gE9iLt6YR2ZESjpLtPwyKYUZZaDQ8PVRNIfqjnhR53z1tp3cEPwwNGdtAICP0
+	1KdVkw==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42w66gusvk-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 14 Nov 2024 18:03:03 +0000 (GMT)
+	Thu, 14 Nov 2024 18:50:54 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AEI32Kc004137
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AEIorKX018846
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 14 Nov 2024 18:03:02 GMT
-Received: from [10.216.22.98] (10.80.80.8) by nalasex01a.na.qualcomm.com
+	Thu, 14 Nov 2024 18:50:53 GMT
+Received: from [10.216.2.12] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 14 Nov
- 2024 10:02:58 -0800
-Message-ID: <750739e8-62ad-4808-9d05-327d64355886@quicinc.com>
-Date: Thu, 14 Nov 2024 23:32:55 +0530
+ 2024 10:50:45 -0800
+Message-ID: <278e62e1-02a4-4e33-8592-fb4fafcedf7e@quicinc.com>
+Date: Fri, 15 Nov 2024 00:20:42 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,104 +65,174 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] drm/msm/adreno: Setup SMMU aparture for
- per-process page table
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Rob Clark
-	<robdclark@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar
-	<quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+Subject: Re: [PATCH v2 2/3] dt-bindings: opp: Add v2-qcom-adreno vendor
+ bindings
+From: Akhil P Oommen <quic_akhilpo@quicinc.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Krzysztof Kozlowski
+	<krzk@kernel.org>
+CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        "Konrad
+ Dybcio" <konradybcio@kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Marijn Suijten <marijn.suijten@somainline.org>,
         David Airlie
-	<airlied@gmail.com>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Simona Vetter
-	<simona@ffwll.ch>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20241110-adreno-smmu-aparture-v2-0-9b1fb2ee41d4@oss.qualcomm.com>
- <20241110-adreno-smmu-aparture-v2-2-9b1fb2ee41d4@oss.qualcomm.com>
- <CAF6AEGvD95RyUXDBjgmoefgO6QyeRw3tpa7EG1MLFKdxcoZ-4g@mail.gmail.com>
- <5a959c08-cc90-4a05-88b2-e1ee666561e2@quicinc.com>
- <9d690e39-2bda-4f5a-b7a5-2c9cf90a8065@oss.qualcomm.com>
+	<airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Viresh Kumar
+	<vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd
+	<sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>
+References: <20241021-gpu-acd-v2-0-9c25a62803bc@quicinc.com>
+ <20241021-gpu-acd-v2-2-9c25a62803bc@quicinc.com>
+ <mz4zpcr4tqh2w7vt75f4ofxjzfve54ozzgpdbi2jjzk5pdxbk7@t36tlt3mmprt>
+ <d858dadb-4098-4c9f-b4f0-393dc988db5f@quicinc.com>
+ <4426b4kybtac6rc4twa5pgm3hvlegofemvqjcrvh6ni7f5z2h6@5dnlv3hgywh5>
+ <c5e868e1-2dae-466c-a6fc-ef0f247fa0ce@quicinc.com>
 Content-Language: en-US
-From: Akhil P Oommen <quic_akhilpo@quicinc.com>
-In-Reply-To: <9d690e39-2bda-4f5a-b7a5-2c9cf90a8065@oss.qualcomm.com>
+In-Reply-To: <c5e868e1-2dae-466c-a6fc-ef0f247fa0ce@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: TGtOpQLQz2PmenG2JnFc9QPo4X0TKqfp
-X-Proofpoint-GUID: TGtOpQLQz2PmenG2JnFc9QPo4X0TKqfp
+X-Proofpoint-GUID: u57XbCI0GTKf8TNdTMbBb-PagDkTp2eW
+X-Proofpoint-ORIG-GUID: u57XbCI0GTKf8TNdTMbBb-PagDkTp2eW
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxscore=0
- impostorscore=0 phishscore=0 lowpriorityscore=0 suspectscore=0
- clxscore=1015 bulkscore=0 malwarescore=0 adultscore=0 priorityscore=1501
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411140142
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxlogscore=999
+ mlxscore=0 malwarescore=0 suspectscore=0 impostorscore=0
+ priorityscore=1501 bulkscore=0 clxscore=1015 lowpriorityscore=0
+ adultscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411140148
 
-On 11/14/2024 8:57 PM, Konrad Dybcio wrote:
-> On 12.11.2024 10:15 PM, Akhil P Oommen wrote:
->> On 11/11/2024 8:38 PM, Rob Clark wrote:
->>> On Sun, Nov 10, 2024 at 9:31 AM Bjorn Andersson
->>> <bjorn.andersson@oss.qualcomm.com> wrote:
+On 11/1/2024 9:54 PM, Akhil P Oommen wrote:
+> On 10/25/2024 11:58 AM, Dmitry Baryshkov wrote:
+>> On Thu, Oct 24, 2024 at 12:56:58AM +0530, Akhil P Oommen wrote:
+>>> On 10/22/2024 11:19 AM, Krzysztof Kozlowski wrote:
+>>>> On Mon, Oct 21, 2024 at 05:23:43PM +0530, Akhil P Oommen wrote:
+>>>>> Add a new schema which extends opp-v2 to support a new vendor specific
+>>>>> property required for Adreno GPUs found in Qualcomm's SoCs. The new
+>>>>> property called "qcom,opp-acd-level" carries a u32 value recommended
+>>>>> for each opp needs to be shared to GMU during runtime.
+>>>>>
+>>>>> Cc: Rob Clark <robdclark@gmail.com>
+>>>>> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+>>>>> ---
+>>>>>  .../bindings/opp/opp-v2-qcom-adreno.yaml           | 96 ++++++++++++++++++++++
+>>>>>  1 file changed, 96 insertions(+)
+>>>>>
+>>>>> diff --git a/Documentation/devicetree/bindings/opp/opp-v2-qcom-adreno.yaml b/Documentation/devicetree/bindings/opp/opp-v2-qcom-adreno.yaml
+>>>>> new file mode 100644
+>>>>> index 000000000000..6d50c0405ef8
+>>>>> --- /dev/null
+>>>>> +++ b/Documentation/devicetree/bindings/opp/opp-v2-qcom-adreno.yaml
+>>>>> @@ -0,0 +1,96 @@
+>>>>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>>>>> +%YAML 1.2
+>>>>> +---
+>>>>> +$id: http://devicetree.org/schemas/opp/opp-v2-qcom-adreno.yaml#
+>>>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>>>>> +
+>>>>> +title: Qualcomm Adreno compatible OPP supply
+>>>>> +
+>>>>> +description:
+>>>>> +  Adreno GPUs present in Qualcomm's Snapdragon chipsets uses an OPP specific
+>>>>> +  ACD related information tailored for the specific chipset. This binding
+>>>>> +  provides the information needed to describe such a hardware value.
+>>>>> +
+>>>>> +maintainers:
+>>>>> +  - Rob Clark <robdclark@gmail.com>
+>>>>> +
+>>>>> +allOf:
+>>>>> +  - $ref: opp-v2-base.yaml#
+>>>>> +
+>>>>> +properties:
+>>>>> +  compatible:
+>>>>> +    items:
+>>>>> +      - const: operating-points-v2-adreno
+>>>>> +      - const: operating-points-v2
+>>>>> +
+>>>>> +patternProperties:
+>>>>> +  '^opp-?[0-9]+$':
 >>>>
->>>> Support for per-process page tables requires the SMMU aparture to be
->>>> setup such that the GPU can make updates with the SMMU. On some targets
->>>> this is done statically in firmware, on others it's expected to be
->>>> requested in runtime by the driver, through a SCM call.
->>>>
->>>> One place where configuration is expected to be done dynamically is the
->>>> QCS6490 rb3gen2.
->>>>
->>>> The downstream driver does this unconditioanlly on any A6xx and newer,
+>>>> '-' should not be optional. opp1 is not expected name.
 >>>
->>> nit, s/unconditioanlly/unconditionally/
+>>> Agree. Will change this to '^opp-[0-9]+$'
 >>>
->>>> so follow suite and make the call.
 >>>>
->>>> Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
->>>
->>> Reviewed-by: Rob Clark <robdclark@gmail.com>
->>>
->>>
->>>> ---
->>>>  drivers/gpu/drm/msm/adreno/adreno_gpu.c | 11 +++++++++++
->>>>  1 file changed, 11 insertions(+)
+>>>>> +    type: object
+>>>>> +    additionalProperties: false
+>>>>> +
+>>>>> +    properties:
+>>>>> +      opp-hz: true
+>>>>> +
+>>>>> +      opp-level: true
+>>>>> +
+>>>>> +      opp-peak-kBps: true
+>>>>> +
+>>>>> +      opp-supported-hw: true
+>>>>> +
+>>>>> +      qcom,opp-acd-level:
+>>>>> +        description: |
+>>>>> +          A positive value representing the ACD (Adaptive Clock Distribution,
+>>>>> +          a fancy name for clk throttling during voltage droop) level associated
+>>>>> +          with this OPP node. This value is shared to a co-processor inside GPU
+>>>>> +          (called Graphics Management Unit a.k.a GMU) during wake up. It may not
+>>>>> +          be present for some OPPs and GMU will disable ACD while transitioning
+>>>>> +          to that OPP. This value encodes a voltage threshold and few other knobs
+>>>>> +          which are identified by characterization of the SoC. So, it doesn't have
+>>>>> +          any unit.
 >>>>
->>>> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
->>>> index 076be0473eb5..75f5367e73ca 100644
->>>> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
->>>> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
->>>> @@ -572,8 +572,19 @@ struct drm_gem_object *adreno_fw_create_bo(struct msm_gpu *gpu,
+>>>> Thanks for explanation and other updates. I am still not happy with this
+>>>> property. I do not see reason why DT should encode magic values in a
+>>>> quite generic piece of code. This creates poor ABI, difficult to
+>>>> maintain or understand.
 >>>>
->>>>  int adreno_hw_init(struct msm_gpu *gpu)
->>>>  {
+>>>
+>>> Configuring GPU ACD block with its respective value is a requirement for each OPP.
+>>> So OPP node seems like the natural place for this data.
+>>>
+>>> If it helps to resolve your concerns, I can elaborate the documentation with
+>>> details on the GMU HFI interface where this value should be passed on to the
+>>> hardware. Also replace "few other knobs" with "Delay cycles & Calibration margin"
+>>> in the above doc.
 >>
->> SCM calls into TZ can block for a very long time (seconds). It depends
->> on concurrent activities from other drivers like crypto for eg:. So we
->> should not do this in the gpu wake up path.
->>
->> Practically, gpu probe is the better place to do this.
-> 
-> Do we only have to do this once?
-> 
-> Do we have to redo it after CXPC?
+>> Usually the preference for DT is to specify data in a sensible way
+>> rather than just the values being programmed to the register. Is it
+>> possible to implement this approach for ACD values?
 
-Only once. Those registers have retention.
+Krzysztof/Dmitry,
+
+BIT(0)-BIT(15) are static configurations which doesn't change between
+OPPs. We can move it to driver.
+
+BIT(16)-BIT(31) indicates a threshold margin which triggers ACD. We can
+keep this in the devicetree. And the driver can construct the final
+value from both data and send it to GMU.
+
+If this is acceptable, I will send the v3 revision.
 
 -Akhil.
 
 > 
-> Konrad
+> I am still checking about this. Will get back.
+> 
+> -Akhil
+> 
+>>
+>>>  
+>>>>
+>>
+> 
 
 
