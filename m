@@ -1,210 +1,260 @@
-Return-Path: <linux-arm-msm+bounces-37898-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37899-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6DDD69C88FC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 12:32:34 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8B9799C8871
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 12:08:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 70324B239EE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 11:06:21 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 44A27282328
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 11:08:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD62E1F77B8;
-	Thu, 14 Nov 2024 11:06:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DFFE21F80D2;
+	Thu, 14 Nov 2024 11:08:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NVzXNwh+"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ySwz1ayK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 317A1189BA0;
-	Thu, 14 Nov 2024 11:06:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C9B41F8185
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2024 11:08:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731582378; cv=none; b=CKuP2HsjLiu6mBHKY2mf3Fwdz18KH+4V3AbtLj9lBDF26sESDy1W1Hw4ZF0T/weESfqciicRUsQ5c8J6dyiecwRWYy3ciC6NDz5ncFg/oWXc+MqpVsI3eexYDf2CQjRfIIHolUiBAENjaDz/UK3L2zWZnPSBSTun1cWgl+nrbqo=
+	t=1731582520; cv=none; b=ef4k5K5bqtQ6B0pQF3c33lD12qmNkdw8pAySm7geHn1xFA2/jZi7inInPMga8kagomjQ0n9tVUKjgRQsig1gWwGjZh056vkWSCgS4PyhrQeezGib9tfSpREEtCy1HPQQxOwzEyk84PCAtoYU8zFzjRBrh0JZin27G/jzTdW36kY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731582378; c=relaxed/simple;
-	bh=AZso2QVYImR1GGZkPip6idDqxJkv3xa62pqrqqeF4/U=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=EZ2A8Re2esyq7X/+THwS6H3MnEv/gysMHo4Z+saQObRjUlj49DmOoKM+A8u6H8bO+nGoaX76FTrFJiFcJ/XTJc5hmoh9Knjf1ievZDB//6Ktre9AXao2YKM0HPGy+1cYXQbApbhr+OcSWC/Q2ct1ZDv696hzO+1ol+LHzG/RzPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NVzXNwh+; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AE9oWj1021409;
-	Thu, 14 Nov 2024 11:06:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=Dyuhwi9rHgnSBBlXYluMiR
-	+AjdINFNaR5pj7dyevPCk=; b=NVzXNwh+owclWHwxcxL5eRLc3P8FERVvhPOyfJ
-	WSmiI0ElOx3c5aCENI3uUVNs8nTGWZyVPGNiartTTcvr2ubihvUhVr6lur9tbqEM
-	s2BQgJOZIDb1bOEnYi5GxfH2QMPSPTtcWp4J6FbMlx4rjRM4qlyWhsdkt00nuOyQ
-	XkQ0LLMmAbSxvAsGdQx2IVqhFvvtLQI+6aKCyAOhrYxHdxnh8ybPnmK5EzWEogg1
-	601vmNJT2HETJjiJVPGxKY3TzGBN3/VLN/k3JpKIGH7SjDma5BD32ubXmdixj0vF
-	6Q1Pga2aPi1wiKEtST6AGftDQC7H1a7a2kx+WQwSUf42uliw==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42wex8r6r3-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 14 Nov 2024 11:06:14 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AEB6DiZ027509
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 14 Nov 2024 11:06:13 GMT
-Received: from hu-imrashai-hyd.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 14 Nov 2024 03:06:09 -0800
-From: Imran Shaik <quic_imrashai@quicinc.com>
-Date: Thu, 14 Nov 2024 16:35:55 +0530
-Subject: [PATCH] arm64: dts: qcom: qcs8300: Add support for clock
- controllers
+	s=arc-20240116; t=1731582520; c=relaxed/simple;
+	bh=dzbS37X0L0tq4kxmhjWWI+bKCewZv3KsIvKoWylV6ps=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=dAi7j26t+k+iUFMiAS2f53em+pKU84szndkojaqkekViiQHDjFqVxr1cVh/YJhSrG0AJWsXYMP9Dm9ivTMDdQnCIxbHF+eK6YnYOgnql1PJoVaoFHmhBp2nmkRZsPnG1dFYZ60ky/WC9CPo0AlYO8fo12585jTrenl5cy9bjnio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ySwz1ayK; arc=none smtp.client-ip=209.85.214.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-21116b187c4so3450525ad.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2024 03:08:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1731582518; x=1732187318; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=S4ICUIU2kTVypzjbkrPGHGmEX7WZpJWypKgX+IImalU=;
+        b=ySwz1ayKFQf5k5pd13wiSwLfi7aKzJ5npg0udEQIHJtkmLOrXf6gnx7ENdpIg8KVvX
+         M9cIvcIgUAVjC+nIhcpgjcfYnltQHXWm5LOtjYpAgduByoMRCl82BhfVOAm44Z1Uht1A
+         n/dtWemn6rEbAku9QvF6B/HZtXTZMzPNNfCWhY6KR+gqILKgC07yeidsgRfVMCzKcNsq
+         vKAmV9bWfQ0Hh9UWVsQbpuPzbvWFhP/+lNTyoUI5yUAJvrcuQia7vrd9Jw1V43Js/Fdb
+         NlJSPf/nlngt3PFvHSOUb5I8z9jRaLZTbjEWEm/tgFeGp2SMn0NdtaxZZTbODr/0PNA/
+         AEYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731582518; x=1732187318;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=S4ICUIU2kTVypzjbkrPGHGmEX7WZpJWypKgX+IImalU=;
+        b=M4gxIZiGdXlEzmWk5YF2Hu7FVdb8w2AtcrH/Gekd9SRYMLMyA/GwFVHNY67zKzQJgB
+         40T78+xOVBSwByYR6WPDWz/N/I7d/p0GqkNU5F7e7SQ2f3ZQ63ngjGsz3TKwBT+uDOHG
+         7Zkmyo5cTJa9TTZItTko8d2Ww2wUsFlCEFGYJCmaNpdi0C2XQHPdRRsigQRP9bIyTfD5
+         MWyja1AK4onZ8gQ0JodOU+tprQ/9edJj0ldx6FxGE9Lu0FFetnBTsl8IZo9B69uLV+WV
+         8Mx8/Y3JlrMDUgbz5s3k809+urCQj9E39rLptBAQRV7nwb1f8vcn8acMrJH6PKiW8qrl
+         F3bg==
+X-Gm-Message-State: AOJu0YyRN2ODjCqiNXk4/y3iNrvEFNagyHqbqAeEMdD8Tv/XtIyrYbDN
+	hN2ub0Y8ynygaR1dqFIDciJl3nDu9FbCjaJXBuJe7o4ShpT7N9u1N7c5CaPdpe8=
+X-Google-Smtp-Source: AGHT+IG/uR8njq3nUO4WzcbIvca9iOUo50VvFlaSdHueUNTB9GQ4ab1JoQGIXQcgjRWdbBHqv/PFbQ==
+X-Received: by 2002:a05:6a20:9183:b0:1db:e338:ab0a with SMTP id adf61e73a8af0-1dc8336123dmr2507880637.8.1731582518463;
+        Thu, 14 Nov 2024 03:08:38 -0800 (PST)
+Received: from x-wing.lan ([49.207.60.151])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2ea06ef6b3esm949628a91.10.2024.11.14.03.08.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 Nov 2024 03:08:38 -0800 (PST)
+From: Amit Pundir <amit.pundir@linaro.org>
+To: Stephen Boyd <sboyd@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Taniya Das <quic_tdas@quicinc.com>,
+	Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+	linux-clk <linux-clk@vger.kernel.org>,
+	lkml <linux-kernel@vger.kernel.org>
+Subject: [PATCH] clk: qcom: gcc-sdm845: Do not use shared clk_ops for QUPs
+Date: Thu, 14 Nov 2024 16:38:33 +0530
+Message-ID: <20241114110833.731059-1-amit.pundir@linaro.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20241114-qcs8300-mm-cc-dt-patch-v1-1-7a974508c736@quicinc.com>
-X-B4-Tracking: v=1; b=H4sIAJLZNWcC/y3MSwrDMAxF0a0EjSuQk+B+tlI6EIraaJCf7ZaCy
- d5jkgzPg3czRA2mER5VhqA/izaNBe5SgfQ8fhStK4aa6tY51+Ii8dYQ4TCgCHYJZ07SIzF7Fn9
- lT3co5zno2/57+Pk6HHT5ln46x3XdAO/Tzct9AAAA
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC: Ajit Pandey <quic_ajipan@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>,
-        Satya Priya Kakitapalli
-	<quic_skakitap@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Imran Shaik
-	<quic_imrashai@quicinc.com>
-X-Mailer: b4 0.14.1
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 23p0LF8AKIh8pfGeqC-8XsginUEXizfs
-X-Proofpoint-ORIG-GUID: 23p0LF8AKIh8pfGeqC-8XsginUEXizfs
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
- phishscore=0 bulkscore=0 mlxlogscore=999 lowpriorityscore=0 suspectscore=0
- priorityscore=1501 malwarescore=0 spamscore=0 clxscore=1011 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2411140086
+Content-Transfer-Encoding: 8bit
 
-Add support for GPU, Video, Camera and Display clock controllers on
-Qualcomm QCS8300 platform.
+Similar to the earlier fixes meant for sm8x50 and x1e platforms,
+do not use shared clk ops for sdm845 QUPs.
 
-Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
+As Stephen Boyd pointed out in earlier fixes, there wasn't a problem
+to mark QUP clks shared until we started parking shared RCGs at clk
+registration time in commit 01a0a6cc8cfd ("clk: qcom: Park shared RCGs
+upon registration"). Parking at init is actually harmful to the UART
+when earlycon is used. If the device is pumping out data while the
+frequency changes and we see garbage on the serial console until the
+driver can probe and actually set a proper frequency.
+
+Revert the QUP clk sharing ops part of commit 06391eddb60a ("clk: qcom:
+Add Global Clock controller (GCC) driver for SDM845") so that the QUPs
+on sdm845 don't get parked during clk registration and break UART
+operations.
+
+Fixes: 01a0a6cc8cfd ("clk: qcom: Park shared RCGs upon registration")
+Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
 ---
-Please note that this series is dependent on [1] and [2], which adds support
-for QCS8300 initial device tree and QCS8300 multi media clock controllers respectively.
+ drivers/clk/qcom/gcc-sdm845.c | 32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
-[1] https://lore.kernel.org/all/20240925-qcs8300_initial_dtsi-v2-0-494c40fa2a42@quicinc.com/
-[2] https://lore.kernel.org/all/20241106-qcs8300-mm-patches-v3-0-f611a8f87f15@quicinc.com/ 
----
- arch/arm64/boot/dts/qcom/qcs8300.dtsi | 59 +++++++++++++++++++++++++++++++++++
- 1 file changed, 59 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/qcs8300.dtsi b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
-index 2c35f96c3f28..e43fada4acb5 100644
---- a/arch/arm64/boot/dts/qcom/qcs8300.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
-@@ -5,6 +5,10 @@
+diff --git a/drivers/clk/qcom/gcc-sdm845.c b/drivers/clk/qcom/gcc-sdm845.c
+index dc3aa7014c3e..c6692808a822 100644
+--- a/drivers/clk/qcom/gcc-sdm845.c
++++ b/drivers/clk/qcom/gcc-sdm845.c
+@@ -454,7 +454,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s0_clk_src_init = {
+ 	.name = "gcc_qupv3_wrap0_s0_clk_src",
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
  
- #include <dt-bindings/clock/qcom,qcs8300-gcc.h>
- #include <dt-bindings/clock/qcom,rpmh.h>
-+#include <dt-bindings/clock/qcom,sa8775p-camcc.h>
-+#include <dt-bindings/clock/qcom,sa8775p-dispcc.h>
-+#include <dt-bindings/clock/qcom,sa8775p-gpucc.h>
-+#include <dt-bindings/clock/qcom,sa8775p-videocc.h>
- #include <dt-bindings/interconnect/qcom,icc.h>
- #include <dt-bindings/interconnect/qcom,qcs8300-rpmh.h>
- #include <dt-bindings/interrupt-controller/arm-gic.h>
-@@ -772,6 +776,20 @@ lpass_ag_noc: interconnect@3c40000 {
- 			qcom,bcm-voters = <&apps_bcm_voter>;
- 		};
+ static struct clk_rcg2 gcc_qupv3_wrap0_s0_clk_src = {
+@@ -470,7 +470,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s1_clk_src_init = {
+ 	.name = "gcc_qupv3_wrap0_s1_clk_src",
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
  
-+		gpucc: clock-controller@3d90000 {
-+			compatible = "qcom,qcs8300-gpucc";
-+			reg = <0x0 0x03d90000 0x0 0xa000>;
-+			clocks = <&rpmhcc RPMH_CXO_CLK>,
-+				 <&gcc GCC_GPU_GPLL0_CLK_SRC>,
-+				 <&gcc GCC_GPU_GPLL0_DIV_CLK_SRC>;
-+			clock-names = "bi_tcxo",
-+				      "gcc_gpu_gpll0_clk_src",
-+				      "gcc_gpu_gpll0_div_clk_src";
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
- 		pmu@9091000 {
- 			compatible = "qcom,qcs8300-llcc-bwmon", "qcom,sc7280-llcc-bwmon";
- 			reg = <0x0 0x9091000 0x0 0x1000>;
-@@ -882,6 +900,47 @@ gem_noc: interconnect@9100000 {
- 			qcom,bcm-voters = <&apps_bcm_voter>;
- 		};
+ static struct clk_rcg2 gcc_qupv3_wrap0_s1_clk_src = {
+@@ -486,7 +486,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s2_clk_src_init = {
+ 	.name = "gcc_qupv3_wrap0_s2_clk_src",
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
  
-+		videocc: clock-controller@abf0000 {
-+			compatible = "qcom,qcs8300-videocc";
-+			reg = <0x0 0x0abf0000 0x0 0x10000>;
-+			clocks = <&gcc GCC_VIDEO_AHB_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK_A>,
-+				 <&sleep_clk>;
-+			power-domains = <&rpmhpd RPMHPD_MMCX>;
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
-+		camcc: clock-controller@ade0000 {
-+			compatible = "qcom,qcs8300-camcc";
-+			reg = <0x0 0x0ade0000 0x0 0x20000>;
-+			clocks = <&gcc GCC_CAMERA_AHB_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK_A>,
-+				 <&sleep_clk>;
-+			power-domains = <&rpmhpd RPMHPD_MMCX>;
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
-+		dispcc: clock-controller@af00000 {
-+			compatible = "qcom,sa8775p-dispcc0";
-+			reg = <0x0 0x0af00000 0x0 0x20000>;
-+			clocks = <&gcc GCC_DISP_AHB_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK_A>,
-+				 <&sleep_clk>,
-+				 <0>, <0>, <0>, <0>,
-+				 <0>, <0>, <0>, <0>;
-+			power-domains = <&rpmhpd RPMHPD_MMCX>;
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
- 		pdc: interrupt-controller@b220000 {
- 			compatible = "qcom,qcs8300-pdc", "qcom,pdc";
- 			reg = <0x0 0xb220000 0x0 0x30000>,
-
----
-base-commit: 78cd5a71d1cb4ca645294a1dbe603a8c356c86a7
-change-id: 20241114-qcs8300-mm-cc-dt-patch-0aa6ac67a609
-
-Best regards,
+ static struct clk_rcg2 gcc_qupv3_wrap0_s2_clk_src = {
+@@ -502,7 +502,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s3_clk_src_init = {
+ 	.name = "gcc_qupv3_wrap0_s3_clk_src",
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
+ 
+ static struct clk_rcg2 gcc_qupv3_wrap0_s3_clk_src = {
+@@ -518,7 +518,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s4_clk_src_init = {
+ 	.name = "gcc_qupv3_wrap0_s4_clk_src",
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
+ 
+ static struct clk_rcg2 gcc_qupv3_wrap0_s4_clk_src = {
+@@ -534,7 +534,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s5_clk_src_init = {
+ 	.name = "gcc_qupv3_wrap0_s5_clk_src",
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
+ 
+ static struct clk_rcg2 gcc_qupv3_wrap0_s5_clk_src = {
+@@ -550,7 +550,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s6_clk_src_init = {
+ 	.name = "gcc_qupv3_wrap0_s6_clk_src",
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
+ 
+ static struct clk_rcg2 gcc_qupv3_wrap0_s6_clk_src = {
+@@ -566,7 +566,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s7_clk_src_init = {
+ 	.name = "gcc_qupv3_wrap0_s7_clk_src",
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
+ 
+ static struct clk_rcg2 gcc_qupv3_wrap0_s7_clk_src = {
+@@ -582,7 +582,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s0_clk_src_init = {
+ 	.name = "gcc_qupv3_wrap1_s0_clk_src",
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
+ 
+ static struct clk_rcg2 gcc_qupv3_wrap1_s0_clk_src = {
+@@ -598,7 +598,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s1_clk_src_init = {
+ 	.name = "gcc_qupv3_wrap1_s1_clk_src",
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
+ 
+ static struct clk_rcg2 gcc_qupv3_wrap1_s1_clk_src = {
+@@ -614,7 +614,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s2_clk_src_init = {
+ 	.name = "gcc_qupv3_wrap1_s2_clk_src",
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
+ 
+ static struct clk_rcg2 gcc_qupv3_wrap1_s2_clk_src = {
+@@ -630,7 +630,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s3_clk_src_init = {
+ 	.name = "gcc_qupv3_wrap1_s3_clk_src",
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
+ 
+ static struct clk_rcg2 gcc_qupv3_wrap1_s3_clk_src = {
+@@ -646,7 +646,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s4_clk_src_init = {
+ 	.name = "gcc_qupv3_wrap1_s4_clk_src",
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
+ 
+ static struct clk_rcg2 gcc_qupv3_wrap1_s4_clk_src = {
+@@ -662,7 +662,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s5_clk_src_init = {
+ 	.name = "gcc_qupv3_wrap1_s5_clk_src",
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
+ 
+ static struct clk_rcg2 gcc_qupv3_wrap1_s5_clk_src = {
+@@ -678,7 +678,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s6_clk_src_init = {
+ 	.name = "gcc_qupv3_wrap1_s6_clk_src",
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
+ 
+ static struct clk_rcg2 gcc_qupv3_wrap1_s6_clk_src = {
+@@ -694,7 +694,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s7_clk_src_init = {
+ 	.name = "gcc_qupv3_wrap1_s7_clk_src",
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
+ 
+ static struct clk_rcg2 gcc_qupv3_wrap1_s7_clk_src = {
 -- 
-Imran Shaik <quic_imrashai@quicinc.com>
+2.43.0
 
 
