@@ -1,168 +1,215 @@
-Return-Path: <linux-arm-msm+bounces-37883-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37884-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F3C529C844B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 08:51:27 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E7ADF9C855D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 09:56:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B846A282D26
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 07:51:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0F7191F22A1A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 08:56:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6EB91F7077;
-	Thu, 14 Nov 2024 07:48:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59A661F8183;
+	Thu, 14 Nov 2024 08:56:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="eFbxWeK8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MoZ3PHEb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BF0F1E9080;
-	Thu, 14 Nov 2024 07:48:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A2061F77BF
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2024 08:56:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731570534; cv=none; b=R/n6Rxuzi8ZZ/TjRMByBv2QxTRkYSJl4AIsZ/PU4GDl6KRB2pw5yH+IzwYSAyrfdOPHmK+Gd7k0S8GXXMYxZgaVD9NOJ4u6oPs7lvRdHYzHNbZhE4QT1Qdl/BVuvCmWOUz3C8nIgdarFLL5p1r18oRFFrLMC7WqxButWp0N5Wp0=
+	t=1731574567; cv=none; b=aK8+3aWErxvE4oU8MdKpEQ1MdIXznZ6418okwP9x9q3tZ0wS8KCIlO6anm0jBN93wer3OeNNpPuyWkkev876vJf6DGYEpshnk2+IOZWniSNzVBZRVN63qRB+Mi4JysRZ/N/cREbz7a0oB+6ymFKVezB8BHCqlylr/3MOd1IgdbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731570534; c=relaxed/simple;
-	bh=4E6aC6oB1+4iQaw6tyR7GxnJWzRZncxwonrwiY4dn0Y=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iTAHbfRRQIU5fip/fUJSGxVwu6sPh2QajNzbYeRCY9Wz3zStUyrIA08isIqwt15CjDNZ4KKTZ2rMgSyaF53PTdSGvhShqSXGXL8wz1G53GMGW1mP5+FGYj3mbzvdZsxZfILvWdEBTU3LKqIsXk5QdAnho3jszahoP0Q5fsiKL3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=eFbxWeK8; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AE1KEpF008599;
-	Thu, 14 Nov 2024 07:48:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=7cHbwg17okigZyqvJWR0iibZ
-	TFH7NMVRqRcMdUm+sHw=; b=eFbxWeK8zROsnO5X9Rhd9FeyRmTa/NGla3Imd7kY
-	MR8jKmjmwbaY4jbr38ylMGtAkwojSDeJKkuXpUHF6HCE6v1ZZP3C4bQwW2PvOC1W
-	av244K31iug5c/8EDhX7qWrNb0VcmIayCcniTC7wT35iakL61m1elLpUspxn2Oti
-	w1DjQa0qohpRhag+gwhajAJ21dCbxbqAX1T6PHxsSZRKJJaCVztmphYiCIg6gyuO
-	pYEI8Y7Y0CE5h7Dvb4G8mqotJtMQBAldomHbPeIh2Usz4iNIIkwThMxxibMQH4Pk
-	XqmdWrOttAJPrZiCuWm6dgsLnEDt1nm189czePf0fQ08jg==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42w7ekhhu5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 14 Nov 2024 07:48:46 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AE7mjHS014444
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 14 Nov 2024 07:48:46 GMT
-Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 13 Nov 2024 23:48:39 -0800
-Date: Thu, 14 Nov 2024 13:18:35 +0530
-From: Varadarajan Narayanan <quic_varada@quicinc.com>
-To: Johan Hovold <johan@kernel.org>
-CC: <vkoul@kernel.org>, <kishon@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <gregkh@linuxfoundation.org>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>, <dmitry.baryshkov@linaro.org>,
-        <mantas@8devices.com>, <quic_rohiagar@quicinc.com>,
-        <quic_kriskura@quicinc.com>, <manivannan.sadhasivam@linaro.org>,
-        <abel.vesa@linaro.org>, <quic_kbajaj@quicinc.com>,
-        <quic_wcheng@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-usb@vger.kernel.org>
-Subject: Re: [PATCH v2 6/6] arm64: dts: qcom: Add USB controller and phy
- nodes for IPQ5424
-Message-ID: <ZzWrU/6+KPOy5ugi@hu-varada-blr.qualcomm.com>
-References: <20241113072316.2829050-1-quic_varada@quicinc.com>
- <20241113072316.2829050-7-quic_varada@quicinc.com>
- <ZzSYU61pmFTcPf5_@hovoldconsulting.com>
+	s=arc-20240116; t=1731574567; c=relaxed/simple;
+	bh=ZxWJ8WBxU1va09s+PNVRjoNLQYSuMg/4Aty32KPY1dM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=cRPE9eUB4yCGRuJ+uQ0WMJzXLPVYbPpwpF+Kj4yEylQwJoQDVXTak5FmZb+GUUOtMiydktmqetB6ZsGDY+0O9e9O3YDorEzQKuSx6WAdPrAK7rHtvqZ3WKlPnj8fNbeh7gbpU2huWpfIeF0j1yrhapxgKxuKbDQ3ePrG7rRs8QM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MoZ3PHEb; arc=none smtp.client-ip=209.85.216.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-2e2eb9dde40so320801a91.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2024 00:56:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1731574565; x=1732179365; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ToT77NODsvlbLTUvpom6vRLwi61ldhVszxA0ETyzPrk=;
+        b=MoZ3PHEbibvh0Z7Aq+HyeKV6xkaz1qU6Zgb1Bj8zh1gqkaHfXGPpTCBxfTbXVZL8/h
+         LSVjsP6uXlapf94dPEZ6DFvIZe+L9Ana5pXU9M7IrOE/fcd42vpixwGovTWJaiYEuB+b
+         J7QKXLHilX1QJhteA3vnTYCw/LqPG6nfv8CJrEHUd0matLR1R8Q7knknLS3rvme9Zx38
+         Oic3ceS3D9Fz0sKpsiCwT0If34fD0m61k/NieE0gAp5NLoz8n68uvubTia0W/D3II12g
+         6qO+un8hN4qLOAAOwpJpWyB8DbE0Mq9B5yUANQ89Az9YaaPssNxwfk/uwrLuwF2DAzTV
+         cqEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731574565; x=1732179365;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ToT77NODsvlbLTUvpom6vRLwi61ldhVszxA0ETyzPrk=;
+        b=CayZVR9V6KTRO4JBY3n5IS8DviNVLZN7pdePbYj89gZHy0OYbH6ubzetaM34YpyVkm
+         SIv+qC2kp7VTEzzx3GUFB7DgIdEPg5ehVoKVXB0771rG4r7tmnrAjqDd4oIYR1MF4VBp
+         AqM73U7kp2LEp5iNRq3Rpsdy5q1w6zmWmisZzUTBAPXxfQ0OrPWrRDDb8eGGLalfptqc
+         NCK6qLxUgS2s+29FmWyeC5szoasqvelzS8a6oxirCDd1xPC5zHx9KHxBrIQ4f6pB6qxM
+         v4M5Q+w+adCWGLh6bJnJpfjp2Qdj5HeSBwSKOcdwlhxwQAJnN5peoXKdn4O+MhPDIpvC
+         ZJdA==
+X-Forwarded-Encrypted: i=1; AJvYcCU+wT38gUCQJ4/O2BdRZRbuzXQFj71fdodPG0e5VKCX2fmnfH0pmBdq/+UYKn/fzybfBG/rpENcFxiiktxK@vger.kernel.org
+X-Gm-Message-State: AOJu0YycXGIvP3FwrQBQTFCPExztG43OiRwdEo7eprlGcaJZ3mgSCH9e
+	UvrBZZaT3ecWRbZNYHgrsmPXh1F+BBiwkw71Y9EeoT8FUzs6x3gJZvQIuvvRoBCJtPslAoK2Eph
+	k43tQ025az6L7iYmE3LHde7X1o0266qle3wnQlA==
+X-Google-Smtp-Source: AGHT+IEF/+2QRuIhdeC8yK5JAR2WX1SxP2TpNFoDaoCNxUEcokJnn2HBF5GtJzruhPEUticVRg3x/kmVprSaln0zgc4=
+X-Received: by 2002:a17:90b:1647:b0:2e2:c6c2:b3d5 with SMTP id
+ 98e67ed59e1d1-2e9f2c7476bmr7530583a91.9.1731574564784; Thu, 14 Nov 2024
+ 00:56:04 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <ZzSYU61pmFTcPf5_@hovoldconsulting.com>
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 0vm_7CVbi4RNzzvExcVw8E-CzDBhj-pf
-X-Proofpoint-GUID: 0vm_7CVbi4RNzzvExcVw8E-CzDBhj-pf
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxscore=0
- impostorscore=0 phishscore=0 lowpriorityscore=0 suspectscore=0
- clxscore=1011 bulkscore=0 malwarescore=0 adultscore=0 priorityscore=1501
- mlxlogscore=619 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411140058
+References: <20241114022916.644899-1-quic_sibis@quicinc.com> <20241114022916.644899-2-quic_sibis@quicinc.com>
+In-Reply-To: <20241114022916.644899-2-quic_sibis@quicinc.com>
+From: Vincent Guittot <vincent.guittot@linaro.org>
+Date: Thu, 14 Nov 2024 09:55:53 +0100
+Message-ID: <CAKfTPtDnyDak1BsdufYuN=wQwhJ+XTJedjMEezAz1evhsB86Jg@mail.gmail.com>
+Subject: Re: [PATCH V8 1/1] cpufreq: scmi: Register for limit change notifications
+To: Sibi Sankar <quic_sibis@quicinc.com>
+Cc: sudeep.holla@arm.com, cristian.marussi@arm.com, rafael@kernel.org, 
+	viresh.kumar@linaro.org, morten.rasmussen@arm.com, dietmar.eggemann@arm.com, 
+	lukasz.luba@arm.com, pierre.gondois@arm.com, 
+	linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, quic_mdtipton@quicinc.com, 
+	linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Nov 13, 2024 at 01:15:15PM +0100, Johan Hovold wrote:
-> On Wed, Nov 13, 2024 at 12:53:16PM +0530, Varadarajan Narayanan wrote:
+On Thu, 14 Nov 2024 at 03:29, Sibi Sankar <quic_sibis@quicinc.com> wrote:
 >
-> > --- a/arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts
-> > +++ b/arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts
-> > @@ -16,12 +16,71 @@ / {
-> >  	aliases {
-> >  		serial0 = &uart1;
-> >  	};
-> > +
-> > +	regulator_fixed_3p3: s3300 {
+> Register for limit change notifications if supported and use the throttled
+> frequency from the notification to apply HW pressure.
 >
-> Fixed regulator nodes should have a "regulator-" prefix in their name.
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> Tested-by: Mike Tipton <quic_mdtipton@quicinc.com>
+> Reviewed-by: Cristian Marussi <cristian.marussi@arm.com>
+> Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+
+Looks good to me
+Acked-by: Vincent Guittot <vincent.guittot@linaro.org>
+
+> ---
 >
-> And please use a shorter label, look at the existing DTs for
-> inspiration (e.g. "vreg_misc_3p3").
-
-Ok.
-
-> > +		compatible = "regulator-fixed";
-> > +		regulator-min-microvolt = <3300000>;
-> > +		regulator-max-microvolt = <3300000>;
-> > +		regulator-boot-on;
-> > +		regulator-always-on;
-> > +		regulator-name = "fixed_3p3";
-> > +	};
+> v8:
+> * Drop patch 1 since it was picked up by Viresh
+> * Leave policy->max update to the cpufreq_qos notifier [Vincent]
+> * We sanitized the range_max from V3 since we dealt with
+>   policy->max, now we can drop the check and policy member
+>   from scmi_data.
 >
-> But is this really an accurate description of these regulators? Are
-> they not part of some PMIC? Can they really not be turned off?
-
-These supplies are coming from internal LDOs and are turned ON at
-power up itself. Software (i.e. boot loaders or the kernel)
-doesn't turn them ON. Checked with the board designers and they
-too don't recommend turning these OFF as some other i/o lines
-also depend on these voltages.
-
-> Also please use the names from the schematics for these. I doubt they
-> are named "fixed_3p3".
-
-Ok.
-
-> > +
-> > +	regulator_fixed_1p8: s1800 {
-> > +		compatible = "regulator-fixed";
-> > +		regulator-min-microvolt = <1800000>;
-> > +		regulator-max-microvolt = <1800000>;
-> > +		regulator-boot-on;
-> > +		regulator-always-on;
-> > +		regulator-name = "fixed_1p8";
-> > +	};
-> > +
-> > +	regulator_fixed_0p925: s0925 {
-> > +		compatible = "regulator-fixed";
-> > +		regulator-min-microvolt = <925000>;
-> > +		regulator-max-microvolt = <925000>;
-> > +		regulator-boot-on;
-> > +		regulator-always-on;
-> > +		regulator-name = "fixed_0p925";
-> > +	};
-> > +
+>  drivers/cpufreq/scmi-cpufreq.c | 45 ++++++++++++++++++++++++++++++++++
+>  1 file changed, 45 insertions(+)
 >
-> Stray newline.
-
-Have addressed these and posted v3. Please review.
-
-Thanks
-Varada
+> diff --git a/drivers/cpufreq/scmi-cpufreq.c b/drivers/cpufreq/scmi-cpufreq.c
+> index 07d6f9a9b7c8..b8fe758aeb01 100644
+> --- a/drivers/cpufreq/scmi-cpufreq.c
+> +++ b/drivers/cpufreq/scmi-cpufreq.c
+> @@ -16,6 +16,7 @@
+>  #include <linux/export.h>
+>  #include <linux/module.h>
+>  #include <linux/pm_opp.h>
+> +#include <linux/pm_qos.h>
+>  #include <linux/slab.h>
+>  #include <linux/scmi_protocol.h>
+>  #include <linux/types.h>
+> @@ -26,6 +27,8 @@ struct scmi_data {
+>         int nr_opp;
+>         struct device *cpu_dev;
+>         cpumask_var_t opp_shared_cpus;
+> +       struct notifier_block limit_notify_nb;
+> +       struct freq_qos_request limits_freq_req;
+>  };
+>
+>  static struct scmi_protocol_handle *ph;
+> @@ -174,6 +177,22 @@ static struct freq_attr *scmi_cpufreq_hw_attr[] = {
+>         NULL,
+>  };
+>
+> +static int scmi_limit_notify_cb(struct notifier_block *nb, unsigned long event, void *data)
+> +{
+> +       struct scmi_data *priv = container_of(nb, struct scmi_data, limit_notify_nb);
+> +       struct scmi_perf_limits_report *limit_notify = data;
+> +       unsigned int limit_freq_khz;
+> +       int ret;
+> +
+> +       limit_freq_khz = limit_notify->range_max_freq / HZ_PER_KHZ;
+> +
+> +       ret = freq_qos_update_request(&priv->limits_freq_req, limit_freq_khz);
+> +       if (ret < 0)
+> +               pr_warn("failed to update freq constraint: %d\n", ret);
+> +
+> +       return NOTIFY_OK;
+> +}
+> +
+>  static int scmi_cpufreq_init(struct cpufreq_policy *policy)
+>  {
+>         int ret, nr_opp, domain;
+> @@ -181,6 +200,7 @@ static int scmi_cpufreq_init(struct cpufreq_policy *policy)
+>         struct device *cpu_dev;
+>         struct scmi_data *priv;
+>         struct cpufreq_frequency_table *freq_table;
+> +       struct scmi_device *sdev = cpufreq_get_driver_data();
+>
+>         cpu_dev = get_cpu_device(policy->cpu);
+>         if (!cpu_dev) {
+> @@ -294,6 +314,23 @@ static int scmi_cpufreq_init(struct cpufreq_policy *policy)
+>                 }
+>         }
+>
+> +       ret = freq_qos_add_request(&policy->constraints, &priv->limits_freq_req, FREQ_QOS_MAX,
+> +                                  FREQ_QOS_MAX_DEFAULT_VALUE);
+> +       if (ret < 0) {
+> +               dev_err(cpu_dev, "failed to add qos limits request: %d\n", ret);
+> +               goto out_free_table;
+> +       }
+> +
+> +       priv->limit_notify_nb.notifier_call = scmi_limit_notify_cb;
+> +       ret = sdev->handle->notify_ops->event_notifier_register(sdev->handle, SCMI_PROTOCOL_PERF,
+> +                                                       SCMI_EVENT_PERFORMANCE_LIMITS_CHANGED,
+> +                                                       &priv->domain_id,
+> +                                                       &priv->limit_notify_nb);
+> +       if (ret)
+> +               dev_warn(&sdev->dev,
+> +                        "failed to register for limits change notifier for domain %d\n",
+> +                        priv->domain_id);
+> +
+>         return 0;
+>
+>  out_free_table:
+> @@ -313,7 +350,13 @@ static int scmi_cpufreq_init(struct cpufreq_policy *policy)
+>  static void scmi_cpufreq_exit(struct cpufreq_policy *policy)
+>  {
+>         struct scmi_data *priv = policy->driver_data;
+> +       struct scmi_device *sdev = cpufreq_get_driver_data();
+>
+> +       sdev->handle->notify_ops->event_notifier_unregister(sdev->handle, SCMI_PROTOCOL_PERF,
+> +                                                           SCMI_EVENT_PERFORMANCE_LIMITS_CHANGED,
+> +                                                           &priv->domain_id,
+> +                                                           &priv->limit_notify_nb);
+> +       freq_qos_remove_request(&priv->limits_freq_req);
+>         dev_pm_opp_free_cpufreq_table(priv->cpu_dev, &policy->freq_table);
+>         dev_pm_opp_remove_all_dynamic(priv->cpu_dev);
+>         free_cpumask_var(priv->opp_shared_cpus);
+> @@ -372,6 +415,8 @@ static int scmi_cpufreq_probe(struct scmi_device *sdev)
+>         if (!handle)
+>                 return -ENODEV;
+>
+> +       scmi_cpufreq_driver.driver_data = sdev;
+> +
+>         perf_ops = handle->devm_protocol_get(sdev, SCMI_PROTOCOL_PERF, &ph);
+>         if (IS_ERR(perf_ops))
+>                 return PTR_ERR(perf_ops);
+> --
+> 2.34.1
+>
 
