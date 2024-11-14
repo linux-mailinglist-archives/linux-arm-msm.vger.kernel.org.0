@@ -1,260 +1,207 @@
-Return-Path: <linux-arm-msm+bounces-37899-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37900-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8B9799C8871
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 12:08:42 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B07009C8960
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 13:00:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 44A27282328
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 11:08:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3D5ED1F23914
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 12:00:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DFFE21F80D2;
-	Thu, 14 Nov 2024 11:08:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6F691DE3A3;
+	Thu, 14 Nov 2024 12:00:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ySwz1ayK"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vJno4IzC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C9B41F8185
-	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2024 11:08:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD2E71F9414
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2024 12:00:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731582520; cv=none; b=ef4k5K5bqtQ6B0pQF3c33lD12qmNkdw8pAySm7geHn1xFA2/jZi7inInPMga8kagomjQ0n9tVUKjgRQsig1gWwGjZh056vkWSCgS4PyhrQeezGib9tfSpREEtCy1HPQQxOwzEyk84PCAtoYU8zFzjRBrh0JZin27G/jzTdW36kY=
+	t=1731585642; cv=none; b=P8v8NxfO64z4wnEZNkrnXyLuLR+PZjc59kN0Z58+KPxdYZCBsg71GVtQ0VBhChdSB4xrvYnqpjPxlaQHmkqhvOozlz0+YQfOoi5Phca0ocG8Oi65s+Izus+pDwBdq4FFnh2mVJOlhuXxBYBmt9rBADCaF4p2TksWx1SC3NoyEzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731582520; c=relaxed/simple;
-	bh=dzbS37X0L0tq4kxmhjWWI+bKCewZv3KsIvKoWylV6ps=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=dAi7j26t+k+iUFMiAS2f53em+pKU84szndkojaqkekViiQHDjFqVxr1cVh/YJhSrG0AJWsXYMP9Dm9ivTMDdQnCIxbHF+eK6YnYOgnql1PJoVaoFHmhBp2nmkRZsPnG1dFYZ60ky/WC9CPo0AlYO8fo12585jTrenl5cy9bjnio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ySwz1ayK; arc=none smtp.client-ip=209.85.214.181
+	s=arc-20240116; t=1731585642; c=relaxed/simple;
+	bh=2YNeAq7nUz3EVSarszFDV4m0bo5zGG8hkdy2omllyGk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ctUPJa2KYEJhlh58ZfeZVqgFO3rA+1nV50vqKkNwtoNSOVaGhi+9wmzZ7j351HKmJQbRKHBT6LJsE3RK2DKR6d5U0rA5WmfrfOd9H9BS1JiemmhqLEYsdGF4jP4yByaotT1BGWVeE5Ip3N7l9Y/5WXTizMDlX9mjxeTSpUN8sMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vJno4IzC; arc=none smtp.client-ip=209.85.167.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-21116b187c4so3450525ad.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2024 03:08:38 -0800 (PST)
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-539eb97f26aso506569e87.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2024 04:00:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731582518; x=1732187318; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=S4ICUIU2kTVypzjbkrPGHGmEX7WZpJWypKgX+IImalU=;
-        b=ySwz1ayKFQf5k5pd13wiSwLfi7aKzJ5npg0udEQIHJtkmLOrXf6gnx7ENdpIg8KVvX
-         M9cIvcIgUAVjC+nIhcpgjcfYnltQHXWm5LOtjYpAgduByoMRCl82BhfVOAm44Z1Uht1A
-         n/dtWemn6rEbAku9QvF6B/HZtXTZMzPNNfCWhY6KR+gqILKgC07yeidsgRfVMCzKcNsq
-         vKAmV9bWfQ0Hh9UWVsQbpuPzbvWFhP/+lNTyoUI5yUAJvrcuQia7vrd9Jw1V43Js/Fdb
-         NlJSPf/nlngt3PFvHSOUb5I8z9jRaLZTbjEWEm/tgFeGp2SMn0NdtaxZZTbODr/0PNA/
-         AEYg==
+        d=linaro.org; s=google; t=1731585639; x=1732190439; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=NRRBK4+PkVV0SMZdEbJR6/cXzeTbiFxvJHPZ285x0Ag=;
+        b=vJno4IzCMkIISmN8G+P/IB6n9lo+yIC90AdHQ2lQ+Yenig2wXGw9a99S5GoUAAgJaC
+         //kef+s+LKtU2TAlBib+T7lIzfyVOWpzdncMPni/FXs1DHL+ByV2ILVs0e+1uZGjb/bE
+         IlIlHsu0bVJoB0dLptnA+PVUWd3jnYJEeKd3vDJjIdi56t3mhzoLTQbKvdPd7gv8n8OP
+         YCVoeCCJnUlX9x6xwhdSM5fIocD6JUNBVyAAng6q9+9ae/3FlQXOyM0egWc0mRgYlROU
+         +QHyAzDIe2jFEK+N8antkwnCyS4P6EAJ0FJZyR8d+kG00M6KJjujJ/Q8VbeHnnvcH0KL
+         6Stw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731582518; x=1732187318;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=S4ICUIU2kTVypzjbkrPGHGmEX7WZpJWypKgX+IImalU=;
-        b=M4gxIZiGdXlEzmWk5YF2Hu7FVdb8w2AtcrH/Gekd9SRYMLMyA/GwFVHNY67zKzQJgB
-         40T78+xOVBSwByYR6WPDWz/N/I7d/p0GqkNU5F7e7SQ2f3ZQ63ngjGsz3TKwBT+uDOHG
-         7Zkmyo5cTJa9TTZItTko8d2Ww2wUsFlCEFGYJCmaNpdi0C2XQHPdRRsigQRP9bIyTfD5
-         MWyja1AK4onZ8gQ0JodOU+tprQ/9edJj0ldx6FxGE9Lu0FFetnBTsl8IZo9B69uLV+WV
-         8Mx8/Y3JlrMDUgbz5s3k809+urCQj9E39rLptBAQRV7nwb1f8vcn8acMrJH6PKiW8qrl
-         F3bg==
-X-Gm-Message-State: AOJu0YyRN2ODjCqiNXk4/y3iNrvEFNagyHqbqAeEMdD8Tv/XtIyrYbDN
-	hN2ub0Y8ynygaR1dqFIDciJl3nDu9FbCjaJXBuJe7o4ShpT7N9u1N7c5CaPdpe8=
-X-Google-Smtp-Source: AGHT+IG/uR8njq3nUO4WzcbIvca9iOUo50VvFlaSdHueUNTB9GQ4ab1JoQGIXQcgjRWdbBHqv/PFbQ==
-X-Received: by 2002:a05:6a20:9183:b0:1db:e338:ab0a with SMTP id adf61e73a8af0-1dc8336123dmr2507880637.8.1731582518463;
-        Thu, 14 Nov 2024 03:08:38 -0800 (PST)
-Received: from x-wing.lan ([49.207.60.151])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2ea06ef6b3esm949628a91.10.2024.11.14.03.08.36
+        d=1e100.net; s=20230601; t=1731585639; x=1732190439;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NRRBK4+PkVV0SMZdEbJR6/cXzeTbiFxvJHPZ285x0Ag=;
+        b=wzPNIa4sEF6F/K2KmrwfgtcAQhUBQmCg1vLCjcDzrKmjKzd5TV+iJFDaGr/H2wCoLt
+         cvETt5BVsDKykKPx2FhxhHFkZtbjucEdYebPBhXEU6nlL87NPckF/uB2psuqHBa9Sd9f
+         2UZ+AfAOfcSOfET/lGqSG2T+CmwrVAMKEpHqwP5YmJ1oYmwF3Ouk1U/Zga0epLlVWIvr
+         4y/c5KnwuHzqfYd6UPj5mynQ2ISnpvZUiUZRqd9N+G4u00IGum75qST4S13yBezKI2nw
+         lfHV3XGYaNJkCpLySafP4b5zVAU9SEbS2GUij8L/HN+bdNvKwVn84FgjwdnDOzwR1c+6
+         UClA==
+X-Forwarded-Encrypted: i=1; AJvYcCU4kzv5ScYmS0SfdPQxKNDgfjbaKU9PmSefEuXc2tRaBMBF1s3mMGjigwhp2der3XQShpvMHNL+imkFIMEP@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz/dA5gbhz2T5e5516uaXjwF4TgnvubrAjiUT+naA4M28sBzrhM
+	Y6ITghfXjgsmWHXbHNZ+W27p7Rwa5RRqFtzwbhu1p38duFsUpQOYmYp67yDlkoo=
+X-Google-Smtp-Source: AGHT+IElKOY/CTNY+jO4gR5Mef2vnpnme0SP+LIl5s6JaZ6ueTqwXe9hXFyAINkFss5pfmDdXbo7SA==
+X-Received: by 2002:a05:6512:ad6:b0:539:fb7f:6288 with SMTP id 2adb3069b0e04-53d9a42e186mr5522325e87.35.1731585638896;
+        Thu, 14 Nov 2024 04:00:38 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53da653e3eesm156316e87.200.2024.11.14.04.00.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Nov 2024 03:08:38 -0800 (PST)
-From: Amit Pundir <amit.pundir@linaro.org>
-To: Stephen Boyd <sboyd@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-	linux-clk <linux-clk@vger.kernel.org>,
-	lkml <linux-kernel@vger.kernel.org>
-Subject: [PATCH] clk: qcom: gcc-sdm845: Do not use shared clk_ops for QUPs
-Date: Thu, 14 Nov 2024 16:38:33 +0530
-Message-ID: <20241114110833.731059-1-amit.pundir@linaro.org>
-X-Mailer: git-send-email 2.43.0
+        Thu, 14 Nov 2024 04:00:37 -0800 (PST)
+Date: Thu, 14 Nov 2024 14:00:34 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Ekansh Gupta <quic_ekangupt@quicinc.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org, 
+	krzk+dt@kernel.org, conor+dt@kernel.org, cros-qcom-dts-watchers@chromium.org, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	srinivas.kandagatla@linaro.org, quic_bkumar@quicinc.com, quic_chennak@quicinc.com
+Subject: Re: [PATCH v1] arm64: dts: qcom: sc7280: Make ADSP a secure fastrpc
+ domain
+Message-ID: <sbkm5wvhtjoluhz7mi7f2wyc4t5znhazcxra52cd5yev5iksbi@yqielk6i7bpe>
+References: <20241113050042.181028-1-quic_ekangupt@quicinc.com>
+ <5oqzxppquoeppt6xnjfm2rdwm23hbui5k3caz5v5ffqzizepob@dz5ikvzgbd4x>
+ <c1f0e56b-b489-4370-99e3-0973641410b8@quicinc.com>
+ <CAA8EJprDTz7b4rNtR4e9A-=j9_z-aJGBg3+g5is8Bmy=cgTM1Q@mail.gmail.com>
+ <b8a9a8f5-1f36-4eea-925b-84578e71838d@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b8a9a8f5-1f36-4eea-925b-84578e71838d@quicinc.com>
 
-Similar to the earlier fixes meant for sm8x50 and x1e platforms,
-do not use shared clk ops for sdm845 QUPs.
+On Thu, Nov 14, 2024 at 10:49:52AM +0530, Ekansh Gupta wrote:
+> 
+> 
+> On 11/13/2024 5:20 PM, Dmitry Baryshkov wrote:
+> > On Wed, 13 Nov 2024 at 08:18, Ekansh Gupta <quic_ekangupt@quicinc.com> wrote:
+> >>
+> >>
+> >> On 11/13/2024 11:13 AM, Dmitry Baryshkov wrote:
+> >>> On Wed, Nov 13, 2024 at 10:30:42AM +0530, Ekansh Gupta wrote:
+> >>>> FastRPC framework treats ADSP as a secure domain on sc7280 SoC
+> >>>> which means that only secure fastrpc device node should be
+> >>>> created for ADSP remoteproc. Remove the non-secure-domain
+> >>>> property from ADSP fastrpc node.
+> >>> If this prevents the non-secure devices from being created, isn't that a
+> >>> regression from the userspace point of view?
+> >> The actual intention of having secure and non-secure domains is to utilize signed(high privilege)
+> >> and unsigned(low privilege) DSP processes properly.
+> >>
+> >> Non-secure device node is intended to be used by untrusted/generic applications which needs to
+> >> offload tasks to DSP as unsignedPD. Only unsigned PD is expected to be allowed if the process is
+> >> using non-secure node.
+> >>
+> >> Secure device is intended to be used by trusted processes like daemons or any application
+> >> which needs to offload as signed PD to DSP.
+> >>
+> >> The ideal expectation from userspace is to first try to open secure device node and fall back to
+> >> non-secure node if the secure node is not accessible or absent.
+> >>
+> >> I understand your concerns, can you please suggest how this can be improved/corrected?
+> > Thank you for the explanation, and thanks for the description of the
+> > expected behaviour, but the question is different.
+> > Currently (with the property being present in DT) the driver creates a
+> > non-secure fastrpc device for the ADSP.
+> > Can it actually be used? Note: no mentioning of a particular userspace
+> > implementation or the (un)expected usage.
+> > If it could not and an attempt to use it resulted in some kind of an
+> > error, then the patch is a fix and it should be decribed accordingly.
+> > If it could be used and now you are removing this possibility, then it
+> > is a regression. Again, this must be clearly documented, but generally
+> > this is not allowed.
+> Thanks for the clarification, Dmitry.
+> 
+> As of today, if the property is present in DT, non-secure fastrpc device will be created
+> for ADSP and as there are no checks to restrict daemons to use only secure node, there
+> will not be any failures observed. So there is no error if non-secure property is added
+> for ADSP and your 2nd point holds here.
+> 
+> Problems with the current design are(you can look into below points independent of the change):
+> 
+> 1. This creates a security concern as any process that can open non-secure device
+> can replicate daemon to attach to DSP root PD and cause troubles there which is not
+> a good thing. So basically any trusted process(maybe same group) should only use secure
+> device node and any process using non-secure node should only offload to unsigned PD.
 
-As Stephen Boyd pointed out in earlier fixes, there wasn't a problem
-to mark QUP clks shared until we started parking shared RCGs at clk
-registration time in commit 01a0a6cc8cfd ("clk: qcom: Park shared RCGs
-upon registration"). Parking at init is actually harmful to the UART
-when earlycon is used. If the device is pumping out data while the
-frequency changes and we see garbage on the serial console until the
-driver can probe and actually set a proper frequency.
+Again, you are describing expected behaviour. Other userspace clients
+can deviate from this.
 
-Revert the QUP clk sharing ops part of commit 06391eddb60a ("clk: qcom:
-Add Global Clock controller (GCC) driver for SDM845") so that the QUPs
-on sdm845 don't get parked during clk registration and break UART
-operations.
+> 
+> 2. Having this property well defined also help in scaling fastrpc driver for new domains(like CDSP1
+> was recently introduced) as driver can only rely on the "label" and "non-secure-domain" property
+> for device creation. Say, only secure device is create if property is not defined and both device nodes
+> are created if non-secure-domain is define. This way, the dependency on domain_id can be removed
+> from fastrpc_rpmsg_probe[1] and create either only fastrpc-xdsp-secure or both(secure and non-secure).
 
-Fixes: 01a0a6cc8cfd ("clk: qcom: Park shared RCGs upon registration")
-Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
----
- drivers/clk/qcom/gcc-sdm845.c | 32 ++++++++++++++++----------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
+Well, I don't think I follow this point. The property is already
+well-defined.
 
-diff --git a/drivers/clk/qcom/gcc-sdm845.c b/drivers/clk/qcom/gcc-sdm845.c
-index dc3aa7014c3e..c6692808a822 100644
---- a/drivers/clk/qcom/gcc-sdm845.c
-+++ b/drivers/clk/qcom/gcc-sdm845.c
-@@ -454,7 +454,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s0_clk_src_init = {
- 	.name = "gcc_qupv3_wrap0_s0_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap0_s0_clk_src = {
-@@ -470,7 +470,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s1_clk_src_init = {
- 	.name = "gcc_qupv3_wrap0_s1_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap0_s1_clk_src = {
-@@ -486,7 +486,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s2_clk_src_init = {
- 	.name = "gcc_qupv3_wrap0_s2_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap0_s2_clk_src = {
-@@ -502,7 +502,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s3_clk_src_init = {
- 	.name = "gcc_qupv3_wrap0_s3_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap0_s3_clk_src = {
-@@ -518,7 +518,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s4_clk_src_init = {
- 	.name = "gcc_qupv3_wrap0_s4_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap0_s4_clk_src = {
-@@ -534,7 +534,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s5_clk_src_init = {
- 	.name = "gcc_qupv3_wrap0_s5_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap0_s5_clk_src = {
-@@ -550,7 +550,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s6_clk_src_init = {
- 	.name = "gcc_qupv3_wrap0_s6_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap0_s6_clk_src = {
-@@ -566,7 +566,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s7_clk_src_init = {
- 	.name = "gcc_qupv3_wrap0_s7_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap0_s7_clk_src = {
-@@ -582,7 +582,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s0_clk_src_init = {
- 	.name = "gcc_qupv3_wrap1_s0_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s0_clk_src = {
-@@ -598,7 +598,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s1_clk_src_init = {
- 	.name = "gcc_qupv3_wrap1_s1_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s1_clk_src = {
-@@ -614,7 +614,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s2_clk_src_init = {
- 	.name = "gcc_qupv3_wrap1_s2_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s2_clk_src = {
-@@ -630,7 +630,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s3_clk_src_init = {
- 	.name = "gcc_qupv3_wrap1_s3_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s3_clk_src = {
-@@ -646,7 +646,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s4_clk_src_init = {
- 	.name = "gcc_qupv3_wrap1_s4_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s4_clk_src = {
-@@ -662,7 +662,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s5_clk_src_init = {
- 	.name = "gcc_qupv3_wrap1_s5_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s5_clk_src = {
-@@ -678,7 +678,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s6_clk_src_init = {
- 	.name = "gcc_qupv3_wrap1_s6_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s6_clk_src = {
-@@ -694,7 +694,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s7_clk_src_init = {
- 	.name = "gcc_qupv3_wrap1_s7_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s7_clk_src = {
+> 
+> This however is a regression as you have mentioned, but it it helps address multiple problems.
+> 
+> Should I discuss further on documentation or is any more design clarification should be done here?
+
+At least you must explicitly specify that this causes changes to
+userspace, and all the reasons to do that. So that everybody else
+doesn't have to read between the lines.
+
+> 
+> [1] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/drivers/misc/fastrpc.c#n2327
+> 
+> --ekansh
+> >> --ekansh
+> >>>> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+> >>>> ---
+> >>>>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 1 -
+> >>>>  1 file changed, 1 deletion(-)
+> >>>>
+> >>>> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> >>>> index 3d8410683402..c633926c0f33 100644
+> >>>> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> >>>> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> >>>> @@ -3852,7 +3852,6 @@ fastrpc {
+> >>>>                                      compatible = "qcom,fastrpc";
+> >>>>                                      qcom,glink-channels = "fastrpcglink-apps-dsp";
+> >>>>                                      label = "adsp";
+> >>>> -                                    qcom,non-secure-domain;
+
+- Are there other platforms which have this flag set for ADSP?
+
+- Granted that sc7280 was targeting ChromeOS devices, might it be that
+  there is a CrOS-specific userspace for that?
+
+> >>>>                                      #address-cells = <1>;
+> >>>>                                      #size-cells = <0>;
+> >>>>
+> >>>> --
+> >>>> 2.34.1
+> >>>>
+> >
+> 
+
 -- 
-2.43.0
-
+With best wishes
+Dmitry
 
