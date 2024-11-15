@@ -1,128 +1,199 @@
-Return-Path: <linux-arm-msm+bounces-38082-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38083-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C95A9CF589
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 21:12:30 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 71FCA9CF58E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 21:14:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0664DB2FD2A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 20:09:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 96EDD2869BA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 20:14:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDB001E1C32;
-	Fri, 15 Nov 2024 20:08:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A48D51E1303;
+	Fri, 15 Nov 2024 20:14:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="pv7U7p/p"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QxGu9sOX"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6295310F2
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 20:08:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9F2B1714C0;
+	Fri, 15 Nov 2024 20:14:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731701337; cv=none; b=gWn09kb9GTglNuqi2LYlA2aTBIkb+BSJ4Hf8U96Wut80ml/m08TMkYwNG/Fao3bVvMq//vfE55d3MJt7wwNezYpnnmoPz8F5DUSnrRt20K1+bdxXsEyqjJ/SKbSHKO7F8xBAUtmxLZxAxqF5F93vPygUgCtFJfM7nEuEZ8+An1w=
+	t=1731701659; cv=none; b=gT8GAsl4IP5ca4oliSSobuife09n6o7rR4Nc6WtDT1Ts6wi1QqP1juUChvk8/pgRuOVMaikpQ9jfkRDQ+8CB9F7JnkOpErH9F+VEmga1KrRIzw414xWMExvdsxdQmBV00icNX5QRbhv6z+uaQKy8nwI76ox8BgF2zRJqvfmIMBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731701337; c=relaxed/simple;
-	bh=AFzwwS3G3AU3lK0XY8whHtEnhR0/cIoT3roEoHg19bM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=pbHtPkNoMdxeFQibK3SE2zcCJe4bOVlXftQu04RKBmPrGEZCqFvYS/LGK+FGCn8gqiwDqssUAJJThKotgjVLDquMEK7PvHJUUURZgbQ6wUMjle1BZBUIBA9w28J7p5k+LYJlM4p/qYmd+Y8g79HtpTXd3yHXlk8FoB6rEEkvvXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=fail smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=pv7U7p/p; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AFIWLUs020240
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 20:08:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Hse3Mlbw04uR0im4BpBbm+MAHd9CqxyZme6biBeqk5s=; b=pv7U7p/pd6mh0f0s
-	0mq3tHolBEYgTLvG+Ht7fyLphRXsq3Fyw4gk9Ss94b2PWjFeNWcoOvVTHfb79HxH
-	bBRRJuy2r58cBAKy1/ylYCY/5hwIvbOy9pxT7vJFNSwr+IKfQ9ZXsdZEPnNtp7Qo
-	cAxPGfPO7Ory6NWJtevFD9/uZTaYIZeMHc3z2BVv28tZ409WtnpgFt8MZfQXwKEw
-	FozcXr5E0TlJogNxY/3C1ZmMeBjKNuRwm/SlTd3baR3C1AiEKHK5igUVKmV92ZHZ
-	HWULZ+0kFafMwc4L4IcjG1CJkICMWM3skAEQ6Ma2v3S8kObqlee2DsJWPyUy//SO
-	aXeqww==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42v4kr5627-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 20:08:54 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-460e81465f8so5181641cf.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 12:08:54 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731701333; x=1732306133;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Hse3Mlbw04uR0im4BpBbm+MAHd9CqxyZme6biBeqk5s=;
-        b=Y4NwtUqWYJ3+0l+JuZ4FVHUEQtKs8TKRi2jxoO6VJVn81MGDlvy6Dsuo2MNXVw9Kjp
-         pEHWFNgm9o81NVw20PzRzHSsVS+yxPaAdM+xt1M8l5oGpF1soi5dg4JFouWVrxzytAUf
-         ShQfyGyidQQj76mnKEg9cg6vvoKtDBlCulFRdRPqQCoLJWyROG08yNHl3KAbUEjbsk6o
-         zRrVHLbxdcZ4/ZH2oURFhaS+6JwHMDmbc28cmcA8gqM7wfO/sCgWAOIrNd00LA3Zfw84
-         gKiHvfeheioRhl08KPEEAXtxsT2eO2xrPIxcX3bZJo1iEeuChadtiZPfz77k9FDl03mP
-         R55A==
-X-Forwarded-Encrypted: i=1; AJvYcCWSnKphj5J/y5PdYt5+Bj2k4nLf8cRM57VyQXyVHHY7eOn47eoVJoDWlkcUBiZ2S7Z2oYmhUm/cDR+FZRIz@vger.kernel.org
-X-Gm-Message-State: AOJu0YxhiY58hx9S/VR9fdYu1s40nEyhnEXeAPAtIUO2rAi+q8WnZnzd
-	R3Oe+hE8dyZxMBH31UKKTsFJqCwM5rAu0vgjUCG7VVS50kaxb1YeW6lpv7f6aN1Kl4KsGK243rs
-	ijoYHua42Oe/E7lcoM06HrwTxWIhjye4VIjazbbmiE51BF+WCFreYGf6KwWyVFZz3
-X-Received: by 2002:ac8:5984:0:b0:460:bb96:dd02 with SMTP id d75a77b69052e-46363debc44mr23042211cf.2.1731701333252;
-        Fri, 15 Nov 2024 12:08:53 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEzrql8SdyFYE2oqYQwCh+1FtfpAe7+KdSR1TE46c/4hpWbrSrrGvXWcLnK+FVQbmvWkQKBxw==
-X-Received: by 2002:ac8:5984:0:b0:460:bb96:dd02 with SMTP id d75a77b69052e-46363debc44mr23042081cf.2.1731701332896;
-        Fri, 15 Nov 2024 12:08:52 -0800 (PST)
-Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa20df50b65sm212562066b.54.2024.11.15.12.08.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 Nov 2024 12:08:52 -0800 (PST)
-Message-ID: <cd31a99f-569f-45ba-8f57-777f71541f82@oss.qualcomm.com>
-Date: Fri, 15 Nov 2024 21:08:50 +0100
+	s=arc-20240116; t=1731701659; c=relaxed/simple;
+	bh=mZJ8M9SYhsdIJfeTLGgEYypyiHJEqPM7nuzJIucP1rQ=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mN4h9gTlgvabR1oZkwvoQbqhbM1ZkIBX+zUVJNZcsWxBHPYE39f/DR5MT63AdOq/t++rY01Rp3yEIJgac1LFY9z6pBR8njqYZMK7/GO3ttrKYCMz0ulDDbRPbMZmUJoZOhsMjRJwlgijFxfiu2774eiMQ+DHUoIoFMVzCo7eyDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QxGu9sOX; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AFBmldF014249;
+	Fri, 15 Nov 2024 20:14:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=1pQWydqckVHECTn8cI0N1o4o
+	6AmIUz9H8m9Aj8yXbao=; b=QxGu9sOXsn7OBHFwFvgBCXCIuubF+i5UQAzqNgA7
+	KE069feTbuiGXtcKMyw0FiRpQVyDCCEW7Z+dSmeQwySaOHd6nqFhWR7uaEkXbwtg
+	s7s+P7SsxhDMGC9CA6dZ0tgWej3vg/WDWJyjkBF6J9Vl/h+vt3JMIoO3W8WY3LBp
+	hA26kV9QXMUw+TAx9+NJo/WK7iYQ0JDulyuSakRPXZ8olWrTgmRFf7d1HUEmACTx
+	hLQAWAjXUJO0EJOk/4k7k1UUG9VIYdlLgnyyZ57ZyR0MRiSHcODoDVLoT36CPkwa
+	oWtkiz2tUWDTaNxYQbe+K5PcODGS8LXCYyDVvkbwilcizA==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42wwddapu0-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 15 Nov 2024 20:14:01 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AFKE0gU025430
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 15 Nov 2024 20:14:00 GMT
+Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Fri, 15 Nov 2024 12:14:00 -0800
+Date: Fri, 15 Nov 2024 12:13:59 -0800
+From: Elliot Berman <quic_eberman@quicinc.com>
+To: David Hildenbrand <david@redhat.com>
+CC: Paolo Bonzini <pbonzini@redhat.com>,
+        Andrew Morton
+	<akpm@linux-foundation.org>,
+        Sean Christopherson <seanjc@google.com>,
+        Fuad
+ Tabba <tabba@google.com>, Ackerley Tng <ackerleytng@google.com>,
+        Mike
+ Rapoport <rppt@kernel.org>, "H. Peter Anvin" <hpa@zytor.com>,
+        Matthew Wilcox
+	<willy@infradead.org>,
+        James Gowans <jgowans@amazon.com>, <linux-fsdevel@vger.kernel.org>,
+        <kvm@vger.kernel.org>, <linux-coco@lists.linux.dev>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-mm@kvack.org>
+Subject: Re: [PATCH RFC v3 1/2] KVM: guest_memfd: Convert .free_folio() to
+ .release_folio()
+Message-ID: <20241115121119110-0800.eberman@hu-eberman-lv.qualcomm.com>
+References: <20241113-guestmem-library-v3-0-71fdee85676b@quicinc.com>
+ <20241113-guestmem-library-v3-1-71fdee85676b@quicinc.com>
+ <c650066d-18c8-4711-ae22-3c6c660c713e@redhat.com>
+ <d2147b7c-bb2e-4434-aa10-40cacac43d4f@redhat.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] soc: qcom: llcc: Update configuration data for
- IPQ5424
-To: Varadarajan Narayanan <quic_varada@quicinc.com>, andersson@kernel.org,
-        konradybcio@kernel.org, conor@kernel.org, robh@kernel.org,
-        krzk+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20241105102210.510025-1-quic_varada@quicinc.com>
- <20241105102210.510025-3-quic_varada@quicinc.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20241105102210.510025-3-quic_varada@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: GYdTHvWtwNIeMTykHI7CTaPv4GMDWr8V
-X-Proofpoint-GUID: GYdTHvWtwNIeMTykHI7CTaPv4GMDWr8V
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <d2147b7c-bb2e-4434-aa10-40cacac43d4f@redhat.com>
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: hUh8BuC6vM8H3tLNDCLcMKmEjCfP2ZGr
+X-Proofpoint-ORIG-GUID: hUh8BuC6vM8H3tLNDCLcMKmEjCfP2ZGr
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
- adultscore=0 priorityscore=1501 lowpriorityscore=0 phishscore=0
- malwarescore=0 spamscore=0 clxscore=1015 mlxscore=0 mlxlogscore=999
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=995 mlxscore=0
+ malwarescore=0 bulkscore=0 priorityscore=1501 impostorscore=0
+ lowpriorityscore=0 clxscore=1015 spamscore=0 phishscore=0 suspectscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2409260000 definitions=main-2411150169
 
-On 5.11.2024 11:22 AM, Varadarajan Narayanan wrote:
-> The 'broadcast' register space is present only in chipsets that
-> have multiple instances of LLCC IP. Since IPQ5424 has only one
-> instance, both the LLCC and LLCC_BROADCAST points to the same
-> register space.
-> 
-> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> ---
-> v2: Use 'true/false' instead of '1/0' for boolean variables.
->     Add 'no_broadcast_register' to qcom_llcc_config structure
->     to identify SoC without LLCC_BROADCAST register space instead
->     of using 'num_banks'.
-> ---
-This looks good now. Please rebase on next as there have been
-some changes to the driver in meantime.
+On Fri, Nov 15, 2024 at 11:58:59AM +0100, David Hildenbrand wrote:
+> On 15.11.24 11:58, David Hildenbrand wrote:
+> > On 13.11.24 23:34, Elliot Berman wrote:
+> > > When guest_memfd becomes a library, a callback will need to be made to
+> > > the owner (KVM SEV) to transition pages back to hypervisor-owned/shared
+> > > state. This is currently being done as part of .free_folio() address
+> > > space op, but this callback shouldn't assume that the mapping still
+> > > exists. guest_memfd library will need the mapping to still exist to look
+> > > up its operations table.
+> > 
+> > I assume you mean, that the mapping is no longer set for the folio (it
+> > sure still exists, because we are getting a callback from it :) )?
+> > 
+> > Staring at filemap_remove_folio(), this is exactly what happens:
+> > 
+> > We remember folio->mapping, call __filemap_remove_folio(), and then call
+> > filemap_free_folio() where we zap folio->mapping via page_cache_delete().
+> > 
+> > Maybe it's easier+cleaner to also forward the mapping to the
+> > free_folio() callback, just like we do with filemap_free_folio()? Would
+> > that help?
+> > 
+> > CCing Willy if that would be reasonable extension of the free_folio
+> > callback.
+> > 
 
-Konrad
+I like this approach too. It would avoid the checks we have to do in the
+invalidate_folio() callback and is cleaner.
+
+- Elliot
+
+> > > 
+> > > .release_folio() and .invalidate_folio() address space ops can serve the
+> > > same purpose here. The key difference between release_folio() and
+> > > free_folio() is whether the mapping is still valid at time of the
+> > > callback. This approach was discussed in the link in the footer, but not
+> > > taken because free_folio() was easier to implement.
+> > > 
+> > > Link: https://lore.kernel.org/kvm/20231016115028.996656-1-michael.roth@amd.com/
+> > > Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> > > ---
+> > >    virt/kvm/guest_memfd.c | 19 ++++++++++++++++---
+> > >    1 file changed, 16 insertions(+), 3 deletions(-)
+> > > 
+> > > diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
+> > > index 47a9f68f7b247f4cba0c958b4c7cd9458e7c46b4..13f83ad8a4c26ba82aca4f2684f22044abb4bc19 100644
+> > > --- a/virt/kvm/guest_memfd.c
+> > > +++ b/virt/kvm/guest_memfd.c
+> > > @@ -358,22 +358,35 @@ static int kvm_gmem_error_folio(struct address_space *mapping, struct folio *fol
+> > >    }
+> > >    #ifdef CONFIG_HAVE_KVM_ARCH_GMEM_INVALIDATE
+> > > -static void kvm_gmem_free_folio(struct folio *folio)
+> > > +static bool kvm_gmem_release_folio(struct folio *folio, gfp_t gfp)
+> > >    {
+> > >    	struct page *page = folio_page(folio, 0);
+> > >    	kvm_pfn_t pfn = page_to_pfn(page);
+> > >    	int order = folio_order(folio);
+> > >    	kvm_arch_gmem_invalidate(pfn, pfn + (1ul << order));
+> > > +
+> > > +	return true;
+> > > +}
+> > > +
+> > > +static void kvm_gmem_invalidate_folio(struct folio *folio, size_t offset,
+> > > +				      size_t len)
+> > > +{
+> > > +	WARN_ON_ONCE(offset != 0);
+> > > +	WARN_ON_ONCE(len != folio_size(folio));
+> > > +
+> > > +	if (offset == 0 && len == folio_size(folio))
+> > > +		filemap_release_folio(folio, 0);
+> > >    }
+> > >    #endif
+> > >    static const struct address_space_operations kvm_gmem_aops = {
+> > >    	.dirty_folio = noop_dirty_folio,
+> > > -	.migrate_folio	= kvm_gmem_migrate_folio,
+> > > +	.migrate_folio = kvm_gmem_migrate_folio,
+> > >    	.error_remove_folio = kvm_gmem_error_folio,
+> > >    #ifdef CONFIG_HAVE_KVM_ARCH_GMEM_INVALIDATE
+> > > -	.free_folio = kvm_gmem_free_folio,
+> > > +	.release_folio = kvm_gmem_release_folio,
+> > > +	.invalidate_folio = kvm_gmem_invalidate_folio,
+> > >    #endif
+> > >    };
+> > > 
+> > 
+> > 
+> 
+> 
+> -- 
+> Cheers,
+> 
+> David / dhildenb
+> 
 
