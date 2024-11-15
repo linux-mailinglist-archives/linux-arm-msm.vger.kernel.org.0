@@ -1,89 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-38032-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38033-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 071BA9CE183
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 15:45:22 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E2AD49CE1ED
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 15:49:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A7EFE1F21934
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 14:45:21 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A4B082824BF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 14:49:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A3CA1CD1F1;
-	Fri, 15 Nov 2024 14:45:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EBCCB1D278A;
+	Fri, 15 Nov 2024 14:49:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Zo5j7Pcb"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OBF7GjNR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7C811CDA2D
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 14:45:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2732D1CEEB4
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 14:49:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731681918; cv=none; b=aQXu6wlrM/E9N8F/k7UWhDlsze4bCQg+1u0gFmoOn+YFHr6s/o71Vtmu9eQkaW5BcVZN4pyTRhQDVOo/1og0tMBTsCAtHoEljZo6Xq3XG4I1S5Db9tJkNwnn6Yc/EAvl8jWoh36huBmg2GGPK9wV6UsXPpoPMI/l9f4Su/2dB+8=
+	t=1731682157; cv=none; b=YaMRbH6qwoL8w3dDSG0UKh5IRceWHmjdQ9hVFUc5nplqgxa7ZQEw6zUJGlzSFpo4+IQvUc213qrEz3Jrg0teZNWfftjwiPnH7dyRoGO1VtzDmFW1tucwYQoo7Wq+nA0RDh16E6oRyTkeSnpEDWJhx/lDcSWS1kpAsraM5n62au0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731681918; c=relaxed/simple;
-	bh=/oDXbwttOuykfRaL+9wm3l68yf7AN2jFgg8NQhGn84o=;
+	s=arc-20240116; t=1731682157; c=relaxed/simple;
+	bh=MJh1GOKiwjKgIQo9t6hbR2hhtJZkOmGxVYf4augiVik=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GoeE/NNp+PX11LabcbCNUcD+9RlkCdkux/uw2dTYlgs1LbtsmnEiUWAzex4s7V/suhO1QwZFN/GOkTXuS4levcAdS3KsKoPnqYgDg+L7hfkxcLD3lWpWbI2IqiFAd1ef2hMBGIfmvbMKpnYtg4xNHhPxoIEIdIiPW2JpC6Lbar0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Zo5j7Pcb; arc=none smtp.client-ip=209.85.167.49
+	 Content-Type:Content-Disposition:In-Reply-To; b=MrxYnzi/AXQymxINxz8l+qme2bSLpKGE1OuMmGPqofl2TmHv8/9RNXgd6ewwH+Ujn4LhR+Gj5NbpbpfZj5vK018YGX9pp/qMWd0RgAj6GnL+2iAmiVHyrstZsw2fNktZIGNoD4qCloe4CI14w2aHD0PjhR9NBp+jFT0kBGWfHSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OBF7GjNR; arc=none smtp.client-ip=209.85.208.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-53da209492cso940266e87.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 06:45:16 -0800 (PST)
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2fb5740a03bso20502641fa.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 06:49:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731681915; x=1732286715; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1731682154; x=1732286954; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=BYYrJ3QMaKeBeww6Qr4YMvDYI5JLF5jZeKTgnHSYPoI=;
-        b=Zo5j7PcbWznEbCnSc02yhezLcn2igKBoyRQdE1JJ7MvUlKKnKt1iRpFQuis1RfEcnf
-         RT4DAUx0+nqXnD3iHWq/qSyiqyBbZE+GPEmuJ/px7WGXn6d2GLF3Nm5oUFkfaqk95X57
-         5S3SwKKTzhMvKbwvfB+gY8l6MKw6ytn/eY835jtpqZ3h3rmaq9gW9v+qe7VG6Un7BScp
-         G8B0t99M/vC2B8oh2W6Q77jhC6vJudykijgRLO8EsmO9Qeq0TUbwCEJDT1tH1/xa4AUq
-         tNytfogo2hW/y7DFhV9WA31y2Vlt7mBs0Y4eCLavQ4q03QR+dNfsMROKE7agZ+xwXPBe
-         qVZA==
+        bh=ascYhFdbvJ6nC72OA8rh8LvUXFT//M84YMCSbVmuWzM=;
+        b=OBF7GjNRlhe4K/RbLNVM8fU4redAPGqdMIpPb354C0SdsZRhThDI5kwxPf3jQK77vF
+         Tu4Awte9dC8TQx6970Vz2I2tu5SZ325YUeE3sLoTFt9vkdEp/WJ4KkmOq1d7WiKEgPOk
+         U2gKmsh6fZkPghZwn5xC8AphMWJpWBWJGs3oR6lz4V11INm5G9UgqekdkUzBXcce8L7e
+         0zu8XxLVgZSYeC7biLBHDf5tLPcadiIe8lPolBJNHiDiUlJcBjtD7ttDFs/3JPtduSYW
+         OU2k/2Dr7i6tYMGoDVZu/O5UcAzYpgepyUn+9DJidUiPP2OsBTZlB+cKmCiE4ZMTTkD3
+         barA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731681915; x=1732286715;
+        d=1e100.net; s=20230601; t=1731682154; x=1732286954;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=BYYrJ3QMaKeBeww6Qr4YMvDYI5JLF5jZeKTgnHSYPoI=;
-        b=D282zIH7kanFIANxz5AIGFvX09VczfoTYpnevn1zFhPTmdCW2Xc9Am4jyioPUdpovT
-         YukAE12QxCK9aU2Nm2jkxdvE3B1qiGdCy4yiigtXlmPKS9f9t65wg84K5TsADb7xFF+x
-         H1cjn46S9TmicPTI5CmE1stioOjL8RsWi5APPtAsKuonGN9mazeWSZI4MMBaOP7mMjvN
-         +7d/oRi+hxXoLDQcthhAqRAdZzWho/ZIIl6qZp9zufKzTQ/Qh2KbuznKSDoJ6rMOlLBB
-         OjovII/p5+NE+FsR+minicB3VeRqw7FoaKZ0ez6RQMaAFQW0bWTwuCTG7/aipXsfFYpM
-         rw7g==
-X-Forwarded-Encrypted: i=1; AJvYcCWQtzQLmDIeKtqJDfUyfurp7FrmzonRWOf+AeB4F4aKuKne42zsjYR+GPdOKQdSJ+Si+/c+98byAoMtM4a1@vger.kernel.org
-X-Gm-Message-State: AOJu0YwKLIwg0lq5nYIq+biymcpDZe347sUTeQ81GxiPdeiwRSYz7W2B
-	f8oFQOJQH8Xp3IeKuD9gcFGh8GiRm6aRh4ypvk2di4V3V2IJYhv0PLCGVjArqpo=
-X-Google-Smtp-Source: AGHT+IH4WWbJnLsxZmJMUOm27aAhqJLobkNJkGiDlPVWvRUcFG8GD58Yh8wTqXHxrAKbB2ce88gyuA==
-X-Received: by 2002:ac2:4e14:0:b0:530:ae4a:58d0 with SMTP id 2adb3069b0e04-53dab295eefmr1607819e87.8.1731681914884;
-        Fri, 15 Nov 2024 06:45:14 -0800 (PST)
+        bh=ascYhFdbvJ6nC72OA8rh8LvUXFT//M84YMCSbVmuWzM=;
+        b=m/odQGROqGtqULoRWJxPjP8NqsXhrKtBxnKnyFbrn+IaOCaEGWyUxNOAxy3cWB/sWN
+         Y7oeyMeLgQJD5igP/DFvd8ObROlHdhGvH0R2dVgclzAyGFrewV218aIZ9tYkH53SUOH2
+         T50x8H3oF/8k9ZJMyQa1veGIzLxY2L6kHeM3vMxujodJ6df89xisc68T2peT2LpDhGVY
+         zLQiTCaFQblkxwhEcEhvXfZ9YEDf/O46ELYcXVDIOcy3+FcwyN14Inm9GQhnH4ArrXx7
+         3riTYtgTDdg24sWcVexg0Nn1QKtcGqzMvXbOqM/FBxtra4vD1aupHwijYjihQ+Jmd4LP
+         7v3g==
+X-Forwarded-Encrypted: i=1; AJvYcCX/aPkDMlgZj9ndSJAqvxw1jTlDZmOjrlXu1F/F3ScQWaA/7rB9l0R/Sy3TIjmCgLf7wTHPGfJUAxT/Dq8r@vger.kernel.org
+X-Gm-Message-State: AOJu0YzdF7QXKQ5fYKJ/WJL5E+tWHbwYCaAu0aKth+FJwHtKtXgc4Qsk
+	wZQ/G6HiX4NL3dHC5BOiRgKRXX4mBGipzv57DiGEUN46EbVPoYAe0B0418WjD5o=
+X-Google-Smtp-Source: AGHT+IG1NFDzV6MZrchb+mEsTwZ0o/ief5MAWsOvo+nNU08Kv6TuNreXt1Cx161FLCFILoMwYnjw2w==
+X-Received: by 2002:a05:651c:98b:b0:2fa:d84a:bd83 with SMTP id 38308e7fff4ca-2ff6066e711mr18694701fa.24.1731682154301;
+        Fri, 15 Nov 2024 06:49:14 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53da6530b70sm593063e87.114.2024.11.15.06.45.12
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ff59763fa1sm5695241fa.11.2024.11.15.06.49.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Nov 2024 06:45:13 -0800 (PST)
-Date: Fri, 15 Nov 2024 16:45:10 +0200
+        Fri, 15 Nov 2024 06:49:13 -0800 (PST)
+Date: Fri, 15 Nov 2024 16:49:11 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Ekansh Gupta <quic_ekangupt@quicinc.com>, 
-	Luca Weiss <luca.weiss@fairphone.com>
-Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org, 
-	krzk+dt@kernel.org, conor+dt@kernel.org, cros-qcom-dts-watchers@chromium.org, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	srinivas.kandagatla@linaro.org, quic_bkumar@quicinc.com, quic_chennak@quicinc.com
-Subject: Re: [PATCH v1] arm64: dts: qcom: sc7280: Make ADSP a secure fastrpc
- domain
-Message-ID: <7grzazq7tfv3kixnevia2fkebe6o352372g3gpdinqeihmuavl@6qxd6vvwcwgt>
-References: <20241113050042.181028-1-quic_ekangupt@quicinc.com>
- <5oqzxppquoeppt6xnjfm2rdwm23hbui5k3caz5v5ffqzizepob@dz5ikvzgbd4x>
- <c1f0e56b-b489-4370-99e3-0973641410b8@quicinc.com>
- <CAA8EJprDTz7b4rNtR4e9A-=j9_z-aJGBg3+g5is8Bmy=cgTM1Q@mail.gmail.com>
- <b8a9a8f5-1f36-4eea-925b-84578e71838d@quicinc.com>
- <sbkm5wvhtjoluhz7mi7f2wyc4t5znhazcxra52cd5yev5iksbi@yqielk6i7bpe>
- <9b16f4d8-56ea-4ef6-9cb5-35750af871e9@quicinc.com>
+To: Melody Olvera <quic_molvera@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+	Geert Uytterhoeven <geert+renesas@glider.be>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Arnd Bergmann <arnd@arndb.de>, 
+	=?utf-8?B?TsOtY29sYXMgRiAuIFIgLiBBIC4=?= Prado <nfraprado@collabora.com>, Trilok Soni <quic_tsoni@quicinc.com>, 
+	Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v2 1/6] dt-bindings: arm: qcom: Document sm8750 SoC and
+ boards
+Message-ID: <6xz7tuzxxkda4h5se4wep4krja2pq63lyq2uh6f5m2ywtnumgc@dctwjxngrkzp>
+References: <20241112004936.2810509-1-quic_molvera@quicinc.com>
+ <20241112004936.2810509-2-quic_molvera@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -92,46 +92,49 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <9b16f4d8-56ea-4ef6-9cb5-35750af871e9@quicinc.com>
+In-Reply-To: <20241112004936.2810509-2-quic_molvera@quicinc.com>
 
-On Fri, Nov 15, 2024 at 05:40:23PM +0530, Ekansh Gupta wrote:
+On Mon, Nov 11, 2024 at 04:49:31PM -0800, Melody Olvera wrote:
+> Document the SM8750 SoC binding and the boards which use it.
+
+Nit: In subject you have 'sm8750'. Please use single style for all SoC
+names (I think it's preferred to use uppercase).
+
 > 
+> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 7 +++++++
+>  1 file changed, 7 insertions(+)
 > 
-> On 11/14/2024 5:30 PM, Dmitry Baryshkov wrote:
-> > On Thu, Nov 14, 2024 at 10:49:52AM +0530, Ekansh Gupta wrote:
-> >>
-> >> On 11/13/2024 5:20 PM, Dmitry Baryshkov wrote:
-> >>> On Wed, 13 Nov 2024 at 08:18, Ekansh Gupta <quic_ekangupt@quicinc.com> wrote:
-> >>>>
-> >>>> On 11/13/2024 11:13 AM, Dmitry Baryshkov wrote:
-> >>>>> On Wed, Nov 13, 2024 at 10:30:42AM +0530, Ekansh Gupta wrote:
-
-[...]
-
-> >>>>>>
-> >>>>>> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> >>>>>> index 3d8410683402..c633926c0f33 100644
-> >>>>>> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> >>>>>> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> >>>>>> @@ -3852,7 +3852,6 @@ fastrpc {
-> >>>>>>                                      compatible = "qcom,fastrpc";
-> >>>>>>                                      qcom,glink-channels = "fastrpcglink-apps-dsp";
-> >>>>>>                                      label = "adsp";
-> >>>>>> -                                    qcom,non-secure-domain;
-> > - Are there other platforms which have this flag set for ADSP?
-> Yes, there are a few platforms where this property is added for ADSP.
-
-Please clean up all of them to reduce a possible chance of different behaviour or further c&p errors.
-
-> > - Granted that sc7280 was targeting ChromeOS devices, might it be that
-> >   there is a CrOS-specific userspace for that?
-> FastRPC nodes were recently added to this devicetree recently. Looks like this property is just getting copied.
-> It might be that fastrpc was recently tried on ChromeOS device or it might be added to support some other devices
-> that uses fastrpc(qcm6490-idp etc.).
-
-Indeed.
-
-Luca, could you possibly comment, as you've added ADSP / FastRPC nodes?
+> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+> index 7c8c3a97506a..f4e8f8821405 100644
+> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+> @@ -86,6 +86,7 @@ description: |
+>          sm8450
+>          sm8550
+>          sm8650
+> +        sm8750
+>          x1e80100
+>  
+>    There are many devices in the list below that run the standard ChromeOS
+> @@ -1077,6 +1078,12 @@ properties:
+>                - qcom,sm8650-qrd
+>            - const: qcom,sm8650
+>  
+> +      - items:
+> +          - enum:
+> +              - qcom,sm8750-mtp
+> +              - qcom,sm8750-qrd
+> +          - const: qcom,sm8750
+> +
+>        - items:
+>            - enum:
+>                - qcom,x1e001de-devkit
+> -- 
+> 2.46.1
+> 
 
 -- 
 With best wishes
