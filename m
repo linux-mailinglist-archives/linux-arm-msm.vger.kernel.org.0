@@ -1,125 +1,248 @@
-Return-Path: <linux-arm-msm+bounces-38080-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38081-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DF7E69CF50B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 20:39:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8826C9CF545
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 20:50:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 72DB3B32732
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 19:38:19 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 89925B2BF00
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 19:48:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E36481E3DC8;
-	Fri, 15 Nov 2024 19:36:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79D391E1A35;
+	Fri, 15 Nov 2024 19:48:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="SsE6wfPH"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CKIR48yH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 475151E2851
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 19:36:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6AA31AF0CE
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 19:48:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731699415; cv=none; b=Qz63wrJlttI8MrNsHKhhExLblbdpsevquNwNVpKZD/s2LfC4XdvlCGKkLi0kBsyis2U3r2ci0SSp15ZfOa4GTAnyq5G5piGY+OMMe+wcc8Gyb5Z+ygLfipj7CPterSUtF0f2KaIlgmN+Hwo7Pj/+mYpG8j1v5HAvDT1lopGaEgw=
+	t=1731700087; cv=none; b=sQziEwDUKuN4vrbB4/SEM/F4+S5rLbdrxn9RBM6w3afDqW/diyQo+T+RZEGS2MpvuShv7vbshZKh8nf950yxmPBvYBtmHulLCqSIOWU8gRLaB76QHj5sptAfOt2zukFKPfgO+EZSC6+iWTeBTAzBijlPhvsqH3ZlupReNVHwXMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731699415; c=relaxed/simple;
-	bh=wWXgRZqIHXWvVEOhthpKXlxcEP2cUH7/y2ER9fU5Lx0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Eh7hLWLT7GaIn7znDjMfSlX3nlya43DpWqvc7J9d+qQQwALvpUyRS53HCGZ4f1+tN3Yn+TOf/56jUtgAVTA8OqsfjTttcxlYI3HUryq23eAKmekCRaaM+k+BIA0cYMX4QhNLWBqZ/pCW6uT1yPV2PC/N2iqDDqFvRK+MYX1JYx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=fail smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=SsE6wfPH; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AF91kqR023945
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 19:36:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	+OPmy28iUwKN7BhgqOpCqy+JA49NoFKjF0aRcQ8M3kQ=; b=SsE6wfPHUIxtLM8j
-	aQ41lET9XgW3QStdeugw1Y1MeUXVrv1v8n/FLP3TdAFYUg8OOxSddMet/TRSximD
-	WcExSjq2zw/uiyXFhEDMS43jWoSW8jSqmEZqRvo/LsiLTzOT5MNHclWnlYaOvfmo
-	pfs1cPqGAmPxgO5URjeLzMoDH4oDthNQdnVGl32UEiNPA+2fhQEorpY8Xw3NW/2m
-	cGBbQTkjS7tWY9uTaSzbdWzZSwXPzYjiOsOfhkH7o2ynoEaDu68IVN/4Ve+TzUA9
-	+D52Di9WcEtaMjRKw1bNCP/iE+tMzStYuGYQyCQbRBR63CpANiVy8GGvx9gdoJFk
-	TyK6pQ==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42x3achnkf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 19:36:53 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7b1583c363eso26385385a.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 11:36:53 -0800 (PST)
+	s=arc-20240116; t=1731700087; c=relaxed/simple;
+	bh=S+W/154gK1CXWykZ/ogoZDvRWYYPTmiXJGM1jIP5fQY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XoUtA/+pLgdQkH8vM1jdzbTgoJEKoSghadZTyZo6FxI7J85iyCMat8DuwIG/SifgfKkYKlfpLj1mzQ04R6XS4FGGQfTDfpsMRtd3tV5SfEnJeG6gXrngO1IMtmJGrVVJZ7K6+VCjNXInVAKxSCtU73zcRqBJ4elI90LOpXDwUtM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CKIR48yH; arc=none smtp.client-ip=209.85.128.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-6ea8419a57eso24366887b3.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 11:48:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1731700084; x=1732304884; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=5hqZZY2Xw4Iij5lMmhTNFkUvBmDKTrsfUBUbIBiu3tQ=;
+        b=CKIR48yHHCQp0mN/z06UQqwBc9+80wSzMO4BAkb5Kxt37+S4jX/zK7Wgb6Ff7Lj02W
+         XWjP+1dgPlgKnoLfcGvyWJCbNvDdO5aennQLSRnxdmFeUj33ekVvC6nGGAeGvKVxpUGf
+         vJIaQKkiAqzuGNykTUq8p1P+oyqgfX3x6St69gI7DoGEizJsRMO09VKWy3WYI/GOtYGr
+         WLUrEAWpHe+OGq0f+4M354E3rV+f4HbI4uy3hwiVn39j0nsvd5i/jkPBjM4FVMyt0sGr
+         2MxLHG9vUMdS/THu028j9HUHto6Ya9uwRF4uDdWV+c03XXjqljZaYQUlbY/U/w+dAC1V
+         4Z6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731699412; x=1732304212;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+OPmy28iUwKN7BhgqOpCqy+JA49NoFKjF0aRcQ8M3kQ=;
-        b=BPj41ybf3J8w5JcSQ81NIuERbP3pY4IRSeVpnL2Z8IypeszStVvB5mYR74CLK014Fk
-         /A30kJ+U4b6mX7QQUqdrMhuLCLR+s+x3f5dHMBCgqFh4rC8OAX5JucHYKUS5T+e4F1Em
-         I8sG/iyx1EF0zN19j2zlOowKzbphnc+6QiJOnbeLJG6GPXMpD6os5J8UP0Op7abvM3pF
-         41Z2CpuSs07mIKCEK6e6xNS+1O2ZKrE5IUCruFA6OffnQkFwUuFlbVy+6CFMcDFUZKhg
-         rTqsqrQtzH68jQEX9g2V4HqVtlM64JRSD9B5h1AnNb/hJ7mJXZ0frPiLKa05taehDflA
-         axYQ==
-X-Gm-Message-State: AOJu0Yz+5rCWftj1ynkdvQ4meQDJRYYshJfzxPWsbBJ7PZgKdcfPjxUw
-	+fAG1Wy2QofI9ZF+EHFgzq2CKjCDnUKA0JEK2PjxL+kWqFGmg3mrE9TeV4zMsol8HDSzO1WMbfw
-	/6vlZXbQyIpM4nMKYtPD5BzI9BUgSJvIo59XkzNAe8DERfHVB9dDpeOHvreljuXQ4qXdqZu0Z
-X-Received: by 2002:a05:620a:28c6:b0:7b1:4351:c344 with SMTP id af79cd13be357-7b36230e4edmr212837785a.14.1731699412357;
-        Fri, 15 Nov 2024 11:36:52 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFM/X/KfuFgH/TsyPsQuB1Fcq9SJz//qUFpYS6zyJSP1xikBBDhS2tAds7hIwtC97xXlzlcPg==
-X-Received: by 2002:a05:620a:28c6:b0:7b1:4351:c344 with SMTP id af79cd13be357-7b36230e4edmr212836385a.14.1731699412037;
-        Fri, 15 Nov 2024 11:36:52 -0800 (PST)
-Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa20e086adfsm208399966b.197.2024.11.15.11.36.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 Nov 2024 11:36:51 -0800 (PST)
-Message-ID: <68c079b0-defe-4cb0-9f6f-ce9e3645e2ba@oss.qualcomm.com>
-Date: Fri, 15 Nov 2024 20:36:50 +0100
+        d=1e100.net; s=20230601; t=1731700084; x=1732304884;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5hqZZY2Xw4Iij5lMmhTNFkUvBmDKTrsfUBUbIBiu3tQ=;
+        b=ifFGtlhCWXs3GOjB7YrqwKTuvPq2PLe/eHx0kI2PJ6rMg7/GN09EJsnzVnIG/4/N+N
+         nTBixpVJ+eo7sXn1QIRaoffZNLqMCAj5Fs4iDIZ7RjjCUnK86EKo3QvX46Cjh2f/E+jh
+         ZbDOSABCes7cYPNttpnTP0HpMd2IiEkgSTDzzW4dpgDuepxI7Y8IINFyb0fzyPDPnjqm
+         EbsXCQ5cLGqGgVomCgWPcAen1hAydvM37EYYc8NSk03HVZ/ZrD+pqdePv3FvBKXQ1KVp
+         NP9Ppcj/G4dRf8NGcaoMg3py+pe+enAqolyKhL8upzEVbqP3MzRj5RLp38QfIn/oeQY+
+         eOlA==
+X-Forwarded-Encrypted: i=1; AJvYcCU6JouV8O1KRBJ1YSxgHqqaGNBjM+g5OEDbGnztXxy/pfnczfXKIIqd82DsHOlrtv4K0In39Ee1gZymOf8J@vger.kernel.org
+X-Gm-Message-State: AOJu0YzKp+LLm6F/FeVmpPfctZh1Ojg/jwKAGsUjEWF3h6kK7fg/9ip8
+	i7p5tzZU2vY5OgiT5chQAHyf0PnSofty01P24quOQBb/qpE2sbyBpCYbfVpuLzfZ464qgSVUEZs
+	9LMLGZu5iqetaAIGLHA0jFVQsDjH4vxeVGEtRXQ==
+X-Google-Smtp-Source: AGHT+IGIukyB05CdIVdL1icbGYosMbFDk6j/Gtkmjlh6kGKZaRFg/N+JXtJlBfPhO8UT5MJlHu9T5PXAioWUh56J1Wc=
+X-Received: by 2002:a05:690c:e18:b0:6ea:8c14:7bfc with SMTP id
+ 00721157ae682-6ee55cbbedamr42076707b3.34.1731700083691; Fri, 15 Nov 2024
+ 11:48:03 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: Remove unused and undocumented
- properties
-To: "Rob Herring (Arm)" <robh@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20241115193435.3618831-1-robh@kernel.org>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20241115193435.3618831-1-robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: i87VFpsTix_bIPt1ySCKX3PRi1KXEe6m
-X-Proofpoint-ORIG-GUID: i87VFpsTix_bIPt1ySCKX3PRi1KXEe6m
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
- clxscore=1015 bulkscore=0 impostorscore=0 adultscore=0 malwarescore=0
- mlxlogscore=999 lowpriorityscore=0 spamscore=0 phishscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411150165
+References: <20241021-gpu-acd-v2-0-9c25a62803bc@quicinc.com>
+ <20241021-gpu-acd-v2-2-9c25a62803bc@quicinc.com> <mz4zpcr4tqh2w7vt75f4ofxjzfve54ozzgpdbi2jjzk5pdxbk7@t36tlt3mmprt>
+ <d858dadb-4098-4c9f-b4f0-393dc988db5f@quicinc.com> <4426b4kybtac6rc4twa5pgm3hvlegofemvqjcrvh6ni7f5z2h6@5dnlv3hgywh5>
+ <c5e868e1-2dae-466c-a6fc-ef0f247fa0ce@quicinc.com> <278e62e1-02a4-4e33-8592-fb4fafcedf7e@quicinc.com>
+ <CAA8EJprgshjbNqNErOb06jqV__LmbWvocsK5eD8PQqL+FaLb1g@mail.gmail.com> <f67c72c3-7393-47b0-9b9c-1bfadce13110@quicinc.com>
+In-Reply-To: <f67c72c3-7393-47b0-9b9c-1bfadce13110@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Fri, 15 Nov 2024 21:47:52 +0200
+Message-ID: <CAA8EJppy+V9m-t_qPEJh2iTkC7tyDcf2y8wD9vYoHtFSp=HrkQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/3] dt-bindings: opp: Add v2-qcom-adreno vendor bindings
+To: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>, Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>, 
+	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, 
+	devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On 15.11.2024 8:34 PM, Rob Herring (Arm) wrote:
-> Remove properties which are both unused in the kernel and undocumented.
-> Most likely they are leftovers from downstream.
-> 
-> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
-> ---
+On Fri, 15 Nov 2024 at 19:54, Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
+>
+> On 11/15/2024 3:54 AM, Dmitry Baryshkov wrote:
+> > Hello Akhil,
+> >
+> > On Thu, 14 Nov 2024 at 20:50, Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
+> >>
+> >> On 11/1/2024 9:54 PM, Akhil P Oommen wrote:
+> >>> On 10/25/2024 11:58 AM, Dmitry Baryshkov wrote:
+> >>>> On Thu, Oct 24, 2024 at 12:56:58AM +0530, Akhil P Oommen wrote:
+> >>>>> On 10/22/2024 11:19 AM, Krzysztof Kozlowski wrote:
+> >>>>>> On Mon, Oct 21, 2024 at 05:23:43PM +0530, Akhil P Oommen wrote:
+> >>>>>>> Add a new schema which extends opp-v2 to support a new vendor specific
+> >>>>>>> property required for Adreno GPUs found in Qualcomm's SoCs. The new
+> >>>>>>> property called "qcom,opp-acd-level" carries a u32 value recommended
+> >>>>>>> for each opp needs to be shared to GMU during runtime.
+> >>>>>>>
+> >>>>>>> Cc: Rob Clark <robdclark@gmail.com>
+> >>>>>>> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+> >>>>>>> ---
+> >>>>>>>  .../bindings/opp/opp-v2-qcom-adreno.yaml           | 96 ++++++++++++++++++++++
+> >>>>>>>  1 file changed, 96 insertions(+)
+> >>>>>>>
+> >>>>>>> diff --git a/Documentation/devicetree/bindings/opp/opp-v2-qcom-adreno.yaml b/Documentation/devicetree/bindings/opp/opp-v2-qcom-adreno.yaml
+> >>>>>>> new file mode 100644
+> >>>>>>> index 000000000000..6d50c0405ef8
+> >>>>>>> --- /dev/null
+> >>>>>>> +++ b/Documentation/devicetree/bindings/opp/opp-v2-qcom-adreno.yaml
+> >>>>>>> @@ -0,0 +1,96 @@
+> >>>>>>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> >>>>>>> +%YAML 1.2
+> >>>>>>> +---
+> >>>>>>> +$id: http://devicetree.org/schemas/opp/opp-v2-qcom-adreno.yaml#
+> >>>>>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> >>>>>>> +
+> >>>>>>> +title: Qualcomm Adreno compatible OPP supply
+> >>>>>>> +
+> >>>>>>> +description:
+> >>>>>>> +  Adreno GPUs present in Qualcomm's Snapdragon chipsets uses an OPP specific
+> >>>>>>> +  ACD related information tailored for the specific chipset. This binding
+> >>>>>>> +  provides the information needed to describe such a hardware value.
+> >>>>>>> +
+> >>>>>>> +maintainers:
+> >>>>>>> +  - Rob Clark <robdclark@gmail.com>
+> >>>>>>> +
+> >>>>>>> +allOf:
+> >>>>>>> +  - $ref: opp-v2-base.yaml#
+> >>>>>>> +
+> >>>>>>> +properties:
+> >>>>>>> +  compatible:
+> >>>>>>> +    items:
+> >>>>>>> +      - const: operating-points-v2-adreno
+> >>>>>>> +      - const: operating-points-v2
+> >>>>>>> +
+> >>>>>>> +patternProperties:
+> >>>>>>> +  '^opp-?[0-9]+$':
+> >>>>>>
+> >>>>>> '-' should not be optional. opp1 is not expected name.
+> >>>>>
+> >>>>> Agree. Will change this to '^opp-[0-9]+$'
+> >>>>>
+> >>>>>>
+> >>>>>>> +    type: object
+> >>>>>>> +    additionalProperties: false
+> >>>>>>> +
+> >>>>>>> +    properties:
+> >>>>>>> +      opp-hz: true
+> >>>>>>> +
+> >>>>>>> +      opp-level: true
+> >>>>>>> +
+> >>>>>>> +      opp-peak-kBps: true
+> >>>>>>> +
+> >>>>>>> +      opp-supported-hw: true
+> >>>>>>> +
+> >>>>>>> +      qcom,opp-acd-level:
+> >>>>>>> +        description: |
+> >>>>>>> +          A positive value representing the ACD (Adaptive Clock Distribution,
+> >>>>>>> +          a fancy name for clk throttling during voltage droop) level associated
+> >>>>>>> +          with this OPP node. This value is shared to a co-processor inside GPU
+> >>>>>>> +          (called Graphics Management Unit a.k.a GMU) during wake up. It may not
+> >>>>>>> +          be present for some OPPs and GMU will disable ACD while transitioning
+> >>>>>>> +          to that OPP. This value encodes a voltage threshold and few other knobs
+> >>>>>>> +          which are identified by characterization of the SoC. So, it doesn't have
+> >>>>>>> +          any unit.
+> >>>>>>
+> >>>>>> Thanks for explanation and other updates. I am still not happy with this
+> >>>>>> property. I do not see reason why DT should encode magic values in a
+> >>>>>> quite generic piece of code. This creates poor ABI, difficult to
+> >>>>>> maintain or understand.
+> >>>>>>
+> >>>>>
+> >>>>> Configuring GPU ACD block with its respective value is a requirement for each OPP.
+> >>>>> So OPP node seems like the natural place for this data.
+> >>>>>
+> >>>>> If it helps to resolve your concerns, I can elaborate the documentation with
+> >>>>> details on the GMU HFI interface where this value should be passed on to the
+> >>>>> hardware. Also replace "few other knobs" with "Delay cycles & Calibration margin"
+> >>>>> in the above doc.
+> >>>>
+> >>>> Usually the preference for DT is to specify data in a sensible way
+> >>>> rather than just the values being programmed to the register. Is it
+> >>>> possible to implement this approach for ACD values?
+> >>
+> >> Krzysztof/Dmitry,
+> >>
+> >> BIT(0)-BIT(15) are static configurations which doesn't change between
+> >> OPPs. We can move it to driver.
+> >>
+> >> BIT(16)-BIT(31) indicates a threshold margin which triggers ACD. We can
+> >> keep this in the devicetree. And the driver can construct the final
+> >> value from both data and send it to GMU.
+> >>
+> >> If this is acceptable, I will send the v3 revision.
+> >
+> > Can the upper bitfield have a sensible representation in DT (like uV
+> > or something similar)?
+>
+> Closest approximation is quantized voltage steps. So, unit-less.
+> Converting it to the exact voltage requires identifying the pmic voltage
+> steps and other stuffs which are outside of my expertise.
+>
+> It is convenient if we can abstract it as an integer which correlates
+> with the voltage margin that should be maintained for each regulator corner.
 
-Funny, the sideinteraction compatible is undocumented and the touchscreen
-driver is not upstream
+I'd say, this is up to the DT maintainers then.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>
+> -Akhil.
+>
+> >
+> >>
+> >> -Akhil.
+> >>
+> >>>
+> >>> I am still checking about this. Will get back.
+> >>>
+> >>> -Akhil
+> >>>
+> >>>>
+> >>>>>
+> >>>>>>
+> >>>>
+> >>>
+> >>
+> >
+> >
+>
 
-Konrad
+
+-- 
+With best wishes
+Dmitry
 
