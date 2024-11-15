@@ -1,247 +1,308 @@
-Return-Path: <linux-arm-msm+bounces-38009-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38010-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5E08D9CDD1F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 11:59:29 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1BEE79CDD5D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 12:21:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A9CF5B24EF3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 10:59:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CD3902837FE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 11:21:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AAE8A1B6539;
-	Fri, 15 Nov 2024 10:59:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44C821B21B6;
+	Fri, 15 Nov 2024 11:21:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Ai7N5Vyk"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cNurve2y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AEC91B3920
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 10:59:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AEDA1ABEDF
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 11:21:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731668346; cv=none; b=jwMQA0uEFXHRLY5gPqNDFuPPz+hCXLSoSiJEP+1IKnpMC/wVWfKjO33kVpgXQyBlrAKN71GAR4lL7QCQrZprd0JAj1WoUOxUwCGxOjm04tclqrCqnBbQmajJVjgBWtlXFENvbkb1aYWYlD/52b2lZx8Xh/vRpM9dtAKZPu92AKs=
+	t=1731669694; cv=none; b=o17CV1DZM+gLwD7mynGiX2JvPZPa7/J///hO+ZfyWrNP11XJl4PR6wJd0IVPX1qAiU8mPBU/P+O7wfOHHxSWwP3QEiorshF3KfEkXB4MOHJAcq/jQJrnfy5KVW2m8885IODL1m0qyH8cMJ0R60XAdQeKgTa1Z7abf/TU2MJ15xU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731668346; c=relaxed/simple;
-	bh=xk5IraDmxNndGfJynhHEOWE4Z0wHW2Kmk6du6iWp3R4=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=Y9eqME+eFeiMlNsFUS5dpe5k85eyDKIo1OfK6ma+JaKoLpsiRrGBV+dQU7cc34Dw8SIZtmQn6Kj00YekzPCEY9SfDttzNKNIC3N6/RgxAqX7WWrUWOzV85DFkG3l6i1aXWyI48z4Cw4nYFIeYfGMram+tKrmqzxSg2DGRh/HHAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=Ai7N5Vyk; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1731668344;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=LZA42ddjo8PCNzqC2RzA/0ngU7rvGCooWJ2X5VJm9io=;
-	b=Ai7N5Vyk6eAaCuoy2L+Yxq6kvqZ2KHUowXhtwman9+kfHtjGEPu/I75LddWk5vdOOvgjln
-	c7GwNUsaogxBmJpL/7fdXWWrXF+YsFxRDJRAEttFYoVa0/psGTBlo7/e65hsHC6EVfhppH
-	YeN1eDFLH83IeY2DSf2fphL6+TnCY2I=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-563-d8DhqjDSNKiI3HXb74p8qg-1; Fri, 15 Nov 2024 05:59:02 -0500
-X-MC-Unique: d8DhqjDSNKiI3HXb74p8qg-1
-X-Mimecast-MFC-AGG-ID: d8DhqjDSNKiI3HXb74p8qg
-Received: by mail-wm1-f70.google.com with SMTP id 5b1f17b1804b1-43151e4ef43so4098115e9.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 02:59:02 -0800 (PST)
+	s=arc-20240116; t=1731669694; c=relaxed/simple;
+	bh=Oel/o/pW5Ic84c83r4MHOLLopdqVgBINoGKIro0WqD0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=muuLboLVN96cg4FW8KDywp+cjn3xlmNcwLw5ZW8eEcSPwEHZOEJAZJyrNX1fsk8tTUZoYPBKdvc654GKcNElHjiXHgWESTjigl/BJsa31QrhPnd07KE4NS3Qn6m0CyDNlvrzY44vDgRX2qjJzqX+vsefXzmb3c0xsDrwBzG+8K0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cNurve2y; arc=none smtp.client-ip=209.85.214.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-20c70abba48so17184985ad.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 03:21:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1731669692; x=1732274492; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=ELW/N7HfoGdxV6J9AGnGqxhIM8EvK/dKl/phitL0z0A=;
+        b=cNurve2yQe2PMr1efnphbIdd0uECxbxmy0cdzFdf3ytquLYNpxDfxmxU55TkxNgoes
+         lDA7xirahjMwcDKUVSTCf4SAyG86dLke/T0GJ0lqnUXMCGKG7dsMdZ6TQJJ8qbcievhk
+         M2ww6GzkH/pFIkQyXNVOX1IJjOr/uzMnYzN7ZDGpAmBwR9r3P7Q9AuWga0qAQWUjBMsj
+         h+tg12ZImvkZEr/t5xAThILWSGBt0aIR++rIba9Y/f0tPRACVH3BW920ihbKT2T/I2O7
+         lSoWn/qrsSwTPG15H30D9kakzi80vSUFayJ9zL6DyAlXvZH7CHn7jcKUS39q3iSyES+U
+         +vEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731668341; x=1732273141;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:from:subject:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=LZA42ddjo8PCNzqC2RzA/0ngU7rvGCooWJ2X5VJm9io=;
-        b=VCU76biAuXBfMwKlZ3cC52H3X1UdQquAflsXo+gx3t1QfKWLUaAgZxPy1d94vGdrvN
-         0mVRTziGW/zhujGCbs3Kk1ZWqh+lmTYc4s+OSpaS709FbyOdZQVvFfUyxX3VU8Q1msho
-         BoV1CtIdh3yXPbQ7U7qG7G4hSmu2FMoaqC49y/uvfRJ+qWEWn/SQw5XSUs6KVnLd/iOh
-         SePEu+k/aikzgPByrBIK1MWsdCM7gGTwVh2sJmyA9xZ2ev+6iW9WlvbLulJvAQGIwmoY
-         JtuP+wy4mxVjkEQ68wMt7wBSMtj6OmGN1npAnbwgsXD/5Nf585QIDAHmvnsY3CORkJlX
-         /DVg==
-X-Forwarded-Encrypted: i=1; AJvYcCW636Jtb5IHeToKcgnuV0c3HnQCgaIOzqz55A8JNTj49qqDGFk9LBMC/XVyGC+xBDrNTa3uTjHP5sDki4Vy@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw+IO2nrieHehK9A1LZ7Mp8F3LyDv42C2ZnanaQN5Obqs/RKysU
-	zSkLyuSr/DhkDx6PkvNj+hrUZQwy4074X6flxxhtp59xlZgaUdOe4jiiYLtLPQZXo/O1O4z5w95
-	1Z/msQpeT8wr4WW3McPjtGUVA4HT680Z/UB7D6sg2Cwan2xQp4MEwiv4THNstDZU=
-X-Received: by 2002:a05:600c:1548:b0:431:6060:8b16 with SMTP id 5b1f17b1804b1-432df792d1fmr19751695e9.30.1731668341632;
-        Fri, 15 Nov 2024 02:59:01 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHEV+H1DNqNgOXQeADtTDfnSZodbTJi6jL/FAZvevlXL9pc+wfCJzI7z7EhCdXSHK1J85QtjQ==
-X-Received: by 2002:a05:600c:1548:b0:431:6060:8b16 with SMTP id 5b1f17b1804b1-432df792d1fmr19751485e9.30.1731668341187;
-        Fri, 15 Nov 2024 02:59:01 -0800 (PST)
-Received: from ?IPV6:2003:cb:c721:8100:177e:1983:5478:64ec? (p200300cbc7218100177e1983547864ec.dip0.t-ipconnect.de. [2003:cb:c721:8100:177e:1983:5478:64ec])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432d48baa42sm66969915e9.1.2024.11.15.02.59.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 Nov 2024 02:59:00 -0800 (PST)
-Message-ID: <d2147b7c-bb2e-4434-aa10-40cacac43d4f@redhat.com>
-Date: Fri, 15 Nov 2024 11:58:59 +0100
+        d=1e100.net; s=20230601; t=1731669692; x=1732274492;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ELW/N7HfoGdxV6J9AGnGqxhIM8EvK/dKl/phitL0z0A=;
+        b=Ab9VMemO4xrcYWkqWg3O2+w9qKZDmerZuEc2hHzBx81wUYPCWqsxW9Uv6WtaWcwSeV
+         pvWLtEMZxFFH/A+1bJuX1RgJ6pX4fJN1DQLxn3Ofyv6HdMarZRvs9Sp+7mgJUqSnZGWO
+         LrAb1DfMi49WzcO8fahKNCFw2c0pDstrxvFbTcKE/i316GgItPnlWEAaDuTNkyngUHXO
+         04Rg6F5mNw1lg1RlC4qDQ5YX/mjFPqewcfVtEi0kblE2bgSUNIHBmml2Tl7nIJ3s0KXf
+         EfiXUZwWVn3uKKdbJK5q8mdE7vkH5zI+CbSx0fTt/19qgfz09wbNuorA9fnpkrT6LaNa
+         FCzA==
+X-Forwarded-Encrypted: i=1; AJvYcCXtEbuNRy8sx9guehrUJjcbJC40IQr1+vk/mplkkXpTPkYbA3ZX2Jf+jexgBSZOqRXAd/L14AWX6bLL2cg3@vger.kernel.org
+X-Gm-Message-State: AOJu0YyOejLtnbMRJ+0R/j8etiX4VxkrrQZ8DCXOWnzo/g9w4BuRzQ1C
+	qKfOC+IZFCe3RV08sfvT3K03rifhaO0hBl8JOCe7VbvmolmOuiG+SLKXiLQChA==
+X-Google-Smtp-Source: AGHT+IFBuRI2q499WkqkjhRflq+dioVOzwcbh2YEfCg5bgRA39VJrPTlEU6z8cnSBvV06mnHdqpyAA==
+X-Received: by 2002:a17:902:dac9:b0:20c:a189:c006 with SMTP id d9443c01a7336-211d0ebf0b8mr25896145ad.45.1731669691615;
+        Fri, 15 Nov 2024 03:21:31 -0800 (PST)
+Received: from thinkpad ([117.193.208.47])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-211d0f34698sm10046475ad.133.2024.11.15.03.21.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 15 Nov 2024 03:21:31 -0800 (PST)
+Date: Fri, 15 Nov 2024 16:51:23 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: neil.armstrong@linaro.org
+Cc: Mayank Rana <quic_mrana@quicinc.com>, jingoohan1@gmail.com,
+	will@kernel.org, lpieralisi@kernel.org, kw@linux.com,
+	robh@kernel.org, bhelgaas@google.com, krzk@kernel.org,
+	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, quic_krichai@quicinc.com
+Subject: Re: [PATCH v3 4/4] PCI: qcom: Add Qualcomm SA8255p based PCIe root
+ complex functionality
+Message-ID: <20241115112123.ktv7ge3mfm6lavlj@thinkpad>
+References: <20241106221341.2218416-1-quic_mrana@quicinc.com>
+ <20241106221341.2218416-5-quic_mrana@quicinc.com>
+ <a1f03a33-22b2-4023-8185-d15abc72bc8a@linaro.org>
+ <7cfc0657-e8f4-45a8-95e2-668476ffce17@quicinc.com>
+ <dffb4a49-9295-4ce3-af96-802f10c600e1@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v3 1/2] KVM: guest_memfd: Convert .free_folio() to
- .release_folio()
-From: David Hildenbrand <david@redhat.com>
-To: Elliot Berman <quic_eberman@quicinc.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Andrew Morton <akpm@linux-foundation.org>,
- Sean Christopherson <seanjc@google.com>, Fuad Tabba <tabba@google.com>,
- Ackerley Tng <ackerleytng@google.com>, Mike Rapoport <rppt@kernel.org>,
- "H. Peter Anvin" <hpa@zytor.com>, Matthew Wilcox <willy@infradead.org>
-Cc: James Gowans <jgowans@amazon.com>, linux-fsdevel@vger.kernel.org,
- kvm@vger.kernel.org, linux-coco@lists.linux.dev,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-mm@kvack.org
-References: <20241113-guestmem-library-v3-0-71fdee85676b@quicinc.com>
- <20241113-guestmem-library-v3-1-71fdee85676b@quicinc.com>
- <c650066d-18c8-4711-ae22-3c6c660c713e@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <c650066d-18c8-4711-ae22-3c6c660c713e@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <dffb4a49-9295-4ce3-af96-802f10c600e1@linaro.org>
 
-On 15.11.24 11:58, David Hildenbrand wrote:
-> On 13.11.24 23:34, Elliot Berman wrote:
->> When guest_memfd becomes a library, a callback will need to be made to
->> the owner (KVM SEV) to transition pages back to hypervisor-owned/shared
->> state. This is currently being done as part of .free_folio() address
->> space op, but this callback shouldn't assume that the mapping still
->> exists. guest_memfd library will need the mapping to still exist to look
->> up its operations table.
+On Fri, Nov 08, 2024 at 11:22:52AM +0100, neil.armstrong@linaro.org wrote:
+> On 07/11/2024 18:45, Mayank Rana wrote:
+> > 
+> > 
+> > On 11/7/2024 12:45 AM, neil.armstrong@linaro.org wrote:
+> > > Hi,
+> > > 
+> > > On 06/11/2024 23:13, Mayank Rana wrote:
+> > > > On SA8255p ride platform, PCIe root complex is firmware managed as well
+> > > > configured into ECAM compliant mode. This change adds functionality to
+> > > > enable resource management (system resource as well PCIe controller and
+> > > > PHY configuration) through firmware, and enumerating ECAM compliant root
+> > > > complex.
+> > > > 
+> > > > Signed-off-by: Mayank Rana <quic_mrana@quicinc.com>
+> > > > ---
+> > > >   drivers/pci/controller/dwc/Kconfig     |   1 +
+> > > >   drivers/pci/controller/dwc/pcie-qcom.c | 116 +++++++++++++++++++++++--
+> > > >   2 files changed, 108 insertions(+), 9 deletions(-)
+> > > > 
+> > > > diff --git a/drivers/pci/controller/dwc/Kconfig b/drivers/pci/controller/dwc/Kconfig
+> > > > index b6d6778b0698..0fe76bd39d69 100644
+> > > > --- a/drivers/pci/controller/dwc/Kconfig
+> > > > +++ b/drivers/pci/controller/dwc/Kconfig
+> > > > @@ -275,6 +275,7 @@ config PCIE_QCOM
+> > > >       select PCIE_DW_HOST
+> > > >       select CRC8
+> > > >       select PCIE_QCOM_COMMON
+> > > > +    select PCI_HOST_COMMON
+> > > >       help
+> > > >         Say Y here to enable PCIe controller support on Qualcomm SoCs. The
+> > > >         PCIe controller uses the DesignWare core plus Qualcomm-specific
+> > > > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> > > > index ef44a82be058..2cb74f902baf 100644
+> > > > --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> > > > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> > > > @@ -21,7 +21,9 @@
+> > > >   #include <linux/limits.h>
+> > > >   #include <linux/init.h>
+> > > >   #include <linux/of.h>
+> > > > +#include <linux/of_pci.h>
+> > > >   #include <linux/pci.h>
+> > > > +#include <linux/pci-ecam.h>
+> > > >   #include <linux/pm_opp.h>
+> > > >   #include <linux/pm_runtime.h>
+> > > >   #include <linux/platform_device.h>
+> > > > @@ -254,10 +256,12 @@ struct qcom_pcie_ops {
+> > > >     * @ops: qcom PCIe ops structure
+> > > >     * @override_no_snoop: Override NO_SNOOP attribute in TLP to enable cache
+> > > >     * snooping
+> > > > +  * @firmware_managed: Set if PCIe root complex is firmware managed
+> > > >     */
+> > > >   struct qcom_pcie_cfg {
+> > > >       const struct qcom_pcie_ops *ops;
+> > > >       bool override_no_snoop;
+> > > > +    bool firmware_managed;
+> > > >       bool no_l0s;
+> > > >   };
+> > > > @@ -1415,6 +1419,10 @@ static const struct qcom_pcie_cfg cfg_sc8280xp = {
+> > > >       .no_l0s = true,
+> > > >   };
+> > > > +static const struct qcom_pcie_cfg cfg_fw_managed = {
+> > > > +    .firmware_managed = true,
+> > > > +};
+> > > > +
+> > > >   static const struct dw_pcie_ops dw_pcie_ops = {
+> > > >       .link_up = qcom_pcie_link_up,
+> > > >       .start_link = qcom_pcie_start_link,
+> > > > @@ -1566,6 +1574,51 @@ static irqreturn_t qcom_pcie_global_irq_thread(int irq, void *data)
+> > > >       return IRQ_HANDLED;
+> > > >   }
+> > > > +static void qcom_pci_free_msi(void *ptr)
+> > > > +{
+> > > > +    struct dw_pcie_rp *pp = (struct dw_pcie_rp *)ptr;
+> > > > +
+> > > > +    if (pp && pp->has_msi_ctrl)
+> > > > +        dw_pcie_free_msi(pp);
+> > > > +}
+> > > > +
+> > > > +static int qcom_pcie_ecam_host_init(struct pci_config_window *cfg)
+> > > > +{
+> > > > +    struct device *dev = cfg->parent;
+> > > > +    struct dw_pcie_rp *pp;
+> > > > +    struct dw_pcie *pci;
+> > > > +    int ret;
+> > > > +
+> > > > +    pci = devm_kzalloc(dev, sizeof(*pci), GFP_KERNEL);
+> > > > +    if (!pci)
+> > > > +        return -ENOMEM;
+> > > > +
+> > > > +    pci->dev = dev;
+> > > > +    pp = &pci->pp;
+> > > > +    pci->dbi_base = cfg->win;
+> > > > +    pp->num_vectors = MSI_DEF_NUM_VECTORS;
+> > > > +
+> > > > +    ret = dw_pcie_msi_host_init(pp);
+> > > > +    if (ret)
+> > > > +        return ret;
+> > > > +
+> > > > +    pp->has_msi_ctrl = true;
+> > > > +    dw_pcie_msi_init(pp);
+> > > > +
+> > > > +    ret = devm_add_action_or_reset(dev, qcom_pci_free_msi, pp);
+> > > > +    return ret;
+> > > > +}
+> > > > +
+> > > > +/* ECAM ops */
+> > > > +const struct pci_ecam_ops pci_qcom_ecam_ops = {
+> > > > +    .init        = qcom_pcie_ecam_host_init,
+> > > > +    .pci_ops    = {
+> > > > +        .map_bus    = pci_ecam_map_bus,
+> > > > +        .read        = pci_generic_config_read,
+> > > > +        .write        = pci_generic_config_write,
+> > > > +    }
+> > > > +};
+> > > > +
+> > > >   static int qcom_pcie_probe(struct platform_device *pdev)
+> > > >   {
+> > > >       const struct qcom_pcie_cfg *pcie_cfg;
+> > > > @@ -1580,11 +1633,52 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+> > > >       char *name;
+> > > >       pcie_cfg = of_device_get_match_data(dev);
+> > > > -    if (!pcie_cfg || !pcie_cfg->ops) {
+> > > > -        dev_err(dev, "Invalid platform data\n");
+> > > > +    if (!pcie_cfg) {
+> > > > +        dev_err(dev, "No platform data\n");
+> > > > +        return -EINVAL;
+> > > > +    }
+> > > > +
+> > > > +    if (!pcie_cfg->firmware_managed && !pcie_cfg->ops) {
+> > > > +        dev_err(dev, "No platform ops\n");
+> > > >           return -EINVAL;
+> > > >       }
+> > > > +    pm_runtime_enable(dev);
+> > > > +    ret = pm_runtime_get_sync(dev);
+> > > > +    if (ret < 0)
+> > > > +        goto err_pm_runtime_put;
+> > > > +
+> > > > +    if (pcie_cfg->firmware_managed) {
+> > > > +        struct pci_host_bridge *bridge;
+> > > > +        struct pci_config_window *cfg;
+> > > > +
+> > > > +        bridge = devm_pci_alloc_host_bridge(dev, 0);
+> > > > +        if (!bridge) {
+> > > > +            ret = -ENOMEM;
+> > > > +            goto err_pm_runtime_put;
+> > > > +        }
+> > > > +
+> > > > +        of_pci_check_probe_only();
+> > > > +        /* Parse and map our Configuration Space windows */
+> > > > +        cfg = gen_pci_init(dev, bridge, &pci_qcom_ecam_ops);
+> > > > +        if (IS_ERR(cfg)) {
+> > > > +            ret = PTR_ERR(cfg);
+> > > > +            goto err_pm_runtime_put;
+> > > > +        }
+> > > > +
+> > > > +        bridge->sysdata = cfg;
+> > > > +        bridge->ops = (struct pci_ops *)&pci_qcom_ecam_ops.pci_ops;
+> > > > +        bridge->msi_domain = true;
+> > > > +
+> > > > +        ret = pci_host_probe(bridge);
+> > > > +        if (ret) {
+> > > > +            dev_err(dev, "pci_host_probe() failed:%d\n", ret);
+> > > > +            goto err_pm_runtime_put;
+> > > > +        }
+> > > > +
+> > > > +        return ret;
+> > > > +    }
+> > > > +
+> > > >       pcie = devm_kzalloc(dev, sizeof(*pcie), GFP_KERNEL);
+> > > >       if (!pcie)
+> > > >           return -ENOMEM;
+> > > > @@ -1593,11 +1687,6 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+> > > >       if (!pci)
+> > > >           return -ENOMEM;
+> > > > -    pm_runtime_enable(dev);
+> > > > -    ret = pm_runtime_get_sync(dev);
+> > > > -    if (ret < 0)
+> > > > -        goto err_pm_runtime_put;
+> > > > -
+> > > >       pci->dev = dev;
+> > > >       pci->ops = &dw_pcie_ops;
+> > > >       pp = &pci->pp;
+> > > > @@ -1739,9 +1828,13 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+> > > >   static int qcom_pcie_suspend_noirq(struct device *dev)
+> > > >   {
+> > > > -    struct qcom_pcie *pcie = dev_get_drvdata(dev);
+> > > > +    struct qcom_pcie *pcie;
+> > > >       int ret = 0;
+> > > > +    if (of_device_is_compatible(dev->of_node, "qcom,pcie-sa8255p"))
+> > > 
+> > > Can't you use if (pcie_cfg->firmware_managed) here instead ?
+> > yes, although with firmware managed mode, struct qcom_pcie *pcie is not allocated, and just
+> > to get access to pcie_cfg for this check, I took this approach. I am thiking to do allocating struct qcom_pcie *pcie and using it in future if we need more other related functionality which needs usage of this structure for functionality like global interrupt etc.
+> > 
+> > Although if you still prefer to allocate struct qcom_pcie based memory to access pcie_cfg, then I can consider to update in next patchset. Please suggest.
 > 
-> I assume you mean, that the mapping is no longer set for the folio (it
-> sure still exists, because we are getting a callback from it :) )?
+> I understand, but running of_device_is_compatible() in runtime PM is not something we should do,
+> so either allocate pcie_cfg, or add a firmware_managed bool to qcom_pcie copied from pcie_cfg,
+> or move runtime pm callbacks in qcom_pcie_ops and don't declare any in cfg_fw_managed->ops.
 > 
-> Staring at filemap_remove_folio(), this is exactly what happens:
-> 
-> We remember folio->mapping, call __filemap_remove_folio(), and then call
-> filemap_free_folio() where we zap folio->mapping via page_cache_delete().
-> 
-> Maybe it's easier+cleaner to also forward the mapping to the
-> free_folio() callback, just like we do with filemap_free_folio()? Would
-> that help?
-> 
-> CCing Willy if that would be reasonable extension of the free_folio
-> callback.
+> I think the latter would be more scalable so we could add runtime pm variant handling
+> for each IP versions. But it may be quite quite useless for now.
 > 
 
-Now really CCing him. :)
+Or just bail out if dev_get_drvdata() return NULL?
 
-> 
->>
->> .release_folio() and .invalidate_folio() address space ops can serve the
->> same purpose here. The key difference between release_folio() and
->> free_folio() is whether the mapping is still valid at time of the
->> callback. This approach was discussed in the link in the footer, but not
->> taken because free_folio() was easier to implement.
->>
->> Link: https://lore.kernel.org/kvm/20231016115028.996656-1-michael.roth@amd.com/
->> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
->> ---
->>    virt/kvm/guest_memfd.c | 19 ++++++++++++++++---
->>    1 file changed, 16 insertions(+), 3 deletions(-)
->>
->> diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
->> index 47a9f68f7b247f4cba0c958b4c7cd9458e7c46b4..13f83ad8a4c26ba82aca4f2684f22044abb4bc19 100644
->> --- a/virt/kvm/guest_memfd.c
->> +++ b/virt/kvm/guest_memfd.c
->> @@ -358,22 +358,35 @@ static int kvm_gmem_error_folio(struct address_space *mapping, struct folio *fol
->>    }
->>    
->>    #ifdef CONFIG_HAVE_KVM_ARCH_GMEM_INVALIDATE
->> -static void kvm_gmem_free_folio(struct folio *folio)
->> +static bool kvm_gmem_release_folio(struct folio *folio, gfp_t gfp)
->>    {
->>    	struct page *page = folio_page(folio, 0);
->>    	kvm_pfn_t pfn = page_to_pfn(page);
->>    	int order = folio_order(folio);
->>    
->>    	kvm_arch_gmem_invalidate(pfn, pfn + (1ul << order));
->> +
->> +	return true;
->> +}
->> +
->> +static void kvm_gmem_invalidate_folio(struct folio *folio, size_t offset,
->> +				      size_t len)
->> +{
->> +	WARN_ON_ONCE(offset != 0);
->> +	WARN_ON_ONCE(len != folio_size(folio));
->> +
->> +	if (offset == 0 && len == folio_size(folio))
->> +		filemap_release_folio(folio, 0);
->>    }
->>    #endif
->>    
->>    static const struct address_space_operations kvm_gmem_aops = {
->>    	.dirty_folio = noop_dirty_folio,
->> -	.migrate_folio	= kvm_gmem_migrate_folio,
->> +	.migrate_folio = kvm_gmem_migrate_folio,
->>    	.error_remove_folio = kvm_gmem_error_folio,
->>    #ifdef CONFIG_HAVE_KVM_ARCH_GMEM_INVALIDATE
->> -	.free_folio = kvm_gmem_free_folio,
->> +	.release_folio = kvm_gmem_release_folio,
->> +	.invalidate_folio = kvm_gmem_invalidate_folio,
->>    #endif
->>    };
->>    
->>
-> 
-> 
-
+- Mani
 
 -- 
-Cheers,
-
-David / dhildenb
-
+மணிவண்ணன் சதாசிவம்
 
