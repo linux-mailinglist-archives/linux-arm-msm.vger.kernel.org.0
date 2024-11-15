@@ -1,136 +1,249 @@
-Return-Path: <linux-arm-msm+bounces-37975-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D39C9CDB4C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 10:16:59 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1C2209CDB48
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 10:16:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E7E8A2808B8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 09:16:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D078F281BC0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 09:16:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 84A333D0D5;
-	Fri, 15 Nov 2024 09:16:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C35018FDC6;
+	Fri, 15 Nov 2024 09:16:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="PQyMwQtW"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lwqSupR2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C820518D621;
-	Fri, 15 Nov 2024 09:16:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 293F918F2FD
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 09:16:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731662192; cv=none; b=PCvJKt0yXl4JuQYkd3rMooD9hAa8gNH+YE4+x/jr17Id0sYvoRxjvFRrMW2ctZy6n3tx7kpP57HHGrx+q09bOX8jncVEdlbXZNenK1dQTy3SPrAUMM11EDMeoSgAGpZA3DJbyIjPW1AQweU+7bxs/Qv4rGVNfun/FHFVu6I9/RE=
+	t=1731662165; cv=none; b=psS+xQvgpBhh7gGOfPVnpuFE56lFB53eqPx+5qSVYXw7CCSC4jts9/WJS+/xcsn5r+zjdmsHcgO6mIldFuWwi7kazaO04ieu2cxlids25gcsqGbXJCWQRU/3Vc/M7c6sxaaWcniDlJarsBZGaXB8OoGuThX5zSsvhF+2fe7baL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731662192; c=relaxed/simple;
-	bh=sAA9u1cnI1auPPiRpRvniYehm1E9zID/QJ1DJAzTyFs=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ow7SXFSOZUM1vhD7fzJrv/Grbd/mQ7K6g3zE8QILftbKKRSZqKc6hBS5ehdlDbPVGY0hq5WJSh09UlzZerNl2Im/eR76Eh7BW4kA/E6SfMxKUyoEjczrmTxHcW3Z2kcIVD28wf1gMHUk+YiepxeMaF+72ou1ryEuVsesYdGlRGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=PQyMwQtW; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AF8Mfr9022237;
-	Fri, 15 Nov 2024 09:16:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=EHVuDme6NnOiOL5RmBjJyo
-	P4D31GwrY5Xjo3uh4TiH8=; b=PQyMwQtWueafRYqR77fyK2IVtN8j1J7QR7iNnX
-	c623RKcg8ltdl38oTMXcmEDSQ/Zozg++6k0evuYNapprtsiz7OBNzfreE6ErHtQU
-	ivbfAIFUP9Z1rnlUd2KcaFU5axTu/DnnDTLYiqnojI9NLU5mh3zwEkoPLHSE+wpJ
-	chHwGwzeZFyX+PL1OGZ/BnLn8wG27GxWj7piksjmUqqd+cj8WHamElh24NolY+wM
-	FlNxxlIlI9KHYzMyK/hK0nIDJp2eXTGddCFDGKkkbYRtiPQSjjWkkXJJOF9adIWm
-	pqejabepEab2UIwFx5hV9/Vh4cRmDcpSyfh/yY2HOlncZYFQ==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42wex8ugk3-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 15 Nov 2024 09:16:12 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AF9Fx5e015905
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 15 Nov 2024 09:15:59 GMT
-Received: from hu-kriskura-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Fri, 15 Nov 2024 01:15:54 -0800
-From: Krishna Kurapati <quic_kriskura@quicinc.com>
-To: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>, Stephen Boyd <swboyd@chromium.org>
-CC: <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <quic_ppratap@quicinc.com>,
-        <quic_jackp@quicinc.com>, Krishna Kurapati <quic_kriskura@quicinc.com>,
-        <stable@vger.kernel.org>
-Subject: [PATCH 5.15.y] phy: qcom: qmp: Fix NULL pointer dereference for USB Uni PHYs
-Date: Fri, 15 Nov 2024 14:45:45 +0530
-Message-ID: <20241115091545.2358156-1-quic_kriskura@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1731662165; c=relaxed/simple;
+	bh=eKLb9WPBbZ0Xu/K4i9juTXvzHHcU4NwWfLgass5d4oU=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=L2pDvrxuUyl1T9DZn94YOYf4mHRXYZPdzfKLgw86gY4uRapxiFrcw6I6gB8mKeY2466RTQGOZ0f86c2CMF+uzwWL5vYzWwJygq8WMuLccRsPG5G1yszdD4Dy9efJFkaMI+iB5lmPiq+odXAUHsr7f69xsKYKyHgkppCxi3DSrNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lwqSupR2; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4314b316495so3815895e9.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 01:16:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1731662160; x=1732266960; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=21xfAjVQeCIIZ6dS35gVy1ZySA5llV+Yj+sUkf/GRP4=;
+        b=lwqSupR2fz51EYLaPJK6SklehLAm6J2GRc5L1Ytvh76mTlUAL6qYPSZk3vDUAcWDzQ
+         /8e8d4XjsEwWThBC1DEkYxkQU9+pQESRedJ486uhzY/JqWAH1Ch9PB1SRvdIpqyQOQda
+         vo8P4M6lPokCsIlhUqIsTZKOPfTmYP66xx67t5I/ZgRSR0B9whv700h/SUUAMBi63UaR
+         n6QJoRVSthfylBxyMqVHo/IfKXw+pdHshj5w6OO2KNXu7QuZHLzsAHj/3D/tSlfisple
+         hD1GNoavh3n+ioao/I1cJsKjGuApbGRIpdZPhBPeDv7WVk+jrayZEKiDqq7iGamGGCrI
+         djuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731662160; x=1732266960;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=21xfAjVQeCIIZ6dS35gVy1ZySA5llV+Yj+sUkf/GRP4=;
+        b=rzmyiOzAWt307Yic1rsPnx3DrhjPTw8hXDBMJ+j2pbMsneikqOHDwSXtF/SmDKVEgX
+         WXRAtGk6Q1eczoMeHx9f2FBtT3ZO/twreK9TgrJw60q3VFPrVk8RGmmRzU3tUwBGXbwz
+         m8jDIMosbh6h5jN7Yqp4zF0aXsvrAHCCPeO3fNole8CorjT9Z8coRwUNei5/dtadViX9
+         4neTbJVBTDONrgmoGXsSyC8Tdx9YWVzuBEAA5jsqH3+xxOtreG8wtMJH1e8KQ8YSRVc/
+         XoKShTdukUfNtomq7FtBpJlDcVqAfMgkgKw+QbDmIa74ateGFX7/dS0OJic+LOOG+hkq
+         LsSg==
+X-Forwarded-Encrypted: i=1; AJvYcCU5naA9BKiqsB0+xiimVrZ7ZYVq//e4LPv6VBwxcLvF7HRUFEojTYZfAU+V49ywnVMMI86VCSqJLQEGKfjo@vger.kernel.org
+X-Gm-Message-State: AOJu0YySX+CWiwqCgncpkT/791TNPpN/cDXByf6EmvI6nm9LcQCVDdQU
+	zFIpKSQiTpVnw9FB2x4WHhm5zaZSZZ4CGV4BEZwIAS3DTPAqG76XZ6VwneSt6jI=
+X-Google-Smtp-Source: AGHT+IFPbcpcX4w3sjn8rOwf7xbvOcUQVBQPqXmF6Nf82dTlcp6xBxu/Ctu+3eZ//JQlin2Qv5qoRw==
+X-Received: by 2002:a05:600c:3b03:b0:430:52ec:1e41 with SMTP id 5b1f17b1804b1-432df74de50mr17161875e9.17.1731662160432;
+        Fri, 15 Nov 2024 01:16:00 -0800 (PST)
+Received: from [192.168.7.189] ([212.114.21.58])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432dac1d85fsm47149875e9.36.2024.11.15.01.15.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 15 Nov 2024 01:15:59 -0800 (PST)
+Message-ID: <8f0f23e0-c517-4e49-864a-e6c47cedc6de@linaro.org>
+Date: Fri, 15 Nov 2024 10:15:59 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: WtDCnt3GfOJrPmBfPpLZPNMM4SS_rqMC
-X-Proofpoint-ORIG-GUID: WtDCnt3GfOJrPmBfPpLZPNMM4SS_rqMC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
- phishscore=0 bulkscore=0 mlxlogscore=999 lowpriorityscore=0 suspectscore=0
- priorityscore=1501 malwarescore=0 spamscore=0 clxscore=1011 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2411150078
+User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH RFC 5/8] drm/msm: adreno: find bandwidth index of OPP and
+ set it along freq index
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Akhil P Oommen <quic_akhilpo@quicinc.com>,
+ Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+ Stephen Boyd <sboyd@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
+ Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Connor Abbott <cwabbott0@gmail.com>,
+ linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+References: <20241113-topic-sm8x50-gpu-bw-vote-v1-0-3b8d39737a9b@linaro.org>
+ <20241113-topic-sm8x50-gpu-bw-vote-v1-5-3b8d39737a9b@linaro.org>
+ <ith6te3m4cjwjyxrsxpjsvqsyjr3qrmlyyo7cucljuweuzn37b@lmd5b5mqwkbw>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <ith6te3m4cjwjyxrsxpjsvqsyjr3qrmlyyo7cucljuweuzn37b@lmd5b5mqwkbw>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Commit [1] introduced DP support to QMP driver. While doing so, the
-dp and usb configuration structures were added to a combo_phy_cfg
-structure. During probe, the match data is used to parse and identify the
-dp and usb configs separately. While doing so, the usb_cfg variable
-represents the configuration parameters for USB part of the phy (whether
-it is DP-Cobo or Uni). during probe, one corner case of parsing usb_cfg
-for Uni PHYs is left incomplete and it is left as NULL. This NULL variable
-further percolates down to qmp_phy_create() call essentially getting
-de-referenced and causing a crash.
+On 15/11/2024 08:28, Dmitry Baryshkov wrote:
+> On Wed, Nov 13, 2024 at 04:48:31PM +0100, Neil Armstrong wrote:
+>> The Adreno GMU Management Unit (GMU) can also scale the DDR Bandwidth
+>> along the Frequency and Power Domain level, until now we left the OPP
+>> core scale the OPP bandwidth via the interconnect path.
+>>
+>> In order to enable bandwidth voting via the GPU Management
+>> Unit (GMU), when an opp is set by devfreq we also look for
+>> the corresponding bandwidth index in the previously generated
+>> bw_table and pass this value along the frequency index to the GMU.
+>>
+>> Since we now vote for all resources via the GMU, setting the OPP
+>> is no more needed, so we can completely skip calling
+>> dev_pm_opp_set_opp() in this situation.
+>>
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>> ---
+>>   drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 17 +++++++++++++++--
+>>   drivers/gpu/drm/msm/adreno/a6xx_gmu.h |  2 +-
+>>   drivers/gpu/drm/msm/adreno/a6xx_hfi.c |  6 +++---
+>>   3 files changed, 19 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+>> index 504a7c5d5a9df4c787951f2ae3a69d566d205ad5..1131c3521ebbb0d053aceb162052ed01e197726a 100644
+>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+>> @@ -113,6 +113,7 @@ void a6xx_gmu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp,
+>>   	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
+>>   	struct a6xx_gmu *gmu = &a6xx_gpu->gmu;
+>>   	u32 perf_index;
+>> +	u32 bw_index = 0;
+>>   	unsigned long gpu_freq;
+>>   	int ret = 0;
+>>   
+>> @@ -125,6 +126,16 @@ void a6xx_gmu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp,
+>>   		if (gpu_freq == gmu->gpu_freqs[perf_index])
+>>   			break;
+>>   
+>> +	/* If enabled, find the corresponding DDR bandwidth index */
+>> +	if ((adreno_gpu->info->quirks & ADRENO_QUIRK_GMU_BW_VOTE) && gmu->nr_gpu_bws) {
+>> +		unsigned int bw = dev_pm_opp_get_bandwidth(opp, true, 0);
+>> +
+>> +		for (bw_index = 0; bw_index < gmu->nr_gpu_bws - 1; bw_index++) {
+>> +			if (bw == gmu->gpu_bw_table[bw_index])
+>> +				break;
+>> +		}
+>> +	}
+>> +
+>>   	gmu->current_perf_index = perf_index;
+>>   	gmu->freq = gmu->gpu_freqs[perf_index];
+>>   
+>> @@ -140,8 +151,10 @@ void a6xx_gmu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp,
+>>   		return;
+>>   
+>>   	if (!gmu->legacy) {
+>> -		a6xx_hfi_set_freq(gmu, perf_index);
+>> -		dev_pm_opp_set_opp(&gpu->pdev->dev, opp);
+>> +		a6xx_hfi_set_freq(gmu, perf_index, bw_index);
+>> +		/* With Bandwidth voting, we now vote for all resources, so skip OPP set */
+>> +		if (bw_index)
+> 
+> if (!bw_index) ???
 
-Subsequently, commit [2] split the driver into multiple files, each
-handling a specific PHY type (USB, DP-Combo, UFS, PCIe). During this
-refactoring, the probing process was modified, and the NULL pointer
-dereference issue no longer showed up.
+Good catch, I added it back wrongly when refactoring...
 
-[1]: https://lore.kernel.org/all/20200916231202.3637932-8-swboyd@chromium.org/
-[2]: https://lore.kernel.org/all/20220607213203.2819885-1-dmitry.baryshkov@linaro.org/
+> 
+> Also should there be a 0 vote too in case we are shutting down /
+> suspending?
 
-Fixes: 52e013d0bffa ("phy: qcom-qmp: Add support for DP in USB3+DP combo phy")
-Cc: stable@vger.kernel.org # 5.15.y
-Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
----
- drivers/phy/qualcomm/phy-qcom-qmp.c | 2 ++
- 1 file changed, 2 insertions(+)
+It's already handled in a6xx_gmu_stop()
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
-index eef863108bfe..e22ee71aa060 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-@@ -5714,6 +5714,8 @@ static int qcom_qmp_phy_probe(struct platform_device *pdev)
- 
- 		usb_cfg = combo_cfg->usb_cfg;
- 		cfg = usb_cfg; /* Setup clks and regulators */
-+	} else {
-+		usb_cfg = cfg;
- 	}
- 
- 	/* per PHY serdes; usually located at base address */
--- 
-2.34.1
+> 
+>> +			dev_pm_opp_set_opp(&gpu->pdev->dev, opp);
+>>   		return;
+>>   	}
+>>   
+>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+>> index 95c632d8987a517f067c48c61c6c06b9a4f61fc0..9b4f2b1a0c48a133cd5c48713bc321c74eaffce9 100644
+>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+>> @@ -205,7 +205,7 @@ void a6xx_hfi_init(struct a6xx_gmu *gmu);
+>>   int a6xx_hfi_start(struct a6xx_gmu *gmu, int boot_state);
+>>   void a6xx_hfi_stop(struct a6xx_gmu *gmu);
+>>   int a6xx_hfi_send_prep_slumber(struct a6xx_gmu *gmu);
+>> -int a6xx_hfi_set_freq(struct a6xx_gmu *gmu, int index);
+>> +int a6xx_hfi_set_freq(struct a6xx_gmu *gmu, int perf_index, int bw_index);
+>>   
+>>   bool a6xx_gmu_gx_is_on(struct a6xx_gmu *gmu);
+>>   bool a6xx_gmu_sptprac_is_on(struct a6xx_gmu *gmu);
+>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+>> index 9a89ba95843e7805d78f0e5ddbe328677b6431dd..e2325c15677f1a1194a811e6ecbb5931bdfb1ad9 100644
+>> --- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+>> @@ -752,13 +752,13 @@ static int a6xx_hfi_send_core_fw_start(struct a6xx_gmu *gmu)
+>>   		sizeof(msg), NULL, 0);
+>>   }
+>>   
+>> -int a6xx_hfi_set_freq(struct a6xx_gmu *gmu, int index)
+>> +int a6xx_hfi_set_freq(struct a6xx_gmu *gmu, int freq_index, int bw_index)
+>>   {
+>>   	struct a6xx_hfi_gx_bw_perf_vote_cmd msg = { 0 };
+>>   
+>>   	msg.ack_type = 1; /* blocking */
+>> -	msg.freq = index;
+>> -	msg.bw = 0; /* TODO: bus scaling */
+>> +	msg.freq = freq_index;
+>> +	msg.bw = bw_index;
+>>   
+>>   	return a6xx_hfi_send_msg(gmu, HFI_H2F_MSG_GX_BW_PERF_VOTE, &msg,
+>>   		sizeof(msg), NULL, 0);
+>>
+>> -- 
+>> 2.34.1
+>>
+> 
 
 
