@@ -1,166 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-37937-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37938-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7EA019C961E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 00:33:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7A0D29CD4AC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 01:38:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 295861F21615
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2024 23:33:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 227B31F21316
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 00:38:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 081671B21A4;
-	Thu, 14 Nov 2024 23:33:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D6CE1096F;
+	Fri, 15 Nov 2024 00:38:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="knwweu2i"
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="n06gKXqP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mailout1.samsung.com (mailout1.samsung.com [203.254.224.24])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A6571B0F20
-	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2024 23:33:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 209F924B26
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 00:38:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.24
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731627197; cv=none; b=ZcbQ1hzChPN1oX0k/cpZBXwcVQXQnobTFsCdaF3bP4X89py02uDvrseXjJ3/TlyULLiyi4yD4xpo9SzvpxpTh4a/8HRRjce8D1AS9Zy/QDysSJlwiEHFKxI0aXVjX7hkabVJRRfXQ1rwx0jwUXyYV3fr5d7Cv9qIFCYZRUXI9Ts=
+	t=1731631096; cv=none; b=OFVoRM3VsIfTrPMN9vs8Mj/5+a5pildCsJDqskm5y7Qa5eFMcnw+2mO0u2BpSTQG/U1rUBc8HOjxRzHM0YGRQKd6JW3ZckiHr02tDrxYpajG36z106OkX2mLIrw8VmyrHA6pOKLSTDIvUsMkZdjl0Z3x2snJsa7U3SHSOrwrYus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731627197; c=relaxed/simple;
-	bh=UYWLHm7qfMw23PDHj1x/cvLxSnpl+KHifSvGS/dxR3I=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Eneb7Lg3ZwWcCUZgOsGNy9YFDgI5DIbTeCkqlw7O9HiVsdwKY3jU8eIsC6ZbXoW2b9D9QuNRwOZvcOxmN9uV5Z+QZoHxjOD5N/C2UjZeDM0aXw9oZXlTN5LOYQEyU50Ofihu+HsStXRJ77QqcPIUgqjHi/1rAi0Q+ACMej70g1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=knwweu2i; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4314f38d274so13208895e9.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2024 15:33:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731627194; x=1732231994; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=VVvwlAu+8zSpv+81YL0HNfwnIe4vXYe/t9Y2ZwRkEAk=;
-        b=knwweu2i6RwuZyu3uqCuLCgE2Kulu1D2F7jUscYz5++8v3/gZylbQzTNU+gXuV8mX+
-         h80X1oYoLKnxeRjQFQU/oSvfSlCwE16mwehI1RtKbK2lItPHOua4Dwsp8QIWigDMPyDu
-         TToyr1Enmia7IAYGKSHb6JojaZ22W4dTtTJaZolcz0g1+rCCmi4H5LmQ4r3uh69CRhNm
-         t6BxG4HTz7C1if0ailW2SFFzyNuObF37ESvkGUnP7zw9gXxQwA0HbJTQGZxkScIS637l
-         BuFDfuicBVva133fzMaomifXj6HPTArAS4IYwh7RrZKkhuxh1WAbpj7+jOOs9Mi1Vav2
-         JJBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731627194; x=1732231994;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=VVvwlAu+8zSpv+81YL0HNfwnIe4vXYe/t9Y2ZwRkEAk=;
-        b=huT7r+Ykdk5BbFSIaCty+ob5GNgGYpO/MnBlWSVbSK3H7wMbo0zdxBHoCAL8Cb26RL
-         F7HKesfa1XzIHRkulr3bzyrvaN83TTJ4fhnAzO8+X1RmlTWTkPBlgNgIOviqo9q8lX49
-         L78zdiEhO55mJDFArTyNs4nydCPRqlKc8vhOnCt5gf9ewNyVasSrrP6a/heuNBD2hM3V
-         opVsfQACoXB/32N4ihsuQFF72GiwcCBY1jYPnzyh+u0ECsKch91MqzeNHcNu/l4lagCI
-         NnBE03c+cc9dI8+oxHHdpp5E0Unw+Q7PQfvZOR97emKuJ3ZF5F0SGKADy57zOvasQTro
-         DXLQ==
-X-Gm-Message-State: AOJu0Yx2NBy+qTbgjM0zN7USjAVVe8wOPtNno3oO9fzO+Hf1Deccjqkx
-	SqEh9CVPCHqweLz8syRHEYd4oZA3afWe9ptyjQ6lS2XMNJjyLJam8KUisf3fI08=
-X-Google-Smtp-Source: AGHT+IGKLPXfM66rPtUFkfPweOwpn1ja3LCHTx2W2I4nd96tds3LIExpBIYxelahGIXvBpARzXKnpA==
-X-Received: by 2002:a05:600c:5125:b0:42f:8229:a09e with SMTP id 5b1f17b1804b1-432df7937c9mr4239815e9.29.1731627194373;
-        Thu, 14 Nov 2024 15:33:14 -0800 (PST)
-Received: from [127.0.1.1] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432da28ba80sm39513565e9.29.2024.11.14.15.33.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Nov 2024 15:33:13 -0800 (PST)
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Date: Thu, 14 Nov 2024 23:32:58 +0000
-Subject: [PATCH] clk: qcom: camcc-x1e80100: Set titan_top_gdsc as the
- parent GDSC of subordinate GDSCs
+	s=arc-20240116; t=1731631096; c=relaxed/simple;
+	bh=2QTg3uMImeU66RhLX3/5YsxnFUoi2i1VFQyshj8WnNg=;
+	h=Mime-Version:Subject:From:To:CC:In-Reply-To:Message-ID:Date:
+	 Content-Type:References; b=lSYTyGI0NTbsH/1OUvDudTpYiA8pOzoz4c6+TWJeVgV6J8UmdlUZC9NprHKIewaox5loqN00yJcFql1nL68wEy2ox0+OXD4Tb8e24ZYjZKO5iy+Bv6FhzR2I3LXgyXIYmpWz6q9k5XW4s9rVsM1/VOINjICxcKiuAm8RBiL1KDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=n06gKXqP; arc=none smtp.client-ip=203.254.224.24
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
+Received: from epcas1p1.samsung.com (unknown [182.195.41.45])
+	by mailout1.samsung.com (KnoxPortal) with ESMTP id 20241115003812epoutp01d76f8ccc5325476bceb8b8a1a689e2b1~H-U3Ay9fJ0262602626epoutp01G
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 00:38:12 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20241115003812epoutp01d76f8ccc5325476bceb8b8a1a689e2b1~H-U3Ay9fJ0262602626epoutp01G
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1731631092;
+	bh=2QTg3uMImeU66RhLX3/5YsxnFUoi2i1VFQyshj8WnNg=;
+	h=Subject:Reply-To:From:To:CC:In-Reply-To:Date:References:From;
+	b=n06gKXqPozK50JkoDvZxhWPYFMHiJ42WNvPnwMZN8BAK263oS3OVs3pVRKW8HHMhd
+	 ADQmtmQKRs4YIMW/2Qo6KRB1O3mRqYdTEs800lHJey/7RF4jnfadrFd72zbrtaslUN
+	 Ric0aukVmj07r38UNfFhV/UJeh/fysvD+C1nw27s=
+Received: from epsnrtp4.localdomain (unknown [182.195.42.165]) by
+	epcas1p2.samsung.com (KnoxPortal) with ESMTP id
+	20241115003811epcas1p2b96da2b129d9027364eef77e96486f1b~H-U2XwYY-2573625736epcas1p2C;
+	Fri, 15 Nov 2024 00:38:11 +0000 (GMT)
+Received: from epsmges1p1.samsung.com (unknown [182.195.36.144]) by
+	epsnrtp4.localdomain (Postfix) with ESMTP id 4XqJ5t2gq8z4x9Q2; Fri, 15 Nov
+	2024 00:38:10 +0000 (GMT)
+X-AuditID: b6c32a35-6c7ff70000023fb3-78-673697f2e2ec
+Received: from epcas1p2.samsung.com ( [182.195.41.46]) by
+	epsmges1p1.samsung.com (Symantec Messaging Gateway) with SMTP id
+	19.41.16307.2F796376; Fri, 15 Nov 2024 09:38:10 +0900 (KST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Mime-Version: 1.0
+Subject: RE: Re: [PATCH V4 4/5] soc: qcom: Introduce SCMI based Memlat
+ (Memory Latency) governor
+Reply-To: myungjoo.ham@samsung.com
+Sender: MyungJoo Ham <myungjoo.ham@samsung.com>
+From: MyungJoo Ham <myungjoo.ham@samsung.com>
+To: Sibi Sankar <quic_sibis@quicinc.com>, Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>, Kyungmin Park <Kyungmin.park@samsung.com>,
+	Chanwoo Choi <cw00.choi@samsung.com>, Viresh Kumar <viresh.kumar@linaro.org>
+CC: "sudeep.holla@arm.com" <sudeep.holla@arm.com>,
+	"cristian.marussi@arm.com" <cristian.marussi@arm.com>,
+	"andersson@kernel.org" <andersson@kernel.org>, "konrad.dybcio@linaro.org"
+	<konrad.dybcio@linaro.org>, "robh+dt@kernel.org" <robh+dt@kernel.org>,
+	"krzysztof.kozlowski+dt@linaro.org" <krzysztof.kozlowski+dt@linaro.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+	"devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+	"linux-arm-kernel@lists.infradead.org"
+	<linux-arm-kernel@lists.infradead.org>, "quic_rgottimu@quicinc.com"
+	<quic_rgottimu@quicinc.com>, "quic_kshivnan@quicinc.com"
+	<quic_kshivnan@quicinc.com>, "conor+dt@kernel.org" <conor+dt@kernel.org>,
+	"arm-scmi@vger.kernel.org" <arm-scmi@vger.kernel.org>, Amir Vajid
+	<avajid@quicinc.com>
+X-Priority: 3
+X-Content-Kind-Code: NORMAL
+In-Reply-To: <ac655bdc-5ccf-c6c6-3203-659f1916c53c@quicinc.com>
+X-Drm-Type: N,general
+X-Msg-Generator: Mail
+X-Msg-Type: PERSONAL
+X-Reply-Demand: N
+Message-ID: <20241115003809epcms1p518df149458f3023d33ec6d87a315e8f6@epcms1p5>
+Date: Fri, 15 Nov 2024 09:38:09 +0900
+X-CMS-MailID: 20241115003809epcms1p518df149458f3023d33ec6d87a315e8f6
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241114-b4-linux-next-master-24-11-14-titan-gdsc-v1-1-ef2533d487dc@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAKmINmcC/x2NwQoCMQwFf2XJ2QdNzclfEQ+1jWtAqzRVCsv+u
- 8XjMDCzkWszdTotGzX9mturTuDDQvme6qqwMpliiMLMgqvgYfUzUHV0PJN3bYgCZkzbraeKtXi
- GlCNnDlxCYpq5d9Objf/qfNn3H/mTBJR6AAAA
-X-Change-ID: 20241114-b4-linux-next-master-24-11-14-titan-gdsc-4d31c101d0a1
-To: Bjorn Andersson <andersson@kernel.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Abel Vesa <abel.vesa@linaro.org>, 
- Rajendra Nayak <quic_rjendra@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
- linux-kernel@vger.kernel.org, stable@vger.kernel.org, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-X-Mailer: b4 0.14.2
+Content-Type: text/plain; charset="utf-8"
+CMS-TYPE: 101P
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrCJsWRmVeSWpSXmKPExsWy7bCmnu6n6WbpBgt/8Fps67CxOHflKrvF
+	+Sv9bBZr9p5jsjjY9pPN4vqX56wW84+cY7WYeB7I7Zi8ncWi78VDZouzTW/YLTY9vgaU2H+W
+	3eLyrjlsFp83b2G3eHl7G5tF86LfbBate4+wWyw/tYPFYuNXDwcRjzXz1jB6bFrVyeZx59oe
+	No/NS+o9Ju6p8+jbsorR4/MmuQD2qGybjNTElNQihdS85PyUzLx0WyXv4HjneFMzA0NdQ0sL
+	cyWFvMTcVFslF58AXbfMHKBvlBTKEnNKgUIBicXFSvp2NkX5pSWpChn5xSW2SqkFKTkFpgV6
+	xYm5xaV56Xp5qSVWhgYGRqZAhQnZGf8WvmcuaOOoOPdrH3sD41a2LkZODgkBE4mfvz+wdzFy
+	cQgJ7GCUuHDkPXMXIwcHr4CgxN8dwiCmsECSRNeuHJByIQEliYab+5hBbGEBfYmOB9sYQWw2
+	AV2JrRvusoCMERG4yigxc/pZMIdZ4C6bROe+q6wQy3glZrQ/ZYGwpSW2L98K1s0pYC/xb/5i
+	qLioxM3Vb9lh7PfH5jNC2CISrffOMkPYghIPfu6GiktK9N3ZywSyTEJgG6PEjiNz2CCc/YwS
+	Ux62QU3Slzgz9yTYy7wCvhI7mw6BXcQioCrR0twNDQoXiZafEHFmAXmJ7W/ngEOCWUBTYv0u
+	fYgwn8S7rz1wz+yY94QJwlaTOLR7CdQqGYnT0xdCHeohcfHDRVZI0K1mlti1MW4Co/wsRPjO
+	QrJsFsKyBYzMqxjFUguKc9NTiw0LDOFRmpyfu4kRnJy1THcwTnz7Qe8QIxMH4yFGCQ5mJRHe
+	U87G6UK8KYmVValF+fFFpTmpxYcYTYHenMgsJZqcD8wPeSXxhiaWBiZmRsYmFoZmhkrivGeu
+	lKUKCaQnlqRmp6YWpBbB9DFxcEo1MOl+iFI6bSJ5aZ7T8ou7bZ/+/ym7evZNST7DCXEVc39N
+	XNCT5+qwa/MuQc3sO2uPpL1J1K68ru7hcLpa+VH9JOmgb5vjiucaTTt3Nlx2pvdZ3g/TNunM
+	2vtHRXrDN8FPPTuenKsJ3cSVOmvBj9pjj36eLtdnb/uzJ8Fm2QYd/tt1vet/RFQ4qk/8avC+
+	dV5r39r+aJccvs+1i6J4rlmYTZ8gzOMXvMvC7hJD6Y/n/nHqmmcWd/XP+i38ZO0pxQWNgh33
+	rlp56j78POt46gbZyRb8vqXvVmhMna144YHpessbcoHyUaLTjpUsN1S8d/Sn+o0Paumdd/aa
+	q/vWX3h+zlJnp/qmwyc23T/XxXTRo0hZiaU4I9FQi7moOBEA2uwez1cEAAA=
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20241114041419epcas1p3b52bb9795ffd9efa568bb106ba268e02
+References: <ac655bdc-5ccf-c6c6-3203-659f1916c53c@quicinc.com>
+	<20241007061023.1978380-1-quic_sibis@quicinc.com>
+	<20241007061023.1978380-5-quic_sibis@quicinc.com>
+	<2aycrvnvivcrqctqmweadcgenwugafdr6ub3bzkscterpenz32@bzabln2hkral>
+	<29eef87e-96f6-5105-6f7a-a8e01efcb4a3@quicinc.com>
+	<k4lpzxtrq3x6riyv6etxiobn7nbpczf2bp3m4oc752nhjknlit@uo53kbppzim7>
+	<CGME20241114041419epcas1p3b52bb9795ffd9efa568bb106ba268e02@epcms1p5>
 
-The Titan TOP GDSC is the parent GDSC for all other GDSCs in the CAMCC
-block. None of the subordinate blocks will switch on without the parent
-GDSC switched on.
+>
+>Hey Dmitry,
+>
+>Thanks for taking time to review the series.
+>
+>+ Devfreq maintainers to comment (I thought you already added
+>them by name)
+>
+>
+>Hey MyungJoo/Kyungmin/Chanwoo,
+>
+>Can you weigh in here? Does it make sense to add a new
+>class of devfreq devices that don't have governors
+>associated with them just for them to export a few
+>essential data to userspace? In this scenario the
+>scaling algorithm is in a SCP and we just start
+>them from the kernel. We do have ways to get the
+>current frequency of various buses but does this
+>warrant adding a new class of governor less devices?
+>
+>-Sibi
 
-Fixes: 76126a5129b5 ("clk: qcom: Add camcc clock driver for x1e80100")
-Cc: stable@vger.kernel.org
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- drivers/clk/qcom/camcc-x1e80100.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+If voltage/frequency is controlled by SCP
+(it's an SoC's internal hardware IP, right?),
+it's good to have a userspace governer
+with the driver not accepting updates from userspace.
 
-diff --git a/drivers/clk/qcom/camcc-x1e80100.c b/drivers/clk/qcom/camcc-x1e80100.c
-index 85e76c7712ad84c88decb62ccaed68533d8848de..b73524ae64b1b2b1ee94ceca88b5f3b46143f20b 100644
---- a/drivers/clk/qcom/camcc-x1e80100.c
-+++ b/drivers/clk/qcom/camcc-x1e80100.c
-@@ -2212,6 +2212,8 @@ static struct clk_branch cam_cc_sfe_0_fast_ahb_clk = {
- 	},
- };
- 
-+static struct gdsc cam_cc_titan_top_gdsc;
-+
- static struct gdsc cam_cc_bps_gdsc = {
- 	.gdscr = 0x10004,
- 	.en_rest_wait_val = 0x2,
-@@ -2221,6 +2223,7 @@ static struct gdsc cam_cc_bps_gdsc = {
- 		.name = "cam_cc_bps_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &cam_cc_titan_top_gdsc.pd,
- 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
- };
- 
-@@ -2233,6 +2236,7 @@ static struct gdsc cam_cc_ife_0_gdsc = {
- 		.name = "cam_cc_ife_0_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &cam_cc_titan_top_gdsc.pd,
- 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
- };
- 
-@@ -2245,6 +2249,7 @@ static struct gdsc cam_cc_ife_1_gdsc = {
- 		.name = "cam_cc_ife_1_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &cam_cc_titan_top_gdsc.pd,
- 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
- };
- 
-@@ -2257,6 +2262,7 @@ static struct gdsc cam_cc_ipe_0_gdsc = {
- 		.name = "cam_cc_ipe_0_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &cam_cc_titan_top_gdsc.pd,
- 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
- };
- 
-@@ -2269,6 +2275,7 @@ static struct gdsc cam_cc_sfe_0_gdsc = {
- 		.name = "cam_cc_sfe_0_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &cam_cc_titan_top_gdsc.pd,
- 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
- };
- 
+E.g., Let "target" callback not update the frequency value,
+ or let "target" callback always return an error with
+ a dev_err message that you don't accept frequency changes
+ from userspace.
 
----
-base-commit: 37c5695cb37a20403947062be8cb7e00f6bed353
-change-id: 20241114-b4-linux-next-master-24-11-14-titan-gdsc-4d31c101d0a1
-
-Best regards,
--- 
-Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-
+Cheers,
+MyungJoo.
 
