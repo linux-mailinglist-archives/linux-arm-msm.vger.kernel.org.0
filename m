@@ -1,249 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-37974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37976-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1C2209CDB48
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 10:16:27 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 18E219CDB54
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 10:18:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D078F281BC0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 09:16:25 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A9460B223E8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 09:18:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C35018FDC6;
-	Fri, 15 Nov 2024 09:16:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A888D18CC1D;
+	Fri, 15 Nov 2024 09:18:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lwqSupR2"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wCY46aTR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 293F918F2FD
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 09:16:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21A9818C03B
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 09:18:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731662165; cv=none; b=psS+xQvgpBhh7gGOfPVnpuFE56lFB53eqPx+5qSVYXw7CCSC4jts9/WJS+/xcsn5r+zjdmsHcgO6mIldFuWwi7kazaO04ieu2cxlids25gcsqGbXJCWQRU/3Vc/M7c6sxaaWcniDlJarsBZGaXB8OoGuThX5zSsvhF+2fe7baL0=
+	t=1731662290; cv=none; b=a0ZT/pRW88Zczj/FlnX3nAPXQizQI4MRT+UyRab95CqEMYt9ewz2DghLU09eXHRWFyqkCVHuVXlHElz/kFCNhz8G6zzp9XPvnmZAZS8G8b82DmjFyVodl1hoQUYTOruob5nW118ibWKAjBAZK2A/+kCaDskEpcbAiMyMFXI/kwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731662165; c=relaxed/simple;
-	bh=eKLb9WPBbZ0Xu/K4i9juTXvzHHcU4NwWfLgass5d4oU=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=L2pDvrxuUyl1T9DZn94YOYf4mHRXYZPdzfKLgw86gY4uRapxiFrcw6I6gB8mKeY2466RTQGOZ0f86c2CMF+uzwWL5vYzWwJygq8WMuLccRsPG5G1yszdD4Dy9efJFkaMI+iB5lmPiq+odXAUHsr7f69xsKYKyHgkppCxi3DSrNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lwqSupR2; arc=none smtp.client-ip=209.85.128.54
+	s=arc-20240116; t=1731662290; c=relaxed/simple;
+	bh=qqeiaL5NykQfrPHYUw6wgvGixgN3W06DlRNcgeCkRHg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=M/fYRppw05OJh5RCKv9+PIrA81ywhOdI/7Xnu5XDmhbSf6pTaREyyT15Kt3yQObXvhyU5es1iiC7o2pvFQjac2VPVUVbtUZgxJASo3T9lGCAUhkvgS4a6ndaYGKECWBb4qegC8uffk38vCSz5xzBYZc2FbNbUyEiGK/qNXmsoL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wCY46aTR; arc=none smtp.client-ip=209.85.210.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4314b316495so3815895e9.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 01:16:01 -0800 (PST)
+Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-720b2d8bb8dso1153154b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 01:18:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731662160; x=1732266960; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=21xfAjVQeCIIZ6dS35gVy1ZySA5llV+Yj+sUkf/GRP4=;
-        b=lwqSupR2fz51EYLaPJK6SklehLAm6J2GRc5L1Ytvh76mTlUAL6qYPSZk3vDUAcWDzQ
-         /8e8d4XjsEwWThBC1DEkYxkQU9+pQESRedJ486uhzY/JqWAH1Ch9PB1SRvdIpqyQOQda
-         vo8P4M6lPokCsIlhUqIsTZKOPfTmYP66xx67t5I/ZgRSR0B9whv700h/SUUAMBi63UaR
-         n6QJoRVSthfylBxyMqVHo/IfKXw+pdHshj5w6OO2KNXu7QuZHLzsAHj/3D/tSlfisple
-         hD1GNoavh3n+ioao/I1cJsKjGuApbGRIpdZPhBPeDv7WVk+jrayZEKiDqq7iGamGGCrI
-         djuA==
+        d=linaro.org; s=google; t=1731662288; x=1732267088; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=d0ZNc3FqrVEx3WM8p2pnlvV9LYAT23GCoRvvHS9Wd68=;
+        b=wCY46aTRK8/IoOhgUYpVHiZMvvv+QXWtYj7Stj8Ab48fuoQ3A6x4eJq9JmwVn2MRcZ
+         x2Oem/4RflEOXnd6QNR3qaptlBQSyniVkl+6rjK6dUQe5plW6n+xotfoYeQrVMHD1bCn
+         n2pCD8EHrIiiZ0Wz6R+tjwUtJLq1mwNMMwVXFipzl98OO/0fACB+Hn0Jo8CTopJGfuGI
+         xwD3sqa50CegbvwS8KbS5xbm2w79Mf5mVHRIBIfiUu7zGQzGv03aVW4MFqJpuDcrr/YK
+         oCPGViAF/Zdeebjv2uYmrKDxUoK3MOustYQQe9nYMhoerc7t1W6YWwzmpLnAP83sj8ru
+         pS2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731662160; x=1732266960;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=21xfAjVQeCIIZ6dS35gVy1ZySA5llV+Yj+sUkf/GRP4=;
-        b=rzmyiOzAWt307Yic1rsPnx3DrhjPTw8hXDBMJ+j2pbMsneikqOHDwSXtF/SmDKVEgX
-         WXRAtGk6Q1eczoMeHx9f2FBtT3ZO/twreK9TgrJw60q3VFPrVk8RGmmRzU3tUwBGXbwz
-         m8jDIMosbh6h5jN7Yqp4zF0aXsvrAHCCPeO3fNole8CorjT9Z8coRwUNei5/dtadViX9
-         4neTbJVBTDONrgmoGXsSyC8Tdx9YWVzuBEAA5jsqH3+xxOtreG8wtMJH1e8KQ8YSRVc/
-         XoKShTdukUfNtomq7FtBpJlDcVqAfMgkgKw+QbDmIa74ateGFX7/dS0OJic+LOOG+hkq
-         LsSg==
-X-Forwarded-Encrypted: i=1; AJvYcCU5naA9BKiqsB0+xiimVrZ7ZYVq//e4LPv6VBwxcLvF7HRUFEojTYZfAU+V49ywnVMMI86VCSqJLQEGKfjo@vger.kernel.org
-X-Gm-Message-State: AOJu0YySX+CWiwqCgncpkT/791TNPpN/cDXByf6EmvI6nm9LcQCVDdQU
-	zFIpKSQiTpVnw9FB2x4WHhm5zaZSZZ4CGV4BEZwIAS3DTPAqG76XZ6VwneSt6jI=
-X-Google-Smtp-Source: AGHT+IFPbcpcX4w3sjn8rOwf7xbvOcUQVBQPqXmF6Nf82dTlcp6xBxu/Ctu+3eZ//JQlin2Qv5qoRw==
-X-Received: by 2002:a05:600c:3b03:b0:430:52ec:1e41 with SMTP id 5b1f17b1804b1-432df74de50mr17161875e9.17.1731662160432;
-        Fri, 15 Nov 2024 01:16:00 -0800 (PST)
-Received: from [192.168.7.189] ([212.114.21.58])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432dac1d85fsm47149875e9.36.2024.11.15.01.15.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 Nov 2024 01:15:59 -0800 (PST)
-Message-ID: <8f0f23e0-c517-4e49-864a-e6c47cedc6de@linaro.org>
-Date: Fri, 15 Nov 2024 10:15:59 +0100
+        d=1e100.net; s=20230601; t=1731662288; x=1732267088;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=d0ZNc3FqrVEx3WM8p2pnlvV9LYAT23GCoRvvHS9Wd68=;
+        b=PQrhbwe7ihAB/xxE8sLcMLU8lraIWw3lViji/GFwidMXwz0YRZfQFLl7Z54BLSDyHV
+         3rpWGoVw6PuYfD0rwW5XyxBV///AJ3jCPAD9yNokls+8pZFs92dHvTILI0SDqnSzDpCw
+         8g+redVzVFf0SSuYIWYnR93YDjnFpK+Hetra5Ls4tik9CSrqJ2h938cnLX0x0KMagW9X
+         MEr7n2PYPKiRZjvSDPwGD3zcSYcJXAdAbRpHG0Irnj4rK2KvMDO0TY1R3tiU7YRR8EW0
+         vmNwRSg9Y8AQ5WweTgRQ9FIAWWOFUELu+RjpnGXud4HvvUvn27uT0wm85gsw4vKKgs3i
+         UunQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWek9GlFkxKWVnnIJs19+GlUne5tpum/f91XqzyU38bHczkEvufultIWNoRMDVnS9JK6JNhGyeiSgrQSyEx@vger.kernel.org
+X-Gm-Message-State: AOJu0YxnlMlSoWlDheTJL+X7mCuZ+ck3gLJlVHreDCEqBrLb6LpqpLiN
+	WeGS1ETxyb4ePDmAm6iDs3D2tN159ZrgMx7Q+NM1yAWSrYzCnjnjLl85Zxyh8A==
+X-Google-Smtp-Source: AGHT+IFiw4LXRo8HqMygrCnoRpV+6wXgJ5hiFEiuhbbxBAUzQ7mLi2e7kDhHQXw6flZ6SWWJ/m7Erw==
+X-Received: by 2002:a17:90b:4ecd:b0:2e1:682b:361a with SMTP id 98e67ed59e1d1-2ea15587d6fmr2071088a91.28.1731662288307;
+        Fri, 15 Nov 2024 01:18:08 -0800 (PST)
+Received: from thinkpad ([117.193.208.47])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2ea06f9f1f3sm2398700a91.37.2024.11.15.01.18.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 15 Nov 2024 01:18:08 -0800 (PST)
+Date: Fri, 15 Nov 2024 14:47:59 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Mayank Rana <quic_mrana@quicinc.com>
+Cc: jingoohan1@gmail.com, will@kernel.org, lpieralisi@kernel.org,
+	kw@linux.com, robh@kernel.org, bhelgaas@google.com, krzk@kernel.org,
+	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, quic_krichai@quicinc.com
+Subject: Re: [PATCH v3 2/4] PCI: host-generic: Export gen_pci_init() API to
+ allow ECAM creation
+Message-ID: <20241115091759.5wogqwvyaqgc7iua@thinkpad>
+References: <20241106221341.2218416-1-quic_mrana@quicinc.com>
+ <20241106221341.2218416-3-quic_mrana@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH RFC 5/8] drm/msm: adreno: find bandwidth index of OPP and
- set it along freq index
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Akhil P Oommen <quic_akhilpo@quicinc.com>,
- Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
- Stephen Boyd <sboyd@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
- Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Connor Abbott <cwabbott0@gmail.com>,
- linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-References: <20241113-topic-sm8x50-gpu-bw-vote-v1-0-3b8d39737a9b@linaro.org>
- <20241113-topic-sm8x50-gpu-bw-vote-v1-5-3b8d39737a9b@linaro.org>
- <ith6te3m4cjwjyxrsxpjsvqsyjr3qrmlyyo7cucljuweuzn37b@lmd5b5mqwkbw>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <ith6te3m4cjwjyxrsxpjsvqsyjr3qrmlyyo7cucljuweuzn37b@lmd5b5mqwkbw>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20241106221341.2218416-3-quic_mrana@quicinc.com>
 
-On 15/11/2024 08:28, Dmitry Baryshkov wrote:
-> On Wed, Nov 13, 2024 at 04:48:31PM +0100, Neil Armstrong wrote:
->> The Adreno GMU Management Unit (GMU) can also scale the DDR Bandwidth
->> along the Frequency and Power Domain level, until now we left the OPP
->> core scale the OPP bandwidth via the interconnect path.
->>
->> In order to enable bandwidth voting via the GPU Management
->> Unit (GMU), when an opp is set by devfreq we also look for
->> the corresponding bandwidth index in the previously generated
->> bw_table and pass this value along the frequency index to the GMU.
->>
->> Since we now vote for all resources via the GMU, setting the OPP
->> is no more needed, so we can completely skip calling
->> dev_pm_opp_set_opp() in this situation.
->>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->> ---
->>   drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 17 +++++++++++++++--
->>   drivers/gpu/drm/msm/adreno/a6xx_gmu.h |  2 +-
->>   drivers/gpu/drm/msm/adreno/a6xx_hfi.c |  6 +++---
->>   3 files changed, 19 insertions(+), 6 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
->> index 504a7c5d5a9df4c787951f2ae3a69d566d205ad5..1131c3521ebbb0d053aceb162052ed01e197726a 100644
->> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
->> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
->> @@ -113,6 +113,7 @@ void a6xx_gmu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp,
->>   	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
->>   	struct a6xx_gmu *gmu = &a6xx_gpu->gmu;
->>   	u32 perf_index;
->> +	u32 bw_index = 0;
->>   	unsigned long gpu_freq;
->>   	int ret = 0;
->>   
->> @@ -125,6 +126,16 @@ void a6xx_gmu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp,
->>   		if (gpu_freq == gmu->gpu_freqs[perf_index])
->>   			break;
->>   
->> +	/* If enabled, find the corresponding DDR bandwidth index */
->> +	if ((adreno_gpu->info->quirks & ADRENO_QUIRK_GMU_BW_VOTE) && gmu->nr_gpu_bws) {
->> +		unsigned int bw = dev_pm_opp_get_bandwidth(opp, true, 0);
->> +
->> +		for (bw_index = 0; bw_index < gmu->nr_gpu_bws - 1; bw_index++) {
->> +			if (bw == gmu->gpu_bw_table[bw_index])
->> +				break;
->> +		}
->> +	}
->> +
->>   	gmu->current_perf_index = perf_index;
->>   	gmu->freq = gmu->gpu_freqs[perf_index];
->>   
->> @@ -140,8 +151,10 @@ void a6xx_gmu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp,
->>   		return;
->>   
->>   	if (!gmu->legacy) {
->> -		a6xx_hfi_set_freq(gmu, perf_index);
->> -		dev_pm_opp_set_opp(&gpu->pdev->dev, opp);
->> +		a6xx_hfi_set_freq(gmu, perf_index, bw_index);
->> +		/* With Bandwidth voting, we now vote for all resources, so skip OPP set */
->> +		if (bw_index)
+On Wed, Nov 06, 2024 at 02:13:39PM -0800, Mayank Rana wrote:
+> Export gen_pci_init() API to create ECAM and initialized ECAM OPs
+> from PCIe driver which don't have way to populate driver_data as
+> just ECAM ops.
 > 
-> if (!bw_index) ???
-
-Good catch, I added it back wrongly when refactoring...
-
+> Signed-off-by: Mayank Rana <quic_mrana@quicinc.com>
+> ---
+>  drivers/pci/controller/pci-host-common.c | 3 ++-
+>  include/linux/pci-ecam.h                 | 2 ++
+>  2 files changed, 4 insertions(+), 1 deletion(-)
 > 
-> Also should there be a 0 vote too in case we are shutting down /
-> suspending?
+> diff --git a/drivers/pci/controller/pci-host-common.c b/drivers/pci/controller/pci-host-common.c
+> index cf5f59a745b3..b9460a4c5b7e 100644
+> --- a/drivers/pci/controller/pci-host-common.c
+> +++ b/drivers/pci/controller/pci-host-common.c
+> @@ -20,7 +20,7 @@ static void gen_pci_unmap_cfg(void *ptr)
+>  	pci_ecam_free((struct pci_config_window *)ptr);
+>  }
+>  
+> -static struct pci_config_window *gen_pci_init(struct device *dev,
+> +struct pci_config_window *gen_pci_init(struct device *dev,
 
-It's already handled in a6xx_gmu_stop()
+Please rename the API to something like 'pci_host_common_init()'.
+'gen_pci_init()' is fine within the driver, but doesn't look good when exported
+outside.
 
-> 
->> +			dev_pm_opp_set_opp(&gpu->pdev->dev, opp);
->>   		return;
->>   	}
->>   
->> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
->> index 95c632d8987a517f067c48c61c6c06b9a4f61fc0..9b4f2b1a0c48a133cd5c48713bc321c74eaffce9 100644
->> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
->> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
->> @@ -205,7 +205,7 @@ void a6xx_hfi_init(struct a6xx_gmu *gmu);
->>   int a6xx_hfi_start(struct a6xx_gmu *gmu, int boot_state);
->>   void a6xx_hfi_stop(struct a6xx_gmu *gmu);
->>   int a6xx_hfi_send_prep_slumber(struct a6xx_gmu *gmu);
->> -int a6xx_hfi_set_freq(struct a6xx_gmu *gmu, int index);
->> +int a6xx_hfi_set_freq(struct a6xx_gmu *gmu, int perf_index, int bw_index);
->>   
->>   bool a6xx_gmu_gx_is_on(struct a6xx_gmu *gmu);
->>   bool a6xx_gmu_sptprac_is_on(struct a6xx_gmu *gmu);
->> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
->> index 9a89ba95843e7805d78f0e5ddbe328677b6431dd..e2325c15677f1a1194a811e6ecbb5931bdfb1ad9 100644
->> --- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
->> +++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
->> @@ -752,13 +752,13 @@ static int a6xx_hfi_send_core_fw_start(struct a6xx_gmu *gmu)
->>   		sizeof(msg), NULL, 0);
->>   }
->>   
->> -int a6xx_hfi_set_freq(struct a6xx_gmu *gmu, int index)
->> +int a6xx_hfi_set_freq(struct a6xx_gmu *gmu, int freq_index, int bw_index)
->>   {
->>   	struct a6xx_hfi_gx_bw_perf_vote_cmd msg = { 0 };
->>   
->>   	msg.ack_type = 1; /* blocking */
->> -	msg.freq = index;
->> -	msg.bw = 0; /* TODO: bus scaling */
->> +	msg.freq = freq_index;
->> +	msg.bw = bw_index;
->>   
->>   	return a6xx_hfi_send_msg(gmu, HFI_H2F_MSG_GX_BW_PERF_VOTE, &msg,
->>   		sizeof(msg), NULL, 0);
->>
->> -- 
->> 2.34.1
->>
+- Mani
+
+>  		struct pci_host_bridge *bridge, const struct pci_ecam_ops *ops)
+>  {
+>  	int err;
+> @@ -48,6 +48,7 @@ static struct pci_config_window *gen_pci_init(struct device *dev,
+>  
+>  	return cfg;
+>  }
+> +EXPORT_SYMBOL_GPL(gen_pci_init);
+>  
+>  int pci_host_common_probe(struct platform_device *pdev)
+>  {
+> diff --git a/include/linux/pci-ecam.h b/include/linux/pci-ecam.h
+> index 3a4860bd2758..386c08349169 100644
+> --- a/include/linux/pci-ecam.h
+> +++ b/include/linux/pci-ecam.h
+> @@ -94,5 +94,7 @@ extern const struct pci_ecam_ops loongson_pci_ecam_ops; /* Loongson PCIe */
+>  /* for DT-based PCI controllers that support ECAM */
+>  int pci_host_common_probe(struct platform_device *pdev);
+>  void pci_host_common_remove(struct platform_device *pdev);
+> +struct pci_config_window *gen_pci_init(struct device *dev,
+> +		struct pci_host_bridge *bridge, const struct pci_ecam_ops *ops);
+>  #endif
+>  #endif
+> -- 
+> 2.25.1
 > 
 
+-- 
+மணிவண்ணன் சதாசிவம்
 
