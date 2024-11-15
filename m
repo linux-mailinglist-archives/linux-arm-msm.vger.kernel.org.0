@@ -1,184 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-37955-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37956-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3B2799CD8DE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 07:55:05 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id CAE7A9CD95B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 07:59:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EE68A283DD6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 06:55:03 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3474EB23C3B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 06:59:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7DCB92BB1B;
-	Fri, 15 Nov 2024 06:54:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8CE615FD13;
+	Fri, 15 Nov 2024 06:59:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cssjMrsB"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fIsz8yYa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7BFE185949
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 06:54:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0D82185924
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 06:59:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653695; cv=none; b=d3wsHYgJRwl8s6oSnUQZYTdZbTdGq/TH4B3sGCG2JtFZSnAmERJwzq8wI9UwWhp5/+ibCp8BWsXdpGlvx9LO8YsOpr5T2t0qDzFDmil/MJhhoaXq4MW64psKg7QBoXL08RY9XdG5/pTnU1FlcSOmJ3z76XFT8qj5DpvN1nCCdfM=
+	t=1731653966; cv=none; b=m2Hd5ctNSathr26KbbNrIBRfOfiIzGA6eav8aOc90KwAQ80864ya/PDHHRglb8zBiPPVyYnE8If9GPm5hHbQEFDabu0/eDYtS6Bs73ziUIfPto2l/nw+CmlzZdE48IJfZ79PEnuZNA+h7N3lCdj/5caxvGCg4WTRaawN9mXwkpw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653695; c=relaxed/simple;
-	bh=wcimBfT4KdslFpSdb7Mnrzgcs31Xrk5aFoelt2AivPQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DZvAXyOOMfN8tKaYrvJC71E3Ip0BkfetsK+9g0/FI0G9P5GgYVhmFWTudhMGcS739ZBD90+HYGoo7QwOrnoiOJhg5Ol5Yamztv+s2YIWHh8ClSTwCnSfQJXtPNj6ZFo7/lsH1TMd+ziTv8MuOl5og6sBXSnkc0rbnFA1PcGr1Qo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cssjMrsB; arc=none smtp.client-ip=209.85.167.44
+	s=arc-20240116; t=1731653966; c=relaxed/simple;
+	bh=vCdT0PSYt7ug/bjF626EO7sSeIjB87TMkLXNwZ9G7Ew=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=bPwkLL3zCozVa8BcD4BJlqPJlZXU8NBhYCJhtTkleNm8Q1NfC81PUUayIRj86BT5nWAlA4UhUwtHWGTYm4S1EpTBM40iXHS1bPqO5PsJHbqd2qLwpPP8S+hoi9uRKbWUkPVa3qq6Oot+NLFT7hmRyIGHLGhqMaRoKDbam4QOtvQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fIsz8yYa; arc=none smtp.client-ip=209.85.208.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-539f84907caso1510142e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2024 22:54:53 -0800 (PST)
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2fb5740a03bso15567611fa.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2024 22:59:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731653692; x=1732258492; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=MjKLBvWETSBADZGUV6yqhakCmIaLRuQjCHp/Lt9M3AA=;
-        b=cssjMrsBLmM4fuB1gxR6lBwHNDLFni1ZVgPu/TbhlRN6Abd45Hqv6os9vWOjpoRyE3
-         DI20WIN8WYqYP/mZvCGBCTiX2KCx+ZxEFmXUBlb0Dj0b3ofQRSavHuv4I5n9HcKcbx/u
-         UL8+7SWQGcILQsVUf1JPLEqlEoUiZudk+nCFdNOoqRcsoHaV10wtZNuBW0isd7R72Yxf
-         tLgRd4eOTroka/AEdQ1oTucahlMvdzIXAmli8lp2qkRYvJNRzvLvOpy+kmiNRJxmlBVw
-         KRkqUIKqJZjB85EuTWMsjMNcPXAW871ZGvrdQlVg/cp0RrMGmEdRFB0s1XcfuW+Xs6jq
-         218g==
+        d=linaro.org; s=google; t=1731653963; x=1732258763; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=S8cfWVnQzgW/o8QfkeZ4D6IstQJzWOaYah0IgQm88BY=;
+        b=fIsz8yYaLkPT3nxs0Upaxo+RhEfZzz4ZKLh3M5+XxOFq3Ao7vwbij/Jqa+PONpIcDO
+         RWofzEXoXEro92wY8l7yg8fBmFd/4/m3ZRYDWivKWyigU5fdYAXufFetdmM2kcGq26Cc
+         skoUusUWciSoQL/Dh+phDDAUGR8jaFvrpEybj7MonoStthzLbysfn9m/HQZ5OjCv4CY0
+         zoJm9yIdQTpPv1I0S8/AqT86SNV6FlpwjrtbfwE2smsk5swlcoJNPMTF1JIXFrOC+i7c
+         LmvUDaxkMEQL4u3c+1STRC8ZBi5Zm78fyuDrRJQW0YKa/NvHD8x99qtHiGvvuAq8RPU8
+         VSYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731653692; x=1732258492;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MjKLBvWETSBADZGUV6yqhakCmIaLRuQjCHp/Lt9M3AA=;
-        b=QLwlQjgnQ8jUzmzQ7IJY7NyOkGrjERWd85sylYgMGs0aIn/qX0mDdbv5uD+wj5Z/aK
-         FQXZmLZwLjb6lDnyLdRjP0TwkBBuzh6UulKl2ZKx5iEAC77qlrPIiTbbjrnP+MTiP3Z6
-         GsOIZPnlFrG3iEotngXnBHmdPOIZ2xiKqAeByCWpcADTEu5hB+GNcfaTFL0Fc0LKKN92
-         yKEM+48UMqGgXGqQAOcBk/eHvabrniU60fcgcLfD95LkOV8MTydNySktxdZyVJENAcoL
-         nTw9lOWp/q3f+StW/q1QKmsVPiedyEXRADkZ7qtl09UtBvPibtB5es6zwWFc64q5V3jW
-         9s7A==
-X-Forwarded-Encrypted: i=1; AJvYcCUhaTvtmVh5PJKMC9dgpkSuIPHsvoMGI1hboIoPgbHOg38XjYDNGJkoJPeLozsAwJ0rrFflCxI+EZRB1VGv@vger.kernel.org
-X-Gm-Message-State: AOJu0YzIQS89ShgU/9Z+mqD/nol3vVwnYhChtkz6CglwEp9SljZ7tzls
-	x6S/bFQUaXcwAYOgyD8yOSXPDoVdgmIgl7aTdHNik63eEt+rHw8Zy79QzKk1I7c=
-X-Google-Smtp-Source: AGHT+IFYT9QcCK1sZ7kStHf5ogo5eN6v02g0qjiZW9C6KciiPEArLV3TRbiCPgAuKP6fFkQC+XS51w==
-X-Received: by 2002:a05:6512:3ba1:b0:53b:1f90:576f with SMTP id 2adb3069b0e04-53dab2a6022mr601193e87.22.1731653691696;
-        Thu, 14 Nov 2024 22:54:51 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53da6548eb8sm457776e87.255.2024.11.14.22.54.49
+        d=1e100.net; s=20230601; t=1731653963; x=1732258763;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=S8cfWVnQzgW/o8QfkeZ4D6IstQJzWOaYah0IgQm88BY=;
+        b=lcbKNK6GDNHUmUTuCGzMCzDGdOIK+u+jdu2ois7apNeW9VZ4Wk88XUKdDXEN6VJTUQ
+         ZTi2VodXpqtgpYi/16VVWK5ymSK4tKpKjSWKNyIZvEReAG8nVGCAmqtxxrB5LwJ5+/OH
+         6sfxXSXRtvZO0cPkpy+PbRL5OSyOo1h/3oYPL3codoURcPLMRvedqqWu9WcUpAT0uLVs
+         P4T2EsBA/DBmEF4gqcWTQPwiPjhjLQ4crLbT+4qKJllb8b7MCRy+4s2PfnGLzPHgtqeu
+         tarrbeHq3lBHzKUAq3RiqMBKgmBPNVEmQI6b4u+GCtSq3+wjDwF2iF6866JSuTbg0wOy
+         3EGg==
+X-Gm-Message-State: AOJu0YwDlsQOotVe6WKhT5Zyo9s4U4oydvXzFkqRgbW0B6izkVaPYBxF
+	TBNmqinG5a+K9ZgJP/6yHiBK3fhQWIUVZM1ozgdMCx2h6F2WnCcBMSeDguXkpXE=
+X-Google-Smtp-Source: AGHT+IGR14P71JvmfPxscnZ8AtrJiDNaABAoCva8RLK6hhRhDLztxqxeX/QSTGO3aJyFaA8uuOmTfQ==
+X-Received: by 2002:a05:651c:1543:b0:2fb:407b:1702 with SMTP id 38308e7fff4ca-2ff606618ecmr7216791fa.20.1731653963122;
+        Thu, 14 Nov 2024 22:59:23 -0800 (PST)
+Received: from umbar.lan ([192.130.178.90])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ff5988ffdbsm4438281fa.111.2024.11.14.22.59.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Nov 2024 22:54:50 -0800 (PST)
-Date: Fri, 15 Nov 2024 08:54:47 +0200
+        Thu, 14 Nov 2024 22:59:21 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Varadarajan Narayanan <quic_varada@quicinc.com>
-Cc: vkoul@kernel.org, kishon@kernel.org, robh@kernel.org, 
-	krzk+dt@kernel.org, conor+dt@kernel.org, gregkh@linuxfoundation.org, 
-	andersson@kernel.org, konradybcio@kernel.org, mantas@8devices.com, 
-	quic_kbajaj@quicinc.com, quic_kriskura@quicinc.com, quic_rohiagar@quicinc.com, 
-	abel.vesa@linaro.org, quic_wcheng@quicinc.com, linux-arm-msm@vger.kernel.org, 
-	linux-phy@lists.infradead.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-usb@vger.kernel.org
-Subject: Re: [PATCH v3 6/6] arm64: dts: qcom: Add USB controller and phy
- nodes for IPQ5424
-Message-ID: <qx22rgezkym3guofdxwmvhrjjwjzshngb4cvpdhqahlykeeqhg@wc4zy3gicrsb>
-References: <20241114074722.4085319-1-quic_varada@quicinc.com>
- <20241114074722.4085319-7-quic_varada@quicinc.com>
- <CAA8EJpr6xb=TPPgk7ERhKVp7OnYdPGCK6+1_2TBRLBt_eWM43A@mail.gmail.com>
- <ZzbZGnKEovwoDPrP@hu-varada-blr.qualcomm.com>
+Subject: [PATCH RFC 0/2] arm64: dts: qcom: move board clocks to DTS files
+Date: Fri, 15 Nov 2024 08:59:19 +0200
+Message-Id: <20241115-fix-board-clocks-v1-0-8cb00a4f57c2@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZzbZGnKEovwoDPrP@hu-varada-blr.qualcomm.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAEfxNmcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxNDQ0NT3bTMCt2k/MSiFN3knPzk7GLdVOPEtFRTIwMzI/NkJaC2gqJUoBq
+ wkdFKQW7OSrG1tQD4+HsoZwAAAA==
+X-Change-ID: 20241115-fix-board-clocks-e3afe520627c
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2377;
+ i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
+ bh=vCdT0PSYt7ug/bjF626EO7sSeIjB87TMkLXNwZ9G7Ew=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnNvFIJY4yUnhWZoSpTYrIbc8hNlNDQmafk95eG
+ N/n2jCZI+qJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZzbxSAAKCRCLPIo+Aiko
+ 1SB2CACr8iWTqBO8VkWl670KxlCnGUnppG7N0fIiL9BKA9sxN5E4b+aS3FM1bt7bjxoxhlL1nag
+ zdq+VSh+Wax6PSYWqTUMQ+4sukwj8Y/kCb0vkVkEYiHlfDkFPM4ZVkLxVf7msx6Be4OW4yitsS8
+ J3oYzLikmRpV/zwOLBqRag1NaU60hIdTKFSYSslG8kiLIcDfaqZP3GWWaoJlDn+JekL8KWr0cXV
+ Vx39mCFyXYgt667kellvUMGhmEyG9WQjKrX267SFl9CIot0F2glDWUQhfQ8aCIZ4z+uCD8H1lwQ
+ NiDkAfD3vLL2NJT3hgynWug1e2SmS8x6Xd+K++Q4Oet0XoRp
+X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-On Fri, Nov 15, 2024 at 10:46:10AM +0530, Varadarajan Narayanan wrote:
-> On Thu, Nov 14, 2024 at 03:28:36PM +0200, Dmitry Baryshkov wrote:
-> > On Thu, 14 Nov 2024 at 09:48, Varadarajan Narayanan
-> > <quic_varada@quicinc.com> wrote:
-> > >
-> > > The IPQ5424 SoC has both USB2.0 and USB3.0 controllers. The USB3.0
-> > > can connect to either of USB2.0 or USB3.0 phy and operate in the
-> > > respective mode.
-> > >
-> > > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> > > ---
-> > > v3: Regulator node names, labels and 'regulator-name' changed per review suggestions
-> > >     Stray newline removed
-> > >
-> > > v2: Add dm/dp_hs_phy_irq to usb3@8a00000 node
-> > >     Add u1/u2-entry quirks to usb@8a00000 node
-> > > ---
-> > >  arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts |  66 ++++++++
-> > >  arch/arm64/boot/dts/qcom/ipq5424.dtsi       | 159 ++++++++++++++++++++
-> > >  2 files changed, 225 insertions(+)
-> > >
-> > > diff --git a/arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts b/arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts
-> > > index d4d31026a026..859e15befb3f 100644
-> > > --- a/arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts
-> > > +++ b/arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts
-> > > @@ -16,12 +16,70 @@ / {
-> > >         aliases {
-> > >                 serial0 = &uart1;
-> > >         };
-> > > +
-> > > +       vreg_misc_3p3: regulator-3300000 {
-> >
-> > Technically these names are correct. However they don't match the
-> > approach that Qualcomm DT files have been using up to now.
-> > You can compare your data with the output of `git grep :.regulator-
-> > arch/arm64/boot/dts/qcom/`
-> 
-> Dmitry,
-> 
-> This name was suggested by Rob Herring [1]. Shall I rename them as follows
-> 
-> 	regulator-usb-3p3
-> 	regulator-usb-1p8
-> 	regulator-usb-0p925
+Multiple Qualcomm platforms play strange tricks with board-level clocks
+(XO, sleep) definitions. On some (older) platforms such clocks are
+completely defined within SoC.dtsi file (although these clocks are not a
+part of the SoC). On other platforms definitions of such clocks  are
+split between the SoC dtsi file and the board file.
+Such definitions don't fully follow the DT guidelines. Move these two
+clocks to the board files completely.
 
-I'd say so. Rob clearly stated that this is not a strict rule. It's
-always better to follow the customs of the particular platform, it helps
-other developers. Also in _many_ cases just defining the voltage is not
-enough, usually there are multiple networks providing 0.925 V or 1.8 V.
+Being an RFC this series converts two platforms as a way to raise the
+question. However note, this is still not fully correct.
 
-> 
-> Thanks
-> Varada
-> 
-> 1 - https://lore.kernel.org/linux-arm-msm/20241113181138.GA1011553-robh@kernel.org/
-> 
-> > > +               compatible = "regulator-fixed";
-> > > +               regulator-min-microvolt = <3300000>;
-> > > +               regulator-max-microvolt = <3300000>;
-> > > +               regulator-boot-on;
-> > > +               regulator-always-on;
-> > > +               regulator-name = "usb_hs_vdda_3p3";
-> > > +       };
-> > > +
-> > > +       vreg_misc_1p8: regulator-1800000 {
-> > > +               compatible = "regulator-fixed";
-> > > +               regulator-min-microvolt = <1800000>;
-> > > +               regulator-max-microvolt = <1800000>;
-> > > +               regulator-boot-on;
-> > > +               regulator-always-on;
-> > > +               regulator-name = "vdda_1p8_usb";
-> > > +       };
-> > > +
-> > > +       vreg_misc_0p925: regulator-0925000 {
-> > > +               compatible = "regulator-fixed";
-> > > +               regulator-min-microvolt = <925000>;
-> > > +               regulator-max-microvolt = <925000>;
-> > > +               regulator-boot-on;
-> > > +               regulator-always-on;
-> > > +               regulator-name = "vdd_core_usb";
-> > > +       };
-> > > +};
-> 
-> [. . .]
+The XO clock is (usually) an external crystal used by the external PMIC,
+which then provides RF CLK and LN BB CLK to the main SoC. However for
+technical reasons this part of the PMIC is modelled as a part of the SoC
+as RPM or RPMh clock controllers. It makes it impractical to describe XO
+clock as being used or being connected to the PMIC.
 
+Sleep clock is a 32 KHz or 32.768 kHz RC oscillator provided by one of
+PMICs. However pushing it into the PMIC might interact badly with fw
+devlink, causing unnecessary probe delays and/or devlink loops. One of
+the possible solutions might be to move it to the corresponding
+PMIC.dtsi, but model the clock outside of the PMIC node, providing
+/clocks/sleep-clk node from that file.
+
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+Dmitry Baryshkov (2):
+      arm64: dts: qcom: sm8450: move board clocks to DTS files
+      arm64: dts: qcom: sm8650: move board clocks to DTS files
+
+ arch/arm64/boot/dts/qcom/sm8450-hdk.dts            | 14 ++++++++++++++
+ arch/arm64/boot/dts/qcom/sm8450-qrd.dts            | 14 ++++++++++++++
+ .../boot/dts/qcom/sm8450-sony-xperia-nagara.dtsi   | 14 ++++++++++++++
+ arch/arm64/boot/dts/qcom/sm8450.dtsi               | 14 --------------
+ arch/arm64/boot/dts/qcom/sm8650-hdk.dts            | 22 ++++++++++++++--------
+ arch/arm64/boot/dts/qcom/sm8650-mtp.dts            | 22 ++++++++++++++--------
+ arch/arm64/boot/dts/qcom/sm8650-qrd.dts            | 22 ++++++++++++++--------
+ arch/arm64/boot/dts/qcom/sm8650.dtsi               | 10 ----------
+ 8 files changed, 84 insertions(+), 48 deletions(-)
+---
+base-commit: 6d59cab07b8d74d0f0422b750038123334f6ecc2
+change-id: 20241115-fix-board-clocks-e3afe520627c
+
+Best regards,
 -- 
-With best wishes
-Dmitry
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
 
