@@ -1,89 +1,93 @@
-Return-Path: <linux-arm-msm+bounces-37965-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37966-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DE4409CD9FB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 08:34:03 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6ECEB9CD9FD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 08:36:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 252D1B2642F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 07:34:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2FD83282E39
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 07:36:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3E971891AB;
-	Fri, 15 Nov 2024 07:33:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 64B631898ED;
+	Fri, 15 Nov 2024 07:36:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vlJGk5FP"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lK+32Qas"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 233501714C0
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 07:33:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E1AC187876
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 07:36:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731656030; cv=none; b=uykEBIB2CfAUr20w/xNn1RNt8ULhKMg4nxUvUGNyrK8iCsngHKgDlKe+fs/84G0eSlY2p0apEZNY2VNTU6R/zXvue4XMBwsPtc/2dMs7Lad4wozlHJHK7QiiDs+7uyQzF1HUD6W8Ovr5y00ViRiSqieCX1Z0qX1I1r+gveSCZ5c=
+	t=1731656179; cv=none; b=aVY+7aAQTAk610A7j4FVHlAmrrZMX1W79cnwzdp0zq+/aSwrVBMWjxFN1fJ+CLp2vBqVQQ9eShXV7H1DhODDPf51vJAeRhAqg45TIVeL2CycM5R0/AHvlhM6ZyVT1IaH/6G5cPgB8X11U/+Dbp7JJAVyHvuiQKjHlkSfbFuG6m0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731656030; c=relaxed/simple;
-	bh=DhDT7iMvKoUsMu+17Bo1UmwumbgR9hDqrlhAcDX87U4=;
+	s=arc-20240116; t=1731656179; c=relaxed/simple;
+	bh=SIEo8s5hFS6DUYrU3deosBF91zXunNrtoBkPt0/ZWIs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TVPp09PoPIzvfyUTdq12X+BBFvlc4Y2wHgicGNtI5AMxvu8eLpiPdH3tDwZoAN45o0S7yZByG+v680ijBeYk0B9bAQhLiCDL4uQo9vS4TQsTcn0wjtNZqf833lpDGEDYfUwk7hWJY2TH3Mr/CwuCq2M7hRGVfAjNy2IUJnjbA5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vlJGk5FP; arc=none smtp.client-ip=209.85.208.174
+	 Content-Type:Content-Disposition:In-Reply-To; b=THeBf7qoDnkUjw+ZU/H548DOM5lqNrgMldVrq/UKoG7hUJNQYBdpHOit9w4Oj5rYvdjJUAFsX8WgpOqzBYGHkSOMkwfFrohI2EhZYwdwQIx0sBMele94eRteLlOzlMnoWqWbrFNkwDXyPpUYDHxXLV08k8CW5O7YZVxo5Ah9+IM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lK+32Qas; arc=none smtp.client-ip=209.85.167.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2ff589728e4so15812071fa.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2024 23:33:47 -0800 (PST)
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-53d9ff92b14so1545436e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2024 23:36:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731656026; x=1732260826; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1731656175; x=1732260975; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=VXUA+xFQvFcv5jH0QqKITZEkbXxSgGAOHInFqY1wEGU=;
-        b=vlJGk5FP/dlpwCFVZ0r+IKCrAuMDjPkL62k0L198WF2bVpJikoBOXMtxtfMMJCD/0i
-         aFb6mWIoMhnuyqXdNPwoATUwfzbcNjaDJxgqXgCtTyPMlyN6TmoCFmHbnuyS4KO8tNJK
-         KOaI5hKHkLVQiNmfm3vh61mIpTCiyNDZHIspJzcgXLICf4uaD1jnXiOZZMgHBaFvWyC8
-         EIQKqnq7OR0RYnJ3zNQBWH34aSATKTCU0H4U0TjvyCEL8H0PzVcv9FxuGYZmFNQZxKoy
-         EaCF7Coy3TJ2vGQjHs4EoZfUPuGYYAx7rmuiJuBCE5feYfctcgdV0z4KMZdTHs04y7oj
-         dJ2Q==
+        bh=f/zaNJXsl01a5zNIwyl9L4dlmA9eGCe/qLUK5CKx19E=;
+        b=lK+32QasuWXjOaanOgx+r4bgIECKTotq9nyq6CrRJpgSdUvF70mX5FYTmKenid80LL
+         zB8E16rqLHV/kw5EheFruIGWpTMzu0edzj7AyEDn4VrxtFQOuCykg5pRf7Zk/UcpXGiz
+         xv15QsGPz014I9eZvIUlad45uEzEoxMaoFuHD4P4bnUJiTyDW+c0g3ncKn4RH7GH5Scd
+         LB47PSiq4wGqFTeHn9T2jjBMfOu/u83aE5FEMI0WVgE2hLLkqcjCzAAbFT/25KWXhatd
+         oP7hZ01KX3iLYJockrYyheYawJWlSNdHRN19tn1BxusWpIxWc058ZyH1WDaDXrPEoIyy
+         k+2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731656026; x=1732260826;
+        d=1e100.net; s=20230601; t=1731656175; x=1732260975;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=VXUA+xFQvFcv5jH0QqKITZEkbXxSgGAOHInFqY1wEGU=;
-        b=UI0jO2JxFxh0svafzichVVO1KZCvLAqaR7NFox6v9YUGWpM8GVQW6yBeUv2UpR6YZ9
-         vnEnkyNIVjs8u/Lw/IIcrIcoP1wzfK6LtkvrJzGO31XBSmuPC/3Tktt2m0KUek+zAPkB
-         G5BT7sg86UryOW93KLF5U8aplD30+ots8v7rrP2+jKVJDXnQBKkEOGRFtDZsvthicBSo
-         wwPoL8aZE6c23yTKMHTnCLt11kYgJoxJcofXUh1PQP3eimaa5c7+yk6FUHtl+q0dWaut
-         GtP5WOuIUoOgdyv/BkACvglV908tPdhLEliiUBn1DUawwHwx27Ht3juzChYqAspS3WdM
-         dKCw==
-X-Forwarded-Encrypted: i=1; AJvYcCW9jC2ZsYmQUME1xfbSDQb6UKd3yYlhW4c+fh0zBekdGCPfN0cFAEraclGNs8qgPlAKScmzQmuBgvUJyrKZ@vger.kernel.org
-X-Gm-Message-State: AOJu0YwwZ8igMVyq2MKyb3hyiYV9QvspsHa8dFiYB5T8cUfzSm7N2W1p
-	Orgqd6WX3sLcc0labh3T7NmC7HcDhD1IPQVGTmz9pxMnRJW6MJb4xErUe683V7w=
-X-Google-Smtp-Source: AGHT+IEG2HyAK/keKdAkffHHfxXY9upS6+zDWPBk8B70ezx4vv7IgjX67R5jNW80lSYbongEkvCjpA==
-X-Received: by 2002:a2e:a883:0:b0:2ff:5d45:883d with SMTP id 38308e7fff4ca-2ff606937e2mr5432671fa.13.1731656026282;
-        Thu, 14 Nov 2024 23:33:46 -0800 (PST)
+        bh=f/zaNJXsl01a5zNIwyl9L4dlmA9eGCe/qLUK5CKx19E=;
+        b=GCTUj4TVZZbNlyI2D8Mfa08WqTtvOuXB8X6I5kh8C8aW5KEIWfG//yxK1VNVxP/cH+
+         yntXifvPr83p80BzJobrSk+Psl38FtRjnwEeT/Iyek5j3i/VFBlGi+8x0rERm/+6zGpD
+         cTocTXPMEd5xQu2JqzQuBbcT3Sa5Z2suv5xH/6d8t1iZIYPgqU0DZbVcxIzZCMDfHwR4
+         fdqJ29aBNfh3SjOIV/XY03irh8tkDyhLTom+LNpZxSvgq71g5xL2BqYDF4T3Sf9OH9C1
+         j0iwfpZCjjmz+5DnBToewV6m1u+a0POY699c3UCcdWmoikBaoKYZd15+p7yyxnwyjIP5
+         vOOg==
+X-Forwarded-Encrypted: i=1; AJvYcCWlvrTqfR/CpsB3JNSdAeXvTeZIMwQC01ygunIpAV43UqierGlLU8oJQ8VAN78dIewYyVSoQ4bGnunLnaZO@vger.kernel.org
+X-Gm-Message-State: AOJu0YwMmR2ZF6xxOHdCyD2ym6o29+yEUwTjFbrlRHXJ4pn/5dJkW8ii
+	LDpRRFuXdrBgg0H6eftUsqVFCwwqK6zAle4qmePiBcVkcmFcgGGYd6QRa2zJ6No=
+X-Google-Smtp-Source: AGHT+IELxNr42kTGq86yNt7HpRgRuLDZHJp2+y0D3HJbNVFtEX+4EYZRDRiqgDM2tZ7bw4WDChznfA==
+X-Received: by 2002:a05:6512:3b25:b0:536:554a:24c2 with SMTP id 2adb3069b0e04-53dab2a04dfmr512452e87.13.1731656174673;
+        Thu, 14 Nov 2024 23:36:14 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ff5aad77b9sm4273791fa.73.2024.11.14.23.33.43
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53da6530d32sm473369e87.139.2024.11.14.23.36.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Nov 2024 23:33:44 -0800 (PST)
-Date: Fri, 15 Nov 2024 09:33:42 +0200
+        Thu, 14 Nov 2024 23:36:13 -0800 (PST)
+Date: Fri, 15 Nov 2024 09:36:10 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Akhil P Oommen <quic_akhilpo@quicinc.com>, 
-	Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>, Stephen Boyd <sboyd@kernel.org>, 
-	"Rafael J. Wysocki" <rafael@kernel.org>, Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Bjorn Andersson <andersson@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Connor Abbott <cwabbott0@gmail.com>, linux-pm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH RFC 6/8] drm/msm: adreno: enable GMU bandwidth for A740
- and A750
-Message-ID: <nw2sqnxmhntvizzvygfho6nhiwfni4xfquwst5gd5g2tel6pnr@h66d4mw46jcf>
-References: <20241113-topic-sm8x50-gpu-bw-vote-v1-0-3b8d39737a9b@linaro.org>
- <20241113-topic-sm8x50-gpu-bw-vote-v1-6-3b8d39737a9b@linaro.org>
+To: Tingwei Zhang <quic_tingweiz@quicinc.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+	Ziyue Zhang <quic_ziyuzhan@quicinc.com>, vkoul@kernel.org, kishon@kernel.org, robh+dt@kernel.org, 
+	manivannan.sadhasivam@linaro.org, bhelgaas@google.com, kw@linux.com, lpieralisi@kernel.org, 
+	quic_qianyu@quicinc.com, conor+dt@kernel.org, neil.armstrong@linaro.org, 
+	andersson@kernel.org, konradybcio@kernel.org, quic_shashim@quicinc.com, 
+	quic_kaushalk@quicinc.com, quic_tdas@quicinc.com, quic_aiquny@quicinc.com, 
+	kernel@quicinc.com, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org
+Subject: Re: [PATCH 4/5] arm64: dts: qcom: qcs8300: enable pcie0 for QCS8300
+Message-ID: <273fm6dpwt3xzdm5khzipdqiqzpo7zy5jsc4iesd3dt72ldhdw@wd2urfqyt6fn>
+References: <20241114095409.2682558-1-quic_ziyuzhan@quicinc.com>
+ <20241114095409.2682558-5-quic_ziyuzhan@quicinc.com>
+ <rg4isufmnhnbsiljm34rfdsn46gfpatbsiscynaqtsnykbhnm3@ovcaulkfj4nk>
+ <26943ea3-109c-473d-818b-2a08dba859ab@oss.qualcomm.com>
+ <288be342-952b-4210-afe7-6e194dfd54a9@quicinc.com>
+ <cp2g6j43zlx2njou5qz5tmwsnnzahqtk2hsxkj2ftrzbcmy742@ysca5ica4mvr>
+ <bb6ae010-5dbf-455c-a53c-6c0e688f0ebc@quicinc.com>
+ <nr4xt5pefd3jngml6bkbgrfhsuxmre44v3qs6uyxz7qp5dzqad@6dss6lwhb35n>
+ <af6ca3d2-54da-49bb-940a-69855ab2a7b0@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -92,93 +96,94 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241113-topic-sm8x50-gpu-bw-vote-v1-6-3b8d39737a9b@linaro.org>
+In-Reply-To: <af6ca3d2-54da-49bb-940a-69855ab2a7b0@quicinc.com>
 
-On Wed, Nov 13, 2024 at 04:48:32PM +0100, Neil Armstrong wrote:
-> Now all the DDR bandwidth voting via the GPU Management Unit (GMU)
-> is in place, let's declare the Bus Control Modules (BCMs) and
-
-s/let's //g
-
-> it's parameters in the GPU info struct and add the GMU_BW_VOTE
-> quirk to enable it.
-
-Can we define a function that checks for info.bcm[0].name isntead of
-adding a quirk?
-
+On Fri, Nov 15, 2024 at 03:16:29PM +0800, Tingwei Zhang wrote:
+> On 11/15/2024 3:03 PM, Dmitry Baryshkov wrote:
+> > On Fri, Nov 15, 2024 at 02:42:47PM +0800, Tingwei Zhang wrote:
+> > > On 11/15/2024 2:26 PM, Dmitry Baryshkov wrote:
+> > > > On Fri, Nov 15, 2024 at 12:59:12PM +0800, Tingwei Zhang wrote:
+> > > > > On 11/14/2024 9:03 PM, Konrad Dybcio wrote:
+> > > > > > On 14.11.2024 1:10 PM, Dmitry Baryshkov wrote:
+> > > > > > > On Thu, Nov 14, 2024 at 05:54:08PM +0800, Ziyue Zhang wrote:
+> > > > > > > > Add configurations in devicetree for PCIe0, including registers, clocks,
+> > > > > > > > interrupts and phy setting sequence.
+> > > > > > > > 
+> > > > > > > > Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+> > > > > > > > ---
+> > > > > > > >     arch/arm64/boot/dts/qcom/qcs8300-ride.dts |  44 +++++-
+> > > > > > > >     arch/arm64/boot/dts/qcom/qcs8300.dtsi     | 176 ++++++++++++++++++++++
+> > > > > > > >     2 files changed, 219 insertions(+), 1 deletion(-)
+> > > > > > > > 
+> > > > > > > > diff --git a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
+> > > > > > > > index 7eed19a694c3..9d7c8555ed38 100644
+> > > > > > > > --- a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
+> > > > > > > > +++ b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
+> > > > > > > > @@ -213,7 +213,7 @@ vreg_l9c: ldo9 {
+> > > > > > > >     &gcc {
+> > > > > > > 
+> > > > > > > The patch doesn't seem to update the gcc node in qcs8300.dtsi. Is there
+> > > > > > > any reason to have the clocks property in the board data file?
+> > > > > > 
+> > > > > > Definitely not. Ziyue, please move that change to the soc dtsi
+> > > > > 
+> > > > > Gcc node is updated in board device tree due to sleep_clk is defined in
+> > > > > board device tree. Sleep_clk is from PMIC instead SoC so we were requested
+> > > > > to move sleep_clk to board device tree in previous review [1].
+> > > > 
+> > > > Note, the review doesn't talk about sleep_clk at all. The recent
+> > > > examples (sm8650, x1e80100, sa8775p) still pull the clocks into the SoC
+> > > > dtsi, but without the freq.
+> > > > 
+> > > It's begining of the discussion of the PMIC clock for SoC. Sleep clock
+> > > specific discussion is here [2].
+> > > [2]https://lore.kernel.org/all/be8b573c-db4e-4eec-a9a6-3cd83d04156d@kernel.org/
+> > 
+> > Please note how the recent platforms describe those clocks: the node in
+> > the SoC dtsi, the frequency in the board dtsi. X1E80100 is a step
+> > backwards, the clock are completely defined in the x1e80100.dtsi. There
+> > seems to be no strict rule on how to handle board clocks. I've sent an
+> > RFC patchset, trying to move them to a single logical location. Let's
+> > see what kind of response it will get. We probably need to define and
+> > follow a common rule for all Qualcomm platforms. Please give it a couple
+> > of days for the dust to settle. However, I think there should be no
+> > reason to keep GCC's clock definitions in the board DTS.
+> > 
+> Thanks for the clean up patch and make it consistent.
 > 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->  drivers/gpu/drm/msm/adreno/a6xx_catalog.c | 26 ++++++++++++++++++++++++--
->  1 file changed, 24 insertions(+), 2 deletions(-)
+> Is it reasonable for GCC's clock definition to refer xo_clk/sleep_clk in
+> board device tree? Theoretically, can we have another board has different
+> xo_clk say xo1_clk defined in board device tree?
+
+That's a question for that series. I'd say, no. Some older platforms had
+separate CXO and PXO clocks, newer platforms have single CXO.
+
+> > > > > 
+> > > > > [1]https://lore.kernel.org/all/10914199-1e86-4a2e-aec8-2a48cc49ef14@kernel.org/
+> > > > > > 
+> > > > > > Konrad
+> > > > > 
+> > > > > 
+> > > > > -- 
+> > > > > Thanks,
+> > > > > Tingwei
+> > > > > 
+> > > > > -- 
+> > > > > linux-phy mailing list
+> > > > > linux-phy@lists.infradead.org
+> > > > > https://lists.infradead.org/mailman/listinfo/linux-phy
+> > > > 
+> > > 
+> > > 
+> > > -- 
+> > > Thanks,
+> > > Tingwei
+> > 
 > 
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-> index 0c560e84ad5a53bb4e8a49ba4e153ce9cf33f7ae..014a24256b832d8e03fe06a6516b5348a5c0474a 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-> @@ -1379,7 +1379,8 @@ static const struct adreno_info a7xx_gpus[] = {
->  		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
->  		.quirks = ADRENO_QUIRK_HAS_CACHED_COHERENT |
->  			  ADRENO_QUIRK_HAS_HW_APRIV |
-> -			  ADRENO_QUIRK_PREEMPTION,
-> +			  ADRENO_QUIRK_PREEMPTION |
-> +			  ADRENO_QUIRK_GMU_BW_VOTE,
->  		.init = a6xx_gpu_init,
->  		.zapfw = "a740_zap.mdt",
->  		.a6xx = &(const struct a6xx_info) {
-> @@ -1388,6 +1389,16 @@ static const struct adreno_info a7xx_gpus[] = {
->  			.pwrup_reglist = &a7xx_pwrup_reglist,
->  			.gmu_chipid = 0x7020100,
->  			.gmu_cgc_mode = 0x00020202,
-> +			.bcm = {
-> +				[0] = { .name = "SH0", .buswidth = 16 },
-> +				[1] = { .name = "MC0", .buswidth = 4 },
-> +				[2] = {
-> +					.name = "ACV",
-> +					.fixed = true,
-> +					.perfmode = BIT(3),
-> +					.perfmode_bw = 16500000,
-
-Is it a platform property or GPU / GMU property? Can expect that there
-might be several SoCs having the same GPU, but different perfmode_bw
-entry?
-
-> +				},
-> +			},
->  		},
->  		.address_space_size = SZ_16G,
->  		.preempt_record_size = 4192 * SZ_1K,
-> @@ -1424,7 +1435,8 @@ static const struct adreno_info a7xx_gpus[] = {
->  		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
->  		.quirks = ADRENO_QUIRK_HAS_CACHED_COHERENT |
->  			  ADRENO_QUIRK_HAS_HW_APRIV |
-> -			  ADRENO_QUIRK_PREEMPTION,
-> +			  ADRENO_QUIRK_PREEMPTION |
-> +			  ADRENO_QUIRK_GMU_BW_VOTE,
->  		.init = a6xx_gpu_init,
->  		.zapfw = "gen70900_zap.mbn",
->  		.a6xx = &(const struct a6xx_info) {
-> @@ -1432,6 +1444,16 @@ static const struct adreno_info a7xx_gpus[] = {
->  			.pwrup_reglist = &a7xx_pwrup_reglist,
->  			.gmu_chipid = 0x7090100,
->  			.gmu_cgc_mode = 0x00020202,
-> +			.bcm = {
-> +				[0] = { .name = "SH0", .buswidth = 16 },
-> +				[1] = { .name = "MC0", .buswidth = 4 },
-> +				[2] = {
-> +					.name = "ACV",
-> +					.fixed = true,
-> +					.perfmode = BIT(2),
-> +					.perfmode_bw = 10687500,
-> +				},
-> +			},
->  		},
->  		.address_space_size = SZ_16G,
->  		.preempt_record_size = 3572 * SZ_1K,
 > 
 > -- 
-> 2.34.1
-> 
+> Thanks,
+> Tingwei
 
 -- 
 With best wishes
