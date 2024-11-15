@@ -1,159 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-38036-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38037-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BAF949CE934
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 16:06:37 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0DF9F9CEABE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 16:10:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 811672882D0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 15:06:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AC8E91F25900
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 15:10:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8509E1D45FB;
-	Fri, 15 Nov 2024 15:06:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 438091D45F2;
+	Fri, 15 Nov 2024 15:10:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="rLDQ+yyi"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OJTkSus5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 754B11D45E0
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 15:06:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A2FC1CD210;
+	Fri, 15 Nov 2024 15:10:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731683187; cv=none; b=IWjclCC0niJNiHhMgVsBYsxAXgsn5/g/miETUn22cP9Re0D58jqLvfnYQ7CXVTIm0gLFMuGOCFhGc6Bp3+PxRW1LXFXwBAenSg7/r5lTufDY8hd7/TiVNhSFUF/cw16rfVeHw1gxkOolxclUWhMk7J5T13bnueK6OMlS08iktzU=
+	t=1731683428; cv=none; b=LCSWqz3Xpwto9H29XGT66ZEgoBmUXPWU1ew241hsjEFMl0JXA0O4wLR5JO0WtuQwOTwHYvZsOm5IJoO87Re3OV9TTMBk8xdgSRBECpKeeXkSjvW4cqyHSLECE70BD00fKa7D2BqWovPgzSU52IBC6VSgAVZE5wyJplc+7K1iciw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731683187; c=relaxed/simple;
-	bh=uPhgKsx31+w99ZN5CAn4r/SW8AcxxzhuHcuFUO+IyG0=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=TJMcFSOL8zwzpClNL2Rs/sZGpdraiMFyNCXw098/S5ap8Uvq181mlGpmMskfjkR7iJqZjUdLW66rljLcqu95/npJiVfrldvCB35L3pLNQrCI88e24LDax1/Szxva6ZH6SGSYu8UhctFqpzQV/y0RFa52F8gwb/BBF1bZACIEx68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=rLDQ+yyi; arc=none smtp.client-ip=209.85.208.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-5c96b2a10e1so3207279a12.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 07:06:21 -0800 (PST)
+	s=arc-20240116; t=1731683428; c=relaxed/simple;
+	bh=XuYVDKWxJgRzbEDpq2EnHT3AN84MFrPjCNvbUOa8htY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=HaHr8kwnUThZ0Qorrg5z3qgt2RH6snjXgveXZAdFcFKGrNei3s2EkFPb1qW0NPVUqhjQVkzAfEGbi1RAaPlXw0mvqL5cskIgGXHPRPQwDh17IgE7VFERBik4KIne/C9psvKbv2DQCyp/+Vyz0wjgSwTbETvl2duCB0iSSAMo0mQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OJTkSus5; arc=none smtp.client-ip=209.85.167.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-539e63c8678so2027130e87.0;
+        Fri, 15 Nov 2024 07:10:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1731683180; x=1732287980; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1731683425; x=1732288225; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=uDOl7NltAXr6G8mTcGijCAhgwcSdhqInV58H0gMs9FY=;
-        b=rLDQ+yyir9CMwY28CEiJhv2vdFCVNztboPr0RgUuxyvCr6PGZ00PpcCb3S18jqDuQ7
-         8habij7cL9ZMlLQoBMEf/Vmi2awuWSaO9huHN5uyOKjxapSr9xzUilNHqxVd+LHYx2LT
-         z8EZkbbxR7Ea7jQ9dHyOVydDwukTWfjOSBztEiIl7L6SkfWhrjOZsh+c20B/b+xNzQVh
-         K58MBEYp5R5fCycgWeK4PIAaT44hWC9owA/Pq5dqtHx6Pw74oiEM3f12KwQHdV1Hm/Un
-         NpvgV3VbE+s2Y4V4DvBgkxhnMcmOV+A8jVLbO53bfpBdejymoljZL0BEWORfV454XtvC
-         mmvA==
+        bh=aUVjcB0sOga4/HfM/3eh0FFL6nDbEVfse0QAH2YWS2s=;
+        b=OJTkSus59njDKR0WGrJY54DVwkuxG16kjZy8w0+uQLTLTjK6BYJO2/nu1VEG/mOHNT
+         abuggyp3k51q9J1Eb5s623nmB2p9+x2jwfRuyREm0HK9u3MneIHCq4Ja9XoSIVBiuKJs
+         ayhtn8km47j1AQotTmZtaI4lE/hB8E8OPi7namtEoqAsjsRij4+MaOkwwNQtFo0y2sNE
+         6Xh1Tir1mk0dTykw6qRhg3euqw1gH0m3Btbs8dgVXsXZUPNEcN6VQ4Q+k5q2j0ygFQW9
+         xw2lHcvA9lSCetOI8kJ1gfWFOeQVGonUX8osrTv2IEVeBOBG6Tb/M8VYr4Xu3jRuGZeS
+         mv5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731683180; x=1732287980;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=uDOl7NltAXr6G8mTcGijCAhgwcSdhqInV58H0gMs9FY=;
-        b=p7fiNjn/xcanS4Swgh90K54RfSzRmeoiDXGZBbEO1Ho36NyDP4O/1ZxvyaUVY6mg0G
-         QIThSI82pU1fZUPx0I1p3SYPq46D3zxU+5Unn6SD6xtH4M2LHpKCeoDyVwXrvkM+lxRQ
-         HaenXx5lZ1G+/B4SrJ8P45CQi0BLOdQfnxH9PVOeKO9heApnGbFH+T7BxWzXNmjvuf3j
-         tndXmJoCtFgT82AGxIex+3i1fdmcV4YCpnOySBLm44BsPMhU6G4oTFlQti7cu/yQR3fp
-         3W8en8Lqai8NYldrC8c6uzr/bwPaJ17Vx5FIqm6ER5c3kL7DNcSFR/Ewrc71xOsnmsVo
-         XVtQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUemtGbtI6eWExwOWrZlTvMzdA2GkSqEtYV/US0ImqUyerSG4CAAAqj+bpoPJ4fQyrEoUnrRQ2IptrYeonz@vger.kernel.org
-X-Gm-Message-State: AOJu0YzP0+pk8dF4a2mYbDKTLepi71AlcbJspdt9khwUe8xhYT0mC6SC
-	+GX0uFHWeSzkmxiSg2+n7q29yl936dtnp9dvv62zAdtIFKMGkfGQ2AMh2WXr0l5J7f/aO4qttEe
-	S
-X-Google-Smtp-Source: AGHT+IFedO/GRq2PCsSSCKMui+UkqTBIrEZvLlVfKH50GUxLxbbg1/IGmebko5wSJKNUi0L/dcOMmQ==
-X-Received: by 2002:a17:907:3d86:b0:a9a:14fc:44a2 with SMTP id a640c23a62f3a-aa483488086mr263775366b.30.1731683179714;
-        Fri, 15 Nov 2024 07:06:19 -0800 (PST)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa20e0434f6sm186743766b.139.2024.11.15.07.06.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 Nov 2024 07:06:19 -0800 (PST)
+        d=1e100.net; s=20230601; t=1731683425; x=1732288225;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=aUVjcB0sOga4/HfM/3eh0FFL6nDbEVfse0QAH2YWS2s=;
+        b=R+XFMtF9DHhM2pRWXrWg7vi7+Sf5nlHiNeNQ4RWHQ8urycwpb2dVn6H6KKcWxhJnVB
+         txx4r1q5oMdPQzbYVFXTZ1mcGnQoYAcV+y9pHg9DRUqfahMnGouefK+SlAlUT78vmN1L
+         6tiyvbeUIF1ECGPznQ5X/EB9FK2ipXq6fk+EpTVAwscdxhbQusla26yl06tQbPJi6l+q
+         g5d8fHnuuGR97n2QQdQmMH+ZaP+uMfXQcJLU+ua3bzYVW43lbY/EOBJ59eGDA55b+nR5
+         g0t1pA3fHhHO+h6aZCnd281WVIbTRS4urwGvlwHPs7pdkYfDdQVdUTcwJEoqhCyD7Tva
+         RT/w==
+X-Forwarded-Encrypted: i=1; AJvYcCVyCP6JPuRx7lAtLFuBzIhayGBAm2lan8apwcAtpTs6OjDOG8Mq0J/bK9GdMl+WeJLatOp2Ng2UdvZNSDtp1w==@vger.kernel.org, AJvYcCWFgGY9WxZ7Gc1SL3OypQ+8rDjX+yPUcimAXS9Bj0R6qyg647GwXAjma33uwdIAwF1iGEeUzDmTaOzVPviz@vger.kernel.org, AJvYcCWojxc/3yslg3sqfGj5f1w9uLI2bq6UyCx47Il/xFMIn1GJh2E1VU7WmTYZuiaJud5cYXbYD3kdySY=@vger.kernel.org, AJvYcCXmGWkpnM/WwNcVoQS3wYUC9iW7S6+BcQjtPIy3DG0j0VuJaZuuSy32twxfSiYcnV5jl9ahfVhpgBrF@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx3XgkrOe8rvSsqrHbh8se0eTvLwlAOmAtTAlrEL1k9yUZKlyaF
+	XUu/CEZtvKeq4KW1163QBf9qVCnIZQNjmlv/vjcrw3JH+9jL0mobhD8Nyo1Uh+vE3FV7LmiWYjk
+	wBnW97INVfdnvFMzBM/4epfuduEM=
+X-Google-Smtp-Source: AGHT+IFSKvpcyw2QBM31REHWotzjXsDEflFMRHu0OtabMrDtzWscE1nvK6FbR8cj0/dESTLG8Of/bCGbaYf8tMdXAx8=
+X-Received: by 2002:a05:6512:1190:b0:53d:a024:ddb2 with SMTP id
+ 2adb3069b0e04-53dab2a076amr1380484e87.24.1731683424294; Fri, 15 Nov 2024
+ 07:10:24 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
+MIME-Version: 1.0
+References: <20241113-topic-sm8x50-gpu-bw-vote-v1-0-3b8d39737a9b@linaro.org>
+ <20241113-topic-sm8x50-gpu-bw-vote-v1-2-3b8d39737a9b@linaro.org>
+ <sgz4h6rlmekiwypaisjbnej326wv4vaqt3mgspp4fs4tg3mdfx@cwmdqcu6gwbf>
+ <63a2b391-8b71-41cb-bed2-3bc7fd2154ab@linaro.org> <CAA8EJpoFm8EjfBq70RTPtwR7Y7Rm24kHO20NukGiLGRYD0p9Tg@mail.gmail.com>
+In-Reply-To: <CAA8EJpoFm8EjfBq70RTPtwR7Y7Rm24kHO20NukGiLGRYD0p9Tg@mail.gmail.com>
+From: Rob Clark <robdclark@gmail.com>
+Date: Fri, 15 Nov 2024 07:10:09 -0800
+Message-ID: <CAF6AEGty1fcA13rDOOJQbhT4o=CTtBYtGFspowZbxD1c-VE9Bw@mail.gmail.com>
+Subject: Re: [PATCH RFC 2/8] drm/msm: adreno: add GMU_BW_VOTE quirk
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: neil.armstrong@linaro.org, Akhil P Oommen <quic_akhilpo@quicinc.com>, 
+	Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>, Stephen Boyd <sboyd@kernel.org>, 
+	"Rafael J. Wysocki" <rafael@kernel.org>, Sean Paul <sean@poorly.run>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Connor Abbott <cwabbott0@gmail.com>, linux-pm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 15 Nov 2024 16:06:18 +0100
-Message-Id: <D5MUGDO3V9ZE.2EQQUXKCQV3QB@fairphone.com>
-Cc: <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
- <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
- <cros-qcom-dts-watchers@chromium.org>, <linux-arm-msm@vger.kernel.org>,
- <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <srinivas.kandagatla@linaro.org>, <quic_bkumar@quicinc.com>,
- <quic_chennak@quicinc.com>
-Subject: Re: [PATCH v1] arm64: dts: qcom: sc7280: Make ADSP a secure fastrpc
- domain
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>, "Ekansh Gupta"
- <quic_ekangupt@quicinc.com>
-X-Mailer: aerc 0.18.2-0-ge037c095a049
-References: <20241113050042.181028-1-quic_ekangupt@quicinc.com>
- <5oqzxppquoeppt6xnjfm2rdwm23hbui5k3caz5v5ffqzizepob@dz5ikvzgbd4x>
- <c1f0e56b-b489-4370-99e3-0973641410b8@quicinc.com>
- <CAA8EJprDTz7b4rNtR4e9A-=j9_z-aJGBg3+g5is8Bmy=cgTM1Q@mail.gmail.com>
- <b8a9a8f5-1f36-4eea-925b-84578e71838d@quicinc.com>
- <sbkm5wvhtjoluhz7mi7f2wyc4t5znhazcxra52cd5yev5iksbi@yqielk6i7bpe>
- <9b16f4d8-56ea-4ef6-9cb5-35750af871e9@quicinc.com>
- <7grzazq7tfv3kixnevia2fkebe6o352372g3gpdinqeihmuavl@6qxd6vvwcwgt>
-In-Reply-To: <7grzazq7tfv3kixnevia2fkebe6o352372g3gpdinqeihmuavl@6qxd6vvwcwgt>
 
-Hi Dmitry,
-
-On Fri Nov 15, 2024 at 3:45 PM CET, Dmitry Baryshkov wrote:
-> On Fri, Nov 15, 2024 at 05:40:23PM +0530, Ekansh Gupta wrote:
-> >=20
-> >=20
-> > On 11/14/2024 5:30 PM, Dmitry Baryshkov wrote:
-> > > On Thu, Nov 14, 2024 at 10:49:52AM +0530, Ekansh Gupta wrote:
+On Fri, Nov 15, 2024 at 6:18=E2=80=AFAM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On Fri, 15 Nov 2024 at 11:21, Neil Armstrong <neil.armstrong@linaro.org> =
+wrote:
+> >
+> > On 15/11/2024 08:07, Dmitry Baryshkov wrote:
+> > > On Wed, Nov 13, 2024 at 04:48:28PM +0100, Neil Armstrong wrote:
+> > >> The Adreno GMU Management Unit (GNU) can also scale the DDR Bandwidt=
+h
+> > >> along the Frequency and Power Domain level, but by default we leave =
+the
+> > >> OPP core vote for the interconnect ddr path.
 > > >>
-> > >> On 11/13/2024 5:20 PM, Dmitry Baryshkov wrote:
-> > >>> On Wed, 13 Nov 2024 at 08:18, Ekansh Gupta <quic_ekangupt@quicinc.c=
-om> wrote:
-> > >>>>
-> > >>>> On 11/13/2024 11:13 AM, Dmitry Baryshkov wrote:
-> > >>>>> On Wed, Nov 13, 2024 at 10:30:42AM +0530, Ekansh Gupta wrote:
+> > >> While scaling via the interconnect path was sufficient, newer GPUs
+> > >> like the A750 requires specific vote paremeters and bandwidth to
+> > >> achieve full functionality.
+> > >>
+> > >> Add a new Quirk enabling DDR Bandwidth vote via GMU.
+> > >
+> > > Please describe, why this is defined as a quirk rather than a proper
+> > > platform-level property. From my experience with 6xx and 7xx, all the
+> > > platforms need to send some kind of BW data to the GMU.
+> >
+> > Well APRIV, CACHED_COHERENT & PREEMPTION are HW features, why this can'=
+t be part of this ?
+> >
+> > Perhaps the "quirks" bitfield should be features instead ?
 >
-> [...]
->
-> > >>>>>>
-> > >>>>>> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/b=
-oot/dts/qcom/sc7280.dtsi
-> > >>>>>> index 3d8410683402..c633926c0f33 100644
-> > >>>>>> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > >>>>>> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > >>>>>> @@ -3852,7 +3852,6 @@ fastrpc {
-> > >>>>>>                                      compatible =3D "qcom,fastrp=
-c";
-> > >>>>>>                                      qcom,glink-channels =3D "fa=
-strpcglink-apps-dsp";
-> > >>>>>>                                      label =3D "adsp";
-> > >>>>>> -                                    qcom,non-secure-domain;
-> > > - Are there other platforms which have this flag set for ADSP?
-> > Yes, there are a few platforms where this property is added for ADSP.
->
-> Please clean up all of them to reduce a possible chance of different beha=
-viour or further c&p errors.
->
-> > > - Granted that sc7280 was targeting ChromeOS devices, might it be tha=
-t
-> > >   there is a CrOS-specific userspace for that?
-> > FastRPC nodes were recently added to this devicetree recently. Looks li=
-ke this property is just getting copied.
-> > It might be that fastrpc was recently tried on ChromeOS device or it mi=
-ght be added to support some other devices
-> > that uses fastrpc(qcm6490-idp etc.).
->
-> Indeed.
->
-> Luca, could you possibly comment, as you've added ADSP / FastRPC nodes?
+> Sounds like that.
 
-I've just followed other platforms, I have little clue about FastRPC
-myself apart from it being used for hexagonrpcd for interfacing with
-sensors. There's not much (any?) docs out there.
+But LMLOADKILL_DISABLE and TWO_PASS_USE_WFI are quirks.. so it is kind
+of a mix of quirks and features.  So meh
 
-Regards
-Luca
+BR,
+-R
+
+>
+> --
+> With best wishes
+> Dmitry
 
