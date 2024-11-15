@@ -1,84 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-38011-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38012-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6D86F9CDD69
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 12:25:19 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id BE7A39CDD74
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 12:28:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 494211F220BE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 11:25:18 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2A235B27255
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 11:28:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA4A61B393C;
-	Fri, 15 Nov 2024 11:25:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 647191B6CF4;
+	Fri, 15 Nov 2024 11:28:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Jc6dPKfy"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vyYiCeW6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oi1-f178.google.com (mail-oi1-f178.google.com [209.85.167.178])
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26B7C1ABEDF
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 11:25:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A99A01A9B43
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 11:28:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731669914; cv=none; b=VLY5JujD8+rjzzf6umFc49QBxEVe8lHgVjtKYZjMtuxfUQLuHBML7wS0uIZXKt9NT7IFb/n8EIGMTmpdEUYkhcm5p/gFpqEKS+IjSN9+A2o7gP5IUEwm9qBhmEk397fDHVNCyKtu2ZBlNr7pjJIrsN0O/e2HEY7cOGEJHYNvFv0=
+	t=1731670093; cv=none; b=kak2Qf/EVPnXa1Pa2OkITDfh3s69lOf9SNcqPvAA+wVRWbAH2FMcYRuodWgSRfgJ27nkVi9OZVegzfVTxYlehKO0Eh5qiDwoQcDzD4VmMfp0e55I3PVFlf3NJuKcwEetW29g4eZSiUAqvN3JaU1jwwOVdIpP9fDXYI52qkSCOi8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731669914; c=relaxed/simple;
-	bh=FCKY1eD04I5Z3uVFWPqntsNBMF1+X8iJFFBU/nIcbio=;
+	s=arc-20240116; t=1731670093; c=relaxed/simple;
+	bh=IV2FeGirkSwbOkjnkrGjm2aoKUL82ZxXZLitcxBlhJo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HQFsfgnrURoLsAkib0YMzNNGbIJNBcrVo4rQ22Jea8tSnj8pq7W3rCJTPAXRKVVTqvFfIjoJKYbr2Scn1FxBdhqH9WnlsLwHGXFhmdOAJI1mR2NEDs5GNZ1+rgKbfru4DXhbRXBZHvgnjWldsI/bYFbT/ze/HtTtCRI/xTKnBeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Jc6dPKfy; arc=none smtp.client-ip=209.85.167.178
+	 Content-Type:Content-Disposition:In-Reply-To; b=uCf+6NivQdDPLh+hPf1ZzMUrsK5zEzR6TUV/IOfzPSPgnhdqRgVlab/mI3V6cOFKeZ4JjDl07+p78Lg6DeZWfoYhX3sAOYAvsx0TzDH+vw1TITrhJlEW3CwZNuqSMg3jFWyDVYYxT/tzfx6eZTqAh7a7we5qcLSfsj4K8SyVVxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vyYiCeW6; arc=none smtp.client-ip=209.85.214.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-oi1-f178.google.com with SMTP id 5614622812f47-3e6104701ffso975493b6e.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 03:25:12 -0800 (PST)
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-20ca388d242so18002165ad.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 03:28:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731669912; x=1732274712; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1731670091; x=1732274891; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=t0ID6LGyvQNAjf20EM8AU6orAPT1m416dbiwXz3DRXI=;
-        b=Jc6dPKfy4IFHXYd0JSOBWh2UQ11FDgmaH5VwgDdxc9LB53S0k3gjnRIYl9x/BCqX5c
-         VEQzbTOEpGQftkGsex/NdGrOruYGTDqGBIs2rdQtX5SSi441W4xXV46cQh6+aCf7h0z4
-         U8gRddA4p+b7s+n23e3hA6GWh68gfCXWGH05SdQGdj/hX6JlQJBZar2YAHyM58dyV8Ps
-         vHNAOK6bYuVsg80ekYxogdyAOBXJqebALwIqjMmshLTVm9jflAhvy7f6tQF4aPwHjQUZ
-         xLsmfVysQ6FGyTfSlg90Gm0Fd1XbxX/8HF8SCwweiVMLp9azxYCWVRQeGFTu0UdmOY9B
-         rapw==
+        bh=EgJfY+QhErfpT0vcHYFRI4p0UMOPmCc6NanmZ+nwutk=;
+        b=vyYiCeW64FqsM6iywb+iWJdZrIaAy80WdzwHaBArJJxN1Bn21OMhqJwz4c+/jiwajw
+         HN+E6H+fQ3Rq4RDvDmSBvBinGZ1rNNCxMAT4ATTagLqgqkCUruXHD+H44oMnzElJ0r8h
+         AmVOedoB2TxWR95EhruTB9X9a3tfi770d3T3hHCurjaD6BERUrnRgzOir235/qOu1eDZ
+         lfufGOPCZVfoxtvYWTa/JjRZ9JbCBTlR5qwZYNhUgVYsrc3mbYnkpCq0RNCMKfgd1tk0
+         4RBgJXKUvWLnONnRhIeUjod77ruxgX6d+1HcCb2PtVoIsX/uFYpsEB1SGejy41UDTswB
+         S/Ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731669912; x=1732274712;
+        d=1e100.net; s=20230601; t=1731670091; x=1732274891;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=t0ID6LGyvQNAjf20EM8AU6orAPT1m416dbiwXz3DRXI=;
-        b=Jzj5F8Llq2CzafS0R9G7NbJPzlhwSTK/ippGIdx6NHX0NP7mouPFiQMVDSsaKk18b3
-         I8ebOpCcyQbRotmdsC9nZ2B9GOTuU9velEI9OjStdBC2nfBcW74tYjV0Uy8SeTknJ83K
-         hF/Sp28fTY9e8SQMrKdWXT5OEjCgAre6DoWE5ZSdpCyGitdw6Ok722wnFKU//y29A3zQ
-         d1vbhv7ZKPrzDCF9J2aWdX61JhwhKEktMHRgCgCckiry8NFbbMJdsTBS5m2go+JOMo5W
-         I5zXRuCUarxulTXp+x9mMfJF1k9B8kaLeuk+19IIzYl4uY2Y7QoTjwuowaMCUmI4LLWD
-         R4OQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXvAGAI3ebbSU2CJF7jL4opKMVIaOtSNQTnqfJ9nb9qcegerx6fMIioeKZMzDD+wp0pjbc6fssb8mTvQ1DT@vger.kernel.org
-X-Gm-Message-State: AOJu0YywEOOB2nQAG4dO/eOJrUZeQ0C0vz7QNsO7SljZ5G4Z+ux1WRWo
-	WrvbfM+X2A79oKswIB3jJcWtMcI4r8UMbm3MB6EVvZYaPQG7JCFQY6JwqPAE5A==
-X-Google-Smtp-Source: AGHT+IFpZg539it1BfGL4KI3yO9IXU1yUG5k4Sss5OebPIZ+F3teAQBNcSqyZsp7sjkXoLsd1CMR1A==
-X-Received: by 2002:a05:6808:320d:b0:3e6:3205:1a71 with SMTP id 5614622812f47-3e7bc7bb0a0mr2480605b6e.15.1731669912170;
-        Fri, 15 Nov 2024 03:25:12 -0800 (PST)
+        bh=EgJfY+QhErfpT0vcHYFRI4p0UMOPmCc6NanmZ+nwutk=;
+        b=dB6Uk9xZNfk4hMnMuA1a81YJFb4m4POoK5rvrAAUw/yccuawZN1/7UnisrGDKxEm8a
+         C6sv53BRIyvaqdc6ZqttxXgyqk1XTCvzOUCcuZj5PZ+eeytTrA+PY1x5JrP8eitHTzNX
+         sNF4I+3wpkm2qL8RUD7H4c8CLJ1cZqZGoGdArMXAJepdlqRpUG8vtWW2RHn6loq2/eaA
+         RC7cVBMjH5Tby1GfdTNdEXcGOuPa3wu6dI0CggsZ4wJRUO/mvjNrUODsjsao1gx7q/Vm
+         XznD9Euy5wVS1Wtv99hhHTRK6GVvKLnClrMhypy4PzBJyJmawCewGIY0+QTYb5jvkX6n
+         p/zQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUETUR4zm9vhIvuc/ReN3uaRq74P4umMgtB5tkZRkjHED+awFy1cMkFiXrFa0Z/YSCSECl/yqaDJbSmlPj4@vger.kernel.org
+X-Gm-Message-State: AOJu0YxNVazitbW6b741OldTkrCzrvVKnCgqXV4YU6wcyLmnUbXPBJ+N
+	fmq2pPPLQCgUtLCgFabicFY4ZMmG8IPTw1zQOFBy2gtsFjWTwYS9p3JYoEKojQ==
+X-Google-Smtp-Source: AGHT+IFiJEdlKgYYdwr2AqQJ6vfoUhsoy9emHj8ASgn9/PxGF5E6ItzT2PUmWLKSVimkMgwkHEnlmA==
+X-Received: by 2002:a17:902:e54c:b0:20f:aee9:d8b8 with SMTP id d9443c01a7336-211d0d72ac0mr22771415ad.20.1731670091084;
+        Fri, 15 Nov 2024 03:28:11 -0800 (PST)
 Received: from thinkpad ([117.193.208.47])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7f8c1c15227sm921010a12.13.2024.11.15.03.25.08
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-211d0f34614sm10248035ad.163.2024.11.15.03.28.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Nov 2024 03:25:11 -0800 (PST)
-Date: Fri, 15 Nov 2024 16:55:04 +0530
+        Fri, 15 Nov 2024 03:28:10 -0800 (PST)
+Date: Fri, 15 Nov 2024 16:58:02 +0530
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To: Mayank Rana <quic_mrana@quicinc.com>
 Cc: jingoohan1@gmail.com, will@kernel.org, lpieralisi@kernel.org,
 	kw@linux.com, robh@kernel.org, bhelgaas@google.com, krzk@kernel.org,
 	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org, quic_krichai@quicinc.com
-Subject: Re: [PATCH v3 4/4] PCI: qcom: Add Qualcomm SA8255p based PCIe root
- complex functionality
-Message-ID: <20241115112504.anaatuqitdvjubyx@thinkpad>
+Subject: Re: [PATCH v3 0/4] Add Qualcomm SA8255p based firmware managed PCIe
+ root complex
+Message-ID: <20241115112802.66xoxj4z5wsg4idl@thinkpad>
 References: <20241106221341.2218416-1-quic_mrana@quicinc.com>
- <20241106221341.2218416-5-quic_mrana@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,220 +87,110 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241106221341.2218416-5-quic_mrana@quicinc.com>
+In-Reply-To: <20241106221341.2218416-1-quic_mrana@quicinc.com>
 
-On Wed, Nov 06, 2024 at 02:13:41PM -0800, Mayank Rana wrote:
-> On SA8255p ride platform, PCIe root complex is firmware managed as well
-> configured into ECAM compliant mode. This change adds functionality to
-> enable resource management (system resource as well PCIe controller and
-> PHY configuration) through firmware, and enumerating ECAM compliant root
-> complex.
+On Wed, Nov 06, 2024 at 02:13:37PM -0800, Mayank Rana wrote:
+> Based on received feedback, this patch series adds support with existing
+> Linux qcom-pcie.c driver to get PCIe host root complex functionality on
+> Qualcomm SA8255P auto platform.
 > 
-> Signed-off-by: Mayank Rana <quic_mrana@quicinc.com>
-> ---
->  drivers/pci/controller/dwc/Kconfig     |   1 +
->  drivers/pci/controller/dwc/pcie-qcom.c | 116 +++++++++++++++++++++++--
->  2 files changed, 108 insertions(+), 9 deletions(-)
+> 1. Interface to allow requesting firmware to manage system resources and
+> performing PCIe Link up (devicetree binding in terms of power domain and
+> runtime PM APIs is used in driver)
 > 
-> diff --git a/drivers/pci/controller/dwc/Kconfig b/drivers/pci/controller/dwc/Kconfig
-> index b6d6778b0698..0fe76bd39d69 100644
-> --- a/drivers/pci/controller/dwc/Kconfig
-> +++ b/drivers/pci/controller/dwc/Kconfig
-> @@ -275,6 +275,7 @@ config PCIE_QCOM
->  	select PCIE_DW_HOST
->  	select CRC8
->  	select PCIE_QCOM_COMMON
-> +	select PCI_HOST_COMMON
->  	help
->  	  Say Y here to enable PCIe controller support on Qualcomm SoCs. The
->  	  PCIe controller uses the DesignWare core plus Qualcomm-specific
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index ef44a82be058..2cb74f902baf 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -21,7 +21,9 @@
->  #include <linux/limits.h>
->  #include <linux/init.h>
->  #include <linux/of.h>
-> +#include <linux/of_pci.h>
->  #include <linux/pci.h>
-> +#include <linux/pci-ecam.h>
->  #include <linux/pm_opp.h>
->  #include <linux/pm_runtime.h>
->  #include <linux/platform_device.h>
-> @@ -254,10 +256,12 @@ struct qcom_pcie_ops {
->    * @ops: qcom PCIe ops structure
->    * @override_no_snoop: Override NO_SNOOP attribute in TLP to enable cache
->    * snooping
-> +  * @firmware_managed: Set if PCIe root complex is firmware managed
+> 2. SA8255P is using Synopsys Designware PCIe controller which supports MSI
+> controller. Using existing MSI controller based functionality by exporting
+> important pcie dwc core driver based MSI APIs, and using those from
+> pcie-qcom.c driver.
+> 
+> Below architecture is used on Qualcomm SA8255P auto platform to get ECAM
+> compliant PCIe controller based functionality. Here firmware VM based PCIe
+> driver takes care of resource management and performing PCIe link related
+> handling (D0 and D3cold). Linux pcie-qcom.c driver uses power domain to
+> request firmware VM to perform these operations using SCMI interface.
+> --------------------
+> 
+> 
+>                                    ┌────────────────────────┐                                               
+>                                    │                        │                                               
+>   ┌──────────────────────┐         │     SHARED MEMORY      │            ┌──────────────────────────┐       
+>   │     Firmware VM      │         │                        │            │         Linux VM         │       
+>   │ ┌─────────┐          │         │                        │            │    ┌────────────────┐    │       
+>   │ │ Drivers │ ┌──────┐ │         │                        │            │    │   PCIE Qcom    │    │       
+>   │ │ PCIE PHY◄─┤      │ │         │   ┌────────────────┐   │            │    │    driver      │    │       
+>   │ │         │ │ SCMI │ │         │   │                │   │            │    │                │    │       
+>   │ │PCIE CTL │ │      │ ├─────────┼───►    PCIE        ◄───┼─────┐      │    └──┬──────────▲──┘    │       
+>   │ │         ├─►Server│ │         │   │    SHMEM       │   │     │      │       │          │       │       
+>   │ │Clk, Vreg│ │      │ │         │   │                │   │     │      │    ┌──▼──────────┴──┐    │       
+>   │ │GPIO,GDSC│ └─▲──┬─┘ │         │   └────────────────┘   │     └──────┼────┤PCIE SCMI Inst  │    │       
+>   │ └─────────┘   │  │   │         │                        │            │    └──▲──────────┬──┘    │       
+>   │               │  │   │         │                        │            │       │          │       │       
+>   └───────────────┼──┼───┘         │                        │            └───────┼──────────┼───────┘       
+>                   │  │             │                        │                    │          │               
+>                   │  │             └────────────────────────┘                    │          │               
+>                   │  │                                                           │          │               
+>                   │  │                                                           │          │               
+>                   │  │                                                           │          │               
+>                   │  │                                                           │IRQ       │HVC            
+>               IRQ │  │HVC                                                        │          │               
+>                   │  │                                                           │          │               
+>                   │  │                                                           │          │               
+>                   │  │                                                           │          │               
+> ┌─────────────────┴──▼───────────────────────────────────────────────────────────┴──────────▼──────────────┐
+> │                                                                                                          │
+> │                                                                                                          │
+> │                                      HYPERVISOR                                                          │
+> │                                                                                                          │
+> │                                                                                                          │
+> │                                                                                                          │
+> └──────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+>                                                                                                             
+>   ┌─────────────┐    ┌─────────────┐  ┌──────────┐   ┌───────────┐   ┌─────────────┐  ┌────────────┐        
+>   │             │    │             │  │          │   │           │   │  PCIE       │  │   PCIE     │        
+>   │   CLOCK     │    │   REGULATOR │  │   GPIO   │   │   GDSC    │   │  PHY        │  │ controller │        
+>   └─────────────┘    └─────────────┘  └──────────┘   └───────────┘   └─────────────┘  └────────────┘        
+>                                                                                                             
 
-ecam_compliant?
+Thanks a lot for working on this Mayank! This version looks good to me. I've
+left some comments, nothing alarming though.
 
->    */
->  struct qcom_pcie_cfg {
->  	const struct qcom_pcie_ops *ops;
->  	bool override_no_snoop;
-> +	bool firmware_managed;
->  	bool no_l0s;
->  };
->  
-> @@ -1415,6 +1419,10 @@ static const struct qcom_pcie_cfg cfg_sc8280xp = {
->  	.no_l0s = true,
->  };
->  
-> +static const struct qcom_pcie_cfg cfg_fw_managed = {
-
-cfg_ecam?
-
-> +	.firmware_managed = true,
-> +};
-> +
->  static const struct dw_pcie_ops dw_pcie_ops = {
->  	.link_up = qcom_pcie_link_up,
->  	.start_link = qcom_pcie_start_link,
-> @@ -1566,6 +1574,51 @@ static irqreturn_t qcom_pcie_global_irq_thread(int irq, void *data)
->  	return IRQ_HANDLED;
->  }
->  
-> +static void qcom_pci_free_msi(void *ptr)
-> +{
-> +	struct dw_pcie_rp *pp = (struct dw_pcie_rp *)ptr;
-> +
-> +	if (pp && pp->has_msi_ctrl)
-> +		dw_pcie_free_msi(pp);
-> +}
-> +
-> +static int qcom_pcie_ecam_host_init(struct pci_config_window *cfg)
-> +{
-> +	struct device *dev = cfg->parent;
-> +	struct dw_pcie_rp *pp;
-> +	struct dw_pcie *pci;
-> +	int ret;
-> +
-> +	pci = devm_kzalloc(dev, sizeof(*pci), GFP_KERNEL);
-> +	if (!pci)
-> +		return -ENOMEM;
-> +
-> +	pci->dev = dev;
-> +	pp = &pci->pp;
-> +	pci->dbi_base = cfg->win;
-> +	pp->num_vectors = MSI_DEF_NUM_VECTORS;
-> +
-> +	ret = dw_pcie_msi_host_init(pp);
-> +	if (ret)
-> +		return ret;
-> +
-> +	pp->has_msi_ctrl = true;
-> +	dw_pcie_msi_init(pp);
-> +
-> +	ret = devm_add_action_or_reset(dev, qcom_pci_free_msi, pp);
-
-return devm_add_action_or_reset()...
-
-> +	return ret;
-> +}
-> +
-> +/* ECAM ops */
-> +const struct pci_ecam_ops pci_qcom_ecam_ops = {
-> +	.init		= qcom_pcie_ecam_host_init,
-> +	.pci_ops	= {
-> +		.map_bus	= pci_ecam_map_bus,
-> +		.read		= pci_generic_config_read,
-> +		.write		= pci_generic_config_write,
-> +	}
-> +};
-> +
->  static int qcom_pcie_probe(struct platform_device *pdev)
->  {
->  	const struct qcom_pcie_cfg *pcie_cfg;
-> @@ -1580,11 +1633,52 @@ static int qcom_pcie_probe(struct platform_device *pdev)
->  	char *name;
->  
->  	pcie_cfg = of_device_get_match_data(dev);
-> -	if (!pcie_cfg || !pcie_cfg->ops) {
-> -		dev_err(dev, "Invalid platform data\n");
-> +	if (!pcie_cfg) {
-> +		dev_err(dev, "No platform data\n");
-> +		return -EINVAL;
-> +	}
-> +
-> +	if (!pcie_cfg->firmware_managed && !pcie_cfg->ops) {
-> +		dev_err(dev, "No platform ops\n");
->  		return -EINVAL;
->  	}
->  
-> +	pm_runtime_enable(dev);
-> +	ret = pm_runtime_get_sync(dev);
-> +	if (ret < 0)
-> +		goto err_pm_runtime_put;
-> +
-> +	if (pcie_cfg->firmware_managed) {
-> +		struct pci_host_bridge *bridge;
-> +		struct pci_config_window *cfg;
-> +
-> +		bridge = devm_pci_alloc_host_bridge(dev, 0);
-> +		if (!bridge) {
-> +			ret = -ENOMEM;
-> +			goto err_pm_runtime_put;
-> +		}
-> +
-> +		of_pci_check_probe_only();
-
-You haven't defined the "linux,pci-probe-only" property in DT. So if everything
-works fine, then you can leave this call.
-
-> +		/* Parse and map our Configuration Space windows */
-> +		cfg = gen_pci_init(dev, bridge, &pci_qcom_ecam_ops);
-> +		if (IS_ERR(cfg)) {
-> +			ret = PTR_ERR(cfg);
-> +			goto err_pm_runtime_put;
-> +		}
-> +
-> +		bridge->sysdata = cfg;
-> +		bridge->ops = (struct pci_ops *)&pci_qcom_ecam_ops.pci_ops;
-> +		bridge->msi_domain = true;
-> +
-> +		ret = pci_host_probe(bridge);
-
-return pci_host_probe()...
-
-> +		if (ret) {
-> +			dev_err(dev, "pci_host_probe() failed:%d\n", ret);
-> +			goto err_pm_runtime_put;
-> +		}
-> +
-> +		return ret;
-> +	}
-> +
->  	pcie = devm_kzalloc(dev, sizeof(*pcie), GFP_KERNEL);
->  	if (!pcie)
->  		return -ENOMEM;
-> @@ -1593,11 +1687,6 @@ static int qcom_pcie_probe(struct platform_device *pdev)
->  	if (!pci)
->  		return -ENOMEM;
->  
-> -	pm_runtime_enable(dev);
-> -	ret = pm_runtime_get_sync(dev);
-> -	if (ret < 0)
-> -		goto err_pm_runtime_put;
-> -
->  	pci->dev = dev;
->  	pci->ops = &dw_pcie_ops;
->  	pp = &pci->pp;
-> @@ -1739,9 +1828,13 @@ static int qcom_pcie_probe(struct platform_device *pdev)
->  
->  static int qcom_pcie_suspend_noirq(struct device *dev)
->  {
-> -	struct qcom_pcie *pcie = dev_get_drvdata(dev);
-> +	struct qcom_pcie *pcie;
->  	int ret = 0;
->  
-> +	if (of_device_is_compatible(dev->of_node, "qcom,pcie-sa8255p"))
-> +		return 0;
-
-How about bailing out if dev_get_drvdata() returns NULL?
+But I do want to hold up this series until we finalize the SCMI based design.
 
 - Mani
+
+> ----------
+> Changes in V3:
+> - Drop usage of PCIE host generic driver usage, and splitting of MSI functionality
+> - Modified existing pcie-qcom.c driver to add support for getting ECAM compliant and firmware managed
+> PCIe root complex functionality
+> Link to v2: https://lore.kernel.org/linux-arm-kernel/925d1eca-975f-4eec-bdf8-ca07a892361a@quicinc.com/T/
+> 
+> Changes in V2:
+> - Drop new PCIe Qcom ECAM driver, and use existing PCIe designware based MSI functionality
+> - Add power domain based functionality within existing ECAM driver
+> Link to v1: https://lore.kernel.org/all/d10199df-5fb3-407b-b404-a0a4d067341f@quicinc.com/T/                                                                                                      
+> 
+> Tested:
+> - Validated NVME functionality with PCIe0 on SA8255P-RIDE platform
+> 
+> Mayank Rana (3):
+>   PCI: dwc: Export dwc MSI controller related APIs
+>   PCI: qcom: Add firmware managed ECAM compliant PCIe root complex
+>     functionality
+>   dt-bindings: PCI: qcom,pcie-sa8255p: Document ECAM compliant PCIe root
+>     complex
+> 
+>  .../devicetree/bindings/pci/qcom,pcie-sa8255p.yaml | 100 +++++++++++++++++++++
+>  drivers/pci/controller/dwc/Kconfig                 |   1 +
+>  drivers/pci/controller/dwc/pcie-designware-host.c  |  38 ++++----
+>  drivers/pci/controller/dwc/pcie-designware.h       |  14 +++
+>  drivers/pci/controller/dwc/pcie-qcom.c             |  69 ++++++++++++--
+>  5 files changed, 199 insertions(+), 23 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/pci/qcom,pcie-sa8255p.yaml
+> 
+> -- 
+> 2.7.4
+> 
 
 -- 
 மணிவண்ணன் சதாசிவம்
