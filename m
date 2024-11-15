@@ -1,83 +1,92 @@
-Return-Path: <linux-arm-msm+bounces-38012-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38013-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id BE7A39CDD74
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 12:28:20 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A8B099CDDAB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 12:45:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2A235B27255
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 11:28:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6379D28112C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 11:45:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 647191B6CF4;
-	Fri, 15 Nov 2024 11:28:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E4C91BAEDC;
+	Fri, 15 Nov 2024 11:45:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vyYiCeW6"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="C6kgP6XZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A99A01A9B43
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 11:28:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D5D41B6D18
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 11:45:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731670093; cv=none; b=kak2Qf/EVPnXa1Pa2OkITDfh3s69lOf9SNcqPvAA+wVRWbAH2FMcYRuodWgSRfgJ27nkVi9OZVegzfVTxYlehKO0Eh5qiDwoQcDzD4VmMfp0e55I3PVFlf3NJuKcwEetW29g4eZSiUAqvN3JaU1jwwOVdIpP9fDXYI52qkSCOi8=
+	t=1731671144; cv=none; b=fUYSuR26G7bThMdkNMxDw6L+N3yQIMGSghiLja/wICfsnnKvXMvsUyVO0dpKhSMxN78lxIxMMbww84ueBbn35bMHcsXUyZofItG/dALTrdW+TQe7BAjcPl2Rj0d+9opIh0UUA7SH6B8BjdUJkV1/hfwySdu1z/6zQCj4Wl8NIXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731670093; c=relaxed/simple;
-	bh=IV2FeGirkSwbOkjnkrGjm2aoKUL82ZxXZLitcxBlhJo=;
+	s=arc-20240116; t=1731671144; c=relaxed/simple;
+	bh=AYQ6bm2XTleVCZIFNAkhoEQnWTu4KviKfTHZ/1z9dcg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uCf+6NivQdDPLh+hPf1ZzMUrsK5zEzR6TUV/IOfzPSPgnhdqRgVlab/mI3V6cOFKeZ4JjDl07+p78Lg6DeZWfoYhX3sAOYAvsx0TzDH+vw1TITrhJlEW3CwZNuqSMg3jFWyDVYYxT/tzfx6eZTqAh7a7we5qcLSfsj4K8SyVVxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vyYiCeW6; arc=none smtp.client-ip=209.85.214.175
+	 Content-Type:Content-Disposition:In-Reply-To; b=GN7AH6q1GxleCAO5DaJ2o2unNZzFRcVU20r6573dxYH/T2qETeIzAviDHvpG/AHCuvZRd4KmoF1GV6c2UywYv5kjGAb7VVGRSbUxS0yXFGbyKsWWwxFcw69pbiH69Bf404jtHlLZCCbiuf9e5sOYaSLZoVYIWyW3RvK6hPqLcGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=C6kgP6XZ; arc=none smtp.client-ip=209.85.214.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-20ca388d242so18002165ad.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 03:28:11 -0800 (PST)
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-20cbcd71012so19296515ad.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 03:45:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731670091; x=1732274891; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1731671142; x=1732275942; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=EgJfY+QhErfpT0vcHYFRI4p0UMOPmCc6NanmZ+nwutk=;
-        b=vyYiCeW64FqsM6iywb+iWJdZrIaAy80WdzwHaBArJJxN1Bn21OMhqJwz4c+/jiwajw
-         HN+E6H+fQ3Rq4RDvDmSBvBinGZ1rNNCxMAT4ATTagLqgqkCUruXHD+H44oMnzElJ0r8h
-         AmVOedoB2TxWR95EhruTB9X9a3tfi770d3T3hHCurjaD6BERUrnRgzOir235/qOu1eDZ
-         lfufGOPCZVfoxtvYWTa/JjRZ9JbCBTlR5qwZYNhUgVYsrc3mbYnkpCq0RNCMKfgd1tk0
-         4RBgJXKUvWLnONnRhIeUjod77ruxgX6d+1HcCb2PtVoIsX/uFYpsEB1SGejy41UDTswB
-         S/Ag==
+        bh=HimgWaHQTpzhPp/68+0fUZZbBB8cI4FMHzyZ2vd64Sw=;
+        b=C6kgP6XZ8Y5CAu4v6tR8uaVfWM/jpP6L+z5M+VVa0fmWMXgWj30Is2qergxbpliyPg
+         aG6kR7D2+FleQMWLiFgBp58/MjchzGKJl3ZrSzJdqDx8mMxgBi34Nd3Co3uEETgNQb1S
+         QoGqzFB4uuA159dINKgtiAef1czmxa3bmgtgfKk5MAdU9H6NCi/ZtMOFBONOnesoX59Y
+         YOMqIQ3kqiY+YuSym9iwhngRe/FvZNRKSkq0vp7fmlT7JhySE2qyUvvq3OpABAyXt9No
+         aPwbbv+0J0ZuOShEWkYPUcxcnnxSwqKxDfB3xrWtiO8wSBxoyKQt3lqnLm4GHwYkBYw0
+         8IJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731670091; x=1732274891;
+        d=1e100.net; s=20230601; t=1731671142; x=1732275942;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EgJfY+QhErfpT0vcHYFRI4p0UMOPmCc6NanmZ+nwutk=;
-        b=dB6Uk9xZNfk4hMnMuA1a81YJFb4m4POoK5rvrAAUw/yccuawZN1/7UnisrGDKxEm8a
-         C6sv53BRIyvaqdc6ZqttxXgyqk1XTCvzOUCcuZj5PZ+eeytTrA+PY1x5JrP8eitHTzNX
-         sNF4I+3wpkm2qL8RUD7H4c8CLJ1cZqZGoGdArMXAJepdlqRpUG8vtWW2RHn6loq2/eaA
-         RC7cVBMjH5Tby1GfdTNdEXcGOuPa3wu6dI0CggsZ4wJRUO/mvjNrUODsjsao1gx7q/Vm
-         XznD9Euy5wVS1Wtv99hhHTRK6GVvKLnClrMhypy4PzBJyJmawCewGIY0+QTYb5jvkX6n
-         p/zQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUETUR4zm9vhIvuc/ReN3uaRq74P4umMgtB5tkZRkjHED+awFy1cMkFiXrFa0Z/YSCSECl/yqaDJbSmlPj4@vger.kernel.org
-X-Gm-Message-State: AOJu0YxNVazitbW6b741OldTkrCzrvVKnCgqXV4YU6wcyLmnUbXPBJ+N
-	fmq2pPPLQCgUtLCgFabicFY4ZMmG8IPTw1zQOFBy2gtsFjWTwYS9p3JYoEKojQ==
-X-Google-Smtp-Source: AGHT+IFiJEdlKgYYdwr2AqQJ6vfoUhsoy9emHj8ASgn9/PxGF5E6ItzT2PUmWLKSVimkMgwkHEnlmA==
-X-Received: by 2002:a17:902:e54c:b0:20f:aee9:d8b8 with SMTP id d9443c01a7336-211d0d72ac0mr22771415ad.20.1731670091084;
-        Fri, 15 Nov 2024 03:28:11 -0800 (PST)
+        bh=HimgWaHQTpzhPp/68+0fUZZbBB8cI4FMHzyZ2vd64Sw=;
+        b=oub1BWISVyo3Q/OJVsK+9B1aZJHWHdGRxi/0t2BR6vX56sjyZ5nQLogJy/sMw4lnbo
+         93SZIS/df/isTMarX5XW+Oo06VAJKmfiM6QfKimKURH1pdsQqPkJxbl5J8icTko+x1GA
+         t4Z1ljE69nIOYXowRHPJAfc68ssiTv5o/wE2oAuzbD8ZV/MKnS/L7NXTvSsGaItoSeFn
+         c3f+te0+clHW2Tco3OCddTE78TYaYGmhdf+mNA9OaGdmHfVRs+kIz4EvqXbspgAUy7DV
+         ArotLa5FzK1zoCXONQdrtA821iYurKBw3OtfLgDEdVqyNp2Knc/BTqYTfUk1H+Dkd3AF
+         CQpg==
+X-Forwarded-Encrypted: i=1; AJvYcCVK458iFX186jHWAODoHY4G6914Rf+zz336lcQQy9aYW3aKWmGnCKCPC1znuUZLBo+L9SEMdelAN82w160+@vger.kernel.org
+X-Gm-Message-State: AOJu0YyXULkgKfuDMyG+Znciqqjb7cYQR0U3Ho2Nn+/KkWn15kx+4uFg
+	UlWi2edU/ogJP0gXPe+GdNhwOCapArIJeKlBAns6y4EEAGaewtDiC7RiDuwS+w==
+X-Google-Smtp-Source: AGHT+IFZFtP+1BGeoW8Q/+hmGF/1QZO1mnKMY+wp/cR1tUMg1R4X+CzMnsq8s7hdN6cWY5lMFAk59w==
+X-Received: by 2002:a17:902:d48f:b0:20b:4875:2c51 with SMTP id d9443c01a7336-211d0d92274mr24621765ad.27.1731671142496;
+        Fri, 15 Nov 2024 03:45:42 -0800 (PST)
 Received: from thinkpad ([117.193.208.47])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-211d0f34614sm10248035ad.163.2024.11.15.03.28.06
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-211d0f56e55sm10454435ad.274.2024.11.15.03.45.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Nov 2024 03:28:10 -0800 (PST)
-Date: Fri, 15 Nov 2024 16:58:02 +0530
+        Fri, 15 Nov 2024 03:45:42 -0800 (PST)
+Date: Fri, 15 Nov 2024 17:15:33 +0530
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Mayank Rana <quic_mrana@quicinc.com>
-Cc: jingoohan1@gmail.com, will@kernel.org, lpieralisi@kernel.org,
-	kw@linux.com, robh@kernel.org, bhelgaas@google.com, krzk@kernel.org,
-	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, quic_krichai@quicinc.com
-Subject: Re: [PATCH v3 0/4] Add Qualcomm SA8255p based firmware managed PCIe
- root complex
-Message-ID: <20241115112802.66xoxj4z5wsg4idl@thinkpad>
-References: <20241106221341.2218416-1-quic_mrana@quicinc.com>
+To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc: andersson@kernel.org, Bjorn Helgaas <bhelgaas@google.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	cros-qcom-dts-watchers@chromium.org,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Bartosz Golaszewski <brgl@bgdev.pl>, quic_vbadigan@quicinc.com,
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 2/6] arm64: dts: qcom: qcs6490-rb3gen2: Add node for
+ qps615
+Message-ID: <20241115114533.vilxuszzmqg4vrko@thinkpad>
+References: <20241112-qps615_pwr-v3-0-29a1e98aa2b0@quicinc.com>
+ <20241112-qps615_pwr-v3-2-29a1e98aa2b0@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -87,110 +96,121 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241106221341.2218416-1-quic_mrana@quicinc.com>
+In-Reply-To: <20241112-qps615_pwr-v3-2-29a1e98aa2b0@quicinc.com>
 
-On Wed, Nov 06, 2024 at 02:13:37PM -0800, Mayank Rana wrote:
-> Based on received feedback, this patch series adds support with existing
-> Linux qcom-pcie.c driver to get PCIe host root complex functionality on
-> Qualcomm SA8255P auto platform.
+On Tue, Nov 12, 2024 at 08:31:34PM +0530, Krishna chaitanya chundru wrote:
+> Add QPS615 PCIe switch node which has 3 downstream ports and in one
+> downstream port two embedded ethernet devices are present.
 > 
-> 1. Interface to allow requesting firmware to manage system resources and
-> performing PCIe Link up (devicetree binding in terms of power domain and
-> runtime PM APIs is used in driver)
+> Power to the QPS615 is supplied through two LDO regulators, controlled
+> by two GPIOs, these are added as fixed regulators. And the QPS615 is
+> configured through i2c.
 > 
-> 2. SA8255P is using Synopsys Designware PCIe controller which supports MSI
-> controller. Using existing MSI controller based functionality by exporting
-> important pcie dwc core driver based MSI APIs, and using those from
-> pcie-qcom.c driver.
-> 
-> Below architecture is used on Qualcomm SA8255P auto platform to get ECAM
-> compliant PCIe controller based functionality. Here firmware VM based PCIe
-> driver takes care of resource management and performing PCIe link related
-> handling (D0 and D3cold). Linux pcie-qcom.c driver uses power domain to
-> request firmware VM to perform these operations using SCMI interface.
-> --------------------
-> 
-> 
->                                    ┌────────────────────────┐                                               
->                                    │                        │                                               
->   ┌──────────────────────┐         │     SHARED MEMORY      │            ┌──────────────────────────┐       
->   │     Firmware VM      │         │                        │            │         Linux VM         │       
->   │ ┌─────────┐          │         │                        │            │    ┌────────────────┐    │       
->   │ │ Drivers │ ┌──────┐ │         │                        │            │    │   PCIE Qcom    │    │       
->   │ │ PCIE PHY◄─┤      │ │         │   ┌────────────────┐   │            │    │    driver      │    │       
->   │ │         │ │ SCMI │ │         │   │                │   │            │    │                │    │       
->   │ │PCIE CTL │ │      │ ├─────────┼───►    PCIE        ◄───┼─────┐      │    └──┬──────────▲──┘    │       
->   │ │         ├─►Server│ │         │   │    SHMEM       │   │     │      │       │          │       │       
->   │ │Clk, Vreg│ │      │ │         │   │                │   │     │      │    ┌──▼──────────┴──┐    │       
->   │ │GPIO,GDSC│ └─▲──┬─┘ │         │   └────────────────┘   │     └──────┼────┤PCIE SCMI Inst  │    │       
->   │ └─────────┘   │  │   │         │                        │            │    └──▲──────────┬──┘    │       
->   │               │  │   │         │                        │            │       │          │       │       
->   └───────────────┼──┼───┘         │                        │            └───────┼──────────┼───────┘       
->                   │  │             │                        │                    │          │               
->                   │  │             └────────────────────────┘                    │          │               
->                   │  │                                                           │          │               
->                   │  │                                                           │          │               
->                   │  │                                                           │          │               
->                   │  │                                                           │IRQ       │HVC            
->               IRQ │  │HVC                                                        │          │               
->                   │  │                                                           │          │               
->                   │  │                                                           │          │               
->                   │  │                                                           │          │               
-> ┌─────────────────┴──▼───────────────────────────────────────────────────────────┴──────────▼──────────────┐
-> │                                                                                                          │
-> │                                                                                                          │
-> │                                      HYPERVISOR                                                          │
-> │                                                                                                          │
-> │                                                                                                          │
-> │                                                                                                          │
-> └──────────────────────────────────────────────────────────────────────────────────────────────────────────┘
->                                                                                                             
->   ┌─────────────┐    ┌─────────────┐  ┌──────────┐   ┌───────────┐   ┌─────────────┐  ┌────────────┐        
->   │             │    │             │  │          │   │           │   │  PCIE       │  │   PCIE     │        
->   │   CLOCK     │    │   REGULATOR │  │   GPIO   │   │   GDSC    │   │  PHY        │  │ controller │        
->   └─────────────┘    └─────────────┘  └──────────┘   └───────────┘   └─────────────┘  └────────────┘        
->                                                                                                             
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
 
-Thanks a lot for working on this Mayank! This version looks good to me. I've
-left some comments, nothing alarming though.
+Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-But I do want to hold up this series until we finalize the SCMI based design.
+One comment below.
+
+> ---
+>  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 115 +++++++++++++++++++++++++++
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi         |   2 +-
+>  2 files changed, 116 insertions(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> index 0d45662b8028..0e890841b600 100644
+> --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> @@ -202,6 +202,30 @@ vph_pwr: vph-pwr-regulator {
+>  		regulator-min-microvolt = <3700000>;
+>  		regulator-max-microvolt = <3700000>;
+>  	};
+> +
+> +	vdd_ntn_0p9: regulator-vdd-ntn-0p9 {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "VDD_NTN_0P9";
+> +		gpio = <&pm8350c_gpios 2 GPIO_ACTIVE_HIGH>;
+> +		regulator-min-microvolt = <899400>;
+> +		regulator-max-microvolt = <899400>;
+> +		enable-active-high;
+> +		pinctrl-0 = <&ntn_0p9_en>;
+> +		pinctrl-names = "default";
+> +		regulator-enable-ramp-delay = <4300>;
+> +	};
+> +
+> +	vdd_ntn_1p8: regulator-vdd-ntn-1p8 {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "VDD_NTN_1P8";
+> +		gpio = <&pm8350c_gpios 3 GPIO_ACTIVE_HIGH>;
+> +		regulator-min-microvolt = <1800000>;
+> +		regulator-max-microvolt = <1800000>;
+> +		enable-active-high;
+> +		pinctrl-0 = <&ntn_1p8_en>;
+> +		pinctrl-names = "default";
+> +		regulator-enable-ramp-delay = <10000>;
+> +	};
+>  };
+>  
+>  &apps_rsc {
+> @@ -684,6 +708,75 @@ &mdss_edp_phy {
+>  	status = "okay";
+>  };
+>  
+> +&pcie1_port {
+> +	pcie@0,0 {
+> +		compatible = "pci1179,0623";
+> +		reg = <0x10000 0x0 0x0 0x0 0x0>;
+> +		#address-cells = <3>;
+> +		#size-cells = <2>;
+> +
+> +		device_type = "pci";
+> +		ranges;
+> +		bus-range = <0x2 0xff>;
+> +
+> +		vddc-supply = <&vdd_ntn_0p9>;
+> +		vdd18-supply = <&vdd_ntn_1p8>;
+> +		vdd09-supply = <&vdd_ntn_0p9>;
+> +		vddio1-supply = <&vdd_ntn_1p8>;
+> +		vddio2-supply = <&vdd_ntn_1p8>;
+> +		vddio18-supply = <&vdd_ntn_1p8>;
+> +
+> +		i2c-parent = <&i2c0 0x77>;
+> +
+> +		reset-gpios = <&pm8350c_gpios 1 GPIO_ACTIVE_LOW>;
+> +
+> +		pcie@1,0 {
+> +			reg = <0x20800 0x0 0x0 0x0 0x0>;
+> +			#address-cells = <3>;
+> +			#size-cells = <2>;
+> +
+> +			device_type = "pci";
+> +			ranges;
+> +			bus-range = <0x3 0xff>;
+> +		};
+> +
+> +		pcie@2,0 {
+> +			reg = <0x21000 0x0 0x0 0x0 0x0>;
+> +			#address-cells = <3>;
+> +			#size-cells = <2>;
+> +
+> +			device_type = "pci";
+> +			ranges;
+> +			bus-range = <0x4 0xff>;
+> +		};
+> +
+> +		pcie@3,0 {
+> +			reg = <0x21800 0x0 0x0 0x0 0x0>;
+> +			#address-cells = <3>;
+> +			#size-cells = <2>;
+> +			device_type = "pci";
+> +			ranges;
+> +			bus-range = <0x5 0xff>;
+> +
+
+You haven't added any additional properties (dfe etc...) to any of the
+downstream port nodes. Does this mean that this board doesn't need any of them?
 
 - Mani
-
-> ----------
-> Changes in V3:
-> - Drop usage of PCIE host generic driver usage, and splitting of MSI functionality
-> - Modified existing pcie-qcom.c driver to add support for getting ECAM compliant and firmware managed
-> PCIe root complex functionality
-> Link to v2: https://lore.kernel.org/linux-arm-kernel/925d1eca-975f-4eec-bdf8-ca07a892361a@quicinc.com/T/
-> 
-> Changes in V2:
-> - Drop new PCIe Qcom ECAM driver, and use existing PCIe designware based MSI functionality
-> - Add power domain based functionality within existing ECAM driver
-> Link to v1: https://lore.kernel.org/all/d10199df-5fb3-407b-b404-a0a4d067341f@quicinc.com/T/                                                                                                      
-> 
-> Tested:
-> - Validated NVME functionality with PCIe0 on SA8255P-RIDE platform
-> 
-> Mayank Rana (3):
->   PCI: dwc: Export dwc MSI controller related APIs
->   PCI: qcom: Add firmware managed ECAM compliant PCIe root complex
->     functionality
->   dt-bindings: PCI: qcom,pcie-sa8255p: Document ECAM compliant PCIe root
->     complex
-> 
->  .../devicetree/bindings/pci/qcom,pcie-sa8255p.yaml | 100 +++++++++++++++++++++
->  drivers/pci/controller/dwc/Kconfig                 |   1 +
->  drivers/pci/controller/dwc/pcie-designware-host.c  |  38 ++++----
->  drivers/pci/controller/dwc/pcie-designware.h       |  14 +++
->  drivers/pci/controller/dwc/pcie-qcom.c             |  69 ++++++++++++--
->  5 files changed, 199 insertions(+), 23 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/pci/qcom,pcie-sa8255p.yaml
-> 
-> -- 
-> 2.7.4
-> 
 
 -- 
 மணிவண்ணன் சதாசிவம்
