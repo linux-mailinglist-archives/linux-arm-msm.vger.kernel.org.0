@@ -1,76 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-38013-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38014-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A8B099CDDAB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 12:45:58 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 521B89CDDC0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 12:51:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6379D28112C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 11:45:57 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D8B7F1F22FAC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 11:51:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E4C91BAEDC;
-	Fri, 15 Nov 2024 11:45:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18B021B6D18;
+	Fri, 15 Nov 2024 11:51:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="C6kgP6XZ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vMzID8m6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D5D41B6D18
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 11:45:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8726C18871E
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 11:51:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731671144; cv=none; b=fUYSuR26G7bThMdkNMxDw6L+N3yQIMGSghiLja/wICfsnnKvXMvsUyVO0dpKhSMxN78lxIxMMbww84ueBbn35bMHcsXUyZofItG/dALTrdW+TQe7BAjcPl2Rj0d+9opIh0UUA7SH6B8BjdUJkV1/hfwySdu1z/6zQCj4Wl8NIXc=
+	t=1731671475; cv=none; b=UwvdzW6yySPMFNFy9nkf3jgeotYaIxNEVa7PiA/sNizv3Hsfk69dCHrFGrl8t4btSm0DWck3v2xtRaUIVYWKiLp3UYWoX9Q7h2Oh4gv8UXE7rmB2SVkyQzJ4tRVKCFP6dbk2EErvox5fg0lOPEY7pSC683E4NVvlCOg68AMx0xI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731671144; c=relaxed/simple;
-	bh=AYQ6bm2XTleVCZIFNAkhoEQnWTu4KviKfTHZ/1z9dcg=;
+	s=arc-20240116; t=1731671475; c=relaxed/simple;
+	bh=sZdR9W40s3IqCSaLvH1Sa+P9DP69302jesYf4sRn+2g=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GN7AH6q1GxleCAO5DaJ2o2unNZzFRcVU20r6573dxYH/T2qETeIzAviDHvpG/AHCuvZRd4KmoF1GV6c2UywYv5kjGAb7VVGRSbUxS0yXFGbyKsWWwxFcw69pbiH69Bf404jtHlLZCCbiuf9e5sOYaSLZoVYIWyW3RvK6hPqLcGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=C6kgP6XZ; arc=none smtp.client-ip=209.85.214.170
+	 Content-Type:Content-Disposition:In-Reply-To; b=dgkZ303mfg/vVHsdkUFil6PeDE45O6gYQSehB/kE18MoBsBpgP7QCIQGl5V5F6nh8ziu9PNes9BdKoml+hBedPrrMPE0cwKlWP1pmcFvQFXOgVBJHyNTnEmDOwj+eBXz5AE+BqR21bzzHIFilhtHvO9e9tCKgoXSvt6km3XHsk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vMzID8m6; arc=none smtp.client-ip=209.85.215.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-20cbcd71012so19296515ad.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 03:45:43 -0800 (PST)
+Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-7ee4c57b037so1185340a12.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 03:51:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731671142; x=1732275942; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1731671473; x=1732276273; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=HimgWaHQTpzhPp/68+0fUZZbBB8cI4FMHzyZ2vd64Sw=;
-        b=C6kgP6XZ8Y5CAu4v6tR8uaVfWM/jpP6L+z5M+VVa0fmWMXgWj30Is2qergxbpliyPg
-         aG6kR7D2+FleQMWLiFgBp58/MjchzGKJl3ZrSzJdqDx8mMxgBi34Nd3Co3uEETgNQb1S
-         QoGqzFB4uuA159dINKgtiAef1czmxa3bmgtgfKk5MAdU9H6NCi/ZtMOFBONOnesoX59Y
-         YOMqIQ3kqiY+YuSym9iwhngRe/FvZNRKSkq0vp7fmlT7JhySE2qyUvvq3OpABAyXt9No
-         aPwbbv+0J0ZuOShEWkYPUcxcnnxSwqKxDfB3xrWtiO8wSBxoyKQt3lqnLm4GHwYkBYw0
-         8IJA==
+        bh=0qz4zjxYN8EsB1sVFFLtbfHvdqNPBMDPqRlMkCvciKQ=;
+        b=vMzID8m6K3DMLchGm5z3M2nR5eVE8wC23baG//7YndEYtxnDR+Zh7u8NGd4uw5yNEF
+         vjxZDAZWxpCjbro5IEog6XXVzpQ1S+f1LlCyyhBlB1iG4XkQqMUjUp82BK2mjbHU6u0f
+         7+9FUPwlhuj+TQabd/D17p73qCHrSacflcYMpd/uSexbFL+WDcUvwZBfUlxXwKG+uYHf
+         Ocd/2jyjGUIPmZRFl6smiLW4yeEK3VdFEKLzcdElxKV1IhdsX7MlUcvk2atcPXnWHC8y
+         Xv1UaHOuQ9VT9vYSkv0kgm5xBQo6Bp+olbwLGtvyX6blL6Qfh3El0WKoFquEpFHgNcz/
+         vumw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731671142; x=1732275942;
+        d=1e100.net; s=20230601; t=1731671473; x=1732276273;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HimgWaHQTpzhPp/68+0fUZZbBB8cI4FMHzyZ2vd64Sw=;
-        b=oub1BWISVyo3Q/OJVsK+9B1aZJHWHdGRxi/0t2BR6vX56sjyZ5nQLogJy/sMw4lnbo
-         93SZIS/df/isTMarX5XW+Oo06VAJKmfiM6QfKimKURH1pdsQqPkJxbl5J8icTko+x1GA
-         t4Z1ljE69nIOYXowRHPJAfc68ssiTv5o/wE2oAuzbD8ZV/MKnS/L7NXTvSsGaItoSeFn
-         c3f+te0+clHW2Tco3OCddTE78TYaYGmhdf+mNA9OaGdmHfVRs+kIz4EvqXbspgAUy7DV
-         ArotLa5FzK1zoCXONQdrtA821iYurKBw3OtfLgDEdVqyNp2Knc/BTqYTfUk1H+Dkd3AF
-         CQpg==
-X-Forwarded-Encrypted: i=1; AJvYcCVK458iFX186jHWAODoHY4G6914Rf+zz336lcQQy9aYW3aKWmGnCKCPC1znuUZLBo+L9SEMdelAN82w160+@vger.kernel.org
-X-Gm-Message-State: AOJu0YyXULkgKfuDMyG+Znciqqjb7cYQR0U3Ho2Nn+/KkWn15kx+4uFg
-	UlWi2edU/ogJP0gXPe+GdNhwOCapArIJeKlBAns6y4EEAGaewtDiC7RiDuwS+w==
-X-Google-Smtp-Source: AGHT+IFZFtP+1BGeoW8Q/+hmGF/1QZO1mnKMY+wp/cR1tUMg1R4X+CzMnsq8s7hdN6cWY5lMFAk59w==
-X-Received: by 2002:a17:902:d48f:b0:20b:4875:2c51 with SMTP id d9443c01a7336-211d0d92274mr24621765ad.27.1731671142496;
-        Fri, 15 Nov 2024 03:45:42 -0800 (PST)
+        bh=0qz4zjxYN8EsB1sVFFLtbfHvdqNPBMDPqRlMkCvciKQ=;
+        b=qlOpGsM2gWIPhQb0qYCJ2Rtu3qFTjqFxiM+d/8/DAP/qB41Q7zAVnHRxGm8qKOsvuo
+         hHQTXVAAKKO/CgwIjk3yURI5eOl16DI8nQMKgMRvnvrtcTimAzTEky0g2WOiff90ktNS
+         52oTSAuwRweW3aUyBInAHodHUrASZn3HNO8Llv6xRjfuzH4SPEqF/CC52Aswbd1apJ+/
+         pVBlsOfmCFKjb7zT9XPBg2wVAjbgmq6J4ZQajVqZgrmTB6FCDQaExJDXiIFd6hvWIhLt
+         r9QKPjM5n0IG8mFBIdgAkh0hAlMKhF8SN5BCYshd4832UbtSuMDPGprlpsmBPZDLDXoE
+         cLtA==
+X-Forwarded-Encrypted: i=1; AJvYcCW67O9YDwBcTlMHe45RNZWH//Q+gKRFAMAMwaclHwPae4Gu9Uwddsu7S+2gyokmJf8LeceFyQE+yIUk9tWC@vger.kernel.org
+X-Gm-Message-State: AOJu0YykvWewfu5pUTlD3MJFNEAFP3ntgXEGkwblFbsEDzmXWumj+E8v
+	n/JEjh0Eh/HqTa7ftnrlx5zznUxw/iazNeyOUp3jyDlvBPh13tCJ79BnezoMnQ==
+X-Google-Smtp-Source: AGHT+IHpT8ZeMKed/s/RPDlK9VLqV5kI+HNUu4iV8muOdZoUPUkSFT36NhvQLuLYGoL5BZzy2K3vgw==
+X-Received: by 2002:a05:6a20:3946:b0:1d9:1045:3ed5 with SMTP id adf61e73a8af0-1dc90b23572mr2838926637.11.1731671472789;
+        Fri, 15 Nov 2024 03:51:12 -0800 (PST)
 Received: from thinkpad ([117.193.208.47])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-211d0f56e55sm10454435ad.274.2024.11.15.03.45.37
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-724770eea1asm1200047b3a.28.2024.11.15.03.51.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Nov 2024 03:45:42 -0800 (PST)
-Date: Fri, 15 Nov 2024 17:15:33 +0530
+        Fri, 15 Nov 2024 03:51:12 -0800 (PST)
+Date: Fri, 15 Nov 2024 17:21:04 +0530
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc: andersson@kernel.org, Bjorn Helgaas <bhelgaas@google.com>,
+To: Bjorn Helgaas <helgaas@kernel.org>
+Cc: Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+	andersson@kernel.org, Bjorn Helgaas <bhelgaas@google.com>,
 	Lorenzo Pieralisi <lpieralisi@kernel.org>,
 	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
 	Rob Herring <robh@kernel.org>,
@@ -82,11 +83,10 @@ Cc: andersson@kernel.org, Bjorn Helgaas <bhelgaas@google.com>,
 	Bartosz Golaszewski <brgl@bgdev.pl>, quic_vbadigan@quicinc.com,
 	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
 	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 2/6] arm64: dts: qcom: qcs6490-rb3gen2: Add node for
- qps615
-Message-ID: <20241115114533.vilxuszzmqg4vrko@thinkpad>
-References: <20241112-qps615_pwr-v3-0-29a1e98aa2b0@quicinc.com>
- <20241112-qps615_pwr-v3-2-29a1e98aa2b0@quicinc.com>
+Subject: Re: [PATCH v3 3/6] PCI: Add new start_link() & stop_link function ops
+Message-ID: <20241115115104.hsa4udzkhhavahgi@thinkpad>
+References: <20241112-qps615_pwr-v3-3-29a1e98aa2b0@quicinc.com>
+ <20241112234149.GA1868239@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -96,121 +96,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241112-qps615_pwr-v3-2-29a1e98aa2b0@quicinc.com>
+In-Reply-To: <20241112234149.GA1868239@bhelgaas>
 
-On Tue, Nov 12, 2024 at 08:31:34PM +0530, Krishna chaitanya chundru wrote:
-> Add QPS615 PCIe switch node which has 3 downstream ports and in one
-> downstream port two embedded ethernet devices are present.
+On Tue, Nov 12, 2024 at 05:41:49PM -0600, Bjorn Helgaas wrote:
+> On Tue, Nov 12, 2024 at 08:31:35PM +0530, Krishna chaitanya chundru wrote:
+> > Certain devices like QPS615 which uses PCI pwrctl framework
+> > needs to configure the device before PCI link is up.
+> > 
+> > If the controller driver already enables link training as part of
+> > its probe, after the device is powered on, controller and device
+> > participates in the link training and link can come up immediately
+> > and maynot have time to configure the device.
+> > 
+> > So we need to stop the link training by using stop_link() and enable
+> > them back after device is configured by using start_link().
 > 
-> Power to the QPS615 is supplied through two LDO regulators, controlled
-> by two GPIOs, these are added as fixed regulators. And the QPS615 is
-> configured through i2c.
+> s/maynot/may not/
 > 
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-
-Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-
-One comment below.
-
-> ---
->  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 115 +++++++++++++++++++++++++++
->  arch/arm64/boot/dts/qcom/sc7280.dtsi         |   2 +-
->  2 files changed, 116 insertions(+), 1 deletion(-)
+> I think I'm missing the point here.  My assumption is this:
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> index 0d45662b8028..0e890841b600 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> @@ -202,6 +202,30 @@ vph_pwr: vph-pwr-regulator {
->  		regulator-min-microvolt = <3700000>;
->  		regulator-max-microvolt = <3700000>;
->  	};
-> +
-> +	vdd_ntn_0p9: regulator-vdd-ntn-0p9 {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "VDD_NTN_0P9";
-> +		gpio = <&pm8350c_gpios 2 GPIO_ACTIVE_HIGH>;
-> +		regulator-min-microvolt = <899400>;
-> +		regulator-max-microvolt = <899400>;
-> +		enable-active-high;
-> +		pinctrl-0 = <&ntn_0p9_en>;
-> +		pinctrl-names = "default";
-> +		regulator-enable-ramp-delay = <4300>;
-> +	};
-> +
-> +	vdd_ntn_1p8: regulator-vdd-ntn-1p8 {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "VDD_NTN_1P8";
-> +		gpio = <&pm8350c_gpios 3 GPIO_ACTIVE_HIGH>;
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <1800000>;
-> +		enable-active-high;
-> +		pinctrl-0 = <&ntn_1p8_en>;
-> +		pinctrl-names = "default";
-> +		regulator-enable-ramp-delay = <10000>;
-> +	};
->  };
->  
->  &apps_rsc {
-> @@ -684,6 +708,75 @@ &mdss_edp_phy {
->  	status = "okay";
->  };
->  
-> +&pcie1_port {
-> +	pcie@0,0 {
-> +		compatible = "pci1179,0623";
-> +		reg = <0x10000 0x0 0x0 0x0 0x0>;
-> +		#address-cells = <3>;
-> +		#size-cells = <2>;
-> +
-> +		device_type = "pci";
-> +		ranges;
-> +		bus-range = <0x2 0xff>;
-> +
-> +		vddc-supply = <&vdd_ntn_0p9>;
-> +		vdd18-supply = <&vdd_ntn_1p8>;
-> +		vdd09-supply = <&vdd_ntn_0p9>;
-> +		vddio1-supply = <&vdd_ntn_1p8>;
-> +		vddio2-supply = <&vdd_ntn_1p8>;
-> +		vddio18-supply = <&vdd_ntn_1p8>;
-> +
-> +		i2c-parent = <&i2c0 0x77>;
-> +
-> +		reset-gpios = <&pm8350c_gpios 1 GPIO_ACTIVE_LOW>;
-> +
-> +		pcie@1,0 {
-> +			reg = <0x20800 0x0 0x0 0x0 0x0>;
-> +			#address-cells = <3>;
-> +			#size-cells = <2>;
-> +
-> +			device_type = "pci";
-> +			ranges;
-> +			bus-range = <0x3 0xff>;
-> +		};
-> +
-> +		pcie@2,0 {
-> +			reg = <0x21000 0x0 0x0 0x0 0x0>;
-> +			#address-cells = <3>;
-> +			#size-cells = <2>;
-> +
-> +			device_type = "pci";
-> +			ranges;
-> +			bus-range = <0x4 0xff>;
-> +		};
-> +
-> +		pcie@3,0 {
-> +			reg = <0x21800 0x0 0x0 0x0 0x0>;
-> +			#address-cells = <3>;
-> +			#size-cells = <2>;
-> +			device_type = "pci";
-> +			ranges;
-> +			bus-range = <0x5 0xff>;
-> +
 
-You haven't added any additional properties (dfe etc...) to any of the
-downstream port nodes. Does this mean that this board doesn't need any of them?
+First controller driver probes, enables link training and scans the bus. When
+the PCI bridge is found, its child DT nodes will be scanned and pwrctl devices
+will be created if needed.
+
+>   - device starts as powered off
+>   - pwrctl turns on the power
+>   - link trains automatically
+>   - qcom driver claims device
+
+QPS615 driver will claim this device not controller driver.
+
+>   - qcom needs to configure things that need to happen before link
+>     train
+> 
+
+QPS615 driver needs to configure the switch before link training. So at this
+point, it stops the link training, configures the switch and starts it again.
+
+Patch description could be improved.
 
 - Mani
+
+> but that can't be quite right because you wouldn't be able to fix it
+> by changing the qcom driver because it's not in the picture until the
+> link is already trained.
+> 
+> So maybe you can add a little more context here?
+> 
+> > Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> > ---
+> >  include/linux/pci.h | 2 ++
+> >  1 file changed, 2 insertions(+)
+> > 
+> > diff --git a/include/linux/pci.h b/include/linux/pci.h
+> > index 573b4c4c2be6..fe6a9b4b22ee 100644
+> > --- a/include/linux/pci.h
+> > +++ b/include/linux/pci.h
+> > @@ -806,6 +806,8 @@ struct pci_ops {
+> >  	void __iomem *(*map_bus)(struct pci_bus *bus, unsigned int devfn, int where);
+> >  	int (*read)(struct pci_bus *bus, unsigned int devfn, int where, int size, u32 *val);
+> >  	int (*write)(struct pci_bus *bus, unsigned int devfn, int where, int size, u32 val);
+> > +	int (*start_link)(struct pci_bus *bus);
+> > +	void (*stop_link)(struct pci_bus *bus);
+> >  };
+> >  
+> >  /*
+> > 
+> > -- 
+> > 2.34.1
+> > 
 
 -- 
 மணிவண்ணன் சதாசிவம்
