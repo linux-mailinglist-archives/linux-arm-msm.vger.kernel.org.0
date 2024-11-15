@@ -1,137 +1,95 @@
-Return-Path: <linux-arm-msm+bounces-38018-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38019-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 39EED9CDEBE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 13:55:37 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6254F9CDFB6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 14:18:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F421728394F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 12:55:35 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E5301B24266
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 13:18:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C1EC51BD4E4;
-	Fri, 15 Nov 2024 12:55:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 646E21B81DC;
+	Fri, 15 Nov 2024 13:18:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gK6MerwE"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j6Fmzj99"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F09F81B85FA
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 12:55:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 342EA52F71;
+	Fri, 15 Nov 2024 13:18:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731675329; cv=none; b=kLlONqkuXjN2n9KNku6ncngWkzt19NOEnsJ/bLzc64Y+QUNYX8KpaYASI10H+ouQbDEhFk7u2ZyAgx7fFO74BD+T1wso6TMq0PZ+9uO7VUhJsejR0VuZuahsqE18jBtKTdRIORxG3bLi4X/r+30/lw1m8xen9gqClQ55fCIFv3I=
+	t=1731676686; cv=none; b=ZgOdq5AbVQ9mEAdKuN51E7OrE0Y4kZtUCi7igc3cnWJHZAZBnh1VEiTOA+USJhBbo+JCaXcRaNBujxebPS47Tur+epW33wfnNVyP526N2sIKdQrsNp2ZWJA1wCm3QIxZijmZWv450U8wSezRU4ZYaudFQPFHJAwSMIp86evHR20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731675329; c=relaxed/simple;
-	bh=CCI27rlvVRosezWzuY/2E3AP29V/IuLh6N24eCBmC9I=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=RJwCZM5ruj20bmYHmAZSWWnt263uakRv9hh0I40ST/R64G8ItOEsWa5SDcFvnwRd/tCjoC4PdSX24wxibYPKkhGWmWdnT2BvWBjDsM3BQM5HTRtmhP4o/EYydxbV1C/NAstPprqkK4PFB9NddHKH5oHSEweVCH7oXSj8dDVQi8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gK6MerwE; arc=none smtp.client-ip=209.85.221.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-382242cd8bbso637878f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 04:55:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731675324; x=1732280124; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=CZze3yn24TXviwcT7N4kjvraoXCM6pscw+3oqLD8HvY=;
-        b=gK6MerwEa/Cg/PTunyjr5GbAvw7A4y2cLBGlWTaykMNTpwYkDLbdMytxaf2sR9YRKh
-         d8IPKQtZT6WgAIvAZb+LAbFdWmm6WKWWqR8UvDJYvmpzBfVNubsMpf10shFQSQG/7VOj
-         BAyC99VVGMW6S7Fc1dPD8sJTrcmAGyXgMzd6UBJpLkra4A4TjInU8AZeM3f2DOwkuc1w
-         Q/fTaoNuvdz2GkSm7LmPtyu6U4RmBBot4T9n99I9hRkYtSQk0gQgYkb7Y41T8m2caulj
-         Vf0W+LJUsbbFyqrnJwz5QCVJrV/IpfjCiaX3kYBtxBXIMQ5dyFI3b30Gs478yQGXyjMI
-         SiHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731675324; x=1732280124;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CZze3yn24TXviwcT7N4kjvraoXCM6pscw+3oqLD8HvY=;
-        b=U5sp5FZtzyTkcyMC0CBJ/+7T1XPy3ybd+EpOcyVOWoom/l2F1TbE46SODkKucdZbvj
-         Luj6FAZfl6POR6aOcPrSYyIgig8BZZZMoucJRASl5BB4AVnuoI7uuKnvK7iT5+a28dcF
-         0DmO6C+5169E07XZyjpW3N0BeTs5FqUMv3i0l40AoZhjzAWbEGbw8eUsJtU4lm4p2o65
-         3+WcjlZG59ZgvdNRyMzZXm2ONDPt0bX4SoZy9dnhS1knOXGQuKFjhzkQzrmMqMSZCC3+
-         SOLtrUN9+ZESKp4ecFCQ/GfkIzLvbj2n2Xcuj8M0hTrns7Phzth3T5shRQekmX6VNcB4
-         YJKw==
-X-Forwarded-Encrypted: i=1; AJvYcCUTr+w4y3PO2oGnKUo+uWjchA8wJURFoj7b0iKHEZwFbVXUnqOZq6XnUFDRaqE3bGBWIpx9ganlGKfDDq/L@vger.kernel.org
-X-Gm-Message-State: AOJu0YztdAlAGtL5QT2iqJdfA6HybUbXo+kLqxTI0TBYxMeuLlLWMMZu
-	QOm2N0pkWwZKllwLyjiIhbc1RqwmX13iCCkNWvEbB74X6f1wxAuT9vk7J0WiDWI=
-X-Google-Smtp-Source: AGHT+IFCxeXdFwVvRfx+K9CW5GOw9LM/hVZhe41k/tOelfCV9iTkGBsMWti9JMRBfFAiS/C37CDtfA==
-X-Received: by 2002:a05:6000:70e:b0:37d:492c:4f54 with SMTP id ffacd0b85a97d-3822590b9aemr1876457f8f.3.1731675324056;
-        Fri, 15 Nov 2024 04:55:24 -0800 (PST)
-Received: from [127.0.0.2] ([2a02:2454:ff21:ef40:f4fb:dc44:5c32:eaef])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3821ae31083sm4285582f8f.103.2024.11.15.04.55.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Nov 2024 04:55:23 -0800 (PST)
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-Date: Fri, 15 Nov 2024 13:55:13 +0100
-Subject: [PATCH] drm/msm/dpu: fix x1e80100 intf_6 underrun/vsync interrupt
+	s=arc-20240116; t=1731676686; c=relaxed/simple;
+	bh=7oXYRRawKbk2IfSVZUztCSg41vvROYYiVDjxrBKKIMI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=vFCnVj77lqCSBx0SsUAHsJgspL9YYA4pem3m6q8VYdz5KkTQWYJczIVosky//DJhJb8JOEGhTDzVIVliTMYshnXL+AO7QNiOM7D/PorX/A32rzNjlvbC3lfo9PEXTmXhlJgFTWeXMg0TV5APnTB4hC5c5/3i0Nh1pOo0IYRNzcA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j6Fmzj99; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 089E0C4CECF;
+	Fri, 15 Nov 2024 13:18:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1731676686;
+	bh=7oXYRRawKbk2IfSVZUztCSg41vvROYYiVDjxrBKKIMI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=j6Fmzj99uXSicxhZaVYIP1mAqUdBb6FtTakNUHAvI1VPGUWWB6pibG7sVHb0cSeeO
+	 EJ/JTP8LoN7EkMk8kPRoslm2sYJukIttY00hzCTxaBATPdkuh/p+6TNVgVSVswFVyQ
+	 4kxbbQGatL10thse9H7RS5tByKOOYa6scCzBB/3yRhVHZuGBKhpXRPUws7V6NDDMJo
+	 0jGAzpwQ5wKr2l/kz1D6fuC8TqNTFrA+nCqGQgyoHdmk8QeS35p24zH7CzqdCqiorq
+	 LIT9+Y+kvF15a2gl0cp00uqyr3+OKlCmfw6jpmIWWC4k58Nc/xge4Iptu0V/3R9a39
+	 xS8YkB4gQ+emA==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1tBwCy-000000007nZ-0yyR;
+	Fri, 15 Nov 2024 14:17:56 +0100
+Date: Fri, 15 Nov 2024 14:17:56 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Stephan Gerhold <stephan.gerhold@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	Abel Vesa <abel.vesa@linaro.org>, linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH] drm/msm/dpu: fix x1e80100 intf_6 underrun/vsync interrupt
+Message-ID: <ZzdKBMRKs2MgLGon@hovoldconsulting.com>
+References: <20241115-x1e80100-dp2-fix-v1-1-727b9fe6f390@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241115-x1e80100-dp2-fix-v1-1-727b9fe6f390@linaro.org>
-X-B4-Tracking: v=1; b=H4sIALBEN2cC/x2MQQqAIBAAvyJ7bsGViuor0cF0q71YKIQg/j3pO
- AMzBRJH4QSLKhD5lSR3aECdAnfZcDKKbwxGm56IBszEkyat0T8GD8m4807Gjd5ZN0PLnshN/8t
- 1q/UD7WkMTGIAAAA=
-To: Rob Clark <robdclark@gmail.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Abel Vesa <abel.vesa@linaro.org>, linux-arm-msm@vger.kernel.org, 
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
- linux-kernel@vger.kernel.org, Johan Hovold <johan@kernel.org>, 
- stable@vger.kernel.org
-X-Mailer: b4 0.13.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241115-x1e80100-dp2-fix-v1-1-727b9fe6f390@linaro.org>
 
-The IRQ indexes for the intf_6 underrun/vsync interrupts are swapped.
-DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 16) is the actual underrun interrupt and
-DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 17) is the vsync interrupt.
+On Fri, Nov 15, 2024 at 01:55:13PM +0100, Stephan Gerhold wrote:
+> The IRQ indexes for the intf_6 underrun/vsync interrupts are swapped.
+> DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 16) is the actual underrun interrupt and
+> DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 17) is the vsync interrupt.
+> 
+> This causes timeout errors when using the DP2 controller, e.g.
+>   [dpu error]enc37 frame done timeout
+>   *ERROR* irq timeout id=37, intf_mode=INTF_MODE_VIDEO intf=6 wb=-1, pp=2, intr=0
+>   *ERROR* wait disable failed: id:37 intf:6 ret:-110
+> 
+> Correct them to fix these errors and make DP2 work properly.
+> 
+> Cc: stable@vger.kernel.org
+> Fixes: e3b1f369db5a ("drm/msm/dpu: Add X1E80100 support")
+> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-This causes timeout errors when using the DP2 controller, e.g.
-  [dpu error]enc37 frame done timeout
-  *ERROR* irq timeout id=37, intf_mode=INTF_MODE_VIDEO intf=6 wb=-1, pp=2, intr=0
-  *ERROR* wait disable failed: id:37 intf:6 ret:-110
+This fixes the errors I was seeing with the third usb-c port on the
+x1e80100 CRD:
 
-Correct them to fix these errors and make DP2 work properly.
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
 
-Cc: stable@vger.kernel.org
-Fixes: e3b1f369db5a ("drm/msm/dpu: Add X1E80100 support")
-Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
----
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h
-index a3e60ac70689..d61895bb396f 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h
-@@ -389,8 +389,8 @@ static const struct dpu_intf_cfg x1e80100_intf[] = {
- 		.type = INTF_DP,
- 		.controller_id = MSM_DP_CONTROLLER_2,
- 		.prog_fetch_lines_worst_case = 24,
--		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 17),
--		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 16),
-+		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 16),
-+		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 17),
- 	}, {
- 		.name = "intf_7", .id = INTF_7,
- 		.base = 0x3b000, .len = 0x280,
-
----
-base-commit: 744cf71b8bdfcdd77aaf58395e068b7457634b2c
-change-id: 20241115-x1e80100-dp2-fix-beb12c6dcac9
-
-Best regards,
--- 
-Stephan Gerhold <stephan.gerhold@linaro.org>
-
+Johan
 
