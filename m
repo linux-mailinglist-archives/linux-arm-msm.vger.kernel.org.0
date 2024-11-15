@@ -1,148 +1,170 @@
-Return-Path: <linux-arm-msm+bounces-37951-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37952-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F0D49CD70D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 07:27:00 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id EBB9D9CD718
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 07:29:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 341A9283364
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 06:26:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7D1051F22373
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 06:29:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A35118734F;
-	Fri, 15 Nov 2024 06:26:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C2FE18873E;
+	Fri, 15 Nov 2024 06:29:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RdO6eHo7"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Nm6tlNze"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ECC4180A80
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 06:26:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82EED188015
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 06:29:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731652018; cv=none; b=Pz+QcIxuvwDebN8UYO/6JaSoI71IQVG+GrzqiZq010k/HB26rD9c/s/uRj+xKtOmXO9sBe3/tQsux16BvKgMKPSwQXx0BQyAmW4yldYLBhSS6udAlyBY0uGPNO45vUD5fgKrXRG0paMy/fU9wCvZfc/wk5FS8gR/xvIuTHVHn7I=
+	t=1731652175; cv=none; b=lMhz7M4upP8aKj5h5pkXoEuK4dXBjBQuUUDwHfHQcdBfnO0QDgp6PhT8dYqMijh82m4NfUCoj+0ICNhK5n596LXC7No3nz0vAY6gtENiNzycxf+DP7oBn/7UUbsKWhQ4pddF9lkHVf/VonlDgGoEuyW2BPUoG4jQeT0hOvKPEKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731652018; c=relaxed/simple;
-	bh=SEOTn+lkHc4hgkSChbLoegk28F7zgytRKRiZFmoACiU=;
+	s=arc-20240116; t=1731652175; c=relaxed/simple;
+	bh=7lut310HhPch7yHLBDvFuhFDjs3W6c+xKnwc8hJfXnI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mAc7+jm2W/mareLsIGaD3hZN2AMa/s/NoQrV57+KqZ7OoR6G8s0M4o2X772lxJChT/z9ppii1h/Xvfa0dCKY7QtVfrhl6jSuSltm2isCi1i7RB7UvfaNquzSX1tdf0EExbWKJhFquvA9UpQkDdkDjPMaUd0E6ICE4AnS1oP59tE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RdO6eHo7; arc=none smtp.client-ip=209.85.167.45
+	 Content-Type:Content-Disposition:In-Reply-To; b=FIXcftx9uu7rbTq55YI6x0xD/yEU/r+FAJJua6+TOoG6Ztl+0iP3+UxntRgU7cDAC6qN26pGm4xhe+aQTg10ftc4cnaJ8BTgkKanrhZylFqk4IUPWuFVqvbHxpCsW42l6OZo5tTl6ZTDSFaM/OvK9sgOCESNL8wKMcloN+Q4Wps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Nm6tlNze; arc=none smtp.client-ip=209.85.210.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-539ee1acb86so1431658e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2024 22:26:56 -0800 (PST)
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-71e953f4e7cso1170425b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2024 22:29:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731652015; x=1732256815; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=1J8YPPScFRM8avVFTNWdv56IQPE49tvtNbMytzKJF2c=;
-        b=RdO6eHo7tAK7JIxaurzIrCgq8jF4iQODifHlnWk1A3vNJvmCHRlPZLHfRN8Aa3HGYV
-         yadVrpuNNVnUmbqAiiVat6CykZvTmCr0LzYSBC5ni1aqAth/czXBnzNwsWmHw6uOhXk4
-         Nhx9cMwMdcBu+7VMHiimf2/DTZ1iJ8c/iN8AlmdzNFa/spJquEFj6TzNOWCY8kHhcI5A
-         d+yfLK30o4FUYO152PrxgICaZbsQLLdhE7TCWWQjuPxph3bfhLwLEcLcz/ztAWRGddCt
-         LlNgRZzzEIgbNUexlkBOxrBGqiCnLkaV+J8xc9P1U8VXZtY22E6/VlHV2q4mrhBzcgQk
-         PDTw==
+        d=linaro.org; s=google; t=1731652173; x=1732256973; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=LAe/9vyquMdCBhByhmO/XPb3+AC0FRNm60dHRdsUA0k=;
+        b=Nm6tlNze+X+9F9uaykd7XmCAeOhFbfkLs1as54LBYvWZuY3axYLA9wzJt5XDJon3Sb
+         1QPjJSOXp3kMNzfbukczx57YsCGlmWg3Ki1pervuZ/8pmaKrMASLyqY76BsgSBPBAYQz
+         C5WwendQKKW1FS2axsaTxnXTb0vVA8Yrtp+UINuKC/Xhz4OqYhsyAt6Oym04fJtl5lhF
+         FGxBB+kOwg9FGl9oAQaH13tJV1ar8iBmsI5ZYh5gaZ9pLeJ9eb0z5ysvKwaZ/UrtOvPJ
+         LzNu5cDx5qcATTRjMXFTpfRgeb9wT3MSfxzRmlcMql2/y81EUwff8V2yRrhsdDQ4sTF8
+         8BNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731652015; x=1732256815;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1J8YPPScFRM8avVFTNWdv56IQPE49tvtNbMytzKJF2c=;
-        b=BrxxJaCSBFm7xpxFz+0+Od8id4clAZADSvqCbzjz98rgNkCBS4OijWYnEKfLbdyO5y
-         1R528MEbjCjacKBbq8rx72jU8Iff5qRKJr7Bt9Cv74Z40ToRoucAKRYMCdsybqeRJZYJ
-         7Qc0bNY7/5Ii+noMjOYJ5WKuYzJjJbPRSFcaYQTzREpU62SNoqlGDffWIeaKWEocAIUy
-         dkSPmn96i6KVeP/FlrtHmkfZSndE8rk8ONJbBkkktCr/WdV6uYXJF45nG09azLGdYBR1
-         MBjcJ6W01G1Cguet/XEzfTL4xsDmhmXJQtEw/kqSRTk4XaN591JkIfCi8LRYkJmcVeD2
-         w8ZQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWTvCIaRG2g4ddX4RDN1nx2E/B4ipzk4fhkEUWAmqt8SDtP2KO+LYiReMXDyCfAQIIjPrVVKkeDaPoHbkuL@vger.kernel.org
-X-Gm-Message-State: AOJu0YzEEwfKinq4aNTlqPLTKap3khrUBjqE/y/U/QEBE0reeTb2ZvdP
-	vBNwpIaVIx9SLZQH7/q2+o6TRYkQFoPrO6TCLMNvUAR3SDCRhr89yueSyv8HEU8=
-X-Google-Smtp-Source: AGHT+IHeRfCBqcZLNmnFoEG/mQnBqtDw3vKMNqwmSRjKMnCBShl3S5C72FWKECfFbwGJqH/kTo07sA==
-X-Received: by 2002:a05:6512:b96:b0:53d:a6d1:b72a with SMTP id 2adb3069b0e04-53dab29abdfmr500983e87.15.1731652014545;
-        Thu, 14 Nov 2024 22:26:54 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53da6548e9bsm445045e87.262.2024.11.14.22.26.52
+        d=1e100.net; s=20230601; t=1731652173; x=1732256973;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=LAe/9vyquMdCBhByhmO/XPb3+AC0FRNm60dHRdsUA0k=;
+        b=mB9NhYNh6zvSdO3AfOMbUwAeLszO5RE3AESyjP8LFJHQ8yzru62MrSq+VJarw0wF0d
+         rGiLQBYOB4PMEWvQH1aXFDlhDwQStgYQtLBVLKPA+Wwo7DayCFMpzzZbaa/MsrW5Qq5m
+         3XFMqHuWb6r0aF9cZ7R+QScHW3/ewmxKCYnB+hbeFRgFWyZ5DEBJBbrJKb0TqstevRcW
+         h8OPQMDvH+EEW8dYehOUoPl43iC5SR0ZZqBOU+QSE/de0Q4+TMCGweuz+Py5ezZNKrv6
+         7pYXxouIjbAHZnXKVF6hzgk8I4MWxBh28GBFYYyhhPiMenhi/k14KGhK0pi4FSxBRmP2
+         I7+w==
+X-Forwarded-Encrypted: i=1; AJvYcCWoDTwV3nRwKNXLWdXZVJJCGCwamLZOpuUxYKMQL/4Caz2f7A9oAOo3HN2FGYeaWf8StHdv+WQULSm2Sa1U@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzp2V+v5h93DQDzHNnF+V62+5KzGM5MkQaW89OkJdZOiCpkRgD7
+	blo9ijjhUmb5ItuUHhckbMRqRVw6O0LQdAGo7sJqLEOSaH2Yw+Vc6THZPzFwqA==
+X-Google-Smtp-Source: AGHT+IFTHBUtXrdQ+eigXtiosvUhCPGu8P0GD6HEmTLFrUEv4hE86FppOeovnfYq2mBU9cj8n0bajQ==
+X-Received: by 2002:a05:6a00:2e27:b0:71e:e3:608 with SMTP id d2e1a72fcca58-72476cfcbccmr2044429b3a.26.1731652172623;
+        Thu, 14 Nov 2024 22:29:32 -0800 (PST)
+Received: from thinkpad ([117.193.208.47])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7247720120fsm637787b3a.193.2024.11.14.22.29.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Nov 2024 22:26:54 -0800 (PST)
-Date: Fri, 15 Nov 2024 08:26:51 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Tingwei Zhang <quic_tingweiz@quicinc.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
-	Ziyue Zhang <quic_ziyuzhan@quicinc.com>, vkoul@kernel.org, kishon@kernel.org, robh+dt@kernel.org, 
-	manivannan.sadhasivam@linaro.org, bhelgaas@google.com, kw@linux.com, lpieralisi@kernel.org, 
-	quic_qianyu@quicinc.com, conor+dt@kernel.org, neil.armstrong@linaro.org, 
-	andersson@kernel.org, konradybcio@kernel.org, quic_shashim@quicinc.com, 
-	quic_kaushalk@quicinc.com, quic_tdas@quicinc.com, quic_aiquny@quicinc.com, 
-	kernel@quicinc.com, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org
-Subject: Re: [PATCH 4/5] arm64: dts: qcom: qcs8300: enable pcie0 for QCS8300
-Message-ID: <cp2g6j43zlx2njou5qz5tmwsnnzahqtk2hsxkj2ftrzbcmy742@ysca5ica4mvr>
-References: <20241114095409.2682558-1-quic_ziyuzhan@quicinc.com>
- <20241114095409.2682558-5-quic_ziyuzhan@quicinc.com>
- <rg4isufmnhnbsiljm34rfdsn46gfpatbsiscynaqtsnykbhnm3@ovcaulkfj4nk>
- <26943ea3-109c-473d-818b-2a08dba859ab@oss.qualcomm.com>
- <288be342-952b-4210-afe7-6e194dfd54a9@quicinc.com>
+        Thu, 14 Nov 2024 22:29:32 -0800 (PST)
+Date: Fri, 15 Nov 2024 11:59:25 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, quic_mrana@quicinc.com,
+	quic_vbadigan@quicinc.com
+Subject: Re: [PATCH v3 1/3] PCI: dwc: Skip waiting for link up if vendor
+ drivers can detect Link up event
+Message-ID: <20241115062925.kuclg4w5wnticyvd@thinkpad>
+References: <20241101-remove_wait-v3-0-7accf27f7202@quicinc.com>
+ <20241101-remove_wait-v3-1-7accf27f7202@quicinc.com>
+ <ywuqtydbapfumelfu66237h65q2xb3rmvjtstiwvd24whn7rju@bcxldl2l4bv2>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <288be342-952b-4210-afe7-6e194dfd54a9@quicinc.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ywuqtydbapfumelfu66237h65q2xb3rmvjtstiwvd24whn7rju@bcxldl2l4bv2>
 
-On Fri, Nov 15, 2024 at 12:59:12PM +0800, Tingwei Zhang wrote:
-> On 11/14/2024 9:03 PM, Konrad Dybcio wrote:
-> > On 14.11.2024 1:10 PM, Dmitry Baryshkov wrote:
-> > > On Thu, Nov 14, 2024 at 05:54:08PM +0800, Ziyue Zhang wrote:
-> > > > Add configurations in devicetree for PCIe0, including registers, clocks,
-> > > > interrupts and phy setting sequence.
-> > > > 
-> > > > Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
-> > > > ---
-> > > >   arch/arm64/boot/dts/qcom/qcs8300-ride.dts |  44 +++++-
-> > > >   arch/arm64/boot/dts/qcom/qcs8300.dtsi     | 176 ++++++++++++++++++++++
-> > > >   2 files changed, 219 insertions(+), 1 deletion(-)
-> > > > 
-> > > > diff --git a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-> > > > index 7eed19a694c3..9d7c8555ed38 100644
-> > > > --- a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-> > > > +++ b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-> > > > @@ -213,7 +213,7 @@ vreg_l9c: ldo9 {
-> > > >   &gcc {
-> > > 
-> > > The patch doesn't seem to update the gcc node in qcs8300.dtsi. Is there
-> > > any reason to have the clocks property in the board data file?
+On Fri, Nov 01, 2024 at 10:26:38AM -0500, Bjorn Andersson wrote:
+> On Fri, Nov 01, 2024 at 05:04:12PM GMT, Krishna chaitanya chundru wrote:
+> > If the vendor drivers can detect the Link up event using mechanisms
+> > such as Link up IRQ and can the driver can enumerate downstream devices
+> > instead of waiting here, then waiting for Link up during probe is not
+> > needed here, which optimizes the boot time.
 > > 
-> > Definitely not. Ziyue, please move that change to the soc dtsi
-> 
-> Gcc node is updated in board device tree due to sleep_clk is defined in
-> board device tree. Sleep_clk is from PMIC instead SoC so we were requested
-> to move sleep_clk to board device tree in previous review [1].
-
-Note, the review doesn't talk about sleep_clk at all. The recent
-examples (sm8650, x1e80100, sa8775p) still pull the clocks into the SoC
-dtsi, but without the freq.
-
-> 
-> [1]https://lore.kernel.org/all/10914199-1e86-4a2e-aec8-2a48cc49ef14@kernel.org/
+> > So skip waiting for link to be up if the driver supports 'linkup_irq'.
 > > 
-> > Konrad
+> > Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> > ---
+> >  drivers/pci/controller/dwc/pcie-designware-host.c | 10 ++++++++--
+> >  drivers/pci/controller/dwc/pcie-designware.h      |  1 +
+> >  2 files changed, 9 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+> > index 3e41865c7290..26418873ce14 100644
+> > --- a/drivers/pci/controller/dwc/pcie-designware-host.c
+> > +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+> > @@ -530,8 +530,14 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
+> >  			goto err_remove_edma;
+> >  	}
+> >  
+> > -	/* Ignore errors, the link may come up later */
+> > -	dw_pcie_wait_for_link(pci);
+> > +	/*
+> > +	 * Note: The link up delay is skipped only when a link up IRQ is present.
+> > +	 * This flag should not be used to bypass the link up delay for arbitrary
+> > +	 * reasons.
+> 
+> Perhaps by improving the naming of the variable, you don't need 3 lines
+> of comment describing the conditional.
+> 
+> > +	 */
+> > +	if (!pp->linkup_irq)
+> > +		/* Ignore errors, the link may come up later */
+> 
+> Does this mean that we will be able to start handling these errors?
+> 
+> > +		dw_pcie_wait_for_link(pci);
+> >  
+> >  	bridge->sysdata = pp;
+> >  
+> > diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+> > index 347ab74ac35a..539c6d106bb0 100644
+> > --- a/drivers/pci/controller/dwc/pcie-designware.h
+> > +++ b/drivers/pci/controller/dwc/pcie-designware.h
+> > @@ -379,6 +379,7 @@ struct dw_pcie_rp {
+> >  	bool			use_atu_msg;
+> >  	int			msg_atu_index;
+> >  	struct resource		*msg_res;
+> > +	bool			linkup_irq;
+> 
+> Please name this for what it is, rather than some property from which
+> some other decision should be derived. (And then you need a comment to
+> describe how people should interpret and use it)
+> 
+> Also, "linkup_irq" sound like an int carrying the interrupt number, not
+> a boolean.
 > 
 > 
-> -- 
-> Thanks,
-> Tingwei
+> Please call it "use_async_linkup", "use_linkup_irq" or something.
 > 
-> -- 
-> linux-phy mailing list
-> linux-phy@lists.infradead.org
-> https://lists.infradead.org/mailman/listinfo/linux-phy
+
+"use_linkup_irq" sounds good to me. But I do like to keep the note above as
+there were incidents that people tried to avoid this delay as a "workaround" to
+unrelated problems.
+
+- Mani
 
 -- 
-With best wishes
-Dmitry
+மணிவண்ணன் சதாசிவம்
 
