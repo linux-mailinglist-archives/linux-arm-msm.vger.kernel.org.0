@@ -1,373 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-37942-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 128649CD4EC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 02:16:22 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5B5629CD524
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 02:47:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 52E50B23D41
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 01:16:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D44301F213F7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 01:47:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A10213C809;
-	Fri, 15 Nov 2024 01:15:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ACFA03211;
+	Fri, 15 Nov 2024 01:47:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mSHFceOy"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ynZoiBwW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BA0E13A88A;
-	Fri, 15 Nov 2024 01:15:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE38942A82
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 01:47:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731633351; cv=none; b=Y7IknP63UNP51y4ZF83Stf+ex6yxV3EZ36GzWfcPfT7moGmb/W6iOEZf4nnByGpYx/xdq9UpxDZeh7RB1VxQFEChqb+iGND5K9Qx5RsGSlttayaQBmDNGpk5UidZqCgfkF+nzN2bWFo0ktxRDdguwdrwDL7clfhZM4RP6si4yrQ=
+	t=1731635234; cv=none; b=uaI5gITnoKRTLH7DfSeiYiC+s3l4/5PjoLCtTQkh4GUuDCMHdxhPJYHrsH8vdyptCVo88+RQFtEnIEpBNkLhO/kLSyU8OEp9b1/h/a/Xd4LOWTKYZ7dONDFV7IzHEWfagSOYcEuQ7pnNXdaJxBEwN8PJ9r6FG77+NUk5TCxhIFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731633351; c=relaxed/simple;
-	bh=2LF7NM83j9VDIN1dogfnDuobHKKvRNyBbh407AOlYHM=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Imi1f9ZxbHoSSM5Vs+PGgXGJuUynODDNeC3Jv2+6Kf4bomT4bStfmiqSbrBjDThiNdGcy06blXiJmGYvLtGgebmlMNplw1FiZr4VXytuzbaoumIBDnNT6RWM+pQd5A0wp9vUK+Mb/zdZLrf2RQ0s6nqH9xpKOifY8rRGSmtAQmM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=mSHFceOy; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AEHHxnJ022104;
-	Fri, 15 Nov 2024 01:15:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	96MgO3zE1oHyAS/1NoWggftC32/feb47kP20tAxRyLw=; b=mSHFceOyU4n0gL7B
-	ShN6kiBjygyjOKjZrRHwraawPPUXeCYv48ROQPH85WW8z0kchjZ3Vf5FA63cfdQx
-	YQmYwMmdVhKkZb3iXz+r/9ueSrDgp5Ma3b3uFUeVOsGRuOQpOrS1LCbbHrvUyDO3
-	jVJVBCfGDlUFo64D4WUFudS7gILU8E406EiaGdnhJbOGJled9EBt6GDmky4a6GX4
-	WN+lITHAiCprwAVFIUcwFsQ01Fnrp/kwp1U3WXoPcrd9HX51hn/pbJqzByWgAWCn
-	lAJ5YYrrCTG6/t1D3Il8V8ifDVEsNYGp4WYYovkzWTNjrsxHNYL51T5pujlzXKVL
-	Tyz1NQ==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42vsg56qf6-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 15 Nov 2024 01:15:41 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AF1FfeC009033
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 15 Nov 2024 01:15:41 GMT
-Received: from hu-sibis-blr.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 14 Nov 2024 17:15:37 -0800
-From: Sibi Sankar <quic_sibis@quicinc.com>
-To: <sudeep.holla@arm.com>, <cristian.marussi@arm.com>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>
-CC: <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <quic_rgottimu@quicinc.com>,
-        <quic_kshivnan@quicinc.com>, <quic_sibis@quicinc.com>,
-        <arm-scmi@vger.kernel.org>, Amir Vajid <avajid@quicinc.com>
-Subject: [PATCH V5 2/2] firmware: arm_scmi: vendors: Add QCOM SCMI Generic Extensions
-Date: Fri, 15 Nov 2024 06:45:15 +0530
-Message-ID: <20241115011515.1313447-3-quic_sibis@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241115011515.1313447-1-quic_sibis@quicinc.com>
-References: <20241115011515.1313447-1-quic_sibis@quicinc.com>
+	s=arc-20240116; t=1731635234; c=relaxed/simple;
+	bh=Vt5BKSGnVSO1wERPKQPDulTkD92E+F5ePSF0pjjU0rQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=COaSsNLxFbaNdwPuAPC+Gd9J1QWYk1TqbSEJRwZtPog4QYjraFF+p4qyNBeGY3rNZuTs6IyraIFR4zpnJyu929WSbH6SG7zMT6f3Cqra/ynQRbJHqO0nSkUvTRLYDYmOOJHxbFZuU+yarpqC0677XI31TNe8drT0x2QQ4iTuWA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ynZoiBwW; arc=none smtp.client-ip=209.85.167.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-539e4824917so108457e87.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2024 17:47:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1731635231; x=1732240031; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=WlZtJEFuE3UKpvbYIEqSVLfZBwjcDIGJk/mPflIrqmI=;
+        b=ynZoiBwWQgRaGjpRMP2rwT4iu9RuPw2jNDFkDUPTXMXv15PNhvy6RfjcOVhdTHvW6G
+         4+CKwo8Pf/uTqJ4h8HT37DC0FuHFZl4lcgKPApBgbWvE+QZ3LxXHbrbYTjgoJG1cVKGV
+         NcG1WgY8S4+Gqx1QRFIgbYhCSbOFBhiNG837RLbUr9OEAjxavXo+NGPbK948/Qbcf52h
+         Ry/QSHO1TfjhUeEqhlWb3Yv90qufORUHTY2YWE1S1Y12L+7JaZcOb6XxSURh+VbP2MAn
+         Ph8Sk5Nu8cHzBjzV6B8I0jXitQ4ii+1/G4+O9V7vewm+tHN5SxhuiDwsjjGD4/qsx+3N
+         5lSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731635231; x=1732240031;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=WlZtJEFuE3UKpvbYIEqSVLfZBwjcDIGJk/mPflIrqmI=;
+        b=G/Bc4uXhkX5JcqgKZdV56yP723/Mrd9ctvM4e2F1Z+fOVnUC59Ds/Is21bhurP/sH3
+         r/MqUh0Euc7fS5NFB7ovNI/tJMWmTV2UIDDVGfF9s2KxOKgVJonhtPp3d+LQjn8Lj/Gw
+         jFoHDL1qB80nGeiBtS91p+LkdDmiXFNhKU7J0kFcZZaBkwhgVtY211OGQIqFHZUWlEsc
+         w+DCIe6gGWqKfw5VPiNmKeluaETZebZ3wi5wYjEwHCADOz9vBQeskdCD49OQhJg6bxlN
+         v77IVuJJWRQRf2rjt+ZG/H5iRHgHvQ1AV0oSwuuWeAUg5d/5pPnLeKp+gu4dKLhbtEFl
+         lLEg==
+X-Gm-Message-State: AOJu0Yzq153bOKKibiE19KTiA6W32xYcfmIp5XxUHRFwJkepshbayg3K
+	xx7NTy4zzaCaxzyeKQRAm316Bh0JSWJClUHq6uPgYWhx1oLG6lNzBwRj7VLCIk8=
+X-Gm-Gg: ASbGnctzeA5XjrHSaGhwWGfvunwsYxzz1+3FELCQ0MFULzmOSlZT5Ud+KLVsQfB8VzZ
+	3HHcA79gGemD0oOZo8W/vxINP5TTF/GoPOI2Uoi5WWVKAKJUCVjLHHbvReETl8VRupcNZa+jC1s
+	mhnviaOSEcWAYM7ugWmdvy5lY5L+kM5haXUjzVbIvFw6PJ1RenIL1DYDhhVr8kH85L6CkrOvXQC
+	zMCp2+84NJUatqtmsI5NMfw+7UZp/EVMT6gG7voL2XMSpoT9uvDxzD4T/RLkkzfADz/yMfKDV1F
+	pxd1TJUvy0yz8anT9OUhcTEJPef1
+X-Google-Smtp-Source: AGHT+IEQjqO83cHFzO/xhdQPIAupPGyCJ6+MgojLBINDYK0Ken0N/7ofXhoTPAECXylvuwdADYNyGg==
+X-Received: by 2002:a05:6512:3c87:b0:53d:a5f3:a561 with SMTP id 2adb3069b0e04-53dab25bbc3mr106471e87.0.1731635230804;
+        Thu, 14 Nov 2024 17:47:10 -0800 (PST)
+Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53da6530b41sm376971e87.136.2024.11.14.17.47.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 14 Nov 2024 17:47:10 -0800 (PST)
+Message-ID: <b3e38b04-0ca9-4022-af73-9feab6f151f1@linaro.org>
+Date: Fri, 15 Nov 2024 03:47:08 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Oz3U6D54__IsiiTY_ukFRP7zEVvWbH05
-X-Proofpoint-ORIG-GUID: Oz3U6D54__IsiiTY_ukFRP7zEVvWbH05
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- priorityscore=1501 phishscore=0 malwarescore=0 lowpriorityscore=0
- mlxscore=0 mlxlogscore=999 impostorscore=0 bulkscore=0 adultscore=0
- suspectscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411150009
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] clk: qcom: camcc-x1e80100: Set titan_top_gdsc as the
+ parent GDSC of subordinate GDSCs
+Content-Language: en-US
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Abel Vesa <abel.vesa@linaro.org>,
+ Rajendra Nayak <quic_rjendra@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-kernel@vger.kernel.org, stable@vger.kernel.org
+References: <20241114-b4-linux-next-master-24-11-14-titan-gdsc-v1-1-ef2533d487dc@linaro.org>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20241114-b4-linux-next-master-24-11-14-titan-gdsc-v1-1-ef2533d487dc@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-The QCOM SCMI Generic Extensions Protocol provides a generic way of
-exposing a number of Qualcomm SoC specific features (like memory bus
-scaling) through a mixture of pre-determined algorithm strings and
-param_id pairs hosted on the SCMI controller.
+On 11/15/24 01:32, Bryan O'Donoghue wrote:
+> The Titan TOP GDSC is the parent GDSC for all other GDSCs in the CAMCC
+> block. None of the subordinate blocks will switch on without the parent
+> GDSC switched on.
+> 
+> Fixes: 76126a5129b5 ("clk: qcom: Add camcc clock driver for x1e80100")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+>   drivers/clk/qcom/camcc-x1e80100.c | 7 +++++++
+>   1 file changed, 7 insertions(+)
+> 
+> diff --git a/drivers/clk/qcom/camcc-x1e80100.c b/drivers/clk/qcom/camcc-x1e80100.c
+> index 85e76c7712ad84c88decb62ccaed68533d8848de..b73524ae64b1b2b1ee94ceca88b5f3b46143f20b 100644
+> --- a/drivers/clk/qcom/camcc-x1e80100.c
+> +++ b/drivers/clk/qcom/camcc-x1e80100.c
+> @@ -2212,6 +2212,8 @@ static struct clk_branch cam_cc_sfe_0_fast_ahb_clk = {
+>   	},
+>   };
+>   
+> +static struct gdsc cam_cc_titan_top_gdsc;
+> +
+>   static struct gdsc cam_cc_bps_gdsc = {
+>   	.gdscr = 0x10004,
+>   	.en_rest_wait_val = 0x2,
+> @@ -2221,6 +2223,7 @@ static struct gdsc cam_cc_bps_gdsc = {
+>   		.name = "cam_cc_bps_gdsc",
+>   	},
+>   	.pwrsts = PWRSTS_OFF_ON,
+> +	.parent = &cam_cc_titan_top_gdsc.pd,
+>   	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+>   };
+>   
+> @@ -2233,6 +2236,7 @@ static struct gdsc cam_cc_ife_0_gdsc = {
+>   		.name = "cam_cc_ife_0_gdsc",
+>   	},
+>   	.pwrsts = PWRSTS_OFF_ON,
+> +	.parent = &cam_cc_titan_top_gdsc.pd,
+>   	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+>   };
+>   
+> @@ -2245,6 +2249,7 @@ static struct gdsc cam_cc_ife_1_gdsc = {
+>   		.name = "cam_cc_ife_1_gdsc",
+>   	},
+>   	.pwrsts = PWRSTS_OFF_ON,
+> +	.parent = &cam_cc_titan_top_gdsc.pd,
+>   	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+>   };
+>   
+> @@ -2257,6 +2262,7 @@ static struct gdsc cam_cc_ipe_0_gdsc = {
+>   		.name = "cam_cc_ipe_0_gdsc",
+>   	},
+>   	.pwrsts = PWRSTS_OFF_ON,
+> +	.parent = &cam_cc_titan_top_gdsc.pd,
+>   	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+>   };
+>   
+> @@ -2269,6 +2275,7 @@ static struct gdsc cam_cc_sfe_0_gdsc = {
+>   		.name = "cam_cc_sfe_0_gdsc",
+>   	},
+>   	.pwrsts = PWRSTS_OFF_ON,
+> +	.parent = &cam_cc_titan_top_gdsc.pd,
+>   	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+>   };
+>   
+> 
 
-Co-developed-by: Shivnandan Kumar <quic_kshivnan@quicinc.com>
-Signed-off-by: Shivnandan Kumar <quic_kshivnan@quicinc.com>
-Co-developed-by: Ramakrishna Gottimukkula <quic_rgottimu@quicinc.com>
-Signed-off-by: Ramakrishna Gottimukkula <quic_rgottimu@quicinc.com>
-Co-developed-by: Amir Vajid <avajid@quicinc.com>
-Signed-off-by: Amir Vajid <avajid@quicinc.com>
-Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-Reviewed-by: Cristian Marussi <cristian.marussi@arm.com>
----
 
-v4:
-* Splitting the series into vendor protocol and memlat client.
-  Also the move the memlat client implementation back to RFC
-  due to multiple opens.
-* Use common xfer helper to avoid code duplication [Dmitry]
-* Update enum documentation without duplicate enum info [Dmitry]
+Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
- drivers/firmware/arm_scmi/Kconfig             |   1 +
- drivers/firmware/arm_scmi/Makefile            |   1 +
- .../firmware/arm_scmi/vendors/qcom/Kconfig    |  15 ++
- .../firmware/arm_scmi/vendors/qcom/Makefile   |   2 +
- .../arm_scmi/vendors/qcom/qcom-generic-ext.c  | 139 ++++++++++++++++++
- include/linux/scmi_qcom_protocol.h            |  37 +++++
- 6 files changed, 195 insertions(+)
- create mode 100644 drivers/firmware/arm_scmi/vendors/qcom/Kconfig
- create mode 100644 drivers/firmware/arm_scmi/vendors/qcom/Makefile
- create mode 100644 drivers/firmware/arm_scmi/vendors/qcom/qcom-generic-ext.c
- create mode 100644 include/linux/scmi_qcom_protocol.h
-
-diff --git a/drivers/firmware/arm_scmi/Kconfig b/drivers/firmware/arm_scmi/Kconfig
-index dabd874641d0..73128442d97b 100644
---- a/drivers/firmware/arm_scmi/Kconfig
-+++ b/drivers/firmware/arm_scmi/Kconfig
-@@ -71,6 +71,7 @@ config ARM_SCMI_DEBUG_COUNTERS
- 
- source "drivers/firmware/arm_scmi/transports/Kconfig"
- source "drivers/firmware/arm_scmi/vendors/imx/Kconfig"
-+source "drivers/firmware/arm_scmi/vendors/qcom/Kconfig"
- 
- endif #ARM_SCMI_PROTOCOL
- 
-diff --git a/drivers/firmware/arm_scmi/Makefile b/drivers/firmware/arm_scmi/Makefile
-index 9ac81adff567..58cf4d656cbb 100644
---- a/drivers/firmware/arm_scmi/Makefile
-+++ b/drivers/firmware/arm_scmi/Makefile
-@@ -12,6 +12,7 @@ scmi-module-objs := $(scmi-driver-y) $(scmi-protocols-y) $(scmi-transport-y)
- 
- obj-$(CONFIG_ARM_SCMI_PROTOCOL) += transports/
- obj-$(CONFIG_ARM_SCMI_PROTOCOL) += vendors/imx/
-+obj-$(CONFIG_ARM_SCMI_PROTOCOL) += vendors/qcom/
- 
- obj-$(CONFIG_ARM_SCMI_PROTOCOL) += scmi-core.o
- obj-$(CONFIG_ARM_SCMI_PROTOCOL) += scmi-module.o
-diff --git a/drivers/firmware/arm_scmi/vendors/qcom/Kconfig b/drivers/firmware/arm_scmi/vendors/qcom/Kconfig
-new file mode 100644
-index 000000000000..5dd9e8a6b75f
---- /dev/null
-+++ b/drivers/firmware/arm_scmi/vendors/qcom/Kconfig
-@@ -0,0 +1,15 @@
-+# SPDX-License-Identifier: GPL-2.0-only
-+menu "ARM SCMI QCOM Vendor Protocols"
-+
-+config QCOM_SCMI_GENERIC_EXT
-+	tristate "Qualcomm Technologies, Inc. Qcom SCMI vendor Protocol"
-+	depends on ARM_SCMI_PROTOCOL || COMPILE_TEST
-+	help
-+	  The QCOM SCMI vendor protocol provides a generic way of exposing
-+	  a number of Qualcomm SoC specific features (like memory bus scaling)
-+	  through a mixture of pre-determined algorithm strings and param_id
-+	  pairs hosted on the SCMI controller.
-+
-+	  This driver defines/documents the message ID's used for this
-+	  communication and also exposes the operations used by the clients.
-+endmenu
-diff --git a/drivers/firmware/arm_scmi/vendors/qcom/Makefile b/drivers/firmware/arm_scmi/vendors/qcom/Makefile
-new file mode 100644
-index 000000000000..6b98fabbebb8
---- /dev/null
-+++ b/drivers/firmware/arm_scmi/vendors/qcom/Makefile
-@@ -0,0 +1,2 @@
-+# SPDX-License-Identifier: GPL-2.0-only
-+obj-$(CONFIG_QCOM_SCMI_GENERIC_EXT) += qcom-generic-ext.o
-diff --git a/drivers/firmware/arm_scmi/vendors/qcom/qcom-generic-ext.c b/drivers/firmware/arm_scmi/vendors/qcom/qcom-generic-ext.c
-new file mode 100644
-index 000000000000..1b209093d275
---- /dev/null
-+++ b/drivers/firmware/arm_scmi/vendors/qcom/qcom-generic-ext.c
-@@ -0,0 +1,139 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
-+ */
-+
-+#include <linux/scmi_qcom_protocol.h>
-+
-+#include "../../common.h"
-+
-+/**
-+ * enum qcom_generic_ext_protocol_cmd - vendor specific commands supported by SCMI Qualcomm
-+ *                                      generic vendor protocol.
-+ *
-+ * This protocol is intended as a generic way of exposing a number of Qualcomm SoC
-+ * specific features through a mixture of pre-determined algorithm string and param_id
-+ * pairs hosted on the SCMI controller.
-+ *
-+ * The QCOM SCMI Vendor Protocol has the protocol id as 0x80 and vendor id set to
-+ * Qualcomm and the implementation version set to 0x20000. The PROTOCOL_VERSION command
-+ * returns version 1.0.
-+ *
-+ * @QCOM_SCMI_SET_PARAM: is used to set the parameter of a specific algo_str hosted on
-+ *			 QCOM SCMI Vendor Protocol. The tx len depends on the algo_str used.
-+ * @QCOM_SCMI_GET_PARAM: is used to get parameter information of a specific algo_str
-+ *			 hosted on QCOM SCMI Vendor Protocol. The tx and rx len depends
-+ *			 on the algo_str used.
-+ * @QCOM_SCMI_START_ACTIVITY: is used to start the activity performed by the algo_str.
-+ * @QCOM_SCMI_STOP_ACTIVITY: is used to stop a pre-existing activity performed by the algo_str.
-+ */
-+enum qcom_generic_ext_protocol_cmd {
-+	QCOM_SCMI_SET_PARAM = 0x10,
-+	QCOM_SCMI_GET_PARAM = 0x11,
-+	QCOM_SCMI_START_ACTIVITY = 0x12,
-+	QCOM_SCMI_STOP_ACTIVITY = 0x13,
-+};
-+
-+/**
-+ * struct qcom_scmi_msg - represents the various parameters to be populated
-+ *                        for using the QCOM SCMI Vendor Protocol
-+ *
-+ * @ext_id: reserved, must be zero
-+ * @algo_low: lower 32 bits of the algo_str
-+ * @algo_high: upper 32 bits of the algo_str
-+ * @param_id: serves as token message id to the specific algo_str
-+ * @buf: serves as the payload to the specified param_id and algo_str pair
-+ */
-+struct qcom_scmi_msg {
-+	__le32 ext_id;
-+	__le32 algo_low;
-+	__le32 algo_high;
-+	__le32 param_id;
-+	__le32 buf[];
-+};
-+
-+static int qcom_scmi_common_xfer(const struct scmi_protocol_handle *ph,
-+				 enum qcom_generic_ext_protocol_cmd cmd_id, void *buf,
-+				 size_t buf_len, u64 algo_str, u32 param_id, size_t rx_size)
-+{
-+	struct scmi_xfer *t;
-+	struct qcom_scmi_msg *msg;
-+	int ret;
-+
-+	ret = ph->xops->xfer_get_init(ph, cmd_id, buf_len + sizeof(*msg), rx_size, &t);
-+	if (ret)
-+		return ret;
-+
-+	msg = t->tx.buf;
-+	msg->algo_low = cpu_to_le32(lower_32_bits(algo_str));
-+	msg->algo_high = cpu_to_le32(upper_32_bits(algo_str));
-+	msg->param_id = cpu_to_le32(param_id);
-+	memcpy(msg->buf, buf, buf_len);
-+
-+	ret = ph->xops->do_xfer(ph, t);
-+	if (rx_size)
-+		memcpy(buf, t->rx.buf, t->rx.len);
-+	ph->xops->xfer_put(ph, t);
-+
-+	return ret;
-+}
-+
-+static int qcom_scmi_set_param(const struct scmi_protocol_handle *ph, void *buf, size_t buf_len,
-+			       u64 algo_str, u32 param_id)
-+{
-+	return qcom_scmi_common_xfer(ph, QCOM_SCMI_SET_PARAM, buf, buf_len, algo_str,
-+				     param_id, 0);
-+}
-+
-+static int qcom_scmi_get_param(const struct scmi_protocol_handle *ph, void *buf, size_t buf_len,
-+			       u64 algo_str, u32 param_id, size_t rx_size)
-+{
-+	return qcom_scmi_common_xfer(ph, QCOM_SCMI_GET_PARAM, buf, buf_len, algo_str,
-+				     param_id, rx_size);
-+}
-+
-+static int qcom_scmi_start_activity(const struct scmi_protocol_handle *ph, void *buf,
-+				    size_t buf_len, u64 algo_str, u32 param_id)
-+{
-+	return qcom_scmi_common_xfer(ph, QCOM_SCMI_START_ACTIVITY, buf, buf_len, algo_str,
-+				     param_id, 0);
-+}
-+
-+static int qcom_scmi_stop_activity(const struct scmi_protocol_handle *ph, void *buf,
-+				   size_t buf_len, u64 algo_str, u32 param_id)
-+{
-+	return qcom_scmi_common_xfer(ph, QCOM_SCMI_STOP_ACTIVITY, buf, buf_len, algo_str,
-+				     param_id, 0);
-+}
-+
-+static struct qcom_generic_ext_ops qcom_proto_ops = {
-+	.set_param = qcom_scmi_set_param,
-+	.get_param = qcom_scmi_get_param,
-+	.start_activity = qcom_scmi_start_activity,
-+	.stop_activity = qcom_scmi_stop_activity,
-+};
-+
-+static int qcom_generic_ext_protocol_init(const struct scmi_protocol_handle *ph)
-+{
-+	u32 version;
-+
-+	ph->xops->version_get(ph, &version);
-+
-+	dev_dbg(ph->dev, "QCOM Generic Vendor Version %d.%d\n",
-+		PROTOCOL_REV_MAJOR(version), PROTOCOL_REV_MINOR(version));
-+
-+	return 0;
-+}
-+
-+static const struct scmi_protocol qcom_generic_ext = {
-+	.id = SCMI_PROTOCOL_QCOM_GENERIC,
-+	.owner = THIS_MODULE,
-+	.instance_init = &qcom_generic_ext_protocol_init,
-+	.ops = &qcom_proto_ops,
-+	.vendor_id = "Qualcomm",
-+	.impl_ver = 0x20000,
-+};
-+module_scmi_protocol(qcom_generic_ext);
-+
-+MODULE_DESCRIPTION("QCOM SCMI Generic Vendor protocol");
-+MODULE_LICENSE("GPL");
-diff --git a/include/linux/scmi_qcom_protocol.h b/include/linux/scmi_qcom_protocol.h
-new file mode 100644
-index 000000000000..465b2522ca29
---- /dev/null
-+++ b/include/linux/scmi_qcom_protocol.h
-@@ -0,0 +1,37 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+/*
-+ * SCMI Message Protocol driver QCOM extension header
-+ *
-+ * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
-+ */
-+
-+#ifndef _LINUX_SCMI_QCOM_PROTOCOL_H
-+#define _LINUX_SCMI_QCOM_PROTOCOL_H
-+
-+#include <linux/types.h>
-+
-+#define SCMI_PROTOCOL_QCOM_GENERIC    0x80
-+
-+struct scmi_protocol_handle;
-+
-+/**
-+ * struct qcom_generic_ext_ops - represents the various operations provided
-+ *				 by QCOM Generic Vendor Protocol
-+ *
-+ * @set_param: set parameter specified by param_id and algo_str pair.
-+ * @get_param: retrieve parameter specified by param_id and algo_str pair.
-+ * @start_activity: initiate a specific activity defined by algo_str.
-+ * @stop_activity: halt previously initiated activity defined by algo_str.
-+ */
-+struct qcom_generic_ext_ops {
-+	int (*set_param)(const struct scmi_protocol_handle *ph, void *buf, size_t buf_len,
-+			 u64 algo_str, u32 param_id);
-+	int (*get_param)(const struct scmi_protocol_handle *ph, void *buf, size_t buf_len,
-+			 u64 algo_str, u32 param_id, size_t rx_size);
-+	int (*start_activity)(const struct scmi_protocol_handle *ph, void *buf, size_t buf_len,
-+			      u64 algo_str, u32 param_id);
-+	int (*stop_activity)(const struct scmi_protocol_handle *ph, void *buf, size_t buf_len,
-+			     u64 algo_str, u32 param_id);
-+};
-+
-+#endif /* _LINUX_SCMI_QCOM_PROTOCOL_H */
--- 
-2.34.1
-
+--
+Best wishes,
+Vladimir
 
