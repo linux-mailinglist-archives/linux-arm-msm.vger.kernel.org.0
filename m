@@ -1,172 +1,345 @@
-Return-Path: <linux-arm-msm+bounces-37943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37944-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B5629CD524
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 02:47:18 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id EF2459CD621
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 05:07:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D44301F213F7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 01:47:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AF3BE280CF2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 04:07:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ACFA03211;
-	Fri, 15 Nov 2024 01:47:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B158215CD49;
+	Fri, 15 Nov 2024 04:07:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ynZoiBwW"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pfa/Uhfz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE38942A82
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 01:47:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3C98156F5D;
+	Fri, 15 Nov 2024 04:07:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731635234; cv=none; b=uaI5gITnoKRTLH7DfSeiYiC+s3l4/5PjoLCtTQkh4GUuDCMHdxhPJYHrsH8vdyptCVo88+RQFtEnIEpBNkLhO/kLSyU8OEp9b1/h/a/Xd4LOWTKYZ7dONDFV7IzHEWfagSOYcEuQ7pnNXdaJxBEwN8PJ9r6FG77+NUk5TCxhIFE=
+	t=1731643653; cv=none; b=TCtfZ86u4d26c05JYM3XmS7GPMqfiffKyiyUkUxeOu5vn77pF31xuw4Nhz8gHM6/govCTCev4IXgLbG4KP5s55nvivaBGvHAUE1lj2xphQSiRNPFnajZaFX4WJ9Ce2lmj6Rsd8crpydz6mUyk4PGTrvyNkPoZRTsQ8jBk6ta9yg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731635234; c=relaxed/simple;
-	bh=Vt5BKSGnVSO1wERPKQPDulTkD92E+F5ePSF0pjjU0rQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=COaSsNLxFbaNdwPuAPC+Gd9J1QWYk1TqbSEJRwZtPog4QYjraFF+p4qyNBeGY3rNZuTs6IyraIFR4zpnJyu929WSbH6SG7zMT6f3Cqra/ynQRbJHqO0nSkUvTRLYDYmOOJHxbFZuU+yarpqC0677XI31TNe8drT0x2QQ4iTuWA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ynZoiBwW; arc=none smtp.client-ip=209.85.167.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-539e4824917so108457e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2024 17:47:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731635231; x=1732240031; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=WlZtJEFuE3UKpvbYIEqSVLfZBwjcDIGJk/mPflIrqmI=;
-        b=ynZoiBwWQgRaGjpRMP2rwT4iu9RuPw2jNDFkDUPTXMXv15PNhvy6RfjcOVhdTHvW6G
-         4+CKwo8Pf/uTqJ4h8HT37DC0FuHFZl4lcgKPApBgbWvE+QZ3LxXHbrbYTjgoJG1cVKGV
-         NcG1WgY8S4+Gqx1QRFIgbYhCSbOFBhiNG837RLbUr9OEAjxavXo+NGPbK948/Qbcf52h
-         Ry/QSHO1TfjhUeEqhlWb3Yv90qufORUHTY2YWE1S1Y12L+7JaZcOb6XxSURh+VbP2MAn
-         Ph8Sk5Nu8cHzBjzV6B8I0jXitQ4ii+1/G4+O9V7vewm+tHN5SxhuiDwsjjGD4/qsx+3N
-         5lSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731635231; x=1732240031;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WlZtJEFuE3UKpvbYIEqSVLfZBwjcDIGJk/mPflIrqmI=;
-        b=G/Bc4uXhkX5JcqgKZdV56yP723/Mrd9ctvM4e2F1Z+fOVnUC59Ds/Is21bhurP/sH3
-         r/MqUh0Euc7fS5NFB7ovNI/tJMWmTV2UIDDVGfF9s2KxOKgVJonhtPp3d+LQjn8Lj/Gw
-         jFoHDL1qB80nGeiBtS91p+LkdDmiXFNhKU7J0kFcZZaBkwhgVtY211OGQIqFHZUWlEsc
-         w+DCIe6gGWqKfw5VPiNmKeluaETZebZ3wi5wYjEwHCADOz9vBQeskdCD49OQhJg6bxlN
-         v77IVuJJWRQRf2rjt+ZG/H5iRHgHvQ1AV0oSwuuWeAUg5d/5pPnLeKp+gu4dKLhbtEFl
-         lLEg==
-X-Gm-Message-State: AOJu0Yzq153bOKKibiE19KTiA6W32xYcfmIp5XxUHRFwJkepshbayg3K
-	xx7NTy4zzaCaxzyeKQRAm316Bh0JSWJClUHq6uPgYWhx1oLG6lNzBwRj7VLCIk8=
-X-Gm-Gg: ASbGnctzeA5XjrHSaGhwWGfvunwsYxzz1+3FELCQ0MFULzmOSlZT5Ud+KLVsQfB8VzZ
-	3HHcA79gGemD0oOZo8W/vxINP5TTF/GoPOI2Uoi5WWVKAKJUCVjLHHbvReETl8VRupcNZa+jC1s
-	mhnviaOSEcWAYM7ugWmdvy5lY5L+kM5haXUjzVbIvFw6PJ1RenIL1DYDhhVr8kH85L6CkrOvXQC
-	zMCp2+84NJUatqtmsI5NMfw+7UZp/EVMT6gG7voL2XMSpoT9uvDxzD4T/RLkkzfADz/yMfKDV1F
-	pxd1TJUvy0yz8anT9OUhcTEJPef1
-X-Google-Smtp-Source: AGHT+IEQjqO83cHFzO/xhdQPIAupPGyCJ6+MgojLBINDYK0Ken0N/7ofXhoTPAECXylvuwdADYNyGg==
-X-Received: by 2002:a05:6512:3c87:b0:53d:a5f3:a561 with SMTP id 2adb3069b0e04-53dab25bbc3mr106471e87.0.1731635230804;
-        Thu, 14 Nov 2024 17:47:10 -0800 (PST)
-Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53da6530b41sm376971e87.136.2024.11.14.17.47.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Nov 2024 17:47:10 -0800 (PST)
-Message-ID: <b3e38b04-0ca9-4022-af73-9feab6f151f1@linaro.org>
-Date: Fri, 15 Nov 2024 03:47:08 +0200
+	s=arc-20240116; t=1731643653; c=relaxed/simple;
+	bh=VlpnF5w/lzklQc+xQBMc5RwW6AlJD1YzDnz+KO0JhjI=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=WTMUo9wxbPF3S6QCsclq7z706fNg/0K3rV0FRjNcWFwME3g4/OLnhe0aMg4PWkRSpWMTKc1VdrSnJ5JCcOK+rcamO3NRc9C3NoIOK+kPCiIZ2tb0OCIkf0p3Ov4ORi7aI5+36LyhW+qPecZVZl3LfmnELh5w7WHcIl5bBoYE5Ks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pfa/Uhfz; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AEHHvj2013426;
+	Fri, 15 Nov 2024 04:07:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	0wel8IXt17KIvMnouSfiKV7Ct/b9qe+Vww6RzLViHZ8=; b=pfa/UhfzoS5wjSN/
+	NqH5467LLM7sJ2g+ROpBRFvi9Gx9xGN5izUY6RtJIxi1IsEx+R2vSTU/g3+Nj3Ap
+	XLWp4EQ+paidKEaRorcjTm4tyuyPRhDM717aFDJ+2mOiZJx4+zb/5DvMqLPrp4pK
+	KroNeXY48q4suJNYfugZnaHbBXU7dcO/RsDwJnXJf5bJVlMuA9YvPHC7IUljKqMo
+	tWeywKvfiqyTrfly1+J4zgNmdU4ME51zvq3f+W0brLDvqnosN2FgIVhA0rf9GLXM
+	z9C9CFJz/Ss+Og4q5YW2dttakSRiE95sKkTjoOw0ZO2+Zw5/th2mWXuH7F25jMR5
+	TT+AVw==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42w7ekmy3c-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 15 Nov 2024 04:07:25 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AF47PUk027108
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 15 Nov 2024 04:07:25 GMT
+Received: from nalasex01c.na.qualcomm.com (10.47.97.35) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Thu, 14 Nov 2024 20:07:24 -0800
+Received: from nalasex01c.na.qualcomm.com ([fe80::dac3:ec8:4ce:6a85]) by
+ nalasex01c.na.qualcomm.com ([fe80::dac3:ec8:4ce:6a85%11]) with mapi id
+ 15.02.1544.009; Thu, 14 Nov 2024 20:07:24 -0800
+From: "Renjiang Han (QUIC)" <quic_renjiang@quicinc.com>
+To: Rob Herring <robh@kernel.org>
+CC: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        "Vikash Garodia (QUIC)"
+	<quic_vgarodia@quicinc.com>,
+        "bryan.odonoghue@linaro.org"
+	<bryan.odonoghue@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>,
+        "linux-media@vger.kernel.org"
+	<linux-media@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org"
+	<linux-arm-msm@vger.kernel.org>,
+        "devicetree@vger.kernel.org"
+	<devicetree@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>
+Subject: RE: [PATCH v2 1/4] dt-bindings: qcom,qcs615-venus: document QCS615
+ venus
+Thread-Topic: [PATCH v2 1/4] dt-bindings: qcom,qcs615-venus: document QCS615
+ venus
+Thread-Index: AQHbNPjc6u9OdCowaE+nFUoyTjgZx7K18TyAgAHJJQA=
+Date: Fri, 15 Nov 2024 04:07:24 +0000
+Message-ID: <cc571cefb8794b1ca02d39e4b4f7cd9c@quicinc.com>
+References: <20241112-add-venus-for-qcs615-v2-0-e67947f957af@quicinc.com>
+ <20241112-add-venus-for-qcs615-v2-1-e67947f957af@quicinc.com>
+ <20241113163857.GA436180-robh@kernel.org>
+In-Reply-To: <20241113163857.GA436180-robh@kernel.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] clk: qcom: camcc-x1e80100: Set titan_top_gdsc as the
- parent GDSC of subordinate GDSCs
-Content-Language: en-US
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Abel Vesa <abel.vesa@linaro.org>,
- Rajendra Nayak <quic_rjendra@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- linux-kernel@vger.kernel.org, stable@vger.kernel.org
-References: <20241114-b4-linux-next-master-24-11-14-titan-gdsc-v1-1-ef2533d487dc@linaro.org>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20241114-b4-linux-next-master-24-11-14-titan-gdsc-v1-1-ef2533d487dc@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: mKTBM6xxCrGrH1GMFW_iqqg9ZZy_WHIr
+X-Proofpoint-GUID: mKTBM6xxCrGrH1GMFW_iqqg9ZZy_WHIr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxscore=0
+ impostorscore=0 phishscore=0 lowpriorityscore=0 suspectscore=0
+ clxscore=1015 bulkscore=0 malwarescore=0 adultscore=0 priorityscore=1501
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411150032
 
-On 11/15/24 01:32, Bryan O'Donoghue wrote:
-> The Titan TOP GDSC is the parent GDSC for all other GDSCs in the CAMCC
-> block. None of the subordinate blocks will switch on without the parent
-> GDSC switched on.
-> 
-> Fixes: 76126a5129b5 ("clk: qcom: Add camcc clock driver for x1e80100")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
->   drivers/clk/qcom/camcc-x1e80100.c | 7 +++++++
->   1 file changed, 7 insertions(+)
-> 
-> diff --git a/drivers/clk/qcom/camcc-x1e80100.c b/drivers/clk/qcom/camcc-x1e80100.c
-> index 85e76c7712ad84c88decb62ccaed68533d8848de..b73524ae64b1b2b1ee94ceca88b5f3b46143f20b 100644
-> --- a/drivers/clk/qcom/camcc-x1e80100.c
-> +++ b/drivers/clk/qcom/camcc-x1e80100.c
-> @@ -2212,6 +2212,8 @@ static struct clk_branch cam_cc_sfe_0_fast_ahb_clk = {
->   	},
->   };
->   
-> +static struct gdsc cam_cc_titan_top_gdsc;
-> +
->   static struct gdsc cam_cc_bps_gdsc = {
->   	.gdscr = 0x10004,
->   	.en_rest_wait_val = 0x2,
-> @@ -2221,6 +2223,7 @@ static struct gdsc cam_cc_bps_gdsc = {
->   		.name = "cam_cc_bps_gdsc",
->   	},
->   	.pwrsts = PWRSTS_OFF_ON,
-> +	.parent = &cam_cc_titan_top_gdsc.pd,
->   	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
->   };
->   
-> @@ -2233,6 +2236,7 @@ static struct gdsc cam_cc_ife_0_gdsc = {
->   		.name = "cam_cc_ife_0_gdsc",
->   	},
->   	.pwrsts = PWRSTS_OFF_ON,
-> +	.parent = &cam_cc_titan_top_gdsc.pd,
->   	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
->   };
->   
-> @@ -2245,6 +2249,7 @@ static struct gdsc cam_cc_ife_1_gdsc = {
->   		.name = "cam_cc_ife_1_gdsc",
->   	},
->   	.pwrsts = PWRSTS_OFF_ON,
-> +	.parent = &cam_cc_titan_top_gdsc.pd,
->   	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
->   };
->   
-> @@ -2257,6 +2262,7 @@ static struct gdsc cam_cc_ipe_0_gdsc = {
->   		.name = "cam_cc_ipe_0_gdsc",
->   	},
->   	.pwrsts = PWRSTS_OFF_ON,
-> +	.parent = &cam_cc_titan_top_gdsc.pd,
->   	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
->   };
->   
-> @@ -2269,6 +2275,7 @@ static struct gdsc cam_cc_sfe_0_gdsc = {
->   		.name = "cam_cc_sfe_0_gdsc",
->   	},
->   	.pwrsts = PWRSTS_OFF_ON,
-> +	.parent = &cam_cc_titan_top_gdsc.pd,
->   	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
->   };
->   
-> 
+On Thu 11/14/2024 12:39 AM, Rob Herring  wrote:
+> On Tue, Nov 12, 2024 at 05:17:57PM +0530, Renjiang Han wrote:
+> > Add support for Qualcomm video acceleration hardware used for video=20
+> > stream decoding and encoding on QCOM QCS615.
+> >=20
+> > Signed-off-by: Renjiang Han <quic_renjiang@quicinc.com> >
+> > ---
+> >  .../bindings/media/qcom,qcs615-venus.yaml          | 181 +++++++++++++=
+++++++++
+> >  1 file changed, 181 insertions(+)
+> >=20
+> > diff --git=20
+> > a/Documentation/devicetree/bindings/media/qcom,qcs615-venus.yaml=20
+> > b/Documentation/devicetree/bindings/media/qcom,qcs615-venus.yaml
+> > new file mode 100644
+> > index=20
+> > 0000000000000000000000000000000000000000..a807f4c7e94c635ef1662971b687
+> > db9bdce1b74a
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/media/qcom,qcs615-venus.yaml
+> > @@ -0,0 +1,181 @@
+> > +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause) %YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/media/qcom,qcs615-venus.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: Qualcomm QCS615 Venus video encode and decode accelerators
+> > +
+> > +maintainers:
+> > +  - Stanimir Varbanov <stanimir.k.varbanov@gmail.com> >
+> > +  - Vikash Garodia <quic_vgarodia@quicinc.com> >
+> > +
+> > +description: |
 
+> Don't need '|' if no formatting.
 
-Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> > +  The Venus IP is a video encode and decode accelerator present  on=20
+> > + Qualcomm platforms
+> > +
+> > +allOf:
+> > +  - $ref: qcom,venus-common.yaml#
+> > +
+> > +properties:
+> > +  compatible:
+> > +    const: qcom,qcs615-venus
+> > +
+> > +  power-domains:
+> > +    minItems: 2
+> > +    maxItems: 3
+> > +
+> > +  power-domain-names:
+> > +    minItems: 2
+> > +    items:
+> > +      - const: venus
+> > +      - const: vcodec0
+> > +      - const: cx
+> > +
+> > +  clocks:
+> > +    maxItems: 5
+> > +
+> > +  clock-names:
+> > +    items:
+> > +      - const: core
+> > +      - const: iface
+> > +      - const: bus
+> > +      - const: vcodec0_core
+> > +      - const: vcodec0_bus
+> > +
+> > +  iommus:
+> > +    maxItems: 1
+> > +
+> > +  memory-region:
+> > +    maxItems: 1
+> > +
+> > +  interconnects:
+> > +    maxItems: 2
+> > +
+> > +  interconnect-names:
+> > +    items:
+> > +      - const: video-mem
+> > +      - const: cpu-cfg
+> > +
+> > +  operating-points-v2: true
 
---
-Best wishes,
-Vladimir
+> blank line
+
+> > +  opp-table:
+> > +    type: object
+> > +
+> > +  video-decoder:
+> > +    type: object
+> > +
+> > +    properties:
+> > +      compatible:
+> > +        const: venus-decoder
+> > +
+> > +    required:
+> > +      - compatible
+> > +
+> > +    additionalProperties: false
+
+> Put this before 'properties' for indented cases.
+
+Do you mean let me put 'additionalProperties' before 'properties'? like thi=
+s?
+
+  video-decoder:
+    type: object
+
+    additionalProperties: false
+
+    properties:
+      compatible:
+        const: venus-decoder
+
+> > +
+> > +  video-encoder:
+> > +    type: object
+> > +
+> > +    properties:
+> > +      compatible:
+> > +        const: venus-encoder
+> > +
+> > +    required:
+> > +      - compatible
+> > +
+> > +    additionalProperties: false
+> > +
+> > +required:
+> > +  - compatible
+> > +  - power-domain-names
+> > +  - iommus
+> > +  - video-decoder
+> > +  - video-encoder
+> > +
+> > +unevaluatedProperties: false
+> > +
+> > +examples:
+> > +  - |
+> > +    #include <dt-bindings/interrupt-controller/arm-gic.h> >
+> > +    #include <dt-bindings/clock/qcom,qcs615-videocc.h> >
+> > +    #include <dt-bindings/interconnect/qcom,qcs615-rpmh.h> >
+> > +    #include <dt-bindings/power/qcom,rpmhpd.h> >
+> > +
+> > +    venus: video-codec@aa00000 {
+> > +        compatible =3D "qcom,qcs615-venus";
+> > +        reg =3D <0xaa00000 0x100000> >;
+> > +        interrupts =3D <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH> >;
+> > +
+> > +        clocks =3D <&videocc VIDEO_CC_VENUS_CTL_CORE_CLK> >,
+> > +                 <&videocc VIDEO_CC_VENUS_AHB_CLK> >,
+> > +                 <&videocc VIDEO_CC_VENUS_CTL_AXI_CLK> >,
+> > +                 <&videocc VIDEO_CC_VCODEC0_CORE_CLK> >,
+> > +                 <&videocc VIDEO_CC_VCODEC0_AXI_CLK> >;
+> > +        clock-names =3D "core",
+> > +                      "iface",
+> > +                      "bus",
+> > +                      "vcodec0_core",
+> > +                      "vcodec0_bus";
+> > +
+> > +        power-domains =3D <&videocc VENUS_GDSC> >,
+> > +                        <&videocc VCODEC0_GDSC> >,
+> > +                        <&rpmhpd RPMHPD_CX> >;
+> > +        power-domain-names =3D "venus",
+> > +                             "vcodec0",
+> > +                             "cx";
+> > +
+> > +        operating-points-v2 =3D <&venus_opp_table> >;
+> > +
+> > +        interconnects =3D <&mmss_noc MASTER_VIDEO_P0 0
+> > +                         &mc_virt SLAVE_EBI1 0> >,
+> > +                        <&gem_noc MASTER_APPSS_PROC 0
+> > +                         &config_noc SLAVE_VENUS_CFG 0> >;
+> > +        interconnect-names =3D "video-mem",
+> > +                             "cpu-cfg";
+> > +
+> > +        iommus =3D <&apps_smmu 0xe40 0x20> >;
+> > +
+> > +        memory-region =3D <&pil_video_mem> >;
+> > +
+> > +        video-decoder {
+> > +            compatible =3D "venus-decoder";
+> > +        };
+> > +
+> > +        video-encoder {
+> > +            compatible =3D "venus-encoder";
+> > +        };
+> > +
+> > +        venus_opp_table: opp-table {
+> > +            compatible =3D "operating-points-v2";
+> > +
+> > +            opp-133330000 {
+> > +                opp-hz =3D /bits/ 64 <133330000> >;
+> > +                required-opps =3D <&rpmhpd_opp_low_svs> >;
+> > +            };
+> > +
+> > +            opp-240000000 {
+> > +                opp-hz =3D /bits/ 64 <240000000> >;
+> > +                required-opps =3D <&rpmhpd_opp_svs> >;
+> > +            };
+> > +
+> > +            opp-300000000 {
+> > +                opp-hz =3D /bits/ 64 <300000000> >;
+> > +                required-opps =3D <&rpmhpd_opp_svs_l1> >;
+> > +            };
+> > +
+> > +            opp-380000000 {
+> > +                opp-hz =3D /bits/ 64 <380000000> >;
+> > +                required-opps =3D <&rpmhpd_opp_nom> >;
+> > +            };
+> > +
+> > +            opp-410000000 {
+> > +                opp-hz =3D /bits/ 64 <410000000> >;
+> > +                required-opps =3D <&rpmhpd_opp_turbo> >;
+> > +            };
+> > +
+> > +            opp-460000000 {
+> > +                opp-hz =3D /bits/ 64 <460000000> >;
+> > +                required-opps =3D <&rpmhpd_opp_turbo_l1> >;
+> > +            };
+> > +        };
+> > +    };
+> >=20
+> > --
+> > 2.34.1
+> >
 
