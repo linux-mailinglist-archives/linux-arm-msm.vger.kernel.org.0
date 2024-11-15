@@ -1,121 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-37969-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-37970-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 896B59CDA2A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 09:03:43 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 48FFB9CDB0D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 10:04:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 35CC11F2182B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 08:03:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 996A7283089
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2024 09:04:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1BD35188920;
-	Fri, 15 Nov 2024 08:03:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C0A0218A922;
+	Fri, 15 Nov 2024 09:04:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="l5SoIKSa"
+	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="Ht1magxP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.zeus03.de (zeus03.de [194.117.254.33])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B3BB1DFFD
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 08:03:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4206D18B470
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 09:04:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.117.254.33
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731657818; cv=none; b=n47kzL9WzzR6lv1Ofj+ci/U03/wSrk7h9A1BF6Qj2HlRmSNaxmwj+mEWwFN5QYjodys6yh2FCpqjGbdZQemiO63bwaO+xEPdk6lZO3xUcSjzSUxdQ4IwFZb13ONQ7RXF9PaRcfdaTzAR/znGTBqWyfnMyjKi1v0hFyKbBvhX6hs=
+	t=1731661491; cv=none; b=TDvB5AOvDBVe+6e5D5mclCOKCmAAloG1dG3W395X2334B5tcSnCimvuI6sMQVD29GqEbvnuFH5vYE054N/yJbRBsFk0z97rIFzGRdooJ8iOjTf6JknYp2Tvf0HQpjq2NngkK8a5egO66Vr71QtFZ3XzRCDOmiTq4xpUsJrZL108=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731657818; c=relaxed/simple;
-	bh=CDDWkMTRsaqG8fDpo4QcP5vpY+jE/dyCbCBBW4aAA68=;
+	s=arc-20240116; t=1731661491; c=relaxed/simple;
+	bh=Zfwl+Qgf37kQCyi1bLs3fRckyJB3hQpgBQ1vdmRdkx8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lsBwWV/WaR82Rg7J55+6IRB1z/SPj1YavntnyC3W1EI/4j7va2l36BOELf9TnIznjMesdJjFuPQ/zWwJPBN99vEiwnv46VyhDxN343+wIy8ZEi0ZUDhly6Ha7OIym+dI7kJk8PKx+oLZYPvoIrWpjTXwpsOlJWu2SGaWU8RPv8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=l5SoIKSa; arc=none smtp.client-ip=209.85.167.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-539f6e1f756so1454661e87.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2024 00:03:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731657814; x=1732262614; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Wg52ed6dDB7uAWG/HTj6AHSw2HsFAkB0m6M5yLEc71Y=;
-        b=l5SoIKSaduG2oacWNq5TUGeuSmi0g1xzI9M+hhgVq1I7oAwA4cPMz2PnzqFUbFMXv6
-         EVkIfZRwTyWnbBu08RxNQJSI6xV5ej/TtZi+L90pEllBw3zzM+DXW+E08rUCnWe1AVps
-         LolNNCkOWyU2t7yMR8sr0sIs+kohPZvuydmHtAV/xyclbR8uTeXFVkfxCf7IvOpBT5so
-         vyPXAbru9tDvY7erlCiDLV0mdaJ4Gqb69G+ApW+o1OSswyLop7aepmp0lfQBtpsJWKM2
-         fL/oE8vFa2sR280qxthE1vHWV7dij/+k5MCZ2fMYm2tPfvGzUabJyKqOZ4OqZD0c60VF
-         YcFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731657814; x=1732262614;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Wg52ed6dDB7uAWG/HTj6AHSw2HsFAkB0m6M5yLEc71Y=;
-        b=Nkm9hunweEv1qw/gYQmGaDiyGv+G0EM9LSpR7j/3inqoBrMwkVGqkS/CIOSDxWpUwV
-         cBab2o2+HjzDMwv3NnCUY2Svs1HHOhoseoXMPCkUJfoNczowZot4qSURmywugmewuAK1
-         46l4WocymvcDbUz1yYvlzM13H8aE6zmrZHNoGjERG8B+Qhn0mWCMqB15DSU+JwcgNQU8
-         f5KOyLDySm6fbaxXyQmYS0ic36gD5+RTUOV3lAiDIKTSDWPjAf+LSudljdgrm2o+FCcr
-         Dgzc97nMl9MZUCeqvxcqj0HlG8MTtM2p+dbw7Zky10ixJ75ZvXiM0OXwwYGZCI+vpyhy
-         6+mA==
-X-Gm-Message-State: AOJu0Yy0FHEnd8MeuPpMq9K1MJxi5/nrEgARVGHCIHMUI7GEHWq9swhe
-	j92oetueSlRyFKT/EBbQDuvp1bBDYi5VWjO7XWcPQmFgu16uOYkhQLcPRbetSyI=
-X-Google-Smtp-Source: AGHT+IEkwODPhmetrFQ7JC1ZlQC8WpzWNpnVaZRGwH7SFyoDcr2DtE+ysrIGhm40Nj0M4383sof/KQ==
-X-Received: by 2002:a19:5e08:0:b0:53d:ab50:4e23 with SMTP id 2adb3069b0e04-53dab504e50mr598467e87.0.1731657814295;
-        Fri, 15 Nov 2024 00:03:34 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53da6548e9bsm474592e87.262.2024.11.15.00.03.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Nov 2024 00:03:33 -0800 (PST)
-Date: Fri, 15 Nov 2024 10:03:31 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
-	Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, Vinod Koul <vkoul@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/3] remoteproc: qcom: pas: enable ADSP support on
- Qualcomm SAR2130P
-Message-ID: <2iuvbh5ubtc7nwkoducgmsuzgsl7427xcnpi4jgitsbij4yned@c6zwqcaz7r4b>
-References: <20241027-sar2130p-adsp-v1-0-bd204e39d24e@linaro.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=ozL9PPQB9ePHlOej452ZFXEnMSeNRrov5Ftm3nba6/Kp6fQkxeYsRVOqts3RKNI7GQWRIGIADIy2tfKpE9kX5U+EQxR5P8q71NlXjkACOjE/VzcBYuv5BUqOjGzy95/pJ1fzdfwQ1H2OISG175G4321HerIxtfu0JuNijG4RMww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=Ht1magxP; arc=none smtp.client-ip=194.117.254.33
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sang-engineering.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	sang-engineering.com; h=date:from:to:cc:subject:message-id
+	:references:mime-version:content-type:in-reply-to; s=k1; bh=Zfwl
+	+Qgf37kQCyi1bLs3fRckyJB3hQpgBQ1vdmRdkx8=; b=Ht1magxPjR1dZ0IchAiT
+	gmM609O2erLV84qmEqCGWv2RPbXFYZKcCn2ZOKw0wGhLqiudcbjnfnHUdqbW1245
+	ISlFZOlYk4Rf9jAPqMJ7PQ+TJclK33g+i49PDt1ImHBPGcc3RJZuEmTQktcZkoP5
+	5wE+0JL3lsB8HrZ34viGtkUFKywx2mMVflFAjjL1kAvHvokD1MGpW206Zf4phBZp
+	qXz40aX1B2F8B8Q726G7zFP9zTX0g1WWE9wWE+uib7GJbfI7q0z8IG2U6sjSF9ft
+	swIvXaaMq7WqCYaYwLzzNjlhoeA+z1MuLYx/3PdRqwv2NClngnW8ZBoNxxns3X7L
+	GQ==
+Received: (qmail 3418442 invoked from network); 15 Nov 2024 10:04:44 +0100
+Received: by mail.zeus03.de with ESMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 15 Nov 2024 10:04:44 +0100
+X-UD-Smtp-Session: l3s3148p1@qIej2+8m7sFehhtH
+Date: Fri, 15 Nov 2024 10:04:44 +0100
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] i2c: qup: use generic device property accessors
+Message-ID: <ZzcOrGPa91rMKc-Y@ninjato>
+Mail-Followup-To: Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+References: <20241008160947.81045-1-brgl@bgdev.pl>
+ <173151232541.92239.8233789832026323394.b4-ty@linaro.org>
+ <yce7vswjat2bhda2l4c4ji4idtozo24c7tbmpahz56tmedmpw7@fn2h2t4hv7dd>
+ <CAMRc=Mdt0D4L17St06nn=mCuObG=e3btf42NHfsuTEOQepB6bQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="SPkMVcExYw2Wv2/l"
+Content-Disposition: inline
+In-Reply-To: <CAMRc=Mdt0D4L17St06nn=mCuObG=e3btf42NHfsuTEOQepB6bQ@mail.gmail.com>
+
+
+--SPkMVcExYw2Wv2/l
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241027-sar2130p-adsp-v1-0-bd204e39d24e@linaro.org>
 
-On Sun, Oct 27, 2024 at 01:09:42AM +0300, Dmitry Baryshkov wrote:
-> Enable Audio DSP support on the Qualcomm SAR2130P platform. The CDSP,
-> also present on this SoC, crashes the device during the start and is
-> thus omitted from the series.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-> Dmitry Baryshkov (3):
->       dt-bindings: remoteproc: qcom,sm8350-pas: add SAR2130P aDSP compatible
->       remoteproc: qcom: pas: add minidump_id to SM8350 resources
->       remoteproc: qcom: pas: enable SAR2130P audio DSP support
 
-Please excuse me, is there a reason why the series wasn't picked up for
-6.13?
+> Greg: Can you take it instead?
 
-> 
->  Documentation/devicetree/bindings/remoteproc/qcom,sm8350-pas.yaml | 3 +++
->  drivers/remoteproc/qcom_q6v5_pas.c                                | 3 +++
->  2 files changed, 6 insertions(+)
-> ---
-> base-commit: a39230ecf6b3057f5897bc4744a790070cfbe7a8
-> change-id: 20241027-sar2130p-adsp-fc3fad54ded3
-> 
-> Best regards,
-> -- 
-> Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> 
+I pinged Andi also. If not, I will take it. Don't take it personally.
+Simply patches overload.
 
--- 
-With best wishes
-Dmitry
+
+--SPkMVcExYw2Wv2/l
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmc3DqgACgkQFA3kzBSg
+KbZc7BAAqvobVO139fseUhLVQjKqLdCAR9/jF7O0OMAnfLQ/ngMigNs6YWQW2Jz+
+LyhLqQ1rMDsTR2DXiEULk8tMpKj+P1yTNHrI4fwDn8d2i3FhuHR0Z1TnJKrXMRSl
+0j5BbS6vDu6iVypRIDXTPCo1z1GeRcM2SZSzQPNfeWi+2u0mpuGJigZn1KTH0zFL
+gcFsX3gnIA45KF3OxANrnoczAkdZhbsJQSdIy0WTWBY0C28ukmb5JKM1cJq2kq4+
+lzmGhhx/4PxwFb/X3saeCOK27VyCpSjsm4J1Ee7OjKq6qTJOaLc2FiIQqq7EWfEq
+4X9GQEJegKhrwFF4CXX/dNXmJX6qxLBh0fCyaH3IVXHDyoCwkPC+19ZHxpzrqNWl
+Y0qomTDqHUrengAnrJs9BxPaNgm6b7BkZ8dcOPl+n+5BxCBvXnwZrryqGP+8780x
+5b+HNSk2tjfzUotQYPUOVzLI/kdjJn4owdgo40CcZAlNTJ5TL/I9wG7oiLVJjpLu
+nkJlMDDIgLykvpiYJvEuEbcC+nkyUd4F9GHmbgq8BMX5zz6+Lw965KLfVPOkdZYj
+HQxK/A05qGHLpbH8+DebjgobuG9kY3f/dZ9qp4DA2STaF3rGZqnRoXTLdO7Pj7p7
+EkM/NSYXXuVk7cRF3L06yq10lJqBxJgS3rlrOy3WfOCGM4ZGge0=
+=m0GM
+-----END PGP SIGNATURE-----
+
+--SPkMVcExYw2Wv2/l--
 
