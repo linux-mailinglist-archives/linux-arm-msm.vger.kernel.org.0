@@ -1,108 +1,188 @@
-Return-Path: <linux-arm-msm+bounces-38133-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38134-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4BABA9D04EB
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Nov 2024 18:59:48 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 423579D053C
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Nov 2024 19:44:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E5E0A1F2185B
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Nov 2024 17:59:47 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B13C11F21B76
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Nov 2024 18:44:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 849B11DA10E;
-	Sun, 17 Nov 2024 17:59:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17F931DB534;
+	Sun, 17 Nov 2024 18:44:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c6mF8prQ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="edEoZQt2"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5B92335B5;
-	Sun, 17 Nov 2024 17:59:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59B461DA602
+	for <linux-arm-msm@vger.kernel.org>; Sun, 17 Nov 2024 18:44:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731866382; cv=none; b=uc4pk8UeUYMG+vc46hFs2yGCX46DfiSFA7lJaZ4lphiOHCqsAwiMvdKEn6+IBsTK2OiN3WED6fZQ690U7ZSuPgdc1EEo8Fm68PkT7k2k6itCbSybRXQ8v8gP8jBXE7JTSg9PbSQB18Uxltl+bleSqllag0w3TVTcMsa5yTRDGrg=
+	t=1731869064; cv=none; b=i8aNeQitqr2XYRMglpJ2T0lTqvCx0aX2yQeK5Q/b3aL0YiPk22w/aJRTeecNVQMMzBMkTberKETnD5gvCmmGZ99iPTRWjRFn4JgYJWf/TZmVHaLrF1FGg1FkkxuISrxojrtFiesoGIkOcreE5+Z9QUPJoT/u1uwg15w6v9WPG5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731866382; c=relaxed/simple;
-	bh=XU3f8iOzysWsUXprwUt22rCfRKOt8VzIxFdJ24lS6Ew=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=RJnVQgzMNIqTTNVhaSjDv5ppffD/OfLpqdvJ9X/UKIImTPecnsHQ3I1MVminStIhHssDr+xOHNNlhNPTI7Iucn5MzDBrUmzPUegM/789L6Og9tNtJl+JiZKUBpnY175m8i/2+uvCQUW6DS72ndppwbVJU7z7NcJaa1c9ZoNvss8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c6mF8prQ; arc=none smtp.client-ip=209.85.221.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-38230ed9baeso1148642f8f.1;
-        Sun, 17 Nov 2024 09:59:40 -0800 (PST)
+	s=arc-20240116; t=1731869064; c=relaxed/simple;
+	bh=BRVnz4//YdXvz1FMKrURytumMDf92OlVDuTwtndmp1c=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=KoCz+M3MXA5hvg5s2AZwWg8FOdS+Qy3dNHZDD3ngwjAP983eY9m+qFHkOctOV+iduYDXc7DZHLxtULKWZ80iJ9y6LvhaQz0mIssaLiscC87t98Raa+vFKRZv77ZdTXI1cryDmdMEFT/OCR6l7HoXQXqr7GiRGTcQJCaGDwFKs/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=edEoZQt2; arc=none smtp.client-ip=209.85.221.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-3823f1ed492so311689f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Nov 2024 10:44:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731866379; x=1732471179; darn=vger.kernel.org;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=XU3f8iOzysWsUXprwUt22rCfRKOt8VzIxFdJ24lS6Ew=;
-        b=c6mF8prQVJxyhMtg7ExPwAc1LAs5scaC/zW4OqFFswv51UfefwxH4L5NnLenLwuR5N
-         bMn/Bb/MHk8rmqH6nPsniualcfnlk0ZrHAPMXObrLszxmmhsqemuYTjcZ4o+pTmSRVnu
-         9zTNleOFJ+vxwcCwrxgyhIJzSZ/QPIE5qEyx4xZEA90neta0X5VijNE2m5pZpf1elyTF
-         Z/viGVS2TKuhJscy1pNKLGKS1WfocoCHvt96S9/5LSwKs4mprE2YlQcMHLq2heNYlAia
-         Q4ELii9KGWMKbZuU8tExOxQc+obkIIYy7Ru1WXJ0DRPit38H5XYcuPkikP2aEVpQQRzT
-         Xyag==
+        d=linaro.org; s=google; t=1731869060; x=1732473860; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=eWkh7WZG7vwBsGnxbhTtR+8ik+TAgauZ51w8oqK1WyQ=;
+        b=edEoZQt26f5BxB30gaQq7huHihGGgPtKaRxJ7WI+MmxNh5jyyx06GM9POk9TL0L5aR
+         sdUBRqpiiS+gaVr6qKVRc24JME7YWPT9yBd6fD+Z2r530Jzqffv+E1lNQQZtF5Vg+vwI
+         dI8apdMJQOyV24U/XpVjpvY2UY3Zmx0Rg4/g26kL1tat+wrVb5LA3gh7ezAC8Bojlh0w
+         bZ5OzzrGyJNAeQ13hLM1H8YVwqtPdRVX7jQvDff4jsmA+x/F2K7MSlq91qrqMZ8UBq+3
+         XBJfAPtB3cho9WSJ/JMauOdacse4eIzNZNu4pzKXXDjBTzBfGuaJXkN5qoUexKGl11xB
+         blKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731866379; x=1732471179;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=XU3f8iOzysWsUXprwUt22rCfRKOt8VzIxFdJ24lS6Ew=;
-        b=m04BeNMJauHT+F8Bs3O1erfRJvKJrpbA8DU5kd8o/WtmNXkJmcZ6zR0daEGxes8ZYh
-         LIGdKSfy4lrc3nVOCicxAaN9WcXMgEhHvN9quxat4RsXpZkMAamv1Tb+nuyWSNL39Uc4
-         ZrWf46uNtgXYhX54YdJn+RcAFua3kd1SHN4No+glGnNPcsWtLd8Jfrj8FfBbfUk3iipJ
-         83v/EGY7N3affDUxp8gDfaHBna6/f2vGau3SLcXh9JfPHOPB64oyMIzFS68OkLEYYzTG
-         yaXxj8H1OTEjuHZPDhFnV04U1s2tR86SNLL0RS8qLt/GHoUD1tjTiEgx0fbcd034SWn8
-         1uxQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUbim2VE57h/hph03FEpEhzqZf+xP0veftl2fWTrve+9fn7IzE3r1x8BCmMP5vY584bIcpL8Dm5FjF1BSWUYOWxA6E=@vger.kernel.org, AJvYcCWzAC3j4fXeqmo4/tpifdj5TBNyvxW5OPQGtpnlS0TE31UqClGaOb4f8WtZ5NAJjLzlj1xTRclczxyq59Wb@vger.kernel.org, AJvYcCX/UmF95vXiGVL8nv6dZXK0dZ+5+M7TZtRHxXiFXl7xUMVV39V2UwYk+PcrCa3GpjhUlW2/HZUanbLOS+4LrO3zNk8=@vger.kernel.org, AJvYcCX3FudyzHT8hnZCWn31ZIpA3YarXl7pU4bJzvHWVrEVk/af2KB8HEfNG5cNOpf79gdI0KesxGI6@vger.kernel.org, AJvYcCXcVg+B2wSvAYGEJhqcl1U5ssUkjx4D0ZGEOAgj+Ia0mAz3blvlTk1PCaxQY8JbnZfJ9VgJvvI12ZfHsa8l@vger.kernel.org
-X-Gm-Message-State: AOJu0YxEl2cUg7hs9mkYg7TjVQfCKl+u5OCICcyz06UeO9/Nzq2rQUff
-	GfQYIofsltuvNPGWDdwqyuZz+daqiVmxy4S2I5G9QOAjFXBsExp6
-X-Google-Smtp-Source: AGHT+IHqbrlLtaP5Yd3T+27nHAETyVBfr+n6kx9rmAYJRbEsnbFwXaqkEA83aORA115kLsYVwdaKWw==
-X-Received: by 2002:a05:6000:2a7:b0:382:4485:2db2 with SMTP id ffacd0b85a97d-38244852eacmr1792870f8f.1.1731866377467;
-        Sun, 17 Nov 2024 09:59:37 -0800 (PST)
-Received: from p200300c58705a8eb1a556f9921c6cbbb.dip0.t-ipconnect.de (p200300c58705a8eb1a556f9921c6cbbb.dip0.t-ipconnect.de. [2003:c5:8705:a8eb:1a55:6f99:21c6:cbbb])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3823e0c910asm3389235f8f.39.2024.11.17.09.59.34
+        d=1e100.net; s=20230601; t=1731869060; x=1732473860;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=eWkh7WZG7vwBsGnxbhTtR+8ik+TAgauZ51w8oqK1WyQ=;
+        b=JLcnHKujaPj1ht/AQYwBjnDGltFGY7G7gBjMXAGkmmzlOEo5+xtYOWvyYdcso2lsh7
+         7hhExQNwVW7pJ2Fzh8kCcGDfhRzidCcgVZdPL05kCOt9JyPe5nOpCMLruk2KqaEkjMiS
+         QHJpJ0m3Qhcu0TzDIz+GzDG5yVL3KseTpOrzvVE54oQCljYrqSIjfH1S9BUjJafDeiF3
+         F6XBEtk5Yc8omDsgcymB18hhhvgTHb+55jdkzxXYRtIfAM8Ah3d+9Zbf6F9QBkKzRKk5
+         Wll6w2TpRcGRyLRDgcT+7+rb1R6kr2946NYbfNuAN2zxKoHnmrpQJ9a20Tq2qm14kJIP
+         bsMA==
+X-Gm-Message-State: AOJu0YyKdysunlHSw60PMoYD04G+xJYrUkXp83CH1bCteEceG7awkQVC
+	KuEeE3Yh3EeEcdUZekxGniBXtlu8Fnl4OvejP6Av+TZKxLHfc1AoDlJEBhXdLHwkYvpvX6rp9SK
+	h
+X-Google-Smtp-Source: AGHT+IGkeQweqYBW/8Hnl0hUU1V1jJ5EB7kiHg+dpWYM1ZyWbyKk+uGQSNgMw4bo7IDu+9OSpPIMdA==
+X-Received: by 2002:a05:6000:1a8e:b0:382:3c7b:9bd with SMTP id ffacd0b85a97d-3823c7b0b66mr3233529f8f.30.1731869059589;
+        Sun, 17 Nov 2024 10:44:19 -0800 (PST)
+Received: from eugen-station.. ([82.76.24.202])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38244220183sm1863714f8f.99.2024.11.17.10.44.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 17 Nov 2024 09:59:37 -0800 (PST)
-Message-ID: <e96fe03c6515e65f91c2524181ffc48815c2831f.camel@gmail.com>
-Subject: Re: [PATCH 3/5] scsi: ufs: pltfrm: Disable runtime PM during
- removal of glue drivers
-From: Bean Huo <huobean@gmail.com>
-To: manivannan.sadhasivam@linaro.org, Alim Akhtar <alim.akhtar@samsung.com>,
-  Avri Altman <avri.altman@wdc.com>, Bart Van Assche <bvanassche@acm.org>,
- "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>, "Martin K.
- Petersen" <martin.petersen@oracle.com>, Mike Bi <mikebi@micron.com>, Bean
- Huo <beanhuo@micron.com>, Thomas =?ISO-8859-1?Q?Wei=DFschuh?=
- <linux@weissschuh.net>,  Luca Porzio <lporzio@micron.com>, Asutosh Das
- <quic_asutoshd@quicinc.com>, Can Guo <quic_cang@quicinc.com>,  Pedro Sousa
- <pedrom.sousa@synopsys.com>, Krzysztof Kozlowski <krzk@kernel.org>, Peter
- Wang <peter.wang@mediatek.com>, Stanley Jhu <chu.stanley@gmail.com>,
- Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>, Orson Zhai
- <orsonzhai@gmail.com>, Baolin Wang <baolin.wang@linux.alibaba.com>, Chunyan
- Zhang <zhang.lyra@gmail.com>,  Matthias Brugger <matthias.bgg@gmail.com>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
- Santosh Y <santoshsy@gmail.com>, Namjae Jeon <linkinjeon@gmail.com>
-Cc: linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-samsung-soc@vger.kernel.org, linux-mediatek@lists.infradead.org, 
-	linux-renesas-soc@vger.kernel.org, stable@vger.kernel.org
-Date: Sun, 17 Nov 2024 18:59:33 +0100
-In-Reply-To: <20241111-ufs_bug_fix-v1-3-45ad8b62f02e@linaro.org>
-References: <20241111-ufs_bug_fix-v1-0-45ad8b62f02e@linaro.org>
-	 <20241111-ufs_bug_fix-v1-3-45ad8b62f02e@linaro.org>
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-User-Agent: Evolution 3.44.4-0ubuntu2 
+        Sun, 17 Nov 2024 10:44:19 -0800 (PST)
+From: Eugen Hristev <eugen.hristev@linaro.org>
+To: linux-arm-msm@vger.kernel.org
+Cc: linux-clk@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-pm@vger.kernel.org,
+	konradybcio@kernel.org,
+	sboyd@kernel.org,
+	andersson@kernel.org,
+	evgreen@chromium.org,
+	Eugen Hristev <eugen.hristev@linaro.org>
+Subject: [PATCH v3] soc: qcom: Rework BCM_TCS_CMD macro
+Date: Sun, 17 Nov 2024 20:43:52 +0200
+Message-ID: <20241117184352.187184-1-eugen.hristev@linaro.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
+Reworked BCM_TCS_CMD macro in order to fix warnings from sparse:
 
-Reviewed-by: Bean Huo <beanhuo@micron.com>
+drivers/clk/qcom/clk-rpmh.c:270:28: warning: restricted __le32 degrades to integer
+drivers/clk/qcom/clk-rpmh.c:270:28: warning: restricted __le32 degrades to integer
+
+While at it, used le32_encode_bits which made the code easier to
+follow and removed unnecessary shift definitions.
+
+Signed-off-by: Eugen Hristev <eugen.hristev@linaro.org>
+---
+Changes in v3:
+- align the macro lines better
+
+Changes in v2:
+- use le32_encode_bits instead of u32_encode_bits with a cpu_to_le32 on
+the fields; this however ment we need to force cast the le32 to the
+u32 container.
+
+ drivers/clk/qcom/clk-rpmh.c           |  2 +-
+ drivers/interconnect/qcom/bcm-voter.c |  2 +-
+ include/soc/qcom/tcs.h                | 26 ++++++++++++--------------
+ 3 files changed, 14 insertions(+), 16 deletions(-)
+
+diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
+index 4acde937114a..4929893b09c2 100644
+--- a/drivers/clk/qcom/clk-rpmh.c
++++ b/drivers/clk/qcom/clk-rpmh.c
+@@ -267,7 +267,7 @@ static int clk_rpmh_bcm_send_cmd(struct clk_rpmh *c, bool enable)
+ 
+ 	if (c->last_sent_aggr_state != cmd_state) {
+ 		cmd.addr = c->res_addr;
+-		cmd.data = BCM_TCS_CMD(1, enable, 0, cmd_state);
++		cmd.data = (__force u32)BCM_TCS_CMD(1, enable, 0, cmd_state);
+ 
+ 		/*
+ 		 * Send only an active only state request. RPMh continues to
+diff --git a/drivers/interconnect/qcom/bcm-voter.c b/drivers/interconnect/qcom/bcm-voter.c
+index a2d437a05a11..ce9091cf122b 100644
+--- a/drivers/interconnect/qcom/bcm-voter.c
++++ b/drivers/interconnect/qcom/bcm-voter.c
+@@ -144,7 +144,7 @@ static inline void tcs_cmd_gen(struct tcs_cmd *cmd, u64 vote_x, u64 vote_y,
+ 		vote_y = BCM_TCS_CMD_VOTE_MASK;
+ 
+ 	cmd->addr = addr;
+-	cmd->data = BCM_TCS_CMD(commit, valid, vote_x, vote_y);
++	cmd->data = (__force u32)BCM_TCS_CMD(commit, valid, vote_x, vote_y);
+ 
+ 	/*
+ 	 * Set the wait for completion flag on command that need to be completed
+diff --git a/include/soc/qcom/tcs.h b/include/soc/qcom/tcs.h
+index 3acca067c72b..d0dfcaa07337 100644
+--- a/include/soc/qcom/tcs.h
++++ b/include/soc/qcom/tcs.h
+@@ -6,6 +6,9 @@
+ #ifndef __SOC_QCOM_TCS_H__
+ #define __SOC_QCOM_TCS_H__
+ 
++#include <linux/bitfield.h>
++#include <linux/bits.h>
++
+ #define MAX_RPMH_PAYLOAD	16
+ 
+ /**
+@@ -60,22 +63,17 @@ struct tcs_request {
+ 	struct tcs_cmd *cmds;
+ };
+ 
+-#define BCM_TCS_CMD_COMMIT_SHFT		30
+-#define BCM_TCS_CMD_COMMIT_MASK		0x40000000
+-#define BCM_TCS_CMD_VALID_SHFT		29
+-#define BCM_TCS_CMD_VALID_MASK		0x20000000
+-#define BCM_TCS_CMD_VOTE_X_SHFT		14
+-#define BCM_TCS_CMD_VOTE_MASK		0x3fff
+-#define BCM_TCS_CMD_VOTE_Y_SHFT		0
+-#define BCM_TCS_CMD_VOTE_Y_MASK		0xfffc000
++#define BCM_TCS_CMD_COMMIT_MASK		BIT(30)
++#define BCM_TCS_CMD_VALID_MASK		BIT(29)
++#define BCM_TCS_CMD_VOTE_MASK		GENMASK(13, 0)
++#define BCM_TCS_CMD_VOTE_Y_MASK		GENMASK(13, 0)
++#define BCM_TCS_CMD_VOTE_X_MASK		GENMASK(27, 14)
+ 
+ /* Construct a Bus Clock Manager (BCM) specific TCS command */
+ #define BCM_TCS_CMD(commit, valid, vote_x, vote_y)		\
+-	(((commit) << BCM_TCS_CMD_COMMIT_SHFT) |		\
+-	((valid) << BCM_TCS_CMD_VALID_SHFT) |			\
+-	((cpu_to_le32(vote_x) &					\
+-	BCM_TCS_CMD_VOTE_MASK) << BCM_TCS_CMD_VOTE_X_SHFT) |	\
+-	((cpu_to_le32(vote_y) &					\
+-	BCM_TCS_CMD_VOTE_MASK) << BCM_TCS_CMD_VOTE_Y_SHFT))
++	(le32_encode_bits(commit, BCM_TCS_CMD_COMMIT_MASK) |	\
++	le32_encode_bits(valid, BCM_TCS_CMD_VALID_MASK) |	\
++	le32_encode_bits(vote_x, BCM_TCS_CMD_VOTE_X_MASK) |	\
++	le32_encode_bits(vote_y, BCM_TCS_CMD_VOTE_Y_MASK))
+ 
+ #endif /* __SOC_QCOM_TCS_H__ */
+-- 
+2.43.0
+
 
