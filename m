@@ -1,86 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-38128-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38129-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5ACB09D03F3
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Nov 2024 14:11:21 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F13C9D0485
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Nov 2024 16:39:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 18F782836FD
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Nov 2024 13:11:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CFE531F21C5D
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Nov 2024 15:39:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E651F188733;
-	Sun, 17 Nov 2024 13:11:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FFNCUqcD"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4AE661CB51F;
+	Sun, 17 Nov 2024 15:39:15 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from inva020.nxp.com (inva020.nxp.com [92.121.34.13])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B37B322E
-	for <linux-arm-msm@vger.kernel.org>; Sun, 17 Nov 2024 13:11:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59AD7CA64;
+	Sun, 17 Nov 2024 15:39:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=92.121.34.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731849077; cv=none; b=U4JCaFH1qRrwD2q9T61OeVvv5FkuortcrvYBjILPORqm6uRmS5lqZz8s4KGDqLpXJqkxYUKEL+AlqYxJtQyXvbFaWZqnVGg4HcBf8HoKcEeh9aCv/jdLH2ST74Yo1WHIW1Ds6TqU7+BKhBYcMQ/1KlGhhYP0BZIfmgJ7zig4eds=
+	t=1731857955; cv=none; b=OU2fpQloBxerJjvh7W2SlZQln96/3r1XJEBGZl0b9NbvynbkqJoIR2PiCXkXaEqrSCA2J2R35DG2YXUbuzWtlRN/ySDkPDbqSqQrEeeWmbjcBCcBh/WNHTBLqZ+nyryM/NsrqoH3wB/8SYqRKZpURNm705tE11hRPI+EoQdkm38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731849077; c=relaxed/simple;
-	bh=nSwj3A8/ForjeKffUwizb7noaejgig1pPhnISFTHpWo=;
+	s=arc-20240116; t=1731857955; c=relaxed/simple;
+	bh=vfJw0C9mvbKaRPxQRr3ddRzBrn5U8By/saKIXyh4gys=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jAVING+R5cNLgXnagPwf++eFzvEMigvc5u8xwcIzK5YXRbQmmu8KWRT4XKpIAYm2C8FWyxuagJczHfvDznNEWEcPVge3yKenq0KOiWKAXZthZyx4ieMw7Tn3rbcrkZrfjJIJ9WXqEuygyjceopqiIwam6Vc5d+ggiSOL2yBWZ4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FFNCUqcD; arc=none smtp.client-ip=209.85.167.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-53da2140769so984660e87.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Nov 2024 05:11:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731849074; x=1732453874; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=NVTB5fgW0CIPrQ9J8AICgZwfqKYac/1UcCg9s2HGvdI=;
-        b=FFNCUqcD/6uAxaCGxwUSXFs0ySP2qm+JEADJpfQ6yluAcuMWiEyafezrmLs4Ndq+0x
-         R0DGVJgL1GPjWNyYN/jew9X/YmIJGuL8hBk/hi+GuxKYoe81eMuDf4VIDByruw79OL8/
-         mqACKXNpe2oP86OMVGY9PE/lAEzoOjaGfBH9LbxiIisVEtlDQj02bNHfAcv9WyDENgiG
-         Pf6wgMiM4nP6g6YkE871PZZZZEo1dNDKDh70myodcv8wv5fPr/nsmKFY3Vx2O4rJ/5dB
-         2jyOVLoEfvaV2IWfnwuX0yq6bwfdquGXbpDa7UkfumJxNjkDhUDa5iL1L8A2bF6B4kTS
-         5i5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731849074; x=1732453874;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NVTB5fgW0CIPrQ9J8AICgZwfqKYac/1UcCg9s2HGvdI=;
-        b=ukSJUDSHP8JJuKSHZDBjICFeyWRR5Ojqhv46y5bJYRnxOMEoNmGDvJ9Hue+V7TJfMP
-         QqLRbVeFu3r7/pIY+mCk9rLR2wrKtyGdRTWmpzRU1EFZ6gGLvbo2bafHPmqalTIN/gyp
-         HKQLDMe0D746JxN+U35973JfYkxHnYKD6tqf+6jhFwiUO2fn2wR+tT0GWg5fl5zXWpmK
-         e8neXNb9wJTkL/f2gF5mtesaXwaMDYoIgyh6+z+wLFmdg58gsRMHswgEp4anktqJ43RT
-         ZFUTHtjGvMhSkXEASwXr46jH6bFbOfZ1EjJNlK3wF2jHRhPWoeupBT2SYZWQPbLTDoJf
-         hjdg==
-X-Forwarded-Encrypted: i=1; AJvYcCW2iO8Mi0XVKNOc0pCrOMkgJs1RdA9hzZdgWh04iWjYcBcSaDPPaj4YSB2ptNFZ1ML0nbHTrcHY3EjoMelK@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw/2JubmFgxtfGNwMaxGH+4OcJ3+tP1Ax7DliRwgC6xSFtVGweA
-	bzedPPCnXz2Fk/4j2j+eVApwofnW1ItUTLWcmONbSZiNs01z56FENzEyEWgTiko=
-X-Google-Smtp-Source: AGHT+IG575J6WcG9hzhULgqTQtjUCp+Yew1GGtVJdfAdD7iB6t7lRgirF640uMkUJ3IZlpLMdP65gA==
-X-Received: by 2002:a05:6512:1195:b0:53d:a1cd:4d2 with SMTP id 2adb3069b0e04-53dab2b4216mr4246336e87.44.1731849074309;
-        Sun, 17 Nov 2024 05:11:14 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53da64ffc6dsm1269110e87.59.2024.11.17.05.11.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 17 Nov 2024 05:11:13 -0800 (PST)
-Date: Sun, 17 Nov 2024 15:11:11 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Konrad Dybcio <konradybcio@kernel.org>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>, 
-	Viresh Kumar <viresh.kumar@linaro.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Vinod Koul <vkoul@kernel.org>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	linux-pm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sc8180x: Add a SoC-specific
- compatible to cpufreq-hw
-Message-ID: <7gftvwwc267za5jgyhw4yxmlw6rh7wkb2am5zx6cgl72x45hc7@eetgqavlalpd>
-References: <20241116-topic-sc8180x_cpufreq_bindings-v1-0-e7db627da99c@oss.qualcomm.com>
- <20241116-topic-sc8180x_cpufreq_bindings-v1-2-e7db627da99c@oss.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=W0JjdrCOyY5NMfxW2uBorss6KLzpbKFxzMTU3bi2+yv0K8ftgg1urvOtWK6rHxFev84brz+f6DfgO6P60Qj+1B54EHh/ixwkeLxPao0pcXxyRnOjBxO05/RbcAbLERNHbhLVmYypkEDLHsD5k7S6DRhMwgBiSRy4jXHDD5mx0Ro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; arc=none smtp.client-ip=92.121.34.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+Received: from inva020.nxp.com (localhost [127.0.0.1])
+	by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 604521A033D;
+	Sun, 17 Nov 2024 16:39:05 +0100 (CET)
+Received: from inva024.eu-rdc02.nxp.com (inva024.eu-rdc02.nxp.com [134.27.226.22])
+	by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 5302A1A0018;
+	Sun, 17 Nov 2024 16:39:05 +0100 (CET)
+Received: from lsv051416.swis.nl-cdc01.nxp.com (lsv051416.swis.nl-cdc01.nxp.com [10.168.48.122])
+	by inva024.eu-rdc02.nxp.com (Postfix) with ESMTP id 0CBCC203CE;
+	Sun, 17 Nov 2024 16:39:05 +0100 (CET)
+Date: Sun, 17 Nov 2024 16:39:05 +0100
+From: Jan Petrous <jan.petrous@oss.nxp.com>
+To: Andrew Lunn <andrew@lunn.ch>
+Cc: Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Jose Abreu <joabreu@synopsys.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Richard Cochran <richardcochran@gmail.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Russell King <linux@armlinux.org.uk>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Emil Renner Berthing <kernel@esmil.dk>,
+	Minda Chen <minda.chen@starfivetech.com>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Iyappan Subramanian <iyappan@os.amperecomputing.com>,
+	Keyur Chudgar <keyur@os.amperecomputing.com>,
+	Quan Nguyen <quan@os.amperecomputing.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	imx@lists.linux.dev, devicetree@vger.kernel.org,
+	NXP S32 Linux Team <s32@nxp.com>,
+	Andrei Botila <andrei.botila@nxp.org>,
+	Jacob Keller <jacob.e.keller@intel.com>
+Subject: Re: [PATCH v4 16/16] net: stmmac: dwmac-s32: Read PTP clock rate
+ when ready
+Message-ID: <ZzoOGdlbQXQVxPkv@lsv051416.swis.nl-cdc01.nxp.com>
+References: <20241028-upstream_s32cc_gmac-v4-0-03618f10e3e2@oss.nxp.com>
+ <20241028-upstream_s32cc_gmac-v4-16-03618f10e3e2@oss.nxp.com>
+ <9154cc5f-a330-4f6d-b161-827e64231e35@lunn.ch>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,26 +87,49 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241116-topic-sc8180x_cpufreq_bindings-v1-2-e7db627da99c@oss.qualcomm.com>
+In-Reply-To: <9154cc5f-a330-4f6d-b161-827e64231e35@lunn.ch>
+X-Virus-Scanned: ClamAV using ClamSMTP
 
-On Sat, Nov 16, 2024 at 12:31:18PM +0100, Konrad Dybcio wrote:
-> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+On Tue, Oct 29, 2024 at 01:18:43PM +0100, Andrew Lunn wrote:
+> On Mon, Oct 28, 2024 at 09:24:58PM +0100, Jan Petrous via B4 Relay wrote:
+> > From: "Jan Petrous (OSS)" <jan.petrous@oss.nxp.com>
+> > 
+> > The PTP clock is read by stmmac_platform during DT parse.
+> > On S32G/R the clock is not ready and returns 0. Postpone
+> > reading of the clock on PTP init.
 > 
-> Comply with bindings guidelines and get rid of errors such as:
-> 
-> cpufreq@18323000: compatible: 'oneOf' conditional failed, one must be fixed:
->         ['qcom,cpufreq-hw'] is too short
-> 
-> Fixes: 8575f197b077 ("arm64: dts: qcom: Introduce the SC8180x platform")
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> ---
->  arch/arm64/boot/dts/qcom/sc8180x.dtsi | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> This needs more explanation as to why this is a feature, not a bug,
+> for the PTP clock.
 > 
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Thanks for comment. I did a homework and found out the root cause is
+using PTP clocks before they are properly enabled. As I understand,
+the clocks, especially the composite variant, require preparation and/or
+enabling them, what is not managed correctly for PTP clocks when
+stmmac_platform is used. In this case, the PTP clock value is read this way:
 
--- 
-With best wishes
-Dmitry
+   stmmac_probe_config_dt:
+   // https://github.com/torvalds/linux/blob/4a5df37964673effcd9f84041f7423206a5ae5f2/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c#L634
+
+	/* Fall-back to main clock in case of no PTP ref is passed */
+	plat->clk_ptp_ref = devm_clk_get(&pdev->dev, "ptp_ref");
+	if (IS_ERR(plat->clk_ptp_ref)) {
+		plat->clk_ptp_rate = clk_get_rate(plat->stmmac_clk);
+		plat->clk_ptp_ref = NULL;
+		dev_info(&pdev->dev, "PTP uses main clock\n");
+	} else {
+		plat->clk_ptp_rate = clk_get_rate(plat->clk_ptp_ref);
+		dev_dbg(&pdev->dev, "PTP rate %d\n", plat->clk_ptp_rate);
+	}
+
+If I change getter to enabled getter:
+	plat->clk_ptp_ref = devm_clk_get_enabled(&pdev->dev, "ptp_ref");
+
+The driver got valid rate and the patch is not needed anymore.
+
+So, if I didn't miss something, it seems like I have to replace the current
+patch with one fixing clk getter.
+
+BR.
+/Jan
 
