@@ -1,135 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-38129-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38130-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2F13C9D0485
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Nov 2024 16:39:19 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0C6429D04D3
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Nov 2024 18:31:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CFE531F21C5D
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Nov 2024 15:39:18 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3973BB2164D
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Nov 2024 17:31:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4AE661CB51F;
-	Sun, 17 Nov 2024 15:39:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0FB51DFCB;
+	Sun, 17 Nov 2024 17:31:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dB38pEvz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from inva020.nxp.com (inva020.nxp.com [92.121.34.13])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59AD7CA64;
-	Sun, 17 Nov 2024 15:39:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=92.121.34.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0219C15C0;
+	Sun, 17 Nov 2024 17:31:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731857955; cv=none; b=OU2fpQloBxerJjvh7W2SlZQln96/3r1XJEBGZl0b9NbvynbkqJoIR2PiCXkXaEqrSCA2J2R35DG2YXUbuzWtlRN/ySDkPDbqSqQrEeeWmbjcBCcBh/WNHTBLqZ+nyryM/NsrqoH3wB/8SYqRKZpURNm705tE11hRPI+EoQdkm38=
+	t=1731864703; cv=none; b=N2LxR94UhTlLQsNOQRTlhWbgmHTu1ghCedBNWF9ahwzvQH7mBGyEnfe3eagZyzIQ/cAapA6mz4tEQL4EUUHoIWQvNQnZCzQ3wl85ow4u7vvOxU5usTGdQbAauOzjA6OREqPe8Ipp/w8OXOnj3LVz0fPtVPJThbmP3DIlqjX5lDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731857955; c=relaxed/simple;
-	bh=vfJw0C9mvbKaRPxQRr3ddRzBrn5U8By/saKIXyh4gys=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=W0JjdrCOyY5NMfxW2uBorss6KLzpbKFxzMTU3bi2+yv0K8ftgg1urvOtWK6rHxFev84brz+f6DfgO6P60Qj+1B54EHh/ixwkeLxPao0pcXxyRnOjBxO05/RbcAbLERNHbhLVmYypkEDLHsD5k7S6DRhMwgBiSRy4jXHDD5mx0Ro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; arc=none smtp.client-ip=92.121.34.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
-Received: from inva020.nxp.com (localhost [127.0.0.1])
-	by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 604521A033D;
-	Sun, 17 Nov 2024 16:39:05 +0100 (CET)
-Received: from inva024.eu-rdc02.nxp.com (inva024.eu-rdc02.nxp.com [134.27.226.22])
-	by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 5302A1A0018;
-	Sun, 17 Nov 2024 16:39:05 +0100 (CET)
-Received: from lsv051416.swis.nl-cdc01.nxp.com (lsv051416.swis.nl-cdc01.nxp.com [10.168.48.122])
-	by inva024.eu-rdc02.nxp.com (Postfix) with ESMTP id 0CBCC203CE;
-	Sun, 17 Nov 2024 16:39:05 +0100 (CET)
-Date: Sun, 17 Nov 2024 16:39:05 +0100
-From: Jan Petrous <jan.petrous@oss.nxp.com>
-To: Andrew Lunn <andrew@lunn.ch>
-Cc: Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Jose Abreu <joabreu@synopsys.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Richard Cochran <richardcochran@gmail.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Russell King <linux@armlinux.org.uk>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Emil Renner Berthing <kernel@esmil.dk>,
-	Minda Chen <minda.chen@starfivetech.com>,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Iyappan Subramanian <iyappan@os.amperecomputing.com>,
-	Keyur Chudgar <keyur@os.amperecomputing.com>,
-	Quan Nguyen <quan@os.amperecomputing.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	imx@lists.linux.dev, devicetree@vger.kernel.org,
-	NXP S32 Linux Team <s32@nxp.com>,
-	Andrei Botila <andrei.botila@nxp.org>,
-	Jacob Keller <jacob.e.keller@intel.com>
-Subject: Re: [PATCH v4 16/16] net: stmmac: dwmac-s32: Read PTP clock rate
- when ready
-Message-ID: <ZzoOGdlbQXQVxPkv@lsv051416.swis.nl-cdc01.nxp.com>
-References: <20241028-upstream_s32cc_gmac-v4-0-03618f10e3e2@oss.nxp.com>
- <20241028-upstream_s32cc_gmac-v4-16-03618f10e3e2@oss.nxp.com>
- <9154cc5f-a330-4f6d-b161-827e64231e35@lunn.ch>
+	s=arc-20240116; t=1731864703; c=relaxed/simple;
+	bh=XU3f8iOzysWsUXprwUt22rCfRKOt8VzIxFdJ24lS6Ew=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=h1IWFzoL182KY/fQ4R7Kg7P2bt7Iyfg+MQPPGeegmumSPh/PRxOpbgkC0WULVXRbIi0ZxFtngoLalCtnaqeAwU0pTY9xdenO95Tps5PpYuiFMnNgp3Sg6CQ5zQAu0gmaXOKDcCnqHKv01ctp+AbhL9U3846iNL7L4v6HmBYP7ho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dB38pEvz; arc=none smtp.client-ip=209.85.221.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-37d4b0943c7so2253570f8f.1;
+        Sun, 17 Nov 2024 09:31:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1731864700; x=1732469500; darn=vger.kernel.org;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=XU3f8iOzysWsUXprwUt22rCfRKOt8VzIxFdJ24lS6Ew=;
+        b=dB38pEvzh3LILhgDAXUC9JlZjsTXuynrRZssCIP1EYZUbPuAtTDqj6KZfg0fnCjkSU
+         hjIpEAB0UG1WK+uqo/R6a79Gf/gCB7a3PjgPPzl9m+DnWd5JcCYmT0iUdL5zOpEKbK3o
+         8bwP6Moku+cs7MIE6SwDF3X1iRytCiF4tO/dgwKGGVaGY+m71Y26R+ULFZSfYid/UiNj
+         RblUxfh9gfiSZW4FMVZ3ExKBmDSdenU23v/Q8hXRdoFn2W0eZXb2jHxycg6P/harZCbr
+         Gwwj5dXgCO/VvnST5FcHnoEdW0a0Fhz3yazD3tZvhkWFSkwQgvfW/ovANN4Zj56vNkXl
+         gcnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731864700; x=1732469500;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=XU3f8iOzysWsUXprwUt22rCfRKOt8VzIxFdJ24lS6Ew=;
+        b=DkBwPZ5hJouuZydHcCV2uiIgSEG+o9LJ5jry0O0Mk7g0wcl3tuBwfrvmhAQa6ON0+a
+         ScR2gyBF6p3bUxz+BFW9k/mtgOEs7OlcJWAYW73wdDCGaQE3JaqXu5/sTG2IchL9iaUg
+         v5nZgPXzmmd2ioSvOGEUFlFYFcyOTFL55W4YHYRNJvL3/e/pp3uT3smsnBWx36+n1cV4
+         1EDCP/mQD5xZZuq/dgbgMcGZO0XOX81qsDEXBHBNte5UB+Qr65o/ZvXVLBQPDvGW+qW0
+         P+T2RgeR+oe0PnE+HeI9e6uzOQ4lqOQAYp4dzDFqkPLyHTvj8akTYG+gvhwVfAmQeNld
+         KzDw==
+X-Forwarded-Encrypted: i=1; AJvYcCU/r5oS8anp/tyjraNR5kjvqlAnSKxnQHRw07ELG6lBRB2x+7ifbTAPdwpIs6QRxhVe6Mghfva3@vger.kernel.org, AJvYcCU4cPXRZbL61XmanX/h8dVcL4nQCtWz1ew3ZE+OzkE2q/dWjfSCxr5H6fQt1T3BAZDbWLk+D+9Wux9pcLPiA75RZN4=@vger.kernel.org, AJvYcCUAEKaI7v2HwfaFJ17lE7lxVYIuL4CMA4LquKBZzmhWw0Zr4Mv5MptWLRmyLxOxCeMtsHIRldrLBE3Hih81C0npjgs=@vger.kernel.org, AJvYcCWeZgrdvCgj+Lb8/9yDpFe6Hju2TE1dfxeF0ntkC+C2HEZifrtNsw7oflyO4mf6ugQdrQOfVaU3lYXZSi/2@vger.kernel.org, AJvYcCX4Zwb1d5VWDuBmuT4fa4kfn9CLit0+stmpCgTQX7deg3nnYP+RZ0w75xLOVumGHlYf+2BRqI+Q4pWwulSQ@vger.kernel.org
+X-Gm-Message-State: AOJu0YxubAau92N+EyC3chUpoNQwJEc8VqJ9GMEVUzNPHXFJL06Md12i
+	z0F44XDFf2rBCRt3+OTpXdyEMwOOsbMnIMtpIINz+WWhDBc4mp5L
+X-Google-Smtp-Source: AGHT+IGM5AOKwL/Gq+vlCdXodaTvKaKrFRZZ7omamsRPMIsQdxFKGxSowkpEpgRfKiIOKPWFsLR64Q==
+X-Received: by 2002:a05:6000:1fac:b0:382:d7a:315b with SMTP id ffacd0b85a97d-382258f0d9emr8122852f8f.11.1731864700227;
+        Sun, 17 Nov 2024 09:31:40 -0800 (PST)
+Received: from p200300c58705a8eb1a556f9921c6cbbb.dip0.t-ipconnect.de (p200300c58705a8eb1a556f9921c6cbbb.dip0.t-ipconnect.de. [2003:c5:8705:a8eb:1a55:6f99:21c6:cbbb])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3821ae1685csm10504821f8f.83.2024.11.17.09.31.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 17 Nov 2024 09:31:39 -0800 (PST)
+Message-ID: <050e354f0d413dc39164bb72262b84b8c2038073.camel@gmail.com>
+Subject: Re: [PATCH 1/5] scsi: ufs: core: Cancel RTC work during
+ ufshcd_remove()
+From: Bean Huo <huobean@gmail.com>
+To: manivannan.sadhasivam@linaro.org, Alim Akhtar <alim.akhtar@samsung.com>,
+  Avri Altman <avri.altman@wdc.com>, Bart Van Assche <bvanassche@acm.org>,
+ "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>, "Martin K.
+ Petersen" <martin.petersen@oracle.com>, Mike Bi <mikebi@micron.com>, Bean
+ Huo <beanhuo@micron.com>, Thomas =?ISO-8859-1?Q?Wei=DFschuh?=
+ <linux@weissschuh.net>,  Luca Porzio <lporzio@micron.com>, Asutosh Das
+ <quic_asutoshd@quicinc.com>, Can Guo <quic_cang@quicinc.com>,  Pedro Sousa
+ <pedrom.sousa@synopsys.com>, Krzysztof Kozlowski <krzk@kernel.org>, Peter
+ Wang <peter.wang@mediatek.com>, Stanley Jhu <chu.stanley@gmail.com>,
+ Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>, Orson Zhai
+ <orsonzhai@gmail.com>, Baolin Wang <baolin.wang@linux.alibaba.com>, Chunyan
+ Zhang <zhang.lyra@gmail.com>,  Matthias Brugger <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+ Santosh Y <santoshsy@gmail.com>, Namjae Jeon <linkinjeon@gmail.com>
+Cc: linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-samsung-soc@vger.kernel.org, linux-mediatek@lists.infradead.org, 
+	linux-renesas-soc@vger.kernel.org, stable@vger.kernel.org
+Date: Sun, 17 Nov 2024 18:31:32 +0100
+In-Reply-To: <20241111-ufs_bug_fix-v1-1-45ad8b62f02e@linaro.org>
+References: <20241111-ufs_bug_fix-v1-0-45ad8b62f02e@linaro.org>
+	 <20241111-ufs_bug_fix-v1-1-45ad8b62f02e@linaro.org>
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+User-Agent: Evolution 3.44.4-0ubuntu2 
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <9154cc5f-a330-4f6d-b161-827e64231e35@lunn.ch>
-X-Virus-Scanned: ClamAV using ClamSMTP
 
-On Tue, Oct 29, 2024 at 01:18:43PM +0100, Andrew Lunn wrote:
-> On Mon, Oct 28, 2024 at 09:24:58PM +0100, Jan Petrous via B4 Relay wrote:
-> > From: "Jan Petrous (OSS)" <jan.petrous@oss.nxp.com>
-> > 
-> > The PTP clock is read by stmmac_platform during DT parse.
-> > On S32G/R the clock is not ready and returns 0. Postpone
-> > reading of the clock on PTP init.
-> 
-> This needs more explanation as to why this is a feature, not a bug,
-> for the PTP clock.
-> 
 
-Thanks for comment. I did a homework and found out the root cause is
-using PTP clocks before they are properly enabled. As I understand,
-the clocks, especially the composite variant, require preparation and/or
-enabling them, what is not managed correctly for PTP clocks when
-stmmac_platform is used. In this case, the PTP clock value is read this way:
-
-   stmmac_probe_config_dt:
-   // https://github.com/torvalds/linux/blob/4a5df37964673effcd9f84041f7423206a5ae5f2/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c#L634
-
-	/* Fall-back to main clock in case of no PTP ref is passed */
-	plat->clk_ptp_ref = devm_clk_get(&pdev->dev, "ptp_ref");
-	if (IS_ERR(plat->clk_ptp_ref)) {
-		plat->clk_ptp_rate = clk_get_rate(plat->stmmac_clk);
-		plat->clk_ptp_ref = NULL;
-		dev_info(&pdev->dev, "PTP uses main clock\n");
-	} else {
-		plat->clk_ptp_rate = clk_get_rate(plat->clk_ptp_ref);
-		dev_dbg(&pdev->dev, "PTP rate %d\n", plat->clk_ptp_rate);
-	}
-
-If I change getter to enabled getter:
-	plat->clk_ptp_ref = devm_clk_get_enabled(&pdev->dev, "ptp_ref");
-
-The driver got valid rate and the patch is not needed anymore.
-
-So, if I didn't miss something, it seems like I have to replace the current
-patch with one fixing clk getter.
-
-BR.
-/Jan
+Reviewed-by: Bean Huo <beanhuo@micron.com>
 
