@@ -1,139 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-38131-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38132-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3794D9D04D8
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Nov 2024 18:37:51 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DE5B89D04E3
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Nov 2024 18:46:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E6EBB281D28
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Nov 2024 17:37:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6C8AE281736
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Nov 2024 17:46:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31C6E143C69;
-	Sun, 17 Nov 2024 17:37:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8FEA41DA309;
+	Sun, 17 Nov 2024 17:46:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HLD67UOQ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GrcmPlGp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B7DE15C0;
-	Sun, 17 Nov 2024 17:37:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D7CE17591;
+	Sun, 17 Nov 2024 17:46:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731865066; cv=none; b=h2oewcGgZo2O/mYdmCZD91YgaVV8eu+SGfZYV3DHY7x4uoWmRMS2PtEROTW0wcPbw8chQMERQFCVRn/SyiU1BmIKyanT5WatB/z2cMFlu1oD1/LU421b0OqQ0TlOFAwV29zatvz0pARdo2ruaJIGfXn887n09DHE32yofhlnQJ8=
+	t=1731865577; cv=none; b=BSqJLqWEZXxb6zeFWRjjyFdp+LhREA6Tw4ngMWg/dSWc/442bgvuzZhp9BUEZ7pO8ohdtIBgE6U8bEbP433znugaY6EdYiGaAgdpdTK7AD9i3LZ9dsW1x18qj9fRF5xj3VirpQ7DjkTEPWryQnCijB/FNBjNOnFgrxTs8f+KMwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731865066; c=relaxed/simple;
-	bh=1L0XnKz/Bgs59CaVEtu2B7ERAAzylQiFjbdPs2G3uUA=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=lmM3gNKCbOnV/2pc177UT4FsVhFQKMC99Ld09l64WGk46QPybl4jxmEiJ5jwWzlKkoFZhsRTneyyOBZqzUDbRPxnNToFPEqmO6zr85EVzbTtYEus12/SdaoKlCcJi9BOTTgQTC8WhTTWA2h/QljopnOa5O2yR/t5oJ5Kml89gdM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HLD67UOQ; arc=none smtp.client-ip=209.85.221.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-3822ba3cdbcso1332333f8f.0;
-        Sun, 17 Nov 2024 09:37:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731865063; x=1732469863; darn=vger.kernel.org;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=1L0XnKz/Bgs59CaVEtu2B7ERAAzylQiFjbdPs2G3uUA=;
-        b=HLD67UOQPgx2zAjS5tMI4m9TAifnFXrzNFlmqBf10BgtsDjaFmg6+up6J2Z6PUJ+69
-         LSyXk3FT/S05eYtVZR5E84NaELh/96TKb47Pkf64JBQUVARcMT6ui3meI3Jq8uFpRwjz
-         4TsFuSvfrlH0/CxyRN5qgk7SkjlCFFdcLv23Sj31MNtTRGv4rL/iJi2hHY+khaWfSjtc
-         6MRjDR8idgFv5eEsKulnBV5aJ0sJ+S29yBMT664emGvOKRrtO4dZFiMmLCQnu659GyQu
-         VFq2dDsv+hIYkBl1Xyw/jd2oc3+unsbIwwsibU0FIz1DQM8umOUMN156PQ6WqxSSwie6
-         Icqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731865063; x=1732469863;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1L0XnKz/Bgs59CaVEtu2B7ERAAzylQiFjbdPs2G3uUA=;
-        b=dwGdGPJZwm25YNE8QtgEk2aGiDQSADx97s0OyDsOQLOnqqAnd4gKviCjOaVmrJwfsf
-         Ta/WLIgRxFh3eYvrk5Eq+kXhMcN89Fihi648G82a6tATKKzRhzEjqAJbXUrVK8fdU/SZ
-         l/K4ri/D1WaDThPEXYAiBBpc5G4SWqRWyHObKtpmV/HWLSwoQ5PC3PYjVLfTjttvNM5I
-         K9K57g9fEXpja/sgf8KDg/CHaB4s+jdqJFTVomGq/w6/FiC3um1D+Z9n8pQDdkO/LnPZ
-         opRA83+XKMqlO6fC6QZaDeQ5X8lGcZ3KMOxKCDqrS9525OjuVFs+ZoV/oPEcYLgAeUqK
-         T+9g==
-X-Forwarded-Encrypted: i=1; AJvYcCV1AJ174LomjRjgFjIypGDyi6ou0P57mkpXhacEIJn0yMHaNDo6N/qAQxc18JemfRHTTnnWAfFp@vger.kernel.org, AJvYcCVvKGnBpQe3TU+oH3A5JrvqdU1MFWAjTSb4HAWqaRg1Ibupdldtjv1VTy+HAmwBf7+8ujaVE1TSYD6CsnAcEhJ82Bs=@vger.kernel.org, AJvYcCW3UePuEdNa3ts0Y5YM/9cJ0nVMSKFMKKQi7im/bEQ1mHLMyfudK32Q9k6gE4i46NbhM34erVnXOtGPvqYF@vger.kernel.org, AJvYcCWw+d6yNv5ubeFBKe3rP7Dv2nqwJ9u7P6tM6gqoVFpvgyThCO1BZex8ygMDWQyBu+N3HgnLxKnhDYamuAeGOnunD6g=@vger.kernel.org, AJvYcCX6tfS0ARVk+F5o+9ysNh/A88uIc+kYFH7gzF5j6iYB+RDKqxmIPDUaT6KhdMlqK15dhxAQjIE3vywF7GmE@vger.kernel.org
-X-Gm-Message-State: AOJu0YxA5PWTbPhk2LsuP4deMThuja0TfOx8J5s+UKj6C1Pg9zSEqR2A
-	VmQb0SdEhcvStllHVv8DpWDl7L9zsvVNFfHZL6TcYXBlivICk1xk
-X-Google-Smtp-Source: AGHT+IE/XAQXxkHFy6KvWJLP0RKL+rq45e6J5Y+YNFyBIw8NtuYv2A6BeGdBO5NUD9ysHPfwh/qb3g==
-X-Received: by 2002:a5d:598c:0:b0:382:22d7:b87 with SMTP id ffacd0b85a97d-38225aafdbdmr6163594f8f.58.1731865062450;
-        Sun, 17 Nov 2024 09:37:42 -0800 (PST)
-Received: from p200300c58705a8eb1a556f9921c6cbbb.dip0.t-ipconnect.de (p200300c58705a8eb1a556f9921c6cbbb.dip0.t-ipconnect.de. [2003:c5:8705:a8eb:1a55:6f99:21c6:cbbb])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-382417f33b8sm2435994f8f.45.2024.11.17.09.37.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 17 Nov 2024 09:37:41 -0800 (PST)
-Message-ID: <3bc8ab6266c7a1c54bbc0d6eca53019734029cbb.camel@gmail.com>
-Subject: Re: [PATCH 2/5] scsi: ufs: qcom: Only free platform MSIs when ESI
- is enabled
-From: Bean Huo <huobean@gmail.com>
-To: manivannan.sadhasivam@linaro.org, Alim Akhtar <alim.akhtar@samsung.com>,
-  Avri Altman <avri.altman@wdc.com>, Bart Van Assche <bvanassche@acm.org>,
- "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>, "Martin K.
- Petersen" <martin.petersen@oracle.com>, Mike Bi <mikebi@micron.com>, Bean
- Huo <beanhuo@micron.com>, Thomas =?ISO-8859-1?Q?Wei=DFschuh?=
- <linux@weissschuh.net>,  Luca Porzio <lporzio@micron.com>, Asutosh Das
- <quic_asutoshd@quicinc.com>, Can Guo <quic_cang@quicinc.com>,  Pedro Sousa
- <pedrom.sousa@synopsys.com>, Krzysztof Kozlowski <krzk@kernel.org>, Peter
- Wang <peter.wang@mediatek.com>, Stanley Jhu <chu.stanley@gmail.com>,
- Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>, Orson Zhai
- <orsonzhai@gmail.com>, Baolin Wang <baolin.wang@linux.alibaba.com>, Chunyan
- Zhang <zhang.lyra@gmail.com>,  Matthias Brugger <matthias.bgg@gmail.com>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
- Santosh Y <santoshsy@gmail.com>, Namjae Jeon <linkinjeon@gmail.com>
-Cc: linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-samsung-soc@vger.kernel.org, linux-mediatek@lists.infradead.org, 
-	linux-renesas-soc@vger.kernel.org, stable@vger.kernel.org
-Date: Sun, 17 Nov 2024 18:37:40 +0100
-In-Reply-To: <20241111-ufs_bug_fix-v1-2-45ad8b62f02e@linaro.org>
-References: <20241111-ufs_bug_fix-v1-0-45ad8b62f02e@linaro.org>
-	 <20241111-ufs_bug_fix-v1-2-45ad8b62f02e@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.44.4-0ubuntu2 
+	s=arc-20240116; t=1731865577; c=relaxed/simple;
+	bh=d4PA4dekFrbPidu64a4HKq8oTBnE6bajLq9aru2A85E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=UKsGMrphv/YTC0Jbx3qXTqfE3bS5/KCZH9itq/y/XMPtH2y7S66zgaYjfBQ8FjTsDEGkmAe8FtNveZAeJCMPmdIYymxVR2r6gvrAnkFy1m8kVRW5UE4RrbJNs7OIVQ2SY1Ql/HExfNA6XItpxgunZW5d6ACJ8Y58qtB0yVY61MQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=GrcmPlGp; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AHGMi5T029188;
+	Sun, 17 Nov 2024 17:46:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	AfYabs+tjtdSrn/b9JlV7O8Zk+qQd/9P8eF6s33xDM4=; b=GrcmPlGpthJZGBjt
+	JrwzVJQbVc5lcBKq5uiAiaR/3U74r4epvC1eAq6kZyk9VT+8K2/B9Qxbj2Vfe2cu
+	bqVwWlPvaxTgN7cJNCBhNGhpCT6F/32ULQFnS83q0BbZlEC+GlY/qM7wrUtgkGlx
+	jo+Ax8a/JjGcqlUr6jx0SsS5HFaayP2YDYy1ye6wzgIa+b7UUvvL3Vl1FmpRrm81
+	3M3TDAR/7DZnXA9tpkDpMWdc9bc5rkSbRVlUzfMLgyQmyzdJ076A9B8ZbHKoKy4l
+	sVIK9yvHW2orB2R/axMa/R71W4cpY9HBoqtEb70pLmSSqOfDlI56JHMsCm+ZDEoT
+	0jqjwA==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42xkrm2hvm-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 17 Nov 2024 17:46:03 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AHHk2h9007072
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 17 Nov 2024 17:46:02 GMT
+Received: from [10.216.44.33] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 17 Nov
+ 2024 09:45:55 -0800
+Message-ID: <ff20d185-4db4-482b-b6dd-06e46124b8ab@quicinc.com>
+Date: Sun, 17 Nov 2024 23:15:51 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/4] dt-bindindgs: i2c: qcom,i2c-geni: Document shared
+ flag
+To: Rob Herring <robh@kernel.org>
+CC: <konrad.dybcio@linaro.org>, <andersson@kernel.org>,
+        <andi.shyti@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-i2c@vger.kernel.org>, <conor+dt@kernel.org>,
+        <agross@kernel.org>, <devicetree@vger.kernel.org>, <vkoul@kernel.org>,
+        <linux@treblig.org>, <dan.carpenter@linaro.org>, <Frank.Li@nxp.com>,
+        <konradybcio@kernel.org>, <bryan.odonoghue@linaro.org>,
+        <krzk+dt@kernel.org>, <quic_vdadhani@quicinc.com>
+References: <20241113161413.3821858-1-quic_msavaliy@quicinc.com>
+ <20241113161413.3821858-2-quic_msavaliy@quicinc.com>
+ <20241115173156.GA3432253-robh@kernel.org>
+Content-Language: en-US
+From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+In-Reply-To: <20241115173156.GA3432253-robh@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: TrqZK6ySCZyw15zvzb8M31VMCLnuwXst
+X-Proofpoint-ORIG-GUID: TrqZK6ySCZyw15zvzb8M31VMCLnuwXst
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
+ spamscore=0 adultscore=0 mlxlogscore=999 malwarescore=0 impostorscore=0
+ clxscore=1015 bulkscore=0 priorityscore=1501 lowpriorityscore=0 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2411170160
 
-On Mon, 2024-11-11 at 23:18 +0530, Manivannan Sadhasivam via B4 Relay
-wrote:
-> Otherwise, it will result in a NULL pointer dereference as below:
->=20
-> Unable to handle kernel NULL pointer dereference at virtual address
-> 0000000000000008
-> Call trace:
-> =C2=A0mutex_lock+0xc/0x54
-> =C2=A0platform_device_msi_free_irqs_all+0x14/0x20
-> =C2=A0ufs_qcom_remove+0x34/0x48 [ufs_qcom]
-> =C2=A0platform_remove+0x28/0x44
-> =C2=A0device_remove+0x4c/0x80
-> =C2=A0device_release_driver_internal+0xd8/0x178
-> =C2=A0driver_detach+0x50/0x9c
-> =C2=A0bus_remove_driver+0x6c/0xbc
-> =C2=A0driver_unregister+0x30/0x60
-> =C2=A0platform_driver_unregister+0x14/0x20
-> =C2=A0ufs_qcom_pltform_exit+0x18/0xb94 [ufs_qcom]
-> =C2=A0__arm64_sys_delete_module+0x180/0x260
-> =C2=A0invoke_syscall+0x44/0x100
-> =C2=A0el0_svc_common.constprop.0+0xc0/0xe0
-> =C2=A0do_el0_svc+0x1c/0x28
-> =C2=A0el0_svc+0x34/0xdc
-> =C2=A0el0t_64_sync_handler+0xc0/0xc4
-> =C2=A0el0t_64_sync+0x190/0x194
->=20
-> Cc: stable@vger.kernel.org=C2=A0# 6.3
-> Fixes: 519b6274a777 ("scsi: ufs: qcom: Add MCQ ESI config vendor
-> specific ops")
-> Signed-off-by: Manivannan Sadhasivam
-> <manivannan.sadhasivam@linaro.org>
+Thanks Rob for your review and comments !
 
-Reviewed-by: Bean Huo <beanhuo@micron.com>
+On 11/15/2024 11:01 PM, Rob Herring wrote:
+> On Wed, Nov 13, 2024 at 09:44:10PM +0530, Mukesh Kumar Savaliya wrote:
+>> Adds qcom,is-shared flag usage. Use this flag when I2C serial controller
+> 
+> Doesn't match the property name.
+Sure, i need to change the name here as qcom,shared-se, will upload a 
+new patch.
+> 
+>> needs to be shared in multiprocessor system(APPS,Modem,ADSP) environment.
+>>
+>> Two clients from different processors can share an I2C controller for same
+>> slave device OR their owned slave devices. Assume I2C Slave EEPROM device
+>> connected with I2C controller. Each client from ADSP SS and APPS Linux SS
+>> can perform i2c transactions.
+>>
+>> Transfer gets serialized by Lock TRE + DMA xfer + Unlock TRE at HW level.
+>>
+>> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+>> ---
+>>   Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml | 4 ++++
+>>   1 file changed, 4 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml b/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
+>> index 9f66a3bb1f80..fe36938712f7 100644
+>> --- a/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
+>> +++ b/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
+>> @@ -60,6 +60,10 @@ properties:
+>>     power-domains:
+>>       maxItems: 1
+>>   
+>> +  qcom,shared-se:
+> 
+> What is 'se'? Is that defined somewhere?
+> 
+SE is Serial Engine acting as I2C controller. Let me add second line for 
+SE here also.
+
+It's mentioned in source code in Patch 3 where it's used.
+ >>> True if serial engine is shared between multiprocessors OR 
+Execution Environment.
+
+>> +    description: True if I2C controller is shared between two or more system processors.
+>> +    type: boolean
+>> +
+>>     reg:
+>>       maxItems: 1
+>>   
+>> -- 
+>> 2.25.1
+>>
 
