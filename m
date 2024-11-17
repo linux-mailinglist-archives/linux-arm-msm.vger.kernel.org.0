@@ -1,109 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-38136-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38137-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B2F8A9D0549
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Nov 2024 19:46:26 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F8929D05D2
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Nov 2024 21:27:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6A6421F22E2C
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Nov 2024 18:46:26 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A45FBB21116
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Nov 2024 20:27:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1117C1DB34B;
-	Sun, 17 Nov 2024 18:46:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41A8513C3F6;
+	Sun, 17 Nov 2024 20:27:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IuuFbmsA"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fEJ7LOpH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69C3F19BA6;
-	Sun, 17 Nov 2024 18:46:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE7F9433A0
+	for <linux-arm-msm@vger.kernel.org>; Sun, 17 Nov 2024 20:27:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731869179; cv=none; b=hQb4V9YyBIA2X4ACLSmMzomy5LQk9cDONcSkVH5YWOtIgYXMscoyfJL/r+CVnO123VHk31ket6RnHgtAEO1y4DQCpUF62YAqxG/0SXF5IEB0HZSZEnBGkVsbQZw1zqul91cCb5AvKZanA64MISVrLrcQl4dJwpR159l/PkmIdos=
+	t=1731875228; cv=none; b=GpHrdDZ4eNunChY8oj6hyo+CZVzX/BVohrhOLzVzq/FEnV8jRdhZx03X2WQA8UWeUWum6tuQlcMD3QrUB2OB6cbF6Df9nLEyIsDOYHf++fZqaSasMUPYC8TK1JWBgxwxCX2UbBZYcocMXDMpogPVb3acn2r6oZquQY3/2s5uqek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731869179; c=relaxed/simple;
-	bh=ZuAX6dOTq5fZ6dymYZ0ndr0pKOruoIR3MEVZ5soZmgs=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=qzTlGPVISuF/tMcl7fY7Wt8a5RvWwg8OEzaI0kwFBPvaKXVXwSajm5aeIih1bsTDQrsZgYD5QQOoxT4FesehEecPjMCEMMqlIGGyGiZDteeN5ZOKTrmR93fUS+BgVp6FKHw+8yFIBU61nFeSp8h4z/5RLmMv2HXej2H+7Eb8+7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IuuFbmsA; arc=none smtp.client-ip=209.85.221.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-38248b810ffso62952f8f.0;
-        Sun, 17 Nov 2024 10:46:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731869176; x=1732473976; darn=vger.kernel.org;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=ZuAX6dOTq5fZ6dymYZ0ndr0pKOruoIR3MEVZ5soZmgs=;
-        b=IuuFbmsAkR4CxDrxCxQzzIVmutumLs1j/BuklbLQc++S7HtsSKL9Ic9r5vSWTwMDYL
-         11TwuSl64kTHp4g1CwhArIiPEJOAnTWXR1PpdZ3oPRl2olS3K7AbdccKkaaV3O9XWK89
-         H7EtMHIeYGTmUranwp1nL06RpdhIa6tlA2GVRx1t/sEgOFjU+UA70vHl+e6QYejXRKZp
-         whJJThYF9kldaJaLppeEzBDQVbLcvB4obSzBNAb4ARSR3yG5kNOyRocMuL0gY351Qn//
-         mHxPWXDn7al5OG6f8u9YIAjqGlGKGqj5xcJcDXUpTtfRLhcDYd0nW6Lp1WyuhM2zt6qm
-         BLRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731869176; x=1732473976;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ZuAX6dOTq5fZ6dymYZ0ndr0pKOruoIR3MEVZ5soZmgs=;
-        b=xEI7Wh2zog/7e0bXRGH6NK1dL3Vc/99y5nzIthieGYD/rGVsoAf0wsWeqYYougNrJo
-         ptt5c52bszLCLv2yi8bbYomWbC1bu+lkHqKGtr6mvcAK48C65zTCGrjbqS+7ggTb8LG6
-         E3LOlu16uQunbrJa2V9Hxmd3seE8SxGEGZpQ53xLiLSP64TL4OKPp36sLG3vIrRnpr13
-         0CUGVOUTX1v4CRSkMsXnLgUPbCd1kv0TPA0pg91AHeBi9VAmtMLvFxJIEuQTsThtmH2Q
-         GW3iYwCS5sGdzc3mk4p0ZzszWkU+uKIQSxJKg4RYdQS3md5rN3ASPGHmDEirhM29OPRF
-         a3RQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUbzqMaHZ7vKNWo1AWPof+HS6HhsiWZr2BUH9CuRJm2zGUco8mat4vKBIw5hDWx77zA85Yg/EFVQ+vDgP8z@vger.kernel.org, AJvYcCUrkObQt/YnuF1+w3hwvT7a8TmIUuRLpqqzSkri/0DOtnVL4p1bJVC4NpGgTswSaDRMOBA7Fjxgw//Cpn+x@vger.kernel.org, AJvYcCVOl37ds+k0+Cd3HSzAiGcMp3W2ZHx+OtHMF8INUjxPgxhsDwDW3f19PGX1yWYEG+nWBB/R1XwoKKag6kT8kDNn9QU=@vger.kernel.org, AJvYcCX+cqxLGl3wQXNG4NoiY6ttVBzGhjsuWbmUWO3iqwzU4gGTY1qf0KqhN2ZDAZMvCWOBJVGFJMPl@vger.kernel.org, AJvYcCXGA4d252lP047mh1tf258h9LOUYlx6kar9q1hNPJ3lMsXZcGWs3uOnIs1o+1lcdT9M8Um9cZkh6JQGqxtkWwP2jRo=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzf1RgpgXlXaQKsI75EdyuWVMj/jN6FVDChDwD+mjSNO9Q6x6uM
-	YNBciDm163mdJ3C2jM+JmRqsBv9PQyqaVqzCAtcFSnmDfGpj3Y9L
-X-Google-Smtp-Source: AGHT+IGQj4MiLznYLc0yMzzGSNQmSxfcskkmVqpy895pf8twonga5yhG5Pxm846pldgya1JFpJXFKQ==
-X-Received: by 2002:a5d:64c8:0:b0:382:2ba9:9d65 with SMTP id ffacd0b85a97d-3822ba9a39cmr6003722f8f.31.1731869175639;
-        Sun, 17 Nov 2024 10:46:15 -0800 (PST)
-Received: from p200300c58705a8eb1a556f9921c6cbbb.dip0.t-ipconnect.de (p200300c58705a8eb1a556f9921c6cbbb.dip0.t-ipconnect.de. [2003:c5:8705:a8eb:1a55:6f99:21c6:cbbb])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432da28ba80sm132793025e9.29.2024.11.17.10.46.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 17 Nov 2024 10:46:15 -0800 (PST)
-Message-ID: <647d9131137670859619e47fbfc524158999a9f9.camel@gmail.com>
-Subject: Re: [PATCH 5/5] scsi: ufs: pltfrm: Dellocate HBA during
- ufshcd_pltfrm_remove()
-From: Bean Huo <huobean@gmail.com>
-To: manivannan.sadhasivam@linaro.org, Alim Akhtar <alim.akhtar@samsung.com>,
-  Avri Altman <avri.altman@wdc.com>, Bart Van Assche <bvanassche@acm.org>,
- "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>, "Martin K.
- Petersen" <martin.petersen@oracle.com>, Mike Bi <mikebi@micron.com>, Bean
- Huo <beanhuo@micron.com>, Thomas =?ISO-8859-1?Q?Wei=DFschuh?=
- <linux@weissschuh.net>,  Luca Porzio <lporzio@micron.com>, Asutosh Das
- <quic_asutoshd@quicinc.com>, Can Guo <quic_cang@quicinc.com>,  Pedro Sousa
- <pedrom.sousa@synopsys.com>, Krzysztof Kozlowski <krzk@kernel.org>, Peter
- Wang <peter.wang@mediatek.com>, Stanley Jhu <chu.stanley@gmail.com>,
- Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>, Orson Zhai
- <orsonzhai@gmail.com>, Baolin Wang <baolin.wang@linux.alibaba.com>, Chunyan
- Zhang <zhang.lyra@gmail.com>,  Matthias Brugger <matthias.bgg@gmail.com>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
- Santosh Y <santoshsy@gmail.com>, Namjae Jeon <linkinjeon@gmail.com>
-Cc: linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-samsung-soc@vger.kernel.org, linux-mediatek@lists.infradead.org, 
-	linux-renesas-soc@vger.kernel.org, stable@vger.kernel.org
-Date: Sun, 17 Nov 2024 19:46:02 +0100
-In-Reply-To: <20241111-ufs_bug_fix-v1-5-45ad8b62f02e@linaro.org>
-References: <20241111-ufs_bug_fix-v1-0-45ad8b62f02e@linaro.org>
-	 <20241111-ufs_bug_fix-v1-5-45ad8b62f02e@linaro.org>
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-User-Agent: Evolution 3.44.4-0ubuntu2 
+	s=arc-20240116; t=1731875228; c=relaxed/simple;
+	bh=l9gN02DdPB9hZBI0fVC6+LeSDXNQ/p3MKcN+esN2RN4=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=KITdqcrnDGHNE49WXE2GEdgSMQOzgPc0TeL/Hsq0kmVgpdS0uD75NudckyTbF4VRwH2nVpQ+mWhSEJZP2nyr8geDr4tSrzzTq3KNs1C8z6sSWt8wUKHy1QgfFNRq3iqcjWz6R8mKCogKC9k8KRwNL62lxKUN7AykpypN67VtQ0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fEJ7LOpH; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AHHqV9x000648;
+	Sun, 17 Nov 2024 20:26:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=ILBk2Uy4S8c/0L9p/WBwOY
+	okg05oaY0JWJgBaggctXk=; b=fEJ7LOpHvUrF24jriIPcSLFuNAM2EXMIG2RtxU
+	HLHnhsFDaoT+5OmmzXvg4zvaSYitzisreKvPCLz9QuYU634pn/LdndplyGCvKcyh
+	nTZGt6RBeeI+Jbj0a3yptT2erLCe1nFAKMHe35WVzjRhBhJtH4o4XtuECSoPS5tg
+	zRBl/1qFsZqeMOq+r8qI8sqZIZxxRMxWQ4WdGxXX9BAbQh+XmG9YolJnQ8KgRVe2
+	BWb4/hJV11Imle7LkTxbKmyHlcla5HVWC2/R6L7dMU7zHtL2AbdPZMcvaDpDVTJQ
+	wsx7ZWFgwweUdKfKygVQCurfhs0Cj7GSUeEz9StjVJWzsa9Q==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42xkt9tsja-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 17 Nov 2024 20:26:51 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AHKQoM1029337
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 17 Nov 2024 20:26:50 GMT
+Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Sun, 17 Nov 2024 12:26:50 -0800
+From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+To: <quic_carlv@quicinc.com>, <andersson@kernel.org>,
+        <quic_yabdulra@quicinc.com>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>,
+        kernel test robot <lkp@intel.com>
+Subject: [PATCH] accel/qaic: Drop redundant vfree() null check in sahara
+Date: Sun, 17 Nov 2024 13:26:29 -0700
+Message-ID: <20241117202629.1681358-1-quic_jhugo@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: X7WvY2cZxFw3xc5B3egTM4XPmNNlgBiP
+X-Proofpoint-ORIG-GUID: X7WvY2cZxFw3xc5B3egTM4XPmNNlgBiP
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ priorityscore=1501 clxscore=1011 adultscore=0 lowpriorityscore=0
+ mlxscore=0 impostorscore=0 suspectscore=0 spamscore=0 phishscore=0
+ bulkscore=0 mlxlogscore=999 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2409260000 definitions=main-2411170183
 
+The documentation for vfree() says that passing in NULL is ok. Therefore
+we can drop the null check as redundant.
 
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202410301732.abF5Md4e-lkp@intel.com/
+Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+---
+ drivers/accel/qaic/sahara.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-Reviewed-by: Bean Huo <beanhuo@micron.com>
+diff --git a/drivers/accel/qaic/sahara.c b/drivers/accel/qaic/sahara.c
+index 6d772143d612..21d58aed0deb 100644
+--- a/drivers/accel/qaic/sahara.c
++++ b/drivers/accel/qaic/sahara.c
+@@ -772,8 +772,7 @@ static void sahara_mhi_remove(struct mhi_device *mhi_dev)
+ 
+ 	cancel_work_sync(&context->fw_work);
+ 	cancel_work_sync(&context->dump_work);
+-	if (context->mem_dump)
+-		vfree(context->mem_dump);
++	vfree(context->mem_dump);
+ 	sahara_release_image(context);
+ 	mhi_unprepare_from_transfer(mhi_dev);
+ }
+-- 
+2.34.1
+
 
