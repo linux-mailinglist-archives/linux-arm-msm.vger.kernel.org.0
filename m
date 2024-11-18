@@ -1,161 +1,247 @@
-Return-Path: <linux-arm-msm+bounces-38251-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38252-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D7EA9D18D4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 20:26:09 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C46C9D18E6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 20:30:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1C7E6282C3F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 19:26:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B175E1F21252
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 19:30:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 39BF71E4937;
-	Mon, 18 Nov 2024 19:26:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B51D1AA1FD;
+	Mon, 18 Nov 2024 19:30:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NGbJCi/m"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="eQLxlO6h"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85C851B0F29;
-	Mon, 18 Nov 2024 19:25:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8774317BBF;
+	Mon, 18 Nov 2024 19:30:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731957962; cv=none; b=n8dw0X2fu4uadOlazkBCbcCpktlLh1mJwY+5FUuIevDPYyxxU/+9hg/u9oI/2jEkcMzLJd2O0+o7Yl2qTZyddu0vjUgWE3Dp+JY3s4jRPwGSP6XByQoGLX+tEDfWwt2V3JEZygKKfbM1Ic2GH9Fi0NPhY7tYUp1778KJgyNlA4Q=
+	t=1731958223; cv=none; b=svcPZthNysXEmFTdjNsis3gvI2dI6o3BUIrGbqRAJx4auq8JavHCGJ3EDL4JI+NPem+nyoYvl2GybQ2LEaTHECRFra9YbnjEBUhxeM2oNUtIFuOlSnHiuX5w45DJ8udYRWt6imBm3J/kQpZPRIBu8fxxE8vS4vR0SKb9hsh3RLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731957962; c=relaxed/simple;
-	bh=IvvPfEQx8+njDlP7eg+rVy3Zr9WN9X65JlqiJMcGRGU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=emKaT9eNrnuIG0UloXvcc/UqrJLJUXjLsNdOXM5mHwIKCqOjWK4QRy5Wm5rEvwYzildj6nCwmErGeIJhrf1ngcwo9s7DKUPeyb7Y2omWZeIEuKOCjF3st9PRsdx+k98JyXu1OOiwByGDIhUGcjgPu7jplg4twa4COBJ4kbCpUPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NGbJCi/m; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4314f38d274so34322885e9.1;
-        Mon, 18 Nov 2024 11:25:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731957958; x=1732562758; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9pD0Ic6pq3x9QjpEUEJLIp8QMqGQFkQZMFW6bkNDgUM=;
-        b=NGbJCi/mlaXf66xjltm3wbnqgsr6gw4KnBQrEddbXgEMWaMazD4qgZzbvn+7DbXBV6
-         CaLTV/L8DJRMyf4NWjsXhGlwem9noMF4V+9dW9xYoSwoDhg2EVYgmT+uS5m0jdueejks
-         uW1mcA9swheFOr7nAClPVpicB/TUE3v4fShItDWPIYwF5aMJVGuu+/BZ+WGGvhVwxPXI
-         G2RglzJbD9yt/GMp2I+ysQF6Umzgq0f2j0Uv0Ie5Ic95ngq7WPp5tQc2QObd+7i20zoS
-         Tks+BUlz+PSOKvFHFXbKd7AySk/Id+R7RYoacW68qR5qsKsxcIt7LzIoCvWI5nMLKaBm
-         7KaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731957958; x=1732562758;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9pD0Ic6pq3x9QjpEUEJLIp8QMqGQFkQZMFW6bkNDgUM=;
-        b=ggmUfgQC0qO9W9JgSo57CqeyKrlfx9wx0O8GIOrRU3+GwBdAtsNEcIqvfeI2xYGcHj
-         i1coJdinvGcCjKQR06Ajh/3lpH14spA/Pv52YMSkf2b8zLdkKh9ioh7ytbli0h/8AleQ
-         D+p3NVMg0EHKsImVg40ZOEHUfYgOGHswGhSHhaGP72uV2sjTddgXkvanucwzicrzJsmW
-         pHSNKzOZxfgh2dL0yrKjz8zxbRrlOo9LkEUkvTjif0bYa2LaUwqxOVOsw/s9QRLt6mV2
-         jqN5CFhWs4eJore9I+esSSuvyVEB5WvbEweK9OUo6Ufq8/QWsDU7FCnVzO0RkZd0b+Vi
-         z7Lg==
-X-Forwarded-Encrypted: i=1; AJvYcCW3g6H6yHx97QOikq+TiMr4Q40Ubd71N7BYpTaQKvuDUXTW/iR20tKT80OX4pAH0XrzmDDbZU6IgXKOuoJmH3YDlGM=@vger.kernel.org, AJvYcCWHldM0H9iHRVVxfij/uE5GjRs8i/yQRgxmfLQ/YZXB0QvZzmcg0q7iPxSGVgfTp8SxEbDWDA4Wha5esI8d@vger.kernel.org, AJvYcCX+hsNxE4Cez3taX/G8hikNI45TuqqpOhlr3n0cZzp0W3b6E2pb0XpLVL5t4g5uL/hktgBfcFEj3uu27cc=@vger.kernel.org, AJvYcCX5MtRSG2lcmES6Onf0jM/6BkkAV8vb+AB6B7usA2cUquzmEuwYTPZfG/JzG4RQ1gVMGjLOvnTM0FMD5MpB@vger.kernel.org
-X-Gm-Message-State: AOJu0YwRrTbAshYyfHyUO9mN9X7kmrn+ewd8wTd3KwdMVeW2CRD8C+S0
-	l+p6ihFSL5AgyekiV+2hDO3U/IS9kNSXA0R9Vq4cLAn63RfO4f04TwLomFoT
-X-Google-Smtp-Source: AGHT+IH+lcOQ8Rj8oM11CtrUWBNXK6zZA1wltL3ZBTXjDjqXIpvoTVhgtssacVRTup7RXCuDYGl00g==
-X-Received: by 2002:a05:600c:1d97:b0:426:59fe:ac27 with SMTP id 5b1f17b1804b1-432df78f3demr130180715e9.26.1731957957571;
-        Mon, 18 Nov 2024 11:25:57 -0800 (PST)
-Received: from ?IPV6:2001:861:3385:e20:6384:4cf:52c5:3194? ([2001:861:3385:e20:6384:4cf:52c5:3194])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432da298c81sm172023915e9.39.2024.11.18.11.25.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 Nov 2024 11:25:57 -0800 (PST)
-Message-ID: <8a4f69dd-b393-4e84-be3c-58f8b33bd59d@gmail.com>
-Date: Mon, 18 Nov 2024 20:25:49 +0100
+	s=arc-20240116; t=1731958223; c=relaxed/simple;
+	bh=9pb/UfvTZ5ffQXilPmxRhQXCj6SzJeUV/mNoDJqfciM=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PKRmwTUHw3BsRTnEwJGuYAuZtDkLNICQUv/jy7GOa1HvZxxcaG1eaHrMmHKNFYDQnVUssOETUwaC6oOc6WH00NtUdWTtdkTpqgY1CLSUhBuTn/bBAlAZwE9dGcTqgdBlP4I3//UwC8AtsgLiuHEP+ic1wlVUthAJXS2rKbMgRBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=eQLxlO6h; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AIGLnb7011441;
+	Mon, 18 Nov 2024 19:30:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=Ch9g1xvXWHfnC8QbBYmpT0Nb
+	kpyf73TTNFt0J/RmQMM=; b=eQLxlO6hymPS3O3mNb2kcthKG2rd9unt4wgpewwm
+	Sts+wtgmsWvmn4gqRz/+DcEgyVuykl+x/lFmkDyPPZesKpO6hoDH0M5eaRH82fJ0
+	fNxKVbCntCwj7Ssn+mp732IIIctuwtqOlJQb7M88MhhkAGqvPWljNWoFPLyJMikE
+	uKdWMS8NuPiGFaZKbZ6qZsKZZaka755cp0jI4zHsGEkNDVeNQEfmoSpgAbwbD8Vb
+	OokGecy8Yiu7VUV8FMuMJtLaptZpK51uzD9oHoeBFCPl0RpNaa/NuFPtvUB4FmIv
+	SwI66cbv08iKiyXR5dODOMLdJFo/dehxc4mHOt6JzWzIvQ==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43091m8dq1-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 18 Nov 2024 19:30:00 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AIJTxC6011016
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 18 Nov 2024 19:29:59 GMT
+Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Mon, 18 Nov 2024 11:27:53 -0800
+Date: Mon, 18 Nov 2024 11:27:53 -0800
+From: Elliot Berman <quic_eberman@quicinc.com>
+To: Lorenzo Pieralisi <lpieralisi@kernel.org>
+CC: Stephen Boyd <swboyd@chromium.org>, Andy Yan <andy.yan@rock-chips.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Bartosz Golaszewski
+	<bartosz.golaszewski@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>, Olof Johansson <olof@lixom.net>,
+        Rob Herring <robh@kernel.org>, "Sebastian
+ Reichel" <sre@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, Will Deacon
+	<will@kernel.org>,
+        <cros-qcom-dts-watchers@chromium.org>,
+        "Satya Durga
+ Srinivasu Prabhala" <quic_satyap@quicinc.com>,
+        Melody Olvera
+	<quic_molvera@quicinc.com>,
+        Shivendra Pratap <quic_spratap@quicinc.com>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        Florian Fainelli
+	<florian.fainelli@broadcom.com>,
+        <linux-pm@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH v6 3/5] firmware: psci: Read and use vendor reset types
+Message-ID: <20241118104725157-0800.eberman@hu-eberman-lv.qualcomm.com>
+References: <20241018-arm-psci-system_reset2-vendor-reboots-v6-0-50cbe88b0a24@quicinc.com>
+ <20241018-arm-psci-system_reset2-vendor-reboots-v6-3-50cbe88b0a24@quicinc.com>
+ <CAE-0n515sUkmTWptgY8pOaMDBPfDp5pZBy9Nby+4cMdMAnAZfA@mail.gmail.com>
+ <20241023092251529-0700.eberman@hu-eberman-lv.qualcomm.com>
+ <ZzdOOP0KuMMdo64W@lpieralisi>
+ <20241115101401666-0800.eberman@hu-eberman-lv.qualcomm.com>
+ <ZztZq1ksXCkyLOvj@lpieralisi>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/5] drm/sti: hda: pass const struct drm_display_mode* to
- hda_get_mode_idx()
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Jani Nikula <jani.nikula@linux.intel.com>,
- Rodrigo Vivi <rodrigo.vivi@intel.com>,
- Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
- Tvrtko Ursulin <tursulin@ursulin.net>, David Airlie <airlied@gmail.com>,
- Simona Vetter <simona@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- Karol Herbst <kherbst@redhat.com>, Lyude Paul <lyude@redhat.com>,
- Danilo Krummrich <dakr@redhat.com>, Harry Wentland <harry.wentland@amd.com>,
- Leo Li <sunpeng.li@amd.com>, Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xinhui Pan <Xinhui.Pan@amd.com>, Alain Volmat <alain.volmat@foss.st.com>,
- Liviu Dudau <liviu.dudau@arm.com>, Andrzej Hajda <andrzej.hajda@intel.com>,
- Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>,
- Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
- Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>,
- Peter Senna Tschudin <peter.senna@gmail.com>, Ian Ray <ian.ray@ge.com>,
- Martyn Welch <martyn.welch@collabora.co.uk>, Inki Dae
- <inki.dae@samsung.com>, Seung-Woo Kim <sw0312.kim@samsung.com>,
- Kyungmin Park <kyungmin.park@samsung.com>,
- Krzysztof Kozlowski <krzk@kernel.org>, Alim Akhtar
- <alim.akhtar@samsung.com>, Stefan Agner <stefan@agner.ch>,
- Alison Wang <alison.wang@nxp.com>,
- Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
- Philipp Zabel <p.zabel@pengutronix.de>, Shawn Guo <shawnguo@kernel.org>,
- Sascha Hauer <s.hauer@pengutronix.de>,
- Pengutronix Kernel Team <kernel@pengutronix.de>,
- Fabio Estevam <festevam@gmail.com>, Rob Clark <robdclark@gmail.com>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- Dave Airlie <airlied@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Sandy Huang <hjc@rock-chips.com>, =?UTF-8?Q?Heiko_St=C3=BCbner?=
- <heiko@sntech.de>, Andy Yan <andy.yan@rock-chips.com>,
- Chen-Yu Tsai <wens@csie.org>, Samuel Holland <samuel@sholland.org>,
- Thierry Reding <thierry.reding@gmail.com>,
- Mikko Perttunen <mperttunen@nvidia.com>,
- Jonathan Hunter <jonathanh@nvidia.com>,
- Dave Stevenson <dave.stevenson@raspberrypi.com>,
- =?UTF-8?Q?Ma=C3=ADra_Canal?= <mcanal@igalia.com>,
- Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>,
- Gurchetan Singh <gurchetansingh@chromium.org>, Chia-I Wu
- <olvaffe@gmail.com>, Zack Rusin <zack.rusin@broadcom.com>,
- Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>
-Cc: intel-gfx@lists.freedesktop.org, intel-xe@lists.freedesktop.org,
- dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- nouveau@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
- linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org,
- imx@lists.linux.dev, linux-arm-msm@vger.kernel.org,
- freedreno@lists.freedesktop.org, virtualization@lists.linux.dev,
- spice-devel@lists.freedesktop.org, linux-rockchip@lists.infradead.org,
- linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org
-References: <20241115-drm-connector-mode-valid-const-v1-0-b1b523156f71@linaro.org>
- <20241115-drm-connector-mode-valid-const-v1-3-b1b523156f71@linaro.org>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?Rapha=C3=ABl_Gallais-Pou?= <rgallaispou@gmail.com>
-In-Reply-To: <20241115-drm-connector-mode-valid-const-v1-3-b1b523156f71@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <ZztZq1ksXCkyLOvj@lpieralisi>
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: XItZRysGkyZ-UJyI7NkUjXCXCsSwFEnA
+X-Proofpoint-GUID: XItZRysGkyZ-UJyI7NkUjXCXCsSwFEnA
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ impostorscore=0 spamscore=0 priorityscore=1501 phishscore=0 malwarescore=0
+ clxscore=1015 bulkscore=0 mlxlogscore=999 lowpriorityscore=0 adultscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411180160
 
-
-
-> Make hda_get_mode_idx() accept const struct drm_display_mode pointer
-> instead of just raw struct drm_display_mode.  This is a preparation to
-> converting the mode_valid() callback of drm_connector to accept const
-> struct drm_display_mode argument.
+On Mon, Nov 18, 2024 at 04:13:47PM +0100, Lorenzo Pieralisi wrote:
+> On Fri, Nov 15, 2024 at 11:08:22AM -0800, Elliot Berman wrote:
+> > On Fri, Nov 15, 2024 at 02:35:52PM +0100, Lorenzo Pieralisi wrote:
+> > > On Wed, Oct 23, 2024 at 09:30:21AM -0700, Elliot Berman wrote:
+> > > > On Fri, Oct 18, 2024 at 10:42:46PM -0700, Stephen Boyd wrote:
+> > > > > Quoting Elliot Berman (2024-10-18 12:39:48)
+> > > > > > diff --git a/drivers/firmware/psci/psci.c b/drivers/firmware/psci/psci.c
+> > > > > > index 2328ca58bba6..60bc285622ce 100644
+> > > > > > --- a/drivers/firmware/psci/psci.c
+> > > > > > +++ b/drivers/firmware/psci/psci.c
+> > > > > > @@ -29,6 +29,8 @@
+> > > > > >  #include <asm/smp_plat.h>
+> > > > > >  #include <asm/suspend.h>
+> > > > > >
+> > > > > > +#define REBOOT_PREFIX "mode-"
+> > > > > 
+> > > > > Maybe move this near the function that uses it.
+> > > > > 
+> > > > > > +
+> > > > > >  /*
+> > > > > >   * While a 64-bit OS can make calls with SMC32 calling conventions, for some
+> > > > > >   * calls it is necessary to use SMC64 to pass or return 64-bit values.
+> > > > > > @@ -305,9 +315,29 @@ static int get_set_conduit_method(const struct device_node *np)
+> > > > > >         return 0;
+> > > > > >  }
+> > > > > >
+> > > > > > +static void psci_vendor_sys_reset2(unsigned long action, void *data)
+> > > > > > +{
+> > > > > > +       const char *cmd = data;
+> > > > > > +       unsigned long ret;
+> > > > > > +       size_t i;
+> > > > > > +
+> > > > > > +       for (i = 0; i < num_psci_reset_params; i++) {
+> > > > > > +               if (!strcmp(psci_reset_params[i].mode, cmd)) {
+> > > > > > +                       ret = invoke_psci_fn(PSCI_FN_NATIVE(1_1, SYSTEM_RESET2),
+> > > > > > +                                            psci_reset_params[i].reset_type,
+> > > > > > +                                            psci_reset_params[i].cookie, 0);
+> > > > > > +                       pr_err("failed to perform reset \"%s\": %ld\n",
+> > > > > > +                               cmd, (long)ret);
+> > > > > 
+> > > > > Do this intentionally return? Should it be some other function that's
+> > > > > __noreturn instead and a while (1) if the firmware returns back to the
+> > > > > kernel?
+> > > > > 
+> > > > 
+> > > > Yes, I think it's best to make sure we fall back to the architectural
+> > > > reset (whether it's the SYSTEM_RESET or architectural SYSTEM_RESET2)
+> > > > since device would reboot then.
+> > > 
+> > > Well, that's one of the doubts I have about enabling this code. From
+> > > userspace we are requesting a reboot (I don't even think that user
+> > > space knows which reboot modes are actually implemented (?)) and we may
+> > > end up issuing one with completely different semantics ?
+> > 
+> > You're right here, userspace issue a "reboot bootloader" and if kernel
+> > doesn't have the support to set up the right cookie, the device would do
+> > a normal reboot and not stop at the bootloader. This problem exists
+> > today and I think whether this is an issue to solve is out of scope here.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
+> That's true. It is the same issue we have with reboot_mode anyway.
+> 
+> Is it a fair statement to say that currently when we request a reboot,
+> the reboot mode is the one set through /sys/kernel/reboot/mode ?
+> 
+> Does user space use that file today ?
+> 
+> I guess userspace does not take specific actions according to the
+> reset it thinks it issues - it is a question.
+> 
 
-Hi Dmitry,
+Yes, user space can write to that file. User space has to configure both
+the mode and command to get the desired reboot configuration. I view the
+vendor reset types as replacing "both", in the sense userspace may not
+need to configure the reboot mode anymore. If "reboot bootloader" or
+"reboot edl" requires a warm reset, the firmware knows that's how the
+PMIC needs to be configured. I don't currently see any need for Linux to
+be aware that a particular vendor reset type is "like a soft" or "like a
+warm" or "like a cold" reset.
 
-Thank you for the patch.
+> > > Are these "reset types" exported to user space ?
+> > > 
+> > 
+> > No mechanism exists to do that. We could do something specific for PSCI
+> > or do something generic for everybody. I don't think something specific
+> > for PSCI is the right approach because it's a general problem. I don't
+> > think there's enough interest to change reboot command plumbing to
+> > advertise valid reset types to userspace.
+> 
+> That's for sure. I suppose the most important bit is making sure that
+> all resets comply with the kernel semantics expected from a *reset*;
+> I appreciate that's a vague statement (and I have no idea how to enforce
+> it) but that's the gist of this discussion.
+> 
+> Another thing I am worried about is device drivers restart handlers
+> (ie having to parse a command that might be platform specific in a
+> generic driver to grok what reset was actually issued and what action
+> should be taken).
 
-Acked-by: Raphael Gallais-Pou <rgallaispou@gmail.com>
+Right, I got your point! I haven't seen any drivers that care about it,
+besides the ones that actually do the resetting.
 
+I'm okay to say that all vendor SYSTEM_RESET2 need to be treated like a
+REBOOT_COLD, but we might run into issue in future where we might want
+some vendor SYSTEM_RESET2 to act be closer to some other mode. I suppose
+then a device-specific driver is needed there.
 
-Regards,
-Raphaël
+In the hypothetical situation where we need reboot_mode to be a specific
+value for a vendor SYSTEM_RESET2, I like my current approach.  Userspace
+already needs to align the mode and command without the kernel enforcing
+it, so it's possible we could still use the generic PSCI driver without
+needing to write a device-specific driver to issue the vendor
+SYSTEM_RESET2. If we hard-code that vendor SYSTEM_RESET2 must be like a
+cold reset, then we definitely need a device-specific driver if we'd
+rather it be like a warm or soft mode.
+
+> I admit it is a tough nut to crack this one - apologies for the time
+> it is taking to reach an agreement.
+> 
+
+This is a weird one :) It seems simple at first but it flexes the design
+of reboot mode and command. I appreciate the time you've taken to look
+at this!
+
+- Elliot
 
