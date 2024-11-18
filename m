@@ -1,186 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-38153-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38154-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DB7FE9D07E4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 03:25:11 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2537D9D0866
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 05:29:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DCE93B218CA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 02:25:08 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DBCF2B20F89
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 04:29:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8EC7779DC7;
-	Mon, 18 Nov 2024 02:24:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4BC1013A863;
+	Mon, 18 Nov 2024 04:29:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AiO2ilLs"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="B4/KSTPC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E186F558A5
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Nov 2024 02:24:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C408981745
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Nov 2024 04:29:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731896682; cv=none; b=jxK9fBofQxCe/ZyMuV6p1+cBXEvKdN0KQ/fD1M7hAAswFcrJj50IG+8+zZuJj0jyPZNJiGm4Nzb+kTEHRVk6x2VImmC0Iti6PBVY913ZQ8lAqE+AvBSxvbaC62Gg/fBTN0/+e/GTs/6WBZPevwFpYKNt2xei+j2LSdvYq5TtwVc=
+	t=1731904164; cv=none; b=Fg1UB342kshJD4sSW/qu8Pg6jnOpqOgmdvlUnRPYxv67abNOvQ0lno5E2/nXYWyR/NOIBOi+dRQEyd5l58DnwT1jvt4sDeRE/vREQ3KUg8Dw73Rw0Wa3Ns/72ZhjdPpa1ShuQq9wjGd275oL90mDS2J1sGG9oooWOrdR/k2HCaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731896682; c=relaxed/simple;
-	bh=4A7Nlfh/Wzmyb8Sqa9yNc0VHqXNcgy/cxKUPLI57RVA=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=bmunRN9pj86BZupuHFJwr+aMWK12KMjhRy/KSztMoxKLq5rywUEoPGitTobkCUVi7rmz+JPVSFV4gn72/WmoUobM4xMvwATujeHKf/u1RtxpZyBF88VOqZc1X7YUEfumeR1qRw3HVtyHDlPsMGlxfkiAaULlUzCP63UmXNKA5SQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AiO2ilLs; arc=none smtp.client-ip=209.85.221.45
+	s=arc-20240116; t=1731904164; c=relaxed/simple;
+	bh=c2FNU8VAqZPHoHfsNxtkxDSwUZw0mk7UWoaRmwhIM8g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VYFaTYlBA9p1nJghVRwb7Wqp8WOwPvuS1qRMztO/FLsTXHqAyEBcVm7obtPzfsnpePNvXuAu4m5AoOfbPXmtoTyaPkaLtrvznyPYpDeMpdjl5qsImZvhXO7hCfFgK8ej+md5fJ4YORLOe2cpgBVH6FMcXZyzwDDxxPZAQZUYq60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=B4/KSTPC; arc=none smtp.client-ip=209.85.215.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3822ec43fb0so1800919f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Nov 2024 18:24:40 -0800 (PST)
+Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-7f809332ffcso2504195a12.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Nov 2024 20:29:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731896679; x=1732501479; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=4iGkwvgZgVeZ73yqZCKTsgB+AcLdw1tSbIMHtFSZKEQ=;
-        b=AiO2ilLsmVmpBsxZ1sKeWV8PocTybMVIr4LSRIDNyPu0In7j6S0HVRzK1Xv0Z4CvBR
-         AkkTLBjueU6qEe9XF3GAGMton1IyNmp9ju+9Nagmw9HWpnYii3QEK0hCWddk1+Bq0dCW
-         L6yqthDFgOpZjnBYtwT++1Yp903FTjEW0208SqEPiKY4l8/FmN/dt3o0HlNcLWCNUsve
-         2a9NC8FH3bh7OP/ECqB/H0kymz8jtWNsQkgj5lt7wbXC8GNqWzfIPiNBHchpTvm0hVDp
-         /q6fV3xL78Ya3ilWmlPYX3dQNRf/sV3f+r5HD0fRR1VESOCTDdrI/Q3KQ0YS9cPfgsPs
-         znAA==
+        d=linaro.org; s=google; t=1731904162; x=1732508962; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=aRkzvR9JmsuEZqEzWfsXbEtv0Qql+USooOaHLs0v1jE=;
+        b=B4/KSTPCoshvGy7HGueX5eUHsNduJli91Wg+XW6TeBtPz9u9s0CPr2RnkA+9nJ5Kbh
+         vXF5pdaT4LcQrl5CyOLfRdnHwPfVe0SU4qE/lG+FKnCE5fUjH1MYjdX/Teab3z5ttW2V
+         Ek14xJdvbrn2Sm8gVSudv2ds8lJ0cswybPtNNTAQhvcd7wEBCMsvsESv32kkBxXRM1DY
+         /CGEVS7nswWVFexy56CNXFjgGLY2fEHDcDMr7W90kn33hYWG3UtEvoYugjbxDbhY54WE
+         u+xxCe9qOm0WAW30HnHbJ8I7cgoPfpKg28em+s9yxjPpwW1Sc8Uw4Q5HBW6yrEMOaoJN
+         W6qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731896679; x=1732501479;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4iGkwvgZgVeZ73yqZCKTsgB+AcLdw1tSbIMHtFSZKEQ=;
-        b=aO37k6oQa2mj9giokHPyyqXyei/aPyfoFbhCsE8c5niPqPa8nRfsijDZIOP+euUrGW
-         DbaghUm2G4GMbcnGCgPW1/H303BCqFdfi4RpQEeF4b9xtowpO1yTeXmLjIfcd2HQ/YuA
-         7oSKlYZKXMq/Ep4jPn6rxvHF4pIZU7qUrnIigK1tn8eH2HLpAghQ4R9pT2iSh310rwT0
-         cpPVqyry5bgkbsIPCKTKQSyAY4HMwA4Q+u0cSRthZjCVzS+9PjQCOX1zcdwV+FTUWHCs
-         JeQRdEoA2FmRkFYrAOU93tn4X4yyLouTWFAnRIUKQj+KaWZB4rf4sCgn2l0KBOrOVfCP
-         8D6A==
-X-Gm-Message-State: AOJu0YwlO0F2dMSKPyLHmrdjMx3QRQ2xEe5TREFqazeFcWsnjRX67BrJ
-	RrzOjymI1zm37O8pXSEMY+gxyW8ZPFsEIiRqMYaYhDpH4TuOyPc7JeEG5w/skvevqGG8Y+UvIPG
-	DHSM=
-X-Google-Smtp-Source: AGHT+IFdCwt308Q7rR5HQPTUr0kdBp0HSjUA+z9CSb7a6F9Yj/68W8pIPqC2Zj4QRv6VV5zlTYUhOg==
-X-Received: by 2002:a05:6000:1a8c:b0:37d:4657:ea7d with SMTP id ffacd0b85a97d-38225aafc3bmr6924217f8f.49.1731896679328;
-        Sun, 17 Nov 2024 18:24:39 -0800 (PST)
-Received: from [127.0.1.1] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3821ada2e35sm11387902f8f.5.2024.11.17.18.24.37
+        d=1e100.net; s=20230601; t=1731904162; x=1732508962;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=aRkzvR9JmsuEZqEzWfsXbEtv0Qql+USooOaHLs0v1jE=;
+        b=gVSTZG8F1whigogqnYYIFfnOTsMIHbBdfm54jj+FcgXI83u1hgEDfDl3bhMY0nhI53
+         mbkFJ4p0RujOnYKn95FrK2RHeJQLzktLqAg9viyWmx02xTZh2PXIaTuW1QBfAeRM28EC
+         JN31rlsm1FrArRmRtIZbgMJVG3img2cACRnVAs7T2eq6Mn1vhIXCxEVM3vRRb6pAx2cr
+         0Bd11Yr8pRKHdycsnPXfZ4EfG5z/dRbzu7spjwkFeRsmzWBy7lEpgUit3tePKL31abnX
+         QCRZjH1Ers1EImfJS2b2lGf23246L429Zx3v2lDmrJxhwDopKiAI7Txjkm9myi1X9PZG
+         WqSA==
+X-Forwarded-Encrypted: i=1; AJvYcCXiamHh3Cg4C05L08BlxlscA3sSFRyGvw9Q2tDE3VSGCafVZ1UFxeSTycq8B6DxilMKKHh7suWTJLzgM2SK@vger.kernel.org
+X-Gm-Message-State: AOJu0YzD2gBqAlD6Zis1pEiiTaTytnxRMiI1SaAgE2YVQO81tX1FJ3Cy
+	lVTTHEDU2GSSVAGLEiVx6RgpMpIywDsFemqBOQxit/2P/eg4xJ7CHBqG6Gm34MmTJm4WWynNlwP
+	G
+X-Google-Smtp-Source: AGHT+IHXV546gfhTrcSiQ/5TtpVxbP+9uPHavmMf9YaowqUBMk7FcaExC7jCPXHHNGj4K/9+30ugTQ==
+X-Received: by 2002:a05:6a20:7292:b0:1d7:e76:6040 with SMTP id adf61e73a8af0-1dc805101d9mr26904641637.4.1731904162120;
+        Sun, 17 Nov 2024 20:29:22 -0800 (PST)
+Received: from localhost ([122.172.86.146])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7f8c1c16d0esm5016479a12.6.2024.11.17.20.29.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 17 Nov 2024 18:24:38 -0800 (PST)
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Date: Mon, 18 Nov 2024 02:24:33 +0000
-Subject: [PATCH 2/2] clk: qcom: gdsc: Add pm_runtime hooks
+        Sun, 17 Nov 2024 20:29:21 -0800 (PST)
+Date: Mon, 18 Nov 2024 09:59:19 +0530
+From: Viresh Kumar <viresh.kumar@linaro.org>
+To: Konrad Dybcio <konradybcio@kernel.org>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH 0/2] Fix SC8180X cpufreq dt-bindings error
+Message-ID: <20241118042919.cakfxwr6xkszxir2@vireshk-i7>
+References: <20241116-topic-sc8180x_cpufreq_bindings-v1-0-e7db627da99c@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241118-b4-linux-next-24-11-18-clock-multiple-power-domains-v1-2-b7a2bd82ba37@linaro.org>
-References: <20241118-b4-linux-next-24-11-18-clock-multiple-power-domains-v1-0-b7a2bd82ba37@linaro.org>
-In-Reply-To: <20241118-b4-linux-next-24-11-18-clock-multiple-power-domains-v1-0-b7a2bd82ba37@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-X-Mailer: b4 0.15-dev-355e8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241116-topic-sc8180x_cpufreq_bindings-v1-0-e7db627da99c@oss.qualcomm.com>
 
-Introduce pm_runtime_get() and pm_runtime_put_sync() on the
-gdsc_toggle_logic().
+On 16-11-24, 12:31, Konrad Dybcio wrote:
+> Add the bindings and dt bits to fix:
+> 
+> cpufreq@18323000: compatible: 'oneOf' conditional failed, one must be fixed:
+>         ['qcom,cpufreq-hw'] is too short
+> 
+> No functional changes.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> ---
+> Konrad Dybcio (2):
+>       dt-bindings: cpufreq: cpufreq-qcom-hw: Add SC8180X compatible
+>       arm64: dts: qcom: sc8180x: Add a SoC-specific compatible to cpufreq-hw
 
-This allows for the switching of the GDSC on/off to propagate to the parent
-clock controller and consequently for any list of power-domains powering
-that controller to be switched on/off.
-
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- drivers/clk/qcom/gdsc.c | 26 ++++++++++++++++++--------
- drivers/clk/qcom/gdsc.h |  2 ++
- 2 files changed, 20 insertions(+), 8 deletions(-)
-
-diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-index fa5fe4c2a2ee7786c2e8858f3e41301f639e5d59..ff5df942147f87e0df24a70cf9ee53bb2df36e54 100644
---- a/drivers/clk/qcom/gdsc.c
-+++ b/drivers/clk/qcom/gdsc.c
-@@ -11,6 +11,7 @@
- #include <linux/kernel.h>
- #include <linux/ktime.h>
- #include <linux/pm_domain.h>
-+#include <linux/pm_runtime.h>
- #include <linux/regmap.h>
- #include <linux/regulator/consumer.h>
- #include <linux/reset-controller.h>
-@@ -141,10 +142,14 @@ static int gdsc_toggle_logic(struct gdsc *sc, enum gdsc_status status,
- {
- 	int ret;
- 
--	if (status == GDSC_ON && sc->rsupply) {
--		ret = regulator_enable(sc->rsupply);
--		if (ret < 0)
--			return ret;
-+	if (status == GDSC_ON) {
-+		if (sc->rsupply) {
-+			ret = regulator_enable(sc->rsupply);
-+			if (ret < 0)
-+				return ret;
-+		}
-+		if (pm_runtime_enabled(sc->dev))
-+			pm_runtime_resume_and_get(sc->dev);
- 	}
- 
- 	ret = gdsc_update_collapse_bit(sc, status == GDSC_OFF);
-@@ -177,10 +182,14 @@ static int gdsc_toggle_logic(struct gdsc *sc, enum gdsc_status status,
- 	ret = gdsc_poll_status(sc, status);
- 	WARN(ret, "%s status stuck at 'o%s'", sc->pd.name, status ? "ff" : "n");
- 
--	if (!ret && status == GDSC_OFF && sc->rsupply) {
--		ret = regulator_disable(sc->rsupply);
--		if (ret < 0)
--			return ret;
-+	if (!ret && status == GDSC_OFF) {
-+		if (pm_runtime_enabled(sc->dev))
-+			pm_runtime_put_sync(sc->dev);
-+		if (sc->rsupply) {
-+			ret = regulator_disable(sc->rsupply);
-+			if (ret < 0)
-+				return ret;
-+		}
- 	}
- 
- 	return ret;
-@@ -544,6 +553,7 @@ int gdsc_register(struct gdsc_desc *desc,
- 			continue;
- 		scs[i]->regmap = regmap;
- 		scs[i]->rcdev = rcdev;
-+		scs[i]->dev = dev;
- 		ret = gdsc_init(scs[i]);
- 		if (ret)
- 			return ret;
-diff --git a/drivers/clk/qcom/gdsc.h b/drivers/clk/qcom/gdsc.h
-index 1e2779b823d1c8ca077c9b4cd0a0dbdf5f9457ef..71ca02c78c5d089cdf96deadc417982ad6079255 100644
---- a/drivers/clk/qcom/gdsc.h
-+++ b/drivers/clk/qcom/gdsc.h
-@@ -30,6 +30,7 @@ struct reset_controller_dev;
-  * @resets: ids of resets associated with this gdsc
-  * @reset_count: number of @resets
-  * @rcdev: reset controller
-+ * @dev: device associated with this gdsc
-  */
- struct gdsc {
- 	struct generic_pm_domain	pd;
-@@ -74,6 +75,7 @@ struct gdsc {
- 
- 	const char 			*supply;
- 	struct regulator		*rsupply;
-+	struct device			*dev;
- };
- 
- struct gdsc_desc {
+Applied. Thanks.
 
 -- 
-2.45.2
-
+viresh
 
