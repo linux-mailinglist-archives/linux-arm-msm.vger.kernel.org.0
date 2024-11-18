@@ -1,81 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-38236-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38237-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id A0B079D1248
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 14:42:34 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 413B59D121D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 14:39:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 63559B2D3EF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 13:38:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EBCFD1F2282E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 13:39:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25C2F1BD9DD;
-	Mon, 18 Nov 2024 13:33:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA01319E83C;
+	Mon, 18 Nov 2024 13:39:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wWSbWPK+"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VTY9t9jT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B1221BD9CA
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Nov 2024 13:33:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE44F1E505
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Nov 2024 13:39:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731936800; cv=none; b=F6eFSK/qGHa4QmHPmMwIV7Sd7HyyQ+tsG9ts1drMhj0dKPrG5JjzFOFzMk1sMCy9x5yUYx0yTiXrX1Cu/cAW4cZX/CZ5dfZDElDhnoXFs78rWudh0m7g0I6RyqOxiFQ+f30XBAIiAHWeWraDK23MejUtXSsHxkfOUs3D5JdJ5pc=
+	t=1731937156; cv=none; b=nftTqmMczCVivo9utR++MY0I+zNEYYsztGdbTzV3ImXZdh5ZFHzm22TU7W32eMmYLi/4+okR4t7UOQ9TP0MTfoL21r8omFgUZowJMST+kWxU57GkF/nRO4wN9VkJHvPvaW/+5DZxeZMJPnYfc1jtYz8GTPZUbk5AbdsDB+3U7po=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731936800; c=relaxed/simple;
-	bh=TgmUVsPMSMHETM7FdaiksN0XJk3FK3AbAIFHD0azkQU=;
+	s=arc-20240116; t=1731937156; c=relaxed/simple;
+	bh=O+/I9qHbRpEyeLkPgEks20gDqSxELQADYxBEFYBKk6s=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sArlnBhs2OnjmQwYo957SLZUb6Lcc7nZHOqi6Zx4mMYozU9b6Jvrx+hRR7CF4tCOy6OdEolhBcbq0YLd+sMWrihvEcgRSWqLG1unrnSTEFwCqPbTXmYJPT5rjBqGHDpODYmjhj2ATC2IqtupNFL5BrFEJXUSa63CcvKL56cHX8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wWSbWPK+; arc=none smtp.client-ip=209.85.208.172
+	 Content-Type:Content-Disposition:In-Reply-To; b=mD252l1VntEJoA5BjwfnKpZUM8Xxq5wKFb//OU6zMsBkJnDGcpgTc7wUc3h4UUTzDp5wE84PN7uqi1ixlvWWlHx1Xkg8jLv2E9OKAd7IAsRD5IocAnsPnThU2rfMxmehBTRns+Gs4hQW11uNirsDbmJ7JLBL031GPqzYKyJIP7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VTY9t9jT; arc=none smtp.client-ip=209.85.208.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2fb584a8f81so37440161fa.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Nov 2024 05:33:18 -0800 (PST)
+Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-2ff3232ee75so42752831fa.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Nov 2024 05:39:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731936796; x=1732541596; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1731937153; x=1732541953; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=i+Vhl0S++O1wuqZ1GQhDM+LsTf+4mTogEFPpDCg1R9A=;
-        b=wWSbWPK+Er04JEJlX1GNCNHI2OUGkoWMgRY44L7ZS2XFKEFOoyUcrkaxeNaAlrBp7V
-         ZWWc5fww2F6OfyHv1hOgEzE1vDBDCSS7stVIg3D/qEVLagyPPMVnAs3c7l/2aLS3r49M
-         PApe8K2lZieg7BX5plECimTnd+WglCWkOp4Q3+SOfsJmQYM61EhRvV5nyKl5bZsbxLMZ
-         VIsFGZedPJ+iLF4sab8fz0QeFMX6nb2gea0wzrWtJ4IExomm+9XFqcVKoKyWqRNiUNRm
-         6ygpg9fIhdTb2OYSGGfg5F5j0hFjxa+0Mu44+Oaq8UyTW9EQtZXGNkBiJeKcJFEt4IM6
-         iAFQ==
+        bh=Vo8qgK/zmm16hQsGKSDsWMd+1rjPC2LBS5AhoiRhMVU=;
+        b=VTY9t9jTDEFM921i7t6ODafEfowW7lL58a1XIXt5JBpb8Ws9zbf54s5SCD8b+z7CEn
+         izWCoDOqHW4cbmHmWGmVjR3GjMSkDexWCCODI4owBf6gfylr51LB7XlCc+3ktiqypK74
+         Nw6XMkOqlEvipXZGJYCkWiOOIq09gzd6JzUKt5ds+Fcwtfh9+bhoRS0rxCTitzy+7UdP
+         1GbCf9GjdE9CzCnzgUsuPrR6BoclTodU+l8d05SDL6KnnqyFMtKgdiu1HNGA3+PHJA2V
+         /w2c3iKQWbizaB4Nv97mgB88XmEC4TeoT7Uq1a+1bx61OoOXLwLPXLz+0IdFHQwcRvjB
+         Ktng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731936796; x=1732541596;
+        d=1e100.net; s=20230601; t=1731937153; x=1732541953;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=i+Vhl0S++O1wuqZ1GQhDM+LsTf+4mTogEFPpDCg1R9A=;
-        b=YEsy8CeNw7YvdCzwE4KJ8RR+8O4hMeFDPE4q0LaOFjnX0LXBLvY2oEFm7GTNv4N8hH
-         IXYpclQnjVLRkAKV/BsBUUe54zVRvoy8cmHBXnEkvpGeJOY5AzCX1k39soMItcOFTz95
-         3r03SO3+w8fxJBV8cZC5dJrJFmGLKjhJCx2/TSCvcHOhkIKuw5Lcf8U2/EYLQIWCkE/M
-         3AjsXHx+8Wf1fIlKaA/5BT7fJcc/x+y8JPXM8bBPds0urd6Py/kjqChA7V2pQpv88QYj
-         5aeddWtnPzVBzQQOs8bpQCS3pXNwDh7kf6HrQDR8q+aT+2U1dWQUwZHuKgtn4BrLndcD
-         VcBA==
-X-Forwarded-Encrypted: i=1; AJvYcCUKy18IXQ98SisJsDYC7FpybMOZ73hwucoimPGDhKymjU9NSx/YFHOoqffl5rBshL5qeYSQo3W9B+5KEiOu@vger.kernel.org
-X-Gm-Message-State: AOJu0YzJ0GstSLl0ZzLvweKeu+U3m5V2GUtVd/W9eULls2ElnHDbaZZt
-	a+zh7E091uvnAiGT0jdv+4UxyJqwDjY63gPeF2Oi1qy5CbxGjihSNTB7AjwxCos=
-X-Google-Smtp-Source: AGHT+IHu40yDxzITrCG6MZokxNtKNL4VtYlvcUKgdjRSp6+abmjx6Xy0uqkTzl1mkiLfFZT8QaxvXw==
-X-Received: by 2002:a05:651c:158f:b0:2fb:5168:1a0c with SMTP id 38308e7fff4ca-2ff6095e53emr53044441fa.19.1731936796455;
-        Mon, 18 Nov 2024 05:33:16 -0800 (PST)
+        bh=Vo8qgK/zmm16hQsGKSDsWMd+1rjPC2LBS5AhoiRhMVU=;
+        b=t2IydZoneX2tI6Syc1djnArMQONWsNgbiSF9jGxI0lTZyPT35x3ULnhst1ODePOi/i
+         CxBkInfSNKfGt3R7nDjcNCysJ9/1HJWFWpTI0gDu/Hw/IL4EWxqBigD/YDavOYGKbEDL
+         DfzAsZtEuYWZjrBqEdLp9mPt53mVgJCAOuNToLuJ5/Qn+AKeYsxScBbjUBTKxaHa9kmf
+         X5iXdUGY0MbaPxxvUm+4aYjSKSnusrx2c6XR6738o8I47yB8/zLWYXtordHVTbAtQfiw
+         KRP7w9XShQr7hHsTZatlk4d9DqCiVeqW/ct0Dvkh/JiqR2IX9/DpxF1AJ2WgaWs5BN0l
+         e6Nw==
+X-Forwarded-Encrypted: i=1; AJvYcCW/3rKZNDUaSKQOLwcZ/3RscgqvIjPqKRB6AKT4tgSa8SI7E8NBNIiSSC72jx9qPMPtp4/wDHXFKWeLgcIn@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy3WcSSxZPXv57/nrJ4puSZ5S7zKO+w5uTsy3tuhJ7pJwIzjV6F
+	JVgaP6AdtlmkFlWzdEUi+X1nJb4d+pwcHI0jOyooj9ym2fq1jV3026cqhujM0E4=
+X-Google-Smtp-Source: AGHT+IE9fOapCm7K6Pg/umhgP6p9aceiGkaGBaQq40IEeWEJt8CsTs1Go6vdmUC+YTfkqwr39h1xgA==
+X-Received: by 2002:a05:651c:158f:b0:2ff:5988:ddcf with SMTP id 38308e7fff4ca-2ff6080823bmr48735431fa.0.1731937151490;
+        Mon, 18 Nov 2024 05:39:11 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ff69ae80basm9646601fa.81.2024.11.18.05.33.14
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ff69b3bd8fsm8953911fa.124.2024.11.18.05.39.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Nov 2024 05:33:15 -0800 (PST)
-Date: Mon, 18 Nov 2024 15:33:12 +0200
+        Mon, 18 Nov 2024 05:39:10 -0800 (PST)
+Date: Mon, 18 Nov 2024 15:39:08 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Ling Xu <quic_lxu5@quicinc.com>
-Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org, 
-	krzk+dt@kernel.org, conor+dt@kernel.org, quic_kuiw@quicinc.com, 
-	quic_ekangupt@quicinc.com, kernel@quicinc.com, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] arm64: qcom: qcs8300: Add ADSP and CDSP0 fastrpc nodes
-Message-ID: <rzecwzfvywp7rtjtdhtyajmfquvpwwyrcyzegzxb2djuw7ml7i@uldmr35hwnjn>
-References: <20241118130343.3675277-1-quic_lxu5@quicinc.com>
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] clk: qcom: gdsc: Add pm_runtime hooks
+Message-ID: <5lg7rsndxrcogrwywlciek4fdfejnpmvuibpwhh33whg2ebtlt@jli5g3qliota>
+References: <20241118-b4-linux-next-24-11-18-clock-multiple-power-domains-v1-0-b7a2bd82ba37@linaro.org>
+ <20241118-b4-linux-next-24-11-18-clock-multiple-power-domains-v1-2-b7a2bd82ba37@linaro.org>
+ <atg6yw64f4aojcbjyarljb57cejqk56g2qnddrloa3smmupm6d@fk3oyiycnuco>
+ <45c0950a-0cde-4bb9-9e3d-7f25b8a3da31@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,143 +86,34 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241118130343.3675277-1-quic_lxu5@quicinc.com>
+In-Reply-To: <45c0950a-0cde-4bb9-9e3d-7f25b8a3da31@linaro.org>
 
-On Mon, Nov 18, 2024 at 06:33:43PM +0530, Ling Xu wrote:
-> Add ADSP and CDSP0 fastrpc nodes for QCS8300 platform.
+On Mon, Nov 18, 2024 at 01:19:49PM +0000, Bryan O'Donoghue wrote:
+> On 18/11/2024 13:10, Dmitry Baryshkov wrote:
+> > > Introduce pm_runtime_get() and pm_runtime_put_sync() on the
+> > > gdsc_toggle_logic().
+> > > 
+> > > This allows for the switching of the GDSC on/off to propagate to the parent
+> > > clock controller and consequently for any list of power-domains powering
+> > > that controller to be switched on/off.
+> > What is the end result of this patch? Does it bring up a single PM
+> > domain or all of them? Or should it be a part of the driver's PM
+> > callbacks? If the CC has multiple parent PM domains, shouldn't we also
+> > use some of them as GDSC's parents?
 > 
-> Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
-> ---
-> This patch depends on patch https://lore.kernel.org/all/20240904-qcs8300_initial_dtsi-v1-0-d0ea9afdc007@quicinc.com/#t
-> Changes since v1:
->  - Remove duplicate cdsp fastrpc nodes
->  - Add adsp memory-region and vmids
-> ---
->  arch/arm64/boot/dts/qcom/qcs8300.dtsi | 81 +++++++++++++++++++++++++++
->  1 file changed, 81 insertions(+)
+> It brings up every PM domain in the list
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/qcs8300.dtsi b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
-> index 2c35f96c3f28..fdfec15f606e 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs8300.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
-> @@ -5,6 +5,7 @@
->  
->  #include <dt-bindings/clock/qcom,qcs8300-gcc.h>
->  #include <dt-bindings/clock/qcom,rpmh.h>
-> +#include <dt-bindings/firmware/qcom,scm.h>
->  #include <dt-bindings/interconnect/qcom,icc.h>
->  #include <dt-bindings/interconnect/qcom,qcs8300-rpmh.h>
->  #include <dt-bindings/interrupt-controller/arm-gic.h>
-> @@ -762,6 +763,38 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
->  
->  				label = "lpass";
->  				qcom,remote-pid = <2>;
-> +
-> +				fastrpc {
-> +					compatible = "qcom,fastrpc";
-> +					qcom,glink-channels = "fastrpcglink-apps-dsp";
-> +					label = "adsp";
-> +					memory-region = <&adsp_rpc_remote_heap_mem>;
-> +					qcom,vmids = <QCOM_SCM_VMID_LPASS
-> +						      QCOM_SCM_VMID_ADSP_HEAP>;
-> +					#address-cells = <1>;
-> +					#size-cells = <0>;
-> +
-> +					compute-cb@3 {
-> +						compatible = "qcom,fastrpc-compute-cb";
-> +						reg = <3>;
-> +						iommus = <&apps_smmu 0x2003 0x0>;
-> +						dma-coherent;
-> +					};
-> +
-> +					compute-cb@4 {
-> +						compatible = "qcom,fastrpc-compute-cb";
-> +						reg = <4>;
-> +						iommus = <&apps_smmu 0x2004 0x0>;
-> +						dma-coherent;
-> +					};
-> +
-> +					compute-cb@5 {
-> +						compatible = "qcom,fastrpc-compute-cb";
-> +						reg = <5>;
-> +						iommus = <&apps_smmu 0x2005 0x0>;
-> +						dma-coherent;
-> +					};
-> +				};
->  			};
->  		};
->  
-> @@ -1361,6 +1394,54 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
->  
->  				label = "cdsp";
->  				qcom,remote-pid = <5>;
-> +
-> +				fastrpc {
-> +					compatible = "qcom,fastrpc";
-> +					qcom,glink-channels = "fastrpcglink-apps-dsp";
-> +					label = "cdsp";
-> +					#address-cells = <1>;
-> +					#size-cells = <0>;
-> +
-> +					compute-cb@1 {
-> +						compatible = "qcom,fastrpc-compute-cb";
-> +						reg = <1>;
-> +						iommus = <&apps_smmu 0x19c1 0x0440>,
-> +							 <&apps_smmu 0x1dc1 0x0440>,
-> +							 <&apps_smmu 0x1961 0x0400>,
-> +							 <&apps_smmu 0x1d61 0x0400>;
-
-This still doesn't look correct:
-
-(gdb) print/x 0x19c1 & ~0x440
-$1 = 0x1981
-(gdb) print/x 0x1dc1 & ~0x440
-$2 = 0x1981
-(gdb) print/x 0x1961 & ~0x400
-$3 = 0x1961
-(gdb) print/x 0x1d61 & ~0x400
-$4 = 0x1961
-
-> +						dma-coherent;
-> +					};
-> +
-> +					compute-cb@2 {
-> +						compatible = "qcom,fastrpc-compute-cb";
-> +						reg = <2>;
-> +						iommus = <&apps_smmu 0x19c2 0x0440>,
-> +							 <&apps_smmu 0x1dc2 0x0440>,
-> +							 <&apps_smmu 0x1962 0x0400>,
-> +							 <&apps_smmu 0x1d62 0x0400>;
-> +						dma-coherent;
-> +					};
-> +
-> +					compute-cb@3 {
-> +						compatible = "qcom,fastrpc-compute-cb";
-> +						reg = <3>;
-> +						iommus = <&apps_smmu 0x19c3 0x0440>,
-> +							 <&apps_smmu 0x1dc3 0x0440>,
-> +							 <&apps_smmu 0x1963 0x0400>,
-> +							 <&apps_smmu 0x1d63 0x0400>;
-> +						dma-coherent;
-> +					};
-> +
-> +					compute-cb@4 {
-> +						compatible = "qcom,fastrpc-compute-cb";
-> +						reg = <4>;
-> +						iommus = <&apps_smmu 0x19c4 0x0440>,
-> +							 <&apps_smmu 0x1dc4 0x0440>,
-> +							 <&apps_smmu 0x1964 0x0400>,
-> +							 <&apps_smmu 0x1d64 0x0400>;
-> +						dma-coherent;
-> +					};
-> +				};
->  			};
->  		};
->  	};
-> -- 
-> 2.34.1
+> clock_cc {
+>     power-domains = <somedomain0>, <another-domain>;
+> };
 > 
+> No different to what the core code does for a single domain - except we can
+> actually turn the PDs off with the pm_runtime_put().
 
+I see. I missed the device link part of the dev_pm_domain_attach_list().
+
+Just to check, have you checked that this provides no splats in
+lockdep-enabled kernels? 
 -- 
 With best wishes
 Dmitry
