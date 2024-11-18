@@ -1,81 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-38218-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38219-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E2FF59D0F25
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 12:03:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7A7BA9D0F39
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 12:07:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A341328419F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 11:03:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 365B328534D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 11:07:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D17851974F4;
-	Mon, 18 Nov 2024 11:03:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D834194C8D;
+	Mon, 18 Nov 2024 11:07:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="GucvHOxr"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YiI2qtdB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B28E2194C96
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Nov 2024 11:03:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F166C3BBF2;
+	Mon, 18 Nov 2024 11:07:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731927810; cv=none; b=sPVrnK2t32XVcRW/fKJZaCnErFT4Cr9df4JdmoX2rgHEzpH5gVuhJU0BV/x+UJXXGp+NNK83ClBKtnRz0Dr9VzO3fhbiEWAvF8MBAKBoesQOhJPK1sxhFo0MUcQMI/JZSwss9yCZkTYKxMrRkY/0eP00AecVXF015x3mbnZ8Io8=
+	t=1731928044; cv=none; b=X9gjei2R2aqlkJlNw+W6F26aOEvohwYzhAEq8/E4THGq/dn38hK9A446T07TrAUG8/nI9/KCdA7GZA9sJUiH0wa9PuKhlN2I2uHaN3voknjDjDFccUVzrnjyvKpyOi8BDk0oNMr+CUPwAhTx2ITVbZPRPHnuzN+taa8DoLxrCiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731927810; c=relaxed/simple;
-	bh=sTWHw+APVrMMSJpBKXYcLEozbM8o88Mak8YJJs642u4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=H6HalhjFtmeUpE70lT9pHEpXdyYvl3HtcTv4y8VRVBMv1NHDplqa8PZrLJhKj35ULa8BAsJwxugtdGhv6U1K8wuO/s95Z4XwLx+GTr/0CgGXx3tyeoTVaBra2gEdc8jk+ivNlt4J0K6YFzkLuhMIteyZ46DNeJup36Rsf9pRLD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=GucvHOxr; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1731927807;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=fFu/OAvTmsREW3ildiFBX75cwQiDefrF6674U37Lx1Y=;
-	b=GucvHOxrYmVutOCwjbScNXi38K9/V+nbvuMhn0i7WO4MOynsNeH44cvCKvV/aZ072AXXuD
-	F/o0LjYKcMexmJTwBDt8OmROBRNSzs1S0om3fP7VxwsTXB+0n5jrJyINg8XFSBvHx+CH0q
-	zIs9rHNf+mN3qotNdohHAtvx3ghxL6s=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-65-Vlz9IzE1OhecysGT0Ck7Dw-1; Mon, 18 Nov 2024 06:03:26 -0500
-X-MC-Unique: Vlz9IzE1OhecysGT0Ck7Dw-1
-X-Mimecast-MFC-AGG-ID: Vlz9IzE1OhecysGT0Ck7Dw
-Received: by mail-ej1-f69.google.com with SMTP id a640c23a62f3a-a9a157d028aso140189366b.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Nov 2024 03:03:26 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731927805; x=1732532605;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fFu/OAvTmsREW3ildiFBX75cwQiDefrF6674U37Lx1Y=;
-        b=flsqgB3MQhf9F/k1vJuu4s06US8zA//eEAxNKNmV1C5LRzJCmvz2Ces9nQKhC1cd7q
-         gEG1Jxiz9mbt7n/uAUUMc7d5NpJHz7lqVCur1PDSTwC+N2OCfm/rxyZFrNPUy6/4z1XT
-         OaU752X36AntmtyWaxwOa38u9+iYRSXeJksH1AxqCIYI54X6GZXojcMj+Q/luHo/EVhT
-         AgiWmZ/2JPXOAIeYwZplJUwjtqShrUYyYzWwpDqdD5JJ3VkjpZTZdfj3iUR9Bb62LRXa
-         w8Z0MwT0tLxrDP9hv2aXpZdhxroy0215OPePFYu6wLLn1yrrPhCeFXdlP8dwBmeWN4MY
-         dfYQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWFhwY36xkVTr5SJgx89rOM7NsswRBlA2zEAjb95NBmdk+7JzM2NgsSUh14DXG+LCbVT0NH4YNZD3gj9Oar@vger.kernel.org
-X-Gm-Message-State: AOJu0YxbYaH57AQnPCpbnR7eOEg5LtNsStK2sOc7RngLcIIzVmSuA95P
-	PFB0cjpvMcj/Fsj8sVTamegM1OCPi4L+vFfuVLh5ISZDMTJ0Z0W2dRidpZhLmwwR5uPPixkw+xE
-	ed44Oj7SxxZ3znkPqvtfgYJ0lTHcVn/c+A374d4LAl9Y7mifSBAgw/tW7Q9TbmUc=
-X-Received: by 2002:a17:907:60cb:b0:a99:4f40:3e82 with SMTP id a640c23a62f3a-aa4833f46famr1234288166b.7.1731927805052;
-        Mon, 18 Nov 2024 03:03:25 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGgE5lFUGeJWNc5aF38BP5qToKS4LCc2lzaIKk6WaXRxGUC+tJxJL16EB5HAdoRxTV53XMQZA==
-X-Received: by 2002:a17:907:60cb:b0:a99:4f40:3e82 with SMTP id a640c23a62f3a-aa4833f46famr1234282866b.7.1731927804585;
-        Mon, 18 Nov 2024 03:03:24 -0800 (PST)
-Received: from ?IPV6:2001:1c00:c32:7800:5bfa:a036:83f0:f9ec? (2001-1c00-0c32-7800-5bfa-a036-83f0-f9ec.cable.dynamic.v6.ziggo.nl. [2001:1c00:c32:7800:5bfa:a036:83f0:f9ec])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa20df501f9sm526378166b.46.2024.11.18.03.03.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 Nov 2024 03:03:24 -0800 (PST)
-Message-ID: <b05db127-b80e-401a-b93b-dec1907902ba@redhat.com>
-Date: Mon, 18 Nov 2024 12:03:23 +0100
+	s=arc-20240116; t=1731928044; c=relaxed/simple;
+	bh=23QyvkzDL9YlSpvXTlcrd7cFt30wzl3tPcIobl+J6ag=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=LmzcLhWlWzwKy9nD5lrgzEec1BxaCcDRNmdlnzrMQiWFnd33/E7E23wfkwxQu9JCOk1Ufv3AzUl2zZjoCrjfSWKXGnHec06aq0Bxr8KIsNma6Qm8PAmug5qP7HA0cXcBt8nKm7JbpALcmTQWySKXoMuIiKduu7S8K9JFKxSyBS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YiI2qtdB; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AI5RdSY001092;
+	Mon, 18 Nov 2024 11:07:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	43q9oucTOu/jPRWVJ4UemBYMItswkfaX94LjYJ9vTPM=; b=YiI2qtdBmb6jfeUF
+	7TUntECEFLQ85UiyryFpdgkjE2EQ9i27910lI2zLcfaW3iKiN62iY7jeQvoc/Nd8
+	63rHYcqun9kjiIeqUiAtr87QBpZlJ0zbxtO+O+j1+CM3UJ3doyRzFLfn9uiloYmh
+	0ydUT9LMd2QpTbiiepzeF3AmNxYc/nW2WTjIF6q3gJestQ5k/2IUlYUrXOc9V13b
+	+xQC6nhBEwgMHmHxCs3SDFRpcFwWxWPnOH2rtS52qNXZG+BeHNR3XUP4vVuUGv/T
+	kiMZGj64ktrlie/kfPLBkAlbKJiigms2mqxIVFvfziLOEcdENpCGULOTG0oCkNXI
+	wIV2uQ==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42ycufa9mv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 18 Nov 2024 11:07:17 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AIB7GOQ029920
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 18 Nov 2024 11:07:16 GMT
+Received: from [10.218.15.248] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 18 Nov
+ 2024 03:07:11 -0800
+Message-ID: <386f0f4a-b17e-4f0b-90ef-0a960f23b1e4@quicinc.com>
+Date: Mon, 18 Nov 2024 16:37:07 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,319 +65,73 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/2] power: supply: max17042: add platform driver
- variant
-To: Dzmitry Sankouski <dsankouski@gmail.com>,
- Krzysztof Kozlowski <krzk@kernel.org>,
- Marek Szyprowski <m.szyprowski@samsung.com>,
- Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>,
- Purism Kernel Team <kernel@puri.sm>, Sebastian Reichel <sre@kernel.org>,
- Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
- Alim Akhtar <alim.akhtar@samsung.com>, Shawn Guo <shawnguo@kernel.org>,
- Sascha Hauer <s.hauer@pengutronix.de>,
- Pengutronix Kernel Team <kernel@pengutronix.de>,
- Fabio Estevam <festevam@gmail.com>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-samsung-soc@vger.kernel.org, imx@lists.linux.dev,
- linux-arm-msm@vger.kernel.org
-References: <20241118-b4-max17042-v3-0-9bcaeda42a06@gmail.com>
- <20241118-b4-max17042-v3-2-9bcaeda42a06@gmail.com>
-Content-Language: en-US, nl
-From: Hans de Goede <hdegoede@redhat.com>
-In-Reply-To: <20241118-b4-max17042-v3-2-9bcaeda42a06@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH V4 1/3] dt-bindings: interconnect: Add EPSS L3 compatible
+ for SA8775P
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>,
+        Sibi Sankar <quic_sibis@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Odelu Kukatla
+	<quic_okukatla@quicinc.com>,
+        Mike Tipton <quic_mdtipton@quicinc.com>
+References: <20241112075826.28296-1-quic_rlaggysh@quicinc.com>
+ <20241112075826.28296-2-quic_rlaggysh@quicinc.com>
+ <tv7gsceomtdjcymma5ximownsxleg2ujuxcwjgkzj5zhmlscr7@wnyx3bfi2cpo>
+Content-Language: en-US
+From: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
+In-Reply-To: <tv7gsceomtdjcymma5ximownsxleg2ujuxcwjgkzj5zhmlscr7@wnyx3bfi2cpo>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: PqHpfkL2JIzPyYmidHAZqME6-UvA2m08
+X-Proofpoint-GUID: PqHpfkL2JIzPyYmidHAZqME6-UvA2m08
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 clxscore=1015
+ mlxlogscore=999 phishscore=0 spamscore=0 impostorscore=0 adultscore=0
+ bulkscore=0 lowpriorityscore=0 priorityscore=1501 mlxscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411180092
 
-Hi Dzmitry,
 
-On 18-Nov-24 11:09 AM, Dzmitry Sankouski wrote:
-> Maxim PMICs may include fuel gauge with additional features, which is
-> out of single Linux power supply driver scope.
+
+On 11/12/2024 7:20 PM, Dmitry Baryshkov wrote:
+> On Tue, Nov 12, 2024 at 07:58:24AM +0000, Raviteja Laggyshetty wrote:
+>> Add Epoch Subsystem (EPSS) L3 interconnect provider binding on
+>> SA8775P SoCs.
+>>
+>> Signed-off-by: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
+>> ---
+>>  Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml | 1 +
+>>  1 file changed, 1 insertion(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml b/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
+>> index 21dae0b92819..94f7f283787a 100644
+>> --- a/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
+>> +++ b/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
+>> @@ -33,6 +33,7 @@ properties:
+>>                - qcom,sm6375-cpucp-l3
+>>                - qcom,sm8250-epss-l3
+>>                - qcom,sm8350-epss-l3
+>> +              - qcom,sa8775p-epss-l3
+>>            - const: qcom,epss-l3
 > 
-> For example, in max77705 PMIC fuelgauge has additional registers,
-> like IIN_REG, VSYS_REG, ISYS_REG. Those needed to measure PMIC input
-> current, system voltage and current respectively. Those measurements
-> cannot be bound to any of fuelgauge properties.
+> No, sa8775p isn't compatible with qcom,epss-l3. I asked you to split the
+> driver patch, not to change the compatibles.
 > 
-> The solution here add and option to use max17042 driver as a MFD
-> sub device, thus allowing any additional functionality be implemented as
-> another sub device. This will help to reduce code duplication in MFD
-> fuel gauge drivers.
 > 
-> Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
-> ---
-> Changes in v3:
-> - pass dev pointer in max17042_probe
-> - remove prints
-> ---
->  drivers/power/supply/max17042_battery.c | 114 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++------------------------
->  1 file changed, 90 insertions(+), 24 deletions(-)
-> 
-> diff --git a/drivers/power/supply/max17042_battery.c b/drivers/power/supply/max17042_battery.c
-> index 99bf6915aa23..d11bf37aaae2 100644
-> --- a/drivers/power/supply/max17042_battery.c
-> +++ b/drivers/power/supply/max17042_battery.c
-> @@ -16,6 +16,7 @@
->  #include <linux/i2c.h>
->  #include <linux/delay.h>
->  #include <linux/interrupt.h>
-> +#include <linux/platform_device.h>
->  #include <linux/pm.h>
->  #include <linux/mod_devicetable.h>
->  #include <linux/power_supply.h>
-> @@ -1029,14 +1030,12 @@ static const struct power_supply_desc max17042_no_current_sense_psy_desc = {
->  	.num_properties	= ARRAY_SIZE(max17042_battery_props) - 2,
->  };
->  
-> -static int max17042_probe(struct i2c_client *client)
-> +static int max17042_probe(struct i2c_client *client, struct device *dev,
-> +			  enum max170xx_chip_type chip_type)
->  {
-> -	const struct i2c_device_id *id = i2c_client_get_device_id(client);
->  	struct i2c_adapter *adapter = client->adapter;
->  	const struct power_supply_desc *max17042_desc = &max17042_psy_desc;
->  	struct power_supply_config psy_cfg = {};
-> -	const struct acpi_device_id *acpi_id = NULL;
-> -	struct device *dev = &client->dev;
->  	struct max17042_chip *chip;
->  	int ret;
->  	int i;
-> @@ -1045,33 +1044,24 @@ static int max17042_probe(struct i2c_client *client)
->  	if (!i2c_check_functionality(adapter, I2C_FUNC_SMBUS_WORD_DATA))
->  		return -EIO;
->  
-> -	chip = devm_kzalloc(&client->dev, sizeof(*chip), GFP_KERNEL);
-> +	chip = devm_kzalloc(dev, sizeof(*chip), GFP_KERNEL);
->  	if (!chip)
->  		return -ENOMEM;
->  
->  	chip->client = client;
-> -	if (id) {
-> -		chip->chip_type = id->driver_data;
-> -	} else {
-> -		acpi_id = acpi_match_device(dev->driver->acpi_match_table, dev);
-> -		if (!acpi_id)
-> -			return -ENODEV;
-> -
-> -		chip->chip_type = acpi_id->driver_data;
-> -	}
-
-I would expect you to now add a:
-
-	chip->chip_type = chip_type;
-
-line here storing the chip_type probe() function argument, but
-that appears to be missing always leaving chip_type at 0.
-
->  	chip->regmap = devm_regmap_init_i2c(client, &max17042_regmap_config);
->  	if (IS_ERR(chip->regmap)) {
-> -		dev_err(&client->dev, "Failed to initialize regmap\n");
-> +		dev_err(dev, "Failed to initialize regmap\n");
->  		return -EINVAL;
->  	}
->  
->  	chip->pdata = max17042_get_pdata(chip);
->  	if (!chip->pdata) {
-> -		dev_err(&client->dev, "no platform data provided\n");
-> +		dev_err(dev, "no platform data provided\n");
->  		return -EINVAL;
->  	}
->  
-> -	i2c_set_clientdata(client, chip);
-> +	dev_set_drvdata(dev, chip);
->  	psy_cfg.drv_data = chip;
->  	psy_cfg.of_node = dev->of_node;
->  
-> @@ -1095,17 +1085,17 @@ static int max17042_probe(struct i2c_client *client)
->  		regmap_write(chip->regmap, MAX17042_LearnCFG, 0x0007);
->  	}
->  
-> -	chip->battery = devm_power_supply_register(&client->dev, max17042_desc,
-> +	chip->battery = devm_power_supply_register(dev, max17042_desc,
->  						   &psy_cfg);
->  	if (IS_ERR(chip->battery)) {
-> -		dev_err(&client->dev, "failed: power supply register\n");
-> +		dev_err(dev, "failed: power supply register\n");
->  		return PTR_ERR(chip->battery);
->  	}
->  
->  	if (client->irq) {
->  		unsigned int flags = IRQF_ONESHOT | IRQF_SHARED | IRQF_PROBE_SHARED;
->  
-> -		ret = devm_request_threaded_irq(&client->dev, client->irq,
-> +		ret = devm_request_threaded_irq(dev, client->irq,
->  						NULL,
->  						max17042_thread_handler, flags,
->  						chip->battery->desc->name,
-> @@ -1118,7 +1108,7 @@ static int max17042_probe(struct i2c_client *client)
->  		} else {
->  			client->irq = 0;
->  			if (ret != -EBUSY)
-> -				dev_err(&client->dev, "Failed to get IRQ\n");
-> +				dev_err(dev, "Failed to get IRQ\n");
->  		}
->  	}
->  	/* Not able to update the charge threshold when exceeded? -> disable */
-> @@ -1127,7 +1117,7 @@ static int max17042_probe(struct i2c_client *client)
->  
->  	regmap_read(chip->regmap, MAX17042_STATUS, &val);
->  	if (val & STATUS_POR_BIT) {
-> -		ret = devm_work_autocancel(&client->dev, &chip->work,
-> +		ret = devm_work_autocancel(dev, &chip->work,
->  					   max17042_init_worker);
->  		if (ret)
->  			return ret;
-> @@ -1139,6 +1129,38 @@ static int max17042_probe(struct i2c_client *client)
->  	return 0;
->  }
->  
-> +static int max17042_i2c_probe(struct i2c_client *client)
-> +{
-> +	const struct i2c_device_id *id = i2c_client_get_device_id(client);
-> +	const struct acpi_device_id *acpi_id = NULL;
-> +	struct device *dev = &client->dev;
-> +	enum max170xx_chip_type chip_type;
-> +
-> +	if (id) {
-> +		chip_type = id->driver_data;
-> +	} else {
-> +		acpi_id = acpi_match_device(dev->driver->acpi_match_table, dev);
-> +		if (!acpi_id)
-> +			return -ENODEV;
-> +
-> +		chip_type = acpi_id->driver_data;
-> +	}
-> +
-> +	return max17042_probe(client, dev, chip_type);
-> +}
-> +
-> +static int max17042_platform_probe(struct platform_device *pdev)
-> +{
-> +	struct device *dev = &pdev->dev;
-> +	struct i2c_client *i2c = dev_get_platdata(dev);
-> +	const struct platform_device_id *id = platform_get_device_id(pdev);
-> +
-> +	if (!i2c)
-> +		return -EINVAL;
-> +
-> +	return max17042_probe(i2c, dev, id->driver_data);
-> +}
-> +
->  #ifdef CONFIG_PM_SLEEP
->  static int max17042_suspend(struct device *dev)
->  {
-> @@ -1204,6 +1226,16 @@ static const struct i2c_device_id max17042_id[] = {
->  };
->  MODULE_DEVICE_TABLE(i2c, max17042_id);
->  
-> +static const struct platform_device_id max17042_platform_id[] = {
-> +	{ "max17042", MAXIM_DEVICE_TYPE_MAX17042 },
-> +	{ "max17047", MAXIM_DEVICE_TYPE_MAX17047 },
-> +	{ "max17050", MAXIM_DEVICE_TYPE_MAX17050 },
-> +	{ "max17055", MAXIM_DEVICE_TYPE_MAX17055 },
-> +	{ "max77849-battery", MAXIM_DEVICE_TYPE_MAX17047 },
-> +	{ }
-> +};
-> +MODULE_DEVICE_TABLE(platform, max17042_platform_id);
-> +
->  static struct i2c_driver max17042_i2c_driver = {
->  	.driver	= {
->  		.name	= "max17042",
-> @@ -1211,10 +1243,44 @@ static struct i2c_driver max17042_i2c_driver = {
->  		.of_match_table = of_match_ptr(max17042_dt_match),
->  		.pm	= &max17042_pm_ops,
->  	},
-> -	.probe		= max17042_probe,
-> +	.probe		= max17042_i2c_probe,
->  	.id_table	= max17042_id,
->  };
-> -module_i2c_driver(max17042_i2c_driver);
-> +
-> +static struct platform_driver max17042_platform_driver = {
-> +	.driver	= {
-> +		.name	= "max17042",
-> +		.acpi_match_table = ACPI_PTR(max17042_acpi_match),
-> +		.of_match_table = of_match_ptr(max17042_dt_match),
-> +		.pm	= &max17042_pm_ops,
-> +	},
-> +	.probe		= max17042_platform_probe,
-> +	.id_table	= max17042_platform_id,
-> +};
-> +
-> +static int __init __driver_max17042_platform_init(void)
-
-I would name this just max17042_init() no reason to prefix with __
-and using platform in the name is weird since it registers both
-the i2c and platform drivers.
-
-> +{
-> +	int ret = 0;
-
-No need to initialize ret to 0, since you immediately assign
-a value to it after declaring it.
-
-> +	ret = platform_driver_register(&max17042_platform_driver);
-
-missing if (ret) return ret.
-
-> +	if (ret) {
-> +		platform_driver_unregister(&max17042_platform_driver);
-> +		return ret;
-> +	}
-> +
-> +	ret = i2c_add_driver(&max17042_i2c_driver);
-
-This needs to be above if (ret) which unregisters the platform_driver
-again.
-
-> +
-> +	return ret;
-
-and this should be return 0;
-
-> +}
-> +module_init(__driver_max17042_platform_init);
-
-Basically the whole function should look like this:
-
-static int __init max17042_init(void)
-{
-	int ret;
-
-	ret = platform_driver_register(&max17042_platform_driver);
-	if (ret)
-		return ret;
-
-	ret = i2c_add_driver(&max17042_i2c_driver);
-	if (ret) {
-		platform_driver_unregister(&max17042_platform_driver);
-		return ret;
-	}
-
-	return 0;
-}
-module_init(max17042_init);
-
-
-> +
-> +static void __exit __driver_max17042_platform_exit(void)
-
-Please name this one just max17042_exit()
-
-> +{
-> +	i2c_del_driver(&max17042_i2c_driver);
-> +	platform_driver_unregister(&max17042_platform_driver);
-> +}
-> +module_exit(__driver_max17042_platform_exit);
->  
->  MODULE_AUTHOR("MyungJoo Ham <myungjoo.ham@samsung.com>");
->  MODULE_DESCRIPTION("MAX17042 Fuel Gauge");
-> 
-
-Regards,
-
-Hans
+Got it, I will split the driver code changes into two patches. 
+First patch will contain the SoC-specific compatible change and multi device support. 
+Second patch will contain the generic compatible addition to of_match table.
 
 
