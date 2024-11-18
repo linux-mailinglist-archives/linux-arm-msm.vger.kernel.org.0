@@ -1,167 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-38174-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38175-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4CE2A9D09ED
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 07:58:03 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2E29C9D0A15
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 08:19:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 11D6328255D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 06:58:02 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BE9C41F21993
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 07:19:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F33614BF8F;
-	Mon, 18 Nov 2024 06:57:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B7A513D297;
+	Mon, 18 Nov 2024 07:19:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="AzLLkMc/"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fneD20gg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B4DD14B092;
-	Mon, 18 Nov 2024 06:57:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64287C2FD;
+	Mon, 18 Nov 2024 07:19:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731913069; cv=none; b=OtWzWYgDK855Um0N2QByXk4ZMlhToCII0PPsnMgHEhfTBwrAkZOcJ/oSpo/yukitKDkUQmj/ECkvdlriFjlaXRUh8x0pHqkfgxjVdJM0LrTp66GXQW3QGLUCPrZamUI36w6+FxF6DaPZIc0IBjqKrL9xCbLyGkXrzoAjy1N/Tc4=
+	t=1731914346; cv=none; b=LrIKGif17diWrUwN/pUP90axv8likdjTG72NrQ9AYzgMVBBbGzdMwqQd+eArl3e252V8KdVlIXKcsNkwTyqddWNvrdqd6YyXmE7Kccv/OTGHe9OG98zpZRyRiX8UDjpjn2eq7sn+zNLX/aI3B+OLZiZ2rcdbS49SR6G0YpuQc6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731913069; c=relaxed/simple;
-	bh=K1qUyK3DCr7kySVsqypCRz/q4FPFum6GHAhp8LI+UVA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=qxRXar5C+iX+qpB+qUrzHUVGkqHoWX1+SA+pWAJXeu3Iyl97Hcn9aZEiTAQctjk/z2acRyWhNzQ0lpX9IIF+d4X6N3hikV+z/PI/bE9JciLTV3b+KwELQqWi2nnRbVMwvMj/7ylVLCDrJ3NUjKEi8MK4iNaoH92qoyQTgYDnxNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=AzLLkMc/; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1731914346; c=relaxed/simple;
+	bh=BKcxMf8dbDw7H0N+ePTc0M738tqOIGOACUgmlNFcxuM=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=GNhmmJB3CpHkS+Xzz9c7D3DKluH+BaI+J2eXXMDcve5zYtXl+6w2SMM0d24zpup+QE/yuBzwQQttmmpM3fQZuyEGrfSzJS16lAVBm/KcDDaBWrRjenJao75PlyeNyGKDynhAldLkeso+1EpQzx3c9SUgCA97JGpyK269b6qHSic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fneD20gg; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AI5RdZu001081;
-	Mon, 18 Nov 2024 06:57:30 GMT
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AI5RfbC009619;
+	Mon, 18 Nov 2024 07:19:01 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	/Enk6OigKE9HeDXJAojnMi3vDdZMDLytoyuoacIrOFI=; b=AzLLkMc/M1NeqmJX
-	+2cC3KmRFuFRYzk0cQ9Ah8IOZNNufmh/X/Nx7ItkkPiQDP2Q6iOZkMrVCWdaBIgc
-	ywlVzBH6fvw4XNVjzdXwyU7CurYWB8qQezXuD+fGSTLjn2Lzrri4Smay9wMLYr4j
-	sgi7KEHYAS0zUff+53a2WKuzIpTkJ7oTDulXVnP6EwZAQSgHj9eDnusx26lh/hB+
-	VrBsct6efXjKkQ1q+9V5zVEkEaET2lWrYgsGF3+Jq6XGhEnZcE2R7Csc/W3lv7MZ
-	XVWaS8Oi5lKD/RXokEneN4tUoFlqOGBrhrQtvrXQuC1uSXxj1UFjbK3XlIKaa7XE
-	sc/dNg==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42ycuf9n84-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=gGWtprDPIj8CYgHX0HKLd9
+	H6F8U8b1an/ZE8Ye76hDI=; b=fneD20ggzzKx9B9UOaROMyCL9ezJCOhOnqAhqB
+	wBpLkTnwrPup31rCqaU8uzP29FTIOo5bJ0AjCkYFv8uxsYAsQrKBOL1uceu4O6k/
+	e3Rr9VLeE0ta9qlyiFIs1y+6jwMOQ36kIeJEh4qucGFz4rlyRwMlsm+qDyCmzSN1
+	QHBasuOiMwUewdy7O8rvGMpUqLR5o5VbA8ximTB39hxBJijQfdOxBpWIyINcF2qd
+	wsk5YLWb1Vg1cBjxc0AoS9SDNZFmZDMZ5TXC7Uekj9dV/X9FHbjiiU9IjouGI52R
+	OtzyNLBtwsDfZfQ8m03ub2dORDWWB+EgoVrmxteAn+m4boEQ==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42xkrm3pqm-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 18 Nov 2024 06:57:30 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AI6vTCj021226
+	Mon, 18 Nov 2024 07:19:00 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AI7IxIx031333
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 18 Nov 2024 06:57:29 GMT
-Received: from [10.64.16.151] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 17 Nov
- 2024 22:57:22 -0800
-Message-ID: <0f5a1ce9-060b-44d3-b6f0-da88b26fc57d@quicinc.com>
-Date: Mon, 18 Nov 2024 14:57:19 +0800
+	Mon, 18 Nov 2024 07:18:59 GMT
+Received: from yijiyang-gv.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Sun, 17 Nov 2024 23:18:56 -0800
+From: YijieYang <quic_yijiyang@quicinc.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Richard Cochran
+	<richardcochran@gmail.com>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <quic_yijiyang@quicinc.com>
+Subject: [PATCH v3 0/5] Enable ethernet for qcs8300
+Date: Mon, 18 Nov 2024 15:18:41 +0800
+Message-ID: <20241118071846.2964333-1-quic_yijiyang@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 9/9] arm64: defconfig: Enable SX150X for QCS615 ride
- board
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar
-	<quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        Maarten Lankhorst
-	<maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Rob Herring <robh@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "Krishna
- Manikandan" <quic_mkrishn@quicinc.com>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        "Catalin
- Marinas" <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Li Liu
-	<quic_lliu6@quicinc.com>,
-        Xiangxu Yin <quic_xiangxuy@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>
-References: <20241113-add-display-support-for-qcs615-platform-v2-0-2873eb6fb869@quicinc.com>
- <20241113-add-display-support-for-qcs615-platform-v2-9-2873eb6fb869@quicinc.com>
- <CAA8EJpok20-7HXJJbcJi8YZYCU68g_DGThR_ckjBEz0e+gGBSA@mail.gmail.com>
-Content-Language: en-US
-From: fange zhang <quic_fangez@quicinc.com>
-In-Reply-To: <CAA8EJpok20-7HXJJbcJi8YZYCU68g_DGThR_ckjBEz0e+gGBSA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: VOJNeQms_kWtpsHJqazuKTbSkYBfIOw2
-X-Proofpoint-GUID: VOJNeQms_kWtpsHJqazuKTbSkYBfIOw2
+X-Proofpoint-GUID: CCmy1JdDVgpqxe6OjVE7_c_x2Z6rTzXz
+X-Proofpoint-ORIG-GUID: CCmy1JdDVgpqxe6OjVE7_c_x2Z6rTzXz
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 clxscore=1015
- mlxlogscore=999 phishscore=0 spamscore=0 impostorscore=0 adultscore=0
- bulkscore=0 lowpriorityscore=0 priorityscore=1501 mlxscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411180057
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
+ spamscore=0 adultscore=0 mlxlogscore=911 malwarescore=0 impostorscore=0
+ clxscore=1015 bulkscore=0 priorityscore=1501 lowpriorityscore=0 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2411180060
+
+From: Yijie Yang <quic_yijiyang@quicinc.com>
+
+Add dts nodes to enable ethernet interface on qcs8300-ride and
+Rev 2 platforms.
+The EMAC, SerDes and EPHY version are the same as those in sa8775p.
+
+To: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konradybcio@kernel.org>
+To: Rob Herring <robh@kernel.org>
+To: Krzysztof Kozlowski <krzk+dt@kernel.org>
+To: Conor Dooley <conor+dt@kernel.org>
+To: Richard Cochran <richardcochran@gmail.com>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Cc: netdev@vger.kernel.org
+Cc: Yijie Yang <quic_yijiyang@quicinc.com>
+Signed-off-by: Yijie Yang <quic_yijiyang@quicinc.com>
+---
+This patch series depends on below patch series:
+https://lore.kernel.org/all/20240925-qcs8300_initial_dtsi-v2-0-494c40fa2a42@quicinc.com/
+https://lore.kernel.org/all/20241010-schema-v1-0-98b2d0a2f7a2@quicinc.com/
+
+Changes in v3:
+- Remove unnecessary space and line in qcs8300-ride.dtsi.
+- Link to v2: https://lore.kernel.org/all/20241017102728.2844274-1-quic_yijiyang@quicinc.com/
 
 
+Yijie Yang (5):
+  dt-bindings: arm: qcom: add qcs8300-ride Rev 2
+  arm64: dts: qcom: qcs8300: add the first 1Gb ethernet
+  arm64: dts: qcom: qcs8300-ride: enable ethernet0
+  arm64: dts: qcom: move common parts for qcs8300-ride variants into a
+    .dtsi
+  arm64: dts: qcom: qcs8300-ride-r2: add new board file
 
-On 2024/11/13 20:21, Dmitry Baryshkov wrote:
-> On Wed, 13 Nov 2024 at 13:53, Fange Zhang <quic_fangez@quicinc.com> wrote:
->>
->> From: Li Liu <quic_lliu6@quicinc.com>
->>
->> For the QCS615 ride board, enable the SX150X to activate the ANX7625
->> allowing the DSI to output to the mDP through the external bridge.
->> The ANX7625 relies on the SX150X chip to perform reset and HPD.
->>
->> Signed-off-by: Li Liu <quic_lliu6@quicinc.com>
->> Signed-off-by: Fange Zhang <quic_fangez@quicinc.com>
->> ---
->>   arch/arm64/configs/defconfig | 1 +
->>   1 file changed, 1 insertion(+)
->>
->> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
->> index c0b8482ac6ad7498487718ba01d11b1c95e7543d..599a339a19435efbee7a5ef80c093b0e8c65f7ff 100644
->> --- a/arch/arm64/configs/defconfig
->> +++ b/arch/arm64/configs/defconfig
->> @@ -631,6 +631,7 @@ CONFIG_PINCTRL_SM8350=y
->>   CONFIG_PINCTRL_SM8450=y
->>   CONFIG_PINCTRL_SM8550=y
->>   CONFIG_PINCTRL_SM8650=y
->> +CONFIG_PINCTRL_SX150X=y
-> 
-> Your commit message doesn't describe why it needs to be disabled as a
-> built-in. You are trying to enable it for all defconfig users.
-> Also the placement of the symbol is not correct. You've added it to
-> the section with msm pinctrl drivers, while the chip has nothing to do
-> with msm.
-ok, will remove it from the patch series
+ .../devicetree/bindings/arm/qcom.yaml         |   1 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ arch/arm64/boot/dts/qcom/qcs8300-ride-r2.dts  |  33 ++
+ arch/arm64/boot/dts/qcom/qcs8300-ride.dts     | 299 ++----------------
+ .../{qcs8300-ride.dts => qcs8300-ride.dtsi}   | 107 ++++++-
+ arch/arm64/boot/dts/qcom/qcs8300.dtsi         |  43 +++
+ 6 files changed, 211 insertions(+), 273 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/qcs8300-ride-r2.dts
+ rewrite arch/arm64/boot/dts/qcom/qcs8300-ride.dts (95%)
+ copy arch/arm64/boot/dts/qcom/{qcs8300-ride.dts => qcs8300-ride.dtsi} (78%)
 
-> 
->>   CONFIG_PINCTRL_X1E80100=y
->>   CONFIG_PINCTRL_QCOM_SPMI_PMIC=y
->>   CONFIG_PINCTRL_LPASS_LPI=m
->>
->> --
->> 2.34.1
->>
-> 
-> 
+
+base-commit: 4d0326b60bb753627437fff0f76bf1525bcda422
+-- 
+2.34.1
 
 
