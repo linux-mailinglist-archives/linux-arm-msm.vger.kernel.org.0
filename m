@@ -1,106 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-38234-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38235-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id C37CF9D11D6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 14:27:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CF6659D11D7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 14:27:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 26871B27648
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 13:24:44 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E3452B22D3E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 13:25:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D2A21A2622;
-	Mon, 18 Nov 2024 13:22:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3DA4319D082;
+	Mon, 18 Nov 2024 13:22:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nmYZDE8J"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iX8dIX61"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE06C1E885
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Nov 2024 13:22:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 817DC1A0BFB
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Nov 2024 13:22:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731936134; cv=none; b=lvspR+3LIV8anQF7cF/9DpPlzfW9dmlouEdcQzKFZ3hshmJLrca0ZzEspl5hcfGsF6Nh4FjsFXgfLsja+MF+NrXdqANBM7olE0pE2CbvH6I/vKvHoU77a4jn4CgUix1KYTdr7r1NZaIkuPyJlviQn2n3OcQzTJiJhdua/0TZtIM=
+	t=1731936140; cv=none; b=SoZL5eZDivbUvcwr7VRM/ESdMYisIKOTEdejSmkHrZD5E5kCBaigVSztEUqZl1F5S2e51DaXLtdXOJgRCOXqQmMDlI5qQHLGQJJukO1SzrtUvabJxJFyoND+0zJtPoLiz4SfppfAtrgyjTzJFlS5tiMYbxCCOGeHtnA952sUZ2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731936134; c=relaxed/simple;
-	bh=8WZWHjrrpvf6/wJGZvis8eIJoW+Xx+9uwID59tAg6dc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=G+vspc0J9SqT2qThOqZ99/oR4RgY9+C4RUgevtbAHIloHu7XtR8MEBv2cOUceAwQQ6Pnhn/2U+rYCuK/K9tu6Wk4gvrXoyi3v0TkP2cfJSJBAH37VcPVpVeZozwQp7Za3ssEhCSKVHR5ApZhTQDlBXeOI8fh2O0SMhbhsNnD+Yc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nmYZDE8J; arc=none smtp.client-ip=209.85.167.41
+	s=arc-20240116; t=1731936140; c=relaxed/simple;
+	bh=ESSG4Jj7FxqGyEig0Jvf7BJtg5tXT9+TXdVz5teABfE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=qIzbVRPEkU3vR8nYJnGzlIWNyURJ6x7fzHvs76j/kWti3gHgqrCkNzqfO3hDV9bBorv1LDIbdRQKmlDWaTQzd0wNe6Uc1uTfmTVjMr9vCGWo28/Z3ml5/a/+RYxlbA5rrsAjhHMfQmw/L+tt956nGzNKnEGe501KSwqnKg+k1wY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iX8dIX61; arc=none smtp.client-ip=209.85.128.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-539e4b7409fso4259777e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Nov 2024 05:22:12 -0800 (PST)
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4316cce103dso29490885e9.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Nov 2024 05:22:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731936131; x=1732540931; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=qHlRycREef525moGSk+vFsAJO6g0zablcSaT2Q6MMzE=;
-        b=nmYZDE8JwRzVTuTCeRnqBYBoe4FSU0oLp4AIoT+ZDVIgiq9ZIDoe0DA6qwqmNw0WWl
-         4d1ek1cnz1V55To9ihuI/+/Qma1aFA7Dkf6SVwuwqlAQIhw2m8mcfh9Peoq6nxRuXAqg
-         9QY7v5T0pLGOH+7lXNnsOgY6/tzdS6jKbw3pXZXRWfna/MMauDhr8DDXSv9UXnEkcyYG
-         6deoWVN2+06hu4X47r97HroD8tTncHOAVc4b3u9fLLse4jV6AOXFd0bvZl3yJVCZEl6k
-         7BdYr6JDXfqWguTj10uqKuESGPXbm/jMvI5wyLbDxMG1TUhPr7xvpo5s35IvhR1vbFqd
-         v9fg==
+        d=linaro.org; s=google; t=1731936137; x=1732540937; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=zMaEJ9Sd/GnLr8UWiwxXSZAacCs33/2tfIwDNrN6hF8=;
+        b=iX8dIX61ZTD3BXJGc8V/ICi4/cWYWTLiKbt2IMzotDpPnFBCiE107kM5WtzlMe7gjL
+         VZDD3aKMceOS4YU1haIimxKkKpO36bZrjNY3GkhtH+/el+NH61K8Q8atNi4EpobI3WWx
+         /1WHYJzMFJRHb3DfbbJQnaJ3nMd110wBk4jhPIR0GLWpg7lYbNebNa51V1dmydUPDvg/
+         yBpPqozqok766sUlH800WpKY191Ah7Z6C5RO7ij6ddRGYl+Js7+hIJbBk9MYeQGiBA3L
+         Ty9CcTpAJ9A02BC9BV9K9KmAMe8M8/kmlORYOzxlK8Ogf3+xTsy8m6LAUNCXKnmUJCKN
+         DqQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731936131; x=1732540931;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qHlRycREef525moGSk+vFsAJO6g0zablcSaT2Q6MMzE=;
-        b=sRkMuMdDvR2tFHVXJpYvNiVTGOyrZLh4fbS8VwS3POkzRNYxQr36X+lwPm5dWsZGqG
-         sReY3F2PY0h9GQ9meMm3q7aiWvK6k2Neut9VX4MfJDSgl7KP0ZYg/6ecKIdckFicBEPV
-         mtLuCZJWeRG2AJbbb91tHrnwmy7bRPQag7fyz8neKeMcL7/xLw14Kh/B1g4ynTKL3raf
-         i4yDPSIhLjkyijf+8khlv4nk85aNvW3n6HB6dRZlLK5tTye6eCwq3a34PmMzTfS4DTox
-         1oW9S6xQcSCeuDB7i3k39eWzDlxILoY7O/GAUvGeBym9inzlfAYT473K1uazACn2uH75
-         LlPA==
-X-Forwarded-Encrypted: i=1; AJvYcCUnFGnS/dtGBHgupV2SZorWz/umLgpN1v9noaihwG/MSFaeJLZ8oPvJc1kZTdUzVRdEn9rhmGgudvnAsdEG@vger.kernel.org
-X-Gm-Message-State: AOJu0YwFfzBlhUQDE5TTf4mfMk30su8L3XF7Er0TfmiERaNreJoAbrGK
-	fVNZPxkAj9sSujut659f4rUzM4EezKUtY0v712kRooXf4mqT4psfXSQG0QAAZvk=
-X-Google-Smtp-Source: AGHT+IEth3Rs4CRCnHxcAkRLL3QYVR7t7ZRuvLES7ZeMPLIutcz17tWZ5cEK7b+lVyqxjvupb/VQnA==
-X-Received: by 2002:a05:6512:ac8:b0:53d:a821:390e with SMTP id 2adb3069b0e04-53daafed725mr3889907e87.7.1731936130882;
-        Mon, 18 Nov 2024 05:22:10 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53da654880bsm1611327e87.225.2024.11.18.05.22.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Nov 2024 05:22:09 -0800 (PST)
-Date: Mon, 18 Nov 2024 15:22:08 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Qingqing Zhou <quic_qqzhou@quicinc.com>
-Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org, 
-	krzk+dt@kernel.org, conor+dt@kernel.org, robimarko@gmail.com, will@kernel.org, 
-	robin.murphy@arm.com, joro@8bytes.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, iommu@lists.linux.dev
-Subject: Re: [PATCH v4 3/3] arm64: dts: qcom: qcs615: add the APPS SMMU node
-Message-ID: <buu6l7re4tqauqsbfhlryf223lt4f3624jm2b2nnhexwxmymtk@7hrpd7ht3aff>
-References: <20241105032107.9552-1-quic_qqzhou@quicinc.com>
- <20241105032107.9552-4-quic_qqzhou@quicinc.com>
+        d=1e100.net; s=20230601; t=1731936137; x=1732540937;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=zMaEJ9Sd/GnLr8UWiwxXSZAacCs33/2tfIwDNrN6hF8=;
+        b=mPgSYGfW/wz9BThu08om0V1cq5w1d3EEK1OpQ8o2Tr5ERAL58pfXVshOMPMJnFM13y
+         05f0wy2MkJRg19IopChYSpevMaGZPfpbF7ftXahL/PV/Jh8fDOmFi4RvMDmOPY6D+j1K
+         PzFUqt39Bd8K6ddBatzrtbNhOumR0V1B3Nel93N0/2AOifIFx0tGlDp8XRNaBJv8s1g9
+         V8e974a/7ulpSoCXY4AWna5Azg0imFMnTHts4s9XV2kdz0HY1lwNnF/i3Euc+c0KfyGv
+         lYhscKfCGOTt/DE7SrvP5K4EAnLejhx+Q3Xx7/Ers/kEc3p3VypHjeUzZ2Ep8TqI5aQI
+         itCQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWNTOA1hZmwnGgDTMNALFurdkmF9pZ9GekPbT/0dtowGk6mDWum6KI1BFxkbndFa+wVoF8xvU/CRJCnEjsB@vger.kernel.org
+X-Gm-Message-State: AOJu0YwgWdpSTMmm1ppgECGrV40heFjIn0bFCp0AHQ5UJO4u20e7JAlm
+	F0ofNcPeIoY7lHjB5yVVcEVVLTK05LtF7BqcnkhLfT6JstwWFyAEJuJnyWB6A+E=
+X-Google-Smtp-Source: AGHT+IFWnZuICcQfYd9OsfPN5uKgimr0iEncaQ0yhH8YtgnUZaUryhBBQ+OQ+MhH1O/KiSAnMc28oA==
+X-Received: by 2002:a05:600c:501e:b0:431:4847:47c0 with SMTP id 5b1f17b1804b1-432df722c63mr122864995e9.7.1731936136986;
+        Mon, 18 Nov 2024 05:22:16 -0800 (PST)
+Received: from [192.168.0.40] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432dab806e1sm159426485e9.20.2024.11.18.05.22.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 18 Nov 2024 05:22:16 -0800 (PST)
+Message-ID: <3ce358b9-6a65-4141-ad3a-bbb826082470@linaro.org>
+Date: Mon, 18 Nov 2024 13:22:15 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241105032107.9552-4-quic_qqzhou@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] clk: qcom: Add support for multiple power-domains for
+ a clock controller.
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20241118-b4-linux-next-24-11-18-clock-multiple-power-domains-v1-0-b7a2bd82ba37@linaro.org>
+ <cl4u42hzdwaj4dt5bponhnadou3uecaodtr7iopfu4vhmvttif@bxxvmwmzu5u2>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <cl4u42hzdwaj4dt5bponhnadou3uecaodtr7iopfu4vhmvttif@bxxvmwmzu5u2>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Nov 05, 2024 at 08:51:07AM +0530, Qingqing Zhou wrote:
-> Add the APPS SMMU node for QCS615 platform. Add the dma-ranges
-> to limit DMA address range to 36bit width to align with system
-> architecture.
-> 
-> Signed-off-by: Qingqing Zhou <quic_qqzhou@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/qcs615.dtsi | 75 ++++++++++++++++++++++++++++
->  1 file changed, 75 insertions(+)
-> 
+On 18/11/2024 13:15, Dmitry Baryshkov wrote:
+>> On x1e80100 and it's SKUs the Camera Clock Controller - CAMCC has
+>> multiple power-domains which power it. Usually with a single power-domain
+>> the core platform code will automatically switch on the singleton
+>> power-domain for you. If you have multiple power-domains for a device, in
+>> this case the clock controller, you need to switch those power-domains
+>> on/off yourself.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> I think the series misses the platform-specific part. 
 
--- 
-With best wishes
-Dmitry
+I don't think I understand what you mean by that.
+
+It is hard to
+> understand what kind of power relationship do you need to express. Is it
+> actually the whole CC being powered by several domains? Or are some of
+> those domains used to power up PLLs? Or as parents to some of GDSCs?
+
+Well for example the TITAN_TOP_GDSC needs both PDs to be switched on.
+
+We _could_ do this just for the CAMCC on x1e80100 - i.e. make it just 
+for the camcc device but then, the next clock controller that needs more 
+than one PD will have to implement the same fix.
+
+---
+bod
 
