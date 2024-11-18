@@ -1,119 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-38214-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38215-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 532B49D0EA9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 11:35:54 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 57B579D0F05
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 11:55:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id F37581F21F6C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 10:35:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1C54A28133B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 10:55:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A94B1990BB;
-	Mon, 18 Nov 2024 10:34:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2AFCE194151;
+	Mon, 18 Nov 2024 10:55:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RkEEcc/M"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="hb5Rnlwh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FD1E17BB32
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Nov 2024 10:34:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 845F619415E
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Nov 2024 10:55:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731926081; cv=none; b=cmk695M9jYkd95NRAuSINYsZrA6a1LnuIXgQUGswSv3BCUDfOZgZQMp1u6nP9W5B2KmQXMp06Gt0p+wfDmkld5DvE4pr7HNikL6d7dK5S1D19jfjhpvdq+lNv6JRwBQQ5KGxTQyTkt73tYJRfLXDw/45ue3ENGKMMt217OBVNvk=
+	t=1731927344; cv=none; b=ccXuwD4NHjWqd8DkpNL7xYntWmLyVL8wSHFidE8ikk36ZiKgh8eedD4QnL6bPhomWTVEneRp7DGBRHCOSgR16yuK+dLO47n1yw2ALMgxBE4kO0wwf/S4rcHAlA+R0E0DWVc9Us3wn2uuyYkEcrFbO0wzfcpv0TbbSLKfuRTE1A0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731926081; c=relaxed/simple;
-	bh=XQsDyuRiau3IHO4Li1+Y+cuAubOEwOYf9EOJSmEbkBs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=DAtfwrFaeIh63iwO4c+Owu+0/oc3BVlBTbO9r4gINzMFG3L5YWmcZIMWrn4sLrdfweXsyX38XNPepMp4Jg9g2mf+xPV6pi8rZErWwcLKmqKw5PCI+FiyWKmsUBYHfgw5B6czPo8wbeyQ+Tx3wH1vbt4kuv9kGP83hM1wdE9Fd4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RkEEcc/M; arc=none smtp.client-ip=209.85.221.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-3823f1ed492so583968f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Nov 2024 02:34:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731926077; x=1732530877; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=W7YU9L/ihohCgSGV7XFCQCDHEXAXKVeCUTFSk43kuSs=;
-        b=RkEEcc/MdVc4XeuUxPrXW7gCWcStT2vFV3AHdcGUqiXJptxZuuuGCD8zjAgqONl28D
-         e8764lltzpNaZR02Tbvh9uIWYnkANSyvmdmekBT+i19iLfjKmbsl+p933o8UYR/kuOlR
-         M+C0as/esy84Ww13qSH5cpRWqA+aY852nIh4f023ydNjXOX150eJmLoRreTrxmq1BzIf
-         FOFvI74QfOABwlCtUhhOCm8PAigqzUYb8/x+Zww6aS3TsZOiU6FE6OsvIFrNdNp9ia7W
-         4/l9lPCfZ+un6D6S8+CDo84yTHK38NCKU+E4LwW2tiyH5vmL2iQD0mOzAFcRNIJNFgVi
-         7u2w==
+	s=arc-20240116; t=1731927344; c=relaxed/simple;
+	bh=ZcFDjxCikiIDehFzhPFoKi4SBUA/t82ryu7kG31flDg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dgFs+LKFyw5m+eeW14shZ2+146CqBq4IoY8izQvxurcxwIL+0tUmPEIA6HrBCrC5dPCq07RguwxXInW4v/wUMRu+QKFZPyw6ISaARpup+ShHbXxJCMRIkyvUC9ku81kYlp76KNMJLeEVB3ikvttkIyMZexyCPbnGjaCjt4B4w6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=hb5Rnlwh; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1731927341;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=AnKB6OxF/nzSNsYCRUDY/ZZFnQ2D348/yl+VsYaNxvk=;
+	b=hb5RnlwhJZd9uYV7dmkpNuh5s7ne3bbgbiK45l/c8SiESei5uuOP+Q+4zYt4mJ/zkN/1Nl
+	YoFv/8UgEnIlOiSBL+Ha3xdwvuKckOgE4XOjyCeuB+osdwuhYBCnFc2gJ9OBmXElLKgS6L
+	DztIC0i/X9akmep/Wdwe2o9FYlqHao0=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-447-GjgOx4R1M9Gouc7AFP8A0A-1; Mon, 18 Nov 2024 05:55:40 -0500
+X-MC-Unique: GjgOx4R1M9Gouc7AFP8A0A-1
+X-Mimecast-MFC-AGG-ID: GjgOx4R1M9Gouc7AFP8A0A
+Received: by mail-ej1-f72.google.com with SMTP id a640c23a62f3a-a9a01cba9f7so178826766b.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Nov 2024 02:55:40 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731926077; x=1732530877;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=W7YU9L/ihohCgSGV7XFCQCDHEXAXKVeCUTFSk43kuSs=;
-        b=iQDeoOXBmYiZGm90cIBQrrp64Cjm5mWEdiQT8ipijZpOsO5ni9k0wtQdetT5vJ1Ay0
-         puezKJt0P2yN5pl7lN+IQFBcys+LM3+7UpIEan+C1HFNzC8mFOtzMdTi05JSksy1nEB5
-         HV7ZdgyoBwiqVrfiWA5SYwFsLnGR/vmiLleTFInA0p27QH14LASEMJ+k0zl8ECtq7Efl
-         UKJKwfoKHwCH6ANHPfj4mlEAl6thsAcEsYVuShxmu1He599dDDnMNWS8HeB1eaYSRItJ
-         zJPz7tmM468byxm0y4fTWcKUtNr3aeg7Enu+KyvgJ2epkfUl1jC/34XRGhQE+rCYJJVA
-         OGXQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVCFGFFjDMPp6CrheFK5jQWtRtKdytp2BKbksJ0eaDvhmARMiTP85WHKxYv05xe8aREQBjfgsPuoNKfBVV2@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz/TghmvZNTDROmEYEazN2nCsUnmOubuJnkQ9EzcmEMA3qPtXw3
-	sxXjZFX4HSxYN5yukFOE9LRqaTJjkNs7Z5PVApfZVuQQcZbe6zW37BX9ljCZGbw=
-X-Google-Smtp-Source: AGHT+IGwcJJL68jiIs4CpOJY91QszYJvr1I5b9vVKUwSfS1kEIk0ygwL6xoo18htvJHm4mOKTYcF8g==
-X-Received: by 2002:a5d:6d8a:0:b0:382:484d:45da with SMTP id ffacd0b85a97d-382484d4782mr2179017f8f.6.1731926076817;
-        Mon, 18 Nov 2024 02:34:36 -0800 (PST)
-Received: from [127.0.0.2] ([2a02:2454:ff21:ef40:5b7a:75b3:1e72:6e3d])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38245e95925sm3162979f8f.111.2024.11.18.02.34.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Nov 2024 02:34:36 -0800 (PST)
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-Date: Mon, 18 Nov 2024 11:34:30 +0100
-Subject: [PATCH 2/2] arm64: defconfig: enable NXP PTN3222 eUSB2 to USB2
- redriver driver
+        d=1e100.net; s=20230601; t=1731927339; x=1732532139;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=AnKB6OxF/nzSNsYCRUDY/ZZFnQ2D348/yl+VsYaNxvk=;
+        b=Ac4zMkytUJK9PLJsFP4wV29r6kURbskVhDwsjXNJeByzuAidgyEjzA1ZK6a+SgUEPH
+         1FxSeAzMmSdvji9+VtVmK5YCHTbdpYl8cgFtYKT9kfFGMK/V3cAfB79JZ2ks+4C3Gpf2
+         rvYqA47WzBpoa3MVhxzmPolsgj+hPInwF1FZYFBEcdxq8Uub8TwUkcQqmHmag8LVa8WX
+         2idT9+oGM+ym6P+p+UYAr2fl99tIgD54jWtCU1UcHH470tLKeVqVlc98kLl3F0dKV9+T
+         jIW6+wjLR1jb0eSeFCqdmQhw07BjqQEjTkGXa1cPLcuIdClG/P5bjg9oqNY0zw3P/0Wf
+         nFHQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV91gcX14+LIY7I1dpNbhMqbjZQhGcaMa4QP6r/hcMOLVsAJ1RIlqLPXlmmVkL1QEd+vpKLo9YciTlcBI7C@vger.kernel.org
+X-Gm-Message-State: AOJu0YyHgLjSmV8818dk5FgSPQ0t6+K4L5Ow5WjjHUKFsNHhoMllzhtW
+	Ud2pzBTxr58gpRaLA5H1JYkzaIT5SXv0etYoJ242vrO5hH9aZQxo8nzx0a3RutE3grfaEoQ4Xv8
+	1Uw99VFWCLaBxCgQ8IKeoZ4UZcvbRkr8D1L9TXbU1MhiRndS0u6RYpkhxI+pRo8c=
+X-Received: by 2002:a17:907:d24:b0:a87:31c:c6c4 with SMTP id a640c23a62f3a-aa483420c9dmr1098521966b.24.1731927339046;
+        Mon, 18 Nov 2024 02:55:39 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE2vTdiBnn4PitIg3NGPzUBSRlMyCFj1MIDShUo/ICNJU5eRSVBn7pak/o015A12IJGuEwz+g==
+X-Received: by 2002:a17:907:d24:b0:a87:31c:c6c4 with SMTP id a640c23a62f3a-aa483420c9dmr1098518766b.24.1731927338635;
+        Mon, 18 Nov 2024 02:55:38 -0800 (PST)
+Received: from ?IPV6:2001:1c00:c32:7800:5bfa:a036:83f0:f9ec? (2001-1c00-0c32-7800-5bfa-a036-83f0-f9ec.cable.dynamic.v6.ziggo.nl. [2001:1c00:c32:7800:5bfa:a036:83f0:f9ec])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa20dffd721sm536956766b.107.2024.11.18.02.55.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 18 Nov 2024 02:55:38 -0800 (PST)
+Message-ID: <322acf33-4569-4e57-a4b5-af60cb0091b7@redhat.com>
+Date: Mon, 18 Nov 2024 11:55:36 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241118-x1e80100-crd-fp-v1-2-ec6b553a2e53@linaro.org>
-References: <20241118-x1e80100-crd-fp-v1-0-ec6b553a2e53@linaro.org>
-In-Reply-To: <20241118-x1e80100-crd-fp-v1-0-ec6b553a2e53@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/2] power: supply: max17042: make interrupt shared
+To: Dzmitry Sankouski <dsankouski@gmail.com>,
+ Krzysztof Kozlowski <krzk@kernel.org>,
+ Marek Szyprowski <m.szyprowski@samsung.com>,
+ Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>,
+ Purism Kernel Team <kernel@puri.sm>, Sebastian Reichel <sre@kernel.org>,
+ Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+ Alim Akhtar <alim.akhtar@samsung.com>, Shawn Guo <shawnguo@kernel.org>,
+ Sascha Hauer <s.hauer@pengutronix.de>,
+ Pengutronix Kernel Team <kernel@pengutronix.de>,
+ Fabio Estevam <festevam@gmail.com>, Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
- Abel Vesa <abel.vesa@linaro.org>, Johan Hovold <johan@kernel.org>
-X-Mailer: b4 0.13.0
+Cc: linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-samsung-soc@vger.kernel.org, imx@lists.linux.dev,
+ linux-arm-msm@vger.kernel.org
+References: <20241118-b4-max17042-v3-0-9bcaeda42a06@gmail.com>
+ <20241118-b4-max17042-v3-1-9bcaeda42a06@gmail.com>
+Content-Language: en-US, nl
+From: Hans de Goede <hdegoede@redhat.com>
+In-Reply-To: <20241118-b4-max17042-v3-1-9bcaeda42a06@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-It is used in many of the Qualcomm X1 Elite laptops for additional USB-A
-ports, USB fingerprint readers or similar peripherals.
+Hi Dzmitry,
 
-Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
----
- arch/arm64/configs/defconfig | 1 +
- 1 file changed, 1 insertion(+)
+On 18-Nov-24 11:09 AM, Dzmitry Sankouski wrote:
+> Fuelgauge blocks often are incorporated in bigger chip,
+> which may use only 1 line for interrupts. Make interrupt
+> shared.
+> 
+> Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 0b8303eb498d..8b17d70b3b58 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -1530,6 +1530,7 @@ CONFIG_RESET_RZG2L_USBPHY_CTRL=y
- CONFIG_RESET_TI_SCI=y
- CONFIG_PHY_XGENE=y
- CONFIG_PHY_CAN_TRANSCEIVER=m
-+CONFIG_PHY_NXP_PTN3222=m
- CONFIG_PHY_SUN4I_USB=y
- CONFIG_PHY_CADENCE_TORRENT=m
- CONFIG_PHY_CADENCE_DPHY_RX=m
+Thanks, patch looks good to me:
 
--- 
-2.44.2
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+
+Regards,
+
+Hans
+
+
+
+> ---
+>  drivers/power/supply/max17042_battery.c | 9 +--------
+>  1 file changed, 1 insertion(+), 8 deletions(-)
+> 
+> diff --git a/drivers/power/supply/max17042_battery.c b/drivers/power/supply/max17042_battery.c
+> index 496c3e1f2ee6..99bf6915aa23 100644
+> --- a/drivers/power/supply/max17042_battery.c
+> +++ b/drivers/power/supply/max17042_battery.c
+> @@ -1103,14 +1103,7 @@ static int max17042_probe(struct i2c_client *client)
+>  	}
+>  
+>  	if (client->irq) {
+> -		unsigned int flags = IRQF_ONESHOT;
+> -
+> -		/*
+> -		 * On ACPI systems the IRQ may be handled by ACPI-event code,
+> -		 * so we need to share (if the ACPI code is willing to share).
+> -		 */
+> -		if (acpi_id)
+> -			flags |= IRQF_SHARED | IRQF_PROBE_SHARED;
+> +		unsigned int flags = IRQF_ONESHOT | IRQF_SHARED | IRQF_PROBE_SHARED;
+>  
+>  		ret = devm_request_threaded_irq(&client->dev, client->irq,
+>  						NULL,
+> 
 
 
