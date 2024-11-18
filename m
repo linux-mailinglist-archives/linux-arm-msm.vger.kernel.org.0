@@ -1,63 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-38171-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38172-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EA9409D09B5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 07:46:00 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 968F69D09B7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 07:46:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 59018B21394
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 06:45:58 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5DD31281CD0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 06:46:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37CAF13CA95;
-	Mon, 18 Nov 2024 06:45:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 08ACA14F123;
+	Mon, 18 Nov 2024 06:45:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WUEp8mDB"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="eyb8uyfA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ABC81803A;
-	Mon, 18 Nov 2024 06:45:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2208D14A619;
+	Mon, 18 Nov 2024 06:45:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731912353; cv=none; b=HfpOqw/caW65Q9JZXewc9mhCPjtitfyjuZNDWU8GeVKncC1nzmdK/aELePpZc+3fcwYI6a/UdBT6HCL+jUAwyG2U4Y7VGaXfjaolvtFzV2OJorl2U/JfVWAuo9wgekh2kpSPHIbSxp8F4re1bG3J6qAUqycHtNSN7+ha1iv1+DA=
+	t=1731912355; cv=none; b=bqnmehkEN00+Sn2n/lkLFoVx7WW094ykeBXy/53yt6FIlh60Xvb5XLhR+iuUIW/3exz2aMkEp48ZjtJG8Vad9Nao9C8YP7iAGjisCDGEGha5Mbrf8GiOByziTTVu5RQWxxf7jyu3iSczLZfEirZ90lMId8z7/ub1qMJzkzha/fI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731912353; c=relaxed/simple;
-	bh=awN9igyNGVeBjdGAA4jfwmBWzN9n/H2nAYHa+saIunQ=;
-	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=r74hQa1M3Tx3ilArqyzzTQhsvr+/D4FSFP8SWK7nNFKZXmqNsGIYVUFTSWn7y9tp5mHJ7ZR1/4VbsdTe+H1QfBunuMTlHujsRL2Y+xcJ7OzcKWvUISbZZ4kcPZYAP+/ZuseqadbF1GiGBLfzavAwWZgaRTGEX1TGmZFIj5ZM5HQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WUEp8mDB; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1731912355; c=relaxed/simple;
+	bh=0qZUPdGJk7bBM+UxhZdM6wcIbpEizh3WpNn2B2lAzws=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
+	 In-Reply-To:To:CC; b=EuYo8cJYbekl4uZokL1nkyu/VqvFMFU2m5dEXO2u6bQ5Truj29kxBAlcklfij2J5NebWjnAoKFmZhHFBxnn6Bv2oHSFosW7JIB9JKXcjHGOE2Nfkbku3Zxjxvcp1BjIF+Fzf8RcJXxe9aaIHp2q62eGUovb8L1ZqEh/GVClHfMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=eyb8uyfA; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AI5Slv2022121;
-	Mon, 18 Nov 2024 06:45:43 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AI5Rot4004351;
+	Mon, 18 Nov 2024 06:45:47 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=c0czzM6k85cS3smUG2XgN2
-	NJPg3YEEhu0UdKfmZR6hk=; b=WUEp8mDB3Attdh+69oVVi0hg2so2ls92YPmBUf
-	vQwn7V5zSbX+bT71x8DLoWtOAhtJIydkODhvT3+7TJxjGivkbRsng49i5rUZtBsP
-	IQey2phO1fWoBRmZWvwBKB+dwMEN0NOY3yEFHKe6sU6TU1LP20ylxPguaZOubgMN
-	0NxER4vMRi6ZpIDYGQM0voSwnTx/GFmSycPRFVU28JGoryoTuQCrkrlyVa/RCQHp
-	nEMKZipgXvwsXG+EafokYm2C6SqFEGo2Zrvq5ZNvdeDkf/1W4xrLQHdlGektXd0Y
-	zknUrF5rtuAuoVgXt+MS0SSswNhocn1DmgvBMxCVYFgdANSg==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42xksqknmy-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	iK4hvlfKA1B5TOlkb/qDrP+TI79PdOVDfLf8BJRGGg0=; b=eyb8uyfAW0xEeuA2
+	t2NJgcVM+DvsEoZ1zNQMzngXFZz9PpV3k+EUTUYMk77i+9+aFjPnPdrfFSw6YRj0
+	27OXb/S9+CpW2YDr1CylwwJogyHc0c8lKqpn1XESwz/82gSKvPUh5KaLjyVfALNu
+	aDhrrKW02cfRi3esxYwp4pUInKUrAqp9fIOKK+v+K9rpK2QqMRnIEjNwe5e4/2Bc
+	/EIrbsyLk2ic1qUYWRM8jFHNip5pfP5YWjRG8zP6kp0bAZicyY3tuVqtz5mcfwSn
+	w1yYT1jwyNw73VcB8U6+3N+ZipW9yEtQphPhaOHfk7z4qzfs3G3Vi9YsKEz53nqY
+	bQwLog==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42xm5g3m7j-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 18 Nov 2024 06:45:43 +0000 (GMT)
+	Mon, 18 Nov 2024 06:45:46 +0000 (GMT)
 Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AI6jgMx009796
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AI6jk5I027342
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 18 Nov 2024 06:45:42 GMT
+	Mon, 18 Nov 2024 06:45:46 GMT
 Received: from yijiyang-gv.ap.qualcomm.com (10.80.80.8) by
  nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Sun, 17 Nov 2024 22:45:39 -0800
+ 15.2.1544.9; Sun, 17 Nov 2024 22:45:42 -0800
 From: Yijie Yang <quic_yijiyang@quicinc.com>
-Subject: [PATCH v2 0/2] Enable ethernet on qcs615
-Date: Mon, 18 Nov 2024 14:44:00 +0800
-Message-ID: <20241118-dts_qcs615-v2-0-e62b924a3cbd@quicinc.com>
+Date: Mon, 18 Nov 2024 14:44:01 +0800
+Subject: [PATCH v2 1/2] arm64: dts: qcom: qcs615: add ethernet node
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,12 +67,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIADHiOmcC/62RzW7DIBCEX8XiXCpY/yqnvkcVRQTWZQ+2G6AoU
- ZR372IuuTYqt4H9ZhbNXUQMhFEcmrsImCnStrKAt0ZYb9YvlORYC1DQaT7SpXi62DjoXo6tUqg
- n14ObBAPfAWe67mafR9ZnE1Geg1mtLxaY/InpMukppi3c9tSsy3wNUFo9B2QtlVT9DOM8GNu59
- uPyQ5ZW+263pfj8HSp7ZXhOHGW0HhcjMzAILah5mJzVMPxTWvvi/3a4exV+1EIC8m2kVFuplfD
- 7QunQrHhNsharNBOPX3BUONYOAgAA
-X-Change-ID: 20241111-dts_qcs615-7300e18d52d8
+Message-ID: <20241118-dts_qcs615-v2-1-e62b924a3cbd@quicinc.com>
+References: <20241118-dts_qcs615-v2-0-e62b924a3cbd@quicinc.com>
+In-Reply-To: <20241118-dts_qcs615-v2-0-e62b924a3cbd@quicinc.com>
 To: Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio
 	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -85,60 +83,80 @@ CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
         Yijie Yang
 	<quic_yijiyang@quicinc.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1731912338; l=1295;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1731912338; l=1557;
  i=quic_yijiyang@quicinc.com; s=20240408; h=from:subject:message-id;
- bh=awN9igyNGVeBjdGAA4jfwmBWzN9n/H2nAYHa+saIunQ=;
- b=io7sEG4Bkv+LVaWF4YhF9uduMQQJivfUx+MCw9MSnu1GgyC/n8I9H4ZKvo4rHSn6KParghNec
- LVuy3CzNQNPDPFj5st79nYTasYOQeVB9G0zpgTrTw/ZsBRdIZPCdurK
+ bh=0qZUPdGJk7bBM+UxhZdM6wcIbpEizh3WpNn2B2lAzws=;
+ b=MsUHD8jkhc0p4eO3SrfoBRfChT6ApXL8WER3ZCv11iQOu9n+4FxUOFJkvW2WHGGl0WyiMa8Vy
+ VoJAHpAnszOAIhcQD42va+5093Jn3iOZL+Uu5nlFl5akhMx6ZjdcARO
 X-Developer-Key: i=quic_yijiyang@quicinc.com; a=ed25519;
  pk=XvMv0rxjrXLYFdBXoFjTdOdAwDT5SPbQ5uAKGESDihk=
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: -WaAwVABC32gWAThzwwQQQEzXcCJWaaT
-X-Proofpoint-ORIG-GUID: -WaAwVABC32gWAThzwwQQQEzXcCJWaaT
+X-Proofpoint-GUID: RMfz0mxFFypAfNSUXCmzBr5NdoC7blkF
+X-Proofpoint-ORIG-GUID: RMfz0mxFFypAfNSUXCmzBr5NdoC7blkF
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- mlxlogscore=808 impostorscore=0 adultscore=0 spamscore=0 bulkscore=0
- lowpriorityscore=0 malwarescore=0 clxscore=1015 phishscore=0 mlxscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411180055
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
+ priorityscore=1501 mlxscore=0 impostorscore=0 clxscore=1015 malwarescore=0
+ adultscore=0 suspectscore=0 mlxlogscore=681 phishscore=0
+ lowpriorityscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2409260000 definitions=main-2411180055
 
-Add dts nodes and EMAC driver data to enable ethernet interface on
-qcs615-ride platforms.
-The EMAC version currently in use on this platform is 2.3.1, and the EPHY
-model is Micrel KSZ9031.
+Add ethqos ethernet controller node for QCS615 SoC.
 
 Signed-off-by: Yijie Yang <quic_yijiyang@quicinc.com>
 ---
-This patch series depends on below patch series:
-https://lore.kernel.org/all/20241104-add_initial_support_for_qcs615-v5-0-9dde8d7b80b0@quicinc.com/
-https://lore.kernel.org/all/20241118-schema-v1-1-11b7c1583c0c@quicinc.com/
-https://lore.kernel.org/all/20241118-schema-v1-2-11b7c1583c0c@quicinc.com/
+ arch/arm64/boot/dts/qcom/qcs615.dtsi | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-Changes in v2:
-- Pad the address to 8 hex digits with leading zeros.
-- Make clock names a vertical list.
-- Refresh the dependencies and update the base-commit.
-- Link to v1: https://lore.kernel.org/r/20241010-dts_qcs615-v1-0-05f27f6ac4d3@quicinc.com
+diff --git a/arch/arm64/boot/dts/qcom/qcs615.dtsi b/arch/arm64/boot/dts/qcom/qcs615.dtsi
+index 868808918fd2cdf3f23fcb43ead61b2abfc776f7..e429a012428701b1240556c919c630382b3ee8ce 100644
+--- a/arch/arm64/boot/dts/qcom/qcs615.dtsi
++++ b/arch/arm64/boot/dts/qcom/qcs615.dtsi
+@@ -375,6 +375,38 @@ soc: soc@0 {
+ 		#address-cells = <2>;
+ 		#size-cells = <2>;
+ 
++		ethernet: ethernet@20000 {
++			compatible = "qcom,qcs615-ethqos";
++			reg = <0x0 0x00020000 0x0 0x00010000>,
++			      <0x0 0x00036000 0x0 0x00000100>;
++			reg-names = "stmmaceth", "rgmii";
++
++			clocks = <&gcc GCC_EMAC_AXI_CLK>,
++				 <&gcc GCC_EMAC_SLV_AHB_CLK>,
++				 <&gcc GCC_EMAC_PTP_CLK>,
++				 <&gcc GCC_EMAC_RGMII_CLK>;
++			clock-names = "stmmaceth",
++				      "pclk",
++				      "ptp_ref",
++				      "rgmii";
++
++			interrupts = <GIC_SPI 660 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 662 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "macirq", "eth_lpi";
++
++			power-domains = <&gcc EMAC_GDSC>;
++			resets = <&gcc GCC_EMAC_BCR>;
++
++			iommus = <&apps_smmu 0x1c0 0x0>;
++
++			snps,tso;
++			snps,pbl = <32>;
++			rx-fifo-depth = <16384>;
++			tx-fifo-depth = <20480>;
++
++			status = "disabled";
++		};
++
+ 		gcc: clock-controller@100000 {
+ 			compatible = "qcom,qcs615-gcc";
+ 			reg = <0 0x00100000 0 0x1f0000>;
 
----
-Yijie Yang (2):
-      arm64: dts: qcom: qcs615: add ethernet node
-      arm64: dts: qcom: qcs615-ride: Enable ethernet node
-
- arch/arm64/boot/dts/qcom/qcs615-ride.dts | 106 +++++++++++++++++++++++++++++++
- arch/arm64/boot/dts/qcom/qcs615.dtsi     |  32 ++++++++++
- 2 files changed, 138 insertions(+)
----
-base-commit: ec29543c01b3dbfcb9a2daa4e0cd33afb3c30c39
-change-id: 20241111-dts_qcs615-7300e18d52d8
-
-Best regards,
 -- 
-Yijie Yang <quic_yijiyang@quicinc.com>
+2.34.1
 
 
