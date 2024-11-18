@@ -1,120 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-38259-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38260-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 98B2B9D1B3D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 23:52:31 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CD2E19D1B42
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 23:53:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5E93E282833
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 22:52:30 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 61161B22905
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 22:53:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 248031E7C29;
-	Mon, 18 Nov 2024 22:52:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8AB561E7C29;
+	Mon, 18 Nov 2024 22:53:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="O2SML3F0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bhL9jvVa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72A83183CD1
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Nov 2024 22:52:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D0F8183CD1;
+	Mon, 18 Nov 2024 22:53:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731970347; cv=none; b=dO3yNO/i4hK9JhbgA4U74A0XfQd9UweblyFBoYDtuHzmmU5DA7SQu8qRZfLnxFIM1ZYGEpteMUEIhD4k9+VBEMZ2z7J9fNOhSpRD2iI+e6N6BHnFs43dEH7nMwz+Oh/qeos5Wa8qrODgExrhMdzPAYImrfjuBjqr6CHDzw8d46U=
+	t=1731970421; cv=none; b=IYhyl800bvBhI3yD9gBc/1YFsLkUjhX75EqKqoKkYp3Q5u5QpX2EEDPT94I+YIAFSN0UsabeWaZlxA5fTdBQWrcdpct+t7V5Pwx0gk+Q+DPH/GLWiSOyI2jeEn++eN94G8CO4D12uXjD8+Jo6mVMuJjBMNIUNHtKwbdyyoIAZ/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731970347; c=relaxed/simple;
-	bh=ZdXm3iVe/pHNYaMtoEOpHIfW69+kJg3c731+QVPRDrI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EZzZZ4ASU2auSBaDIsUjUiPoSnjiT5yowwP29mgJWRnjaa0P5wWadA+38UJqW91EWswxSrAlc2QK5RuzLpxl2x8XT8Ij0t2vUBH5hAJ2L7HsXQLRSle7dSU/AbQC3rVJAS6qAa+iWKLlQXsfHhWQw4cbexoL+Ua1NegllpF5EfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=O2SML3F0; arc=none smtp.client-ip=209.85.221.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-382423e1f7aso1249675f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Nov 2024 14:52:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731970344; x=1732575144; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=gQZ1H7BLVJlHjVImlFPAn8pO0c0uma6JbIMH8fW7XIk=;
-        b=O2SML3F0n/cV6xRkSM+M770ZzpSBgOsUysjLsZEf8jD5N5igqp7FPr3NwPnduG+kLS
-         HjfZZL42cNf6AB3/sqALDwJjwgiNeSrcSHoHNy0InWAuMcZLJ7jhz1FpM7+gJ/SZsckd
-         ei3WeEhHX8MpeHe2W8OzXFe3qm8zleXJyDKwqSzzFAcU0vzIbfPw7mVxw3kEENE3aP3B
-         uApBG3lWVz0lHQ9dI0jHQlXGRh6BOkPKA/zrFskayzaqWw/XqLN49ZvWdNhn9r3iBsTv
-         9x4YVftZgwpCyrzzlWpAnNgzY9/0Fzrpe1A+z7UExTei5DT0k4gednYQLh8MUsTPcQoD
-         EtrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731970344; x=1732575144;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gQZ1H7BLVJlHjVImlFPAn8pO0c0uma6JbIMH8fW7XIk=;
-        b=G/QCvFmhNd0bVlpBjOkJEQDOMcmxC2mCgLXXsRQA6H0I4DQT4KMs+wUoArGGoeHISB
-         wAW8gjgSe8GnbFQwZs0hDb97NCwsBF+uJCrMu5P2BcPoQUmkyDsy/iNXfC+pBI9zhLCG
-         XSf5BfapUQJLpNZxr++HfKj/0y9i5u/uHPYs4+CvN+K/qmkkm8nnPDu5lByozdLSRKJ9
-         k2XnPHpBB0PaYfsAZLpA+5xPaRyRWy6rbMCodmEI8QOVjz+5VQxxlvXb4fVZLQR7saMS
-         ZgrX7gGOjE8KBjfQe0rH/0ZwyxGort9rbJ1ZQsFOO4aSRGAnZPMTtMPts9S5S1bg1mVe
-         HMew==
-X-Gm-Message-State: AOJu0Yze2Dy8Q08sb/vHlXNlyr41VRREuW18d7wnHa3NV3qcMbNqHVyr
-	czkfmlzaJDp+4TY71qeEHZevYxrwAWEMDxF40vIOfYT8A81GYRgU/5k3R4YpCeE=
-X-Google-Smtp-Source: AGHT+IEpllqNeXrLFAJ6hV+Vn+2k7uE4VkD/xEA3WWU8D/eic5WliEwLRK82P9EcMjRhkP5rXePrFw==
-X-Received: by 2002:a5d:6d02:0:b0:382:4b63:96b5 with SMTP id ffacd0b85a97d-3824b6398ffmr1759861f8f.57.1731970343837;
-        Mon, 18 Nov 2024 14:52:23 -0800 (PST)
-Received: from [192.168.0.40] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-382435f6986sm5752267f8f.42.2024.11.18.14.52.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 Nov 2024 14:52:23 -0800 (PST)
-Message-ID: <79fcefae-ef01-4499-9532-fbb87ef8f0eb@linaro.org>
-Date: Mon, 18 Nov 2024 22:52:22 +0000
+	s=arc-20240116; t=1731970421; c=relaxed/simple;
+	bh=LxeFH443P3XiwAdqwIJsULBSBIz9MnIhcq3bdOBUiPE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VLyZIU13/leKEen6CP0YpASRtrELVnrazOc/uotdx6JCjhY5e8OjGAOkjRzS+7cr8ikL4SunGHOHTBHlv8Knx8CsFdGvhKl76vfz4AVv50/qm4x/zS4FBY9ikk0LTwvAvtG7TiyeTpouVlm97UdOQOW7oLzOwcnuOnJW8OMEL7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bhL9jvVa; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34614C4CECF;
+	Mon, 18 Nov 2024 22:53:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1731970419;
+	bh=LxeFH443P3XiwAdqwIJsULBSBIz9MnIhcq3bdOBUiPE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=bhL9jvVaANeQ/vLkvK0DUuESDQq227s/vNzZ6V+vBty07/+IFZzXThZhzDVLLFjCQ
+	 w0IRBPe5jkcU3eoeb5k3CdbZ8KA9zCfoNH+MTFPPNoefvAB346qBBNrF0dNDxUcD+e
+	 uWTkjubk4T9YZwLOpPDJIW3Hzh+jauButpqrECuqWwN9vZY0D+GNUSCvnJXbRLuZit
+	 pvyU8Wm/v5k7mf+H2sNxk6MT49H9A9y09YnCJtjM46bmQcpvYda+QlHIYM7MI3fvP8
+	 R2Z7MNP1pGT2O+94/nPyeaOtcI1lpsv9Ew91ajG2TM9GbkO1ZaHJwlkO6eTyf7+f7a
+	 mzcRCPPxgRkSg==
+Date: Mon, 18 Nov 2024 23:53:35 +0100
+From: Andi Shyti <andi.shyti@kernel.org>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH] i2c: qup: use generic device property accessors
+Message-ID: <h57xw6en4bb7gxsqq7qwq4z5yakavmn26jda36uh34r3ve4kbt@vj35tpjd7d2f>
+References: <20241008160947.81045-1-brgl@bgdev.pl>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] clk: qcom: common: Add support for power-domain
- attachment
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20241118-b4-linux-next-24-11-18-clock-multiple-power-domains-v1-0-b7a2bd82ba37@linaro.org>
- <20241118-b4-linux-next-24-11-18-clock-multiple-power-domains-v1-1-b7a2bd82ba37@linaro.org>
- <8a33c0ff-0c6d-4995-b239-023d2a2c2af5@linaro.org>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <8a33c0ff-0c6d-4995-b239-023d2a2c2af5@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241008160947.81045-1-brgl@bgdev.pl>
 
-On 18/11/2024 22:17, Vladimir Zapolskiy wrote:
->      ret = devm_pm_domain_attach_list(dev, NULL, &cc->pd_list);
->      if (ret < 0 && ret != -EEXIST)
->          return ret;
+Hi Bartosz,
+
+On Tue, Oct 08, 2024 at 06:09:47PM +0200, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > 
-> That's it. No need to introduce a new function, not saying about 20 LoC 
-> off.
+> There's no reason for this driver to use OF-specific property helpers.
+> Drop the last one in favor of the generic variant and no longer include
+> of.h.
 > 
-> Next, you have to call dev_pm_domain_detach_list() in your version of the
-> change on the error paths etc., fortunately this can be easily avoided,
-> if the resource management flavour of the same function is in use.
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
- From memory I _thought_ I concluded this was necessary
+this whole thread has gone off my radar, I'm sorry to have missed
+this. Thanks Wolfram for bringing this to my attention.
 
-+    /* Only one power-domain platform framework will hook it up */
-+    if (dev->pm_domain)
-+        return 0;
+Merged to i2c/i2c-host.
 
-=> for clocks which have a single power-domain the core framework will 
-already have setup the linkage by the time we get to this point in the code.
-
-But, I'll check again to make sure.
-
----
-bod
+Andi
 
