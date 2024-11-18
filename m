@@ -1,260 +1,247 @@
-Return-Path: <linux-arm-msm+bounces-38210-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38211-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D5B69D0E99
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 11:33:28 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5A5CE9D0E66
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 11:24:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5DA2BB2CF9D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 10:22:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 192B828275F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 10:24:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87AE61974FE;
-	Mon, 18 Nov 2024 10:18:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03D5E199253;
+	Mon, 18 Nov 2024 10:22:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YDu4++ko"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC18A193078;
-	Mon, 18 Nov 2024 10:18:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC9C01946A8
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Nov 2024 10:21:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731925129; cv=none; b=jHrX8TVYbuNHMQ2z5Ac/IDErSSZXLK5IrJYAPMuwgIm9O6HXru6FwAWToeBDdYgc3zF9yM29QCAr63jFyh2m/1hheL9wC1QKKfHeub2T+hU6PdKo2y4Dppqke4LPtUv0LDrYUzB0jVkF3czu+iK3+nFOpHhGxtEauSTFHsm8qMw=
+	t=1731925320; cv=none; b=OrMXCNBm9Gq572Dz6y0VZUWvEM5wEx1mfSFay28lL7SxOqyj89bN8sjrJg0sLfKGK7KVW6/hZ0IBB5KYbq9SSjHr3UKceF0lp7ikH2gR2tYE8nqgkYjxtzuW0I7O00AC/v15I0Nuv2nE7Y7yliK3n8ijB2a00ZBOz1LLvxuUIRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731925129; c=relaxed/simple;
-	bh=WIrXWo4C4xW7cz2oeKRTCkfd+yRuNRUQJ0POoOogce4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IWMHjULhis0IypU57o2TFHUY4VR0M0gJzzI6SoHC6CXCtWAzC1/ZuvJ8FwihwsF0AiIobX7/hL2v6AYzWuV6xck9f38H6B7Jidd7+B3QQE7KGBJclkgTbcXahnyYjuptYeNDhVRMG+L2sy6ktVgWq29jWDzRrxI55Cx5Uq7nfS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 23BDB1682;
-	Mon, 18 Nov 2024 02:19:16 -0800 (PST)
-Received: from [10.57.67.249] (unknown [10.57.67.249])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id A839D3F5A1;
-	Mon, 18 Nov 2024 02:18:42 -0800 (PST)
-Message-ID: <ef057e19-1209-4a72-b223-ef3f1e2b4513@arm.com>
-Date: Mon, 18 Nov 2024 10:18:41 +0000
+	s=arc-20240116; t=1731925320; c=relaxed/simple;
+	bh=Db4cp2BS1tOGXH1Epn3W22qyrM5yGAT815UoctHNo+w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sd23jjMy84tipPpkilPfUhKFApLPrmJm0ZRbqmIFYE6dCy3nFyeMpvqVdZ3tzK655qpcP6EdB3iYwi90R+9hG9q61mwxhgVNYCIy6QZKeu07WXN99Ccky0s0xPwe0XlmCLa5KU3OICh1PCU0w9Oyhtqf24AM6/zHxSQEIrSRp18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YDu4++ko; arc=none smtp.client-ip=209.85.221.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-3822ba3cdbcso1720995f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Nov 2024 02:21:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1731925317; x=1732530117; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=phSqjmldBPWXRgFeffd/JWcPCOA4hJo3BiIhOYwH3MA=;
+        b=YDu4++koJxtr+FzoXRequiUYoGo53OpWgZJqWqBeGre2QOgLudGKs8vCGZd3+wo4uK
+         ecfpKtI8e9PyKRns3Sgef+U5OzMMF3OfOPq66U4+t375VPK1K+BG79LJFYj6kGbmckVt
+         YvDB2KbVitfwAh7aBAbqDjh+jhLCe5U5v+mm1M7vVwjqx7A3XVqcuCo0ZJ7vZKd/3pjN
+         yvIpDMXqTub8C76HxQ7wCMHyvsTjY7SCY9S1h4P+YcFS8kPLFNDnm+Gep2n+LQfA2dws
+         U92HLOJeUVlk6cW1PYcbFWM7DC8zjTw4IWK4Q9TwKdmHzzIwIaBeHKOhq6Fqe+PmDsM0
+         BcTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731925317; x=1732530117;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=phSqjmldBPWXRgFeffd/JWcPCOA4hJo3BiIhOYwH3MA=;
+        b=E4lPTcga5cxVwRo0BKi+BtG6XetpSMJh9tMIo2kgA9nkkUu75OjirSoCLCgnlkwOfH
+         TLCLg2ihCA3X9FWrTzrf6uJZruSPecH6+UNV+bZu3xtF1GM3MqW4uwF2d7KSlcDY5s+a
+         PLiGZ8ZZAXmDvjE1fZHTyZBgGaqBgiaQ8UIhPWzt3c6CXAS+GHrUPUYuAbCj8tEvP/lS
+         8yiqCq0rc4xsqjLNEIBPTYv4LthlpSp4Yr6XYTUctYktYhMh2sWYQYhtbTaA+4yFtMhR
+         ynbNp7pcqgcsBv5R3UMZvTkUuPEkTor1KqHiDpUs912HazHuh7hHqZTli7UVaheUaJSj
+         WL/g==
+X-Forwarded-Encrypted: i=1; AJvYcCULzakCgOaQeDFIRzFKG9TWclVR2/b8gdzdXTpnw2/dSfw+B4+OCyKxUbxPAyf0tnzFvs0lIUgojRQILQQa@vger.kernel.org
+X-Gm-Message-State: AOJu0YyBR///GukG3UAqsGpJNWXGeSP8sruCju8Ao74iYC9Akt8naOtE
+	FZ+M/mRXVDrxUqFMeUp9B+Dk/GUI1F8grIl6NHOCjl4GM/+fMabKEI+ve76q2v8=
+X-Google-Smtp-Source: AGHT+IEFeF0+Sdkb6b315Q3y1qMmmjCmnoawHXKh9ZeoveK/uoXwKwzlP7db+07+TyaV3vMlKWXWlQ==
+X-Received: by 2002:a05:6000:1f88:b0:37c:d276:f04 with SMTP id ffacd0b85a97d-38225a915fbmr8111178f8f.45.1731925317212;
+        Mon, 18 Nov 2024 02:21:57 -0800 (PST)
+Received: from linaro.org ([2a02:2454:ff21:ef80:8453:3d1e:f32c:d913])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-382485e2a89sm2301322f8f.17.2024.11.18.02.21.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 Nov 2024 02:21:56 -0800 (PST)
+Date: Mon, 18 Nov 2024 11:21:45 +0100
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: =?iso-8859-1?B?QmFybmFi4XMgQ3rpbeFu?= <barnabas.czeman@mainlining.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Amit Kucheria <amitk@kernel.org>,
+	Thara Gopinath <thara.gopinath@gmail.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
+	Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+	linux-pm@vger.kernel.org, iommu@lists.linux.dev
+Subject: Re: [PATCH v6 10/10] arm64: dts: qcom: Add Xiaomi Redmi 5A
+Message-ID: <ZzsVOV8GjCVtCi5Q@linaro.org>
+References: <20241113-msm8917-v6-0-c348fb599fef@mainlining.org>
+ <20241113-msm8917-v6-10-c348fb599fef@mainlining.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 2/3] coresight: Add support to get static id for system
- trace sources
-Content-Language: en-GB
-To: Jinlong Mao <quic_jinlmao@quicinc.com>, Mike Leach
- <mike.leach@linaro.org>, James Clark <james.clark@arm.com>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20241104115604.14522-1-quic_jinlmao@quicinc.com>
- <20241104115604.14522-3-quic_jinlmao@quicinc.com>
- <6424c536-2f2c-4a59-8b6d-f610201dc7a7@arm.com>
- <6a8e10fc-a231-467a-8056-d291e237fec1@quicinc.com>
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <6a8e10fc-a231-467a-8056-d291e237fec1@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20241113-msm8917-v6-10-c348fb599fef@mainlining.org>
 
-On 18/11/2024 10:14, Jinlong Mao wrote:
+On Wed, Nov 13, 2024 at 04:11:51PM +0100, Barnab�s Cz�m�n wrote:
+> Add initial support for Xiaomi Redmi 5A (riva).
 > 
+> Signed-off-by: Barnab�s Cz�m�n <barnabas.czeman@mainlining.org>
+> ---
+>  arch/arm64/boot/dts/qcom/Makefile                |   1 +
+>  arch/arm64/boot/dts/qcom/msm8917-xiaomi-riva.dts | 297 +++++++++++++++++++++++
+>  2 files changed, 298 insertions(+)
 > 
-> On 2024/11/13 21:27, Suzuki K Poulose wrote:
->> On 04/11/2024 11:56, Mao Jinlong wrote:
->>> Dynamic trace id was introduced in coresight subsystem, so trace id is
->>> allocated dynamically. However, some hardware ATB source has static 
->>> trace
->>> id and it cannot be changed via software programming. For such source,
->>> it can call coresight_get_static_trace_id to get the fixed trace id from
->>> device node and pass id to coresight_trace_id_get_static_system_id to
->>> reserve the id.
->>>
->>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
->>> Reviewed-by: Mike Leach <mike.leach@linaro.org>
->>> ---
->>>   .../hwtracing/coresight/coresight-platform.c  |  6 +++
->>>   .../hwtracing/coresight/coresight-trace-id.c  | 39 +++++++++++++------
->>>   .../hwtracing/coresight/coresight-trace-id.h  |  9 +++++
->>>   include/linux/coresight.h                     |  1 +
->>>   4 files changed, 44 insertions(+), 11 deletions(-)
->>>
->>> diff --git a/drivers/hwtracing/coresight/coresight-platform.c b/ 
->>> drivers/hwtracing/coresight/coresight-platform.c
->>> index 64e171eaad82..633d96b9577a 100644
->>> --- a/drivers/hwtracing/coresight/coresight-platform.c
->>> +++ b/drivers/hwtracing/coresight/coresight-platform.c
->>> @@ -796,6 +796,12 @@ int coresight_get_cpu(struct device *dev)
->>>   }
->>>   EXPORT_SYMBOL_GPL(coresight_get_cpu);
->>> +int coresight_get_static_trace_id(struct device *dev, u32 *id)
->>> +{
->>> +    return fwnode_property_read_u32(dev_fwnode(dev), "arm,static- 
->>> trace-id", id);
->>> +}
->>> +EXPORT_SYMBOL_GPL(coresight_get_static_trace_id);
->>> +
->>>   struct coresight_platform_data *
->>>   coresight_get_platform_data(struct device *dev)
->>>   {
->>> diff --git a/drivers/hwtracing/coresight/coresight-trace-id.c b/ 
->>> drivers/hwtracing/coresight/coresight-trace-id.c
->>> index d98e12cb30ec..df8fe50b413f 100644
->>> --- a/drivers/hwtracing/coresight/coresight-trace-id.c
->>> +++ b/drivers/hwtracing/coresight/coresight-trace-id.c
->>> @@ -12,6 +12,12 @@
->>>   #include "coresight-trace-id.h"
->>> +enum trace_id_flags {
->>> +    TRACE_ID_ANY = 0x0,
->>> +    TRACE_ID_PREFER_ODD = 0x1,
->>> +    TRACE_ID_REQ_STATIC = 0x2,
->>> +};
->>> +
->>>   /* Default trace ID map. Used in sysfs mode and for system sources */
->>>   static DEFINE_PER_CPU(atomic_t, id_map_default_cpu_ids) = 
->>> ATOMIC_INIT(0);
->>>   static struct coresight_trace_id_map id_map_default = {
->>> @@ -74,16 +80,18 @@ static int coresight_trace_id_find_odd_id(struct 
->>> coresight_trace_id_map *id_map)
->>>    * Otherwise allocate next available ID.
->>>    */
->>>   static int coresight_trace_id_alloc_new_id(struct 
->>> coresight_trace_id_map *id_map,
->>> -                       int preferred_id, bool prefer_odd_id)
->>> +                       int preferred_id, unsigned int flags)
->>>   {
->>>       int id = 0;
->>>       /* for backwards compatibility, cpu IDs may use preferred value */
->>> -    if (IS_VALID_CS_TRACE_ID(preferred_id) &&
->>> -        !test_bit(preferred_id, id_map->used_ids)) {
->>> -        id = preferred_id;
->>> -        goto trace_id_allocated;
->>> -    } else if (prefer_odd_id) {
->>> +    if (IS_VALID_CS_TRACE_ID(preferred_id)) {
->>> +        if (!test_bit(preferred_id, id_map->used_ids)) {
->>> +            id = preferred_id;
->>> +            goto trace_id_allocated;
->>> +        } else if (flags & TRACE_ID_REQ_STATIC)
->>> +            return -EINVAL;
->>
->> nit: EBUSY sounds like a better choice here ? Requested ID is not
->> available.
->>
->> Additionally, do we need to handle a case where the preferred_id is
->> not valid ? I think we silently allocate a new trace id in such case ?
->>
->> Rest looks good to me.
->>
->> Suzuki
->>
->>
-> 
-> If preferred_id is not valid, a random id will be allocated for the 
-> source. For the normal source, 0 is provided here as preferred_id.
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 9bb8b191aeb517e8f1e3a11bca98a3d0c39c5398..7562406843cfd82397c4844d14a22e8bcf4bba74 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -62,6 +62,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt86518.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt86528.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt88047.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-yiming-uz801v3.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= msm8917-xiaomi-riva.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8929-wingtech-wt82918hd.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-huawei-kiwi.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-longcheer-l9100.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/msm8917-xiaomi-riva.dts b/arch/arm64/boot/dts/qcom/msm8917-xiaomi-riva.dts
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..81bb76f1773252be2f60777acf93d51d01981f86
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/msm8917-xiaomi-riva.dts
+> @@ -0,0 +1,297 @@
+> [...]
+> +	gpio-keys {
+> +		compatible = "gpio-keys";
+> +
+> +		key-volup {
+> +			label = "Volume Up";
+> +			linux,code = <KEY_VOLUMEUP>;
+> +			gpios = <&tlmm 91 GPIO_ACTIVE_LOW>;
 
-My point is : If preferred_id is not valid *and* TRACE_ID_REQ_STATIC
-flag is set, we go ahead and allocate a random different ID. Which is
-not preferred. We should return -EINVAL in that case.
+It's good practice to
 
-Suzuki
+> +			debounce-interval = <15>;
+> +		};
+> +	};
+> [...]
+> +&blsp1_i2c3 {
+> +	status = "okay";
+> +
+> +	touchscreen@38 {
+> +		compatible = "edt,edt-ft5306";
+> +		reg = <0x38>;
+> +		interrupts-extended = <&tlmm 65 IRQ_TYPE_LEVEL_LOW>;
+
+add pinctrl
+
+> +		reset-gpios = <&tlmm 64 GPIO_ACTIVE_LOW>;
+
+for all
+
+> +		vcc-supply = <&pm8937_l10>;
+> +		iovcc-supply = <&pm8937_l5>;
+> +
+> +		touchscreen-size-x = <720>;
+> +		touchscreen-size-y = <1280>;
+> +	};
+> +};
+> +
+> +&blsp2_i2c1 {
+> +	status = "okay";
+> +
+> +	bq27426@55 {
+> +		compatible = "ti,bq27426";
+> +		reg = <0x55>;
+> +		monitored-battery = <&battery>;
+> +	};
+> +
+> +	bq25601@6b{
+> +		compatible = "ti,bq25601";
+> +		reg = <0x6b>;
+> +		monitored-battery = <&battery>;
+> +
+> +		interrupt-parent = <&tlmm>;
+> +		interrupts = <61 IRQ_TYPE_EDGE_FALLING>;
+
+GPIOs/pins
+
+> +
+> +		input-voltage-limit-microvolt = <4400000>;
+> +		input-current-limit-microamp = <1000000>;
+> +	};
+> +};
+> [...]
+
+> +&sdhc_2 {
+> +	cd-gpios = <&tlmm 67 GPIO_ACTIVE_LOW>;
+
+that you use. :-)
+
+Usually it can be something simple like function=gpio, bias-disable,
+drive-strength = <2>, etc, plenty of examples exist upstream. Check
+downstream or schematics (if you have them). Ideally you would check
+what the peripheral requires.
+
+E.g. for SD card the GPIO usually has external pull-up, so bias-pull-up
+would be redundant and one can just use bias-disable:
+
+	pinctrl-0 = <&sdc2_default &sdc2_cd_default>;
+	pinctrl-1 = <&sdc2_sleep &sdc2_cd_default>;
+	pinctrl-names = "default", "sleep";
+
+&tlmm {
+	sdc2_cd_default: sdc2-cd-default-state {
+		pins = "gpio67";
+		function = "gpio";
+		drive-strength = <2>;
+		bias-disable;
+	};
+};
 
 
-> 
->>
->>
->>> +    } else if (flags & TRACE_ID_PREFER_ODD) {
->>>       /* may use odd ids to avoid preferred legacy cpu IDs */
->>>           id = coresight_trace_id_find_odd_id(id_map);
->>>           if (id)
->>> @@ -153,7 +161,7 @@ static int _coresight_trace_id_get_cpu_id(int 
->>> cpu, struct coresight_trace_id_map
->>>        */
->>>       id = coresight_trace_id_alloc_new_id(id_map,
->>>                            CORESIGHT_LEGACY_CPU_TRACE_ID(cpu),
->>> -                         false);
->>> +                         TRACE_ID_ANY);
->>>       if (!IS_VALID_CS_TRACE_ID(id))
->>>           goto get_cpu_id_out_unlock;
->>> @@ -188,14 +196,14 @@ static void _coresight_trace_id_put_cpu_id(int 
->>> cpu, struct coresight_trace_id_ma
->>>       DUMP_ID_MAP(id_map);
->>>   }
->>> -static int coresight_trace_id_map_get_system_id(struct 
->>> coresight_trace_id_map *id_map)
->>> +static int coresight_trace_id_map_get_system_id(struct 
->>> coresight_trace_id_map *id_map,
->>> +                    int preferred_id, unsigned int traceid_flags)
->>>   {
->>>       unsigned long flags;
->>>       int id;
->>>       spin_lock_irqsave(&id_map->lock, flags);
->>> -    /* prefer odd IDs for system components to avoid legacy CPU IDS */
->>> -    id = coresight_trace_id_alloc_new_id(id_map, 0, true);
->>> +    id = coresight_trace_id_alloc_new_id(id_map, preferred_id, 
->>> traceid_flags);
->>>       spin_unlock_irqrestore(&id_map->lock, flags);
->>>       DUMP_ID(id);
->>> @@ -255,10 +263,19 @@ 
->>> EXPORT_SYMBOL_GPL(coresight_trace_id_read_cpu_id_map);
->>>   int coresight_trace_id_get_system_id(void)
->>>   {
->>> -    return coresight_trace_id_map_get_system_id(&id_map_default);
->>> +    /* prefer odd IDs for system components to avoid legacy CPU IDS */
->>> +    return coresight_trace_id_map_get_system_id(&id_map_default, 0,
->>> +            TRACE_ID_PREFER_ODD);
->>>   }
->>>   EXPORT_SYMBOL_GPL(coresight_trace_id_get_system_id);
->>> +int coresight_trace_id_get_static_system_id(int trace_id)
->>> +{
->>> +    return coresight_trace_id_map_get_system_id(&id_map_default,
->>> +            trace_id, TRACE_ID_REQ_STATIC);
->>> +}
->>> +EXPORT_SYMBOL_GPL(coresight_trace_id_get_static_system_id);
->>> +
->>>   void coresight_trace_id_put_system_id(int id)
->>>   {
->>>       coresight_trace_id_map_put_system_id(&id_map_default, id);
->>> diff --git a/drivers/hwtracing/coresight/coresight-trace-id.h b/ 
->>> drivers/hwtracing/coresight/coresight-trace-id.h
->>> index 9aae50a553ca..db68e1ec56b6 100644
->>> --- a/drivers/hwtracing/coresight/coresight-trace-id.h
->>> +++ b/drivers/hwtracing/coresight/coresight-trace-id.h
->>> @@ -116,6 +116,15 @@ int coresight_trace_id_read_cpu_id_map(int cpu, 
->>> struct coresight_trace_id_map *i
->>>    */
->>>   int coresight_trace_id_get_system_id(void);
->>> +/**
->>> + * Allocate a CoreSight static trace ID for a system component.
->>> + *
->>> + * Used to allocate static IDs for system trace sources such as 
->>> dummy source.
->>> + *
->>> + * return: Trace ID or -EINVAL if allocation is impossible.
->>> + */
->>> +int coresight_trace_id_get_static_system_id(int id);
->>> +
->>>   /**
->>>    * Release an allocated system trace ID.
->>>    *
->>> diff --git a/include/linux/coresight.h b/include/linux/coresight.h
->>> index c13342594278..129795873072 100644
->>> --- a/include/linux/coresight.h
->>> +++ b/include/linux/coresight.h
->>> @@ -662,6 +662,7 @@ void coresight_relaxed_write64(struct 
->>> coresight_device *csdev,
->>>   void coresight_write64(struct coresight_device *csdev, u64 val, u32 
->>> offset);
->>>   extern int coresight_get_cpu(struct device *dev);
->>> +extern int coresight_get_static_trace_id(struct device *dev, u32 *id);
->>>   struct coresight_platform_data *coresight_get_platform_data(struct 
->>> device *dev);
->>>   struct coresight_connection *
->>
-> 
+> +	vmmc-supply = <&pm8937_l11>;
+> +	vqmmc-supply = <&pm8937_l12>;
+> +
+> +	status = "okay";
+> +};
+> +
+> [...]
+> +&rpm_requests {
+> +	regulators-0 {
+> +		compatible = "qcom,rpm-pm8937-regulators";
+> +
+> [...]
+> +		pm8937_l11: l11 {
+> +			regulator-min-microvolt = <2950000>;
+> +			regulator-max-microvolt = <2950000>;
+> +		};
 
+You usually need/want regulator-allow-set-load and regulator-system-load
+for the SD card regulator to avoid issues with certain SD
+cards/operations, see
+
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=af61bef513ba179559e56908b8c465e587bc3890
+
+Thanks,
+Stephan
 
