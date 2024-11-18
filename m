@@ -1,105 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-38247-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38248-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D33AE9D15A8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 17:47:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0816E9D15BF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 17:50:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 99C592849F9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 16:47:12 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C2AA0286CE9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 16:50:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DA7B1C463F;
-	Mon, 18 Nov 2024 16:45:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1F0E19CC24;
+	Mon, 18 Nov 2024 16:48:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fXiboZzB"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="OU7v34Xc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A961C2DCF;
-	Mon, 18 Nov 2024 16:45:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 274F81C1F3C
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Nov 2024 16:48:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731948319; cv=none; b=VyJD7f3Lpnz7nTFinZBe4sPgCHnzTFGyzRnEJ0SpqpQZhS1k2SyJrL/uPjRGJiETxHF0vbk6n88iK/k/26L3sXb2uDYbM55Gcxs6tF8GabF5lHSr6o+C11t78Tf/3/Q94quKGYkp5SKGxpYwRVSmLOTAPZE9gP/buiUhy4L6mqA=
+	t=1731948518; cv=none; b=WqG59pM1Bmx784qu8aR3B4FKtfxRfrfwzjliNz+//WJ96LUz1vx7m1vkDumHrZBsDQzZRsCB/WoW0b1rRO/44rexpAe4g0sG0Be9nhm3Q3wu+465SVOWrIZkxFFhF+xpZGH4lW01EA2W8bUkL9fIV8gj2/l/dycJEd2m7X9ZXHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731948319; c=relaxed/simple;
-	bh=4vykr79dw2FmxfHObswN27QCeA73mIXqFkR3mxU+AyY=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=h10gR5LPdzhuw+ZhVZEh/x5QP42GkPiFdj/MsAMxyUOHOBs4dBxZiKt8RYVoyO0Gr6riT/1vYS3vMEtrrrxDqDKxVDPtOQ3asrGAr9rZPkE/7BRgyZqoLjm0lwyBWA87mbkssJKSSOwHzca+fG5NH5yViCfm6PpraVU3VMDXqkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fXiboZzB; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66A9FC4CED9;
-	Mon, 18 Nov 2024 16:45:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1731948318;
-	bh=4vykr79dw2FmxfHObswN27QCeA73mIXqFkR3mxU+AyY=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=fXiboZzBqxW+qipmAbotXYIxdHIspwjUn3AQtJf+vREs0d8kY3EB9e67XWUr3hj2e
-	 w/0/Rvrj89MhkVvvWczlHquHTLKwBO5OIyK5cXFA0I4U9QRLRBejfdZgD+9TgF3Njw
-	 /H4N//mMkZubYsBL64/LnxvTo2GiNBpCZjnAIqII/Z5FXYPnQ46rxgFDB+mUYAeZXg
-	 WhxmdqZ6YDLDe4sY137EzNWR0x5cUoK46y3gTg2PbULLNT6N7bTuyQAu1NLvQc9EwO
-	 xWkIXAHBagpf330ItgkbTGl8BOU4TqV6WjDuqiq3Rivw8SYYHeme7xVgoefHHTcm89
-	 uWNql/b8FveGQ==
-From: Mark Brown <broonie@kernel.org>
-To: Liam Girdwood <lgirdwood@gmail.com>, 
- Trilok Soni <quic_tsoni@quicinc.com>, 
- Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>, 
- Melody Olvera <quic_molvera@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-In-Reply-To: <20241112002645.2803506-1-quic_molvera@quicinc.com>
-References: <20241112002645.2803506-1-quic_molvera@quicinc.com>
-Subject: Re: [PATCH v2] regulator: qcom-rpmh: Update ranges for FTSMPS525
-Message-Id: <173194831703.51309.5093146340854774646.b4-ty@kernel.org>
-Date: Mon, 18 Nov 2024 16:45:17 +0000
+	s=arc-20240116; t=1731948518; c=relaxed/simple;
+	bh=nkdYFTre5jNB3vCGUssIkQ/oLl/TYwA7SYi6pLUQLyo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=WmGu3XQ/NE5uUaRbskCauyFyEMe4Gtt1JYaOf+l+ogofndQymA3LQ9Zu4d6Q+vZ3KhaseQY8DFKzZrAzUhuZ7SfJLxWok+PiJJaNymMPwNGe9QrbUTSg/PbkO8JHawfPitH00ZklnWoV4YAPbe6EWocCztInMrRIMLyyeQ9VWX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=OU7v34Xc; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AIGGdXa028405;
+	Mon, 18 Nov 2024 16:48:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	I+GFP6iBo1rb3ao0ESNw3laydo1qbrn5QHEsN1a+aGQ=; b=OU7v34XclrGlNE7I
+	t1tLViM6NGPAAW/VEv3LA3H7TxbmhaJtKHlpw9XQvLVm+HtAgfcHVP9378CvUl3F
+	HcUnMfvBr7+F116lWNRhyppXm+Ze09mkLBd2EcZwVv2qAW7i+KcN1bisCsmTJrUH
+	9k2hkL4EXs3bdZHAj7Z3wRG+bvDSE+K5U8ShRBZzm5hNgJXvqq2F+/3i+g5JSFoc
+	w2JITjaIrOb/JE7c/qmiwvmjurdZgrAluGanuwpZAykGQRRb2Dh78txrAmJxNZTJ
+	oP9Mm0OLdHvQLjD24oS1E/pMSDnYsN1yI97WChScpQVrcF9jGQsmev0HjiKcEOVp
+	vue9+g==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4308y5r29j-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 18 Nov 2024 16:48:32 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AIGmWst031429
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 18 Nov 2024 16:48:32 GMT
+Received: from [10.110.125.248] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 18 Nov
+ 2024 08:48:31 -0800
+Message-ID: <e7721ac9-b809-4fdd-a369-5e827b35745a@quicinc.com>
+Date: Mon, 18 Nov 2024 08:48:24 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] accel/qaic: Drop redundant vfree() null check in sahara
+To: Jeffrey Hugo <quic_jhugo@quicinc.com>, <andersson@kernel.org>,
+        <quic_yabdulra@quicinc.com>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        "kernel test robot" <lkp@intel.com>
+References: <20241117202629.1681358-1-quic_jhugo@quicinc.com>
+From: Carl Vanderlip <quic_carlv@quicinc.com>
+Content-Language: en-US
+In-Reply-To: <20241117202629.1681358-1-quic_jhugo@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.15-dev-9b746
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: SAByqQladp4lUMziuEWkT8QxC0PAGNiD
+X-Proofpoint-ORIG-GUID: SAByqQladp4lUMziuEWkT8QxC0PAGNiD
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ bulkscore=0 suspectscore=0 malwarescore=0 mlxscore=0 adultscore=0
+ clxscore=1011 spamscore=0 impostorscore=0 priorityscore=1501
+ mlxlogscore=695 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2409260000 definitions=main-2411180139
 
-On Mon, 11 Nov 2024 16:26:45 -0800, Melody Olvera wrote:
-> All FTSMPS525 regulators support LV and MV ranges; however,
-> the boot loader firmware will determine which range to use as
-> the device boots.
+On 11/17/2024 12:26 PM, Jeffrey Hugo wrote:
+> The documentation for vfree() says that passing in NULL is ok. Therefore
+> we can drop the null check as redundant.
 > 
-> Nonetheless, the driver cannot determine which range was selected,
-> so hardcoding the ranges as either LV or MV will not cover all cases
-> as it's possible for the firmware to select a range not supported by
-> the driver's current hardcoded values.
-> 
-> [...]
+> Reported-by: kernel test robot <lkp@intel.com>
+> Closes: https://lore.kernel.org/oe-kbuild-all/202410301732.abF5Md4e-lkp@intel.com/
+> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 
-Applied to
-
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
-
-Thanks!
-
-[1/1] regulator: qcom-rpmh: Update ranges for FTSMPS525
-      commit: eeecf953d697cb7f0d916f9908a2b9f451bb2667
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
-
+Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
 
