@@ -1,247 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-38211-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38212-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5A5CE9D0E66
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 11:24:11 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 520CF9D0EA4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 11:35:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 192B828275F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 10:24:10 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3F9201F21CB3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 10:35:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03D5E199253;
-	Mon, 18 Nov 2024 10:22:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B2BE1946DF;
+	Mon, 18 Nov 2024 10:34:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YDu4++ko"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="y3YuTPuS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC9C01946A8
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Nov 2024 10:21:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 145461DFFB
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Nov 2024 10:34:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731925320; cv=none; b=OrMXCNBm9Gq572Dz6y0VZUWvEM5wEx1mfSFay28lL7SxOqyj89bN8sjrJg0sLfKGK7KVW6/hZ0IBB5KYbq9SSjHr3UKceF0lp7ikH2gR2tYE8nqgkYjxtzuW0I7O00AC/v15I0Nuv2nE7Y7yliK3n8ijB2a00ZBOz1LLvxuUIRQ=
+	t=1731926078; cv=none; b=XOfAFUvwCp2ZQj6q+Nycd6mQUYAOhPDTjJ2JSY+P+t+BQ2Lg+CUADLwXJvtfNdDdTscVlAAXkzdEGurrkuQtRvHdlDNyCimLJpfT/oeOITY5UQcbodICUzR1p3EoG1Sl7JpaUDfZSPM5UcVM284cIH1hhmopB/WiEPxNq9VF4pc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731925320; c=relaxed/simple;
-	bh=Db4cp2BS1tOGXH1Epn3W22qyrM5yGAT815UoctHNo+w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sd23jjMy84tipPpkilPfUhKFApLPrmJm0ZRbqmIFYE6dCy3nFyeMpvqVdZ3tzK655qpcP6EdB3iYwi90R+9hG9q61mwxhgVNYCIy6QZKeu07WXN99Ccky0s0xPwe0XlmCLa5KU3OICh1PCU0w9Oyhtqf24AM6/zHxSQEIrSRp18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YDu4++ko; arc=none smtp.client-ip=209.85.221.43
+	s=arc-20240116; t=1731926078; c=relaxed/simple;
+	bh=1hzvf0YnG1GK5VmFfu7fUVYkXt5PuJgTUsR7YbCEhwg=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=hc++rW91abZHn2P57BRcXe+W3WRYSdVbNPJeXM7NzxLcqwZ0ZXt0oLkW5gYRGW/QVQLs9ah9NscLi3IE5wNpwZ+aRmip0TMRL9/ZKJHf1UBAHirUYL+Ogg441mPdEOHdfEzSpH0ICl4TPtb8mlC8STJow2iHi3M5L6ptonymkOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=y3YuTPuS; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-3822ba3cdbcso1720995f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Nov 2024 02:21:58 -0800 (PST)
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-43161e7bb25so33014655e9.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Nov 2024 02:34:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731925317; x=1732530117; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=phSqjmldBPWXRgFeffd/JWcPCOA4hJo3BiIhOYwH3MA=;
-        b=YDu4++koJxtr+FzoXRequiUYoGo53OpWgZJqWqBeGre2QOgLudGKs8vCGZd3+wo4uK
-         ecfpKtI8e9PyKRns3Sgef+U5OzMMF3OfOPq66U4+t375VPK1K+BG79LJFYj6kGbmckVt
-         YvDB2KbVitfwAh7aBAbqDjh+jhLCe5U5v+mm1M7vVwjqx7A3XVqcuCo0ZJ7vZKd/3pjN
-         yvIpDMXqTub8C76HxQ7wCMHyvsTjY7SCY9S1h4P+YcFS8kPLFNDnm+Gep2n+LQfA2dws
-         U92HLOJeUVlk6cW1PYcbFWM7DC8zjTw4IWK4Q9TwKdmHzzIwIaBeHKOhq6Fqe+PmDsM0
-         BcTw==
+        d=linaro.org; s=google; t=1731926075; x=1732530875; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=3VAHDTdSdnUcjMrmzQom8uUSDOBZ2weSAUyUK6y+NhY=;
+        b=y3YuTPuSJb6ZzY+5rXpkoCTuaVjNLnsXpoId3k2LB6klKUil6/iduT6FQD7MbJ6iVG
+         cfSrd3Lfu30Ed+VGKQyTKElb6KSgllgKfTkIv1gCsDbY7bUtJxiJIOYX1UAD4rQ73m3W
+         ps0QIPEhI+Z86BvsILbz2YbNbAkUGDXjE8qtO8yxzKFtSssmiYDZPIwp2F8dwGR1K0Ik
+         2oSsmAklXcJmiGxqGAnTrL8obmg2RR3TDGHCVXWTXqboAbXXWs9m1DN9OQHY/pmT0xx3
+         YTpTFavfZi+A4tstO+RwFTmL6G9S13mbickDzMNdeZYgLxb4iOzrK+tj4IjjG4xVBpH0
+         r8eA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731925317; x=1732530117;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=phSqjmldBPWXRgFeffd/JWcPCOA4hJo3BiIhOYwH3MA=;
-        b=E4lPTcga5cxVwRo0BKi+BtG6XetpSMJh9tMIo2kgA9nkkUu75OjirSoCLCgnlkwOfH
-         TLCLg2ihCA3X9FWrTzrf6uJZruSPecH6+UNV+bZu3xtF1GM3MqW4uwF2d7KSlcDY5s+a
-         PLiGZ8ZZAXmDvjE1fZHTyZBgGaqBgiaQ8UIhPWzt3c6CXAS+GHrUPUYuAbCj8tEvP/lS
-         8yiqCq0rc4xsqjLNEIBPTYv4LthlpSp4Yr6XYTUctYktYhMh2sWYQYhtbTaA+4yFtMhR
-         ynbNp7pcqgcsBv5R3UMZvTkUuPEkTor1KqHiDpUs912HazHuh7hHqZTli7UVaheUaJSj
-         WL/g==
-X-Forwarded-Encrypted: i=1; AJvYcCULzakCgOaQeDFIRzFKG9TWclVR2/b8gdzdXTpnw2/dSfw+B4+OCyKxUbxPAyf0tnzFvs0lIUgojRQILQQa@vger.kernel.org
-X-Gm-Message-State: AOJu0YyBR///GukG3UAqsGpJNWXGeSP8sruCju8Ao74iYC9Akt8naOtE
-	FZ+M/mRXVDrxUqFMeUp9B+Dk/GUI1F8grIl6NHOCjl4GM/+fMabKEI+ve76q2v8=
-X-Google-Smtp-Source: AGHT+IEFeF0+Sdkb6b315Q3y1qMmmjCmnoawHXKh9ZeoveK/uoXwKwzlP7db+07+TyaV3vMlKWXWlQ==
-X-Received: by 2002:a05:6000:1f88:b0:37c:d276:f04 with SMTP id ffacd0b85a97d-38225a915fbmr8111178f8f.45.1731925317212;
-        Mon, 18 Nov 2024 02:21:57 -0800 (PST)
-Received: from linaro.org ([2a02:2454:ff21:ef80:8453:3d1e:f32c:d913])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-382485e2a89sm2301322f8f.17.2024.11.18.02.21.56
+        d=1e100.net; s=20230601; t=1731926075; x=1732530875;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3VAHDTdSdnUcjMrmzQom8uUSDOBZ2weSAUyUK6y+NhY=;
+        b=BSbJuTepjazRkauiT7EcnWoiy+6lwV1iVzl3X1jVzEQfxYQyeO0ZNB6cnYpBwKthug
+         /2HrtLa4wo0qGQp8XkATE2FpQvj0snpHJgr7+XWcBqq6RLh/KCNwmNf3ouoqBwBLGPCU
+         xdt3L+LVK80OcDD9EumGvsNQFOsIbNByfLwhhZDM+qPGnbfBWAbWArDAZnpzLDm/bcXe
+         +oyJl1grZGgs3/Sv+VyuWNqkjTWbZwn5bgoU/ymIc7FuittPXvD9RJ3e5Y8KGanbHOYO
+         S8ZhKBMFFOD5BNFvV1qPbd65J+6eAZblwMQrUIe+3uPVTLWNxd3wXBS8Tk2/ofHBlGSg
+         ZjXA==
+X-Forwarded-Encrypted: i=1; AJvYcCVgBrqj3fa6xFZkU6PIScR7KSx0iPK8VAvynQ0W2yovJbMvf6AOhFaGyaVmmh/qXhTgyI+QZwWAYaLIPE6a@vger.kernel.org
+X-Gm-Message-State: AOJu0YwfxwSTQkgAtl6gEIar5sCrQJYfJ809C+yQdcvsCIvRVM7mv8LS
+	VdFzWNQjfsu5oPRk1h8DpLSWzmMaAYWoUaDhvwJisqCN/cw/kSy/erJAXNZHSw0=
+X-Google-Smtp-Source: AGHT+IFxjSgWOZeMwBydjHIA/ty6oUxOJKnYUIUmBh0PHN55/0Q67i27jFciZxiAhLtnxqrGR+4o4w==
+X-Received: by 2002:a05:600c:35d1:b0:431:6153:a258 with SMTP id 5b1f17b1804b1-432df72c1cfmr100625065e9.13.1731926075377;
+        Mon, 18 Nov 2024 02:34:35 -0800 (PST)
+Received: from [127.0.0.2] ([2a02:2454:ff21:ef40:5b7a:75b3:1e72:6e3d])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38245e95925sm3162979f8f.111.2024.11.18.02.34.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Nov 2024 02:21:56 -0800 (PST)
-Date: Mon, 18 Nov 2024 11:21:45 +0100
+        Mon, 18 Nov 2024 02:34:35 -0800 (PST)
 From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: =?iso-8859-1?B?QmFybmFi4XMgQ3rpbeFu?= <barnabas.czeman@mainlining.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Amit Kucheria <amitk@kernel.org>,
-	Thara Gopinath <thara.gopinath@gmail.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
-	Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
-	linux-pm@vger.kernel.org, iommu@lists.linux.dev
-Subject: Re: [PATCH v6 10/10] arm64: dts: qcom: Add Xiaomi Redmi 5A
-Message-ID: <ZzsVOV8GjCVtCi5Q@linaro.org>
-References: <20241113-msm8917-v6-0-c348fb599fef@mainlining.org>
- <20241113-msm8917-v6-10-c348fb599fef@mainlining.org>
+Subject: [PATCH 0/2] arm64: dts: qcom: x1e80100-crd: Add USB multiport
+ fingerprint reader
+Date: Mon, 18 Nov 2024 11:34:28 +0100
+Message-Id: <20241118-x1e80100-crd-fp-v1-0-ec6b553a2e53@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241113-msm8917-v6-10-c348fb599fef@mainlining.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIADQYO2cC/x3MTQqAIBBA4avIrBtwpB/rKtFCdKrZWChEIN49a
+ fkt3iuQOQlnWFSBxI9kuWIDdQr86eLBKKEZjDY9EQ34EltNWqNPAfcbrTXWezdPYRyhVXfiXd7
+ /uG61fg4ipKFhAAAA
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+ Abel Vesa <abel.vesa@linaro.org>, Johan Hovold <johan@kernel.org>
+X-Mailer: b4 0.13.0
 
-On Wed, Nov 13, 2024 at 04:11:51PM +0100, Barnabás Czémán wrote:
-> Add initial support for Xiaomi Redmi 5A (riva).
-> 
-> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
-> ---
->  arch/arm64/boot/dts/qcom/Makefile                |   1 +
->  arch/arm64/boot/dts/qcom/msm8917-xiaomi-riva.dts | 297 +++++++++++++++++++++++
->  2 files changed, 298 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 9bb8b191aeb517e8f1e3a11bca98a3d0c39c5398..7562406843cfd82397c4844d14a22e8bcf4bba74 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -62,6 +62,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt86518.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt86528.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt88047.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-yiming-uz801v3.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= msm8917-xiaomi-riva.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8929-wingtech-wt82918hd.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-huawei-kiwi.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-longcheer-l9100.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/msm8917-xiaomi-riva.dts b/arch/arm64/boot/dts/qcom/msm8917-xiaomi-riva.dts
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..81bb76f1773252be2f60777acf93d51d01981f86
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/msm8917-xiaomi-riva.dts
-> @@ -0,0 +1,297 @@
-> [...]
-> +	gpio-keys {
-> +		compatible = "gpio-keys";
-> +
-> +		key-volup {
-> +			label = "Volume Up";
-> +			linux,code = <KEY_VOLUMEUP>;
-> +			gpios = <&tlmm 91 GPIO_ACTIVE_LOW>;
+The X1E80100 CRD has a Goodix fingerprint reader connected to the USB
+multiport controller. Set it up in the device tree and enable the needed
+driver for the NXP PTN3222 eUSB2 to USB2 redriver in the arm64 defconfig.
 
-It's good practice to
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+---
+Stephan Gerhold (2):
+      arm64: dts: qcom: x1e80100-crd: Add USB multiport fingerprint reader
+      arm64: defconfig: enable NXP PTN3222 eUSB2 to USB2 redriver driver
 
-> +			debounce-interval = <15>;
-> +		};
-> +	};
-> [...]
-> +&blsp1_i2c3 {
-> +	status = "okay";
-> +
-> +	touchscreen@38 {
-> +		compatible = "edt,edt-ft5306";
-> +		reg = <0x38>;
-> +		interrupts-extended = <&tlmm 65 IRQ_TYPE_LEVEL_LOW>;
+ arch/arm64/boot/dts/qcom/x1e80100-crd.dts | 48 +++++++++++++++++++++++++++++++
+ arch/arm64/configs/defconfig              |  1 +
+ 2 files changed, 49 insertions(+)
+---
+base-commit: 30eb6f0b08b13fd25ea12a3a6fa0a85915190c1c
+change-id: 20241115-x1e80100-crd-fp-8828cca97d66
 
-add pinctrl
+Best regards,
+-- 
+Stephan Gerhold <stephan.gerhold@linaro.org>
 
-> +		reset-gpios = <&tlmm 64 GPIO_ACTIVE_LOW>;
-
-for all
-
-> +		vcc-supply = <&pm8937_l10>;
-> +		iovcc-supply = <&pm8937_l5>;
-> +
-> +		touchscreen-size-x = <720>;
-> +		touchscreen-size-y = <1280>;
-> +	};
-> +};
-> +
-> +&blsp2_i2c1 {
-> +	status = "okay";
-> +
-> +	bq27426@55 {
-> +		compatible = "ti,bq27426";
-> +		reg = <0x55>;
-> +		monitored-battery = <&battery>;
-> +	};
-> +
-> +	bq25601@6b{
-> +		compatible = "ti,bq25601";
-> +		reg = <0x6b>;
-> +		monitored-battery = <&battery>;
-> +
-> +		interrupt-parent = <&tlmm>;
-> +		interrupts = <61 IRQ_TYPE_EDGE_FALLING>;
-
-GPIOs/pins
-
-> +
-> +		input-voltage-limit-microvolt = <4400000>;
-> +		input-current-limit-microamp = <1000000>;
-> +	};
-> +};
-> [...]
-
-> +&sdhc_2 {
-> +	cd-gpios = <&tlmm 67 GPIO_ACTIVE_LOW>;
-
-that you use. :-)
-
-Usually it can be something simple like function=gpio, bias-disable,
-drive-strength = <2>, etc, plenty of examples exist upstream. Check
-downstream or schematics (if you have them). Ideally you would check
-what the peripheral requires.
-
-E.g. for SD card the GPIO usually has external pull-up, so bias-pull-up
-would be redundant and one can just use bias-disable:
-
-	pinctrl-0 = <&sdc2_default &sdc2_cd_default>;
-	pinctrl-1 = <&sdc2_sleep &sdc2_cd_default>;
-	pinctrl-names = "default", "sleep";
-
-&tlmm {
-	sdc2_cd_default: sdc2-cd-default-state {
-		pins = "gpio67";
-		function = "gpio";
-		drive-strength = <2>;
-		bias-disable;
-	};
-};
-
-
-> +	vmmc-supply = <&pm8937_l11>;
-> +	vqmmc-supply = <&pm8937_l12>;
-> +
-> +	status = "okay";
-> +};
-> +
-> [...]
-> +&rpm_requests {
-> +	regulators-0 {
-> +		compatible = "qcom,rpm-pm8937-regulators";
-> +
-> [...]
-> +		pm8937_l11: l11 {
-> +			regulator-min-microvolt = <2950000>;
-> +			regulator-max-microvolt = <2950000>;
-> +		};
-
-You usually need/want regulator-allow-set-load and regulator-system-load
-for the SD card regulator to avoid issues with certain SD
-cards/operations, see
-
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=af61bef513ba179559e56908b8c465e587bc3890
-
-Thanks,
-Stephan
 
