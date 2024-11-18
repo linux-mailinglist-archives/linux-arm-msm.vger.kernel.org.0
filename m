@@ -1,184 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-38164-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38165-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3F9E39D0908
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 06:46:33 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 920BC9D0971
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 07:18:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E1B6A1F21022
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 05:46:32 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 35F05B21132
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 06:18:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5743613D61B;
-	Mon, 18 Nov 2024 05:46:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 932CA1465A5;
+	Mon, 18 Nov 2024 06:18:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Ni76dJ/G"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="KbPe1YiT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1612126BF5;
-	Mon, 18 Nov 2024 05:46:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08FC31C6B8;
+	Mon, 18 Nov 2024 06:18:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731908784; cv=none; b=V50WvSRvy4HIidfgy4KiiP/cu0FsyAilaOaOJ7pBedVQ6d9HY6B88Cbl3Zt1oI67siQ1bKwGqLfwYsJeYXO7sGc3gIWxdDIJY6DA7DEDMJtbChyEaEw/ZGWOY+K9Ox7Q0p54Yik1stM7WA8mRPHmVI2KxA7faZXuaFhe0Z6loUc=
+	t=1731910721; cv=none; b=GH3JXDNH8duaE7OuYhBDbhqzqitCs6ilBe9uxeBtXz6PUQJGq7UyUkQZe/d0KTtqRgIv4d2QbenPgxO8Ow+66XLplEwmMx3R7RKMh/ZaiU7xtOo7Xgm6ODtigm1CwVvzG2i2WhQ9lJ2c4oOnqorNS/07c6Z/mLgCujSq0IupKw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731908784; c=relaxed/simple;
-	bh=93Nb6r7t6AIN0MXxsslj2L7H+yq3vjWywpI3M1cqALU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=WMr8zOKSU6SLsXvU8AGYHyo58tZ3uzt0BTnw9d+62Krw4CAShVxQBAzRZXPnAPUuLPBkuQ/HhxN0EAc3jNgaD/IxY3skRCtF9gluXKTtdA9i6SCaUQhXbUSmHvJFklHhHxsZHmCTfzSAfHzKH1tigXcbous7EVqV36D61dAeQ8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Ni76dJ/G; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1731910721; c=relaxed/simple;
+	bh=Zm9tehsSs7BLjNfhUeRO8pHHmppIjYVtYgtpVwgrIP4=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=Wp7lW0IFLMM4pJYi8IsFYNqTjp+iUtUPDlVux70i1fjKrEJu+SqD8Ba27ceHHACdLKYFfAiE+T5WrnfbzGK+XzAiH/MwOxEklyAQkv7CRw3mZtC954wXN+u4SY6TVNtxqlCTGq2SSuhbRO9bnXhJn3+/Hd6Xfiy7+1Qu4z2YNo0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=KbPe1YiT; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AI5RmCd029042;
-	Mon, 18 Nov 2024 05:46:15 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AI5SF22003568;
+	Mon, 18 Nov 2024 06:18:13 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	iOGrpjWMlH/TbNBbr4mUxA777nPQXKTSf24nXmae8hs=; b=Ni76dJ/GbMQbeV7j
-	qRYQap0wVB1mPkdPoY7IbeyFZS8eyoNLGRszcJu9EE4lc0EWsopGha0rCHghVLJW
-	zhXylDrw4hg2/WxzzxEhKZeHRBJg/gO4HcmeLq/1PEHJdEAcZJic4vpP1AE1Hask
-	RIXv3kFVggkgAtsOl6x3vhjBPbJc76ku+lR1cN8MfnqAkatwI06aZsEq07XjrfMU
-	yKcYYePVWq+NwLjE9HsEh8eWuNuX7IaD5hHPLnkreqmVBVuxh+VCeSewcyl86qIt
-	lh07dG68NaC2E2dhPVQjMC2A8ql9accOMyUT/C7eIFIDDUbzHDOh1HKGFpHyIjh9
-	3tvweQ==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42xkv9uhq5-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=CpCdAQqS4w3V1Exr745zFN
+	JoIIAlh+Y7MPwMKhJZx18=; b=KbPe1YiTWzVvfqMQPhhVrLEgdhB3b3+QrBaUI3
+	9Uu3iTaACIm2p4oenpp6zfL0YSA3Fssodw9gn4DfVHyMMAYISp4nvJvJzAmjzg6j
+	gsLhbZxrDuZKdiF9Qxegbf8lpFPh6cOGgcQa/BPrJKN5X+cbPJU4J5TvvziTu4nd
+	/dQ7Jj8nS+0XVtAzO6e2SwZL2YmlLK7O7EUP/DmL+yqfS+K2Tqh7E10Ta2udNi5U
+	JsXt1HwZXpoRXcmep3yEDtXQsiX25aE+GxL8x+K5UuHKjZBg4p1TfBwtz91BUcBZ
+	szgmMGBJmQaYtSNB1WIVqajadCbbn25q4BMovMCQyB9DOUDA==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42xkv9ujqg-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 18 Nov 2024 05:46:14 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AI5kC2c031641
+	Mon, 18 Nov 2024 06:18:13 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AI6IBjN014966
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 18 Nov 2024 05:46:12 GMT
-Received: from [10.217.219.207] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 17 Nov
- 2024 21:46:07 -0800
-Message-ID: <5a39b6d0-600f-455f-9ba7-29787f9085ce@quicinc.com>
-Date: Mon, 18 Nov 2024 11:16:07 +0530
+	Mon, 18 Nov 2024 06:18:12 GMT
+Received: from yijiyang-gv.ap.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Sun, 17 Nov 2024 22:18:04 -0800
+From: Yijie Yang <quic_yijiyang@quicinc.com>
+Subject: [PATCH 0/3] Add standalone ethernet MAC entries for qcs615
+Date: Mon, 18 Nov 2024 14:16:49 +0800
+Message-ID: <20241118-schema-v1-0-11b7c1583c0c@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/4] dmaengine: gpi: Add Lock and Unlock TRE support to
- access I2C exclusively
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, <konrad.dybcio@linaro.org>,
-        <andersson@kernel.org>, <andi.shyti@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dmaengine@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
-        <conor+dt@kernel.org>, <agross@kernel.org>,
-        <devicetree@vger.kernel.org>, <vkoul@kernel.org>, <linux@treblig.org>,
-        <dan.carpenter@linaro.org>, <Frank.Li@nxp.com>,
-        <konradybcio@kernel.org>, <bryan.odonoghue@linaro.org>,
-        <krzk+dt@kernel.org>, <robh@kernel.org>
-CC: <quic_vdadhani@quicinc.com>
-References: <20241113161413.3821858-1-quic_msavaliy@quicinc.com>
- <20241113161413.3821858-3-quic_msavaliy@quicinc.com>
- <87cc1f1e-85d2-40cb-b3b3-8935004f4f98@oss.qualcomm.com>
-Content-Language: en-US
-From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-In-Reply-To: <87cc1f1e-85d2-40cb-b3b3-8935004f4f98@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
+X-B4-Tracking: v=1; b=H4sIANLbOmcC/1WOyw6CMBREf4V0bU1fyGPlfxgXpVykC4q22GAI/
+ +7lodHZTTJnZiYSwFsIpEwm4iHaYHuHhh8SYlrtbkBtjZ4IJhRH0WBa6DTNCp5mWcEEa1KC4bu
+ Hxo5r0eWKvtIBaOW1M+2Cb9Qe9PB44tCwpbeo6bvODmXiYBzoNsZysjS1Ngy9f60PI1+J/Yz4n
+ ImcMqpUfspSXeWFqs84YKwzR6xdS6L4BeUXFAhKcdKNVKnUuvkH53l+A/If+s8hAQAA
+X-Change-ID: 20241111-schema-7915779020f5
+To: Vinod Koul <vkoul@kernel.org>, Andrew Lunn <andrew+netdev@lunn.ch>,
+        "David
+ S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        "Jakub
+ Kicinski" <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+        Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        "Alexandre
+ Torgue" <alexandre.torgue@foss.st.com>,
+        Giuseppe Cavallaro
+	<peppe.cavallaro@st.com>,
+        Jose Abreu <joabreu@synopsys.com>,
+        Maxime Coquelin
+	<mcoquelin.stm32@gmail.com>
+CC: <quic_yijiyang@quicinc.com>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski@linaro.org>,
+        <netdev@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        <linux-arm-kernel@lists.infradead.org>, <quic_tingweiz@quicinc.com>,
+        <quic_aiquny@quicinc.com>, <quic_tengfan@quicinc.com>,
+        <quic_jiegan@quicinc.com>, <quic_jingyw@quicinc.com>,
+        <quic_jsuraj@quicinc.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1731910683; l=824;
+ i=quic_yijiyang@quicinc.com; s=20240408; h=from:subject:message-id;
+ bh=Zm9tehsSs7BLjNfhUeRO8pHHmppIjYVtYgtpVwgrIP4=;
+ b=4WX46OMtEAR1pPzx/Y36ezeXe0o/tfSt3fX7rS2RoXdlQD+kvx0bcmg6YudNXySJ1bdQJKPnD
+ Oy9KbJMqD9TBJUqYOil9GB6sUDLz7YLJDmU3UPUxNMCj4WzU9wHLPco
+X-Developer-Key: i=quic_yijiyang@quicinc.com; a=ed25519;
+ pk=XvMv0rxjrXLYFdBXoFjTdOdAwDT5SPbQ5uAKGESDihk=
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: YGVu8ialxrtGNZHVR4ZDdas37iNRCKPn
-X-Proofpoint-ORIG-GUID: YGVu8ialxrtGNZHVR4ZDdas37iNRCKPn
+X-Proofpoint-ORIG-GUID: GfrKfr-53M1u1xTlWARFwCoWmY_EveUL
+X-Proofpoint-GUID: GfrKfr-53M1u1xTlWARFwCoWmY_EveUL
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 phishscore=0
- mlxlogscore=999 priorityscore=1501 lowpriorityscore=0 adultscore=0
- spamscore=0 suspectscore=0 impostorscore=0 clxscore=1015 mlxscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411180049
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ adultscore=0 mlxlogscore=635 priorityscore=1501 suspectscore=0
+ malwarescore=0 phishscore=0 impostorscore=0 mlxscore=0 bulkscore=0
+ clxscore=1011 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411180051
 
-Thanks Konrad for the review !
+Add separate EMAC entries for qcs615 since its core version is 2.3.1,
+compared to sm8150's 2.1.2.
 
-On 11/16/2024 12:53 AM, Konrad Dybcio wrote:
-> On 13.11.2024 5:14 PM, Mukesh Kumar Savaliya wrote:
->> GSI DMA provides specific TREs(Transfer ring element) namely Lock and
->> Unlock TRE. It provides mutually exclusive access to I2C controller from
->> any of the processor(Apps,ADSP). Lock prevents other subsystems from
->> concurrently performing DMA transfers and avoids disturbance to data path.
->> Basically for shared I2C usecase, lock the SE(Serial Engine) for one of
->> the processor, complete the transfer, unlock the SE.
->>
->> Apply Lock TRE for the first transfer of shared SE and Apply Unlock
->> TRE for the last transfer.
->>
->> Also change MAX_TRE macro to 5 from 3 because of the two additional TREs.
->>
->> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
->> ---
->>   drivers/dma/qcom/gpi.c           | 37 +++++++++++++++++++++++++++++++-
->>   include/linux/dma/qcom-gpi-dma.h |  6 ++++++
->>   2 files changed, 42 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
->> index 52a7c8f2498f..c9e71c576680 100644
->> --- a/drivers/dma/qcom/gpi.c
->> +++ b/drivers/dma/qcom/gpi.c
->> @@ -2,6 +2,7 @@
->>   /*
->>    * Copyright (c) 2017-2020, The Linux Foundation. All rights reserved.
->>    * Copyright (c) 2020, Linaro Limited
->> + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
->>    */
->>   
->>   #include <dt-bindings/dma/qcom-gpi.h>
->> @@ -65,6 +66,14 @@
->>   /* DMA TRE */
->>   #define TRE_DMA_LEN		GENMASK(23, 0)
->>   
->> +/* Lock TRE */
->> +#define TRE_LOCK		BIT(0)
->> +#define TRE_MINOR_TYPE		GENMASK(19, 16)
->> +#define TRE_MAJOR_TYPE		GENMASK(23, 20)
->> +
->> +/* Unlock TRE */
->> +#define TRE_I2C_UNLOCK		BIT(8)
-> 
-> So the lock is generic.. I'd then expect the unlock to be generic, too?
-Absolutely, renamed it for generic as TRE_UNLOCK.
-> 
->> +
->>   /* Register offsets from gpi-top */
->>   #define GPII_n_CH_k_CNTXT_0_OFFS(n, k)	(0x20000 + (0x4000 * (n)) + (0x80 * (k)))
->>   #define GPII_n_CH_k_CNTXT_0_EL_SIZE	GENMASK(31, 24)
->> @@ -516,7 +525,7 @@ struct gpii {
->>   	bool ieob_set;
->>   };
->>   
->> -#define MAX_TRE 3
->> +#define MAX_TRE 5
->>   
->>   struct gpi_desc {
->>   	struct virt_dma_desc vd;
->> @@ -1637,6 +1646,19 @@ static int gpi_create_i2c_tre(struct gchan *chan, struct gpi_desc *desc,
->>   	struct gpi_tre *tre;
->>   	unsigned int i;
->>   
->> +	/* create lock tre for first tranfser */
->> +	if (i2c->shared_se && i2c->first_msg) {
-> 
-> Does the first/last logic handle errors well? i.e. what if we
-> have >= 3 transfers and:
-> 
-> 1) the first transfer succeeds but the last doesn't
-> 2) the first transfer succeeds, the second one doesn't and the lock
->     is submitted again
-> 3) the unlock never suceeds
-> 
-geni_i2c_gpi_xfer() takes care of any of the error. Upon error, it does 
-dma_engine_terminate_sync() which resets all the pipes. Internal 
-downstream also has same implementation.
-> Konrad
+Signed-off-by: Yijie Yang <quic_yijiyang@quicinc.com>
+---
+Yijie Yang (3):
+      dt-bindings: net: qcom,ethqos: revise description for qcs615
+      dt-bindings: net: snps,dwmac: add description for qcs615
+      net: stmmac: dwmac-qcom-ethqos: add support for EMAC on qcs615 platforms
+
+ Documentation/devicetree/bindings/net/qcom,ethqos.yaml  |  5 +----
+ Documentation/devicetree/bindings/net/snps,dwmac.yaml   |  2 ++
+ drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c | 17 +++++++++++++++++
+ 3 files changed, 20 insertions(+), 4 deletions(-)
+---
+base-commit: 3664e6c4f4d07fa51834cd59d94b42b7f803e79b
+change-id: 20241111-schema-7915779020f5
+
+Best regards,
+-- 
+Yijie Yang <quic_yijiyang@quicinc.com>
+
 
