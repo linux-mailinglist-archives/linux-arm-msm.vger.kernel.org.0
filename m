@@ -1,76 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-38213-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38214-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 544059D0EA6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 11:35:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 532B49D0EA9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 11:35:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CDDDE1F21BEA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 10:35:27 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id F37581F21F6C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 10:35:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 131EB194A64;
-	Mon, 18 Nov 2024 10:34:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A94B1990BB;
+	Mon, 18 Nov 2024 10:34:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KQYO5aWb"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RkEEcc/M"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D32F19415E
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Nov 2024 10:34:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FD1E17BB32
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Nov 2024 10:34:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731926080; cv=none; b=ES0r3irKWv1Ja+L1zdZ4F3cA4S6OA+5XNv1S2rLJ9SRvaMydy0wMueV4E+c6dvw7JOXX6MauNki2aq0JDP3/lvGpY2HFiFwlQyuPTVKJ6r1u48MvbKfcmVhCZONxahJ7RPr7NNMFrs5YDP6j/0q6nnj0K4X/RVmGOvkkBlEGuMQ=
+	t=1731926081; cv=none; b=cmk695M9jYkd95NRAuSINYsZrA6a1LnuIXgQUGswSv3BCUDfOZgZQMp1u6nP9W5B2KmQXMp06Gt0p+wfDmkld5DvE4pr7HNikL6d7dK5S1D19jfjhpvdq+lNv6JRwBQQ5KGxTQyTkt73tYJRfLXDw/45ue3ENGKMMt217OBVNvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731926080; c=relaxed/simple;
-	bh=5thSI/c+7QWY6iWfYvRFqJwPPVssjzSrSi0OiLmYH9g=;
+	s=arc-20240116; t=1731926081; c=relaxed/simple;
+	bh=XQsDyuRiau3IHO4Li1+Y+cuAubOEwOYf9EOJSmEbkBs=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=SDrOCfKXzald8n2U1NSOjtx2sKocFTJgUc3T6q58e7Cu99JNvbj53p1rHPlUWSCU4RebkuOXiSxGsBJ605pvNzyyuM6xTPQFiqHdV7tdW1tK8WeuKK3trSfD/X61K177skfRhwE9aGwppDLpFvogJfmlDKTXO+LkspXQ/GhPT20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KQYO5aWb; arc=none smtp.client-ip=209.85.128.54
+	 In-Reply-To:To:Cc; b=DAtfwrFaeIh63iwO4c+Owu+0/oc3BVlBTbO9r4gINzMFG3L5YWmcZIMWrn4sLrdfweXsyX38XNPepMp4Jg9g2mf+xPV6pi8rZErWwcLKmqKw5PCI+FiyWKmsUBYHfgw5B6czPo8wbeyQ+Tx3wH1vbt4kuv9kGP83hM1wdE9Fd4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RkEEcc/M; arc=none smtp.client-ip=209.85.221.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-431616c23b5so22453635e9.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Nov 2024 02:34:37 -0800 (PST)
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-3823f1ed492so583968f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Nov 2024 02:34:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1731926076; x=1732530876; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1731926077; x=1732530877; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Yr1292EdCuKFfiA+4ZvZQTerR4Z3UgKV6lwrmxEoxeo=;
-        b=KQYO5aWbQY/a9ge/YJ/80N2rNibzGaGArJLYJIJLdUpdxoU+eylLoQ40Sy/oXvMyM2
-         2+RaIMUFBqiSDcrNq0q5RqLbCXJc7CRtmLXbZd75ty73C3FQbMF2PYDcWRt98nzOldHN
-         bCBs3JKnFX7kehsgl5cgeu288FqemX76pBoA5JZPfXFqHVSKMH6wnhM4logJDrJ1Xqsw
-         BSzks2+2aOL+SCxiTPuihQgu0ZUtohL9ROMORIubgd9aUdGopuOc+r2mts/VYfF1/paM
-         dBtbTguSe9jQzr5W2znx0JBhoiELQ0/M/dzpH+yOvB8JHbU++rZbwTAdPIUnvIcEffGM
-         8pZQ==
+        bh=W7YU9L/ihohCgSGV7XFCQCDHEXAXKVeCUTFSk43kuSs=;
+        b=RkEEcc/MdVc4XeuUxPrXW7gCWcStT2vFV3AHdcGUqiXJptxZuuuGCD8zjAgqONl28D
+         e8764lltzpNaZR02Tbvh9uIWYnkANSyvmdmekBT+i19iLfjKmbsl+p933o8UYR/kuOlR
+         M+C0as/esy84Ww13qSH5cpRWqA+aY852nIh4f023ydNjXOX150eJmLoRreTrxmq1BzIf
+         FOFvI74QfOABwlCtUhhOCm8PAigqzUYb8/x+Zww6aS3TsZOiU6FE6OsvIFrNdNp9ia7W
+         4/l9lPCfZ+un6D6S8+CDo84yTHK38NCKU+E4LwW2tiyH5vmL2iQD0mOzAFcRNIJNFgVi
+         7u2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731926076; x=1732530876;
+        d=1e100.net; s=20230601; t=1731926077; x=1732530877;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Yr1292EdCuKFfiA+4ZvZQTerR4Z3UgKV6lwrmxEoxeo=;
-        b=XuPbGSdkcCo6Npsxsk8oH2CdsYxYpi883VF9eM/IFBByT7mZPF2uZP+iRoV65g0MVc
-         m1LxAbPjE+uAVEt2cMalvsabEW2jbgSaM/tJY83gC8nOPbCqKacVjJoCeyD0QIYGgFPn
-         EzcIE8siBawQpO+uievqLtD1lxlZ/28nSPZU5hK7aYun0RiMoFNnXcQ51YE2VZ/EwXZd
-         Dn54T5uhcaKN5MgkgI+bIcZ8Senv4ZC54uBpoW8Pfo/UC+OjsA/ym2e4FcwaTMY8FJXa
-         zs7trl/eU78wJPk93dV5CXZScUFnQeVWL/nqHqm/CkzJ+j0NdBitA9/FWnvwhT222YLg
-         UDig==
-X-Forwarded-Encrypted: i=1; AJvYcCV2p4eVZUUeEY9F/aP8teRwaRwH8aAehALWhJ523rKtlLhMiMnSvqX4YZseWFFEmK5EpOznDBaXuGGbFQCC@vger.kernel.org
-X-Gm-Message-State: AOJu0YyvD/Ny1OhxRu0xJJ7tNOqmeLFWYZrt0H4iXSZzZWcTIMpBKqou
-	3qPikkyksSHoI6TcqjH5tuU2WtTeX/7b/3tfiuxC//qyuwmWRu3JAVR6j+JWJys=
-X-Google-Smtp-Source: AGHT+IEpR027bQwqgL+gWsLc+SHyyXqlwdyiwrb5NhXy2pdUH//X/toKtnp1aDwfHxO74fzhk6rBZg==
-X-Received: by 2002:a05:600c:1d1d:b0:431:3b80:6ca7 with SMTP id 5b1f17b1804b1-432d9767819mr147645655e9.13.1731926076147;
+        bh=W7YU9L/ihohCgSGV7XFCQCDHEXAXKVeCUTFSk43kuSs=;
+        b=iQDeoOXBmYiZGm90cIBQrrp64Cjm5mWEdiQT8ipijZpOsO5ni9k0wtQdetT5vJ1Ay0
+         puezKJt0P2yN5pl7lN+IQFBcys+LM3+7UpIEan+C1HFNzC8mFOtzMdTi05JSksy1nEB5
+         HV7ZdgyoBwiqVrfiWA5SYwFsLnGR/vmiLleTFInA0p27QH14LASEMJ+k0zl8ECtq7Efl
+         UKJKwfoKHwCH6ANHPfj4mlEAl6thsAcEsYVuShxmu1He599dDDnMNWS8HeB1eaYSRItJ
+         zJPz7tmM468byxm0y4fTWcKUtNr3aeg7Enu+KyvgJ2epkfUl1jC/34XRGhQE+rCYJJVA
+         OGXQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVCFGFFjDMPp6CrheFK5jQWtRtKdytp2BKbksJ0eaDvhmARMiTP85WHKxYv05xe8aREQBjfgsPuoNKfBVV2@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz/TghmvZNTDROmEYEazN2nCsUnmOubuJnkQ9EzcmEMA3qPtXw3
+	sxXjZFX4HSxYN5yukFOE9LRqaTJjkNs7Z5PVApfZVuQQcZbe6zW37BX9ljCZGbw=
+X-Google-Smtp-Source: AGHT+IGwcJJL68jiIs4CpOJY91QszYJvr1I5b9vVKUwSfS1kEIk0ygwL6xoo18htvJHm4mOKTYcF8g==
+X-Received: by 2002:a5d:6d8a:0:b0:382:484d:45da with SMTP id ffacd0b85a97d-382484d4782mr2179017f8f.6.1731926076817;
         Mon, 18 Nov 2024 02:34:36 -0800 (PST)
 Received: from [127.0.0.2] ([2a02:2454:ff21:ef40:5b7a:75b3:1e72:6e3d])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38245e95925sm3162979f8f.111.2024.11.18.02.34.35
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38245e95925sm3162979f8f.111.2024.11.18.02.34.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Nov 2024 02:34:35 -0800 (PST)
+        Mon, 18 Nov 2024 02:34:36 -0800 (PST)
 From: Stephan Gerhold <stephan.gerhold@linaro.org>
-Date: Mon, 18 Nov 2024 11:34:29 +0100
-Subject: [PATCH 1/2] arm64: dts: qcom: x1e80100-crd: Add USB multiport
- fingerprint reader
+Date: Mon, 18 Nov 2024 11:34:30 +0100
+Subject: [PATCH 2/2] arm64: defconfig: enable NXP PTN3222 eUSB2 to USB2
+ redriver driver
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,7 +79,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241118-x1e80100-crd-fp-v1-1-ec6b553a2e53@linaro.org>
+Message-Id: <20241118-x1e80100-crd-fp-v1-2-ec6b553a2e53@linaro.org>
 References: <20241118-x1e80100-crd-fp-v1-0-ec6b553a2e53@linaro.org>
 In-Reply-To: <20241118-x1e80100-crd-fp-v1-0-ec6b553a2e53@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -92,87 +92,26 @@ Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
  Abel Vesa <abel.vesa@linaro.org>, Johan Hovold <johan@kernel.org>
 X-Mailer: b4 0.13.0
 
-The X1E80100 CRD has a Goodix fingerprint reader connected to the USB
-multiport controller on eUSB6. All other ports (including USB super-speed
-pins) are unused.
-
-Set it up in the device tree together with the NXP PTN3222 repeater.
+It is used in many of the Qualcomm X1 Elite laptops for additional USB-A
+ports, USB fingerprint readers or similar peripherals.
 
 Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/x1e80100-crd.dts | 48 +++++++++++++++++++++++++++++++
- 1 file changed, 48 insertions(+)
+ arch/arm64/configs/defconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-index 39f9d9cdc10d..44942931c18f 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-@@ -735,6 +735,26 @@ keyboard@3a {
- 	};
- };
- 
-+&i2c5 {
-+	clock-frequency = <400000>;
-+
-+	status = "okay";
-+
-+	eusb6_repeater: redriver@4f {
-+		compatible = "nxp,ptn3222";
-+		reg = <0x4f>;
-+		#phy-cells = <0>;
-+
-+		vdd3v3-supply = <&vreg_l13b_3p0>;
-+		vdd1v8-supply = <&vreg_l4b_1p8>;
-+
-+		reset-gpios = <&tlmm 184 GPIO_ACTIVE_LOW>;
-+
-+		pinctrl-0 = <&eusb6_reset_n>;
-+		pinctrl-names = "default";
-+	};
-+};
-+
- &i2c8 {
- 	clock-frequency = <400000>;
- 
-@@ -1047,6 +1067,14 @@ edp_reg_en: edp-reg-en-state {
- 		bias-disable;
- 	};
- 
-+	eusb6_reset_n: eusb6-reset-n-state {
-+		pins = "gpio184";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+		output-low;
-+	};
-+
- 	hall_int_n_default: hall-int-n-state {
- 		pins = "gpio92";
- 		function = "gpio";
-@@ -1260,3 +1288,23 @@ &usb_1_ss2_dwc3_hs {
- &usb_1_ss2_qmpphy_out {
- 	remote-endpoint = <&pmic_glink_ss2_ss_in>;
- };
-+
-+&usb_mp {
-+	status = "okay";
-+};
-+
-+&usb_mp_dwc3 {
-+	/* Limit to USB 2.0 and single port */
-+	maximum-speed = "high-speed";
-+	phys = <&usb_mp_hsphy1>;
-+	phy-names = "usb2-1";
-+};
-+
-+&usb_mp_hsphy1 {
-+	vdd-supply = <&vreg_l2e_0p8>;
-+	vdda12-supply = <&vreg_l3e_1p2>;
-+
-+	phys = <&eusb6_repeater>;
-+
-+	status = "okay";
-+};
+diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+index 0b8303eb498d..8b17d70b3b58 100644
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -1530,6 +1530,7 @@ CONFIG_RESET_RZG2L_USBPHY_CTRL=y
+ CONFIG_RESET_TI_SCI=y
+ CONFIG_PHY_XGENE=y
+ CONFIG_PHY_CAN_TRANSCEIVER=m
++CONFIG_PHY_NXP_PTN3222=m
+ CONFIG_PHY_SUN4I_USB=y
+ CONFIG_PHY_CADENCE_TORRENT=m
+ CONFIG_PHY_CADENCE_DPHY_RX=m
 
 -- 
 2.44.2
