@@ -1,149 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-38150-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38151-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6137C9D075B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 02:02:30 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 11D049D07DF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 03:24:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 265B3281D1F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 01:02:29 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BDDA91F217A6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 02:24:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45817D517;
-	Mon, 18 Nov 2024 01:02:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44E2638DC8;
+	Mon, 18 Nov 2024 02:24:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="EXd+wdK8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Tygw5ctg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7532B79CF;
-	Mon, 18 Nov 2024 01:02:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D0F4360
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Nov 2024 02:24:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731891744; cv=none; b=A3h3dkybeE6OSLVjAzxBwLRGq5KGG34gdz/CXCe1v32u4HGTsvTCIq0myHQSsu/N4hBf30VnDk9HjqoRfTGLNv8P+b5zGaDKh73PCXpATTkWIZSL/b2/hVnnMyHVX+m+HpOje4kUvu13GV6oKJabx9EC8uGR26XcFwCCt3cLPBU=
+	t=1731896679; cv=none; b=h7Wo62EJLv0s2sReYmRiyp/EMFTF57mHJ+oNGBN4y3Q7ZHDnZ0U6FC2q5K5lPFRlZVjKxm1yXVmfGgCEp0ucLI4LtTvA0kW4Xfmzum/LyXU4zGJ29HvwPklS1UstmR1IId2xISplstr2gh3kc+vNi/hMJAkZPFOz3LxH8299umg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731891744; c=relaxed/simple;
-	bh=IGNouuMdJ5XOR/9dlU6EcY6EPlihRfta8uOShRul4vI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Qba81UimtPyD5R2m+2TntA4dVQ1DhF3a8pC7awn2Fv5F9rMOpA1sr0aNqyifu0PtyI0X3Gp4UJJDuwOKK8KO1sN+LkgQYcoHrPqhVcQ/pNH3iMMay9y7kXDIjK1jjyBBj5V+rwf6qUFKa7hzwDXBlh8kuyP0WKXDfW+KyituQgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=EXd+wdK8; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AHDuAdB003341;
-	Mon, 18 Nov 2024 01:02:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	dBDM9G0SVfojD6pu0UvAgUdsM+YYMATzysm281v9ueU=; b=EXd+wdK8HIC/Nvtl
-	NGive39yhottlqLNbn5bNKrZHq2qv3PmlWfmKAknt0ijOq57vCafjBkVNFzfcOVg
-	UUQFUI3V9tGNDqyIEMhXh7oJrL1f+fosSQLxAtIu1VEcBTVTnqDcXzDa+Xz2VnfV
-	GmYTN71ftizHRxbIbdEe5sbxIB+MyV+JuFRuqY9Ur8Tv/LDWJ3sV0PwIwON2hAlF
-	9mI4Spzjf4ck2BWQRz6yVpqU1sCVstDuMCmUKXKCueGsGUehrZ/ENSpwv20P4aqO
-	smplmIU/rqTiq3qiKww/0shEDh/hhu/CYsRLNQ8o1vq7koGlGNkgVQ420q62hcXp
-	86TIMw==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42xkv9u01w-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 18 Nov 2024 01:02:05 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AI124rC019347
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 18 Nov 2024 01:02:04 GMT
-Received: from [10.253.15.8] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 17 Nov
- 2024 17:02:00 -0800
-Message-ID: <6fd79a88-bab4-477c-aaf0-0dffb80e103c@quicinc.com>
-Date: Mon, 18 Nov 2024 09:01:58 +0800
+	s=arc-20240116; t=1731896679; c=relaxed/simple;
+	bh=k3eyVUgvTJkKbvoXpMka4VR0FOUVAWdTrp6FJEjjc0o=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=TGmyXvDmDgBsST754TRLWLOpDmkym1lDu3t3O9Y9bL8mG54CJjSWRCc1RJ4IAGeYG9IgyfF4AwIul/MQbiICHTV3cpUOCwt9m+WD9V8GalVa0/qd3PjiLdIfJckZzfWa2cnRHtMgDOjkWRIVFUzFOCsDZpj6zCtMYbSbW7me3Dw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Tygw5ctg; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4315e62afe0so33748325e9.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Nov 2024 18:24:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1731896675; x=1732501475; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=uPjgWhLQCkTakjfZhT/uUqtaJNKJd0vGZgcQQ4R7uyQ=;
+        b=Tygw5ctgnQNfwteytDhRTYSHu0qKkLqgi0PBBggtGC2Iil+B5aWtYIPBe8JFGiKDom
+         uR5DW3Wbs7oP8u0m5/M/ZTEybkB70ughhrMmsZgKuS7lazHEB0nSLV6C2LLnrXqa5fjK
+         sJa8uZSkgXnBftHDHscXeZKH38P6hZnn2rHTCXpgYv+AQqVGjSLRTwpK/lBlvwRIUvcv
+         jNOHN4YFdWt++JE/TmqgTgdTbBp8UJMSN+rax6J7wR4309QyITuZtyC4mkCFvBGk0jta
+         7Fa3Q/6cIgTeEuw6H1XYbqUsXU8qM3BriOyPcNKj+Z94YxcZmdrjhnkPs5pYYIG11fuQ
+         cgcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731896675; x=1732501475;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=uPjgWhLQCkTakjfZhT/uUqtaJNKJd0vGZgcQQ4R7uyQ=;
+        b=MUstJN9Vljh4dzhfKzuJHY46vVhqamUOuNf61ygH+jvLP7EeBxFN3WPgNUwuRGHVmW
+         UiSzDoVpDWFy/t4SVclJIQrkkhjY1ZEZuQC8M0eCPblNKWSaDrMOqAj1mx+jalNtpILd
+         zltENyrcN/w6d/sqlo0KHvwXQcNtneBqyC40l1sbTgZ8jt7GyI2fxrLFrOm6K/YjE0YG
+         xiUx2aFif6476umCQpJ+lO5NADOTryzhZ+veLSdduH2Nt6QB1vdCWpALFaIW64htZ93R
+         jp6+6DDIxXB1eHk5Mgxut7yKeNzSAZsndZ2XgIpIDzuxKVn/EFApcU0sfrfjf3oQLzQC
+         3yIg==
+X-Gm-Message-State: AOJu0YzRlHyKYNat0+37umWIDhDA5mSH7lSNfmFQgFuv+w46MVgDNvmV
+	OTouxUPhwhQVyNwcWjfBoEuGBwzhbNnb+Zgyb6f1BjjKNrCNPU2foo2rswqWBwo=
+X-Google-Smtp-Source: AGHT+IHoVxhlL4UOF7WDoLOsycgCb1o74foUHlXwahjrJcecC+yRs/vAT7J/fQ/8T2Sm873bRa/fYQ==
+X-Received: by 2002:a05:6000:400c:b0:382:3afd:126a with SMTP id ffacd0b85a97d-3823afd1568mr4338493f8f.35.1731896674856;
+        Sun, 17 Nov 2024 18:24:34 -0800 (PST)
+Received: from [127.0.1.1] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3821ada2e35sm11387902f8f.5.2024.11.17.18.24.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 17 Nov 2024 18:24:33 -0800 (PST)
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: [PATCH 0/2] clk: qcom: Add support for multiple power-domains for
+ a clock controller.
+Date: Mon, 18 Nov 2024 02:24:31 +0000
+Message-Id: <20241118-b4-linux-next-24-11-18-clock-multiple-power-domains-v1-0-b7a2bd82ba37@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: qcs615: add ethernet node
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Richard Cochran <richardcochran@gmail.com>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <netdev@vger.kernel.org>,
-        <quic_tingweiz@quicinc.com>, <quic_aiquny@quicinc.com>
-References: <20241010-dts_qcs615-v1-0-05f27f6ac4d3@quicinc.com>
- <20241010-dts_qcs615-v1-1-05f27f6ac4d3@quicinc.com>
- <1e902d79-5dad-4d12-a80e-464dbcf851c3@oss.qualcomm.com>
-Content-Language: en-US
-From: Yijie Yang <quic_yijiyang@quicinc.com>
-In-Reply-To: <1e902d79-5dad-4d12-a80e-464dbcf851c3@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: IAhippoAc_vikBIui2nQ2bnbb1RPaiPx
-X-Proofpoint-GUID: IAhippoAc_vikBIui2nQ2bnbb1RPaiPx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- adultscore=0 mlxlogscore=908 priorityscore=1501 suspectscore=0
- malwarescore=0 phishscore=0 impostorscore=0 mlxscore=0 bulkscore=0
- clxscore=1015 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411180008
+X-B4-Tracking: v=1; b=H4sIAF+lOmcC/x2NQQrCMBAAv1L27IIbUrB+RTzEZKuL6SYkrQZK/
+ 27wOHOY2aFyEa5wHXYo/JEqSTvQaQD/cvpklNAZzNlYIrrgw2IU3RoqtxWNRSLs2sfk37hscZU
+ cGXP6csGQFida0Y3zNNng7Wgc9HIuPEv7X2/34/gB8bMFNYUAAAA=
+X-Change-ID: 20241118-b4-linux-next-24-11-18-clock-multiple-power-domains-a5f994dc452a
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+X-Mailer: b4 0.15-dev-355e8
 
+On x1e80100 and it's SKUs the Camera Clock Controller - CAMCC has
+multiple power-domains which power it. Usually with a single power-domain
+the core platform code will automatically switch on the singleton
+power-domain for you. If you have multiple power-domains for a device, in
+this case the clock controller, you need to switch those power-domains
+on/off yourself.
 
+The clock controllers can also contain Global Distributed
+Switch Controllers - GDSCs which themselves can be referenced from dtsi
+nodes ultimately triggering a gdsc_en() in drivers/clk/qcom/gdsc.c.
 
-On 2024-11-16 03:11, Konrad Dybcio wrote:
-> On 10.10.2024 5:05 AM, Yijie Yang wrote:
->> Add ethqos ethernet controller node for QCS615 SoC.
->>
->> Signed-off-by: Yijie Yang <quic_yijiyang@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/qcs615.dtsi | 27 +++++++++++++++++++++++++++
->>   1 file changed, 27 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/qcs615.dtsi b/arch/arm64/boot/dts/qcom/qcs615.dtsi
->> index 0d8fb557cf48..ba737cd89679 100644
->> --- a/arch/arm64/boot/dts/qcom/qcs615.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/qcs615.dtsi
->> @@ -420,6 +420,33 @@ soc: soc@0 {
->>   		#address-cells = <2>;
->>   		#size-cells = <2>;
->>   
->> +		ethernet: ethernet@20000 {
->> +			compatible = "qcom,qcs615-ethqos", "qcom,sm8150-ethqos";
->> +			reg = <0x0 0x20000 0x0 0x10000>,
->> +			      <0x0 0x36000 0x0 0x100>;
-> 
-> Please pad the address part to 8 hex digits with leading zeroes
-> 
->> +			reg-names = "stmmaceth", "rgmii";
->> +
->> +			clocks = <&gcc GCC_EMAC_AXI_CLK>,
->> +			         <&gcc GCC_EMAC_SLV_AHB_CLK>,
->> +			         <&gcc GCC_EMAC_PTP_CLK>,
->> +			         <&gcc GCC_EMAC_RGMII_CLK>;
->> +			clock-names = "stmmaceth", "pclk", "ptp_ref", "rgmii";
-> 
-> Please make this a vertical list, just like clocks
+As an example:
 
-Sure, I will revise.
+cci0: cci@ac4a000 {
+	power-domains = <&camcc TITAN_TOP_GDSC>;
+};
 
-> 
-> Konrad
+This series adds the support to attach a power-domain list to the
+clock-controllers and the GDSCs those controllers provide so that in the
+case of the above example gdsc_toggle_logic() will trigger the power-domain
+list with pm_runtime_resume_and_get() and pm_runtime_put_sync()
+respectively.
 
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+---
+Bryan O'Donoghue (2):
+      clk: qcom: common: Add support for power-domain attachment
+      clk: qcom: gdsc: Add pm_runtime hooks
+
+ drivers/clk/qcom/common.c | 24 ++++++++++++++++++++++++
+ drivers/clk/qcom/gdsc.c   | 26 ++++++++++++++++++--------
+ drivers/clk/qcom/gdsc.h   |  2 ++
+ 3 files changed, 44 insertions(+), 8 deletions(-)
+---
+base-commit: 744cf71b8bdfcdd77aaf58395e068b7457634b2c
+change-id: 20241118-b4-linux-next-24-11-18-clock-multiple-power-domains-a5f994dc452a
+
+Best regards,
 -- 
-Best Regards,
-Yijie
+Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
 
