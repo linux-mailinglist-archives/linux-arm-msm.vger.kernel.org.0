@@ -1,202 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-38199-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38200-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C4DF9D0DB6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 11:05:05 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 384839D0DD3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 11:10:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C46CF1F22BCC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 10:05:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EA7BA282634
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 10:10:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 516781917F0;
-	Mon, 18 Nov 2024 10:04:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8DA8E193060;
+	Mon, 18 Nov 2024 10:10:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YAmhZYpz"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LLR5iVoR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FF98149E0E;
-	Mon, 18 Nov 2024 10:04:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB881188A0D;
+	Mon, 18 Nov 2024 10:10:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731924298; cv=none; b=uUg2gadxg59egUkWfZSpZZzktgRzTvWnUNZVAaXEdxU0hXOGEtx7vurpqEPQGm0PHCGcjhiSjljgDUO3CXuE37bzVT/DEQqB+3SaypNifq+GeC8OUTRaH/pMLNyPl/W2HsqYXZL/sXow/K/TnuztyuzSif7J1CiWUMWkSNirsNs=
+	t=1731924603; cv=none; b=dbbml7qqsVns0vHdTwsYMEVbNrEHdBcUPayLQWE+lGdb1nsEPA5KYuFvU6jSykZBIx/XKDG/UXHTyYR9YM3KlMqDY9kIs97xKM3RZwGvhje05pW7gEOgMgfJ59ZK/eZC0z0hBqPWNOtzozdabG8bCvYf9Zvm8DElvY3QSEUAOz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731924298; c=relaxed/simple;
-	bh=Svr6EunWysvQO3ijRLUsBDH75AvE5Rrg8A+PmW81pgk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=WTzbU6D1Yia3ccBWeprlpWdnbiYndl4Xl1bY2ND1DSEm3ehUwxE6SEkmPy6Tr3VGIu7SBw3o/tcHBLmi+SR+s95MF6EAsjjmO9v18RCY7Y+LnlmnVEdKprV3BSgdpxXNhkQY9qfjEbZ8uFlviBuAYmSp2/fHtynUgLsTcR2hfeQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YAmhZYpz; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AI5RkC8009831;
-	Mon, 18 Nov 2024 10:04:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	gPiQ/AXs6OKwLqOErMd5RmqFtsPLKhoq2wS2AXM+WRA=; b=YAmhZYpz5smo8Bk3
-	fCT/EXa7/XPwk2nmOL45LDi8tqbgXO4K4R0r5kuAh2IUkZ4ZHiLfeAib7t7Ct7Ek
-	QAfQv8G5uiRI71ZKSN+b8GrOG8UAYg2h62bKrY1ECwm9zhvkXddCdgJt1V2DczFW
-	XeXAeFDcBDdScaToXp1iXjfBW30aC3qohLhMiezJ357KsYKPfjZog9E0IPqH6DPI
-	EjQ8IPLYoThByxEMR35dhHfsSUJyXvutuKuwvJhdo2DfR6AyQXcPOpdWAY3BqOLc
-	bmzbzFCAOMSJAOZzJHx1GndsxzARkUSakSDpy2kjMCmtPBiXJegy0Ch9wXX8gqr6
-	5qKukg==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42xkrm43qs-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 18 Nov 2024 10:04:45 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AIA4ixo023701
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 18 Nov 2024 10:04:44 GMT
-Received: from [10.239.132.41] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 18 Nov
- 2024 02:04:41 -0800
-Message-ID: <f995938e-f56a-4b27-9a03-901c0077e88c@quicinc.com>
-Date: Mon, 18 Nov 2024 18:04:38 +0800
+	s=arc-20240116; t=1731924603; c=relaxed/simple;
+	bh=OL7qRLSxG0s/rBjQDcTGXS3wtyvq3ca7DYri+vMk6u4=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=rRIHpAqAhqK36lCLkPxFQ4o1LWeQeEEEHcVBegiJX32ickI/TbwTgT1QCOCm/MOX2301oSt3rPzWbaVmRZIUXOyR5w51ecfFopM7hz4sisCVmJOizh+vxkz+xcdDBK4b0FbW6U9Et8iO7Ftkm26D0mqdHDz+yGjzO6PzzUKS5TM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LLR5iVoR; arc=none smtp.client-ip=209.85.218.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a9e44654ae3so483200166b.1;
+        Mon, 18 Nov 2024 02:10:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1731924600; x=1732529400; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=TAawXV2Pa4jygEr1LKjVR7SSwvft3mACK3InAoqSWHI=;
+        b=LLR5iVoR67yScY5gfqC7Tnt2XqJ8SNLTSS/+PKQszj2LcdchN1JuAlBbSqoj6eeX4X
+         JVP9HgRvF+S8+B+4BYyywR+bbK+MtY2+Ht8X0CjMvBTI3kd8d0sOdc+MbJf45O8Fdly2
+         7spFtmVcQc46uZPbXv0T7bw4/udxUZ5ToFmR7wlXdG9dEe8ch2SXXOUGLo1L7g8sQaYY
+         WZixerFtlPoa9rVovTFIgz4vaLVJ1eMv5uxqJIitQejQSK/gQkn5zEQXrthXDH/1/a0h
+         J+lJpfXbh33Th0y2xfSXxxDKoCtE9VqZ1HA5erNwh5Sa1Mi6kPWYjN/kagM8aV7Q9dxV
+         ieCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731924600; x=1732529400;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=TAawXV2Pa4jygEr1LKjVR7SSwvft3mACK3InAoqSWHI=;
+        b=Kx3vo2lYAMV6OUO4vqZjnXNTfrYiDHLVk6sxux2DJhLkLLwM2ipRnVlOL5tghpbQGn
+         Xjqx21lX6LFEruGgj1YCqY4Sx/Z5v8eNu5HaiTf9whEr//IXIrRv9JZn7VSOibj35Umk
+         h/hpB6DHwEKA2o1fYNqqGaM6qx2DhLqdJbUttEo3tCAyJ5rjWX7diZ7T+RjO8wQur5lB
+         5E1odCg1zV/WpeZ/j05mvlUMWo43W623nNfEXG7bLd6urmU6lnkgc78goKydVqEkzdiw
+         nqKCvqV4kzsgoYikrLi/uYaqMZHIJzfzuSyqVi8A5J61aHcJyZB42FTPq4s7xTT8Kbv8
+         RTZQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUF/3JAfoUd1X6x8Wk2aEHJe42NCnMWSc2jgDJBCb9vKmlZ9raYVSFRlL/o83ehgjCNVMcUiBAOjyIM@vger.kernel.org, AJvYcCUsXrK2imjUtHFfcl7wLyeEFGulWTLoSsBh5PkQ+x8b6vWTYZ6WPGP7ZbC0VkvAVoDRMH2lRXmU7L7s2nOy@vger.kernel.org, AJvYcCUu1Rxlo8EuYA8c/VdmkQnDn7HsmtC2+4ttQzd3qEzHISlaCpK5x2msXE2X00RKCzomFposxTPsBQ78axcOeYYFhLs=@vger.kernel.org, AJvYcCWlZURFKwL/3qjDKAaBHDJf6i6YtKepZq/kNaE7qbhPR7rQ/m86kZ9Xihg4siRMvhpez1iS1s6ONX7mASp1wg==@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz/Tmv5UIVv4uwQv9cbG3TFWAdGpQXRlYp93plmWRRm9N2NMx2r
+	gMz94xfvdAcisxXQI0WPvEUJZHwtShiA9WNLcmI9+7SzPGQzH1DrHW7zrQ==
+X-Google-Smtp-Source: AGHT+IEV887fK4x/zoQ5oGZPDlKSshxiegqGbDkMZtPnNY8t6w/dixHiVJbN2cH6q6ldqdSmIyhyEw==
+X-Received: by 2002:a17:906:dc8f:b0:a9a:3e33:8d9e with SMTP id a640c23a62f3a-aa48344ea5dmr1000913666b.28.1731924599829;
+        Mon, 18 Nov 2024 02:09:59 -0800 (PST)
+Received: from [127.0.1.1] ([46.53.242.72])
+        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-aa20e046932sm518546366b.170.2024.11.18.02.09.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 Nov 2024 02:09:59 -0800 (PST)
+From: Dzmitry Sankouski <dsankouski@gmail.com>
+Subject: [PATCH v3 0/2] power: supply: max17042: cleanup and more features
+Date: Mon, 18 Nov 2024 13:09:52 +0300
+Message-Id: <20241118-b4-max17042-v3-0-9bcaeda42a06@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/3] arm64: dts: qcom: qcs615: add the APPS SMMU node
-To: <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <robimarko@gmail.com>,
-        <will@kernel.org>, <robin.murphy@arm.com>, <joro@8bytes.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <iommu@lists.linux.dev>
-References: <20241105032107.9552-1-quic_qqzhou@quicinc.com>
- <20241105032107.9552-4-quic_qqzhou@quicinc.com>
-From: Qingqing Zhou <quic_qqzhou@quicinc.com>
-In-Reply-To: <20241105032107.9552-4-quic_qqzhou@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 6-T7PxNPiyudALfBPsxbFoH0fVobzClh
-X-Proofpoint-ORIG-GUID: 6-T7PxNPiyudALfBPsxbFoH0fVobzClh
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
- spamscore=0 adultscore=0 mlxlogscore=840 malwarescore=0 impostorscore=0
- clxscore=1015 bulkscore=0 priorityscore=1501 lowpriorityscore=0 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2411180083
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAHESO2cC/1WOywqDMBBFf0Vm3ZRJjEa76n+ULhI70UB9kJRgE
+ f+9USjo8lw4h7tAIO8owC1bwFN0wY1DgvySQdPpoSXmXolBoJCcY8WMZL2euUIpWJ1jaRtVaKs
+ JkjF5sm7ea49n4s6Fz+i/ezzybf136lMncoasJmFQUSFJlfe21+59bcYetk4UR/f8IYrkWiwqq
+ zQvjTZHd13XH+7E4pfiAAAA
+To: Hans de Goede <hdegoede@redhat.com>, 
+ Krzysztof Kozlowski <krzk@kernel.org>, 
+ Marek Szyprowski <m.szyprowski@samsung.com>, 
+ Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>, 
+ Purism Kernel Team <kernel@puri.sm>, Sebastian Reichel <sre@kernel.org>, 
+ Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+ Alim Akhtar <alim.akhtar@samsung.com>, Shawn Guo <shawnguo@kernel.org>, 
+ Sascha Hauer <s.hauer@pengutronix.de>, 
+ Pengutronix Kernel Team <kernel@pengutronix.de>, 
+ Fabio Estevam <festevam@gmail.com>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-pm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+ linux-samsung-soc@vger.kernel.org, imx@lists.linux.dev, 
+ linux-arm-msm@vger.kernel.org, Dzmitry Sankouski <dsankouski@gmail.com>
+X-Mailer: b4 0.14.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1731924598; l=1807;
+ i=dsankouski@gmail.com; s=20240619; h=from:subject:message-id;
+ bh=OL7qRLSxG0s/rBjQDcTGXS3wtyvq3ca7DYri+vMk6u4=;
+ b=7jEvmdQJh8PUUcsHhePFwT0jY9Q7oH7hRJfOSJ5ZhmxOfSk4LVTGVseM/tab168KyDJjGuEed
+ k65kLp7lcysAceAGTYo5Hq9iJlKoLIzaeBx9AQ5SHr4LoG3fom71zkS
+X-Developer-Key: i=dsankouski@gmail.com; a=ed25519;
+ pk=YJcXFcN1EWrzBYuiE2yi5Mn6WLn6L1H71J+f7X8fMag=
 
+Fuelgauge blocks often are incorporated in bigger chip,
+which may use only 1 line for interrupts. Shared-irq
+handles that case by requesting irq as shared.
 
+Maxim PMICs may include fuel gauge with additional features, which is
+out of single Linux power supply driver scope.
 
-在 11/5/2024 11:21 AM, Qingqing Zhou 写道:
-> Add the APPS SMMU node for QCS615 platform. Add the dma-ranges
-> to limit DMA address range to 36bit width to align with system
-> architecture.
-> 
-Could anyone help review this? The patch changes not much. Thanks!
-> Signed-off-by: Qingqing Zhou <quic_qqzhou@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/qcs615.dtsi | 75 ++++++++++++++++++++++++++++
->  1 file changed, 75 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/qcs615.dtsi b/arch/arm64/boot/dts/qcom/qcs615.dtsi
-> index 027c5125f36b..e35fd4059073 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs615.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/qcs615.dtsi
-> @@ -379,6 +379,7 @@
->  	soc: soc@0 {
->  		compatible = "simple-bus";
->  		ranges = <0 0 0 0 0x10 0>;
-> +		dma-ranges = <0 0 0 0 0x10 0>;
->  		#address-cells = <2>;
->  		#size-cells = <2>;
->  
-> @@ -524,6 +525,80 @@
->  			reg = <0x0 0x0c3f0000 0x0 0x400>;
->  		};
->  
-> +		apps_smmu: iommu@15000000 {
-> +			compatible = "qcom,qcs615-smmu-500", "qcom,smmu-500", "arm,mmu-500";
-> +			reg = <0x0 0x15000000 0x0 0x80000>;
-> +			#iommu-cells = <2>;
-> +			#global-interrupts = <1>;
-> +			dma-coherent;
-> +
-> +			interrupts = <GIC_SPI 65 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 94 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 95 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 96 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 97 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 98 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 99 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 100 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 101 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 102 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 103 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 104 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 105 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 106 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 107 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 108 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 109 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 110 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 111 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 112 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 113 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 114 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 115 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 116 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 117 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 118 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 181 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 182 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 183 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 184 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 185 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 186 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 187 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 188 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 189 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 190 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 191 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 192 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 315 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 316 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 317 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 318 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 319 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 320 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 321 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 322 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 323 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 324 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 325 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 326 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 327 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 328 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 329 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 330 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 331 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 332 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 333 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 334 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 335 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 336 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 337 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 338 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 339 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 340 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 341 IRQ_TYPE_LEVEL_HIGH>;
-> +		};
-> +
->  		intc: interrupt-controller@17a00000 {
->  			compatible = "arm,gic-v3";
->  			reg = <0x0 0x17a00000 0x0 0x10000>,     /* GICD */
+For example, in max77705 PMIC fuelgauge has additional registers,
+like IIN_REG, VSYS_REG, ISYS_REG. Those needed to measure PMIC input
+current, system voltage and current respectively. Those measurements
+cannot be bound to any of fuelgauge properties.
+
+The solution here add and option to use max17042 driver as a MFD
+sub device, thus allowing any additional functionality be implemented as
+another sub device. This will help to reduce code duplication in MFD
+fuel gauge drivers.
+
+Make max17042 interrupt shared, and add platform driver
+version.
+
+Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
+---
+Changes in v3:
+- pass dev pointer to probe
+- Link to v2: https://lore.kernel.org/r/20241108-b4-max17042-v2-0-f058f7a16bab@gmail.com
+
+Changes in v2:
+- drop NACKed commits
+- make shared interrupts unconditionally
+- rework descriptions
+- add platform driver version
+- Link to v1: https://lore.kernel.org/r/20241109-b4-max17042-v1-0-9e2b07e54e76@gmail.com
+
+---
+Dzmitry Sankouski (2):
+      power: supply: max17042: make interrupt shared
+      power: supply: max17042: add platform driver variant
+
+ drivers/power/supply/max17042_battery.c | 123 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++--------------------------------
+ 1 file changed, 91 insertions(+), 32 deletions(-)
+---
+base-commit: ae58226b89ac0cffa05ba7357733776542e40216
+change-id: 20241108-b4-max17042-9306fc75afae
+
+Best regards,
+-- 
+Dzmitry Sankouski <dsankouski@gmail.com>
 
 
