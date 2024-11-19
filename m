@@ -1,303 +1,557 @@
-Return-Path: <linux-arm-msm+bounces-38286-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38287-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A63C49D216D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 09:17:19 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 513F19D2204
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 09:59:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0A01AB20366
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 08:17:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CEA341F21F73
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 08:59:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D34BB19067C;
-	Tue, 19 Nov 2024 08:17:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0EFA2150981;
+	Tue, 19 Nov 2024 08:59:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="hBsfJ3fk"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="d7iUJj08"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACB7E1A28C
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Nov 2024 08:17:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD7991798C;
+	Tue, 19 Nov 2024 08:59:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732004234; cv=none; b=XnzQPV17LEiAZSzMCw8bQBQE9LDYDfg7CuWEDL5PiBx/RHOWGji9IHraAFXRbLGA20hf6MRSIzew1oBkjhZkQMinGrINaPaJe9gtgdnnIPft2Gkzys6orPYQgxRZ5ECbi07RSnOjOrMa/3ZtnIeO466L1q4YmyDCiUCNo5BCmn8=
+	t=1732006761; cv=none; b=Ck+bB41qpIb/uXS1Hxp3RzPoqWfnHXYZfpId+b+2b7AB71HcrUSZb3DopDf6a+16uZXnp89EvmQLt8GprTnTYZuMy2GaZ6HDYnY2QHzMN+qtXvdngVgrCfEUwdvlHiNFzedTn9Vu5B30cBGrHU8yn0Ze+kJavsn2zmR12HNpn4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732004234; c=relaxed/simple;
-	bh=BnCPo5Jv3ffjYxxYM7XQApvz+ShJZ5fwcjW9lNQ732I=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=L81bj4prLNjoZxNlb7AA2CPpJ0gCmBFV0f/SWOpwpM7mwYIT4StbtkTp+zhMN9rF953MaFjO+oPlWEhbVcDD0NNek5Ja4s9HG1QtQ1Tq/a3cEs+yRvJfQGFpYhEUevi6fM8WJol32SZYrZLV0uD6VeErRuhH9Gr+I6K3A7CjSvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=hBsfJ3fk; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-432d9bb168cso29023875e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Nov 2024 00:17:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1732004230; x=1732609030; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=rfRPeJv9b+5MklHMVSrCiVgH+hmaDNicfWnfjxpRi08=;
-        b=hBsfJ3fkcRev0UBJAESJpGI1GExIH+pLIpoftUVNorahap0tUiY+OifB5+VwG9/xAM
-         DMhZ6NiqkvcnBeyffDttRmd+r5hdwYTqzpkdjoOMZeKqXdC0Dae1OY016yF4k44scINM
-         Ax48Tv710mM90gIYebKuUxnhZbWhDGX0+IHRuKuTnc/ACIcqrQ9a0Pjd/kJxrPoYCcnf
-         j2t4c2c7a0feRi8XQbn5FAe2Sm7awxcnvC3G5vnbFVLB8fqzG6Je9YK64+hgL49WvK/a
-         gzxIU3BFA8mZWfuc+sdHDobwC0TKayZQbVzJ32RNVwCs1xo7r863ui8d4m04QJLji86l
-         WuQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732004230; x=1732609030;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rfRPeJv9b+5MklHMVSrCiVgH+hmaDNicfWnfjxpRi08=;
-        b=NtNaZbS5gfvTPOJoj99+bCTooxsSSccWsIiOrflAFj6q3drvTDyCRjzks3o/tKR1Q8
-         R1etHSVvbc4LLbw+bjrHjUS9iKY69WFIrCOlJB7G1TI7QXalTR4P9Yphi7A8J6VjNnEr
-         eOokTCwXVCSkFh0D/rioLxgy5rp4bUosRbYInITgKMQT9iqWy5zwka3gjAsbzXzdKdgN
-         IrrQDJGy5H7EnFk3/W6yn2VAFxgpGuqGnxjtok3s/RtqYVusGHo3dn3LkBKbYn2Tw1sR
-         uHGM+zrfmbf8IH/5YyAdjHks42X6eMKwnV0zbJnPv6pRe9SbuHvm0x5Kc3A6eqT9FORT
-         6IAQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVZMyqkE+WqJ2gsDMePEvxXWlCa2tGP3oksAK/LrYZsbVnEwDLrFKddkaTHlYP4c+wk3XWLuzErithBKie1@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyr5vJ8veAk+v3eXZbkQtVT+LnRwYnyRfqZYU6TiWE+hwxw/Cxl
-	zzsPT2x1K+c23usdubnGnqZbCNv35Tojp0UTPRQGK3kEorjBrifzd08kQni/i0A=
-X-Google-Smtp-Source: AGHT+IE8UC5xo/EXauIpi30O/6QpEs3dvAFOyd1qOQ9SCqrRP4JGzhvWxQ0rNGF/bwnRQGTw1YZ6JQ==
-X-Received: by 2002:a5d:6d82:0:b0:382:484d:45da with SMTP id ffacd0b85a97d-3824cb30e81mr1673211f8f.6.1732004228585;
-        Tue, 19 Nov 2024 00:17:08 -0800 (PST)
-Received: from localhost ([2a02:8071:b783:6940:9b70:ed4b:d274:54e5])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38244220183sm6495288f8f.99.2024.11.19.00.17.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Nov 2024 00:17:08 -0800 (PST)
-From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-To: Jassi Brar <jassisinghbrar@gmail.com>
-Cc: Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Chen-Yu Tsai <wens@csie.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Samuel Holland <samuel@sholland.org>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Michal Simek <michal.simek@amd.com>,
-	linux-kernel@vger.kernel.org,
-	imx@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-sunxi@lists.linux.dev,
-	linux-tegra@vger.kernel.org
-Subject: [PATCH] mailbox: Switch back to struct platform_driver::remove()
-Date: Tue, 19 Nov 2024 09:16:51 +0100
-Message-ID:  <6f0297ba884c670d604232c2861347940082c8e6.1732004078.git.u.kleine-koenig@baylibre.com>
-X-Mailer: git-send-email 2.45.2
+	s=arc-20240116; t=1732006761; c=relaxed/simple;
+	bh=JlHQrlbLuIdIqownOM26bRFM+q2r6dW4qRrKda7Lt6Y=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Ga7OymXep99Fwl21+VEFIm3lwhznLSqS/4fBnhcky83jHZqlRj3s4PaiiGWf3TGu4TdoVNxHXo/EgRX7G8iU9SLH/LcxJFCiqsmWSDI0HLSQdbVm7G25fT6oQFjxztH0UJUPFJ3ixhz7Bm6HhPp5srZy0iRROj64ROaXecWokeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=d7iUJj08; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AJ7s0kK028562;
+	Tue, 19 Nov 2024 08:58:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	S4tT+dQuydE90Mbj2ruSwdAj9IcakjnOlQwcK5tQoj4=; b=d7iUJj08tjt5gP5h
+	h5I0Y71YTH8YO6IGYoweO5DXqt2p+H3zqa/7DaLQKULtIZDsxwksG+pAHX/iJEL8
+	W32He4fz+62CuSRv5msqmInDnaTj3GhJbMHBHjBOyrptwqqntYBfZP74+NQhmIXk
+	6RfD6mv7N1/9+MrFHlIz5oNpy9d7FTB9cbGKeI9mkYWbCyCzjCqlH/72sHWCSZkP
+	mfK6GS6Nkc+vhUVZuafaNmwLAsejxVit4o5VTSkjF06bnmOjbA/1u+FcTAJnoibK
+	XNHfzTenM37J9oj0BoxjyLREV0viT9NgjglM8d/wjqMXggwtfiXQlhYklIY7DnXf
+	PEYmJg==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4308y81yfw-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 19 Nov 2024 08:58:58 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AJ8wvfi027151
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 19 Nov 2024 08:58:58 GMT
+Received: from [10.239.133.211] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 19 Nov
+ 2024 00:58:53 -0800
+Message-ID: <8aeb8ca9-5d3f-4154-bba5-1255b368bf1b@quicinc.com>
+Date: Tue, 19 Nov 2024 16:58:50 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7380; i=u.kleine-koenig@baylibre.com; h=from:subject:message-id; bh=BnCPo5Jv3ffjYxxYM7XQApvz+ShJZ5fwcjW9lNQ732I=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBnPEl0l82yWH4cD9PUDIPfKIE/RnbW2FKHwIBNo NRXP1KykqyJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZzxJdAAKCRCPgPtYfRL+ ToaTCACO97vvz1RQ3OfeVhaCoF9jIByuwurbxrlo/e4TXGjXh2MD85LTlsW7X/pdlEpXrP7LStP rubeC1o9FEsFEJDpzNVhMoNb2mBLHniaqeivaaIITO1C7iOgf/7l6bUdNF6szQsgsyIOa7eK+h4 6Evgz1M3LBYLhtZcwyCg8pysblUX/f+7Bpgdzo1ijgQjhinFHE0K8ep6xD7n3F0gZTUEt/9QWEa fgoFuQD5sY05UOOOvRjFNRAkpP+8qV6HYJ8eSFoFVoVvAsSuYcnfHR1oaeC82Zdgm4c4nHE4sye cAgefJza5W4P8GCaVvE9A7L2tHfGs7DQoQm1AUVXBMxOcDDU
-X-Developer-Key: i=u.kleine-koenig@baylibre.com; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 3/4] coresight: Add support for trace filtering by
+ source
+To: Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach
+	<mike.leach@linaro.org>, James Clark <james.clark@arm.com>,
+        Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Leo Yan
+	<leo.yan@linux.dev>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>
+CC: <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20241030093255.26915-1-quic_taozha@quicinc.com>
+ <20241030093255.26915-4-quic_taozha@quicinc.com>
+ <c39a844e-d0a8-46ac-ab52-530dae741751@arm.com>
+ <6bbdd8dd-a5ab-4b51-8152-595331cdd58b@quicinc.com>
+ <f2221c21-b891-413f-8adb-e76921da1fb1@arm.com>
+ <939c3461-c092-4901-ac06-2173547858ad@quicinc.com>
+ <94096b6e-1a4c-4fc4-8294-316b38b35e99@arm.com>
+Content-Language: en-US
+From: Tao Zhang <quic_taozha@quicinc.com>
+In-Reply-To: <94096b6e-1a4c-4fc4-8294-316b38b35e99@arm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: dkOyCXO0G-rlQz4gdi-C4rBFPFIpXLd-
+X-Proofpoint-GUID: dkOyCXO0G-rlQz4gdi-C4rBFPFIpXLd-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 phishscore=0
+ impostorscore=0 priorityscore=1501 lowpriorityscore=0 bulkscore=0
+ mlxscore=0 spamscore=0 adultscore=0 suspectscore=0 malwarescore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411190064
 
-After commit 0edb555a65d1 ("platform: Make platform_driver::remove()
-return void") .remove() is (again) the right callback to implement for
-platform drivers.
 
-Convert all platform drivers below drivers/mailbox to use .remove(),
-with the eventual goal to drop struct platform_driver::remove_new(). As
-.remove() and .remove_new() have the same prototypes, conversion is done
-by just changing the structure member name in the driver initializer.
+On 11/18/2024 5:56 PM, Suzuki K Poulose wrote:
+> On 18/11/2024 09:28, Tao Zhang wrote:
+>>
+>> On 11/15/2024 5:40 PM, Suzuki K Poulose wrote:
+>>> On 15/11/2024 09:18, Tao Zhang wrote:
+>>>>
+>>>> On 11/13/2024 9:39 PM, Suzuki K Poulose wrote:
+>>>>> On 30/10/2024 09:32, Tao Zhang wrote:
+>>>>>> Some replicators have hard coded filtering of "trace" data, based 
+>>>>>> on the
+>>>>>> source device. This is different from the trace filtering based on
+>>>>>> TraceID, available in the standard programmable replicators. e.g.,
+>>>>>> Qualcomm replicators have filtering based on custom trace protocol
+>>>>>> format and is not programmable.
+>>>>>>
+>>>>>> The source device could be connected to the replicator via 
+>>>>>> intermediate
+>>>>>> components (e.g., a funnel). Thus we need platform information from
+>>>>>> the firmware tables to decide the source device corresponding to a
+>>>>>> given output port from the replicator. Given this affects "trace
+>>>>>> path building" and traversing the path back from the sink to source,
+>>>>>> add the concept of "filtering by source" to the generic coresight
+>>>>>> connection.
+>>>>>>
+>>>>>> The specified source will be marked like below in the Devicetree.
+>>>>>> test-replicator {
+>>>>>>      ... ... ... ...
+>>>>>>      out-ports {
+>>>>>>          ... ... ... ...
+>>>>>>          port@0 {
+>>>>>>              reg = <0>;
+>>>>>>              xyz: endpoint {
+>>>>>>                  remote-endpoint = <&zyx>;
+>>>>>>                  filter-source = <&source_1>; <-- To specify the 
+>>>>>> source to
+>>>>>>              };                           be filtered out here.
+>>>>>>          };
+>>>>>>
+>>>>>>          port@1 {
+>>>>>>              reg = <1>;
+>>>>>>              abc: endpoint {
+>>>>>>                  remote-endpoint = <&cba>;
+>>>>>>                  filter-source = <&source_2>; <-- To specify the 
+>>>>>> source to
+>>>>>>              };                           be filtered out here.
+>>>>>>          };
+>>>>>>      };
+>>>>>> };
+>>>>>>
+>>>>>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+>>>>>> ---
+>>>>>>   drivers/hwtracing/coresight/coresight-core.c  | 113 
+>>>>>> +++++++++++++ ++---
+>>>>>>   .../hwtracing/coresight/coresight-platform.c  |  18 +++
+>>>>>>   include/linux/coresight.h                     |   5 +
+>>>>>>   3 files changed, 117 insertions(+), 19 deletions(-)
+>>>>>>
+>>>>>> diff --git a/drivers/hwtracing/coresight/coresight-core.c b/ 
+>>>>>> drivers/hwtracing/coresight/coresight-core.c
+>>>>>> index ea38ecf26fcb..0a9380350fb5 100644
+>>>>>> --- a/drivers/hwtracing/coresight/coresight-core.c
+>>>>>> +++ b/drivers/hwtracing/coresight/coresight-core.c
+>>>>>> @@ -75,22 +75,54 @@ struct coresight_device 
+>>>>>> *coresight_get_percpu_sink(int cpu)
+>>>>>>   }
+>>>>>>   EXPORT_SYMBOL_GPL(coresight_get_percpu_sink);
+>>>>>>   +static struct coresight_device *coresight_get_source(struct 
+>>>>>> list_head *path)
+>>>>>> +{
+>>>>>> +    struct coresight_device *csdev;
+>>>>>> +
+>>>>>> +    if (!path)
+>>>>>> +        return NULL;
+>>>>>> +
+>>>>>> +    csdev = list_first_entry(path, struct coresight_node, link)- 
+>>>>>> >csdev;
+>>>>>> +    if (!coresight_is_device_source(csdev))
+>>>>>> +        return NULL;
+>>>>>> +
+>>>>>> +    return csdev;
+>>>>>> +}
+>>>>>> +
+>>>>>> +/**
+>>>>>> + * coresight_blocks_source - checks whether the connection 
+>>>>>> matches the source
+>>>>>> + * of path if connection is bound to specific source.
+>>>>>> + * @src:    The source device of the trace path
+>>>>>> + * @conn:    The connection of one outport
+>>>>>> + *
+>>>>>> + * Return false if the connection doesn't have a source binded 
+>>>>>> or source of the
+>>>>>> + * path matches the source binds to connection.
+>>>>>> + */
+>>>>>> +static bool coresight_blocks_source(struct coresight_device *src,
+>>>>>> +                    struct coresight_connection *conn)
+>>>>>> +{
+>>>>>> +    return conn->filter_src_fwnode && (conn->filter_src_dev != 
+>>>>>> src);
+>>>>>> +}
+>>>>>> +
+>>>>>>   static struct coresight_connection *
+>>>>>> -coresight_find_out_connection(struct coresight_device *src_dev,
+>>>>>> -                  struct coresight_device *dest_dev)
+>>>>>> +coresight_find_out_connection(struct coresight_device *csdev,
+>>>>>> +                  struct coresight_device *out_dev,
+>>>>>> +                  struct coresight_device *trace_src)
+>>>>>>   {
+>>>>>>       int i;
+>>>>>>       struct coresight_connection *conn;
+>>>>>>   -    for (i = 0; i < src_dev->pdata->nr_outconns; i++) {
+>>>>>> -        conn = src_dev->pdata->out_conns[i];
+>>>>>> -        if (conn->dest_dev == dest_dev)
+>>>>>> +    for (i = 0; i < csdev->pdata->nr_outconns; i++) {
+>>>>>> +        conn = csdev->pdata->out_conns[i];
+>>>>>> +        if (coresight_blocks_source(trace_src, conn))
+>>>>>> +            continue;
+>>>>>> +        if (conn->dest_dev == out_dev)
+>>>>>>               return conn;
+>>>>>>       }
+>>>>>>   -    dev_err(&src_dev->dev,
+>>>>>> -        "couldn't find output connection, src_dev: %s, dest_dev: 
+>>>>>> %s\n",
+>>>>>> -        dev_name(&src_dev->dev), dev_name(&dest_dev->dev));
+>>>>>> +    dev_err(&csdev->dev,
+>>>>>> +        "couldn't find output connection, csdev: %s, out_dev: 
+>>>>>> %s\n",
+>>>>>> +        dev_name(&csdev->dev), dev_name(&out_dev->dev));
+>>>>>>         return ERR_PTR(-ENODEV);
+>>>>>>   }
+>>>>>> @@ -251,7 +283,8 @@ static void coresight_disable_sink(struct 
+>>>>>> coresight_device *csdev)
+>>>>>>     static int coresight_enable_link(struct coresight_device *csdev,
+>>>>>>                    struct coresight_device *parent,
+>>>>>> -                 struct coresight_device *child)
+>>>>>> +                 struct coresight_device *child,
+>>>>>> +                 struct coresight_device *source)
+>>>>>>   {
+>>>>>>       int link_subtype;
+>>>>>>       struct coresight_connection *inconn, *outconn;
+>>>>>> @@ -259,8 +292,8 @@ static int coresight_enable_link(struct 
+>>>>>> coresight_device *csdev,
+>>>>>>       if (!parent || !child)
+>>>>>>           return -EINVAL;
+>>>>>>   -    inconn = coresight_find_out_connection(parent, csdev);
+>>>>>> -    outconn = coresight_find_out_connection(csdev, child);
+>>>>>> +    inconn = coresight_find_out_connection(parent, csdev, source);
+>>>>>> +    outconn = coresight_find_out_connection(csdev, child, source);
+>>>>>>       link_subtype = csdev->subtype.link_subtype;
+>>>>>>         if (link_subtype == CORESIGHT_DEV_SUBTYPE_LINK_MERG && 
+>>>>>> IS_ERR(inconn))
+>>>>>> @@ -273,15 +306,16 @@ static int coresight_enable_link(struct 
+>>>>>> coresight_device *csdev,
+>>>>>>     static void coresight_disable_link(struct coresight_device 
+>>>>>> *csdev,
+>>>>>>                      struct coresight_device *parent,
+>>>>>> -                   struct coresight_device *child)
+>>>>>> +                   struct coresight_device *child,
+>>>>>> +                   struct coresight_device *source)
+>>>>>>   {
+>>>>>>       struct coresight_connection *inconn, *outconn;
+>>>>>>         if (!parent || !child)
+>>>>>>           return;
+>>>>>>   -    inconn = coresight_find_out_connection(parent, csdev);
+>>>>>> -    outconn = coresight_find_out_connection(csdev, child);
+>>>>>> +    inconn = coresight_find_out_connection(parent, csdev, source);
+>>>>>> +    outconn = coresight_find_out_connection(csdev, child, source);
+>>>>>>         link_ops(csdev)->disable(csdev, inconn, outconn);
+>>>>>>   }
+>>>>>> @@ -375,7 +409,8 @@ static void 
+>>>>>> coresight_disable_path_from(struct list_head *path,
+>>>>>>           case CORESIGHT_DEV_TYPE_LINK:
+>>>>>>               parent = list_prev_entry(nd, link)->csdev;
+>>>>>>               child = list_next_entry(nd, link)->csdev;
+>>>>>> -            coresight_disable_link(csdev, parent, child);
+>>>>>> +            coresight_disable_link(csdev, parent, child,
+>>>>>> +                           coresight_get_source(path));
+>>>>>>               break;
+>>>>>>           default:
+>>>>>>               break;
+>>>>>> @@ -418,7 +453,9 @@ int coresight_enable_path(struct list_head 
+>>>>>> *path, enum cs_mode mode,
+>>>>>>       u32 type;
+>>>>>>       struct coresight_node *nd;
+>>>>>>       struct coresight_device *csdev, *parent, *child;
+>>>>>> +    struct coresight_device *source;
+>>>>>>   +    source = coresight_get_source(path);
+>>>>>>       list_for_each_entry_reverse(nd, path, link) {
+>>>>>>           csdev = nd->csdev;
+>>>>>>           type = csdev->type;
+>>>>>> @@ -456,7 +493,7 @@ int coresight_enable_path(struct list_head 
+>>>>>> *path, enum cs_mode mode,
+>>>>>>           case CORESIGHT_DEV_TYPE_LINK:
+>>>>>>               parent = list_prev_entry(nd, link)->csdev;
+>>>>>>               child = list_next_entry(nd, link)->csdev;
+>>>>>> -            ret = coresight_enable_link(csdev, parent, child);
+>>>>>> +            ret = coresight_enable_link(csdev, parent, child, 
+>>>>>> source);
+>>>>>>               if (ret)
+>>>>>>                   goto err;
+>>>>>>               break;
+>>>>>> @@ -619,6 +656,7 @@ static void coresight_drop_device(struct 
+>>>>>> coresight_device *csdev)
+>>>>>>   /**
+>>>>>>    * _coresight_build_path - recursively build a path from a 
+>>>>>> @csdev to a sink.
+>>>>>>    * @csdev:    The device to start from.
+>>>>>> + * @source:    The trace source device of the path.
+>>>>>>    * @sink:    The final sink we want in this path.
+>>>>>>    * @path:    The list to add devices to.
+>>>>>>    *
+>>>>>> @@ -628,6 +666,7 @@ static void coresight_drop_device(struct 
+>>>>>> coresight_device *csdev)
+>>>>>>    * the source is the first device and the sink the last one.
+>>>>>>    */
+>>>>>>   static int _coresight_build_path(struct coresight_device *csdev,
+>>>>>> +                 struct coresight_device *source,
+>>>>>>                    struct coresight_device *sink,
+>>>>>>                    struct list_head *path)
+>>>>>>   {
+>>>>>> @@ -641,7 +680,7 @@ static int _coresight_build_path(struct 
+>>>>>> coresight_device *csdev,
+>>>>>>         if (coresight_is_percpu_source(csdev) && 
+>>>>>> coresight_is_percpu_sink(sink) &&
+>>>>>>           sink == per_cpu(csdev_sink, source_ops(csdev)- 
+>>>>>> >cpu_id(csdev))) {
+>>>>>> -        if (_coresight_build_path(sink, sink, path) == 0) {
+>>>>>> +        if (_coresight_build_path(sink, source, sink, path) == 0) {
+>>>>>>               found = true;
+>>>>>>               goto out;
+>>>>>>           }
+>>>>>> @@ -652,8 +691,12 @@ static int _coresight_build_path(struct 
+>>>>>> coresight_device *csdev,
+>>>>>>           struct coresight_device *child_dev;
+>>>>>>             child_dev = csdev->pdata->out_conns[i]->dest_dev;
+>>>>>> +
+>>>>>> +        if (coresight_blocks_source(source, csdev->pdata- 
+>>>>>> >out_conns[i]))
+>>>>>> +            continue;
+>>>>>> +
+>>>>>>           if (child_dev &&
+>>>>>> -            _coresight_build_path(child_dev, sink, path) == 0) {
+>>>>>> +            _coresight_build_path(child_dev, source, sink, path) 
+>>>>>> == 0) {
+>>>>>>               found = true;
+>>>>>>               break;
+>>>>>>           }
+>>>>>> @@ -698,7 +741,7 @@ struct list_head *coresight_build_path(struct 
+>>>>>> coresight_device *source,
+>>>>>>         INIT_LIST_HEAD(path);
+>>>>>>   -    rc = _coresight_build_path(source, sink, path);
+>>>>>> +    rc = _coresight_build_path(source, source, sink, path);
+>>>>>>       if (rc) {
+>>>>>>           kfree(path);
+>>>>>>           return ERR_PTR(rc);
+>>>>>> @@ -927,6 +970,16 @@ static int coresight_orphan_match(struct 
+>>>>>> device *dev, void *data)
+>>>>>>       for (i = 0; i < src_csdev->pdata->nr_outconns; i++) {
+>>>>>>           conn = src_csdev->pdata->out_conns[i];
+>>>>>>   +        /* Fix filter source device before skip the port */
+>>>>>> +        if (conn->filter_src_fwnode && !conn->filter_src_dev) {
+>>>>>> +            if (dst_csdev &&
+>>>>>> +                (conn->filter_src_fwnode == 
+>>>>>> dst_csdev->dev.fwnode) &&
+>>>>>> + !WARN_ON_ONCE(!coresight_is_device_source(dst_csdev)))
+>>>>>> +                conn->filter_src_dev = dst_csdev;
+>>>>>> +            else
+>>>>>> +                still_orphan = true;
+>>>>>> +        }
+>>>>>> +
+>>>>>>           /* Skip the port if it's already connected. */
+>>>>>>           if (conn->dest_dev)
+>>>>>>               continue;
+>>>>>> @@ -977,18 +1030,40 @@ static int 
+>>>>>> coresight_fixup_orphan_conns(struct coresight_device *csdev)
+>>>>>>                csdev, coresight_orphan_match);
+>>>>>>   }
+>>>>>>   +static int coresight_clear_filter_source(struct device *dev, 
+>>>>>> void *data)
+>>>>>> +{
+>>>>>> +    int i;
+>>>>>> +    struct coresight_device *source = data;
+>>>>>> +    struct coresight_device *csdev = to_coresight_device(dev);
+>>>>>> +
+>>>>>> +    for (i = 0; i < csdev->pdata->nr_outconns; ++i) {
+>>>>>> +        if (csdev->pdata->out_conns[i]->filter_src_dev == source)
+>>>>>> + csdev->pdata->out_conns[i]->filter_src_dev = NULL;
+>>>>>> +    }
+>>>>>> +    return 0;
+>>>>>> +}
+>>>>>> +
+>>>>>>   /* coresight_remove_conns - Remove other device's references to 
+>>>>>> this device */
+>>>>>>   static void coresight_remove_conns(struct coresight_device *csdev)
+>>>>>>   {
+>>>>>>       int i, j;
+>>>>>>       struct coresight_connection *conn;
+>>>>>>   +    if (coresight_is_device_source(csdev))
+>>>>>> +        bus_for_each_dev(&coresight_bustype, NULL, csdev,
+>>>>>> +                 coresight_clear_filter_source);
+>>>>>> +
+>>>>>>       /*
+>>>>>>        * Remove the input connection references from the 
+>>>>>> destination device
+>>>>>>        * for each output connection.
+>>>>>>        */
+>>>>>>       for (i = 0; i < csdev->pdata->nr_outconns; i++) {
+>>>>>>           conn = csdev->pdata->out_conns[i];
+>>>>>> +        if (conn->filter_src_fwnode) {
+>>>>>> +            conn->filter_src_dev = NULL;
+>>>>>> + fwnode_handle_put(conn->filter_src_fwnode);
+>>>>>> +        }
+>>>>>> +
+>>>>>>           if (!conn->dest_dev)
+>>>>>>               continue;
+>>>>>>   diff --git a/drivers/hwtracing/coresight/coresight-platform.c 
+>>>>>> b/ drivers/hwtracing/coresight/coresight-platform.c
+>>>>>> index 64e171eaad82..d5532caa9e92 100644
+>>>>>> --- a/drivers/hwtracing/coresight/coresight-platform.c
+>>>>>> +++ b/drivers/hwtracing/coresight/coresight-platform.c
+>>>>>> @@ -243,6 +243,24 @@ static int 
+>>>>>> of_coresight_parse_endpoint(struct device *dev,
+>>>>>>           conn.dest_fwnode = fwnode_handle_get(rdev_fwnode);
+>>>>>>           conn.dest_port = rendpoint.port;
+>>>>>>   +        /*
+>>>>>> +         * Get the firmware node of the filter source through the
+>>>>>> +         * reference. This could be used to filter the source in
+>>>>>> +         * building path.
+>>>>>> +         */
+>>>>>> +        conn.filter_src_fwnode =
+>>>>>> +            fwnode_find_reference(&ep->fwnode, "filter-source", 0);
+>>>>>> +        if (IS_ERR(conn.filter_src_fwnode)) {
+>>>>>> +            conn.filter_src_fwnode = NULL;
+>>>>>> +        } else {
+>>>>>> +            conn.filter_src_dev =
+>>>>>> + coresight_find_csdev_by_fwnode(conn.filter_src_fwnode);
+>>>>>> +            if (conn.filter_src_dev &&
+>>>>>> + !coresight_is_device_source(conn.filter_src_dev))
+>>>>>> + dev_warn(&conn.filter_src_dev->dev,
+>>>>>> +                  "Filter source is not a source device\n");
+>>>>>
+>>>>> Do we need to reset the conn.filter_src_fwnode ? Otherwise, we can 
+>>>>> warn from other places too.
+>>>>
+>>>> Agree, we need to reset conn.filter_src_fwnode and 
+>>>> conn.filter_src_dev here if it is not a SOURCE
+>>>>
+>>>> type device.
+>>>>
+>>>> I will update the following code to the next patch series. Could 
+>>>> you help check if it is fine to you?
+>>>
+>>> This looks good.
+>>>
+>>>>
+>>>> +            if (conn.filter_src_dev &&
+>>>> + !coresight_is_device_source(conn.filter_src_dev)) {
+>>>> +                dev_warn(&conn.filter_src_dev->dev,
+>>>> +                  "Filter source is not a source device\n");
+>>>
+>>> minor nit: It would be good to indicate which device has this 
+>>> "filtering". i.e,
+>>>           dev_warn(dev, "Filter source is not a trace source : 
+>>> %s\n", dev_name(&conn.filter_src_dev->dev));
+>> Sure, I will update this to the next patch series.
+>
+> Also, it may be helpful, if we specify the "port number" which has this
+> wrong handle. I guess something like:
+>
+> dev_warn(dev, "port %d: Filter handle is not a trace source : %s\n",
+>      conn.src_port, dev_name(&conn.filter_src_dev->dev));
 
-Make a few indentions consistent while touching these struct
-initializers.
+Sure, I will update this to the next patch series.
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
----
-Hello,
+Best,
 
-I did a single patch for all of drivers/mailbox. While I usually prefer
-to do one logical change per patch, this seems to be overengineering
-here as the individual changes are really trivial and shouldn't be much
-in the way for stable backports. But I'll happily split the patch if you
-prefer it split.
+Tao
 
-This is based on today's next, if conflicts arise when you apply it at
-some later time and don't want to resolve them, feel free to just drop
-the changes to the conflicting files. I'll notice and followup at a
-later time then. Or ask me for a fixed resend.
-
-Best regards
-Uwe
-
- drivers/mailbox/bcm-flexrm-mailbox.c    | 2 +-
- drivers/mailbox/bcm-pdc-mailbox.c       | 2 +-
- drivers/mailbox/imx-mailbox.c           | 2 +-
- drivers/mailbox/mailbox-test.c          | 4 ++--
- drivers/mailbox/mtk-cmdq-mailbox.c      | 2 +-
- drivers/mailbox/qcom-apcs-ipc-mailbox.c | 2 +-
- drivers/mailbox/qcom-ipcc.c             | 2 +-
- drivers/mailbox/stm32-ipcc.c            | 2 +-
- drivers/mailbox/sun6i-msgbox.c          | 4 ++--
- drivers/mailbox/tegra-hsp.c             | 2 +-
- drivers/mailbox/zynqmp-ipi-mailbox.c    | 2 +-
- 11 files changed, 13 insertions(+), 13 deletions(-)
-
-diff --git a/drivers/mailbox/bcm-flexrm-mailbox.c b/drivers/mailbox/bcm-flexrm-mailbox.c
-index b1abc2a0c971..41f79e51d9e5 100644
---- a/drivers/mailbox/bcm-flexrm-mailbox.c
-+++ b/drivers/mailbox/bcm-flexrm-mailbox.c
-@@ -1675,7 +1675,7 @@ static struct platform_driver flexrm_mbox_driver = {
- 		.of_match_table = flexrm_mbox_of_match,
- 	},
- 	.probe		= flexrm_mbox_probe,
--	.remove_new	= flexrm_mbox_remove,
-+	.remove		= flexrm_mbox_remove,
- };
- module_platform_driver(flexrm_mbox_driver);
- 
-diff --git a/drivers/mailbox/bcm-pdc-mailbox.c b/drivers/mailbox/bcm-pdc-mailbox.c
-index a873672a9082..406bc41cba60 100644
---- a/drivers/mailbox/bcm-pdc-mailbox.c
-+++ b/drivers/mailbox/bcm-pdc-mailbox.c
-@@ -1618,7 +1618,7 @@ static void pdc_remove(struct platform_device *pdev)
- 
- static struct platform_driver pdc_mbox_driver = {
- 	.probe = pdc_probe,
--	.remove_new = pdc_remove,
-+	.remove = pdc_remove,
- 	.driver = {
- 		   .name = "brcm-iproc-pdc-mbox",
- 		   .of_match_table = pdc_mbox_of_match,
-diff --git a/drivers/mailbox/imx-mailbox.c b/drivers/mailbox/imx-mailbox.c
-index f815dab3be50..9889e4d0d9da 100644
---- a/drivers/mailbox/imx-mailbox.c
-+++ b/drivers/mailbox/imx-mailbox.c
-@@ -1120,7 +1120,7 @@ static const struct dev_pm_ops imx_mu_pm_ops = {
- 
- static struct platform_driver imx_mu_driver = {
- 	.probe		= imx_mu_probe,
--	.remove_new	= imx_mu_remove,
-+	.remove		= imx_mu_remove,
- 	.driver = {
- 		.name	= "imx_mu",
- 		.of_match_table = imx_mu_dt_ids,
-diff --git a/drivers/mailbox/mailbox-test.c b/drivers/mailbox/mailbox-test.c
-index 3386b4e72551..c9dd8c42c0cd 100644
---- a/drivers/mailbox/mailbox-test.c
-+++ b/drivers/mailbox/mailbox-test.c
-@@ -441,8 +441,8 @@ static struct platform_driver mbox_test_driver = {
- 		.name = "mailbox_test",
- 		.of_match_table = mbox_test_match,
- 	},
--	.probe  = mbox_test_probe,
--	.remove_new = mbox_test_remove,
-+	.probe = mbox_test_probe,
-+	.remove = mbox_test_remove,
- };
- module_platform_driver(mbox_test_driver);
- 
-diff --git a/drivers/mailbox/mtk-cmdq-mailbox.c b/drivers/mailbox/mtk-cmdq-mailbox.c
-index 4bff73532085..bac5b8eaa665 100644
---- a/drivers/mailbox/mtk-cmdq-mailbox.c
-+++ b/drivers/mailbox/mtk-cmdq-mailbox.c
-@@ -796,7 +796,7 @@ MODULE_DEVICE_TABLE(of, cmdq_of_ids);
- 
- static struct platform_driver cmdq_drv = {
- 	.probe = cmdq_probe,
--	.remove_new = cmdq_remove,
-+	.remove = cmdq_remove,
- 	.driver = {
- 		.name = "mtk_cmdq",
- 		.pm = &cmdq_pm_ops,
-diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-index 7d91e7c016ba..f0d1fc0fb9ff 100644
---- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-+++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-@@ -167,7 +167,7 @@ MODULE_DEVICE_TABLE(of, qcom_apcs_ipc_of_match);
- 
- static struct platform_driver qcom_apcs_ipc_driver = {
- 	.probe = qcom_apcs_ipc_probe,
--	.remove_new = qcom_apcs_ipc_remove,
-+	.remove = qcom_apcs_ipc_remove,
- 	.driver = {
- 		.name = "qcom_apcs_ipc",
- 		.of_match_table = qcom_apcs_ipc_of_match,
-diff --git a/drivers/mailbox/qcom-ipcc.c b/drivers/mailbox/qcom-ipcc.c
-index d537cc9c4d4b..14c7907c6632 100644
---- a/drivers/mailbox/qcom-ipcc.c
-+++ b/drivers/mailbox/qcom-ipcc.c
-@@ -346,7 +346,7 @@ static const struct dev_pm_ops qcom_ipcc_dev_pm_ops = {
- 
- static struct platform_driver qcom_ipcc_driver = {
- 	.probe = qcom_ipcc_probe,
--	.remove_new = qcom_ipcc_remove,
-+	.remove = qcom_ipcc_remove,
- 	.driver = {
- 		.name = "qcom-ipcc",
- 		.of_match_table = qcom_ipcc_of_match,
-diff --git a/drivers/mailbox/stm32-ipcc.c b/drivers/mailbox/stm32-ipcc.c
-index 1442f275782b..4f63f1a14ca6 100644
---- a/drivers/mailbox/stm32-ipcc.c
-+++ b/drivers/mailbox/stm32-ipcc.c
-@@ -379,7 +379,7 @@ static struct platform_driver stm32_ipcc_driver = {
- 		.of_match_table = stm32_ipcc_of_match,
- 	},
- 	.probe		= stm32_ipcc_probe,
--	.remove_new	= stm32_ipcc_remove,
-+	.remove		= stm32_ipcc_remove,
- };
- 
- module_platform_driver(stm32_ipcc_driver);
-diff --git a/drivers/mailbox/sun6i-msgbox.c b/drivers/mailbox/sun6i-msgbox.c
-index 3dcc54dc83b2..6ba6920f4645 100644
---- a/drivers/mailbox/sun6i-msgbox.c
-+++ b/drivers/mailbox/sun6i-msgbox.c
-@@ -307,8 +307,8 @@ static struct platform_driver sun6i_msgbox_driver = {
- 		.name = "sun6i-msgbox",
- 		.of_match_table = sun6i_msgbox_of_match,
- 	},
--	.probe  = sun6i_msgbox_probe,
--	.remove_new = sun6i_msgbox_remove,
-+	.probe = sun6i_msgbox_probe,
-+	.remove = sun6i_msgbox_remove,
- };
- module_platform_driver(sun6i_msgbox_driver);
- 
-diff --git a/drivers/mailbox/tegra-hsp.c b/drivers/mailbox/tegra-hsp.c
-index 19ef56cbcfd3..8d5e2d7dc03b 100644
---- a/drivers/mailbox/tegra-hsp.c
-+++ b/drivers/mailbox/tegra-hsp.c
-@@ -951,7 +951,7 @@ static struct platform_driver tegra_hsp_driver = {
- 		.pm = &tegra_hsp_pm_ops,
- 	},
- 	.probe = tegra_hsp_probe,
--	.remove_new = tegra_hsp_remove,
-+	.remove = tegra_hsp_remove,
- };
- 
- static int __init tegra_hsp_init(void)
-diff --git a/drivers/mailbox/zynqmp-ipi-mailbox.c b/drivers/mailbox/zynqmp-ipi-mailbox.c
-index 521d08b9ab47..91365acd334d 100644
---- a/drivers/mailbox/zynqmp-ipi-mailbox.c
-+++ b/drivers/mailbox/zynqmp-ipi-mailbox.c
-@@ -1015,7 +1015,7 @@ MODULE_DEVICE_TABLE(of, zynqmp_ipi_of_match);
- 
- static struct platform_driver zynqmp_ipi_driver = {
- 	.probe = zynqmp_ipi_probe,
--	.remove_new = zynqmp_ipi_remove,
-+	.remove = zynqmp_ipi_remove,
- 	.driver = {
- 		   .name = "zynqmp-ipi",
- 		   .of_match_table = of_match_ptr(zynqmp_ipi_of_match),
-
-base-commit: 414c97c966b69e4a6ea7b32970fa166b2f9b9ef0
--- 
-2.45.2
-
+>
+> Suzuki
+>
+>>>
+>>>> +                conn.filter_src_dev = NULL；
+>>>> +                conn.filter_src_dev = NULL;
+>>
+>> Sorry for my mistake here. I also want to set "filter_src_fwnode " to 
+>> NULL if it is not a trace source.
+>>
+>> conn.filter_src_fwnode = NULL;
+>
+>
+>>
+>>
+>> Best,
+>>
+>> Tao
+>>
+>>>
+>>> Duplicated line ^
+>>>
+>>> Suzuki
+>>>
+>>>> +            }
+>>>>
+>>>> Best,
+>>>>
+>>>> Tao
+>>>>
+>>>>>
+>>>>> Suzuki
+>>>>>
+>>>>>> +        }
+>>>>>> +
+>>>>>>           new_conn = coresight_add_out_conn(dev, pdata, &conn);
+>>>>>>           if (IS_ERR_VALUE(new_conn)) {
+>>>>>>               fwnode_handle_put(conn.dest_fwnode);
+>>>>>> diff --git a/include/linux/coresight.h b/include/linux/coresight.h
+>>>>>> index 9311df8538fc..f372c01ae2fc 100644
+>>>>>> --- a/include/linux/coresight.h
+>>>>>> +++ b/include/linux/coresight.h
+>>>>>> @@ -172,6 +172,9 @@ struct coresight_desc {
+>>>>>>    * @dest_dev:    a @coresight_device representation of the 
+>>>>>> component
+>>>>>>           connected to @src_port. NULL until the device is created
+>>>>>>    * @link: Representation of the connection as a sysfs link.
+>>>>>> + * @filter_src_fwnode: filter source component's fwnode handle.
+>>>>>> + * @filter_src_dev: a @coresight_device representation of the 
+>>>>>> component that
+>>>>>> +        needs to be filtered.
+>>>>>>    *
+>>>>>>    * The full connection structure looks like this, where 
+>>>>>> in_conns store
+>>>>>>    * references to same connection as the source device's out_conns.
+>>>>>> @@ -200,6 +203,8 @@ struct coresight_connection {
+>>>>>>       struct coresight_device *dest_dev;
+>>>>>>       struct coresight_sysfs_link *link;
+>>>>>>       struct coresight_device *src_dev;
+>>>>>> +    struct fwnode_handle *filter_src_fwnode;
+>>>>>> +    struct coresight_device *filter_src_dev;
+>>>>>>       atomic_t src_refcnt;
+>>>>>>       atomic_t dest_refcnt;
+>>>>>>   };
+>>>>>
+>>>
+>
 
