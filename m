@@ -1,273 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-38394-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38395-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C2B729D2DEC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 19:29:15 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BC85A9D2E58
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 19:49:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 83A5F28407F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 18:29:14 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EB6AEB371D3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 18:36:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87B631D26EE;
-	Tue, 19 Nov 2024 18:29:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECBB41D0E20;
+	Tue, 19 Nov 2024 18:33:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="Xq7txC//"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zTKmyAN7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4357C1D1F73
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Nov 2024 18:29:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA1841990AD
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Nov 2024 18:33:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732040948; cv=none; b=Bhkh80WXRvXa405gPxvt3BWOvEmqUCGsiNDgdvSVzxIXQcwFOS9Lkjz461d9t7xrDLaBK02CgKYwkkpejPWy9Ap9AShWh4XiuKD+yFQqZLysmpnOEBIcnMCHFIxeC+6UftjKWMCrk/IuDyH8+q8lzjnKelCyZkLQAyoHD9uN0pM=
+	t=1732041218; cv=none; b=KQTsvPePNmWzaJEpwDJT+CpfHftsGfJiNPL1GFuGY9HxYDx/nnsoZX1kC+pFAARd4dWOHkA58DNZAY+RrFgfC0CwF3MRtISTsZyfLxto1miXgEWF7dJezx6WpdpJhJS8VvYH8W8DYo49oWhH8T7fmoC/S+RvbN7a3BjzV6rY9uQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732040948; c=relaxed/simple;
-	bh=7EkmoYAIwgLMOya3DiDGaKKRi9eJcRdqgo7aEZsiTP4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=mmfcKxWvtvTMIleU6htW9Ii1pNtM4L2+EzRubUGnRhBaFed7nceDJCW39aHx8fWxPvc6Nx0ZsKC5JKqTpspe/pjVpQfaq7C3cLpVM5aRLNIv3QcoPmQFz12qi7CCKlzogEDnYJ3m/xktPsYfHydQHuDskJWmF/VJJ85YBUZArW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=Xq7txC//; arc=none smtp.client-ip=209.85.221.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3824a8a5c56so1347519f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Nov 2024 10:29:04 -0800 (PST)
+	s=arc-20240116; t=1732041218; c=relaxed/simple;
+	bh=QxQemEHGZ9KofZh2dhxrC4puyYzWDwPDCmQkhwIKnEE=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=j6+WALjZhhqQhkkCgwG2yBp5y6yKd6IioEJB1nJF2yqZUqqxMAy6bWa3XnA/PD+FOTJGR2i4KJAINzkkGIEh6ii7VL9MAwjoJFRPv8eMIafQXmVX1s9ByChIxCL8RRyrgfFdDESvBVwsDh4564i5itFVBrP7H70huRETidm8/mc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zTKmyAN7; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4314c006fa4so5618335e9.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Nov 2024 10:33:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1732040943; x=1732645743; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=TjjEcmv2liyk/XEk1ss5lodHgFTZTAwHIgNTYP/SyTw=;
-        b=Xq7txC//hrlB38W1B3QVYa30x6KnEZzMV7r07Pw6nVuQ5Ee5K3Uctfaush223LfmCI
-         xnNEEhKE5OTxlZumHK3qIPi0xZJVdShgGtpr7S9IC1B+QGu1OzLo2RyAQHx7x3KugJvr
-         ccJ7HWSguPHuwjB18Rwtpew8SlsiTmaKIljWRpuIz70LWIarZtobVYF9oFwtmMqVxuNU
-         X3BZRBM1jTHzUX8ABaNZuCmRvTahrTg1mFa55ZmNMbkonkNMkxtN6pvE4DAyZB0MiEJE
-         2Lt/HlnTIM99ZlWUrV1giQb88Atuq30xFkeWY/4OPKLRNqU95/0JoPn6LVMVqlDuxWNj
-         L2vg==
+        d=linaro.org; s=google; t=1732041215; x=1732646015; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=4uxBlhEzCEm273gWZ0Z1r3LrMeos0nChCkSfjPfMnzE=;
+        b=zTKmyAN7fypxvTk5uaz+rlVPv9RlilhlA8fhCi0TmaWzEJT/vde2OxU+vE9n389iMN
+         egDwjvoWQEH4uUS/2EJ9+s7u9REAEYXp18ecjypAnBHutfsJjLBJr1gWaxgrhuYg7jRP
+         MOmD5meE9KIoMFT97/mQLkpesGp+Hglav/GAyPAtn8Pt4dfmplei2txFoAXEfYFpzhwO
+         N77KBrM7SgoFeqaotJYAsPiJqK3E7phPss5fonVYamNaiPjz8vfHUBMKNXIEmTyf3vQ3
+         iJqrB6BqA5cYubiRhD9SBqyifIso2GxEXkvKB/KaaFru77RHdUGgYXiJF8Xp+FlkDC3y
+         v5Bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732040943; x=1732645743;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1732041215; x=1732646015;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=TjjEcmv2liyk/XEk1ss5lodHgFTZTAwHIgNTYP/SyTw=;
-        b=PBNbD+8twmM0uD4tfOWWTWfY2qj62dlwEwp+UE921ggcR5BnoD3UnylnUpLGMfMwWW
-         d5+m4FdZ8cyvTttDb9NPVDwJ1Xhyyt9lt0HHPgLbKd5fwoNqY1UlOjvZZYnlbQwIR9CY
-         ARBEPygTz4sw4pXgbcGcmiHlES6Xrluo04GKpOAAY92rWNAC8eh5KUCRLII44Q3zyX6O
-         hsg2Ro7kPR6iMaAsftB+v8lHWxTGvWd2LOV0SYcp3UfLXA0V5QyeA3214oYPyU+wxtEw
-         khGq8N2KV2MZZilAFvnwj2v0g2QtyPwDSBg0CWTO9LcN6UjdK11e89aI0rJKKDZSkGgL
-         Ex0g==
-X-Forwarded-Encrypted: i=1; AJvYcCUD6TvCjRyzW+i/CImHyDDPCSUv2ykGRcwXGNWEUyEEC/ky2ySNNKQTLV5wJI2OHhbdcLUauITSb9fo9/Tt@vger.kernel.org
-X-Gm-Message-State: AOJu0YzfBqCzMWxRZGgQemwDvBGElq9ixob2WW5gXDjwa5qBD9dBK272
-	RLOe0g9qzmLK08GRHbiejYTA2KJd3xAkFuBzdwV/z7qk2fKPu7ZksJgR5uUHV8I=
-X-Google-Smtp-Source: AGHT+IFnY/REEdmz7YD1WEr3CSS+CDWUtex9JzX1ZdzW4zdq0+PcYDiFyHyYLuR7W7cpAOYMYdli5w==
-X-Received: by 2002:a5d:6c62:0:b0:382:40cc:5057 with SMTP id ffacd0b85a97d-38240cc530dmr8023061f8f.8.1732040943004;
-        Tue, 19 Nov 2024 10:29:03 -0800 (PST)
-Received: from localhost (p509159f1.dip0.t-ipconnect.de. [80.145.89.241])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38244220183sm7893379f8f.99.2024.11.19.10.29.02
+        bh=4uxBlhEzCEm273gWZ0Z1r3LrMeos0nChCkSfjPfMnzE=;
+        b=oPzYyukUcq0sh3Kxr60cVkT6QGzjPtFNceCjbiEJN1sWzIMzLgL+lBwJH320k3ILW7
+         h5s+eFsVdHOLsh3VN3aKLS2QIlgm9UK35vPTTjx2sLmaToyVUS5GJR87spU0nw9znRCp
+         uJKSYJD6k1b6mMk+kxt2ShWAeiK+phhgv6Oe8WnKepPJ6rmsmtz/l0kIZMU61t6TBBSH
+         YdlVCw/Zo2C12agPDKrrKXmetGCvLIfyIJyTUuiGpj5a+Z/FOqU1Mff66dHfo9+HGp1/
+         pHqVuW6wzWlVsZQxilPiphWRhzZw3ngHIHe5e+u3ZUjO16EaYocXwEtYIfg08Z3q1LHc
+         Czdw==
+X-Gm-Message-State: AOJu0YxqF63gWx9NczK0gcmrJquPVRArJuS3U67u3l3aqsoFxFJ7dNWC
+	as6HdxhmjCuHWcFNnwqywV84oY6ldl8zgbv48pV/C5k0/9Gj6cqOEGYZvx0kEKs=
+X-Gm-Gg: ASbGncsZEoRnLZq140bTj/9gc4f+Ldh8VqHkSjoPhuoBlaIearrY23Zw5uf332rV8OZ
+	FTRCmw0qNHLK3VroXWJZCyYJK+LQuK1ARjcokEhJH/hG5ZGhA3kZGgd60WJEuWs6wK6C2thWVxj
+	pwaN4JOiXwa+qUKkcnq0Aj7QJZ7D5B7s3OoMLf6nT2pwNV6fkbJWuVtw5LgxRP9WCWfSeLOJx1d
+	o2zzbHaEzac/brlecCgyGGEiVhNy/IApCfFGq81D19+gJhTQTnNqQVXtESxfrA3eA==
+X-Google-Smtp-Source: AGHT+IEv8u9mS7b3Hjaj8uwdJ2FGRBK///EN6j4F7a0RsdLD3QQC7qNAwSSPJAVtSHksF/xeUp+riw==
+X-Received: by 2002:a05:600c:354b:b0:42c:aeee:80b with SMTP id 5b1f17b1804b1-432df797e02mr64687705e9.8.1732041215219;
+        Tue, 19 Nov 2024 10:33:35 -0800 (PST)
+Received: from [127.0.1.1] ([178.197.211.167])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432dac1fb7asm201566805e9.42.2024.11.19.10.33.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Nov 2024 10:29:02 -0800 (PST)
-From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-To: "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Cc: Pedro Sousa <pedrom.sousa@synopsys.com>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Peter Griffin <peter.griffin@linaro.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Peter Wang <peter.wang@mediatek.com>,
-	Stanley Jhu <chu.stanley@gmail.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Orson Zhai <orsonzhai@gmail.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Chunyan Zhang <zhang.lyra@gmail.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Andrew Halaney <ahalaney@redhat.com>,
-	Nitin Rawat <quic_nitirawa@quicinc.com>,
-	Can Guo <quic_cang@quicinc.com>,
-	linux-scsi@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-samsung-soc@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org
-Subject: [PATCH] scsi: ufs: Switch back to struct platform_driver::remove()
-Date: Tue, 19 Nov 2024 19:28:56 +0100
-Message-ID: <20241119182856.55743-2-u.kleine-koenig@baylibre.com>
-X-Mailer: git-send-email 2.45.2
+        Tue, 19 Nov 2024 10:33:34 -0800 (PST)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 0/6] firmware: qcom: scm: Fixes for concurrency
+Date: Tue, 19 Nov 2024 19:33:16 +0100
+Message-Id: <20241119-qcom-scm-missing-barriers-and-all-sort-of-srap-v1-0-7056127007a7@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6400; i=u.kleine-koenig@baylibre.com; h=from:subject; bh=7EkmoYAIwgLMOya3DiDGaKKRi9eJcRdqgo7aEZsiTP4=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBnPNjp6LSiAa1I5FOmgMRNs6RRlpfp1I+WXQ5Jy kT+1b+r+OmJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZzzY6QAKCRCPgPtYfRL+ TpXpB/0e48BSclKJNk79t2QAL7ya486g/ZENqVkbV84wvxtryeeYwTupocnq00111eq5K0/DmGn 5N4obnl0Yz0e3KeGMA7JfzxJvPrPYGOGz28YyBN6Sd3hOEd6ySenM2sNKhrDFRa+ryLgbBtM+0r t1goFmLAz1bCbMLKdKob3arBzK0CJUYeBB/jgaipkO2eqyCWlNSt+pteiri4uI2flz9pqWJALQL QXPOzQck5OYwjzyutjQCb/e5xiDGpJriITfqlnsNsdFM2WKgrZ/R+MvqLn6nnyNroBHFtNX80WU 7OIgmZQqPyjlHlnMRJJPpcenrvoEatHfp2PJ/iqzncWGiZ5D
-X-Developer-Key: i=u.kleine-koenig@baylibre.com; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAOzZPGcC/x3NQQqDMBBG4avIrPuDCUq1VyldTE20AyaxM1IK4
+ t0bunyb7x1kUSUa3ZqDNH7EpOQa7tLQ9OK8REioTb71nXNuxHsqCTYlJDGTvODJWgU1cA7gdYU
+ V3VFmmPIG9n3ox/baDYOnim4aZ/n+h/fHef4AcxNUboAAAAA=
+X-Change-ID: 20241119-qcom-scm-missing-barriers-and-all-sort-of-srap-a25d59074882
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Mukesh Ojha <quic_mojha@quicinc.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+ Stephan Gerhold <stephan.gerhold@linaro.org>, 
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
+ Kuldeep Singh <quic_kuldsing@quicinc.com>, 
+ Elliot Berman <quic_eberman@quicinc.com>, 
+ Andrew Halaney <ahalaney@redhat.com>, 
+ Avaneesh Kumar Dwivedi <quic_akdwived@quicinc.com>, 
+ Andy Gross <andy.gross@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ stable@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1525;
+ i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
+ bh=QxQemEHGZ9KofZh2dhxrC4puyYzWDwPDCmQkhwIKnEE=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBnPNn01sfaeiAILH62481Qc8WKb9yZRN57MIG3r
+ 9L9KJ+HMaCJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZzzZ9AAKCRDBN2bmhouD
+ 1xpLD/9ct2p3xGbW1rNsPWJVNjot6Qj9SnzyG8S64Q/hbmzt7tFJAWPDyJE3xctWD3W+8CnRS2X
+ AWMlCoelvil+5Pg6wy8lPfewFyrt6MwaGI/Ukjd5kZFNUxPzuH9o9WVOFV4cs9TOj7YAGvhUpnz
+ E0hMQg7Ms3D6Cmp6ASD2VzPnZOTLfi0Zy/7pLwYkn8c8xOV9kKidw7Kx6VmQEjfvM5L907VIA3x
+ aqYbEZ06elWAekwEFwAn+txMpn7Hxr4kD26g0w61FFnfj1B5ewGVPbx/r+nc29pycXivLfjSzg3
+ +i07q0GC1MoeHuXxpEIo5jg/jH09ehbNWwjBPK0Nmk8WzkZZBIrM+3EQeUanpyqct+oTyT9XZF9
+ 0OHA2F6leAAzfb0jKD0y9Pcrg41M0MapiTd/Iv5EL2hM6gqHwXutNPT34xUBer+T8D8sPXgitpx
+ yjs+ijos8oUW9Ifo7W7pmIrqYfcjt+e+UzBf3xZU4RXsD3H7P57zwB5uxtYSHongbnGDJK/lX88
+ rEwdpnOB50tdHe09FzlPVpGotWw5eIWv1YncfKORspQs9z638n5YvmSe/ffwQ9cP35JQ00v8j+Y
+ +z5eh4be6er6mDaEr0vMF6Qm/GlwnCfKqrCgRwNTNG4V9PrwXgUiB10RZr1vq6FVNAPg6picO3C
+ bNKWKvA7+WsD+fw==
+X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
+ fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
-After commit 0edb555a65d1 ("platform: Make platform_driver::remove()
-return void") .remove() is (again) the right callback to implement for
-platform drivers.
+SCM driver looks messy in terms of handling concurrency of probe.  The
+driver exports interface which is guarded by global '__scm' variable
+but:
+1. Lacks proper read barrier (commit adding write barriers mixed up
+   READ_ONCE with a read barrier).
+2. Lacks barriers or checks for '__scm' in multiple places.
+3. Lacks probe error cleanup.
 
-Convert all platform drivers below drivers/ufs to use .remove(), with
-the eventual goal to drop struct platform_driver::remove_new(). As
-.remove() and .remove_new() have the same prototypes, conversion is done
-by just changing the structure member name in the driver initializer.
+I fixed here few visible things, but this was not tested extensively.  I
+tried only SM8450.
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+ARM32 and SC8280xp/X1E platforms would be useful for testing as well.
+
+All the issues here are non-urgent, IOW, they were here for some time
+(v6.10-rc1 and earlier).
+
+Best regards,
+Krzysztof
+
 ---
-Hello,
+Krzysztof Kozlowski (6):
+      firmware: qcom: scm: Fix missing read barrier in qcom_scm_is_available()
+      firmware: qcom: scm: Fix missing read barrier in qcom_scm_get_tzmem_pool()
+      firmware: qcom: scm: Handle various probe ordering for qcom_scm_assign_mem()
+      [RFC/RFT] firmware: qcom: scm: Cleanup global '__scm' on probe failures
+      firmware: qcom: scm: smc: Handle missing SCM device
+      firmware: qcom: scm: smc: Narrow 'mempool' variable scope
 
-I did a single patch for all of drivers/ufs. While I usually prefer to
-do one logical change per patch, this seems to be overengineering here
-as the individual changes are really trivial and shouldn't be much in
-the way for stable backports. But I'll happily split the patch if you
-prefer it split. Also if you object the indentation stuff, I can rework
-that.
-
-This is based on today's next, if conflicts arise when you apply it at
-some later time and don't want to resolve them, feel free to just drop
-the changes to the conflicting files. I'll notice and followup at a
-later time then. Or ask me for a fixed resend. (Having said that, I
-recommend b4 am -3 + git am -3 which should resolve most conflicts just
-fine.)
-
-Best regards
-Uwe
-
- drivers/ufs/host/cdns-pltfrm.c        | 2 +-
- drivers/ufs/host/tc-dwc-g210-pltfrm.c | 2 +-
- drivers/ufs/host/ti-j721e-ufs.c       | 2 +-
- drivers/ufs/host/ufs-exynos.c         | 2 +-
- drivers/ufs/host/ufs-hisi.c           | 2 +-
- drivers/ufs/host/ufs-mediatek.c       | 2 +-
- drivers/ufs/host/ufs-qcom.c           | 2 +-
- drivers/ufs/host/ufs-renesas.c        | 2 +-
- drivers/ufs/host/ufs-sprd.c           | 2 +-
- 9 files changed, 9 insertions(+), 9 deletions(-)
-
-diff --git a/drivers/ufs/host/cdns-pltfrm.c b/drivers/ufs/host/cdns-pltfrm.c
-index 66811d8d1929..c80f770a6285 100644
---- a/drivers/ufs/host/cdns-pltfrm.c
-+++ b/drivers/ufs/host/cdns-pltfrm.c
-@@ -321,7 +321,7 @@ static const struct dev_pm_ops cdns_ufs_dev_pm_ops = {
- 
- static struct platform_driver cdns_ufs_pltfrm_driver = {
- 	.probe	= cdns_ufs_pltfrm_probe,
--	.remove_new = cdns_ufs_pltfrm_remove,
-+	.remove = cdns_ufs_pltfrm_remove,
- 	.driver	= {
- 		.name   = "cdns-ufshcd",
- 		.pm     = &cdns_ufs_dev_pm_ops,
-diff --git a/drivers/ufs/host/tc-dwc-g210-pltfrm.c b/drivers/ufs/host/tc-dwc-g210-pltfrm.c
-index a3877592604d..9bfaa36cc898 100644
---- a/drivers/ufs/host/tc-dwc-g210-pltfrm.c
-+++ b/drivers/ufs/host/tc-dwc-g210-pltfrm.c
-@@ -89,7 +89,7 @@ static const struct dev_pm_ops tc_dwc_g210_pltfm_pm_ops = {
- 
- static struct platform_driver tc_dwc_g210_pltfm_driver = {
- 	.probe		= tc_dwc_g210_pltfm_probe,
--	.remove_new	= tc_dwc_g210_pltfm_remove,
-+	.remove		= tc_dwc_g210_pltfm_remove,
- 	.driver		= {
- 		.name	= "tc-dwc-g210-pltfm",
- 		.pm	= &tc_dwc_g210_pltfm_pm_ops,
-diff --git a/drivers/ufs/host/ti-j721e-ufs.c b/drivers/ufs/host/ti-j721e-ufs.c
-index 250c22df000d..21214e5d5896 100644
---- a/drivers/ufs/host/ti-j721e-ufs.c
-+++ b/drivers/ufs/host/ti-j721e-ufs.c
-@@ -83,7 +83,7 @@ MODULE_DEVICE_TABLE(of, ti_j721e_ufs_of_match);
- 
- static struct platform_driver ti_j721e_ufs_driver = {
- 	.probe	= ti_j721e_ufs_probe,
--	.remove_new = ti_j721e_ufs_remove,
-+	.remove = ti_j721e_ufs_remove,
- 	.driver	= {
- 		.name   = "ti-j721e-ufs",
- 		.of_match_table = ti_j721e_ufs_of_match,
-diff --git a/drivers/ufs/host/ufs-exynos.c b/drivers/ufs/host/ufs-exynos.c
-index 6548f7a8562f..c4098011c4b4 100644
---- a/drivers/ufs/host/ufs-exynos.c
-+++ b/drivers/ufs/host/ufs-exynos.c
-@@ -2166,7 +2166,7 @@ static const struct dev_pm_ops exynos_ufs_pm_ops = {
- 
- static struct platform_driver exynos_ufs_pltform = {
- 	.probe	= exynos_ufs_probe,
--	.remove_new = exynos_ufs_remove,
-+	.remove = exynos_ufs_remove,
- 	.driver	= {
- 		.name	= "exynos-ufshc",
- 		.pm	= &exynos_ufs_pm_ops,
-diff --git a/drivers/ufs/host/ufs-hisi.c b/drivers/ufs/host/ufs-hisi.c
-index 5ee73ff05251..494f593702a3 100644
---- a/drivers/ufs/host/ufs-hisi.c
-+++ b/drivers/ufs/host/ufs-hisi.c
-@@ -590,7 +590,7 @@ static const struct dev_pm_ops ufs_hisi_pm_ops = {
- 
- static struct platform_driver ufs_hisi_pltform = {
- 	.probe	= ufs_hisi_probe,
--	.remove_new = ufs_hisi_remove,
-+	.remove = ufs_hisi_remove,
- 	.driver	= {
- 		.name	= "ufshcd-hisi",
- 		.pm	= &ufs_hisi_pm_ops,
-diff --git a/drivers/ufs/host/ufs-mediatek.c b/drivers/ufs/host/ufs-mediatek.c
-index 06ab1e5e8b6f..6fc848d0ada8 100644
---- a/drivers/ufs/host/ufs-mediatek.c
-+++ b/drivers/ufs/host/ufs-mediatek.c
-@@ -1962,7 +1962,7 @@ static const struct dev_pm_ops ufs_mtk_pm_ops = {
- 
- static struct platform_driver ufs_mtk_pltform = {
- 	.probe      = ufs_mtk_probe,
--	.remove_new = ufs_mtk_remove,
-+	.remove = ufs_mtk_remove,
- 	.driver = {
- 		.name   = "ufshcd-mtk",
- 		.pm     = &ufs_mtk_pm_ops,
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 3b592492e152..d2b8d97b480e 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -1897,7 +1897,7 @@ static const struct dev_pm_ops ufs_qcom_pm_ops = {
- 
- static struct platform_driver ufs_qcom_pltform = {
- 	.probe	= ufs_qcom_probe,
--	.remove_new = ufs_qcom_remove,
-+	.remove = ufs_qcom_remove,
- 	.driver	= {
- 		.name	= "ufshcd-qcom",
- 		.pm	= &ufs_qcom_pm_ops,
-diff --git a/drivers/ufs/host/ufs-renesas.c b/drivers/ufs/host/ufs-renesas.c
-index 3ff97112e1f6..f404019dc5d9 100644
---- a/drivers/ufs/host/ufs-renesas.c
-+++ b/drivers/ufs/host/ufs-renesas.c
-@@ -404,7 +404,7 @@ static void ufs_renesas_remove(struct platform_device *pdev)
- 
- static struct platform_driver ufs_renesas_platform = {
- 	.probe	= ufs_renesas_probe,
--	.remove_new = ufs_renesas_remove,
-+	.remove = ufs_renesas_remove,
- 	.driver	= {
- 		.name	= "ufshcd-renesas",
- 		.of_match_table	= of_match_ptr(ufs_renesas_of_match),
-diff --git a/drivers/ufs/host/ufs-sprd.c b/drivers/ufs/host/ufs-sprd.c
-index d8b165908809..b1ffb9b05fa7 100644
---- a/drivers/ufs/host/ufs-sprd.c
-+++ b/drivers/ufs/host/ufs-sprd.c
-@@ -442,7 +442,7 @@ static const struct dev_pm_ops ufs_sprd_pm_ops = {
- 
- static struct platform_driver ufs_sprd_pltform = {
- 	.probe = ufs_sprd_probe,
--	.remove_new = ufs_sprd_remove,
-+	.remove = ufs_sprd_remove,
- 	.driver = {
- 		.name = "ufshcd-sprd",
- 		.pm = &ufs_sprd_pm_ops,
-
+ drivers/firmware/qcom/qcom_scm-smc.c |  6 +++-
+ drivers/firmware/qcom/qcom_scm.c     | 55 +++++++++++++++++++++++++-----------
+ 2 files changed, 44 insertions(+), 17 deletions(-)
+---
 base-commit: 414c97c966b69e4a6ea7b32970fa166b2f9b9ef0
+change-id: 20241119-qcom-scm-missing-barriers-and-all-sort-of-srap-a25d59074882
+
+Best regards,
 -- 
-2.45.2
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 
