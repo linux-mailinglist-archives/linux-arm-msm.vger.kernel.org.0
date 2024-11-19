@@ -1,133 +1,230 @@
-Return-Path: <linux-arm-msm+bounces-38405-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38406-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3AEC69D2F53
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 21:11:26 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1B8239D2FA3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 21:39:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E61BAB25D16
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 20:11:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 982C71F23C37
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 20:39:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F4C01D2B04;
-	Tue, 19 Nov 2024 20:11:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 672651D3565;
+	Tue, 19 Nov 2024 20:39:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VPVzkLUf"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fUdJEGNf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FCCB153835;
-	Tue, 19 Nov 2024 20:11:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 357261D2F55;
+	Tue, 19 Nov 2024 20:39:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732047073; cv=none; b=YeN2pLtlAAavL8V3VzILjs3IxRC72caxJM3p+dVUzfVTI/BOPPEizHzch9M/+pe4Ec/vihwXG4jjaA73p2GFJ1XYQM0gWCjheYbRuPtPJOX1/G01K4S7rR7wGuRssQ5//Du5MFb+O/K8sBOgEPfNR3OCnxcO8foVd1IcQ0UKq68=
+	t=1732048746; cv=none; b=JeVa87hsWr5IfhmOGdIk2kRTeryyJXitVo3Xgoq+Ic6VNunZRiMCr+QSHVYertMxiutWdKwXtBJTeLLJi7Rji15OYCuxe1P1cLhxT9eXUfey7u2ncxWM18RpzOuNG+cP6dlZlpikT9l+57ug8YrsOThBBj+bfO7ELMHlvIRL49w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732047073; c=relaxed/simple;
-	bh=rSituOJrRNz6zH8xI0pVCVWA9bP2bhYuyASCgbKHarY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Xnbt+gaqep09GYHgpzVBHSmRF/sBk0lXyHrJVviTHIpR8R13PFULwMmSMXJEeZGOFE86jnQiR0GvsnVTuYw2t9/ivbfynKCVpJrubfHc3cykYYlrTOuk6u7kgmEWQKmpqwC4f+2F7JSk3qqqo9b3XSYIzl0ILyaSrkRbZPD1D8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=VPVzkLUf; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AJAYnfu007872;
-	Tue, 19 Nov 2024 20:11:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	sxPXjPDaTQBw3jBSkf+bpcp8+tu2oQqE7OEE9+eNkAM=; b=VPVzkLUfsd75mVuZ
-	Tx5wuPQJwbcmoxe2iepddlQ5Voan2tE5lplUULiX1pQKjUwXR1ceiZa0rL7g8DWd
-	Ah20LVZvg0d3VmE+BRZ1vSBBce5dhXUsl1petZ2G+WFfkPHyE0LADcsWpfs6YAXb
-	bdQeI8G32wCUVuBb4+UMgoY9nxTEJ3We/HYv2S+cH5E0MXFGsMCfs6gHgB7/EAa/
-	1NSEaGTZ/cAM9d+/9hgkA5debY7Zs8aSut44OmwwHj1XgEKGh1BQdvOF9kkrNW8m
-	IL7PqYb3oc7qZ+Od03yzgq9MgBmObTnnr99pmfv9/xw5DyDUgim4ijNkn7MbUDYl
-	kJDf6g==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4308y6usyn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Nov 2024 20:11:11 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AJKBA6Z002838
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Nov 2024 20:11:10 GMT
-Received: from [10.216.16.143] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 19 Nov
- 2024 12:11:06 -0800
-Message-ID: <30fda0e2-f314-49b8-8c1c-bf4fac87050d@quicinc.com>
-Date: Wed, 20 Nov 2024 01:41:03 +0530
+	s=arc-20240116; t=1732048746; c=relaxed/simple;
+	bh=OOWExM1N60jCy1dSIf8NXBKIEYTUdBfF3QKNExZ85/s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZBPhe9jz5+tFWuGJ8mikUkZS0Pk7s8UhQLsnTVPjdZuQx0vWXENDMRPzDWpxDaBFkvhCfdo9Was+7P+Q40zHCyeyn1ziY9U7dSeovw5eiiOlJUUYofO4RLo+OE7iSuHQN6frnTRMG5+Wa1Al1u8Lw03hp0zAUoi6gCNwcRxES2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fUdJEGNf; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90738C4CECF;
+	Tue, 19 Nov 2024 20:39:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1732048745;
+	bh=OOWExM1N60jCy1dSIf8NXBKIEYTUdBfF3QKNExZ85/s=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=fUdJEGNf8LcVFkS4Y/CHZrJRYqDVlgSp1kQtKjHAybajS3sjie9VoShoEaevbBPhW
+	 ki94a71CZqVvrGOo7s8W5Z8fuJrxDtqPccHIBE7cCLqVvZoLC/enAP39ybhA6173Jb
+	 N35VyndijJVXdMzwKFBuX2F3xs91DDblYtFFXUu9r0JyVn7yF9EkOG8vjwhP0wnhm1
+	 bWRtfU2PxlVb7B3BGn1flApnJG5KGRClE4rdvYQSP0+7B+tJU6rQTLS5/Sio/VYXqw
+	 UkSeXTNVdJvqhYlvthufmgJg0GDqQAcuW1FkEUwYk+0M8gpYjDUg/Aqyq7U9aRYOg5
+	 FrpeQC+YJuDTw==
+Date: Tue, 19 Nov 2024 14:39:03 -0600
+From: Rob Herring <robh@kernel.org>
+To: "Jan Petrous (OSS)" <jan.petrous@oss.nxp.com>
+Cc: Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Jose Abreu <joabreu@synopsys.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Richard Cochran <richardcochran@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Russell King <linux@armlinux.org.uk>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Emil Renner Berthing <kernel@esmil.dk>,
+	Minda Chen <minda.chen@starfivetech.com>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Iyappan Subramanian <iyappan@os.amperecomputing.com>,
+	Keyur Chudgar <keyur@os.amperecomputing.com>,
+	Quan Nguyen <quan@os.amperecomputing.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	imx@lists.linux.dev, devicetree@vger.kernel.org,
+	NXP S32 Linux Team <s32@nxp.com>
+Subject: Re: [PATCH v5 13/16] dt-bindings: net: Add DT bindings for DWMAC on
+ NXP S32G/R SoCs
+Message-ID: <20241119203903.GA2249015-robh@kernel.org>
+References: <20241119-upstream_s32cc_gmac-v5-0-7dcc90fcffef@oss.nxp.com>
+ <20241119-upstream_s32cc_gmac-v5-13-7dcc90fcffef@oss.nxp.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: qcs9100: Update memory map for QCS9100
- Ride and QCS9100 Ride Rev3
-To: Pratyush Brahma <quic_pbrahma@quicinc.com>,
-        Bjorn Andersson
-	<bjorn.andersson@example.com>,
-        Konrad Dybcio <konrad.dybcio@example.com>,
-        "Rob Herring" <rob.herring@example.com>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski@example.com>,
-        Conor Dooley <conor.dooley@example.com>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_tengfan@quicinc.com>,
-        <quic_shashim@quicinc.com>
-References: <20241119092501.31111-1-quic_pbrahma@quicinc.com>
-Content-Language: en-US
-From: Kuldeep Singh <quic_kuldsing@quicinc.com>
-In-Reply-To: <20241119092501.31111-1-quic_pbrahma@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: H2nW38eyBv7ErXnkdnqSClquZtx3rPWD
-X-Proofpoint-GUID: H2nW38eyBv7ErXnkdnqSClquZtx3rPWD
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 suspectscore=0
- impostorscore=0 bulkscore=0 mlxscore=0 malwarescore=0 mlxlogscore=806
- phishscore=0 spamscore=0 priorityscore=1501 lowpriorityscore=0
- clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411190150
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241119-upstream_s32cc_gmac-v5-13-7dcc90fcffef@oss.nxp.com>
 
-
-
-On 11/19/2024 2:55 PM, Pratyush Brahma wrote:
-> This patch series is based on Tengfei Fan's patches [1] which adds support
-> for QCS9100 Ride and QCS9100 Ride Rev3 boards.
+On Tue, Nov 19, 2024 at 04:00:19PM +0100, Jan Petrous (OSS) wrote:
+> Add basic description for DWMAC ethernet IP on NXP S32G2xx, S32G3xx
+> and S32R45 automotive series SoCs.
 > 
-> Some new carveouts (viz. gunyah_md and a few pil dtb carveouts) have been
-> introduced and the size and base addresses have been updated for
-> a few of existing carveouts compared to SA8775P. Also, tz_ffi_mem carveout
-> and its corresponding scm reference has been removed as it is not required
-> for these boards. Incorporate these changes in the updated memory map
-> for QCS9100 Ride and QCS9100 Rev3 boards.
+> Signed-off-by: Jan Petrous (OSS) <jan.petrous@oss.nxp.com>
+> ---
+>  .../devicetree/bindings/net/nxp,s32-dwmac.yaml     | 105 +++++++++++++++++++++
+>  .../devicetree/bindings/net/snps,dwmac.yaml        |   3 +
+>  2 files changed, 108 insertions(+)
 > 
-> [1] https://lore.kernel.org/all/20240911-add_qcs9100_support-v2-4-e43a71ceb017@quicinc.com/
-> 
-> Signed-off-by: Pratyush Brahma <quic_pbrahma@quicinc.com>
+> diff --git a/Documentation/devicetree/bindings/net/nxp,s32-dwmac.yaml b/Documentation/devicetree/bindings/net/nxp,s32-dwmac.yaml
+> new file mode 100644
+> index 000000000000..a141e826a295
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/net/nxp,s32-dwmac.yaml
+> @@ -0,0 +1,105 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +# Copyright 2021-2024 NXP
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/net/nxp,s32-dwmac.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: NXP S32G2xx/S32G3xx/S32R45 GMAC ethernet controller
+> +
+> +maintainers:
+> +  - Jan Petrous (OSS) <jan.petrous@oss.nxp.com>
+> +
+> +description:
+> +  This device is a Synopsys DWC IP, integrated on NXP S32G/R SoCs.
+> +  The SoC series S32G2xx and S32G3xx feature one DWMAC instance,
+> +  the SoC S32R45 has two instances. The devices can use RGMII/RMII/MII
+> +  interface over Pinctrl device or the output can be routed
+> +  to the embedded SerDes for SGMII connectivity.
+> +
+> +properties:
+> +  compatible:
+> +    oneOf:
+> +      - const: nxp,s32g2-dwmac
+> +      - items:
+> +        - enum:
+> +            - nxp,s32g3-dwmac
+> +            - nxp,s32r45-dwmac
+> +        - const: nxp,s32g2-dwmac
+> +
+> +  reg:
+> +    items:
+> +      - description: Main GMAC registers
+> +      - description: GMAC PHY mode control register
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  interrupt-names:
+> +    const: macirq
+> +
+> +  clocks:
+> +    items:
+> +      - description: Main GMAC clock
+> +      - description: Transmit clock
+> +      - description: Receive clock
+> +      - description: PTP reference clock
+> +
+> +  clock-names:
+> +    items:
+> +      - const: stmmaceth
+> +      - const: tx
+> +      - const: rx
+> +      - const: ptp_ref
+> +
+> +required:
+> +  - clocks
+> +  - clock-names
+> +
+> +allOf:
+> +  - $ref: snps,dwmac.yaml#
+> +
+> +unevaluatedProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +    #include <dt-bindings/interrupt-controller/irq.h>
+> +    #include <dt-bindings/phy/phy.h>
+> +    bus {
+> +      #address-cells = <2>;
+> +      #size-cells = <2>;
+> +
+> +      ethernet@4033c000 {
+> +        compatible = "nxp,s32g2-dwmac";
+> +        reg = <0x0 0x4033c000 0x0 0x2000>, /* gmac IP */
+> +              <0x0 0x4007c004 0x0 0x4>;    /* GMAC_0_CTRL_STS */
+> +        interrupt-parent = <&gic>;
+> +        interrupts = <GIC_SPI 57 IRQ_TYPE_LEVEL_HIGH>;
+> +        interrupt-names = "macirq";
+> +        snps,mtl-rx-config = <&mtl_rx_setup>;
+> +        snps,mtl-tx-config = <&mtl_tx_setup>;
+> +        clocks = <&clks 24>, <&clks 17>, <&clks 16>, <&clks 15>;
+> +        clock-names = "stmmaceth", "tx", "rx", "ptp_ref";
+> +        phy-mode = "rgmii-id";
+> +        phy-handle = <&phy0>;
+> +
+> +        mtl_rx_setup: rx-queues-config {
+> +          snps,rx-queues-to-use = <5>;
+> +        };
+> +
+> +        mtl_tx_setup: tx-queues-config {
+> +          snps,tx-queues-to-use = <5>;
+> +        };
+> +
+> +        mdio {
+> +          #address-cells = <1>;
+> +          #size-cells = <0>;
+> +          compatible = "snps,dwmac-mdio";
+> +
+> +          phy0: ethernet-phy@0 {
+> +            reg = <0>;
+> +          };
+> +        };
+> +      };
+> +    };
+> diff --git a/Documentation/devicetree/bindings/net/snps,dwmac.yaml b/Documentation/devicetree/bindings/net/snps,dwmac.yaml
+> index 4e2ba1bf788c..a88d1c236eaf 100644
+> --- a/Documentation/devicetree/bindings/net/snps,dwmac.yaml
+> +++ b/Documentation/devicetree/bindings/net/snps,dwmac.yaml
+> @@ -66,6 +66,9 @@ properties:
+>          - ingenic,x2000-mac
+>          - loongson,ls2k-dwmac
+>          - loongson,ls7a-dwmac
+> +        - nxp,s32g2-dwmac
+> +        - nxp,s32g3-dwmac
+> +        - nxp,s32r-dwmac
 
-The memory map for qcs9100-ride-r3 and qcs9100-ride is exactly same.
-A good churn you are first deleting(based on sa8775p) and then re-adding
-for qcs9100-ride*.
+You really only need to add nxp,s32g2-dwmac since it's always present.
 
-I think it's better to move common qcs9100-ride* to a common file ex:
-qcs9100-ride.dtsi and keep specifics further to .dts files?
+Other than the yamllint issue,
 
-This will ensure common entities are present at same place with no
-duplicates.
-
---
-
-Regards
-Kuldeep
+Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
 
