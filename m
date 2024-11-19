@@ -1,143 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-38308-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38309-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5AE5B9D265D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 14:06:04 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 217159D2674
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 14:10:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0907B1F20FFB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 13:06:04 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D01701F22AEF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 13:10:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 245A41CC8A9;
-	Tue, 19 Nov 2024 13:06:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C6ED1CCECF;
+	Tue, 19 Nov 2024 13:10:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uRW/wFl/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8BCE1CC170;
-	Tue, 19 Nov 2024 13:05:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09AC81CCB53
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Nov 2024 13:10:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732021562; cv=none; b=CRFwnlJV4Qxoj50kDbwmG2i+ibla8Idq7xyL4dOyK0AzFnAWKg2kNOIwE3BAd5IXg1o5ixqe80XiVYqrO6Mml1dL7BtSZuaEEALNvMyHh1dJYQtAZlC58nIq+UV5o9jtsaC2QfArWQ2zlwJ4g7MTmVdMVyw7RTIvO1oDfAB5ORk=
+	t=1732021837; cv=none; b=UUVtiGcnGI+ySbZo0t1gsSD9MNxSk7ZdVPRz4End8vDhzwO7b9Y1+CHH83Q7mfqUiRvy1GNZG2uuoNw8IXNzoSXBDYnPzOa3HR4B+D96Tb8T741OZ9SO9BfSxWnpErYRho+Tt7qvokDflFRakV8oMtV6bER33MDCFXoyLXPyz8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732021562; c=relaxed/simple;
-	bh=uSwSTdd7HCm/YcK1V1kqqpFIOnCFAFfr1gYiTS1xaBk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lAXIzXnrYNS5it5EY1DgqEAfI0fdSC1AokMjn+XOn831fKbwxwYXiVYR/5gsrHSZcS+GnsQgmcYGYsrXee0thNxr9IvwSuBNbYrCIm2kawmSoVLmKsCkPb8K8hkq7N3yDFyApxugYDGDFVZYNnOINjjNu+t7F8Lk8kV07FgGKU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=csie.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.208.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=csie.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2fb5014e2daso26588971fa.0;
-        Tue, 19 Nov 2024 05:05:59 -0800 (PST)
+	s=arc-20240116; t=1732021837; c=relaxed/simple;
+	bh=4fXNyWptEUJ9NqiDYY4v5f2MA6FE8JIpt+fHVIuwt+U=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=kKKcGBke2NTdMPWnUTF6q+ujRh7A31hqGqaV8Pvbxy/68wHlyyGK6iDdtxhOX6mb8pSgmEs1Hc0QOWigXqCNDDHyvEmgF53OXKhyyzK9kpZ1fyK2MamxXDHtkz1zXkSRcU8MCVmyaP8XtZUjnzha9y2SJQuqQX7hy/Ey2QZ7qhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uRW/wFl/; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-4314c4cb752so38332945e9.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Nov 2024 05:10:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1732021833; x=1732626633; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=QCd1XDFaDcI0eu/5aCsZjulpUPFQcIcFClGyDjhAXE4=;
+        b=uRW/wFl/vKGPh88hCVHGj8Kc5Lbj/5byEinOJs5rYAPJNT4tezCpD+SuiMW+GdSRDJ
+         TJw5+bMxIHSM6m0J8wQrE6obeYYTwNtaiLnnW5xpN4JdzDq+IZGLjbnrRERy7J+cGNtw
+         AZJ8WNOVgC20p9u/qqqX5jB1RJF9smcyhqkR+NV/Sqxq4uQVz3wJQs3YyXzFzZicrtwU
+         DhSnDzftLph7Pg7jkTGQY3MyspN1thpcBMSZbtg+oBGe+lCFyUDAcqlrfE+8X2gLwHC3
+         3lNbxn6gJ4zkneyTArda2MGHlRa44tqy6y5x1rTa4UoIsJd/rynvldHMtxjp4zoZwgn6
+         NrAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732021556; x=1732626356;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :reply-to:in-reply-to:references:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=r5SnbOSPJM2xbQk5uUW2SdrCV3aSiK5t/lke9tIy5ZM=;
-        b=ANltHQ9SyyyoPO9Shp9Q1EokDBNyURE+V4UZtsFw2eiU9HVxxme8K49bkLpkzp8XQC
-         uEEEyv1QbBWVuvX+lvuzDMbbam44l7QYyroSOgCX4i5yJ5QLAoDMl1ZaTKL0pZqOpsyI
-         wuCjW8v8jXwRDXLknXcvNUqmGI6hRmW6DjKhaHnDJkQzc15udZHil5mNiyWq3jHHid5z
-         boPAjHt/FD4pjF2m+fKKMSq2bLGPJ1T1DBraK/Sihi8JiiYA09Ljqz6Wn5pmr3RoeCrK
-         bokErh05RVUR3GZMsFXLL9BgjwkBYpirmkpE3Oi3pG8SmrqkrnYWVrJI40sXGPF21o57
-         e3oQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUXHToErbBPLCWjVZ/L60h3BVeWXltRf07hQ88I8IerA3CT5i8geaCNeUxB9ZFAONop1EYaZUy2UUkCgLc=@vger.kernel.org, AJvYcCVbC8/qy1v/2NU5UX0i6QuMNyvf+lrvuCwxJTYkB+H4M2b1vAzYdpUQKT6JsOHEBCY2nX3HRmqXk57muiVa@vger.kernel.org, AJvYcCWhMAfS9rKR+6+luNEmmLLcXy/1idQPNX1zxnJirHRcP69E6MiL8XssYULcde101C5JO72ngTVRFuKw+5Z/@vger.kernel.org
-X-Gm-Message-State: AOJu0YxMh88PMuUX5mfcLzig8k7PKnVUkJ9uxtBsQxBUI/Zm+vFeWJvg
-	0M7RMJhHsqJpJ1pP3l9igEjzALqO7sHM6mUv/LFfq1NylTcuxgWdumT9wDUA
-X-Google-Smtp-Source: AGHT+IH0XQk6P8B3PQQ4Ty/GuFjhNpI/I+DvC2i0waLOUq6CTQp+JV16DN7VZh7i0a4m1vo52JvVFA==
-X-Received: by 2002:a2e:a903:0:b0:2fb:3bef:6233 with SMTP id 38308e7fff4ca-2ff6070e042mr83271141fa.33.1732021555447;
-        Tue, 19 Nov 2024 05:05:55 -0800 (PST)
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com. [209.85.208.171])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ff698515d0sm12383251fa.19.2024.11.19.05.05.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Nov 2024 05:05:54 -0800 (PST)
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2fb3110b964so25253001fa.1;
-        Tue, 19 Nov 2024 05:05:54 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCUvoVgTx5CQ4BCnVJMrMqV3tV8v7XTKjibdUeUrFh1fgW+hh95N50sWTPSEwFG29BUBidcjAR9GD6agye0=@vger.kernel.org, AJvYcCVWt24J8tmukF0ivTt1aB19yv/9xezcKdva1uLm67pbaMB+NgeAA5tNzzmPaoctvWn1GcQB/lnqHTHtHVVD@vger.kernel.org, AJvYcCWxUDJz3oD7aEO0tucnp5nPx9dBGH2nlM+MrSepAHCnIeGsGGxYLvP4N35XIuZ9F49ySpwAdeiBq/InEvjO@vger.kernel.org
-X-Received: by 2002:a05:651c:1582:b0:2f7:4cf1:d6b1 with SMTP id
- 38308e7fff4ca-2ff606226a5mr76184521fa.1.1732021553921; Tue, 19 Nov 2024
- 05:05:53 -0800 (PST)
+        d=1e100.net; s=20230601; t=1732021833; x=1732626633;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=QCd1XDFaDcI0eu/5aCsZjulpUPFQcIcFClGyDjhAXE4=;
+        b=NZaK1xEUT3FwIJKzXeIJCO1T88PG3XLnpzRPHTTg4+wVYQBFHHC/iP6UUNBOvIXPJO
+         L9oxAMfN05WUcTAFOyyDUqj0vVueQjWNi7uEj28B2GIYLq/1ax4X4LFUeUJ6+RgQ4IM+
+         4r4TorVG8C49ThYNIXHa4t2cEouuXI97xCMiD8OkbzHzC6n1kOcw5bYwgHoXBu9dHcjq
+         yHUzJ9wi9bSo3okz598NOUavYTYJ1C+xagOGLEjiGYwWuo66rw6K2I5SrTD6WKenkckL
+         6nBECJbyuNpltgzHy8U/zs+L6GK13waJuuHRVLWH2KZPohK26k8ogP6s6/NAX6W2fy9Y
+         JidA==
+X-Forwarded-Encrypted: i=1; AJvYcCWDTLd0QaUfiz/i7fDyyMO6bqLcGyC87zI7vwQ/P/h1ca5fIg0R6hQXpiJdL4tPXQeBx5P+tXaILKUgJMSB@vger.kernel.org
+X-Gm-Message-State: AOJu0YzWglsGjDjGfmElhshccb0ZQjJN55zyH50wWUft+AXv3NUxLTKO
+	4Te7FlgyKICzcfDbgbwHuFNx9zyTrSe00jYrPtcRqEi7Hl0m1cyPhy3KRqHlmjata8NCsZRWdl7
+	VaTk=
+X-Google-Smtp-Source: AGHT+IGusP/UzmZ0+YghK5T/t6qFJwR3QEG3Zd6a+CKh0Jg8Puhh2L5Y6iTO7QAmcU06sOzzeyBDEw==
+X-Received: by 2002:a05:600c:3584:b0:430:5887:c238 with SMTP id 5b1f17b1804b1-432df725532mr135846905e9.11.1732021833272;
+        Tue, 19 Nov 2024 05:10:33 -0800 (PST)
+Received: from [127.0.1.1] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432dab76dafsm192016185e9.10.2024.11.19.05.10.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 Nov 2024 05:10:32 -0800 (PST)
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: [PATCH 0/6] Add dt-bindings and dtsi changes for CAMSS on x1e80100
+ silicon
+Date: Tue, 19 Nov 2024 13:10:29 +0000
+Message-Id: <20241119-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v1-0-54075d75f654@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <6f0297ba884c670d604232c2861347940082c8e6.1732004078.git.u.kleine-koenig@baylibre.com>
-In-Reply-To: <6f0297ba884c670d604232c2861347940082c8e6.1732004078.git.u.kleine-koenig@baylibre.com>
-Reply-To: wens@csie.org
-From: Chen-Yu Tsai <wens@csie.org>
-Date: Tue, 19 Nov 2024 22:05:42 +0900
-X-Gmail-Original-Message-ID: <CAGb2v66f6WEYYVm+UQzmz_V87Vqt4BSUkoW5S_qqr_arczc6ug@mail.gmail.com>
-Message-ID: <CAGb2v66f6WEYYVm+UQzmz_V87Vqt4BSUkoW5S_qqr_arczc6ug@mail.gmail.com>
-Subject: Re: [PATCH] mailbox: Switch back to struct platform_driver::remove()
-To: =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-Cc: Jassi Brar <jassisinghbrar@gmail.com>, Shawn Guo <shawnguo@kernel.org>, 
-	Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, 
-	Fabio Estevam <festevam@gmail.com>, Matthias Brugger <matthias.bgg@gmail.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Samuel Holland <samuel@sholland.org>, 
-	Thierry Reding <thierry.reding@gmail.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
-	Michal Simek <michal.simek@amd.com>, linux-kernel@vger.kernel.org, imx@lists.linux.dev, 
-	linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
-	linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAEWOPGcC/x3NQQrCMBBG4auUWftDJg1t9CrSRWxGHdAomSqB0
+ rtbXH6b91YyqSpGp26lKl81fZUdfOhovqdyE2jeTd75wMxHXAIeWj4NRdoCH8AMjsiLKRpLdOw
+ c5vQ0Q/Rp6Md+yG70tAffVa7a/rPztG0/dNJJzHwAAAA=
+X-Change-ID: 20241119-b4-linux-next-24-11-18-dtsi-x1e80100-camss-82a63736d072
+To: Loic Poulain <loic.poulain@linaro.org>, Robert Foss <rfoss@kernel.org>, 
+ Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Todor Tomov <todor.too@gmail.com>, 
+ Mauro Carvalho Chehab <mchehab@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, 
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, 
+ Jagadeesh Kona <quic_jkona@quicinc.com>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-media@vger.kernel.org, linux-clk@vger.kernel.org, 
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+X-Mailer: b4 0.15-dev-355e8
 
-On Tue, Nov 19, 2024 at 5:17=E2=80=AFPM Uwe Kleine-K=C3=B6nig
-<u.kleine-koenig@baylibre.com> wrote:
->
-> After commit 0edb555a65d1 ("platform: Make platform_driver::remove()
-> return void") .remove() is (again) the right callback to implement for
-> platform drivers.
->
-> Convert all platform drivers below drivers/mailbox to use .remove(),
-> with the eventual goal to drop struct platform_driver::remove_new(). As
-> .remove() and .remove_new() have the same prototypes, conversion is done
-> by just changing the structure member name in the driver initializer.
->
-> Make a few indentions consistent while touching these struct
-> initializers.
->
-> Signed-off-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@baylibre.com>
-> ---
-> Hello,
->
-> I did a single patch for all of drivers/mailbox. While I usually prefer
-> to do one logical change per patch, this seems to be overengineering
-> here as the individual changes are really trivial and shouldn't be much
-> in the way for stable backports. But I'll happily split the patch if you
-> prefer it split.
->
-> This is based on today's next, if conflicts arise when you apply it at
-> some later time and don't want to resolve them, feel free to just drop
-> the changes to the conflicting files. I'll notice and followup at a
-> later time then. Or ask me for a fixed resend.
->
-> Best regards
-> Uwe
->
->  drivers/mailbox/bcm-flexrm-mailbox.c    | 2 +-
->  drivers/mailbox/bcm-pdc-mailbox.c       | 2 +-
->  drivers/mailbox/imx-mailbox.c           | 2 +-
->  drivers/mailbox/mailbox-test.c          | 4 ++--
->  drivers/mailbox/mtk-cmdq-mailbox.c      | 2 +-
->  drivers/mailbox/qcom-apcs-ipc-mailbox.c | 2 +-
->  drivers/mailbox/qcom-ipcc.c             | 2 +-
->  drivers/mailbox/stm32-ipcc.c            | 2 +-
+This series adds dt-bindings and dtsi for CAMSS on x1e80100.
 
+The primary difference between x1e80100 and other platforms is a new VFE
+and CSID pair at version 680.
 
->  drivers/mailbox/sun6i-msgbox.c          | 4 ++--
+Some minor driver churn will be required to support outside of the new VFE
+and CSID blocks but nothing too major.
 
-Acked-by: Chen-Yu Tsai <wens@csie.org>
+The CAMCC in this silicon requires two, not one power-domain requiring
+either this fix I've proposed here or something similar:
 
->  drivers/mailbox/tegra-hsp.c             | 2 +-
->  drivers/mailbox/zynqmp-ipi-mailbox.c    | 2 +-
->  11 files changed, 13 insertions(+), 13 deletions(-)
->
+https://lore.kernel.org/linux-arm-msm/bad60452-41b3-42fb-acba-5b7226226d2d@linaro.org/T/#t
+
+That doesn't gate adoption of the binding description though.
+
+A working tree in progress can be found here:
+https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/x1e80100-6.12-rc7+camss?ref_type=heads
+
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+---
+Bryan O'Donoghue (6):
+      dt-bindings: i2c: qcom-cci: Document x1e80100 compatible
+      dt-bindings: media: Add qcom,x1e80100-camss binding
+      dt-bindings: clock: qcom: Add second power-domain to CAMCC
+      arm64: dts: qcom: x1e80100: Add CAMCC block definition
+      arm64: dts: qcom: x1e80100: Add CCI definitions
+      arm64: dts: qcom: x1e80100: Add CAMSS block definition
+
+ .../bindings/clock/qcom,sm8450-camcc.yaml          |   5 +-
+ .../devicetree/bindings/i2c/qcom,i2c-cci.yaml      |   2 +
+ .../bindings/media/qcom,x1e80100-camss.yaml        | 354 ++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi             | 359 +++++++++++++++++++++
+ 4 files changed, 718 insertions(+), 2 deletions(-)
+---
+base-commit: 744cf71b8bdfcdd77aaf58395e068b7457634b2c
+change-id: 20241119-b4-linux-next-24-11-18-dtsi-x1e80100-camss-82a63736d072
+
+Best regards,
+-- 
+Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+
 
