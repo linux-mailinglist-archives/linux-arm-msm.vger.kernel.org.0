@@ -1,190 +1,107 @@
-Return-Path: <linux-arm-msm+bounces-38290-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38291-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5612E9D2241
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 10:14:10 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8DEE79D225D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 10:21:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8CC5EB219DA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 09:14:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5407F281FA9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 09:21:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E7FA1AF0AC;
-	Tue, 19 Nov 2024 09:13:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7AF52198E77;
+	Tue, 19 Nov 2024 09:21:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CXqjVkof"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Zejrvb94"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 049DD19D07A;
-	Tue, 19 Nov 2024 09:13:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B566B13FD83;
+	Tue, 19 Nov 2024 09:21:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732007639; cv=none; b=ctJKWtOmEbpPK5xMDgBFyFo4n9JARnlt9ZiZIODCZYTDlMVJCuCVSJlesAmial4doAmSiSiInhY7hNrkE6CFmSnRKanlIsNUaTlBaS2kvDeII4EpacUJnev02a2bD1z+qCvIhUIlZNaIKEKD0Aac/lE0lWBBVGwr0hWK6oL139Q=
+	t=1732008102; cv=none; b=qIpwZGRDOLregZRmrR06eFAAD5aRge4hBXthZq5Lyseh9ascFAIhakQnUYv6l+YKtSvRseShg25Xk52ZNeVX3vOOGSDF2Mi2Ox/h8RMymZs7c/8RtW4Gszerl/YPkPu+JV9j1ANqDcHzY0yFJ3JIY2CBqUKyTVjykgxq4wbPUdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732007639; c=relaxed/simple;
-	bh=2VZx2V9CVxqf2nW+fj+4T81hvTJdFCbYTV71NmDqQeg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dzOjjvtxR3JkeRTfyviMbUzgeLanQo88KriJztcmRkq5WwTqppmNNNdzmx6llKlMh8q1xR6V2YtsaYgzwuL2x/gbm26bIvRMDigMEP4lR/BmYziy3dA5bJ+AI3nVbPfd1MDedPx+qGrzjoIwZuhzQ7yexr2oCabowgDFPsKwx/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CXqjVkof; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E438C4CECF;
-	Tue, 19 Nov 2024 09:13:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732007638;
-	bh=2VZx2V9CVxqf2nW+fj+4T81hvTJdFCbYTV71NmDqQeg=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=CXqjVkofP/0q91qDo3Ommx4z8COey/ZCvwj/8e6JY14iGyYrPHZ2PSFQREUT02yJa
-	 rJajENc59J2Vbx3+4VgQZMoUKdL1xDjVDdkOM7tLgUFa4rLgji3BMGAan30Tx2mABY
-	 pW1L1aeuB4QHCA9QR+x1NuukkKDCpzjNTVrGore/0Pj+UgFIYYYgudZhjXKiTLw94Y
-	 uQGuN99ig4d1/EBV3ZaA0RvGBaOoSg0AmB/K0m1BGoK221mhtLTrnE4Lv67pweIj9/
-	 PMjclUbrMePquPrs1Uv5BsedP9egllo/Rg4sNqUeKNMyWlL/07RdCbjc3huwC336Gf
-	 BdjN2M4Kq6IVA==
-Message-ID: <9f347e95-7ce1-4339-9ccb-6bf2962d09d0@kernel.org>
-Date: Tue, 19 Nov 2024 10:13:50 +0100
+	s=arc-20240116; t=1732008102; c=relaxed/simple;
+	bh=hv2VA0WclhBnrnAjI1v1yhoLgYRSQyHsG8IvWBVmqB4=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=K06j9VmLFQlWzEYHyawuLqDTTCFdD8jSwW87nwQpvAMhTleW/c9omXidOEq8jD1cTi6KbWteKoECpV+wF8dkmNTu52LoMR4ktfyByJDc70XmArD/Yzum/+y3Nc6C5/5/X/Vms6peyqqekVkOFA2PVsdwhPSXutlaQoGUv55/fS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Zejrvb94; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AJ7F8FI004708;
+	Tue, 19 Nov 2024 09:21:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=BM/vYOPtFIg6lICyqBL4ZR
+	26RlC4Jn1npyuN2f43SgI=; b=Zejrvb94+5fVehP5ziXVSRiQLpj0AMgWT+mKsx
+	Culy6LSQHhKCv16OSye5uMoY4a43gA0f2CD6Ryx69Q3kfHYVOqzWvYEgRGLUEjZ/
+	Ol/UKRgj0klwOFq4MWdlz/2YGCeywCMGm/megkHZ7nNxH9duV7Os3WUTqBdx3yN3
+	ZDQo80fJWMtCLD9hOMLPXlfqjakh4/DoA8v0DpyYu4pl5seLrM/cU0AYDsXacwiq
+	czYRnfaienQp7fg9dsSAtX5bDKOiTgvb/8Hv4y8QyKIPtZCfpwNNi8YsJFpmJZm+
+	C9Dm+CXcIhoQDmzJyGCO8k4B5sYIVv/F/ozoNeEF7HElS8/g==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4308y7t1m6-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 19 Nov 2024 09:21:22 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AJ9LLdI011298
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 19 Nov 2024 09:21:21 GMT
+Received: from hu-mdalam-blr.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 19 Nov 2024 01:21:18 -0800
+From: Md Sadre Alam <quic_mdalam@quicinc.com>
+To: <manivannan.sadhasivam@linaro.org>, <miquel.raynal@bootlin.com>,
+        <richard@nod.at>, <vigneshr@ti.com>, <linux-mtd@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+CC: <quic_srichara@quicinc.com>, <quic_nainmeht@quicinc.com>,
+        <quic_laksd@quicinc.com>, <quic_varada@quicinc.com>
+Subject: [PATCH 0/2] QPIC v2 fixes for SDX75
+Date: Tue, 19 Nov 2024 14:50:56 +0530
+Message-ID: <20241119092058.480363-1-quic_mdalam@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/4] dt-bindindgs: i2c: qcom,i2c-geni: Document shared
- flag
-To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-Cc: konrad.dybcio@linaro.org, andersson@kernel.org, andi.shyti@kernel.org,
- linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org,
- conor+dt@kernel.org, agross@kernel.org, devicetree@vger.kernel.org,
- vkoul@kernel.org, linux@treblig.org, dan.carpenter@linaro.org,
- Frank.Li@nxp.com, konradybcio@kernel.org, bryan.odonoghue@linaro.org,
- krzk+dt@kernel.org, robh@kernel.org
-References: <20240927063108.2773304-1-quic_msavaliy@quicinc.com>
- <20240927063108.2773304-2-quic_msavaliy@quicinc.com>
- <we3wmw6e25y6e4443ndrduurwvkkpvuw7ozrizuys6pwxppwfy@2uq7uda4evhd>
- <6d81d8e7-ecd1-46f0-8ca3-617b5ee96990@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <6d81d8e7-ecd1-46f0-8ca3-617b5ee96990@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: mTQF6_ZJw8fDetbnkEbODP2F8fIKLRo4
+X-Proofpoint-ORIG-GUID: mTQF6_ZJw8fDetbnkEbODP2F8fIKLRo4
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 mlxlogscore=933 adultscore=0 mlxscore=0 phishscore=0
+ spamscore=0 bulkscore=0 malwarescore=0 lowpriorityscore=0 suspectscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411190066
 
-On 13/11/2024 17:08, Mukesh Kumar Savaliya wrote:
-> 
-> 
-> On 9/27/2024 2:54 PM, Krzysztof Kozlowski wrote:
->> On Fri, Sep 27, 2024 at 12:01:05PM +0530, Mukesh Kumar Savaliya wrote:
->>> Adds qcom,shared-se flag usage. Use this when particular I2C serial
->>> controller needs to be shared between two subsystems.
->>>
->>> SE = Serial Engine, meant for I2C controller here.
->>> TRE = Transfer Ring Element, refers to Queued Descriptor.
->>> SS = Subsystems (APPS processor, Modem, TZ, ADSP etc).
->>>
->>> Example :
->>> Two clients from different SS can share an I2C SE for same slave device
->>> OR their owned slave devices.
->>> Assume I2C Slave EEPROM device connected with I2C controller.
->>> Each client from ADSP SS and APPS Linux SS can perform i2c transactions.
->>> This gets serialized by lock TRE + DMA Transfers + Unlock TRE at HW level.
->>>
->>> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
->>> ---
->>>   Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml | 4 ++++
->>>   1 file changed, 4 insertions(+)
->>>
->>> diff --git a/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml b/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
->>> index 9f66a3bb1f80..3b9b20a0edff 100644
->>> --- a/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
->>> +++ b/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
->>> @@ -60,6 +60,10 @@ properties:
->>>     power-domains:
->>>       maxItems: 1
->>>   
->>> +  qcom,shared-se:
->>> +    description: True if I2C needs to be shared between two or more subsystems(SS).
->>
->> The "SS" and subsystem should be explained in the binding. Please do not
->> use some qcom-specific abbreviations here, but explain exactly, e.g.
->> processors like application processor and DSP.
->>
->> "se" is also not explained in the binding - please open it and look for
->> such explanation.
-> Sure, i thought cover letter explanation is good enough. I will add it 
-> per patch as cover letter will not be visible and go away after merge.
->>
->> This all should be rephrased to make it clear... We talked about this
->> and I do not see much of improvements except commit msg, so we are
->> making circles. I don't know, get someone internally to help you in
->> upstreaming this.
-> Let me retry to make it better.
-> Will make SS (subsystem) to system processor (can be APPS or DSP OR any 
-> other).
->>
->> Is sharing of IP blocks going to be also for other devices? If yes, then
->> this should be one property for all Qualcomm devices. If not, then be
->> sure that this is the case because I will bring it up if you come with
->> one more solution for something else.
->>
-> IP blocks like SE can be shared. Here we are talking about I2C sharing.
-> In future it can be SPI sharing. But design wise it fits better to add 
-> flag per SE node. Same we shall be adding for SPI too in future.
-> 
-> Please let me know your further suggestions.
+These patches will fix the following:
+ 
+1) onfi param page read which was broken by exec_op() patch.
 
-You responded 1.5 months after my message.
+2) Fixed offset passed to BAM from QPIC base
 
-I will provide you suggestions also 1.5 months, when I dig the context.
-Oh wait, all previous emails are long gone from my inbox...
 
-Anyway, my above comment stands for all Qualcomm reviews: stop coming up
-every month with twenty different "shared IP" properties.
+Md Sadre Alam (2):
+  mtd: rawnand: qcom: Pass 18 bit offset from QPIC base address to BAM
+  mtd: rawnand: qcom: Fix onfi param page read
 
-Best regards,
-Krzysztof
+ drivers/mtd/nand/raw/qcom_nandc.c | 23 ++++++++++++++++++-----
+ 1 file changed, 18 insertions(+), 5 deletions(-)
+
+-- 
+2.34.1
 
 
