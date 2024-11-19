@@ -1,54 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-38260-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38261-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD2E19D1B42
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 23:53:48 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3C1FA9D1D43
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 02:27:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 61161B22905
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2024 22:53:46 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 020DB28260C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 01:27:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8AB561E7C29;
-	Mon, 18 Nov 2024 22:53:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DEA932D047;
+	Tue, 19 Nov 2024 01:27:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bhL9jvVa"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="E5aQF0UM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D0F8183CD1;
-	Mon, 18 Nov 2024 22:53:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 104A483CC1;
+	Tue, 19 Nov 2024 01:27:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731970421; cv=none; b=IYhyl800bvBhI3yD9gBc/1YFsLkUjhX75EqKqoKkYp3Q5u5QpX2EEDPT94I+YIAFSN0UsabeWaZlxA5fTdBQWrcdpct+t7V5Pwx0gk+Q+DPH/GLWiSOyI2jeEn++eN94G8CO4D12uXjD8+Jo6mVMuJjBMNIUNHtKwbdyyoIAZ/w=
+	t=1731979637; cv=none; b=JRbn/YqND/mu0cGXZcyUAeDbGUwD/Xw144+Gf1GNrVluxpvcM4Xfh+X5CP1agTSXIrL/C+3G0boEB7bKvwDQdODdreSeCAJAKaMgxKWHGNISEC2JdGtuISodNjb0TRNmB2ZnR9sT//VmwcGl/NwmpLbYdSyEhk1/j8P0T6pqNPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731970421; c=relaxed/simple;
-	bh=LxeFH443P3XiwAdqwIJsULBSBIz9MnIhcq3bdOBUiPE=;
+	s=arc-20240116; t=1731979637; c=relaxed/simple;
+	bh=PE+v4tm16jnBLb+iJ8z174hx/xtzA5LTbTk+9E5XUQQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VLyZIU13/leKEen6CP0YpASRtrELVnrazOc/uotdx6JCjhY5e8OjGAOkjRzS+7cr8ikL4SunGHOHTBHlv8Knx8CsFdGvhKl76vfz4AVv50/qm4x/zS4FBY9ikk0LTwvAvtG7TiyeTpouVlm97UdOQOW7oLzOwcnuOnJW8OMEL7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bhL9jvVa; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34614C4CECF;
-	Mon, 18 Nov 2024 22:53:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1731970419;
-	bh=LxeFH443P3XiwAdqwIJsULBSBIz9MnIhcq3bdOBUiPE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=bhL9jvVaANeQ/vLkvK0DUuESDQq227s/vNzZ6V+vBty07/+IFZzXThZhzDVLLFjCQ
-	 w0IRBPe5jkcU3eoeb5k3CdbZ8KA9zCfoNH+MTFPPNoefvAB346qBBNrF0dNDxUcD+e
-	 uWTkjubk4T9YZwLOpPDJIW3Hzh+jauButpqrECuqWwN9vZY0D+GNUSCvnJXbRLuZit
-	 pvyU8Wm/v5k7mf+H2sNxk6MT49H9A9y09YnCJtjM46bmQcpvYda+QlHIYM7MI3fvP8
-	 R2Z7MNP1pGT2O+94/nPyeaOtcI1lpsv9Ew91ajG2TM9GbkO1ZaHJwlkO6eTyf7+f7a
-	 mzcRCPPxgRkSg==
-Date: Mon, 18 Nov 2024 23:53:35 +0100
-From: Andi Shyti <andi.shyti@kernel.org>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH] i2c: qup: use generic device property accessors
-Message-ID: <h57xw6en4bb7gxsqq7qwq4z5yakavmn26jda36uh34r3ve4kbt@vj35tpjd7d2f>
-References: <20241008160947.81045-1-brgl@bgdev.pl>
+	 Content-Type:Content-Disposition:In-Reply-To; b=OQfS8z8uwvln0m80ZZlxvjRSFBwrbh+XkWx811IAnEmln/2P0WfNPbiGs3QUc+GU48tQ6ypg6GRf5MnsNVwpVyOHF1jrXN1rRhxovz+nZ4YHQIRT9UTzHmzyKq08u0SvXdVfVj3tVfTltUY4DjGg+2dotMep9FNbZiQUIkqcFCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=E5aQF0UM; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=6Y0+K3PqqIgBny+BhM9cv9Q9ohqYkiNfuQM6ZshMm7c=; b=E5aQF0UM3rjeAM9rCFCv9I6DHK
+	LIRCilMCFArYAt4QFK4dDejXULJZwNLqVR8oayk3tqys3oU2aaxyFyAYwzns4mDYgLmCNMHqQCaQW
+	1U8ZHxIZ5ULeTBfY0WJPMYTXYFctTfLJaSq+Or2zrLpvFVY58WvYB8cdcxhx+OROOFw4=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1tDD1K-00DjJq-C1; Tue, 19 Nov 2024 02:27:10 +0100
+Date: Tue, 19 Nov 2024 02:27:10 +0100
+From: Andrew Lunn <andrew@lunn.ch>
+To: Yijie Yang <quic_yijiyang@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Richard Cochran <richardcochran@gmail.com>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, netdev@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: qcs615-ride: Enable ethernet
+ node
+Message-ID: <ececbbe1-07b3-4050-b3a4-3de9451ac7d7@lunn.ch>
+References: <20241118-dts_qcs615-v2-0-e62b924a3cbd@quicinc.com>
+ <20241118-dts_qcs615-v2-2-e62b924a3cbd@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -57,23 +66,47 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241008160947.81045-1-brgl@bgdev.pl>
+In-Reply-To: <20241118-dts_qcs615-v2-2-e62b924a3cbd@quicinc.com>
 
-Hi Bartosz,
-
-On Tue, Oct 08, 2024 at 06:09:47PM +0200, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On Mon, Nov 18, 2024 at 02:44:02PM +0800, Yijie Yang wrote:
+> Enable the ethernet node, add the phy node and pinctrl for ethernet.
 > 
-> There's no reason for this driver to use OF-specific property helpers.
-> Drop the last one in favor of the generic variant and no longer include
-> of.h.
+> Signed-off-by: Yijie Yang <quic_yijiyang@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/qcs615-ride.dts | 106 +++++++++++++++++++++++++++++++
+>  1 file changed, 106 insertions(+)
 > 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> diff --git a/arch/arm64/boot/dts/qcom/qcs615-ride.dts b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
+> index ee6cab3924a6d71f29934a8debba3a832882abdd..299be3aa17a0633d808f4b5d32aed946f07d5dfd 100644
+> --- a/arch/arm64/boot/dts/qcom/qcs615-ride.dts
+> +++ b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
+> @@ -5,6 +5,7 @@
+>  /dts-v1/;
+>  
+>  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+> +#include <dt-bindings/gpio/gpio.h>
+>  #include "qcs615.dtsi"
+>  / {
+>  	model = "Qualcomm Technologies, Inc. QCS615 Ride";
+> @@ -196,6 +197,60 @@ vreg_l17a: ldo17 {
+>  	};
+>  };
+>  
+> +&ethernet {
+> +	status = "okay";
+> +
+> +	pinctrl-0 = <&ethernet_defaults>;
+> +	pinctrl-names = "default";
+> +
+> +	phy-handle = <&rgmii_phy>;
+> +	phy-mode = "rgmii";
 
-this whole thread has gone off my radar, I'm sorry to have missed
-this. Thanks Wolfram for bringing this to my attention.
+That is unusual. Does the board have extra long clock lines?
 
-Merged to i2c/i2c-host.
+> +	max-speed = <1000>;
 
-Andi
+Why do you have this property? It is normally used to slow the MAC
+down because of issues at higher speeds.
+
+	Andrew
 
