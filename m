@@ -1,117 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-38282-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38283-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 964A59D20C3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 08:28:13 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id F2A259D210D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 08:57:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2E8C4B2103A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 07:28:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B8880282632
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 07:57:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9334F157A55;
-	Tue, 19 Nov 2024 07:28:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7CE2E156C63;
+	Tue, 19 Nov 2024 07:57:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HedFkaSI"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="DVKKSfVB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 067A714E2E2
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Nov 2024 07:28:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7ED06E2BE;
+	Tue, 19 Nov 2024 07:57:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732001284; cv=none; b=k4rvzTnEGsj3hRq8iSKwn30raqM5PgivyBvLbTiS5cN+84GlkTSCnGK3Xoovdm/nqlRyCixWhAhddwAN3kQ8JGct0X4YM2guUlJ8Yw1oQ2MP2E7z+OTKv/ZI2U4Tz/AfvfgcvQl0hQdJQIwJMYSr9gEBgWXmt0rzEqHwMqYqTng=
+	t=1732003072; cv=none; b=lMda/Eebxz3FMcbRH8cQdSi+BGbMAcULrtMnt6bHCAjWXXzyUK1dsQtWiNVZfUjU8bqQwfxxPBaC2w5xf/zVhzdc1XgUnrftie7v0CNLTW1CKNnThiPl8gfgOAee6teGWUtRsDHgFA4XNV4h4Nwz6Ah+bFy5E8gC23bbGWDcXoA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732001284; c=relaxed/simple;
-	bh=e3OFRhPM41WMBWFocoxGAX9pQCoY+5qz29EryMfR188=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Px44pWkq2uZCdeVQ5SbXxqEVkjBR2+NwU9GvqiIp/ZJi3pSsDnMmjRKc/3a3UlPV+M4kXMvLjYMDIvk6s8bplp71TrVJTR1EFUgVXKN4T6vUEIoEt5SnGB2EwK8i/UzfKPdT7/e1l99snGxN5KrYi7BnVktLdkELXPtsDn6svBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HedFkaSI; arc=none smtp.client-ip=209.85.215.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-7eb0bc007edso1914412a12.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Nov 2024 23:28:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732001282; x=1732606082; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=NBeJh21HJZOCDVfM7Nr1yowrhAnMZKyjCkeStKypIic=;
-        b=HedFkaSIOznIDrnDWkucAcxpzNALwA7jAwx7c7i6qrIASsjdiBKfX2BZvpR5uvmd7r
-         n6PYw5HMU9s0NyFdalLIUuhq/+pAWDgfIbWD8O88QA5iWv5U1yfuIls/qS/n9YE/txFA
-         3sF7icwe4yugrmRJrmgTjXB0lgZpVDiVHryJCwL0PJF/VDRuEcDH5sDqbV04+9fpIuHb
-         CYSeybcxm12lK7YvQaZzCSAz16o77HEum75GLPf0SQ1jjKdWNAoCxRul/i1VOQ2Elk4U
-         FoLajaTxqZ0LvolQYuuqw+sURISAvKESsoOhPB8lKlR2+tO3gutHtFrjKHjpZCt6LylB
-         GkrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732001282; x=1732606082;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NBeJh21HJZOCDVfM7Nr1yowrhAnMZKyjCkeStKypIic=;
-        b=LOj/AP5rTtP5vpBVRdeuF+7buaXg9YRzn7riDxbn4KchO8+4BDHxoNCkmVsCjzwuFB
-         fT3ZuKTc0Se8jdq3igqUrd2okVJi/7CvGmd58u7fu4m4ba6nonzA9BRHLA5fG1LhDajv
-         tHP9/YLrtvh3OLoynPAQqrcaBnsVksNInRiSH7ju2a+LgPFXHSVn/yNTOLQyUa6cyang
-         xNm3AreB2FmvHRMg26xFr80AexZO+4et4dd5XDGf0pv6aFAjozLQqhHzL06uf//1rdav
-         +mLg/bc7caaeECe7jJuXAejiqzwucxWLkbqKtI43BwSbXybzoBTAcI8PFzoWZr36TL7H
-         voew==
-X-Forwarded-Encrypted: i=1; AJvYcCWnvargxzErw2UapTWZNHNbpLisPvVcrxp1o8qcbtQFd1svBKil5ZOnhULeRbFzSLYs0xIlMDzMDtljCZGW@vger.kernel.org
-X-Gm-Message-State: AOJu0YzHBceGeyeG7NYLdeMjlvjvMfnFXesfTllPo6cBDuCg+TcSr7Ep
-	0ZIH7Y8+ddU+i3WiTM6PDBVLLpuLembVj+NV+XeEV4IzgTlIIrW7d6HzDXcqf3U=
-X-Google-Smtp-Source: AGHT+IHJLqekCPLYaEe2knpfsDc5XMeTEXIH1fs/KtZQN/FHVFGvisg2UrHDymaT4m7kHPqSN5aAOA==
-X-Received: by 2002:a05:6a20:9150:b0:1db:d8a5:7c82 with SMTP id adf61e73a8af0-1dc90b09f48mr21189048637.5.1732001282254;
-        Mon, 18 Nov 2024 23:28:02 -0800 (PST)
-Received: from localhost ([122.172.86.146])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7f8c1dc7a3esm7125129a12.76.2024.11.18.23.28.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Nov 2024 23:28:01 -0800 (PST)
-Date: Tue, 19 Nov 2024 12:57:59 +0530
-From: Viresh Kumar <viresh.kumar@linaro.org>
-To: Sibi Sankar <quic_sibis@quicinc.com>
-Cc: sudeep.holla@arm.com, cristian.marussi@arm.com, rafael@kernel.org,
-	morten.rasmussen@arm.com, dietmar.eggemann@arm.com,
-	lukasz.luba@arm.com, pierre.gondois@arm.com,
-	vincent.guittot@linaro.org, linux-arm-kernel@lists.infradead.org,
-	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	quic_mdtipton@quicinc.com, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH V8 1/1] cpufreq: scmi: Register for limit change
- notifications
-Message-ID: <20241119072759.oi75cdqrw4vl4fsc@vireshk-i7>
-References: <20241114022916.644899-1-quic_sibis@quicinc.com>
- <20241114022916.644899-2-quic_sibis@quicinc.com>
+	s=arc-20240116; t=1732003072; c=relaxed/simple;
+	bh=gnQZhYVvdavHNLP+7fclXgbClouzlL7npTK1Sc6tpAs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=d9Z0T1f+dmua9Xl3lAoVty8giSWj+LBjdEx13Xjpnj84LNG1hMiqQKVSu3mXZs23cQIJ4VhseNfzVjsI807yFXzWtARMXVzAcfi7pso5cNS6F2GhdzxEZzCZHmOXZlEwj6s9bVfgAuHuJP7gGAjRHvuVWD+ygCP6FAI2JW0YR+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=DVKKSfVB; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AJ7kjud028423;
+	Tue, 19 Nov 2024 07:57:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	6OTmAHmFVN0NQjzADhz4W6KThxkdI5yUGKV8VNNpV5M=; b=DVKKSfVBfnrEb635
+	dFpePthHC0FjkaZVdeVEoy0HtThmIFmM5wb0QxqRydqzsez8cHKneUI0UOdxdldD
+	irTi53M8duujJ4plIa0u1hWl8Q+tvg+au04xLZFU9+7yTZhWBHB2G23wFzEPRxZn
+	ULIxmksNFrHN6zyx2S6PEvDg4RmWh6/MVJf5vXWDyWV0ychb2lFRrmkUTUfyORBF
+	IcJ+qISNRPViB9ayOEbiorFLWrFcFkwmMZg/1hTKCiK4DWzhmO1PNoc29X1EDYZ1
+	18SsXeJAa1SXJPwUUMZivdcgL1gBhJ4i+fCmqO/1lWJQVmLVouLzLEkC2N+g4R5r
+	zfPEHA==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4308y5su52-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 19 Nov 2024 07:57:30 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AJ7vUJS022829
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 19 Nov 2024 07:57:30 GMT
+Received: from [10.110.70.207] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 18 Nov
+ 2024 23:57:21 -0800
+Message-ID: <5993cade-153e-4b91-9f30-e1690376615f@quicinc.com>
+Date: Tue, 19 Nov 2024 13:27:18 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241114022916.644899-2-quic_sibis@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/5] dt-bindings: thermal: qcom: Add MBG thermal monitor
+ bindings
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Jonathan Cameron <jic23@kernel.org>, Lars-Peter Clausen <lars@metafoo.de>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
+        Amit Kucheria <amitk@kernel.org>,
+        "Thara
+ Gopinath" <thara.gopinath@gmail.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Kamal Wadhwa
+	<quic_kamalw@quicinc.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Jishnu Prakash
+	<quic_jprakash@quicinc.com>,
+        <linux-kernel@vger.kernel.org>, <linux-iio@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, Ajit Pandey
+	<quic_ajipan@quicinc.com>,
+        Imran Shaik <quic_imrashai@quicinc.com>,
+        "Jagadeesh Kona" <quic_jkona@quicinc.com>
+References: <20240712-mbg-tm-support-v1-0-7d78bec920ca@quicinc.com>
+ <20240712-mbg-tm-support-v1-2-7d78bec920ca@quicinc.com>
+ <haqojsbi3ain6rvht5a3ytcmjwq64tswgrpj2azqrztrvlcvag@3u476p7t57dx>
+Content-Language: en-US
+From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+In-Reply-To: <haqojsbi3ain6rvht5a3ytcmjwq64tswgrpj2azqrztrvlcvag@3u476p7t57dx>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: oDsTgUVo3PLgdUW6jynK1gi4Gfm1aRRF
+X-Proofpoint-ORIG-GUID: oDsTgUVo3PLgdUW6jynK1gi4Gfm1aRRF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ bulkscore=0 suspectscore=0 malwarescore=0 mlxscore=0 adultscore=0
+ clxscore=1011 spamscore=0 impostorscore=0 priorityscore=1501
+ mlxlogscore=999 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2409260000 definitions=main-2411190055
 
-On 14-11-24, 07:59, Sibi Sankar wrote:
-> Register for limit change notifications if supported and use the throttled
-> frequency from the notification to apply HW pressure.
-> 
-> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-> Tested-by: Mike Tipton <quic_mdtipton@quicinc.com>
-> Reviewed-by: Cristian Marussi <cristian.marussi@arm.com>
-> Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
-> ---
-> 
-> v8:
-> * Drop patch 1 since it was picked up by Viresh
-> * Leave policy->max update to the cpufreq_qos notifier [Vincent]
-> * We sanitized the range_max from V3 since we dealt with
->   policy->max, now we can drop the check and policy member
->   from scmi_data.
-> 
->  drivers/cpufreq/scmi-cpufreq.c | 45 ++++++++++++++++++++++++++++++++++
->  1 file changed, 45 insertions(+)
 
-Applied. Thanks.
+On 7/13/2024 9:44 PM, Dmitry Baryshkov wrote:
+> On Fri, Jul 12, 2024 at 06:13:29PM GMT, Satya Priya Kakitapalli wrote:
+>> Add bindings support for the MBG Temp alarm peripheral found on
+>> pm8775 pmics.
+>>
+>> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+>> ---
+>>   .../bindings/thermal/qcom-spmi-mbg-tm.yaml         | 63 ++++++++++++++++++++++
+>>   1 file changed, 63 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/thermal/qcom-spmi-mbg-tm.yaml b/Documentation/devicetree/bindings/thermal/qcom-spmi-mbg-tm.yaml
+>> new file mode 100644
+>> index 000000000000..9b6d1bc34a11
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/thermal/qcom-spmi-mbg-tm.yaml
+>> @@ -0,0 +1,63 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/thermal/qcom-spmi-mbg-tm.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm Technologies, Inc. SPMI PMIC MBG Thermal Monitoring
+>> +
+>> +maintainers:
+>> +  - Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+>> +
+>> +description: |
+>> +  Qualcomm's thermal driver for the MBG thermal monitoring device.
+> I was hoping for the binding to tell me, what is MBG. But they don't.
+> Could you please fix that?
 
--- 
-viresh
+
+Sure, I'll add the description and post v2 patches.
+
+
+>> +
+>> +properties:
+>> +  compatible:
+>> +    const: qcom,spmi-mbg-tm
 
