@@ -1,309 +1,187 @@
-Return-Path: <linux-arm-msm+bounces-38315-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38316-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F7599D269A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 14:13:18 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D41BC9D26EF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 14:32:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D5AD52833C5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 13:13:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5D4C31F2425D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 13:32:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E910C1D0164;
-	Tue, 19 Nov 2024 13:10:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 22B464EB38;
+	Tue, 19 Nov 2024 13:32:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UdWlBDvl"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zbjz/CO8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EFDD1CF2B9
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Nov 2024 13:10:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E59761DFE1;
+	Tue, 19 Nov 2024 13:32:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732021846; cv=none; b=Ai4DKRSPDgHOeJzmbUTKIHgOXbAxC37tilVsAbUZ84jzXQEoOlQAThen0hQ4hYlyQpz0ypB0q9J5vBi5ywSi9NFy1G7cj8Cp45ZoT3ox2mvMKi+gqQAa0A4JSjBwpPcPzUjO3+mI8gIgfvx/JZMcOfHatcf0BM7Y7ddHjlM+SRE=
+	t=1732023132; cv=none; b=dzGdpmZLOovmrg+pzKDyPhLX+FbVdyCAW+97PhXR5iaOXqhQVRgFePN6ebA3M8gnvCS3pC+hJYe34L1GBhE1AsjvAyGnUwdro8/LQjPwrnyC2zIHSCf4LDD7tmGiTRftEVY6O6R72x6AYn2wnRDJ9NZmJ2DL5j+WQ9d4/uUF+jY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732021846; c=relaxed/simple;
-	bh=y5qfE/9dZWV3dzmm7Caw3VqmSf3LClqWLiOIbH57cmI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=p9OvzD00VtRjkUxJOZhDo6ElKiV1KsAp1G47wThXOp9Oxn6tnC749kwoTRtMF9v5DWTUAhUvFwoo6hmwgJUJhnimB5sNkcngL3ZSRrc2ORDz8++OPQ+CAb/W06Nf1lxMqHV4T0hIB1gZAVfdjdvm2uJh1FDzn7gOITarO0XrVmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UdWlBDvl; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-43155abaf0bso29837045e9.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Nov 2024 05:10:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732021842; x=1732626642; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=OnE3O1IwTuUTUTLfMtEy4462xEAzxWFWUSMwJbxZYMU=;
-        b=UdWlBDvlNKYXel6zkn1/BuYBa+PchjIT/Cxcc8escC/bYP775XFddLxIDx+chySWeJ
-         n4cnNqYxMCalP3JIFZFoWC0ZN8wfbPhug4H+m0Obyv9OjnIRYkpPcjDrTGcZ3VEwnEpl
-         hjrDSuUnAvzbGDx5daIsgZTyD7q0wDGdtAzFrhF1KAg2ZztDC4iH66Tv6FV6cuZdWrIs
-         s6mo7nB5LyCiGCylVjkZICqyti2J7jMtrcEazilvds8c4B/LUd3mOrSAMseHGOVlxVOk
-         H7f/nTj2C0vIipgwYAIQutVPSV6RYDJV6bz552WfzrMAkZ4zQw1tDQdCiBkI80Nq1N4t
-         kBew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732021842; x=1732626642;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=OnE3O1IwTuUTUTLfMtEy4462xEAzxWFWUSMwJbxZYMU=;
-        b=fJXWWJYvM79wqlD/LI+piu0BYFtWYmzMznYAGIxmrgIk3xN1N0j/7W025kTQwDEUBd
-         kKgIOjKc7qwLuU5sqvKp5MH3QIxjiZrhDuMdaBUe8ozurQpGPtd7MfXubpi39/qkKP8p
-         JIKxn32kiIslPkiGL94D76wI/5LsfnYD6YGzrZa3pmRCAlPgAqRPfH2PimUtPBxiyVlF
-         PtCG6S2njnMR4S5cdlRKafXXzZMOopMWgcOYBR7iceNSbd6CPsNZTS2zQE8g0hpBpFPk
-         qeRMsNoqt1MSk9a27UiJ3AzPfHJK8ZKv82AwGDb21nBtCkAb/0SMGqfnquuGbbF2GpBS
-         WAIQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVzM0YVRiKB2GpYkLsH8xEmBaEE8BPnFFWfnRvymmgWzeMbDU13kHalrTGwwrS6DN/b3uGWr6zEbzgded+J@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzb+On5dwLx4W1tl3eMMgMul3SknPOstLyliYsbaoWubI4sbDi4
-	waK2iQuT71Q2+6K2hss+JWIa+6e9NukJ2OodZRoSFTZ/RR2uF9BdmbiTCO8Bz9A=
-X-Google-Smtp-Source: AGHT+IG9FwUsgTH840ttIs+BRK4SXaoWiDUrS8XGtk7tH2iAYNf+OVc14xK/HA4sJjhRrFua639vqA==
-X-Received: by 2002:a05:600c:468d:b0:431:57e5:b251 with SMTP id 5b1f17b1804b1-432df78f4bemr117749605e9.28.1732021842000;
-        Tue, 19 Nov 2024 05:10:42 -0800 (PST)
-Received: from [127.0.1.1] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432dab76dafsm192016185e9.10.2024.11.19.05.10.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Nov 2024 05:10:41 -0800 (PST)
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Date: Tue, 19 Nov 2024 13:10:35 +0000
-Subject: [PATCH 6/6] arm64: dts: qcom: x1e80100: Add CAMSS block definition
+	s=arc-20240116; t=1732023132; c=relaxed/simple;
+	bh=6ytICKKYqP31T4ieH1gVrmD+P04171RopjljjKeGzEg=;
+	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=saqoAi2uRGYrBq2hxcp/zJLGmSDB9+WvcFTAfQN82Kyg3LnFSoPjnoE9EFZ5JOh/jt1YWLwIBXcpYZGDaz6erK/B7bf87vwRC0VK7qtGpZJob/tCTrdJFnERd3RzbDzuLlEMgO+qvtKwMpiEi8Ko6Y7vs18ZGt79GV7JcJgzppM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Zbjz/CO8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D1A6C4CECF;
+	Tue, 19 Nov 2024 13:32:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1732023131;
+	bh=6ytICKKYqP31T4ieH1gVrmD+P04171RopjljjKeGzEg=;
+	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
+	b=Zbjz/CO8YX81y1wX+hXhU3n19BEpLeIvwllPIbxOGwzkjHTDQOG83+tjkSmbqrius
+	 xSjFi8RDcBdh6tBwdSdbxIxBFlhXu/0yXOr3TEY9CDvymhc0Kk+/CDfXiOC33/8474
+	 sBlSyg6kb02dNLH2G2ZDKdXqw9yb7ydeYyTSdMk59H2wdyRs9y0BRvJkSCQNlB15GK
+	 fD5FLjnVh46rmuIwfuH9LlQL5AaLxFBaD9xepRD7hjLmwshe/0AyiadwoLtARKBgvG
+	 FhK5TZ5tzky0t53n3aFqBAC6hDonGJW7D8JlkuGRfRjLjx8oFs4R3Q6kf/0x15gbqa
+	 gJy/y1FUnGoHQ==
+Date: Tue, 19 Nov 2024 07:32:09 -0600
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241119-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v1-6-54075d75f654@linaro.org>
-References: <20241119-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v1-0-54075d75f654@linaro.org>
-In-Reply-To: <20241119-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v1-0-54075d75f654@linaro.org>
-To: Loic Poulain <loic.poulain@linaro.org>, Robert Foss <rfoss@kernel.org>, 
- Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Todor Tomov <todor.too@gmail.com>, 
- Mauro Carvalho Chehab <mchehab@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, 
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, 
- Jagadeesh Kona <quic_jkona@quicinc.com>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-media@vger.kernel.org, linux-clk@vger.kernel.org, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-X-Mailer: b4 0.15-dev-355e8
+From: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: devicetree@vger.kernel.org, quic_tengfan@quicinc.com, 
+ Konrad Dybcio <konrad.dybcio@example.com>, 
+ Rob Herring <rob.herring@example.com>, linux-kernel@vger.kernel.org, 
+ Conor Dooley <conor.dooley@example.com>, linux-arm-msm@vger.kernel.org, 
+ Bjorn Andersson <bjorn.andersson@example.com>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@example.com>, 
+ quic_shashim@quicinc.com
+To: Pratyush Brahma <quic_pbrahma@quicinc.com>
+In-Reply-To: <20241119092501.31111-1-quic_pbrahma@quicinc.com>
+References: <20241119092501.31111-1-quic_pbrahma@quicinc.com>
+Message-Id: <173202311318.1042362.18237729758130915839.robh@kernel.org>
+Subject: Re: [PATCH] arm64: dts: qcom: qcs9100: Update memory map for
+ QCS9100 Ride and QCS9100 Ride Rev3
 
-Add dtsi to describe the xe180100 CAMSS block
 
-4 x CSIPHY
-2 x CSID
-2 x CSID Lite
-2 x IFE
-2 x IFE Lite
+On Tue, 19 Nov 2024 14:55:01 +0530, Pratyush Brahma wrote:
+> This patch series is based on Tengfei Fan's patches [1] which adds support
+> for QCS9100 Ride and QCS9100 Ride Rev3 boards.
+> 
+> Some new carveouts (viz. gunyah_md and a few pil dtb carveouts) have been
+> introduced and the size and base addresses have been updated for
+> a few of existing carveouts compared to SA8775P. Also, tz_ffi_mem carveout
+> and its corresponding scm reference has been removed as it is not required
+> for these boards. Incorporate these changes in the updated memory map
+> for QCS9100 Ride and QCS9100 Rev3 boards.
+> 
+> [1] https://lore.kernel.org/all/20240911-add_qcs9100_support-v2-4-e43a71ceb017@quicinc.com/
+> 
+> Signed-off-by: Pratyush Brahma <quic_pbrahma@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/qcs9100-ride-r3.dts | 100 +++++++++++++++++++
+>  arch/arm64/boot/dts/qcom/qcs9100-ride.dts    |  99 ++++++++++++++++++
+>  2 files changed, 199 insertions(+)
+> 
 
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- arch/arm64/boot/dts/qcom/x1e80100.dtsi | 180 +++++++++++++++++++++++++++++++++
- 1 file changed, 180 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-index c19754fdc7e0fa4f674ce19f813db77fe2615cf3..f23352493cb270c0fdc3c42add032286601db1e9 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-@@ -4730,6 +4730,186 @@ cci1_i2c1: i2c-bus@1 {
- 			};
- 		};
- 
-+		camss: camss@ac62000 {
-+			compatible = "qcom,x1e80100-camss";
-+
-+			reg = <0 0x0acb7000 0 0x2000>,
-+			      <0 0x0acb9000 0 0x2000>,
-+			      <0 0x0acbb000 0 0x2000>,
-+			      <0 0x0acb6000 0 0x1000>,
-+			      <0 0x0ace4000 0 0x1000>,
-+			      <0 0x0ace6000 0 0x1000>,
-+			      <0 0x0ace8000 0 0x1000>,
-+			      <0 0x0acec000 0 0x4000>,
-+			      <0 0x0acc7000 0 0x2000>,
-+			      <0 0x0accb000 0 0x2000>,
-+			      <0 0x0ac62000 0 0x2a00>,
-+			      <0 0x0ac71000 0 0x2a00>;
-+
-+			reg-names = "csid0",
-+				    "csid1",
-+				    "csid2",
-+				    "csid_wrapper",
-+				    "csiphy0",
-+				    "csiphy1",
-+				    "csiphy2",
-+				    "csiphy4",
-+				    "vfe_lite0",
-+				    "vfe_lite1",
-+				    "vfe0",
-+				    "vfe1";
-+
-+			interrupts = <GIC_SPI 464 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 466 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 431 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 468 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 359 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 477 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 478 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 479 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 122 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 465 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 467 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 469 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 360 IRQ_TYPE_LEVEL_HIGH>;
-+
-+			interrupt-names = "csid0",
-+					  "csid1",
-+					  "csid2",
-+					  "csid_lite0",
-+					  "csid_lite1",
-+					  "csiphy0",
-+					  "csiphy1",
-+					  "csiphy2",
-+					  "csiphy4",
-+					  "vfe0",
-+					  "vfe1",
-+					  "vfe_lite0",
-+					  "vfe_lite1";
-+
-+			power-domains = <&camcc CAM_CC_IFE_0_GDSC>,
-+					<&camcc CAM_CC_IFE_1_GDSC>,
-+					<&camcc CAM_CC_TITAN_TOP_GDSC>;
-+
-+			power-domain-names = "ife0",
-+					     "ife1",
-+					     "top";
-+
-+			clocks = <&camcc CAM_CC_CAMNOC_AXI_RT_CLK>,
-+				 <&camcc CAM_CC_CAMNOC_AXI_NRT_CLK>,
-+				 <&camcc CAM_CC_CORE_AHB_CLK>,
-+				 <&camcc CAM_CC_CPAS_AHB_CLK>,
-+				 <&camcc CAM_CC_CPAS_FAST_AHB_CLK>,
-+				 <&camcc CAM_CC_CPAS_IFE_0_CLK>,
-+				 <&camcc CAM_CC_CPAS_IFE_1_CLK>,
-+				 <&camcc CAM_CC_CPAS_IFE_LITE_CLK>,
-+				 <&camcc CAM_CC_CPHY_RX_CLK_SRC>,
-+				 <&camcc CAM_CC_CSID_CLK>,
-+				 <&camcc CAM_CC_CSID_CSIPHY_RX_CLK>,
-+				 <&camcc CAM_CC_CSIPHY0_CLK>,
-+				 <&camcc CAM_CC_CSI0PHYTIMER_CLK>,
-+				 <&camcc CAM_CC_CSIPHY1_CLK>,
-+				 <&camcc CAM_CC_CSI1PHYTIMER_CLK>,
-+				 <&camcc CAM_CC_CSIPHY2_CLK>,
-+				 <&camcc CAM_CC_CSI2PHYTIMER_CLK>,
-+				 <&camcc CAM_CC_CSIPHY4_CLK>,
-+				 <&camcc CAM_CC_CSI4PHYTIMER_CLK>,
-+				 <&gcc GCC_CAMERA_HF_AXI_CLK>,
-+				 <&gcc GCC_CAMERA_SF_AXI_CLK>,
-+				 <&camcc CAM_CC_IFE_0_CLK>,
-+				 <&camcc CAM_CC_IFE_0_FAST_AHB_CLK>,
-+				 <&camcc CAM_CC_IFE_1_CLK>,
-+				 <&camcc CAM_CC_IFE_1_FAST_AHB_CLK>,
-+				 <&camcc CAM_CC_IFE_LITE_CLK>,
-+				 <&camcc CAM_CC_IFE_LITE_AHB_CLK>,
-+				 <&camcc CAM_CC_IFE_LITE_CPHY_RX_CLK>,
-+				 <&camcc CAM_CC_IFE_LITE_CSID_CLK>;
-+
-+			clock-names = "camnoc_rt_axi",
-+				      "camnoc_nrt_axi",
-+				      "core_ahb",
-+				      "cpas_ahb",
-+				      "cpas_fast_ahb",
-+				      "cpas_vfe0",
-+				      "cpas_vfe1",
-+				      "cpas_vfe_lite",
-+				      "cphy_rx_clk_src",
-+				      "csid",
-+				      "csid_csiphy_rx",
-+				      "csiphy0",
-+				      "csiphy0_timer",
-+				      "csiphy1",
-+				      "csiphy1_timer",
-+				      "csiphy2",
-+				      "csiphy2_timer",
-+				      "csiphy4",
-+				      "csiphy4_timer",
-+				      "gcc_axi_hf",
-+				      "gcc_axi_sf",
-+				      "vfe0",
-+				      "vfe0_fast_ahb",
-+				      "vfe1",
-+				      "vfe1_fast_ahb",
-+				      "vfe_lite",
-+				      "vfe_lite_ahb",
-+				      "vfe_lite_cphy_rx",
-+				      "vfe_lite_csid";
-+
-+			iommus = <&apps_smmu 0x800 0x60>,
-+				 <&apps_smmu 0x820 0x60>,
-+				 <&apps_smmu 0x840 0x60>,
-+				 <&apps_smmu 0x860 0x60>,
-+				 <&apps_smmu 0x1800 0x60>,
-+				 <&apps_smmu 0x1820 0x60>,
-+				 <&apps_smmu 0x1840 0x60>,
-+				 <&apps_smmu 0x1860 0x60>,
-+				 <&apps_smmu 0x18a0 0x00>,
-+				 <&apps_smmu 0x18e0 0x00>,
-+				 <&apps_smmu 0x1900 0x00>,
-+				 <&apps_smmu 0x1980 0x20>,
-+				 <&apps_smmu 0x19a0 0x20>;
-+
-+			interconnects = <&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_CAMERA_CFG 0>,
-+					<&mmss_noc MASTER_CAMNOC_HF 0 &mc_virt SLAVE_EBI1 0>,
-+					<&mmss_noc MASTER_CAMNOC_SF 0 &mc_virt SLAVE_EBI1 0>,
-+					<&mmss_noc MASTER_CAMNOC_ICP 0 &mc_virt SLAVE_EBI1 0>;
-+			interconnect-names = "cam_ahb",
-+					     "cam_hf_mnoc",
-+					     "cam_sf_mnoc",
-+					     "cam_sf_icp_mnoc";
-+
-+			status = "disabled";
-+
-+			ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+				};
-+
-+				port@1 {
-+					reg = <1>;
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+				};
-+
-+				port@2 {
-+					reg = <2>;
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+				};
-+
-+				port@3 {
-+					reg = <3>;
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+				};
-+			};
-+		};
-+
- 		camcc: clock-controller@ade0000 {
- 			compatible = "qcom,x1e80100-camcc";
- 			reg = <0 0x0ade0000 0 0x20000>;
+My bot found new DTB warnings on the .dts files added or changed in this
+series.
 
--- 
-2.45.2
+Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
+are fixed by another series. Ultimately, it is up to the platform
+maintainer whether these warnings are acceptable or not. No need to reply
+unless the platform maintainer has comments.
+
+If you already ran DT checks and didn't see these error(s), then
+make sure dt-schema is up to date:
+
+  pip3 install dtschema --upgrade
+
+
+New warnings running 'make CHECK_DTBS=y qcom/qcs9100-ride-r3.dtb qcom/qcs9100-ride.dtb' for 20241119092501.31111-1-quic_pbrahma@quicinc.com:
+
+arch/arm64/boot/dts/qcom/qcs9100-ride.dtb: qcom,gpi-dma@800000: $nodename:0: 'qcom,gpi-dma@800000' does not match '^dma-controller(@.*)?$'
+	from schema $id: http://devicetree.org/schemas/dma/qcom,gpi.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride-r3.dtb: qcom,gpi-dma@800000: $nodename:0: 'qcom,gpi-dma@800000' does not match '^dma-controller(@.*)?$'
+	from schema $id: http://devicetree.org/schemas/dma/qcom,gpi.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride.dtb: bluetooth: 'vddwlcx-supply' is a required property
+	from schema $id: http://devicetree.org/schemas/net/bluetooth/qualcomm-bluetooth.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride.dtb: bluetooth: 'vddwlmx-supply' is a required property
+	from schema $id: http://devicetree.org/schemas/net/bluetooth/qualcomm-bluetooth.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride.dtb: bluetooth: 'vddrfa1p8-supply' is a required property
+	from schema $id: http://devicetree.org/schemas/net/bluetooth/qualcomm-bluetooth.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride-r3.dtb: bluetooth: 'vddwlcx-supply' is a required property
+	from schema $id: http://devicetree.org/schemas/net/bluetooth/qualcomm-bluetooth.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride-r3.dtb: bluetooth: 'vddwlmx-supply' is a required property
+	from schema $id: http://devicetree.org/schemas/net/bluetooth/qualcomm-bluetooth.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride-r3.dtb: bluetooth: 'vddrfa1p8-supply' is a required property
+	from schema $id: http://devicetree.org/schemas/net/bluetooth/qualcomm-bluetooth.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride.dtb: qcom,gpi-dma@900000: $nodename:0: 'qcom,gpi-dma@900000' does not match '^dma-controller(@.*)?$'
+	from schema $id: http://devicetree.org/schemas/dma/qcom,gpi.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride-r3.dtb: qcom,gpi-dma@900000: $nodename:0: 'qcom,gpi-dma@900000' does not match '^dma-controller(@.*)?$'
+	from schema $id: http://devicetree.org/schemas/dma/qcom,gpi.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride.dtb: qcom,gpi-dma@a00000: $nodename:0: 'qcom,gpi-dma@a00000' does not match '^dma-controller(@.*)?$'
+	from schema $id: http://devicetree.org/schemas/dma/qcom,gpi.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride-r3.dtb: qcom,gpi-dma@a00000: $nodename:0: 'qcom,gpi-dma@a00000' does not match '^dma-controller(@.*)?$'
+	from schema $id: http://devicetree.org/schemas/dma/qcom,gpi.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride.dtb: qcom,gpi-dma@b00000: $nodename:0: 'qcom,gpi-dma@b00000' does not match '^dma-controller(@.*)?$'
+	from schema $id: http://devicetree.org/schemas/dma/qcom,gpi.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride-r3.dtb: qcom,gpi-dma@b00000: $nodename:0: 'qcom,gpi-dma@b00000' does not match '^dma-controller(@.*)?$'
+	from schema $id: http://devicetree.org/schemas/dma/qcom,gpi.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride.dtb: crypto@1dfa000: compatible: 'oneOf' conditional failed, one must be fixed:
+	['qcom,sa8775p-qce', 'qcom,qce'] is too long
+	['qcom,sa8775p-qce', 'qcom,qce'] is too short
+	'qcom,crypto-v5.1' was expected
+	'qcom,crypto-v5.4' was expected
+	'qcom,sa8775p-qce' is not one of ['qcom,ipq4019-qce', 'qcom,sm8150-qce']
+	'qcom,sa8775p-qce' is not one of ['qcom,ipq6018-qce', 'qcom,ipq8074-qce', 'qcom,ipq9574-qce', 'qcom,msm8996-qce', 'qcom,qcm2290-qce', 'qcom,sdm845-qce', 'qcom,sm6115-qce']
+	'qcom,ipq4019-qce' was expected
+	'qcom,sm8150-qce' was expected
+	from schema $id: http://devicetree.org/schemas/crypto/qcom-qce.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride-r3.dtb: crypto@1dfa000: compatible: 'oneOf' conditional failed, one must be fixed:
+	['qcom,sa8775p-qce', 'qcom,qce'] is too long
+	['qcom,sa8775p-qce', 'qcom,qce'] is too short
+	'qcom,crypto-v5.1' was expected
+	'qcom,crypto-v5.4' was expected
+	'qcom,sa8775p-qce' is not one of ['qcom,ipq4019-qce', 'qcom,sm8150-qce']
+	'qcom,sa8775p-qce' is not one of ['qcom,ipq6018-qce', 'qcom,ipq8074-qce', 'qcom,ipq9574-qce', 'qcom,msm8996-qce', 'qcom,qcm2290-qce', 'qcom,sdm845-qce', 'qcom,sm6115-qce']
+	'qcom,ipq4019-qce' was expected
+	'qcom,sm8150-qce' was expected
+	from schema $id: http://devicetree.org/schemas/crypto/qcom-qce.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride.dtb: rsc@18200000: 'power-domains' is a required property
+	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,rpmh-rsc.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride-r3.dtb: rsc@18200000: 'power-domains' is a required property
+	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,rpmh-rsc.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride.dtb: ethernet@23000000: tx-queues-config: 'snps,tx-sched-sp' does not match any of the regexes: '^queue[0-9]$', 'pinctrl-[0-9]+'
+	from schema $id: http://devicetree.org/schemas/net/qcom,ethqos.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride.dtb: ethernet@23000000: Unevaluated properties are not allowed ('interconnect-names', 'interconnects', 'phy-handle', 'phy-mode', 'power-domains', 'rx-fifo-depth', 'rx-queues-config', 'snps,mtl-rx-config', 'snps,mtl-tx-config', 'snps,pbl', 'snps,ps-speed', 'snps,tso', 'tx-fifo-depth', 'tx-queues-config' were unexpected)
+	from schema $id: http://devicetree.org/schemas/net/qcom,ethqos.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride-r3.dtb: ethernet@23000000: tx-queues-config: 'snps,tx-sched-sp' does not match any of the regexes: '^queue[0-9]$', 'pinctrl-[0-9]+'
+	from schema $id: http://devicetree.org/schemas/net/qcom,ethqos.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride-r3.dtb: ethernet@23000000: Unevaluated properties are not allowed ('interconnect-names', 'interconnects', 'phy-handle', 'phy-mode', 'power-domains', 'rx-fifo-depth', 'rx-queues-config', 'snps,mtl-rx-config', 'snps,mtl-tx-config', 'snps,pbl', 'snps,ps-speed', 'snps,tso', 'tx-fifo-depth', 'tx-queues-config' were unexpected)
+	from schema $id: http://devicetree.org/schemas/net/qcom,ethqos.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride.dtb: ethernet@23040000: tx-queues-config: 'snps,tx-sched-sp' does not match any of the regexes: '^queue[0-9]$', 'pinctrl-[0-9]+'
+	from schema $id: http://devicetree.org/schemas/net/qcom,ethqos.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride.dtb: ethernet@23040000: Unevaluated properties are not allowed ('interconnect-names', 'interconnects', 'mdio', 'phy-handle', 'phy-mode', 'power-domains', 'rx-fifo-depth', 'rx-queues-config', 'snps,mtl-rx-config', 'snps,mtl-tx-config', 'snps,pbl', 'snps,ps-speed', 'snps,tso', 'tx-fifo-depth', 'tx-queues-config' were unexpected)
+	from schema $id: http://devicetree.org/schemas/net/qcom,ethqos.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride-r3.dtb: ethernet@23040000: tx-queues-config: 'snps,tx-sched-sp' does not match any of the regexes: '^queue[0-9]$', 'pinctrl-[0-9]+'
+	from schema $id: http://devicetree.org/schemas/net/qcom,ethqos.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride-r3.dtb: ethernet@23040000: Unevaluated properties are not allowed ('interconnect-names', 'interconnects', 'mdio', 'phy-handle', 'phy-mode', 'power-domains', 'rx-fifo-depth', 'rx-queues-config', 'snps,mtl-rx-config', 'snps,mtl-tx-config', 'snps,pbl', 'snps,ps-speed', 'snps,tso', 'tx-fifo-depth', 'tx-queues-config' were unexpected)
+	from schema $id: http://devicetree.org/schemas/net/qcom,ethqos.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride.dtb: wcn6855-pmu: 'vddpmumx-supply' is a required property
+	from schema $id: http://devicetree.org/schemas/regulator/qcom,qca6390-pmu.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride.dtb: wcn6855-pmu: 'vddpmucx-supply' is a required property
+	from schema $id: http://devicetree.org/schemas/regulator/qcom,qca6390-pmu.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride-r3.dtb: wcn6855-pmu: 'vddpmumx-supply' is a required property
+	from schema $id: http://devicetree.org/schemas/regulator/qcom,qca6390-pmu.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride-r3.dtb: wcn6855-pmu: 'vddpmucx-supply' is a required property
+	from schema $id: http://devicetree.org/schemas/regulator/qcom,qca6390-pmu.yaml#
+
+
+
+
 
 
