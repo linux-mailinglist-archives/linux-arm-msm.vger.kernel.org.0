@@ -1,213 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-38319-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38320-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 248729D2831
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 15:31:10 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id B03B39D284D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 15:36:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AC6251F21699
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 14:31:09 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D50B0B2FAEA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 14:34:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9DA7B1CC164;
-	Tue, 19 Nov 2024 14:31:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8DC631CF296;
+	Tue, 19 Nov 2024 14:33:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kBPZx9wl"
+	dkim=fail reason="key not found in DNS" (0-bit key) header.d=lausen.nl header.i=@lausen.nl header.b="empPKh6+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mailgate02.uberspace.is (mailgate02.uberspace.is [185.26.156.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C82EE56A;
-	Tue, 19 Nov 2024 14:31:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F1AC1CEE94
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Nov 2024 14:33:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.26.156.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732026664; cv=none; b=NY4I76wkW3jPOQ3yjRLNb2krAHrCu82A8SSCJMKjN8BCPr26+sOpfMMiyk0y3fTfgAzCcmUhgwRKM1rdY+QsCB/TNiFGG29c2h8SisnRJdMsIUfDm7mtL89I3T/bjnnreCF3TOf0xjighDoeyl7j7oyUhcpLgFmkkBej+iVdVWQ=
+	t=1732026821; cv=none; b=ru3jrlOuBD1kacPwUqigZ9T0DewXmOYvLjjGL10X8UF3xIyezYe3LhIrPU9/vUJg5IxVJKMFK+AYHq0/Ycb7Ahr1p4syVX5hyOdbSIc+jdpxGJPShvaQDA2VoiwMhmjvLOdySygQ2GvqxT2t1k6mmNB1eEzdJ0dJrr6bfzKdsrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732026664; c=relaxed/simple;
-	bh=19chT3VK5iUOy0Ed4mobVGVETZcuXaPQI0WZCJfbcQ8=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=X2Dp5VTtk1SjAdAu7OdUyH8+EZbwt/4OQYm+PQkIvZwCMyLbKZBrBz3lsjcQFePqF8ABFDfrJhdOEKSuRlUhkRVN0EQtpVH5KxZztcEViXMqYKyBfu+Tk8ESmVdn+y/jI3lkF+CEOYbHqe74LyTYHjxmz6wGTEjZJYQDD1wh++U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=kBPZx9wl; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AJ7CRqW027076;
-	Tue, 19 Nov 2024 14:30:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=E1kCAu+pULAojbnh8MS7CwsULAt3cJ+Tvm2
-	EnuFeRfQ=; b=kBPZx9wl0Hw2MWyt/Cz3cNioL+xLh+Uyjzxp2lQerQiesqW3CYu
-	tIM+Ebvi8wA3kVIk3ERN040xk6KKKLenmZLUdJeCJh64b0VEJhWW02V4cB9o3XwV
-	JFIyj/oSPMzNI2hd/cDHtsAnA7Mz1vqSwZ5xO8kw00sg0MpO2h4BuS3B610mh15u
-	c9EMQ+V0yWmsp+YRW1JZlsHzI7rSqB/2ZpwJakSTfDQq4xTHKuElU6x56gaEZl31
-	YIiSPvfqKs1hV0URbo7jyRRoRzhW/fMD5zu/ih/EJikbyy7ozKscR4+krQjhEz7u
-	Se9hUhDyLjlyOQ8NwPVP8SOSQCg7Lh/CM7A==
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4308y7tth6-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Nov 2024 14:30:56 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 4AJEUrER010746;
-	Tue, 19 Nov 2024 14:30:53 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 42xmfm502c-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Nov 2024 14:30:53 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4AJEUrOp010741;
-	Tue, 19 Nov 2024 14:30:53 GMT
-Received: from hu-maiyas-hyd.qualcomm.com (hu-msavaliy-hyd.qualcomm.com [10.213.110.207])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 4AJEUrWm010739
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Nov 2024 14:30:53 +0000
-Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 429934)
-	id 1B5EA24060; Tue, 19 Nov 2024 20:00:52 +0530 (+0530)
-From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-To: andi.shyti@kernel.org, quic_bjorande@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
-        linux-kernel@vger.kernel.org, --cc=konrad.dybcio@linaro.org,
-        quic_vdadhani@quicinc.com, vkoul@kernel.org
-Cc: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-Subject: [PATCH v3] i2c: i2c-qcom-geni: Serve transfer during early resume stage
-Date: Tue, 19 Nov 2024 20:00:31 +0530
-Message-Id: <20241119143031.3331753-1-quic_msavaliy@quicinc.com>
-X-Mailer: git-send-email 2.25.1
+	s=arc-20240116; t=1732026821; c=relaxed/simple;
+	bh=3eWpa/+18Ue1BMImsmUxMY87oqji2WJD8S5AYWjcUDc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=TGU5GCv0z4NlVgJSO5DbTEZaeOvclvpGf7metEt1G0dv3NHi8fT3h9ubwHB4TypbyAXFqL+dU843MdBt/p1umsJsyl63/iLFd5rFzq9I/Mszb7P+JeVRv2TrOE0b+L3ZR2Jytz9DvzihrnRqJsQURkQdDtzkqz+m0QEZs9ubV9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=lausen.nl; spf=pass smtp.mailfrom=lausen.nl; dkim=fail (0-bit key) header.d=lausen.nl header.i=@lausen.nl header.b=empPKh6+ reason="key not found in DNS"; arc=none smtp.client-ip=185.26.156.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=lausen.nl
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lausen.nl
+Received: from devico.uberspace.de (devico.uberspace.de [185.26.156.185])
+	by mailgate02.uberspace.is (Postfix) with ESMTPS id 2504618048D
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Nov 2024 15:33:31 +0100 (CET)
+Received: (qmail 4871 invoked by uid 990); 19 Nov 2024 14:33:31 -0000
+Authentication-Results: devico.uberspace.de;
+	auth=pass (plain)
+Received: from unknown (HELO unkown) (::1)
+	by devico.uberspace.de (Haraka/3.0.1) with ESMTPSA; Tue, 19 Nov 2024 15:33:30 +0100
+Message-ID: <2138d887-f1bf-424a-b3e5-e827a39cc855@lausen.nl>
+Date: Tue, 19 Nov 2024 09:33:26 -0500
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [v2,1/2] drm/msm/dpu1: don't choke on disabling the writeback
+ connector
+To: Johan Hovold <johan@kernel.org>, =?UTF-8?Q?Gy=C3=B6rgy_Kurucz?=
+ <me@kuruczgy.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Rob Clark <robdclark@gmail.com>
+Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+ linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ Jeykumar Sankaran <jsanka@codeaurora.org>, stable@vger.kernel.org,
+ Abel Vesa <abel.vesa@linaro.org>
+References: <20240802-dpu-fix-wb-v2-1-7eac9eb8e895@linaro.org>
+ <b70a4d1d-f98f-4169-942c-cb9006a42b40@kuruczgy.com>
+ <ZzyYI8KkWK36FfXf@hovoldconsulting.com>
+Content-Language: en-US
+From: Leonard Lausen <leonard@lausen.nl>
+Autocrypt: addr=leonard@lausen.nl; keydata=
+ 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 Sw==
+In-Reply-To: <ZzyYI8KkWK36FfXf@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 1XYFHjsaLiahucoNLglRV-Y8FQPu3Jld
-X-Proofpoint-GUID: 1XYFHjsaLiahucoNLglRV-Y8FQPu3Jld
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
- mlxlogscore=999 clxscore=1015 suspectscore=0 adultscore=0
- priorityscore=1501 phishscore=0 impostorscore=0 bulkscore=0
- lowpriorityscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2409260000 definitions=main-2411190106
+X-Rspamd-Bar: /
+X-Rspamd-Report: BAYES_HAM(-0.305056) XM_UA_NO_VERSION(0.01) MIME_GOOD(-0.1)
+X-Rspamd-Score: -0.395056
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+	d=lausen.nl; s=uberspace;
+	h=from:to:cc:subject:date;
+	bh=3eWpa/+18Ue1BMImsmUxMY87oqji2WJD8S5AYWjcUDc=;
+	b=empPKh6+3nG4JFrzy62dqTO7O4GFygVYRuAglDyo1q1kimjnZ5oyRYPRXcfZrEiZQOrPp9FQbT
+	G/wQEWjRyFu6nddXFCX8v20PwOCMdqRVIHSzTp0PYKi60jR7fT1c4LYczq/uzcD8cBx3jHBms7nf
+	nJfyJ/779pL78g308ZgUe4VTdq9x1qMbTdHLChuD91UYub/0uSNir7RSFzxkdOSj6ve6ADRjlwuA
+	uyvkYBTt1NEKZzHqI3nafK+tnR0ZRX6MHURu68DPoS4OUJdqXPNRINzLoG4b3OWPNqa1qPZTWV1o
+	gS6InHDrrJ4Zf8aa/iQAYmCcLZoS8R8b0RfgDBJd2fHuNd4p9L/iXSvy6GY4laRVv2E+SjEP/H5S
+	wrgwMrx3wScH2bpzenb4MEAJeM5z4RbKts9z437ZlJ7T55NT2nTZNuS94mAA5UwLVZt12coR0ffG
+	aCyC4Ziclj6V4nU/A7+JxzYz03xCl+QNU+OTIhnqOmqyS9acVUPgyNhQiueycTegFIc8BWxHnziC
+	adePTjYZ7RrI/seh2kt+GTIoPZKSjalQs+RNx9AzUZ/LXIaIAbV7iCDJ0NUPZ4NHyx9uEznKOaOr
+	A9uihadXlRAQJHhvQGQoAsApeMQAh1Zu7NUDlR0r5Fluf2IYXujmzGrMAkra4sD1LN7Vd+c03iJ/
+	s=
 
-pm_runtime_get_sync() function fails during PM early resume and returns
--EACCES because runtime PM for the device is disabled at the early stage
-causing i2c transfer to fail. Make changes to serve transfer with forced
-resume.
+Hi Johan,
 
-Few i2c clients like PCI OR touch may request i2c transfers during early
-resume stage. Any i2c client can keep transfer request very early resume
-stage like noirq phase of PM. To serve the transfer, register an interrupt
-with IRQF_EARLY_RESUME and IRQF_NO_SUSPEND flags to avoid timeout of
-transfer when IRQ is not enabled during early stage.
+> I'm seeing the same issue as György on the x1e80100 CRD and Lenovo
+> ThinkPad T14s. Without this patch, the internal display fails to resume
+> properly (switching VT brings it back) and the following errors are
+> logged:
+> 
+> 	[dpu error]connector not connected 3
+> 	[drm:drm_mode_config_helper_resume [drm_kms_helper]] *ERROR* Failed to resume (-22)
+> 
+> I see the same symptoms with Xorg as well as sway.
 
-pm_runtime_get_sync() fails when runtime PM is not enabled, then use
-pm_runtime_force_resume() and serve the transfer.
+The issue of "internal display fails to resume properly (switching VT brings it back)"
+also affects sc7180 platform during some resumes. Do you see the issue consistently
+during every resume?
 
-Co-developed-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
----
+> Can we please get this fixed and backported as soon as possible?
+> 
+> Even if there are further issues with some "Night Light" functionality
+> on one machine, keeping this bug as workaround does not seem warranted
+> given that it breaks basic functionality for users.
 
-Link to V2: https://lore.kernel.org/lkml/202410132233.P25W2vKq-lkp@intel.com/T/
+I suspect this is not about "further issues with some 'Night Light' functionality
+on one machine", but rather a more fundamental issue or race condition in the qcom
+DRM devices stack, that is exposed when applying this patch. With this patch applied
+DRM device state is lost after resume and setting the state is no longer possible.
+Lots of kernel errors are printed if attempting to set DRM state such as the
+Color Transform Matrix, when running a kernel with this patch applied.
+Back in July 2024 I tested this patch on top of 6.9.8 and next-20240709,
+observing below snippet being logged tens of times:
 
- v2 -> v3:
- - Updated exact usecase and scenario in the commit log description.
- - Removed bulleted points from technical description, added details in free flow.
- - Used pm_runtime_force_resume/suspend() instead customized local implementation.
- - Added debug log after pm_runtime_force_suspend().
+[drm:_dpu_rm_check_lm_and_get_connected_blks] [dpu error]failed to get dspp on lm 0
+[drm:_dpu_rm_make_reservation] [dpu error]unable to find appropriate mixers
+[drm:dpu_rm_reserve] [dpu error]failed to reserve hw resources: -119
 
----
-Link to V1: https://patches.linaro.org/project/linux-i2c/patch/20240328123743.1713696-1-quic_msavaliy@quicinc.com/
+Full logs are attached at https://gitlab.freedesktop.org/drm/msm/-/issues/58.
 
- v1 -> v2:
- - Changed gi2c->se.dev to dev during dev_dbg() calls.
- - Addressed review comments from Andi and Bjorn.
- - Returned 0 instead garbage inside geni_i2c_force_resume().
- - Added comments explaining forced resume transfer when runtime PM
-   remains disabled.
----
+> The x1e80100 is the only platform I have access to with a writeback
+> connector, but this regression potentially affects a whole host of older
+> platforms as well.
 
- drivers/i2c/busses/i2c-qcom-geni.c | 43 +++++++++++++++++++++---------
- 1 file changed, 31 insertions(+), 12 deletions(-)
+Have you attempted setting CTM or other DRM state when running with this patch?
 
-diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-index 7a22e1f46e60..4fe5fa4532ca 100644
---- a/drivers/i2c/busses/i2c-qcom-geni.c
-+++ b/drivers/i2c/busses/i2c-qcom-geni.c
-@@ -695,17 +695,27 @@ static int geni_i2c_xfer(struct i2c_adapter *adap,
- 			 int num)
- {
- 	struct geni_i2c_dev *gi2c = i2c_get_adapdata(adap);
-+	struct device *dev = gi2c->se.dev;
- 	int ret;
- 
- 	gi2c->err = 0;
- 	reinit_completion(&gi2c->done);
--	ret = pm_runtime_get_sync(gi2c->se.dev);
--	if (ret < 0) {
--		dev_err(gi2c->se.dev, "error turning SE resources:%d\n", ret);
--		pm_runtime_put_noidle(gi2c->se.dev);
--		/* Set device in suspended since resume failed */
--		pm_runtime_set_suspended(gi2c->se.dev);
--		return ret;
-+	/* Serve I2C transfer by forced resume if Runtime PM is enbled or not */
-+	if (!pm_runtime_enabled(dev) && gi2c->suspended) {
-+		dev_dbg(dev, "Runtime PM is disabled hence force resume, pm_usage_count: %d\n",
-+			atomic_read(&dev->power.usage_count));
-+		ret = pm_runtime_force_resume(dev);
-+		if (ret)
-+			return ret;
-+	} else {
-+		ret = pm_runtime_get_sync(gi2c->se.dev);
-+		if (ret < 0) {
-+			dev_err(gi2c->se.dev, "error turning SE resources:%d\n", ret);
-+			pm_runtime_put_noidle(gi2c->se.dev);
-+			/* Set device in suspended since resume failed */
-+			pm_runtime_set_suspended(gi2c->se.dev);
-+			return ret;
-+		}
- 	}
- 
- 	qcom_geni_i2c_conf(gi2c);
-@@ -715,8 +725,18 @@ static int geni_i2c_xfer(struct i2c_adapter *adap,
- 	else
- 		ret = geni_i2c_fifo_xfer(gi2c, msgs, num);
- 
--	pm_runtime_mark_last_busy(gi2c->se.dev);
--	pm_runtime_put_autosuspend(gi2c->se.dev);
-+	/* if Runtime PM is disabled, do force_suspend() else autosuspend the driver */
-+	if (!pm_runtime_enabled(dev) && !gi2c->suspended) {
-+		ret = pm_runtime_force_suspend(dev);
-+		dev_dbg(dev, "Runtime PM is disabled hence force suspend, pm_usage_count: %d\n",
-+			atomic_read(&dev->power.usage_count));
-+		if (ret)
-+			return ret;
-+	} else {
-+		pm_runtime_mark_last_busy(gi2c->se.dev);
-+		pm_runtime_put_autosuspend(gi2c->se.dev);
-+	}
-+
- 	gi2c->cur = NULL;
- 	gi2c->err = 0;
- 	return ret;
-@@ -833,9 +853,8 @@ static int geni_i2c_probe(struct platform_device *pdev)
- 	init_completion(&gi2c->done);
- 	spin_lock_init(&gi2c->lock);
- 	platform_set_drvdata(pdev, gi2c);
--
--	/* Keep interrupts disabled initially to allow for low-power modes */
--	ret = devm_request_irq(dev, gi2c->irq, geni_i2c_irq, IRQF_NO_AUTOEN,
-+	ret = devm_request_irq(dev, gi2c->irq, geni_i2c_irq,
-+			       IRQF_NO_AUTOEN | IRQF_EARLY_RESUME | IRQF_NO_SUSPEND,
- 			       dev_name(dev), gi2c);
- 	if (ret) {
- 		dev_err(dev, "Request_irq failed:%d: err:%d\n",
--- 
-2.25.1
-
+Best regards
+Leonard
 
