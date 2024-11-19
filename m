@@ -1,175 +1,303 @@
-Return-Path: <linux-arm-msm+bounces-38285-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38286-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id BCD709D213C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 09:07:04 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A63C49D216D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 09:17:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7E2DD282370
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 08:07:03 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0A01AB20366
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 08:17:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B650157A67;
-	Tue, 19 Nov 2024 08:06:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D34BB19067C;
+	Tue, 19 Nov 2024 08:17:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bvPBy+y7"
+	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="hBsfJ3fk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9064A7F460;
-	Tue, 19 Nov 2024 08:06:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACB7E1A28C
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Nov 2024 08:17:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732003619; cv=none; b=C/pWvyrhdZVdf90q1p9YB20rqU4CxgxBSNHgE65LlzIWRW2JvTorxKrGTbnIM9Xj1SFWXVIeCrtNBcgGd9a8kLjoO3HEBENEK8RR/cdhXP+ZrMlVH5E5Yo+Z2FrNp1/q58tAu1f/fsqIgCMKCUeKgOXa+6cNJ4Mo9xUJ2j/frDk=
+	t=1732004234; cv=none; b=XnzQPV17LEiAZSzMCw8bQBQE9LDYDfg7CuWEDL5PiBx/RHOWGji9IHraAFXRbLGA20hf6MRSIzew1oBkjhZkQMinGrINaPaJe9gtgdnnIPft2Gkzys6orPYQgxRZ5ECbi07RSnOjOrMa/3ZtnIeO466L1q4YmyDCiUCNo5BCmn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732003619; c=relaxed/simple;
-	bh=wFlxyr540sGw+qiwLK6g9rlU4lxJjv8L3+0y5sLyvXA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Hr/kGVU+34Xh2YpHNRh/tAmNyoKgVDd7yNHnUTAlLkNwVRaek7joPvOSM1uw0hg9KpbdNpDzjFB8WvQTACWe5GXzUHznINrbv6CykWq1et6ok1cfI6n8HsFGUgbolZ9/vfSKSM2AuhOsZCpxPdTM/hdM8PwAPp+X2pIV7Fv5NAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bvPBy+y7; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AJ7w5X2010987;
-	Tue, 19 Nov 2024 08:06:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	flrVsdi8JSfLXAcBm5qGsvDyGvzhN1gEh+kKt4mGOMg=; b=bvPBy+y7QD6BUdYk
-	dD5ClKBv3woo47o+4nhlygleIasAha5edU4SHt2+2v4BO+5TwtHf9qWm2NubzLCU
-	qYfaGEXW+6oPTBh7K7QZInqkbYuGCk3wIRJE0VlbQFuGuhTNz5PVo/iMXYGXZ1vk
-	CibArbNEujbZAmMnCw4HLgShbs2Q8cQodJp/FhzbcaeoaUdJdnt0QxTEZUII/9oo
-	mj8SP0xtjmMpUiZau556J+I5XABjhZVTAYXU2+hEq+J/XcE+BTTNWzBWjEGXxfPZ
-	+akc8dynTy8hbQYk73VzAftq92IOi7RYZcysrHiPSQOGwq7FnDdgtdsjoWIH3Y8v
-	D5QZYA==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43091m9utf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Nov 2024 08:06:38 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AJ86bvB001214
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Nov 2024 08:06:37 GMT
-Received: from [10.110.70.207] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 19 Nov
- 2024 00:06:29 -0800
-Message-ID: <54c3fdd2-f701-4a06-bb3f-41f5a431687a@quicinc.com>
-Date: Tue, 19 Nov 2024 13:36:25 +0530
+	s=arc-20240116; t=1732004234; c=relaxed/simple;
+	bh=BnCPo5Jv3ffjYxxYM7XQApvz+ShJZ5fwcjW9lNQ732I=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=L81bj4prLNjoZxNlb7AA2CPpJ0gCmBFV0f/SWOpwpM7mwYIT4StbtkTp+zhMN9rF953MaFjO+oPlWEhbVcDD0NNek5Ja4s9HG1QtQ1Tq/a3cEs+yRvJfQGFpYhEUevi6fM8WJol32SZYrZLV0uD6VeErRuhH9Gr+I6K3A7CjSvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=hBsfJ3fk; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-432d9bb168cso29023875e9.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Nov 2024 00:17:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1732004230; x=1732609030; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=rfRPeJv9b+5MklHMVSrCiVgH+hmaDNicfWnfjxpRi08=;
+        b=hBsfJ3fkcRev0UBJAESJpGI1GExIH+pLIpoftUVNorahap0tUiY+OifB5+VwG9/xAM
+         DMhZ6NiqkvcnBeyffDttRmd+r5hdwYTqzpkdjoOMZeKqXdC0Dae1OY016yF4k44scINM
+         Ax48Tv710mM90gIYebKuUxnhZbWhDGX0+IHRuKuTnc/ACIcqrQ9a0Pjd/kJxrPoYCcnf
+         j2t4c2c7a0feRi8XQbn5FAe2Sm7awxcnvC3G5vnbFVLB8fqzG6Je9YK64+hgL49WvK/a
+         gzxIU3BFA8mZWfuc+sdHDobwC0TKayZQbVzJ32RNVwCs1xo7r863ui8d4m04QJLji86l
+         WuQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732004230; x=1732609030;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rfRPeJv9b+5MklHMVSrCiVgH+hmaDNicfWnfjxpRi08=;
+        b=NtNaZbS5gfvTPOJoj99+bCTooxsSSccWsIiOrflAFj6q3drvTDyCRjzks3o/tKR1Q8
+         R1etHSVvbc4LLbw+bjrHjUS9iKY69WFIrCOlJB7G1TI7QXalTR4P9Yphi7A8J6VjNnEr
+         eOokTCwXVCSkFh0D/rioLxgy5rp4bUosRbYInITgKMQT9iqWy5zwka3gjAsbzXzdKdgN
+         IrrQDJGy5H7EnFk3/W6yn2VAFxgpGuqGnxjtok3s/RtqYVusGHo3dn3LkBKbYn2Tw1sR
+         uHGM+zrfmbf8IH/5YyAdjHks42X6eMKwnV0zbJnPv6pRe9SbuHvm0x5Kc3A6eqT9FORT
+         6IAQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVZMyqkE+WqJ2gsDMePEvxXWlCa2tGP3oksAK/LrYZsbVnEwDLrFKddkaTHlYP4c+wk3XWLuzErithBKie1@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyr5vJ8veAk+v3eXZbkQtVT+LnRwYnyRfqZYU6TiWE+hwxw/Cxl
+	zzsPT2x1K+c23usdubnGnqZbCNv35Tojp0UTPRQGK3kEorjBrifzd08kQni/i0A=
+X-Google-Smtp-Source: AGHT+IE8UC5xo/EXauIpi30O/6QpEs3dvAFOyd1qOQ9SCqrRP4JGzhvWxQ0rNGF/bwnRQGTw1YZ6JQ==
+X-Received: by 2002:a5d:6d82:0:b0:382:484d:45da with SMTP id ffacd0b85a97d-3824cb30e81mr1673211f8f.6.1732004228585;
+        Tue, 19 Nov 2024 00:17:08 -0800 (PST)
+Received: from localhost ([2a02:8071:b783:6940:9b70:ed4b:d274:54e5])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38244220183sm6495288f8f.99.2024.11.19.00.17.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 Nov 2024 00:17:08 -0800 (PST)
+From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+To: Jassi Brar <jassisinghbrar@gmail.com>
+Cc: Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Chen-Yu Tsai <wens@csie.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Samuel Holland <samuel@sholland.org>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Michal Simek <michal.simek@amd.com>,
+	linux-kernel@vger.kernel.org,
+	imx@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-sunxi@lists.linux.dev,
+	linux-tegra@vger.kernel.org
+Subject: [PATCH] mailbox: Switch back to struct platform_driver::remove()
+Date: Tue, 19 Nov 2024 09:16:51 +0100
+Message-ID:  <6f0297ba884c670d604232c2861347940082c8e6.1732004078.git.u.kleine-koenig@baylibre.com>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/5] Add support for MBG Thermal monitoring device
-To: <neil.armstrong@linaro.org>, Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano
-	<daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>, Lukasz Luba
-	<lukasz.luba@arm.com>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath
-	<thara.gopinath@gmail.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Konrad
- Dybcio" <konrad.dybcio@linaro.org>
-CC: Kamal Wadhwa <quic_kamalw@quicinc.com>,
-        Taniya Das
-	<quic_tdas@quicinc.com>,
-        Jishnu Prakash <quic_jprakash@quicinc.com>,
-        <linux-kernel@vger.kernel.org>, <linux-iio@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, Ajit Pandey <quic_ajipan@quicinc.com>,
-        "Imran
- Shaik" <quic_imrashai@quicinc.com>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>
-References: <20240712-mbg-tm-support-v1-0-7d78bec920ca@quicinc.com>
- <306baccf-0106-4253-b6b1-72eaee9c5911@linaro.org>
-Content-Language: en-US
-From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-In-Reply-To: <306baccf-0106-4253-b6b1-72eaee9c5911@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset=UTF-8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=7380; i=u.kleine-koenig@baylibre.com; h=from:subject:message-id; bh=BnCPo5Jv3ffjYxxYM7XQApvz+ShJZ5fwcjW9lNQ732I=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBnPEl0l82yWH4cD9PUDIPfKIE/RnbW2FKHwIBNo NRXP1KykqyJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZzxJdAAKCRCPgPtYfRL+ ToaTCACO97vvz1RQ3OfeVhaCoF9jIByuwurbxrlo/e4TXGjXh2MD85LTlsW7X/pdlEpXrP7LStP rubeC1o9FEsFEJDpzNVhMoNb2mBLHniaqeivaaIITO1C7iOgf/7l6bUdNF6szQsgsyIOa7eK+h4 6Evgz1M3LBYLhtZcwyCg8pysblUX/f+7Bpgdzo1ijgQjhinFHE0K8ep6xD7n3F0gZTUEt/9QWEa fgoFuQD5sY05UOOOvRjFNRAkpP+8qV6HYJ8eSFoFVoVvAsSuYcnfHR1oaeC82Zdgm4c4nHE4sye cAgefJza5W4P8GCaVvE9A7L2tHfGs7DQoQm1AUVXBMxOcDDU
+X-Developer-Key: i=u.kleine-koenig@baylibre.com; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: oWyolHT_JibPcMiY8cJfcQPfyNeAXljK
-X-Proofpoint-GUID: oWyolHT_JibPcMiY8cJfcQPfyNeAXljK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- impostorscore=0 spamscore=0 priorityscore=1501 phishscore=0 malwarescore=0
- clxscore=1011 bulkscore=0 mlxlogscore=999 lowpriorityscore=0 adultscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411190056
 
+After commit 0edb555a65d1 ("platform: Make platform_driver::remove()
+return void") .remove() is (again) the right callback to implement for
+platform drivers.
 
-On 7/12/2024 8:09 PM, neil.armstrong@linaro.org wrote:
-> Hi,
->
-> On 12/07/2024 14:43, Satya Priya Kakitapalli wrote:
->> Add bindings, driver and DT for the Qualcomm's MBG thermal
->> monitoring device.
->>
->> Please note that this series is dependent on [1] which adds
->> ADC5-GEN3 support.
->>
->> [1] 
->> https://lore.kernel.org/linux-iio/20231231171237.3322376-1-quic_jprakash@quicinc.com/
->
-> Since this dependency was sent almost 7 months ago, and had plenty of 
-> changes requests,
-> this patchset should've been either delayed until a proper support of 
-> ADC5-GEN3
-> was accepted or marked as RFC.
->
+Convert all platform drivers below drivers/mailbox to use .remove(),
+with the eventual goal to drop struct platform_driver::remove_new(). As
+.remove() and .remove_new() have the same prototypes, conversion is done
+by just changing the structure member name in the driver initializer.
 
-Sure, I'll re-base my patches on the recently posted version of 
-ADC5-GEN3 patches and post my V2 as RFC.
+Make a few indentions consistent while touching these struct
+initializers.
 
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+---
+Hello,
 
->>
->> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
->> ---
->> Satya Priya Kakitapalli (5):
->>        dt-bindings: iio: adc: Add ADC5 GEN3 Channel info for pm8775 PMIC
->>        dt-bindings: thermal: qcom: Add MBG thermal monitor bindings
->>        thermal: qcom: Add support for MBG Temp monitor
->>        ARM: dts: qcom: Add vadc support for pm8775 pmic on SA8775P
->>        ARM: dts: qcom: Add support for MBG TM for pm8775 on SA8775P
->
-> Those should be: "arm64: dts: qcom: sa8775p-pmics: ..."
->
+I did a single patch for all of drivers/mailbox. While I usually prefer
+to do one logical change per patch, this seems to be overengineering
+here as the individual changes are really trivial and shouldn't be much
+in the way for stable backports. But I'll happily split the patch if you
+prefer it split.
 
-Okay.
+This is based on today's next, if conflicts arise when you apply it at
+some later time and don't want to resolve them, feel free to just drop
+the changes to the conflicting files. I'll notice and followup at a
+later time then. Or ask me for a fixed resend.
 
+Best regards
+Uwe
 
->>
->>   .../bindings/thermal/qcom-spmi-mbg-tm.yaml         |  63 +++++
->>   arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi        | 210 
->> ++++++++++++++++
->>   drivers/thermal/qcom/Kconfig                       |  11 +
->>   drivers/thermal/qcom/Makefile                      |   1 +
->>   drivers/thermal/qcom/qcom-spmi-mbg-tm.c            | 269 
->> +++++++++++++++++++++
->>   .../iio/adc/qcom,spmi-adc5-gen3-pm8775.h           |  42 ++++
->>   6 files changed, 596 insertions(+)
->> ---
->> base-commit: c27723304c1f6af79f7bece5edacace6a8d46167
->> change-id: 20240627-mbg-tm-support-7bbf25c246e1
->>
->> Best regards,
->
-> Neil
->
+ drivers/mailbox/bcm-flexrm-mailbox.c    | 2 +-
+ drivers/mailbox/bcm-pdc-mailbox.c       | 2 +-
+ drivers/mailbox/imx-mailbox.c           | 2 +-
+ drivers/mailbox/mailbox-test.c          | 4 ++--
+ drivers/mailbox/mtk-cmdq-mailbox.c      | 2 +-
+ drivers/mailbox/qcom-apcs-ipc-mailbox.c | 2 +-
+ drivers/mailbox/qcom-ipcc.c             | 2 +-
+ drivers/mailbox/stm32-ipcc.c            | 2 +-
+ drivers/mailbox/sun6i-msgbox.c          | 4 ++--
+ drivers/mailbox/tegra-hsp.c             | 2 +-
+ drivers/mailbox/zynqmp-ipi-mailbox.c    | 2 +-
+ 11 files changed, 13 insertions(+), 13 deletions(-)
+
+diff --git a/drivers/mailbox/bcm-flexrm-mailbox.c b/drivers/mailbox/bcm-flexrm-mailbox.c
+index b1abc2a0c971..41f79e51d9e5 100644
+--- a/drivers/mailbox/bcm-flexrm-mailbox.c
++++ b/drivers/mailbox/bcm-flexrm-mailbox.c
+@@ -1675,7 +1675,7 @@ static struct platform_driver flexrm_mbox_driver = {
+ 		.of_match_table = flexrm_mbox_of_match,
+ 	},
+ 	.probe		= flexrm_mbox_probe,
+-	.remove_new	= flexrm_mbox_remove,
++	.remove		= flexrm_mbox_remove,
+ };
+ module_platform_driver(flexrm_mbox_driver);
+ 
+diff --git a/drivers/mailbox/bcm-pdc-mailbox.c b/drivers/mailbox/bcm-pdc-mailbox.c
+index a873672a9082..406bc41cba60 100644
+--- a/drivers/mailbox/bcm-pdc-mailbox.c
++++ b/drivers/mailbox/bcm-pdc-mailbox.c
+@@ -1618,7 +1618,7 @@ static void pdc_remove(struct platform_device *pdev)
+ 
+ static struct platform_driver pdc_mbox_driver = {
+ 	.probe = pdc_probe,
+-	.remove_new = pdc_remove,
++	.remove = pdc_remove,
+ 	.driver = {
+ 		   .name = "brcm-iproc-pdc-mbox",
+ 		   .of_match_table = pdc_mbox_of_match,
+diff --git a/drivers/mailbox/imx-mailbox.c b/drivers/mailbox/imx-mailbox.c
+index f815dab3be50..9889e4d0d9da 100644
+--- a/drivers/mailbox/imx-mailbox.c
++++ b/drivers/mailbox/imx-mailbox.c
+@@ -1120,7 +1120,7 @@ static const struct dev_pm_ops imx_mu_pm_ops = {
+ 
+ static struct platform_driver imx_mu_driver = {
+ 	.probe		= imx_mu_probe,
+-	.remove_new	= imx_mu_remove,
++	.remove		= imx_mu_remove,
+ 	.driver = {
+ 		.name	= "imx_mu",
+ 		.of_match_table = imx_mu_dt_ids,
+diff --git a/drivers/mailbox/mailbox-test.c b/drivers/mailbox/mailbox-test.c
+index 3386b4e72551..c9dd8c42c0cd 100644
+--- a/drivers/mailbox/mailbox-test.c
++++ b/drivers/mailbox/mailbox-test.c
+@@ -441,8 +441,8 @@ static struct platform_driver mbox_test_driver = {
+ 		.name = "mailbox_test",
+ 		.of_match_table = mbox_test_match,
+ 	},
+-	.probe  = mbox_test_probe,
+-	.remove_new = mbox_test_remove,
++	.probe = mbox_test_probe,
++	.remove = mbox_test_remove,
+ };
+ module_platform_driver(mbox_test_driver);
+ 
+diff --git a/drivers/mailbox/mtk-cmdq-mailbox.c b/drivers/mailbox/mtk-cmdq-mailbox.c
+index 4bff73532085..bac5b8eaa665 100644
+--- a/drivers/mailbox/mtk-cmdq-mailbox.c
++++ b/drivers/mailbox/mtk-cmdq-mailbox.c
+@@ -796,7 +796,7 @@ MODULE_DEVICE_TABLE(of, cmdq_of_ids);
+ 
+ static struct platform_driver cmdq_drv = {
+ 	.probe = cmdq_probe,
+-	.remove_new = cmdq_remove,
++	.remove = cmdq_remove,
+ 	.driver = {
+ 		.name = "mtk_cmdq",
+ 		.pm = &cmdq_pm_ops,
+diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+index 7d91e7c016ba..f0d1fc0fb9ff 100644
+--- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
++++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+@@ -167,7 +167,7 @@ MODULE_DEVICE_TABLE(of, qcom_apcs_ipc_of_match);
+ 
+ static struct platform_driver qcom_apcs_ipc_driver = {
+ 	.probe = qcom_apcs_ipc_probe,
+-	.remove_new = qcom_apcs_ipc_remove,
++	.remove = qcom_apcs_ipc_remove,
+ 	.driver = {
+ 		.name = "qcom_apcs_ipc",
+ 		.of_match_table = qcom_apcs_ipc_of_match,
+diff --git a/drivers/mailbox/qcom-ipcc.c b/drivers/mailbox/qcom-ipcc.c
+index d537cc9c4d4b..14c7907c6632 100644
+--- a/drivers/mailbox/qcom-ipcc.c
++++ b/drivers/mailbox/qcom-ipcc.c
+@@ -346,7 +346,7 @@ static const struct dev_pm_ops qcom_ipcc_dev_pm_ops = {
+ 
+ static struct platform_driver qcom_ipcc_driver = {
+ 	.probe = qcom_ipcc_probe,
+-	.remove_new = qcom_ipcc_remove,
++	.remove = qcom_ipcc_remove,
+ 	.driver = {
+ 		.name = "qcom-ipcc",
+ 		.of_match_table = qcom_ipcc_of_match,
+diff --git a/drivers/mailbox/stm32-ipcc.c b/drivers/mailbox/stm32-ipcc.c
+index 1442f275782b..4f63f1a14ca6 100644
+--- a/drivers/mailbox/stm32-ipcc.c
++++ b/drivers/mailbox/stm32-ipcc.c
+@@ -379,7 +379,7 @@ static struct platform_driver stm32_ipcc_driver = {
+ 		.of_match_table = stm32_ipcc_of_match,
+ 	},
+ 	.probe		= stm32_ipcc_probe,
+-	.remove_new	= stm32_ipcc_remove,
++	.remove		= stm32_ipcc_remove,
+ };
+ 
+ module_platform_driver(stm32_ipcc_driver);
+diff --git a/drivers/mailbox/sun6i-msgbox.c b/drivers/mailbox/sun6i-msgbox.c
+index 3dcc54dc83b2..6ba6920f4645 100644
+--- a/drivers/mailbox/sun6i-msgbox.c
++++ b/drivers/mailbox/sun6i-msgbox.c
+@@ -307,8 +307,8 @@ static struct platform_driver sun6i_msgbox_driver = {
+ 		.name = "sun6i-msgbox",
+ 		.of_match_table = sun6i_msgbox_of_match,
+ 	},
+-	.probe  = sun6i_msgbox_probe,
+-	.remove_new = sun6i_msgbox_remove,
++	.probe = sun6i_msgbox_probe,
++	.remove = sun6i_msgbox_remove,
+ };
+ module_platform_driver(sun6i_msgbox_driver);
+ 
+diff --git a/drivers/mailbox/tegra-hsp.c b/drivers/mailbox/tegra-hsp.c
+index 19ef56cbcfd3..8d5e2d7dc03b 100644
+--- a/drivers/mailbox/tegra-hsp.c
++++ b/drivers/mailbox/tegra-hsp.c
+@@ -951,7 +951,7 @@ static struct platform_driver tegra_hsp_driver = {
+ 		.pm = &tegra_hsp_pm_ops,
+ 	},
+ 	.probe = tegra_hsp_probe,
+-	.remove_new = tegra_hsp_remove,
++	.remove = tegra_hsp_remove,
+ };
+ 
+ static int __init tegra_hsp_init(void)
+diff --git a/drivers/mailbox/zynqmp-ipi-mailbox.c b/drivers/mailbox/zynqmp-ipi-mailbox.c
+index 521d08b9ab47..91365acd334d 100644
+--- a/drivers/mailbox/zynqmp-ipi-mailbox.c
++++ b/drivers/mailbox/zynqmp-ipi-mailbox.c
+@@ -1015,7 +1015,7 @@ MODULE_DEVICE_TABLE(of, zynqmp_ipi_of_match);
+ 
+ static struct platform_driver zynqmp_ipi_driver = {
+ 	.probe = zynqmp_ipi_probe,
+-	.remove_new = zynqmp_ipi_remove,
++	.remove = zynqmp_ipi_remove,
+ 	.driver = {
+ 		   .name = "zynqmp-ipi",
+ 		   .of_match_table = of_match_ptr(zynqmp_ipi_of_match),
+
+base-commit: 414c97c966b69e4a6ea7b32970fa166b2f9b9ef0
+-- 
+2.45.2
+
 
