@@ -1,213 +1,273 @@
-Return-Path: <linux-arm-msm+bounces-38393-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38394-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A1A8D9D2D6A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 19:01:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C2B729D2DEC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 19:29:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 62BF1283602
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 18:01:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 83A5F28407F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 18:29:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED2211DC185;
-	Tue, 19 Nov 2024 17:57:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87B631D26EE;
+	Tue, 19 Nov 2024 18:29:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="q6xG3nad"
+	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="Xq7txC//"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FC721D9598
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Nov 2024 17:57:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4357C1D1F73
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Nov 2024 18:29:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732039022; cv=none; b=LavE3GZVv1ZnsyLFvhe3GgPMVPAVXZFoaFieMSzKzlmgR+XGF+GKOsrWVF+YU7vwcsMUW+fI8RMedGvs8Km2WU5+RrmPGemrJrFZcJVd1LB4Xk2c3/7RWanjsCbxR1nA6NfU311fMEHylchDKYRc2an9chuDy0CKuITw7xM5MUs=
+	t=1732040948; cv=none; b=Bhkh80WXRvXa405gPxvt3BWOvEmqUCGsiNDgdvSVzxIXQcwFOS9Lkjz461d9t7xrDLaBK02CgKYwkkpejPWy9Ap9AShWh4XiuKD+yFQqZLysmpnOEBIcnMCHFIxeC+6UftjKWMCrk/IuDyH8+q8lzjnKelCyZkLQAyoHD9uN0pM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732039022; c=relaxed/simple;
-	bh=kMBG33vo/TOc40mVibFxMI9MiLmVj3cBO8HFx/GtxHk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=YQLJ7n0xtY6l7pvpjN3CFRytHIKSZNGGgkn3vyfweMPSxG46zBYoNdvt+ELZ8YhDg6NQrvJDW6lMF4FOgW6Ai1OLX2RE1GNi5eZJuEiJYDiGjepNh+Zrf2lVgLSrF5592LOkO90XblbKFndsqEYtjvG87ltel3WvJ/8BHqwA1RQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=q6xG3nad; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-431548bd1b4so30755495e9.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Nov 2024 09:57:00 -0800 (PST)
+	s=arc-20240116; t=1732040948; c=relaxed/simple;
+	bh=7EkmoYAIwgLMOya3DiDGaKKRi9eJcRdqgo7aEZsiTP4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=mmfcKxWvtvTMIleU6htW9Ii1pNtM4L2+EzRubUGnRhBaFed7nceDJCW39aHx8fWxPvc6Nx0ZsKC5JKqTpspe/pjVpQfaq7C3cLpVM5aRLNIv3QcoPmQFz12qi7CCKlzogEDnYJ3m/xktPsYfHydQHuDskJWmF/VJJ85YBUZArW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=Xq7txC//; arc=none smtp.client-ip=209.85.221.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3824a8a5c56so1347519f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Nov 2024 10:29:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732039018; x=1732643818; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=gHpOD3kUgP0NZgNkpxEn7+M6CVhgca5HnhadSgnc1wM=;
-        b=q6xG3nadyd5V+SEMvb4T3EEI6lXl7JmViz1HK2dPPkDTSMPX1yh+wwHHmcfs4sX1ga
-         ravHF4jAYoVnFsGfw19Lg3MKHDZpu0wWQoNrV0/ples/GxdHplyAEwkemDUugkqGpJ38
-         Ufo9k6gJ7LWtonagMMxdtDQmn0JO6EYRwctTtM3dbzSP/pQ5ovJB/qPcg4Wbcqja72Gy
-         CJyyxXE43k7aZFEMIe8tXUBEroCEc01MvV3dRNuPlfaRhQpJtCZKHtao0+Dv6jvq1IY7
-         GCrfBJDJ1DUapaXb/HM+sAKNhttp2tmOPOlrV4/BVGvBPiJxqwVKH6vy100AAiyuTkct
-         nu4w==
+        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1732040943; x=1732645743; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=TjjEcmv2liyk/XEk1ss5lodHgFTZTAwHIgNTYP/SyTw=;
+        b=Xq7txC//hrlB38W1B3QVYa30x6KnEZzMV7r07Pw6nVuQ5Ee5K3Uctfaush223LfmCI
+         xnNEEhKE5OTxlZumHK3qIPi0xZJVdShgGtpr7S9IC1B+QGu1OzLo2RyAQHx7x3KugJvr
+         ccJ7HWSguPHuwjB18Rwtpew8SlsiTmaKIljWRpuIz70LWIarZtobVYF9oFwtmMqVxuNU
+         X3BZRBM1jTHzUX8ABaNZuCmRvTahrTg1mFa55ZmNMbkonkNMkxtN6pvE4DAyZB0MiEJE
+         2Lt/HlnTIM99ZlWUrV1giQb88Atuq30xFkeWY/4OPKLRNqU95/0JoPn6LVMVqlDuxWNj
+         L2vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732039018; x=1732643818;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gHpOD3kUgP0NZgNkpxEn7+M6CVhgca5HnhadSgnc1wM=;
-        b=APreIBB+PoIAG1hsuRXU09pXpKpzIzhXICXPvnhH+y5h4QQ4P9IpJbfwVQBIj2I/1T
-         Nhszm8FVWcOAseeH/k71p9CWMQfY2mHIXvAvh8IysNmCiwE3DMWhv/5MuY+4DoQ++NuJ
-         XfP28euA8fupxIfa6NxGothfa82VxUyOky+WtsosAl7pby0dX8gReThPClhpFHo4/c/j
-         h6YNQkVEbGOmizBy20z89UTGeIx/YwBwzSwrBWdcoJQ5AQFmGPlwiGB4rIQ+hI3osI/x
-         RwqkJnvK+YkTMZNIJfrTOKarQDu1KZVzTevRAH3ivDECo70vo4Vs0dHjq5gxlXMrIyen
-         +zww==
-X-Forwarded-Encrypted: i=1; AJvYcCWDDWqelQvvcO5xbMtMu8Ho/b//b6kLtm+nqyCKWZiWmm62MRdIKMKHl6pZ17M8fFHLCHKItJcYXteu2sZR@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxj7RKDtfmzJ4jCPSv4rAdZX8EdcrF/OqMD6t5OD9dkLLutzWvT
-	vubNg8oeyw5f4GramqwWs8BQqSz8ANNXTxxrkWVJDctjEJHr6nHT+i6nf/sjhrc=
-X-Google-Smtp-Source: AGHT+IFPDNX6KLXFLn/SU6zrsFO0OInhb1Q9wiuJ7LRR3o8jd+59g6Yz543jn9+v12PfjDHzMkSYog==
-X-Received: by 2002:a05:600c:3111:b0:431:5c7b:e937 with SMTP id 5b1f17b1804b1-432df74c8bdmr168114705e9.17.1732039018583;
-        Tue, 19 Nov 2024 09:56:58 -0800 (PST)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432da27fe68sm208302275e9.24.2024.11.19.09.56.57
+        d=1e100.net; s=20230601; t=1732040943; x=1732645743;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=TjjEcmv2liyk/XEk1ss5lodHgFTZTAwHIgNTYP/SyTw=;
+        b=PBNbD+8twmM0uD4tfOWWTWfY2qj62dlwEwp+UE921ggcR5BnoD3UnylnUpLGMfMwWW
+         d5+m4FdZ8cyvTttDb9NPVDwJ1Xhyyt9lt0HHPgLbKd5fwoNqY1UlOjvZZYnlbQwIR9CY
+         ARBEPygTz4sw4pXgbcGcmiHlES6Xrluo04GKpOAAY92rWNAC8eh5KUCRLII44Q3zyX6O
+         hsg2Ro7kPR6iMaAsftB+v8lHWxTGvWd2LOV0SYcp3UfLXA0V5QyeA3214oYPyU+wxtEw
+         khGq8N2KV2MZZilAFvnwj2v0g2QtyPwDSBg0CWTO9LcN6UjdK11e89aI0rJKKDZSkGgL
+         Ex0g==
+X-Forwarded-Encrypted: i=1; AJvYcCUD6TvCjRyzW+i/CImHyDDPCSUv2ykGRcwXGNWEUyEEC/ky2ySNNKQTLV5wJI2OHhbdcLUauITSb9fo9/Tt@vger.kernel.org
+X-Gm-Message-State: AOJu0YzfBqCzMWxRZGgQemwDvBGElq9ixob2WW5gXDjwa5qBD9dBK272
+	RLOe0g9qzmLK08GRHbiejYTA2KJd3xAkFuBzdwV/z7qk2fKPu7ZksJgR5uUHV8I=
+X-Google-Smtp-Source: AGHT+IFnY/REEdmz7YD1WEr3CSS+CDWUtex9JzX1ZdzW4zdq0+PcYDiFyHyYLuR7W7cpAOYMYdli5w==
+X-Received: by 2002:a5d:6c62:0:b0:382:40cc:5057 with SMTP id ffacd0b85a97d-38240cc530dmr8023061f8f.8.1732040943004;
+        Tue, 19 Nov 2024 10:29:03 -0800 (PST)
+Received: from localhost (p509159f1.dip0.t-ipconnect.de. [80.145.89.241])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38244220183sm7893379f8f.99.2024.11.19.10.29.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Nov 2024 09:56:58 -0800 (PST)
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Tue, 19 Nov 2024 18:56:46 +0100
-Subject: [PATCH v2 11/11] arm64: qcom: dts: sm8650: add interconnect and
- opp-peak-kBps for GPU
+        Tue, 19 Nov 2024 10:29:02 -0800 (PST)
+From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+To: "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Cc: Pedro Sousa <pedrom.sousa@synopsys.com>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Peter Griffin <peter.griffin@linaro.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Peter Wang <peter.wang@mediatek.com>,
+	Stanley Jhu <chu.stanley@gmail.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Orson Zhai <orsonzhai@gmail.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Chunyan Zhang <zhang.lyra@gmail.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Andrew Halaney <ahalaney@redhat.com>,
+	Nitin Rawat <quic_nitirawa@quicinc.com>,
+	Can Guo <quic_cang@quicinc.com>,
+	linux-scsi@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-samsung-soc@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org
+Subject: [PATCH] scsi: ufs: Switch back to struct platform_driver::remove()
+Date: Tue, 19 Nov 2024 19:28:56 +0100
+Message-ID: <20241119182856.55743-2-u.kleine-koenig@baylibre.com>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241119-topic-sm8x50-gpu-bw-vote-v2-11-4deb87be2498@linaro.org>
-References: <20241119-topic-sm8x50-gpu-bw-vote-v2-0-4deb87be2498@linaro.org>
-In-Reply-To: <20241119-topic-sm8x50-gpu-bw-vote-v2-0-4deb87be2498@linaro.org>
-To: Akhil P Oommen <quic_akhilpo@quicinc.com>, 
- Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>, 
- Stephen Boyd <sboyd@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
- Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: Connor Abbott <cwabbott0@gmail.com>, linux-pm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
- devicetree@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2636;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=kMBG33vo/TOc40mVibFxMI9MiLmVj3cBO8HFx/GtxHk=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBnPNFbEK25BwtwTu1JMvsqoiBYwcvGuuHxuWkwKltH
- JiltqguJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZzzRWwAKCRB33NvayMhJ0SqJD/
- 9i9oT1zcWnuyY+2ojc3JgiG8RZ8/za1lypAPHpIoWVyEqom9FIhYIr5FQhaBl8JzvTyLgD5dWllI46
- xxzzMukeW1ktiB/KPRpfA/qz1LbqwExPkNQVl8ruAMbqBYXAUVPHxmlYxEkD0WuUga+D/CX9Xik71k
- EENR+lA4BtGV7oMNCM1bQ1ov1HNA2p3jmOY7Km2JYzI0lzXkuwskSHjiN1B6wDVtQgdBfU2SJK2gTS
- mxXzExfxB9VsQDtMgcy9ejIRVoidE9NeFJUYAbTflhXprqiPS08t6S6FoVv6lIA/l6cQPprydHYCGL
- Jj7gxQv6t1+boECssBZUnNCqepbKsacMzl+b4KJ8RPrOaE9xJMvVMIwvJWlBhyzSqCVCBVEU3dGnzk
- O/bOXlwFhF4bWgUR+Qu/VTw7QvCQ6JGkY66Mn9mp2Vyx646XSu/L/tCYvP5j70I8k7gg2RlPJKjSWq
- 4U0AX/V3yGRATzqzGJMvvWraXnglSRW0OVivH9GCNMsGpbdpz5oUWi3KOyHyE+l2p6anawxBOGxx2J
- ZhkTaJCDFFiNapDGgPEpDSsj+j0KXa3TIR/G5IL3zC7ZFigY3hFKs0q4+cvAg9LCE106xwAem7Qvd1
- UsfFkATgF/Hg9N4PH2GzIJYmYirtoOjIshEu/UTgSZhQiBWYSMcV0yqVUm3g==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+Content-Type: text/plain; charset=UTF-8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6400; i=u.kleine-koenig@baylibre.com; h=from:subject; bh=7EkmoYAIwgLMOya3DiDGaKKRi9eJcRdqgo7aEZsiTP4=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBnPNjp6LSiAa1I5FOmgMRNs6RRlpfp1I+WXQ5Jy kT+1b+r+OmJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZzzY6QAKCRCPgPtYfRL+ TpXpB/0e48BSclKJNk79t2QAL7ya486g/ZENqVkbV84wvxtryeeYwTupocnq00111eq5K0/DmGn 5N4obnl0Yz0e3KeGMA7JfzxJvPrPYGOGz28YyBN6Sd3hOEd6ySenM2sNKhrDFRa+ryLgbBtM+0r t1goFmLAz1bCbMLKdKob3arBzK0CJUYeBB/jgaipkO2eqyCWlNSt+pteiri4uI2flz9pqWJALQL QXPOzQck5OYwjzyutjQCb/e5xiDGpJriITfqlnsNsdFM2WKgrZ/R+MvqLn6nnyNroBHFtNX80WU 7OIgmZQqPyjlHlnMRJJPpcenrvoEatHfp2PJ/iqzncWGiZ5D
+X-Developer-Key: i=u.kleine-koenig@baylibre.com; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+Content-Transfer-Encoding: 8bit
 
-Each GPU OPP requires a specific peak DDR bandwidth, let's add
-those to each OPP and also the related interconnect path.
+After commit 0edb555a65d1 ("platform: Make platform_driver::remove()
+return void") .remove() is (again) the right callback to implement for
+platform drivers.
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Convert all platform drivers below drivers/ufs to use .remove(), with
+the eventual goal to drop struct platform_driver::remove_new(). As
+.remove() and .remove_new() have the same prototypes, conversion is done
+by just changing the structure member name in the driver initializer.
+
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 ---
- arch/arm64/boot/dts/qcom/sm8650.dtsi | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+Hello,
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-index 01ac3769ffa62ffb83c5c51878e2823e1982eb67..331c5140c16bf013190d6da136c0920009d2646b 100644
---- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-@@ -2636,6 +2636,9 @@ gpu: gpu@3d00000 {
- 			qcom,gmu = <&gmu>;
- 			#cooling-cells = <2>;
- 
-+			interconnects = <&gem_noc MASTER_GFX3D 0 &mc_virt SLAVE_EBI1 0>;
-+			interconnect-names = "gfx-mem";
-+
- 			status = "disabled";
- 
- 			zap-shader {
-@@ -2649,56 +2652,67 @@ gpu_opp_table: opp-table {
- 				opp-231000000 {
- 					opp-hz = /bits/ 64 <231000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS_D2>;
-+					opp-peak-kBps = <2136718>;
- 				};
- 
- 				opp-310000000 {
- 					opp-hz = /bits/ 64 <310000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS_D1>;
-+					opp-peak-kBps = <6074218>;
- 				};
- 
- 				opp-366000000 {
- 					opp-hz = /bits/ 64 <366000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS_D0>;
-+					opp-peak-kBps = <6074218>;
- 				};
- 
- 				opp-422000000 {
- 					opp-hz = /bits/ 64 <422000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
-+					opp-peak-kBps = <8171875>;
- 				};
- 
- 				opp-500000000 {
- 					opp-hz = /bits/ 64 <500000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS_L1>;
-+					opp-peak-kBps = <8171875>;
- 				};
- 
- 				opp-578000000 {
- 					opp-hz = /bits/ 64 <578000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
-+					opp-peak-kBps = <12449218>;
- 				};
- 
- 				opp-629000000 {
- 					opp-hz = /bits/ 64 <629000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L0>;
-+					opp-peak-kBps = <12449218>;
- 				};
- 
- 				opp-680000000 {
- 					opp-hz = /bits/ 64 <680000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
-+					opp-peak-kBps = <16500000>;
- 				};
- 
- 				opp-720000000 {
- 					opp-hz = /bits/ 64 <720000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L2>;
-+					opp-peak-kBps = <16500000>;
- 				};
- 
- 				opp-770000000 {
- 					opp-hz = /bits/ 64 <770000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_NOM>;
-+					opp-peak-kBps = <16500000>;
- 				};
- 
- 				opp-834000000 {
- 					opp-hz = /bits/ 64 <834000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_NOM_L1>;
-+					opp-peak-kBps = <16500000>;
- 				};
- 			};
- 		};
+I did a single patch for all of drivers/ufs. While I usually prefer to
+do one logical change per patch, this seems to be overengineering here
+as the individual changes are really trivial and shouldn't be much in
+the way for stable backports. But I'll happily split the patch if you
+prefer it split. Also if you object the indentation stuff, I can rework
+that.
 
+This is based on today's next, if conflicts arise when you apply it at
+some later time and don't want to resolve them, feel free to just drop
+the changes to the conflicting files. I'll notice and followup at a
+later time then. Or ask me for a fixed resend. (Having said that, I
+recommend b4 am -3 + git am -3 which should resolve most conflicts just
+fine.)
+
+Best regards
+Uwe
+
+ drivers/ufs/host/cdns-pltfrm.c        | 2 +-
+ drivers/ufs/host/tc-dwc-g210-pltfrm.c | 2 +-
+ drivers/ufs/host/ti-j721e-ufs.c       | 2 +-
+ drivers/ufs/host/ufs-exynos.c         | 2 +-
+ drivers/ufs/host/ufs-hisi.c           | 2 +-
+ drivers/ufs/host/ufs-mediatek.c       | 2 +-
+ drivers/ufs/host/ufs-qcom.c           | 2 +-
+ drivers/ufs/host/ufs-renesas.c        | 2 +-
+ drivers/ufs/host/ufs-sprd.c           | 2 +-
+ 9 files changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/drivers/ufs/host/cdns-pltfrm.c b/drivers/ufs/host/cdns-pltfrm.c
+index 66811d8d1929..c80f770a6285 100644
+--- a/drivers/ufs/host/cdns-pltfrm.c
++++ b/drivers/ufs/host/cdns-pltfrm.c
+@@ -321,7 +321,7 @@ static const struct dev_pm_ops cdns_ufs_dev_pm_ops = {
+ 
+ static struct platform_driver cdns_ufs_pltfrm_driver = {
+ 	.probe	= cdns_ufs_pltfrm_probe,
+-	.remove_new = cdns_ufs_pltfrm_remove,
++	.remove = cdns_ufs_pltfrm_remove,
+ 	.driver	= {
+ 		.name   = "cdns-ufshcd",
+ 		.pm     = &cdns_ufs_dev_pm_ops,
+diff --git a/drivers/ufs/host/tc-dwc-g210-pltfrm.c b/drivers/ufs/host/tc-dwc-g210-pltfrm.c
+index a3877592604d..9bfaa36cc898 100644
+--- a/drivers/ufs/host/tc-dwc-g210-pltfrm.c
++++ b/drivers/ufs/host/tc-dwc-g210-pltfrm.c
+@@ -89,7 +89,7 @@ static const struct dev_pm_ops tc_dwc_g210_pltfm_pm_ops = {
+ 
+ static struct platform_driver tc_dwc_g210_pltfm_driver = {
+ 	.probe		= tc_dwc_g210_pltfm_probe,
+-	.remove_new	= tc_dwc_g210_pltfm_remove,
++	.remove		= tc_dwc_g210_pltfm_remove,
+ 	.driver		= {
+ 		.name	= "tc-dwc-g210-pltfm",
+ 		.pm	= &tc_dwc_g210_pltfm_pm_ops,
+diff --git a/drivers/ufs/host/ti-j721e-ufs.c b/drivers/ufs/host/ti-j721e-ufs.c
+index 250c22df000d..21214e5d5896 100644
+--- a/drivers/ufs/host/ti-j721e-ufs.c
++++ b/drivers/ufs/host/ti-j721e-ufs.c
+@@ -83,7 +83,7 @@ MODULE_DEVICE_TABLE(of, ti_j721e_ufs_of_match);
+ 
+ static struct platform_driver ti_j721e_ufs_driver = {
+ 	.probe	= ti_j721e_ufs_probe,
+-	.remove_new = ti_j721e_ufs_remove,
++	.remove = ti_j721e_ufs_remove,
+ 	.driver	= {
+ 		.name   = "ti-j721e-ufs",
+ 		.of_match_table = ti_j721e_ufs_of_match,
+diff --git a/drivers/ufs/host/ufs-exynos.c b/drivers/ufs/host/ufs-exynos.c
+index 6548f7a8562f..c4098011c4b4 100644
+--- a/drivers/ufs/host/ufs-exynos.c
++++ b/drivers/ufs/host/ufs-exynos.c
+@@ -2166,7 +2166,7 @@ static const struct dev_pm_ops exynos_ufs_pm_ops = {
+ 
+ static struct platform_driver exynos_ufs_pltform = {
+ 	.probe	= exynos_ufs_probe,
+-	.remove_new = exynos_ufs_remove,
++	.remove = exynos_ufs_remove,
+ 	.driver	= {
+ 		.name	= "exynos-ufshc",
+ 		.pm	= &exynos_ufs_pm_ops,
+diff --git a/drivers/ufs/host/ufs-hisi.c b/drivers/ufs/host/ufs-hisi.c
+index 5ee73ff05251..494f593702a3 100644
+--- a/drivers/ufs/host/ufs-hisi.c
++++ b/drivers/ufs/host/ufs-hisi.c
+@@ -590,7 +590,7 @@ static const struct dev_pm_ops ufs_hisi_pm_ops = {
+ 
+ static struct platform_driver ufs_hisi_pltform = {
+ 	.probe	= ufs_hisi_probe,
+-	.remove_new = ufs_hisi_remove,
++	.remove = ufs_hisi_remove,
+ 	.driver	= {
+ 		.name	= "ufshcd-hisi",
+ 		.pm	= &ufs_hisi_pm_ops,
+diff --git a/drivers/ufs/host/ufs-mediatek.c b/drivers/ufs/host/ufs-mediatek.c
+index 06ab1e5e8b6f..6fc848d0ada8 100644
+--- a/drivers/ufs/host/ufs-mediatek.c
++++ b/drivers/ufs/host/ufs-mediatek.c
+@@ -1962,7 +1962,7 @@ static const struct dev_pm_ops ufs_mtk_pm_ops = {
+ 
+ static struct platform_driver ufs_mtk_pltform = {
+ 	.probe      = ufs_mtk_probe,
+-	.remove_new = ufs_mtk_remove,
++	.remove = ufs_mtk_remove,
+ 	.driver = {
+ 		.name   = "ufshcd-mtk",
+ 		.pm     = &ufs_mtk_pm_ops,
+diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+index 3b592492e152..d2b8d97b480e 100644
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -1897,7 +1897,7 @@ static const struct dev_pm_ops ufs_qcom_pm_ops = {
+ 
+ static struct platform_driver ufs_qcom_pltform = {
+ 	.probe	= ufs_qcom_probe,
+-	.remove_new = ufs_qcom_remove,
++	.remove = ufs_qcom_remove,
+ 	.driver	= {
+ 		.name	= "ufshcd-qcom",
+ 		.pm	= &ufs_qcom_pm_ops,
+diff --git a/drivers/ufs/host/ufs-renesas.c b/drivers/ufs/host/ufs-renesas.c
+index 3ff97112e1f6..f404019dc5d9 100644
+--- a/drivers/ufs/host/ufs-renesas.c
++++ b/drivers/ufs/host/ufs-renesas.c
+@@ -404,7 +404,7 @@ static void ufs_renesas_remove(struct platform_device *pdev)
+ 
+ static struct platform_driver ufs_renesas_platform = {
+ 	.probe	= ufs_renesas_probe,
+-	.remove_new = ufs_renesas_remove,
++	.remove = ufs_renesas_remove,
+ 	.driver	= {
+ 		.name	= "ufshcd-renesas",
+ 		.of_match_table	= of_match_ptr(ufs_renesas_of_match),
+diff --git a/drivers/ufs/host/ufs-sprd.c b/drivers/ufs/host/ufs-sprd.c
+index d8b165908809..b1ffb9b05fa7 100644
+--- a/drivers/ufs/host/ufs-sprd.c
++++ b/drivers/ufs/host/ufs-sprd.c
+@@ -442,7 +442,7 @@ static const struct dev_pm_ops ufs_sprd_pm_ops = {
+ 
+ static struct platform_driver ufs_sprd_pltform = {
+ 	.probe = ufs_sprd_probe,
+-	.remove_new = ufs_sprd_remove,
++	.remove = ufs_sprd_remove,
+ 	.driver = {
+ 		.name = "ufshcd-sprd",
+ 		.pm = &ufs_sprd_pm_ops,
+
+base-commit: 414c97c966b69e4a6ea7b32970fa166b2f9b9ef0
 -- 
-2.34.1
+2.45.2
 
 
