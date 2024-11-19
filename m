@@ -1,156 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-38293-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38294-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 37E319D2260
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 10:22:04 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id D80EE9D2267
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 10:22:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D95091F228D5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 09:22:03 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 654B4B2213B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 09:22:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A425119C54F;
-	Tue, 19 Nov 2024 09:21:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A1011C07C2;
+	Tue, 19 Nov 2024 09:22:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="a3WAMvMo"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nYatqqQk"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5431146A73;
-	Tue, 19 Nov 2024 09:21:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E2241C07D7;
+	Tue, 19 Nov 2024 09:22:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732008112; cv=none; b=Pe3GIUtYuuznzD0oTsqsU7iHfOQSCnlXNV/PyWbjrNqnC6Adhq3roDJ9pJF+Whsq0cBbq4Gzt8vvl774GUErEHbICKy2iarD5a4xAE8d5kyrDSQwtlDrp9zNHed+XQu2Px1UOu57ollCsLJ319CuI/ULxRwf+BmVZ1tDFHNF9NI=
+	t=1732008147; cv=none; b=U6NYa2+k8eIAMo1F1PFgdTUnVNXxrV3FzRntjFT1JgXThBExKpciDcfyeqkXKxUgRdVvtSClM8/qR1OaIwe9gH/K34bC5OtcmHPr8d3PT8SHgfEKYCJp4QV+QgkihJvXW2QrdQBrg/WKNj4kFk3cXVGSjTLjKlhRi8ZVNBeJSw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732008112; c=relaxed/simple;
-	bh=/6dYCIbOpuB4rP8Dj5usJF6JZAo7w/c9Vw5z1UE4D2M=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QDAvAFQ8ql6/SB+HuDRP9mWFYo/LA08Uwvb0t0ju03qxxO8ExeXP1KwvnfK5J1r+sM6QCKLlKGaZGA4uABpXPovXPO+rwB84hIGH2vWztBCKRi9BoUToTD8QNTEkuk3ILbnerwKKL7Jgrq5Jn2iRnW/YcNQkvHTJppqTDXWatrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=a3WAMvMo; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1732008147; c=relaxed/simple;
+	bh=W0kylkLy4P3MU5Xwb1kcvgvN2vy0PWZo5uTSAP8A9xo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=DSi8VyLpG4pZmSI5QuqGg2qi/ChWAqugdYFY5BTOWxFQdS1xkXQK1oCSiPoZyef/UBZlXufyCszfWxO1p7eCVHOmY6O8pEZXlcxhr0iA4+hJmcg9RB2+7Q3Rb7iFb0TLrC7HLbYelF5RUT8g3QajP5SKAvNaNG9lFipvwCD6tyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nYatqqQk; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AJ7F06h026876;
-	Tue, 19 Nov 2024 09:21:43 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AJ7h2X0031218;
+	Tue, 19 Nov 2024 09:22:23 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	5n4LdU3TE41g83n0rbVywtQ6WAVdeoT/X+RIaV9maaQ=; b=a3WAMvMoUEsIYF1P
-	u3D19XQX/cxY8RbGQXXCksnppz5JsJvV9uk9zoA8/azt8IStCbojT9zO5boBxCtc
-	JWLtU5SwTKE+4PLkcqzrwTPjHuA7+Lg39rwIG8Y0vVrbMIZbrK8I5hBtGg3Nat47
-	n8RWqk/+vfU476PkInnFWZpn66njgc3/OSEcpnu2YkZST7fNOeLDfxlTzSscOwL5
-	12bReI5rA6XbUojo5jIFQm0TR9zsNDYjlZ7toTSdOY+G3m8i9gu3bzz83O1oyqyC
-	T2zRHZ1OVeQuKDLu85zJobr2bzhs3qBv7NqYpL07YFQnPVZZQOrfMYVQ+w/5Htcg
-	j3GmPg==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4308y7t2vp-1
+	8frZC1PrgVzVzBzyMrewfX5KrEeP0IsVOp9VgM6LpQg=; b=nYatqqQkWeU1n6kV
+	xnTRGCCxgT+EEYri1y7D0HsEgVyyx0nVLoUMPtmizUdY/nstFWGo2cIfFebi6eNZ
+	uUTF24pH/IGiqqTJg8E5zq0j7WG4dZz1iGiy3+6hF+LUNHgBfLGGfWU7nd87C7Gz
+	axYicpHIzPQOfeRE41IFuP9rdkdkk9/BevbuqewpKwSVBDOV4nYXCZ5j/2NYG5Mf
+	Z2xB6ZSdF50LIIFv/ZLPZlu+NHHFZSEgPixQt8vZoEAjsGmwklbuHwB0wVOMwGXQ
+	PxoLVov2KHgWcCOwoRR0/FL5ezqkrRUyURoanNnXqezdOfRyi3Z4/sWPzTOYoRvi
+	LnBSNA==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4308y9223g-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Nov 2024 09:21:43 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AJ9LTaX028936
+	Tue, 19 Nov 2024 09:22:23 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AJ9Ltqb029249
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Nov 2024 09:21:29 GMT
-Received: from hu-mdalam-blr.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 19 Nov 2024 01:21:25 -0800
-From: Md Sadre Alam <quic_mdalam@quicinc.com>
-To: <manivannan.sadhasivam@linaro.org>, <miquel.raynal@bootlin.com>,
-        <richard@nod.at>, <vigneshr@ti.com>, <linux-mtd@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-CC: <quic_srichara@quicinc.com>, <quic_nainmeht@quicinc.com>,
-        <quic_laksd@quicinc.com>, <quic_varada@quicinc.com>
-Subject: [PATCH 2/2] mtd: rawnand: qcom: Fix onfi param page read
-Date: Tue, 19 Nov 2024 14:50:58 +0530
-Message-ID: <20241119092058.480363-3-quic_mdalam@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241119092058.480363-1-quic_mdalam@quicinc.com>
-References: <20241119092058.480363-1-quic_mdalam@quicinc.com>
+	Tue, 19 Nov 2024 09:21:55 GMT
+Received: from [10.239.133.118] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 19 Nov
+ 2024 01:21:52 -0800
+Message-ID: <cc57833c-13ca-48ae-a6d9-c7fdc545743f@quicinc.com>
+Date: Tue, 19 Nov 2024 17:21:49 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: Enable Primary USB controller on
+ QCS615 Ride
+To: Krishna Kurapati <quic_kriskura@quicinc.com>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Rob Herring <robh@kernel.org>, Conor Dooley
+	<conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>
+CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <quic_ppratap@quicinc.com>,
+        <quic_jackp@quicinc.com>
+References: <20241119052854.995691-1-quic_kriskura@quicinc.com>
+ <20241119052854.995691-3-quic_kriskura@quicinc.com>
+Content-Language: en-US
+From: Song Xue <quic_songxue@quicinc.com>
+In-Reply-To: <20241119052854.995691-3-quic_kriskura@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 2XijrQ2wGzC3PcOGEb6lF0m9fvjjayQS
-X-Proofpoint-GUID: 2XijrQ2wGzC3PcOGEb6lF0m9fvjjayQS
+X-Proofpoint-GUID: EMgZiG0_qsKh0zFk_r-PedGpzpxFFP1T
+X-Proofpoint-ORIG-GUID: EMgZiG0_qsKh0zFk_r-PedGpzpxFFP1T
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
- mlxlogscore=999 clxscore=1015 suspectscore=0 adultscore=0
- priorityscore=1501 phishscore=0 impostorscore=0 bulkscore=0
- lowpriorityscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2409260000 definitions=main-2411190067
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ mlxlogscore=917 malwarescore=0 mlxscore=0 phishscore=0 bulkscore=0
+ adultscore=0 lowpriorityscore=0 impostorscore=0 spamscore=0 clxscore=1015
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411190067
 
-For QPIC V2 onwards there is a separate register to read
-last code word "QPIC_NAND_READ_LOCATION_LAST_CW_n".
 
-qcom_param_page_type_exec() is used to read only one code word
-If we will configure number of code words to 1 in QPIC_NAND_DEV0_CFG0
-register then QPIC controller thinks its reading the last code word,
-since we are having separate register to read the last code word,
-we have to configure "QPIC_NAND_READ_LOCATION_LAST_CW_n" register
-to fetch data from QPIC buffer to system memory.
 
-Also there is minimum size to fetch the data from device to QPIC buffer
-is 512-bytes. If size is less than 512-bytes the data will not be
-protected by ECC as per QPIC standard. So while reading onfi parameter
-page from NAND device setting nandc->buf_count = 512.
+On 11/19/2024 1:28 PM, Krishna Kurapati wrote:
+> Enable primary USB controller on QCS615 Ride platform. The primary USB
+> controller is made "peripheral", as this is intended to be connected to
+> a host for debugging use cases.
+> 
+> For using the controller in host mode, changing the dr_mode and adding
+> appropriate pinctrl nodes to provide vbus would be sufficient.
+> 
+> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+> ---
+>   arch/arm64/boot/dts/qcom/qcs615-ride.dts | 23 +++++++++++++++++++++++
+>   1 file changed, 23 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/qcs615-ride.dts b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
+> index ee6cab3924a6..b647c87b030b 100644
+> --- a/arch/arm64/boot/dts/qcom/qcs615-ride.dts
+> +++ b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
+> @@ -214,6 +214,29 @@ &uart0 {
+>   	status = "okay";
+>   };
+>   
+> +&usb_1_hsphy {
+> +	vdd-supply = <&vreg_l5a>;
+> +	vdda-pll-supply = <&vreg_l2a>;
+> +	vdda-phy-dpdm-supply = <&vreg_l13a>;
+> +
+> +	status = "okay";
+> +};
+> +
+ From schematic, we need use the "vreg_l12a" for vdda-pll-supply.
 
-Fixes: 89550beb098e ("mtd: rawnand: qcom: Implement exec_op()")
-Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
----
- drivers/mtd/nand/raw/qcom_nandc.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ From bindings, we also can see need 1.8V(VREG_L12A_1P8) not 
+2.9V(VREG_L2A_2P96):
 
-diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
-index 34ee8555fb8a..6487f2126833 100644
---- a/drivers/mtd/nand/raw/qcom_nandc.c
-+++ b/drivers/mtd/nand/raw/qcom_nandc.c
-@@ -2859,7 +2859,12 @@ static int qcom_param_page_type_exec(struct nand_chip *chip,  const struct nand_
- 	const struct nand_op_instr *instr = NULL;
- 	unsigned int op_id = 0;
- 	unsigned int len = 0;
--	int ret;
-+	int ret, reg_base;
-+
-+	reg_base = NAND_READ_LOCATION_0;
-+
-+	if (nandc->props->qpic_v2)
-+		reg_base = NAND_READ_LOCATION_LAST_CW_0;
- 
- 	ret = qcom_parse_instructions(chip, subop, &q_op);
- 	if (ret)
-@@ -2911,14 +2916,17 @@ static int qcom_param_page_type_exec(struct nand_chip *chip,  const struct nand_
- 	op_id = q_op.data_instr_idx;
- 	len = nand_subop_get_data_len(subop, op_id);
- 
--	nandc_set_read_loc(chip, 0, 0, 0, len, 1);
-+	if (nandc->props->qpic_v2)
-+		nandc_set_read_loc_last(chip, reg_base, 0, len, 1);
-+	else
-+		nandc_set_read_loc_first(chip, reg_base, 0, len, 1);
- 
- 	if (!nandc->props->qpic_v2) {
- 		write_reg_dma(nandc, NAND_DEV_CMD_VLD, 1, 0);
- 		write_reg_dma(nandc, NAND_DEV_CMD1, 1, NAND_BAM_NEXT_SGL);
- 	}
- 
--	nandc->buf_count = len;
-+	nandc->buf_count = 512;
- 	memset(nandc->data_buffer, 0xff, nandc->buf_count);
- 
- 	config_nand_single_cw_page_read(chip, false, 0);
--- 
-2.34.1
+62vdda-pll-supply:
+63     description:
+64       Phandle to 1.8V regulator supply to PHY refclk pll block.
 
+> +&usb_qmpphy {
+> +	vdda-phy-supply = <&vreg_l5a>;
+> +	vdda-pll-supply = <&vreg_l12a>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&usb_1 {
+> +	status = "okay";
+> +};
+> +
+> +&usb_1_dwc3 {
+> +	dr_mode = "peripheral";
+> +};
+> +
+>   &watchdog {
+>   	clocks = <&sleep_clk>;
+>   };
+Thanks,
+Song
 
