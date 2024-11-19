@@ -1,63 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-38287-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38288-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 513F19D2204
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 09:59:24 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AA66A9D220D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 10:02:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CEA341F21F73
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 08:59:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6A7CC2837F6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2024 09:02:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0EFA2150981;
-	Tue, 19 Nov 2024 08:59:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A832B19ABC3;
+	Tue, 19 Nov 2024 09:02:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="d7iUJj08"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FcIQMoiY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD7991798C;
-	Tue, 19 Nov 2024 08:59:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68188158D96
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Nov 2024 09:02:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732006761; cv=none; b=Ck+bB41qpIb/uXS1Hxp3RzPoqWfnHXYZfpId+b+2b7AB71HcrUSZb3DopDf6a+16uZXnp89EvmQLt8GprTnTYZuMy2GaZ6HDYnY2QHzMN+qtXvdngVgrCfEUwdvlHiNFzedTn9Vu5B30cBGrHU8yn0Ze+kJavsn2zmR12HNpn4U=
+	t=1732006941; cv=none; b=nlKMdIUel1kQkCkaOu1yL1lImCXfleajwWo9lwnJuPUT3M8Ubg6hJo8piThSKrqAiaMAAneY3QWBx06mYh4hAZviFoUd3/ykLnHUU3Gr55BJ0LqYjlgYLLm6JfPTPEJg3WdWMpcIqysj4KPwWJHCsLEpvu7MbJcU9FIho183/dI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732006761; c=relaxed/simple;
-	bh=JlHQrlbLuIdIqownOM26bRFM+q2r6dW4qRrKda7Lt6Y=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Ga7OymXep99Fwl21+VEFIm3lwhznLSqS/4fBnhcky83jHZqlRj3s4PaiiGWf3TGu4TdoVNxHXo/EgRX7G8iU9SLH/LcxJFCiqsmWSDI0HLSQdbVm7G25fT6oQFjxztH0UJUPFJ3ixhz7Bm6HhPp5srZy0iRROj64ROaXecWokeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=d7iUJj08; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AJ7s0kK028562;
-	Tue, 19 Nov 2024 08:58:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	S4tT+dQuydE90Mbj2ruSwdAj9IcakjnOlQwcK5tQoj4=; b=d7iUJj08tjt5gP5h
-	h5I0Y71YTH8YO6IGYoweO5DXqt2p+H3zqa/7DaLQKULtIZDsxwksG+pAHX/iJEL8
-	W32He4fz+62CuSRv5msqmInDnaTj3GhJbMHBHjBOyrptwqqntYBfZP74+NQhmIXk
-	6RfD6mv7N1/9+MrFHlIz5oNpy9d7FTB9cbGKeI9mkYWbCyCzjCqlH/72sHWCSZkP
-	mfK6GS6Nkc+vhUVZuafaNmwLAsejxVit4o5VTSkjF06bnmOjbA/1u+FcTAJnoibK
-	XNHfzTenM37J9oj0BoxjyLREV0viT9NgjglM8d/wjqMXggwtfiXQlhYklIY7DnXf
-	PEYmJg==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4308y81yfw-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Nov 2024 08:58:58 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AJ8wvfi027151
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Nov 2024 08:58:58 GMT
-Received: from [10.239.133.211] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 19 Nov
- 2024 00:58:53 -0800
-Message-ID: <8aeb8ca9-5d3f-4154-bba5-1255b368bf1b@quicinc.com>
-Date: Tue, 19 Nov 2024 16:58:50 +0800
+	s=arc-20240116; t=1732006941; c=relaxed/simple;
+	bh=7i+4vicmpvdvXCc4vKH9ARs9QvjvPpWrGVehq6Zfqos=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=RwpKTVctTsOpzKAx4/3l7EyVJk/x1cGnOr9lgUyVr4uqYrfXbfi/RbDnC5V4Y4xqVZm9E4LLQwWj6QjN+PLtQ3Dhqc06eXsqEJ4o/jKtlWqmuAN14adulhYbKaabtNhCrLbvqGHj6pBjR7//HGALXRruCwPKV57TmGJ2BE70lrs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FcIQMoiY; arc=none smtp.client-ip=209.85.221.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-37ece998fe6so365295f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Nov 2024 01:02:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1732006938; x=1732611738; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=PWT9jbzuwuMDBlzD8+v50VUHF7SndtEw79T5t/vLiW4=;
+        b=FcIQMoiYjXmch560MCykatoM47jCwDrJJts0IMVgTov4Ou6ueYiYaE+AsOxavb31Z8
+         34/QiJtutHcU+5WMSIp+QYb7ZqfdSxR2K9XWnKc+dfzcN0zVAk/4R2ujMEA8v3PBYvEs
+         I7Ur7NuO8LTu/0As+DNf/4LIlGvOpUyEzqwkMunAfLXfwb7wKDVJaMDuMsVEy+w3R733
+         FL2J018rxLB486o29JRD3sGNbrVaXLQbbrZwbhjr80Hn/LJkVLgfcf34PzHEb3IX63i8
+         OUpXLeAyEcRR2UGTEGqdCUkxayE2UvikPbN5NibESMYuS1SMRRU7as8BlskChGWw5Lsf
+         vDaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732006938; x=1732611738;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PWT9jbzuwuMDBlzD8+v50VUHF7SndtEw79T5t/vLiW4=;
+        b=EdmEyaWyhqRiOYs48xpY5kwNpg63JB3NnEs2GVKro7nQw24ZNPM1W3+fDylOjsu65Q
+         gHmto4vws5IWGu2oQNwxXaYxp6uJTNSVBt1FY62x9fHb0T0DilIkEZ2ux28Cw6rkLUKd
+         KnG+bdJSqzyy3XNLkBnhEOU9u+XxVnbKsgMAJoayP5fq3L7+QccagQfx3CHo1xLlqdTB
+         RdWu5IWeuiSU7ZFPWJQXinuTnOFxfTWrRwubfr4zBYPrTJOfxyhtdDZUlrNdAaFj9F9R
+         wLcUwyPunXU/3qnKLyKZm6FzG07znTVGlZSSXJFWe9VnWyE98qc+1FLXVq+IWo+bdckU
+         yMcw==
+X-Forwarded-Encrypted: i=1; AJvYcCVT35/J3QI7JQvqFIu+agGSVMDqE9QZU1x5Dc6n9o0rYbznbK7bMfMAUg9fFdCwJ2HGX4edQgpNAH1OTZDc@vger.kernel.org
+X-Gm-Message-State: AOJu0YysLBGv6rmbUA+jvbC8yaR4o65joeIgBwatmfp2pvb1P1eC7sJL
+	MqF28W7RYSAk04In65sF8na1E17it78ZDmqMKU6BN9yPvzqZir4cgSapWacH4P0dbufBCiKyx2e
+	d2U39yQ==
+X-Gm-Gg: ASbGncuMwG4tLSJa+2hJAuWuWk+l4UxCrsaSmk4Phyc8vNj/PdWp0ooSi2Zw9mYx+zC
+	LgYPu8TttZhew8Zn0mw0deOKnu5T+AQ2HJ25l4rcZV6/CopVaDBs+nRubDFCS8r2zWYlutSYqw7
+	QBlWXSbBX25QjBdA9QsG/lSAU/hkqhuffWfeEOgsBHfy8m3byjA6rG1UXg/rx0618s5BwFzUV9i
+	t0AohT5IM+iJBIEgmskR7L+hFRXvaXGs6Yt6mctpypGiPYDQIgkcTlvD4yudARymhmv6g==
+X-Google-Smtp-Source: AGHT+IGIOHSmYD20IuSF+bq/VVWIiUD2Ng832a921xP7HytR5xBQhyn3tkesw7rln86jK5YeufSH2Q==
+X-Received: by 2002:a5d:6da6:0:b0:374:ca43:ac00 with SMTP id ffacd0b85a97d-3822590fa79mr5198387f8f.4.1732006937536;
+        Tue, 19 Nov 2024 01:02:17 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.211.167])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3823ade6c73sm9025061f8f.30.2024.11.19.01.02.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 19 Nov 2024 01:02:16 -0800 (PST)
+Message-ID: <7a078fd9-65b1-4f8b-a076-ff56c537e8ad@linaro.org>
+Date: Tue, 19 Nov 2024 10:02:14 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,493 +82,422 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 3/4] coresight: Add support for trace filtering by
- source
-To: Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach
-	<mike.leach@linaro.org>, James Clark <james.clark@arm.com>,
-        Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Leo Yan
-	<leo.yan@linux.dev>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>
-CC: <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20241030093255.26915-1-quic_taozha@quicinc.com>
- <20241030093255.26915-4-quic_taozha@quicinc.com>
- <c39a844e-d0a8-46ac-ab52-530dae741751@arm.com>
- <6bbdd8dd-a5ab-4b51-8152-595331cdd58b@quicinc.com>
- <f2221c21-b891-413f-8adb-e76921da1fb1@arm.com>
- <939c3461-c092-4901-ac06-2173547858ad@quicinc.com>
- <94096b6e-1a4c-4fc4-8294-316b38b35e99@arm.com>
+Subject: Re: [PATCH V4 2/4] dt-bindings: iio: adc: Add support for QCOM PMIC5
+ Gen3 ADC
+To: Jishnu Prakash <quic_jprakash@quicinc.com>, jic23@kernel.org,
+ robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+ agross@kernel.org, andersson@kernel.org, dmitry.baryshkov@linaro.org,
+ konrad.dybcio@linaro.org, daniel.lezcano@linaro.org, sboyd@kernel.org,
+ quic_subbaram@quicinc.com, quic_collinsd@quicinc.com,
+ quic_amelende@quicinc.com, quic_kamalw@quicinc.com, amitk@kernel.org
+Cc: lee@kernel.org, rafael@kernel.org, rui.zhang@intel.com,
+ lukasz.luba@arm.com, lars@metafoo.de, quic_skakitap@quicinc.com,
+ neil.armstrong@linaro.org, devicetree@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+ cros-qcom-dts-watchers@chromium.org
+References: <20241030185854.4015348-1-quic_jprakash@quicinc.com>
+ <20241030185854.4015348-3-quic_jprakash@quicinc.com>
+ <6daaee01-36a0-4dc5-86c7-106aabbfff4e@linaro.org>
+ <bb877daa-8cdb-4c52-a70a-2206e67d014e@quicinc.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Content-Language: en-US
-From: Tao Zhang <quic_taozha@quicinc.com>
-In-Reply-To: <94096b6e-1a4c-4fc4-8294-316b38b35e99@arm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: dkOyCXO0G-rlQz4gdi-C4rBFPFIpXLd-
-X-Proofpoint-GUID: dkOyCXO0G-rlQz4gdi-C4rBFPFIpXLd-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 phishscore=0
- impostorscore=0 priorityscore=1501 lowpriorityscore=0 bulkscore=0
- mlxscore=0 spamscore=0 adultscore=0 suspectscore=0 malwarescore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411190064
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <bb877daa-8cdb-4c52-a70a-2206e67d014e@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+On 13/11/2024 15:05, Jishnu Prakash wrote:
+> Hi Krzysztof,
+> 
+> On 10/31/2024 4:28 PM, Krzysztof Kozlowski wrote:
+>> On 30/10/2024 19:58, Jishnu Prakash wrote:
+>>> For the PMIC5-Gen3 type PMICs, ADC peripheral is present in HW for the
+>>> following PMICs: PMK8550, PM8550, PM8550B and PM8550VX PMICs.
+>>>
+>>> It is similar to PMIC5-Gen2, with SW communication to ADCs on all PMICs
+>>> going through PBS(Programmable Boot Sequence) firmware through a single
+>>> register interface. This interface is implemented on an SDAM (Shared
+>>> Direct Access Memory) peripheral on the master PMIC PMK8550 rather
+>>> than a dedicated ADC peripheral.
+>>>
+>>> Add documentation for PMIC5 Gen3 ADC and macro definitions for ADC
+>>> channels and virtual channels (combination of ADC channel number and
+>>> PMIC SID number) per PMIC, to be used by clients of this device.
+>>>
+>>> Co-developed-by: Anjelique Melendez <quic_amelende@quicinc.com>
+>>> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
+>>> Signed-off-by: Jishnu Prakash <quic_jprakash@quicinc.com>
+>>> ---
+>>
+>> This has still test failures, so limited review follows.
+>>
+>>>  properties:
+>>>    compatible:
+>>> @@ -23,14 +27,20 @@ properties:
+>>>            - const: qcom,pms405-adc
+>>>            - const: qcom,spmi-adc-rev2
+>>>        - enum:
+>>> -          - qcom,spmi-vadc
+>>> -          - qcom,spmi-adc5
+>>>            - qcom,spmi-adc-rev2
+>>> +          - qcom,spmi-adc5
+>>> +          - qcom,spmi-adc5-gen3
+>>>            - qcom,spmi-adc7
+>>> +          - qcom,spmi-vadc
+>>>  
+>>>    reg:
+>>> -    description: VADC base address in the SPMI PMIC register map
+>>> -    maxItems: 1
+>>> +    description:
+>>> +      For compatible properties "qcom,spmi-vadc", "qcom,spmi-adc5", "qcom,spmi-adc-rev2"
+>>> +      and "qcom,spmi-adc7", reg is the VADC base address in the SPMI PMIC register map.
+>>> +      For compatible property "qcom,spmi-adc5-gen3", each reg corresponds to an SDAM
+>>> +      peripheral base address that is being used for ADC functionality.
+>>
+>> This description is not really needed. You need to provide constraints
+>> in schema.
+>>
+>>> +    minItems: 1
+>>> +    maxItems: 2
+>>>  
+>>>    '#address-cells':
+>>>      const: 1
+>>> @@ -38,20 +48,28 @@ properties:
+>>>    '#size-cells':
+>>>      const: 0
+>>>  
+>>> +  "#thermal-sensor-cells":
+>>> +    const: 1
+>>> +    description:
+>>> +      Number of cells required to uniquely identify the thermal sensors.
+>>
+>> Drop, redundant.
+>>
+>>> +      For compatible property "qcom,spmi-adc5-gen3", this property is
+>>> +      required for if any channels under it are used for ADC_TM.
+>>> +      Since we have multiple sensors this is set to 1.
+>>
+>> Drop sentence, redundant.
+>>
+>>> +
+>>>    '#io-channel-cells':
+>>>      const: 1
+>>>  
+>>>    interrupts:
+>>> -    maxItems: 1
+>>>      description:
+>>>        End of conversion interrupt.
+>>> +      For compatible property "qcom,spmi-adc5-gen3", interrupts are defined
+>>> +      for each SDAM being used.
+>>
+>> Drop descriptions and instead rather list and describe items. You keep
+>> repeating schema in free form text. That's not the point.
+>>
+>>> +    minItems: 1
+>>> +    maxItems: 2
+>>>  
+>>> -required:
+>>> -  - compatible
+>>> -  - reg
+>>> -  - '#address-cells'
+>>> -  - '#size-cells'
+>>> -  - '#io-channel-cells'
+>>> +  interrupt-names:
+>>> +    minItems: 1
+>>> +    maxItems: 2
+>>>  
+>>>  patternProperties:
+>>>    "^channel@[0-9a-f]+$":
+>>> @@ -71,8 +89,8 @@ patternProperties:
+>>>          description: |
+>>>            ADC channel number.
+>>>            See include/dt-bindings/iio/adc/qcom,spmi-vadc.h
+>>> -          For PMIC7 ADC, the channel numbers are specified separately per PMIC
+>>> -          in the PMIC-specific files in include/dt-bindings/iio/adc.
+>>> +          For PMIC7 and PMIC5 Gen3 ADC, the channel numbers are specified separately
+>>> +          per PMIC in the PMIC-specific files in include/dt-bindings/iio/adc.
+>>>  
+>>>        label:
+>>>          description: |
+>>> @@ -113,11 +131,11 @@ patternProperties:
+>>>                channel calibration. If property is not found, channel will be
+>>>                calibrated with 0.625V and 1.25V reference channels, also
+>>>                known as absolute calibration.
+>>> -            - For compatible property "qcom,spmi-adc5", "qcom,spmi-adc7" and
+>>> -              "qcom,spmi-adc-rev2", if this property is specified VADC will use
+>>> -              the VDD reference (1.875V) and GND for channel calibration. If
+>>> -              property is not found, channel will be calibrated with 0V and 1.25V
+>>> -              reference channels, also known as absolute calibration.
+>>> +            - For compatible property "qcom,spmi-adc5", "qcom,spmi-adc7",
+>>> +              "qcom,spmi-adc-rev2" and "qcom,spmi-adc5-gen3", if this property is
+>>> +              specified VADC will use the VDD reference (1.875V) and GND for channel
+>>> +              calibration. If property is not found, channel will be calibrated with
+>>> +              0V and 1.25V reference channels, also known as absolute calibration.
+>>>          type: boolean
+>>>  
+>>>        qcom,hw-settle-time:
+>>> @@ -135,9 +153,24 @@ patternProperties:
+>>>              from the ADC that is an average of multiple samples. The value
+>>>              selected is 2^(value).
+>>>  
+>>> +      qcom,adc-tm:
+>>> +        description:
+>>> +          Indicates if ADC_TM monitoring is done on this channel.
+>>
+>> What is "ADC_TM"? Why this would be property of a board? This does not
+>> look like suitable for DT, at least based on such very vague explanation.
+>>
+>>> +          Defined for compatible property "qcom,spmi-adc5-gen3".
+>>
+>> Drop redundant.
+>>
+>>> +          This is the same functionality as in the existing QCOM ADC_TM
+>>> +          device, documented at devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml.
+>>
+>> What does it mean? How property can represent functionality of entire
+>> binding?
+>>
+>> BTW, use full paths when refering to files.
+>>
+> 
+> To address all your above questions for ADC_TM:
+> 
+> The file "Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml" describes
+> the Qualcomm ADC thermal monitoring device, which existed as a separate device on older
+> PMIC generations. ADC_TM refers to this functionality.
+> 
+> In ADC5 Gen3, ADC_TM functionality is combined with the existing ADC read functionality
+> described in this file, under a single device.
+> 
+> In the earlier ADC_TM DT nodes, each child node would describe one of the IIO ADC channels being
+> monitored by ADC_TM HW. In this ADC5 Gen3 device, setting the property 'qcom,adc-tm' for a channel
+> node means that it will also be monitored in HW exactly like an ADC_TM channel.
+> 
+> It can be considered a hardware property as the monitoring is done by a sequence under
+> PBS (Programmable Boot Sequence, can be considered firmware), which periodically gets the
+> channel reading and checks it against upper/lower thresholds set by clients of this driver, 
+> for threshold violations.
+
+So you want to configure channels in different way? Then specify it
+precisely - what is the nature of this feature/configuration. I have no
+clue what is ADC TM and you keep using it over and over.
+
+I still wait for answer why this is a property of a board.
+
+> 
+> 
+>>> +        type: boolean
+>>> +
+>>>      required:
+>>>        - reg
+>>>  
+>>> +required:
+>>> +  - compatible
+>>> +  - reg
+>>> +  - '#address-cells'
+>>> +  - '#size-cells'
+>>> +  - '#io-channel-cells'
+>>> +
+>>>  allOf:
+>>>    - if:
+>>>        properties:
+>>> @@ -146,6 +179,15 @@ allOf:
+>>>              const: qcom,spmi-vadc
+>>>  
+>>>      then:
+>>> +      properties:
+>>> +        reg:
+>>> +          minItems: 1
+>>
+>> min is redundant.
+>>
+>>> +          maxItems: 1
+>>> +        interrupts:
+>>> +          minItems: 1
+>>> +          maxItems: 1
+>>
+>> So here you list and describe items instead.
+> 
+> Do you mean interrupts should be updated to something like this?
+> 
+>         interrupts:
+>           maxItems: 1
+> 	  description: 
+>             End of conversion interrupt.
+> 
+> Does this look right?
 
 
-On 11/18/2024 5:56 PM, Suzuki K Poulose wrote:
-> On 18/11/2024 09:28, Tao Zhang wrote:
->>
->> On 11/15/2024 5:40 PM, Suzuki K Poulose wrote:
->>> On 15/11/2024 09:18, Tao Zhang wrote:
->>>>
->>>> On 11/13/2024 9:39 PM, Suzuki K Poulose wrote:
->>>>> On 30/10/2024 09:32, Tao Zhang wrote:
->>>>>> Some replicators have hard coded filtering of "trace" data, based 
->>>>>> on the
->>>>>> source device. This is different from the trace filtering based on
->>>>>> TraceID, available in the standard programmable replicators. e.g.,
->>>>>> Qualcomm replicators have filtering based on custom trace protocol
->>>>>> format and is not programmable.
->>>>>>
->>>>>> The source device could be connected to the replicator via 
->>>>>> intermediate
->>>>>> components (e.g., a funnel). Thus we need platform information from
->>>>>> the firmware tables to decide the source device corresponding to a
->>>>>> given output port from the replicator. Given this affects "trace
->>>>>> path building" and traversing the path back from the sink to source,
->>>>>> add the concept of "filtering by source" to the generic coresight
->>>>>> connection.
->>>>>>
->>>>>> The specified source will be marked like below in the Devicetree.
->>>>>> test-replicator {
->>>>>>      ... ... ... ...
->>>>>>      out-ports {
->>>>>>          ... ... ... ...
->>>>>>          port@0 {
->>>>>>              reg = <0>;
->>>>>>              xyz: endpoint {
->>>>>>                  remote-endpoint = <&zyx>;
->>>>>>                  filter-source = <&source_1>; <-- To specify the 
->>>>>> source to
->>>>>>              };                           be filtered out here.
->>>>>>          };
->>>>>>
->>>>>>          port@1 {
->>>>>>              reg = <1>;
->>>>>>              abc: endpoint {
->>>>>>                  remote-endpoint = <&cba>;
->>>>>>                  filter-source = <&source_2>; <-- To specify the 
->>>>>> source to
->>>>>>              };                           be filtered out here.
->>>>>>          };
->>>>>>      };
->>>>>> };
->>>>>>
->>>>>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
->>>>>> ---
->>>>>>   drivers/hwtracing/coresight/coresight-core.c  | 113 
->>>>>> +++++++++++++ ++---
->>>>>>   .../hwtracing/coresight/coresight-platform.c  |  18 +++
->>>>>>   include/linux/coresight.h                     |   5 +
->>>>>>   3 files changed, 117 insertions(+), 19 deletions(-)
->>>>>>
->>>>>> diff --git a/drivers/hwtracing/coresight/coresight-core.c b/ 
->>>>>> drivers/hwtracing/coresight/coresight-core.c
->>>>>> index ea38ecf26fcb..0a9380350fb5 100644
->>>>>> --- a/drivers/hwtracing/coresight/coresight-core.c
->>>>>> +++ b/drivers/hwtracing/coresight/coresight-core.c
->>>>>> @@ -75,22 +75,54 @@ struct coresight_device 
->>>>>> *coresight_get_percpu_sink(int cpu)
->>>>>>   }
->>>>>>   EXPORT_SYMBOL_GPL(coresight_get_percpu_sink);
->>>>>>   +static struct coresight_device *coresight_get_source(struct 
->>>>>> list_head *path)
->>>>>> +{
->>>>>> +    struct coresight_device *csdev;
->>>>>> +
->>>>>> +    if (!path)
->>>>>> +        return NULL;
->>>>>> +
->>>>>> +    csdev = list_first_entry(path, struct coresight_node, link)- 
->>>>>> >csdev;
->>>>>> +    if (!coresight_is_device_source(csdev))
->>>>>> +        return NULL;
->>>>>> +
->>>>>> +    return csdev;
->>>>>> +}
->>>>>> +
->>>>>> +/**
->>>>>> + * coresight_blocks_source - checks whether the connection 
->>>>>> matches the source
->>>>>> + * of path if connection is bound to specific source.
->>>>>> + * @src:    The source device of the trace path
->>>>>> + * @conn:    The connection of one outport
->>>>>> + *
->>>>>> + * Return false if the connection doesn't have a source binded 
->>>>>> or source of the
->>>>>> + * path matches the source binds to connection.
->>>>>> + */
->>>>>> +static bool coresight_blocks_source(struct coresight_device *src,
->>>>>> +                    struct coresight_connection *conn)
->>>>>> +{
->>>>>> +    return conn->filter_src_fwnode && (conn->filter_src_dev != 
->>>>>> src);
->>>>>> +}
->>>>>> +
->>>>>>   static struct coresight_connection *
->>>>>> -coresight_find_out_connection(struct coresight_device *src_dev,
->>>>>> -                  struct coresight_device *dest_dev)
->>>>>> +coresight_find_out_connection(struct coresight_device *csdev,
->>>>>> +                  struct coresight_device *out_dev,
->>>>>> +                  struct coresight_device *trace_src)
->>>>>>   {
->>>>>>       int i;
->>>>>>       struct coresight_connection *conn;
->>>>>>   -    for (i = 0; i < src_dev->pdata->nr_outconns; i++) {
->>>>>> -        conn = src_dev->pdata->out_conns[i];
->>>>>> -        if (conn->dest_dev == dest_dev)
->>>>>> +    for (i = 0; i < csdev->pdata->nr_outconns; i++) {
->>>>>> +        conn = csdev->pdata->out_conns[i];
->>>>>> +        if (coresight_blocks_source(trace_src, conn))
->>>>>> +            continue;
->>>>>> +        if (conn->dest_dev == out_dev)
->>>>>>               return conn;
->>>>>>       }
->>>>>>   -    dev_err(&src_dev->dev,
->>>>>> -        "couldn't find output connection, src_dev: %s, dest_dev: 
->>>>>> %s\n",
->>>>>> -        dev_name(&src_dev->dev), dev_name(&dest_dev->dev));
->>>>>> +    dev_err(&csdev->dev,
->>>>>> +        "couldn't find output connection, csdev: %s, out_dev: 
->>>>>> %s\n",
->>>>>> +        dev_name(&csdev->dev), dev_name(&out_dev->dev));
->>>>>>         return ERR_PTR(-ENODEV);
->>>>>>   }
->>>>>> @@ -251,7 +283,8 @@ static void coresight_disable_sink(struct 
->>>>>> coresight_device *csdev)
->>>>>>     static int coresight_enable_link(struct coresight_device *csdev,
->>>>>>                    struct coresight_device *parent,
->>>>>> -                 struct coresight_device *child)
->>>>>> +                 struct coresight_device *child,
->>>>>> +                 struct coresight_device *source)
->>>>>>   {
->>>>>>       int link_subtype;
->>>>>>       struct coresight_connection *inconn, *outconn;
->>>>>> @@ -259,8 +292,8 @@ static int coresight_enable_link(struct 
->>>>>> coresight_device *csdev,
->>>>>>       if (!parent || !child)
->>>>>>           return -EINVAL;
->>>>>>   -    inconn = coresight_find_out_connection(parent, csdev);
->>>>>> -    outconn = coresight_find_out_connection(csdev, child);
->>>>>> +    inconn = coresight_find_out_connection(parent, csdev, source);
->>>>>> +    outconn = coresight_find_out_connection(csdev, child, source);
->>>>>>       link_subtype = csdev->subtype.link_subtype;
->>>>>>         if (link_subtype == CORESIGHT_DEV_SUBTYPE_LINK_MERG && 
->>>>>> IS_ERR(inconn))
->>>>>> @@ -273,15 +306,16 @@ static int coresight_enable_link(struct 
->>>>>> coresight_device *csdev,
->>>>>>     static void coresight_disable_link(struct coresight_device 
->>>>>> *csdev,
->>>>>>                      struct coresight_device *parent,
->>>>>> -                   struct coresight_device *child)
->>>>>> +                   struct coresight_device *child,
->>>>>> +                   struct coresight_device *source)
->>>>>>   {
->>>>>>       struct coresight_connection *inconn, *outconn;
->>>>>>         if (!parent || !child)
->>>>>>           return;
->>>>>>   -    inconn = coresight_find_out_connection(parent, csdev);
->>>>>> -    outconn = coresight_find_out_connection(csdev, child);
->>>>>> +    inconn = coresight_find_out_connection(parent, csdev, source);
->>>>>> +    outconn = coresight_find_out_connection(csdev, child, source);
->>>>>>         link_ops(csdev)->disable(csdev, inconn, outconn);
->>>>>>   }
->>>>>> @@ -375,7 +409,8 @@ static void 
->>>>>> coresight_disable_path_from(struct list_head *path,
->>>>>>           case CORESIGHT_DEV_TYPE_LINK:
->>>>>>               parent = list_prev_entry(nd, link)->csdev;
->>>>>>               child = list_next_entry(nd, link)->csdev;
->>>>>> -            coresight_disable_link(csdev, parent, child);
->>>>>> +            coresight_disable_link(csdev, parent, child,
->>>>>> +                           coresight_get_source(path));
->>>>>>               break;
->>>>>>           default:
->>>>>>               break;
->>>>>> @@ -418,7 +453,9 @@ int coresight_enable_path(struct list_head 
->>>>>> *path, enum cs_mode mode,
->>>>>>       u32 type;
->>>>>>       struct coresight_node *nd;
->>>>>>       struct coresight_device *csdev, *parent, *child;
->>>>>> +    struct coresight_device *source;
->>>>>>   +    source = coresight_get_source(path);
->>>>>>       list_for_each_entry_reverse(nd, path, link) {
->>>>>>           csdev = nd->csdev;
->>>>>>           type = csdev->type;
->>>>>> @@ -456,7 +493,7 @@ int coresight_enable_path(struct list_head 
->>>>>> *path, enum cs_mode mode,
->>>>>>           case CORESIGHT_DEV_TYPE_LINK:
->>>>>>               parent = list_prev_entry(nd, link)->csdev;
->>>>>>               child = list_next_entry(nd, link)->csdev;
->>>>>> -            ret = coresight_enable_link(csdev, parent, child);
->>>>>> +            ret = coresight_enable_link(csdev, parent, child, 
->>>>>> source);
->>>>>>               if (ret)
->>>>>>                   goto err;
->>>>>>               break;
->>>>>> @@ -619,6 +656,7 @@ static void coresight_drop_device(struct 
->>>>>> coresight_device *csdev)
->>>>>>   /**
->>>>>>    * _coresight_build_path - recursively build a path from a 
->>>>>> @csdev to a sink.
->>>>>>    * @csdev:    The device to start from.
->>>>>> + * @source:    The trace source device of the path.
->>>>>>    * @sink:    The final sink we want in this path.
->>>>>>    * @path:    The list to add devices to.
->>>>>>    *
->>>>>> @@ -628,6 +666,7 @@ static void coresight_drop_device(struct 
->>>>>> coresight_device *csdev)
->>>>>>    * the source is the first device and the sink the last one.
->>>>>>    */
->>>>>>   static int _coresight_build_path(struct coresight_device *csdev,
->>>>>> +                 struct coresight_device *source,
->>>>>>                    struct coresight_device *sink,
->>>>>>                    struct list_head *path)
->>>>>>   {
->>>>>> @@ -641,7 +680,7 @@ static int _coresight_build_path(struct 
->>>>>> coresight_device *csdev,
->>>>>>         if (coresight_is_percpu_source(csdev) && 
->>>>>> coresight_is_percpu_sink(sink) &&
->>>>>>           sink == per_cpu(csdev_sink, source_ops(csdev)- 
->>>>>> >cpu_id(csdev))) {
->>>>>> -        if (_coresight_build_path(sink, sink, path) == 0) {
->>>>>> +        if (_coresight_build_path(sink, source, sink, path) == 0) {
->>>>>>               found = true;
->>>>>>               goto out;
->>>>>>           }
->>>>>> @@ -652,8 +691,12 @@ static int _coresight_build_path(struct 
->>>>>> coresight_device *csdev,
->>>>>>           struct coresight_device *child_dev;
->>>>>>             child_dev = csdev->pdata->out_conns[i]->dest_dev;
->>>>>> +
->>>>>> +        if (coresight_blocks_source(source, csdev->pdata- 
->>>>>> >out_conns[i]))
->>>>>> +            continue;
->>>>>> +
->>>>>>           if (child_dev &&
->>>>>> -            _coresight_build_path(child_dev, sink, path) == 0) {
->>>>>> +            _coresight_build_path(child_dev, source, sink, path) 
->>>>>> == 0) {
->>>>>>               found = true;
->>>>>>               break;
->>>>>>           }
->>>>>> @@ -698,7 +741,7 @@ struct list_head *coresight_build_path(struct 
->>>>>> coresight_device *source,
->>>>>>         INIT_LIST_HEAD(path);
->>>>>>   -    rc = _coresight_build_path(source, sink, path);
->>>>>> +    rc = _coresight_build_path(source, source, sink, path);
->>>>>>       if (rc) {
->>>>>>           kfree(path);
->>>>>>           return ERR_PTR(rc);
->>>>>> @@ -927,6 +970,16 @@ static int coresight_orphan_match(struct 
->>>>>> device *dev, void *data)
->>>>>>       for (i = 0; i < src_csdev->pdata->nr_outconns; i++) {
->>>>>>           conn = src_csdev->pdata->out_conns[i];
->>>>>>   +        /* Fix filter source device before skip the port */
->>>>>> +        if (conn->filter_src_fwnode && !conn->filter_src_dev) {
->>>>>> +            if (dst_csdev &&
->>>>>> +                (conn->filter_src_fwnode == 
->>>>>> dst_csdev->dev.fwnode) &&
->>>>>> + !WARN_ON_ONCE(!coresight_is_device_source(dst_csdev)))
->>>>>> +                conn->filter_src_dev = dst_csdev;
->>>>>> +            else
->>>>>> +                still_orphan = true;
->>>>>> +        }
->>>>>> +
->>>>>>           /* Skip the port if it's already connected. */
->>>>>>           if (conn->dest_dev)
->>>>>>               continue;
->>>>>> @@ -977,18 +1030,40 @@ static int 
->>>>>> coresight_fixup_orphan_conns(struct coresight_device *csdev)
->>>>>>                csdev, coresight_orphan_match);
->>>>>>   }
->>>>>>   +static int coresight_clear_filter_source(struct device *dev, 
->>>>>> void *data)
->>>>>> +{
->>>>>> +    int i;
->>>>>> +    struct coresight_device *source = data;
->>>>>> +    struct coresight_device *csdev = to_coresight_device(dev);
->>>>>> +
->>>>>> +    for (i = 0; i < csdev->pdata->nr_outconns; ++i) {
->>>>>> +        if (csdev->pdata->out_conns[i]->filter_src_dev == source)
->>>>>> + csdev->pdata->out_conns[i]->filter_src_dev = NULL;
->>>>>> +    }
->>>>>> +    return 0;
->>>>>> +}
->>>>>> +
->>>>>>   /* coresight_remove_conns - Remove other device's references to 
->>>>>> this device */
->>>>>>   static void coresight_remove_conns(struct coresight_device *csdev)
->>>>>>   {
->>>>>>       int i, j;
->>>>>>       struct coresight_connection *conn;
->>>>>>   +    if (coresight_is_device_source(csdev))
->>>>>> +        bus_for_each_dev(&coresight_bustype, NULL, csdev,
->>>>>> +                 coresight_clear_filter_source);
->>>>>> +
->>>>>>       /*
->>>>>>        * Remove the input connection references from the 
->>>>>> destination device
->>>>>>        * for each output connection.
->>>>>>        */
->>>>>>       for (i = 0; i < csdev->pdata->nr_outconns; i++) {
->>>>>>           conn = csdev->pdata->out_conns[i];
->>>>>> +        if (conn->filter_src_fwnode) {
->>>>>> +            conn->filter_src_dev = NULL;
->>>>>> + fwnode_handle_put(conn->filter_src_fwnode);
->>>>>> +        }
->>>>>> +
->>>>>>           if (!conn->dest_dev)
->>>>>>               continue;
->>>>>>   diff --git a/drivers/hwtracing/coresight/coresight-platform.c 
->>>>>> b/ drivers/hwtracing/coresight/coresight-platform.c
->>>>>> index 64e171eaad82..d5532caa9e92 100644
->>>>>> --- a/drivers/hwtracing/coresight/coresight-platform.c
->>>>>> +++ b/drivers/hwtracing/coresight/coresight-platform.c
->>>>>> @@ -243,6 +243,24 @@ static int 
->>>>>> of_coresight_parse_endpoint(struct device *dev,
->>>>>>           conn.dest_fwnode = fwnode_handle_get(rdev_fwnode);
->>>>>>           conn.dest_port = rendpoint.port;
->>>>>>   +        /*
->>>>>> +         * Get the firmware node of the filter source through the
->>>>>> +         * reference. This could be used to filter the source in
->>>>>> +         * building path.
->>>>>> +         */
->>>>>> +        conn.filter_src_fwnode =
->>>>>> +            fwnode_find_reference(&ep->fwnode, "filter-source", 0);
->>>>>> +        if (IS_ERR(conn.filter_src_fwnode)) {
->>>>>> +            conn.filter_src_fwnode = NULL;
->>>>>> +        } else {
->>>>>> +            conn.filter_src_dev =
->>>>>> + coresight_find_csdev_by_fwnode(conn.filter_src_fwnode);
->>>>>> +            if (conn.filter_src_dev &&
->>>>>> + !coresight_is_device_source(conn.filter_src_dev))
->>>>>> + dev_warn(&conn.filter_src_dev->dev,
->>>>>> +                  "Filter source is not a source device\n");
->>>>>
->>>>> Do we need to reset the conn.filter_src_fwnode ? Otherwise, we can 
->>>>> warn from other places too.
->>>>
->>>> Agree, we need to reset conn.filter_src_fwnode and 
->>>> conn.filter_src_dev here if it is not a SOURCE
->>>>
->>>> type device.
->>>>
->>>> I will update the following code to the next patch series. Could 
->>>> you help check if it is fine to you?
->>>
->>> This looks good.
->>>
->>>>
->>>> +            if (conn.filter_src_dev &&
->>>> + !coresight_is_device_source(conn.filter_src_dev)) {
->>>> +                dev_warn(&conn.filter_src_dev->dev,
->>>> +                  "Filter source is not a source device\n");
->>>
->>> minor nit: It would be good to indicate which device has this 
->>> "filtering". i.e,
->>>           dev_warn(dev, "Filter source is not a trace source : 
->>> %s\n", dev_name(&conn.filter_src_dev->dev));
->> Sure, I will update this to the next patch series.
->
-> Also, it may be helpful, if we specify the "port number" which has this
-> wrong handle. I guess something like:
->
-> dev_warn(dev, "port %d: Filter handle is not a trace source : %s\n",
->      conn.src_port, dev_name(&conn.filter_src_dev->dev));
+No, you need to list the items. Look at qcom clocks.
 
-Sure, I will update this to the next patch series.
+> 
+>>
+>>> +        "#thermal-sensor-cells": false
+>>> +        interrupt-names: false
+>>
+>> Keep things properly ordered. xxx-names is always next to xxx.
+>>
+>>>        patternProperties:
+>>>          "^channel@[0-9a-f]+$":
+>>>            properties:
+>>> @@ -162,6 +204,8 @@ allOf:
+>>>                enum: [ 1, 2, 4, 8, 16, 32, 64, 128, 256, 512 ]
+>>>                default: 1
+>>>  
+>>> +            qcom,adc-tm: false
+>>> +
+>>>    - if:
+>>>        properties:
+>>>          compatible:
+>>> @@ -169,6 +213,15 @@ allOf:
+>>>              const: qcom,spmi-adc-rev2
+>>>  
+>>>      then:
+>>> +      properties:
+>>> +        reg:
+>>> +          minItems: 1
+>>> +          maxItems: 1
+>>> +        interrupts:
+>>> +          minItems: 1
+>>> +          maxItems: 1
+>>> +        "#thermal-sensor-cells": false
+>>> +        interrupt-names: false
+>>>        patternProperties:
+>>>          "^channel@[0-9a-f]+$":
+>>>            properties:
+>>> @@ -185,6 +238,8 @@ allOf:
+>>>                enum: [ 1, 2, 4, 8, 16 ]
+>>>                default: 1
+>>>  
+>>> +            qcom,adc-tm: false
+>>> +
+>>>    - if:
+>>>        properties:
+>>>          compatible:
+>>> @@ -192,6 +247,15 @@ allOf:
+>>>              const: qcom,spmi-adc5
+>>>  
+>>>      then:
+>>> +      properties:
+>>> +        reg:
+>>> +          minItems: 1
+>>> +          maxItems: 1
+>>> +        interrupts:
+>>> +          minItems: 1
+>>> +          maxItems: 1
+>>> +        "#thermal-sensor-cells": false
+>>> +        interrupt-names: false
+>>>        patternProperties:
+>>>          "^channel@[0-9a-f]+$":
+>>>            properties:
+>>> @@ -208,6 +272,8 @@ allOf:
+>>>                enum: [ 1, 2, 4, 8, 16 ]
+>>>                default: 1
+>>>  
+>>> +            qcom,adc-tm: false
+>>> +
+>>>    - if:
+>>>        properties:
+>>>          compatible:
+>>> @@ -215,6 +281,59 @@ allOf:
+>>>              const: qcom,spmi-adc7
+>>>  
+>>>      then:
+>>> +      properties:
+>>> +        reg:
+>>> +          minItems: 1
+>>> +          maxItems: 1
+>>> +        interrupts:
+>>> +          minItems: 1
+>>> +          maxItems: 1
+>>> +        "#thermal-sensor-cells": false
+>>> +        interrupt-names: false
+>>> +      patternProperties:
+>>> +        "^channel@[0-9a-f]+$":
+>>> +          properties:
+>>> +            qcom,decimation:
+>>> +              enum: [ 85, 340, 1360 ]
+>>> +              default: 1360
+>>> +
+>>> +            qcom,hw-settle-time:
+>>> +              enum: [ 15, 100, 200, 300, 400, 500, 600, 700, 1000, 2000, 4000,
+>>> +                      8000, 16000, 32000, 64000, 128000 ]
+>>> +              default: 15
+>>> +
+>>> +            qcom,avg-samples:
+>>> +              enum: [ 1, 2, 4, 8, 16 ]
+>>> +              default: 1
+>>> +
+>>> +            qcom,adc-tm: false
+>>> +
+>>> +  - if:
+>>> +      properties:
+>>> +        compatible:
+>>> +          contains:
+>>> +            const: qcom,spmi-adc5-gen3
+>>> +
+>>> +    then:
+>>> +      properties:
+>>> +        reg:
+>>> +          minItems: 1
+>>
+>> Why this is flexible?
+> 
+> I'm assuming you are asking why it can be either 1 or 2 instead of exactly 2.
+> Both configurations can be supported in HW and it varies between boards. Some of them
+> have exactly one SDAM peripheral assigned for ADC usage and some may have two.
 
-Best,
+That's odd. How this can vary between boards with the same, exactly the
+same PMIC? Do you program entirely different FW for different boards
+with the same hardware (PMIC)?
 
-Tao
+This is programming model, so any differences here must be obvious.
 
->
-> Suzuki
->
->>>
->>>> +                conn.filter_src_dev = NULL；
->>>> +                conn.filter_src_dev = NULL;
->>
->> Sorry for my mistake here. I also want to set "filter_src_fwnode " to 
->> NULL if it is not a trace source.
->>
->> conn.filter_src_fwnode = NULL;
->
->
->>
->>
->> Best,
->>
->> Tao
->>
->>>
->>> Duplicated line ^
->>>
->>> Suzuki
->>>
->>>> +            }
->>>>
->>>> Best,
->>>>
->>>> Tao
->>>>
->>>>>
->>>>> Suzuki
->>>>>
->>>>>> +        }
->>>>>> +
->>>>>>           new_conn = coresight_add_out_conn(dev, pdata, &conn);
->>>>>>           if (IS_ERR_VALUE(new_conn)) {
->>>>>>               fwnode_handle_put(conn.dest_fwnode);
->>>>>> diff --git a/include/linux/coresight.h b/include/linux/coresight.h
->>>>>> index 9311df8538fc..f372c01ae2fc 100644
->>>>>> --- a/include/linux/coresight.h
->>>>>> +++ b/include/linux/coresight.h
->>>>>> @@ -172,6 +172,9 @@ struct coresight_desc {
->>>>>>    * @dest_dev:    a @coresight_device representation of the 
->>>>>> component
->>>>>>           connected to @src_port. NULL until the device is created
->>>>>>    * @link: Representation of the connection as a sysfs link.
->>>>>> + * @filter_src_fwnode: filter source component's fwnode handle.
->>>>>> + * @filter_src_dev: a @coresight_device representation of the 
->>>>>> component that
->>>>>> +        needs to be filtered.
->>>>>>    *
->>>>>>    * The full connection structure looks like this, where 
->>>>>> in_conns store
->>>>>>    * references to same connection as the source device's out_conns.
->>>>>> @@ -200,6 +203,8 @@ struct coresight_connection {
->>>>>>       struct coresight_device *dest_dev;
->>>>>>       struct coresight_sysfs_link *link;
->>>>>>       struct coresight_device *src_dev;
->>>>>> +    struct fwnode_handle *filter_src_fwnode;
->>>>>> +    struct coresight_device *filter_src_dev;
->>>>>>       atomic_t src_refcnt;
->>>>>>       atomic_t dest_refcnt;
->>>>>>   };
->>>>>
->>>
->
+Best regards,
+Krzysztof
+
 
