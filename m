@@ -1,88 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-38462-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38463-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id F05C69D396A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 12:22:56 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9EDB39D396B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 12:23:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4FBB8B21AB7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 11:19:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5E1A02829A4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 11:23:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3EBE219CD1B;
-	Wed, 20 Nov 2024 11:19:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 491F619A2A2;
+	Wed, 20 Nov 2024 11:22:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sglkLF7R"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="B7F2BWmS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CE3519D8A0
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Nov 2024 11:19:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F16C4C74
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Nov 2024 11:22:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732101565; cv=none; b=f5HJugIFdvQbxij7n29qJzNWfKoebh0tOqBHFgOn7Ps4J+H0hTvYwuaIM1DnZIH4osVXKfwk8eSsYGIU0QoPeL1i2d2UwRy3IE/Zq5/Q4MTVQka1+pcEr8Q0WnBMwZ2SVam6IPh8EpLDv+RfNyG16iWikA393XeLjufW9WntikM=
+	t=1732101778; cv=none; b=rbWNjNt6Sg8jOTU7kFwJmcZ1dMfj4O4k1FmkGeCsD2Gv9tp8d4nsU4/R2f3eyxeyZs6w36Mr9S6zY95UILAwYI4nM1b5zcZATtWmQQ7sCefAKdedR1xbrwXFQX2nujuQWxsY87u92uAv1OssGGlHo6stmE9dj/HU/6OWsDpW+KI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732101565; c=relaxed/simple;
-	bh=92Dmkw67Yjgb/1xLInbl4rH+zqF32qiTgg/ksPzkVxI=;
+	s=arc-20240116; t=1732101778; c=relaxed/simple;
+	bh=P9kkRy8zM31XFar1exxoX3R5DTgmyCvt93okga+jDl8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nfITZd24HfYTSK/n4sEa+T3aWqvioa0OV3DAKVnuRnep0BUys8umE94wk7d/OTnXzTANApysfk5qSnhybNygf9SlgEjYsTR8P1/895GRAUf/uLZY6K3eyfKuxPXr6HzAiYD1mUS7ow9MOSQt+9enn41kI6RsMkjJJ3Ujb1HHL7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sglkLF7R; arc=none smtp.client-ip=209.85.208.178
+	 Content-Type:Content-Disposition:In-Reply-To; b=Gg/fqxQHT6wFbDn4C///BOEPSDbTuUiaMfrIpvT+mICx2A/is8bZwA2tFvxfrbQCi+lOHREZT5x2cQFGhk/2EJC9z0eRGqnPX87KlYH5TAXyfcCAPXHmZr0m7baCFpgodPOzsvXXgbuO3SDP3k1c0fU6GUJYjbJWgD/y+CeTA2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=B7F2BWmS; arc=none smtp.client-ip=209.85.208.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2fb57f97d75so21538781fa.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Nov 2024 03:19:23 -0800 (PST)
+Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-2fb599aac99so43600011fa.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Nov 2024 03:22:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732101562; x=1732706362; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1732101774; x=1732706574; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=0rdRMEcIeKMxsgTSwvPC2Ggi3/Ka8/LNcXy0+kUwfLg=;
-        b=sglkLF7RQfwdkl6WwhseePbAlmVCwE7AAenf/kPDt+/3lGZ+Zfdv1ALOuqO3bea6YV
-         JEfrDY+EtRlwwcEW/5xgy0YrXWnvd24RabkFrOO2gwMxk7h4FfA8xI7qvjgCW+XoZuYa
-         nNkFzHg/feCHL8jNR01T3gxg1nzw3lP7cPCYcVqPiq/YzFcnqr5musqsbP/q5xAqF+x7
-         QUCKGdK1N02GFgkt9VstF4maOXvA6plbTwOnrnt5T+xJXxtmYEOvbACeIS9JC8UYrwKT
-         G1iPx8OTn279uqKv9KYSXym7uWX7W6T3io7tvCPjNyO3Rms08uY3cWp7qSxu4+p8PrnQ
-         EIWQ==
+        bh=bQiVlXJQi/VK9tRXY+qooanaI30URiLhdo7sIgDslow=;
+        b=B7F2BWmSBbWwQwjCLxJxekY0yzYJUiwAwYmdePxqMg6PTNZNQogzB926TXE8k6/+vh
+         x887ucwLEHizIdsbP+ke7w7GaGLQkrnuoNX/7oQ+VSKMWRCZER1IMIxirKlqKtu5kXN4
+         eQoC6b5piIjQkpzrLsyo/uRVF+lijhRJpNWxPOU+hF2GAhK7D/PWzDsllOzi9I7gTTrJ
+         ehpgLE5BB+pqqJVGfg9B2JL9kSqihCLG3TFMaDP7v5yA+hbPNBuMcICiXp/c0MP9vPPz
+         ukEgxrAz9THE24VkY6wgiBbIB/SdaB7BSMUBgPyEMhETfizrlEkJVxMVEoBiYjkHA0x4
+         7RcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732101562; x=1732706362;
+        d=1e100.net; s=20230601; t=1732101774; x=1732706574;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=0rdRMEcIeKMxsgTSwvPC2Ggi3/Ka8/LNcXy0+kUwfLg=;
-        b=vXrT5FrKl76GPoXirDsDthxAlvYrQ0NgrYq/s6MayP2Ex0R+ZChOp3WROp2HWyd/Qk
-         2JGow/DHxrO7vocUv4AcSVnmJ75WqwfFkwSPxeKJIaWnycp9GUz1GLN5I/Z3R0TJqaQl
-         S2iaq4KMud/QswZYOJVcBF4N2GSt2GCVYqJjBuw2ReUusF5Fk1PdA0O69bacbImgzlGs
-         +b7zbDnxJ6V5EUDM2Y4u+cfk4rAdd/O1tYRi+99dw1qZpWvM3CDcWUBdmQf63dNJPJVl
-         4tesslG1+bYLSDsrhD3chTvBg4kz6qGpo14HQZ8AqIFZZ2H6rZyntDkQhg5iBriCoTI/
-         SFSA==
-X-Forwarded-Encrypted: i=1; AJvYcCWc/3uOlIYl0eqr4Q97ymiapISfYt20aqkCGaD+d5iVMUAMuJtkGzLlypLZQUGAt3vgBuPpdabZieykJfI8@vger.kernel.org
-X-Gm-Message-State: AOJu0YyJt5vFTiQPuaW3IOt9jA+jRwL1t5JE65Xt7bGpA5Id+wqFPODy
-	ACFb2iiSnaF80kPMnryKu9CJernjgUucTlesDWe7GmKmeyD8cL2ngx7njVzrKkY=
-X-Google-Smtp-Source: AGHT+IFz4/wMpaCWcpDGZw/e6uCaZaeyezhXZTQfdXVBkzxU2f5cPxItg85GBW91OdibreTQE0mP0A==
-X-Received: by 2002:ac2:48ba:0:b0:53d:ab10:234a with SMTP id 2adb3069b0e04-53dc1333888mr741916e87.21.1732101561756;
-        Wed, 20 Nov 2024 03:19:21 -0800 (PST)
+        bh=bQiVlXJQi/VK9tRXY+qooanaI30URiLhdo7sIgDslow=;
+        b=BaPInr+fZ9+n4cfCG3jQyeoiw/a/oR9RsMFey4DhgcBtybrlhK2/HzI3Aw7RwVZww8
+         ElVuNlpOkWKgbgw1h8Dxl3Hn8W1Z7don+I6QG8mqB2GLoGKNhB13dyfNipaDRo8s70ZY
+         00E5sxHSB0nkUshZuWOaWz8YdlIoigW3kq1a/3QRNLtL+xJXmXQPYf+SzfiAMZQmgYJd
+         aYZruErK81NpPR+38/f48njs6UoPfrAQAh4dCu/y6OXv7o+AcKbsmDSfi6yIGcdX/aHU
+         7F1r4ErqRfCHvbQgWmCAPAcc6P074Mnp9+XGfXr7EhMsXsEeZjjqLfjbmZpB6gPPb8oG
+         pNFQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUQJIYHzhitiQhbwQidDtLsf4fCgClgAHRL81xLLDexJIKzS7BEYC2khpXvwdOvEHgCiNaxG80PqMbw3S8o@vger.kernel.org
+X-Gm-Message-State: AOJu0YwjBTR5LjYhBltOgrpK6+V69jGXH4msBc2xZ1l/f3tYiVJkN5wc
+	Myg0c7jEc5QwwkHbRmRqoQsqmt8bj7UCAHNAjan3zUilSUqrbjiE1qnPBZrpnS0=
+X-Google-Smtp-Source: AGHT+IHzeBEZkGiXTUGchf05G9qXy0QSvlmcCHEMFt2ig0UCdDl7oRuB2wCtA374ksARIUfZPEb4rg==
+X-Received: by 2002:a2e:bd0a:0:b0:2fa:cdd1:4f16 with SMTP id 38308e7fff4ca-2ff8dbff92emr12411911fa.14.1732101774356;
+        Wed, 20 Nov 2024 03:22:54 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53dbd4670e6sm595236e87.159.2024.11.20.03.19.20
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ff69b15797sm14946211fa.108.2024.11.20.03.22.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Nov 2024 03:19:21 -0800 (PST)
-Date: Wed, 20 Nov 2024 13:19:18 +0200
+        Wed, 20 Nov 2024 03:22:53 -0800 (PST)
+Date: Wed, 20 Nov 2024 13:22:50 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Akhil P Oommen <quic_akhilpo@quicinc.com>, 
-	Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>, Stephen Boyd <sboyd@kernel.org>, 
-	"Rafael J. Wysocki" <rafael@kernel.org>, Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Bjorn Andersson <andersson@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Connor Abbott <cwabbott0@gmail.com>, linux-pm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 04/11] drm/msm: adreno: add GMU_BW_VOTE feature flag
-Message-ID: <iw75ptavkqw3vybfov2f7koz5nh5lfzxcou3wey7rdsqt2gj5n@7luy2kqrzkj5>
-References: <20241119-topic-sm8x50-gpu-bw-vote-v2-0-4deb87be2498@linaro.org>
- <20241119-topic-sm8x50-gpu-bw-vote-v2-4-4deb87be2498@linaro.org>
+To: Vikash Garodia <quic_vgarodia@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, "Renjiang Han (QUIC)" <quic_renjiang@quicinc.com>, 
+	"linux-firmware@kernel.org" <linux-firmware@kernel.org>, "Dikshita Agarwal (QUIC)" <quic_dikshita@quicinc.com>, 
+	"Qiwei Liu (QUIC)" <quic_qiweil@quicinc.com>, "quic_zhgao@quicinc.co" <quic_zhgao@quicinc.com>, 
+	linux-arm-msm@vger.kernel.org
+Subject: Re: add venus firmware file for qcs615
+Message-ID: <pukoimsqhck5oymirmgiwad6s3l6frt7xbahp7juhvj3rt4622@wpajx6vyw5nl>
+References: <83153c5ab8374e008d62646f200f9a04@quicinc.com>
+ <ng4o7sdejoh4jn4nnarjd4lio4lbx2tiuiz5c6bigjbtxldinr@xl5wx6dmdivy>
+ <ab4f83c1-5cd6-a80b-fd85-ccc337c8f301@quicinc.com>
+ <pqoq64hk2jedmqta5fs4ktcadw4getwkgz324vtrzzotcurpaw@zc6dlhbqtsnz>
+ <a1bbc1d0-d3bd-e44e-e393-a7ade909a506@quicinc.com>
+ <CAA8EJpoDXKbF5cqb_vzE28zjdC6OC66Zxb5j030QXaCe+FUmfw@mail.gmail.com>
+ <egdqhgdiqqny57yiauiyekcvhxvebfttyncqoazslzjprwvakz@txvy7wn4vg7g>
+ <a259c98c-6c77-1c1e-e428-41c2550f7517@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -91,46 +92,63 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241119-topic-sm8x50-gpu-bw-vote-v2-4-4deb87be2498@linaro.org>
+In-Reply-To: <a259c98c-6c77-1c1e-e428-41c2550f7517@quicinc.com>
 
-On Tue, Nov 19, 2024 at 06:56:39PM +0100, Neil Armstrong wrote:
-> The Adreno GMU Management Unit (GNU) can also scale the DDR Bandwidth
-> along the Frequency and Power Domain level, but by default we leave the
-> OPP core vote for the interconnect ddr path.
+On Wed, Nov 20, 2024 at 04:40:51PM +0530, Vikash Garodia wrote:
 > 
-> While scaling via the interconnect path was sufficient, newer GPUs
-> like the A750 requires specific vote paremeters and bandwidth to
-> achieve full functionality.
-> 
-> While the feature will require some data in a6xx_info, it's safer
-> to only enable tested platforms with this flag first.
-> 
-> Add a new feature enabling DDR Bandwidth vote via GMU.
+> On 11/20/2024 4:09 PM, Dmitry Baryshkov wrote:
+> > On Thu, Nov 14, 2024 at 01:31:14PM +0200, Dmitry Baryshkov wrote:
+> >> On Thu, 14 Nov 2024 at 13:05, Vikash Garodia <quic_vgarodia@quicinc.com> wrote:
+> >>>
+> >>>
+> >>> On 11/14/2024 4:16 PM, Dmitry Baryshkov wrote:
+> >>>> On Thu, Nov 14, 2024 at 09:06:55AM +0530, Vikash Garodia wrote:
+> >>>>>
+> >>>>> On 11/13/2024 8:10 PM, Dmitry Baryshkov wrote:
+> >>>>>> On Wed, Nov 13, 2024 at 10:50:44AM +0000, Renjiang Han (QUIC) wrote:
+> >>>>>>> Hello
+> >>>>>>>
+> >>>>>>> The following changes since commit 6482750d396980a31f76edd5a84b03a96bbdf3fe:
+> >>>>>>>
+> >>>>>>>   Merge branch 'verb' into 'main' (2024-11-11 20:01:00 +0000)
+> >>>>>>>
+> >>>>>>> are available in the Git repository at:
+> >>>>>>>
+> >>>>>>>   git@git.codelinaro.org:clo/linux-kernel/linux-firmware.git<mailto:git@git.codelinaro.org:clo/linux-kernel/linux-firmware.git> video-firmware-qcs615
+> >>>>>>>
+> >>>>>>> for you to fetch changes up to 1e7f65883150d3b48307b4f0d6871c60151ee25b:
+> >>>>>>>
+> >>>>>>>   qcom: venus-5.4: add venus firmware file for qcs615 (2024-11-13 15:50:29 +0530)
+> >>>>>>>
+> >>>>>>> ----------------------------------------------------------------
+> >>>>>>> Renjiang Han (1):
+> >>>>>>>       qcom: venus-5.4: add venus firmware file for qcs615
+> >>>>>>>
+> >>>>>>> WHENCE                      |   1 +
+> >>>>>>
+> >>>>>> Could you please be more specific, what is the difference between the
+> >>>>>> existing file and a new file? According to the soc_vers the new file
+> >>>>>> supports sdm845. Should it instead replace the old firmware?
+> >>>>> SDM845, SC7180, qcs615 can be enabled on same firmware ideally, but due to a
+> >>>>> different signing for qcs615, it takes a separate bin (xxx_s6.mbn).
+> >>>>
+> >>>> Can SDM845 handle v6 signatures? It supports v5 and PSS. Or can QCS615
+> >>>> use v5 signatures?
+> >>> Infact we started with loading sc7180 firmware on qc615, video init failed. So
+> >>> far i have seen 2 categories in signing version for video bins, either default
+> >>> or v6 specific tool.
+> >>
+> >> Can firmware / security engineers actually advice us on using v5
+> >> firmware signatures with QCS615 _and_ with older platforms?
+> >> Existing venus-5.4/venus.mbn uses v3
+> > 
+> > Vikash, any updates on this topic? Would it be possible to have a single
+> > FW image with just v5 signatures?
+> Not yet Dmitry. Having a followup with relevant folks this friday to understand
+> the signing requirements across different SOCs, hopefully will be able to add
+> something on this by then.
 
-Squash into the implementation patch.
-
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->  drivers/gpu/drm/msm/adreno/adreno_gpu.h | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> index 4702d4cfca3b58fb3cbb25cb6805f1c19be2ebcb..394b96eb6c83354ae008b15b562bedb96cd391dd 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> @@ -58,6 +58,7 @@ enum adreno_family {
->  #define ADRENO_FEAT_HAS_HW_APRIV		BIT(0)
->  #define ADRENO_FEAT_HAS_CACHED_COHERENT		BIT(1)
->  #define ADRENO_FEAT_PREEMPTION			BIT(2)
-> +#define ADRENO_FEAT_GMU_BW_VOTE			BIT(3)
->  
->  /* Helper for formating the chip_id in the way that userspace tools like
->   * crashdec expect.
-> 
-> -- 
-> 2.34.1
-> 
+Ack, thank you.
 
 -- 
 With best wishes
