@@ -1,212 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-38452-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38454-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9795D9D38F7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 12:01:59 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 749759D390B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 12:04:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 39F121F23FAA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 11:01:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0263F1F2425D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 11:04:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C66D51A76B2;
-	Wed, 20 Nov 2024 11:00:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F0AA01A76D1;
+	Wed, 20 Nov 2024 11:02:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XQcDO3C7"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TZZy37Gr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1B421A4E77;
-	Wed, 20 Nov 2024 11:00:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DB0A1A7265
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Nov 2024 11:02:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732100407; cv=none; b=C1bTWB/Dz2+KG2XEwBjmstAwF4SmH5bAog1pOQYCMRQUopBL48Ip74ZwytDiuCSEQBJYLjT+lg7Gyx6xGZzFqEpiEbh4PpMNY48WN8I7kBUW0Koxfuhr20qed52ut7lS+nAqk5BBg1fdFo7QzxC/E1nUpyEcYUqL/XEMkfeWjTQ=
+	t=1732100558; cv=none; b=USVyQgjPzh/Bf10zSaRsHAdZ0/a/ZwGdua5Njs9SoguVvjTluPWoxGMwNlCb+qQZueKsJLMrSli9lct16393aadaWpQ9dBiJy9Bx68Q/2UNBQu6TWFDIp0AcjT/+SxPQaoABOpt4yLZF7zyVSZp2VjvEd1qt3YQgi6IJWSCOLlE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732100407; c=relaxed/simple;
-	bh=Sm0rX+FSTAdHbIUuipg8AflfiM27xqi8lxwbIDIKsyU=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References; b=rWX+PpX3PKFKHOjAbOE6D1eEDCHFsD7rJyjUOHV02dpbRqHk4LSbaG6hdB5DlC9ToUI4Uju6Fz+NPZ2PCU/XOiP5uuoiKjwiXrMgUj0YnyqF+IJ8xbyPRWowkcEpqLAmSTrK6JAbb0cu8pRcfIPx89y/88Au0MotPud1a181EUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=XQcDO3C7; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AK9GWJj025929;
-	Wed, 20 Nov 2024 11:00:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:date:from:in-reply-to:message-id:references:subject:to; s=
-	qcppdkim1; bh=uhOxfLJm7IAQxFMXnko7AWGcyTFeJVBwgwPDFqPcecM=; b=XQ
-	cDO3C7hk1d8768kMje7ioQRukuHYVIXwOTfbG6mKuZ+Ah4ifluS83Jxqr/VNSzNt
-	H/Pg22SR0CxtCumI/cf8PqWbJ70jOYjYmoW5lhVwjzh66rEdEOlKS9Yn2ucSy0KW
-	XsDU5xdARrMUCU3NdQubcgyFu1fuJYdqhM+VjeMDTMNCxRZHeSB6hOMjI6iNRRwN
-	BFPd/MfrT8GQRGsOqZw2K0nlUhV35JMRicjmuPumtrk4KqG28wT0VnOMebv+gMZY
-	cUhR5T6vQ02kalyuOePR1vFpSHoqA5EDquu8qXhxiMBiFiIEcVWwGQ9ydURiMr8Q
-	IDA8Xaw0YZc50tah4dVQ==
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 431byjge77-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 20 Nov 2024 11:00:02 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 4AKAxvu8013600;
-	Wed, 20 Nov 2024 10:59:57 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 42xmfm8jst-1;
-	Wed, 20 Nov 2024 10:59:57 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4AKAxvK7013584;
-	Wed, 20 Nov 2024 10:59:57 GMT
-Received: from hu-maiyas-hyd.qualcomm.com (hu-mukhopad-hyd.qualcomm.com [10.147.244.250])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 4AKAxv2U013581;
-	Wed, 20 Nov 2024 10:59:57 +0000
-Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 3978529)
-	id 78D7A5009EF; Wed, 20 Nov 2024 16:29:56 +0530 (+0530)
-From: Soutrik Mukhopadhyay <quic_mukhopad@quicinc.com>
-To: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
-        krzk+dt@kernel.org, conor+dt@kernel.org
-Cc: Soutrik Mukhopadhyay <quic_mukhopad@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_riteshk@quicinc.com,
-        quic_vproddut@quicinc.com, quic_abhinavk@quicinc.com
-Subject: [PATCH v4 2/2] arm64: dts: qcom: sa8775p-ride: Enable Display Port
-Date: Wed, 20 Nov 2024 16:29:54 +0530
-Message-Id: <20241120105954.9665-3-quic_mukhopad@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20241120105954.9665-1-quic_mukhopad@quicinc.com>
-References: <20241120105954.9665-1-quic_mukhopad@quicinc.com>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: pdFAVi4NYhdIGvCRLEEgKfysuIuX8wNK
-X-Proofpoint-ORIG-GUID: pdFAVi4NYhdIGvCRLEEgKfysuIuX8wNK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
- suspectscore=0 phishscore=0 lowpriorityscore=0 impostorscore=0
- malwarescore=0 priorityscore=1501 bulkscore=0 adultscore=0 mlxlogscore=999
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411200076
+	s=arc-20240116; t=1732100558; c=relaxed/simple;
+	bh=zeRJrbbWDExW4KbfV8yDdwcoYd/3egm/qiRgnU8jK4g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YBIuiGEhJQF4LG6P7EFIVBPAHzS81zbICc5hT/Uw5TgUDa1Go4Y6dSjx1ntfh3Rk7aksIW6qdRlgBYJDoF9utDLWJeoSYo/exxJz342vkq8w/HBLZ/42+owR/5754FP9jhar3rlAmHVvUkQRRm1WYBvhhhqqumxRisRHW1tfeZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TZZy37Gr; arc=none smtp.client-ip=209.85.167.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-53d8c08cfc4so4289600e87.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Nov 2024 03:02:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1732100555; x=1732705355; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=a5zgbWAlYfYCr8Nk6Jg9k5X2+R3v6k9oDP6EluhSmbg=;
+        b=TZZy37Grx98ttt4l66+SPVJOoobCGxeM/M4tvkRscLlenkccuB1dj/fnpq081NEvya
+         bzKqISROu3oD2VuD953fKb0WlKnFMl8LjOMHJYZzZuqexvo6D5FPThYi7ZuOODWFcnk6
+         5W7/YBwO7rFXyOlRQ8EL/I8PR0NCYZLXxf8lVU+w95gXuotgDMQDbOeUGKHi8kOR2X0K
+         bbCZNqVgrW1T5bYtecbTkzEmCt3vwJY58ZixdKJ3xEMBKsjwwbHfFvW2UOO/+V0CbBo/
+         Ll4wURzbd1GZDytaPhjh5LUBHNQssLV48SV+yli6xxNd3Phi0VMd4Vmf1bVlv2NAwJLP
+         wtRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732100555; x=1732705355;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=a5zgbWAlYfYCr8Nk6Jg9k5X2+R3v6k9oDP6EluhSmbg=;
+        b=GqCV8W52eSN1HCIcU04AUnDSOoTzVPGeabk7cYAXC7F+80UQ2Lp8gVAqll8hjPRO4w
+         hW49PKZXhHmC18pzmQe82H2Pj3QCMK6JDH9Nfw7sPfO/4LWOe0LHh6pl9z4nHtMWzS3U
+         uctgu1Q2gGSzmsHVRh3IS2WvkDNkC97lSss9hyikcDRDYVli7uZ/QQtGEjuM/jKq+dFp
+         CJhb961woV52hy4vKEbdYAwKmjeK1LrIZL3pkFkS8IGSWUzWPHdDFQkxsk6dbdeNJJFg
+         SrWi7WZIdyc3ANppf/yiIU0e9jmi0BGpO+qiZsvzUFpC9ylG3cGbx+D5zJ9g2nj1CYse
+         wJWw==
+X-Forwarded-Encrypted: i=1; AJvYcCVaFHV8Lms+COx1Qf8bVZo1aWWrb4ESdzSuHvYg0CPm1TUu7eoLf8633IuLmnGJu3Ut50UKktEdFPM8mFqH@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz60kkguDZ5oMXa595K4aBgEYsFYp7EsnSa+HMXKuU7ZhQiFVJ7
+	2q+bPKLZpEGpgzXfX926fIYLaZKaFEa9YXcaxJBca3Gr/ra+i0QG2m6WD/10Hm0=
+X-Google-Smtp-Source: AGHT+IHKWiTrRrCzYnYM6d7Ym7wDAknR4wn2POzDwbTPgBhBhzfbphYglKnHr9g6u4D92E9megUh/Q==
+X-Received: by 2002:a05:6512:3d19:b0:53d:a86a:6b2b with SMTP id 2adb3069b0e04-53dc136a95emr1101614e87.35.1732100555170;
+        Wed, 20 Nov 2024 03:02:35 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53dbf09664esm394046e87.162.2024.11.20.03.02.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 20 Nov 2024 03:02:34 -0800 (PST)
+Date: Wed, 20 Nov 2024 13:02:32 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Dheeraj Reddy Jonnalagadda <dheeraj.linuxdev@gmail.com>
+Cc: robdclark@gmail.com, quic_abhinavk@quicinc.com, 
+	linux-arm-msm@vger.kernel.org, sean@poorly.run, marijn.suijten@somainline.org, 
+	airlied@gmail.com, simona@ffwll.ch, quic_bjorande@quicinc.com, 
+	quic_parellan@quicinc.com, quic_khsieh@quicinc.com, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, dianders@chromium.org
+Subject: Re: [PATCH drm-next] drm/msm/dp: Fix potential division by zero issue
+Message-ID: <piembwzz7x6plsps3umjg3b3pi2ii44svmeii3wwtydtriceny@uqq7ck2ge5zz>
+References: <20241120050451.100957-1-dheeraj.linuxdev@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241120050451.100957-1-dheeraj.linuxdev@gmail.com>
 
-Enable DPTX0 and DPTX1 along with their corresponding PHYs for
-sa8775p-ride platform.
+On Wed, Nov 20, 2024 at 10:34:51AM +0530, Dheeraj Reddy Jonnalagadda wrote:
+> The variable pixel_div can remain zero due to an invalid rate input,
 
-Signed-off-by: Soutrik Mukhopadhyay <quic_mukhopad@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 80 ++++++++++++++++++++++
- 1 file changed, 80 insertions(+)
+No, it can not. Rate is set by the driver, which knowns which rates are
+supported. 
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-index adb71aeff339..4847e4942386 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-@@ -27,6 +27,30 @@
- 	chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
-+
-+	dp0-connector {
-+		compatible = "dp-connector";
-+		label = "DP0";
-+		type = "full-size";
-+
-+		port {
-+			dp0_connector_in: endpoint {
-+				remote-endpoint = <&mdss0_dp0_out>;
-+			};
-+		};
-+	};
-+
-+	dp1-connector {
-+		compatible = "dp-connector";
-+		label = "DP1";
-+		type = "full-size";
-+
-+		port {
-+			dp1_connector_in: endpoint {
-+				remote-endpoint = <&mdss0_dp1_out>;
-+			};
-+		};
-+	};
- };
- 
- &apps_rsc {
-@@ -421,6 +445,50 @@
- 	status = "okay";
- };
- 
-+&mdss0 {
-+	status = "okay";
-+};
-+
-+&mdss0_dp0 {
-+	status = "okay";
-+
-+	pinctrl-0 = <&dp0_hot_plug_det>;
-+	pinctrl-names = "default";
-+};
-+
-+&mdss0_dp0_out {
-+	data-lanes = <0 1 2 3>;
-+	link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
-+	remote-endpoint = <&dp0_connector_in>;
-+};
-+
-+&mdss0_dp0_phy {
-+	status = "okay";
-+
-+	vdda-phy-supply = <&vreg_l1c>;
-+	vdda-pll-supply = <&vreg_l4a>;
-+};
-+
-+&mdss0_dp1 {
-+	status = "okay";
-+
-+	pinctrl-0 = <&dp1_hot_plug_det>;
-+	pinctrl-names = "default";
-+};
-+
-+&mdss0_dp1_out {
-+	data-lanes = <0 1 2 3>;
-+	link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
-+	remote-endpoint = <&dp1_connector_in>;
-+};
-+
-+&mdss0_dp1_phy {
-+	status = "okay";
-+
-+	vdda-phy-supply = <&vreg_l1c>;
-+	vdda-pll-supply = <&vreg_l4a>;
-+};
-+
- &pmm8654au_0_gpios {
- 	gpio-line-names = "DS_EN",
- 			  "POFF_COMPLETE",
-@@ -527,6 +595,18 @@
- };
- 
- &tlmm {
-+	dp0_hot_plug_det: dp0-hot-plug-det-state {
-+		pins = "gpio101";
-+		function = "edp0_hot";
-+		bias-disable;
-+	};
-+
-+	dp1_hot_plug_det: dp1-hot-plug-det-state {
-+		pins = "gpio102";
-+		function = "edp1_hot";
-+		bias-disable;
-+	};
-+
- 	ethernet0_default: ethernet0-default-state {
- 		ethernet0_mdc: ethernet0-mdc-pins {
- 			pins = "gpio8";
+> leading to a potential division by zero issue. This patch fixes it and
+> the function now logs an error and returns early.
+
+See Documentation/process/submitting-patches.rst, look for "This patch"
+string.
+
+> 
+> Additionally, this patch resolves trailing whitespace issues detected
+> by checkpatch.pl in the same file.
+
+Additionally perform ... => separate commits.
+
+> 
+> Signed-off-by: Dheeraj Reddy Jonnalagadda <dheeraj.linuxdev@gmail.com>
+> ---
+>  drivers/gpu/drm/msm/dp/dp_catalog.c | 8 +++++---
+>  1 file changed, 5 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
+> index b4c8856fb25d..e170f70f1d42 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_catalog.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
+> @@ -225,7 +225,7 @@ int msm_dp_catalog_aux_clear_hw_interrupts(struct msm_dp_catalog *msm_dp_catalog
+>   * This function reset AUX controller
+>   *
+>   * NOTE: reset AUX controller will also clear any pending HPD related interrupts
+> - * 
+> + *
+>   */
+>  void msm_dp_catalog_aux_reset(struct msm_dp_catalog *msm_dp_catalog)
+>  {
+> @@ -487,8 +487,10 @@ void msm_dp_catalog_ctrl_config_msa(struct msm_dp_catalog *msm_dp_catalog,
+>  		pixel_div = 2;
+>  	else if (rate == link_rate_hbr2)
+>  		pixel_div = 4;
+> -	else
+> +	else {
+>  		DRM_ERROR("Invalid pixel mux divider\n");
+> +		return;
+> +	}
+>  
+>  	dispcc_input_rate = (rate * 10) / pixel_div;
+>  
+> @@ -579,7 +581,7 @@ u32 msm_dp_catalog_hw_revision(const struct msm_dp_catalog *msm_dp_catalog)
+>   * This function reset the DP controller
+>   *
+>   * NOTE: reset DP controller will also clear any pending HPD related interrupts
+> - * 
+> + *
+>   */
+>  void msm_dp_catalog_ctrl_reset(struct msm_dp_catalog *msm_dp_catalog)
+>  {
+> -- 
+> 2.34.1
+> 
+
 -- 
-2.17.1
-
+With best wishes
+Dmitry
 
