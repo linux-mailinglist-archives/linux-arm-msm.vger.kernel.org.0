@@ -1,90 +1,69 @@
-Return-Path: <linux-arm-msm+bounces-38409-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38410-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4E3A89D3314
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 06:05:06 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C46239D3347
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 06:53:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D26D1B248DF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 05:05:03 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 733A11F23367
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 05:53:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 108EE14D70B;
-	Wed, 20 Nov 2024 05:04:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 90382156F57;
+	Wed, 20 Nov 2024 05:53:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fqogr6nv"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oRyTqoIn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4280879CD;
-	Wed, 20 Nov 2024 05:04:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98C7078C76;
+	Wed, 20 Nov 2024 05:53:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732079099; cv=none; b=i8j1n+o2TMYmkRzA6rOnRobtQq6+a7gUr/tqJzpyEvabbCJ/yTUaPMG6f5CY/mY9xuhglEtXRXWa9/Pn5Jn8BcykZb8R2dbJe2SNLjd7q+Em82DSN4eeXL1jA7JSVsvT0QoulA4rgRtS/6qhPyHlsGVyj3F9QiZbACKPll8MM5c=
+	t=1732082010; cv=none; b=oN5UOq5r3KZKHSq3CXR/PWL33TP8wgXfQ+A9v46rCYBZ8GjpfBTuNBTUbnOdPqOPrfISZuIU3/XH0hMSEgD8qMWe5V4srxI5DmIfX99Da+0/9+pxj7K+wKQwYusa/fFKq95aKk35huji5XxVRtWaGFetWT3+okfOfR96JwLbvRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732079099; c=relaxed/simple;
-	bh=vwdLdlZBdR2XgCTkCGvmFTzN+2BPVNW04Yb54bofmFY=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=hX07gPRdTPiiqQgnoZaIXL7ZKNfQ2jbGe+oKU70oEolrANazV39KEeWT9gEztEB5uAqA7kWbAAazav6GFICrPV3436k/Pd13WguLG3O0B5AIGNLqfzu7T6EzvJp+KIljjUI07RpfSxopZMbGTVB915OwahuD6nldKJsc9lcLPyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fqogr6nv; arc=none smtp.client-ip=209.85.215.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-7ee020ec76dso1358995a12.3;
-        Tue, 19 Nov 2024 21:04:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732079096; x=1732683896; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=iDzqRQmbV2PA+ACm5mYhCZYmsznh/BcrPcsNX+5Rzd4=;
-        b=Fqogr6nvANL4kA/rUmjAAH2BB3qUFAUEk6UpvSD5q96kDZjpMak4haTS9AHADtPTai
-         g9eJMGGFIb7txguNbkoSGWuGF46/8dj5VqoS+FadaXPeEkFHqGfZ35OxeVaZa5d+G6Cn
-         QS2g252ZxPcJqAjeC8BHEgoezoBnOGwgBwfcQbeYI88/UF6UaiaRrdz+6fZH9JUN5JYh
-         dxge47q5AZ2oHGDBTxbTEGXN9+245CmjAzkDGHlkJHQGushgD7KxQREXtM4MSDRsW29k
-         w6RzbikFMniz1vjfiiwDABCzrIotB5IIK6vHUrtQEUX7aQVdj8gfkkmlfD1tJ/XopIpg
-         UErQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732079096; x=1732683896;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=iDzqRQmbV2PA+ACm5mYhCZYmsznh/BcrPcsNX+5Rzd4=;
-        b=aAb/wrLHmRd0a0Aem7scfEmAaLpuEosoFinA6UTxFT8SZ0toFchMQfEDvXJMYwGnyG
-         RuLzIZjaq7TPaMmer8DLOSJdBYoeCT+iWZP71lTvNxFAqJpH4O/TDYZQNKrylnpG9sc1
-         M6OeX+yVCxZ8QQQh4afHTL9+agJ9K/XtCDB3CVc+4z+qUCcEzm19bpua/me17zRAXlpZ
-         r+ubxhkNbmKxM/0bOJTJQjeff8VDD1RWzTiuaUXdpRcqeP+CFEL3zY4IUwgZPHoR96Sk
-         5wjYcd60tX3N7nSvdRyFJjcxI/mB5+oljshwwVySNye6xmiA3JicnOV8huRrCmZJX8lc
-         0Fhg==
-X-Forwarded-Encrypted: i=1; AJvYcCWvEkyqFMWDQbGlfbMTDyzSwqCYNhooiOmXuVynrSr/eDbE/7Aqzy8Y8FJR7cO1QJY7eGfLxEJeHKHrXZsd@vger.kernel.org, AJvYcCXYCndcnWlv9KKHAWGg0l/WUoVVhMHZ4SLlxnZyeLbm7oNRg27hAxqcnt2QvKcH3BZVsnoTz/HgrLGhWJD0@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywt7Yim056PVAGEGu2fKpCyONMOVuLiT/oaJDNfyc1/IqkS3wFn
-	wvuaM0xKn+FnQKxGrg7vuQRH3G6y/6Unc9vq7V/BP2gXk3ur0q4B
-X-Google-Smtp-Source: AGHT+IGXHKrgOAEXK8lTj10qUqfAMieZLXkbaFv8HzsFgHnzL3kEMyr/0wjhIgmVWuNZ4D1J6pHREg==
-X-Received: by 2002:a05:6a21:6d92:b0:1db:f642:8d8b with SMTP id adf61e73a8af0-1ddb09139d4mr2281960637.45.1732079096328;
-        Tue, 19 Nov 2024 21:04:56 -0800 (PST)
-Received: from HOME-PC ([223.185.132.211])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-724befa6f7fsm623414b3a.134.2024.11.19.21.04.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Nov 2024 21:04:56 -0800 (PST)
-From: Dheeraj Reddy Jonnalagadda <dheeraj.linuxdev@gmail.com>
-To: robdclark@gmail.com,
-	quic_abhinavk@quicinc.com,
-	dmitry.baryshkov@linaro.org,
-	linux-arm-msm@vger.kernel.org
-Cc: sean@poorly.run,
-	marijn.suijten@somainline.org,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	quic_bjorande@quicinc.com,
-	quic_parellan@quicinc.com,
-	quic_khsieh@quicinc.com,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org,
-	dianders@chromium.org,
-	Dheeraj Reddy Jonnalagadda <dheeraj.linuxdev@gmail.com>
-Subject: [PATCH drm-next] drm/msm/dp: Fix potential division by zero issue
-Date: Wed, 20 Nov 2024 10:34:51 +0530
-Message-Id: <20241120050451.100957-1-dheeraj.linuxdev@gmail.com>
+	s=arc-20240116; t=1732082010; c=relaxed/simple;
+	bh=jhO+MVAyk6A0ALucdUV3SKoONq3wyur4YDIg44CpDyw=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=H/xGwhkmEKyz0efF6DLOFJl6MWhu0FM+R9aAHEi8z/A4NY6S2Tc650XeCphE7TlO5NDexDC10rWTQgU4y3SwqsMAyCqSJYI3mGlGJF2GuabPJW1uf5KK0cf2i2f6OcIbmmLJPiUnEpKfHFjE95v0h0raLnieYI+kj3bgNrt58Yc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=oRyTqoIn; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AJIFE6l030154;
+	Wed, 20 Nov 2024 05:53:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=TsDY9yAdf/ePyQdc/w8aQp
+	jGS1f8pDLXuad5PrYIUig=; b=oRyTqoIncVR7WqHFsvbkH4V/x+KydvgELOdL8m
+	uDDM9HjMv31CgrHjc8lfTLWmSzJdzNeQu2pMrrYegaLH67IFtlIotik0bnMzwKGx
+	8Oiyldo/kK8fJftOuXwKeU2UTV24I5uU48ySsAvw8BCToVUZVAy0q4/81tPHmRib
+	q8d2uRN7UaupnxYOfaXsJUdWvLoOwSyT/ar3196JG5jP0/wCv1C5naiOD8BNDSKp
+	yTX5E7jW+a7oL1sJ8zykLzR1803c+r5WwZDrpifxmo9tgDm/K9uSjCPmAR51r/Kw
+	IQjxA54zn9kJH1A/hxl3tGJ+Isx7TS6CEbS6CGQvIgXOnImw==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4308y6cv9s-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 20 Nov 2024 05:53:06 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AK5r6An031559
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 20 Nov 2024 05:53:06 GMT
+Received: from hu-mmanikan-blr.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 19 Nov 2024 21:53:01 -0800
+From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+To: <wim@linux-watchdog.org>, <linux@roeck-us.net>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <quic_rjendra@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-watchdog@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+CC: <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
+Subject: [PATCH 0/2] Add watchdog support for IPQ5424
+Date: Wed, 20 Nov 2024 11:22:46 +0530
+Message-ID: <20241120055248.657813-1-quic_mmanikan@quicinc.com>
 X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -93,53 +72,33 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: grXfIcVeyE9uCWzTQF5zZ-btSUHW0sJH
+X-Proofpoint-GUID: grXfIcVeyE9uCWzTQF5zZ-btSUHW0sJH
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ mlxlogscore=756 suspectscore=0 mlxscore=0 bulkscore=0 malwarescore=0
+ lowpriorityscore=0 spamscore=0 clxscore=1011 adultscore=0 phishscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411200041
 
-The variable pixel_div can remain zero due to an invalid rate input,
-leading to a potential division by zero issue. This patch fixes it and
-the function now logs an error and returns early.
+Add a watchdog node to the IPQ5424 device tree and update the relevant
+bindings accordingly.
 
-Additionally, this patch resolves trailing whitespace issues detected
-by checkpatch.pl in the same file.
+Manikanta Mylavarapu (2):
+  dt-bindings: watchdog: Document Qualcomm IPQ5424
+  arm64: dts: qcom: ipq5424: Add watchdog node
 
-Signed-off-by: Dheeraj Reddy Jonnalagadda <dheeraj.linuxdev@gmail.com>
----
- drivers/gpu/drm/msm/dp/dp_catalog.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml | 1 +
+ arch/arm64/boot/dts/qcom/ipq5424.dtsi                    | 7 +++++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
-index b4c8856fb25d..e170f70f1d42 100644
---- a/drivers/gpu/drm/msm/dp/dp_catalog.c
-+++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
-@@ -225,7 +225,7 @@ int msm_dp_catalog_aux_clear_hw_interrupts(struct msm_dp_catalog *msm_dp_catalog
-  * This function reset AUX controller
-  *
-  * NOTE: reset AUX controller will also clear any pending HPD related interrupts
-- * 
-+ *
-  */
- void msm_dp_catalog_aux_reset(struct msm_dp_catalog *msm_dp_catalog)
- {
-@@ -487,8 +487,10 @@ void msm_dp_catalog_ctrl_config_msa(struct msm_dp_catalog *msm_dp_catalog,
- 		pixel_div = 2;
- 	else if (rate == link_rate_hbr2)
- 		pixel_div = 4;
--	else
-+	else {
- 		DRM_ERROR("Invalid pixel mux divider\n");
-+		return;
-+	}
- 
- 	dispcc_input_rate = (rate * 10) / pixel_div;
- 
-@@ -579,7 +581,7 @@ u32 msm_dp_catalog_hw_revision(const struct msm_dp_catalog *msm_dp_catalog)
-  * This function reset the DP controller
-  *
-  * NOTE: reset DP controller will also clear any pending HPD related interrupts
-- * 
-+ *
-  */
- void msm_dp_catalog_ctrl_reset(struct msm_dp_catalog *msm_dp_catalog)
- {
 -- 
 2.34.1
 
