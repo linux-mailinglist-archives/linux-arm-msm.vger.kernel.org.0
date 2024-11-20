@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-38544-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38545-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 76A0E9D4073
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 17:47:47 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 544799D4079
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 17:48:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E8CBA285809
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 16:47:45 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0D25A1F25F67
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 16:48:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA5AD14F132;
-	Wed, 20 Nov 2024 16:47:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1269A154439;
+	Wed, 20 Nov 2024 16:47:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ScZtAV0r"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HN7S8qGL"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99DE614A4DF;
-	Wed, 20 Nov 2024 16:47:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D18FB24B28;
+	Wed, 20 Nov 2024 16:47:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732121253; cv=none; b=lNs3pzGHrmewTDIxbH88I9Xb+f5l2dqd0C/B2r9zZPo7oogHuETSiu4isBkckpR4vWG9nUP0tiKrBFVuDq3P498P3cisT2a1Q+nZhHLteeIYlebNcojyUWFXsfulhnaQd3TmcERfeQNAXWCob7+SoNUpye4wyxNOD82WKFMMHDk=
+	t=1732121272; cv=none; b=mol1bADFUk79H+jIOB4NJg4ugHB2NelE2XvvOG02ukcjx12jCradPQcPI4tS8ec6auwMNKU/L4XZZ5ffX8nHtbXswRbeqzy21yahX2h+y6gyQxFHCa2BoP2NGtxLYYkapQyG/HBfS71YS1IX/YwZ/JuVRDEhbdNyUXi1woVdDj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732121253; c=relaxed/simple;
-	bh=wUnQ+kMKYblTOx0L6js9IumN8GCJdPiA6Np3YbhtkHM=;
+	s=arc-20240116; t=1732121272; c=relaxed/simple;
+	bh=IcHBfVHmXN1rcivxMaZb/dIkTerQ7zPP/+NDapASb0I=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IdEpGp4057eGs9/DgpM9QC5o2mGJMGDMTArNZWm/tkJjpmpgPZwMsng8s/4U1yhJwtNrfBCsUvw3OLqbCBr6jjRZ1/ue3hTdaj/HLT8rTg0xMjgFmphJ4XEmcPGhfbkWsq+sSlm4AtJWPKXcpqWWhJdCUVFQC/CMlPNr3fj8O5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ScZtAV0r; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57FDEC4CECD;
-	Wed, 20 Nov 2024 16:47:29 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=irXhC0g360MzhTbW3IPZurjbJUxGmPtuIjHMfdYlvwqgVIBUnWJYfC7QnI/58NpwtU4QIVZt6QNQWFzR9vM8wMNLtm+1VkaDhhgUDQ2LZgh6qt7u/B9KPQH/R+xV7ko4f33OULPuz6V4xndIgmn4XstGdfwfmValTo0QRQ8gXKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HN7S8qGL; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A116CC4CED1;
+	Wed, 20 Nov 2024 16:47:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732121253;
-	bh=wUnQ+kMKYblTOx0L6js9IumN8GCJdPiA6Np3YbhtkHM=;
+	s=k20201202; t=1732121272;
+	bh=IcHBfVHmXN1rcivxMaZb/dIkTerQ7zPP/+NDapASb0I=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=ScZtAV0rb2M2up6On4eT/pJc10kSTSYBjb1mDZv3Xuh4ao56htDZcVzFCi/ADG1Qh
-	 w/y4zHj2yO9GdzKW5rype1ov53VHiLPcQBhempP95W57AGh8hsxFq/7qU/d669imLo
-	 uQTWZxTTZYSRJL4bHrlCu5L7SjcYQXWPadaHWusnhlfstELMKahIAJy4zwNsInhE+x
-	 BVm/fjiAx6JRDMKfrJpdsaSsAuILkxQ5zE7DrDoquEBV4iQKWsT721bsQeH0DsnLcV
-	 8ruTZbZEHkN6DjrAt91HmAnrJ1xmN3cBE6s2flGkmkJWfi5ps7wDhcL+z3Gr+G4pB8
-	 h0mhPdqTYvoSg==
-Message-ID: <6ef7acc9-38bd-4441-bc2d-9beb47ab2580@kernel.org>
-Date: Wed, 20 Nov 2024 17:47:27 +0100
+	b=HN7S8qGLG0mLtkKWaQzTR6Kl+uiLqa3asIO4d5pPva+FuesBmngoTKgDBOF8GTZox
+	 04WCjKqyLpunSfesJvj6Fph6B0Dgmr1UDxuOpVk+EODA0bEz/KI8xnl72mnutllCBT
+	 HprgaQF+dmX0KqXHDyeqpFQ8bA4iGC7x9mrfaFZfK72VRRlTpkoHm+O1vV+BKPxGdX
+	 /SWLyyvwgc1U50YlhvPVB9TBOEqXo00rk3ynUIeM+OFqs1rU2I6bn1bZWMVY20mITS
+	 49zsECGOGrAaLocooRfM6TbAM8p3Jewd5IyUdpYpqd4Z0NTmB2Gv5z/2eOuUAy0/Qx
+	 fQhJyhtm7tNqQ==
+Message-ID: <516e0bdd-d9a2-41cb-a4e4-a4843e66523e@kernel.org>
+Date: Wed, 20 Nov 2024 17:47:45 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/4] dt-bindings: bluetooth: Add qca6698 compatible
- string
+Subject: Re: [PATCH v2 3/4] arm64: dts: qcom: sa8775p-ride: update BT nodes
 To: Cheng Jiang <quic_chejiang@quicinc.com>,
  Marcel Holtmann <marcel@holtmann.org>,
  Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Rob Herring
@@ -64,9 +63,9 @@ Cc: linux-bluetooth@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
  quic_mohamull@quicinc.com
 References: <20241120095428.1122935-1-quic_chejiang@quicinc.com>
- <20241120095428.1122935-3-quic_chejiang@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+ <20241120095428.1122935-4-quic_chejiang@quicinc.com>
 Content-Language: en-US
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -110,13 +109,42 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20241120095428.1122935-3-quic_chejiang@quicinc.com>
+In-Reply-To: <20241120095428.1122935-4-quic_chejiang@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 20/11/2024 10:54, Cheng Jiang wrote:
-> Add QCA6698 qcom,qca6698-bt compatible strings.
-We see this from the diff. Say something useful...
+> Add product-variant property to specify the IoT product line.
+> Update the chip soc type, SA8775P-ride platform uses the QCA6698
+> chip, which is compatible with the WCN6855. It's necessary to use this
+> new SoC type to distinguish it from projects using WCN chips.
+> 
+> Signed-off-by: Cheng Jiang <quic_chejiang@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
+> index 3fc62e123689..da52f425c676 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
+> @@ -856,7 +856,8 @@ &uart17 {
+>  	status = "okay";
+>  
+>  	bluetooth {
+> -		compatible = "qcom,wcn6855-bt";
+> +		compatible = "qcom,qca6698-bt";
+
+Breaks users.
+
+> +		qcom,product-variant = <0x20000>;
+
+Nope.
+
+>  
+>  		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
+>  		vddaon-supply = <&vreg_pmu_aon_0p59>;
+
 
 Best regards,
 Krzysztof
