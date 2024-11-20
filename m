@@ -1,201 +1,226 @@
-Return-Path: <linux-arm-msm+bounces-38494-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38495-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id A98DD9D3ACE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 13:39:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B3FC39D3AD2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 13:40:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 64BCBB23232
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 12:39:29 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A2B80B21DDD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 12:40:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 809ED1A3029;
-	Wed, 20 Nov 2024 12:39:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A40AC1A3BAD;
+	Wed, 20 Nov 2024 12:40:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="eR2CqMgB";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="of2M/yvE";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="eR2CqMgB";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="of2M/yvE"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NWpIpd0K"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C106C19F432;
-	Wed, 20 Nov 2024 12:39:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6CAF19EED7
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Nov 2024 12:40:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732106363; cv=none; b=WRXcVBTbJkg1plU/h19myJlXptyoYcOgRo60bssGzc+hdv0MaVKfcIix9pF/fsUvJpCte4kIgDTGDBOTjQk328Tu31Gxw/Vf1mk9GVG+EDT73wWwR3d8d5dk576KWAdEaq9x9EvsK5KqXXcAVLOSc02uXNl3ch6Qm2UGw6gSLRQ=
+	t=1732106448; cv=none; b=ir0j4dx8PC5AOcDJyUXANfhx1tJuOy2SYs93COkKMaQbwdS/kQoBHuXt84Cvbsi3z9AwYTnSBNJUq96ORHnLZUYNBlSa9pOyToKAkEOfSkPtswtiZ+vWrWtc9fNzzveCjh7oVGrpXiW8med618T94TLLdssk6tWK5nShjDy1Hm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732106363; c=relaxed/simple;
-	bh=xeMGb/D8nMTzxROFUPSvZVlLdK0LsDnTnJEJvQ1csGU=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EVcdyUpbaAgcgyAFLEGeIhEr+5RDr3a6IGjYQQMVAhSMs6mx+IH69szDm/sxn/Ir/S4M3jd2OJhFRlZy3oLRt2mLUeJioFLa6Gg5BbkYYdiOlx7G8rB8gtAwUHBSuLVUH6dVQ677DTbTYWM2ue7ywhjGAesMS4o/55dTnJT0dts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=eR2CqMgB; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=of2M/yvE; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=eR2CqMgB; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=of2M/yvE; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id B699C1F79C;
-	Wed, 20 Nov 2024 12:39:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1732106359; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=W9mjT+B4JZ4+Oh+HgNPt0ag3rPOFwQMa/YzT5RYsfR0=;
-	b=eR2CqMgBNGl/bKJfd7HouvsQwoRxGNwAqy9gCUBd6xsOcpw5OMGj6VXBB1CUauN+tPS8zz
-	xFzqOL8l0eaSo5iqNd66Gnm3WvBZElDIMG/qdRFw1DCwUgvb1u6fZFZt0FipDg8leDUaGm
-	ijLL0SKVM4DQbMpd2yMfjv33Wsr0djA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1732106359;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=W9mjT+B4JZ4+Oh+HgNPt0ag3rPOFwQMa/YzT5RYsfR0=;
-	b=of2M/yvEMK2Wr7x3kdbx3f6KbzE/uCBZDOBIbETizV/JP9Ez+F8obkmFCgHNhqhYfNcwFb
-	2UIJuAdLjcSoAHBQ==
-Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=eR2CqMgB;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="of2M/yvE"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1732106359; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=W9mjT+B4JZ4+Oh+HgNPt0ag3rPOFwQMa/YzT5RYsfR0=;
-	b=eR2CqMgBNGl/bKJfd7HouvsQwoRxGNwAqy9gCUBd6xsOcpw5OMGj6VXBB1CUauN+tPS8zz
-	xFzqOL8l0eaSo5iqNd66Gnm3WvBZElDIMG/qdRFw1DCwUgvb1u6fZFZt0FipDg8leDUaGm
-	ijLL0SKVM4DQbMpd2yMfjv33Wsr0djA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1732106359;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=W9mjT+B4JZ4+Oh+HgNPt0ag3rPOFwQMa/YzT5RYsfR0=;
-	b=of2M/yvEMK2Wr7x3kdbx3f6KbzE/uCBZDOBIbETizV/JP9Ez+F8obkmFCgHNhqhYfNcwFb
-	2UIJuAdLjcSoAHBQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 78427137CF;
-	Wed, 20 Nov 2024 12:39:19 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id kszVHHfYPWc/EAAAD6G6ig
-	(envelope-from <tiwai@suse.de>); Wed, 20 Nov 2024 12:39:19 +0000
-Date: Wed, 20 Nov 2024 13:39:19 +0100
-Message-ID: <875xoi3wqw.wl-tiwai@suse.de>
-From: Takashi Iwai <tiwai@suse.de>
-To: Wesley Cheng <quic_wcheng@quicinc.com>
-Cc: Greg KH <gregkh@linuxfoundation.org>,
-	<srinivas.kandagatla@linaro.org>,
-	<mathias.nyman@intel.com>,
-	<perex@perex.cz>,
-	<conor+dt@kernel.org>,
-	<dmitry.torokhov@gmail.com>,
-	<corbet@lwn.net>,
-	<broonie@kernel.org>,
-	<lgirdwood@gmail.com>,
-	<krzk+dt@kernel.org>,
-	<pierre-louis.bossart@linux.dev>,
-	<Thinh.Nguyen@synopsys.com>,
-	<tiwai@suse.com>,
-	<robh@kernel.org>,
-	<linux-kernel@vger.kernel.org>,
-	<devicetree@vger.kernel.org>,
-	<linux-sound@vger.kernel.org>,
-	<linux-usb@vger.kernel.org>,
-	<linux-input@vger.kernel.org>,
-	<linux-arm-msm@vger.kernel.org>,
-	<linux-doc@vger.kernel.org>
-Subject: Re: [PATCH v30 00/30] Introduce QC USB SND audio offloading support
-In-Reply-To: <2f512d8d-e5f3-4bdd-8172-37114a382a69@quicinc.com>
-References: <20241106193413.1730413-1-quic_wcheng@quicinc.com>
-	<edfeb642-297e-42bb-ad09-cbf74f995514@quicinc.com>
-	<2024111655-approve-throwback-e7df@gregkh>
-	<2f512d8d-e5f3-4bdd-8172-37114a382a69@quicinc.com>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) Emacs/27.2 Mule/6.0
+	s=arc-20240116; t=1732106448; c=relaxed/simple;
+	bh=8yJMwcTHtcgvU7ExIkN68hrctLobhHAvOsB/vCEzUVU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JeuMckKns2pQI+dPQoZJnsxvrAygufO9dIHjxGDcmaT3WfhOHP0A2V0ckYdop/bO7d0VxzMd1g2Y+YUBTV3DcuQ96e1qN2++Zr81xwXcK3Y7uSUrrzn5/mNjEXdk2b3oLCHyR0Nll0qG7mdCDI8ByY2r4lQjZbGG5DP17MTJoeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NWpIpd0K; arc=none smtp.client-ip=209.85.167.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-53a097aa3daso4030304e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Nov 2024 04:40:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1732106445; x=1732711245; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=L956lhRe0LlEWkMS5Gwktl85mpkmY8AZuSEqvk9rvN0=;
+        b=NWpIpd0Kgn79TwvM2fXv+lT7iiscWgSIdtTIEE3A1FV2ScQW35ELOfzdRkMU+ek2ib
+         NgS0TAf9mFymksivorD7weh+mTlTIyL58DHm1I5r7+HJYKGeABqFqyojKyUTxDFVYGg4
+         C7a18AAvjEukaXMknc+VO/pj5Ctjbp1H7ATHzRRIyHzpBqFlWqsvap+o8UD3j+QUJsMA
+         hAtpHm9Kv4dk02JZXSpEMg8fHtRM8tZ39FnjidF3rGl8Q36A4R3pXE2ytOFX581TKSXC
+         8UuKkmJ7ywrfcGFQoLVV6DkZsV8BGdr7jBrZMDJ6lrFI/VTvCS7ZE7fCeXSzovxbxd+I
+         OqZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732106445; x=1732711245;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=L956lhRe0LlEWkMS5Gwktl85mpkmY8AZuSEqvk9rvN0=;
+        b=ZvJO2eZy7RtnssArCYUJ7zqO4KKYfMrnQ4vM68Q+R4BH3k1DjoEqWNH8494uOWO3+F
+         CaMd9RMDdM2dN810cJEyf6l+XZjbOJs8iqaUIiPR8U5HnIeyXA/HXqY06rs/K4YjJdHi
+         PTVF6qym2l2lc9GpuH3/kl95W3MArhMG96fPDpHXCZ/YJ9nmUmtQm1EBh8Vll2fIK0Yy
+         OGz2jtB18pFMxa8yoNzOkWel9/jcJ5te6WcSlmg9v1xPZEWl4+DbW/HzVKV73nlVN3kz
+         Ecc03uyhhg4llp58zYR3be8M9kpP+k/AscIOcfertV9a7WWMAFpcupVm+ziRR6L/+D0c
+         vs0w==
+X-Forwarded-Encrypted: i=1; AJvYcCWYGQUZmD974MUaFnowD3WINEQbCnu2bpB5kK9aiubCbCAoe+/G2qoq1ahfQSnH439FgKQgrXFfU8kewuAJ@vger.kernel.org
+X-Gm-Message-State: AOJu0YxHYhFhvOkQrubihWfB20Rx7DPfL2FI4L2mos/QEJ/IULgSFpEH
+	pn93ThlG7RGdpDBWE1nAvV07R7+uDEa5WziSaYL7+0bdnM9UOyhti/JHZBnwccY=
+X-Google-Smtp-Source: AGHT+IEiqeubZ5zfbphw/m8EC0uSMLGjCvjc5KM5cHWbACD1pJ+S0jBmI33wb2FQ79hEwG5asr5GVw==
+X-Received: by 2002:ac2:54ab:0:b0:53d:a283:f290 with SMTP id 2adb3069b0e04-53dc1341c7amr977825e87.31.1732106445050;
+        Wed, 20 Nov 2024 04:40:45 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53dbd467255sm618654e87.160.2024.11.20.04.40.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 20 Nov 2024 04:40:44 -0800 (PST)
+Date: Wed, 20 Nov 2024 14:40:41 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org, conor@kernel.org, 
+	robh@kernel.org, krzk+dt@kernel.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 2/3] soc: qcom: llcc: Update configuration data for
+ IPQ5424
+Message-ID: <fkpp4ii254ewtmhg2j4nnjarvl7qkvet7i7urr6xhbblcmdb3u@tcbwmfqrnch2>
+References: <20241119060754.3350320-1-quic_varada@quicinc.com>
+ <20241119060754.3350320-3-quic_varada@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: B699C1F79C
-X-Spam-Level: 
-X-Spamd-Result: default: False [-2.01 / 50.00];
-	BAYES_HAM(-3.00)[99.99%];
-	SUSPICIOUS_RECIPS(1.50)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	MID_CONTAINS_FROM(1.00)[];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	ARC_NA(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[22];
-	FUZZY_BLOCKED(0.00)[rspamd.com];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	FREEMAIL_CC(0.00)[linuxfoundation.org,linaro.org,intel.com,perex.cz,kernel.org,gmail.com,lwn.net,linux.dev,synopsys.com,suse.com,vger.kernel.org];
-	RCVD_COUNT_TWO(0.00)[2];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	TAGGED_RCPT(0.00)[dt];
-	DKIM_TRACE(0.00)[suse.de:+];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spam-Score: -2.01
-X-Spam-Flag: NO
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241119060754.3350320-3-quic_varada@quicinc.com>
 
-On Tue, 19 Nov 2024 18:50:52 +0100,
-Wesley Cheng wrote:
+On Tue, Nov 19, 2024 at 11:37:53AM +0530, Varadarajan Narayanan wrote:
+> The 'broadcast' register space is present only in chipsets that
+> have multiple instances of LLCC IP. Since IPQ5424 has only one
+> instance, both the LLCC and LLCC_BROADCAST points to the same
+> register space.
 > 
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> ---
+> v3: Rebase to ToT
+>     Remove 'need_llcc_cfg = true'
 > 
-> On 11/15/2024 11:42 PM, Greg KH wrote:
-> > On Fri, Nov 15, 2024 at 02:42:47PM -0800, Wesley Cheng wrote:
-> >> Hi,
-> >>
-> >> On 11/6/2024 11:33 AM, Wesley Cheng wrote:
-> >>> Requesting to see if we can get some Acked-By tags, and merge on usb-next.
-> >> Are there any more clarifications that I can help with to get this
-> >> series going?  I know its been a long time coming, so folks may have
-> >> lost context, but if there are any points that might be blocking the
-> >> series from getting merged, please let me know.
-> > I would like others to review this (xhci maintainer for one), to give
-> > their blessing before I even consider this.
+> v2: Use 'true/false' instead of '1/0' for boolean variables.
+>     Add 'no_broadcast_register' to qcom_llcc_config structure
+>     to identify SoC without LLCC_BROADCAST register space instead
+>     of using 'num_banks'.
+> ---
+>  drivers/soc/qcom/llcc-qcom.c | 57 ++++++++++++++++++++++++++++++++++--
+>  1 file changed, 55 insertions(+), 2 deletions(-)
 > 
-> Thanks, Greg...Yes, I was hoping to see if I could clarify any points for Mathias and Takashi if they had any concerns.  Just so folks are also aware, we did deploy a portion of the series (specifically the XHCI sec interrupter and USB SND core changes) into devices on the market, if that adds any confidence into those changes.  For the most part, there were no major issues within those drivers, and the single minor bug (in the XHCI sec intr) that we did catch was fixed in previous submissions, and should be highlighted in the change revision list.
+> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
+> index 32c3bc887cef..106f2619277a 100644
+> --- a/drivers/soc/qcom/llcc-qcom.c
+> +++ b/drivers/soc/qcom/llcc-qcom.c
+> @@ -142,6 +142,7 @@ struct qcom_llcc_config {
+>  	bool skip_llcc_cfg;
+>  	bool no_edac;
+>  	bool irq_configured;
+> +	bool no_broadcast_register;
+>  };
+>  
+>  struct qcom_sct_config {
+> @@ -154,6 +155,38 @@ enum llcc_reg_offset {
+>  	LLCC_COMMON_STATUS0,
+>  };
+>  
+> +static const struct llcc_slice_config ipq5424_data[] =  {
+> +	{
+> +		.usecase_id = LLCC_CPUSS,
+> +		.slice_id = 1,
+> +		.max_cap = 768,
+> +		.priority = 1,
+> +		.bonus_ways = 0xFFFF,
+> +		.retain_on_pc = true,
+> +		.activate_on_init = true,
+> +		.write_scid_cacheable_en = true,
+> +		.stale_en = true,
+> +		.stale_cap_en = true,
+> +		.alloc_oneway_en = true,
+> +		.ovcap_en = true,
+> +		.ovcap_prio = true,
+> +		.vict_prio = true,
+> +	},
+> +	{
+> +		.usecase_id = LLCC_VIDSC0,
+> +		.slice_id = 2,
+> +		.max_cap = 256,
+> +		.priority = 2,
+> +		.fixed_size = true,
+> +		.bonus_ways = 0xF000,
+> +		.retain_on_pc = true,
+> +		.activate_on_init = true,
+> +		.write_scid_cacheable_en = true,
+> +		.stale_en = true,
+> +		.stale_cap_en = true,
+> +	},
+> +};
+> +
+>  static const struct llcc_slice_config sa8775p_data[] =  {
+>  	{
+>  		.usecase_id = LLCC_CPUSS,
+> @@ -3185,6 +3218,16 @@ static const struct qcom_llcc_config qdu1000_cfg[] = {
+>  	},
+>  };
+>  
+> +static const struct qcom_llcc_config ipq5424_cfg[] = {
+> +	{
+> +		.sct_data       = ipq5424_data,
+> +		.size           = ARRAY_SIZE(ipq5424_data),
+> +		.reg_offset     = llcc_v2_1_reg_offset,
+> +		.edac_reg_offset = &llcc_v2_1_edac_reg_offset,
+> +		.no_broadcast_register = true,
+> +	},
+> +};
+> +
+>  static const struct qcom_llcc_config sa8775p_cfg[] = {
+>  	{
+>  		.sct_data	= sa8775p_data,
+> @@ -3360,6 +3403,11 @@ static const struct qcom_sct_config qdu1000_cfgs = {
+>  	.num_config	= ARRAY_SIZE(qdu1000_cfg),
+>  };
+>  
+> +static const struct qcom_sct_config ipq5424_cfgs = {
+> +	.llcc_config	= ipq5424_cfg,
+> +	.num_config	= ARRAY_SIZE(ipq5424_cfg),
+> +};
+> +
+>  static const struct qcom_sct_config sa8775p_cfgs = {
+>  	.llcc_config	= sa8775p_cfg,
+>  	.num_config	= ARRAY_SIZE(sa8775p_cfg),
+> @@ -3957,8 +4005,12 @@ static int qcom_llcc_probe(struct platform_device *pdev)
+>  
+>  	drv_data->bcast_regmap = qcom_llcc_init_mmio(pdev, i, "llcc_broadcast_base");
+>  	if (IS_ERR(drv_data->bcast_regmap)) {
+> -		ret = PTR_ERR(drv_data->bcast_regmap);
+> -		goto err;
+> +		if (cfg->no_broadcast_register) {
+> +			drv_data->bcast_regmap = regmap;
+> +		} else {
+> +			ret = PTR_ERR(drv_data->bcast_regmap);
+> +			goto err;
+> +		}
+>  	}
+>  
+>  	/* Extract version of the IP */
+> @@ -4032,6 +4084,7 @@ static const struct of_device_id qcom_llcc_of_match[] = {
+>  	{ .compatible = "qcom,qcs615-llcc", .data = &qcs615_cfgs},
+>  	{ .compatible = "qcom,qcs8300-llcc", .data = &qcs8300_cfgs},
+>  	{ .compatible = "qcom,qdu1000-llcc", .data = &qdu1000_cfgs},
+> +	{ .compatible = "qcom,ipq5424-llcc", .data = &ipq5424_cfgs},
 
-Well, from the sound subsystem side, the only concerns are the design
-issues: namely, whether the implementations with two cards are
-acceptable, and whether the current control of PCM mapping is OK from
-the user POV.  IIRC, there were discussions with Intel people and
-others, and I haven't followed whether we got consensus.
-If we reached some agreement, it'd be appreciated if you can put acks
-from them in the patches, too.
+I wonder why is this getting inserted at this point. The list is sorted
+and your entry definitely is not in the correct place.
 
-The internal implementation details can be adjusted later, but those
-two must be set in stone after merging the stuff to the upstream.
+Please review if your addition is breaking sorting order in other places
+too.
 
-(BTW, the mail address of Pierre changed; I corrected in this mail.)
+>  	{ .compatible = "qcom,sa8775p-llcc", .data = &sa8775p_cfgs },
+>  	{ .compatible = "qcom,sar1130p-llcc", .data = &sar1130p_cfgs },
+>  	{ .compatible = "qcom,sar2130p-llcc", .data = &sar2130p_cfgs },
+> -- 
+> 2.34.1
+> 
 
-
-thanks,
-
-Takashi
+-- 
+With best wishes
+Dmitry
 
