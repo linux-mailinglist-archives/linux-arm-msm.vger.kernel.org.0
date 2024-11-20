@@ -1,85 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-38478-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38479-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 05CBD9D39FF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 12:56:09 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6A3349D3A01
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 12:56:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B14F8280551
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 11:56:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2F9EA281E01
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 11:56:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38AAA1AA78D;
-	Wed, 20 Nov 2024 11:54:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29639189BBF;
+	Wed, 20 Nov 2024 11:55:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cRF9cZbY"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bFi4ievt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE6DC1A76DA;
-	Wed, 20 Nov 2024 11:54:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CD844EB45
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Nov 2024 11:55:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732103666; cv=none; b=QP8xtcFOahEvGd3hDJa5sXR6/cMMW6HPlOBL46xkaBjcmMQwM8MH0RrGOo4T+3W7rdjoiVhk63Lnli5hEMZxJ9qM/CpH0bT+VeEE6v/0nKtrzDxMpmq3atXQNurm0SsUd8ttzZufhbgY78iyzemCvjPPOx8orBOxX3xdVFsBBw8=
+	t=1732103703; cv=none; b=l+InxUJsudC+xaXpET2Ad+nOpGmSgNAZm2CcGDRqj4A0OAxMx8vax+n5mgpS4pvFn6MVLIgHulNlRE/QGGYw5ouQt1mOgOJr5YnQ5TLgnSxcHAcTUxOn027TwGX6qpiZQfJd+3+32pbxdF4bYt+KeeSYcr/pZFbJHkmnxYAe7lU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732103666; c=relaxed/simple;
-	bh=PSpAaRrqNzO8wYAkhgHM0W3VM/KrG3ePQN4pLORJcvM=;
+	s=arc-20240116; t=1732103703; c=relaxed/simple;
+	bh=KyL3kYPj+ynCqBkkIgRzK6ppMn8Q42vYTthv6ynTbZM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XD+M+TTAMKkYOOFfiXT2liqsBd3feCNl1ZsDufdGCI+PvugoOnl4ahpR7YSbuy3hkX52GYuLw9v5e4dUL1n5b2kRdpzkIyfPXHyuuS4MinZ6/R2pWPq+y1a/XoyzRd89XZOsm3Pcq45Y6pV44plHLhHZoSfpDa97Ljsdh+rvFt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cRF9cZbY; arc=none smtp.client-ip=209.85.214.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-211fcadd960so31332465ad.2;
-        Wed, 20 Nov 2024 03:54:24 -0800 (PST)
+	 Content-Type:Content-Disposition:In-Reply-To; b=dK4iN0jNLVHob947MpyHccVm4BVwRIR/QHlzrD7Hq8VfDYeC/WklxAGdx063xLRQxjv8nyASM9DI2SChfFHX9osHhRnuLsVumvF7emDkOrkiQYbmpBk6D78H5NYgh0kFp+JBJDSQhQ7Uiopfr1y9lb7GuczcVaW3vtJ4rlh6v4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bFi4ievt; arc=none smtp.client-ip=209.85.167.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-53da24e9673so2420204e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Nov 2024 03:55:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732103664; x=1732708464; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1732103699; x=1732708499; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=3CU4VQWBACqm9PUCaRN7S/RhGe8ctry/AcpamMARb5Y=;
-        b=cRF9cZbYlACNCq78ep99seIw5JCw3mg6vo+BFAtipcW2V4IiXfvYFjzCfIooieoZRW
-         H5xZ96+ry8BMhMZA49NKrC5rvs8wm+skheuO2Xdaq4tZFJlCFroH75p+EXJPsGELvfrE
-         rvgO39lx1uXL0igkwmgXG+HC6aPQV7BftXA8j13kvouH0dBf0W9gKXfbGYcaCOfYCsyH
-         4M6x7usaN4cf2/aU1xg/h72QU2S6Ud5dyC3v7dUKuoqCjJc7dJPa3QLY5MZMlJ9fWsco
-         l8OQPeBlUvx5nTzZXJXJmH74pIFMnCkbi8FI66L6Otv5GmP5IBOP7FPeUOriwiqBfHQ/
-         nLzQ==
+        bh=cYPtpbT0rYtV4i05WMfOS2O/bZheBplF9irAJrqd1/4=;
+        b=bFi4ievtEScwmDM7Bx35Jb0KUYHv1qAtn0XgyOLgEcgXDSXWC7niq7/DDAo/IG8Zaz
+         ULFzEsIwP+WpE4keSDZ5Dm5OphVKgkTeKk9JD8kMFYu+RDpmo4KcFKt51zymazfTTHt6
+         zvJfgrnJxaAC4AhqKzqRSC38oVc1Xq2NX3H7gEzjcOqh3QqLTNgczPUnxOo5Efm925Yo
+         Xmg0jwbARwdx0LQgAXeTGqZ1x+0dYa5G8G1XSXMVfUkotPsqHiHKntB1x6RpyUxhxUXy
+         AEncxeZtAwxGlnbre2njF29IoEpiUSAAuYjXchH224bGIfV88ijV/Pvyy7iDz//2m81g
+         eURA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732103664; x=1732708464;
+        d=1e100.net; s=20230601; t=1732103699; x=1732708499;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=3CU4VQWBACqm9PUCaRN7S/RhGe8ctry/AcpamMARb5Y=;
-        b=v1hobwollOILWGXBTlXRFC5a83KeUQioIR5TxL/1e1UW3xhj6P+8ow8ghLx4aiIwne
-         ZbCagiaFi4xRAg9taWCI9Y6nrYjlAzmc4N+FYiScNjpoOCRVOZ7rItSdHA+O6JVv6QGc
-         5hG8RQOV3hWEDCbiOZTmedrREOD6O3gJRZGbm1/dGazn8MBZY00b1qGprURcEqHU4Da9
-         STq9JUyfms1jbL0dLlCi0PtwJ0Mxj+/HeoJY5oSZTud1XPua2WJG8l6iAzIEgGMYyQVa
-         VmIc14IFajhthbjJ/qOKiBnDJ9zltkTRY2+4ylSNmGTwdbpSq2foBaQdgNAydLYUAzPE
-         wvww==
-X-Forwarded-Encrypted: i=1; AJvYcCVRtKsE/FT1vbj9XZT1gcidXu1CEKYlMTMHBJ6mLwVT2yvrlbHFPUIR15SorlNniEUe6rlIUTcG+iHQqmxx@vger.kernel.org, AJvYcCW9ixupPCy+dPjl0I+h2LjXxMC7RxW4t6f892u9d2jmYhh7GkxMQ4Z7sBg+Xk9rlOo0fxsX3R0pDPxWeHdM@vger.kernel.org
-X-Gm-Message-State: AOJu0YzQWvbnQZwJhn8YMy+l9Duc+503fzhC/yAeCuamIRkSVfg1UwCn
-	UxTED3nTaitQl2Q1JUqinfy4fPTKvUW5FY1jHxh4iTNyMYlKTc6Z5ReJRryA
-X-Google-Smtp-Source: AGHT+IHCCQlHXWu+VwXZr0F1OsJVRG8awCPqJtVORBIi12RYKMzGzobiFsxattqW9qkfyCXn+lMg1Q==
-X-Received: by 2002:a17:902:e94f:b0:20b:51b0:4b22 with SMTP id d9443c01a7336-2126c9785c1mr31181815ad.47.1732103663931;
-        Wed, 20 Nov 2024 03:54:23 -0800 (PST)
-Received: from HOME-PC ([223.185.132.211])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21207f26c61sm62826295ad.160.2024.11.20.03.54.22
+        bh=cYPtpbT0rYtV4i05WMfOS2O/bZheBplF9irAJrqd1/4=;
+        b=XOCBVdu/IND0Z65Mmy2adHgjfMUOxUKZGXLKjqpImG63ZPP2N4PB0bKbIfxgwU4TUc
+         RAPULD1BB24ZewhGkw6oP+FAy82iOjErlq69Rom+b+4KrJHuhyoh9E6O8lQXYRSQ+XHU
+         deSMJPUs/kuS8JDpyQzzu76Hqj9kd8Pl/8cSiP1MpcOgO4bZh0mfzp56Q/4Ztz7pX144
+         ZtU0MiulSollfHLCIhjS8ePtQgQqki3TRkbJwzfGFkDuMzp6CQZNgCx20i+vL6CoyObI
+         cMCOW311m3ZvmtQLTsir/iGUK/Fkr5gg3XUPsgkewJseQJjKz0LtWeiq+107ooyU2V3L
+         gc+w==
+X-Forwarded-Encrypted: i=1; AJvYcCXARdGpeMtd5cPi/oGHv99jKXr9pKzn0l95JI5GxLXIKKDFY75dxcLlbDoB/zFKY793sVJtgyozuAZcijTD@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywz/9cMcS/acGdrksMnGzH7/dVFa2PK7cQIMx2xw2IStjOke8yY
+	XSN2exgTBNvn+COjruDEPhfeDAOsX/cTkX+xRHsO34Cayffulwj0AAc4Qh1uOC0=
+X-Google-Smtp-Source: AGHT+IFMequDT4bdY6LP9O3I5AvvXInQUMDuGlgE0eHlxcbATY6rHghGabLIkWJMyNfHChGofJMPQQ==
+X-Received: by 2002:a05:6512:1303:b0:53d:a883:5a3e with SMTP id 2adb3069b0e04-53dc1369cb4mr1005535e87.39.1732103699572;
+        Wed, 20 Nov 2024 03:54:59 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53dbd3edd2bsm608508e87.43.2024.11.20.03.54.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Nov 2024 03:54:23 -0800 (PST)
-Date: Wed, 20 Nov 2024 17:24:20 +0530
-From: Dheeraj Reddy Jonnalagadda <dheeraj.linuxdev@gmail.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: robdclark@gmail.com, quic_abhinavk@quicinc.com,
-	linux-arm-msm@vger.kernel.org, sean@poorly.run,
-	marijn.suijten@somainline.org, airlied@gmail.com, simona@ffwll.ch,
-	quic_bjorande@quicinc.com, quic_parellan@quicinc.com,
-	quic_khsieh@quicinc.com, dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-	dianders@chromium.org
-Subject: Re: [PATCH drm-next] drm/msm/dp: Fix potential division by zero issue
-Message-ID: <Zz3N7IvdN4L8N62p@HOME-PC>
-References: <20241120050451.100957-1-dheeraj.linuxdev@gmail.com>
- <piembwzz7x6plsps3umjg3b3pi2ii44svmeii3wwtydtriceny@uqq7ck2ge5zz>
+        Wed, 20 Nov 2024 03:54:58 -0800 (PST)
+Date: Wed, 20 Nov 2024 13:54:55 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Kuldeep Singh <quic_kuldsing@quicinc.com>
+Cc: Pratyush Brahma <quic_pbrahma@quicinc.com>, 
+	Bjorn Andersson <bjorn.andersson@example.com>, Konrad Dybcio <konrad.dybcio@example.com>, 
+	Rob Herring <rob.herring@example.com>, Krzysztof Kozlowski <krzysztof.kozlowski@example.com>, 
+	Conor Dooley <conor.dooley@example.com>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, quic_tengfan@quicinc.com, quic_shashim@quicinc.com
+Subject: Re: [PATCH] arm64: dts: qcom: qcs9100: Update memory map for QCS9100
+ Ride and QCS9100 Ride Rev3
+Message-ID: <rnrxb5e7xcgnjp4y4id5m5dyswii6xipry3bvtpit2f4c3iqfy@qghr42jz6oze>
+References: <20241119092501.31111-1-quic_pbrahma@quicinc.com>
+ <30fda0e2-f314-49b8-8c1c-bf4fac87050d@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,97 +87,39 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <piembwzz7x6plsps3umjg3b3pi2ii44svmeii3wwtydtriceny@uqq7ck2ge5zz>
+In-Reply-To: <30fda0e2-f314-49b8-8c1c-bf4fac87050d@quicinc.com>
 
-On Wed, Nov 20, 2024 at 01:02:32PM +0200, Dmitry Baryshkov wrote:
-> On Wed, Nov 20, 2024 at 10:34:51AM +0530, Dheeraj Reddy Jonnalagadda wrote:
-> > The variable pixel_div can remain zero due to an invalid rate input,
+On Wed, Nov 20, 2024 at 01:41:03AM +0530, Kuldeep Singh wrote:
 > 
-> No, it can not. Rate is set by the driver, which knowns which rates are
-> supported. 
 > 
-> > leading to a potential division by zero issue. This patch fixes it and
-> > the function now logs an error and returns early.
-> 
-> See Documentation/process/submitting-patches.rst, look for "This patch"
-> string.
-> 
+> On 11/19/2024 2:55 PM, Pratyush Brahma wrote:
+> > This patch series is based on Tengfei Fan's patches [1] which adds support
+> > for QCS9100 Ride and QCS9100 Ride Rev3 boards.
 > > 
-> > Additionally, this patch resolves trailing whitespace issues detected
-> > by checkpatch.pl in the same file.
-> 
-> Additionally perform ... => separate commits.
-> 
+> > Some new carveouts (viz. gunyah_md and a few pil dtb carveouts) have been
+> > introduced and the size and base addresses have been updated for
+> > a few of existing carveouts compared to SA8775P. Also, tz_ffi_mem carveout
+> > and its corresponding scm reference has been removed as it is not required
+> > for these boards. Incorporate these changes in the updated memory map
+> > for QCS9100 Ride and QCS9100 Rev3 boards.
 > > 
-> > Signed-off-by: Dheeraj Reddy Jonnalagadda <dheeraj.linuxdev@gmail.com>
-> > ---
-> >  drivers/gpu/drm/msm/dp/dp_catalog.c | 8 +++++---
-> >  1 file changed, 5 insertions(+), 3 deletions(-)
+> > [1] https://lore.kernel.org/all/20240911-add_qcs9100_support-v2-4-e43a71ceb017@quicinc.com/
 > > 
-> > diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
-> > index b4c8856fb25d..e170f70f1d42 100644
-> > --- a/drivers/gpu/drm/msm/dp/dp_catalog.c
-> > +++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
-> > @@ -225,7 +225,7 @@ int msm_dp_catalog_aux_clear_hw_interrupts(struct msm_dp_catalog *msm_dp_catalog
-> >   * This function reset AUX controller
-> >   *
-> >   * NOTE: reset AUX controller will also clear any pending HPD related interrupts
-> > - * 
-> > + *
-> >   */
-> >  void msm_dp_catalog_aux_reset(struct msm_dp_catalog *msm_dp_catalog)
-> >  {
-> > @@ -487,8 +487,10 @@ void msm_dp_catalog_ctrl_config_msa(struct msm_dp_catalog *msm_dp_catalog,
-> >  		pixel_div = 2;
-> >  	else if (rate == link_rate_hbr2)
-> >  		pixel_div = 4;
-> > -	else
-> > +	else {
-> >  		DRM_ERROR("Invalid pixel mux divider\n");
-> > +		return;
-> > +	}
-> >  
-> >  	dispcc_input_rate = (rate * 10) / pixel_div;
-> >  
-> > @@ -579,7 +581,7 @@ u32 msm_dp_catalog_hw_revision(const struct msm_dp_catalog *msm_dp_catalog)
-> >   * This function reset the DP controller
-> >   *
-> >   * NOTE: reset DP controller will also clear any pending HPD related interrupts
-> > - * 
-> > + *
-> >   */
-> >  void msm_dp_catalog_ctrl_reset(struct msm_dp_catalog *msm_dp_catalog)
-> >  {
-> > -- 
-> > 2.34.1
-> > 
+> > Signed-off-by: Pratyush Brahma <quic_pbrahma@quicinc.com>
 > 
-> -- 
-> With best wishes
-> Dmitry
+> The memory map for qcs9100-ride-r3 and qcs9100-ride is exactly same.
+> A good churn you are first deleting(based on sa8775p) and then re-adding
+> for qcs9100-ride*.
+> 
+> I think it's better to move common qcs9100-ride* to a common file ex:
+> qcs9100-ride.dtsi and keep specifics further to .dts files?
+> 
+> This will ensure common entities are present at same place with no
+> duplicates.
 
-Hello Dmitry,
+I'd second this proposal.
 
-Thank you for the valuable feedback. Will update my commit messages
-accordingly. I wanted to seek clarification on the the divide by zero
-issue. Would pixel_dev not be zero upon hitting the else case as
-indicated below casuing a div by zero?
-
-	u32 mvid, nvid, pixel_div = 0, dispcc_input_rate;
-	u32 const nvid_fixed = DP_LINK_CONSTANT_N_VALUE;
-	
-	[..]
-	
-	if (rate == link_rate_hbr3)
-		pixel_div = 6;
-	else if (rate == 162000 || rate == 270000)
-		pixel_div = 2;
-	else if (rate == link_rate_hbr2)
-		pixel_div = 4;
-	else
-		DRM_ERROR("Invalid pixel mux divider\n"); <<-- here
-
-	dispcc_input_rate = (rate * 10) / pixel_div;
-
--Dheeraj
+-- 
+With best wishes
+Dmitry
 
