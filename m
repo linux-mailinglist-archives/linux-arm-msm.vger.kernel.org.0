@@ -1,188 +1,230 @@
-Return-Path: <linux-arm-msm+bounces-38560-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38561-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 19B539D4265
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 20:14:19 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 972419D42DC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 21:08:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9EA231F22141
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 19:14:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id F3CA31F2385E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 20:08:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 603FF1BDAA5;
-	Wed, 20 Nov 2024 19:13:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33B63175562;
+	Wed, 20 Nov 2024 20:08:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LHFCzK89"
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="oc74y9BN";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="THwxHPph";
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="oc74y9BN";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="THwxHPph"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B7F21BD9CC;
-	Wed, 20 Nov 2024 19:13:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D2741C1F0A;
+	Wed, 20 Nov 2024 20:08:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732130038; cv=none; b=uHGJQoiRfhwqDMobC3LkrdPeoMEO8Gk7pJaATa9UUkVzIR2jaQ47frCNsc3xFTCVwmN9rjBmfQ2boq5eAvwvWLBrlP1J9e31MkCNmIWUeNVHnxKkB8THsvioy4l6i8XPirgFkwN8VDSo6QNMkOEX+an8dKfGRRs3sCW7H5v9N9A=
+	t=1732133317; cv=none; b=HCYliOPeTe1ZuRxVjLt68RzXsXX4QrYsrCk4LBHEtanCL434RSDihluuynrwI4v6ubDlhotSIf6mdoPRSz+/YgO5XyPC3/x+Jk5TflCwDRuZvEdmPFnUpalGIPt3PotSrTDOXwXBnHozEVI/22wPq8LrZ54rgjnag3iKeJOcn90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732130038; c=relaxed/simple;
-	bh=mEsKzUYLiMK+Irx2LHiLlacnbn1Jq9aoRKytVJw2fJE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=tuvK6Wql3w/tM8I+ygcb+6at9Axc/KbaCsoX+TAZY9mII/JdCn8cA7TNz/o/6W1xp+VznzgqlYaUowtzb5UrtXO8brQ4Uz9jMO+Jg7o7Vwl9DcYKahTITO9kbacpRV4yVsbx+9ug+3yhiOthb8KfAnfYd6rj8B+CXLj6/KHbqmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LHFCzK89; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AKAjtv1004593;
-	Wed, 20 Nov 2024 19:13:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	PRgl+A5czD1vLYckMAcFjfhUCMb9rNaDVG9BQoUpWWo=; b=LHFCzK89UmfPRv6n
-	EZ0Xv3bacCjleZB4+w2zLYkkpljS4dwYkv6oW2qC+a0GzIyIut37r+Akl8TzuNzp
-	IKUFom+wPfq+Bnr2lCAz31VGne7QGa5PXcgVsGhIYmEi24LtGpgC7lWVO6yTFTcp
-	tyFfbqhYBPZajJT0Yu4E9XC8CLPRF7mm2XBPvytUykJgIeAZkw97NNskU6MBinac
-	eKO3W5Hz8xLoQFfvEUr4QwqOdUayrxwvHUSc7NvcDfOJCd6+2zdCK4Gw2Y5xTGdy
-	x+SSolBDrBHkz0IfcSLBpb7tSCVcMx44LDVjxpkGdVJgLWmMcb4UbGMHbOC1E42q
-	jyyZPg==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 431ea719ru-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 20 Nov 2024 19:13:36 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AKJDZhm018898
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 20 Nov 2024 19:13:35 GMT
-Received: from [10.110.30.192] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 20 Nov
- 2024 11:13:35 -0800
-Message-ID: <02c20b06-34ef-459b-9cd1-2d2735eb1352@quicinc.com>
-Date: Wed, 20 Nov 2024 11:13:34 -0800
+	s=arc-20240116; t=1732133317; c=relaxed/simple;
+	bh=tRXKe+a+dwaOZ6N2Id7do1HLgihmaBGKIMofXGjn96A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WvGylt0jt5+bwr2JGjvY/TS+nPEOVk+EvPcEZcVkt9oshTYKTUch5IRhD+f0K9QG7QEul/Lt3ZcfqbcJ/6dRDRu8LtYeO6q1hy+vCqyvzq+2KNy5CS1JeeLV0FD+qhtZVxdi3nGfNZ8IRBKD8pF9DL+YDjwNUp5mVWNbA0s2uSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz; spf=pass smtp.mailfrom=suse.cz; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=oc74y9BN; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=THwxHPph; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=oc74y9BN; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=THwxHPph; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id F345B1F79B;
+	Wed, 20 Nov 2024 20:08:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1732133313;
+	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
+	 cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=+NKWEBGgG7I2PjnhstdebYJIFhgT24xBC5DxPEneKhk=;
+	b=oc74y9BNrmkb0YWoATxzDK8XzDAvJBF+Koy06j2q2ruW0I8TkLGqu4ZD89tkywXpum1pxP
+	O0em3hLnaLKfJDVaL2N91BgbRdQr94aqmPielpYP7TVoCcRdG9CK5ifiBcew11Hqkf8Lnh
+	+maqGCzqGqnCSsEMRi4QVEQbC4ZRJ0Q=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1732133313;
+	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
+	 cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=+NKWEBGgG7I2PjnhstdebYJIFhgT24xBC5DxPEneKhk=;
+	b=THwxHPphKJoME05ys+JrwJhwzkOr/xujjmrtOsT5CyeN9z6jGFRA6fMajLsnGzAzPOB7eO
+	XldqUGHcwZoatxCA==
+Authentication-Results: smtp-out2.suse.de;
+	dkim=pass header.d=suse.cz header.s=susede2_rsa header.b=oc74y9BN;
+	dkim=pass header.d=suse.cz header.s=susede2_ed25519 header.b=THwxHPph
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1732133313;
+	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
+	 cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=+NKWEBGgG7I2PjnhstdebYJIFhgT24xBC5DxPEneKhk=;
+	b=oc74y9BNrmkb0YWoATxzDK8XzDAvJBF+Koy06j2q2ruW0I8TkLGqu4ZD89tkywXpum1pxP
+	O0em3hLnaLKfJDVaL2N91BgbRdQr94aqmPielpYP7TVoCcRdG9CK5ifiBcew11Hqkf8Lnh
+	+maqGCzqGqnCSsEMRi4QVEQbC4ZRJ0Q=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1732133313;
+	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
+	 cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=+NKWEBGgG7I2PjnhstdebYJIFhgT24xBC5DxPEneKhk=;
+	b=THwxHPphKJoME05ys+JrwJhwzkOr/xujjmrtOsT5CyeN9z6jGFRA6fMajLsnGzAzPOB7eO
+	XldqUGHcwZoatxCA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 47EBB137CF;
+	Wed, 20 Nov 2024 20:08:32 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id DqQKEMBBPmeEEwAAD6G6ig
+	(envelope-from <pvorel@suse.cz>); Wed, 20 Nov 2024 20:08:32 +0000
+Date: Wed, 20 Nov 2024 21:08:26 +0100
+From: Petr Vorel <pvorel@suse.cz>
+To: Rob Clark <robdclark@gmail.com>
+Cc: linux-arm-msm@vger.kernel.org, Masahiro Yamada <masahiroy@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	linux-kbuild@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org, Rob Clark <robdclark@chromium.org>
+Subject: Re: [RFC][PATCH 1/1] drm/msm: require python3 and xml.parsers.expat
+ module
+Message-ID: <20241120200826.GA46775@pevik>
+Reply-To: Petr Vorel <pvorel@suse.cz>
+References: <20241120154919.814593-1-pvorel@suse.cz>
+ <CAF6AEGshZMEHYT6X3fG0vYPpfa4i_o8gxOareHNggYWtkn=2Yg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v30 28/30] ALSA: usb-audio: Add USB offload route kcontrol
-To: Takashi Iwai <tiwai@suse.de>
-CC: <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
-        <perex@perex.cz>, <conor+dt@kernel.org>, <dmitry.torokhov@gmail.com>,
-        <corbet@lwn.net>, <broonie@kernel.org>, <lgirdwood@gmail.com>,
-        <krzk+dt@kernel.org>, <pierre-louis.bossart@linux.intel.com>,
-        <Thinh.Nguyen@synopsys.com>, <tiwai@suse.com>, <robh@kernel.org>,
-        <gregkh@linuxfoundation.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-sound@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <linux-input@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>
-References: <20241106193413.1730413-1-quic_wcheng@quicinc.com>
- <20241106193413.1730413-29-quic_wcheng@quicinc.com>
- <87bjya3xzw.wl-tiwai@suse.de>
-Content-Language: en-US
-From: Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <87bjya3xzw.wl-tiwai@suse.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: sqkKZTyGo3C_8Bm1FdjXq4-r8MU9hacU
-X-Proofpoint-ORIG-GUID: sqkKZTyGo3C_8Bm1FdjXq4-r8MU9hacU
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 adultscore=0
- bulkscore=0 mlxscore=0 suspectscore=0 lowpriorityscore=0 clxscore=1015
- priorityscore=1501 impostorscore=0 malwarescore=0 mlxlogscore=999
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411200133
+In-Reply-To: <CAF6AEGshZMEHYT6X3fG0vYPpfa4i_o8gxOareHNggYWtkn=2Yg@mail.gmail.com>
+X-Rspamd-Queue-Id: F345B1F79B
+X-Spam-Score: -3.71
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-3.71 / 50.00];
+	BAYES_HAM(-3.00)[99.99%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	MID_RHS_NOT_FQDN(0.50)[];
+	HAS_REPLYTO(0.30)[pvorel@suse.cz];
+	R_DKIM_ALLOW(-0.20)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
+	NEURAL_HAM_SHORT(-0.20)[-0.999];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
+	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	FREEMAIL_TO(0.00)[gmail.com];
+	FUZZY_BLOCKED(0.00)[rspamd.com];
+	TO_DN_SOME(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	ARC_NA(0.00)[];
+	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	RCVD_TLS_ALL(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.cz:dkim,suse.cz:replyto,suse.cz:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[8];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+	DKIM_TRACE(0.00)[suse.cz:+];
+	MISSING_XM_UA(0.00)[];
+	REPLYTO_EQ_FROM(0.00)[]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Spam-Flag: NO
+X-Spam-Level: 
 
-Hi Takashi,
+> On Wed, Nov 20, 2024 at 7:49 AM Petr Vorel <pvorel@suse.cz> wrote:
 
-On 11/20/2024 4:12 AM, Takashi Iwai wrote:
-> On Wed, 06 Nov 2024 20:34:11 +0100,
-> Wesley Cheng wrote:
->> In order to allow userspace/applications know about USB offloading status,
->> expose a sound kcontrol that fetches information about which sound card
->> and PCM index the USB device is mapped to for supporting offloading.  In
->> the USB audio offloading framework, the ASoC BE DAI link is the entity
->> responsible for registering to the SOC USB layer.
->>
->> It is expected for the USB SND offloading driver to add the kcontrol to the
->> sound card associated with the USB audio device.  An example output would
->> look like:
->>
->> tinymix -D 1 get 'USB Offload Playback Route PCM#0'
->> -1, -1 (range -1->255)
->>
->> This example signifies that there is no mapped ASoC path available for the
->> USB SND device.
->>
->> tinymix -D 1 get 'USB Offload Playback Route PCM#0'
->> 0, 0 (range -1->255)
->>
->> This example signifies that the offload path is available over ASoC sound
->> card index#0 and PCM device#0.
->>
->> The USB offload kcontrol will be added in addition to the existing
->> kcontrols identified by the USB SND mixer.  The kcontrols used to modify
->> the USB audio device specific parameters are still valid and expected to be
->> used.  These parameters are not mirrored to the ASoC subsystem.
->>
->> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
-> IIRC, this representation of kcontrol was one argued issue; Pierre
-> expressed the concern about the complexity of the kcontrol.
-> I didn't follow exactly, but did we get consensus?
-So the part that Pierre had concerns on was that previously, the implementation was placing offload kcontrols to the ASoC platform card, and had some additional controls that complicated the offload implementation about the offload status for each USB audio device.  This was discussed here:
+> > 0fddd045f88e introduced python3 dependency, require it to quick early.
 
-https://lore.kernel.org/linux-usb/957b3c13-e4ba-45e3-b880-7a313e48c33f@quicinc.com/
+> > Signed-off-by: Petr Vorel <pvorel@suse.cz>
+> > ---
+> > Hi all,
 
-To summarize, I made the decision to move the offload status kcontrols from ASoC --> USB SND and limited it to only one kcontrol (mapped offload device).  So now, there exists a kcontrol for every USB SND device (if the offload mixer is enabled), where it tells userspace the mapped ASoC platform card and pcm device that handles USB offloading, else you'll see the "-1, -1" pair, which means offload is not possible for that USB audio device.
+> > RFC because I'm not sure if previous failed build wasn't better:
 
-> Apart from that: the Kconfig defition below ...
->
->> +config SND_USB_OFFLOAD_MIXER
->> +	tristate "USB Audio Offload mixer control"
->> +	help
->> +	 Say Y to enable the USB audio offloading mixer controls.  This
->> +	 exposes an USB offload capable kcontrol to signal to applications
->> +	 about which platform sound card can support USB audio offload.
->> +	 The returning values specify the mapped ASoC card and PCM device
->> +	 the USB audio device is associated to.
-> ... and Makefile addition below ...
->
->> --- a/sound/usb/Makefile
->> +++ b/sound/usb/Makefile
->> @@ -36,3 +36,5 @@ obj-$(CONFIG_SND_USB_US122L) += snd-usbmidi-lib.o
->>  
->>  obj-$(CONFIG_SND) += misc/ usx2y/ caiaq/ 6fire/ hiface/ bcd2000/ qcom/
->>  obj-$(CONFIG_SND_USB_LINE6)	+= line6/
->> +
->> +obj-$(CONFIG_SND_USB_OFFLOAD_MIXER) += mixer_usb_offload.o
-> ... indicates that this code will be an individual module, although
-> it's solely used from snd-usb-audio-qmi driver.  This should be rather
-> a boolean and moved to sound/usb/qcom/, and linked to
-> snd-usb-audio-qmi driver itself, e.g.
->
-> --- a/sound/usb/qcom/Makefile
-> +++ b/sound/usb/qcom/Makefile
-> @@ -1,2 +1,3 @@
->  snd-usb-audio-qmi-objs := usb_audio_qmi_v01.o qc_audio_offload.o
-> +snd-usb-audio-qmi-$(CONFIG_SND_USB_OFFLOAD_MIXER) += mixer_usb_offload.o
->  obj-$(CONFIG_SND_USB_AUDIO_QMI) += snd-usb-audio-qmi.o
->
-> Then you can drop EXPORT_SYMBOL_GPL(), too.
+> >         GENHDR  drivers/gpu/drm/msm/generated/a2xx.xml.h
+> >         /bin/sh: python3: not found
 
-Had a discussion with Pierre on this too below.
+> > This way it's documented, but CONFIG_DRM_MSM just silently disappears
+> > from .config. Also because depends on $(success ..) is not evaluated
+> > (understand, some expressions can be really long) one see only:
+> > Depends on: n [=n].
 
-https://lore.kernel.org/linux-usb/f507a228-4865-4df5-9215-bc59e330a82f@linux.intel.com/
+> > I was thinking about testing via $(PYTHON3) -m "xml.parsers.expat",
+> > but because expat parser (and other modules) should be part the official
+> > python3 and are installed even on minimal python3 installations (e.g.
+> > python3-minimal on Debian). Therefore depending on "$(PYTHON3) -V"
+> > should be enough.
 
-I remember you commenting to place it in this vendor offload module, which is what I did on v24.
 
-Thanks
+> Would it be more clear to do something like:
 
-Wesley Cheng
+> config HAS_PYTHON3
+>       dev_bool $(success ...)
+
+> (in init/Kconfig or somewhere central) and then use 'depends on
+> HAS_PYTHON3'?  That might make the dependency easier to see in
+> menuconfig/etc
+
+Thanks a lot, good idea, there are already few config HAVE_* in it. I'll send
+v2. Before I already noticed various variables in the top level Makefile (PERL,
+BASH, RUSTC, ...), but didn't find any check. Just now I noticed HAVE_RUST in
+arch/Kconfig. I suppose HAVE_PYTHON3 should be in init/Kconfig.
+
+Kind regards,
+Petr
+
+> BR,
+> -R
+
+> > Kind regards,
+> > Petr
+
+> >  drivers/gpu/drm/msm/Kconfig | 3 ++-
+> >  1 file changed, 2 insertions(+), 1 deletion(-)
+
+> > diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
+> > index 90c68106b63b..2cf4573a2ff1 100644
+> > --- a/drivers/gpu/drm/msm/Kconfig
+> > +++ b/drivers/gpu/drm/msm/Kconfig
+> > @@ -11,6 +11,7 @@ config DRM_MSM
+> >         depends on QCOM_LLCC || QCOM_LLCC=n
+> >         depends on QCOM_COMMAND_DB || QCOM_COMMAND_DB=n
+> >         depends on PM
+> > +       depends on $(success,$(PYTHON3) -V)
+> >         select IOMMU_IO_PGTABLE
+> >         select QCOM_MDT_LOADER if ARCH_QCOM
+> >         select REGULATOR
+> > @@ -36,7 +37,7 @@ config DRM_MSM
+> >         select PM_GENERIC_DOMAINS
+> >         select TRACE_GPU_MEM
+> >         help
+> > -         DRM/KMS driver for MSM/snapdragon.
+> > +         DRM/KMS driver for MSM/snapdragon.  Requires python3.
+
+> >  config DRM_MSM_GPU_STATE
+> >         bool
+> > --
+> > 2.47.0
+
 
 
