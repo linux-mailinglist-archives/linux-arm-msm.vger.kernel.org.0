@@ -1,74 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-38546-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38547-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 589C59D4144
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 18:39:36 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 114739D40A7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 17:57:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D5777B3DE61
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 16:49:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B8EBE1F21551
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 16:57:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD7BB14EC55;
-	Wed, 20 Nov 2024 16:49:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BEE6153BEE;
+	Wed, 20 Nov 2024 16:57:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qP7zuNWt"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RTAhgFtt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F96C14D28C
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Nov 2024 16:49:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D7291420DD;
+	Wed, 20 Nov 2024 16:57:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732121348; cv=none; b=eU76iQLlrZFG3Xi/sg/mBKD/6lbTwzyR333aPqsSFlLTsp/MOqF+ipwHekDw639gjM4QBsk3uhxOmwovBx5+BVDcB4aw6WB5r9XzaUx5WZJc+jQD99DdpPEBzIP6e+cHpMwy6u1mtw6+Zgxb72cYDu2GT8RmxRgccnDboTpi9rE=
+	t=1732121868; cv=none; b=f1YxgQxm5sofhCTTdCscGSyAIIk6cfvBgQqUuZCQqeYL4V9TgiRtaJzWzDdrKVei6LJdMndg1l4Nk6KxAJBcHZCYjnLIaUFdpw+YvUhP3hyyPeBkA4gFqrAhOm/ztGSL/9Hvxz9rA/8+2Ru4ob7JYKNu190n7Kpdt/cq7zUaDsA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732121348; c=relaxed/simple;
-	bh=srZ9SCWdJyh8yNz8se0UPXWlQVN0xpkVWoSbiXEFNo0=;
+	s=arc-20240116; t=1732121868; c=relaxed/simple;
+	bh=45r0FXFxX++ZNSJL5f7z/YCJV5SlmOdkB/4IZgvSZ4Q=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=M9ybEj/+UMhAWwFDytMA9HqBh3aYAiQ+YdhTO/HMefgl+REi+GbA5+HFlSJ7L46iD/sIZosJ0OhLcW49f8mQUHMd/j+7cBbP7rwGDZqOk+bINhqohXUAJ2U099dhpLuSnMYr5+dlsoJx9EyVL9wDTzKD1KH+K6XBdstZY3zZ5oQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qP7zuNWt; arc=none smtp.client-ip=209.85.128.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4319399a411so21575575e9.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Nov 2024 08:49:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732121345; x=1732726145; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=n8UgD457K+Hay4DWV5Dre9+UIqq+Qp9AxidcbC+nUoA=;
-        b=qP7zuNWtmbmNY6/Qi2gVNSUNaF+3no5dhPMr9qonH+113/6pPyfnzepN+6zjFO2hnj
-         CwANPHr8q/AuAgGrOri2Bx/SAVQV5uXSaQdJr90wt1IZhb1iHOXu9qRLY9hi7H2jvywI
-         7+kOI2BsZP1zv1C0v22/0bGgv7coNp4yOkvAE8jJuR5lpuUSS5X/jey1wnniTGcWxcr3
-         ObgJ+47x7wmhVu+SB5ZCHPNHDAv1QoDWL/dZCAzn1XTSNwybEHafDL3QdP1Vo0v4nVOx
-         sX77QbLDBp/TeyOV9PfGgS5sD5Skei8HSIhibL5eF7xgLv5wmAE9cdiOc61nTEdlZnGh
-         nTKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732121345; x=1732726145;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=n8UgD457K+Hay4DWV5Dre9+UIqq+Qp9AxidcbC+nUoA=;
-        b=A5j/yWLFZR7dZBRCtKF9E5M0Y+k9noslBMXzrWeN95aBnHGOYJ4yUKf0tcUdsEdH1M
-         XvLU5tVTS6W57ng6TN1rhTnuTkfUG87I3y8mMXvMePQaHnCOYUqzZbzl27L8fUj2cxex
-         KU1SGEaVk/ZwF6Hiayp6cXdwZzi+qvYRHr2cGZ3jn8N3D/mX5zQlUkIplvWsq+smL1fS
-         CRUEN6oKbhCxa/otpLKw/4QyKWby/eeyZAsN33mD85RdNygb12g4VYSDQnmVIGZeKLlu
-         2WGSxTGOOEjvuN9v5w/GZECpQQ7Yx+JA3EpmDgEKXyx3jd0NhwZPHZIvu1gsNtgcdWk/
-         KP+g==
-X-Forwarded-Encrypted: i=1; AJvYcCW2/0cAHt3oxUsJqgmHt+gmPW8K97cD60ohzoTgmfDSBfJkeyo4930NKGenFkYgTOfR6D6nkNbJboqQG1Bc@vger.kernel.org
-X-Gm-Message-State: AOJu0YysWfiPJLNzQZtKZ9df35S3TqSz7rO08+fR7nrow0OW7n5NWCV4
-	XpZ21CdKA/AeTwn+5XG1CkAtiMdkY2OmtPqP64q3yeQlNb5NI3s9uX1dpcKO4Ls=
-X-Google-Smtp-Source: AGHT+IHo9WhI3mbF3lCYmgsOy4+wAwOTVXhU5u9vhGfivrKQbhnhnyedHmi0kYrH9tI43DWFsRMBOQ==
-X-Received: by 2002:a05:600c:3ca9:b0:42e:75a6:bb60 with SMTP id 5b1f17b1804b1-433489d6886mr28109325e9.19.1732121345508;
-        Wed, 20 Nov 2024 08:49:05 -0800 (PST)
-Received: from [192.168.0.200] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-433b463aba6sm24821125e9.34.2024.11.20.08.49.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 20 Nov 2024 08:49:05 -0800 (PST)
-Message-ID: <587de15d-06c8-4f12-8986-f60a80fe5ad8@linaro.org>
-Date: Wed, 20 Nov 2024 16:49:04 +0000
+	 In-Reply-To:Content-Type; b=PexDmYAM5i047ARUFqxAiLlnH+UKnujtaTbbLbYJqq742Qywybqt1YtE9yDdfqQR+0v3KPqLqPuamaA1uDZ7h4+vqB8Htm0j3uTcz40ox16/5+Nz5gGGqGT3nx9n/g/ddcbBus/D7BQPCrcaHZRcy6uw5JFG6yXzQ27lbfr5t4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RTAhgFtt; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5952C4CECD;
+	Wed, 20 Nov 2024 16:57:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1732121867;
+	bh=45r0FXFxX++ZNSJL5f7z/YCJV5SlmOdkB/4IZgvSZ4Q=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=RTAhgFttR/TYBmFb4FOkdlV7aXjnNiKh1hEhGUzM1uasuNHtnLQvpDoHwCs0QosKe
+	 VHekTBslPb9dqCOszOaz/Bj8stHUYKec21DZUa5WyE9YQHSPeKv8Z/fCyRzG3udR9O
+	 5kHpJ8RNilvwpUvf5+89GZM1m0MrcVmnoKegMijleUvKZ6lutPPicep8p5LnZlRT6x
+	 g71VLh9ZwGL6m1Ey1RL6tW1WpLgPk3R7jrXqdFsBkpJkxhuBBZQB+9Y5YWgxXexLXv
+	 4ennIV1TAUvoc47MiXKSE813njPyKWUKuwzkRn8FPhry5vD7Ntitdwyv4+MdYD4rDz
+	 Blkc1zxHYupmg==
+Message-ID: <d9c3dc82-24e5-465d-bd1c-7a7c97e17136@kernel.org>
+Date: Wed, 20 Nov 2024 17:57:38 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,54 +50,88 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] clk: qcom: common: Add support for power-domain
- attachment
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>,
- Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20241118-b4-linux-next-24-11-18-clock-multiple-power-domains-v1-0-b7a2bd82ba37@linaro.org>
- <20241118-b4-linux-next-24-11-18-clock-multiple-power-domains-v1-1-b7a2bd82ba37@linaro.org>
- <u6azgqlmncadcwiz42pk36q7rehwajnftvwfjh4aoawskdwkof@ao2imoy34k4y>
+Subject: Re: [PATCH v2 1/3] dt-bindings: ufs: qcom: Add UFS Host Controller
+ for QCS615
+To: Xin Liu <quic_liuxin@quicinc.com>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I
+ <kishon@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>,
+ Avri Altman <avri.altman@wdc.com>, Bart Van Assche <bvanassche@acm.org>,
+ Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-scsi@vger.kernel.org,
+ quic_jiegan@quicinc.com, quic_aiquny@quicinc.com, quic_tingweiz@quicinc.com,
+ quic_sayalil@quicinc.com,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+References: <20241119022050.2995511-1-quic_liuxin@quicinc.com>
+ <20241119022050.2995511-2-quic_liuxin@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <u6azgqlmncadcwiz42pk36q7rehwajnftvwfjh4aoawskdwkof@ao2imoy34k4y>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20241119022050.2995511-2-quic_liuxin@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 19/11/2024 15:41, Bjorn Andersson wrote:
-audience what exactly you mean with "singleton" and "core logic".
+On 19/11/2024 03:20, Xin Liu wrote:
+> From: Sayali Lokhande <quic_sayalil@quicinc.com>
 > 
->> Use dev_pm_domain_attach_list() to automatically hook the list of given
->> power-domains in the dtsi for the clock being registered in
->> qcom_cc_really_probe().
->>
-> Do we need to power on/off all the associated power-domains every time
-> we access registers in the clock controller etc, or only in relation to
-> operating these GDSCs?
+> Document the Universal Flash Storage(UFS) Host Controller on the Qualcomm
+> QCS615 Platform.
+> 
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Signed-off-by: Sayali Lokhande <quic_sayalil@quicinc.com>
+> Co-developed-by: Xin Liu <quic_liuxin@quicinc.com>
+> Signed-off-by: Xin Liu <quic_liuxin@quicinc.com>
+That's a bit odd SoB chain. First, these are just one-liners. Second,
+who authored the patches?
 
-Its a good question.
-
-No I don't believe these PDs are required for the regs themselves i.e. 
-we can write and read - I checked the regs in the clock's probe with the 
-GDSCs off
-
-         /* Keep clocks always enabled */
-         qcom_branch_set_clk_en(regmap, 0x13a9c); /* CAM_CC_GDSC_CLK */
-         qcom_branch_set_clk_en(regmap, 0x13ab8); /* CAM_CC_SLEEP_CLK */
-
-only inside the probe where we actually try to switch the clock on, do 
-we need the PD.
-
-         ret = qcom_cc_really_probe(&pdev->dev, &cam_cc_x1e80100_desc, 
-regmap);
-
-Which means the registers themselves don't need the PD. The clock 
-remains "stuck" unless the GDSC is on which to me means that the PLL 
-isn't powered until the GDSC is switched on.
-
-So no, the regs are fine but the PLL won't budge without juice from the PD.
-
----
-bod
+Best regards,
+Krzysztof
 
