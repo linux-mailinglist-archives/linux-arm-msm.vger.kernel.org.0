@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-38547-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38548-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 114739D40A7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 17:57:55 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E845E9D40DE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 18:12:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B8EBE1F21551
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 16:57:54 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EE3A2B26210
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 16:59:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BEE6153BEE;
-	Wed, 20 Nov 2024 16:57:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0AC5150994;
+	Wed, 20 Nov 2024 16:59:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RTAhgFtt"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q5q+nM/m"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D7291420DD;
-	Wed, 20 Nov 2024 16:57:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FF6614037F;
+	Wed, 20 Nov 2024 16:59:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732121868; cv=none; b=f1YxgQxm5sofhCTTdCscGSyAIIk6cfvBgQqUuZCQqeYL4V9TgiRtaJzWzDdrKVei6LJdMndg1l4Nk6KxAJBcHZCYjnLIaUFdpw+YvUhP3hyyPeBkA4gFqrAhOm/ztGSL/9Hvxz9rA/8+2Ru4ob7JYKNu190n7Kpdt/cq7zUaDsA=
+	t=1732121942; cv=none; b=jPfcvTXZEJ4p5D3gd+RUKsS3xFYvdmj4dEx8XVy/Ui5vb+HQbHPdHqe/YAb83dDD9R8qF8WvQWWKWD6+rO+3Sj9jyS7aesEJ4zOu76fwdbp8FX1gev7+1Blt1j8NyT6QS0muZUUB60qUL/Xq3OoRtOTlmyhnKGuuGjqErZB1U84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732121868; c=relaxed/simple;
-	bh=45r0FXFxX++ZNSJL5f7z/YCJV5SlmOdkB/4IZgvSZ4Q=;
+	s=arc-20240116; t=1732121942; c=relaxed/simple;
+	bh=nHqlTCAJTOsFswa5Im2ImJEGMk0MP0JmeVKe69q9qek=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PexDmYAM5i047ARUFqxAiLlnH+UKnujtaTbbLbYJqq742Qywybqt1YtE9yDdfqQR+0v3KPqLqPuamaA1uDZ7h4+vqB8Htm0j3uTcz40ox16/5+Nz5gGGqGT3nx9n/g/ddcbBus/D7BQPCrcaHZRcy6uw5JFG6yXzQ27lbfr5t4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RTAhgFtt; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5952C4CECD;
-	Wed, 20 Nov 2024 16:57:40 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=BDmq5HfAS45bPUIhQN10S30fxfBTe43634XHZE98xKYQpQlP5C5BV4EbLCeC28xruujWufcI7x+jObG7fc2StUwaHct5gGzAzGnEm69CXpQ62wzYOlZT0hdk252fblSmmgJFxNNbr9L/I0ER1l92hK4E0YYCec3pXf2lCoILmWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q5q+nM/m; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E3C5C4CECD;
+	Wed, 20 Nov 2024 16:58:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732121867;
-	bh=45r0FXFxX++ZNSJL5f7z/YCJV5SlmOdkB/4IZgvSZ4Q=;
+	s=k20201202; t=1732121942;
+	bh=nHqlTCAJTOsFswa5Im2ImJEGMk0MP0JmeVKe69q9qek=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=RTAhgFttR/TYBmFb4FOkdlV7aXjnNiKh1hEhGUzM1uasuNHtnLQvpDoHwCs0QosKe
-	 VHekTBslPb9dqCOszOaz/Bj8stHUYKec21DZUa5WyE9YQHSPeKv8Z/fCyRzG3udR9O
-	 5kHpJ8RNilvwpUvf5+89GZM1m0MrcVmnoKegMijleUvKZ6lutPPicep8p5LnZlRT6x
-	 g71VLh9ZwGL6m1Ey1RL6tW1WpLgPk3R7jrXqdFsBkpJkxhuBBZQB+9Y5YWgxXexLXv
-	 4ennIV1TAUvoc47MiXKSE813njPyKWUKuwzkRn8FPhry5vD7Ntitdwyv4+MdYD4rDz
-	 Blkc1zxHYupmg==
-Message-ID: <d9c3dc82-24e5-465d-bd1c-7a7c97e17136@kernel.org>
-Date: Wed, 20 Nov 2024 17:57:38 +0100
+	b=Q5q+nM/mneJhgYJJK6SiU2GN3Zca5+e1RtCMMGnJdZN1WX7zmK2dVW1RIkUIEVNBS
+	 CaWM5BMJ2YXVX9lLoRaVFA7cb7NoK5sziRQV3iLxBxHLURME7AS7JeELifgNiZMcuS
+	 LgszgyXg5XV02Oumowmwg3J38aGKLrmcmWIHBpm8ctmudQHZH29PSaJZCMvNBhEj0c
+	 po7tTbPL3tgu2TMfQEchQwZBp7bbH5xXHBAx7ZcgBmdFWMV1iNhNnFKJtJ1czvRTZU
+	 79y4b+Fd8tzxcvfdoepcWSDfNNNAZtJZdjOgKfK7nEbdlVwkvm2h6vAFvCIpV1WFaC
+	 dvYHnCpC9zgiw==
+Message-ID: <4bf9ea1f-4a45-4536-82c0-032f72b28807@kernel.org>
+Date: Wed, 20 Nov 2024 17:58:52 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] dt-bindings: ufs: qcom: Add UFS Host Controller
- for QCS615
+Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: qcs615: add UFS node
 To: Xin Liu <quic_liuxin@quicinc.com>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
  <conor+dt@kernel.org>,
@@ -65,10 +64,9 @@ Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I
  linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, linux-scsi@vger.kernel.org,
  quic_jiegan@quicinc.com, quic_aiquny@quicinc.com, quic_tingweiz@quicinc.com,
- quic_sayalil@quicinc.com,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+ quic_sayalil@quicinc.com
 References: <20241119022050.2995511-1-quic_liuxin@quicinc.com>
- <20241119022050.2995511-2-quic_liuxin@quicinc.com>
+ <20241119022050.2995511-3-quic_liuxin@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -114,23 +112,21 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20241119022050.2995511-2-quic_liuxin@quicinc.com>
+In-Reply-To: <20241119022050.2995511-3-quic_liuxin@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 19/11/2024 03:20, Xin Liu wrote:
 > From: Sayali Lokhande <quic_sayalil@quicinc.com>
 > 
-> Document the Universal Flash Storage(UFS) Host Controller on the Qualcomm
-> QCS615 Platform.
+> Add the UFS Host Controller node and its PHY for QCS615 SoC.
 > 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > Signed-off-by: Sayali Lokhande <quic_sayalil@quicinc.com>
 > Co-developed-by: Xin Liu <quic_liuxin@quicinc.com>
 > Signed-off-by: Xin Liu <quic_liuxin@quicinc.com>
-That's a bit odd SoB chain. First, these are just one-liners. Second,
-who authored the patches?
+
+Confusing. Who is the FIRST author? Please carefully read submitting
+patches.
 
 Best regards,
 Krzysztof
