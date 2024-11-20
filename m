@@ -1,283 +1,196 @@
-Return-Path: <linux-arm-msm+bounces-38553-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38554-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D05BC9D4115
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 18:23:12 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id AE4159D41E2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 19:12:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 96957280D12
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 17:23:11 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 40C371F22608
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 18:12:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5811619F41C;
-	Wed, 20 Nov 2024 17:23:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E0E751B3F30;
+	Wed, 20 Nov 2024 18:12:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="gIImquSD";
-	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="TscKSRkj";
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="gIImquSD";
-	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="TscKSRkj"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lFiAVJA/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F8B114831E
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Nov 2024 17:22:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 425F31E515;
+	Wed, 20 Nov 2024 18:12:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732123380; cv=none; b=CHa99yjlE0+lrGZUIfYsCjJEc43yBnSGZnNXwZo7EgOMbSMC1RNQVbVVcf0/XGdBRijZfg6eO+6Wj5y3MBE49jhvdThBXMfC1mFT5OdLedvhDznj+s6YuYcLnXiP6byaVX1uqLqGFN1O2573J0XW+JsPQ2zPHMOXTd5AF8WBMa0=
+	t=1732126364; cv=none; b=rBntKq8+JdrBC7LnLyuTbVOTVTiJsAi53RB/K7gQDS72NSVcbPn/x2Q1e/I/DzE+E4WDtVlBwAPovsNsziCKZxT9w9ERqawMwo5vG9L4ca+SaUCq0DEMcYhBuCfmSP9Kj4lGN45VwFjNUErz+TGo+p4RSc9cQC9mU7xyY+3toe4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732123380; c=relaxed/simple;
-	bh=+OpmX36I47ryTtzXmN0hqRs0NhXasOnU6047Wg/DMqY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eCh/4xvNReJ+a8ZxHe99mOOCdS5XaKvJfgGLZl6fEGmUGb5UyugwOhbFrDO6dNIvw2xioBZLJRtc2gILCJlpuEg8aU5z7tuqOBJYnMO1pwPI2uUkm2G6XoIhA0HhOjufN6dHuLLFGtaVBtGRMc06FVN+3RN1QsWTGkU0tbkYKUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz; spf=pass smtp.mailfrom=suse.cz; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=gIImquSD; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=TscKSRkj; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=gIImquSD; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=TscKSRkj; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 54A591F7B1;
-	Wed, 20 Nov 2024 17:22:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1732123376;
-	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
-	 cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=08aJaWeObe77avLOJk3Q7AD9Cjdcc+R8GmLyAeAUptI=;
-	b=gIImquSD7csfsf3WagORB58uuhZmNkpBmBHullTyn7Az61aimOHdv3FeUJNezs+xBBHgN4
-	X8mt/t0tDLCyjHXObxegGh3Wj1tY4jTN1HWtpLNI1XYBBzuOPxluy1+qfdEyE5CMHkKe4s
-	AeOVp9OOwXZBKWq4ql3RbiaqM3yR6a8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1732123376;
-	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
-	 cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=08aJaWeObe77avLOJk3Q7AD9Cjdcc+R8GmLyAeAUptI=;
-	b=TscKSRkjHud9EqEZywXQcmW9mKWt8AKZ4WQ8pjcqykpwvAHJTx3KTUqscuTKdGV3y4FiHH
-	DgxsqTwuX3S74gAw==
-Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.cz header.s=susede2_rsa header.b=gIImquSD;
-	dkim=pass header.d=suse.cz header.s=susede2_ed25519 header.b=TscKSRkj
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1732123376;
-	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
-	 cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=08aJaWeObe77avLOJk3Q7AD9Cjdcc+R8GmLyAeAUptI=;
-	b=gIImquSD7csfsf3WagORB58uuhZmNkpBmBHullTyn7Az61aimOHdv3FeUJNezs+xBBHgN4
-	X8mt/t0tDLCyjHXObxegGh3Wj1tY4jTN1HWtpLNI1XYBBzuOPxluy1+qfdEyE5CMHkKe4s
-	AeOVp9OOwXZBKWq4ql3RbiaqM3yR6a8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1732123376;
-	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
-	 cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=08aJaWeObe77avLOJk3Q7AD9Cjdcc+R8GmLyAeAUptI=;
-	b=TscKSRkjHud9EqEZywXQcmW9mKWt8AKZ4WQ8pjcqykpwvAHJTx3KTUqscuTKdGV3y4FiHH
-	DgxsqTwuX3S74gAw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id F1BEC13297;
-	Wed, 20 Nov 2024 17:22:55 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id drSGKe8aPmfVZgAAD6G6ig
-	(envelope-from <pvorel@suse.cz>); Wed, 20 Nov 2024 17:22:55 +0000
-Date: Wed, 20 Nov 2024 18:22:54 +0100
-From: Petr Vorel <pvorel@suse.cz>
-To: Caleb Connolly <caleb.connolly@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, David Heidelberg <david@ixit.cz>,
-	Joel Selvaraj <joelselvaraj.oss@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Dylan Van Assche <me@dylanvanassche.be>,
-	Gergo Koteles <soyer@irl.hu>
-Subject: Re: [RFC PATCH 1/1] arm64: dts: qcom: sdm845-oneplus-common: enable
- resin/volume down
-Message-ID: <20241120172254.GB38310@pevik>
-Reply-To: Petr Vorel <pvorel@suse.cz>
-References: <20241120145317.31406-1-pvorel@suse.cz>
- <ab1f91bd-8b6d-4825-90e3-b6a995e346f0@linaro.org>
+	s=arc-20240116; t=1732126364; c=relaxed/simple;
+	bh=+GIAMTVbJ1ixJStHsEbMHlliDpePtNm2e3H3BFBrBvg=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=BuBSytoEYYHrYO3fRfb8D8YZal6q9fIDOzf+LHY+2I6ewvAGseGfUokJwkQYI1bggVPPgpo0AvJbktfdp4QspT+VgFMDo7HK3oTYWrHuEfZq3eFvtZtmKADey0MHOig36lOK3BB3JH4qqV5x878+0YymFLDlUw/LQyxhdYGiWDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lFiAVJA/; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AK9GWxj025929;
+	Wed, 20 Nov 2024 18:12:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=EhNaM1mzvIH9f+QEUvvyQ1
+	l0k56DBuV7rXs6Bl8yZT4=; b=lFiAVJA/Rqalps64p2UfO3u40nM1FzbsFDrJ1D
+	THUltmdgjEBUEcKlBvuxBT2L8RhqW72MgoEeiz98N0J6C8mPYg8cR6IJf0+f5a1E
+	tn5mRsV5pKw/Bh3OUJMieLY5YCiKa/a5ncxVEE55gFxUjhDWgXayN3LR4jWourMR
+	NOrvqJV5nOCv8tx1a1G1Hyz7dVFc1p2B6uHYR0W+dcbkNKEaN+lXs278Ps71Leps
+	93blNZDTZU8rDEECrj3D+MQXgIZYzyG1UKLcCs4FCuIWrWKFtk2uEvj88dHGcWNs
+	vy9XkecfWSUdp49K2mX+KB1yhH6RzQ6rXArt9iwmDgJk8Q6Q==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 431byjhkpj-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 20 Nov 2024 18:12:15 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AKICEkM001246
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 20 Nov 2024 18:12:14 GMT
+Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 20 Nov 2024 10:12:13 -0800
+From: Elliot Berman <quic_eberman@quicinc.com>
+Subject: [PATCH v4 0/2] mm: Refactor KVM guest_memfd to introduce guestmem
+ library
+Date: Wed, 20 Nov 2024 10:12:06 -0800
+Message-ID: <20241120-guestmem-library-v4-0-0c597f733909@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ab1f91bd-8b6d-4825-90e3-b6a995e346f0@linaro.org>
-X-Rspamd-Queue-Id: 54A591F7B1
-X-Spam-Level: 
-X-Spamd-Result: default: False [-2.21 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	SUSPICIOUS_RECIPS(1.50)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	MID_RHS_NOT_FQDN(0.50)[];
-	HAS_REPLYTO(0.30)[pvorel@suse.cz];
-	R_DKIM_ALLOW(-0.20)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	FUZZY_BLOCKED(0.00)[rspamd.com];
-	TO_DN_SOME(0.00)[];
-	DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	ARC_NA(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	RCVD_TLS_ALL(0.00)[];
-	DKIM_TRACE(0.00)[suse.cz:+];
-	RCVD_COUNT_TWO(0.00)[2];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_CC(0.00)[vger.kernel.org,ixit.cz,gmail.com,linaro.org,dylanvanassche.be,irl.hu];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.cz:replyto,suse.cz:dkim,suse.cz:email,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
-	TAGGED_RCPT(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[7];
-	MISSING_XM_UA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	REPLYTO_EQ_FROM(0.00)[]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spam-Score: -2.21
-X-Spam-Flag: NO
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAHcmPmcC/2WNwQ6CMBAFf4Xs2RraYqme/A/DgZYFNrGALTQSw
+ r9bSTx5nEnevA0CesIAt2wDj5ECjUOC4pSB7euhQ0ZNYhC5KDjngnULhtmhY08yvvYrU1oqaY2
+ 4cq0gzSaPLb2P5KNK3FOYR78eD1F+7S8m/2NRspyVvG0Q9UWVytxfC1ka7NmODqp93z+32UyVs
+ gAAAA==
+X-Change-ID: 20241112-guestmem-library-68363cb29186
+To: Paolo Bonzini <pbonzini@redhat.com>,
+        Andrew Morton
+	<akpm@linux-foundation.org>,
+        Sean Christopherson <seanjc@google.com>,
+        "Fuad
+ Tabba" <tabba@google.com>,
+        Ackerley Tng <ackerleytng@google.com>,
+        "Mike
+ Rapoport" <rppt@kernel.org>,
+        David Hildenbrand <david@redhat.com>,
+        "H. Peter
+ Anvin" <hpa@zytor.com>,
+        "Matthew Wilcox (Oracle)" <willy@infradead.org>,
+        Jonathan Corbet <corbet@lwn.net>, Trond Myklebust <trondmy@kernel.org>,
+        "Anna
+ Schumaker" <anna@kernel.org>,
+        Mike Marshall <hubcap@omnibond.com>,
+        "Martin
+ Brandenburg" <martin@omnibond.com>,
+        Alexander Viro <viro@zeniv.linux.org.uk>,
+        Christian Brauner <brauner@kernel.org>, Jan Kara <jack@suse.cz>
+CC: James Gowans <jgowans@amazon.com>, Mike Day <michael.day@amd.com>,
+        <linux-fsdevel@vger.kernel.org>, <kvm@vger.kernel.org>,
+        <linux-coco@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-mm@kvack.org>,
+        <linux-doc@vger.kernel.org>, <linux-nfs@vger.kernel.org>,
+        <devel@lists.orangefs.org>, <linux-arm-kernel@lists.infradead.org>,
+        "Elliot
+ Berman" <quic_eberman@quicinc.com>
+X-Mailer: b4 0.14.2
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: nd43uozb7EZ_SXIRUmbmgsxDVz64o2Pc
+X-Proofpoint-ORIG-GUID: nd43uozb7EZ_SXIRUmbmgsxDVz64o2Pc
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1011
+ suspectscore=0 phishscore=0 lowpriorityscore=0 impostorscore=0
+ malwarescore=0 priorityscore=1501 bulkscore=0 adultscore=0 mlxlogscore=954
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411200125
 
-Hi Caleb,
+In preparation for adding more features to KVM's guest_memfd, refactor
+and introduce a library which abtracts some of the core-mm decisions
+about managing folios associated with guest memory. The goal of the
+refactor serves two purposes:
 
-> Hi Petr,
+1. Provide an easier way to reason about memory in guest_memfd. KVM
+   needs to support multiple confidentiality models (TDX, SEV, pKVM, Arm
+   CCA). These models support different semantics for when the host
+   can(not) access guest memory. An abstraction for the allocator and
+   managing the state of pages will make it eaiser to reason about the
+   state of folios within the guest_memfd.
 
-> On 20/11/2024 15:53, Petr Vorel wrote:
-> > OnePlus 6T (fajita) downstream device tree contains volume down GPIO key
-> > and resin. I suppose it is also in OnePlus 6 (enchilada).
+2. Provide a common implementation for other users such as Gunyah [1] and
+   guestmemfs [2].
 
-> The volume down key is already enabled under the gpio-keys node in
-> sdm845-oneplus-common.dtsi does it not work for you for some reason?
+In this initial series, I'm seeking comments for the line I'm drawing
+between library and user (KVM). I've not introduced new functionality in
+this series; the first new feature will probably be Fuad's mappability
+patches [3].
 
-Thanks for info. I'm sorry for the noise, obviously I was wrong. I noticed
-before gpio-keys but later forgot on it (staring to too many device tree files
-during day).  That's how it endup if I dare to send patch without testing :(.
+I've decided to only bring out the address_space from guest_memfd as it
+seemed the simplest approach. In the current iteration, KVM "attaches"
+the guestmem to the inode. I expect we'll want to provide some helpers
+for inode, file, and vm operations when it's relevant to
+mappability/accessiblity/faultability.
 
-> I don't believe the resin node is used on this board, it's ignosed on
-> the schematics at any rate.
+I'd appreciate any feedback, especially on how much we should pull into
+the guestmem library.
 
-I saw resin in the downstream device tree (get from phone, not just by reading
-downstream source codes), but obviously if volume down is working resin is not
-needed anyway. Another example of how downstream device tree is messy, I would
-also trust schematics more.
+[1]: https://lore.kernel.org/lkml/20240222-gunyah-v17-0-1e9da6763d38@quicinc.com/
+[2]: https://lore.kernel.org/all/20240805093245.889357-1-jgowans@amazon.com/
+[3]: https://lore.kernel.org/all/20241010085930.1546800-3-tabba@google.com/
 
-Kind regards,
-Petr
+Changes in v4:
+- Update folio_free() to add address_space mapping instead of
+  invalidate_folio/free_folio path.
+- Link to v3: https://lore.kernel.org/r/20241113-guestmem-library-v3-0-71fdee85676b@quicinc.com
 
-> Kind regards,
+Changes in v3:
+ - Refactor/extract only the address_space
+ - Link to v2: https://lore.kernel.org/all/20240829-guest-memfd-lib-v2-0-b9afc1ff3656@quicinc.com/
 
-> > Signed-off-by: Petr Vorel <pvorel@suse.cz>
-> > ---
-> > Hi
+Changes in v2:
+- Significantly reworked to introduce "accessible" and "safe" reference
+  counters
+- Link to v1: https://lore.kernel.org/r/20240805-guest-memfd-lib-v1-0-e5a29a4ff5d7@quicinc.com
 
-> > reason for RFC:
-> > * Unfortunately untested on the real device.
-> > * OnePlus 6 (enchilada) is nearly identical, but I haven't compared it's
-> >   device tree.
-> > * Other sdm845 based devices just enable resin/volume down key the same
-> >   way. But what confuses me is "gpios = <0xe7 0x05 0x01>;", does it need
-> >   to enable gpios like sm6375-sony-xperia-murray-pdx225.dts in
-> >   795ee50e55f4 ("arm64: dts: qcom: sm6375-pdx225: Add volume down GPIO key") ?
+Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+---
+Elliot Berman (2):
+      filemap: Pass address_space mapping to ->free_folio()
+      mm: guestmem: Convert address_space operations to guestmem library
 
-> > Below is snipped of the OnePlus 6T (fajita) downstream device tree.
+ Documentation/filesystems/locking.rst |   2 +-
+ MAINTAINERS                           |   2 +
+ fs/nfs/dir.c                          |  11 +-
+ fs/orangefs/inode.c                   |   3 +-
+ include/linux/fs.h                    |   2 +-
+ include/linux/guestmem.h              |  33 ++++++
+ mm/Kconfig                            |   3 +
+ mm/Makefile                           |   1 +
+ mm/filemap.c                          |   9 +-
+ mm/guestmem.c                         | 196 ++++++++++++++++++++++++++++++++++
+ mm/secretmem.c                        |   3 +-
+ mm/vmscan.c                           |   4 +-
+ virt/kvm/Kconfig                      |   1 +
+ virt/kvm/guest_memfd.c                |  97 +++++------------
+ 14 files changed, 283 insertions(+), 84 deletions(-)
+---
+base-commit: 5cb1659f412041e4780f2e8ee49b2e03728a2ba6
+change-id: 20241112-guestmem-library-68363cb29186
 
-> > Kind regards,
-> > Petr
+Best regards,
+-- 
+Elliot Berman <quic_eberman@quicinc.com>
 
-> > gpio_keys {
-> > 		compatible = "gpio-keys";
-> > 		label = "gpio-keys";
-> > 		pinctrl-0 = <0x2f7>;
-> > 		pinctrl-names = "default";
-
-> > 		vol_down {
-> > 				gpios = <0xe7 0x05 0x01>;
-> > 				linux,can-disable;
-> > 				debounce-interval = <0x0f>;
-> > 				label = "volume_down";
-> > 				linux,input-type = <0x01>;
-> > 				linux,code = <0x72>;
-> > 		};
-
-> > 		vol_up {
-> > 				gpios = <0xe7 0x06 0x01>;
-> > 				linux,can-disable;
-> > 				debounce-interval = <0x0f>;
-> > 				label = "volume_up";
-> > 				linux,input-type = <0x01>;
-> > 				gpio-key,wakeup;
-> > 				linux,code = <0x73>;
-> > 		};
-
-> > 		cam_focus {
-> > 				status = "disabled";
-> > 		};
-
-> > 		hallsensor_key {
-> > 				gpios = <0x34 0x7c 0x01>;
-> > 				debounce-interval = <0x0f>;
-> > 				interrupt-parent = <0x34>;
-> > 				interrupts = <0x7c 0x00>;
-> > 				label = "hallsensor_key";
-> > 				linux,input-type = <0x05>;
-> > 				gpio-key,wakeup;
-> > 				linux,code = <0x00>;
-> > 		};
-
-> > 		cam_snapshot {
-> > 				status = "disabled";
-> > 		};
-> > };
-
-> > ...
-> > qcom,power-on@800 {
-> > 		qcom,system-reset;
-> > 		compatible = "qcom,qpnp-power-on";
-> > 		qcom,pon-dbc-delay = <0x3d09>;
-> > 		interrupts = <0x00 0x08 0x00 0x00 0x00 0x08 0x01 0x00 0x00 0x08 0x04 0x00 0x00 0x08 0x05 0x00>;
-> > 		qcom,kpdpwr-sw-debounce;
-> > 		reg = <0x800 0x100>;
-> > 		interrupt-names = "kpdpwr\0resin\0resin-bark\0kpdpwr-resin-bark";
-> > 		qcom,store-hard-reset-reason;
-
-> > 		qcom,pon_1 {
-> > 				qcom,support-reset = <0x00>;
-> > 				qcom,pull-up = <0x01>;
-> > 				qcom,pon-type = <0x00>;
-> > 				linux,code = <0x74>;
-> > 		};
-
-> > 		qcom,pon_2 {
-> > 				qcom,pull-up = <0x01>;
-> > 				qcom,pon-type = <0x01>;
-> > 				linux,code = <0x72>;
-> > 		};
-
-> >  arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 5 +++++
-> >  1 file changed, 5 insertions(+)
-
-> > diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-> > index 46e25c53829a..6cb074de7696 100644
-> > --- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-> > @@ -847,6 +847,11 @@ speaker_default: speaker-default-state {
-> >  	};
-> >  };
-
-> > +&pm8998_resin {
-> > +	linux,code = <KEY_VOLUMEDOWN>;
-> > +	status = "okay";
-> > +};
-> > +
-> >  &venus {
-> >  	status = "okay";
-> >  	firmware-name = "qcom/sdm845/oneplus6/venus.mbn";
 
