@@ -1,156 +1,252 @@
-Return-Path: <linux-arm-msm+bounces-38531-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38533-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 053619D3E4C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 15:59:28 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id CA82A9D3E64
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 16:02:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B47BD1F218F1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 14:59:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5F764282357
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 15:02:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 757A01DDC3E;
-	Wed, 20 Nov 2024 14:49:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C1A511AA787;
+	Wed, 20 Nov 2024 14:53:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="IaJ0u76B"
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="Qw8olUjd";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="LVxVwrBT";
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="bNMMuUc6";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="3Jn0I07R"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 034491DDC2D;
-	Wed, 20 Nov 2024 14:49:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C60AA1714CD
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Nov 2024 14:53:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732114161; cv=none; b=Gst1x/mbSVVLktEVUPgEVaokwtsf4gr/mGtXNqH2XM/OboQnwM92CSPmOtZXP04xCoIKlbvqPkFDk0aBrVe/pxIr3GBi/gqQ/o3Ql7u+PhZZchpYJGGABZqJdkqf8/mSXZCzCUbpi2AUocKX77S9GT1BLNgKLVlanHgJouN2+uU=
+	t=1732114404; cv=none; b=lBJJLBJIITPNfdsYW+XTD8ifz7wb9ce2clTY86Q9Lt4Qhf5RasqUcSvG+W5iMhfW9d/QC/Z3sA9KGNhxCJ/NDPO7sF2wSWgUuhAtXqcv2jlyb8iaPaQOuYrMjbFskZghT4246kuuJ6+zQtWYhSG9GPPcdTtPZ5vCuy5OEBnxw0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732114161; c=relaxed/simple;
-	bh=ljYka+yEPL7dtoadjp4FCBcNXplDLLPRhCJ9St112Pw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=CjRZTa0RU4oRuuYs1KnSemfIaUsgAYNNbHFXAoUGHwVhqpPiM9oK+eFLHovvynTvRl4rE/edH9aqm2kJ7x33tJzKyf/nvJ2Oh+EuzhnpC4BDHeR4BBNTz681kgFyx3fHCsgJBHb92XPENxRd4Otvcxlx7Ta72U0JPXkbSLIaDxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=IaJ0u76B; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AKAo9BA027179;
-	Wed, 20 Nov 2024 14:49:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Oxkw5D/JPs2UYjgb4jIX/CzNiPXlr+l6xOKDFt/4wo8=; b=IaJ0u76BSvUJlkw7
-	mBIQDg5rgT8/qkQCihfnx9cwjhFivODOWMP6kJtgVw0Bkq8nHCoelW1+/ijjmEfF
-	+mk68PYxVuT6198zwMnzLBtdnCNujhLvVJ5RVw2P7Et4eO3+jMhtV23yFQasAgi8
-	A4Eeisb/e2PlU+llfRkwEJtELgUiWBboYOsWdoB6bAQvohkqKCTQvlTPPXTqney/
-	FiZ5vCjWlaH86UF1AawrDiNHG7PG1wKB1o1ybrmtrHQ23ibyXQMiqL6EdHbbamSw
-	khPhFF/xJubJpoA0rpNIkYrAbLo2suLJdw2u2OqHmKzuz43O5bh/5CZA/UyPs6WL
-	xmuinA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 431eby8k2a-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 20 Nov 2024 14:49:12 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AKEnBVK008175
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 20 Nov 2024 14:49:11 GMT
-Received: from hu-dikshita-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 20 Nov 2024 06:49:06 -0800
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
-Date: Wed, 20 Nov 2024 20:16:18 +0530
-Subject: [PATCH v6 28/28] media: MAINTAINERS: add Qualcomm iris video
- accelerator driver
+	s=arc-20240116; t=1732114404; c=relaxed/simple;
+	bh=U7kjrGCZ9PqAOjimlBmNTH32A5F8SnmOObHpu7MrLa4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=aOnnirhiRWASpvP6EK2mlYQKwLq4N4YnB6jbOnlV8Rv0s7gsuqN85JE6ogNPMZ59bvfI2g4yAP0mxA1iGSMqfKzG4FFvo/eHtmVuOkxVqq85G0bKpC+BofsfTIv1UDZIHDnHVN79UEZ8Q88/DxcfHw0XGPXnoSATCKRM+TlzOfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz; spf=pass smtp.mailfrom=suse.cz; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=Qw8olUjd; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=LVxVwrBT; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=bNMMuUc6; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=3Jn0I07R; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id ECD561F79B;
+	Wed, 20 Nov 2024 14:53:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1732114401; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=/JtcxRVyojzrhZubTsRcBODGGrGAf4Z+/nH9fUtnHSQ=;
+	b=Qw8olUjd7tpX0u7OWWdUmulgsc7IibELTMpkcAmmSdkTUDqNSJRkJeRTa1NCc1ZqMCyLLI
+	RPCqznnhE8kxU0x1q+aGpwaif/6B5IC2yZm7suYKUdVr5XWvyjg4dRaGDbKyM3yAXWHv0F
+	QIojlwRXaOwBT1+3rGKnTvlaHsnSspA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1732114401;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=/JtcxRVyojzrhZubTsRcBODGGrGAf4Z+/nH9fUtnHSQ=;
+	b=LVxVwrBT+9jXQ7qns4e8EREiN7ijKvsMqurEJBIPBESD8AHXMipoUitwYgJqN4GIcNUpaH
+	kAOFMTe/SD6aM/Bw==
+Authentication-Results: smtp-out2.suse.de;
+	dkim=pass header.d=suse.cz header.s=susede2_rsa header.b=bNMMuUc6;
+	dkim=pass header.d=suse.cz header.s=susede2_ed25519 header.b=3Jn0I07R
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1732114400; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=/JtcxRVyojzrhZubTsRcBODGGrGAf4Z+/nH9fUtnHSQ=;
+	b=bNMMuUc6TXOhu988VA+6D6ZM4O2D3Yt8C2kABakBIOYUsllfsAKkdYzbEWIT4XPhSnz8wP
+	GZphlL4eA04MRcpxXIQPRZmXJg0PxzM/a6BtFWQYEUzO4ChEIfV/zksNECWvkifOSbe7jM
+	GSOsHCv2tHIozfHhkb7U2UYbiafCUO8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1732114400;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=/JtcxRVyojzrhZubTsRcBODGGrGAf4Z+/nH9fUtnHSQ=;
+	b=3Jn0I07R5sELbK6JLOd5XoHKLiU57BsdDEJgnMWt60AyrIwaoJh5XawjcXL82D8GFPsK2t
+	7uj8IjW/NiwbAUBA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id AD41D137CF;
+	Wed, 20 Nov 2024 14:53:20 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id QeeVKOD3PWfvOQAAD6G6ig
+	(envelope-from <pvorel@suse.cz>); Wed, 20 Nov 2024 14:53:20 +0000
+From: Petr Vorel <pvorel@suse.cz>
+To: linux-arm-msm@vger.kernel.org
+Cc: Petr Vorel <pvorel@suse.cz>,
+	Caleb Connolly <caleb.connolly@linaro.org>,
+	David Heidelberg <david@ixit.cz>,
+	Joel Selvaraj <joelselvaraj.oss@gmail.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Dylan Van Assche <me@dylanvanassche.be>,
+	Gergo Koteles <soyer@irl.hu>
+Subject: [RFC PATCH 1/1] arm64: dts: qcom: sdm845-oneplus-common: enable resin/volume down
+Date: Wed, 20 Nov 2024 15:53:16 +0100
+Message-ID: <20241120145317.31406-1-pvorel@suse.cz>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20241120-qcom-video-iris-v6-28-a8cf6704e992@quicinc.com>
-References: <20241120-qcom-video-iris-v6-0-a8cf6704e992@quicinc.com>
-In-Reply-To: <20241120-qcom-video-iris-v6-0-a8cf6704e992@quicinc.com>
-To: Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Abhinav Kumar
-	<quic_abhinavk@quicinc.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        "Rob
- Herring" <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        "Conor
- Dooley" <conor+dt@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>
-CC: Hans Verkuil <hverkuil@xs4all.nl>,
-        Sebastian Fricke
-	<sebastian.fricke@collabora.com>,
-        Bryan O'Donoghue
-	<bryan.odonoghue@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Nicolas Dufresne
-	<nicolas@ndufresne.ca>,
-        =?utf-8?q?Uwe_Kleine-K=C3=B6nig?=
-	<u.kleine-koenig@baylibre.com>,
-        Jianhua Lu <lujianhua000@gmail.com>, <linux-media@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        "Dikshita
- Agarwal" <quic_dikshita@quicinc.com>
-X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1732113983; l=1060;
- i=quic_dikshita@quicinc.com; s=20240917; h=from:subject:message-id;
- bh=ljYka+yEPL7dtoadjp4FCBcNXplDLLPRhCJ9St112Pw=;
- b=ovc4qxub2F5eMzuCXputinphaVPxI3cGetGOXmj8SAIjge1rcdnJhU0POnKBgb3hyr6MJVd9D
- ZBxR87dTCKWDnalOJB/WvPsFvZfKi/bI+Z8MPEaODLiQLFi32cm7Ldz
-X-Developer-Key: i=quic_dikshita@quicinc.com; a=ed25519;
- pk=EEvKY6Ar1OI5SWf44FJ1Ebo1KuQEVbbf5UNPO+UHVhM=
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: hETFp3prU3poPUth79wLqhyv4yaz1gye
-X-Proofpoint-ORIG-GUID: hETFp3prU3poPUth79wLqhyv4yaz1gye
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- priorityscore=1501 lowpriorityscore=0 malwarescore=0 mlxlogscore=836
- spamscore=0 mlxscore=0 phishscore=0 suspectscore=0 bulkscore=0
- adultscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2409260000 definitions=main-2411200098
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: ECD561F79B
+X-Spam-Level: 
+X-Spamd-Result: default: False [-1.51 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	SUSPICIOUS_RECIPS(1.50)[];
+	MID_CONTAINS_FROM(1.00)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	R_MISSING_CHARSET(0.50)[];
+	R_DKIM_ALLOW(-0.20)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	TO_DN_SOME(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
+	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	ARC_NA(0.00)[];
+	FUZZY_BLOCKED(0.00)[rspamd.com];
+	FREEMAIL_CC(0.00)[suse.cz,linaro.org,ixit.cz,gmail.com,dylanvanassche.be,irl.hu];
+	RCVD_TLS_ALL(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	TAGGED_RCPT(0.00)[];
+	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+	DKIM_TRACE(0.00)[suse.cz:+];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com]
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+X-Spam-Score: -1.51
+X-Spam-Flag: NO
 
-Add an entry for iris video decoder accelerator driver.
+OnePlus 6T (fajita) downstream device tree contains volume down GPIO key
+and resin. I suppose it is also in OnePlus 6 (enchilada).
 
-Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
-Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Signed-off-by: Petr Vorel <pvorel@suse.cz>
 ---
- MAINTAINERS | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+Hi
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 7a14891a8fa9..d647e59d9912 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -19156,6 +19156,16 @@ S:	Maintained
- F:	Documentation/devicetree/bindings/regulator/vqmmc-ipq4019-regulator.yaml
- F:	drivers/regulator/vqmmc-ipq4019-regulator.c
+reason for RFC:
+* Unfortunately untested on the real device.
+* OnePlus 6 (enchilada) is nearly identical, but I haven't compared it's
+  device tree.
+* Other sdm845 based devices just enable resin/volume down key the same
+  way. But what confuses me is "gpios = <0xe7 0x05 0x01>;", does it need
+  to enable gpios like sm6375-sony-xperia-murray-pdx225.dts in
+  795ee50e55f4 ("arm64: dts: qcom: sm6375-pdx225: Add volume down GPIO key") ?
+
+Below is snipped of the OnePlus 6T (fajita) downstream device tree.
+
+Kind regards,
+Petr
+
+gpio_keys {
+		compatible = "gpio-keys";
+		label = "gpio-keys";
+		pinctrl-0 = <0x2f7>;
+		pinctrl-names = "default";
+
+		vol_down {
+				gpios = <0xe7 0x05 0x01>;
+				linux,can-disable;
+				debounce-interval = <0x0f>;
+				label = "volume_down";
+				linux,input-type = <0x01>;
+				linux,code = <0x72>;
+		};
+
+		vol_up {
+				gpios = <0xe7 0x06 0x01>;
+				linux,can-disable;
+				debounce-interval = <0x0f>;
+				label = "volume_up";
+				linux,input-type = <0x01>;
+				gpio-key,wakeup;
+				linux,code = <0x73>;
+		};
+
+		cam_focus {
+				status = "disabled";
+		};
+
+		hallsensor_key {
+				gpios = <0x34 0x7c 0x01>;
+				debounce-interval = <0x0f>;
+				interrupt-parent = <0x34>;
+				interrupts = <0x7c 0x00>;
+				label = "hallsensor_key";
+				linux,input-type = <0x05>;
+				gpio-key,wakeup;
+				linux,code = <0x00>;
+		};
+
+		cam_snapshot {
+				status = "disabled";
+		};
+};
+
+...
+qcom,power-on@800 {
+		qcom,system-reset;
+		compatible = "qcom,qpnp-power-on";
+		qcom,pon-dbc-delay = <0x3d09>;
+		interrupts = <0x00 0x08 0x00 0x00 0x00 0x08 0x01 0x00 0x00 0x08 0x04 0x00 0x00 0x08 0x05 0x00>;
+		qcom,kpdpwr-sw-debounce;
+		reg = <0x800 0x100>;
+		interrupt-names = "kpdpwr\0resin\0resin-bark\0kpdpwr-resin-bark";
+		qcom,store-hard-reset-reason;
+
+		qcom,pon_1 {
+				qcom,support-reset = <0x00>;
+				qcom,pull-up = <0x01>;
+				qcom,pon-type = <0x00>;
+				linux,code = <0x74>;
+		};
+
+		qcom,pon_2 {
+				qcom,pull-up = <0x01>;
+				qcom,pon-type = <0x01>;
+				linux,code = <0x72>;
+		};
+
+ arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
+index 46e25c53829a..6cb074de7696 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
+@@ -847,6 +847,11 @@ speaker_default: speaker-default-state {
+ 	};
+ };
  
-+QUALCOMM IRIS VIDEO ACCELERATOR DRIVER
-+M:	Vikash Garodia <quic_vgarodia@quicinc.com>
-+M:	Dikshita Agarwal <quic_dikshita@quicinc.com>
-+R:	Abhinav Kumar <quic_abhinavk@quicinc.com>
-+L:	linux-media@vger.kernel.org
-+L:	linux-arm-msm@vger.kernel.org
-+S:	Maintained
-+F:	Documentation/devicetree/bindings/media/qcom,*-iris.yaml
-+F:	drivers/media/platform/qcom/iris/
++&pm8998_resin {
++	linux,code = <KEY_VOLUMEDOWN>;
++	status = "okay";
++};
 +
- QUALCOMM NAND CONTROLLER DRIVER
- M:	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
- L:	linux-mtd@lists.infradead.org
-
+ &venus {
+ 	status = "okay";
+ 	firmware-name = "qcom/sdm845/oneplus6/venus.mbn";
 -- 
-2.34.1
+2.45.2
 
 
