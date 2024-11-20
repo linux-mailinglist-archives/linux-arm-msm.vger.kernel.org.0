@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-38540-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38541-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6C2419D4123
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 18:28:39 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id C2A4B9D4083
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 17:49:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C705BB38B92
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 16:41:51 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1215CB3A074
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 16:43:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E1E0153BF8;
-	Wed, 20 Nov 2024 16:41:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA6D3153BEE;
+	Wed, 20 Nov 2024 16:43:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YIA7nuKb"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q++I0lHq"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E31DD148FE8;
-	Wed, 20 Nov 2024 16:41:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E6A3153820;
+	Wed, 20 Nov 2024 16:43:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732120905; cv=none; b=C0i5XtAvLaPhpIKMiqwKdiFOwf0uYf6+l0MLZG1DFWKVxN4IKrJ+2HvGRXvKQu4PaUz0++2AVX6e1EI1V7SvrZQvm+pdrKfwUG4yBMxsbjrtgY/qICSLE3sos2FsYlMJ3hfRQnV/DdTUaR5L53UQ65WgygHlbsTy/uaPU5pqIQs=
+	t=1732120998; cv=none; b=FyO5niqeTZK/3Ogzy1ohbw/E8R4Fp9KDndPt4Qz3+eZpsR36DaINPUYjSV6beRTgc57790BVbUf9AKly3TxwN4K3WaYPcUkS3AOh/OxhAfRCVjx/ExrYov02ePX2DCgUDTG4k5Gj9aRSCPERqUzPAO6xoA3uSuytUwZ8Q4QivbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732120905; c=relaxed/simple;
-	bh=aow1D5oiZOa2yWdRgBhIfhCOaZCz2R+6BfhiQAHq7SM=;
+	s=arc-20240116; t=1732120998; c=relaxed/simple;
+	bh=ZTj9gMEuBfZ8/vgx3Ct1L/MVUNIjz0fyHYSh2AzyBCI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nYYFeDSthufzkZS+EkbeWKS7gL3c2EiFelEz2DTbMocImgteQEU8LS3sejIlU+yeKgBrDO+nnigr/qU1eWi/RIHmuhNmJ1RCU5CF1cYEWiXU2LD/biiDxa+VIB3YMgh320oT5VrJXXYcgHRX7VNZrHCVSb17moQULY3VsPHDyqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YIA7nuKb; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44596C4CECD;
-	Wed, 20 Nov 2024 16:41:40 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=CuwhuDOnaoNEiz3sMOswwSlYVj2PH/0SY4Olq3H1DZFoFIwNz/kpHHZQSg/bNQ76KBxSFbmnuAe4MNdRZGP2rJ7BOJ2wrLTaquukgQNtVBmwEeb6HAJ+eXTzyn2cqeIftUNQPy7uBregvrSyv4PgQXcreYq0Ic+vVNJ7uqPilks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q++I0lHq; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09A74C4CECD;
+	Wed, 20 Nov 2024 16:43:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732120904;
-	bh=aow1D5oiZOa2yWdRgBhIfhCOaZCz2R+6BfhiQAHq7SM=;
+	s=k20201202; t=1732120997;
+	bh=ZTj9gMEuBfZ8/vgx3Ct1L/MVUNIjz0fyHYSh2AzyBCI=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=YIA7nuKbVbuSMCY4GKe8nHZOKon2c3Z0lRtmAScjrWGeO3x/tPIhnDt+DEstqDQLS
-	 lmMZkBSzW8NDFgBOvgE9Nw+7O2rYnwVImD/uujdPyc4Cfo/+/POlzH+OhCClNTqbsQ
-	 w3jk+AKPwd+PVGaKOM6UxsscJcwV0UoK3hgSTUFq+X3eUGLFIeMpQ/AC1r9/NBeXtw
-	 XHQxWzTG70vUHMAE+K/V6zd2Z50yoYU6DwMelNtBz+MwPUP0uaxSp5faSTfCGBPMdD
-	 d2WgG3vRsLNwYat7Ay7u/p1o+PhjK+VXFga+k9XsrngjAYsbfd1KSih98ayburDcRr
-	 VbAcoMk/+RrfQ==
-Message-ID: <7f52e0d2-0934-49ca-9c7d-4ba88460096a@kernel.org>
-Date: Wed, 20 Nov 2024 17:41:39 +0100
+	b=Q++I0lHqJWvT12rZf1n3kD2s2JuKmX8MhARm0OQy8gFfFKBUovZ3GI349vKmfRQp1
+	 KIoJb6INWfQNavO5ZFaOEbARNuBfA/GB0jy7+9s4raT/RiyAJb0I9svefOxqobTdCx
+	 FUKU/ghK9Kra4qcgvk/N4qsj2gM9TnKBlFtsvNfkXhvtg/DIpYYI2a0IxrGRbpRWSC
+	 Eo4BDJwJvFLLPEERn1J/a/iDmeKw0BJHagNe8FOztO9KFfXQVAqw248eUoHx6tZIuA
+	 MqMM93scKC+3Qqg0IkAkTiav8w8z1eyEPCGGeIuj7HHwiJh8bWb4SBa8fSRi3ccrqd
+	 mdyc9c6LjjjDg==
+Message-ID: <9fc564e4-4bb5-4529-a38b-88d93684805b@kernel.org>
+Date: Wed, 20 Nov 2024 17:43:12 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/5] arm64: qcom: Add support for QCS9075 boards
+Subject: Re: [PATCH v3 3/5] dt-bindings: arm: qcom: Document rb8/ride/ride-r3
+ on QCS9075
 To: Wasim Nazir <quic_wasimn@quicinc.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -58,6 +59,7 @@ To: Wasim Nazir <quic_wasimn@quicinc.com>,
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, kernel@quicinc.com
 References: <20241119174954.1219002-1-quic_wasimn@quicinc.com>
+ <20241119174954.1219002-4-quic_wasimn@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -103,19 +105,29 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20241119174954.1219002-1-quic_wasimn@quicinc.com>
+In-Reply-To: <20241119174954.1219002-4-quic_wasimn@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 19/11/2024 18:49, Wasim Nazir wrote:
-> This series:
-> 
-> Add support for Qualcomm's rb8, ride/ride-r3 boards using QCS9075 SoC.
+> qcs9075 rb8, ride & ride-r3 boards are based on QCS9075 SoC.
 > 
 > QCS9075 is compatible IoT-industrial grade variant of SA8775p SoC
-How does it relate to qcs9100? Why this is not compatible with the
-other? It looks like you duplicate here a lot without trying to make
-these built on top of each other.
+> without safety monitorng feature of SAfety-IsLand subsystem.
+
+SA or Sa?
+Also some typos above.
+
+> This subsystem continues to supports other features like built-in
+> self-test, error-detection, reset-handling, etc.
+
+Which subsystem? How does it matter for the board? Drop all marketing
+stuff from here and rather explain why this is not related to qcs9100.
+We had quite a lot of talks and I am surprised seeing this without any
+earlier references.
+
+
+
 
 Best regards,
 Krzysztof
