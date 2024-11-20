@@ -1,138 +1,185 @@
-Return-Path: <linux-arm-msm+bounces-38476-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38477-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id BCB469D39FD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 12:55:31 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7674E9D3A66
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 13:14:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6B27C1F24EF1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 11:55:31 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6A1EDB2C917
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 11:55:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 320A21A7255;
-	Wed, 20 Nov 2024 11:53:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 86A8D1A9B38;
+	Wed, 20 Nov 2024 11:53:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BCd0kegS"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ONF3QyCF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E8C219D894
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Nov 2024 11:53:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC1241A4AA1;
+	Wed, 20 Nov 2024 11:53:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732103605; cv=none; b=kovqPxNI8ATvfWos2HR3Xcccmop9bQo2rdvhFsNBT37ey+UXiWfNY01J4Oh1nRR/v16zQ7e7Z/n1dzrrchUlnxl0t3PjOBBZD3uLKI4PDnivxp3q03UzUtBHYKxO64Pne0RS66vcG1VcjpqsDVwSk2RDnEO8RwP3lnJQgS1+CuA=
+	t=1732103619; cv=none; b=cH39xegcvXLmuHy9OnZzRp1gDATw1JkO6Otg44K2giC1vj0wx1bUzR0tUpGaIV6ze7e6lZrp/5yax7+Ij+WM75cJ6pwxLBgI8DmPNYPEuFVTGy2/acv9aaGuILp3l5k8bo2pObuh1udEwyshdFNet/txZkuKPD/nN85LjtXfGeQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732103605; c=relaxed/simple;
-	bh=+MxPqx3dXMtmTTkh/KdDxAQTgcrpLDPNHcD87nDZzSM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JFs1NgiAZ3LaC604OPBnN0/hh+drYLM83jwcYMIiNj5LgDo9FJn7mQM6sgZBgLkE8gkCCsuy9xvj8ZTmlAjc5S1/xN1Y5nlmCa/vLc2CBCFZempxDRpliWmNsjvdA5rNi6g5DOkO2b8pfkKhLSsjl2nmO9MVb9rXjMT9RniXc4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BCd0kegS; arc=none smtp.client-ip=209.85.208.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2fb561f273eso64329141fa.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Nov 2024 03:53:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732103601; x=1732708401; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=USA1W1qx9HFfEjKLttxC4EE5U+gk9ptHIMuBPa1JZ40=;
-        b=BCd0kegS9thjEObRwXFyOwsxrqNu2RKpzBm6g286lpAzZhQLTgBLfMhvgKLQmOwN+9
-         +RvvyMuvyeLf5k8lDKe0dHAxhbkYp5oNYxaOOXMMgwT328QLwn8LE6lwRIENKvEe4BQI
-         pvrjiGE7KdAyWy4iRs9xii+ksKA6r6oeZCiFU+0bkMpbrkkogdmOf2HwYUJ/3Gytpn/7
-         XqxDSmOHOluZbPbML614dxK7xpI9InKc8DNkk0FybjJDjNwg9w4pmtsOoaH4sXFfnk93
-         /DUEuu2I9ksPUKIHfKP0Mnyk4/1sD/NPuM3v+fwAreu8SzC/7JFA4C+l0N6wzdveCy+4
-         v9sQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732103601; x=1732708401;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=USA1W1qx9HFfEjKLttxC4EE5U+gk9ptHIMuBPa1JZ40=;
-        b=TsGYjgaQFg6eF0l8IihXWyeeCQuWWNU/SJnXJPV+tIh8BaD3JGBnvvAoDObhgIoMSR
-         ILVQ8ts25NgJW5sbG6Dn44V+F7nLYMjN3XWkcuJ2aMNdH/mqFg2GRuj9n3GMCNbWG046
-         j5GzmzwlfE0JFb62Q4J8sisI+jfkPmfM1U2U9ehqOzONyd1dIKLM+OCv6SebLGQJWnWh
-         tqw/TYZ+FS9GoxLRMELZAkXI1eyPN8v3BuRVnU4yzPTyYx+4S+DzYy5VVN/o2aIAE6YY
-         CKOD9Q+uHpIpCIWeh23A3Q4KV7/fWXdAo/R6TQbb/DSbSQ7BkGW+EXxBuPyecL0vw/IP
-         4lXg==
-X-Forwarded-Encrypted: i=1; AJvYcCXe4m2Ia54Br72CO0OhfcpDQCNpFZ2C/N11d5S9BxH8HczcQXnl9SVfHU7qDxS0aMRHb5/FLSJW/Ar/t6Pz@vger.kernel.org
-X-Gm-Message-State: AOJu0YxDhfW3M5BC/MCKUpZsxS6irLudI8Ghu185U8j8yqbYtEs+wAPD
-	s0tuKauQmyxD2VE4zzlCjYCT7K9i+/fkGG+NbL5/mpSWchOwjHjrCVDVgh+bEfRxIPN9AoJtbBR
-	P
-X-Google-Smtp-Source: AGHT+IFU8N7uQdXevfHD8jFBl1FBII5BkIFR59rGddbGn3KESnHWjFoPDuxOKOct3CyafHsEQL2nsg==
-X-Received: by 2002:a05:651c:88c:b0:2ef:20ae:d113 with SMTP id 38308e7fff4ca-2ff8dd32ac6mr14418721fa.40.1732103600720;
-        Wed, 20 Nov 2024 03:53:20 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ff69851184sm14554601fa.15.2024.11.20.03.53.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Nov 2024 03:53:19 -0800 (PST)
-Date: Wed, 20 Nov 2024 13:53:17 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: Loic Poulain <loic.poulain@linaro.org>, Robert Foss <rfoss@kernel.org>, 
-	Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
-	Stephen Boyd <sboyd@kernel.org>, Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, 
-	Jagadeesh Kona <quic_jkona@quicinc.com>, Konrad Dybcio <konradybcio@kernel.org>, 
-	linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-media@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH 3/6] dt-bindings: clock: qcom: Add second power-domain to
- CAMCC
-Message-ID: <pl7og7jrwbkmfmphlvlzhov3kk2edsn2umxq4mt6dyadwb42h7@vg3zjmogwzf3>
-References: <20241119-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v1-0-54075d75f654@linaro.org>
- <20241119-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v1-3-54075d75f654@linaro.org>
+	s=arc-20240116; t=1732103619; c=relaxed/simple;
+	bh=3FR1ky094xdN9WO0F5J8zlFHKIIXOpiIsAHeqk7o7tM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=rhBypeCH/knRcY7YA8qF2Xe7kyCrOlrtrqOZO42oYbpI4aTD+PdUMER45vzCQoDRpmvDRbgf3M6DC46kuLZJ2KLcialTt5Tdm9Z4K72OEyaTYb3INFuIpEKJaMp9S2oEjpSjNBTC4A081SotwaRQuesGPWLJJEiCcdWD0o4NUCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ONF3QyCF; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AK9FJFM029736;
+	Wed, 20 Nov 2024 11:53:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	3RX4EOPtrWDQhSqLJwh/DLTATy8YlgdLZf6BEVOabtA=; b=ONF3QyCFdbWFhRxD
+	s/UXnZYgChQaqlc8JVn3A4gsUSUVb2LQxR1CKV9zKZeRiv8xgQlYUlKwZq6vr/dT
+	7w4K/MAVOlqm8hIfQqTXQJUZeXiKvNkAIzyIk2pEaw87JkEz7/0sDGMsfEXN/xee
+	bfjEX6cNu2TCtJSSpkEyXeFPTVi4mkqL1FPdXvZb+5FCdEzgzJYVXG3BYihNlXB2
+	fo7oHHauYS7e16TsXIM2Ys0UkIv+ARdngFpqmWOlJxgrRntFxb/zb7liiVFF/iMQ
+	OcslCJsOm2kd2se9fiBOQpgytxJzlWZBQMFzaZxDgCiY+E55Dt6JC9wkNHx/P7Zw
+	pM0k+g==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4319528yn8-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 20 Nov 2024 11:53:34 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AKBrXvS003944
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 20 Nov 2024 11:53:33 GMT
+Received: from [10.206.104.61] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 20 Nov
+ 2024 03:53:29 -0800
+Message-ID: <4da87d98-823f-4781-b138-c6f6caae38fb@quicinc.com>
+Date: Wed, 20 Nov 2024 17:23:24 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241119-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v1-3-54075d75f654@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/2] arm64: dts: qcom: sa8775p-ride: Enable Display
+ Port
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_riteshk@quicinc.com>,
+        <quic_vproddut@quicinc.com>, <quic_abhinavk@quicinc.com>
+References: <20241120105954.9665-1-quic_mukhopad@quicinc.com>
+ <20241120105954.9665-3-quic_mukhopad@quicinc.com>
+ <lkovymvjsbd44v2huij7paikvnmo7i7rrmkmvpha2wn5sc4hr3@ppr2dgvhzy6d>
+ <a741b71b-af04-44aa-9e08-a3f852b8a801@quicinc.com>
+ <qpdponpaztryzacue5vtythr4b4cu6fohmgiwlzredm7ky7caw@eose6vpy4e7y>
+From: Soutrik Mukhopadhyay <quic_mukhopad@quicinc.com>
+In-Reply-To: <qpdponpaztryzacue5vtythr4b4cu6fohmgiwlzredm7ky7caw@eose6vpy4e7y>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: xwadpKECjOaOjr08ZOVHhPKc3seqM2n6
+X-Proofpoint-GUID: xwadpKECjOaOjr08ZOVHhPKc3seqM2n6
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 phishscore=0
+ adultscore=0 priorityscore=1501 impostorscore=0 suspectscore=0
+ lowpriorityscore=0 mlxscore=0 clxscore=1015 spamscore=0 malwarescore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411200081
 
-On Tue, Nov 19, 2024 at 01:10:32PM +0000, Bryan O'Donoghue wrote:
-> The x1e80100 has two power-domains for the CAMCC not one.
-> 
-> Capture this as:
-> minItems:1
-> maxItems:2
-> 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
->  Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml
-> index 0766f66c7dc4f6b81afa01f156c490f4f742fcee..afb7e37118b691658fc5cc71e97b110dcee7f22a 100644
-> --- a/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml
-> +++ b/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml
-> @@ -39,9 +39,10 @@ properties:
->        - description: Sleep clock source
->  
->    power-domains:
-> -    maxItems: 1
-> +    minItems: 1
-> +    maxItems: 2
->      description:
-> -      A phandle and PM domain specifier for the MMCX power domain.
-> +      A phandle and PM domain specifier for the MMCX or MCX power domains.
 
-Should there be an if, selecting which platforms need 1 domain and which
-need both?
+On 11/20/2024 5:13 PM, Dmitry Baryshkov wrote:
+> On Wed, Nov 20, 2024 at 05:05:50PM +0530, Soutrik Mukhopadhyay wrote:
+> > 
+> > On 11/20/2024 4:42 PM, Dmitry Baryshkov wrote:
+> > > On Wed, Nov 20, 2024 at 04:29:54PM +0530, Soutrik Mukhopadhyay wrote:
+> > > > Enable DPTX0 and DPTX1 along with their corresponding PHYs for
+> > > > sa8775p-ride platform.
+> > > > > Signed-off-by: Soutrik Mukhopadhyay <quic_mukhopad@quicinc.com>
+> > > > ---
+> > > >  arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 80 ++++++++++++++++++++++
+> > > >  1 file changed, 80 insertions(+)
+> > > > > diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
+> > > b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
+> > > > index adb71aeff339..4847e4942386 100644
+> > > > --- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
+> > > > +++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
+> > > > @@ -27,6 +27,30 @@
+> > > >  	chosen {
+> > > >  		stdout-path = "serial0:115200n8";
+> > > >  	};
+> > > > +
+> > > > +	dp0-connector {
+> > > > +		compatible = "dp-connector";
+> > > > +		label = "DP0";
+> > > 
+> > > Thundercomm's SA8775p RIDE platform doesn't show such a connector. At
+> > > least not on a device advertised on the web pages.
+> > 
+> > 
+> > Are you referring to this product in the Thundercomm web page : SA8225P and
+> > SA8775P
+> > Ride SX 4.0 Automotive Development Platform ?
+>
+> Yes
+>
+> > For this particular product we
+> > can see
+> > eDP 0/1/2/3 serving as the dp connectors.
+>
+> Please correct the labels then. And also please mention why eDP2/3 are
+> not included / tested.
 
->  
->    required-opps:
->      maxItems: 1
-> 
-> -- 
-> 2.45.2
-> 
 
--- 
-With best wishes
-Dmitry
+Sure, we will update the labels in the upcoming patchset.
+edp 0/1 corresponds to mdss0_dptx0 and mdss0_dptx1. We have validated 
+only these.
+edp 2/3 corresponds to mdss1_dptx0 and mdss1_dptx1, and these are not 
+validated,
+as already mentioned during the driver changes for the same.
+Should we mention the same in the commit message for the upcoming patchset ?
+
+
+>
+> > 
+> > 
+> > > 
+> > > > +		type = "full-size";
+> > > > +
+> > > > +		port {
+> > > > +			dp0_connector_in: endpoint {
+> > > > +				remote-endpoint = <&mdss0_dp0_out>;
+> > > > +			};
+> > > > +		};
+> > > > +	};
+> > > > +
+> > > > +	dp1-connector {
+> > > > +		compatible = "dp-connector";
+> > > > +		label = "DP1";
+> > > 
+> > > Same comment here.
+> > > 
+> > > > +		type = "full-size";
+> > > > +
+> > > > +		port {
+> > > > +			dp1_connector_in: endpoint {
+> > > > +				remote-endpoint = <&mdss0_dp1_out>;
+> > > > +			};
+> > > > +		};
+> > > > +	};
+> > > >  };
+> > > >  >  &apps_rsc {
+> > > 
+>
 
