@@ -1,169 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-38557-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38558-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3DB7C9D422F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 19:48:26 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7153F9D423C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 19:52:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F31112812C1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 18:48:24 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2C62FB281D7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 18:51:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A006B19F13B;
-	Wed, 20 Nov 2024 18:48:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3086D15746E;
+	Wed, 20 Nov 2024 18:51:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="b9L1TiaO"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lE6zDckI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f44.google.com (mail-io1-f44.google.com [209.85.166.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA4B0155742;
-	Wed, 20 Nov 2024 18:48:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A737013C83D;
+	Wed, 20 Nov 2024 18:51:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732128504; cv=none; b=QKGC9Iun+mCW6QbXAxtzCYG+u7urVB4UGMxsN4WobQwKsDpTYQ+cAZzusVleweUXEnFZrO2AIMFsQpySxCHbUOSw8AxFEyccac96s9SGngR4Ql46VfWs3mOLLZVs6uy6kULk9NKfb9raseeTq9LQW1l3lNYg+w2s4X50S4zvibk=
+	t=1732128672; cv=none; b=G+o6+nuGWe7UrCvDbcVxDar/LpqZi+W89rX6rEhSAFJ20zh2Dz0HsglznuCogURdx3N/bAA/ga3Fw/KZmgZ8CxI1Ji254/OyZMLQe3lF0cOpep1mRPUyXdCW0EgQrF7VlGhQN+xANJqoa6603c6xWQWQDdstOwdhDVp/bDygUxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732128504; c=relaxed/simple;
-	bh=ujSDzaApsf9yiTgCIRSrJbgFe+qCH4hd9AnhtUVjtFM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=utbpiSZWL3CwKSK8UqEjyo0sIhrD1WUgLcDej6mQo3dVbtukXIakTMi/ym/IfOj2eNktsfV7uCb8S1N23iKCFWnhfJcyPZYCuhuo67C4iBIQyZw4laqGw+b9dwqLia1Yo7XaWyeEt/Ep58vWayYQJOAU+U0QwGGedT/Awhtwby0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=b9L1TiaO; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AK9FN5s007711;
-	Wed, 20 Nov 2024 18:48:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ujSDzaApsf9yiTgCIRSrJbgFe+qCH4hd9AnhtUVjtFM=; b=b9L1TiaOdke1hTcg
-	GjOUPgn6HQSjns/mMLEpvvWpJ2ZeOscobZOhuKMmxDBBqZu0TxWjUVhCGMneZKTC
-	6PAEFvVqZuIwM1bEOS92htP6FAH13ZxRTIH6MsYJUujWAQDb4ACpA31nPB3S6rlc
-	H8lJz/WENmiwMztc7APVPGiFrYSZZVetwfRqubTCQwOxTCOv3PRy/Ov2L23YqZIN
-	12Dgq3RmKJt55TQY6f/mBKUER+G6tHJwRMsXUSxdvRgopjONhjTYWRqnccjZBG9F
-	7cVXVbPTsmcJ6N+knKcxrU4PiVeITwDPGhVuvUdGPpKydqcLiBPQhi7iR8W31Hyc
-	fVm4Jg==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4318uvj41e-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 20 Nov 2024 18:48:03 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AKIm2OH012549
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 20 Nov 2024 18:48:02 GMT
-Received: from [10.110.30.192] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 20 Nov
- 2024 10:48:01 -0800
-Message-ID: <a7bca9f6-06f9-4e14-a1ab-761e92a68ceb@quicinc.com>
-Date: Wed, 20 Nov 2024 10:48:00 -0800
+	s=arc-20240116; t=1732128672; c=relaxed/simple;
+	bh=It6fx44B2idzzO0pwF5tHaq97aT5Qkwbmvid/og7b8Y=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=AKcNti0i1zpZ8G3H6OlKN19XYUgVIqD4C4ajIylgUcbTQf1v/9o04cP7x1t7iPnugI8VlLW6ASpEvcOxMDlaxx45swF01FZOiDG7nWtjuXdXCThTC1BOVGQT0WChfYrEmY18U/UPqz9O7un+vOWxEZV8sjohfMo3MRNeW3i6zxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lE6zDckI; arc=none smtp.client-ip=209.85.166.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-io1-f44.google.com with SMTP id ca18e2360f4ac-83aba65556cso3339939f.3;
+        Wed, 20 Nov 2024 10:51:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1732128670; x=1732733470; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=F+Cd26FOvgLlRGwlmWQpeEkQVjz0XsHua3Mq3Xu6fWM=;
+        b=lE6zDckId2vgUN410bUgWl1S4v/0bpaPUFQpyuzXorFJpv75Eza7GCaWIM5GCnPGsu
+         lQDUBUGjap7pjoJFOzNl2cPwsDLFB/DA0OamR+RsJka+/3Lns9IGZTgAzym2lFt07Kch
+         aI9p5WBvBdOzCmcmEUh1pT0/aNQlARThdGcCOlmH0K4gYFmn/eFa/8zqhr8sOT8dqsOe
+         y1Yg+2UIxl8HsDrDC4+oA1G2uUpeERSrbUX6uTRiWgDBb8dV/8dp/Ctkbfv0XoFVg7m/
+         /V8iBaAZFT0Af+Zx9qGnPH6kKzEgO90RUr6RRivbYT5hpvVumrA5wYZuNpcpLMBhIJrC
+         s3/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732128670; x=1732733470;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=F+Cd26FOvgLlRGwlmWQpeEkQVjz0XsHua3Mq3Xu6fWM=;
+        b=cKhAJdMmKloEnOPZoBomHVJ/QMO19DwNMBbis2WRWmUbASLjohzJhzWw8EQ06gDkaZ
+         +uIzXKN8iJLpQCrOhUBJdwWSLAqZPZpWcSTfVLWwnUAeYw9+yXYqAYPM7AETbtIAo53S
+         +At6BuoTCLv5RGphomMGN4jrz3sdK+ZuXm+N5ZTaLgx2DRTg2E1aVjItNyFVmisGTCRf
+         Bk95zcznqvg3R1qpm0NVvewt+KA4kdnR4vNupPDVWp+984ITjqsSXVRCbxyQrl9mR8Bc
+         IKMvc/kFarLwwsQ8J4uolspwr4b9lS3hHm2AD/kqH+47nC5ox2W5XJxUQVT0oWTUEXxe
+         9djw==
+X-Forwarded-Encrypted: i=1; AJvYcCWfG0tDyTFpRxMjjbzdLnK0syUVAEnsBq1cjr19bdr7zVDOyZQT7DQjS9VuYzxpZQ7Qr1HoTYc3iXg/C9E=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzia23XbqJFTD7RgVgK6tAgUTSUYXPmroNxKnzDlLGG7ucIUP2o
+	DLTLz5G4VFkv49Re1TqruK9hwC4Tnsh9oc5rfnkPL0IzBcIs/PGT4lyVmgS2PdzEm/GYbDY+n7d
+	flTOM3aM+2R7PpOvdgisK3kk9FBI=
+X-Google-Smtp-Source: AGHT+IEsgAE+Ui00r62dF3CVBG/0pDLJRkIWjlY0vwqwXvv02noBqS1qDHqCRVOUcSbt7XdBIOi9icRNOyIEzSO7KVI=
+X-Received: by 2002:a05:6602:340e:b0:83a:a96b:8825 with SMTP id
+ ca18e2360f4ac-83eb5e387a2mr456030939f.0.1732128669794; Wed, 20 Nov 2024
+ 10:51:09 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v30 01/30] usb: host: xhci: Repurpose event handler for
- skipping interrupter events
-To: Mathias Nyman <mathias.nyman@linux.intel.com>,
-        <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
-        <perex@perex.cz>, <conor+dt@kernel.org>, <dmitry.torokhov@gmail.com>,
-        <corbet@lwn.net>, <broonie@kernel.org>, <lgirdwood@gmail.com>,
-        <krzk+dt@kernel.org>, <pierre-louis.bossart@linux.intel.com>,
-        <Thinh.Nguyen@synopsys.com>, <tiwai@suse.com>, <robh@kernel.org>,
-        <gregkh@linuxfoundation.org>
-CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-input@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>
-References: <20241106193413.1730413-1-quic_wcheng@quicinc.com>
- <20241106193413.1730413-2-quic_wcheng@quicinc.com>
- <18a691df-e7b6-42fc-8dbc-c10c2608cd9c@linux.intel.com>
-Content-Language: en-US
-From: Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <18a691df-e7b6-42fc-8dbc-c10c2608cd9c@linux.intel.com>
+References: <20241120154919.814593-1-pvorel@suse.cz>
+In-Reply-To: <20241120154919.814593-1-pvorel@suse.cz>
+From: Rob Clark <robdclark@gmail.com>
+Date: Wed, 20 Nov 2024 10:50:58 -0800
+Message-ID: <CAF6AEGshZMEHYT6X3fG0vYPpfa4i_o8gxOareHNggYWtkn=2Yg@mail.gmail.com>
+Subject: Re: [RFC][PATCH 1/1] drm/msm: require python3 and xml.parsers.expat module
+To: Petr Vorel <pvorel@suse.cz>
+Cc: linux-arm-msm@vger.kernel.org, Masahiro Yamada <masahiroy@kernel.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, linux-kbuild@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	Rob Clark <robdclark@chromium.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: UJkgSqup_QCVRf1BrXCSUM8P7P6OytC2
-X-Proofpoint-GUID: UJkgSqup_QCVRf1BrXCSUM8P7P6OytC2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
- priorityscore=1501 phishscore=0 adultscore=0 malwarescore=0 mlxscore=0
- lowpriorityscore=0 mlxlogscore=999 spamscore=0 suspectscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411200130
+Content-Transfer-Encoding: quoted-printable
 
-Hi Mathias,
+On Wed, Nov 20, 2024 at 7:49=E2=80=AFAM Petr Vorel <pvorel@suse.cz> wrote:
+>
+> 0fddd045f88e introduced python3 dependency, require it to quick early.
+>
+> Signed-off-by: Petr Vorel <pvorel@suse.cz>
+> ---
+> Hi all,
+>
+> RFC because I'm not sure if previous failed build wasn't better:
+>
+>         GENHDR  drivers/gpu/drm/msm/generated/a2xx.xml.h
+>         /bin/sh: python3: not found
+>
+> This way it's documented, but CONFIG_DRM_MSM just silently disappears
+> from .config. Also because depends on $(success ..) is not evaluated
+> (understand, some expressions can be really long) one see only:
+> Depends on: n [=3Dn].
+>
+> I was thinking about testing via $(PYTHON3) -m "xml.parsers.expat",
+> but because expat parser (and other modules) should be part the official
+> python3 and are installed even on minimal python3 installations (e.g.
+> python3-minimal on Debian). Therefore depending on "$(PYTHON3) -V"
+> should be enough.
+>
 
-On 11/20/2024 3:48 AM, Mathias Nyman wrote:
-> On 6.11.2024 21.33, Wesley Cheng wrote:
->> Depending on the interrupter use case, the OS may only be used to handle
->> the interrupter event ring clean up.  In these scenarios, event TRBs don't
->> need to be handled by the OS, so introduce an xhci interrupter flag to tag
->> if the events from an interrupter needs to be handled or not.
->>
->> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
->> ---
->>   drivers/usb/host/xhci-ring.c | 17 +++++++++++++----
->>   drivers/usb/host/xhci.h      |  1 +
->>   2 files changed, 14 insertions(+), 4 deletions(-)
->>
->> diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
->> index 9f1e150a1c76..b8f6983b7369 100644
->> --- a/drivers/usb/host/xhci-ring.c
->> +++ b/drivers/usb/host/xhci-ring.c
->> @@ -2931,14 +2931,22 @@ static int handle_tx_event(struct xhci_hcd *xhci,
->>   }
->>     /*
->> - * This function handles one OS-owned event on the event ring. It may drop
->> - * xhci->lock between event processing (e.g. to pass up port status changes).
->> + * This function handles one OS-owned event on the event ring, or ignores one event
->> + * on interrupters which are non-OS owned. It may drop xhci->lock between event
->> + * processing (e.g. to pass up port status changes).
->>    */
->>   static int xhci_handle_event_trb(struct xhci_hcd *xhci, struct xhci_interrupter *ir,
->>                    union xhci_trb *event)
->>   {
->>       u32 trb_type;
->>   +    /*
->> +     * Some interrupters do not need to handle event TRBs, as they may be
->> +     * managed by another entity, but rely on the OS to clean up.
->> +     */
->> +    if (ir->skip_events)
->> +        return 0;
->
-> This works for your special case but is a small step sideways from other possible xhci
-> secondary interrupter usecases.
->
-> We currently support just one event handler function even if we support several secondary
-> interrupters. Idea was to add support to pass dedicated handlers for each secondary interrupter,
-> set when the secondary interrupter is requested.
->
-> In your case this dedicated handler wouldn't do anything.
->
-> This patch again has a different approach, it keeps the default handler, and instead adds
-> flags to it, preventing it from handling the event trb.
->
-> Not sure if we should take the time and implement dedicated handlers now, even if we don't
-> have any real users yet, or just take this quick change and rework it later when needed.
->
->
-Yes, I think we had a small discussion on this on v20:
+Would it be more clear to do something like:
 
-https://lore.kernel.org/linux-usb/a88b41f4-7e53-e162-5a6a-2d470e29c0bb@quicinc.com/
+config HAS_PYTHON3
+      dev_bool $(success ...)
 
-Since I didn't have an environment that exercised the path where we'd actually want to handle secondary interrupter events, I wasn't sure if it was valid to add bits and pieces of it to support such use cases w/o proper testing.  I think having this driver (as is) is still a step forward into the right direction, as these APIs are still going to be required if enabling secondary interrupter events in the Linux environment.
+(in init/Kconfig or somewhere central) and then use 'depends on
+HAS_PYTHON3'?  That might make the dependency easier to see in
+menuconfig/etc
 
-Thanks
+BR,
+-R
 
-Wesley Cheng
-
+> Kind regards,
+> Petr
+>
+>  drivers/gpu/drm/msm/Kconfig | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
+> index 90c68106b63b..2cf4573a2ff1 100644
+> --- a/drivers/gpu/drm/msm/Kconfig
+> +++ b/drivers/gpu/drm/msm/Kconfig
+> @@ -11,6 +11,7 @@ config DRM_MSM
+>         depends on QCOM_LLCC || QCOM_LLCC=3Dn
+>         depends on QCOM_COMMAND_DB || QCOM_COMMAND_DB=3Dn
+>         depends on PM
+> +       depends on $(success,$(PYTHON3) -V)
+>         select IOMMU_IO_PGTABLE
+>         select QCOM_MDT_LOADER if ARCH_QCOM
+>         select REGULATOR
+> @@ -36,7 +37,7 @@ config DRM_MSM
+>         select PM_GENERIC_DOMAINS
+>         select TRACE_GPU_MEM
+>         help
+> -         DRM/KMS driver for MSM/snapdragon.
+> +         DRM/KMS driver for MSM/snapdragon.  Requires python3.
+>
+>  config DRM_MSM_GPU_STATE
+>         bool
+> --
+> 2.47.0
+>
+>
 
