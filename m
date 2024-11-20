@@ -1,186 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-38536-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38537-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B09E9D4038
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 17:39:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 099A99D4033
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 17:36:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4B2D6B213D0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 15:49:34 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 36A3EB35B63
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 15:55:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40D8413B58A;
-	Wed, 20 Nov 2024 15:49:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68C4E145B18;
+	Wed, 20 Nov 2024 15:55:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="E8rYxIAM";
-	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="DigfWKYZ";
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="E8rYxIAM";
-	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="DigfWKYZ"
+	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="Nnw04bxv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.15.14])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81BA513BAEE;
-	Wed, 20 Nov 2024 15:49:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C45A712BF02;
+	Wed, 20 Nov 2024 15:55:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732117771; cv=none; b=q9jlsea2uGBjLpglm9J3xkpNe9DUZ4vYjb6m2gy6eZvtAApWMpzCvSrQKhNkkjVXq5OTHQtJwVxBmjztU0Fi/an8ZjA0UjJTuPykrNWgSFopl/OUrYz7O9jWsAnV9NeXlKyzL8H4THeJDRe6N7L3TTIRdP1CzCfoNr/nRWxMu3I=
+	t=1732118118; cv=none; b=MszenzfgbbcZFjIUJVR0HusRVCEtyIAB62IjsfSBPxnB5z4p8Kje8ng+15ijpBUio3uNk1L4L3cfQJJJJGjSVeyXYp4F1x9Yg08PdhyRBr2g0wQDqsVg/KerwBJuh3npL3ztz6HLQS1a1DmW5/Fm6M7qsW50/ikaaQG0v6thbN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732117771; c=relaxed/simple;
-	bh=oLCRB1JtkiQ0+qmqdsV09QYydHkWi30cvgPRLrUHVT4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=kIgxHr7ow4P4P1WJihLcRG4jYH5RmWUJXhMg7Z8pL5G2A5/gfJp67PWSVynsicZF4j8KuHTSKnDNLIrDnqShwP3MIeidCwYCS0oNxaSButFZDbewoySiMkuxOq7VTF0CcTwxtDY5ZSUEt2yIZ0Aa7X1w9oxZZYufActnjGQKeqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz; spf=pass smtp.mailfrom=suse.cz; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=E8rYxIAM; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=DigfWKYZ; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=E8rYxIAM; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=DigfWKYZ; arc=none smtp.client-ip=195.135.223.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id AC4D7211D7;
-	Wed, 20 Nov 2024 15:49:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1732117767; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=R/vAdDCZ7AeI7ZWvAk/xK249zyMaEemAZqVttREVMeI=;
-	b=E8rYxIAMrCCxvfVPy7qYYwHg37yNshTpZWzKYkIYiCJiMHDtuOgciGF30kylmRGl4FPgha
-	37d45Z0M1QyAZ+Bg+iOVbdM1iPBnYT1qW6PW00FoInpjC8bRc3kFcGrLM8ya1cljnBKhpF
-	vKYEQq5DhwNY4StGTqVWCYsOZ/4hOqc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1732117767;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=R/vAdDCZ7AeI7ZWvAk/xK249zyMaEemAZqVttREVMeI=;
-	b=DigfWKYZNJUi43jog02pGeKbgezxBHqHYbmhJdp8OCK5HaKbl69dyUT3c+nqYVWE+YSDgQ
-	7+W1BLgRbe3nTbCA==
-Authentication-Results: smtp-out1.suse.de;
-	dkim=pass header.d=suse.cz header.s=susede2_rsa header.b=E8rYxIAM;
-	dkim=pass header.d=suse.cz header.s=susede2_ed25519 header.b=DigfWKYZ
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1732117767; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=R/vAdDCZ7AeI7ZWvAk/xK249zyMaEemAZqVttREVMeI=;
-	b=E8rYxIAMrCCxvfVPy7qYYwHg37yNshTpZWzKYkIYiCJiMHDtuOgciGF30kylmRGl4FPgha
-	37d45Z0M1QyAZ+Bg+iOVbdM1iPBnYT1qW6PW00FoInpjC8bRc3kFcGrLM8ya1cljnBKhpF
-	vKYEQq5DhwNY4StGTqVWCYsOZ/4hOqc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1732117767;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=R/vAdDCZ7AeI7ZWvAk/xK249zyMaEemAZqVttREVMeI=;
-	b=DigfWKYZNJUi43jog02pGeKbgezxBHqHYbmhJdp8OCK5HaKbl69dyUT3c+nqYVWE+YSDgQ
-	7+W1BLgRbe3nTbCA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 098B713297;
-	Wed, 20 Nov 2024 15:49:27 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id dEf7AAcFPmc4SgAAD6G6ig
-	(envelope-from <pvorel@suse.cz>); Wed, 20 Nov 2024 15:49:27 +0000
-From: Petr Vorel <pvorel@suse.cz>
-To: linux-arm-msm@vger.kernel.org
-Cc: Petr Vorel <pvorel@suse.cz>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	linux-kbuild@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org
-Subject: [RFC][PATCH 1/1] drm/msm: require python3 and xml.parsers.expat module
-Date: Wed, 20 Nov 2024 16:49:19 +0100
-Message-ID: <20241120154919.814593-1-pvorel@suse.cz>
-X-Mailer: git-send-email 2.47.0
+	s=arc-20240116; t=1732118118; c=relaxed/simple;
+	bh=aH1wc23EJWXfqTUsXUZjkafTEKQs81xZn3aG8YiTq1E=;
+	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
+	 In-Reply-To:Content-Type; b=i/Kkp8h7tCryquePzb8ftgRpinkLd0EbjMo3+KkSPIxB37uXQpeoMTHJ0ThqzphGqsrPan0dE2NxSwGnuJjQSFvNC9o0Z7DOdkvdpRVb/fxP//TxDHBP+hhsgVV/PdT+W2kFb51hGmEd519PuiO8oJWPVp/XoO9glTFwlB05GTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=Nnw04bxv; arc=none smtp.client-ip=212.227.15.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1732118088; x=1732722888; i=markus.elfring@web.de;
+	bh=Px+wp5wWpABFQ3ooT1RXVc/as9DCsxBIOhFrFSKvCms=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
+	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=Nnw04bxv4M/gIws7YJqT1zt2MlPtFLhjDSh2dnbgFOMoHj+0MkNToqrQ9PH+RwSd
+	 frYIAsev2Q+7bj4/hHlxW8TfZiWQXV0KrO/p1pZrdWlj4CGWj54oc5uRGMVNMyCjn
+	 z6yOoKFOfWXFFi1uOHyRpiNDfRF1mqXomj/tBQAIRWy+LJ2SuXsE2GZxPdsUq4c90
+	 tguncC6jxPZGzoxLSsAehdwHot/SEKcCa8qaA1Vx6wo+usXtQO34qp6JfG3cOCn4h
+	 y4wjHsRGMxkQ4Eg1gxvk2D3v6FYxeF358BPQMSb/bBcp+R7B/3XbFU6W4dJZn0Abf
+	 1jGUGhGvHwihi9afHw==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.21] ([94.31.88.95]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MjPUE-1tbcLC02J8-00nlxq; Wed, 20
+ Nov 2024 16:54:48 +0100
+Message-ID: <5516b4b1-638c-44ff-bce7-aa81928da5d6@web.de>
+Date: Wed, 20 Nov 2024 16:54:37 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: AC4D7211D7
-X-Spam-Score: -3.01
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.01 / 50.00];
-	BAYES_HAM(-3.00)[99.99%];
-	MID_CONTAINS_FROM(1.00)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_MISSING_CHARSET(0.50)[];
-	R_DKIM_ALLOW(-0.20)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	ARC_NA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	FUZZY_BLOCKED(0.00)[rspamd.com];
-	RCPT_COUNT_SEVEN(0.00)[7];
-	DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	RCVD_TLS_ALL(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	DKIM_TRACE(0.00)[suse.cz:+]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+User-Agent: Mozilla Thunderbird
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Conor Dooley <conor+dt@kernel.org>, Krzysztof Kozlowski
+ <krzk+dt@kernel.org>, Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Philipp Zabel <p.zabel@pengutronix.de>, Rob Herring <robh@kernel.org>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>
+Cc: LKML <linux-kernel@vger.kernel.org>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Hans Verkuil <hverkuil@xs4all.nl>, Jianhua Lu <lujianhua000@gmail.com>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Nicolas Dufresne <nicolas@ndufresne.ca>,
+ Sebastian Fricke <sebastian.fricke@collabora.com>,
+ =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+References: <20241120-qcom-video-iris-v6-4-a8cf6704e992@quicinc.com>
+Subject: Re: [PATCH v6 04/28] media: iris: introduce iris core state
+ management with shared queues
+Content-Language: en-GB
+From: Markus Elfring <Markus.Elfring@web.de>
+In-Reply-To: <20241120-qcom-video-iris-v6-4-a8cf6704e992@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:VFqsH1p4TgtOsK9QsSIvSz6wJFN3eL00eRdJ4hHpVaxsIGertni
+ mEnJCX8vuOL3MrBj/nqszzojHZr2r1NvamW8k7THJTqH4M+Qv8+EWBBT+yhY1FQx6V8z/im
+ ycBYHL9qcsW+7w8JpoiEqqmJwrdgizG1CsQoUpbA6zvEB9+cAfpzJ92XY2WggI7sAISVnj5
+ 4kmqSe8v6bHkR1P8feSwA==
 X-Spam-Flag: NO
-X-Spam-Level: 
+UI-OutboundReport: notjunk:1;M01:P0:Db70Gs0J4b8=;CSihz6jcYJtBDbRNEZtFikED2v0
+ jGT34+myyr2+8HiwRwnLmbqayMZTrxaZjEPvp1R3zVE0UYvzm4T9881i3yMgO3iWuZrEJG2dz
+ jgeR136I0DVM8+PgLlmdORKlwp3vKPD1iQVhu8dt+6mLktqqztsqPXhu0SxDZ+3DhspVXe3Vp
+ nqJ+vzlvuGcxH1aaVfkZd9aJM8VnLHUtaxh00pI5Nx7HnWYxmhX3goF2JS6hFgwtUwx1UJuLd
+ cwsECJShOUC20hLY1q4BmMoiy7ly6GDvbVcJUyFg/iHLLhtZxJoRI5XNNp3LFvQ9vx+lEPO08
+ raOcu+jW54v2RvNRzodV660LFYaVTcuOai796O/6RTY8CQ1ZuMKRd7jWrMjgPll4xpz0XsHbB
+ BjpULPX+HwBFUQ/j9gH5KFLyg9I7eoWgrsfNITWnEYJR8CTKJX7lEyjnWWTobCi33z58IlVMX
+ kmXrLEDpsO9DjX7YOp3qu1bwv9nS55LG+og2mNMNIPwc642Q6hh4xuJVnFETLafoKbjYmMPde
+ 0gqCC4q3RK1VDFwqerpeliKszZPKz/bTSHWIyAlpiBrxBsFiT1i6OT7f5RjRjDqoGsLhW1sg4
+ ZpQO3f/HD++RZ+TMf8OT3Pas1Op2XxxAAaWDua0WHiM1FpN3l90DPjltyZkCvN0sic9QAlqjm
+ mDztSSSqAsO/JxkDYhsYsywQ9ZFUFgad4FWpEsQIiARhTAshsYG/hnavExdxoi2waiU2CljBO
+ VC0ZZ8giB4F5l48XgLKV4fqGFDMX2RRERWSE2+DNXrlFpDVBoCcimM6dxhnhDXVqr7WxqGQ1X
+ iZBOtnGHtAmdA2xdw3oFldxqWZZYUWILJg1/B4+iBzih8QQRkeTD5jL5iTNIX913sObmyvEnf
+ R4sZJypfhlM3+XV+7Ha6IfntL0kJI8DYB72GCnjOxX4foHobyqeB/cuuW
 
-0fddd045f88e introduced python3 dependency, require it to quick early.
+=E2=80=A6
+> +++ b/drivers/media/platform/qcom/iris/iris_core.c
+> @@ -0,0 +1,46 @@
+=E2=80=A6
+> +void iris_core_deinit(struct iris_core *core)
+> +{
+> +	mutex_lock(&core->lock);
+> +	iris_hfi_queues_deinit(core);
+> +	core->state =3D IRIS_CORE_DEINIT;
+> +	mutex_unlock(&core->lock);
+> +}
+=E2=80=A6
 
-Signed-off-by: Petr Vorel <pvorel@suse.cz>
----
-Hi all,
+Under which circumstances would you become interested to apply a statement
+like =E2=80=9Cguard(mutex)(&core->lock);=E2=80=9D?
+https://elixir.bootlin.com/linux/v6.12/source/include/linux/mutex.h#L201
 
-RFC because I'm not sure if previous failed build wasn't better:
-
-	GENHDR  drivers/gpu/drm/msm/generated/a2xx.xml.h
-	/bin/sh: python3: not found
-
-This way it's documented, but CONFIG_DRM_MSM just silently disappears
-from .config. Also because depends on $(success ..) is not evaluated
-(understand, some expressions can be really long) one see only:
-Depends on: n [=n].
-
-I was thinking about testing via $(PYTHON3) -m "xml.parsers.expat",
-but because expat parser (and other modules) should be part the official
-python3 and are installed even on minimal python3 installations (e.g.
-python3-minimal on Debian). Therefore depending on "$(PYTHON3) -V"
-should be enough.
-
-Kind regards,
-Petr
-
- drivers/gpu/drm/msm/Kconfig | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
-index 90c68106b63b..2cf4573a2ff1 100644
---- a/drivers/gpu/drm/msm/Kconfig
-+++ b/drivers/gpu/drm/msm/Kconfig
-@@ -11,6 +11,7 @@ config DRM_MSM
- 	depends on QCOM_LLCC || QCOM_LLCC=n
- 	depends on QCOM_COMMAND_DB || QCOM_COMMAND_DB=n
- 	depends on PM
-+	depends on $(success,$(PYTHON3) -V)
- 	select IOMMU_IO_PGTABLE
- 	select QCOM_MDT_LOADER if ARCH_QCOM
- 	select REGULATOR
-@@ -36,7 +37,7 @@ config DRM_MSM
- 	select PM_GENERIC_DOMAINS
- 	select TRACE_GPU_MEM
- 	help
--	  DRM/KMS driver for MSM/snapdragon.
-+	  DRM/KMS driver for MSM/snapdragon.  Requires python3.
- 
- config DRM_MSM_GPU_STATE
- 	bool
--- 
-2.47.0
-
+Regards,
+Markus
 
