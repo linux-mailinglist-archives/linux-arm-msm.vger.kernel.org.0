@@ -1,143 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-38457-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38458-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2292E9D3926
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 12:08:45 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id AA3D89D3931
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 12:11:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DD1CD2868E5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 11:08:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 31ADF1F229A6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 11:11:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 22BCF1A08C5;
-	Wed, 20 Nov 2024 11:06:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B7CF18EFC1;
+	Wed, 20 Nov 2024 11:11:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rDK8OpDm"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="iHpx0Oq0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2658A17F7
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Nov 2024 11:06:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81ACC146D53
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Nov 2024 11:11:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732100819; cv=none; b=PFvR6pc032EZdDmx+8UXeW+yo2QqiAnIpYjAOTfn1a9+MdZdH7XSwJYBLy4BoTDzPp4G3ClLY4sZ44IYQks3/KUOs25T61Fx/fISvSyKe+zJ9e4nin2HR483CqgaxtHN1aTACDQaua+EHAkod6jDqTP6wQGFOVTf3PUhFKfZqIc=
+	t=1732101066; cv=none; b=TZiPufKRt/VFe/jsnI9NSThxjGKgVte/HyXaRNfByICFNqJARpkqim/xLxLsAGVePCCxNCCKxt2lXe7r024jgXDdHuIBsloZFrVo3NhfIZbS80JuIo1i+VNnYXYe5cXST9gbjYiBnMOCQ3ehUrpcfhlt5EyByAAVQyGHa7K11rA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732100819; c=relaxed/simple;
-	bh=Opw++HCPzuvISj9795BFVznYxd3dwYjAw4EH26M6vSo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aNCKRBgaU45rGzLb6Fbq8yKJXLOUoHJeS/a9LYBFdJdiYaKTBhpp59X+x63b+/XY0kZCxVLcL5aL33ZjeVNI/OuAfKN/5pgN4QD95f9oQvojShc4FUIHgkuEzPjxuS0ntT75J3De25hPKTahWvmM/KtDkelZD7LtF/dD6C5RFy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rDK8OpDm; arc=none smtp.client-ip=209.85.167.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-53da22c5863so7241839e87.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Nov 2024 03:06:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732100814; x=1732705614; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=qhI9rDcFFsjnQk9S43iaxw5ytZ2AHt2y8QIidlXD0lA=;
-        b=rDK8OpDmTqDbBAeTIVurN4+bYqreffeHZeho0VUIKvF/hoUO9H4SkvMq60199XaoC3
-         0mYMqu1XF5EaSXpdPr1gGynVvETquouXVnrMxQosFD1MO3iX+fNgop91yzIHge5Xkk8b
-         VyOAFs8StnfJH5AEdnOrLfK7zVrAVSXQ6ZPw7vdckklpGP7OXwaAAC1G7wYn1yHXVjQI
-         exFRmfRV0qE+gFZvInYbwamEZd2NDGTbSvbNgeWHfFWidufrhknM2oENXnBMdOdaLcIv
-         HjlvFuxtT4iPjLH0IY7ivxcVyJ2To4ZrwC0D7kdvcQUve/Df702khUizZfamEn6quZr2
-         EfnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732100814; x=1732705614;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qhI9rDcFFsjnQk9S43iaxw5ytZ2AHt2y8QIidlXD0lA=;
-        b=Agw5DfMsT+q/Hov+ucEWrd86/p0HmgomKzDyr5MjID0AbUWOyPdqmC4RiieHdMCadf
-         CqV28l28lB9gUCG/VubCC0WklEI8BidWJ6mrjRra1N0pmTuIC76go80Kwp3MIuzb+QEc
-         oaha3JKuE5iC4vRx2JksB6493TpkWJksdm9qQ+O+7lvHHBc8ci6y07HJozJYfKAob4XI
-         TgNrTr+ahvgHo3YLL5rFPupN+sg+ikHt5iyPS+lgllOsm/X87cH0CkqZFFJi4FDKAdPl
-         0pJRpsQsKZVpzHPI+5/prwTgn5mCroq6xWvluJHzWBXGoVPFL9X0dD/8UExWcCQKJrnF
-         F7uA==
-X-Forwarded-Encrypted: i=1; AJvYcCW3CuP5ja3nYTAkzrAPaZyqhrwkhVEoQvY93aCFkRZmZaoukCcM+7g7/560TS/45cQ48tB/6fn77pQOvSH/@vger.kernel.org
-X-Gm-Message-State: AOJu0YxhiqXKFEqd3SsOGjmSzgEB7iuBv0nn2WRC69I6gnP6RFQMYdHB
-	oD40Dg2jypbED/trXzFa2iHOlR3vl7Tu9ZUO1naO84O5QO+mbOqlVW4jGCTsytI=
-X-Google-Smtp-Source: AGHT+IFLYKw16+LDmrFlZjXXDXMHzk0CaMxx322Elr/lTZUAtJXwcvx8rBLt4IaAsdsomBMIPcfNyw==
-X-Received: by 2002:a05:6512:3ba0:b0:539:f8cb:f5e3 with SMTP id 2adb3069b0e04-53dc1373ea4mr854241e87.48.1732100814272;
-        Wed, 20 Nov 2024 03:06:54 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53dbd3fcae6sm605075e87.102.2024.11.20.03.06.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Nov 2024 03:06:53 -0800 (PST)
-Date: Wed, 20 Nov 2024 13:06:51 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Soutrik Mukhopadhyay <quic_mukhopad@quicinc.com>
-Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org, 
-	krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, quic_riteshk@quicinc.com, 
-	quic_vproddut@quicinc.com, quic_abhinavk@quicinc.com
-Subject: Re: [PATCH v4 0/2] Enable Display Port for Qualcomm SA8775P-ride
- platform
-Message-ID: <kh75vjlfxiglbwmbbu7l77baboe773n2tpmw3urn7yuf6srdep@rp657fnrjgnu>
-References: <20241120105954.9665-1-quic_mukhopad@quicinc.com>
+	s=arc-20240116; t=1732101066; c=relaxed/simple;
+	bh=XdrrspmkBbVpoHf5pqOYcxJPFUtDEvjjhdBXzflLdCU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=qE7T95QX0Rk4VKF+XLbbE8Vtco8NZspNPWHjycKoOa5eIpARVL7yKgfMdlgqkitRdeJFwG0DEn6KOKZo7lbt75mr0QLfjFi9gp1WfrQOxgrXll5sIsxBS4f9I8qnFpJ3TDo1m9peWaBsXoSJRGwYCqR6FErZ3ZsmGzsDtEt7WZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=iHpx0Oq0; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AK9FUn5014417;
+	Wed, 20 Nov 2024 11:11:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	4PHkCv6sM+C6frpmERuCxc8UIhNJxC/c7kKI3VkxXwk=; b=iHpx0Oq0/qtP0Mj1
+	vh2jD6Z6jvXOhpwJIrl1Gf4lJWBzEwda+kHwCR4sxwSfmTrQ62AwSB3OmNjJxwKD
+	CNJETT0OJiiGS3nVLY3S5k7Jm3QW4rjA1STx7Thn+nn+4aX7aGBVp6V7aSCACUqb
+	LGo7YVTUYIh+Bd886nILpTGv/rcxcpKKYgHyW6W67ECAuT4zfiuZONkEEZGA/71m
+	gX7CA9zTmQkG7sEtrvaCivSWt7eKQI7foJbSRUCRteJP77G4LL6xxChEwz2nOWOw
+	LhGNKjMw1YFifkrwq29KrK/SVbBUNO6lsMLv8tTLj6p71++bSB8zWLlNQVTAATOv
+	8bB7Kg==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4308y95k62-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 20 Nov 2024 11:11:00 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AKBAxqp003205
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 20 Nov 2024 11:10:59 GMT
+Received: from [10.216.8.3] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 20 Nov
+ 2024 03:10:55 -0800
+Message-ID: <a259c98c-6c77-1c1e-e428-41c2550f7517@quicinc.com>
+Date: Wed, 20 Nov 2024 16:40:51 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241120105954.9665-1-quic_mukhopad@quicinc.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: add venus firmware file for qcs615
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+CC: "Renjiang Han (QUIC)" <quic_renjiang@quicinc.com>,
+        "linux-firmware@kernel.org" <linux-firmware@kernel.org>,
+        "Dikshita Agarwal
+ (QUIC)" <quic_dikshita@quicinc.com>,
+        "Qiwei Liu (QUIC)"
+	<quic_qiweil@quicinc.com>,
+        "quic_zhgao@quicinc.co" <quic_zhgao@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>
+References: <83153c5ab8374e008d62646f200f9a04@quicinc.com>
+ <ng4o7sdejoh4jn4nnarjd4lio4lbx2tiuiz5c6bigjbtxldinr@xl5wx6dmdivy>
+ <ab4f83c1-5cd6-a80b-fd85-ccc337c8f301@quicinc.com>
+ <pqoq64hk2jedmqta5fs4ktcadw4getwkgz324vtrzzotcurpaw@zc6dlhbqtsnz>
+ <a1bbc1d0-d3bd-e44e-e393-a7ade909a506@quicinc.com>
+ <CAA8EJpoDXKbF5cqb_vzE28zjdC6OC66Zxb5j030QXaCe+FUmfw@mail.gmail.com>
+ <egdqhgdiqqny57yiauiyekcvhxvebfttyncqoazslzjprwvakz@txvy7wn4vg7g>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <egdqhgdiqqny57yiauiyekcvhxvebfttyncqoazslzjprwvakz@txvy7wn4vg7g>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: jx2LrD89lQhAo5SZ3hjVfXzOKD5gOLpY
+X-Proofpoint-ORIG-GUID: jx2LrD89lQhAo5SZ3hjVfXzOKD5gOLpY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
+ phishscore=0 suspectscore=0 adultscore=0 clxscore=1011 priorityscore=1501
+ lowpriorityscore=0 spamscore=0 bulkscore=0 mlxlogscore=999 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2411200077
 
-On Wed, Nov 20, 2024 at 04:29:52PM +0530, Soutrik Mukhopadhyay wrote:
-> This series adds the DPTX0 and DPTX1 nodes, as a part of mdss0
-> on Qualcomm SA8775P SoC. It also enables Display Port on Qualcomm
-> SA8775P-ride platform.
-> 
-> ---
-> This patch depends on following series:
-> https://lore.kernel.org/all/20240816-sa8775p-mm-v3-v1-0-77d53c3c0cef@quicinc.com/
-> https://lore.kernel.org/all/20241019-patchv3_1-v5-0-d2fb72c9a845@quicinc.com/
-> https://lore.kernel.org/all/20241018070706.28980-1-quic_mukhopad@quicinc.com/
-> 
-> v2: Fixed review comments from Dmitry, Konrad and Bjorn
-> 	- Added a new patchset to separate out the soc and board parts.[Konrad]
-> 	- Patchset 1 now comprises of the soc parts and patchset 2 includes board specific changes.[Bjorn]
-> 	- Patchset 2 enables all the DP ports validated on the sa8775p-ride platform.[Bjorn]
-> 	- Fixed indentation errors in the dtsi file containing the soc information.[Dmitry][Konrad]
-> 	- Updated clocks to be used by respective PHYs.[Dmitry]
-> 	- Added mdss0_dp1 device node.[Dmitry]
-> 	- Updated the names of PHYs using label prefix "mdssM_dpN" for clarity.[Bjorn]
-> 	- Avoided use of referring any label in the board(dts) file in the dtsi(platform) file.[Bjorn]
-> 
-> v3: Fixed review comments from Dmitry and other minor changes to prevent warnings and maintain alignment
-> 	- Added specific DP connector node for each DP port validated in patchset 2.[Dmitry]
-> 	- Updated the reg value to 1 for port 1 under mdss_mdp in patchset 1.
-> 	- Fixed the register address space for mdss0_dp1 and mdss0_dp1_phy in alignment to the 
-> 	  register address space for mdss0_dp0 and mdss0_dp0_phy, in patchset 1.
-> 
-> v4: Fixed review comments from Dmitry
-> 	- Added p1 region to the register set of both mdss_dp0 and mdss_dp1
-> 	  alongside validation of devicetree against DT schema.[Dmitry]
 
-NIT: Please describe changes in the logical order: newer aka interesting
-items in the top, historical changes at the bottom. The "b4" tool would
-have handled it for you.
-
+On 11/20/2024 4:09 PM, Dmitry Baryshkov wrote:
+> On Thu, Nov 14, 2024 at 01:31:14PM +0200, Dmitry Baryshkov wrote:
+>> On Thu, 14 Nov 2024 at 13:05, Vikash Garodia <quic_vgarodia@quicinc.com> wrote:
+>>>
+>>>
+>>> On 11/14/2024 4:16 PM, Dmitry Baryshkov wrote:
+>>>> On Thu, Nov 14, 2024 at 09:06:55AM +0530, Vikash Garodia wrote:
+>>>>>
+>>>>> On 11/13/2024 8:10 PM, Dmitry Baryshkov wrote:
+>>>>>> On Wed, Nov 13, 2024 at 10:50:44AM +0000, Renjiang Han (QUIC) wrote:
+>>>>>>> Hello
+>>>>>>>
+>>>>>>> The following changes since commit 6482750d396980a31f76edd5a84b03a96bbdf3fe:
+>>>>>>>
+>>>>>>>   Merge branch 'verb' into 'main' (2024-11-11 20:01:00 +0000)
+>>>>>>>
+>>>>>>> are available in the Git repository at:
+>>>>>>>
+>>>>>>>   git@git.codelinaro.org:clo/linux-kernel/linux-firmware.git<mailto:git@git.codelinaro.org:clo/linux-kernel/linux-firmware.git> video-firmware-qcs615
+>>>>>>>
+>>>>>>> for you to fetch changes up to 1e7f65883150d3b48307b4f0d6871c60151ee25b:
+>>>>>>>
+>>>>>>>   qcom: venus-5.4: add venus firmware file for qcs615 (2024-11-13 15:50:29 +0530)
+>>>>>>>
+>>>>>>> ----------------------------------------------------------------
+>>>>>>> Renjiang Han (1):
+>>>>>>>       qcom: venus-5.4: add venus firmware file for qcs615
+>>>>>>>
+>>>>>>> WHENCE                      |   1 +
+>>>>>>
+>>>>>> Could you please be more specific, what is the difference between the
+>>>>>> existing file and a new file? According to the soc_vers the new file
+>>>>>> supports sdm845. Should it instead replace the old firmware?
+>>>>> SDM845, SC7180, qcs615 can be enabled on same firmware ideally, but due to a
+>>>>> different signing for qcs615, it takes a separate bin (xxx_s6.mbn).
+>>>>
+>>>> Can SDM845 handle v6 signatures? It supports v5 and PSS. Or can QCS615
+>>>> use v5 signatures?
+>>> Infact we started with loading sc7180 firmware on qc615, video init failed. So
+>>> far i have seen 2 categories in signing version for video bins, either default
+>>> or v6 specific tool.
+>>
+>> Can firmware / security engineers actually advice us on using v5
+>> firmware signatures with QCS615 _and_ with older platforms?
+>> Existing venus-5.4/venus.mbn uses v3
 > 
-> ---
-> 
-> Soutrik Mukhopadhyay (2):
->   arm64: dts: qcom: sa8775p: add DisplayPort device nodes
->   arm64: dts: qcom: sa8775p-ride: Enable Display Port
-> 
->  arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi |  80 ++++++++
->  arch/arm64/boot/dts/qcom/sa8775p.dtsi      | 218 ++++++++++++++++++++-
->  2 files changed, 297 insertions(+), 1 deletion(-)
-> 
-> -- 
-> 2.17.1
-> 
-
--- 
-With best wishes
-Dmitry
+> Vikash, any updates on this topic? Would it be possible to have a single
+> FW image with just v5 signatures?
+Not yet Dmitry. Having a followup with relevant folks this friday to understand
+the signing requirements across different SOCs, hopefully will be able to add
+something on this by then.
+Regards,
+Vikash
 
