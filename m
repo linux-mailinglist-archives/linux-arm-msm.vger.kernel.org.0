@@ -1,126 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-38438-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38439-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9AA5A9D377E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 10:52:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 35F499D37A2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 10:56:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 400D01F222CD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 09:52:57 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D8C7B1F226D5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 09:56:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA64819D08F;
-	Wed, 20 Nov 2024 09:52:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C06D1A01B8;
+	Wed, 20 Nov 2024 09:55:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="TyMmhvof"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Oqh5b5iJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DEDA19AA68;
-	Wed, 20 Nov 2024 09:52:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6164219F48D;
+	Wed, 20 Nov 2024 09:55:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732096363; cv=none; b=HzA084l0qPmTPWIJfca/LakU2tIsZhjMQ6ootF/hhs5AvDOyT5gwXw4yiYgkRuut1oR9ZCqsPTSfrXZMtycwi2YvW8jiz/Wgj8ENY7dDkOF7EeoBCJ8917/Vf1pRGUDo18+gqoks0IKGAzAAWknFkSr9hyrl2I53KzmspUcDhZI=
+	t=1732096508; cv=none; b=Q4a2qmdzBmrn+8NvLj4IkvEG6z9eQkwNz8PLvPebwfbmJhfcM/8hcGpe9VdZGiKLpFutDoIm7gmVkD3q1jMWMFzqeaM8Hwpopb6Gz5SOv+1KGGCbueCkQRBb+XCrocqEuglE+0Q0vTrqdSvs9ZE/KvzJQGdd4ymVsrEAyBtn6J0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732096363; c=relaxed/simple;
-	bh=oTjxLSyLUSDWUqEL4U89tgmhSivPbNqKBql5iY5FXnk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=bLwPGuAjjFkEcNoZtuu4e327J8tutnhYLVJvcRJAeAfzN7uWyvhDFU4k0gLs5o1MKNO6rvMHLg+IuxexcUldhpo56nJfm2VcO1LpvGhBsxv/5R3HLKQiqQHp0bVKxx3XLJT0yaYuiFETNfcyp6JV3L43zkwnqxBtan+G2HKo+sQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=TyMmhvof; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1732096508; c=relaxed/simple;
+	bh=rMW8nx/VGQNImI5wWQKUTTyyBSXKCsWcOxQdXVSDAco=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=dkeevEqF0oX5pW6T9A62N86ydWaQJEUtMVTEuwcm33KoaarLeutEI2he6vEiUvoUt3LV+EVU1oEaozNk0e9mVStP1LeFjeZSCJFGRzycQHrak+lwuVSTwL5RQiSYCJgIabtOFtSQ5pScXrV9O1BawEFjBizDBYUeYqFpsu68Go0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Oqh5b5iJ; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AK9FT9B005743;
-	Wed, 20 Nov 2024 09:52:24 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AK9FTDo007981;
+	Wed, 20 Nov 2024 09:55:02 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	d0302W7DdnTeDi5GvqZgRf9A+n5FM0dF6jQPmr+WzZ8=; b=TyMmhvofTo8CYN/D
-	rCSnuLbLRiwECV/WCXX2G1rfiF7Qp7EizdNKvHNY+RZ8EjzXoVPwzA8/mr3pFWY+
-	781Bt55zyBLPVmbYNc4eGFoLI2vMGVItaEIXq0Pk36sroaqEl1xGMQRs6UzdYnzd
-	u8DUAFoHjLtRFA1mf7ZysR8cWcDbchQob0GkPG7mILFaTls42Q08OivLdmkITy3v
-	8dIND/0/DgpaubugKIrXRFYdVUgUBYHlqoeBbYTTrS+9ABsMxUP9rWEPNYywoMUT
-	7USrmKTMq5MGeh9z3fbNE3IQWgHZ7ZrnSYfZUSmep4D1GoCptegU1bJUdUeFeWFv
-	jhTVsg==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4308y7wemx-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=GTYyLA5p9qWUSkYxsYPQeY
+	6kil5ws7BD6ZDPscuSftY=; b=Oqh5b5iJRjtY3opsu2YUVHUfStNdSTwClBVC/X
+	cdlDc+Ea59cGQ5J5se1soMInw2UnfLIPQPphcvDmvOs7+Uy8nyf45MQ2IJ/3czuX
+	PaCJnvv2NcviFM/2bPakjzL3WISGrR850U5CSDnW93M7wg2BscU/1l3sESSVogSi
+	ELkqnB54iVgjJ0qwt+/9aF3gp+aK3S0hw3Vls8V6bya6+HHPRtMwz9hLsmpv04Lq
+	0g9+AnUjdIGgOwRefL9+ukxQUglPqO3jnzSaFw50pTyFUC6zsuYnbOQKvLsgJU2+
+	p75qbuKiacRvPklENFwU6Iv7UTJ4L7s/FuROJilBFJCS0aVA==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4318uvgqhr-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 20 Nov 2024 09:52:24 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AK9qNVa014018
+	Wed, 20 Nov 2024 09:55:01 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AK9t0rW012582
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 20 Nov 2024 09:52:23 GMT
-Received: from [10.152.195.140] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 20 Nov
- 2024 01:52:18 -0800
-Message-ID: <48bf0cde-42e2-4032-a71c-3f9d43d02385@quicinc.com>
-Date: Wed, 20 Nov 2024 15:22:15 +0530
+	Wed, 20 Nov 2024 09:55:00 GMT
+Received: from chejiang-gv.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 20 Nov 2024 01:54:56 -0800
+From: Cheng Jiang <quic_chejiang@quicinc.com>
+To: Marcel Holtmann <marcel@holtmann.org>,
+        Luiz Augusto von Dentz
+	<luiz.dentz@gmail.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        "Balakrishna
+ Godavarthi" <quic_bgodavar@quicinc.com>,
+        Rocky Liao
+	<quic_rjliao@quicinc.com>, <quic_zijuhu@quicinc.com>
+CC: <linux-bluetooth@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <quic_mohamull@quicinc.com>, <quic_chejiang@quicinc.com>
+Subject: [PATCH v1 0/4] Add qcom,product-variant properties in Qualcomm
+Date: Wed, 20 Nov 2024 17:54:24 +0800
+Message-ID: <20241120095428.1122935-1-quic_chejiang@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: ipq5424: Add watchdog node
-To: Krzysztof Kozlowski <krzk@kernel.org>, <wim@linux-watchdog.org>,
-        <linux@roeck-us.net>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>, <quic_rjendra@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-watchdog@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-CC: <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
-References: <20241120055248.657813-1-quic_mmanikan@quicinc.com>
- <20241120055248.657813-3-quic_mmanikan@quicinc.com>
- <e134af10-4d58-4bee-9de2-80c120ca8a02@kernel.org>
-Content-Language: en-US
-From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-In-Reply-To: <e134af10-4d58-4bee-9de2-80c120ca8a02@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+ nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: PhuqJ_ZSMbfZf6nJ9MPWUppNJBBD-5Gj
-X-Proofpoint-GUID: PhuqJ_ZSMbfZf6nJ9MPWUppNJBBD-5Gj
+X-Proofpoint-ORIG-GUID: ixUL55i9m1-7_eFAoKm1lKfF197ZotIY
+X-Proofpoint-GUID: ixUL55i9m1-7_eFAoKm1lKfF197ZotIY
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
- mlxlogscore=846 clxscore=1015 suspectscore=0 adultscore=0
- priorityscore=1501 phishscore=0 impostorscore=0 bulkscore=0
- lowpriorityscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2409260000 definitions=main-2411200069
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
+ priorityscore=1501 phishscore=0 adultscore=0 malwarescore=0 mlxscore=0
+ lowpriorityscore=0 mlxlogscore=999 spamscore=0 suspectscore=0
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411200069
+
+Add a new property in qualcom bluetooth dts to identify the product
+information, so the driver can load the proper firmware.
+
+Several Qualcomm projects will use the same Bluetooth chip, each
+focusing on different features. For instance, consumer projects
+prioritize the A2DP SRC feature, while IoT projects focus on the A2DP
+SINK feature. Due to the patch size, it is not feasible to include all
+features in a single firmware.
+
+Therefore, the 'product-variant' devicetree property is used to provide
+product information for the Bluetooth driver to load the appropriate
+firmware.
+
+The driver will parse 'product-variant' to load firmware from different
+directories. If it's not defined in dts, the default firmware will be
+loaded, which is compatible with the existing implementaion.
 
 
+Cheng Jiang (4):
+  dt-bindings: bluetooth: add 'qcom,product-variant'
+  dt-bindings: bluetooth: Add qca6698 compatible string
+  arm64: dts: qcom: sa8775p-ride: update BT nodes
+  Bluetooth: hci_qca: add qcom,product-variant properties
 
-On 11/20/2024 1:10 PM, Krzysztof Kozlowski wrote:
-> On 20/11/2024 06:52, Manikanta Mylavarapu wrote:
->> Add the watchdog node for IPQ5424 SoC.
->>
->> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
->> ---
->>  arch/arm64/boot/dts/qcom/ipq5424.dtsi | 7 +++++++
->>  1 file changed, 7 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/ipq5424.dtsi b/arch/arm64/boot/dts/qcom/ipq5424.dtsi
->> index 5e219f900412..4ca1ef1c4dc7 100644
->> --- a/arch/arm64/boot/dts/qcom/ipq5424.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/ipq5424.dtsi
->> @@ -233,6 +233,13 @@ intc: interrupt-controller@f200000 {
->>  			msi-controller;
->>  		};
->>  
->> +		watchdog: watchdog@f410000 {
-> You do not use the label. Can be dropped.
-> 
+ .../net/bluetooth/qualcomm-bluetooth.yaml     |   8 +
+ arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi    |   3 +-
+ drivers/bluetooth/btqca.c                     | 142 ++++++++++++++----
+ drivers/bluetooth/btqca.h                     |  11 +-
+ drivers/bluetooth/hci_qca.c                   |  73 +++++----
+ 5 files changed, 174 insertions(+), 63 deletions(-)
 
-Okay, sure. I will drop label.
 
-Thanks & Regards,
-Manikanta.
+base-commit: 6fb2fa9805c501d9ade047fc511961f3273cdcb5
+-- 
+2.25.1
+
 
