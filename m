@@ -1,175 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-38487-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38488-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EC8BA9D3A7C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 13:15:59 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 70DC79D3AA6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 13:28:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 75CF11F23AE2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 12:15:59 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 22630B282A8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 12:16:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9812A1A2C3A;
-	Wed, 20 Nov 2024 12:15:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1273C1A071C;
+	Wed, 20 Nov 2024 12:16:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="gYOVtqlp";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="PLT+iV2t";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="gYOVtqlp";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="PLT+iV2t"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kXFWHLiN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00EC119F13B;
-	Wed, 20 Nov 2024 12:15:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F12A1A4F01
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Nov 2024 12:16:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732104954; cv=none; b=djythtP0BOWCEXRxXuSqWngvA3t1PXfMUQ68KzJs7ggLfMcSMn9P0xD/CAKfKmHwKmXSKXeeaPyB10bdIyBiO903ceMoVRYf2i9gitioCmvPup0K2w30fzBb88VErPlms5XjqpkCGcUT92usKpuZHqMCKNqqchdMp8pWPmCzw7g=
+	t=1732104977; cv=none; b=AHkA74CRHXdYjxfMlwy8svBKSY5q+WnIlcD9TpC/JWEICPNbSZUQgZL8GsJ+yp0oLAe27SbkclnFdlB0RpjzN3Rl0jnjLYEE1BF9oN1ZsTbUod6YN3ucgdgCBuviXCsCcqGUl4fCqP2aKPdtP4kHutRnUMb3p2WSTkB1nsvsutQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732104954; c=relaxed/simple;
-	bh=rUWRVgIpsN+qqDYsytfpIupLDOZ51LODujjC8CHoTZc=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Av+8nAyDkjX00l7+mtT6TgjP+wvRGXmYGWuAjB4GBHpR+rvY5eQjej+M3LezOeW7TZ35n/yADj/DSRX/FBB/7TiXDFw8O1tg6VZIharb0jnM7MYxJnRVD5C6K4F/MUoz+6jlDwn6huG1lc33i+33DTX5uimBb+2kLRms0irV0K8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=gYOVtqlp; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=PLT+iV2t; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=gYOVtqlp; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=PLT+iV2t; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 4FC851F76E;
-	Wed, 20 Nov 2024 12:15:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1732104951; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=R6TtZOhsAKBtybCxBgSSK+eJqeEPxyGmEPvC3eHY3IE=;
-	b=gYOVtqlpmEBIa9ncQj3AZs8dQKvAiCR4NouHLPoIyceGzfa+l+G11v3RhG8V8olfA/nCEB
-	N70hRlx4JS9jC3mtKN14j0gA3K0y1/ig5FpTyZ9zv2wzMw7LuHSPkPOhU2MLV6UOPzt6TP
-	7UjF5/oMb/2ncozW5D8hM8ZyZ7jx1a0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1732104951;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=R6TtZOhsAKBtybCxBgSSK+eJqeEPxyGmEPvC3eHY3IE=;
-	b=PLT+iV2tn7kwhTcYgDYYJeMI4PbScJS0Dan4ViISWeQxnIv820ibMmGlDIwOFlRNYyQjj0
-	Gv0bf7Xp5i90X3Dw==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1732104951; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=R6TtZOhsAKBtybCxBgSSK+eJqeEPxyGmEPvC3eHY3IE=;
-	b=gYOVtqlpmEBIa9ncQj3AZs8dQKvAiCR4NouHLPoIyceGzfa+l+G11v3RhG8V8olfA/nCEB
-	N70hRlx4JS9jC3mtKN14j0gA3K0y1/ig5FpTyZ9zv2wzMw7LuHSPkPOhU2MLV6UOPzt6TP
-	7UjF5/oMb/2ncozW5D8hM8ZyZ7jx1a0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1732104951;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=R6TtZOhsAKBtybCxBgSSK+eJqeEPxyGmEPvC3eHY3IE=;
-	b=PLT+iV2tn7kwhTcYgDYYJeMI4PbScJS0Dan4ViISWeQxnIv820ibMmGlDIwOFlRNYyQjj0
-	Gv0bf7Xp5i90X3Dw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 072FE137CF;
-	Wed, 20 Nov 2024 12:15:51 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id W9g0AffSPWfyCAAAD6G6ig
-	(envelope-from <tiwai@suse.de>); Wed, 20 Nov 2024 12:15:51 +0000
-Date: Wed, 20 Nov 2024 13:15:50 +0100
-Message-ID: <87a5du3xu1.wl-tiwai@suse.de>
-From: Takashi Iwai <tiwai@suse.de>
-To: Wesley Cheng <quic_wcheng@quicinc.com>
-Cc: <srinivas.kandagatla@linaro.org>,
-	<mathias.nyman@intel.com>,
-	<perex@perex.cz>,
-	<conor+dt@kernel.org>,
-	<dmitry.torokhov@gmail.com>,
-	<corbet@lwn.net>,
-	<broonie@kernel.org>,
-	<lgirdwood@gmail.com>,
-	<krzk+dt@kernel.org>,
-	<pierre-louis.bossart@linux.intel.com>,
-	<Thinh.Nguyen@synopsys.com>,
-	<tiwai@suse.com>,
-	<robh@kernel.org>,
-	<gregkh@linuxfoundation.org>,
-	<linux-kernel@vger.kernel.org>,
-	<devicetree@vger.kernel.org>,
-	<linux-sound@vger.kernel.org>,
-	<linux-usb@vger.kernel.org>,
-	<linux-input@vger.kernel.org>,
-	<linux-arm-msm@vger.kernel.org>,
-	<linux-doc@vger.kernel.org>
-Subject: Re: [PATCH v30 26/30] ALSA: usb-audio: qcom: Introduce QC USB SND offloading support
-In-Reply-To: <20241106193413.1730413-27-quic_wcheng@quicinc.com>
-References: <20241106193413.1730413-1-quic_wcheng@quicinc.com>
-	<20241106193413.1730413-27-quic_wcheng@quicinc.com>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) Emacs/27.2 Mule/6.0
+	s=arc-20240116; t=1732104977; c=relaxed/simple;
+	bh=r9BGWtiuF0mfz6RBtnoPJ158IEaZpOtLb28KEG6nOwU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FfXB1wHzFFTdVcmtSg0PtUhghBCUA2MS8joqutI5MP+rW7NqsA4yMNcI8vSzxNCxSVpnM7A2CoAmMKmOha7iGQPdETZ5QZt+CH2flYgU867rvMFzoiJVkPG6RNrgcAkRE/9UOBUuv8lNpQRvwr00sqWxMAoQ2zSUnj/kgNk6VG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kXFWHLiN; arc=none smtp.client-ip=209.85.208.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2fb599aac99so44220531fa.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Nov 2024 04:16:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1732104973; x=1732709773; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=cIsUKn523ItPFhw9PoQgspXzNPwI8eBe9tACkVcqoFg=;
+        b=kXFWHLiN85+mdNa675J3x2MOayJj7HH2PlOGP1OD8SjYAk38Y1/S1eC50D80pJH34+
+         Ydpo+HjuaXMekXnMOuDD8H7H85C2E1W9Sb53RGI5nyOmlyJQ1BMkVujGg7AWSzjS/WJl
+         R2klshASlUisFvauR62JHYJ6pPqjw0Ib7GAOY0qCNxhHnwsIj68mzB1wA08vlr/MQgD5
+         JcD2lCAuW7M2ISIVeouwsEDYiwBZHgNrYzSupaVRhTezUPte8lC/0f1NM7xQ4KNiypIW
+         JPk8862jln+7RIfLNf8MrL162irtKQSpSR4SA/2XANID9HH5SoTdysYAvjMAmgP5hzdD
+         dk1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732104973; x=1732709773;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cIsUKn523ItPFhw9PoQgspXzNPwI8eBe9tACkVcqoFg=;
+        b=aA28iRuHazpyA69tVYOCC50tdzda3yogbzLe01RkX1eipVwLGnfaV7clsFYP2NFbkA
+         eANEfeDP11xbGGJ61kE89by9I1nENjZcPntW3yE6V0qcr+2doxrktteRJmj1qHdHGTST
+         HKdlVh6xMUBJsYwHCe8DsBLEMiVEkG5Kdp6VrH0PRHrO5qMZTSXBHLDDJYD/qY3XQf3U
+         zsnQqMBlopoNfXpqWaedZT/KOgAuObNJJwe/2kUVu21vuyMq9hynS2wfTy8C+9TVQC8L
+         ge+hEFHEGhUZdQumOYuiTjY/YFma/vwOS4CyLwUJb4x2pdBzdNhU9Zvtpa7sJSXnOgxr
+         Rtcg==
+X-Forwarded-Encrypted: i=1; AJvYcCU5JV0VDT8BTMKPQjwYueIRjNtXeEno5C+7GIOfbpQ3zD2uaFfYrQBi51YOQYs+ekHWCRiwb8Az/vx1J733@vger.kernel.org
+X-Gm-Message-State: AOJu0YzmGm6xhawrwN3hEdX7TOGjtBod0TCxRSPwPDmMQ5dS/cXIGVt+
+	GhrdAze8FuXheE89YrOqDcs0CuH4HOCCNteQ4ClzI59MVNcR4XzNvlOI3SfCJTQ=
+X-Google-Smtp-Source: AGHT+IG+JbXwf7DnQ9184clVxgyLKaSqR5SrvWGXCF34hbjR2SJgwz1JS9pJIQewA46R8bEOMRQG1Q==
+X-Received: by 2002:a2e:bc20:0:b0:2ff:78be:e02d with SMTP id 38308e7fff4ca-2ff8dbcb795mr14542921fa.11.1732104973210;
+        Wed, 20 Nov 2024 04:16:13 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ff69ae80c5sm15094771fa.80.2024.11.20.04.16.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 20 Nov 2024 04:16:11 -0800 (PST)
+Date: Wed, 20 Nov 2024 14:16:09 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Dheeraj Reddy Jonnalagadda <dheeraj.linuxdev@gmail.com>
+Cc: robdclark@gmail.com, quic_abhinavk@quicinc.com, 
+	linux-arm-msm@vger.kernel.org, sean@poorly.run, marijn.suijten@somainline.org, 
+	airlied@gmail.com, simona@ffwll.ch, quic_bjorande@quicinc.com, 
+	quic_parellan@quicinc.com, quic_khsieh@quicinc.com, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, dianders@chromium.org
+Subject: Re: [PATCH drm-next] drm/msm/dp: Fix potential division by zero issue
+Message-ID: <pwwukfhijwywhz7tailrfamxdyz6jabo5ref64xr6upnkzcpel@flzvrcr3m3h5>
+References: <20241120050451.100957-1-dheeraj.linuxdev@gmail.com>
+ <piembwzz7x6plsps3umjg3b3pi2ii44svmeii3wwtydtriceny@uqq7ck2ge5zz>
+ <Zz3N7IvdN4L8N62p@HOME-PC>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-Spam-Level: 
-X-Spamd-Result: default: False [-1.80 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	SUSPICIOUS_RECIPS(1.50)[];
-	MID_CONTAINS_FROM(1.00)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	TAGGED_RCPT(0.00)[dt];
-	RCPT_COUNT_TWELVE(0.00)[22];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	ARC_NA(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_CC(0.00)[linaro.org,intel.com,perex.cz,kernel.org,gmail.com,lwn.net,linux.intel.com,synopsys.com,suse.com,linuxfoundation.org,vger.kernel.org];
-	TO_DN_SOME(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	FUZZY_BLOCKED(0.00)[rspamd.com];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,imap1.dmz-prg2.suse.org:helo]
-X-Spam-Score: -1.80
-X-Spam-Flag: NO
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Zz3N7IvdN4L8N62p@HOME-PC>
 
-On Wed, 06 Nov 2024 20:34:09 +0100,
-Wesley Cheng wrote:
-> +config SND_USB_AUDIO_QMI
-> +	tristate "Qualcomm Audio Offload driver"
-> +	depends on QCOM_QMI_HELPERS && SND_USB_AUDIO && USB_XHCI_SEC_INTR && SND_SOC_USB
-> +	select SND_PCM
+On Wed, Nov 20, 2024 at 05:24:20PM +0530, Dheeraj Reddy Jonnalagadda wrote:
+> On Wed, Nov 20, 2024 at 01:02:32PM +0200, Dmitry Baryshkov wrote:
+> > On Wed, Nov 20, 2024 at 10:34:51AM +0530, Dheeraj Reddy Jonnalagadda wrote:
+> > > The variable pixel_div can remain zero due to an invalid rate input,
+> > 
+> > No, it can not. Rate is set by the driver, which knowns which rates are
+> > supported. 
+> > 
+> > > leading to a potential division by zero issue. This patch fixes it and
+> > > the function now logs an error and returns early.
+> > 
+> > See Documentation/process/submitting-patches.rst, look for "This patch"
+> > string.
+> > 
+> > > 
+> > > Additionally, this patch resolves trailing whitespace issues detected
+> > > by checkpatch.pl in the same file.
+> > 
+> > Additionally perform ... => separate commits.
+> > 
+> > > 
+> > > Signed-off-by: Dheeraj Reddy Jonnalagadda <dheeraj.linuxdev@gmail.com>
+> > > ---
+> > >  drivers/gpu/drm/msm/dp/dp_catalog.c | 8 +++++---
+> > >  1 file changed, 5 insertions(+), 3 deletions(-)
+> > > 
+> > > diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
+> > > index b4c8856fb25d..e170f70f1d42 100644
+> > > --- a/drivers/gpu/drm/msm/dp/dp_catalog.c
+> > > +++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
+> > > @@ -225,7 +225,7 @@ int msm_dp_catalog_aux_clear_hw_interrupts(struct msm_dp_catalog *msm_dp_catalog
+> > >   * This function reset AUX controller
+> > >   *
+> > >   * NOTE: reset AUX controller will also clear any pending HPD related interrupts
+> > > - * 
+> > > + *
+> > >   */
+> > >  void msm_dp_catalog_aux_reset(struct msm_dp_catalog *msm_dp_catalog)
+> > >  {
+> > > @@ -487,8 +487,10 @@ void msm_dp_catalog_ctrl_config_msa(struct msm_dp_catalog *msm_dp_catalog,
+> > >  		pixel_div = 2;
+> > >  	else if (rate == link_rate_hbr2)
+> > >  		pixel_div = 4;
+> > > -	else
+> > > +	else {
+> > >  		DRM_ERROR("Invalid pixel mux divider\n");
+> > > +		return;
+> > > +	}
+> > >  
+> > >  	dispcc_input_rate = (rate * 10) / pixel_div;
+> > >  
+> > > @@ -579,7 +581,7 @@ u32 msm_dp_catalog_hw_revision(const struct msm_dp_catalog *msm_dp_catalog)
+> > >   * This function reset the DP controller
+> > >   *
+> > >   * NOTE: reset DP controller will also clear any pending HPD related interrupts
+> > > - * 
+> > > + *
+> > >   */
+> > >  void msm_dp_catalog_ctrl_reset(struct msm_dp_catalog *msm_dp_catalog)
+> > >  {
+> > > -- 
+> > > 2.34.1
+> > > 
+> > 
+> > -- 
+> > With best wishes
+> > Dmitry
+> 
+> Hello Dmitry,
+> 
+> Thank you for the valuable feedback. Will update my commit messages
+> accordingly. I wanted to seek clarification on the the divide by zero
+> issue. Would pixel_dev not be zero upon hitting the else case as
+> indicated below casuing a div by zero?
+> 
+> 	u32 mvid, nvid, pixel_div = 0, dispcc_input_rate;
+> 	u32 const nvid_fixed = DP_LINK_CONSTANT_N_VALUE;
+> 	
+> 	[..]
+> 	
+> 	if (rate == link_rate_hbr3)
+> 		pixel_div = 6;
+> 	else if (rate == 162000 || rate == 270000)
+> 		pixel_div = 2;
+> 	else if (rate == link_rate_hbr2)
+> 		pixel_div = 4;
+> 	else
+> 		DRM_ERROR("Invalid pixel mux divider\n"); <<-- here
 
-This select is superfluous as it already depends on
-CONFIG_SND_USB_AUDIO that does select it.
+The 'rate' itself also comes from the driver and the calling functions
+ensure that the value is correct.
 
-> diff --git a/sound/usb/qcom/Makefile b/sound/usb/qcom/Makefile
-> new file mode 100644
-> index 000000000000..a81c9b28d484
-> --- /dev/null
-> +++ b/sound/usb/qcom/Makefile
-> @@ -0,0 +1,2 @@
-> +snd-usb-audio-qmi-objs := usb_audio_qmi_v01.o qc_audio_offload.o
+> 
+> 	dispcc_input_rate = (rate * 10) / pixel_div;
+> 
+> -Dheeraj
 
-Use snd-usb-audio-qmi-y instead of *-objs.
-
-
-thanks,
-
-Takashi
+-- 
+With best wishes
+Dmitry
 
