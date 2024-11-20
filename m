@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-38549-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38550-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D62059D40AE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 17:59:33 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 12D629D40BF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 18:04:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 822B21F215E2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 16:59:33 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 14644B27914
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 17:00:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8527A1547FF;
-	Wed, 20 Nov 2024 16:59:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 51CE5155726;
+	Wed, 20 Nov 2024 17:00:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S5lXZWaF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tNzWInAv"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5816514037F;
-	Wed, 20 Nov 2024 16:59:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24C7914F12D;
+	Wed, 20 Nov 2024 17:00:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732121968; cv=none; b=nLZqrYyfioctuzlma0rS6WVFm5B5eAyD+XUGAWLORkZIPxMXUSbUOGbGhsdTbotRY4VFGeHpz/0JBFypvATl9zJ9Lx+ARN4NpOXbCmLlrKbHg58VQxz5Pp1uq+eyvrZNxDDRXdAvBTFCa5JxvK0zFUkN1dtsp17qOrVDQoFMN7E=
+	t=1732122022; cv=none; b=H4DCFZ3upvbB5U6nw0ZaZW1IEIlBvN3aP9fA4dxXw9KNIjrVtegvXk59uBXgNpPjPVCjhfdbg7pZ8DWDQ78/+r7sQgwdd5S9NqnOHIK0rL3OwSPTiYSvzpoQ1oe6LNWihL4LJlbGN4o8nR+bjR4zFn+E5BW7Z0ykKLO3CojemyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732121968; c=relaxed/simple;
-	bh=hscjhMXW63edDinHnMPBbQ7RflN48QfJ+SWWRhZAO2E=;
+	s=arc-20240116; t=1732122022; c=relaxed/simple;
+	bh=bYzeSkQ9Bd7O4xF6AGbqkibiHuCXxUi77anWi3k2pSM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=aKtukwCAcy0NdghkIPLU6HX+VUwEsHERNK8rrdOwYfG2ySYltUzkPTuoCbf6i4xXDyZ4Ra+J0Hd4bZtbT+PlmZ6kloG/O1WFThxRDZYwqyUw2e4PGR90Ieh2YGyUC3auHI1qoCRbjdh9WQo8RyFeRT2qmXWPOBTLYvd43G7hfNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S5lXZWaF; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CACECC4CECD;
-	Wed, 20 Nov 2024 16:59:23 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=MLAg86HidVEH9RevNEhRHkgvUORhzQmluSK06rLFk3ox6s1cP8gYazaqWvrbqvqQPECNy3g746p5j0N34XPeW48VvhvLiuc5WtZqXkW/1nEZRJoweFKoA5gyMQEyFz6n90QA15iEI6nYq1d+RCw1pf9p/m37ylaqrZ8aUpoHm9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tNzWInAv; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7FBEC4CED7;
+	Wed, 20 Nov 2024 17:00:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732121967;
-	bh=hscjhMXW63edDinHnMPBbQ7RflN48QfJ+SWWRhZAO2E=;
+	s=k20201202; t=1732122018;
+	bh=bYzeSkQ9Bd7O4xF6AGbqkibiHuCXxUi77anWi3k2pSM=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=S5lXZWaFJ3fT46FFCcHIHORbt6jEdfLfCciExkVVb2rWv4tqM59wvRNRkfJ8ezFpS
-	 GW8OxmrCXpKmATLLwVHsAH/b12lFlJ0HLGU67q36Ib+CT8UGF7ZxyvLPPJp5GJPrz4
-	 knlg5Qe8+Kr6i+RqhAbObaXVM8CbsKJjOMpklwIuWnoYnvyDMIaT0TH3jwuUkDdL06
-	 bO3KPS9qqU28tZF9s2NxdIIj0ykKRexLaSqzJZgFSvPP1D3uahL7541ybgDrsXa2p6
-	 dydeJTGSU8K5Kiw5MnreAHkALoFCoggFVNHcW19zERon9hq/r84Gsy4kADOb44YYuy
-	 vb8a95EoxeULA==
-Message-ID: <5d670f55-1ebe-4034-a6a5-e68417c6e486@kernel.org>
-Date: Wed, 20 Nov 2024 17:59:21 +0100
+	b=tNzWInAvu39W7dIAmftVg7wN3eLA5ELeCNBPa81lRhhpW5vHyPJiQexZQ3e82zNBj
+	 f648Dm+UOsUshsFtYeWntnzcnPqskWUj8N+KaOOMgt/EnyeDNx08zLrhV+LUP1J1UT
+	 RYBLhKoUpfaIUXPXnQ/akJz0Qz/tbP4ZWygaKWHt+GsvMYIZ+FSc0CgwdlIFm7Q0A8
+	 gmawmCC9PKDJk/xCxhxYjvqp2r2khRd0jyJTpMqQK6x8YZomkfz7zXSS3S4DMMLBzr
+	 OIbPLzdrmQgY/tinyD+GEPph+QxNhxFQdSo56/Yx4Fe6kvVs+Y52i0ZHneUyiiDJLD
+	 ra7psytEHwEbA==
+Message-ID: <252644d9-e304-45ee-91ed-a1452300840f@kernel.org>
+Date: Wed, 20 Nov 2024 18:00:12 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: qcs8300-ride: Add watchdog node
+Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: qcs8300: Add watchdog node
 To: Xin Liu <quic_liuxin@quicinc.com>, Bjorn Andersson
  <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
  Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
@@ -59,7 +59,7 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, kernel@quicinc.com, quic_jiegan@quicinc.com,
  quic_aiquny@quicinc.com, quic_tingweiz@quicinc.com
 References: <20241119102315.3167607-1-quic_liuxin@quicinc.com>
- <20241119102315.3167607-4-quic_liuxin@quicinc.com>
+ <20241119102315.3167607-3-quic_liuxin@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -105,35 +105,38 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20241119102315.3167607-4-quic_liuxin@quicinc.com>
+In-Reply-To: <20241119102315.3167607-3-quic_liuxin@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 19/11/2024 11:23, Xin Liu wrote:
-> Add watchdog clock on the Qualcomm QCS8300 Ride platform.
+> Add the watchdog node for QCS8300 SoC.
 > 
 > Signed-off-by: Xin Liu <quic_liuxin@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/qcs8300-ride.dts | 4 ++++
->  1 file changed, 4 insertions(+)
+
+<form letter>
+This is a friendly reminder during the review process.
+
+It looks like you received a tag and forgot to add it.
+
+If you do not know the process, here is a short explanation:
+Please add Acked-by/Reviewed-by/Tested-by tags when posting new
+versions, under or above your Signed-off-by tag. Tag is "received", when
+provided in a message replied to you on the mailing list. Tools like b4
+can help here. However, there's no need to repost patches *only* to add
+the tags. The upstream maintainer will do that for tags received on the
+version they apply.
+
+https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
+
+If a tag was not added on purpose, please state why and what changed.
+</form letter>
+
+>  arch/arm64/boot/dts/qcom/qcs8300.dtsi | 6 ++++++
+>  1 file changed, 6 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-> index 7eed19a694c3..3024338bcfbc 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-> +++ b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-> @@ -265,3 +265,7 @@ &ufs_mem_phy {
->  	vdda-pll-supply = <&vreg_l5a>;
->  	status = "okay";
->  };
-> +
-> +&watchdog {
-> +    clocks = <&sleep_clk>;
-> +};
-> \ No newline at end of file
-
-Look, your patches have errors...
-
-
+> diff --git a/arch/arm64/boot/dts/qcom/qcs8300.
 Best regards,
 Krzysztof
 
