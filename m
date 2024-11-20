@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-38542-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38543-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0AA499D4061
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 17:45:14 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 431BE9D40A4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 17:57:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9D349280F42
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 16:45:12 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 98F4AB3D4CE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 16:47:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AACDF1AA7AA;
-	Wed, 20 Nov 2024 16:44:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43E96146D57;
+	Wed, 20 Nov 2024 16:47:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nqn8YbZL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A6HYZcEI"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F0DD1AA781;
-	Wed, 20 Nov 2024 16:44:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 103A6145324;
+	Wed, 20 Nov 2024 16:47:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732121055; cv=none; b=hiR0nehxF5EKwgoY3eDwcqM17z+B2NucoauuJN7y9x71PDZajAAn9eILcfdDcwIMMF/rXrYvz9tWZe3ednhkb7tS4VTNHdw+avY3yi2jyMMcOXBk18h8YgNY7DALq4A0nTpEw5mce1lqLnmLg6ZeI2pza96gAWyKjguG7ijxv+c=
+	t=1732121233; cv=none; b=nhn6H6oXuoY9VUv1Ibr2GPeHVkxV/WdUxTFya7vJZokKtffOvikmwaHP7gF7xJo334j4ERMxDxzCjUDeE/+pPX+4Wfw4OiVJ1sxSxu+lFerWGRYgdElCqHudYG5UA+l8ahEGhNKZlKD5REKY76aX4v2FCLAG5y4B1Jfh+9nYqfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732121055; c=relaxed/simple;
-	bh=d/nTSeDIiT1XRjSwqzCCa4v3OQ9EvRslVdLCExgqLYY=;
+	s=arc-20240116; t=1732121233; c=relaxed/simple;
+	bh=1xhpyUQO3vC6p6qyxXGURDP7/NzTbaO8rvYZ4S2AiDY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Y3EtWZYOpf7oCXklW9a5MTi8nz5fxjYKFwCymtXmXh+HaN0MnVeYTFu8NIo5aTXGKuybs/ZrfusQ4vhMkzH9UN0egsh1r468tQ+YahvWzo/6Pp5h9EBnZV91io+xpKgdHUjsSFmKzy0mrAWlGMri9lOTl9TPXzX/vYwhasteTDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nqn8YbZL; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D260AC4CED1;
-	Wed, 20 Nov 2024 16:44:12 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=OquCQ7a+viQf+EGpcitgHVHnigh0OvtXisuYCuPaKkITAPK3k4UalQiZOlFQkeSFdKLiqgKBrat1aXbDQLvP6jWQSNYvMRAy1iN+7bBtL2pp6ZELzHNZPDKhXV0VvBIxd/TM5tBhvtLa8s4MQJqcZ1ZLnd27JnzIPoJzzJDgLRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A6HYZcEI; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8416DC4CECD;
+	Wed, 20 Nov 2024 16:47:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732121055;
-	bh=d/nTSeDIiT1XRjSwqzCCa4v3OQ9EvRslVdLCExgqLYY=;
+	s=k20201202; t=1732121232;
+	bh=1xhpyUQO3vC6p6qyxXGURDP7/NzTbaO8rvYZ4S2AiDY=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=nqn8YbZL6lt0uEoMkqBYRsKI3tnCe/WA2rQL1wnYvfLTqSgylHra22H/r/u1bd+t0
-	 ckSDjC4TF6dNxig/sLhLjHxT6qhs/5Iaii8hu+SQQ/0o5H7Igoph4ykx6gw8TgzudI
-	 eIT6YjIuvea5IAQA3vlrltjwvD5LvJvUlBBiB2MdD/+JjIuE0S2yKpWnvYiR57VTZn
-	 Wsm01LHRH0r+NUV1jIaZLBPOrUae7M9COBW9jD+K079YIijztFHLczrvQ0kpgtMvg5
-	 Pzfydf8NpYDPVMSkBGoRY9jnO+39aeFL0NU/dK++M8WltCFixKnMS80ZnOaLxkiZyU
-	 GzuqVUaiRzpGA==
-Message-ID: <9e351979-be01-4d38-9b94-cc23efac4c3f@kernel.org>
-Date: Wed, 20 Nov 2024 17:44:11 +0100
+	b=A6HYZcEIHMs1x/76bljokcvJpIp8Ln0XGwsprEGp3qZZqci7O+zTdWbtqfnJIbTaC
+	 2HLFpf+WlEidO5T6ejwsQ0R9mPQ3dGv2T0IOYZJI9O5X8Ls3sZQleN7bb8hYc6yDMf
+	 2pmFF/I/YZmNkXi2cgcafCHqHtxWn0DhMy3FPseELHDBpAXMUpl9M401cXEj0H2lWk
+	 JR+a/uGXDZcP3y8uwTPfreq6ccTrbjjbx87xe5QTDwMsWMKp7D6IupkgyX55wpGPvL
+	 aud7+ClprPgNConnrE4G64hi8meN0iFGT2zo3cLHqUnqcpGkHKuBq6Ot7ip3WNNYd0
+	 hnXM50sOvIDmQ==
+Message-ID: <c8ae761a-732c-4def-ac6e-5e1b16a21ada@kernel.org>
+Date: Wed, 20 Nov 2024 17:47:06 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,18 +50,22 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/5] arm64: dts: qcom: Add support for QCS9075 Ride &
- Ride-r3
-To: Wasim Nazir <quic_wasimn@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, kernel@quicinc.com
-References: <20241119174954.1219002-1-quic_wasimn@quicinc.com>
- <20241119174954.1219002-6-quic_wasimn@quicinc.com>
-Content-Language: en-US
+Subject: Re: [PATCH v2 1/4] dt-bindings: bluetooth: add 'qcom,product-variant'
+To: Cheng Jiang <quic_chejiang@quicinc.com>,
+ Marcel Holtmann <marcel@holtmann.org>,
+ Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Rob Herring
+ <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Balakrishna Godavarthi <quic_bgodavar@quicinc.com>,
+ Rocky Liao <quic_rjliao@quicinc.com>, quic_zijuhu@quicinc.com
+Cc: linux-bluetooth@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ quic_mohamull@quicinc.com
+References: <20241120095428.1122935-1-quic_chejiang@quicinc.com>
+ <20241120095428.1122935-2-quic_chejiang@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -105,60 +109,67 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20241119174954.1219002-6-quic_wasimn@quicinc.com>
+In-Reply-To: <20241120095428.1122935-2-quic_chejiang@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 19/11/2024 18:49, Wasim Nazir wrote:
-> Add device tree support for QCS9075 Ride & Ride-r3 boards.
-> QCS9075 Ride & Ride-r3 are similar to QCS9100 Ride and Ride-r3
-> boards but without safety monitoring feature of SAfety-IsLand
-> subsystem.
+On 20/11/2024 10:54, Cheng Jiang wrote:
+> Several Qualcomm projects will use the same Bluetooth chip, each
+> focusing on different features. For instance, consumer projects
+> prioritize the A2DP SRC feature, while IoT projects focus on the A2DP
+> SINK feature, which may have more optimizations for coexistence when
+> acting as a SINK. Due to the patch size, it is not feasible to include
+> all features in a single firmware.
 > 
-> Difference between ride and ride-r3 is the ethernet phy.
-> Ride uses 1G ethernet phy while ride-r3 uses 2.5G ethernet phy.
+> Therefore, the 'product-variant' devicetree property is used to provide
+> product information for the Bluetooth driver to load the appropriate
+> firmware.
 > 
-> Signed-off-by: Wasim Nazir <quic_wasimn@quicinc.com>
+> If this property is not defined, the default firmware will be loaded,
+> ensuring there are no backward compatibility issues with older
+> devicetrees.
+> 
+> The product-variant defines like this:
+>   0 - 15 (16 bits) are product line specific definitions
+>   16 - 23 (8 bits) are for the product line.
+>   24 - 31 (8 bits) are reserved for future use, 0 currently
+> 
+> |---------------------------------------------------------------------|
+> |                       32 Bits                                       |
+> |---------------------------------------------------------------------|
+> |  31 - 24 (bits)   |    23 - 16 (bits)   | 15 - 0 (16 bits)          |
+> |---------------------------------------------------------------------|
+> |   Reserved        |    0: default       | 0: default                |
+> |                   |    1: CE            |                           |
+> |                   |    2: IoT           |                           |
+> |                   |    3: Auto          |                           |
+> |                   |    4: Reserved      |                           |
+> |---------------------------------------------------------------------|
+> 
+> Signed-off-by: Cheng Jiang <quic_chejiang@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/Makefile            |  2 ++
->  arch/arm64/boot/dts/qcom/qcs9075-ride-r3.dts | 12 ++++++++++++
->  arch/arm64/boot/dts/qcom/qcs9075-ride.dts    | 12 ++++++++++++
->  3 files changed, 26 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/qcs9075-ride-r3.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/qcs9075-ride.dts
+>  .../bindings/net/bluetooth/qualcomm-bluetooth.yaml          | 6 ++++++
+>  1 file changed, 6 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 5d9847119f2e..91c811aca2ca 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -116,6 +116,8 @@ dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= qcs8550-aim300-aiot.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= qcs9075-rb8.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= qcs9075-ride.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= qcs9075-ride-r3.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride-r3.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= qdu1000-idp.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/qcs9075-ride-r3.dts b/arch/arm64/boot/dts/qcom/qcs9075-ride-r3.dts
-> new file mode 100644
-> index 000000000000..a04c8d1fa258
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/qcs9075-ride-r3.dts
-> @@ -0,0 +1,12 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +/dts-v1/;
+> diff --git a/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml b/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
+> index 7bb68311c609..9019fe7bcdc6 100644
+> --- a/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
+> +++ b/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
+> @@ -110,6 +110,12 @@ properties:
+>      description:
+>        boot firmware is incorrectly passing the address in big-endian order
+>  
+> +  qcom,product-variant:
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    description:
+> +      specify the product information for driver to load the appropriate firmware
+
+Nah, you have firmware-name for this.
+
+
 > +
-> +#include "sa8775p-ride-r3.dts"
-No guys, you are making these things up. This is EXACTLY the same as
-qcs9100.
-
-NAK
-
-
+> +
+No clue why two blank lines...
 
 Best regards,
 Krzysztof
