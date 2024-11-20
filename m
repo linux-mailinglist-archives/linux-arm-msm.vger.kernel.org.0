@@ -1,176 +1,274 @@
-Return-Path: <linux-arm-msm+bounces-38489-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38490-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 369F89D3A95
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 13:22:34 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1E40E9D3A9D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 13:24:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EAE38282AAB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 12:22:32 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 989D9B23BD5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2024 12:24:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECD2416E863;
-	Wed, 20 Nov 2024 12:22:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6664B1A257C;
+	Wed, 20 Nov 2024 12:24:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tzXurJmo"
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="KIx0blxU";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="2F3TC1vO";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="KIx0blxU";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="2F3TC1vO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F12EE1A0BC4
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Nov 2024 12:22:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 860CD172BD5;
+	Wed, 20 Nov 2024 12:24:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732105350; cv=none; b=XRmJazdh6TdIbsuOwdUV99XZajL3u3T9fV83jSr9J+FyN4LkCGSvLng+YUkEiQCknXTmSBkFujHBpzSuKCQ2WppN3l0qD0TCAF1SUggZbt9dG7IxKXNIngCxTUjfAzD5vHNB3MJ/dijLXWfDLSu7kSzqx5rfibiRmsoTFUM8YBA=
+	t=1732105445; cv=none; b=aUwiyEFlCqXpLLimcJ0sk7TevXnuGrTNSdCmkOMgEB91VJNqLlna24dpD8POMmbNWiLn/J1HEU7anwGog2FRIQd0YiEphTM6oSM2EueyLcWchLjPRSVPsBakuXxMAM1F8t6cizbtCd7Ojq7ItUb1TnSYcQP9Xl0zZkAqe3wLS1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732105350; c=relaxed/simple;
-	bh=uSHuqQVeOGNEdagTn3llR1Roms5Hmm7Gu8ejtYUEyw0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kQL8SYUoPJWNHj/1WkL+zVlXsP7ncqETuG0m3p3EY0OQt12tqBHShqwfDZKYfKjihHKa/JViEp4do3Sinv2Fkr8oyYOSK25vOYcqS26afqfixYtxxrAlTimmiH2YNEAMExLfmn8xH/mmMdpulh/GFvC+RyNLEGWEFMMf0YuOLTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tzXurJmo; arc=none smtp.client-ip=209.85.208.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2fb49510250so52589321fa.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Nov 2024 04:22:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732105347; x=1732710147; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=SruCioZfgrn86jAMwwtPTp5mHwQ8KSQNR1JzfmIlXwA=;
-        b=tzXurJmo/sMcOceOXMxv2FY3t6KgcOdFYF5o2dkOw0C1PEPpLvLpt0cBy0El8zVZeu
-         N0zDooY1kLnTAI2sFDL9Z64Jsr6AzwGfvtbq4um+wTbUZXJHj1nvL+eQKxAm768NvASv
-         hKpp1olUHQpZ1DAWJ5svi0PZHzriMIdXITA5me3BXxcgNT3eHTpjAWp2pqWyiU7TUxqV
-         cPl/UfUR/SBD4JVNQbdRJOZ3x+fwZPZ7YWv51lqfL7pK47swTifFFEaTX6rT+JMV/qHY
-         TZHZoRk3schflbMc4xdrA3Q88ktVh+I+1AO+Cox0XB+/HzfncSZnNdXaQZmSzwokrYxO
-         hbkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732105347; x=1732710147;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SruCioZfgrn86jAMwwtPTp5mHwQ8KSQNR1JzfmIlXwA=;
-        b=pK8x/ViMiEUqQLMzWMUdD/Cwr5asPjAOTqb7DLoLqmgFXWZkcu/lo6M7cjSpmhREoc
-         gOFSurgVqISZz2iGcj2zNg32a0ZchMUXXYGLKsI2KdRMxTlEJna1E6/UclYBmsnVwALo
-         myupzuY8AkfYcaAHCAiEO7OJ1RbBOYFaqtRUBpI6/og+f6VorXe9fTh6YvlsRSIRffUU
-         2AErMtwCJHLLqMjKwmiQGIfGQNECrVfPq82Su7qZ3oQiJUs27BYMcRMKeGhpXVjsfBfl
-         bnu3aLkU22ehtA/NRic04ndln92expNCIYrpMRb5/HCVPxTa0LJBiq9mKTppEZDuKHBO
-         vuTw==
-X-Forwarded-Encrypted: i=1; AJvYcCUd8h0l5iFHDg9N26AyX9h92HcwKMh/5AiykgBSTboUoNaQNtLGOg9uOQguQO1GuIznCyMuz62nwOgYdt0A@vger.kernel.org
-X-Gm-Message-State: AOJu0YzB3GXiB4QkWkimuS7Ee3WgIKUydwasDmkwC4Sp/yUEAI1a46y9
-	jL3PHvdM8H6/ZPbiZ+8x1/dYW+8+KWLPkrLdUwILOSaB9b+rWLkkp6fTx6dWgyClu29Z1x2+28e
-	/
-X-Google-Smtp-Source: AGHT+IEiiSKHX4fIrglemmZ24n5kuwXRep6VaqLRLC7YsS+ml8gGLPpofbPYqhQ9SU1K9uvsEoZgDw==
-X-Received: by 2002:a05:651c:88d:b0:2ff:5a42:9205 with SMTP id 38308e7fff4ca-2ff8dcb2af6mr14710341fa.31.1732105346969;
-        Wed, 20 Nov 2024 04:22:26 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ff69b158fdsm14765831fa.102.2024.11.20.04.22.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Nov 2024 04:22:25 -0800 (PST)
-Date: Wed, 20 Nov 2024 14:22:23 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: fange zhang <quic_fangez@quicinc.com>
-Cc: kernel@quicinc.com, quic_lliu6@quicinc.com, quic_xiangxuy@quicinc.com, 
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 4/6] dt-bindings: display/msm: Add QCS615 DSI phy
-Message-ID: <p2glf4gv4jw45yxycptosbs4emcazmeysu4loefvwrfik6rn62@bayln37drvps>
-References: <20241014-add_display_support_for_qcs615-v1-0-4efa191dbdd4@quicinc.com>
- <20241014-add_display_support_for_qcs615-v1-4-4efa191dbdd4@quicinc.com>
- <34jwvxxycm2mi3tqndhuoapth4u5nbn4omsiaxxrh2iapwuky6@f7xttrmt7w2c>
- <b313ce58-74b4-4f5c-af7d-3ce1c53a804e@quicinc.com>
+	s=arc-20240116; t=1732105445; c=relaxed/simple;
+	bh=K5K1Yw+04T/dpRHzJK4zgf/M5dBzfsDcoWJpc0vA5ww=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=tF1O2TOmNbwf9uc36E7XkVLr5Q66a/xI3RmofagDNpdOH5etNUbBt4YzjiS1xYPHRAZ5hBbGeiFhfyPNyXYycLer005d/T1H/0tnyF7IFXZ3dR//JwtrQiax/niUcLoL8p9ZsmO+J/eB8tD5NFh4FN54eWqAm66CHqF1wPwoxog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=KIx0blxU; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=2F3TC1vO; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=KIx0blxU; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=2F3TC1vO; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 152892198C;
+	Wed, 20 Nov 2024 12:23:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1732105436; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=sv1wEwUCRnJgcO3pMn8ORE+/2tjnCkxAdkeEeFOh8so=;
+	b=KIx0blxUFL9bJVyktEgCeBFKPKZ4WbAcpLdCS5burmflYn/+j3UQQUJPdMCZORNMVASxRl
+	z6OUNXLVsLki1TKHYFUkgAdDiLYnjwXdi//ECfCYp4UAzqfBKz8diRnHW+2+EVKzEuKw/o
+	bC3se6JPJ6HJxL0iubkT0Mp+N+OyQhY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1732105436;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=sv1wEwUCRnJgcO3pMn8ORE+/2tjnCkxAdkeEeFOh8so=;
+	b=2F3TC1vOPjTWOxZJco88LmeS7C4NWtF8RBLcjRWOSrYL+/jkMJ9gOLwH+dEFxhfWvKuFMS
+	qS1svuKgbiab3nBA==
+Authentication-Results: smtp-out1.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=KIx0blxU;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=2F3TC1vO
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1732105436; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=sv1wEwUCRnJgcO3pMn8ORE+/2tjnCkxAdkeEeFOh8so=;
+	b=KIx0blxUFL9bJVyktEgCeBFKPKZ4WbAcpLdCS5burmflYn/+j3UQQUJPdMCZORNMVASxRl
+	z6OUNXLVsLki1TKHYFUkgAdDiLYnjwXdi//ECfCYp4UAzqfBKz8diRnHW+2+EVKzEuKw/o
+	bC3se6JPJ6HJxL0iubkT0Mp+N+OyQhY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1732105436;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=sv1wEwUCRnJgcO3pMn8ORE+/2tjnCkxAdkeEeFOh8so=;
+	b=2F3TC1vOPjTWOxZJco88LmeS7C4NWtF8RBLcjRWOSrYL+/jkMJ9gOLwH+dEFxhfWvKuFMS
+	qS1svuKgbiab3nBA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C9373137CF;
+	Wed, 20 Nov 2024 12:23:55 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id F09UMNvUPWdlCwAAD6G6ig
+	(envelope-from <tiwai@suse.de>); Wed, 20 Nov 2024 12:23:55 +0000
+Date: Wed, 20 Nov 2024 13:23:51 +0100
+Message-ID: <878qte3xgo.wl-tiwai@suse.de>
+From: Takashi Iwai <tiwai@suse.de>
+To: Wesley Cheng <quic_wcheng@quicinc.com>
+Cc: <srinivas.kandagatla@linaro.org>,
+	<mathias.nyman@intel.com>,
+	<perex@perex.cz>,
+	<conor+dt@kernel.org>,
+	<dmitry.torokhov@gmail.com>,
+	<corbet@lwn.net>,
+	<broonie@kernel.org>,
+	<lgirdwood@gmail.com>,
+	<krzk+dt@kernel.org>,
+	<pierre-louis.bossart@linux.intel.com>,
+	<Thinh.Nguyen@synopsys.com>,
+	<tiwai@suse.com>,
+	<robh@kernel.org>,
+	<gregkh@linuxfoundation.org>,
+	<linux-kernel@vger.kernel.org>,
+	<devicetree@vger.kernel.org>,
+	<linux-sound@vger.kernel.org>,
+	<linux-usb@vger.kernel.org>,
+	<linux-input@vger.kernel.org>,
+	<linux-arm-msm@vger.kernel.org>,
+	<linux-doc@vger.kernel.org>
+Subject: Re: [PATCH v30 15/30] ASoC: usb: Fetch ASoC card and pcm device information
+In-Reply-To: <20241106193413.1730413-16-quic_wcheng@quicinc.com>
+References: <20241106193413.1730413-1-quic_wcheng@quicinc.com>
+	<20241106193413.1730413-16-quic_wcheng@quicinc.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) Emacs/27.2 Mule/6.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b313ce58-74b4-4f5c-af7d-3ce1c53a804e@quicinc.com>
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-Rspamd-Queue-Id: 152892198C
+X-Spam-Level: 
+X-Spamd-Result: default: False [-2.01 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	SUSPICIOUS_RECIPS(1.50)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	MID_CONTAINS_FROM(1.00)[];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	FUZZY_BLOCKED(0.00)[rspamd.com];
+	MIME_TRACE(0.00)[0:+];
+	ARC_NA(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[22];
+	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	FREEMAIL_CC(0.00)[linaro.org,intel.com,perex.cz,kernel.org,gmail.com,lwn.net,linux.intel.com,synopsys.com,suse.com,linuxfoundation.org,vger.kernel.org];
+	RCVD_COUNT_TWO(0.00)[2];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	TAGGED_RCPT(0.00)[dt];
+	ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	DKIM_TRACE(0.00)[suse.de:+];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[quicinc.com:email,intel.com:email]
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+X-Spam-Score: -2.01
+X-Spam-Flag: NO
 
-On Tue, Nov 19, 2024 at 12:45:00PM +0800, fange zhang wrote:
+On Wed, 06 Nov 2024 20:33:58 +0100,
+Wesley Cheng wrote:
 > 
+> USB SND needs to know how the USB offload path is being routed.  This would
+> allow for applications to open the corresponding sound card and pcm device
+> when it wants to take the audio offload path.  This callback should return
+> the mapped indexes based on the USB SND device information.
 > 
-> On 2024/10/14 18:30, Dmitry Baryshkov wrote:
-> > On Mon, Oct 14, 2024 at 05:47:30PM +0800, fangez via B4 Relay wrote:
-> > > From: lliu6 <quic_lliu6@quicinc.com>
-> > > 
-> > > QCS615 platform uses the 14nm DSI PHY driver.
-> > 
-> > - bindings describe the hardware, not the drivers.
-> > - other platforms also have 14nm DSI PHY. Why do you need a separate
-> >    compatible?
-> We need to introduce a new regulator configuration for the PHY:
-> dsi_phy_14nm_36mA_regulators. This configuration has not been used before.
+> Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+> ---
+>  include/sound/soc-usb.h | 16 ++++++++++++++++
+>  sound/soc/soc-usb.c     | 34 ++++++++++++++++++++++++++++++++++
+>  2 files changed, 50 insertions(+)
 > 
-> > 
-> > > 
-> > > Signed-off-by: lliu6 <quic_lliu6@quicinc.com>
-> > > ---
-> > >   Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml | 1 +
-> > >   1 file changed, 1 insertion(+)
-> > > 
-> > > diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml b/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml
-> > > index 52bbe132e6dae57246200757767edcd1c8ec2d77..029606d9e87e3b184bd10bd4a5076d6923d60e9e 100644
-> > > --- a/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml
-> > > +++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml
-> > > @@ -20,6 +20,7 @@ properties:
-> > >         - qcom,dsi-phy-14nm-660
-> > >         - qcom,dsi-phy-14nm-8953
-> > >         - qcom,sm6125-dsi-phy-14nm
-> > > +      - qcom,qcs615-dsi-phy-14nm
+> diff --git a/include/sound/soc-usb.h b/include/sound/soc-usb.h
+> index 587ea07a8cf5..c3d3e8d62ac5 100644
+> --- a/include/sound/soc-usb.h
+> +++ b/include/sound/soc-usb.h
+> @@ -36,6 +36,11 @@ struct snd_soc_usb_device {
+>   * @list - list head for SND SOC struct list
+>   * @component - reference to ASoC component
+>   * @connection_status_cb - callback to notify connection events
+> + * @update_offload_route_info - callback to fetch mapped ASoC card and pcm
+> + *				device pair.  This is unrelated to the concept
+> + *				of DAPM route.  The "route" argument carries
+> + *				an array used for a kcontrol output and should
+> + *				contain two integers, card and pcm device index
+>   * @priv_data - driver data
+>   **/
+>  struct snd_soc_usb {
+> @@ -44,6 +49,9 @@ struct snd_soc_usb {
+>  	int (*connection_status_cb)(struct snd_soc_usb *usb,
+>  				    struct snd_soc_usb_device *sdev,
+>  				    bool connected);
+> +	int (*update_offload_route_info)(struct snd_soc_component *component,
+> +					 int card, int pcm, int direction,
+> +					 long *route);
+>  	void *priv_data;
+>  };
+>  
+> @@ -61,6 +69,8 @@ int snd_soc_usb_setup_offload_jack(struct snd_soc_component *component,
+>  int snd_soc_usb_disable_offload_jack(struct snd_soc_component *component);
+>  int snd_soc_usb_enable_offload_jack(struct snd_soc_component *component,
+>  				    struct snd_soc_jack *jack);
+> +int snd_soc_usb_update_offload_route(struct device *dev, int card, int pcm,
+> +				     int direction, long *route);
+>  
+>  struct snd_soc_usb *snd_soc_usb_allocate_port(struct snd_soc_component *component,
+>  					      void *data);
+> @@ -109,6 +119,12 @@ static inline int snd_soc_usb_enable_offload_jack(struct snd_soc_component *comp
+>  	return 0;
+>  }
+>  
+> +static int snd_soc_usb_update_offload_route(struct device *dev, int card, int pcm,
+> +					    int direction, long *route)
+> +{
+> +	return -ENODEV;
+> +}
+> +
+>  static inline struct snd_soc_usb *
+>  snd_soc_usb_allocate_port(struct snd_soc_component *component, void *data)
+>  {
+> diff --git a/sound/soc/soc-usb.c b/sound/soc/soc-usb.c
+> index ab914878e101..e56826f1df71 100644
+> --- a/sound/soc/soc-usb.c
+> +++ b/sound/soc/soc-usb.c
+> @@ -145,6 +145,40 @@ int snd_soc_usb_enable_offload_jack(struct snd_soc_component *component,
+>  }
+>  EXPORT_SYMBOL_GPL(snd_soc_usb_enable_offload_jack);
+>  
+> +/**
+> + * snd_soc_usb_update_offload_route - Find active USB offload path
+> + * @dev - USB device to get offload status
+> + * @card - USB card index
+> + * @pcm - USB PCM device index
+> + * @direction - playback or capture direction
+> + * @route - pointer to route output array
+> + *
+> + * Fetch the current status for the USB SND card and PCM device indexes
+> + * specified.  The "route" argument should be an array of integers being
+> + * used for a kcontrol output.  The first element should have the selected
+> + * card index, and the second element should have the selected pcm device
+> + * index.
+> + */
+> +int snd_soc_usb_update_offload_route(struct device *dev, int card, int pcm,
+> +				     int direction, long *route)
+> +{
+> +	struct snd_soc_usb *ctx;
+> +	int ret = -EINVAL;
+> +
+> +	ctx = snd_soc_find_usb_ctx(dev);
+> +	if (!ctx)
+> +		return -ENODEV;
+> +
+> +	mutex_lock(&ctx_mutex);
+> +	if (ctx && ctx->update_offload_route_info)
+> +		ret = ctx->update_offload_route_info(ctx->component, card, pcm,
+> +						     direction, route);
+> +	mutex_unlock(&ctx_mutex);
 
-qcom,sm6150-dsi-phy-14nm
+The second ctx check is redundant.  And the locking scheme looks
+dubious -- as ctx isn't protected by ctx_mutex after its retrieval via
+snd_soc_find_usb_ctx(), even if you reacquire ctx_mutex, it may point
+to an already released object (in theory).
 
-> sorry, still have some question about this yaml file.
-> it's necessary for b4 check
-> 
-> checkpatch.pl: drivers/gpu/drm/msm/dsi/phy/dsi_phy.c:564: WARNING: DT
-> compatible string "qcom,dsi-phy-14nm-6150" appears un-doc
-> umented -- check ./Documentation/devicetree/bindings/
-> 
-> need to add this new 6150 node for dsi-phy-14nm.
-> shall i add it?
-> 
-> > >     reg:
-> > >       items:
-> > > 
-> > > -- 
-> > > 2.25.1
-> > > 
-> > > 
-> > 
-> 
-> and could you please help to review the new version?
-> Author: Li Liu <quic_lliu6@quicinc.com>
-> Date:   Tue Nov 19 12:35:12 2024 +0800
-> 
->     dt-bindings: display/msm: Add SM6150 DSI phy
-> 
->     Add new compatible for SM6150 with dsi_phy_14nm_36mA_regulators
-> 
->     Signed-off-by: Li Liu <quic_lliu6@quicinc.com>
->     Signed-off-by: Fange Zhang <quic_fangez@quicinc.com>
-> 
-> diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml
-> b/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml
-> index 52bbe132e6da..fd6eb3434450 100644
-> --- a/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml
-> +++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml
-> @@ -17,6 +17,7 @@ properties:
->      enum:
->        - qcom,dsi-phy-14nm
->        - qcom,dsi-phy-14nm-2290
-> +      - qcom,dsi-phy-14nm-6150
+IOW, for a safer protection, you'd need to cover the whole
+find-and-exec procedure via a single ctx_mutex lock action.
 
-qcom,sm6150-dsi-phy-14nm
 
->        - qcom,dsi-phy-14nm-660
->        - qcom,dsi-phy-14nm-8953
->        - qcom,sm6125-dsi-phy-14nm
-> 
+thanks,
 
--- 
-With best wishes
-Dmitry
+Takashi
 
