@@ -1,518 +1,337 @@
-Return-Path: <linux-arm-msm+bounces-38662-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38663-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 274279D4C88
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 13:09:03 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3416D9D4CBC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 13:23:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9F9DA1F21DA5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 12:09:02 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B87861F2305C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 12:23:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96CF21CD202;
-	Thu, 21 Nov 2024 12:09:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C9E51D416A;
+	Thu, 21 Nov 2024 12:23:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PFICfpEP"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="H2kAd/9p"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oa1-f51.google.com (mail-oa1-f51.google.com [209.85.160.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86BA01A3BC8
-	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Nov 2024 12:08:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BCCD1D3197
+	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Nov 2024 12:23:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732190940; cv=none; b=eh9TSsY9gNEubvqM8Rb4s1gpVfuti6/dgcZRhJrs6HUZ+JvY/qonzQZJ/r72HwrgOFy7XIPAk1kGu2zSfBKtrFoFrvGSbSvP9a3wx3m+057jRDNQNtd2JbW5ioRsxJ+hMisKDK9vZXiIxVObwRj00dISyfMV83EpX/yu6LnPNKQ=
+	t=1732191820; cv=none; b=TNdIpGjQXVdtQ06kk/qU1eAOpejG7m1O4TCwRjouAh8cI4I9Z7dUbTun11S0RgrFdRdcdSnK5+3nJ2l8QQeqqc5UldgosF+XHzmt56m8FJiGKq+hyV0el46l1HDcVQMHhh1CJI2YB04mFZcSY96jmN/2/B1MSGN6zRr/2yEP680=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732190940; c=relaxed/simple;
-	bh=E8+B6z6E4P3TjK0lz/AhgaRGgJ/hjjZzSP0yOGMfFWg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=e7wNhxA9SJU2LCd1ogR9PwTcsgAd+4jFaTFeOKgtcS9tFLctFmu/PugtSwQnWhfUQ56Hz86mzYQSqKkUeqelBEFfXiZCjQH96187DCe/PT6Nktn1QAat9Xv/Kcg70JsR9eVz0zboY9oXxANFI595Y76S0ayXDj0X9SHoclb5ZMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PFICfpEP; arc=none smtp.client-ip=209.85.160.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-oa1-f51.google.com with SMTP id 586e51a60fabf-296c184ed6bso487367fac.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Nov 2024 04:08:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732190937; x=1732795737; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=r6PzZJ3DM7uaJxWkI/0n/rESbT0VqvgXcQ+4blsh3O0=;
-        b=PFICfpEPdoZZO1/3kn0kuXY5CI8mz3q6rMF8Soh91lMpf2iqmWUshE8JkMVw8cYoEF
-         sBZogs5VJG9nTgO/lPd4AS5xwxaGlF3NLLWImiN7Q14A7opjWQC8eZfwXIQPrBasoyEk
-         I93tCJmc5nD92/rwxgVCdnewAAobttpyMCxZM7mscvPqcz0y3KKhhXH63A/cLi+GGiVj
-         ebGgDj9AXGmhweechyofvbZNeNqEgIn8pBeH1vhl0fj0W4Xo5Td6iWu/jh24Fmjguwz6
-         y82NPdlfhOGMe/Wav0xmbgYDuKBToGpqmuGzWLyQs/0TWY4FOJz3OGV6QI+/iA5u79XJ
-         4tuA==
+	s=arc-20240116; t=1732191820; c=relaxed/simple;
+	bh=G3QTb/yo1GuyOWWj7xTqamoXngMsH5W7sCHHE2I2oxE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VNdt7XBFk2KljL6Tr38pAXkk2eVq6pdaAVowVXEVBKVERjODk+kGLAHN7ZE5vZ1V9/3ew/+/2DD4rzf5o3nsO7TQfB9V8iRemOXb9IHWYJtueh8cazh7E1WLvBEQ6tz796p/GAx1JyyU+HEk/V3hLUCBodMGIGBkND/EVaUsHxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=H2kAd/9p; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1732191817;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=Z6i+4dWSdQLkPEB+Ec8jfbVRCaAInR7wHYj3/psiBHE=;
+	b=H2kAd/9pUynFCsT6IqWieFaUyFMOtFAWJSZjFjVclVvIwS0irA7UVUmdmnQWFJzYX1HMC6
+	ZEupfQ79tJxIBg8//v4kgXF75UwrKf12YEFJTuM4Ez3zOnVS5dspAHa39VPlckkmhuTTvE
+	6/uscnSl1pskZ8secjzC0Fv2JI5va+c=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-130-KL4gGuG9NnKH5qKlwCI3XQ-1; Thu, 21 Nov 2024 07:23:36 -0500
+X-MC-Unique: KL4gGuG9NnKH5qKlwCI3XQ-1
+X-Mimecast-MFC-AGG-ID: KL4gGuG9NnKH5qKlwCI3XQ
+Received: by mail-wr1-f69.google.com with SMTP id ffacd0b85a97d-3822ec50b64so458619f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Nov 2024 04:23:35 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732190937; x=1732795737;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=r6PzZJ3DM7uaJxWkI/0n/rESbT0VqvgXcQ+4blsh3O0=;
-        b=DaBOog1a9Wxace0pX8LisY2VDv2Hii9j8WG3LVgzn7VWoPzWEB9GQiMfikdFYrvoLM
-         L1GmTxFdf4ARNzLjKZTVElrhra+ASWFwZq9tEJiSnbZjvPiufhESPVZSY9sWHRFK74LY
-         lVlsPsN0PcX0YzqQSRfMesNfESl3QOh5b60iAo4Xac888AWOo2acqohsFwlC9ckyoEPD
-         3VPAmCePewlfbEXPdhC2GxsdLOIwoIT4Pdwsg5pz47GUpMOJnJlGg8CKpehPR+EPWQeE
-         14wYwDTT7T7CKoPNKT24QxDRFwmIGgY1ZyK8Nb5y0u4vKEnQv/o6vLhU1NsDohErfXEc
-         g2wg==
-X-Forwarded-Encrypted: i=1; AJvYcCX0i1PmogPW7GMRrL/92/YpgQHtJrWbXy0pWeju2XHNpfp9WhdcDCEnRjp1vMG+rPH7ZpQeO5PkD1pDJH4e@vger.kernel.org
-X-Gm-Message-State: AOJu0YwNMoECsJgWM+6SxlIJ7uZG2019KhB7unLTIK4JIOIO3xvQgR2w
-	2TybOAx0AW9XrzUAJWCqxmkIQoNnCglAALMqaWFNNMxNc7DtiXz+1S+tQZulJQ4ZVYrxoSanPjv
-	C/yRc2CmWWC7LLuhjz9VtvYNE+/KyJ0E3UIRtCLEV+UcExw6YBMCBYg==
-X-Google-Smtp-Source: AGHT+IFO1zgBWmmvvFNRCPnLaEgaUHIElp3JIxkwo8dw9X/ZhrCSOfOWx2UJyJLmLFbQM1g9sXyRKp7JVZg1hhlSiyY=
-X-Received: by 2002:a05:6870:658d:b0:27b:66ea:add7 with SMTP id
- 586e51a60fabf-296d9ae3ae2mr6107516fac.4.1732190937469; Thu, 21 Nov 2024
- 04:08:57 -0800 (PST)
+        d=1e100.net; s=20230601; t=1732191815; x=1732796615;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:from:references:cc:to:subject:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Z6i+4dWSdQLkPEB+Ec8jfbVRCaAInR7wHYj3/psiBHE=;
+        b=oBniAIpOV86/8CBJv0qozumI50G4dlKcEyP2xrLLscGQSqAmIrvwj6U1SuTH5lnSOk
+         vxOHaE6tiKjmPPAY6jgZlYv9nYvZaYds4o4ORT+jcQjnzIb0HsexccXDzvkm6c++YA+w
+         LF3/owl3UX4vBV03VHq72cmHss3cffeG0WkLtEcETkQQhLS4NDYyd18JOCHzbOh1V8yu
+         92yRdcCCgzLAPWj7Rnh7lmMNgWtvX5m3aNBC7vgtRppOhQxwwkZrEWq62fMwXraauhhL
+         dVNrhKcK+xfpl02bXWqOasJamxFuqe74RGE4sbfuMBQC8M+QPaFcPjNaEBYj5Xyb6vQz
+         EmFw==
+X-Forwarded-Encrypted: i=1; AJvYcCVqiLs+kwwr0xm5FFHxC5U5DnGfL1RnL4LfRL+EaZkUCVL//YkuZviu1FW2AKFby+MJ1XkirbteSrrtfwP0@vger.kernel.org
+X-Gm-Message-State: AOJu0YxAJCLPCBWQa0ghK0xvd4/TtCCTkTyTT3xW1s+es5OvdoknNNak
+	CthEinEMlFa1hE8DZrFI8+l9zTEYWOURtPqcGoJkQUd6SjinppbeJ2uKLujNGTCVLJRjTG6Igmy
+	RUzDplGm0FfrmGabRuoAbIeOcayZXKJp/4g9Oh01N15LJYnN2kDCcCKXXtErQtrE=
+X-Received: by 2002:a5d:59af:0:b0:382:516e:271b with SMTP id ffacd0b85a97d-38254b26416mr4135007f8f.58.1732191814639;
+        Thu, 21 Nov 2024 04:23:34 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHiEJoGXX0H9+YxrkL3w67kPrXj5+nk34QWe8K0VhlUYrcZUZM5ijH4Fehc62MFsG+2wKg9eA==
+X-Received: by 2002:a5d:59af:0:b0:382:516e:271b with SMTP id ffacd0b85a97d-38254b26416mr4134959f8f.58.1732191813180;
+        Thu, 21 Nov 2024 04:23:33 -0800 (PST)
+Received: from ?IPV6:2003:cb:c70c:de00:1200:8636:b63b:f43? (p200300cbc70cde0012008636b63b0f43.dip0.t-ipconnect.de. [2003:cb:c70c:de00:1200:8636:b63b:f43])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3825493ea20sm4910187f8f.93.2024.11.21.04.23.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 21 Nov 2024 04:23:32 -0800 (PST)
+Message-ID: <954bfd5d-49ee-4754-90a6-12b44d8350d5@redhat.com>
+Date: Thu, 21 Nov 2024 13:23:30 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241120-fix-tee_shm-refcount-upstream-v1-0-5da97f584fcd@quicinc.com>
- <20241120-fix-tee_shm-refcount-upstream-v1-3-5da97f584fcd@quicinc.com>
-In-Reply-To: <20241120-fix-tee_shm-refcount-upstream-v1-3-5da97f584fcd@quicinc.com>
-From: Jens Wiklander <jens.wiklander@linaro.org>
-Date: Thu, 21 Nov 2024 13:08:45 +0100
-Message-ID: <CAHUa44Eoxa+NfRF-XCuV-O5uVgtC3UMT0utCLrUZ4rCBREp=pQ@mail.gmail.com>
-Subject: Re: [PATCH RFC 3/3] tee: introduce orphan tee_shm and default context
-To: Amirreza Zarrabi <quic_azarrabi@quicinc.com>
-Cc: Sumit Garg <sumit.garg@linaro.org>, op-tee@lists.trustedfirmware.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/2] filemap: Pass address_space mapping to
+ ->free_folio()
+To: Elliot Berman <quic_eberman@quicinc.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ Sean Christopherson <seanjc@google.com>, Fuad Tabba <tabba@google.com>,
+ Ackerley Tng <ackerleytng@google.com>, Mike Rapoport <rppt@kernel.org>,
+ "H. Peter Anvin" <hpa@zytor.com>,
+ "Matthew Wilcox (Oracle)" <willy@infradead.org>,
+ Jonathan Corbet <corbet@lwn.net>, Trond Myklebust <trondmy@kernel.org>,
+ Anna Schumaker <anna@kernel.org>, Mike Marshall <hubcap@omnibond.com>,
+ Martin Brandenburg <martin@omnibond.com>,
+ Alexander Viro <viro@zeniv.linux.org.uk>,
+ Christian Brauner <brauner@kernel.org>, Jan Kara <jack@suse.cz>
+Cc: James Gowans <jgowans@amazon.com>, Mike Day <michael.day@amd.com>,
+ linux-fsdevel@vger.kernel.org, kvm@vger.kernel.org,
+ linux-coco@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-mm@kvack.org, linux-doc@vger.kernel.org,
+ linux-nfs@vger.kernel.org, devel@lists.orangefs.org,
+ linux-arm-kernel@lists.infradead.org
+References: <20241120-guestmem-library-v4-0-0c597f733909@quicinc.com>
+ <20241120-guestmem-library-v4-1-0c597f733909@quicinc.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <20241120-guestmem-library-v4-1-0c597f733909@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi Amirreza,
-
-On Thu, Nov 21, 2024 at 2:37=E2=80=AFAM Amirreza Zarrabi
-<quic_azarrabi@quicinc.com> wrote:
->
-> The default context has a lifespan similar to the tee_device.
-> It is used as a context for shared memory if the context to which the
-> shared memory belongs is released, making the tee_shm an orphan.
-> This allows the driver implementing shm_unregister to safely make
-> subsequent calls, such as to a supplicant if needed.
->
-> It also enables users to free the shared memory while the driver is
-> blocked on unregister_tee_device safely.
->
-> Preferably, this should be used for all driver internal uses, using
-> teedev_get_def_context rather than calling teedev_open.
->
-> Signed-off-by: Amirreza Zarrabi <quic_azarrabi@quicinc.com>
+On 20.11.24 19:12, Elliot Berman wrote:
+> When guest_memfd becomes a library, a callback will need to be made to
+> the owner (KVM SEV) to update the RMP entry for the page back to shared
+> state. This is currently being done as part of .free_folio() operation,
+> but this callback shouldn't assume that folio->mapping is set/valid.
+> 
+> The mapping is well-known to callers of .free_folio(), so pass that
+> mapping so the callback can access the mapping's private data.
+> 
+> Link: https://lore.kernel.org/all/15f665b4-2d33-41ca-ac50-fafe24ade32f@redhat.com/
+> Suggested-by: David Hildenbrand <david@redhat.com>
+> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
 > ---
->  drivers/tee/optee/core.c    |  2 +-
->  drivers/tee/optee/ffa_abi.c |  2 +-
->  drivers/tee/optee/smc_abi.c |  2 +-
->  drivers/tee/tee_core.c      | 83 +++++++++++++++++++++++++++++----------=
-------
->  drivers/tee/tee_private.h   |  3 --
->  drivers/tee/tee_shm.c       | 18 ++--------
->  include/linux/tee_core.h    | 15 ++++++++
->  include/linux/tee_drv.h     |  7 ----
->  8 files changed, 73 insertions(+), 59 deletions(-)
->
-> diff --git a/drivers/tee/optee/core.c b/drivers/tee/optee/core.c
-> index c75fddc83576..78d43d0c8014 100644
-> --- a/drivers/tee/optee/core.c
-> +++ b/drivers/tee/optee/core.c
-> @@ -173,7 +173,7 @@ void optee_remove_common(struct optee *optee)
->
->         optee_notif_uninit(optee);
->         optee_shm_arg_cache_uninit(optee);
-> -       teedev_close_context(optee->ctx);
-> +
->         /*
->          * The two devices have to be unregistered before we can free the
->          * other resources.
-> diff --git a/drivers/tee/optee/ffa_abi.c b/drivers/tee/optee/ffa_abi.c
-> index f3af5666bb11..6ad94f0788ad 100644
-> --- a/drivers/tee/optee/ffa_abi.c
-> +++ b/drivers/tee/optee/ffa_abi.c
-> @@ -949,7 +949,7 @@ static int optee_ffa_probe(struct ffa_device *ffa_dev=
-)
->         optee_shm_arg_cache_init(optee, arg_cache_flags);
->         mutex_init(&optee->rpmb_dev_mutex);
->         ffa_dev_set_drvdata(ffa_dev, optee);
-> -       ctx =3D teedev_open(optee->teedev);
-> +       ctx =3D teedev_get_def_context(optee->teedev);
->         if (IS_ERR(ctx)) {
->                 rc =3D PTR_ERR(ctx);
->                 goto err_rhashtable_free;
-> diff --git a/drivers/tee/optee/smc_abi.c b/drivers/tee/optee/smc_abi.c
-> index e9456e3e74cc..c77a3e631d04 100644
-> --- a/drivers/tee/optee/smc_abi.c
-> +++ b/drivers/tee/optee/smc_abi.c
-> @@ -1722,7 +1722,7 @@ static int optee_probe(struct platform_device *pdev=
-)
->         mutex_init(&optee->rpmb_dev_mutex);
->
->         platform_set_drvdata(pdev, optee);
-> -       ctx =3D teedev_open(optee->teedev);
-> +       ctx =3D teedev_get_def_context(optee->teedev);
->         if (IS_ERR(ctx)) {
->                 rc =3D PTR_ERR(ctx);
->                 goto err_supp_uninit;
-> diff --git a/drivers/tee/tee_core.c b/drivers/tee/tee_core.c
-> index 93f3b330aec8..805e1336089d 100644
-> --- a/drivers/tee/tee_core.c
-> +++ b/drivers/tee/tee_core.c
-> @@ -57,7 +57,6 @@ struct tee_context *teedev_open(struct tee_device *teed=
-ev)
->                 goto err;
->         }
->
-> -       kref_init(&ctx->refcount);
->         ctx->teedev =3D teedev;
->         INIT_LIST_HEAD(&ctx->list_shm);
->         rc =3D teedev->desc->ops->open(ctx);
-> @@ -73,36 +72,43 @@ struct tee_context *teedev_open(struct tee_device *te=
-edev)
->  }
->  EXPORT_SYMBOL_GPL(teedev_open);
->
-> -void teedev_ctx_get(struct tee_context *ctx)
-> +struct tee_context *teedev_get_def_context(struct tee_device *teedev)
->  {
-> -       if (ctx->releasing)
-> -               return;
-> +       int rc;
-> +       struct tee_context *ctx =3D &teedev->def_ctx;
->
-> -       kref_get(&ctx->refcount);
-> -}
-> +       ctx->teedev =3D teedev;
-> +       INIT_LIST_HEAD(&ctx->list_shm);
-> +       rc =3D teedev->desc->ops->open(ctx);
-> +       if (rc)
-> +               return ERR_PTR(rc);
+>   Documentation/filesystems/locking.rst |  2 +-
+>   fs/nfs/dir.c                          | 11 ++++++-----
+>   fs/orangefs/inode.c                   |  3 ++-
+>   include/linux/fs.h                    |  2 +-
+>   mm/filemap.c                          |  9 +++++----
+>   mm/secretmem.c                        |  3 ++-
+>   mm/vmscan.c                           |  4 ++--
+>   virt/kvm/guest_memfd.c                |  3 ++-
+>   8 files changed, 21 insertions(+), 16 deletions(-)
+> 
+> diff --git a/Documentation/filesystems/locking.rst b/Documentation/filesystems/locking.rst
+> index f5e3676db954b5bce4c23a0bf723a79d66181fcd..f1a20ad5edbee70c1a3c8d8a9bfc0f008a68985b 100644
+> --- a/Documentation/filesystems/locking.rst
+> +++ b/Documentation/filesystems/locking.rst
+> @@ -258,7 +258,7 @@ prototypes::
+>   	sector_t (*bmap)(struct address_space *, sector_t);
+>   	void (*invalidate_folio) (struct folio *, size_t start, size_t len);
+>   	bool (*release_folio)(struct folio *, gfp_t);
+> -	void (*free_folio)(struct folio *);
+> +	void (*free_folio)(struct address_space *, struct folio *);
+>   	int (*direct_IO)(struct kiocb *, struct iov_iter *iter);
+>   	int (*migrate_folio)(struct address_space *, struct folio *dst,
+>   			struct folio *src, enum migrate_mode);
+> diff --git a/fs/nfs/dir.c b/fs/nfs/dir.c
+> index 492cffd9d3d845723b5f3d0eea3874b1f1773fe1..54e7069013ef2a63db24491fa65059e5ad68057a 100644
+> --- a/fs/nfs/dir.c
+> +++ b/fs/nfs/dir.c
+> @@ -55,7 +55,7 @@ static int nfs_closedir(struct inode *, struct file *);
+>   static int nfs_readdir(struct file *, struct dir_context *);
+>   static int nfs_fsync_dir(struct file *, loff_t, loff_t, int);
+>   static loff_t nfs_llseek_dir(struct file *, loff_t, int);
+> -static void nfs_readdir_clear_array(struct folio *);
+> +static void nfs_readdir_clear_array(struct address_space *, struct folio *);
+>   static int nfs_do_create(struct inode *dir, struct dentry *dentry,
+>   			 umode_t mode, int open_flags);
+>   
+> @@ -218,7 +218,8 @@ static void nfs_readdir_folio_init_array(struct folio *folio, u64 last_cookie,
+>   /*
+>    * we are freeing strings created by nfs_add_to_readdir_array()
+>    */
+> -static void nfs_readdir_clear_array(struct folio *folio)
+> +static void nfs_readdir_clear_array(struct address_space *mapping,
+> +				    struct folio *folio)
+>   {
+>   	struct nfs_cache_array *array;
+>   	unsigned int i;
+> @@ -233,7 +234,7 @@ static void nfs_readdir_clear_array(struct folio *folio)
+>   static void nfs_readdir_folio_reinit_array(struct folio *folio, u64 last_cookie,
+>   					   u64 change_attr)
+>   {
+> -	nfs_readdir_clear_array(folio);
+> +	nfs_readdir_clear_array(folio->mapping, folio);
+>   	nfs_readdir_folio_init_array(folio, last_cookie, change_attr);
+>   }
+>   
+> @@ -249,7 +250,7 @@ nfs_readdir_folio_array_alloc(u64 last_cookie, gfp_t gfp_flags)
+>   static void nfs_readdir_folio_array_free(struct folio *folio)
+>   {
+>   	if (folio) {
+> -		nfs_readdir_clear_array(folio);
+> +		nfs_readdir_clear_array(folio->mapping, folio);
+>   		folio_put(folio);
+>   	}
+>   }
+> @@ -391,7 +392,7 @@ static void nfs_readdir_folio_init_and_validate(struct folio *folio, u64 cookie,
+>   	if (folio_test_uptodate(folio)) {
+>   		if (nfs_readdir_folio_validate(folio, cookie, change_attr))
+>   			return;
+> -		nfs_readdir_clear_array(folio);
+> +		nfs_readdir_clear_array(folio->mapping, folio);
+>   	}
+>   	nfs_readdir_folio_init_array(folio, cookie, change_attr);
+>   	folio_mark_uptodate(folio);
+> diff --git a/fs/orangefs/inode.c b/fs/orangefs/inode.c
+> index aae6d2b8767df04714647db5fe1e5ce54c092fce..2d554102ba9ac83acd2b637d4568090717e87f94 100644
+> --- a/fs/orangefs/inode.c
+> +++ b/fs/orangefs/inode.c
+> @@ -470,7 +470,8 @@ static bool orangefs_release_folio(struct folio *folio, gfp_t foo)
+>   	return !folio_test_private(folio);
+>   }
+>   
+> -static void orangefs_free_folio(struct folio *folio)
+> +static void orangefs_free_folio(struct address_space *mapping,
+> +				struct folio *folio)
+>   {
+>   	kfree(folio_detach_private(folio));
+>   }
+> diff --git a/include/linux/fs.h b/include/linux/fs.h
+> index e3c603d01337650d562405500013f5c4cfed8eb6..6e5b5cc99750a685b217cb8273c38e7f6bf5ae86 100644
+> --- a/include/linux/fs.h
+> +++ b/include/linux/fs.h
+> @@ -417,7 +417,7 @@ struct address_space_operations {
+>   	sector_t (*bmap)(struct address_space *, sector_t);
+>   	void (*invalidate_folio) (struct folio *, size_t offset, size_t len);
+>   	bool (*release_folio)(struct folio *, gfp_t);
+> -	void (*free_folio)(struct folio *folio);
+> +	void (*free_folio)(struct address_space *, struct folio *folio);
+>   	ssize_t (*direct_IO)(struct kiocb *, struct iov_iter *iter);
+>   	/*
+>   	 * migrate the contents of a folio to the specified target. If
+> diff --git a/mm/filemap.c b/mm/filemap.c
+> index 36d22968be9a1e10da42927dd627d3f22c3a747b..2c8d92dd9d5dd433acbf1b87156eb2e68337332d 100644
+> --- a/mm/filemap.c
+> +++ b/mm/filemap.c
+> @@ -235,12 +235,12 @@ void __filemap_remove_folio(struct folio *folio, void *shadow)
+>   
+>   void filemap_free_folio(struct address_space *mapping, struct folio *folio)
+>   {
+> -	void (*free_folio)(struct folio *);
+> +	void (*free_folio)(struct address_space *, struct folio *);
+>   	int refs = 1;
+>   
+>   	free_folio = mapping->a_ops->free_folio;
+>   	if (free_folio)
+> -		free_folio(folio);
+> +		free_folio(mapping, folio);
+>   
+>   	if (folio_test_large(folio))
+>   		refs = folio_nr_pages(folio);
+> @@ -814,7 +814,8 @@ EXPORT_SYMBOL(file_write_and_wait_range);
+>   void replace_page_cache_folio(struct folio *old, struct folio *new)
+>   {
+>   	struct address_space *mapping = old->mapping;
+> -	void (*free_folio)(struct folio *) = mapping->a_ops->free_folio;
+> +	void (*free_folio)(struct address_space *, struct folio *) =
+> +		mapping->a_ops->free_folio;
+>   	pgoff_t offset = old->index;
+>   	XA_STATE(xas, &mapping->i_pages, offset);
+>   
+> @@ -843,7 +844,7 @@ void replace_page_cache_folio(struct folio *old, struct folio *new)
+>   		__lruvec_stat_add_folio(new, NR_SHMEM);
+>   	xas_unlock_irq(&xas);
+>   	if (free_folio)
+> -		free_folio(old);
+> +		free_folio(mapping, old);
+>   	folio_put(old);
+>   }
+>   EXPORT_SYMBOL_GPL(replace_page_cache_folio);
+> diff --git a/mm/secretmem.c b/mm/secretmem.c
+> index 3afb5ad701e14ad87b6e5173b2974f1309399b8e..8643d073b8f3554a18d419353fa604864de224c1 100644
+> --- a/mm/secretmem.c
+> +++ b/mm/secretmem.c
+> @@ -152,7 +152,8 @@ static int secretmem_migrate_folio(struct address_space *mapping,
+>   	return -EBUSY;
+>   }
+>   
+> -static void secretmem_free_folio(struct folio *folio)
+> +static void secretmem_free_folio(struct address_space *mapping,
+> +				 struct folio *folio)
 
-I think ctx->teedev and ctx->list_shm must always be initialized or
-&teedev->def_ctx can't be used in teedev_close_context().
-We could initialize teedev->def_ctx on the first call to teedev_open()
-on that tee_device. We need a way to tell the
-teedev->desc->ops->open() to the backed driver that it's initializing
-the default context though, or optee_open() can't handle the
-tee-supplicant case properly.
+In the mm world, we're nowadays indenting the second parameter line with 
+two tabs. Makes it easier to rename the function without having to 
+adjust many lines, and requires less lines in general.
 
-Should we allow this function to be called more than once for each teedev?
-Do we need serialization in this function if it's called after the
-driver is probed?
+Not sure about rules for FSes (personally, I just do it everywhere like 
+this now :) ).
 
->
-> -static void teedev_ctx_release(struct kref *ref)
-> -{
-> -       struct tee_context *ctx =3D container_of(ref, struct tee_context,
-> -                                              refcount);
-> -       ctx->releasing =3D true;
-> -       ctx->teedev->desc->ops->release(ctx);
-> -       kfree(ctx);
-> +       return ctx;
->  }
-> +EXPORT_SYMBOL_GPL(teedev_get_def_context);
->
-> -void teedev_ctx_put(struct tee_context *ctx)
-> +void teedev_close_context(struct tee_context *ctx)
->  {
-> -       if (ctx->releasing)
-> +       struct tee_device *teedev =3D ctx->teedev;
-> +       struct tee_shm *shm;
-> +
-> +       if (ctx =3D=3D &teedev->def_ctx)
->                 return;
->
-> -       kref_put(&ctx->refcount, teedev_ctx_release);
-> -}
-> +       teedev->desc->ops->release(ctx);
->
-> -void teedev_close_context(struct tee_context *ctx)
-> -{
-> -       struct tee_device *teedev =3D ctx->teedev;
-> +       mutex_lock(&teedev->mutex);
-> +       list_for_each_entry(shm, &ctx->list_shm, link) {
-> +               /* Context released. However, shm still holding a teedev =
-reference.
-> +                * Replace shm->ctx with the default context so that tee_=
-shm_get_from_id()
-> +                * fails (i.e. it is not accessible from userspace) but s=
-hm still
-> +                * holds a valid context for further clean up, e.g. shm_u=
-nregister().
-> +                */
+Acked-by: David Hildenbrand <david@redhat.com>
 
-/*
- * Please format
- * multiline comments
- * like this. Please
- * keep the lines at
- * max 80 columns
- * here and at other
- * places in the patch-
- * set.
- */
-
-> +               shm->ctx =3D &teedev->def_ctx;
-
-shm->ctx will always point to a valid context, even if it is the
-default context. It seems that we can always get hold of the correct
-teedev via shm->ctx->teedev. Do we need "tee: revert removal of
-redundant teedev in struct tee_shm"?
-
-Shouldn't the shm be removed from the ctx->list_shm and be moved to
-teedev->def_ctx.list_shm?
-
-> +       }
-> +       mutex_unlock(&teedev->mutex);
->
-> -       teedev_ctx_put(ctx);
-> +       kfree(ctx);
->         tee_device_put(teedev);
->  }
->  EXPORT_SYMBOL_GPL(teedev_close_context);
-> @@ -946,6 +952,8 @@ struct tee_device *tee_device_alloc(const struct tee_=
-desc *teedesc,
->
->         teedev->desc =3D teedesc;
->         teedev->pool =3D pool;
-> +       /* Only open default context when teedev_get_def_context() called=
-. */
-> +       teedev->def_ctx.teedev =3D NULL;
->
->         return teedev;
->  err_devt:
-> @@ -1027,16 +1035,31 @@ EXPORT_SYMBOL_GPL(tee_device_register);
->
->  void tee_device_put(struct tee_device *teedev)
->  {
-> -       mutex_lock(&teedev->mutex);
-> -       /* Shouldn't put in this state */
-> -       if (!WARN_ON(!teedev->desc)) {
-> -               teedev->num_users--;
-> -               if (!teedev->num_users) {
-> -                       teedev->desc =3D NULL;
-> -                       complete(&teedev->c_no_users);
-> -               }
-> +       const struct tee_desc *desc;
-> +
-> +       scoped_guard(mutex, &teedev->mutex) {
-> +               desc =3D teedev->desc;
-> +
-> +               /* Shouldn't put in this state */
-> +               if (WARN_ON(!desc))
-> +                       return;
-> +
-> +               /* If there is still users for teedev */
-> +               if (--teedev->num_users)
-
-Please do teedev->num_users-- first and then check. It makes the code
-easier to read.
-
-> +                       return;
-> +
-> +               /* tee_device_unregister() has been called and there is n=
-o
-> +                * user in userspace or kernel, including orphan shm for =
-teedev.
-> +                * Set teedev->desc to NULL, so that teedev can not be re=
-used.
-> +                */
-> +               teedev->desc =3D NULL;
->         }
-> -       mutex_unlock(&teedev->mutex);
-> +
-> +       /* Release the default context */
-> +       desc->ops->release(&teedev->def_ctx);
-
-This should only be done if teedev->def_ctx has been initialized.
-
+-- 
 Cheers,
-Jens
 
-> +       teedev->def_ctx.teedev =3D NULL;
-> +
-> +       complete(&teedev->c_no_users);
->  }
->
->  bool tee_device_get(struct tee_device *teedev)
-> diff --git a/drivers/tee/tee_private.h b/drivers/tee/tee_private.h
-> index 9bc50605227c..6c7bcc308958 100644
-> --- a/drivers/tee/tee_private.h
-> +++ b/drivers/tee/tee_private.h
-> @@ -17,9 +17,6 @@ int tee_shm_get_fd(struct tee_shm *shm);
->  bool tee_device_get(struct tee_device *teedev);
->  void tee_device_put(struct tee_device *teedev);
->
-> -void teedev_ctx_get(struct tee_context *ctx);
-> -void teedev_ctx_put(struct tee_context *ctx);
-> -
->  struct tee_shm *tee_shm_alloc_user_buf(struct tee_context *ctx, size_t s=
-ize);
->  struct tee_shm *tee_shm_register_user_buf(struct tee_context *ctx,
->                                           unsigned long addr, size_t leng=
-th);
-> diff --git a/drivers/tee/tee_shm.c b/drivers/tee/tee_shm.c
-> index c0164c0f4a01..f07274291edf 100644
-> --- a/drivers/tee/tee_shm.c
-> +++ b/drivers/tee/tee_shm.c
-> @@ -59,8 +59,6 @@ static void tee_shm_release(struct tee_shm *shm)
->                 release_registered_pages(shm);
->         }
->
-> -       teedev_ctx_put(shm->ctx);
-> -
->         kfree(shm);
->
->         tee_device_put(teedev);
-> @@ -93,13 +91,6 @@ static struct tee_shm *shm_alloc_helper(struct tee_con=
-text *ctx, size_t size,
->         shm->flags =3D flags;
->         shm->teedev =3D teedev;
->         shm->id =3D id;
-> -
-> -       /*
-> -        * We're assigning this as it is needed if the shm is to be
-> -        * registered. If this function returns OK then the caller expect=
-ed
-> -        * to call teedev_ctx_get() or clear shm->ctx in case it's not
-> -        * needed any longer.
-> -        */
->         shm->ctx =3D ctx;
->
->         rc =3D teedev->pool->ops->alloc(teedev->pool, shm, size, align);
-> @@ -112,7 +103,6 @@ static struct tee_shm *shm_alloc_helper(struct tee_co=
-ntext *ctx, size_t size,
->         list_add_tail(&shm->link, &ctx->list_shm);
->         mutex_unlock(&teedev->mutex);
->
-> -       teedev_ctx_get(ctx);
->         return shm;
->  err_kfree:
->         kfree(shm);
-> @@ -295,12 +285,10 @@ register_shm_helper(struct tee_context *ctx, struct=
- iov_iter *iter, u32 flags,
->                 goto err_dev_put;
->         }
->
-> -       teedev_ctx_get(ctx);
-> -
->         shm =3D kzalloc(sizeof(*shm), GFP_KERNEL);
->         if (!shm) {
->                 ret =3D ERR_PTR(-ENOMEM);
-> -               goto err_ctx_put;
-> +               goto err_dev_put;
->         }
->
->         refcount_set(&shm->refcount, 1);
-> @@ -313,7 +301,7 @@ register_shm_helper(struct tee_context *ctx, struct i=
-ov_iter *iter, u32 flags,
->         num_pages =3D iov_iter_npages(iter, INT_MAX);
->         if (!num_pages) {
->                 ret =3D ERR_PTR(-ENOMEM);
-> -               goto err_ctx_put;
-> +               goto err_dev_put;
->         }
->
->         shm->pages =3D kcalloc(num_pages, sizeof(*shm->pages), GFP_KERNEL=
-);
-> @@ -361,8 +349,6 @@ register_shm_helper(struct tee_context *ctx, struct i=
-ov_iter *iter, u32 flags,
->         kfree(shm->pages);
->  err_free_shm:
->         kfree(shm);
-> -err_ctx_put:
-> -       teedev_ctx_put(ctx);
->  err_dev_put:
->         tee_device_put(teedev);
->         return ret;
-> diff --git a/include/linux/tee_core.h b/include/linux/tee_core.h
-> index a38494d6b5f4..13393ddac530 100644
-> --- a/include/linux/tee_core.h
-> +++ b/include/linux/tee_core.h
-> @@ -44,6 +44,7 @@
->   * @idr:       register of user space shared memory objects allocated or
->   *             registered on this device
->   * @pool:      shared memory pool
-> + * @def_ctx:   default context used if there is no context available, e.=
-g. internal driver calls.
->   */
->  struct tee_device {
->         char name[TEE_MAX_DEV_NAME_LEN];
-> @@ -60,6 +61,7 @@ struct tee_device {
->
->         struct idr idr;
->         struct tee_shm_pool *pool;
-> +       struct tee_context def_ctx;
->  };
->
->  /**
-> @@ -309,6 +311,19 @@ static inline bool tee_param_is_memref(struct tee_pa=
-ram *param)
->   */
->  struct tee_context *teedev_open(struct tee_device *teedev);
->
-> +/**
-> + * teedev_get_def_context() - Get default context for a struct tee_devic=
-e
-> + * @teedev:    Device to open
-> + *
-> + * Unlike a context that returned from teedev_open(), the default contex=
-t is static
-> + * and available as long as @teedev has a user ''other then this context=
-''. This context
-> + * can be used for driver internal operation and clean up where a contex=
-t should be
-> + * available, while tee_device_unregister() is waiting for other users t=
-o go away.
-> + *
-> + * @return a pointer to struct tee_context on success or an ERR_PTR on f=
-ailure.
-> + */
-> +struct tee_context *teedev_get_def_context(struct tee_device *teedev);
-> +
->  /**
->   * teedev_close_context() - closes a struct tee_context
->   * @ctx:       The struct tee_context to close
-> diff --git a/include/linux/tee_drv.h b/include/linux/tee_drv.h
-> index 1b57cddfecc8..9633e14ba484 100644
-> --- a/include/linux/tee_drv.h
-> +++ b/include/linux/tee_drv.h
-> @@ -7,7 +7,6 @@
->  #define __TEE_DRV_H
->
->  #include <linux/device.h>
-> -#include <linux/kref.h>
->  #include <linux/list.h>
->  #include <linux/mod_devicetable.h>
->  #include <linux/tee.h>
-> @@ -25,10 +24,6 @@ struct tee_device;
->   * @teedev:    pointer to this drivers struct tee_device
->   * @list_shm:  List of shared memory object owned by this context
->   * @data:      driver specific context data, managed by the driver
-> - * @refcount:  reference counter for this structure
-> - * @releasing:  flag that indicates if context is being released right n=
-ow.
-> - *             It is needed to break circular dependency on context duri=
-ng
-> - *              shared memory release.
->   * @supp_nowait: flag that indicates that requests in this context shoul=
-d not
->   *              wait for tee-supplicant daemon to be started if not pres=
-ent
->   *              and just return with an error code. It is needed for req=
-uests
-> @@ -41,8 +36,6 @@ struct tee_context {
->         struct tee_device *teedev;
->         struct list_head list_shm;
->         void *data;
-> -       struct kref refcount;
-> -       bool releasing;
->         bool supp_nowait;
->         bool cap_memref_null;
->  };
->
-> --
-> 2.34.1
->
+David / dhildenb
+
 
