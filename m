@@ -1,231 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-38697-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38698-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 607019D5240
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 19:03:27 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F8B79D5293
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 19:32:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BD891B23A36
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 18:03:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E966F28110B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 18:32:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5A17D1BBBC1;
-	Thu, 21 Nov 2024 18:03:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D51B1A2574;
+	Thu, 21 Nov 2024 18:32:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JTWU+j3p"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MtAvh/zq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE331A0726;
-	Thu, 21 Nov 2024 18:03:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E8DB139597
+	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Nov 2024 18:32:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732212201; cv=none; b=Xz0QTqIM41VTqrXFQH+eqlfktdb8npu8NBIseQo5WrUCBymjktB2DJ11i9/STHGSNoEQeF6BMcACYWwt+6oPMAldbdfUswGjo2yrgvjV7lB1aaxewlwrKwKbh6KNW2tOgZVgVvXAdxM0/9lz/IR/R8YWzqiyQ3mi91n2OHxRUak=
+	t=1732213941; cv=none; b=tJDkX2XjXX5fXCxhwTlHaI1NuCFhgRyRGn1u8UmHutCCwxNxNzyB1XJNxhGi4zcve2VZLAsu0TZxSkP46qdDxHzA63LPajIeuN8dMkqJ2vuazrqjPvKrBb/L8uSYbs27PIDCaFxjvs+BHgsnImFFkT2Ym4DwenUOboR9lUt+Zw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732212201; c=relaxed/simple;
-	bh=qdl3gcm8LTYFq14sBh2ATyVCxMyGQMP61nP8fX88IH0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Z1edo1YvCTZ0Zh90BIzeJBwCm77CLoV+dMYXohEJGsY2noQl+D9OktcdAA6NAJ6Ng/t5YCTqV6iAqaqgW+w/q49eD+XJ8o+F7/BH1c/xrb0grciELe6Cde2D37gkAzhO0AdZYASf+9ZKrbHSo1qe13SNstXbM/iQ0JzsHVajvos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JTWU+j3p; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AL9Dxs6007912;
-	Thu, 21 Nov 2024 18:03:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	mQCLjvbQA0l76BDkjJNaGTmYOIeoZTLNFsbEZ66eoFs=; b=JTWU+j3px7+y9A9f
-	uCNMEXg5s8SYMbno6ELldQ79XAoCyzHHNApN0PFpFgEJmMSy5v5lH4CIN/02GmYb
-	miNVqfbcGuuplr+QFscOJllC5n6U5pLpOhEvt7EJJLAUTdv3zRuc4QCZLXeCwq/X
-	REkpGQ+5q9QfMsE1Sn1moqADy9dEFmfNHEx9vimMcCSOkwnlmOlFYWiK9FLLnnsg
-	5SkIH1ueMvf5lWckRF1aFRSRI5M63JUZhjIG/r5b+uO59lRTCnb1xqPVVYDlEj07
-	mTyoU0GMe3OY1doWiO8WTg38QmY+jax+vJDd5RBvEkkM8zamYo1nmZ6Li6RMIinX
-	pV0Ikg==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4318uvne3w-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 21 Nov 2024 18:03:14 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4ALI3D7L013603
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 21 Nov 2024 18:03:13 GMT
-Received: from [10.216.2.20] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 21 Nov
- 2024 10:03:08 -0800
-Message-ID: <b2a05dfb-a820-4450-a156-8d6b4bd59be3@quicinc.com>
-Date: Thu, 21 Nov 2024 23:33:04 +0530
+	s=arc-20240116; t=1732213941; c=relaxed/simple;
+	bh=NxoNhqN7/s5UCLJhRwnlQc5AL67LK0A9EbK6QoZWtGA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aDZ6hBp0YRzEy61SzMiCWxGv5Sb2qsASlmaztBZESLyX6puZlc15rwmD0T/+LNwLVvSX1iqZteu4pJ2zksvC1/wrFLLwya+UYnf1dXR9ODWv5kOUaLY2zlMNPnIn4sq7q/xCEy4in1WbYXI5BvZWZjTOj0/M1xRBLhQQ+UBqVm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MtAvh/zq; arc=none smtp.client-ip=209.85.208.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2fb57f97d75so13895921fa.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Nov 2024 10:32:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1732213938; x=1732818738; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=7YR6bunkgbvINXjPaA3POQemx6H3ADSr2/yDH9XACR0=;
+        b=MtAvh/zqiMK9xbyH573mWvVr4JTnprBhRRFLeSnzBAB82CQgGtIdzrjI5ayDtXKH0K
+         y3x6+vWsUph2H/+dbfdWwalioy4JSAdEFvcaBMTOTf591i2c2fod7BWS0YqlQgPiIm3S
+         qDZquELaAtlCad+vpEFBETVFieWKxJPnBIydDB5POk3ByMm0bO70pomPXe3lp2f0dDxV
+         Z0iW+vi1wHoZ2+RQHIrdeHhf66/aKHst1qPtC4t3o1ahmv6efaAvP7KKBCnKQkKpgEsx
+         d886u8vrFI+zM7BsNN1PIZKBZYyxvLlbH/mZyX2psissjP6eVWQm/DzKvcD8Ex9U/72l
+         SFiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732213938; x=1732818738;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7YR6bunkgbvINXjPaA3POQemx6H3ADSr2/yDH9XACR0=;
+        b=k8nHAYgVvG+ZVUooNtrKW2k3pc7anNB6WgGMp9WvfNtbh87GEjebtFKiVyQpD4dnlN
+         1B1gYKkEwSSboKAQC/vLIcBL/+87ZTlKK7zGPrKVVxwNndyXhG8CSZz+bHKQ3+x4HUPl
+         lHOvX3yySG5bs4my3V0JT4sIYcsqq0uKgE00x1vcBKlBor3KO0eGA3CaAuOWo7l3LNsb
+         Q1dudGmxoRMuud46OmqQdNYsp1wlOlB+/mycdkpOeNcm3A5SyYjn2nnYPxXYqjRmoLTv
+         De1cfmahOLSPtrQT0UyXR+n3tGNmE+2x13RawJVBtG06ginH1VJN0ufjdVC+AQt7F3BF
+         IkXQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV/gLBvpm2dxpNVeUHMbm2VGzXKAckLW320lsMWMb3pa5V3XkmbZuWk75GX6htmJVpGn8k/8Wh1t4IvwTV4@vger.kernel.org
+X-Gm-Message-State: AOJu0YyqwZ27ZmKkStZ8rzEuNXZWGNRqrlYRUzFto+sN9F9SzzlDzXp6
+	6KhlvcWBwpd6yXh/0MGcE1O+ggPtsDDPlAW1vqO8YryAIBtHTOS4JAbURRdoRvI=
+X-Gm-Gg: ASbGncuCTZK4X00+PU8IDfAiDj6e5AyFe+aAGoAGRPcOJ7YE53HT/0tMFBhdnVSuNgb
+	IRvSqbVqhThi5TM79CpdybOsxWO0DNGyTrfmw2/eDbeLc0nT6cyFmnShseH7Ws0mIevm+3s+1av
+	3pafDAT4tkk12K9erDz5MktUOZe+Z48AfUrYPuwxVR+kT3kur5vjwQsEbKu9HXj7wD6z+83Py30
+	yJo7QQueeiRmgYdL4NyLkhI63aZDyIaajQynoocv+/QRS6hjuNWIMWb+vHOX12KYa2nlwnQUAUL
+	vp2yH7nYngYRBPw+oqsh0Lz7hOl1Bg==
+X-Google-Smtp-Source: AGHT+IFCTWJ72tvI1EYO6Sxeh0nyQQvqWPBwgJgPQ0V5L1GVWbKh7Z5LWaJvnlK5PXvdh7Kz0Y69uA==
+X-Received: by 2002:a05:651c:547:b0:2ff:a3c0:a878 with SMTP id 38308e7fff4ca-2ffa3c0aa4emr6655951fa.4.1732213938371;
+        Thu, 21 Nov 2024 10:32:18 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ffa4d57be7sm143411fa.62.2024.11.21.10.32.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Nov 2024 10:32:17 -0800 (PST)
+Date: Thu, 21 Nov 2024 20:32:14 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org, conor@kernel.org, 
+	robh@kernel.org, krzk+dt@kernel.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 2/3] soc: qcom: llcc: Update configuration data for
+ IPQ5424
+Message-ID: <y52pqmnj2bftfkoz5txmsl7wzjpfv3t7x5mtvrucupdubioxdl@dcflltnxnpdm>
+References: <20241121051935.1055222-1-quic_varada@quicinc.com>
+ <20241121051935.1055222-3-quic_varada@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V5 3/4] interconnect: qcom: Add EPSS L3 support on SA8775P
-To: Krzysztof Kozlowski <krzk@kernel.org>, Georgi Djakov <djakov@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-CC: Odelu Kukatla <quic_okukatla@quicinc.com>,
-        Mike Tipton
-	<quic_mdtipton@quicinc.com>,
-        Sibi Sankar <quic_sibis@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20241121113006.28520-1-quic_rlaggysh@quicinc.com>
- <20241121113006.28520-4-quic_rlaggysh@quicinc.com>
- <bc926d6d-e3d1-4fbf-9b6a-bbd3816a766d@kernel.org>
-Content-Language: en-US
-From: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
-In-Reply-To: <bc926d6d-e3d1-4fbf-9b6a-bbd3816a766d@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: L2QJQhmrIgNv2SkNb8xDAEuum8cZyLMQ
-X-Proofpoint-GUID: L2QJQhmrIgNv2SkNb8xDAEuum8cZyLMQ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
- priorityscore=1501 phishscore=0 adultscore=0 malwarescore=0 mlxscore=0
- lowpriorityscore=0 mlxlogscore=999 spamscore=0 suspectscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411210137
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241121051935.1055222-3-quic_varada@quicinc.com>
 
+On Thu, Nov 21, 2024 at 10:49:34AM +0530, Varadarajan Narayanan wrote:
+> The 'broadcast' register space is present only in chipsets that
+> have multiple instances of LLCC IP. Since IPQ5424 has only one
+> instance, both the LLCC and LLCC_BROADCAST points to the same
+> register space.
+> 
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> ---
+> v4: Fix ipq5424-llcc placement according to the sort order
+> 
+> v3: Rebase to ToT
+>     Remove 'need_llcc_cfg = true'
+> 
+> v2: Use 'true/false' instead of '1/0' for boolean variables.
+>     Add 'no_broadcast_register' to qcom_llcc_config structure
+>     to identify SoC without LLCC_BROADCAST register space instead
+>     of using 'num_banks'.
+> ---
+>  drivers/soc/qcom/llcc-qcom.c | 57 ++++++++++++++++++++++++++++++++++--
+>  1 file changed, 55 insertions(+), 2 deletions(-)
+> 
 
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-On 11/21/2024 5:28 PM, Krzysztof Kozlowski wrote:
-> On 21/11/2024 12:30, Raviteja Laggyshetty wrote:
->> Add Epoch Subsystem (EPSS) L3 interconnect provider on
->> SA8775P SoCs with multiple device support.
->>
-> 
-> 
-> ...
-> 
->> -DEFINE_QNODE(osm_l3_master, OSM_L3_MASTER_NODE, 16, OSM_L3_SLAVE_NODE);
->> -DEFINE_QNODE(osm_l3_slave, OSM_L3_SLAVE_NODE, 16);
->> +DEFINE_QNODE(osm_l3_master, 16, osm_l3_slave);
->> +DEFINE_QNODE(osm_l3_slave, 16);
->>  
->> -static const struct qcom_osm_l3_node * const osm_l3_nodes[] = {
->> +static struct qcom_osm_l3_node * const osm_l3_nodes[] = {
->>  	[MASTER_OSM_L3_APPS] = &osm_l3_master,
->>  	[SLAVE_OSM_L3] = &osm_l3_slave,
->>  };
->>  
->> -DEFINE_QNODE(epss_l3_master, OSM_L3_MASTER_NODE, 32, OSM_L3_SLAVE_NODE);
->> -DEFINE_QNODE(epss_l3_slave, OSM_L3_SLAVE_NODE, 32);
->> +DEFINE_QNODE(epss_l3_master, 32, epss_l3_slave);
->> +DEFINE_QNODE(epss_l3_slave, 32);
->>  
->> -static const struct qcom_osm_l3_node * const epss_l3_nodes[] = {
->> +static struct qcom_osm_l3_node * const epss_l3_nodes[] = {
-> 
-> 
-> I think dropping const makes the code worse, not better. Commit msg does
-> not explain all these changes and I could not figure out the intention
-> (except modifying but that's just obvious).
-
-EPSS L3 on SA8775P has two instances and this requires creation of two device nodes in devicetree.
-As Interconnect framework requires a unique node id, each device node needs to have different compatible and data.
-To overcome the need of having two different compatibles and data, driver code has been modified to acquire unique node id from IDA 
-and the node name is made dynamic (nodename@address).
-Updating node id and node name is not possible with const.
-> 
-> 
-> 
->>  	[MASTER_EPSS_L3_APPS] = &epss_l3_master,
->>  	[SLAVE_EPSS_L3_SHARED] = &epss_l3_slave,
->>  };
->> @@ -123,6 +125,19 @@ static const struct qcom_osm_l3_desc epss_l3_l3_vote = {
->>  	.reg_perf_state = EPSS_REG_L3_VOTE,
->>  };
->>  
->> +static u16 get_node_id_by_name(const char *node_name,
->> +			       const struct qcom_osm_l3_desc *desc)
->> +{
->> +	struct qcom_osm_l3_node *const *nodes = desc->nodes;
->> +	int i;
->> +
->> +	for (i = 0; i < desc->num_nodes; i++) {
->> +		if (!strcmp(nodes[i]->name, node_name))
->> +			return nodes[i]->id;
->> +	}
->> +	return 0;
->> +}
->> +
->>  static int qcom_osm_l3_set(struct icc_node *src, struct icc_node *dst)
->>  {
->>  	struct qcom_osm_l3_icc_provider *qp;
->> @@ -164,10 +179,11 @@ static int qcom_osm_l3_probe(struct platform_device *pdev)
->>  	const struct qcom_osm_l3_desc *desc;
->>  	struct icc_onecell_data *data;
->>  	struct icc_provider *provider;
->> -	const struct qcom_osm_l3_node * const *qnodes;
->> +	struct qcom_osm_l3_node * const *qnodes;
->>  	struct icc_node *node;
->>  	size_t num_nodes;
->>  	struct clk *clk;
->> +	u64 addr;
->>  	int ret;
->>  
->>  	clk = clk_get(&pdev->dev, "xo");
->> @@ -188,6 +204,10 @@ static int qcom_osm_l3_probe(struct platform_device *pdev)
->>  	if (!qp)
->>  		return -ENOMEM;
->>  
->> +	ret = of_property_read_reg(pdev->dev.of_node, 0, &addr, NULL);
->> +	if (ret)
->> +		return ret;
->> +
->>  	qp->base = devm_platform_ioremap_resource(pdev, 0);
->>  	if (IS_ERR(qp->base))
->>  		return PTR_ERR(qp->base);
->> @@ -242,8 +262,13 @@ static int qcom_osm_l3_probe(struct platform_device *pdev)
->>  
->>  	icc_provider_init(provider);
->>  
->> +	/* Allocate unique id for qnodes */
->> +	for (i = 0; i < num_nodes; i++)
->> +		qnodes[i]->id = ida_alloc_min(&osm_l3_id, OSM_L3_NODE_ID_START, GFP_KERNEL);
->> +
->>  	for (i = 0; i < num_nodes; i++) {
->> -		size_t j;
->> +		char *node_name;
->> +		size_t j, len;
->>  
->>  		node = icc_node_create(qnodes[i]->id);
->>  		if (IS_ERR(node)) {
->> @@ -251,13 +276,29 @@ static int qcom_osm_l3_probe(struct platform_device *pdev)
->>  			goto err;
->>  		}
->>  
->> -		node->name = qnodes[i]->name;
->> +		/* len = strlen(node->name) + @ + 8 (base-address) + NULL */
->> +		len = strlen(qnodes[i]->name) + OSM_NODE_NAME_SUFFIX_SIZE;
->> +		node_name = devm_kzalloc(&pdev->dev, len, GFP_KERNEL);
->> +		if (!node_name) {
->> +			ret = -ENOMEM;
->> +			goto err;
->> +		}
->> +
->> +		snprintf(node_name, len, "%s@%08llx", qnodes[i]->name, addr);
->> +		node->name = node_name;
-> 
-> 
-> Why the node name becomes dynamic?
-> 
-> Best regards,
-> Krzysztof
-
+-- 
+With best wishes
+Dmitry
 
