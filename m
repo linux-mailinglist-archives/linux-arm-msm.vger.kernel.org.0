@@ -1,88 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-38684-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38685-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3BD699D5159
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 18:11:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 749FA9D5169
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 18:13:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0058A28467A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 17:11:21 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3A75D284BB8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 17:13:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 070FA19CC17;
-	Thu, 21 Nov 2024 17:11:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="femW/hq3"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D85719E960;
+	Thu, 21 Nov 2024 17:13:07 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from inva020.nxp.com (inva020.nxp.com [92.121.34.13])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30C73189F37
-	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Nov 2024 17:11:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 792DB1487C8;
+	Thu, 21 Nov 2024 17:13:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=92.121.34.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732209076; cv=none; b=r1Emc+/UI/FXcPCeaDo0ErI9rCQ3SMw40jH9ur0oJsy9t6EKuzAMTw04oU2bQGPQZ5E6UVN8V0WJvqclXU4STLVch2xy6JiTM6IIXXyIdz1UjFGaAX9QYA7kCyKZ6hbHcEW6KpqiiyligswsmDc1ZboZY162XQdEQ69FOrzjgBU=
+	t=1732209187; cv=none; b=hxYWFaT649NiXWVKJMeiUigGt0kibCavhonAwWxffs+Q35LsvH8lOF19K3B3xuk/WyHZsvzE1jG3i3EB75nplp4OsMcNZhUew/G+qYhroMeyMMGeBRaOePBxCc2iEcq4HDxfSQysMiNhVO1xopYKERndXFOgEYen8OQT1HNHa2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732209076; c=relaxed/simple;
-	bh=+AL6wkfuA2btJisY5BliOminhIkzFmMy/zkSJfUjIhg=;
+	s=arc-20240116; t=1732209187; c=relaxed/simple;
+	bh=GcWWyOMvMcHfUlznL29VswDqfZ4aK48pVXyV1KQ6Bw0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gMGpKQZovH5LIeSlzuaxE3OGbjizIdHwazn4sn0GIo1ectGzAK+5rFhVpzmjml3f28brtg7aSq2ojtEuaJppdYnHPIxNdjZXnb5fIQMCzZkfrNH7fmyssmFq6anJO3nLiXviRrCE7VcuVSWIYXQbYUiZa04F3LY9OgBNNgoxmZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=femW/hq3; arc=none smtp.client-ip=209.85.167.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-539f6e1f756so1202261e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Nov 2024 09:11:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732209073; x=1732813873; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=BMEW165paKttKZq6OB5pufjOGDOmBneCMyuKHIOgj/g=;
-        b=femW/hq3VbzTqyoU8TldxJwJB+DJpZFfdtXHY2zUEV1cBVC+y+PZy+6QdjCGsWC1tr
-         lNp7XnZDG2N6qDF/IcKtE/Vll72kfJeWl64cFNtWTBWm21V4LY2lT0/XbMsdY1JOi6DE
-         SNsc9csCzWxEVa2/DY1m2lRk1ge6HDlWWoeWthk2yVTyDH0aB2xKuqVTSBTCE+hQEIzz
-         kg9fPjwnw8L/bPbW8UF8ccvFEJQKswFcOvg7Z5H+q2g3eZuflFQ86dsM5anfLaifVKBA
-         VwtryyCQoqofwbpPNg65vQrlktHtZS7orGlN6roVirlSv0RoFtGnV7Iph2Uqdp5zvUiV
-         pn3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732209073; x=1732813873;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BMEW165paKttKZq6OB5pufjOGDOmBneCMyuKHIOgj/g=;
-        b=vov0kkNYn6Bes16K03d1+D5H3+vdPdYspb+0RSGd4rL9wYD1Q6vAKgeb1f3O5vDpgm
-         0b+HeEIwIV+wB5UOZpUTlC88XxVG4hMTDfIJHep+6flQqeH5rmNK1GhCbZN2n0U7aP78
-         JQrxagjZOLK4zecJlXfCZ60LbJrrJ/aYSqUu37kaEbuOIe0iJd//3tAB3es/lWc8erFf
-         8UOekzkWWnD1ejDrXF8rjKOfOzIvay4xXB4fb0QYYbb9pqNXY8EEoHYPc/fZg+5vaY7R
-         k5rBaH5OA7ShjcGJ4njVr1V6fbLmhOdapTn5GUAFS+t1d6957h8ZR2JSf/lgcJkmZ1ap
-         GILg==
-X-Forwarded-Encrypted: i=1; AJvYcCU3E3hnGHb+TvzuelsTLPMWXY+CKp2PkZaaL+Bs15A/rJt7qtgccpBRAcB43xNbgUpW5cgced7IIAHWTTSF@vger.kernel.org
-X-Gm-Message-State: AOJu0YxEquvzesTVFHBP3tDTepB8mqOQo7vzW1BzvLL5MN1czeUnLFlG
-	YvBwh4L5t7oe/+Sx8ygTg3Xw2WDpAejVJ89FhlxAFxLwaUAteO9CwHdnEXPZ5V8=
-X-Gm-Gg: ASbGncuP35CyTFKJjHZ8/YoLHR0rXt1WMbtRQ4prn+xH2jQj62JeJiXQOPf4rXE5qYU
-	0M8MBpxQ1U+KbXvf5X9F3SGmtRmBA82+OTyRFsM6BdsFpXug8n+LHxaP5VLCjaVvMgpWwW7uBLw
-	wKeF1biOqUMj+9C+MzxuGStXs9jDGVcdifJeOtTBrxN9tRCooEfn5bO7vD/SlU1Jww0caD6RaZv
-	AJ83GnJEtGjpE55fNGAOgIZIrMX5CrAVyRvJzWhiEXcON1nGRWtDSEt4clCTYUiXXzcMrztijXa
-	StgNZ2zehC3TgjUO/cW3Wf1Q6hMMXA==
-X-Google-Smtp-Source: AGHT+IH75E9kHCeJ9hwtn+b2lfsAECcUMBrPaNYfXzIudtYhmAv7LO26flEfRN2vJp6JnpGQMZqjQw==
-X-Received: by 2002:a05:6512:1051:b0:53d:d236:6f7f with SMTP id 2adb3069b0e04-53dd23670c4mr268737e87.12.1732209073257;
-        Thu, 21 Nov 2024 09:11:13 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53dd2481f18sm17470e87.158.2024.11.21.09.11.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Nov 2024 09:11:11 -0800 (PST)
-Date: Thu, 21 Nov 2024 19:11:10 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Soutrik Mukhopadhyay <quic_mukhopad@quicinc.com>
-Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org, 
-	krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, quic_riteshk@quicinc.com, 
-	quic_vproddut@quicinc.com, quic_abhinavk@quicinc.com
-Subject: Re: [PATCH v5 2/2] arm64: dts: qcom: sa8775p-ride: Enable Display
- Port
-Message-ID: <uf7nk7n2ji34my5y42zz7n32aqn33vnqeg6zcxlimwcmpa75zy@stbrgjkt3jqi>
-References: <20241121091401.20584-1-quic_mukhopad@quicinc.com>
- <20241121091401.20584-3-quic_mukhopad@quicinc.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=PdE/FUlsm1lwfr7h8Q0dRwvYVg2mNyGdVfvulYhDdagvSEZ5ma1kUIFQ53UgMfc+XiwRWPpaRGnC+AJHD2PFcKcwjQWKNyYPENIM9EIyoGSzo0kPodM7FSzYjeQ/xc5xtxnuqAV29OKVWD/xymjQXiXaxa55VJ0FMof7oSZ4NO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; arc=none smtp.client-ip=92.121.34.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+Received: from inva020.nxp.com (localhost [127.0.0.1])
+	by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 4748B1A063E;
+	Thu, 21 Nov 2024 18:12:58 +0100 (CET)
+Received: from inva024.eu-rdc02.nxp.com (inva024.eu-rdc02.nxp.com [134.27.226.22])
+	by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 4441B1A063A;
+	Thu, 21 Nov 2024 18:12:58 +0100 (CET)
+Received: from lsv051416.swis.nl-cdc01.nxp.com (lsv051416.swis.nl-cdc01.nxp.com [10.168.48.122])
+	by inva024.eu-rdc02.nxp.com (Postfix) with ESMTP id 7BFFC2026C;
+	Thu, 21 Nov 2024 18:12:57 +0100 (CET)
+Date: Thu, 21 Nov 2024 18:12:58 +0100
+From: Jan Petrous <jan.petrous@oss.nxp.com>
+To: Paolo Abeni <pabeni@redhat.com>
+Cc: Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Jose Abreu <joabreu@synopsys.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+	Richard Cochran <richardcochran@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Russell King <linux@armlinux.org.uk>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Emil Renner Berthing <kernel@esmil.dk>,
+	Minda Chen <minda.chen@starfivetech.com>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Iyappan Subramanian <iyappan@os.amperecomputing.com>,
+	Keyur Chudgar <keyur@os.amperecomputing.com>,
+	Quan Nguyen <quan@os.amperecomputing.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	imx@lists.linux.dev, devicetree@vger.kernel.org,
+	NXP S32 Linux Team <s32@nxp.com>
+Subject: Re: [PATCH v5 16/16] net: stmmac: platform: Fix PTP clock rate
+ reading
+Message-ID: <Zz9qGvb9v9+SXSev@lsv051416.swis.nl-cdc01.nxp.com>
+References: <20241119-upstream_s32cc_gmac-v5-0-7dcc90fcffef@oss.nxp.com>
+ <20241119-upstream_s32cc_gmac-v5-16-7dcc90fcffef@oss.nxp.com>
+ <d6794550-07f2-46df-aa4f-c728b06d50bd@redhat.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -91,25 +85,36 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241121091401.20584-3-quic_mukhopad@quicinc.com>
+In-Reply-To: <d6794550-07f2-46df-aa4f-c728b06d50bd@redhat.com>
+X-Virus-Scanned: ClamAV using ClamSMTP
 
-On Thu, Nov 21, 2024 at 02:44:01PM +0530, Soutrik Mukhopadhyay wrote:
-> The Qualcomm SA8775P platform comes with 2 DisplayPort controllers
-> for each mdss. edp0 and edp1 correspond to the DP controllers of
-> mdss0, whereas edp2 and edp3 correspond to the DP controllers of
-> mdss1. This change enables only the DP controllers, DPTX0 and DPTX1
-> alongside their corresponding PHYs of mdss0, which have been
-> validated.
+On Thu, Nov 21, 2024 at 08:45:20AM +0100, Paolo Abeni wrote:
+> On 11/19/24 16:00, Jan Petrous (OSS) wrote:
+> > From: "Jan Petrous (OSS)" <jan.petrous@oss.nxp.com>
+> > 
+> > The stmmac driver supports many vendors SoCs using Synopsys-licensed
+> > Ethernet controller IP. Most of these vendors reuse the stmmac_platform
+> > codebase, which has a potential PTP clock initialization issue.
+> > The PTP clock rate reading might require ungating what is not provided.
+> > 
+> > Fix the PTP clock initialization by enabling it immediately.
+> > 
+> > Signed-off-by: Jan Petrous (OSS) <jan.petrous@oss.nxp.com>
 > 
-> Signed-off-by: Soutrik Mukhopadhyay <quic_mukhopad@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 80 ++++++++++++++++++++++
->  1 file changed, 80 insertions(+)
+> Side, process-related note: it would be great if you could trim the
+> patch series below 16 (currently off-by-one):
+> 
+> https://elixir.bootlin.com/linux/v6.11.8/source/Documentation/process/maintainer-netdev.rst#L14
+> 
+> This patch looks like an independent fix, possibly worth the 'net' tree.
+> If so, please submit this patch separately, including a suitable fixes
+> tag and including the 'net' keyword in the patch subj prefix.
 > 
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Yeh, I also was a bit worried about patchwork fail check on patch series
+size. Thanks for your hint, I will remove this PTP clock rate patch from
+the series and resend it to the 'net' tree with fixes tag.
 
--- 
-With best wishes
-Dmitry
+BR.
+/Jan
 
