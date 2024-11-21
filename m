@@ -1,134 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-38652-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38653-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 534A59D4BFA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 12:31:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CC7F49D4C18
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 12:38:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0A5B11F21E75
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 11:31:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8414D1F21E23
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 11:38:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4544D1D79B1;
-	Thu, 21 Nov 2024 11:30:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 97DDF1CD1EB;
+	Thu, 21 Nov 2024 11:38:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="L1c9tZck"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gcrE9/67"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACC3D1D7989;
-	Thu, 21 Nov 2024 11:30:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01D2F3C47B;
+	Thu, 21 Nov 2024 11:38:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732188652; cv=none; b=MzMK1AReRARoHi1sqLlZQo4I06udD7JuffQJjPJzhhQciag41bnJAO7SeHoWy3IBcZz+tQVvc7cygq+JHgvxuip7PLUNWIWOH7LqAHFlCHwLqmNcWl0aaqbF0uLdFCo3odDYe8DdPdvivkPyxWIqHgImL2Uy466vam7ovqS+mZ0=
+	t=1732189115; cv=none; b=LKdiTt6g7h7un0h87VOOJOJyRgtP3mxHf6egg7s6hvIf75PE3+0kmRTBnhq2OqwRSmdrIzr1v/vJZUCGKPZHSfoE7CdAW2h6MpB5jLJRS5eik4kPiQo132UZi2gN5DRElWxLfndPrqFTb9fmJnIp/HWlsEbGouaIdoNCIMuXRWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732188652; c=relaxed/simple;
-	bh=JDWkwmF9nt2wiNynUGk2EKO/EDp5Yi2U5yhzymrTLCU=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ixzDRsXqFwrNEh/arGyE2GUVYaf0kZ8srHfv4wwwlOejyKMKmrhfw8OaB2W6vy6piLyb+T9Bq6ceEgfeGEIu+mTJS6+qjrmX8XtQsvjp1EmnQzyjX+wvSyub0E4TpN6PaiLbwHdPwIzu7b63ACrspkx+mb+mP7wmEUWqQErmhfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=L1c9tZck; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1732189115; c=relaxed/simple;
+	bh=TktO2GCT6OnXrOXfOCRgOrtOaCnVDQkqu89HI9z1htE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=VQOubSZZ8GZYQzNzT0YdUi3FH0hXXsr1SC4kqqOaLO98M4z3zCdBTUeWv1ufYb1Lv2oKFLDOzU8HMeOwetBaYlFKf42CTa3jN64WVu3fAd3S+oQobeEKELLIVrX5YSc/yIVYgCanNedrTmYJsHymjkyd+0Z8fQunKkOz/+X2/5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gcrE9/67; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AL8x9jK005925;
-	Thu, 21 Nov 2024 11:30:47 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AL8uUPY003935;
+	Thu, 21 Nov 2024 11:38:32 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	YpcC+g7QRy1/fsC0WhGzHpWSWdEgWi9EiS9Pl7uxUtQ=; b=L1c9tZckzzTEO8K0
-	gqaoRzbs4CvyZnP20w/3bJB/2xfn5iPo23Dbn8J00XVRco4MrX0DGReVkyi6x+bd
-	niO3RPVWT59PLVZBUSdcQGXcI7RqKHsp0pc96MewGqMoIt1y+UBFL1LEooIA8Hm+
-	gn3DJmK3ioeA41Zdh3MfKeeTT8BSVRYH2dKuVsPtkfdSQ0TMoMn0GZ00Q11W/YKc
-	JqeMFYoeWlgOqxrHub619o7FcIYwemUfDnYciq0oygosLKT1Qp+/M3bk89rtUmM0
-	Ay0gARog2SUh6aAZaKELJbb8hgrHX/BsMclNlmLZr8QYe8WYXkKP9xkDUDcNZX1y
-	LafJZA==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4317t24jx1-1
+	4YRcO6b70jf15iw+nKaeBYvuDjp5NyM+Lyd4fqDywlU=; b=gcrE9/67B6ifTCMk
+	nKQU5EwKN8AY3Ag3Zbj3FT2LDBhFSYv2XMWiaryj301sBs+t4/cYys5vD1wYoJLT
+	ANeZyynnpPXgwNjj7EZG3gd9jW9gh9azdAq4s3aEGQRz7bhQ6VRTZ3WchPodd+Lq
+	I9nRzhdWD/jLygI2drBJhFJtktwn/nc08yD8mimwXXrinvUPZCX3JVXInKZb6Xgz
+	Zd3+R9xwiyyy5bvH1VC+f2edcWNmtnDwPJYvvOuapWMFYByCP8/X7WOweaMdwaSC
+	oA9al3OozE6R76Gwvl40brnLmYTRxN3edj7P6EbKo0cgBT8lqoIGz3rbmxkaragL
+	RKlfRw==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 431ce3bvrk-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 21 Nov 2024 11:30:47 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4ALBUk48003513
+	Thu, 21 Nov 2024 11:38:32 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4ALBcVtL025920
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 21 Nov 2024 11:30:46 GMT
-Received: from 41ee23f3c785.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 21 Nov 2024 03:30:42 -0800
-From: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
-To: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>
-CC: Odelu Kukatla <quic_okukatla@quicinc.com>,
-        Mike Tipton
-	<quic_mdtipton@quicinc.com>,
-        Sibi Sankar <quic_sibis@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH V5 4/4] interconnect: qcom: osm-l3: Add epss compatibles for SA8775P SoC
-Date: Thu, 21 Nov 2024 11:30:06 +0000
-Message-ID: <20241121113006.28520-5-quic_rlaggysh@quicinc.com>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20241121113006.28520-1-quic_rlaggysh@quicinc.com>
-References: <20241121113006.28520-1-quic_rlaggysh@quicinc.com>
+	Thu, 21 Nov 2024 11:38:31 GMT
+Received: from [10.216.44.227] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 21 Nov
+ 2024 03:38:26 -0800
+Message-ID: <f123a993-0cd5-4747-80fb-88acb2434880@quicinc.com>
+Date: Thu, 21 Nov 2024 17:08:22 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: qcs9100: Update memory map for QCS9100
+ Ride and QCS9100 Ride Rev3
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Kuldeep Singh
+	<quic_kuldsing@quicinc.com>
+CC: Bjorn Andersson <bjorn.andersson@example.com>,
+        Konrad Dybcio
+	<konrad.dybcio@example.com>,
+        Rob Herring <rob.herring@example.com>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski@example.com>,
+        Conor Dooley
+	<conor.dooley@example.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_tengfan@quicinc.com>,
+        <quic_shashim@quicinc.com>, <quic_kbajaj@quicinc.com>
+References: <20241119092501.31111-1-quic_pbrahma@quicinc.com>
+ <30fda0e2-f314-49b8-8c1c-bf4fac87050d@quicinc.com>
+ <rnrxb5e7xcgnjp4y4id5m5dyswii6xipry3bvtpit2f4c3iqfy@qghr42jz6oze>
+Content-Language: en-US
+From: Pratyush Brahma <quic_pbrahma@quicinc.com>
+In-Reply-To: <rnrxb5e7xcgnjp4y4id5m5dyswii6xipry3bvtpit2f4c3iqfy@qghr42jz6oze>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: GWeD_I2V8nUCbMMZdLfRI38nhndYMlUS
-X-Proofpoint-ORIG-GUID: GWeD_I2V8nUCbMMZdLfRI38nhndYMlUS
+X-Proofpoint-GUID: 9n3Lo9Y5RQJnNB6QxYxqUc_ugdjnYlle
+X-Proofpoint-ORIG-GUID: 9n3Lo9Y5RQJnNB6QxYxqUc_ugdjnYlle
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- suspectscore=0 mlxlogscore=999 spamscore=0 bulkscore=0 lowpriorityscore=0
- mlxscore=0 malwarescore=0 impostorscore=0 phishscore=0 adultscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411210090
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ malwarescore=0 clxscore=1015 priorityscore=1501 impostorscore=0
+ bulkscore=0 mlxscore=0 adultscore=0 spamscore=0 mlxlogscore=898
+ suspectscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2409260000 definitions=main-2411210091
 
-The EPSS instance in SA8775P uses PERF_STATE register instead of
-REG_L3_VOTE to scale L3 clocks.
-Along with SoC specific compatible, add new generic compatible
-"qcom,epss-l3-perf" for PERF_STATE register based L3 scaling.
 
-Signed-off-by: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
----
- drivers/interconnect/qcom/osm-l3.c | 2 ++
- 1 file changed, 2 insertions(+)
+On 11/20/2024 5:24 PM, Dmitry Baryshkov wrote:
+> On Wed, Nov 20, 2024 at 01:41:03AM +0530, Kuldeep Singh wrote:
+>>
+>> On 11/19/2024 2:55 PM, Pratyush Brahma wrote:
+>>> This patch series is based on Tengfei Fan's patches [1] which adds support
+>>> for QCS9100 Ride and QCS9100 Ride Rev3 boards.
+>>>
+>>> Some new carveouts (viz. gunyah_md and a few pil dtb carveouts) have been
+>>> introduced and the size and base addresses have been updated for
+>>> a few of existing carveouts compared to SA8775P. Also, tz_ffi_mem carveout
+>>> and its corresponding scm reference has been removed as it is not required
+>>> for these boards. Incorporate these changes in the updated memory map
+>>> for QCS9100 Ride and QCS9100 Rev3 boards.
+>>>
+>>> [1] https://lore.kernel.org/all/20240911-add_qcs9100_support-v2-4-e43a71ceb017@quicinc.com/
+>>>
+>>> Signed-off-by: Pratyush Brahma <quic_pbrahma@quicinc.com>
+>> The memory map for qcs9100-ride-r3 and qcs9100-ride is exactly same.
+>> A good churn you are first deleting(based on sa8775p) and then re-adding
+>> for qcs9100-ride*.
+>>
+>> I think it's better to move common qcs9100-ride* to a common file ex:
+>> qcs9100-ride.dtsi and keep specifics further to .dts files?
+>>
+>> This will ensure common entities are present at same place with no
+>> duplicates.
+> I'd second this proposal.
+Ok then, I see that there are some thermal and gpu enablement changes as 
+well in the pipeline to be posted.
+Having a common dtsi file for these iot socs would help in reducing the 
+duplication at board
+dts file level for all these changes. In that regard, does naming it
+"sa8775-iot.dtsi" sound good? The board files can include this dtsi.
 
-diff --git a/drivers/interconnect/qcom/osm-l3.c b/drivers/interconnect/qcom/osm-l3.c
-index a9405b7d251b..285afaa1f61e 100644
---- a/drivers/interconnect/qcom/osm-l3.c
-+++ b/drivers/interconnect/qcom/osm-l3.c
-@@ -318,6 +318,7 @@ static int qcom_osm_l3_probe(struct platform_device *pdev)
- 
- static const struct of_device_id osm_l3_of_match[] = {
- 	{ .compatible = "qcom,epss-l3", .data = &epss_l3_l3_vote },
-+	{ .compatible = "qcom,epss-l3-perf", .data = &epss_l3_perf_state },
- 	{ .compatible = "qcom,osm-l3", .data = &osm_l3 },
- 	{ .compatible = "qcom,sc7180-osm-l3", .data = &osm_l3 },
- 	{ .compatible = "qcom,sc7280-epss-l3", .data = &epss_l3_perf_state },
-@@ -325,6 +326,7 @@ static const struct of_device_id osm_l3_of_match[] = {
- 	{ .compatible = "qcom,sm8150-osm-l3", .data = &osm_l3 },
- 	{ .compatible = "qcom,sc8180x-osm-l3", .data = &osm_l3 },
- 	{ .compatible = "qcom,sm8250-epss-l3", .data = &epss_l3_perf_state },
-+	{ .compatible = "qcom,sa8775p-epss-l3", .data = &epss_l3_perf_state },
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, osm_l3_of_match);
 -- 
-2.39.2
+Thanks and Regards
+Pratyush Brahma
 
 
