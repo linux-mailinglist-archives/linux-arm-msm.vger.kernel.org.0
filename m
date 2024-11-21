@@ -1,89 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-38714-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38715-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CF43B9D5522
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 23:03:09 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 916889D5530
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 23:08:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 39800B22D6C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 22:03:07 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EF3C6B21059
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 22:08:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 082801DD0FE;
-	Thu, 21 Nov 2024 22:02:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E23A61DDA2F;
+	Thu, 21 Nov 2024 22:08:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Gvv1AdRv"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kNFoYxws"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C01AF1D9A54
-	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Nov 2024 22:02:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C567B1DD873
+	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Nov 2024 22:08:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732226578; cv=none; b=jX6RxZtmFQvF9gJmZofbO3bWNIzW9XFxf0mmemDq3X2jIVAxc4ZuZhXaw0CrI30szVr53gAK0BxTquxzTuCcGhnEiFDLJ7OBwWXnjxCHaPuF30aRSG9ScVmrGjUDy8rivkJ3g5xesTuWKHsHMCikuQE4TefRmCE9UGOtnMqsHX8=
+	t=1732226929; cv=none; b=gucioKfVvzXSLlj6nSeVEZ4YO4KGoU3X+ynyUprDrNdSPboOHOx07bxcy/tx1sL3vFoW5RRtU3x71rXUZVO+LcjxDPsqzYXqwniKTBZtTwx/0XaD1c5WUD0KujdsaUObvWjj9BVXbdPdk8P0bWy9WsxxWxItqtAZX1YbSd5G6Fc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732226578; c=relaxed/simple;
-	bh=+q3J5+26S3qLOW3VlhEi8UKAtf0KbbS5+fxznIzyn4o=;
+	s=arc-20240116; t=1732226929; c=relaxed/simple;
+	bh=rAzXnHe2SBhDMw27QAAIXDlh7GeOePkPJvRWdVpqQz0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CNcwujJsGzjw0BLuBoVVgtr/OBrk29fD3ASH9plJyURPbyYPLWPvtmIsSxwuAXMXBLavM14xRq+LCnQFp33tf5jhi0CvU2HJS4sUq6w/xEGMwDkLTPjl3xKkh8xTZ6w0U5Tn9kyUtrvN3BpJc9bDFylZKDmA1H6B0MN/LtZAzwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Gvv1AdRv; arc=none smtp.client-ip=209.85.167.48
+	 Content-Type:Content-Disposition:In-Reply-To; b=KvGi3IKFBFY0jPfRDSaaDCkCa3LytsKh/6mZmow1RLYxLmtOChkzYtoXjuyTGEAalGArCks/lyoCzP9m4lA/CocLQVQlmpowfxQP6V2mn4MmuEUAByoRqxLe9e2tP5D3qxSwSblvQz23yZyi6pxbwNb1NS+xwXoYv0QSbibltEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kNFoYxws; arc=none smtp.client-ip=209.85.167.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-53da3545908so1652614e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Nov 2024 14:02:56 -0800 (PST)
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-53da5a27771so1662697e87.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Nov 2024 14:08:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732226575; x=1732831375; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1732226926; x=1732831726; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=XyZbodUlxaaIOLbLNj0ESoIe1vXf8L/biFz6rscYqaI=;
-        b=Gvv1AdRvnQ3JW7sXWmRhbnglMO6koNG6iRC7OGsVqbdSoh/sslHAeWae6trICT/VAf
-         1QglIWWOHlWoIknR7uUDkSdRpprrbocnE/pL4IC8hOcUByvSDDUj2fYkUj907n4mM1IM
-         Nh92/KPZCf48Cj5qokaSyFLCNNey5TLHtCnwBx582jeIUE+QVs427FKhDRVL/nP4JmJL
-         FtJuNmNlkjq0QtP5lwJMKvkd7S5h18Tscw5rGirgSTPuz7IbUb4yIza9eOqdbLMuMd7x
-         G6pjMDj9u99GoOM6GSMJgr9+AOYFq+WfmZeHR4jMaf3weVjgwYpe2H4Vliz7ZUFpsPFw
-         5X7Q==
+        bh=OkX+U05RiYpd3FpHw3ImL6zcHYL+a4J2Aov+jcxxZh4=;
+        b=kNFoYxwsnIgeumw31gwWeCytcWiOZclfqX3hbV+mUbo9IToAEr9Buyuedg4p+3Y3e3
+         4FDFgRgbc9oio2lNcXW0ky9yY+16h8bPE7SPo+t1M7eqwVlwV+2CQyvLEvDnjUJSyQrP
+         Th+TGSOQpsfP9/oiFAKVMVrj74aoW6qSqDkm+zViL4Mkfc7qjli89nIamZzncvNWNgam
+         uknBmNZsLcmhl9tJI4G2bq7VfsekYylRh08K+vBZam+bQsGOApHNcaUWOfd1X5alAK07
+         H/T+mKLlHCH+Rsu2QCaptt7Hz/BnnV9nXx2VIzTJEGkdBTtbqZA9MhtmKO0nRER3Kp5x
+         kVwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732226575; x=1732831375;
+        d=1e100.net; s=20230601; t=1732226926; x=1732831726;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=XyZbodUlxaaIOLbLNj0ESoIe1vXf8L/biFz6rscYqaI=;
-        b=rBYqNK7dKH45jEfvAQlMj9f/YQyiU/R7Tm8ZkpfoZTkbJoFZqYOhGel9DpGQPms77U
-         /C1WLRojhbLo2ksyM7S7mRzdmuz1WY/Qaa90S4RObEUNTmZ7+OJLhI+hnCPYKkr4NX/9
-         QxcEULCsFE2kXO6djHr/V1w97kIvixmBvOaSlLgYQvl0+WFS2GiFTKhsWS6yKDk+QfZU
-         CAPRMFSnymV9UpMJa7tjScJFXdSqyV/YtTyUqQ2P1UcQ5hi2J/ro6z5ruu5rTvL70PSw
-         kbiCwpJ/A1UL58IXgTJOGr7eI+iKYVtG5ZoWYXODf/Pq4mDwLCRJexgYxHxzTnPKL5Db
-         T9YQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVdAsa2haxn+NVn5kxgymvUhA5FEsiSLjCD7fMKy+lPvpTr6ahwoIDrkM4wYFGltoMOvLCe16N1mH7E3Z4Y@vger.kernel.org
-X-Gm-Message-State: AOJu0YyjxnJSTVELhwnLMTdkY4ZyJNXjlQr7zkZvhT3K3Jxk/Ud9qGVH
-	w26M7pbqlpCTrzYGdJYZM7vh08OWfdyNOPs71E39H67zhcl0BcoUYIQRyi4C+ik=
-X-Gm-Gg: ASbGncvjRrTXoPFk5iN0M3BTzyieRsT+ITXbSEyK1i1TNpoHFUemElqe/Qq+fScVU/f
-	d6xT2818iN8xn1YIfXyg+u7VTBscF84QotIwZ1v6hVnNIGcH861s6kstQES6VhwUTjuBKLqlWjT
-	cj3yNJDcxRNfwF/Qxzt4P+HmkVur03KUwCK0dEAwfH8Jg72ODOS/oVZXxsyVuiz2iEvTBrLb/5+
-	iDMBvh4MzgQKaJaC/r4jk0sbmWtcDBWCFv2delmxLpIPzFgTTLTrsZBq/Cqf7w+vYbeM3Fb1XDc
-	jLbfZTe00J65l4o6kiHumAQt4jjVZA==
-X-Google-Smtp-Source: AGHT+IGvMp2P63eNMJFBM/uS4x5A1fplOGNXUhnBN8XcU6oi3MYCcRDHTuJfZMtxhHAmmCkZfdOtjw==
-X-Received: by 2002:a05:6512:3e23:b0:535:82eb:21d1 with SMTP id 2adb3069b0e04-53dd3baf730mr140842e87.57.1732226574803;
-        Thu, 21 Nov 2024 14:02:54 -0800 (PST)
+        bh=OkX+U05RiYpd3FpHw3ImL6zcHYL+a4J2Aov+jcxxZh4=;
+        b=f7zLjTNdvdt69Y2gyUdC+0e/crRuVEepbOyV8+v5S0JjdMPECsHi31wwn7It219Mga
+         9FAxOMMJV8uawF8tBH3B0vABcFYj4A6cO05EdKi+jho9wkWg1MgorzvabSEb2nFmohyW
+         bOXvYD56kVHza7nkoXTamGEQwbV41QfqgmCN0aZQKqs3JZdabgCbmW7wyGV5IE9gA/ix
+         SyNOnAeK9Nn48xN8h1VwH1Vx56tKznx/j5WC2DTmo2iML1iOpwDXlkTu/oeLGd+3rWOV
+         EUNJage4nDKrHMplAUirz0TYlPBSHhfs+4PiYMlcEIEhCtEleTgYBMrClzkgy1gwHl0m
+         A3kg==
+X-Forwarded-Encrypted: i=1; AJvYcCWdJsWLy3rygJfFbO30fT0xriuUVXElbgNC2XVZD/TntHV5Eakb9QfDAMzt3BJ9/iUpCBfmoldbUh9B195k@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx29f1BZNo/S5f6Wsc/YezXKWBF5gIoSPpIfkH6YyKXVl2KygZG
+	vXcOmyU1kpgnNkk7qUTIJqzzKd5DQqAflhd3Z7ZfPrTlZ5TlaycXoW8Rwnr+eAA=
+X-Gm-Gg: ASbGnctFdIo+ean7xHjJioOXYxDmkyGZv19qXaPDbiExVaeGClkiBn4iwgBZfRxiabU
+	Xb12rfe8bmZz9XatbBgq8qJrl1/Fpfr9eMsOInXKx/d18tq4nX4KhX3JDPjLYimIW2eOdZPpwIS
+	6ltb0TCBKbGnNjlt2JmERbdbJIN58qasZxhwhON2dKIy2oQuGT+meZ4YXSYeW7ePud48MC1Tg8E
+	HgMrWVljiuGhqCxZObCxhlKqs2trTrrkVzaPx2dd+XxtPenBcZ8LeI87gopi5zyRVi3Ovnt6dKL
+	bgyrgTzsCra5tkilpWdiJLbEE9gYrA==
+X-Google-Smtp-Source: AGHT+IFuSwv+GpzK+sOK+hKbldDpyos/a2WLCYStBI83LunKlMjHra2urT+tQtcpGQjiSTEPq3cXng==
+X-Received: by 2002:a05:6512:1111:b0:53d:cfd6:d49c with SMTP id 2adb3069b0e04-53dd36a0314mr255859e87.14.1732226925721;
+        Thu, 21 Nov 2024 14:08:45 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53dd24518b2sm93296e87.102.2024.11.21.14.02.52
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53dd2451862sm94277e87.78.2024.11.21.14.08.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Nov 2024 14:02:53 -0800 (PST)
-Date: Fri, 22 Nov 2024 00:02:51 +0200
+        Thu, 21 Nov 2024 14:08:44 -0800 (PST)
+Date: Fri, 22 Nov 2024 00:08:42 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
-Cc: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Odelu Kukatla <quic_okukatla@quicinc.com>, Mike Tipton <quic_mdtipton@quicinc.com>, 
-	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] interconnect: qcom: sdx75: Drop QP0 related
- interconnect and BCM nodes
-Message-ID: <cjqy5de3kkqh7qasbyow4midimgoo3qkx5zk73hc5kqy5566ps@7ukxckx5vcz5>
-References: <20241121172737.255-1-quic_rlaggysh@quicinc.com>
- <20241121172737.255-3-quic_rlaggysh@quicinc.com>
+To: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Mark Brown <broonie@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-spi@vger.kernel.org, quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com
+Subject: Re: [PATCH v1 1/1] spi: spi-geni-qcom: Add immediate DMA support
+Message-ID: <d2ybuvo676ouxhj2rejx6swlwkofycms2iwqsfcnwbfl3llbdr@4yoxxbmalpyf>
+References: <20241121115201.2191-1-quic_jseerapu@quicinc.com>
+ <20241121115201.2191-2-quic_jseerapu@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -92,212 +89,172 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241121172737.255-3-quic_rlaggysh@quicinc.com>
+In-Reply-To: <20241121115201.2191-2-quic_jseerapu@quicinc.com>
 
-On Thu, Nov 21, 2024 at 05:27:37PM +0000, Raviteja Laggyshetty wrote:
-> QP0 resource on sdx75 is managed by clk-rpmh.
-> There are no interconnect clients voting for QP0, hence dropping the
-> redundant nodes from topolgy to avoid the risk of overriding the vote
-> placed on QP0 using clk-rpmh.
+On Thu, Nov 21, 2024 at 05:22:01PM +0530, Jyothi Kumar Seerapu wrote:
+> The DMA TRE(Transfer ring element) buffer contains the DMA
+> buffer address. Accessing data from this address can cause
+> significant delays in SPI transfers, which can be mitigated to
+> some extent by utilizing immediate DMA support.
 > 
-> Signed-off-by: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
+> QCOM GPI DMA hardware supports an immediate DMA feature for data
+> up to 8 bytes, storing the data directly in the DMA TRE buffer
+> instead of the DMA buffer address. This enhancement enables faster
+> SPI data transfers.
+
+Is it supported on all GPI DMA platforms, starting from SDM845?
+
+> 
+> This optimization reduces the average transfer time from 25 us to
+> 16 us for a single SPI transfer of 8 bytes length, with a clock
+> frequency of 50 MHz.
+> 
+> Signed-off-by: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
 > ---
->  drivers/interconnect/qcom/sdx75.c |  25 -------
->  drivers/interconnect/qcom/sdx75.h | 118 +++++++++++++++---------------
->  2 files changed, 58 insertions(+), 85 deletions(-)
+>  drivers/dma/qcom/gpi.c           | 32 +++++++++++++++++++++++++++-----
+>  drivers/spi/spi-geni-qcom.c      |  7 +++++++
+>  include/linux/dma/qcom-gpi-dma.h |  7 +++++++
+
+How is this supposed to be merged? Please try to separate the patches by
+the subsystem, letting maintainers to handle possible dependencies.
+
+>  3 files changed, 41 insertions(+), 5 deletions(-)
 > 
-> diff --git a/drivers/interconnect/qcom/sdx75.c b/drivers/interconnect/qcom/sdx75.c
-> index 7ef1f17f3292..4afcdc5f25a7 100644
-> --- a/drivers/interconnect/qcom/sdx75.c
-> +++ b/drivers/interconnect/qcom/sdx75.c
-> @@ -16,15 +16,6 @@
->  #include "icc-rpmh.h"
->  #include "sdx75.h"
+> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
+> index 52a7c8f2498f..a8df1e835e27 100644
+> --- a/drivers/dma/qcom/gpi.c
+> +++ b/drivers/dma/qcom/gpi.c
+> @@ -27,6 +27,7 @@
+>  #define TRE_FLAGS_IEOT		BIT(9)
+>  #define TRE_FLAGS_BEI		BIT(10)
+>  #define TRE_FLAGS_LINK		BIT(11)
+> +#define TRE_FLAGS_IMMEDIATE_DMA	BIT(16)
+>  #define TRE_FLAGS_TYPE		GENMASK(23, 16)
 >  
-> -static struct qcom_icc_node qpic_core_master = {
-> -	.name = "qpic_core_master",
-> -	.id = SDX75_MASTER_QPIC_CORE,
-> -	.channels = 1,
-> -	.buswidth = 4,
-> -	.num_links = 1,
-> -	.links = { SDX75_SLAVE_QPIC_CORE },
-> -};
-> -
->  static struct qcom_icc_node qup0_core_master = {
->  	.name = "qup0_core_master",
->  	.id = SDX75_MASTER_QUP_CORE_0,
-> @@ -375,14 +366,6 @@ static struct qcom_icc_node xm_usb3 = {
->  	.links = { SDX75_SLAVE_A1NOC_CFG },
->  };
+>  /* SPI CONFIG0 WD0 */
+> @@ -64,6 +65,7 @@
 >  
-> -static struct qcom_icc_node qpic_core_slave = {
-> -	.name = "qpic_core_slave",
-> -	.id = SDX75_SLAVE_QPIC_CORE,
-> -	.channels = 1,
-> -	.buswidth = 4,
-> -	.num_links = 0,
-> -};
-> -
->  static struct qcom_icc_node qup0_core_slave = {
->  	.name = "qup0_core_slave",
->  	.id = SDX75_SLAVE_QUP_CORE_0,
-> @@ -831,12 +814,6 @@ static struct qcom_icc_bcm bcm_mc0 = {
->  	.nodes = { &ebi },
->  };
+>  /* DMA TRE */
+>  #define TRE_DMA_LEN		GENMASK(23, 0)
+> +#define TRE_DMA_IMMEDIATE_LEN	GENMASK(3, 0)
 >  
-> -static struct qcom_icc_bcm bcm_qp0 = {
-> -	.name = "QP0",
-> -	.num_nodes = 1,
-> -	.nodes = { &qpic_core_slave },
-> -};
-> -
->  static struct qcom_icc_bcm bcm_qup0 = {
->  	.name = "QUP0",
->  	.keepalive = true,
-> @@ -903,9 +880,7 @@ static struct qcom_icc_bcm * const clk_virt_bcms[] = {
->  };
+>  /* Register offsets from gpi-top */
+>  #define GPII_n_CH_k_CNTXT_0_OFFS(n, k)	(0x20000 + (0x4000 * (n)) + (0x80 * (k)))
+> @@ -1711,6 +1713,8 @@ static int gpi_create_spi_tre(struct gchan *chan, struct gpi_desc *desc,
+>  	dma_addr_t address;
+>  	struct gpi_tre *tre;
+>  	unsigned int i;
+> +	u8 *buf;
+> +	int len = 0;
 >  
->  static struct qcom_icc_node * const clk_virt_nodes[] = {
-> -	[MASTER_QPIC_CORE] = &qpic_core_master,
->  	[MASTER_QUP_CORE_0] = &qup0_core_master,
-> -	[SLAVE_QPIC_CORE] = &qpic_core_slave,
->  	[SLAVE_QUP_CORE_0] = &qup0_core_slave,
->  };
+>  	/* first create config tre if applicable */
+>  	if (direction == DMA_MEM_TO_DEV && spi->set_config) {
+> @@ -1763,14 +1767,32 @@ static int gpi_create_spi_tre(struct gchan *chan, struct gpi_desc *desc,
+>  	tre_idx++;
 >  
-> diff --git a/drivers/interconnect/qcom/sdx75.h b/drivers/interconnect/qcom/sdx75.h
-> index 24e887159920..3fd2bfcdce84 100644
-> --- a/drivers/interconnect/qcom/sdx75.h
-> +++ b/drivers/interconnect/qcom/sdx75.h
-> @@ -33,65 +33,63 @@
->  #define SDX75_MASTER_QDSS_ETR			24
->  #define SDX75_MASTER_QDSS_ETR_1			25
->  #define SDX75_MASTER_QPIC			26
-> -#define SDX75_MASTER_QPIC_CORE			27
+>  	address = sg_dma_address(sgl);
+> -	tre->dword[0] = lower_32_bits(address);
+> -	tre->dword[1] = upper_32_bits(address);
+> +	len = sg_dma_len(sgl);
+>  
+> -	tre->dword[2] = u32_encode_bits(sg_dma_len(sgl), TRE_DMA_LEN);
+> +	/* Support Immediate dma for write transfers for data length up to 8 bytes */
+> +	if ((spi->flags & QCOM_GPI_IMMEDIATE_DMA) && direction == DMA_MEM_TO_DEV) {
+> +		buf = (u8 *)sg_virt(sgl);
+>  
+> -	tre->dword[3] = u32_encode_bits(TRE_TYPE_DMA, TRE_FLAGS_TYPE);
+> -	if (direction == DMA_MEM_TO_DEV)
+> +		/* memcpy may not always be length of 8, hence pre-fill both dword's with 0 */
+> +		tre->dword[0] = 0;
+> +		tre->dword[1] = 0;
+> +		memcpy((u8 *)&tre->dword[0], buf, len);
 
-What prompts renumbering of all the nodes? From my POV it's perfectly
-fine to keep the indices with the holes in them.
+Drop all type conversions, they should not be necessary. memcpy()
+functions accepts void pointers.
 
-> -#define SDX75_MASTER_QUP_0			28
-> -#define SDX75_MASTER_QUP_CORE_0			29
-> -#define SDX75_MASTER_SDCC_1			30
-> -#define SDX75_MASTER_SDCC_4			31
-> -#define SDX75_MASTER_SNOC_CFG			32
-> -#define SDX75_MASTER_SNOC_SF_MEM_NOC		33
-> -#define SDX75_MASTER_SYS_TCU			34
-> -#define SDX75_MASTER_USB3_0			35
-> -#define SDX75_SLAVE_A1NOC_CFG			36
-> -#define SDX75_SLAVE_ANOC_PCIE_GEM_NOC		37
-> -#define SDX75_SLAVE_AUDIO			38
-> -#define SDX75_SLAVE_CLK_CTL			39
-> -#define SDX75_SLAVE_CRYPTO_0_CFG		40
-> -#define SDX75_SLAVE_CNOC_MSS			41
-> -#define SDX75_SLAVE_DDRSS_CFG			42
-> -#define SDX75_SLAVE_EBI1			43
-> -#define SDX75_SLAVE_ETH0_CFG			44
-> -#define SDX75_SLAVE_ETH1_CFG			45
-> -#define SDX75_SLAVE_GEM_NOC_CFG			46
-> -#define SDX75_SLAVE_GEM_NOC_CNOC		47
-> -#define SDX75_SLAVE_ICBDI_MVMSS_CFG		48
-> -#define SDX75_SLAVE_IMEM			49
-> -#define SDX75_SLAVE_IMEM_CFG			50
-> -#define SDX75_SLAVE_IPA_CFG			51
-> -#define SDX75_SLAVE_IPC_ROUTER_CFG		52
-> -#define SDX75_SLAVE_LAGG_CFG			53
-> -#define SDX75_SLAVE_LLCC			54
-> -#define SDX75_SLAVE_MCCC_MASTER			55
-> -#define SDX75_SLAVE_MEM_NOC_PCIE_SNOC		56
-> -#define SDX75_SLAVE_PCIE_0			57
-> -#define SDX75_SLAVE_PCIE_1			58
-> -#define SDX75_SLAVE_PCIE_2			59
-> -#define SDX75_SLAVE_PCIE_0_CFG			60
-> -#define SDX75_SLAVE_PCIE_1_CFG			61
-> -#define SDX75_SLAVE_PCIE_2_CFG			62
-> -#define SDX75_SLAVE_PCIE_ANOC_CFG		63
-> -#define SDX75_SLAVE_PCIE_RSC_CFG		64
-> -#define SDX75_SLAVE_PDM				65
-> -#define SDX75_SLAVE_PRNG			66
-> -#define SDX75_SLAVE_QDSS_CFG			67
-> -#define SDX75_SLAVE_QDSS_STM			68
-> -#define SDX75_SLAVE_QPIC			69
-> -#define SDX75_SLAVE_QPIC_CORE			70
-> -#define SDX75_SLAVE_QUP_0			71
-> -#define SDX75_SLAVE_QUP_CORE_0			72
-> -#define SDX75_SLAVE_SDCC_1			73
-> -#define SDX75_SLAVE_SDCC_4			74
-> -#define SDX75_SLAVE_SERVICE_GEM_NOC		75
-> -#define SDX75_SLAVE_SERVICE_PCIE_ANOC		76
-> -#define SDX75_SLAVE_SERVICE_SNOC		77
-> -#define SDX75_SLAVE_SNOC_CFG			78
-> -#define SDX75_SLAVE_SNOC_GEM_NOC_SF		79
-> -#define SDX75_SLAVE_SNOOP_BWMON			80
-> -#define SDX75_SLAVE_SPMI_VGI_COEX		81
-> -#define SDX75_SLAVE_TCSR			82
-> -#define SDX75_SLAVE_TCU				83
-> -#define SDX75_SLAVE_TLMM			84
-> -#define SDX75_SLAVE_USB3			85
-> -#define SDX75_SLAVE_USB3_PHY_CFG		86
-> +#define SDX75_MASTER_QUP_0			27
-> +#define SDX75_MASTER_QUP_CORE_0			28
-> +#define SDX75_MASTER_SDCC_1			29
-> +#define SDX75_MASTER_SDCC_4			30
-> +#define SDX75_MASTER_SNOC_CFG			31
-> +#define SDX75_MASTER_SNOC_SF_MEM_NOC		32
-> +#define SDX75_MASTER_SYS_TCU			33
-> +#define SDX75_MASTER_USB3_0			34
-> +#define SDX75_SLAVE_A1NOC_CFG			35
-> +#define SDX75_SLAVE_ANOC_PCIE_GEM_NOC		36
-> +#define SDX75_SLAVE_AUDIO			37
-> +#define SDX75_SLAVE_CLK_CTL			38
-> +#define SDX75_SLAVE_CRYPTO_0_CFG		39
-> +#define SDX75_SLAVE_CNOC_MSS			40
-> +#define SDX75_SLAVE_DDRSS_CFG			41
-> +#define SDX75_SLAVE_EBI1			42
-> +#define SDX75_SLAVE_ETH0_CFG			43
-> +#define SDX75_SLAVE_ETH1_CFG			44
-> +#define SDX75_SLAVE_GEM_NOC_CFG			45
-> +#define SDX75_SLAVE_GEM_NOC_CNOC		46
-> +#define SDX75_SLAVE_ICBDI_MVMSS_CFG		47
-> +#define SDX75_SLAVE_IMEM			48
-> +#define SDX75_SLAVE_IMEM_CFG			49
-> +#define SDX75_SLAVE_IPA_CFG			50
-> +#define SDX75_SLAVE_IPC_ROUTER_CFG		51
-> +#define SDX75_SLAVE_LAGG_CFG			52
-> +#define SDX75_SLAVE_LLCC			53
-> +#define SDX75_SLAVE_MCCC_MASTER			54
-> +#define SDX75_SLAVE_MEM_NOC_PCIE_SNOC		55
-> +#define SDX75_SLAVE_PCIE_0			56
-> +#define SDX75_SLAVE_PCIE_1			57
-> +#define SDX75_SLAVE_PCIE_2			58
-> +#define SDX75_SLAVE_PCIE_0_CFG			59
-> +#define SDX75_SLAVE_PCIE_1_CFG			60
-> +#define SDX75_SLAVE_PCIE_2_CFG			61
-> +#define SDX75_SLAVE_PCIE_ANOC_CFG		62
-> +#define SDX75_SLAVE_PCIE_RSC_CFG		63
-> +#define SDX75_SLAVE_PDM				64
-> +#define SDX75_SLAVE_PRNG			65
-> +#define SDX75_SLAVE_QDSS_CFG			66
-> +#define SDX75_SLAVE_QDSS_STM			67
-> +#define SDX75_SLAVE_QPIC			68
-> +#define SDX75_SLAVE_QUP_0			69
-> +#define SDX75_SLAVE_QUP_CORE_0			70
-> +#define SDX75_SLAVE_SDCC_1			71
-> +#define SDX75_SLAVE_SDCC_4			72
-> +#define SDX75_SLAVE_SERVICE_GEM_NOC		73
-> +#define SDX75_SLAVE_SERVICE_PCIE_ANOC		74
-> +#define SDX75_SLAVE_SERVICE_SNOC		75
-> +#define SDX75_SLAVE_SNOC_CFG			76
-> +#define SDX75_SLAVE_SNOC_GEM_NOC_SF		77
-> +#define SDX75_SLAVE_SNOOP_BWMON			78
-> +#define SDX75_SLAVE_SPMI_VGI_COEX		79
-> +#define SDX75_SLAVE_TCSR			80
-> +#define SDX75_SLAVE_TCU				81
-> +#define SDX75_SLAVE_TLMM			82
-> +#define SDX75_SLAVE_USB3			83
-> +#define SDX75_SLAVE_USB3_PHY_CFG		84
+> +
+> +		tre->dword[2] = u32_encode_bits(len, TRE_DMA_IMMEDIATE_LEN);
+> +
+> +		tre->dword[3] = u32_encode_bits(TRE_TYPE_DMA, TRE_FLAGS_TYPE);
+>  		tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_IEOT);
+> +		tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_IMMEDIATE_DMA);
+> +	} else {
+> +		tre->dword[0] = lower_32_bits(address);
+> +		tre->dword[1] = upper_32_bits(address);
+> +
+> +		tre->dword[2] = u32_encode_bits(len, TRE_DMA_LEN);
+> +
+> +		tre->dword[3] = u32_encode_bits(TRE_TYPE_DMA, TRE_FLAGS_TYPE);
+> +		if (direction == DMA_MEM_TO_DEV)
+> +			tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_IEOT);
+> +	}
 >  
->  #endif
+>  	for (i = 0; i < tre_idx; i++)
+>  		dev_dbg(dev, "TRE:%d %x:%x:%x:%x\n", i, desc->tre[i].dword[0],
+> diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
+> index 768d7482102a..53c8f6b7f3c5 100644
+> --- a/drivers/spi/spi-geni-qcom.c
+> +++ b/drivers/spi/spi-geni-qcom.c
+> @@ -472,11 +472,18 @@ static int setup_gsi_xfer(struct spi_transfer *xfer, struct spi_geni_master *mas
+>  		mas->cur_speed_hz = xfer->speed_hz;
+>  	}
+>  
+> +	/*
+> +	 * Set QCOM_GPI_IMMEDIATE_DMA flag if transfer length up to 8 bytes.
+> +	 */
+>  	if (xfer->tx_buf && xfer->rx_buf) {
+>  		peripheral.cmd = SPI_DUPLEX;
+> +		if (xfer->len <= QCOM_GPI_IMMEDIATE_DMA_LEN)
+> +			peripheral.flags |= QCOM_GPI_IMMEDIATE_DMA;
+>  	} else if (xfer->tx_buf) {
+>  		peripheral.cmd = SPI_TX;
+>  		peripheral.rx_len = 0;
+> +		if (xfer->len <= QCOM_GPI_IMMEDIATE_DMA_LEN)
+> +			peripheral.flags |= QCOM_GPI_IMMEDIATE_DMA;
+>  	} else if (xfer->rx_buf) {
+>  		peripheral.cmd = SPI_RX;
+>  		if (!(mas->cur_bits_per_word % MIN_WORD_LEN)) {
+> diff --git a/include/linux/dma/qcom-gpi-dma.h b/include/linux/dma/qcom-gpi-dma.h
+> index 6680dd1a43c6..0eb96e62a1f1 100644
+> --- a/include/linux/dma/qcom-gpi-dma.h
+> +++ b/include/linux/dma/qcom-gpi-dma.h
+> @@ -15,6 +15,11 @@ enum spi_transfer_cmd {
+>  	SPI_DUPLEX,
+>  };
+>  
+> +#define QCOM_GPI_BLOCK_EVENT_IRQ	BIT(0)
+
+Unrelated, please drop.
+
+> +#define QCOM_GPI_IMMEDIATE_DMA		BIT(1)
+
+Can GPI driver deduce whether it should use immediate DMA based on the
+transfer length?
+
+> +
+> +#define QCOM_GPI_IMMEDIATE_DMA_LEN	8
+> +
+>  /**
+>   * struct gpi_spi_config - spi config for peripheral
+>   *
+> @@ -30,6 +35,7 @@ enum spi_transfer_cmd {
+>   * @cs: chip select toggle
+>   * @set_config: set peripheral config
+>   * @rx_len: receive length for buffer
+> + * @flags: flags for immediate dma and block event interrupt support
+>   */
+>  struct gpi_spi_config {
+>  	u8 set_config;
+> @@ -44,6 +50,7 @@ struct gpi_spi_config {
+>  	u32 clk_src;
+>  	enum spi_transfer_cmd cmd;
+>  	u32 rx_len;
+> +	u8 flags;
+>  };
+>  
+>  enum i2c_op {
 > -- 
-> 2.39.2
+> 2.17.1
 > 
 
 -- 
