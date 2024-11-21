@@ -1,150 +1,199 @@
-Return-Path: <linux-arm-msm+bounces-38709-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38710-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id CC72B9D53A0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 20:53:25 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5C0409D53F8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 21:25:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 59D70B226FF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 19:53:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DFD371F229F6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 20:25:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4AA7A1C4A35;
-	Thu, 21 Nov 2024 19:53:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E4CA1D0DF7;
+	Thu, 21 Nov 2024 20:25:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l4k2SthJ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="E+qGCi6h"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-io1-f54.google.com (mail-io1-f54.google.com [209.85.166.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B55F93C47B;
-	Thu, 21 Nov 2024 19:53:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 981D81BF58;
+	Thu, 21 Nov 2024 20:25:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732218798; cv=none; b=affIviAfzO/38w4cYFfRZlwAzVTSw0Myte26qDZTMd9RbKM9b9GqcfXxY08KJa8FJIEQhTt2pMK0iesrEkmVkm0VS4U+tLNhWiMnUTADSFaKVEtGU/L1eeVUnInw6brJY01S52W2Zcvy/uMZ2KfIsMUmr4B4Yf5KNh5ISbbgPZ8=
+	t=1732220717; cv=none; b=RkwBtGpeyvI24yqnVzmsDB6ZcSwl8K2swhWt5I0w9t2oLm0qw+uGtYn73LZEnAx0FX5hQHUWDFcZD3LDE2JRu+/BMtqPE7RVCSxk8AQnPrK3/iuNok6lBy5jU044HjBWjCOruLw59DznXimrF6V8Et7qENf1ouCHaBriaTwNx1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732218798; c=relaxed/simple;
-	bh=L+PEngRCazXOIXtZ+LN5E7TP0Zee2Caw9NzrRmAHe/s=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bJET2GipngHxSj14CYO/5xQQAvL/ML4usv/WEVnQbTQ0kKZHZKCrfF1GrRKrxD1R9irUUgb8FLZglIiQjLI4UNzoRQvUMikYYCNXkuhBwnijbul3/WRT6yWO3L2FLee/3f6WAx6Q7/cPYcgr0aUETVkm6GR8XIzEJrUhCqitLAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l4k2SthJ; arc=none smtp.client-ip=209.85.166.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-io1-f54.google.com with SMTP id ca18e2360f4ac-83e870a646dso36069639f.3;
-        Thu, 21 Nov 2024 11:53:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732218796; x=1732823596; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=diAZCrMsMB3HqFx9gMbdYj2qxdjUwPEtwF8yqOBUtUA=;
-        b=l4k2SthJece5m25NkOMUbRrUjmG++Vm9NIXLnisV1x3S7dVARQv5P1bd2AZHKXc1W7
-         JQzbd/hS9f39uFLSXBG0kfY2pkJpCUNx28IMdKgiqwcd3e0ypMpZsQVtrGb9ldputud9
-         2iupk0uZuL+5174w9ulFFAa8trOM0/4A19Q+cz6dBB0kCNFUnvE15g8TYDxsHYeRC91E
-         YWnRVdV7PqOMKBMxGHoJs+9lbvGwUbUqUtwrbIgPX867z7r09LHertSIcVib1iThbPhO
-         9LWRkmco02n4VoT8JnT6QwWAOLM93pIicJkcKj6i+GcM1POVX0qdjv88gNFAt6F46JZJ
-         Basw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732218796; x=1732823596;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=diAZCrMsMB3HqFx9gMbdYj2qxdjUwPEtwF8yqOBUtUA=;
-        b=opWFnIcSqvdCovzuJJd2bX0U79+dSoRygoxIAAwxpJUDAy5rXCwb9FVLGTEsn4Kjk5
-         PU5LDl75iXu8SQZqQLyMkeUaYL32Mu1OrK1FhphcdK3rNiE/5tN6URhvGSreuOJzY4tw
-         Pr5qUd4tDill0915AiDuqL8+DZLOvybTPjZp2vfJIjplRPH1onez+SrOIgArWtJ4CUCx
-         AxdStTuyaIviPS0XF0LuN1G7LMFVvRan65mWnrd+qhsTnf+02Rq/UACBWXRu273d3J0I
-         P+RUTM6tB/QQfTxWmIvPPhBrar1+0cOBtOhDEzlFuaG8tcx8c5jYz1w7TdAOBRKmcikO
-         XjMw==
-X-Forwarded-Encrypted: i=1; AJvYcCV3pQQ154rmqBZaTWDEXvjWWSdmtWw4HNsIf651XMpWSztEORXdSJDfi/qd1pKtoPuJiyF6m0GyES4=@vger.kernel.org, AJvYcCWAroouALWTRbr4SzX1mHWnarIWOXHMmWwxifwoglqEJUNkYtbFjlPn6lWOl1RsV4wKERwVwfmUY9c8@vger.kernel.org, AJvYcCXLDjnGQGvobBV+pip4JYd+dKJ7YBDBzUl60vd8N7QgCNlhqDiwsv9vlBsSMKbVouIwe+f+V2y0B3c0gZPQ@vger.kernel.org, AJvYcCXwrMfhQR7+jg8DQge26w4rUiRnxWiWGDZPmR1ZdAVKbcNGWwskyD+iSuIM5R0ak61qg7pppFrjcQ0rqfLUSQ==@vger.kernel.org
-X-Gm-Message-State: AOJu0YxMm9WiygQpEfDpw5fmS653BxUxNgEvGjx5ihdeQ0JZ31tQdUWv
-	aGeyASZkJpg3sg5rxZRFwYK5nh3xumDC64gjpusq9tTA1QW1zDp+But4/qlKDgamvLIihW+7KEK
-	CIFseu65rxxwOHnXdNO/DVEQNxXA=
-X-Gm-Gg: ASbGnctR1HODIuvCczXsdvLtlaRGxi6wV6Cmh2wQCK+Sqv3Tejy67FQ7whbRCbzGKvl
-	pZrt4nrLh5uPLIn24lSRatUG+6p19E3rb25Nc7xx9Awxx8b6F45cmpH3T69YjeQ==
-X-Google-Smtp-Source: AGHT+IGVvKdxeJ2KfZ5TpOhV5e8CaKf2OdRVRdRq27Mf98UYeu0Bs53rOSroYiruS8NzSiyjkP/fPk3EC6WgTw+tzqg=
-X-Received: by 2002:a05:6602:3f83:b0:83d:ff89:218c with SMTP id
- ca18e2360f4ac-83ecdc8f12dmr23501839f.7.1732218795759; Thu, 21 Nov 2024
- 11:53:15 -0800 (PST)
+	s=arc-20240116; t=1732220717; c=relaxed/simple;
+	bh=xt/N1u7xQDP3nA0PEqU+LzyDhnsawogKcVfQNRe9l4s=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=WYkp2iqHioGreijgFzWKaG+CVRmLk31nTPLer00QIa+49x0dXxnzmtMuhuSXMJoBk7jo7iP1N5hcZXJICFeijctnDySLCoW9VL9AGy10MfVlHt16tLT8rUKVetfwwEV5HJ3B3EdHtTxsk3BMSw2fMmv6sRHOrEizkx2omBQytKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=E+qGCi6h; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ALH7B7C015590;
+	Thu, 21 Nov 2024 20:24:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	xt/N1u7xQDP3nA0PEqU+LzyDhnsawogKcVfQNRe9l4s=; b=E+qGCi6hCsvn9XAL
+	RCJDDuwVGYHi4vOG4kOhtX3FVFQvm3WGpZTf8BLzXF7uPla8i9Oxef8F63heXXnZ
+	cUUQ+fOy8VTsMfbQuU2LmEJy9T7va/7o3Q8SFCn2t1CE8gi/2s3xzmiAS8j0gUP/
+	XjrNwS+GPR7//F9SXMaf3OvVt/44LoW7ROyGnvsIYcueT+s7VCcNT84eeFMX4awS
+	vTpMFeSPJZjVEwe/BgBUUrfkxCjxdp3QTu/6ju/SpzPALE5DQlC0nZrmOtAP9aiQ
+	iREOo/p/kg/O4U8n+0zEeoiu9d8FmaIR+leSPGXZ8Qfzl9ipnTs4KdxiKk3S4XRj
+	wIUrXA==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4320y9j1jt-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 21 Nov 2024 20:24:56 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4ALKOtkf018777
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 21 Nov 2024 20:24:55 GMT
+Received: from [10.71.112.120] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 21 Nov
+ 2024 12:24:54 -0800
+Message-ID: <c30b77dc-0a34-4ea7-a4c0-37a5d3065ee7@quicinc.com>
+Date: Thu, 21 Nov 2024 12:24:54 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241119-topic-sm8x50-gpu-bw-vote-v2-0-4deb87be2498@linaro.org>
- <20241119-topic-sm8x50-gpu-bw-vote-v2-4-4deb87be2498@linaro.org> <CAF6AEGtBVDERQjcoXriKK3d2VZy2QMUxZZJbFdSgbpvue=0QNA@mail.gmail.com>
-In-Reply-To: <CAF6AEGtBVDERQjcoXriKK3d2VZy2QMUxZZJbFdSgbpvue=0QNA@mail.gmail.com>
-From: Rob Clark <robdclark@gmail.com>
-Date: Thu, 21 Nov 2024 11:53:03 -0800
-Message-ID: <CAF6AEGtrs8175V1+onoH4p6u4benT_tzz-Gg3JkNA+WE9Ltcsw@mail.gmail.com>
-Subject: Re: [PATCH v2 04/11] drm/msm: adreno: add GMU_BW_VOTE feature flag
-To: Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Akhil P Oommen <quic_akhilpo@quicinc.com>, Viresh Kumar <vireshk@kernel.org>, 
-	Nishanth Menon <nm@ti.com>, Stephen Boyd <sboyd@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
-	Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Connor Abbott <cwabbott0@gmail.com>, linux-pm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	devicetree@vger.kernel.org
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v30 02/30] xhci: sec-intr: add initial api to register a
+ secondary interrupter entity
+To: Mathias Nyman <mathias.nyman@linux.intel.com>,
+        <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
+        <perex@perex.cz>, <conor+dt@kernel.org>, <dmitry.torokhov@gmail.com>,
+        <corbet@lwn.net>, <broonie@kernel.org>, <lgirdwood@gmail.com>,
+        <krzk+dt@kernel.org>, <pierre-louis.bossart@linux.intel.com>,
+        <Thinh.Nguyen@synopsys.com>, <tiwai@suse.com>, <robh@kernel.org>,
+        <gregkh@linuxfoundation.org>
+CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-input@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-doc@vger.kernel.org>
+References: <20241106193413.1730413-1-quic_wcheng@quicinc.com>
+ <20241106193413.1730413-3-quic_wcheng@quicinc.com>
+ <9b86a2c9-de7f-46b7-b63d-451ebc9c87dd@linux.intel.com>
+ <2384956c-7aae-4890-8dca-f12e9874709f@quicinc.com>
+ <17890837-f74f-483f-bbfe-658b3e8176d6@linux.intel.com>
+Content-Language: en-US
+From: Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <17890837-f74f-483f-bbfe-658b3e8176d6@linux.intel.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 7bB-EHy_Uf1hGCZKbwD638GxX6IKNyiW
+X-Proofpoint-ORIG-GUID: 7bB-EHy_Uf1hGCZKbwD638GxX6IKNyiW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ phishscore=0 impostorscore=0 suspectscore=0 lowpriorityscore=0
+ mlxlogscore=999 spamscore=0 mlxscore=0 malwarescore=0 clxscore=1015
+ adultscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411210153
 
-On Thu, Nov 21, 2024 at 11:50=E2=80=AFAM Rob Clark <robdclark@gmail.com> wr=
-ote:
+Hi Mathias,
+
+On 11/21/2024 11:15 AM, Mathias Nyman wrote:
+> On 21.11.2024 3.34, Wesley Cheng wrote:
+>> Hi Mathias,
+>>
+>> On 11/20/2024 6:36 AM, Mathias Nyman wrote:
+>>> On 6.11.2024 21.33, Wesley Cheng wrote:
+>>>> From: Mathias Nyman <mathias.nyman@linux.intel.com>
+>>>>
+>>>> Introduce XHCI sec intr, which manages the USB endpoints being requested by
+>>>> a client driver.  This is used for when client drivers are attempting to
+>>>> offload USB endpoints to another entity for handling USB transfers.  XHCI
+>>>> sec intr will allow for drivers to fetch the required information about the
+>>>> transfer ring, so the user can submit transfers independently.  Expose the
+>>>> required APIs for drivers to register and request for a USB endpoint and to
+>>>> manage XHCI secondary interrupters.
+>>>>
+>>>> Driver renaming, multiple ring segment page linking, proper endpoint clean
+>>>> up, and allowing module compilation added by Wesley Cheng to complete
+>>>> original concept code by Mathias Nyman.
+>>>>
+>>>> Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+>>>> Co-developed-by: Wesley Cheng <quic_wcheng@quicinc.com>
+>>>> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+>>>> ---
+>>>>    drivers/usb/host/Kconfig          |  11 +
+>>>>    drivers/usb/host/Makefile         |   2 +
+>>>>    drivers/usb/host/xhci-sec-intr.c  | 438 ++++++++++++++++++++++++++++++
+>>>>    drivers/usb/host/xhci.h           |   4 +
+>>>>    include/linux/usb/xhci-sec-intr.h |  70 +++++
+>>>>    5 files changed, 525 insertions(+)
+>>>>    create mode 100644 drivers/usb/host/xhci-sec-intr.c
+>>>>    create mode 100644 include/linux/usb/xhci-sec-intr.h
+>>>>
+>>>> diff --git a/drivers/usb/host/Kconfig b/drivers/usb/host/Kconfig
+>>>> index d011d6c753ed..a2d549e3e076 100644
+>>>> --- a/drivers/usb/host/Kconfig
+>>>> +++ b/drivers/usb/host/Kconfig
+>>>> @@ -104,6 +104,17 @@ config USB_XHCI_RZV2M
+>>>>          Say 'Y' to enable the support for the xHCI host controller
+>>>>          found in Renesas RZ/V2M SoC.
+>>>>    +config USB_XHCI_SEC_INTR
+>>>> +    tristate "xHCI support for secondary interrupter management"
+>>>> +    help
+>>>> +      Say 'Y' to enable the support for the xHCI secondary management.
+>>>> +      Provide a mechanism for a sideband datapath for payload associated
+>>>> +      with audio class endpoints. This allows for an audio DSP to use
+>>>> +      xHCI USB endpoints directly, allowing CPU to sleep while playing
+>>>> +      audio.  This is not the same feature as the audio sideband
+>>>> +      capability mentioned within the xHCI specification, and continues
+>>>> +      to utilize main system memory for data transfers.
+>>>
+>>> This same API should be used for the hardware xHCI sideband capability.
+>>> We should add a function that checks which types of xHC sideband capability xHC
+>>> hardware can support, and pick and pass a type to xhci xhci_sec_intr_register()
+>>> when registering a sideband/sec_intr
+>>
+>> Just to make sure we're on the same page, when you mention the term sideband capability, are you referring to section 7.9 xHCI Audio Sideband Capability in the xHCI spec?  If so, I'm not entirely sure if that capability relies much on secondary interrupters.  From reading the material, it just seems like its a way to map audio endpoints directly to another USB device connected to the controller? (I might be wrong, couldn't find much about potential use cases)
 >
-> On Tue, Nov 19, 2024 at 9:56=E2=80=AFAM Neil Armstrong
-> <neil.armstrong@linaro.org> wrote:
-> >
-> > The Adreno GMU Management Unit (GNU) can also scale the DDR Bandwidth
+> Yes, that is the one, 7.9 xHCI Audio Sideband Capability.
 >
-> nit, s/GNU/GMU/
-
-And I guess you meant "GPU Management Unit" (presumably this isn't yet
-another recursive acronym
-
-Same comment in the next commit
-
+> I had that in mind when I started writing the sideband API.
+> This is why registering a sideband and requesting a secondary interrupter
+> are done in separate functions.
+> The concept if still similar even if '7.9 Audio Sideband Capability' doesn't
+> need a secondary interrupter, we want to tell xhci driver/xHC hardware that
+> one connected usb device/endpoint handling is offloaded somewhere else.
 >
-> > along the Frequency and Power Domain level, but by default we leave the
-> > OPP core vote for the interconnect ddr path.
-> >
-> > While scaling via the interconnect path was sufficient, newer GPUs
-> > like the A750 requires specific vote paremeters and bandwidth to
-> > achieve full functionality.
-> >
-> > While the feature will require some data in a6xx_info, it's safer
-> > to only enable tested platforms with this flag first.
-> >
-> > Add a new feature enabling DDR Bandwidth vote via GMU.
-> >
-> > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> > ---
-> >  drivers/gpu/drm/msm/adreno/adreno_gpu.h | 1 +
-> >  1 file changed, 1 insertion(+)
-> >
-> > diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/=
-msm/adreno/adreno_gpu.h
-> > index 4702d4cfca3b58fb3cbb25cb6805f1c19be2ebcb..394b96eb6c83354ae008b15=
-b562bedb96cd391dd 100644
-> > --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> > +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> > @@ -58,6 +58,7 @@ enum adreno_family {
-> >  #define ADRENO_FEAT_HAS_HW_APRIV               BIT(0)
-> >  #define ADRENO_FEAT_HAS_CACHED_COHERENT                BIT(1)
-> >  #define ADRENO_FEAT_PREEMPTION                 BIT(2)
-> > +#define ADRENO_FEAT_GMU_BW_VOTE                        BIT(3)
-> >
-> >  /* Helper for formating the chip_id in the way that userspace tools li=
-ke
-> >   * crashdec expect.
-> >
-> > --
-> > 2.34.1
-> >
+
+Ah, ok...now I understand a bit more on what you were trying to do.  When you do eventually introduce the audio sideband capability, you'd need to modify the endpoint APIs to also issue the 'Set Resource Assignment' command with the proper device/endpoint being offloaded.  Initially, when Thinh brought up this section in the xHCI spec, I couldn't find any use cases that utilized that capability, so it was a bit unclear to me what it was meant for.  Now you've explained it a bit more, I think I can get the gist of it.
+
+
+> I don't think we should write another API for that one just because more is
+> done by firmware than by xhci driver.
+>
+> The only change for now would be to add some "sideband_type" parameter to
+> xhci_sec_intr_register(struct usb_device *udev, enum sideband_type), fail the
+> registration if isn't "software", and save the type in struct xhci_sec_intr
+>
+> I'll add hardware sideband support (7.9 Audio Sideband) later, but it would be
+> nice to not change the API then.
+>
+> The name change from sideband to sec-intr is a bit unfortunate with this in
+> mind. Was there some reason for it?
+>
+
+This was because I wasn't too sure how the audio sideband and this driver was related, but I get what you are trying to do now.  I can change it back to the original xhci-sideband, as the name change was something that happened on this revision.  I will fix the corner case I mentioned WRT the xhci_discover_or_reset_device() scenario, add the basic sideband type handling and rename this back to xhci-sideband in the next rev.
+
+Thanks
+
+Wesley Cheng
+
 
