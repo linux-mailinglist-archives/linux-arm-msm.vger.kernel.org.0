@@ -1,149 +1,190 @@
-Return-Path: <linux-arm-msm+bounces-38577-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38578-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6B0B69D44F1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 01:37:35 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F26C69D453A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 02:17:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8E57EB2146B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 00:37:32 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5A492B22250
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 01:17:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 895C62309B6;
-	Thu, 21 Nov 2024 00:37:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C90B2309BD;
+	Thu, 21 Nov 2024 01:17:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Sy/kmpcT"
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="WTfy/D8l";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="sHoe/EPT";
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="WTfy/D8l";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="sHoe/EPT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1E132309A0
-	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Nov 2024 00:37:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5136729B0;
+	Thu, 21 Nov 2024 01:17:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732149446; cv=none; b=HJ4K8YNobJZiCNwl0ZnUSC0117Y/EltmyGFRQXsCDp4cnsgBLSZbqxZuYgo+5oSS5+0tw9LcwIrxemNZIYaB+rvT+Vi7AAgiNMH9vVhdSYxxzaw/nI8rlchLdaEz0UiZzda5aE2sJ+iIlD47fYaYH958H+4Z5xBUr4zRbJF/2fk=
+	t=1732151847; cv=none; b=Ks3yRs5rj6c1aXp/Mg8NtGIJHfD8REf1BIcD6P0KAJ6iUbLVIdlzVft9jXj4fRBgSHVIXIj8TCAyLY8lJsG2rEV/tAUHwCKrbNwNLXRFJb7WFy2GysSJ30hqHvKaz4gb+7d5tus5iEnUeoOOiO1rRJ0mJ/Iu2xVVX3OQDncP/iE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732149446; c=relaxed/simple;
-	bh=U1S0roCBZy6Yr/IN5az14AchlrK43tHpIByXaXPoH0A=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=oXBKcmH1ie0jFL8ql+MfnEj+qFE9vdEB8/vM36UI6acAq1DXPCyy6cd19saD7P3gpyKKFsUpEAoJWYqdyfgz+O5qZffM0WLBZ6q8N2RDSrCe6jXvKeBXX7IGyUhUtqg8NB1R1f3Nc+1jd636jqB7ZlZ7pm0AI8GMtD+4BLeHTso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Sy/kmpcT; arc=none smtp.client-ip=209.85.208.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2f75d529b49so601631fa.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Nov 2024 16:37:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732149443; x=1732754243; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=YAuXluMpfSh0qDO+UckfWrXerNoxRK+af2VJkTt6Y4g=;
-        b=Sy/kmpcTwZM+69COId67IPOCa4YugyAXsuSPVcoY9yHEwBVGZ6IVnT1BQIVMfZdkc6
-         gFITm+wtk22RirvoctJ3TXWj4sa9gChSlZrVcPlXzjUJp1ef4QcN29+NRrWuxZ5j2gKY
-         Yl6tCVCqZQyPEs5iF7JqW8wckob9ds/wN96GCcaUvvErJmj7jxULtP09JQ0tfdYU/fDl
-         hVXHFgmv4vDulJ5Lq7GDHaoeJC86/hZgIIPBPgFWZ+USVm7gTsHzYOnMlBvGq6cX50Nj
-         trEncmtv9rArPj584tvykHjp4KGJkqtFzssMhcHcezm5ssjjpDkSZbUhE+qiIJtvdkuu
-         DzWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732149443; x=1732754243;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YAuXluMpfSh0qDO+UckfWrXerNoxRK+af2VJkTt6Y4g=;
-        b=BX/c1XBE4XKy7YTAVnWhjqU40OToLc4YKIrMJx/mhW/hjKw3f10CPQyJOJPfgwPrPD
-         Uvw5ZlKHp5wYKw0lIrdbgD2oiNOAFZicJOWtf/0FiWo1gYTh7LhoAZk7xDdEhu3/LVad
-         r83jRQhZoxo+nNpweVI6MF7OqcH2bJeueO/uyLIgk7LqyZNZkzZBZhlBWzwc9Qd67jHT
-         ae0A1a/Q2F+qCrFALSZoab3LB5H9JtGGU2wYS3yV2rqE0Wq28BmAJw45zY5StEh7EogV
-         /6ndzHB6Z1Qx7XYfiVVhLksXs8ggTIdVH86g4RNgZYibmrqT4r9uJOoh63ml8yd8R2fe
-         NL9w==
-X-Forwarded-Encrypted: i=1; AJvYcCVJuW60d3+QqQX5GegsBOModqJGzGp9ZTT6yR/Y9QX/hSuIRt5XVZSVqI/Tg1Q4cYwruxJcX7YOzIYbNbQG@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx5Y0ASHfDvxvvMEW5Jp7Rlm6xNGQwAuFlU6ULTG+ezQMoxnVsm
-	PQ0WglVuWQFV4JhBqKXxKSZze5/6ViIxqfzThISJOOmu+ccxNXapZqvNraS718c=
-X-Gm-Gg: ASbGncvpFLAtJIjv2A2mRgpVHBgChdHyUFHKWxVjsX7zpKAdqH0ogKwdJnVklxpaimP
-	qdE3NuFUwNcTqUf6Fqdsq35ScfO5bhgDgdk6ArtJSbBusGPRDmzjo8LaPgTeG2zrYN8rmfNIB5+
-	dWQ7skdCI6PacpGEvCTKeYQANdWMye+o1I/bH4oljKNlr/rsSsaBe3TW3RkVFyT3GiTOCV9gMtZ
-	OJewv24Rd7KkKYsk00kY1qADDfOTLOL3YJJ6ADa/MMPCXXTzDfspalEOjHAMe2qaJTAruXXIxgs
-	ptQ56Uu9WLRs8GrhGQO22KKUIgj7
-X-Google-Smtp-Source: AGHT+IFN9O08F0W2wl6yka9ElBfiou3gnBgywoKZF/lU+i/vNAQy12evwkDojEAvUqtsv0eO+fwRIA==
-X-Received: by 2002:a05:6512:3d12:b0:53d:a8a5:82d2 with SMTP id 2adb3069b0e04-53dc13281a8mr604562e87.3.1732149442659;
-        Wed, 20 Nov 2024 16:37:22 -0800 (PST)
-Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53dbd472766sm773787e87.204.2024.11.20.16.37.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 20 Nov 2024 16:37:21 -0800 (PST)
-Message-ID: <f903025b-08ff-422c-a93e-fad911a7ee43@linaro.org>
-Date: Thu, 21 Nov 2024 02:37:19 +0200
+	s=arc-20240116; t=1732151847; c=relaxed/simple;
+	bh=vyXbvtxhyPtbV5ayWzvanIDpgaq/AHNMfKErujSAQMo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mMZ14QZhB8FN2/5krSssT3jSBx9NwNqxF6mUb4mkf4NxLuyOB57/z8P08xo1YL5MDIGpjQEsx9qzkiEQ65htgBqsb9DUv+UfGrTmTaSuath9tSMHlHkXC6MOW3p9Rd1h45WEfOmhhAQh146gmZseSSImrvLa7ZlA3q3qdr7WUSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz; spf=pass smtp.mailfrom=suse.cz; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=WTfy/D8l; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=sHoe/EPT; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=WTfy/D8l; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=sHoe/EPT; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 33ACB218E8;
+	Thu, 21 Nov 2024 01:17:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1732151843;
+	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
+	 cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=qLQJlwjvQ2Dbsxi9xrvB3E+w9FqEmidg2MsLHAlaruU=;
+	b=WTfy/D8lXXnS1RCYj/kN8ybXIRGdK9y77RgIIzyC2F+xZxevqn2DN5XCMEVnC/Do6cMl0H
+	M2AJae9CvW7tMxtUVDf0Ipiqi8tjNeii2nWDh9zG2MCCsJ8B8NebR1eH2oOVVAu9q8jRFX
+	271J45VO7uiuqFTr+2DFW7/HtOhaQy4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1732151843;
+	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
+	 cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=qLQJlwjvQ2Dbsxi9xrvB3E+w9FqEmidg2MsLHAlaruU=;
+	b=sHoe/EPT2FszmRf+WJP9eUtps0tEwuPNJ1TVh409aaJnFORCnA18Tw2+KbajPc5Kla0CRO
+	QcJELP0LMHFpTNDg==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1732151843;
+	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
+	 cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=qLQJlwjvQ2Dbsxi9xrvB3E+w9FqEmidg2MsLHAlaruU=;
+	b=WTfy/D8lXXnS1RCYj/kN8ybXIRGdK9y77RgIIzyC2F+xZxevqn2DN5XCMEVnC/Do6cMl0H
+	M2AJae9CvW7tMxtUVDf0Ipiqi8tjNeii2nWDh9zG2MCCsJ8B8NebR1eH2oOVVAu9q8jRFX
+	271J45VO7uiuqFTr+2DFW7/HtOhaQy4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1732151843;
+	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
+	 cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=qLQJlwjvQ2Dbsxi9xrvB3E+w9FqEmidg2MsLHAlaruU=;
+	b=sHoe/EPT2FszmRf+WJP9eUtps0tEwuPNJ1TVh409aaJnFORCnA18Tw2+KbajPc5Kla0CRO
+	QcJELP0LMHFpTNDg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 93B9A1376E;
+	Thu, 21 Nov 2024 01:17:22 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id cNZzHyKKPme0XgAAD6G6ig
+	(envelope-from <pvorel@suse.cz>); Thu, 21 Nov 2024 01:17:22 +0000
+Date: Thu, 21 Nov 2024 02:17:20 +0100
+From: Petr Vorel <pvorel@suse.cz>
+To: Masahiro Yamada <masahiroy@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	linux-kbuild@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+	Rob Clark <robdclark@gmail.com>
+Subject: Re: [PATCH v4 1/2] init/Kconfig: add python3 availability config
+Message-ID: <20241121011720.GA69389@pevik>
+Reply-To: Petr Vorel <pvorel@suse.cz>
+References: <20241120204125.52644-1-pvorel@suse.cz>
+ <CAK7LNASYr+pjUs-W40d_Gc+vP67nX7NHXyE0AnOpXxXgxrCtqQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/6] dt-bindings: media: Add qcom,x1e80100-camss binding
-Content-Language: en-US
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Loic Poulain <loic.poulain@linaro.org>, Robert Foss <rfoss@kernel.org>,
- Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Jagadeesh Kona <quic_jkona@quicinc.com>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-media@vger.kernel.org, linux-clk@vger.kernel.org
-References: <20241119-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v1-0-54075d75f654@linaro.org>
- <20241119-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v1-2-54075d75f654@linaro.org>
- <92f3f608-1ca6-4c41-9406-28c7ad589872@linaro.org>
- <66d1c50f-ebfc-41c7-95a4-5d555b336da4@linaro.org>
- <bb58d02f-9ed6-476f-8bc6-ad56cb35e37f@linaro.org>
- <91afb347-e8ee-4a97-bd8b-9a1413051cb9@linaro.org>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <91afb347-e8ee-4a97-bd8b-9a1413051cb9@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAK7LNASYr+pjUs-W40d_Gc+vP67nX7NHXyE0AnOpXxXgxrCtqQ@mail.gmail.com>
+X-Spam-Score: -3.50
+X-Spamd-Result: default: False [-3.50 / 50.00];
+	BAYES_HAM(-3.00)[99.99%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	MID_RHS_NOT_FQDN(0.50)[];
+	HAS_REPLYTO(0.30)[pvorel@suse.cz];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	RCVD_TLS_ALL(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	ARC_NA(0.00)[];
+	TO_DN_SOME(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	FUZZY_BLOCKED(0.00)[rspamd.com];
+	FROM_HAS_DN(0.00)[];
+	FREEMAIL_CC(0.00)[vger.kernel.org,linaro.org,linux-foundation.org,lists.freedesktop.org,gmail.com];
+	DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
+	FROM_EQ_ENVFROM(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.cz:replyto,suse.cz:email];
+	RCVD_COUNT_TWO(0.00)[2];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	REPLYTO_EQ_FROM(0.00)[]
+X-Spam-Flag: NO
+X-Spam-Level: 
 
-On 11/21/24 01:27, Bryan O'Donoghue wrote:
-> On 20/11/2024 23:02, Vladimir Zapolskiy wrote:
->> like "vdd-csiphy-0p9-supply" and "vdd-csiphy-1p2-supply"?
-> 
-> In theory, however I'd like to avoid adding endless strings of new names
-> into the driver code for each different power input.
+> On Thu, Nov 21, 2024 at 5:41 AM Petr Vorel <pvorel@suse.cz> wrote:
 
-I don't understand this argument, it's the same degree of endlessness as
-the endlessness of new designed SoCs. Should it be stopped now or what's
-the point here?
+> > It will be used in the next commit for DRM_MSM.
 
-My argument is to represent the actual hardware instead of copying errors.
+> > Suggested-by: Rob Clark <robdclark@gmail.com>
+> > Signed-off-by: Petr Vorel <pvorel@suse.cz>
+> > ---
+> > Changes v3->v4:
+> > * Move definition to the end of the file
 
-> We can add this additional string name though in the interim between now
-> and refactor for the PHY API.
 
-I don't see it as a good reason to copy an easy to correct mistake.
+> I prefer to not check the tool.
 
->> Also you put a description like "supply to PHY refclk pll block", but if I
->> remember correctly once you've said that the datasheet (of another SoC)
->> does not give any clues about the usage of the supply, thus it invalidates
->> the given description.
-> 
-> I'm surmising by extrapolation - that's "probably" what those are just
-> at different voltage levels based on previous iterations of this PHY.
+Ack.
 
-But this is proven to be wrong, let me kindly ask you to align with the SoC
-documentation here.
+> Why don't you install python3?
 
-> I'm just as happy not to describe this or to describe it as no mor that
-> the 1.2v supply etc.
-> 
+Everybody installs it when it's required, the question is how to inform about
+the dependency.
 
-Thank you for understanding.
+There build environments are minimal environments:
+* chroot (e.g. cross compilation)
+* container
 
---
-Best wishes,
-Vladimir
+These are used by both developers and distros.
+
+Kind regards,
+Petr
+
+> >  init/Kconfig | 3 +++
+> >  1 file changed, 3 insertions(+)
+
+> > diff --git a/init/Kconfig b/init/Kconfig
+> > index fbd0cb06a50a..c77e45484e81 100644
+> > --- a/init/Kconfig
+> > +++ b/init/Kconfig
+> > @@ -2047,3 +2047,6 @@ config ARCH_HAS_SYNC_CORE_BEFORE_USERMODE
+> >  # <asm/syscall_wrapper.h>.
+> >  config ARCH_HAS_SYSCALL_WRAPPER
+> >         def_bool n
+> > +
+> > +config HAVE_PYTHON3
+> > +       def_bool $(success,$(PYTHON3) -V)
+> > --
+> > 2.45.2
 
