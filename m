@@ -1,144 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-38629-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38630-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 68F9C9D48F7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 09:38:30 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8A6209D4927
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 09:47:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2F5D9282B69
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 08:38:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4F25F282B21
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 08:47:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43F0E1953AD;
-	Thu, 21 Nov 2024 08:38:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB3D713BC3F;
+	Thu, 21 Nov 2024 08:47:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="FpiIU6sb"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="MdTE5Fe7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87FC61C9EDC;
-	Thu, 21 Nov 2024 08:38:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0534E230983;
+	Thu, 21 Nov 2024 08:47:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732178304; cv=none; b=gA3/SwSsW09qVxu49fkqG92Fsa37XrjzlzvkoGKCmAQKv7qzrzgRlUgWNa2B/6uLtD3B+0Yx7WjNphgbBLTJVa24stP/H2bI8euMI9M7d6+G93ceNCnpDThj5kwHv6ZzBN6faW2GhRxngAthryBfXxAeL7ch1RmzZ8L0UeIIcNc=
+	t=1732178853; cv=none; b=gQWetefA1ePlnhbtgVOEe/BIWhflpr11t172mVFh7o4DysJFc+ZHzq3C/8OxvQHPb+IYhbozXEroQg5jN0Ff8LTPEwNTpmQLG+r8g4zXZqr86dj30+NA19rXrsFZPz7+Nh3cVFxCkqn9hwAzzWh04yhN4AKE65nsEik9GjaVF4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732178304; c=relaxed/simple;
-	bh=4Mj935QMoc0VRJ/01ktsGEBOR95L286nivQ5m8U2iw0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=gpyYa/0HvIWEQI3IuJbsiwUsmTqB1gZ41tnM5N0v8vFqM/VLwtvTMiIW9cEO+2yqQY5YSMyqTw+CYrFmyCGYZYI98yAGx0FDH1ESpOkB0NljY0NCpiB8weoqVZFrLFuC328eey4zh2ktoCFDLeIB9OqdHHURoqQ+DNlf54iyhuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=FpiIU6sb; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1732178853; c=relaxed/simple;
+	bh=P+DEEWV7wpcPXcZOQIRy/GDTFJ+9SPJ+Awof+SdrZ0c=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ELYNV5Hql5JzAc+toTRVOWccpeOVlQdIhuDzuQkN3cVUbNU+vh1aFf2pdV6UE1pDPs6G3NSZIC5IyLuas7TOKp91A6mlFlgPMGS3FjPFtTsLcIexyF/rDRaLQ683WJ3Vr8W8jZQBxoTWx9RqRgbbVKf5RibWWZMFE8XhB4q/m+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=MdTE5Fe7; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AL7xaoc015290;
-	Thu, 21 Nov 2024 08:38:01 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AKK0D42007592;
+	Thu, 21 Nov 2024 08:47:27 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	tB0KnnanTcHNjDGVYNGLDMZfTGK9vcYncMo3+GSBNxU=; b=FpiIU6sb+Atbrrtv
-	RvWijmTAK6Elnu3X0A5qS0tKbPyqKtxenRYT7/equZ1v7UEq97eOmw4TFRkj8+Vl
-	c6LPJ0mltkgnisTCV0rrUFPwywopvDASrK5OwUjSbR4qVTvZIhtVRxXqebIZnh0+
-	vEAXMLVLEZkOBezkpH1sTukf5QJSmc042DjkAAN7ZMl6FGadImoXQmeVEmHBs34T
-	M0oYDADllPEn3efbnM8T9ncACL5Sssvk045Mj/cB4htm3pV178A+jl6DKjPYxBX8
-	kmTUsX3gsmiH/TJR09O/Kw3TkdukvzouIsijyvlrb7ASsM7trnYzvqOJI7lMOd2a
-	VLh/5Q==
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=cVw8DRemM26GgC3mNCihCe
+	sQFkVPhAJEylz8ayd0rNM=; b=MdTE5Fe7sreMKvagh2Ci4bVFGqDSwbm8rhEr3S
+	xDw9DaaTU9ihPTFZw7SlRRjMhuzTUdBoIKj5qyWOKKyJ1SrFodaXqSjZH4Hq8ynT
+	woGIpSAlz2vx4yHxREtc6/jQbXPPDOFwGGqkVySlvtw4a+LVNmyheTy1ObeDfMpC
+	lorcHRmgYo75LpqU2hF6ZeGZxdVbAe/q1RC3BCfj5X50+0WuESfGij4I63OUkA8y
+	USZb3ZBTpBZE+LjXT9269WeD9XaKjw6fatTpxqKzzWpelrs7aCWSsVgAYiPHY/Bw
+	V0OCU2s1saqVS8ZFd6ODCnDqu8FfzVSm+HAr9QYp8bGIaEaQ==
 Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4320y9g4tv-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4318uvkvfk-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 21 Nov 2024 08:38:01 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AL8c0LZ029995
+	Thu, 21 Nov 2024 08:47:27 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AL8lQr4012489
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 21 Nov 2024 08:38:00 GMT
-Received: from [10.64.68.72] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 21 Nov
- 2024 00:37:53 -0800
-Message-ID: <242451d6-2b77-417c-bd98-4455f739dc0d@quicinc.com>
-Date: Thu, 21 Nov 2024 16:37:48 +0800
+	Thu, 21 Nov 2024 08:47:26 GMT
+Received: from hu-ekangupt-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Thu, 21 Nov 2024 00:47:22 -0800
+From: Ekansh Gupta <quic_ekangupt@quicinc.com>
+To: <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>
+CC: <gregkh@linuxfoundation.org>, <quic_bkumar@quicinc.com>,
+        <linux-kernel@vger.kernel.org>, <quic_chennak@quicinc.com>,
+        <dri-devel@lists.freedesktop.org>, <arnd@arndb.de>
+Subject: [PATCH v4 0/2] Add changes to use session index as identifier
+Date: Thu, 21 Nov 2024 14:17:11 +0530
+Message-ID: <20241121084713.2599904-1-quic_ekangupt@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] dt-bindings: ufs: qcom: Add UFS Host Controller
- for QCS615
-To: Krzysztof Kozlowski <krzk@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-CC: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>, Andy Gross <agross@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-scsi@vger.kernel.org>, <quic_jiegan@quicinc.com>,
-        <quic_aiquny@quicinc.com>, <quic_tingweiz@quicinc.com>,
-        <quic_sayalil@quicinc.com>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski@linaro.org>
-References: <20241119022050.2995511-1-quic_liuxin@quicinc.com>
- <20241119022050.2995511-2-quic_liuxin@quicinc.com>
- <d9c3dc82-24e5-465d-bd1c-7a7c97e17136@kernel.org>
- <eae9d141-9c88-4856-9287-2ba6ea6f4a06@kernel.org>
-From: Xin Liu <quic_liuxin@quicinc.com>
-In-Reply-To: <eae9d141-9c88-4856-9287-2ba6ea6f4a06@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+ nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: C-wGCnRF7NJ8TW3zITJPRtXg76QtxZEB
-X-Proofpoint-ORIG-GUID: C-wGCnRF7NJ8TW3zITJPRtXg76QtxZEB
+X-Proofpoint-ORIG-GUID: whCOzTTYfGcXfB7MstqubXanpEbhyQ-F
+X-Proofpoint-GUID: whCOzTTYfGcXfB7MstqubXanpEbhyQ-F
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- phishscore=0 impostorscore=0 suspectscore=0 lowpriorityscore=0
- mlxlogscore=861 spamscore=0 mlxscore=0 malwarescore=0 clxscore=1015
- adultscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411210067
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
+ priorityscore=1501 phishscore=0 adultscore=0 malwarescore=0 mlxscore=0
+ lowpriorityscore=0 mlxlogscore=801 spamscore=0 suspectscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411210068
 
+This patch series carries changes to use a masked session index
+as an identifier instead of process tgid to support mutiple PDs
+from same process.
+Previous single patch[v3]: https://lore.kernel.org/all/20240808104228.839629-1-quic_ekangupt@quicinc.com/
 
+Changes in v2:
+  - Reformatted commit text.
+  - Moved from ida to idr.
+  - Changed dsp_pgid data type.
+  - Resolved memory leak.
+Changes in v3:
+  - Modified commit text.
+  - Removed idr implementation.
+  - Using session index for client id.
+Changes in v4:
+  - Use GENMASK for client ID mask
+  - Add a new patch to rename tid and pgid as client ID.
 
-在 2024/11/21 15:40, Krzysztof Kozlowski 写道:
-> On 20/11/2024 17:57, Krzysztof Kozlowski wrote:
->> On 19/11/2024 03:20, Xin Liu wrote:
->>> From: Sayali Lokhande <quic_sayalil@quicinc.com>
->>>
->>> Document the Universal Flash Storage(UFS) Host Controller on the Qualcomm
->>> QCS615 Platform.
->>>
->>> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>> Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->>> Signed-off-by: Sayali Lokhande <quic_sayalil@quicinc.com>
->>> Co-developed-by: Xin Liu <quic_liuxin@quicinc.com>
->>> Signed-off-by: Xin Liu <quic_liuxin@quicinc.com>
->> That's a bit odd SoB chain. First, these are just one-liners. Second,
->> who authored the patches?
-> To be clear: SoB regarding authorship is correct, but regarding Acks and
-> Reviews is not. Savali did not receive these tags. If so, please point
-> to lore discussion with it.
-> 
-> All this needs fixing.
-Thank you for your comments. These are the two reviews I received. One 
-is your reviewd-by, and the other is Manivannan's acked-by.I have also 
-cc Sayali on the email.
+Ekansh Gupta (2):
+  misc: fastrpc: Add support for multiple PD from one process
+  misc: fastrpc: Rename tgid and pid to client_id
 
-https://lore.kernel.org/linux-arm-msm/rv3ukz6rhgp3x32s74nbftmoqmdxjxmoii3zsd4wipmhudyq7q@ha4l2svl5lim/
+ drivers/misc/fastrpc.c | 58 ++++++++++++++++++++++--------------------
+ 1 file changed, 30 insertions(+), 28 deletions(-)
 
-https://lore.kernel.org/linux-arm-msm/20241112075619.2ilsccnnk4leqmdy@thinkpad/
-> 
-> Best regards,
-> Krzysztof
+-- 
+2.34.1
 
 
