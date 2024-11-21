@@ -1,199 +1,134 @@
-Return-Path: <linux-arm-msm+bounces-38710-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38711-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5C0409D53F8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 21:25:33 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CCA189D54E6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 22:45:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DFD371F229F6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 20:25:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7F9172840B9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 21:45:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E4CA1D0DF7;
-	Thu, 21 Nov 2024 20:25:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A4861DC05D;
+	Thu, 21 Nov 2024 21:45:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="E+qGCi6h"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="KqaDG6Tf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 981D81BF58;
-	Thu, 21 Nov 2024 20:25:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C7D21CB50C;
+	Thu, 21 Nov 2024 21:45:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732220717; cv=none; b=RkwBtGpeyvI24yqnVzmsDB6ZcSwl8K2swhWt5I0w9t2oLm0qw+uGtYn73LZEnAx0FX5hQHUWDFcZD3LDE2JRu+/BMtqPE7RVCSxk8AQnPrK3/iuNok6lBy5jU044HjBWjCOruLw59DznXimrF6V8Et7qENf1ouCHaBriaTwNx1w=
+	t=1732225503; cv=none; b=RyvCp85aCQm50MOMfFD1Pb7QoVz3LuIHPF/CCKdfta8bXIDW/9exPLeX5KNJGzn0IWuqDC7GgeRzTUDHXivwMXAQXrit4bgxBeF1xA5uQXYg0UaJSQFBkJ3THI7n7OeNsp3ExhXH9FzXhENe4Si9VmonzSeP7AraIhdYfXvBXiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732220717; c=relaxed/simple;
-	bh=xt/N1u7xQDP3nA0PEqU+LzyDhnsawogKcVfQNRe9l4s=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=WYkp2iqHioGreijgFzWKaG+CVRmLk31nTPLer00QIa+49x0dXxnzmtMuhuSXMJoBk7jo7iP1N5hcZXJICFeijctnDySLCoW9VL9AGy10MfVlHt16tLT8rUKVetfwwEV5HJ3B3EdHtTxsk3BMSw2fMmv6sRHOrEizkx2omBQytKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=E+qGCi6h; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ALH7B7C015590;
-	Thu, 21 Nov 2024 20:24:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	xt/N1u7xQDP3nA0PEqU+LzyDhnsawogKcVfQNRe9l4s=; b=E+qGCi6hCsvn9XAL
-	RCJDDuwVGYHi4vOG4kOhtX3FVFQvm3WGpZTf8BLzXF7uPla8i9Oxef8F63heXXnZ
-	cUUQ+fOy8VTsMfbQuU2LmEJy9T7va/7o3Q8SFCn2t1CE8gi/2s3xzmiAS8j0gUP/
-	XjrNwS+GPR7//F9SXMaf3OvVt/44LoW7ROyGnvsIYcueT+s7VCcNT84eeFMX4awS
-	vTpMFeSPJZjVEwe/BgBUUrfkxCjxdp3QTu/6ju/SpzPALE5DQlC0nZrmOtAP9aiQ
-	iREOo/p/kg/O4U8n+0zEeoiu9d8FmaIR+leSPGXZ8Qfzl9ipnTs4KdxiKk3S4XRj
-	wIUrXA==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4320y9j1jt-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 21 Nov 2024 20:24:56 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4ALKOtkf018777
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 21 Nov 2024 20:24:55 GMT
-Received: from [10.71.112.120] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 21 Nov
- 2024 12:24:54 -0800
-Message-ID: <c30b77dc-0a34-4ea7-a4c0-37a5d3065ee7@quicinc.com>
-Date: Thu, 21 Nov 2024 12:24:54 -0800
+	s=arc-20240116; t=1732225503; c=relaxed/simple;
+	bh=z6SsQwO1xdocyqy0LDzeJjiSEosdlVjnlBC6wCHkbj8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Nys7BAKPM3ytKW06Qw4kP82i+l8tQ0RhX3zKumXweFb9IiWGdv39AkiOPZZIcyLLmgzDYmy/SZPhJBEyONEHtK6HEBNtA6ZOkbUjYZg0kSOOISIj3kpm8m0U2L4kIOf5loDWQqCZo8BxCgJ3I8WQU/Ce0NTzq9uN3Yzpx6IiA7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=KqaDG6Tf; arc=none smtp.client-ip=198.175.65.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1732225502; x=1763761502;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=z6SsQwO1xdocyqy0LDzeJjiSEosdlVjnlBC6wCHkbj8=;
+  b=KqaDG6TfwQlzaGmIWeVg5y3QkMEpY2p+CZKJKkxfnIPxK6R4YZypeyy2
+   gM1zrMgSb9DmD8yBIyI1ff0Af/NsYVpVLK4bKEqwBOMcD8MrcZ5fNIm6e
+   ndhhatik81YpPtVINMEKGZrazHn/ihHWhGPrdBR3OEV29z6kg7Zi+zR1t
+   sq71crsJBwHStHx9sBxw5TfbundtgzT+jIlsSlrBpt6V8jCEKNY0PX0Lx
+   F0t4BGy7kLhUyA5iuCRSLSeVIM6UJ927vAv9j1xURRrSV/yEg2y/jUr6M
+   Iz5Sx8WIl5G3L0hb8K2DFmVsE4QhdWSCmsk3fprZ5Ah8lBVAUvcdoTumm
+   Q==;
+X-CSE-ConnectionGUID: lxZavyciQ5qTVTcVJh5zUA==
+X-CSE-MsgGUID: z6qs273vTWulcoqviPl/UQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11263"; a="32514196"
+X-IronPort-AV: E=Sophos;i="6.12,173,1728975600"; 
+   d="scan'208";a="32514196"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Nov 2024 13:45:01 -0800
+X-CSE-ConnectionGUID: LSoy2AwmSsKRuXTWY52GvA==
+X-CSE-MsgGUID: baquf0K4S/CXW5Q48ljBhw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,173,1728975600"; 
+   d="scan'208";a="90753181"
+Received: from lkp-server01.sh.intel.com (HELO 8122d2fc1967) ([10.239.97.150])
+  by fmviesa010.fm.intel.com with ESMTP; 21 Nov 2024 13:44:56 -0800
+Received: from kbuild by 8122d2fc1967 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1tEEyr-0003Nz-16;
+	Thu, 21 Nov 2024 21:44:53 +0000
+Date: Fri, 22 Nov 2024 05:43:57 +0800
+From: kernel test robot <lkp@intel.com>
+To: Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+	cros-qcom-dts-watchers@chromium.org,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?unknown-8bit?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Bjorn Helgaas <helgaas@kernel.org>
+Cc: oe-kbuild-all@lists.linux.dev, quic_vbadigan@quicinc.com,
+	quic_ramkri@quicinc.com, quic_nitegupt@quicinc.com,
+	quic_skananth@quicinc.com, quic_vpernami@quicinc.com,
+	quic_mrana@quicinc.com, mmareddy@quicinc.com,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+	Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Subject: Re: [PATCH 2/3] PCI: dwc: Add ECAM support with iATU configuration
+Message-ID: <202411220541.dAciinyb-lkp@intel.com>
+References: <20241117-ecam-v1-2-6059faf38d07@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v30 02/30] xhci: sec-intr: add initial api to register a
- secondary interrupter entity
-To: Mathias Nyman <mathias.nyman@linux.intel.com>,
-        <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
-        <perex@perex.cz>, <conor+dt@kernel.org>, <dmitry.torokhov@gmail.com>,
-        <corbet@lwn.net>, <broonie@kernel.org>, <lgirdwood@gmail.com>,
-        <krzk+dt@kernel.org>, <pierre-louis.bossart@linux.intel.com>,
-        <Thinh.Nguyen@synopsys.com>, <tiwai@suse.com>, <robh@kernel.org>,
-        <gregkh@linuxfoundation.org>
-CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-input@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>
-References: <20241106193413.1730413-1-quic_wcheng@quicinc.com>
- <20241106193413.1730413-3-quic_wcheng@quicinc.com>
- <9b86a2c9-de7f-46b7-b63d-451ebc9c87dd@linux.intel.com>
- <2384956c-7aae-4890-8dca-f12e9874709f@quicinc.com>
- <17890837-f74f-483f-bbfe-658b3e8176d6@linux.intel.com>
-Content-Language: en-US
-From: Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <17890837-f74f-483f-bbfe-658b3e8176d6@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 7bB-EHy_Uf1hGCZKbwD638GxX6IKNyiW
-X-Proofpoint-ORIG-GUID: 7bB-EHy_Uf1hGCZKbwD638GxX6IKNyiW
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- phishscore=0 impostorscore=0 suspectscore=0 lowpriorityscore=0
- mlxlogscore=999 spamscore=0 mlxscore=0 malwarescore=0 clxscore=1015
- adultscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411210153
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241117-ecam-v1-2-6059faf38d07@quicinc.com>
 
-Hi Mathias,
+Hi Krishna,
 
-On 11/21/2024 11:15 AM, Mathias Nyman wrote:
-> On 21.11.2024 3.34, Wesley Cheng wrote:
->> Hi Mathias,
->>
->> On 11/20/2024 6:36 AM, Mathias Nyman wrote:
->>> On 6.11.2024 21.33, Wesley Cheng wrote:
->>>> From: Mathias Nyman <mathias.nyman@linux.intel.com>
->>>>
->>>> Introduce XHCI sec intr, which manages the USB endpoints being requested by
->>>> a client driver.  This is used for when client drivers are attempting to
->>>> offload USB endpoints to another entity for handling USB transfers.  XHCI
->>>> sec intr will allow for drivers to fetch the required information about the
->>>> transfer ring, so the user can submit transfers independently.  Expose the
->>>> required APIs for drivers to register and request for a USB endpoint and to
->>>> manage XHCI secondary interrupters.
->>>>
->>>> Driver renaming, multiple ring segment page linking, proper endpoint clean
->>>> up, and allowing module compilation added by Wesley Cheng to complete
->>>> original concept code by Mathias Nyman.
->>>>
->>>> Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
->>>> Co-developed-by: Wesley Cheng <quic_wcheng@quicinc.com>
->>>> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
->>>> ---
->>>>    drivers/usb/host/Kconfig          |  11 +
->>>>    drivers/usb/host/Makefile         |   2 +
->>>>    drivers/usb/host/xhci-sec-intr.c  | 438 ++++++++++++++++++++++++++++++
->>>>    drivers/usb/host/xhci.h           |   4 +
->>>>    include/linux/usb/xhci-sec-intr.h |  70 +++++
->>>>    5 files changed, 525 insertions(+)
->>>>    create mode 100644 drivers/usb/host/xhci-sec-intr.c
->>>>    create mode 100644 include/linux/usb/xhci-sec-intr.h
->>>>
->>>> diff --git a/drivers/usb/host/Kconfig b/drivers/usb/host/Kconfig
->>>> index d011d6c753ed..a2d549e3e076 100644
->>>> --- a/drivers/usb/host/Kconfig
->>>> +++ b/drivers/usb/host/Kconfig
->>>> @@ -104,6 +104,17 @@ config USB_XHCI_RZV2M
->>>>          Say 'Y' to enable the support for the xHCI host controller
->>>>          found in Renesas RZ/V2M SoC.
->>>>    +config USB_XHCI_SEC_INTR
->>>> +    tristate "xHCI support for secondary interrupter management"
->>>> +    help
->>>> +      Say 'Y' to enable the support for the xHCI secondary management.
->>>> +      Provide a mechanism for a sideband datapath for payload associated
->>>> +      with audio class endpoints. This allows for an audio DSP to use
->>>> +      xHCI USB endpoints directly, allowing CPU to sleep while playing
->>>> +      audio.  This is not the same feature as the audio sideband
->>>> +      capability mentioned within the xHCI specification, and continues
->>>> +      to utilize main system memory for data transfers.
->>>
->>> This same API should be used for the hardware xHCI sideband capability.
->>> We should add a function that checks which types of xHC sideband capability xHC
->>> hardware can support, and pick and pass a type to xhci xhci_sec_intr_register()
->>> when registering a sideband/sec_intr
->>
->> Just to make sure we're on the same page, when you mention the term sideband capability, are you referring to section 7.9 xHCI Audio Sideband Capability in the xHCI spec?  If so, I'm not entirely sure if that capability relies much on secondary interrupters.  From reading the material, it just seems like its a way to map audio endpoints directly to another USB device connected to the controller? (I might be wrong, couldn't find much about potential use cases)
->
-> Yes, that is the one, 7.9 xHCI Audio Sideband Capability.
->
-> I had that in mind when I started writing the sideband API.
-> This is why registering a sideband and requesting a secondary interrupter
-> are done in separate functions.
-> The concept if still similar even if '7.9 Audio Sideband Capability' doesn't
-> need a secondary interrupter, we want to tell xhci driver/xHC hardware that
-> one connected usb device/endpoint handling is offloaded somewhere else.
->
+kernel test robot noticed the following build errors:
 
-Ah, ok...now I understand a bit more on what you were trying to do.  When you do eventually introduce the audio sideband capability, you'd need to modify the endpoint APIs to also issue the 'Set Resource Assignment' command with the proper device/endpoint being offloaded.  Initially, when Thinh brought up this section in the xHCI spec, I couldn't find any use cases that utilized that capability, so it was a bit unclear to me what it was meant for.  Now you've explained it a bit more, I think I can get the gist of it.
+[auto build test ERROR on 2f87d0916ce0d2925cedbc9e8f5d6291ba2ac7b2]
 
+url:    https://github.com/intel-lab-lkp/linux/commits/Krishna-chaitanya-chundru/arm64-dts-qcom-sc7280-Increase-config-size-to-256MB-for-ECAM-feature/20241121-095614
+base:   2f87d0916ce0d2925cedbc9e8f5d6291ba2ac7b2
+patch link:    https://lore.kernel.org/r/20241117-ecam-v1-2-6059faf38d07%40quicinc.com
+patch subject: [PATCH 2/3] PCI: dwc: Add ECAM support with iATU configuration
+config: alpha-randconfig-r064-20241121 (https://download.01.org/0day-ci/archive/20241122/202411220541.dAciinyb-lkp@intel.com/config)
+compiler: alpha-linux-gcc (GCC) 14.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20241122/202411220541.dAciinyb-lkp@intel.com/reproduce)
 
-> I don't think we should write another API for that one just because more is
-> done by firmware than by xhci driver.
->
-> The only change for now would be to add some "sideband_type" parameter to
-> xhci_sec_intr_register(struct usb_device *udev, enum sideband_type), fail the
-> registration if isn't "software", and save the type in struct xhci_sec_intr
->
-> I'll add hardware sideband support (7.9 Audio Sideband) later, but it would be
-> nice to not change the API then.
->
-> The name change from sideband to sec-intr is a bit unfortunate with this in
-> mind. Was there some reason for it?
->
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202411220541.dAciinyb-lkp@intel.com/
 
-This was because I wasn't too sure how the audio sideband and this driver was related, but I get what you are trying to do now.  I can change it back to the original xhci-sideband, as the name change was something that happened on this revision.  I will fix the corner case I mentioned WRT the xhci_discover_or_reset_device() scenario, add the basic sideband type handling and rename this back to xhci-sideband in the next rev.
+All errors (new ones prefixed by >>):
 
-Thanks
+   alpha-linux-ld: drivers/pci/controller/dwc/pcie-designware-host.o: in function `dw_pcie_host_deinit':
+>> (.text+0x17a4): undefined reference to `pci_ecam_free'
+>> alpha-linux-ld: (.text+0x17a8): undefined reference to `pci_ecam_free'
+   alpha-linux-ld: drivers/pci/controller/dwc/pcie-designware-host.o: in function `dw_pcie_host_init':
+>> (.text+0x21e4): undefined reference to `pci_generic_ecam_ops'
+>> alpha-linux-ld: (.text+0x21e8): undefined reference to `pci_ecam_create'
+   alpha-linux-ld: (.text+0x21f0): undefined reference to `pci_ecam_create'
+>> alpha-linux-ld: (.text+0x2240): undefined reference to `pci_generic_ecam_ops'
+   alpha-linux-ld: (.text+0x2834): undefined reference to `pci_ecam_free'
+   alpha-linux-ld: (.text+0x2838): undefined reference to `pci_ecam_free'
 
-Wesley Cheng
-
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
