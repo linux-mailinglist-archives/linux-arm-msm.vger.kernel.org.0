@@ -1,106 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-38673-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38674-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3152A9D4DC7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 14:30:40 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id C8A089D4E3B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 15:03:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EBC36281EB5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 13:30:38 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 565F1B232B5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 14:03:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E617B1D89E5;
-	Thu, 21 Nov 2024 13:30:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2AE431D86C7;
+	Thu, 21 Nov 2024 14:03:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DntPCbB6"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pW1jKepJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FE7C1D89E3;
-	Thu, 21 Nov 2024 13:30:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00D9C1D79B0;
+	Thu, 21 Nov 2024 14:03:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732195836; cv=none; b=Pi3TXrJWWPIlEnzk/jCgcKKrmF679jwSYpFl2u74N0VpAH/2LpAxX6LLY27hB4IgBU+7vebBshIm0fmPMPh7KNEKjvmjz9GnK0TMneTkliuipRNBbyzDbs5dqgdpiHwBvlfWFnmUxczYgzwS0yrVT8G9DQM+/WK4cyvpVr5vX78=
+	t=1732197789; cv=none; b=s7NGYA5f2yfditsJuZ4kJmEU+wvCS67Wcz5j+p4UXBoULu9rqNinHc1uSV0/aa2YPNi3jaoB0mtSLr1rESDmUP2qdTAdHBRol1DyIKARG+yPPd+xpEhDVO2HUuP/c39CJQIyZLeazb03dG4iIk5N+uorRNV2AeHJ/tw2kuGzh4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732195836; c=relaxed/simple;
-	bh=ASgXHVNuV9rj2VXsDVEXv70EB7Y5fnU8w3EOoPXXK30=;
+	s=arc-20240116; t=1732197789; c=relaxed/simple;
+	bh=EqoX93a7SSSutDSrjFHpMZeVK/vypQ6MnjJTLZXO/IA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XRmdkjbMs/OxfloLMbne21Uch6FKl5I+a3fO742F2es0GsKe5/9MPliQteQcBv6p9ttI+EGxcIuiL1U+e220elz2xJ/P3ndwkDA5IdVjwUemgJKTHK3KUNwOqr1MDUPQ0BufNZrsttbpwU0nKgrScjEWf7JGLgDAp+qvsJhsJBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DntPCbB6; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6D2EC4CECC;
-	Thu, 21 Nov 2024 13:30:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732195835;
-	bh=ASgXHVNuV9rj2VXsDVEXv70EB7Y5fnU8w3EOoPXXK30=;
+	 Content-Type:Content-Disposition:In-Reply-To; b=EJTECjH0NF2ULKfivMv6BZ2yzc0xsatGyEEriGuhxOL9Lr0DgBEd6/1TcXdp5h4h12tPNDLz197ao9hZMHQDBkJnoBYmvFtYaW6zRGq6dkV1fgyQQ3DSVkUp489jucV/sq/adf+5E2qWm980zTs/CgMcqNdhDOpyMxKHh3qO9VM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pW1jKepJ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58C56C4CED0;
+	Thu, 21 Nov 2024 14:03:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1732197788;
+	bh=EqoX93a7SSSutDSrjFHpMZeVK/vypQ6MnjJTLZXO/IA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=DntPCbB6E0le/iKyoX/744ERaY6tkAuSukHl3qFZyuZyBVJvGFTqqIO0GZ1s37VCg
-	 tKi39aE84OJMuJeOF/U/S7l69XWKA5FwRlVKGss4AK8TcVtLi2iSKoqqtU+6HjNZqb
-	 iQ7fYiqBwCOqoNKVqoKzZLYDa0ogxPPaQOIjgC+E=
-Date: Thu, 21 Nov 2024 14:30:10 +0100
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Ekansh Gupta <quic_ekangupt@quicinc.com>
-Cc: srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org,
-	quic_bkumar@quicinc.com, linux-kernel@vger.kernel.org,
-	quic_chennak@quicinc.com, dri-devel@lists.freedesktop.org,
-	arnd@arndb.de
-Subject: Re: [PATCH v1 4/4] misc: fastrpc: Add debugfs support for fastrpc
-Message-ID: <2024112120-sandal-reach-2e09@gregkh>
-References: <20241118084046.3201290-1-quic_ekangupt@quicinc.com>
- <20241118084046.3201290-5-quic_ekangupt@quicinc.com>
- <2024111804-doze-reflected-0feb@gregkh>
- <c3b285b0-33d1-4bfa-b8ab-6783ff5ed78d@quicinc.com>
+	b=pW1jKepJgOpBBBEEItFDTaXkV9FaIP2tlsyxiTZWrMQ/M3SXodJdqtyVipI9mepc3
+	 1BfUi2k94k+W8epnfmcIt5APqxW5//gHUvzgiEKQu1oIVcAmABsCSlRYUHPXFjMXM9
+	 2EcPgCTYH2MckodRKgshyh0Ex8AarCVNx6YXjkgIGSLmsEfuqJgjpFPbMOxjux6Xlm
+	 jk9srdRE9XX6fmmeWNBylz4eQn1HX1+uBHgxH55gXmBcUL7HH/4UDNzA9FFZO+dn8d
+	 sR4MnLdWouSihaOX60ni0lccvUgFeUagbbVALjHdjskbFYBDnl4mS7kq7rEEIpfLde
+	 ljd5HLRZusgyg==
+Date: Thu, 21 Nov 2024 14:03:03 +0000
+From: Mark Brown <broonie@kernel.org>
+To: Bert Karwatzki <spasswolf@web.de>
+Cc: Stephan Gerhold <stephan@gerhold.net>, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org
+Subject: Re: [PATCH] ASoC: qcom: apq8016_sbc: Fix second argument of
+ apq8016_dai_init()
+Message-ID: <387c84aa-dab1-44ca-8d42-bc19abc79434@sirena.org.uk>
+References: <20241117232100.23760-1-spasswolf@web.de>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="BVF4aMiMiHWSAYi5"
 Content-Disposition: inline
-In-Reply-To: <c3b285b0-33d1-4bfa-b8ab-6783ff5ed78d@quicinc.com>
+In-Reply-To: <20241117232100.23760-1-spasswolf@web.de>
+X-Cookie: Remember the... the... uhh.....
 
-On Thu, Nov 21, 2024 at 12:12:17PM +0530, Ekansh Gupta wrote:
-> On 11/18/2024 7:32 PM, Greg KH wrote:
-> > On Mon, Nov 18, 2024 at 02:10:46PM +0530, Ekansh Gupta wrote:
-> >> +		/*
-> >> +		 * Use HLOS process name, HLOS PID, fastrpc user TGID,
-> >> +		 * domain_id in debugfs filename to create unique file name
-> >> +		 */
-> >> +		snprintf(debugfs_buf, size, "%.10s_%d_%d_%d",
-> >> +			cur_comm, current->pid, fl->tgid, domain_id);
-> >> +		fl->debugfs_file = debugfs_create_file(debugfs_buf, 0644,
-> >> +				debugfs_dir, fl, &fastrpc_debugfs_fops);
-> > Why are you saving the debugfs file?  What do you need to do with it
-> > that you can't just delete the whole directory, or look up the name
-> > again in the future when removing it?
-> fl structure is specific to a process using fastrpc driver. The reason to save
-> this debugfs file is to delete is when the process releases fastrpc device.
-> If the file is not deleted, it might flood multiple files in debugfs directory.
-> 
-> As part of this change, only the file that is getting created by a process is
-> getting removed when process is releasing device and I don't think we
-> can clean up the whole directory at this point.
-> 
-> Do you suggest that looking up the name is a better approach that saving
-> the file?
 
-Yes.
+--BVF4aMiMiHWSAYi5
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> >> +}
-> >> +
-> >> +struct dentry *fastrpc_create_debugfs_dir(const char *name)
-> >> +{
-> >> +	return debugfs_create_dir(name, NULL);
-> > At the root of debugfs?  Why is this function even needed?
-> creating a dir named "fastrpc_adsp", "fastrpc_cdsp" etc. to create debugfs
-> file for the processes using adsp, cdsp etc.
+On Mon, Nov 18, 2024 at 12:20:58AM +0100, Bert Karwatzki wrote:
+> Since commit a78a42fb48b8 the second argument of apq8016_dai_init() has
+> to be an lpass id returned by qdsp6_dai_get_lpass_id().
 
-Then just call debugfs_create_dir() you do not need a wrapper function
-for this.
+This breaks the build:
 
-thanks,
+/build/stage/linux/sound/soc/qcom/apq8016_sbc.c: In function =E2=80=98apq80=
+16_sbc_dai_in
+it=E2=80=99:
+/build/stage/linux/sound/soc/qcom/apq8016_sbc.c:153:38: error: implicit dec=
+larat
+ion of function =E2=80=98qdsp6_dai_get_lpass_id=E2=80=99 [-Werror=3Dimplici=
+t-function-declaration]
+  153 |         return apq8016_dai_init(rtd, qdsp6_dai_get_lpass_id(cpu_dai=
+));
+      |                                      ^~~~~~~~~~~~~~~~~~~~~~
+/build/stage/linux/sound/soc/qcom/apq8016_sbc.c: At top level:
+/build/stage/linux/sound/soc/qcom/apq8016_sbc.c:165:12: error: static decla=
+ratio
+n of =E2=80=98qdsp6_dai_get_lpass_id=E2=80=99 follows non-static declaration
+  165 | static int qdsp6_dai_get_lpass_id(struct snd_soc_dai *cpu_dai)
+      |            ^~~~~~~~~~~~~~~~~~~~~~
+/build/stage/linux/sound/soc/qcom/apq8016_sbc.c:153:38: note: previous impl=
+icit=20
+declaration of =E2=80=98qdsp6_dai_get_lpass_id=E2=80=99 with type =E2=80=98=
+int()=E2=80=99
+  153 |         return apq8016_dai_init(rtd, qdsp6_dai_get_lpass_id(cpu_dai=
+));
+      |                                      ^~~~~~~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
 
-greg k-h
+--BVF4aMiMiHWSAYi5
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmc/PZYACgkQJNaLcl1U
+h9D/Swf/d78eojqXzZ5VOkYr+QjU1ZK0Dbvd72wJ41o23kHzspDvY5OCw/NIU1RP
+OGkyFIDnLqEsJ6bNy05h7HdR5gGNDzYBHN+DsvVpGstCmVIZ8JRC3R/Iwym9e8th
+tMvCj/I9tsezLwOa9esB5gvQDjLNLKrt/DPyI2ORKEnoS0G1xWwoA0gvldD0iwNa
+fIz71HhzFfGCwDqTGIwhqnfggnnNLLYONsiocDIaWIHMWcQzznRuy7kKM8IRgUaS
+cDVQt7QFGInhOpIE7mAH5iPq797YnQ05pen+hoGV8DQsGvfkFAZIrhgA/KcyTWrt
+PojNfqnAOvOLurJzoA11kK+hvDzaNg==
+=LL8L
+-----END PGP SIGNATURE-----
+
+--BVF4aMiMiHWSAYi5--
 
