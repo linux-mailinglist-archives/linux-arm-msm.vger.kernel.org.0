@@ -1,289 +1,212 @@
-Return-Path: <linux-arm-msm+bounces-38632-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38633-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 919FF9D492C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 09:48:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id DD1C19D496A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 10:02:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 22DC11F2161C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 08:48:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6D93B1F20F78
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 09:02:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 760771CD1E9;
-	Thu, 21 Nov 2024 08:47:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 46A531BE239;
+	Thu, 21 Nov 2024 09:02:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Qh1A3DZS"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oBVYBkws"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C004E1CCB50;
-	Thu, 21 Nov 2024 08:47:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E4A31CD3F;
+	Thu, 21 Nov 2024 09:02:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732178860; cv=none; b=UzILzKgqYU6G/ABO9pB2yqXnJmZM2h5fEJNX0U7BKht69nvmnpzcLi8MpYpp7uktcNhKCTda0CYh8NVewEUmNsli61pR6RU/C9lP9+AJNpszzrbMxAqHkcoU+DhDLGsKzrqy8tbIsxf6X5Hae2bK0j0SDjpjEW/WcACwuX1Zqz4=
+	t=1732179723; cv=none; b=XuTIRed5/6Obgt4+WSRIlES0vY7SfX6nXWi3/aQSocioQ9LCaUxuztJdqSbFg5mWr7Q2tOKIx5bWB+SyiORzaaczgPzPY53NL3W7+Ph1glViZPwMDZ53yn4cN0EwhvFEd2jbObpiWMk1+CPbyWklk675tWhoSutURyKzzflomME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732178860; c=relaxed/simple;
-	bh=VyUJp9vQ/2LBs2W6+PO/mRg7VDmliVfE8OOG/ZrWTQM=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kOvlAcH1GF0OPie8qG8Pf31QKGTd8RLDpefi9GVyRF8YaDppF9MX0OAcTNeHvegs6dQnheidSH96mlDUqkl3cX9CXGQ4QIAP8CWB54S0nnPd64cSKmybhNyjRnIE2uLYGVGYj++w/O9ntzuo0rnUH1RkFS8n50fWiS7HOlWEgdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Qh1A3DZS; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1732179723; c=relaxed/simple;
+	bh=sdrBzK2AY4kkNLxzL+85zMN/XbgWuwgCeW3Eq9UyzxM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=kZznCeiQOgSj7xeWdyYLCtkUG/2rHsmleupnv/uW6tOLOTtcnw88Os1r4nFBL6xDDTnI63srWkKjLvMGNQEj1YYnHgmmL3mjZ/TV5l6X100ZyLQLolS3UTwgR7oEen4ApJPDD8YudTiE2YzLKZJxaSuR8WEITunEsziIjJCa+78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=oBVYBkws; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AKJpaCW005741;
-	Thu, 21 Nov 2024 08:47:34 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AL0QPNA004490;
+	Thu, 21 Nov 2024 09:01:51 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	4AvMX6aXFHbqw/g7dZS4/asi8D2KEz0bf+nG6W9+gv0=; b=Qh1A3DZSqw9E9Eap
-	je26cNK0UwuTLJsQ4luvi+EZ++YfdI01xRDWbJ+rtSfKhr5By1aebF25U5S4PSmv
-	LaLAjNErlMKzSEvcpiQUwUQ/Py73dBGb5mmPBV11scpDzSEBmuu/TSGoZXoypQW2
-	2s8bWdWo2Elb37asAQFSsxwY0vI8lvW0EZw3ibbxqWjvJ1aNeyC5+rD23WXDxyKQ
-	Msmzlq0ZjBbvzkWs7P/dDh5N4Sx5/kelmjTpNohy+CWsMS+ChbNSlzXLh1VQ98U8
-	v+9C48j3u5YAc3dw3bTSi/64wetIwUyRZ5B8jt7mh9Ohc8h9CS16twLwrzNQACIz
-	mXcQMg==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4308y80nrk-1
+	SQob7p0JJo2MxbnZrpGC5LnILI6WD9gZ6xWBoswmcjQ=; b=oBVYBkwsxsNeOh3Y
+	trM9Ev3JlCE6qYzqrhzVEfcibk/LqVvsu6CBbKzcgcjZTjAU2a6H2fyBBfIEyokj
+	fUYFV8Ay0qjqktMYU3zahOQ0EnmMHyZmqp3ul64vocllNsfqbxUTOTu6Pm9oOa3y
+	Rc9u6YpcLSyZdeoEkRomSZS032WCtpG0KQRoNAOD0R8MnKbGyjewfXL4HiHpdov7
+	422Bih3XsBiBKfNo9r1Z3fqQ6lpYQKKyyQTCgfi7pYJsbD71cmTeVNzr50FJGdMC
+	ttqKad3TUJOBpNnUAvoXeDwKQCqWHags9MDGmr9oJzTObc9yv298uqzbqqqxEChd
+	dGwFfQ==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 431ea733mg-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 21 Nov 2024 08:47:34 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AL8lXJD012526
+	Thu, 21 Nov 2024 09:01:51 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AL91o5R006559
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 21 Nov 2024 08:47:33 GMT
-Received: from hu-ekangupt-hyd.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 21 Nov 2024 00:47:29 -0800
-From: Ekansh Gupta <quic_ekangupt@quicinc.com>
-To: <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>
-CC: <gregkh@linuxfoundation.org>, <quic_bkumar@quicinc.com>,
-        <linux-kernel@vger.kernel.org>, <quic_chennak@quicinc.com>,
-        <dri-devel@lists.freedesktop.org>, <arnd@arndb.de>
-Subject: [PATCH v4 2/2] misc: fastrpc: Rename tgid and pid to client_id
-Date: Thu, 21 Nov 2024 14:17:13 +0530
-Message-ID: <20241121084713.2599904-3-quic_ekangupt@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241121084713.2599904-1-quic_ekangupt@quicinc.com>
-References: <20241121084713.2599904-1-quic_ekangupt@quicinc.com>
+	Thu, 21 Nov 2024 09:01:50 GMT
+Received: from [10.151.37.94] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 21 Nov
+ 2024 01:01:46 -0800
+Message-ID: <d3c0414c-6bd7-6b46-93e2-216dcaa4d39a@quicinc.com>
+Date: Thu, 21 Nov 2024 14:31:43 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH 1/2] mtd: rawnand: qcom: Pass 18 bit offset from QPIC base
+ address to BAM
+Content-Language: en-US
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+CC: <miquel.raynal@bootlin.com>, <richard@nod.at>, <vigneshr@ti.com>,
+        <linux-mtd@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_srichara@quicinc.com>,
+        <quic_nainmeht@quicinc.com>, <quic_laksd@quicinc.com>,
+        <quic_varada@quicinc.com>
+References: <20241119092058.480363-1-quic_mdalam@quicinc.com>
+ <20241119092058.480363-2-quic_mdalam@quicinc.com>
+ <20241120070115.qox54zr3yhnkqgmd@thinkpad>
+ <e76e9562-f7d0-88c9-dcb6-dfcf41cdf205@quicinc.com>
+ <20241121065902.5w7rpjjgjqgfxpqo@thinkpad>
+From: Md Sadre Alam <quic_mdalam@quicinc.com>
+In-Reply-To: <20241121065902.5w7rpjjgjqgfxpqo@thinkpad>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: JIzm28MtTpBheIxjUmQtAJghv7yaW2fZ
-X-Proofpoint-GUID: JIzm28MtTpBheIxjUmQtAJghv7yaW2fZ
+X-Proofpoint-GUID: AXAKvGPVA6kA1P8TxIVQRpkGzxkH1qIZ
+X-Proofpoint-ORIG-GUID: AXAKvGPVA6kA1P8TxIVQRpkGzxkH1qIZ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
- mlxlogscore=999 clxscore=1015 suspectscore=0 adultscore=0
- priorityscore=1501 phishscore=0 impostorscore=0 bulkscore=0
- lowpriorityscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2409260000 definitions=main-2411210067
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 adultscore=0
+ bulkscore=0 mlxscore=0 suspectscore=0 lowpriorityscore=0 clxscore=1015
+ priorityscore=1501 impostorscore=0 malwarescore=0 mlxlogscore=999
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411210070
 
-The information passed as request tgid and pid is actually the
-client id of the process. This client id is used as an
-identifier by DSP to identify the DSP PD corresponding to the
-process. Currently process tgid is getting passed as the
-identifier which is getting replaced by a custom client id.
-Rename the data which uses this client id.
 
-Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
----
- drivers/misc/fastrpc.c | 48 +++++++++++++++++++++---------------------
- 1 file changed, 24 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index 08f223c95c33..93826de9c191 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -140,14 +140,14 @@ struct fastrpc_mmap_rsp_msg {
- };
- 
- struct fastrpc_mmap_req_msg {
--	s32 pgid;
-+	s32 client_id;
- 	u32 flags;
- 	u64 vaddr;
- 	s32 num;
- };
- 
- struct fastrpc_mem_map_req_msg {
--	s32 pgid;
-+	s32 client_id;
- 	s32 fd;
- 	s32 offset;
- 	u32 flags;
-@@ -157,20 +157,20 @@ struct fastrpc_mem_map_req_msg {
- };
- 
- struct fastrpc_munmap_req_msg {
--	s32 pgid;
-+	s32 client_id;
- 	u64 vaddr;
- 	u64 size;
- };
- 
- struct fastrpc_mem_unmap_req_msg {
--	s32 pgid;
-+	s32 client_id;
- 	s32 fd;
- 	u64 vaddrin;
- 	u64 len;
- };
- 
- struct fastrpc_msg {
--	int pid;		/* process group id */
-+	int client_id;		/* process client id */
- 	int tid;		/* thread id */
- 	u64 ctx;		/* invoke caller context */
- 	u32 handle;	/* handle to invoke */
-@@ -235,7 +235,7 @@ struct fastrpc_invoke_ctx {
- 	int nbufs;
- 	int retval;
- 	int pid;
--	int tgid;
-+	int client_id;
- 	u32 sc;
- 	u32 *crc;
- 	u64 ctxid;
-@@ -615,7 +615,7 @@ static struct fastrpc_invoke_ctx *fastrpc_context_alloc(
- 	ctx->sc = sc;
- 	ctx->retval = -1;
- 	ctx->pid = current->pid;
--	ctx->tgid = user->client_id;
-+	ctx->client_id = user->client_id;
- 	ctx->cctx = cctx;
- 	init_completion(&ctx->work);
- 	INIT_WORK(&ctx->put_work, fastrpc_context_put_wq);
-@@ -1116,11 +1116,11 @@ static int fastrpc_invoke_send(struct fastrpc_session_ctx *sctx,
- 	int ret;
- 
- 	cctx = fl->cctx;
--	msg->pid = fl->client_id;
-+	msg->client_id = fl->client_id;
- 	msg->tid = current->pid;
- 
- 	if (kernel)
--		msg->pid = 0;
-+		msg->client_id = 0;
- 
- 	msg->ctx = ctx->ctxid | fl->pd;
- 	msg->handle = handle;
-@@ -1245,7 +1245,7 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
- 	int err;
- 	bool scm_done = false;
- 	struct {
--		int pgid;
-+		int client_id;
- 		u32 namelen;
- 		u32 pageslen;
- 	} inbuf;
-@@ -1294,7 +1294,7 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
- 		}
- 	}
- 
--	inbuf.pgid = fl->client_id;
-+	inbuf.client_id = fl->client_id;
- 	inbuf.namelen = init.namelen;
- 	inbuf.pageslen = 0;
- 	fl->pd = USER_PD;
-@@ -1364,7 +1364,7 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
- 	int memlen;
- 	int err;
- 	struct {
--		int pgid;
-+		int client_id;
- 		u32 namelen;
- 		u32 filelen;
- 		u32 pageslen;
-@@ -1396,7 +1396,7 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
- 		goto err;
- 	}
- 
--	inbuf.pgid = fl->client_id;
-+	inbuf.client_id = fl->client_id;
- 	inbuf.namelen = strlen(current->comm) + 1;
- 	inbuf.filelen = init.filelen;
- 	inbuf.pageslen = 1;
-@@ -1504,12 +1504,12 @@ static void fastrpc_session_free(struct fastrpc_channel_ctx *cctx,
- static int fastrpc_release_current_dsp_process(struct fastrpc_user *fl)
- {
- 	struct fastrpc_invoke_args args[1];
--	int tgid = 0;
-+	int client_id = 0;
- 	u32 sc;
- 
--	tgid = fl->client_id;
--	args[0].ptr = (u64)(uintptr_t) &tgid;
--	args[0].length = sizeof(tgid);
-+	client_id = fl->client_id;
-+	args[0].ptr = (u64)(uintptr_t) &client_id;
-+	args[0].length = sizeof(client_id);
- 	args[0].fd = -1;
- 	sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_RELEASE, 1, 0);
- 
-@@ -1649,11 +1649,11 @@ static int fastrpc_dmabuf_alloc(struct fastrpc_user *fl, char __user *argp)
- static int fastrpc_init_attach(struct fastrpc_user *fl, int pd)
- {
- 	struct fastrpc_invoke_args args[1];
--	int tgid = fl->client_id;
-+	int client_id = fl->client_id;
- 	u32 sc;
- 
--	args[0].ptr = (u64)(uintptr_t) &tgid;
--	args[0].length = sizeof(tgid);
-+	args[0].ptr = (u64)(uintptr_t) &client_id;
-+	args[0].length = sizeof(client_id);
- 	args[0].fd = -1;
- 	sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_ATTACH, 1, 0);
- 	fl->pd = pd;
-@@ -1805,7 +1805,7 @@ static int fastrpc_req_munmap_impl(struct fastrpc_user *fl, struct fastrpc_buf *
- 	int err;
- 	u32 sc;
- 
--	req_msg.pgid = fl->client_id;
-+	req_msg.client_id = fl->client_id;
- 	req_msg.size = buf->size;
- 	req_msg.vaddr = buf->raddr;
- 
-@@ -1891,7 +1891,7 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
- 		return err;
- 	}
- 
--	req_msg.pgid = fl->client_id;
-+	req_msg.client_id = fl->client_id;
- 	req_msg.flags = req.flags;
- 	req_msg.vaddr = req.vaddrin;
- 	req_msg.num = sizeof(pages);
-@@ -1980,7 +1980,7 @@ static int fastrpc_req_mem_unmap_impl(struct fastrpc_user *fl, struct fastrpc_me
- 		return -EINVAL;
- 	}
- 
--	req_msg.pgid = fl->client_id;
-+	req_msg.client_id = fl->client_id;
- 	req_msg.len = map->len;
- 	req_msg.vaddrin = map->raddr;
- 	req_msg.fd = map->fd;
-@@ -2033,7 +2033,7 @@ static int fastrpc_req_mem_map(struct fastrpc_user *fl, char __user *argp)
- 		return err;
- 	}
- 
--	req_msg.pgid = fl->client_id;
-+	req_msg.client_id = fl->client_id;
- 	req_msg.fd = req.fd;
- 	req_msg.offset = req.offset;
- 	req_msg.vaddrin = req.vaddrin;
--- 
-2.34.1
-
+On 11/21/2024 12:29 PM, Manivannan Sadhasivam wrote:
+> On Thu, Nov 21, 2024 at 11:33:13AM +0530, Md Sadre Alam wrote:
+>>
+>>
+>> On 11/20/2024 12:31 PM, Manivannan Sadhasivam wrote:
+>>> On Tue, Nov 19, 2024 at 02:50:57PM +0530, Md Sadre Alam wrote:
+>>>> Currently we are configuring lower 24 bits of address in descriptor
+>>>> whereas QPIC design expects 18 bit register offset from QPIC base
+>>>
+>>> You mean 'QPIC IP' here? But is it QPIC or NANDc? I guess the later.
+>> It's QPIC IP only.
+> 
+> Hmm, so what is the difference between QPIC and NANDc?
+QPIC is wrapper which integrates NANDc. So only QPIC (Qualcomm Parallel
+Interface Controller) will be exposed for interface.
+> 
+>>>
+>>>> address to be configured in cmd descriptors. This is leading to a
+>>>> different address actually being used in HW, leading to wrong value
+>>>> read.
+>>>>
+>>>
+>>> This doesn't clearly say what the actual issue is. IIUC, the issue is that the
+>>> NANDc base address is different from the QPIC base address. But the driver
+>>> doesn't take it into account and just used the QPIC base as the NANDc base. This
+>>> used to work as the NANDc IP only considers the lower 18 bits of the address
+>>> passed by the driver to derive the register offset. Since the base address of
+>>> QPIC used to contain all 0 for lower 18 bits (like 0x07980000), the driver ended
+>>> up passing the actual register offset in it and NANDc worked properly. But on
+>>> newer SoCs like SDX75, the QPIC base address doesn't contain all 0 for lower 18
+>>> bits (like 0x01C98000). So NANDc sees wrong offset as per the current logic.
+>> Yes correct. If QPIC address = 0x07980000 and QPIC_EBI2NAND address = 0x079b0000
+>> the the diff is 0x30000, this is the actual offset expected by QPIC RTL code.
+>> and RTL needs only 18-bit offset.
+> 
+> Okay. So the driver used to pass 0x30000 + offset in older targets and on newer
+> ones starting from SDX75, 0x30000 is not passed correctly due to the changed
+> QPIC base address.
+Yes, correct. In SDX75 the first 18-bits of QPIC base address are non-zero.
+> 
+> Please mention it clearly in description.
+Ok
+> 
+> - Mani
+> 
+>>>
+>>>> Older targets also used same configuration (lower 24 bits) like sdxpinn,
+>>>
+>>> Please use actual product names and not internal names. I believe you are
+>>> referring to SDX55/SDX65 here.
+>> Ok , will change in next revision.
+>>>
+>>>> ipq etc. but issue is masked in older targets due to lower 18 bits of QPIC
+>>>> base address being zero leading to expected address generation.
+>>>>
+>>>> Sdxpinn     : QPIC_QPIC | 0x01C98000 (Lower 18 bits are non zero)
+>>>> Sdxnightjar : QPIC_QPIC | 0x07980000 (Lower 18 bits are zero) Same for
+>>>> older targets.
+>>>
+>>> Same here.
+>> Ok
+>>>
+>>>>
+>>>> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+>>>
+>>> Please add relevant Fixes tag.
+>> Ok
+>>>
+>>>> ---
+>>>>    drivers/mtd/nand/raw/qcom_nandc.c | 9 +++++++--
+>>>>    1 file changed, 7 insertions(+), 2 deletions(-)
+>>>>
+>>>> diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
+>>>> index b8cff9240b28..34ee8555fb8a 100644
+>>>> --- a/drivers/mtd/nand/raw/qcom_nandc.c
+>>>> +++ b/drivers/mtd/nand/raw/qcom_nandc.c
+>>>> @@ -207,7 +207,7 @@ nandc_set_reg(chip, reg,			\
+>>>>    #define dev_cmd_reg_addr(nandc, reg) ((nandc)->props->dev_cmd_reg_start + (reg))
+>>>>    /* Returns the NAND register physical address */
+>>>> -#define nandc_reg_phys(chip, offset) ((chip)->base_phys + (offset))
+>>>> +#define nandc_reg_phys(chip, offset)  ((nandc)->props->offset_from_qpic + (offset))
+>>>>    /* Returns the dma address for reg read buffer */
+>>>>    #define reg_buf_dma_addr(chip, vaddr) \
+>>>> @@ -561,6 +561,7 @@ struct qcom_nandc_props {
+>>>>    	bool is_qpic;
+>>>>    	bool qpic_v2;
+>>>>    	bool use_codeword_fixup;
+>>>> +	u32 offset_from_qpic;
+>>>
+>>> nandc_offset?
+>> Ok
+>>>
+>>>>    };
+>>>>    /* Frees the BAM transaction memory */
+>>>> @@ -3477,6 +3478,7 @@ static const struct qcom_nandc_props ipq806x_nandc_props = {
+>>>>    	.is_bam = false,
+>>>>    	.use_codeword_fixup = true,
+>>>>    	.dev_cmd_reg_start = 0x0,
+>>>> +	.offset_from_qpic = 0x30000,
+>>>
+>>> How 0x30000 is supposed to work? You said the NANDc ignores lower 18 bits, but
+>>> this has 17th and 18th bits set.
+>> Not this address 0x30000, this the diff b/w QPIC base and EBI2NAND base. The 18-bits we have see
+>> on this address 0x07980000 and this address 0x01C98000.
+>>>
+>>> - Mani
+>>>
+> 
 
