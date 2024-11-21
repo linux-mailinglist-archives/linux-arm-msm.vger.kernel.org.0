@@ -1,280 +1,187 @@
-Return-Path: <linux-arm-msm+bounces-38676-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38677-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7D2919D5018
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 16:50:58 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A44E69D5028
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 16:53:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 036521F22F5B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 15:50:58 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5C90E1F23512
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 15:53:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 52A8615D5C3;
-	Thu, 21 Nov 2024 15:50:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A208B15665D;
+	Thu, 21 Nov 2024 15:53:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="Ml+Zf0az";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="8h8Hq4nx";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="Ml+Zf0az";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="8h8Hq4nx"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="N6lXYvnN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63F9D17BD3;
-	Thu, 21 Nov 2024 15:50:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD11B132122;
+	Thu, 21 Nov 2024 15:53:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732204252; cv=none; b=rClkw7YiYjjM4hdDxggsniFL9LAobFJvb0q5nrUJOpe64qYcLrVzSIWBmYLV3oyfj0KDN/q4ksSEix6R2Jle+F6JLL+rLiGJtgdPEccKObsZ5TLrKjiaxt+DIgQrP/PCqsYdyS7LFbt1q3+6b3as9hIB64pm3oUUGE2wEpfZ5/c=
+	t=1732204417; cv=none; b=llhk+P69Jez6K6gFO+7NGTUKZ7b7i2k6xahE+tuH049iEOLNl61Lw7Bl4NnAYAe2m/HsiKVk7vKiEkKDCWdS9xhbsazL79B15G31oyuOjn6U3M69Gk7TSYd7f0rhrNjrvb/HOu29fu5rFhGBZmKSllXEZAQUFpgAZpLgDU6hrys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732204252; c=relaxed/simple;
-	bh=vImrSacsOI614jvw7kiRwHhUhHp4yGeurkBEFbnQEkg=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gWySpqyHvUApMNkjMhjY0jrlDpjs3KyyCT8QOWnHYGZeFjeXaBSC94mP50+RQZ5fHVlCnVYz9ZY1qfOboooAYcfT+l5YXLqSqnZ9lYJfix9bU/3ZfMqCliYEruwWE191NajX1QCsW7v1mQbinAnVPOCK66LFA9kTgsuKzxoW438=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=Ml+Zf0az; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=8h8Hq4nx; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=Ml+Zf0az; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=8h8Hq4nx; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 266B51F37E;
-	Thu, 21 Nov 2024 15:50:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1732204243; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=b7oR72zk/NGiMOSWNYMUBy1bxIH0Iurk7XfGGuW0qS0=;
-	b=Ml+Zf0azbqtrrdsm1nHiISlg+m6kVVp752jlzq5OuU/xDd922mphmQGCeg1Znhyb/rYqpZ
-	QwMJDDveJ+cUauiT4YHs3Bn/ZlVErs03AFIkZ7MlXjSA2JW/P1Jiuwp+AvZOFoZJgPNzeZ
-	0K9txIfcDnOqbFChafBXQ95hmcbsO4A=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1732204243;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=b7oR72zk/NGiMOSWNYMUBy1bxIH0Iurk7XfGGuW0qS0=;
-	b=8h8Hq4nx7YDcPlGxUcHJWSLIx2wa7BiW/R4VLAZeU0+Ab9TRwHuExQGTcJlmMPIIxY2HuB
-	/5iCMPt4qMW6rCBw==
-Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Ml+Zf0az;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=8h8Hq4nx
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1732204243; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=b7oR72zk/NGiMOSWNYMUBy1bxIH0Iurk7XfGGuW0qS0=;
-	b=Ml+Zf0azbqtrrdsm1nHiISlg+m6kVVp752jlzq5OuU/xDd922mphmQGCeg1Znhyb/rYqpZ
-	QwMJDDveJ+cUauiT4YHs3Bn/ZlVErs03AFIkZ7MlXjSA2JW/P1Jiuwp+AvZOFoZJgPNzeZ
-	0K9txIfcDnOqbFChafBXQ95hmcbsO4A=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1732204243;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=b7oR72zk/NGiMOSWNYMUBy1bxIH0Iurk7XfGGuW0qS0=;
-	b=8h8Hq4nx7YDcPlGxUcHJWSLIx2wa7BiW/R4VLAZeU0+Ab9TRwHuExQGTcJlmMPIIxY2HuB
-	/5iCMPt4qMW6rCBw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 86C3813927;
-	Thu, 21 Nov 2024 15:50:42 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id YqqgH9JWP2eMVAAAD6G6ig
-	(envelope-from <tiwai@suse.de>); Thu, 21 Nov 2024 15:50:42 +0000
-Date: Thu, 21 Nov 2024 16:50:42 +0100
-Message-ID: <87zfls1t7x.wl-tiwai@suse.de>
-From: Takashi Iwai <tiwai@suse.de>
-To: Wesley Cheng <quic_wcheng@quicinc.com>
-Cc: Takashi Iwai <tiwai@suse.de>,
-	<srinivas.kandagatla@linaro.org>,
-	<mathias.nyman@intel.com>,
-	<perex@perex.cz>,
-	<conor+dt@kernel.org>,
-	<dmitry.torokhov@gmail.com>,
-	<corbet@lwn.net>,
-	<broonie@kernel.org>,
-	<lgirdwood@gmail.com>,
-	<krzk+dt@kernel.org>,
-	<pierre-louis.bossart@linux.intel.com>,
-	<Thinh.Nguyen@synopsys.com>,
-	<tiwai@suse.com>,
-	<robh@kernel.org>,
-	<gregkh@linuxfoundation.org>,
-	<linux-kernel@vger.kernel.org>,
-	<devicetree@vger.kernel.org>,
-	<linux-sound@vger.kernel.org>,
-	<linux-usb@vger.kernel.org>,
-	<linux-input@vger.kernel.org>,
-	<linux-arm-msm@vger.kernel.org>,
-	<linux-doc@vger.kernel.org>
-Subject: Re: [PATCH v30 28/30] ALSA: usb-audio: Add USB offload route kcontrol
-In-Reply-To: <02c20b06-34ef-459b-9cd1-2d2735eb1352@quicinc.com>
-References: <20241106193413.1730413-1-quic_wcheng@quicinc.com>
-	<20241106193413.1730413-29-quic_wcheng@quicinc.com>
-	<87bjya3xzw.wl-tiwai@suse.de>
-	<02c20b06-34ef-459b-9cd1-2d2735eb1352@quicinc.com>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) Emacs/27.2 Mule/6.0
+	s=arc-20240116; t=1732204417; c=relaxed/simple;
+	bh=bEvgRur44FM4ftsf8LdgAzMDucW7VPkHFXSp25ktueI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=chd2+XXuB8LDKLpWu5Cx6SllgY6xsHYtPabLtpzR8CZQUondXLkACyhf7Btrm2iZHth6VzYXiotfNbERRPYgj7TpV/NjD0kQS8PNiKLCYzxGFghFJ8IjRXnq0Orfvz6CvwS8tJdrcXvd7ROjbGcX3NNC4oOjGratsAMpOobPqus=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=N6lXYvnN; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ALAYFTj027329;
+	Thu, 21 Nov 2024 15:53:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	MK/8a1y3kW8M7eNqMsEi7pWYZUCu2ujWwiQcYO9hXfg=; b=N6lXYvnNR7dicZXp
+	6Rq1kzf/J2M4vWr/lufUD2l2ByrZ3Oe3Vxfl0CAS+3HWt5T8OokhPcii0C0/6/CQ
+	SnV9XpsNhj7xSAd/kX7KjR1y1bYlh34CCZKjRloQRy6UkpvmA/XtTvg7frwst7e+
+	QJqSuDpHWloZ3y9ehelrTtyfXULygAiEYtfh35IKLOdgXJKlPN3tRdaX+BfR+ydI
+	pCGi2oROfaEq05SxeHE4KkzxmU5+YLuVrEvVdxU0B7VCCQ+08x0FlWyWymoEDUbw
+	wLE6mqCeJzo2E2ElUyFVgrxupZTnuvoyIWslaC3fLPLZx19qIz24zU0QJ4vY8Kzz
+	dGPcGQ==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 431ebyc7cf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 21 Nov 2024 15:53:29 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4ALFrS0Y027720
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 21 Nov 2024 15:53:28 GMT
+Received: from [10.253.72.30] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 21 Nov
+ 2024 07:53:23 -0800
+Message-ID: <8a185104-f393-4341-ac85-34cb83c47c22@quicinc.com>
+Date: Thu, 21 Nov 2024 23:53:19 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 266B51F37E
-X-Spam-Level: 
-X-Spamd-Result: default: False [-2.01 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	SUSPICIOUS_RECIPS(1.50)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	MID_CONTAINS_FROM(1.00)[];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	FUZZY_BLOCKED(0.00)[rspamd.com];
-	MIME_TRACE(0.00)[0:+];
-	ARC_NA(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[23];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	FREEMAIL_CC(0.00)[suse.de,linaro.org,intel.com,perex.cz,kernel.org,gmail.com,lwn.net,linux.intel.com,synopsys.com,suse.com,linuxfoundation.org,vger.kernel.org];
-	RCVD_COUNT_TWO(0.00)[2];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[dt];
-	RCVD_TLS_ALL(0.00)[];
-	DKIM_TRACE(0.00)[suse.de:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim,suse.de:mid]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spam-Score: -2.01
-X-Spam-Flag: NO
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/4] dt-bindings: bluetooth: add 'qcom,product-variant'
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+        Marcel Holtmann
+	<marcel@holtmann.org>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        "Rob
+ Herring" <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        "Conor
+ Dooley" <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad Dybcio" <konradybcio@kernel.org>,
+        Balakrishna Godavarthi
+	<quic_bgodavar@quicinc.com>,
+        Rocky Liao <quic_rjliao@quicinc.com>, <quic_zijuhu@quicinc.com>
+CC: <linux-bluetooth@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <quic_mohamull@quicinc.com>
+References: <20241120095428.1122935-1-quic_chejiang@quicinc.com>
+ <20241120095428.1122935-2-quic_chejiang@quicinc.com>
+ <c8ae761a-732c-4def-ac6e-5e1b16a21ada@kernel.org>
+ <0b0b55a2-ab80-4f6d-a4cf-c04acc94a989@quicinc.com>
+ <4c419118-83f8-4263-9d7c-8aef02908430@kernel.org>
+Content-Language: en-US
+From: "Cheng Jiang (IOE)" <quic_chejiang@quicinc.com>
+In-Reply-To: <4c419118-83f8-4263-9d7c-8aef02908430@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: OfGMRbmI7Xpf-kg2OF4mndzMnOm53OZ7
+X-Proofpoint-ORIG-GUID: OfGMRbmI7Xpf-kg2OF4mndzMnOm53OZ7
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ priorityscore=1501 lowpriorityscore=0 malwarescore=0 mlxlogscore=999
+ spamscore=0 mlxscore=0 phishscore=0 suspectscore=0 bulkscore=0
+ adultscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2409260000 definitions=main-2411210122
 
-On Wed, 20 Nov 2024 20:13:34 +0100,
-Wesley Cheng wrote:
+Hi Krzysztof,
+
+On 11/21/2024 3:49 PM, Krzysztof Kozlowski wrote:
+> On 21/11/2024 05:06, Cheng Jiang wrote:
+>> Hi Krzysztof,
+>>
+>> On 11/21/2024 12:47 AM, Krzysztof Kozlowski wrote:
+>>> On 20/11/2024 10:54, Cheng Jiang wrote:
+>>>> Several Qualcomm projects will use the same Bluetooth chip, each
+>>>> focusing on different features. For instance, consumer projects
+>>>> prioritize the A2DP SRC feature, while IoT projects focus on the A2DP
+>>>> SINK feature, which may have more optimizations for coexistence when
+>>>> acting as a SINK. Due to the patch size, it is not feasible to include
+>>>> all features in a single firmware.
+>>>>
+>>>> Therefore, the 'product-variant' devicetree property is used to provide
+>>>> product information for the Bluetooth driver to load the appropriate
+>>>> firmware.
+>>>>
+>>>> If this property is not defined, the default firmware will be loaded,
+>>>> ensuring there are no backward compatibility issues with older
+>>>> devicetrees.
+>>>>
+>>>> The product-variant defines like this:
+>>>>   0 - 15 (16 bits) are product line specific definitions
+>>>>   16 - 23 (8 bits) are for the product line.
+>>>>   24 - 31 (8 bits) are reserved for future use, 0 currently
+>>>>
+>>>> |---------------------------------------------------------------------|
+>>>> |                       32 Bits                                       |
+>>>> |---------------------------------------------------------------------|
+>>>> |  31 - 24 (bits)   |    23 - 16 (bits)   | 15 - 0 (16 bits)          |
+>>>> |---------------------------------------------------------------------|
+>>>> |   Reserved        |    0: default       | 0: default                |
+>>>> |                   |    1: CE            |                           |
+>>>> |                   |    2: IoT           |                           |
+>>>> |                   |    3: Auto          |                           |
+>>>> |                   |    4: Reserved      |                           |
+>>>> |---------------------------------------------------------------------|
+>>>>
+>>>> Signed-off-by: Cheng Jiang <quic_chejiang@quicinc.com>
+>>>> ---
+>>>>  .../bindings/net/bluetooth/qualcomm-bluetooth.yaml          | 6 ++++++
+>>>>  1 file changed, 6 insertions(+)
+>>>>
+>>>> diff --git a/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml b/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
+>>>> index 7bb68311c609..9019fe7bcdc6 100644
+>>>> --- a/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
+>>>> +++ b/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
+>>>> @@ -110,6 +110,12 @@ properties:
+>>>>      description:
+>>>>        boot firmware is incorrectly passing the address in big-endian order
+>>>>  
+>>>> +  qcom,product-variant:
+>>>> +    $ref: /schemas/types.yaml#/definitions/uint32
+>>>> +    description:
+>>>> +      specify the product information for driver to load the appropriate firmware
+>>>
+>>> Nah, you have firmware-name for this.
+>>>
+>> Currently "firmware-name" is used to specifythe nvm (config) file only,
+>> we also need to specify the rampatch file (TLV). 
+>>  
+>> Can we re-use the "firmware-name"? add two segments like the following?
+>> firmware-name = "rampatch_xx.tlv",  "nvm_xx.bin";
+>>
+>> Or add a new property to specify the rampatch file? 
+>> rampatch-name = "rampatch_xx.tlv";
+> You can grow the property, it's a list. Order of items in the list must
+> be fixed (specific), though. See other Qualcomm remoteproc PAS loaders
+> which already use two entries.
+Thank you for the guidance. I will follow it to submit a new change. 
 > 
-> Hi Takashi,
-> 
-> On 11/20/2024 4:12 AM, Takashi Iwai wrote:
-> > On Wed, 06 Nov 2024 20:34:11 +0100,
-> > Wesley Cheng wrote:
-> >> In order to allow userspace/applications know about USB offloading status,
-> >> expose a sound kcontrol that fetches information about which sound card
-> >> and PCM index the USB device is mapped to for supporting offloading.  In
-> >> the USB audio offloading framework, the ASoC BE DAI link is the entity
-> >> responsible for registering to the SOC USB layer.
-> >>
-> >> It is expected for the USB SND offloading driver to add the kcontrol to the
-> >> sound card associated with the USB audio device.  An example output would
-> >> look like:
-> >>
-> >> tinymix -D 1 get 'USB Offload Playback Route PCM#0'
-> >> -1, -1 (range -1->255)
-> >>
-> >> This example signifies that there is no mapped ASoC path available for the
-> >> USB SND device.
-> >>
-> >> tinymix -D 1 get 'USB Offload Playback Route PCM#0'
-> >> 0, 0 (range -1->255)
-> >>
-> >> This example signifies that the offload path is available over ASoC sound
-> >> card index#0 and PCM device#0.
-> >>
-> >> The USB offload kcontrol will be added in addition to the existing
-> >> kcontrols identified by the USB SND mixer.  The kcontrols used to modify
-> >> the USB audio device specific parameters are still valid and expected to be
-> >> used.  These parameters are not mirrored to the ASoC subsystem.
-> >>
-> >> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
-> > IIRC, this representation of kcontrol was one argued issue; Pierre
-> > expressed the concern about the complexity of the kcontrol.
-> > I didn't follow exactly, but did we get consensus?
-> So the part that Pierre had concerns on was that previously, the
-> > implementation was placing offload kcontrols to the ASoC platform
-> > card, and had some additional controls that complicated the
-> > offload implementation about the offload status for each USB audio
-> > device.  This was discussed here:
-> 
-> https://lore.kernel.org/linux-usb/957b3c13-e4ba-45e3-b880-7a313e48c33f@quicinc.com/
-> 
-> To summarize, I made the decision to move the offload status
-> kcontrols from ASoC --> USB SND and limited it to only one kcontrol
-> (mapped offload device).  So now, there exists a kcontrol for every
-> USB SND device (if the offload mixer is enabled), where it tells
-> userspace the mapped ASoC platform card and pcm device that handles
-> USB offloading, else you'll see the "-1, -1" pair, which means
-> offload is not possible for that USB audio device.
+> Best regards,
+> Krzysztof
 
-OK, the simplification is good.  But I wonder whether the current
-representation is the best.  Why not just providing two controls per
-PCM, one for card and one for device, instead of two integer array?
-It would look more intuitive to me.
-
-
-> > Apart from that: the Kconfig defition below ...
-> >
-> >> +config SND_USB_OFFLOAD_MIXER
-> >> +	tristate "USB Audio Offload mixer control"
-> >> +	help
-> >> +	 Say Y to enable the USB audio offloading mixer controls.  This
-> >> +	 exposes an USB offload capable kcontrol to signal to applications
-> >> +	 about which platform sound card can support USB audio offload.
-> >> +	 The returning values specify the mapped ASoC card and PCM device
-> >> +	 the USB audio device is associated to.
-> > ... and Makefile addition below ...
-> >
-> >> --- a/sound/usb/Makefile
-> >> +++ b/sound/usb/Makefile
-> >> @@ -36,3 +36,5 @@ obj-$(CONFIG_SND_USB_US122L) += snd-usbmidi-lib.o
-> >>  
-> >>  obj-$(CONFIG_SND) += misc/ usx2y/ caiaq/ 6fire/ hiface/ bcd2000/ qcom/
-> >>  obj-$(CONFIG_SND_USB_LINE6)	+= line6/
-> >> +
-> >> +obj-$(CONFIG_SND_USB_OFFLOAD_MIXER) += mixer_usb_offload.o
-> > ... indicates that this code will be an individual module, although
-> > it's solely used from snd-usb-audio-qmi driver.  This should be rather
-> > a boolean and moved to sound/usb/qcom/, and linked to
-> > snd-usb-audio-qmi driver itself, e.g.
-> >
-> > --- a/sound/usb/qcom/Makefile
-> > +++ b/sound/usb/qcom/Makefile
-> > @@ -1,2 +1,3 @@
-> >  snd-usb-audio-qmi-objs := usb_audio_qmi_v01.o qc_audio_offload.o
-> > +snd-usb-audio-qmi-$(CONFIG_SND_USB_OFFLOAD_MIXER) += mixer_usb_offload.o
-> >  obj-$(CONFIG_SND_USB_AUDIO_QMI) += snd-usb-audio-qmi.o
-> >
-> > Then you can drop EXPORT_SYMBOL_GPL(), too.
-> 
-> Had a discussion with Pierre on this too below.
-> 
-> https://lore.kernel.org/linux-usb/f507a228-4865-4df5-9215-bc59e330a82f@linux.intel.com/
-> 
-> I remember you commenting to place it in this vendor offload module,
-> which is what I did on v24.
-
-I assume that my early comment was based on your old implementations,
-and I guess it was because the mixer part didn't belong to the qcom
-stuff.  Now it belongs solely to qcom, the situation changed; it makes
-no sense to make it an individual module at all.
-
-
-thanks,
-
-Takashi
 
