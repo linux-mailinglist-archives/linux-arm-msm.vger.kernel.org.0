@@ -1,89 +1,92 @@
-Return-Path: <linux-arm-msm+bounces-38716-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38717-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8555F9D5538
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 23:10:50 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C89D79D5545
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 23:15:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2E50D1F23361
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 22:10:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8812B282E3E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2024 22:15:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D0E881DD9A8;
-	Thu, 21 Nov 2024 22:10:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3CD891DD9A8;
+	Thu, 21 Nov 2024 22:15:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="H9P1RY7q"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bFfteXDY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F102F1DC1B7
-	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Nov 2024 22:10:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33EE71DC05D
+	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Nov 2024 22:14:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732227043; cv=none; b=LOsH8p2fIMsyMmHWk2VocA7/+01PyFjJJhnQ1ojGV5JdtkpJVThF9Wk5cqKP7XesBTwFbvFy2sj63gSEQ4UX5Gj2tdKlFJ6wUG7yG1xMn06yPyO/G8Pj89fkXtpn6BR+SFyhxsMaDqfHTtlAYauV2eEPOe9zEdXNvB0CvLQygP0=
+	t=1732227300; cv=none; b=Da8rdaeC0/ZXXSzyAL/eetFDua9fo3/LjlmrcdV7PAYCzyZC6xFr3QJ2coTnJOC1RHLKlLzUI+qgl0xxNmcYH/HNNW71P8HFtwnquMsE0zLwB/JVwam0TPaYAT9c7z/bF+SCW+nHITc/cGUUe5XTLFynlwb02m980SO9prvzMPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732227043; c=relaxed/simple;
-	bh=yeWBaZyskmHQQzGoYf4eQzjnS5JlEV8qt70IgjYzCIE=;
+	s=arc-20240116; t=1732227300; c=relaxed/simple;
+	bh=MedtbcPE68w6A1t+0iluDLfV5ixEvAxDTp134mz3ta8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lTLN57Rra1uuPz3f4u5GYK+VX3HysGqSRCYnJ5UcjLp4w0NJDPnCYSta6xvKyHEHKXxh4mh1cycTtlE/naAh3EnKHjrtmxIXdwp6blbuAu7CR0QTL1faEv50o9iT/WXH12n/uJRprl+eC/JDPYsyOl4vNjs2Zys5M7LLppOF17M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=H9P1RY7q; arc=none smtp.client-ip=209.85.208.170
+	 Content-Type:Content-Disposition:In-Reply-To; b=b5jvHjF9bzcvc8qr5KwO6ENH2erJT1Jxvuyria7eL6rGn0fgwO4ULKrN65T0bSWYn0vTbMbn6hrgimAzCUfMfQ3iPEDmgqUfFn8mXNi/Ij4sPUaRhbJR603XdSW+q6QL9clSQARC8ZM9Qjm1o3vcHd6+CvST3lFZ3dRIQo5TH2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bFfteXDY; arc=none smtp.client-ip=209.85.167.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2f7657f9f62so15520341fa.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Nov 2024 14:10:41 -0800 (PST)
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-53d9ff92ee9so1581709e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Nov 2024 14:14:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732227040; x=1732831840; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1732227296; x=1732832096; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=gFDuP7IjDwDMv6NR+DnprUqGpxBiP59fQ/sq6qPsJrg=;
-        b=H9P1RY7qOTOzBIoE9oqgJcctr5IqJ9f3UvXdpcBOJrQ+nVf0lLCpWjh477uvHWFek6
-         GyU8h2ELHq2Z3bMc47zDNEd79WT3cBbSUGXDV2djQlMm65J/kXFUkNlg1wU3Dtz0R5Wd
-         5G2b8/aIRkJFmuwAcotlk1VyuJ43aCcl8b1nlQ4Ly3nfcfIOaJfMO3YoP0vw/xNJbElc
-         QFw9qUhPOH90ZGVpph3XJiYDtXcUrUsjVEa14Ug9bKk2KoiaYzPUdsaTNxfvMfdH7FoT
-         +qwyDMnMDRRcVGZIpqyT8K+DLrUUCIIGpgsYuv1UkA/0jSSNliFxe1LGWb4EtXbxVsFQ
-         eT+Q==
+        bh=hi/XevIo1cthNQyPWS6cIe1zGxlhuryhjSAJjzS6ibM=;
+        b=bFfteXDY3fA8SWiKKI3+PJ8GBmeGfGdT9gMq0C+aVgXqG9va/5F9z+PUuDuq38sJh6
+         CycVpHQPvwrWRXh5JMLHlQcSubmb/AiCbRFHfgigADhhMgzkqlB0zBFIFnqx/w87Hxdm
+         2mAVN4cSAKgJMm+kmW9xcxV9EurOgUJGF8Ti89phdDiWa7Q+vVuy0ifDbNHNE8W8aCUS
+         d8ibT/xys7ggjN3yq9hG1RSxVsVBVC7O2/SDxA0Zi0sSphMRPsiA0LaLcbDDEsYX6zxi
+         WB6I4ncczb5gQ+2UWj7WObdct8lswQx748VQWcP2jT293C5UO5DcVrjDv1NupDEuKmR4
+         kHlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732227040; x=1732831840;
+        d=1e100.net; s=20230601; t=1732227296; x=1732832096;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=gFDuP7IjDwDMv6NR+DnprUqGpxBiP59fQ/sq6qPsJrg=;
-        b=Unx03KGYjMXh4/CZiptd9X5zBLvLxWhfzjNGFvsuuV897G0+mvfaUbHatFRWAEIKBf
-         q3OBCYZznw/2IcyTEZ3s1Q/Xb7jdkvNIvBE7drV4Dl9SGAvh5pv1RjMThn6Hq8FqiyUt
-         pdKYyIvFfhn4oFy4u1c+lYJw9F4cozV8YwAPaaLpm9uXuni4o8oVojaa8EhVXt2ePeEU
-         T0WsOqvWZIX9vouUG3jT4RdL5pclw1DHASy6QgayqxXFPp3pK/u3vkfmNse2B2v3BJbz
-         IaP+98ZW/lcx3ZYzQCZl6AxojSAstu/RoQZCc2wcGdDocjnYA780M7VKa7aGybs1TT8g
-         Cfyw==
-X-Forwarded-Encrypted: i=1; AJvYcCVGweTceXkp2qNU8jhLsicAyxb1JuRtIQo7inuCifCDSxvpdPbaxao6V5w2mP+1bxq0+Wsfsj6B+tQZpeXV@vger.kernel.org
-X-Gm-Message-State: AOJu0YxyKbuJWQINSyTEnqlmjZGsuM6kM2KdmP+zj+zfVTmm6JkQWujm
-	OcA/5vup0Tsh2zY55vBjHT0TGD6zMK0co5p/vttQV/U/vYhZA+waH3ZBwf+VxOU=
-X-Gm-Gg: ASbGnctAC8fL+S849ZiQWa9NcBw+bVgtm6VopR1cnglCSBVDzXU3zBjNlw+DMhj+CHj
-	WFaAc/v26G7aRhRwm9k8q/3WGblWXkPMYL/zrpmfsyeCIt9VtU8IJeiNVFNGG9M9GSvYRrEhe0k
-	bWC/22yahBZ3jD/mUrvUY3C95Tls5ZLClahSrT+2jP8VRJIbideq5MXgWdOVC/r1FrP6IOQVFY2
-	WeEn1DPQdZU28sniNSVddkt3Hdmihjqukiu6GR8MkvnMshVg3TRMDEnHOErYrq1+AJxCbJ9/7bq
-	PtuXeW+WjmlCnoSx6L6bvHd6Oxn6RQ==
-X-Google-Smtp-Source: AGHT+IF5UEvVH8EwlVFvDbA8yqDXP2EnIvz85XTHp+jyVxMS03tfkpla0bwll8dc1ETCUfCWi+KKfg==
-X-Received: by 2002:a05:651c:2208:b0:2f4:3de7:ac4c with SMTP id 38308e7fff4ca-2ffa70f0968mr1996351fa.8.1732227039935;
-        Thu, 21 Nov 2024 14:10:39 -0800 (PST)
+        bh=hi/XevIo1cthNQyPWS6cIe1zGxlhuryhjSAJjzS6ibM=;
+        b=jXDLQ/ACSd2IoD+T77t7tERC29LiSoa5JjUNlk80Wb3UzhCDVMqKg9Ipqxjkw3V1uM
+         Z94DpO7lO1xOY8PuXP23ndGMjNvl6xc9sMnsWXSSHZPgLMjzUwZg6Y+/LOlhqPU33FCC
+         wjCsOEUNTna5fT0SxTeGl4MU62b8ThV40w/qhNcjc08Ri5d8CH8Ruy9YcAizS1LU7w/8
+         RfyAg0Sq9PUbqFTRahHe9MwP2F9KI5M/my5i/zpz8uZGzS2hw75R+4IIuTR2yCG3ILIO
+         djSO2fjWG8zByMZgqS703jfk2WNWZbk0y5IRNbu76cnm6nkYfsTmnkdKKUYktWODvCXJ
+         QHhg==
+X-Forwarded-Encrypted: i=1; AJvYcCUqbCjdpJWypHhEBp8eRAZD80Al/tk77G71IJczH/Qoo0iDNetSNh/+6+ot064rH/QfRNyXeNyKAHRdwZAh@vger.kernel.org
+X-Gm-Message-State: AOJu0YyP/gjaop8vxLuV3+4QUPocj9MpCpJKrmk/JgMBnD3K/6XRGZos
+	Hz2lmKzKxuQBMGeCu68wk0o1+jU64Qyu3VRSx1el6Kb2RLxgUlw4inQ3AmH55BA=
+X-Gm-Gg: ASbGncsbsmn5KIB6eXkN0JHOZKwYzGKWQLhh7S6NLJiRWELwyT+zYc02F68f3py2k4H
+	ksOByqFETCaanjdGAIawybAKmriqwhhjIvKvJqR+Ld+43gAuBEmAYRlzR0MqzM6dfHhpAygAHmV
+	8F+e9gy1Yn343rmbmkAsZFKoz8fdVcRfqXX2yN8ddSOQ9E2Ulm6f1or2BJMVA+50Wnv6dOXAAy5
+	1JZBlZmUaNdjfX5sabQQItsDtaLUaeO7O8qGRL8FJ8d0g0vh+8i5bruZ2VrCKDgvdtfdCxDAiRj
+	QHeTqA3VGlN1nehofUcr2t7ZI4SEyQ==
+X-Google-Smtp-Source: AGHT+IGV/C1nBqdFgvJeMR65ubRSZVeKyIlihXhmqtyVdAP02zb8OqzD3cvC0frxkEgh3Df6nv5ppg==
+X-Received: by 2002:a05:6512:304a:b0:53d:d0dd:8dae with SMTP id 2adb3069b0e04-53dd36a075fmr261668e87.17.1732227296249;
+        Thu, 21 Nov 2024 14:14:56 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ffa538f100sm593151fa.103.2024.11.21.14.10.37
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53dd248b42esm91463e87.206.2024.11.21.14.14.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Nov 2024 14:10:38 -0800 (PST)
-Date: Fri, 22 Nov 2024 00:10:36 +0200
+        Thu, 21 Nov 2024 14:14:54 -0800 (PST)
+Date: Fri, 22 Nov 2024 00:14:52 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Andi Shyti <andi.shyti@kernel.org>, 
-	Sumit Semwal <sumit.semwal@linaro.org>, Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>, 
-	linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-i2c@vger.kernel.org, linux-media@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	linaro-mm-sig@lists.linaro.org, quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com
-Subject: Re: [PATCH v3 3/3] i2c: i2c-qcom-geni: Update compile dependenices
- for I2C GENI driver
-Message-ID: <zfkhbjm6wrmcocqcvluov3nbrpb2ozbo52c6nlwxro44gublcw@5645ksz4cfm2>
-References: <20241121130134.29408-1-quic_jseerapu@quicinc.com>
- <20241121130134.29408-4-quic_jseerapu@quicinc.com>
+To: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>, 
+	Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Odelu Kukatla <quic_okukatla@quicinc.com>, Mike Tipton <quic_mdtipton@quicinc.com>, 
+	Sibi Sankar <quic_sibis@quicinc.com>, linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH V5 3/4] interconnect: qcom: Add EPSS L3 support on SA8775P
+Message-ID: <u2jfxvmn6qazhpvmehrh7ifc3ei7qucuwbk5dq5jzpoqkxmdbk@tsx4di2fdj4h>
+References: <20241121113006.28520-1-quic_rlaggysh@quicinc.com>
+ <20241121113006.28520-4-quic_rlaggysh@quicinc.com>
+ <bc926d6d-e3d1-4fbf-9b6a-bbd3816a766d@kernel.org>
+ <b2a05dfb-a820-4450-a156-8d6b4bd59be3@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -92,47 +95,142 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241121130134.29408-4-quic_jseerapu@quicinc.com>
+In-Reply-To: <b2a05dfb-a820-4450-a156-8d6b4bd59be3@quicinc.com>
 
-On Thu, Nov 21, 2024 at 06:31:34PM +0530, Jyothi Kumar Seerapu wrote:
-> I2C functionality has dependencies on the GPI driver.
-> Ensure that the GPI driver is enabled when using the I2C
-> driver functionality.
-> Therefore, update the I2C GENI driver to depend on the GPI driver.
+On Thu, Nov 21, 2024 at 11:33:04PM +0530, Raviteja Laggyshetty wrote:
 > 
-> Signed-off-by: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
-> ---
-> v2 -> v3:
->    - Moved this change to patch3.
->    - Updated commit description.
 > 
-> v1 -> v2:
->    -  This patch is added in v2 to address the kernel test robot
->       reported compilation error.
->       ERROR: modpost: "gpi_multi_desc_process" [drivers/i2c/busses/i2c-qcom-geni.ko] undefined!
+> On 11/21/2024 5:28 PM, Krzysztof Kozlowski wrote:
+> > On 21/11/2024 12:30, Raviteja Laggyshetty wrote:
+> >> Add Epoch Subsystem (EPSS) L3 interconnect provider on
+> >> SA8775P SoCs with multiple device support.
+> >>
+> > 
+> > 
+> > ...
+> > 
+> >> -DEFINE_QNODE(osm_l3_master, OSM_L3_MASTER_NODE, 16, OSM_L3_SLAVE_NODE);
+> >> -DEFINE_QNODE(osm_l3_slave, OSM_L3_SLAVE_NODE, 16);
+> >> +DEFINE_QNODE(osm_l3_master, 16, osm_l3_slave);
+> >> +DEFINE_QNODE(osm_l3_slave, 16);
+> >>  
+> >> -static const struct qcom_osm_l3_node * const osm_l3_nodes[] = {
+> >> +static struct qcom_osm_l3_node * const osm_l3_nodes[] = {
+> >>  	[MASTER_OSM_L3_APPS] = &osm_l3_master,
+> >>  	[SLAVE_OSM_L3] = &osm_l3_slave,
+> >>  };
+> >>  
+> >> -DEFINE_QNODE(epss_l3_master, OSM_L3_MASTER_NODE, 32, OSM_L3_SLAVE_NODE);
+> >> -DEFINE_QNODE(epss_l3_slave, OSM_L3_SLAVE_NODE, 32);
+> >> +DEFINE_QNODE(epss_l3_master, 32, epss_l3_slave);
+> >> +DEFINE_QNODE(epss_l3_slave, 32);
+> >>  
+> >> -static const struct qcom_osm_l3_node * const epss_l3_nodes[] = {
+> >> +static struct qcom_osm_l3_node * const epss_l3_nodes[] = {
+> > 
+> > 
+> > I think dropping const makes the code worse, not better. Commit msg does
+> > not explain all these changes and I could not figure out the intention
+> > (except modifying but that's just obvious).
 > 
->  drivers/i2c/busses/Kconfig | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/i2c/busses/Kconfig b/drivers/i2c/busses/Kconfig
-> index 0aa948014008..87634a682855 100644
-> --- a/drivers/i2c/busses/Kconfig
-> +++ b/drivers/i2c/busses/Kconfig
-> @@ -1049,6 +1049,7 @@ config I2C_QCOM_GENI
->  	tristate "Qualcomm Technologies Inc.'s GENI based I2C controller"
->  	depends on ARCH_QCOM || COMPILE_TEST
->  	depends on QCOM_GENI_SE
-> +	depends on QCOM_GPI_DMA
+> EPSS L3 on SA8775P has two instances and this requires creation of two device nodes in devicetree.
+> As Interconnect framework requires a unique node id, each device node needs to have different compatible and data.
+> To overcome the need of having two different compatibles and data, driver code has been modified to acquire unique node id from IDA 
+> and the node name is made dynamic (nodename@address).
+> Updating node id and node name is not possible with const.
 
-So... without this change the previous patch is broken, which is a
-no-go. And anyway, adding dependency onto a particular DMA driver is a
-bad idea. Please make use of the DMA API instead.
+Has this been described in the commit message? No. Have you had similar
+questions since v1? Yes. What does that tell us?
 
->  	help
->  	  This driver supports GENI serial engine based I2C controller in
->  	  master mode on the Qualcomm Technologies Inc.'s SoCs. If you say
-> -- 
-> 2.17.1
+Also, while we are at it. Please fix your email client settings to wrap
+message body text on some sensible (72-75) width.
+
+> > 
+> > 
+> > 
+> >>  	[MASTER_EPSS_L3_APPS] = &epss_l3_master,
+> >>  	[SLAVE_EPSS_L3_SHARED] = &epss_l3_slave,
+> >>  };
+> >> @@ -123,6 +125,19 @@ static const struct qcom_osm_l3_desc epss_l3_l3_vote = {
+> >>  	.reg_perf_state = EPSS_REG_L3_VOTE,
+> >>  };
+> >>  
+> >> +static u16 get_node_id_by_name(const char *node_name,
+> >> +			       const struct qcom_osm_l3_desc *desc)
+> >> +{
+> >> +	struct qcom_osm_l3_node *const *nodes = desc->nodes;
+> >> +	int i;
+> >> +
+> >> +	for (i = 0; i < desc->num_nodes; i++) {
+> >> +		if (!strcmp(nodes[i]->name, node_name))
+> >> +			return nodes[i]->id;
+> >> +	}
+> >> +	return 0;
+> >> +}
+> >> +
+> >>  static int qcom_osm_l3_set(struct icc_node *src, struct icc_node *dst)
+> >>  {
+> >>  	struct qcom_osm_l3_icc_provider *qp;
+> >> @@ -164,10 +179,11 @@ static int qcom_osm_l3_probe(struct platform_device *pdev)
+> >>  	const struct qcom_osm_l3_desc *desc;
+> >>  	struct icc_onecell_data *data;
+> >>  	struct icc_provider *provider;
+> >> -	const struct qcom_osm_l3_node * const *qnodes;
+> >> +	struct qcom_osm_l3_node * const *qnodes;
+> >>  	struct icc_node *node;
+> >>  	size_t num_nodes;
+> >>  	struct clk *clk;
+> >> +	u64 addr;
+> >>  	int ret;
+> >>  
+> >>  	clk = clk_get(&pdev->dev, "xo");
+> >> @@ -188,6 +204,10 @@ static int qcom_osm_l3_probe(struct platform_device *pdev)
+> >>  	if (!qp)
+> >>  		return -ENOMEM;
+> >>  
+> >> +	ret = of_property_read_reg(pdev->dev.of_node, 0, &addr, NULL);
+> >> +	if (ret)
+> >> +		return ret;
+> >> +
+> >>  	qp->base = devm_platform_ioremap_resource(pdev, 0);
+> >>  	if (IS_ERR(qp->base))
+> >>  		return PTR_ERR(qp->base);
+> >> @@ -242,8 +262,13 @@ static int qcom_osm_l3_probe(struct platform_device *pdev)
+> >>  
+> >>  	icc_provider_init(provider);
+> >>  
+> >> +	/* Allocate unique id for qnodes */
+> >> +	for (i = 0; i < num_nodes; i++)
+> >> +		qnodes[i]->id = ida_alloc_min(&osm_l3_id, OSM_L3_NODE_ID_START, GFP_KERNEL);
+> >> +
+> >>  	for (i = 0; i < num_nodes; i++) {
+> >> -		size_t j;
+> >> +		char *node_name;
+> >> +		size_t j, len;
+> >>  
+> >>  		node = icc_node_create(qnodes[i]->id);
+> >>  		if (IS_ERR(node)) {
+> >> @@ -251,13 +276,29 @@ static int qcom_osm_l3_probe(struct platform_device *pdev)
+> >>  			goto err;
+> >>  		}
+> >>  
+> >> -		node->name = qnodes[i]->name;
+> >> +		/* len = strlen(node->name) + @ + 8 (base-address) + NULL */
+> >> +		len = strlen(qnodes[i]->name) + OSM_NODE_NAME_SUFFIX_SIZE;
+> >> +		node_name = devm_kzalloc(&pdev->dev, len, GFP_KERNEL);
+> >> +		if (!node_name) {
+> >> +			ret = -ENOMEM;
+> >> +			goto err;
+> >> +		}
+> >> +
+> >> +		snprintf(node_name, len, "%s@%08llx", qnodes[i]->name, addr);
+> >> +		node->name = node_name;
+> > 
+> > 
+> > Why the node name becomes dynamic?
+> > 
+> > Best regards,
+> > Krzysztof
 > 
 
 -- 
