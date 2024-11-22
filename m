@@ -1,143 +1,208 @@
-Return-Path: <linux-arm-msm+bounces-38792-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38793-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 789519D5B38
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 09:44:35 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6B3149D5B5E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 09:56:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id F17601F23114
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 08:44:34 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4EB25282CEF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 08:56:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FC49198E7B;
-	Fri, 22 Nov 2024 08:43:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2CF3119E970;
+	Fri, 22 Nov 2024 08:56:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="KLxYZ33x"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="X3cWRFAX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 401BB165EE6;
-	Fri, 22 Nov 2024 08:43:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4457B1BD519
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 08:56:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732264997; cv=none; b=UkdUwsq69Cq03yb/w1muVUbInL8gc5rK/zdqNgmBGz0GHJZlCJNYf0gkxYKnkfFjEVN/wdby5pb1GGka6GoWpB4Io1p75Y+Or+77PDaO12UUeCdNBbS9DjlCL6fyh0S02XW9ZXnsuYhSWZVmpLlO4yPso+hN0Fyqciz0Vh4bho8=
+	t=1732265792; cv=none; b=JWuvlb2Q9tah2Fcrp0bQuOEI2bVgmDZYQoE+ZiNWC85hjXpQSedZZ6m1CT0dYuPs8sIf+Yuk5lmlHyFmt2v2FqODohY9j4nPFu5ga9Sn35mdUvKhPLe2wRKUhgDo8NzKG9ne/nGGf3jwgszeHd6Y/WCH04xqiuzNQBp7DBFSERw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732264997; c=relaxed/simple;
-	bh=P68aeh3TcVBeafEDkBgbtLr5at3kUvBlctQM9B64INo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tZW57hPvf2++Axf8L0Cg+ut1etln7h7M/COe6BIJGyHUTCv8huLzmYxxbXthpqKjcNGh3HF8M071hjO93hdoLt2LJCilNCZJs2gAHDX3Tu7C3eOQYPW4IFRzpU+DJvSo+KVMHYV7PeWafTzsSaLKJA6YT7M2mRoAgH/rz2iCb2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=KLxYZ33x; arc=none smtp.client-ip=198.175.65.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1732264996; x=1763800996;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=P68aeh3TcVBeafEDkBgbtLr5at3kUvBlctQM9B64INo=;
-  b=KLxYZ33xvqclAegVBy8QheEa2q8J+GpNxnUBLxV1un0wVmjV/hJKsT2t
-   OZJIlptn6l+7zaj1Brq+ahj5VDXGrTsSTyneWDGKexNZgBMFgrpJySHl+
-   u2HN8eLzBE+ay+lzNWj1P2yKOk9Ua2rGZp1caRShZq3FdQQR3tTTdWJIj
-   6ZZprX/mElOztNgZ6QoZddBcM0Vt0BY0GEfz8huzfj70eFRhpKtEvnD7z
-   sykGyMRiNcIg+QQ4nGjHEgJJnGqHHZrcqRFgg46iBRoEVV57dFxrvb03B
-   a4o0a8JgAPcrsnPj3LaHSxwCAqzk49OzEjBxkIwxJIBEPsQpK+E/lf3rh
-   g==;
-X-CSE-ConnectionGUID: edqIpWZqTI2fTBdoenQegg==
-X-CSE-MsgGUID: 5Jm3Eh7jQRyfbP6FOfe5qQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11263"; a="43479431"
-X-IronPort-AV: E=Sophos;i="6.12,175,1728975600"; 
-   d="scan'208";a="43479431"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Nov 2024 00:43:08 -0800
-X-CSE-ConnectionGUID: d3+K4gt2R1OCzu6OIXkbOw==
-X-CSE-MsgGUID: P6LLq6iIT+Kyy3L4HHzRVw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,175,1728975600"; 
-   d="scan'208";a="128030479"
-Received: from lkp-server01.sh.intel.com (HELO 8122d2fc1967) ([10.239.97.150])
-  by orviesa001.jf.intel.com with ESMTP; 22 Nov 2024 00:43:04 -0800
-Received: from kbuild by 8122d2fc1967 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1tEPFl-0003n5-27;
-	Fri, 22 Nov 2024 08:43:01 +0000
-Date: Fri, 22 Nov 2024 16:42:21 +0800
-From: kernel test robot <lkp@intel.com>
-To: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>,
-	Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	Odelu Kukatla <quic_okukatla@quicinc.com>,
-	Mike Tipton <quic_mdtipton@quicinc.com>,
-	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] interconnect: qcom: sdx75: Drop QP0 related
- interconnect and BCM nodes
-Message-ID: <202411221619.zJpjlWkH-lkp@intel.com>
-References: <20241121172737.255-3-quic_rlaggysh@quicinc.com>
+	s=arc-20240116; t=1732265792; c=relaxed/simple;
+	bh=F2koBmdyZubej7GEO1XyX3Sem/GjeTvvmVNiCWXNQWM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=p3L2ZZqOxqTTwYAbAkNFbwEpk9/NWeUSET81zbspkkx2fMq0xXbgPSOaYG5IYuEoR8mybZ6H1eF30S9nHvy74EHYmEGHzY2MpNHnP9n+TOLheuCDJ0zmR8wxxPqBe22LiXn/oZLw6IshjKbjGLDV9vOSWuu3LHx5VuRluVU763g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=X3cWRFAX; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4315855ec58so2763225e9.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 00:56:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1732265788; x=1732870588; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=0q24aZj5UoB/3iOB1xFJKIgPYCub+iJrpgUz3sRy/lk=;
+        b=X3cWRFAX4s2kf17Eb+7UlG9hryuG1h92NW9AOlFhHMdXc19Hrc4iJCxF5AOvgbfDh2
+         qo8fzR1pm/4YVgEkKCyjwzev9x5iEL0H1cSrFihtKfaBDMo2S9vq96ussZhwp9Qsq1i6
+         oxovcppug+BS0zt0M1Qg01X1qhMHRUqwSYWG89zeAwpntisdFG184ukV71Am6ZkWY4bR
+         LT5MxHZQptv3br9y5INXYfFW2WI8RaHPtApU5IrEYKLVqHatCVLcuKAXa3MIUMD5D85j
+         lRz7uGK7bIa8yWTHL4tdkgoA1Z9Urezkj8l13jzdkK7oqSUZ3tGKDwgsO2qsAJlUHa/a
+         z6+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732265788; x=1732870588;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=0q24aZj5UoB/3iOB1xFJKIgPYCub+iJrpgUz3sRy/lk=;
+        b=THNWU5cAGacEd6+q73HqYuUC3yKH44RmWFKlFiMBnSqQ3GOD/7KS0ZQjKa/Ak7GuRj
+         sGcr99RpIfR6sXgHeV7aZx6rYi7jRjgDeilbqyMJPcwuh2F9zHnlDxdbqSh/CrPQ6VdK
+         YUoHaO0VQTa9iGxXEiWmZ1rY6QiedNhl3WmjZ2b93kEmEoawXNVWbUwW2TWKtUrBm49k
+         m4jpAoHot0EMDix1EjxtVOuDMi45x4TQn76AyX6Bc0xtDQ1+cVyd5IFCgU9eUTeBtEo0
+         tueNOFJFrkpWVYt/WmsRyeNvYZupqA7KMpsHiOV3rKEi03GWsRgXi/svpMc2dFEGilmZ
+         OMSQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUzCJoCTCqsGD8MGG/bO/vJfCHnNpBYVu7mbwugnojpSZZbyNzBKEUObJ2hCP8hUAP4YT7PgvufURE3alBg@vger.kernel.org
+X-Gm-Message-State: AOJu0YwfJTdrH6SIANZDPDB07A38IvNVdSaOMprU6CR73LNXYJ9FFdY4
+	bIoaP6ocB6hTEpq5gB1kCy93zV3JhKV6r2q4MuulV0eeuI+x3UKiLQ3/u/9iA7s=
+X-Gm-Gg: ASbGncu9QgqPaxU9AsHmXGIZopmU4SNASOy/s5uFwlwKujhkVlMQ4WdboZzSHt491St
+	PW8NqyBKmFhhuE+T26g578ROWg4HwVXs1E+24LxfMKSLOt3shppW2XL10Q24pvHd1RRSNA3wgbI
+	Nd11zcmmVmdSjFB73rmBkxT72h9OjFtyR7D+wo28QDHBRJRflT6fcI9JIBpq4TNEnaf2FTFBTMq
+	KdpgUNoKiYN5rCQmJ33BCsvPaieLAL5x2jgilwEdOOTxWNJJ6t7OMahSK4bW5u7
+X-Google-Smtp-Source: AGHT+IHm+ygSxetYz9qzxk45T5z++2uQxDgWuaTPnpb+Sqx9dh7f/s+TWZ+u8q1SsFdpQxAP7j9xVA==
+X-Received: by 2002:a05:600c:4f84:b0:431:5632:4480 with SMTP id 5b1f17b1804b1-433ce4e76dfmr6350545e9.6.1732265788560;
+        Fri, 22 Nov 2024 00:56:28 -0800 (PST)
+Received: from krzk-bin.. ([178.197.211.167])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-433cde97c68sm20320695e9.36.2024.11.22.00.56.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 Nov 2024 00:56:27 -0800 (PST)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-remoteproc@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/2] dt-bindings: remoteproc: Add SM8750 MPSS and CDSP
+Date: Fri, 22 Nov 2024 09:56:22 +0100
+Message-ID: <20241122085623.19988-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241121172737.255-3-quic_rlaggysh@quicinc.com>
+Content-Transfer-Encoding: 8bit
 
-Hi Raviteja,
+Add remote processor PAS loaders for SM8750 MPSS (modem) and CDSP
+processors.  Both are compatible with earlier SM8650 with minor
+differences:
+1. SM8750 CDSP has one more sixth shutdown interrupt.
+2. SM8750 MPSS lacks fifth memory region for Qlink Logging, according to
+   downstream sources.  There might be other differences, because the
+   modem currently crashes after starting.
 
-kernel test robot noticed the following build errors:
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[auto build test ERROR on robh/for-next]
-[also build test ERROR on linus/master v6.12 next-20241121]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+---
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Raviteja-Laggyshetty/dt-bindings-interconnect-qcom-drop-QPIC_CORE-IDs/20241122-013857
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-patch link:    https://lore.kernel.org/r/20241121172737.255-3-quic_rlaggysh%40quicinc.com
-patch subject: [PATCH 2/2] interconnect: qcom: sdx75: Drop QP0 related interconnect and BCM nodes
-config: arm64-allmodconfig (https://download.01.org/0day-ci/archive/20241122/202411221619.zJpjlWkH-lkp@intel.com/config)
-compiler: clang version 20.0.0git (https://github.com/llvm/llvm-project 592c0fe55f6d9a811028b5f3507be91458ab2713)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20241122/202411221619.zJpjlWkH-lkp@intel.com/reproduce)
+DTS for both of these will follow up after merge window. Work in
+progress is available at:
+https://github.com/krzk/linux/tree/b4/sm8750-audio-part-2
+---
+ .../bindings/remoteproc/qcom,sm8550-pas.yaml  | 46 +++++++++++++++++--
+ 1 file changed, 42 insertions(+), 4 deletions(-)
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202411221619.zJpjlWkH-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
->> drivers/interconnect/qcom/sdx75.c:878:3: error: use of undeclared identifier 'bcm_qp0'; did you mean 'bcm_qup0'?
-     878 |         &bcm_qp0,
-         |          ^~~~~~~
-         |          bcm_qup0
-   drivers/interconnect/qcom/sdx75.c:817:28: note: 'bcm_qup0' declared here
-     817 | static struct qcom_icc_bcm bcm_qup0 = {
-         |                            ^
-   1 error generated.
-
-Kconfig warnings: (for reference only)
-   WARNING: unmet direct dependencies detected for MODVERSIONS
-   Depends on [n]: MODULES [=y] && !COMPILE_TEST [=y]
-   Selected by [y]:
-   - RANDSTRUCT_FULL [=y] && (CC_HAS_RANDSTRUCT [=y] || GCC_PLUGINS [=n]) && MODULES [=y]
-
-
-vim +878 drivers/interconnect/qcom/sdx75.c
-
-3642b4e5cbfe48 Rohit Agarwal 2023-09-13  876  
-3642b4e5cbfe48 Rohit Agarwal 2023-09-13  877  static struct qcom_icc_bcm * const clk_virt_bcms[] = {
-3642b4e5cbfe48 Rohit Agarwal 2023-09-13 @878  	&bcm_qp0,
-3642b4e5cbfe48 Rohit Agarwal 2023-09-13  879  	&bcm_qup0,
-3642b4e5cbfe48 Rohit Agarwal 2023-09-13  880  };
-3642b4e5cbfe48 Rohit Agarwal 2023-09-13  881  
-
+diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml
+index a24cbb61bda7..2dd479cf4821 100644
+--- a/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml
++++ b/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml
+@@ -24,11 +24,15 @@ properties:
+           - qcom,sm8650-adsp-pas
+           - qcom,sm8650-cdsp-pas
+           - qcom,sm8650-mpss-pas
++          - qcom,sm8750-mpss-pas
+           - qcom,x1e80100-adsp-pas
+           - qcom,x1e80100-cdsp-pas
+       - items:
+           - const: qcom,sm8750-adsp-pas
+           - const: qcom,sm8550-adsp-pas
++      - items:
++          - const: qcom,sm8750-cdsp-pas
++          - const: qcom,sm8650-cdsp-pas
+ 
+   reg:
+     maxItems: 1
+@@ -114,6 +118,23 @@ allOf:
+         memory-region:
+           minItems: 3
+           maxItems: 3
++
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,sm8750-cdsp-pas
++    then:
++      properties:
++        interrupts:
++          maxItems: 6
++        interrupt-names:
++          maxItems: 6
++        memory-region:
++          minItems: 3
++          maxItems: 3
++
+   - if:
+       properties:
+         compatible:
+@@ -144,6 +165,21 @@ allOf:
+           minItems: 5
+           maxItems: 5
+ 
++  - if:
++      properties:
++        compatible:
++          enum:
++            - qcom,sm8750-mpss-pas
++    then:
++      properties:
++        interrupts:
++          minItems: 6
++        interrupt-names:
++          minItems: 6
++        memory-region:
++          minItems: 4
++          maxItems: 4
++
+   - if:
+       properties:
+         compatible:
+@@ -171,6 +207,7 @@ allOf:
+             - qcom,sdx75-mpss-pas
+             - qcom,sm8550-mpss-pas
+             - qcom,sm8650-mpss-pas
++            - qcom,sm8750-mpss-pas
+     then:
+       properties:
+         power-domains:
+@@ -184,10 +221,11 @@ allOf:
+   - if:
+       properties:
+         compatible:
+-          enum:
+-            - qcom,sm8550-cdsp-pas
+-            - qcom,sm8650-cdsp-pas
+-            - qcom,x1e80100-cdsp-pas
++          contains:
++            enum:
++              - qcom,sm8550-cdsp-pas
++              - qcom,sm8650-cdsp-pas
++              - qcom,x1e80100-cdsp-pas
+     then:
+       properties:
+         power-domains:
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+2.43.0
+
 
