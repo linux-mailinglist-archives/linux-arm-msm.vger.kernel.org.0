@@ -1,150 +1,231 @@
-Return-Path: <linux-arm-msm+bounces-38882-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38883-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9A0729D6477
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 20:11:12 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4A8689D64F6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 21:42:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5EDF2283562
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 19:11:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0BF7F282FB6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 20:42:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40EB81DF98E;
-	Fri, 22 Nov 2024 19:10:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54186186E40;
+	Fri, 22 Nov 2024 20:42:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ANNIdFq9"
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="AzsDTPqT";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="XZz/Zwqu";
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="AzsDTPqT";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="XZz/Zwqu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A06291DF72C;
-	Fri, 22 Nov 2024 19:10:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39BC317B428;
+	Fri, 22 Nov 2024 20:42:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732302638; cv=none; b=sV+yTDHns82sMoj2+8QlB3J58+BHclzNsQNhhs7hKG6zN/KGtXn64/NrqlCiH/Q3qdkYV842GsjsTRjkq7vEiPRD0cZihywkOgbA97h0WA+h6ZZ83iLH51mW/g0K83rQm8xLabEz/uxWGjtmugfQ+4w3rKm34xOke4FfjEk27Uo=
+	t=1732308128; cv=none; b=gDxPfumSMyVPZGNmOi9wr0X++cmH7ykVh0/vqJMI1BgHWJhA+DgPlE4jqW2Axg9VJ7PK9T35LWrqb9J+DtInxjL4IslYT1vtSthBwCc56hiKuDUV8lHqr3cpjnhCU4DFv+4/DYLwMqtrWWjN7EHunsc6T9ot9I8dtI5YBuPv1aY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732302638; c=relaxed/simple;
-	bh=8NH2yB5xLLOnt00p6vqPplFTBNCd7hf+CR6j9FI9O9w=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=SyTm8q3m4I7+/gJ5rDoZBGBYQOy+BxYgMfufxtfk8cwy4XU6Vhyzc2Xf2dvK5N6IxlEEqZh2V45QKSMVuEJq0RTuw3KRG89qnYL7Ls1XeEru81JXEQ4Ll3TyUu3mEVgTt73yCeLaFVNvVgXzx81AihMSOdDX0J20R83wYTLJSs8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ANNIdFq9; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AMDZbnZ027713;
-	Fri, 22 Nov 2024 19:10:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Vv7NlU8R41aOG84T042tZhwrHKwcQz1mHKXKct/Et3o=; b=ANNIdFq9Vgs52qW0
-	sYFvlGHX+wFs1yoK1N3o/gbXzXorIpraFDseX1GrYpBmEBLOHu7jG+9CaC/CrdpK
-	oaz8EraZAEYGAsZ3KyehRMa+6EUJyxm7u4ZG63gRKmV7MEInOSGxvY7u+66gK3w7
-	9UmiOFI1KW+e8E8kgXQ3MwUFWu4PDld3dOxlBjlg/HTWvGrDtf71uZZfKUBrBb3s
-	5bMoTMCF98fWBy/9eJohm7WJCErx8DkYID12bsbnwm28X1Rlzfyk7cuSrxF4q3si
-	ocjS5lJqZmvrwberoNJcuYz1S/PgT0B/yqAX+3OoGuOnM/qnq2arg3fIKt7BBg2h
-	GOi8dw==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 432h4dtb0t-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 22 Nov 2024 19:10:25 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AMJAOd3025725
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 22 Nov 2024 19:10:24 GMT
-Received: from hu-krichai-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Fri, 22 Nov 2024 11:10:20 -0800
-From: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Date: Sat, 23 Nov 2024 00:40:01 +0530
-Subject: [PATCH v5 3/3] PCI: qcom: Update ICC and OPP values during link up
- event
+	s=arc-20240116; t=1732308128; c=relaxed/simple;
+	bh=KHKHQCXvuPqtS8zBtf2vIiBmq70MyYsvypTSAYgkiac=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=J4D3t3vjwVbVEInf70YFvXMazW/Rv1cc88n0patbhFMu/VO1hVtbUdFDg/+81pGcfmkJfmVilRNakmXj+JDmggZNPjvS8XxEGBErl5lLAdVGsJy6wV1slgPLWie8uj3naFBkD1ZWL7pdaSS7XvgWyP81GB4Im0mNtPWjoWzKTPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz; spf=pass smtp.mailfrom=suse.cz; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=AzsDTPqT; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=XZz/Zwqu; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=AzsDTPqT; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=XZz/Zwqu; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 4270221240;
+	Fri, 22 Nov 2024 20:42:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1732308124;
+	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
+	 cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=KHKHQCXvuPqtS8zBtf2vIiBmq70MyYsvypTSAYgkiac=;
+	b=AzsDTPqT7eoeHiGQhWEj4WP5gEbXkxHzIEV42sxL+XYjq1GcEtMKEkF9eTpm++y1OcS53L
+	NgTKC68IcUn8EdftJ9vPGZNPjgcZJpkQj4/fRow2065DaZqdJSyQsbPgzr1FRasW0UD7bf
+	PWhkcX5WaZRySP5fqFm7kMsF3sCxbOA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1732308124;
+	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
+	 cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=KHKHQCXvuPqtS8zBtf2vIiBmq70MyYsvypTSAYgkiac=;
+	b=XZz/Zwqu27QgWYeUGgkJu5PLIx9ocmWILGpX51ZwduaMkHZ29nBQOgyXf0XF+TvouhrXj/
+	Q0c5l2DwC/5zDaDA==
+Authentication-Results: smtp-out1.suse.de;
+	dkim=pass header.d=suse.cz header.s=susede2_rsa header.b=AzsDTPqT;
+	dkim=pass header.d=suse.cz header.s=susede2_ed25519 header.b="XZz/Zwqu"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1732308124;
+	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
+	 cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=KHKHQCXvuPqtS8zBtf2vIiBmq70MyYsvypTSAYgkiac=;
+	b=AzsDTPqT7eoeHiGQhWEj4WP5gEbXkxHzIEV42sxL+XYjq1GcEtMKEkF9eTpm++y1OcS53L
+	NgTKC68IcUn8EdftJ9vPGZNPjgcZJpkQj4/fRow2065DaZqdJSyQsbPgzr1FRasW0UD7bf
+	PWhkcX5WaZRySP5fqFm7kMsF3sCxbOA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1732308124;
+	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
+	 cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=KHKHQCXvuPqtS8zBtf2vIiBmq70MyYsvypTSAYgkiac=;
+	b=XZz/Zwqu27QgWYeUGgkJu5PLIx9ocmWILGpX51ZwduaMkHZ29nBQOgyXf0XF+TvouhrXj/
+	Q0c5l2DwC/5zDaDA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E8A59138A7;
+	Fri, 22 Nov 2024 20:42:03 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id 9uhuNpvsQGefVAAAD6G6ig
+	(envelope-from <pvorel@suse.cz>); Fri, 22 Nov 2024 20:42:03 +0000
+Date: Fri, 22 Nov 2024 21:41:57 +0100
+From: Petr Vorel <pvorel@suse.cz>
+To: Masahiro Yamada <masahiroy@kernel.org>
+Cc: Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	linux-kbuild@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 1/2] init/Kconfig: add python3 availability config
+Message-ID: <20241122204157.GA125569@pevik>
+Reply-To: Petr Vorel <pvorel@suse.cz>
+References: <20241120204125.52644-1-pvorel@suse.cz>
+ <CAK7LNASYr+pjUs-W40d_Gc+vP67nX7NHXyE0AnOpXxXgxrCtqQ@mail.gmail.com>
+ <20241121011720.GA69389@pevik>
+ <CAF6AEGuzFNVd5fE+b+hKcC8xAOg7CrkPaYuWC6tCVmioutoOOw@mail.gmail.com>
+ <CAK7LNAQDMJUYUF7BaN10bwctW7fuHmSMrrAjMmn4s7P2ys5P+Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20241123-remove_wait2-v5-3-b5f9e6b794c2@quicinc.com>
-References: <20241123-remove_wait2-v5-0-b5f9e6b794c2@quicinc.com>
-In-Reply-To: <20241123-remove_wait2-v5-0-b5f9e6b794c2@quicinc.com>
-To: Jingoo Han <jingoohan1@gmail.com>,
-        Manivannan Sadhasivam
-	<manivannan.sadhasivam@linaro.org>,
-        Lorenzo Pieralisi
-	<lpieralisi@kernel.org>,
-        =?utf-8?q?Krzysztof_Wilczy=C5=84ski?=
-	<kw@linux.com>,
-        Rob Herring <robh@kernel.org>, Bjorn Helgaas
-	<bhelgaas@google.com>,
-        Konrad Dybcio <konradybcio@kernel.org>
-CC: <linux-pci@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        =?utf-8?q?Krzysztof_Wilczy=C5=84ski?=
-	<kwilczynski@kernel.org>,
-        <andersson@kernel.org>, <quic_vbadigan@quicinc.com>,
-        <quic_mrana@quicinc.com>,
-        "Krishna chaitanya
- chundru" <quic_krichai@quicinc.com>
-X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1732302607; l=1500;
- i=quic_krichai@quicinc.com; s=20230907; h=from:subject:message-id;
- bh=8NH2yB5xLLOnt00p6vqPplFTBNCd7hf+CR6j9FI9O9w=;
- b=jlHUMlK9os0a8uibvg0sVDUzDjiY3qOtLeMErY2m/f7oPN5ohfhFbaH+WVkWyPjT3nl3Os3fw
- G3zKqogA3PNANNQOGuLoQb5Z5HddzezixH879QKjol/gaxyK3xox2Js
-X-Developer-Key: i=quic_krichai@quicinc.com; a=ed25519;
- pk=10CL2pdAKFyzyOHbfSWHCD0X0my7CXxj8gJScmn1FAg=
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ZW5XeqCWSW5aqWZuIajKE7S8NrFEYUIm
-X-Proofpoint-GUID: ZW5XeqCWSW5aqWZuIajKE7S8NrFEYUIm
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 suspectscore=0
- clxscore=1015 phishscore=0 malwarescore=0 impostorscore=0
- lowpriorityscore=0 mlxlogscore=897 spamscore=0 adultscore=0 mlxscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411220161
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAK7LNAQDMJUYUF7BaN10bwctW7fuHmSMrrAjMmn4s7P2ys5P+Q@mail.gmail.com>
+X-Rspamd-Queue-Id: 4270221240
+X-Spam-Level: 
+X-Spamd-Result: default: False [-3.71 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	MID_RHS_NOT_FQDN(0.50)[];
+	HAS_REPLYTO(0.30)[pvorel@suse.cz];
+	R_DKIM_ALLOW(-0.20)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	FUZZY_BLOCKED(0.00)[rspamd.com];
+	ARC_NA(0.00)[];
+	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	TO_DN_SOME(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	FREEMAIL_CC(0.00)[gmail.com,vger.kernel.org,linaro.org,linux-foundation.org,lists.freedesktop.org];
+	DKIM_TRACE(0.00)[suse.cz:+];
+	RCVD_COUNT_TWO(0.00)[2];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
+	REPLYTO_EQ_FROM(0.00)[]
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+X-Spam-Score: -3.71
+X-Spam-Flag: NO
 
-The 'commit 4581403f6792 ("PCI: qcom: Enumerate endpoints based on Link up
-event in 'global_irq' interrupt")' added the Link up based enumeration
-support failed to update the ICC/OPP vote once link is up. Earlier, the
-update happens during probe and the endpoints may or may not be enumerated
-at that time. So the ICC/OPP vote was not guaranteed to be accurate. Now
-with the Link up based enumeration support, the driver can request the
-accurate vote based on the PCIe link.
+> On Thu, Nov 21, 2024 at 10:49 AM Rob Clark <robdclark@gmail.com> wrote:
 
-So call qcom_pcie_icc_opp_update() in qcom_pcie_global_irq_thread() after
-enumerating the endpoints.
+> > On Wed, Nov 20, 2024 at 5:17 PM Petr Vorel <pvorel@suse.cz> wrote:
 
-Fixes: 4581403f6792 ("PCI: qcom: Enumerate endpoints based on Link up event in 'global_irq' interrupt")
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
----
- drivers/pci/controller/dwc/pcie-qcom.c | 2 ++
- 1 file changed, 2 insertions(+)
+> > > > On Thu, Nov 21, 2024 at 5:41 AM Petr Vorel <pvorel@suse.cz> wrote:
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 656d2be9d87f..e4d3366ead1f 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -1569,6 +1569,8 @@ static irqreturn_t qcom_pcie_global_irq_thread(int irq, void *data)
- 		pci_lock_rescan_remove();
- 		pci_rescan_bus(pp->bridge->bus);
- 		pci_unlock_rescan_remove();
-+
-+		qcom_pcie_icc_opp_update(pcie);
- 	} else {
- 		dev_WARN_ONCE(dev, 1, "Received unknown event. INT_STATUS: 0x%08x\n",
- 			      status);
+> > > > > It will be used in the next commit for DRM_MSM.
 
--- 
-2.34.1
+> > > > > Suggested-by: Rob Clark <robdclark@gmail.com>
+> > > > > Signed-off-by: Petr Vorel <pvorel@suse.cz>
+> > > > > ---
+> > > > > Changes v3->v4:
+> > > > > * Move definition to the end of the file
 
+
+> > > > I prefer to not check the tool.
+
+> > > Ack.
+
+> > > > Why don't you install python3?
+
+> > > Everybody installs it when it's required, the question is how to inform about
+> > > the dependency.
+
+> > > There build environments are minimal environments:
+> > > * chroot (e.g. cross compilation)
+> > > * container
+
+> > > These are used by both developers and distros.
+
+> > I don't think py3 is an _onerous_ dependency, but it has come up as a
+> > surprise in minimal distro build environments at least once.. so I'd
+> > be a fan of surfacing this dependency in a predictable/understandable
+> > way (ie. I'm in favor of this patchset)
+
+
+> "once" is a keyword here.
+
+> "/bin/sh: python3: not found" provides sufficient information
+> about why the compilation failed, and you know what to do
+> to fix the problem.
+> This is good.
+
+> If you hide CONFIG_DRM_MSM silently
+> due to missing python3, you may scratch your head
+> "why drm/msm was not compiled?".
+It's not on the list, but still visible in help (via search).
+
+> This is worse.
+
+I'm ok with this being refused. Yes, it's a trivial thing to find that python3
+is not installed. I wasn't sure myself if this is really better. Having
+something like "requires $(PYTHON3)" would be best solution (e.g. not disable
+the config, but exit before starting to build), but of course unless this
+feature is needed for many modules it does not make sense to have it.
+It's because kernel mostly contains everything (unless languages like python
+or any other dependency starts to be added). For this reason I like that
+mconf-cfg.sh warns when missing ncurses devel files (even suggesting package
+names).
+
+Just to explain what was my motivation. CONFIG_DRM_MSM in in arm64 defconfig,
+thus it will affect anybody who uses the defconfig (any distro will need to add
+it).
+
+It's needed only for Qualcomm arm64 devices only. But only for these devices
+which are mainlined enough to really use CONFIG_DRM_MSM (many of them aren't in
+that state).
+
+postmarketOS is the distribution which supports Qualcomm. It stores kernel
+config for each device and devices often have individual maintainer. E.g. 175x
+"once" :).
+
+Kind regards,
+Petr
 
