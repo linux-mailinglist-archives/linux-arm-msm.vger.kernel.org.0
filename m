@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-38859-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38860-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 593519D60F8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 15:58:31 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1ED959D6103
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 16:00:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5FF7EB299A4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 14:56:12 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CA8C01F21768
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 15:00:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1563143736;
-	Fri, 22 Nov 2024 14:56:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A83C152517;
+	Fri, 22 Nov 2024 15:00:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sx6T/T6p"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N8IGQHgS"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D6B8AD2F;
-	Fri, 22 Nov 2024 14:56:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE6BA69959;
+	Fri, 22 Nov 2024 15:00:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732287364; cv=none; b=P/k9zlguH2WdYmtbTNnt+RkErg9KqYQ95D+W5OqtVrC3ACgX5mh+psibE0SAOtgK01B/pzlS0XizZ/gatS2brVMzTXRHy0b+Ndp6QuWDst9vbWsazL7Osx0b/X4J6SdvTdCwuIAauaObVhi+3HkU3wOSj3Rj3khm6wEvUjlbaWw=
+	t=1732287643; cv=none; b=DsO4D34SndP/y4uNOYm16QHv2ualF6gL46BimWQbigwpD7bucooxjB/XRMUcKkhjxeWiO7k7dg31c3tMGN2atxFEMKETEKau4gU6sWVLbjohbCdqo911e935qow7hOzCkbMGp9+dhRp2fF2IcwBr+P+NgldrZviv8oM6My8XXMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732287364; c=relaxed/simple;
-	bh=AnkZTUQz7vtorDx0ojovaAGYdc5renUApP+5BRBaSs0=;
+	s=arc-20240116; t=1732287643; c=relaxed/simple;
+	bh=HM6inbvYL1/lEyw6iiqAwcJHl2HKnfkTeVOblQ8aKMA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=q1Ya5lLCeoUQ+4kwJCDJEY/rkgvID1zKPlX10ylRSr8c2aqkG81k7Izjbk3a9xbKlPqqdMFQ/W5uLaSPotTCymtUJipHHszkyVW6Eqi9sXjAi3Dc7yPqySCMAhBscQOiWk6gexYYX0PQdz8vnJ08uLFRAKcnINt+3LJqJSgPK2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sx6T/T6p; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36262C4CECE;
-	Fri, 22 Nov 2024 14:56:00 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=ASn5ZsVHieMzCSFM9t29KYfpVfpJn3H5OdGOkJGAqrD34lv9QaIyDGsODP86sp1Rk0g1CPK/7VSqg6D39ywf2Ya+Ah3rz4vDq1KAV+C09GKwcFi4s48319uNBt2pGdaXe4omhY2Jb6XdsgkVuGG0a+NhOBp/EuLyABZzJf498yQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N8IGQHgS; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90827C4CED0;
+	Fri, 22 Nov 2024 15:00:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732287364;
-	bh=AnkZTUQz7vtorDx0ojovaAGYdc5renUApP+5BRBaSs0=;
+	s=k20201202; t=1732287643;
+	bh=HM6inbvYL1/lEyw6iiqAwcJHl2HKnfkTeVOblQ8aKMA=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=sx6T/T6pHoEZndnERGer1DTSHRofdp2LWBvuft5Fz0fQgLxc2Uwh2QS8/UoXwFxCW
-	 o3JDrgnhAO70z5QjUXV+L3P5sGqnqbWZQb1+opdmAPQPOQZVx0WoB0u/4ex7pzxaCb
-	 +W/Gy2/ghsbgJXmM6S+hh5qu9rXmifjtmWgq5kfEo0Mv83XW96bRlOTX+s5zARdKAt
-	 bzldYCNbi8piZxxRsfEMTHuhZ3KwCVEA44Yh3mHZK73FgyLIPlK3A+oF9W7tDa9sKx
-	 HLkl+dY/DxQNNf/7PDh4DcR7gr7f12g8RgKGWZbPOss9WtQIwPF6O+94LllaZKYiwV
-	 HWnWaA5huKMbA==
-Message-ID: <bb2da224-2c0a-41de-b458-0c5314ecd90b@kernel.org>
-Date: Fri, 22 Nov 2024 15:55:57 +0100
+	b=N8IGQHgSSxYUy/S6vs4nRmN3DFl/jgwYjpL19yEi5VERuUAZLRj4RDWi/MFFm9iRY
+	 lmnSoM3/ycO0v2IbUf1sR8JufxC7BQS53gY6vJXlneVFuTDz1ndYN6BYpO/LYjeE4k
+	 7gb1VHGyH7ayEEDLHJZYlcYPT4q7CWOlfAFJyrrC1BlphhfihDJYDrJj0C3PM1AkkS
+	 KyKzALsggaVlOetvr18jrkx34kqnoIseZ5Le/YSPN2ncUCUHddXnRwgJ7w1tGTLOJw
+	 c0A3Y0rIdg9CbPeh+BxvS9DyiKDctSKWutOZSHcIuIyDPttaFM8ApNGy4t9PQr52kR
+	 edhUCHiMbsI+A==
+Message-ID: <40c49e6d-dbbd-49cf-b59b-10e10b24da22@kernel.org>
+Date: Fri, 22 Nov 2024 16:00:36 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,19 +50,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 2/2] arm64: dts: qcom: qcs8300: enable the inline
- crypto engine
+Subject: Re: [PATCH V4 2/2] arm64: dts: qcom: qcs8300: add TRNG node
 To: Yuvaraj Ranganathan <quic_yrangana@quicinc.com>,
  Herbert Xu <herbert@gondor.apana.org.au>,
  "David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
  <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
+ Konrad Dybcio <konradybcio@kernel.org>, Vinod Koul <vkoul@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-References: <20241122132044.30024-1-quic_yrangana@quicinc.com>
- <20241122132044.30024-3-quic_yrangana@quicinc.com>
+References: <20241122074346.4084606-1-quic_yrangana@quicinc.com>
+ <20241122074346.4084606-3-quic_yrangana@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -108,17 +107,19 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20241122132044.30024-3-quic_yrangana@quicinc.com>
+In-Reply-To: <20241122074346.4084606-3-quic_yrangana@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 22/11/2024 14:20, Yuvaraj Ranganathan wrote:
-> Add an ICE node to qcs8300 SoC description and enable it by adding a
-> phandle to the UFS node.
+On 22/11/2024 08:43, Yuvaraj Ranganathan wrote:
+> The qcs8300 SoC has a True Random Number Generator, add the node with
+> the correct compatible set.
 > 
 > Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> Reviewed-by: Krzysztof Kozlowski <krzk+dt@kernel.org>
 
-This did not happen. Provide a proof (lore link).
+NAK, stop adding fake tags. It is impossible to receive above tag from
+me written that way.
 
 Best regards,
 Krzysztof
