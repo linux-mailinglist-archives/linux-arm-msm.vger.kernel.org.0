@@ -1,88 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-38828-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38829-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 734969D5DBA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 12:04:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7F3A39D5E93
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 13:09:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EC4221F24770
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 11:04:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id F14C51F2248B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 12:09:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C550A1DE2A3;
-	Fri, 22 Nov 2024 11:03:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 353854500E;
+	Fri, 22 Nov 2024 12:09:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="htXriobr"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="FTneeyND"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECB231DE4C3
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 11:03:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE5B1187321
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 12:09:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732273403; cv=none; b=M4rB5ugup+KqAIVQ1hg5oZCor0f5mRJOKR+jZKG6pYghjpvBSyBEyBvsCaCc+M9vWb95cSAfp6hCnFJv/Wc7DRrxjjhqT5cy6UnNnMN5oGXI4LV8NReyo40gji0pRVK8GLApmY0/xk1Nt+dol+CKutC9ZFJkVlIsbCVftKUhQQo=
+	t=1732277361; cv=none; b=OZQPSOfQW8uZDLp6dMC/FR5BZqdyhAUWRY43mudnIjHRjzKPA0sfftNEmXxQYVwflKI4kcbmeAD/W+hGlQ4a/kq/ehiJCgi8u0uyusL5dOaDCzylYmJScRZ0OV9gKmE7qZw5Lgqdn0E7/4nFqpPyXPY9MOqKV4wCAf/5EPicPWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732273403; c=relaxed/simple;
-	bh=NNT2sdRz8gOTo1HjKqBbwsGakTUcvB+cnj7LflAFjQY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=G7ODSfqrYkHPmEx7L2SqoMuvfmUwR2lIxp9Hfza95jSxaNCIWAHlt+Rc5Oes12S4zJzgpOSq6fUXG5+8eofkhhR/ujD4WjlvAdphQi/WlHEQkAkexkG7Sm5+lg0lMvRQRrBg1igguz5SJclZBuM8XvA5cLNiREhTOpJT374HB1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=htXriobr; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1732273399;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=bESni2/f8mwItX/tTYi25M4TXlCQoc1gL7vsjpaYqxo=;
-	b=htXriobrv2v2o+wqoruwbM2sphOD0VSjwCFtWV1JSbA1vlxeNZNJgxQ43Z65KbyjPVuous
-	WJum7ttZJsfhH6Oidl7ZBrWWtfQpWK+YNfJhMhu1nMlL2zwPYsu2MwHolHt50GOrWEMm8R
-	ue1GuhqIFzagyVVdNI5e3gNTN4GOaQs=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-209-vtbi_DfwPXOA7usIawFNZw-1; Fri, 22 Nov 2024 06:03:17 -0500
-X-MC-Unique: vtbi_DfwPXOA7usIawFNZw-1
-X-Mimecast-MFC-AGG-ID: vtbi_DfwPXOA7usIawFNZw
-Received: by mail-wm1-f72.google.com with SMTP id 5b1f17b1804b1-432d9bb0f19so15915315e9.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 03:03:17 -0800 (PST)
+	s=arc-20240116; t=1732277361; c=relaxed/simple;
+	bh=f3I4gqxCEIx4XLDLokX5S8VXumoKTGDeUDBMTyPNel0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=H4kWPXn8sC3JGYSgF4bDVtpY/ZPP4Xn60ZcxFMcFaVeYc0Gz8vhR85H803cBOM3e3Pa9f6YbdR+dDJZUO/2C0zFNDoAwOlwePwJ1c8FA3QGbyj6CbvwhPcvze3jVYaCQq5cViavK+gwY41x4Pu4Cdk4VuHHvDT4j/hAZfsqiGvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=FTneeyND; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AMBC4TT019522
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 12:09:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	sgfQ5I0CQl8UfQ3flsk4bhkJPTEDMQpM6xgAt6l3YTk=; b=FTneeyNDQWEvHnxQ
+	xz3fChARcBrFbrWPZBmXiIYv+ZWIzHoa7KjZD7bIG4sWL3ErgQbQEskXkUmCOJDn
+	IMnKImaXWh+QBJNrycrxskgyl+zbFzAolx2N91lKSuzUehpOCRoy+ZtCmFSRN4DM
+	86vbyv9vSNHTdSab4uhCPYmiSyDiWou+ry+/EZSehk8HhGGB5Bdm5cV2v30BFp1w
+	M/t0QsvPJ4mBDl0dmdP2u/8MDc2BiBfLkL0tY0JUEj6b+bIOdGTx4sAriePn8wym
+	7UulJlnP8sHvkLjOgnj3fxYsP7+wgcToPKwR+1Ib5ag/bGcx6Ki/r2GHZNe9oBuS
+	a9FBFQ==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 431sv2n3sa-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 12:09:17 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-460abcbba38so1996631cf.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 04:09:17 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732273397; x=1732878197;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:from:references:cc:to:subject:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=bESni2/f8mwItX/tTYi25M4TXlCQoc1gL7vsjpaYqxo=;
-        b=g/Dqgm2F4EV1K+jNVVoKJQNGNLzRjfEFhS5cte7D3uKrHz3lbDkZ4bjtJG4tyg8w7A
-         RQqrFNid6QtwJFK+zGqueAj/h22P7U8jMf6NuAVY4vea5nF32GyAa6cYftl9MrUrofmV
-         PYs3D8yG/c6UDpNxxQSu9TIyBU0VjsLbU2ouBror1uArx1sM5d+aCrRCLWkhgSUgImdJ
-         9KAy+NVzvJaNx2E10gnRCU9H/6DHWQbTtYq5/NWKRVU1iRgnhBdeZqnzXDjCgeUnXDFU
-         ZN8/Uw9qmPWNhwRJAe9hBYbipMh14nDSNKfEapgFJTcJd3i/XIeVCCIJ4PbDVI7kMwJz
-         a6XQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV7N4w/yVnXF1cx8DyTDbDaRm/+3on3tSTPTyiqhdoxUumwxEgX0h+CwBLY3D5ZZXqUAB/RzmzQTQ4zdVrq@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw+pF+IpQVkUvoc0QFnALoJDCywVRa3MI855YanuwmJ1QIs9bHP
-	WZIctX9v/uI5Ba8XL7yqwHa2JaYOfi++p0GhRnA3xEKiS+BH49CVfEhF49KsIBcagIiTfqYPldL
-	X3hL7gQcw+wQkcp6xe5lrvb96vCVU0/b17aPprfEqIT5FXf7RpbmSbGPDT7J4Peg=
-X-Gm-Gg: ASbGncsW41LDyT/TcD1JXXxURmuGBO5TB9TivZUzaI7SmtMrzj6LGRDNUQPxeI35Gqn
-	qPip+2laHxTwSvZMPc3o6qf9+m9On2mcoGYexBOnIH44T8xViihKnnbPqUN9ZPxbBpW9JPDIwQC
-	ruDVvJsogNBq69R925CP0I5T4URz2FYx7/W7nAPwO3pQNs3Z2T/zJWHeE30e0MjevxCrJiEV60f
-	H61Y27HsZJ3xFMz4/eqm1Mj7GZyx+nsaMpL0Evf8TjP+zHNEnb3gw0SOf3Kqqm9FI+3dutitBdz
-	TSZYRQqV3C/vRSakDiiRzHRiG0drFmRlGjdfv10Pt4vRS4sRzEBmsp8w/7w6YASc4IbrRJMK0/I
-	=
-X-Received: by 2002:a05:600c:1e1e:b0:42c:b603:422 with SMTP id 5b1f17b1804b1-433cdb0b504mr21328205e9.8.1732273396609;
-        Fri, 22 Nov 2024 03:03:16 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFFJxr7crO4glajQJEDgTAZNjVb8uk7YiyJcg7aXRoJivCkE6u6AnPY5u3vjqLC7qU4+MK8iA==
-X-Received: by 2002:a05:600c:1e1e:b0:42c:b603:422 with SMTP id 5b1f17b1804b1-433cdb0b504mr21327795e9.8.1732273396194;
-        Fri, 22 Nov 2024 03:03:16 -0800 (PST)
-Received: from ?IPV6:2003:cb:c70b:7a00:9ccd:493:d8e2:9ac8? (p200300cbc70b7a009ccd0493d8e29ac8.dip0.t-ipconnect.de. [2003:cb:c70b:7a00:9ccd:493:d8e2:9ac8])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-433cde114d5sm23620125e9.17.2024.11.22.03.03.14
+        d=1e100.net; s=20230601; t=1732277357; x=1732882157;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=sgfQ5I0CQl8UfQ3flsk4bhkJPTEDMQpM6xgAt6l3YTk=;
+        b=ZpZWXfSwV3tnEDSfHD+bJ7qwA+MXb8f29UdOyU0JC7ESHr3uneKOQR0crCRNzOD4kK
+         eGtP9uBHbbguXtSoAFbhIkSKzrJkLgsjT0Dz8AmyRNJgsQy27W971mYMA3Km9HHTklHH
+         P97207vqSFWksErizV7a+fJnKTWHEuZlTgz6AM7K5UsLpC1E619El3RMXYz0Z52IyrBe
+         V6NDI9AMfsxCHQi00zaYMoUc4TWb2tH1husSO4r1SRIllRGviPmjKNXYb9kOH8smY8mQ
+         1WkvWNl9ZesSOQWPS/ZW2MNkkHfvM4VSug2PkoDmnCLUaGOuIeylKpbNXhTlIrDSjbom
+         /UaA==
+X-Forwarded-Encrypted: i=1; AJvYcCU/rB8WnlTSFSaalpejB2/ZpN/55DF3BVUDrOLjw98k/4R0xwP9HrfDvcaetHz8KTHlR4G5idWmu1yitZVb@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywnwg0jxl8Y8n62coVEY3n89nlpZpqJbdLROH2iK1mpYXK84xZF
+	au857aa/F8dNoROmJvHzdnkFPEYPJJs3lDaBFrnVAi8JjhFAoWjrIeeYv1YpMOlK3vlMqZQ+F2S
+	KE9SV9bzp6AaCFOn0IgZ2W3x+W91PFEA47GHLVbTNBR0WQlATqKwqWASytIL4XoHm
+X-Gm-Gg: ASbGncvvea/rsEnR7GPzGWGmZqq2HMr61VBVyN5nWPSt0juQR99rK5heR3yDLHW8dsz
+	ZDJ8aSCdw2Ju6m1qF9TXyxHRbxGcDxO2LR1dw9yqOUGm9lXixj7NqfZGhzAgObvRiVUrm6gkzvK
+	OUuIXmnNKhS1jt07VqX69aj7UBXV0jJUILvofYHsIxnodq2IrH+fFYRnBV1vSKRwZv3A++/fUYW
+	cOkSs6sT68sv+jnI836hrHrTCDpbxkkNN9rVfsFWXQD110ML0FunS2iCaN/rH1iU2Z+Q0S6w47J
+	eBdLL8pde3rtF6fxk2LnQoeJPNUw8g==
+X-Received: by 2002:a05:620a:4393:b0:7ae:64d1:d31 with SMTP id af79cd13be357-7b51451a49amr145613385a.6.1732277356796;
+        Fri, 22 Nov 2024 04:09:16 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFIvmb/Y1Kc36T84MfAddlUEPXu02tmNhvl1dBN2N1NQHDvFihw8x5CC9BRGYVlS2+hubr+Lg==
+X-Received: by 2002:a05:620a:4393:b0:7ae:64d1:d31 with SMTP id af79cd13be357-7b51451a49amr145611585a.6.1732277356421;
+        Fri, 22 Nov 2024 04:09:16 -0800 (PST)
+Received: from [192.168.212.29] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa50b5300e1sm91807966b.106.2024.11.22.04.09.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Nov 2024 03:03:15 -0800 (PST)
-Message-ID: <0903abca-42f5-4ca7-8c81-070e7669f996@redhat.com>
-Date: Fri, 22 Nov 2024 12:03:14 +0100
+        Fri, 22 Nov 2024 04:09:15 -0800 (PST)
+Message-ID: <7da6fa27-0967-4fd7-af75-0141fde79b3b@oss.qualcomm.com>
+Date: Fri, 22 Nov 2024 13:09:13 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,290 +89,40 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/2] mm: guestmem: Convert address_space operations to
- guestmem library
-To: michael.day@amd.com, Elliot Berman <quic_eberman@quicinc.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Andrew Morton <akpm@linux-foundation.org>,
- Sean Christopherson <seanjc@google.com>, Fuad Tabba <tabba@google.com>,
- Ackerley Tng <ackerleytng@google.com>, Mike Rapoport <rppt@kernel.org>,
- "H. Peter Anvin" <hpa@zytor.com>,
- "Matthew Wilcox (Oracle)" <willy@infradead.org>,
- Jonathan Corbet <corbet@lwn.net>, Trond Myklebust <trondmy@kernel.org>,
- Anna Schumaker <anna@kernel.org>, Mike Marshall <hubcap@omnibond.com>,
- Martin Brandenburg <martin@omnibond.com>,
- Alexander Viro <viro@zeniv.linux.org.uk>,
- Christian Brauner <brauner@kernel.org>, Jan Kara <jack@suse.cz>
-Cc: James Gowans <jgowans@amazon.com>, linux-fsdevel@vger.kernel.org,
- kvm@vger.kernel.org, linux-coco@lists.linux.dev,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-mm@kvack.org, linux-doc@vger.kernel.org, linux-nfs@vger.kernel.org,
- devel@lists.orangefs.org, linux-arm-kernel@lists.infradead.org
-References: <20241120-guestmem-library-v4-0-0c597f733909@quicinc.com>
- <20241120-guestmem-library-v4-2-0c597f733909@quicinc.com>
- <20241120145527130-0800.eberman@hu-eberman-lv.qualcomm.com>
- <3349f838-2c73-4ef0-aa30-a21e41fb39e5@amd.com>
-From: David Hildenbrand <david@redhat.com>
+Subject: Re: [PATCH v4 2/3] soc: qcom: llcc: Update configuration data for
+ IPQ5424
+To: Varadarajan Narayanan <quic_varada@quicinc.com>, andersson@kernel.org,
+        konradybcio@kernel.org, conor@kernel.org, robh@kernel.org,
+        krzk+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20241121051935.1055222-1-quic_varada@quicinc.com>
+ <20241121051935.1055222-3-quic_varada@quicinc.com>
 Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <3349f838-2c73-4ef0-aa30-a21e41fb39e5@amd.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20241121051935.1055222-3-quic_varada@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: -MX8iMdcONe8slrhxU1yZRoUEwbxyK_6
+X-Proofpoint-ORIG-GUID: -MX8iMdcONe8slrhxU1yZRoUEwbxyK_6
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ lowpriorityscore=0 clxscore=1015 bulkscore=0 adultscore=0 suspectscore=0
+ spamscore=0 malwarescore=0 mlxscore=0 mlxlogscore=927 phishscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411220103
 
-On 21.11.24 18:40, Mike Day wrote:
+On 21.11.2024 6:19 AM, Varadarajan Narayanan wrote:
+> The 'broadcast' register space is present only in chipsets that
+> have multiple instances of LLCC IP. Since IPQ5424 has only one
+> instance, both the LLCC and LLCC_BROADCAST points to the same
+> register space.
 > 
-> 
-> On 11/21/24 10:43, Elliot Berman wrote:
->> On Wed, Nov 20, 2024 at 10:12:08AM -0800, Elliot Berman wrote:
->>> diff --git a/mm/guestmem.c b/mm/guestmem.c
->>> new file mode 100644
->>> index 0000000000000000000000000000000000000000..19dd7e5d498f07577ec5cec5b52055f7435980f4
->>> --- /dev/null
->>> +++ b/mm/guestmem.c
->>> @@ -0,0 +1,196 @@
->>> +// SPDX-License-Identifier: GPL-2.0-only
->>> +/*
->>> + * guestmem library
->>> + *
->>> + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
->>> + */
->>> +
->>> +#include <linux/fs.h>
->>> +#include <linux/guestmem.h>
->>> +#include <linux/mm.h>
->>> +#include <linux/pagemap.h>
->>> +
->>> +struct guestmem {
->>> +	const struct guestmem_ops *ops;
->>> +};
->>> +
->>> +static inline struct guestmem *folio_to_guestmem(struct folio *folio)
->>> +{
->>> +	struct address_space *mapping = folio->mapping;
->>> +
->>> +	return mapping->i_private_data;
->>> +}
->>> +
->>> +static inline bool __guestmem_release_folio(struct address_space *mapping,
->>> +					    struct folio *folio)
->>> +{
->>> +	struct guestmem *gmem = mapping->i_private_data;
->>> +	struct list_head *entry;
->>> +
->>> +	if (gmem->ops->release_folio) {
->>> +		list_for_each(entry, &mapping->i_private_list) {
->>> +			if (!gmem->ops->release_folio(entry, folio))
->>> +				return false;
->>> +		}
->>> +	}
->>> +
->>> +	return true;
->>> +}
->>> +
->>> +static inline int
->>> +__guestmem_invalidate_begin(struct address_space *const mapping, pgoff_t start,
->>> +			    pgoff_t end)
->>> +{
->>> +	struct guestmem *gmem = mapping->i_private_data;
->>> +	struct list_head *entry;
->>> +	int ret = 0;
->>> +
->>> +	list_for_each(entry, &mapping->i_private_list) {
->>> +		ret = gmem->ops->invalidate_begin(entry, start, end);
->>> +		if (ret)
->>> +			return ret;
->>> +	}
->>> +
->>> +	return 0;
->>> +}
->>> +
->>> +static inline void
->>> +__guestmem_invalidate_end(struct address_space *const mapping, pgoff_t start,
->>> +			  pgoff_t end)
->>> +{
->>> +	struct guestmem *gmem = mapping->i_private_data;
->>> +	struct list_head *entry;
->>> +
->>> +	if (gmem->ops->invalidate_end) {
->>> +		list_for_each(entry, &mapping->i_private_list)
->>> +			gmem->ops->invalidate_end(entry, start, end);
->>> +	}
->>> +}
->>> +
->>> +static void guestmem_free_folio(struct address_space *mapping,
->>> +				struct folio *folio)
->>> +{
->>> +	WARN_ON_ONCE(!__guestmem_release_folio(mapping, folio));
->>> +}
->>> +
->>> +static int guestmem_error_folio(struct address_space *mapping,
->>> +				struct folio *folio)
->>> +{
->>> +	pgoff_t start, end;
->>> +	int ret;
->>> +
->>> +	filemap_invalidate_lock_shared(mapping);
->>> +
->>> +	start = folio->index;
->>> +	end = start + folio_nr_pages(folio);
->>> +
->>> +	ret = __guestmem_invalidate_begin(mapping, start, end);
->>> +	if (ret)
->>> +		goto out;
->>> +
->>> +	/*
->>> +	 * Do not truncate the range, what action is taken in response to the
->>> +	 * error is userspace's decision (assuming the architecture supports
->>> +	 * gracefully handling memory errors).  If/when the guest attempts to
->>> +	 * access a poisoned page, kvm_gmem_get_pfn() will return -EHWPOISON,
->>> +	 * at which point KVM can either terminate the VM or propagate the
->>> +	 * error to userspace.
->>> +	 */
->>> +
->>> +	__guestmem_invalidate_end(mapping, start, end);
->>> +
->>> +out:
->>> +	filemap_invalidate_unlock_shared(mapping);
->>> +	return ret ? MF_DELAYED : MF_FAILED;
->>> +}
->>> +
->>> +static int guestmem_migrate_folio(struct address_space *mapping,
->>> +				  struct folio *dst, struct folio *src,
->>> +				  enum migrate_mode mode)
->>> +{
->>> +	WARN_ON_ONCE(1);
->>> +	return -EINVAL;
->>> +}
->>> +
->>> +static const struct address_space_operations guestmem_aops = {
->>> +	.dirty_folio = noop_dirty_folio,
->>> +	.free_folio = guestmem_free_folio,
->>> +	.error_remove_folio = guestmem_error_folio,
->>> +	.migrate_folio = guestmem_migrate_folio,
->>> +};
->>> +
->>> +int guestmem_attach_mapping(struct address_space *mapping,
->>> +			    const struct guestmem_ops *const ops,
->>> +			    struct list_head *data)
->>> +{
->>> +	struct guestmem *gmem;
->>> +
->>> +	if (mapping->a_ops == &guestmem_aops) {
->>> +		gmem = mapping->i_private_data;
->>> +		if (gmem->ops != ops)
->>> +			return -EINVAL;
->>> +
->>> +		goto add;
->>> +	}
->>> +
->>> +	gmem = kzalloc(sizeof(*gmem), GFP_KERNEL);
->>> +	if (!gmem)
->>> +		return -ENOMEM;
->>> +
->>> +	gmem->ops = ops;
->>> +
->>> +	mapping->a_ops = &guestmem_aops;
->>> +	mapping->i_private_data = gmem;
->>> +
->>> +	mapping_set_gfp_mask(mapping, GFP_HIGHUSER);
->>> +	mapping_set_inaccessible(mapping);
->>> +	/* Unmovable mappings are supposed to be marked unevictable as well. */
->>> +	WARN_ON_ONCE(!mapping_unevictable(mapping));
->>> +
->>> +add:
->>> +	list_add(data, &mapping->i_private_list);
->>> +	return 0;
->>> +}
->>> +EXPORT_SYMBOL_GPL(guestmem_attach_mapping);
->>> +
->>> +void guestmem_detach_mapping(struct address_space *mapping,
->>> +			     struct list_head *data)
->>> +{
->>> +	list_del(data);
->>> +
->>> +	if (list_empty(&mapping->i_private_list)) {
->>> +		kfree(mapping->i_private_data);
->>
->> Mike was helping me test this out for SEV-SNP. They helped find a bug
->> here. Right now, when the file closes, KVM calls
->> guestmem_detach_mapping() which will uninstall the ops. When that
->> happens, it's not necessary that all of the folios aren't removed from
->> the filemap yet
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> ---
 
-Yes, that's the real issue. There either must be some lifetime tracking 
-(kfree() after the mapping is completely unused), or you have to tear it 
-all down before you mess with the mapping.
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
->>
->> There are a few approaches I could take:
->>
->> 1. Create a guestmem superblock so I can register guestmem-specific
->>      destroy_inode() to do the kfree() above. This requires a lot of
->>      boilerplate code, and I think it's not preferred approach.
->> 2. Update how KVM tracks the memory so it is back in "shared" state when
->>      the file closes. This requires some significant rework about the page
->>      state compared to current guest_memfd. That rework might be useful
->>      for the shared/private state machine.
->> 3. Call truncate_inode_pages(mapping, 0) to force pages to be freed
->>      here. It's might be possible that a page is allocated after this
->>      point. In order for that to be a problem, KVM would need to update
->>      RMP entry as guest-owned, and I don't believe that's possible after
->>      the last guestmem_detach_mapping().
->>
->> My preference is to go with #3 as it was the most easy thing to do.
-> 
-> #3 is my preference as well. The semantics are that the guest is "closing" the gmem
-> object, which means all the memory is being released from the guest.
-
-Agreed.
-
--- 
-Cheers,
-
-David / dhildenb
-
+Konrad
 
