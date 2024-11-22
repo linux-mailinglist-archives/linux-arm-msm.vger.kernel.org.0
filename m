@@ -1,231 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-38883-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38884-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4A8689D64F6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 21:42:11 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id DB76B9D64FA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 21:43:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0BF7F282FB6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 20:42:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9FEF12831E1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 20:43:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54186186E40;
-	Fri, 22 Nov 2024 20:42:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 23F5018859E;
+	Fri, 22 Nov 2024 20:43:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="AzsDTPqT";
-	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="XZz/Zwqu";
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="AzsDTPqT";
-	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="XZz/Zwqu"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WmJv6Kho"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39BC317B428;
-	Fri, 22 Nov 2024 20:42:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC76917B428;
+	Fri, 22 Nov 2024 20:43:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732308128; cv=none; b=gDxPfumSMyVPZGNmOi9wr0X++cmH7ykVh0/vqJMI1BgHWJhA+DgPlE4jqW2Axg9VJ7PK9T35LWrqb9J+DtInxjL4IslYT1vtSthBwCc56hiKuDUV8lHqr3cpjnhCU4DFv+4/DYLwMqtrWWjN7EHunsc6T9ot9I8dtI5YBuPv1aY=
+	t=1732308221; cv=none; b=AaOSmWhn0drzeFMI7Au4EGn3aR1XCKcG72Xyx69s5kFIa5RVhrnDri3pukdgW0jsR1KjxCpuwt6BSbZMGpiLMHjAML+qBwkWbh8wn0OFBzJMavTok2kzAvZPxvujO1XR8lDKwZBhQMivR5+gzOCaLR8lJS9V081cw3cQqF1iLII=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732308128; c=relaxed/simple;
-	bh=KHKHQCXvuPqtS8zBtf2vIiBmq70MyYsvypTSAYgkiac=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=J4D3t3vjwVbVEInf70YFvXMazW/Rv1cc88n0patbhFMu/VO1hVtbUdFDg/+81pGcfmkJfmVilRNakmXj+JDmggZNPjvS8XxEGBErl5lLAdVGsJy6wV1slgPLWie8uj3naFBkD1ZWL7pdaSS7XvgWyP81GB4Im0mNtPWjoWzKTPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz; spf=pass smtp.mailfrom=suse.cz; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=AzsDTPqT; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=XZz/Zwqu; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=AzsDTPqT; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=XZz/Zwqu; arc=none smtp.client-ip=195.135.223.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 4270221240;
-	Fri, 22 Nov 2024 20:42:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1732308124;
-	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
-	 cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=KHKHQCXvuPqtS8zBtf2vIiBmq70MyYsvypTSAYgkiac=;
-	b=AzsDTPqT7eoeHiGQhWEj4WP5gEbXkxHzIEV42sxL+XYjq1GcEtMKEkF9eTpm++y1OcS53L
-	NgTKC68IcUn8EdftJ9vPGZNPjgcZJpkQj4/fRow2065DaZqdJSyQsbPgzr1FRasW0UD7bf
-	PWhkcX5WaZRySP5fqFm7kMsF3sCxbOA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1732308124;
-	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
-	 cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=KHKHQCXvuPqtS8zBtf2vIiBmq70MyYsvypTSAYgkiac=;
-	b=XZz/Zwqu27QgWYeUGgkJu5PLIx9ocmWILGpX51ZwduaMkHZ29nBQOgyXf0XF+TvouhrXj/
-	Q0c5l2DwC/5zDaDA==
-Authentication-Results: smtp-out1.suse.de;
-	dkim=pass header.d=suse.cz header.s=susede2_rsa header.b=AzsDTPqT;
-	dkim=pass header.d=suse.cz header.s=susede2_ed25519 header.b="XZz/Zwqu"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1732308124;
-	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
-	 cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=KHKHQCXvuPqtS8zBtf2vIiBmq70MyYsvypTSAYgkiac=;
-	b=AzsDTPqT7eoeHiGQhWEj4WP5gEbXkxHzIEV42sxL+XYjq1GcEtMKEkF9eTpm++y1OcS53L
-	NgTKC68IcUn8EdftJ9vPGZNPjgcZJpkQj4/fRow2065DaZqdJSyQsbPgzr1FRasW0UD7bf
-	PWhkcX5WaZRySP5fqFm7kMsF3sCxbOA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1732308124;
-	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
-	 cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=KHKHQCXvuPqtS8zBtf2vIiBmq70MyYsvypTSAYgkiac=;
-	b=XZz/Zwqu27QgWYeUGgkJu5PLIx9ocmWILGpX51ZwduaMkHZ29nBQOgyXf0XF+TvouhrXj/
-	Q0c5l2DwC/5zDaDA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E8A59138A7;
-	Fri, 22 Nov 2024 20:42:03 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id 9uhuNpvsQGefVAAAD6G6ig
-	(envelope-from <pvorel@suse.cz>); Fri, 22 Nov 2024 20:42:03 +0000
-Date: Fri, 22 Nov 2024 21:41:57 +0100
-From: Petr Vorel <pvorel@suse.cz>
-To: Masahiro Yamada <masahiroy@kernel.org>
-Cc: Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	linux-kbuild@vger.kernel.org, dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 1/2] init/Kconfig: add python3 availability config
-Message-ID: <20241122204157.GA125569@pevik>
-Reply-To: Petr Vorel <pvorel@suse.cz>
-References: <20241120204125.52644-1-pvorel@suse.cz>
- <CAK7LNASYr+pjUs-W40d_Gc+vP67nX7NHXyE0AnOpXxXgxrCtqQ@mail.gmail.com>
- <20241121011720.GA69389@pevik>
- <CAF6AEGuzFNVd5fE+b+hKcC8xAOg7CrkPaYuWC6tCVmioutoOOw@mail.gmail.com>
- <CAK7LNAQDMJUYUF7BaN10bwctW7fuHmSMrrAjMmn4s7P2ys5P+Q@mail.gmail.com>
+	s=arc-20240116; t=1732308221; c=relaxed/simple;
+	bh=9ur4fx8g1n2aQGv6Iks60+fVeXS+jljxmXCqMX/FUJ4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=JSTJ/Tuos4ZSVw1zdDQWw38FD84A9zDgb9gZVqCXua5NJNdOyGqgXww6UK9Wtw5Zvjcpdlnuw5qEkdMsyiAutleUH0bkWCV+j8WvaUO1FWPH7Ca10dUJAXbq4eJMB2ZncScvSObOaVF8pdx7AbzUIjqokTfhKA/ooVvZM+fVa4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WmJv6Kho; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65824C4CED0;
+	Fri, 22 Nov 2024 20:43:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1732308220;
+	bh=9ur4fx8g1n2aQGv6Iks60+fVeXS+jljxmXCqMX/FUJ4=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=WmJv6KhouoPjpYLnMmpuN8uVIn3pLQ0Vd7k2AQGH9abPMLZZhMmh9G6MWgp1q8m4I
+	 Pr/Vc3akz8klX7oxufe/3NkQDg5Xqh7480yRTyKme5dz5LHpLPSreF2O7o0qcfwUdQ
+	 pYpCWaGGkzeSZV6r3tdVuAQnq83X5DIBGBUrORRoVb+1zpbjA5SQHi4WbWgZjAuvqE
+	 hS+XC/Ouj4fPKANKiMnRvsh942pLYXZ6agsarnLBIMOtl9595DP4WIDVp3LB8yBFRq
+	 wlHudLoPFIOdYGvsdqu6nw/2VbtDWeGEJvzoOhab7RmDCoYYFouD97rsHObLFnfNiS
+	 ypKOd1a3pR0MA==
+Received: by mail-oo1-f45.google.com with SMTP id 006d021491bc7-5ec1ee25504so1213094eaf.3;
+        Fri, 22 Nov 2024 12:43:40 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCUER6iThg7MTu6Axtj3mJ4cg1reKPjWD7bcaybaXf5gLIxxRWowMmr7qJr2Xu6a5mnoPKhslxM+JN7SNumU@vger.kernel.org, AJvYcCUiChhOCMNvd/q4wZKzxz9NcpWtvjOnFwXbNS6G3gZlR+YaWXgjk/4+rV3GhwlQAzgNCMCMoPxXwUs=@vger.kernel.org, AJvYcCXCnhLQ4UBt3D0FthQ2Int6rdI+O/9z6bwgZRX2Q6CUFBjKuiPP5r+IHajCCnkTbD2LVUJf/DOjNl9xVII=@vger.kernel.org, AJvYcCXmKKRQ7W7GqYrSdnnv9OSxiip05TYsiLpXHEYCXO8NYVuzGEaVhbCjukueEErt73SikOGNDlQ8BoIsZWIV@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy+62R+E+1npT1UVEPwCP3cPFeMf9fUp0BXu3ZTqVy6BcX57Cyy
+	3oMAcTLC9wKR7OyHQ5T/lbVhjnDWNcHCte+AHS6hx1b9zPKbS3xEzdbudKbgOmsprdTaCyQjQV7
+	1Z8mnZsycJa4qo9tTOSU3P0bjuZg=
+X-Google-Smtp-Source: AGHT+IEutDuraKb6w9V+8CLjNMD2UYE+lNm29XfGmOiaTuVzMfm8AxFlD6kXcNxHi/+pw8cR8P3Zi9iHFF2EXbeKgV0=
+X-Received: by 2002:a05:6871:69c1:b0:287:d8df:7c22 with SMTP id
+ 586e51a60fabf-29720c59d21mr4407291fac.23.1732308219677; Fri, 22 Nov 2024
+ 12:43:39 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAK7LNAQDMJUYUF7BaN10bwctW7fuHmSMrrAjMmn4s7P2ys5P+Q@mail.gmail.com>
-X-Rspamd-Queue-Id: 4270221240
-X-Spam-Level: 
-X-Spamd-Result: default: False [-3.71 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	MID_RHS_NOT_FQDN(0.50)[];
-	HAS_REPLYTO(0.30)[pvorel@suse.cz];
-	R_DKIM_ALLOW(-0.20)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	FUZZY_BLOCKED(0.00)[rspamd.com];
-	ARC_NA(0.00)[];
-	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	TO_DN_SOME(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	FREEMAIL_CC(0.00)[gmail.com,vger.kernel.org,linaro.org,linux-foundation.org,lists.freedesktop.org];
-	DKIM_TRACE(0.00)[suse.cz:+];
-	RCVD_COUNT_TWO(0.00)[2];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[9];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
-	REPLYTO_EQ_FROM(0.00)[]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spam-Score: -3.71
-X-Spam-Flag: NO
+References: <20241010-b4-cleanup-h-of-node-put-thermal-v4-0-bfbe29ad81f4@linaro.org>
+In-Reply-To: <20241010-b4-cleanup-h-of-node-put-thermal-v4-0-bfbe29ad81f4@linaro.org>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Date: Fri, 22 Nov 2024 21:43:28 +0100
+X-Gmail-Original-Message-ID: <CAJZ5v0jjjA6enruipTU9kTnuA6x5p_XUQyXc-4Cr4bo_b4VHtQ@mail.gmail.com>
+Message-ID: <CAJZ5v0jjjA6enruipTU9kTnuA6x5p_XUQyXc-4Cr4bo_b4VHtQ@mail.gmail.com>
+Subject: Re: [PATCH v4 0/6] thermal: scope/cleanup.h improvements
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+	Daniel Lezcano <daniel.lezcano@linaro.org>
+Cc: Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>, 
+	Amit Kucheria <amitk@kernel.org>, Thara Gopinath <thara.gopinath@gmail.com>, 
+	Thierry Reding <thierry.reding@gmail.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
+	Vasily Khoruzhick <anarsoul@gmail.com>, Yangtao Li <tiny.windzz@gmail.com>, Chen-Yu Tsai <wens@csie.org>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Samuel Holland <samuel@sholland.org>, linux-pm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-tegra@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-sunxi@lists.linux.dev, Jonathan Cameron <Jonathan.Cameron@huawei.com>, 
+	Chen-Yu Tsai <wenst@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> On Thu, Nov 21, 2024 at 10:49 AM Rob Clark <robdclark@gmail.com> wrote:
+Hi Daniel,
 
-> > On Wed, Nov 20, 2024 at 5:17 PM Petr Vorel <pvorel@suse.cz> wrote:
+On Thu, Oct 10, 2024 at 8:06=E2=80=AFPM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> Changes in v4:
+> - Patch 2: rewrite, significant change: kzalloc() also with
+>   scoped-handling so the entire error handling could be removed.
+>   Due to above, drop review-tags (Chen-Yu, Jonathan).
+> - Add Rb tags for other patches.
+> - Link to v3: https://lore.kernel.org/r/20241008-b4-cleanup-h-of-node-put=
+-thermal-v3-0-825122398f71@linaro.org
+>
+> Changes in v3:
+> - Rebase, because there was bigger rework in thermal code.
+>   This made two patches obsolete, but brought new one:
+>   1/6: thermal: of: Simplify thermal_of_should_bind with scoped for each =
+OF child
+> - Link to v2: https://lore.kernel.org/r/20240816-b4-cleanup-h-of-node-put=
+-thermal-v2-0-cee9fc490478@linaro.org
+>
+> Changes in v2:
+> - Drop left-over of_node_put in regular exit path (Chen-Yu)
+> - Link to v1: https://lore.kernel.org/r/20240814-b4-cleanup-h-of-node-put=
+-thermal-v1-0-7a1381e1627e@linaro.org
+>
+> Few code simplifications with scope/cleanup.h.
+>
+> Best regards,
+> Krzysztof
+>
+> ---
+> Krzysztof Kozlowski (6):
+>       thermal: of: Simplify thermal_of_should_bind with scoped for each O=
+F child
+>       thermal: of: Use scoped memory and OF handling to simplify thermal_=
+of_trips_init()
+>       thermal: of: Use scoped device node handling to simplify of_thermal=
+_zone_find()
+>       thermal: qcom-spmi-adc-tm5: Simplify with scoped for each OF child =
+loop
+>       thermal: tegra: Simplify with scoped for each OF child loop
+>       thermal: sun8i: Use scoped device node handling to simplify error p=
+aths
+>
+>  drivers/thermal/qcom/qcom-spmi-adc-tm5.c |  7 ++---
+>  drivers/thermal/sun8i_thermal.c          | 11 +++----
+>  drivers/thermal/tegra/soctherm.c         |  5 ++-
+>  drivers/thermal/thermal_of.c             | 54 ++++++++++----------------=
+------
+>  4 files changed, 25 insertions(+), 52 deletions(-)
+> ---
 
-> > > > On Thu, Nov 21, 2024 at 5:41 AM Petr Vorel <pvorel@suse.cz> wrote:
+This seems to have fallen through cracks.
 
-> > > > > It will be used in the next commit for DRM_MSM.
+Since all of the other 6.13 thermal changes have been integrated now,
+I'm going to apply it and push next week unless you have concerns (in
+which case please let me know).
 
-> > > > > Suggested-by: Rob Clark <robdclark@gmail.com>
-> > > > > Signed-off-by: Petr Vorel <pvorel@suse.cz>
-> > > > > ---
-> > > > > Changes v3->v4:
-> > > > > * Move definition to the end of the file
-
-
-> > > > I prefer to not check the tool.
-
-> > > Ack.
-
-> > > > Why don't you install python3?
-
-> > > Everybody installs it when it's required, the question is how to inform about
-> > > the dependency.
-
-> > > There build environments are minimal environments:
-> > > * chroot (e.g. cross compilation)
-> > > * container
-
-> > > These are used by both developers and distros.
-
-> > I don't think py3 is an _onerous_ dependency, but it has come up as a
-> > surprise in minimal distro build environments at least once.. so I'd
-> > be a fan of surfacing this dependency in a predictable/understandable
-> > way (ie. I'm in favor of this patchset)
-
-
-> "once" is a keyword here.
-
-> "/bin/sh: python3: not found" provides sufficient information
-> about why the compilation failed, and you know what to do
-> to fix the problem.
-> This is good.
-
-> If you hide CONFIG_DRM_MSM silently
-> due to missing python3, you may scratch your head
-> "why drm/msm was not compiled?".
-It's not on the list, but still visible in help (via search).
-
-> This is worse.
-
-I'm ok with this being refused. Yes, it's a trivial thing to find that python3
-is not installed. I wasn't sure myself if this is really better. Having
-something like "requires $(PYTHON3)" would be best solution (e.g. not disable
-the config, but exit before starting to build), but of course unless this
-feature is needed for many modules it does not make sense to have it.
-It's because kernel mostly contains everything (unless languages like python
-or any other dependency starts to be added). For this reason I like that
-mconf-cfg.sh warns when missing ncurses devel files (even suggesting package
-names).
-
-Just to explain what was my motivation. CONFIG_DRM_MSM in in arm64 defconfig,
-thus it will affect anybody who uses the defconfig (any distro will need to add
-it).
-
-It's needed only for Qualcomm arm64 devices only. But only for these devices
-which are mainlined enough to really use CONFIG_DRM_MSM (many of them aren't in
-that state).
-
-postmarketOS is the distribution which supports Qualcomm. It stores kernel
-config for each device and devices often have individual maintainer. E.g. 175x
-"once" :).
-
-Kind regards,
-Petr
+Thanks!
 
