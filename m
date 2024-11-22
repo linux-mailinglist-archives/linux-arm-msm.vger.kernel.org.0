@@ -1,157 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-38875-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38876-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4BC509D637E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 18:45:13 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id AEB9C9D6420
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 19:23:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0FEF3288907
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 17:45:12 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3A3F1B2285F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 18:23:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A4601DE4D7;
-	Fri, 22 Nov 2024 17:44:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D418D1DF961;
+	Fri, 22 Nov 2024 18:23:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fZ2YMktj"
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="cbSvla7i"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD9F71DEFF1;
-	Fri, 22 Nov 2024 17:44:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49D731DF255;
+	Fri, 22 Nov 2024 18:23:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732297478; cv=none; b=auVXQFZfFRmmoeQHuSYqgzTXT3qFbXS0oLAeP8TOJC4EXLwet0dwDkoDAN/3j1zmi42xEdQ55u/Y6DOWly9SzgnNpxN7hGPeZUfsWq/b7av/sWUuRV63MrjFFglU2JACEE1w3gOTvehroI/yz2HrKWF7JAIwj2QZdUnl0ezstiA=
+	t=1732299791; cv=none; b=fqc6eGWcapF0ZM4D99Y0ZnCvmDnHoc5CRouNA/qBfLmCi3K3WZRx74aKaWzr0VnmuS9JuZFUJwjkcFzhyZ+AkAZoCgRSzQkbIDAD0CiVYwpyLrBM4floygq7DckCZRLx1JqQXgVtNel8yXBxGSRMsHro8cHKtuHRWs+/BywtRRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732297478; c=relaxed/simple;
-	bh=LTfcF1SnfYbuR6jnNpBsOiXWV1nNwAYPniS82toQRDU=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=QdXDPlu47xgyXBPT5beVknnmY5uSCOpN8+6STA8FT6JmcQ0h3VJCbeoFFu14I8AODHL4ivBOUlignMmxiXbSccwiwcYDiqPU1W+w0MCH+E0cKvbnvCjYnOEM3wPH3WO26MtfD438Rs6IARvrJqHobG1IcZL0tTUMsWREXh0E51k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fZ2YMktj; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AMG8DCS003764;
-	Fri, 22 Nov 2024 17:44:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	JtL69AN9oMCYjCSYEQSCltA+7HfPoe92ivrgMjlg/F8=; b=fZ2YMktjrcYHMYno
-	k/VdDwPGSL96nK4wxQaNviDas4dnpUYSejiuRF6Fp1o5bHxdVVyAOXOnyMIgUhMn
-	eBDU6nG8kO1euGMVDYgtaL+d9E0KEGEYEp7k/uMGDJCSzXnSmpfTMXXZIy2bZrR4
-	MyNb7Ml4cIi11FX0OBY6INkqgY56ADT+/eRtPNMfV2QHSm9FFBaJZEPoKDZRmDaJ
-	nu/c8kZH3kZhFD7Le3OIsCaghNKSaeUrASgYrMkbF8pwlqjdDRWiwnsRVyneX4kO
-	38fyeea7UzPqbcXNHsD5A9mrLqV4G9W5RBPrSi9rgfrEyCachH2U/oGzgK1vYjEA
-	wNwavA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 432w72r72u-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 22 Nov 2024 17:44:21 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AMHiKVG031094
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 22 Nov 2024 17:44:21 GMT
-Received: from nalasex01c.na.qualcomm.com (10.47.97.35) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Fri, 22 Nov 2024 09:44:20 -0800
-Received: from nalasex01c.na.qualcomm.com ([fe80::5da8:4d0f:c16a:a1d]) by
- nalasex01c.na.qualcomm.com ([fe80::5da8:4d0f:c16a:a1d%11]) with mapi id
- 15.02.1544.009; Fri, 22 Nov 2024 09:44:20 -0800
-From: "Lakshmi Sowjanya D (QUIC)" <quic_laksd@quicinc.com>
-To: "Md Sadre Alam (QUIC)" <quic_mdalam@quicinc.com>,
-        "manivannan.sadhasivam@linaro.org" <manivannan.sadhasivam@linaro.org>,
-        "miquel.raynal@bootlin.com" <miquel.raynal@bootlin.com>,
-        "richard@nod.at"
-	<richard@nod.at>,
-        "vigneshr@ti.com" <vigneshr@ti.com>,
-        "bbrezillon@kernel.org" <bbrezillon@kernel.org>,
-        "linux-mtd@lists.infradead.org" <linux-mtd@lists.infradead.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-CC: "Sricharan Ramabadhran (QUIC)" <quic_srichara@quicinc.com>,
-        "Varadarajan
- Narayanan (QUIC)" <quic_varada@quicinc.com>,
-        "Naina Mehta (QUIC)"
-	<quic_nainmeht@quicinc.com>,
-        "Lakshmi Sowjanya D (QUIC)"
-	<quic_laksd@quicinc.com>
-Subject: RE: [PATCH v2 0/3] QPIC v2 fixes for SDX75
-Thread-Topic: [PATCH v2 0/3] QPIC v2 fixes for SDX75
-Thread-Index: AQHbPLzmOYXrwOalokeDht4Doi7jRLLEGOtQ
-Date: Fri, 22 Nov 2024 17:44:20 +0000
-Message-ID: <741980c863444f02ad949ff1a36f718f@quicinc.com>
-References: <20241122085933.2663927-1-quic_mdalam@quicinc.com>
-In-Reply-To: <20241122085933.2663927-1-quic_mdalam@quicinc.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	s=arc-20240116; t=1732299791; c=relaxed/simple;
+	bh=yMq2dZlzx0j16v83wajqstloGi3wXiyrz+Joq5vwcH4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SqGYPTsF3iTGdKxj9X1Edj3eAhXiEZJqDWlrIdHjKX3JUtlGBLBRY3KdPf1xXcDqt23D55Ag7pl/0DFDLDBeUm3rWizhPCf4rWVCy1BR2w1mDj0uH+XqpgLv+rEjBb9wBrVnc2Bs+AnMKTtFwGzseV4sKLxP8RfI3B8BTZcWWmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=cbSvla7i; arc=none smtp.client-ip=90.155.50.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=9sYuGQL1WZhF2hZ3J+JuipVRSYMiUCSOWCts3kbR50A=; b=cbSvla7iPzxM6su8n80MIGoprm
+	S+XTGfyXS26q0XPJZk402JCQashv0FVUmR9e5nqkM6A4/NUqk5ACCwY41XdwkX5lAWwZEOxa/YED3
+	kxiKQOnp/rEYGoNa/EgL9HQ5Ds2fh3wiDja8v6+l1FmxXDjmCMPwfS+dMG2LkeFHpOq7/8b+mGuNt
+	N3n5B3uye5L1DQ7tDPrmPgwy7GOFVso//2eg+HA3Pi55t0t8nnuPEt4kG1AgBRXmmawAToDF8P+7v
+	ayC6bo0RQ0Bed9NsmeCJhHPgZmrfoiFQgDyBLTFMyiTbQUCB46To4bPPbgO6MCzScg1su5w8aiUWf
+	GK6C7cQg==;
+Received: from willy by casper.infradead.org with local (Exim 4.98 #2 (Red Hat Linux))
+	id 1tEYIw-000000088Di-12lh;
+	Fri, 22 Nov 2024 18:22:54 +0000
+Date: Fri, 22 Nov 2024 18:22:54 +0000
+From: Matthew Wilcox <willy@infradead.org>
+To: Elliot Berman <quic_eberman@quicinc.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sean Christopherson <seanjc@google.com>,
+	Fuad Tabba <tabba@google.com>,
+	Ackerley Tng <ackerleytng@google.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	David Hildenbrand <david@redhat.com>,
+	"H. Peter Anvin" <hpa@zytor.com>, Jonathan Corbet <corbet@lwn.net>,
+	Trond Myklebust <trondmy@kernel.org>,
+	Anna Schumaker <anna@kernel.org>,
+	Mike Marshall <hubcap@omnibond.com>,
+	Martin Brandenburg <martin@omnibond.com>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Christian Brauner <brauner@kernel.org>, Jan Kara <jack@suse.cz>,
+	James Gowans <jgowans@amazon.com>, Mike Day <michael.day@amd.com>,
+	linux-fsdevel@vger.kernel.org, kvm@vger.kernel.org,
+	linux-coco@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-mm@kvack.org,
+	linux-doc@vger.kernel.org, linux-nfs@vger.kernel.org,
+	devel@lists.orangefs.org, linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v5 1/2] filemap: Pass address_space mapping to
+ ->free_folio()
+Message-ID: <Z0DL_jL4Tw_Z1LKD@casper.infradead.org>
+References: <20241122-guestmem-library-v5-0-450e92951a15@quicinc.com>
+ <20241122-guestmem-library-v5-1-450e92951a15@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: oslOqMu6BXiaXyu2pHflFmTSQxq9f-ML
-X-Proofpoint-GUID: oslOqMu6BXiaXyu2pHflFmTSQxq9f-ML
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- suspectscore=0 clxscore=1011 spamscore=0 priorityscore=1501 malwarescore=0
- phishscore=0 bulkscore=0 mlxlogscore=999 impostorscore=0 adultscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411220149
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241122-guestmem-library-v5-1-450e92951a15@quicinc.com>
 
+On Fri, Nov 22, 2024 at 09:29:38AM -0800, Elliot Berman wrote:
+> When guest_memfd becomes a library, a callback will need to be made to
+> the owner (KVM SEV) to update the RMP entry for the page back to shared
+> state. This is currently being done as part of .free_folio() operation,
+> but this callback shouldn't assume that folio->mapping is set/valid.
 
+I think this could be slightly clearer ...
 
-> -----Original Message-----
-> From: Md Sadre Alam (QUIC) <quic_mdalam@quicinc.com>
-> Sent: Friday, November 22, 2024 2:30 PM
-> To: manivannan.sadhasivam@linaro.org; miquel.raynal@bootlin.com;
-> richard@nod.at; vigneshr@ti.com; bbrezillon@kernel.org; linux-
-> mtd@lists.infradead.org; linux-arm-msm@vger.kernel.org; linux-
-> kernel@vger.kernel.org
-> Cc: Sricharan Ramabadhran (QUIC) <quic_srichara@quicinc.com>;
-> Varadarajan Narayanan (QUIC) <quic_varada@quicinc.com>; Md Sadre Alam
-> (QUIC) <quic_mdalam@quicinc.com>; Naina Mehta (QUIC)
-> <quic_nainmeht@quicinc.com>; Lakshmi Sowjanya D (QUIC)
-> <quic_laksd@quicinc.com>
-> Subject: [PATCH v2 0/3] QPIC v2 fixes for SDX75
->=20
-> v2:
->  * Updated commit message
->  * Added stable kernel tag
->  * Added Fixes tag
->  * Renamed the variable from offset_from_qpic to nandc_offset
->  * Set buf_count to 512 in the parameter page read
->  * Replaced the buf_count value of 512 with the len in bytes
->=20
-> v1:
->  * These patches will fix the following:
->  * 1) onfi param page read which was broken by exec_op() patch.
->  * 2) Fixed offset passed to BAM from QPIC base
->=20
-> Md Sadre Alam (3):
->   mtd: rawnand: qcom: Pass 18 bit offset from QPIC base address to BAM
->   mtd: rawnand: qcom: Fix onfi param page read
->   mtd: rawnand: qcom: Fix read len for onfi param page
->=20
->  drivers/mtd/nand/raw/qcom_nandc.c | 23 ++++++++++++++++++-----
->  1 file changed, 18 insertions(+), 5 deletions(-)
->=20
-> --
+guest_memfd wants to inform the owner of the page that the folio has
+been removed from the mapping.  The best place to do this is in the
+free_folio() callback, but the folio's mapping pointer has already been
+cleared.  Pass the mapping in so that the callback knows which mapping
+the folio has been removed from.
 
-Tested-by: Lakshmi Sowjanya D <quic_laksd@quicinc.com>     # on SDX75
+> ---
+>  Documentation/filesystems/locking.rst |  2 +-
 
---=20
-Regards
-Lakshmi Sowjanya
+Because life is hard, we also have documentation in vfs.rst.  Can you
+please update that one too?
 
+> +++ b/virt/kvm/guest_memfd.c
+> @@ -358,7 +358,8 @@ static int kvm_gmem_error_folio(struct address_space *mapping, struct folio *fol
+>  }
+>  
+>  #ifdef CONFIG_HAVE_KVM_ARCH_GMEM_INVALIDATE
+> -static void kvm_gmem_free_folio(struct folio *folio)
+> +static void kvm_gmem_free_folio(struct address_space *mapping,
+> +				struct folio *folio)
+>  {
+>  	struct page *page = folio_page(folio, 0);
+>  	kvm_pfn_t pfn = page_to_pfn(page);
+
+You could just use folio_pfn() here; maybe sneak it in as part of this
+patch or do a separate patch for it.
 
