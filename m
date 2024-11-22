@@ -1,164 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-38839-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38840-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id DFDA49D5F0E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 13:46:50 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 07D049D5F31
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 13:47:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8C5B41F220E8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 12:46:50 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7DA67B251FE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 12:47:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 793CE1DF72E;
-	Fri, 22 Nov 2024 12:45:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE59A1DF751;
+	Fri, 22 Nov 2024 12:46:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="o47lvyrb"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="bbOvkUt5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7A91E52D;
-	Fri, 22 Nov 2024 12:45:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08CFD1DF745
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 12:46:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732279546; cv=none; b=DMu551kWUuJNEaZIe8B2LNWH+cDK4sE5dQKLnVSZ2pPYqbsWCPjw9WZUBN4bI8MZ9jZRlWXJQ9AKODCx6PCE6dvFmDNS/Iwt3I6T9YP4F0fQlMPkIoEj5Q2sSBkQeqQPirQ4kL0lT15r8Yi2UUxBPJ0puQo8AxP4654tkY+sXsU=
+	t=1732279611; cv=none; b=bPS/9YxNWMBG/z8TpDjyQRVWh7ryMvY7YYTCcYqkkT9pSBMb8L8vyarMWHTU4hqlongFsedCcVAoP5K3jnV0pN83zYNghpzs+bqclFEzYZjcvPWDlu4ZXq0iSRl9XZ+UgvaDfRVkyqArd2B6W8bnIUy+JLiHOZhlQap+3IiriYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732279546; c=relaxed/simple;
-	bh=Bm4WRksVmD7sFXxYAq19D3ZgtZ11SpKaEs2hcjauaeE=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fdiL12mthyvJP+pylKLQrfVCJQ1bweZK0PudHCtI4RzHk9UJFd/5I1guho/IUhtsVPgf9erU/AOshS0Z+W8Te/HPFMGiob+LcsTTtSxWZq3GkZxWo+sI10r6mgjae5gjhGP6+LQtNeQ6K6Wl+BuVuPSvMDoDsxOEe0CgBgLUbhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=o47lvyrb; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AM7FNGn020915;
-	Fri, 22 Nov 2024 12:45:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	s=arc-20240116; t=1732279611; c=relaxed/simple;
+	bh=PGxmlMvM42jCb09Sw5Nk0aJULQXXd1s94DyQ/r3iWC0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=qAyWEYYH4EkNoELKVdENuFnqJqYkzA0ZnydqRzT25kfUK1em8uGqfDZMvOo2HKqEnZsrjw+UOEqAjqEH8eyNl5VjOFEroAGGGgRJsEZ9mYh4ITOLjSI8FcwqvzEwaipvH+qtLiILveMvz7XAcva+BDSbKsq/IkGjHfB1rKwz1EM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=bbOvkUt5; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AM9S4E1019613
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 12:46:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	42j83bS2JYE8Us/GYuAe6PoNrQZYsucJiuGsc4BcDmc=; b=o47lvyrbPJA1LkUp
-	nBGVG6w98t5BmJt0At9E2+cZ3533tueryNDjrNyoHfN3NKJIiG6WpKXp18WteUZL
-	yHEtADgSreyuTzNvXx5dlyndqUSebwzoONl7lGVEFj2xs12ATOuqq1rgez8ddSkI
-	irI+1+Mw96lpKvMcJHhRvVQvsYqKxGqtf3x36khaDHy766WAcfmpTBsNZ0FpG0oI
-	oIkZM9y3bfMBKzuVF1Wv6iKwoQ4Vh5sX6ztSWCNpPHtFt3ZPXu4GJE+J3RyGUn5x
-	x8N06kLQVZD8zkkhprM/5xKjzXBHYzg1Ztzkx/tBcOuwetIYktLz5XGTAveVkHq4
-	60Ov4Q==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4320wk47qe-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 22 Nov 2024 12:45:41 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AMCjeWZ005097
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 22 Nov 2024 12:45:40 GMT
-Received: from hu-mmanikan-blr.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Fri, 22 Nov 2024 04:45:36 -0800
-From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-To: <andersson@kernel.org>, <linus.walleij@linaro.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <konradybcio@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-CC: <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
-Subject: [PATCH 4/4] arm64: dts: qcom: ipq5424: configure spi0 node for rdp466
-Date: Fri, 22 Nov 2024 18:15:05 +0530
-Message-ID: <20241122124505.1688436-5-quic_mmanikan@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241122124505.1688436-1-quic_mmanikan@quicinc.com>
-References: <20241122124505.1688436-1-quic_mmanikan@quicinc.com>
+	Ia4UrDs3vd2kvaJNQHWGjnWaoKrlYpuMSlA2+3djwo8=; b=bbOvkUt5luCh54dG
+	6s6J41ui/OjrMkR01OslBwvPoELphPzxgFJcqdGuOmWWipw7bgcOAfnx/X7D7z49
+	u4Z3z9JbU5+UE73bDuOatMJ+u9X4olz25Ub9sEFIC/pP1GxrVPkCfSUn+xNaXuuX
+	mL5ap7bzR4b7AZlskokOLZ6+QLANTKZnIlTaacUs1RWlFnJXeDF04uWtCRozuypj
+	cANqfRv2oT6k6HlrniH6R+vjoJObu+TU9jVW1EQ4kgtdPi0YUWQ+XGIHsBTT2ebR
+	7RQaVm2l3Iipw5roctjVEX66YYAT9SOyW0+fMCkjKSgHDXlssmUYrVI8fGgSgJBJ
+	IsB0LA==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 431c7hqeru-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 12:46:49 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-6d40a926b91so5256166d6.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 04:46:49 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732279608; x=1732884408;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ia4UrDs3vd2kvaJNQHWGjnWaoKrlYpuMSlA2+3djwo8=;
+        b=Q/DxXyniVddbYszSrZT10IX0GtrmPMI8nfAmlj04THuZfxNbM7QjjNZHLK+m8PoTed
+         IcnTYdtRgJZKn3qhBXZ8xYb1TLL4MV0rTcho4ZdM0q5hsiJqjT3Pqa9ba8Fz+1A95zdu
+         mAQzNpt/M8wh024Yy7LDKUfzC2xqqUNBap1pT8AFwzVlOTcet+b1IjltLrLhpzX2TV9R
+         +w2m8kCo6V1VG3KrjayXptAzfQo6gMy5/q2EzOf69t7e8BgnVvnQeT5/H2ok8dvXjCoZ
+         2Y5sEoNCJE5GP6Je4ApBrhra5/LeYddA43dnVM3MwRCvfuEWroauX+0JsyNi2TZifzkJ
+         VbHw==
+X-Forwarded-Encrypted: i=1; AJvYcCVyUqp83I6QzAKCZHMSImKovjydCgHsugBXDXnpZ2aZ9QlfGykYPzf8jrx28QTRYCwE6tB26RVy1bOBxuRE@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywcr44N75U5vCb67V8HZwYGZRPt2DglU9iKOeIgSAo/WCIc4uqM
+	SbpozE06jU51IEZ9GYLOfm6r/mtnUbFVCy4HkkNGDZ+oIaZCxUjSFuC+RkaeRhuKNuhrIkO0eVM
+	73PcyZkFzfSrLGOZimIvJNHcrz/mPhRjUl7o5q4lnyPkbUnA7T6hhbmBvbDfClTUH
+X-Gm-Gg: ASbGncvyy/CvzdR0Ze0ykN+Th7NHjoVwKS5+yu5bgZ9HwSFsooBCL0e+7v0jmP4Jm6M
+	drdFsOQk6opm8lmrfYX33pk5X5s9S/Bw4vqktonzu7ZVQJ27bAGNtXzoM2F4BoEWfkhIm9mXy4l
+	zFiGDXLeMiTlRidK7A+caWdVNI2zdhCs75dMeqqOkTqCNf6EhiYhSNlTFU+0gawzfKthPPkH1uS
+	LhU/YNAi9uvaGDsfKazk6f8168ueOPA17X7X2gM7BgsjQ0/AfP+2YUtaX0YXULfaSaNoTOY4G8R
+	dvRn/barOv3JZbpWt3bHIFkqkkQjLVg=
+X-Received: by 2002:a05:620a:1713:b0:7af:cb6b:b506 with SMTP id af79cd13be357-7b51451a046mr183920885a.10.1732279607956;
+        Fri, 22 Nov 2024 04:46:47 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGmIPXE7w7yZ0oy7BimtfW3pz/4db5Uchdbm73yDFjLne3ud5VpvKRTqnMiznhLBMrqXFvxsg==
+X-Received: by 2002:a05:620a:1713:b0:7af:cb6b:b506 with SMTP id af79cd13be357-7b51451a046mr183919485a.10.1732279607627;
+        Fri, 22 Nov 2024 04:46:47 -0800 (PST)
+Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa50b28dd8fsm95930466b.39.2024.11.22.04.46.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 22 Nov 2024 04:46:47 -0800 (PST)
+Message-ID: <b4716d0d-fcae-4d64-832a-96ecb0a233a7@oss.qualcomm.com>
+Date: Fri, 22 Nov 2024 13:46:44 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Z8MRihk9J0XKbZAElDvwjQRjoQcBkncU
-X-Proofpoint-GUID: Z8MRihk9J0XKbZAElDvwjQRjoQcBkncU
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V5 3/4] interconnect: qcom: Add EPSS L3 support on SA8775P
+To: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: Odelu Kukatla <quic_okukatla@quicinc.com>,
+        Mike Tipton <quic_mdtipton@quicinc.com>,
+        Sibi Sankar
+ <quic_sibis@quicinc.com>, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20241121113006.28520-1-quic_rlaggysh@quicinc.com>
+ <20241121113006.28520-4-quic_rlaggysh@quicinc.com>
+ <bc926d6d-e3d1-4fbf-9b6a-bbd3816a766d@kernel.org>
+ <b2a05dfb-a820-4450-a156-8d6b4bd59be3@quicinc.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <b2a05dfb-a820-4450-a156-8d6b4bd59be3@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: Z5TVGf8i1EsonwTz2An1RRzunX8fO99v
+X-Proofpoint-GUID: Z5TVGf8i1EsonwTz2An1RRzunX8fO99v
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 impostorscore=0
- malwarescore=0 lowpriorityscore=0 suspectscore=0 mlxlogscore=830
- adultscore=0 mlxscore=0 bulkscore=0 clxscore=1015 priorityscore=1501
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411220108
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
+ phishscore=0 priorityscore=1501 malwarescore=0 bulkscore=0 spamscore=0
+ mlxscore=0 impostorscore=0 suspectscore=0 lowpriorityscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411220109
 
-Enable the SPI0 node and configure the associated gpio pins.
+On 21.11.2024 7:03 PM, Raviteja Laggyshetty wrote:
+> 
+> 
+> On 11/21/2024 5:28 PM, Krzysztof Kozlowski wrote:
+>> On 21/11/2024 12:30, Raviteja Laggyshetty wrote:
+>>> Add Epoch Subsystem (EPSS) L3 interconnect provider on
+>>> SA8775P SoCs with multiple device support.
+>>>
+>>
+>>
+>> ...
+>>
+>>> -DEFINE_QNODE(osm_l3_master, OSM_L3_MASTER_NODE, 16, OSM_L3_SLAVE_NODE);
+>>> -DEFINE_QNODE(osm_l3_slave, OSM_L3_SLAVE_NODE, 16);
+>>> +DEFINE_QNODE(osm_l3_master, 16, osm_l3_slave);
+>>> +DEFINE_QNODE(osm_l3_slave, 16);
+>>>  
+>>> -static const struct qcom_osm_l3_node * const osm_l3_nodes[] = {
+>>> +static struct qcom_osm_l3_node * const osm_l3_nodes[] = {
+>>>  	[MASTER_OSM_L3_APPS] = &osm_l3_master,
+>>>  	[SLAVE_OSM_L3] = &osm_l3_slave,
+>>>  };
+>>>  
+>>> -DEFINE_QNODE(epss_l3_master, OSM_L3_MASTER_NODE, 32, OSM_L3_SLAVE_NODE);
+>>> -DEFINE_QNODE(epss_l3_slave, OSM_L3_SLAVE_NODE, 32);
+>>> +DEFINE_QNODE(epss_l3_master, 32, epss_l3_slave);
+>>> +DEFINE_QNODE(epss_l3_slave, 32);
+>>>  
+>>> -static const struct qcom_osm_l3_node * const epss_l3_nodes[] = {
+>>> +static struct qcom_osm_l3_node * const epss_l3_nodes[] = {
+>>
+>>
+>> I think dropping const makes the code worse, not better. Commit msg does
+>> not explain all these changes and I could not figure out the intention
+>> (except modifying but that's just obvious).
+> 
+> EPSS L3 on SA8775P has two instances and this requires creation of two device nodes in devicetree.
+> As Interconnect framework requires a unique node id, each device node needs to have different compatible and data.
+> To overcome the need of having two different compatibles and data, driver code has been modified to acquire unique node id from IDA 
+> and the node name is made dynamic (nodename@address).
+> Updating node id and node name is not possible with const.
 
-Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
----
- arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts | 45 +++++++++++++++++++++
- 1 file changed, 45 insertions(+)
+I think it would be better to just fix the interconnect API to do it
+internally
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts b/arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts
-index d4d31026a026..6256216ca764 100644
---- a/arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts
-+++ b/arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts
-@@ -23,6 +23,36 @@ &sleep_clk {
- };
- 
- &tlmm {
-+	spi0_default_state: spi0-default-state {
-+		clk-pins {
-+			pins = "gpio6";
-+			function = "spi0_clk";
-+			drive-strength = <8>;
-+			bias-pull-down;
-+		};
-+
-+		cs-pins {
-+			pins = "gpio7";
-+			function = "spi0_cs";
-+			drive-strength = <8>;
-+			bias-pull-up;
-+		};
-+
-+		miso-pins {
-+			pins = "gpio8";
-+			function = "spi0_miso";
-+			drive-strength = <8>;
-+			bias-pull-down;
-+		};
-+
-+		mosi-pins {
-+			pins = "gpio9";
-+			function = "spi0_mosi";
-+			drive-strength = <8>;
-+			bias-pull-down;
-+		};
-+	};
-+
- 	sdc_default_state: sdc-default-state {
- 		clk-pins {
- 			pins = "gpio5";
-@@ -57,3 +87,18 @@ &xo_board {
- 	clock-frequency = <24000000>;
- };
- 
-+&qupv3 {
-+	spi0: spi@1a90000 {
-+		pinctrl-0 = <&spi0_default_state>;
-+		pinctrl-names = "default";
-+		status = "okay";
-+
-+		flash@0 {
-+			compatible = "micron,n25q128a11", "jedec,spi-nor";
-+			reg = <0>;
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+			spi-max-frequency = <50000000>;
-+		};
-+	};
-+};
--- 
-2.34.1
-
+Konrad
 
