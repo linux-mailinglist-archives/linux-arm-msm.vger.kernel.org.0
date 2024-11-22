@@ -1,219 +1,252 @@
-Return-Path: <linux-arm-msm+bounces-38783-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38784-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5AD779D5A58
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 08:51:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E6E839D5A5E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 08:52:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BFE1EB237C2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 07:51:36 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 425BDB213A6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 07:52:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F212189917;
-	Fri, 22 Nov 2024 07:51:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56BC1187346;
+	Fri, 22 Nov 2024 07:51:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="RwlBo9/t"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UaeGTkaJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C79118990D;
-	Fri, 22 Nov 2024 07:51:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 554761865E7;
+	Fri, 22 Nov 2024 07:51:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732261866; cv=none; b=UwD4KYjT1mVuEhunAIH7b3rLhKKH5GPHUyjePqTf+plY2BZ0YELBY9qdOpUh6J0saWL0Flou/F8qvUE9PcebWo5hZ5yfKp/VHNmQyyeFGAc+2ezSbnkDUI8Xxf4wP/StaQcFiZH7w8MZbu2dEnPtLmIgjlURmllo04kx07PalDE=
+	t=1732261880; cv=none; b=GKmEUbh8h9ZURC6rsybK/DfPP5+/bLaFNwZ9+WxkAicOgcBOpIIS2vzP3eRbJLsweGm/Xy96n9cIPajsvVB3bTsZwDVc9J+tmDMDzpIyENJiJyiSIANrl77OsjHyn92h/orf/bpDRTwPvvaQJf8e/OP/QdIxUnuvB1VpBbFrDc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732261866; c=relaxed/simple;
-	bh=ZZGSD+Tf9pw4+mC1CBo9amMXhYpAa31/QE57BMBPaxg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DV5pnSx84fj6xvUBkGiBHuqEDxDl7DcILLbMuAhx0FQFrOVe6iSE5ohulQAd1eSKY1Zug37+vHt5kg7u/0UwXkjBdgIx0KpZA/LZxfAIWXUrCgLwfA4WLEnVY8hV6S/iQjLXoB8krrqDj2v/qexdvedBnWS392nX0psQOynCbmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=RwlBo9/t; arc=none smtp.client-ip=198.175.65.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1732261863; x=1763797863;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=ZZGSD+Tf9pw4+mC1CBo9amMXhYpAa31/QE57BMBPaxg=;
-  b=RwlBo9/t8blxKhSMNMpR4YBxuFTHRfp65pUp9JkiwuhzG1yYixvI6fJA
-   UNiMgBTdfXw46XRUntbWMNvRgtIONJ8Zu2CKA3c+iZoiHTdFEqvHwsrAX
-   DxfhVEr/DqWEm9+sv7T55CfP9GA161TtpFJndnchDQgwR1Gmh7737oHt9
-   R8LvP9lQ9TK6mt0NNUkLn6NYmZEFnbbA6Is+Gaim988EtxWbO+qQLEfol
-   kI6992JEBRxCfEuoK4xJ69OGj7IbUWefxHcwvDj0SCOzhK6E8Cse3ZysU
-   HlIUbYKJ+ooZaW+QQgBC6Jhh7ADrRSdsnrA5x0e9F5mLaw/+rWJqydYow
-   Q==;
-X-CSE-ConnectionGUID: motnuL3YTX2TwQYzP8PVGA==
-X-CSE-MsgGUID: clmGffkJQhqlvSE2LWxzjw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11263"; a="32156850"
-X-IronPort-AV: E=Sophos;i="6.12,175,1728975600"; 
-   d="scan'208";a="32156850"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
-  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Nov 2024 23:51:03 -0800
-X-CSE-ConnectionGUID: nBgbhrT/TK+xGGAPGMHUJQ==
-X-CSE-MsgGUID: PPr96EqHTdWlSloqZgrpYg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,175,1728975600"; 
-   d="scan'208";a="91294935"
-Received: from lkp-server01.sh.intel.com (HELO 8122d2fc1967) ([10.239.97.150])
-  by orviesa008.jf.intel.com with ESMTP; 21 Nov 2024 23:51:00 -0800
-Received: from kbuild by 8122d2fc1967 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1tEORN-0003lz-2n;
+	s=arc-20240116; t=1732261880; c=relaxed/simple;
+	bh=C2xxxCSxcgNZJ6leMsg28bVXsfJ/P2l084v0AQ4W7Fs=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=hMjZL34aTb3Vqn6z2B/nUe0+YH/rviya/1iO5yPFy1ZQld9xnf8U+5hQoPt8OZ3ho9pLgpncc0796SWvYTDjs5B/LpWqa8ldhoYdOl5TG8gdhm6yhcyp9DLWyybwhMaCV3ToxFuCWFTOdVM68+anpwXfdOWckWZjb04U6J0infE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UaeGTkaJ; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AM5F6bP020377;
+	Fri, 22 Nov 2024 07:51:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=sJEwCo+ghoL55XsmCLIJU0
+	a7yfszGQc288qfvj5WF3c=; b=UaeGTkaJsD6dNVtelSCpxE/ffXN+65DhSuSZTQ
+	2+ippeS/2wYBRCVcAR0lZufOFXwK3mfzldUzkAWwAHJWthVZ6KPlBBWQLNiPsskG
+	n/nhQ180Du2QmtRvfSk+/vlc+5znN/+Rp2c7rtV0ujO9rDctSMDw4gsioEdI2s7S
+	YvqO0LXB2Syu+x7HRQxpyjM0g070iP6+FW5NvCTGc9qEhwVOiy9VWpLQ9G88Gea0
+	P0JRo+yz+yUa4UPXzwintrnPSJi/hiFrZI3IP+lLYBhD0AzCwwJ52ef2eAgjgllf
+	0UOaxT/xyaOypkxQTaPqaf5f0M3efQ38rqRkEKeSzbXMt/Vw==
+Received: from aptaippmta02.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4326ataanm-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 22 Nov 2024 07:51:14 +0000 (GMT)
+Received: from pps.filterd (APTAIPPMTA02.qualcomm.com [127.0.0.1])
+	by APTAIPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 4AM7ov2T022164;
+	Fri, 22 Nov 2024 07:50:57 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 42xmfkvmx0-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
 	Fri, 22 Nov 2024 07:50:57 +0000
-Date: Fri, 22 Nov 2024 15:50:37 +0800
-From: kernel test robot <lkp@intel.com>
-To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
-	andi.shyti@kernel.org, quic_bjorande@quicinc.com,
-	linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
-	linux-kernel@vger.kernel.org, --cc=konrad.dybcio@linaro.org,
-	quic_vdadhani@quicinc.com, vkoul@kernel.org
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-Subject: Re: [PATCH v3] i2c: i2c-qcom-geni: Serve transfer during early
- resume stage
-Message-ID: <202411221541.mTqJTK6J-lkp@intel.com>
-References: <20241119143031.3331753-1-quic_msavaliy@quicinc.com>
+Received: from APTAIPPMTA02.qualcomm.com (APTAIPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4AM7ovth022159;
+	Fri, 22 Nov 2024 07:50:57 GMT
+Received: from cse-cd02-lnx.ap.qualcomm.com (cse-cd02-lnx.qualcomm.com [10.64.75.246])
+	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 4AM7ouBd022157
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 22 Nov 2024 07:50:57 +0000
+Received: by cse-cd02-lnx.ap.qualcomm.com (Postfix, from userid 4571896)
+	id 297891801; Fri, 22 Nov 2024 15:50:55 +0800 (CST)
+From: Yuanjie Yang <quic_yuanjiey@quicinc.com>
+To: adrian.hunter@intel.com, ulf.hansson@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc: quic_tengfan@quicinc.com, quic_tingweiz@quicinc.com,
+        quic_zhgao@quicinc.com, Yuanjie Yang <quic_yuanjiey@quicinc.com>
+Subject: [PATCH v1] mmc: sdhci-msm: Correctly set the load for the regulator
+Date: Fri, 22 Nov 2024 15:50:48 +0800
+Message-Id: <20241122075048.2006894-1-quic_yuanjiey@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241119143031.3331753-1-quic_msavaliy@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: m7wjLmSXfswSyEaL9qyKFzVChZmvczbq
+X-Proofpoint-GUID: m7wjLmSXfswSyEaL9qyKFzVChZmvczbq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ malwarescore=0 clxscore=1011 mlxlogscore=938 lowpriorityscore=0
+ phishscore=0 adultscore=0 priorityscore=1501 bulkscore=0 spamscore=0
+ mlxscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411220065
 
-Hi Mukesh,
+Qualcomm regulator supports two power supply modes: HPM and LPM.
+Currently, the sdhci-msm.c driver does not set the load to adjust
+the current for eMMC and SD. Therefore, if the regulator set load
+in LPM state, it will lead to the inability to properly initialize
+eMMC and SD.
 
-kernel test robot noticed the following build errors:
+Set the correct regulator current for eMMC and SD to ensure that the
+device can work normally even when the regulator is in LPM.
 
-[auto build test ERROR on next-20241120]
-[also build test ERROR on linus/master]
-[cannot apply to v6.12 v6.12-rc7 v6.12-rc6 v6.12]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+Signed-off-by: Yuanjie Yang <quic_yuanjiey@quicinc.com>
+---
+ drivers/mmc/host/sdhci-msm.c | 91 +++++++++++++++++++++++++++++++++++-
+ 1 file changed, 89 insertions(+), 2 deletions(-)
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Mukesh-Kumar-Savaliya/i2c-i2c-qcom-geni-Serve-transfer-during-early-resume-stage/20241121-124240
-base:   next-20241120
-patch link:    https://lore.kernel.org/r/20241119143031.3331753-1-quic_msavaliy%40quicinc.com
-patch subject: [PATCH v3] i2c: i2c-qcom-geni: Serve transfer during early resume stage
-config: hexagon-allmodconfig (https://download.01.org/0day-ci/archive/20241122/202411221541.mTqJTK6J-lkp@intel.com/config)
-compiler: clang version 20.0.0git (https://github.com/llvm/llvm-project 592c0fe55f6d9a811028b5f3507be91458ab2713)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20241122/202411221541.mTqJTK6J-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202411221541.mTqJTK6J-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
-   In file included from drivers/i2c/busses/i2c-qcom-geni.c:6:
-   In file included from include/linux/dmaengine.h:12:
-   In file included from include/linux/scatterlist.h:8:
-   In file included from include/linux/mm.h:2223:
-   include/linux/vmstat.h:518:36: warning: arithmetic between different enumeration types ('enum node_stat_item' and 'enum lru_list') [-Wenum-enum-conversion]
-     518 |         return node_stat_name(NR_LRU_BASE + lru) + 3; // skip "nr_"
-         |                               ~~~~~~~~~~~ ^ ~~~
->> drivers/i2c/busses/i2c-qcom-geni.c:706:28: error: no member named 'usage_count' in 'struct dev_pm_info'
-     706 |                         atomic_read(&dev->power.usage_count));
-         |                                      ~~~~~~~~~~ ^
-   include/linux/dev_printk.h:165:39: note: expanded from macro 'dev_dbg'
-     165 |         dynamic_dev_dbg(dev, dev_fmt(fmt), ##__VA_ARGS__)
-         |                                              ^~~~~~~~~~~
-   include/linux/dynamic_debug.h:274:19: note: expanded from macro 'dynamic_dev_dbg'
-     274 |                            dev, fmt, ##__VA_ARGS__)
-         |                                        ^~~~~~~~~~~
-   include/linux/dynamic_debug.h:250:59: note: expanded from macro '_dynamic_func_call'
-     250 |         _dynamic_func_call_cls(_DPRINTK_CLASS_DFLT, fmt, func, ##__VA_ARGS__)
-         |                                                                  ^~~~~~~~~~~
-   include/linux/dynamic_debug.h:248:65: note: expanded from macro '_dynamic_func_call_cls'
-     248 |         __dynamic_func_call_cls(__UNIQUE_ID(ddebug), cls, fmt, func, ##__VA_ARGS__)
-         |                                                                        ^~~~~~~~~~~
-   include/linux/dynamic_debug.h:224:15: note: expanded from macro '__dynamic_func_call_cls'
-     224 |                 func(&id, ##__VA_ARGS__);                       \
-         |                             ^~~~~~~~~~~
-   drivers/i2c/busses/i2c-qcom-geni.c:732:28: error: no member named 'usage_count' in 'struct dev_pm_info'
-     732 |                         atomic_read(&dev->power.usage_count));
-         |                                      ~~~~~~~~~~ ^
-   include/linux/dev_printk.h:165:39: note: expanded from macro 'dev_dbg'
-     165 |         dynamic_dev_dbg(dev, dev_fmt(fmt), ##__VA_ARGS__)
-         |                                              ^~~~~~~~~~~
-   include/linux/dynamic_debug.h:274:19: note: expanded from macro 'dynamic_dev_dbg'
-     274 |                            dev, fmt, ##__VA_ARGS__)
-         |                                        ^~~~~~~~~~~
-   include/linux/dynamic_debug.h:250:59: note: expanded from macro '_dynamic_func_call'
-     250 |         _dynamic_func_call_cls(_DPRINTK_CLASS_DFLT, fmt, func, ##__VA_ARGS__)
-         |                                                                  ^~~~~~~~~~~
-   include/linux/dynamic_debug.h:248:65: note: expanded from macro '_dynamic_func_call_cls'
-     248 |         __dynamic_func_call_cls(__UNIQUE_ID(ddebug), cls, fmt, func, ##__VA_ARGS__)
-         |                                                                        ^~~~~~~~~~~
-   include/linux/dynamic_debug.h:224:15: note: expanded from macro '__dynamic_func_call_cls'
-     224 |                 func(&id, ##__VA_ARGS__);                       \
-         |                             ^~~~~~~~~~~
-   1 warning and 2 errors generated.
-
-
-vim +706 drivers/i2c/busses/i2c-qcom-geni.c
-
-   692	
-   693	static int geni_i2c_xfer(struct i2c_adapter *adap,
-   694				 struct i2c_msg msgs[],
-   695				 int num)
-   696	{
-   697		struct geni_i2c_dev *gi2c = i2c_get_adapdata(adap);
-   698		struct device *dev = gi2c->se.dev;
-   699		int ret;
-   700	
-   701		gi2c->err = 0;
-   702		reinit_completion(&gi2c->done);
-   703		/* Serve I2C transfer by forced resume if Runtime PM is enbled or not */
-   704		if (!pm_runtime_enabled(dev) && gi2c->suspended) {
-   705			dev_dbg(dev, "Runtime PM is disabled hence force resume, pm_usage_count: %d\n",
- > 706				atomic_read(&dev->power.usage_count));
-   707			ret = pm_runtime_force_resume(dev);
-   708			if (ret)
-   709				return ret;
-   710		} else {
-   711			ret = pm_runtime_get_sync(gi2c->se.dev);
-   712			if (ret < 0) {
-   713				dev_err(gi2c->se.dev, "error turning SE resources:%d\n", ret);
-   714				pm_runtime_put_noidle(gi2c->se.dev);
-   715				/* Set device in suspended since resume failed */
-   716				pm_runtime_set_suspended(gi2c->se.dev);
-   717				return ret;
-   718			}
-   719		}
-   720	
-   721		qcom_geni_i2c_conf(gi2c);
-   722	
-   723		if (gi2c->gpi_mode)
-   724			ret = geni_i2c_gpi_xfer(gi2c, msgs, num);
-   725		else
-   726			ret = geni_i2c_fifo_xfer(gi2c, msgs, num);
-   727	
-   728		/* if Runtime PM is disabled, do force_suspend() else autosuspend the driver */
-   729		if (!pm_runtime_enabled(dev) && !gi2c->suspended) {
-   730			ret = pm_runtime_force_suspend(dev);
-   731			dev_dbg(dev, "Runtime PM is disabled hence force suspend, pm_usage_count: %d\n",
-   732				atomic_read(&dev->power.usage_count));
-   733			if (ret)
-   734				return ret;
-   735		} else {
-   736			pm_runtime_mark_last_busy(gi2c->se.dev);
-   737			pm_runtime_put_autosuspend(gi2c->se.dev);
-   738		}
-   739	
-   740		gi2c->cur = NULL;
-   741		gi2c->err = 0;
-   742		return ret;
-   743	}
-   744	
-
+diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+index e00208535bd1..f2a2260d54c6 100644
+--- a/drivers/mmc/host/sdhci-msm.c
++++ b/drivers/mmc/host/sdhci-msm.c
+@@ -134,9 +134,22 @@
+ /* Timeout value to avoid infinite waiting for pwr_irq */
+ #define MSM_PWR_IRQ_TIMEOUT_MS 5000
+ 
++/* Max load for eMMC Vdd supply */
++#define MMC_VMMC_MAX_LOAD_UA	570000
++
+ /* Max load for eMMC Vdd-io supply */
+ #define MMC_VQMMC_MAX_LOAD_UA	325000
+ 
++/* Max load for SD Vdd supply */
++#define SD_VMMC_MAX_LOAD_UA	800000
++
++/* Max load for SD Vdd-io supply */
++#define SD_VQMMC_MAX_LOAD_UA	22000
++
++#define MAX_MMC_SD_VMMC_LOAD_UA  max(MMC_VMMC_MAX_LOAD_UA, SD_VMMC_MAX_LOAD_UA)
++
++#define MAX_MMC_SD_VQMMC_LOAD_UA max(MMC_VQMMC_MAX_LOAD_UA, SD_VQMMC_MAX_LOAD_UA)
++
+ #define msm_host_readl(msm_host, host, offset) \
+ 	msm_host->var_ops->msm_readl_relaxed(host, offset)
+ 
+@@ -147,6 +160,11 @@
+ #define CQHCI_VENDOR_CFG1	0xA00
+ #define CQHCI_VENDOR_DIS_RST_ON_CQ_EN	(0x3 << 13)
+ 
++enum {
++	VMMC_REGULATOR,
++	VQMMC_REGULATOR,
++};
++
+ struct sdhci_msm_offset {
+ 	u32 core_hc_mode;
+ 	u32 core_mci_data_cnt;
+@@ -1403,11 +1421,70 @@ static int sdhci_msm_set_pincfg(struct sdhci_msm_host *msm_host, bool level)
+ 	return ret;
+ }
+ 
+-static int sdhci_msm_set_vmmc(struct mmc_host *mmc)
++static int sdhci_msm_get_regulator_load(struct mmc_host *mmc, int max_current, int type)
++{
++	int load = 0;
++
++	/*
++	 * When eMMC and SD are powered on for the first time, select a higher
++	 * current value from the corresponding current for eMMC and SD to
++	 * ensure that the eMMC and SD cards start up properly and complete
++	 * initialization. After the initialization process is finished, use
++	 * the corresponding current to set the eMMC and SD to ensure the
++	 * normal work of the device.
++	 */
++
++	if (!mmc->card)
++		return max_current;
++
++	if (mmc_card_is_removable(mmc) && mmc_card_mmc(mmc->card))
++		load = (type == VMMC_REGULATOR) ? MMC_VMMC_MAX_LOAD_UA : MMC_VQMMC_MAX_LOAD_UA;
++	else if (mmc_card_sd(mmc->card))
++		load = (type == VMMC_REGULATOR) ? SD_VMMC_MAX_LOAD_UA : SD_VQMMC_MAX_LOAD_UA;
++
++	return load;
++}
++
++static int msm_config_regulator_load(struct sdhci_msm_host *msm_host, struct mmc_host *mmc,
++				     bool hpm, int max_current, int type)
++{
++	int ret;
++	int load = 0;
++
++	/*
++	 * After the initialization process is finished, Once the type of card
++	 * is determined，only set the corresponding current for SD and eMMC.
++	 */
++
++	if (mmc->card && !(mmc_card_mmc(mmc->card) || mmc_card_sd(mmc->card)))
++		return 0;
++
++	if (hpm)
++		load = sdhci_msm_get_regulator_load(mmc, max_current, type);
++
++	if (type == VMMC_REGULATOR)
++		ret = regulator_set_load(mmc->supply.vmmc, load);
++	else
++		ret = regulator_set_load(mmc->supply.vqmmc, load);
++	if (ret)
++		dev_err(mmc_dev(mmc), "%s: set load failed: %d\n",
++			mmc_hostname(mmc), ret);
++	return ret;
++}
++
++static int sdhci_msm_set_vmmc(struct sdhci_msm_host *msm_host,
++			      struct mmc_host *mmc, bool hpm)
+ {
++	int ret;
++
+ 	if (IS_ERR(mmc->supply.vmmc))
+ 		return 0;
+ 
++	ret = msm_config_regulator_load(msm_host, mmc, hpm,
++					MAX_MMC_SD_VMMC_LOAD_UA, VMMC_REGULATOR);
++	if (ret)
++		return ret;
++
+ 	return mmc_regulator_set_ocr(mmc, mmc->supply.vmmc, mmc->ios.vdd);
+ }
+ 
+@@ -1435,6 +1512,15 @@ static int msm_toggle_vqmmc(struct sdhci_msm_host *msm_host,
+ 				goto out;
+ 			}
+ 		}
++
++		ret = msm_config_regulator_load(msm_host, mmc, level,
++						MAX_MMC_SD_VQMMC_LOAD_UA, VQMMC_REGULATOR);
++		if (ret < 0) {
++			dev_err(mmc_dev(mmc), "%s: vqmmc set regulator load failed: %d\n",
++				mmc_hostname(mmc), ret);
++			goto out;
++		}
++
+ 		ret = regulator_enable(mmc->supply.vqmmc);
+ 	} else {
+ 		ret = regulator_disable(mmc->supply.vqmmc);
+@@ -1642,7 +1728,8 @@ static void sdhci_msm_handle_pwr_irq(struct sdhci_host *host, int irq)
+ 	}
+ 
+ 	if (pwr_state) {
+-		ret = sdhci_msm_set_vmmc(mmc);
++		ret = sdhci_msm_set_vmmc(msm_host, mmc,
++					 pwr_state & REQ_BUS_ON);
+ 		if (!ret)
+ 			ret = sdhci_msm_set_vqmmc(msm_host, mmc,
+ 					pwr_state & REQ_BUS_ON);
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+2.34.1
+
 
