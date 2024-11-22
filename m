@@ -1,87 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-38829-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38830-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7F3A39D5E93
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 13:09:27 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 565279D5EB8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 13:21:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id F14C51F2248B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 12:09:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1756C28394B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 12:21:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 353854500E;
-	Fri, 22 Nov 2024 12:09:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFE6A1DE2B3;
+	Fri, 22 Nov 2024 12:21:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="FTneeyND"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ceTL7KBv"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE5B1187321
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 12:09:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49A5B1D5164
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 12:21:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732277361; cv=none; b=OZQPSOfQW8uZDLp6dMC/FR5BZqdyhAUWRY43mudnIjHRjzKPA0sfftNEmXxQYVwflKI4kcbmeAD/W+hGlQ4a/kq/ehiJCgi8u0uyusL5dOaDCzylYmJScRZ0OV9gKmE7qZw5Lgqdn0E7/4nFqpPyXPY9MOqKV4wCAf/5EPicPWQ=
+	t=1732278111; cv=none; b=TPDYFj4j20OehtvYKlOPtOS/+SKHUdx4JkajcNJnRiSFTLcsDNs0ztwPMpWBsdi1/I09I863xLlxw4Xf9bmwhpQMwPauQV6YszW4tYzsjJtlrr0IZ2SvhkhuPyNhRVTFBhIL1sENiMCi/LHxQZSId7G9c1bn0bzMFG9g4x4AsGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732277361; c=relaxed/simple;
-	bh=f3I4gqxCEIx4XLDLokX5S8VXumoKTGDeUDBMTyPNel0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=H4kWPXn8sC3JGYSgF4bDVtpY/ZPP4Xn60ZcxFMcFaVeYc0Gz8vhR85H803cBOM3e3Pa9f6YbdR+dDJZUO/2C0zFNDoAwOlwePwJ1c8FA3QGbyj6CbvwhPcvze3jVYaCQq5cViavK+gwY41x4Pu4Cdk4VuHHvDT4j/hAZfsqiGvc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=FTneeyND; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1732278111; c=relaxed/simple;
+	bh=4NdMI7i4HthevHg5xPrOBrT7ml56nJWGuXa+q7fy4/g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=kg/RUz3AdBx8Za+4Ntfkw3yoE6yXb7oUjjzMDMQ9ZmVMANGNI43ZWpGZwLIz2QAOQFz8kVignYRRL40Jd+EsLuDzCwcprvGYc75fFjrTmhNWcsKKkDP/B1l6deuBzPh7N6ZrJa5hmXUS2yRuSAnMlTdrGjBSSaDGQ+zXWumR/f0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ceTL7KBv; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AMBC4TT019522
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 12:09:17 GMT
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AM7tZSN002213
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 12:21:49 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	content-transfer-encoding:content-type:date:from:in-reply-to
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	sgfQ5I0CQl8UfQ3flsk4bhkJPTEDMQpM6xgAt6l3YTk=; b=FTneeyNDQWEvHnxQ
-	xz3fChARcBrFbrWPZBmXiIYv+ZWIzHoa7KjZD7bIG4sWL3ErgQbQEskXkUmCOJDn
-	IMnKImaXWh+QBJNrycrxskgyl+zbFzAolx2N91lKSuzUehpOCRoy+ZtCmFSRN4DM
-	86vbyv9vSNHTdSab4uhCPYmiSyDiWou+ry+/EZSehk8HhGGB5Bdm5cV2v30BFp1w
-	M/t0QsvPJ4mBDl0dmdP2u/8MDc2BiBfLkL0tY0JUEj6b+bIOdGTx4sAriePn8wym
-	7UulJlnP8sHvkLjOgnj3fxYsP7+wgcToPKwR+1Ib5ag/bGcx6Ki/r2GHZNe9oBuS
-	a9FBFQ==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 431sv2n3sa-1
+	2zyqdqOWon+Bb6KDq9EFahJ8KwOZlSLq3h9cfnJbehE=; b=ceTL7KBvdCZ22zVi
+	udzdRY3CYZAS9dHzjhEXUYpMQFNAUEyJJWx0j9AWTrlU1Sv50SUvlGWeV1wBj3ZV
+	xGDxL/L6fh9buUgSMMSoZGS2b5L4akX3K/u3qqbXWwWJuVwvF9Zs7E9S8GNSp9+a
+	G/idSgVQg/kUfpi8Syq65G0aCwvt/YCBlgQshS8wLWWw3wshLoznkEOghhIv2/q3
+	AV1vQs78BgOValB+FPpJW+G4Kw2OUqBrW4b6lBmf12UfSBYMgJoCfM4qmpdcHDkx
+	ibuMyzc6hyysA70lfHAv2OaPegJF7bTAYNPFj40x7aiCJwHHVIjtgHDhogLw3nne
+	Y1zz4A==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 432p0d8psg-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 12:09:17 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-460abcbba38so1996631cf.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 04:09:17 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 12:21:48 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7b1456dc270so27951485a.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 04:21:48 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732277357; x=1732882157;
+        d=1e100.net; s=20230601; t=1732278108; x=1732882908;
         h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=sgfQ5I0CQl8UfQ3flsk4bhkJPTEDMQpM6xgAt6l3YTk=;
-        b=ZpZWXfSwV3tnEDSfHD+bJ7qwA+MXb8f29UdOyU0JC7ESHr3uneKOQR0crCRNzOD4kK
-         eGtP9uBHbbguXtSoAFbhIkSKzrJkLgsjT0Dz8AmyRNJgsQy27W971mYMA3Km9HHTklHH
-         P97207vqSFWksErizV7a+fJnKTWHEuZlTgz6AM7K5UsLpC1E619El3RMXYz0Z52IyrBe
-         V6NDI9AMfsxCHQi00zaYMoUc4TWb2tH1husSO4r1SRIllRGviPmjKNXYb9kOH8smY8mQ
-         1WkvWNl9ZesSOQWPS/ZW2MNkkHfvM4VSug2PkoDmnCLUaGOuIeylKpbNXhTlIrDSjbom
-         /UaA==
-X-Forwarded-Encrypted: i=1; AJvYcCU/rB8WnlTSFSaalpejB2/ZpN/55DF3BVUDrOLjw98k/4R0xwP9HrfDvcaetHz8KTHlR4G5idWmu1yitZVb@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywnwg0jxl8Y8n62coVEY3n89nlpZpqJbdLROH2iK1mpYXK84xZF
-	au857aa/F8dNoROmJvHzdnkFPEYPJJs3lDaBFrnVAi8JjhFAoWjrIeeYv1YpMOlK3vlMqZQ+F2S
-	KE9SV9bzp6AaCFOn0IgZ2W3x+W91PFEA47GHLVbTNBR0WQlATqKwqWASytIL4XoHm
-X-Gm-Gg: ASbGncvvea/rsEnR7GPzGWGmZqq2HMr61VBVyN5nWPSt0juQR99rK5heR3yDLHW8dsz
-	ZDJ8aSCdw2Ju6m1qF9TXyxHRbxGcDxO2LR1dw9yqOUGm9lXixj7NqfZGhzAgObvRiVUrm6gkzvK
-	OUuIXmnNKhS1jt07VqX69aj7UBXV0jJUILvofYHsIxnodq2IrH+fFYRnBV1vSKRwZv3A++/fUYW
-	cOkSs6sT68sv+jnI836hrHrTCDpbxkkNN9rVfsFWXQD110ML0FunS2iCaN/rH1iU2Z+Q0S6w47J
-	eBdLL8pde3rtF6fxk2LnQoeJPNUw8g==
-X-Received: by 2002:a05:620a:4393:b0:7ae:64d1:d31 with SMTP id af79cd13be357-7b51451a49amr145613385a.6.1732277356796;
-        Fri, 22 Nov 2024 04:09:16 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFIvmb/Y1Kc36T84MfAddlUEPXu02tmNhvl1dBN2N1NQHDvFihw8x5CC9BRGYVlS2+hubr+Lg==
-X-Received: by 2002:a05:620a:4393:b0:7ae:64d1:d31 with SMTP id af79cd13be357-7b51451a49amr145611585a.6.1732277356421;
-        Fri, 22 Nov 2024 04:09:16 -0800 (PST)
-Received: from [192.168.212.29] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa50b5300e1sm91807966b.106.2024.11.22.04.09.14
+        bh=2zyqdqOWon+Bb6KDq9EFahJ8KwOZlSLq3h9cfnJbehE=;
+        b=fXNCtXoOWgrMjdWfDPFIbsZALG6KJQp0qWvrhOZhPw7aEsAMinloagVoqm+4TPT5i/
+         PfH4ZjjXZcuF1z1GnnN5arSwe5gW5iXb5w9hQ03mK1dc1I2dNf6pQI3WAw+noiGXHiEd
+         lisSJ5QTdAxR+Jd5ZnZuxAP7MAxH+LcnrLJKPEUuCo1+TJFRGQEPBiz86ais48Cz52+P
+         zpfzGPaGx7sssK3eCsOmWpVWjXgeqND6NzY9LnsuaAwF9lUFPJ/P8/OLSInscHKjPkDW
+         09YScwVTNgDnU34y4jLGA7etAAY05WQ4FyN65Mm4Y5i3wOMOJe1PVKx/dV0zEzUrzQ7g
+         4G/w==
+X-Gm-Message-State: AOJu0YxfpZdhOE7M+5tceCHhpT73QUK1uz3oiE2SyATk8C71S9Y4GCYh
+	yZloM6Ym8W++gNyaL6laJVv1r7TAE6sZss+7WhVO5L85swZjx8MFA+Xf44xlaOHf8eDX446zX3S
+	rx9Om7EeNJm90+fchhycDNLbxrsHyuwmJmeYIuBBlH1MpSuKpYdoDtz6Sk6TWTinjaXdZW6Mj
+X-Gm-Gg: ASbGncuM2wqbPwEgG/rZTYvV3T+kePJs79dsat7jmO2Fc94NZytYwCJkWWmiBE/sn2F
+	RCFP/bHohN2fxGnjqW+dysS/r2kQCfOGehngZKpgx8kJxEKNJGiSqKiQWjuAm6ekEV500gMeBZ1
+	SMQrfOdWRXL/ujXpkK6HqKKwBkerebTiEj0tLVHQkf+nziC0tPLUY9Hdc3BvFhivR2JaJq04TF7
+	D3Jdr+V3Il5wLtoljpwhaH+rhJaWNAHZEKDnv6VhUaCWr+H1FdzEZrdw0bd+Zkmu4B7z51bpkEz
+	hRDx4WaQbsI4bG8Mnqp7QQtJ5Ca0ukQ=
+X-Received: by 2002:a05:620a:1a16:b0:7a9:c0f2:75fc with SMTP id af79cd13be357-7b51457fd82mr154413385a.12.1732278107906;
+        Fri, 22 Nov 2024 04:21:47 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGHmLTbwm8pNChveHbGVRdyKfjc2M6rbis5hRH/aHBrK0D9jZQQS3R1hjWKmaZIuM4R3iO+zw==
+X-Received: by 2002:a05:620a:1a16:b0:7a9:c0f2:75fc with SMTP id af79cd13be357-7b51457fd82mr154411085a.12.1732278107496;
+        Fri, 22 Nov 2024 04:21:47 -0800 (PST)
+Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa50b57c19esm92298166b.154.2024.11.22.04.21.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Nov 2024 04:09:15 -0800 (PST)
-Message-ID: <7da6fa27-0967-4fd7-af75-0141fde79b3b@oss.qualcomm.com>
-Date: Fri, 22 Nov 2024 13:09:13 +0100
+        Fri, 22 Nov 2024 04:21:46 -0800 (PST)
+Message-ID: <54601d79-4156-41f4-b1b7-250c5c970641@oss.qualcomm.com>
+Date: Fri, 22 Nov 2024 13:21:44 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,40 +88,58 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/3] soc: qcom: llcc: Update configuration data for
- IPQ5424
-To: Varadarajan Narayanan <quic_varada@quicinc.com>, andersson@kernel.org,
-        konradybcio@kernel.org, conor@kernel.org, robh@kernel.org,
-        krzk+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20241121051935.1055222-1-quic_varada@quicinc.com>
- <20241121051935.1055222-3-quic_varada@quicinc.com>
+Subject: Re: [PATCH] drm/msm: UAPI error reporting
+To: Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
+Cc: linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Rob Clark <robdclark@chromium.org>, Sean Paul <sean@poorly.run>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20241121164858.457921-1-robdclark@gmail.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20241121051935.1055222-3-quic_varada@quicinc.com>
+In-Reply-To: <20241121164858.457921-1-robdclark@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: -MX8iMdcONe8slrhxU1yZRoUEwbxyK_6
-X-Proofpoint-ORIG-GUID: -MX8iMdcONe8slrhxU1yZRoUEwbxyK_6
+X-Proofpoint-ORIG-GUID: sonhtC7JFS2wjBhxppId0eYsKOYXCw5H
+X-Proofpoint-GUID: sonhtC7JFS2wjBhxppId0eYsKOYXCw5H
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- lowpriorityscore=0 clxscore=1015 bulkscore=0 adultscore=0 suspectscore=0
- spamscore=0 malwarescore=0 mlxscore=0 mlxlogscore=927 phishscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411220103
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
+ clxscore=1015 lowpriorityscore=0 impostorscore=0 mlxlogscore=999
+ suspectscore=0 spamscore=0 phishscore=0 bulkscore=0 adultscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411220105
 
-On 21.11.2024 6:19 AM, Varadarajan Narayanan wrote:
-> The 'broadcast' register space is present only in chipsets that
-> have multiple instances of LLCC IP. Since IPQ5424 has only one
-> instance, both the LLCC and LLCC_BROADCAST points to the same
-> register space.
+On 21.11.2024 5:48 PM, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
 > 
-> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> Debugging incorrect UAPI usage tends to be a bit painful, so add a
+> helper macro to make it easier to add debug logging which can be enabled
+> at runtime via drm.debug.
+> 
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
 > ---
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+[...]
+
+> +/* Helper for returning a UABI error with optional logging which can make
+> + * it easier for userspace to understand what it is doing wrong.
+> + */
+> +#define UERR(err, drm, fmt, ...) \
+> +	({ DRM_DEV_DEBUG_DRIVER((drm)->dev, fmt, ##__VA_ARGS__); -(err); })
+> +
+>  #define DBG(fmt, ...) DRM_DEBUG_DRIVER(fmt"\n", ##__VA_ARGS__)
+>  #define VERB(fmt, ...) if (0) DRM_DEBUG_DRIVER(fmt"\n", ##__VA_ARGS__)
+
+I'm generally not a fan of adding driver-specific debug prints..
+
+Maybe that's something that could be pushed to the drm-common layer
+or even deeper down the stack?
 
 Konrad
 
