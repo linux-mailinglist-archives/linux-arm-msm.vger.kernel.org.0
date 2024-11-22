@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-38786-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38787-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AFABD9D5A7E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 08:57:46 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8140C9D5A84
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 08:59:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E77C9281D9E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 07:57:44 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id F0D301F21966
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 07:59:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2FED175D37;
-	Fri, 22 Nov 2024 07:57:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85D4018595F;
+	Fri, 22 Nov 2024 07:59:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="iiYZvGM1"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gDjsmJlT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73C17166F26
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 07:57:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3118166F26;
+	Fri, 22 Nov 2024 07:59:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732262262; cv=none; b=fq/fTo1auu+EECqeqId5jo/ws/OSFpvzl5QxyUPl7I7PbmETuxj2Bmh90RF3wc1sNSDrDJwVECoUq0P9Xy2obxewvZrQ5rKvYYXNU81dUPN5oFoikgBFFrgxJZRf6CSEBu0uX1/gcaEsEoD4tZhjLak5fqAxaInk843cwL2pPVY=
+	t=1732262375; cv=none; b=vGjT5whX9DqmGocqZq5ibRs750m07M3X5PkFApzi0gOe5kSIygGyLdee2jwTbuKjA3NpCOS0XyShUX1QNGHzU8gwMaTc1DNq17MzRM4sTNnEmdnpW7ovEeeMEnkQQNvR2hoLGfROxGzNw03cTgd/yl8r+aPU1PwZXLARW7C6QfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732262262; c=relaxed/simple;
-	bh=z/MfpcWDxZrrL91EWw9xPWAvqIBbS5pyZYW5skY0vvs=;
+	s=arc-20240116; t=1732262375; c=relaxed/simple;
+	bh=wYGRj2iBykDhXHFmoI/kOYWd9wW2qzvD+ug1Q2u5OrE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=scduHyqbhLrf63M9WT6wF7OaBA5WrUpVSldK676FDh7rZoK7DA8hVNVE79LCbnKOoyKWOi/mKYaOOy0tJeux+CkSLGFk7NpxQ2bhfG9J3WMXL4eVAp6TaxnkGN2TC96c5wmd3jzLxrEufO5mqgGJmvC4hrYf+bp21ns/7Kjtkuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=iiYZvGM1; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=YiEASgziNXbOUCbqgkJjJEEhWbXrhLHooNgZrbRCdFzrEZ6YefQQr8rxyzz+GEuB3GNsky9mZY3OI+nCMoSDbTXe78F3lGJd0SjbMPlRS7bFeyQ1oGC/5yW5p1sG/srCEWj5srmzrtd+9ffU9HbqNV2ncajTQKbERaMTGkiTHrM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gDjsmJlT; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AM13VBA005030;
-	Fri, 22 Nov 2024 07:57:40 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AM6I3jA007373;
+	Fri, 22 Nov 2024 07:59:30 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	l4eawDMSpKtqBbb/yPF21LX3/Lu0ZmJ0+eJv7MwXo5c=; b=iiYZvGM1XJcgmuDc
-	DVHsa+pFJLIPlfjQJjrJMzrpwQSeqZYyulJuO5KmJYIaZRW2Mel7cmuathe4Vnaq
-	ON3A4HHEfLSieSmUBmhU09OXUL5L9HzLRpzpWTskCWfuNDpaek2j8/wvHWJJuJOv
-	jdTN4/3vFPZMdmvRO5DZJiB0/qI36a1JS3VWvZLgOf230XA5OiJs3Wzsoac9ml8+
-	PivWyjBDhHfo+TeBFpJWguzRR3GH8sWzZtHBizFsWEHq/ljt0/xFsCUd2oknAafY
-	xguc2+isCvZlokzNo/RjEtH0juh2nl82XUlugq62BYy/iKp/rQTIEWBjbM4xgppy
-	B1DZbQ==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 431ea766r6-1
+	NAQBA/kdjmhpvBrX/2Y1nIUNO7rIloWLIsoHN00wedM=; b=gDjsmJlT9O+1qsKs
+	c/CkdNX1o1jJ6fjaLVKf/+n9NfhD9PWgzMRG0+jlRWLx1NihB6B8ol8eZ9x/4N1y
+	CkZYv5cstHbuV+1A12AGVm04YFtqfiFp0Js9oeZPOruOw8QTWoRke4+2qf8aWnbL
+	6wiiqwaFLCNQc9X7KI8UhnVFJ5s05eH14sR8eNRzUCG+k8upUUZvere1bE3Twu3c
+	GvtbvOYKP7Ty9lv5M7bJFy6BA4RL/lEWkhAYpJqal6H4TC98FiFxlimhTF8kWoay
+	LqoF+o7/n9lVtsDEUORJA18wP0ITUPcCSHGF36h7izWbl1G8NoU5cr6ilWNYYcJj
+	s4f5Ow==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 432mjh87eq-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 22 Nov 2024 07:57:39 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AM7vdvv032587
+	Fri, 22 Nov 2024 07:59:30 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AM7xT23015235
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 22 Nov 2024 07:57:39 GMT
-Received: from [10.64.16.151] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+	Fri, 22 Nov 2024 07:59:29 GMT
+Received: from [10.64.68.72] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 21 Nov
- 2024 23:57:34 -0800
-Message-ID: <a7242ce3-240b-43f0-b8c4-60574bf71d69@quicinc.com>
-Date: Fri, 22 Nov 2024 15:57:32 +0800
+ 2024 23:59:22 -0800
+Message-ID: <83f5aa6c-61d7-4552-859e-5518c0ebf3f4@quicinc.com>
+Date: Fri, 22 Nov 2024 15:59:19 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,71 +65,79 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] arm64: defconfig: Enable SX150X
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <kernel@quicinc.com>, <quic_lliu6@quicinc.com>,
-        <quic_xiangxuy@quicinc.com>, <linux-arm-msm@vger.kernel.org>
-References: <20241014-add_display_support_for_qcs615-v1-0-4efa191dbdd4@quicinc.com>
- <20241014-add_display_support_for_qcs615-v1-1-4efa191dbdd4@quicinc.com>
- <pd2pnnnlw2mxaxtdw4aelnngr6kznungvzg452jco6c2anmb7n@xj3zci34aabs>
-Content-Language: en-US
-From: fange zhang <quic_fangez@quicinc.com>
-In-Reply-To: <pd2pnnnlw2mxaxtdw4aelnngr6kznungvzg452jco6c2anmb7n@xj3zci34aabs>
+Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: qcs8300: Add watchdog node
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>,
+        <quic_jiegan@quicinc.com>, <quic_aiquny@quicinc.com>,
+        <quic_tingweiz@quicinc.com>
+References: <20241119102315.3167607-1-quic_liuxin@quicinc.com>
+ <20241119102315.3167607-3-quic_liuxin@quicinc.com>
+ <252644d9-e304-45ee-91ed-a1452300840f@kernel.org>
+From: Xin Liu <quic_liuxin@quicinc.com>
+In-Reply-To: <252644d9-e304-45ee-91ed-a1452300840f@kernel.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: iLaj0b7N5z-aAW_7A7CaSvh1kCdMYAaD
-X-Proofpoint-ORIG-GUID: iLaj0b7N5z-aAW_7A7CaSvh1kCdMYAaD
+X-Proofpoint-GUID: VI7ZXZVpjZ6AXkHDVrWBUrg8QoWbUFQ_
+X-Proofpoint-ORIG-GUID: VI7ZXZVpjZ6AXkHDVrWBUrg8QoWbUFQ_
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 adultscore=0
- bulkscore=0 mlxscore=0 suspectscore=0 lowpriorityscore=0 clxscore=1015
- priorityscore=1501 impostorscore=0 malwarescore=0 mlxlogscore=449
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ mlxlogscore=999 priorityscore=1501 bulkscore=0 clxscore=1015 phishscore=0
+ adultscore=0 impostorscore=0 mlxscore=0 lowpriorityscore=0 spamscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2409260000 definitions=main-2411220065
 
 
 
-On 2024/10/14 18:37, Dmitry Baryshkov wrote:
-> On Mon, Oct 14, 2024 at 05:47:27PM +0800, fangez via B4 Relay wrote:
->> From: lliu6 <quic_lliu6@quicinc.com>
+在 2024/11/21 1:00, Krzysztof Kozlowski 写道:
+> On 19/11/2024 11:23, Xin Liu wrote:
+>> Add the watchdog node for QCS8300 SoC.
 >>
->> Enable SX150X pinctrl driver.
->>
->> Signed-off-by: lliu6 <quic_lliu6@quicinc.com>
-> 
-> Ok, even worse. fangez, you are not the author of the patches, so there
-> is a missing S-o-B.
-Got it, fixed in v2 for other patches, and will remove the defconfig patch
-
-and I believe all items have been addressed. May I ask if we can start 
-sending v3 now?
-> 
+>> Signed-off-by: Xin Liu <quic_liuxin@quicinc.com>
 >> ---
->>   arch/arm64/configs/defconfig | 1 +
->>   1 file changed, 1 insertion(+)
->>
->> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
->> index 76f3a6ee93e979e9e39cb0283699a2753b0dddf4..13ff005ebe0e9cfcf171b08add24465d0ab94f05 100644
->> --- a/arch/arm64/configs/defconfig
->> +++ b/arch/arm64/configs/defconfig
->> @@ -630,6 +630,7 @@ CONFIG_PINCTRL_SM8350=y
->>   CONFIG_PINCTRL_SM8450=y
->>   CONFIG_PINCTRL_SM8550=y
->>   CONFIG_PINCTRL_SM8650=y
->> +CONFIG_PINCTRL_SX150X=y
->>   CONFIG_PINCTRL_X1E80100=y
->>   CONFIG_PINCTRL_QCOM_SPMI_PMIC=y
->>   CONFIG_PINCTRL_LPASS_LPI=m
->>
->> -- 
->> 2.25.1
->>
->>
 > 
+> <form letter>
+> This is a friendly reminder during the review process.
+> 
+> It looks like you received a tag and forgot to add it.
+> 
+> If you do not know the process, here is a short explanation:
+> Please add Acked-by/Reviewed-by/Tested-by tags when posting new
+> versions, under or above your Signed-off-by tag. Tag is "received", when
+> provided in a message replied to you on the mailing list. Tools like b4
+> can help here. However, there's no need to repost patches *only* to add
+> the tags. The upstream maintainer will do that for tags received on the
+> version they apply.
+> 
+> https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
+> 
+> If a tag was not added on purpose, please state why and what changed.
+> </form letter>
+> 
+Thank you for your comments. In my cover letter:
+PATCH 2/3：Drop the Reviewed-by tag that received by v1. Assign a label
+to the wachdog node.
+
+I have made modifications to the code. Should the reviewed by tag be 
+removed in this situation.
+>>   arch/arm64/boot/dts/qcom/qcs8300.dtsi | 6 ++++++
+>>   1 file changed, 6 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/qcs8300.
+> Best regards,
+> Krzysztof
 
 
