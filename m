@@ -1,86 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-38846-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38847-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 640069D5F74
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 14:02:29 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3A0A79D5F7E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 14:06:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E1A47B22F8B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 13:02:26 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4A46AB20D8F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 13:06:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA75F1D2F78;
-	Fri, 22 Nov 2024 13:02:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2A3F1DEFE9;
+	Fri, 22 Nov 2024 13:06:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="X7Oxb1ED"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="f6vlWPsy"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C5F91EB39
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 13:02:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F7522309BF
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 13:06:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732280541; cv=none; b=fc7RkIdXprytY+g70+2o6rlnvv5LCvWD9v+xw+Qpl10E6POYoUv1GTSWcYoBZniy5zUlPSBbhUuespKptte0chgk9eNqRLqGUaxhY/nXSDy15uPXQkTKHE9/vEbnRquBAYmkD020oUSaQU2DEIqYqy/2UdhIRyVj15BsNvNLWfM=
+	t=1732280765; cv=none; b=uhzGCisKP9/qSa4CH7nJWxmVU6nL7Od9+PGC06l2SZjToGyabC1exr+dcR5fWC9zcu4l18FsmMb0v5ESjtQAxLV1UbzgVsvyzCnyBr941PEEj7Qq7RvCQaJTw2UBg2iyfYWGO2LZNrtBh3COBWf+wX5aqARcgsqIeS7CHbNbxRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732280541; c=relaxed/simple;
-	bh=hkkzOJ6GCj35VVaA6tuA70DPXj9UWp2xzAz9EycU77Q=;
+	s=arc-20240116; t=1732280765; c=relaxed/simple;
+	bh=/dlSRdirAmXldQET2Ge72ybo3eTzSkqiDtwo9z4OH6s=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=A9ic5zO2lQJ9zpxJZts8j90vZtBq4j3flRYWclAvu9KWN+mYsjBxPxhKHq8gJAtmfCsZv2ZanUSBYmyAWvlYQZ7sVYgeigKeuKgQ8KQETJmE5jxLl0OvPn61pDPDBsufxgEEJE90HrKnBh7u3KFwSZopXEAHJCggWt+4sfvBXc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=X7Oxb1ED; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=m0pU6I8uGoA92D+l1BFxz6yEvWNwZC/L0gNL+bq+YZv8dy92RsHD2Lim5ZUYaooesgWLoRu+lcXKpVGZAgEAW6FZ4X+mN07lEQdyLK+tIbk3Myw+s9x9f8qGm32z6mNVcgbfaq39hbDA/GBxup93cIkDQmM/Rky7En20qobErxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=f6vlWPsy; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AM9F8ql019249
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 13:02:19 GMT
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AM3nkwL021660
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 13:06:03 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	OUtwXsA6fi06uw94keaemdw+7r4z9cngQFHn1Kq0AiM=; b=X7Oxb1EDLNtUHv0D
-	+CoQ8pf8rqsmp5UdPsUg69OBdBqyageSreq/wPbQxDlwi3LOenAprkwjo4iIm8fP
-	3j/j7bBNu3NQ6PIvWIVHm39uDdBiKh3IW9aO8Bxpip8+szM2FKI7O/oKPZ2l1Oi/
-	WtBaduyjRg9pkVdpfZ/lX3lNJpH+6Id6bfptGMwZfob/eqZziBL4NQ/tPZoUmIqZ
-	U2EEMOa30Z0SRGL0/a84zAWZB062e3fqAcrS6+6Itn28lrknOp+5Jllf7w5cE+w0
-	jnLo/nAk0MAGW83kvAicPchBZARU/Z4tot6UzhJg5cflMdpxyQIfo36qdDY3HO35
-	IHb47Q==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 431c7hqg0r-1
+	AaHOhFj0Pi9aA28279AVxSRISiCPQlgDopG/l4doSPc=; b=f6vlWPsySXRWFdVI
+	5d8H0BCO81pc9bio5up7KvMApRgzFdoP2+MX4H2BW2GCIQx7TMqAkQMeNBQu9QnA
+	rLy2KKkDYX1+vSzZPM9rZYx2VoWkdjmbQyNdCIblYgEqaAADrHGH8HXKYdtLJDzG
+	ZpvHzrC5Sq+E8TqWZifEHXGgwBz2Aifv9Nokb+YHE8zkmgNtH0+QKGSqc+slNJfT
+	sE+QI5Q33jtEuRYedFzimpK6viF96ooEOut7pGqD0BWcvzkYuRAOyJAk5Ai1S90O
+	EhwJMtZDSsCItq5NIos8x3lejiTa2v6849Jv754+80PRCaljX0SIlNrkvtnO5lrd
+	fRvqOw==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4326atb5bt-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 13:02:19 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-460b5727217so3438411cf.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 05:02:19 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 13:06:02 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7b37a60ccdaso14127285a.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 05:06:02 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732280538; x=1732885338;
+        d=1e100.net; s=20230601; t=1732280761; x=1732885561;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OUtwXsA6fi06uw94keaemdw+7r4z9cngQFHn1Kq0AiM=;
-        b=P6RABROn39heXVbqkbBWWkvPS7bHIGxmz4jlF4e4LizIKegzhTxmhtNQy8TuOLgdIi
-         NQIlr6M2n3Tf3vKEJ8VMK5ljonEP2sv+RZylApyeyzrgmwzDxC5F43AS+52KRroBtGIt
-         RCkjIXR7QVyBfVT+L6yJnqFDiFXb4pLv6buTlMJKotz0x1dlRaD4q6av7FhcyyVt/drH
-         F0GWRYTFrv6BKJ1EdOKMp0MNCC71L/2AQZf9STimunITRAos5VYyTzOFXBon8LXoWwlA
-         0D+dJ7lNoQGuD2jerU1HZYioLRcrrvaEN1DYK6tl4nK8vf2SoIOXhJpgLPyF1osXshqh
-         icUw==
-X-Gm-Message-State: AOJu0Yy49H8bdPeRN4vln4mzx0JIbAHNFOlE9CxxdSDkLVQA9gOw2W+w
-	g7sxAFf3Ll39In/E8UFMnkyFKUi4NWjXA/aaRP1RYiRXW4bc2+PuJFTeNPTp/b5++Oln1guQtRD
-	ESFAHV5n5dddgNrau5MJMiJoiNjfkHe6RWrA0owBoCx6e+6fk63OYJpY1imv3RcNy
-X-Gm-Gg: ASbGncvEYwWK8KBMA4mulyP2qfj8BNMb9XDIYWitMe9n6u2ciJZK5zwisPMELJLAtq8
-	Ydj6DqghShZioGh/+5QIQ3PeEmE5kdEpiV3bwKwJvQLo2VBfBqnQ062938xU6tCWdcVC4VCRS0X
-	cRo9EkaBv5hZUX6Fptpq1peOV7DYqZrYbFWhR5LnoXWBOofFkeyRkmhjWlKyBVbjfTUUpHCWX6w
-	SstIcaJaLavxcSfXVBbWOQz7+GN4EdymroEFaPxDTGC3tqaCxby5QCUP/Q3wqWxJ1SBcx2ddUnY
-	7ViOQurCGWWLRqlvj/P6GZAzMSS+p0w=
-X-Received: by 2002:a05:620a:c93:b0:7b1:4add:f234 with SMTP id af79cd13be357-7b5144c7c3fmr144860085a.1.1732280537948;
-        Fri, 22 Nov 2024 05:02:17 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEhI3EtfapA7M3nlK78FHUcQBl/pt+MLm9ptP++4+wo8qRREO7ed8WW8w1263P0hSJNC7GqZQ==
-X-Received: by 2002:a05:620a:c93:b0:7b1:4add:f234 with SMTP id af79cd13be357-7b5144c7c3fmr144857385a.1.1732280537550;
-        Fri, 22 Nov 2024 05:02:17 -0800 (PST)
+        bh=AaHOhFj0Pi9aA28279AVxSRISiCPQlgDopG/l4doSPc=;
+        b=KYxVFgjxLgjCaABjhIcfJYGAoh7+4DCKj/KXPPAXut+sITJpBOqpYmFnp/s4eHHFW0
+         2GYWvBcPuPjFp1RaWPwkj2WCDU50y3+0X3Mz9ciuzLbrb67nMLzKFRSwn528a1Tngl6R
+         L2B0fyg857X5B87luGriAk7E1WIo7yPH4ZLoXb39aJ70nvOqhvR9tbwCs/dIkiDLDRKZ
+         OcVcTsIekB5cBnuAYDO92H6ImbyF2U7PdPK6NHNhUPbzOovBm3I3YaTw0or7DSNOwknK
+         bEN5RQlj1Exwu88cxBDwdhNN/aC5tvRq0O+ERo8F9gGmkSO8qUDmz+89pkXZLR7hl6Df
+         ynDg==
+X-Forwarded-Encrypted: i=1; AJvYcCVRsT3JjVVXsOExY0CnQSvMGnOFvJlBBnNtxaGUz3HKDwtnnDVPChzij4ju8KbpKt/YUVseY3vNVpNSXgjF@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz4hcnqoyLu3jiuLhBkBmEFF4EmW/CHVXULEb/7+WEXPyXizhUf
+	U27bf5Mlef4CypJuhC+ZM26RqE2Hd0YvBHRJIb82F+n95RqSEuGsd2dOakKdpLhEor8Urp1CXK9
+	PMBVGmICHZJ13hIUd7kyO9kVtLIbeUKbnoKA5YTakjq/59OytNalKt1IXjKsseuMk
+X-Gm-Gg: ASbGncuEGZjC1iCX7m85aAIiyPgdsxsVgI0N2zLwFJw8+XFeS5we/HF+MZjrIVFQca1
+	ChJmoStxFwdHbfn23AVFLXyRWOdRPwAXqCO58BssO0YNA6rOrX22RSqzEKUipQXvuRtlnUGp21P
+	dhaNWDRBftHaDuXQ8b5rRv720E/FaxJ05ZXwt5Qv5I8ihkQ060gXFk6RkNhu9OO9qpmDLYiiRy/
+	Y059sbe5uvRimOD4o56IVHGB4mKq05Mw4RFavC7ancJu4/9clU9Uwb9keE1A6xBielXNhqI7NhN
+	S74OwoQhltWYNzS/zqNwxsIgyS7cTbo=
+X-Received: by 2002:a05:620a:2982:b0:7b1:4920:8006 with SMTP id af79cd13be357-7b51459e2fcmr143208785a.11.1732280761248;
+        Fri, 22 Nov 2024 05:06:01 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG7jXetbMhOkrobfsZwzS9OMeNJtv9q6mIqwiOPbk/X99BrgD/3iA9g6QNlS2xUlHcrhl5i0Q==
+X-Received: by 2002:a05:620a:2982:b0:7b1:4920:8006 with SMTP id af79cd13be357-7b51459e2fcmr143205685a.11.1732280760662;
+        Fri, 22 Nov 2024 05:06:00 -0800 (PST)
 Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa50b52fe71sm96767066b.110.2024.11.22.05.02.15
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa50b2f41d1sm96992966b.59.2024.11.22.05.05.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Nov 2024 05:02:17 -0800 (PST)
-Message-ID: <9a2862c2-4241-44a4-acac-b37fce237ceb@oss.qualcomm.com>
-Date: Fri, 22 Nov 2024 14:02:14 +0100
+        Fri, 22 Nov 2024 05:06:00 -0800 (PST)
+Message-ID: <0eaa951b-5eed-44eb-95d8-8220bc6c0ca8@oss.qualcomm.com>
+Date: Fri, 22 Nov 2024 14:05:57 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,78 +89,88 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/2] arm64: dts: qcom: sa8775p: add DisplayPort device
- nodes
-To: Soutrik Mukhopadhyay <quic_mukhopad@quicinc.com>, andersson@kernel.org,
-        konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
-        conor+dt@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_riteshk@quicinc.com,
-        quic_vproddut@quicinc.com, quic_abhinavk@quicinc.com
-References: <20241121091401.20584-1-quic_mukhopad@quicinc.com>
- <20241121091401.20584-2-quic_mukhopad@quicinc.com>
+Subject: Re: [PATCH v4 2/2] arm64: dts: qcom: sa8775p-ride: Enable Display
+ Port
+To: Soutrik Mukhopadhyay <quic_mukhopad@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+        krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_riteshk@quicinc.com, quic_vproddut@quicinc.com,
+        quic_abhinavk@quicinc.com
+References: <20241120105954.9665-1-quic_mukhopad@quicinc.com>
+ <20241120105954.9665-3-quic_mukhopad@quicinc.com>
+ <lkovymvjsbd44v2huij7paikvnmo7i7rrmkmvpha2wn5sc4hr3@ppr2dgvhzy6d>
+ <a741b71b-af04-44aa-9e08-a3f852b8a801@quicinc.com>
+ <qpdponpaztryzacue5vtythr4b4cu6fohmgiwlzredm7ky7caw@eose6vpy4e7y>
+ <4da87d98-823f-4781-b138-c6f6caae38fb@quicinc.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20241121091401.20584-2-quic_mukhopad@quicinc.com>
+In-Reply-To: <4da87d98-823f-4781-b138-c6f6caae38fb@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: s4Q0aV2eB9pGWhyktDiG0I5voX2hTCkG
-X-Proofpoint-GUID: s4Q0aV2eB9pGWhyktDiG0I5voX2hTCkG
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: xCI-Hoda6C_Bq-hfR-ttJjV-i0G6qaVd
+X-Proofpoint-GUID: xCI-Hoda6C_Bq-hfR-ttJjV-i0G6qaVd
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
- phishscore=0 priorityscore=1501 malwarescore=0 bulkscore=0 spamscore=0
- mlxscore=0 impostorscore=0 suspectscore=0 lowpriorityscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411220110
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ malwarescore=0 clxscore=1015 mlxlogscore=999 lowpriorityscore=0
+ phishscore=0 adultscore=0 priorityscore=1501 bulkscore=0 spamscore=0
+ mlxscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411220111
 
-On 21.11.2024 10:14 AM, Soutrik Mukhopadhyay wrote:
-> Add device tree nodes for the DPTX0 and DPTX1 controllers
-> with their corresponding PHYs found on Qualcomm SA8775P SoC.
+On 20.11.2024 12:53 PM, Soutrik Mukhopadhyay wrote:
 > 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Soutrik Mukhopadhyay <quic_mukhopad@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 218 +++++++++++++++++++++++++-
->  1 file changed, 217 insertions(+), 1 deletion(-)
+> On 11/20/2024 5:13 PM, Dmitry Baryshkov wrote:
+>> On Wed, Nov 20, 2024 at 05:05:50PM +0530, Soutrik Mukhopadhyay wrote:
+>> > > On 11/20/2024 4:42 PM, Dmitry Baryshkov wrote:
+>> > > On Wed, Nov 20, 2024 at 04:29:54PM +0530, Soutrik Mukhopadhyay wrote:
+>> > > > Enable DPTX0 and DPTX1 along with their corresponding PHYs for
+>> > > > sa8775p-ride platform.
+>> > > > > Signed-off-by: Soutrik Mukhopadhyay <quic_mukhopad@quicinc.com>
+>> > > > ---
+>> > > >  arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 80 ++++++++++++++++++++++
+>> > > >  1 file changed, 80 insertions(+)
+>> > > > > diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
+>> > > b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
+>> > > > index adb71aeff339..4847e4942386 100644
+>> > > > --- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
+>> > > > +++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
+>> > > > @@ -27,6 +27,30 @@
+>> > > >      chosen {
+>> > > >          stdout-path = "serial0:115200n8";
+>> > > >      };
+>> > > > +
+>> > > > +    dp0-connector {
+>> > > > +        compatible = "dp-connector";
+>> > > > +        label = "DP0";
+>> > > > > Thundercomm's SA8775p RIDE platform doesn't show such a connector. At
+>> > > least not on a device advertised on the web pages.
+>> > > > Are you referring to this product in the Thundercomm web page : SA8225P and
+>> > SA8775P
+>> > Ride SX 4.0 Automotive Development Platform ?
+>>
+>> Yes
+>>
+>> > For this particular product we
+>> > can see
+>> > eDP 0/1/2/3 serving as the dp connectors.
+>>
+>> Please correct the labels then. And also please mention why eDP2/3 are
+>> not included / tested.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> index f7a9d1684a79..7fd0d89bf7a9 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> @@ -3343,6 +3343,25 @@
->  				interrupt-parent = <&mdss0>;
->  				interrupts = <0>;
->  
-> +				ports {
-> +					#address-cells = <1>;
-> +					#size-cells = <0>;
-> +
-> +					port@0 {
-> +						reg = <0>;
-> +						dpu_intf0_out: endpoint {
+> 
+> Sure, we will update the labels in the upcoming patchset.
+> edp 0/1 corresponds to mdss0_dptx0 and mdss0_dptx1. We have validated only these.
+> edp 2/3 corresponds to mdss1_dptx0 and mdss1_dptx1, and these are not validated,
+> as already mentioned during the driver changes for the same.
+> Should we mention the same in the commit message for the upcoming patchset ?
 
-Style: please add a newline between last properties and first subnodes
-
-[...]
-
-> +			mdss0_dp0_phy: phy@aec2a00 {
-> +				compatible = "qcom,sa8775p-edp-phy";
-> +
-> +				reg = <0x0 0xaec2a00 0x0 0x200>,
-
-Addresses should be padded to 8 hex digits with leading zeroes
-
-> +				      <0x0 0xaec2200 0x0 0xd0>,
-> +				      <0x0 0xaec2600 0x0 0xd0>,
-> +				      <0x0 0xaec2000 0x0 0x1c8>;
-> +
-> +				clocks =<&dispcc0 MDSS_DISP_CC_MDSS_DPTX0_AUX_CLK>,
-
-Missing space after '='
-
-(ditto in other nodes)
+So the box on the store page has these 4 ports next to each other..
+Please take the additional 2 minutes and plug in a monitor to the
+other two ones as well.
 
 Konrad
 
