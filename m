@@ -1,94 +1,71 @@
-Return-Path: <linux-arm-msm+bounces-38794-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38795-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 44B259D5B63
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 09:57:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 483DC9D5B6A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 10:00:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E3835B228C1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 08:56:58 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D1787B213F4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 09:00:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C671E1D0E27;
-	Fri, 22 Nov 2024 08:56:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 977931D79BB;
+	Fri, 22 Nov 2024 09:00:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="STjR9WOA"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XxP++Y0H"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F661C8776
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 08:56:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F8E21D63F8;
+	Fri, 22 Nov 2024 09:00:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732265795; cv=none; b=KBn0r5goEc9Uld4Nl42oNX5mrdpmHfpIQn9v3QQ4SBfw9+KL47ndXedGVaYuJRaaxxJf825OIdVndK8HvvQ2NZyaZpzinP01wVnoYzmM07wcYJ33vkk2NAtkJ1KoZlu3graxzVnFeevZd+yAs7HbF3G3kb4UsdBvX6ctoZ9DAQA=
+	t=1732266015; cv=none; b=EFfiblY6nQkz4PEpwsZn8theaWDxC1x4oImMah1iVIqPUR+OZVYn0Tu2of1Q7SBHPKGcFYHfFxvLCz78hntG87IlyvH1AD58t6N/Z+94snEdUSyNuLkK71M7rjquA2DVn1sBmbcCix1cn9hQjnvvLP1olrEl/rM5flCu9LJPSzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732265795; c=relaxed/simple;
-	bh=iDnkUJ6+qKrz4yi0lcczfYKLL8cZ5N7uOIHYPvi8lfk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VqZMLCNJt0Uwi9pq8A7C9gWCT2s1ZC/dgBmZbUMvYuHms8veqF1TzqqyBP9vDIgVKJEGZqAuCuouei2I/6cylb7v3C+6X9tBFrMBJp0T4BW3b82APUZInbkEC+l8jeubHfp3hqLyLqGmfvGEbu+eTuBtpSZMxeNz8y3vs4vQg7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=STjR9WOA; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4315b0bd4ddso2759835e9.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 00:56:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732265791; x=1732870591; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xMexPyi4X/XFWoEQeqC/jUtxuZa+FuBdiAX8hec2Nrk=;
-        b=STjR9WOAU1BhogK0WnpXaPCmSz1cgKONAl7SKKqFCfjsjl32iab+Ee1O1E3aEguSUd
-         U2JJIwWSnM5VrmSt7uMm5JCsXMa1md5h5MEXM700gy4AuFS2xLGqpe+yWyBuDwFeJ4Wu
-         b+W23qE0eJYz/AtXgrMlETP+7WF2dfMd7rw3mYE2WknZktk8Dy5BkVhKhPsGj3bK2Srh
-         J68olxtQw/Ogs5bOpYFE6Nh9NoEZ9RjN8obApoRsO63CeCGbSyGLOuse0oRiVg8hxhJc
-         d4E4RICM+M6A8Jre9OhqYnCDutZtYZ3KV4gj0lHeUWKW4YunDYt/dBhigh+qz2D2g19W
-         yVdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732265791; x=1732870591;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xMexPyi4X/XFWoEQeqC/jUtxuZa+FuBdiAX8hec2Nrk=;
-        b=dMd0u0y1rDcOwCVhg06XEDYIT6JfAFLQaL0xS8RKjFPkkI4HXwxmu+nYk9GygTeNtX
-         Tg+3uB5il0tFoegayXMs88K6bhl9AI4CiDYHCTEIHMTg0S/StvEY7Ek6ZUY+jxwgJYvi
-         JSkqONDhU5H7QQhD/XTjIHFigDJAzZssn356aKXy8QUmBCHCSJWEu26fnTrRfDJtzthN
-         wsm9YoO/eiTAKqLLKvmfJHxXXUz58YQBJSquMJL5ZezD/lnES1YUvvbVbg3u7jlcRSjo
-         NiL+QuV9TOGpEQZKzwCh2k3FMMaE8p1K9wc+n42hgecitUKpYJMZz7xxaYgLtRoaA9Fv
-         JXXA==
-X-Forwarded-Encrypted: i=1; AJvYcCUpul6eHs4/IMLfMCawJVsF1lzpBKcLIkRFhF5t/XF5YeroYJkiljSLQf9GybZMUYKfq9D57FAk6DnajAnf@vger.kernel.org
-X-Gm-Message-State: AOJu0YxGLudu64d13IjbEipHpPKd6OLK6Eiba16Pqx6Cmuih9wTYjqCd
-	lazQ88UUmdAGSaixnoFCASbd0EJKWOXwnOl7ovDbDIiCds5tEze4kAQIcUXbZaU=
-X-Gm-Gg: ASbGncvhEFWsVTO/vIADMo1r771kKyksQhd4OjynibsvNuSiBwGhX3OTnnUQ+o8mC6l
-	ykAGfcOECyNX/xdfe37nc3DyA7/MbH8pANtaG/zT1KZh93xvoDGOskJz/RWC7GWm3vbE4oJM8Qj
-	L+SPegy5GWiBsDceJzkQs5F9qbr8TkRtU6pB/FJGuVytuO0ikDTJvjDbl1MhbwiPRa+tQA5xazi
-	7eydA9LteOeFrqYdE13IG/OaXSrmrrUQf1tcTecOPZvWg0MKAOagxFildLC3E2K
-X-Google-Smtp-Source: AGHT+IGkV8XGhRtLXA/2oeLLvXbpa9yNqrwoZ1wN+JqNTZm6ToUQ8b+at7MqfHbeoQ8SEFNb6oTHFA==
-X-Received: by 2002:a05:6000:4028:b0:382:4e71:1a12 with SMTP id ffacd0b85a97d-38260b465d0mr560916f8f.1.1732265790809;
-        Fri, 22 Nov 2024 00:56:30 -0800 (PST)
-Received: from krzk-bin.. ([178.197.211.167])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-433cde97c68sm20320695e9.36.2024.11.22.00.56.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Nov 2024 00:56:29 -0800 (PST)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-remoteproc@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 2/2] remoteproc: qcom: pas: Add SM8750 MPSS
-Date: Fri, 22 Nov 2024 09:56:23 +0100
-Message-ID: <20241122085623.19988-2-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241122085623.19988-1-krzysztof.kozlowski@linaro.org>
-References: <20241122085623.19988-1-krzysztof.kozlowski@linaro.org>
+	s=arc-20240116; t=1732266015; c=relaxed/simple;
+	bh=uJh3B3S70+J1nrMKYJfnBrzbcGwPWn4bd39sZBMftPA=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=uzcxNZeMgSLcdYSV3V+mebhqduxA9svvVRbH77P2oAaAbUEa3PXSbjcZEKbHtfNTPqVagFOG1p7rGpyAp8zYKSQBfQNpwGiI5ZAnWbLmIcHbwj6P58kmqFk7fO+sYIIBP3ndNWTRu+qo1rd4nxXwpV6OZbEUp2JlD7+dYszIsl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=XxP++Y0H; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AM4WVnM019747;
+	Fri, 22 Nov 2024 08:59:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=V+HCme4EtitAVLS3Z1HOd4
+	JRzmtvtNlpepGHbbLHDuw=; b=XxP++Y0HoBKgsXgoE0dy/BP7MT7AXugpBu8Yx2
+	NE824ga3hJQE3qfYKmkaNgk9i8/tEidVXiVoDlvcvL2YEWTYEC3Yo41nTU77s+Zq
+	nOg8HU7uAEwXYS8E8f73a6ai1Q1jOen5BryW1a0SPBPeVgkKpxXDAxdflE6eLYoM
+	gvPwL/CXoirm0l4tCG6FNjbr7D3lgAgEXnrZA3/12PHDQSlr2kHBn1ajcF8gp7c9
+	9WBX01V3365J4pBlbpbmjvUPCyAckoFHRDRIqZv8j9nCemERCb9IsJXcyhuxyoZu
+	Qilzpd7TCQqiHbCTAUmQH0HbKI/h2sLyeHp+6RILPYurAOeQ==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4326atagy6-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 22 Nov 2024 08:59:55 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AM8xsMn006462
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 22 Nov 2024 08:59:54 GMT
+Received: from hu-mdalam-blr.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Fri, 22 Nov 2024 00:59:50 -0800
+From: Md Sadre Alam <quic_mdalam@quicinc.com>
+To: <manivannan.sadhasivam@linaro.org>, <miquel.raynal@bootlin.com>,
+        <richard@nod.at>, <vigneshr@ti.com>, <bbrezillon@kernel.org>,
+        <linux-mtd@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC: <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>,
+        <quic_mdalam@quicinc.com>, <quic_nainmeht@quicinc.com>,
+        <quic_laksd@quicinc.com>
+Subject: [PATCH v2 0/3] QPIC v2 fixes for SDX75
+Date: Fri, 22 Nov 2024 14:29:30 +0530
+Message-ID: <20241122085933.2663927-1-quic_mdalam@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -96,59 +73,44 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: XMiQSuBQRnaBtd-RX6aLVjPL1xzi6IvI
+X-Proofpoint-GUID: XMiQSuBQRnaBtd-RX6aLVjPL1xzi6IvI
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ malwarescore=0 clxscore=1011 mlxlogscore=999 lowpriorityscore=0
+ phishscore=0 adultscore=0 priorityscore=1501 bulkscore=0 spamscore=0
+ mlxscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411220075
 
-Add remote processor PAS loaders for SM8750 MPSS (modem), which differs
-from SM8650 by lack of fifth memory region for Qlink Logging.
+v2:
+ * Updated commit message
+ * Added stable kernel tag
+ * Added Fixes tag
+ * Renamed the variable from offset_from_qpic to nandc_offset
+ * Set buf_count to 512 in the parameter page read
+ * Replaced the buf_count value of 512 with the len in bytes 
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- drivers/remoteproc/qcom_q6v5_pas.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+v1:
+ * These patches will fix the following:
+ * 1) onfi param page read which was broken by exec_op() patch.
+ * 2) Fixed offset passed to BAM from QPIC base
 
-diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-index 97c4bdd9222a..c34b7780f786 100644
---- a/drivers/remoteproc/qcom_q6v5_pas.c
-+++ b/drivers/remoteproc/qcom_q6v5_pas.c
-@@ -1409,6 +1409,30 @@ static const struct adsp_data sm8650_mpss_resource = {
- 	.region_assign_vmid = QCOM_SCM_VMID_MSS_MSA,
- };
- 
-+static const struct adsp_data sm8750_mpss_resource = {
-+	.crash_reason_smem = 421,
-+	.firmware_name = "modem.mdt",
-+	.dtb_firmware_name = "modem_dtb.mdt",
-+	.pas_id = 4,
-+	.dtb_pas_id = 0x26,
-+	.minidump_id = 3,
-+	.auto_boot = false,
-+	.decrypt_shutdown = true,
-+	.proxy_pd_names = (char*[]){
-+		"cx",
-+		"mss",
-+		NULL
-+	},
-+	.load_state = "modem",
-+	.ssr_name = "mpss",
-+	.sysmon_name = "modem",
-+	.ssctl_id = 0x12,
-+	.smem_host_id = 1,
-+	.region_assign_idx = 2,
-+	.region_assign_count = 2,
-+	.region_assign_vmid = QCOM_SCM_VMID_MSS_MSA,
-+};
-+
- static const struct of_device_id adsp_of_match[] = {
- 	{ .compatible = "qcom,msm8226-adsp-pil", .data = &adsp_resource_init},
- 	{ .compatible = "qcom,msm8953-adsp-pil", .data = &msm8996_adsp_resource},
-@@ -1474,6 +1498,7 @@ static const struct of_device_id adsp_of_match[] = {
- 	{ .compatible = "qcom,sm8650-adsp-pas", .data = &sm8550_adsp_resource},
- 	{ .compatible = "qcom,sm8650-cdsp-pas", .data = &sm8650_cdsp_resource},
- 	{ .compatible = "qcom,sm8650-mpss-pas", .data = &sm8650_mpss_resource},
-+	{ .compatible = "qcom,sm8750-mpss-pas", .data = &sm8750_mpss_resource},
- 	{ .compatible = "qcom,x1e80100-adsp-pas", .data = &x1e80100_adsp_resource},
- 	{ .compatible = "qcom,x1e80100-cdsp-pas", .data = &x1e80100_cdsp_resource},
- 	{ },
+Md Sadre Alam (3):
+  mtd: rawnand: qcom: Pass 18 bit offset from QPIC base address to BAM
+  mtd: rawnand: qcom: Fix onfi param page read
+  mtd: rawnand: qcom: Fix read len for onfi param page
+
+ drivers/mtd/nand/raw/qcom_nandc.c | 23 ++++++++++++++++++-----
+ 1 file changed, 18 insertions(+), 5 deletions(-)
+
 -- 
-2.43.0
+2.34.1
 
 
