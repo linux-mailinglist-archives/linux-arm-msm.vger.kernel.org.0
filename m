@@ -1,106 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-38878-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38879-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5A3E79D6440
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 19:38:51 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A1C4D9D646D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 20:10:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BA36228286B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 18:38:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 61AFB2835A6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 19:10:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B73F6BA20;
-	Fri, 22 Nov 2024 18:38:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A93A81DE4E4;
+	Fri, 22 Nov 2024 19:10:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="C3+TWYqw"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fWPXQKrp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 152AA2FC23
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 18:38:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBEBD1DFE03;
+	Fri, 22 Nov 2024 19:10:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732300728; cv=none; b=rTrB52BR+kgAd5eplSLx+Pjy0pXx2A6spZpX3QrYqr0IAdTXFXtVRr3JHc1syB32UpJiJe+XhtfXrSzW+zRe0pzEtsVrUnmJFodkX2lLAP9F27mSjl5Fu5flb2iXZ6xyxHfz0tUgP7Jjt4rF7TVoOsRCKg+VZc1s9/eszGkJgfg=
+	t=1732302623; cv=none; b=aPiF/A+ENQGy0JJLS6lEpWtBPMjKeaMLXoZjgM6WQHKZZd9LYWrRAxYDSihFDjCi3oq7muc6fToF5Og/vC1CVpfmUaVR/eowBFgMCVmRhNs4FrVX0Bg2jrmjGwaK4bEroAIFpZUuw6kaE+gBB2Uck6J43pFhc3oMG2YVBHLe4nA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732300728; c=relaxed/simple;
-	bh=rvIkMwuoqT5YSWcE3lJqYpVqFAzm2xpYKbW7P2FcmjY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=LoQyIUm5+OYx79h18vN01u2Ba4C7GlO/UthlRGO5qplXoylHzla5sNGwsgF4wr34ZcIQ5690kiKBb4NI1hVj4MJ6MWM0ki9vPpVU6kn2ieXMw+NLmRjh+CGhd8MndG2TvyC/+E0Q20B6rrm1Ck8yHCe9qvHH/DxEXKxE2YBgHZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=C3+TWYqw; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1732302623; c=relaxed/simple;
+	bh=84GZ+R2OqQE4rHqhAY6rc/ITnfPCkYF7wzsHxHXg78Y=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=qJT5sIcWpolsTL5iTCN4+ni3blNaCGKgeJ4MtGlzrcnBwMmr58eVI+fDXViTFPHVt0DszLblb3t4fA87KoxKtfuDTTjOhY/z29Z7nIdC2x69PjPjaURMJjys7pblGR9ml7f7p/XYAAg6CmwPLJTqQVNr+vfVo+hf1PqOtFHHz8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fWPXQKrp; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AMBxowQ004608;
-	Fri, 22 Nov 2024 18:38:43 GMT
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AM7tZvi002213;
+	Fri, 22 Nov 2024 19:10:12 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	KJV7+5jrID/ChUcEkj99nCNJ4KK80LJ+d7p6tlWha2g=; b=C3+TWYqw5eZEF7o1
-	OBOZourZ6LoDffEIkfnn1NjY2DxvqySt1lKMXwktyI5jHsl7zkFM70+c8J4o6230
-	reQ5PG3HhTk68wig81RpZC9X6iVtU1xUW25SUCicH5b95a1bzsbQlxdiLx1nBinZ
-	DT2NgTz1NzBLrTvwjUXFa4LcbZULxOX5MWxbLe9/M30LPv+4BUK+ALpctkm8KvAI
-	pcpJFoWdlH96a2Jf1tyz0d0TGhc/xNcIr6Jxc/kVZ++CEgiAJA/gaiE2HRAtbmyS
-	MTpTGudMNlZCv/x1QTt9HlqROgDZTkUbM7dD8FcdAJmAKGNytkdl54vTGzlifgYU
-	XWrmwA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 431ea77t53-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=UThjkvtVgCIcIdz+X4z1bc
+	btxxw3djCQl/sVcWIyu3c=; b=fWPXQKrpOFOFX8tRbH34VoiDRyViRiAaZh18w8
+	E6ykIxoXxBU/+LG8hrFiVPjb/J0cqllUQGtu5iQL0U/+Ww7hwjUXbXN/17Zop509
+	Ue5luGFteEnC7vqHoKDQj+vDGfG7PmYRWsPc2MBOYPfifxYJcmvhtHSdF4Om5xDj
+	0fhE2sU5GbSonFsCV4KrgdSMCv26DWbGBRDdInXMSmiAZKT+gruC4NymlofEGCIl
+	FgpThH79pROXFB0DdTWfDo+VCAlPOc1ECmjQzn9yGArXZynoPuVBe72cVuyEJEaP
+	RsjS0wvz2QVR+6qteoRs2v49NgDuBof0aBPlMGhyvVz8f+zA==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 432p0d9pnc-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 22 Nov 2024 18:38:42 +0000 (GMT)
+	Fri, 22 Nov 2024 19:10:12 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AMIcg2N006113
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AMJABrt007593
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 22 Nov 2024 18:38:42 GMT
-Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 22 Nov
- 2024 10:38:41 -0800
-Message-ID: <e88d420f-4dd0-a362-404c-f8e347cd2df2@quicinc.com>
-Date: Fri, 22 Nov 2024 11:38:40 -0700
+	Fri, 22 Nov 2024 19:10:11 GMT
+Received: from hu-krichai-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Fri, 22 Nov 2024 11:10:07 -0800
+From: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Subject: [PATCH v5 0/3] PCI: dwc: Skip waiting for link up if vendor
+ drivers can detect Link up event
+Date: Sat, 23 Nov 2024 00:39:58 +0530
+Message-ID: <20241123-remove_wait2-v5-0-b5f9e6b794c2@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH] accel/qaic: Drop redundant vfree() null check in sahara
-Content-Language: en-US
-To: <quic_carlv@quicinc.com>, <andersson@kernel.org>,
-        <quic_yabdulra@quicinc.com>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        "kernel test robot" <lkp@intel.com>
-References: <20241117202629.1681358-1-quic_jhugo@quicinc.com>
-From: Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <20241117202629.1681358-1-quic_jhugo@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+X-B4-Tracking: v=1; b=H4sIAAbXQGcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyTHUUlJIzE
+ vPSU3UzU4B8JSMDIxNDQyMj3aLU3Pyy1PjyxMwSI90UUwvDJBMDYwuD1EQloJaCotS0zAqwcdG
+ xtbUAabw//l4AAAA=
+To: Jingoo Han <jingoohan1@gmail.com>,
+        Manivannan Sadhasivam
+	<manivannan.sadhasivam@linaro.org>,
+        Lorenzo Pieralisi
+	<lpieralisi@kernel.org>,
+        =?utf-8?q?Krzysztof_Wilczy=C5=84ski?=
+	<kw@linux.com>,
+        Rob Herring <robh@kernel.org>, Bjorn Helgaas
+	<bhelgaas@google.com>,
+        Konrad Dybcio <konradybcio@kernel.org>
+CC: <linux-pci@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        =?utf-8?q?Krzysztof_Wilczy=C5=84ski?=
+	<kwilczynski@kernel.org>,
+        <andersson@kernel.org>, <quic_vbadigan@quicinc.com>,
+        <quic_mrana@quicinc.com>,
+        "Krishna chaitanya
+ chundru" <quic_krichai@quicinc.com>
+X-Mailer: b4 0.14.1
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1732302606; l=2230;
+ i=quic_krichai@quicinc.com; s=20230907; h=from:subject:message-id;
+ bh=84GZ+R2OqQE4rHqhAY6rc/ITnfPCkYF7wzsHxHXg78Y=;
+ b=uMHF0GLlsaoaWCq0pHfuLO6JbdRpx/Bhlo6JURHw9Z1uqRT2Mg2lHUX+GrCJRNjnrIV63JKDB
+ VrxiwEzKFQbAJRJSKOMM//ShGxrUoUuJGS1KysAFkdhpmFuv3GciD6w
+X-Developer-Key: i=quic_krichai@quicinc.com; a=ed25519;
+ pk=10CL2pdAKFyzyOHbfSWHCD0X0my7CXxj8gJScmn1FAg=
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: mDqpIVDk1B3MK-d8nx-ahPnWTI-dhgAO
-X-Proofpoint-ORIG-GUID: mDqpIVDk1B3MK-d8nx-ahPnWTI-dhgAO
+X-Proofpoint-ORIG-GUID: B98aWgXbqGtIxOc1vLzZ5FYwNOT5kHZl
+X-Proofpoint-GUID: B98aWgXbqGtIxOc1vLzZ5FYwNOT5kHZl
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 adultscore=0
- bulkscore=0 mlxscore=0 suspectscore=0 lowpriorityscore=0 clxscore=1015
- priorityscore=1501 impostorscore=0 malwarescore=0 mlxlogscore=746
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411220157
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
+ clxscore=1015 lowpriorityscore=0 impostorscore=0 mlxlogscore=503
+ suspectscore=0 spamscore=0 phishscore=0 bulkscore=0 adultscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411220161
 
-On 11/17/2024 1:26 PM, Jeffrey Hugo wrote:
-> The documentation for vfree() says that passing in NULL is ok. Therefore
-> we can drop the null check as redundant.
-> 
-> Reported-by: kernel test robot <lkp@intel.com>
-> Closes: https://lore.kernel.org/oe-kbuild-all/202410301732.abF5Md4e-lkp@intel.com/
-> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+If the vendor drivers can detect the Link up event using mechanisms
+such as Link up IRQ, then waiting for Link up during probe is not
+needed. if the drivers can be notified when the link comes up,
+vendor driver can enumerate downstream devices instead of waiting
+here, which optimizes the boot time.
 
-Applied to drm-misc-next
+So skip waiting for link to be up if the driver supports 'use_linkup_irq'.
 
--Jeff
+Currently, only Qcom RC driver supports the 'use_linkup_irq' as it can
+detect the Link Up event using its own 'global IRQ' interrupt. So set
+'use_linkup_irq' flag for QCOM drivers.
+
+And as part of the PCIe link up event, the ICC and OPP values are updated.
+
+Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+---
+Changes in v5:
+- update the commit text as suggested by (mani).
+Changes in v4:
+- change the linkup_irq name to use_linkup_irq a suggested by (bjorn
+  andresson)
+- update commit text as suggested by bjorn andresson.
+- Link to v3: https://lore.kernel.org/r/linux-arm-msm/20241101-remove_wait-v3-0-7accf27f7202@quicinc.com/T/
+Changes in v3:
+- seperate dwc changes and qcom changes as suggested (mani)
+- update commit & comments as suggested (mani & bjorn)
+- Link to v2: https://lore.kernel.org/linux-pci/20240920-remove_wait-v2-0-7c0fcb3b581d@quicinc.com/T/
+Changes in v2:
+- Updated the bypass_link_up_wait name to linkup_irq  & added comment as
+  suggested (mani).
+- seperated the icc and opp update patch (mani).
+- Link to v1: https://lore.kernel.org/r/20240917-remove_wait-v1-1-456d2551bc50@quicinc.com
+
+---
+Krishna chaitanya chundru (3):
+      PCI: dwc: Skip waiting for link up if vendor drivers can detect Link up event
+      PCI: qcom: Set use_linkup_irq if global IRQ handler is present
+      PCI: qcom: Update ICC and OPP values during link up event
+
+ drivers/pci/controller/dwc/pcie-designware-host.c | 10 ++++++++--
+ drivers/pci/controller/dwc/pcie-designware.h      |  1 +
+ drivers/pci/controller/dwc/pcie-qcom.c            |  7 ++++++-
+ 3 files changed, 15 insertions(+), 3 deletions(-)
+---
+base-commit: cfba9f07a1d6aeca38f47f1f472cfb0ba133d341
+change-id: 20241122-remove_wait2-d581b40380ea
+
+Best regards,
+-- 
+Krishna chaitanya chundru <quic_krichai@quicinc.com>
+
 
