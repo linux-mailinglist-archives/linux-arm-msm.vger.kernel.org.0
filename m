@@ -1,120 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-38849-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38851-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 688B99D5FA4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 14:19:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 249A79D5FB3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 14:26:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 05A291F22151
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 13:19:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D13741F21F53
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 13:26:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 287481DE2BD;
-	Fri, 22 Nov 2024 13:19:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A9861DEFC8;
+	Fri, 22 Nov 2024 13:26:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="5MnakZMB"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Ud8nCDdt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C3251632C2;
-	Fri, 22 Nov 2024 13:19:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A5F01DEFFD;
+	Fri, 22 Nov 2024 13:26:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732281589; cv=none; b=mMuIHJbMdTZNGshOdNrTacPVOEvg/UikmqdU5X3hMkxTH66Hw4Qwa1pS/uI0PWSw2t+k9CirRRcnWD2CK7JNr9k9gLsDzHn5dP5GCZJ6ejD/a1y53slQdirl3I8MxVJk4VFpY6bVo2SX2A1PBkx5DYhf0///58GoPwjhpJrDt1Y=
+	t=1732281970; cv=none; b=mCTZx3DI36tPYEgkpgW6XpIHyVqBO2YCVBs2xIf4jJw8y89RW1qFtYfrDWI5PDCHaJ5UX5aQ8jk65b89/9KJyoxPP6l5mVkkbMNChY3alL5LPNSFNHx1i0FjhADB7IMxSBG5KYOjjXOIIxHKbi+dYSfe61bHpSyQnmEbV+BS2E4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732281589; c=relaxed/simple;
-	bh=jZ6S1WK8YmZkVXiT9kTeI1z3ZyzV2vRLZ4LQj4aPOUg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fXHpK0vHQ2Gmsbp6cJAVgTmmhrKBnV2dlNhetz0waAhJM1n3AFC6VNFXUPxcIfmngNfwSyjio4WLOPumcHgnIjOPLWzO+KaNYizMP4yeiTXN+ARMDRWxPNq8AgoI1YzBR02C8fMKU58WXC6GK13y2mCLzyytf7esAehCzaBChtY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=5MnakZMB; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Transfer-Encoding:Content-Disposition:
-	Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:From:
-	Sender:Reply-To:Subject:Date:Message-ID:To:Cc:MIME-Version:Content-Type:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Content-Disposition:
-	In-Reply-To:References; bh=eibJPlT+++EK0KY6sKsvkPD5fXWfg8lbgWv1SoyKd4c=; b=5M
-	nakZMB+C0LHteb7UKXpBGXACC86WRgeHRU5jTGKz0Yt9bGNGQ2Mc6FBircag6xamWOijvICpJa6v4
-	/2qp4bzT2ua6yT4tL5tlKUzEuOlBZzTkOYzC95Bvv+68b6lwILEfplMWVgGyfooiB9Dy1LnPnkl/b
-	HoEvk/JwUoAwiEA=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1tETZV-00E8jb-KJ; Fri, 22 Nov 2024 14:19:41 +0100
-Date: Fri, 22 Nov 2024 14:19:41 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Yijie Yang <quic_yijiyang@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Richard Cochran <richardcochran@gmail.com>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, netdev@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: qcs615-ride: Enable ethernet
- node
-Message-ID: <3c69423e-ba80-487f-b585-1e4ffb4137b6@lunn.ch>
-References: <20241118-dts_qcs615-v2-0-e62b924a3cbd@quicinc.com>
- <20241118-dts_qcs615-v2-2-e62b924a3cbd@quicinc.com>
- <ececbbe1-07b3-4050-b3a4-3de9451ac7d7@lunn.ch>
- <89a4f120-6cfd-416d-ab55-f0bdf069d9ce@quicinc.com>
- <c2800557-225d-4fbd-83ee-d4b72eb587ce@oss.qualcomm.com>
+	s=arc-20240116; t=1732281970; c=relaxed/simple;
+	bh=eZoAv6hSbHxeaSbNPfTpBF+habOHlkApuQ0RM74broA=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=h9Zw0heaCmqmBP+klFZpRcwjCsJ3zkd0ba+BeaKbvgkSUBa4/flhqv5EP3x2AWWPlZxclsylpgf6lrd4rcJa4kOnb9IowEz5HG604gM9mg/rDd9KvL2muPlzhjnF49K3DHW1v1v+SxosKojGz/47QWW0wS9P2FIYbFzVh1/lao4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Ud8nCDdt; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AMD5ZPr020748;
+	Fri, 22 Nov 2024 13:21:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=K6N9AZQOnQBx/9N5W6+uuY
+	oVJngUBFScBTgfgYZby70=; b=Ud8nCDdtRe8ZTB/CvbTbFk0Ge0JsZzm7HrjQwH
+	DEIWVzNPrGfNRquyKR/A2Z55jgqgo6FhSqeLbL9jDKEwvoABkekbRSKCA5w8x8AB
+	qwCo89RvMQx8nxdrZQUkTsDvQjTmzE3ryXpBQ6OxoI5pSLQjQa+JrHfUJew+3sKZ
+	bsIYQxFYEcgTdtwwL6P9NX9l75ZFoVfcOngkQbrF/3Z7Y2if2qUasWwfvraSyrpq
+	KRcMt0YbyYFoSWvTKvprw9rTjBt6/ZuLBgIDX6H0k5yuJNMOK6EQwFCNJwq9ndpT
+	LRBrkUDbQhwI3M7Ox6ERdcJlNZRJtGxCN+XxCtOiwQXmH5+w==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 432thpg16p-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 22 Nov 2024 13:21:01 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AMDL0ut009887
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 22 Nov 2024 13:21:00 GMT
+Received: from hu-yrangana-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Fri, 22 Nov 2024 05:20:56 -0800
+From: Yuvaraj Ranganathan <quic_yrangana@quicinc.com>
+To: Herbert Xu <herbert@gondor.apana.org.au>,
+        "David S. Miller"
+	<davem@davemloft.net>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-crypto@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_yrangana@quicinc.com>
+Subject: [PATCH V2 0/2] Enable Inline crypto engine for QCS8300
+Date: Fri, 22 Nov 2024 18:50:42 +0530
+Message-ID: <20241122132044.30024-1-quic_yrangana@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <c2800557-225d-4fbd-83ee-d4b72eb587ce@oss.qualcomm.com>
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: pkEXk4YRoGgSfqBxRw9ySUwikLQTyPfb
+X-Proofpoint-ORIG-GUID: pkEXk4YRoGgSfqBxRw9ySUwikLQTyPfb
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ lowpriorityscore=0 mlxlogscore=700 priorityscore=1501 phishscore=0
+ suspectscore=0 mlxscore=0 spamscore=0 clxscore=1015 adultscore=0
+ bulkscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2409260000 definitions=main-2411220111
 
-> >>>   +&ethernet {
-> >>> +    status = "okay";
-> >>> +
-> >>> +    pinctrl-0 = <&ethernet_defaults>;
-> >>> +    pinctrl-names = "default";
-> >>> +
-> >>> +    phy-handle = <&rgmii_phy>;
-> >>> +    phy-mode = "rgmii";
-> >>
-> >> That is unusual. Does the board have extra long clock lines?
-> > 
-> > Do you mean to imply that using RGMII mode is unusual? While the EMAC controller supports various modes, due to hardware design limitations, only RGMII mode can be effectively implemented.
-> 
-> Is that a board-specific issue, or something that concerns the SoC itself?
+Document and add device-tree node to enable Inline crypto engine for QCS8300
 
-Lots of developers gets this wrong.... Searching the mainline list for
-patchs getting it wrong and the explanation i have given in the past
-might help.
+This series depends on below patch series:
+https://lore.kernel.org/all/20240925-qcs8300_initial_dtsi-v2-0-494c40fa2a42@quicinc.com/ - Reviewed
 
-The usual setting here is 'rgmmii-id', which means something needs to
-insert a 2ns delay on the clock lines. This is not always true, a very
-small number of boards use extra long clock likes on the PCB to add
-the needed 2ns delay.
+Changes in v2:
+ - extend UFS ICE to the full register range
+ - Link to v1: https://lore.kernel.org/all/20241113043351.2889027-1-quic_yrangana@quicinc.com/
 
-Now, if 'rgmii' does work, it means something else is broken
-somewhere. I will let you find out what.
+Signed-off-by: Yuvaraj Ranganathan <quic_yrangana@quicinc.com>
+---
+Yuvaraj Ranganathan (2):
+  dt-bindings: crypto: ice: document the qcs8300 inline crypto engine
+  arm64: dts: qcom: qcs8300: enable the inline crypto engine
 
-> >>> +    max-speed = <1000>;
-> >>
-> >> Why do you have this property? It is normally used to slow the MAC
-> >> down because of issues at higher speeds.
-> > 
-> > According to the databoot, the EMAC in RGMII mode can support speeds of up to 1Gbps.
-> 
-> I believe the question Andrew is asking is "how is that effectively
-> different from the default setting (omitting the property)?"
+ .../bindings/crypto/qcom,inline-crypto-engine.yaml        | 1 +
+ arch/arm64/boot/dts/qcom/qcs8300.dtsi                     | 8 ++++++++
+ 2 files changed, 9 insertions(+)
 
-Correct. If there are no issues at higher speeds, you don't need
-this. phylib will ask the PHY what it is capable of, and limit the
-negotiated speeds to its capabilities. Occasionally you do see an
-RGMII PHY connected to a MII MAC, because a RGMII PHY is cheaper...
+-- 
+2.34.1
 
-	Andrew
 
