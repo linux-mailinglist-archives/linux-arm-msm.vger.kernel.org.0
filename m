@@ -1,140 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-38825-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38826-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id AA5169D5D65
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 11:38:50 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1DAF99D5D8E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 11:59:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6E1F2283661
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 10:38:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 98A0E1F21C37
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 10:59:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70AE01D9688;
-	Fri, 22 Nov 2024 10:38:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A5331DDC12;
+	Fri, 22 Nov 2024 10:59:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="E9C/i6rZ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MKFun1Nf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E11511304BA;
-	Fri, 22 Nov 2024 10:38:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AE471BE243
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 10:59:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732271924; cv=none; b=W9NRoe5itDWnw6GhsyUUXYoDzSQ3IKmH28JxZ6nyKk3pPgp/GHD9QQdXsp4kWQUvZLHMRpPyEF9mtF8WYu6vHjyQUUzhTBbIw94aE5xaVJ15YpeDFHab+dCtRLV8L7c5HASuUoG9HXv7QC+/rjh1pZdsfrCbKNLXT9psfQ8gDCI=
+	t=1732273175; cv=none; b=Ghh0xyZLR8vXLLAJCg5A8wr3T1ZgJXMdkJ1hz8LB8Itr9MUTOlM3/mTugHGT0djx7It3qb0p1MiAB79UiET4DOSXzE8YbZhdN2utbp6NPUtIEnBVY/5nwhJoAd39OoRXH/sYOS+K2V8dn9a92vK8bO/f8OUuhe+4P8ZtSr/KMGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732271924; c=relaxed/simple;
-	bh=r/b3Td5N3dQTrbXMdIwv4GfFi5yyjShOpjCm4Woqxr8=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
-	 In-Reply-To:Content-Type; b=ruWX+0Hq2ndqD4KpxpJJxeJ6bXIWdMQN6S52Yvww0uwaPEAMsPWHCtSEBU9mWIjPWZENxYeba0rlMlHNR0wmX+ubSpsnYUEse7HTvPMqf6vsDy2Rnqm7ZHKRBfSw1n5jVIGt0fYrKZAs/PjHxLxZjLpQT2cwvBAZM+JqvTpMFxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=E9C/i6rZ; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AM7tmqX002954;
-	Fri, 22 Nov 2024 10:38:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	yaeaYr98+fbsR9DLE90GgBAnpX0QZ47zRyGbUfUjRsU=; b=E9C/i6rZ04Ya9OED
-	928Vl3I+ckgF/YqGHF1yuLW0NsDoj7L3vHEEbfKPRGXoL1Ro2TKvneGO1iCE5Wgs
-	WaKjZeOOJXEyJ9Ed5egiAPybZwtSnfrN+d6FOJyl4LA2y4w3RuQHYca0QBiLIV3s
-	4H/qK4v4otrz+DDl/ItbMAjHj1ICThLnQBr1m7Wne+EoiNEeditIUjYe6W7ulP2d
-	/j08CeE+4gnCAmBI9HkS7kvpx3+w/GraBjUloQkX3QQZiLaIG9odHCP8DSfF3gkL
-	C3auzVusN6gl7CTeHKFU6nXQMeejijpds6h1oN+3eLLPM9HJW8ZdYEAGFRB9Rk7O
-	qchZwQ==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 432p0d8erw-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 22 Nov 2024 10:38:38 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AMAcb39022911
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 22 Nov 2024 10:38:37 GMT
-Received: from [10.231.207.28] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 22 Nov
- 2024 02:38:31 -0800
-Message-ID: <89228c85-9b0e-477f-9cb9-e775850b2eb0@quicinc.com>
-Date: Fri, 22 Nov 2024 18:38:29 +0800
+	s=arc-20240116; t=1732273175; c=relaxed/simple;
+	bh=nEzgREpChasM34b4gISMzAEe13sm7XvSNaprCZAX5HU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Zrkbvbb/ltg1PJsfM5JXRWx5afRTAsxrkVs4M4MqyCzxYt7yx6/E5SQQXWnM/khXn99mGb1tHRw24zqC9zAtCil90C3PLv5hCyeKmzRq8i2702ab98ezMMqnALCjS7qx3fHuh2zPkKvmozwD6wRgZxyimNrnMHYa4HcsXsyGKXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MKFun1Nf; arc=none smtp.client-ip=209.85.208.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2ffa974b2b0so3386011fa.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 02:59:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1732273171; x=1732877971; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ca1wh/KO+WUPMC9ZKsaxo5mo5dUX/wOwJn5Ib1h7hEA=;
+        b=MKFun1NfHOOc1g6GQm9fqqJB0kZlGHqEbo4JbbYuHdu3Ufn3qQ58UYfNiHLqWMTyta
+         PkvDgtd/FzsEZa4GnUf9vPqdBkG6s0yo9eiLukStnCcMZyGb+F1EGHRCJ4f1Vl0pqexI
+         nL+vIHsN1DMinyjMV6l2SFa9ZMatd5P6ri3tCjVlaJIw2v7LSzeBxNZoMCAQNqeGxA9A
+         idYRJ8URIXUvK+8nLn65/3k7+TM+ZFN1fiLwP2s6usDW06FW+XUdodSPsyat/8iqxePU
+         efu2xEFQENda2jCkpoxFDVzT9YbtQluuLErbwevQtkIlwR4xuf4194O/76Z9EpbsuKP1
+         +GlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732273171; x=1732877971;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Ca1wh/KO+WUPMC9ZKsaxo5mo5dUX/wOwJn5Ib1h7hEA=;
+        b=RzvbqeN5YWfuFnOhINbl9928kZbDtQUMwsXP6m2WdueHPafXf0paE/6904O6HNdA8U
+         Dmc1jXNriIDIucHHuA8cCoySdHHQfWfH6quu1PNlc6Wu/KSeI/ceOhPECgfZRG5V1lxD
+         QXR4+fqs0aDW2ajY+BOzjLfs1Bb/t8PBxAdwiVQyes/QI53aqSHV3Y965yEXCAi5FYQK
+         mEcE0BzP81Fmdb4cSxUhsLlLSKUmFC2MviX9uSZD1Atkr8TpSl5/n+GDhglEyfPtEVsX
+         nZQscZ0hcBGKcLK2atNePhPbpES5u+O4cF7gPmjPW8HtreMsihPnScat5a6TwGa5N+hG
+         SEBA==
+X-Forwarded-Encrypted: i=1; AJvYcCW7j9FknzZH0P75G9ae8eGndnnoSUTUftRI1/InatUH8LaBI8+upqicRFoWTHUMkuL5iVD8bEFxplAq04/Q@vger.kernel.org
+X-Gm-Message-State: AOJu0YyhHSRVuYihHlbRIZpLabyjh6m1rWYHmnxAwBDKcWELUa+cpyks
+	5VXvR0M3MQtF9AR2OV2D70x3sw7JkPJ2L2R818XXupuQCHV7HrPadR0ijXbBLQA=
+X-Gm-Gg: ASbGncsiAkKTreX7ZVnx8WFH0XNzyzBmp+znfHP/cC1BRp+cECWP1OZUD7mMo7aEPPU
+	KqR/5bGbp75QyB0kLMost4oTSrgyGfGKMSmXPurAndXIFlZlpvdftKgw7JWARyzmsyZwcuFUekP
+	y1Npk/3aj9ouxbNkLo5TiL+H+nBFbeByswJiJUJYyUCEI0wGAl/FTGsQQfDs3e6ETy2Wu7YSMO4
+	ff/uUx/r0dkVzxfLy+cgltxsinyQYKuzRHLDo2rD9FBetLohiMowEeK1wn0QUiVoBNa4jDQuj2c
+	yCag18cz8qVbPW3QDHOcJAEOaLHHmw==
+X-Google-Smtp-Source: AGHT+IFlyxZP6biD5HPPeqicl8Wlb81WmlgYHkbJwaVmdfCVMRq/sOgXjiyZs52bpQDkMT/aAiHhjQ==
+X-Received: by 2002:a05:651c:503:b0:2fb:8774:440c with SMTP id 38308e7fff4ca-2ffa712017emr12224181fa.10.1732273171190;
+        Fri, 22 Nov 2024 02:59:31 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ffa53a112dsm2894751fa.119.2024.11.22.02.59.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 Nov 2024 02:59:29 -0800 (PST)
+Date: Fri, 22 Nov 2024 12:59:27 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Renjiang Han <quic_renjiang@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
+	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, Vikash Garodia <quic_vgarodia@quicinc.com>, 
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-media@vger.kernel.org, Taniya Das <quic_tdas@quicinc.com>
+Subject: Re: [PATCH 1/2] clk: qcom: videocc: Use HW_CTRL_TRIGGER flag for
+ video GDSC's
+Message-ID: <zhco37pigrp4fh5alqx4xfxx3xhjitqlgw552vwiijka22bt4u@sl4ngzypwh4x>
+References: <20241122-switch_gdsc_mode-v1-0-365f097ecbb0@quicinc.com>
+ <20241122-switch_gdsc_mode-v1-1-365f097ecbb0@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: sa8775p: pmic: enable rtc
-From: Tingguo Cheng <quic_tingguoc@quicinc.com>
-To: Krzysztof Kozlowski <krzk@kernel.org>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>,
-        <quic_kotarake@quicinc.com>, <quic_kamalw@quicinc.com>,
-        <quic_skakitap@quicinc.com>, <quic_fenglinw@quicinc.com>
-References: <20240902104302.3959670-1-quic_tingguoc@quicinc.com>
- <f5b768b3-37ad-4bdf-9cb6-b39b14c8ee45@kernel.org>
- <14392fbf-9bf6-4e39-8ba2-59473351a64b@quicinc.com>
-Content-Language: en-US
-In-Reply-To: <14392fbf-9bf6-4e39-8ba2-59473351a64b@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: UsCjIRpN91dkqMPcGJNU0tAOefnGXCal
-X-Proofpoint-GUID: UsCjIRpN91dkqMPcGJNU0tAOefnGXCal
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
- clxscore=1015 lowpriorityscore=0 impostorscore=0 mlxlogscore=949
- suspectscore=0 spamscore=0 phishscore=0 bulkscore=0 adultscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411220090
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241122-switch_gdsc_mode-v1-1-365f097ecbb0@quicinc.com>
 
+On Fri, Nov 22, 2024 at 04:01:45PM +0530, Renjiang Han wrote:
+> From: Taniya Das <quic_tdas@quicinc.com>
+> 
+> The video driver will be using the newly introduced
 
+'will be' or 'is using'? Or will be using it for these platforms? Is
+there any kind of dependency between two patches in the series?
 
-On 9/19/2024 10:23 AM, Tingguo Cheng wrote:
+> dev_pm_genpd_set_hwmode() API to switch the video GDSC to HW and SW
+> control modes at runtime.
+> Hence use HW_CTRL_TRIGGER flag instead of HW_CTRL for video GDSC's for
+> Qualcomm SoC SC7180 and SDM845.
+
+Is it applicable to any other platforms? Why did you select just these
+two?
+
 > 
+> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> Signed-off-by: Renjiang Han <quic_renjiang@quicinc.com>
+> ---
+>  drivers/clk/qcom/videocc-sc7180.c | 2 +-
+>  drivers/clk/qcom/videocc-sdm845.c | 4 ++--
+>  2 files changed, 3 insertions(+), 3 deletions(-)
 > 
-> On 9/6/2024 8:22 PM, Krzysztof Kozlowski wrote:
->> On 02/09/2024 12:43, Tingguo Cheng wrote:
->>> Add RTC node, the RTC is controlled by PMIC device via spmi bus.
->>>
->>> Signed-off-by: Tingguo Cheng <quic_tingguoc@quicinc.com>
->>> ---
->>>   arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi | 8 ++++++++
->>>   1 file changed, 8 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi b/arch/ 
->>> arm64/boot/dts/qcom/sa8775p-pmics.dtsi
->>> index 1369c3d43f86..47d05b897d5a 100644
->>> --- a/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
->>
->> We achieved consensus allowing sa8775p to stay, but now Qualcomm changes
->> point of view and insists on new approach of dropping sa8775p. Therefore
->> this change does not make much sense in the new approach.
->>
-> The new approach(QCS9100+sa8775p compatible) will still use the same 
-> PMIC chip(As usually, include sa8775p-pmics.dtsi as it's pmic part). 
-> Therefore, from this point, it does make sense in the new approach.
->  From another point, for old boards, this change should have been there.
+> diff --git a/drivers/clk/qcom/videocc-sc7180.c b/drivers/clk/qcom/videocc-sc7180.c
+> index d7f84548039699ce6fdd7c0f6675c168d5eaf4c1..dd2441d6aa83bd7cff17deeb42f5d011c1e9b134 100644
+> --- a/drivers/clk/qcom/videocc-sc7180.c
+> +++ b/drivers/clk/qcom/videocc-sc7180.c
+> @@ -166,7 +166,7 @@ static struct gdsc vcodec0_gdsc = {
+>  	.pd = {
+>  		.name = "vcodec0_gdsc",
+>  	},
+> -	.flags = HW_CTRL,
+> +	.flags = HW_CTRL_TRIGGER,
+>  	.pwrsts = PWRSTS_OFF_ON,
+>  };
+>  
+> diff --git a/drivers/clk/qcom/videocc-sdm845.c b/drivers/clk/qcom/videocc-sdm845.c
+> index f77a0777947773dc8902c92098acff71b9b8f10f..6dedc80a8b3e18eca82c08a5bcd7e1fdc374d4b5 100644
+> --- a/drivers/clk/qcom/videocc-sdm845.c
+> +++ b/drivers/clk/qcom/videocc-sdm845.c
+> @@ -260,7 +260,7 @@ static struct gdsc vcodec0_gdsc = {
+>  	},
+>  	.cxcs = (unsigned int []){ 0x890, 0x930 },
+>  	.cxc_count = 2,
+> -	.flags = HW_CTRL | POLL_CFG_GDSCR,
+> +	.flags = HW_CTRL_TRIGGER | POLL_CFG_GDSCR,
+>  	.pwrsts = PWRSTS_OFF_ON,
+>  };
+>  
+> @@ -271,7 +271,7 @@ static struct gdsc vcodec1_gdsc = {
+>  	},
+>  	.cxcs = (unsigned int []){ 0x8d0, 0x950 },
+>  	.cxc_count = 2,
+> -	.flags = HW_CTRL | POLL_CFG_GDSCR,
+> +	.flags = HW_CTRL_TRIGGER | POLL_CFG_GDSCR,
+>  	.pwrsts = PWRSTS_OFF_ON,
+>  };
+>  
 > 
->> Best regards,
->> Krzysztof
->>
+> -- 
+> 2.34.1
 > 
-We have aligned this internally again, "sa8775p-pmics.dtsi" still 
-continue to be used for qcs9100-ride. Can you help review/apply this
-change? We need this RTC function in some boards.
 
 -- 
-Thank you & BRs
-Tingguo
-
+With best wishes
+Dmitry
 
