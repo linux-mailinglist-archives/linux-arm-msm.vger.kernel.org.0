@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-38785-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38786-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 57E5B9D5A63
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 08:52:38 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AFABD9D5A7E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 08:57:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E4C9C1F21B46
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 07:52:37 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E77C9281D9E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 07:57:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 758A51865FD;
-	Fri, 22 Nov 2024 07:51:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2FED175D37;
+	Fri, 22 Nov 2024 07:57:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nXW76GW3"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="iiYZvGM1"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAE8E178CF6
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 07:51:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73C17166F26
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 07:57:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732261889; cv=none; b=XOBg3lYHnDt8mmxF/jGpW2aiAG3y7E4RKLL8eIJJWeb1Zjtrwuma7PyNTyP/6QZTidIzR4uJhC/aL9RAGSgk7c4TzDKiSkrccFEAztuKNbevBp4QatNJkHknX9HeKgwrevDXgzM9YuXWZVNH3AyM8GfcgZZUdtywZc9zlPC8tBw=
+	t=1732262262; cv=none; b=fq/fTo1auu+EECqeqId5jo/ws/OSFpvzl5QxyUPl7I7PbmETuxj2Bmh90RF3wc1sNSDrDJwVECoUq0P9Xy2obxewvZrQ5rKvYYXNU81dUPN5oFoikgBFFrgxJZRf6CSEBu0uX1/gcaEsEoD4tZhjLak5fqAxaInk843cwL2pPVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732261889; c=relaxed/simple;
-	bh=naaqnYTkX+RkZoiH90lM3LFvL/lrssDyOU9Xb1i3x80=;
+	s=arc-20240116; t=1732262262; c=relaxed/simple;
+	bh=z/MfpcWDxZrrL91EWw9xPWAvqIBbS5pyZYW5skY0vvs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=J1+yexfCIh+VhZQMzWS7oP6ZdZWsF3VsbYRVsrNi0d5TgXfNIHzD/s3HZRVcOPwlpqmwt3/f7qSZPVsGLwI1CnrD1UR/8FcXMzEuTtiX7BjXSUgbB13Ve7C9K+OJ8OJsLFeEOzLzjIHximpQHQID8sTkb5ml6u8F2L//PuzG2Tk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nXW76GW3; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=scduHyqbhLrf63M9WT6wF7OaBA5WrUpVSldK676FDh7rZoK7DA8hVNVE79LCbnKOoyKWOi/mKYaOOy0tJeux+CkSLGFk7NpxQ2bhfG9J3WMXL4eVAp6TaxnkGN2TC96c5wmd3jzLxrEufO5mqgGJmvC4hrYf+bp21ns/7Kjtkuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=iiYZvGM1; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ALJPckJ019239;
-	Fri, 22 Nov 2024 07:51:26 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AM13VBA005030;
+	Fri, 22 Nov 2024 07:57:40 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	68+RTSUroK2YvKLQeeV8i34KzcI/Wi/vbFXeg2R2+yg=; b=nXW76GW3bxgadoDc
-	oUI+TUjSQGPDhhfafCdCOvX7KLnIYnSKLyUq69N1Q8Jf2BiIhXwXIjpNTiULVqvE
-	7s0UA6E26p8LgATkrSdwGMWT7xyzsVwIlYoR4Sr0djVlrHfbtpzSgpPzrisMbuvt
-	swpWoBR9AIlFOlylIzVIbn+aNF2rQJEx4MVK416XT9cKCezTSi78B1lj7bIkNe3c
-	H06/0//jd/96WIDDiCaw8aV3xKqOgXD2mSOy7skIToyHFGT3fLGEaTC0ML9bC3iG
-	uTAKxHOOgzoR+E9NaV+gEvVMIGUB0Mn2GUIsnoOzGe9h1sNLX/KiwxmItfIIYTDT
-	xw+8lA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 431c7hpnyn-1
+	l4eawDMSpKtqBbb/yPF21LX3/Lu0ZmJ0+eJv7MwXo5c=; b=iiYZvGM1XJcgmuDc
+	DVHsa+pFJLIPlfjQJjrJMzrpwQSeqZYyulJuO5KmJYIaZRW2Mel7cmuathe4Vnaq
+	ON3A4HHEfLSieSmUBmhU09OXUL5L9HzLRpzpWTskCWfuNDpaek2j8/wvHWJJuJOv
+	jdTN4/3vFPZMdmvRO5DZJiB0/qI36a1JS3VWvZLgOf230XA5OiJs3Wzsoac9ml8+
+	PivWyjBDhHfo+TeBFpJWguzRR3GH8sWzZtHBizFsWEHq/ljt0/xFsCUd2oknAafY
+	xguc2+isCvZlokzNo/RjEtH0juh2nl82XUlugq62BYy/iKp/rQTIEWBjbM4xgppy
+	B1DZbQ==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 431ea766r6-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 22 Nov 2024 07:51:26 +0000 (GMT)
+	Fri, 22 Nov 2024 07:57:39 +0000 (GMT)
 Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AM7pPbU014969
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AM7vdvv032587
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 22 Nov 2024 07:51:25 GMT
+	Fri, 22 Nov 2024 07:57:39 GMT
 Received: from [10.64.16.151] (10.80.80.8) by nalasex01b.na.qualcomm.com
  (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 21 Nov
- 2024 23:51:21 -0800
-Message-ID: <e0208d5d-fd39-4d59-8eb0-0360d744ee0b@quicinc.com>
-Date: Fri, 22 Nov 2024 15:51:18 +0800
+ 2024 23:57:34 -0800
+Message-ID: <a7242ce3-240b-43f0-b8c4-60574bf71d69@quicinc.com>
+Date: Fri, 22 Nov 2024 15:57:32 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -71,45 +71,44 @@ CC: <kernel@quicinc.com>, <quic_lliu6@quicinc.com>,
         <quic_xiangxuy@quicinc.com>, <linux-arm-msm@vger.kernel.org>
 References: <20241014-add_display_support_for_qcs615-v1-0-4efa191dbdd4@quicinc.com>
  <20241014-add_display_support_for_qcs615-v1-1-4efa191dbdd4@quicinc.com>
- <it2yaebzazylkebwmouet3eccqa4kpxqeu6cosqlf47qjiqhjy@34s4ch2xidao>
+ <pd2pnnnlw2mxaxtdw4aelnngr6kznungvzg452jco6c2anmb7n@xj3zci34aabs>
 Content-Language: en-US
 From: fange zhang <quic_fangez@quicinc.com>
-In-Reply-To: <it2yaebzazylkebwmouet3eccqa4kpxqeu6cosqlf47qjiqhjy@34s4ch2xidao>
+In-Reply-To: <pd2pnnnlw2mxaxtdw4aelnngr6kznungvzg452jco6c2anmb7n@xj3zci34aabs>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: _67W5GpNPXFsm6HudqFa8KfUHquVlHCR
-X-Proofpoint-GUID: _67W5GpNPXFsm6HudqFa8KfUHquVlHCR
+X-Proofpoint-GUID: iLaj0b7N5z-aAW_7A7CaSvh1kCdMYAaD
+X-Proofpoint-ORIG-GUID: iLaj0b7N5z-aAW_7A7CaSvh1kCdMYAaD
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
- phishscore=0 priorityscore=1501 malwarescore=0 bulkscore=0 spamscore=0
- mlxscore=0 impostorscore=0 suspectscore=0 lowpriorityscore=0
- mlxlogscore=519 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 adultscore=0
+ bulkscore=0 mlxscore=0 suspectscore=0 lowpriorityscore=0 clxscore=1015
+ priorityscore=1501 impostorscore=0 malwarescore=0 mlxlogscore=449
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2409260000 definitions=main-2411220065
 
 
 
-On 2024/10/14 18:12, Dmitry Baryshkov wrote:
+On 2024/10/14 18:37, Dmitry Baryshkov wrote:
 > On Mon, Oct 14, 2024 at 05:47:27PM +0800, fangez via B4 Relay wrote:
 >> From: lliu6 <quic_lliu6@quicinc.com>
-> 
-> This is not the name
-sorry for the mistake.
-fixed in v2
-> 
 >>
 >> Enable SX150X pinctrl driver.
-> 
-> ... which is used for the abcdef board.
-will remove this patch in v3
-> 
 >>
 >> Signed-off-by: lliu6 <quic_lliu6@quicinc.com>
+> 
+> Ok, even worse. fangez, you are not the author of the patches, so there
+> is a missing S-o-B.
+Got it, fixed in v2 for other patches, and will remove the defconfig patch
+
+and I believe all items have been addressed. May I ask if we can start 
+sending v3 now?
+> 
 >> ---
 >>   arch/arm64/configs/defconfig | 1 +
 >>   1 file changed, 1 insertion(+)
