@@ -1,112 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-38887-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38888-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id CAC6D9D6662
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Nov 2024 00:32:08 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BC99E9D668F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Nov 2024 01:00:49 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 905A32824E3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2024 23:32:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 35E9F161244
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Nov 2024 00:00:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04E66189F36;
-	Fri, 22 Nov 2024 23:32:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07401157E99;
+	Sat, 23 Nov 2024 00:00:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ObgRPmYf"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gCibfN9F"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DDE418C009;
-	Fri, 22 Nov 2024 23:32:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C40492A1D1
+	for <linux-arm-msm@vger.kernel.org>; Sat, 23 Nov 2024 00:00:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732318324; cv=none; b=e4tsdZ8ZXaUz1C8i9XgMdpzBNvPV6vCzuA6W+KX7F4p2GAoYI5CJr/9bTd4mzp7hWPWbch89ZDqKaiURwIBsMJ4GUE1/kVNT2zffcTwj3sPtrr9xAPS+I4uBxbXsShn+0IsJeiufSCrQaxaYMcS05O7YTtft+Jx7iwSeLyAUI60=
+	t=1732320023; cv=none; b=qcZzlrLoSrbefU4c8089FIpEII/gPCrGoXK6VOoOKBrUq4SCEB41AtKCX5rF0YB0cxS0qaZtc0xq+LgtU5uiJNrMKKX2YnT5uGS4Cv19oUp0JIEst0T9nXswj2dnEIGcuvxpuEL+7kPcNXfxONZIfGyGlSEfzumYyQzsnHeKrAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732318324; c=relaxed/simple;
-	bh=0swNmG/gMkIo8kpZ7UIINRXYNH+QYyHPBum1usiGpmA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=rg6I0tP1PsFWj4NMmh9+kTdTY6BaGEoI/J0YAek13JdpFLGVRcw7o7ESRpG6L/GwJaInlfpyj44ahiJJqPcZYPqY5uF9BOpLvNjZINI7g9WNL+DDBQaqdrvUxa+Bw03+tmblG5y2RK2eiZENGWFOrmBxqTzACdAOz4IrpO3UxTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ObgRPmYf; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AMCpFfd025091;
-	Fri, 22 Nov 2024 23:31:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Tegoeksb4rOhicj9vqU/v0nsakvpHW2qA4gDGhuS62Q=; b=ObgRPmYfyklGZ/SZ
-	BvlOAq3o2TotLfnMY3M2XgU33Rs8ttuEVdpvcDuTJB5BjhhowPrNpAAyHiONKl8O
-	2LJE9N0fPSrP+31JwmkTV/pLzELMwl0Hq5dZRupXUZN8umIFj4KuClXFJZruF9tw
-	hl5NiNNgL1BnIOfkXAGUy0M+mBGHyY48qXFDlV+palG2ATPGQI3gk5wzcUp6rE8B
-	vQ5e3+OfOg4q8DWs26hYxAHdC0WPZ36Zc4sP+I1mPWHfpTlKn8rvPrgBw5lNAq/e
-	HpvUiqtf2OEfGavebmGJ/NcLt5fx7nyWB2KYDCuD3QM9qIu3X4JNqFoHPmDpDiAU
-	WDmleA==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43251nmrdu-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 22 Nov 2024 23:31:55 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AMNVsT7030236
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 22 Nov 2024 23:31:54 GMT
-Received: from [10.110.77.154] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 22 Nov
- 2024 15:31:53 -0800
-Message-ID: <0cf64e39-810b-47bf-9e5d-f610403220f2@quicinc.com>
-Date: Fri, 22 Nov 2024 15:31:53 -0800
+	s=arc-20240116; t=1732320023; c=relaxed/simple;
+	bh=u3GVNbfepnp7N5qDFxe94e68p+Ai5fxqeOp9tDEO4gA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=be7gMW8LpP3IucPriqALkzCBPXIDfDOrCxvjhjbL6igqd1gqJKAqV+Do28r2wncoUqe1nXyrVhcCWSRAwV+r3bXkkKl/TUIPhDwjtw2E19FslRki1tXd8/wCmp14YKzf3JqfccGV9GzrLHqRdo5CfCCaRl6jrgl5O5X7UEWr4Y8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gCibfN9F; arc=none smtp.client-ip=209.85.167.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-53dd9e853ccso790298e87.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 16:00:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1732320020; x=1732924820; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=jsBEPts/nIbbNaoUTj1vxVlfNzP9ab+ytNZuDFKdOsk=;
+        b=gCibfN9FzwbZtSCG5X66rDLBjseMPx7NLp5v0BO0eoEQZySfEW9gzqC+vKePeeU8LM
+         m4dMbByVeQICwi+LndXPOz0Zx161PtPgw6k46cqadMEoSYzVnaFVOS/NjWNDZ0DPFwFF
+         CWPxjStDs8YCxxAJmjpPNuB1fhBgS1+ENqveUgwf+gFt3DKrr/ie6/sbfI8jAVHP0vq1
+         Ikl95BYz/zTLDJFFovZz54W5Om+84a9vRK+I/lrtRXfI3GVZvAbbpgVLxF6BeDsbSd1K
+         yr9ndSbOtMrVgp4pMzC4osCiQeamUobWlcWgambKOI054zrfxVrJc8qtI8H7h/lSLgFC
+         xXLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732320020; x=1732924820;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jsBEPts/nIbbNaoUTj1vxVlfNzP9ab+ytNZuDFKdOsk=;
+        b=CLvuLdJRnHKSr345KRZoECq5114mpPr+ah1iYN9a0DlrHkn+p87OVyqrUMEbnMS+Bi
+         RioHbIfJmLqWnKxHXKUrxte0afU1YRLhNlD0YP8Vz5RhVU5b17SbXDkgvgwq4zFyV6qy
+         3grP4URpYFOnb5WyjKFHJyr3EkVqTQk2qbfviYHaEQhNIbzu/gnmcpxr7y8FoTgvEIaF
+         7xvdszBm8vBnnr9j5AAGkOK+YyWvkwOot8GUNdOIWRBgoy3Cu1g7bF/sIWWr3ubvPWwJ
+         pxGRm2R9SMd/GRO9qYpC6d52hgPHDOzz3cR4gx+NxxiLXId0UBd1dWBuOja5sryLYCnn
+         Tnlw==
+X-Forwarded-Encrypted: i=1; AJvYcCXauT+Ifp4ss8HAkOm1KOK0jcvkewDJWRZaYj+Kz3wAo0JWbYEtzmZUFuX4xHz1plPpgLW4eGXvVPQY+HMs@vger.kernel.org
+X-Gm-Message-State: AOJu0YxpGsozO7MZy/q/7TY6VFBLKVEQNVscpYObADwlDMMrJ9mWebUa
+	cFqsHu8FjN1K7w5Eh4DEc4dmT2FeXFx26pR05dxqj9mz5+7msnVU8huIcZ/HjAk=
+X-Gm-Gg: ASbGncuu9lJaRdaazHwG+v3RsyQ4amjcBr1gVVLHJkhdnIy1OBqUCR5bNMJLc2zzgHU
+	vIHpA2RGYFn+XXzPB67qTwWTPAQY1jyXR50ekOMCfU89U1MZVhfyaJrotyGAJuET+bZ70Fr+r1x
+	IufWd1kdrbwF/e7L1K74h7bNQndFooyqJs8HSi8YF+n82+oheIkHaXg/i9/I+LIOFpgV1gaKBGk
+	N1DdYWHLNEpK7YBT8XJ2YNi9928XxZza+GXo3sEB5LTGJKPLtDtEAA0J4vg1PPLHPIo9jUmqgwC
+	i7J9i2q43s/lo/zjCuwAwUxg8xNwgQ==
+X-Google-Smtp-Source: AGHT+IFzdu68PpAVcH2MaPOLobnSuhzBLFuGpwZtzC/B7jvw+8UWRjpP5qmwwColoKW5tz3fO1q7LQ==
+X-Received: by 2002:a05:6512:118d:b0:53d:dc12:7cb4 with SMTP id 2adb3069b0e04-53ddc127db7mr103246e87.29.1732320019290;
+        Fri, 22 Nov 2024 16:00:19 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53dd2497cfdsm610900e87.248.2024.11.22.16.00.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 Nov 2024 16:00:18 -0800 (PST)
+Date: Sat, 23 Nov 2024 02:00:16 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Jessica Zhang <quic_jesszhan@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, quic_abhinavk@quicinc.com, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] drm/msm/dpu: Add VBIF to DPU snapshot
+Message-ID: <mue2tzzik4hiu3i4jjl457inbrveq7oifsy35fzwclfbqwn5xz@awtruuphsjzb>
+References: <20241122-vbif-snapshot-v1-1-6e8fedd16fdf@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] drm/msm/dpu: Add VBIF to DPU snapshot
-To: Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Rob Clark
-	<robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        "Sean
- Paul" <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        "David Airlie" <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-References: <20241122-vbif-snapshot-v1-1-6e8fedd16fdf@quicinc.com>
-Content-Language: en-US
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 In-Reply-To: <20241122-vbif-snapshot-v1-1-6e8fedd16fdf@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: SOB9E0bOUJFgMufVQGc89kq6B7co00hO
-X-Proofpoint-GUID: SOB9E0bOUJFgMufVQGc89kq6B7co00hO
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0 mlxscore=0
- spamscore=0 impostorscore=0 phishscore=0 mlxlogscore=776 adultscore=0
- malwarescore=0 bulkscore=0 clxscore=1015 suspectscore=0 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2411220199
 
-
-
-On 11/22/2024 3:09 PM, Jessica Zhang wrote:
+On Fri, Nov 22, 2024 at 03:09:10PM -0800, Jessica Zhang wrote:
 > Add VBIF registers to the DPU snapshot to help with debugging.
 > 
 > Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
 > ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 8 ++++++++
->   1 file changed, 8 insertions(+)
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 8 ++++++++
+>  1 file changed, 8 insertions(+)
 > 
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+-- 
+With best wishes
+Dmitry
 
