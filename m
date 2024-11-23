@@ -1,151 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-38915-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38920-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 28EB79D6913
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Nov 2024 13:59:04 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D4B9F9D69F1
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Nov 2024 17:14:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9E0E2281C9F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Nov 2024 12:59:02 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 50723B21893
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Nov 2024 16:14:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 91C5E18B47C;
-	Sat, 23 Nov 2024 12:58:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 829A8126BF1;
+	Sat, 23 Nov 2024 16:14:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LubYlHIM"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fCgDdIaH"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ACC923098E;
-	Sat, 23 Nov 2024 12:58:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52DAE225D7;
+	Sat, 23 Nov 2024 16:14:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732366739; cv=none; b=Kq6QYCLqhtS2C2NBXEernAv5h28O+cghSGrOm7NMj1OeoRKs/am5azaEzVC1dvXb+l0MWG9AOduqfkbsc9yr4W7/e+ikEY188sAqV9cXAXDRlAEGt/YCBo6xjNrEv1o06V3RQKGPavjRkmXq4bCveYcO7P46youMevLbxelyVBY=
+	t=1732378473; cv=none; b=ChyOhhxlDlzTO1q0YuD7cm20ldELPG2dM34VE7hsuzjtBPgT/H+CqyeGZKCQjlOxJWvDgjb2btPgdZhMHGnaBiu6S/9gyvLwDZm5WVtfLwA+FqJthcfe+5hBcY3pINrEgEBzLxUqmor3iAqbHfkPGjFpnIwIrC1/EKWLtn2E3uM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732366739; c=relaxed/simple;
-	bh=rJ3P/EwNpRpfkOloeZcwIZCsX0PzORmTXOM1R5SR4gU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=j6tE/Q/OeWeb/ZUDrs7eJu2MbUknTD5xxl1McjmuHAjioQ9YaO8MJSxdWRST8H7oaceB5td3vvnK2cGp897hD2D+33EAwNhdTY0XCDvQwWgxcXNUSEjPCdvy6ONSqpLyXOkDPk4p/vlU4dpHQoHDmY+bT3kjRaA/QF3uBhMjGWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LubYlHIM; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 2BA45C4CEDB;
-	Sat, 23 Nov 2024 12:58:59 +0000 (UTC)
+	s=arc-20240116; t=1732378473; c=relaxed/simple;
+	bh=E02GaD6C2zW4KVX9ewnciYeUTWpwJEUwwnHlZ+OyWAA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Yx7GLz9gJ0/m5CHMP2KlBfkvgd0rIhp3WtVUQ5O0V8Ojb2qx1Ow7L1YrJjTXUgzMq99uX33gnnKxTO5WXFMpbOrjtVZT5FdjRsVfv82qOyWn3vchukELjXQ6lPaecFyQ+w1+hTcPVhcn/EXJ5x7gRfs934KHqAr4ym3OufSeSrM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fCgDdIaH; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D9FDC4CECD;
+	Sat, 23 Nov 2024 16:14:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732366739;
-	bh=rJ3P/EwNpRpfkOloeZcwIZCsX0PzORmTXOM1R5SR4gU=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=LubYlHIMr5OnyMfeNHXytxf+Hr0BMlp2/kvtWYg2mp5b/Gji9qDwA82Ku0QUm85Vq
-	 Wup9CUG2gc60FI+ZowAHyx5vA7m+Giiu5jkxNaNjVE8M1356NFHWTsZ9Z5lzh6GaRY
-	 oUBXMNENXQ8y9VXpLXtz53m4z8lTEUQ8YxqAJZAaJGK+mwpvgo8XF8227K0ssDI9H4
-	 yJh64C69ds+u5wFiJf1EdIxSn8UFxUCgGUIUtSXzkhzef10ZP3oCw5/Kxwb0D/ePR0
-	 yCrXMcGPKSvp4hXOXubDoGYLvfW9RTogreThW34h87s642UmbwMFKNBw1AkTnMsYN8
-	 Ghxm8A5JFWccA==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 19A81E6ADFF;
-	Sat, 23 Nov 2024 12:58:59 +0000 (UTC)
-From: Maud Spierings via B4 Relay <devnull+maud_spierings.hotmail.com@kernel.org>
-Date: Sat, 23 Nov 2024 13:58:56 +0100
-Subject: [PATCH v2 4/4] arm64: dts: qcom: x1e80100-vivobook-s15: Add
- bluetooth
+	s=k20201202; t=1732378472;
+	bh=E02GaD6C2zW4KVX9ewnciYeUTWpwJEUwwnHlZ+OyWAA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=fCgDdIaHZ/hdTwWsN6WgLvT5q0urJF4+Z5E/Sa8AebGnhIzjcjzdtMv6lQT0jgxWH
+	 9Q7kcXz2wXkEUfRPjU/pr/3HijAkVNFBs3IbCVREQlCA0kzZTm2OMGUqMa9nrIvTCG
+	 hI3w87j2uxmb/Ma4j2q79eV7AM1WYYzS09T+EEyci8RdtdOa9nExvQx4FwY5XA6eUw
+	 8uN9zRfIfcMu21Qbz5sBoLo0PgV+eFT0i4FhwAO1Pcyp/og3VKhJ2EegX/qVntPKbt
+	 yRoU4YqT7JkZL15r1sGVOapWJckzUEXe7c7UeTIlWOGJl3ol2qXdLF4+CY4EOYaRoM
+	 t31g5QM/vq8sA==
+Date: Sat, 23 Nov 2024 17:14:29 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Fange Zhang <quic_fangez@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Krishna Manikandan <quic_mkrishn@quicinc.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, 
+	Will Deacon <will@kernel.org>, Li Liu <quic_lliu6@quicinc.com>, 
+	Xiangxu Yin <quic_xiangxuy@quicinc.com>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v3 0/9] Add display support for QCS615 platform
+Message-ID: <2ihy463xjiguluacmd3qhlskjtrpotk4mmflqdtgm3qhjzcrif@x2ckw5h6xqyj>
+References: <20241122-add-display-support-for-qcs615-platform-v3-0-35252e3a51fe@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241123-asus_qcom_display-v2-4-a0bff8576024@hotmail.com>
-References: <20241123-asus_qcom_display-v2-0-a0bff8576024@hotmail.com>
-In-Reply-To: <20241123-asus_qcom_display-v2-0-a0bff8576024@hotmail.com>
-To: Neil Armstrong <neil.armstrong@linaro.org>, 
- Jessica Zhang <quic_jesszhan@quicinc.com>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Douglas Anderson <dianders@chromium.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- Maud Spierings <maud_spierings@hotmail.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1732366736; l=1600;
- i=maud_spierings@hotmail.com; s=20241110; h=from:subject:message-id;
- bh=vMJXwGXqcYHA1iOq+F9o2RBWr2fMV7IxMGdC4E6B5Pk=;
- b=365x96YE6AP/LybGpULNt3Vr0JG9Hmfnj6O5ZshBhwY8zwRr+XMHMUjn9K5v/i9xyCtSGfNCA
- g3MHJQw82pbDiDQAjwkV5+BmmzWObPa1+W1LULiSmFWb4nvQy0K9mvZ
-X-Developer-Key: i=maud_spierings@hotmail.com; a=ed25519;
- pk=CeFKVnZvRfX2QjB1DpdiAe2N+MEjwLEB9Yhx/OAcxRc=
-X-Endpoint-Received: by B4 Relay for maud_spierings@hotmail.com/20241110
- with auth_id=273
-X-Original-From: Maud Spierings <maud_spierings@hotmail.com>
-Reply-To: maud_spierings@hotmail.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20241122-add-display-support-for-qcs615-platform-v3-0-35252e3a51fe@quicinc.com>
 
-From: Maud Spierings <maud_spierings@hotmail.com>
+On Fri, Nov 22, 2024 at 05:56:43PM +0800, Fange Zhang wrote:
+> This series aims to enable display on the QCS615 platform
+> 
+> 1.Add MDSS & DPU support for QCS615
+> 2.Add DSI support for QCS615     
+> 
+> QCS615 platform supports DisplayPort, and this feature will be added in a future patch
+> 
+> This patch series depends on below patch series:
+> - rpmhcc
+> https://lore.kernel.org/all/20241022-qcs615-clock-driver-v4-2-3d716ad0d987@quicinc.com/
+> - gcc
+> https://lore.kernel.org/all/20241022-qcs615-clock-driver-v4-4-3d716ad0d987@quicinc.com/
+> - base
+> https://lore.kernel.org/all/20241104-add_initial_support_for_qcs615-v5-0-9dde8d7b80b0@quicinc.com/
+> - Apps SMMU
+> https://lore.kernel.org/all/20241105032107.9552-4-quic_qqzhou@quicinc.com/
+> - I2C
+> https://lore.kernel.org/all/20241111084331.2564643-1-quic_vdadhani@quicinc.com/
+> - dispcc
+> https://lore.kernel.org/all/20241108-qcs615-mm-clockcontroller-v3-0-7d3b2d235fdf@quicinc.com/
+> - dispcc dts
+> https://lore.kernel.org/lkml/20241108-qcs615-mm-dt-nodes-v1-0-b2669cac0624@quicinc.com/
 
-Add bluetooth for the asus vivobook s15
+Which makes it unmergeable and untestable. I suggest decouple
+dependencies.
 
-Signed-off-by: Maud Spierings <maud_spierings@hotmail.com>
----
- .../boot/dts/qcom/x1e80100-asus-vivobook-s15.dts   | 24 ++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-index d0bee4b6fc0be6fe40d335f4d50dde495853b315..caf7509692db84c69ad375b5dd07054ac0adcb52 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-@@ -18,6 +18,11 @@ / {
- 	compatible = "asus,vivobook-s15", "qcom,x1e80100";
- 	chassis-type = "laptop";
- 
-+	aliases {
-+		serial0 = &uart21;
-+		serial1 = &uart14;
-+	};
-+
- 	gpio-keys {
- 		compatible = "gpio-keys";
- 		pinctrl-0 = <&hall_int_n_default>;
-@@ -545,6 +550,14 @@ &tlmm {
- 			       <44 4>, /* SPI (TPM) */
- 			       <238 1>; /* UFS Reset */
- 
-+	bt_en_default: bt-en-sleep {
-+		pins = "gpio116";
-+		function = "gpio";
-+		output-low;
-+		bias-disable;
-+		qcom,drive-strength = <16>;
-+	};
-+
- 	edp_reg_en: edp-reg-en-state {
- 		pins = "gpio70";
- 		function = "gpio";
-@@ -624,6 +637,17 @@ tpad_default: tpad-default-state {
- 	};
- };
- 
-+&uart14 {
-+	status = "okay";
-+	bluetooth: bt_wcn7850 {
-+		compatible = "qcom,wcn7850-bt";
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&bt_en_default>;
-+		enable-gpios = <&tlmm 116 GPIO_ACTIVE_HIGH>;
-+		max-speed = <3200000>;
-+	};
-+};
-+
- &usb_1_ss0_hsphy {
- 	vdd-supply = <&vreg_l3j_0p8>;
- 	vdda12-supply = <&vreg_l2j_1p2>;
-
--- 
-2.47.0
-
+Best regards,
+Krzysztof
 
 
