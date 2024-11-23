@@ -1,96 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-38937-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38938-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A75E9D6B2E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Nov 2024 20:41:57 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5548B9D6B36
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Nov 2024 20:43:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B2918161BDC
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Nov 2024 19:41:53 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D5C06161D01
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Nov 2024 19:43:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1625017BB16;
-	Sat, 23 Nov 2024 19:41:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9FE84198E81;
+	Sat, 23 Nov 2024 19:43:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="z+3Exu21"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZfwFLNaZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BD3F158DB1;
-	Sat, 23 Nov 2024 19:41:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79FED225D7;
+	Sat, 23 Nov 2024 19:43:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732390913; cv=none; b=iqW7Q8JrYDV7ZKa8fVsMbgnzvoCzZBTysH7JiC5XGbvLte2I9u6I1iDbs5N/ew8ZqODRyjjRTW8/LG3I8bLYXPc1Lq12u0fBTc+oYck16XdzoHweclVcnUtihl2D9gFJD620rrp2+bQjP/w+jzq0Y8x8Al/vxSL8h0N3bd11muI=
+	t=1732391021; cv=none; b=Led9rabl7vWuCDAzEwcsOwJVX63FXLWv66ygPYAiitjbZCdHGmVdZ/R5b7+KRKaBhSsFJKa+ksgx3KYU7xyD/oXk1pI5A5UGLkogsxYAgLzUECA9haCVrl8ujqCuw777VWvD447E+ZNN7TN7wp1tcfFhPEYgS7SXiroMENdWq1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732390913; c=relaxed/simple;
-	bh=Vb5QHAayI057QZIb4ZxIjRg4f0RYlXzQxPSvBg/yZrw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fpJfgQbV3KXUE2lMacddDy4JXiEBVIbTdUaKOlE8lbZxabqTjF9odfpyQ1MWL7OBZlho5im042MkyfrxHQnVWrdMb/4hulBi6QGGIcVrgRBBKMPqlKMGs6G64MNN3Aay4dfFyRFnKLyF/ctAHCQ+bcD3SWy4LP9ypOQUEe79kIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=z+3Exu21; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=bXSGeVcp+cWnCmHmUCmJMk2BmeyVeWCVr/9EKOca6eM=; b=z+3Exu21gVLNau8G2CdKo5qliZ
-	/s2vHZgv8mJNtWwnXpTu86AGHEXb9ubyFgGpdnmKvHgHR4FD3sgXqi/0XaQupZ+SwKBq3o+wQQ/WU
-	tJv7hRT9AACJR4ofXGutRL/j3bwd0XEd4V+WIvhP6zgNuvn7PNVRuCc6dCBNA8aKYcIA=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1tEw0m-00EEC4-Os; Sat, 23 Nov 2024 20:41:44 +0100
-Date: Sat, 23 Nov 2024 20:41:44 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Yijie Yang <quic_yijiyang@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Richard Cochran <richardcochran@gmail.com>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, netdev@vger.kernel.org
-Subject: Re: [PATCH v4 2/2] arm64: dts: qcom: qcs8300-ride: enable ethernet0
-Message-ID: <cbd696c0-3b25-438b-a279-a4263308323a@lunn.ch>
-References: <20241123-dts_qcs8300-v4-0-b10b8ac634a9@quicinc.com>
- <20241123-dts_qcs8300-v4-2-b10b8ac634a9@quicinc.com>
+	s=arc-20240116; t=1732391021; c=relaxed/simple;
+	bh=tGPOgclemoMu7/cMWJ8L6U5QW//GoJwlV7nmam601mM=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=b9kAAy//Qv7Cvm0M2a9OBw7ta5seLReNujvfUJdggNZYVkT42bmIQo9DR3X+qQppWPYzY/WcGJV8GrMhPr1UtGg6z0m5WBKwfu1ca00rMahh3RY+xks2dsETHRF6clfw6MKIENG0nwhzOOg8FAeIBaVQtHwfeiRkJ2zuzDU6Wm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZfwFLNaZ; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ANJ2ZDL021590;
+	Sat, 23 Nov 2024 19:43:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=rTIOLT43gtxqh17Vq7x24Lsb
+	prvLiFCTG8dAMH1h/xg=; b=ZfwFLNaZIiMB+elaiYXtRH7SsQtiD3CJfEbv5/sq
+	ZLKJQufPK5OUYCPjcIdFxLfXOAC6ZTSgqRgQKwv09P1TIWZ2W6GGzQJtYPTYiLsN
+	C1xy6Jr9KV+zcMLuyzAQXZlLk3XgQv7r5jEobBalsSwigCjHWw9ghlXfouSRjWiN
+	BJ2/I0K/dU+SIGMT94AMMs+oXdKwWYpQbMyKknVv6Dk3pmh7ec8fQN/k5HtADLDf
+	t/aj/9ACnH+PQeRPgbLsOHpr/Q0gi7D5TVCT8Z9ekcQPTWr9zZuZj0xR+I4nSeA0
+	KGWggdO2zIZ0Z4pgnUadBhvT3/dVx87o9+PV4AyXBfZeFg==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4338b894c6-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 23 Nov 2024 19:43:27 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4ANJhQJ0011605
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 23 Nov 2024 19:43:26 GMT
+Received: from hu-akhilpo-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Sat, 23 Nov 2024 11:43:19 -0800
+Date: Sun, 24 Nov 2024 01:13:16 +0530
+From: Akhil P Oommen <quic_akhilpo@quicinc.com>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+CC: Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        "Stephen
+ Boyd" <sboyd@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Rob Clark
+	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        "Dmitry
+ Baryshkov" <dmitry.baryshkov@linaro.org>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, "Simona
+ Vetter" <simona@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>, Rob
+ Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor
+ Dooley <conor+dt@kernel.org>,
+        Connor Abbott <cwabbott0@gmail.com>, <linux-pm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
+        <devicetree@vger.kernel.org>
+Subject: Re: [PATCH v2 04/11] drm/msm: adreno: add GMU_BW_VOTE feature flag
+Message-ID: <20241123194316.yqvovktcptfep4dr@hu-akhilpo-hyd.qualcomm.com>
+References: <20241119-topic-sm8x50-gpu-bw-vote-v2-0-4deb87be2498@linaro.org>
+ <20241119-topic-sm8x50-gpu-bw-vote-v2-4-4deb87be2498@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <20241123-dts_qcs8300-v4-2-b10b8ac634a9@quicinc.com>
+In-Reply-To: <20241119-topic-sm8x50-gpu-bw-vote-v2-4-4deb87be2498@linaro.org>
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: ryrIuRNVzSxZaJQeCU3vSDCY0aamOJEC
+X-Proofpoint-GUID: ryrIuRNVzSxZaJQeCU3vSDCY0aamOJEC
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
+ adultscore=0 mlxscore=0 priorityscore=1501 lowpriorityscore=0 bulkscore=0
+ phishscore=0 malwarescore=0 suspectscore=0 mlxlogscore=999 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2411230162
 
-On Sat, Nov 23, 2024 at 04:51:54PM +0800, Yijie Yang wrote:
-> Enable the SerDes PHY on qcs8300-ride. Add the MDC and MDIO pin functions
-> for ethernet0 on qcs8300-ride. Enable the ethernet port on qcs8300-ride.
+On Tue, Nov 19, 2024 at 06:56:39PM +0100, Neil Armstrong wrote:
+> The Adreno GMU Management Unit (GNU) can also scale the DDR Bandwidth
+> along the Frequency and Power Domain level, but by default we leave the
+> OPP core vote for the interconnect ddr path.
 > 
-> Signed-off-by: Yijie Yang <quic_yijiyang@quicinc.com>
+> While scaling via the interconnect path was sufficient, newer GPUs
+> like the A750 requires specific vote paremeters and bandwidth to
+> achieve full functionality.
+> 
+> While the feature will require some data in a6xx_info, it's safer
+> to only enable tested platforms with this flag first.
+> 
+> Add a new feature enabling DDR Bandwidth vote via GMU.
+> 
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 > ---
->  arch/arm64/boot/dts/qcom/qcs8300-ride.dts | 112 ++++++++++++++++++++++++++++++
->  1 file changed, 112 insertions(+)
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.h | 1 +
+>  1 file changed, 1 insertion(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-> index 7eed19a694c39dbe791afb6a991db65acb37e597..af7be26828524cc28299e219c1f0ad459e1c543d 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-> +++ b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-> @@ -210,6 +210,95 @@ vreg_l9c: ldo9 {
->  	};
->  };
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> index 4702d4cfca3b58fb3cbb25cb6805f1c19be2ebcb..394b96eb6c83354ae008b15b562bedb96cd391dd 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> @@ -58,6 +58,7 @@ enum adreno_family {
+>  #define ADRENO_FEAT_HAS_HW_APRIV		BIT(0)
+>  #define ADRENO_FEAT_HAS_CACHED_COHERENT		BIT(1)
+>  #define ADRENO_FEAT_PREEMPTION			BIT(2)
+> +#define ADRENO_FEAT_GMU_BW_VOTE			BIT(3)
+
+Do we really need a feature flag for this? We have to carry this for every
+GPU going forward. IB voting is supported on all GMUs from A6xx GEN2 and
+newer. So we can just check that along with whether the bw table is
+dynamically generated or not.
+
+-Akhil
+
 >  
-> +&ethernet0 {
-> +	phy-mode = "2500base-x";
-> +	phy-handle = <&sgmii_phy0>;
-
-Nit picking, but your PHY clearly is not an SGMII PHY if it is using
-2500base-x. I would call it just phy0, so avoiding using SGMII
-wrongly, which most vendors do use the name SGMII wrongly.
-
-	Andrew
+>  /* Helper for formating the chip_id in the way that userspace tools like
+>   * crashdec expect.
+> 
+> -- 
+> 2.34.1
+> 
 
