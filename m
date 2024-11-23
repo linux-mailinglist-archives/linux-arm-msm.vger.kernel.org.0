@@ -1,167 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-38892-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38893-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id AF8949D66D0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Nov 2024 01:20:51 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C3569D6734
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Nov 2024 03:41:57 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 74C0F2810B5
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Nov 2024 00:20:50 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9951416168E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Nov 2024 02:41:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1949F4A08;
-	Sat, 23 Nov 2024 00:19:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D4ED2D057;
+	Sat, 23 Nov 2024 02:41:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="djwadoRi"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TB57FEN6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f50.google.com (mail-io1-f50.google.com [209.85.166.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D1A42309A6
-	for <linux-arm-msm@vger.kernel.org>; Sat, 23 Nov 2024 00:19:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5A74817;
+	Sat, 23 Nov 2024 02:41:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732321185; cv=none; b=O2D9Pab1fWkYQYe+PPIA6T7Okgf3Y2TXE6jK0yVug4kUAKy1yOCvxifDxWUIKiBxGv5Fmwvj1DQlN/Irxr2NfwKfiT+1vZerQHUmpe7a9agvmVxxozG56mJt56ng7XcYoqfCG1gCcjHuEZCVCoVSk1NWj9uiURtLqJjo9SksLRs=
+	t=1732329713; cv=none; b=bphQZh+aN7FdSrQ24cR8wFGNCm/i/+PVD2EHobwLHN6jzy34kz5sAXJlceTi3r4s6wTo1eJ3FEOctYT7E7hQV55TiGrgz8suXtK81/uq3GEJ7eaSKutHDOrHD4r5DI6I/np/Cxt1y8IK28ZVVEuEdaAxUIWrFN9TGZDiP33wzoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732321185; c=relaxed/simple;
-	bh=W1T4Zed6CRgrZT8ai/WFastdRH0qGAdtmmixOSmvyAY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Juuk9oecqlEcZC7C8SMU5t3A0VUb/n80jTxeU7ui+WSWpfytKQBMwJW587pdUx3HS6PosEJF6yERJv2WFrJib12EXANHmWgH+Xmzwqy/Ufb50/sNzUwwglQu+nH7nfL0J5p9h4nKWQKyh5/MAhG/scE+RlmPnUGE+Byj13AL1OA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=djwadoRi; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AMD5bP8020827
-	for <linux-arm-msm@vger.kernel.org>; Sat, 23 Nov 2024 00:19:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	xrWWeSVsA8o5gUZSnPUFBeaGhEjYRvTTPyQTwcDpYmg=; b=djwadoRiZsTk8XFL
-	Zo+wunlm2QPYNJT5HisVogu610qeXDDgmCf4/GGNdwTXoe27lZUy7T80b8zyYDVD
-	MBJdtPQNPxI7DlGOPl2VLObezPvBfgaTfx2CliEzZe6osU/fjfpa4/jwmw1BZ+Vz
-	HvLep5R1DFGRqs2wbhb/jhK9p8ZD1s+w13x4zNC3WTP0Cykhdt75N6XxQ5wOTwz4
-	IRNo7ZJdpNzEGFzIueZbI0okU3dZJUf9ub3Qoc1RVxeV3KdfRN6e6sMOXl61H6zY
-	FUm3p5urONnd3l8Hmiqq+GaiT37GZvFk3aARquWCNbVa/aEwqga2IF7Of7pN+INy
-	viSBUw==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 432thphdc2-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 23 Nov 2024 00:19:42 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-6d41129974dso6992296d6.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 16:19:42 -0800 (PST)
+	s=arc-20240116; t=1732329713; c=relaxed/simple;
+	bh=LNavqxR7RibpcEYKL0qPKrLUMz33vsxDPgSWZhdxd0c=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Qti8aIv89MlQRY9Ew9pZrJOCFC1tWJ8TEorbcGpW8kMLYnSXzawptFuQ8ns4Q/nAe3/xDtfAy2G6nFEE/x+NlAdp3rrPpgwrnXne3G/3DVgPWSXE0eZlL3GKruVk7w7W6uu1fXpUTRs3SzHHrQ84cBYmuL30fDK4xYf8p6KlZ/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TB57FEN6; arc=none smtp.client-ip=209.85.166.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-io1-f50.google.com with SMTP id ca18e2360f4ac-83e5dd0e5faso114790739f.1;
+        Fri, 22 Nov 2024 18:41:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1732329711; x=1732934511; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=70gmuVqd5ZnoO1vvK5nWrsFGGQmS9boqrWJIu2Mw/JQ=;
+        b=TB57FEN6RGVpS08YfkrvVrovvoUvped3cvXF+p6BmoJ8dyGqaNaHxTZwJy94ROY6Nd
+         HolHkYFlhSJEVFuJoZOz7y56hftlimd8tDxoHoWvs71j56z9Owm4lrkz9wLKGhnDaGVS
+         2b9b68pYm+lGND6IA5Tr85vhIC5BwYoA6+JllLTGZZYI5Gslrl2CseQaI8Q7di0zp6sd
+         0QP+SIqYA7M3agACtLe9oVHtulGmbFOeLHa3JbtMZiW1phQYXXtYe1YfZ53tNZJKiP0w
+         LsEpzmLy4tZKlKDv6cC+YkWHVX+Ge0JhJ+mgaobxq+P9ppnMAbgR4qf2ibDEx/ZS5RfI
+         Dw4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732321181; x=1732925981;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xrWWeSVsA8o5gUZSnPUFBeaGhEjYRvTTPyQTwcDpYmg=;
-        b=E93PK4VjsOb6xHeGohmY9MQXMTjkmWMcAZWVrFZbfX7WKilQMkbyvslQVi2sJCyGKM
-         8e50d7z7nwKBhlmVdd3ewAuZHTTMdYekUxUkZuUgVsJdVNk+fHpKENSs1re1snqA/jvX
-         NpslKZfdl4zm5OozXK63Uzgt+vV4AAAIS9H5x7lfEyWV9YbGcm93hTj423QgUVX3/LgC
-         GiTd693v5k0iS9kUlpOfDRTHXLJ5oDaBxMXHTBv0Am68R05esouGMGSGW9mXzC2FNkCe
-         mWcX5qE716NmLPBvG59s2gk/Z2O5lXht6F2Iw+rk/3sVL2Iw613sv+4TZVGKin5ADoeh
-         Shxg==
-X-Forwarded-Encrypted: i=1; AJvYcCXjxfJSF0Ijcp1aaiNVkm31TXz9VQM6BS6fZiKZ4k6wB2tqpJ6hEv9cN65d3HeyjOAkkREJicGF2yopDSVD@vger.kernel.org
-X-Gm-Message-State: AOJu0YxxtRTfERN97cfOYt4r6EkZc6D8wAqewJ8a4f7PkcJyrkbvfHOF
-	B+WnndTIbr0EhrVI78D7IwbV3AOsLuxbnLpWscIFrqxARmGGdI23H7qYhWRN+LFa3voghh+jZmn
-	Ucerqfy2slL9fVdrRMqHwvghnlsQ7PVdJ7BFj8gG6qLzxPJ1NlkhOGQas8nXQ0pNu
-X-Gm-Gg: ASbGncs0Zf4UXn3WbSNIK7NFl4HO2LZJ3lD1cDjjzizecn67z7mVDljMVSre7XJ3BO0
-	/tCD1js7Tdq+jzVuYQl25qfYvcz+qX2ThI9O8UiKSYmrUgAQrNeRxykD6VxD7UXggQgDcnJ+qTE
-	rSMSfDbhL7SqKLNakuwmSMXe71cAOnYEjvMLSigM5ilHK21qYlFWwh2VrXotgs9Mq9QaGmGHzJH
-	RaSOUSYOP1daBDl28llTn21w2QxiNePUey0ny/W2k9xijJr9euNu41nJfKgmIzz++XKD1Ggqo+U
-	MAsTWQGcDMVAjU10Ql644QJpQZZBHew=
-X-Received: by 2002:a05:620a:271b:b0:7a9:a632:df3c with SMTP id af79cd13be357-7b51457fad7mr307972885a.14.1732321181004;
-        Fri, 22 Nov 2024 16:19:41 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEGqI1WQQpUf2crWgNFFZ+pnTknQHdikQ7GCgw8JwewpNtBbLTat7WrGjpS3Ex4P+Irr7Yh0Q==
-X-Received: by 2002:a05:620a:271b:b0:7a9:a632:df3c with SMTP id af79cd13be357-7b51457fad7mr307971885a.14.1732321180610;
-        Fri, 22 Nov 2024 16:19:40 -0800 (PST)
-Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5d01d3c0458sm1414240a12.45.2024.11.22.16.19.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Nov 2024 16:19:40 -0800 (PST)
-Message-ID: <5ff5d720-ccf7-42ee-9a4b-90cc168a4b7b@oss.qualcomm.com>
-Date: Sat, 23 Nov 2024 01:19:37 +0100
+        d=1e100.net; s=20230601; t=1732329711; x=1732934511;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=70gmuVqd5ZnoO1vvK5nWrsFGGQmS9boqrWJIu2Mw/JQ=;
+        b=IEUwXKGQiHLAGOR9P0iY3GhD4YhkW/gL+nvJrUKxJEj7assZxbTMr9z2+ydOQcaLHb
+         lLqnxALbxw1DzVmHsRdta04meFFmG7LP6otCav+I1NY0JDep8ltXHDbGpzW2f7a3YUyB
+         h47nTR2f6jLwTZhJWTAo3bSuOK0NUNN/AwexfWbVVZaX96sXENtSV9CmCJBDALrW/RqF
+         nTcd7OhEBOVwODN1luVIzgXzk8lbo7pEBYRROLQ4ETGmIThx2Cjdy1a4ZrByJx+x3Sf7
+         kqVkjLB2t0sJRkI5ZnEo8XQ53Pfz9j8RqY2/noZFHfSQlCkVCiqaYog3KauFPh1TyYIW
+         9v8Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVN5/Hhtfm6XV2oriFlcNoGodmx5IMHJvPx0SIhMixMHIFsyYqWCI7+BpLZeH4T9Lu96t6U72B5I8K2I310@vger.kernel.org, AJvYcCWxxHKjtNQ7McUZK65GTBdlr4+1hMbXDz58/3EKEArNWtW3foiJtUNesln2h7WSCb2hrZHJnDTU8XhmsaHq@vger.kernel.org
+X-Gm-Message-State: AOJu0YzWQmyrEmhqb0LZpValUWQywLRTcPwrTx55KyviEIiGrz5uG+B1
+	b4yG9sYM4KQPikAX6JhjC7ccnITTfZNGvnj0I+Qh2YmkNxjPujCOBHzKmEVDYQ6H/GmgR+lltIV
+	4u7i28sFuDBoWjomhh2Xp2ODm68A=
+X-Gm-Gg: ASbGnctHH6NHSPFstc6Ag3h5S8F2oS30dwGeniCagUp2ZBFKVpaCwpe2R7gwxoY+Il6
+	BimJJrp8O7uHPyXK/j9VxW7Ywto/h5rU=
+X-Google-Smtp-Source: AGHT+IHCuNiL+FpVrEqzvuP5atIKEy/3nfa6jAXX2Bz235hjzWk72EjraJCcQQQADNxbedTXxFJysZnkRKitQUoDPeM=
+X-Received: by 2002:a05:6602:1491:b0:83a:a7ec:cc0e with SMTP id
+ ca18e2360f4ac-83ecce46417mr403776539f.0.1732329710689; Fri, 22 Nov 2024
+ 18:41:50 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+References: <20241121164858.457921-1-robdclark@gmail.com> <54601d79-4156-41f4-b1b7-250c5c970641@oss.qualcomm.com>
+ <CAF6AEGtafQM7-mYy163Krry3OHgPNH3e9A=9VEhBpiQTADtULQ@mail.gmail.com> <5ff5d720-ccf7-42ee-9a4b-90cc168a4b7b@oss.qualcomm.com>
+In-Reply-To: <5ff5d720-ccf7-42ee-9a4b-90cc168a4b7b@oss.qualcomm.com>
+From: Rob Clark <robdclark@gmail.com>
+Date: Fri, 22 Nov 2024 18:41:39 -0800
+Message-ID: <CAF6AEGuwjpizRy+S-xCmGdZV9MX+CDACwQp-NNKc2eBroCt1CQ@mail.gmail.com>
 Subject: Re: [PATCH] drm/msm: UAPI error reporting
-To: Rob Clark <robdclark@gmail.com>
-Cc: dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20241121164858.457921-1-robdclark@gmail.com>
- <54601d79-4156-41f4-b1b7-250c5c970641@oss.qualcomm.com>
- <CAF6AEGtafQM7-mYy163Krry3OHgPNH3e9A=9VEhBpiQTADtULQ@mail.gmail.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <CAF6AEGtafQM7-mYy163Krry3OHgPNH3e9A=9VEhBpiQTADtULQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: FmMdwwDx1mfgg1RTVRYUmZkwlrx2zGNY
-X-Proofpoint-ORIG-GUID: FmMdwwDx1mfgg1RTVRYUmZkwlrx2zGNY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- lowpriorityscore=0 mlxlogscore=583 priorityscore=1501 phishscore=0
- suspectscore=0 mlxscore=0 spamscore=0 clxscore=1015 adultscore=0
- bulkscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2409260000 definitions=main-2411230000
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+	freedreno@lists.freedesktop.org, Rob Clark <robdclark@chromium.org>, 
+	Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 22.11.2024 4:51 PM, Rob Clark wrote:
-> On Fri, Nov 22, 2024 at 4:21 AM Konrad Dybcio
-> <konrad.dybcio@oss.qualcomm.com> wrote:
->>
->> On 21.11.2024 5:48 PM, Rob Clark wrote:
->>> From: Rob Clark <robdclark@chromium.org>
->>>
->>> Debugging incorrect UAPI usage tends to be a bit painful, so add a
->>> helper macro to make it easier to add debug logging which can be enabled
->>> at runtime via drm.debug.
->>>
->>> Signed-off-by: Rob Clark <robdclark@chromium.org>
->>> ---
->>
->> [...]
->>
->>> +/* Helper for returning a UABI error with optional logging which can make
->>> + * it easier for userspace to understand what it is doing wrong.
->>> + */
->>> +#define UERR(err, drm, fmt, ...) \
->>> +     ({ DRM_DEV_DEBUG_DRIVER((drm)->dev, fmt, ##__VA_ARGS__); -(err); })
->>> +
->>>  #define DBG(fmt, ...) DRM_DEBUG_DRIVER(fmt"\n", ##__VA_ARGS__)
->>>  #define VERB(fmt, ...) if (0) DRM_DEBUG_DRIVER(fmt"\n", ##__VA_ARGS__)
->>
->> I'm generally not a fan of adding driver-specific debug prints..
->>
->> Maybe that's something that could be pushed to the drm-common layer
->> or even deeper down the stack?
-> 
-> Even if we had something like DRM_DBG_UABI_ERROR() I'd probably still
-> just #define UERR() to be a wrapper for it, since line length/wrapping
-> tends to be a bit of a challenge.  And I have a fairly substantial
-> patch stack on top of this adding sparse/vm_bind support.  (Debugging
-> that was actually the motivation for this patch.)
+On Fri, Nov 22, 2024 at 4:19=E2=80=AFPM Konrad Dybcio
+<konrad.dybcio@oss.qualcomm.com> wrote:
+>
+> On 22.11.2024 4:51 PM, Rob Clark wrote:
+> > On Fri, Nov 22, 2024 at 4:21=E2=80=AFAM Konrad Dybcio
+> > <konrad.dybcio@oss.qualcomm.com> wrote:
+> >>
+> >> On 21.11.2024 5:48 PM, Rob Clark wrote:
+> >>> From: Rob Clark <robdclark@chromium.org>
+> >>>
+> >>> Debugging incorrect UAPI usage tends to be a bit painful, so add a
+> >>> helper macro to make it easier to add debug logging which can be enab=
+led
+> >>> at runtime via drm.debug.
+> >>>
+> >>> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> >>> ---
+> >>
+> >> [...]
+> >>
+> >>> +/* Helper for returning a UABI error with optional logging which can=
+ make
+> >>> + * it easier for userspace to understand what it is doing wrong.
+> >>> + */
+> >>> +#define UERR(err, drm, fmt, ...) \
+> >>> +     ({ DRM_DEV_DEBUG_DRIVER((drm)->dev, fmt, ##__VA_ARGS__); -(err)=
+; })
+> >>> +
+> >>>  #define DBG(fmt, ...) DRM_DEBUG_DRIVER(fmt"\n", ##__VA_ARGS__)
+> >>>  #define VERB(fmt, ...) if (0) DRM_DEBUG_DRIVER(fmt"\n", ##__VA_ARGS_=
+_)
+> >>
+> >> I'm generally not a fan of adding driver-specific debug prints..
+> >>
+> >> Maybe that's something that could be pushed to the drm-common layer
+> >> or even deeper down the stack?
+> >
+> > Even if we had something like DRM_DBG_UABI_ERROR() I'd probably still
+> > just #define UERR() to be a wrapper for it, since line length/wrapping
+> > tends to be a bit of a challenge.  And I have a fairly substantial
+> > patch stack on top of this adding sparse/vm_bind support.  (Debugging
+> > that was actually the motivation for this patch.)
+>
+> Alright, let's not get in the way then
+>
+> > I noticed that xe has something similar, but slightly different shape,
+> > in the form of XE_IOCTL_DBG().. but that kinda just moves the line
+> > length problem into the if() conditional.  (And doesn't provide the
+> > benefit of being able to display the incorrect param.)
+>
+> Maybe rust comes one day and the lines will start growing vertically ;)
 
-Alright, let's not get in the way then
+Rust for the userspace facing rendernode side of the driver, in
+particular, would be interesting for me, tbh.  Especially if handle
+related rust<->c layers are designed properly.  I've lost track of how
+many handle lifetime race condition UAF's I've seen ;-)
 
-> I noticed that xe has something similar, but slightly different shape,
-> in the form of XE_IOCTL_DBG().. but that kinda just moves the line
-> length problem into the if() conditional.  (And doesn't provide the
-> benefit of being able to display the incorrect param.)
+Re-writing entire drivers is a big lift, especially when there is so
+much hw+features to enable.  KMS is limited to drm master (generally a
+somewhat privileged process), so less of a concern from a security
+standpoint.  Much of the GPU side of things is "boring" power related
+stuff (suspend/resume/devfreq).  But the rendernode ioctls are open to
+any process that can use the GPU in a typical setup.
 
-Maybe rust comes one day and the lines will start growing vertically ;)
-
-Konrad
+BR,
+-R
 
