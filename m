@@ -1,112 +1,173 @@
-Return-Path: <linux-arm-msm+bounces-38895-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38896-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id CCA499D6781
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Nov 2024 05:33:06 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D08C39D6783
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Nov 2024 05:37:24 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 47CAF1610E3
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Nov 2024 04:33:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 95885281EE8
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Nov 2024 04:37:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA8D5481A3;
-	Sat, 23 Nov 2024 04:33:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E10287C0BE;
+	Sat, 23 Nov 2024 04:37:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uJwCohjB"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jj+6P33+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3DB34A0A
-	for <linux-arm-msm@vger.kernel.org>; Sat, 23 Nov 2024 04:33:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8E44E555;
+	Sat, 23 Nov 2024 04:37:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732336384; cv=none; b=HYkRJNRwX/C4Lp0nG6Wa2VlUoK3Gl3pHeq2LB6be3Py6ZpxK20kzKOD1P6cgQor4HFNQYktaCSu0k8GhNrj6fYd7PMq1huzV+kGaBRFTx3JMZRPWsKGGkKw0NwdeHRpMmQvujrfOyObEco3YWjriFb4P/tINF8hViUARJ++Q+R0=
+	t=1732336639; cv=none; b=WRNsnLhA5ROmapTILdUsItb0yofbXssg7Xbg4pXLqRo0eKFL/4/J/dmwngeJZaliCEmCHT2xxwgMjJG/S7WgaV9ejlQeBOOlMsrvaZ2XrQG4FIf9rtKqDSssKmry3rH/ZL57tmHeSmJceHRmFuAqCPXJT9pYF4jLAMxYWpwr2o4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732336384; c=relaxed/simple;
-	bh=05OUskCpRZqj5cEzov83EbhorcQyz5baklPnEnJ7sRo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GEYhhM4nCmBbipIgUdDotuetqHBzOkt9z6wrOdO29wDY9FtfIGIiQQTM4MKDiaL9rvzJnT2NS8ukcQ6ZrdhMrfJYXTSwjTvwmOOGdBhkCYH3ifwkNLvgR/4HoG8OYQA2vg4oJZ6PdF/g/RV4z5vekYdfGH+QannO3DcmeuYCEQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uJwCohjB; arc=none smtp.client-ip=209.85.167.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-539f2b95775so4222015e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 20:33:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732336381; x=1732941181; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=VMGxDuJ/rtujDZFX9z6xbz2UE34eujmvFMapxF8n9e8=;
-        b=uJwCohjBPT4b5B7YGT7xcDxWdyOpy3DGkqj+/yncj6umLjPfkhDml14c0dyvzJUQTa
-         +OcENtprfsDxNOyUHIVXh94wFC+dYMaCmMumbBHmjJovI2CV3BOkdyzpxE+exfq2gnPf
-         RxYwAjdsR+iKkWVH7PWDGtN8Y8n7CJuNLduJ1SVxrljkkMfKE5IqEnNcD4jh2HnLE25m
-         c1Xlw+Tf7NzxtwkN4SJM6fIemYlhq+JVuf520beoDnEATVKX8gg1whfEkycTYc5qjwVh
-         iepVd8gS5/3tcCFHEZW5yX1YZYLFTVINmdW1oM3/6cGoVAWpFHswTlYvl0cctu4iiNjU
-         buNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732336381; x=1732941181;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VMGxDuJ/rtujDZFX9z6xbz2UE34eujmvFMapxF8n9e8=;
-        b=ud+wjV3CQT/6RmHzO94fy/TAVDBQbYZmuQMjo2osK+2t5uc230gNxoU3siPrzXrSiV
-         LtxjOTczfaYlDbYjxRq3q8/FA124vy7VnIsFfJinJidkaFO5COeTBFbfcQxU8fc0tnKG
-         ottbeEN772lRJ0yQqrqhGXdwAjpUQyRpU+pAG7ty1R2kBMgN91gx/5WD6t1ZKOP0xaEg
-         /pY48qYFHtOBdH/hFSkFFvJqzgpEpFtOBAjwYByDX9fwT6I93CNsmf+6Udidh0Cx9AHu
-         Yi1Z3nYnXuAnTLcHz3o+nJLB4qh1MuX7771wbn6vFpOeDhZ0VA4XjPas3QI1v7+WWSk9
-         nkwA==
-X-Forwarded-Encrypted: i=1; AJvYcCWX6OZSsZLXP8J9DIm3Cbc0yPLHihAi6bAl6TOjm3c0RJPvUi4e0uhxy9eXurWJMh/rO5tccVA5ImPoWLPG@vger.kernel.org
-X-Gm-Message-State: AOJu0YzAfwqj1r9aTudK7DpiQ7sUMNwWswZJj40/JN+gfj+MuDUsu1S6
-	Sna+QXKVQTWNJWiB8fSQZPgCWvZFHA4i7hMNBLii49JLzuLLqGhZ1VTxHoKAm3A=
-X-Gm-Gg: ASbGncvMyC2mefjjphSemQ/eLVYhUoA4VP+MtqHNeHyZ5gjYLoMPzibDk+6ZdGAcwI/
-	hh8zQ0EvJ2v0b/KSSvxZoh+1zJ6YWggN3n9FgAJDL2n3FGNqEgDJa16PssEaYj+6nUB1xZfAqb7
-	7sfYE3N+LCsiPnwS29+vcAh25DioILqs5dlDNSUnP858CzdRsPCkd1x6VpLSDPVPjjRKeiQVDTs
-	IujKqg2t8LCWNCXD/oF6bydPBA89RlNbdw1Ch6UZw7An3OsrmF64nMQHeYg+vmOKO0u+iEyxDV9
-	0uniwYb8U8imKMBP4cP3DRn7b/QK0w==
-X-Google-Smtp-Source: AGHT+IHLJiA6aYnUX3Lh/TeIP5I3J/OMBEcDuDbvten7DOXiFjiEs6Kd2U58RE+IDTcVG4JwRP8PJg==
-X-Received: by 2002:a05:6512:3ba2:b0:53d:d0a9:a453 with SMTP id 2adb3069b0e04-53dd389c91bmr4355304e87.31.1732336381130;
-        Fri, 22 Nov 2024 20:33:01 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53dd24513c0sm715018e87.97.2024.11.22.20.32.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Nov 2024 20:32:59 -0800 (PST)
-Date: Sat, 23 Nov 2024 06:32:57 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-Cc: robdclark@gmail.com, will@kernel.org, robin.murphy@arm.com, 
-	joro@8bytes.org, jgg@ziepe.ca, jsnitsel@redhat.com, robh@kernel.org, 
-	krzysztof.kozlowski@linaro.org, quic_c_gdjako@quicinc.com, iommu@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH RESEND v17 5/5] iommu/arm-smmu: add ACTLR data and
- support for qcom_smmu_500
-Message-ID: <ppbgnxl5wh4cpkkb2lphealm5cqbdfaxqwizxe2ibrqifat3cu@abmenyqc35vj>
-References: <20241114160721.1527934-1-quic_bibekkum@quicinc.com>
- <20241114160721.1527934-6-quic_bibekkum@quicinc.com>
+	s=arc-20240116; t=1732336639; c=relaxed/simple;
+	bh=IEfmIuvf4RAZiKcvZ/bEeGLP0YpTuFTW7nzn8ETa25s=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PrAVE6xrFWuCY2jWhj5FGY6wiHBiFGKNdi4axauK5ZxxDf6zluvYODakGND06oWw8edU/Hy+3rpEmWNQxeXuxqvtfPOKDgvvfybdNFQHinANvzSY4bzkgD9JCXFrN7uVWoJKfozFX/IjttdEk6vGlyapEzhXn3v26yXFE93+dqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jj+6P33+; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AN4Gw1w005848;
+	Sat, 23 Nov 2024 04:37:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=c2xEIpSPn21EhzqyOoYBSY89
+	AGIccID/ZJQJM8/dhek=; b=jj+6P33+PlgqHvQFfhcImgUh4cjOFDqQbVNThrhi
+	Lx3axgsvp9bEde24hcjT+umDuO9x3zYI5PB2Q1JjEW0Ms+sfsvPaswnaQLoiZGpD
+	rRGEsawybkoUt3mDlwpjAOwnTjLh5vAzjIwXxhfRzh9WvTOgQDkRip6iQ0pXVDvz
+	V6RBEWXd3za1SueGSx0/4/JM+1jTFtDt9Ub4mIW5VH4ngzEKH1rqjeVVx2apHFGY
+	MMYcbY/mv2+56KsbtANCqhAF7LtcOth1p9Hwd/6+sOxRluRCDQbgtDJrz4nH+NeY
+	EAuNg6LCU5r44LKnboETVCx9qmxA9EJS1/y1qQAwrM9zQA==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43362685fe-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 23 Nov 2024 04:37:03 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AN4b24w021123
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 23 Nov 2024 04:37:02 GMT
+Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Fri, 22 Nov 2024 20:36:59 -0800
+Date: Sat, 23 Nov 2024 10:06:55 +0530
+From: Varadarajan Narayanan <quic_varada@quicinc.com>
+To: Md Sadre Alam <quic_mdalam@quicinc.com>
+CC: <vkoul@kernel.org>, <ulf.hansson@linaro.org>, <martin.petersen@oracle.com>,
+        <kees@kernel.org>, <dave.jiang@intel.com>, <av2082000@gmail.com>,
+        <linux-arm-msm@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_srichara@quicinc.com>
+Subject: Re: [PATCH] dmaengine: qcom: bam_dma: Avoid writing unavailable
+ register
+Message-ID: <Z0Fb5xBolEtwyUKb@hu-varada-blr.qualcomm.com>
+References: <20241122071649.2618320-1-quic_mdalam@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <20241114160721.1527934-6-quic_bibekkum@quicinc.com>
+In-Reply-To: <20241122071649.2618320-1-quic_mdalam@quicinc.com>
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: NRZFCp9wre6-FjG--Mb6mOSdEovYI7qI
+X-Proofpoint-ORIG-GUID: NRZFCp9wre6-FjG--Mb6mOSdEovYI7qI
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
+ priorityscore=1501 clxscore=1011 phishscore=0 spamscore=0 adultscore=0
+ impostorscore=0 mlxscore=0 malwarescore=0 suspectscore=0 mlxlogscore=999
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411230034
 
-On Thu, Nov 14, 2024 at 09:37:21PM +0530, Bibek Kumar Patro wrote:
-> Add ACTLR data table for qcom_smmu_500 including
-> corresponding data entry and set prefetch value by
-> way of a list of compatible strings.
-> 
-> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+On Fri, Nov 22, 2024 at 12:46:49PM +0530, Md Sadre Alam wrote:
+> Avoid writing unavailable register in BAM-Lite mode.
+> BAM_DESC_CNT_TRSHLD register is unavailable in BAM-Lite
+> mode. Its only available in BAM-NDP mode. So avoid writing
+> this register for clients who is using BAM-Lite mode.
+>
+> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
 > ---
->  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 33 ++++++++++++++++++++++
->  1 file changed, 33 insertions(+)
+>  drivers/dma/qcom/bam_dma.c | 22 ++++++++++++++--------
+>  1 file changed, 14 insertions(+), 8 deletions(-)
+>
+> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+> index d43a881e43b9..13a08c03746b 100644
+> --- a/drivers/dma/qcom/bam_dma.c
+> +++ b/drivers/dma/qcom/bam_dma.c
+> @@ -59,6 +59,9 @@ struct bam_desc_hw {
+>  #define DESC_FLAG_NWD BIT(12)
+>  #define DESC_FLAG_CMD BIT(11)
+>
+> +#define BAM_LITE	0x13
+> +#define BAM_NDP		0x20
+> +
+>  struct bam_async_desc {
+>  	struct virt_dma_desc vd;
+>
+> @@ -398,6 +401,7 @@ struct bam_device {
+>
+>  	/* dma start transaction tasklet */
+>  	struct tasklet_struct task;
+> +	u32 bam_revision;
+>  };
+>
+>  /**
+> @@ -441,8 +445,9 @@ static void bam_reset(struct bam_device *bdev)
+>  	writel_relaxed(val, bam_addr(bdev, 0, BAM_CTRL));
+>
+>  	/* set descriptor threshold, start with 4 bytes */
+> -	writel_relaxed(DEFAULT_CNT_THRSHLD,
+> -			bam_addr(bdev, 0, BAM_DESC_CNT_TRSHLD));
+> +	if (bdev->bam_revision >= BAM_LITE && bdev->bam_revision < BAM_NDP)
+> +		writel_relaxed(DEFAULT_CNT_THRSHLD,
+> +			       bam_addr(bdev, 0, BAM_DESC_CNT_TRSHLD));
+>
+>  	/* Enable default set of h/w workarounds, ie all except BAM_FULL_PIPE */
+>  	writel_relaxed(BAM_CNFG_BITS_DEFAULT, bam_addr(bdev, 0, BAM_CNFG_BITS));
+> @@ -1000,9 +1005,9 @@ static void bam_apply_new_config(struct bam_chan *bchan,
+>  			maxburst = bchan->slave.src_maxburst;
+>  		else
+>  			maxburst = bchan->slave.dst_maxburst;
+> -
+> -		writel_relaxed(maxburst,
+> -			       bam_addr(bdev, 0, BAM_DESC_CNT_TRSHLD));
+> +		if (bdev->bam_revision >= BAM_LITE && bdev->bam_revision < BAM_NDP)
+> +			writel_relaxed(maxburst,
+> +				       bam_addr(bdev, 0, BAM_DESC_CNT_TRSHLD));
+>  	}
+>
+>  	bchan->reconfigure = 0;
+> @@ -1192,10 +1197,11 @@ static int bam_init(struct bam_device *bdev)
+>  	u32 val;
+>
+>  	/* read revision and configuration information */
+> -	if (!bdev->num_ees) {
+> -		val = readl_relaxed(bam_addr(bdev, 0, BAM_REVISION));
+> +	val = readl_relaxed(bam_addr(bdev, 0, BAM_REVISION));
+> +	if (!bdev->num_ees)
+>  		bdev->num_ees = (val >> NUM_EES_SHIFT) & NUM_EES_MASK;
+> -	}
+> +
+> +	bdev->bam_revision = val & 0xff;
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Use REVISION_MASK instead of 0xff
 
--- 
-With best wishes
-Dmitry
+-Varada
+
+>  	/* check that configured EE is within range */
+>  	if (bdev->ee >= bdev->num_ees)
+> --
+> 2.34.1
+>
 
