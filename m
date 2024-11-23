@@ -1,400 +1,203 @@
-Return-Path: <linux-arm-msm+bounces-38939-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38940-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B11139D6B94
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Nov 2024 22:23:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 806F59D6BBD
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Nov 2024 23:17:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3818D16180A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Nov 2024 21:23:14 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 07C60161A3C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Nov 2024 22:17:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93E7B14EC47;
-	Sat, 23 Nov 2024 21:23:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FA7813D890;
+	Sat, 23 Nov 2024 22:17:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pFjx5/1v"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CaXXMMAZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E79613C9C4;
-	Sat, 23 Nov 2024 21:23:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD018139D1B
+	for <linux-arm-msm@vger.kernel.org>; Sat, 23 Nov 2024 22:17:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732396993; cv=none; b=LqSNwG0f83lwEI0VNuEHTtr9sVnt+axyN498I91LI4rxS0DBTfQJf6Rhe4fIoF66MIUP7Nz/t1ZyYdXdaafAFRtikVCiG7tLPEkMyDJ0DsIExCmui1au1lFsub3aNXBXlszxt5JGobdCidqSo3Ka+8ZqWL2zdHMJ/LcDk3Z/XMw=
+	t=1732400240; cv=none; b=r4LMT0Pt/u1c4B3NMWsgqttOERNPEGT4jxs9DvOPAL+BFMvWCOyVjnIn4YSUuqtiXb3XRYey88YxwbOTzhtlCzniIkzbb0kojwSn91T0ndly1f5x3mzoXhDRTifxiolIEHsQHIGcoyZ6RqMUGM8ZOTi+tbCmKGf+AMCtUXP+aHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732396993; c=relaxed/simple;
-	bh=Yx8rWaOKQQ/xVEBhSMw1gDjWQojFIbGkBqb6yyP1rws=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AuJAWKS2eaNy23dFQ3XZYAlobbeHvigBwW+x6rQwOhbYNE+LkgpcBlcnWvj6OLXBxTkiveqxeBtz7tV6WpJmtrrkEvZ/YhQChxivJVsFHemWLCT5nMEQQZlhN20ZTtpVBeY97YXL6mlAjC3fOVFfZwRIY2FAthjwWKoeJEfQpBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pFjx5/1v; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ANKg9fn010490;
-	Sat, 23 Nov 2024 21:22:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=WGsAd+M1M8CAPI2c6n24Veb6
-	7ucYEOUvglGXQx5cpMk=; b=pFjx5/1va2SLC/eCRqLqm1OVLJZiwJH8XLPJFGRY
-	ODtvwxScgUlPPAFKmcgmajXr8WzapCQjXvx4uC0DhHmjYwoN22n2gL88zbn5lfDd
-	VqlsuytypQw8vOdP9m+GZnYUtSc5UDUBssGDmv9dsSicI999gKtrcyFXh5Ydz7JV
-	C3A2cJrepFFo75dsu7whlD2u6wDXwHMzODCJ3gsvZrHpbKtHI3H4Iv2jGA7GlEZt
-	i5ZuL9hu93sFY/cFcy2i8ZE5hem3on3ROeJb51OZ7M9SdAHRVjpxQKahM5EwvwBb
-	eftixmtTw7MsF/DxwI41xs+C8hs9N3lyCW/2/VtL3q2neg==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4334dmshph-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 23 Nov 2024 21:22:58 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4ANLMvrY021343
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 23 Nov 2024 21:22:57 GMT
-Received: from hu-akhilpo-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Sat, 23 Nov 2024 13:22:50 -0800
-Date: Sun, 24 Nov 2024 02:52:46 +0530
-From: Akhil P Oommen <quic_akhilpo@quicinc.com>
-To: Neil Armstrong <neil.armstrong@linaro.org>
-CC: Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        "Stephen
- Boyd" <sboyd@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Rob Clark
-	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        "Dmitry
- Baryshkov" <dmitry.baryshkov@linaro.org>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, "Simona
- Vetter" <simona@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>, Rob
- Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor
- Dooley <conor+dt@kernel.org>,
-        Connor Abbott <cwabbott0@gmail.com>, <linux-pm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
-        <devicetree@vger.kernel.org>
-Subject: Re: [PATCH v2 05/11] drm/msm: adreno: add plumbing to generate
- bandwidth vote table for GMU
-Message-ID: <20241123212246.46hdznrgusr2pj4v@hu-akhilpo-hyd.qualcomm.com>
-References: <20241119-topic-sm8x50-gpu-bw-vote-v2-0-4deb87be2498@linaro.org>
- <20241119-topic-sm8x50-gpu-bw-vote-v2-5-4deb87be2498@linaro.org>
+	s=arc-20240116; t=1732400240; c=relaxed/simple;
+	bh=EOhBBTv2bGi8GWL7TZdAAuY87OKt8WIKXaVrQFXnfPc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=SzuAwCQVLloZDQEDb95kAGY92xEyV03lOLj1z8NX3HXR43zIUVV0cqNK7UD2IYsYPpdYcYZPWCihLtc6MNrmQDPBeZmgZEyav8PJ6l8qU2snl5YiHt6WbcpulVljnNyUnz1WawVHJsAbgpk5FirMuPxA4aGVIQaIZ6H8kY/SwSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CaXXMMAZ; arc=none smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4315df7b43fso29980895e9.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Nov 2024 14:17:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1732400235; x=1733005035; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=xUM5ai4qkzG21WAywzYdq6QZCDAO72307yXlG4t6sAU=;
+        b=CaXXMMAZfM2cKy5vubCpyEyfh5vW5B2fDvkg1WOKeW7tdhE1OEDkkr2t0hEWXuCxzp
+         GlOUWLYhcPCXcVQCYVtjwgW6NWlidQ4wdPcdmUCCswhHdOarstLKJGvkyKkFGsqafeb1
+         DGCA64p35rlQrtUHXiNBMXrpHMAFSstdTLDumprVDvGi9Y5ZHXz39f6h1eFAOkd5VQ6m
+         UwZBSl+uB0+qIIGrPdjsfei/tt9EsqM6pMA3xamy8PvxKKNLv1MX8kVtPgZWFfjqR3ZK
+         xU52ynkNRCBPlrrTJt73KV/BdzjjBaJ0+r4z34avLi4RKnSb8bl+4GzwIwfT5JUE6RaT
+         RlcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732400235; x=1733005035;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xUM5ai4qkzG21WAywzYdq6QZCDAO72307yXlG4t6sAU=;
+        b=N+2QMGNDrcE9wFo2Z3a+ntxnvsNLl2duk8s1lBkYWd5cyVCJWxiWHSR++JxNhTmPnU
+         tyYk4ieHrTkHi9dKmbKtTx92ANc8guEbJd4c1njmC1Swd6dg+8sSizDdqcYrONwRzkyN
+         RHcnTXwZJ8q2R22W1YQyynCKEIbA+q6cOv8TAuo3OSaAiUNBujH4GC1TrIANTTmFqfYv
+         2ShcO+zti8kUrfWfVn7f7SZLnbURXgdo7a+qNRov006AmB6H54k4JRO+teJV6Rlxm0Tm
+         pO7SnAfYTub3K05NsaC6QOnhowLdrNGRX/L83LaGYsRNrBqNvL1fWTcdaS8tH1CCjC0X
+         Kd7Q==
+X-Gm-Message-State: AOJu0Yx0a+zKD2H5VkD5+1jADVBvi7TMPsJmBFjlNausEx/cZ5fYaZ8d
+	POCjFJkb7Wx+/rM9EC8D9qzMxU05iFs/nj6njAwMzUwd+mp7lxOQmRMfVQ==
+X-Gm-Gg: ASbGncvYj4/jD6qr8ILH+kU3lRmDPncy5sZJDd8ASyoQLzkgwSGaN9vAJ/6puVLEwDy
+	nY8mz1x3A6tFFpUk9frC1D9rRrESjW0re55bZWHfKx0O1Mv4AiGb9/oQo/5LElWrSQ6xegxlioT
+	F5DExjdmDIlSo6hNaO4lz3zWPVNvL91dBacNtEVl7yz6rAgjjuXq1+J0xCOWk05ckBYx1BA62nx
+	RSfsioqQiC20bL0k2hVrytnes+xmArtyh0SjhDsclzGLmc6L5GZ7ThgIjfJ1eLZhHq/yttU7T+M
+X-Google-Smtp-Source: AGHT+IFIFlKDpPq7QI+moGbVB94otjWQ35ZX0jV0MLhm617xhWFWg2JeBzYsIXOvZbc21nFOKZBwiA==
+X-Received: by 2002:a05:600c:a44:b0:430:54a4:5ad7 with SMTP id 5b1f17b1804b1-433ce41100emr57103855e9.1.1732400234840;
+        Sat, 23 Nov 2024 14:17:14 -0800 (PST)
+Received: from localhost.localdomain (gw1.ms-free.net. [185.243.124.10])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-433cde8c8c8sm72460605e9.34.2024.11.23.14.17.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 23 Nov 2024 14:17:13 -0800 (PST)
+From: Petr Vorel <petr.vorel@gmail.com>
+To: linux-arm-msm@vger.kernel.org
+Cc: Petr Vorel <petr.vorel@gmail.com>,
+	Alexander Reimelt <alexander.reimelt@posteo.de>,
+	Konrad Dybcio <konradybcio@kernel.org>
+Subject: [PATCH 1/1] arm64: dts: qcom: msm8994-angler: Enable power key, volume up/down
+Date: Sat, 23 Nov 2024 23:17:08 +0100
+Message-ID: <20241123221708.862901-1-petr.vorel@gmail.com>
+X-Mailer: git-send-email 2.47.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20241119-topic-sm8x50-gpu-bw-vote-v2-5-4deb87be2498@linaro.org>
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: OBgJ453CoV1s0ZdQcQB89qsB4f-nfXh9
-X-Proofpoint-ORIG-GUID: OBgJ453CoV1s0ZdQcQB89qsB4f-nfXh9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- priorityscore=1501 mlxlogscore=999 phishscore=0 mlxscore=0
- lowpriorityscore=0 suspectscore=0 malwarescore=0 adultscore=0 spamscore=0
- impostorscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2409260000 definitions=main-2411230177
+Content-Transfer-Encoding: 8bit
 
-On Tue, Nov 19, 2024 at 06:56:40PM +0100, Neil Armstrong wrote:
-> The Adreno GMU Management Unit (GMU) can also scale DDR Bandwidth along
-> the Frequency and Power Domain level, but by default we leave the
-> OPP core scale the interconnect ddr path.
-> 
-> In order to calculate vote values used by the GPU Management
-> Unit (GMU), we need to parse all the possible OPP Bandwidths and
+Signed-off-by: Petr Vorel <petr.vorel@gmail.com>
+---
+Tested:
+# evtest /dev/input/event0 # KEY_POWER
+/ # Input driver version is 1.0.1
+Input device ID: bus 0x0 vendor 0x0 product 0x0 version 0x0
+Input device name: "pm8941_pwrkey"
+Supported events:
+  Event type 0 (EV_SYN)
+  Event type 1 (EV_KEY)
+    Event code 116 (KEY_POWER)
+Properties:
+Testing ... (interrupt to exit)
+Event: time 31.770919, type 1 (EV_KEY), code 116 (KEY_POWER), value 1
+Event: time 31.770919, -------------- SYN_REPORT ------------
+Event: time 32.077229, type 1 (EV_KEY), code 116 (KEY_POWER), value 0
+Event: time 32.077229, -------------- SYN_REPORT ------------
 
-GMU expects a table of votes for each DDR frequency corners. Can we
-please try to figure out a way to do that? Generally, we should ensure the
-data that is send to GMU firmware match downstream exactly. Because,
-when something breaks in firmware or worst, at SoC level, it will be pretty
-hard to narrow down the issue. So, I prefer to be very conservative about
-this.
+# evtest /dev/input/event1 # KEY_VOLUMEDOWN
+Input driver version is 1.0.1
+/ # Input device ID: bus 0x0 vendor 0x0 product 0x0 version 0x0
+Input device name: "pm8941_resin"
+Supported events:
+  Event type 0 (EV_SYN)
+  Event type 1 (EV_KEY)
+    Event code 114 (KEY_VOLUMEDOWN)
+Properties:
+Testing ... (interrupt to exit)
+Event: time 44.979203, type 1 (EV_KEY), code 114 (KEY_VOLUMEDOWN), value 1
+Event: time 44.979203, -------------- SYN_REPORT ------------
+Event: time 45.222189, type 1 (EV_KEY), code 114 (KEY_VOLUMEDOWN), value 0
+Event: time 45.222189, -------------- SYN_REPORT ------------
 
-KGSL keeps the ddr frequency table in the devicetree. That helps to keep
-the driver lean, but I am not sure if that is viable upstream.
+# evtest /dev/input/event2 # KEY_VOLUMEUP
+Input driver version is 1.0.1
+/ # Input device ID: bus 0x19 vendor 0x1 product 0x1 version 0x100
+Input device name: "gpio-keys"
+Supported events:
+  Event type 0 (EV_SYN)
+  Event type 1 (EV_KEY)
+    Event code 115 (KEY_VOLUMEUP)
+Key repeat handling:
+  Repeat type 20 (EV_REP)
+    Repeat code 0 (REP_DELAY)
+      Value    250
+    Repeat code 1 (REP_PERIOD)
+      Value     33
+Properties:
+Testing ... (interrupt to exit)
+Event: time 54.630877, type 1 (EV_KEY), code 115 (KEY_VOLUMEUP), value 1
+Event: time 54.630877, -------------- SYN_REPORT ------------
+Event: time 54.912013, type 1 (EV_KEY), code 115 (KEY_VOLUMEUP), value 2
+Event: time 54.912013, -------------- SYN_REPORT ------------
+Event: time 54.931493, type 1 (EV_KEY), code 115 (KEY_VOLUMEUP), value 0
+Event: time 54.931493, -------------- SYN_REPORT ------------
 
--Akhil.
+# evtest
+No device specified, trying to scan all of /dev/input/event*
+Available devices:
+/dev/input/event0:	pm8941_pwrkey
+/ # /dev/input/event1:	pm8941_resin
+/dev/input/event2:	gpio-keys
+Select the device event number [0-2]: USAGE:
+...
 
-> create a vote value to be sent to the appropriate Bus Control
-> Modules (BCMs) declared in the GPU info struct.
-> 
-> The vote array will then be used to dynamically generate the GMU
-> bw_table sent during the GMU power-up.
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->  drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 153 ++++++++++++++++++++++++++++++++++
->  drivers/gpu/drm/msm/adreno/a6xx_gmu.h |  14 ++++
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.h |   1 +
->  3 files changed, 168 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> index 14db7376c712d19446b38152e480bd5a1e0a5198..f6814d92a4edb29ba8a34a34aabb8b2324e9c6a4 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> @@ -9,6 +9,7 @@
->  #include <linux/pm_domain.h>
->  #include <linux/pm_opp.h>
->  #include <soc/qcom/cmd-db.h>
-> +#include <soc/qcom/tcs.h>
->  #include <drm/drm_gem.h>
->  
->  #include "a6xx_gpu.h"
-> @@ -1287,6 +1288,109 @@ static int a6xx_gmu_memory_probe(struct a6xx_gmu *gmu)
->  	return 0;
->  }
->  
-> +/**
-> + * struct bcm_db - Auxiliary data pertaining to each Bus Clock Manager (BCM)
-> + * @unit: divisor used to convert bytes/sec bw value to an RPMh msg
-> + * @width: multiplier used to convert bytes/sec bw value to an RPMh msg
-> + * @vcd: virtual clock domain that this bcm belongs to
-> + * @reserved: reserved field
-> + */
-> +struct bcm_db {
-> +	__le32 unit;
-> +	__le16 width;
-> +	u8 vcd;
-> +	u8 reserved;
-> +};
-> +
-> +static u64 bcm_div(u64 num, u32 base)
-> +{
-> +	/* Ensure that small votes aren't lost. */
-> +	if (num && num < base)
-> +		return 1;
-> +
-> +	do_div(num, base);
-> +
-> +	return num;
-> +}
-> +
-> +static int a6xx_gmu_rpmh_bw_votes_init(const struct a6xx_info *info,
-> +				       struct a6xx_gmu *gmu)
-> +{
-> +	const struct bcm_db *bcm_data[GMU_MAX_BCMS] = { 0 };
-> +	unsigned int bcm_index, bw_index;
-> +
-> +	/* Retrieve BCM data from cmd-db */
-> +	for (bcm_index = 0; bcm_index < GMU_MAX_BCMS; bcm_index++) {
-> +		size_t count;
-> +
-> +		/* Skip unconfigured BCM */
-> +		if (!info->bcm[bcm_index].name)
-> +			continue;
-> +
-> +		bcm_data[bcm_index] = cmd_db_read_aux_data(
-> +						info->bcm[bcm_index].name,
-> +						&count);
-> +		if (IS_ERR(bcm_data[bcm_index]))
-> +			return PTR_ERR(bcm_data[bcm_index]);
-> +
-> +		if (!count)
-> +			return -EINVAL;
-> +	}
-> +
-> +	/* Generate BCM votes values for each bandwidth & BCM */
-> +	for (bw_index = 0; bw_index < gmu->nr_gpu_bws; bw_index++) {
-> +		u32 *data = gmu->gpu_bw_votes[bw_index];
-> +		u32 bw = gmu->gpu_bw_table[bw_index];
-> +
-> +		/* Calculations loosely copied from bcm_aggregate() & tcs_cmd_gen() */
-> +		for (bcm_index = 0; bcm_index < GMU_MAX_BCMS; bcm_index++) {
-> +			bool commit = false;
-> +			u64 peak, vote;
-> +			u16 width;
-> +			u32 unit;
-> +
-> +			/* Skip unconfigured BCM */
-> +			if (!info->bcm[bcm_index].name || !bcm_data[bcm_index])
-> +				continue;
-> +
-> +			if (bcm_index == GMU_MAX_BCMS - 1 ||
-> +			    (bcm_data[bcm_index + 1] &&
-> +			     bcm_data[bcm_index]->vcd != bcm_data[bcm_index + 1]->vcd))
-> +				commit = true;
-> +
-> +			if (!bw) {
-> +				data[bcm_index] = BCM_TCS_CMD(commit, false, 0, 0);
-> +				continue;
-> +			}
-> +
-> +			if (info->bcm[bcm_index].fixed) {
-> +				u32 perfmode = 0;
-> +
-> +				if (bw >= info->bcm[bcm_index].perfmode_bw)
-> +					perfmode = info->bcm[bcm_index].perfmode;
-> +
-> +				data[bcm_index] = BCM_TCS_CMD(commit, true, 0, perfmode);
-> +				continue;
-> +			}
-> +
-> +			/* Multiply the bandwidth by the width of the connection */
-> +			width = le16_to_cpu(bcm_data[bcm_index]->width);
-> +			peak = bcm_div((u64)bw * width, info->bcm[bcm_index].buswidth);
-> +
-> +			/* Input bandwidth value is in KBps, scale the value to BCM unit */
-> +			unit = le32_to_cpu(bcm_data[bcm_index]->unit);
-> +			vote = bcm_div(peak * 1000ULL, unit);
-> +
-> +			if (vote > BCM_TCS_CMD_VOTE_MASK)
-> +				vote = BCM_TCS_CMD_VOTE_MASK;
-> +
-> +			data[bcm_index] = BCM_TCS_CMD(commit, true, vote, vote);
-> +		}
-> +	}
-> +
-> +	return 0;
-> +}
-> +
->  /* Return the 'arc-level' for the given frequency */
->  static unsigned int a6xx_gmu_get_arc_level(struct device *dev,
->  					   unsigned long freq)
-> @@ -1390,12 +1494,15 @@ static int a6xx_gmu_rpmh_arc_votes_init(struct device *dev, u32 *votes,
->   * The GMU votes with the RPMh for itself and on behalf of the GPU but we need
->   * to construct the list of votes on the CPU and send it over. Query the RPMh
->   * voltage levels and build the votes
-> + * The GMU can also vote for DDR interconnects, use the OPP bandwidth entries
-> + * and BCM parameters to build the votes.
->   */
->  
->  static int a6xx_gmu_rpmh_votes_init(struct a6xx_gmu *gmu)
->  {
->  	struct a6xx_gpu *a6xx_gpu = container_of(gmu, struct a6xx_gpu, gmu);
->  	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
-> +	const struct a6xx_info *info = adreno_gpu->info->a6xx;
->  	struct msm_gpu *gpu = &adreno_gpu->base;
->  	int ret;
->  
-> @@ -1407,6 +1514,10 @@ static int a6xx_gmu_rpmh_votes_init(struct a6xx_gmu *gmu)
->  	ret |= a6xx_gmu_rpmh_arc_votes_init(gmu->dev, gmu->cx_arc_votes,
->  		gmu->gmu_freqs, gmu->nr_gmu_freqs, "cx.lvl");
->  
-> +	/* Build the interconnect votes */
-> +	if (adreno_gpu->info->features & ADRENO_FEAT_GMU_BW_VOTE)
-> +		ret |= a6xx_gmu_rpmh_bw_votes_init(info, gmu);
-> +
->  	return ret;
->  }
->  
-> @@ -1442,6 +1553,38 @@ static int a6xx_gmu_build_freq_table(struct device *dev, unsigned long *freqs,
->  	return index;
->  }
->  
-> +static int a6xx_gmu_build_bw_table(struct device *dev, unsigned long *bandwidths,
-> +		u32 size)
-> +{
-> +	int count = dev_pm_opp_get_opp_count(dev);
-> +	struct dev_pm_opp *opp;
-> +	int i, index = 0;
-> +	unsigned int bandwidth = 1;
-> +
-> +	/*
-> +	 * The OPP table doesn't contain the "off" bandwidth level so we need to
-> +	 * add 1 to the table size to account for it
-> +	 */
-> +
-> +	if (WARN(count + 1 > size,
-> +		"The GMU bandwidth table is being truncated\n"))
-> +		count = size - 1;
-> +
-> +	/* Set the "off" bandwidth */
-> +	bandwidths[index++] = 0;
-> +
-> +	for (i = 0; i < count; i++) {
-> +		opp = dev_pm_opp_find_bw_ceil(dev, &bandwidth, 0);
-> +		if (IS_ERR(opp))
-> +			break;
-> +
-> +		dev_pm_opp_put(opp);
-> +		bandwidths[index++] = bandwidth++;
-> +	}
-> +
-> +	return index;
-> +}
-> +
->  static int a6xx_gmu_pwrlevels_probe(struct a6xx_gmu *gmu)
->  {
->  	struct a6xx_gpu *a6xx_gpu = container_of(gmu, struct a6xx_gpu, gmu);
-> @@ -1472,6 +1615,16 @@ static int a6xx_gmu_pwrlevels_probe(struct a6xx_gmu *gmu)
->  
->  	gmu->current_perf_index = gmu->nr_gpu_freqs - 1;
->  
-> +	/*
-> +	 * The GMU also handles GPU Interconnect Votes so build a list
-> +	 * of DDR bandwidths from the GPU OPP table
-> +	 */
-> +	if (adreno_gpu->info->features & ADRENO_FEAT_GMU_BW_VOTE)
-> +		gmu->nr_gpu_bws = a6xx_gmu_build_bw_table(&gpu->pdev->dev,
-> +			gmu->gpu_bw_table, ARRAY_SIZE(gmu->gpu_bw_table));
-> +
-> +	gmu->current_perf_index = gmu->nr_gpu_freqs - 1;
-> +
->  	/* Build the list of RPMh votes that we'll send to the GMU */
->  	return a6xx_gmu_rpmh_votes_init(gmu);
->  }
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
-> index b4a79f88ccf45cfe651c86d2a9da39541c5772b3..03603eadc0f9ed866899c95e99f333a511ebc3c1 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
-> @@ -19,6 +19,16 @@ struct a6xx_gmu_bo {
->  	u64 iova;
->  };
->  
-> +#define GMU_MAX_BCMS	3
-> +
-> +struct a6xx_bcm {
-> +	char *name;
-> +	unsigned int buswidth;
-> +	bool fixed;
-> +	unsigned int perfmode;
-> +	unsigned int perfmode_bw;
-> +};
-> +
->  /*
->   * These define the different GMU wake up options - these define how both the
->   * CPU and the GMU bring up the hardware
-> @@ -82,6 +92,10 @@ struct a6xx_gmu {
->  	unsigned long gpu_freqs[16];
->  	u32 gx_arc_votes[16];
->  
-> +	int nr_gpu_bws;
-> +	unsigned long gpu_bw_table[16];
-> +	u32 gpu_bw_votes[16][GMU_MAX_BCMS];
-> +
->  	int nr_gmu_freqs;
->  	unsigned long gmu_freqs[4];
->  	u32 cx_arc_votes[4];
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-> index 4aceffb6aae89c781facc2a6e4a82b20b341b6cb..5b80919e595fa1ba0a3afcca55feb89e60870cb1 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-> @@ -44,6 +44,7 @@ struct a6xx_info {
->  	u32 gmu_chipid;
->  	u32 gmu_cgc_mode;
->  	u32 prim_fifo_threshold;
-> +	const struct a6xx_bcm bcm[GMU_MAX_BCMS];
->  };
->  
->  struct a6xx_gpu {
-> 
-> -- 
-> 2.34.1
-> 
+ .../qcom/msm8994-huawei-angler-rev-101.dts    | 21 ++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts b/arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts
+index 29e79ae0849d8..1aca11daf83c0 100644
+--- a/arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts
++++ b/arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts
+@@ -2,12 +2,13 @@
+ /*
+  * Copyright (c) 2015, Huawei Inc. All rights reserved.
+  * Copyright (c) 2016, The Linux Foundation. All rights reserved.
+- * Copyright (c) 2021-2023, Petr Vorel <petr.vorel@gmail.com>
++ * Copyright (c) 2021-2024, Petr Vorel <petr.vorel@gmail.com>
+  */
+ 
+ /dts-v1/;
+ 
+ #include "msm8994.dtsi"
++#include "pm8994.dtsi"
+ 
+ / {
+ 	model = "Huawei Nexus 6P";
+@@ -46,6 +47,24 @@ reserved@6300000 {
+ 			no-map;
+ 		};
+ 	};
++
++	gpio-keys {
++		compatible = "gpio-keys";
++		autorepeat;
++
++		button-vol-up {
++			label = "volume up";
++			gpios = <&pm8994_gpios 3 GPIO_ACTIVE_LOW>;
++			linux,code = <KEY_VOLUMEUP>;
++			wakeup-source;
++			debounce-interval = <15>;
++		};
++	};
++};
++
++&pm8994_resin {
++	linux,code = <KEY_VOLUMEDOWN>;
++	status = "okay";
+ };
+ 
+ &blsp1_uart2 {
+-- 
+2.47.0
+
 
