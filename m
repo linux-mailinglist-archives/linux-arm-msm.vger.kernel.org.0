@@ -1,77 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-38891-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38892-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A37229D66AF
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Nov 2024 01:19:14 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id AF8949D66D0
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Nov 2024 01:20:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 057D9B21E46
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Nov 2024 00:19:12 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 74C0F2810B5
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Nov 2024 00:20:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 11275B640;
-	Sat, 23 Nov 2024 00:19:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1949F4A08;
+	Sat, 23 Nov 2024 00:19:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Feo9+J+A"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="djwadoRi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AAAD4A08
-	for <linux-arm-msm@vger.kernel.org>; Sat, 23 Nov 2024 00:19:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D1A42309A6
+	for <linux-arm-msm@vger.kernel.org>; Sat, 23 Nov 2024 00:19:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732321144; cv=none; b=PFnfg74HCr65UPOF+lfCoh1ww3KUGA1/pshm28beuOBAuE+oV0gjAignNaflwlGs03OVWKoKSwaem3ut/N0sRAVkrOSvTjNZgwl8Wpp/hR/+e2hbQPTRxVvzY0j5JfYcDXmArFiVvfInOFwdpIwuHPruigFhz0Q7SQjNLwLhCEc=
+	t=1732321185; cv=none; b=O2D9Pab1fWkYQYe+PPIA6T7Okgf3Y2TXE6jK0yVug4kUAKy1yOCvxifDxWUIKiBxGv5Fmwvj1DQlN/Irxr2NfwKfiT+1vZerQHUmpe7a9agvmVxxozG56mJt56ng7XcYoqfCG1gCcjHuEZCVCoVSk1NWj9uiURtLqJjo9SksLRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732321144; c=relaxed/simple;
-	bh=gp6cmepa61xAyiqmA0aFpcdQ8xEtl56sKeMzfRIXE1U=;
+	s=arc-20240116; t=1732321185; c=relaxed/simple;
+	bh=W1T4Zed6CRgrZT8ai/WFastdRH0qGAdtmmixOSmvyAY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZLAOt/Dy/4tRla6rCFF7V7s6MFud+yHn2Ma1jj5erhtSn58kO+SAQ9sV+3YrU35Numaw3nUuB5u6pJIQq1vzo/9yOAtYijYj/DpYhh4/U9extLe2ysi6utEvAPemN2Q9xO+Ih0s0fsJufIXZlOzEqhWUmPelIIKozMqygKUTjT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Feo9+J+A; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-431548bd1b4so23606355e9.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 16:19:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732321140; x=1732925940; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=CBar/yUBJZ7evAtJzqvt9icFhcSkyuHEJP8iZfvqHus=;
-        b=Feo9+J+AR+AU+ahicpwF2PWcXN8I0qV2NdFn1o9kB4MN4DsZY1aPTb3TU6hhTJWUBZ
-         tIiioKDGA2up5wrH4dGGfBzaC3Mpi/pwx/OPeZDmfjnOm/Bz+6eIxnbXB4OtOEfpBwGN
-         WKqIejjb8qHFpdGcfO5KGg11Kdwag8d53soZNfbkNbbwHNlcXEKfcNT4E6YUEXz7lXrT
-         RPqrl3kfirqo8OUcIcx9NHXwJjAQ3Oyy/YIa+StCpxvUY+SNRMhhSGJmJamLoupidY0T
-         1RlzrH0Rx4hVoyH8B+lJjf+GP7gycsG4Y2c/zhAhLpWtCcR9MQdJAbyZGjD8vzdcRV2v
-         bK6A==
+	 In-Reply-To:Content-Type; b=Juuk9oecqlEcZC7C8SMU5t3A0VUb/n80jTxeU7ui+WSWpfytKQBMwJW587pdUx3HS6PosEJF6yERJv2WFrJib12EXANHmWgH+Xmzwqy/Ufb50/sNzUwwglQu+nH7nfL0J5p9h4nKWQKyh5/MAhG/scE+RlmPnUGE+Byj13AL1OA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=djwadoRi; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AMD5bP8020827
+	for <linux-arm-msm@vger.kernel.org>; Sat, 23 Nov 2024 00:19:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	xrWWeSVsA8o5gUZSnPUFBeaGhEjYRvTTPyQTwcDpYmg=; b=djwadoRiZsTk8XFL
+	Zo+wunlm2QPYNJT5HisVogu610qeXDDgmCf4/GGNdwTXoe27lZUy7T80b8zyYDVD
+	MBJdtPQNPxI7DlGOPl2VLObezPvBfgaTfx2CliEzZe6osU/fjfpa4/jwmw1BZ+Vz
+	HvLep5R1DFGRqs2wbhb/jhK9p8ZD1s+w13x4zNC3WTP0Cykhdt75N6XxQ5wOTwz4
+	IRNo7ZJdpNzEGFzIueZbI0okU3dZJUf9ub3Qoc1RVxeV3KdfRN6e6sMOXl61H6zY
+	FUm3p5urONnd3l8Hmiqq+GaiT37GZvFk3aARquWCNbVa/aEwqga2IF7Of7pN+INy
+	viSBUw==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 432thphdc2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 23 Nov 2024 00:19:42 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-6d41129974dso6992296d6.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2024 16:19:42 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732321140; x=1732925940;
+        d=1e100.net; s=20230601; t=1732321181; x=1732925981;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CBar/yUBJZ7evAtJzqvt9icFhcSkyuHEJP8iZfvqHus=;
-        b=EEwLpmWUFk2nu7XqU8G7NvAxBxyiV2pvx0dioLr/48qxFKcsOP3+FiLtSEuJYn7ggR
-         eKSv7u7w9D3SxU+eDd5GYt69u7QUvAfCPAhxZ7Zl/wUmilU4QS8EH88G1A/J7PUfAJgy
-         uEFVFcSxNxf4Asaz2JbslLH2kldjzemOkJHGaxM/uil5SIKr/DZi2M+aPwEKPCeqbXwI
-         zJd2QCEBRJnx9w0RHVh1HDbWC5eTrhUcZrILgoCCjv0RdMB7k9CL0Ip82phVr/T791Zz
-         lxIcgvSHu/qiZBTmEe/PtoNyI5cEvxbbd0oPzRgWR205rQItFqvI40gQ2JEi8NsvCF99
-         KuRA==
-X-Gm-Message-State: AOJu0Yztd9PmVeOaLvyZNPWos/leEAYaS67OZWAWCiR4b/cLGLXSNRH/
-	QlFnEwkfijr6A/GiICUDlO8Dr8zhBMR37HoBntqvsSOZ/i9HyA/HUS9b9/Istk0=
-X-Gm-Gg: ASbGnctaRi2esmfpyxcVrvs6DGlixVQGCLs0VOD/0RRJdLN/w7X+jt8EGXDwYnwDglm
-	NVuSuSZY1ElJQHr04VwPV//VZUQTZWDyH8VhvNmEnUmNFwt4slleZR0+3nd0kE7X3tI7KHPwwcT
-	Di+Oz9g3DFulTpy80ifaOSfxpYs7UPHWMk4akL3m/E6BoNzbu5vVRp1V2+mn1hq4YlCSfH0AdG3
-	kSoNgzzWc2tYotlIoHKlpkxQrnGvOucPSfnyd2Meuy8BDvRKIFe29mga5Pjcvc=
-X-Google-Smtp-Source: AGHT+IHlRoz6uk5MGmn7iew4+RptSPaqyvO51B4OHl+zcs4aSMhp1CyvOMHb1GlQZ23DFr2P1b8X8g==
-X-Received: by 2002:a05:600c:3ac3:b0:431:6083:cd2a with SMTP id 5b1f17b1804b1-433ce42c78bmr45572455e9.15.1732321140029;
-        Fri, 22 Nov 2024 16:19:00 -0800 (PST)
-Received: from [192.168.0.40] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-433cde10eabsm43567815e9.13.2024.11.22.16.18.59
+        bh=xrWWeSVsA8o5gUZSnPUFBeaGhEjYRvTTPyQTwcDpYmg=;
+        b=E93PK4VjsOb6xHeGohmY9MQXMTjkmWMcAZWVrFZbfX7WKilQMkbyvslQVi2sJCyGKM
+         8e50d7z7nwKBhlmVdd3ewAuZHTTMdYekUxUkZuUgVsJdVNk+fHpKENSs1re1snqA/jvX
+         NpslKZfdl4zm5OozXK63Uzgt+vV4AAAIS9H5x7lfEyWV9YbGcm93hTj423QgUVX3/LgC
+         GiTd693v5k0iS9kUlpOfDRTHXLJ5oDaBxMXHTBv0Am68R05esouGMGSGW9mXzC2FNkCe
+         mWcX5qE716NmLPBvG59s2gk/Z2O5lXht6F2Iw+rk/3sVL2Iw613sv+4TZVGKin5ADoeh
+         Shxg==
+X-Forwarded-Encrypted: i=1; AJvYcCXjxfJSF0Ijcp1aaiNVkm31TXz9VQM6BS6fZiKZ4k6wB2tqpJ6hEv9cN65d3HeyjOAkkREJicGF2yopDSVD@vger.kernel.org
+X-Gm-Message-State: AOJu0YxxtRTfERN97cfOYt4r6EkZc6D8wAqewJ8a4f7PkcJyrkbvfHOF
+	B+WnndTIbr0EhrVI78D7IwbV3AOsLuxbnLpWscIFrqxARmGGdI23H7qYhWRN+LFa3voghh+jZmn
+	Ucerqfy2slL9fVdrRMqHwvghnlsQ7PVdJ7BFj8gG6qLzxPJ1NlkhOGQas8nXQ0pNu
+X-Gm-Gg: ASbGncs0Zf4UXn3WbSNIK7NFl4HO2LZJ3lD1cDjjzizecn67z7mVDljMVSre7XJ3BO0
+	/tCD1js7Tdq+jzVuYQl25qfYvcz+qX2ThI9O8UiKSYmrUgAQrNeRxykD6VxD7UXggQgDcnJ+qTE
+	rSMSfDbhL7SqKLNakuwmSMXe71cAOnYEjvMLSigM5ilHK21qYlFWwh2VrXotgs9Mq9QaGmGHzJH
+	RaSOUSYOP1daBDl28llTn21w2QxiNePUey0ny/W2k9xijJr9euNu41nJfKgmIzz++XKD1Ggqo+U
+	MAsTWQGcDMVAjU10Ql644QJpQZZBHew=
+X-Received: by 2002:a05:620a:271b:b0:7a9:a632:df3c with SMTP id af79cd13be357-7b51457fad7mr307972885a.14.1732321181004;
+        Fri, 22 Nov 2024 16:19:41 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEGqI1WQQpUf2crWgNFFZ+pnTknQHdikQ7GCgw8JwewpNtBbLTat7WrGjpS3Ex4P+Irr7Yh0Q==
+X-Received: by 2002:a05:620a:271b:b0:7a9:a632:df3c with SMTP id af79cd13be357-7b51457fad7mr307971885a.14.1732321180610;
+        Fri, 22 Nov 2024 16:19:40 -0800 (PST)
+Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5d01d3c0458sm1414240a12.45.2024.11.22.16.19.38
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Nov 2024 16:18:59 -0800 (PST)
-Message-ID: <f7c31279-8492-484c-94c4-893d98f53afb@linaro.org>
-Date: Sat, 23 Nov 2024 00:18:58 +0000
+        Fri, 22 Nov 2024 16:19:40 -0800 (PST)
+Message-ID: <5ff5d720-ccf7-42ee-9a4b-90cc168a4b7b@oss.qualcomm.com>
+Date: Sat, 23 Nov 2024 01:19:37 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,61 +89,79 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] Use APIs in gdsc genpd to switch gdsc mode for venus
- v4 core
-To: Renjiang Han <quic_renjiang@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
- Taniya Das <quic_tdas@quicinc.com>
-References: <20241122-switch_gdsc_mode-v1-0-365f097ecbb0@quicinc.com>
+Subject: Re: [PATCH] drm/msm: UAPI error reporting
+To: Rob Clark <robdclark@gmail.com>
+Cc: dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20241121164858.457921-1-robdclark@gmail.com>
+ <54601d79-4156-41f4-b1b7-250c5c970641@oss.qualcomm.com>
+ <CAF6AEGtafQM7-mYy163Krry3OHgPNH3e9A=9VEhBpiQTADtULQ@mail.gmail.com>
 Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20241122-switch_gdsc_mode-v1-0-365f097ecbb0@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <CAF6AEGtafQM7-mYy163Krry3OHgPNH3e9A=9VEhBpiQTADtULQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: FmMdwwDx1mfgg1RTVRYUmZkwlrx2zGNY
+X-Proofpoint-ORIG-GUID: FmMdwwDx1mfgg1RTVRYUmZkwlrx2zGNY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ lowpriorityscore=0 mlxlogscore=583 priorityscore=1501 phishscore=0
+ suspectscore=0 mlxscore=0 spamscore=0 clxscore=1015 adultscore=0
+ bulkscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2409260000 definitions=main-2411230000
 
-On 22/11/2024 10:31, Renjiang Han wrote:
-> The Venus driver requires vcodec GDSC to be ON in SW mode for clock
-> operations and move it back to HW mode to gain power benefits. Earlier,
-> as there is no interface to switch the GDSC mode from GenPD framework,
-> the GDSC is moved to HW control mode as part of GDSC enable callback and
-> venus driver is writing to its POWER_CONTROL register to keep the GDSC ON
-> from SW whereever required. But the POWER_CONTROL register addresses are
-> not constant and can vary across the variants.
+On 22.11.2024 4:51 PM, Rob Clark wrote:
+> On Fri, Nov 22, 2024 at 4:21 AM Konrad Dybcio
+> <konrad.dybcio@oss.qualcomm.com> wrote:
+>>
+>> On 21.11.2024 5:48 PM, Rob Clark wrote:
+>>> From: Rob Clark <robdclark@chromium.org>
+>>>
+>>> Debugging incorrect UAPI usage tends to be a bit painful, so add a
+>>> helper macro to make it easier to add debug logging which can be enabled
+>>> at runtime via drm.debug.
+>>>
+>>> Signed-off-by: Rob Clark <robdclark@chromium.org>
+>>> ---
+>>
+>> [...]
+>>
+>>> +/* Helper for returning a UABI error with optional logging which can make
+>>> + * it easier for userspace to understand what it is doing wrong.
+>>> + */
+>>> +#define UERR(err, drm, fmt, ...) \
+>>> +     ({ DRM_DEV_DEBUG_DRIVER((drm)->dev, fmt, ##__VA_ARGS__); -(err); })
+>>> +
+>>>  #define DBG(fmt, ...) DRM_DEBUG_DRIVER(fmt"\n", ##__VA_ARGS__)
+>>>  #define VERB(fmt, ...) if (0) DRM_DEBUG_DRIVER(fmt"\n", ##__VA_ARGS__)
+>>
+>> I'm generally not a fan of adding driver-specific debug prints..
+>>
+>> Maybe that's something that could be pushed to the drm-common layer
+>> or even deeper down the stack?
 > 
-> Also as per the HW recommendation, the GDSC mode switching needs to be
-> controlled from respective GDSC register and this is a uniform approach
-> across all the targets. Hence use dev_pm_genpd_set_hwmode() API which
-> controls GDSC mode switching using its respective GDSC register.
-> 
-> Signed-off-by: Renjiang Han <quic_renjiang@quicinc.com>
-> ---
-> Renjiang Han (1):
->        venus: pm_helpers: Use dev_pm_genpd_set_hwmode to switch GDSC mode on V4
-> 
-> Taniya Das (1):
->        clk: qcom: videocc: Use HW_CTRL_TRIGGER flag for video GDSC's
-> 
->   drivers/clk/qcom/videocc-sc7180.c              |  2 +-
->   drivers/clk/qcom/videocc-sdm845.c              |  4 ++--
->   drivers/media/platform/qcom/venus/pm_helpers.c | 10 +++++-----
->   3 files changed, 8 insertions(+), 8 deletions(-)
-> ---
-> base-commit: 63b3ff03d91ae8f875fe8747c781a521f78cde17
-> change-id: 20241122-switch_gdsc_mode-b658ea233c2a
-> 
-> Best regards,
+> Even if we had something like DRM_DBG_UABI_ERROR() I'd probably still
+> just #define UERR() to be a wrapper for it, since line length/wrapping
+> tends to be a bit of a challenge.  And I have a fairly substantial
+> patch stack on top of this adding sparse/vm_bind support.  (Debugging
+> that was actually the motivation for this patch.)
 
-What's your test strategy here ? What platforms have you tested this on ?
+Alright, let's not get in the way then
 
-What help do you need ?
+> I noticed that xe has something similar, but slightly different shape,
+> in the form of XE_IOCTL_DBG().. but that kinda just moves the line
+> length problem into the if() conditional.  (And doesn't provide the
+> benefit of being able to display the incorrect param.)
 
----
-bod
+Maybe rust comes one day and the lines will start growing vertically ;)
+
+Konrad
 
