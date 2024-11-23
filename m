@@ -1,149 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-38914-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38916-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 992239D68F8
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Nov 2024 13:13:29 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B8E5C9D691E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Nov 2024 13:59:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 28685B216F4
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Nov 2024 12:13:27 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 33C88B21983
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Nov 2024 12:59:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C26F6187355;
-	Sat, 23 Nov 2024 12:13:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A8BAB198E81;
+	Sat, 23 Nov 2024 12:58:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Vlsq0FoQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TqI4h5g7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BD3B14F9E9;
-	Sat, 23 Nov 2024 12:13:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71BA21836D9;
+	Sat, 23 Nov 2024 12:58:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732364002; cv=none; b=IpbPzi7Swp1ejsVjg6706QXLl7PEYwLlHwq/NNiqwvZZdIS0Cu9utFH7ZhHRhupcHsMnwH2+0wH/JWsH1y3B+a6Jx5EQq+ESjc1CNJMD7OMwipXJZqB5ev6/hxxskux03RVkQS1yXgosh2X+8EVw3fXSpsY3FaUJEo5B2h2G8k0=
+	t=1732366739; cv=none; b=gr58F/FkS401PRBn8Uv5PnkR0+Ko577oBdw86DaHcqVP8pLK5ZZ7ziF9/xeodXmWvCwEzNwVZHhamjC9rjQ0tQS9nq1xM68al5vyMvXVgt2/b+Ho0GHtR8b7qNwX3KRZ0pTxs6V78SDD4jXb1/issDsD4OwiLEeFiS/8AT7YTBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732364002; c=relaxed/simple;
-	bh=1dM5uHcLVJ4kOXWd0J8Gu9w8OhsgSUXOM8wfFq038M0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=ttAlfaD/m7T+5oC3l2JN+1AFFahUSqFJ5ydwMq4r9wEEIl0H7c3kIzrg8j8VeAzFSVRywkVA+6enbyk4f9Cf+zXWMcFpbZg2yOTGPkUjjRD9EYCZ10M4XT7QDYkB0B3bPk+HPCdZJEJ4g3txBWYP/wSMmZa1ASi8590oH/6nyFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Vlsq0FoQ; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AN9X4nM021444;
-	Sat, 23 Nov 2024 12:13:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	l5alXzzFD3JlV4R06VDMhg9cSTZcm4OkikXmaWosx7E=; b=Vlsq0FoQMDhgx3bn
-	EBo/tbTrznsQAgv0Hfn4yNa47egmItRmfpzcP9/N+GleCDL6mPknliGs8FHstv+d
-	rPDNk7FaTMhicJ1Rb1qwC69GVdn8M5RzNzQnVtjWYsK7mwWGNjz9v+eLmQ/wDC2n
-	sfk1Y3bCvCLUYuX1scotowT1/PW/f2smC6ZVya/c63O/MQ4FMTF0XW5jX1yBSNmS
-	Z8Ffoi5PNoP8b7siJk1Pz8pxGRQeheHmUgexcp+SzxDq4oxBqA58LdRu1T2aTZxU
-	AjdJLrK3ajszDAJw9qLKDeODaYZ29xVtbifjqdoYWn9wf6lexGx4hATA2X+/TVgH
-	CXx84A==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4337e6rps7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 23 Nov 2024 12:13:16 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4ANCDFoE024074
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 23 Nov 2024 12:13:15 GMT
-Received: from [10.216.31.245] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sat, 23 Nov
- 2024 04:13:12 -0800
-Message-ID: <f96fbfc5-ed5a-4def-a7e0-df4098dea4b3@quicinc.com>
-Date: Sat, 23 Nov 2024 17:43:09 +0530
+	s=arc-20240116; t=1732366739; c=relaxed/simple;
+	bh=gRTpoiz71rEZ3HEhPa5QBWzaIeCM3QF+8GY8L2ThZMU=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=kUo265dDGY1NlxKMRHjMzOnMbxLReYWyExMKNH9pkF3huoSoGP9WTblxFUSAB+pa5lDqbZHbCdUXer1dd17frozd1t5EObMnbTYL87aZ9wB6pk0hE6wmxLIyFmeh5lKbCQfsiLMxUkPxQeavikWLX7vwcozXXOE5wvMh0rZu/oo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TqI4h5g7; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id DB411C4CECD;
+	Sat, 23 Nov 2024 12:58:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1732366739;
+	bh=gRTpoiz71rEZ3HEhPa5QBWzaIeCM3QF+8GY8L2ThZMU=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=TqI4h5g7r7iu7STjYURGiYnIM5o3GxJC5v7RDOM7KQbTZR9nD5gc+jVy4pBpsF2yp
+	 nuDvzFpMx5/vs2Rq345JTG43P93axb0Ewt7xtF5fRKaGDH6Bkgx8jWXj1VNioI2U98
+	 TMQWr1IKAycA4+z51Yd5rQ9XM8bU94WakvmsKVS5JpBn9YCrpgFHHz7PzRWKANziIr
+	 +NzxW2CZMQYxouZpA0Lc/qLkXAWPyj7dOvsVU/KE8KK6O7ZYfVzAfS9h0Byhyq/PAD
+	 2+Jpiuedo7q4fXrd1kLn8hNWsIHOU0fULxMxCTt0EzZKzXjygh0kpxDxXv/iagDHRX
+	 egW403TGFihVA==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C44A8E6ADF9;
+	Sat, 23 Nov 2024 12:58:58 +0000 (UTC)
+From: Maud Spierings via B4 Relay <devnull+maud_spierings.hotmail.com@kernel.org>
+Subject: [PATCH v2 0/4] Asus vivobook s15 improvements
+Date: Sat, 23 Nov 2024 13:58:52 +0100
+Message-Id: <20241123-asus_qcom_display-v2-0-a0bff8576024@hotmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] i2c: i2c-qcom-geni: Serve transfer during early resume
- stage
-To: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-CC: <andi.shyti@kernel.org>, <quic_bjorande@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <konrad.dybcio@linaro.org>,
-        <quic_vdadhani@quicinc.com>, <vkoul@kernel.org>
-References: <20241011121757.2267336-1-quic_msavaliy@quicinc.com>
- <ZwlnWIWkS1pwQ/xK@hu-bjorande-lv.qualcomm.com>
- <3797c11f-b263-4f5d-9307-963fd6662b26@quicinc.com>
- <CADLxj5RD5syLXdVnfsMpEso9VOhWiwdP8_iV12R=mvhKwUY_bA@mail.gmail.com>
-Content-Language: en-US
-From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-In-Reply-To: <CADLxj5RD5syLXdVnfsMpEso9VOhWiwdP8_iV12R=mvhKwUY_bA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: cabVDFBPFFZzUr2N_0-bjYKUK5IR4W66
-X-Proofpoint-ORIG-GUID: cabVDFBPFFZzUr2N_0-bjYKUK5IR4W66
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
- priorityscore=1501 impostorscore=0 malwarescore=0 clxscore=1015
- lowpriorityscore=0 spamscore=0 mlxscore=0 mlxlogscore=999 adultscore=0
- suspectscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2409260000 definitions=main-2411230104
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAIzRQWcC/22NwQ6CMBBEf4Xs2Zq2gIon/8MQsimt3QQodpFIC
+ P9uJR49vsnMmxXYRrIM12yFaGdiCkMCfcjAeBweVlCbGLTUhVLqJJBf3DxN6JuWeOxwEcaWzp1
+ 1leeFhLQbo3X03p33OrEnnkJc9otZfdOfTed/bLMSUlxKrJyrdCERbz5MPVJ3TC2ot237AB1Kf
+ q20AAAA
+X-Change-ID: 20241116-asus_qcom_display-ce5ff7293340
+To: Neil Armstrong <neil.armstrong@linaro.org>, 
+ Jessica Zhang <quic_jesszhan@quicinc.com>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Douglas Anderson <dianders@chromium.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ Maud Spierings <maud_spierings@hotmail.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1732366736; l=1132;
+ i=maud_spierings@hotmail.com; s=20241110; h=from:subject:message-id;
+ bh=gRTpoiz71rEZ3HEhPa5QBWzaIeCM3QF+8GY8L2ThZMU=;
+ b=MODatZrh/bk+k0WvKk5jsrWTZsQpXoa/lqa9kKOJxymK6Qyl0TGqe7vy0/wuKcbNZJs7+mAWj
+ LqMReLG/gtYBYkRFPII2dBPjLg6Se6DsoDUJ7gRNEix7oZGpSZmEqn/
+X-Developer-Key: i=maud_spierings@hotmail.com; a=ed25519;
+ pk=CeFKVnZvRfX2QjB1DpdiAe2N+MEjwLEB9Yhx/OAcxRc=
+X-Endpoint-Received: by B4 Relay for maud_spierings@hotmail.com/20241110
+ with auth_id=273
+X-Original-From: Maud Spierings <maud_spierings@hotmail.com>
+Reply-To: maud_spierings@hotmail.com
 
-Thanks Bjorn.
+Improves several parts of the devicetree:
+1. The eDP panel bindings
+2. Adds a lid switch
+3. Adds bluetooth (depends on [1])
 
-On 11/19/2024 8:29 PM, Bjorn Andersson wrote:
-> On Tue, Nov 19, 2024 at 8:29 AM Mukesh Kumar Savaliya
-> <quic_msavaliy@quicinc.com> wrote:
->> On 10/11/2024 11:28 PM, Bjorn Andersson wrote:
->>> On Fri, Oct 11, 2024 at 05:47:57PM +0530, Mukesh Kumar Savaliya wrote:
-> [..]
->>>> pm_runtime_get_sync() function fails during PM early resume and returning
->>>> -EACCES because runtime PM for the device is disabled at the early stage
->>>> causing i2c transfer to fail. Make changes to serve transfer with forced
->>>> resume.
->>>>
->>>> Few i2c clients like PCI OR touch may request i2c transfers during early
->>>> resume stage. In order to serve transfer request do :
->>>>
->>>
->>> This problem description is too generic. I am not aware of any use case
->>> upstream where PCI or touch might need to perform i2c transfers during
->>> early resume; your commit message should educate me.
->>>
->> yes, it's generic as of now since we have an internal usecase with PCI
->> is yet to be enabled in upstream. Not tied up with any usecase in
->> upstream, i just heard recently.
->>
->> Provided the scenario is generic and possible by any client, can this
->> code change be reviewed or shall be kept on halt till PCI usecase gets
->> enabled ?
->>
-> 
-> If this is a valid scenario in the upstream kernel, yes. If it solves
-> a problem only manifesting itself based on a downstream design then
-> you need to exactly describe that scenario so that reviewers can
-> decide if this is a problem with the upstream kernel or your
-> downstream design.
-> 
-The exact scenario from PCIe switch is as below.  Hope it describes the 
-usecase at high level to understand PCIe client -> PCIe Driver -> I2C 
-driver.
+[1]: https://lore.kernel.org/all/20241007-x1e80100-pwrseq-qcp-v1-0-f7166510ab17@linaro.org/
 
-PCIe switch needs certain configurations through i2c after powering on 
-the switch, as part of suspend we are using suspend_noirq() to turn off 
-the switch because some PCIe clients do some transfers till 
-suspend_noirq() phase. And as part of resume_noirq(), we will enable the 
-power to the switch and configures the switch again through i2c.
+---
+Changes in v2:
+- Add missing gpiokeys include in the lid switch patch
+- Add depends on for the bluetooth patch
+- Link to v1: https://lore.kernel.org/r/20241123-asus_qcom_display-v1-0-85a9ff9240aa@hotmail.com
+
+---
+Maud Spierings (4):
+      dt-bindings: display: panel: samsung,atna56ac03: Document ATNA56AC03
+      arm64: dts: qcom: x1e80100-vivobook-s15: Use the samsung,atna33xc20 panel driver
+      arm64: dts: qcom: x1e80100-vivobook-s15: Add lid switch
+      arm64: dts: qcom: x1e80100-vivobook-s15: Add bluetooth
+
+ .../bindings/display/panel/samsung,atna33xc20.yaml |  2 +
+ .../boot/dts/qcom/x1e80100-asus-vivobook-s15.dts   | 61 +++++++++++++++++++++-
+ 2 files changed, 62 insertions(+), 1 deletion(-)
+---
+base-commit: 80e87ab38380e4ddf238ba3d8436357c3e0b52d1
+change-id: 20241116-asus_qcom_display-ce5ff7293340
+
+Best regards,
+-- 
+Maud Spierings <maud_spierings@hotmail.com>
 
 
-> Regards,
-> Bjonr
-> 
 
