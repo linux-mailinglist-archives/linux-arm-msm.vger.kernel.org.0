@@ -1,53 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-38970-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38969-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B34329D7045
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Nov 2024 14:32:32 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 039089D74FE
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Nov 2024 16:24:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 78D81281C99
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B07B0B3B7B1
 	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Nov 2024 13:32:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 746CC1D0B82;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 71C0F1CFEB5;
 	Sun, 24 Nov 2024 13:20:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="paVKX0kq"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eNk8etjH"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 475C31AD3E4;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4757419DF66;
 	Sun, 24 Nov 2024 13:20:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732454420; cv=none; b=Uv0Njj5z42LMlOb5WVZFV8WQumNMWTCK9CycAKOQ/dUBY+N+fVvx7sLjCYl5jrEt782rPsI0nC9P+aezuBJsPXpjA3RPZWpBOUYFpeb0XfNZmI5p8a6aHebixWE/kngyuPE7gqub6LllS7dVCku6JeBhdYrmgtiJ2lgwtfCtD/s=
+	t=1732454420; cv=none; b=fxbjDDpqVWwl8dtWgFGBaOZqBGOpKpFIvNdAOxzh4NI6l2fjmPMwKhBU45hItCRNex2g9WqEnEmZO0kiv7ko81yr8ZC+9AdnbieqxWbYz/aopNLXAA6PNGTjDww7OUl7SbLwcENQ7mlF7h/R/C11v64Mbr3R5HNpm/QMSVk6LlQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1732454420; c=relaxed/simple;
-	bh=o3qDnzRB7JA/YNfKWgznRZdQVguoCPuO7AEYr5dX23k=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=kFCSrYJzAoSZzq+unQApJd6vKQLVNdF4Ut0g0rbFuH2owePS97l3KC03hyawvL3StP/5WKiZpqwhCLwjiYhj9zCZif4rSyvK/qAtaCUnB/gYM8yoNb+YA991GSb89tpl7VMEM5RABiqlSk7iAgTTxIAxIuUsZeM4/5uCVrQ/P4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=paVKX0kq; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id C9B0CC4CECC;
+	bh=EtfPh7PgvIA2k3juLObv+tMNxfZuebaJ1CXuplChEUI=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=AgAqRXHQV+b4wQMRortLjsa0uw/QJyIR40nQ+91AV16GU7ABU/ARL8cW72cQBgIopWfaHwqYJ4FzaitNmKBAdrif6y52zntKr0OrdARxI095Xh924Nw5QkTm20q+1S8fBaDtSVhAxgIIQ++xu9yf8dnRmICZe43XNrd5AuJFj2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eNk8etjH; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id D997FC4CED3;
 	Sun, 24 Nov 2024 13:20:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1732454419;
-	bh=o3qDnzRB7JA/YNfKWgznRZdQVguoCPuO7AEYr5dX23k=;
-	h=From:Subject:Date:To:Cc:Reply-To:From;
-	b=paVKX0kqYT2nvdoHufguy5HfyyG9XXp0+VAkZMVGWHodWNczuWccwMIqFtmozVGbF
-	 uXx9kB1mZxBH++OlQbCJiGejLAA0VwLhEZqe4RxFsPphFCOp3dX5vi2wTwesX5VSok
-	 nfozbmiugYPXqlsss/bbXa113/42znbQhnvvMl2gCZW3r74ilE1s0yvKPsbhWjEp1K
-	 mxawjgP7rFj7IGuwF+lYVhDXoDpb9Ow9pBHEOQeJQiLn6ntpBP5YbzF0BxxJUPLKCl
-	 cZR8S0bktX+1/Paq+G21XEKgQB6eKsHUTlBW9E945t0DUgDjbEyaSy6UOQE6rmZIBd
-	 ibq43Ea5z4GHA==
+	bh=EtfPh7PgvIA2k3juLObv+tMNxfZuebaJ1CXuplChEUI=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=eNk8etjHWufM+BYvEbgLvVmp/uC5CYLxF/BDcStanyJehKA4qL6vLuREGM2ddl+eY
+	 DJ+tLi0IxSYAz8M7Jp68YaYpkG7vBBz0MoJOEB+CxTu/V5oCXW5Yg7oEaenI61kAL/
+	 lDazQZqp9Az2PKROHD5I2SLG3aO6x56uvLH1FS1JDP9BiQ3BCUtzlZ7/VoKN+1BnxP
+	 Y661aOb18ZWHGli0jFLbp6SjQCVgSpj3CIoTmSdaPm00KPY7lDLPs6pHgk+hI8+HdB
+	 JUt/NO3DAaoUaSfHPsV7oKrwyUAcjY9lZx65z6V/FPEHVtVY/vxcyny2WrSUg6A2Mx
+	 rtoXCK53N4JNA==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B4EE6E66887;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CAD5AE668AB;
 	Sun, 24 Nov 2024 13:20:19 +0000 (UTC)
 From: Jens Glathe via B4 Relay <devnull+jens.glathe.oldschoolsolutions.biz@kernel.org>
-Subject: [PATCH 0/4] arm64: dts: qcom: x1e80100-hp-x14: dt for HP Omnibook
- X Laptop 14
-Date: Sun, 24 Nov 2024 14:20:14 +0100
-Message-Id: <20241124-hp-omnibook-x14-v1-0-e4262f0254fa@oldschoolsolutions.biz>
+Date: Sun, 24 Nov 2024 14:20:15 +0100
+Subject: [PATCH 1/4] dt-bindings: arm: qcom: Add HP Omnibook X 14
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,9 +55,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAA4oQ2cC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIxNDQ0Mz3YwC3fzcvMyk/Pxs3QpDE11LA1Njy7TEZHND0xQloK6CotS0zAq
- widGxtbUAwF/s9WEAAAA=
+Message-Id: <20241124-hp-omnibook-x14-v1-1-e4262f0254fa@oldschoolsolutions.biz>
+References: <20241124-hp-omnibook-x14-v1-0-e4262f0254fa@oldschoolsolutions.biz>
+In-Reply-To: <20241124-hp-omnibook-x14-v1-0-e4262f0254fa@oldschoolsolutions.biz>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -74,12 +73,12 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org, 
  Jens Glathe <jens.glathe@oldschoolsolutions.biz>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1732454418; l=2781;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1732454418; l=935;
  i=jens.glathe@oldschoolsolutions.biz; s=20240919;
  h=from:subject:message-id;
- bh=o3qDnzRB7JA/YNfKWgznRZdQVguoCPuO7AEYr5dX23k=;
- b=xaxMZTW7q82I7KgHQhtF4RH7TZalgHO5X4PZkOpcLhkzbDQJYpj3ZgrgQXc1h31/KM1wPgSat
- IXibu276GryBpYmi/fV6BchNUun2XnxEqk/QkA79MBIZx2z03Tce85A
+ bh=XL2QR5fav9PTm4bj2aAabfeiNRaT7RhXzBiXmBI/OBE=;
+ b=vlJcJ1R6tCoInUkDdhDqzBlrIKNw4mub3QTLW0OBoLbgBex8YvyWkUGcNgnkaj5u/zmvGgWDS
+ Mq7S26+sOkaCafSSuDYtrliqEzfC8RMLYx1YLXyoqtZBPgNeEn30cYy
 X-Developer-Key: i=jens.glathe@oldschoolsolutions.biz; a=ed25519;
  pk=JcRJqJc/y8LsxOlPakALD3juGfOKmFBWtO+GfELMJVg=
 X-Endpoint-Received: by B4 Relay for
@@ -87,72 +86,35 @@ X-Endpoint-Received: by B4 Relay for
 X-Original-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
 Reply-To: jens.glathe@oldschoolsolutions.biz
 
-Introduce device tree for the HP Omnibook X Laptop 14-fe0750ng
-(hp-omnibook-x14). It is a Laptop based on the Qualcomm Snapdragon
-X Elite SoC. There seem to be other SKUs, some with Wifi-7 (WCN7850)
-instead of Wifi-6E (WCN6855). This dt explicitly supports WCN6855,
-I haven't found a good way yet to describe both.
-    
+From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+
+Add compatible values for the HP Omnibook X Laptop 14-fe0750ng,
+using "hp,omnibook-x14"
+
+The laptop is based on the Snapdragon X Elite (x1e80100) SoC.
+
 PDF link: https://www8.hp.com/h20195/V2/GetPDF.aspx/c08989140
-
-Supported features:
-    
-- Keyboard (no function keys though)
-- Display (IPS 2240x1400, 300nits)
-- PWM brightness control (works via brightnessctl)
-- Touchpad
-- Touchscreen
-- PCIe ports (pcie4, pcie6a)
-- USB type-c, type-a
-- WCN6855 Wifi-6E
-- WCN6855 Bluetooth
-- ADSP and CDSP
-- X1 GPU
-- GPIO Keys (Lid switch)
-- Audio definition (works via USB)
-- prepared for DP Altmode
-
-Bringup work has started with the Asus Vivobook S15 as initial template,
-worked from there by comparing and copying from the CRD, QCP, 
-Yoga Slim 7, Thinkpad T14s. Special thanks to all the people that helped
-on #aarch64-laptops [1] with comments and suggestions.
-I tested on my laptop, mostly. Since the dt is also in Ubuntu-Concept X1E
-[2] there is also test exposure there, with some feedback.
-
-For WiFi to work you need a board file matching the board string [3]. By 
-experiment and pure guess I found the already existing calibration for
-HP_G8_LANCIA_14 to be quite nice, it gives 866MB/s link speed here. A 
-patch proposal is on its way.
-
-For this patchset to work you also need patch [4] in the tree,
-otherwise uart14 for BT will be mising.
-
-[1] https://oftc.irclog.whitequark.org/aarch64-laptops
-[2] https://discourse.ubuntu.com/t/ubuntu-24-10-concept-snapdragon-x-elite/48800
-[3] "bus=pci,vendor=17cb,device=1103,subsystem-vendor=105b,subsystem-device=e108,qmi-chip-id=2,qmi-board-id=255"
-[4] https://lore.kernel.org/all/20241007-x1e80100-pwrseq-qcp-v1-0-f7166510ab17@linaro.org/
 
 Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
 ---
-Jens Glathe (4):
-      dt-bindings: arm: qcom: Add HP Omnibook X 14
-      firmware: qcom: scm: Allow QSEECOM for HP Omnibook X14
-      drm/panel-edp: Add unknown BOE panel for HP Omnibook X14
-      arm64: dts: qcom: x1e80100-hp-x14: dt for HP Omnibook X Laptop 14
+ Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
- Documentation/devicetree/bindings/arm/qcom.yaml    |    1 +
- arch/arm64/boot/dts/qcom/Makefile                  |    1 +
- .../boot/dts/qcom/x1e80100-hp-omnibook-x14.dts     | 1693 ++++++++++++++++++++
- drivers/firmware/qcom/qcom_scm.c                   |    1 +
- drivers/gpu/drm/panel/panel-edp.c                  |    1 +
- 5 files changed, 1697 insertions(+)
----
-base-commit: b59c450dec42537800be384db7e552042b72f93c
-change-id: 20241116-hp-omnibook-x14-90539fac715d
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index ca39903935104..62e197a1e7603 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -1103,6 +1103,7 @@ properties:
+           - enum:
+               - asus,vivobook-s15
+               - dell,xps13-9345
++              - hp,omnibook-x14
+               - lenovo,yoga-slim7x
+               - microsoft,romulus13
+               - microsoft,romulus15
 
-Best regards,
 -- 
-Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+2.43.0
 
 
 
