@@ -1,221 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-38954-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38955-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id BD1A69D6C73
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Nov 2024 02:44:40 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F1B5F9D6C95
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Nov 2024 04:48:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2787EB21431
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Nov 2024 01:44:38 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8C5B0B212C7
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Nov 2024 03:48:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E37014A82;
-	Sun, 24 Nov 2024 01:44:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F1961224FA;
+	Sun, 24 Nov 2024 03:47:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="phwr6oYV"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="PMC6lhnV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFBE82F26;
-	Sun, 24 Nov 2024 01:44:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30F3910E3;
+	Sun, 24 Nov 2024 03:47:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732412673; cv=none; b=nDkRcDyX5s/Y45f9FkxJ9vrR3LP/ghJqlwyG+tZNjGc6u86q7L3La9kZk1BrzX8xTyMexFIGpTcaeNLfNYdPQ0pC7WLXpix0eEX/JpH9yLP1Eky94HJQLmZbKOdKaF1J+gJIcPwYn5IuppYQcMuRolFjHLTx+LSzOPBXNsuizJc=
+	t=1732420079; cv=none; b=UrZrLF8GsjaqthTT2GLe6etEXfj+gucR8wB2D9yWFFeLVymlQIWlWLZKf2lXhT7P380203JIgcbu8WPpF12xzNnXwhvLxE5X8l6pWDKZTL5ZWIeQONYH0dkCM5NXrj3WZx9TwYihqoUvNVZCl5+orCcSDpsV+43rFkQYrVteuW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732412673; c=relaxed/simple;
-	bh=HfTua57kegNRfT6STmuD15q6lJAvFdxokP/cBoAzAfs=;
+	s=arc-20240116; t=1732420079; c=relaxed/simple;
+	bh=8cPMfw6PoNjW6ddBq16fmKOWIEvysHhn0isqtuVUBmk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=B5YzV8VrUETHnTCW6PWWBKV9FV0RVOriLJSCkDxLUH3XWvGLPBjV5APrjYzY7TJ3rtvNL1BUKJ46dIpKc1shu5x8xr8f+GhNYiG2hQveqwL6F1s2NlX+Gs7/ePFOrHhoYDPExgW9hOXDKFuoskpkEX8cfJ+CkrRdgu+SvAL5Atk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=phwr6oYV; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=LUmaNGNvF3ML7FRILMFwRmUVkctMD7YZjis/1Yx9zDvK28UmkMDoiXw7NTPJCOfnj157snt/fSUe3V4NqDjpL0W6MSZ26m1b0+2H0frecLk9BM8xs4+Lobz4OfD4Aplb36T9ggFHorMYrb8Ns3tk8E/13ZHPsHRQT1kx/D9m7yo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=PMC6lhnV; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AO0F12h006558;
-	Sun, 24 Nov 2024 01:44:24 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AO2Pfip030064;
+	Sun, 24 Nov 2024 03:47:49 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	+e7MoueAaCrUQ0s0RkvzIxfJfB32OKnEoD9FCsA0ZUk=; b=phwr6oYVBy3vxCJ+
-	JroeWYG3mqGivh7vVKkPcxuRXn1oQFpOp6j8dAwzgWLDF1SmiK75g4FeQna6NIpm
-	Ab8TwkqtJBdyz7wqwfBoxV35HgNYQNbXS0j3PvKTh/LXMgJv1QpI4KtXh1qwKk45
-	2rErlgmk4+nlCVdahKP9gKpEtMAY0AJf/Nd7gLHDkghD7gx2nOZyQGVl/pSq5Pl6
-	W2q8wThDTMpKUuy0YMRE3FjnNsoMVtHHZEvg29eTGSTNHGyCZbx/bNiKdClPDjYj
-	Yp3iYBjAyp22IthBJObFSKrNyeI0M2Ggalsau8nL7Ttw8SpmVRqZA0jXhWAnxI0S
-	1Q/v9w==
+	ebVIz2B0tpcSE0N9hw3kbmVkL1bXOlcrVMgCsiihGfY=; b=PMC6lhnV3cln0c8A
+	c/22MsyqvyYVv7rDfwCfTK2cIiKqZLSd6JpFMPmr4zexAr6TPUCBP5RcWU/tMxF3
+	vItf716UH+mDHeXsNf7vRskfkJbMcN72fxqZwzHiLXo1KDpeNeiPSNczfmeLuL6k
+	Qu46ChBmE9e2M9rlKgviD8USHhpepnbd7bj74gKlSj+lyvy7gzanyWmYpd39f/D4
+	awNrq0b8JtNQockh1lX7nf7GPif++zoTOsDrmO0fYEjUJ/oMAw+F/+2WVEdzZxRZ
+	3WT4VeiQYo4Oc84lKVNOtnAWJJrL41aHBPpc7Ypj3GiGnZ56O4Fijcr6WT9kHZrN
+	AyFWnQ==
 Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4334rd1qkv-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4336mx9nnh-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 24 Nov 2024 01:44:23 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AO1iNpC012418
+	Sun, 24 Nov 2024 03:47:49 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AO3lm2F024490
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 24 Nov 2024 01:44:23 GMT
-Received: from [10.216.29.212] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+	Sun, 24 Nov 2024 03:47:48 GMT
+Received: from [10.216.25.141] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sat, 23 Nov
- 2024 17:44:17 -0800
-Message-ID: <e0ed1805-a5ba-4bed-d0df-d5f8f09a1b5f@quicinc.com>
-Date: Sun, 24 Nov 2024 07:14:14 +0530
+ 2024 19:47:43 -0800
+Message-ID: <0bdaa2ef-3979-4963-be75-0a5a89728f44@quicinc.com>
+Date: Sun, 24 Nov 2024 09:17:40 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v3 5/6] PCI: qcom: Add support for host_stop_link() &
- host_start_link()
-Content-Language: en-US
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-CC: <andersson@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-        "Lorenzo
- Pieralisi" <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?=
-	<kw@linux.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V4 2/2] arm64: dts: qcom: qcs8300: add TRNG node
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+        Herbert Xu
+	<herbert@gondor.apana.org.au>,
+        "David S. Miller" <davem@davemloft.net>,
+        "Rob
+ Herring" <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        "Conor
+ Dooley" <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad Dybcio" <konradybcio@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-crypto@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
         Konrad Dybcio
-	<konradybcio@kernel.org>,
-        <cros-qcom-dts-watchers@chromium.org>,
-        Jingoo Han
-	<jingoohan1@gmail.com>,
-        Bartosz Golaszewski <brgl@bgdev.pl>, <quic_vbadigan@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pci@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20241112-qps615_pwr-v3-0-29a1e98aa2b0@quicinc.com>
- <20241112-qps615_pwr-v3-5-29a1e98aa2b0@quicinc.com>
- <20241115115729.wmcohbbc6sl4il3e@thinkpad>
-From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-In-Reply-To: <20241115115729.wmcohbbc6sl4il3e@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+	<konrad.dybcio@oss.qualcomm.com>
+References: <20241122074346.4084606-1-quic_yrangana@quicinc.com>
+ <20241122074346.4084606-3-quic_yrangana@quicinc.com>
+ <40c49e6d-dbbd-49cf-b59b-10e10b24da22@kernel.org>
+Content-Language: en-US
+From: Yuvaraj Ranganathan <quic_yrangana@quicinc.com>
+In-Reply-To: <40c49e6d-dbbd-49cf-b59b-10e10b24da22@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+ nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: eyKfJMKNIinCvmMyIerXsX3MPT6VLrYk
-X-Proofpoint-GUID: eyKfJMKNIinCvmMyIerXsX3MPT6VLrYk
+X-Proofpoint-ORIG-GUID: efob-2Xpg7uH5oB6b4LcLQTXO0nCv3wd
+X-Proofpoint-GUID: efob-2Xpg7uH5oB6b4LcLQTXO0nCv3wd
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
- bulkscore=0 clxscore=1015 suspectscore=0 priorityscore=1501 malwarescore=0
- spamscore=0 adultscore=0 impostorscore=0 phishscore=0 mlxlogscore=999
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2411240013
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 mlxscore=0
+ adultscore=0 impostorscore=0 phishscore=0 spamscore=0 lowpriorityscore=0
+ clxscore=1015 suspectscore=0 bulkscore=0 priorityscore=1501
+ mlxlogscore=687 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411240029
 
+Hi Krzysztof,
 
+I sincerely apologize for the inconvenience. I added the "Reviewed-by"
+tag without fully understanding its implications. I will remove the tag
+in the next patch series.
 
-On 11/15/2024 5:27 PM, Manivannan Sadhasivam wrote:
-> On Tue, Nov 12, 2024 at 08:31:37PM +0530, Krishna chaitanya chundru wrote:
->> For the switches like QPS615 which needs to configure it before
->> the PCIe link is established.
+Thanks,
+Yuvaraj.
+
+On 11/22/2024 8:30 PM, Krzysztof Kozlowski wrote:
+> On 22/11/2024 08:43, Yuvaraj Ranganathan wrote:
+>> The qcs8300 SoC has a True Random Number Generator, add the node with
+>> the correct compatible set.
 >>
->> If the link is up, the boatloader might powered and configured the
->> endpoint/switch already. In that case don't touch PCIe link else
->> assert the PERST# and disable LTSSM bit so that PCIe controller
->> will not participate in the link training as part of host_stop_link().
->>
->> De-assert the PERST# and enable LTSSM bit back in host_start_link().
->>
->> Introduce ltssm_disable function op to stop the link training.
->>
->> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
->> ---
->>   drivers/pci/controller/dwc/pcie-qcom.c | 39 ++++++++++++++++++++++++++++++++++
->>   1 file changed, 39 insertions(+)
->>
->> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
->> index ef44a82be058..048aea94e319 100644
->> --- a/drivers/pci/controller/dwc/pcie-qcom.c
->> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
->> @@ -246,6 +246,7 @@ struct qcom_pcie_ops {
->>   	void (*host_post_init)(struct qcom_pcie *pcie);
->>   	void (*deinit)(struct qcom_pcie *pcie);
->>   	void (*ltssm_enable)(struct qcom_pcie *pcie);
->> +	void (*ltssm_disable)(struct qcom_pcie *pcie);
->>   	int (*config_sid)(struct qcom_pcie *pcie);
->>   };
->>   
->> @@ -617,6 +618,41 @@ static int qcom_pcie_post_init_1_0_0(struct qcom_pcie *pcie)
->>   	return 0;
->>   }
->>   
->> +static int qcom_pcie_host_start_link(struct dw_pcie *pci)
->> +{
->> +	struct qcom_pcie *pcie = to_qcom_pcie(pci);
->> +
->> +	if (!dw_pcie_link_up(pcie->pci))  {
+>> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>> Reviewed-by: Krzysztof Kozlowski <krzk+dt@kernel.org>
 > 
-> I don't think the controller driver should worry about the bootloader
-> initialization. You should export dw_pcie_link_up() as a callback and call
-> start/stop link if only required (link not up) from the pwrctl driver.
->
-Instead of exporting this API, I will try to read config space and see 
-if the link is up or not. if it is not up then will call these.
-
-- Krishna Chaitanya.
-
-> - Mani
+> NAK, stop adding fake tags. It is impossible to receive above tag from
+> me written that way.
 > 
->> +		qcom_ep_reset_deassert(pcie);
->> +
->> +		if (pcie->cfg->ops->ltssm_enable)
->> +			pcie->cfg->ops->ltssm_enable(pcie);
->> +	}
->> +
->> +	return 0;
->> +}
->> +
->> +static void qcom_pcie_host_stop_link(struct dw_pcie *pci)
->> +{
->> +	struct qcom_pcie *pcie = to_qcom_pcie(pci);
->> +
->> +	if (!dw_pcie_link_up(pcie->pci))  {
->> +		qcom_ep_reset_assert(pcie);
->> +
->> +		if (pcie->cfg->ops->ltssm_disable)
->> +			pcie->cfg->ops->ltssm_disable(pcie);
->> +	}
->> +}
->> +
->> +static void qcom_pcie_2_3_2_ltssm_disable(struct qcom_pcie *pcie)
->> +{
->> +	u32 val;
->> +
->> +	val = readl(pcie->parf + PARF_LTSSM);
->> +	val &= ~LTSSM_EN;
->> +	writel(val, pcie->parf + PARF_LTSSM);
->> +}
->> +
->>   static void qcom_pcie_2_3_2_ltssm_enable(struct qcom_pcie *pcie)
->>   {
->>   	u32 val;
->> @@ -1361,6 +1397,7 @@ static const struct qcom_pcie_ops ops_1_9_0 = {
->>   	.host_post_init = qcom_pcie_host_post_init_2_7_0,
->>   	.deinit = qcom_pcie_deinit_2_7_0,
->>   	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
->> +	.ltssm_disable = qcom_pcie_2_3_2_ltssm_disable,
->>   	.config_sid = qcom_pcie_config_sid_1_9_0,
->>   };
->>   
->> @@ -1418,6 +1455,8 @@ static const struct qcom_pcie_cfg cfg_sc8280xp = {
->>   static const struct dw_pcie_ops dw_pcie_ops = {
->>   	.link_up = qcom_pcie_link_up,
->>   	.start_link = qcom_pcie_start_link,
->> +	.host_start_link = qcom_pcie_host_start_link,
->> +	.host_stop_link = qcom_pcie_host_stop_link,
->>   };
->>   
->>   static int qcom_pcie_icc_init(struct qcom_pcie *pcie)
->>
->> -- 
->> 2.34.1
->>
-> 
+> Best regards,
+> Krzysztof
+
 
