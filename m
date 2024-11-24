@@ -1,155 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-38975-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38976-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 258179D7264
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Nov 2024 15:07:37 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 28F0A9D7550
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Nov 2024 16:35:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 739B016392D
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Nov 2024 14:07:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 34F9D168B19
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Nov 2024 15:34:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EDB3F1F8F12;
-	Sun, 24 Nov 2024 13:42:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9980A1B0F02;
+	Sun, 24 Nov 2024 15:00:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RNoJzJfp"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tLYm6J5c"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3DD31D357A;
-	Sun, 24 Nov 2024 13:42:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E52D61AF4F6
+	for <linux-arm-msm@vger.kernel.org>; Sun, 24 Nov 2024 15:00:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732455762; cv=none; b=nY9RUiXTGWY2UKR2OCICHr3WYaR1GsnNtp+ecglS9DBJM+Hb0M4Chn5WQMh4je4mNWdieJh56sykuekEU6Y6r/BCQpcpakcmgUIaQjgL0Mfg0jQYY2/tVZV0/xuYvPece2WSFspCJOt2/jCQ8t29pNvpU+0C7KDJ1C9KCNKGgP8=
+	t=1732460449; cv=none; b=Xw2Y7O9B4+IfjRykSceE2eyNpVT1NBGErI/TPMDH2mwJHJQ75n5KzLQtl1pHNvhDgVGTR+NXut+LJuX9t6pDiF3i+MilZnuEOi9MceT8UoukyHjODiC8cjQ0wQwa6oN/GD1iHks97ZbC1K2nY+5d+caJGRvXeSweJCZcQApeeas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732455762; c=relaxed/simple;
-	bh=s+OAzGTHxef1Z14wQ9FkruNi4WHFXo3WVWtCL0MRYjY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k0Ek36AI9KYSwRQ6TPuDz2N/feZx7nx6wZspWv9PVlDmgR0MOLD0kmEw2St89/wO41heD60xCR2uap3eMr0uwyE7Ws5CI6coRHI2lfeboHBwgmfdcS2STce1bn9SqBlfrNxvZrxqScey3HALfAPBdnL7kvOSYmGq9JIO8vW1w9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RNoJzJfp; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F0DCC4CED3;
-	Sun, 24 Nov 2024 13:42:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732455762;
-	bh=s+OAzGTHxef1Z14wQ9FkruNi4WHFXo3WVWtCL0MRYjY=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RNoJzJfpDBTUTuoqtJQPc8sn7nWK9j0dQuSGY3UxB/3jkFJYkfTtxL0PeUcurNWdB
-	 9yfOVi89lT2i6wLXjhFgo/R7MKojv4CowwVfX4QZNCXOdPjT8sKcdKTjVIoR8CJy6P
-	 KI4izTlr3kwQ/VoiMRWUZo/a0hoGAhiPzi+cQhqvAkIvRL+ojKzG+HwDZYoNipTR1g
-	 rxFvKijYbkXrgvk4J+1r88wX/Ln+viE9mGj4uYOMVaI6taaID2dzvNfCnjKGVhdIWt
-	 W1dW6M4GiN6YP/XdrxWF03E+9kthZQqbo5OHcKhC7HnOz0ncprzM+7Di1EUGcezmGl
-	 EVa7UW3FC3NRg==
-From: Sasha Levin <sashal@kernel.org>
-To: linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Cc: Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	Troy Hanson <quic_thanson@quicinc.com>,
-	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	ogabbay@kernel.org,
-	corbet@lwn.net,
-	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	linux-doc@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.11 27/87] accel/qaic: Add AIC080 support
-Date: Sun, 24 Nov 2024 08:38:05 -0500
-Message-ID: <20241124134102.3344326-27-sashal@kernel.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241124134102.3344326-1-sashal@kernel.org>
-References: <20241124134102.3344326-1-sashal@kernel.org>
+	s=arc-20240116; t=1732460449; c=relaxed/simple;
+	bh=PBAxbrnOf3mUDylcJ3Av/xPCET+3fgbDMZT7D8E9FlA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aEDnuZYfXw8xOld0X6U6GuZ1J843xNmKwp/242wajaSR5bWu1Dj6oKydUzaaAjXprw2zJRDlfGMAa9cBg1vvxuuchGyb9W6fRPw+tNtBEOoaL0M4NJTik+qP9ooqCVTp2pDO1+a5B0posCO3N/BgQXYfzfwkbrjgdKWMyqbKd0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tLYm6J5c; arc=none smtp.client-ip=209.85.216.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-2ea39638194so3187215a91.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Nov 2024 07:00:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1732460447; x=1733065247; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=uGc1S2wYIhfLQogroy29pKHU2o6lK/gHyYeLMurEVxY=;
+        b=tLYm6J5cAkL77InAgoqw04QEe50B2ygCIuwQEJGMI1bFgA1RxB1P5NJsIbinaCJ9IA
+         bC4iVXsv4GwWVLsURtVMnYEQeJWImDod908IxkdnesFBZuuaCf+AQxjZv7TnbfUZ+M68
+         wdVwF/wFAQmcmuP/528GXb7wX6UBJ6lPrUrPCjOO9j6++UgXaEgS64o7BzzxQi+GbO+i
+         w4f+md2KHkmZpMrGvRmL7OjzqR8F4BNM074Ln6bBOiLlNPk1FkDm3iqoI8LH1jaNoSKQ
+         0s+4mizfjl3WrmG3thoIZQ5yfnjnIrdI9trIN+Eo/HLxsS1ihAcRkV8A/KgPVjzrkRAJ
+         Y91w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732460447; x=1733065247;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=uGc1S2wYIhfLQogroy29pKHU2o6lK/gHyYeLMurEVxY=;
+        b=Jez+/KxA/paKVVDuZVdahFgbO72GRbUCpZInbRzJBP58jZcUucFullnqmh+d6AxyHB
+         0c0jUT7Bo40K4treqxTpErIbwyK+vUhpuAdFLgQLz1U9AZE8+LxX3S0zv0Zdm+0B5+WQ
+         V/wD939eGztWcPnx2jKOuYpw0aGPzxR5rWYsOP0pNr8trXWEN+ZesihyDH8jwXAdrBFf
+         LqPSei/B+goUa0OlJbSnIfB5eNjBuRF2MXvQvFvC+yHzVbtZSeLbkIzoJdGsn69GzHDL
+         UmHBgu3RUnmh8/VlOmCJv6jcN8T7VQ9UkmUxePu8nKqtTIe37kNmxkho3gOrXPO1E9Wg
+         nUTg==
+X-Forwarded-Encrypted: i=1; AJvYcCX5VyfdVLURgB/ramZ1Ah0p8KzsAlQkF2UePxvNoB4ta7iZRFg2M6CKq/00P+WhJE4R0gWDpibOHL1THoou@vger.kernel.org
+X-Gm-Message-State: AOJu0YyIWNvuX6UjLkCTyUOyrGNZdjZ/KfU6IgiXdMN1VlILwrQOYMGz
+	cmI1tt+vHL3gctllrzu1KgIweOn67w9M5g5LRIa8FH0sJo5W2++VBOxMt1aTBQ==
+X-Gm-Gg: ASbGncvISOzsBMdbgrZ+cZJDKocR9RNfODZnKfpQ4wfjvNkbCTNa6mw7N8RjkojvD/M
+	Qf74dAl8hhBjBFfmcyuPoIrWCLQKJYlP0siYaf0AKBDkNufjRPGhuPLUgM+Ctsl4g6NRIbhNw/p
+	vkUp0+rTqgpXmF4ijWuey6GRS2KbVGtQPtlAocm3liVFcH49frGZAj7rusCeYzXUx5+a4N2l2KR
+	sRQrorBW52srl0v9wLee6A8nGZWP3TbnKTW2jC8oNCKbeaGHtJZdDBMFbt4
+X-Google-Smtp-Source: AGHT+IGSIxvkw6uzHJU66ROMlaDDTKSfeX3BN4E33A4cnjvrKqZLF5VEOAWjCg4WJIQuCYjdbk/27w==
+X-Received: by 2002:a17:90b:3a88:b0:2ea:47f1:7a03 with SMTP id 98e67ed59e1d1-2eb0e87c077mr12722997a91.30.1732460447156;
+        Sun, 24 Nov 2024 07:00:47 -0800 (PST)
+Received: from thinkpad ([36.255.17.192])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2eb0cfe448esm4893619a91.8.2024.11.24.07.00.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 24 Nov 2024 07:00:46 -0800 (PST)
+Date: Sun, 24 Nov 2024 20:30:39 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+Cc: vkoul@kernel.org, kishon@kernel.org, robh+dt@kernel.org,
+	bhelgaas@google.com, kw@linux.com, lpieralisi@kernel.org,
+	quic_qianyu@quicinc.com, conor+dt@kernel.org,
+	neil.armstrong@linaro.org, andersson@kernel.org,
+	konradybcio@kernel.org, quic_tsoni@quicinc.com,
+	quic_shashim@quicinc.com, quic_kaushalk@quicinc.com,
+	quic_tdas@quicinc.com, quic_tingweiz@quicinc.com,
+	quic_aiquny@quicinc.com, kernel@quicinc.com,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+	Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Subject: Re: [PATCH v2 4/6] PCI: qcom: Add QCS615 PCIe support
+Message-ID: <20241124150039.cjp5g6pnulf5xnp5@thinkpad>
+References: <20241122023314.1616353-1-quic_ziyuzhan@quicinc.com>
+ <20241122023314.1616353-5-quic_ziyuzhan@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.11.10
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20241122023314.1616353-5-quic_ziyuzhan@quicinc.com>
 
-From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+On Fri, Nov 22, 2024 at 10:33:12AM +0800, Ziyue Zhang wrote:
+> From: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> 
+> Add the compatible and the driver data for QCS615 PCIe controller.
+> 
+> There is only one controller instance found on this platform, out of which
 
-[ Upstream commit b8128f7815ff135f0333c1b46dcdf1543c41b860 ]
+'out of which'? you said there is only one instance.
 
-Add basic support for the new AIC080 product. The PCIe Device ID is
-0xa080. AIC080 is a lower cost, lower performance SKU variant of AIC100.
-From the qaic perspective, it is the same as AIC100.
+> is Gen3 with speeds of up to 8.0GT/s.
+> 
+> The version of the controller is 1.38.0 for all instances, but they are
 
-Reviewed-by: Troy Hanson <quic_thanson@quicinc.com>
-Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Reviewed-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241004195209.3910996-1-quic_jhugo@quicinc.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- Documentation/accel/qaic/aic080.rst | 14 ++++++++++++++
- Documentation/accel/qaic/index.rst  |  1 +
- drivers/accel/qaic/qaic_drv.c       |  4 +++-
- 3 files changed, 18 insertions(+), 1 deletion(-)
- create mode 100644 Documentation/accel/qaic/aic080.rst
+Again, only one instance.
 
-diff --git a/Documentation/accel/qaic/aic080.rst b/Documentation/accel/qaic/aic080.rst
-new file mode 100644
-index 0000000000000..d563771ea6ce4
---- /dev/null
-+++ b/Documentation/accel/qaic/aic080.rst
-@@ -0,0 +1,14 @@
-+.. SPDX-License-Identifier: GPL-2.0-only
-+
-+===============================
-+ Qualcomm Cloud AI 80 (AIC080)
-+===============================
-+
-+Overview
-+========
-+
-+The Qualcomm Cloud AI 80/AIC080 family of products are a derivative of AIC100.
-+The number of NSPs and clock rates are reduced to fit within resource
-+constrained solutions. The PCIe Product ID is 0xa080.
-+
-+As a derivative product, all AIC100 documentation applies.
-diff --git a/Documentation/accel/qaic/index.rst b/Documentation/accel/qaic/index.rst
-index ad19b88d1a669..967b9dd8bacea 100644
---- a/Documentation/accel/qaic/index.rst
-+++ b/Documentation/accel/qaic/index.rst
-@@ -10,4 +10,5 @@ accelerator cards.
- .. toctree::
- 
-    qaic
-+   aic080
-    aic100
-diff --git a/drivers/accel/qaic/qaic_drv.c b/drivers/accel/qaic/qaic_drv.c
-index 580b29ed19021..e18613e9ac3c1 100644
---- a/drivers/accel/qaic/qaic_drv.c
-+++ b/drivers/accel/qaic/qaic_drv.c
-@@ -34,6 +34,7 @@
- 
- MODULE_IMPORT_NS(DMA_BUF);
- 
-+#define PCI_DEV_AIC080			0xa080
- #define PCI_DEV_AIC100			0xa100
- #define QAIC_NAME			"qaic"
- #define QAIC_DESC			"Qualcomm Cloud AI Accelerators"
-@@ -365,7 +366,7 @@ static struct qaic_device *create_qdev(struct pci_dev *pdev, const struct pci_de
- 		return NULL;
- 
- 	qdev->dev_state = QAIC_OFFLINE;
--	if (id->device == PCI_DEV_AIC100) {
-+	if (id->device == PCI_DEV_AIC080 || id->device == PCI_DEV_AIC100) {
- 		qdev->num_dbc = 16;
- 		qdev->dbc = devm_kcalloc(dev, qdev->num_dbc, sizeof(*qdev->dbc), GFP_KERNEL);
- 		if (!qdev->dbc)
-@@ -609,6 +610,7 @@ static struct mhi_driver qaic_mhi_driver = {
- };
- 
- static const struct pci_device_id qaic_ids[] = {
-+	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, PCI_DEV_AIC080), },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, PCI_DEV_AIC100), },
- 	{ }
- };
+> compatible with 1.9.0 config.
+> 
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+
+With above fixed,
+
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+
+- Mani
+
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index ef44a82be058..da7200b56b1e 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -1830,6 +1830,7 @@ static const struct of_device_id qcom_pcie_match[] = {
+>  	{ .compatible = "qcom,pcie-ipq8074-gen3", .data = &cfg_2_9_0 },
+>  	{ .compatible = "qcom,pcie-msm8996", .data = &cfg_2_3_2 },
+>  	{ .compatible = "qcom,pcie-qcs404", .data = &cfg_2_4_0 },
+> +	{ .compatible = "qcom,pcie-qcs615", .data = &cfg_1_9_0 },
+>  	{ .compatible = "qcom,pcie-sa8540p", .data = &cfg_sc8280xp },
+>  	{ .compatible = "qcom,pcie-sa8775p", .data = &cfg_1_34_0},
+>  	{ .compatible = "qcom,pcie-sc7280", .data = &cfg_1_9_0 },
+> -- 
+> 2.34.1
+> 
+
 -- 
-2.43.0
-
+மணிவண்ணன் சதாசிவம்
 
