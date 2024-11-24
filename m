@@ -1,212 +1,2796 @@
-Return-Path: <linux-arm-msm+bounces-38962-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38963-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 681549D6E13
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Nov 2024 13:29:13 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E0AF4161A33
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Nov 2024 12:29:09 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3ECF018870B;
-	Sun, 24 Nov 2024 12:29:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b="chhyFUda"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from EUR02-DB5-obe.outbound.protection.outlook.com (mail-db5eur02olkn2044.outbound.protection.outlook.com [40.92.50.44])
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 391819D716E
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Nov 2024 14:49:01 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E2F32C80;
-	Sun, 24 Nov 2024 12:29:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.92.50.44
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732451349; cv=fail; b=h5eTw6vdT+zNT8qDybS+MHG5gCl7vlDWYPs8IXz3ke3PFWe2xlde5IswekAJAUpStsITZ0Ltc0RH7s+GMoMY31Q/uiYnyV65A0K3aUyDXwT88U5/HjmLAWE8KkIxRZ7KtdmdB0AmrXKUWy1pnULioYaTChWam3nql4yRgVebfAQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732451349; c=relaxed/simple;
-	bh=bCIZP4oCFKcZG5GJEyxocxru6kF3XRoxBloXErb4CFo=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=jqJrdK6BXYRpaDp6MkZNFF4LA+qygItBJcaY38db0cQIUGDlTu7n2YaNDK/SzAseM9T7rDd4Wl6g4ILpXdaDykymdnJ6MOc+84p046iv/dz72TgFj2j9gk1KSpiVSJCtH8KfI9lBo1SPUxE8dgMgu+l1sqUiVzUTeIg25uiDvM0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com; spf=pass smtp.mailfrom=hotmail.com; dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b=chhyFUda; arc=fail smtp.client-ip=40.92.50.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hotmail.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=lFq0uNUDEpm7Y5WFj75TJA9jeF2tXg51F7B+mQ6b+FJso6MQs1LLUYIZxb9Jq7Foq/66B5lPl6vuVsxSXmT0ZgH1RkuIBv2MqbelzxYq20h6v3iPBLFahW1SxqikQ47fsBUNtwvOgBnyPgOm5H3huBs6gbxuJhWRBvaA6zWgmCmi6yudvSuCGcuZuDPw0WVM3qOP9+KiOh6VHb2pO4BNX+s87OQr2Fvai+BldL8xyiqiQJgyxviIfdRNf0+nGdXOsEhBdVfX+ZgYs7a3MvCppbVYwcw0vcRgrF+ojjUC5szu87lOfqPakmFzPzv9xn2UcSzNjL+IeJeqPSqsEb72tg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=MGGS3klio0UUsKLYs6iSA54Yomidx+mPyy/obJ3W4EA=;
- b=dpbUPsxAjpDEKCncHhFB/fkzGXUhLc8wwlQz8gcZEkpaTa3TJJ8ss4/PBAidtyKS0YAt7sxdvJT/RNHObhPJXf0TdXVteBViUBHuKwyQYsWlqYKVfpktTsDVq4NN86azuXbKEljTsl985DOUVy8CMTFi0vXNhXseDxt71pSwZRV0H/GJj6Y1Arb0aZk3e4FPwWka3JZBvHnhYg0BFgcJSmXsrDsZv+CT/H36wGv4AHcUvVb5WCOhZGufz9rp0mCWM5ROtOX+JSkPpLhgXE+F6x+ysMTdq3fc5jkszcNCkoVLtgBB5ozc3Owe96Hv4HvHKvBYdoBawUGVVWz/VXKj/A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=MGGS3klio0UUsKLYs6iSA54Yomidx+mPyy/obJ3W4EA=;
- b=chhyFUdatmLzocY2Of5KWOhAh/xQqL3ompjOF+w9A7QQmm6s1cDuBC6FTld/JGLbfqoeOWfG9eU+g6f0uB/TWpIR72JvSofhOOJJ4XwUXhZc+ti6gCJmDZoUYWoJYpRAaPeIR4lW1Q03BLfVyBp6XD5QSPdw2P4cQX1xpuYdDa6fAMCEIr3Bh7bGSm6d6RIdcpo4APjegzoniJ2k5R5KHa1CjaCSA0b4szBCD8eIMq423QBH4yw/vZTOxEmnO0Kr9X1EwdxiO2sLEf3gp0wiRkR6vIhOKIBp3OfVaWj9Wwmaw8pZkILH9jQz76DYMZMgFmR0lonxq/kUHpX4ajDORg==
-Received: from VE1P189MB1024.EURP189.PROD.OUTLOOK.COM (2603:10a6:800:149::13)
- by AS2P189MB2470.EURP189.PROD.OUTLOOK.COM (2603:10a6:20b:595::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8182.18; Sun, 24 Nov
- 2024 12:29:04 +0000
-Received: from VE1P189MB1024.EURP189.PROD.OUTLOOK.COM
- ([fe80::4c0a:a901:4d3c:e0bb]) by VE1P189MB1024.EURP189.PROD.OUTLOOK.COM
- ([fe80::4c0a:a901:4d3c:e0bb%4]) with mapi id 15.20.8158.024; Sun, 24 Nov 2024
- 12:29:04 +0000
-Message-ID:
- <VE1P189MB1024FED800B8291EFAA52B15E32D2@VE1P189MB1024.EURP189.PROD.OUTLOOK.COM>
-Date: Sun, 24 Nov 2024 13:29:02 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/4] dt-bindings: display: panel: samsung,atna56ac03:
- Document ATNA56AC03
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>,
- Jessica Zhang <quic_jesszhan@quicinc.com>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Douglas Anderson
- <dianders@chromium.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, dri-devel@lists.freedesktop.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20241124-asus_qcom_display-v3-0-002b723b1920@hotmail.com>
- <20241124-asus_qcom_display-v3-1-002b723b1920@hotmail.com>
- <k27rqbfvuon3uppgyhcfhcmlqv7ritbn35fmhuljnw2ievqnia@rey3cljv2p2n>
-Content-Language: en-US
-From: Maud Spierings <maud_spierings@hotmail.com>
-In-Reply-To: <k27rqbfvuon3uppgyhcfhcmlqv7ritbn35fmhuljnw2ievqnia@rey3cljv2p2n>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: AM0PR04CA0091.eurprd04.prod.outlook.com
- (2603:10a6:208:be::32) To VE1P189MB1024.EURP189.PROD.OUTLOOK.COM
- (2603:10a6:800:149::13)
-X-Microsoft-Original-Message-ID:
- <90015c1b-f654-4460-a4d7-af0c2123d500@hotmail.com>
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7D8B8B254A6
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Nov 2024 13:05:26 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19AB41D1F56;
+	Sun, 24 Nov 2024 12:49:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CYI1i5+W"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA8DB1D131E;
+	Sun, 24 Nov 2024 12:49:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1732452565; cv=none; b=HKr2ud6qy8M549DyUwpuY+0A5IfaviILXm056fpQP07AC9c1b1Lr5MxQRoUUujMVrpSnBFIg/4L7nEYF7cb6LUilbtyp9DfGJwzrV+TmI0xHy2amnq+LRZ2UQm1pR8JaoumHakhAregIdQTt4jdhATM/UDrzlT7px/6tjFFJ/ZI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1732452565; c=relaxed/simple;
+	bh=5ay7/V5R0QiWz25z0/9Jnspmt2ypxsDLOqWSKXuXwL0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=iuZnh+sd6rsdWqNC+8iQkyvQTi8O9WFXaqAYIDZg8iEyLUHNumk42aU1ChWIH6aE9kM5/v4gnhi4afDYrWRAObcIeVhp9vWSaXKns2lEgGxeCfiJDkFHd4780VKbyFqNKf3SYzsAhyenQqgIPTnupR5IzJEsxTROxsTb9rtimdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CYI1i5+W; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C630C4CED3;
+	Sun, 24 Nov 2024 12:49:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1732452565;
+	bh=5ay7/V5R0QiWz25z0/9Jnspmt2ypxsDLOqWSKXuXwL0=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=CYI1i5+WnjANdkX5rbEshary5PRM0hWIOhq5iNS63mXLF+slgRkQCirrcw3EqU+Xt
+	 oHbx6+xOrrsfBnnBi00mO24JXUHY6R4EzQNkRbfJQs/RpSXu7kVGLOEJsNZd9ccc3M
+	 +MHARPu2wn6hm2v+kHwtcgg2zoAZEuJYVV7edezY5UiUF0rFdkWCAwuijOfqLqfGgi
+	 Y5TSbcRFJ0Z/U1KHuzrHO8jcUHsKaJuo8nvMr7HjTtoPDAMr9z3fpJ/TvAL2L+t3Ku
+	 PgbisWufFk9VD03NLEX3xRw/gqEq9F52Cu5KO3mHymHYS/1br2AV0qz1F0IJmwZLdN
+	 zHbZXCLOizELQ==
+From: Sasha Levin <sashal@kernel.org>
+To: linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Cc: Konrad Dybcio <quic_kdybcio@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	konradybcio@kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.12 03/23] soc: qcom: llcc: Use designated initializers for LLC settings
+Date: Sun, 24 Nov 2024 07:48:14 -0500
+Message-ID: <20241124124919.3338752-3-sashal@kernel.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20241124124919.3338752-1-sashal@kernel.org>
+References: <20241124124919.3338752-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VE1P189MB1024:EE_|AS2P189MB2470:EE_
-X-MS-Office365-Filtering-Correlation-Id: f511afa6-8780-49b0-218a-08dd0c83957c
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|5072599009|461199028|19110799003|6090799003|8060799006|15080799006|440099028|3412199025|4302099013|10035399004|1602099012;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?THB5bWNHeTAySHBsV21SWnExRUswdmVDcENwL2s0VHRldDBDRWI4Y05qUGE3?=
- =?utf-8?B?N1NtcHhwbzU2L1pJTUJqaXpUMngxN2tUTHBXNXdaUGFKU3J3YWZoWEVQZExU?=
- =?utf-8?B?b0N3SWdmSVorL0dOWUdTSFJxRVR5YWprUkJmN0I0NGxvS202RWlaclhqYzhJ?=
- =?utf-8?B?Rm9OVXFwUWh1Nk52dVZmVHhNYlo1aDhIdnprU1ZySytBalExYzN2eGNra25H?=
- =?utf-8?B?Uk5FTGFOaGtUL3lnU1BsYmQxQXlDM0tWZ0puSjh4aG5SSkltcVdkcndGK29q?=
- =?utf-8?B?eUR4dkQvWG03enpZYmYveHRyZzdwZm1TSWFZaXBDRkQ4UmgrVGcwRGZQL0tr?=
- =?utf-8?B?UVVrTE9aYW5SQlVrQU9BeVljbTVzTGdrbDdMOXM0U0FJNGdpYitXVmgvc0RV?=
- =?utf-8?B?OHd1OTVQa0toSTV1K0dNQXAxMTlZZml4QTFvSkhlNllaQmNhaTVPYnZodTFa?=
- =?utf-8?B?L3dGWDR0TWs3NFd4bFE0VVZ0K3djbDJra3lVUEdxSDBMYjdDYWJHVGwrQ2Nn?=
- =?utf-8?B?dG5HNmEydjRwa0U4K2xOd284Wm5lTGg5VkRPSGZrbjZQa2d4d1NXcE5JaFVE?=
- =?utf-8?B?SjdvMlJ4TW1zREdSaUYyRHJld0o5NGRZeWRrVG4wQWM4ODBmNFJjOEErd1FP?=
- =?utf-8?B?czRrSGpqK0FmTDRpQ0FDaHFlT2R4KzVsM2hCUXZJNjFhZzkzVFh0Y3lIOXlF?=
- =?utf-8?B?OENMNmJlK2x2OTd5UDlxOXhJMGlRTDlLeE1QdFZ6eEhmQU5CWjczb0JJSGoy?=
- =?utf-8?B?VU94d090YW9XdWQ2aE42Q1VnZlduS0wvTGZvTG04cGh0U3NqaXhBNFEvOFcw?=
- =?utf-8?B?YW9xT0I0aVFHN3dQdkd6djNreDVjM3UvaGVxZFByd1JwQ3hhWU9kdDdNaFR0?=
- =?utf-8?B?cUx2SDM4SlM2TGVJVW94QW5Wa1pRMFdQM1BnY01EaHQycnhQUXUvV3NFTXpl?=
- =?utf-8?B?dUxuQWNpYzlUWTJNR3BLY1JXR2JIMXFhbzMrZHRwOVlITm9pbTUxY2cwNldt?=
- =?utf-8?B?d0RDQjJrRmxHUFlWZ21tY0YvWkFEc0lWTlJuY3Bmb2d6eVJVaUJTSDBwSlA3?=
- =?utf-8?B?V3ZGeWw4b0tqSlhGR0kvMTR1YllXSHJaUVpIRVM5bU1TTVlrMnV3TGo3Q1JN?=
- =?utf-8?B?MkZxUXVCaC9mQ1UwNkNuWW9acC8yWnR2VlNKWkRkYmRRWHU5L2Q1SDcxeEh4?=
- =?utf-8?B?NmxMdW9aQ2xPVWI0aFI2VEtmWFB0U2l2S2FzUGxDMkdDQU1aUXdDdEpqQkxB?=
- =?utf-8?B?a0gxZmQ0QTIwU0pHU1NHdWplWFZESVg4WTYrOUpVZ0xHdCtqODlTNGdCZnhL?=
- =?utf-8?B?VmJlTDhPL08xMDVQRkRIam9qSzh4MHpkSGNOV0Z5RktWYmVaTVc3S2pVeXVs?=
- =?utf-8?B?aGE1U0xkSWlwOW83QU90SWFsU0hSQlJpczdvbXRueWZXT0xUVGZhU3AyR0cr?=
- =?utf-8?B?UkJRUXI0SEl3VzJGQzA4dEM3RFN6eDZTazdSVThleURBcGQyR05kZjMvY0Mz?=
- =?utf-8?B?TDBnd3M5cFVXZWR2blh5V0JrMnlHdHJYNzB5VlV4bFNrVllnRm9TbU5hOEFu?=
- =?utf-8?B?dUIxUT09?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?S1ZLOStTdUZmVEhqUzE0VTVwcXNXZW9xSWJxeEJDd0t6d0Fzci9RT01kQTRR?=
- =?utf-8?B?NzNLZFhyTVdNaldzekFRdktFaE1UTFU5ZklRemdMN1pkUE1FbkRzOGNHRitF?=
- =?utf-8?B?VXk4U3lzdko2Vi9KaXcrajRUYzIzS0Z5Z2dLVW5xSlNJY1JYak85d2VSMDRE?=
- =?utf-8?B?K2JicjdhaHczSHRDQVJSNGhsVnR5TVZnMVhyRDlPWVUxaXhnMkhHdm5wQkln?=
- =?utf-8?B?SklsZVdpR0pPaUloZE9nS0lNdmtSVWgxVjRZN05yVThYNU9DSUIwbklqK1NO?=
- =?utf-8?B?TEt6NU50dkNLY0tBRnNCRFlVWDhqZE13R2x6bWF6MTByNmRnOHhnQUpXeTc1?=
- =?utf-8?B?Q3RmWGZKMVZHTGY3Vm1IR28ycGI2TDFkWmxXU1VyR3UvZmc2U1I1RDBUbjJQ?=
- =?utf-8?B?S202RXprYVM3aytXcHpxVGJnY21pOC9OcXAxU3k0WUFHTE1oaDVCT2hYemlO?=
- =?utf-8?B?emhzYmRtd05tZ2FvYytzSllEa1NQakVRd2tnaml4WEZPTFgyZlNMbW9XWUxt?=
- =?utf-8?B?dm5JVmx3d0hPRXJiOXBLRXRFRDJta29qa2s0aXZuTFZld1B2cE1PUmsxWStP?=
- =?utf-8?B?UlhsMjZNYUJCN1lDYjdEbkt4Qm1qOHpKWGdXTVlXWnZFQzlGaGpOZzZJMGJ0?=
- =?utf-8?B?STdyYjk3ay81bks0SFhvaEp2YlJtRVlIZUs1RUJWK1VPTDQrVWtHZmtmRUhQ?=
- =?utf-8?B?UGRueDQvUENvOFhYY0k2L3c1ckFQWlJxRmFwMjZteTVNVG5oZGROSzZ5cU1W?=
- =?utf-8?B?TWk3Mlg0SzNPTFFhenkrOUV1bFIybEVGVWx6UG1zTklrR0I4UENqWEZMK1Js?=
- =?utf-8?B?SE41Nk9VRlowYldtQ0xmT0JoUU9uRGJQMUZRd1l3Rmc2V01HUHAxZ0tVWWhi?=
- =?utf-8?B?cEpDaUIxVWhEN0hna2hxWWM4cm1TcXZEbk1pQVI4RE1DWkEzdVhBVFU4WHly?=
- =?utf-8?B?WVo0SHV2Rm81bCs1WnZLTlM1ZHFKdnFtKzhYMDV3enJvcXE1cjFJeTY4TGNw?=
- =?utf-8?B?OEFYN3Npei9mcHB5WFRYY1NYZEFvVWJ3WEN6N1I5eHRTWGpMNlU4Z0l5Y2lO?=
- =?utf-8?B?dXVIbXoyYTZuUjNVMjRpTFBMUUxhYUJzMWdabFRjSTBPL2JzYk5oeUdid0s0?=
- =?utf-8?B?b0oySkkzSk9qUlpFZ3c1ak1BU2JWdWFjaEU0RzdLWGFYcldOa25mSTdWYWgw?=
- =?utf-8?B?eUlHc1lleUVYajgxR3hlS25ScFdUM0EwekJpcFViWkZ6WHVZT0xlOWZtTGFV?=
- =?utf-8?B?V1pLNmxsMnFqbG9QdVRwS0xyb2xVMmxNRm5NZ1BuNENSN0l6ck9SY2RhYSta?=
- =?utf-8?B?MERrVHFSM0tES0lRZkVScUJXUzY3Yzh2MU5WeXpjVkNSbWhzMGFxNWMyeFBX?=
- =?utf-8?B?M1pEMGUrQXc5U2hpa0REd0F4QUN6aGxueFJPR05Td0gyTlRHYVQxT2FjK3FB?=
- =?utf-8?B?YTlXcnV3eFUyUmlFSU42UXo3ZC93MTM2MmtGTm9BN3RQbE1pV0N6Vi91WmFI?=
- =?utf-8?B?R1N5WTNSQ2FvQjV2WHRYeTgyTzFMYkN3SjNxdnY5NXY4SG9YMzl4MVhJY0pw?=
- =?utf-8?B?UjNJRHlRMVBPWFhiTDh3QWJEYzAyd1NFVkh4aU9XLzlBR0ZHUCt0Y2RmeHhB?=
- =?utf-8?B?NkpWSHJ0dDFaTnBTOFdHZWJkRTZSVEtrVThjSU1lVmJCRlUrbUUyeUJPeDZa?=
- =?utf-8?B?dTV6UkcvWjhDMmprVG9Cb2xmTWNJUUNKMHJIaEhkNEhjam51WGFZUkFxN2NS?=
- =?utf-8?Q?IFuwLwFXMsRpT+vIJt/n0NAfpxf84CRlgPygy4i?=
-X-OriginatorOrg: sct-15-20-7719-19-msonline-outlook-3b3e0.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: f511afa6-8780-49b0-218a-08dd0c83957c
-X-MS-Exchange-CrossTenant-AuthSource: VE1P189MB1024.EURP189.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Nov 2024 12:29:04.7520
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS2P189MB2470
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.12.1
+Content-Transfer-Encoding: 8bit
 
-On 11/24/24 12:00 PM, Krzysztof Kozlowski wrote:
-> On Sun, Nov 24, 2024 at 11:00:57AM +0100, Maud Spierings wrote:
->> The Samsung ATNA56AC03 panel is an AMOLED eDP panel.
->> It is similar to the ATNA33xc20 except it is larger and has a different
->> resolution.
->>
->> Signed-off-by: Maud Spierings <maud_spierings@hotmail.com>
->> ---
-> <form letter>
-> This is a friendly reminder during the review process.
->
-> It looks like you received a tag and forgot to add it.
->
-> If you do not know the process, here is a short explanation: Please add
-> Acked-by/Reviewed-by/Tested-by tags when posting new versions, under
-> or above your Signed-off-by tag. Tag is "received", when provided
-> in a message replied to you on the mailing list. Tools like b4 can help
-> here. However, there's no need to repost patches *only* to add the tags.
-> The upstream maintainer will do that for tags received on the version
-> they apply.
->
-> https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
->
-> If a tag was not added on purpose, please state why and what changed.
-> </form letter>
->
-> Best regards,
-> Krzysztof
->
-I did indeed completely miss it, only focussed on the correction, Should 
-I make a new version?
-Also this is my first time replying on the list so I hope this goes well.
+From: Konrad Dybcio <quic_kdybcio@quicinc.com>
 
-When I add one of these tags it should be in the commit message of that 
-patch below three dashes?
+[ Upstream commit 20a0a05f40faf82f64f1c2ad3e9f5006b80ca0cb ]
 
+The current way of storing the configuration is very much
+unmaintainable. Convert the data to use designated initializers to make
+it easier both to understand and add/update the slice configuration
+data.
 
-Best regards,
-Maud
+Signed-off-by: Konrad Dybcio <quic_kdybcio@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20240910-topic-llcc_unwrap-v2-1-f0487c983373@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/soc/qcom/llcc-qcom.c | 2644 ++++++++++++++++++++++++++++++----
+ 1 file changed, 2375 insertions(+), 269 deletions(-)
+
+diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
+index 28bcc65e91beb..a470285f54a87 100644
+--- a/drivers/soc/qcom/llcc-qcom.c
++++ b/drivers/soc/qcom/llcc-qcom.c
+@@ -153,325 +153,2431 @@ enum llcc_reg_offset {
+ };
+ 
+ static const struct llcc_slice_config sa8775p_data[] =  {
+-	{LLCC_CPUSS,    1, 2048, 1, 0, 0x00FF, 0x0, 0, 0, 0, 1, 1, 0, 0},
+-	{LLCC_VIDSC0,   2, 512, 3, 1, 0x00FF, 0x0, 0, 0, 0, 1, 0, 0, 0},
+-	{LLCC_CPUSS1,   3, 1024, 1, 1, 0x00FF, 0x0, 0, 0, 0, 1, 0, 0, 0},
+-	{LLCC_CPUHWT,   5, 512, 1, 1, 0x00FF, 0x0, 0, 0, 0, 1, 0, 0, 0},
+-	{LLCC_AUDIO,    6, 1024, 1, 1, 0x00FF, 0x0, 0, 0, 0, 0, 0, 0, 0},
+-	{LLCC_CMPT,     10, 4096, 1, 1, 0x00FF, 0x0, 0, 0, 0, 1, 0, 0, 0},
+-	{LLCC_GPUHTW,   11, 1024, 1, 1, 0x00FF, 0x0, 0, 0, 0, 1, 0, 0, 0},
+-	{LLCC_GPU,      12, 1024, 1, 1, 0x00FF, 0x0, 0, 0, 0, 1, 0, 1, 0},
+-	{LLCC_MMUHWT,   13, 1024, 1, 1, 0x00FF, 0x0, 0, 0, 0, 0, 1, 0, 0},
+-	{LLCC_CMPTDMA,  15, 1024, 1, 1, 0x00FF, 0x0, 0, 0, 0, 1, 0, 0, 0},
+-	{LLCC_DISP,     16, 4096, 2, 1, 0x00FF, 0x0, 0, 0, 0, 1, 0, 0, 0},
+-	{LLCC_VIDFW,    17, 3072, 1, 0, 0x00FF, 0x0, 0, 0, 0, 1, 0, 0, 0},
+-	{LLCC_AUDHW,    22, 1024, 1, 1, 0x00FF, 0x0, 0, 0, 0, 0, 0, 0, 0},
+-	{LLCC_CVP,      28, 256, 3, 1, 0x00FF, 0x0, 0, 0, 0, 1, 0, 0, 0},
+-	{LLCC_APTCM,    30, 1024, 3, 1, 0x0, 0xF0, 1, 0, 0, 1, 0, 0, 0},
+-	{LLCC_WRCACHE,    31, 512, 1, 1, 0x00FF, 0x0, 0, 0, 0, 0, 1, 0, 0},
++	{
++		.usecase_id = LLCC_CPUSS,
++		.slice_id = 1,
++		.max_cap = 2048,
++		.priority = 1,
++		.bonus_ways = 0xff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_VIDSC0,
++		.slice_id = 2,
++		.max_cap = 512,
++		.priority = 3,
++		.fixed_size = true,
++		.bonus_ways = 0xff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_CPUSS1,
++		.slice_id = 3,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_CPUHWT,
++		.slice_id = 5,
++		.max_cap = 512,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_AUDIO,
++		.slice_id = 6,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xff,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_CMPT,
++		.slice_id = 10,
++		.max_cap = 4096,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_GPUHTW,
++		.slice_id = 11,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_GPU,
++		.slice_id = 12,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++		.write_scid_en = true,
++	}, {
++		.usecase_id = LLCC_MMUHWT,
++		.slice_id = 13,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_CMPTDMA,
++		.slice_id = 15,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_DISP,
++		.slice_id = 16,
++		.max_cap = 4096,
++		.priority = 2,
++		.fixed_size = true,
++		.bonus_ways = 0xff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_VIDFW,
++		.slice_id = 17,
++		.max_cap = 3072,
++		.priority = 1,
++		.bonus_ways = 0xff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_AUDHW,
++		.slice_id = 22,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xff,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_CVP,
++		.slice_id = 28,
++		.max_cap = 256,
++		.priority = 3,
++		.fixed_size = true,
++		.bonus_ways = 0xff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_APTCM,
++		.slice_id = 30,
++		.max_cap = 1024,
++		.priority = 3,
++		.fixed_size = true,
++		.res_ways = 0xf0,
++		.cache_mode = 1,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_WRCACHE,
++		.slice_id = 31,
++		.max_cap = 512,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	},
+ };
+ 
+ static const struct llcc_slice_config sc7180_data[] =  {
+-	{ LLCC_CPUSS,    1,  256, 1, 0, 0xf, 0x0, 0, 0, 0, 1, 1 },
+-	{ LLCC_MDM,      8,  128, 1, 0, 0xf, 0x0, 0, 0, 0, 1, 0 },
+-	{ LLCC_GPUHTW,   11, 128, 1, 0, 0xf, 0x0, 0, 0, 0, 1, 0 },
+-	{ LLCC_GPU,      12, 128, 1, 0, 0xf, 0x0, 0, 0, 0, 1, 0 },
++	{
++		.usecase_id = LLCC_CPUSS,
++		.slice_id = 1,
++		.max_cap = 256,
++		.priority = 1,
++		.bonus_ways = 0xf,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_MDM,
++		.slice_id = 8,
++		.max_cap = 128,
++		.priority = 1,
++		.bonus_ways = 0xf,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_GPUHTW,
++		.slice_id = 11,
++		.max_cap = 128,
++		.priority = 1,
++		.bonus_ways = 0xf,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_GPU,
++		.slice_id = 12,
++		.max_cap = 128,
++		.priority = 1,
++		.bonus_ways = 0xf,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	},
+ };
+ 
+ static const struct llcc_slice_config sc7280_data[] =  {
+-	{ LLCC_CPUSS,    1,  768, 1, 0, 0x3f, 0x0, 0, 0, 0, 1, 1, 0},
+-	{ LLCC_MDMHPGRW, 7,  512, 2, 1, 0x3f, 0x0, 0, 0, 0, 1, 0, 0},
+-	{ LLCC_CMPT,     10, 768, 1, 1, 0x3f, 0x0, 0, 0, 0, 1, 0, 0},
+-	{ LLCC_GPUHTW,   11, 256, 1, 1, 0x3f, 0x0, 0, 0, 0, 1, 0, 0},
+-	{ LLCC_GPU,      12, 512, 1, 0, 0x3f, 0x0, 0, 0, 0, 1, 0, 0},
+-	{ LLCC_MMUHWT,   13, 256, 1, 1, 0x3f, 0x0, 0, 0, 0, 0, 1, 0},
+-	{ LLCC_MDMPNG,   21, 768, 0, 1, 0x3f, 0x0, 0, 0, 0, 1, 0, 0},
+-	{ LLCC_WLHW,     24, 256, 1, 1, 0x3f, 0x0, 0, 0, 0, 1, 0, 0},
+-	{ LLCC_MODPE,    29, 64,  1, 1, 0x3f, 0x0, 0, 0, 0, 1, 0, 0},
++	{
++		.usecase_id = LLCC_CPUSS,
++		.slice_id = 1,
++		.max_cap = 768,
++		.priority = 1,
++		.bonus_ways = 0x3f,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_MDMHPGRW,
++		.slice_id = 7,
++		.max_cap = 512,
++		.priority = 2,
++		.fixed_size = true,
++		.bonus_ways = 0x3f,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_CMPT,
++		.slice_id = 10,
++		.max_cap = 768,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0x3f,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_GPUHTW,
++		.slice_id = 11,
++		.max_cap = 256,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0x3f,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_GPU,
++		.slice_id = 12,
++		.max_cap = 512,
++		.priority = 1,
++		.bonus_ways = 0x3f,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_MMUHWT,
++		.slice_id = 13,
++		.max_cap = 256,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0x3f,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_MDMPNG,
++		.slice_id = 21,
++		.max_cap = 768,
++		.priority = 0,
++		.fixed_size = true,
++		.bonus_ways = 0x3f,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_WLHW,
++		.slice_id = 24,
++		.max_cap = 256,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0x3f,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_MODPE,
++		.slice_id = 29,
++		.max_cap = 64,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0x3f,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	},
+ };
+ 
+ static const struct llcc_slice_config sc8180x_data[] = {
+-	{ LLCC_CPUSS,    1, 6144,  1, 1, 0xfff, 0x0,   0, 0, 0, 1, 1 },
+-	{ LLCC_VIDSC0,   2, 512,   2, 1, 0xfff, 0x0,   0, 0, 0, 1, 0 },
+-	{ LLCC_VIDSC1,   3, 512,   2, 1, 0xfff, 0x0,   0, 0, 0, 1, 0 },
+-	{ LLCC_AUDIO,    6, 1024,  1, 1, 0xfff, 0x0,   0, 0, 0, 1, 0 },
+-	{ LLCC_MDMHPGRW, 7, 3072,  1, 1, 0x3ff, 0xc00, 0, 0, 0, 1, 0 },
+-	{ LLCC_MDM,      8, 3072,  1, 1, 0xfff, 0x0,   0, 0, 0, 1, 0 },
+-	{ LLCC_MODHW,    9, 1024,  1, 1, 0xfff, 0x0,   0, 0, 0, 1, 0 },
+-	{ LLCC_CMPT,     10, 6144, 1, 1, 0xfff, 0x0,   0, 0, 0, 1, 0 },
+-	{ LLCC_GPUHTW,   11, 1024, 1, 1, 0xfff, 0x0,   0, 0, 0, 1, 0 },
+-	{ LLCC_GPU,      12, 5120, 1, 1, 0xfff, 0x0,   0, 0, 0, 1, 0 },
+-	{ LLCC_MMUHWT,   13, 1024, 1, 1, 0xfff, 0x0,   0, 0, 0, 0, 1 },
+-	{ LLCC_CMPTDMA,  15, 6144, 1, 1, 0xfff, 0x0,   0, 0, 0, 1, 0 },
+-	{ LLCC_DISP,     16, 6144, 1, 1, 0xfff, 0x0,   0, 0, 0, 1, 0 },
+-	{ LLCC_VIDFW,    17, 1024, 1, 1, 0xfff, 0x0,   0, 0, 0, 1, 0 },
+-	{ LLCC_MDMHPFX,  20, 1024, 2, 1, 0xfff, 0x0,   0, 0, 0, 1, 0 },
+-	{ LLCC_MDMPNG,   21, 1024, 0, 1, 0xc,   0x0,   0, 0, 0, 1, 0 },
+-	{ LLCC_AUDHW,    22, 1024, 1, 1, 0xfff, 0x0,   0, 0, 0, 1, 0 },
+-	{ LLCC_NPU,      23, 6144, 1, 1, 0xfff, 0x0,   0, 0, 0, 1, 0 },
+-	{ LLCC_WLHW,     24, 6144, 1, 1, 0xfff, 0x0,   0, 0, 0, 1, 0 },
+-	{ LLCC_MODPE,    29, 512,  1, 1, 0xc,   0x0,   0, 0, 0, 1, 0 },
+-	{ LLCC_APTCM,    30, 512,  3, 1, 0x0,   0x1,   1, 0, 0, 1, 0 },
+-	{ LLCC_WRCACHE,  31, 128,  1, 1, 0xfff, 0x0,   0, 0, 0, 0, 0 },
++	{
++		.usecase_id = LLCC_CPUSS,
++		.slice_id = 1,
++		.max_cap = 6144,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_VIDSC0,
++		.slice_id = 2,
++		.max_cap = 512,
++		.priority = 2,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_VIDSC1,
++		.slice_id = 3,
++		.max_cap = 512,
++		.priority = 2,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_AUDIO,
++		.slice_id = 6,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_MDMHPGRW,
++		.slice_id = 7,
++		.max_cap = 3072,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0x3ff,
++		.res_ways = 0xc00,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_MDM,
++		.slice_id = 8,
++		.max_cap = 3072,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_MODHW,
++		.slice_id = 9,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_CMPT,
++		.slice_id = 10,
++		.max_cap = 6144,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_GPUHTW,
++		.slice_id = 11,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_GPU,
++		.slice_id = 12,
++		.max_cap = 5120,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_MMUHWT,
++		.slice_id = 13,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_CMPTDMA,
++		.slice_id = 15,
++		.max_cap = 6144,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_DISP,
++		.slice_id = 16,
++		.max_cap = 6144,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_VIDFW,
++		.slice_id = 17,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_MDMHPFX,
++		.slice_id = 20,
++		.max_cap = 1024,
++		.priority = 2,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_MDMPNG,
++		.slice_id = 21,
++		.max_cap = 1024,
++		.priority = 0,
++		.fixed_size = true,
++		.bonus_ways = 0xc,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_AUDHW,
++		.slice_id = 22,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_NPU,
++		.slice_id = 23,
++		.max_cap = 6144,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_WLHW,
++		.slice_id = 24,
++		.max_cap = 6144,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_MODPE,
++		.slice_id = 29,
++		.max_cap = 512,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xc,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_APTCM,
++		.slice_id = 30,
++		.max_cap = 512,
++		.priority = 3,
++		.fixed_size = true,
++		.res_ways = 0x1,
++		.cache_mode = 1,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_WRCACHE,
++		.slice_id = 31,
++		.max_cap = 128,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++	},
+ };
+ 
+ static const struct llcc_slice_config sc8280xp_data[] = {
+-	{ LLCC_CPUSS,    1,  6144, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 1, 0 },
+-	{ LLCC_VIDSC0,   2,  512,  3, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
+-	{ LLCC_AUDIO,    6,  1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 0, 0, 0 },
+-	{ LLCC_CMPT,     10, 6144, 1, 1, 0xfff, 0x0, 0, 0, 0, 0, 0, 0 },
+-	{ LLCC_GPUHTW,   11, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
+-	{ LLCC_GPU,      12, 4096, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 1 },
+-	{ LLCC_MMUHWT,   13, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
+-	{ LLCC_DISP,     16, 6144, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
+-	{ LLCC_AUDHW,    22, 2048, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
+-	{ LLCC_ECC,      26, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
+-	{ LLCC_CVP,      28, 512,  3, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
+-	{ LLCC_APTCM,    30, 1024, 3, 1, 0x0,   0x1, 1, 0, 0, 1, 0, 0 },
+-	{ LLCC_WRCACHE,  31, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
+-	{ LLCC_CVPFW,    17, 512,  1, 0, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
+-	{ LLCC_CPUSS1,   3, 2048, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
+-	{ LLCC_CPUHWT,   5, 512,  1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
++	{
++		.usecase_id = LLCC_CPUSS,
++		.slice_id = 1,
++		.max_cap = 6144,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_VIDSC0,
++		.slice_id = 2,
++		.max_cap = 512,
++		.priority = 3,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_AUDIO,
++		.slice_id = 6,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_CMPT,
++		.slice_id = 10,
++		.max_cap = 6144,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_GPUHTW,
++		.slice_id = 11,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_GPU,
++		.slice_id = 12,
++		.max_cap = 4096,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++		.write_scid_en = true,
++	}, {
++		.usecase_id = LLCC_MMUHWT,
++		.slice_id = 13,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_DISP,
++		.slice_id = 16,
++		.max_cap = 6144,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_AUDHW,
++		.slice_id = 22,
++		.max_cap = 2048,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_ECC,
++		.slice_id = 26,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_CVP,
++		.slice_id = 28,
++		.max_cap = 512,
++		.priority = 3,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_APTCM,
++		.slice_id = 30,
++		.max_cap = 1024,
++		.priority = 3,
++		.fixed_size = true,
++		.res_ways = 0x1,
++		.cache_mode = 1,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_WRCACHE,
++		.slice_id = 31,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_CVPFW,
++		.slice_id = 17,
++		.max_cap = 512,
++		.priority = 1,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_CPUSS1,
++		.slice_id = 3,
++		.max_cap = 2048,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_CPUHWT,
++		.slice_id = 5,
++		.max_cap = 512,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	},
+ };
+ 
+-static const struct llcc_slice_config sdm845_data[] =  {
+-	{ LLCC_CPUSS,    1,  2816, 1, 0, 0xffc, 0x2,   0, 0, 1, 1, 1 },
+-	{ LLCC_VIDSC0,   2,  512,  2, 1, 0x0,   0x0f0, 0, 0, 1, 1, 0 },
+-	{ LLCC_VIDSC1,   3,  512,  2, 1, 0x0,   0x0f0, 0, 0, 1, 1, 0 },
+-	{ LLCC_ROTATOR,  4,  563,  2, 1, 0x0,   0x00e, 2, 0, 1, 1, 0 },
+-	{ LLCC_VOICE,    5,  2816, 1, 0, 0xffc, 0x2,   0, 0, 1, 1, 0 },
+-	{ LLCC_AUDIO,    6,  2816, 1, 0, 0xffc, 0x2,   0, 0, 1, 1, 0 },
+-	{ LLCC_MDMHPGRW, 7,  1024, 2, 0, 0xfc,  0xf00, 0, 0, 1, 1, 0 },
+-	{ LLCC_MDM,      8,  2816, 1, 0, 0xffc, 0x2,   0, 0, 1, 1, 0 },
+-	{ LLCC_CMPT,     10, 2816, 1, 0, 0xffc, 0x2,   0, 0, 1, 1, 0 },
+-	{ LLCC_GPUHTW,   11, 512,  1, 1, 0xc,   0x0,   0, 0, 1, 1, 0 },
+-	{ LLCC_GPU,      12, 2304, 1, 0, 0xff0, 0x2,   0, 0, 1, 1, 0 },
+-	{ LLCC_MMUHWT,   13, 256,  2, 0, 0x0,   0x1,   0, 0, 1, 0, 1 },
+-	{ LLCC_CMPTDMA,  15, 2816, 1, 0, 0xffc, 0x2,   0, 0, 1, 1, 0 },
+-	{ LLCC_DISP,     16, 2816, 1, 0, 0xffc, 0x2,   0, 0, 1, 1, 0 },
+-	{ LLCC_VIDFW,    17, 2816, 1, 0, 0xffc, 0x2,   0, 0, 1, 1, 0 },
+-	{ LLCC_MDMHPFX,  20, 1024, 2, 1, 0x0,   0xf00, 0, 0, 1, 1, 0 },
+-	{ LLCC_MDMPNG,   21, 1024, 0, 1, 0x1e,  0x0,   0, 0, 1, 1, 0 },
+-	{ LLCC_AUDHW,    22, 1024, 1, 1, 0xffc, 0x2,   0, 0, 1, 1, 0 },
++static const struct llcc_slice_config sdm845_data[] =  {{
++		.usecase_id = LLCC_CPUSS,
++		.slice_id = 1,
++		.max_cap = 2816,
++		.priority = 1,
++		.bonus_ways = 0xffc,
++		.res_ways = 0x2,
++		.cache_mode = 0,
++		.dis_cap_alloc = true,
++		.retain_on_pc = true,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_VIDSC0,
++		.slice_id = 2,
++		.max_cap = 512,
++		.priority = 2,
++		.fixed_size = true,
++		.res_ways = 0xf0,
++		.cache_mode = 0,
++		.dis_cap_alloc = true,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_VIDSC1,
++		.slice_id = 3,
++		.max_cap = 512,
++		.priority = 2,
++		.fixed_size = true,
++		.res_ways = 0xf0,
++		.cache_mode = 0,
++		.dis_cap_alloc = true,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_ROTATOR,
++		.slice_id = 4,
++		.max_cap = 563,
++		.priority = 2,
++		.fixed_size = true,
++		.res_ways = 0xe,
++		.cache_mode = 2,
++		.dis_cap_alloc = true,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_VOICE,
++		.slice_id = 5,
++		.max_cap = 2816,
++		.priority = 1,
++		.bonus_ways = 0xffc,
++		.res_ways = 0x2,
++		.cache_mode = 0,
++		.dis_cap_alloc = true,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_AUDIO,
++		.slice_id = 6,
++		.max_cap = 2816,
++		.priority = 1,
++		.bonus_ways = 0xffc,
++		.res_ways = 0x2,
++		.cache_mode = 0,
++		.dis_cap_alloc = true,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_MDMHPGRW,
++		.slice_id = 7,
++		.max_cap = 1024,
++		.priority = 2,
++		.bonus_ways = 0xfc,
++		.res_ways = 0xf00,
++		.cache_mode = 0,
++		.dis_cap_alloc = true,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_MDM,
++		.slice_id = 8,
++		.max_cap = 2816,
++		.priority = 1,
++		.bonus_ways = 0xffc,
++		.res_ways = 0x2,
++		.cache_mode = 0,
++		.dis_cap_alloc = true,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_CMPT,
++		.slice_id = 10,
++		.max_cap = 2816,
++		.priority = 1,
++		.bonus_ways = 0xffc,
++		.res_ways = 0x2,
++		.cache_mode = 0,
++		.dis_cap_alloc = true,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_GPUHTW,
++		.slice_id = 11,
++		.max_cap = 512,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xc,
++		.cache_mode = 0,
++		.dis_cap_alloc = true,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_GPU,
++		.slice_id = 12,
++		.max_cap = 2304,
++		.priority = 1,
++		.bonus_ways = 0xff0,
++		.res_ways = 0x2,
++		.cache_mode = 0,
++		.dis_cap_alloc = true,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_MMUHWT,
++		.slice_id = 13,
++		.max_cap = 256,
++		.priority = 2,
++		.res_ways = 0x1,
++		.cache_mode = 0,
++		.dis_cap_alloc = true,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_CMPTDMA,
++		.slice_id = 15,
++		.max_cap = 2816,
++		.priority = 1,
++		.bonus_ways = 0xffc,
++		.res_ways = 0x2,
++		.cache_mode = 0,
++		.dis_cap_alloc = true,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_DISP,
++		.slice_id = 16,
++		.max_cap = 2816,
++		.priority = 1,
++		.bonus_ways = 0xffc,
++		.res_ways = 0x2,
++		.cache_mode = 0,
++		.dis_cap_alloc = true,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_VIDFW,
++		.slice_id = 17,
++		.max_cap = 2816,
++		.priority = 1,
++		.bonus_ways = 0xffc,
++		.res_ways = 0x2,
++		.cache_mode = 0,
++		.dis_cap_alloc = true,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_MDMHPFX,
++		.slice_id = 20,
++		.max_cap = 1024,
++		.priority = 2,
++		.fixed_size = true,
++		.res_ways = 0xf00,
++		.cache_mode = 0,
++		.dis_cap_alloc = true,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_MDMPNG,
++		.slice_id = 21,
++		.max_cap = 1024,
++		.priority = 0,
++		.fixed_size = true,
++		.bonus_ways = 0x1e,
++		.cache_mode = 0,
++		.dis_cap_alloc = true,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_AUDHW,
++		.slice_id = 22,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xffc,
++		.res_ways = 0x2,
++		.cache_mode = 0,
++		.dis_cap_alloc = true,
++		.retain_on_pc = true,
++	},
+ };
+ 
+ static const struct llcc_slice_config sm6350_data[] =  {
+-	{ LLCC_CPUSS,    1,  768, 1, 0, 0xFFF, 0x0, 0, 0, 0, 0, 1, 1 },
+-	{ LLCC_MDM,      8,  512, 2, 0, 0xFFF, 0x0, 0, 0, 0, 0, 1, 0 },
+-	{ LLCC_GPUHTW,   11, 256, 1, 0, 0xFFF, 0x0, 0, 0, 0, 0, 1, 0 },
+-	{ LLCC_GPU,      12, 512, 1, 0, 0xFFF, 0x0, 0, 0, 0, 0, 1, 0 },
+-	{ LLCC_MDMPNG,   21, 768, 0, 1, 0xFFF, 0x0, 0, 0, 0, 0, 1, 0 },
+-	{ LLCC_NPU,      23, 768, 1, 0, 0xFFF, 0x0, 0, 0, 0, 0, 1, 0 },
+-	{ LLCC_MODPE,    29,  64, 1, 1, 0xFFF, 0x0, 0, 0, 0, 0, 1, 0 },
++	{
++		.usecase_id = LLCC_CPUSS,
++		.slice_id = 1,
++		.max_cap = 768,
++		.priority = 1,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++		.write_scid_en = true,
++	}, {
++		.usecase_id = LLCC_MDM,
++		.slice_id = 8,
++		.max_cap = 512,
++		.priority = 2,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_GPUHTW,
++		.slice_id = 11,
++		.max_cap = 256,
++		.priority = 1,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_GPU,
++		.slice_id = 12,
++		.max_cap = 512,
++		.priority = 1,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_MDMPNG,
++		.slice_id = 21,
++		.max_cap = 768,
++		.priority = 0,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_NPU,
++		.slice_id = 23,
++		.max_cap = 768,
++		.priority = 1,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_MODPE,
++		.slice_id = 29,
++		.max_cap = 64,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	},
+ };
+ 
+ static const struct llcc_slice_config sm7150_data[] =  {
+-	{ LLCC_CPUSS,    1,  512, 1, 0, 0xF, 0x0, 0, 0, 0, 1, 1 },
+-	{ LLCC_MDM,      8,  128, 2, 0, 0xF, 0x0, 0, 0, 0, 1, 0 },
+-	{ LLCC_GPUHTW,   11, 256, 1, 1, 0xF, 0x0, 0, 0, 0, 1, 0 },
+-	{ LLCC_GPU,      12, 256, 1, 1, 0xF, 0x0, 0, 0, 0, 1, 0 },
+-	{ LLCC_NPU,      23, 512, 1, 0, 0xF, 0x0, 0, 0, 0, 1, 0 },
++	{
++		.usecase_id = LLCC_CPUSS,
++		.slice_id = 1,
++		.max_cap = 512,
++		.priority = 1,
++		.bonus_ways = 0xf,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_MDM,
++		.slice_id = 8,
++		.max_cap = 128,
++		.priority = 2,
++		.bonus_ways = 0xf,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_GPUHTW,
++		.slice_id = 11,
++		.max_cap = 256,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xf,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_GPU,
++		.slice_id = 12,
++		.max_cap = 256,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xf,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_NPU,
++		.slice_id = 23,
++		.max_cap = 512,
++		.priority = 1,
++		.bonus_ways = 0xf,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	},
+ };
+ 
+ static const struct llcc_slice_config sm8150_data[] =  {
+-	{  LLCC_CPUSS,    1, 3072, 1, 1, 0xFFF, 0x0,   0, 0, 0, 1, 1 },
+-	{  LLCC_VIDSC0,   2, 512,  2, 1, 0xFFF, 0x0,   0, 0, 0, 1, 0 },
+-	{  LLCC_VIDSC1,   3, 512,  2, 1, 0xFFF, 0x0,   0, 0, 0, 1, 0 },
+-	{  LLCC_AUDIO,    6, 1024, 1, 1, 0xFFF, 0x0,   0, 0, 0, 1, 0 },
+-	{  LLCC_MDMHPGRW, 7, 3072, 1, 0, 0xFF,  0xF00, 0, 0, 0, 1, 0 },
+-	{  LLCC_MDM,      8, 3072, 1, 1, 0xFFF, 0x0,   0, 0, 0, 1, 0 },
+-	{  LLCC_MODHW,    9, 1024, 1, 1, 0xFFF, 0x0,   0, 0, 0, 1, 0 },
+-	{  LLCC_CMPT,    10, 3072, 1, 1, 0xFFF, 0x0,   0, 0, 0, 1, 0 },
+-	{  LLCC_GPUHTW , 11, 512,  1, 1, 0xFFF, 0x0,   0, 0, 0, 1, 0 },
+-	{  LLCC_GPU,     12, 2560, 1, 1, 0xFFF, 0x0,   0, 0, 0, 1, 0 },
+-	{  LLCC_MMUHWT,  13, 1024, 1, 1, 0xFFF, 0x0,   0, 0, 0, 0, 1 },
+-	{  LLCC_CMPTDMA, 15, 3072, 1, 1, 0xFFF, 0x0,   0, 0, 0, 1, 0 },
+-	{  LLCC_DISP,    16, 3072, 1, 1, 0xFFF, 0x0,   0, 0, 0, 1, 0 },
+-	{  LLCC_MDMHPFX, 20, 1024, 2, 1, 0xFFF, 0x0,   0, 0, 0, 1, 0 },
+-	{  LLCC_MDMHPFX, 21, 1024, 0, 1, 0xF,   0x0,   0, 0, 0, 1, 0 },
+-	{  LLCC_AUDHW,   22, 1024, 1, 1, 0xFFF, 0x0,   0, 0, 0, 1, 0 },
+-	{  LLCC_NPU,     23, 3072, 1, 1, 0xFFF, 0x0,   0, 0, 0, 1, 0 },
+-	{  LLCC_WLHW,    24, 3072, 1, 1, 0xFFF, 0x0,   0, 0, 0, 1, 0 },
+-	{  LLCC_MODPE,   29, 256,  1, 1, 0xF,   0x0,   0, 0, 0, 1, 0 },
+-	{  LLCC_APTCM,   30, 256,  3, 1, 0x0,   0x1,   1, 0, 0, 1, 0 },
+-	{  LLCC_WRCACHE, 31, 128,  1, 1, 0xFFF, 0x0,   0, 0, 0, 0, 0 },
++	{
++		.usecase_id = LLCC_CPUSS,
++		.slice_id = 1,
++		.max_cap = 3072,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_VIDSC0,
++		.slice_id = 2,
++		.max_cap = 512,
++		.priority = 2,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_VIDSC1,
++		.slice_id = 3,
++		.max_cap = 512,
++		.priority = 2,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_AUDIO,
++		.slice_id = 6,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_MDMHPGRW,
++		.slice_id = 7,
++		.max_cap = 3072,
++		.priority = 1,
++		.bonus_ways = 0xff,
++		.res_ways = 0xf00,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_MDM,
++		.slice_id = 8,
++		.max_cap = 3072,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_MODHW,
++		.slice_id = 9,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_CMPT,
++		.slice_id = 10,
++		.max_cap = 3072,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_GPUHTW,
++		.slice_id = 11,
++		.max_cap = 512,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_GPU,
++		.slice_id = 12,
++		.max_cap = 2560,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_MMUHWT,
++		.slice_id = 13,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_CMPTDMA,
++		.slice_id = 15,
++		.max_cap = 3072,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_DISP,
++		.slice_id = 16,
++		.max_cap = 3072,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_MDMHPFX,
++		.slice_id = 20,
++		.max_cap = 1024,
++		.priority = 2,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_MDMHPFX,
++		.slice_id = 21,
++		.max_cap = 1024,
++		.priority = 0,
++		.fixed_size = true,
++		.bonus_ways = 0xf,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_AUDHW,
++		.slice_id = 22,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_NPU,
++		.slice_id = 23,
++		.max_cap = 3072,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_WLHW,
++		.slice_id = 24,
++		.max_cap = 3072,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_MODPE,
++		.slice_id = 29,
++		.max_cap = 256,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xf,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_APTCM,
++		.slice_id = 30,
++		.max_cap = 256,
++		.priority = 3,
++		.fixed_size = true,
++		.res_ways = 0x1,
++		.cache_mode = 1,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_WRCACHE,
++		.slice_id = 31,
++		.max_cap = 128,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++	},
+ };
+ 
+ static const struct llcc_slice_config sm8250_data[] =  {
+-	{ LLCC_CPUSS,    1, 3072, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 1, 0 },
+-	{ LLCC_VIDSC0,   2, 512,  3, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
+-	{ LLCC_AUDIO,    6, 1024, 1, 0, 0xfff, 0x0, 0, 0, 0, 0, 0, 0 },
+-	{ LLCC_CMPT,    10, 1024, 1, 0, 0xfff, 0x0, 0, 0, 0, 0, 0, 0 },
+-	{ LLCC_GPUHTW,  11, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
+-	{ LLCC_GPU,     12, 1024, 1, 0, 0xfff, 0x0, 0, 0, 0, 1, 0, 1 },
+-	{ LLCC_MMUHWT,  13, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
+-	{ LLCC_CMPTDMA, 15, 1024, 1, 0, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
+-	{ LLCC_DISP,    16, 3072, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
+-	{ LLCC_VIDFW,   17, 512,  1, 0, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
+-	{ LLCC_AUDHW,   22, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
+-	{ LLCC_NPU,     23, 3072, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
+-	{ LLCC_WLHW,    24, 1024, 1, 0, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
+-	{ LLCC_CVP,     28, 256,  3, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
+-	{ LLCC_APTCM,   30, 128,  3, 0, 0x0,   0x3, 1, 0, 0, 1, 0, 0 },
+-	{ LLCC_WRCACHE, 31, 256,  1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
++	{
++		.usecase_id = LLCC_CPUSS,
++		.slice_id = 1,
++		.max_cap = 3072,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_VIDSC0,
++		.slice_id = 2,
++		.max_cap = 512,
++		.priority = 3,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_AUDIO,
++		.slice_id = 6,
++		.max_cap = 1024,
++		.priority = 1,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_CMPT,
++		.slice_id = 10,
++		.max_cap = 1024,
++		.priority = 1,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_GPUHTW,
++		.slice_id = 11,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_GPU,
++		.slice_id = 12,
++		.max_cap = 1024,
++		.priority = 1,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++		.write_scid_en = true,
++	}, {
++		.usecase_id = LLCC_MMUHWT,
++		.slice_id = 13,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_CMPTDMA,
++		.slice_id = 15,
++		.max_cap = 1024,
++		.priority = 1,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_DISP,
++		.slice_id = 16,
++		.max_cap = 3072,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_VIDFW,
++		.slice_id = 17,
++		.max_cap = 512,
++		.priority = 1,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_AUDHW,
++		.slice_id = 22,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_NPU,
++		.slice_id = 23,
++		.max_cap = 3072,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_WLHW,
++		.slice_id = 24,
++		.max_cap = 1024,
++		.priority = 1,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_CVP,
++		.slice_id = 28,
++		.max_cap = 256,
++		.priority = 3,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_APTCM,
++		.slice_id = 30,
++		.max_cap = 128,
++		.priority = 3,
++		.res_ways = 0x3,
++		.cache_mode = 1,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_WRCACHE,
++		.slice_id = 31,
++		.max_cap = 256,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	},
+ };
+ 
+ static const struct llcc_slice_config sm8350_data[] =  {
+-	{ LLCC_CPUSS,    1, 3072,  1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 1 },
+-	{ LLCC_VIDSC0,   2, 512,   3, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
+-	{ LLCC_AUDIO,    6, 1024,  1, 1, 0xfff, 0x0, 0, 0, 0, 0, 0, 0 },
+-	{ LLCC_MDMHPGRW, 7, 1024,  3, 0, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
+-	{ LLCC_MODHW,    9, 1024,  1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
+-	{ LLCC_CMPT,     10, 3072, 1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
+-	{ LLCC_GPUHTW,   11, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
+-	{ LLCC_GPU,      12, 1024, 1, 0, 0xfff, 0x0, 0, 0, 0, 1, 1, 0 },
+-	{ LLCC_MMUHWT,   13, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 0, 0, 1 },
+-	{ LLCC_DISP,     16, 3072, 2, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
+-	{ LLCC_MDMPNG,   21, 1024, 0, 1, 0xf,   0x0, 0, 0, 0, 0, 1, 0 },
+-	{ LLCC_AUDHW,    22, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
+-	{ LLCC_CVP,      28, 512,  3, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
+-	{ LLCC_MODPE,    29, 256,  1, 1, 0xf,   0x0, 0, 0, 0, 0, 1, 0 },
+-	{ LLCC_APTCM,    30, 1024, 3, 1, 0x0,   0x1, 1, 0, 0, 0, 1, 0 },
+-	{ LLCC_WRCACHE,  31, 512,  1, 1, 0xfff, 0x0, 0, 0, 0, 0, 0, 1 },
+-	{ LLCC_CVPFW,    17, 512,  1, 0, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
+-	{ LLCC_CPUSS1,   3, 1024,  1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
+-	{ LLCC_CPUHWT,   5, 512,   1, 1, 0xfff, 0x0, 0, 0, 0, 0, 0, 1 },
++	{
++		.usecase_id = LLCC_CPUSS,
++		.slice_id = 1,
++		.max_cap = 3072,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++		.write_scid_en = true,
++	}, {
++		.usecase_id = LLCC_VIDSC0,
++		.slice_id = 2,
++		.max_cap = 512,
++		.priority = 3,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_AUDIO,
++		.slice_id = 6,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_MDMHPGRW,
++		.slice_id = 7,
++		.max_cap = 1024,
++		.priority = 3,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_MODHW,
++		.slice_id = 9,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_CMPT,
++		.slice_id = 10,
++		.max_cap = 3072,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_GPUHTW,
++		.slice_id = 11,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_GPU,
++		.slice_id = 12,
++		.max_cap = 1024,
++		.priority = 1,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_MMUHWT,
++		.slice_id = 13,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.write_scid_en = true,
++	}, {
++		.usecase_id = LLCC_DISP,
++		.slice_id = 16,
++		.max_cap = 3072,
++		.priority = 2,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_MDMPNG,
++		.slice_id = 21,
++		.max_cap = 1024,
++		.priority = 0,
++		.fixed_size = true,
++		.bonus_ways = 0xf,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_AUDHW,
++		.slice_id = 22,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_CVP,
++		.slice_id = 28,
++		.max_cap = 512,
++		.priority = 3,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_MODPE,
++		.slice_id = 29,
++		.max_cap = 256,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xf,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_APTCM,
++		.slice_id = 30,
++		.max_cap = 1024,
++		.priority = 3,
++		.fixed_size = true,
++		.res_ways = 0x1,
++		.cache_mode = 1,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_WRCACHE,
++		.slice_id = 31,
++		.max_cap = 512,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.write_scid_en = true,
++	}, {
++		.usecase_id = LLCC_CVPFW,
++		.slice_id = 17,
++		.max_cap = 512,
++		.priority = 1,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_CPUSS1,
++		.slice_id = 3,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_CPUHWT,
++		.slice_id = 5,
++		.max_cap = 512,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.write_scid_en = true,
++	},
+ };
+ 
+ static const struct llcc_slice_config sm8450_data[] =  {
+-	{LLCC_CPUSS,     1, 3072, 1, 0, 0xFFFF, 0x0,   0, 0, 0, 1, 1, 0, 0 },
+-	{LLCC_VIDSC0,    2,  512, 3, 1, 0xFFFF, 0x0,   0, 0, 0, 1, 0, 0, 0 },
+-	{LLCC_AUDIO,     6, 1024, 1, 1, 0xFFFF, 0x0,   0, 0, 0, 0, 0, 0, 0 },
+-	{LLCC_MDMHPGRW,  7, 1024, 3, 0, 0xFFFF, 0x0,   0, 0, 0, 1, 0, 0, 0 },
+-	{LLCC_MODHW,     9, 1024, 1, 1, 0xFFFF, 0x0,   0, 0, 0, 1, 0, 0, 0 },
+-	{LLCC_CMPT,     10, 4096, 1, 1, 0xFFFF, 0x0,   0, 0, 0, 1, 0, 0, 0 },
+-	{LLCC_GPUHTW,   11,  512, 1, 1, 0xFFFF, 0x0,   0, 0, 0, 1, 0, 0, 0 },
+-	{LLCC_GPU,      12, 2048, 1, 1, 0xFFFF, 0x0,   0, 0, 0, 1, 0, 1, 0 },
+-	{LLCC_MMUHWT,   13,  768, 1, 1, 0xFFFF, 0x0,   0, 0, 0, 0, 1, 0, 0 },
+-	{LLCC_DISP,     16, 4096, 2, 1, 0xFFFF, 0x0,   0, 0, 0, 1, 0, 0, 0 },
+-	{LLCC_MDMPNG,   21, 1024, 1, 1, 0xF000, 0x0,   0, 0, 0, 1, 0, 0, 0 },
+-	{LLCC_AUDHW,    22, 1024, 1, 1, 0xFFFF, 0x0,   0, 0, 0, 0, 0, 0, 0 },
+-	{LLCC_CVP,      28,  256, 3, 1, 0xFFFF, 0x0,   0, 0, 0, 1, 0, 0, 0 },
+-	{LLCC_MODPE,    29,   64, 1, 1, 0xF000, 0x0,   0, 0, 0, 1, 0, 0, 0 },
+-	{LLCC_APTCM,    30, 1024, 3, 1, 0x0,    0xF0,  1, 0, 0, 1, 0, 0, 0 },
+-	{LLCC_WRCACHE,  31,  512, 1, 1, 0xFFFF, 0x0,   0, 0, 0, 0, 1, 0, 0 },
+-	{LLCC_CVPFW,    17,  512, 1, 1, 0xFFFF, 0x0,   0, 0, 0, 1, 0, 0, 0 },
+-	{LLCC_CPUSS1,    3, 1024, 1, 1, 0xFFFF, 0x0,   0, 0, 0, 1, 0, 0, 0 },
+-	{LLCC_CAMEXP0,   4,  256, 3, 1, 0xFFFF, 0x0,   0, 0, 0, 1, 0, 0, 0 },
+-	{LLCC_CPUMTE,   23,  256, 1, 1, 0x0FFF, 0x0,   0, 0, 0, 0, 1, 0, 0 },
+-	{LLCC_CPUHWT,    5,  512, 1, 1, 0xFFFF, 0x0,   0, 0, 0, 1, 1, 0, 0 },
+-	{LLCC_CAMEXP1,  27,  256, 3, 1, 0xFFFF, 0x0,   0, 0, 0, 1, 0, 0, 0 },
+-	{LLCC_AENPU,     8, 2048, 1, 1, 0xFFFF, 0x0,   0, 0, 0, 0, 0, 0, 0 },
++	{
++		.usecase_id = LLCC_CPUSS,
++		.slice_id = 1,
++		.max_cap = 3072,
++		.priority = 1,
++		.bonus_ways = 0xffff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_VIDSC0,
++		.slice_id = 2,
++		.max_cap = 512,
++		.priority = 3,
++		.fixed_size = true,
++		.bonus_ways = 0xffff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_AUDIO,
++		.slice_id = 6,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xffff,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_MDMHPGRW,
++		.slice_id = 7,
++		.max_cap = 1024,
++		.priority = 3,
++		.bonus_ways = 0xffff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_MODHW,
++		.slice_id = 9,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xffff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_CMPT,
++		.slice_id = 10,
++		.max_cap = 4096,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xffff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_GPUHTW,
++		.slice_id = 11,
++		.max_cap = 512,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xffff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_GPU,
++		.slice_id = 12,
++		.max_cap = 2048,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xffff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++		.write_scid_en = true,
++	}, {
++		.usecase_id = LLCC_MMUHWT,
++		.slice_id = 13,
++		.max_cap = 768,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xffff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_DISP,
++		.slice_id = 16,
++		.max_cap = 4096,
++		.priority = 2,
++		.fixed_size = true,
++		.bonus_ways = 0xffff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_MDMPNG,
++		.slice_id = 21,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xf000,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_AUDHW,
++		.slice_id = 22,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xffff,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_CVP,
++		.slice_id = 28,
++		.max_cap = 256,
++		.priority = 3,
++		.fixed_size = true,
++		.bonus_ways = 0xffff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_MODPE,
++		.slice_id = 29,
++		.max_cap = 64,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xf000,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_APTCM,
++		.slice_id = 30,
++		.max_cap = 1024,
++		.priority = 3,
++		.fixed_size = true,
++		.res_ways = 0xf0,
++		.cache_mode = 1,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_WRCACHE,
++		.slice_id = 31,
++		.max_cap = 512,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xffff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_CVPFW,
++		.slice_id = 17,
++		.max_cap = 512,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xffff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_CPUSS1,
++		.slice_id = 3,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xffff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_CAMEXP0,
++		.slice_id = 4,
++		.max_cap = 256,
++		.priority = 3,
++		.fixed_size = true,
++		.bonus_ways = 0xffff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_CPUMTE,
++		.slice_id = 23,
++		.max_cap = 256,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_CPUHWT,
++		.slice_id = 5,
++		.max_cap = 512,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xffff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_CAMEXP1,
++		.slice_id = 27,
++		.max_cap = 256,
++		.priority = 3,
++		.fixed_size = true,
++		.bonus_ways = 0xffff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_AENPU,
++		.slice_id = 8,
++		.max_cap = 2048,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xffff,
++		.cache_mode = 0,
++	},
+ };
+ 
+ static const struct llcc_slice_config sm8550_data[] =  {
+-	{LLCC_CPUSS,     1, 5120, 1, 0, 0xFFFFFF, 0x0,   0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+-	{LLCC_VIDSC0,    2,  512, 4, 1, 0xFFFFFF, 0x0,   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+-	{LLCC_AUDIO,     6, 1024, 1, 1, 0xFFFFFF, 0x0,   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+-	{LLCC_MDMHPGRW, 25, 1024, 4, 0, 0xFFFFFF, 0x0,   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+-	{LLCC_MODHW,    26, 1024, 1, 1, 0xFFFFFF, 0x0,   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+-	{LLCC_CMPT,     10, 4096, 1, 1, 0xFFFFFF, 0x0,   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+-	{LLCC_GPUHTW,   11,  512, 1, 1, 0xFFFFFF, 0x0,   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+-	{LLCC_GPU,       9, 3096, 1, 0, 0xFFFFFF, 0x0,   0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, },
+-	{LLCC_MMUHWT,   18,  768, 1, 1, 0xFFFFFF, 0x0,   0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+-	{LLCC_DISP,     16, 6144, 1, 1, 0xFFFFFF, 0x0,   2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+-	{LLCC_MDMPNG,   27, 1024, 0, 1, 0xF00000, 0x0,   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+-	{LLCC_AUDHW,    22, 1024, 1, 1, 0xFFFFFF, 0x0,   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+-	{LLCC_CVP,       8,  256, 4, 1, 0xFFFFFF, 0x0,   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+-	{LLCC_MODPE,    29,   64, 1, 1, 0xF00000, 0x0,   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, },
+-	{LLCC_WRCACHE,  31,  512, 1, 1, 0xFFFFFF, 0x0,   0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+-	{LLCC_CAMEXP0,   4,  256, 4, 1,      0xF, 0x0,   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+-	{LLCC_CPUHWT,    5,  512, 1, 1, 0xFFFFFF, 0x0,   0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+-	{LLCC_CAMEXP1,   7, 3200, 3, 1, 0xFFFFF0, 0x0,   2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+-	{LLCC_CMPTHCP,  17,  256, 4, 1, 0xFFFFFF, 0x0,   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+-	{LLCC_LCPDARE,  30,  128, 4, 1, 0xFFFFFF, 0x0,   0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, },
+-	{LLCC_AENPU,     3, 3072, 1, 1, 0xFE01FF, 0x0,   2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+-	{LLCC_ISLAND1,  12, 1792, 7, 1,   0xFE00, 0x0,   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+-	{LLCC_ISLAND4,  15,  256, 7, 1,  0x10000, 0x0,   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+-	{LLCC_CAMEXP2,  19, 3200, 3, 1, 0xFFFFF0, 0x0,   2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+-	{LLCC_CAMEXP3,  20, 3200, 2, 1, 0xFFFFF0, 0x0,   2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+-	{LLCC_CAMEXP4,  21, 3200, 2, 1, 0xFFFFF0, 0x0,   2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+-	{LLCC_DISP_WB,  23, 1024, 4, 1, 0xFFFFFF, 0x0,   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+-	{LLCC_DISP_1,   24, 6144, 1, 1, 0xFFFFFF, 0x0,   2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+-	{LLCC_VIDVSP,   28,  256, 4, 1, 0xFFFFFF, 0x0,   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
++	{
++		.usecase_id = LLCC_CPUSS,
++		.slice_id = 1,
++		.max_cap = 5120,
++		.priority = 1,
++		.bonus_ways = 0xffffff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++		.write_scid_en = true,
++	}, {
++		.usecase_id = LLCC_VIDSC0,
++		.slice_id = 2,
++		.max_cap = 512,
++		.priority = 4,
++		.fixed_size = true,
++		.bonus_ways = 0xffffff,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_AUDIO,
++		.slice_id = 6,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xffffff,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_MDMHPGRW,
++		.slice_id = 25,
++		.max_cap = 1024,
++		.priority = 4,
++		.bonus_ways = 0xffffff,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_MODHW,
++		.slice_id = 26,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xffffff,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_CMPT,
++		.slice_id = 10,
++		.max_cap = 4096,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xffffff,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_GPUHTW,
++		.slice_id = 11,
++		.max_cap = 512,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xffffff,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_GPU,
++		.slice_id = 9,
++		.max_cap = 3096,
++		.priority = 1,
++		.bonus_ways = 0xffffff,
++		.cache_mode = 0,
++		.write_scid_en = true,
++		.write_scid_cacheable_en = true,
++	}, {
++		.usecase_id = LLCC_MMUHWT,
++		.slice_id = 18,
++		.max_cap = 768,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xffffff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_DISP,
++		.slice_id = 16,
++		.max_cap = 6144,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xffffff,
++		.cache_mode = 2,
++	}, {
++		.usecase_id = LLCC_MDMPNG,
++		.slice_id = 27,
++		.max_cap = 1024,
++		.priority = 0,
++		.fixed_size = true,
++		.bonus_ways = 0xf00000,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_AUDHW,
++		.slice_id = 22,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xffffff,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_CVP,
++		.slice_id = 8,
++		.max_cap = 256,
++		.priority = 4,
++		.fixed_size = true,
++		.bonus_ways = 0xffffff,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_MODPE,
++		.slice_id = 29,
++		.max_cap = 64,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xf00000,
++		.cache_mode = 0,
++		.alloc_oneway_en = true,
++		.vict_prio = true,
++	}, {
++		.usecase_id = LLCC_WRCACHE,
++		.slice_id = 31,
++		.max_cap = 512,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xffffff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_CAMEXP0,
++		.slice_id = 4,
++		.max_cap = 256,
++		.priority = 4,
++		.fixed_size = true,
++		.bonus_ways = 0xf,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_CPUHWT,
++		.slice_id = 5,
++		.max_cap = 512,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xffffff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_CAMEXP1,
++		.slice_id = 7,
++		.max_cap = 3200,
++		.priority = 3,
++		.fixed_size = true,
++		.bonus_ways = 0xfffff0,
++		.cache_mode = 2,
++	}, {
++		.usecase_id = LLCC_CMPTHCP,
++		.slice_id = 17,
++		.max_cap = 256,
++		.priority = 4,
++		.fixed_size = true,
++		.bonus_ways = 0xffffff,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_LCPDARE,
++		.slice_id = 30,
++		.max_cap = 128,
++		.priority = 4,
++		.fixed_size = true,
++		.bonus_ways = 0xffffff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++		.alloc_oneway_en = true,
++		.vict_prio = true,
++	}, {
++		.usecase_id = LLCC_AENPU,
++		.slice_id = 3,
++		.max_cap = 3072,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfe01ff,
++		.cache_mode = 2,
++	}, {
++		.usecase_id = LLCC_ISLAND1,
++		.slice_id = 12,
++		.max_cap = 1792,
++		.priority = 7,
++		.fixed_size = true,
++		.bonus_ways = 0xfe00,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_ISLAND4,
++		.slice_id = 15,
++		.max_cap = 256,
++		.priority = 7,
++		.fixed_size = true,
++		.bonus_ways = 0x10000,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_CAMEXP2,
++		.slice_id = 19,
++		.max_cap = 3200,
++		.priority = 3,
++		.fixed_size = true,
++		.bonus_ways = 0xfffff0,
++		.cache_mode = 2,
++	}, {
++		.usecase_id = LLCC_CAMEXP3,
++		.slice_id = 20,
++		.max_cap = 3200,
++		.priority = 2,
++		.fixed_size = true,
++		.bonus_ways = 0xfffff0,
++		.cache_mode = 2,
++	}, {
++		.usecase_id = LLCC_CAMEXP4,
++		.slice_id = 21,
++		.max_cap = 3200,
++		.priority = 2,
++		.fixed_size = true,
++		.bonus_ways = 0xfffff0,
++		.cache_mode = 2,
++	}, {
++		.usecase_id = LLCC_DISP_WB,
++		.slice_id = 23,
++		.max_cap = 1024,
++		.priority = 4,
++		.fixed_size = true,
++		.bonus_ways = 0xffffff,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_DISP_1,
++		.slice_id = 24,
++		.max_cap = 6144,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xffffff,
++		.cache_mode = 2,
++	}, {
++		.usecase_id = LLCC_VIDVSP,
++		.slice_id = 28,
++		.max_cap = 256,
++		.priority = 4,
++		.fixed_size = true,
++		.bonus_ways = 0xffffff,
++		.cache_mode = 0,
++	},
+ };
+ 
+ static const struct llcc_slice_config sm8650_data[] = {
+-	{LLCC_CPUSS,     1, 5120, 1, 0, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
+-	{LLCC_VIDSC0,    2,  512, 3, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+-	{LLCC_AUDIO,     6,  512, 1, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+-	{LLCC_MDMHPGRW, 25, 1024, 3, 0, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+-	{LLCC_MODHW,    26, 1024, 1, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+-	{LLCC_CMPT,     10, 4096, 1, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+-	{LLCC_GPUHTW,   11,  512, 1, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+-	{LLCC_GPU,       9, 3096, 1, 0, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+-	{LLCC_MMUHWT,   18,  768, 1, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+-	{LLCC_DISP,     16, 6144, 1, 1, 0xFFFFFF, 0x0,      2, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+-	{LLCC_MDMHPFX,  24, 1024, 3, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+-	{LLCC_MDMPNG,   27, 1024, 0, 1, 0x000000, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+-	{LLCC_AUDHW,    22, 1024, 1, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+-	{LLCC_CVP,       8,  256, 3, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+-	{LLCC_MODPE,    29,  128, 1, 1, 0xF00000, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
+-	{LLCC_WRCACHE,  31,  512, 1, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+-	{LLCC_CAMEXP0,   4,  256, 3, 1,      0xF, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+-	{LLCC_CAMEXP1,   7, 3200, 3, 1, 0xFFFFF0, 0x0,      2, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+-	{LLCC_CMPTHCP,  17,  256, 3, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+-	{LLCC_LCPDARE,  30,  128, 3, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
+-	{LLCC_AENPU,     3, 3072, 1, 1, 0xFFFFFF, 0x0,      2, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+-	{LLCC_ISLAND1,  12, 5888, 7, 1,      0x0, 0x7FFFFF, 0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+-	{LLCC_DISP_WB,  23, 1024, 3, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+-	{LLCC_VIDVSP,   28,  256, 3, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
++	{
++		.usecase_id = LLCC_CPUSS,
++		.slice_id = 1,
++		.max_cap = 5120,
++		.priority = 1,
++		.bonus_ways = 0xffffff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++		.stale_en = true,
++	}, {
++		.usecase_id = LLCC_VIDSC0,
++		.slice_id = 2,
++		.max_cap = 512,
++		.priority = 3,
++		.fixed_size = true,
++		.bonus_ways = 0xffffff,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_AUDIO,
++		.slice_id = 6,
++		.max_cap = 512,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xffffff,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_MDMHPGRW,
++		.slice_id = 25,
++		.max_cap = 1024,
++		.priority = 3,
++		.bonus_ways = 0xffffff,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_MODHW,
++		.slice_id = 26,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xffffff,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_CMPT,
++		.slice_id = 10,
++		.max_cap = 4096,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xffffff,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_GPUHTW,
++		.slice_id = 11,
++		.max_cap = 512,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xffffff,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_GPU,
++		.slice_id = 9,
++		.max_cap = 3096,
++		.priority = 1,
++		.bonus_ways = 0xffffff,
++		.cache_mode = 0,
++		.write_scid_en = true,
++		.write_scid_cacheable_en = true,
++	}, {
++		.usecase_id = LLCC_MMUHWT,
++		.slice_id = 18,
++		.max_cap = 768,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xffffff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_DISP,
++		.slice_id = 16,
++		.max_cap = 6144,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xffffff,
++		.cache_mode = 2,
++	}, {
++		.usecase_id = LLCC_MDMHPFX,
++		.slice_id = 24,
++		.max_cap = 1024,
++		.priority = 3,
++		.fixed_size = true,
++		.bonus_ways = 0xffffff,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_MDMPNG,
++		.slice_id = 27,
++		.max_cap = 1024,
++		.priority = 0,
++		.fixed_size = true,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_AUDHW,
++		.slice_id = 22,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xffffff,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_CVP,
++		.slice_id = 8,
++		.max_cap = 256,
++		.priority = 3,
++		.fixed_size = true,
++		.bonus_ways = 0xffffff,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_MODPE,
++		.slice_id = 29,
++		.max_cap = 128,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xf00000,
++		.cache_mode = 0,
++		.alloc_oneway_en = true,
++	}, {
++		.usecase_id = LLCC_WRCACHE,
++		.slice_id = 31,
++		.max_cap = 512,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xffffff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_CAMEXP0,
++		.slice_id = 4,
++		.max_cap = 256,
++		.priority = 3,
++		.fixed_size = true,
++		.bonus_ways = 0xf,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_CAMEXP1,
++		.slice_id = 7,
++		.max_cap = 3200,
++		.priority = 3,
++		.fixed_size = true,
++		.bonus_ways = 0xfffff0,
++		.cache_mode = 2,
++	}, {
++		.usecase_id = LLCC_CMPTHCP,
++		.slice_id = 17,
++		.max_cap = 256,
++		.priority = 3,
++		.fixed_size = true,
++		.bonus_ways = 0xffffff,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_LCPDARE,
++		.slice_id = 30,
++		.max_cap = 128,
++		.priority = 3,
++		.fixed_size = true,
++		.bonus_ways = 0xffffff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++		.alloc_oneway_en = true,
++	}, {
++		.usecase_id = LLCC_AENPU,
++		.slice_id = 3,
++		.max_cap = 3072,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xffffff,
++		.cache_mode = 2,
++	}, {
++		.usecase_id = LLCC_ISLAND1,
++		.slice_id = 12,
++		.max_cap = 5888,
++		.priority = 7,
++		.fixed_size = true,
++		.res_ways = 0x7fffff,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_DISP_WB,
++		.slice_id = 23,
++		.max_cap = 1024,
++		.priority = 3,
++		.fixed_size = true,
++		.bonus_ways = 0xffffff,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_VIDVSP,
++		.slice_id = 28,
++		.max_cap = 256,
++		.priority = 3,
++		.fixed_size = true,
++		.bonus_ways = 0xffffff,
++		.cache_mode = 0,
++	},
+ };
+ 
+ static const struct llcc_slice_config qdu1000_data_2ch[] = {
+-	{ LLCC_MDMHPGRW, 7, 512, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0, 0 },
+-	{ LLCC_MODHW,    9, 256, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0, 0 },
+-	{ LLCC_MDMPNG,  21, 256, 0, 1, 0x3,   0x0, 0, 0, 0, 1, 0, 0, 0 },
+-	{ LLCC_ECC,     26, 512, 3, 1, 0xffc, 0x0, 0, 0, 0, 0, 1, 0, 0 },
+-	{ LLCC_MODPE,   29, 256, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0, 0 },
+-	{ LLCC_APTCM,   30, 256, 3, 1, 0x0,   0xc, 1, 0, 0, 1, 0, 0, 0 },
+-	{ LLCC_WRCACHE, 31, 128, 1, 1, 0x3,   0x0, 0, 0, 0, 0, 1, 0, 0 },
++	{
++		.usecase_id = LLCC_MDMHPGRW,
++		.slice_id = 7,
++		.max_cap = 512,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_MODHW,
++		.slice_id = 9,
++		.max_cap = 256,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_MDMPNG,
++		.slice_id = 21,
++		.max_cap = 256,
++		.priority = 0,
++		.fixed_size = true,
++		.bonus_ways = 0x3,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_ECC,
++		.slice_id = 26,
++		.max_cap = 512,
++		.priority = 3,
++		.fixed_size = true,
++		.bonus_ways = 0xffc,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_MODPE,
++		.slice_id = 29,
++		.max_cap = 256,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_APTCM,
++		.slice_id = 30,
++		.max_cap = 256,
++		.priority = 3,
++		.fixed_size = true,
++		.res_ways = 0xc,
++		.cache_mode = 1,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_WRCACHE,
++		.slice_id = 31,
++		.max_cap = 128,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0x3,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	},
+ };
+ 
+ static const struct llcc_slice_config qdu1000_data_4ch[] = {
+-	{ LLCC_MDMHPGRW, 7, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0, 0 },
+-	{ LLCC_MODHW,    9, 512,  1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0, 0 },
+-	{ LLCC_MDMPNG,  21, 512,  0, 1, 0x3,   0x0, 0, 0, 0, 1, 0, 0, 0 },
+-	{ LLCC_ECC,     26, 1024, 3, 1, 0xffc, 0x0, 0, 0, 0, 0, 1, 0, 0 },
+-	{ LLCC_MODPE,   29, 512,  1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0, 0 },
+-	{ LLCC_APTCM,   30, 512,  3, 1, 0x0,   0xc, 1, 0, 0, 1, 0, 0, 0 },
+-	{ LLCC_WRCACHE, 31, 256,  1, 1, 0x3,   0x0, 0, 0, 0, 0, 1, 0, 0 },
++	{
++		.usecase_id = LLCC_MDMHPGRW,
++		.slice_id = 7,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_MODHW,
++		.slice_id = 9,
++		.max_cap = 512,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_MDMPNG,
++		.slice_id = 21,
++		.max_cap = 512,
++		.priority = 0,
++		.fixed_size = true,
++		.bonus_ways = 0x3,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_ECC,
++		.slice_id = 26,
++		.max_cap = 1024,
++		.priority = 3,
++		.fixed_size = true,
++		.bonus_ways = 0xffc,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_MODPE,
++		.slice_id = 29,
++		.max_cap = 512,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_APTCM,
++		.slice_id = 30,
++		.max_cap = 512,
++		.priority = 3,
++		.fixed_size = true,
++		.res_ways = 0xc,
++		.cache_mode = 1,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_WRCACHE,
++		.slice_id = 31,
++		.max_cap = 256,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0x3,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	},
+ };
+ 
+ static const struct llcc_slice_config qdu1000_data_8ch[] = {
+-	{ LLCC_MDMHPGRW, 7, 2048, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0, 0 },
+-	{ LLCC_MODHW,    9, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0, 0 },
+-	{ LLCC_MDMPNG,  21, 1024, 0, 1, 0x3,   0x0, 0, 0, 0, 1, 0, 0, 0 },
+-	{ LLCC_ECC,     26, 2048, 3, 1, 0xffc, 0x0, 0, 0, 0, 0, 1, 0, 0 },
+-	{ LLCC_MODPE,   29, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0, 0 },
+-	{ LLCC_APTCM,   30, 1024, 3, 1, 0x0,   0xc, 1, 0, 0, 1, 0, 0, 0 },
+-	{ LLCC_WRCACHE, 31, 512,  1, 1, 0x3,   0x0, 0, 0, 0, 0, 1, 0, 0 },
++	{
++		.usecase_id = LLCC_MDMHPGRW,
++		.slice_id = 7,
++		.max_cap = 2048,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_MODHW,
++		.slice_id = 9,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_MDMPNG,
++		.slice_id = 21,
++		.max_cap = 1024,
++		.priority = 0,
++		.fixed_size = true,
++		.bonus_ways = 0x3,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_ECC,
++		.slice_id = 26,
++		.max_cap = 2048,
++		.priority = 3,
++		.fixed_size = true,
++		.bonus_ways = 0xffc,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_MODPE,
++		.slice_id = 29,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_APTCM,
++		.slice_id = 30,
++		.max_cap = 1024,
++		.priority = 3,
++		.fixed_size = true,
++		.res_ways = 0xc,
++		.cache_mode = 1,
++		.retain_on_pc = true,
++	}, {
++		.usecase_id = LLCC_WRCACHE,
++		.slice_id = 31,
++		.max_cap = 512,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0x3,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	},
+ };
+ 
+ static const struct llcc_slice_config x1e80100_data[] = {
+-	{LLCC_CPUSS,	 1, 6144, 1, 1, 0xFFF, 0x0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+-	{LLCC_VIDSC0,	 2,  512, 4, 1, 0xFFF, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+-	{LLCC_AUDIO,	 6, 1024, 1, 1, 0xFFF, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+-	{LLCC_CMPT,     10, 6144, 1, 1, 0xFFF, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+-	{LLCC_GPUHTW,   11,  512, 1, 1, 0xFFF, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+-	{LLCC_GPU,       9, 4608, 1, 0, 0xFFF, 0x0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0},
+-	{LLCC_MMUHWT,   18,  512, 1, 1, 0xFFF, 0x0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+-	{LLCC_AUDHW,    22, 1024, 1, 1, 0xFFF, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+-	{LLCC_CVP,       8,  512, 4, 1, 0xFFF, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+-	{LLCC_WRCACHE,  31, 1024, 1, 1, 0xFFF, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+-	{LLCC_CAMEXP0,   4,  256, 4, 1,   0x3, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+-	{LLCC_CAMEXP1,   7, 3072, 3, 1, 0xFFC, 0x0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+-	{LLCC_LCPDARE,  30,  512, 3, 1, 0xFFF, 0x0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
+-	{LLCC_AENPU,     3, 3072, 1, 1, 0xFFF, 0x0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+-	{LLCC_ISLAND1,  12, 2048, 7, 1,   0x0, 0xF, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+-	{LLCC_CAMEXP2,  19, 3072, 3, 1, 0xFFC, 0x0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+-	{LLCC_CAMEXP3,  20, 3072, 2, 1, 0xFFC, 0x0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+-	{LLCC_CAMEXP4,  21, 3072, 2, 1, 0xFFC, 0x0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
++	{
++		.usecase_id = LLCC_CPUSS,
++		.slice_id = 1,
++		.max_cap = 6144,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_VIDSC0,
++		.slice_id = 2,
++		.max_cap = 512,
++		.priority = 4,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_AUDIO,
++		.slice_id = 6,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_CMPT,
++		.slice_id = 10,
++		.max_cap = 6144,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_GPUHTW,
++		.slice_id = 11,
++		.max_cap = 512,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_GPU,
++		.slice_id = 9,
++		.max_cap = 4608,
++		.priority = 1,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.write_scid_en = true,
++		.write_scid_cacheable_en = true,
++		.stale_en = true,
++	}, {
++		.usecase_id = LLCC_MMUHWT,
++		.slice_id = 18,
++		.max_cap = 512,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++	}, {
++		.usecase_id = LLCC_AUDHW,
++		.slice_id = 22,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_CVP,
++		.slice_id = 8,
++		.max_cap = 512,
++		.priority = 4,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_WRCACHE,
++		.slice_id = 31,
++		.max_cap = 1024,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_CAMEXP0,
++		.slice_id = 4,
++		.max_cap = 256,
++		.priority = 4,
++		.fixed_size = true,
++		.bonus_ways = 0x3,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_CAMEXP1,
++		.slice_id = 7,
++		.max_cap = 3072,
++		.priority = 3,
++		.fixed_size = true,
++		.bonus_ways = 0xffc,
++		.cache_mode = 2,
++	}, {
++		.usecase_id = LLCC_LCPDARE,
++		.slice_id = 30,
++		.max_cap = 512,
++		.priority = 3,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 0,
++		.activate_on_init = true,
++		.alloc_oneway_en = true,
++	}, {
++		.usecase_id = LLCC_AENPU,
++		.slice_id = 3,
++		.max_cap = 3072,
++		.priority = 1,
++		.fixed_size = true,
++		.bonus_ways = 0xfff,
++		.cache_mode = 2,
++	}, {
++		.usecase_id = LLCC_ISLAND1,
++		.slice_id = 12,
++		.max_cap = 2048,
++		.priority = 7,
++		.fixed_size = true,
++		.res_ways = 0xf,
++		.cache_mode = 0,
++	}, {
++		.usecase_id = LLCC_CAMEXP2,
++		.slice_id = 19,
++		.max_cap = 3072,
++		.priority = 3,
++		.fixed_size = true,
++		.bonus_ways = 0xffc,
++		.cache_mode = 2,
++	}, {
++		.usecase_id = LLCC_CAMEXP3,
++		.slice_id = 20,
++		.max_cap = 3072,
++		.priority = 2,
++		.fixed_size = true,
++		.bonus_ways = 0xffc,
++		.cache_mode = 2,
++	}, {
++		.usecase_id = LLCC_CAMEXP4,
++		.slice_id = 21,
++		.max_cap = 3072,
++		.priority = 2,
++		.fixed_size = true,
++		.bonus_ways = 0xffc,
++		.cache_mode = 2,
++	},
+ };
+ 
+ static const struct llcc_edac_reg_offset llcc_v1_edac_reg_offset = {
+-- 
+2.43.0
 
 
