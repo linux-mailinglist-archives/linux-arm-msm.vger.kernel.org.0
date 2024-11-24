@@ -1,94 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-38976-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38977-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 28F0A9D7550
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Nov 2024 16:35:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C6CC99D7555
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Nov 2024 16:35:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 34F9D168B19
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Nov 2024 15:34:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C822C168C1A
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Nov 2024 15:35:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9980A1B0F02;
-	Sun, 24 Nov 2024 15:00:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tLYm6J5c"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC7E21B85C9;
+	Sun, 24 Nov 2024 15:04:32 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E52D61AF4F6
-	for <linux-arm-msm@vger.kernel.org>; Sun, 24 Nov 2024 15:00:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 989261B3923;
+	Sun, 24 Nov 2024 15:04:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732460449; cv=none; b=Xw2Y7O9B4+IfjRykSceE2eyNpVT1NBGErI/TPMDH2mwJHJQ75n5KzLQtl1pHNvhDgVGTR+NXut+LJuX9t6pDiF3i+MilZnuEOi9MceT8UoukyHjODiC8cjQ0wQwa6oN/GD1iHks97ZbC1K2nY+5d+caJGRvXeSweJCZcQApeeas=
+	t=1732460672; cv=none; b=Xn8Ua7mYejtnj8fRTKha0XWAt8HOOdWrVS0LKUANei05B1wQwX2dk7DrsjS8dHgD7x/QJlkSxwFkHyXN9hoJBiqcJg7pMHZfcL2otYyIpLC8/k2//plB2+ctoqh553IaJkUB5jORf4nTLxR3VR4fdDT4DVhPs687WceQONNhYNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732460449; c=relaxed/simple;
-	bh=PBAxbrnOf3mUDylcJ3Av/xPCET+3fgbDMZT7D8E9FlA=;
+	s=arc-20240116; t=1732460672; c=relaxed/simple;
+	bh=NzAhNdIviC4mcJCGvuq35Fppehjrbw/+lTWbWZ/mAFQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aEDnuZYfXw8xOld0X6U6GuZ1J843xNmKwp/242wajaSR5bWu1Dj6oKydUzaaAjXprw2zJRDlfGMAa9cBg1vvxuuchGyb9W6fRPw+tNtBEOoaL0M4NJTik+qP9ooqCVTp2pDO1+a5B0posCO3N/BgQXYfzfwkbrjgdKWMyqbKd0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tLYm6J5c; arc=none smtp.client-ip=209.85.216.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-2ea39638194so3187215a91.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Nov 2024 07:00:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732460447; x=1733065247; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=uGc1S2wYIhfLQogroy29pKHU2o6lK/gHyYeLMurEVxY=;
-        b=tLYm6J5cAkL77InAgoqw04QEe50B2ygCIuwQEJGMI1bFgA1RxB1P5NJsIbinaCJ9IA
-         bC4iVXsv4GwWVLsURtVMnYEQeJWImDod908IxkdnesFBZuuaCf+AQxjZv7TnbfUZ+M68
-         wdVwF/wFAQmcmuP/528GXb7wX6UBJ6lPrUrPCjOO9j6++UgXaEgS64o7BzzxQi+GbO+i
-         w4f+md2KHkmZpMrGvRmL7OjzqR8F4BNM074Ln6bBOiLlNPk1FkDm3iqoI8LH1jaNoSKQ
-         0s+4mizfjl3WrmG3thoIZQ5yfnjnIrdI9trIN+Eo/HLxsS1ihAcRkV8A/KgPVjzrkRAJ
-         Y91w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732460447; x=1733065247;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uGc1S2wYIhfLQogroy29pKHU2o6lK/gHyYeLMurEVxY=;
-        b=Jez+/KxA/paKVVDuZVdahFgbO72GRbUCpZInbRzJBP58jZcUucFullnqmh+d6AxyHB
-         0c0jUT7Bo40K4treqxTpErIbwyK+vUhpuAdFLgQLz1U9AZE8+LxX3S0zv0Zdm+0B5+WQ
-         V/wD939eGztWcPnx2jKOuYpw0aGPzxR5rWYsOP0pNr8trXWEN+ZesihyDH8jwXAdrBFf
-         LqPSei/B+goUa0OlJbSnIfB5eNjBuRF2MXvQvFvC+yHzVbtZSeLbkIzoJdGsn69GzHDL
-         UmHBgu3RUnmh8/VlOmCJv6jcN8T7VQ9UkmUxePu8nKqtTIe37kNmxkho3gOrXPO1E9Wg
-         nUTg==
-X-Forwarded-Encrypted: i=1; AJvYcCX5VyfdVLURgB/ramZ1Ah0p8KzsAlQkF2UePxvNoB4ta7iZRFg2M6CKq/00P+WhJE4R0gWDpibOHL1THoou@vger.kernel.org
-X-Gm-Message-State: AOJu0YyIWNvuX6UjLkCTyUOyrGNZdjZ/KfU6IgiXdMN1VlILwrQOYMGz
-	cmI1tt+vHL3gctllrzu1KgIweOn67w9M5g5LRIa8FH0sJo5W2++VBOxMt1aTBQ==
-X-Gm-Gg: ASbGncvISOzsBMdbgrZ+cZJDKocR9RNfODZnKfpQ4wfjvNkbCTNa6mw7N8RjkojvD/M
-	Qf74dAl8hhBjBFfmcyuPoIrWCLQKJYlP0siYaf0AKBDkNufjRPGhuPLUgM+Ctsl4g6NRIbhNw/p
-	vkUp0+rTqgpXmF4ijWuey6GRS2KbVGtQPtlAocm3liVFcH49frGZAj7rusCeYzXUx5+a4N2l2KR
-	sRQrorBW52srl0v9wLee6A8nGZWP3TbnKTW2jC8oNCKbeaGHtJZdDBMFbt4
-X-Google-Smtp-Source: AGHT+IGSIxvkw6uzHJU66ROMlaDDTKSfeX3BN4E33A4cnjvrKqZLF5VEOAWjCg4WJIQuCYjdbk/27w==
-X-Received: by 2002:a17:90b:3a88:b0:2ea:47f1:7a03 with SMTP id 98e67ed59e1d1-2eb0e87c077mr12722997a91.30.1732460447156;
-        Sun, 24 Nov 2024 07:00:47 -0800 (PST)
-Received: from thinkpad ([36.255.17.192])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2eb0cfe448esm4893619a91.8.2024.11.24.07.00.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 24 Nov 2024 07:00:46 -0800 (PST)
-Date: Sun, 24 Nov 2024 20:30:39 +0530
+	 Content-Type:Content-Disposition:In-Reply-To; b=Hp7LtcLjf+xReX5WeC31r11hR+DkRcOR5mw+Uuw88XirkAnO0J8IMmZKTxRZAyF00kdJq8lo+N/lC+bG767WvvJD9X4y1i6mooPwPx9yxzEncUjC8/4LKXxrBqX5sthmn2i9wdjI+IvY5BlG599XsTDDsnJsOxBFiI4FOAiuk5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20911C4CECC;
+	Sun, 24 Nov 2024 15:04:27 +0000 (UTC)
+Date: Sun, 24 Nov 2024 20:34:22 +0530
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
-Cc: vkoul@kernel.org, kishon@kernel.org, robh+dt@kernel.org,
-	bhelgaas@google.com, kw@linux.com, lpieralisi@kernel.org,
-	quic_qianyu@quicinc.com, conor+dt@kernel.org,
-	neil.armstrong@linaro.org, andersson@kernel.org,
-	konradybcio@kernel.org, quic_tsoni@quicinc.com,
-	quic_shashim@quicinc.com, quic_kaushalk@quicinc.com,
-	quic_tdas@quicinc.com, quic_tingweiz@quicinc.com,
-	quic_aiquny@quicinc.com, kernel@quicinc.com,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
-	Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Subject: Re: [PATCH v2 4/6] PCI: qcom: Add QCS615 PCIe support
-Message-ID: <20241124150039.cjp5g6pnulf5xnp5@thinkpad>
-References: <20241122023314.1616353-1-quic_ziyuzhan@quicinc.com>
- <20241122023314.1616353-5-quic_ziyuzhan@quicinc.com>
+To: Chris Lew <quic_clew@quicinc.com>
+Cc: Johan Hovold <johan@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Simon Horman <horms@kernel.org>,
+	Hemant Kumar <quic_hemantk@quicinc.com>,
+	Loic Poulain <loic.poulain@linaro.org>,
+	Maxim Kochetkov <fido_max@inbox.ru>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org, Bhaumik Bhatt <bbhatt@codeaurora.org>
+Subject: Re: [PATCH] net: qrtr: mhi: synchronize qrtr and mhi preparation
+Message-ID: <20241124150422.nt67aonfknfhz3sc@thinkpad>
+References: <20241104-qrtr_mhi-v1-1-79adf7e3bba5@quicinc.com>
+ <Zy3oyGLdsnDY9C0p@hovoldconsulting.com>
+ <b1e22673-2768-445c-8c67-eae93206cca5@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -98,53 +58,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241122023314.1616353-5-quic_ziyuzhan@quicinc.com>
+In-Reply-To: <b1e22673-2768-445c-8c67-eae93206cca5@quicinc.com>
 
-On Fri, Nov 22, 2024 at 10:33:12AM +0800, Ziyue Zhang wrote:
-> From: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+On Thu, Nov 21, 2024 at 04:28:41PM -0800, Chris Lew wrote:
 > 
-> Add the compatible and the driver data for QCS615 PCIe controller.
 > 
-> There is only one controller instance found on this platform, out of which
-
-'out of which'? you said there is only one instance.
-
-> is Gen3 with speeds of up to 8.0GT/s.
+> On 11/8/2024 2:32 AM, Johan Hovold wrote:
+> > On Mon, Nov 04, 2024 at 05:29:37PM -0800, Chris Lew wrote:
+> > > From: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> > > 
+> > > The call to qrtr_endpoint_register() was moved before
+> > > mhi_prepare_for_transfer_autoqueue() to prevent a case where a dl
+> > > callback can occur before the qrtr endpoint is registered.
+> > > 
+> > > Now the reverse can happen where qrtr will try to send a packet
+> > > before the channels are prepared. Add a wait in the sending path to
+> > > ensure the channels are prepared before trying to do a ul transfer.
+> > > 
+> > > Fixes: 68a838b84eff ("net: qrtr: start MHI channel after endpoit creation")
+> > > Reported-by: Johan Hovold <johan@kernel.org>
+> > > Closes: https://lore.kernel.org/linux-arm-msm/ZyTtVdkCCES0lkl4@hovoldconsulting.com/
+> > > Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> > > Signed-off-by: Chris Lew <quic_clew@quicinc.com>
+> > 
+> > > @@ -53,6 +54,10 @@ static int qcom_mhi_qrtr_send(struct qrtr_endpoint *ep, struct sk_buff *skb)
+> > >   	if (skb->sk)
+> > >   		sock_hold(skb->sk);
+> > > +	rc = wait_for_completion_interruptible(&qdev->prepared);
+> > > +	if (rc)
+> > > +		goto free_skb;
+> > > +
+> > >   	rc = skb_linearize(skb);
+> > >   	if (rc)
+> > >   		goto free_skb;
+> > > @@ -85,6 +90,7 @@ static int qcom_mhi_qrtr_probe(struct mhi_device *mhi_dev,
+> > >   	qdev->mhi_dev = mhi_dev;
+> > >   	qdev->dev = &mhi_dev->dev;
+> > >   	qdev->ep.xmit = qcom_mhi_qrtr_send;
+> > > +	init_completion(&qdev->prepared);
+> > >   	dev_set_drvdata(&mhi_dev->dev, qdev);
+> > >   	rc = qrtr_endpoint_register(&qdev->ep, QRTR_EP_NID_AUTO);
+> > > @@ -97,6 +103,7 @@ static int qcom_mhi_qrtr_probe(struct mhi_device *mhi_dev,
+> > >   		qrtr_endpoint_unregister(&qdev->ep);
+> > >   		return rc;
+> > >   	}
+> > > +	complete_all(&qdev->prepared);
+> > >   	dev_dbg(qdev->dev, "Qualcomm MHI QRTR driver probed\n");
+> > 
+> > While this probably works, it still looks like a bit of a hack.
+> > 
+> > Why can't you restructure the code so that the channels are fully
+> > initialised before you register or enable them instead?
+> > 
 > 
-> The version of the controller is 1.38.0 for all instances, but they are
-
-Again, only one instance.
-
-> compatible with 1.9.0 config.
+> Ok, I think we will have to stop using the autoqueue feature of MHI and
+> change the flow to be mhi_prepare_for_transfer() -->
+> qrtr_endpoint_register() --> mhi_queue_buf(DMA_FROM_DEVICE). This would make
+> it so ul_transfers only happen after mhi_prepare_for_transfer() and
+> dl_transfers happen after qrtr_endpoint_register().
 > 
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+> I'll take a stab at implementing this.
+> 
 
-With above fixed,
-
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Hmm, I thought 'autoqueue' was used for a specific reason. So it is not valid
+now?
 
 - Mani
-
-> ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index ef44a82be058..da7200b56b1e 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -1830,6 +1830,7 @@ static const struct of_device_id qcom_pcie_match[] = {
->  	{ .compatible = "qcom,pcie-ipq8074-gen3", .data = &cfg_2_9_0 },
->  	{ .compatible = "qcom,pcie-msm8996", .data = &cfg_2_3_2 },
->  	{ .compatible = "qcom,pcie-qcs404", .data = &cfg_2_4_0 },
-> +	{ .compatible = "qcom,pcie-qcs615", .data = &cfg_1_9_0 },
->  	{ .compatible = "qcom,pcie-sa8540p", .data = &cfg_sc8280xp },
->  	{ .compatible = "qcom,pcie-sa8775p", .data = &cfg_1_34_0},
->  	{ .compatible = "qcom,pcie-sc7280", .data = &cfg_1_9_0 },
-> -- 
-> 2.34.1
-> 
 
 -- 
 மணிவண்ணன் சதாசிவம்
