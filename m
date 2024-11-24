@@ -1,122 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-38981-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-38982-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 28ACB9D77A9
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Nov 2024 20:07:38 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 93F3F9D780D
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Nov 2024 21:12:36 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BF8E1281E7D
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Nov 2024 19:07:36 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0074C16307A
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Nov 2024 20:12:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59D1F81ADA;
-	Sun, 24 Nov 2024 19:07:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C76E7136658;
+	Sun, 24 Nov 2024 20:12:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HJEKVx+0"
+	dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b="oq3J4W5D"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mout.kundenserver.de (mout.kundenserver.de [217.72.192.74])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77B1F17BA6;
-	Sun, 24 Nov 2024 19:07:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B96036C;
+	Sun, 24 Nov 2024 20:12:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732475254; cv=none; b=l3aKzJFWo92EZcTgvoFIjMREQGjkzHP87TNOMRQPtYSLBJcsuaKEPGoQsOn4UnRCAyYxUQquSj42hCHAX5rRT62x31iEdY3hBJSyGQS5bCO9r0lqpBbC+bL4FOMk+Ztz/Q5e254zsjZKafG5o2vIKSvKz5+D2OwosAwj3wui724=
+	t=1732479151; cv=none; b=dHT1IAw2X+uKUG9hHIy3cZHKHkH1pjuXAT5GTxO5rlv67bZFKPIMaXt1BUjhPmBuQ8Yq2b9+FqD/u5CEe4aI7QVJsK1jkkHeZU6QIS0f10uQyUOIUGVVzlqeiwpAxIyPoFyurBWw/zoTWidc9/6+O5O2vmrdPgRWsanI3Xr/zPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732475254; c=relaxed/simple;
-	bh=esIeKPZ5uMUcixde5dcDskkQnFhBhetH5uV6GOY/E54=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=li1sPRgMEY25i3Up+v8GaAC7LtKJTyaKnYX2v8F6V13Kb/+81tdhTStZJQRkoFEElr7QAMy2BdUnzEIO1m4MxLdQhE3n6v542NhWNp6oPOzXNPN0n30Bd3SuxpVSVMKFvrvp7ocoWgfA2YiwGH9U+mH3RyYWjGCpijjpPr1zOGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HJEKVx+0; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AO9Q1TI013221;
-	Sun, 24 Nov 2024 19:07:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Bkre2WeoGiPhovYus2RkV3ZM5DAJZ4Ku2XTeN1DLg+M=; b=HJEKVx+0D67xsjSp
-	9RpCLAS+OHmQ6u5PiLD+Q+wdS2ppmbMTCT/EuX40FlM1mHRrdiu58m0yhZ5xDiLV
-	xetOZXBFDeEOmyio4hb58W7215cxWBqlzdLQYTBa/Dn/XEvMT3lpx9HU85NFswyj
-	KT33I+wvYXNmVp8VTiXfUJGX9eNhUEmAv9pCJJ2mE86YFqWG7e6xqB6eKVaNKDv2
-	tMYQuTf6c4Yq1dhZOChU/595R5JHejU/MnaNcUvmPoltuqzw7lRwIU8YC4etA5ju
-	iRSigIucMWQrcwGZI/Ea8B2t1yUfRFbCCIQpbQS7bg4Id82ieHJNMP4pBkJ8v4Fn
-	3OJuRw==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4337e6tmvw-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 24 Nov 2024 19:07:23 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AOJ7MKS000470
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 24 Nov 2024 19:07:22 GMT
-Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 24 Nov
- 2024 11:07:21 -0800
-Message-ID: <51afee37-2c90-d31a-978c-5681dccd5ccb@quicinc.com>
-Date: Sun, 24 Nov 2024 12:07:20 -0700
+	s=arc-20240116; t=1732479151; c=relaxed/simple;
+	bh=ynqyixvm2rjUp9IOH82m4L0Ic1fb+euGKq6l6ona/zY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CyEMUYv6SYP+H4hUb5cp+TY9WDiA9BILFfUJtFuyT6rwLSFV04IrmExIynd9/PeVfK4LgevJfyilWvpVWExrNAr6ct0twL1eHiOoPfxHrjDIX7C5XvXOG06/q64b3YQV2WBkA8qjH9jbGjlyg2DxcjzCGdo8gcmDwY/Bgp35g5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz; spf=pass smtp.mailfrom=oldschoolsolutions.biz; dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b=oq3J4W5D; arc=none smtp.client-ip=217.72.192.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oldschoolsolutions.biz
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=oldschoolsolutions.biz; s=s1-ionos; t=1732479139; x=1733083939;
+	i=jens.glathe@oldschoolsolutions.biz;
+	bh=ynqyixvm2rjUp9IOH82m4L0Ic1fb+euGKq6l6ona/zY=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=oq3J4W5D1gmqjCBarmwEU9Rk9o3lSke6G6Fe1i40xbdKxRDLS8PsZCMX3woyV+hC
+	 An9vk9uUbJ7GPbvarGczRh4uJq0eZFc1emsvI00LAsy9tvecQrjYZMI5wpPcgPxsT
+	 BAh2V1gORj29+vJYJCtMzE9yuttwAZWLe4fKIMe5+vaUg3aDYItNaO2VlSWz4LhOF
+	 SgttJA661Mj+WvGnQV3R10RaIYCTzIOVvLBugjoxrhMDS68LunW9Nl96qJ2GaQuw9
+	 VAKsOMsm8A3L82w89AyMxjZbjGJZr1up4dHyuCtJnagMTqvCTggiw738m1XaeHvv1
+	 4zDn2wgGB4s/wDQHZg==
+X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
+Received: from [192.168.0.174] ([91.64.229.215]) by mrelayeu.kundenserver.de
+ (mreue107 [212.227.15.183]) with ESMTPSA (Nemesis) id
+ 1MXYAj-1tDVBQ0uJ5-00OiAI; Sun, 24 Nov 2024 20:58:15 +0100
+Message-ID: <0455ab38-fd58-4b93-9656-5745c2f62f89@oldschoolsolutions.biz>
+Date: Sun, 24 Nov 2024 20:58:09 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH AUTOSEL 6.12 033/107] accel/qaic: Add AIC080 support
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/4] arm64: dts: qcom: x1e80100-hp-x14: dt for HP Omnibook
+ X Laptop 14
+To: Krishna Kurapati <quic_kriskura@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ Douglas Anderson <dianders@chromium.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Jessica Zhang <quic_jesszhan@quicinc.com>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Kalle Valo <kvalo@kernel.org>, David Airlie <airlied@gmail.com>,
+ Conor Dooley <conor+dt@kernel.org>, Simona Vetter <simona@ffwll.ch>,
+ Thomas Zimmermann <tzimmermann@suse.de>, Maxime Ripard <mripard@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>
+References: <20241124-hp-omnibook-x14-v1-0-e4262f0254fa@oldschoolsolutions.biz>
+ <20241124-hp-omnibook-x14-v1-4-e4262f0254fa@oldschoolsolutions.biz>
+ <0b4db909-6029-40e6-8e1d-a7ecdc731b25@quicinc.com>
 Content-Language: en-US
-To: Sasha Levin <sashal@kernel.org>, <linux-kernel@vger.kernel.org>,
-        <stable@vger.kernel.org>
-CC: Troy Hanson <quic_thanson@quicinc.com>,
-        Jacek Lawrynowicz
-	<jacek.lawrynowicz@linux.intel.com>,
-        <ogabbay@kernel.org>, <corbet@lwn.net>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <linux-doc@vger.kernel.org>
-References: <20241124133301.3341829-1-sashal@kernel.org>
- <20241124133301.3341829-33-sashal@kernel.org>
-From: Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <20241124133301.3341829-33-sashal@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: P6p515Ej5zV_wAaxb-O7SdWDXz9JZpjc
-X-Proofpoint-ORIG-GUID: P6p515Ej5zV_wAaxb-O7SdWDXz9JZpjc
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
- priorityscore=1501 impostorscore=0 malwarescore=0 clxscore=1031
- lowpriorityscore=0 spamscore=0 mlxscore=0 mlxlogscore=999 adultscore=0
- suspectscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2409260000 definitions=main-2411240168
+From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+In-Reply-To: <0b4db909-6029-40e6-8e1d-a7ecdc731b25@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:LaIDgpAhSCbFpwAaThtHz90n64aey9SlwaHk0+mqX/KFMT6ppV5
+ FqkGHIcjwYtnASxdeuABOrVF6ZeyCdU9BDIlGhnv83yiZeNluPeWv0KRyM0Ncdf5L9/64JE
+ tdhOtJmComQGYwL38Lm0SuxkTxHmNga2gT7dsgjVNk+jrA/IOdapLnOEO+sn5oJ9vxxWsVn
+ UUwLDExljqSQotxMEYRHA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:mkB2p6G99c0=;wxgmyBo2+zCMAptP7a+gEhTrgnt
+ zcbz/mLa/k0sRzL4qWqqh7xl3xcBO6sDStN2mHEUNgQ46+L8QwrrDCc+okdMyEz+vwR43rzie
+ /9XNRQuWdj3z2rbUL4PaZpHyQU88mJ+cEhzdh0SVBj9oCTzF6O4Yj7phd4CErOk3Um9KO+Gyb
+ UajfoJ4twLU+UJdis9/bpABf6dTm4HCn2qmTQralMTwh2NQ4XIACCnvnNE7GtWDPYIJ3BfB1n
+ 0cvbDgsz8kS7kPDaDgaXATJfz2yijgYCd7xCCNy9XoPa2ufoz3ZEYnfoPJiVS1g3CVzwtx1jy
+ kBQeqVLfUcoU6B3kXo22GXBctp72o2T3h0U8sdf0zTF4P9dTUarBEjSK4ziaqlYdYPwPrf301
+ jineSDoMsg8lgrR0n2aOXA2k7FvkechHLP5iu2qkPheXJcfoKVnxYtBlab6ps0WkAue0yB0Bh
+ 0vaYJxMS/W5waMWZR3oEkqomcoFKdniYvSS0y/zNzdpdmsq9pwnvVtQ1LS3nV6CW3x5M8XukQ
+ 4po/kQhQO1KY0s36VIly2VM1nfao9DszJJ6ANWYId84CIQ5U3a5jbgNV5gcE+unaia9QQDKFM
+ 5srdX9S/OOT19Is1Y1/pWoO07Lzyw5EulhwK93bwGrQGv3Vn6ciUDUvZcaFhwkBSyPUDyplNa
+ LaOeG3ZbeFFqykynDUeBsrHyxc3ThOiH7H7GnAcKUeVTkyxNhL67vLOF+kk3v6MyaQirFQ2bs
+ /lGhYarfrw1JeSRXxku84Otij32VsHd/gtwkT3Dn8YNG43Jl8IXrT95Nj9JzA1tTTVFgfA+u+
+ VSen8/KOkFiXxeNTa12DyBM+ocuHO2YuAk6/1zgCEH/dRH8VKL2bObD0sxx8MV9ZsD
 
-On 11/24/2024 6:28 AM, Sasha Levin wrote:
-> From: Jeffrey Hugo <quic_jhugo@quicinc.com>
-> 
-> [ Upstream commit b8128f7815ff135f0333c1b46dcdf1543c41b860 ]
-> 
-> Add basic support for the new AIC080 product. The PCIe Device ID is
-> 0xa080. AIC080 is a lower cost, lower performance SKU variant of AIC100.
->  From the qaic perspective, it is the same as AIC100.
-> 
-> Reviewed-by: Troy Hanson <quic_thanson@quicinc.com>
-> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-> Reviewed-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-> Link: https://patchwork.freedesktop.org/patch/msgid/20241004195209.3910996-1-quic_jhugo@quicinc.com
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
 
-Sasha, it feels like autosel was a bit aggressive here.  This is an 
-enablement patch for new hardware, and not a bug fix.  Therefore, it 
-does not appear to be stable material to me.
+On 24.11.24 16:54, Krishna Kurapati wrote:
+>
+>
+> On 11/24/2024 6:50 PM, Jens Glathe via B4 Relay wrote:
+>> From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+>>
+> [...]
+>
+>> +
+>> +&usb_mp {
+>> +=C2=A0=C2=A0=C2=A0 status =3D "okay";
+>> +};
+>> +
+>> +&usb_mp_dwc3 {
+>> +=C2=A0=C2=A0=C2=A0 phys =3D <&usb_mp_hsphy0>;
+>> +=C2=A0=C2=A0=C2=A0 phy-names =3D "usb2-0";
+>> +};
+>> +
+>> +&usb_mp_hsphy0 {
+>> +=C2=A0=C2=A0=C2=A0 vdd-supply =3D <&vreg_l2e_0p8>;
+>> +=C2=A0=C2=A0=C2=A0 vdda12-supply =3D <&vreg_l3e_1p2>;
+>> +
+>> +=C2=A0=C2=A0=C2=A0 phys =3D <&eusb3_repeater>;
+>> +
+>> +=C2=A0=C2=A0=C2=A0 status =3D "okay";
+>> +};
+>> +
+>> +&usb_mp_qmpphy0 {
+>> +=C2=A0=C2=A0=C2=A0 vdda-phy-supply =3D <&vreg_l3e_1p2>;
+>> +=C2=A0=C2=A0=C2=A0 vdda-pll-supply =3D <&vreg_l3c_0p8>;
+>> +
+>> +=C2=A0=C2=A0=C2=A0 status =3D "okay";
+>> +};
+>>
+>
+> The above QMP MP PHy is unused in the above DWC3 node. If the port is
+> only HS capable, please don't enable the QMP node.
+>
+Oh its the other way round I guess. Thank you for the hint. It should be:
 
-Am I missing something?
++&usb_mp_dwc3 {
++=C2=A0=C2=A0=C2=A0 phys =3D <&usb_mp_hsphy0>, <&usb_mp_qmpphy0>;
++=C2=A0=C2=A0=C2=A0 phy-names =3D "usb2-0", "usb3-0";
++};
 
--Jeff
+The port is USB2 and USB3 capable, and this was the intent. Noted for v2.
+
+with best regards
+
+Jens Glathe
+
 
