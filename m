@@ -1,140 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-39013-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39014-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 227329D7A65
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2024 04:39:33 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6C80F9D7A6F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2024 04:50:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D4D35280C2F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2024 03:39:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 776C4281A34
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2024 03:50:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7767F33997;
-	Mon, 25 Nov 2024 03:39:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6EF981E48A;
+	Mon, 25 Nov 2024 03:50:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ewQCK+I5"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pM7uCdbK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9AAB2500AC;
-	Mon, 25 Nov 2024 03:39:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D65EE7FD;
+	Mon, 25 Nov 2024 03:49:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732505970; cv=none; b=USbBXkV9vdaRZ+geshADWpfj4U7zrmFuvXtyhOaUPnML85NXBV2Uc4NtEGVSrkpOCB4M9UXKo0tXz/KckBKjffsw4DmU+vD2uqG9IGGRVspvw1MLNSjSDf/FLZRvgiCvOcZEoPaNqIh+mfSEO1+Xw1xov+KWJWi+OsAmDdjqsZA=
+	t=1732506601; cv=none; b=W2y0XhSAzueNyvNCI9aCmbmfZL/p1vTrTBjoWvECZeqFWRfcI58mPkKXy4V454xhQGai+VYUu+Jn3FsNuQhL2eB/MMqZ2Hxsk1eHfEG8o57YG98E4s8yF3HWn449MMM+3PjWv3Cu+vJqPXtTfgIGBpI2R3qaaw/8NW7I9T6xhj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732505970; c=relaxed/simple;
-	bh=o6AyubdLIxQFozXKJeWNwpcy8swQeM0jUZLQcwZJbyk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=RKagT+WSgaaRDUoYwRc3gk4OPoavcwQrja8Qa4aURCvK+m5oq04u+ntH/QTIWzYHNX5m9b8iQ/ip4wxPWDm07B5vEkXWifH9L8ZCNgvV4/Jq4in1nh7G+H7+wEz/RAMFWCMgP7NNSL489frniUxAVRZ+cH0M/xFTlx4l5BnXY18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ewQCK+I5; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1732506601; c=relaxed/simple;
+	bh=yGkrOcQYKfN/Q/cfyq/QHkdJ4b2lQxJIJS6gM76K6hw=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=EnCt/enOo/8f2yZ1CQdaxCM0A653ceUZy12zEdszJ/GskE3G+qJT7FyMOkkwk0myjN0rsazAV7xG1/dV9xlrr7FV1XMWOJXfAUo3qz0XDp8zo//0RBt2KJlIdHOHBFUIFiHH1j2ygjkyrs0ixWKifBHJiAvBvpAI91JMmZHH4aU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pM7uCdbK; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AONDdaD019777;
-	Mon, 25 Nov 2024 03:39:21 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AOMsbKQ015810;
+	Mon, 25 Nov 2024 03:49:54 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	W5KC879pXDmQjk3e/MYMpCbKJ6xkp7D507cwCO4aQRQ=; b=ewQCK+I5RP0HAPhx
-	pgRfxTQx3x0S45UIAwT2Dx7Gl0pjpjqKDU76sEvmDWdB8dEAqkvG53P/rnR8C7Pb
-	fipQTmI7rmOgqoPsBH2nmS8/3G/Qz+GjQX0Zb90v601oga+manX8VbcWZTB4398a
-	tzBxrfrYKU4cOMyRkDHjJxpUxv79fX9vYTPblbtGwYMDDdD7R+VSYvGRFBwIAkmY
-	ExIYwJ/3tHOH6m9QD3Oyb0j9/d7WcAiqH0gcc/bfKWJuZgFfc+sdAqHVHKWWaJ0q
-	WUObrTOfKSBQ1C4dCeSc9muLYbfoPYeLul1YDi0+32Nv4uZRkb2A7ye23r9CAST5
-	D87y6Q==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4336mxb9mu-1
+	uvbsf9el7uMW77H3pL6L/UKqOplk12CWDa7RDN1jpdw=; b=pM7uCdbKaGZqb+AM
+	pEEsnCti07F5qO6LU6O1BpyFK+atAVIy51C+SWtlVPpt9wj+M3AWNq2ZvLBrFr+D
+	aRc6tEi30fPDZ6K6q1yQJWHw50HbY2M32yVwZAXl3LtxBWfya0FrY6eaVHynQ6UN
+	WVCXjeSLsQimwXSrRZe/9BzLBrG4kU0fMmrUdqCIg64v2dGinXcissJbP9w3jcX5
+	jRGpXhU/3F3pBGtOks/OiW4Ir++E4IE+uxRSo91xr3Sk4L8EFhaWWRx5Or/rXkGa
+	kc3h3m82jGpKVbhp3h+MYGVwqSrOoIbmNG84ZwbUDU21GSPgI6+QDcMtkOxAgY2l
+	5t75Kw==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 433792b8yt-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 25 Nov 2024 03:39:21 +0000 (GMT)
+	Mon, 25 Nov 2024 03:49:54 +0000 (GMT)
 Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AP3dKMx006338
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AP3nrjB023470
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 25 Nov 2024 03:39:20 GMT
-Received: from [10.253.38.8] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 24 Nov
- 2024 19:39:16 -0800
-Message-ID: <21ee5ff4-9355-44aa-b6f7-afbc044f9ec8@quicinc.com>
-Date: Mon, 25 Nov 2024 11:39:14 +0800
+	Mon, 25 Nov 2024 03:49:53 GMT
+Received: from nalasex01c.na.qualcomm.com (10.47.97.35) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Sun, 24 Nov 2024 19:49:53 -0800
+Received: from nalasex01c.na.qualcomm.com ([fe80::5da8:4d0f:c16a:a1d]) by
+ nalasex01c.na.qualcomm.com ([fe80::5da8:4d0f:c16a:a1d%11]) with mapi id
+ 15.02.1544.009; Sun, 24 Nov 2024 19:49:53 -0800
+From: "Renjiang Han (QUIC)" <quic_renjiang@quicinc.com>
+To: "bryan.odonoghue@linaro.org" <bryan.odonoghue@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        "Stephen
+ Boyd" <sboyd@kernel.org>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        "Vikash Garodia (QUIC)" <quic_vgarodia@quicinc.com>,
+        "bryan.odonoghue@linaro.org" <bryan.odonoghue@linaro.org>,
+        "Mauro Carvalho
+ Chehab" <mchehab@kernel.org>
+CC: "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-clk@vger.kernel.org" <linux-clk@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
+        "Taniya Das
+ (QUIC)" <quic_tdas@quicinc.com>
+Subject: RE: [PATCH 0/2] Use APIs in gdsc genpd to switch gdsc mode for venus
+ v4 core
+Thread-Topic: [PATCH 0/2] Use APIs in gdsc genpd to switch gdsc mode for venus
+ v4 core
+Thread-Index: AQHbPMnFuhcs0/Hoi02bEw0vEs1J7rLEhxwAgALQD9A=
+Date: Mon, 25 Nov 2024 03:49:53 +0000
+Message-ID: <2212eace0ed44c439da117fb05f2b1db@quicinc.com>
+References: <20241122-switch_gdsc_mode-v1-0-365f097ecbb0@quicinc.com>
+ <f7c31279-8492-484c-94c4-893d98f53afb@linaro.org>
+In-Reply-To: <f7c31279-8492-484c-94c4-893d98f53afb@linaro.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/2] arm64: dts: qcom: qcs8300-ride: enable ethernet0
-To: Andrew Lunn <andrew@lunn.ch>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Richard Cochran
-	<richardcochran@gmail.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <netdev@vger.kernel.org>
-References: <20241123-dts_qcs8300-v4-0-b10b8ac634a9@quicinc.com>
- <20241123-dts_qcs8300-v4-2-b10b8ac634a9@quicinc.com>
- <cbd696c0-3b25-438b-a279-a4263308323a@lunn.ch>
-Content-Language: en-US
-From: Yijie Yang <quic_yijiyang@quicinc.com>
-In-Reply-To: <cbd696c0-3b25-438b-a279-a4263308323a@lunn.ch>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: uEmU1Dku6UaT0b39yLYCJAjX4uLQQA29
-X-Proofpoint-GUID: uEmU1Dku6UaT0b39yLYCJAjX4uLQQA29
+X-Proofpoint-ORIG-GUID: J-OYa_v6RuDto-3M_0e0Anahkr8saN6V
+X-Proofpoint-GUID: J-OYa_v6RuDto-3M_0e0Anahkr8saN6V
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 mlxscore=0
- adultscore=0 impostorscore=0 phishscore=0 spamscore=0 lowpriorityscore=0
- clxscore=1015 suspectscore=0 bulkscore=0 priorityscore=1501
- mlxlogscore=804 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ mlxlogscore=930 clxscore=1015 impostorscore=0 mlxscore=0 phishscore=0
+ priorityscore=1501 lowpriorityscore=0 bulkscore=0 suspectscore=0
+ adultscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2409260000 definitions=main-2411250029
 
+On Saturday, November 23, 2024 8:19 AM, Bryan O'Donoghue wrote:
+> On 22/11/2024 10:31, Renjiang Han wrote:
+> > The Venus driver requires vcodec GDSC to be ON in SW mode for clock=20
+> > operations and move it back to HW mode to gain power benefits.=20
+> > Earlier, as there is no interface to switch the GDSC mode from GenPD=20
+> > framework, the GDSC is moved to HW control mode as part of GDSC enable=
+=20
+> > callback and venus driver is writing to its POWER_CONTROL register to=20
+> > keep the GDSC ON from SW whereever required. But the POWER_CONTROL=20
+> > register addresses are not constant and can vary across the variants.
+> >=20
+> > Also as per the HW recommendation, the GDSC mode switching needs to be=
+=20
+> > controlled from respective GDSC register and this is a uniform=20
+> > approach across all the targets. Hence use dev_pm_genpd_set_hwmode()=20
+> > API which controls GDSC mode switching using its respective GDSC regist=
+er.
+> >=20
+> > Signed-off-by: Renjiang Han <quic_renjiang@quicinc.com> >
+> > ---
+> > Renjiang Han (1):
+> >        venus: pm_helpers: Use dev_pm_genpd_set_hwmode to switch GDSC=20
+> > mode on V4
+> >=20
+> > Taniya Das (1):
+> >        clk: qcom: videocc: Use HW_CTRL_TRIGGER flag for video GDSC's
+> >=20
+> >   drivers/clk/qcom/videocc-sc7180.c              |  2 +-
+> >   drivers/clk/qcom/videocc-sdm845.c              |  4 ++--
+> >   drivers/media/platform/qcom/venus/pm_helpers.c | 10 +++++-----
+> >   3 files changed, 8 insertions(+), 8 deletions(-)
+> > ---
+> > base-commit: 63b3ff03d91ae8f875fe8747c781a521f78cde17
+> > change-id: 20241122-switch_gdsc_mode-b658ea233c2a
+> >=20
+> > Best regards,
 
+> What's your test strategy here ? What platforms have you tested this on ?
 
-On 2024-11-24 03:41, Andrew Lunn wrote:
-> On Sat, Nov 23, 2024 at 04:51:54PM +0800, Yijie Yang wrote:
->> Enable the SerDes PHY on qcs8300-ride. Add the MDC and MDIO pin functions
->> for ethernet0 on qcs8300-ride. Enable the ethernet port on qcs8300-ride.
->>
->> Signed-off-by: Yijie Yang <quic_yijiyang@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/qcs8300-ride.dts | 112 ++++++++++++++++++++++++++++++
->>   1 file changed, 112 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
->> index 7eed19a694c39dbe791afb6a991db65acb37e597..af7be26828524cc28299e219c1f0ad459e1c543d 100644
->> --- a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
->> +++ b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
->> @@ -210,6 +210,95 @@ vreg_l9c: ldo9 {
->>   	};
->>   };
->>   
->> +&ethernet0 {
->> +	phy-mode = "2500base-x";
->> +	phy-handle = <&sgmii_phy0>;
-> 
-> Nit picking, but your PHY clearly is not an SGMII PHY if it is using
-> 2500base-x. I would call it just phy0, so avoiding using SGMII
-> wrongly, which most vendors do use the name SGMII wrongly.
+> What help do you need ?
+Since the GDSC flag has been changed to HW_CTRL_TRIGGER, the v4 core needs =
+to use
+dev_pm_genpd_set_hwmode to switch the GDSC mode like v6. The video codec ha=
+s
+been verified on SC7180 and the result is OK. The same verification has bee=
+n done on
+the latest QCS615 and the result is also OK.
+In addition, since the videocc of QCS615 uses the HW_CTRL_TRIGGER flag, QCS=
+615 and
+SC7180 both use the v4 core in venus. So the v4 core needs to use
+dev_pm_genpd_set_hwmode to switch the GDSC mode like v6.
 
-You're right, that's really confusing here. I'll fix it.
-
-> 
-> 	Andrew
-
--- 
-Best Regards,
-Yijie
-
+> ---
+> bod
 
