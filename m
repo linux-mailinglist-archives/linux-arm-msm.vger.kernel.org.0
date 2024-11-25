@@ -1,167 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-39130-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39131-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 063D99D8BAE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2024 18:54:03 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 617F79D8BD9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2024 19:02:23 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8D9A3163EA9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2024 17:53:59 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1B5D7B32103
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2024 18:01:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D641F41C92;
-	Mon, 25 Nov 2024 17:53:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 05A4C1B87C2;
+	Mon, 25 Nov 2024 18:00:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="JifcHzyr"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VokZd+Rb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 005B81B414F
-	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Nov 2024 17:53:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB55041C92;
+	Mon, 25 Nov 2024 18:00:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732557239; cv=none; b=fvqIqdnTtSVNvAS/YMtGSh+rllmof1W5xR78uorTgLFf5UpHJieaZ3BcbUGznFvOymK96XvN9aDu0kQrG/xVDHPE7KJka5ILfMHlWASj0Nfhhz+2zzUAkuJCvBj2nXcOBtBW4x6rkc7fwaSpoMGHSYENQg3otg8tzENzuKMPgDA=
+	t=1732557643; cv=none; b=F5GH7qKEVDRvdjMQt9WhHypLc7UPJQ0x91d2SVvFsQQsEoVu5t1grSN3Q26pzh651LIigLh1eg6IazNkyBzU4j8AvccKhhztzgw0TJr3aNTvni2isc5U6H1/1y2BlWjA2FyoR6o+g09m5w4t73S43GBfhDVPtS2RpVeeQta4pvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732557239; c=relaxed/simple;
-	bh=+aKBNdyqoPPoH7YFlDbUCvXZ6sn8H8tO0XYdJpv9c8M=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=INTVcWB4qolld2ku8sjphB4+JKYidAci27llsWSSJs2dcpU+oc8X7kJduUQSky5/5oM5NpSldnQdEIx5NnU48xi7VPibEg/dbR0y7i/4rrwklF6XQ2dw/g+Z3BOyFmw3uKVYjItSUupn5wsXVd96VDoeiPkKx4gpQivyvdkCWjo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=JifcHzyr; arc=none smtp.client-ip=209.85.167.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-53dd59a2bc1so3723856e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Nov 2024 09:53:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1732557235; x=1733162035; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bAoWd6DpzeBICi4AhBURcNm7laPx9KjIN0TBKhbYcUY=;
-        b=JifcHzyrpA83IybBgVuyMiiJFfmVevRVWEdtH2KZF2e4jnNKPdBQXF9WTvv4gT//hf
-         aAP/gkX+eEMiT6DiMYO0qku7RwGrgXOvNo6RhW9ds5fSn+MfS8PesRAk+0PNP7lVVwV2
-         VXZGHXmPdGxuZ3aN1xqjZRsXIihtO9gbZxt+o=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732557235; x=1733162035;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bAoWd6DpzeBICi4AhBURcNm7laPx9KjIN0TBKhbYcUY=;
-        b=LoCn1apMawUThX+0Z3JoonkL3vV91Q+Oxk8Z3Uf+0x2HUvcyiA17HroDWniKJvEeC5
-         p7+J/J8p9+VZzcORKMtnq9Qe7CX75BeIGLgrlVWPrwMsXsv5+YFn9PA8+l73CRy4M7X1
-         Z+lGLC8RfrJNV03YBuLCGlGbx5iEZivoQdBwZJF/Ulq2LM3MV5qjA5xmFsJyjhDFljBR
-         0nKI4nmZ/78quiAKwc58loHQQ8UbxG9JHH0+x1OKscT87x9tqTB7uVFRe13Ct/3NdApl
-         fMDhzBHfLjhFhN/FbVq20pweqDqEISxbuZXe8/x06cyr09I+13aMsWbwae52a3AAh9QQ
-         KKJA==
-X-Forwarded-Encrypted: i=1; AJvYcCUG3AHxBc/uenY14lUaUhORZz0+ZEcLUZVrimBGqQaHocVaxNua7VLW9v3gdUipM0qjtXYvulZ7sipcs/bg@vger.kernel.org
-X-Gm-Message-State: AOJu0YwJtGNuK5rKXHOomxedNqgf+G6HQCcybZ0zS8QDQqCR0p87Gsuh
-	BTkV6nvUcbOKNTnk0L6nGQNhrJvVtJqZKO7BweaDWMQx7JUbGunxZFNcs1ym/Q+AuhxF206P4Ox
-	YYg==
-X-Gm-Gg: ASbGncuwLOhjyZcmOsxuGBa8dg/EwIhuWeALE8S9BogTQ8QEh2bOgA79nDyK6qiw2iR
-	0fdp0ynDpDDhdRI1FQn/mJ+WOo9Sh6joOVOuT9Yvya/3Hfi9qJtzTp127zN0SBFjcDE9L8QtAnJ
-	qgB9uCu2ITU95wPraY6suBOHTmAY5EpLIuFAheUh2BB5Q99UhDDpc4TnFmXrHs4jcUNl9WP8sr6
-	USFE5ws8WlSsM56cS55hO/1itBZq6kTNzE/m8IicCpSIx/vErr8FfSRfzKCZHqyemZSmb5nAyF1
-	FD04uIGpy95qYZjB4Q==
-X-Google-Smtp-Source: AGHT+IFo/xTn4VodUOPd0HXCF4belFNuNhdKbWinZT4WYEYVhkBT7GZ5rqA6gTICPVxt+VG7T/qNVA==
-X-Received: by 2002:a05:6512:1593:b0:53d:dd50:1a94 with SMTP id 2adb3069b0e04-53ddd501c1dmr3472366e87.53.1732557235376;
-        Mon, 25 Nov 2024 09:53:55 -0800 (PST)
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com. [209.85.208.182])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53dd2489af7sm1727824e87.184.2024.11.25.09.53.54
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Nov 2024 09:53:54 -0800 (PST)
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2ffa3e8e917so43577571fa.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Nov 2024 09:53:54 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCWw0Z1FIl+s0sBsKuQm/vIPf/gNyYafHZy9RBWfNF6V1tEgg8kvgblJMF7JcCnnAV334fDOBHxQiAQ3Dmm4@vger.kernel.org
-X-Received: by 2002:a05:6512:1247:b0:536:56d8:24b4 with SMTP id
- 2adb3069b0e04-53dd35a4f22mr6019059e87.5.1732557234037; Mon, 25 Nov 2024
- 09:53:54 -0800 (PST)
+	s=arc-20240116; t=1732557643; c=relaxed/simple;
+	bh=t3yRoPdOkAQ3koYhuWnWz98SIxwom1UcZJLowruDFBA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ejMDNcwAmCoJ2fr/RLGwU1uku/fCR+budFKaVnwwGrbPgBgauW3xuS0kCjM8jaSuQnzirz6RRjq0K6Aq7KXe71Dkl+CHrOlzEzWIS1QsX3fYCZYCj2RJ9A48cUOG9igXFt4oxhf2qWmoqTn5RjbwT+8uiCnS41F+xF/i8Ve5VVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VokZd+Rb; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFE31C4CECE;
+	Mon, 25 Nov 2024 18:00:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1732557643;
+	bh=t3yRoPdOkAQ3koYhuWnWz98SIxwom1UcZJLowruDFBA=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=VokZd+RbKt6UB85x6xWElXAwbPr4mTJFV8HfDkNJRPHLHt+R9/tUYQL4Vh2gTta3M
+	 hYDukxVDWC19woR6U0zhlpDYlwE3Cg80DWztFGf3gx/v2qgHq9/OmVcKpmTKWWfnP/
+	 10O2Dnydyyy8qQ0n8WL0QhfKyPEEFNFSS8dH1AAGAGHN3lQbbI0qcL37I5JDuA0Joo
+	 r/A87nC/NpBet3U43P6e2iW8OYZZCPadOr74srO35Hq5nTwMXmv4VVMkjm7x5JzNC0
+	 eV5kKB7SbRv+WD1aDCrU6mQA4KRimo8MIg3IB8sV8WiwFIk2QlOmi6o6ObEFZYLprE
+	 avuvaL2TfsAYA==
+Message-ID: <936fc52e-95a7-48f6-85bb-13dbc10ddb71@kernel.org>
+Date: Mon, 25 Nov 2024 19:00:36 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241124-hp-omnibook-x14-v1-0-e4262f0254fa@oldschoolsolutions.biz>
- <20241124-hp-omnibook-x14-v1-3-e4262f0254fa@oldschoolsolutions.biz>
-In-Reply-To: <20241124-hp-omnibook-x14-v1-3-e4262f0254fa@oldschoolsolutions.biz>
-From: Doug Anderson <dianders@chromium.org>
-Date: Mon, 25 Nov 2024 09:53:42 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=V2JhWsK4-gHL72ttXdNA0U2p6YojN+DXtWxNSOjD-ZSw@mail.gmail.com>
-Message-ID: <CAD=FV=V2JhWsK4-gHL72ttXdNA0U2p6YojN+DXtWxNSOjD-ZSw@mail.gmail.com>
-Subject: Re: [PATCH 3/4] drm/panel-edp: Add unknown BOE panel for HP Omnibook X14
-To: jens.glathe@oldschoolsolutions.biz
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Kalle Valo <kvalo@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V6 3/4] dt-bindings: interconnect: Add generic compatible
+ qcom,epss-l3-perf
+To: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>,
+ Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: Odelu Kukatla <quic_okukatla@quicinc.com>,
+ Mike Tipton <quic_mdtipton@quicinc.com>, Sibi Sankar
+ <quic_sibis@quicinc.com>, linux-arm-msm@vger.kernel.org,
+ linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20241125174511.45-1-quic_rlaggysh@quicinc.com>
+ <20241125174511.45-4-quic_rlaggysh@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20241125174511.45-4-quic_rlaggysh@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi,
-
-On Sun, Nov 24, 2024 at 5:20=E2=80=AFAM Jens Glathe via B4 Relay
-<devnull+jens.glathe.oldschoolsolutions.biz@kernel.org> wrote:
->
-> From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
->
-> Seems to be like NV140DRM-N61 but with touch. Haven't disassembled
-> the lid to look.
->
-> Due to lack of information, use the delay_200_500_e200 timings like
-> many other BOE panels do for now.
->
-> The raw EDID of the panel is:
->
-> 00 ff ff ff ff ff ff 00 09 e5 93 0c 00 00 00 00
-> 25 21 01 04 a5 1e 13 78 03 ee 95 a3 54 4c 99 26
-> 0f 50 54 00 00 00 01 01 01 01 01 01 01 01 01 01
-> 01 01 01 01 01 01 a4 57 c0 dc 80 78 78 50 30 20
-> f6 0c 2e bc 10 00 00 1a 6d 3a c0 dc 80 78 78 50
-> 30 20 f6 0c 2e bc 10 00 00 1a 00 00 00 00 00 00
-> 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 02
-> 00 0d 36 ff 0a 3c 96 0f 09 15 96 00 00 00 01 8b
->
-> There are no timings in it, sadly.
-
-Yeah, and like other BOE panels also no model info in the EDID. Sigh.
-I guess "Unknown" it is until someone can officially add it.
+On 25/11/2024 18:45, Raviteja Laggyshetty wrote:
+> EPSS instance on sc7280, sm8250 SoCs, use PERF_STATE register instead of
 
 
-> Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-> ---
->  drivers/gpu/drm/panel/panel-edp.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/pa=
-nel-edp.c
-> index 8566e9cf2f82a..403679e506fa4 100644
-> --- a/drivers/gpu/drm/panel/panel-edp.c
-> +++ b/drivers/gpu/drm/panel/panel-edp.c
-> @@ -1915,6 +1915,7 @@ static const struct edp_panel_entry edp_panels[] =
-=3D {
->         EDP_PANEL_ENTRY('B', 'O', 'E', 0x0c20, &delay_200_500_e80, "NT140=
-FHM-N47"),
->         EDP_PANEL_ENTRY('B', 'O', 'E', 0x0cb6, &delay_200_500_e200, "NT11=
-6WHM-N44"),
->         EDP_PANEL_ENTRY('B', 'O', 'E', 0x0cfa, &delay_200_500_e50, "NV116=
-WHM-A4D"),
-> +       EDP_PANEL_ENTRY('B', 'O', 'E', 0x0c93, &delay_200_500_e200, "Unkn=
-own"),
+This should explain that these devices are actually 100% compatible.
 
-This is sorted incorrectly. I'll fix it for you this time while
-applying, but in the future make sure you sort numerically. 0x0c93
-should be before 0x0cb6.
+> REG_L3_VOTE to scale L3 clocks, hence adding a new generic
+> compatible "qcom,epss-l3-perf" for these targets.
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Not the best reason... You add one more generic compatible, because
+devices are different? With such reason answer is: no, do not add
+generic compatibles, because they are not generic.
 
-Pushed to drm-misc-next:
+The entire point of having generic compatibles is that they really are
+generic. Here you prove that they are not generic, so why creating one
+more generic compatible which might not be generic at all?
 
-[3/4] drm/panel-edp: Add unknown BOE panel for HP Omnibook X14
-      commit: c1bae6802ee9c8ad8e3c1df7ca3174d6b4b260e5
+I already expressed above concerns multiple times:
+1. In previous versions of this patchset
+2. In other threads
+
+I am not against this change, but I am not going to Ack it. Get acks
+from other maintainers, I am not happy with multiple
+generic-but-actually-not-generic compatibles. I think that is poor approach.
+
+Best regards,
+Krzysztof
 
