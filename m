@@ -1,238 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-39097-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39098-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F2B599D860F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2024 14:13:45 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id E5FC99D864D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2024 14:24:40 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B2EE328776C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2024 13:13:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3002316AD21
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2024 13:23:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41F4A1AAE0B;
-	Mon, 25 Nov 2024 13:13:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8BC501822E5;
+	Mon, 25 Nov 2024 13:23:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ix8HfmTL"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hF7K4eEa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A183D1A9B5D
-	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Nov 2024 13:13:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B4251AAE17
+	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Nov 2024 13:23:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732540410; cv=none; b=KzOn9CiDES5PvBRV3mRN5zAQmGR+3HYtpPhzvXTURFultBRFLjq/xBhjIW4PaU6ARV6pf0nNCH+r3MzEEZ39FRcwq3YNx2yKK/jbv0IFntGz7ZnEPcEH63FlYdK4KlAvZbpI3aTr0Ce/ZhajBQ1z3+1U7yYujymCan9RMhL566Q=
+	t=1732541008; cv=none; b=JzWhE0iVp7YQR/ueEK0cR5iDTdh9Lv6KzQXr7hTYhhf9a+svshIvZhFDSVGMEviFcX4N1ft4/LJNoXr6Yx3QsfE0ISKdomnl44Sv27dltOANsD45U1AymyA0V/DXsTF2PpvOZOOKy36qRFcrhpQ/WNbbKjyv19BRo9MVDZszrVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732540410; c=relaxed/simple;
-	bh=dhUis+L7Ycp0/25ZlPxU34H4a066EiAPbpjt5heCetc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nWIfBlHSyqyyESh/dS2QL1k0VWLSOAFm1MXbK04rZQBh0t1rlKRormzXi62Rpwl3JHLTw5fVs5+7rT2b1+49nzf9k8NocjlkbDjI6x0hATjpA6oX5/lcN7GGgkuhFoUkI3arxrtn2wUESmmh5dg6aOPcEfI3TGRY091LbDBbsys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ix8HfmTL; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4APBBKZZ032319
-	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Nov 2024 13:13:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	r54gTYviKOwXlruq1v3O1F1bgn7zesVKS49rXzTVgUc=; b=ix8HfmTLUgbl55Ql
-	d/2uebYuy3y/vMgnglH7XAuG08lUY2JnwrxY6cxAofNy2bVfxiBHdJnCzEHDiPIy
-	4KA/j6IGkQK9eCBiaTummcosphmdgXKnYOtlVuPdTSCuRVSqppnHBzovwhcp+XK8
-	FIXx3kUZCjGlPgWJaQqkWGjjMKjPqZHFcnHDuAQP9hoxbiJXCAr8f51W8nCZTmpl
-	XjZC/KGisF/mELWKr+6iNoECy9jexcugSzMBOpDy4T8NjkRFTp38hUl4sfGKrgB7
-	DZ+W2qjtNokTtq2q+ojsvYQuotperTNmUpIHrMYyegc7yTpqrAE4r9VIlnkfVeUD
-	SnpzDw==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43374svw1y-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Nov 2024 13:13:27 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4668c9aa8c7so2608591cf.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Nov 2024 05:13:27 -0800 (PST)
+	s=arc-20240116; t=1732541008; c=relaxed/simple;
+	bh=XdOSXy8lCeni0oZF+EIcTnWomwfB185LaVQ4QiKqYUQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GvsLwyr9vekguCIulSoACYQ1/0t2ZqPbagjQ/V+HBHcMlLcp3pvYOiODp7ZZUbLId7hGmJYlJo5OtntqJ/DgkZHAmgmI2N0f1fMMOuUFL/iqW2bgvkD6R6SDcjBHQKku+a1lL9LLoiFZYv4afH8CjgexgXTH6VocaBaO//wXHgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hF7K4eEa; arc=none smtp.client-ip=209.85.167.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-53da6801c6dso3977517e87.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Nov 2024 05:23:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1732541005; x=1733145805; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=cqgylUqRVA3P8aqcdkADreActuQPskKOQXcGbKk9s6w=;
+        b=hF7K4eEaW6kuFTpDC8vOYnkZU80QdwIsfaP0oLbIN0t3nG160KbJyXMPSDqismDZun
+         g9Ajz7oTjty71y7PQRh6J6SQz/kRRlUAD94qoDNHNnQa3bkaATHf31psiZryPz1RqPQD
+         +wVSzlabHBCFHWSjsgnP3/Qeq65nR4e3duni9zRyxxR7SfEOiyVAaYO2YOLIdddhQsnf
+         EWYRvreW8t08fcTcFRyqh+flJW7vQ+N8I8wTTcd2ZoJiILN0VynuH44AQqh8ObBv7OMj
+         m9NyaCDpBUGwMivx3pJCu4K3pt06D4QnYLOFyIPPbvEjAIJiWHQhYw+5tU6lg7oI8tNr
+         esaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732540406; x=1733145206;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=r54gTYviKOwXlruq1v3O1F1bgn7zesVKS49rXzTVgUc=;
-        b=WQPs1H7LJazrtqMyKv8d88JGFM1eqva6xIo2NzGMKnrBUwBnRcq64Iuez2K1qVm8xG
-         DrsQywYrc0YP9jKRIkKp2E7/sgjCHGancaDrfvzljjYhFCWs92pE555fIaVOu2+njpfY
-         S1F0QzrCBRasaZ4x0+19AvRNufDtNDJdDp4Gvs+IzLhFih1aWkp2WpXb2qVRlOhZBkLp
-         zrL419lcX7qiXBU7VwYftJza2blkGq0qX9hn1+OnAXdAKEpTk7xboSM3yPD8t6Q56DcY
-         ihNY2akfoah+rbO9VVtoFJjPYUZ1xSiot2B1A5DYUP1GL0ynv9jsJ7epwF4aVC7ppCKk
-         OkGg==
-X-Forwarded-Encrypted: i=1; AJvYcCV0xIrw5NbWqBVmTiOOgDhbkgN0Trrvbw64LPoY8DJ+s4Cg4KFd6KjtVxSW3T84AeZSIiXhV6N+rdy6JkFd@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw6zlJ+Hr+1oWfZiHclN7ogXuZOSHBI/AkQ7gYqSZgZ2UJLJk/K
-	CaKsUUC9eZV4eFuaiShLNPp5CFF+4beNq7nfamk2YMVzEsdKJSglJqIlQ7ywgzuoYnA/G8bpSgH
-	/+FjKsbZvZQ3MGSQnn45mQbZ09cwGzOWoGs4Ik1gwLNf3+y0XiHRywd6rbk9b+vWG
-X-Gm-Gg: ASbGnctg2VQ47d5g5TPfoohRs5Josc9U68MMSlY9JgW5e60G90vDNbh6vZR8yegYEHl
-	wB7IDBc39a1rpppe5sZlHelrc8eyRTZz8qvSGrMZ19g1sqoQhwCjUXz7BCZQy5M87XnzSGc38NZ
-	+n+Plc+PkXMOvqGeuR7B/l0bItuO1mDVg3MCorxR3GJOY0mrwQkJUUDlrZeDXLhZmydEKzoMMg1
-	CKUCHpGHdzdAsER4+Cw8CtZkoG+mhcds2P0EBr6v/CAcub+2VcPuKUWoTQv198R97FF/OV6hGbg
-	to7d6Z8B/P3V5mJe9mxp7bhTmeCJovU=
-X-Received: by 2002:a05:622a:5a11:b0:464:af83:ba34 with SMTP id d75a77b69052e-466a176c64emr965291cf.10.1732540406300;
-        Mon, 25 Nov 2024 05:13:26 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFu15OrzuBffo2/0f07cUhKhr9ZQY4Z6CXgoi3UuBOLryZSdLxCtIaPUN/M9o9gnubIHVFfgA==
-X-Received: by 2002:a05:622a:5a11:b0:464:af83:ba34 with SMTP id d75a77b69052e-466a176c64emr965031cf.10.1732540405892;
-        Mon, 25 Nov 2024 05:13:25 -0800 (PST)
-Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa5414cb10esm236300866b.3.2024.11.25.05.13.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Nov 2024 05:13:25 -0800 (PST)
-Message-ID: <7c0c1120-c2b2-40dd-8032-339cc4d4cda4@oss.qualcomm.com>
-Date: Mon, 25 Nov 2024 14:13:22 +0100
+        d=1e100.net; s=20230601; t=1732541005; x=1733145805;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cqgylUqRVA3P8aqcdkADreActuQPskKOQXcGbKk9s6w=;
+        b=FWGmcFWxL3X9dBFKuFQ2+ZrLkt9XP9R5pVofW4BgMTyXLqKKRM45PYGqNWGSI5TBQ2
+         ZVL1KuY8shjqErwNhIVjoPz/sZLAz//g37ck3o7Z6rxeajkvAWDNZSUReTabIt6p9e3S
+         WMM0ZGYqWOxoVVCXN5FW3H+mewt5ybcZqnnbTds+eYPcYSQwwo0Ij6dqcL2i3/suZCV1
+         zuWNrxPStXopukl0pQ6HVuOyIhDiOkFekA2lrBM/e7+SISpmwaREwympklxU8X/bV0Ut
+         zsMxLd2DzMK+ofFJqBcXy0J40RkOWWiWEHGq4kYzF/Fwd9c351oxD1YsJE253RHlYyyw
+         aqiA==
+X-Forwarded-Encrypted: i=1; AJvYcCXm4ev/5RkEbgViHPtxiWa0BSjgkRAw5oouQGnR/yJ2hCxdzJwxGqVDIj5fTW2xJPMkqWI9s0+PBnDlq0I+@vger.kernel.org
+X-Gm-Message-State: AOJu0YwIJ3cwwRKXvnzA/Ego9pHWFmTlGALz8JJZdIbY/hAvezziNS5M
+	5FRDYuaRucU2aSFxrh+HOCMdMyCTpnCoj5XjxUb3mom4KeloA/0lE508iV1lJJ3J+euzc6Dnxpj
+	r
+X-Gm-Gg: ASbGncs+FS322/R4SIPJANvbsePI+sZbUJiYTkD7u0LMNouEAyH0iqgSoeQVq5dxCwv
+	3dHXFyT3HhOsOypLSM14wO8R/gy8Dwi+rmOtDrixsvvYTe8sDn5hmo/RtuR4Kr6X9wS6ENtAblV
+	Ua4wwr5NL84v0n8E9cQc8SIw/D10Q2vVCB5UC8oRyfbSixHNr35I4vYVGTGBiBesMk848Z7CEoc
+	8XRcmHxTAkA69arNZfAvWQHiYbJtWclHchr4b0pSlWnPPFQmmNnBMDs53IDWI+JqCV87Z7gZSbX
+	8Olv/WC9dyPp1JK3Z2bdhaW4a6V2Gg==
+X-Google-Smtp-Source: AGHT+IFTOooIa/aOyqy2c5urQieX0rO7QBZkuMOs7rhBV9SwbSTAMGIUTmurdG2bVZTp8/Y/9DvwRA==
+X-Received: by 2002:ac2:424d:0:b0:53d:d3f1:13aa with SMTP id 2adb3069b0e04-53dd3f113d8mr4425960e87.20.1732541004885;
+        Mon, 25 Nov 2024 05:23:24 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53dd24519absm1670069e87.105.2024.11.25.05.23.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Nov 2024 05:23:24 -0800 (PST)
+Date: Mon, 25 Nov 2024 15:23:22 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH RFC 2/2] arm64: dts: qcom: sm8650: move board clocks to
+ DTS files
+Message-ID: <4kopdkvbkrpcpzwteezm427ml5putqvzsnfkpmg76spsple7l5@mg7v3ihwxnit>
+References: <20241115-fix-board-clocks-v1-0-8cb00a4f57c2@linaro.org>
+ <20241115-fix-board-clocks-v1-2-8cb00a4f57c2@linaro.org>
+ <e9a3179e-858c-43e8-ada4-942517dc1971@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] arm64: dts: qcom: qcs615: add SDHC1 and SDHC2
-To: Yuanjie Yang <quic_yuanjiey@quicinc.com>, ulf.hansson@linaro.org,
-        robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-        bhupesh.sharma@linaro.org, andersson@kernel.org,
-        konradybcio@kernel.org
-Cc: linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        quic_tingweiz@quicinc.com
-References: <20241122065101.1918470-1-quic_yuanjiey@quicinc.com>
- <20241122065101.1918470-2-quic_yuanjiey@quicinc.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20241122065101.1918470-2-quic_yuanjiey@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: YzLiF6e-Z_RUY-tqipRtKSgUV9R0fjwx
-X-Proofpoint-ORIG-GUID: YzLiF6e-Z_RUY-tqipRtKSgUV9R0fjwx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- lowpriorityscore=0 mlxlogscore=999 bulkscore=0 malwarescore=0 adultscore=0
- priorityscore=1501 spamscore=0 mlxscore=0 impostorscore=0 phishscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411250113
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e9a3179e-858c-43e8-ada4-942517dc1971@kernel.org>
 
-On 22.11.2024 7:51 AM, Yuanjie Yang wrote:
-> Add SDHC1 and SDHC2 support to the QCS615 Ride platform.
+On Sat, Nov 23, 2024 at 06:02:06PM +0100, Krzysztof Kozlowski wrote:
+> On 15/11/2024 07:59, Dmitry Baryshkov wrote:
+> > SM8650 is one of the platforms where board-level clocks (XO, sleep)
+> > definitions are split between the SoC dtsi file and the board file.
+> > This is not correct, as these two clocks are not a part of the SoC. Also
+> > such definitions don't fully follow the DT guidelines. Move these two
+> > clocks to the board files completely.
+> > 
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/sm8650-hdk.dts | 22 ++++++++++++++--------
+> >  arch/arm64/boot/dts/qcom/sm8650-mtp.dts | 22 ++++++++++++++--------
+> >  arch/arm64/boot/dts/qcom/sm8650-qrd.dts | 22 ++++++++++++++--------
+> >  arch/arm64/boot/dts/qcom/sm8650.dtsi    | 10 ----------
+> >  4 files changed, 42 insertions(+), 34 deletions(-)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/sm8650-hdk.dts b/arch/arm64/boot/dts/qcom/sm8650-hdk.dts
+> > index f00bdff4280af22f6f8b23e33238f53c602bc169..641bd817d75439bc6a050189565437e1c5ead3b5 100644
+> > --- a/arch/arm64/boot/dts/qcom/sm8650-hdk.dts
+> > +++ b/arch/arm64/boot/dts/qcom/sm8650-hdk.dts
+> > @@ -30,6 +30,20 @@ chosen {
+> >  		stdout-path = "serial0:115200n8";
+> >  	};
+> >  
+> > +	clocks {
+> > +		xo_board: xo-board {
+> > +			compatible = "fixed-clock";
+> > +			#clock-cells = <0>;
+> > +			clock-frequency = <76800000>;
+> > +		};
+> > +
+> > +		sleep_clk: sleep-clk {
+> > +			compatible = "fixed-clock";
+> > +			#clock-cells = <0>;
+> > +			clock-frequency = <32000>;
+> > +		};
+> > +	};
+> > +
+> >  	hdmi-out {
+> >  		compatible = "hdmi-connector";
+> >  		type = "a";
+> > @@ -1112,10 +1126,6 @@ &sdhc_2 {
+> >  	status = "okay";
+> >  };
+> >  
+> > -&sleep_clk {
+> > -	clock-frequency = <32000>;
+> > -};
 > 
-> Signed-off-by: Yuanjie Yang <quic_yuanjiey@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/qcs615.dtsi | 198 +++++++++++++++++++++++++++
->  1 file changed, 198 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/qcs615.dtsi b/arch/arm64/boot/dts/qcom/qcs615.dtsi
-> index 590beb37f441..37c6ab217c96 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs615.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/qcs615.dtsi
-> @@ -399,6 +399,65 @@ qfprom: efuse@780000 {
->  			#size-cells = <1>;
->  		};
->  
-> +		sdhc_1: mmc@7c4000 {
-> +			compatible = "qcom,qcs615-sdhci", "qcom,sdhci-msm-v5";
-> +			reg = <0x0 0x007c4000 0x0 0x1000>,
-> +			      <0x0 0x007c5000 0x0 0x1000>;
-> +			reg-names = "hc",
-> +				    "cqhci";
+> No, code has correct style. To avoid duplication, the SoC DTSI keeps the
+> skeleton of the clock, which also indicates that SoC expects it to be
+> provided by board. Then the board provides the clock by setting the
+> frequency.
 
-There's an "ice" region at 0x007c8000
+So, what is the decision maker: a deduplication or board vs soc
+placement? From the duplication point of view we can keep the complete
+clock in SoC.dtsi (like we did for older platforms or I did for
+sar2130p). Most if not all boards use the same clock for the SoC family.
+From the correctness point of view the clock should be completely in the
+board DT, the clock is completely on the board and not on the SoC.
+Having clock declaration in SoC.dtsi and patching the freq in board.dts
+is a strange hack and mix of two solutions. For me as a reviewer and a
+porter having such a split is a nightmare.
 
-> +
-> +			interrupts = <GIC_SPI 641 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 644 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "hc_irq",
-> +					  "pwr_irq";
-> +
-> +			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
-> +				 <&gcc GCC_SDCC1_APPS_CLK>,
-> +				 <&rpmhcc RPMH_CXO_CLK>,
-> +				 <&gcc GCC_SDCC1_ICE_CORE_CLK>;
-> +			clock-names = "iface",
-> +				      "core",
-> +				      "xo",
-> +				      "ice";
-> +
-> +			resets = <&gcc GCC_SDCC1_BCR>;
-> +
-> +			power-domains = <&rpmhpd RPMHPD_CX>;
-> +			operating-points-v2 = <&sdhc1_opp_table>;
-> +			iommus = <&apps_smmu 0x02c0 0x0>;
-> +			interconnects = <&aggre1_noc MASTER_SDCC_1 QCOM_ICC_TAG_ALWAYS
-> +					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
-> +					<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
-> +					 &config_noc SLAVE_SDCC_1 QCOM_ICC_TAG_ALWAYS>;
-> +			interconnect-names = "sdhc-ddr",
-> +					     "cpu-sdhc";
-> +
-> +			bus-width = <8>;
-> +			qcom,dll-config = <0x000f642c>;
-> +			qcom,ddr-config = <0x80040868>;
-> +			supports-cqe;
-> +			dma-coherent;
-> +			mmc-ddr-1_8v;
-> +			mmc-hs200-1_8v;
-> +			mmc-hs400-1_8v;
-> +			mmc-hs400-enhanced-strobe;
-> +			status = "disabled";
-> +
-> +			sdhc1_opp_table: opp-table {
-> +				compatible = "operating-points-v2";
-> +
-> +				opp-100000000 {
-> +					opp-hz = /bits/ 64 <100000000>;
-> +					required-opps = <&rpmhpd_opp_svs>;
-> +				};
-
-I'm seeing 25/50 MHz OPPs in the docs as well
-
-[...]
-
-> +
-> +		sdhc_2: mmc@8804000 {
-> +			compatible = "qcom,qcs615-sdhci","qcom,sdhci-msm-v5";
-
-Missing space 
-
-> +			reg = <0x0 0x08804000 0x0 0x1000>;
-> +			reg-names = "hc";
-> +
-> +			interrupts = <GIC_SPI 204 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 222 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "hc_irq",
-> +					  "pwr_irq";
-> +
-> +			clocks = <&gcc GCC_SDCC2_AHB_CLK>,
-> +				 <&gcc GCC_SDCC2_APPS_CLK>,
-> +				 <&rpmhcc RPMH_CXO_CLK>;
-> +			clock-names = "iface",
-> +				      "core",
-> +				      "xo";
-> +
-> +			power-domains = <&rpmhpd RPMHPD_CX>;
-> +			operating-points-v2 = <&sdhc2_opp_table>;
-> +			iommus = <&apps_smmu 0x02a0 0x0>;
-> +			resets = <&gcc GCC_SDCC2_BCR>;
-> +			interconnects = <&aggre1_noc MASTER_SDCC_2 QCOM_ICC_TAG_ALWAYS
-> +					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
-> +					<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
-> +					 &config_noc SLAVE_SDCC_2 QCOM_ICC_TAG_ALWAYS>;
-> +			interconnect-names = "sdhc-ddr",
-> +					     "cpu-sdhc";
-> +
-> +			bus-width = <4>;
-> +			qcom,dll-config = <0x0007642c>;
-> +			qcom,ddr-config = <0x80040868>;
-> +			dma-coherent;
-> +			status = "disabled";
-> +
-> +			sdhc2_opp_table: opp-table {
-> +				compatible = "operating-points-v2";
-> +
-
-Similarly, it can operate at 25/50 MHz too
-
-Konrad
+-- 
+With best wishes
+Dmitry
 
