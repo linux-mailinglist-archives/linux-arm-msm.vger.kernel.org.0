@@ -1,289 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-39107-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39108-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 585CA9D8A78
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2024 17:36:34 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C3CD9D88EA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2024 16:14:47 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B418E162A15
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2024 15:14:43 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A16AF1B393A;
+	Mon, 25 Nov 2024 15:14:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mnmMtTTp"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A5F8CB2B8F6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2024 15:14:06 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 992091B3925;
-	Mon, 25 Nov 2024 15:14:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Z+vjZC9g"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ua1-f50.google.com (mail-ua1-f50.google.com [209.85.222.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 989911B3927
-	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Nov 2024 15:13:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C71221B3927;
+	Mon, 25 Nov 2024 15:14:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732547641; cv=none; b=o/9uepYpgnPIiOT0l3WQJ+sboHSqGV9yPmvPR2y1s/RUNKqmbCH3PBcmdZvkO1Ymc+Ucsvg4Fb7iPVFEXzQw61aY0YKxRhXPDMs9AkHl1GA3YUNV+ouWw2slvWdS/stuZQMot+PYuOt1sT1LnFZQX1tHqt2VRt0RGWjQc32OJOA=
+	t=1732547679; cv=none; b=LaP03r7nMGkrQfu5snvX5QfVqhMwegmaiEIMtgz5G7fBMJ4LT+SBxdCSojrSOACCR/VbEl+xW2pebBaAXuLugNtyEH5OD1rrXIQsRsfPpoZYl9mrR0JHaKPF8IBRa0rZcT2IHZy5sfMW9PjVzDpeewyZuHE2it2couKM/mPV0sY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732547641; c=relaxed/simple;
-	bh=w543H5prkhH0bid38/yg03RQQKv25hY83w4UIeHaLgo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JL042wDCycgzbMXV1n/OjkRhXmyMZwS4UjU+9D8vy30cmmVa+RM2L1CRqQK5WQB8mb255cOlZqpgKo74aHqasKvNNXbM2QJv4Yi/pkQ/RKGp9fZMqBdKls+CO1OZl9FCgilJOkKWreFRuvwJrz/NItPoANy6y1DD8msdUNr1ZrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Z+vjZC9g; arc=none smtp.client-ip=209.85.222.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ua1-f50.google.com with SMTP id a1e0cc1a2514c-856f2b3e1b7so786237241.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Nov 2024 07:13:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732547638; x=1733152438; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=f7NNg8fFihdAGmXIwZGNJl3iHZB9uXav6cE/K1tOSnQ=;
-        b=Z+vjZC9g59kYIYLS4KSJIDGsPCpoSzcJuckw9cxV3z3kVTfj+hzM7QVeePET1J1YjV
-         //RtjRhRa7L87HbjB2Bd8VN081a7Fdh1bt7QfvtVqk5vU/Cg4b//825Kt38IrXrDa1WQ
-         EfexPCR+sx24I6YM+3GnDjMX2RHXoJ41en5wEBhJyL8dzpFuCNtv2m+zhFnpbRP6rqa0
-         y/9+PjY8R7jdPhpZKTpAJPj91hrvhKA/cTgvevN0sYbvPPwB+382daTWap6PR5oYadHp
-         p7gzVB0y6qYHbV3ek1Tfmg0pZC1DfTyDquQNli+TwWwgoCi0+ezCaepdnMdoulDOJ+aa
-         /SeQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732547638; x=1733152438;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=f7NNg8fFihdAGmXIwZGNJl3iHZB9uXav6cE/K1tOSnQ=;
-        b=YcmeBZjs5jATRCcKxetjvqQcOO55M47D7hUqd1/8aSyze7VbivjIW4ehoh6Dnjbzrz
-         VuS1zznqrlgBETuaUGMDdnoLA78PVgh9K81x8TYAqmSP3iur6ldoD4A4/kI3bg1EUjj6
-         NQSCXabhb/VkC/fZ0Fj7l4Elx5edxGRIB+4uD5io8lhSOUMCkp4dciRVRJs6Li/2Yw2V
-         xX5WQoZmvJuefyVWZREzVmp9krlHvOsnIqtGv9R2wmTV7jEfGXXeOlzZxCJe1/9BTl9Q
-         3OACjiQeqyDcUw9ORWQuxFIv8vPFsapyOcRYupMCzg1o08Mh1VGngk8dl6h/qN2zLtG2
-         ezUA==
-X-Gm-Message-State: AOJu0YzSSA5iIejBz1dNJO/Ty0OJAp39NDvI+3EyXenlzNQumN9qNR8i
-	9jYuOr9kOzOcCIRP/t8mJCnHuYgEylm+4ziJX9ZOix7BK7CMDFRYOZ/4PMlbg9Hwktm/GUWN2Ym
-	bUz/B8JbcNjm2Q4t5mlxu6m8aGz52pykX1TBsJwdkScI2EZi0K6Q=
-X-Gm-Gg: ASbGncujIpvWE3E4kkMw8clWhH1olwnkSGXRFDuBHeUsoYR+bPdNIL4dfU1cOGMEbj6
-	ovoapIRX9WJ6LgCvBdLwocLrSC6wEdh/5uA==
-X-Google-Smtp-Source: AGHT+IGeAQOZx4ClA9qZVhPPddmQ4QlmEBO+O8apbfhNOrTMTEbfcngyeawEYZLnbmdVs/2wyJOYKV1hh/5CeIwknQc=
-X-Received: by 2002:a05:6122:d0d:b0:50d:3ec1:154b with SMTP id
- 71dfb90a1353d-515004ec8f1mr11584331e0c.3.1732547636532; Mon, 25 Nov 2024
- 07:13:56 -0800 (PST)
+	s=arc-20240116; t=1732547679; c=relaxed/simple;
+	bh=IDc3s65VgfufqNNVA8rbj6MGucc1mNxpQg9R06Yd0sw=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=WeEWSSG9Wxv8hBSA7cvUy3jUti55oEbXx5rpOYXAZix2SYXu3gnN4gZSaYToX3jNcZWm8Ocn0gBHHl0XprJc2JHOUdP7glIHF1TJDNa+t05DnLMmNzbpNao1eIW1RQPscrViB6DJbhyXlWsTh50l42KTNmeE2qTGeQhVC0oCU6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=mnmMtTTp; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4APAt3tr006831;
+	Mon, 25 Nov 2024 15:14:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	IDc3s65VgfufqNNVA8rbj6MGucc1mNxpQg9R06Yd0sw=; b=mnmMtTTp6dtXIObt
+	prBiMtQo7FGuBzgpcgTLjNRtrZRxxoCkPeZBdCb4CcOV2oEey3MvP92VVJOuEPer
+	3DfvS4IG94zHO6NSpKSu8oCW9jQcGlEwrXwPcHm55ZmqAD0qXMZUbvx+bogFNE0q
+	NolHex9kd0AQPmyeAPMzI2MPxsxyxS+L9MW8vs4gSXPJgDqYrBZu9tXePbliPeZm
+	8cSdHtoW6jFT02foDDVABCdzMCkOH4KzFO+CXWr94/uW1TXNFXqMI6Hf4Uz77EzG
+	Z1il5ZmIfZZZqFgK7nwxDxL97O63XlgLmHZjpo7/oqVkmNZ6GJJUAmlERt9S+Jdy
+	M2gTLA==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4336mxd5vr-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 25 Nov 2024 15:14:30 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4APFETZr004372
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 25 Nov 2024 15:14:29 GMT
+Received: from nalasex01c.na.qualcomm.com (10.47.97.35) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Mon, 25 Nov 2024 07:14:28 -0800
+Received: from nalasex01c.na.qualcomm.com ([fe80::5da8:4d0f:c16a:a1d]) by
+ nalasex01c.na.qualcomm.com ([fe80::5da8:4d0f:c16a:a1d%11]) with mapi id
+ 15.02.1544.009; Mon, 25 Nov 2024 07:14:28 -0800
+From: "Renjiang Han (QUIC)" <quic_renjiang@quicinc.com>
+To: "dmitry.baryshkov@linaro.org" <dmitry.baryshkov@linaro.org>
+CC: "bryan.odonoghue@linaro.org" <bryan.odonoghue@linaro.org>,
+        "Taniya Das
+ (QUIC)" <quic_tdas@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        "Vikash Garodia (QUIC)"
+	<quic_vgarodia@quicinc.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-clk@vger.kernel.org" <linux-clk@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>
+Subject: RE: [PATCH 1/2] clk: qcom: videocc: Use HW_CTRL_TRIGGER flag for
+ video GDSC's
+Thread-Topic: [PATCH 1/2] clk: qcom: videocc: Use HW_CTRL_TRIGGER flag for
+ video GDSC's
+Thread-Index: AQHbPMnHbExtF43Cx0+9GIchxuRRY7LDp7qAgABjjACAAHgMAIAAAygAgALeqPCAASq6gP//jDyw
+Date: Mon, 25 Nov 2024 15:14:27 +0000
+Message-ID: <7765000a0f87447e98d827dee5977ca7@quicinc.com>
+References: <20241122-switch_gdsc_mode-v1-0-365f097ecbb0@quicinc.com>
+ <20241122-switch_gdsc_mode-v1-1-365f097ecbb0@quicinc.com>
+ <zhco37pigrp4fh5alqx4xfxx3xhjitqlgw552vwiijka22bt4u@sl4ngzypwh4x>
+ <1d9aa2e7-d402-42dc-baa6-155f01b132ca@quicinc.com>
+ <23ho25gl3iwyi2jspb6a2x5bv76fco5pkg2x5ct4gu3c44dbiq@yec6evx5sihm>
+ <eec92088-edfb-4d0c-b81d-9d4f1d968b20@linaro.org>
+ <b411489f9f2441f7a0f936127678e36b@quicinc.com>
+ <CAA8EJpqYSujKXPFkdWcqRpOKZ+dJHQDkYM33Mt5JxuA=Mfs+WQ@mail.gmail.com>
+In-Reply-To: <CAA8EJpqYSujKXPFkdWcqRpOKZ+dJHQDkYM33Mt5JxuA=Mfs+WQ@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CA+G9fYs+2mBz1y2dAzxkj9-oiBJ2Acm1Sf1h2YQ3VmBqj_VX2g@mail.gmail.com>
-In-Reply-To: <CA+G9fYs+2mBz1y2dAzxkj9-oiBJ2Acm1Sf1h2YQ3VmBqj_VX2g@mail.gmail.com>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Mon, 25 Nov 2024 20:43:44 +0530
-Message-ID: <CA+G9fYvh8n=CTCmcCdLViH=o-UXH1Euncn+7YuYkvt5O-k8NMg@mail.gmail.com>
-Subject: Re: pc : qnoc_probe (drivers/interconnect/qcom/icc-rpmh.c:269) :
- Dragonboard 410c - arm64 - boot failed
-To: linux-arm-msm <linux-arm-msm@vger.kernel.org>, Linux PM <linux-pm@vger.kernel.org>, 
-	Linux ARM <linux-arm-kernel@lists.infradead.org>, 
-	open list <linux-kernel@vger.kernel.org>, clang-built-linux <llvm@lists.linux.dev>
-Cc: Georgi Djakov <djakov@kernel.org>, konradybcio@kernel.org, quic_okukatla@quicinc.com, 
-	quic_rlaggysh@quicinc.com, quic_jjohnson@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: OzGxjbSolOr4rvVNv6v92AOpA1bgYvit
+X-Proofpoint-GUID: OzGxjbSolOr4rvVNv6v92AOpA1bgYvit
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 mlxscore=0
+ adultscore=0 impostorscore=0 phishscore=0 spamscore=0 lowpriorityscore=0
+ clxscore=1015 suspectscore=0 bulkscore=0 priorityscore=1501
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411250128
 
-[Small correction]
-
-On Mon, 25 Nov 2024 at 20:33, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
->
-> The arm64 Dragonboard 410c has failed with the Linux next, mainline
-> and the Linux stable. Please find boot log and build links.
-
-This boot regression is noticed only on Dragonboard 845c.
-Linux next-20241125 tag.
-
-Good: next-20241122
-Bad: next-20241125
-
->
-> Device: Dragonboard 410c - arm64
-> Boot failed: clang-19
-> Configs: korg-clang-19-lkftconfig-hardening
-> Boot pass: qemu-arm64 (Additional info)
->
-> This is always reproducible.
->
-> Dragonboard 410c - arm64:
-> boot:
->  * clang-nightly-lkftconfig-hardening
->  * korg-clang-19-lkftconfig-hardening
->
-> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
->
-> Log details:
-> ------------
-> [    0.000000] Booting Linux on physical CPU 0x0000000000 [0x410fd030]
-> [    0.000000] Linux version 6.12.0-next-20241125 (tuxmake@tuxmake)
-> (ClangBuiltLinux clang version 19.1.4
-> (https://github.com/llvm/llvm-project.git
-> aadaa00de76ed0c4987b97450dd638f63a385bed), ClangBuiltLinux LLD 19.1.4
-> (https://github.com/llvm/llvm-project.git
-> aadaa00de76ed0c4987b97450dd638f63a385bed)) #1 SMP PREEMPT @1732509632
-> [    0.000000] KASLR disabled due to lack of seed
-> [    0.000000] Machine model: Qualcomm Technologies, Inc. APQ 8016 SBC
-> <Trim>
-> [    8.983574] videodev: Linux video capture interface: v2.00
-> [    8.990308] Internal error: UBSAN: array index out of bounds:
-> 00000000f2005512 [#1] PREEMPT SMP
-> [    8.990374] Modules linked in: qcom_rng drm_client_lib qcom_stats
-> qnoc_msm8916(+) videodev videobuf2_memops videobuf2_common mc
-> rpmsg_ctrl rpmsg_char display_connector phy_qcom_usb_hs drm_kms_helper
-> ramoops reed_solomon socinfo rmtfs_mem fuse drm backlight ip_tables
-> x_tables ipv6
-> [    9.000620] CPU: 0 UID: 0 PID: 199 Comm: (udev-worker) Not tainted
-> 6.12.0-next-20241125 #1
-> [    9.022836] Hardware name: Qualcomm Technologies, Inc. APQ 8016 SBC (DT)
-> [    9.030902] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-> [    9.037760] pc : qnoc_probe (drivers/interconnect/qcom/icc-rpmh.c:269)
-> [    9.044439] lr : qnoc_probe (drivers/interconnect/qcom/icc-rpmh.c:0)
-> [    9.048258] sp : ffff800083b93470
-> [    9.052075] x29: ffff800083b93480 x28: ffff000002c2ae80 x27: ffff80007ac3d3e0
-> [    9.055554] x26: ffff000002c2ae88 x25: 0000000000000000 x24: ffff000009bb7400
-> [    9.062671] x23: 0000000000000000 x22: 0000000000000001 x21: ffff000004931400
-> [    9.069788] x20: ffff000004931410 x19: ffff0000048e0c80 x18: ffff800083a7d0a8
-> [    9.076907] x17: fffffffffffc23a2 x16: 0000000000000001 x15: 000000000000026c
-> [    9.084027] x14: fffffffffffffffd x13: 0000000000000000 x12: ffff7fffba293000
-> [    9.091145] x11: 0000000000000000 x10: 0000000000000000 x9 : 0000000000000001
-> [    9.098262] x8 : 0000000000000000 x7 : 0000000000000000 x6 : 000000000000003f
-> [    9.105381] x5 : 0000000000000040 x4 : ffff00003c75d9e0 x3 : 0000000000199400
-> [    9.112497] x2 : 0000000000000008 x1 : 0000000000000000 x0 : 0000000000000000
-> [    9.119617] Call trace:
-> [    9.126727] qnoc_probe+0x4c8/0x4d0 P
-> [    9.128987] qnoc_probe+0x354/0x4d0 L
-> [    9.132805] platform_probe (drivers/base/platform.c:1405)
-> [    9.136624] really_probe (drivers/base/dd.c:581 drivers/base/dd.c:658)
-> [    9.140443] __driver_probe_device (drivers/base/dd.c:800)
-> [    9.144089] driver_probe_device (drivers/base/dd.c:830)
-> [    9.148429] __driver_attach (drivers/base/dd.c:1217)
-> [    9.152422] bus_for_each_dev (drivers/base/bus.c:369)
-> [    9.156590] driver_attach (drivers/base/dd.c:1234)
-> [    9.160495] bus_add_driver (drivers/base/bus.c:676)
-> [    9.164140] driver_register (drivers/base/driver.c:247)
-> [    9.167700] __platform_driver_register (drivers/base/platform.c:867)
-> [    9.171520] init_module+0x20/0xfbc qnoc_msm8916
-> [    9.176383] do_one_initcall (init/main.c:1250 init/main.c:1267)
-> [    9.181068] do_init_module (kernel/module/main.c:2910)
-> [    9.184800] load_module (kernel/module/main.c:3376)
-> [    9.188618] __arm64_sys_finit_module (kernel/module/main.c:3565
-> kernel/module/main.c:3577 kernel/module/main.c:3603
-> kernel/module/main.c:3587 kernel/module/main.c:3587)
-> [    9.192353] invoke_syscall (arch/arm64/kernel/syscall.c:50)
-> [    9.197127] el0_svc_common (arch/arm64/kernel/syscall.c:139)
-> [    9.200771] do_el0_svc (arch/arm64/kernel/syscall.c:152)
-> [    9.204503] el0_svc (arch/arm64/kernel/entry-common.c:165
-> arch/arm64/kernel/entry-common.c:178
-> arch/arm64/kernel/entry-common.c:745)
-> [    9.207802] el0t_64_sync_handler (arch/arm64/kernel/entry-common.c:797)
-> [    9.210756] el0t_64_sync (arch/arm64/kernel/entry.S:600)
-> [ 9.215189] Code: aa1303e0 97fff41c 17ffff79 d4200020 (d42aa240)
-> All code
-> ========
->
-> Code starting with the faulting instruction
-> ===========================================
-> [    9.218752] ---[ end trace 0000000000000000 ]---
-> [    9.233047] note: (udev-worker)[199] exited with irqs disabled
-> [    9.233245] note: (udev-worker)[199] exited with preempt_count 1
-> [    9.243434] ------------[ cut here ]------------
-> <trim>
-> [    9.243951] WARNING: CPU: 0 PID: 0 at kernel/context_tracking.c:128
-> ct_kernel_exit (kernel/context_tracking.c:153)
-> [    9.248555] Modules linked in: videobuf2_v4l2 qcom_rng
-> drm_client_lib qcom_stats qnoc_msm8916(+) videodev videobuf2_memops
-> videobuf2_common mc rpmsg_ctrl rpmsg_char display_connector
-> phy_qcom_usb_hs drm_kms_helper ramoops reed_solomon socinfo rmtfs_mem
-> fuse drm backlight ip_tables x_tables ipv6
-> [    9.260538] CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Tainted: G      D
->           6.12.0-next-20241125 #1
-> [    9.282755] Tainted: [D]=DIE
-> [    9.292113] Hardware name: Qualcomm Technologies, Inc. APQ 8016 SBC (DT)
-> [    9.292888] Unable to handle kernel read from unreadable memory at
-> virtual address 0000ffffa3c44d20
-> [    9.295061] pstate: 204000c5 (nzCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-> [    9.295071] pc : ct_kernel_exit (kernel/context_tracking.c:153)
-> [    9.295088] lr : ct_kernel_exit (kernel/context_tracking.c:126)
-> [    9.301765] Mem abort info:
-> [    9.310514] sp : ffff800082503d10
-> [    9.310519] x29: ffff800082503d10 x28: ffff8000824c4ff0 x27: ffff800082509000
-> [    9.310536] x26: 0000000000000000 x25: ffff0000041f9898
-> [    9.317463]   ESR = 0x0000000096000004
-> [    9.321618]  x24: ffff0000041f9898
-> [    9.321625] x23: 0000000226f30819 x22: 0000000000000000
-> [    9.325621]   EC = 0x25: DABT (current EL), IL = 32 bits
-> [    9.328214]  x21: ffff00003c757ff8
-> [    9.328221] x20: ffff8000824c2350 x19: ffff00003c755350
-> [    9.331701]   SET = 0, FnV = 0
-> [    9.338806]  x18: ffff800082514880
-> [    9.338813] x17: 00000000529c6ef0 x16: 00000000529c6ef0 x15: 000000000000007e
-> [    9.343850]   EA = 0, S1PTW = 0
-> [    9.347659]
-> [    9.347662] x14: 00000000000000c8 x13: 0000000000000004 x12: 000000000a929b85
-> [    9.351058]   FSC = 0x04: level 0 translation fault
-> [    9.356167]
-> [    9.356171] x11: 0000000000000015 x10: 000000000682aaab x9 : 4000000000000000
-> [    9.361732] Data abort info:
-> [    9.364935] x8 : 4000000000000002 x7 : 0000000000005221 x6 : 0000000000055ad0
-> [    9.370064]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
-> [    9.373179] x5 : 0000000000005469 x4 : 0000000000000093 x3 : 0000000000000006
-> [    9.376580]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-> [    9.383768] x2 : 0000000000000000 x1 : ffff0000041f9880 x0 : ffff7fffba293000
-> [    9.386730]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-> [    9.388462] Call trace:
-> [    9.395502] user pgtable: 4k pages, 48-bit VAs, pgdp=00000000856aa000
-> [    9.400175] ct_kernel_exit+0x80/0x8c P
-> [    9.401918] [0000ffffa3c44d20] pgd=0000000000000000
-> [    9.408943] ct_kernel_exit+0x14/0x8c L
-> [    9.408958] ct_idle_enter (kernel/context_tracking.c:321)
-> [    9.411910] , p4d=0800000089bb0403
-> [    9.418929] cpuidle_enter_state (drivers/cpuidle/cpuidle.c:268)
-> [    9.418943] cpuidle_enter (drivers/cpuidle/cpuidle.c:391)
-> [    9.418953] do_idle (kernel/sched/idle.c:155
-> kernel/sched/idle.c:230 kernel/sched/idle.c:325)
-> [    9.424326] , pud=080000008943e403
-> [    9.431516] cpu_startup_entry (kernel/sched/idle.c:422)
-> [    9.431527] rest_init+0xe0/0xe4
-> [    9.436563] , pmd=0800000089bac403
-> [    9.443668] start_kernel (init/main.c:1040)
-> [    9.443681] __primary_switched (arch/arm64/kernel/head.S:247)
-> [    9.449057] , pte=00200000910f9fc3
-> [    9.451224] ---[ end trace 0000000000000000 ]---
->
-> Links:
-> ------
-> - https://qa-reports.linaro.org/lkft/linux-next-master/build/next-20241125/testrun/26040307/suite/boot/test/korg-clang-19-lkftconfig-hardening/log
-> - https://qa-reports.linaro.org/lkft/linux-next-master/build/next-20241125/testrun/26040307/suite/boot/test/korg-clang-19-lkftconfig-hardening/details/
-> - https://qa-reports.linaro.org/lkft/linux-next-master/build/next-20241125/testrun/26040307/suite/boot/test/korg-clang-19-lkftconfig-hardening/history/
-> - https://lkft.validation.linaro.org/scheduler/job/8004888#L2200
-> - https://tuxapi.tuxsuite.com/v1/groups/linaro/projects/lkft/tests/2pKKSWo1tVldooGuq0fBz0nRD07/
->
-> Build image:
-> -----------
-> - https://tuxapi.tuxsuite.com/v1/groups/linaro/projects/lkft/tests/2pKKSWo1tVldooGuq0fBz0nRD07/
->
-> Steps to reproduce:
-> ------------
-> - https://tuxapi.tuxsuite.com/v1/groups/linaro/projects/lkft/tests/2pKKSWo1tVldooGuq0fBz0nRD07/reproducer
-> - https://tuxapi.tuxsuite.com/v1/groups/linaro/projects/lkft/tests/2pKKSWo1tVldooGuq0fBz0nRD07/tux_plan
->
-> metadata:
-> ----
-
-git repo:  https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git
-git sha: 85a2dd7d7c8152cb125712a1ecae1d0a6ccac250
-
-> kernel config:
-> https://tuxapi.tuxsuite.com/v1/groups/linaro/projects/lkft/tests/2pKKSWo1tVldooGuq0fBz0nRD07/config
-> build url: https://tuxapi.tuxsuite.com/v1/groups/linaro/projects/lkft/tests/2pKKSWo1tVldooGuq0fBz0nRD07/
-> toolchain: clang-19 and clang-nightly
-> config:  korg-clang-19-lkftconfig-hardening
-> arch: arm64
->
-> --
-> Linaro LKFT
-> https://lkft.linaro.org
-
-- Naresh
+T24gTW9uZGF5LCBOb3ZlbWJlciAyNSwgMjAyNCA5OjU1IFBNLCBEbWl0cnkgQmFyeXNoa292IHdy
+b3RlOg0KPiBPbiBNb24sIDI1IE5vdiAyMDI0IGF0IDA3OjMxLCBSZW5qaWFuZyBIYW4gKFFVSUMp
+IDxxdWljX3JlbmppYW5nQHF1aWNpbmMuY29tPiB3cm90ZToNCj4gPiBPbiBTYXR1cmRheSwgTm92
+ZW1iZXIgMjMsIDIwMjQgODoxNyBBTSwgQnJ5YW4gTydEb25vZ2h1ZSB3cm90ZToNCj4gPiA+IE9u
+IDIzLzExLzIwMjQgMDA6MDUsIERtaXRyeSBCYXJ5c2hrb3Ygd3JvdGU6DQo+ID4gPiA+IFRoaXMg
+bGVhdmVzIHNtNzE1MCwgc204MTUwIGFuZCBzbTg0NTAgdW50b3VjaGVkLiBEb24ndCB0aGV5IGFs
+c28gDQo+ID4gPiA+IG5lZWQgdG8gdXNlIEhXX0NUUkxfVFJJR0dFUj8NCj4gPg0KPiA+ID4gSSBi
+ZWxpZXZlIHRoZSBjb3JyZWN0IGxpc3QgaGVyZSBpcyBhbnl0aGluZyB0aGF0IGlzIEhGSV9WRVJT
+SU9OXzRYWCANCj4gPiA+IGluDQo+ID4NCj4gPiA+IFlvdSBjYW4ndCBhcHBseSB0aGUgc2Vjb25k
+IHBhdGNoIGluIHRoaXMgc2VyaWVzIHdpdGhvdXQgZW5zdXJpbmcgdGhlIA0KPiA+ID4gY2xvY2sg
+Y29udHJvbGxlcnMgZm9yIHNkbTg0NSBhbmQgc203MTgwDQo+ID4NCj4gPiA+IGdyZXAgSEZJX1ZF
+UlNJT05fNFhYIGRyaXZlcnMvbWVkaWEvcGxhdGZvcm0vcWNvbS92ZW51cy9jb3JlLmMNCj4gPg0K
+PiA+ID4gZHJpdmVycy9jbGsvcWNvbS92aWRlb2NjLXNkbTg0NS5jDQo+ID4gPiBkcml2ZXJzL2Ns
+ay9xY29tL3ZpZGVvY2Mtc2M3MTgwLmMNCj4gPg0KPiA+ID4gSG1tLi4gdGhhdCdzIHdoYXQgdGhp
+cyBwYXRjaCBkb2VzLCB0byBiZSBmYWlyIG15IG90aGVyIGVtYWlsIHdhcyBmbGlwcGFudC4NCj4g
+Pg0KPiA+ID4gVGhpcyBpcyBmaW5lIGluIGdlbmVyYWwsIG9uY2Ugd2UgY2FuIGdldCBzb21lIFRl
+c3RlZC1ieTogZm9yIGl0Lg0KPiA+DQo+ID4gPiBUaGF0J3MgbXkgcXVlc3Rpb24gLSB3aGF0IHBs
+YXRmb3JtcyBoYXMgdGhpcyBjaGFuZ2UgYmVlbiB0ZXN0ZWQgb24gPw0KPiA+DQo+ID4gPiBJIGNh
+biBkbyBzZG04NDUgYnV0LCB3ZSdsbCBuZWVkIHRvIGZpbmQgc29tZW9uZSB3aXRoIDcxODAgdG8g
+dmVyaWZ5IElNTy4NCj4gPg0KPiA+IFRoYW5rcyBmb3IgeW91ciBjb21tZW50LiBXZSBoYXZlIHJ1
+biB2aWRlbyBjYXNlIHdpdGggdGhlc2UgdHdvIHBhdGNoZXMgb24gc2M3MTgwLiBUaGUgcmVzdWx0
+IGlzIGZpbmUuDQoNCj4gQSBzaW5nbGUgY2FzZSwgYSB0aG9yb3VnaCB0ZXN0cywgYSBtaXh0dXJl
+IG9mIHN1c3BlbmQmcmVzdW1lIHdoaWxlIHBsYXlpbmcgdmlkZW8gY2FzZXM/DQoNCj4gQWxzbywg
+Y2FuIEkgcGxlYXNlIHJlaXRlcmF0ZSBteSBxdWVzdGlvbjogc203MTUwLCBzbTgxNTAgYW5kIHNt
+ODQ1MCA/DQo+IFNob3VsZCB0aGV5IGFsc28gYmUgY2hhbmdlZCB0byB1c2UgSFdfQ1RSTF9UUklH
+R0VSPw0KPiBOZXh0IHF1ZXN0aW9uLCBzZG02NjAsIG1zbTg5OTYsIG1zbTg5OTg6IGRvIHRoZXkg
+c3VwcG9ydCBIV19DVFJMX1RSSUdHRVI/DQoNClRoYW5rcyBmb3IgeW91ciByZXZpZXcuIFRoZSB2
+aWRlbyBwbGF5YmFjayBhbmQgcmVjb3JkaW5nIGNhc2VzIGluY2x1ZGUgdmlkZW8NCnBhdXNlIGFu
+ZCByZXN1bWUsIGFuZCBmdWxsIHZpZGVvIHBsYXliYWNrLiBUaGUgcmVzdWx0cyBhcmUgZmluZS4N
+CkFsc28sIHRoaXMgY2hhbmdlIGlzIG9ubHkgZm9yIHY0IGNvcmUgKEhGSV9WRVJTSU9OXzRYWCAp
+LiBUaGVyZWZvcmUsIHdlIGhhdmUgb25seSB0ZXN0ZWQgaXQNCm9uIHBsYXRmb3JtcyB1c2luZyB2
+NCBjb3JlLiBXZSBoYXZlIG5vdCB0cmllZCBvdGhlciBwbGF0Zm9ybXMuDQpzbTcxNTAsIHNtODE1
+MCBhbmQgc204NDUwIHNob3VsZCBub3QgdXNlIHZlbnVzIHY0IGNvcmUuIFNvIHRoZXkgbmVlZG4n
+dCB0byB1c2UgSFdfQ1RSTF9UUklHR0VSLg0KDQpCZXN0IFJlZ2FyZHMsDQpSZW5qaWFuZw0K
 
