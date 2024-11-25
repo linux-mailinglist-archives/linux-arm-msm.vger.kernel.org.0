@@ -1,71 +1,71 @@
-Return-Path: <linux-arm-msm+bounces-39144-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39145-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id EDE539D8E53
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2024 23:08:28 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id B0E079D8E60
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2024 23:12:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AD355281916
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2024 22:08:27 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 36D14B217BC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2024 22:12:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C84E188724;
-	Mon, 25 Nov 2024 22:08:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3AB831CB53D;
+	Mon, 25 Nov 2024 22:12:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Uod5sVLY"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="N4aZm9p1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF7B4190059
-	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Nov 2024 22:08:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AC521CACF7
+	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Nov 2024 22:12:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732572504; cv=none; b=N68aQOR3rfNPNViLdpm1kFyW2uKQ4S+EysTRxBIbY/mcErpxsgDQDFgiTkNtNO5m/7WFhzDLojYAR88toPZaI4JShTGcF4g8eUSa4nK0d8m2Ab7Go7gqSItVgYhJy1mQE0ge3PVoZfYjigyaZbco4UNio1uqf3Pjx4AjL0/t5AQ=
+	t=1732572729; cv=none; b=UezDNYibPXOFbBHjDwVcFF0Xb5HUhIHjBwCn5bcJZpkSX1+40Jc6gVW0BroKGiKZB9wTi030zm5W3ENCQr4d5oYhxdr0aZyWyubMFR98ILRU5dxefgQrYW+5KHSOseVAMTKvIKQqHEbVI0dt/1WgcTr3AbPU8jqodjH3KXwVOa4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732572504; c=relaxed/simple;
-	bh=xNz1w0/+f9nkgC6K+YBMLNPP16IhNrqOslyvuYbdvbw=;
+	s=arc-20240116; t=1732572729; c=relaxed/simple;
+	bh=McZwplkugwELgpEP4OeOZtACZ23ZVvR2HDi8q9M2F54=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mMHLHgCEwgv0Q1TNKPzIH2G1NxIbO1gJcQnX8ieSyLOsjLsXTrKZPbWhuEuxt7d65iJb0lmFt9k3xc2YPo4uXZLBftDSQyry7AFDawvREsOKhlv0nGHY09Cs8UtXW3KGjT8ss1rlTY63Lb5RusWuG+oyQvTgMvUOyv1mWeMmb/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Uod5sVLY; arc=none smtp.client-ip=209.85.219.172
+	 To:Cc:Content-Type; b=gq9r5vecbVAfl0339vK7svg1YtQHLQhVsvque88WLaoX7dLci8maYJ5Vg0o+TYaj/3eyFejEyZ2JKDv8TXCWxAb3xr0RyOA1PHYyh8Na+soywMvPz5MwnAL4PzOR8+sIagd76MaAkGoF4DyFh6cFS3/IzSa71gl8Fo+9Nio9IZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=N4aZm9p1; arc=none smtp.client-ip=209.85.128.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-e388186edbfso4755907276.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Nov 2024 14:08:22 -0800 (PST)
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-6ef0c64d75cso15174057b3.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Nov 2024 14:12:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732572501; x=1733177301; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1732572726; x=1733177526; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=2eAVON7HGIpJamTV+1ul/jOyH9ikQLUzIAIpUaFRKeE=;
-        b=Uod5sVLY0p8ExaykKTLYWBIUCmPh1jw/tLGJEwSb94gyL3xbylgYCHzvTSMpixyWLs
-         oehxgoImPCoECxnDt13/jox3vrUSlHdTtW3A93mLNZgCt9AU5ZVHxve8XUagHti+WJps
-         IbPP1TdwG6ZtE4Q7nkFOWyrI353sl0W09YsPgBV/2EPgHTsgIdBr8wy3OWfhNgqule4O
-         aLKrfN8AtsACvBr8ouVb6huQFHKRkMvRk9e8RDrK3AzyTlHyi/EVjNrbGDcALLHGD/R8
-         QJKLt2i1UmM4z0Yd5UNesHHsD2XduwgpnpFYWgOKZcH5A3cTi6gHHGDSKE9wtCOn0csH
-         2LPg==
+        bh=RGr05iKNJHbtHhaz6iDKZMDzd6vC++UBaPJYjmD+AfE=;
+        b=N4aZm9p15LS1rHKKmnoO+9OST7EZwKrPMHokhiUKIbYX9MDvk8zsK60JRQGRD3BSgQ
+         iK92/4Do+CJ9RyWgPREWjKWz6MyFbhMeW4jZ2UBV1M7QBq5HAbH3GV2rzOMRgDZ3IrSs
+         Xi+EjK36Y+lQ7tIYQ/eNYilOcMk1l8erUW9SyZKkS3cwmyxkPtqUEK/X7mCqDedvqUaz
+         YM9Rb6TycXObSnVYAWT3KHdTBlIOTP4ysiZt8ZP2wHZpRp6KiHvoQjVQWPCrvKgGya22
+         Ppfnfh7yLPGY1Akv8RRcD0cKy6UQTq6DnKk2VDM8a8aeRCers8t7qwqIWhH679d4jkI6
+         eB4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732572501; x=1733177301;
+        d=1e100.net; s=20230601; t=1732572726; x=1733177526;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=2eAVON7HGIpJamTV+1ul/jOyH9ikQLUzIAIpUaFRKeE=;
-        b=vhxd/scURmVZ7A1Au7mKQklT9Fw+lgdRK/uCgkVhsTzcjq8cNHv+QA+W7gouvEVP9C
-         Xlt6cU9aIwRveFAPBzTevkcWWkc8OxrObc7AxZj7WdF7SuIQF8tVHKuohEcqY2IDuPJt
-         vbvp87/Ym0AkndCDVvV84A+ZCQ0r85iclcXiXAqh1I8k5SqoeXvOGvXhZ4uHgPYoqHCn
-         zztEbsfLI8fU5L6WjmipnYLoB1QMFKW7BpTtgOpzqYo00a32d3kStsGCZPQIooj7mBWM
-         A1LpSoWAnZvAgsMtRdk+usRlb35GglmEmGlQ9AXEPQaFJ1Syy6/3oh77BVd3g4IhjAh7
-         hkEg==
-X-Forwarded-Encrypted: i=1; AJvYcCUnDEMx6sCVZJVhz6MfUotlTuz2jUXHwOI/bD8ElTyZWDqf4B46vaZMwPf7Hx1rx0a4ad+76WxS1HbLyr7H@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy9GZWnVvMgnQbvSY6i8KXUPj4vbYdln7Lrt24MDd4A+k+P1HKK
-	eYhbZRKWQ9oZP15DSf7tyVqzBnfBRSQTT6rfp9AfjGKBsefN5wxUpACkPIMn0OMgcahSiNhFohf
-	f3Bs7EgkDny782EBGoqImDLp8UTAmXzd3gLPg4A==
-X-Gm-Gg: ASbGncsw9u8lSh0fs+nwGqCARYBxAffMFaEunBLqwrPsRFlOzyGGwD177zGXpAHkg8F
-	v922nHjfAtLuQjXRnTuRYUF0JqMzLnXePpt7/YEo9mnuTpw==
-X-Google-Smtp-Source: AGHT+IH3FXdPBpJiJnoxYtZf5OcPuzoBCcHTS63VZoNzGC8i3tQMMu8CiFEfyuzsoE5SpSq1X+HyPrst164d4mk4PR4=
-X-Received: by 2002:a05:6902:2b85:b0:e38:bec9:527d with SMTP id
- 3f1490d57ef6-e38f8b22061mr11846744276.26.1732572501125; Mon, 25 Nov 2024
- 14:08:21 -0800 (PST)
+        bh=RGr05iKNJHbtHhaz6iDKZMDzd6vC++UBaPJYjmD+AfE=;
+        b=Gf0I3EvsQCqH2QbPzKh24yk1bGwoXkT/mgkRNSI3kjWWRM5UmLaCilNHD0pvgdB3XO
+         CqGY/v2LtZkx2MJ76p5ZBb/ImMY9u0h9KZghZE97BF7FsIqd8mvbTyo/uVt5J6tbKW5D
+         B4uIJHMp5IJU7gZ5y7G4o5pFTVht8iHX8/IfIzDhj/anOnXDElRyDJuck6Q7Ji0124no
+         D4AYweIJbsT8n4bU4y+wvmwLstSotj/2Oe+ZKV47N6tOH+i0yDRf+7P4b2ssUPqcNT43
+         aAYNGRTc2VAzKh5DxkaPZ4maUhP+Rz6p0xz7Qz77eIq0+5H34cHXQ3EiWv5QWm63A2HK
+         Bggw==
+X-Forwarded-Encrypted: i=1; AJvYcCWoo07WAKdS6rgbKlvQIkR/dYGZ2sYW7FD2Ur4HkD3jh/H/0KjVvWh9XqXGOaHW+Ap47OZVm/syDzc1jAqf@vger.kernel.org
+X-Gm-Message-State: AOJu0YwZKNWjxnNgYIUNKJJ1Y+OKbbr8CUd/Gx3RbRt+5XoZhRjI2fjG
+	OvGZmWy/70iccGjcC7q3jOwV8P2reLtnmorHAiTwZBSWPf03BMk4yxTae8YVfFGjKEsf7tMstTd
+	cHsFzvU7EDxBQOS9x/p4kUokQxxAxexEww3T3lQ==
+X-Gm-Gg: ASbGncucC6YDirOg134lSO/aw3Dt3N2TfOe99/SbBL6VqufsK9KUDeP1ybyzAEh5Vv0
+	olTOpENahBKvIS4wnu/BLSY3IgCfQhJu0999ifha25k7t5A==
+X-Google-Smtp-Source: AGHT+IHMeE1tMJvjhY7YlnbsGtnbHrVf2fxw1EomN6QywO8Yk7cLfG7wt01HeO53/ICqUTeaxSuJYhsdBLq9CwzcufI=
+X-Received: by 2002:a05:690c:600e:b0:6ee:5068:74f7 with SMTP id
+ 00721157ae682-6eee08ba0c6mr132245527b3.23.1732572726501; Mon, 25 Nov 2024
+ 14:12:06 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -73,14 +73,13 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20241122-add-display-support-for-qcs615-platform-v3-0-35252e3a51fe@quicinc.com>
- <20241122-add-display-support-for-qcs615-platform-v3-9-35252e3a51fe@quicinc.com>
- <azdmcs7uafw3n6cqbq4ei66oybzhtyvdyz2xl4wtaf3u5zextb@vdhbs6wnbeg4> <520419eb-cedf-465b-a14a-12d97ab257a0@quicinc.com>
-In-Reply-To: <520419eb-cedf-465b-a14a-12d97ab257a0@quicinc.com>
+ <20241122-add-display-support-for-qcs615-platform-v3-7-35252e3a51fe@quicinc.com>
+ <mcvhfkh3ycrx2ganumsxlc7lx53ed55yk4syh5qev3jqqgkeqj@h5vnfpgjwtj5> <bfc87132-a63e-4f3f-99b7-1a1bd7eb60ce@quicinc.com>
+In-Reply-To: <bfc87132-a63e-4f3f-99b7-1a1bd7eb60ce@quicinc.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 26 Nov 2024 00:08:10 +0200
-Message-ID: <CAA8EJpqvkeMWgeWCx9D-HcJhRfipZJdEvpvag0wk-WXazkPahA@mail.gmail.com>
-Subject: Re: [PATCH v3 9/9] arm64: dts: qcom: Add display support for QCS615
- RIDE board
+Date: Tue, 26 Nov 2024 00:11:55 +0200
+Message-ID: <CAA8EJpoYwGHenThgxaKcapjTng3BchpbVBfzXqBvTDGBzv2J-w@mail.gmail.com>
+Subject: Re: [PATCH v3 7/9] drm/msm/dsi: Add support for SM6150
 To: fange zhang <quic_fangez@quicinc.com>
 Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
 	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
@@ -96,118 +95,65 @@ Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	linux-arm-kernel@lists.infradead.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Mon, 25 Nov 2024 at 09:39, fange zhang <quic_fangez@quicinc.com> wrote:
+On Mon, 25 Nov 2024 at 04:31, fange zhang <quic_fangez@quicinc.com> wrote:
 >
 >
 >
-> On 2024/11/22 18:22, Dmitry Baryshkov wrote:
-> > On Fri, Nov 22, 2024 at 05:56:52PM +0800, Fange Zhang wrote:
+> On 2024/11/22 18:10, Dmitry Baryshkov wrote:
+> > On Fri, Nov 22, 2024 at 05:56:50PM +0800, Fange Zhang wrote:
 > >> From: Li Liu <quic_lliu6@quicinc.com>
 > >>
-> >> Add display MDSS and DSI configuration for QCS615 RIDE board.
-> >> QCS615 has a DP port, and DP support will be added in a later patch.
+> >> Add support for DSI 2.3.1 (block used on SM6150).
 > >>
 > >> Signed-off-by: Li Liu <quic_lliu6@quicinc.com>
 > >> Signed-off-by: Fange Zhang <quic_fangez@quicinc.com>
 > >> ---
-> >>   arch/arm64/boot/dts/qcom/qcs615-ride.dts | 76 ++++++++++++++++++++++++++++++++
-> >>   1 file changed, 76 insertions(+)
+> >>   drivers/gpu/drm/msm/dsi/dsi_cfg.c | 4 +++-
+> >>   drivers/gpu/drm/msm/dsi/dsi_cfg.h | 1 +
+> >>   2 files changed, 4 insertions(+), 1 deletion(-)
 > >>
-> >> diff --git a/arch/arm64/boot/dts/qcom/qcs615-ride.dts b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-> >> index ee6cab3924a6d71f29934a8debba3a832882abdd..cc7dadc411ab79b9e60ccb15eaff84ea5f997c4c 100644
-> >> --- a/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-> >> +++ b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-> >> @@ -202,6 +202,82 @@ &gcc {
-> >>               <&sleep_clk>;
-> >>   };
-> >>
-> >> +&i2c2 {
-> >> +    clock-frequency = <400000>;
-> >> +    status = "okay";
-> >> +
-> >> +    ioexp: gpio@3e {
-> >> +            compatible = "semtech,sx1509q";
-> >> +            reg = <0x3e>;
-> >> +            interrupt-parent = <&tlmm>;
-> >> +            interrupts = <58 0>;
-> >> +            gpio-controller;
-> >> +            #gpio-cells = <2>;
-> >> +            interrupt-controller;
-> >> +            #interrupt-cells = <2>;
-> >> +            semtech,probe-reset;
-> >> +    };
-> >> +
-> >> +    i2c-mux@77 {
-> >> +            compatible = "nxp,pca9542";
-> >> +            reg = <0x77>;
-> >> +            #address-cells = <1>;
-> >> +            #size-cells = <0>;
-> >> +            i2c@0 {
-> >> +                    reg = <0>;
-> >> +                    #address-cells = <1>;
-> >> +                    #size-cells = <0>;
-> >> +
-> >> +                    anx7625@58 {
-> >> +                            compatible = "analogix,anx7625";
-> >> +                            reg = <0x58>;
-> >> +                            interrupt-parent = <&ioexp>;
-> >> +                            interrupts = <0 0>;
-> >> +                            enable-gpios = <&tlmm 4 GPIO_ACTIVE_HIGH>;
-> >> +                            reset-gpios = <&tlmm 5 GPIO_ACTIVE_HIGH>;
-> >> +                            wakeup-source;
-> >> +
-> >> +                            ports {
-> >> +                                    #address-cells = <1>;
-> >> +                                    #size-cells = <0>;
-> >> +
-> >> +                                    port@0 {
-> >> +                                            reg = <0>;
-> >> +                                            anx_7625_in: endpoint {
-> >> +                                                    remote-endpoint = <&mdss_dsi0_out>;
-> >> +                                            };
-> >> +                                    };
-> >> +
-> >> +                                    port@1 {
-> >> +                                            reg = <1>;
-> >> +                                            anx_7625_out: endpoint {
-> >> +                                            };
+> >> diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.c b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
+> >> index 10ba7d153d1cfc9015f527c911c4658558f6e29e..fe02724bddf69c2e8d6816589f4ea410fa666e5b 100644
+> >> --- a/drivers/gpu/drm/msm/dsi/dsi_cfg.c
+> >> +++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
+> >> @@ -171,7 +171,7 @@ static const struct msm_dsi_config sdm845_dsi_cfg = {
+> >>      .num_bus_clks = ARRAY_SIZE(dsi_v2_4_clk_names),
+> >>      .io_start = {
+> >>              { 0xae94000, 0xae96000 }, /* SDM845 / SDM670 */
+> >> -            { 0x5e94000 }, /* QCM2290 / SM6115 / SM6125 / SM6375 */
+> >> +            { 0x5e94000 }, /* QCM2290 / SM6115 / SM6125 / SM6150 / SM6375 */
 > >
-> > Where is it connected? Is it DP port? USB-C? eDP?
-> yes, it's DP port
+> > Not true
+> Should I remove it or add it behind the SDM670?
 
-So, I'd expect to see a dp-connector node at the end, not the
-unterminated anx7625.
+You should not be sending patches which provide false information. Why
+did you add it to the wrong line in the first place?
 
 > >
-> >> +                                    };
-> >> +                            };
-> >> +                    };
-> >> +            };
-> >> +    };
-> >> +};
-> >> +
-> >> +&mdss {
-> >> +    status = "okay";
-> >> +};
-> >> +
-> >> +&mdss_dsi0 {
-> >> +    vdda-supply = <&vreg_l11a>;
-> >> +    status = "okay";
-> >> +};
-> >> +
-> >> +&mdss_dsi0_out {
-> >> +    remote-endpoint = <&anx_7625_in>;
-> >> +    data-lanes = <0 1 2 3>;
-> >> +};
-> >> +
-> >> +&mdss_dsi0_phy {
-> >> +    vdds-supply = <&vreg_l5a>;
-> >> +    status = "okay";
-> >> +};
-> >> +
-> >>   &qupv3_id_0 {
-> >>      status = "okay";
+> >>      },
 > >>   };
+> >>
+> >> @@ -286,6 +286,8 @@ static const struct msm_dsi_cfg_handler dsi_cfg_handlers[] = {
+> >>              &sdm845_dsi_cfg, &msm_dsi_6g_v2_host_ops},
+> >>      {MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_3_0,
+> >>              &sdm845_dsi_cfg, &msm_dsi_6g_v2_host_ops},
+> >> +    {MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_3_1,
+> >> +            &sdm845_dsi_cfg, &msm_dsi_6g_v2_host_ops},
+> >>      {MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_4_0,
+> >>              &sdm845_dsi_cfg, &msm_dsi_6g_v2_host_ops},
+> >>      {MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_4_1,
+> >> diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.h b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
+> >> index 4c9b4b37681b066dbbc34876c38d99deee24fc82..120cb65164c1ba1deb9acb513e5f073bd560c496 100644
+> >> --- a/drivers/gpu/drm/msm/dsi/dsi_cfg.h
+> >> +++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
+> >> @@ -23,6 +23,7 @@
+> >>   #define MSM_DSI_6G_VER_MINOR_V2_2_0        0x20000000
+> >>   #define MSM_DSI_6G_VER_MINOR_V2_2_1        0x20020001
+> >>   #define MSM_DSI_6G_VER_MINOR_V2_3_0        0x20030000
+> >> +#define MSM_DSI_6G_VER_MINOR_V2_3_1 0x20030001
+> >>   #define MSM_DSI_6G_VER_MINOR_V2_4_0        0x20040000
+> >>   #define MSM_DSI_6G_VER_MINOR_V2_4_1        0x20040001
+> >>   #define MSM_DSI_6G_VER_MINOR_V2_5_0        0x20050000
 > >>
 > >> --
 > >> 2.34.1
