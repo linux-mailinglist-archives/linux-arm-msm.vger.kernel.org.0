@@ -1,225 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-39124-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39125-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7DF929D8B7C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2024 18:43:55 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5578C9D8B86
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2024 18:45:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CF2DF166484
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2024 17:43:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EC5251653CC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2024 17:45:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A2951B86F7;
-	Mon, 25 Nov 2024 17:43:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 971FF1B4126;
+	Mon, 25 Nov 2024 17:45:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b="LlO1db+X"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bcw0hXGc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from EUR05-AM6-obe.outbound.protection.outlook.com (mail-am6eur05olkn2080.outbound.protection.outlook.com [40.92.91.80])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8F6714D43D;
-	Mon, 25 Nov 2024 17:43:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.92.91.80
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732556624; cv=fail; b=L4ffu09dJl/zatlUHehFDJdYkaUVyjlJZr54TiLtcneBVcEOAbljqtHo2GH/6cJzY33UEi385j3ySEvd1ykCf6dAEUQ1nlq6YjsNTHKc4oiL/+phjcrs9Ucv4iRAtMg3Yb6iILMpvBBhgRmYsLXqMUQUC7Q/jwrRpF8XDojxFC8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732556624; c=relaxed/simple;
-	bh=Iac71OGknZULrbnzf7M0GlkyWRgrHJpn9X0qDW18Xno=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=RtvOQhs3djXfFmW4EViNotRGtm9TR+uqYl7nYG+oHiSGEiqDt+XrpYZSpQRwl9lREG5AWke5/sd4qaFsrmvWAesS1sC+x9tiTZpqtnNWZ6Q7go6ZwkpBVzAKojfBGFoyA8RqBurVFZnWE8w3r4pSg627pfkPPzBtXeXQLB6w44k=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com; spf=pass smtp.mailfrom=hotmail.com; dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b=LlO1db+X; arc=fail smtp.client-ip=40.92.91.80
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hotmail.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=mIGlbs694EyDB/S9XYwLWbDSyQ6lI+Sp3jyI/A5w6UvSDNCoKLON9sfPcWrtKbymAuwRVbdB9rvzknSBPMMots0guUTa4d34OLNREWRKUMInG96QQPDYOMiVQnxUKvX8A1qEEATX8HFipJp4S/J1dRzZVbf/2fwM9yfmVeRjbN9x1/FVolPR2EXMgGuxLR00GpAsEeY5wwOLkMhF4Z1fLzKv3d80p3nOCi0D2NqxNAjLhkt+03YDjDenKuV5KrqdKbinNlcI5WazC9I5Co02zvudFK6TUogL+CCsCFDYzvGwVxU8boqeC5k59iXIfOrH47JA4gkg0/fMwzkz7feMZg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=b+tn3iAUt15RN7TXuN0IEUR+AtUt6jFmM9jeIwj87X8=;
- b=BjRLkfD4hAafRaNSGoj6dLq1mhRxcflN3k4lNFmGJHVHRHl5BWxCbf1tdAFWe1iV+NTLSFXPnNXDN3xsWTdz1Kchc09RmIU2v+dVjaTOOs0n+aOhhG9LxGeYBzPb0FtZAOKDv2ESFRBibhx6720brWe5RnMqrNUov+vxBcGsRKhHdhxvzLiELDpd7eHJExPWuUitXCOlTdsKEk+ZRHB2sqK5nPL9cvvkr1TerHIpk7yewLONMa5Hj5G3ZtqR+4n9VN3h+rrCDgZ2UfVhtyMtZ0/K9Kga34S9RqgEdjGqCAFtORfDgb+/ng2S70CXx2dBadO6PJQA+dCKCfC2cLJDAA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=b+tn3iAUt15RN7TXuN0IEUR+AtUt6jFmM9jeIwj87X8=;
- b=LlO1db+X33V0Skmzj3cTQuL3hbaLOvlLv+tUDL7XqwHvbmNxtSNAoE4Dx+przMauLDH4DxGgR176ipRv8gjDwz+tlNJx0/zOe5GxT3i11cGZhHz+gTPI/uVCpY8kpbvWDXkKZcau8vA8liPVk5P07Od4dteLj5+bcksjr/x6gNzraIb9O8YHCKRF0Lf6J3S2xfeysIB9DtmZAD3y7uwjZ6FWKF4fuPkurz5cMMGVvvOC54t+diCpoqE8z41szc0u2fU8eEj6UUbKg3iZDrfWhYEKvX2UEfgzW2foKH9sWnNx1wh/4hLuNxXLMu5fNn8EN2G57jD1f+8zUCGWYgILIw==
-Received: from VE1P189MB1024.EURP189.PROD.OUTLOOK.COM (2603:10a6:800:149::13)
- by DU4P189MB2682.EURP189.PROD.OUTLOOK.COM (2603:10a6:10:563::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8158.22; Mon, 25 Nov
- 2024 17:43:34 +0000
-Received: from VE1P189MB1024.EURP189.PROD.OUTLOOK.COM
- ([fe80::4c0a:a901:4d3c:e0bb]) by VE1P189MB1024.EURP189.PROD.OUTLOOK.COM
- ([fe80::4c0a:a901:4d3c:e0bb%4]) with mapi id 15.20.8158.024; Mon, 25 Nov 2024
- 17:43:34 +0000
-Message-ID:
- <VE1P189MB10249A3A525D8282E35D18F2E32E2@VE1P189MB1024.EURP189.PROD.OUTLOOK.COM>
-Date: Mon, 25 Nov 2024 18:43:32 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/4] arm64: dts: qcom: x1e80100-vivobook-s15: Use the
- samsung,atna33xc20 panel driver
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Jessica Zhang <quic_jesszhan@quicinc.com>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Douglas Anderson
- <dianders@chromium.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20241124-asus_qcom_display-v3-0-002b723b1920@hotmail.com>
- <20241124-asus_qcom_display-v3-2-002b723b1920@hotmail.com>
- <af6f4b48-7e9b-4561-818d-150fe954d821@oss.qualcomm.com>
-Content-Language: en-US
-From: Maud Spierings <maud_spierings@hotmail.com>
-In-Reply-To: <af6f4b48-7e9b-4561-818d-150fe954d821@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: AM8P190CA0013.EURP190.PROD.OUTLOOK.COM
- (2603:10a6:20b:219::18) To VE1P189MB1024.EURP189.PROD.OUTLOOK.COM
- (2603:10a6:800:149::13)
-X-Microsoft-Original-Message-ID:
- <b2b59027-0ef3-415d-b542-d778a19dddc0@hotmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F26EB2A1BB;
+	Mon, 25 Nov 2024 17:45:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1732556739; cv=none; b=afpcgAszks2OwN1kyQnYBSSOqf+YaChW7R30xg8z7BuoG6mC9BSqNlOmKxKmt5VWQTsAhj19XhrTWxiuBFiVRZJmeuY9v01JOHglXO7k2YewcRjQZvFAj9rN4hlr0/8DKxStuMyGDKUMoq5Ko2OmLx4xkIgm44VTgCEiols1flQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1732556739; c=relaxed/simple;
+	bh=T9fVaT+0crdQGN5Ke4mNVRBXg3jKEtGHXAOxNToizak=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=VveY4zfdCJ/rBNHfzQsWvmsY84EPc6BckRTDjXxBBlAAbJV0QEyai51PRoFq2QlasSV3PITvaoOMhRoylIF1vrzXMvtRJui2J/smTkdS/fPWRO7DKCgWIMlVruAS3h9E0Wz0quQ344LzcBz0C1xf0e29uYdxRLk8a+BGTTZrZ6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bcw0hXGc; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4APBI4er006014;
+	Mon, 25 Nov 2024 17:45:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=W0PykMQ/fsXhY7K98PI6/8
+	vSG5xM41Hr4sbjk5al7+0=; b=bcw0hXGc0NkP682gl5SD9/dGb4ILXR8tqEdJYW
+	tFcbD8Ky0B5luHTuZe++oEm5+rjo763oTwrY30dzanbPvNtf4fbVM1GAV+KqwR9q
+	m8H0kJcxtWkfkuPnZIPQeKu+2/q+oG/TX0yAnl53ZiPpNMngv+1kCsf/hT0doFu+
+	M1uM5zt5N6+cecCH0VXLirD3WqMGEyEuifrGw7Mnre2uhUl9ZzR5I3GtDTD5relj
+	o7K+5SEyvVdsVSSTbCpaedmdoGRamIk7j6qoWth9sHqeAVY4d/KwsZfk7KJrynRV
+	IVTOLctEuQAdeSc0Z2RMJiuNTgIMt0LqLh6D9RucBjxHsBRg==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4336cfnp1a-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 25 Nov 2024 17:45:32 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4APHjVWg032572
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 25 Nov 2024 17:45:31 GMT
+Received: from 4215f72c9660.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Mon, 25 Nov 2024 09:45:27 -0800
+From: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
+To: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>
+CC: Odelu Kukatla <quic_okukatla@quicinc.com>,
+        Mike Tipton
+	<quic_mdtipton@quicinc.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH V6 0/4] Add EPSS L3 provider support on SA8775P SoC
+Date: Mon, 25 Nov 2024 17:45:07 +0000
+Message-ID: <20241125174511.45-1-quic_rlaggysh@quicinc.com>
+X-Mailer: git-send-email 2.39.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VE1P189MB1024:EE_|DU4P189MB2682:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1de3620e-0f1e-4041-c961-08dd0d78aecb
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|5072599009|461199028|8060799006|15080799006|6090799003|19110799003|440099028|3412199025;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?QUlBWFhuVDFDNS8rdFhVSkVPMEVndWNINnFxUjJ4NmNMNmhIeEwrZGh6WUhS?=
- =?utf-8?B?VmtNZm9UWmdqQW5VZi9KKzNYYVpBc2JxeGdkUjBWWE8rZmN5TkM3cmUyakM5?=
- =?utf-8?B?cFhwY0F0QjYwS3ZoODlVR1AxQVdiYUN5b3Y0ZFk4NWxSL095L1Vid2JCRDJj?=
- =?utf-8?B?N050N3pxamZ3bExHZG1lV0F3Nms0Yzg0QytGbDVwT01YM2JLUUNQNG12Qk5s?=
- =?utf-8?B?TUthckJxVUoxU1lKL2E3N2lTYU5GTlRYU3I0dzRQSHo5UzRxOUZhOHRHNzl6?=
- =?utf-8?B?MC9VS0cwdm4rOEwvcUkyUlo0WHExTkFKTVJxZnluRElOL2FhWlE2c2VmRWtm?=
- =?utf-8?B?MTVTeUYyNm41R0tlWS8zdm00THQ3TmJxQWZkdXNkb2FSNXBNbFFFOEROTzZr?=
- =?utf-8?B?QzQrQ2o5YjREYmMrUnhEQjI4VkFWZ2JHSnA4a0hYMFVOU1kvaXlmMjdyMmor?=
- =?utf-8?B?Ykd6aXVGcGZha3JrYXdkaGdyVzVuNHE1eDl2Q214WFV6dVpvMGZkL1FBS3hU?=
- =?utf-8?B?ekRWdEVCMFJPcEpEYmRVVzRMV21RMUo3d0VMd0JYR3dLazlDS2dqa2hpYW4z?=
- =?utf-8?B?aE5WNHVDbThpTTMzSG5OVDIycnh6c1JEdVluYy9KY3lPU2t2UXFLR3RLdmdU?=
- =?utf-8?B?NzVhelRIa1lFOHpmMVUrN2ZJbmpadGI3VTFvRG9vQ21CRGFwTmRheTh3K3RP?=
- =?utf-8?B?bFpkR29vM2kvT0ZCUERtaERWVTBSNTg5T0hCMlpITFZmY05yRzFHampWbG95?=
- =?utf-8?B?ZlE4TUZ2ZzJ4aXBUWk85UFd1bEpBSWJmVUt6eDFWaXYzZ2lQMVg4QmdORkxt?=
- =?utf-8?B?anhLdVZiOUVLaldWa1QzSzM1Z2ZCd0Y5WHVKaEhTNnRDdmxVTHd5anBJMlJa?=
- =?utf-8?B?Vyt6RElseSt3WmJ0U2Y1b09idVFpaXBkekE5bGVJU2p1c25xOWF1STdFcThR?=
- =?utf-8?B?RHgzQ3ZDdDZNdzVpdWZ6Q2hTR3hFejE3OW9JWmg5UDNGUnBHVWJBNUt2NUth?=
- =?utf-8?B?QlRaTEQrVTBaRVRDbWZZTGwwcldmeHB4YU5SQzFnOUVGY24wVi9ub2x4cXdn?=
- =?utf-8?B?WnVBUlhoOXQ4V3BUQkZNMUVhcmVXK1l6bzY5cXZVRk5HbGN0ZDk4RFZQSFhl?=
- =?utf-8?B?YXFSNEFialIrNWtML3RYQUU4bStUaFBrSmxJZHAvdUlVd1h3SEtLSWd0NlNT?=
- =?utf-8?B?UDZlR1BZcUY5Y2xRUWtOTXhvbHF3RXN0VEQ4WFR3bFR5UUhSd2Jzdk9EcVJ2?=
- =?utf-8?B?aHlQazVydkVneTVQZUpoWVpGNlZiUXhYVE9rdThaeEgvYUVSVUZxTWZETXZZ?=
- =?utf-8?B?MGVBMjZQVjVCYXFqSTZZWTR6cDIyVjNwQWhKOFIwWi9BM0xMSDVQQi9LeStZ?=
- =?utf-8?Q?w4OnO7+EsstOgoL5d+bsm8m/6cllQ67c=3D?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?b3A1TWJrZ290SFpBUENjUHZoWXlkR2tpS1hreFdtNTBhd1hucVJWUFNlVXpp?=
- =?utf-8?B?bjBEZC9ydmxDc1ZRem1oeDNYM3dQQVY2aDVTaWthd2tmZjFJVU1TVDRvR2pJ?=
- =?utf-8?B?L1JUdXFaR1dWTERhWXkyWmxpZnBORVBDS1Q5TlI5bUptVlBzRmZwMStCb1Fn?=
- =?utf-8?B?anlQZTVOM2xtenNWbXozTW5iVTFRU2RhdjM1SnZpMThtanVDcjRTN0k1czBS?=
- =?utf-8?B?cmR6NWcrdnpzcWZIREdTaHAxU2dMaEhZZzZ4WWxlcVNEWDlPZTJKN0RFNEJu?=
- =?utf-8?B?SnYycmV2Zll5ZElZQWtoT2ZKMXA2RHUrREoyMVJab2ljeHh6UVlZZnFtanQx?=
- =?utf-8?B?OER5SzVMUW5ObjNNV2tQSGx1bDQ3MDExTHhhR21BenRkSU0yK0lrQllBTTZj?=
- =?utf-8?B?MGxLa0VnRGRESHJmcU1kVGZrQ3luaFBzYThYNVkyODRQcDF3aXIvZFU2TDBX?=
- =?utf-8?B?RGo1WElkamR0RGNUODhkR1BiTnBBUVpNbFg1RWtiNTE1L0xHK0lYak1naHpm?=
- =?utf-8?B?bXpTSU03d29FNWcwYmJKY2VtTE85VjNwS3lOaEM3M3RxcnIwck4vTmJEbTcz?=
- =?utf-8?B?UnU1UUFia1pTK1ZTb2NPUmVGL2djampLT1RkOUYvN0puQzFmWVp2dmg4MnpG?=
- =?utf-8?B?bHU3SkVjR1ZPTXBlRzdtOTkyUm9qWjFHbVh5UFFXUVdkQkxvL0tqK0xFaERi?=
- =?utf-8?B?dFhVT3lHK0N4QmJsRTJNbDhMMnpndWVKS2QxYlZoeWlmUHJDRDRwVWEvcHNQ?=
- =?utf-8?B?NlQ1di84OGFpckxnWklheDBqcGhVai80U0xhcS9GRVR3aElueGdQeHMyMzNB?=
- =?utf-8?B?M3dWQnhsNElBWTVMdGlCSktIRmVtYzRPZDVQbEFUTk5sTU4rR1JnRDJPYU5P?=
- =?utf-8?B?QXI5S1p4Q2dxdUU2NzVPdkJYc0pVRUFLbGFyaUV1U0NGZklaM2FBUmg3RHBQ?=
- =?utf-8?B?NmlHVVkxeWJEaWM3bldVSzNBTHRwSWsxUDM1aTY0NVkyU0RuVmdKZytlOFRn?=
- =?utf-8?B?UVdTbDh0alp6OEw5dXRKOTJnSm9CMG0zK1BFV0xiUkZMNlFibkZjMDNSSTZE?=
- =?utf-8?B?aTJYNDN4TXNITlRNQ1RoWUtqcFF0U0tiL1NhWlIrQ01scG5heFRxOUNqUFMy?=
- =?utf-8?B?TTBxMTJ0aEVxMkd4QTRCWnJuVjVzdFVpUkg0WjFGRjZKeSsxdkdkSCs5R3Br?=
- =?utf-8?B?YkxzQ0V0Yjd6cjVpQUFIOUVZbEJTWlA5eFRIN0JVNi9yTENUaUVPdlhSc3lY?=
- =?utf-8?B?cmlhNVQ5S2JSeG9xZndqT0lOdEVBRG1YcC9aSGtTZUd0ZG5BSEpZaG4xQ0pT?=
- =?utf-8?B?NitnU3JDdE9ONVdFcHZnRjBFalVGc3Brc1piUWl3azNzNjNVTXMwaENwaU52?=
- =?utf-8?B?RWEzRzI5RTNTdzZMZFRzZVN0Tml3RUxmTmd5aGxyaUN1MzNQSEdqOStQS28z?=
- =?utf-8?B?UHBPdlV5QzZmaG5lOVlqQS9IZkZ2R09PSm1KbERtN2RmamNvNzJRZTdFSnc4?=
- =?utf-8?B?NnNENUtNRFNKMjVVMWdHMXIzdXZaYnRCblFuRDk2OWJMT1NFdmx3QWtkL1da?=
- =?utf-8?B?bHErNjRXT054R3FSRnVvNWN1eTZPcU44MUNiTUxNMGpsOEtzdTlFZHJnVUti?=
- =?utf-8?B?alZYY3MxejVsS2h4TzVMSjdKOEdINE82dzdQbmd5bFNVQWNaREhuM3VCaCtv?=
- =?utf-8?B?ZmdQS0VqLzdJMjY5TDZubTA0ZXgrUURNbkdrOENjTTJqQVNmRWM5K1hpaWFl?=
- =?utf-8?Q?zzbuNf5H2yJY42ulRCIhTPk3tnUrS3F+eEnnFoO?=
-X-OriginatorOrg: sct-15-20-7719-19-msonline-outlook-3b3e0.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1de3620e-0f1e-4041-c961-08dd0d78aecb
-X-MS-Exchange-CrossTenant-AuthSource: VE1P189MB1024.EURP189.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Nov 2024 17:43:34.1007
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU4P189MB2682
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: eCLmpnNKbUEHKE9gW5-IJoyI5p0hvRKW
+X-Proofpoint-ORIG-GUID: eCLmpnNKbUEHKE9gW5-IJoyI5p0hvRKW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
+ spamscore=0 lowpriorityscore=0 phishscore=0 adultscore=0 malwarescore=0
+ mlxscore=0 suspectscore=0 mlxlogscore=999 clxscore=1015 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2411250147
 
-On 11/25/24 1:21 PM, Konrad Dybcio wrote:
-> On 24.11.2024 11:00 AM, Maud Spierings via B4 Relay wrote:
->> From: Maud Spierings <maud_spierings@hotmail.com>
->>
->> The Asus vivobook s15 uses the ATNA56AC03 panel.
->> This panel is controlled by the atna33xc20 driver instead of the generic
->> edp-panel driver
->>
->> Signed-off-by: Maud Spierings <maud_spierings@hotmail.com>
->> ---
->>   arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts | 16 +++++++++++++++-
->>   1 file changed, 15 insertions(+), 1 deletion(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
->> index f25991b887de3fca0092c5f81c881c5d8bd71aac..dbc85aff50a95bfc2ac11528d1901979ec7b1501 100644
->> --- a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
->> +++ b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
->> @@ -407,9 +407,13 @@ &mdss_dp3 {
->>   
->>   	aux-bus {
->>   		panel {
->> -			compatible = "edp-panel";
->> +			compatible = "samsung,atna56ac03", "samsung,atna33xc20";
->> +			enable-gpios = <&pmc8380_3_gpios 4 GPIO_ACTIVE_HIGH>;
->>   			power-supply = <&vreg_edp_3p3>;
->>   
->> +			pinctrl-0 = <&edp_bl_en>;
->> +			pinctrl-names = "default";
->> +
->>   			port {
->>   				edp_panel_in: endpoint {
->>   					remote-endpoint = <&mdss_dp3_out>;
->> @@ -475,6 +479,16 @@ &pcie6a_phy {
->>   	status = "okay";
->>   };
->>   
->> +&pmc8380_3_gpios {
->> +	edp_bl_en: edp-bl-en-state {
->> +		pins = "gpio4";
->> +		function = "normal";
->> +		power-source = <0>;
-> This is <1> on other boards.. I'm guessing you verified this against
-> at-boot values?
->
-> Konrad
-I checked all the other gpios in these patches but it seems I did not do 
-the same for this one. It is indeed supposed to be <1>, I wonder if the 
-lenovo slim 7 dts is wrong too then.
+Add Epoch Subsystem (EPSS) L3 provider support on SA8775P SoCs.
 
-Anyways, I will fix this, with a couple of other parameters that have to 
-be added as well.
+Change since v5:
+ - Reused qcom,sm8250-epss-l3 compatible for sa8775p SoC.
+ - Rearranged the patches, moved dt changes to end of series.
+ - Updated the commit text.
 
-Terribly sorry for the lack of checking and thank you for spotting this.
+Changes since v4:
+ - Added generic compatible "qcom,epss-l3-perf" and split the driver
+   changes accordingly.
 
-Kind regards, Maud
+Changes since v3:
+ - Removed epss-l3-perf generic compatible changes. These will be posted
+   as separate patch until then SoC specific compatible will be used for
+   probing.
+
+Changes since v2:
+ - Updated the commit text to reflect the reason for code change.
+ - Added SoC-specific and generic compatible to driver match table.
+
+Changes since v1:
+ - Removed the usage of static IDs and implemented dynamic ID assignment
+   for icc nodes using IDA.
+ - Removed separate compatibles for cl0 and cl1. Both cl0 and cl1
+   devices use the same compatible.
+ - Added new generic compatible for epss-l3-perf.
+
+Raviteja Laggyshetty (4):
+  interconnect: qcom: Add multidev EPSS L3 support
+  interconnect: qcom: osm-l3: Add generic compatible for epss-l3-perf
+  dt-bindings: interconnect: Add generic compatible qcom,epss-l3-perf
+  arm64: dts: qcom: sa8775p: add EPSS l3 interconnect provider
+
+ .../bindings/interconnect/qcom,osm-l3.yaml    |  7 +-
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi         | 19 ++++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi          |  2 +-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          |  2 +-
+ drivers/interconnect/qcom/osm-l3.c            | 86 ++++++++++++++-----
+ 5 files changed, 90 insertions(+), 26 deletions(-)
+
+-- 
+2.39.2
 
 
