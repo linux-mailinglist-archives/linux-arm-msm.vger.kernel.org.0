@@ -1,298 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-39119-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39120-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F3149D8AE1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2024 18:02:25 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 258AF9D8A93
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2024 17:45:51 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 31933B37633
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2024 16:34:12 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B6DC11660E4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2024 16:45:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A945E1B4F1E;
-	Mon, 25 Nov 2024 16:34:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 765221B413E;
+	Mon, 25 Nov 2024 16:45:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="W5tdSjzS"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jNiTBHsZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA4CA1B4F14;
-	Mon, 25 Nov 2024 16:33:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94BCF77102
+	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Nov 2024 16:45:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732552441; cv=none; b=jjViQSGH2w8pxwkV27tYm1GnBM+H1VlK7zF6TpIisdzdE8K94x58ziCWYAtkKv2lTVb6i/7PTzR5iVvEhCaCBCEbTV6lCR+sv47qBILheo+l82TByIWgYfBx1Zi9tvpUk/Gxul8gpr55tuq7vT1kOLYUhRCuH8SR56EzPJQr8PU=
+	t=1732553147; cv=none; b=GfnChQzx8qODHG+kZ88NOyI7o6I9/3qcHN9qBNngJ2rGjEg+pGSFwaHbgZRIfTopEIJfDi2OU0DHI5mcsxr785iIzwV0pHG+836pTA8EzLgestEKVA86QnQjDaKRmPNnW5VjlK72ITlzr/S6cBNz5mg4p/INoMy2bUZOEwMHS7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732552441; c=relaxed/simple;
-	bh=96PuKBE5JdD/eHc81yMjwJcQQ3cQw2hp2B/5v603J3Y=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=Awnd8vjxAZYrcWKjoKHTa33tTAR2JlLCCFpyNGYkYJuB331Krr9a4fNYUlB9cBpCKVKdc/DiAodv/6AcZsOWI9J2xj4y3uJo5PSYNwYNX1RW+bNjDH+HkKpp4SlFlCxVHRY46P93xG7yAo9ijsToCoLRWGZX216IqjboiMKuqWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=W5tdSjzS; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4APB1067008874;
-	Mon, 25 Nov 2024 16:33:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	pR35uQh0Vz3rmWy5iymN95hYXiXemTleILwxkaib3ac=; b=W5tdSjzSh67jGWDA
-	7bRbeXbiyl/TuBhIkQEdnKDbVazfAXrwsDmZahah0gyWHX/pERxDAJC67LOK1WvN
-	Gisi/pFCcaAPi24xfuQv0cBZZEpTMe8VMb4fkqS/qBRGwgjTU+ygPLh6jT6d9XE5
-	Q0AAyamiZhxVfI6CQqODXDOOgvdqYDp9b4dHksBUTknp4kAap99QCjFb3znshzrd
-	KLOOUXkr9L2LeJTTdZfset1KGAoH9xNyqZRZ1cVeu4G5u+QxgMbr0gE3drZ8gAPt
-	+UQJU8MJBaVrTI06tNz5qYfSRjyR/CrTgDj/E1piHK89do6+WPId5txN1xgiGIWL
-	sFPT5w==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 433626df41-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 25 Nov 2024 16:33:39 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4APGXcAi017720
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 25 Nov 2024 16:33:38 GMT
-Received: from [10.213.111.143] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 25 Nov
- 2024 08:33:33 -0800
-From: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Date: Mon, 25 Nov 2024 22:03:01 +0530
-Subject: [PATCH v2 2/2] drm/msm/a6xx: Add support for Adreno 612
+	s=arc-20240116; t=1732553147; c=relaxed/simple;
+	bh=pntte1+Z8hWk6WRTFB8PfobjrAF8mnuCEH1yqjlijng=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mbS/O8cf5v78lbvgd3z9gP93s7EawFDYYrD/hsUqJPMm6Tt58PTEHgcm1nhKRKjKiRBmc+C0wSuGQrbNDh67pcXdDcinEeNHx0B2OYMSx7uizYMW6eke5v9ZrkgboXqBxtziI6SXArNIuYQCqTT4dTwxZs1AT7oKUinwe8zuFpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jNiTBHsZ; arc=none smtp.client-ip=209.85.167.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-53de880c77eso22165e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Nov 2024 08:45:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1732553144; x=1733157944; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=fIAgeAhmCn372flnwJB0OBUFPTeilzavFF36VaP2Itg=;
+        b=jNiTBHsZi11Abuz2rbREBYuGJjFunTAO8IigJ9bFMKVIXl+jycz7Dkzs8xvHLr1+VG
+         dC4EOmOYOgQ+CGUS6xNhpFU+z2YzvEeuvxT5R1PNlTUm0a+n2KUIHmuHuq8QO1Lfn7z+
+         XOuBh4zGrmPcexBLp0m9O/AcKtWkTty7aoPLkxzgK+31XgCzXP09yHjMg+o45nHvZp42
+         aEgQUqHDTw+iscjh0IxZiolHqdkqytI0XKEd2rPpCniOKMmYo/XTN/1QvbNkXW0kHuy6
+         Ryd87jwcm4KNGsxbtflR1f1C7D7tnliChul1lYYqZBpk6+JPKtlszFU9gQJIyDhDbum5
+         nCsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732553144; x=1733157944;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fIAgeAhmCn372flnwJB0OBUFPTeilzavFF36VaP2Itg=;
+        b=iWcHl1nscG+dLcEXL0Zx2iJ1uuOPiNLeuQWGH+CrUJIdNX4NafKqClEclqeF+8y+JP
+         uDFzHUfkKdo3yXy8h6e0bSvAPnU77E72MEH5JAU4766BopkYM7IYeKVhLPZ/5lyCOMzs
+         3OPtCI+vgyGf8SUg3qSB+E8Tef7DsGEqeMlQF3nBBhUMzOAHtm3XctQp82aLHk3NHS63
+         r8oqtmlcLHgQyPovGDUb9ZSXMqWzAzmahgGBvADduYfTFwA8RNXnKlBOcB8HUxEExguw
+         s42ovXWe94F0oTqRSGAN+/qKFPItb/Ak9Ix0LrKxndLGB2pGiF2sn10ffmXaH89AbHTD
+         7MJw==
+X-Forwarded-Encrypted: i=1; AJvYcCWPkm1KJzFW8cYWiZ2sQ5iBCGIzcf7RHSdcLmjvIyC1ccMQspKsBAHrcQUvDiTtpNSwtyPU6tUaThsv5TMn@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw1VdXE9kdu6LRHcKCp57yVaeVFjd3BAKVJExKWCLJihkn8n8Mi
+	GXsg+3zvMeTuXhkj+Yte1J2U2xgc4mlhnYKAY2NmIivGpdRs7y6V+/pHmibN3Jg=
+X-Gm-Gg: ASbGncuBDxZc0wthL0bApeUEVzywLqgz0tHNp1WuojLAHstEsWwg0EqdbIam99WktRT
+	DFJcgcQ/VPw0XZBMu3qyhHFqYLqsdIA+IZhFaCRobZYywX3TTcN8sD5eWjS+/w7H5IFw5isSvNz
+	r1JsnBojICfiXO9n/2pEAYJQG5LkWZuaZpZdAfIH8RiN6bvxAsuGpHdgE87p0QmAxVcGzEEHDn0
+	aOC7nUlI3xnurJmhWSczD/mg5ymwSK+5gYpK6N1B268YB9CSg0/ztOZmJZMKPKwp8IPzDKYPwws
+	eTzYVBOyoPmcOKo9FTeC9cquA6p7cA==
+X-Google-Smtp-Source: AGHT+IF6AynL9UpDhBawUpEwDkQ2c3G14CtiWofl68FeWiQ6izt6omfKnKNwyR4f3DSsQ0mgBCkCPg==
+X-Received: by 2002:a05:6512:ea4:b0:53d:de12:ef26 with SMTP id 2adb3069b0e04-53dde12efbfmr3507612e87.4.1732553143652;
+        Mon, 25 Nov 2024 08:45:43 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53ddd09737csm1089610e87.156.2024.11.25.08.45.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Nov 2024 08:45:42 -0800 (PST)
+Date: Mon, 25 Nov 2024 18:45:39 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Xin Liu <quic_liuxin@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	kernel@quicinc.com, quic_jiegan@quicinc.com, quic_aiquny@quicinc.com, 
+	quic_tingweiz@quicinc.com
+Subject: Re: [PATCH v3 3/3] arm64: dts: qcom: qcs8300-ride: Add watchdog node
+Message-ID: <wty3opxcapeesat2bnai6ntbk4utwxk2hf56w4hymwjxj57ora@6f7f2lwtdcpo>
+References: <20241125093503.1162412-1-quic_liuxin@quicinc.com>
+ <20241125093503.1162412-4-quic_liuxin@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20241125-a612-gpu-support-v2-2-b7cc38e60191@quicinc.com>
-References: <20241125-a612-gpu-support-v2-0-b7cc38e60191@quicinc.com>
-In-Reply-To: <20241125-a612-gpu-support-v2-0-b7cc38e60191@quicinc.com>
-To: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        "Konrad
- Dybcio" <konradybcio@kernel.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, "Simona
- Vetter" <simona@ffwll.ch>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        Jie Zhang
-	<quic_jiezh@quicinc.com>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        "Konrad
- Dybcio" <konrad.dybcio@oss.qualcomm.com>
-X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1732552405; l=6457;
- i=quic_akhilpo@quicinc.com; s=20240726; h=from:subject:message-id;
- bh=UujJJJ2qBaLMZpgFIWVNQifU/7BDaePIDcmsc4etJ1A=;
- b=W1fGmzxPtB18c8izwU/kDQMHA6OPNZL5EzfeM71zIUbTFB0RLwVZttxCALA+8ajfCsKlGVBzz
- vmn3Fx2DoZEBDhSG5bMCLkv1Rloyl9/6k5NG3IFKE3lQ5aoEtS1xtFW
-X-Developer-Key: i=quic_akhilpo@quicinc.com; a=ed25519;
- pk=lmVtttSHmAUYFnJsQHX80IIRmYmXA4+CzpGcWOOsfKA=
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: F_tJt68fNsCtpwMgIX4SILIyNMav6pG2
-X-Proofpoint-ORIG-GUID: F_tJt68fNsCtpwMgIX4SILIyNMav6pG2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
- priorityscore=1501 clxscore=1015 phishscore=0 spamscore=0 adultscore=0
- impostorscore=0 mlxscore=0 malwarescore=0 suspectscore=0 mlxlogscore=999
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411250138
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241125093503.1162412-4-quic_liuxin@quicinc.com>
 
-From: Jie Zhang <quic_jiezh@quicinc.com>
+On Mon, Nov 25, 2024 at 05:35:03PM +0800, Xin Liu wrote:
+> Add watchdog clock on the Qualcomm QCS8300 Ride platform.
+> 
+> Signed-off-by: Xin Liu <quic_liuxin@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/qcs8300-ride.dts | 4 ++++
+>  1 file changed, 4 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
+> index 7eed19a694c3..d4e4c7a8b453 100644
+> --- a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
+> +++ b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
+> @@ -265,3 +265,7 @@ &ufs_mem_phy {
+>  	vdda-pll-supply = <&vreg_l5a>;
+>  	status = "okay";
+>  };
+> +
+> +&watchdog {
+> +    clocks = <&sleep_clk>;
+> +};
 
-Add support for Adreno 612 GPU found in SM6150/QCS615 chipsets.
-A612 falls under ADRENO_6XX_GEN1 family and is a cut down version
-of A615 GPU.
-
-A612 has a new IP called Reduced Graphics Management Unit or RGMU
-which is a small state machine which helps to toggle GX GDSC
-(connected to CX rail) to implement IFPC feature. It doesn't support
-any other features of a full fledged GMU like clock control, resource
-voting to rpmh etc. So we need linux clock driver support like other
-gmu-wrapper implementations to control gpu core clock and gpu GX gdsc.
-Since there is no benefit with enabling RGMU at the moment, RGMU is
-entirely skipped in this patch.
-
-Signed-off-by: Jie Zhang <quic_jiezh@quicinc.com>
-Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
----
- drivers/gpu/drm/msm/adreno/a6xx_catalog.c | 15 +++++++++++++
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c     | 35 ++++++++++++++++++++++++-------
- drivers/gpu/drm/msm/adreno/adreno_gpu.h   | 11 +++++++---
- 3 files changed, 50 insertions(+), 11 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-index 5e389f6b8b8a..633a966a0c39 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-@@ -705,6 +705,21 @@ static const struct adreno_info a6xx_gpus[] = {
- 			{ 157, 3 },
- 			{ 127, 4 },
- 		),
-+	}, {
-+		.chip_ids = ADRENO_CHIP_IDS(0x06010200),
-+		.family = ADRENO_6XX_GEN1,
-+		.fw = {
-+			[ADRENO_FW_SQE] = "a630_sqe.fw",
-+		},
-+		.gmem = (SZ_128K + SZ_4K),
-+		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
-+		.init = a6xx_gpu_init,
-+		.a6xx = &(const struct a6xx_info) {
-+			.hwcg = a612_hwcg,
-+			.protect = &a630_protect,
-+			.gmu_cgc_mode = 0x00000022,
-+			.prim_fifo_threshold = 0x00080000,
-+		},
- 	}, {
- 		.chip_ids = ADRENO_CHIP_IDS(0x06010500),
- 		.family = ADRENO_6XX_GEN1,
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index a8b928d0f320..1af7bbed457a 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -504,15 +504,26 @@ static void a6xx_set_hwcg(struct msm_gpu *gpu, bool state)
- 
- 	if (adreno_is_a630(adreno_gpu))
- 		clock_cntl_on = 0x8aa8aa02;
--	else if (adreno_is_a610(adreno_gpu))
-+	else if (adreno_is_a610(adreno_gpu) || adreno_is_a612(adreno_gpu))
- 		clock_cntl_on = 0xaaa8aa82;
- 	else if (adreno_is_a702(adreno_gpu))
- 		clock_cntl_on = 0xaaaaaa82;
- 	else
- 		clock_cntl_on = 0x8aa8aa82;
- 
--	cgc_delay = adreno_is_a615_family(adreno_gpu) ? 0x111 : 0x10111;
--	cgc_hyst = adreno_is_a615_family(adreno_gpu) ? 0x555 : 0x5555;
-+	if (adreno_is_a612(adreno_gpu))
-+		cgc_delay = 0x11;
-+	else if (adreno_is_a615_family(adreno_gpu))
-+		cgc_delay = 0x111;
-+	else
-+		cgc_delay = 0x10111;
-+
-+	if (adreno_is_a612(adreno_gpu))
-+		cgc_hyst = 0x55;
-+	else if (adreno_is_a615_family(adreno_gpu))
-+		cgc_delay = 0x555;
-+	else
-+		cgc_delay = 0x5555;
- 
- 	gmu_write(&a6xx_gpu->gmu, REG_A6XX_GPU_GMU_AO_GMU_CGC_MODE_CNTL,
- 			state ? adreno_gpu->info->a6xx->gmu_cgc_mode : 0);
-@@ -600,6 +611,9 @@ static void a6xx_calc_ubwc_config(struct adreno_gpu *gpu)
- 		gpu->ubwc_config.ubwc_swizzle = 0x7;
- 	}
- 
-+	if (adreno_is_a612(gpu))
-+		gpu->ubwc_config.highest_bank_bit = 13;
-+
- 	if (adreno_is_a618(gpu))
- 		gpu->ubwc_config.highest_bank_bit = 14;
- 
-@@ -1165,7 +1179,7 @@ static int hw_init(struct msm_gpu *gpu)
- 		gpu_write(gpu, REG_A6XX_CP_LPAC_PROG_FIFO_SIZE, 0x00000020);
- 
- 	/* Setting the mem pool size */
--	if (adreno_is_a610(adreno_gpu)) {
-+	if (adreno_is_a610(adreno_gpu) || adreno_is_a612(adreno_gpu)) {
- 		gpu_write(gpu, REG_A6XX_CP_MEM_POOL_SIZE, 48);
- 		gpu_write(gpu, REG_A6XX_CP_MEM_POOL_DBG_ADDR, 47);
- 	} else if (adreno_is_a702(adreno_gpu)) {
-@@ -1199,7 +1213,7 @@ static int hw_init(struct msm_gpu *gpu)
- 
- 	/* Enable fault detection */
- 	if (adreno_is_a730(adreno_gpu) ||
--	    adreno_is_a740_family(adreno_gpu))
-+	    adreno_is_a740_family(adreno_gpu) || adreno_is_a612(adreno_gpu))
- 		gpu_write(gpu, REG_A6XX_RBBM_INTERFACE_HANG_INT_CNTL, (1 << 30) | 0xcfffff);
- 	else if (adreno_is_a690(adreno_gpu))
- 		gpu_write(gpu, REG_A6XX_RBBM_INTERFACE_HANG_INT_CNTL, (1 << 30) | 0x4fffff);
-@@ -2076,6 +2090,9 @@ static int a6xx_pm_resume(struct msm_gpu *gpu)
- 	if (!ret)
- 		msm_devfreq_resume(gpu);
- 
-+	if (!(a6xx_gpu->base.info->quirks & ADRENO_QUIRK_NO_SYSCACHE))
-+		a6xx_llc_activate(a6xx_gpu);
-+
- 	return ret;
- }
- 
-@@ -2115,6 +2132,9 @@ static int a6xx_pm_suspend(struct msm_gpu *gpu)
- 
- 	trace_msm_gpu_suspend(0);
- 
-+	if (!(a6xx_gpu->base.info->quirks & ADRENO_QUIRK_NO_SYSCACHE))
-+		a6xx_llc_deactivate(a6xx_gpu);
-+
- 	msm_devfreq_suspend(gpu);
- 
- 	mutex_lock(&a6xx_gpu->gmu.lock);
-@@ -2480,11 +2500,8 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
- 		  config->info->family == ADRENO_7XX_GEN2 ||
- 		  config->info->family == ADRENO_7XX_GEN3;
- 
--	a6xx_llc_slices_init(pdev, a6xx_gpu, is_a7xx);
--
- 	ret = a6xx_set_supported_hw(&pdev->dev, config->info);
- 	if (ret) {
--		a6xx_llc_slices_destroy(a6xx_gpu);
- 		kfree(a6xx_gpu);
- 		return ERR_PTR(ret);
- 	}
-@@ -2503,6 +2520,8 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
- 		return ERR_PTR(ret);
- 	}
- 
-+	a6xx_llc_slices_init(pdev, a6xx_gpu, is_a7xx);
-+
- 	/*
- 	 * For now only clamp to idle freq for devices where this is known not
- 	 * to cause power supply issues:
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-index 398be2218110..a6462a255611 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-@@ -421,6 +421,11 @@ static inline int adreno_is_a610(const struct adreno_gpu *gpu)
- 	return adreno_is_revn(gpu, 610);
- }
- 
-+static inline int adreno_is_a612(const struct adreno_gpu *gpu)
-+{
-+	return gpu->info->chip_ids[0] == 0x06010200;
-+}
-+
- static inline int adreno_is_a618(const struct adreno_gpu *gpu)
- {
- 	return adreno_is_revn(gpu, 618);
-@@ -490,9 +495,9 @@ static inline int adreno_is_a610_family(const struct adreno_gpu *gpu)
- {
- 	if (WARN_ON_ONCE(!gpu->info))
- 		return false;
--
--	/* TODO: A612 */
--	return adreno_is_a610(gpu) || adreno_is_a702(gpu);
-+	return adreno_is_a610(gpu) ||
-+	       adreno_is_a612(gpu) ||
-+	       adreno_is_a702(gpu);
- }
- 
- /* TODO: 615/616 */
+I'd really prefer to have this in the SoC dtsi. It's not a part that can
+change between boards.
 
 -- 
-2.45.2
-
+With best wishes
+Dmitry
 
