@@ -1,176 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-39039-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39040-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 065C19D7B24
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2024 06:26:47 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id CD6CD9D7B2C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2024 06:31:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8F400281A3D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2024 05:26:45 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6BAB3B20975
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2024 05:31:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8016813D51E;
-	Mon, 25 Nov 2024 05:26:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 08F5528DA1;
+	Mon, 25 Nov 2024 05:31:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ghEuYAx2"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pviVoli7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAF094D9FB;
-	Mon, 25 Nov 2024 05:26:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F0D02500CC;
+	Mon, 25 Nov 2024 05:31:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732512402; cv=none; b=SKHtbtX7LUzjyDxbBA0dbdTzyWKjEGH/vV6GJugP+7tY9XGFWfOcgHFcsJSUIHhrPIjE2yplzb/hhC3VxxkWqJ0cHmI+6E6PDXYKi+9hMJYx5WjcMCyEtBStgLRXLkfC6VG/clZ3QMRl5fW6fOyTQpFdnEuzHvbN6hVk1+emIuI=
+	t=1732512689; cv=none; b=hzxXVgGfw26p9NoXpQVfaM0JcDEGqUmha52Ga4nUJvMn5yJWsaXcsrjntgo0K+7uMns34x1H6L/WP5up1SrE/u6b/8UBZYSQYfmhs5QbTVIvmWQVZQhftwsloaMBhcn+SjLugvHxC7Lz6DNRppu13ciNeR6Byidx+WI8xduE+Zg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732512402; c=relaxed/simple;
-	bh=jlmVrUQm4JzI02JcNEr+Qb2LtCPkCl7Mq8KI9AlIjKc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=C5fDGeaSsG4vyoS7UEhYMTbSH9mgZrRHwceXsx3dVrfD3n+9zIUH8KBkkXQDKHLuqmMma6J7Pz0H+LrtlQdKAkgigNYhY071uB4sLDBpWFoR5dVcASPsCSWYX2Gcq2AU+TfkhhCiT7SmZyMo8+kC0SIdm5NEJdzuUcUr9vYaAJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ghEuYAx2; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1732512689; c=relaxed/simple;
+	bh=sX81iNwF+B7/VwoQHzDY90j+Y00UPtMTVIZ2oDZH/Vo=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=n2pIYUbi/pa//l77yRdswGjSEotlqFniW47CD9TIzcyJLm75xUovIrS3Lh/Jjzj1lMuAYBiwt66UwNp4xUbAzh8vgW0NtDt5Q0PtejJjn2GRZD0ZlTv0IO2UKwLG2iwSPv7mgTGunls4rQ7UDCTW1k3AUIUW2avHiwTnjYpOutg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pviVoli7; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AOLueWd032678;
-	Mon, 25 Nov 2024 05:26:33 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AONb9Go022850;
+	Mon, 25 Nov 2024 05:31:24 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	D+ZYEE/zzBwnUzJvbR5Du6cdh0vKFOvucrO6qTaMoQg=; b=ghEuYAx27+p/Ea7D
-	XRANJn7zSZF7KMV1wM74QSkYZp4tQpxOYcnUypUWXAYs2XDfKZj9F2kkd8iRmj1N
-	KD+QYZXl5+MWuv9E05dv/VZqxLTRgEr2yq+DxyKODR9hv0lTST43ZN8ZXN6p0Flx
-	K66nOgOIQky0ykZcdAHBLtxrmeQ4K96k3a2NGPIFeHBoPzSPs3j2NXOKNPdUMKD0
-	o2oVk8lj+M7ddgpTSJSO01ilFyYeZ5bec97djdn3McNpNRr1hYrFArmv3LzepGm5
-	hKn+M9Bm0E2GM2qkauI0c/GV6q0ntcpHrA5xFgjU7rxAEUdz+cg0ES7mR/sCS8W1
-	bWyb9w==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 433626bhbd-1
+	sX81iNwF+B7/VwoQHzDY90j+Y00UPtMTVIZ2oDZH/Vo=; b=pviVoli7lclgR6V2
+	tJ63R0I03t0CgxBtiNmomuygxTUhkx1PYN0YetMqkBqeDgeefOXufWuu1UxzZG6G
+	qKz1CDeVZUrJCsJH+oO5J2C5FeiX8CkA/c2Y6bbfMExW8hYTZN+0VdRcFpOguE6A
+	smlgYhGvBXdEjMIqYzruY5uXdngzTK78ZFLZLMBDSEGNMoBvmCnYriPygXsfB8Xg
+	tfX0ZyR502s18quj3NW/VqT32og84owOBu8ILrWAvw7F2IWXNrpeS+FL2enkhn5J
+	t1SvKC0THUo0tEY1c1ft6SBKxV5zfWyqcI8wx7QcRcC6DsFa/hlnvN4CFlY/nybG
+	y5YdYQ==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 433792bf0m-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 25 Nov 2024 05:26:32 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AP5QVnF000648
+	Mon, 25 Nov 2024 05:31:23 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AP5VMIS026486
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 25 Nov 2024 05:26:32 GMT
-Received: from [10.217.219.207] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 24 Nov
- 2024 21:26:26 -0800
-Message-ID: <8e0ffc82-e205-4ea9-8b84-7437564e28cd@quicinc.com>
-Date: Mon, 25 Nov 2024 10:56:23 +0530
+	Mon, 25 Nov 2024 05:31:22 GMT
+Received: from nalasex01c.na.qualcomm.com (10.47.97.35) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Sun, 24 Nov 2024 21:31:22 -0800
+Received: from nalasex01c.na.qualcomm.com ([fe80::5da8:4d0f:c16a:a1d]) by
+ nalasex01c.na.qualcomm.com ([fe80::5da8:4d0f:c16a:a1d%11]) with mapi id
+ 15.02.1544.009; Sun, 24 Nov 2024 21:31:22 -0800
+From: "Renjiang Han (QUIC)" <quic_renjiang@quicinc.com>
+To: "bryan.odonoghue@linaro.org" <bryan.odonoghue@linaro.org>,
+        "dmitry.baryshkov@linaro.org" <dmitry.baryshkov@linaro.org>,
+        "Taniya Das
+ (QUIC)" <quic_tdas@quicinc.com>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette
+	<mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Stanimir Varbanov
+	<stanimir.k.varbanov@gmail.com>,
+        "Vikash Garodia (QUIC)"
+	<quic_vgarodia@quicinc.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-clk@vger.kernel.org" <linux-clk@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>
+Subject: RE: [PATCH 1/2] clk: qcom: videocc: Use HW_CTRL_TRIGGER flag for
+ video GDSC's
+Thread-Topic: [PATCH 1/2] clk: qcom: videocc: Use HW_CTRL_TRIGGER flag for
+ video GDSC's
+Thread-Index: AQHbPMnHbExtF43Cx0+9GIchxuRRY7LDp7qAgABjjACAAHgMAIAAAygAgALeqPA=
+Date: Mon, 25 Nov 2024 05:31:22 +0000
+Message-ID: <b411489f9f2441f7a0f936127678e36b@quicinc.com>
+References: <20241122-switch_gdsc_mode-v1-0-365f097ecbb0@quicinc.com>
+ <20241122-switch_gdsc_mode-v1-1-365f097ecbb0@quicinc.com>
+ <zhco37pigrp4fh5alqx4xfxx3xhjitqlgw552vwiijka22bt4u@sl4ngzypwh4x>
+ <1d9aa2e7-d402-42dc-baa6-155f01b132ca@quicinc.com>
+ <23ho25gl3iwyi2jspb6a2x5bv76fco5pkg2x5ct4gu3c44dbiq@yec6evx5sihm>
+ <eec92088-edfb-4d0c-b81d-9d4f1d968b20@linaro.org>
+In-Reply-To: <eec92088-edfb-4d0c-b81d-9d4f1d968b20@linaro.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 4/4] i2c: i2c-qcom-geni: Enable i2c controller sharing
- between two subsystems
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, <konrad.dybcio@linaro.org>,
-        <andersson@kernel.org>, <andi.shyti@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dmaengine@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
-        <conor+dt@kernel.org>, <agross@kernel.org>,
-        <devicetree@vger.kernel.org>, <vkoul@kernel.org>, <linux@treblig.org>,
-        <dan.carpenter@linaro.org>, <Frank.Li@nxp.com>,
-        <konradybcio@kernel.org>, <bryan.odonoghue@linaro.org>,
-        <krzk+dt@kernel.org>, <robh@kernel.org>
-CC: <quic_vdadhani@quicinc.com>
-References: <20241113161413.3821858-1-quic_msavaliy@quicinc.com>
- <20241113161413.3821858-5-quic_msavaliy@quicinc.com>
- <37762281-4903-4b2d-8f44-3cc4d988558d@oss.qualcomm.com>
- <cbbb78c9-54ec-453a-92ec-6b174bd3d9cb@quicinc.com>
- <8508988c-a74b-4f65-8060-30a0cb5afa64@oss.qualcomm.com>
-Content-Language: en-US
-From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-In-Reply-To: <8508988c-a74b-4f65-8060-30a0cb5afa64@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: PpiuLxYIcGv_VCr_T94ghVE-J62wyQTm
-X-Proofpoint-ORIG-GUID: PpiuLxYIcGv_VCr_T94ghVE-J62wyQTm
+X-Proofpoint-ORIG-GUID: F8yTw2U3O7PwtVgEQgjILzbml9KWbi2b
+X-Proofpoint-GUID: F8yTw2U3O7PwtVgEQgjILzbml9KWbi2b
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
- priorityscore=1501 clxscore=1015 phishscore=0 spamscore=0 adultscore=0
- impostorscore=0 mlxscore=0 malwarescore=0 suspectscore=0 mlxlogscore=999
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411250044
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ mlxlogscore=999 clxscore=1015 impostorscore=0 mlxscore=0 phishscore=0
+ priorityscore=1501 lowpriorityscore=0 bulkscore=0 suspectscore=0
+ adultscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411250045
 
-Thanks Konrad !
-
-On 11/22/2024 7:12 PM, Konrad Dybcio wrote:
-> On 18.11.2024 6:45 AM, Mukesh Kumar Savaliya wrote:
->> Thanks for the review konrad !
->>
->> On 11/16/2024 12:58 AM, Konrad Dybcio wrote:
->>> On 13.11.2024 5:14 PM, Mukesh Kumar Savaliya wrote:
->>>> Add support to share I2C controller in multiprocessor system in a mutually
->>>> exclusive way. Use "qcom,shared-se" flag in a particular i2c instance node
->>>> if the usecase requires i2c controller to be shared.
->>>
->>> Can we read back some value from the registers to know whether such sharing
->>> takes place?
->> Actually, HW register doesn't provide such mechanism, it's add on feature if SE is programmed for GSI mode.
-> 
-> So it's more of an unwritten contract between subsystems.. okay
-> 
-yes, purely SW flag based decision.
->>>
->>>> Sharing of I2C SE(Serial engine) is possible only for GSI mode as client
->>>> from each processor can queue transfers over its own GPII Channel. For
->>>> non GSI mode, we should force disable this feature even if set by user
->>>> from DT by mistake.
->>>
->>> The DT is to be taken authoritatively
->>>
->> To clarify - Does it mean i should not have SW disable this feature OR override  ? And let it continue in non GSI mode even it's not going to work ?
-> 
-> If a configuration is invalid, you should return -EINVAL from probe,
-> with an appropriate error message.
-> 
-Sure, i agree. I will make a change here and will bail out with an error 
-and print logs  if (gi2c->se.shared_geni_se == true). Thanks for this 
-suggestion.
-
->>>>
->>>> I2C driver just need to mark first_msg and last_msg flag to help indicate
->>>> GPI driver to take lock and unlock TRE there by protecting from concurrent
->>>> access from other EE or Subsystem.
->>>>
->>>> gpi_create_i2c_tre() function at gpi.c will take care of adding Lock and
->>>> Unlock TRE for the respective transfer operations.
->>>>
->>>> Since the GPIOs are also shared between two SS, do not unconfigure them
->>>> during runtime suspend. This will allow other SS to continue to transfer
->>>> the data without any disturbance over the IO lines.
->>>>
->>>> For example, Assume an I2C EEPROM device connected with an I2C controller.
->>>> Each client from ADSP and APPS processor can perform i2c transactions
->>>> without any disturbance from each other.
->>>>
->>>> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
->>>> ---
->>>
->>> [...]
->>>
->>>>        } else {
->>>>            gi2c->gpi_mode = false;
->>>> +
->>>> +        /* Force disable shared SE case for non GSI mode */
->>>> +        gi2c->se.shared_geni_se = false;
->>>
->>> Doing this silently sounds rather odd..
->> we can have Some SW logging added ?
-> 
-> Normally such overrides mandate a warning/notice, but as I said above,
-> we should disallow such combinations altogether for sanity
-> 
-Sure, taken cared with above suggestion.
-> Konrad
+T24gU2F0dXJkYXksIE5vdmVtYmVyIDIzLCAyMDI0IDg6MTcgQU0sIEJyeWFuIE8nRG9ub2dodWUg
+d3JvdGU6DQo+IE9uIDIzLzExLzIwMjQgMDA6MDUsIERtaXRyeSBCYXJ5c2hrb3Ygd3JvdGU6DQo+
+ID4gVGhpcyBsZWF2ZXMgc203MTUwLCBzbTgxNTAgYW5kIHNtODQ1MCB1bnRvdWNoZWQuIERvbid0
+IHRoZXkgYWxzbyBuZWVkIA0KPiA+IHRvIHVzZSBIV19DVFJMX1RSSUdHRVI/DQoNCj4gSSBiZWxp
+ZXZlIHRoZSBjb3JyZWN0IGxpc3QgaGVyZSBpcyBhbnl0aGluZyB0aGF0IGlzIEhGSV9WRVJTSU9O
+XzRYWCBpbg0KDQo+IFlvdSBjYW4ndCBhcHBseSB0aGUgc2Vjb25kIHBhdGNoIGluIHRoaXMgc2Vy
+aWVzIHdpdGhvdXQgZW5zdXJpbmcgdGhlIGNsb2NrIGNvbnRyb2xsZXJzIGZvciBzZG04NDUgYW5k
+IHNtNzE4MA0KDQo+IGdyZXAgSEZJX1ZFUlNJT05fNFhYIGRyaXZlcnMvbWVkaWEvcGxhdGZvcm0v
+cWNvbS92ZW51cy9jb3JlLmMNCg0KPiBkcml2ZXJzL2Nsay9xY29tL3ZpZGVvY2Mtc2RtODQ1LmMN
+Cj4gZHJpdmVycy9jbGsvcWNvbS92aWRlb2NjLXNjNzE4MC5jDQoNCj4gSG1tLi4gdGhhdCdzIHdo
+YXQgdGhpcyBwYXRjaCBkb2VzLCB0byBiZSBmYWlyIG15IG90aGVyIGVtYWlsIHdhcyBmbGlwcGFu
+dC4NCg0KPiBUaGlzIGlzIGZpbmUgaW4gZ2VuZXJhbCwgb25jZSB3ZSBjYW4gZ2V0IHNvbWUgVGVz
+dGVkLWJ5OiBmb3IgaXQuDQoNCj4gVGhhdCdzIG15IHF1ZXN0aW9uIC0gd2hhdCBwbGF0Zm9ybXMg
+aGFzIHRoaXMgY2hhbmdlIGJlZW4gdGVzdGVkIG9uID8NCg0KPiBJIGNhbiBkbyBzZG04NDUgYnV0
+LCB3ZSdsbCBuZWVkIHRvIGZpbmQgc29tZW9uZSB3aXRoIDcxODAgdG8gdmVyaWZ5IElNTy4NCg0K
+VGhhbmtzIGZvciB5b3VyIGNvbW1lbnQuIFdlIGhhdmUgcnVuIHZpZGVvIGNhc2Ugd2l0aCB0aGVz
+ZSB0d28gcGF0Y2hlcyBvbiBzYzcxODAuIFRoZSByZXN1bHQgaXMgZmluZS4NCg0KPiAtLS0NCj4g
+Ym9kDQo=
 
