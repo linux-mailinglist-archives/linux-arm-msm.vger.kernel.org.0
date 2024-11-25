@@ -1,151 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-39029-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39030-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2BA1A9D7AD2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2024 06:02:07 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BBA10162B07
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2024 05:02:03 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D80AA28684;
-	Mon, 25 Nov 2024 05:02:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZXAIb9Qh"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3FAF29D7ADC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2024 06:08:16 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E232500C8;
-	Mon, 25 Nov 2024 05:02:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9C92BB21962
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2024 05:08:13 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F0F482B2CF;
+	Mon, 25 Nov 2024 05:08:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QkAeaeFv"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 420FE2500C8;
+	Mon, 25 Nov 2024 05:08:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732510922; cv=none; b=tCtrq5JIXdG/RA5lxSdPxnQyzYcvB6u7Ks+kQPxgKIjfSEEGeBE1JB2UZcmPmmoICF2GoIu2WzulKF1umpaPlON9bCCXLJUWzdAvjTvbXterAoMKtAzi02LQeniaKqLVZkPFsn37CZiHn5iZNTX6uKlTf0XER5zkHpP/Vs3RqaU=
+	t=1732511288; cv=none; b=k8IBXjQfJcKWi3LSW+hQePRyINHWdbmB5WkP/oBYE6bkW6ZHkKcSGDL262TrRUASCXxAu+PnvMzYUBFJw2KX8VS68YALV1oiNq57A9ANWS4j7gf+4qjGZmvfooWQ80OdRWOpT/74cfkr35yW7EFiBDhLG5nNoL5SD36UXYI/Fvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732510922; c=relaxed/simple;
-	bh=QiPt2Irvj/6t97+JwrxnOBClvQCcx+6Sy5W3+yneGa8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=KwU4x/KsW0C0qnNwkg2TaHYwM0ITw9omC3ievQjtyZNU5PGQluxW4bkOiqCWtJjAuH9yn/TS7+i+i4tvZd1D6ywLaTFVIIs27ukXCGiRAtFAN5eVkd3LU6oZscweOo9G5f+2yv6tGwBLryQlrxK9qjHd9+vp5xWloxXo/6CBci4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZXAIb9Qh; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1732511288; c=relaxed/simple;
+	bh=eCTbs0JZb69D9es/iL57YN+Wzq6f9RN1ifl8th7bfFg=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=uJabn5/96vuEpiV6LRZtMxzTHZT5yv9tpODknRhkZGq7ERuu0O506NFk4XIFAumAi2NSYO4uPXBjHrwxO9Zo0wH/Gsmlp+TxGDnolxMVsZ17AFyGMCVGJ0f9ujrtQbjQdv63V0b9LbKizrnK8L5EbNSiYXDPW1Nf/bmvzViOEWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QkAeaeFv; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AP0BK6C011648;
-	Mon, 25 Nov 2024 05:01:53 GMT
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AOMBjMf024879;
+	Mon, 25 Nov 2024 05:07:57 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	kJ2sfujBYpBb1b9Xk6SYgxMIs8xHWugstDXeXBbNhLo=; b=ZXAIb9QhDYHV9T/m
-	ilTC5YRMVshZHHEpryYGulJpLPX366yP58tv0PvixJUbvxzmqfhNHz3RGNUD12zE
-	HswU+Qv8kXSzh1W4ygcz2945eehS535fvX4ZZbKaEpFO1w3/hc4XSnNyzDnm18bu
-	4dfG07SDQU4nE3qA1WKpzRwiMIGeMnFXEfitRowgeMqki2WpQao53CX8UJ1bm/7C
-	EZVMcBtdVGOzu8PoJwMW19iKDxW19cxk2hQAPogppXm2GovYqvWXT/N4CwzzZNA8
-	751xWoy98m1O0Y14gz6t21Qm+A/y/dM6bD4kxS8pruD4SE11QlNhocn+hEuog8hq
-	Tmjuvg==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4334dmunf5-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=qp9FobJU5xuolasioWQMn6
+	Hkzg6cB+z8wWzmDeu0srE=; b=QkAeaeFvp2c+sW/qkifCp6dg8uOjmJRNs1Iuti
+	5qr3u9R1ES4QoS4nodYj1rEV8cmEktTWPNu7/97miXvbkNiXZ3AjbkqKT0MgLogR
+	QCGFZ91G2DypgjecUGWypCgwW1dOgCUkfgMXl6Nu/uefiGgo/rKa/5Y4ODbVMDF8
+	qT5jpredhKinpq2HDNk5/ChyVi8bHWhZOiZRdBheNCn4fCN7xUQV0e8KC0jX1iDy
+	Ul5J19BRiXMzZA+A5qI1H4hcJtJCSKnI1UB01245PjXJ9gFmKK8QeGzEO1JfO8EO
+	D7AvuTEDTBo4hlTXELrWBhHA+v2+3WCw96uobwhSA+y7HKBg==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4338b8bb5u-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 25 Nov 2024 05:01:53 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AP51qrZ028808
+	Mon, 25 Nov 2024 05:07:57 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AP57uZs000799
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 25 Nov 2024 05:01:52 GMT
-Received: from [10.217.219.207] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 24 Nov
- 2024 21:01:46 -0800
-Message-ID: <12337d5f-63ad-43f1-a9e0-87eb2e3abf61@quicinc.com>
-Date: Mon, 25 Nov 2024 10:31:43 +0530
+	Mon, 25 Nov 2024 05:07:56 GMT
+Received: from hu-mmanikan-blr.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Sun, 24 Nov 2024 21:07:51 -0800
+From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+To: <srinivas.kandagatla@linaro.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <amitk@kernel.org>, <thara.gopinath@gmail.com>,
+        <rafael@kernel.org>, <daniel.lezcano@linaro.org>,
+        <rui.zhang@intel.com>, <lukasz.luba@arm.com>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>
+CC: <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
+Subject: [PATCH v9 0/7] Add TSENS support for IPQ5332, IPQ5424 
+Date: Mon, 25 Nov 2024 10:37:21 +0530
+Message-ID: <20241125050728.3699241-1-quic_mmanikan@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/4] dmaengine: gpi: Add Lock and Unlock TRE support to
- access I2C exclusively
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, <konrad.dybcio@linaro.org>,
-        <andersson@kernel.org>, <andi.shyti@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dmaengine@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
-        <conor+dt@kernel.org>, <agross@kernel.org>,
-        <devicetree@vger.kernel.org>, <vkoul@kernel.org>, <linux@treblig.org>,
-        <dan.carpenter@linaro.org>, <Frank.Li@nxp.com>,
-        <konradybcio@kernel.org>, <bryan.odonoghue@linaro.org>,
-        <krzk+dt@kernel.org>, <robh@kernel.org>
-CC: <quic_vdadhani@quicinc.com>
-References: <20241113161413.3821858-1-quic_msavaliy@quicinc.com>
- <20241113161413.3821858-3-quic_msavaliy@quicinc.com>
- <87cc1f1e-85d2-40cb-b3b3-8935004f4f98@oss.qualcomm.com>
- <5a39b6d0-600f-455f-9ba7-29787f9085ce@quicinc.com>
- <4d2a9f76-f6e6-4897-9569-6d325a6e62cb@oss.qualcomm.com>
-Content-Language: en-US
-From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-In-Reply-To: <4d2a9f76-f6e6-4897-9569-6d325a6e62cb@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: tVE1Ze_QIByJAJTp5vRmgdrkgSiPdo05
-X-Proofpoint-ORIG-GUID: tVE1Ze_QIByJAJTp5vRmgdrkgSiPdo05
+X-Proofpoint-ORIG-GUID: wNoyZpgLkc8IGwzbRFKO6o6Hj6ZP2-25
+X-Proofpoint-GUID: wNoyZpgLkc8IGwzbRFKO6o6Hj6ZP2-25
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- priorityscore=1501 mlxlogscore=999 phishscore=0 mlxscore=0
- lowpriorityscore=0 suspectscore=0 malwarescore=0 adultscore=0 spamscore=0
- impostorscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2409260000 definitions=main-2411250041
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
+ adultscore=0 mlxscore=0 priorityscore=1501 lowpriorityscore=0 bulkscore=0
+ phishscore=0 malwarescore=0 suspectscore=0 mlxlogscore=751 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2411250041
 
-Hi Konrad, Thanks !
+IPQ5332 uses tsens v2.3.3 IP with combined interrupt for
+upper/lower and critical. IPQ5332 does not have RPM and
+kernel has to take care of TSENS enablement and calibration.
 
-On 11/22/2024 7:10 PM, Konrad Dybcio wrote:
-> On 18.11.2024 6:46 AM, Mukesh Kumar Savaliya wrote:
->> Thanks Konrad for the review !
->>
->> On 11/16/2024 12:53 AM, Konrad Dybcio wrote:
->>> On 13.11.2024 5:14 PM, Mukesh Kumar Savaliya wrote:
->>>> GSI DMA provides specific TREs(Transfer ring element) namely Lock and
->>>> Unlock TRE. It provides mutually exclusive access to I2C controller from
->>>> any of the processor(Apps,ADSP). Lock prevents other subsystems from
->>>> concurrently performing DMA transfers and avoids disturbance to data path.
->>>> Basically for shared I2C usecase, lock the SE(Serial Engine) for one of
->>>> the processor, complete the transfer, unlock the SE.
->>>>
->>>> Apply Lock TRE for the first transfer of shared SE and Apply Unlock
->>>> TRE for the last transfer.
->>>>
->>>> Also change MAX_TRE macro to 5 from 3 because of the two additional TREs.
->>>>
->>>> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
->>>> ---
-> 
-> [...]
-> 
->>>>    +    /* create lock tre for first tranfser */
->>>> +    if (i2c->shared_se && i2c->first_msg) {
->>>
->>> Does the first/last logic handle errors well? i.e. what if we
->>> have >= 3 transfers and:
->>>
->>> 1) the first transfer succeeds but the last doesn't
->>> 2) the first transfer succeeds, the second one doesn't and the lock
->>>      is submitted again
->>> 3) the unlock never suceeds
->>>
->> geni_i2c_gpi_xfer() takes care of any of the error. Upon error, it does dma_engine_terminate_sync() which resets all the pipes. Internal downstream also has same implementation.
-> 
-> Okay, this sounds reassuring.
-> 
-> Since the TRE would be locked to APSS, I'm guessing we don't ever need
-> to worry about gpi_terminate_all() being executed halfway through a
-> non-APSS transaction?
-> 
-Right.
-> Konrad
+IPQ5424 also uses same tsens v2.3.3 IP and it's similar to IPQ5332
+(no RPM) hence add IPQ5424 support in this series itself.
+
+This patch series adds the temperature sensor enablement,
+calibration support for IPQ5332 and IPQ5424.
+
+Changes in V9:
+	- Fixed all review comments from Konrad Dybico
+	- Detailed change logs are added to the respective patches
+
+V8 can be found at:
+https://lore.kernel.org/linux-arm-msm/20241115103957.1157495-1-quic_mmanikan@quicinc.com/
+
+V7 can be found at:
+https://lore.kernel.org/linux-arm-msm/20241107140550.3260859-1-quic_mmanikan@quicinc.com/
+
+V6 can be found at:
+https://lore.kernel.org/linux-arm-msm/20241104124413.2012794-1-quic_mmanikan@quicinc.com/
+
+V5 can be found at:
+https://lore.kernel.org/linux-arm-msm/20230721054619.2366510-1-quic_ipkumar@quicinc.com/
+
+V4 can be found at:
+https://lore.kernel.org/linux-arm-msm/20230719104041.126718-1-quic_ipkumar@quicinc.com/
+
+V3 can be found at:
+https://lore.kernel.org/linux-arm-msm/20230713052732.787853-1-quic_ipkumar@quicinc.com/
+
+V2 can be found at:
+https://lore.kernel.org/linux-arm-msm/20230712113539.4029941-1-quic_ipkumar@quicinc.com/
+
+Manikanta Mylavarapu (3):
+  dt-bindings: nvmem: Add compatible for IPQ5424
+  arm64: dts: qcom: ipq5424: Add tsens node
+  arm64: dts: qcom: ipq5424: Add thermal zone nodes
+
+Praveenkumar I (4):
+  dt-bindings: thermal: tsens: Add ipq5332, ipq5424 compatible
+  thermal/drivers/tsens: Add TSENS enable and calibration support for V2
+  arm64: dts: qcom: ipq5332: Add tsens node
+  arm64: dts: qcom: ipq5332: Add thermal zone nodes
+
+ .../bindings/nvmem/qcom,qfprom.yaml           |   1 +
+ .../bindings/thermal/qcom-tsens.yaml          |  18 ++
+ arch/arm64/boot/dts/qcom/ipq5332.dtsi         | 135 ++++++++++++
+ arch/arm64/boot/dts/qcom/ipq5424.dtsi         | 201 ++++++++++++++++++
+ drivers/thermal/qcom/tsens-v2.c               | 178 ++++++++++++++++
+ drivers/thermal/qcom/tsens.c                  |   8 +-
+ drivers/thermal/qcom/tsens.h                  |   4 +-
+ 7 files changed, 543 insertions(+), 2 deletions(-)
+
+-- 
+2.34.1
+
 
