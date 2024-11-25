@@ -1,77 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-39006-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39007-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A47B9D79AE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2024 02:07:55 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AE2E29D79D5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2024 02:44:51 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2FD5016369D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2024 01:44:48 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC285539A;
+	Mon, 25 Nov 2024 01:44:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mir+povm"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8FC6028204A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2024 01:07:53 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5293710F9;
-	Mon, 25 Nov 2024 01:07:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Fvqk/7DM"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1C1ABE5E
-	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Nov 2024 01:07:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15FA810F9;
+	Mon, 25 Nov 2024 01:44:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732496871; cv=none; b=k05nfrcfjK2rtD6kYrS/uHAJsj9IEC8P1MB4Ynplmtw8eQHzxSG3QGRc+fLk6vMTVLxmCmMolCgYeuIWshZ/4jPpy37uF2TNclQu6/a0tJbM/V8KBcZ5txpw2ISYfi5UQYzKWMJKm8xYCRZMsrl5My7r1YbabhIO6u+36misx+E=
+	t=1732499086; cv=none; b=LFYix3JRbHzyhGJ4oY1dBpD9yjWkMwO63sIjmQBmWn//g9V2O40EIgY0gReyRAPqQUyoKa8F+QdAYdhMQfUSsAjaV8vXbGDwebdCb5pz9GcMna7N08KIYJQfNvYjw79iJiMQt6mmx2GmRVsR4l551fHWjS7Uk67gC/mHDUYYI4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732496871; c=relaxed/simple;
-	bh=Zyft1p8BKzVPHJKKM8dRsZ8hHf5nnaQuyeZe7XSgq/g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tUjobAHziqJnDmrVldxrJWUVLbot6epgOaKrHMniu+qmaLngF0hCV3YWwQZpo6qm112Fo8pFBm3gNfnM5C7DENI5U290khP7N8a5K0LiZ9SsLnKHymkD4mSDJelVUONp+fB3GPgCPgITUoBRdN55NGWYWc9+QI8bh9N9h6PNApI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Fvqk/7DM; arc=none smtp.client-ip=209.85.221.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-3823cf963f1so2418577f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Nov 2024 17:07:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732496868; x=1733101668; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Zyft1p8BKzVPHJKKM8dRsZ8hHf5nnaQuyeZe7XSgq/g=;
-        b=Fvqk/7DMQqim1X1CrIHSs3BZ+mdI3VV8GYux6wSflK00D/zXDUoSR5+V6z8NQKueLC
-         vGXVrOlIuXZiXVecjTEE7r1KSk9TnSznwrLOYa4A0F5DSyiD/CHzMlFyebEmSLnh2LKb
-         evl2dwb7rIp8I3ad8cVVG67bWHeav2OTBFNfU3wWvIkcapyQfip3kWHytbmFkNIxQzh1
-         2U1qVGUtKWMDjSTMQdj0CLf/dtAuKOl5o+UqbmJpKR55vX1s2tn11a++pONSdzvBJRmX
-         J8KGV7z/GIAR27TzDK+wh/obmmUY03Xm/hPshHdtkObqOvJa3dn/+2bav6yvhGwiTdE8
-         Zf6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732496868; x=1733101668;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Zyft1p8BKzVPHJKKM8dRsZ8hHf5nnaQuyeZe7XSgq/g=;
-        b=pEjIF81dPrt683x3IlJT6Sb9RHr0idKdcQtWBXn/BF/+D+jhkYpXettQgHkxdysaAJ
-         vXG+q+KLbmSXRlP1ilDloe5O87jIB9T+1vxl6Tu+ei4MiXHfCYwxdjBlkPcxJ167ODHf
-         h0sRsLzpgxTyarH4IN6LCvbe93FfAdsNEccl8Gxs4S3qDTy4lNKBgqq5iRHxlsAVovFx
-         S3IF5bMNf3Qss7YbWmcSriR+mR4pO3A6MXhY+QWrYQHvG1JrP/SE0xK9XqBmcKD6Jadm
-         TdCVvEbyv0CjfC+riRJYcUP/C5ilT6UFj9AwfYPAmEGh8LSgRTmHvPr/9M5+txcmrEuc
-         XGaA==
-X-Gm-Message-State: AOJu0Yy7nfH5i2vulHOWAmFuqFWhpgBBfpCGNTCjc3GZjO1I2kjnpxHE
-	cx7n+rz78Rzx8foD1mJrVSGSIC++p3zqmtzW/+LSx6kBOMZBsRu5eN420DUffAc=
-X-Gm-Gg: ASbGnctbRWPfa87yUjnB3FzP/VQv1bZ5TvnR+LZzJJBNlemUvBTVowvVJ+/6hwIrljX
-	FnN1NqrGcWYNB4y8a6oXZlRvr8RejSFdqxm2LYizrd8BL/SxU+cu5zFQ7YvZP6Fv/jSWXxv6g9n
-	uVOYdn7zGUQL2mp87mR33HAg9J9sgwFZImEontvQNAEB3D/BAbkU4I7QdfKkgLYc2T14qdZd/Zk
-	pmj/opIOGTe04a3dnTiAug6X30B2a3vacgFJDjC6EfXJ5dS14T4qgBv2g0rKiQ=
-X-Google-Smtp-Source: AGHT+IHhoeFb+Wf/gYrX78mfl6z1x1kaYwgpE8ZNovkFpwSxzWiADNjuxgKT0GRkBF+vDAWZZizWWQ==
-X-Received: by 2002:a05:6000:797:b0:382:5066:326f with SMTP id ffacd0b85a97d-38260b5b0bcmr8716564f8f.17.1732496867967;
-        Sun, 24 Nov 2024 17:07:47 -0800 (PST)
-Received: from [192.168.0.30] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3825fd04ec7sm8938616f8f.110.2024.11.24.17.07.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 24 Nov 2024 17:07:46 -0800 (PST)
-Message-ID: <b1ff464f-9243-4e91-8dde-b31fac61e08c@linaro.org>
-Date: Mon, 25 Nov 2024 01:07:45 +0000
+	s=arc-20240116; t=1732499086; c=relaxed/simple;
+	bh=wTMdRmUB6ZsWBhv8uPeSdAAH33/P1tWe4+yZBvYk+hQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=tFjqMTS3/BPKGziEiOpCIXSQUgQ/cK+ZBo+/3wGrvoKTgIjSypfz5jaEzex1t4qoj/KeDgMbPDXr3jz4+XXLl+tTB6rlAf1r2teEukcrrtcNwasi4Fi8fFr/MV+lnzFnx8zdq/qaLyoCTJhKw6aiEDet4SypfJMM97zFfOOMhFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=mir+povm; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AP0L7tV006014;
+	Mon, 25 Nov 2024 01:44:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	iGaYT6nZ/4PiLaqqfZNnRdCsS1EzHLa59yqMFNnJ2X0=; b=mir+povmuBtEd5+T
+	2oYJoTZ6tUh3oQjLy+JCRBFablP+gvIZ3jv/kQhennjTmAnUonm+Z0NG9zUsr1e+
+	NxpvPmv0YsWHalX7TGuPuelOe9lLnAgdHdI7iNOvAfp5Nx8OGuAkLXFODcDxh/sU
+	kA2jFyZ/KcTbtgbfUaLjmSifdhXG1/nfDRQdirRZR17GppZyTeEfbz5w1z8jexQ/
+	HeGjUl7ZJJBOQu+unX7CK/WjMrVTTsO6xSN+2I+C84gr5I1izKxijDvaz9wOs3A7
+	uMRGBUtWD0+PvS6qpstLBjqva72EYLn53DRI00HQ05TDE7NqCQcDqxGvFMYaWU9h
+	+Up4rw==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4336cfk4gq-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 25 Nov 2024 01:44:23 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AP1iMhU025369
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 25 Nov 2024 01:44:22 GMT
+Received: from [10.64.16.151] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 24 Nov
+ 2024 17:44:15 -0800
+Message-ID: <10413094-500f-4044-b4e3-8ce83fee3dbd@quicinc.com>
+Date: Mon, 25 Nov 2024 09:44:12 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,23 +65,121 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] clk: qcom: common: Add support for power-domain
- attachment
-To: Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20241125-b4-linux-next-24-11-18-clock-multiple-power-domains-v2-0-a5e7554d7e45@linaro.org>
- <20241125-b4-linux-next-24-11-18-clock-multiple-power-domains-v2-2-a5e7554d7e45@linaro.org>
+Subject: Re: [PATCH v3 5/9] drm/msm/dpu: Add SM6150 support
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar
+	<quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "Krishna
+ Manikandan" <quic_mkrishn@quicinc.com>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        "Catalin
+ Marinas" <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, Li Liu
+	<quic_lliu6@quicinc.com>,
+        Xiangxu Yin <quic_xiangxuy@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>
+References: <20241122-add-display-support-for-qcs615-platform-v3-0-35252e3a51fe@quicinc.com>
+ <20241122-add-display-support-for-qcs615-platform-v3-5-35252e3a51fe@quicinc.com>
+ <bhylewwvztm7gsmkjwo6asceuph2jlqgvy2lhocdvg6r7y4i6w@duvbnsko3xg2>
 Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20241125-b4-linux-next-24-11-18-clock-multiple-power-domains-v2-2-a5e7554d7e45@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: fange zhang <quic_fangez@quicinc.com>
+In-Reply-To: <bhylewwvztm7gsmkjwo6asceuph2jlqgvy2lhocdvg6r7y4i6w@duvbnsko3xg2>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ALnY4WQC7U_GidKZVMBIyRRX_D5Sz7vY
+X-Proofpoint-ORIG-GUID: ALnY4WQC7U_GidKZVMBIyRRX_D5Sz7vY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
+ spamscore=0 lowpriorityscore=0 phishscore=0 adultscore=0 malwarescore=0
+ mlxscore=0 suspectscore=0 mlxlogscore=999 clxscore=1015 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2411250013
 
-On 25/11/2024 01:00, Bryan O'Donoghue wrote:
-> per which
 
-for each
+
+On 2024/11/22 18:07, Dmitry Baryshkov wrote:
+> On Fri, Nov 22, 2024 at 05:56:48PM +0800, Fange Zhang wrote:
+>> From: Li Liu <quic_lliu6@quicinc.com>
+>>
+>> Add definitions for the display hardware used on the Qualcomm SM6150
+>> platform.
+>>
+>> Signed-off-by: Li Liu <quic_lliu6@quicinc.com>
+>> Signed-off-by: Fange Zhang <quic_fangez@quicinc.com>
+>> ---
+>>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h | 263 +++++++++++++++++++++
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |   1 +
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   1 +
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   1 +
+>>   4 files changed, 266 insertions(+)
+>>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h
+>> new file mode 100644
+>> index 0000000000000000000000000000000000000000..e8b7f694b885d69a9bbfaa85b0faf0c7af677a75
+>> --- /dev/null
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h
+>> @@ -0,0 +1,263 @@
+>> +/* SPDX-License-Identifier: GPL-2.0-only */
+>> +/*
+>> + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+>> + */
+>> +
+>> +#ifndef _DPU_5_3_SM6150_H
+>> +#define _DPU_5_3_SM6150_H
+>> +
+>> +	}, {
+>> +		.name = "intf_2", .id = INTF_2,
+>> +		.base = 0x6b000, .len = 0x2c0,
+>> +		.features = INTF_SC7180_MASK,
+>> +		.type = INTF_NONE,
+>> +		.controller_id = 0,
+>> +		.prog_fetch_lines_worst_case = 24,
+>> +		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 28),
+>> +		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 29),
+> 
+> Please drop. No need to declare missing blocks.
+got it, will remove this block in the next patch
+> 
+> Other than that:
+> 
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> 
+> 
+>> +	}, {
+>> +		.name = "intf_3", .id = INTF_3,
+>> +		.base = 0x6b800, .len = 0x280,
+>> +		.features = INTF_SC7180_MASK,
+>> +		.type = INTF_DP,
+>> +		.controller_id = MSM_DP_CONTROLLER_1,
+>> +		.prog_fetch_lines_worst_case = 24,
+>> +		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 30),
+>> +		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 31),
+>> +	},
+>> +};
+>> +
+> 
+
 
