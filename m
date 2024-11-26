@@ -1,193 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-39221-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39223-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E1EA49D9BBC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Nov 2024 17:45:52 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4F9DA9D9C6B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Nov 2024 18:24:41 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A18C9283F65
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Nov 2024 16:45:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id ED5FC167376
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Nov 2024 17:24:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 390231DB94F;
-	Tue, 26 Nov 2024 16:45:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A5B41DB958;
+	Tue, 26 Nov 2024 17:23:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="awlgPaFO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GM3ghPVb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 833661D90B1;
-	Tue, 26 Nov 2024 16:45:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F8001DB534;
+	Tue, 26 Nov 2024 17:23:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732639516; cv=none; b=cb2v1bzDJn+Lcrg1u9X4JDquvGHferupLtLFLi2kBgF/fLKsE3NV6r9O4VJHO42T6t0old2OMLrh0Kv+5ktBpI3c5/J4pfL8aI1MNR/Yrbl+IEm1BWndIlwyWNT6SfL/OQt7zVREqQax388nm7dW673Pxg+TUVGL/zfnExRWll0=
+	t=1732641807; cv=none; b=m1NaXp6aLrNUtY42R/N+FJzoiy6Hp9rE9g68u0IxyXzWfSHhW7Mkv6U9U4mYH8ezOwMRdWHgXF18SH/+My2wTe7AB6Bp1YPVhGm9/9NS3QQD1hnAevlOQ+VpimdODBlZMet7rSbQo1dqee3IivK4qkEcWxVAbx1uD72f+yzJMt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732639516; c=relaxed/simple;
-	bh=APOzSU+KlMGLUuYjnSvUiO03YykwfjLbCynGKCVGp+4=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CyfCd5GegzxLmqsSQuestfLF2/VGuqMeLuNXevykv67/1Xqg+GLGt+iZw3vnb/MvDPCyiDxrFcBWoEK1R7D0VZmUlPZ6e02bL4Mxu2K7VYd2BoKaJhqgMrUrGYHUaIq1bwvhCM5TQiOegufWBidr7kabDn2CZXiOMkecihQ7bYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=awlgPaFO; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AQDifi6030687;
-	Tue, 26 Nov 2024 16:45:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	jcQW5RcyqeDeHXJvfyXe0YmvyZ+DgVH1hq0fW/JPfT4=; b=awlgPaFOGCSD7DF6
-	OrnlwAFqo1tG55QttO5yNbhoDkKLYogIC8rblbOBsSfiqfqYbSiluXqQH+PkWJP5
-	wXH4vdY7a5dAVLFwnqTC7YI7yj8OFSNCRDZmsWhMlPGSocf5jBjps1lJsBf2mtSK
-	64ye2KQczbVviHqIzEgN4Hcp1r43odm7kQg/SNSYzf2+HbDAiEIrFbfGbgiHAW3z
-	j4shaHV4gEJAoKE1ryf+m1lRMliVx3wt12Ym0hEDl+GeP0zkv9B1RTs4YsxMhLYo
-	odxioxdT4kAJfin/ovS7b/XvwGBWxVHQnSjfKmDKdj1hrZUvVmptrKlVfH5oYzaT
-	B+Cp0A==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 435ffyrea7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 26 Nov 2024 16:45:01 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AQGj0EZ024402
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 26 Nov 2024 16:45:00 GMT
-Received: from hu-mohs-hyd.qualcomm.com (10.80.80.8) by
- nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 26 Nov 2024 08:44:52 -0800
-From: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Liam Girdwood
-	<lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
-        Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Bard Liao
-	<yung-chuan.liao@linux.intel.com>,
-        Jaroslav Kysela <perex@perex.cz>, "Takashi
- Iwai" <tiwai@suse.com>
-CC: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
-        Sanyog Kale
-	<sanyog.r.kale@intel.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-sound@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_rohkumar@quicinc.com>, <kernel@quicinc.com>,
-        Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-Subject: [PATCH v3 5/5] ASoC: qcom: sdw: Add get and set channel maps support from codec to cpu dais
-Date: Tue, 26 Nov 2024 22:13:00 +0530
-Message-ID: <20241126164300.3305903-6-quic_mohs@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20241126164300.3305903-1-quic_mohs@quicinc.com>
-References: <20241126164300.3305903-1-quic_mohs@quicinc.com>
+	s=arc-20240116; t=1732641807; c=relaxed/simple;
+	bh=Qbe4lWMToRkGg8uJP13fqcPkyVngCbNVvjX8AR1hjQw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GTNsmKLmq5hFB4ngYhwyZShVY4jKwQdOCaktIsHiqkbR3wBZoqvmFdUhkIBzZroeFJzMh7Q5jPBH1xzBqqYbWmKpCtVNfTB7r/loaaox596XaOCMEzK9eZXSocNGD0DkldSXwtNjYCQWZ4QZTeyMcr/xOT72fZ3CaBHCrRpxZv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GM3ghPVb; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48864C4CECF;
+	Tue, 26 Nov 2024 17:23:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1732641806;
+	bh=Qbe4lWMToRkGg8uJP13fqcPkyVngCbNVvjX8AR1hjQw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=GM3ghPVbFNwv7h/34NeL70hl/EcXP5eJGabKq3GIIzgg+pA/23lEfJa2P44m5SRs6
+	 T2Nz56PFdq23mvww8K/dlYcVMg1E5kTZ3qs0Ked3GwdBPUzh8+mTztxygA4X2lcRr5
+	 vVUujHnEOWi1ehy13u4Go3BxnswzdYJ4A83puJol/ZHJlD9NqT31UBNJ+AngH0R4ms
+	 dJP2Rsay9HQXF7Hd3T3VOgRN9j9FJEU2gy989mmy1nToeiBxxYaFOyhFus8phpC6va
+	 sgPFJavoWHq7tf5ecmCh8CVTrvFS+QqhAy8oOJ/OtZQxhIdZ0uuK1OKhsJOmJ9mozt
+	 lWYQibOx/1gcQ==
+Date: Tue, 26 Nov 2024 11:23:24 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: Michael Turquette <mturquette@baylibre.com>, 
+	Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] clk: qcom: gdsc: Add pm_runtime hooks
+Message-ID: <ava6dkmz5g725skafuqyb4rly3qna5z4bhfmrqgogcmdcubzf3@eu4odajw6e6d>
+References: <20241118-b4-linux-next-24-11-18-clock-multiple-power-domains-v1-0-b7a2bd82ba37@linaro.org>
+ <20241118-b4-linux-next-24-11-18-clock-multiple-power-domains-v1-2-b7a2bd82ba37@linaro.org>
+ <zhhna2wni4yqhnc2tqfc2ugril3h4kzbyr3ix6vpwrgghwytfa@kjfpff5zdl4z>
+ <7a52ca1f-303e-44ae-b750-6aaa521516c3@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: zpba1ksEgN8qISXxb0IVeakLXlbes5ow
-X-Proofpoint-ORIG-GUID: zpba1ksEgN8qISXxb0IVeakLXlbes5ow
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
- bulkscore=0 lowpriorityscore=0 spamscore=0 impostorscore=0 suspectscore=0
- priorityscore=1501 malwarescore=0 adultscore=0 phishscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411260134
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <7a52ca1f-303e-44ae-b750-6aaa521516c3@linaro.org>
 
-Add get and set channel maps support from codec to cpu dais.
+On Wed, Nov 20, 2024 at 05:09:08PM +0000, Bryan O'Donoghue wrote:
+> On 19/11/2024 15:34, Bjorn Andersson wrote:
+> > What I think you want is two things:
+> > 1) When you're accessing the registers, you want the clock controller's
+> > power-domain to be on.
+> > 2) When the client vote for a GDSC, you want to have the PM framework
+> > also ensure that parent power-domains are kept on.
+> > For the single case, this is handled by the pm_genpd_add_subdomain()
+> > call below. This, or something along those lines, seems like the
+> > appropriate solution.
+> 
+> Yes.
+> 
+> I'm finding with this patch reverted but, keeping the first patch that it
+> pretty much works as you'd want with the caveat that gdsc_register ->
+> gdsc_en -> gdsc_toggle fails the first time.
+> 
 
-Implemented logic to get the channel map in case of only sdw stream and
-set channel map only for specific cpu dais.
+Can you clarify that call graph for me? The one case I can see where
+gdsc_register() leads to gdsc_enable() is if the sc is marked ALWAYS_ON
+and I don't think that is your case.
 
-Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
----
- drivers/soundwire/qcom.c |  5 ++---
- sound/soc/qcom/sdw.c     | 34 +++++++++++++++++++++++++++++++---
- 2 files changed, 33 insertions(+), 6 deletions(-)
+What you describe sounds like we're trying to turn on the power-domain
+without first enabling the supplies, or perhaps there are clock
+dependencies that are not in order when this is being attempted?
 
-diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-index 007183c6c047..6c3cff1194aa 100644
---- a/drivers/soundwire/qcom.c
-+++ b/drivers/soundwire/qcom.c
-@@ -1276,11 +1276,10 @@ static void *qcom_swrm_get_sdw_stream(struct snd_soc_dai *dai, int direction)
- }
- 
- static int qcom_swrm_set_channel_map(struct snd_soc_dai *dai,
--				     unsigned int tx_num, unsigned int *tx_slot,
--				     unsigned int rx_num, unsigned int *rx_slot)
-+				     unsigned int tx_num, const unsigned int *tx_slot,
-+				     unsigned int rx_num, const unsigned int *rx_slot)
- {
- 	struct qcom_swrm_ctrl *ctrl = dev_get_drvdata(dai->dev);
--	struct sdw_stream_runtime *sruntime = ctrl->sruntime[dai->id];
- 	int i;
- 
- 	if (tx_slot) {
-diff --git a/sound/soc/qcom/sdw.c b/sound/soc/qcom/sdw.c
-index f2eda2ff46c0..d4d8ed46e6ff 100644
---- a/sound/soc/qcom/sdw.c
-+++ b/sound/soc/qcom/sdw.c
-@@ -25,7 +25,9 @@ int qcom_snd_sdw_startup(struct snd_pcm_substream *substream)
- 	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
- 	struct sdw_stream_runtime *sruntime;
- 	struct snd_soc_dai *codec_dai;
--	int ret, i;
-+	int ret, i, j;
-+	u32 rx_ch[SDW_MAX_PORTS], tx_ch[SDW_MAX_PORTS];
-+	u32 rx_ch_cnt = 0, tx_ch_cnt = 0;
- 
- 	sruntime = sdw_alloc_stream(cpu_dai->name);
- 	if (!sruntime)
-@@ -35,9 +37,35 @@ int qcom_snd_sdw_startup(struct snd_pcm_substream *substream)
- 		ret = snd_soc_dai_set_stream(codec_dai, sruntime,
- 					     substream->stream);
- 		if (ret < 0 && ret != -ENOTSUPP) {
--			dev_err(rtd->dev, "Failed to set sdw stream on %s\n",
--				codec_dai->name);
-+			dev_err(rtd->dev, "Failed to set sdw stream on %s\n", codec_dai->name);
- 			goto err_set_stream;
-+		} else if (ret == -ENOTSUPP) {
-+			/* Ignore unsupported */
-+			continue;
-+		}
-+
-+		ret = snd_soc_dai_get_channel_map(codec_dai, &tx_ch_cnt, tx_ch,
-+						  &rx_ch_cnt, rx_ch);
-+		if (ret != 0 && ret != -ENOTSUPP) {
-+			dev_err(rtd->dev, "Failed to get codec chan map %s\n", codec_dai->name);
-+			goto err_set_stream;
-+		} else if (ret == -ENOTSUPP) {
-+			/* Ignore unsupported */
-+			continue;
-+		}
-+	}
-+
-+	switch (cpu_dai->id) {
-+	case RX_CODEC_DMA_RX_0:
-+	case TX_CODEC_DMA_TX_3:
-+		if (tx_ch_cnt || rx_ch_cnt) {
-+			for_each_rtd_codec_dais(rtd, j, codec_dai) {
-+				ret = snd_soc_dai_set_channel_map(codec_dai,
-+								  tx_ch_cnt, tx_ch,
-+								  rx_ch_cnt, rx_ch);
-+				if (ret != 0 && ret != -ENOTSUPP)
-+					goto err_set_stream;
-+			}
- 		}
- 	}
- 
--- 
-2.25.1
+Regards,
+Bjorn
 
+> After that I see the GDSCs on/off as excpected
+> 
+> cat /sys/kernel/debug/pm_genpd/cam_cc_titan_top_gdsc/current_state
+> off-0
+> 
+> cat /sys/kernel/debug/pm_genpd/cam_cc_ife_0_gdsc/current_state
+> off-0
+> 
+> cam -c 1 --capture=10 --file
+> 
+> cat /sys/kernel/debug/pm_genpd/cam_cc_titan_top_gdsc/current_state
+> off-0
+> 
+> cat /sys/kernel/debug/pm_genpd/cam_cc_ife_0_gdsc/current_state
+> off-0
+> 
+> Perhaps we just need to fix the probe path @ gdsc_register()
+> 
+> ---
+> bod
 
