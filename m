@@ -1,161 +1,186 @@
-Return-Path: <linux-arm-msm+bounces-39181-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39182-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5FEC19D94DC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Nov 2024 10:48:17 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 115BD9D94AF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Nov 2024 10:39:31 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EFD00B2F065
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Nov 2024 09:36:21 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9DD6D161B8A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Nov 2024 09:39:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 350591C878E;
-	Tue, 26 Nov 2024 09:36:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 352801BBBF4;
+	Tue, 26 Nov 2024 09:39:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="DGZ29QcU"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="MuNiPXT0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB2891C4A1E;
-	Tue, 26 Nov 2024 09:35:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAB681B0F26;
+	Tue, 26 Nov 2024 09:39:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732613760; cv=none; b=quAaeqCnZrWALtVOqSe+dKj5rrjEIZM9RqJYyLiFfqsMZCqgwxUZu9oICPe+dy0MHBOzIwKLoqasDa6fraquYWv+IJWuaMPGqCFruY+5YwncHtGQjc/WrIp+fy2L2xY5sD2dHRuScKDTtQY7Bs+7zsZj5KTTfwoDMUu5EMJZ4pw=
+	t=1732613967; cv=none; b=q+lbxG1ehKfnaFcbc1pMtcsah6eOBWnvO8GFB6x3DbGLqYFwE9jupAyPSnDbezUkchUODZDKwfPTg0eph5OHoEdY1IRnevJmZazwnKQwpamkA+7JKdyempSbWdQXH6LADOzMNraIuoMt8Zb7jqvvmpVtle48qUL4iFPDUEJNEGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732613760; c=relaxed/simple;
-	bh=Dy9jfyJL9DqPIvg0ykvyBMGcJukk+5g1Qe+eNUyCaTk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=PYfd3oJVnbTZDOWCgHJrsYR/YDj605jIwhPpQs7d/ErE+URuvbBvNUpiuj0T5n+lvl009xdhRyd07GWqC/v7KdCK2ibwKrVIQg9NEZbFx6wUKQMOikCS1S39hxBQEDpJtqHH+oDe11IgFh1030ccjQE+Bg5X0k3UJ6yAJevvjG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=DGZ29QcU; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1732613967; c=relaxed/simple;
+	bh=r+oYFhQDu206kh8rtpczYlIqikTcn2nqOwmDgEWMDZ8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=fIkFjHHf4SNkq+lar9Fem2sHYFeqhX8W2OnaCB5iDjbm0+yvp0ENoNU+iLWEF3VMb3/xCa4k8uA8oxxA0R3VQ9imnb7/PdeUx028E/KnL664RIli9dz58J1UfljlFIyafn8tEWPV6xDNr42+6QjtVPWo3Ox9VaXx/AaYCJ2TcrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=MuNiPXT0; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4APLHhM3032368;
-	Tue, 26 Nov 2024 09:35:55 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AQ99pdh028937;
+	Tue, 26 Nov 2024 09:39:22 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	kG8EvSzPlUsbfIKd08/QW2AMJXbceZXcM+y0DGe08LM=; b=DGZ29QcUvgTJCqTW
-	mnzcb5mp0yPZexxzIF6hCrTNDWwrxuYRCC7xzF6n/OnrnFB/66NpmeW2AXgyk42m
-	c4XL/lah62Mt5L6FqHpfd8GpIMW9LNtBhol4VcvsnpMrzuCB5WltpjtApn5v5ZGR
-	dB6wYOs0KZUzsbTeLKjc4VKsmtfB8QES/vmCEQZtKqoG2CNVZcL+IA0LTttnklpd
-	bRsOT5Xfxv5wCluQqWl6UpLYrOpOg8m0D/n34dQDHS4yaHBuQk5eJ2PNoGMmeauO
-	wWOIKWToE7REnbo4v7KnL/468KCYhvFhVxoo6iechSGq0UwzzBOOTVLYKUwwAmn3
-	uWjFvg==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43374symaj-1
+	G02s6ZvHBVRG3S+Aqq0TT6fCgdbpyTvJwDs0wiqPkZE=; b=MuNiPXT0SEZs0O59
+	WK4owFc9yvf/uEAtIEkEvnlKLCU32b7LfXigMT6CWlfj01cPPM56S8UXN59K92ll
+	POPiTpz9wMmFldVRKmAMQCeQ1peQxcu/SlubnmIp1HwajEozNy2avE2+S41H5IhG
+	uArWnTt3uw2eeZQqz3lBsQNYFzFKBkZF4qqviMYfTet98/2n45Wet+4ezgXp/hk/
+	ZPeTDe/x6YVrwQykC0iysRNolt6T4okSNoV3036JwWR0OByWJvAKTQPEMtuZCB+a
+	u9GGfPebhxZL+FhUORLKmJ7Vi8g2DM1DBdXoVS2wmpq28aS68DQZOTHzD347BHPS
+	jEc5MA==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 435bf5g2t5-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 26 Nov 2024 09:35:55 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AQ9Zs0T029196
+	Tue, 26 Nov 2024 09:39:21 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AQ9dLe2018007
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 26 Nov 2024 09:35:54 GMT
-Received: from cse-cd02-lnx.ap.qualcomm.com (10.80.80.8) by
- nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 26 Nov 2024 01:35:47 -0800
-From: Tingguo Cheng <quic_tingguoc@quicinc.com>
-Date: Tue, 26 Nov 2024 17:35:06 +0800
-Subject: [PATCH 2/2] arm64: dts: qcom: qcs8300-ride: Enable PMIC
- peripherals
+	Tue, 26 Nov 2024 09:39:21 GMT
+Received: from [10.231.216.103] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 26 Nov
+ 2024 01:39:17 -0800
+Message-ID: <729add5f-1478-4b0e-84a1-3e33f153d58b@quicinc.com>
+Date: Tue, 26 Nov 2024 17:39:14 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/4] dt-bindings: qcom,qcs615-venus: add support for
+ video hardware
+To: Krzysztof Kozlowski <krzk@kernel.org>
+CC: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        "Vikash Garodia (QUIC)"
+	<quic_vgarodia@quicinc.com>,
+        "bryan.odonoghue@linaro.org"
+	<bryan.odonoghue@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        "Rob Herring" <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        "Conor Dooley" <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad Dybcio" <konradybcio@kernel.org>,
+        "linux-media@vger.kernel.org"
+	<linux-media@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org"
+	<linux-arm-msm@vger.kernel.org>,
+        "devicetree@vger.kernel.org"
+	<devicetree@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>,
+        <quic_qiweil@quicinc.com>
+References: <20241125-add-venus-for-qcs615-v3-0-5a376b97a68e@quicinc.com>
+ <20241125-add-venus-for-qcs615-v3-1-5a376b97a68e@quicinc.com>
+ <jovwobfcbc344eqrcgxeaxlz2mzgolxqaldvxzmvp5p3rxj3se@fudhzbx5hf2e>
+ <18cc654b4377463e8783de0b4659a27d@quicinc.com>
+ <474cef98-4644-4838-b07c-950ad7515b73@kernel.org>
+ <8c60696c-df14-4300-8a92-59eb134a96d2@quicinc.com>
+ <b2729bde-a12c-4662-897b-18bbea66d2f6@kernel.org>
+Content-Language: en-US
+From: Renjiang Han <quic_renjiang@quicinc.com>
+In-Reply-To: <b2729bde-a12c-4662-897b-18bbea66d2f6@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-ID: <20241126-adds-spmi-pmic-peripherals-for-qcs8300-v1-2-28af84cb86f8@quicinc.com>
-References: <20241126-adds-spmi-pmic-peripherals-for-qcs8300-v1-0-28af84cb86f8@quicinc.com>
-In-Reply-To: <20241126-adds-spmi-pmic-peripherals-for-qcs8300-v1-0-28af84cb86f8@quicinc.com>
-To: <quic_fenglinw@quicinc.com>, <quic_tingweiz@quicinc.com>,
-        <kernel@quicinc.com>, Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Tingguo Cheng <quic_tingguoc@quicinc.com>
-X-Mailer: b4 0.15-dev-dedf8
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1732613740; l=1324;
- i=quic_tingguoc@quicinc.com; s=20240917; h=from:subject:message-id;
- bh=Dy9jfyJL9DqPIvg0ykvyBMGcJukk+5g1Qe+eNUyCaTk=;
- b=m0gUF3DJqK9IHh4Ao2xDxYq7P5IgYuMOswFBONmgHV0fYUzKOLx94p7WNTKGk1GHzab1xYwMi
- IZqvLo5plupA4VSrrPYI0YQA5iwaDhZ2s1rOjC2eDCWgCT4kqSLK12d
-X-Developer-Key: i=quic_tingguoc@quicinc.com; a=ed25519;
- pk=PiFYQPN5GCP7O6SA43tuKfHAbl9DewSKOuQA/GiHQrI=
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: CrLOjxwpe6wns0vamFlKMyJopY7WYyWo
-X-Proofpoint-ORIG-GUID: CrLOjxwpe6wns0vamFlKMyJopY7WYyWo
+X-Proofpoint-ORIG-GUID: _i6MVz5Du2hP-4CJrfTyFxb9vzOSRepH
+X-Proofpoint-GUID: _i6MVz5Du2hP-4CJrfTyFxb9vzOSRepH
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- lowpriorityscore=0 mlxlogscore=936 bulkscore=0 malwarescore=0 adultscore=0
- priorityscore=1501 spamscore=0 mlxscore=0 impostorscore=0 phishscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411260075
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 impostorscore=0
+ suspectscore=0 clxscore=1015 mlxlogscore=947 spamscore=0 malwarescore=0
+ adultscore=0 bulkscore=0 priorityscore=1501 lowpriorityscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411260076
 
-Enable PMIC and PMIC peripherals for qcs8300-ride board. The qcs8
-300-ride uses 2 pmics(pmm8620au:0,pmm8650au:1) on the board, which
-are variants of pmm8654au used on sa8775p/qcs9100 -ride(4x pmics).
 
-Signed-off-by: Tingguo Cheng <quic_tingguoc@quicinc.com>
----
- arch/arm64/boot/dts/qcom/qcs8300-ride.dts | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+On 11/26/2024 2:42 PM, Krzysztof Kozlowski wrote:
+> On 26/11/2024 07:07, Renjiang Han wrote:
+>> On 11/25/2024 11:55 PM, Krzysztof Kozlowski wrote:
+>>> On 25/11/2024 16:49, Renjiang Han (QUIC) wrote:
+>>>>>> +  video-decoder:
+>>>>>> +    type: object
+>>>>>> +
+>>>>>> +    additionalProperties: false
+>>>>>> +
+>>>>>> +    properties:
+>>>>>> +      compatible:
+>>>>>> +        const: venus-decoder
+>>>>>> +
+>>>>>> +    required:
+>>>>>> +      - compatible
+>>>>>> +
+>>>>>> +  video-encoder:
+>>>>>> +    type: object
+>>>>> Both nodes are useless - no resources here, nothing to control.
+>>>>> Do not add nodes just to instantiate Linux drivers. Drop them.
+>>>> Do you mean I should remove video-decoder and video-encoder from here?
+>>> Yes, that's my suggestion.
+>>>
+>>>> If so, do I also need to remove these two nodes from the dtsi file and add
+>>> Yes
+>>>
+>>>> them in the qcs615-ride.dts file?
+>>> Well, no, how would it pass dtbs_check?
+>>>
+>>> Don't add nodes purely for Linux driver instantiation.
+>> OK, I got it. I'll update like this. If video-decoder and video-encoder are
+>>
+>> removed from dtsi file and not added to qcs615-ride.dts file, then the
+>>
+>> video decoder and encoder functions will not be available on the qcs615
+>>
+>> platform. So I think these two nodes should be added to the
+>>
+>> qcs615-ride.dts file to ensure that the qcs615 platform can enable the
+>>
+>> video decoder and encoder functions.
+> You just repeated the same sentences. Address my comment instead - empty
+> device nodes should not be used just to instantiate Linux device drivers.
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-index 7eed19a694c39dbe791afb6a991db65acb37e597..9447efb9cd01654b74ec4c18dec58b1956ffe710 100644
---- a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-+++ b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-@@ -9,6 +9,7 @@
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- 
- #include "qcs8300.dtsi"
-+#include "sa8775p-pmics.dtsi"
- / {
- 	model = "Qualcomm Technologies, Inc. QCS8300 Ride";
- 	compatible = "qcom,qcs8300-ride", "qcom,qcs8300";
-@@ -223,6 +224,28 @@ &gcc {
- 		 <0>;
- };
- 
-+&pmm8654au_0_pon_resin{
-+	linux,code = <KEY_VOLUMEDOWN>;
-+
-+	status = "okay";
-+};
-+
-+&pmm8654au_2{
-+	status = "disabled";
-+};
-+
-+&pmm8654au_2_thermal{
-+	status = "disabled";
-+};
-+
-+&pmm8654au_3{
-+	status = "disabled";
-+};
-+
-+&pmm8654au_3_thermal{
-+	status = "disabled";
-+};
-+
- &qupv3_id_0 {
- 	status = "okay";
- };
+Thanks for your reply. I agree with your comment. The two nodes 
+video-decoder and
+
+video-encoder should not be placed in the devicetree. But this is 
+affected by the venus
+
+driver. On the old platform, some only need to enable the video-decoder 
+function or
+
+only enable the video-encoder function. So these two nodes were added to the
+
+devicetree at that time. For new platforms, the iris driver will be used 
+in the future,
+
+and this situation will not occur.
+
+> Best regards,
+> Krzysztof
 
 -- 
-2.34.1
+Best Regards,
+Renjiang
 
 
