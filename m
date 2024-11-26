@@ -1,80 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-39230-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39231-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5E08C9D9FC9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 00:44:58 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2B5699D9FCC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 00:45:13 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4AF3B168AE2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Nov 2024 23:44:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E112D283009
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Nov 2024 23:45:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0AF7C1E0490;
-	Tue, 26 Nov 2024 23:44:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0AE231E0B70;
+	Tue, 26 Nov 2024 23:44:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="f6AKDNje"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JxG539p/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E29D1DFE3B
-	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Nov 2024 23:44:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A8691E049C
+	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Nov 2024 23:44:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732664677; cv=none; b=HViP9ZjiZaT7E98A0zHGoHHTgZ4/Js42oFMkpSMjsnlpqVbQ1qoDZpOPmy0dvG/yKN1odg1xD/LrD5PQXsEBISety/7AfEuR+mn/IE32a3vBAfjq4OKcp1FFrvOhw0AnsNIJNZ5iruN2qs1/d1mxO22CqUGmAPSxfA67E48JP8M=
+	t=1732664679; cv=none; b=Dj2dHcCg6wBsBVqKFuHytiZKvEXsVT99Pd3mQ3tZMRhKrMxjqe98+iQC4STKn0Co+fK5d+9uNGEDsUOUnHjWfENJd0g/X5VKEhfIeb2CGV7SYNKe7gZ651a2MYNxwIVJYJtTkPZSpJIqr7pskI5x+XNXhPoBB7gw3ixnKOjVt0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732664677; c=relaxed/simple;
-	bh=9DcDIgyiPEQQcegeEN1oWtNvqOat5t+dI1L4z5w/npc=;
+	s=arc-20240116; t=1732664679; c=relaxed/simple;
+	bh=nVHGEOrRUdBNA5gRWj0sFzT9xtelcZ3Fgi3g7ZZhzww=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=jXcH1ZRzh+j5M/lB7YDuK64DHXjks9lDfHmY3tCWZyqxffM1AbLHd/vBd22amWqZ6KXabdKdcTn+OukNoYGJ45tdsJkAM6Wd/CVqXHrd7l0EZSutVEVcBcFWITRtgLJkOPdsXlIkZLcJ+9MLzTv1a/o/KAQuvJ/fUsejlBSzXV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=f6AKDNje; arc=none smtp.client-ip=209.85.221.54
+	 In-Reply-To:To:Cc; b=ClQUew+AO1t+FoQHZyIGaK+a6vtdp35fRymx0jg8XnZWyWMGSMliJi7Iy+2yUZqGpnRYSvVw0dnjRKG0mHmFqm2CIoFB9azrVl04qXdLcxY5Tm28bROY5ZIkzhhzNCMeLgmCFCP9NyqvyvWUGXVaHIXjXXdOV15j1rZBM248kcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JxG539p/; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-382376fcc4fso3756224f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Nov 2024 15:44:35 -0800 (PST)
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4349f160d62so25772865e9.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Nov 2024 15:44:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732664674; x=1733269474; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1732664676; x=1733269476; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=6CvPt8QMHcz942A3Oqz3/N9DPxj3tCNq+0xhS6ngyuw=;
-        b=f6AKDNjeC/ddGcJ/pTrP7RqmpxnNaWdSofMYY3TPXNbF6hvkg2of2rKa+C/GSW6vjv
-         1RpNC3zm24hAhgBtMYpuS5yw1/4wgsw8q6cLrEdBu6mfyWb+Dw60om71rEIDXWRX3tKl
-         YTOc0PLpO/QnFAe0jXk5kEjZqzd3RZXEWS+vb4egTeOurBFnMD+FNO0XRr06vFHH73Y/
-         2Q+a2bBF+EEVOP0Oh+hHKUx6HxDwWA8mCcGoUCyhbAPfIYBjWmjr6kFViBQmCEXoFoO0
-         qMMMoJf+hYMoA0cS9BaV6mYied2HpNCRbEm2e6FQwYoFytnngRksEp2aPwoX/VSnGkeO
-         lGzQ==
+        bh=QK080mMzdkSHpObUIjIterv6PuoIM1SQM8FNf9+Umao=;
+        b=JxG539p/bnkKA/TwZTCcEQ7syyPsoN4yl43pdhfBegBFA+PKgVZhZdVR2Y2mPySnMN
+         ENWByUqYgO9C0WRp8eJJKZ9TGUjQ7cxsNerfLjnsbI0ZZzOaT3yNT6AO57SGRIwuPEqV
+         C3nfzjSQzWW6H0r/Zxq8RGwJ6iRW2kSeVBl1RG7Rr9oRxmam6LW7eZ/qd6neMQqHWkxp
+         Tw7ehbmIhzQ9d6GbgStisa8NmDzARED90SfAeJv+jbzYP5ndHUggVD3RiaA7NhS+m8F/
+         /mRkY195lWjO9SHEntCsA3vS7V+RJO9gqqLyNGNE1pnzq8RZIDQ72mpEeGwVB26F00g6
+         wJJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732664674; x=1733269474;
+        d=1e100.net; s=20230601; t=1732664676; x=1733269476;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=6CvPt8QMHcz942A3Oqz3/N9DPxj3tCNq+0xhS6ngyuw=;
-        b=hno2mEF285aZ+pGkStnuXkp3OHig6yCU//pyQXdIsec832/f/nvoI8LqFf8Ll69VVC
-         TQ+lRGgPM4N0wu0kN2p36OoEsdNMn0ZIRnbAC6SDGK6kd9UBx2fyyIbun0lva4xQJ5xw
-         4kkhoc7gtn/nauZPOQr5jF7uU/PMqOjA6EaV4vQUIbkvk3kYMPH1WIPssjEMBDFarq57
-         MI2GpTWoDJl3PBHQa+NGinRIjKiXHOnFMHGBhDOnsdxxbxKrkurf/q06h+13p1e1ldrp
-         giDPyFl/lh3LZ4zSzHno2Fxr3M6p/jWpNNF8JU+1wh0sqa/lMApFkMhnXCFhOiruJV25
-         fhkg==
-X-Gm-Message-State: AOJu0Yy0ehQgC7oXt9ztOukmHnINuGWxv+BwzUbs2hk86RCY5TSjqVjz
-	6TlvJVzostYAWA+wERSp8+i73XGtcSo8rcBe6Z7m5csi6Dl2ezCT3fvoiUbnGW59tr7Mtmx0KpH
-	8mmA=
-X-Gm-Gg: ASbGncu8X51u/BzBeVGZIg0hHS+22SodN+MC62L+juL0bojhdFbNITU3PWretfgPovg
-	/74i3Ajgv1ozNJbhmspVEgYMY+lhj5lNn/W9i3gelLqBt/Oa3hxS4luxUfWfxb9Gwg+1p+EWWpW
-	bv4LpAXfRijGjuZnQSoo28tlZSMr1SNtQI4CgYhWM5WWb+zZ2SRRe9o+xBI5+hecbE6r6NzyCkO
-	1JAT1MsEtFvIeiJggwHIxqBj2ttkUjahsClTdAYvuWqiGEt00YSsMoaWqQ=
-X-Google-Smtp-Source: AGHT+IE+Oglm7E2t7Ut5iZpBl+SAvEqAXWb/9nqHNfrjK8E3TwWYDWN8olld0Ah29+gOrPXAKM3mBQ==
-X-Received: by 2002:a5d:5888:0:b0:382:4378:4652 with SMTP id ffacd0b85a97d-385c6edd47bmr520166f8f.45.1732664674376;
-        Tue, 26 Nov 2024 15:44:34 -0800 (PST)
+        bh=QK080mMzdkSHpObUIjIterv6PuoIM1SQM8FNf9+Umao=;
+        b=vypgF6hPX4MBq7UK2Ts0PxdsC/cxy8XfomAqJF3OD4+b9goEgNbK0ZDTGpwYM7+7tS
+         /HQJdLJkNwRWXP5eOuMutf1lBUPA/BH5OFvyUNLE+DQMSfFm3FRBMD0WJ4NZViyuje/V
+         KVwQ7ukdJ01OBmE9QZG8mxMul2CFjFzHVd+Wj57tsrB9WN8A8Sjj1kgczMdgEJpZcQod
+         5bXhfDg5vNOoR7ZwAOsfHI8wR569b25/iIJGLZ4wuKe2NT/IO6VK/4xL1uFX+cUZTeZ2
+         B4aWD+StCVW53npInARAAxVuDktu7vrCS2s9cCzoArj54YXnHjwK1ixeUtUVdyWRG6R5
+         fTUQ==
+X-Gm-Message-State: AOJu0YyBC4nZcgfRQ3binfZRpnI7D+RwvkkugMJbCDt6jo7tjv/NoaOY
+	rYx8m3WgB81P+QQnSaj+9maDu6A7zz9AaeakshlaugJQngFsccOEypf1pgrUGaahg72dBnrgJ3X
+	no6c=
+X-Gm-Gg: ASbGncuNGa/qT5rXZFwN1d6pPMA2fIy11n1dnRsfh10tCdhfnCS94GncF18iWArJtPQ
+	VR6z6I/V6LIRuOIMf/eEXmRMZii698dmhQgQAnDJZY3xBgeIRK7+9uk19RGTjv9jn0L0InJ68vj
+	eZkREqy5UWkIFjo9Nxzq3K5SIjQhlpsDtY3mng8iIKMrggIp23WHQ5hJVuKigJPrSIN3GF4wOq8
+	NUQddj9+RjO+IF3bAH/rUlNuTUt/gXgvDroHgesED4upcjSmlHZQhqk1Ic=
+X-Google-Smtp-Source: AGHT+IGd+fjrVRUKvsVcA1pohdHvtSxuhDJA0UKE8GpD7PEO4QQLWsNHgyLqbxvvvkEfp+17KqBElA==
+X-Received: by 2002:a05:600c:1d18:b0:434:9936:c823 with SMTP id 5b1f17b1804b1-434a9dc694fmr9606295e9.18.1732664676497;
+        Tue, 26 Nov 2024 15:44:36 -0800 (PST)
 Received: from [127.0.1.1] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3825fafe338sm14482899f8f.33.2024.11.26.15.44.33
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3825fafe338sm14482899f8f.33.2024.11.26.15.44.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Nov 2024 15:44:34 -0800 (PST)
+        Tue, 26 Nov 2024 15:44:35 -0800 (PST)
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Date: Tue, 26 Nov 2024 23:44:28 +0000
-Subject: [PATCH v3 2/3] clk: qcom: common: Add support for power-domain
- attachment
+Date: Tue, 26 Nov 2024 23:44:29 +0000
+Subject: [PATCH v3 3/3] driver: clk: qcom: Support attaching subdomain list
+ to multiple parents
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,7 +83,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241126-b4-linux-next-24-11-18-clock-multiple-power-domains-v3-2-836dad33521a@linaro.org>
+Message-Id: <20241126-b4-linux-next-24-11-18-clock-multiple-power-domains-v3-3-836dad33521a@linaro.org>
 References: <20241126-b4-linux-next-24-11-18-clock-multiple-power-domains-v3-0-836dad33521a@linaro.org>
 In-Reply-To: <20241126-b4-linux-next-24-11-18-clock-multiple-power-domains-v3-0-836dad33521a@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -94,66 +94,100 @@ Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  linux-kernel@vger.kernel.org, Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 X-Mailer: b4 0.15-dev-355e8
 
-Right now we support one power-domain per clock controller.
-These single power-domains are switched on by the driver platform logic.
-
-However when we have multiple power-domains attached to a clock-controller
-that list of power-domains must be handled outside of driver platform
-logic.
-
-Use devm_pm_domain_attach_list() to automatically hook the list of given
-power-domains in the dtsi for the clock-controller driver.
+When a clock-controller has multiple power-domains we need to attach parent
+GDSCs in that clock-controller as subdomains of each of the power-domains.
 
 Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 ---
- drivers/clk/qcom/common.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ drivers/clk/qcom/common.c |  1 +
+ drivers/clk/qcom/gdsc.c   | 35 +++++++++++++++++++++++++++++++++++
+ drivers/clk/qcom/gdsc.h   |  1 +
+ 3 files changed, 37 insertions(+)
 
 diff --git a/drivers/clk/qcom/common.c b/drivers/clk/qcom/common.c
-index 33cc1f73c69d1f875a193aea0552902268dc8716..7727295c57c8f6672d46d2380e1ff5ec2ac68d42 100644
+index 7727295c57c8f6672d46d2380e1ff5ec2ac68d42..58a8397eefe51da237a4285d4e7cee967e19948f 100644
 --- a/drivers/clk/qcom/common.c
 +++ b/drivers/clk/qcom/common.c
-@@ -22,6 +22,7 @@ struct qcom_cc {
- 	struct qcom_reset_controller reset;
- 	struct clk_regmap **rclks;
- 	size_t num_rclks;
-+	struct dev_pm_domain_list *pd_list;
- };
- 
- const
-@@ -283,6 +284,21 @@ static int qcom_cc_icc_register(struct device *dev,
- 						     desc->num_icc_hws, icd);
+@@ -338,6 +338,7 @@ int qcom_cc_really_probe(struct device *dev,
+ 		scd->dev = dev;
+ 		scd->scs = desc->gdscs;
+ 		scd->num = desc->num_gdscs;
++		scd->pd_list = cc->pd_list;
+ 		ret = gdsc_register(scd, &reset->rcdev, regmap);
+ 		if (ret)
+ 			return ret;
+diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
+index 4fc6f957d0b846cc90e50ef243f23a7a27e66899..cb4afa6d584899f3dafa380d5e01be6de9711737 100644
+--- a/drivers/clk/qcom/gdsc.c
++++ b/drivers/clk/qcom/gdsc.c
+@@ -506,6 +506,36 @@ static int gdsc_init(struct gdsc *sc)
+ 	return ret;
  }
  
-+static int qcom_cc_pds_attach(struct device *dev, struct qcom_cc *cc)
++static int gdsc_add_subdomain_list(struct dev_pm_domain_list *pd_list,
++				   struct generic_pm_domain *subdomain)
 +{
-+	struct dev_pm_domain_attach_data pd_data = {
-+		.pd_names = 0,
-+		.num_pd_names = 0,
-+	};
-+	int ret;
++	int i, ret;
 +
-+	ret = devm_pm_domain_attach_list(dev, &pd_data, &cc->pd_list);
-+	if (ret < 0 && ret != -EEXIST)
-+		return ret;
++	for (i = 0; i < pd_list->num_pds; i++) {
++		struct device *dev = pd_list->pd_devs[i];
++		struct generic_pm_domain *genpd = pd_to_genpd(dev->pm_domain);
++
++		ret = pm_genpd_add_subdomain(genpd, subdomain);
++		if (ret)
++			return ret;
++	}
 +
 +	return 0;
 +}
 +
- int qcom_cc_really_probe(struct device *dev,
- 			 const struct qcom_cc_desc *desc, struct regmap *regmap)
- {
-@@ -299,6 +315,10 @@ int qcom_cc_really_probe(struct device *dev,
- 	if (!cc)
- 		return -ENOMEM;
- 
-+	ret = qcom_cc_pds_attach(dev, cc);
-+	if (ret)
-+		return ret;
++static void gdsc_remove_subdomain_list(struct dev_pm_domain_list *pd_list,
++				       struct generic_pm_domain *subdomain)
++{
++	int i;
 +
- 	reset = &cc->reset;
- 	reset->rcdev.of_node = dev->of_node;
- 	reset->rcdev.ops = &qcom_reset_ops;
++	for (i = 0; i < pd_list->num_pds; i++) {
++		struct device *dev = pd_list->pd_devs[i];
++		struct generic_pm_domain *genpd = pd_to_genpd(dev->pm_domain);
++
++		pm_genpd_remove_subdomain(genpd, subdomain);
++	}
++}
++
+ int gdsc_register(struct gdsc_desc *desc,
+ 		  struct reset_controller_dev *rcdev, struct regmap *regmap)
+ {
+@@ -558,6 +588,9 @@ int gdsc_register(struct gdsc_desc *desc,
+ 			ret = pm_genpd_add_subdomain(scs[i]->parent, &scs[i]->pd);
+ 		else if (!IS_ERR_OR_NULL(dev->pm_domain))
+ 			ret = pm_genpd_add_subdomain(pd_to_genpd(dev->pm_domain), &scs[i]->pd);
++		else if (desc->pd_list)
++			ret = gdsc_add_subdomain_list(desc->pd_list, &scs[i]->pd);
++
+ 		if (ret)
+ 			return ret;
+ 	}
+@@ -580,6 +613,8 @@ void gdsc_unregister(struct gdsc_desc *desc)
+ 			pm_genpd_remove_subdomain(scs[i]->parent, &scs[i]->pd);
+ 		else if (!IS_ERR_OR_NULL(dev->pm_domain))
+ 			pm_genpd_remove_subdomain(pd_to_genpd(dev->pm_domain), &scs[i]->pd);
++		else if (desc->pd_list)
++			gdsc_remove_subdomain_list(desc->pd_list, &scs[i]->pd);
+ 	}
+ 	of_genpd_del_provider(dev->of_node);
+ }
+diff --git a/drivers/clk/qcom/gdsc.h b/drivers/clk/qcom/gdsc.h
+index 1e2779b823d1c8ca077c9b4cd0a0dbdf5f9457ef..dd843e86c05b2f30e6d9e978681580016333839d 100644
+--- a/drivers/clk/qcom/gdsc.h
++++ b/drivers/clk/qcom/gdsc.h
+@@ -80,6 +80,7 @@ struct gdsc_desc {
+ 	struct device *dev;
+ 	struct gdsc **scs;
+ 	size_t num;
++	struct dev_pm_domain_list *pd_list;
+ };
+ 
+ #ifdef CONFIG_QCOM_GDSC
 
 -- 
 2.45.2
