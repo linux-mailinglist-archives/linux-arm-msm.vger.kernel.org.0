@@ -1,61 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-39218-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39220-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C584D9D9BB4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Nov 2024 17:45:11 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 53EE1160F53
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Nov 2024 16:45:08 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB2361DA113;
-	Tue, 26 Nov 2024 16:45:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="I7tJfT75"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 448979D9BEE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Nov 2024 17:58:11 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 348531D8E16;
-	Tue, 26 Nov 2024 16:44:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 841D4B2B5D0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Nov 2024 16:45:50 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 358F51DA617;
+	Tue, 26 Nov 2024 16:45:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="DnQYNNIp"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 833121D8E1E;
+	Tue, 26 Nov 2024 16:45:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732639502; cv=none; b=Y2AqzncgzeBDao4fS7A/v6Xpv1Ugo6QpYMKKoAxt+S85PoTlMelvKsYXqmR6Uso0MO/hFefA8h6piikrLbmSpQ8W3HnwCDuPtGX8RZDZ4X4z84Crc1sbgDLZi5mB78M3Oqo4wbOSPwacoqTfTZ0PR2T5mKYAe6fSm3l8xWGOk9c=
+	t=1732639516; cv=none; b=s0Ybwuu9Ka0eqjzNlXaAhaAHBnrW5n1VqV1HuSbBsR3KIbwWHQY5n9SKeJEWiHwCWhSWi05l95vRJ9KtvZgNioP1lboGDssb3Ui2QKo4AfJKRAM3HxgmEvd9LlSc9KuMmJiZicjRBjcNsVbYasG1LwHsoEwb8jxTq2kTV9LUAWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732639502; c=relaxed/simple;
-	bh=ArvzV5XrFXZSwjUaVyXbuWR86XhWcfmbbvukIEhNofY=;
+	s=arc-20240116; t=1732639516; c=relaxed/simple;
+	bh=khRN4s58tWHnZ8JZzMUG8MRVrkfMP+cl/uKoXkmgylk=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HBGUL21IRinxcDhtBXfv+jVYR83n2DH+0cY3DGdLN8QmuapBZXaIxC7g1gnfd0cMfR9sZiO4jXt525q3z8z2ZNwm8s1dhPz6+iVM4alkN6GyJk0unAXPtvaEg21W5t+7LKVcgBy/8MXk4dboAZMggPOkUXkTkg0FA6GYFtDttew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=I7tJfT75; arc=none smtp.client-ip=205.220.168.131
+	 MIME-Version:Content-Type; b=BzsglqtTAG0VUyG97E1YIWHFC8+HBkeCtyoi+Gawf+4f1I2go6w8bF+tV+q+lXt4ilJCF9jTamP1by5/7XL1rtlnMpL6lNUPdwFPRcpK7fZAggNzthoubLdWPYlYhu5oJcnXyVTjJYGv1jv7kZ3T97LJRN/gymqunCJl0R9Emww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=DnQYNNIp; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AQ99qHN028964;
-	Tue, 26 Nov 2024 16:44:39 GMT
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AQDjDoO032291;
+	Tue, 26 Nov 2024 16:44:46 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	wlvUV5zZsPDjQimoOhzSljo/S63ZXaxegUXl2iCWMyo=; b=I7tJfT75+CaJqs+E
-	QZef74+3IBwb+zAz+suK/nA8O8/LDiSGmUc0tb7SmGMa5q66su4tlXF6S0cNF862
-	4q2YACdUSgczRk1uKARBF14DJbhZmenWYQ+hrIZcmQ/S6s7Tu8tu8cXkbb5NtR9Q
-	slZw3eFLZ39R7XgQcONUIYSqYYfBk5wFT/REKT6EN4G1OOxMivbo4J8KOgHR9L27
-	lO8ma+qhNh5ZWaKt1B7mlW9MIi+B57/7nwFHRJ7RASd+Ru1PPemE5eQUIS7jsO+t
-	SbWuOiIZfDQ8kOl7g85TaIQCdPa55XhvcP8TcQ55hbAzwbbooy2QGNPKCvv+vSnE
-	eTBWKw==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 435bf5h760-1
+	i147ChdZnlEZdK4XlMeJAHpSdB9mk5quIXMEE6428gw=; b=DnQYNNIpyknMkofp
+	pwqzGkYfH/06ZxDVNYNExyssnM97YZeyJMGFnqcFdnmx0O8KxLHQd5DEMok1vBQN
+	fV9Nt6CeCe0NpY7ZBFIpjTPU1vXbW44QxQGFhwYA7NQp31FB9QdGjzhJLnRyoKZ4
+	yHpi7zN0/9zKmyLRO8u2blLYYND/Z10ZvUQRB/tZNCQVcSOhrX4koojEjYiTu8VL
+	hz0SWXIOFa5xXNHaGlFkvE6ua2Uy4pSmD22361jgHhmwaYQMAinFejqUugzdwSZY
+	FiQM4QxteKvQJLMdDkX97YcgQQzxboTFQ/81jOzxRNFP2UPID+boTbsAA83KAU96
+	qZfkaw==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 435ffyre9t-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 26 Nov 2024 16:44:39 +0000 (GMT)
+	Tue, 26 Nov 2024 16:44:45 +0000 (GMT)
 Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AQGicFF023869
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AQGiiAP008216
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 26 Nov 2024 16:44:38 GMT
+	Tue, 26 Nov 2024 16:44:44 GMT
 Received: from hu-mohs-hyd.qualcomm.com (10.80.80.8) by
  nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 26 Nov 2024 08:44:31 -0800
+ 15.2.1544.9; Tue, 26 Nov 2024 08:44:36 -0800
 From: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
 To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
         Liam Girdwood
@@ -76,9 +76,9 @@ CC: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
         <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
         <quic_rohkumar@quicinc.com>, <kernel@quicinc.com>,
         Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-Subject: [PATCH v3 1/5] ASoC: dt-bindings: Add bindings for wcd937x static channel mapping
-Date: Tue, 26 Nov 2024 22:12:56 +0530
-Message-ID: <20241126164300.3305903-2-quic_mohs@quicinc.com>
+Subject: [PATCH v3 2/5] ASoC: dt-bindings: wcd937x-sdw: Add static channel mapping support
+Date: Tue, 26 Nov 2024 22:12:57 +0530
+Message-ID: <20241126164300.3305903-3-quic_mohs@quicinc.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20241126164300.3305903-1-quic_mohs@quicinc.com>
 References: <20241126164300.3305903-1-quic_mohs@quicinc.com>
@@ -94,45 +94,131 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 9hQwXFatRDiYxyuH6qN7qU2zj99iHrAr
-X-Proofpoint-GUID: 9hQwXFatRDiYxyuH6qN7qU2zj99iHrAr
+X-Proofpoint-GUID: HU-5G5kmbhB3XH0Y4aOmGjio1-w08qwZ
+X-Proofpoint-ORIG-GUID: HU-5G5kmbhB3XH0Y4aOmGjio1-w08qwZ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 impostorscore=0
- suspectscore=0 clxscore=1015 mlxlogscore=999 spamscore=0 malwarescore=0
- adultscore=0 bulkscore=0 priorityscore=1501 lowpriorityscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
+ bulkscore=0 lowpriorityscore=0 spamscore=0 impostorscore=0 suspectscore=0
+ priorityscore=1501 malwarescore=0 adultscore=0 phishscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2409260000 definitions=main-2411260134
 
-Add wcd937x static channel mapping values to avoid
-having to use unclear number indices in device trees.
+Add static channel mapping between master and slave rx/tx ports for
+Qualcomm wcd937x soundwire codec.
+
+Currently, the channel map index value for each soundwire port is
+hardcoded in the wcd937x-sdw driver, and the same channel map index
+value is configured in the soundwire master.
+
+The Qualcomm board like the QCM6490-IDP require static channel map
+settings for the soundwire master and slave ports.
+
+If another boards which are using enable wcd937x, the channel mapping
+index values between master and slave may be different depending on the
+board hw design and requirements. If the above properties are not used
+in a SoC specific device tree, the channel mapping index values are set
+to default.
+
+With the introduction of the following channel mapping properties, it is
+now possible to configure the master channel mapping directly from the
+device tree.
+
+The qcom,tx-channel-mapping property specifies the static channel mapping
+between the slave and master tx ports in the order of slave port channels
+which is adc1, adc2, adc3, adc4, dmic0, dmic1, mbhc, dmic2, dmic3, dmci4,
+dmic5, dmic6, dmic7.
+
+The qcom,rx-channel-mapping property specifies the static channel mapping
+between the slave and master rx ports in the order of slave port channels
+which is hph_l, hph_r, clsh, comp_l, comp_r, lo, dsd_r, dsd_l.
 
 Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
 ---
- include/dt-bindings/sound/qcom,wcd93xx.h | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
- create mode 100644 include/dt-bindings/sound/qcom,wcd93xx.h
+ .../bindings/sound/qcom,wcd937x-sdw.yaml      | 48 +++++++++++++++++++
+ 1 file changed, 48 insertions(+)
 
-diff --git a/include/dt-bindings/sound/qcom,wcd93xx.h b/include/dt-bindings/sound/qcom,wcd93xx.h
-new file mode 100644
-index 000000000000..45bcc30d0393
---- /dev/null
-+++ b/include/dt-bindings/sound/qcom,wcd93xx.h
-@@ -0,0 +1,13 @@
-+/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+ * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
-+ */
+diff --git a/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml b/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml
+index d3cf8f59cb23..7893b1c1f80b 100644
+--- a/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml
++++ b/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml
+@@ -58,6 +58,44 @@ properties:
+     items:
+       enum: [1, 2, 3, 4, 5]
+ 
++  qcom,tx-channel-mapping:
++    description: |
++      Specifies static channel mapping between slave and master tx port
++      channels.
++      In the order of slave port channels which is adc1, adc2, adc3,
++      dmic0, dmic1, mbhc, dmic2, dmic3, dmci4, dmic5, dmic6, dmic7.
++      The channel map index values are fixed values.
++      SWRM_CH1 ==> 1
++      SWRM_CH2 ==> 2
++      SWRM_CH3 ==> 4
++      SWRM_CH4 ==> 8
 +
-+#ifndef __DT_SOUND_QCOM_WCD93xx_H
-+#define __DT_SOUND_QCOM_WCD93xx_H
++    $ref: /schemas/types.yaml#/definitions/uint8-array
++    minItems: 12
++    maxItems: 12
++    additionalItems: false
++    items:
++      enum: [1, 2, 4, 8]
 +
-+#define SWRM_CH1 1
-+#define SWRM_CH2 2
-+#define SWRM_CH3 4
-+#define SWRM_CH4 8
++  qcom,rx-channel-mapping:
++    description: |
++      Specifies static channels mapping between slave and master rx port
++      channels.
++      In the order of slave port channels, which is
++      hph_l, hph_r, clsh, comp_l, comp_r, lo, dsd_r, dsd_l.
++      The channel map index values are fixed values.
++      SWRM_CH1 ==> 1
++      SWRM_CH2 ==> 2
++      SWRM_CH3 ==> 4
++      SWRM_CH4 ==> 8
 +
-+#endif
++    $ref: /schemas/types.yaml#/definitions/uint8-array
++    minItems: 8
++    maxItems: 8
++    additionalItems: false
++    items:
++      enum: [1, 2, 4, 8]
++
+ required:
+   - compatible
+   - reg
+@@ -66,6 +104,9 @@ additionalProperties: false
+ 
+ examples:
+   - |
++
++    #include <dt-bindings/sound/qcom,wcd93xx.h>
++
+     soundwire@3210000 {
+         reg = <0x03210000 0x2000>;
+         #address-cells = <2>;
+@@ -74,6 +115,9 @@ examples:
+             compatible = "sdw20217010a00";
+             reg = <0 4>;
+             qcom,rx-port-mapping = <1 2 3 4 5>;
++            qcom,rx-channel-mapping =  /bits/ 8 <SWRM_CH1 SWRM_CH2 SWRM_CH1
++                                                 SWRM_CH1 SWRM_CH2 SWRM_CH1
++                                                 SWRM_CH1 SWRM_CH2>;
+         };
+     };
+ 
+@@ -85,6 +129,10 @@ examples:
+             compatible = "sdw20217010a00";
+             reg = <0 3>;
+             qcom,tx-port-mapping = <2 2 3 4>;
++            qcom,tx-channel-mapping = /bits/ 8 <SWRM_CH1 SWRM_CH2 SWRM_CH2
++                                                SWRM_CH1 SWRM_CH2 SWRM_CH3
++                                                SWRM_CH3 SWRM_CH4 SWRM_CH1
++                                                SWRM_CH2 SWRM_CH3 SWRM_CH4>;
+         };
+     };
+ 
 -- 
 2.25.1
 
