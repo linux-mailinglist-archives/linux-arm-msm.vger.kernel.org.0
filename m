@@ -1,171 +1,182 @@
-Return-Path: <linux-arm-msm+bounces-39203-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39205-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 639409D97C7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Nov 2024 13:58:16 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id DD30D9D992B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Nov 2024 15:09:59 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 77DD9165F05
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Nov 2024 14:09:56 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2C361D5AA4;
+	Tue, 26 Nov 2024 14:09:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bpw74h2D"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B1620B27AC5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Nov 2024 12:56:41 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C4D0F1D4358;
-	Tue, 26 Nov 2024 12:56:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tUZNBKqo"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C18C1D432C
-	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Nov 2024 12:56:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F330D528;
+	Tue, 26 Nov 2024 14:09:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732625785; cv=none; b=SclNSRIBl+EyHA13E3lvd0yu+jvSh2fO2ZFbQluB4erMUFMTmfa3tflBZH16shgy04GG+zxLQS9jU+SeigHzDOL114jTgbHT0DH4xxFQFL0XVbMw1tufq7og7XMoWcd+jAYS/L7AyjgQX/G2XTSWSajp7/r2qE2fBfecT6iJ/0o=
+	t=1732630197; cv=none; b=IKtW8z4vKBp86QspkooPPHY2yBS+oBsE+GB78tjS2Cop0HwEaoa11tb4sjrmMRzv6UK1GkyzH1da/MNgApdU0M8XEvvW0+r8dr+9M00f/aW0hwN1a/Hw9ZolOa4qLo8reR8DN4akFrpAzOd545ObwU2Y9zp+5N0NvcmGunWaHhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732625785; c=relaxed/simple;
-	bh=TfjTGWQaDFmp9+wS6+9ipI5j9jCprYMO03bsaV8msQQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fArYyvnd48PSrfqbngv/lTvGfudNJijdgdE6G1nBYb3QRz0ncABHIH6rgJgfUBNWwzZHwcrQIEPaX8eHtRjNcWWcnqJ3GVWW+YeouHQat6vtTGbd+THlBPJDkE+THgqqZ028FvWdfcJ8dFM2YZE+E7+lugNEuf/f780Sud2MQKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tUZNBKqo; arc=none smtp.client-ip=209.85.214.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-214f6ed9f17so1575505ad.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Nov 2024 04:56:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732625783; x=1733230583; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=YY215mVBF/BsyIyjPcQ5YdAmE/7mcXahP/kNz5RyMwA=;
-        b=tUZNBKqoYN5o9F2YcDoN5qwCVmv5Leka0vhz1kNI1bZLv13ecMRELbhRCZZ3XUi/jp
-         HUqytxkeMOtxdO801G1fYdEC1Auy8x9BMlbqp/uCMBbPAjwl/c1iFDdypFHUTvJhRbAD
-         6uNSTiUfOCRGL2lL0eoymokAJTVataOZvUSg3XfdtCNxN3wzi+foKhfzG5ZG5yI33Lpj
-         Y6g08Lc1PQ4NpwAH41U0qLfDAN+evzz+rrGfi+CoZw8X94/j52kwKh3R1TRxgI2ryfzb
-         bJkyTo1vURXOJew30cq87YH1R8usbHFAu+bsmzDDypXFjxshJX8Bb1rsJwnsNfyy7gQ5
-         5MWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732625783; x=1733230583;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YY215mVBF/BsyIyjPcQ5YdAmE/7mcXahP/kNz5RyMwA=;
-        b=j2e4trbuayLrLVR6igPwIV5M2WXzNRHRQlJhbQ6Pops7g1cfc5UOOX2hTHa6udqZE6
-         VGcNfqL2SFGZaaw7kq0XBY55hMHeHUaDdUKW3g9+qmQwFZ3pyfer+awBZmr5Gj6nEdHw
-         i8dxgO++KLjRLUMgC47a0elPNRyIUXE0xPAro/wl8v7BW2Z+Uu/IqDilOyCKI7epaWnj
-         CIMJKjJuS04VFQ0vGiXce11a/emsJKS4HtSVOI7EiWuxxJLy0jTLVNtrclq234NewxdB
-         4/rsgAVtDM6lqpaoj0QFb+h4EjDszonlTCCnAU0qH/DnIUxRJtCYcsSK44ZI0lJ6WO0F
-         EG1g==
-X-Forwarded-Encrypted: i=1; AJvYcCWCkdADPLyKDKFCqkwmLQhAbUak19DGCkH+J73UGvVUVLJqJ9ikWDSr2ixIsYri6DoZJpS445sJlNsd7y6m@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy8TZHZnSmdrhlGzqvCEGcO3n/LLXAxpakLAALJpBzfudgxHK7M
-	v8dKwHqW9ifB5Rbx4yt8VEou3H8xwa8oQ49b9uOGI6BNiJ7EFBLVqOipEZFMPw==
-X-Gm-Gg: ASbGncsM4oXmSjBFA7uwm7mvt2Oipy8NxvZf8kNGQzh5/DcZmRv5Suj3M0ijgCrQC+C
-	qAginU1FsTu9/X2Wy4TtrsQbzTkPtKo+9jQIQ90G5n6PL6lUJA7Re7pzw8juNBQYrERc7mu/2ul
-	bl7X3KsRsHpda7YDdxEYnnotHLb7Fb+oMQ5Uxtz0VJYajt+LB961hU8FCFz3ainsyVTAefVWqBw
-	dIySo2t0ZO84wf3usAgsOniiCfLjAT3LKA01WNObXefhGvjsiTrA677Oqwt
-X-Google-Smtp-Source: AGHT+IFGZO6YwIydzhnaKn6anetOGg2+48yG+FxdkhfkcKfSo66F6npaVl3d/51tMhwslnENrkjuQA==
-X-Received: by 2002:a17:902:fc4f:b0:20c:9821:69af with SMTP id d9443c01a7336-2129f797977mr204224095ad.45.1732625783658;
-        Tue, 26 Nov 2024 04:56:23 -0800 (PST)
-Received: from thinkpad ([120.60.136.64])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2129dc2210dsm83601765ad.245.2024.11.26.04.56.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Nov 2024 04:56:23 -0800 (PST)
-Date: Tue, 26 Nov 2024 18:26:18 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Bjorn Helgaas <bhelgaas@google.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: sm8650: Add 'global' interrupt to
- the PCIe RC nodes
-Message-ID: <20241126125618.v7spvqvm4cdqpa5g@thinkpad>
-References: <20241126-topic-sm8x50-pcie-global-irq-v1-0-4049cfccd073@linaro.org>
- <20241126-topic-sm8x50-pcie-global-irq-v1-3-4049cfccd073@linaro.org>
+	s=arc-20240116; t=1732630197; c=relaxed/simple;
+	bh=d5iHBiGGN5jBz6LgxCxlnJnrYaoDxXw7Uj57uUApwcU=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=u9lNRC2mPzx/KyteQZ5NdAdT0LwrJLWhhV+tP8lT4XAp81hwY8mtIuJUiRkIF+DTgpE3S09LUQYkxueNsXhtPOLdQA6KsnOzAbDCthfrG+EHzS2uIFooCNTOzWLKEw1UEY54Gr5o7gmG5hb4nP8Nf6w+mYr+QhSO+wbjN1vyI00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bpw74h2D; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AQDweju019861;
+	Tue, 26 Nov 2024 14:09:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=qLa/jexMcmZaGRBDyAgRLR
+	o8c9MmhNNi6oP+B9/cXnk=; b=bpw74h2DSG4MQmlxPQcCQP+jjph1isFUrRBE8q
+	12pZxItjkFAzxON1xfaNIcr0UumG0ZpEZL02C5EOjUKzORRGmLRGpjhQkUNSksex
+	s3JiHLMEFGcmYXC/0n5cNRvtP6cN7iBZc2JCCzCCGxvzKpUU4lbPSs7T2xhrBb/E
+	FAmu/0D9eqApu9bscEomL1dO1eMkxTgIKrnzcg4Z7gUcj5/rnDtZUjpHmLj8IIdZ
+	N2Rs9r/TH+BSb7ghOuBYUrKgQnxg9qWQ0zFwt9ZwwWfVsvqcIJ1kH29AEK0fjUcO
+	rX1KDHpwv+MtSTJ5rEHz7IMT9zBkJ7h6X6cNbEHLyf29rEPw==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4358399cud-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 26 Nov 2024 14:09:41 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AQE9dmV028166
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 26 Nov 2024 14:09:39 GMT
+Received: from [10.213.111.143] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 26 Nov
+ 2024 06:09:33 -0800
+From: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Subject: [PATCH 0/3] Devicetree changes for QCS615's GPU
+Date: Tue, 26 Nov 2024 19:36:46 +0530
+Message-ID: <20241126-qcs615-gpu-dt-v1-0-a87782976dad@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241126-topic-sm8x50-pcie-global-irq-v1-3-4049cfccd073@linaro.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAPbVRWcC/5WR3WqEMBBGX0W87iz5MRqXUvoeZZGYSXZD1Wii0
+ nbZd2927V4UCm0vv4HvzJnknEcTnIn5PjvnwawuOj+kQB+yXJ/UcDTgMOWcEVZQygRMOpZUwHF
+ cAGewSrcoleZU2jx1xmCse7vxXg5bDmZaEnbehnmrogHt+97N+4wT05aWtES2lFtkwijKFFelV
+ URJUVNBa6KpvqJ7E6O6+eyzx02HFKAQGze42amuics4+jA31ofmS3MVUECNaCRWrUyLnpOMdoP
+ eJYWnn7GEsfuVuvP6FTC41QRYC+DAsaKlQoK1rH5nkTrxCl4LuUtPl7Cp0IROHY/v8fQHFUrkX
+ aXvNxvthzn4rrsKcaigQt4yZFxYtP8mph8cPJoIKwUKLSvLWitNSlb8BcUYqYqasR2TVPAEuJ0
+ 3TR8nv3zvHy6XTxvaqx1qAgAA
+X-Change-ID: 20241125-qcs615-gpu-dt-facbd8ac318f
+To: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        "Konrad
+ Dybcio" <konradybcio@kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "Bjorn
+ Andersson" <andersson@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Jie Zhang <quic_jiezh@quicinc.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1732630173; l=3156;
+ i=quic_akhilpo@quicinc.com; s=20240726; h=from:subject:message-id;
+ bh=d5iHBiGGN5jBz6LgxCxlnJnrYaoDxXw7Uj57uUApwcU=;
+ b=mvsPszG7J+F4lxa0BgQdH6pj/A+l/uewjtgFLL3wNNJKjsJaadH8ZugkGU4/OLZH84VXs/5nE
+ 65pGkw3XaolBs1GG0ER8HfNEcPPUGjpVNQ9+eIdT+knK8ydcZ0d/kPn
+X-Developer-Key: i=quic_akhilpo@quicinc.com; a=ed25519;
+ pk=lmVtttSHmAUYFnJsQHX80IIRmYmXA4+CzpGcWOOsfKA=
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: BBsP1mWnJii_gDhM9-3seYt7Vc1UhS02
+X-Proofpoint-ORIG-GUID: BBsP1mWnJii_gDhM9-3seYt7Vc1UhS02
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 bulkscore=0
+ phishscore=0 suspectscore=0 spamscore=0 malwarescore=0 mlxscore=0
+ priorityscore=1501 impostorscore=0 mlxlogscore=999 lowpriorityscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411260114
 
-On Tue, Nov 26, 2024 at 11:22:51AM +0100, Neil Armstrong wrote:
-> Qcom PCIe RC controllers are capable of generating 'global' SPI interrupt
-> to the host CPUs. This interrupt can be used by the device driver to
-> identify events such as PCIe link specific events, safety events, etc...
-> 
-> Hence, add it to the PCIe RC node along with the existing MSI interrupts.
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+This series adds support for Adreno 612 to QCS615 chipset's devicetree.
+DRM driver's support was posted earlier and can be found here:
+	https://patchwork.freedesktop.org/patch/626066/
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Patch#1 is for Rob Clark and the other 2 for Bjorn
 
-- Mani
+Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+---
+Akhil P Oommen (1):
+      dt-bindings: display/msm: gpu: Document A612 GPU
 
-> ---
->  arch/arm64/boot/dts/qcom/sm8650.dtsi | 12 ++++++++----
->  1 file changed, 8 insertions(+), 4 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> index 01ac3769ffa62ffb83c5c51878e2823e1982eb67..f394fadf11f9ac1f781d31f514946bd5060fa56f 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> @@ -2233,7 +2233,8 @@ pcie0: pcie@1c00000 {
->  				     <GIC_SPI 145 IRQ_TYPE_LEVEL_HIGH>,
->  				     <GIC_SPI 146 IRQ_TYPE_LEVEL_HIGH>,
->  				     <GIC_SPI 147 IRQ_TYPE_LEVEL_HIGH>,
-> -				     <GIC_SPI 148 IRQ_TYPE_LEVEL_HIGH>;
-> +				     <GIC_SPI 148 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>;
->  			interrupt-names = "msi0",
->  					  "msi1",
->  					  "msi2",
-> @@ -2241,7 +2242,8 @@ pcie0: pcie@1c00000 {
->  					  "msi4",
->  					  "msi5",
->  					  "msi6",
-> -					  "msi7";
-> +					  "msi7",
-> +					  "global";
->  
->  			clocks = <&gcc GCC_PCIE_0_AUX_CLK>,
->  				 <&gcc GCC_PCIE_0_CFG_AHB_CLK>,
-> @@ -2365,7 +2367,8 @@ pcie1: pcie@1c08000 {
->  				     <GIC_SPI 313 IRQ_TYPE_LEVEL_HIGH>,
->  				     <GIC_SPI 314 IRQ_TYPE_LEVEL_HIGH>,
->  				     <GIC_SPI 374 IRQ_TYPE_LEVEL_HIGH>,
-> -				     <GIC_SPI 375 IRQ_TYPE_LEVEL_HIGH>;
-> +				     <GIC_SPI 375 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 306 IRQ_TYPE_LEVEL_HIGH>;
->  			interrupt-names = "msi0",
->  					  "msi1",
->  					  "msi2",
-> @@ -2373,7 +2376,8 @@ pcie1: pcie@1c08000 {
->  					  "msi4",
->  					  "msi5",
->  					  "msi6",
-> -					  "msi7";
-> +					  "msi7",
-> +					  "global";
->  
->  			clocks = <&gcc GCC_PCIE_1_AUX_CLK>,
->  				 <&gcc GCC_PCIE_1_CFG_AHB_CLK>,
-> 
-> -- 
-> 2.34.1
-> 
+Jie Zhang (2):
+      arm64: dts: qcom: qcs615: Add gpu and gmu nodes
+      arm64: dts: qcom: qcs615-ride: Enable Adreno 612 GPU
 
+ .../devicetree/bindings/display/msm/gpu.yaml       | 28 ++++---
+ arch/arm64/boot/dts/qcom/qcs615-ride.dts           |  8 ++
+ arch/arm64/boot/dts/qcom/qcs615.dtsi               | 86 ++++++++++++++++++++++
+ 3 files changed, 110 insertions(+), 12 deletions(-)
+---
+base-commit: 30eb6f0b08b13fd25ea12a3a6fa0a85915190c1c
+change-id: 20241125-qcs615-gpu-dt-facbd8ac318f
+prerequisite-message-id: <20241104-add_initial_support_for_qcs615-v5-4-9dde8d7b80b0@quicinc.com>
+prerequisite-patch-id: 09782474af7eecf1013425fd34f9d2f082fb3616
+prerequisite-patch-id: 04ca722967256efddc402b7bab94136a5174b0b9
+prerequisite-patch-id: 82481c82a20345548e2cb292d3098ed51843b809
+prerequisite-patch-id: 3bd8edd83297815fcb1b81fcd891d3c14908442f
+prerequisite-patch-id: fc1cfec4ecd56e669c161c4d2c3797fc0abff0ae
+prerequisite-message-id: <20241022-qcs615-clock-driver-v4-3-3d716ad0d987@quicinc.com>
+prerequisite-patch-id: cd9fc0a399ab430e293764d0911a38109664ca91
+prerequisite-patch-id: 07f2c7378c7bbd560f26b61785b6814270647f1b
+prerequisite-patch-id: a57054b890d767b45cca87e71b4a0f6bf6914c2f
+prerequisite-patch-id: 5a8e9ea15a2c3d60b4dbdf11b4e2695742d6333c
+prerequisite-message-id: <20240924143958.25-2-quic_rlaggysh@quicinc.com>
+prerequisite-patch-id: 3c73bafb074ea339d387a6aa39e5362c8775596d
+prerequisite-patch-id: 0e224a7310d36e9a633d57c4a177ff24c1e8e767
+prerequisite-message-id: <20241108-qcs615-mm-clockcontroller-v3-7-7d3b2d235fdf@quicinc.com>
+prerequisite-patch-id: 748a4e51bbedae9c6ebdbd642b2fd1badf958788
+prerequisite-patch-id: 72a894a3b19fdbd431e1cec9397365bc5b27abfe
+prerequisite-patch-id: da2b7a74f1afd58833c6a9a4544a0e271720641f
+prerequisite-patch-id: 40b79fe0b9101f5db3bddad23551c1123572aee5
+prerequisite-patch-id: cb93e5798f6bfe8cc3044c4ce973e3ae5f20dc6b
+prerequisite-patch-id: 13b0dbf97ac1865d241791afb4b46a28ca499523
+prerequisite-patch-id: 807019bedabd47c04f7ac78e9461d0b5a6e9131b
+prerequisite-patch-id: 8e2e841401fefbd96d78dd4a7c47514058c83bf2
+prerequisite-patch-id: 125bb8cb367109ba22cededf6e78754579e1ed03
+prerequisite-patch-id: b3cc42570d5826a4704f7702e7b26af9a0fe57b0
+prerequisite-patch-id: df8e2fdd997cbf6c0a107f1871ed9e2caaa97582
+prerequisite-message-id: <20241108-qcs615-mm-dt-nodes-v1-1-b2669cac0624@quicinc.com>
+prerequisite-patch-id: bcb1328b70868bb9c87c0e4c48e5c9d38853bc60
+prerequisite-patch-id: 8844a4661902eb44406639a3b7344416a0c88ed9
+prerequisite-message-id: <20241122074922.28153-1-quic_qqzhou@quicinc.com>
+prerequisite-patch-id: 50223f2370a7ae8053b164fa5219a1690d7e4567
+prerequisite-patch-id: c71c7897d6f250b381f7a9ac66ec58f4a10d49d6
+
+Best regards,
 -- 
-மணிவண்ணன் சதாசிவம்
+Akhil P Oommen <quic_akhilpo@quicinc.com>
+
 
