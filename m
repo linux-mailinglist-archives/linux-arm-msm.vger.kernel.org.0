@@ -1,241 +1,240 @@
-Return-Path: <linux-arm-msm+bounces-39168-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39169-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 460909D9299
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Nov 2024 08:38:09 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DFFC29D92A6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Nov 2024 08:41:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 06BED281625
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Nov 2024 07:38:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A0A4D281339
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Nov 2024 07:41:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 506F81A9B36;
-	Tue, 26 Nov 2024 07:37:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03CDF194A44;
+	Tue, 26 Nov 2024 07:41:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="H05zmFpZ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="IPxQME9m"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 561D919CC3C
-	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Nov 2024 07:37:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F6931940B1;
+	Tue, 26 Nov 2024 07:40:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732606669; cv=none; b=px3ZqdGiJlVtqqH9co00sC+A9N98VKRSdE/gPENWpKRPM/sSEZ0+sE7l0YkWxVl3wbIs35JNCsQxaGuZ41j9y7cp2SnhOQ9NMCRwJ3VEmQsLziKUw74+hUAN08vA4qU0WyjfFH/wLlYDBj1Hut7mDJC6fRaLkUuUbdCNizsMwi8=
+	t=1732606860; cv=none; b=YS3kRqGEvxHzqIcLsQkcLPFwvbuMu15L9yi1+OMJw52MUBI5FukraCCKTZJ3Lk7lYjxovC/fP415BwBie8YHrSJZ1IndhXbYQDA+kKcE83zCAuZojJ0mIVOGB8gC+mWcVm98kfeJQ93RaQu4qGVEZ4y60Ha8rdw7bycMfn8vK1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732606669; c=relaxed/simple;
-	bh=z0R18S0d0POXSq+hvwQl136nVU+kLIn61Jdmo0ILmVI=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=TnDEybSueWRl+WVWcMcryQBE9lUWijjkhy0GUisqmq3yHKz8j9lk/fc9MrX/MpGYDKgXcpbgpszyJO2H2rIc2txuv4VGNpA02s56H8ZKlPtoEqyTAKGZ/5FUkm/1zca04ppiyf7V1ArtcLJzjaMehWtK2v/6ppVODuR9uPM0GRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=H05zmFpZ; arc=none smtp.client-ip=209.85.208.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2ffa3e8e917so50062171fa.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Nov 2024 23:37:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732606665; x=1733211465; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=0S15AS2+IAWhOlFxUJLerXC5aMLzjf0hnvf3dDW0dVY=;
-        b=H05zmFpZd6oyjPH135nfaMtXtxfpK51ERmjX/jR+nfys4gPoleB+yzDI70AznkredK
-         /iWH13REwqcwxPYY3CTSmVf3Ygt3rNXnCbVr1rdNQ2e7jjMZC9XhRxikkXBSzWahIpzr
-         AWuMjwUDvnsA14Lq4RFHyxo+HlI3mYNNrTgKyqXk8JTiGlgnswI7E4HbWW+iP7qsgYua
-         AmhUrbxIrFOo0FKQsPWQnL0XHIZmxYMYujuGnxXFhNNt+Y9qeiT7JTIrt5GptLGuJb39
-         +z4puzpS38r7J9fE8uMi+BWAOzDEy7OWI+Il1NP9PfRx3d9MWe1w8X5qULdpnSEtvykU
-         Z0hw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732606665; x=1733211465;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=0S15AS2+IAWhOlFxUJLerXC5aMLzjf0hnvf3dDW0dVY=;
-        b=AilB91lymKioorFuHcTqiRlGMgcDPQOudg3YDfrR/Ifk88QNSUmYqFB6ytxipSrwQX
-         DL3VvURvu7D0GjgIvzVHzY7f/hSTsZn9Uc6EzPmnfQcxfBpgRDOBHuWH6PUA0qWfNAyA
-         idn3k9dXh8Jw1Jzx3cQEYHVLieC9vEF52RVY7MeLoBLqv+lYnpi9jGRudcnOCvkaua3W
-         NCX8CyZsO11YFtZPymu3JUj4R0EWLBFoGXmItJxxrKpiXRB7QakEQMmjS/du2M4xRq0X
-         AmdizBwr7/smYSMTrwTQpD3uy6hJ4TGz5t5LRyI5bffhzcT+MtmB6HBCrxeO6PNWeW72
-         IzKw==
-X-Forwarded-Encrypted: i=1; AJvYcCW1/iwkA+LprLxh1cssxyqV/GW55kteSTj9gwBtn9qVDmdmhrMrJ3D+ioHcTin8h67dIg2Ej+LVy8pDfh9i@vger.kernel.org
-X-Gm-Message-State: AOJu0YxLI7isBWVIDRVMgqZVTPCVCi5+J7QTZWTJvySnsmZdSm8m7q+S
-	NQ/8jrE2BJatS7q6TsntEndi9exmXTyXpi8G1E37y61oZksw9o6hJ92TJibsPo0=
-X-Gm-Gg: ASbGncsUSJaSONE8ZvkALoQ9M2cQwwTbS52Ia9ZnSGMw0tMPeY5RyIq59j8AH97HK29
-	YHCUFR2dG5pQbkNFsD/10Cf6qJsq3AyKMjoaldek8pWMK2NfbVfSH+SRbDHNFQ/kU6EK64iOJes
-	uquDH1QYDyzi31wizN0GgVq1/dCOd/ZpLnxHEbUTYajJQBJUVn2mtNIlmQqdGUwbOUt3U2u+Jqe
-	f5gTtLLp3xv9AG08KuadLrnzxVnivJNlGe+vDmswxefghMAV0Dvmxl/2tXGUwaC0Oj9gLqtmNed
-	+OP/hkJI31LgYwQ=
-X-Google-Smtp-Source: AGHT+IHSvd8+Okq1rWT0Gwj+Ojl6/8fdOcG083wycHgqsDoXJ6KPadO0/SSu0+2RmVjYC6Koyhifvg==
-X-Received: by 2002:a05:651c:b0b:b0:2ff:d03c:bcda with SMTP id 38308e7fff4ca-2ffd03cbda5mr3060351fa.9.1732606665534;
-        Mon, 25 Nov 2024 23:37:45 -0800 (PST)
-Received: from [127.0.0.1] (85-76-116-93-nat.elisa-mobile.fi. [85.76.116.93])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ffb61bde51sm10798881fa.30.2024.11.25.23.37.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Nov 2024 23:37:44 -0800 (PST)
-Date: Tue, 26 Nov 2024 09:37:40 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Melody Olvera <quic_molvera@quicinc.com>
-CC: Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
- Trilok Soni <quic_tsoni@quicinc.com>,
- Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v2_5/7=5D_clk=3A_qcom=3A_Add_supp?=
- =?US-ASCII?Q?ort_for_GCC_clock_controller_on_SM8750?=
-User-Agent: Thunderbird for Android
-In-Reply-To: <3d9d3d18-9028-4dbc-8e72-3ed70edc97f4@quicinc.com>
-References: <20241112002807.2804021-1-quic_molvera@quicinc.com> <20241112002807.2804021-6-quic_molvera@quicinc.com> <n4h4jvxrsyahgmxedfsifhgmarw4rzn2cbg5pcvzo4ll3edziq@vgpvjco5hyb4> <f2bf7790-7387-4eb6-8e1e-e555a20a717b@quicinc.com> <xjfdqtiauxzmes3hwtgknjglu5rkp4mnyktsaxqtb7xmzsa2zx@phlkamgm47x4> <3d9d3d18-9028-4dbc-8e72-3ed70edc97f4@quicinc.com>
-Message-ID: <B5649FBA-0B04-462D-AEC9-DE228E05A806@linaro.org>
+	s=arc-20240116; t=1732606860; c=relaxed/simple;
+	bh=j6DDMD1mwtZuyEBtg5yeJypXdVy0cFA7GiviiEotRLo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=IaDwP3a/j2PPHXKmOf4GpK3CJFAELqBcIoIw8lryi6hToHXgT5uLStqLNVa8C8zfcEMZ1VUA5OS7EeWwKCBJ4956g+0FFAT+KneHxptPPr++IwRcNkvfY6DL9VHzIlKgupc+lMPMAiMv8/kddxwHu73UPPmgXRgUQyO0UIds6Oo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=IPxQME9m; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4APK3kEq017784;
+	Tue, 26 Nov 2024 07:40:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	tV2SeT/Vv75C92ptkNu2BNJmCrW+QJhXeUY3M9F0/RI=; b=IPxQME9miqaGYvZt
+	ysYqi6JIdDedbnp89UUURH2tugKzHb763O54DS3Tqj/Q8F5KBjH9MQNBPt/I2qP0
+	tR+stTm6JoPhmFlSYXIi9UGCc9CFZLYdih4XvO7/29PE3KQWWiDDiz9i1Yx9Sodh
+	dEHvLalFfh3kcd6giqBiRNTnzHKRW/iAx3tJ+FiTJuNHNoHrsg4diPt8rDOUm0pP
+	LZTgW7RewSfSF4QOXUwMecxhf5nvWOTNbMq6UH5ljAaJkbZAMWLE+iyM5OSiZHiR
+	rhwwnvLgW0aPmBXrsEqPambLJd4LR7EtyO7IWRIytzMXfcal2A0HiNqeL6f8VOdZ
+	xl5SZg==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 433dny6qxh-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 26 Nov 2024 07:40:54 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AQ7errd030530
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 26 Nov 2024 07:40:53 GMT
+Received: from [10.231.216.103] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 25 Nov
+ 2024 23:40:50 -0800
+Message-ID: <36fdb3d7-fd48-43a9-a392-336038db71a2@quicinc.com>
+Date: Tue, 26 Nov 2024 15:40:47 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/4] media: venus: core: add qcs615 platform data
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        "Vikash Garodia (QUIC)"
+	<quic_vgarodia@quicinc.com>,
+        "bryan.odonoghue@linaro.org"
+	<bryan.odonoghue@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        "Rob Herring" <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        "Conor Dooley" <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad Dybcio" <konradybcio@kernel.org>,
+        "linux-media@vger.kernel.org"
+	<linux-media@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org"
+	<linux-arm-msm@vger.kernel.org>,
+        "devicetree@vger.kernel.org"
+	<devicetree@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>,
+        <quic_qiweil@quicinc.com>
+References: <20241125-add-venus-for-qcs615-v3-0-5a376b97a68e@quicinc.com>
+ <20241125-add-venus-for-qcs615-v3-2-5a376b97a68e@quicinc.com>
+ <j4nnlbstclwgoy2cr4dvoebd62by7exukvo6nfekg4lt6vi3ib@tevifuxaawua>
+ <da432de1369e4ce799c72ce98c9baaf1@quicinc.com>
+ <ro5nx6brovd7inyy6tkrs7newszcxrzymfbsftejgpglz3gs6v@pscij26xmmco>
+Content-Language: en-US
+From: Renjiang Han <quic_renjiang@quicinc.com>
+In-Reply-To: <ro5nx6brovd7inyy6tkrs7newszcxrzymfbsftejgpglz3gs6v@pscij26xmmco>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: h9wASKNnklYvRaopNhKxfme74s5WelL8
+X-Proofpoint-ORIG-GUID: h9wASKNnklYvRaopNhKxfme74s5WelL8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 bulkscore=0
+ suspectscore=0 spamscore=0 malwarescore=0 phishscore=0 clxscore=1015
+ impostorscore=0 mlxlogscore=999 adultscore=0 lowpriorityscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411260060
 
-On 25 November 2024 23:31:58 EET, Melody Olvera <quic_molvera@quicinc=2Ecom=
-> wrote:
->
->
->On 11/18/2024 5:59 PM, Dmitry Baryshkov wrote:
->> On Mon, Nov 18, 2024 at 11:30:58AM -0800, Melody Olvera wrote:
->>>=20
->>> On 11/15/2024 7:34 AM, Dmitry Baryshkov wrote:
->>>> On Mon, Nov 11, 2024 at 04:28:05PM -0800, Melody Olvera wrote:
->>>>> From: Taniya Das <quic_tdas@quicinc=2Ecom>
->>>>>=20
->>>>> Add support for GCC Clock Controller for SM8750 platform=2E
->>>>>=20
->>>>> Signed-off-by: Taniya Das <quic_tdas@quicinc=2Ecom>
->>>>> Signed-off-by: Melody Olvera <quic_molvera@quicinc=2Ecom>
->>>>> ---
->>>>>    drivers/clk/qcom/Kconfig      |    9 +
->>>>>    drivers/clk/qcom/Makefile     |    1 +
->>>>>    drivers/clk/qcom/gcc-sm8750=2Ec | 3274 ++++++++++++++++++++++++++=
-+++++++
->>>>>    3 files changed, 3284 insertions(+)
->>>>>    create mode 100644 drivers/clk/qcom/gcc-sm8750=2Ec
->>>>>=20
->>>>> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
->>>>> index ef89d686cbc4=2E=2E26bfb607235b 100644
->>>>> --- a/drivers/clk/qcom/Kconfig
->>>>> +++ b/drivers/clk/qcom/Kconfig
->>>>> @@ -1130,6 +1130,15 @@ config SM_GCC_8650
->>>>>    	  Say Y if you want to use peripheral devices such as UART,
->>>>>    	  SPI, I2C, USB, SD/UFS, PCIe etc=2E
->>>>> +config SM_GCC_8750
->>>>> +	tristate "SM8750 Global Clock Controller"
->>>>> +	depends on ARM64 || COMPILE_TEST
->>>>> +	select QCOM_GDSC
->>>>> +	help
->>>>> +	  Support for the global clock controller on SM8750 devices=2E
->>>>> +	  Say Y if you want to use peripheral devices such as UART,
->>>>> +	  SPI, I2C, USB, SD/UFS, PCIe etc=2E
->>>>> +
->>>>>    config SM_GPUCC_4450
->>>>>    	tristate "SM4450 Graphics Clock Controller"
->>>>>    	depends on ARM64 || COMPILE_TEST
->>>>> diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
->>>>> index b09dbdc210eb=2E=2E1875018d1100 100644
->>>>> --- a/drivers/clk/qcom/Makefile
->>>>> +++ b/drivers/clk/qcom/Makefile
->>>>> @@ -143,6 +143,7 @@ obj-$(CONFIG_SM_GCC_8350) +=3D gcc-sm8350=2Eo
->>>>>    obj-$(CONFIG_SM_GCC_8450) +=3D gcc-sm8450=2Eo
->>>>>    obj-$(CONFIG_SM_GCC_8550) +=3D gcc-sm8550=2Eo
->>>>>    obj-$(CONFIG_SM_GCC_8650) +=3D gcc-sm8650=2Eo
->>>>> +obj-$(CONFIG_SM_GCC_8750) +=3D gcc-sm8750=2Eo
->>>>>    obj-$(CONFIG_SM_GPUCC_4450) +=3D gpucc-sm4450=2Eo
->>>>>    obj-$(CONFIG_SM_GPUCC_6115) +=3D gpucc-sm6115=2Eo
->>>>>    obj-$(CONFIG_SM_GPUCC_6125) +=3D gpucc-sm6125=2Eo
->>>>> diff --git a/drivers/clk/qcom/gcc-sm8750=2Ec b/drivers/clk/qcom/gcc-=
-sm8750=2Ec
->>>>> new file mode 100644
->>>>> index 000000000000=2E=2Efaaefa42a039
->>>>> --- /dev/null
->>>>> +++ b/drivers/clk/qcom/gcc-sm8750=2Ec
->>>>> @@ -0,0 +1,3274 @@
->>>>> +// SPDX-License-Identifier: (GPL-2=2E0-only OR BSD-2-Clause)
->>>>> +/*
->>>>> + * Copyright (c) 2024, Qualcomm Innovation Center, Inc=2E All right=
-s reserved=2E
->>>>> + */
->>>>> +
->>>>> +#include <linux/clk-provider=2Eh>
->>>>> +#include <linux/mod_devicetable=2Eh>
->>>>> +#include <linux/module=2Eh>
->>>>> +#include <linux/platform_device=2Eh>
->>>>> +#include <linux/regmap=2Eh>
->>>>> +
->>>>> +#include <dt-bindings/clock/qcom,sm8750-gcc=2Eh>
->>>>> +
->>>>> +#include "clk-alpha-pll=2Eh"
->>>>> +#include "clk-branch=2Eh"
->>>>> +#include "clk-pll=2Eh"
->>>>> +#include "clk-rcg=2Eh"
->>>>> +#include "clk-regmap=2Eh"
->>>>> +#include "clk-regmap-divider=2Eh"
->>>>> +#include "clk-regmap-mux=2Eh"
->>>>> +#include "clk-regmap-phy-mux=2Eh"
->>>>> +#include "common=2Eh"
->>>>> +#include "gdsc=2Eh"
->>>>> +#include "reset=2Eh"
->>>>> +
->>>>> +enum {
->>>>> +	DT_BI_TCXO,
->>>>> +	DT_BI_TCXO_AO,
->>>>> +	DT_PCIE_0_PIPE_CLK,
->>>>> +	DT_SLEEP_CLK,
->>>>> +	DT_UFS_PHY_RX_SYMBOL_0_CLK,
->>>>> +	DT_UFS_PHY_RX_SYMBOL_1_CLK,
->>>>> +	DT_UFS_PHY_TX_SYMBOL_0_CLK,
->>>>> +	DT_USB3_PHY_WRAPPER_GCC_USB30_PIPE_CLK,
->>>> This doesn't match Documentation/devicetree/bindings/clock/qcom,sm865=
-0-gcc=2Eyaml
->>> Hmmm I see what seems to have happened here=2E You're correct; this do=
-esn't
->>> match the bindings
->>> in sm8650-gcc=2E The v1 patchset had a new bindings file which matched=
- the
->>> sm8650 bindings, but also
->>> didn't match the driver; however we only seemed to catch that the two
->>> bindings matched and not the
->>> fact that they didn't match the drivers=2E
->> I don't see v1=2E Please bring bindings back=2E
->
->Will do=2E
->
->>=20
->>> In terms of remedy I see two options=2E I'm fairly certain the driver =
-here is
->>> correct, so we can either
->>> add the sm8750 bindings file back and remove the two lines about the P=
-CIE 1
->>> clocks or adjust the
->>> sm8650 binding to encompass both sm8650 and sm8750=2E It's unclear to =
-me how
->>> precedented the latter
->>> is; certainly having a single bindings file encompass both chips is
->>> feasible, but I think I'm currently
->>> leaning towards bringing back the original bindings file as that seems=
- more
->>> precedented=2E Lmk
->>> your thoughts=2E
->> How are you thinking to change SM8650 bindings without breaking the ABI
->> / backwards compatibility?
->
->
->Giant if-then (read: poorly)=2E
 
-I'd say, this means a separate file=2E
+On 11/26/2024 12:20 AM, Dmitry Baryshkov wrote:
+> On Mon, Nov 25, 2024 at 03:34:19PM +0000, Renjiang Han (QUIC) wrote:
+>> On Monday, November 25, 2024 9:36 PM, Dmitry Baryshkov wrote:
+>>> On Mon, Nov 25, 2024 at 11:04:50AM +0530, Renjiang Han wrote:
+>>>> Initialize the platform data and enable venus driver probe of QCS615
+>>>> SoC.
+>>>>
+>>>> Signed-off-by: Renjiang Han <quic_renjiang@quicinc.com> >
+>>>> ---
+>>>>   drivers/media/platform/qcom/venus/core.c | 50
+>>>> ++++++++++++++++++++++++++++++++
+>>>>   1 file changed, 50 insertions(+)
+>>>>
+>>>> diff --git a/drivers/media/platform/qcom/venus/core.c
+>>>> b/drivers/media/platform/qcom/venus/core.c
+>>>> index
+>>>> 423deb5e94dcb193974da23f9bd2d905bfeab2d9..39d8bcf62fe4f72674746b75994c
+>>>> ce6cbaee94eb 100644
+>>>> --- a/drivers/media/platform/qcom/venus/core.c
+>>>> +++ b/drivers/media/platform/qcom/venus/core.c
+>>>> @@ -630,6 +630,55 @@ static const struct venus_resources msm8998_res = {
+>>>>   	.fwname = "qcom/venus-4.4/venus.mbn",  };
+>>>>   
+>>>> +static const struct freq_tbl qcs615_freq_table[] = {
+>>>> +	{ 0, 460000000 },
+>>>> +	{ 0, 410000000 },
+>>>> +	{ 0, 380000000 },
+>>>> +	{ 0, 300000000 },
+>>>> +	{ 0, 240000000 },
+>>>> +	{ 0, 133333333 },
+>>>> +};
+>>>> +
+>>>> +static const struct bw_tbl qcs615_bw_table_enc[] = {
+>>>> +	{  972000,  951000, 0, 1434000, 0 },	/* 3840x2160@30 */
+>>>> +	{  489600,  723000, 0,  973000, 0 },	/* 1920x1080@60 */
+>>>> +	{  244800,  370000, 0,	495000, 0 },	/* 1920x1080@30 */
+>>>> +};
+>>>> +
+>>>> +static const struct bw_tbl qcs615_bw_table_dec[] = {
+>>>> +	{ 1036800, 1987000, 0, 2797000, 0 },	/* 4096x2160@30 */
+>>>> +	{  489600, 1040000, 0, 1298000, 0 },	/* 1920x1080@60 */
+>>>> +	{  244800,  530000, 0,  659000, 0 },	/* 1920x1080@30 */
+>>>> +};
+>>>> +
+>>>> +static const struct venus_resources qcs615_res = {
+>>>> +	.freq_tbl = qcs615_freq_table,
+>>>> +	.freq_tbl_size = ARRAY_SIZE(qcs615_freq_table),
+>>>> +	.bw_tbl_enc = qcs615_bw_table_enc,
+>>>> +	.bw_tbl_enc_size = ARRAY_SIZE(qcs615_bw_table_enc),
+>>>> +	.bw_tbl_dec = qcs615_bw_table_dec,
+>>>> +	.bw_tbl_dec_size = ARRAY_SIZE(qcs615_bw_table_dec),
+>>>> +	.clks = {"core", "iface", "bus" },
+>>>> +	.clks_num = 3,
+>>>> +	.vcodec0_clks = { "vcodec0_core", "vcodec0_bus" },
+>>>> +	.vcodec_clks_num = 2,
+>>>> +	.vcodec_pmdomains = (const char *[]) { "venus", "vcodec0" },
+>>>> +	.vcodec_pmdomains_num = 2,
+>>>> +	.opp_pmdomain = (const char *[]) { "cx" },
+>>>> +	.vcodec_num = 1,
+>>>> +	.hfi_version = HFI_VERSION_4XX,
+>>>> +	.vpu_version = VPU_VERSION_AR50,
+>>>> +	.vmem_id = VIDC_RESOURCE_NONE,
+>>>> +	.vmem_size = 0,
+>>>> +	.vmem_addr = 0,
+>>>> +	.dma_mask = 0xe0000000 - 1,
+>>>> +	.cp_start = 0,
+>>>> +	.cp_size = 0x70800000,
+>>>> +	.cp_nonpixel_start = 0x1000000,
+>>>> +	.cp_nonpixel_size = 0x24800000,
+>>>> +	.fwname = "qcom/venus-5.4/venus_s6.mbn",
+>>> I really want the firmware discussion of linux-firmware to be solved first,
+>>> before we land this patch.
+>>> SHort summary: can we use a single image for all 5.4 platforms (by using
+>>> v5 signatures, by using v6 signatures, v3 or any other kind of quirk).
+>> Thanks for your comment. We have discussed with the firmware team and
+>> other teams if we can use the same firmware binary. The result is we'd better
+>> use different firmware files. They should respond in the firmware binary
+>> thread. I will push them and hope them respond as quickly as possible and
+>> give reasons.
+>>>> +};
+>>>> +
+>>>>   static const struct freq_tbl sdm660_freq_table[] = {
+>>>>   	{ 979200, 518400000 },
+>>>>   	{ 489600, 441600000 },
+>>>> @@ -937,6 +986,7 @@ static const struct of_device_id venus_dt_match[] = {
+>>>>   	{ .compatible = "qcom,msm8916-venus", .data = &msm8916_res, },
+>>>>   	{ .compatible = "qcom,msm8996-venus", .data = &msm8996_res, },
+>>>>   	{ .compatible = "qcom,msm8998-venus", .data = &msm8998_res, },
+>>>> +	{ .compatible = "qcom,qcs615-venus", .data = &qcs615_res, },
+>>> The hardware seems to be the same as sc7180, only the frequencies differ.
+>>> Can we change the driver in a way that we don't have to add another
+>>> compat entry just for the sake of changing freqs / bandwidths?
+>> Thank you for your comment. I agree with you. But based on the Venus code
+>> architecturE ANd the distinction between different platforms, I think the
+>> current changes are the simplest.
+> Well, it is simplest, correct. But not the best one. There is no plan no
+> migrate these platforms to the iris driver. So instead, please improve
+> the venus driver instead of just pushing the simplest change. I should
+> have been more explicit about it earlier.
 
->
->Thanks,
->Melody
+Based on the current code architecture, I don't know if there is a 
+better way. If we
+
+refactor the code, it will take a lot of effort.
+
+Therefore, I submit this change. Do you have a better approach?
+
+Also, the driver architecture of iris is implemented as you said.
+
+>>>>   	{ .compatible = "qcom,sdm660-venus", .data = &sdm660_res, },
+>>>>   	{ .compatible = "qcom,sdm845-venus", .data = &sdm845_res, },
+>>>>   	{ .compatible = "qcom,sdm845-venus-v2", .data = &sdm845_res_v2, },
+>>>>
+>>>> --
+>>>> 2.34.1
+>>>>
+>>> -- 
+>>> With best wishes
+>>> Dmitry
+
+-- 
+Best Regards,
+Renjiang
 
 
