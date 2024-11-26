@@ -1,257 +1,189 @@
-Return-Path: <linux-arm-msm+bounces-39227-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39228-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0E3E39D9F88
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 00:20:22 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 98690164AF8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Nov 2024 23:20:18 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F8F81DF243;
-	Tue, 26 Nov 2024 23:20:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NwKd34f+"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id B715E9D9FC4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 00:44:45 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5D2A1DA23;
-	Tue, 26 Nov 2024 23:20:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C0AE2B2244C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Nov 2024 23:44:42 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 313361DFE3D;
+	Tue, 26 Nov 2024 23:44:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oCUdUsoi"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 433CD1DFE11
+	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Nov 2024 23:44:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732663217; cv=none; b=PgHudHFcFLR6zxr4PiOlAUwXsEUjqh39482POcsuRdUpgOUW6wft1b5W8zOTqmQGljqebUbFOeoTTwuvT/O843jxD71a+DHnK7HvbBpM8KltE/WWzPFIikyJzU0o44bRwpRYg2JBsmjMIj3SlRcY8TWfFkjOFRejNQR5AYcCTH8=
+	t=1732664676; cv=none; b=hktdUfPR2oGdqDoSpeEBHZsC50FiTJ20d/2cwDb1N7t/Cm4k8LYzorZqmu28wbPBAGKBNaDWVnO3KPn71V9osWwgIT2H6pmM0cHyI0Pt79LQVOi0+OLChAiV6g3JlCmFytsqQKquhHtLirJWBPoB816PHqPlxt3ZzZ5V+p/RHGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732663217; c=relaxed/simple;
-	bh=uYz1fIPEEUSYGIPG3S07I/kURabcIlSMz61S+iMi4fg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Fji7JU1DOCzfdoGT3luHzLCGe55iEbQaGtZOqfknFYGZ6YhdGMqNU/JiS0ZQAX+uUXDUMzDPVzt3eUS3qPlO+o238A57LiMkQsbVFYqrTDontrUdiB+TctoFxefMeyYaiTcWiDrqiofOSRuP7Xp02IHq0GRdvg/MtabDxgORjhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NwKd34f+; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AQKLKLp003917;
-	Tue, 26 Nov 2024 23:19:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	JXOj1uo6qRGb0YQzjEwm+4KOBZcNIhIGsYVmiWDab6k=; b=NwKd34f+BNxW/8TT
-	6k+dBzD5ef11xfSeFzze0MoMvTTxXmyzIemzgsjfB85VroZ6inezQqOqp5gvVANn
-	7/kRbk2NmBm443erBdfdz4tTgeBdl9l1sPcd68mJRG/ck6FhZVVl47izLSLjnM4G
-	ksTILhNF77c4TgCTas8j2JK2h3bRBBVMXPgKq57hr/qkcFPB3cskrrhNHmkaDXar
-	VtERgnFMTnlOExjBkowSltYS0N8ZhhQRBRHgLj1b5k8PY8JTOe1lTraAYo1L5H3d
-	txi4+ZtE12zBPmF28EH9Wkqj0KoqnJS7LdpfSd15afuF6uG0MTtCwOX5juMKQq5E
-	5I2S3g==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 435839aqrr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 26 Nov 2024 23:19:57 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AQNJtaX020705
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 26 Nov 2024 23:19:56 GMT
-Received: from [10.110.73.239] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 26 Nov
- 2024 15:19:55 -0800
-Message-ID: <d4d94c91-5b40-4ed3-9895-8f8c85fd0a29@quicinc.com>
-Date: Tue, 26 Nov 2024 15:19:54 -0800
+	s=arc-20240116; t=1732664676; c=relaxed/simple;
+	bh=+fhFM24qdTFklU9m2XwiT7YHYQrJaiSziSmW70rJDQQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=kTcwlgU8fS3pu85/2gQhi59rbtF1Zm65WX3LKnE6yDcudLPvxy0v+fSWEe81ZUbnRImRwpfQ9a0vpPBiBvmYbd9I8T5uKe3uWtiKuVQX3WwOGKVd2hza3QAu3rZrtngT0oImYPMnfwrzXg61B8ihL6XF08XaMBd4W7kXDT/RFJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oCUdUsoi; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-434a752140eso9643795e9.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Nov 2024 15:44:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1732664671; x=1733269471; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=CJmU59J+M2fvIhoTK/DsvENc1HKmlM36AHXQwtD2KaU=;
+        b=oCUdUsoiFAyrnEu0aLgsolTfbOYpbUFi5xIt9YgPd8pRMrg/3XvGJ5Qg4CacbQg+w5
+         iWugoTZqjVukKvzJTPnZEbxIzTloML3Cd9zgOT4XF3CBo2LvgRunwCp7k/9D5NmHIBW6
+         42zKM0ZbUVFvFu35zyJgGxuNdpd/tpRIyOvWsiwnOxKKilUZh5P/C9C3TGovykzUdFQg
+         m6TzK8aUNMiZ825IKMmotSdmiaGig76ctw5AIINf77ybxqXKsxvP0DMdlqSnnMNvzQ8e
+         Hi9x0YHn+knMFQou2YVx3PTL5yUPi6cFDYsP/p+qOkhmanrQ+Bz+O6LJ2XmGvGnQuqqb
+         ratQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732664671; x=1733269471;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CJmU59J+M2fvIhoTK/DsvENc1HKmlM36AHXQwtD2KaU=;
+        b=TwCSZ/9MQ5VTBeqhvJukn+an1XkcYzBchYRpGOz4pNSs+nWDHl/0flNxdJ2puWYEim
+         w8EypJbFrsz8ZCmAwI76HjJgtKHPLt7bOCPplk9a9fhdPP+RYCs/4YTtlgcjTQNh17pa
+         SPIY5T4BqxhqMi7RI9E3trZ8L0Wkx3RpTZ2p2cAobmM1poXIjn2YX3o2O3X5s2MHoDF5
+         dac/Gow1tyxKyhRMUBqE5DKme0gI9RT//Fl1ZpphepdGWrl9JXRRiy6CNGrdcTLA3by2
+         YPMM2QVpLXQ00FZ6NxKLuXMhUBllDzRWWDQTd1MqzjGDDUlN82nS8fFwCQmRy3+tw251
+         +Mrw==
+X-Gm-Message-State: AOJu0YxbD4jhjr0pmCXndmMgvnOYCqc0NZW1aKOLehRkhD7cNuIBvchh
+	3W8ivh5YmLZTfXAAx70YXJ47cUsg/TOkpqEm4HgfJ3STqfkdWCH/q/SPd8c2aYhgrclAMXfOHO8
+	ODA4=
+X-Gm-Gg: ASbGnctrxwLYbz+91yBeyYMkKdG95Q+nFJnadsQ1arbNlbD0zUWYnF+2vxXWpZWwKtR
+	2xUSC6VgjyPTS9fYObV8kjE8EqvVmBH0fYr31dRKdnvy7vZPcvwctUR1S+s8HNADuc2MIt4g2gB
+	Mrdl3fBrC9+Ehs771j5Xzm+gf5tVD1ICU5dcmCLvuDCPq29hg2g696zP2hDTu6x5YvHoaG96uoD
+	Fdpc6nQPzWlSvkX/REuz5oyTGwAH/jj0V/kxtjuf7EaJYHwI6YMPFNE7O8=
+X-Google-Smtp-Source: AGHT+IE8eKTrNeWUzbOE7vIWSLENBWD9fjmEpqowThwTsPT8/dFfLlB5O1ysxqfYmXhLujNL/goltg==
+X-Received: by 2002:a05:600c:5253:b0:434:9da3:602b with SMTP id 5b1f17b1804b1-434a9dbc410mr8471415e9.5.1732664671287;
+        Tue, 26 Nov 2024 15:44:31 -0800 (PST)
+Received: from [127.0.1.1] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3825fafe338sm14482899f8f.33.2024.11.26.15.44.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Nov 2024 15:44:30 -0800 (PST)
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: [PATCH v3 0/3] clk: qcom: Add support for multiple power-domains
+ for a clock controller.
+Date: Tue, 26 Nov 2024 23:44:26 +0000
+Message-Id: <20241126-b4-linux-next-24-11-18-clock-multiple-power-domains-v3-0-836dad33521a@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v30 28/30] ALSA: usb-audio: Add USB offload route kcontrol
-To: Takashi Iwai <tiwai@suse.de>
-CC: <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
-        <perex@perex.cz>, <conor+dt@kernel.org>, <dmitry.torokhov@gmail.com>,
-        <corbet@lwn.net>, <broonie@kernel.org>, <lgirdwood@gmail.com>,
-        <krzk+dt@kernel.org>, <pierre-louis.bossart@linux.intel.dev>,
-        <Thinh.Nguyen@synopsys.com>, <tiwai@suse.com>, <robh@kernel.org>,
-        <gregkh@linuxfoundation.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-sound@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <linux-input@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>
-References: <20241106193413.1730413-1-quic_wcheng@quicinc.com>
- <20241106193413.1730413-29-quic_wcheng@quicinc.com>
- <87bjya3xzw.wl-tiwai@suse.de>
- <02c20b06-34ef-459b-9cd1-2d2735eb1352@quicinc.com>
- <87zfls1t7x.wl-tiwai@suse.de>
- <8fc53dd9-0c26-410c-b1b1-3d6df7894a44@quicinc.com>
- <87cyiiaxpc.wl-tiwai@suse.de>
-Content-Language: en-US
-From: Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <87cyiiaxpc.wl-tiwai@suse.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: pZrM1Xsvu6nZrHsg37EGUg7jbpgwR8Gp
-X-Proofpoint-ORIG-GUID: pZrM1Xsvu6nZrHsg37EGUg7jbpgwR8Gp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 bulkscore=0
- phishscore=0 suspectscore=0 spamscore=0 malwarescore=0 mlxscore=0
- priorityscore=1501 impostorscore=0 mlxlogscore=999 lowpriorityscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411260187
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAFpdRmcC/6XOwQ6CMBAE0F8hPbvGrm0AT/6H8VDoKhuxJS0gx
+ vDvFk561ePMYd68RKTAFMUhe4lAI0f2LoX9JhN1Y9yVgG3KAneopJQFVApadsMEjqYeUIGUkOq
+ 69fUN7kPbc9cSdP5BAay/G3YRjL6UpbK10mhEWu4CXXha1dM55YZj78NzPTHKpf3PGyXsoMoNV
+ rbAyuzzY5owwW99uIoFHPEDQf0bggkxmnKtlc1J6S9knuc33akzplwBAAA=
+X-Change-ID: 20241118-b4-linux-next-24-11-18-clock-multiple-power-domains-a5f994dc452a
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+ stable@vger.kernel.org
+X-Mailer: b4 0.15-dev-355e8
 
-Hi Takashi,
+v3:
+- Fixes commit log "per which" - Bryan 
+- Link to v2: https://lore.kernel.org/r/20241125-b4-linux-next-24-11-18-clock-multiple-power-domains-v2-0-a5e7554d7e45@linaro.org
 
-On 11/26/2024 6:14 AM, Takashi Iwai wrote:
-> On Mon, 25 Nov 2024 21:33:03 +0100,
-> Wesley Cheng wrote:
->> Hi Takashi,
->>
->> On 11/21/2024 7:50 AM, Takashi Iwai wrote:
->>> On Wed, 20 Nov 2024 20:13:34 +0100,
->>> Wesley Cheng wrote:
->>>> Hi Takashi,
->>>>
->>>> On 11/20/2024 4:12 AM, Takashi Iwai wrote:
->>>>> On Wed, 06 Nov 2024 20:34:11 +0100,
->>>>> Wesley Cheng wrote:
->>>>>> In order to allow userspace/applications know about USB offloading status,
->>>>>> expose a sound kcontrol that fetches information about which sound card
->>>>>> and PCM index the USB device is mapped to for supporting offloading.  In
->>>>>> the USB audio offloading framework, the ASoC BE DAI link is the entity
->>>>>> responsible for registering to the SOC USB layer.
->>>>>>
->>>>>> It is expected for the USB SND offloading driver to add the kcontrol to the
->>>>>> sound card associated with the USB audio device.  An example output would
->>>>>> look like:
->>>>>>
->>>>>> tinymix -D 1 get 'USB Offload Playback Route PCM#0'
->>>>>> -1, -1 (range -1->255)
->>>>>>
->>>>>> This example signifies that there is no mapped ASoC path available for the
->>>>>> USB SND device.
->>>>>>
->>>>>> tinymix -D 1 get 'USB Offload Playback Route PCM#0'
->>>>>> 0, 0 (range -1->255)
->>>>>>
->>>>>> This example signifies that the offload path is available over ASoC sound
->>>>>> card index#0 and PCM device#0.
->>>>>>
->>>>>> The USB offload kcontrol will be added in addition to the existing
->>>>>> kcontrols identified by the USB SND mixer.  The kcontrols used to modify
->>>>>> the USB audio device specific parameters are still valid and expected to be
->>>>>> used.  These parameters are not mirrored to the ASoC subsystem.
->>>>>>
->>>>>> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
->>>>> IIRC, this representation of kcontrol was one argued issue; Pierre
->>>>> expressed the concern about the complexity of the kcontrol.
->>>>> I didn't follow exactly, but did we get consensus?
->>>> So the part that Pierre had concerns on was that previously, the
->>>>> implementation was placing offload kcontrols to the ASoC platform
->>>>> card, and had some additional controls that complicated the
->>>>> offload implementation about the offload status for each USB audio
->>>>> device.  This was discussed here:
->>>> https://lore.kernel.org/linux-usb/957b3c13-e4ba-45e3-b880-7a313e48c33f@quicinc.com/
->>>>
->>>> To summarize, I made the decision to move the offload status
->>>> kcontrols from ASoC --> USB SND and limited it to only one kcontrol
->>>> (mapped offload device).  So now, there exists a kcontrol for every
->>>> USB SND device (if the offload mixer is enabled), where it tells
->>>> userspace the mapped ASoC platform card and pcm device that handles
->>>> USB offloading, else you'll see the "-1, -1" pair, which means
->>>> offload is not possible for that USB audio device.
->>> OK, the simplification is good.  But I wonder whether the current
->>> representation is the best.  Why not just providing two controls per
->>> PCM, one for card and one for device, instead of two integer array?
->>> It would look more intuitive to me.
->>>
->> I could separate it, but we would have to have a pair of controls
->> for each available USB PCM playback stream supported by the device.
->> However, before I get into making that change, I think the decision
->> for either two or one FE needs to be decided. Again, I think the 2
->> FE approach is much less invasive to the USB SND/ASoC core files,
->> and ensures the legacy USB SND path still works through the
->> non-offloaded data path.
-> Sure, the decision about the 2 FEs is the most significant one, and
-> those controls depend on that.
+v2:
+The main change in this version is Bjorn's pointing out that pm_runtime_*
+inside of the gdsc_enable/gdsc_disable path would be recursive and cause a
+lockdep splat. Dmitry alluded to this too.
 
+Bjorn pointed to stuff being done lower in the gdsc_register() routine that
+might be a starting point.
 
-Would like to get closure on that here... (1 vs 2 FEs)  My stance is that the 2 FE approach can be the initial one we can take as it still incorporates the significant blocks that would apply to both situations.  From the userspace perspective, since audio offloading doesn't exist yet, applications should be working off the USB SND device and the SW path.  For those, without changes to look for the offload kcontrol, they can continue to operate off the USB SND PCM devices directly.  If enhancements are made to look for the offload kcontrol, then applications would first refer to the kcontrol of the USB SND device and look for existence of the offload controls.  If present they can then open the ASoC PCM devices.
+I iterated around that idea and came up with patch #3. When a gdsc has no
+parent and the pd_list is non-NULL then attach that orphan GDSC to the
+clock controller power-domain list.
 
-If we then decided to move to the 1 FE approach in the future, this doesn't affect the userspace entities that added support during the 2 FE stages, because we are always first referring to the USB SND device to query for offload support.  The idea for the 1 FE design is that the userspace doesn't need to check for offload support, it just behaves as if it was opening the USB SND devices. (which should be the base of all applications working with USB SND)
+Existing subdomain code in gdsc_register() will connect the parent GDSCs in
+the clock-controller to the clock-controller subdomain, the new code here
+does that same job for a list of power-domains the clock controller depends
+on.
 
+To Dmitry's point about MMCX and MCX dependencies for the registers inside
+of the clock controller, I have switched off all references in a test dtsi
+and confirmed that accessing the clock-controller regs themselves isn't
+required.
 
-> So my comment assumes that, and if that applied, we need to consider
-> which kcontrol representation is better for users.  I don't mind too
-> much about that, but generally speaking, simpler representation is
-> better in the end, even if it leads to more elements.  e.g. sysfs
-> allows basically only one value per file principle, too.
->
->
->>>>> Apart from that: the Kconfig defition below ...
->>>>>
->>>>>> +config SND_USB_OFFLOAD_MIXER
->>>>>> +	tristate "USB Audio Offload mixer control"
->>>>>> +	help
->>>>>> +	 Say Y to enable the USB audio offloading mixer controls.  This
->>>>>> +	 exposes an USB offload capable kcontrol to signal to applications
->>>>>> +	 about which platform sound card can support USB audio offload.
->>>>>> +	 The returning values specify the mapped ASoC card and PCM device
->>>>>> +	 the USB audio device is associated to.
->>>>> ... and Makefile addition below ...
->>>>>
->>>>>> --- a/sound/usb/Makefile
->>>>>> +++ b/sound/usb/Makefile
->>>>>> @@ -36,3 +36,5 @@ obj-$(CONFIG_SND_USB_US122L) += snd-usbmidi-lib.o
->>>>>>  
->>>>>>  obj-$(CONFIG_SND) += misc/ usx2y/ caiaq/ 6fire/ hiface/ bcd2000/ qcom/
->>>>>>  obj-$(CONFIG_SND_USB_LINE6)	+= line6/
->>>>>> +
->>>>>> +obj-$(CONFIG_SND_USB_OFFLOAD_MIXER) += mixer_usb_offload.o
->>>>> ... indicates that this code will be an individual module, although
->>>>> it's solely used from snd-usb-audio-qmi driver.  This should be rather
->>>>> a boolean and moved to sound/usb/qcom/, and linked to
->>>>> snd-usb-audio-qmi driver itself, e.g.
->>>>>
->>>>> --- a/sound/usb/qcom/Makefile
->>>>> +++ b/sound/usb/qcom/Makefile
->>>>> @@ -1,2 +1,3 @@
->>>>>  snd-usb-audio-qmi-objs := usb_audio_qmi_v01.o qc_audio_offload.o
->>>>> +snd-usb-audio-qmi-$(CONFIG_SND_USB_OFFLOAD_MIXER) += mixer_usb_offload.o
->>>>>  obj-$(CONFIG_SND_USB_AUDIO_QMI) += snd-usb-audio-qmi.o
->>>>>
->>>>> Then you can drop EXPORT_SYMBOL_GPL(), too.
->>>> Had a discussion with Pierre on this too below.
->>>>
->>>> https://lore.kernel.org/linux-usb/f507a228-4865-4df5-9215-bc59e330a82f@linux.intel.com/
->>>>
->>>> I remember you commenting to place it in this vendor offload module,
->>>> which is what I did on v24.
->>> I assume that my early comment was based on your old implementations,
->>> and I guess it was because the mixer part didn't belong to the qcom
->>> stuff.  Now it belongs solely to qcom, the situation changed; it makes
->>> no sense to make it an individual module at all.
->>>
->>>
->> I guess Pierre's feedback was that he believed this should be vendor
->> agnostic, because any vendor that could potentially support USB
->> audio offload should have the same kcontrol within the USB SND
->> device.  Hence the reason for keeping it within generic code.  Since
->> QC is the only user of this now.  Do you prefer to make this part of
->> the vendor module for now, until another user comes along and
->> introduces offload support?
-> Yes, less module is preferred for now.  If the stuff is agnostic and
-> really used by multiple instances, we can factor out to an individual
-> module again.
->
+On the second point I also verified my test branch with lockdep on which
+was a concern with the pm_domain version of this solution but I wanted to
+cover it anyway with the new approach for completeness sake.
 
-OK, sounds good.  I will make it as part of our package then.
+Here's the item-by-item list of changes:
 
-Thanks
+- Adds a patch to capture pm_genpd_add_subdomain() result code - Bryan
+- Changes changelog of second patch to remove singleton and generally
+  to make the commit log easier to understand - Bjorn
+- Uses demv_pm_domain_attach_list - Vlad
+- Changes error check to if (ret < 0 && ret != -EEXIST) - Vlad
+- Retains passing &pd_data instead of NULL - because NULL doesn't do
+  the same thing - Bryan/Vlad
+- Retains standalone function qcom_cc_pds_attach() because the pd_data
+  enumeration looks neater in a standalone function - Bryan/Vlad
+- Drops pm_runtime in favour of gdsc_add_subdomain_list() for each
+  power-domain in the pd_list.
+  The pd_list will be whatever is pointed to by power-domains = <>
+  in the dtsi - Bjorn
+- Link to v1: https://lore.kernel.org/r/20241118-b4-linux-next-24-11-18-clock-multiple-power-domains-v1-0-b7a2bd82ba37@linaro.org
 
-Wesley Cheng
+v1:
+On x1e80100 and it's SKUs the Camera Clock Controller - CAMCC has
+multiple power-domains which power it. Usually with a single power-domain
+the core platform code will automatically switch on the singleton
+power-domain for you. If you have multiple power-domains for a device, in
+this case the clock controller, you need to switch those power-domains
+on/off yourself.
+
+The clock controllers can also contain Global Distributed
+Switch Controllers - GDSCs which themselves can be referenced from dtsi
+nodes ultimately triggering a gdsc_en() in drivers/clk/qcom/gdsc.c.
+
+As an example:
+
+cci0: cci@ac4a000 {
+	power-domains = <&camcc TITAN_TOP_GDSC>;
+};
+
+This series adds the support to attach a power-domain list to the
+clock-controllers and the GDSCs those controllers provide so that in the
+case of the above example gdsc_toggle_logic() will trigger the power-domain
+list with pm_runtime_resume_and_get() and pm_runtime_put_sync()
+respectively.
+
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+---
+Bryan O'Donoghue (3):
+      clk: qcom: gdsc: Capture pm_genpd_add_subdomain result code
+      clk: qcom: common: Add support for power-domain attachment
+      driver: clk: qcom: Support attaching subdomain list to multiple parents
+
+ drivers/clk/qcom/common.c | 21 +++++++++++++++++++++
+ drivers/clk/qcom/gdsc.c   | 41 +++++++++++++++++++++++++++++++++++++++--
+ drivers/clk/qcom/gdsc.h   |  1 +
+ 3 files changed, 61 insertions(+), 2 deletions(-)
+---
+base-commit: 744cf71b8bdfcdd77aaf58395e068b7457634b2c
+change-id: 20241118-b4-linux-next-24-11-18-clock-multiple-power-domains-a5f994dc452a
+
+Best regards,
+-- 
+Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
 
