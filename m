@@ -1,77 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-39158-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39159-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 21E679D9168
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Nov 2024 06:41:47 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B80B29D9177
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Nov 2024 06:45:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A655D164EF7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Nov 2024 05:41:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5DBA616714C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Nov 2024 05:45:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7BDE113AA5D;
-	Tue, 26 Nov 2024 05:41:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 512E37DA82;
+	Tue, 26 Nov 2024 05:45:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="J7o3nNq7"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bRGWo8WJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF5A47E76D
-	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Nov 2024 05:41:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE50E36127
+	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Nov 2024 05:45:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732599703; cv=none; b=mSd1JtK3bK5O5i307dC3FMBOmpHl4ah0qBew0B6cA2WFfJeLYWW8UwIAQyZq2s9QqClucnMd+JanjZ1qgcwR0e1wSAsuEI3fkRlWzobllsZvjKsReQMu/ZgvF88I1Xp0prFSSJuOThHGqi5Ryd41OLC4ttxg4GaeiZ9B1ZGVXqg=
+	t=1732599937; cv=none; b=cUlwRLQ+oa/F7tzmI/LjRuRPy+bSAdoW95OOCO+FkabszcG+dAHUienLIn6wW4YS4lWNk95eQOhd1nYpR4DikN/tKrncTZA8IfJCAuRMmOrM6JTCVdFahq4cQ6+ni0SDComhWarqvcG/85fl4vX9BFPTyad/zpMESAZ6JAGFZDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732599703; c=relaxed/simple;
-	bh=jA2jxjqsNqYBHCGkHXnptZD+IoakeakmrW6ZcgyeRl4=;
+	s=arc-20240116; t=1732599937; c=relaxed/simple;
+	bh=LduKrUiuF+o4ID5hULsbw3YjGls8uuInoe2CDUqrjnE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AaJaBYYL33ocLhhkUBPKkbm6KI8R9DO/jeolnHh5YCz4xJpRF1GDXbKfmX1zjQ2bwUnQR8YewZQwhAwXMXWu7+vScHTwE4QJo2xlhIqCLXLMRaXge7A9LnntqPQdKQX+nllLY16KNQYS9RZgO0GZ8Grys9RwP2PaZHV+vgZQ36M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=J7o3nNq7; arc=none smtp.client-ip=209.85.210.170
+	 Content-Type:Content-Disposition:In-Reply-To; b=vDbeEgH9fuiuggyasO6R0CSdYlfKyRHRABN8yYklGqYwhvIaKIzegRqG+2NEioM0v9CuJcBCJGmVHDVk1mwVMDGn7JO2ssy9G7nzGrYspxEeVb6Ix0Av1Bq70D8144IsrWdZvzakMQGUqnqIMw0sJ5KLDAtG7KpANgfgr7/gS9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bRGWo8WJ; arc=none smtp.client-ip=209.85.210.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-724d57a9f7cso4201027b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Nov 2024 21:41:41 -0800 (PST)
+Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-724e6c53fe2so3239367b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Nov 2024 21:45:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732599701; x=1733204501; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1732599935; x=1733204735; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=+ZIXv+9dxOLvX44jgEosCeJ1ZkgG3xlaNHk54kHEnho=;
-        b=J7o3nNq71hhUtKwGq9PGHz7I3w8fE9X99lE7FPCkWy9K+vv/xyJjoTJKJ3DeAS30pj
-         LBn5QLj/CZjODW2sL4LRo4Uqc1xXVlVFcJs3abYeNPa8W6eMcdduSgJ3y7OUsqQPZLnT
-         ffLWZazSF5T0s9JbWRvPu4j0fPPzWXQsDs8Ac7cgu4bWMRPAVPLKuOTr+mu3QSAJnRaw
-         Sj7RBb9LlxOnXw8YRasZRolo2qszxo7urOokx08uLFVWidEXpgzO9IdkLBDl58nKwIeW
-         UxuAILz9+jQPV8oQOPWMwpEQPe+RH3CRfiKx+8t+3bwseRcWEKwmnZc6hle0pu+lvm83
-         qvBQ==
+        bh=ru8A8FYea7pWk45ZPv+cLA69r/6TsIev+AJUTgUfZ+o=;
+        b=bRGWo8WJxb23tBA4xwr0/64TqF8c63yT94NYh3lUJB6ihPMJi/HKi6o04Bjpl9/lio
+         W7jF5TX5E7eaWlgvQ85cHnD8YOBuo1MMaZEJFjpCTdnZrLCkst9UZoLPmo8oiExm8oSE
+         kThWDQI64P5xa4hKkusGX1fSMyqYqLR0OC+LwEle/UG4FZv8VihxMFKVaNe/Ap3tupM7
+         gl5CDXrnxHyOJn2/pJ0aDVK1Ye+0kEpYJb0dPQ5ASFF1xkdI0bMGmqKAAdtiXQ5ysRxj
+         FGDL+HCx7ZMDavP6BIetAmLWMzGtzlVNbgoQrvKsj8O8Xiammk/ezjei9oxayPgd8omn
+         leWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732599701; x=1733204501;
+        d=1e100.net; s=20230601; t=1732599935; x=1733204735;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+ZIXv+9dxOLvX44jgEosCeJ1ZkgG3xlaNHk54kHEnho=;
-        b=Jzaf0DGK3uLIkthByZP6MQAtiwOkYYEIgCJxOrHBd/zhMlU51RyzfcGjsNzVGwkDPy
-         /jnd7Y+YCl15ZU+qi/6zjzkWKVzyfhAzkTLxy4ckdgfVUmFhso9G9AEZoGaPt6gcPQtV
-         4OSuooBUAGqIGvsuUv1R9yZG4BPY69E62hOsLjk9oMWkLccMpG0p1evBybNaPJlIj6Af
-         DYxbrk3ZCfbQE4LPCylMB3XjpZcQFL7NOYOs2PgUC2yqYL5xcIJJLqGamDVmkbg/n6r+
-         4tLZfSYWaH2kSPEK1i/vgak4u7RRY2DhEKSo7WEYGDyAXHWRXn9KDooVXQRJQWxJpKtP
-         WSPQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX/1hx5claJkwpNWFSJY+QeUgup0ytWSggWGZkWwuujTwJLd0hMDSb2bNByovlJlaMpQp7g0qsP60Gjmk6I@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx3sLParBk7lh8+Jxxs6eG1hPkAsEQSSLgy4V7cWS8VpM61FkY8
-	R/Fgqd564qbh2krEHoTXDTHirHFsUXrDlK8T3p5rSquyb0k+oozuZ44soKBEEQ==
-X-Gm-Gg: ASbGncsGIJoEmcPnQYGojNAdCtkPA4ym1Au/Kk6z6zYM1GggaAHTtYLi2Qj4ILIas7b
-	v7cvh0SRJJauFV0BJs1NpioCU5DXYXY5hwSgieElRmZ5Kt7rbs4wZ82Jz/Bwdr6xM1Bb78Bgo6v
-	QP2+Ocut1xhf+kOKMBnNtgKj1AGMB5j7dGrpSDBWYteRMy46ThC2cgpElVXFfwkrPf6YtzKHlbU
-	HsT5sLv5wrJWawlfYWvnzJo/Iec+tvN08d09tIWFk3IN7fDRBA77uoZ4co3cGI=
-X-Google-Smtp-Source: AGHT+IGRS+i8V50r8qVF0iygtYyP45FI8jr12E9Od5qn87IuCcU2RB0hrEDLVVUAawQahHHo56Qlbg==
-X-Received: by 2002:a17:902:c94c:b0:20c:9d9e:9049 with SMTP id d9443c01a7336-2129f228d84mr271690485ad.22.1732599701043;
-        Mon, 25 Nov 2024 21:41:41 -0800 (PST)
+        bh=ru8A8FYea7pWk45ZPv+cLA69r/6TsIev+AJUTgUfZ+o=;
+        b=wdDVMMhzQdQxekChaciKEyU2I76DW8O+5ytMk9U1+ETxa1MWnbr2uINOfdSBzJsFvY
+         9Q/AacfIoj28qrAm6/Ytzork7sdbTycHgoI0zGFLB2zBO/t0etExavnIvW+I5A/8kp2N
+         5W3wGBocmkbKJPXYgCRzXGJl7a4V1O+T/58jht2rDqp2YO2BlVLiUtnAKExCMqxLYeou
+         +ZMQBtaNbroLFrLDeKpLKrrWn1RocVz+jBVtok/3pOVE2Yt+8fJHsLr9gQXMnrrClJ6K
+         tWJTnQCFvDsDKZgYiVwmsOFmat3s5VWGR4juA6ZQ3U7CMNbFw/sbrEeRQbLTBGZKnjmM
+         t77w==
+X-Forwarded-Encrypted: i=1; AJvYcCXhicpxdVDU0t2MTvLY6eOQJUETKnCAOq1kleLEinTZIAFBHRnHHq10zB0R567ur6nTSzftpsxdft2T54X7@vger.kernel.org
+X-Gm-Message-State: AOJu0YxQ8XZn7cRKk6b7/qJQ21GaodMxiX7hEyuwM7uuTwXhR8PfZ5ec
+	RGDH52zriCzaYzTRgi4lvyYKb5PZcHr2yRF5NzgXAD9+ITifygl237XkbN3s5w==
+X-Gm-Gg: ASbGncsEh3aS2Yq4CKqF2x44chofIaXlg/AkwLYAGXwx9Dj1D0GhbzATZa5DwIV7Hv/
+	t6Q32ZCOdm3aMIplNbc8SRR1PTTQAa4SAoF17HZiDrXgdgVbwumPbA2MXO4QQAtkTVCnOmEIZWB
+	HFqx+3f2D8Jt2jl7zfSytPr1WD0+2jgh1YfqQznofLPakbw6u8x0uISnn4wAlv87V2bTYlTMET3
+	9UEzuIYnSOUadCq3oOeM6+cmG/Qa7kEPKxe1I5tOtcgoOF78fj5mvUhasSM8CI=
+X-Google-Smtp-Source: AGHT+IEBdAbqM+xFjnu+5Y3RUrCVenb/3lk9NHI94YHgWcVczPs6/2qW10NRSJW4WAL4o0zVcC2bbg==
+X-Received: by 2002:a05:6a00:244e:b0:71d:f510:b791 with SMTP id d2e1a72fcca58-724df5ee500mr20478083b3a.12.1732599935009;
+        Mon, 25 Nov 2024 21:45:35 -0800 (PST)
 Received: from thinkpad ([220.158.156.172])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2129dc11e43sm75706875ad.170.2024.11.25.21.41.37
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-724de454ae5sm7505161b3a.7.2024.11.25.21.45.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Nov 2024 21:41:40 -0800 (PST)
-Date: Tue, 26 Nov 2024 11:11:35 +0530
+        Mon, 25 Nov 2024 21:45:34 -0800 (PST)
+Date: Tue, 26 Nov 2024 11:15:29 +0530
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To: Md Sadre Alam <quic_mdalam@quicinc.com>
 Cc: miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
@@ -79,10 +79,11 @@ Cc: miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
 	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
 	quic_srichara@quicinc.com, quic_varada@quicinc.com,
 	quic_nainmeht@quicinc.com, quic_laksd@quicinc.com
-Subject: Re: [PATCH v2 2/3] mtd: rawnand: qcom: Fix onfi param page read
-Message-ID: <20241126054135.5v7f5ln5vwc64eys@thinkpad>
+Subject: Re: [PATCH v2 3/3] mtd: rawnand: qcom: Fix read len for onfi param
+ page
+Message-ID: <20241126054529.ewoajuaor4wpa4xe@thinkpad>
 References: <20241122085933.2663927-1-quic_mdalam@quicinc.com>
- <20241122085933.2663927-3-quic_mdalam@quicinc.com>
+ <20241122085933.2663927-4-quic_mdalam@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -92,35 +93,16 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241122085933.2663927-3-quic_mdalam@quicinc.com>
+In-Reply-To: <20241122085933.2663927-4-quic_mdalam@quicinc.com>
 
-On Fri, Nov 22, 2024 at 02:29:32PM +0530, Md Sadre Alam wrote:
+On Fri, Nov 22, 2024 at 02:29:33PM +0530, Md Sadre Alam wrote:
+> The minimum size to fetch the data from device to QPIC buffer
+> is 512-bytes. If size is less than 512-bytes the data will not be
+> protected by ECC as per QPIC standard. So while reading onfi parameter
+> page from NAND device setting nandc->buf_count = 512.
 
-Please change subject to:
+s/setting/set
 
-mtd: rawnand: qcom: Fix last codeword read in qcom_param_page_type_exec()
-
-> For QPIC V2 onwards there is a separate register to read
-> last code word "QPIC_NAND_READ_LOCATION_LAST_CW_n".
-> 
-> qcom_param_page_type_exec() is used to read only one code word
-> If it will get configure number of code words to 1 in QPIC_NAND_DEV0_CFG0
-
-"If it configures the number of..."
-
-> register then QPIC controller thinks its reading the last code word,
-> since we are having separate register to read the last code word,
-> we have to configure "QPIC_NAND_READ_LOCATION_LAST_CW_n" register
-> to fetch data from QPIC buffer to system memory.
-> 
-> Without this change page read was failing with timeout error
-> 
-> / # hexdump -C /dev/mtd1
-> [  129.206113] qcom-nandc 1cc8000.nand-controller: failure to read page/oob
-> hexdump: /dev/mtd1: Connection timed out
-> 
-> This issue only seen on SDX targets since SDX target used QPICv2. But
-> same working on IPQ targets since IPQ used QPICv1.
 > 
 > Cc: stable@vger.kernel.org
 > Fixes: 89550beb098e ("mtd: rawnand: qcom: Implement exec_op()")
@@ -134,56 +116,28 @@ Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > 
 > Change in [v2]
 > 
-> * Updated commit message
-> 
-> * Added stable kernel tag
-> 
-> * Replaced the buf_count value of 512 with the len in bytes.
+> * Set buf_count to 512 in the parameter page read
 > 
 > Change in [v1]
 > 
-> * Resolved the issue with reading a single code word in the parameter
->   page read
+> * This patch was not included in v1
 > 
->  drivers/mtd/nand/raw/qcom_nandc.c | 12 ++++++++++--
->  1 file changed, 10 insertions(+), 2 deletions(-)
+>  drivers/mtd/nand/raw/qcom_nandc.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 > diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
-> index cc59461df72e..31ec3db1246d 100644
+> index 31ec3db1246d..e1dca4857754 100644
 > --- a/drivers/mtd/nand/raw/qcom_nandc.c
 > +++ b/drivers/mtd/nand/raw/qcom_nandc.c
-> @@ -2859,7 +2859,12 @@ static int qcom_param_page_type_exec(struct nand_chip *chip,  const struct nand_
->  	const struct nand_op_instr *instr = NULL;
->  	unsigned int op_id = 0;
->  	unsigned int len = 0;
-> -	int ret;
-> +	int ret, reg_base;
-> +
-> +	reg_base = NAND_READ_LOCATION_0;
-> +
-> +	if (nandc->props->qpic_v2)
-> +		reg_base = NAND_READ_LOCATION_LAST_CW_0;
+> @@ -2926,7 +2926,7 @@ static int qcom_param_page_type_exec(struct nand_chip *chip,  const struct nand_
+>  		write_reg_dma(nandc, NAND_DEV_CMD1, 1, NAND_BAM_NEXT_SGL);
+>  	}
 >  
->  	ret = qcom_parse_instructions(chip, subop, &q_op);
->  	if (ret)
-> @@ -2911,7 +2916,10 @@ static int qcom_param_page_type_exec(struct nand_chip *chip,  const struct nand_
->  	op_id = q_op.data_instr_idx;
->  	len = nand_subop_get_data_len(subop, op_id);
+> -	nandc->buf_count = len;
+> +	nandc->buf_count = 512;
+>  	memset(nandc->data_buffer, 0xff, nandc->buf_count);
 >  
-> -	nandc_set_read_loc(chip, 0, 0, 0, len, 1);
-
-nandc_set_read_loc() does changes the register offset based on QPIC version. So
-what exactly you are trying to fix here?
-
-- Mani
-
-> +	if (nandc->props->qpic_v2)
-> +		nandc_set_read_loc_last(chip, reg_base, 0, len, 1);
-> +	else
-> +		nandc_set_read_loc_first(chip, reg_base, 0, len, 1);
->  
->  	if (!nandc->props->qpic_v2) {
->  		write_reg_dma(nandc, NAND_DEV_CMD_VLD, 1, 0);
+>  	config_nand_single_cw_page_read(chip, false, 0);
 > -- 
 > 2.34.1
 > 
