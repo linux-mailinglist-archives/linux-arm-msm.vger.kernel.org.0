@@ -1,188 +1,182 @@
-Return-Path: <linux-arm-msm+bounces-39155-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39156-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 370549D90F5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Nov 2024 05:13:19 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 321089D912A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Nov 2024 05:57:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A67A6B240EC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Nov 2024 04:13:16 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 843F8B24917
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Nov 2024 04:57:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1D3112FB0A;
-	Tue, 26 Nov 2024 04:13:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE64022EE5;
+	Tue, 26 Nov 2024 04:57:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uQTECpwG"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="TQqv7hXY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EEB042A80;
-	Tue, 26 Nov 2024 04:13:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BC493D6D;
+	Tue, 26 Nov 2024 04:57:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732594392; cv=none; b=HFKhKPTDnXr6RsmdmoXwhR8D5M7vC98h4G3ZeTiN4eLsfwY8XIfj5xqDjq2nTceARoTEvfmpeQ+Yzc7hGGATtNESLrf4dwoRGRSMghFrlDPifRduKwHDMw2xuiggEyjGjdU2oKTeFri1bAoAUiL+7G6UYfqhuSJ/io7+/H+sn1c=
+	t=1732597057; cv=none; b=UKucGbNdzt2v+N+L2RrFuP53nDG6n1/dAmbP+juxoekWIs/kEzm/J8ZspM6gq92MPWnD573ub4gVj1rRFQGmDFjtwd8vQLi9ujxtgZSWHawsK5Yb0cY9M3MiM1Emo+rbX4QcKgdPNOZF+8yeaq45Y2CFOFsi9eck31fhX8JTFaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732594392; c=relaxed/simple;
-	bh=wvE1j6jYlustZGPgO4za1DJpvm8S+eQ4rSParDa6Lgg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ubKQbR0FPLhCecU31WHHpShmcYEufta14YzKuvKj7tyTQjoyNgMwlzXeDT/AeoQWJCyToSKgqF7NIjjGc0XGhZVnai1lD/2Z5PSDfChBZidB3K0NyoGtDjmMAguB8e9CZW3JA9lUrQ8amuBCg/2XtC4Dr/+wMzd+G39aqss7ckE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uQTECpwG; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11FB4C4CED7;
-	Tue, 26 Nov 2024 04:13:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732594392;
-	bh=wvE1j6jYlustZGPgO4za1DJpvm8S+eQ4rSParDa6Lgg=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=uQTECpwGCtXvgW65bmiUP/yGxJvz0r7mVGsCCqF/XcRfiIuZv42jYE+QPSuePckeG
-	 dVbnsZ00LE3d97xJR0ePFq8U2Yna8qZuuLQRvwb8eQI1wxd3k/KmMWjdEoDku2wqsM
-	 5TBjzWODkEd91uKinwhXClwNwOgrMStAMcYizAy7nilQEqoHOb5j+YoNl+se83vScv
-	 +42ovPaLlv1+IrKOuv6MgCjlDvHiXubKEt15Twjb9yqSSaQbJexzFs2nkEel1m063j
-	 NmiD8mcuO+uw07c8qlCBNtJ2U/ke+no1KjokLVaCPMMy7AyeXY4qgL1/BNNqPb5+Jm
-	 gINg2xT+7LbPQ==
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2ffced84ba8so1223721fa.2;
-        Mon, 25 Nov 2024 20:13:11 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCV36tjH5IWTg9U+yoJeP5cYMlIP0nOgwTMW9TM8ZRlRdHhacAvVHb2TomybLNz2KJCh1l+FmUmxZCCILk5G@vger.kernel.org, AJvYcCWiMo8rBXeRyO5pFfoVRCDqxRRNdbQIgAuAaUds1NqNU+jl3LJBlZvVL7EJP5EvlxLY4tLOwobeLMA8p69O@vger.kernel.org, AJvYcCWtm+xh8j5ZfA3+nzo23vWjc8319gOuzC7GRtjOiCI1XnbYDIAtyVub5qN9UetOcmkFuof5rysE8j3PjhJX@vger.kernel.org
-X-Gm-Message-State: AOJu0YxVR/6jAzLqJhdnCWtxqPC/69VG8h1t4z1SKm/CAdD6ZzXSLUZo
-	di+BFhvig6VY1Uz11gVSBVQkAAeYyyjwuEHFn7ckVEKmLDxkN2OJ2rO3sLOUb+C2yxFmBDBDCGk
-	tKjkyg8AXVKVvUwfawyIwynHGVRM=
-X-Google-Smtp-Source: AGHT+IGax4HC8zIQqLB8xrI0moZd82uV5VPNJpszQ12dMOodNR4A+EElpdPN8bJ83seoA/fkNz8n4WUh6BTdRHvKAZE=
-X-Received: by 2002:a05:6512:b86:b0:53d:d0f0:ad0d with SMTP id
- 2adb3069b0e04-53dd39b55bemr7255517e87.46.1732594390702; Mon, 25 Nov 2024
- 20:13:10 -0800 (PST)
+	s=arc-20240116; t=1732597057; c=relaxed/simple;
+	bh=tsRzdQafM1jps+fhoc4oXSxGVhKQo6o0E3myeIY8rgo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=i89FxIMbNlNny6NUt03Ew86CY6apOzxR4uZYvaz50oiyPXVGVAhtLJKqhlbJotx+T/4KMkkli7srtgC/aOIsGIvPu494WDtJUpIp6/1Ts23y3yzLYHbLA/sybldwGGum4UjF0N0WI2s7ZolcvgNksz7mZvGFa/cn0Yj3tHdPFdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=TQqv7hXY; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4APJTQcw030525;
+	Tue, 26 Nov 2024 04:57:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	2kfNfp3sjB/n7H5lX+DdLkxSUAoQqrFWzurnBC0Xtq4=; b=TQqv7hXYA7LVh+BO
+	IWH10DgYaJAOdq25B+HmSCqiBhO3iQmNqF25Fnr/lRuTE2gDCikWrg1Sk8r9Uxg4
+	vSfZdLcOiodQBiG6Wm5wiCfC3TJDmJHIzXDAZzq2MClJ7bAzufQBTeZFdF7q9ziC
+	4Q+eZFpUAC3vQlh9uwGggzIUncGpD9e37xkSZWo4zDcm9ITC2a33sjGrzLEJMIo+
+	I1qWT82OuurVxjBCqa8KZIdVtW3rcn4uHUFnJsPL4uzyemrVCWZsr5r/em1c8+ee
+	FTuPhaLraUXjSLKIoSWY6CMullupXWgQlElLj4QlQnQkRZDWJSY6ZHmzm4yCUUnE
+	Uy6Szw==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4334rd75m2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 26 Nov 2024 04:57:28 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AQ4vR0r032199
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 26 Nov 2024 04:57:27 GMT
+Received: from [10.151.37.94] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 25 Nov
+ 2024 20:57:23 -0800
+Message-ID: <b874e1fc-2d0d-f18b-3ebc-6ebff2e02e8f@quicinc.com>
+Date: Tue, 26 Nov 2024 10:27:13 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241120204125.52644-1-pvorel@suse.cz> <CAK7LNASYr+pjUs-W40d_Gc+vP67nX7NHXyE0AnOpXxXgxrCtqQ@mail.gmail.com>
- <20241121011720.GA69389@pevik> <CAF6AEGuzFNVd5fE+b+hKcC8xAOg7CrkPaYuWC6tCVmioutoOOw@mail.gmail.com>
- <CAK7LNAQDMJUYUF7BaN10bwctW7fuHmSMrrAjMmn4s7P2ys5P+Q@mail.gmail.com> <20241122204157.GA125569@pevik>
-In-Reply-To: <20241122204157.GA125569@pevik>
-From: Masahiro Yamada <masahiroy@kernel.org>
-Date: Tue, 26 Nov 2024 13:12:33 +0900
-X-Gmail-Original-Message-ID: <CAK7LNARDWAw6Yo9HdO-Sba=G_bohr_0uXuKtgNZSr1YLeQE2ug@mail.gmail.com>
-Message-ID: <CAK7LNARDWAw6Yo9HdO-Sba=G_bohr_0uXuKtgNZSr1YLeQE2ug@mail.gmail.com>
-Subject: Re: [PATCH v4 1/2] init/Kconfig: add python3 availability config
-To: Petr Vorel <pvorel@suse.cz>
-Cc: Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Andrew Morton <akpm@linux-foundation.org>, 
-	linux-kbuild@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Sat, Nov 23, 2024 at 5:42=E2=80=AFAM Petr Vorel <pvorel@suse.cz> wrote:
->
-> > On Thu, Nov 21, 2024 at 10:49=E2=80=AFAM Rob Clark <robdclark@gmail.com=
-> wrote:
->
-> > > On Wed, Nov 20, 2024 at 5:17=E2=80=AFPM Petr Vorel <pvorel@suse.cz> w=
-rote:
->
-> > > > > On Thu, Nov 21, 2024 at 5:41=E2=80=AFAM Petr Vorel <pvorel@suse.c=
-z> wrote:
->
-> > > > > > It will be used in the next commit for DRM_MSM.
->
-> > > > > > Suggested-by: Rob Clark <robdclark@gmail.com>
-> > > > > > Signed-off-by: Petr Vorel <pvorel@suse.cz>
-> > > > > > ---
-> > > > > > Changes v3->v4:
-> > > > > > * Move definition to the end of the file
->
->
-> > > > > I prefer to not check the tool.
->
-> > > > Ack.
->
-> > > > > Why don't you install python3?
->
-> > > > Everybody installs it when it's required, the question is how to in=
-form about
-> > > > the dependency.
->
-> > > > There build environments are minimal environments:
-> > > > * chroot (e.g. cross compilation)
-> > > > * container
->
-> > > > These are used by both developers and distros.
->
-> > > I don't think py3 is an _onerous_ dependency, but it has come up as a
-> > > surprise in minimal distro build environments at least once.. so I'd
-> > > be a fan of surfacing this dependency in a predictable/understandable
-> > > way (ie. I'm in favor of this patchset)
->
->
-> > "once" is a keyword here.
->
-> > "/bin/sh: python3: not found" provides sufficient information
-> > about why the compilation failed, and you know what to do
-> > to fix the problem.
-> > This is good.
->
-> > If you hide CONFIG_DRM_MSM silently
-> > due to missing python3, you may scratch your head
-> > "why drm/msm was not compiled?".
-> It's not on the list, but still visible in help (via search).
->
-> > This is worse.
->
-> I'm ok with this being refused. Yes, it's a trivial thing to find that py=
-thon3
-> is not installed. I wasn't sure myself if this is really better. Having
-> something like "requires $(PYTHON3)" would be best solution (e.g. not dis=
-able
-> the config, but exit before starting to build), but of course unless this
-> feature is needed for many modules it does not make sense to have it.
-> It's because kernel mostly contains everything (unless languages like pyt=
-hon
-> or any other dependency starts to be added). For this reason I like that
-> mconf-cfg.sh warns when missing ncurses devel files (even suggesting pack=
-age
-> names).
->
-> Just to explain what was my motivation. CONFIG_DRM_MSM in in arm64 defcon=
-fig,
-> thus it will affect anybody who uses the defconfig (any distro will need =
-to add
-> it).
-
-
-arch/arm64/configs/defconfig is a multi-platform config.
-
-If CONFIG_DRM_MSM exists in arch/arm64/configs/defconfig
-and if you want to build arm64 defconfig, you need to install
-all necessary tools for that.
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH] dmaengine: qcom: bam_dma: Avoid writing unavailable
+ register
+To: Varadarajan Narayanan <quic_varada@quicinc.com>
+CC: <vkoul@kernel.org>, <ulf.hansson@linaro.org>, <martin.petersen@oracle.com>,
+        <kees@kernel.org>, <dave.jiang@intel.com>, <av2082000@gmail.com>,
+        <linux-arm-msm@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_srichara@quicinc.com>
+References: <20241122071649.2618320-1-quic_mdalam@quicinc.com>
+ <Z0Fb5xBolEtwyUKb@hu-varada-blr.qualcomm.com>
+Content-Language: en-US
+From: Md Sadre Alam <quic_mdalam@quicinc.com>
+In-Reply-To: <Z0Fb5xBolEtwyUKb@hu-varada-blr.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: jMkiCdQVs8jVk6KiTvVppZqNZBJDTSOJ
+X-Proofpoint-GUID: jMkiCdQVs8jVk6KiTvVppZqNZBJDTSOJ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
+ bulkscore=0 clxscore=1015 suspectscore=0 priorityscore=1501 malwarescore=0
+ spamscore=0 adultscore=0 impostorscore=0 phishscore=0 mlxlogscore=999
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2411260039
 
 
 
->
-> It's needed only for Qualcomm arm64 devices only. But only for these devi=
-ces
-> which are mainlined enough to really use CONFIG_DRM_MSM (many of them are=
-n't in
-> that state).
->
-> postmarketOS is the distribution which supports Qualcomm. It stores kerne=
-l
-> config for each device and devices often have individual maintainer. E.g.=
- 175x
-> "once" :).
-
-
-If you do not want to be bothered by unnecessary drivers,
-you need to disable the relevant CONFIG option.
-(e.g, scripts/config -d  CONFIG_DRM_MSM)
-
-
-This is the standard way we have for many years.
-
-
-
---
-Best Regards
-Masahiro Yamada
+On 11/23/2024 10:06 AM, Varadarajan Narayanan wrote:
+> On Fri, Nov 22, 2024 at 12:46:49PM +0530, Md Sadre Alam wrote:
+>> Avoid writing unavailable register in BAM-Lite mode.
+>> BAM_DESC_CNT_TRSHLD register is unavailable in BAM-Lite
+>> mode. Its only available in BAM-NDP mode. So avoid writing
+>> this register for clients who is using BAM-Lite mode.
+>>
+>> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+>> ---
+>>   drivers/dma/qcom/bam_dma.c | 22 ++++++++++++++--------
+>>   1 file changed, 14 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+>> index d43a881e43b9..13a08c03746b 100644
+>> --- a/drivers/dma/qcom/bam_dma.c
+>> +++ b/drivers/dma/qcom/bam_dma.c
+>> @@ -59,6 +59,9 @@ struct bam_desc_hw {
+>>   #define DESC_FLAG_NWD BIT(12)
+>>   #define DESC_FLAG_CMD BIT(11)
+>>
+>> +#define BAM_LITE	0x13
+>> +#define BAM_NDP		0x20
+>> +
+>>   struct bam_async_desc {
+>>   	struct virt_dma_desc vd;
+>>
+>> @@ -398,6 +401,7 @@ struct bam_device {
+>>
+>>   	/* dma start transaction tasklet */
+>>   	struct tasklet_struct task;
+>> +	u32 bam_revision;
+>>   };
+>>
+>>   /**
+>> @@ -441,8 +445,9 @@ static void bam_reset(struct bam_device *bdev)
+>>   	writel_relaxed(val, bam_addr(bdev, 0, BAM_CTRL));
+>>
+>>   	/* set descriptor threshold, start with 4 bytes */
+>> -	writel_relaxed(DEFAULT_CNT_THRSHLD,
+>> -			bam_addr(bdev, 0, BAM_DESC_CNT_TRSHLD));
+>> +	if (bdev->bam_revision >= BAM_LITE && bdev->bam_revision < BAM_NDP)
+>> +		writel_relaxed(DEFAULT_CNT_THRSHLD,
+>> +			       bam_addr(bdev, 0, BAM_DESC_CNT_TRSHLD));
+>>
+>>   	/* Enable default set of h/w workarounds, ie all except BAM_FULL_PIPE */
+>>   	writel_relaxed(BAM_CNFG_BITS_DEFAULT, bam_addr(bdev, 0, BAM_CNFG_BITS));
+>> @@ -1000,9 +1005,9 @@ static void bam_apply_new_config(struct bam_chan *bchan,
+>>   			maxburst = bchan->slave.src_maxburst;
+>>   		else
+>>   			maxburst = bchan->slave.dst_maxburst;
+>> -
+>> -		writel_relaxed(maxburst,
+>> -			       bam_addr(bdev, 0, BAM_DESC_CNT_TRSHLD));
+>> +		if (bdev->bam_revision >= BAM_LITE && bdev->bam_revision < BAM_NDP)
+>> +			writel_relaxed(maxburst,
+>> +				       bam_addr(bdev, 0, BAM_DESC_CNT_TRSHLD));
+>>   	}
+>>
+>>   	bchan->reconfigure = 0;
+>> @@ -1192,10 +1197,11 @@ static int bam_init(struct bam_device *bdev)
+>>   	u32 val;
+>>
+>>   	/* read revision and configuration information */
+>> -	if (!bdev->num_ees) {
+>> -		val = readl_relaxed(bam_addr(bdev, 0, BAM_REVISION));
+>> +	val = readl_relaxed(bam_addr(bdev, 0, BAM_REVISION));
+>> +	if (!bdev->num_ees)
+>>   		bdev->num_ees = (val >> NUM_EES_SHIFT) & NUM_EES_MASK;
+>> -	}
+>> +
+>> +	bdev->bam_revision = val & 0xff;
+> 
+> Use REVISION_MASK instead of 0xff
+Ok
+> 
+> -Varada
+> 
+>>   	/* check that configured EE is within range */
+>>   	if (bdev->ee >= bdev->num_ees)
+>> --
+>> 2.34.1
+>>
 
