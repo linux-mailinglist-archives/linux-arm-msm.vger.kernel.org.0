@@ -1,270 +1,170 @@
-Return-Path: <linux-arm-msm+bounces-39204-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39209-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4A9D09D9923
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Nov 2024 15:08:44 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 962CA9D9954
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Nov 2024 15:14:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0BAAC283D84
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Nov 2024 14:08:43 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 837E4B269BD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Nov 2024 14:12:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6925F1D5AA1;
-	Tue, 26 Nov 2024 14:08:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E561B1D5AB5;
+	Tue, 26 Nov 2024 14:12:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vUvUvxKt"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gdqMXqmC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AFE0D528
-	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Nov 2024 14:08:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B52FD1D5AA9;
+	Tue, 26 Nov 2024 14:12:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732630121; cv=none; b=TJmKnOVd1VDqcgAF60FuMixhQRTo6/IC1+uuO6GVrASrYDfG9lQmJvjLAnMxbfNQXx8+DVANSe288rWqf8tub6Yc5Ye59bvJLiNne1/kk6XOlgelzXufZtlrKZguhW7yJCVooTQnUohRnN8l4mhSfff2Cbyic3Fusu3R2Ex/np8=
+	t=1732630331; cv=none; b=E7lpPkpuegcL4upq5KRC2paM+d9XM7zq3oYgWdmjJgAgLeJuKRN59KEcT9Qd5jCyA4NuFsyNbpAF4G4N8ulc0dGNA0jwhnb86+7ThjxCf2L8Tahfoi9NDhhzHKgNJNYrkgF8bo99spw5OB3fcHoEkHKznhTPxPh+rLZg5Pvg0JU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732630121; c=relaxed/simple;
-	bh=TBFDk6n5p3Ok7a9f59nLR0qfFhfTz84rCQHeYRhiemA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AjhxbbL96x2v06cx20bTifG/cFzAwwHwbfXPkn8+MM5UifveB55SNrVvD2LlUmekaDFghcalbHcjSg2adpq3l6e4NQzllaUvZpRPTViaHoD9tHDCeMviAbDJN5ZfpqYv6NN2kYl7yydmcyr+fht2eF3NKokEpfzav/t3ODx/TtU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vUvUvxKt; arc=none smtp.client-ip=209.85.208.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2ffc81cee68so18529321fa.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Nov 2024 06:08:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732630118; x=1733234918; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=p9nEgjsuX9i9WDOFc1qk+82AoXsJqVH3Z5AhmpQUDqg=;
-        b=vUvUvxKt0vftjSjpeoPl43LExwpTzX/8w28h0n2Pz2cEqibpV+zOoRucZd/fBqejC5
-         XFYkXelICNkaIc07LQwG8NPPumgfaCNvgXyMTVbFmaI6k6jBdRXBD6nswBxStacDA+qL
-         zjKdpNkC3OU6k+gQwCQ1w98gX4l5XBLErQvIpHuS7glkLW+n/jRAKSYQpX1EqpiAKWMw
-         gu0yrEEKoz8va1GsowOtorGMd343XgFOj2kdzYBGufC0buBMBNAph3Mnxwk9YKzvEzcj
-         +XI3HJh1u8LI3XCyXPr5qL6aSAUh9K8rZKHBoPgFvIsmrK7aXjFIRuIVPWwiuo1RZ0e3
-         pK5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732630118; x=1733234918;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=p9nEgjsuX9i9WDOFc1qk+82AoXsJqVH3Z5AhmpQUDqg=;
-        b=iJQ56RkoLkPacM+tgufd1OSz82QsQnaC7NdofjOt5Y5HrQx9hwWYn0Vyi1jFMNmIAQ
-         b62vLSyvs/gsrUvfXRri+OFR9uaBVzA2tztnIvZ7NWnG9xyoeXqvQhpaFOR83JhvuZTq
-         Z1ODIWBSjlGUOPctasShvq6uCzENCDqK3msN+RE930aHRYT7bYeB/EnPXbqTcWW61YPG
-         cKK+4Nre5jonSp7MqEoWbGQ5YeLq9AcvuPGkVtcGUA8ZrarnnhVTelYDyb/9ZcAY+y70
-         snkAO0lXEjDoeb5UzDThN/cqHBtNtg2Jw0MCNwW7XwC2ox46jeQoSNY9ttuiD5V0lzIO
-         cqRA==
-X-Forwarded-Encrypted: i=1; AJvYcCXEgimJozTCAc+9bDbeXzDIEBxzfsDSDIGyar5uEVpTIA7llG5jcXsDQxmTG5xXmlMjnr5UN+JtoF8LowiB@vger.kernel.org
-X-Gm-Message-State: AOJu0YxoZxrW/Qjv0UB1e6j7n7EitQu+utg/NDdpApjpEMQrvpYnHbjj
-	hXQF01fja68Q5qsHgSZZnL3HYZc0X/8g35ydM05d5xoyRhRgbxrlBgUwM705H9k=
-X-Gm-Gg: ASbGncsquG7tEwYR90l39l4VGjMhdisGMFr5E9Gi0hdNIj0HRmCUVN29SGApz+mGRJ/
-	pj/4DfH//peelVmRzNwq+Rw2nSVnWPfcFNh5nc+y0yrNvkvxBMtN+nwhE946KqtJ2gPpYzQVLzZ
-	8x7PITZhV6hoEfao1ckZDnbmCOw7OmIMD5mKeHd6V9pcZxbxOpAK2FXJrn8FipzlE1c2Zew6GLx
-	JU7LUMfstdxs2wMsISIHpN/Qz98Fd3mQmyGXH3AcCjX+hlSCPtMalWV6jqrmTlQ189T88uyGmSn
-	CbrUeYc+nebL1fwfysuHe6ZHMkba+w==
-X-Google-Smtp-Source: AGHT+IHFo0u9dZeqasaGK/11AiEVRHpr6/TNKRrMBD8HtygsZB7hj/KBCWrxrNtWfqK7NAgihmRiwA==
-X-Received: by 2002:a05:6512:400c:b0:53d:eefc:2b48 with SMTP id 2adb3069b0e04-53deefc2f0amr277753e87.33.1732630117611;
-        Tue, 26 Nov 2024 06:08:37 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53ddd09737csm1385252e87.156.2024.11.26.06.08.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Nov 2024 06:08:36 -0800 (PST)
-Date: Tue, 26 Nov 2024 16:08:34 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Komal Bajaj <quic_kbajaj@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Melody Olvera <quic_molvera@quicinc.com>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3] arm64: dts: qcom: qdu/qru1000-idp: Fix the voltage
- setting
-Message-ID: <makbiq4pby5qoqpraonia3rorytb5uqhiab3tri5bjimdbcoc2@z6jkhg2u3reb>
-References: <20241119070812.16079-1-quic_kbajaj@quicinc.com>
- <orvnnjclxlwrab34daxrepn3m3la3heogkxbncl44yjyn3wxkt@vnp4knb5nedo>
- <6ebf5fcc-011c-4984-ac5b-8139d0da8588@quicinc.com>
+	s=arc-20240116; t=1732630331; c=relaxed/simple;
+	bh=uKSI0QK41RbOL5oGaHAJ68uSQpiJSgszgWx5JphXpSI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Fj4gUlFWglaw2L9hRpRhu5rkOZIqxQYs9wK3Mbd98mS5xCp4QVqoGiPHTB8u4dQmGN+80Eo5Nf01euoCJQD3bQVewtg+UxGkRle58XViNI9LW/mhURpkvDCCaGnNXc4rGw2pZlGrJGt73rLoE/HXKoHPI+Jt7lZdrAoTggmwWQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gdqMXqmC; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02030C4CECF;
+	Tue, 26 Nov 2024 14:12:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1732630331;
+	bh=uKSI0QK41RbOL5oGaHAJ68uSQpiJSgszgWx5JphXpSI=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=gdqMXqmC1OAD5zw+3ibo0qGU7zgsBUOiGKTYli19SbPRmdCHUQQv8zgIjeRty07Ea
+	 hNuMQLpHu1BmkCDTXJeFIsWnhYv9duTjkPPzynUdqlpK3mRVVAmXSbUUaWJYZktxzJ
+	 El3k+80ey+KrP9co/9v+uqjgwHWVjpQWsfb04EIW6hMSYzklRVzIUQ9Y11vNhl27JC
+	 iG81Ap2Nkj/cz60OWK+eSsKPqwJJU6oWgpbUqSGdLdSy0dqVg6zxdb19Xx+dTEOEW8
+	 ufdVZ2uX8vEzftRy/Kgi0x/Ec/s86TQfLI2246vuBBZBoGQNKR3NkYJylIqEQWdN9E
+	 KCedA/DGJ6YxA==
+Message-ID: <680a9f92-1d29-410b-bc63-a998d2d64e9e@kernel.org>
+Date: Tue, 26 Nov 2024 15:12:05 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <6ebf5fcc-011c-4984-ac5b-8139d0da8588@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] dt-bindings: display/msm: gpu: Document A612 GPU
+To: Akhil P Oommen <quic_akhilpo@quicinc.com>, Rob Clark
+ <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20241126-qcs615-gpu-dt-v1-0-a87782976dad@quicinc.com>
+ <20241126-qcs615-gpu-dt-v1-1-a87782976dad@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20241126-qcs615-gpu-dt-v1-1-a87782976dad@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Mon, Nov 25, 2024 at 06:02:40PM +0530, Komal Bajaj wrote:
-> On 11/20/2024 5:27 PM, Dmitry Baryshkov wrote:
-> > On Tue, Nov 19, 2024 at 12:38:11PM +0530, Komal Bajaj wrote:
-> > > While adding the USB support, it was found that the configuration
-> > > for regulator smps5 was incorrectly set. Upon cross verifying for
-> > > all the regulators, found that smps4, smps6 and smps8 are also
-> > > incorrectly configured. The patch corrects these configurations.
-> > > 
-> > > In particular -
-> > > - smps4 is 1.574V min and 2.04V max
-> > > - smps5 is 1.2V min and 1.4V max
-> > > - smps6 is 0.382V min and 1.12V max
-> > > - smps8 is fixed at 0.752V
-> > Could you please comment whether your values represent the min/max
-> > supported by the regulators themselves or the shared min/max by all the
-> > devices powered by the corresponding regulator?
+On 26/11/2024 15:06, Akhil P Oommen wrote:
+> A612 GPU requires an additional smmu_vote clock. Update the bindings to
+> reflect this.
 > 
-> values represent the min/max supported by the regulators themselves
+> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+> ---
+>  .../devicetree/bindings/display/msm/gpu.yaml       | 28 ++++++++++++----------
+>  1 file changed, 16 insertions(+), 12 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/display/msm/gpu.yaml b/Documentation/devicetree/bindings/display/msm/gpu.yaml
+> index 6ddc72fd85b04537ea270754a897b4e7eb269641..201150d3151b55c26c95832d36f4e02f66060a25 100644
+> --- a/Documentation/devicetree/bindings/display/msm/gpu.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/gpu.yaml
+> @@ -187,6 +187,7 @@ allOf:
+>              enum:
+>                - qcom,adreno-610.0
+>                - qcom,adreno-619.1
+> +              - qcom,adreno-612.0
 
-This is incorrect. Please take a look around. The regulators in the
-board files specify working ranges, which are suitable for the
-particular board, not the ranges that are supported by the regulator
-itself.
+Keep things ordered.
 
-So, NAK. If working ranges need to be corrected, please send another
-patch.
+>      then:
+>        properties:
+>          clocks:
+> @@ -195,18 +196,21 @@ allOf:
+>  
+>          clock-names:
+>            items:
+> -            - const: core
+> -              description: GPU Core clock
+> -            - const: iface
+> -              description: GPU Interface clock
+> -            - const: mem_iface
+> -              description: GPU Memory Interface clock
+> -            - const: alt_mem_iface
+> -              description: GPU Alternative Memory Interface clock
+> -            - const: gmu
+> -              description: CX GMU clock
+> -            - const: xo
+> -              description: GPUCC clocksource clock
+> +            anyOf:
 
-> 
-> 
-> > > Fixes: d1f2cfe2f669 ("arm64: dts: qcom: Add base QDU1000/QRU1000 IDP DTs")
-> > > Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
-> > > ---
-> > > Changes in v3 -
-> > > * Minor nit pick in commit message
-> > > * Link to v2: https://lore.kernel.org/all/20240524082236.24112-1-quic_kbajaj@quicinc.com/
-> > > 
-> > > Changes in v2-
-> > > * Updated the commit message as suggested by Krzysztof
-> > > * Link to v1: https://lore.kernel.org/linux-arm-msm/20240514131038.28036-1-quic_kbajaj@quicinc.com/
-> > > ---
-> > >   arch/arm64/boot/dts/qcom/qdu1000-idp.dts | 16 ++++++++--------
-> > >   arch/arm64/boot/dts/qcom/qru1000-idp.dts | 16 ++++++++--------
-> > >   2 files changed, 16 insertions(+), 16 deletions(-)
-> > > 
-> > > diff --git a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
-> > > index e65305f8136c..6e8f9007068b 100644
-> > > --- a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
-> > > +++ b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
-> > > @@ -96,20 +96,20 @@ vreg_s3a_1p05: smps3 {
-> > > 
-> > >   		vreg_s4a_1p8: smps4 {
-> > >   			regulator-name = "vreg_s4a_1p8";
-> > > -			regulator-min-microvolt = <1800000>;
-> > > -			regulator-max-microvolt = <1800000>;
-> > > +			regulator-min-microvolt = <1574000>;
-> > > +			regulator-max-microvolt = <2040000>;
-> > >   		};
-> > > 
-> > >   		vreg_s5a_2p0: smps5 {
-> > >   			regulator-name = "vreg_s5a_2p0";
-> > > -			regulator-min-microvolt = <1904000>;
-> > > -			regulator-max-microvolt = <2000000>;
-> > > +			regulator-min-microvolt = <1200000>;
-> > > +			regulator-max-microvolt = <1400000>;
-> > Having 2.0 V regulator with the range of 1.2V - 1.4V is strange.
-> 
-> The configuration for this regulator was incorrectly set, as its nominal
-> range is 1.2 V.
-> 
-> There was no scenario utilizing this regulator, but we discovered this
-> misconfiguration while enabling USB.
+No, this makes everything total mess. Why xo now is allowed to be first
+clock?
 
-Well. Then the name also needs to be corrected. You can not have
-1.2-1.4 V regulator having the 2p0 name.
+Drop and explain in commit msg why other devices now get smmu clock.
 
-> > >   		};
-> > > 
-> > >   		vreg_s6a_0p9: smps6 {
-> > >   			regulator-name = "vreg_s6a_0p9";
-> > > -			regulator-min-microvolt = <920000>;
-> > > -			regulator-max-microvolt = <1128000>;
-> > > +			regulator-min-microvolt = <382000>;
-> > > +			regulator-max-microvolt = <1120000>;
-> > The same applies to this regulator, 0.9V usually can not go to 0.382 V
-> > and still let the devices to continue working.
-> 
-> 
-> This regulator supports a minimum voltage, but it won't actually drop to
-> that level. The previous voltage values did not align with the Power Grid.
+BTW, I am pretty sure this breaks existing platforms.
 
-What is the actual minimal voltage for the regulator on this board?
-Please use it instead.
-
-> 
-> 
-> > 
-> > >   		};
-> > > 
-> > >   		vreg_s7a_1p2: smps7 {
-> > > @@ -120,8 +120,8 @@ vreg_s7a_1p2: smps7 {
-> > > 
-> > >   		vreg_s8a_1p3: smps8 {
-> > >   			regulator-name = "vreg_s8a_1p3";
-> > > -			regulator-min-microvolt = <1352000>;
-> > > -			regulator-max-microvolt = <1352000>;
-> > > +			regulator-min-microvolt = <752000>;
-> > > +			regulator-max-microvolt = <752000>;
-> > 1.3V at 0.752V?
-> 
-> 
-> same applies here as well.
-
-Same comment. No 0.752V for 1.3V regulator.
-
-> Thanks
-> 
-> Komal
-> 
-> 
-> > 
-> > >   		};
-> > > 
-> > >   		vreg_l1a_0p91: ldo1 {
-> > > diff --git a/arch/arm64/boot/dts/qcom/qru1000-idp.dts b/arch/arm64/boot/dts/qcom/qru1000-idp.dts
-> > > index 1c781d9e24cf..8b0ddc187ca0 100644
-> > > --- a/arch/arm64/boot/dts/qcom/qru1000-idp.dts
-> > > +++ b/arch/arm64/boot/dts/qcom/qru1000-idp.dts
-> > > @@ -96,20 +96,20 @@ vreg_s3a_1p05: smps3 {
-> > > 
-> > >   		vreg_s4a_1p8: smps4 {
-> > >   			regulator-name = "vreg_s4a_1p8";
-> > > -			regulator-min-microvolt = <1800000>;
-> > > -			regulator-max-microvolt = <1800000>;
-> > > +			regulator-min-microvolt = <1574000>;
-> > > +			regulator-max-microvolt = <2040000>;
-> > >   		};
-> > > 
-> > >   		vreg_s5a_2p0: smps5 {
-> > >   			regulator-name = "vreg_s5a_2p0";
-> > > -			regulator-min-microvolt = <1904000>;
-> > > -			regulator-max-microvolt = <2000000>;
-> > > +			regulator-min-microvolt = <1200000>;
-> > > +			regulator-max-microvolt = <1400000>;
-> > >   		};
-> > > 
-> > >   		vreg_s6a_0p9: smps6 {
-> > >   			regulator-name = "vreg_s6a_0p9";
-> > > -			regulator-min-microvolt = <920000>;
-> > > -			regulator-max-microvolt = <1128000>;
-> > > +			regulator-min-microvolt = <382000>;
-> > > +			regulator-max-microvolt = <1120000>;
-> > >   		};
-> > > 
-> > >   		vreg_s7a_1p2: smps7 {
-> > > @@ -120,8 +120,8 @@ vreg_s7a_1p2: smps7 {
-> > > 
-> > >   		vreg_s8a_1p3: smps8 {
-> > >   			regulator-name = "vreg_s8a_1p3";
-> > > -			regulator-min-microvolt = <1352000>;
-> > > -			regulator-max-microvolt = <1352000>;
-> > > +			regulator-min-microvolt = <752000>;
-> > > +			regulator-max-microvolt = <752000>;
-> > >   		};
-> > > 
-> > >   		vreg_l1a_0p91: ldo1 {
-> > > --
-> > > 2.46.0
-> > > 
-
--- 
-With best wishes
-Dmitry
+Best regards,
+Krzysztof
 
