@@ -1,266 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-39323-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39324-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id AA8D59DA88B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 14:31:35 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 823339DA8D0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 14:42:25 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7644A1662D8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 13:31:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4336A282738
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 13:42:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 39E371FC0F6;
-	Wed, 27 Nov 2024 13:31:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7392B1FCFDF;
+	Wed, 27 Nov 2024 13:41:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="Exkw5gWh"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rCekTdkt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ABB71957E1
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Nov 2024 13:31:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 777591FCF73
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Nov 2024 13:41:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732714287; cv=none; b=BbvCxbd2gFmdEmkQUwbkjrX9yZocNvwKbIgGLwmXokWGJd9N3M6R7Phkh+wfv86Ruiuh7UCHhsh8rWV3KNAyUYrKL2YCFMOaM9A/iZ+Nxriv2JsThpMjY2Dg+czMAPicuvpLc0dq2kPuoY8xEU4edFrdnuSVGA+R3nIMmvJRmAE=
+	t=1732714883; cv=none; b=L1sDx+hgUVCca+Nbcl6kFxT7/KPeQqvCTDcdT6AIMoAonJlJBfpAo2fcRQX7WCDlYDa10tDZFFbd0dh0AAzSd/f75nSoVbtJPy2N5RmqYVNRPnYU5hPFk4akNURo043wq+SQma59ccbyq/VWtBl1BO48d3ckQiH5H9b5i902yEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732714287; c=relaxed/simple;
-	bh=FCq/wz9CODrxpUcZSiq/K80sBf8feqP0ZtgImUXPI88=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Y0IhxKNkiOzlsYSY0NgPqOq8BfrJx7MpbkT7kGduAmeq8WvbwJe/6U8NDSi+fS9YVlvbm5qH+szbsS3OxOeoaKSrNuzzdbMDALiUEcplw8aEAqibkXrxhaDT2RS0HFlxDB3/FzWuMHE++qWhEIDJUqaGoaDCWQNRzkmXnCeGnR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=Exkw5gWh; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-434a1639637so24976475e9.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Nov 2024 05:31:23 -0800 (PST)
+	s=arc-20240116; t=1732714883; c=relaxed/simple;
+	bh=ySPedvBJevYjtblSz3wodfE4A8z/KCFgNZPKngqn6RM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OCAsxciBNvQCufuHF1vEjgu8IlKw/50mH8dedmkUGDQRoEDbV01WA2fs9P4fuGWmYFr95oJjRMAK9z94cmMi9ZzSnZ0w5unbQh/lZ5A0vwnKG5F0gSzrB6CnG2cNYNAl6E7xDLZrm81Jj22vqGi4eDoXL1Vl+x5NoDjz3oamPYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rCekTdkt; arc=none smtp.client-ip=209.85.167.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-53de852a287so2349173e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Nov 2024 05:41:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1732714282; x=1733319082; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=GRGKjYxWwsRelyuP0tWpLLQewWr/T1xF1uSm0KaiNUo=;
-        b=Exkw5gWh8o+TTFiTmqa788aRQ7EarUDRziCanpPFPJJ5KZOwltUrrixIGW1U/67HUH
-         FeAE1Ic2kOCJGTYo//EXTGNe4LxrZJLr3rfyQKnfJEnKRLdAKjbS+CBYYMGP992neXqV
-         JGxwoKGB6G5pC85Hhf7JogEEubxAj/OW+AsHt/yqmAfvXqXyOavE+Ko41KE6MN/pYzI8
-         XCO6Def7SgpMEfO6Zuucn7/bKbeK47y2w2pqk7twRm21qOx+u64mx7XYsCknRWUPZ8xt
-         Qly02NRVNZ11Dwd/kRnLFSNNQ27QVW8y6BZZ22ZBDB0LcQPDRmB5l00UeTa0gS/CoFI1
-         3RFA==
+        d=linaro.org; s=google; t=1732714880; x=1733319680; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=+V0B8FgWwCZYmESnMjYEXbPLdTp7ON4XeU+NCnDG0sM=;
+        b=rCekTdkt8YkjJpLmPc5KUeLL+2QN43j0QjeeB7RK19/9ggR6r5wLPvhqiyCegmpgI3
+         cbcGvrArgBVXCudovRvI85RIsiJs4tWzZTIi0jaI+oao0x0UhvrhtJnl9tfYitJB8hPh
+         vyBMd1km8v5Ph42Rj/kdqVUaZTRHm86phwjimVM1bTfdTg19yZJ0zlDytyGjBErdViTV
+         dXHwyyCvMUq0FXNOFHag/77JDdOSmc0uCpxJbuzA0A7h03qBs7AFgzMsV3yQ4pIzGk6M
+         xak0IVHwW3HmnH+nwCkc0Kns5g/TwdR7izsqqMvFRhSPzdWzGSlVq9yYp3UiYAdDHQeG
+         GTRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732714282; x=1733319082;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=GRGKjYxWwsRelyuP0tWpLLQewWr/T1xF1uSm0KaiNUo=;
-        b=FUKpdTWeVl6M18YlTQ5cYQdsLtdD4COPKVBIeXScGy//WRQ7IUj6A1DtIcPYteF4sH
-         qHnz/bc/WTo3aIrdsTlJtQ+tRfAiKOQU202SBLGK5eeuqrbMBjmukO4ImZrJh4I7//p3
-         TkWHsrmP/gIXiF8fPvjM/e6QVNz31hFLiuLmkbMBQxXBEkz1b88I/P3TIGulebnefr2X
-         JHLYTMOprLOtDqSJMBB564Mfa4R3tqMqJocWmH0uHYe7IxXDP5aw4jOZ9mlgdA6kQNiE
-         fG7WZ2idXSMmmUXGHQXKJn738Ha0Us7wHxiMrSyEP2qa+qa1f9CJYVKggd6CUEKpnlVm
-         cXNA==
-X-Forwarded-Encrypted: i=1; AJvYcCVRvCNHpvTj/xFrbXogS12/iZvr0JYnj5+FwZDIic049kObUM5vygAFBqNmfP8s1+XmxTa86Wpjk3U/g0Si@vger.kernel.org
-X-Gm-Message-State: AOJu0YzOvCO6m4UPBzQ4/hDfX7NLBF/0BeNFmza37u3aHfat25TUsDA2
-	wZVhBwKfCvppQRCJAPJyeXNHApgXvpZopj4RnHfhu/virSdJ/HJAnjh248PnM6I=
-X-Gm-Gg: ASbGncuwVFsOlJVvg+8TksgBrU7LZAqj7kuP86QG/UmAbgIwRVRtLC+LXP0txLShpg1
-	cHwyIprtnq4vHzSILi5+PylHS9hUqFVJZ8shG71MqMndwq7a/GGI8zsE591aOueuxh25G53eyc0
-	23z8vAkYCLxRNr0T+14Mt74BeXd5gWUI45XjPfZzcozJonAfAoBcqjJBvKEJCzAXKy8tLVV6mwl
-	R32lOmsIjnF+1uBWKjo16OXkA1NLtfq/YGoSUxAkSlZDP0OMZHpiWE=
-X-Google-Smtp-Source: AGHT+IEZ7C9LB7FM3cTaauPjrEMojqCE1Of1m/atUBZHepHaTuyY1CQCKhviAha5orYzGSUtbCVNQw==
-X-Received: by 2002:a05:600c:3b9e:b0:434:a4a6:5212 with SMTP id 5b1f17b1804b1-434a9d483a2mr30303435e9.0.1732714281484;
-        Wed, 27 Nov 2024 05:31:21 -0800 (PST)
-Received: from localhost ([2a02:8071:b783:6940:d88d:8601:f512:7eed])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-434aa7e4d42sm21130305e9.37.2024.11.27.05.31.20
+        d=1e100.net; s=20230601; t=1732714880; x=1733319680;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+V0B8FgWwCZYmESnMjYEXbPLdTp7ON4XeU+NCnDG0sM=;
+        b=uH3rIlMeN8QJma8VESUyWX8zTejjARhclWpD7q0TP6bMuIGIa4+4ipJwXuH3hrbqsd
+         oDBAkG3N3ojRq4enOPIX5kGwRRndFyeni2a/mT/8NO6aSIZmA5Gn77BE88bhvIkIGWrl
+         BGOm/6qED3u1908HHMSpnwi2UzvdQP3Mi7DD85tYlPqkmwIuPHCNXBcc3/UEc67iGXDj
+         RtvS1nVKaD4dqIpRPttjY5CMQZLJOjE5VxIBfUd0GifCGPZH3rkGycSUIu+RvV2T1e8q
+         YC06InCk7T10DE+TGbEjtFFg3veA9QfGtluzuKA0rO+v6LeXjPau4UZalbvW/+d6t8vt
+         bqTg==
+X-Forwarded-Encrypted: i=1; AJvYcCUze2MeKzb8Av9QE3hGU51kfZGZOnSD9hVOP9wo7aJNQfdcKeWfqFz9RzbLdLcwWYlL8/Hc+6va2jxElodg@vger.kernel.org
+X-Gm-Message-State: AOJu0YxpYW3OFVf1zGWfukyISoki17f3s/332qmC5a1Vk7BElOjvsXON
+	DH3YKOoRbSsELnYdbwH65ALGklcEPwAExxuuaqldYA1kNN4DYJgCDyHPLR+cJEA=
+X-Gm-Gg: ASbGncvpYLuat8Hv9IO+HBG0GuqvztQk5FJ9LNsBza6lktVoeWPgo1fl3XnkH0MhAd/
+	RieH1LQtSSsWlbnJA9iPAM8yOooVF9WP+qpCrb/lWxYCAP8xmSvyBflysXzbTCzNNrKg3/qiD7y
+	EnxCc6bK5JAc55VgNuh2RQCAs57aG6kwqxA0+V30Si3bTNeIpA9aSVF51rBY3KJMv94gbhdWABe
+	5hlPV037fhZ/aev3gP/79FkiBwWCujgPFJHZyzRbl1hIUPVOZNILXcy07375D1UazR6qo8P3mMv
+	hmknimCAlEGHI0UuvhoGNJePTOnHQg==
+X-Google-Smtp-Source: AGHT+IG9BNVyGMPhRMDkSB666seeuc69CW+Jv5lBWbNwNRZPtIr56nhPI2eE0zoLaGS7x7+3k7cyFg==
+X-Received: by 2002:a05:6512:3a8f:b0:53d:a4f3:29ed with SMTP id 2adb3069b0e04-53df00dd707mr910972e87.27.1732714879617;
+        Wed, 27 Nov 2024 05:41:19 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53dd336a530sm2263130e87.142.2024.11.27.05.41.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Nov 2024 05:31:21 -0800 (PST)
-From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-To: Ulf Hansson <ulf.hansson@linaro.org>
-Cc: Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Michal Simek <michal.simek@amd.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Marco Felsch <m.felsch@pengutronix.de>,
-	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Marek Vasut <marex@denx.de>,
-	Jacky Bai <ping.bai@nxp.com>,
-	Adam Ford <aford173@gmail.com>,
-	Stefan Wahren <wahrenst@gmx.net>,
-	linux-pm@vger.kernel.org,
-	imx@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH] pmdomain: Switch back to struct platform_driver::remove()
-Date: Wed, 27 Nov 2024 14:31:04 +0100
-Message-ID: <20241127133104.673408-2-u.kleine-koenig@baylibre.com>
-X-Mailer: git-send-email 2.45.2
+        Wed, 27 Nov 2024 05:41:19 -0800 (PST)
+Date: Wed, 27 Nov 2024 15:41:16 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Yongxing Mou <quic_yongmou@quicinc.com>
+Cc: Vinod Koul <vkoul@kernel.org>, 
+	Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Kuogee Hsieh <quic_khsieh@quicinc.com>, linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, Ritesh Kumar <quic_riteshk@quicinc.com>
+Subject: Re: [PATCH 2/4] phy: qcom: edp: Add support for eDP PHY on QCS8300
+Message-ID: <new6hjxnwyuohetdprxwee3epf23uemwft2p7faym5f5zqv3og@fksrew4blk7p>
+References: <20241127-qcs8300_dp-v1-0-0d30065c8c58@quicinc.com>
+ <20241127-qcs8300_dp-v1-2-0d30065c8c58@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6060; i=u.kleine-koenig@baylibre.com; h=from:subject; bh=FCq/wz9CODrxpUcZSiq/K80sBf8feqP0ZtgImUXPI88=; b=owGbwMvMwMXY3/A7olbonx/jabUkhnR3eYnzuzV/fUnQrjrQ49PHHO+gcVHK+DnbvNafNiwyd yMyndI6GY1ZGBi5GGTFFFnsG9dkWlXJRXau/XcZZhArE8gUBi5OAZiIsxn7P302Ocami3Yay4yz heZou26sfvk5+MmlleGe/2cdFmZ5qej1M/IxwwyGd4/fF0v/8JNZ9MrlT/p+/sJPZyQvM7r/OCE nZFb32lKOXWQqm/nH6a8fFz0PMs1VWibzKytH5szRXxH/3rnMFvS/aSRkZxTroKG5mv2EwocgOb /J3kKVE4yjXsSfWnAvnNNvxfqzzmXPehdm/LtsZe9t+Ln3kuTNRV7ROu/Mc2MMv3DwR9Q0PJHdK PXPa2LShPTvX6xfBQi2zkh+1lSsl6JeUuse+77I+ng869z9EboKHJlGlyfz3VL2d83bvlpl5imX jbelvk6NzOnuvlq6YCebfozAbING75TLb2MEnUW+7zkDAA==
-X-Developer-Key: i=u.kleine-koenig@baylibre.com; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241127-qcs8300_dp-v1-2-0d30065c8c58@quicinc.com>
 
-After commit 0edb555a65d1 ("platform: Make platform_driver::remove()
-return void") .remove() is (again) the right callback to implement for
-platform drivers.
+On Wed, Nov 27, 2024 at 04:15:49PM +0800, Yongxing Mou wrote:
+> Add support for eDP PHY v5 found on the Qualcomm QCS8300 platform.
+> 
+> Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
+> ---
+>  drivers/phy/qualcomm/phy-qcom-edp.c | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-edp.c b/drivers/phy/qualcomm/phy-qcom-edp.c
+> index f1b51018683d51df064f60440864c6031638670c..90e0a399c25299ad1b2fb5df8512ba3888661046 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-edp.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-edp.c
+> @@ -532,6 +532,13 @@ static const struct phy_ver_ops qcom_edp_phy_ops_v4 = {
+>  	.com_configure_ssc	= qcom_edp_com_configure_ssc_v4,
+>  };
+>  
+> +static const struct qcom_edp_phy_cfg qcs8300_dp_phy_cfg = {
+> +	.is_edp = false,
+> +	.aux_cfg = edp_phy_aux_cfg_v5,
+> +	.swing_pre_emph_cfg = &edp_phy_swing_pre_emph_cfg_v5,
+> +	.ver_ops = &qcom_edp_phy_ops_v4,
+> +};
+> +
+>  static const struct qcom_edp_phy_cfg sa8775p_dp_phy_cfg = {
+>  	.is_edp = false,
+>  	.aux_cfg = edp_phy_aux_cfg_v5,
+> @@ -1133,6 +1140,7 @@ static int qcom_edp_phy_probe(struct platform_device *pdev)
+>  }
+>  
+>  static const struct of_device_id qcom_edp_phy_match_table[] = {
+> +	{ .compatible = "qcom,qcs8300-edp-phy", .data = &qcs8300_dp_phy_cfg, },
 
-Convert all platform drivers below drivers/pmdomain to use .remove(),
-with the eventual goal to drop struct platform_driver::remove_new(). As
-.remove() and .remove_new() have the same prototypes, conversion is done
-by just changing the structure member name in the driver initializer.
+If the setup is the same as SA8775p and you don't expect any
+QCS8300-specific tunings, please reuse sa8775p as a fallback compat.
 
-En passant make the alignment of the struct initializer in
-imx/gpcv2.c consistent.
+>  	{ .compatible = "qcom,sa8775p-edp-phy", .data = &sa8775p_dp_phy_cfg, },
+>  	{ .compatible = "qcom,sc7280-edp-phy", .data = &sc7280_dp_phy_cfg, },
+>  	{ .compatible = "qcom,sc8180x-edp-phy", .data = &sc7280_dp_phy_cfg, },
+> 
+> -- 
+> 2.34.1
+> 
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
----
-Hello,
-
-given the simplicity of the individual changes I do this all in a single
-patch. I you don't agree, please tell and I will happily split it.
-
-It's based on today's next, feel free to drop changes that result in a
-conflict when you come around to apply this. I'll care for the fallout
-at a later time then. (Having said that, if you use b4 am -3 and git am
--3, there should be hardly any conflict.)
-
-Best regards
-Uwe
-
- drivers/pmdomain/imx/gpc.c                  | 4 ++--
- drivers/pmdomain/imx/gpcv2.c                | 4 ++--
- drivers/pmdomain/imx/imx8m-blk-ctrl.c       | 2 +-
- drivers/pmdomain/imx/imx8mp-blk-ctrl.c      | 2 +-
- drivers/pmdomain/imx/imx93-blk-ctrl.c       | 2 +-
- drivers/pmdomain/imx/imx93-pd.c             | 2 +-
- drivers/pmdomain/qcom/cpr.c                 | 2 +-
- drivers/pmdomain/xilinx/zynqmp-pm-domains.c | 2 +-
- 8 files changed, 10 insertions(+), 10 deletions(-)
-
-diff --git a/drivers/pmdomain/imx/gpc.c b/drivers/pmdomain/imx/gpc.c
-index fbb4c90b72c4..f18c7e6e75dd 100644
---- a/drivers/pmdomain/imx/gpc.c
-+++ b/drivers/pmdomain/imx/gpc.c
-@@ -233,7 +233,7 @@ static struct platform_driver imx_pgc_power_domain_driver = {
- 		.name = "imx-pgc-pd",
- 	},
- 	.probe = imx_pgc_power_domain_probe,
--	.remove_new = imx_pgc_power_domain_remove,
-+	.remove = imx_pgc_power_domain_remove,
- 	.id_table = imx_pgc_power_domain_id,
- };
- builtin_platform_driver(imx_pgc_power_domain_driver)
-@@ -545,6 +545,6 @@ static struct platform_driver imx_gpc_driver = {
- 		.of_match_table = imx_gpc_dt_ids,
- 	},
- 	.probe = imx_gpc_probe,
--	.remove_new = imx_gpc_remove,
-+	.remove = imx_gpc_remove,
- };
- builtin_platform_driver(imx_gpc_driver)
-diff --git a/drivers/pmdomain/imx/gpcv2.c b/drivers/pmdomain/imx/gpcv2.c
-index 6e6ecbf2e152..48e3693d2bdc 100644
---- a/drivers/pmdomain/imx/gpcv2.c
-+++ b/drivers/pmdomain/imx/gpcv2.c
-@@ -1438,8 +1438,8 @@ static struct platform_driver imx_pgc_domain_driver = {
- 		.name = "imx-pgc",
- 		.pm = &imx_pgc_domain_pm_ops,
- 	},
--	.probe    = imx_pgc_domain_probe,
--	.remove_new = imx_pgc_domain_remove,
-+	.probe = imx_pgc_domain_probe,
-+	.remove = imx_pgc_domain_remove,
- 	.id_table = imx_pgc_domain_id,
- };
- builtin_platform_driver(imx_pgc_domain_driver)
-diff --git a/drivers/pmdomain/imx/imx8m-blk-ctrl.c b/drivers/pmdomain/imx/imx8m-blk-ctrl.c
-index ca942d7929c2..23db85b7aa9e 100644
---- a/drivers/pmdomain/imx/imx8m-blk-ctrl.c
-+++ b/drivers/pmdomain/imx/imx8m-blk-ctrl.c
-@@ -889,7 +889,7 @@ MODULE_DEVICE_TABLE(of, imx8m_blk_ctrl_of_match);
- 
- static struct platform_driver imx8m_blk_ctrl_driver = {
- 	.probe = imx8m_blk_ctrl_probe,
--	.remove_new = imx8m_blk_ctrl_remove,
-+	.remove = imx8m_blk_ctrl_remove,
- 	.driver = {
- 		.name = "imx8m-blk-ctrl",
- 		.pm = &imx8m_blk_ctrl_pm_ops,
-diff --git a/drivers/pmdomain/imx/imx8mp-blk-ctrl.c b/drivers/pmdomain/imx/imx8mp-blk-ctrl.c
-index 77e889165eed..e3a0f64c144c 100644
---- a/drivers/pmdomain/imx/imx8mp-blk-ctrl.c
-+++ b/drivers/pmdomain/imx/imx8mp-blk-ctrl.c
-@@ -857,7 +857,7 @@ MODULE_DEVICE_TABLE(of, imx8mp_blk_ctrl_of_match);
- 
- static struct platform_driver imx8mp_blk_ctrl_driver = {
- 	.probe = imx8mp_blk_ctrl_probe,
--	.remove_new = imx8mp_blk_ctrl_remove,
-+	.remove = imx8mp_blk_ctrl_remove,
- 	.driver = {
- 		.name = "imx8mp-blk-ctrl",
- 		.pm = &imx8mp_blk_ctrl_pm_ops,
-diff --git a/drivers/pmdomain/imx/imx93-blk-ctrl.c b/drivers/pmdomain/imx/imx93-blk-ctrl.c
-index b10348ac10f0..0e2ba8ec55d7 100644
---- a/drivers/pmdomain/imx/imx93-blk-ctrl.c
-+++ b/drivers/pmdomain/imx/imx93-blk-ctrl.c
-@@ -438,7 +438,7 @@ MODULE_DEVICE_TABLE(of, imx93_blk_ctrl_of_match);
- 
- static struct platform_driver imx93_blk_ctrl_driver = {
- 	.probe = imx93_blk_ctrl_probe,
--	.remove_new = imx93_blk_ctrl_remove,
-+	.remove = imx93_blk_ctrl_remove,
- 	.driver = {
- 		.name = "imx93-blk-ctrl",
- 		.of_match_table = imx93_blk_ctrl_of_match,
-diff --git a/drivers/pmdomain/imx/imx93-pd.c b/drivers/pmdomain/imx/imx93-pd.c
-index 25ab592945bd..d68273330687 100644
---- a/drivers/pmdomain/imx/imx93-pd.c
-+++ b/drivers/pmdomain/imx/imx93-pd.c
-@@ -162,7 +162,7 @@ static struct platform_driver imx93_power_domain_driver = {
- 		.of_match_table = imx93_pd_ids,
- 	},
- 	.probe = imx93_pd_probe,
--	.remove_new = imx93_pd_remove,
-+	.remove = imx93_pd_remove,
- };
- module_platform_driver(imx93_power_domain_driver);
- 
-diff --git a/drivers/pmdomain/qcom/cpr.c b/drivers/pmdomain/qcom/cpr.c
-index 26a60a101e42..3ee8184e4be3 100644
---- a/drivers/pmdomain/qcom/cpr.c
-+++ b/drivers/pmdomain/qcom/cpr.c
-@@ -1717,7 +1717,7 @@ MODULE_DEVICE_TABLE(of, cpr_match_table);
- 
- static struct platform_driver cpr_driver = {
- 	.probe		= cpr_probe,
--	.remove_new	= cpr_remove,
-+	.remove		= cpr_remove,
- 	.driver		= {
- 		.name	= "qcom-cpr",
- 		.of_match_table = cpr_match_table,
-diff --git a/drivers/pmdomain/xilinx/zynqmp-pm-domains.c b/drivers/pmdomain/xilinx/zynqmp-pm-domains.c
-index 0b5831e5ba1b..d579220a4500 100644
---- a/drivers/pmdomain/xilinx/zynqmp-pm-domains.c
-+++ b/drivers/pmdomain/xilinx/zynqmp-pm-domains.c
-@@ -313,7 +313,7 @@ static struct platform_driver zynqmp_power_domain_driver = {
- 		.sync_state = zynqmp_gpd_sync_state,
- 	},
- 	.probe = zynqmp_gpd_probe,
--	.remove_new = zynqmp_gpd_remove,
-+	.remove = zynqmp_gpd_remove,
- };
- module_platform_driver(zynqmp_power_domain_driver);
- 
-
-base-commit: 6f3d2b5299b0a8bcb8a9405a8d3fceb24f79c4f0
 -- 
-2.45.2
-
+With best wishes
+Dmitry
 
