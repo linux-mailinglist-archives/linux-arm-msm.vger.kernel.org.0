@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-39353-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39354-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B6E919DAD02
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 19:27:40 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 94A629DAD0B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 19:29:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 67A1B164901
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 18:27:37 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 442DD1647A7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 18:29:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 179F3201015;
-	Wed, 27 Nov 2024 18:27:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94345201017;
+	Wed, 27 Nov 2024 18:29:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iVpwL7me"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M9gqIb5g"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9EA313D503;
-	Wed, 27 Nov 2024 18:27:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 652C41FF7B0;
+	Wed, 27 Nov 2024 18:29:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732732056; cv=none; b=qjcgBhyoyVC+GBKRuev7jRZknquc802GSkf+M1K7lHUWY5p5uKx3/v96+SY7KxG2rtkn46YpvYXDKSsk5zTZs/eZqVycfu6d9BOkHukCtfp1reJ8T1UaFqW4xIQNRTUacC2RYIiSaDCNBJ7GiSGgF3q04riXdvZ4fcpciHnpsNA=
+	t=1732732142; cv=none; b=jtMCO43CZ6pcZg5wvh8ShW4JIm/ZCetWikBeBjwkxq8J3Fck6j1KBKsOB+CUlBqk5ft1Ky9JcNAWwC5dD908z6ONwDKzcIq4EBMwZ4YgERooPY4mXuaWGgEYxLj87Re7Jhn691L9hmkmfUmyzaYdBKNKXdDbtAW5bV9KgKqvJfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732732056; c=relaxed/simple;
-	bh=lKCISMfUMTDAUqkuaB/QeRcHlA/aD3hqMLJncaeT/WM=;
+	s=arc-20240116; t=1732732142; c=relaxed/simple;
+	bh=hsvAzJbsOippFpgaQxLr33LtX30TWw3xnnUFBVplrpY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HfoosC22tvoytKfcbsuvUIRM4Wj7WyhWO1bHtxbuEeEmpNlVkhRNhZ4hlM9zGMT3b0GLa1irdJ+U1t0rqko/fbQQx5wFTV/03XKCiwwDd3EVbiuFzyvKBosRv3jw6dOhrFNA+/YzOnlFYAfvsUeLFXqDCVVYZchdtJzluu8X1D4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iVpwL7me; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 639D7C4CECC;
-	Wed, 27 Nov 2024 18:27:30 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=or5HLizC+UZShZ5BnwTZhBsW1GH5iSxmYamNsN/dIibVZOXIrU5pG2aqKOc+b1Vl89izyTghRW9WHoumsjLFdL5iQmFwQVGm5e30VbNw1026fTUxcP9rGSyeJiEn1CxIpq9c7yglmDqssC3k1PIUsPNCz+7UP4Myqs1JormIUQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M9gqIb5g; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68651C4CECC;
+	Wed, 27 Nov 2024 18:28:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732732055;
-	bh=lKCISMfUMTDAUqkuaB/QeRcHlA/aD3hqMLJncaeT/WM=;
+	s=k20201202; t=1732732142;
+	bh=hsvAzJbsOippFpgaQxLr33LtX30TWw3xnnUFBVplrpY=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=iVpwL7meTkSjhL95/clsXixNLScc7w0dhGWRMxEE9d4Mq+mvksM1B1FmcVhYTqpUh
-	 iAj0QDuZxiQpXu62e6IrMR1vWX1gsmW0fWZ02jzB2gSBLAweF5nP7MFspyoTYuo6aD
-	 LyjAqDYnORNf3VYZxkamHPvTPk1VABdZSLcLVdUF6IK64P2PfgyPPPcP4bTUeWUA1p
-	 yf0JJzlH1hF48tFywAXPAYKyBvCXOUD9HLSuiKcyG7rpwbECnB3ZUI2D5r3ilWLeo6
-	 eWLE1GdVnIiRQi1o1UrtVmgvYFVDsAZtd/UzonSqc6R+Xhh/wg9l+exve9g+1rDHfZ
-	 tt1nNDe1pVNnA==
-Message-ID: <0ba0f4af-5075-4bb1-a7f6-815ef95bbda7@kernel.org>
-Date: Wed, 27 Nov 2024 19:27:27 +0100
+	b=M9gqIb5gWafJ07ZhcUqkbVFDi717sJVbne+4d64HlGCKeYc9fyzN2VR3s2ffAwPV5
+	 csiCYh7nyzCqzyi5CZqh1aWQoEkCXpj0YFxI2nwcFAh47hCqyWig3uxq3ejblPA2dz
+	 4Qzmm+gqwG0B/fI9vSzzlaaNW/eNXRJSA9Y52z89kcZxj17mOsNKKQaGNfnwiGkF9Q
+	 UXT6eZs1nobLg6vyEWxNSd2KOJHwYEWDhGoDfJ5AOaCX7cJDKvjWKjcGEuaiHREMwu
+	 dbDUp2u45OrZ5kuMRS3ujnMy3ExeXxPETnw8gWKTZ6zjhIQNCPmP7V1O9B369vbwSM
+	 b8/uQh8OGUaKQ==
+Message-ID: <3729bdcb-5f3d-4845-8f96-dbb0616b88f4@kernel.org>
+Date: Wed, 27 Nov 2024 19:28:52 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,23 +50,24 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V6 3/4] dt-bindings: interconnect: Add generic compatible
- qcom,epss-l3-perf
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Rob Herring <robh@kernel.org>
-Cc: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>,
- Georgi Djakov <djakov@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Odelu Kukatla <quic_okukatla@quicinc.com>,
- Mike Tipton <quic_mdtipton@quicinc.com>, Sibi Sankar
- <quic_sibis@quicinc.com>, linux-arm-msm@vger.kernel.org,
- linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20241125174511.45-1-quic_rlaggysh@quicinc.com>
- <20241125174511.45-4-quic_rlaggysh@quicinc.com>
- <20241127142304.GA3443205-robh@kernel.org>
- <zchtx32wtii2mzy2pp4lp4gdaim7w56kih7jcqes4tyhu24r3n@dagazlsdgdcv>
+Subject: Re: [PATCH 1/4] dt-bindings: phy: Add eDP PHY compatible for qcs8300
+To: Yongxing Mou <quic_yongmou@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+ Ritesh Kumar <quic_riteshk@quicinc.com>
+References: <20241127-qcs8300_dp-v1-0-0d30065c8c58@quicinc.com>
+ <20241127-qcs8300_dp-v1-1-0d30065c8c58@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -112,29 +113,17 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <zchtx32wtii2mzy2pp4lp4gdaim7w56kih7jcqes4tyhu24r3n@dagazlsdgdcv>
+In-Reply-To: <20241127-qcs8300_dp-v1-1-0d30065c8c58@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 27/11/2024 17:53, Dmitry Baryshkov wrote:
-> On Wed, Nov 27, 2024 at 08:23:04AM -0600, Rob Herring wrote:
->> On Mon, Nov 25, 2024 at 05:45:10PM +0000, Raviteja Laggyshetty wrote:
->>> EPSS instance on sc7280, sm8250 SoCs, use PERF_STATE register instead of
->>> REG_L3_VOTE to scale L3 clocks, hence adding a new generic compatible
->>> "qcom,epss-l3-perf" for these targets.
->>
->> Is this a h/w difference from prior blocks or you just want to use B 
->> instead of A while the h/w has both A and B? The latter sounds like 
->> driver policy.
->>
->> It is also an ABI break for s/w that didn't understand 
->> qcom,epss-l3-perf.
-> 
-> As the bindings keep old compatible strings in addition to the new
-> qcom,epss-l3-perf, where is the ABI break? Old SW will use old entries,
-> newer can use either of those.
-No, this change drops qcom,epss-l3 and adds new fallback. How old
-software can work in such case? It's broken.
+On 27/11/2024 09:15, Yongxing Mou wrote:
+> Add compatible string for the supported eDP PHY on qcs8300 platform.
+
+
+What is supported eDP PHY? Can it be unsupported? Anyway, this repeats
+the diff. Say something useful instead, like why this is not compatible
+with sa8775p.
 
 Best regards,
 Krzysztof
