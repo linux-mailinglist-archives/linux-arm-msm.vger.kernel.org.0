@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-39260-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39261-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5832F9DA301
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 08:25:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3555A9DA32A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 08:36:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 05891169001
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 07:25:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C8FC41648C8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 07:36:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43B11149C4F;
-	Wed, 27 Nov 2024 07:25:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A76AB1537B9;
+	Wed, 27 Nov 2024 07:36:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="h8Fc8TA0"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LJRdxrW7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB6461114;
-	Wed, 27 Nov 2024 07:24:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA02F18E0E;
+	Wed, 27 Nov 2024 07:36:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732692301; cv=none; b=I7cBYjJjKa5R7kgmlcvRoiQ+EoTPS7UqowT6E+3fBLeHapZgwk2jMJzM0xE1GvY1/tvlajRMf9rougxE4Fi7x9Ls8aik4rwgVuU/PLf5BUhnXxdGsF6hklp2txCRrGH5WHyCoDCQqGbHuyb/gEMjsma4xUV5fG5qh1mTYdhPox4=
+	t=1732692976; cv=none; b=tccwYwxfkBLth7A2wNDcvAerIIkLxsqv89kjBLDFECKKqH1fva6MWh/FDpJhhtQpJhXrXSDzNYA634IwxcqP5Sfq2kzgHyXcleV0TaHD7y7PNbgb8yw1I4u0eAcqinFuBQzeaWqDoFxVSFgiewTRoKKgTA3AKlBBNtTAOoy79+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732692301; c=relaxed/simple;
-	bh=P8kFsxDlZKWl7Xli/WBLMhjNY2vCFvtxZpeE++EhU68=;
+	s=arc-20240116; t=1732692976; c=relaxed/simple;
+	bh=EOCdsoxG9AHOg7BTmXtIhFFSstqOeb+WhlyLfpX9kAc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=g3nqD5b2EoX4REhVZiJE8LR3PXhB3iHmUIDhZPHYyzIHD5vxxMkn+ti6hAqMjPe3zxEusTtaZlJzwyvLuV7cS9Om4wNefrdBM5t9L0xmx8hx62laFkC/H2Y8+A/YDzCjakOapvHMp416DS/SCounQpYaD5DMYE2nrq/I8CkWOmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=h8Fc8TA0; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=W1EkybBwQXSCS2ByfzpY6oxVNjEuS58iUMImXNdu7JBLXDN4zUwlk12Rny9z0O6JaEL/hr2zxfzrZixK5+QBE6STUu/83XDVs0ZK1MhE2mqB8reApu9iubX4veEwxU1dWlCxSLAp5pd4T+NcwkH8jOMB2eOvV+TPlOnjK4Cp5OA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LJRdxrW7; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AQKLZME007169;
-	Wed, 27 Nov 2024 07:24:53 GMT
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AR64kee000834;
+	Wed, 27 Nov 2024 07:36:02 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	S2AWkEyxvmsl1kvKldkRb2KMSlvYt9LKy1TqsWTIG5A=; b=h8Fc8TA0mzTfkfDB
-	tW0wPDETYDLRFUJLZX4LDurH6YMdAYN04rPUXRaAAKDgM6CxeIKKHzvGWSFfg5e3
-	lzONddtNv8kAf7rbzWDdOn8FmNCISbALj25PS+8rlKPLgHDoAiS/pHF0w4iVye/+
-	YIW8ZKjFY3asWlmXs1T56f6tbNVsmAaiV5Q38mucSJDQUlcDRBVQe9Pz8hbEzar4
-	LjgxXG6XQOczQFL6DwX3GlsV0HRHQHCy+niOfNVHxqgJB6/3d19bQus9oScj8LZH
-	nkxMVfwn7xkqqe3WZeU3V5jx6oCSALP8GAgr1DZd0huf0nf1SE0s6DOiS/4lKScB
-	esmOkg==
+	9SZE/ngSUWY+MFsrhLtZzarpm0W1+Jk37klDRXno5kc=; b=LJRdxrW7Q8uszm6o
+	p8vN7FZZsXz3LEumLNi2CwbQDsouSTeo9ArKnYXv3N1iZW+N/C32PZkUbNHdraDL
+	87NoFtlr3g0BUaXjXgXsnZOAvjdrmeWX6QpE+5W/K+75s8Fb2iEUrXZulwjPped0
+	Brmrw5rDPos03+eRtfnix95OvztwR1FmU0Y4qkWwzrArfa2dmAR+y6wgRepUlkge
+	V49luQc1mSJaE2L8qviMuzLntsfRPy+xDG69IDnGOhvyKeWJw16uIxnb9qrWklX8
+	7IXCbu7oaplbOxiSK2l2Qb67hdND3JrhgEDhsgc8mzZEzJ6PI3zDHkpt1theDlai
+	iHHVgQ==
 Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 434sw9dukf-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 435wuer7rg-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 27 Nov 2024 07:24:53 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AR7Oq46012527
+	Wed, 27 Nov 2024 07:36:01 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AR7a0In029186
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 27 Nov 2024 07:24:52 GMT
-Received: from [10.216.30.52] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+	Wed, 27 Nov 2024 07:36:00 GMT
+Received: from [10.64.68.119] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 26 Nov
- 2024 23:24:48 -0800
-Message-ID: <2d10224e-102c-4508-99f4-5743588d0686@quicinc.com>
-Date: Wed, 27 Nov 2024 12:54:31 +0530
+ 2024 23:35:53 -0800
+Message-ID: <dc44ae50-4113-4538-83ac-e3cb422ee53b@quicinc.com>
+Date: Wed, 27 Nov 2024 15:35:49 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,81 +65,268 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 01/22] dt-bindings: net: wireless: describe the ath12k
- AHB module
-To: Krzysztof Kozlowski <krzk@kernel.org>
-CC: <ath12k@lists.infradead.org>, <linux-wireless@vger.kernel.org>,
-        Kalle Valo
-	<kvalo@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
+Subject: Re: [PATCH 1/5] dt-bindings: display/msm: Document MDSS on QCS8300
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+        Ritesh Kumar
+	<quic_riteshk@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Jeff Johnson
-	<jjohnson@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-References: <20241015182637.955753-1-quic_rajkbhag@quicinc.com>
- <20241015182637.955753-2-quic_rajkbhag@quicinc.com>
- <h4xel7xh3vyljxi7jn2afqasfmbsiqjtgpvqthrviovode6cxt@ey5nnzi4dwtv>
- <708e9d22-0513-4646-aeac-2187c052e208@quicinc.com>
- <b5f352e8-19a5-4c06-b9ba-44af791f6a81@kernel.org>
+        "Neil
+ Armstrong" <neil.armstrong@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+CC: Abhinav Kumar <quic_abhinavk@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20241127-mdss_qcs8300-v1-0-29b2c3ee95b8@quicinc.com>
+ <20241127-mdss_qcs8300-v1-1-29b2c3ee95b8@quicinc.com>
+ <70abadbf-b796-4434-b2d8-0675c18eee07@kernel.org>
 Content-Language: en-US
-From: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
-In-Reply-To: <b5f352e8-19a5-4c06-b9ba-44af791f6a81@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+From: Yongxing Mou <quic_yongmou@quicinc.com>
+In-Reply-To: <70abadbf-b796-4434-b2d8-0675c18eee07@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: a33gLwOSBQYVf_Bonnz9Mjr4doGl8QAp
-X-Proofpoint-ORIG-GUID: a33gLwOSBQYVf_Bonnz9Mjr4doGl8QAp
+X-Proofpoint-ORIG-GUID: s9z3uS0GxjrUSJQqZB-Hjq9t7ElrnLht
+X-Proofpoint-GUID: s9z3uS0GxjrUSJQqZB-Hjq9t7ElrnLht
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- mlxlogscore=901 adultscore=0 spamscore=0 impostorscore=0
- priorityscore=1501 phishscore=0 clxscore=1015 mlxscore=0
- lowpriorityscore=0 bulkscore=0 malwarescore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2411270060
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 mlxlogscore=999
+ clxscore=1011 adultscore=0 impostorscore=0 priorityscore=1501
+ malwarescore=0 spamscore=0 lowpriorityscore=0 phishscore=0 suspectscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411270062
 
-On 10/16/2024 2:30 PM, Krzysztof Kozlowski wrote:
->>>> +    description:
->>>> +      phandle to a node describing reserved memory (System RAM memory)
->>>> +      used by ath12k firmware (see bindings/reserved-memory/reserved-memory.txt)
->>>> +
->>>> +  qcom,rproc:
->>>> +    $ref: /schemas/types.yaml#/definitions/phandle
->>>> +    description:
->>>> +      DT entry of a WCSS node. WCSS node is the child node of q6 remoteproc driver.
->>>> +      (see bindings/remoteproc/qcom,multipd-pil.yaml)
->>> DT nodes are not children of drivers. But other DT nodes. Explain why
->>> this phandle is needed, what is it for.
->>>
->>> To me it looks like you incorrectly organized your nodes.
->>>
->> This phandle is required by wifi driver (ath12k) to retrieve the correct remote processor
->> (rproc_get_by_phandle()). Ath12k driver needs this rproc to interact with the remote
->> processor (example: booting-up remote processor).
-> That's driver aspect. Why does the hardware needs it?
-> 
-> WiFi is the remote processor, so I would expect this being a child. Or
-> just drop entirely.
-> 
-> You keep using here arguments how you designed your drivers, which is
-> not valid. Sorry, fix your drivers... or use arguments in terms of hardware.
-> 
-> 
->> In next version, will correct the description based on existing bindings (qcom,ath11k.yaml).
-> Sorry, let's don't copy existing solutions just because they exist.
 
-In the IPQ5332 platform, the WiFi component, known as the Wireless Control Subsystem (WCSS),
-functions as the wireless controller. Additionally, there is a separate hardware module, the
-Qualcomm Hexagon DSP(q6 remote processor), which is utilized for offloading WiFi processing
-tasks. These two hardware modules operate in conjunction, necessitating a phandle in the WiFi
-node that references the remote processor. Despite their interdependence, these modules are
-distinct from a hardware perspective.
+
+On 2024/11/27 15:15, Krzysztof Kozlowski wrote:
+> On 27/11/2024 08:05, Yongxing Mou wrote:
+>> Document the MDSS hardware found on the Qualcomm QCS8300 platform.
+>>
+>> Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
+> 
+> 
+> Will fail testing, so only limited review.
+> 
+Thanks for reviewing,will fix it in next patchset.
+>> +examples:
+>> +  - |
+>> +    #include <dt-bindings/interconnect/qcom,icc.h>
+>> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+>> +    #include <dt-bindings/clock/qcom,qcs8300-gcc.h>
+>> +    #include <dt-bindings/clock/qcom,sa8775p-dispcc.h>
+>> +    #include <dt-bindings/interconnect/qcom,qcs8300-rpmh.h>
+>> +    #include <dt-bindings/power/qcom,rpmhpd.h>
+>> +    #include <dt-bindings/power/qcom-rpmpd.h>
+>> +
+>> +    mdss: display-subsystem@ae00000 {
+>> +        compatible = "qcom,qcs8300-mdss";
+>> +        reg = <0 0x0ae00000 0 0x1000>;
+>> +        reg-names = "mdss";
+>> +
+>> +        interconnects = <&mmss_noc MASTER_MDP0 QCOM_ICC_TAG_ACTIVE_ONLY
+>> +                         &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ACTIVE_ONLY>,
+>> +                        <&mmss_noc MASTER_MDP1 QCOM_ICC_TAG_ACTIVE_ONLY
+>> +                         &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ACTIVE_ONLY>,
+>> +                        <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
+>> +                         &config_noc SLAVE_DISPLAY_CFG QCOM_ICC_TAG_ACTIVE_ONLY>;
+>> +        interconnect-names = "mdp0-mem",
+>> +                             "mdp1-mem",
+>> +                             "cpu-cfg";
+>> +
+>> +        power-domains = <&dispcc0 MDSS_DISP_CC_MDSS_CORE_GDSC>;
+>> +
+>> +        clocks = <&dispcc0 MDSS_DISP_CC_MDSS_AHB_CLK>,
+>> +                 <&gcc GCC_DISP_HF_AXI_CLK>,
+>> +                 <&dispcc0 MDSS_DISP_CC_MDSS_MDP_CLK>;
+>> +
+>> +        interrupts = <GIC_SPI 92 IRQ_TYPE_LEVEL_HIGH>;
+>> +        interrupt-controller;
+>> +        #interrupt-cells = <1>;
+>> +
+>> +        iommus = <&apps_smmu 0x1000 0x402>;
+>> +
+>> +        #address-cells = <2>;
+>> +        #size-cells = <2>;
+>> +        ranges;
+>> +
+>> +        status = "disabled";
+> 
+> No, your code cannot be disabled.
+> 
+Thanks, will remove it.
+>> +
+>> +        mdss_mdp: display-controller@ae01000 {
+>> +            compatible = "qcom,qcs8300-dpu";
+>> +            reg = <0 0x0ae01000 0 0x8f000>,
+>> +                  <0 0x0aeb0000 0 0x2008>;
+>> +            reg-names = "mdp", "vbif";
+>> +
+>> +            clocks = <&gcc GCC_DISP_HF_AXI_CLK>,
+>> +                     <&dispcc0 MDSS_DISP_CC_MDSS_AHB_CLK>,
+>> +                     <&dispcc0 MDSS_DISP_CC_MDSS_MDP_LUT_CLK>,
+>> +                     <&dispcc0 MDSS_DISP_CC_MDSS_MDP_CLK>,
+>> +                     <&dispcc0 MDSS_DISP_CC_MDSS_VSYNC_CLK>;
+>> +            clock-names = "bus",
+>> +                          "iface",
+>> +                          "lut",
+>> +                          "core",
+>> +                          "vsync";
+>> +
+>> +            assigned-clocks = <&dispcc0 MDSS_DISP_CC_MDSS_VSYNC_CLK>;
+>> +            assigned-clock-rates = <19200000>;
+>> +            operating-points-v2 = <&mdp_opp_table>;
+>> +            power-domains = <&rpmhpd RPMHPD_MMCX>;
+>> +
+>> +            interrupt-parent = <&mdss>;
+>> +            interrupts = <0>;
+>> +            ports {
+>> +                #address-cells = <1>;
+>> +                #size-cells = <0>;
+>> +                port@0 {
+>> +                    reg = <0>;
+>> +                    dpu_intf0_out: endpoint {
+>> +                         remote-endpoint = <&mdss_dp0_in>;
+>> +                    };
+>> +                };
+>> +            };
+>> +
+>> +            mdp_opp_table: opp-table {
+>> +                compatible = "operating-points-v2";
+>> +
+>> +                opp-375000000 {
+>> +                    opp-hz = /bits/ 64 <375000000>;
+>> +                    required-opps = <&rpmhpd_opp_svs_l1>;
+>> +                };
+>> +
+>> +                opp-500000000 {
+>> +                    opp-hz = /bits/ 64 <500000000>;
+>> +                    required-opps = <&rpmhpd_opp_nom>;
+>> +                };
+>> +
+>> +                opp-575000000 {
+>> +                    opp-hz = /bits/ 64 <575000000>;
+>> +                    required-opps = <&rpmhpd_opp_turbo>;
+>> +                };
+>> +
+>> +                opp-650000000 {
+>> +                    opp-hz = /bits/ 64 <650000000>;
+>> +                    required-opps = <&rpmhpd_opp_turbo_l1>;
+>> +                };
+>> +            };
+>> +        };
+>> +
+>> +        mdss_dp0: displayport-controller@af54000 {
+>> +            compatible = "qcom,qcs8300-dp";
+>> +
+>> +            pinctrl-0 = <&dp_hot_plug_det>;
+>> +            pinctrl-names = "default";
+>> +
+>> +            reg = <0 0xaf54000 0 0x104>,
+>> +                <0 0xaf54200 0 0x0c0>,
+>> +                <0 0xaf55000 0 0x770>,
+>> +                <0 0xaf56000 0 0x09c>;
+>> +
+>> +            interrupt-parent = <&mdss>;
+>> +            interrupts = <12>;
+>> +            clocks = <&dispcc0 MDSS_DISP_CC_MDSS_AHB_CLK>,
+>> +                <&dispcc0 MDSS_DISP_CC_MDSS_DPTX0_AUX_CLK>,
+> 
+> Messed alignment in multiple places.
+> 
+Thanks, will fix it in next patchset.
+>> +                <&dispcc0 MDSS_DISP_CC_MDSS_DPTX0_LINK_CLK>,
+>> +                <&dispcc0 MDSS_DISP_CC_MDSS_DPTX0_LINK_INTF_CLK>,
+>> +                <&dispcc0 MDSS_DISP_CC_MDSS_DPTX0_PIXEL0_CLK>;
+>> +            clock-names = "core_iface",
+>> +                "core_aux",
+>> +                "ctrl_link",
+>> +                "ctrl_link_iface",
+>> +                "stream_pixel";
+>> +            assigned-clocks = <&dispcc0 MDSS_DISP_CC_MDSS_DPTX0_LINK_CLK_SRC>,
+>> +                 <&dispcc0 MDSS_DISP_CC_MDSS_DPTX0_PIXEL0_CLK_SRC>;
+>> +            assigned-clock-parents = <&mdss_edp_phy 0>, <&mdss_edp_phy 1>;
+>> +            phys = <&mdss_edp_phy>;
+>> +            phy-names = "dp";
+>> +            operating-points-v2 = <&dp_opp_table>;
+>> +            power-domains = <&rpmhpd RPMHPD_MMCX>;
+>> +
+>> +            #sound-dai-cells = <0>;
+>> +            status = "disabled";
+> 
+> No, your code cannot be disabled.
+> 
+Got it. will remove it.
+>> +
+>> +            ports {
+>> +                #address-cells = <1>;
+>> +                #size-cells = <0>;
+>> +
+>> +                port@0 {
+>> +                    reg = <0>;
+>> +                    mdss_dp0_in: endpoint {
+>> +                        remote-endpoint = <&dpu_intf0_out>;
+>> +                    };
+>> +                };
+>> +
+>> +                port@1 {
+>> +                   reg = <1>;
+>> +                   mdss_dp_out: endpoint { };
+>> +                };
+>> +            };
+>> +
+>> +            dp_opp_table: opp-table {
+>> +                compatible = "operating-points-v2";
+>> +
+>> +                opp-160000000 {
+>> +                    opp-hz = /bits/ 64 <160000000>;
+>> +                    required-opps = <&rpmhpd_opp_low_svs>;
+>> +                };
+>> +
+>> +                opp-270000000 {
+>> +                    opp-hz = /bits/ 64 <270000000>;
+>> +                    required-opps = <&rpmhpd_opp_svs>;
+>> +                };
+>> +
+>> +                opp-540000000 {
+>> +                    opp-hz = /bits/ 64 <540000000>;
+>> +                    required-opps = <&rpmhpd_opp_svs_l1>;
+>> +                };
+>> +
+>> +                opp-810000000 {
+>> +                    opp-hz = /bits/ 64 <810000000>;
+>> +                    required-opps = <&rpmhpd_opp_nom>;
+>> +                };
+>> +            };
+>> +
+> 
+> Drop stray blank lines.
+> 
+Got it.will fix this issue,there should be a '}'.
+>> +    };
+>> +...
+>>
+> 
+> 
+> Best regards,
+> Krzysztof
+
 
