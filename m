@@ -1,162 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-39331-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39332-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B4FD9DA989
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 15:03:05 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 53C4B9DA990
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 15:04:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D5C51281C59
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 14:03:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 231F6281A64
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 14:04:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA2D61FCFD0;
-	Wed, 27 Nov 2024 14:02:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5889A1FCF41;
+	Wed, 27 Nov 2024 14:04:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Kdp0xkxj"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VeJ7zgsr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA0EC1FCF41
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Nov 2024 14:02:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D3A63232
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Nov 2024 14:04:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732716177; cv=none; b=fKJCwTVmV49wiBWcHO/PCMUBqeoCgmnAKASuzYJ2VQhFKL/qJN/I5oCjoPIMggHTnOvaxLtCQotEUC4uiHeP7qRziti5neaDDgRTIPvdDbWJFUetb6tzELmEWSQjmYsiT98vbAAB57gTy/ugURoBiUtvojTH4hSW3scJ3YIFgvc=
+	t=1732716287; cv=none; b=mv5a19IG0vOvSgKykoNlMIjNf92Mnn2+JcaQv3UOd3sc3aKQHremIhQJ7EheCGe85xpTOGLsP03e2qZxU3YRXIxqu0oJAWb1fkVIMEOGtZ1SMhuLmfStr+o8+DuYbMTGnRXGZ41j8LiXRWnDroc6gHMxdQn9EkNarNTDTxiq2IM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732716177; c=relaxed/simple;
-	bh=TUPT2Vj93/kyEbrXqfOFEH096hxvwGyIPajMGlJp8xA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LmeYYlU50rWOHtVXjbts1z+EcUoD3GASquya61YoOxrF9eHRDNSXdaEY7SJnsNoDRCelDCP4o0jgToWLWoXMHazKwpvTOFzeyaiFJzw81zyiHfRo9762g07yKzGZOTzLX/8mQR4ZCRt8IPUZwh7hS7UJWQittGaxY3nOVIzSAII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Kdp0xkxj; arc=none smtp.client-ip=209.85.208.180
+	s=arc-20240116; t=1732716287; c=relaxed/simple;
+	bh=Awfx1uj7GWmNyTbncLyYqj3YeiEUQM92uIC4PxSF4K4=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=bn/vghNxgL7tQdiSKWTKd5lzTepK2xq1+OMcCHdQxeIeJbc5X6lMci1Ow8beMdyU8GyAbnQuWohHYvyPIzvbf+vcqwhC3wJG4M0otJQjTku5YF8EHvkjZa+xD/TNXv6Ngj5OFKAtpOruCJ6pc2sQqfY7uyJDEm3N7xo2x/bpQ80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VeJ7zgsr; arc=none smtp.client-ip=209.85.167.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2ffc86948dcso31431441fa.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Nov 2024 06:02:55 -0800 (PST)
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-53dd0cb9ce3so6163681e87.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Nov 2024 06:04:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732716174; x=1733320974; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=T01FX8+ifMzh7FdT/3RYrXgZQjd2w/xyGf35CNWYzZw=;
-        b=Kdp0xkxjdipnSnpoAfJH/ID8ZhUz7QlJIUqtiA1lA7sRn3lZE2FRl8Wrie5RLWOZOu
-         +nS/edCDmeyaq6snRRuK47idAH0i4+ndakXWNoY5h7O1iIkknPi3mZOa/KrVFhlBHC40
-         L8KYFJB80qc1pNrOdOQpW1/bIq6mvXztylLU6LUwAQD84JnjiFV7RYjrnYxqanNvBF06
-         zj7W44eIHmVCQUUCj3aJMGE6LfDJbwthLCobJBjdakXOzwHOiYOHMeEoI4f1tiWila8D
-         W+xYIJAOjnYjlswYnL8K32uyFyJZ93JGD8Wu9DVlmjo2tMqsiQ9pTChj1oFDK8ncTB2N
-         HsGw==
+        d=linaro.org; s=google; t=1732716284; x=1733321084; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=u4Ts7aUIWizov/NLYuaDxwP3nX1iyB8pequrCUYPZSs=;
+        b=VeJ7zgsr13DWRnFVcNLnAak+avFh0r5qZaOkOGII0gOjeBPILHwSBaLrrnGQnsGyfr
+         nif8h1AULYwCEWZ38HInActxhA+2S+Gdvl0EArYnZIOBro2OhxN1g1pzOM8le5CAT0P+
+         lYb2VJkAQr2hJ6m59sHHlCHTFFEpxkzOmz1sIsN+HQQ3QUP2nCxJOrCr5pHb9yrxYPcR
+         59ooqk6JVE8mowGMsniChA7LKq5RKq4gN4ubZwug0Mkq7ihF3ArB1ci6RyUmz4YIn0Mp
+         QCfhioCBe46u65qYmsg8jD1McGuqGI1rygn0Q2NEGvxzh7sakyWzo2zE1C/J9Wm5+YnK
+         WznA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732716174; x=1733320974;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=T01FX8+ifMzh7FdT/3RYrXgZQjd2w/xyGf35CNWYzZw=;
-        b=Shdn5q214jvVuL9/+gtu5NINd1GdJ0bkkgmEzhBM0NopBtaGIdMuGIrUDnrJ1z6+XK
-         /ecbeMfbTAuIqGfKAa15MknEq9idXcKKedice7Uzc6U0rPv1DdG+5PjxkGOfYOm4P6+h
-         6/7bR3lESxW/Y2sjwIm8bN3xJgtQahWOP+66PpVhKg32vDtH5+yWK+x4AKvlSqUPD6Ev
-         lkP+4FQ6SrYn1nMfK0FYfAQ/X+N3qNBgOUJpgTPWS6ERLel8QbbbqwSQz4PWriy3Bq9f
-         SU88indTB5ZtKNsP7OaClQiVZjZXp6jaR1kurwlSUf7tBb1OxkMlXMDO15x+IxWOQIjm
-         Q+2g==
-X-Forwarded-Encrypted: i=1; AJvYcCWSvdEAOVqmUSAlLY9+ch51QxMnolS2sRoNL0aM95o1RzP4z3IL4mGbkndgYpru3LRABa087AdUB85ZmJCF@vger.kernel.org
-X-Gm-Message-State: AOJu0YxCbX2bl6+aKFClVtRPwgm3JdWuG7I1OkGZJzajKrHPAFIjLAPS
-	DAL/Ru+aCh2Ox24IkKTRksfRXPIiy1gDpcsl54/pzpzVn5fFWhuCfGnOq0+ys9c=
-X-Gm-Gg: ASbGncul8uDBBHhORvScIxfmbXT3IdZT0C19uTKCJgx2+03Zilx6CILYYjV9V7epxRF
-	Bscjraa34bELheaI87yWyE6rOGlbnfPx0SqPqOnU7hX0ojP2+mU3QA+2Ao965jSJLF31lOAYJGJ
-	vawyNgY4XdZO4ZzlDrv09iuHgY4yLPNWDfaldVLBRnNN/TVkYHRU1A9BF/02BddUjcUyV1XsTuu
-	A9KYWiAwKLrqfxaWP/Aaj2pWdGfNJ/Sg4zYh+3mJvjIOVBaoak28wYbzVGXCRs9SiTc8MiBL8Az
-	YBvuAJfdJ4dYv/tQCxqMeKpB69zDbA==
-X-Google-Smtp-Source: AGHT+IE4PFY/jEkiwyrm8o+Db9OLNXgxUMj7QvjWWz6uR+5Fh5KVZpx+UZJ77BHMmy7vJiZ7cMIV8g==
-X-Received: by 2002:a05:6512:398c:b0:53d:ea3c:2ba0 with SMTP id 2adb3069b0e04-53df00d12afmr2027772e87.16.1732716173570;
-        Wed, 27 Nov 2024 06:02:53 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53dd3c852ccsm2274613e87.253.2024.11.27.06.02.51
+        d=1e100.net; s=20230601; t=1732716284; x=1733321084;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=u4Ts7aUIWizov/NLYuaDxwP3nX1iyB8pequrCUYPZSs=;
+        b=vEiM0q0b0vtgwlsRXQhD+yJpJvyt9BJiHbIneptU6z91ZJEiPUpZcer2rdQQhhKpDg
+         +PARdk5zNLdL5Hn0G5nxccTRuUKlubyGYAmkUO1HKfk9CMlgSv1PWkNFeidhLeXnsdUb
+         liCWUEdEKoNWqkbtefq+VHnaniRUbIAzMmezU+oZqvZXKDQ98ziesvimcqpseJNsu7kZ
+         E6h+LdhMi0vOK6wlpOGY84h8ayrjsbDlxhb0YccDdpBmlBWNbq1+ajY8d3dUsj/Qvq0q
+         SY3hxk4LtLdvZi/sU9WrPQrgxKyvaMCA7/pC2eE1S2YBLDl+TK9pMpMaeHGL0jbIN/mB
+         /OrQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWHJKjz5mHXspn2fjs3YMlsBAuxfmFdm10sqTb/3yHmuwXYM6vPBo9zHovieHVnCoD8RVnNf7w0akGFrxCq@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy+q6NCJKTt2P4hoZ3dvIk3wJ/KKKP4ig9rKM58NPkwiocI6AX7
+	JbfCxewHamJTNvQMqzEg4X38IHSkktRNPLVjMyxnBZaAVnJgbmrlQheEbyNenNA=
+X-Gm-Gg: ASbGncvcPwCqhtgjZntHgvwoh7GgCmYMMTg03ORI54UjzsOvaTmSdMn4yX2WeNiNi6I
+	0DO72bZM7Vc5HzWTl3rLS1Gty+JU9mFh8TFzASNwyslTNWBYHuBpBaXBfDZ/sjMO3Txyf/GwyRC
+	879Sv8Mx98NDzh1w1iCA02D66+gTZnapRHXH1TXYPmBjCMmpAyhil50LTiVNd021i00MKH4TnPY
+	FJBU83LFqQ/DWF/eu7+wRyWsbLnyp3aFYBjxMqPvLX1Wa5rd37YGxOiiw==
+X-Google-Smtp-Source: AGHT+IGKW7mqkMGNSg9jVL3UeUo9m2hpnWRcx4+XgEbh8rHW/MWq3FNhz3Cl3UMtUlWPz/sntopdTA==
+X-Received: by 2002:a05:6512:3d0f:b0:53d:ab0d:b9f9 with SMTP id 2adb3069b0e04-53df00d3e42mr812209e87.23.1732716276835;
+        Wed, 27 Nov 2024 06:04:36 -0800 (PST)
+Received: from umbar.lan ([192.130.178.90])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53dd44cb7c5sm2157291e87.122.2024.11.27.06.04.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Nov 2024 06:02:52 -0800 (PST)
-Date: Wed, 27 Nov 2024 16:02:50 +0200
+        Wed, 27 Nov 2024 06:04:35 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Krishna Kurapati <quic_kriskura@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>
-Subject: Re: [PATCH v4 2/3] arm64: dts: qcom: sar2130p: add support for
- SAR2130P
-Message-ID: <2hka5j3iyml32czhv6k2gr6ss2jthsgaljva5izhzzcoc3l4eq@slsmyp7s6ars>
-References: <20241102-sar2130p-dt-v4-0-60b7220fd0dd@linaro.org>
- <20241102-sar2130p-dt-v4-2-60b7220fd0dd@linaro.org>
- <ff7c9b83-0ac7-43a0-a86a-2fed66728a32@quicinc.com>
+Subject: [PATCH v3 0/3] drm/msm/mdss: rework UBWC registers programming
+Date: Wed, 27 Nov 2024 16:04:31 +0200
+Message-Id: <20241127-msm-mdss-ubwc-v3-0-9782a7c2b023@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ff7c9b83-0ac7-43a0-a86a-2fed66728a32@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAO8mR2cC/3XMSwrCMBSF4a2UjI3k5iHGkfsQB21y0wZsI4lGp
+ WTvph0ICg7Pge+fScLoMZFDM5OI2ScfpjrEpiFmaKceqbd1E864ZJoDHdNIR5sSvXcPQ4Eptdf
+ IlBOKVHON6Pxz7Z3OdQ8+3UJ8rfkMy/uvlIEyKgGscYJpy9Tx4qc2hm2IPVlSmX84ABe/nK9cS
+ NmZHTptvngp5Q1c7rZL6gAAAA==
+X-Change-ID: 20240921-msm-mdss-ubwc-105589e05f35
+To: Rob Clark <robdclark@gmail.com>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ Connor Abbott <cwabbott0@gmail.com>, David Airlie <airlied@gmail.com>, 
+ Simona Vetter <simona@ffwll.ch>
+Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2035;
+ i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
+ bh=Awfx1uj7GWmNyTbncLyYqj3YeiEUQM92uIC4PxSF4K4=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnRybyTdBGPMzM2WIyfuTcNhdMbTAUb/2tvctHL
+ Jam+Z4nmBKJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ0cm8gAKCRCLPIo+Aiko
+ 1Rx5B/9lunJDTciQmLjaJcsjsjKWM5jxx+FakpMngARXvBBZo4b2ntmIWJbBk00P6yfPhJjWkCk
+ +S6QuYEw52Blfvsi7T5rFVqVeZ+2YcxiI8PDutT75UtGvfubgbXvOWxvGlDALnPw0NzzkLY/xs8
+ KEf1p15baAKO19G1vZz97uQa+lMFNvRuHAur0PaAA6pMh/R48B9WfbziqlSltAgd5QYkDWf2fTo
+ 4foNKhePqDMVnwobTAUrSinMNNUBpK+y6krSYAfO2Mbds0An0Cc1NJYYF/MNz7jqzouSE/SCIvv
+ 7ATxElK5TwgWRF1qufGQ4yUxwkJcdl80acOpx3DgCUhwAUte
+X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-On Tue, Nov 26, 2024 at 11:32:59PM +0530, Krishna Kurapati wrote:
-> 
-> 
-> On 11/2/2024 8:33 AM, Dmitry Baryshkov wrote:
-> > Add DT file for the Qualcomm SAR2130P platform.
-> > 
-> > Co-developed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >   arch/arm64/boot/dts/qcom/sar2130p.dtsi | 3123 ++++++++++++++++++++++++++++++++
-> >   1 file changed, 3123 insertions(+)
-> > 
-> 
-> [...]
-> 
-> > +		usb_dp_qmpphy: phy@88e8000 {
-> > +			compatible = "qcom,sar2130p-qmp-usb3-dp-phy";
-> > +			reg = <0x0 0x088e8000 0x0 0x3000>;
-> > +
-> > +			clocks = <&gcc GCC_USB3_PRIM_PHY_AUX_CLK>,
-> > +				 <&rpmhcc RPMH_CXO_CLK>,
-> > +				 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>,
-> > +				 <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
-> > +			clock-names = "aux", "ref", "com_aux", "usb3_pipe";
-> > +
-> > +			power-domains = <&gcc USB3_PHY_GDSC>;
-> > +
-> > +			resets = <&gcc GCC_USB3_PHY_PRIM_BCR>,
-> > +				 <&gcc GCC_USB3_DP_PHY_PRIM_BCR>;
-> > +			reset-names = "phy", "common";
-> > +
-> > +			#clock-cells = <1>;
-> > +			#phy-cells = <1>;
-> > +
-> > +			orientation-switch;
-> > +
-> > +			status = "disabled";
-> > +
-> 
-> Hi Dmitry,
-> 
->  Sorry for asking this question after code got merged. I forgot about asking
-> this last time when I commented on your patch and provided the HS Phy IRQ
-> value.
-> 
->  In SAR2130P, I remember that the lane orientation is reversed. As in on
-> normal targets, if the orientatin GPIO reads "0" it means LANE_A but on
-> SAR2130 it means LANE_B. Can you confirm if superspeed was tested only in
-> one orientation only.
+Current way of programming of the UBWC-related registers has been
+inherited from vendor's drivers. The ubwc_static was supposed to contain
+raw data to be programmed to the hardware, but was later repurposed to
+define of the bits. As it can be seen by the commit 3e30296b374a
+("drm/msm: fix the highest_bank_bit for sc7180") sometimes this data
+gets out of sync.
 
-Thanks for the notice. I don't remember if I had USB3 or just USB2
-connected to the USB-C connector. I will take a look and report
-afterwards, but it might take some time.
+Rework existing msm_mdss_setup_ubwc_dec_NN() functions to be closer to
+the actual hardware bit definitions. Drop the ubwc_static field.
 
-> 
->  I can push code for setting orienation properly for this target if you can
-> confirm that orienation is read reverse on SAR2130P.
-> 
-> Regards,
-> Krishna,
+Unfortunately this also introduces several "unknown" bits, for which we
+do not document the actual purpose. Hopefully comparing this data with
+the more documented Adreno UBWC feature bits will provide information
+about the meaning of those bits.
 
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+Changes in v3:
+- Changed UBWC_MIN_ACC_LEN to be two-bit field (Abhinav)
+- Link to v2: https://lore.kernel.org/r/20241123-msm-mdss-ubwc-v2-0-41344bc6ef9c@linaro.org
+
+Changes in v2:
+- Dropped applied patches
+- Added defines for UBWC_AMSBC, UBWC_MIN_ACC_LEN and UBWC_BANK_SPREAD
+  and .ubwc_bank_spread flag in struct msm_mdss_data (kudos to Abhinav
+  for helping to handle this on Qualcomm side)
+- Changed msm_mdss_data to use true/false to set macrotile_mode
+- Link to v1: https://lore.kernel.org/r/20240921-msm-mdss-ubwc-v1-0-411dcf309d05@linaro.org
+
+---
+Dmitry Baryshkov (3):
+      drm/msm/mdss: define bitfields for the UBWC_STATIC register
+      drm/msm/mdss: reuse defined bitfields for UBWC 2.0
+      drm/msm/mdss: use boolean values for macrotile_mode
+
+ drivers/gpu/drm/msm/msm_mdss.c                 | 71 ++++++++++++++++----------
+ drivers/gpu/drm/msm/msm_mdss.h                 |  4 +-
+ drivers/gpu/drm/msm/registers/display/mdss.xml | 11 +++-
+ 3 files changed, 55 insertions(+), 31 deletions(-)
+---
+base-commit: 86313a9cd152330c634b25d826a281c6a002eb77
+change-id: 20240921-msm-mdss-ubwc-105589e05f35
+
+Best regards,
 -- 
-With best wishes
-Dmitry
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
 
