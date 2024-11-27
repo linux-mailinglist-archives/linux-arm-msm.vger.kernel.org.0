@@ -1,61 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-39275-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39276-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D77D09DA418
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 09:43:06 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 105C29DA469
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 10:04:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9D5FD284C86
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 08:43:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CA1A5285ADB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 09:04:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 47F8219004A;
-	Wed, 27 Nov 2024 08:42:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C959D190493;
+	Wed, 27 Nov 2024 09:03:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WVCw9g5h"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="peH6d27q"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12E5D15E5CA;
-	Wed, 27 Nov 2024 08:42:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98E6F18E361;
+	Wed, 27 Nov 2024 09:03:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732696977; cv=none; b=rZFCNi+ocBZ2fR4qa0VMYMFR8cdZsIMAQgCKryqyOnIrlld0vVk85DdSj2aASnMGq7Q5kbruY8gbWf4u8vG4JkKFoczR0YkcMDQgRKzxnxsa/SGmnZ9xIdGzxTK5sN2QEEvxz5QkogV0mLxIsxTsRQnLkjUwkgr+cb0j87h5qMo=
+	t=1732698237; cv=none; b=SuYqfhfyyn1ks22jb8BZYZhiRd5PrgIPQElhXW584rp7CmaDCrHzZl5MPgd6VFnPo228VxLLzY2nxRYcJcBDvReEEx6Gt0dA/Se5ggJQRd3l/0blTsw07rrtCfngQHH9QiA5ENeKK/PFvIm/9lG7T5xDYKvZU/w53u1l66h7Upo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732696977; c=relaxed/simple;
-	bh=e0r9bfon/eutIEC1aFHA8PXjFMiaw6h1Je5WMzlW0k0=;
+	s=arc-20240116; t=1732698237; c=relaxed/simple;
+	bh=YjjhfKSA7UaKlVXmNfz/frkT2tjQet6crPqv7kAjLM0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Fff11Q6YMKQOkmefWLlmvIjMe95IOuMVkWz+gOVtpMS2mUfKFr9dy9tFBjlF/fRsMY8qtS4mGYdPvGQgt6IhthnYQwdYAOFc8n41Vn3lbO83C3hcOk44/6IqE26v3EKCwWTEmE9HcWVXSAsX3ZJbzC/cE4vVgXreE8qBj38dgj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WVCw9g5h; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0682EC4CECC;
-	Wed, 27 Nov 2024 08:42:55 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=J1o++PbmTmQiGRX5Xezp/gkjiIETzqUQT/cNhOHXA3JDURyUA8n8pu8/oinwvrLq/54n83QL9w//Ra+Eizf0iUPqjvorwCJRTB2SY2AES2FM1xubM/guH5A8Ejaf5cJ2ooYS8jYzamDPIxh7ZQ3k1gcux0TahHbTHAYyldTHIIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=peH6d27q; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA7F5C4CECC;
+	Wed, 27 Nov 2024 09:03:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732696976;
-	bh=e0r9bfon/eutIEC1aFHA8PXjFMiaw6h1Je5WMzlW0k0=;
+	s=k20201202; t=1732698237;
+	bh=YjjhfKSA7UaKlVXmNfz/frkT2tjQet6crPqv7kAjLM0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=WVCw9g5hsYU55lb7GCKgIR2M7p0t7fo98Zssh//uYOoQ+CJP4r+MQ5VMSq0GIBZwB
-	 ONCwD2C8RIKA8IuyjdMP+9UU94bMh58FxnZcMgxtOCE4F/2l+QhDH3lU/8oazeHBbf
-	 OzA/qNsXTC+9tlV6EtkUITPe251EOpPLTgA1NcPtXFdbisiey5trtJgGxAZObMHmnU
-	 EplXeymmRyAS0LuOc44A0n06c4+Q501vvTAMmHnuUOQ45l+zDVUtCJVWaQSZaq7fBW
-	 orBatstQUeDI1C7gaF7Ff4OF24FwDD6a8wCHrcsPjd1nbi7LE+tTMesMyR+cGMnwY/
-	 Znn8Sxo8yaHYw==
-Date: Wed, 27 Nov 2024 09:42:53 +0100
+	b=peH6d27qO6z7GHzOyjoIQvVWjsJA5XydS7PvItstOfKUq/c6KwGKM5a9UNxPhlws5
+	 tsZgcD41KYWOFI/mc114XMzs0IAs9bx4MbiyLTpxGykCe9Y34MV+pH+AWVI9YNTgfq
+	 DOQGINExDgkCxNzsVCa+yOLQ1Pgu9m7l3q7xCeZ8TMtval1p3/CG2h6wzn88WoLi/m
+	 mUv2mpxI1j1rpjGMjN4bhqhid31zHXKvl+8uLYkpoSqd2bJu3X3nRpC1tEEvd2lRq+
+	 YHHfhFOx2yfPa9ASD4/MTi1qFF2pyGiFMNPxIiEdoojl2yy2fJhLKDUfb49DZ9P/Bl
+	 RBGh76olt4+LQ==
+Date: Wed, 27 Nov 2024 10:03:54 +0100
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Bjorn Helgaas <bhelgaas@google.com>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>, 
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/3] dt-bindings: PCI: qcom,pcie-sm8550: document
- 'global' interrupt
-Message-ID: <nd4codxqdjzoqf6m2ivaofmuzrial7daby2pv62apjsmp6amkp@jxg6fcfh27vu>
-References: <20241126-topic-sm8x50-pcie-global-irq-v1-0-4049cfccd073@linaro.org>
- <20241126-topic-sm8x50-pcie-global-irq-v1-1-4049cfccd073@linaro.org>
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, 
+	Vikash Garodia <quic_vgarodia@quicinc.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, quic_renjiang@quicinc.com, quic_vnagar@quicinc.com, 
+	quic_dikshita@quicinc.com, konradybcio@kernel.org, linux-media@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Stanimir Varbanov <stanimir.varbanov@linaro.org>, devicetree@vger.kernel.org
+Subject: Re: [PATCH 3/3] media: dt-bindings: qcom-venus: Deprecate
+ video-decoder and video-encoder where applicable
+Message-ID: <rlicw76pztgy5subc5lzy7hx45y6kb4erkanixx6qc366b2ucp@oncjni3qdqt6>
+References: <20241127-media-staging-24-11-25-rb3-hw-compat-string-v1-0-99c16f266b46@linaro.org>
+ <20241127-media-staging-24-11-25-rb3-hw-compat-string-v1-3-99c16f266b46@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,23 +64,17 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20241126-topic-sm8x50-pcie-global-irq-v1-1-4049cfccd073@linaro.org>
+In-Reply-To: <20241127-media-staging-24-11-25-rb3-hw-compat-string-v1-3-99c16f266b46@linaro.org>
 
-On Tue, Nov 26, 2024 at 11:22:49AM +0100, Neil Armstrong wrote:
-> Qcom PCIe RC controllers are capable of generating 'global' SPI interrupt
-> to the host CPU. This interrupt can be used by the device driver to handle
-> PCIe link specific events such as Link up and Link down, which give the
-> driver a chance to start bus enumeration on its own when link is up and
-> initiate link training if link goes to a bad state. The PCIe driver can
-> still work without this interrupt but it will provide a nice user
-> experience when device gets plugged and removed.
+On Wed, Nov 27, 2024 at 01:34:06AM +0000, Bryan O'Donoghue wrote:
+> For the list of yaml files here the video-decoder and video-encoder nodes
+> provide nothing more than configuration input for the driver. These entries
+> do not in fact impart hardware specific data and should be deprecated.
 > 
-> Document the interrupt as optional for SM8550 and SM8650 platforms.
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > ---
->  Documentation/devicetree/bindings/pci/qcom,pcie-sm8550.yaml | 9 ++++++---
->  1 file changed, 6 insertions(+), 3 deletions(-)
+
+Thanks for doing this.
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
