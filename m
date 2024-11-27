@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-39281-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39282-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 852699DA4E8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 10:38:02 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 634C79DA4F1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 10:40:42 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4B11A282A9D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 09:38:01 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 10DC3161E2A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 09:40:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 440B8193409;
-	Wed, 27 Nov 2024 09:37:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 63CC7193416;
+	Wed, 27 Nov 2024 09:40:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MHbwB1ij"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S/fvBgUr"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17D47193060;
-	Wed, 27 Nov 2024 09:37:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33A00193060;
+	Wed, 27 Nov 2024 09:40:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732700278; cv=none; b=E24f5M9dtj6YJAATGO7/VD0PQRlCiagyfOE46zgT8rk3OE8VItwAt9eHaB9PhhZIsC12eGKasOz2W9Awv3yvcmZGhvtGhKNqR1hArXB8lH6RBmlK2qdK6JwHUjYxw4AF9Ds0R6ghyLuHhhwo96luiVHhFbnghK1wtm8rMzK1MLs=
+	t=1732700438; cv=none; b=BqBv1yuRCHvfK0lG22D9Jc5Tujky8f2z4KbCiuxvQCw8DxIql04Ph+1lXBO0ZEeuE6E8iZ2EnBDAC5+0WNhlXu/2uRPS2MeWXGV4a035I5D2VumurM2Smo9y04Ei4ydr80qLelgii+uVS12P2cCzl1aBGcDGIkwABcJUGmAmooI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732700278; c=relaxed/simple;
-	bh=2RQAx5yTC+mn8SEu4ZcvdX34ZqfK54eSl0sEaD2sZHA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=M1wrwsKV0rbZRXgdGyImFDQHD3oxFuBteGfIOBVeMeDMsUQDRzvfHBaah+Nd4Ls6Z0+0bmRXo90pKVmu39dVaFZwmA8Y7xAk0yzXM3RSnC9e8vggwu9KYtVf8R02U/IPpApVSU4VpYJ16qAQlqizkHs6b6Dgw0h31w3niBpwfoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MHbwB1ij; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D33DC4CECC;
-	Wed, 27 Nov 2024 09:37:53 +0000 (UTC)
+	s=arc-20240116; t=1732700438; c=relaxed/simple;
+	bh=iK/cZpP3in9oQkiP+zslk6edX5pzwthEzCyqGqnUsyU=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=DnAg2LTKkDu6f5mv62H39u/vFbx3Ah74/8krT+zHfSPrIN1AO6+wDg2YU1TwBVUfuaFj1tl+mu9fOYgMgDd+o+EL8w8RodyhQ1pwzBkOSG/xETasTH5sHBDf+Bac4jCl+N0AZ7ml4pQySHqCyclCpLHgsY/tV8iWnwF0F10E1Tk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S/fvBgUr; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3620C4CECC;
+	Wed, 27 Nov 2024 09:40:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732700277;
-	bh=2RQAx5yTC+mn8SEu4ZcvdX34ZqfK54eSl0sEaD2sZHA=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=MHbwB1iji4J82b3vYeJlKafjSH73DEGTwOY9zNuIYAUEmlYCSreLVYzWicv/dPkob
-	 cfQD1CBQ6Ec/yNW3md8vgtMkHlI2LnUlhELQ7Vby/iM8DkbkkxTSa4+lbDEMsDxxb1
-	 kJ3GClNN8Mlp8m2DB2ffjE6xnaYB3UlOFhdo9sLpA5HIu3EqfTxFephnS3uo5ODDaP
-	 PPtsZ0G0M4fCsLxTY6dYzKW2LlV1yLX1yoFnY5VfeSiYmDOzKilSIeaSbW8ehtIQRa
-	 0/xt976nHT0U6+x6CbQ48285KpqMhKQJlujQHJ2+Ib6DuEX+IUAVqiCmry5ntypSNJ
-	 tnMR3+H0qRhtw==
-Message-ID: <42e3293d-a7dd-4b39-8e36-45b1f31f8b01@kernel.org>
-Date: Wed, 27 Nov 2024 10:37:51 +0100
+	s=k20201202; t=1732700437;
+	bh=iK/cZpP3in9oQkiP+zslk6edX5pzwthEzCyqGqnUsyU=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
+	b=S/fvBgUrq7Uaq5hfwrA4V0Ru6g+9RCikGwzEopIm4vVwm3IWg+SUqOduOzWF9ZLDr
+	 oQmGSk0qYOFe0GQya7Nik3bXGPPOrq/IRpuaw0L69Uf5EN6l8zYm0335N/NhyZMPD8
+	 svKHtE2KAVMMKsZfUgdYZJwsbWsUZND+kmCDH4cpd/V5Uw2GkWoQxE/joYw67jJpBP
+	 8ywNfJClHsdHNefdc/I45Isp4CUq1gUH/JpGiZZU6fNEFStAB9yRH5vRY5jQM0tYw7
+	 /Qz/s1DpH4dHaZp6+DZ+7hhrQeBKd/b/BAJQFNrZHPKEUxnwHADLTst//W0qeCaYgK
+	 R/FBz/LNi9gUA==
+Message-ID: <766219f6-a535-4eaa-b1cc-768e0522d71c@kernel.org>
+Date: Wed, 27 Nov 2024 10:40:29 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,17 +50,24 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: Correct IRQ number of EL2 non-secure
- physical timer
-To: Cong Zhang <quic_congzhan@quicinc.com>,
+Subject: Re: [PATCH v2 0/4] Add initial support for QCS8300 SoC and QCS8300
+ RIDE board
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Jingyi Wang <quic_jingyw@quicinc.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: quic_pkondeti@quicinc.com, quic_aiquny@quicinc.com, kernel@quicinc.com,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20241127-correct_timer_irq-v1-1-ce4309b655bd@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>,
+ Will Deacon <will@kernel.org>
+Cc: quic_tengfan@quicinc.com, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, quic_tingweiz@quicinc.com,
+ quic_aiquny@quicinc.com, Zhenhua Huang <quic_zhenhuah@quicinc.com>,
+ Xin Liu <quic_liuxin@quicinc.com>, Kyle Deng <quic_chunkaid@quicinc.com>,
+ Tingguo Cheng <quic_tingguoc@quicinc.com>,
+ Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
+References: <20240925-qcs8300_initial_dtsi-v2-0-494c40fa2a42@quicinc.com>
+ <5a4a80e7-b6dc-4c01-a16d-ed8ea1aefe44@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -105,28 +112,50 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20241127-correct_timer_irq-v1-1-ce4309b655bd@quicinc.com>
+In-Reply-To: <5a4a80e7-b6dc-4c01-a16d-ed8ea1aefe44@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 27/11/2024 10:32, Cong Zhang wrote:
-> The INTID of EL2 non-secure physical timer is 26. In linux, the IRQ
-> number has a fixed 16 offset for PPIs. Therefore, the linux IRQ number
-> of EL2 non-secure physical timer should be 10 (26 - 16).
+On 25/09/2024 16:01, Krzysztof Kozlowski wrote:
+> On 25/09/2024 12:43, Jingyi Wang wrote:
+>> Introduce the Device Tree for the QCS8300 platform.
+>>
+>> Features added and enabled:
+>> - CPUs with PSCI idle states
+>> - Interrupt-controller with PDC wakeup support
+>> - Timers, TCSR Clock Controllers
+>> - Reserved Shared memory
+>> - GCC and RPMHCC
+>> - TLMM
+>> - Interconnect
+>> - QuP with uart
+>> - SMMU
+>> - QFPROM
+>> - Rpmhpd power controller
+>> - UFS
+>> - Inter-Processor Communication Controller
+>> - SRAM
+>> - Remoteprocs including ADSP,CDSP and GPDSP
+>> - BWMONs
+>>
+>> binding dependencies:
+>> - remoteproc: https://lore.kernel.org/linux-arm-msm/20240925-qcs8300_remoteproc_binding-v3-1-21b0c52b142b@quicinc.com/
+>> - ufs-phy: https://lore.kernel.org/linux-arm-msm/20240925-qcs8300_ufs_phy_binding-v3-1-c1eb5c393b09@quicinc.com/
+>> - ufs-controller: https://lore.kernel.org/all/20240911-qcs8300_ufs_binding-v2-1-68bb66d48730@quicinc.com/ - Reviewed
+>> - smmu: https://lore.kernel.org/all/20240911-qcs8300_smmu_binding-v2-1-f53dd9c047ba@quicinc.com/ - Applied
+>> - ipcc: https://lore.kernel.org/all/20240911-qcs8300_ipcc_binding-v2-1-ca15326c5d0f@quicinc.com/ - Applied
+>> - qfprom: https://lore.kernel.org/all/20240911-qcs8300_qfprom_binding-v2-1-d39226887493@quicinc.com/ - Reviewed
+>> - tcsr: https://lore.kernel.org/all/20240911-qcs8300_tcsr_binding-v2-1-66eb5336b8d1@quicinc.com/ - Reviewed
+>> - rmphpd: https://lore.kernel.org/all/20240920-add_qcs8300_powerdomains_driver_support-v1-1-96a2a08841da@quicinc.com/ - Reviewed
+>> - bwmon: https://lore.kernel.org/all/20240925-qcs8300_bwmon_binding-v1-1-a7bfd94b2854@quicinc.com/ - Reviewed
+>> - others: https://lore.kernel.org/all/20240911-qcs8300_binding-v2-0-de8641b3eaa1@quicinc.com/ - Reviewed
 > 
-> Signed-off-by: Cong Zhang <quic_congzhan@quicinc.com>
-> ---
-> The EL2 non-secure physical timer is utilized during kernel bootup in
-> EL2 mode with KVM enabled. This patch has been verified on the QCS8300
-> platform with KVM enabled. Given that the dependency patch has already
-> been reviewed, I am uncertain whether it is preferable to submit this
-> fix as a new patch or to combine it with the dependency patch. I would
-> appreciate your suggestions on this patch.
-> ---
->  arch/arm64/boot/dts/qcom/qcs8300.dtsi | 2 +-
-This was not merged. Do not post fixes to things which are still patches
-on mailing list.
+This submission has bugs and instead of fixing it, some other people are
+sending already patches on top.
+
+No, fix this patchset instead.
 
 Best regards,
 Krzysztof
+
 
