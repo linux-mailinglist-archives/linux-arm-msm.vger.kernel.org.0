@@ -1,148 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-39309-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39310-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 12BF69DA7BB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 13:27:37 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 040AA9DA7F2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 13:38:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8E302B29C88
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 12:02:22 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D2FD6B21217
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 12:30:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C56341FA24A;
-	Wed, 27 Nov 2024 12:02:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79C451FA82E;
+	Wed, 27 Nov 2024 12:29:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rhARbqg7"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GkdoMgmI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f194.google.com (mail-lj1-f194.google.com [209.85.208.194])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9657B19D8A4;
-	Wed, 27 Nov 2024 12:02:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B68A31FBC88
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Nov 2024 12:29:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732708926; cv=none; b=AQSxyxI3iRJX3PnQFa5QahqaEywfDttwnGTnFpJN3ZdH795L+pIXMznA9frlBHyFolmWVi2BRAZ/CyleIsHFDe7GgiE17P1/jeGKjnpXxLd+AzV8lr9LbcTRQPcbIMKGa/vSZtfoR1cMb5kmCclWjqlOWZXWko/xTA6Umwx06aY=
+	t=1732710598; cv=none; b=fyPotB8yRyFKw0JZq+CCXIxuTWwqoOACb3fd+Bovgw3RgTHpxFGslkVktln0NYyINxH03L1/Y9bszHqWBSoPhjx/ZErSR9DDEdCg0FPxmqRUInmttQK75ZwCn78XMRTV/7kRcktPT+ePnGYLjxnpV5ADqnIUrnuub+WDvn0OpYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732708926; c=relaxed/simple;
-	bh=qrf4kicubqIpGh1eXcdG8o3eHzgO34mObfDiCh8Bf4c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ejNicgK58Qjjd3fu1LFrPmDZGLy0DDTmPj8HObSd1v5/p5Ur3X/De+aytPqgHgBVoCQXffSipulS4invbQzdWKmaqAuSOykf+9azENcdmL9XrA4PygDrIemGyQEhovByKPKUx8T7lHdd48fxA/y27/w5mVTYLOh69hgR1uHYlXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rhARbqg7; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E57DC4CED2;
-	Wed, 27 Nov 2024 12:02:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732708926;
-	bh=qrf4kicubqIpGh1eXcdG8o3eHzgO34mObfDiCh8Bf4c=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=rhARbqg7g9YJfBBTKhMkJLrkeGkGKS2rNvo/wb5/bIUojWDYGW1OQdwJmhlTcRzcJ
-	 GawPi4dCjWC5qNhaGXm5Wg3ydf199wRmo8lURaP1pL9XpmJl/mqW65VeGY5fqoz6Ks
-	 V60XtlEibo5IPlUkSLGuSrcy0QsXZd7tkeL+aD2JCRmhdrovsRXkU4IamUS6Odfw9I
-	 mFa7tmOsbvupx3QEZyp+Vh3XD/xs0RB1UMeCjNm4h8bdZqOfXRMDigyVu13nppNAVi
-	 Ri1rXwGqGWl0EKa+RKGumYXNJ8H8ZQFmFcyVAPFSXUIeehMFmkMJHGEqz/798Q7Gzs
-	 qj92Fx+E8+xSA==
-Message-ID: <e3c47041-51ab-403c-a217-a39f071e0d55@kernel.org>
-Date: Wed, 27 Nov 2024 13:01:59 +0100
+	s=arc-20240116; t=1732710598; c=relaxed/simple;
+	bh=eO8pZeLmCY07ZvONQ95F7bnDt5LzCJtb1w9NSPUfJh8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=R2tW3yk8dE8jugMxvhfH1/8LHjSYvt8yoichpLbSv/bFlEWGDCYk3Nw2G/ukZxjvFAoIrsUbfajzEAOIxNI1bDF4l8XlNaeyhOjQSGRWCCk4r/T2xV3rWpGsTwa/LOZ2v3ZtbgOhP3Xjrxy2PJUnjtJfcSi4nK+Ne5xQBIYVUDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GkdoMgmI; arc=none smtp.client-ip=209.85.208.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f194.google.com with SMTP id 38308e7fff4ca-2ffd2026437so994001fa.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Nov 2024 04:29:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1732710595; x=1733315395; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=KRcdSs7XMlGnAilpDhcNiYT3hFI3KAq1n7SCl+kMm14=;
+        b=GkdoMgmIwaaGmz5I/jMOZc2DEuvqJYiAiw6yeY7DixADaY0Y+L7rIka7ebJktp3K2B
+         tISsYEh1ACr+1dbu16T+snXfgu6HtL3qZw2uzql3dIiYwZFKcl6HK+/tam3oDPdByjvt
+         8kaRjngBkX9KEZgWV32oa3NYJrChUulq4hTHx9Gdmkrvy4L5feTi8f1/mn46aubCrPVr
+         JHSm6v6ElKctF+qPY3QMQOUMvTvtGmJ4DlM7AAcVGo2sD7OL9IHMgz2513bOu42IaCa/
+         Otsvp8qxCwi4+nohGF7rjBdyAeHhoyyV6oqwQsgueOcGYMFgOhcrZcttGdKbuD+gLEWb
+         rDOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732710595; x=1733315395;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KRcdSs7XMlGnAilpDhcNiYT3hFI3KAq1n7SCl+kMm14=;
+        b=BTWwWJeUgZpy8LCPtqjatYvpINDQCa9b0CmtXz9tQqkbY/YBfoJrEF5LjarmiR8z5P
+         Kp0ofyWZvjrEYE0fx3OKE5/RAdG3Rmq4nw+YlxdYECU64Qpy+XfbBdD7R9VyaDIl1FtO
+         JTBt4RmEWKS72Hs4hN5qsnKwTO2dgjbsH5ogZgXtXS/SPsSA+wLJ+QW4SWbeqpHWTpmN
+         0Z9nfej+D0JXKMOooFm+SBVuHPQZGP1QAbIPhRbJIirVrcK3e6OhzAhruoZcSx6bUn+m
+         I0kF71kt+1wKUexKY6mwfnAsRt35MoahI7h5v8geP5UPcbQ7tHQaVyC84Zre/c/3ptj+
+         5JMw==
+X-Forwarded-Encrypted: i=1; AJvYcCWG8A/7lThFxW+8g8osz4hkzJo6IwiRMWfFB9n8sqcc2/xUVYe82uFgSGVuerDKaN+QqIYAix1aoE/5VKGd@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw+CL7R+l+YZdquBWV1CqR5DuvRi0Jdci/c7GgJhZ1FbX8xtzGF
+	nGPCMWOdEXJy+lO4vbGiaya8q9dxS/gA8+Gr1HF8zbwdLxTcUEm7i/KpeSzXMKpnuJbVqNx7qSs
+	cfbVmeg==
+X-Gm-Gg: ASbGncuL2pf7SHbXh4JHhA1Tke4AAptHhUGoBg9osOSEPtCpnkP0z0K5ZbhYCLn7TL4
+	wQLqVVfqP5rHN1JeFqaDprO86/logDGeafSHdyRJZYo5KLMhfOCh3TRYDNx4xju3+h68WpRQ5Mr
+	XMygvosfKUOkAnMYE7GR9EYpN/PPlPAIpmJD4f/ji1nwugthcVnwHvBETbAv4yUBRLQGaWNkJkT
+	4qicLraLNWZLSRzMETjiE9XhDaQScuC4a+ngRcBzcMgqMbgkUVkPW3CchHVcU/t1BhksWiE+9AP
+	Y10/HaBqgdXhhjx3wApy0ICHxMu+s770pmXXILc=
+X-Google-Smtp-Source: AGHT+IEmhY/XevE73lIO5R+T76MBj7DXNOF8lKpN8Jyne4r1vkv6Io8XVDa+jBnr77B+i8BS8pEL7A==
+X-Received: by 2002:a05:6512:3e23:b0:53d:ddc6:259e with SMTP id 2adb3069b0e04-53df0108cbcmr392654e87.11.1732710594838;
+        Wed, 27 Nov 2024 04:29:54 -0800 (PST)
+Received: from localhost.localdomain (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53dd24953a1sm2276621e87.228.2024.11.27.04.29.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 Nov 2024 04:29:54 -0800 (PST)
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>
+Cc: Robert Foss <rfoss@kernel.org>,
+	Todor Tomov <todor.too@gmail.com>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	linux-media@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org
+Subject: [PATCH v3 0/6] dt-bindings: media: camss: Fix interrupt types
+Date: Wed, 27 Nov 2024 14:29:44 +0200
+Message-ID: <20241127122950.885982-1-vladimir.zapolskiy@linaro.org>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/5] Display enablement changes for Qualcomm QCS8300
- platform
-To: Yongxing Mou <quic_yongmou@quicinc.com>,
- Ritesh Kumar <quic_riteshk@quicinc.com>, Rob Clark <robdclark@gmail.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>, linux-arm-msm@vger.kernel.org,
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20241127-mdss_qcs8300-v1-0-29b2c3ee95b8@quicinc.com>
- <675c41cb-afa8-4386-8dc9-026a36bc1152@kernel.org>
- <8982d065-9bc6-4036-8004-80b1681eaf3c@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <8982d065-9bc6-4036-8004-80b1681eaf3c@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 27/11/2024 11:54, Yongxing Mou wrote:
-> 
-> 
-> On 2024/11/27 15:13, Krzysztof Kozlowski wrote:
->> On 27/11/2024 08:05, Yongxing Mou wrote:
->>> This series introduces support to enable the Mobile Display Subsystem (MDSS)
->>> and Display Processing Unit (DPU) for the Qualcomm QCS8300 target. It
->>> includes the addition of the hardware catalog, compatible string,
->>> relevant device tree changes, and their YAML bindings.
->>>
->>> Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
->>> ---
->>> This series depends on following series:
->>> https://lore.kernel.org/all/20241114-qcs8300-mm-cc-dt-patch-v1-1-7a974508c736@quicinc.com/
->>> https://lore.kernel.org/all/20240925-qcs8300_initial_dtsi-v2-0-494c40fa2a42@quicinc.com/
->> Above was not part of this merge window, so nothing from your patchset
->> can be merged for this v6.14.
->>
->> If you want things to get merged, I suggest decoupling dependencies.
->>
-> Thanks for reviewing.Can we keep the dependency on above changes and 
-> merge our changes after the dependent changes are merged?
-So merged in 4 months? for v6.15-rc1? You can.
+It was discovered that on a few Qualcomm platforms types of interrupts
+do not match the type given by the Qualcomm IP catalog, the type in
+downstream code and the type requested by the CAMSS driver itself.
 
-Best regards,
-Krzysztof
+The mismatched interrupt type between firmware and the correspondent CAMSS
+driver leads to known problems, similar to the ones which were discussed
+previously:
+
+  https://lore.kernel.org/lkml/20220530080842.37024-4-manivannan.sadhasivam@linaro.org/
+
+Here the situation is essentially the same, namely a repeated bind of
+the CAMSS device is not possible due to a wrongly specified interrupt type,
+and it may lead to an issue in runtime manifested like this:
+
+  irq: type mismatch, failed to map hwirq-509 for interrupt-controller@17a00000!
+
+Changes from v2 to v3:
+* gave clear commit messages addressing Qualcomm IP, thanks to Depeng Shao,
+* hence keep Krzysztof Acked-by tag, since the only expressed concern was
+  a missing reference to the hardware specs,
+* added Reviewed-by tags from Bryan,
+
+Link to v2 of the changeset:
+
+  https://lore.kernel.org/all/20240923072827.3772504-1-vladimir.zapolskiy@linaro.org/
+
+Changes from v1 to v2:
+* added gained Acked-by, Tested-by and Reviewed-by tags,
+* per patch review requests from Krzysztof deduplicated "media:" from subjects.
+
+Link to v1 of the changeset:
+
+  https://lore.kernel.org/all/20240905164142.3475873-1-vladimir.zapolskiy@linaro.org/
+
+Vladimir Zapolskiy (6):
+  dt-bindings: media: qcom,sc8280xp-camss: Fix interrupt types
+  dt-bindings: media: qcom,sdm845-camss: Fix interrupt types
+  dt-bindings: media: qcom,sm8250-camss: Fix interrupt types
+  arm64: dts: qcom: sc8280xp: Fix interrupt type of camss interrupts
+  arm64: dts: qcom: sdm845: Fix interrupt types of camss interrupts
+  arm64: dts: qcom: sm8250: Fix interrupt types of camss interrupts
+
+ .../bindings/media/qcom,sc8280xp-camss.yaml   | 40 +++++++++----------
+ .../bindings/media/qcom,sdm845-camss.yaml     | 20 +++++-----
+ .../bindings/media/qcom,sm8250-camss.yaml     | 28 ++++++-------
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi        | 40 +++++++++----------
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          | 20 +++++-----
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          | 28 ++++++-------
+ 6 files changed, 88 insertions(+), 88 deletions(-)
+
+-- 
+2.45.2
+
 
