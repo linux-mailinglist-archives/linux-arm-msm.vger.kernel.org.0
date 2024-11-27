@@ -1,168 +1,272 @@
-Return-Path: <linux-arm-msm+bounces-39239-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39240-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 049589DA081
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 02:58:40 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id E0E059DA0AC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 03:39:30 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3DDB3B2356F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 01:58:37 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7CE50168AA0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 02:39:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 28EFA1BC20;
-	Wed, 27 Nov 2024 01:58:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 75344288B5;
+	Wed, 27 Nov 2024 02:39:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="IDPNF800"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="O4auedZF"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75AFF14F90;
-	Wed, 27 Nov 2024 01:58:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96E49208C4;
+	Wed, 27 Nov 2024 02:39:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732672713; cv=none; b=rnbvkRiso/PuOkMwdz5nFhwvZq3dIFWfvtZ8nPXn6HtsxShNU3oSDaQnYUV78i026/KNPhYt+zXLL1toU4fge2FShcmiq7Ss+5VwVQLvTJEFOmM/CeZtlp0kZM7yrTLYZq6DC9fgCo4KbbKRjpP+2X0PTAhlg8N+dL+ERM9KHz0=
+	t=1732675169; cv=none; b=THHR6POOSLtFZ6uRqHdx3B48NoyksXMqQXwqYzNWujh1VBMb+gA9Lkpaf0n8SRQMaJ2bpLbZUSmherFyB7goMzd/zQmHdyIO+NMVH2/Zb8QNnQekqxhwVvN81UIllRpZIYrTHbSLXOZMRLV9SclmzeC69Bde10wz5Sf5K1L2QcM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732672713; c=relaxed/simple;
-	bh=CvGs68H2xkIajgyJcmTQLagTvM0yJHf0yGkXqMt0NUI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=jtEMAf1kVuqIGeWmAP+zswy+ziToD6h8+l8/vxRSr0BiPXtG9M7uwC5uCCKy+4jvBU3k5OMLpf97lJNNukARAth9uTMNR8yOZ4Rm7b0e7IwqRfj+sDDbre3BEU6glqO6vden7ubz4rx/lChyVtuEF/H5iw+uA2EafCJIjUG89so=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=IDPNF800; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1732675169; c=relaxed/simple;
+	bh=nDVMp7oZ1MfEFQGe8BmgFuzjQzJ3q9e84tSp9XATVzI=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FPx/lF7Gq6XZJNWWkFnQ+NEsmZ3dvXYANgbiiv4ohnCeVDb1xPSPIqYc5an4VPHX1QSVFX/qk/4s5Um7Z1k/sMLpWkJtZ3iijHjkcSWczhxSoM+f4UrN5AfiYz6DVARJXj7vUIDDN8f9alN4xKlTmrPes2lalPVIsR9E5a90tqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=O4auedZF; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AQKL4ud005672;
-	Wed, 27 Nov 2024 01:58:24 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AQKLFrh011465;
+	Wed, 27 Nov 2024 02:39:25 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	EmZqD7ocn3WRNDRezaNH3t2EaAWioA15EVm251HzGhE=; b=IDPNF800PH80Hch6
-	k8m5Iz6cS3qJUBsCcv3HNOkrZNik/VmLQjZdlCLSP6+wLtR7kiLHfqckvhRgY9z/
-	q905+EWwytRovJ9xfpYke/H7/Kf1mvWuZytARBs7sRfiUhO0ihPGkXIA9g1X8OU7
-	Pxtx2GhNn32qQTEcFzG2kiVw6s/aI7uqYVu97f7FZnzeOcKDcZxoeTdv+MZ0uuSp
-	64filq85ZiPXEr+4/NV214zwP9C7iB3I1Wryw9jkAUQm9FA84L/CjHtCd0KmobXF
-	yMeBbVljB8M+V3NLVPq3jcxhQjycDyF7Zjx4dvaynpbXqREviXx0I2ioBpndOGjU
-	mwH4WA==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 434ts1mty7-1
+	dKR4CyFsKZY1WikosxBOiyo7kYRZRY7WKvX8Ka9wIIE=; b=O4auedZFXJptF81M
+	hNNOy/e0hX3V7ERiOsvqPkfkbws0aJIMWub4g2QrIKZlyTNcZy+RUhq98SkzWVcu
+	RMweXTiRjj6koJaS8TsNL2WO/Q1H2Qv3SNw+weaJij/g1c7xIq0vhPs81YUwTjlg
+	oP4eLHZhb7l88j07kDb6GAyvD/vT3v/zXyAn6hcGeuDKwMCKio/iFOHZXX/17JQD
+	Z0qtH3aBi0W4WRECUJANEkitv7F6A5I0lVSQxyxRoXYOpHqng9rECKRlOBvr0F9Z
+	eL+vi61FYdiw5hk2Vn1Cu1QQDXnVbVmCtZUhCnOExtYnWx9UraFQcWlhXDEQ/r8f
+	DiJIQw==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 435bf5jjb2-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 27 Nov 2024 01:58:24 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AR1wNEJ003150
+	Wed, 27 Nov 2024 02:39:24 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AR2dOuG026584
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 27 Nov 2024 01:58:23 GMT
-Received: from [10.216.8.10] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 26 Nov
- 2024 17:58:14 -0800
-Message-ID: <7d905563-137d-5c0e-42a1-8b93f4d630ce@quicinc.com>
-Date: Wed, 27 Nov 2024 07:28:10 +0530
+	Wed, 27 Nov 2024 02:39:24 GMT
+Received: from cse-cd02-lnx.ap.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 26 Nov 2024 18:39:20 -0800
+Date: Wed, 27 Nov 2024 10:39:16 +0800
+From: Yuanjie Yang <quic_yuanjiey@quicinc.com>
+To: Adrian Hunter <adrian.hunter@intel.com>, <ulf.hansson@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC: <quic_tengfan@quicinc.com>, <quic_tingweiz@quicinc.com>,
+        <quic_zhgao@quicinc.com>, <quic_yuanjiey@quicinc.com>
+Subject: Re: [PATCH v1] mmc: sdhci-msm: Correctly set the load for the
+ regulator
+Message-ID: <Z0aGVA4xtIa2G8Ei@cse-cd02-lnx.ap.qualcomm.com>
+References: <20241122075048.2006894-1-quic_yuanjiey@quicinc.com>
+ <10836ece-7ea9-47d6-ad0c-25ae36e5051b@intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH 2/4] PCI: of: Add API to retrieve equalization presets
- from device tree
-Content-Language: en-US
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, <quic_mrana@quicinc.com>,
-        <quic_vbadigan@quicinc.com>, <kernel@quicinc.com>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Jingoo Han
-	<jingoohan1@gmail.com>,
-        Manivannan Sadhasivam
-	<manivannan.sadhasivam@linaro.org>,
-        Lorenzo Pieralisi
-	<lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-pci@vger.kernel.org>
-References: <20241116-presets-v1-0-878a837a4fee@quicinc.com>
- <20241116-presets-v1-2-878a837a4fee@quicinc.com>
- <7dd7ecd2-c8a1-4800-8746-2b6166d3ae1c@oss.qualcomm.com>
-From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-In-Reply-To: <7dd7ecd2-c8a1-4800-8746-2b6166d3ae1c@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <10836ece-7ea9-47d6-ad0c-25ae36e5051b@intel.com>
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+ nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: nvfwKvwjtjIuIw0O7P0xaRYojphJAjJp
-X-Proofpoint-ORIG-GUID: nvfwKvwjtjIuIw0O7P0xaRYojphJAjJp
+X-Proofpoint-ORIG-GUID: 23l1SoBfR03C2S3S_JwAhg9C63vCiOcW
+X-Proofpoint-GUID: 23l1SoBfR03C2S3S_JwAhg9C63vCiOcW
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- lowpriorityscore=0 mlxlogscore=999 spamscore=0 adultscore=0 malwarescore=0
- impostorscore=0 phishscore=0 priorityscore=1501 mlxscore=0 suspectscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411270015
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 impostorscore=0
+ suspectscore=0 clxscore=1015 mlxlogscore=999 spamscore=0 malwarescore=0
+ adultscore=0 bulkscore=0 priorityscore=1501 lowpriorityscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411270021
 
-
-
-On 11/16/2024 4:29 PM, Konrad Dybcio wrote:
-> On 16.11.2024 2:37 AM, Krishna chaitanya chundru wrote:
->> PCIe equalization presets are predefined settings used to optimize
->> signal integrity by compensating for signal loss and distortion in
->> high-speed data transmission.
->>
->> As per PCIe spec 6.0.1 revision section 8.3.3.3 & 4.2.4 for data rates
->> of 8.0 GT/s, 16.0 GT/s, 32.0 GT/s, and 64.0 GT/s, there is a way to
->> configure lane equalization presets for each lane to enhance the PCIe
->> link reliability. Each preset value represents a different combination
->> of pre-shoot and de-emphasis values. For each data rate, different
->> registers are defined: for 8.0 GT/s, registers are defined in section
->> 7.7.3.4; for 16.0 GT/s, in section 7.7.5.9, etc. The 8.0 GT/s rate has
->> an extra receiver preset hint, requiring 16 bits per lane, while the
->> remaining data rates use 8 bits per lane.
->>
->> Based on the number of lanes and the supported data rate, this function
->> reads the device tree property and stores in the presets structure.
->>
->> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
->> ---
->>   drivers/pci/of.c  | 62 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
->>   drivers/pci/pci.h | 17 +++++++++++++--
->>   2 files changed, 77 insertions(+), 2 deletions(-)
->>
->> diff --git a/drivers/pci/of.c b/drivers/pci/of.c
->> index dacea3fc5128..0d37bc231956 100644
->> --- a/drivers/pci/of.c
->> +++ b/drivers/pci/of.c
->> @@ -826,3 +826,65 @@ u32 of_pci_get_slot_power_limit(struct device_node *node,
->>   	return slot_power_limit_mw;
->>   }
->>   EXPORT_SYMBOL_GPL(of_pci_get_slot_power_limit);
->> +
->> +int of_pci_get_equalization_presets(struct device *dev,
->> +				    struct pci_eq_presets *presets,
->> +				    int num_lanes)
->> +{
->> +	int ret;
->> +
->> +	if (of_property_present(dev->of_node, "eq-presets-8gts")) {
->> +		presets->eq_presets_8gts = devm_kzalloc(dev, sizeof(u16) * num_lanes, GFP_KERNEL);
->> +		if (!presets->eq_presets_8gts)
+On Tue, Nov 26, 2024 at 12:43:12PM +0200, Adrian Hunter wrote:
+> On 22/11/24 09:50, Yuanjie Yang wrote:
+> > Qualcomm regulator supports two power supply modes: HPM and LPM.
+> > Currently, the sdhci-msm.c driver does not set the load to adjust
+> > the current for eMMC and SD. Therefore, if the regulator set load
+> > in LPM state, it will lead to the inability to properly initialize
+> > eMMC and SD.
+> > 
+> > Set the correct regulator current for eMMC and SD to ensure that the
+> > device can work normally even when the regulator is in LPM.
+> > 
+> > Signed-off-by: Yuanjie Yang <quic_yuanjiey@quicinc.com>
+> > ---
+> >  drivers/mmc/host/sdhci-msm.c | 91 +++++++++++++++++++++++++++++++++++-
+> >  1 file changed, 89 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+> > index e00208535bd1..f2a2260d54c6 100644
+> > --- a/drivers/mmc/host/sdhci-msm.c
+> > +++ b/drivers/mmc/host/sdhci-msm.c
+> > @@ -134,9 +134,22 @@
+> >  /* Timeout value to avoid infinite waiting for pwr_irq */
+> >  #define MSM_PWR_IRQ_TIMEOUT_MS 5000
+> >  
+> > +/* Max load for eMMC Vdd supply */
+> > +#define MMC_VMMC_MAX_LOAD_UA	570000
+> > +
+> >  /* Max load for eMMC Vdd-io supply */
+> >  #define MMC_VQMMC_MAX_LOAD_UA	325000
+> >  
+> > +/* Max load for SD Vdd supply */
+> > +#define SD_VMMC_MAX_LOAD_UA	800000
+> > +
+> > +/* Max load for SD Vdd-io supply */
+> > +#define SD_VQMMC_MAX_LOAD_UA	22000
+> > +
+> > +#define MAX_MMC_SD_VMMC_LOAD_UA  max(MMC_VMMC_MAX_LOAD_UA, SD_VMMC_MAX_LOAD_UA)
+> > +
+> > +#define MAX_MMC_SD_VQMMC_LOAD_UA max(MMC_VQMMC_MAX_LOAD_UA, SD_VQMMC_MAX_LOAD_UA)
+> > +
+> >  #define msm_host_readl(msm_host, host, offset) \
+> >  	msm_host->var_ops->msm_readl_relaxed(host, offset)
+> >  
+> > @@ -147,6 +160,11 @@
+> >  #define CQHCI_VENDOR_CFG1	0xA00
+> >  #define CQHCI_VENDOR_DIS_RST_ON_CQ_EN	(0x3 << 13)
+> >  
+> > +enum {
 > 
-> If you make this an array with enum indices, you can make a for loop and
-> read "eq-presets-%ugts", (8 << i)
+> This could be a named type and used instead of 'int'
+> e.g.
 > 
-> Konrad
-as "eq-presets-8gts" is u16 array and other properties are u8 array.
-I will use as it is for "eq-presets-8gts", but for remaining properties
-I will use for loop as suggested by you.
+> enum msm_reg_type {
+Thanks , I will fix it in next version.
 
-- Krishna Chaitanya.
+> > +	VMMC_REGULATOR,
+> > +	VQMMC_REGULATOR,
+> > +};
+> > +
+> >  struct sdhci_msm_offset {
+> >  	u32 core_hc_mode;
+> >  	u32 core_mci_data_cnt;
+> > @@ -1403,11 +1421,70 @@ static int sdhci_msm_set_pincfg(struct sdhci_msm_host *msm_host, bool level)
+> >  	return ret;
+> >  }
+> >  
+> > -static int sdhci_msm_set_vmmc(struct mmc_host *mmc)
+> > +static int sdhci_msm_get_regulator_load(struct mmc_host *mmc, int max_current, int type)
+> 
+> Then 'int type' could be 'enum msm_reg_type type'
+Thanks, I will fix it in next version.
+
+> > +{
+> > +	int load = 0;
+> > +
+> > +	/*
+> > +	 * When eMMC and SD are powered on for the first time, select a higher
+> > +	 * current value from the corresponding current for eMMC and SD to
+> > +	 * ensure that the eMMC and SD cards start up properly and complete
+> > +	 * initialization. After the initialization process is finished, use
+> > +	 * the corresponding current to set the eMMC and SD to ensure the
+> > +	 * normal work of the device.
+> > +	 */
+> > +
+> > +	if (!mmc->card)
+> > +		return max_current;
+> > +
+> > +	if (mmc_card_is_removable(mmc) && mmc_card_mmc(mmc->card))
+> 
+> The comment mentions eMMC but here there is 'mmc_card_is_removable()'
+> whereas eMMC's are not removable.  If this is right it needs some
+> clarification.
+Thanks, I also realize that mmc_card_is_removable(mmc) is an unnecessary
+judgment. I will delete this judgment in next version.
+
+> > +		load = (type == VMMC_REGULATOR) ? MMC_VMMC_MAX_LOAD_UA : MMC_VQMMC_MAX_LOAD_UA;
+> > +	else if (mmc_card_sd(mmc->card))
+> > +		load = (type == VMMC_REGULATOR) ? SD_VMMC_MAX_LOAD_UA : SD_VQMMC_MAX_LOAD_UA;
+> > +
+> > +	return load;
+> > +}
+> > +
+> > +static int msm_config_regulator_load(struct sdhci_msm_host *msm_host, struct mmc_host *mmc,
+> > +				     bool hpm, int max_current, int type)
+> 
+> Again 'int type' could be 'enum msm_reg_type type'
+Thanks, I will fix it in next version.
+
+> > +{
+> > +	int ret;
+> > +	int load = 0;
+> > +
+> > +	/*
+> > +	 * After the initialization process is finished, Once the type of card
+> > +	 * is determined，only set the corresponding current for SD and eMMC.
+> > +	 */
+> > +
+> > +	if (mmc->card && !(mmc_card_mmc(mmc->card) || mmc_card_sd(mmc->card)))
+> > +		return 0;
+> > +
+> > +	if (hpm)
+> > +		load = sdhci_msm_get_regulator_load(mmc, max_current, type);
+> > +
+> > +	if (type == VMMC_REGULATOR)
+> > +		ret = regulator_set_load(mmc->supply.vmmc, load);
+> > +	else
+> > +		ret = regulator_set_load(mmc->supply.vqmmc, load);
+> > +	if (ret)
+> > +		dev_err(mmc_dev(mmc), "%s: set load failed: %d\n",
+> > +			mmc_hostname(mmc), ret);
+> > +	return ret;
+> > +}
+> > +
+> > +static int sdhci_msm_set_vmmc(struct sdhci_msm_host *msm_host,
+> > +			      struct mmc_host *mmc, bool hpm)
+> >  {
+> > +	int ret;
+> > +
+> >  	if (IS_ERR(mmc->supply.vmmc))
+> >  		return 0;
+> >  
+> > +	ret = msm_config_regulator_load(msm_host, mmc, hpm,
+> > +					MAX_MMC_SD_VMMC_LOAD_UA, VMMC_REGULATOR);
+> > +	if (ret)
+> > +		return ret;
+> > +
+> >  	return mmc_regulator_set_ocr(mmc, mmc->supply.vmmc, mmc->ios.vdd);
+> >  }
+> >  
+> > @@ -1435,6 +1512,15 @@ static int msm_toggle_vqmmc(struct sdhci_msm_host *msm_host,
+> >  				goto out;
+> >  			}
+> >  		}
+> > +
+> > +		ret = msm_config_regulator_load(msm_host, mmc, level,
+> > +						MAX_MMC_SD_VQMMC_LOAD_UA, VQMMC_REGULATOR);
+> > +		if (ret < 0) {
+> > +			dev_err(mmc_dev(mmc), "%s: vqmmc set regulator load failed: %d\n",
+> > +				mmc_hostname(mmc), ret);
+> > +			goto out;
+> > +		}
+> > +
+> >  		ret = regulator_enable(mmc->supply.vqmmc);
+> >  	} else {
+> >  		ret = regulator_disable(mmc->supply.vqmmc);
+> > @@ -1642,7 +1728,8 @@ static void sdhci_msm_handle_pwr_irq(struct sdhci_host *host, int irq)
+> >  	}
+> >  
+> >  	if (pwr_state) {
+> > -		ret = sdhci_msm_set_vmmc(mmc);
+> > +		ret = sdhci_msm_set_vmmc(msm_host, mmc,
+> > +					 pwr_state & REQ_BUS_ON);
+> >  		if (!ret)
+> >  			ret = sdhci_msm_set_vqmmc(msm_host, mmc,
+> >  					pwr_state & REQ_BUS_ON);
+> 
 
