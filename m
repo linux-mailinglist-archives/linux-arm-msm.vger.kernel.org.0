@@ -1,186 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-39307-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39308-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4F5B69DA72F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 12:52:27 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C270A9DA75B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 13:05:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1283F280F0F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 11:52:26 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 068ACB28B2B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 12:01:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 760571F9F5C;
-	Wed, 27 Nov 2024 11:51:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E40A1FA16D;
+	Wed, 27 Nov 2024 12:01:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VReTf/mQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IjFRese9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D83A01F9F55;
-	Wed, 27 Nov 2024 11:51:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D2701FA142;
+	Wed, 27 Nov 2024 12:01:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732708309; cv=none; b=C8vGpkmRiC9yRj32n2XuxxDyQF/6EgCAXHHj19fwn/Jy+mweDZ+a+ixDhCyx+mWXS+2geQGHMhYSK61piRFTRz1XBfuPuqxr6TYS7kScnsBsXtx8F1VjPShaw0ckuM4w9g7q9afnzvMW76Wz/plshGuvAbsT/w4RGjJ7cRZgaVw=
+	t=1732708875; cv=none; b=nOq9HoIk9TqhltL56l2dxYKU3Q8Ex28pLh4MeciXsZlZGlEte1yxD9oKCnms+uBt7ETJOB6rbDZQuoRm1zhEvkHvezoXAOSL8yjyNn3ROj/447UgNJX7YLU17i5y3fNwqqcZsIH/V1bfvLgMp+6RTDb4JthJ/2aBmQw30t8cqIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732708309; c=relaxed/simple;
-	bh=ErPP9c4l3QF+6gCsJyaNXV9lUGfHlw8xtchr84nZNUc=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=n+2up/oaY/EuMF1HpHRDM2MGogeGQyn2dgfxk+LQwBmjmlumS8hDwn3sLotXRJPc/uYO/AxadZEhB8U6Zkjx9bvp/dz7r51QQsXdT49d1YZq2r9JYKyZRGAVdGrFgvCwfE0VXt0PFUMfLoDBXdFAFSqphD+89YBK8r3hpWfI3TM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=VReTf/mQ; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AR8BnrL009576;
-	Wed, 27 Nov 2024 11:51:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=1L6EbXGa4gjKewlKK1VepByH
-	J/Y1UHlLv72Bl04ORAU=; b=VReTf/mQlYe4hoPN57uXsB1rzLArhNZT6wVtqGY6
-	sBE3SAnYzslWSZoM9nw7kugRp6e+uPd3JGT5U+xPuA4rGqqOyMcBmAIkyMylF5JA
-	azVaRbHt+YJy4zU5vrmmVJJKnlxsQq7Ua9qlfV5ApmcuS+13AlWDmIhUkVqGnbkW
-	FWSZqeThyeV3eDuDrjmgvjEe1Ze0MbN6FLaimdEsYyrfYH+0id6tGpYWwOPtlZGm
-	w3Wfs/SflgQglf/50Y927/d7HrMxM201AFDef8lYnTeJRHgiJ0ryoiYeFUG/21vs
-	i2pbhsqfIg90XMu1ocPplJ0z5P0Wlt4r3zTpl16OeNorXA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 435ffyu9ba-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 27 Nov 2024 11:51:40 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4ARBpcuC025967
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 27 Nov 2024 11:51:38 GMT
-Received: from hu-janathot-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 27 Nov 2024 03:51:32 -0800
-From: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
-To: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
-        "Rob
- Herring" <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        "Conor
- Dooley" <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Konrad Dybcio" <konradybcio@kernel.org>,
-        Marcel Holtmann
-	<marcel@holtmann.org>,
-        "Luiz Augusto von Dentz" <luiz.dentz@gmail.com>,
-        Bartosz Golaszewski <brgl@bgdev.pl>
-CC: <quic_mohamull@quicinc.com>, <quic_hbandi@quicinc.com>,
-        <quic_anubhavg@quicinc.com>,
-        Bartosz Golaszewski
-	<bartosz.golaszewski@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-bluetooth@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>
-Subject: [PATCH v4 2/2] regulator: dt-bindings: qcom,qca6390-pmu: document WCN6750
-Date: Wed, 27 Nov 2024 17:21:07 +0530
-Message-ID: <20241127115107.11549-3-quic_janathot@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20241127115107.11549-1-quic_janathot@quicinc.com>
-References: <20241127115107.11549-1-quic_janathot@quicinc.com>
+	s=arc-20240116; t=1732708875; c=relaxed/simple;
+	bh=l8Y87yoQEdyXuP6xZbRrWD7FatUpzs4zW88la++jh5Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=nI5kBi7zviujHkjh0OOtXIOfDfmpWpXbAIeoM8SxlW1EPhOAtLDMjmPSCjkktBEZ/HXN8uEJXE77D+cakR3C6IN5Fg7nguR2ADCk7Stupep1EtEcEa7OZxw41NaUvYH50byXDeaXJyZz+xTYoqvybQItnAvCU1UvdYXCP2P3svM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IjFRese9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE0C8C4CECC;
+	Wed, 27 Nov 2024 12:01:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1732708873;
+	bh=l8Y87yoQEdyXuP6xZbRrWD7FatUpzs4zW88la++jh5Q=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=IjFRese9ysTQdVyc/xnxkc9GB+5OpLdUhPEOeNhtYMbfgeN0EAcPHJr18VwywFEqV
+	 OPZijlfEDT47CGTH4iIbmDP0YhfQzCIKPHB2XcM/x4SpS2fR1vf4nRyg2nx5bxzUrm
+	 u5e8gRUEs4+/o4CEzh6iMQHdu+MlXss/HKOrNRuF6MZDxy0emp4AWYf/xNGJ6XrngQ
+	 436HfpFWjFiLCpoQmsscMDXkWElo4L7fYXnvLfqRBfu71ZVpBtnGj0AO5QNrAUJ7TL
+	 GlpHiFr7erDfydx3cZm55gHddiSYNW3PKSSRzmI6NH5dPGg1n7P4nDoRIrhe98bAU0
+	 l/N8pTSQJ0W3g==
+Message-ID: <d4145905-68d3-40ba-bb66-15747eb0d54d@kernel.org>
+Date: Wed, 27 Nov 2024 13:01:06 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: _pBDr6Aqp9p_24q6N-01cBBsS6A7Uc-h
-X-Proofpoint-ORIG-GUID: _pBDr6Aqp9p_24q6N-01cBBsS6A7Uc-h
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 mlxscore=0
- bulkscore=0 lowpriorityscore=0 spamscore=0 impostorscore=0 suspectscore=0
- priorityscore=1501 malwarescore=0 adultscore=0 phishscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411270097
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/5] dt-bindings: display/msm: Document MDSS on QCS8300
+To: Yongxing Mou <quic_yongmou@quicinc.com>,
+ "Rob Herring (Arm)" <robh@kernel.org>
+Cc: Maxime Ripard <mripard@kernel.org>, dri-devel@lists.freedesktop.org,
+ Ritesh Kumar <quic_riteshk@quicinc.com>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Clark <robdclark@gmail.com>,
+ Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org,
+ Sean Paul <sean@poorly.run>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, freedreno@lists.freedesktop.org,
+ Simona Vetter <simona@ffwll.ch>, Neil Armstrong <neil.armstrong@linaro.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-kernel@vger.kernel.org,
+ Thomas Zimmermann <tzimmermann@suse.de>, devicetree@vger.kernel.org
+References: <20241127-mdss_qcs8300-v1-0-29b2c3ee95b8@quicinc.com>
+ <20241127-mdss_qcs8300-v1-1-29b2c3ee95b8@quicinc.com>
+ <173269567235.2233485.7286772244329561840.robh@kernel.org>
+ <f433283d-e203-41f7-acc6-59fe606722a5@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <f433283d-e203-41f7-acc6-59fe606722a5@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Add description of the PMU node for the WCN6750 module.
+On 27/11/2024 12:02, Yongxing Mou wrote:
+>>
+>> doc reference errors (make refcheckdocs):
+>>
+>> See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20241127-mdss_qcs8300-v1-1-29b2c3ee95b8@quicinc.com
+>>
+>> The base for the series is generally the latest rc1. A different dependency
+>> should be noted in *this* patch.
+>>
+>> If you already ran 'make dt_binding_check' and didn't see the above
+>> error(s), then make sure 'yamllint' is installed and dt-schema is up to
+>> date:
+>>
+>> pip3 install dtschema --upgrade
+>>
+>> Please check and re-submit after running the above command yourself. Note
+>> that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+>> your schema. However, it must be unset to test all examples with your schema.
+>>
+> Thank you for your checking. I rechecked this file and indeed found some 
+> issues. I will fix them in the next patchset. But i did not see issues 
+> related to this header file in local. Maybe it is dependency or tool 
+> issues. I will and update tool and recheck this issue and fix it in the 
+> next patchset.
+> 
 
-Signed-off-by: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
----
- .../bindings/regulator/qcom,qca6390-pmu.yaml  | 27 +++++++++++++++++++
- 1 file changed, 27 insertions(+)
+Read the instruction carefully, including statement about base.
 
-diff --git a/Documentation/devicetree/bindings/regulator/qcom,qca6390-pmu.yaml b/Documentation/devicetree/bindings/regulator/qcom,qca6390-pmu.yaml
-index ca401a209cca..47c425c9fff1 100644
---- a/Documentation/devicetree/bindings/regulator/qcom,qca6390-pmu.yaml
-+++ b/Documentation/devicetree/bindings/regulator/qcom,qca6390-pmu.yaml
-@@ -18,6 +18,7 @@ properties:
-   compatible:
-     enum:
-       - qcom,qca6390-pmu
-+      - qcom,wcn6750-pmu
-       - qcom,wcn6855-pmu
-       - qcom,wcn7850-pmu
- 
-@@ -27,6 +28,9 @@ properties:
-   vddaon-supply:
-     description: VDD_AON supply regulator handle
- 
-+  vddasd-supply:
-+    description: VDD_ASD supply regulator handle
-+
-   vdddig-supply:
-     description: VDD_DIG supply regulator handle
- 
-@@ -42,6 +46,9 @@ properties:
-   vddio1p2-supply:
-     description: VDD_IO_1P2 supply regulator handle
- 
-+  vddrfa0p8-supply:
-+    description: VDD_RFA_0P8 supply regulator handle
-+
-   vddrfa0p95-supply:
-     description: VDD_RFA_0P95 supply regulator handle
- 
-@@ -51,12 +58,18 @@ properties:
-   vddrfa1p3-supply:
-     description: VDD_RFA_1P3 supply regulator handle
- 
-+  vddrfa1p7-supply:
-+    description: VDD_RFA_1P7 supply regulator handle
-+
-   vddrfa1p8-supply:
-     description: VDD_RFA_1P8 supply regulator handle
- 
-   vddrfa1p9-supply:
-     description: VDD_RFA_1P9 supply regulator handle
- 
-+  vddrfa2p2-supply:
-+    description: VDD_RFA_2P2 supply regulator handle
-+
-   vddpcie1p3-supply:
-     description: VDD_PCIE_1P3 supply regulator handle
- 
-@@ -119,6 +132,20 @@ allOf:
-         - vddpcie1p3-supply
-         - vddpcie1p9-supply
-         - vddio-supply
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            const: qcom,wcn6750-pmu
-+    then:
-+      required:
-+        - vddaon-supply
-+        - vddasd-supply
-+        - vddpmu-supply
-+        - vddrfa0p8-supply
-+        - vddrfa1p2-supply
-+        - vddrfa1p7-supply
-+        - vddrfa2p2-supply
-   - if:
-       properties:
-         compatible:
--- 
+Best regards,
+Krzysztof
 
