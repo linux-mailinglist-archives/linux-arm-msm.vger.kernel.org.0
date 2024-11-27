@@ -1,179 +1,258 @@
-Return-Path: <linux-arm-msm+bounces-39283-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39284-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DC5AD9DA4FA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 10:43:30 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 814529DA521
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 10:52:18 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 218B2164F93
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 09:52:15 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A380819343B;
+	Wed, 27 Nov 2024 09:52:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="S+4gAeZN"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 289CBB273CA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 09:43:28 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3A8D19343B;
-	Wed, 27 Nov 2024 09:43:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="b7qLS9Wd"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12217193416
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Nov 2024 09:43:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8650191F7C;
+	Wed, 27 Nov 2024 09:52:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732700601; cv=none; b=o3RVoeRiZQVTWCosDkOAlaTDknB0XLEGOs9DSEaLi7CyDWuLeDeA3qBNARZBuPonCJ4mYF0uYquYfXQ3C3DguHVgLcOqTc8iL/N7H+Grpv3T8gHnQIiHxZjYS4ONqXcMc4L1SEEXHCNQGp+OfV5EwfcSrL7LBTETvcc8WvAgpzo=
+	t=1732701136; cv=none; b=U8oBLSrB84BaCBemUqUDfOXsQWyqf+V4xJYXUmz5X0WITXsVHALX/BKb7jtJJQMTVUNPkyo7qVkYY4cIdb45xfzLLasJmStSZ8gmKb1Nketo194iecWx9ri2tHJqhsc3WtF7peTv68pzwn4AjLx/0drPRn2IdqNpJo0uKWd1uko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732700601; c=relaxed/simple;
-	bh=CmAthmj+0BJ8BpGKq01sKwjy0zefg5xANEMM1ENWhsk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tuOCvBR0XOlhcLiH/GckaHhzzGfuPQDXAzkPd1h9idG0s3/GACc+C9vnGJq0/yHMIvCYnmae9na3p3xRKxIbX/dnlFb2IxWoaXJHOUgPuyqsIGiAMhO04HFx6FPRW5+89pqB37ibwm4X4COQAFO2qUShqEy2KWBx3j7dipEXMik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=b7qLS9Wd; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-434a7cef2e3so1434765e9.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Nov 2024 01:43:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732700597; x=1733305397; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=/x4E8wiXQgWWhk51Xz0Izn5wXZBkvHxtPMjLjyfmt78=;
-        b=b7qLS9Wdb+kvTawNcU1o0NDsevixVLNv+sPn4kRIrkpEAgPfTsQZ5JQ4cnaxhPW9Yq
-         1X/7RYByirzv8NhU99dCrwoXWKP9PhgCybaYrfoy0ItgsdWyvQ0TT2YE9+QfzIjPMliN
-         brFv2MVJQh9aSMBhTYA6QqDvq0r9OsKlYcQZYuxZ0SDb0NtOqfnQdTEkyPvgI8R+A5jX
-         RNejMp0gUItAIL3Zm2pnychwBRg5MCEgrAHB/iXnEVEVzRzC0C+WSg0ZdsVipBHdDaMT
-         VzlQ9b7vxhKrAT9rbMn070biYc6VpaaknJ/LwGrNWJnylLz85ps1q6QvyAwvpYOUioX3
-         Y5Qw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732700597; x=1733305397;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/x4E8wiXQgWWhk51Xz0Izn5wXZBkvHxtPMjLjyfmt78=;
-        b=ubnetPM23WHjmi4viAquaCskwKEqF8ufScSC7BVS0XqyKFPq3YcO+B/TSGRsGa2Nfb
-         wkxRt+n4flzSCyO0WJ2Whg8Oq3rBtr1P3pMMxmIE0ZhkjiXQJKZHlgVXfVczDtoavrFq
-         L+8TIrV9Xqh4vkBFUfJs7GtY73FRqoha6IRKQtE5QClIrNCWeozBD11SgCfvwpCFDmbK
-         BfxILM2BraDNF9L9p421F+UOupHYlhTDNoYKiGgNNK1SbYxLHkOuI29IKfxE9glVd9KX
-         +k8amwyCxb4ZRrOMYVdKzQHDJJqjYR7zFcZKQJINIi5Q8vbk8k0AcNKnX3TFl6MkVSbV
-         7fOQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV6qJFzCqxTDvACzbMxpcOXxQY3LIQumlqOr/pwHeKUxkAqbXtRstJ2KFSYiMj/RbiKHOkT/mpul/H9mWcY@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy+zdns/tIqZmAJQrxwF/ejHPBoXtsKWzhyM0q6/VdwPQ/UNOiM
-	nZz0gRbKLrtDX6+m7M6xf1hIu1wNksJXqJ53rO3ltsEfQiImLTI6UWqKcnaDfww=
-X-Gm-Gg: ASbGnctR8QkdVTVTAMES9B6B909lQ1Xn4exQjYvKA7kDmsKBy3UrrhkrExpvOYry/yX
-	GQ+MsD5n/EfF8NsNNGEav/hwpiDvbVQQi6E7ktn5jHxMUaXWyHb1x2BBe241n8JjoyLEsMdvcuC
-	vBCxCbAY9/cSWNpiooJA2nWFkURFx2uxp38skRE3gtJeYVOI57gZnGr1Yz1aJhO59tJ37+Xiig6
-	adS/H8DUc6WNnln0sFsSCVLm82SErzkGuBc4M3JAbjgRE8l6lNxP7ap4YjV65oGk2+p
-X-Google-Smtp-Source: AGHT+IGW2kHkktj3j2eNCDXupvHHC0vvQtDZBn0LOqQ61CYdq4dYyGvDLQUw9Ne9ho7ByaeTK8Dqvw==
-X-Received: by 2002:a05:600c:4447:b0:434:a0cb:6d24 with SMTP id 5b1f17b1804b1-434a9dc0c14mr7514325e9.3.1732700597439;
-        Wed, 27 Nov 2024 01:43:17 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.219.21])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-434aa7d29fbsm15165425e9.29.2024.11.27.01.43.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 27 Nov 2024 01:43:16 -0800 (PST)
-Message-ID: <3637deb7-3f64-4fbd-b492-f4642478c647@linaro.org>
-Date: Wed, 27 Nov 2024 10:43:14 +0100
+	s=arc-20240116; t=1732701136; c=relaxed/simple;
+	bh=6BuS9gaT9G4Qz4JKIlJWphDI2532BIgo0dP+a/mAPWg=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=h0IpSZ6WD1JXmnaMTYF9ltnVP3YyyRTNxftxsfWHoyBZueJIJgCKy58m/AOrfs2/D2aL5owk4kjiQYfabCMmIWohcGO4p1Fg3IQ8GBVs+uKQmABPeJjoi0daoCJAEbqvjMOJkD7jJy4fEBwq7rvh/sKlMFw7wc+3M1nf0vON7pI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=S+4gAeZN; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AR8F38k028826;
+	Wed, 27 Nov 2024 09:52:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=rwwmQdO7SbJa5FZkaXLdhRaWTNOCYfTaXXa
+	QF+0Dc7w=; b=S+4gAeZN/k9MzMczAJlN9dw7HQjvgHKThFL3Mv4b/cdNcy1uXMH
+	2xW433mYwXBQsfgayzOI/P1ZT/grhpLxpV4uYMsJ9+FyR0r3Ygf8drY6bMs4CYe5
+	s++nnPO5AtS1QJIcErJjSMwvosIPe3tEkake9Lo+tGsM/Fi5JhKt+R9Pkd5JTDSz
+	6rlsmnQJkXPnLUfH/l1c92oCEAFdRXtlmZeAaG56Qg4sHQ6OPmu4/m5Q7AJFUmL1
+	27X2GvMjQJH9JpECiam5r5J5YWUePzQNdGVtkZOVlk8qMqWn2Xs9G/Kh2n1tA61s
+	o/s2iMRuYd0LjHbG0+hchX4MpDBckEcmtYQ==
+Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 434nyg7aqy-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 27 Nov 2024 09:52:10 +0000 (GMT)
+Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
+	by APTAIPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 4AR9q8TO017675;
+	Wed, 27 Nov 2024 09:52:08 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 43384kmh7s-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 27 Nov 2024 09:52:08 +0000
+Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4AR9q8wL017670;
+	Wed, 27 Nov 2024 09:52:08 GMT
+Received: from cse-cd02-lnx.ap.qualcomm.com (cse-cd02-lnx.qualcomm.com [10.64.75.246])
+	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 4AR9q7Zo017660
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 27 Nov 2024 09:52:08 +0000
+Received: by cse-cd02-lnx.ap.qualcomm.com (Postfix, from userid 4571896)
+	id 75F1518D8; Wed, 27 Nov 2024 17:52:06 +0800 (CST)
+From: Yuanjie Yang <quic_yuanjiey@quicinc.com>
+To: adrian.hunter@intel.com, ulf.hansson@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc: quic_tingweiz@quicinc.com, quic_zhgao@quicinc.com,
+        quic_yuanjiey@quicinc.com
+Subject: [PATCH v2] mmc: sdhci-msm: Correctly set the load for the regulator
+Date: Wed, 27 Nov 2024 17:50:29 +0800
+Message-Id: <20241127095029.3918290-1-quic_yuanjiey@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/4] arm64: dts: qcom: add initial support for QCS8300
- DTSI
-To: Jingyi Wang <quic_jingyw@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Cong Zhang <quic_congzhan@quicinc.com>
-Cc: quic_tengfan@quicinc.com, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, quic_tingweiz@quicinc.com,
- Conor Dooley <conor+dt@kernel.org>, quic_aiquny@quicinc.com,
- Catalin Marinas <catalin.marinas@arm.com>,
- Zhenhua Huang <quic_zhenhuah@quicinc.com>, Xin Liu
- <quic_liuxin@quicinc.com>, Kyle Deng <quic_chunkaid@quicinc.com>,
- Tingguo Cheng <quic_tingguoc@quicinc.com>,
- Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>,
- Rob Herring <robh@kernel.org>, Will Deacon <will@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-References: <20240925-qcs8300_initial_dtsi-v2-0-494c40fa2a42@quicinc.com>
- <20240925-qcs8300_initial_dtsi-v2-3-494c40fa2a42@quicinc.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Content-Language: en-US
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240925-qcs8300_initial_dtsi-v2-3-494c40fa2a42@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: vd1YDaakC2SsijUZdXPjtGU8TiyD01gE
+X-Proofpoint-ORIG-GUID: vd1YDaakC2SsijUZdXPjtGU8TiyD01gE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
+ mlxlogscore=999 clxscore=1015 mlxscore=0 adultscore=0 lowpriorityscore=0
+ impostorscore=0 suspectscore=0 malwarescore=0 bulkscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411270081
 
-On 25/09/2024 12:43, Jingyi Wang wrote:
-> +			glink-edge {
-> +				interrupts-extended = <&ipcc IPCC_CLIENT_CDSP
-> +							     IPCC_MPROC_SIGNAL_GLINK_QMP
-> +							     IRQ_TYPE_EDGE_RISING>;
-> +				mboxes = <&ipcc IPCC_CLIENT_CDSP
-> +						IPCC_MPROC_SIGNAL_GLINK_QMP>;
-> +
-> +				label = "cdsp";
-> +				qcom,remote-pid = <5>;
-> +			};
-> +		};
-> +	};
-> +
-> +	arch_timer: timer {
-> +		compatible = "arm,armv8-timer";
-> +		interrupts = <GIC_PPI 13 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
-> +			     <GIC_PPI 14 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
-> +			     <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
-> +			     <GIC_PPI 12 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>;
-I feel disappointed that instead of reviewing the code while it is still
-on the lists, you prefer the bug to be merged and then post a patch on
-top of it.
+Qualcomm regulator supports two power supply modes: HPM and LPM.
+Currently, the sdhci-msm.c driver does not set the load to adjust
+the current for eMMC and SD. Therefore, if the regulator set load
+in LPM state, it will lead to the inability to properly initialize
+eMMC and SD.
 
-Best regards,
-Krzysztof
+Set the correct regulator current for eMMC and SD to ensure that the
+device can work normally even when the regulator is in LPM.
+
+Signed-off-by: Yuanjie Yang <quic_yuanjiey@quicinc.com>
+---
+Changes in v2:
+- Add enum msm_reg_type to optimize the code
+- Delete redundant emmc type judgment
+- Link to v1: https://lore.kernel.org/linux-arm-msm/20241122075048.2006894-1-quic_yuanjiey@quicinc.com/
+
+---
+ drivers/mmc/host/sdhci-msm.c | 92 +++++++++++++++++++++++++++++++++++-
+ 1 file changed, 90 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+index e00208535bd1..fc13ef60ab61 100644
+--- a/drivers/mmc/host/sdhci-msm.c
++++ b/drivers/mmc/host/sdhci-msm.c
+@@ -134,9 +134,22 @@
+ /* Timeout value to avoid infinite waiting for pwr_irq */
+ #define MSM_PWR_IRQ_TIMEOUT_MS 5000
+ 
++/* Max load for eMMC Vdd supply */
++#define MMC_VMMC_MAX_LOAD_UA	570000
++
+ /* Max load for eMMC Vdd-io supply */
+ #define MMC_VQMMC_MAX_LOAD_UA	325000
+ 
++/* Max load for SD Vdd supply */
++#define SD_VMMC_MAX_LOAD_UA	800000
++
++/* Max load for SD Vdd-io supply */
++#define SD_VQMMC_MAX_LOAD_UA	22000
++
++#define MAX_MMC_SD_VMMC_LOAD_UA  max(MMC_VMMC_MAX_LOAD_UA, SD_VMMC_MAX_LOAD_UA)
++
++#define MAX_MMC_SD_VQMMC_LOAD_UA max(MMC_VQMMC_MAX_LOAD_UA, SD_VQMMC_MAX_LOAD_UA)
++
+ #define msm_host_readl(msm_host, host, offset) \
+ 	msm_host->var_ops->msm_readl_relaxed(host, offset)
+ 
+@@ -147,6 +160,11 @@
+ #define CQHCI_VENDOR_CFG1	0xA00
+ #define CQHCI_VENDOR_DIS_RST_ON_CQ_EN	(0x3 << 13)
+ 
++enum msm_reg_type {
++	VMMC_REGULATOR,
++	VQMMC_REGULATOR,
++};
++
+ struct sdhci_msm_offset {
+ 	u32 core_hc_mode;
+ 	u32 core_mci_data_cnt;
+@@ -1403,11 +1421,71 @@ static int sdhci_msm_set_pincfg(struct sdhci_msm_host *msm_host, bool level)
+ 	return ret;
+ }
+ 
+-static int sdhci_msm_set_vmmc(struct mmc_host *mmc)
++static int sdhci_msm_get_regulator_load(struct mmc_host *mmc, int max_current,
++					enum msm_reg_type type)
++{
++	int load = 0;
++
++	/*
++	 * When eMMC and SD are powered on for the first time, select a higher
++	 * current value from the corresponding current for eMMC and SD to
++	 * ensure that the eMMC and SD cards start up properly and complete
++	 * initialization. After the initialization process is finished, use
++	 * the corresponding current to set the eMMC and SD to ensure the
++	 * normal work of the device.
++	 */
++
++	if (!mmc->card)
++		return max_current;
++
++	if (mmc_card_mmc(mmc->card))
++		load = (type == VMMC_REGULATOR) ? MMC_VMMC_MAX_LOAD_UA : MMC_VQMMC_MAX_LOAD_UA;
++	else if (mmc_card_sd(mmc->card))
++		load = (type == VMMC_REGULATOR) ? SD_VMMC_MAX_LOAD_UA : SD_VQMMC_MAX_LOAD_UA;
++
++	return load;
++}
++
++static int msm_config_regulator_load(struct sdhci_msm_host *msm_host, struct mmc_host *mmc,
++				     bool hpm, int max_current, enum msm_reg_type type)
++{
++	int ret;
++	int load = 0;
++
++	/*
++	 * After the initialization process is finished, Once the type of card
++	 * is determined, only set the corresponding current for SD and eMMC.
++	 */
++
++	if (mmc->card && !(mmc_card_mmc(mmc->card) || mmc_card_sd(mmc->card)))
++		return 0;
++
++	if (hpm)
++		load = sdhci_msm_get_regulator_load(mmc, max_current, type);
++
++	if (type == VMMC_REGULATOR)
++		ret = regulator_set_load(mmc->supply.vmmc, load);
++	else
++		ret = regulator_set_load(mmc->supply.vqmmc, load);
++	if (ret)
++		dev_err(mmc_dev(mmc), "%s: set load failed: %d\n",
++			mmc_hostname(mmc), ret);
++	return ret;
++}
++
++static int sdhci_msm_set_vmmc(struct sdhci_msm_host *msm_host,
++			      struct mmc_host *mmc, bool hpm)
+ {
++	int ret;
++
+ 	if (IS_ERR(mmc->supply.vmmc))
+ 		return 0;
+ 
++	ret = msm_config_regulator_load(msm_host, mmc, hpm,
++					MAX_MMC_SD_VMMC_LOAD_UA, VMMC_REGULATOR);
++	if (ret)
++		return ret;
++
+ 	return mmc_regulator_set_ocr(mmc, mmc->supply.vmmc, mmc->ios.vdd);
+ }
+ 
+@@ -1435,6 +1513,15 @@ static int msm_toggle_vqmmc(struct sdhci_msm_host *msm_host,
+ 				goto out;
+ 			}
+ 		}
++
++		ret = msm_config_regulator_load(msm_host, mmc, level,
++						MAX_MMC_SD_VQMMC_LOAD_UA, VQMMC_REGULATOR);
++		if (ret < 0) {
++			dev_err(mmc_dev(mmc), "%s: vqmmc set regulator load failed: %d\n",
++				mmc_hostname(mmc), ret);
++			goto out;
++		}
++
+ 		ret = regulator_enable(mmc->supply.vqmmc);
+ 	} else {
+ 		ret = regulator_disable(mmc->supply.vqmmc);
+@@ -1642,7 +1729,8 @@ static void sdhci_msm_handle_pwr_irq(struct sdhci_host *host, int irq)
+ 	}
+ 
+ 	if (pwr_state) {
+-		ret = sdhci_msm_set_vmmc(mmc);
++		ret = sdhci_msm_set_vmmc(msm_host, mmc,
++					 pwr_state & REQ_BUS_ON);
+ 		if (!ret)
+ 			ret = sdhci_msm_set_vqmmc(msm_host, mmc,
+ 					pwr_state & REQ_BUS_ON);
+-- 
+2.34.1
+
 
