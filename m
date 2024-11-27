@@ -1,202 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-39278-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39279-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 178139DA487
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 10:11:46 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5C6389DA4D0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 10:32:48 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8533EB22611
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 09:11:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EFF49160346
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 09:32:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3AB5A1917F0;
-	Wed, 27 Nov 2024 09:11:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D8507192B70;
+	Wed, 27 Nov 2024 09:32:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="KRy49Cfz"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="P4y2TCd0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75ECD13D278;
-	Wed, 27 Nov 2024 09:11:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E53192B79;
+	Wed, 27 Nov 2024 09:32:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732698701; cv=none; b=nMh/lds24u/hgV74VJZI/Wm3Qk0LuIvoPCBSUTiZ6AVj2Hpq203eQ5Lzbya6XwinHgiKMlmKM+Lag2VyNKj99UNQPlu4y78U9m8K6QQnR5SMNNQ7AH40OiReY+u39HBUqq8zHTAekeJgoIVmZLr9N9S01/iCOhhiDE5rDnpQSw8=
+	t=1732699965; cv=none; b=NzjUO5TeW5XWlF3Fwdr2Dnj8MgCohpbQEMGzfMaaHOrdUdgJVveYutJzeOZngyxQBU428VsPvBIDkHTTrpMHH04uVznnBh0WFzoe15KLihprT4iUpZGJWfwtL/Jqz30h7/PjboZgRZJ6RnUkrPH4jPbIv4a0MUvs5ZaexbE5gJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732698701; c=relaxed/simple;
-	bh=4Les83iobehZQbj4RmZdxVlxgPcNcFnRN78AlQyw+QA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=B9gqI3IoIk1q2WVto+laF5kEsTFzVUG7dbLOf7LWH+LTMXWwawwQKkcEm2zGs8OUmg2RMU45SlMK18u+QIfEH0ODTJ6Su7FzyQkd+9ABecPgxYMJFSd5kOYiWzhKSsFVLTZlSv0UIBrUSZaL5gwM+E4YVMHBN6mY6HV1nc87w38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=KRy49Cfz; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1732699965; c=relaxed/simple;
+	bh=FBw9HVozgfVKZtFYcBQA4Su42LkaqncDAcZ8xBi6Rpw=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=ljSQFdM+oxvc/71B1Z1uAe023sEyE23F8hFMOb97WRevDyO0MBfrsQTgayE2fL60VjyLsg8H/UsrGzCIWNVWqIxnLp4sbw1kcbEmQvhUgz0s9dmOlTOWCNXLwoaNR70tW8n2Fza3tCXsP2+CdWUeGMzEHsvEf8RMFwjAP3SEBT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=P4y2TCd0; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AR64jBM000828;
-	Wed, 27 Nov 2024 09:11:28 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AR96xFw023533;
+	Wed, 27 Nov 2024 09:32:40 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	KPoWXTJ5g40D7FXVXok8S9PkK66Riq85uQri4nd5Ay8=; b=KRy49Cfz53hwb5yM
-	l3J7s9aztn8BvmYSEDXP97xulOc/IgpYL8AiOkDb/zGCBsp2XP1XsW6S0vHphe3L
-	qdRBHQ2gDO8rON/g3vFBLpYXyn1pOfLMN5TbLe/bqPs3xqtattBTPEXwiXJk6aA1
-	z8JBBO8aYG0eZ9y/yKF0dGtsRsA2NdHXFxKz0BO9HzIYPBA898e7poSKz8cjuOcV
-	wc3HRtP+miUI6sbUgzi6NQBnNQf5U2QRnEV9MdyXsJaxDqd80wlPsEhgyJo3vSYY
-	4wOKOlUtf9g+k6F7+yxEbfEcyZQw63rM/h6MqYgxdufXQwJ2EBPRelOVkESPEjlp
-	ZERKgw==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 435wuerg63-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=lopIUVwDrKphG6QaSe4vO1
+	jusRE8iqpppJ0DQUcGOio=; b=P4y2TCd0lY3VFppO8bvdPi4d4SSpjYpiAzYyHt
+	YELOcSZvnYvf4TMhkQRxeHt8LCC5Jt6CXV4DjTFCoWG++gI92A7/tUT22WCskzWi
+	HtRN0aaJtGgPiXmRNv2cbxjePZBZ1mofShZpxmgNJfLuwDhv3voBBVKWr3GmUoG+
+	Jc1OUeNxD34RSBK+R1aDaAfGmEpwAsJQRiPtuSNlQzgp6PBDZ9X7hIYEyXfTRsJ2
+	JsyMBd8apLfOFWLxBMnN3IX4qMjotIPbHXiDbeO3dE012XuZ8ySPsiHMhhnlwmdw
+	5XHxRkVvPJasl8rjtSgkfBT971UkZB8MQOQK0TvEpvpokzww==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 435bf5kmd3-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 27 Nov 2024 09:11:28 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AR9BRFD029189
+	Wed, 27 Nov 2024 09:32:40 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AR9Wdjl003524
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 27 Nov 2024 09:11:27 GMT
-Received: from [10.151.37.94] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 27 Nov
- 2024 01:11:23 -0800
-Message-ID: <fe912c14-170f-92b7-d0be-71c4a7a456d0@quicinc.com>
-Date: Wed, 27 Nov 2024 14:41:20 +0530
+	Wed, 27 Nov 2024 09:32:39 GMT
+Received: from congzhan2-gv.ap.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 27 Nov 2024 01:32:33 -0800
+From: Cong Zhang <quic_congzhan@quicinc.com>
+Date: Wed, 27 Nov 2024 17:32:20 +0800
+Subject: [PATCH] arm64: dts: qcom: Correct IRQ number of EL2 non-secure
+ physical timer
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH v2 2/3] mtd: rawnand: qcom: Fix onfi param page read
-Content-Language: en-US
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-CC: <miquel.raynal@bootlin.com>, <richard@nod.at>, <vigneshr@ti.com>,
-        <bbrezillon@kernel.org>, <linux-mtd@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>,
-        <quic_nainmeht@quicinc.com>, <quic_laksd@quicinc.com>
-References: <20241122085933.2663927-1-quic_mdalam@quicinc.com>
- <20241122085933.2663927-3-quic_mdalam@quicinc.com>
- <20241126054135.5v7f5ln5vwc64eys@thinkpad>
-From: Md Sadre Alam <quic_mdalam@quicinc.com>
-In-Reply-To: <20241126054135.5v7f5ln5vwc64eys@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-ID: <20241127-correct_timer_irq-v1-1-ce4309b655bd@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIACTnRmcC/33PwWrDMAwG4FcJOk/DVtx0KWPsPUYJnqqsgiZZZ
+ C9slLz73PSy0y6CX6BP0hWSmEqCQ3UFk0WTTmMJ/qECPsfxQ1BPJQM5Ct5TgzyZCecu6yDWqc3
+ o61pcLGXfEpS5T5Nevzfz7XjPJvNXofO9CYOkFDf6UD3fZNfSDmdOT7VznY6aNV66U06KC6HD0
+ AYOro8UA70WiXXkR56GF7j5Z015sp/thcVvC/65dvHosfE7x3t67xuu/4JwXNf1FzrYG+YUAQA
+ A
+X-Change-ID: 20241126-correct_timer_irq-133e0a33e792
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC: <quic_pkondeti@quicinc.com>, <quic_aiquny@quicinc.com>,
+        <kernel@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Cong Zhang
+	<quic_congzhan@quicinc.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1732699953; l=2699;
+ i=quic_congzhan@quicinc.com; s=20241126; h=from:subject:message-id;
+ bh=FBw9HVozgfVKZtFYcBQA4Su42LkaqncDAcZ8xBi6Rpw=;
+ b=54RdeYrUbZufBarzWgQ/QTteprPVZ2ILSpmePxXtsh3hlJL9siovTfoImGnesdzgm+jLyfPN1
+ 1dGKROEcw4qAO6oc7TuR7vMgA/1IrRuoNjbC6vrTf/oNg8pUWY1DG8P
+X-Developer-Key: i=quic_congzhan@quicinc.com; a=ed25519;
+ pk=EAdxxOpkixn8jyG0MRQXsIFtZX7PytBUry7L44VBHIo=
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: TqBkF3t_1oEpfbKdomLQIAR-XW4e8jwL
-X-Proofpoint-GUID: TqBkF3t_1oEpfbKdomLQIAR-XW4e8jwL
+X-Proofpoint-ORIG-GUID: ATfu0gELOnXjeCqOwE7sooaYV3EI4okO
+X-Proofpoint-GUID: ATfu0gELOnXjeCqOwE7sooaYV3EI4okO
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 mlxlogscore=999
- clxscore=1015 adultscore=0 impostorscore=0 priorityscore=1501
- malwarescore=0 spamscore=0 lowpriorityscore=0 phishscore=0 suspectscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411270075
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 impostorscore=0
+ suspectscore=0 clxscore=1011 mlxlogscore=481 spamscore=0 malwarescore=0
+ adultscore=0 bulkscore=0 priorityscore=1501 lowpriorityscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411270079
 
+The INTID of EL2 non-secure physical timer is 26. In linux, the IRQ
+number has a fixed 16 offset for PPIs. Therefore, the linux IRQ number
+of EL2 non-secure physical timer should be 10 (26 - 16).
 
+Signed-off-by: Cong Zhang <quic_congzhan@quicinc.com>
+---
+The EL2 non-secure physical timer is utilized during kernel bootup in
+EL2 mode with KVM enabled. This patch has been verified on the QCS8300
+platform with KVM enabled. Given that the dependency patch has already
+been reviewed, I am uncertain whether it is preferable to submit this
+fix as a new patch or to combine it with the dependency patch. I would
+appreciate your suggestions on this patch.
+---
+ arch/arm64/boot/dts/qcom/qcs8300.dtsi | 2 +-
+ arch/arm64/boot/dts/qcom/sdx75.dtsi   | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-On 11/26/2024 11:11 AM, Manivannan Sadhasivam wrote:
-> On Fri, Nov 22, 2024 at 02:29:32PM +0530, Md Sadre Alam wrote:
-> 
-> Please change subject to:
-> 
-> mtd: rawnand: qcom: Fix last codeword read in qcom_param_page_type_exec()
-Ok
-> 
->> For QPIC V2 onwards there is a separate register to read
->> last code word "QPIC_NAND_READ_LOCATION_LAST_CW_n".
->>
->> qcom_param_page_type_exec() is used to read only one code word
->> If it will get configure number of code words to 1 in QPIC_NAND_DEV0_CFG0
-> 
-> "If it configures the number of..."
-Ok
-> 
->> register then QPIC controller thinks its reading the last code word,
->> since we are having separate register to read the last code word,
->> we have to configure "QPIC_NAND_READ_LOCATION_LAST_CW_n" register
->> to fetch data from QPIC buffer to system memory.
->>
->> Without this change page read was failing with timeout error
->>
->> / # hexdump -C /dev/mtd1
->> [  129.206113] qcom-nandc 1cc8000.nand-controller: failure to read page/oob
->> hexdump: /dev/mtd1: Connection timed out
->>
->> This issue only seen on SDX targets since SDX target used QPICv2. But
->> same working on IPQ targets since IPQ used QPICv1.
->>
->> Cc: stable@vger.kernel.org
->> Fixes: 89550beb098e ("mtd: rawnand: qcom: Implement exec_op()")
->> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
-> 
-> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> 
-> - Mani
-> 
->> ---
->>
->> Change in [v2]
->>
->> * Updated commit message
->>
->> * Added stable kernel tag
->>
->> * Replaced the buf_count value of 512 with the len in bytes.
->>
->> Change in [v1]
->>
->> * Resolved the issue with reading a single code word in the parameter
->>    page read
->>
->>   drivers/mtd/nand/raw/qcom_nandc.c | 12 ++++++++++--
->>   1 file changed, 10 insertions(+), 2 deletions(-)
->>
->> diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
->> index cc59461df72e..31ec3db1246d 100644
->> --- a/drivers/mtd/nand/raw/qcom_nandc.c
->> +++ b/drivers/mtd/nand/raw/qcom_nandc.c
->> @@ -2859,7 +2859,12 @@ static int qcom_param_page_type_exec(struct nand_chip *chip,  const struct nand_
->>   	const struct nand_op_instr *instr = NULL;
->>   	unsigned int op_id = 0;
->>   	unsigned int len = 0;
->> -	int ret;
->> +	int ret, reg_base;
->> +
->> +	reg_base = NAND_READ_LOCATION_0;
->> +
->> +	if (nandc->props->qpic_v2)
->> +		reg_base = NAND_READ_LOCATION_LAST_CW_0;
->>   
->>   	ret = qcom_parse_instructions(chip, subop, &q_op);
->>   	if (ret)
->> @@ -2911,7 +2916,10 @@ static int qcom_param_page_type_exec(struct nand_chip *chip,  const struct nand_
->>   	op_id = q_op.data_instr_idx;
->>   	len = nand_subop_get_data_len(subop, op_id);
->>   
->> -	nandc_set_read_loc(chip, 0, 0, 0, len, 1);
-> 
-> nandc_set_read_loc() does changes the register offset based on QPIC version. So
-> what exactly you are trying to fix here?
-QPICv2 having separate register to copy last code word data from QPIC buffer to Memory.
-e.g for 2K page nand total code word = 4, so to copy first three code word need to configure
-NAND_LOCATIONn register , but to copy last code word need to configure NAND_LOCATIONn_LAST
-register.
-> 
-> - Mani
-> 
->> +	if (nandc->props->qpic_v2)
->> +		nandc_set_read_loc_last(chip, reg_base, 0, len, 1);
->> +	else
->> +		nandc_set_read_loc_first(chip, reg_base, 0, len, 1);
->>   
->>   	if (!nandc->props->qpic_v2) {
->>   		write_reg_dma(nandc, NAND_DEV_CMD_VLD, 1, 0);
->> -- 
->> 2.34.1
->>
-> 
+diff --git a/arch/arm64/boot/dts/qcom/qcs8300.dtsi b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
+index 2c35f96c3f289d5e2e57e0e30ef5e17cd1286188..de6c368efb3a5efeaf628babdb7e91f8cbbf9d5f 100644
+--- a/arch/arm64/boot/dts/qcom/qcs8300.dtsi
++++ b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
+@@ -1370,6 +1370,6 @@ arch_timer: timer {
+ 		interrupts = <GIC_PPI 13 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
+ 			     <GIC_PPI 14 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
+ 			     <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
+-			     <GIC_PPI 12 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>;
++			     <GIC_PPI 10 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>;
+ 	};
+ };
+diff --git a/arch/arm64/boot/dts/qcom/sdx75.dtsi b/arch/arm64/boot/dts/qcom/sdx75.dtsi
+index 5f7e59ecf1ca6298cb252ee0654bc7eaeefbd303..b0775173278f3eed0f301b40dfba0f2680d7b0d0 100644
+--- a/arch/arm64/boot/dts/qcom/sdx75.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdx75.dtsi
+@@ -1548,6 +1548,6 @@ timer {
+ 		interrupts = <GIC_PPI 13 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
+ 			     <GIC_PPI 14 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
+ 			     <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
+-			     <GIC_PPI 12 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>;
++			     <GIC_PPI 10 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>;
+ 	};
+ };
+
+---
+base-commit: 6ad9d5070ae9de51803b16ffc384c23d62466c7d
+change-id: 20241126-correct_timer_irq-133e0a33e792
+prerequisite-message-id: <20240925-qcs8300_initial_dtsi-v2-0-494c40fa2a42@quicinc.com>
+prerequisite-patch-id: 73c78f31fa1d504124d4a82b578a6a14126cccd8
+prerequisite-patch-id: 5a01283c8654ae7c696d9c69cb21505b71c5ca27
+prerequisite-patch-id: dc633d5aaac790776a8a213ea2faa4890a3f665d
+prerequisite-patch-id: 9ecf4cb8b5842ac64e51d6baa0e6c1fbe449ee66
+
+Best regards,
+-- 
+Cong Zhang <quic_congzhan@quicinc.com>
+
 
