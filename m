@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-39277-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39278-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 69C7D9DA474
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 10:05:43 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 178139DA487
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 10:11:46 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0A31916613F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 09:05:40 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8533EB22611
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 09:11:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 35F98190493;
-	Wed, 27 Nov 2024 09:05:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3AB5A1917F0;
+	Wed, 27 Nov 2024 09:11:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cE5TRT6L"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="KRy49Cfz"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 646BB14AD02;
-	Wed, 27 Nov 2024 09:05:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75ECD13D278;
+	Wed, 27 Nov 2024 09:11:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732698339; cv=none; b=FieNuY1lTPXi2i5KnBK5kFs6zOWwyCpZWeVZlzDrbh3iEHE2hH9MIq0ObuwJjuBm9b1rmK+gEaYWhhXTCU9zVs3d1S1+o+JWZ9CunC2GT91UTrVPiFeEVd5SWBOaybKv5CjLqmBiM2eBxkbkpoh9dIAlsJwe+PggxF0Wtwe9uvs=
+	t=1732698701; cv=none; b=nMh/lds24u/hgV74VJZI/Wm3Qk0LuIvoPCBSUTiZ6AVj2Hpq203eQ5Lzbya6XwinHgiKMlmKM+Lag2VyNKj99UNQPlu4y78U9m8K6QQnR5SMNNQ7AH40OiReY+u39HBUqq8zHTAekeJgoIVmZLr9N9S01/iCOhhiDE5rDnpQSw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732698339; c=relaxed/simple;
-	bh=Tb6kjVh7jfFmpmMXuIRGhK7kiVbrABjoeMQJv2i1pcw=;
+	s=arc-20240116; t=1732698701; c=relaxed/simple;
+	bh=4Les83iobehZQbj4RmZdxVlxgPcNcFnRN78AlQyw+QA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Ym1EEXWM7ZOPERzWU/ZIkgzbt5Or9oUommonVc/xCrvsxijh8lDOtmnLaa/rYMs2Gz1ieBPxksz9PTWjA4+tOo0S9tBVKze+3a6XJzWOlHJeBUSWzIXxQR7hcbFl/sWwuPyxZhJ3dGp64DovE8tqfmF9uwRj5YP09JuUwtRq+KM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cE5TRT6L; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=B9gqI3IoIk1q2WVto+laF5kEsTFzVUG7dbLOf7LWH+LTMXWwawwQKkcEm2zGs8OUmg2RMU45SlMK18u+QIfEH0ODTJ6Su7FzyQkd+9ABecPgxYMJFSd5kOYiWzhKSsFVLTZlSv0UIBrUSZaL5gwM+E4YVMHBN6mY6HV1nc87w38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=KRy49Cfz; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AQKLJ7V022746;
-	Wed, 27 Nov 2024 09:05:19 GMT
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AR64jBM000828;
+	Wed, 27 Nov 2024 09:11:28 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	CKdg1a8UXEDnzqGonEr7So4ElPrNguVTFyRMl84Fin0=; b=cE5TRT6L1gNXBGNF
-	q66671gjswCoOiVoBtTayHYMcVjMI0mHqeo/HC3q5oBOJUVbewC6BAN1Z9ofoNnU
-	Zvfj2/qNlhHbICSMBpW5SpxQJd+WRceP1/FV4BdmxabVTDVjzwtH1MTQel6Fr9eW
-	zmalJBYwQRHsIFaLa/1HyZv4H6Gaov8eoyNxbWmnfgzsCuLurr3ZC2ypiyMm3Nek
-	ONPQdk0KM72bBYLIj7ssJWDFKmR+9q1E0S+otK+F8XATKVyW5thCIZkG/KXcKB/K
-	+zUiso3Ei8M36r3dZzHlWQYXHBIlFGAsP5/+bAxTgy8N6PuWxO5+fhmhkS67s6Ck
-	tfvQNQ==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 434mx7794s-1
+	KPoWXTJ5g40D7FXVXok8S9PkK66Riq85uQri4nd5Ay8=; b=KRy49Cfz53hwb5yM
+	l3J7s9aztn8BvmYSEDXP97xulOc/IgpYL8AiOkDb/zGCBsp2XP1XsW6S0vHphe3L
+	qdRBHQ2gDO8rON/g3vFBLpYXyn1pOfLMN5TbLe/bqPs3xqtattBTPEXwiXJk6aA1
+	z8JBBO8aYG0eZ9y/yKF0dGtsRsA2NdHXFxKz0BO9HzIYPBA898e7poSKz8cjuOcV
+	wc3HRtP+miUI6sbUgzi6NQBnNQf5U2QRnEV9MdyXsJaxDqd80wlPsEhgyJo3vSYY
+	4wOKOlUtf9g+k6F7+yxEbfEcyZQw63rM/h6MqYgxdufXQwJ2EBPRelOVkESPEjlp
+	ZERKgw==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 435wuerg63-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 27 Nov 2024 09:05:19 +0000 (GMT)
+	Wed, 27 Nov 2024 09:11:28 +0000 (GMT)
 Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AR95IQZ028294
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AR9BRFD029189
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 27 Nov 2024 09:05:18 GMT
+	Wed, 27 Nov 2024 09:11:27 GMT
 Received: from [10.151.37.94] (10.80.80.8) by nasanex01a.na.qualcomm.com
  (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 27 Nov
- 2024 01:05:14 -0800
-Message-ID: <09a03767-1bd5-c398-7894-5fd1392d1fb8@quicinc.com>
-Date: Wed, 27 Nov 2024 14:35:11 +0530
+ 2024 01:11:23 -0800
+Message-ID: <fe912c14-170f-92b7-d0be-71c4a7a456d0@quicinc.com>
+Date: Wed, 27 Nov 2024 14:41:20 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,8 +66,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.1
-Subject: Re: [PATCH v2 1/3] mtd: rawnand: qcom: Pass 18 bit offset from QPIC
- base address to BAM
+Subject: Re: [PATCH v2 2/3] mtd: rawnand: qcom: Fix onfi param page read
 Content-Language: en-US
 To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 CC: <miquel.raynal@bootlin.com>, <richard@nod.at>, <vigneshr@ti.com>,
@@ -76,163 +75,128 @@ CC: <miquel.raynal@bootlin.com>, <richard@nod.at>, <vigneshr@ti.com>,
         <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>,
         <quic_nainmeht@quicinc.com>, <quic_laksd@quicinc.com>
 References: <20241122085933.2663927-1-quic_mdalam@quicinc.com>
- <20241122085933.2663927-2-quic_mdalam@quicinc.com>
- <20241126053019.ujdb7nkkj3f25jyn@thinkpad>
+ <20241122085933.2663927-3-quic_mdalam@quicinc.com>
+ <20241126054135.5v7f5ln5vwc64eys@thinkpad>
 From: Md Sadre Alam <quic_mdalam@quicinc.com>
-In-Reply-To: <20241126053019.ujdb7nkkj3f25jyn@thinkpad>
+In-Reply-To: <20241126054135.5v7f5ln5vwc64eys@thinkpad>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: MkfATXQB6BIws0kTm7OdZD9qGKcZDd_s
-X-Proofpoint-ORIG-GUID: MkfATXQB6BIws0kTm7OdZD9qGKcZDd_s
+X-Proofpoint-ORIG-GUID: TqBkF3t_1oEpfbKdomLQIAR-XW4e8jwL
+X-Proofpoint-GUID: TqBkF3t_1oEpfbKdomLQIAR-XW4e8jwL
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
- mlxlogscore=999 malwarescore=0 adultscore=0 spamscore=0 mlxscore=0
- bulkscore=0 phishscore=0 lowpriorityscore=0 suspectscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411270074
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 mlxlogscore=999
+ clxscore=1015 adultscore=0 impostorscore=0 priorityscore=1501
+ malwarescore=0 spamscore=0 lowpriorityscore=0 phishscore=0 suspectscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411270075
 
 
 
-On 11/26/2024 11:00 AM, Manivannan Sadhasivam wrote:
-> On Fri, Nov 22, 2024 at 02:29:31PM +0530, Md Sadre Alam wrote:
->> Currently we are configuring lower 24 bits of address in descriptor
->> whereas QPIC design expects 18 bit register offset from QPIC base
->> address to be configured in cmd descriptors. This is leading to a
->> different address actually being used in HW, leading to wrong value
->> read.
+On 11/26/2024 11:11 AM, Manivannan Sadhasivam wrote:
+> On Fri, Nov 22, 2024 at 02:29:32PM +0530, Md Sadre Alam wrote:
+> 
+> Please change subject to:
+> 
+> mtd: rawnand: qcom: Fix last codeword read in qcom_param_page_type_exec()
+Ok
+> 
+>> For QPIC V2 onwards there is a separate register to read
+>> last code word "QPIC_NAND_READ_LOCATION_LAST_CW_n".
 >>
->> the actual issue is that the NANDc base address is different from the
->> QPIC base address. But the driver doesn't take it into account and just
->> used the QPIC base as the NANDc base. This used to work as the NANDc IP
->> only considers the lower 18 bits of the address passed by the driver to
->> derive the register offset. Since the base address of QPIC used to contain
->> all 0 for lower 18 bits (like 0x07980000), the driver ended up passing the
+>> qcom_param_page_type_exec() is used to read only one code word
+>> If it will get configure number of code words to 1 in QPIC_NAND_DEV0_CFG0
 > 
-> SDX55's NANDc base is 0x01b30000 and it has bits 17 and 18 set corresponding to
-> 0x30000. So it is correct that the IP only considers lower 18 bits and it used
-> to work as the driver ended up passing 0x3000 + register offset.
-This address 0x30000 is the address from QPIC_BASE to QPIC_EBI2NAND
-e.g for SDX55 and SDX65 the QPIC_BASE is 0x01B00000. So here lower 18-bits
-are zero only.
+> "If it configures the number of..."
+Ok
 > 
-> Your wording is not correct.
-Ok, will fix in next revision.
-> 
->> actual register offset in it and NANDc worked properly. But on newer SoCs
->> like SDX75, the QPIC base address doesn't contain all 0 for lower 18 bits
->> (like 0x01C98000). So NANDc sees wrong offset as per the current logic
+>> register then QPIC controller thinks its reading the last code word,
+>> since we are having separate register to read the last code word,
+>> we have to configure "QPIC_NAND_READ_LOCATION_LAST_CW_n" register
+>> to fetch data from QPIC buffer to system memory.
 >>
-> 
-> 'all 0 for lower 18 bits' is not true.
-The lower 18 bits zero we have to see in QPIC_BASE not in EBI2NAND_BASE.
-e.g SDX55 & SDX65 the QPIC_BASE = 0x01B00000, all lower 18 bits are zero
-but in SDX75 the QPIC_BASE = 0x01C98000, all lower 18 bits are non-zero.
-> 
->> Older targets also used same configuration (lower 24 bits) like SDX55,
->> SDX65, IPQ8074, IPQ6018  etc. but issue is masked in older targets due
->> to lower 18 bits of QPIC base address being zero leading to expected
->> address generation.
+>> Without this change page read was failing with timeout error
 >>
-> 
-> This paragraph is redundant now.
-Ok, will remove in next revision.
-> 
->> The address should be passed to BAM 0x30000 + offset. In older targets
->> the lower 18-bits are zero so that correct address being paased. But
->> in newer targets the lower 18-bits are non-zero in QPIC base so that
->> 0x300000 + offset giving the wrong value.
+>> / # hexdump -C /dev/mtd1
+>> [  129.206113] qcom-nandc 1cc8000.nand-controller: failure to read page/oob
+>> hexdump: /dev/mtd1: Connection timed out
 >>
->> SDX75 : QPIC_QPIC | 0x01C98000 (Lower 18 bits are non zero)
->> SDX55 : QPIC_QPIC | 0x07980000 (Lower 18 bits are zero) Same for
-> 
-> This address is wrong as I mentioned above.
-Ok, will fix in next revision.
-> 
->> older targets.
+>> This issue only seen on SDX targets since SDX target used QPICv2. But
+>> same working on IPQ targets since IPQ used QPICv1.
 >>
 >> Cc: stable@vger.kernel.org
->> Fixes: 8d6b6d7e135e ("mtd: nand: qcom: support for command descriptor formation")
+>> Fixes: 89550beb098e ("mtd: rawnand: qcom: Implement exec_op()")
 >> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+> 
+> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> 
+> - Mani
+> 
 >> ---
 >>
 >> Change in [v2]
 >>
 >> * Updated commit message
 >>
->> * Added Fixes tag
->>
 >> * Added stable kernel tag
 >>
->> * Renamed the variable from offset_from_qpic to nandc_offset
+>> * Replaced the buf_count value of 512 with the len in bytes.
 >>
 >> Change in [v1]
 >>
->> * Preliminary correction for the register address forwarded to BAM
->>   
->>   drivers/mtd/nand/raw/qcom_nandc.c | 9 +++++++--
->>   1 file changed, 7 insertions(+), 2 deletions(-)
+>> * Resolved the issue with reading a single code word in the parameter
+>>    page read
+>>
+>>   drivers/mtd/nand/raw/qcom_nandc.c | 12 ++++++++++--
+>>   1 file changed, 10 insertions(+), 2 deletions(-)
 >>
 >> diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
->> index b8cff9240b28..cc59461df72e 100644
+>> index cc59461df72e..31ec3db1246d 100644
 >> --- a/drivers/mtd/nand/raw/qcom_nandc.c
 >> +++ b/drivers/mtd/nand/raw/qcom_nandc.c
->> @@ -207,7 +207,7 @@ nandc_set_reg(chip, reg,			\
->>   #define dev_cmd_reg_addr(nandc, reg) ((nandc)->props->dev_cmd_reg_start + (reg))
+>> @@ -2859,7 +2859,12 @@ static int qcom_param_page_type_exec(struct nand_chip *chip,  const struct nand_
+>>   	const struct nand_op_instr *instr = NULL;
+>>   	unsigned int op_id = 0;
+>>   	unsigned int len = 0;
+>> -	int ret;
+>> +	int ret, reg_base;
+>> +
+>> +	reg_base = NAND_READ_LOCATION_0;
+>> +
+>> +	if (nandc->props->qpic_v2)
+>> +		reg_base = NAND_READ_LOCATION_LAST_CW_0;
 >>   
->>   /* Returns the NAND register physical address */
->> -#define nandc_reg_phys(chip, offset) ((chip)->base_phys + (offset))
->> +#define nandc_reg_phys(chip, offset)  ((nandc)->props->nandc_offset + (offset))
+>>   	ret = qcom_parse_instructions(chip, subop, &q_op);
+>>   	if (ret)
+>> @@ -2911,7 +2916,10 @@ static int qcom_param_page_type_exec(struct nand_chip *chip,  const struct nand_
+>>   	op_id = q_op.data_instr_idx;
+>>   	len = nand_subop_get_data_len(subop, op_id);
 >>   
->>   /* Returns the dma address for reg read buffer */
->>   #define reg_buf_dma_addr(chip, vaddr) \
->> @@ -561,6 +561,7 @@ struct qcom_nandc_props {
->>   	bool is_qpic;
->>   	bool qpic_v2;
->>   	bool use_codeword_fixup;
->> +	u32 nandc_offset;
->>   };
->>   
->>   /* Frees the BAM transaction memory */
->> @@ -3477,6 +3478,7 @@ static const struct qcom_nandc_props ipq806x_nandc_props = {
->>   	.is_bam = false,
->>   	.use_codeword_fixup = true,
->>   	.dev_cmd_reg_start = 0x0,
->> +	.nandc_offset = 0x30000,
->>   };
->>   
->>   static const struct qcom_nandc_props ipq4019_nandc_props = {
->> @@ -3484,6 +3486,7 @@ static const struct qcom_nandc_props ipq4019_nandc_props = {
->>   	.is_bam = true,
->>   	.is_qpic = true,
->>   	.dev_cmd_reg_start = 0x0,
->> +	.nandc_offset = 0x30000,
->>   };
->>   
->>   static const struct qcom_nandc_props ipq8074_nandc_props = {
->> @@ -3491,6 +3494,7 @@ static const struct qcom_nandc_props ipq8074_nandc_props = {
->>   	.is_bam = true,
->>   	.is_qpic = true,
->>   	.dev_cmd_reg_start = 0x7000,
->> +	.nandc_offset = 0x30000,
->>   };
->>   
->>   static const struct qcom_nandc_props sdx55_nandc_props = {
->> @@ -3498,7 +3502,8 @@ static const struct qcom_nandc_props sdx55_nandc_props = {
->>   	.is_bam = true,
->>   	.is_qpic = true,
->>   	.qpic_v2 = true,
->> -	.dev_cmd_reg_start = 0x7000,
->> +	.dev_cmd_reg_start = 0x0,
+>> -	nandc_set_read_loc(chip, 0, 0, 0, len, 1);
 > 
-> What is this change?
-Sorry, by mistake this get modified. Will fix in next revision.
+> nandc_set_read_loc() does changes the register offset based on QPIC version. So
+> what exactly you are trying to fix here?
+QPICv2 having separate register to copy last code word data from QPIC buffer to Memory.
+e.g for 2K page nand total code word = 4, so to copy first three code word need to configure
+NAND_LOCATIONn register , but to copy last code word need to configure NAND_LOCATIONn_LAST
+register.
 > 
 > - Mani
+> 
+>> +	if (nandc->props->qpic_v2)
+>> +		nandc_set_read_loc_last(chip, reg_base, 0, len, 1);
+>> +	else
+>> +		nandc_set_read_loc_first(chip, reg_base, 0, len, 1);
+>>   
+>>   	if (!nandc->props->qpic_v2) {
+>>   		write_reg_dma(nandc, NAND_DEV_CMD_VLD, 1, 0);
+>> -- 
+>> 2.34.1
+>>
 > 
 
