@@ -1,57 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-39244-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39245-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6C7139DA154
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 05:07:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0CEC09DA16B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 05:21:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2E0382840BD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 04:07:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BEBC4284174
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 04:21:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF387139D0B;
-	Wed, 27 Nov 2024 04:07:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 74E4121A0B;
+	Wed, 27 Nov 2024 04:21:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qlGgdzMB"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KHxQG5sL"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEACE42AB3;
-	Wed, 27 Nov 2024 04:07:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4327D10E6;
+	Wed, 27 Nov 2024 04:21:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732680434; cv=none; b=OeQkSoohurHBV5MutV3MqYEu426Fs/iqyYfmA/FnZ6HaAnMTz5xdkN40WsOvcTF/NWio8yfwv9oJzfenMYvuTPaqbpehBIb/R9N1rd87pFOl8heetViXjTrN3TtlJydoZJ2sCWf4dM3IT1LBZreLktIfsrKRUcrKr/0YDjHLz98=
+	t=1732681273; cv=none; b=n0+DDyasqWG67SLeSuYjNN0u6c86IghUbc79lHaHyc+YwoV6Dhp+m2PDfkr2HjJ8eAG4mNGlV0RxqvGYyrkDLB8MjNx27TJLOj2yWRmhppTkPal74bz99IwzPxCZq6ZZW44iz+FySHSLVKaxPfNiJEvEXoLx6opB/9LUTiKWSDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732680434; c=relaxed/simple;
-	bh=OmVtOoVnhc+wKXNqr18xMEkfBDu8J0aIQTO6c6iNU2I=;
+	s=arc-20240116; t=1732681273; c=relaxed/simple;
+	bh=eHOLQKunbk8Z3giDEIVHC1DnAyRTlQQ9KQn/cuoZS7k=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NQuC8/7PSKkYHYm1+rtBR/ZUXapPG45Jh4xpVJ/vk4QfMO6zAsF8+WB2tZ2wQKkHRsqO5v3DOEkuONrpdKKGDgQ3t+njwqBJa7ntb0Yl6hgKaAxOOYgvJPRqxJ6i7m1RRYWD8jTpiNSBLwTxGXOAM7eTg3zBMDP2/EuGMZdG2eM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qlGgdzMB; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDBC1C4CECC;
-	Wed, 27 Nov 2024 04:07:12 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=VgKsIWd9KEk6keNVN8MJsjurSBcjQ9CzTPNodl1TXGMm2BlcaeyxmFXI7QAL8iT0EU0FYKGb4mySIPJFtx3gUQm5eVE/DHqEaDdfy4S4Mt3ZT9z9QydQx7sJUIaHTWt3CdjeY5I7UrZava78XCcIuBwVGKGwa1kNJQqg1myTGik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KHxQG5sL; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ADF5C4CECC;
+	Wed, 27 Nov 2024 04:21:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732680433;
-	bh=OmVtOoVnhc+wKXNqr18xMEkfBDu8J0aIQTO6c6iNU2I=;
+	s=k20201202; t=1732681273;
+	bh=eHOLQKunbk8Z3giDEIVHC1DnAyRTlQQ9KQn/cuoZS7k=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=qlGgdzMBLMKqs29v7ugGZDliNCaXlq7KOlvDfdz9qCJuPzsHE/a9gvOInMis7VvQc
-	 UiAlp/V7F5RxilpLBTLdlOzFBauFrnFo/oC7lmRrcAefXnFqDT75ibgTIvDnAQF/Nh
-	 09y3P5V95mYGo1Hoey+0W0Kcc8tyY5Lfv6uTTyAO7BMYylpy0zkq18KroE8nMRiqYR
-	 FOijftzVAQsMME0omtOEBh8VeFmFWXhLRatr+M1J5KKfQaJAE10KG06RbL0KK9q6Q9
-	 9V9WtuyeTcN9fKHP8dNt4hmaJ6ibq3yQHp+dlsDlFdgQQ+bx1AbTRdF9IAtdSMurp+
-	 4Y/HaNgRDdyMA==
-Date: Tue, 26 Nov 2024 22:07:11 -0600
+	b=KHxQG5sLVqZUZTAiOvTwoSBEJAQfVtGniz0PQwBIE1txYPDdeZ5Ic6WNRzeGQcgQO
+	 dSDtnCfBI4DmJs1SUxqb8zN9WxQ0NeOGrCo/V/OtPio9W02z9iTS/qyYU+ewU98Iva
+	 TlKHdFs7vGL7uHayaDq+pPqYw3ztw7aazAR12KXjGwK+4q5LKWhfuKXo8ExmvRr4RC
+	 3VSMDDZhVfcvz6beZcxdo9GC7P4RFcPEildaDZgrQUtLyri2wC1U30PIBsIzKHgbIo
+	 6FuDLPfyMiY2zZMSJn6ee54mOsCnB85ax/kwtuofA9ucTI5L45qD30KXgvspfAdOQQ
+	 Qe4OE9J2BGghw==
+Date: Tue, 26 Nov 2024 22:21:10 -0600
 From: Bjorn Andersson <andersson@kernel.org>
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To: manivannan.sadhasivam@linaro.org
 Cc: Michael Turquette <mturquette@baylibre.com>, 
-	Stephen Boyd <sboyd@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 3/3] driver: clk: qcom: Support attaching subdomain
- list to multiple parents
-Message-ID: <fs4lj5a3n52yx5bskizsthjw3egr73u6v3cuili46ef24owb2a@jff4l5uz2pn3>
-References: <20241126-b4-linux-next-24-11-18-clock-multiple-power-domains-v3-0-836dad33521a@linaro.org>
- <20241126-b4-linux-next-24-11-18-clock-multiple-power-domains-v3-3-836dad33521a@linaro.org>
+	Stephen Boyd <sboyd@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Amit Pundir <amit.pundir@linaro.org>, 
+	Nitin Rawat <quic_nitirawa@quicinc.com>, stable@vger.kernel.org
+Subject: Re: [PATCH 1/2] clk: qcom: gcc-sm8550: Keep UFS PHY GDSCs ALWAYS_ON
+Message-ID: <tebgud2k4bup35e7rkfpx5kt7m5jxgw3yo3myjzfushnmdecsj@e4cb44jqoevp>
+References: <20241107-ufs-clk-fix-v1-0-6032ff22a052@linaro.org>
+ <20241107-ufs-clk-fix-v1-1-6032ff22a052@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -60,117 +61,76 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241126-b4-linux-next-24-11-18-clock-multiple-power-domains-v3-3-836dad33521a@linaro.org>
+In-Reply-To: <20241107-ufs-clk-fix-v1-1-6032ff22a052@linaro.org>
 
-On Tue, Nov 26, 2024 at 11:44:29PM +0000, Bryan O'Donoghue wrote:
-> When a clock-controller has multiple power-domains we need to attach parent
-> GDSCs in that clock-controller as subdomains of each of the power-domains.
+On Thu, Nov 07, 2024 at 11:58:09AM +0000, Manivannan Sadhasivam via B4 Relay wrote:
+> From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> 
+> Starting from SM8550, UFS PHY GDSCs doesn't support hardware retention. So
+> using RETAIN_FF_ENABLE is wrong. Moreover, without ALWAYS_ON flag, GDSCs
+> will get powered down during suspend, causing the UFS PHY to loose its
+> state. And this will lead to below UFS error during resume as observed on
+> SM8550-QRD:
 > 
 
-This is a bit sparse, in particular it would be nice to capture the open
-questions about whether every GDSC always should be parented by all
-defined power-domains, and if performance-state should be applied
-equally across all those power-domains (and/or if this actually
-happens).
+Unless I'm mistaken, ALWAYS_ON makes GDSC keep the gendpd ALWAYS_ON as
+well, which in turn would ensure that any parent power-domain is kept
+active - which in the case of GCC would imply CX.
 
-PS. Please drop "drivers: " and s/subdomain list/GDSC/ in subject.
+The way we've dealt with this elsewhere is to use the PWRSTS_RET_ON flag
+in pwrsts; we then keep the GDSC active, but release any votes to the
+parent and rely on hardware to kick in MX when we're shutting down CX.
+Perhaps this can't be done for some reason?
+
+
+PS. In contrast to other platforms where we've dealt with issues of
+under voltage crashes, I see &gcc in sm8550.dtsi doesn't specify a
+parent power-domain, which would mean that the required-opps = <&nom> of
+&ufs_mem_hc is voting for nothing.
 
 Regards,
 Bjorn
 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
->  drivers/clk/qcom/common.c |  1 +
->  drivers/clk/qcom/gdsc.c   | 35 +++++++++++++++++++++++++++++++++++
->  drivers/clk/qcom/gdsc.h   |  1 +
->  3 files changed, 37 insertions(+)
+> ufshcd-qcom 1d84000.ufs: ufshcd_uic_hibern8_exit: hibern8 exit failed. ret = 5
+> ufshcd-qcom 1d84000.ufs: __ufshcd_wl_resume: hibern8 exit failed 5
+> ufs_device_wlun 0:0:0:49488: ufshcd_wl_resume failed: 5
+> ufs_device_wlun 0:0:0:49488: PM: dpm_run_callback(): scsi_bus_resume+0x0/0x84 returns 5
+> ufs_device_wlun 0:0:0:49488: PM: failed to resume async: error 5
 > 
-> diff --git a/drivers/clk/qcom/common.c b/drivers/clk/qcom/common.c
-> index 7727295c57c8f6672d46d2380e1ff5ec2ac68d42..58a8397eefe51da237a4285d4e7cee967e19948f 100644
-> --- a/drivers/clk/qcom/common.c
-> +++ b/drivers/clk/qcom/common.c
-> @@ -338,6 +338,7 @@ int qcom_cc_really_probe(struct device *dev,
->  		scd->dev = dev;
->  		scd->scs = desc->gdscs;
->  		scd->num = desc->num_gdscs;
-> +		scd->pd_list = cc->pd_list;
->  		ret = gdsc_register(scd, &reset->rcdev, regmap);
->  		if (ret)
->  			return ret;
-> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-> index 4fc6f957d0b846cc90e50ef243f23a7a27e66899..cb4afa6d584899f3dafa380d5e01be6de9711737 100644
-> --- a/drivers/clk/qcom/gdsc.c
-> +++ b/drivers/clk/qcom/gdsc.c
-> @@ -506,6 +506,36 @@ static int gdsc_init(struct gdsc *sc)
->  	return ret;
->  }
->  
-> +static int gdsc_add_subdomain_list(struct dev_pm_domain_list *pd_list,
-> +				   struct generic_pm_domain *subdomain)
-> +{
-> +	int i, ret;
-> +
-> +	for (i = 0; i < pd_list->num_pds; i++) {
-> +		struct device *dev = pd_list->pd_devs[i];
-> +		struct generic_pm_domain *genpd = pd_to_genpd(dev->pm_domain);
-> +
-> +		ret = pm_genpd_add_subdomain(genpd, subdomain);
-> +		if (ret)
-> +			return ret;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static void gdsc_remove_subdomain_list(struct dev_pm_domain_list *pd_list,
-> +				       struct generic_pm_domain *subdomain)
-> +{
-> +	int i;
-> +
-> +	for (i = 0; i < pd_list->num_pds; i++) {
-> +		struct device *dev = pd_list->pd_devs[i];
-> +		struct generic_pm_domain *genpd = pd_to_genpd(dev->pm_domain);
-> +
-> +		pm_genpd_remove_subdomain(genpd, subdomain);
-> +	}
-> +}
-> +
->  int gdsc_register(struct gdsc_desc *desc,
->  		  struct reset_controller_dev *rcdev, struct regmap *regmap)
->  {
-> @@ -558,6 +588,9 @@ int gdsc_register(struct gdsc_desc *desc,
->  			ret = pm_genpd_add_subdomain(scs[i]->parent, &scs[i]->pd);
->  		else if (!IS_ERR_OR_NULL(dev->pm_domain))
->  			ret = pm_genpd_add_subdomain(pd_to_genpd(dev->pm_domain), &scs[i]->pd);
-> +		else if (desc->pd_list)
-> +			ret = gdsc_add_subdomain_list(desc->pd_list, &scs[i]->pd);
-> +
->  		if (ret)
->  			return ret;
->  	}
-> @@ -580,6 +613,8 @@ void gdsc_unregister(struct gdsc_desc *desc)
->  			pm_genpd_remove_subdomain(scs[i]->parent, &scs[i]->pd);
->  		else if (!IS_ERR_OR_NULL(dev->pm_domain))
->  			pm_genpd_remove_subdomain(pd_to_genpd(dev->pm_domain), &scs[i]->pd);
-> +		else if (desc->pd_list)
-> +			gdsc_remove_subdomain_list(desc->pd_list, &scs[i]->pd);
->  	}
->  	of_genpd_del_provider(dev->of_node);
->  }
-> diff --git a/drivers/clk/qcom/gdsc.h b/drivers/clk/qcom/gdsc.h
-> index 1e2779b823d1c8ca077c9b4cd0a0dbdf5f9457ef..dd843e86c05b2f30e6d9e978681580016333839d 100644
-> --- a/drivers/clk/qcom/gdsc.h
-> +++ b/drivers/clk/qcom/gdsc.h
-> @@ -80,6 +80,7 @@ struct gdsc_desc {
->  	struct device *dev;
->  	struct gdsc **scs;
->  	size_t num;
-> +	struct dev_pm_domain_list *pd_list;
+> Cc: stable@vger.kernel.org # 6.8
+> Fixes: 1fe8273c8d40 ("clk: qcom: gcc-sm8550: Add the missing RETAIN_FF_ENABLE GDSC flag")
+> Reported-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Suggested-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>  drivers/clk/qcom/gcc-sm8550.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/clk/qcom/gcc-sm8550.c b/drivers/clk/qcom/gcc-sm8550.c
+> index 5abaeddd6afc..7dd08e175820 100644
+> --- a/drivers/clk/qcom/gcc-sm8550.c
+> +++ b/drivers/clk/qcom/gcc-sm8550.c
+> @@ -3046,7 +3046,7 @@ static struct gdsc ufs_phy_gdsc = {
+>  		.name = "ufs_phy_gdsc",
+>  	},
+>  	.pwrsts = PWRSTS_OFF_ON,
+> -	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+> +	.flags = POLL_CFG_GDSCR | ALWAYS_ON,
 >  };
 >  
->  #ifdef CONFIG_QCOM_GDSC
+>  static struct gdsc ufs_mem_phy_gdsc = {
+> @@ -3055,7 +3055,7 @@ static struct gdsc ufs_mem_phy_gdsc = {
+>  		.name = "ufs_mem_phy_gdsc",
+>  	},
+>  	.pwrsts = PWRSTS_OFF_ON,
+> -	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+> +	.flags = POLL_CFG_GDSCR | ALWAYS_ON,
+>  };
+>  
+>  static struct gdsc usb30_prim_gdsc = {
 > 
 > -- 
-> 2.45.2
+> 2.25.1
+> 
 > 
 
