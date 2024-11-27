@@ -1,332 +1,189 @@
-Return-Path: <linux-arm-msm+bounces-39261-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39262-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3555A9DA32A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 08:36:19 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 864499DA345
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 08:43:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C8FC41648C8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 07:36:15 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1AF80160FFE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 07:42:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A76AB1537B9;
-	Wed, 27 Nov 2024 07:36:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7EEBE154BEA;
+	Wed, 27 Nov 2024 07:42:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LJRdxrW7"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xAWT5veW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA02F18E0E;
-	Wed, 27 Nov 2024 07:36:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAD701547E2
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Nov 2024 07:42:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732692976; cv=none; b=tccwYwxfkBLth7A2wNDcvAerIIkLxsqv89kjBLDFECKKqH1fva6MWh/FDpJhhtQpJhXrXSDzNYA634IwxcqP5Sfq2kzgHyXcleV0TaHD7y7PNbgb8yw1I4u0eAcqinFuBQzeaWqDoFxVSFgiewTRoKKgTA3AKlBBNtTAOoy79+o=
+	t=1732693375; cv=none; b=DSfr3B7yWJB0zBi0TCX58qE1I8OBBt8uSNm/YrIcbPLB1vl3L2SWHrMaF9mr7YiyapIXtubF0YAXmxBc5W2CWRv5chtbyo1uLsRiZgsUEqb+0LSerkfVqOK+NSww6AbWFkBM7CSQU9Zik0oNnKVJ3HJWF0kmFObuuz6/3RcA8Nc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732692976; c=relaxed/simple;
-	bh=EOCdsoxG9AHOg7BTmXtIhFFSstqOeb+WhlyLfpX9kAc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=W1EkybBwQXSCS2ByfzpY6oxVNjEuS58iUMImXNdu7JBLXDN4zUwlk12Rny9z0O6JaEL/hr2zxfzrZixK5+QBE6STUu/83XDVs0ZK1MhE2mqB8reApu9iubX4veEwxU1dWlCxSLAp5pd4T+NcwkH8jOMB2eOvV+TPlOnjK4Cp5OA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LJRdxrW7; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AR64kee000834;
-	Wed, 27 Nov 2024 07:36:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	9SZE/ngSUWY+MFsrhLtZzarpm0W1+Jk37klDRXno5kc=; b=LJRdxrW7Q8uszm6o
-	p8vN7FZZsXz3LEumLNi2CwbQDsouSTeo9ArKnYXv3N1iZW+N/C32PZkUbNHdraDL
-	87NoFtlr3g0BUaXjXgXsnZOAvjdrmeWX6QpE+5W/K+75s8Fb2iEUrXZulwjPped0
-	Brmrw5rDPos03+eRtfnix95OvztwR1FmU0Y4qkWwzrArfa2dmAR+y6wgRepUlkge
-	V49luQc1mSJaE2L8qviMuzLntsfRPy+xDG69IDnGOhvyKeWJw16uIxnb9qrWklX8
-	7IXCbu7oaplbOxiSK2l2Qb67hdND3JrhgEDhsgc8mzZEzJ6PI3zDHkpt1theDlai
-	iHHVgQ==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 435wuer7rg-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 27 Nov 2024 07:36:01 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AR7a0In029186
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 27 Nov 2024 07:36:00 GMT
-Received: from [10.64.68.119] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 26 Nov
- 2024 23:35:53 -0800
-Message-ID: <dc44ae50-4113-4538-83ac-e3cb422ee53b@quicinc.com>
-Date: Wed, 27 Nov 2024 15:35:49 +0800
+	s=arc-20240116; t=1732693375; c=relaxed/simple;
+	bh=LU6AwlYsk3CPKKY2s0mNL0hPX4NuZPGAywEkPk0vpeg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EElZoPyp5wFqet2s7iejKNLt8JyLEUoQCSCm49jY6MUdvhi0FarbUmx2EEcZ9mbYs0OK/q/QR+HWzNf/IMFyVp8uZZEhIVGqMEX6L2jjy5iuQXun5LnstIpJKmQC0jaPnz8OYeRsPxulZw0t2hCtYSOCq68Tan2mqcojDyqt5QE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xAWT5veW; arc=none smtp.client-ip=209.85.214.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-211fcadd960so43868075ad.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Nov 2024 23:42:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1732693373; x=1733298173; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=oMWDgk/n3j4GiaybswgAiKAVmYvm7oHmNlJIVMIMNac=;
+        b=xAWT5veWFj/XYJ1A1tOPYsUPA5QLLbRSKq1cnhQPYGAcid7rDYrT61U9HlxPNax0QK
+         2rok6R4SlfXLXShsS3Ae8TgXZP1Fr8A5FjLtZ+8/dtLgWgguCG1MeE/msauMNJyHWEe9
+         6pA/Lgfrw9TzNDgH8l73V435/DD6/Yr4qyVTTdglwIU5gu4qpBd5z9siq4zGz7sngUrH
+         tehw0J7GDcwIsgmrC6Fi1/RmtrW4rULmpDdNT/zKnTXK01H9LLPc6q+Y0RatrJPspGi5
+         2gYi+9c1OYfJpUKty8iL5zGkrIuuxUTNj8ybKpthN2h94l898Y7HqduXYZeu4jmjeTwz
+         nlzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732693373; x=1733298173;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=oMWDgk/n3j4GiaybswgAiKAVmYvm7oHmNlJIVMIMNac=;
+        b=QIkRbyu7dPSt9B2n0Lbt0LXjb9wXIr8ZLBpsWUMusD2gFCjq1x9BiwMa3pZJnhUEEI
+         uG/0KR9yEl6jLLUrCtJbysmFDB7+Z/QnL0+lFfQRIx+H0VZvgzlC9vV0sf5AienGzq2Q
+         AWvs1qu3u0PYeaokJe+4ZiEr9pcyxoh9eyhpMZDmGbdF1Xjc5wWGw0menoMaABtJtC0f
+         zk1Ml2R8aCTqA9T4E4RhTSpuVj8kDfOgITDcTtvIojXTSb0hKYtaypzANMPn/bsaLLI2
+         mXfIWb9vpxTiH+pk6KD8FTTTZY7+Wb3+wyWXQZsCXmWW7YlNk/ZVLyzdIhrKsoyKCMwf
+         4vzQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVVotq/F+sSv1Ar7wftP8+sLJXgsZC8mfM3vXsqQVxkJfz+7zvPL0xKuor5nDRtXk8gkhbtCLQxvpwjC+T8@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx1bConI7afSci8EZVuLey2z/qPtZUCMHTvQIacroWswW9fjVtD
+	pcPy7WZ3j4MPXz3GG57uriNC8GFIioDjA6VgNp4Medi6xadXk+5eoIn7AEBP/A==
+X-Gm-Gg: ASbGncujLYUgGZIir1UE3eSEf/9x/fA94B4zlrtXwPrRKrI6adcxYKIuBnIjGcNLnJx
+	W5anVaFhrMbN8mlt3WQ0hV/uLKcqPsNS8nfiSYZUBLB92XS6incm0kjGUANzVDfTcUI8gylPvKX
+	4lawxKbH8XyUBtDMlWb40L5MJsZOKPIbBJmwTqPoLqC7IFgLXEcWUnZN3rL+MyDUmjl48z3wkvB
+	vXe+Ucr65qP4UrtSiTTM9T2qQixa4FtPkdp8w64JrIeFQfHex7EzwP+KiqS
+X-Google-Smtp-Source: AGHT+IGp9I4DmuKPduEUQ+Vs8HvCWxBrCkbO+5RyEgGe/YSQ1SwDti6JUnGKKHfl4zUAgD/Vk310rA==
+X-Received: by 2002:a17:902:d551:b0:211:f8c8:372c with SMTP id d9443c01a7336-21501381ba1mr22923355ad.21.1732693373062;
+        Tue, 26 Nov 2024 23:42:53 -0800 (PST)
+Received: from thinkpad ([120.60.136.64])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2129dc12f22sm96678915ad.186.2024.11.26.23.42.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Nov 2024 23:42:52 -0800 (PST)
+Date: Wed, 27 Nov 2024 13:12:45 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+	linux-kernel@vger.kernel.org, Amit Pundir <amit.pundir@linaro.org>,
+	Nitin Rawat <quic_nitirawa@quicinc.com>, stable@vger.kernel.org
+Subject: Re: [PATCH 1/2] clk: qcom: gcc-sm8550: Keep UFS PHY GDSCs ALWAYS_ON
+Message-ID: <20241127074245.4fhr3gypxbjipqnq@thinkpad>
+References: <20241107-ufs-clk-fix-v1-0-6032ff22a052@linaro.org>
+ <20241107-ufs-clk-fix-v1-1-6032ff22a052@linaro.org>
+ <tebgud2k4bup35e7rkfpx5kt7m5jxgw3yo3myjzfushnmdecsj@e4cb44jqoevp>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] dt-bindings: display/msm: Document MDSS on QCS8300
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Ritesh Kumar
-	<quic_riteshk@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        Maarten Lankhorst
-	<maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Rob Herring <robh@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "Neil
- Armstrong" <neil.armstrong@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-CC: Abhinav Kumar <quic_abhinavk@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20241127-mdss_qcs8300-v1-0-29b2c3ee95b8@quicinc.com>
- <20241127-mdss_qcs8300-v1-1-29b2c3ee95b8@quicinc.com>
- <70abadbf-b796-4434-b2d8-0675c18eee07@kernel.org>
-Content-Language: en-US
-From: Yongxing Mou <quic_yongmou@quicinc.com>
-In-Reply-To: <70abadbf-b796-4434-b2d8-0675c18eee07@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: s9z3uS0GxjrUSJQqZB-Hjq9t7ElrnLht
-X-Proofpoint-GUID: s9z3uS0GxjrUSJQqZB-Hjq9t7ElrnLht
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 mlxlogscore=999
- clxscore=1011 adultscore=0 impostorscore=0 priorityscore=1501
- malwarescore=0 spamscore=0 lowpriorityscore=0 phishscore=0 suspectscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411270062
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <tebgud2k4bup35e7rkfpx5kt7m5jxgw3yo3myjzfushnmdecsj@e4cb44jqoevp>
 
+On Tue, Nov 26, 2024 at 10:21:10PM -0600, Bjorn Andersson wrote:
+> On Thu, Nov 07, 2024 at 11:58:09AM +0000, Manivannan Sadhasivam via B4 Relay wrote:
+> > From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > 
+> > Starting from SM8550, UFS PHY GDSCs doesn't support hardware retention. So
+> > using RETAIN_FF_ENABLE is wrong. Moreover, without ALWAYS_ON flag, GDSCs
+> > will get powered down during suspend, causing the UFS PHY to loose its
+> > state. And this will lead to below UFS error during resume as observed on
+> > SM8550-QRD:
+> > 
+> 
+> Unless I'm mistaken, ALWAYS_ON makes GDSC keep the gendpd ALWAYS_ON as
+> well, which in turn would ensure that any parent power-domain is kept
+> active - which in the case of GCC would imply CX.
+> 
 
+That's correct. But there is one more way to fix this issue. We can powerdown
+UFS (controller and device) during suspend and the ufs-qcom driver can specify
+the default suspend level based on platform. I think that would be more
+appropriate than forbidding CX power collapse for the whole SoC.
 
-On 2024/11/27 15:15, Krzysztof Kozlowski wrote:
-> On 27/11/2024 08:05, Yongxing Mou wrote:
->> Document the MDSS hardware found on the Qualcomm QCS8300 platform.
->>
->> Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
-> 
-> 
-> Will fail testing, so only limited review.
-> 
-Thanks for reviewing,will fix it in next patchset.
->> +examples:
->> +  - |
->> +    #include <dt-bindings/interconnect/qcom,icc.h>
->> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
->> +    #include <dt-bindings/clock/qcom,qcs8300-gcc.h>
->> +    #include <dt-bindings/clock/qcom,sa8775p-dispcc.h>
->> +    #include <dt-bindings/interconnect/qcom,qcs8300-rpmh.h>
->> +    #include <dt-bindings/power/qcom,rpmhpd.h>
->> +    #include <dt-bindings/power/qcom-rpmpd.h>
->> +
->> +    mdss: display-subsystem@ae00000 {
->> +        compatible = "qcom,qcs8300-mdss";
->> +        reg = <0 0x0ae00000 0 0x1000>;
->> +        reg-names = "mdss";
->> +
->> +        interconnects = <&mmss_noc MASTER_MDP0 QCOM_ICC_TAG_ACTIVE_ONLY
->> +                         &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ACTIVE_ONLY>,
->> +                        <&mmss_noc MASTER_MDP1 QCOM_ICC_TAG_ACTIVE_ONLY
->> +                         &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ACTIVE_ONLY>,
->> +                        <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
->> +                         &config_noc SLAVE_DISPLAY_CFG QCOM_ICC_TAG_ACTIVE_ONLY>;
->> +        interconnect-names = "mdp0-mem",
->> +                             "mdp1-mem",
->> +                             "cpu-cfg";
->> +
->> +        power-domains = <&dispcc0 MDSS_DISP_CC_MDSS_CORE_GDSC>;
->> +
->> +        clocks = <&dispcc0 MDSS_DISP_CC_MDSS_AHB_CLK>,
->> +                 <&gcc GCC_DISP_HF_AXI_CLK>,
->> +                 <&dispcc0 MDSS_DISP_CC_MDSS_MDP_CLK>;
->> +
->> +        interrupts = <GIC_SPI 92 IRQ_TYPE_LEVEL_HIGH>;
->> +        interrupt-controller;
->> +        #interrupt-cells = <1>;
->> +
->> +        iommus = <&apps_smmu 0x1000 0x402>;
->> +
->> +        #address-cells = <2>;
->> +        #size-cells = <2>;
->> +        ranges;
->> +
->> +        status = "disabled";
-> 
-> No, your code cannot be disabled.
-> 
-Thanks, will remove it.
->> +
->> +        mdss_mdp: display-controller@ae01000 {
->> +            compatible = "qcom,qcs8300-dpu";
->> +            reg = <0 0x0ae01000 0 0x8f000>,
->> +                  <0 0x0aeb0000 0 0x2008>;
->> +            reg-names = "mdp", "vbif";
->> +
->> +            clocks = <&gcc GCC_DISP_HF_AXI_CLK>,
->> +                     <&dispcc0 MDSS_DISP_CC_MDSS_AHB_CLK>,
->> +                     <&dispcc0 MDSS_DISP_CC_MDSS_MDP_LUT_CLK>,
->> +                     <&dispcc0 MDSS_DISP_CC_MDSS_MDP_CLK>,
->> +                     <&dispcc0 MDSS_DISP_CC_MDSS_VSYNC_CLK>;
->> +            clock-names = "bus",
->> +                          "iface",
->> +                          "lut",
->> +                          "core",
->> +                          "vsync";
->> +
->> +            assigned-clocks = <&dispcc0 MDSS_DISP_CC_MDSS_VSYNC_CLK>;
->> +            assigned-clock-rates = <19200000>;
->> +            operating-points-v2 = <&mdp_opp_table>;
->> +            power-domains = <&rpmhpd RPMHPD_MMCX>;
->> +
->> +            interrupt-parent = <&mdss>;
->> +            interrupts = <0>;
->> +            ports {
->> +                #address-cells = <1>;
->> +                #size-cells = <0>;
->> +                port@0 {
->> +                    reg = <0>;
->> +                    dpu_intf0_out: endpoint {
->> +                         remote-endpoint = <&mdss_dp0_in>;
->> +                    };
->> +                };
->> +            };
->> +
->> +            mdp_opp_table: opp-table {
->> +                compatible = "operating-points-v2";
->> +
->> +                opp-375000000 {
->> +                    opp-hz = /bits/ 64 <375000000>;
->> +                    required-opps = <&rpmhpd_opp_svs_l1>;
->> +                };
->> +
->> +                opp-500000000 {
->> +                    opp-hz = /bits/ 64 <500000000>;
->> +                    required-opps = <&rpmhpd_opp_nom>;
->> +                };
->> +
->> +                opp-575000000 {
->> +                    opp-hz = /bits/ 64 <575000000>;
->> +                    required-opps = <&rpmhpd_opp_turbo>;
->> +                };
->> +
->> +                opp-650000000 {
->> +                    opp-hz = /bits/ 64 <650000000>;
->> +                    required-opps = <&rpmhpd_opp_turbo_l1>;
->> +                };
->> +            };
->> +        };
->> +
->> +        mdss_dp0: displayport-controller@af54000 {
->> +            compatible = "qcom,qcs8300-dp";
->> +
->> +            pinctrl-0 = <&dp_hot_plug_det>;
->> +            pinctrl-names = "default";
->> +
->> +            reg = <0 0xaf54000 0 0x104>,
->> +                <0 0xaf54200 0 0x0c0>,
->> +                <0 0xaf55000 0 0x770>,
->> +                <0 0xaf56000 0 0x09c>;
->> +
->> +            interrupt-parent = <&mdss>;
->> +            interrupts = <12>;
->> +            clocks = <&dispcc0 MDSS_DISP_CC_MDSS_AHB_CLK>,
->> +                <&dispcc0 MDSS_DISP_CC_MDSS_DPTX0_AUX_CLK>,
-> 
-> Messed alignment in multiple places.
-> 
-Thanks, will fix it in next patchset.
->> +                <&dispcc0 MDSS_DISP_CC_MDSS_DPTX0_LINK_CLK>,
->> +                <&dispcc0 MDSS_DISP_CC_MDSS_DPTX0_LINK_INTF_CLK>,
->> +                <&dispcc0 MDSS_DISP_CC_MDSS_DPTX0_PIXEL0_CLK>;
->> +            clock-names = "core_iface",
->> +                "core_aux",
->> +                "ctrl_link",
->> +                "ctrl_link_iface",
->> +                "stream_pixel";
->> +            assigned-clocks = <&dispcc0 MDSS_DISP_CC_MDSS_DPTX0_LINK_CLK_SRC>,
->> +                 <&dispcc0 MDSS_DISP_CC_MDSS_DPTX0_PIXEL0_CLK_SRC>;
->> +            assigned-clock-parents = <&mdss_edp_phy 0>, <&mdss_edp_phy 1>;
->> +            phys = <&mdss_edp_phy>;
->> +            phy-names = "dp";
->> +            operating-points-v2 = <&dp_opp_table>;
->> +            power-domains = <&rpmhpd RPMHPD_MMCX>;
->> +
->> +            #sound-dai-cells = <0>;
->> +            status = "disabled";
-> 
-> No, your code cannot be disabled.
-> 
-Got it. will remove it.
->> +
->> +            ports {
->> +                #address-cells = <1>;
->> +                #size-cells = <0>;
->> +
->> +                port@0 {
->> +                    reg = <0>;
->> +                    mdss_dp0_in: endpoint {
->> +                        remote-endpoint = <&dpu_intf0_out>;
->> +                    };
->> +                };
->> +
->> +                port@1 {
->> +                   reg = <1>;
->> +                   mdss_dp_out: endpoint { };
->> +                };
->> +            };
->> +
->> +            dp_opp_table: opp-table {
->> +                compatible = "operating-points-v2";
->> +
->> +                opp-160000000 {
->> +                    opp-hz = /bits/ 64 <160000000>;
->> +                    required-opps = <&rpmhpd_opp_low_svs>;
->> +                };
->> +
->> +                opp-270000000 {
->> +                    opp-hz = /bits/ 64 <270000000>;
->> +                    required-opps = <&rpmhpd_opp_svs>;
->> +                };
->> +
->> +                opp-540000000 {
->> +                    opp-hz = /bits/ 64 <540000000>;
->> +                    required-opps = <&rpmhpd_opp_svs_l1>;
->> +                };
->> +
->> +                opp-810000000 {
->> +                    opp-hz = /bits/ 64 <810000000>;
->> +                    required-opps = <&rpmhpd_opp_nom>;
->> +                };
->> +            };
->> +
-> 
-> Drop stray blank lines.
-> 
-Got it.will fix this issue,there should be a '}'.
->> +    };
->> +...
->>
-> 
-> 
-> Best regards,
-> Krzysztof
+Let me cook up a patch.
 
+> The way we've dealt with this elsewhere is to use the PWRSTS_RET_ON flag
+> in pwrsts; we then keep the GDSC active, but release any votes to the
+> parent and rely on hardware to kick in MX when we're shutting down CX.
+> Perhaps this can't be done for some reason?
+> 
+
+UFS team told me that there is no 'hardware retention' for UFS PHYs starting
+from SM8550 and asked to keep GDSCs ALWAYS_ON. So that would mean, there is no
+MX backing also.
+
+- Mani
+
+> 
+> PS. In contrast to other platforms where we've dealt with issues of
+> under voltage crashes, I see &gcc in sm8550.dtsi doesn't specify a
+> parent power-domain, which would mean that the required-opps = <&nom> of
+> &ufs_mem_hc is voting for nothing.
+> 
+> Regards,
+> Bjorn
+> 
+> > ufshcd-qcom 1d84000.ufs: ufshcd_uic_hibern8_exit: hibern8 exit failed. ret = 5
+> > ufshcd-qcom 1d84000.ufs: __ufshcd_wl_resume: hibern8 exit failed 5
+> > ufs_device_wlun 0:0:0:49488: ufshcd_wl_resume failed: 5
+> > ufs_device_wlun 0:0:0:49488: PM: dpm_run_callback(): scsi_bus_resume+0x0/0x84 returns 5
+> > ufs_device_wlun 0:0:0:49488: PM: failed to resume async: error 5
+> > 
+> > Cc: stable@vger.kernel.org # 6.8
+> > Fixes: 1fe8273c8d40 ("clk: qcom: gcc-sm8550: Add the missing RETAIN_FF_ENABLE GDSC flag")
+> > Reported-by: Neil Armstrong <neil.armstrong@linaro.org>
+> > Suggested-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> >  drivers/clk/qcom/gcc-sm8550.c | 4 ++--
+> >  1 file changed, 2 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/drivers/clk/qcom/gcc-sm8550.c b/drivers/clk/qcom/gcc-sm8550.c
+> > index 5abaeddd6afc..7dd08e175820 100644
+> > --- a/drivers/clk/qcom/gcc-sm8550.c
+> > +++ b/drivers/clk/qcom/gcc-sm8550.c
+> > @@ -3046,7 +3046,7 @@ static struct gdsc ufs_phy_gdsc = {
+> >  		.name = "ufs_phy_gdsc",
+> >  	},
+> >  	.pwrsts = PWRSTS_OFF_ON,
+> > -	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+> > +	.flags = POLL_CFG_GDSCR | ALWAYS_ON,
+> >  };
+> >  
+> >  static struct gdsc ufs_mem_phy_gdsc = {
+> > @@ -3055,7 +3055,7 @@ static struct gdsc ufs_mem_phy_gdsc = {
+> >  		.name = "ufs_mem_phy_gdsc",
+> >  	},
+> >  	.pwrsts = PWRSTS_OFF_ON,
+> > -	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+> > +	.flags = POLL_CFG_GDSCR | ALWAYS_ON,
+> >  };
+> >  
+> >  static struct gdsc usb30_prim_gdsc = {
+> > 
+> > -- 
+> > 2.25.1
+> > 
+> > 
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
