@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-39354-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39355-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 94A629DAD0B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 19:29:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 587149DAD23
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 19:32:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 442DD1647A7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 18:29:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 07FB9164C72
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2024 18:32:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94345201017;
-	Wed, 27 Nov 2024 18:29:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E528201017;
+	Wed, 27 Nov 2024 18:32:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M9gqIb5g"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Var05lfL"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 652C41FF7B0;
-	Wed, 27 Nov 2024 18:29:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 595201BC3F;
+	Wed, 27 Nov 2024 18:32:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732732142; cv=none; b=jtMCO43CZ6pcZg5wvh8ShW4JIm/ZCetWikBeBjwkxq8J3Fck6j1KBKsOB+CUlBqk5ft1Ky9JcNAWwC5dD908z6ONwDKzcIq4EBMwZ4YgERooPY4mXuaWGgEYxLj87Re7Jhn691L9hmkmfUmyzaYdBKNKXdDbtAW5bV9KgKqvJfk=
+	t=1732732354; cv=none; b=KAkuHGS/LbiGU0jrJ4cdSlUxRCGq8lu7edyDl5qNFfpVQYHtkGQeHob1OXIBGumoxISpgzxiWW/qb1SMyNbB2iJ2KK3ufMsJM3d+R57u7AnMEWvIf4TfxKGnFRKR7WiafaF/Fj/o6662ztz5JHkxWogEi/KijJ0DY7bNQhBUi8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732732142; c=relaxed/simple;
-	bh=hsvAzJbsOippFpgaQxLr33LtX30TWw3xnnUFBVplrpY=;
+	s=arc-20240116; t=1732732354; c=relaxed/simple;
+	bh=/vBmTYaopwkO9U1MxuA3+UmHMhhDk6FRfuMg62uPqSw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=or5HLizC+UZShZ5BnwTZhBsW1GH5iSxmYamNsN/dIibVZOXIrU5pG2aqKOc+b1Vl89izyTghRW9WHoumsjLFdL5iQmFwQVGm5e30VbNw1026fTUxcP9rGSyeJiEn1CxIpq9c7yglmDqssC3k1PIUsPNCz+7UP4Myqs1JormIUQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M9gqIb5g; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68651C4CECC;
-	Wed, 27 Nov 2024 18:28:54 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=PjOS3v4u3zcVdhl+UvixX2ALcKTMp9WLro4l4WNv5eRJcPogXDY2KV/RVWZhghQxu04Qlqu6NYP64KvdjHzrQ7jZdww9JTMFPfes2yQLxuLJWhSDsGHoC/bxr/HjKMnfOyDbq6JpobeXsrRxLerC5MOS7XDPT9+5NYOqZfhwl68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Var05lfL; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CEF8C4CECC;
+	Wed, 27 Nov 2024 18:32:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732732142;
-	bh=hsvAzJbsOippFpgaQxLr33LtX30TWw3xnnUFBVplrpY=;
+	s=k20201202; t=1732732353;
+	bh=/vBmTYaopwkO9U1MxuA3+UmHMhhDk6FRfuMg62uPqSw=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=M9gqIb5gWafJ07ZhcUqkbVFDi717sJVbne+4d64HlGCKeYc9fyzN2VR3s2ffAwPV5
-	 csiCYh7nyzCqzyi5CZqh1aWQoEkCXpj0YFxI2nwcFAh47hCqyWig3uxq3ejblPA2dz
-	 4Qzmm+gqwG0B/fI9vSzzlaaNW/eNXRJSA9Y52z89kcZxj17mOsNKKQaGNfnwiGkF9Q
-	 UXT6eZs1nobLg6vyEWxNSd2KOJHwYEWDhGoDfJ5AOaCX7cJDKvjWKjcGEuaiHREMwu
-	 dbDUp2u45OrZ5kuMRS3ujnMy3ExeXxPETnw8gWKTZ6zjhIQNCPmP7V1O9B369vbwSM
-	 b8/uQh8OGUaKQ==
-Message-ID: <3729bdcb-5f3d-4845-8f96-dbb0616b88f4@kernel.org>
-Date: Wed, 27 Nov 2024 19:28:52 +0100
+	b=Var05lfLBzfmO5ci4BJJQraPwABzaIm5Pll7Q8hAcEiUgmflOttzPgLrgdiQ1AzBJ
+	 HgO0RfvWMVf+h+5lT8NOAjGReTb48tB78JDCPBjz8dW+U9Lq0/c9/C5xIfPxf3jHbA
+	 QlOZMYfgVnlx96g+Wh10ME1NaMYvBhF0i0B30yQhhq8XOphhkjtQYCrZ6XTSLjb31w
+	 sD2OMWA1GSlq/FaMR62agAvqeEaIpi5eLBSwwfPGG93rpknJS5vwIIQ5ekabtqm9rM
+	 Vu1h2x1u/jHuLpydSeC6ELE+UMSREQaGI+KOOureMm856thof1JbpMuTb60Ui634No
+	 92wAtycmIfADg==
+Message-ID: <a51b99a3-bfa3-42d7-ba6e-fed5b2c25646@kernel.org>
+Date: Wed, 27 Nov 2024 19:32:24 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,26 +50,20 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] dt-bindings: phy: Add eDP PHY compatible for qcs8300
-To: Yongxing Mou <quic_yongmou@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
- Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
- Ritesh Kumar <quic_riteshk@quicinc.com>
-References: <20241127-qcs8300_dp-v1-0-0d30065c8c58@quicinc.com>
- <20241127-qcs8300_dp-v1-1-0d30065c8c58@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v6 4/5] arm64: dts: qcom: sc7280: Add support for camss
+To: Vikram Sharma <quic_vikramsa@quicinc.com>, rfoss@kernel.org,
+ todor.too@gmail.com, bryan.odonoghue@linaro.org, mchehab@kernel.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ akapatra@quicinc.com, hariramp@quicinc.com, andersson@kernel.org,
+ konradybcio@kernel.org, hverkuil-cisco@xs4all.nl,
+ cros-qcom-dts-watchers@chromium.org, catalin.marinas@arm.com, will@kernel.org
+Cc: linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, kernel@quicinc.com
+References: <20241127100421.3447601-1-quic_vikramsa@quicinc.com>
+ <20241127100421.3447601-5-quic_vikramsa@quicinc.com>
 Content-Language: en-US
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -113,17 +107,42 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20241127-qcs8300_dp-v1-1-0d30065c8c58@quicinc.com>
+In-Reply-To: <20241127100421.3447601-5-quic_vikramsa@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 27/11/2024 09:15, Yongxing Mou wrote:
-> Add compatible string for the supported eDP PHY on qcs8300 platform.
+On 27/11/2024 11:04, Vikram Sharma wrote:
+> Add changes to support the camera subsystem on the SC7280.
+> 
+> Signed-off-by: Suresh Vankadara <quic_svankada@quicinc.com>
+> Signed-off-by: Trishansh Bhardwaj <quic_tbhardwa@quicinc.com>
+> Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 170 +++++++++++++++++++++++++++
+>  1 file changed, 170 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index 55db1c83ef55..9376755ac43e 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -4426,6 +4426,176 @@ cci1_i2c1: i2c-bus@1 {
+>  			};
+>  		};
+>  
+> +		camss: camss@acaf000 {
+> +			compatible = "qcom,sc7280-camss";
+> +
+> +			reg = <0x0 0x0acb3000 0x0 0x1000>,
 
+You received feedback to really start testing your code with tools.
+Nothing improved. Do you have troubles running tools or something in
+feedback was not clear? If first - ask. If second - respond to our
+comments, so we can clarify.
 
-What is supported eDP PHY? Can it be unsupported? Anyway, this repeats
-the diff. Say something useful instead, like why this is not compatible
-with sa8775p.
+Repeating the same mistake over and over and asking us to point you the
+same issue is waste of our time. Sorry, that's not acceptable to me.
+
+NAK.
 
 Best regards,
 Krzysztof
