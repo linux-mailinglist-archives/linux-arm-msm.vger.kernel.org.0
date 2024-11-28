@@ -1,227 +1,242 @@
-Return-Path: <linux-arm-msm+bounces-39464-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39465-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 70D499DB971
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 15:16:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id EFBF99DB98E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 15:25:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D23D1162F9A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 14:16:48 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 97CCD163BCC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 14:25:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AFD7F1AE01D;
-	Thu, 28 Nov 2024 14:16:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 584BE1ABEA6;
+	Thu, 28 Nov 2024 14:25:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="W5BRoEdc"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="fFnuQ3Fb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5EC19CC2E
-	for <linux-arm-msm@vger.kernel.org>; Thu, 28 Nov 2024 14:16:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A417192D77;
+	Thu, 28 Nov 2024 14:25:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732803407; cv=none; b=lWu6V053eTfwt2qx6bhijL0/gTZQUQm0As5GilVZXsRxwV53Roo+Fm+LIx3egcSOfJFAKeECCAgi5Nisyx2KlmMVtATuNnDj7O9pg2ITHQjYnvvuK4qlS1jCNBj+JUqqTBFFRofN9kfE4tt8+np2ArU5hKh6TGYHhev5k2TAdms=
+	t=1732803903; cv=none; b=HRdYE+1KNCFeCC6tpxxgiOlxZbc2MXEOY2spxHNVCh1BAaZ2zuxmULunnU8x3awNvLWpFYcEeYjTwTIMgWyNfRQe6ncsyiBiVidgPKEFu1Qqo1jfD7BH/pRAtp24bCGep19N2kEeQBf8tRA8zFRv1NpZHEm0krjbH+DgdaA38BE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732803407; c=relaxed/simple;
-	bh=tD9T2cNXN8N5ZIgFXb9UF+AsJmmb03IzRlaR5j2mCZg=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=QHLCQ3VKDrfrsdWFwXMe6PkS3O85rB6NXb94SPCRyPXNO7VEG9gW1AnrylRfjeKxDFxYb2aMkarXUpPFijAVa9JvfWh1DDEs+c+1TZpfXKFxMYrqwEloG7LGGvc515oL8CkjmoWZxJKT9jj0zARPaYX6bd7h9RSVHqzsjKPzyc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=W5BRoEdc; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-434a7ee3d60so11818005e9.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Nov 2024 06:16:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732803404; x=1733408204; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xzG0XNOQZF4a2W5O+NcAalaLtDSp8F8libK88vzeBpI=;
-        b=W5BRoEdcG6vzpgRrAHsD3bwOnvB3C2WrFpSHrX+gCgGiSZyZrJQnUztZrgbhyyDF9r
-         Dg2lyF10neouFJbmKxHBmQveGD3ctTge0ONhIVgnK+AuX0hlU4726wN1rvID26Ee51Vv
-         PjiiYmNesJpUxmqMmhydC4SxBxRBQ9mk12FruVr1N5tE3grWmGYrmUu5NOEnbZMj3L9a
-         hICm1X1XB9Asg0+52zoQTQ4jekldJXFrHMdmS5I7v4GhgANgLIrw2StbIoXpRw/AYtIQ
-         q0EL/wPqsmGOPq5Gy+9Lnl9hA6G2LnOKzrfoEJ+dX7e2bUeTm7svlgNAmkaRgYwtqktk
-         wUuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732803404; x=1733408204;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=xzG0XNOQZF4a2W5O+NcAalaLtDSp8F8libK88vzeBpI=;
-        b=e14VkSxP3e4kpVJZfZ9eXdwOmglEX2YPwNx872WI5Lw4YgJ3ILtFmkaxR1yH9/ddpu
-         w6/lcHg6tNw0gPJ2hXbFKnEiTz7lWn2Bp/sGIeH3ev9Z77QBGXjrZT2ijzH0YoUohLeq
-         CUrfowFZcSy7JVjLa8XQ1kmDjxz6pnYma62DcJnVNW5ALlRD6KcvIBzCr8InKZMZ3qJG
-         654au/sLEzwG0mYvfF7LpSaTvrsox2LQf/cpQFMAaMFfMZtUghESYH5dDrjUSCPL3i4F
-         Wd4/PnnvBubUu8Zw3mZ/+aj2YZpH3ZaFJNF701UjDliZgj8nyjPRnmYK0hV89XzD5zV1
-         NX/g==
-X-Forwarded-Encrypted: i=1; AJvYcCUUCienQ9uW/yOZDajtXGIo40OQWsgIaFUnYCwNx+ZL9r4AQfcdzqPAS5XT6Cpj2zUT117DvUVQKmYhcPeQ@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzx+zaxiijVxTPZzFWSHvuxFLMQkOJxZf0IQ+7/76jVvVzatHw7
-	WIJWjIeLjZnfTlVWU22EatdeEPeoNbUwYSroBMK1Q0wqkHcNw3pi75bTmF5aHGzwQ5lYxjaZ+9W
-	gq9c=
-X-Gm-Gg: ASbGnctToAYnVI96jPRBwO5ds4s8rFJisU6sPl0SvC4UdJ5tySjwklKmtOdgSCyMW5V
-	kgNRu2Rne1N+9NGqoLyUWXSWA35pX/jXm3PL8VmD66sYyDNss0FSZEkxiYF477vGEDGC5OuUt3Z
-	KutmP9qfdm1uLdkeKPlAhqUR+3EMTY4R7VO65ZWRdc58oDDeYbrt9QxqT+ovOEFicS6Tx4TzAlB
-	eZoI1sOfm+VpQLNDyuZK0Dx8viZfcv+bM6qSK65XuV1kVbdN6SYAj0rYm8wip7Jq8kWMXjpYfsS
-	EaCtj/P57Omxz5WsImH0QK3T
-X-Google-Smtp-Source: AGHT+IH9gpTDzzH0YVMfrX0ygKVTmF2nSE1+q9nvp2q6noStYv2AG3BDf1Oub/zJThviNJP8vK6UUw==
-X-Received: by 2002:a05:600c:6c8a:b0:434:8e8a:d4ec with SMTP id 5b1f17b1804b1-434afc3b6e1mr30503355e9.13.1732803404015;
-        Thu, 28 Nov 2024 06:16:44 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:42d0:cacb:48b:722a? ([2a01:e0a:982:cbb0:42d0:cacb:48b:722a])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-434aa7e4d42sm54447225e9.37.2024.11.28.06.16.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 28 Nov 2024 06:16:43 -0800 (PST)
-Message-ID: <c2d74a3e-5aaa-4568-aa28-189b7d1b48b0@linaro.org>
-Date: Thu, 28 Nov 2024 15:16:42 +0100
+	s=arc-20240116; t=1732803903; c=relaxed/simple;
+	bh=fdHxtNj422UoKWLv3QvML6sSjy8dNKenAT6YQfKoT3k=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=AzZ7kLmVggbxXzIFEhC4DkjA54+9gpwcs/9NYHTcC1FNX6NJMkfM20ADez3Ret10t7dAH/fVQyDrD9+y0BFkwDAZlyA3myX9HF+t0+eq6eT2vN0RuTm7ffkyOcK2T85RazE8zX/g5CGxmvOjRfjnPKxcuuBgzADjocI1K0FtFtg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=fFnuQ3Fb; arc=none smtp.client-ip=5.75.144.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
+Received: from localhost (docker-mailserver-web-1.docker-mailserver_default [172.22.0.5])
+	by mail.mainlining.org (Postfix) with ESMTPSA id 827CFE4804;
+	Thu, 28 Nov 2024 14:24:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mainlining.org;
+	s=psm; t=1732803898;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=GpXcJ7SsT/I9I6T2nG6xcD8KuRD4m/4UXD1TYsISI24=;
+	b=fFnuQ3FbKvbbUND+qYkBMzWxrt4EEzBhjzQ1b0OLNjYxTIn2Ea6RKlNmzIKnKTWLNWfWtE
+	dtzlrhVx+/f9WbgbQ3ANG2LhgpvP4T9Yyf+9GALdfoc9F4HTqTAbGS7vWkSbdGdSVVJ0JE
+	hTjCGuL6SOgL8h8rWNTq2fKuEuxEuQUZGpMWxttS9fB6HUsoTAbt1urkMiX95RCIZSGKMz
+	AsGIqGHsr/QS7+prvrpZH8rC+O2YDQf2XgAlkj1q+uaccPisAriS92HdFtF1BvZNRCcodj
+	0eFFDSXYZkfwsgMqp8fWd8n0R1w74BxMB1Kf2imyOCgr2u2SHIuR46jVM7DgcQ==
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v3 6/7] arm64: qcom: dts: sm8550: add interconnect and
- opp-peak-kBps for GPU
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Akhil P Oommen <quic_akhilpo@quicinc.com>,
- linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org
-References: <20241128-topic-sm8x50-gpu-bw-vote-v3-0-81d60c10fb73@linaro.org>
- <20241128-topic-sm8x50-gpu-bw-vote-v3-6-81d60c10fb73@linaro.org>
- <7ylrgy44dlitavefgwaobve7runpy6eqyhufmtkxmwnqkj2g25@pfdjlf5aj4j6>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <7ylrgy44dlitavefgwaobve7runpy6eqyhufmtkxmwnqkj2g25@pfdjlf5aj4j6>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Date: Thu, 28 Nov 2024 15:24:58 +0100
+From: barnabas.czeman@mainlining.org
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc: Yassine Oudjana <y.oudjana@protonmail.com>, Robert Foss
+ <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, Bryan O'Donoghue
+ <bryan.odonoghue@linaro.org>, Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Hans Verkuil <hverkuil@xs4all.nl>,
+ linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] media: qcom: camss: fix VFE pm domain off
+In-Reply-To: <38003f90-4b0b-4a7a-86f5-ec75e227777a@linaro.org>
+References: <a0a41b77-ee63-4d55-8c91-baf667c25cba@protonmail.com>
+ <acb6366a-aa6b-4c84-a3b2-cad03ae02ee7@linaro.org>
+ <43be9872149cc60d2c5c21294cd69f07@mainlining.org>
+ <38003f90-4b0b-4a7a-86f5-ec75e227777a@linaro.org>
+Message-ID: <9a2b01c9e00fee0b3f359e7289effa29@mainlining.org>
+X-Sender: barnabas.czeman@mainlining.org
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
 
-On 28/11/2024 14:26, Dmitry Baryshkov wrote:
-> On Thu, Nov 28, 2024 at 11:25:46AM +0100, Neil Armstrong wrote:
->> Each GPU OPP requires a specific peak DDR bandwidth, let's add
->> those to each OPP and also the related interconnect path.
->>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->> ---
->>   arch/arm64/boot/dts/qcom/sm8550.dtsi | 11 +++++++++++
->>   1 file changed, 11 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
->> index e7774d32fb6d2288748ecec00bf525b2b3c40fbb..545eb52174c704bbefa69189fad9fbff053d8569 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
->> @@ -2114,6 +2114,9 @@ gpu: gpu@3d00000 {
->>   			qcom,gmu = <&gmu>;
->>   			#cooling-cells = <2>;
->>   
->> +			interconnects = <&gem_noc MASTER_GFX3D 0 &mc_virt SLAVE_EBI1 0>;
+On 2024-11-28 14:22, Vladimir Zapolskiy wrote:
+> On 11/28/24 12:27, barnabas.czeman@mainlining.org wrote:
+>> On 2024-11-28 10:10, Vladimir Zapolskiy wrote:
+>>> On 11/27/24 12:01, Yassine Oudjana wrote:
+>>>> On 22/11/2024 5:06 am, Barnabás Czémán wrote:
+>>>>> Fix NULL pointer check before device_link_del
+>>>>> is called.
+>>> 
+>>> The intention is clear, but the context of the change is completely
+>>> lost.
+>>> 
+>>>>> Fixes: eb73facec2c2 ("media: qcom: camss: Use common VFE
+>>>>> pm_domain_on/pm_domain_off where applicable")
+>>> 
+>>> It's invalid, the change is not a fix.
+>> I don't agree this patch is fixing NULL pointer dereference.
+>> 
+>> [   92.989120] Unable to handle kernel NULL pointer dereference at
+>> virtual address 000000000000032c
+>> [   92.989170] Mem abort info:
+>> [   92.989186]   ESR = 0x0000000096000004
+>> [   92.989203]   EC = 0x25: DABT (current EL), IL = 32 bits
+>> [   92.989221]   SET = 0, FnV = 0
+>> [   92.989237]   EA = 0, S1PTW = 0
+>> [   92.989253]   FSC = 0x04: level 0 translation fault
+>> [   92.989270] Data abort info:
+>> [   92.989284]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+>> [   92.989300]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+>> [   92.989317]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+>> [   92.989335] user pgtable: 4k pages, 48-bit VAs, 
+>> pgdp=00000001218a8000
+>> [   92.989354] [000000000000032c] pgd=0000000000000000,
+>> p4d=0000000000000000
+>> [   92.989389] Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
+>> [   92.989408] Modules linked in: q6afe_dai q6asm_dai q6routing q6adm
+>> q6asm q6afe snd_q6dsp_common panel_lgphilips_sw43101 q6core venus_enc
+>> venus_dec videobuf2_dma_contig imx318 ak7375 snd_soc_wcd9335
+>> regmap_slimbus snd_soc_wcd_classh apr snd_soc_apq8096
+>> snd_soc_qcom_common snd_soc_core qcom_camss msm v4l2_fwnode 
+>> snd_compress
+>> ath10k_pci v4l2_async ath10k_core snd_pcm nxp_nci_i2c drm_exec nxp_nci
+>> venus_core videobuf2_dma_sg snd_timer ath v4l2_mem2mem 
+>> videobuf2_memops
+>> mac80211 drm_dp_aux_bus snd gpu_sched nci videobuf2_v4l2 libarc4
+>> soundcore videodev nfc slim_qcom_ngd_ctrl drm_display_helper hci_uart
+>> pdr_interface videobuf2_common btqca drm_kms_helper slimbus 
+>> i2c_qcom_cci
+>> bluetooth mc qcom_q6v5_pas qcom_q6v5_mss qcom_pil_info qcom_q6v5
+>> qcom_sysmon qcom_common qmi_helpers mdt_loader socinfo rmtfs_mem
+>> pwm_ir_tx cfg80211 rfkill zram zsmalloc atmel_mxt_ts drm
+>> drm_panel_orientation_quirks dm_mod ip_tables
+>> [   92.989981] CPU: 2 PID: 1365 Comm: pool-megapixels Not tainted
+>> 6.9.0-rc3+ #10
+>> [   92.990003] Hardware name: Xiaomi Mi Note 2 (DT)
+>> [   92.990020] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS
+>> BTYPE=--)
+>> [   92.990042] pc : device_link_put_kref+0xc/0xb8
+>> [   92.990071] lr : device_link_del+0x30/0x48
+>> [   92.990089] sp : ffff80008a5db9d0
+>> [   92.990105] x29: ffff80008a5db9d0 x28: 0000000000000001 x27:
+>> 0000000000000000
+>> [   92.990143] x26: 0000000000000000 x25: ffff0000e79d9100 x24:
+>> ffff0000e79d9500
+>> [   92.990180] x23: ffff0000943f8568 x22: 00000000ffffffff x21:
+>> 0000000000000000
+>> [   92.990217] x20: 0000000000000000 x19: ffff800081352498 x18:
+>> 0000000000000000
+>> [   92.990253] x17: 0000000000000000 x16: 0000000000000000 x15:
+>> 0000000000000168
+>> [   92.990288] x14: 0000000000000000 x13: 0000000000000191 x12:
+>> ffff800081259d58
+>> [   92.990324] x11: 0000000000000001 x10: 0000000000000a60 x9 :
+>> ffff80008a5db7e0
+>> [   92.990359] x8 : ffff0000e79d9bc0 x7 : 0000000000000004 x6 :
+>> 0000000000000190
+>> [   92.990396] x5 : 0000000000000057 x4 : 0000000000000000 x3 :
+>> 0000000000000000
+>> [   92.990430] x2 : ffff0000e79d9100 x1 : 0000000000000000 x0 :
+>> 0000000000000000
+>> [   92.990466] Call trace:
+>> [   92.990482]  device_link_put_kref+0xc/0xb8
+>> [   92.990503]  device_link_del+0x30/0x48
+>> [   92.990522]  vfe_pm_domain_off+0x24/0x38 [qcom_camss]
 > 
-> QCOM_ICC_TAG_ALWAYS
-
-Damn, thanks forgot those one.
-
-Thanks,
-Neil
-
+> vfe_pm_domain_off() shall not be called before vfe_pm_domain_on() call.
 > 
-> LGTM otherwise.
+> If vfe_pm_domain_on() is called and returns failure, then a media 
+> pipeline
+> shall not be started, and vfe_pm_domain_off() shall not be called.
 > 
->> +			interconnect-names = "gfx-mem";
->> +
->>   			status = "disabled";
->>   
->>   			zap-shader {
->> @@ -2127,41 +2130,49 @@ gpu_opp_table: opp-table {
->>   				opp-680000000 {
->>   					opp-hz = /bits/ 64 <680000000>;
->>   					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
->> +					opp-peak-kBps = <16500000>;
->>   				};
->>   
->>   				opp-615000000 {
->>   					opp-hz = /bits/ 64 <615000000>;
->>   					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L0>;
->> +					opp-peak-kBps = <16500000>;
->>   				};
->>   
->>   				opp-550000000 {
->>   					opp-hz = /bits/ 64 <550000000>;
->>   					opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
->> +					opp-peak-kBps = <12449218>;
->>   				};
->>   
->>   				opp-475000000 {
->>   					opp-hz = /bits/ 64 <475000000>;
->>   					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS_L1>;
->> +					opp-peak-kBps = <8171875>;
->>   				};
->>   
->>   				opp-401000000 {
->>   					opp-hz = /bits/ 64 <401000000>;
->>   					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
->> +					opp-peak-kBps = <6671875>;
->>   				};
->>   
->>   				opp-348000000 {
->>   					opp-hz = /bits/ 64 <348000000>;
->>   					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS_D0>;
->> +					opp-peak-kBps = <6074218>;
->>   				};
->>   
->>   				opp-295000000 {
->>   					opp-hz = /bits/ 64 <295000000>;
->>   					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS_D1>;
->> +					opp-peak-kBps = <6074218>;
->>   				};
->>   
->>   				opp-220000000 {
->>   					opp-hz = /bits/ 64 <220000000>;
->>   					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS_D2>;
->> +					opp-peak-kBps = <6074218>;
->>   				};
->>   			};
->>   		};
->>
->> -- 
->> 2.34.1
->>
-> 
+> If vfe_pm_domain_on() is called and returns success, then 
+> vfe->genpd_link
+> is not NULL.
+It can be null if the pm_domain_off is called twice somehow or it is 
+called
+before pm_domain_on.
+This is the original function, it sets genpd_link to NULL:
 
+void vfe_pm_domain_off(struct vfe_device *vfe)
+{
+         if (!vfe->genpd)
+                 return;
+
+         device_link_del(vfe->genpd_link);
+         vfe->genpd_link = NULL;
+}
+Other possible case:
+genpd_link can be NULL when pm_domain_on is failing or
+when genpd is NULL
+
+By the way pm_domain_on checks if genpd_link is NULL:
+         vfe->genpd_link = device_link_add(camss->dev, vfe->genpd,
+                                           DL_FLAG_STATELESS |
+                                           DL_FLAG_PM_RUNTIME |
+                                           DL_FLAG_RPM_ACTIVE);
+         if (!vfe->genpd_link)
+                 return -EINVAL;
+It is not calling pm_domain_off on fail:
+
+ret = vfe->res->hw_ops->pm_domain_on(vfe);
+                 if (ret < 0)
+                         goto error_pm_domain;
+
+[...]
+
+error_domain_off:
+         vfe->res->hw_ops->pm_domain_off(vfe);
+
+error_pm_domain:
+         mutex_unlock(&vfe->power_lock);
+
+
+camss_pm_domain_off also calls vfe_pm_domain_off what is used in 
+camss-ispif
+void camss_pm_domain_off(struct camss *camss, int id)
+{
+         if (id < camss->res->vfe_num) {
+                 struct vfe_device *vfe = &camss->vfe[id];
+
+                 vfe->res->hw_ops->pm_domain_off(vfe);
+         }
+}
+> 
+> Are there any perceptable flaws within the given above reasoning?
+The camss will be broken and system also can recover correctly (only 
+force reboot works.).
+> 
+> Since you've encountered a bug and taking the reasoning from above as
+> correct, I believe the bug is present somewhere else, and if so, it 
+> will
+> remain unfixed by this change.
+> 
+>> [   92.990566]  vfe_put+0x9c/0xd0 [qcom_camss]
+>> [   92.990601]  vfe_set_power+0x48/0x58 [qcom_camss]
+>> [   92.990636]  pipeline_pm_power_one+0x154/0x158 [videodev]
+>> [   92.990683]  pipeline_pm_power+0x74/0xfc [videodev]
+>> [   92.990720]  v4l2_pipeline_pm_use+0x54/0x90 [videodev]
+>> [   92.990757]  v4l2_pipeline_pm_put+0x14/0x34 [videodev]
+>> [   92.990793]  video_release+0x2c/0x44 [qcom_camss]
+>> [   92.990828]  v4l2_release+0xe4/0xec [videodev]
+> 
+> Please include the backtrace up to this point into the commit message.
+> 
+> --
+> Best wishes,
+> Vladimir
 
