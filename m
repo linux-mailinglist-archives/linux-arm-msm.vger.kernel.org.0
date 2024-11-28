@@ -1,161 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-39402-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39404-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id DA6309DB4E3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 10:41:22 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3456A167A0A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 09:41:16 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B3F5156887;
-	Thu, 28 Nov 2024 09:41:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="MmLaaPm+"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A6BDC9DB52D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 11:00:11 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 997D0155C83;
-	Thu, 28 Nov 2024 09:41:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 269EDB256B1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 10:00:09 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D069217C219;
+	Thu, 28 Nov 2024 10:00:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GOT0GXSy"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1F5B15854F;
+	Thu, 28 Nov 2024 10:00:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732786877; cv=none; b=Ro0GBqdOXYNX9XfsxrJuLx9jUTPvmbKFYcHCmWGweCU6qyXW2aXPVDQjLjplDEanMqoDpS2dUHHxZJTodVvkPNyvaHRv6IwFscSer6FXziYpOEMmVVvxeAg+9mgjkQNEDYAQFiOBlaa8g/mTNXHlq2cCswjzdcvxQMXcO5739NY=
+	t=1732788005; cv=none; b=aH1NnVBKydz6f/RV4mUlQpiDpi1ipHS5FehlCAKQ5z1jzCya8fwH8f6iQL5dzgfEN0CgZ/nRJk5SVxYVq6bJsWsqXJvWawuG5gUTWcg2r75O/ZMP4UCjyRO90kjDjXRJEKmjosWQWnhGHaH6MxyQ0mEwl5iFMbTRmxoFL/KNBnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732786877; c=relaxed/simple;
-	bh=k71kvRRoBDmVzGMd5DTUXIv9WgZ16WK1Rj5Cwxj2hpc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=OJGvtKFUVV2KYu3MoGGrtNbb/RWucXKKoAQFDull9r0R5kVkR+FT3WJzoixn96cUv9khqLzaIC5RSCCSF2J/OlXvdubGAr2NnBXeYaeZGzMgsKUwPuqxOuW0g+GwFx0gxerxfeQp6PCBcK8Q7B+dGPVPURHm4rFpw8+GC1y9H7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=MmLaaPm+; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AS8TDTk025351;
-	Thu, 28 Nov 2024 09:41:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	mkNPgDK7NHK5jnRClmZAvQu0Tyyth2yZXXa1RkYqaco=; b=MmLaaPm+VaEuF3Ea
-	Qy9u7An0ngImxxwHC0mKsmuFvf3QsMvV2dHSM4OsUWQi39QL21bEg73GqXyb1g2h
-	J53PMU/GiW1umCfKrnUgszsNNjqnpABbF1I9377fwDIK5NvGmkgGW37tTe/UeEA7
-	XG9uxBHdwR8WgAKcSRvYTSA9XIXFtaZcT9N6KGNGyjW8Yuu6/1nsCU5nhbgr7OIo
-	xv28CnQ6KVKc6GLC1tCDd079/T5pae+EJrHLOynY+1P1YT+/1aGswnnjpVO+DMjV
-	ZP2dfdtsBi8Gh2OqtpIlbeV4oS16nIhTTSiJRCenNZwuLj+j5rhTO81Rz8G4FmzX
-	F7ApDQ==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4366xw2322-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 28 Nov 2024 09:41:13 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AS9f5SL002995
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 28 Nov 2024 09:41:05 GMT
-Received: from cse-cd02-lnx.ap.qualcomm.com (10.80.80.8) by
- nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 28 Nov 2024 01:40:59 -0800
-From: Tingguo Cheng <quic_tingguoc@quicinc.com>
-Date: Thu, 28 Nov 2024 17:40:17 +0800
-Subject: [PATCH v2 2/2] arm64: dts: qcom: qcs8300-ride: Enable PMIC
- peripherals
+	s=arc-20240116; t=1732788005; c=relaxed/simple;
+	bh=tYQLxPQpxbcH3iX/1Bao/eVA36jnfdZ+ATR7y7ejkOc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hsUvtxrvbUswgtC9ntU7dJrBJcFwMN8Or8Fae4A7+z/mz3sBwmPDJ/drKGfd8IUOfOaXzpi7D/+6OO8ETVjAL25zx2hbotkxLLnRkxWt4mgBfFWI62PSce1ybmTBGbj4ybMA7fHEqsAmzYS55tEtw0YKnN3fyND/ZzgRMivAbn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GOT0GXSy; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13F62C4CECE;
+	Thu, 28 Nov 2024 10:00:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1732788005;
+	bh=tYQLxPQpxbcH3iX/1Bao/eVA36jnfdZ+ATR7y7ejkOc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=GOT0GXSy3if50dIKEgK4YmYtal081egLlC8H4HHWwjSL8AfpaKguEJG+PxeZYsQIy
+	 //rGdi2B/uq9o8+jUYHQ6EcS5//L8CGc9p0Ns40rjiI2D7tsbGlyJEVjQvyQ0qsT9N
+	 y7Jx2lJc4ZHQZDRq7D8B8VVFnuCEnG0iEtCvr8Z5WqGN4EBPnFhN1zBzs1VEsxoeX0
+	 Jjq9U/AkQXlgUGnmnIfULzetU7M41gwCCgCuqKQzPTxq3U0RReF600iyUYPJDYLUJ8
+	 vkCVA9GzKgXWd4jhj49gQ7ipmRIC6MdKVRkTO8TXXw2eayLZKnCGoueKzoY87bKScu
+	 u1X8cFX/wJeNw==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1tGbJU-000000000mu-3UiV;
+	Thu, 28 Nov 2024 10:59:57 +0100
+Date: Thu, 28 Nov 2024 10:59:56 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Ard Biesheuvel <ardb@kernel.org>
+Cc: Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Ricardo Salveti <ricardo@foundries.io>,
+	Marc Zyngier <maz@kernel.org>, linux-efi@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: UEFI EBS() failures on Lenovo T14s
+Message-ID: <Z0g_HL01eqXu4cwQ@hovoldconsulting.com>
+References: <Z0gn1N3IsP8r3gTA@hovoldconsulting.com>
+ <CAMj1kXGjiA1HydMaY82MQsYvkchpN7v7CMOB5i3NEdqcYGn19Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20241128-adds-spmi-pmic-peripherals-for-qcs8300-v2-2-001c0bed7c67@quicinc.com>
-References: <20241128-adds-spmi-pmic-peripherals-for-qcs8300-v2-0-001c0bed7c67@quicinc.com>
-In-Reply-To: <20241128-adds-spmi-pmic-peripherals-for-qcs8300-v2-0-001c0bed7c67@quicinc.com>
-To: <quic_fenglinw@quicinc.com>, <quic_tingweiz@quicinc.com>,
-        <kernel@quicinc.com>, Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Tingguo Cheng <quic_tingguoc@quicinc.com>
-X-Mailer: b4 0.15-dev-dedf8
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1732786852; l=1329;
- i=quic_tingguoc@quicinc.com; s=20240917; h=from:subject:message-id;
- bh=k71kvRRoBDmVzGMd5DTUXIv9WgZ16WK1Rj5Cwxj2hpc=;
- b=BInAOxjgkGxlb99YAGyXO00Cm1qiOYKsBTT7csQJtdfuxAneZMKzP6cFfoqK0A0CTMflLaHnp
- nI/FXsUH0t+CB9pKIDQ5H/rLluAfZPr1rRhYgFKLUbKX6wS2McrUQWI
-X-Developer-Key: i=quic_tingguoc@quicinc.com; a=ed25519;
- pk=PiFYQPN5GCP7O6SA43tuKfHAbl9DewSKOuQA/GiHQrI=
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 4Te05hiFdcF2cLLZjr7pWh4ZDb24sXeK
-X-Proofpoint-ORIG-GUID: 4Te05hiFdcF2cLLZjr7pWh4ZDb24sXeK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
- bulkscore=0 adultscore=0 suspectscore=0 mlxlogscore=934 mlxscore=0
- spamscore=0 malwarescore=0 lowpriorityscore=0 priorityscore=1501
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2411280077
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAMj1kXGjiA1HydMaY82MQsYvkchpN7v7CMOB5i3NEdqcYGn19Q@mail.gmail.com>
 
-Enable PMIC and PMIC peripherals for qcs8300-ride board. The qcs8
-300-ride uses 2 pmics(pmm8620au:0,pmm8650au:1) on the board, which
-are variants of pmm8654au used on sa8775p/qcs9100 -ride(4x pmics).
+On Thu, Nov 28, 2024 at 09:52:33AM +0100, Ard Biesheuvel wrote:
 
-Signed-off-by: Tingguo Cheng <quic_tingguoc@quicinc.com>
----
- arch/arm64/boot/dts/qcom/qcs8300-ride.dts | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+> On Thu, 28 Nov 2024 at 09:20, Johan Hovold <johan@kernel.org> wrote:
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-index 7eed19a694c39dbe791afb6a991db65acb37e597..56e7194521834a7a6f5c5597e0f28a27a18d90d3 100644
---- a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-+++ b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-@@ -9,6 +9,7 @@
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- 
- #include "qcs8300.dtsi"
-+#include "sa8775p-pmics.dtsi"
- / {
- 	model = "Qualcomm Technologies, Inc. QCS8300 Ride";
- 	compatible = "qcom,qcs8300-ride", "qcom,qcs8300";
-@@ -223,6 +224,28 @@ &gcc {
- 		 <0>;
- };
- 
-+&pmm8654au_0_pon_resin {
-+	linux,code = <KEY_VOLUMEDOWN>;
-+
-+	status = "okay";
-+};
-+
-+&pmm8654au_2 {
-+	status = "disabled";
-+};
-+
-+&pmm8654au_2_thermal {
-+	status = "disabled";
-+};
-+
-+&pmm8654au_3 {
-+	status = "disabled";
-+};
-+
-+&pmm8654au_3_thermal {
-+	status = "disabled";
-+};
-+
- &qupv3_id_0 {
- 	status = "okay";
- };
+> > We've run into a buggy UEFI implementation on the Qualcomm Snapdragon
+> > based Lenovo ThinkPad T14s where ExitBootServices() often fails.
 
--- 
-2.34.1
+> > Based on your comments to a similar report for an older Snapdragon based
+> > Lenovo UEFI implementation [1], I discovered that allocating an event
+> > before calling ExitBootServices() can make the call succeed. There is
+> > often no need to actually signal the event group, but the event must
+> > remain allocated (i.e. CloseEvent() must not be called).
+> >
+> > (Raising TPL or disabling interrupts does not seem to help.)
+> >
+> > Also with the event signalling, ExitBootServices() sometimes fails when
+> > starting the kernel automatically from a shell startup.nsh, while
+> > systemd-boot seems to always work. This was only observed after removing
+> > some efi_printk() used during the experiments from the stub..
+.
+> So the error code is EFI_INVALID_PARAMETER in all cases? In the
+> upstream implementation, the only thing that can make
+> ExitBootServices() return an error is a mismatch of the map key, and
+> so there is something changing the memory map.
 
+Yes, it's always EFI_INVALID_PARAMETER.
+
+> This might be due to a handler of the
+> gEfiEventBeforeExitBootServicesGuid event group that fails to close
+> the event, and so it gets signaled every time. This is a fairly recent
+> addition, though, so I'm not sure it even exists in QCOM's tree.
+> 
+> In upstream EDK2, the map key is just a monotonic counter that gets
+> incremented on every memory map update, so one experiment worth
+> conducting is to repeat the second call to ExitBootServices() a couple
+> of times, increasing the map key each time. 
+
+I had already tried repeating the second call (GMM + EBS) by running it
+in a loop, and I do see the map_key increasing for each iteration (e.g.
+by 0x1a).
+
+> Or use GetMemoryMap() to
+> just grab the map key without the actual memory map, and printing it
+> to the console (although the timer is disabled on the first call so
+> anything that relies on that will be shut down at this point)
+
+I just tried adding another inner loop just calling GetMemoryMap() a few
+times and I see the map_key increasing there too for each iteration
+(e.g. by 0x6).
+
+(The map size remains constant.)
+
+I do get the feeling that efi_printk() contributes to the memory map
+updates, and I can indeed get the reference design fw to similarly fail
+if I try to print the map_key after each call to GetMemoryMap() in a
+retry loop.
+
+Johan
 
