@@ -1,149 +1,113 @@
-Return-Path: <linux-arm-msm+bounces-39406-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39407-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CEB8C9DB574
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 11:17:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C80E69DB579
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 11:21:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8378D164794
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 10:17:29 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7D04E166A21
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 10:21:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8452F158534;
-	Thu, 28 Nov 2024 10:17:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98D2C15854A;
+	Thu, 28 Nov 2024 10:21:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Iva85KlV"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d8vqW9Jz"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53E012CCC0;
-	Thu, 28 Nov 2024 10:17:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E8FF13B7BC;
+	Thu, 28 Nov 2024 10:21:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732789048; cv=none; b=c7FImIaS7btX6wmInvwXgsYsIvc/MEoAzOqL26OxquhQdbczg6twmPDMM4cduYlYz31Mgssr+xtcytR3kYJ/pcRz7afwIRwcVQ1ApNprbrZDWlAn2fsyyhwKnrGUjGtPvvHqEQdF8PDjyfoDBeIGp8aQpjAdgEy2xBFyp9XvXDQ=
+	t=1732789307; cv=none; b=JwlIUg0FdTigvwPBZpz+v4UOVzXX/1P3ldRcX/ha3V9SiJlk/O4/X19KHhDal0e2bJ4UdgMgOGriynuGMMFzmW/PBNZ8voMavGbbSNOf3FBXKauBJ8Fjz42b4ym9n8VtYq0nrzygS7w/vNob4xcNNhRkpcpT1+wSpn2heeML+Kk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732789048; c=relaxed/simple;
-	bh=uUD9cunmBFEiItQ1QLqJY4Xet/9tAOCUZK8mQcgPtJI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=F65ceBa3kjkGRKVu136VjHhwxyXCK2Z50W2IrzfW9uxrDT+YBf5T9zGwhNdlgf3U6vVPGNy4ftaatGlAwS99WbDwWkdBghrwP7Tr1KLrOBUctMqD8gyYiyz4B0rtSelYmBDPtJAqQwdlpKE442/+xUgaGwwHr64Kzc0Ilh3LIiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Iva85KlV; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D1A5C4CECE;
-	Thu, 28 Nov 2024 10:17:21 +0000 (UTC)
+	s=arc-20240116; t=1732789307; c=relaxed/simple;
+	bh=4EfoEVsFJB6w0A5vmk7+CYyR0KI444JgV0GrVrP34IE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Vk9R9/Tk6A7LKSZG9RsrNhX11KM8bAyyMwDu7bpV/+fRlynXAM7ss2SbKvFdcEUKnccX/LWS75FnG6nkGWPAF5XkalQ7rRln5xglA/waGwUE9yyNJ49KHVEhdHGvwdg8IvfopvdBrATrdPttqWMWJ06a2oUOHXDQrQry6SbC1Gc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d8vqW9Jz; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EFC3C4CED3;
+	Thu, 28 Nov 2024 10:21:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732789046;
-	bh=uUD9cunmBFEiItQ1QLqJY4Xet/9tAOCUZK8mQcgPtJI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Iva85KlVR0nIJHDSLrTwQLKSeVu6PM+aNJQIrVjggT1x9RxHnwvVsbu5P44RGqu2/
-	 w0bSQZZzS2UHWRdifieFoJk+d1asaaWs0qzpuXrVRcBzQpHcuHf8oJzg5Ffb5LCDlA
-	 qY9NexE7HKDcWdmPb0rZf1TFaq6OUxYHWjsNXBAwftbrFNi3EUGSuDxxZBAIi4QzUP
-	 x9IZBfi0nx04Dr9GM72btYfpPQHfNayS+VgglmQfNvyEkwT+stkAPPsuOqDPrtBCVb
-	 cjf+DY4TbKFkQJv+YApECLIsbyg3SYSdTZh2zkQpN7m+3Q6OerF6J6MC1t9+d0HT3i
-	 lXmcU/NvaeUYA==
-Message-ID: <52b93801-3629-414c-98f7-1ca143238c0e@kernel.org>
-Date: Thu, 28 Nov 2024 11:17:19 +0100
+	s=k20201202; t=1732789307;
+	bh=4EfoEVsFJB6w0A5vmk7+CYyR0KI444JgV0GrVrP34IE=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=d8vqW9Jz4QF6Zfqg+EltY46lROgpZFxSLWVFeAkJURcwXn7MvL0FYgbr0ql8gNX54
+	 ou3OHBZOigMMxxsQJ9Zq+WHoy8iPFEITbBa9gvBdLNZszvq4LhQYQAEuNFsPLU0HKZ
+	 2KYZbzzuRunWlCB3YXi4wma+QF3zSj34lge9bY/0G87/ryqiJwDnFOy9ZgjdC9gNws
+	 NPwwraDZ9T9ByDa7C8QfZqXGi4BUMVVo/5MRtzHnPiX3ESnGqcxfJeU9yM92p14O4k
+	 RPI4ioh5Tva+hafDgUI/wiDKLyDzel3u2paukQVuNfl6NdFURaBNnymDPQvXVKtDqY
+	 AA00ThrOb0LjQ==
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-53df1e0641fso681302e87.1;
+        Thu, 28 Nov 2024 02:21:47 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCUIkwzQUuCOsxzN1VRg2ZdIM9VPbH5pB2XzGInToo+ePAAAnO/Y1dUhTM8toreilhg0QLucSlcWmnMv8c61@vger.kernel.org, AJvYcCUkTGQMmOZzfeqO8/ctpFa/btnSTLuHJ3+Orf3jU3+ywIPWSCu+hc5xb4oVEy0hbEj9sY1n2TqO8Sd2@vger.kernel.org, AJvYcCVks/J5ImTnGNT9WokG7fggrnZ/dC6FGVoblkkKv5nxqATbjMSzMpofv6+tB3CK6VM/8YpUDqANHynfUW2/@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy5pKYLic7mnkzYOC23V/A6HrAKyq4hSX7by2E1XafyuODzkL96
+	wxMXTUNmxtpMieWHHUsIM7Np5GEwYfgDNEsR768IdO2eIQAwmjYu5hC4eDBc2f7/7LcqPb97EPe
+	dduPbjhmLvUEKG7uSMjONaSpkY+s=
+X-Google-Smtp-Source: AGHT+IEqWuy/9UWvck/9O/d4DrCd8DvPNnzq5hZHjay2oOo8vuufMsrqxHIFnEcr7UmaD2/pzX9Vmtxwy5hfgMu0K58=
+X-Received: by 2002:a05:6512:a94:b0:53d:d3ff:83c0 with SMTP id
+ 2adb3069b0e04-53df00c607amr3606417e87.12.1732789305585; Thu, 28 Nov 2024
+ 02:21:45 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/8] dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy:
- Document the QCS8300 QMP PCIe PHY Gen4 x2
-To: Ziyue Zhang <quic_ziyuzhan@quicinc.com>, vkoul@kernel.org,
- kishon@kernel.org, robh+dt@kernel.org, manivannan.sadhasivam@linaro.org,
- bhelgaas@google.com, kw@linux.com, lpieralisi@kernel.org,
- quic_qianyu@quicinc.com, conor+dt@kernel.org, neil.armstrong@linaro.org,
- andersson@kernel.org, konradybcio@kernel.org
-Cc: quic_tsoni@quicinc.com, quic_shashim@quicinc.com,
- quic_kaushalk@quicinc.com, quic_tdas@quicinc.com, quic_tingweiz@quicinc.com,
- quic_aiquny@quicinc.com, kernel@quicinc.com, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-phy@lists.infradead.org
-References: <20241128081056.1361739-1-quic_ziyuzhan@quicinc.com>
- <20241128081056.1361739-2-quic_ziyuzhan@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20241128081056.1361739-2-quic_ziyuzhan@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <Z0gn1N3IsP8r3gTA@hovoldconsulting.com> <CAMj1kXGjiA1HydMaY82MQsYvkchpN7v7CMOB5i3NEdqcYGn19Q@mail.gmail.com>
+ <Z0g_HL01eqXu4cwQ@hovoldconsulting.com>
+In-Reply-To: <Z0g_HL01eqXu4cwQ@hovoldconsulting.com>
+From: Ard Biesheuvel <ardb@kernel.org>
+Date: Thu, 28 Nov 2024 11:21:34 +0100
+X-Gmail-Original-Message-ID: <CAMj1kXFtr7ejEjjSRj9dcRa7YbO0SR5OR3pm+K6OvbX2=RfhAQ@mail.gmail.com>
+Message-ID: <CAMj1kXFtr7ejEjjSRj9dcRa7YbO0SR5OR3pm+K6OvbX2=RfhAQ@mail.gmail.com>
+Subject: Re: UEFI EBS() failures on Lenovo T14s
+To: Johan Hovold <johan@kernel.org>
+Cc: Leif Lindholm <leif.lindholm@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Ricardo Salveti <ricardo@foundries.io>, Marc Zyngier <maz@kernel.org>, linux-efi@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On 28/11/2024 09:10, Ziyue Zhang wrote:
-> Document the QMP PCIe PHY on the QCS8300 platform.
-> 
-> Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
-> ---
+On Thu, 28 Nov 2024 at 11:00, Johan Hovold <johan@kernel.org> wrote:
+>
+> On Thu, Nov 28, 2024 at 09:52:33AM +0100, Ard Biesheuvel wrote:
+>
+...
+> > In upstream EDK2, the map key is just a monotonic counter that gets
+> > incremented on every memory map update, so one experiment worth
+> > conducting is to repeat the second call to ExitBootServices() a couple
+> > of times, increasing the map key each time.
+>
+> I had already tried repeating the second call (GMM + EBS) by running it
+> in a loop, and I do see the map_key increasing for each iteration (e.g.
+> by 0x1a).
+>
+> > Or use GetMemoryMap() to
+> > just grab the map key without the actual memory map, and printing it
+> > to the console (although the timer is disabled on the first call so
+> > anything that relies on that will be shut down at this point)
+>
+> I just tried adding another inner loop just calling GetMemoryMap() a few
+> times and I see the map_key increasing there too for each iteration
+> (e.g. by 0x6).
+>
+> (The map size remains constant.)
+>
+> I do get the feeling that efi_printk() contributes to the memory map
+> updates, and I can indeed get the reference design fw to similarly fail
+> if I try to print the map_key after each call to GetMemoryMap() in a
+> retry loop.
 
-You did not Cc me, even though maintainers script asks you to do that,
-but you Cc-ed several folks from Qualcomm not really necessary.
+Per the spec, the only thing you are permitted to call if
+ExitBootServices() fails is GetMemoryMap(), and so this is not a spec
+violation.
 
-Weird, but sure, I will not review your patch.
-
-However note that just ignored existing review and tags.
-
-<form letter>
-This is a friendly reminder during the review process.
-
-It looks like you received a tag and forgot to add it.
-
-If you do not know the process, here is a short explanation:
-Please add Acked-by/Reviewed-by/Tested-by tags when posting new
-versions, under or above your Signed-off-by tag. Tag is "received", when
-provided in a message replied to you on the mailing list. Tools like b4
-can help here. However, there's no need to repost patches *only* to add
-the tags. The upstream maintainer will do that for tags received on the
-version they apply.
-
-https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
-
-If a tag was not added on purpose, please state why and what changed.
-</form letter>
-
-Best regards,
-Krzysztof
+If GetMemoryMap() itself causes the map key to assume a different
+value than the one it returns, or if ExitBootServices() invokes event
+callbacks on the second call that may cause the map key to get updated
+before it manages to check it, there is obviously something wrong in
+the firmware implementation.
 
