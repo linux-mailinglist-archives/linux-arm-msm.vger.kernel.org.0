@@ -1,111 +1,258 @@
-Return-Path: <linux-arm-msm+bounces-39475-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39476-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1A7AE9DBA67
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 16:21:35 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C43D9DBA6B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 16:23:42 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9C2F61644DF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 15:21:27 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 840B9B21CD5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 15:23:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 215AD1BBBFC;
-	Thu, 28 Nov 2024 15:21:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7036918E25;
+	Thu, 28 Nov 2024 15:23:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UWo+Lk5v"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l4rq1DpD"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE9DA1B86E9;
-	Thu, 28 Nov 2024 15:21:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CB4A847B;
+	Thu, 28 Nov 2024 15:23:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732807283; cv=none; b=nDlsgcuaZGatBT1LiqJ9oSd78uVInELyWStFZtT9tOqVEbBHyerIxnf6Wn7Zy9du7needhje81FLe1rwY8Dend2CH/kxRdnBMQr0m7Y9rDre0r6VcHuC0apPaY/bYjJDRP1UFIehHw7ReaenKCRAarxUZaP+wBDa33oRNvXzYQs=
+	t=1732807415; cv=none; b=TbYWK7Y6N8ZLd+4exg7cFwQATEkUzlQfhMMv+/vQm2QYKInbuI5PAW90GotmnTZet+edzLj+kdddCdOPEAzvq0tvrsQm1bPMhOCt4My7rlY0+EAgujCOHEY8Ibammtu4e1Cohxq4L6cgyGdyp0xgOBy5FqEug1WB0H+zjjaQ4iI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732807283; c=relaxed/simple;
-	bh=KwPswigeoYrfDYJtdMcEwRzcAGQAejZN5dhixRMkbQw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DhU8HgDXN7FBw1uOJpu7kNVpR5E8aEUXJAHoWwzE8PJfadg62Ajevwq9zNW7+NfMv2RYHNdZN7kCCv2mm8PTKEaWgebNZTy5JY4ueTKhVRoZKKTKnpI6fgZf9nNGV4nmgo/JLtcdFkeH0Rq3GkoWhcnQZd8Gbdj8atR22kjldxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UWo+Lk5v; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6266CC4CED2;
-	Thu, 28 Nov 2024 15:21:22 +0000 (UTC)
+	s=arc-20240116; t=1732807415; c=relaxed/simple;
+	bh=zf3XI+duCmZMKJdMWvONc/8e5U+UV5sJ/cIMEjqAU74=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=oUniJQS5nE+B9QaZNPgo5TTUqUlgQwyOx3OZRZbzCsPkf2qzPqg6B7AUMYVXv7hVHmD2sXeggf0+DhUgt0IaBGkwzpuQzlqqF4d8xXwjl0L5QD/P/lhngLOAKCVgN/cx/a+EFX9+uXz0zj5e0SCSpEYaJNcnGFJfdKMT0gc9DvE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l4rq1DpD; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8385C4CECE;
+	Thu, 28 Nov 2024 15:23:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732807282;
-	bh=KwPswigeoYrfDYJtdMcEwRzcAGQAejZN5dhixRMkbQw=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=UWo+Lk5vNuDy8tBOM3Ww+BPuyIt360DAkV9VWzV16v6Vu7OQzD6zf5o0T2UAII2XZ
-	 Rf1v1jaNZoQMXTQUH1vuAPdLbNLDkEWj4P457t0j971xTFxfz/q5PJv6ohO+7DDBet
-	 djQsZu+/QKETqRULA+VPz1YtXfAtbb2tCD5lwV5mhFF0dRFKA2p80moHjQjxmvTIva
-	 COfO8GkJl4S0pIOWPicXB4fFjL3eJ2qfdoCeSEmzF4gSX+t+SQ3wpIwDfMOuB8ce2q
-	 8/N9NbTCfQvT/4/QrLUS6mjPHI12PFqFLrwsPIuWa0lG793OokYnjzd0JfcM0SuF71
-	 hCDkZfYzUSa3w==
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-53df1d1b726so1088785e87.0;
-        Thu, 28 Nov 2024 07:21:22 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCUJuAvYFcm0t30QsOhWkQk+BqQCi8TFWeGoOgoPn3ES2uNnXXpuVLALiJBJXkAVT7h6nXUS0VN+sNvFgq90@vger.kernel.org, AJvYcCWWq+a6jCFThDecuGpR0rSCDekDbuKHEho+mHMqkyLjQfiElXX8BnQD5leYnQFYhkrv0Aj6HLDyZZPh@vger.kernel.org, AJvYcCX3BwI9HcBiT2V5Ca/QQrsBNn50mDIEFalPXRBcJfpdcAQrXMaa8ug6pbAa2p1rNkYpILwBNrs8/KOaBCDf@vger.kernel.org
-X-Gm-Message-State: AOJu0YwFha0rD9bzKA9l2n7foJB6fS3a9IokI61zWiP51WKWrbptz763
-	a7h7zeo0LSHeW40f2L7RBpVsgEa6xi3eswEqv88hvdqShommKv7HoLjxtV5epR3uL6AXAQO8lBn
-	45/RA3UJszwkvFCsNnJZkf2gQa4w=
-X-Google-Smtp-Source: AGHT+IH5AzxePrQfm/g3C9Rp5Yo42677DLUre4lr1G2GByUnqv2vCF3ncOHe8H5mYdDAWk6MQDbEnY2XInxuuPyirs8=
-X-Received: by 2002:a05:6512:39c9:b0:53d:c322:e782 with SMTP id
- 2adb3069b0e04-53df00d9c87mr4513660e87.28.1732807280609; Thu, 28 Nov 2024
- 07:21:20 -0800 (PST)
+	s=k20201202; t=1732807414;
+	bh=zf3XI+duCmZMKJdMWvONc/8e5U+UV5sJ/cIMEjqAU74=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=l4rq1DpDtIbHWYYkNQEIAaoVPCAMmMAlUk7mxdtgJHGryaJgMGceMCBy23NEdrp0c
+	 MZeyqSKoZiGYYtc9NzFNcxa/nCokl03aKmERt1+cc9N8aOB/WeiRvz4LwK+2+FXPnB
+	 SvmSi9dRO2IID778GIIGr9+uHP2m07epiFHmqXFZ4II8v4fn38C3JhbieUbSGUEPt+
+	 AcM2UUrBqI96qDByhzZtBPr7kKTKaOVPXx8lYnv/Owpj6DppWQ+oIsRNIUrXvQXFPl
+	 yd/L7qjbOPH+QRAp+IMjaLthMdQO6/gCkez90Net1yzgUkDsPO9f6oNssE6nxEXEz6
+	 NZfr6WQQYZeJw==
+Date: Thu, 28 Nov 2024 09:23:21 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Mark Brown <broonie@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-spi@vger.kernel.org, quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com
+Subject: Re: [PATCH v2 1/2] dmaengine: qcom: gpi: Add GPI immediate DMA
+ support
+Message-ID: <obv72hhaqvremd7b4c4efpqv6vy7blz54upwc7jqx3pvrzg24t@zebke7igb3nl>
+References: <20241128133351.24593-1-quic_jseerapu@quicinc.com>
+ <20241128133351.24593-2-quic_jseerapu@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <Z0gn1N3IsP8r3gTA@hovoldconsulting.com> <CAMj1kXGjiA1HydMaY82MQsYvkchpN7v7CMOB5i3NEdqcYGn19Q@mail.gmail.com>
- <Z0g_HL01eqXu4cwQ@hovoldconsulting.com> <CAMj1kXFtr7ejEjjSRj9dcRa7YbO0SR5OR3pm+K6OvbX2=RfhAQ@mail.gmail.com>
- <CAMj1kXHS_TY=jfBT=dqUQSXf2pBXbt12uaLsMw-FLX3uU_X6uA@mail.gmail.com> <Z0iCNJVWNzBzdq0C@hovoldconsulting.com>
-In-Reply-To: <Z0iCNJVWNzBzdq0C@hovoldconsulting.com>
-From: Ard Biesheuvel <ardb@kernel.org>
-Date: Thu, 28 Nov 2024 16:21:09 +0100
-X-Gmail-Original-Message-ID: <CAMj1kXF0Mmr5CyyeKXO6-Ot+5cfSV6t2jPmn+TGVyjUsoYwGtw@mail.gmail.com>
-Message-ID: <CAMj1kXF0Mmr5CyyeKXO6-Ot+5cfSV6t2jPmn+TGVyjUsoYwGtw@mail.gmail.com>
-Subject: Re: UEFI EBS() failures on Lenovo T14s
-To: Johan Hovold <johan@kernel.org>
-Cc: Leif Lindholm <leif.lindholm@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Ricardo Salveti <ricardo@foundries.io>, Marc Zyngier <maz@kernel.org>, linux-efi@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241128133351.24593-2-quic_jseerapu@quicinc.com>
 
-On Thu, 28 Nov 2024 at 15:46, Johan Hovold <johan@kernel.org> wrote:
->
-> On Thu, Nov 28, 2024 at 12:05:09PM +0100, Ard Biesheuvel wrote:
->
-> > If you're happy to experiment more, you could try and register a
-> > notification for EFI_EVENT_GROUP_BEFORE_EXIT_BOOT_SERVICES using
-> > CreateEventEx(), and see if it gets called when ExitBootServices() is
-> > called. That would at least help narrow it down.
->
-> Thanks for the suggestion.
->
-> I see the notify function being called when I signal it as well as on
-> each ExitBootServices().
->
+On Thu, Nov 28, 2024 at 07:03:50PM +0530, Jyothi Kumar Seerapu wrote:
+> The DMA TRE(Transfer ring element) buffer contains the DMA
+> buffer address. Accessing data from this address can cause
+> significant delays in SPI transfers, which can be mitigated to
+> some extent by utilizing immediate DMA support.
+> 
+> QCOM GPI DMA hardware supports an immediate DMA feature for data
+> up to 8 bytes, storing the data directly in the DMA TRE buffer
+> instead of the DMA buffer address. This enhancement enables faster
+> SPI data transfers.
+> 
+> This optimization reduces the average transfer time from 25 us to
+> 16 us for a single SPI transfer of 8 bytes length, with a clock
+> frequency of 50 MHz.
+> 
+> Signed-off-by: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
+> ---
+> v1 -> v2:
+>    - Separated the patches to dmaengine and spi subsystems
+>    - Removed the changes which are not required for this feature from
+>      qcom-gpi-dma.h file.
+>    - Removed the type conversions used in gpi_create_spi_tre.
+> 
+>  drivers/dma/qcom/gpi.c           | 32 +++++++++++++++++++++++++++-----
+>  include/linux/dma/qcom-gpi-dma.h |  6 ++++++
+>  2 files changed, 33 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
+> index 52a7c8f2498f..4c5df696ddd8 100644
+> --- a/drivers/dma/qcom/gpi.c
+> +++ b/drivers/dma/qcom/gpi.c
+> @@ -27,6 +27,7 @@
+>  #define TRE_FLAGS_IEOT		BIT(9)
+>  #define TRE_FLAGS_BEI		BIT(10)
+>  #define TRE_FLAGS_LINK		BIT(11)
+> +#define TRE_FLAGS_IMMEDIATE_DMA	BIT(16)
+>  #define TRE_FLAGS_TYPE		GENMASK(23, 16)
+>  
+>  /* SPI CONFIG0 WD0 */
+> @@ -64,6 +65,7 @@
+>  
+>  /* DMA TRE */
+>  #define TRE_DMA_LEN		GENMASK(23, 0)
+> +#define TRE_DMA_IMMEDIATE_LEN	GENMASK(3, 0)
+>  
+>  /* Register offsets from gpi-top */
+>  #define GPII_n_CH_k_CNTXT_0_OFFS(n, k)	(0x20000 + (0x4000 * (n)) + (0x80 * (k)))
+> @@ -1711,6 +1713,8 @@ static int gpi_create_spi_tre(struct gchan *chan, struct gpi_desc *desc,
+>  	dma_addr_t address;
+>  	struct gpi_tre *tre;
+>  	unsigned int i;
+> +	u8 *buf;
+> +	int len = 0;
 
-Interesting. That means the EDK2 fork is fairly recent.
+First use of "len" is an assignment, so you shouldn't zero-initialize it
+here.
 
-FYI https://github.com/tianocore/edk2/pull/6481
+>  
+>  	/* first create config tre if applicable */
+>  	if (direction == DMA_MEM_TO_DEV && spi->set_config) {
+> @@ -1763,14 +1767,32 @@ static int gpi_create_spi_tre(struct gchan *chan, struct gpi_desc *desc,
+>  	tre_idx++;
+>  
+>  	address = sg_dma_address(sgl);
+> -	tre->dword[0] = lower_32_bits(address);
+> -	tre->dword[1] = upper_32_bits(address);
+> +	len = sg_dma_len(sgl);
+>  
+> -	tre->dword[2] = u32_encode_bits(sg_dma_len(sgl), TRE_DMA_LEN);
+> +	/* Support Immediate dma for write transfers for data length up to 8 bytes */
+
+And what happens if the developer writing the SPI driver forgets to read
+this comment and sets QCOM_GPI_IMMEDIATE_DMA for a 9 byte transfer?
+
+> +	if ((spi->flags & QCOM_GPI_IMMEDIATE_DMA) && direction == DMA_MEM_TO_DEV) {
+
+Why is this flag introduced?
+
+If I understand the next patch, all DMA_MEM_TO_DEV transfers of <=
+QCOM_GPI_IMMEDIATE_DMA_LEN can use the immediate mode, so why not move
+the condition here?
+
+Also ordering[1].
+
+	if (direction == DMA_MEM_TO_DEV && len <= 2 * sizeof(tre->dword[0]))
 
 
-> With an efi_printk() in the callback ExitBootServices() fails as
-> expected, but with an empty function the kernel seems to start every
-> time.
->
-> Interestingly, ExitBootServices() now succeeds also if I add back the
-> CloseEvent() call. In fact, it works also if I never signal the event
-> (i.e. if I just create and close the event).
->
+[1] Compare "all transfers of length 8 or less, which are mem to device"
+vs "all transfers which are mem to device, with a length of 8 or less".
+The bigger "selection criteria" is the direction, then that's fine tuned
+by the length query.
 
-Is it still invoked by the firmware if you closed the event before EBS()?
+> +		buf = sg_virt(sgl);
 
-> The patch below should suffice as a workaround I can carry until the
-> firmware has been fixed.
->
+It's a question of style, but I think you could just put the sg_virt()
+directly in the memcpy() call and avoid the extra variable.
 
-Ok. I'd prefer to get this fixed on the firmware side as well.
+>  
+> -	tre->dword[3] = u32_encode_bits(TRE_TYPE_DMA, TRE_FLAGS_TYPE);
+> -	if (direction == DMA_MEM_TO_DEV)
+> +		/* memcpy may not always be length of 8, hence pre-fill both dword's with 0 */
+
+The implementation of memcpy() is always more than 8 bytes, it's buf
+that might be less than 8 bytes ;)
+
+Also you're not "pre-filling", you're "zero-initializing", or just
+"initialize".
+
+
+That said, does it matter? Will the QUP read beyond the
+TRE_DMA_IMMEDIATE_LEN bytes? If so, please put _that_ in the comment
+("QUP reads beyond the provided len, so additional content needs to be
+cleared", or similar)
+
+> +		tre->dword[0] = 0;
+> +		tre->dword[1] = 0;
+> +		memcpy(&tre->dword[0], buf, len);
+> +
+> +		tre->dword[2] = u32_encode_bits(len, TRE_DMA_IMMEDIATE_LEN);
+
+Does the format of tre->dword[2] really change when
+TRE_FLAGS_IMMEDIATE_DMA is set, or is TRE_DMA_IMMEDIATE_LEN just a
+mask to highlight that len can't be more than 4 bits?
+
+It seems like you could drop TRE_DMA_IMMEDIATE_LEN and just use
+TRE_DMA_LEN here? (But it should match what the hardware programming
+guide states)
+
+
+Perhaps you could reduce the scope of this if/else then as well, as the
+assignment of of dword[2] and dword[3] is mostly the same with and
+without immediate mode (just the one bit to enable it)
+
+> +
+> +		tre->dword[3] = u32_encode_bits(TRE_TYPE_DMA, TRE_FLAGS_TYPE);
+>  		tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_IEOT);
+> +		tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_IMMEDIATE_DMA);
+> +	} else {
+> +		tre->dword[0] = lower_32_bits(address);
+> +		tre->dword[1] = upper_32_bits(address);
+> +
+> +		tre->dword[2] = u32_encode_bits(len, TRE_DMA_LEN);
+> +
+> +		tre->dword[3] = u32_encode_bits(TRE_TYPE_DMA, TRE_FLAGS_TYPE);
+> +		if (direction == DMA_MEM_TO_DEV)
+> +			tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_IEOT);
+> +	}
+>  
+>  	for (i = 0; i < tre_idx; i++)
+>  		dev_dbg(dev, "TRE:%d %x:%x:%x:%x\n", i, desc->tre[i].dword[0],
+> diff --git a/include/linux/dma/qcom-gpi-dma.h b/include/linux/dma/qcom-gpi-dma.h
+> index 6680dd1a43c6..84598848d53a 100644
+> --- a/include/linux/dma/qcom-gpi-dma.h
+> +++ b/include/linux/dma/qcom-gpi-dma.h
+> @@ -15,6 +15,10 @@ enum spi_transfer_cmd {
+>  	SPI_DUPLEX,
+>  };
+>  
+> +#define QCOM_GPI_IMMEDIATE_DMA		BIT(1)
+> +
+> +#define QCOM_GPI_IMMEDIATE_DMA_LEN	8
+> +
+>  /**
+>   * struct gpi_spi_config - spi config for peripheral
+>   *
+> @@ -30,6 +34,7 @@ enum spi_transfer_cmd {
+>   * @cs: chip select toggle
+>   * @set_config: set peripheral config
+>   * @rx_len: receive length for buffer
+> + * @flags: true for immediate dma support
+
+Per above I think you can remove this flag, but "true for immediate DMA
+support" doesn't match what you have written in the code. (Also in
+general u8 shouldn't be "true")
+
+Regards,
+Bjorn
+
+>   */
+>  struct gpi_spi_config {
+>  	u8 set_config;
+> @@ -44,6 +49,7 @@ struct gpi_spi_config {
+>  	u32 clk_src;
+>  	enum spi_transfer_cmd cmd;
+>  	u32 rx_len;
+> +	u8 flags;
+>  };
+>  
+>  enum i2c_op {
+> -- 
+> 2.17.1
+> 
+> 
 
