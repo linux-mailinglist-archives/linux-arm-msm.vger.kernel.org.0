@@ -1,117 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-39454-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39455-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7A5A19DB8AF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 14:30:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 932FA9DB8CA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 14:34:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 404B7280291
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 13:30:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 55A0D2815FA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 13:34:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 317C21A00FE;
-	Thu, 28 Nov 2024 13:30:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DECAB1A9B44;
+	Thu, 28 Nov 2024 13:34:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="feihFoWl"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="AlPQkGFQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6344A1A29A
-	for <linux-arm-msm@vger.kernel.org>; Thu, 28 Nov 2024 13:30:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4296F1A29A;
+	Thu, 28 Nov 2024 13:34:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732800618; cv=none; b=a9a6abJ4lKun92Sp4ForcGekWy2f5fmLbjAi78uc/FI0RLdRIypT+sTMCY4tVI4vY+hU9RK+5e5w0x6X/yeg8tyWtRHzXsRXJbPNEf80PkPY2fk4LSROBOsC5HeLqF4AVY3ynW7gC4gMe7R0JFh5W0z6iaBSALAbe4sJs2x7JX0=
+	t=1732800856; cv=none; b=SE59JJ8UjIeA4vQxEKbjBZBpDlz+PDgtlGz7YOAo8+QONreViny/b2V7lmJUjk3RV7/dJiffiD9U5F3VItg9wYxNCJ7efQQQfigWBhdPuXrVfrWN3Thpnrje02ZsTXrkH7kPh0rjyGiZYRPvTzyeMUe+6uolqRMC2VqnJ+2QH8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732800618; c=relaxed/simple;
-	bh=UkRWDGIYcosnptVfDrpixA3gL5nnTPr9/n7pCEn4IMk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=S+f1u++93vIVC6Y/4IdWZh3P1+RfnCEhtrmMlVGgUU2Mn7aa17mQFPhMc59R7UNy/cgXYzjF8VEYo1J6iDgQuxfmrfbTTQXxaJTqWtDEeTFLqX6JvY9LScfiBtm307Kcc6BwFuN4M/tEsV/auQMa8CN9ItYky2oXLZQXLn6uV4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=feihFoWl; arc=none smtp.client-ip=209.85.167.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-53de880c77eso966040e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Nov 2024 05:30:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732800614; x=1733405414; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=yCjaLIoqKd3bBOokmeosaZwBTg8Xdv4t4ZzkEjKsEdE=;
-        b=feihFoWlkZbvHRGyaB4V5GHjqP5rN4T7mfQ6Fo6CKLHbCNqmVomK7fNKtiCJNlTMb8
-         ajuEE9E+j2dvsLgLtlu/8ErSOk+tx96/qe+j2NmCDN1dCH/P9KZJFEfW9IjMegnUouX+
-         oA0gFb0SxtMIBSsV6Xjkvf3/GYRvhDhjCPWp+1oxH3PQExAQ1c/A8EdtePVeopsfKRTz
-         LBEktSyLFsqbbuedL2mqGbCTbJnKRZNeAEfUNkzZllLK6cxvLMfPq21DnUdMBtM7bRjr
-         lJ7lNLsPZE+jmvg7UpZYIQLJalD4WU/eBA8eoquIVJksL5cQaSg7BzlSuG/WuWR5rEcA
-         PywQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732800614; x=1733405414;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yCjaLIoqKd3bBOokmeosaZwBTg8Xdv4t4ZzkEjKsEdE=;
-        b=AeT/G4dQKgcsII8xpceftwhAG4Ix3qaHucZR7ZcLgp5113c7NuDQk0RNCiiA16iWx+
-         O+x/lzRUS3EQMQiNSbXGNDm6MJP8rsMShx5UViYegZuwd/jGEKnNyynr/i/5uLU+SX42
-         NJ3/E6dWJP5g2tXoMkYLMBXhtraHT+QicwqpPeBB3YwdeEyhNsc1DSvRvvj4wyGGHIv7
-         hQZVwSkk7JdI9HzogkhkaYZT0n8iZqnzmPgQUzomf9dOoXClkIDwoKR2YP+gGxRtHgt6
-         hsEz3n7B9uth2D1IvM5fSdVnGy8uUb4mzjg53hKxcrMk1SMuDD3q6VhjLHeUx+M0o27B
-         sUKg==
-X-Forwarded-Encrypted: i=1; AJvYcCVijVYeM/jVEGvGjBU1VHtjbi8EpOmu/Mt5Appx7fs2L2PI4nwpP/Xtp5kbSFe1p1o7s7B733DWkQ/6Zg2T@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz1CK4h7yqzMrjw3AMubpilySOkNnHXopbHnRbCt/Kp9F4biDn8
-	ViwFqFRfmOuw3d9u86z0KVp+VSEtvaQFrpdOCbkCxYehTVqrf0YyQTurYY2c4gM=
-X-Gm-Gg: ASbGncslVXHct7WTOckktpEuAjMCqnuI5YINz36lFBUDQJlZ3VEpb+G283hUKI17Ktl
-	Ub6rluPAQDFxQVS/g/a2p9y/h8deQEZ5ipPcs+WHMje2KK8w5ZPX2oUmzASPmVvH0LvA+jbMTE6
-	rAEngvxQT5HKCsG6cZGVIoP+c6PRDHMBWvVV5UbGoLYlLx0tqo82R/JDOm4ZKmTyNOhxd/JPZc+
-	mwDauaJ2nTbsbrknJmEoYraeMQIhdP3xlKkzrB1tMmseDh9fCs8m/SY2xU4AE14w7gTOZy1SV/w
-	eKYGtfkQ2Og0li9N2NPN0ebZZUUm7w==
-X-Google-Smtp-Source: AGHT+IExPmce5P4ZT632z2IC0da+T/+lWJvFnMY6sShZcO7cz0kH9x97oQAlFQTrdXw86Rylra8OBQ==
-X-Received: by 2002:a05:6512:238a:b0:53d:cb7e:2251 with SMTP id 2adb3069b0e04-53df010471fmr3419369e87.36.1732800614564;
-        Thu, 28 Nov 2024 05:30:14 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53df64310d2sm178615e87.48.2024.11.28.05.30.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Nov 2024 05:30:13 -0800 (PST)
-Date: Thu, 28 Nov 2024 15:30:10 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Bjorn Andersson <andersson@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Akhil P Oommen <quic_akhilpo@quicinc.com>, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 5/7] drm/msm: adreno: enable GMU bandwidth for A740
- and A750
-Message-ID: <lseuso7qmbgtt36jrpzipip2e5m6r4wbi4ixxss5mi6ssi3thx@dzt5tlsjbyu7>
-References: <20241128-topic-sm8x50-gpu-bw-vote-v3-0-81d60c10fb73@linaro.org>
- <20241128-topic-sm8x50-gpu-bw-vote-v3-5-81d60c10fb73@linaro.org>
+	s=arc-20240116; t=1732800856; c=relaxed/simple;
+	bh=ZvTd00fnco11E4EWIweRrAc8AjwbJP784CxZOEfdGJY=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Jlb/YpY7aKWtN+xoYQkFKXrfeF0LpB03Cv9b1XKxta+wGOMt/HG/FVCwoTkuE07prR0pTahS+IPZpeYW/dInAs3toHi9QwqZi2G4yZrIWb5tEHcGcDnuFH8/mTtDmt/KgbCjfiFPu7zMWtE76BsIJcXR2y9K9OkaSMRqQlw/V4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=AlPQkGFQ; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AS8hX4c012287;
+	Thu, 28 Nov 2024 13:34:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:message-id:mime-version:subject:to; s=
+	qcppdkim1; bh=ujC9rX20xzmXBX7Z0EPm7uXpVSxDFoT6gE0DgYc0xSE=; b=Al
+	PQkGFQNLp4vGIG/gy80xRoqoDpofWWKVF2RTM3iYsLbQiMm7PNQz5BaxKzMcTzwG
+	9DvamylZ6BygZqUF+JA1LUlY0WW6HdZz7Xc92aDLoSBV40zr1H6ggUuqDmcb4egz
+	x15r7j9YbL/vH7mXpAqbzBXIzUxXhq9kacayilzw3hrl7haq54pSl63ywjfk9xy4
+	j5J8pD1fPRlcDiT3CvKwxNW+uqD2GXVNta2PkiPln69KK4w2sm4fDwfjf60jT+Qj
+	scgkHDl1F6AOJYCmNbT042auQpepcD+IS7RqlhlvC8afXWmHk0C67t7W+mnpNzCy
+	CFR3PYFMrdvZF7TAHXJA==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4366xy2t54-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 28 Nov 2024 13:34:11 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4ASDYAKL030161
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 28 Nov 2024 13:34:10 GMT
+Received: from hu-jseerapu-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Thu, 28 Nov 2024 05:34:08 -0800
+From: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
+To: Vinod Koul <vkoul@kernel.org>, Mark Brown <broonie@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-spi@vger.kernel.org>,
+        <quic_msavaliy@quicinc.com>, <quic_vtanuku@quicinc.com>
+Subject: [PATCH v2 0/2] Add GPI immediate DMA support for SPI 
+Date: Thu, 28 Nov 2024 19:03:49 +0530
+Message-ID: <20241128133351.24593-1-quic_jseerapu@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241128-topic-sm8x50-gpu-bw-vote-v3-5-81d60c10fb73@linaro.org>
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 8FYvQU7At5hPqwUGVP5MqXtwdjrFTKa-
+X-Proofpoint-ORIG-GUID: 8FYvQU7At5hPqwUGVP5MqXtwdjrFTKa-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 spamscore=0
+ clxscore=1015 malwarescore=0 suspectscore=0 adultscore=0 mlxlogscore=999
+ mlxscore=0 priorityscore=1501 phishscore=0 lowpriorityscore=0 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
+ definitions=main-2411280106
 
-On Thu, Nov 28, 2024 at 11:25:45AM +0100, Neil Armstrong wrote:
-> Now all the DDR bandwidth voting via the GPU Management Unit (GMU)
-> is in place, declare the Bus Control Modules (BCMs) and the
-> corresponding parameters in the GPU info struct and add the
-> GMU_BW_VOTE feature bit to enable it.
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->  drivers/gpu/drm/msm/adreno/a6xx_catalog.c | 22 ++++++++++++++++++++++
->  1 file changed, 22 insertions(+)
-> 
+The DMA TRE(Transfer ring element) buffer contains the DMA
+buffer address. Accessing data from this address can cause
+significant delays in SPI transfers, which can be mitigated to
+some extent by utilizing immediate DMA support.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+QCOM GPI DMA hardware supports an immediate DMA feature for data
+up to 8 bytes, storing the data directly in the DMA TRE buffer
+instead of the DMA buffer address. This enhancement enables faster
+SPI data transfers.
 
+This optimization reduces the average transfer time from 25 us to
+16 us for a single SPI transfer of 8 bytes length, with a clock
+frequency of 50 MHz.
+
+v1 -> v2:
+   - Separated the patches to dmaengine and spi subsystems
+   - Removed the type conversions used in gpi_create_spi_tre of gpi.c.
+   - Removed the changes which are not required for this feature from
+     qcom-gpi-dma.h file. 
+
+Jyothi Kumar Seerapu (2):
+  dmaengine: qcom: gpi: Add GPI immediate DMA support
+  spi: spi-geni-qcom: Add immediate DMA support
+
+ drivers/dma/qcom/gpi.c           | 32 +++++++++++++++++++++++++++-----
+ drivers/spi/spi-geni-qcom.c      |  7 +++++++
+ include/linux/dma/qcom-gpi-dma.h |  6 ++++++
+ 3 files changed, 40 insertions(+), 5 deletions(-)
+
+
+base-commit: ceab669fdf7b7510b4e4997b33d6f66e433a96db
 -- 
-With best wishes
-Dmitry
+2.17.1
+
 
