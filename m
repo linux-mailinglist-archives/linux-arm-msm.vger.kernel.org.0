@@ -1,101 +1,261 @@
-Return-Path: <linux-arm-msm+bounces-39488-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39489-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 74D1A9DBB7E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 17:50:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 382109DBBA8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 18:12:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 18D921639B7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 16:49:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D503616432E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 17:12:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BFFB11AA1E4;
-	Thu, 28 Nov 2024 16:49:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 675601C07D9;
+	Thu, 28 Nov 2024 17:12:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="LsMx96iW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V/fFVA9e"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D234717993;
-	Thu, 28 Nov 2024 16:49:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D4669463;
+	Thu, 28 Nov 2024 17:12:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732812596; cv=none; b=HGYVz4djRR5c0Mrsm38q4E5MMCissn07twpArf+xnfo4vz86fjJ9T3KNMYW8/zE6zK4qOiK31JBG8MwavAH8Fo8QMlLK53OIuB/S2UOHX20IWKApAw9xF+hLFw4VmJ+Ni/p4NZbuB0QLM4hMb/kqKNhsppggwyTbd/9dUipC7do=
+	t=1732813965; cv=none; b=WjhVmMTeC1KGKqNsL0pHm4qnj+6jNjskfNu+r/u1BzSKpftI4wZ+s8DsFffDOJyMWV9Bs9wBNi2iCgOLCTOFDhcc06SUAvN9HUru1eIjvl5+UxG4ZG5dIva0y29onun2VU8GoBk9twbRPDQLaz1G+HTJk0VK/0CJlsQsQA6uMuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732812596; c=relaxed/simple;
-	bh=+f65cArbkad+RjYcrHk8XkXcpR5AKMSGfRrHUf09l8I=;
+	s=arc-20240116; t=1732813965; c=relaxed/simple;
+	bh=obu6+yPQWfPFqgWAIwUui4SC29PIZhtWgr/lVg2Zhbk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MNn1KayvAvb4m99iSCLhj6MGOfQFKeVavFcFGKl3pl6OHsMZEzNZKxabIq0tNr21WRVz9tfpeimGwd/HwW9jLLSlUkTsqQQUeaZn/rilqxteQ1fKAI6S6ju8NmB74jVCpPxI2G9vSXQZFTfemuVBVdpHUz0bHDmTdcYs8sjJ/yI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=LsMx96iW; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=YRg/7d6YJzOoez+QkfVBlbg77QpvQiIofJH2zZ3Hjtg=; b=LsMx96iWwDND2at+8Wjl7oCHaL
-	ocO4idUaabSGW+jJXM0iWz9v9g3jsiZcEvFNARD91lU3/R7tRERvjwy89136atw1HGSjnHqL0jDhk
-	5QtkfFAHTNemlNm+ddEmqUOwQoOSYLjhAN49Y0T19rRW3r02CY9NLpVxxJAq1L3GGQAM=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1tGhi9-00Einh-Od; Thu, 28 Nov 2024 17:49:49 +0100
-Date: Thu, 28 Nov 2024 17:49:49 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Jingyi Wang <quic_jingyw@quicinc.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=kZ7A1c4qI2jFNjss8IJOF0KXmZBJQnq2EZY6UNDUPcoggVqihzJK2yVGnS7g382vIiqk2ymT6/A68d0/JVeymGbADf3hB7Cov46tZRRJF/MrG7HV+ISdKFoJrdl71W2D4utgv8Wk550jyNip9dgoyp8hmcQ1FbbOYB6fNr1NyWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V/fFVA9e; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DB30C4CECE;
+	Thu, 28 Nov 2024 17:12:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1732813964;
+	bh=obu6+yPQWfPFqgWAIwUui4SC29PIZhtWgr/lVg2Zhbk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=V/fFVA9eMCnu3Xa4i9HhBIUQxPQ7SgMF5jW6ERMZNQ3Y0w0gjudJHVykRPGz/1Xd9
+	 YOYru5yRVoiniaGqqJMH6jifXSP4le+0uCvQpL+Mf9dRVpyxYXX1x20NwDY6Pb2Tp3
+	 gVubJJMBhXDTKndDt0mwNOj2Qf1Ka56F2Ggz6+nSL5qgSq0GifFvjJi3xve3+JEhKE
+	 8KBCSa++Fnx/lnJpNSOa7BVeJCQFd7L7sJnwNEmCPLWh/3FoV5DsK56irgFQXOrG0l
+	 UA+EYDgwJ7o/kRQP5iQ9buodrqRfYS5Gb5Dkx9+qNoQyKrrRMy9eGlPMsxPEbdCx8P
+	 5fzMFjAVxKf5g==
+Date: Thu, 28 Nov 2024 17:12:40 +0000
+From: Conor Dooley <conor@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>, quic_tengfan@quicinc.com,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	Krzysztof Kozlowski <krzk@kernel.org>
-Subject: Re: [PATCH v3 4/4] arm64: dts: qcom: add base QCS8300 RIDE board
-Message-ID: <fe332b12-d62e-442d-906b-7f3a72165b85@lunn.ch>
-References: <20241128-qcs8300_initial_dtsi-v3-0-26aa8a164914@quicinc.com>
- <20241128-qcs8300_initial_dtsi-v3-4-26aa8a164914@quicinc.com>
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/3] dt-bindings: clock: qcom,sm8550-dispcc: Add SM8750
+ DISPCC
+Message-ID: <20241128-serotonin-carwash-62ad0fb09c3a@spud>
+References: <20241128-sm8750-dispcc-v1-0-120705a4015c@linaro.org>
+ <20241128-sm8750-dispcc-v1-1-120705a4015c@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="bY94c2bZOlNH/+X1"
+Content-Disposition: inline
+In-Reply-To: <20241128-sm8750-dispcc-v1-1-120705a4015c@linaro.org>
+
+
+--bY94c2bZOlNH/+X1
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241128-qcs8300_initial_dtsi-v3-4-26aa8a164914@quicinc.com>
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Nov 28, 2024 at 04:44:46PM +0800, Jingyi Wang wrote:
-> Add initial support for Qualcomm QCS8300 RIDE board which enables DSPs,
-> UFS and booting to shell with uart console.
-> 
-> Written with help from Tingguo Cheng (added rpmhpd nodes) and Xin Liu
-> (added ufs, adsp and gpdsp nodes).
-> 
-> Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
-> Signed-off-by: Jingyi Wang <quic_jingyw@quicinc.com>
+On Thu, Nov 28, 2024 at 04:07:59PM +0100, Krzysztof Kozlowski wrote:
+> Add bindings for the Qualcomm SM8750 Display Clock Controller (DISPCC).
+> Bindings are similar to existing SM8550 and SM8650 (same clock inputs),
+> but the clock hierarchy is quite different and these are not compatible
+> devices.
+>=20
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
->  arch/arm64/boot/dts/qcom/Makefile         |   2 +-
->  arch/arm64/boot/dts/qcom/qcs8300-ride.dts | 267 ++++++++++++++++++++++++++++++
->  2 files changed, 268 insertions(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 9bb8b191aeb5..d9545743606a 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -114,7 +114,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= qcm6490-shift-otter.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2.dtb
-> -dtb-$(CONFIG_ARCH_QCOM)	+= qcs8550-aim300-aiot.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= qcs8300-ride.dtb
+>  .../bindings/clock/qcom,sm8550-dispcc.yaml         |   4 +-
+>  include/dt-bindings/clock/qcom,sm8750-dispcc.h     | 112 +++++++++++++++=
+++++++
+>  2 files changed, 115 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8550-dispcc.y=
+aml b/Documentation/devicetree/bindings/clock/qcom,sm8550-dispcc.yaml
+> index c57d55a9293c214c4c101902cdd9603074e2243d..30e4b46315752b93754ab2f94=
+6c684e13b06ab93 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,sm8550-dispcc.yaml
+> +++ b/Documentation/devicetree/bindings/clock/qcom,sm8550-dispcc.yaml
+> @@ -12,11 +12,12 @@ maintainers:
+> =20
+>  description: |
+>    Qualcomm display clock control module provides the clocks, resets and =
+power
+> -  domains on SM8550.
+> +  domains on SM8550, SM8650, SM8750 and few other platforms.
+> =20
+>    See also:
+>    - include/dt-bindings/clock/qcom,sm8550-dispcc.h
+>    - include/dt-bindings/clock/qcom,sm8650-dispcc.h
+> +  - include/dt-bindings/clock/qcom,sm8750-dispcc.h
+>    - include/dt-bindings/clock/qcom,x1e80100-dispcc.h
+> =20
+>  properties:
+> @@ -25,6 +26,7 @@ properties:
+>        - qcom,sar2130p-dispcc
+>        - qcom,sm8550-dispcc
+>        - qcom,sm8650-dispcc
+> +      - qcom,sm8750-dispcc
+>        - qcom,x1e80100-dispcc
+> =20
+>    clocks:
+> diff --git a/include/dt-bindings/clock/qcom,sm8750-dispcc.h b/include/dt-=
+bindings/clock/qcom,sm8750-dispcc.h
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..dafb5069c96a0c3f83c15f3c6=
+1978e138baa886c
+> --- /dev/null
+> +++ b/include/dt-bindings/clock/qcom,sm8750-dispcc.h
+> @@ -0,0 +1,112 @@
+> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
+> +/*
+> + * Copyright (c) 2022, The Linux Foundation. All rights reserved.
 
-It would be good to add a comment to the commit message about why you
-are removing qcs8550-aim300-aiot.dtb from the Makefile.
+This looks pretty questionable, how does something that was apparently
+announced last month have a 2022 copyright from the Linux Foundation?
 
-	Andrew
+> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reser=
+ved.
+> + * Copyright (c) 2024, Linaro Ltd.
+> + */
+> +
+> +#ifndef _DT_BINDINGS_CLK_QCOM_SM8750_DISP_CC_H
+> +#define _DT_BINDINGS_CLK_QCOM_SM8750_DISP_CC_H
+> +
+> +/* DISP_CC clocks */
+> +#define DISP_CC_ESYNC0_CLK					0
+> +#define DISP_CC_ESYNC0_CLK_SRC					1
+> +#define DISP_CC_ESYNC1_CLK					2
+> +#define DISP_CC_ESYNC1_CLK_SRC					3
+> +#define DISP_CC_MDSS_ACCU_SHIFT_CLK				4
+> +#define DISP_CC_MDSS_AHB1_CLK					5
+> +#define DISP_CC_MDSS_AHB_CLK					6
+> +#define DISP_CC_MDSS_AHB_CLK_SRC				7
+> +#define DISP_CC_MDSS_BYTE0_CLK					8
+> +#define DISP_CC_MDSS_BYTE0_CLK_SRC				9
+> +#define DISP_CC_MDSS_BYTE0_DIV_CLK_SRC				10
+> +#define DISP_CC_MDSS_BYTE0_INTF_CLK				11
+> +#define DISP_CC_MDSS_BYTE1_CLK					12
+> +#define DISP_CC_MDSS_BYTE1_CLK_SRC				13
+> +#define DISP_CC_MDSS_BYTE1_DIV_CLK_SRC				14
+> +#define DISP_CC_MDSS_BYTE1_INTF_CLK				15
+> +#define DISP_CC_MDSS_DPTX0_AUX_CLK				16
+> +#define DISP_CC_MDSS_DPTX0_AUX_CLK_SRC				17
+> +#define DISP_CC_MDSS_DPTX0_CRYPTO_CLK				18
+> +#define DISP_CC_MDSS_DPTX0_LINK_CLK				19
+> +#define DISP_CC_MDSS_DPTX0_LINK_CLK_SRC				20
+> +#define DISP_CC_MDSS_DPTX0_LINK_DIV_CLK_SRC			21
+> +#define DISP_CC_MDSS_DPTX0_LINK_INTF_CLK			22
+> +#define DISP_CC_MDSS_DPTX0_PIXEL0_CLK				23
+> +#define DISP_CC_MDSS_DPTX0_PIXEL0_CLK_SRC			24
+> +#define DISP_CC_MDSS_DPTX0_PIXEL1_CLK				25
+> +#define DISP_CC_MDSS_DPTX0_PIXEL1_CLK_SRC			26
+> +#define DISP_CC_MDSS_DPTX0_USB_ROUTER_LINK_INTF_CLK		27
+> +#define DISP_CC_MDSS_DPTX1_AUX_CLK				28
+> +#define DISP_CC_MDSS_DPTX1_AUX_CLK_SRC				29
+> +#define DISP_CC_MDSS_DPTX1_CRYPTO_CLK				30
+> +#define DISP_CC_MDSS_DPTX1_LINK_CLK				31
+> +#define DISP_CC_MDSS_DPTX1_LINK_CLK_SRC				32
+> +#define DISP_CC_MDSS_DPTX1_LINK_DIV_CLK_SRC			33
+> +#define DISP_CC_MDSS_DPTX1_LINK_INTF_CLK			34
+> +#define DISP_CC_MDSS_DPTX1_PIXEL0_CLK				35
+> +#define DISP_CC_MDSS_DPTX1_PIXEL0_CLK_SRC			36
+> +#define DISP_CC_MDSS_DPTX1_PIXEL1_CLK				37
+> +#define DISP_CC_MDSS_DPTX1_PIXEL1_CLK_SRC			38
+> +#define DISP_CC_MDSS_DPTX1_USB_ROUTER_LINK_INTF_CLK		39
+> +#define DISP_CC_MDSS_DPTX2_AUX_CLK				40
+> +#define DISP_CC_MDSS_DPTX2_AUX_CLK_SRC				41
+> +#define DISP_CC_MDSS_DPTX2_CRYPTO_CLK				42
+> +#define DISP_CC_MDSS_DPTX2_LINK_CLK				43
+> +#define DISP_CC_MDSS_DPTX2_LINK_CLK_SRC				44
+> +#define DISP_CC_MDSS_DPTX2_LINK_DIV_CLK_SRC			45
+> +#define DISP_CC_MDSS_DPTX2_LINK_INTF_CLK			46
+> +#define DISP_CC_MDSS_DPTX2_PIXEL0_CLK				47
+> +#define DISP_CC_MDSS_DPTX2_PIXEL0_CLK_SRC			48
+> +#define DISP_CC_MDSS_DPTX2_PIXEL1_CLK				49
+> +#define DISP_CC_MDSS_DPTX2_PIXEL1_CLK_SRC			50
+> +#define DISP_CC_MDSS_DPTX3_AUX_CLK				51
+> +#define DISP_CC_MDSS_DPTX3_AUX_CLK_SRC				52
+> +#define DISP_CC_MDSS_DPTX3_CRYPTO_CLK				53
+> +#define DISP_CC_MDSS_DPTX3_LINK_CLK				54
+> +#define DISP_CC_MDSS_DPTX3_LINK_CLK_SRC				55
+> +#define DISP_CC_MDSS_DPTX3_LINK_DIV_CLK_SRC			56
+> +#define DISP_CC_MDSS_DPTX3_LINK_INTF_CLK			57
+> +#define DISP_CC_MDSS_DPTX3_PIXEL0_CLK				58
+> +#define DISP_CC_MDSS_DPTX3_PIXEL0_CLK_SRC			59
+> +#define DISP_CC_MDSS_ESC0_CLK					60
+> +#define DISP_CC_MDSS_ESC0_CLK_SRC				61
+> +#define DISP_CC_MDSS_ESC1_CLK					62
+> +#define DISP_CC_MDSS_ESC1_CLK_SRC				63
+> +#define DISP_CC_MDSS_MDP1_CLK					64
+> +#define DISP_CC_MDSS_MDP_CLK					65
+> +#define DISP_CC_MDSS_MDP_CLK_SRC				66
+> +#define DISP_CC_MDSS_MDP_LUT1_CLK				67
+> +#define DISP_CC_MDSS_MDP_LUT_CLK				68
+> +#define DISP_CC_MDSS_NON_GDSC_AHB_CLK				69
+> +#define DISP_CC_MDSS_PCLK0_CLK					70
+> +#define DISP_CC_MDSS_PCLK0_CLK_SRC				71
+> +#define DISP_CC_MDSS_PCLK1_CLK					72
+> +#define DISP_CC_MDSS_PCLK1_CLK_SRC				73
+> +#define DISP_CC_MDSS_PCLK2_CLK					74
+> +#define DISP_CC_MDSS_PCLK2_CLK_SRC				75
+> +#define DISP_CC_MDSS_RSCC_AHB_CLK				76
+> +#define DISP_CC_MDSS_RSCC_VSYNC_CLK				77
+> +#define DISP_CC_MDSS_VSYNC1_CLK					78
+> +#define DISP_CC_MDSS_VSYNC_CLK					79
+> +#define DISP_CC_MDSS_VSYNC_CLK_SRC				80
+> +#define DISP_CC_OSC_CLK						81
+> +#define DISP_CC_OSC_CLK_SRC					82
+> +#define DISP_CC_PLL0						83
+> +#define DISP_CC_PLL1						84
+> +#define DISP_CC_PLL2						85
+> +#define DISP_CC_SLEEP_CLK					86
+> +#define DISP_CC_SLEEP_CLK_SRC					87
+> +#define DISP_CC_XO_CLK						88
+> +#define DISP_CC_XO_CLK_SRC					89
+> +
+> +/* DISP_CC resets */
+> +#define DISP_CC_MDSS_CORE_BCR					0
+> +#define DISP_CC_MDSS_CORE_INT2_BCR				1
+> +#define DISP_CC_MDSS_RSCC_BCR					2
+> +
+> +/* DISP_CC GDSCR */
+> +#define MDSS_GDSC						0
+> +#define MDSS_INT2_GDSC						1
+> +
+> +#endif
+>=20
+> --=20
+> 2.43.0
+>=20
+
+--bY94c2bZOlNH/+X1
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZ0ikiAAKCRB4tDGHoIJi
+0hhOAQD8VomtMHxksZJO1DjfXQ69y1VOcE6aJIcdiBPGBt30AwD+MEiXu/CuD/Fi
+0yxtbCKF9hLbcAQvPpoWNuTWLc6J1gg=
+=1sJ8
+-----END PGP SIGNATURE-----
+
+--bY94c2bZOlNH/+X1--
 
