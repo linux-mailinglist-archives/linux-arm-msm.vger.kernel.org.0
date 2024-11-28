@@ -1,261 +1,251 @@
-Return-Path: <linux-arm-msm+bounces-39489-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39490-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 382109DBBA8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 18:12:49 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7BBBB9DBBAD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 18:16:01 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D503616432E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 17:12:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0A2DD281207
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 17:16:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 675601C07D9;
-	Thu, 28 Nov 2024 17:12:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 819671B3924;
+	Thu, 28 Nov 2024 17:15:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V/fFVA9e"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XxdIZpA3"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D4669463;
-	Thu, 28 Nov 2024 17:12:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F4B211C;
+	Thu, 28 Nov 2024 17:15:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732813965; cv=none; b=WjhVmMTeC1KGKqNsL0pHm4qnj+6jNjskfNu+r/u1BzSKpftI4wZ+s8DsFffDOJyMWV9Bs9wBNi2iCgOLCTOFDhcc06SUAvN9HUru1eIjvl5+UxG4ZG5dIva0y29onun2VU8GoBk9twbRPDQLaz1G+HTJk0VK/0CJlsQsQA6uMuw=
+	t=1732814157; cv=none; b=nI41OW4hxUKUQgrGIYNbWQJGetCzXRv06AzQXMis6CWv7sCgGwrHIM9Kxq1fikAARp6BDBi240w88pdK9S76GIJDCi91QAw+ljKmm84PHJdZt0R8WvpRgNSwgOcG5zRTfhbr8coCbLwmr2es0c4AS7cNWxWXiIeOWiiIYsybmhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732813965; c=relaxed/simple;
-	bh=obu6+yPQWfPFqgWAIwUui4SC29PIZhtWgr/lVg2Zhbk=;
+	s=arc-20240116; t=1732814157; c=relaxed/simple;
+	bh=tiZymhVe0D/G2ym8mSpnxGfXK5/9orFgnPuSOUquEq8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kZ7A1c4qI2jFNjss8IJOF0KXmZBJQnq2EZY6UNDUPcoggVqihzJK2yVGnS7g382vIiqk2ymT6/A68d0/JVeymGbADf3hB7Cov46tZRRJF/MrG7HV+ISdKFoJrdl71W2D4utgv8Wk550jyNip9dgoyp8hmcQ1FbbOYB6fNr1NyWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V/fFVA9e; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DB30C4CECE;
-	Thu, 28 Nov 2024 17:12:42 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=LTnFMThFguabdeaU3I/KHXeN1nELax1idayhE6ka8hOBvPmQVMp1dJQz0lPrros3jWdH9Z7kA8vZG/8f3DUkIXuTZLuwWy0NV1wY9/VO2wxl55SpaU74AL/f6UICuKZ/gb8phOJb3WDx0jg+XR9lJ8aTAd7oaFOuSY2aptSMHrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XxdIZpA3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 224FFC4CECE;
+	Thu, 28 Nov 2024 17:15:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732813964;
-	bh=obu6+yPQWfPFqgWAIwUui4SC29PIZhtWgr/lVg2Zhbk=;
+	s=k20201202; t=1732814156;
+	bh=tiZymhVe0D/G2ym8mSpnxGfXK5/9orFgnPuSOUquEq8=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=V/fFVA9eMCnu3Xa4i9HhBIUQxPQ7SgMF5jW6ERMZNQ3Y0w0gjudJHVykRPGz/1Xd9
-	 YOYru5yRVoiniaGqqJMH6jifXSP4le+0uCvQpL+Mf9dRVpyxYXX1x20NwDY6Pb2Tp3
-	 gVubJJMBhXDTKndDt0mwNOj2Qf1Ka56F2Ggz6+nSL5qgSq0GifFvjJi3xve3+JEhKE
-	 8KBCSa++Fnx/lnJpNSOa7BVeJCQFd7L7sJnwNEmCPLWh/3FoV5DsK56irgFQXOrG0l
-	 UA+EYDgwJ7o/kRQP5iQ9buodrqRfYS5Gb5Dkx9+qNoQyKrrRMy9eGlPMsxPEbdCx8P
-	 5fzMFjAVxKf5g==
-Date: Thu, 28 Nov 2024 17:12:40 +0000
-From: Conor Dooley <conor@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/3] dt-bindings: clock: qcom,sm8550-dispcc: Add SM8750
- DISPCC
-Message-ID: <20241128-serotonin-carwash-62ad0fb09c3a@spud>
-References: <20241128-sm8750-dispcc-v1-0-120705a4015c@linaro.org>
- <20241128-sm8750-dispcc-v1-1-120705a4015c@linaro.org>
+	b=XxdIZpA3xC3TX7JHy4Bb9kyzc4GuFjRiW8Nx1fA7xBNpx+jGcAyX5L/QKLFwyZj88
+	 J+cxCs9kmfc0q+vaCHaqlvJrWtoKp8Xma4lwP1XsPpPcQVDLdAqyAjajWPpQKi49zL
+	 DKa0X7ZpbrXhQxF5IMxK0G4bROJdGjN76yXVjMBa8mVGM7xIZIilibJ6eTCZuWIKON
+	 DMzp6losctyiLyixVR4Uf0zEU9b1EVyoKKMarErrQ6vrIamW+lGVSsn68bOq+NbGq7
+	 zF24aCKgoM06M5tK9dEYdpGhFsxLT2k2eQqHEgqZcSUQ01eihMThD1WNkeBq5LISck
+	 Mdmdx72wAl7uA==
+Date: Thu, 28 Nov 2024 11:15:54 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Yuanjie Yang <quic_yuanjiey@quicinc.com>
+Cc: adrian.hunter@intel.com, ulf.hansson@linaro.org, 
+	linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	quic_tingweiz@quicinc.com, quic_zhgao@quicinc.com
+Subject: Re: [PATCH v2] mmc: sdhci-msm: Correctly set the load for the
+ regulator
+Message-ID: <lza5dbabt2eoipyrbgo47ftpsftcwggb4v6d53lqvsh7w7vp3n@f2ld34a53a2z>
+References: <20241127095029.3918290-1-quic_yuanjiey@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="bY94c2bZOlNH/+X1"
-Content-Disposition: inline
-In-Reply-To: <20241128-sm8750-dispcc-v1-1-120705a4015c@linaro.org>
-
-
---bY94c2bZOlNH/+X1
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20241127095029.3918290-1-quic_yuanjiey@quicinc.com>
 
-On Thu, Nov 28, 2024 at 04:07:59PM +0100, Krzysztof Kozlowski wrote:
-> Add bindings for the Qualcomm SM8750 Display Clock Controller (DISPCC).
-> Bindings are similar to existing SM8550 and SM8650 (same clock inputs),
-> but the clock hierarchy is quite different and these are not compatible
-> devices.
->=20
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+On Wed, Nov 27, 2024 at 05:50:29PM +0800, Yuanjie Yang wrote:
+> Qualcomm regulator supports two power supply modes: HPM and LPM.
+> Currently, the sdhci-msm.c driver does not set the load to adjust
+> the current for eMMC and SD. Therefore, if the regulator set load
+> in LPM state, it will lead to the inability to properly initialize
+> eMMC and SD.
+> 
+> Set the correct regulator current for eMMC and SD to ensure that the
+> device can work normally even when the regulator is in LPM.
+> 
+> Signed-off-by: Yuanjie Yang <quic_yuanjiey@quicinc.com>
 > ---
->  .../bindings/clock/qcom,sm8550-dispcc.yaml         |   4 +-
->  include/dt-bindings/clock/qcom,sm8750-dispcc.h     | 112 +++++++++++++++=
-++++++
->  2 files changed, 115 insertions(+), 1 deletion(-)
->=20
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8550-dispcc.y=
-aml b/Documentation/devicetree/bindings/clock/qcom,sm8550-dispcc.yaml
-> index c57d55a9293c214c4c101902cdd9603074e2243d..30e4b46315752b93754ab2f94=
-6c684e13b06ab93 100644
-> --- a/Documentation/devicetree/bindings/clock/qcom,sm8550-dispcc.yaml
-> +++ b/Documentation/devicetree/bindings/clock/qcom,sm8550-dispcc.yaml
-> @@ -12,11 +12,12 @@ maintainers:
-> =20
->  description: |
->    Qualcomm display clock control module provides the clocks, resets and =
-power
-> -  domains on SM8550.
-> +  domains on SM8550, SM8650, SM8750 and few other platforms.
-> =20
->    See also:
->    - include/dt-bindings/clock/qcom,sm8550-dispcc.h
->    - include/dt-bindings/clock/qcom,sm8650-dispcc.h
-> +  - include/dt-bindings/clock/qcom,sm8750-dispcc.h
->    - include/dt-bindings/clock/qcom,x1e80100-dispcc.h
-> =20
->  properties:
-> @@ -25,6 +26,7 @@ properties:
->        - qcom,sar2130p-dispcc
->        - qcom,sm8550-dispcc
->        - qcom,sm8650-dispcc
-> +      - qcom,sm8750-dispcc
->        - qcom,x1e80100-dispcc
-> =20
->    clocks:
-> diff --git a/include/dt-bindings/clock/qcom,sm8750-dispcc.h b/include/dt-=
-bindings/clock/qcom,sm8750-dispcc.h
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..dafb5069c96a0c3f83c15f3c6=
-1978e138baa886c
-> --- /dev/null
-> +++ b/include/dt-bindings/clock/qcom,sm8750-dispcc.h
-> @@ -0,0 +1,112 @@
-> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
-> +/*
-> + * Copyright (c) 2022, The Linux Foundation. All rights reserved.
+> Changes in v2:
+> - Add enum msm_reg_type to optimize the code
 
-This looks pretty questionable, how does something that was apparently
-announced last month have a 2022 copyright from the Linux Foundation?
+Please re-optimize the code to make it easy to read and understand.
 
-> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reser=
-ved.
-> + * Copyright (c) 2024, Linaro Ltd.
-> + */
+> - Delete redundant emmc type judgment
+> - Link to v1: https://lore.kernel.org/linux-arm-msm/20241122075048.2006894-1-quic_yuanjiey@quicinc.com/
+> 
+> ---
+>  drivers/mmc/host/sdhci-msm.c | 92 +++++++++++++++++++++++++++++++++++-
+>  1 file changed, 90 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+> index e00208535bd1..fc13ef60ab61 100644
+> --- a/drivers/mmc/host/sdhci-msm.c
+> +++ b/drivers/mmc/host/sdhci-msm.c
+> @@ -134,9 +134,22 @@
+>  /* Timeout value to avoid infinite waiting for pwr_irq */
+>  #define MSM_PWR_IRQ_TIMEOUT_MS 5000
+>  
+> +/* Max load for eMMC Vdd supply */
+> +#define MMC_VMMC_MAX_LOAD_UA	570000
 > +
-> +#ifndef _DT_BINDINGS_CLK_QCOM_SM8750_DISP_CC_H
-> +#define _DT_BINDINGS_CLK_QCOM_SM8750_DISP_CC_H
+>  /* Max load for eMMC Vdd-io supply */
+>  #define MMC_VQMMC_MAX_LOAD_UA	325000
+>  
+> +/* Max load for SD Vdd supply */
+> +#define SD_VMMC_MAX_LOAD_UA	800000
 > +
-> +/* DISP_CC clocks */
-> +#define DISP_CC_ESYNC0_CLK					0
-> +#define DISP_CC_ESYNC0_CLK_SRC					1
-> +#define DISP_CC_ESYNC1_CLK					2
-> +#define DISP_CC_ESYNC1_CLK_SRC					3
-> +#define DISP_CC_MDSS_ACCU_SHIFT_CLK				4
-> +#define DISP_CC_MDSS_AHB1_CLK					5
-> +#define DISP_CC_MDSS_AHB_CLK					6
-> +#define DISP_CC_MDSS_AHB_CLK_SRC				7
-> +#define DISP_CC_MDSS_BYTE0_CLK					8
-> +#define DISP_CC_MDSS_BYTE0_CLK_SRC				9
-> +#define DISP_CC_MDSS_BYTE0_DIV_CLK_SRC				10
-> +#define DISP_CC_MDSS_BYTE0_INTF_CLK				11
-> +#define DISP_CC_MDSS_BYTE1_CLK					12
-> +#define DISP_CC_MDSS_BYTE1_CLK_SRC				13
-> +#define DISP_CC_MDSS_BYTE1_DIV_CLK_SRC				14
-> +#define DISP_CC_MDSS_BYTE1_INTF_CLK				15
-> +#define DISP_CC_MDSS_DPTX0_AUX_CLK				16
-> +#define DISP_CC_MDSS_DPTX0_AUX_CLK_SRC				17
-> +#define DISP_CC_MDSS_DPTX0_CRYPTO_CLK				18
-> +#define DISP_CC_MDSS_DPTX0_LINK_CLK				19
-> +#define DISP_CC_MDSS_DPTX0_LINK_CLK_SRC				20
-> +#define DISP_CC_MDSS_DPTX0_LINK_DIV_CLK_SRC			21
-> +#define DISP_CC_MDSS_DPTX0_LINK_INTF_CLK			22
-> +#define DISP_CC_MDSS_DPTX0_PIXEL0_CLK				23
-> +#define DISP_CC_MDSS_DPTX0_PIXEL0_CLK_SRC			24
-> +#define DISP_CC_MDSS_DPTX0_PIXEL1_CLK				25
-> +#define DISP_CC_MDSS_DPTX0_PIXEL1_CLK_SRC			26
-> +#define DISP_CC_MDSS_DPTX0_USB_ROUTER_LINK_INTF_CLK		27
-> +#define DISP_CC_MDSS_DPTX1_AUX_CLK				28
-> +#define DISP_CC_MDSS_DPTX1_AUX_CLK_SRC				29
-> +#define DISP_CC_MDSS_DPTX1_CRYPTO_CLK				30
-> +#define DISP_CC_MDSS_DPTX1_LINK_CLK				31
-> +#define DISP_CC_MDSS_DPTX1_LINK_CLK_SRC				32
-> +#define DISP_CC_MDSS_DPTX1_LINK_DIV_CLK_SRC			33
-> +#define DISP_CC_MDSS_DPTX1_LINK_INTF_CLK			34
-> +#define DISP_CC_MDSS_DPTX1_PIXEL0_CLK				35
-> +#define DISP_CC_MDSS_DPTX1_PIXEL0_CLK_SRC			36
-> +#define DISP_CC_MDSS_DPTX1_PIXEL1_CLK				37
-> +#define DISP_CC_MDSS_DPTX1_PIXEL1_CLK_SRC			38
-> +#define DISP_CC_MDSS_DPTX1_USB_ROUTER_LINK_INTF_CLK		39
-> +#define DISP_CC_MDSS_DPTX2_AUX_CLK				40
-> +#define DISP_CC_MDSS_DPTX2_AUX_CLK_SRC				41
-> +#define DISP_CC_MDSS_DPTX2_CRYPTO_CLK				42
-> +#define DISP_CC_MDSS_DPTX2_LINK_CLK				43
-> +#define DISP_CC_MDSS_DPTX2_LINK_CLK_SRC				44
-> +#define DISP_CC_MDSS_DPTX2_LINK_DIV_CLK_SRC			45
-> +#define DISP_CC_MDSS_DPTX2_LINK_INTF_CLK			46
-> +#define DISP_CC_MDSS_DPTX2_PIXEL0_CLK				47
-> +#define DISP_CC_MDSS_DPTX2_PIXEL0_CLK_SRC			48
-> +#define DISP_CC_MDSS_DPTX2_PIXEL1_CLK				49
-> +#define DISP_CC_MDSS_DPTX2_PIXEL1_CLK_SRC			50
-> +#define DISP_CC_MDSS_DPTX3_AUX_CLK				51
-> +#define DISP_CC_MDSS_DPTX3_AUX_CLK_SRC				52
-> +#define DISP_CC_MDSS_DPTX3_CRYPTO_CLK				53
-> +#define DISP_CC_MDSS_DPTX3_LINK_CLK				54
-> +#define DISP_CC_MDSS_DPTX3_LINK_CLK_SRC				55
-> +#define DISP_CC_MDSS_DPTX3_LINK_DIV_CLK_SRC			56
-> +#define DISP_CC_MDSS_DPTX3_LINK_INTF_CLK			57
-> +#define DISP_CC_MDSS_DPTX3_PIXEL0_CLK				58
-> +#define DISP_CC_MDSS_DPTX3_PIXEL0_CLK_SRC			59
-> +#define DISP_CC_MDSS_ESC0_CLK					60
-> +#define DISP_CC_MDSS_ESC0_CLK_SRC				61
-> +#define DISP_CC_MDSS_ESC1_CLK					62
-> +#define DISP_CC_MDSS_ESC1_CLK_SRC				63
-> +#define DISP_CC_MDSS_MDP1_CLK					64
-> +#define DISP_CC_MDSS_MDP_CLK					65
-> +#define DISP_CC_MDSS_MDP_CLK_SRC				66
-> +#define DISP_CC_MDSS_MDP_LUT1_CLK				67
-> +#define DISP_CC_MDSS_MDP_LUT_CLK				68
-> +#define DISP_CC_MDSS_NON_GDSC_AHB_CLK				69
-> +#define DISP_CC_MDSS_PCLK0_CLK					70
-> +#define DISP_CC_MDSS_PCLK0_CLK_SRC				71
-> +#define DISP_CC_MDSS_PCLK1_CLK					72
-> +#define DISP_CC_MDSS_PCLK1_CLK_SRC				73
-> +#define DISP_CC_MDSS_PCLK2_CLK					74
-> +#define DISP_CC_MDSS_PCLK2_CLK_SRC				75
-> +#define DISP_CC_MDSS_RSCC_AHB_CLK				76
-> +#define DISP_CC_MDSS_RSCC_VSYNC_CLK				77
-> +#define DISP_CC_MDSS_VSYNC1_CLK					78
-> +#define DISP_CC_MDSS_VSYNC_CLK					79
-> +#define DISP_CC_MDSS_VSYNC_CLK_SRC				80
-> +#define DISP_CC_OSC_CLK						81
-> +#define DISP_CC_OSC_CLK_SRC					82
-> +#define DISP_CC_PLL0						83
-> +#define DISP_CC_PLL1						84
-> +#define DISP_CC_PLL2						85
-> +#define DISP_CC_SLEEP_CLK					86
-> +#define DISP_CC_SLEEP_CLK_SRC					87
-> +#define DISP_CC_XO_CLK						88
-> +#define DISP_CC_XO_CLK_SRC					89
+> +/* Max load for SD Vdd-io supply */
+> +#define SD_VQMMC_MAX_LOAD_UA	22000
 > +
-> +/* DISP_CC resets */
-> +#define DISP_CC_MDSS_CORE_BCR					0
-> +#define DISP_CC_MDSS_CORE_INT2_BCR				1
-> +#define DISP_CC_MDSS_RSCC_BCR					2
+> +#define MAX_MMC_SD_VMMC_LOAD_UA  max(MMC_VMMC_MAX_LOAD_UA, SD_VMMC_MAX_LOAD_UA)
 > +
-> +/* DISP_CC GDSCR */
-> +#define MDSS_GDSC						0
-> +#define MDSS_INT2_GDSC						1
+> +#define MAX_MMC_SD_VQMMC_LOAD_UA max(MMC_VQMMC_MAX_LOAD_UA, SD_VQMMC_MAX_LOAD_UA)
 > +
-> +#endif
->=20
-> --=20
-> 2.43.0
->=20
+>  #define msm_host_readl(msm_host, host, offset) \
+>  	msm_host->var_ops->msm_readl_relaxed(host, offset)
+>  
+> @@ -147,6 +160,11 @@
+>  #define CQHCI_VENDOR_CFG1	0xA00
+>  #define CQHCI_VENDOR_DIS_RST_ON_CQ_EN	(0x3 << 13)
+>  
+> +enum msm_reg_type {
+> +	VMMC_REGULATOR,
+> +	VQMMC_REGULATOR,
+> +};
+> +
+>  struct sdhci_msm_offset {
+>  	u32 core_hc_mode;
+>  	u32 core_mci_data_cnt;
+> @@ -1403,11 +1421,71 @@ static int sdhci_msm_set_pincfg(struct sdhci_msm_host *msm_host, bool level)
+>  	return ret;
+>  }
+>  
+> -static int sdhci_msm_set_vmmc(struct mmc_host *mmc)
+> +static int sdhci_msm_get_regulator_load(struct mmc_host *mmc, int max_current,
+> +					enum msm_reg_type type)
+> +{
+> +	int load = 0;
+> +
+> +	/*
+> +	 * When eMMC and SD are powered on for the first time, select a higher
+> +	 * current value from the corresponding current for eMMC and SD to
+> +	 * ensure that the eMMC and SD cards start up properly and complete
+> +	 * initialization. After the initialization process is finished, use
+> +	 * the corresponding current to set the eMMC and SD to ensure the
+> +	 * normal work of the device.
+> +	 */
+> +
+> +	if (!mmc->card)
+> +		return max_current;
 
---bY94c2bZOlNH/+X1
-Content-Type: application/pgp-signature; name="signature.asc"
+max_current is type == VMMC_REGULATOR ? MAX_MMC_SD_VMMC_LOAD_UA :
+MAX_MMC_SD_VQMMC_LOAD_UA;
 
------BEGIN PGP SIGNATURE-----
+Try to rewrite the patch so that you don't have the decisions spread
+across multiple levels in the callstack.
 
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZ0ikiAAKCRB4tDGHoIJi
-0hhOAQD8VomtMHxksZJO1DjfXQ69y1VOcE6aJIcdiBPGBt30AwD+MEiXu/CuD/Fi
-0yxtbCKF9hLbcAQvPpoWNuTWLc6J1gg=
-=1sJ8
------END PGP SIGNATURE-----
+> +
+> +	if (mmc_card_mmc(mmc->card))
+> +		load = (type == VMMC_REGULATOR) ? MMC_VMMC_MAX_LOAD_UA : MMC_VQMMC_MAX_LOAD_UA;
+> +	else if (mmc_card_sd(mmc->card))
+> +		load = (type == VMMC_REGULATOR) ? SD_VMMC_MAX_LOAD_UA : SD_VQMMC_MAX_LOAD_UA;
+> +
+> +	return load;
+> +}
+> +
+> +static int msm_config_regulator_load(struct sdhci_msm_host *msm_host, struct mmc_host *mmc,
+> +				     bool hpm, int max_current, enum msm_reg_type type)
+> +{
+> +	int ret;
+> +	int load = 0;
+> +
+> +	/*
+> +	 * After the initialization process is finished, Once the type of card
+> +	 * is determined, only set the corresponding current for SD and eMMC.
+> +	 */
+> +
+> +	if (mmc->card && !(mmc_card_mmc(mmc->card) || mmc_card_sd(mmc->card)))
+> +		return 0;
+> +
+> +	if (hpm)
+> +		load = sdhci_msm_get_regulator_load(mmc, max_current, type);
 
---bY94c2bZOlNH/+X1--
+Does !hpm happen when regulators are enabled or always together with a
+regulator_disable? (The regulator framework skips the load of disabled
+regulators when aggregating)
+
+> +
+> +	if (type == VMMC_REGULATOR)
+> +		ret = regulator_set_load(mmc->supply.vmmc, load);
+> +	else
+> +		ret = regulator_set_load(mmc->supply.vqmmc, load);
+> +	if (ret)
+> +		dev_err(mmc_dev(mmc), "%s: set load failed: %d\n",
+> +			mmc_hostname(mmc), ret);
+> +	return ret;
+> +}
+> +
+> +static int sdhci_msm_set_vmmc(struct sdhci_msm_host *msm_host,
+> +			      struct mmc_host *mmc, bool hpm)
+>  {
+> +	int ret;
+> +
+>  	if (IS_ERR(mmc->supply.vmmc))
+>  		return 0;
+>  
+> +	ret = msm_config_regulator_load(msm_host, mmc, hpm,
+> +					MAX_MMC_SD_VMMC_LOAD_UA, VMMC_REGULATOR);
+
+msm_config_regulator_load() is mostly 2 different functions with
+multiple levels of conditional code paths depending on this last
+parameter. Please try to refactor this to avoid overloading the
+functions like that.
+
+Regards,
+Bjorn
+
+> +	if (ret)
+> +		return ret;
+> +
+>  	return mmc_regulator_set_ocr(mmc, mmc->supply.vmmc, mmc->ios.vdd);
+>  }
+>  
+> @@ -1435,6 +1513,15 @@ static int msm_toggle_vqmmc(struct sdhci_msm_host *msm_host,
+>  				goto out;
+>  			}
+>  		}
+> +
+> +		ret = msm_config_regulator_load(msm_host, mmc, level,
+> +						MAX_MMC_SD_VQMMC_LOAD_UA, VQMMC_REGULATOR);
+> +		if (ret < 0) {
+> +			dev_err(mmc_dev(mmc), "%s: vqmmc set regulator load failed: %d\n",
+> +				mmc_hostname(mmc), ret);
+> +			goto out;
+> +		}
+> +
+>  		ret = regulator_enable(mmc->supply.vqmmc);
+>  	} else {
+>  		ret = regulator_disable(mmc->supply.vqmmc);
+> @@ -1642,7 +1729,8 @@ static void sdhci_msm_handle_pwr_irq(struct sdhci_host *host, int irq)
+>  	}
+>  
+>  	if (pwr_state) {
+> -		ret = sdhci_msm_set_vmmc(mmc);
+> +		ret = sdhci_msm_set_vmmc(msm_host, mmc,
+> +					 pwr_state & REQ_BUS_ON);
+>  		if (!ret)
+>  			ret = sdhci_msm_set_vqmmc(msm_host, mmc,
+>  					pwr_state & REQ_BUS_ON);
+> -- 
+> 2.34.1
+> 
+> 
 
