@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-39405-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39406-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A08A79DB567
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 11:10:17 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CEB8C9DB574
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 11:17:32 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 639BF2831F6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 10:10:16 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8378D164794
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 10:17:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F0B5A192B94;
-	Thu, 28 Nov 2024 10:09:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8452F158534;
+	Thu, 28 Nov 2024 10:17:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qXq+AZUu"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Iva85KlV"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0CD184E1C;
-	Thu, 28 Nov 2024 10:09:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53E012CCC0;
+	Thu, 28 Nov 2024 10:17:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732788593; cv=none; b=u5fGzyM8AptkfH2sH10ALW1JY0dVjPZGGZgZzmwRHEjFT2emROxMj2nufge9PzRtIKDACu319lS1b4xtCgwzF5BCq9n+NXVyWaPDBs8zcVTsWrQanXvNYS0VmB1tWOhJIqvTNnOAVrXMLnPT0G+h8s9PRDhYLUlXNiQsjU+QRA8=
+	t=1732789048; cv=none; b=c7FImIaS7btX6wmInvwXgsYsIvc/MEoAzOqL26OxquhQdbczg6twmPDMM4cduYlYz31Mgssr+xtcytR3kYJ/pcRz7afwIRwcVQ1ApNprbrZDWlAn2fsyyhwKnrGUjGtPvvHqEQdF8PDjyfoDBeIGp8aQpjAdgEy2xBFyp9XvXDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732788593; c=relaxed/simple;
-	bh=JNa4gGUMSplJXGwuvXsLnBsxaAPwxxHHs8m/rX84JR4=;
+	s=arc-20240116; t=1732789048; c=relaxed/simple;
+	bh=uUD9cunmBFEiItQ1QLqJY4Xet/9tAOCUZK8mQcgPtJI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LC7iqnFClu3SMz1lQBkRSAr8oC9Agyy88c5u/C053ue9iuxoILs/NzeF/DEj/vpJvtAYfoCqtKg8FRZCXgnS/NTIWVDVXLYsOfrzSL/H6GFOmFOAGRKu9MyGryITgU3QUAnyM1lhWqTNAMqkX8+PvMUQKuyM/4HzRGxXKR10rFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qXq+AZUu; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCC01C4CECE;
-	Thu, 28 Nov 2024 10:09:47 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=F65ceBa3kjkGRKVu136VjHhwxyXCK2Z50W2IrzfW9uxrDT+YBf5T9zGwhNdlgf3U6vVPGNy4ftaatGlAwS99WbDwWkdBghrwP7Tr1KLrOBUctMqD8gyYiyz4B0rtSelYmBDPtJAqQwdlpKE442/+xUgaGwwHr64Kzc0Ilh3LIiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Iva85KlV; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D1A5C4CECE;
+	Thu, 28 Nov 2024 10:17:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732788593;
-	bh=JNa4gGUMSplJXGwuvXsLnBsxaAPwxxHHs8m/rX84JR4=;
+	s=k20201202; t=1732789046;
+	bh=uUD9cunmBFEiItQ1QLqJY4Xet/9tAOCUZK8mQcgPtJI=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=qXq+AZUu5EOuVw7p4plTD1gFRAHt5KTtNHEOTGDc1aoQkUNrQ6TrdAX9mj4hkqsQV
-	 gG7opYNhmxfcU3NR3NKu9SHeOdLTQn/Vv70WO4fNRM035erE2ppTI7+zB5KxrTitYd
-	 mQXX8Cuwa5d/ikGbx6bncIcsMiv+U8giCJjoan+bm5IK8Lz2oth4hOUKbTsfBAE2wa
-	 A6H2ZlDBM3a3C7alxssu33Lpjld7QgQ4PMtjcNgLcDM62Qgi41CKmmCUlx9CWz9+Kd
-	 nHnLux+iN2QwFDGHV9F6HNyrmw8GEjLHTNntZeJ3RaXRm9YKa+9+VQCLFGZZkt2VDj
-	 UXPC5AJmGUpAw==
-Message-ID: <1e4d79b7-2348-41e2-9780-4b4f7bf3dc14@kernel.org>
-Date: Thu, 28 Nov 2024 11:09:46 +0100
+	b=Iva85KlVR0nIJHDSLrTwQLKSeVu6PM+aNJQIrVjggT1x9RxHnwvVsbu5P44RGqu2/
+	 w0bSQZZzS2UHWRdifieFoJk+d1asaaWs0qzpuXrVRcBzQpHcuHf8oJzg5Ffb5LCDlA
+	 qY9NexE7HKDcWdmPb0rZf1TFaq6OUxYHWjsNXBAwftbrFNi3EUGSuDxxZBAIi4QzUP
+	 x9IZBfi0nx04Dr9GM72btYfpPQHfNayS+VgglmQfNvyEkwT+stkAPPsuOqDPrtBCVb
+	 cjf+DY4TbKFkQJv+YApECLIsbyg3SYSdTZh2zkQpN7m+3Q6OerF6J6MC1t9+d0HT3i
+	 lXmcU/NvaeUYA==
+Message-ID: <52b93801-3629-414c-98f7-1ca143238c0e@kernel.org>
+Date: Thu, 28 Nov 2024 11:17:19 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,24 +50,20 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 1/5] media: dt-bindings: Add qcom,sc7280-camss
-To: Vikram Sharma <quic_vikramsa@quicinc.com>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, rfoss@kernel.org,
- todor.too@gmail.com, mchehab@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, akapatra@quicinc.com,
- hariramp@quicinc.com, andersson@kernel.org, konradybcio@kernel.org,
- hverkuil-cisco@xs4all.nl, cros-qcom-dts-watchers@chromium.org,
- catalin.marinas@arm.com, will@kernel.org
-Cc: linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, kernel@quicinc.com
-References: <20241127100421.3447601-1-quic_vikramsa@quicinc.com>
- <20241127100421.3447601-2-quic_vikramsa@quicinc.com>
- <1a87e9d9-da7e-4b8b-807e-f56aa15acfc2@linaro.org>
- <25f89e78-faec-4eba-887b-019eed752064@linaro.org>
- <e7f5f84d-d7cd-4052-bc8c-1b1e5f2a0073@linaro.org>
- <af043a60-adac-41da-8c7c-1ae5272ffeb1@quicinc.com>
+Subject: Re: [PATCH v2 1/8] dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy:
+ Document the QCS8300 QMP PCIe PHY Gen4 x2
+To: Ziyue Zhang <quic_ziyuzhan@quicinc.com>, vkoul@kernel.org,
+ kishon@kernel.org, robh+dt@kernel.org, manivannan.sadhasivam@linaro.org,
+ bhelgaas@google.com, kw@linux.com, lpieralisi@kernel.org,
+ quic_qianyu@quicinc.com, conor+dt@kernel.org, neil.armstrong@linaro.org,
+ andersson@kernel.org, konradybcio@kernel.org
+Cc: quic_tsoni@quicinc.com, quic_shashim@quicinc.com,
+ quic_kaushalk@quicinc.com, quic_tdas@quicinc.com, quic_tingweiz@quicinc.com,
+ quic_aiquny@quicinc.com, kernel@quicinc.com, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-phy@lists.infradead.org
+References: <20241128081056.1361739-1-quic_ziyuzhan@quicinc.com>
+ <20241128081056.1361739-2-quic_ziyuzhan@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -113,28 +109,40 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <af043a60-adac-41da-8c7c-1ae5272ffeb1@quicinc.com>
+In-Reply-To: <20241128081056.1361739-2-quic_ziyuzhan@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 28/11/2024 10:43, Vikram Sharma wrote:
-> Hi Bryan/Vladimir/Krzysztof,
+On 28/11/2024 09:10, Ziyue Zhang wrote:
+> Document the QMP PCIe PHY on the QCS8300 platform.
 > 
-> Thanks for your comments and suggestions.
-> To address below warning.I guess sorting reg entries on the basis of 
-> register address is better idea than sorting alphanumerically with 
-> reg-name. Please confirm if I can sort it based on register addresses 
-> for V7 of this series?
-> 
-> arch/arm64/boot/dts/qcom/sc7280.dtsi:4429.24-4597.5: Warning
-> (simple_bus_reg): /soc@0/camss@acaf000: simple-bus unit address format
-> error, expected "acb3000"
-> 
-These two topics are not related. There was a feedback on this from Rob:
-binding does not know addresses, so how can you enforce in the binding
-sorting by address? Anyway, we talked about this so much already I am
-not going back there. Use the tools to produce correct DTS and binding,
-whatever you decide.
+> Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+> ---
+
+You did not Cc me, even though maintainers script asks you to do that,
+but you Cc-ed several folks from Qualcomm not really necessary.
+
+Weird, but sure, I will not review your patch.
+
+However note that just ignored existing review and tags.
+
+<form letter>
+This is a friendly reminder during the review process.
+
+It looks like you received a tag and forgot to add it.
+
+If you do not know the process, here is a short explanation:
+Please add Acked-by/Reviewed-by/Tested-by tags when posting new
+versions, under or above your Signed-off-by tag. Tag is "received", when
+provided in a message replied to you on the mailing list. Tools like b4
+can help here. However, there's no need to repost patches *only* to add
+the tags. The upstream maintainer will do that for tags received on the
+version they apply.
+
+https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
+
+If a tag was not added on purpose, please state why and what changed.
+</form letter>
 
 Best regards,
 Krzysztof
