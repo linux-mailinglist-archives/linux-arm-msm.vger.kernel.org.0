@@ -1,204 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-39469-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39470-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6E0049DB9DB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 15:46:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4913F9DB9F2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 15:52:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CBF75B20A71
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 14:46:23 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CD1C5B21A25
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 14:52:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BEBF156661;
-	Thu, 28 Nov 2024 14:46:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3DB6A1B85F8;
+	Thu, 28 Nov 2024 14:51:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gLqxnHeL"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aH1k8Vg3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F5912233A;
-	Thu, 28 Nov 2024 14:46:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 732401BFE0D
+	for <linux-arm-msm@vger.kernel.org>; Thu, 28 Nov 2024 14:51:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732805181; cv=none; b=ZTiHwTUGlmDJ21V+PKQ+N3TxEv0kfMRYEJwWS3hpG/ksEUu4Dg6o1YC9nNqCiTNIw7MmHUicDyzJ3nglhZXk7FPbWTSBRVoYFkXoiiZOc4M+hYh9B0fI9ku4wPXXDVTYqsf+lN8IUN0FOJBq/CM0SD9+Hjz4kzp3PbRqMrOWgWA=
+	t=1732805518; cv=none; b=EPKIVFnOkNvYpfIWGUL4XjfPfG4RmTRXrBlG9KeaSKEYr9eycsaqMRfNOZcXKU2LJhBgrcP6y6oQx5/V9jesm8CBj4ain+MLAaVrIzeSUZr8S2VxWX2rT7n13m+dLDBQdAAIWqSvkxMOn6B70dkGv+l8ngZx+Gq2GleLsiBDNBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732805181; c=relaxed/simple;
-	bh=nM1YIPt3xK38HIq6W7KgltvqgYeZUWpbOdjuEOs7MXI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Rw9JyXTnJ+otFxUYcbRmG87zUq70KnQKmxefoaK6Vdb7yenF7IGYM6Gv9WLXXcrKRzgpwMihlNBeRpfoURxxUYM3S3OfYEScxjYYRzX+folYrS+mnc7pmX86sR3UojNkfcG+6P3HxbflIuvs6cM1jXXyxjvVr/u3h60EeyS8+DU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gLqxnHeL; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF529C4CECE;
-	Thu, 28 Nov 2024 14:46:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732805179;
-	bh=nM1YIPt3xK38HIq6W7KgltvqgYeZUWpbOdjuEOs7MXI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=gLqxnHeLM6Tw/I4WrTnBd+q5Uip3+dASDuKZZ+2tZkbtfbXXus/i9H/fgp1VIv8h3
-	 bHF9y9Ct3P4EJ9Pq0xMLSj6dwcu0K+NA/O1nReIJ9yzLaXHqBXL2H+brl+ldE6EcxT
-	 bl7p8iyuAxF+s2kQWETekR0krUKRVJv7WLaFJOXEBZg0My5hVNk4PR/f1ppPwlP+uJ
-	 jPp+08iIJPZ7+Zh8ehE2ZUT/kLYuzOm4QE/fNGtl3LMyPAKyk5HgjiFytkJXyVjWVr
-	 LiEPYZWf8/1W0itAZav+k6pyqaQGn9vMi+yAZi2W0vATufEi1YsU3RS3nRFUukuMFw
-	 9T63WSdwRJfdQ==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1tGfmW-000000000mo-0NFf;
-	Thu, 28 Nov 2024 15:46:12 +0100
-Date: Thu, 28 Nov 2024 15:46:12 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Ard Biesheuvel <ardb@kernel.org>
-Cc: Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Ricardo Salveti <ricardo@foundries.io>,
-	Marc Zyngier <maz@kernel.org>, linux-efi@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: UEFI EBS() failures on Lenovo T14s
-Message-ID: <Z0iCNJVWNzBzdq0C@hovoldconsulting.com>
-References: <Z0gn1N3IsP8r3gTA@hovoldconsulting.com>
- <CAMj1kXGjiA1HydMaY82MQsYvkchpN7v7CMOB5i3NEdqcYGn19Q@mail.gmail.com>
- <Z0g_HL01eqXu4cwQ@hovoldconsulting.com>
- <CAMj1kXFtr7ejEjjSRj9dcRa7YbO0SR5OR3pm+K6OvbX2=RfhAQ@mail.gmail.com>
- <CAMj1kXHS_TY=jfBT=dqUQSXf2pBXbt12uaLsMw-FLX3uU_X6uA@mail.gmail.com>
+	s=arc-20240116; t=1732805518; c=relaxed/simple;
+	bh=iONE0HKU0IqL9O9ShumEXpebGnA8RIwvd+IgFAfUlXs=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=kaf5bttR1sXeIq0S3BRmvGM6kyY7qssDV8pNL9YJ36BjRIhvbnP+Oyy0Cs8kgbiBBOE7M6AqZO89JB3afAXgB/t06s2MOt1hsqtxvwkPN3Pw4JJH881W9gk2plDwBkmRIsq46T12UC8VLncInGlNERvDrBC5zb6+KYXmk6tI8oY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=aH1k8Vg3; arc=none smtp.client-ip=209.85.210.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-7252f48acf2so674313b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Nov 2024 06:51:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1732805516; x=1733410316; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=d/MXPQzhJ+NbcczEaxmCbcj8MjpwS3qOOhKqFULBuO8=;
+        b=aH1k8Vg3LzRPvjv+t4OKpUkxmLT3zHCy3vtqri31hXcXWxvwuJf/n5tFhXkpO1YIJI
+         dt0JtRorKg3ESrqVKNtm9RqY6zMG2ng/dcQoBP0Wr2YR4tydOdW5uPusd1O5Q8TZIAKB
+         8TwY2a+nVzR3Oovo1ugFcEL6cYcnKqLUC7BwAZwgdpLPmtC+fv8AyxeuiuzaUXj1Ots/
+         rNl1XMTyUL6H105H3hWu4NuKf6TK10wwhlAfz4kLLoKGJM5+UyLqHlRgfFp5OKrzjfoa
+         Y33lfUMpYsSElcJskMaejwReI+tMSAm7kFARrZK/HjiQhPoJ+r6QXzo3OlvZpFXX5mvh
+         gVYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732805516; x=1733410316;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=d/MXPQzhJ+NbcczEaxmCbcj8MjpwS3qOOhKqFULBuO8=;
+        b=QzKmZ2J0ElQOegi30k/L3/yoY6aqX8v5O4nghUHwd7kAjkD7eObQKrUBNn45TlejUH
+         iHoEIbG5EkPdifkC6geQ6qGVReDTGk9iuyacccd7CRBzS0EEZ2tasWyV97mRNUhXn4gE
+         0fsKpTBLxmJY1klydvwidx4rYch3NTIARJDMEzyhx6V6bcEjUh762Tu17tw7lmWMa9qp
+         7BrJ91Skymw3F7tid6zms3fxKAx8+Q7MBGBBTrbClPEzxm+HN+TuflC1gsOqRm5R3Nl3
+         XekCu/LiWNfbVtoIlTYsHUekGpZv78Jj7Vp0NPPyrjZ596yaJlbX5Xe0/WyPShN0Y1mU
+         mLdw==
+X-Gm-Message-State: AOJu0YyLQRiPoIe73xKDYZP7QAFn6QkvV7Vr0QJj4FqTfuF5jR3FJ4Bj
+	xXCCL5DjYNobzSYQaNnMyXmUfgZSwiJnoWhdx3Gk8ziSgeRgu0g/47Ro0AjwMg==
+X-Gm-Gg: ASbGncuNJ3tXCynMkKU1sfxDk7ceoxijlr+qqW7a9XPYU/wAFU+elTOQjtVee1sc9bT
+	TlC33r4Amijz2WgUJ+5DimUxr8oxm3dgywbzj5nPQaPmqyBWKoC0TBTDfRFKEsd+h55NT/XyPyE
+	yku3vO3cAHp6KHCva8yRqLUWyz/iyOWcZ8J6caa7mVpLszTzusrWaE+Qb1FKJFbtsgyoCN/MJlH
+	8ElC6LxEMt7I7pzZAnpNCwyGXh72TmLGVWN7KRXw4on4vamEe32MS2/dzQDWJNuHooTa+hA8K4V
+	GA==
+X-Google-Smtp-Source: AGHT+IE94xRezL0R5MUb1CgWVQ85Hdjg7x8RVESl+SHCpYNTjmiYjyLuD+1yP71Qqn42MFKmXZk5NQ==
+X-Received: by 2002:a05:6a00:1c8d:b0:725:3bd4:9b54 with SMTP id d2e1a72fcca58-7253bd49c20mr7408782b3a.2.1732805515839;
+        Thu, 28 Nov 2024 06:51:55 -0800 (PST)
+Received: from localhost.localdomain ([117.213.97.61])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7254176f76dsm1660418b3a.68.2024.11.28.06.51.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 Nov 2024 06:51:55 -0800 (PST)
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: andersson@kernel.org,
+	konradybcio@kernel.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org
+Cc: linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	stable@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: sa8775p: Fix the size of 'addr_space' regions
+Date: Thu, 28 Nov 2024 20:21:47 +0530
+Message-Id: <20241128145147.145618-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAMj1kXHS_TY=jfBT=dqUQSXf2pBXbt12uaLsMw-FLX3uU_X6uA@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 
-On Thu, Nov 28, 2024 at 12:05:09PM +0100, Ard Biesheuvel wrote:
+For both the controller instances, size of the 'addr_space' region should
+be 0x1fe00000 as per the hardware memory layout.
 
-> If you're happy to experiment more, you could try and register a
-> notification for EFI_EVENT_GROUP_BEFORE_EXIT_BOOT_SERVICES using
-> CreateEventEx(), and see if it gets called when ExitBootServices() is
-> called. That would at least help narrow it down.
+Otherwise, endpoint drivers cannot request even reasonable BAR size of 1MB.
 
-Thanks for the suggestion.
-
-I see the notify function being called when I signal it as well as on
-each ExitBootServices().
-
-With an efi_printk() in the callback ExitBootServices() fails as
-expected, but with an empty function the kernel seems to start every
-time.
-
-Interestingly, ExitBootServices() now succeeds also if I add back the
-CloseEvent() call. In fact, it works also if I never signal the event
-(i.e. if I just create and close the event).
-
-The patch below should suffice as a workaround I can carry until the
-firmware has been fixed.
-
-Johan
-
-
-From 1464360c7c16d1a6ce454bf88ee5815663f27283 Mon Sep 17 00:00:00 2001
-From: Johan Hovold <johan+linaro@kernel.org>
-Date: Wed, 27 Nov 2024 16:05:37 +0100
-Subject: [PATCH] hack: efi/libstub: fix t14s exit_boot_services() failure
-
-The UEFI firmware on the Lenovo ThinkPad T14s is broken and
-ExitBootServices() often fails and prevents the kernel from starting:
-
-	EFI stub: Exiting boot services...
-	EFI stub: Exit boot services failed.
-
-One bootloader entry may fail to start almost consistently (once in a
-while it may start), while a second entry may always work even when the
-kernel, dtb and initramfs images are copies of the failing entry on the
-same ESP.
-
-This can be worked around by starting and exiting a UEFI shell from the
-bootloader or by starting the bootloader manually via the Boot Menu
-(F12) before starting the kernel.
-
-Notably starting the kernel automatically from the shell startup.nsh
-does not work, while calling the same script manually works.
-
-Experiments have revealed that allocating an event before calling
-ExitBootServices() can make the call succeed. When providing a
-notification function there apparently is no need to actually signal the
-event group and CloseEvent() could also be called directly.
-
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Cc: stable@vger.kernel.org # 6.11
+Fixes: c5f5de8434ec ("arm64: dts: qcom: sa8775p: Add ep pcie1 controller node")
+Fixes: 1924f5518224 ("arm64: dts: qcom: sa8775p: Add ep pcie0 controller node")
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- .../firmware/efi/libstub/efi-stub-helper.c    | 24 +++++++++++++++++++
- drivers/firmware/efi/libstub/efistub.h        |  4 ++--
- 2 files changed, 26 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/firmware/efi/libstub/efi-stub-helper.c b/drivers/firmware/efi/libstub/efi-stub-helper.c
-index de659f6a815f..9c9c7a1f1718 100644
---- a/drivers/firmware/efi/libstub/efi-stub-helper.c
-+++ b/drivers/firmware/efi/libstub/efi-stub-helper.c
-@@ -409,6 +409,13 @@ char *efi_convert_cmdline(efi_loaded_image_t *image, int *cmd_line_len)
- 	return (char *)cmdline_addr;
- }
- 
-+#define EFI_EVENT_GROUP_BEFORE_EXIT_BOOT_SERVICES \
-+	EFI_GUID(0x8be0e274, 0x3970, 0x4b44,  0x80, 0xc5, 0x1a, 0xb9, 0x50, 0x2f, 0x3b, 0xfc)
-+
-+static void efi_before_ebs_notify(efi_event_t event, void *context)
-+{
-+}
-+
- /**
-  * efi_exit_boot_services() - Exit boot services
-  * @handle:	handle of the exiting image
-@@ -429,10 +436,27 @@ efi_status_t efi_exit_boot_services(void *handle, void *priv,
- {
- 	struct efi_boot_memmap *map;
- 	efi_status_t status;
-+	efi_guid_t guid = EFI_EVENT_GROUP_BEFORE_EXIT_BOOT_SERVICES;
-+	efi_event_t event;
- 
- 	if (efi_disable_pci_dma)
- 		efi_pci_disable_bridge_busmaster();
- 
-+	status = efi_bs_call(create_event_ex, EFI_EVT_NOTIFY_SIGNAL,
-+			     EFI_TPL_CALLBACK, efi_before_ebs_notify, NULL,
-+			     &guid, &event);
-+	if (status == EFI_SUCCESS) {
-+		status = efi_bs_call(signal_event, event);
-+		if (status != EFI_SUCCESS)
-+			efi_err("%s - signal event failed: %02lx\n", __func__, status);
-+
-+		status = efi_bs_call(close_event, event);
-+		if (status != EFI_SUCCESS)
-+			efi_err("%s - close event failed: %02lx\n", __func__, status);
-+	} else {
-+		efi_err("%s - create event ex failed: %02lx\n", __func__, status);
-+	}
-+
- 	status = efi_get_memory_map(&map, true);
- 	if (status != EFI_SUCCESS)
- 		return status;
-diff --git a/drivers/firmware/efi/libstub/efistub.h b/drivers/firmware/efi/libstub/efistub.h
-index 685098f9626f..e3f710823a29 100644
---- a/drivers/firmware/efi/libstub/efistub.h
-+++ b/drivers/firmware/efi/libstub/efistub.h
-@@ -272,7 +272,7 @@ union efi_boot_services {
- 		efi_status_t (__efiapi *wait_for_event)(unsigned long,
- 							efi_event_t *,
- 							unsigned long *);
--		void *signal_event;
-+		efi_status_t (__efiapi *signal_event)(efi_event_t);
- 		efi_status_t (__efiapi *close_event)(efi_event_t);
- 		void *check_event;
- 		void *install_protocol_interface;
-@@ -322,7 +322,7 @@ union efi_boot_services {
- 		void *calculate_crc32;
- 		void (__efiapi *copy_mem)(void *, const void *, unsigned long);
- 		void (__efiapi *set_mem)(void *, unsigned long, unsigned char);
--		void *create_event_ex;
-+		efi_status_t (__efiapi *create_event_ex)(u32, int, void *, void *, void *, efi_event_t *);
- 	};
- 	struct {
- 		efi_table_hdr_t hdr;
+diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+index e8dbc8d820a6..320a94dcac5c 100644
+--- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
++++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+@@ -5587,7 +5587,7 @@ pcie0_ep: pcie-ep@1c00000 {
+ 		      <0x0 0x40000000 0x0 0xf20>,
+ 		      <0x0 0x40000f20 0x0 0xa8>,
+ 		      <0x0 0x40001000 0x0 0x4000>,
+-		      <0x0 0x40200000 0x0 0x100000>,
++		      <0x0 0x40200000 0x0 0x1fe00000>,
+ 		      <0x0 0x01c03000 0x0 0x1000>,
+ 		      <0x0 0x40005000 0x0 0x2000>;
+ 		reg-names = "parf", "dbi", "elbi", "atu", "addr_space",
+@@ -5744,7 +5744,7 @@ pcie1_ep: pcie-ep@1c10000 {
+ 		      <0x0 0x60000000 0x0 0xf20>,
+ 		      <0x0 0x60000f20 0x0 0xa8>,
+ 		      <0x0 0x60001000 0x0 0x4000>,
+-		      <0x0 0x60200000 0x0 0x100000>,
++		      <0x0 0x60200000 0x0 0x1fe00000>,
+ 		      <0x0 0x01c13000 0x0 0x1000>,
+ 		      <0x0 0x60005000 0x0 0x2000>;
+ 		reg-names = "parf", "dbi", "elbi", "atu", "addr_space",
 -- 
-2.45.2
+2.25.1
 
 
