@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-39466-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39467-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 40FDB9DB9C7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 15:39:34 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 50A7E9DB9CF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 15:41:32 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7BA12B21248
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 14:39:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 995F01648BC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 14:41:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9037B1B0F2C;
-	Thu, 28 Nov 2024 14:39:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4FFBC1B3957;
+	Thu, 28 Nov 2024 14:41:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HYlrrvSe"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cXFir5AK"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E4391B0F0B;
-	Thu, 28 Nov 2024 14:39:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FC811B394E;
+	Thu, 28 Nov 2024 14:41:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732804767; cv=none; b=SNg8S6LC2wrbR9oifSUi0Yijat90SYPxl8sHrHWCacpNroyN7GarlyZkcBxeboSv+C92G76/MZXogNJOxZH7Pg+Oz1ZQfHGGp6zIiWazkSd4J/dBXXHJuCSl8/LqY5foDGkA52pLkX1L3zK6T/BwpsMg5hR313kKa1P1OsbZnUE=
+	t=1732804872; cv=none; b=b7syxYxIRg959BHYeUTjaBMbD67n+8uA7rwj5JrQbhJaMhqpSJrGxdjA3kBrtHUrXyE7EFNYgWF0Am9QIzyvGYqEbeXQ9QzOaz+p10U4MBdw6Dmp7f/7pUIBk8rHKveFYwGoKwmxrLiuU0OUC1Qjq0EymBAsthx8qb9hlhScT94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732804767; c=relaxed/simple;
-	bh=Hu5gM7cflrERdLiUJj+sDvixPCRJWH9MxPu0yUhD6Ds=;
+	s=arc-20240116; t=1732804872; c=relaxed/simple;
+	bh=gA8SVICHT6Ib0YVBS6U3853M8kxOK6nOFVJYK09QkVM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hTZy+ekQxvAH4LLiESta7F2nVqWPnOsI45XZXvfUOcG6C6msQNrICqEwumT+14lb/oln/yp6XGaor72pOxm3JV/ijuJxPpnahVdnu6sP3oUNOX4AgEljjP0s96xGp+qfloA8S4YCTGSe0nC90dSh6tm0a0FkO8VVQ9brsLhCv48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HYlrrvSe; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC829C4CECE;
-	Thu, 28 Nov 2024 14:39:22 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=ppGdZOxvjNmPzKHUfho7TdMpziIx437CNlHwN83J61Ajc7y36D0Ii+vmgv+PfqamGJK4JRuLYPQYlQPK0Qa3IyTeP6NGfgzLn299OTljsdnvZ0RZuAHTwzEAAUf2ReWNx5x0apXqGp4Sgu49wi1O90blJgu1QqDaBEGGnhOQXIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cXFir5AK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 870E4C4CECE;
+	Thu, 28 Nov 2024 14:41:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732804766;
-	bh=Hu5gM7cflrERdLiUJj+sDvixPCRJWH9MxPu0yUhD6Ds=;
+	s=k20201202; t=1732804871;
+	bh=gA8SVICHT6Ib0YVBS6U3853M8kxOK6nOFVJYK09QkVM=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=HYlrrvSeYJSTjrypuqfOvm2+W1YXQJpoXU/Ve0lXiWUY96hMbaiG71B0Vn0LqSCcC
-	 CxsY4hdyxcS1fKo5uS/H+t/bWBgs+z5zWHKh3dm9qqlg/0a6T6ySEwaGOjI8BrjNQY
-	 rv4eXLWM+7KT0MN7EzdLKrppzt9UpgpgXrr4D5fvLPkchLU+Q4pT7D4bA1d4ng7qWd
-	 jhqHGfthcHypwEpKQMzTebP4MxPUBL592tIaCIYdxytUhZxRxjSsSvr2c6jjY7Aurh
-	 Rq/+BehycPaLT1wSGNoEHv/F/IKlcTMUd1GwLR8pvWHldUWbqqdX7ehbwteLttKvDI
-	 dFqWKfR7vd0Lw==
-Message-ID: <08c19ae1-b781-475a-8059-18bf9b708dfd@kernel.org>
-Date: Thu, 28 Nov 2024 15:39:20 +0100
+	b=cXFir5AKgg8hw8lnLu9WsralJh7g7IXfXXVNOWiGS66v+26bbP5nAhosg/yYJr3/b
+	 3nAepatUIMKtOzkQrzsdxYRuWft2f+mf051qT4QpkZhobF22hJSgPmqdssrdo+XCIl
+	 3BLfYmUeC+Ieo8mZboFEV1cFiM4Q/06lDseE1WXnktoNGlOMGho/GbORQgO8J/a/45
+	 c4p9+1uoeLLaWQWvmKnZ3L1k8I5C9uKhDInWQASUnnFqEaFo2XfQKnAFZMF0iscoj9
+	 /8YrJRgQhnwZWmkho1yuJ4A7Mi5bRTIqEBxRHJ76XZK4rV3GwDXoqmesP2wX4VzTFp
+	 kUDvHHMJ2zVGQ==
+Message-ID: <bd4cb046-f0c1-4044-897c-00f30c6e84d2@kernel.org>
+Date: Thu, 28 Nov 2024 15:41:05 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/3] arm64: dts: qcom: sa8775p-ride: Change the BT node
+Subject: Re: [PATCH v1 2/3] dt-bindings: net: Add QCA6698 Bluetooth
 To: Cheng Jiang <quic_chejiang@quicinc.com>,
  Marcel Holtmann <marcel@holtmann.org>,
  Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Rob Herring
@@ -63,7 +63,7 @@ Cc: linux-bluetooth@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
  quic_bt@quicinc.com
 References: <20241128120922.3518582-1-quic_chejiang@quicinc.com>
- <20241128120922.3518582-2-quic_chejiang@quicinc.com>
+ <20241128120922.3518582-3-quic_chejiang@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,35 +109,28 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20241128120922.3518582-2-quic_chejiang@quicinc.com>
+In-Reply-To: <20241128120922.3518582-3-quic_chejiang@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 28/11/2024 13:09, Cheng Jiang wrote:
-> The SA8775P-Ride uses the QCA6698 chipset, which shares the same IP core
-> as the WCN6855. However, it has different RF components and RAM sizes,
-> so new firmware is needed.  This change allows driver to distinguish it
-> from the WCN6855 and load the specific firmware.
-> 
-> Signed-off-by: Cheng Jiang <quic_chejiang@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-> index 3fc62e123..f95e709bd 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-> @@ -856,7 +856,7 @@ &uart17 {
->  	status = "okay";
->  
->  	bluetooth {
-> -		compatible = "qcom,wcn6855-bt";
-> +		compatible = "qcom,qca6698-bt";
+> Add the compatible for the Bluetooth part of the Qualcomm QCA6698 chipset.
 
-This breaks users without mentioning it, without really justifying the
-impact. Also it is not clear for me whether devices are or are not
-compatible.
+<form letter>
+This is a friendly reminder during the review process.
+
+It seems my or other reviewer's previous comments were not fully
+addressed. Maybe the feedback got lost between the quotes, maybe you
+just forgot to apply it. Please go back to the previous discussion and
+either implement all requested changes or keep discussing them.
+
+Thank you.
+</form letter>
+
+Respond to the comment and then implement it.
+
+Also, version your patches correct and provide changelog. This is v2,
+not v1.
 
 Best regards,
 Krzysztof
