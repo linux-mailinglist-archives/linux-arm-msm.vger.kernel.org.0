@@ -1,80 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-39472-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39473-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 750719DBA1B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 16:08:32 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3A0E19DBA24
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 16:09:29 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 35445281A71
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 15:08:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 362BB16630B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 15:08:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 211C21B85FA;
-	Thu, 28 Nov 2024 15:08:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B6621B6D0D;
+	Thu, 28 Nov 2024 15:08:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cYK9IhSI"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ct9fh04F"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 248851B6CE5
-	for <linux-arm-msm@vger.kernel.org>; Thu, 28 Nov 2024 15:08:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7234419D06A
+	for <linux-arm-msm@vger.kernel.org>; Thu, 28 Nov 2024 15:08:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732806501; cv=none; b=d1ZiJYZbCjsk3q1X1JWD5eH1q+rRbDeRxprLTPakmpRX0yqPjW4M8AAV4EG5zT6srgtEPsSEMyj5Ozi48j3cuEk0SysjqA/sxLLSnst7lzpmkADSUvC91n1s6GShQEYw+A7KO+gO4F3VdoWBPODL2aJzq3XH4jJlvu5oq/JwH2Y=
+	t=1732806510; cv=none; b=eIGdkjq4SY5YgjuSxrK73T360q/dqfJkWkNJpvXpxKlp0ofdiilXs+U48Pzdl63yQPpGjyRK4STmqVBi/WoNvbELe6rATSHVKis46Z7Fg0dzvYCr5FsNsh8q+rTgEJqNNPJEKGMpQ1DkBaqE3JvF1hYgkDY83MauRYaxtN1YMRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732806501; c=relaxed/simple;
-	bh=NLTvKIrXbeqVLRyJFTHVStzDu6b4FyaxZBZ5DZOx4qs=;
+	s=arc-20240116; t=1732806510; c=relaxed/simple;
+	bh=rlbKyKmaJtl7AvcVbj958NNb2CTCjGH3e22/HK7aHSI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=jBcqzyIKkIkyJjD4L5RLSGE6dKWOIZavn3YVWuYuBjqTcbRGLuEAXAMurfMYXjDvAlutSgRUSCoXDQplrVUL/ZgLK2RSzK3dO09doNAjW5qY1EsaWY5iFFxEY80NEAJ5Gxa6TjhMZ7582OsOlruasvG56jh6hAkflQKvFUf8KeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cYK9IhSI; arc=none smtp.client-ip=209.85.221.51
+	 In-Reply-To:To:Cc; b=CNCg6Jh4ZoIxtpaPM48Blwzb7XHKDwF3nbDDyOjpdHshPVaYRcnj74HfqJ01a7tZnSBp5OupDsQBPr19jzJLdiE+Rs1orkwfsD+8iWpyC91G52IxbWfrWjS+psA0q0VmJvvY5Y0RWX9zk1ikm8hjKxDPbkOi6IhM8p+nsA8lrHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ct9fh04F; arc=none smtp.client-ip=209.85.221.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-385bbdcd901so40307f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Nov 2024 07:08:18 -0800 (PST)
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-385db79aafbso1990f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Nov 2024 07:08:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732806497; x=1733411297; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1732806506; x=1733411306; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=eT7Vlh8p3qIU4Gf8jpOggviT1zyfYMs1qA9um2UgMqg=;
-        b=cYK9IhSIlC5evBIbJhkL7piKs43cWnEzHyZAOIltKagWzqEVSapF9pCxzIps9lAUKQ
-         c97xRLHT4uVZ+xJxINO1pstcXJhNYkTm1hEgU1g9Af2c2UZwcLiX/sPdmHs/lMnUrO/w
-         YtOFouJPBxjQoh6fMtLuNBjmAaRhVgJCXD31dC+VNzixnV/nXBlUBxP8RqqbDbkCA9vL
-         vr5fdz3teS74F9S4Bsfw4qS+1yNdoXda+KTUMVm53nsk/vyixq/kFTUQNXRmKyosZHuM
-         FyN8So9vbGcTwywU3pwvpnAd1zOokLsJKWT/TydCWDF2UVCygdiMD3TCqOEL5O0U3fYP
-         8Bqw==
+        bh=lt5QzJeMPWKPAsqGSyhIDMAHPVBRFaBMW/ugPFyL0zM=;
+        b=ct9fh04FrNnN1zxce09NpASj1I5DVvF62kgyL4GuSYmB5mH/CZEmDIXUl4BMJ7I4Iy
+         e+JIWInb4jIxlGxhmuf/jU6NI5uMiLfn58JxtY1c4wNE5WRxDaVdRmYZtVshhOHed8tH
+         CMG0COrI+N58apdQoy6gUszawugrw3w3PUGMBiU4QZ95XwA/3vxccYwWREGptnW5BRnb
+         djAeoDljnQ60QsxTdCefgEJvcJqYtT5Qd4QjX/ViUrnXIHCz2g60h5ijnP5IBTAveuYf
+         JKM9zKI2DKvP0yfQfrGJssSMcbyndm+JuuEm6SW8gQcfxTk/Wx5Tp8Z3uzZS1f6D4ejr
+         RTNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732806497; x=1733411297;
+        d=1e100.net; s=20230601; t=1732806506; x=1733411306;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=eT7Vlh8p3qIU4Gf8jpOggviT1zyfYMs1qA9um2UgMqg=;
-        b=Ks6plUgscJsfP4TQ5B7XoMudlSK/FdKwDm1Of2maPr6ww3cklEwdYTMAVoNv3ajiY8
-         QP3+V7ubndWDXzU5K4M6rOCs5bpBoXjF/uL9rRMD8S3zwAx4baTbOZGpJnrwkFC2zlUH
-         SSiBOYgAtY5K2sSA5X3Nr4jl9moW93bUMnrEAgblF2+BMPw+hY1Ic2TF+sSYXgbfWdlU
-         1KRJ89xnSQrcJAho0o9R2AY/sS/NC9awM0jPCHti5gJ54arjlK+FfXnxe6DU/NkCrwZP
-         FNBe31ix+3CSNJRnDHYT7B3uduZjZ18dS8HXj8JRmWeS/vdgbwE0v1sfJQ4Lx/AD+oW4
-         R+Lw==
-X-Gm-Message-State: AOJu0YxClm8vnvWPQjAD7hENEwtSYcJO2TphLKF7Yjl1VORIqCfEUTO3
-	7VAX4B/Yu+SsoamWTwItHWz83tIPbrX3VyoD+hcA3QWAIJ6zJXaMRO38zCYx15+CuOles28D0e8
-	1/Ts=
-X-Gm-Gg: ASbGncspaWjPB96TGhdQGzpxE67CnauBwYlnqDCouQNDJXGkmBtKmUaS6cO+55GJFO1
-	vddwzIW6FHWnPTfL3y6t5Brr1FIADhu9OK4V1tZsK/y/05Rlds2a8Qmk9bdqgD2zNgJwy8iI6iE
-	GY9WBOA9L+Ur8Vdk2jgyZE5/RcDG3a9wKH2AXxJQ2XZu+OS/ebUQIGcxFDBsIL3agGrfNk6mMT+
-	16aH2gjaVyMfX4dNL7VllddbWy860f7j1I0v9ZXEXCP6WjFZfL67rLmibQbBk//
-X-Google-Smtp-Source: AGHT+IH1u6HW/VJLtYQw/LhDscA8OcxHJW6kOKnBGgX2K0E/Z0MEvnVRhyLWshJqqCkYnxWvnUI+gQ==
-X-Received: by 2002:a05:6000:1fa7:b0:37e:d940:a9fe with SMTP id ffacd0b85a97d-385c6ee1547mr2350174f8f.13.1732806497347;
-        Thu, 28 Nov 2024 07:08:17 -0800 (PST)
+        bh=lt5QzJeMPWKPAsqGSyhIDMAHPVBRFaBMW/ugPFyL0zM=;
+        b=LhgtMGRclLl/GwfjGss0/iTxYLX24jbiBG+IwJgtMw3mEDKFGNU0PxM6z8g/FdIONt
+         KxzaBZtH5D0NKwnWUazmf7jWrJWfKNXaRzxVdT457lSPQ2+ePfbTBO8ACUUlt7H7CGf/
+         4tnV1YrDsA6/oMlMPNDw1XIyBZvXjUGfzRnZLEms4o1iB9830VadzpTS8mZK66GGu9d8
+         ew1x8ZFiiEJty2MJ93d9Oj/NqqQ7p2Bfya5fUXpFcUamkBIpL6cQKwVzg11VWju+J7u/
+         mRHDMDaQemTVObpLECb16aZ7gZgpjUSI/h84uBOaD6IQUCKuSPg8ciOUiyNQVLZh3Spb
+         N3Xg==
+X-Gm-Message-State: AOJu0YzgL+q56ICO5aQ61hrlzSSmBJTLBxeZChEAciMFAl5Jev1ehEAK
+	2WM7tYhoBsgdwyKWPBuWlFMJ5bTNQuqccR44iJLnwRqPM9oam4IFIiTlDE1PnGE=
+X-Gm-Gg: ASbGncuM5u1SUwIZVuiCex47reKWzW8rr7EMT8Mdz9svbLAmKXvI/IFIW9ZFGEt5tc/
+	2wWgpyKCkmPief9rrUFVngpEGTd+HMmCFcRyBcVHtLwJk9yPlXrBAjLKQyTj+cnC+t2Honfrt8K
+	QrmGeRp5cksFYuqp0SVgO8cWl/J22ugBo9eO1z8DyHe3xO4jI8RI+r/Y2ULHMOgFuaHAkw8dOsR
+	sO/h5U4IodBJCqBzJOo/YZrogxRSlN/GSpUtqo9i4BcWuISc6ql28Xx9G+zJ9hm
+X-Google-Smtp-Source: AGHT+IGR1lbSVgB7vzP7m/gmvAgrBpQbx+UF61A50ryjf7WQv+50btp/Sgs2mmdy2IVSZrcDUYdpZw==
+X-Received: by 2002:a05:6000:1867:b0:382:542d:3994 with SMTP id ffacd0b85a97d-385c6cca768mr2201090f8f.2.1732806498938;
+        Thu, 28 Nov 2024 07:08:18 -0800 (PST)
 Received: from [127.0.1.1] ([178.197.218.23])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-385ccd7fc33sm1828291f8f.94.2024.11.28.07.08.15
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-385ccd7fc33sm1828291f8f.94.2024.11.28.07.08.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Nov 2024 07:08:16 -0800 (PST)
+        Thu, 28 Nov 2024 07:08:18 -0800 (PST)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Thu, 28 Nov 2024 16:07:59 +0100
-Subject: [PATCH 1/3] dt-bindings: clock: qcom,sm8550-dispcc: Add SM8750
- DISPCC
+Date: Thu, 28 Nov 2024 16:08:00 +0100
+Subject: [PATCH 2/3] clk: qcom: clk-alpha-pll: Add Pongo PLL
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,7 +81,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241128-sm8750-dispcc-v1-1-120705a4015c@linaro.org>
+Message-Id: <20241128-sm8750-dispcc-v1-2-120705a4015c@linaro.org>
 References: <20241128-sm8750-dispcc-v1-0-120705a4015c@linaro.org>
 In-Reply-To: <20241128-sm8750-dispcc-v1-0-120705a4015c@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -96,179 +94,293 @@ Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
  Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6415;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=10106;
  i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=NLTvKIrXbeqVLRyJFTHVStzDu6b4FyaxZBZ5DZOx4qs=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBnSIdUCTCPeoWhcRX5+KojPuRZy/jz5f0IlA02/
- blUX4SlCVqJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZ0iHVAAKCRDBN2bmhouD
- 1743D/4pWkgvkEm5uy7vrtXPbDl9PqGg2/C/snpS/4ld8Cfh9drcLyxe41jr/ry4kx1udcfR5JZ
- YrxseYvznukA1zfkHYqTOJy6VeNd5EJWisVS9c+nZ2txsENc0/OhxswZR8OJYLdn9ogiUHfBbpd
- q884RmXjDSVjOMDYA/gT88mPqAuubEPxgAx//4ih0LOih4PlnN9Vcsi0kxMORKVGqc+NcpJN5Hx
- taQtrq20o7HgWRheCeE4U90lDYp1cnd/nLbo9V/DM67Y8U6vhzZQNI4TKv2eyiSgDP3GtiazyzS
- G3D02qUYgb5MttIoVK2FjOUEqlXIM5JbIe7OXXF5tTeJ+MFBoLaGb9gTduqO2RJIeM9dD8xzlSW
- gh7hj47xRgwD+wqFbdLhh2ETjG5IbbEvtUNjBkZfQxtzPA1/RklUOSqYqlSLysrh7h+yB/1Xngg
- yssuKYDXtBnGRwwyXW5oRG3J2NQarGQ1/KUB3sMySqEOQOFo3+RbZq6oCzYiacYq8qXqFeFSBqa
- xRysg9p5Cx8ots4qxwKfNaWs/6F57OvMrYQCaLHM93OgittShsegZ6SuAdEPaHtlP6e+5ajZkYI
- 46sgKbK75jsRdkxcYCeDM2mhR042rwk6PFxEsnLJjFwaZIXve/xlD3BpW3D7mrUwFw0SjmPZcMY
- o7iyb60F5OTwiJQ==
+ bh=rlbKyKmaJtl7AvcVbj958NNb2CTCjGH3e22/HK7aHSI=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBnSIdV8PJ4CeQsUr6uhn2gqq6+GZvtv+ehfTnD7
+ CHw7LVX9B2JAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZ0iHVQAKCRDBN2bmhouD
+ 11tdD/91lfmRXs+7J0tCh6uvPa6RZImGwSwhswJmwdtWXKGlrgDdPM98Apd4aoX2cxZSGDBZQh3
+ Fy1v0eMrCHdB7lPf5/kVAW9Qj/BZ4E6ZffSixBb49b3OSvK7bpnbODlNir8GFIHLfeZT0Tykra6
+ YdbfkyIvxds2lj+VzD+IOAfZESbBqvNcwBTvqSiEuD5CwSU/nkAostnFBgx8vHnXMUI5+0dCNbn
+ tk12tJ7dKrXihX/NLuDqYZfOvUY5uOLHHRfk0b22T2CBq4+cNaazg0FYyVLfubjYpT/u0B9VcGu
+ lJuXYykNzkZL780Yw+5X7u7NkcmQdrd0KeIyvjns6+X7yWaLncoeM9scVcYG9ed7QUNXvxlCyny
+ LY0c13VQeYb/qtWIfJBWVUhaiE5MNkAwk6Nm6rzgXrWrhNbMg/A3VKMkGAK+H/PSW50HRPY8azQ
+ VjTfSiK0yWIBu85+klD7YWjzBt3kN/eAAKVZILpPtilwNMfsSVCtqyPXrLmEygboWjWuY3mvrL5
+ E2b79YcUc6iB9URAxhWiHwV4scOqctZ2YHUc5bJA5lVK2bRrBpeGVlZMkuwfFHZjs1IQrEVbClS
+ wSipXXNfg1T1WgknTNTtZj1BRqPlME0zThvo24Ik7eqDMX1j0QvJlhrJvQaRTWAmteRZQU79TJi
+ Oz4kGKhFX2aKutA==
 X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
  fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
-Add bindings for the Qualcomm SM8750 Display Clock Controller (DISPCC).
-Bindings are similar to existing SM8550 and SM8650 (same clock inputs),
-but the clock hierarchy is quite different and these are not compatible
-devices.
+Add support for Pongo type of PLL clocks, used in Qualcomm SM8750 SoC.
+Notable difference comparing to other PLLs is the need for calibration
+for internally generated clock followed by wait_for_pll().  This is done
+in configure call and at this time clocks are not yet registered, thus
+wait_for_pll() cannot use clk_hw_get_name.  Locking during this
+calibration requires much more time, thus increase the timeout in
+wait_for_pll().
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- .../bindings/clock/qcom,sm8550-dispcc.yaml         |   4 +-
- include/dt-bindings/clock/qcom,sm8750-dispcc.h     | 112 +++++++++++++++++++++
- 2 files changed, 115 insertions(+), 1 deletion(-)
+ drivers/clk/qcom/clk-alpha-pll.c | 159 ++++++++++++++++++++++++++++++++++++++-
+ drivers/clk/qcom/clk-alpha-pll.h |   6 ++
+ 2 files changed, 163 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8550-dispcc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8550-dispcc.yaml
-index c57d55a9293c214c4c101902cdd9603074e2243d..30e4b46315752b93754ab2f946c684e13b06ab93 100644
---- a/Documentation/devicetree/bindings/clock/qcom,sm8550-dispcc.yaml
-+++ b/Documentation/devicetree/bindings/clock/qcom,sm8550-dispcc.yaml
-@@ -12,11 +12,12 @@ maintainers:
+diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
+index 0cd937ab47d04e453e9835dd142cd15f39f3f710..5603c8861a24a62789be3853effe82944289262d 100644
+--- a/drivers/clk/qcom/clk-alpha-pll.c
++++ b/drivers/clk/qcom/clk-alpha-pll.c
+@@ -58,6 +58,7 @@
+ #define PLL_TEST_CTL_U(p)	((p)->offset + (p)->regs[PLL_OFF_TEST_CTL_U])
+ #define PLL_TEST_CTL_U1(p)     ((p)->offset + (p)->regs[PLL_OFF_TEST_CTL_U1])
+ #define PLL_TEST_CTL_U2(p)     ((p)->offset + (p)->regs[PLL_OFF_TEST_CTL_U2])
++#define PLL_TEST_CTL_U3(p)     ((p)->offset + (p)->regs[PLL_OFF_TEST_CTL_U3])
+ #define PLL_STATUS(p)		((p)->offset + (p)->regs[PLL_OFF_STATUS])
+ #define PLL_OPMODE(p)		((p)->offset + (p)->regs[PLL_OFF_OPMODE])
+ #define PLL_FRAC(p)		((p)->offset + (p)->regs[PLL_OFF_FRAC])
+@@ -197,6 +198,23 @@ const u8 clk_alpha_pll_regs[][PLL_OFF_MAX_REGS] = {
+ 		[PLL_OFF_TEST_CTL_U1] = 0x34,
+ 		[PLL_OFF_TEST_CTL_U2] = 0x38,
+ 	},
++	[CLK_ALPHA_PLL_TYPE_PONGO_ELU] = {
++		[PLL_OFF_OPMODE] = 0x04,
++		[PLL_OFF_STATE] = 0x08,
++		[PLL_OFF_STATUS] = 0x0c,
++		[PLL_OFF_L_VAL] = 0x10,
++		[PLL_OFF_USER_CTL] = 0x14,
++		[PLL_OFF_USER_CTL_U] = 0x18,
++		[PLL_OFF_CONFIG_CTL] = 0x1c,
++		[PLL_OFF_CONFIG_CTL_U] = 0x20,
++		[PLL_OFF_CONFIG_CTL_U1] = 0x24,
++		[PLL_OFF_CONFIG_CTL_U2] = 0x28,
++		[PLL_OFF_TEST_CTL] = 0x2c,
++		[PLL_OFF_TEST_CTL_U] = 0x30,
++		[PLL_OFF_TEST_CTL_U1] = 0x34,
++		[PLL_OFF_TEST_CTL_U2] = 0x38,
++		[PLL_OFF_TEST_CTL_U3] = 0x3c,
++	},
+ 	[CLK_ALPHA_PLL_TYPE_TAYCAN_ELU] = {
+ 		[PLL_OFF_OPMODE] = 0x04,
+ 		[PLL_OFF_STATE] = 0x08,
+@@ -337,6 +355,12 @@ EXPORT_SYMBOL_GPL(clk_alpha_pll_regs);
+ #define LUCID_EVO_PLL_CAL_L_VAL_SHIFT	16
+ #define LUCID_OLE_PLL_RINGOSC_CAL_L_VAL_SHIFT	24
  
- description: |
-   Qualcomm display clock control module provides the clocks, resets and power
--  domains on SM8550.
-+  domains on SM8550, SM8650, SM8750 and few other platforms.
++/* PONGO ELU PLL specific setting and offsets */
++#define PONGO_PLL_OUT_MASK		GENMASK(1, 0)
++#define PONGO_PLL_L_VAL_MASK		GENMASK(11, 0)
++#define PONGO_XO_PRESENT		BIT(10)
++#define PONGO_CLOCK_SELECT		BIT(12)
++
+ /* ZONDA PLL specific */
+ #define ZONDA_PLL_OUT_MASK	0xf
+ #define ZONDA_STAY_IN_CFA	BIT(16)
+@@ -360,13 +384,14 @@ static int wait_for_pll(struct clk_alpha_pll *pll, u32 mask, bool inverse,
+ 	u32 val;
+ 	int count;
+ 	int ret;
+-	const char *name = clk_hw_get_name(&pll->clkr.hw);
++	const char *name;
  
-   See also:
-   - include/dt-bindings/clock/qcom,sm8550-dispcc.h
-   - include/dt-bindings/clock/qcom,sm8650-dispcc.h
-+  - include/dt-bindings/clock/qcom,sm8750-dispcc.h
-   - include/dt-bindings/clock/qcom,x1e80100-dispcc.h
+ 	ret = regmap_read(pll->clkr.regmap, PLL_MODE(pll), &val);
+ 	if (ret)
+ 		return ret;
  
- properties:
-@@ -25,6 +26,7 @@ properties:
-       - qcom,sar2130p-dispcc
-       - qcom,sm8550-dispcc
-       - qcom,sm8650-dispcc
-+      - qcom,sm8750-dispcc
-       - qcom,x1e80100-dispcc
+-	for (count = 200; count > 0; count--) {
++	/* Pongo PLLs using a 32KHz reference can take upwards of 1500us to lock. */
++	for (count = 1500; count > 0; count--) {
+ 		ret = regmap_read(pll->clkr.regmap, PLL_MODE(pll), &val);
+ 		if (ret)
+ 			return ret;
+@@ -378,6 +403,13 @@ static int wait_for_pll(struct clk_alpha_pll *pll, u32 mask, bool inverse,
+ 		udelay(1);
+ 	}
  
-   clocks:
-diff --git a/include/dt-bindings/clock/qcom,sm8750-dispcc.h b/include/dt-bindings/clock/qcom,sm8750-dispcc.h
-new file mode 100644
-index 0000000000000000000000000000000000000000..dafb5069c96a0c3f83c15f3c61978e138baa886c
---- /dev/null
-+++ b/include/dt-bindings/clock/qcom,sm8750-dispcc.h
-@@ -0,0 +1,112 @@
-+/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
-+/*
-+ * Copyright (c) 2022, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) 2024, Linaro Ltd.
-+ */
++	/* Called with clocks already registered ... */
++	if (pll->clkr.hw.core)
++		name = clk_hw_get_name(&pll->clkr.hw);
++	else
++		/* or before registering, when init data is present */
++		name = pll->clkr.hw.init->name;
 +
-+#ifndef _DT_BINDINGS_CLK_QCOM_SM8750_DISP_CC_H
-+#define _DT_BINDINGS_CLK_QCOM_SM8750_DISP_CC_H
+ 	WARN(1, "%s failed to %s!\n", name, action);
+ 	return -ETIMEDOUT;
+ }
+@@ -2524,6 +2556,129 @@ const struct clk_ops clk_alpha_pll_reset_lucid_evo_ops = {
+ };
+ EXPORT_SYMBOL_GPL(clk_alpha_pll_reset_lucid_evo_ops);
+ 
++static int alpha_pll_pongo_elu_enable(struct clk_hw *hw)
++{
++	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
++	struct regmap *regmap = pll->clkr.regmap;
++	int ret;
 +
-+/* DISP_CC clocks */
-+#define DISP_CC_ESYNC0_CLK					0
-+#define DISP_CC_ESYNC0_CLK_SRC					1
-+#define DISP_CC_ESYNC1_CLK					2
-+#define DISP_CC_ESYNC1_CLK_SRC					3
-+#define DISP_CC_MDSS_ACCU_SHIFT_CLK				4
-+#define DISP_CC_MDSS_AHB1_CLK					5
-+#define DISP_CC_MDSS_AHB_CLK					6
-+#define DISP_CC_MDSS_AHB_CLK_SRC				7
-+#define DISP_CC_MDSS_BYTE0_CLK					8
-+#define DISP_CC_MDSS_BYTE0_CLK_SRC				9
-+#define DISP_CC_MDSS_BYTE0_DIV_CLK_SRC				10
-+#define DISP_CC_MDSS_BYTE0_INTF_CLK				11
-+#define DISP_CC_MDSS_BYTE1_CLK					12
-+#define DISP_CC_MDSS_BYTE1_CLK_SRC				13
-+#define DISP_CC_MDSS_BYTE1_DIV_CLK_SRC				14
-+#define DISP_CC_MDSS_BYTE1_INTF_CLK				15
-+#define DISP_CC_MDSS_DPTX0_AUX_CLK				16
-+#define DISP_CC_MDSS_DPTX0_AUX_CLK_SRC				17
-+#define DISP_CC_MDSS_DPTX0_CRYPTO_CLK				18
-+#define DISP_CC_MDSS_DPTX0_LINK_CLK				19
-+#define DISP_CC_MDSS_DPTX0_LINK_CLK_SRC				20
-+#define DISP_CC_MDSS_DPTX0_LINK_DIV_CLK_SRC			21
-+#define DISP_CC_MDSS_DPTX0_LINK_INTF_CLK			22
-+#define DISP_CC_MDSS_DPTX0_PIXEL0_CLK				23
-+#define DISP_CC_MDSS_DPTX0_PIXEL0_CLK_SRC			24
-+#define DISP_CC_MDSS_DPTX0_PIXEL1_CLK				25
-+#define DISP_CC_MDSS_DPTX0_PIXEL1_CLK_SRC			26
-+#define DISP_CC_MDSS_DPTX0_USB_ROUTER_LINK_INTF_CLK		27
-+#define DISP_CC_MDSS_DPTX1_AUX_CLK				28
-+#define DISP_CC_MDSS_DPTX1_AUX_CLK_SRC				29
-+#define DISP_CC_MDSS_DPTX1_CRYPTO_CLK				30
-+#define DISP_CC_MDSS_DPTX1_LINK_CLK				31
-+#define DISP_CC_MDSS_DPTX1_LINK_CLK_SRC				32
-+#define DISP_CC_MDSS_DPTX1_LINK_DIV_CLK_SRC			33
-+#define DISP_CC_MDSS_DPTX1_LINK_INTF_CLK			34
-+#define DISP_CC_MDSS_DPTX1_PIXEL0_CLK				35
-+#define DISP_CC_MDSS_DPTX1_PIXEL0_CLK_SRC			36
-+#define DISP_CC_MDSS_DPTX1_PIXEL1_CLK				37
-+#define DISP_CC_MDSS_DPTX1_PIXEL1_CLK_SRC			38
-+#define DISP_CC_MDSS_DPTX1_USB_ROUTER_LINK_INTF_CLK		39
-+#define DISP_CC_MDSS_DPTX2_AUX_CLK				40
-+#define DISP_CC_MDSS_DPTX2_AUX_CLK_SRC				41
-+#define DISP_CC_MDSS_DPTX2_CRYPTO_CLK				42
-+#define DISP_CC_MDSS_DPTX2_LINK_CLK				43
-+#define DISP_CC_MDSS_DPTX2_LINK_CLK_SRC				44
-+#define DISP_CC_MDSS_DPTX2_LINK_DIV_CLK_SRC			45
-+#define DISP_CC_MDSS_DPTX2_LINK_INTF_CLK			46
-+#define DISP_CC_MDSS_DPTX2_PIXEL0_CLK				47
-+#define DISP_CC_MDSS_DPTX2_PIXEL0_CLK_SRC			48
-+#define DISP_CC_MDSS_DPTX2_PIXEL1_CLK				49
-+#define DISP_CC_MDSS_DPTX2_PIXEL1_CLK_SRC			50
-+#define DISP_CC_MDSS_DPTX3_AUX_CLK				51
-+#define DISP_CC_MDSS_DPTX3_AUX_CLK_SRC				52
-+#define DISP_CC_MDSS_DPTX3_CRYPTO_CLK				53
-+#define DISP_CC_MDSS_DPTX3_LINK_CLK				54
-+#define DISP_CC_MDSS_DPTX3_LINK_CLK_SRC				55
-+#define DISP_CC_MDSS_DPTX3_LINK_DIV_CLK_SRC			56
-+#define DISP_CC_MDSS_DPTX3_LINK_INTF_CLK			57
-+#define DISP_CC_MDSS_DPTX3_PIXEL0_CLK				58
-+#define DISP_CC_MDSS_DPTX3_PIXEL0_CLK_SRC			59
-+#define DISP_CC_MDSS_ESC0_CLK					60
-+#define DISP_CC_MDSS_ESC0_CLK_SRC				61
-+#define DISP_CC_MDSS_ESC1_CLK					62
-+#define DISP_CC_MDSS_ESC1_CLK_SRC				63
-+#define DISP_CC_MDSS_MDP1_CLK					64
-+#define DISP_CC_MDSS_MDP_CLK					65
-+#define DISP_CC_MDSS_MDP_CLK_SRC				66
-+#define DISP_CC_MDSS_MDP_LUT1_CLK				67
-+#define DISP_CC_MDSS_MDP_LUT_CLK				68
-+#define DISP_CC_MDSS_NON_GDSC_AHB_CLK				69
-+#define DISP_CC_MDSS_PCLK0_CLK					70
-+#define DISP_CC_MDSS_PCLK0_CLK_SRC				71
-+#define DISP_CC_MDSS_PCLK1_CLK					72
-+#define DISP_CC_MDSS_PCLK1_CLK_SRC				73
-+#define DISP_CC_MDSS_PCLK2_CLK					74
-+#define DISP_CC_MDSS_PCLK2_CLK_SRC				75
-+#define DISP_CC_MDSS_RSCC_AHB_CLK				76
-+#define DISP_CC_MDSS_RSCC_VSYNC_CLK				77
-+#define DISP_CC_MDSS_VSYNC1_CLK					78
-+#define DISP_CC_MDSS_VSYNC_CLK					79
-+#define DISP_CC_MDSS_VSYNC_CLK_SRC				80
-+#define DISP_CC_OSC_CLK						81
-+#define DISP_CC_OSC_CLK_SRC					82
-+#define DISP_CC_PLL0						83
-+#define DISP_CC_PLL1						84
-+#define DISP_CC_PLL2						85
-+#define DISP_CC_SLEEP_CLK					86
-+#define DISP_CC_SLEEP_CLK_SRC					87
-+#define DISP_CC_XO_CLK						88
-+#define DISP_CC_XO_CLK_SRC					89
++	/* Check if PLL is already enabled */
++	if (trion_pll_is_enabled(pll, regmap))
++		return 0;
 +
-+/* DISP_CC resets */
-+#define DISP_CC_MDSS_CORE_BCR					0
-+#define DISP_CC_MDSS_CORE_INT2_BCR				1
-+#define DISP_CC_MDSS_RSCC_BCR					2
++	ret = regmap_update_bits(regmap, PLL_MODE(pll), PLL_RESET_N, PLL_RESET_N);
++	if (ret)
++		return ret;
 +
-+/* DISP_CC GDSCR */
-+#define MDSS_GDSC						0
-+#define MDSS_INT2_GDSC						1
++	/* Set operation mode to RUN */
++	regmap_write(regmap, PLL_OPMODE(pll), PLL_RUN);
 +
-+#endif
++	ret = wait_for_pll_enable_lock(pll);
++	if (ret)
++		return ret;
++
++	/* Enable the global PLL outputs */
++	ret = regmap_update_bits(regmap, PLL_MODE(pll), PLL_OUTCTRL, PLL_OUTCTRL);
++	if (ret)
++		return ret;
++
++	/* Ensure that the write above goes through before returning. */
++	mb();
++
++	return ret;
++}
++
++static void alpha_pll_pongo_elu_disable(struct clk_hw *hw)
++{
++	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
++	struct regmap *regmap = pll->clkr.regmap;
++	int ret;
++
++	/* Disable the global PLL output */
++	ret = regmap_update_bits(regmap, PLL_MODE(pll), PLL_OUTCTRL, 0);
++	if (ret)
++		return;
++
++	/* Place the PLL mode in STANDBY */
++	regmap_write(regmap, PLL_OPMODE(pll), PLL_STANDBY);
++}
++
++static unsigned long alpha_pll_pongo_elu_recalc_rate(struct clk_hw *hw,
++						     unsigned long parent_rate)
++{
++	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
++	struct regmap *regmap = pll->clkr.regmap;
++	u32 l;
++
++	if (regmap_read(regmap, PLL_L_VAL(pll), &l))
++		return 0;
++
++	l &= PONGO_PLL_L_VAL_MASK;
++
++	return alpha_pll_calc_rate(parent_rate, l, 0, pll_alpha_width(pll));
++}
++
++const struct clk_ops clk_alpha_pll_pongo_elu_ops = {
++	.enable = alpha_pll_pongo_elu_enable,
++	.disable = alpha_pll_pongo_elu_disable,
++	.recalc_rate = alpha_pll_pongo_elu_recalc_rate,
++};
++EXPORT_SYMBOL(clk_alpha_pll_pongo_elu_ops);
++
++void clk_pongo_elu_pll_configure(struct clk_alpha_pll *pll,
++				 struct regmap *regmap,
++				 const struct alpha_pll_config *config)
++{
++	u32 val;
++
++	regmap_update_bits(regmap, PLL_USER_CTL(pll), PONGO_PLL_OUT_MASK,
++			   PONGO_PLL_OUT_MASK);
++
++	if (trion_pll_is_enabled(pll, regmap))
++		return;
++
++	if (regmap_read(regmap, PLL_L_VAL(pll), &val))
++		return;
++	val &= PONGO_PLL_L_VAL_MASK;
++	if (val)
++		return;
++
++	clk_alpha_pll_write_config(regmap, PLL_L_VAL(pll), config->l);
++	clk_alpha_pll_write_config(regmap, PLL_ALPHA_VAL(pll), config->alpha);
++	clk_alpha_pll_write_config(regmap, PLL_CONFIG_CTL(pll), config->config_ctl_val);
++	clk_alpha_pll_write_config(regmap, PLL_CONFIG_CTL_U(pll), config->config_ctl_hi_val);
++	clk_alpha_pll_write_config(regmap, PLL_CONFIG_CTL_U1(pll), config->config_ctl_hi1_val);
++	clk_alpha_pll_write_config(regmap, PLL_CONFIG_CTL_U2(pll), config->config_ctl_hi2_val);
++	clk_alpha_pll_write_config(regmap, PLL_USER_CTL(pll),
++				   config->user_ctl_val | PONGO_PLL_OUT_MASK);
++	clk_alpha_pll_write_config(regmap, PLL_USER_CTL_U(pll), config->user_ctl_hi_val);
++	clk_alpha_pll_write_config(regmap, PLL_TEST_CTL(pll), config->test_ctl_val);
++	clk_alpha_pll_write_config(regmap, PLL_TEST_CTL_U(pll), config->test_ctl_hi_val);
++	clk_alpha_pll_write_config(regmap, PLL_TEST_CTL_U1(pll), config->test_ctl_hi1_val);
++	clk_alpha_pll_write_config(regmap, PLL_TEST_CTL_U2(pll), config->test_ctl_hi2_val);
++	clk_alpha_pll_write_config(regmap, PLL_TEST_CTL_U3(pll), config->test_ctl_hi3_val);
++
++	/* Disable PLL output */
++	regmap_update_bits(regmap, PLL_MODE(pll), PLL_OUTCTRL, 0);
++
++	/* Enable PLL intially to one-time calibrate against XO. */
++	regmap_write(regmap, PLL_OPMODE(pll), PLL_RUN);
++	regmap_update_bits(regmap, PLL_MODE(pll), PLL_RESET_N, PLL_RESET_N);
++	regmap_update_bits(regmap, PLL_MODE(pll), PONGO_XO_PRESENT, PONGO_XO_PRESENT);
++
++	/* Set regmap for wait_for_pll() */
++	pll->clkr.regmap = regmap;
++	if (wait_for_pll_enable_lock(pll))
++		return;
++
++	/* Disable PLL after one-time calibration. */
++	regmap_write(regmap, PLL_OPMODE(pll), PLL_STANDBY);
++
++	/* Select internally generated clock. */
++	regmap_update_bits(regmap, PLL_MODE(pll), PONGO_CLOCK_SELECT, PONGO_CLOCK_SELECT);
++}
++EXPORT_SYMBOL(clk_pongo_elu_pll_configure);
++
+ void clk_rivian_evo_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
+ 				  const struct alpha_pll_config *config)
+ {
+diff --git a/drivers/clk/qcom/clk-alpha-pll.h b/drivers/clk/qcom/clk-alpha-pll.h
+index 87bd469d9c2c2ec4e0758c97231527b92fe6afe5..79aca8525262211ae5295245427d4540abf1e09a 100644
+--- a/drivers/clk/qcom/clk-alpha-pll.h
++++ b/drivers/clk/qcom/clk-alpha-pll.h
+@@ -27,6 +27,7 @@ enum {
+ 	CLK_ALPHA_PLL_TYPE_ZONDA_OLE,
+ 	CLK_ALPHA_PLL_TYPE_LUCID_EVO,
+ 	CLK_ALPHA_PLL_TYPE_LUCID_OLE,
++	CLK_ALPHA_PLL_TYPE_PONGO_ELU,
+ 	CLK_ALPHA_PLL_TYPE_TAYCAN_ELU,
+ 	CLK_ALPHA_PLL_TYPE_RIVIAN_EVO,
+ 	CLK_ALPHA_PLL_TYPE_DEFAULT_EVO,
+@@ -53,6 +54,7 @@ enum {
+ 	PLL_OFF_TEST_CTL_U,
+ 	PLL_OFF_TEST_CTL_U1,
+ 	PLL_OFF_TEST_CTL_U2,
++	PLL_OFF_TEST_CTL_U3,
+ 	PLL_OFF_STATE,
+ 	PLL_OFF_STATUS,
+ 	PLL_OFF_OPMODE,
+@@ -138,6 +140,7 @@ struct alpha_pll_config {
+ 	u32 test_ctl_hi_mask;
+ 	u32 test_ctl_hi1_val;
+ 	u32 test_ctl_hi2_val;
++	u32 test_ctl_hi3_val;
+ 	u32 main_output_mask;
+ 	u32 aux_output_mask;
+ 	u32 aux2_output_mask;
+@@ -196,6 +199,7 @@ extern const struct clk_ops clk_alpha_pll_postdiv_lucid_evo_ops;
+ #define clk_alpha_pll_postdiv_lucid_ole_ops clk_alpha_pll_postdiv_lucid_evo_ops
+ #define clk_alpha_pll_postdiv_taycan_elu_ops clk_alpha_pll_postdiv_lucid_evo_ops
+ 
++extern const struct clk_ops clk_alpha_pll_pongo_elu_ops;
+ extern const struct clk_ops clk_alpha_pll_rivian_evo_ops;
+ #define clk_alpha_pll_postdiv_rivian_evo_ops clk_alpha_pll_postdiv_fabia_ops
+ 
+@@ -222,6 +226,8 @@ void clk_lucid_evo_pll_configure(struct clk_alpha_pll *pll, struct regmap *regma
+ 				 const struct alpha_pll_config *config);
+ void clk_lucid_ole_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
+ 				 const struct alpha_pll_config *config);
++void clk_pongo_elu_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
++				 const struct alpha_pll_config *config);
+ #define clk_taycan_elu_pll_configure(pll, regmap, config) \
+ 	clk_lucid_evo_pll_configure(pll, regmap, config)
+ 
 
 -- 
 2.43.0
