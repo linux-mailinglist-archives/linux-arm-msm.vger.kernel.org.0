@@ -1,67 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-39486-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39487-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id A460F9DBB64
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 17:42:23 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F26A39DBB72
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 17:43:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2D18CB21BE5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 16:42:21 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 98FB2B22016
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 16:43:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E41B81B85FA;
-	Thu, 28 Nov 2024 16:42:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1621C1BD9EE;
+	Thu, 28 Nov 2024 16:43:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sB6Oydwn"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iEfZGUbG"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE41F3232;
-	Thu, 28 Nov 2024 16:42:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCA411B85FA;
+	Thu, 28 Nov 2024 16:43:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732812136; cv=none; b=TlLKwtAvmPO9jaogOuuamNkd0D7rtc0EjRDys7UkZ2JGNiiLfAkNtfwmoFMn2iGBr8LTTwIrmglyFrnVdrNpb2r1kbV/xjW29YMXISwXYtItaWt/45CUvBrCKtGNs8hk0Bp1TR12zqmcYBUScg1J7xh/D2ev0iyINMWF1tzBqLs=
+	t=1732812229; cv=none; b=PypI2Fb3Gf8NilHTCHJgzEtJ9cIlhQBD/F72qS0lDNLWnDeRCFV9TlHT3rqrn9qRGXSj7bLbCK9CKwMaCIGFmxib21QughDzgUXNseNqSurmChd4NVcdxZd7q1ESaTRt6uy2noNcvYQMb8gp0XV8DcR5MjsZGuRBFeVxKRruqXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732812136; c=relaxed/simple;
-	bh=reIHRCSYgXX7krbHbZuB1P5p2+PBEeLWCfrM4sq9TJE=;
+	s=arc-20240116; t=1732812229; c=relaxed/simple;
+	bh=cfGnX3HhW0ZLkB6Rpk07vfYDD6bx5vOherGOdZSl7mA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VYfsYxC4fJhkcRJBS/wxH+5zesQe77uYso1W+nwiLysFrZ0sH4IqRPF/gM69eKkcmQ6Q1KC5hdIwT+bWmb0YChJHSJWQk6TvvdcjVRog9irdYsQ8JvlKqAhsIOokeLWl+76sip6FdpLCyphFbGcKJzlMhGWlcu2savG80YFo+XM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sB6Oydwn; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 376B4C4CECE;
-	Thu, 28 Nov 2024 16:42:16 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=bfatLneKUrWfxQhbOGNGB8teAQbhJ0jnUQiD+BpNyZDVka0KjH3hnvVixwqgWdo/ZA2IpkYsJWM7yu1KvSykmbvAE1ZpueefrXvUuwGvnBowaAOdTGsmoaGXnW+6NP9wJOsTKSTaRah9HVWN7gA9DsnKmjSAeI6cO9snMnI9xNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iEfZGUbG; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 822B1C4CECE;
+	Thu, 28 Nov 2024 16:43:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732812136;
-	bh=reIHRCSYgXX7krbHbZuB1P5p2+PBEeLWCfrM4sq9TJE=;
+	s=k20201202; t=1732812228;
+	bh=cfGnX3HhW0ZLkB6Rpk07vfYDD6bx5vOherGOdZSl7mA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=sB6OydwnQ05EJysfnXpEyDki/aft5Fhy2S8zT3N9qcBj+0GrhEzXv+45T1Z7Eys6t
-	 CRM5FMX2KcXn3S6qJaxS/fUqj2ipJFtG0nfaszdivOzZl5iNIYlb5VjdnpRcYar/6w
-	 qzkF+pRQM1F+OzIEg6csk4mM6ujMysj7DKFY/v4UCfhuOMpVtrjQabjLve2pt8RrHK
-	 5Y8YrYyedtxsZxUhiYADTN27O/L+LiE6BZ2Of3WCcNb3mMjoW96q6ZoYIWEqMbYHjn
-	 JPfUMzizNXIQFHLkghjYqAJifXkzphnSknMLSoEVwd+CXAgnWcRMv7jz4rgS65xBXs
-	 mCJYKj/KF8kqA==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1tGhai-0000000071O-2bJ5;
-	Thu, 28 Nov 2024 17:42:09 +0100
-Date: Thu, 28 Nov 2024 17:42:08 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Ard Biesheuvel <ardb@kernel.org>
-Cc: Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Ricardo Salveti <ricardo@foundries.io>,
-	Marc Zyngier <maz@kernel.org>, linux-efi@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: UEFI EBS() failures on Lenovo T14s
-Message-ID: <Z0idYMTrsKXOA6a1@hovoldconsulting.com>
-References: <Z0gn1N3IsP8r3gTA@hovoldconsulting.com>
- <CAMj1kXGjiA1HydMaY82MQsYvkchpN7v7CMOB5i3NEdqcYGn19Q@mail.gmail.com>
- <Z0g_HL01eqXu4cwQ@hovoldconsulting.com>
- <CAMj1kXFtr7ejEjjSRj9dcRa7YbO0SR5OR3pm+K6OvbX2=RfhAQ@mail.gmail.com>
- <CAMj1kXHS_TY=jfBT=dqUQSXf2pBXbt12uaLsMw-FLX3uU_X6uA@mail.gmail.com>
- <Z0iCNJVWNzBzdq0C@hovoldconsulting.com>
- <CAMj1kXF0Mmr5CyyeKXO6-Ot+5cfSV6t2jPmn+TGVyjUsoYwGtw@mail.gmail.com>
+	b=iEfZGUbGESxjukgGsMx0W1DMiYtp3MPy0kCVcFl89B4W5MoUzR/7pA9fWq0j/gY1d
+	 9EAFbqwIrZeYgfUqmMtxaltDKpCa08muuIUscn0Th2A4Al/43KDkOy0BuA8pSG96Fu
+	 XKdWVe35z6BNhlsa3elcuFwdf+Q8EmjqoLKV8+704pDR6U4OJ7GJ0oJtFR6QUHaSAK
+	 U67PlWV0JyEP0fDIV6irBIkMZF9k7g3iIEAPqYbObbtfVw9co/lRQSTOs5E/HsmYU/
+	 H8Mdi1RL5qwAugOuMlODoIaDJM6xixfhdCKI1ISbJSlGf8aj4k9dS68plxbY0cuJEA
+	 3eSvq2a6NpnPg==
+Date: Thu, 28 Nov 2024 10:43:45 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Song Xue <quic_songxue@quicinc.com>
+Cc: Vinod Koul <vkoul@kernel.org>, 
+	Kishon Vijay Abraham I <kishon@kernel.org>, Manu Gautam <mgautam@codeaurora.org>, 
+	Vivek Gautam <vivek.gautam@codeaurora.org>, kernel@quicinc.com, linux-arm-msm@vger.kernel.org, 
+	linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] phy: qcom-qusb2: Add regulator_set_load to Qualcomm
+ usb phy
+Message-ID: <vbuo2yel2pdcwnmz32f4t5pb6v3ptt2bcs2t6ybab2jxnkd6e7@rjnsbawj4zpb>
+References: <20241121-add_set_load_to_qusb_phy-v2-1-1c5da1befec0@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,41 +60,88 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAMj1kXF0Mmr5CyyeKXO6-Ot+5cfSV6t2jPmn+TGVyjUsoYwGtw@mail.gmail.com>
+In-Reply-To: <20241121-add_set_load_to_qusb_phy-v2-1-1c5da1befec0@quicinc.com>
 
-On Thu, Nov 28, 2024 at 04:21:09PM +0100, Ard Biesheuvel wrote:
-> On Thu, 28 Nov 2024 at 15:46, Johan Hovold <johan@kernel.org> wrote:
-> >
-> > On Thu, Nov 28, 2024 at 12:05:09PM +0100, Ard Biesheuvel wrote:
-> >
-> > > If you're happy to experiment more, you could try and register a
-> > > notification for EFI_EVENT_GROUP_BEFORE_EXIT_BOOT_SERVICES using
-> > > CreateEventEx(), and see if it gets called when ExitBootServices() is
-> > > called. That would at least help narrow it down.
-> >
-> > Thanks for the suggestion.
-> >
-> > I see the notify function being called when I signal it as well as on
-> > each ExitBootServices().
+On Thu, Nov 21, 2024 at 04:09:27PM +0800, Song Xue wrote:
+> Set the current load before enable regulator supplies at QUSB phy.
 > 
-> Interesting. That means the EDK2 fork is fairly recent.
+> Encountered one issue where the board powered down instantly once the UVC
+> camera was attached to USB port while adding host mode on usb port and
+> testing a UVC camera with the driver on QCS615 platform. The extensible
+> boot loader mentioned that OCP(Over Current Protection) occurred at LDO12
+> from regulators-0 upon powered on board again. That indicates that the
+> current load set for QUSB phy, which use the regulator supply, is lower
+> than expected.
 > 
-> FYI https://github.com/tianocore/edk2/pull/6481
-
-Nice find.
-
-> > With an efi_printk() in the callback ExitBootServices() fails as
-> > expected, but with an empty function the kernel seems to start every
-> > time.
-> >
-> > Interestingly, ExitBootServices() now succeeds also if I add back the
-> > CloseEvent() call. In fact, it works also if I never signal the event
-> > (i.e. if I just create and close the event).
+> As per QUSB spec, set the maximum current load at 30mA to avoid overcurrent
+> load when attach a device to the USB port.
 > 
-> Is it still invoked by the firmware if you closed the event before EBS()?
+> Fixes: 937e17f36a32 ("phy: qcom-qusb2: Power-on PHY before initialization")
+> Signed-off-by: Song Xue <quic_songxue@quicinc.com>
 
-No, I just reconfirmed that then it is only called when I signal it
-before closing (or never if don't signal the event).
+The patch looks good. But if we describe the regulator(s) with
+regulator-allow-set-load; and not all the consumers vote for load, the
+sum of the load when USB phy is disabled goes to 0 and we will enter
+LPM.
 
-Johan
+For this reason we're not doing any load requests today. Can you confirm
+that this works fine with a dtb where only HPM is permitted (as well as
+LPM and HPM)? If so I'd be in favor of us merging this change, but
+keeping the dts HPM-only until someone confirms that all consumers of
+these regulators specify load-votes.
+
+Regards,
+Bjorn
+
+> ---
+> Changes in v2:
+> - Removed "---" above the Fixes. 
+> - Link to v1: https://lore.kernel.org/r/20241121-add_set_load_to_qusb_phy-v1-1-0f44f3a3290e@quicinc.com
+> ---
+>  drivers/phy/qualcomm/phy-qcom-qusb2.c | 13 ++++++++++++-
+>  1 file changed, 12 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qusb2.c b/drivers/phy/qualcomm/phy-qcom-qusb2.c
+> index c52655a383cef008552ed4533b9f31d1cbf34a13..80f0d17c42717e843937255a9a780bbae5998535 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qusb2.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qusb2.c
+> @@ -722,16 +722,27 @@ static int __maybe_unused qusb2_phy_runtime_resume(struct device *dev)
+>  	return ret;
+>  }
+>  
+> +#define QUSB2PHY_HPM_LOAD 30000 /*uA*/
+> +
+>  static int qusb2_phy_init(struct phy *phy)
+>  {
+>  	struct qusb2_phy *qphy = phy_get_drvdata(phy);
+>  	const struct qusb2_phy_cfg *cfg = qphy->cfg;
+>  	unsigned int val = 0;
+>  	unsigned int clk_scheme;
+> -	int ret;
+> +	int ret, i;
+>  
+>  	dev_vdbg(&phy->dev, "%s(): Initializing QUSB2 phy\n", __func__);
+>  
+> +	/* set the current load */
+> +	for (i = 0; i < ARRAY_SIZE(qphy->vregs); i++) {
+> +		ret = regulator_set_load(qphy->vregs[i].consumer, QUSB2PHY_HPM_LOAD);
+> +		if (ret) {
+> +			dev_err(&phy->dev, "failed to set load at %s\n", qphy->vregs[i].supply);
+> +			return ret;
+> +		}
+> +	}
+> +
+>  	/* turn on regulator supplies */
+>  	ret = regulator_bulk_enable(ARRAY_SIZE(qphy->vregs), qphy->vregs);
+>  	if (ret)
+> 
+> ---
+> base-commit: decc701f41d07481893fdea942c0ac6b226e84cd
+> change-id: 20241121-add_set_load_to_qusb_phy-d1327c797ffe
+> 
+> Best regards,
+> -- 
+> Song Xue <quic_songxue@quicinc.com>
+> 
+> 
 
