@@ -1,191 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-39367-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39368-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B9499DB243
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 05:46:01 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 13CC79DB254
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 06:05:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E5A441667E7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 04:45:57 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8C76B168006
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 05:05:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 035BF13B58E;
-	Thu, 28 Nov 2024 04:45:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34BA413FD83;
+	Thu, 28 Nov 2024 05:05:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Up6jx4PR"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="DrdDbm78"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CF6E360;
-	Thu, 28 Nov 2024 04:45:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AA7C1FAA;
+	Thu, 28 Nov 2024 05:05:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732769156; cv=none; b=laQL4S/hZy9PTWpGJX8oU3CC19FCVB5x3nkLZgf9F9HXrZg1oPQFqJAf02vFYa/4qRdFs7gTsFyk2BqlNyb8jwnkn5YPhHK4ujaoX5DDGybnEl6gu22zeDqbm42PliK+pZZtZTXq0BjHBC2eUH0N5GmZVegGvYE0CrW0EzC1RwE=
+	t=1732770332; cv=none; b=apIHpoBk5QBSeLtcjutr898YSdrRObpPrPCrRgBkcHxzK+A7F0vloFiYAXh9Km8f/WnXLUoW6jWKhYZKCzFqZQVqHeZVZsZ67oY2PXAYionTbs5YQwm+JBA1OzNS4N+q2MbPZ+2/4yn45W83LvHTCjRg5xA7tRSxNcUO9lr5D8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732769156; c=relaxed/simple;
-	bh=Nh/umBmDogP6K+8vOrQntqBkOwYJR9zftfW9Lv/r33A=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=USG3XuDZvRalhzlTf8gY38TIi0E/49kCtH7xJxz6cBbbK5y3qFkcenCh5VHHE9W0dVKbo7mZS/XYpVfRQ7gU25EeKWg2ZxOK1yhETBUCKSx0kIfiIThe4tIbK6+nhbR8xX/5AED6cJ2HMQVqzaXV0LGRnKc4/+P18Tyk6sXlMVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Up6jx4PR; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1732770332; c=relaxed/simple;
+	bh=JoXdclOpAXCa9Tcg/xERw0jHha09R6d9Sfl9SLTUwtc=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=QHbpeoT0ax4e0Uif7xBksSKu8XQwmekHYA7iCACzD6FTozYN4uEbhsSxzKhX1lt/wNctZewiJyqp6uyfF7P1p03rMFb4oadaYkiLSPlULrM4OM7sq0URrDgx5odHBK7x5WvHm+uWIQQJmQQn4OsUEiPPpTr84NYyw6GBv1yGgio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=DrdDbm78; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ARGRUNO018966;
-	Thu, 28 Nov 2024 04:45:51 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ARGRUOZ018966;
+	Thu, 28 Nov 2024 05:05:23 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	uJA0hZahYt3ouFeJrPPN50GKqvOKT7odLnSpABDr55o=; b=Up6jx4PRNz1yFAhm
-	dfccQ2dvTepXsmUdV97mH7ktaZWxatxL0XVO6daOLv07uWQ09Z3/p72bkZHGj872
-	gShTaHY4Tdk3XsmF3o0aKhELHcAmGHradCqeUF3lZMUQO5N8LNQH+ufh95ecP7OB
-	EOKh57ZPjAq/wTbbkjSbqrYw/0LJjE0Ufg0LEnhZFXRDiNhXTl/Z/o6NsSdVOA2G
-	wFzdDsw++gcl2Yt6ShF5+3pJpNt+cjPFgYCyWGvu6pkScfwo06nstgge0QU8LfaU
-	JV85yy6a31WlqDJ1/4lUw80rcwQduERdi0PRmjqY0Ebo4cqU59wXtOD5m1RtvxkK
-	2H1UqA==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4366y01b1v-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=J1MjLHK1HnXfB9Qnhsid+s
+	8QoX2emh7DYyNGRwddJD8=; b=DrdDbm78tvtDJL93MGRsIHVTYfBlz0WoKW7eIJ
+	5qzeMsr0rnzXd/4Z3NZJz8qfUBFZG+OtQnk49/mGxaNH4SOvpZ/Z8d+DqxtpkHXV
+	un/3PVX0Ao9YZe787FhWkjQ05+yx1IBvSfQFjNSwSEw58XNo4F4wR6L/rqBA9TFO
+	6jmo3Qf9zI4pnq3G468Ih7LQMe1Hq1QLUR7hhIBKnuxGaZM8n/+ooaX2ucpWC4VW
+	AIqqCeN/G7sCOUmK8whdSz/XiG/oSdLgIuWZlHY3Q1hJ51kGynk9VbKG5emxztri
+	VRhTdGA8rjoDd8ZbWIqZo/2lSTeTLWKSZ2iY23C7FIdrzkRw==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4366y01cba-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 28 Nov 2024 04:45:50 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AS4jn72010111
+	Thu, 28 Nov 2024 05:05:23 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AS55MiT023225
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 28 Nov 2024 04:45:49 GMT
-Received: from [10.152.201.37] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 27 Nov
- 2024 20:45:46 -0800
-Message-ID: <73506419-e53d-4f45-8056-811dad1c163f@quicinc.com>
-Date: Thu, 28 Nov 2024 10:15:43 +0530
+	Thu, 28 Nov 2024 05:05:22 GMT
+Received: from hu-vgarodia-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 27 Nov 2024 21:05:18 -0800
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
+Subject: [PATCH v2 0/4] Venus driver fixes to avoid possible OOB accesses
+Date: Thu, 28 Nov 2024 10:35:10 +0530
+Message-ID: <20241128-venus_oob_2-v2-0-483ae0a464b8@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V7 5/5] firmware: qcom_scm: ipq5332: add support to pass
- metadata size
-To: Bjorn Andersson <andersson@kernel.org>
-CC: <sboyd@kernel.org>, <konradybcio@kernel.org>, <krzk+dt@kernel.org>,
-        <linux-clk@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <quic_varada@quicinc.com>,
-        <quic_srichara@quicinc.com>
-References: <20240820055618.267554-1-quic_gokulsri@quicinc.com>
- <20240820055618.267554-6-quic_gokulsri@quicinc.com>
- <pdyy4zflklvi5syhwt3oklidq3mwizthds2td4qzglhhdulel5@337xsbehgdp3>
-Content-Language: en-US
-From: Gokul Sriram P <quic_gokulsri@quicinc.com>
-In-Reply-To: <pdyy4zflklvi5syhwt3oklidq3mwizthds2td4qzglhhdulel5@337xsbehgdp3>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAb6R2cC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyjHQUlJIzE
+ vPSU3UzU4B8JSMDIxNDQ0NT3bLUvNLi+Pz8pHgjXSNDcwMLI2NLQ3OzRCWgjoKi1LTMCrBp0bG
+ 1tQAGYINgXQAAAA==
+X-Change-ID: 20241115-venus_oob_2-21708239176a
+To: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Bryan O'Donoghue
+	<bryan.odonoghue@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Tomasz Figa <tfiga@chromium.org>,
+        Hans Verkuil <hans.verkuil@cisco.com>
+CC: Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Mauro Carvalho Chehab
+	<mchehab+samsung@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>, <stable@vger.kernel.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1732770318; l=1450;
+ i=quic_vgarodia@quicinc.com; s=20241104; h=from:subject:message-id;
+ bh=JoXdclOpAXCa9Tcg/xERw0jHha09R6d9Sfl9SLTUwtc=;
+ b=sFdYCl83UxXRjCCzr8TPcydHIQ4ULOY5Pm7+8h1xVBmrFm8jO6LLfU1zqjW0dYujbfIGAwMGv
+ uFBCsqxWFEWC/yv/u7HQgg+KQ7Y6aQO+UP7iSVBsaPqFjBbPcbSPcpp
+X-Developer-Key: i=quic_vgarodia@quicinc.com; a=ed25519;
+ pk=LY9Eqp4KiHWxzGNKGHbwRFEJOfRCSzG/rxQNmvZvaKE=
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: AQctSQfs-8J72bleLrV-MpC80p3cbkxM
-X-Proofpoint-GUID: AQctSQfs-8J72bleLrV-MpC80p3cbkxM
+X-Proofpoint-ORIG-GUID: K8dAgHXMKog_PffVuI1nX1AqmSclFPK4
+X-Proofpoint-GUID: K8dAgHXMKog_PffVuI1nX1AqmSclFPK4
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 phishscore=0
  priorityscore=1501 bulkscore=0 malwarescore=0 adultscore=0 suspectscore=0
- mlxlogscore=999 spamscore=0 mlxscore=0 lowpriorityscore=0 impostorscore=0
+ mlxlogscore=958 spamscore=0 mlxscore=0 lowpriorityscore=0 impostorscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2411280036
+ definitions=main-2411280039
 
+v1 -> v2:
+- init_codec to always update with latest payload from firmware
+  (Dmitry/Bryan)
+- Rewrite the logic of packet parsing to consider payload size for 
+  different packet type (Bryan)
+- Consider reading sfr data till available space (Dmitry)
+- Add reviewed-by tags
 
-On 10/23/2024 9:22 PM, Bjorn Andersson wrote:
-> On Tue, Aug 20, 2024 at 11:26:18AM GMT, Gokul Sriram Palanisamy wrote:
->> From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
->>
->> IPQ5332 security software running under trustzone
->> requires metadata size. With V2 cmd, pass metadata
->> size as well.
-> Documentation says commit messages should be wrapped at 75 characters,
-> not 50...
->
-> Please improve the second sentence here, "v2 cmd" is coming out of
-> nowhere. Say that there is a new command with a size parameter added.
->
-> Is this operation available on all targets, or is it IPQ-specific?
->
->
-> I don't see the relationship between this patch and the cover letter
-> subject "remove unnecessary q6 clocks". Should this have been send on
-> its own?
->
->> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
->> Signed-off-by: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
->> ---
->> Changes in v7:
->> 	- No changes.
->> 	- Rebased on top of linux-next.
->>
->> Changes in v6:
->> 	- Rebased on linux-next
->>
->> Changes in v5:
->> 	- Rebased on linux-next
->>
->> Changes in v4:
->> 	- Rebased on linux-next
->>
->>   drivers/firmware/qcom/qcom_scm.c | 8 ++++++++
->>   drivers/firmware/qcom/qcom_scm.h | 1 +
->>   2 files changed, 9 insertions(+)
->>
->> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
->> index e60bef68401c..aa559fd01932 100644
->> --- a/drivers/firmware/qcom/qcom_scm.c
->> +++ b/drivers/firmware/qcom/qcom_scm.c
->> @@ -607,6 +607,14 @@ int qcom_scm_pas_init_image(u32 peripheral, const void *metadata, size_t size,
->>   
->>   	desc.args[1] = mdata_phys;
->>   
->> +	if (__qcom_scm_is_call_available(__scm->dev, QCOM_SCM_SVC_PIL,
->> +					 QCOM_SCM_PAS_INIT_IMAGE_V2)) {
->> +		desc.cmd = QCOM_SCM_PAS_INIT_IMAGE_V2;
->> +		desc.arginfo =
->> +			QCOM_SCM_ARGS(3, QCOM_SCM_VAL, QCOM_SCM_RW, QCOM_SCM_VAL);
->> +		desc.args[2] = size;
->> +	}
->> +
-> Please avoid default initialization and then conditionally overwrite
-> parts of the values. Make a clear:
->
-> if (v2 availble) {
-> 	prepare v2 request;
-> } else {
-> 	prepare v1 request;
-> }
->
-> Regards,
-> Bjorn
+v1:
+https://lore.kernel.org/all/20241105-venus_oob-v1-0-8d4feedfe2bb@quicinc.com/
 
-  sure, will address. Thank you.
+This series primarily adds check at relevant places in venus driver where there
+are possible OOB accesses due to unexpected payload from venus firmware. The
+patches describes the specific OOB possibility.
 
-Regards,
+Please review and share your feedback.
 
-Gokul
+Validated on sc7180(v4) and rb5(v6).
 
->>   	ret = qcom_scm_call(__scm->dev, &desc, &res);
->>   	qcom_scm_bw_disable();
->>   
->> diff --git a/drivers/firmware/qcom/qcom_scm.h b/drivers/firmware/qcom/qcom_scm.h
->> index 685b8f59e7a6..008b59cbad36 100644
->> --- a/drivers/firmware/qcom/qcom_scm.h
->> +++ b/drivers/firmware/qcom/qcom_scm.h
->> @@ -96,6 +96,7 @@ struct qcom_tzmem_pool *qcom_scm_get_tzmem_pool(void);
->>   
->>   #define QCOM_SCM_SVC_PIL		0x02
->>   #define QCOM_SCM_PIL_PAS_INIT_IMAGE	0x01
->> +#define QCOM_SCM_PAS_INIT_IMAGE_V2	0x1a
->>   #define QCOM_SCM_PIL_PAS_MEM_SETUP	0x02
->>   #define QCOM_SCM_PIL_PAS_AUTH_AND_RESET	0x05
->>   #define QCOM_SCM_PIL_PAS_SHUTDOWN	0x06
->> -- 
->> 2.34.1
->>
+Stan, please help to extend the test on db410c(v1).
+
+Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+---
+Vikash Garodia (4):
+      media: venus: hfi_parser: add check to avoid out of bound access
+      media: venus: hfi_parser: avoid OOB access beyond payload word count
+      media: venus: hfi: add check to handle incorrect queue size
+      media: venus: hfi: add a check to handle OOB in sfr region
+
+ drivers/media/platform/qcom/venus/hfi_parser.c | 58 +++++++++++++++++++++-----
+ drivers/media/platform/qcom/venus/hfi_venus.c  | 15 ++++++-
+ 2 files changed, 60 insertions(+), 13 deletions(-)
+---
+base-commit: c7ccf3683ac9746b263b0502255f5ce47f64fe0a
+change-id: 20241115-venus_oob_2-21708239176a
+
+Best regards,
+-- 
+Vikash Garodia <quic_vgarodia@quicinc.com>
+
 
