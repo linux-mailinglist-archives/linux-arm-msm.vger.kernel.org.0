@@ -1,184 +1,234 @@
-Return-Path: <linux-arm-msm+bounces-39380-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39386-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 688609DB36C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 09:11:38 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D57049DB39F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 09:20:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8CF62B220A1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 08:11:35 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 942C9280612
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 08:20:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07DE514D2A7;
-	Thu, 28 Nov 2024 08:11:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5CC55149DFA;
+	Thu, 28 Nov 2024 08:20:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="P5maOvx+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vDFQCVU2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 775FD149DE8;
-	Thu, 28 Nov 2024 08:11:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BC311482ED;
+	Thu, 28 Nov 2024 08:20:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732781479; cv=none; b=ooqWcHejONG+mZlzj5aoNcWW+HD332jK6+NaeOY8BpuDYsa39gVxeYe0qnzO5tmm0w4CS9y35oBk4D71Fw0jPG88165gnNlOHeOVSgWcxgKtYy5mX/yDLokuZvLeZDKZy/WPH2xvjc/PnFG3+nBNApCuwRGn/0Q83ib3FG/88so=
+	t=1732782045; cv=none; b=UMRHvLgasBV18SQGTASUda0UxrhyytORHwpkJkW7PES62Fn1p1hCrCD9HcH/whRGYhB2bm+eUxZFx31K+pFicc8TWejmJEsbB1Tv+oW2H4ZVtw7/JWQQIEH1DD3/NHY2GzgPnoiDOudeXq7FBm9i1M7GtHmCbLPbFSGIMdRUQiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732781479; c=relaxed/simple;
-	bh=0ZxcYDV3Z7sb3IUY7U72yTqMZ5JKzyza85fCmSNKM/8=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=tye6t+5VVUTrnSycBxv66PfrgghoelajZnozVHq4BhJ+2Knaf850s6rMFUt34oIqv1xN2UqdYIdTz7fet1gvja5R1zrZ2EeybioBmIp3n6MPJNbSPSQ2Rv2wMZQHplfw/nHN2Hp4dCkfSA2MOBcwf/hrSJJw2IPwC0tigM8IEXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=P5maOvx+; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ARGW3cJ028806;
-	Thu, 28 Nov 2024 08:11:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=XG5AV9cC3wc
-	MilhWcd1f8Rvssnv0h3FSHs/yCPAOwJg=; b=P5maOvx+HGLsqFKc9WuYfeWO/gC
-	jGCw0pYfyvHWLKxGvuRyXIP4E/jA5zLcf13YxbMNtoHfu9FCY8zVG8ZXLFbH6Kxv
-	zEAlkWhdsNOvLp7KPk/2WgMjcRJgdnXVtmBNqwKmmek9a6XbEl+1K1dVUafASW81
-	vVTk97KwzAqHxfIG1ftyCI7QMzj1hzi6kskCC+/C1Z75kLwOd30KR6D953ml5pVp
-	R9Hu+nGlM1+21xd+rrVVd5NN9pW1K1yRvhGJe1SjPI+ol7BGqAfSvZ9suR49hfXF
-	P29BQwJADE+og38X8ugHoZGRFpJUuzhCVD+uPaIcB9ofuNT61VjL2MwrdUg==
-Received: from aptaippmta02.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43671e9s08-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 28 Nov 2024 08:11:04 +0000 (GMT)
-Received: from pps.filterd (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-	by APTAIPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 4AS8B0C6002552;
-	Thu, 28 Nov 2024 08:11:02 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 43384krmn3-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 28 Nov 2024 08:11:02 +0000
-Received: from APTAIPPMTA02.qualcomm.com (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4AS8B2pJ002607;
-	Thu, 28 Nov 2024 08:11:02 GMT
-Received: from cse-cd02-lnx.ap.qualcomm.com (cse-cd02-lnx.qualcomm.com [10.64.75.246])
-	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 4AS8B176002568
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 28 Nov 2024 08:11:02 +0000
-Received: by cse-cd02-lnx.ap.qualcomm.com (Postfix, from userid 4438065)
-	id 1562D1902; Thu, 28 Nov 2024 16:11:00 +0800 (CST)
-From: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
-To: vkoul@kernel.org, kishon@kernel.org, robh+dt@kernel.org,
-        manivannan.sadhasivam@linaro.org, bhelgaas@google.com, kw@linux.com,
-        lpieralisi@kernel.org, quic_qianyu@quicinc.com, conor+dt@kernel.org,
-        neil.armstrong@linaro.org, andersson@kernel.org,
-        konradybcio@kernel.org
-Cc: quic_tsoni@quicinc.com, quic_shashim@quicinc.com,
-        quic_kaushalk@quicinc.com, quic_tdas@quicinc.com,
-        quic_tingweiz@quicinc.com, quic_aiquny@quicinc.com, kernel@quicinc.com,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
-        Ziyue Zhang <quic_ziyuzhan@quicinc.com>
-Subject: [PATCH v2 8/8] arm64: dts: qcom: qcs8300: enable pcie1 for qcs8300 platform
-Date: Thu, 28 Nov 2024 16:10:56 +0800
-Message-Id: <20241128081056.1361739-9-quic_ziyuzhan@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241128081056.1361739-1-quic_ziyuzhan@quicinc.com>
-References: <20241128081056.1361739-1-quic_ziyuzhan@quicinc.com>
+	s=arc-20240116; t=1732782045; c=relaxed/simple;
+	bh=hZXAETzwQyZavk9H2dN1vMoO8dtxzQj8THoXMEj0S3o=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=IDh+0HYqVw3qVN1ZQq3k9MIkln8T9QQEAnJzpkHdzw0wEClKRA2XIxbbJfs6N/MC1S+03V7i8D0Tk1Dg/qbckN4g8/2gAqPxVjrhisOv2Y1G/5EFRvupH5jUUDAQ5ApiZldU9sqDafyQJxequhHqR+ZKrn9SCEZEMIcyxPnrdio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vDFQCVU2; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1D92C4CECE;
+	Thu, 28 Nov 2024 08:20:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1732782044;
+	bh=hZXAETzwQyZavk9H2dN1vMoO8dtxzQj8THoXMEj0S3o=;
+	h=Date:From:To:Cc:Subject:From;
+	b=vDFQCVU2kCPXrf32ExLyf2WRXISubMmu8N+ZzyMGpZTbQg3RdTGFIWiNZ65zy+Lr8
+	 QpSCO3hCcQDOBDMHE/y1h0Pquf4h0YSbBDMwJb8uG2TsB8pFzMENjGCypuT80lZdmv
+	 4ZdMQenkk9x0iNfZPbM+L0/71UyptGib+m1qTY72z/VR+84DE6t9mTrYPsGioZpkix
+	 7ul55mOhfK6gIm3F0mAU9vSab1VwY4EJnb7dskcajxbKqdwWPxOss1wVkaq0C3DFKS
+	 gwXp+KlYOAAyRfWw69AqxJfftLE9Me8uSA4RHNuYpAfDWgkCI2VYZLJp5KHDmS8Tp7
+	 NQ56WdaSk503g==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1tGZlM-000000003QH-3uzK;
+	Thu, 28 Nov 2024 09:20:36 +0100
+Date: Thu, 28 Nov 2024 09:20:36 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Ard Biesheuvel <ardb@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Ricardo Salveti <ricardo@foundries.io>,
+	Marc Zyngier <maz@kernel.org>, linux-efi@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: UEFI EBS() failures on Lenovo T14s
+Message-ID: <Z0gn1N3IsP8r3gTA@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: S8gVJ5P5ijXjaybu9rqMnglhhOWKHjaR
-X-Proofpoint-GUID: S8gVJ5P5ijXjaybu9rqMnglhhOWKHjaR
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=0
- impostorscore=0 mlxscore=0 phishscore=0 priorityscore=1501 clxscore=1015
- bulkscore=0 lowpriorityscore=0 spamscore=0 adultscore=0 mlxlogscore=869
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2411280063
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Add configurations in devicetree for PCIe1, board related gpios,
-PMIC regulators, etc.
+Hi Ard,
 
-Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+We've run into a buggy UEFI implementation on the Qualcomm Snapdragon
+based Lenovo ThinkPad T14s where ExitBootServices() often fails.
+
+One bootloader entry may fail to start almost consistently (once in a
+while it may start), while a second entry may always work even when the
+kernel, dtb and initramfs images are copies of the failing entry on the
+same ESP.
+
+This can be worked around by starting and exiting a UEFI shell from the
+bootloader or by starting the bootloader manually via the Boot Menu
+(F12) before starting the kernel.
+
+Notably starting the kernel automatically from the shell startup.nsh
+does not work, while calling the same script manually works.
+
+Based on your comments to a similar report for an older Snapdragon based
+Lenovo UEFI implementation [1], I discovered that allocating an event
+before calling ExitBootServices() can make the call succeed. There is
+often no need to actually signal the event group, but the event must
+remain allocated (i.e. CloseEvent() must not be called).
+
+(Raising TPL or disabling interrupts does not seem to help.)
+
+Also with the event signalling, ExitBootServices() sometimes fails when
+starting the kernel automatically from a shell startup.nsh, while
+systemd-boot seems to always work. This was only observed after removing
+some efi_printk() used during the experiments from the stub...
+
+Something is obviously really broken here, but do you have any
+suggestions about what could be the cause of this as further input to
+Qualcomm (and Lenovo) as they try to fix this?
+
+For completeness, the first call to ExitBootServices() often fails also
+on the x1e80100 reference design (CRD), and Qualcomm appears to have
+been the ones providing the current retry implementation:
+
+	fc07716ba803 ("efi/libstub: Introduce ExitBootServices helper")
+
+as this was needed to prevent similar boot failures with older Qualcomm
+UEFI fw.
+
+Marc is also hitting something like this on the Qualcomm X1E devkit
+(i.e. with firmware that should not have any modifications from Lenovo).
+
+I'm attaching the patch that allows me to boot kernels on the T14s
+below.
+
+Johan
+
+
+[1] https://bugzilla.kernel.org/show_bug.cgi?id=216375#c10
+
+
+From 4ceece4e15e87d0949110b835b867e7cea1bd658 Mon Sep 17 00:00:00 2001
+From: Johan Hovold <johan+linaro@kernel.org>
+Date: Wed, 27 Nov 2024 16:05:37 +0100
+Subject: [PATCH] hack: efi/libstub: fix t14s exit_boot_services() failure
+
+The UEFI firmware on the Lenovo ThinkPad T14s is broken and
+ExitBootServices() often fails and prevents the kernel from starting:
+
+	EFI stub: Exiting boot services...
+	EFI stub: Exit boot services failed.
+
+One bootloader entry may fail to start almost consistently (once in a
+while it may start), while a second entry may always work even when the
+kernel, dtb and initramfs images are copies of the failing entry on the
+same ESP.
+
+This can be worked around by starting and exiting a UEFI shell from the
+bootloader or by starting the bootloader manually via the Boot Menu
+(F12) before starting the kernel.
+
+Notably starting the kernel automatically from the shell startup.nsh
+does not work, while calling the same script manually works.
+
+Experiments have revealed that allocating an event before calling
+ExitBootServices() can make the call succeed. There is often no need to
+actually signal the event group, but the event must remain allocated
+(i.e. CloseEvent() must not be called).
+
+Also with the event signalling, ExitBootServices() sometimes fails when
+starting the kernel automatically from a shell startup.nsh, while
+systemd-boot seems to always work. This was only observed after removing
+some efi_printk() used during the experiments from the stub...
+
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/qcs8300-ride.dts | 42 ++++++++++++++++++++++-
- 1 file changed, 41 insertions(+), 1 deletion(-)
+ .../firmware/efi/libstub/efi-stub-helper.c    | 20 +++++++++++++++++++
+ drivers/firmware/efi/libstub/efistub.h        |  4 ++--
+ 2 files changed, 22 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-index 7f97f771c44a..a83faba0252e 100644
---- a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-+++ b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-@@ -214,7 +214,7 @@ &gcc {
- 	clocks = <&rpmhcc RPMH_CXO_CLK>,
- 		 <&sleep_clk>,
- 		 <&pcie0_phy>,
--		 <0>,
-+		 <&pcie1_phy>,
- 		 <0>,
- 		 <0>,
- 		 <0>,
-@@ -240,6 +240,23 @@ &pcie0_phy {
- 	status = "okay";
- };
+diff --git a/drivers/firmware/efi/libstub/efi-stub-helper.c b/drivers/firmware/efi/libstub/efi-stub-helper.c
+index de659f6a815f..f228895bf090 100644
+--- a/drivers/firmware/efi/libstub/efi-stub-helper.c
++++ b/drivers/firmware/efi/libstub/efi-stub-helper.c
+@@ -409,6 +409,9 @@ char *efi_convert_cmdline(efi_loaded_image_t *image, int *cmd_line_len)
+ 	return (char *)cmdline_addr;
+ }
  
-+&pcie1 {
-+	perst-gpios = <&tlmm 23 GPIO_ACTIVE_LOW>;
-+	wake-gpios = <&tlmm 21 GPIO_ACTIVE_HIGH>;
++#define EFI_EVENT_GROUP_BEFORE_EXIT_BOOT_SERVICES \
++	EFI_GUID(0x8be0e274, 0x3970, 0x4b44,  0x80, 0xc5, 0x1a, 0xb9, 0x50, 0x2f, 0x3b, 0xfc)
 +
-+	pinctrl-0 = <&pcie1_default_state>;
-+	pinctrl-names = "default";
+ /**
+  * efi_exit_boot_services() - Exit boot services
+  * @handle:	handle of the exiting image
+@@ -429,10 +432,26 @@ efi_status_t efi_exit_boot_services(void *handle, void *priv,
+ {
+ 	struct efi_boot_memmap *map;
+ 	efi_status_t status;
++	efi_guid_t guid = EFI_EVENT_GROUP_BEFORE_EXIT_BOOT_SERVICES;
++	efi_event_t event;
+ 
+ 	if (efi_disable_pci_dma)
+ 		efi_pci_disable_bridge_busmaster();
+ 
++	status = efi_bs_call(create_event_ex, 0, 0, NULL, NULL, &guid, &event);
++	if (status == EFI_SUCCESS) {
++		status = efi_bs_call(signal_event, event);
++		if (status != EFI_SUCCESS)
++			efi_err("%s - signal event failed: %02lx\n", __func__, status);
++#if 0
++		status = efi_bs_call(close_event, event);
++		if (status != EFI_SUCCESS)
++			efi_err("%s - close event failed: %02lx\n", __func__, status);
++#endif
++	} else {
++		efi_err("%s - create event ex failed: %02lx\n", __func__, status);
++	}
 +
-+	status = "okay";
-+};
-+
-+&pcie1_phy {
-+	vdda-phy-supply = <&vreg_l6a>;
-+	vdda-pll-supply = <&vreg_l5a>;
-+
-+	status = "okay";
-+};
-+
- &qupv3_id_0 {
- 	status = "okay";
- };
-@@ -287,6 +304,29 @@ wake-pins {
- 			bias-pull-up;
- 		};
+ 	status = efi_get_memory_map(&map, true);
+ 	if (status != EFI_SUCCESS)
+ 		return status;
+@@ -446,6 +465,7 @@ efi_status_t efi_exit_boot_services(void *handle, void *priv,
+ 	status = efi_bs_call(exit_boot_services, handle, map->map_key);
+ 
+ 	if (status == EFI_INVALID_PARAMETER) {
++		//efi_err("Exit boot services failed: %lx\n", status);
+ 		/*
+ 		 * The memory map changed between efi_get_memory_map() and
+ 		 * exit_boot_services().  Per the UEFI Spec v2.6, Section 6.4:
+diff --git a/drivers/firmware/efi/libstub/efistub.h b/drivers/firmware/efi/libstub/efistub.h
+index 685098f9626f..e3f710823a29 100644
+--- a/drivers/firmware/efi/libstub/efistub.h
++++ b/drivers/firmware/efi/libstub/efistub.h
+@@ -272,7 +272,7 @@ union efi_boot_services {
+ 		efi_status_t (__efiapi *wait_for_event)(unsigned long,
+ 							efi_event_t *,
+ 							unsigned long *);
+-		void *signal_event;
++		efi_status_t (__efiapi *signal_event)(efi_event_t);
+ 		efi_status_t (__efiapi *close_event)(efi_event_t);
+ 		void *check_event;
+ 		void *install_protocol_interface;
+@@ -322,7 +322,7 @@ union efi_boot_services {
+ 		void *calculate_crc32;
+ 		void (__efiapi *copy_mem)(void *, const void *, unsigned long);
+ 		void (__efiapi *set_mem)(void *, unsigned long, unsigned char);
+-		void *create_event_ex;
++		efi_status_t (__efiapi *create_event_ex)(u32, int, void *, void *, void *, efi_event_t *);
  	};
-+
-+	pcie1_default_state: pcie1-default-state {
-+		clkreq-pins {
-+			pins = "gpio22";
-+			function = "pcie1_clkreq";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+
-+		perst-pins {
-+			pins = "gpio23";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-down;
-+		};
-+
-+		wake-pins {
-+			pins = "gpio21";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+	};
- };
- 
- &uart7 {
+ 	struct {
+ 		efi_table_hdr_t hdr;
 -- 
-2.34.1
+2.45.2
 
 
