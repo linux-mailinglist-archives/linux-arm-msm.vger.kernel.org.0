@@ -1,234 +1,170 @@
-Return-Path: <linux-arm-msm+bounces-39386-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39387-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D57049DB39F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 09:20:49 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 84BFB9DB3B3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 09:25:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 942C9280612
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 08:20:48 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 13AC6B21755
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 08:25:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5CC55149DFA;
-	Thu, 28 Nov 2024 08:20:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E41514A609;
+	Thu, 28 Nov 2024 08:24:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vDFQCVU2"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ReInDfA8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BC311482ED;
-	Thu, 28 Nov 2024 08:20:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3213313FD86;
+	Thu, 28 Nov 2024 08:24:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732782045; cv=none; b=UMRHvLgasBV18SQGTASUda0UxrhyytORHwpkJkW7PES62Fn1p1hCrCD9HcH/whRGYhB2bm+eUxZFx31K+pFicc8TWejmJEsbB1Tv+oW2H4ZVtw7/JWQQIEH1DD3/NHY2GzgPnoiDOudeXq7FBm9i1M7GtHmCbLPbFSGIMdRUQiw=
+	t=1732782299; cv=none; b=V4C+FINtcGGHdbC2+2GBZiSZ7AbvnMaJsZd/ETWMhaMthw6LHvMzenmT1AhJIE21m98FXGuFdjn9YvgvXwclEFCMEa9oEk8La5HHbYrajdZuitafY7qV2xo0zVp3/OUlyOzIe6doVcixJMPjpeNK8DNh8wag6PJiFlkLB+9UdRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732782045; c=relaxed/simple;
-	bh=hZXAETzwQyZavk9H2dN1vMoO8dtxzQj8THoXMEj0S3o=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=IDh+0HYqVw3qVN1ZQq3k9MIkln8T9QQEAnJzpkHdzw0wEClKRA2XIxbbJfs6N/MC1S+03V7i8D0Tk1Dg/qbckN4g8/2gAqPxVjrhisOv2Y1G/5EFRvupH5jUUDAQ5ApiZldU9sqDafyQJxequhHqR+ZKrn9SCEZEMIcyxPnrdio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vDFQCVU2; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1D92C4CECE;
-	Thu, 28 Nov 2024 08:20:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732782044;
-	bh=hZXAETzwQyZavk9H2dN1vMoO8dtxzQj8THoXMEj0S3o=;
-	h=Date:From:To:Cc:Subject:From;
-	b=vDFQCVU2kCPXrf32ExLyf2WRXISubMmu8N+ZzyMGpZTbQg3RdTGFIWiNZ65zy+Lr8
-	 QpSCO3hCcQDOBDMHE/y1h0Pquf4h0YSbBDMwJb8uG2TsB8pFzMENjGCypuT80lZdmv
-	 4ZdMQenkk9x0iNfZPbM+L0/71UyptGib+m1qTY72z/VR+84DE6t9mTrYPsGioZpkix
-	 7ul55mOhfK6gIm3F0mAU9vSab1VwY4EJnb7dskcajxbKqdwWPxOss1wVkaq0C3DFKS
-	 gwXp+KlYOAAyRfWw69AqxJfftLE9Me8uSA4RHNuYpAfDWgkCI2VYZLJp5KHDmS8Tp7
-	 NQ56WdaSk503g==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1tGZlM-000000003QH-3uzK;
-	Thu, 28 Nov 2024 09:20:36 +0100
-Date: Thu, 28 Nov 2024 09:20:36 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Ard Biesheuvel <ardb@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Ricardo Salveti <ricardo@foundries.io>,
-	Marc Zyngier <maz@kernel.org>, linux-efi@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: UEFI EBS() failures on Lenovo T14s
-Message-ID: <Z0gn1N3IsP8r3gTA@hovoldconsulting.com>
+	s=arc-20240116; t=1732782299; c=relaxed/simple;
+	bh=1fnaIG1nYe4uoedCIRf1VMkQy9HxCwnYmURxMbX/Dhs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=DN0GZA5Tl7kXQoVLydTgrlgTqfhqG1XuRElW5ipMnkBHJt8X4PFoJG8QSDgq4l0CPCMN6R97EotT/HCnLJdZRBmf0K1VpeHRn31WgoPJkRhri8VIBQCWuBFvR31MHSkBd6m14rDy1yXn6Jy1kmHTia6sOef9xCc1zoILgIJ+q2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ReInDfA8; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ARMH9D6016748;
+	Thu, 28 Nov 2024 08:24:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	/4U7H+fB6+lpXcyRIf7le/5WCYXvwpYmkA9IOsE9Mig=; b=ReInDfA8pnpF+hWx
+	Bamu+dyScIf5tZCflJJX2fdPXXXh+qr/KhnF8GCdviW7FvSCSJYBEq6DT8I8aNqJ
+	aykSjrURMkhIgnGOBqWfMja3xDLqMA+Iy6fK5YKfL7Kg9Xh5zs28rEKtDRWMBzVD
+	vYqnVsdYNDOFSwtbZyjC7BkvKQgp/qWM1k/Jia9HlOFbTx+BywkwNFu9xHRvxI4/
+	AXwDXJxICl0FHv21jn/TSZEYcGPC5QqskEb57U1y/yQXKFhhtH4XpdR9LMNSCCZt
+	LlC0FvqotWdtQH7NngBYSt8pH6fSTaEKGk8qOHtH4SIBvI6nLzDAsGKLb4Xd+g6O
+	aG3WLQ==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43671e9ted-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 28 Nov 2024 08:24:48 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AS8OmWu007444
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 28 Nov 2024 08:24:48 GMT
+Received: from [10.233.21.53] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 28 Nov
+ 2024 00:24:43 -0800
+Message-ID: <c6497c90-f323-42e4-97ea-a0b5d91e3585@quicinc.com>
+Date: Thu, 28 Nov 2024 16:24:40 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-Hi Ard,
-
-We've run into a buggy UEFI implementation on the Qualcomm Snapdragon
-based Lenovo ThinkPad T14s where ExitBootServices() often fails.
-
-One bootloader entry may fail to start almost consistently (once in a
-while it may start), while a second entry may always work even when the
-kernel, dtb and initramfs images are copies of the failing entry on the
-same ESP.
-
-This can be worked around by starting and exiting a UEFI shell from the
-bootloader or by starting the bootloader manually via the Boot Menu
-(F12) before starting the kernel.
-
-Notably starting the kernel automatically from the shell startup.nsh
-does not work, while calling the same script manually works.
-
-Based on your comments to a similar report for an older Snapdragon based
-Lenovo UEFI implementation [1], I discovered that allocating an event
-before calling ExitBootServices() can make the call succeed. There is
-often no need to actually signal the event group, but the event must
-remain allocated (i.e. CloseEvent() must not be called).
-
-(Raising TPL or disabling interrupts does not seem to help.)
-
-Also with the event signalling, ExitBootServices() sometimes fails when
-starting the kernel automatically from a shell startup.nsh, while
-systemd-boot seems to always work. This was only observed after removing
-some efi_printk() used during the experiments from the stub...
-
-Something is obviously really broken here, but do you have any
-suggestions about what could be the cause of this as further input to
-Qualcomm (and Lenovo) as they try to fix this?
-
-For completeness, the first call to ExitBootServices() often fails also
-on the x1e80100 reference design (CRD), and Qualcomm appears to have
-been the ones providing the current retry implementation:
-
-	fc07716ba803 ("efi/libstub: Introduce ExitBootServices helper")
-
-as this was needed to prevent similar boot failures with older Qualcomm
-UEFI fw.
-
-Marc is also hitting something like this on the Qualcomm X1E devkit
-(i.e. with firmware that should not have any modifications from Lenovo).
-
-I'm attaching the patch that allows me to boot kernels on the T14s
-below.
-
-Johan
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/4] arm64: dts: qcom: add initial support for QCS8300
+ DTSI
+To: Bjorn Andersson <andersson@kernel.org>
+CC: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, <quic_tengfan@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+        <quic_tingweiz@quicinc.com>, <quic_aiquny@quicinc.com>,
+        Zhenhua Huang <quic_zhenhuah@quicinc.com>,
+        Xin Liu
+	<quic_liuxin@quicinc.com>,
+        Kyle Deng <quic_chunkaid@quicinc.com>,
+        "Tingguo
+ Cheng" <quic_tingguoc@quicinc.com>,
+        Raviteja Laggyshetty
+	<quic_rlaggysh@quicinc.com>
+References: <20240925-qcs8300_initial_dtsi-v2-0-494c40fa2a42@quicinc.com>
+ <20240925-qcs8300_initial_dtsi-v2-3-494c40fa2a42@quicinc.com>
+ <mjth25v54mioefjet2udacqqwvw7tfbhemmvjps4utjm545hyn@3f7zwohi4qee>
+Content-Language: en-US
+From: Jingyi Wang <quic_jingyw@quicinc.com>
+In-Reply-To: <mjth25v54mioefjet2udacqqwvw7tfbhemmvjps4utjm545hyn@3f7zwohi4qee>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 8C_cxGrAsdLSQVq6o9tcxHAyKnFrTUwe
+X-Proofpoint-GUID: 8C_cxGrAsdLSQVq6o9tcxHAyKnFrTUwe
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=0
+ impostorscore=0 mlxscore=0 phishscore=0 priorityscore=1501 clxscore=1011
+ bulkscore=0 lowpriorityscore=0 spamscore=0 adultscore=0 mlxlogscore=999
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
+ definitions=main-2411280066
 
 
-[1] https://bugzilla.kernel.org/show_bug.cgi?id=216375#c10
 
+On 11/27/2024 2:13 AM, Bjorn Andersson wrote:
+> On Wed, Sep 25, 2024 at 06:43:34PM +0800, Jingyi Wang wrote:
+>> Add initial DTSI for QCS8300 SoC.
+>>
+>> Features added in this revision:
+>> - CPUs with PSCI idle states
+>> - Interrupt-controller with PDC wakeup support
+>> - Timers, TCSR Clock Controllers
+>> - Reserved Shared memory
+>> - GCC and RPMHCC
+>> - TLMM
+>> - Interconnect
+>> - QuP with uart
+>> - SMMU
+>> - QFPROM
+>> - Rpmhpd power controller
+>> - UFS
+>> - Inter-Processor Communication Controller
+>> - SRAM
+>> - Remoteprocs including ADSP,CDSP and GPDSP
+>> - BWMONs
+>>
+>> [Zhenhua: added the smmu node]
+>> Co-developed-by: Zhenhua Huang <quic_zhenhuah@quicinc.com>
+>> Signed-off-by: Zhenhua Huang <quic_zhenhuah@quicinc.com>
+>> [Xin: added ufs/adsp/gpdsp nodes]
+>> Co-developed-by: Xin Liu <quic_liuxin@quicinc.com>
+>> Signed-off-by: Xin Liu <quic_liuxin@quicinc.com>
+>> [Kyle: added the aoss_qmp node]
+>> Co-developed-by: Kyle Deng <quic_chunkaid@quicinc.com>
+>> Signed-off-by: Kyle Deng <quic_chunkaid@quicinc.com>
+>> [Tingguo: added the rpmhpd nodes]
+>> Co-developed-by: Tingguo Cheng <quic_tingguoc@quicinc.com>
+>> Signed-off-by: Tingguo Cheng <quic_tingguoc@quicinc.com>
+>> [Raviteja: added interconnect nodes]
+>> Co-developed-by: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
+>> Signed-off-by: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
+>> Signed-off-by: Jingyi Wang <quic_jingyw@quicinc.com>
+> 
+> Sorry, thought I had replied to this already, but I must have confused
+> it with QCS615.
+> 
+> Please see my feedback regarding signed-off-by and subject line:
+> https://lore.kernel.org/all/4bhsuysjm2uwkk52g4pkspiadsf5y4m2afotj7ggo2lnj24ip2@yqkijcdkiloj/
+> https://lore.kernel.org/all/2qvv3zrop2i5hurrn7bfggfkjb7rqlbfa7bxiekdisi6c57gxd@d2fptisjhy3j/
+> 
+> 
+> 
+> For reference, here's the qcs615 v5.
+> https://lore.kernel.org/all/20241104-add_initial_support_for_qcs615-v5-0-9dde8d7b80b0@quicinc.com/
+> 
+> Regards,
+> Bjorn
 
-From 4ceece4e15e87d0949110b835b867e7cea1bd658 Mon Sep 17 00:00:00 2001
-From: Johan Hovold <johan+linaro@kernel.org>
-Date: Wed, 27 Nov 2024 16:05:37 +0100
-Subject: [PATCH] hack: efi/libstub: fix t14s exit_boot_services() failure
+Thanks, Will update in the next version.
 
-The UEFI firmware on the Lenovo ThinkPad T14s is broken and
-ExitBootServices() often fails and prevents the kernel from starting:
-
-	EFI stub: Exiting boot services...
-	EFI stub: Exit boot services failed.
-
-One bootloader entry may fail to start almost consistently (once in a
-while it may start), while a second entry may always work even when the
-kernel, dtb and initramfs images are copies of the failing entry on the
-same ESP.
-
-This can be worked around by starting and exiting a UEFI shell from the
-bootloader or by starting the bootloader manually via the Boot Menu
-(F12) before starting the kernel.
-
-Notably starting the kernel automatically from the shell startup.nsh
-does not work, while calling the same script manually works.
-
-Experiments have revealed that allocating an event before calling
-ExitBootServices() can make the call succeed. There is often no need to
-actually signal the event group, but the event must remain allocated
-(i.e. CloseEvent() must not be called).
-
-Also with the event signalling, ExitBootServices() sometimes fails when
-starting the kernel automatically from a shell startup.nsh, while
-systemd-boot seems to always work. This was only observed after removing
-some efi_printk() used during the experiments from the stub...
-
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- .../firmware/efi/libstub/efi-stub-helper.c    | 20 +++++++++++++++++++
- drivers/firmware/efi/libstub/efistub.h        |  4 ++--
- 2 files changed, 22 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/firmware/efi/libstub/efi-stub-helper.c b/drivers/firmware/efi/libstub/efi-stub-helper.c
-index de659f6a815f..f228895bf090 100644
---- a/drivers/firmware/efi/libstub/efi-stub-helper.c
-+++ b/drivers/firmware/efi/libstub/efi-stub-helper.c
-@@ -409,6 +409,9 @@ char *efi_convert_cmdline(efi_loaded_image_t *image, int *cmd_line_len)
- 	return (char *)cmdline_addr;
- }
- 
-+#define EFI_EVENT_GROUP_BEFORE_EXIT_BOOT_SERVICES \
-+	EFI_GUID(0x8be0e274, 0x3970, 0x4b44,  0x80, 0xc5, 0x1a, 0xb9, 0x50, 0x2f, 0x3b, 0xfc)
-+
- /**
-  * efi_exit_boot_services() - Exit boot services
-  * @handle:	handle of the exiting image
-@@ -429,10 +432,26 @@ efi_status_t efi_exit_boot_services(void *handle, void *priv,
- {
- 	struct efi_boot_memmap *map;
- 	efi_status_t status;
-+	efi_guid_t guid = EFI_EVENT_GROUP_BEFORE_EXIT_BOOT_SERVICES;
-+	efi_event_t event;
- 
- 	if (efi_disable_pci_dma)
- 		efi_pci_disable_bridge_busmaster();
- 
-+	status = efi_bs_call(create_event_ex, 0, 0, NULL, NULL, &guid, &event);
-+	if (status == EFI_SUCCESS) {
-+		status = efi_bs_call(signal_event, event);
-+		if (status != EFI_SUCCESS)
-+			efi_err("%s - signal event failed: %02lx\n", __func__, status);
-+#if 0
-+		status = efi_bs_call(close_event, event);
-+		if (status != EFI_SUCCESS)
-+			efi_err("%s - close event failed: %02lx\n", __func__, status);
-+#endif
-+	} else {
-+		efi_err("%s - create event ex failed: %02lx\n", __func__, status);
-+	}
-+
- 	status = efi_get_memory_map(&map, true);
- 	if (status != EFI_SUCCESS)
- 		return status;
-@@ -446,6 +465,7 @@ efi_status_t efi_exit_boot_services(void *handle, void *priv,
- 	status = efi_bs_call(exit_boot_services, handle, map->map_key);
- 
- 	if (status == EFI_INVALID_PARAMETER) {
-+		//efi_err("Exit boot services failed: %lx\n", status);
- 		/*
- 		 * The memory map changed between efi_get_memory_map() and
- 		 * exit_boot_services().  Per the UEFI Spec v2.6, Section 6.4:
-diff --git a/drivers/firmware/efi/libstub/efistub.h b/drivers/firmware/efi/libstub/efistub.h
-index 685098f9626f..e3f710823a29 100644
---- a/drivers/firmware/efi/libstub/efistub.h
-+++ b/drivers/firmware/efi/libstub/efistub.h
-@@ -272,7 +272,7 @@ union efi_boot_services {
- 		efi_status_t (__efiapi *wait_for_event)(unsigned long,
- 							efi_event_t *,
- 							unsigned long *);
--		void *signal_event;
-+		efi_status_t (__efiapi *signal_event)(efi_event_t);
- 		efi_status_t (__efiapi *close_event)(efi_event_t);
- 		void *check_event;
- 		void *install_protocol_interface;
-@@ -322,7 +322,7 @@ union efi_boot_services {
- 		void *calculate_crc32;
- 		void (__efiapi *copy_mem)(void *, const void *, unsigned long);
- 		void (__efiapi *set_mem)(void *, unsigned long, unsigned char);
--		void *create_event_ex;
-+		efi_status_t (__efiapi *create_event_ex)(u32, int, void *, void *, void *, efi_event_t *);
- 	};
- 	struct {
- 		efi_table_hdr_t hdr;
--- 
-2.45.2
-
+Thanks,
+Jingyi
 
