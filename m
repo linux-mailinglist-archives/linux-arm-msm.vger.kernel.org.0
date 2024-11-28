@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-39491-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39492-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 347569DBBD9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 18:38:59 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 41AC09DBBDC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 18:40:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DDD53164A1C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 17:38:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 020BA16405A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 17:40:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D87051C07FC;
-	Thu, 28 Nov 2024 17:38:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A8C51C0DCB;
+	Thu, 28 Nov 2024 17:40:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d++cxkK4"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TAvA1JFe"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A66BF537F8;
-	Thu, 28 Nov 2024 17:38:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CCB1537F8;
+	Thu, 28 Nov 2024 17:40:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732815534; cv=none; b=POcZ3ya8fjIgopZf2aQz2QLpoCPzw/SPWUfJ7Cn/tqcMXwxpGp7mlFNRWi4Ae0oehtL71G4S7+hLNoZ8J9OFJnhRz3NUCBTWzF+VCrXXXTTbW5ZA6l3NrsA74s8g9knI4NvlbizZsktc9Fc5c7hpCe8szBWA2RG5sdxjR2LWRrA=
+	t=1732815622; cv=none; b=Yq6tB+seZTixOtCcBgVpePlRdQdcHK6fH9Bu1xtdG0nFIsfxXKm0wsJWdA86PE0avWkoteFuuuEne3i4Ss/ZZA5+vqda6SEYaJcVPTf2W0auTRS/oLzkEbwGcyb32i4dOnlnANjUzc7z7L3gb/EA3jTsNSnv3AkgGX4vqVpuJ6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732815534; c=relaxed/simple;
-	bh=4KfpUrzSkNe6ynb61PNuvJN+Ztx1PoloamFneZjQprU=;
+	s=arc-20240116; t=1732815622; c=relaxed/simple;
+	bh=KFL4/KdPWYKy7tPfDipXJxPv3vNWFuho/jtQSeo1XfE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hvjGL0bhAlUjx6NsuW1Edn9mgtZCbSOyuK/VrPadJSH0Qo7UoZ4E16bNPxSg3FAVmUj1dlFZeC25/0Cxr9uv4I6DGty/pPXBLDXxTNMMyaclOG5g5LiJK5HU0oDpsPAvOnd8XxXZYbo/+4lGano5buKO5RJOr79t9i5QFIPbmE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d++cxkK4; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BFD1C4CECE;
-	Thu, 28 Nov 2024 17:38:49 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=pDif20JLKkhnvuQUiiKfxOnyUApn0NnRyN1O0jNmyFEvWOl35liEJmx/EVAAnWp3EXZ1+upyeRR32ZsXz9J1gM9m2C+tudcAG6pXKuSw8d7UGvzlHtmqxOYzKtTho1gFh0mSet6khm7wTHnNxHRjxSL6/B8hCVDvjBWw+kTfwgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TAvA1JFe; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BE3AC4CECE;
+	Thu, 28 Nov 2024 17:40:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732815534;
-	bh=4KfpUrzSkNe6ynb61PNuvJN+Ztx1PoloamFneZjQprU=;
+	s=k20201202; t=1732815619;
+	bh=KFL4/KdPWYKy7tPfDipXJxPv3vNWFuho/jtQSeo1XfE=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=d++cxkK4xvBGGQEL4/RZz+eWSjjH3PLY0k6Nw/NO+T+ki9pTVEAoEIAWAvUh2uiDc
-	 AAzoICUEBfxPE2DBuM3cFFNI3uQhVQsMEKCy2gy154fHMVx1fj5QNg93Jnb4rOEjea
-	 VBtpNER3PMIAUYO3r9J0v5mHyNaUTA59Ge3uQrQwtwYgihWgyTz+szTa98CzskGPwO
-	 TKBaK6dpULFIpxaCxJVtDyC5MSJr7JzFgfP41h861xBJUfJBeETU04J5KEE2cdci+0
-	 W58XXfchOJFRyswFmABOvzDnMOGqrrnptU/UoAgl/3SxKnlDOEyDjS986ZkRPUbtHh
-	 xbZVGU9k7itZA==
-Message-ID: <55ceb6e2-3642-41b2-9428-ca92b8a43487@kernel.org>
-Date: Thu, 28 Nov 2024 18:38:48 +0100
+	b=TAvA1JFet7rwjww4XTHqSJmT9U9gYyEGeTYCbJDej60B/X76fwcYtlBPGRvATfNw4
+	 i2kChXH6pxtx7FwqMP9UKV9oqAaysHCWRQID0ef+X9p0veIqZaxf1zbmzurWBKQGFq
+	 1K9fZD5mMh/+r8qnA+mhNMEYhj+AX7PdE73e1TVJQhH4Kh6vRZY47eTJsZkyACaLeK
+	 JP7InV0RlxBMYz142e7KYSEL24yWqt+rzSKZnnlBcIF/aZvS6KjYojduUjSmIrlI4U
+	 pF6yeFWzhcC2GQTz/l/7yCYkTD46plfYVB6a2VMtGDJAILuijEKnUuLfXyYy9LFn6d
+	 mDcAgxjHM+njQ==
+Message-ID: <e330ef8b-8cf9-4c7e-bea9-c9c240aa38f2@kernel.org>
+Date: Thu, 28 Nov 2024 18:40:13 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,20 +50,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: clock: qcom,sm8550-dispcc: Add SM8750
- DISPCC
-To: Conor Dooley <conor@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v3 4/4] arm64: dts: qcom: add base QCS8300 RIDE board
+To: Andrew Lunn <andrew@lunn.ch>, Jingyi Wang <quic_jingyw@quicinc.com>
 Cc: Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20241128-sm8750-dispcc-v1-0-120705a4015c@linaro.org>
- <20241128-sm8750-dispcc-v1-1-120705a4015c@linaro.org>
- <20241128-serotonin-carwash-62ad0fb09c3a@spud>
+ <conor+dt@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>,
+ Will Deacon <will@kernel.org>, quic_tengfan@quicinc.com,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+References: <20241128-qcs8300_initial_dtsi-v3-0-26aa8a164914@quicinc.com>
+ <20241128-qcs8300_initial_dtsi-v3-4-26aa8a164914@quicinc.com>
+ <fe332b12-d62e-442d-906b-7f3a72165b85@lunn.ch>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,29 +107,41 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20241128-serotonin-carwash-62ad0fb09c3a@spud>
+In-Reply-To: <fe332b12-d62e-442d-906b-7f3a72165b85@lunn.ch>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 28/11/2024 18:12, Conor Dooley wrote:
->>  
->>    clocks:
->> diff --git a/include/dt-bindings/clock/qcom,sm8750-dispcc.h b/include/dt-bindings/clock/qcom,sm8750-dispcc.h
->> new file mode 100644
->> index 0000000000000000000000000000000000000000..dafb5069c96a0c3f83c15f3c61978e138baa886c
->> --- /dev/null
->> +++ b/include/dt-bindings/clock/qcom,sm8750-dispcc.h
->> @@ -0,0 +1,112 @@
->> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
->> +/*
->> + * Copyright (c) 2022, The Linux Foundation. All rights reserved.
+On 28/11/2024 17:49, Andrew Lunn wrote:
+> On Thu, Nov 28, 2024 at 04:44:46PM +0800, Jingyi Wang wrote:
+>> Add initial support for Qualcomm QCS8300 RIDE board which enables DSPs,
+>> UFS and booting to shell with uart console.
+>>
+>> Written with help from Tingguo Cheng (added rpmhpd nodes) and Xin Liu
+>> (added ufs, adsp and gpdsp nodes).
+>>
+>> Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+>> Signed-off-by: Jingyi Wang <quic_jingyw@quicinc.com>
+>> ---
+>>  arch/arm64/boot/dts/qcom/Makefile         |   2 +-
+>>  arch/arm64/boot/dts/qcom/qcs8300-ride.dts | 267 ++++++++++++++++++++++++++++++
+>>  2 files changed, 268 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+>> index 9bb8b191aeb5..d9545743606a 100644
+>> --- a/arch/arm64/boot/dts/qcom/Makefile
+>> +++ b/arch/arm64/boot/dts/qcom/Makefile
+>> @@ -114,7 +114,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= qcm6490-shift-otter.dtb
+>>  dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
+>>  dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
+>>  dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2.dtb
+>> -dtb-$(CONFIG_ARCH_QCOM)	+= qcs8550-aim300-aiot.dtb
+>> +dtb-$(CONFIG_ARCH_QCOM)	+= qcs8300-ride.dtb
 > 
-> This looks pretty questionable, how does something that was apparently
-> announced last month have a 2022 copyright from the Linux Foundation?
-> 
-I copied the binding header from downstream sources, which had above
-copyrights. Rest of the changes - driver and bindings - are my work.
+> It would be good to add a comment to the commit message about why you
+> are removing qcs8550-aim300-aiot.dtb from the Makefile.
 
+Especially that it was not in v2 (which I reviewed) and nothing in the
+changelog explains this removal.
 
 Best regards,
 Krzysztof
