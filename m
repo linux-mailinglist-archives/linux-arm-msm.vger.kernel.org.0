@@ -1,118 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-39417-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39418-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 344AB9DB5B2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 11:28:34 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6657A9DB635
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 12:05:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EE2C7281D16
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 10:28:32 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8E965B22197
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 11:05:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C4F01917E9;
-	Thu, 28 Nov 2024 10:28:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B866C18B495;
+	Thu, 28 Nov 2024 11:05:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WGJnH+Mi"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sgadpRYk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-vk1-f176.google.com (mail-vk1-f176.google.com [209.85.221.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6CD115D5B7
-	for <linux-arm-msm@vger.kernel.org>; Thu, 28 Nov 2024 10:28:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A63E1494A3;
+	Thu, 28 Nov 2024 11:05:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732789700; cv=none; b=YTbTJOCBEERYs2jR9XTMVSUeMF4P8jPjI0dUlHUB7dq3ngNIPZ7CNB4Po8sKIzWwZKNwPn8BoV+LiKSqGwWnE05qTzQUfcEphK2jEmfxO3jAMVrnDKl8bHc+1PMPNuaUYzpLemEYcw2bmUgh4OrEUDJGIfPCZeDB853ij9C5TH4=
+	t=1732791922; cv=none; b=GhRrnxreOJsZupLVqEWasXwU5jSys0uxy0RGxhgz0b4e0l3db+2GC9CFAtvBpAK17e/L+aewupnBq0eKzj95J99AlLmcdKwc2Q8Dorhq/PnPzvmEWCfOb5E4j7CKJxBY933bwjdDBHVOcMFPGlqsKTIPBFkubxCx3sOxuBBb2+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732789700; c=relaxed/simple;
-	bh=xBez7rpBLjMzyjYwf7HZa9dlrkgJrg+yAQKT8Au5N6I=;
+	s=arc-20240116; t=1732791922; c=relaxed/simple;
+	bh=Tk3SgBmzxf75v8mpHFOojCa1eU5RK95fb1ARplAvCr8=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rsVQ3sM1sOSehpbVv5pn6/KKpXalRssHY8SyTKyuqROxlsLO3NoC5V9K45UJ3PtvcmDAeZHJb4jXNyx5ZjNxoDL7w4M42KzfizLK3xq8g/HR7JtW9kHRsVncAxEvgH3OyR3yZWyJWIUiizypQof8CJD9Rs/7Gs408xDaRTkmg4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WGJnH+Mi; arc=none smtp.client-ip=209.85.221.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-vk1-f176.google.com with SMTP id 71dfb90a1353d-5151541426fso222110e0c.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Nov 2024 02:28:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732789698; x=1733394498; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=CKy9NFeqlqcw1t7BKiitB8spU33tefaJ6SaLKo921pw=;
-        b=WGJnH+MiNnbq8GdTtyvTArrp29CWeieCAwYA18o+6AxJcUfuCp9Joto2Ey0eXVB5Xe
-         40Gxi+4YKGtbmw1KJ7zp3U9PSuLRHyIYMbSoUC7mOv2M9QYFUrQrwnf9Lm/jWVUTCk1p
-         G1W1/HI/ImWEv97USJwNtRVnTlIiWxiL3DN/1+DQNGf2OGva7hzYmlNDBKQCcahkpc4z
-         mSlN7D6qOiDfg8pXslIGbpjpGddCV+med1Lv0hFDhb9h8vKZXHFooZyIuGZa7/Mlq9qt
-         bsbqq1qTtBbGSag8AzMBwqk4i87GIB2UOu+kWVr+VuSStWpdz5vM3A5Vu1fk7JOxCg96
-         nVNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732789698; x=1733394498;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CKy9NFeqlqcw1t7BKiitB8spU33tefaJ6SaLKo921pw=;
-        b=PFH6qjKkHftgUey4T+Ni+lrRHy7yCaX1jkQcUE1J7DTKP2mwvr1nsijvReCu9REdjb
-         XMjltzDLSYDQWuTmlOfiVA/o/y4RsWnAu+IO+G46sRwFie/SMb0osOXGplane6Rzx6ms
-         JWxj1+mB7oTPr7XEMoo13Af1T0bj41xKkPU1U7v3P4Pr7Cfc7net0quM89wdTviTaXsr
-         fu18s0lCFrePH43YvDWXW4WojuqgDK2pxUGkg3VGJicLOfjD35yRE8TZI1XTdLOijBtC
-         NUNX1yt5RWAXacI9uuHHvIqQsRiVvMsPxq3CIds5fPdOOwAw6pw1dkwedNcSDpGskvxx
-         BcAg==
-X-Gm-Message-State: AOJu0Yzrh55Ue4F6sQH//vW1tZl7FjJuqipmkZtrLSxIpTqS5a9pegyl
-	ZBpXQG5U+RWyIb5zYlaYB7Bh/W190FZKX/3KdSkSSiJgXzP42jSqlZhpG+ap9GDejwObBPWbC4T
-	b7URVAozOwKX5aFuxfY026mTuCncaFuK5aNx7RA==
-X-Gm-Gg: ASbGncs9tAWh9/rEc7YK1retnQ9iB8An7Xl2m2hRphDj/4j2sL63UjslT7hV76AjLF0
-	d0gEaGW3idx2f5vUzVY4uzC6gn6D1EWI5iQ==
-X-Google-Smtp-Source: AGHT+IHNjCHSookykhJ0jiELmB8RMX1pmwKtceJGivKe5r9uvyYhkK2Li/fKdNaKGIC1FiwJ9jTRq09+7ToPFKBO6rs=
-X-Received: by 2002:a05:6102:82cc:b0:4af:497f:aaa4 with SMTP id
- ada2fe7eead31-4af497fac19mr5014052137.4.1732789697607; Thu, 28 Nov 2024
- 02:28:17 -0800 (PST)
+	 To:Cc:Content-Type; b=Dhrv8+MgC6XrUOfhzs3k1ue5fsGN2Fpw2CA3S+dMLJgL0vGbZ6WiDSOrPXqPUIRbzCXFB4mZHFlrwZGXZsKhQBIbiOARJNZ1lgowmnEdj1fKynnB7zZ8hjQTTS51VnZ8pCciGo3JOnZRs0kIaMMfH9vhsGQNIkr5cr5KaqbK9gY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sgadpRYk; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06343C4CECE;
+	Thu, 28 Nov 2024 11:05:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1732791922;
+	bh=Tk3SgBmzxf75v8mpHFOojCa1eU5RK95fb1ARplAvCr8=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=sgadpRYkuUXFkpjw24NWlB9pvIl8IEIcSrCdtE5h4/Cz8ycnW82hdweipurtpcoeG
+	 u1eS8gWZ8oKiDO9M9Nx8k5YsKx0hzTFL/sdclt+pdjqjfCyk08lG+FPgI+k34C/pjF
+	 dL5WYpQmFoEsLJ5q8+vTFdGKyrCR3HZ1zrRhVSQOukrKFqc11yXU2bUkRhtBNLkqXW
+	 U+kqunmAlnqI4wV+AYmOb2muUQWTjySJLk//zpB0DxGOcfi5SRSL8RS67OO0nQKeaf
+	 38H7M0Twjhn+fim4YzHOrHXLiYD+WtyPdgPlV/zEuJIznC4lwChKKVkvNmyLRzLtEZ
+	 Yzj11q9xJ+e+Q==
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2ffbfee94d7so6049601fa.3;
+        Thu, 28 Nov 2024 03:05:21 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCUt3WT9luNfmNelNRa0hqLhRGEHAUUGN+WIOvlosnqkj/kEibm67xpPqyWSaZjeJoGfDX/DjqRfh8QN@vger.kernel.org, AJvYcCVrw43qur+723jvHh4i/bTmCHnpZw26XQ8sYCfxXRcXztc8ze29BIhBH2aD7hO/PsXDgU0hC3hWigMKnqfl@vger.kernel.org, AJvYcCW8SON0fBJ4Y129WlcfZTVnp59+hM3Ro1XxZ6EpbAjyCrO0ab7gaYNQCHcDhPNDtieN4M443gDlDRjeCmh+@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywt+FnrxqSikEU+qfQzjTJEtuwhrOcOpx/3S21LCj4Z+i//rwZy
+	lFvg45Kp3wxTRnpH3wYP6iHIaKNqojOcXONahB/0vJ5k7KhqTKpd9kfNDUw2LrG2SSzSdGsdXmT
+	e/p6Zh3YqZNJMXOB/aYD/fi5S62E=
+X-Google-Smtp-Source: AGHT+IGfCryE9/9cOqbIgjCEMT/F26Kog+spNc3XbOBLC67DHHd+EO0spiyPdSSyrDsU90ykUHitPdH7fxi0sBZnjRk=
+X-Received: by 2002:a05:651c:545:b0:2ff:a89b:4348 with SMTP id
+ 38308e7fff4ca-2ffd5fcc351mr23066001fa.1.1732791920303; Thu, 28 Nov 2024
+ 03:05:20 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CA+G9fYs+2mBz1y2dAzxkj9-oiBJ2Acm1Sf1h2YQ3VmBqj_VX2g@mail.gmail.com>
- <CA+G9fYvh8n=CTCmcCdLViH=o-UXH1Euncn+7YuYkvt5O-k8NMg@mail.gmail.com> <20241125154235.GC2067874@thelio-3990X>
-In-Reply-To: <20241125154235.GC2067874@thelio-3990X>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Thu, 28 Nov 2024 15:58:06 +0530
-Message-ID: <CA+G9fYshK6+AuXSnu7c=j+QJ38kN6O6t7B=DdzqQrMN_rGsJhA@mail.gmail.com>
-Subject: Re: pc : qnoc_probe (drivers/interconnect/qcom/icc-rpmh.c:269) :
- Dragonboard 410c - arm64 - boot failed
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: linux-arm-msm <linux-arm-msm@vger.kernel.org>, Linux PM <linux-pm@vger.kernel.org>, 
-	Linux ARM <linux-arm-kernel@lists.infradead.org>, 
-	open list <linux-kernel@vger.kernel.org>, clang-built-linux <llvm@lists.linux.dev>, 
-	Georgi Djakov <djakov@kernel.org>, konradybcio@kernel.org, quic_okukatla@quicinc.com, 
-	quic_rlaggysh@quicinc.com, quic_jjohnson@quicinc.com
+References: <Z0gn1N3IsP8r3gTA@hovoldconsulting.com> <CAMj1kXGjiA1HydMaY82MQsYvkchpN7v7CMOB5i3NEdqcYGn19Q@mail.gmail.com>
+ <Z0g_HL01eqXu4cwQ@hovoldconsulting.com> <CAMj1kXFtr7ejEjjSRj9dcRa7YbO0SR5OR3pm+K6OvbX2=RfhAQ@mail.gmail.com>
+In-Reply-To: <CAMj1kXFtr7ejEjjSRj9dcRa7YbO0SR5OR3pm+K6OvbX2=RfhAQ@mail.gmail.com>
+From: Ard Biesheuvel <ardb@kernel.org>
+Date: Thu, 28 Nov 2024 12:05:09 +0100
+X-Gmail-Original-Message-ID: <CAMj1kXHS_TY=jfBT=dqUQSXf2pBXbt12uaLsMw-FLX3uU_X6uA@mail.gmail.com>
+Message-ID: <CAMj1kXHS_TY=jfBT=dqUQSXf2pBXbt12uaLsMw-FLX3uU_X6uA@mail.gmail.com>
+Subject: Re: UEFI EBS() failures on Lenovo T14s
+To: Johan Hovold <johan@kernel.org>
+Cc: Leif Lindholm <leif.lindholm@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Ricardo Salveti <ricardo@foundries.io>, Marc Zyngier <maz@kernel.org>, linux-efi@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Mon, 25 Nov 2024 at 21:12, Nathan Chancellor <nathan@kernel.org> wrote:
+On Thu, 28 Nov 2024 at 11:21, Ard Biesheuvel <ardb@kernel.org> wrote:
 >
-> On Mon, Nov 25, 2024 at 08:43:44PM +0530, Naresh Kamboju wrote:
-> > [Small correction]
+> On Thu, 28 Nov 2024 at 11:00, Johan Hovold <johan@kernel.org> wrote:
 > >
-> > On Mon, 25 Nov 2024 at 20:33, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
-> > >
-> > > The arm64 Dragonboard 410c has failed with the Linux next, mainline
-> > > and the Linux stable. Please find boot log and build links.
+> > On Thu, Nov 28, 2024 at 09:52:33AM +0100, Ard Biesheuvel wrote:
 > >
-> > This boot regression is noticed only on Dragonboard 845c.
-> > Linux next-20241125 tag.
+> ...
+> > > In upstream EDK2, the map key is just a monotonic counter that gets
+> > > incremented on every memory map update, so one experiment worth
+> > > conducting is to repeat the second call to ExitBootServices() a couple
+> > > of times, increasing the map key each time.
 > >
-> > Good: next-20241122
-> > Bad: next-20241125
+> > I had already tried repeating the second call (GMM + EBS) by running it
+> > in a loop, and I do see the map_key increasing for each iteration (e.g.
+> > by 0x1a).
+> >
+> > > Or use GetMemoryMap() to
+> > > just grab the map key without the actual memory map, and printing it
+> > > to the console (although the timer is disabled on the first call so
+> > > anything that relies on that will be shut down at this point)
+> >
+> > I just tried adding another inner loop just calling GetMemoryMap() a few
+> > times and I see the map_key increasing there too for each iteration
+> > (e.g. by 0x6).
+> >
+> > (The map size remains constant.)
+> >
+> > I do get the feeling that efi_printk() contributes to the memory map
+> > updates, and I can indeed get the reference design fw to similarly fail
+> > if I try to print the map_key after each call to GetMemoryMap() in a
+> > retry loop.
 >
-> Can you bisect to see what change introduced this?
+> Per the spec, the only thing you are permitted to call if
+> ExitBootServices() fails is GetMemoryMap(), and so this is not a spec
+> violation.
+>
+> If GetMemoryMap() itself causes the map key to assume a different
+> value than the one it returns, or if ExitBootServices() invokes event
+> callbacks on the second call that may cause the map key to get updated
+> before it manages to check it, there is obviously something wrong in
+> the firmware implementation.
 
-The bisection did not provide any good results.
-
-I have been tracking these boot failures on db410c and then the boot
-test got passed on next-20241126, next-20241127 and next-20241128.
-
-Boot test history:
------------------
--  https://qa-reports.linaro.org/lkft/linux-next-master/build/next-20241125/testrun/26040307/suite/boot/test/korg-clang-19-lkftconfig-hardening/history/
-
-- Naresh
+If you're happy to experiment more, you could try and register a
+notification for EFI_EVENT_GROUP_BEFORE_EXIT_BOOT_SERVICES using
+CreateEventEx(), and see if it gets called when ExitBootServices() is
+called. That would at least help narrow it down.
 
