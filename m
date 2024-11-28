@@ -1,125 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-39448-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39449-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 797C39DB87A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 14:24:30 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AE2509DB881
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 14:24:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 402182820EB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 13:24:29 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 07265B22599
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2024 13:24:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C7591A7AD0;
-	Thu, 28 Nov 2024 13:24:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A684D1A9B49;
+	Thu, 28 Nov 2024 13:24:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="D22owIct"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XFOLGqaM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1C5E1A01B3
-	for <linux-arm-msm@vger.kernel.org>; Thu, 28 Nov 2024 13:24:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21F271A0BFD
+	for <linux-arm-msm@vger.kernel.org>; Thu, 28 Nov 2024 13:24:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732800265; cv=none; b=MFK8fj4l8ZpzQPfcC/BmEWsSWVx8dyv3NNXBtlBRuNW/SlOmjgxq+euYGxl0AdNfDSCRGTRAqGiDELkkqUsRgZEhoBWadc8aMJLQKObPYdX2ZykyhnBdUt6cM6x5J1MO2o0/fnSfyG64RZ1S9rZe4ONkVW7zzmqEJvkRT2/z/JM=
+	t=1732800284; cv=none; b=VtlcTLahSzdJqdhsIFHxbqswO6MfcZ9ZCRUJfwvhf4azwUBZBX7EaCmh5VmjWAA4/g3kAchfvSYa01OtLS/sqU2dSkgqT4PO5Ytp5uQSa8EoDUd0CEKMBAkf2Ep6bPYVrMyJFeOPCoqN687OShJXhPXTGz9ZQIsHdhfGeHKrA18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732800265; c=relaxed/simple;
-	bh=6N0bgmGW6ZFE1RBJSAYibt4wD8JBkZs1/eYZgRBGMOI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bWdAieMbxl4srFFfArL+26YgRe0JkpDMdVaEFCF8BxKgUWYXVuBj7GleqlymsZGj34foulv9XMhD/pbLBo7oJnvxMmv+ffkigggWsGBOppKiIwZiODvVezL1CF7I2IylNmZjEOTFYbXATzU/PFGjJHtTrE9W5iK/mzG0OIOdulk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=D22owIct; arc=none smtp.client-ip=209.85.167.43
+	s=arc-20240116; t=1732800284; c=relaxed/simple;
+	bh=EiQXqUxIixcM/WIqsE6yZhdRc2YDwoBwf0kwdTIOQLY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=e8JTIziuJSAHQCw6+0OQt7fPWC0mnmkuCbJPYvUa2PA9qnExjFWtLUwBpfqYDMbOAP4shDpc+f//SogcmghFHAwQX+lm1kwWuKhjFQ+tGzxRTygqcOGeqJxO4hyUD837JfTGaTFnDGn2w88owhdV7azktY9kcmhyhtBH0Vx/la4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XFOLGqaM; arc=none smtp.client-ip=209.85.216.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-53dd0ee64b5so106352e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Nov 2024 05:24:23 -0800 (PST)
+Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-2ee46851b5eso96902a91.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Nov 2024 05:24:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732800262; x=1733405062; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=gXmwGgua6b6IFHk+sz5oYErhryQ6lSwss7yAIxQHIIc=;
-        b=D22owIctVKxBDkaxGYzFMy0rfpp6kKM1JoEakN4yj1q+xxIzhOeCA24rgu/0Jtf2fD
-         YdZCFfXRCAJGK/1h+XMYphJOvJSNeZWdajY5PfBig/rg6avopRRxOwy2ccc8tYBbg77e
-         XyQrIddjeRH4ASCI+sWepk0ZT93onZnrKIo14FJ5XLrd/IH2kfEiyQFoAkldqcBUQOuG
-         /fId78i4zP2kP6s/AofO8owlxCfXn4fZ21OjvPFnYzmuN/UXR3O66e0falhSxEnAKjnx
-         XD2ffpaODjOtiszMWyihs7g+NtWAi6yJV4X+jkQ1sYn6uf8Xqol4l0oB0gLtZ9fp5Ce3
-         lyIw==
+        d=linaro.org; s=google; t=1732800281; x=1733405081; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=y/S3V26ZtpsH53gJ+nZdjF8Q8MrpcidP1Hfwlg06frY=;
+        b=XFOLGqaMrAgAs/EAVX2uU3saBP7riM6VcpUEb199Xd5CuFEEl11dLi29jPhaPv4cVL
+         7k4944aDxi19ky2rjhNM5Fcq9BJ9072A5+exeau8Qbwd8bAyO8VHmHzEdBG8JjvjlUlB
+         vqp6JKmQsxt3c0siN9cywgnGGYEo/xlCcYrf4zPactVn9tBwJy5yM99L0D+Ssv5y9Kd4
+         pXTmynrq0T7g6iSJT0oTOXJ5M+bUi+tPNQpTsXDzbn0e8633KWXvjxjVe9jwJoMHUJ5v
+         HWglMhN0Hq3+rg2NhoI2Rwe6asgpmeZxA1HS4Zm2fg1rZXXhDvAsjbUwH08zL3kLTFda
+         Uw8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732800262; x=1733405062;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1732800281; x=1733405081;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gXmwGgua6b6IFHk+sz5oYErhryQ6lSwss7yAIxQHIIc=;
-        b=HiWOM35DpOaAeO8d0VmDqpEfG5f+h5dYGIHYVtuqVmMUbPAAD6KSboUSjMfodFEkYD
-         xuXPCoi8e3Lehh7EWYd/VFTxW+Y2p0HGKrfOMa3iKaCgKhUPZ9LN0QH0e7pRbbcfUX6Q
-         LWEozfBHPm/+14sQZmnNN1537xKHUB+3csEmtNhJqa4Z7gHHa/ZaZ5Q2ZOJEcQpx1dUl
-         I/8norF/TFWgvU39zdJbJ/Efd03ZJJl/dVAbg83JH2zB2qmxpbXTMlB5wUlbBH6JhH6s
-         n6ZiqgE7SCQ57OwX8UOGbzvHgnowWuLeQe3FX8LNtHQwp6WevhxH5RNKlSpGvjRdQHtR
-         dBEQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV4/zTYssQhvSub+onfTYBp3jWq3B8CW2snDTWpH6d8VJ2T60Z+xtPneWpBo3PaBNqmP5cfnphTm5DhwYsF@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw5kwsaf0qcZeF9ooKlI3kH9VheQddPHBxfy7AriepEccfVgRJb
-	RdDCrD8YdChcdUpJaP7fy8YQb4G/Ub5dqVCWj5VCCVSUwBveL7k3laTxSWPZy5k=
-X-Gm-Gg: ASbGnctHX4akW8nG2wJOgahFdxk3cUDjGLSZI6jl2gnHzyEpCPV+eKBQPd6X37uGUnX
-	Qr9ShdDm+cAk0Jb7lsQiaeGr5hZcCTX1Z1B4Bxrb1FcprTarugkI5TqjFOds0snCUxgUjuvKThC
-	CLPKcEK64K0WG+ucgXw/fzo91oy5OYiqdqRgwOf3DHdmCPyFvdfYT4qn8ypZway4AHMQ6UMz5Nq
-	SIRJLGr085GQlTJkh54EnNp1Eur8DSQvV0iCCj0xUlLwkqIbOYTwaGGGnVVV9EJ3cRkgYyuoSj6
-	bSgMoAkrZ4W/y+N6x6qfO6+pBWiJ
-X-Google-Smtp-Source: AGHT+IGFUJAxjvhsByyBdZMcAk0gikSSjkNb3tPTHIn7AP9ungve1WLXE07mxdF/zOolQIu33Qx1Vw==
-X-Received: by 2002:a05:6512:3b23:b0:53d:abc3:82a6 with SMTP id 2adb3069b0e04-53df00d3e59mr947638e87.4.1732800262033;
-        Thu, 28 Nov 2024 05:24:22 -0800 (PST)
-Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53df646f27fsm176060e87.157.2024.11.28.05.24.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 28 Nov 2024 05:24:20 -0800 (PST)
-Message-ID: <b97adbf2-f19f-4cd7-9266-526957c4c3d1@linaro.org>
-Date: Thu, 28 Nov 2024 15:24:18 +0200
+        bh=y/S3V26ZtpsH53gJ+nZdjF8Q8MrpcidP1Hfwlg06frY=;
+        b=UFvkjAzinl8aYFPQQcHsMMgEb7WQ5eRykjYLAvwcl+f65aSVPF2/f242jQ7LAPT7wf
+         A1BBUSbQPUF+4XWsfR2HHge64OPQbt48yYpMcECIEEx3fPktjc5RJbUTuB4XneQVMBPF
+         LqDhNamDghx89TTvHgBFhknub1kXngTzyX5t5ckUdyf/9F71vn9upWWJOcq59aXU200t
+         Zo0j47gLrmUUsOWD2375UM9Aennwl2gXpEY6ZOqUegiJCUnXSQToFYAzMR+Too+tFOpu
+         hekva7LPtCgNj5BWgiwJsf4IAcrCu2GD1BjwDLaDKaJk/rWmLheZWxGOhiQEmCi8be3m
+         187w==
+X-Forwarded-Encrypted: i=1; AJvYcCUJqW8Z0kwAYryS+sqh9ARLhcqQQjO2oDmAytJmsESB1iOk5liiDSk8I8gLEGeg5MZuJOFLoGYBT+H0lbVb@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy+iyx4he5oZSsngTRK6mgheNj97jXVykLHtNooWEtM5g2FHIAm
+	t/9J2cYd+QmOBiAKk3xGhrKXlJyelqdubV+z8ziTJ2v87OgCPVS2C0O9wdQLXw==
+X-Gm-Gg: ASbGncsoAuO1X+Qi0T8HU5unV/UiOlCcmrRG5XWVrZJj1eAmtlKz9neNIupXw26M/cL
+	dFcvVVt9TVDHWDe/EOKaJHijDebP+sk9H4O+Ugp6P9NDktnA7S2Roz16Q6cXh8Umth6VuN5TdS5
+	4v08t36JQONUWgBihAxzJ7nKnMlCXMWJ9c5tmB4iV9x4FDeIz9DyD/xZKdMgnmZvA+GOc8mh2Ga
+	DMzALUOSZKPyo2dpmY+xWc1EVILQ4z5bCd2sKBltROU0ElL4IzEgM7AUvl8
+X-Google-Smtp-Source: AGHT+IHhjHrwJN/0a3LoxP1T5UBrL/PpHDbGZKXCNWeqjqOsCu7VZTYvWW+l6+4/H4GWb3YSpNc2tw==
+X-Received: by 2002:a17:90b:388a:b0:2ea:adaa:1a42 with SMTP id 98e67ed59e1d1-2ee08ecc3f2mr11264448a91.16.1732800281343;
+        Thu, 28 Nov 2024 05:24:41 -0800 (PST)
+Received: from thinkpad ([117.213.97.61])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2ee2aff1f34sm1408085a91.5.2024.11.28.05.24.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 Nov 2024 05:24:40 -0800 (PST)
+Date: Thu, 28 Nov 2024 18:54:32 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>,
+	andersson@kernel.org, Bjorn Helgaas <bhelgaas@google.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	cros-qcom-dts-watchers@chromium.org,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Bartosz Golaszewski <brgl@bgdev.pl>, quic_vbadigan@quicinc.com,
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 1/6] dt-bindings: PCI: Add binding for qps615
+Message-ID: <20241128132432.fxvmjeluagignbph@thinkpad>
+References: <20241112-qps615_pwr-v3-0-29a1e98aa2b0@quicinc.com>
+ <20241112-qps615_pwr-v3-1-29a1e98aa2b0@quicinc.com>
+ <poruhxgxnkhvqij5q7z4toxzcsk2gvkyj6ewicsfxj6xl3i3un@msgyeeyb6hsf>
+ <42425b92-6e0d-a77b-8733-e50614bcb3a8@quicinc.com>
+ <b203d90d-91bc-437b-9b91-1085034ed716@kernel.org>
+ <cce7507f-a2c4-6f96-f993-b9a7e9217ffa@quicinc.com>
+ <c81b89ff-6eb5-4a01-af84-636aa2a02a34@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] media: venus: Add support for static video
- encoder/decoder declarations
-Content-Language: en-US
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: quic_renjiang@quicinc.com, quic_vnagar@quicinc.com,
- quic_dikshita@quicinc.com, konradybcio@kernel.org,
- linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org,
- Stanimir Varbanov <stanimir.varbanov@linaro.org>, devicetree@vger.kernel.org
-References: <20241127-media-staging-24-11-25-rb3-hw-compat-string-v2-0-c010fd45f7ff@linaro.org>
- <20241127-media-staging-24-11-25-rb3-hw-compat-string-v2-1-c010fd45f7ff@linaro.org>
- <ad906baa-a93f-42c4-bbe5-968fa939c653@linaro.org>
- <71dd9aec-e2b4-4323-aeb6-53f2491005b3@linaro.org>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <71dd9aec-e2b4-4323-aeb6-53f2491005b3@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <c81b89ff-6eb5-4a01-af84-636aa2a02a34@kernel.org>
 
-On 11/28/24 14:54, Bryan O'Donoghue wrote:
-> On 28/11/2024 09:02, Vladimir Zapolskiy wrote:
->>> +    np = of_changeset_create_node(ocs, dev->of_node, node_name);
->>> +    if (!np) {
->>> +        dev_err(dev, "Unable to create new node\n");
->>> +        return -ENODEV;
->>
->> Leaked reference to np.
+On Tue, Nov 26, 2024 at 07:58:16AM +0100, Krzysztof Kozlowski wrote:
+> On 26/11/2024 07:50, Krishna Chaitanya Chundru wrote:
+> > 
+> > 
+> > On 11/25/2024 1:10 PM, Krzysztof Kozlowski wrote:
+> >> On 24/11/2024 02:41, Krishna Chaitanya Chundru wrote:
+> >>>> ...
+> >>>>
+> >>>>> +  qps615,axi-clk-freq-hz:
+> >>>>
+> >>>> That's a downstream code you send us.
+> >>>>
+> >>>> Anyway, why assigned clock rates do not work for you? You are 
+> >>>> re-implementing legacy property now under different name :/
+> >>>>
+> >>>> The assigned clock rates comes in to the picture when we are 
+> >>>> using clock
+> >>> framework to control the clocks. For this switch there are no 
+> >>> clocks needs to be control, the moment we power on the switch 
+> >>> clocks are enabled by default. This switch provides a mechanism to 
+> >>> control the frequency using i2c. And switch supports only two 
+> >>> frequencies i.e
+> >>
+> >>
+> >> frequency of what, since there are no clocks?
+> >>
+> > The axi clock frequency internal to the switch, host can't control
+> > the enablement of the clocks it can control only the frequency.
+> > 
+> > we already had a discussion on this on v2[1], and we taught you agreed
+> > on this property.
+> > 
+> > [1] 
+> > https://lore.kernel.org/netdev/d1af1eac-f9bd-7a8e-586b-5c2a76445145@codeaurora.org/T/#m3d5864c758f2e05fa15ba522aad6a37e3417bd9f
+> > 
 > 
-> I don't believe that's a leak, because you only release np when it is
-> non-NULL.
+> This points something else. I diged v2 and found many unanswered
+> questions and unfinished discussion:
 > 
 
-Clearly it's my fault here, I'm very sorry for it.
+The conversation is here:
+https://lore.kernel.org/linux-arm-msm/20240823094028.7xul4eoiexey5xjm@thinkpad/
 
---
-Best wishes,
-Vladimir
+But there was no explicit agreement on the usage of 'qps615,axi-clk-freq-hz'.
+
+If describing the PCI device's internal clock frequency is not applicable, then
+I'd recommend to change the clock rate in the driver itself based on the number
+of DSPs enabled (or based on other configuration).
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
