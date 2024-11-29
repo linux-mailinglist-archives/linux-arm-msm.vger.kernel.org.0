@@ -1,50 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-39638-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39639-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9249A9DED21
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2024 23:13:29 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6AD129DED25
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2024 23:13:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3507D16389F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2024 22:13:26 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D42761638D6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2024 22:13:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9BCF81A9B52;
-	Fri, 29 Nov 2024 22:13:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CCB981A725C;
+	Fri, 29 Nov 2024 22:13:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Vb0gijGt"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g1flsD/2"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 656591A4F09;
-	Fri, 29 Nov 2024 22:13:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BBE51A4F09;
+	Fri, 29 Nov 2024 22:13:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732918387; cv=none; b=ZJRLSIXFEsLofOdiqz0yd4qA+rHmsPrVOenp+Hr6o4i1XNqswDqzXHIwPJVO//Xfvbeb20/zn6KfeW7HUpBvgpmOdrGmHP9Ef6YhxIqxWpAWDkskOk3fWJHq/FAcgOlwSlIPCaaghLCYeJvaMk0m66ZeGf6W47s3C1bCGn7KXhI=
+	t=1732918392; cv=none; b=fbGxyvNgvHIYgJ3mozshEt1zPB9YxAkKYVMy2eW4u1EfcuYNL6tb+wCj7aHswed7ARczHv5YmfB7VLn6654vzFlNvmyHH2mshBRr2gqCocEOD4GeL0aWkOl8N8M9ZFnYQHbmLbZwLva97TZwRqJJkjRJ3C0ZKm0PERaG7L2HHkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732918387; c=relaxed/simple;
-	bh=zgSt9E9eYLZhU3v4oROWjzAasMeEyCaINI54A9l3ubQ=;
+	s=arc-20240116; t=1732918392; c=relaxed/simple;
+	bh=jMK6epEz5EBY7sijolgFqoyp01hNxpOBbKNL9dshfg0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=p+3IqZ6CGZB7mVJkp5Ql6mXRq0pFHSaycgxPOhOH7HuDCH3ktftIj/VMs7RMIAoWDD1rS9XAf9DA4L1sVmnPCfuSJ86zLAmjmJOvPXDh50tkVLzZ+u2rvYCKelAnXkCgFAj8csNoijXGWKw2p8xo9izM2of7oCgLeWrHo8aGKlo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Vb0gijGt; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D54A3C4CECF;
-	Fri, 29 Nov 2024 22:13:02 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=pJ/MM8/KrQHZvdkn01Xw8bylE55hxBf+k04nMEPPPpRyES+eQBdZBan47ZLR9c5EBOSIYw6oOHOr1MUQYk4Cm/wXCeK+VUFbeqEjtVoTHT5/PqIwVliiRQQfXTVQNViuT7fj12NXTBWKDZHHZyD0qVjU1ZuHhmb+06C5TMOqX/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g1flsD/2; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4677C4CECF;
+	Fri, 29 Nov 2024 22:13:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732918387;
-	bh=zgSt9E9eYLZhU3v4oROWjzAasMeEyCaINI54A9l3ubQ=;
+	s=k20201202; t=1732918392;
+	bh=jMK6epEz5EBY7sijolgFqoyp01hNxpOBbKNL9dshfg0=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=Vb0gijGtVIJjwB3RCd+Rk7BXQ2vMWkgC/Lgwig74kMm5k9MNBN38Ee2Qp5ZJ5HE/P
-	 uhOE6W0Jj7b9NWLm/gGqzZj9jVEwLfQBw4byq57sk5LzecE3D9gstVISdnZkODajqr
-	 FihIhw5JX32WKdtrkJ5qSJXJmm6EeJ7ldamL6AJMYC/oSXA/FiylOobVN1QL0QJgO4
-	 +y4XDQvvtyQDCc2ce1Fwf3sRaOVOzSJSaWTdw8HwrsHRIBUa4Gfu89yGJq+OJ0fUy2
-	 iXmUy/Drq2Qdx9lwZKb48g/hJwtbX30gM3JliEYqnSexlCiSboiLT69z7MkdQxt8Do
-	 l/bALGW/I4Wag==
+	b=g1flsD/2BzmJ+3o/dvKJ0PqX50PMTusC9gTvAIEjn0pWGOh7z8Aevt9ATTSwGyKBi
+	 fiet0bI+VVixoIn4V8a5kWRA0/OrBKZU/RlVtTbg3OkRo3MJPw/YetDP8+tCAcPCGt
+	 uA/nkdAJKRrACKrRiauc6VXI/pWsJgMK/BzpgRH3ooyaW6+Y+tM/2zHI68Y6un3KI0
+	 h1q6iVTELpPtvzlV0dGYk4PiwRf730AlT6wWMqQe0YMRmt0cyr6Tbw9jS/QLPyw/rr
+	 gXwLbLvzXtkhFOXHC37QPaw8ITpya78rJ9ujxVhEUcJx/Q0ZADojBItUEaSQ1tOzbs
+	 2EgfE6S2Dxb0w==
 From: Konrad Dybcio <konradybcio@kernel.org>
-Date: Fri, 29 Nov 2024 23:12:46 +0100
-Subject: [PATCH RFT 2/4] dt-bindings: usb: qcom,dwc3: Fix MSM8994 interrupt
- spec
+Date: Fri, 29 Nov 2024 23:12:47 +0100
+Subject: [PATCH RFT 3/4] arm64: dts: qcom: msm8996: Fix up USB3 interrupts
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,7 +52,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241129-topic-qcom_usb_dtb_fixup-v1-2-cba24120c058@oss.qualcomm.com>
+Message-Id: <20241129-topic-qcom_usb_dtb_fixup-v1-3-cba24120c058@oss.qualcomm.com>
 References: <20241129-topic-qcom_usb_dtb_fixup-v1-0-cba24120c058@oss.qualcomm.com>
 In-Reply-To: <20241129-topic-qcom_usb_dtb_fixup-v1-0-cba24120c058@oss.qualcomm.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
@@ -72,44 +71,50 @@ Cc: Marijn Suijten <marijn.suijten@somainline.org>,
  Harry Austen <hpausten@protonmail.com>, 
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1732918371; l=1153;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1732918371; l=1317;
  i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=BIFYO+CLtWkBnRHvBOajO+beyOCJj9NvQbQ/HDfTLKg=;
- b=pWStGpoJqL6ki0Y1D6Ax9RDDwi1XD3/T6Txs6dJzq8+RXpE/f0JYcsJviePmM45Dzcol21OIX
- IzEeztB8dedAciiHqcPC3hUP5LWeN+d8PE3bAS80IBSV7mW05CYTM3+
+ bh=MgNMkEjMNVsQXDCdVbGV7gJ6cNNdJLmEyymYhE0Z+7s=;
+ b=JgrH1FomxoumLnG/GwbIyhv0UZTzruFH2EvRkgnZWsA0EbSOIavbhVtwjbzMfA3OoD5SMBX2V
+ FVtN6fNb7rQD78wYenKLf3VgaEoL4nZDaH8erYPX/Mu7bF2lhaEGOlp
 X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-This SoC doesn't seem to have separate DP/DM interrupts, move it to the
-category that has a "qusb2_phy" one instead.
+Add the missing interrupt lines and fix qusb2_phy being an impostor
+of hs_phy_irq.
 
+This happens to also fix warnings such as:
+
+usb@6af8800: interrupt-names: ['hs_phy_irq', 'ss_phy_irq'] is too short
+
+Fixes: 4753492de9df ("arm64: dts: qcom: msm8996: Add usb3 interrupts")
 Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 ---
- Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-index 7ce56db1bbd4cd801129929616eb17f968b097f1..8c9f675083bc9d5964374304d2186c803e81be29 100644
---- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-+++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-@@ -411,6 +411,7 @@ allOf:
-         compatible:
-           contains:
-             enum:
-+              - qcom,msm8994-dwc3
-               - qcom,msm8996-dwc3
-               - qcom,qcs404-dwc3
-               - qcom,sdm660-dwc3
-@@ -469,7 +470,6 @@ allOf:
-             enum:
-               - qcom,ipq4019-dwc3
-               - qcom,ipq8064-dwc3
--              - qcom,msm8994-dwc3
-               - qcom,qcs8300-dwc3
-               - qcom,qdu1000-dwc3
-               - qcom,sa8775p-dwc3
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index b379623c1b8a0844c9de5255c4647fe3490bd2aa..4719e1fc70d2cb15a6a63d3e28622ae078a367ef 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -3065,9 +3065,14 @@ usb3: usb@6af8800 {
+ 			#size-cells = <1>;
+ 			ranges;
+ 
+-			interrupts = <GIC_SPI 347 IRQ_TYPE_LEVEL_HIGH>,
++			interrupts = <GIC_SPI 180 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 347 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <GIC_SPI 243 IRQ_TYPE_LEVEL_HIGH>;
+-			interrupt-names = "hs_phy_irq", "ss_phy_irq";
++			interrupt-names = "pwr_event",
++					  "qusb2_phy",
++					  "hs_phy_irq",
++					  "ss_phy_irq";
+ 
+ 			clocks = <&gcc GCC_SYS_NOC_USB3_AXI_CLK>,
+ 				 <&gcc GCC_USB30_MASTER_CLK>,
 
 -- 
 2.47.1
