@@ -1,48 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-39532-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39533-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD1029DC064
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2024 09:21:24 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 72CA39DC0A7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2024 09:44:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9EAB2281F27
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2024 08:21:23 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AB98AB208A7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2024 08:44:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7DAB15B0EE;
-	Fri, 29 Nov 2024 08:21:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4EB3166F07;
+	Fri, 29 Nov 2024 08:44:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B7hJyQr2"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KEn3Vp5V"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B920912B93;
-	Fri, 29 Nov 2024 08:21:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE744165F1F
+	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Nov 2024 08:44:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732868480; cv=none; b=P+J3yrvBfZRqsgFusHuqaiVMrbjL/OiYf/NcDjZdPCcOrjyt7Zfug77CuM1HSjkNNGMcfrzPBcLw+uQkkleHiVyjradfGxybW38FLPMtqLfvuY/9mfrZKDsb3uR297rNY6PS7Yuu69mWenmZnDONUjNeXUb8PC6/18AaJIyvp2E=
+	t=1732869856; cv=none; b=lzPmnN3NhtbXZyE7L7rFAgZ/ArCTo2aVNoSuJWmhZURkWe5V104E3oFNr9M5idP4f7OYVI668GglZTOAcF4GlnN/cO9fPoA+i3RmWg6cT50yNnxFfaFaNjd0QtOjhxcEWMBxIfbgRUmpQpeYxo73HsOWH1suMlRXm4cuOShJ0O4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732868480; c=relaxed/simple;
-	bh=KZ7ntoFjiRE4qae6dkopyRJLmQ10JWGG6InjMJTRkT4=;
+	s=arc-20240116; t=1732869856; c=relaxed/simple;
+	bh=TT5+RIHx1xuXgfqy9hE/Avt96/GK+N20arFL11M50sU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ntt6Rpv4G+1+FCZtVbN275QhvvZ94Y2FgeHKt6AGCxOLXoGjAYYKOjJestCI+zQQ+dhNcAy7NQ82EE5z42bD9O/MxIWNEPCpAaPui9GDVrJSV+tJccrhLJoT7w7Kw1OErSPXB7PX8DyGhzjVR6pamnldjGuSN9HKTnu/DqS/7H0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B7hJyQr2; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 856B5C4CECF;
-	Fri, 29 Nov 2024 08:21:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732868480;
-	bh=KZ7ntoFjiRE4qae6dkopyRJLmQ10JWGG6InjMJTRkT4=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=B7hJyQr2adnxbl6WkkiCsz6QtzYu1jwp6HCl2VfCsV6WebVjB7BjLa3xkpSjWoB2z
-	 Jiyt9WU94BvPBNU7fK6mPQodt+BjouxOEpilzk9cXeESLUMNK6QgyN1/W3kC2fr/Lx
-	 L+2fEDVTfpBvV3ng9HGequHoLsgDw/GHhBUEz/CsGW2g55c1N+Bx66IBPriSXAtFoV
-	 a2Sqp4Hd4mza32JS7i9MgEWCQMza7IRw1Blv1LzQ/XYvJQChz4Cc3V6uqlc1grFou0
-	 akHoETfTE+Cf3sv2pA27SNWevNtAWBPa4bYn8Pa0mS5TCKmQTDtZTABkLz+4p+aINE
-	 Xpp7sVNNj6epw==
-Message-ID: <b3f89c19-a6d6-40a0-9225-111cc59221a2@kernel.org>
-Date: Fri, 29 Nov 2024 09:21:08 +0100
+	 In-Reply-To:Content-Type; b=EYBCgaWGzqy2QcfTo43bVMItmTL08yiZvmztEur4eEFRFIoUBUssLMHQOPWpNIsjNCpT+iYMVIamJOODt+cw7lKCfSYib+MRGLwzYAEBTedO9QdemBkaZ1Q1yQ/jlJ3PNCj7U/Qx4PT19f9NtwsmdNmh6r9o+ahgdsTQBjRxGWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KEn3Vp5V; arc=none smtp.client-ip=209.85.167.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-53dd668c5e9so218303e87.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Nov 2024 00:44:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1732869853; x=1733474653; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Bt9DDOfs9JYKOtE18laVJNPP8yvKV7fk7BdMO0QU3tw=;
+        b=KEn3Vp5VT1dUvDxBakJ8e02Em50Os/NcX5/SeLS+laQtbJFf29Ir47vLm0JkyBAVGj
+         83CE2Ey7do6p2Jnxn7uxc9HKz6wgIwlnL+9hw9XRu5YPxs43AtV5jXcyIWiDFNTaD9Bd
+         OBNCNVcKSLst5m3awF9YKHT5X45ljq3zLutfrkHUE25Bi0TaGPWV2vfi/y10c4k/TlZQ
+         nmxOd/kTMtDiJvhx+dJDsb9PS9IxYaFZ2V+So33jz7Fm05h+/7I8nzUHuSMHTSC066G+
+         +Kf/TYWGbqz6V5oZAP1rjeWLmCPJtge+w/vGomKbxmZCgMeG2CZFYDV3Ooo45ZK0aFjK
+         vLOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732869853; x=1733474653;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Bt9DDOfs9JYKOtE18laVJNPP8yvKV7fk7BdMO0QU3tw=;
+        b=ECMfT1AViBzpHZUe2Zj/7NvkE058cmpb01+UsfnhrKOw8X/V2mkntl25xYB+nxl0YS
+         Ej+t5HkIAkA9KHR14uJvzhA1U/Hjx5KTRLEewiu8fA+idGBMqAtWG/nNrjc4FVEdCD9e
+         8rj863cUTzNNY+tjmex2fpbBh9ORMdEZhWZ5YrsWAnzlZZxa31JovFSuGf793zFK78H/
+         yCvhOOEFkQnPQ18j7JEcn79nNf3kssRdihnr1nlnvH5ZYQpXsoXV+JYNB8JBBdpnELqo
+         hI8foTQYQGsX70asF7wnh4IEiyl+Kx+2whCSuzXMILJNzZnusChH6x9r+HCVGpCueGwv
+         HJDw==
+X-Forwarded-Encrypted: i=1; AJvYcCUk0f1xEWt2dTlB+BJ6gwAZd5kav+M2FPog8bDJVBUClDZF7VUNe9r7M8L9T1wR1btxHI8Ea/jDn409QkwI@vger.kernel.org
+X-Gm-Message-State: AOJu0YxKx5FmsreFJrX6/EC86wDw+488H/2I7ZB/JUmwRQzvKIQzIiyS
+	b+Y1ZtnU3LZqn69HBNxsOnGVyI4GnuOL7j9n/T4ZK2cZbj6sDxMzR+y05hMypZA=
+X-Gm-Gg: ASbGncudi/YYxqXb0+vxxRCL04dogVIsxbH6tq7AlsU/E1ltHqhxIU93UI1k7wyUWPI
+	1xmczYsXet21wcZimERIrMnUlNw3dXWwRTJtlIonr7qxpsQwIF4ixssROdNJLeNmnO3LKkcxGxx
+	cVC9rl/MijD79oELN0XD0fTfX8tdgBMR2rnfE3cdADNqnU91AaXQnMrewS1VDPg1jCrCX5ImMGz
+	ORyy9uVwomGjCz+Yf1HFSaBx4oYTqoJlCTpxohsK+asBrkjJJBDRmR1g14Gr2A3Emt3BSmNMaGS
+	2hQ+11k0LQkEAtw1vTniEOB5nmxG
+X-Google-Smtp-Source: AGHT+IHcURwgNyGfLPh20iVLAIgq5+kcYBHSmn/BfhMfCEJIr6Aoikjy3UF0JK6k0Gg+R+w7Fkq4zw==
+X-Received: by 2002:a05:6512:e90:b0:53d:da85:9df0 with SMTP id 2adb3069b0e04-53df00c74bbmr1249914e87.2.1732869852814;
+        Fri, 29 Nov 2024 00:44:12 -0800 (PST)
+Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53df6431007sm425297e87.54.2024.11.29.00.44.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 29 Nov 2024 00:44:11 -0800 (PST)
+Message-ID: <f8b51be2-9121-4313-a575-d7aea330b687@linaro.org>
+Date: Fri, 29 Nov 2024 10:44:09 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,94 +81,207 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 8/8] drm/msm/dp: Support external GPIO HPD with 3rd
- pinctrl chip
-To: Xiangxu Yin <quic_xiangxuy@quicinc.com>, Rob Clark <robdclark@gmail.com>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Kuogee Hsieh <quic_khsieh@quicinc.com>,
- Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
- Linus Walleij <linus.walleij@linaro.org>, Bartosz Golaszewski
- <brgl@bgdev.pl>, quic_lliu6@quicinc.com, quic_fangez@quicinc.com
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
- linux-gpio@vger.kernel.org
-References: <20241129-add-displayport-support-for-qcs615-platform-v1-0-09a4338d93ef@quicinc.com>
- <20241129-add-displayport-support-for-qcs615-platform-v1-8-09a4338d93ef@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH] media: qcom: camss: fix VFE pm domain off
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20241129-add-displayport-support-for-qcs615-platform-v1-8-09a4338d93ef@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+To: barnabas.czeman@mainlining.org
+Cc: Yassine Oudjana <y.oudjana@protonmail.com>, Robert Foss
+ <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Hans Verkuil <hverkuil@xs4all.nl>,
+ linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <a0a41b77-ee63-4d55-8c91-baf667c25cba@protonmail.com>
+ <acb6366a-aa6b-4c84-a3b2-cad03ae02ee7@linaro.org>
+ <43be9872149cc60d2c5c21294cd69f07@mainlining.org>
+ <38003f90-4b0b-4a7a-86f5-ec75e227777a@linaro.org>
+ <9a2b01c9e00fee0b3f359e7289effa29@mainlining.org>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <9a2b01c9e00fee0b3f359e7289effa29@mainlining.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On 29/11/2024 08:57, Xiangxu Yin wrote:
->  
-> +	if (of_find_property(pdev->dev.of_node, "dp-hpd-gpio", NULL)) {
-> +		dp->ext_gpio = true;
-> +		dp->gpio_num = of_get_named_gpio(pdev->dev.of_node, "dp-hpd-gpio", 0);
-> +		if (dp->gpio_num < 0) {
-> +			dev_err(&pdev->dev, "Failed to get gpio:%d\n", dp->gpio_num);
-> +			return dp->gpio_num;
-> +		}
-> +
-> +		if (!gpio_is_valid(dp->gpio_num)) {
-> +			DRM_ERROR("gpio(%d) invalid\n", dp->gpio_num);
-> +			return -EINVAL;
-> +		}
-> +
-> +		rc = gpio_request(dp->gpio_num, "dp-hpd-gpio");
-This is not how you request GPIOs. All this code is just wrong. See
-Gpiolib API description/document. Or any other driver using GPIOs.
+On 11/28/24 16:24, barnabas.czeman@mainlining.org wrote:
+> On 2024-11-28 14:22, Vladimir Zapolskiy wrote:
+>> On 11/28/24 12:27, barnabas.czeman@mainlining.org wrote:
+>>> On 2024-11-28 10:10, Vladimir Zapolskiy wrote:
+>>>> On 11/27/24 12:01, Yassine Oudjana wrote:
+>>>>> On 22/11/2024 5:06 am, Barnabás Czémán wrote:
+>>>>>> Fix NULL pointer check before device_link_del
+>>>>>> is called.
+>>>>
+>>>> The intention is clear, but the context of the change is completely
+>>>> lost.
+>>>>
+>>>>>> Fixes: eb73facec2c2 ("media: qcom: camss: Use common VFE
+>>>>>> pm_domain_on/pm_domain_off where applicable")
+>>>>
+>>>> It's invalid, the change is not a fix.
+>>> I don't agree this patch is fixing NULL pointer dereference.
+>>>
+>>> [   92.989120] Unable to handle kernel NULL pointer dereference at
+>>> virtual address 000000000000032c
+>>> [   92.989170] Mem abort info:
+>>> [   92.989186]   ESR = 0x0000000096000004
+>>> [   92.989203]   EC = 0x25: DABT (current EL), IL = 32 bits
+>>> [   92.989221]   SET = 0, FnV = 0
+>>> [   92.989237]   EA = 0, S1PTW = 0
+>>> [   92.989253]   FSC = 0x04: level 0 translation fault
+>>> [   92.989270] Data abort info:
+>>> [   92.989284]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+>>> [   92.989300]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+>>> [   92.989317]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+>>> [   92.989335] user pgtable: 4k pages, 48-bit VAs,
+>>> pgdp=00000001218a8000
+>>> [   92.989354] [000000000000032c] pgd=0000000000000000,
+>>> p4d=0000000000000000
+>>> [   92.989389] Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
+>>> [   92.989408] Modules linked in: q6afe_dai q6asm_dai q6routing q6adm
+>>> q6asm q6afe snd_q6dsp_common panel_lgphilips_sw43101 q6core venus_enc
+>>> venus_dec videobuf2_dma_contig imx318 ak7375 snd_soc_wcd9335
+>>> regmap_slimbus snd_soc_wcd_classh apr snd_soc_apq8096
+>>> snd_soc_qcom_common snd_soc_core qcom_camss msm v4l2_fwnode
+>>> snd_compress
+>>> ath10k_pci v4l2_async ath10k_core snd_pcm nxp_nci_i2c drm_exec nxp_nci
+>>> venus_core videobuf2_dma_sg snd_timer ath v4l2_mem2mem
+>>> videobuf2_memops
+>>> mac80211 drm_dp_aux_bus snd gpu_sched nci videobuf2_v4l2 libarc4
+>>> soundcore videodev nfc slim_qcom_ngd_ctrl drm_display_helper hci_uart
+>>> pdr_interface videobuf2_common btqca drm_kms_helper slimbus
+>>> i2c_qcom_cci
+>>> bluetooth mc qcom_q6v5_pas qcom_q6v5_mss qcom_pil_info qcom_q6v5
+>>> qcom_sysmon qcom_common qmi_helpers mdt_loader socinfo rmtfs_mem
+>>> pwm_ir_tx cfg80211 rfkill zram zsmalloc atmel_mxt_ts drm
+>>> drm_panel_orientation_quirks dm_mod ip_tables
+>>> [   92.989981] CPU: 2 PID: 1365 Comm: pool-megapixels Not tainted
+>>> 6.9.0-rc3+ #10
+>>> [   92.990003] Hardware name: Xiaomi Mi Note 2 (DT)
+>>> [   92.990020] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS
+>>> BTYPE=--)
+>>> [   92.990042] pc : device_link_put_kref+0xc/0xb8
+>>> [   92.990071] lr : device_link_del+0x30/0x48
+>>> [   92.990089] sp : ffff80008a5db9d0
+>>> [   92.990105] x29: ffff80008a5db9d0 x28: 0000000000000001 x27:
+>>> 0000000000000000
+>>> [   92.990143] x26: 0000000000000000 x25: ffff0000e79d9100 x24:
+>>> ffff0000e79d9500
+>>> [   92.990180] x23: ffff0000943f8568 x22: 00000000ffffffff x21:
+>>> 0000000000000000
+>>> [   92.990217] x20: 0000000000000000 x19: ffff800081352498 x18:
+>>> 0000000000000000
+>>> [   92.990253] x17: 0000000000000000 x16: 0000000000000000 x15:
+>>> 0000000000000168
+>>> [   92.990288] x14: 0000000000000000 x13: 0000000000000191 x12:
+>>> ffff800081259d58
+>>> [   92.990324] x11: 0000000000000001 x10: 0000000000000a60 x9 :
+>>> ffff80008a5db7e0
+>>> [   92.990359] x8 : ffff0000e79d9bc0 x7 : 0000000000000004 x6 :
+>>> 0000000000000190
+>>> [   92.990396] x5 : 0000000000000057 x4 : 0000000000000000 x3 :
+>>> 0000000000000000
+>>> [   92.990430] x2 : ffff0000e79d9100 x1 : 0000000000000000 x0 :
+>>> 0000000000000000
+>>> [   92.990466] Call trace:
+>>> [   92.990482]  device_link_put_kref+0xc/0xb8
+>>> [   92.990503]  device_link_del+0x30/0x48
+>>> [   92.990522]  vfe_pm_domain_off+0x24/0x38 [qcom_camss]
+>>
+>> vfe_pm_domain_off() shall not be called before vfe_pm_domain_on() call.
+>>
+>> If vfe_pm_domain_on() is called and returns failure, then a media
+>> pipeline
+>> shall not be started, and vfe_pm_domain_off() shall not be called.
+>>
+>> If vfe_pm_domain_on() is called and returns success, then
+>> vfe->genpd_link
+>> is not NULL.
+> It can be null if the pm_domain_off is called twice somehow or it is
+> called
+> before pm_domain_on.
 
-Best regards,
-Krzysztof
+Then this is the problem and this not yet identified problem shall be fixed.
+
+The currently proposed change does not fix it, but hides more efficiently.
+
+> This is the original function, it sets genpd_link to NULL:
+> 
+> void vfe_pm_domain_off(struct vfe_device *vfe)
+> {
+>           if (!vfe->genpd)
+>                   return;
+> 
+>           device_link_del(vfe->genpd_link);
+>           vfe->genpd_link = NULL;
+> }
+> Other possible case:
+> genpd_link can be NULL when pm_domain_on is failing or
+> when genpd is NULL
+
+
+
+> By the way pm_domain_on checks if genpd_link is NULL:
+>           vfe->genpd_link = device_link_add(camss->dev, vfe->genpd,
+>                                             DL_FLAG_STATELESS |
+>                                             DL_FLAG_PM_RUNTIME |
+>                                             DL_FLAG_RPM_ACTIVE);
+>           if (!vfe->genpd_link)
+>                   return -EINVAL;
+> It is not calling pm_domain_off on fail:
+> 
+> ret = vfe->res->hw_ops->pm_domain_on(vfe);
+>                   if (ret < 0)
+>                           goto error_pm_domain;
+> 
+> [...]
+> 
+> error_domain_off:
+>           vfe->res->hw_ops->pm_domain_off(vfe);
+> 
+> error_pm_domain:
+>           mutex_unlock(&vfe->power_lock);
+> 
+> 
+> camss_pm_domain_off also calls vfe_pm_domain_off what is used in
+> camss-ispif
+> void camss_pm_domain_off(struct camss *camss, int id)
+> {
+>           if (id < camss->res->vfe_num) {
+>                   struct vfe_device *vfe = &camss->vfe[id];
+> 
+>                   vfe->res->hw_ops->pm_domain_off(vfe);
+>           }
+> }
+>>
+>> Are there any perceptable flaws within the given above reasoning?
+> The camss will be broken and system also can recover correctly (only
+> force reboot works.).
+
+Well, my question was about the reasoning, why there is another
+problem.
+
+I'm worried that the real bug will not be fixed by this change, and
+I believe additional analysis is needed here.
+
+>>
+>> Since you've encountered a bug and taking the reasoning from above as
+>> correct, I believe the bug is present somewhere else, and if so, it
+>> will
+>> remain unfixed by this change.
+>>
+>>> [   92.990566]  vfe_put+0x9c/0xd0 [qcom_camss]
+>>> [   92.990601]  vfe_set_power+0x48/0x58 [qcom_camss]
+>>> [   92.990636]  pipeline_pm_power_one+0x154/0x158 [videodev]
+>>> [   92.990683]  pipeline_pm_power+0x74/0xfc [videodev]
+>>> [   92.990720]  v4l2_pipeline_pm_use+0x54/0x90 [videodev]
+>>> [   92.990757]  v4l2_pipeline_pm_put+0x14/0x34 [videodev]
+>>> [   92.990793]  video_release+0x2c/0x44 [qcom_camss]
+>>> [   92.990828]  v4l2_release+0xe4/0xec [videodev]
+>>
+>> Please include the backtrace up to this point into the commit message.
+>>
+
+--
+Best wishes,
+Vladimir
+
 
