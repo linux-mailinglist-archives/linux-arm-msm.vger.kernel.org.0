@@ -1,233 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-39519-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39521-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 52BDB9DBFE0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2024 08:48:00 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3A0F99DC002
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2024 08:59:16 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 13BC92816D6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2024 07:47:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 65F04164723
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2024 07:59:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F91415098B;
-	Fri, 29 Nov 2024 07:47:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 696BD15A843;
+	Fri, 29 Nov 2024 07:59:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XzVwNK/7"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Kn5UV2/R"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 584FE1386DA;
-	Fri, 29 Nov 2024 07:47:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDD311586CF;
+	Fri, 29 Nov 2024 07:59:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732866478; cv=none; b=pgcDcxVRzTFonZ+bcRFH8AGxHCssTTGlIxawhynswf2h6135x90vlAeuYpfxTlg1kiOAPzgs2xPcAZCUFLN2x1uyAAFcjLWZP7CfX5BVjdgHWJQRrWwCvEmbHsLsb8Ut4uncUmFkawZl1YJVHAZT441Q3hVzk3qlbtimNEmlQSY=
+	t=1732867146; cv=none; b=CA/tFi+QPIvcyS8lKZ1093ixFy9puFt99Uyw0LBLqeniwiI4SLPH6sZjZUKF4mW+mjyxZ++B8pi6o7YY9dgbi34CY6xMvB/j1CDRteHc47n+s2lDRsSmOsSEifcZC+/v+tRTjt4P790nWHQ25I8Rz/34ntmq+WuaG0SRQ5p4cO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732866478; c=relaxed/simple;
-	bh=kwuMROrURsHseoiSdB0iqwJm9reXjPuCRbvQJB4guio=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=CKUgckgok5bV2FD88GMLOsLokU+Q1jSaYvJz5hVqMRC9dpCIx+Z2eRrpFxHWnlo7aB3Rjs88vIBGH2A7ymlLyroK48grkupPG3l/8cx1acWzvaGpHrBf1XKXrKmGOaFvfnqJMCE3ahJOVhRskAphpOh2rNoJeZbvGbRpkDlWpWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=XzVwNK/7; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1732867146; c=relaxed/simple;
+	bh=Fd1OV19tKe/iRpJtP65nSl/tyRA4w5O73ceQTpa9AhM=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=fgUOs6CXvzBa8Gp4XtZbiHY/pWHzXwbXIEcy9fMYCcAPpjUPe/eU5xK2YT4lYUCQzlo8VtvT1sR/4eiXb441NGYd47d1U8QG3mhKG8DGVjD0zoF6enjAs7+ma2KPPcBBrbRfIcS3DRQ0RmqGhhOHOpJEaAARTlMV6fcengDy2es=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Kn5UV2/R; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ASLafqV019798;
-	Fri, 29 Nov 2024 07:47:51 GMT
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ASLZ9lV032583;
+	Fri, 29 Nov 2024 07:58:34 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=K3hNAk7Wtna1DBG67fmm8hJ0HmP9zar30SA
-	zfWmV4qA=; b=XzVwNK/7gOSLoLkizfgYWxJ6dfwbjZVhlRo83nJ7jrio8Hi7eOa
-	NxmJKAUfofez7SI65+vePjN1ipNt+K3vm35dtLkcw13EMH3wPNkc1UbgVXCwmGtn
-	F8NZtpUeUTQxhmYvjpzU5JhNJCvSJDQBpqJtyL3gsyKOuPY+Yz9G6V+5j8TQ+DEd
-	xkyzxheitq2WVQlnCZ9KIhO0G43EKm5Yz4YuUZHLgFTvnl2GOlgkH463IFYw8j78
-	3B6wJXdmSSnZLXUwDsAlDFt11xaCDLWdR+eWagcl6DK7C+UQ4ExXDkD67djQB6+G
-	8aweqyNSpBYSbvMlh8iZPEEiDZ5n+1tsHIA==
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4366y04py5-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=wmDwwPYdRhYwNyIOV1zgnK
+	J886oOT+Cnazeu21JtPFo=; b=Kn5UV2/R4aHp64GS44iiYZBnw+84mnisIBU0ZY
+	8wt8xAAIiWzEzPCTRqynn+dxiKV2nicF8w/9kSR4n1dn6aPwCjldlPASq3XBcSGI
+	nSRs0Q3TuLsMEU0B0YvtNnpyhpc/3x9SPS2af4g/jwQnpUaYj8KJZPGGc1XzJ+GZ
+	GvQNc7CA+dC8T85AoPK6H5RjeFhoV7drU37wtiyHw4EeYFEcg0yNJFoXridQUxy8
+	Y/2l1EspoF55N+AHTtxfSKfo98Toc/TyrxR7UW01uMNPG+4B+Xct7Xoh9K7fN01J
+	LF3+C2j4O1V8UCG4TTuLddkgGTcztDA+1DReVnSoTMG6TgaQ==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43671ecrcs-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 29 Nov 2024 07:47:50 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 4AT7llWt013065;
-	Fri, 29 Nov 2024 07:47:47 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 43384n0fsb-1
+	Fri, 29 Nov 2024 07:58:33 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AT7wX3m028949
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 29 Nov 2024 07:47:47 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4AT7lldt013057;
-	Fri, 29 Nov 2024 07:47:47 GMT
-Received: from hu-maiyas-hyd.qualcomm.com (hu-msavaliy-hyd.qualcomm.com [10.213.110.207])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 4AT7lllR013054
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 29 Nov 2024 07:47:47 +0000
-Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 429934)
-	id 63BD6240BE; Fri, 29 Nov 2024 13:17:46 +0530 (+0530)
-From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-To: andi.shyti@kernel.org, quic_bjorande@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
-        linux-kernel@vger.kernel.org, --cc=konrad.dybcio@linaro.org,
-        quic_vdadhani@quicinc.com, vkoul@kernel.org
-Cc: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-Subject: [PATCH v4] i2c: i2c-qcom-geni: Serve transfer during early resume stage
-Date: Fri, 29 Nov 2024 13:17:42 +0530
-Message-Id: <20241129074742.1844031-1-quic_msavaliy@quicinc.com>
-X-Mailer: git-send-email 2.25.1
+	Fri, 29 Nov 2024 07:58:33 GMT
+Received: from szioemm-lnxbld002.qualcomm.com (10.80.80.8) by
+ nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Thu, 28 Nov 2024 23:58:25 -0800
+From: Xiangxu Yin <quic_xiangxuy@quicinc.com>
+Subject: [PATCH 0/8] Add DisplayPort support for QCS615 platform
+Date: Fri, 29 Nov 2024 15:57:40 +0800
+Message-ID: <20241129-add-displayport-support-for-qcs615-platform-v1-0-09a4338d93ef@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAPdzSWcC/x3NwQrCMBAE0F8pe3bBTbUYf0V6iNlEF7SJ2SpK6
+ b+79DQ8BmYW0NQkKZy7BVr6iEqZDLTrIN7DdEsobAa3dwci5zEwI4vWR/jV0mbUd90yl4avqAM
+ d0brZ+MTc03XgeOo9ebDF2lKW7/Z2Gdf1D6bApOl9AAAA
+X-Change-ID: 20241129-add-displayport-support-for-qcs615-platform-f31b6dc83919
+To: Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar
+	<quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard
+	<mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie
+	<airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>, Vinod Koul
+	<vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Linus Walleij
+	<linus.walleij@linaro.org>,
+        Bartosz Golaszewski <brgl@bgdev.pl>, <quic_lliu6@quicinc.com>,
+        <quic_fangez@quicinc.com>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <linux-gpio@vger.kernel.org>, Xiangxu Yin <quic_xiangxuy@quicinc.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1732867102; l=1753;
+ i=quic_xiangxuy@quicinc.com; s=20241125; h=from:subject:message-id;
+ bh=Fd1OV19tKe/iRpJtP65nSl/tyRA4w5O73ceQTpa9AhM=;
+ b=wGx2t6A6cR5ttTbyh1L6muXBC2nNyPEJEHutJc+jkfQVdR4jkzt4NRc6+2V7HLBPHztZpzht8
+ pc06a+nec4QCswG4jagVbKXhTlaG4ZIZ3KqPr/xp91omKCftMJqu8Sw
+X-Developer-Key: i=quic_xiangxuy@quicinc.com; a=ed25519;
+ pk=F1TwipJzpywfbt3n/RPi4l/A4AVF+QC89XzCHgZYaOc=
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: sgFfcwCk6fSYCXsUa73aSfX2ZM0naH0p
-X-Proofpoint-GUID: sgFfcwCk6fSYCXsUa73aSfX2ZM0naH0p
+X-Proofpoint-ORIG-GUID: Hfd54WROFUaa1CI-iA_qBkFYE0apdKyE
+X-Proofpoint-GUID: Hfd54WROFUaa1CI-iA_qBkFYE0apdKyE
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 phishscore=0
- priorityscore=1501 bulkscore=0 malwarescore=0 adultscore=0 suspectscore=0
- mlxlogscore=999 spamscore=0 mlxscore=0 lowpriorityscore=0 impostorscore=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=0
+ impostorscore=0 mlxscore=0 phishscore=0 priorityscore=1501 clxscore=1011
+ bulkscore=0 lowpriorityscore=0 spamscore=0 adultscore=0 mlxlogscore=999
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2411290062
+ definitions=main-2411290064
 
-pm_runtime_get_sync() function fails during PM early resume and returns
--EACCES because runtime PM for the device is disabled at the early stage
-causing i2c transfer to fail. Make changes to serve transfer with forced
-resume.
+This series aims to extend the USB-C PHY to support DP mode and enable
+DisplayPort on the Qualcomm QCS615 platform.
 
-Few i2c clients like PCI OR touch may request i2c transfers during early
-resume stage. Any i2c client can keep transfer request very early resume
-stage like noirq phase of PM. To serve the transfer, register an interrupt
-with IRQF_EARLY_RESUME and IRQF_NO_SUSPEND flags to avoid timeout of
-transfer when IRQ is not enabled during early stage.
+The devicetree modification for DisplayPort on QCS615 will be provided
+in a future patch.
 
-The actual usecase over i2c is(Not in upstream yet), PCIe client ->
-PCIe Driver -> I2C driver.
-PCIe client needs certain configurations over i2c after powering on the
-PCIe switch. As part of suspend it uses suspend_noirq() to turn off the
-switch, because some PCIe clients do some transfers till suspend_noirq()
-phase. And as part of resume_noirq(), it enables the power to the switch
-and configures the switch again through i2c.
-
-If pm_runtime_get_sync() is failing when runtime PM is not enabled, then
-use pm_runtime_force_resume().
-
-Co-developed-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+Signed-off-by: Xiangxu Yin <quic_xiangxuy@quicinc.com>
 ---
-Link to V3: https://lore.kernel.org/all/20241119143031.3331753-1-quic_msavaliy@quicinc.com/T/
+Xiangxu Yin (8):
+      dt-bindings: display/msm: Document DP on QCS615
+      dt-bindings: phy: qcom,msm8998-qmp-usb3-phy: Add DP support for QCS615
+      phy: qcom: qmp-usbc: Add DP phy mode support on QCS615
+      drm/msm/dp: Add DisplayPort support for QCS615
+      drm/msm/dp: Add support for lane mapping configuration
+      drm/msm/dp: Add maximum width limitation for modes
+      drm/msm/dp: Retry Link Training 2 with lower pattern
+      drm/msm/dp: Support external GPIO HPD with 3rd pinctrl chip
 
-v3->v4 :
- - Enhanced commit log by explaining client usecase scenario during early resume.
- - Covered 'usage_count' of 'struct dev_pm_info' under CONFIG_PM to compile non PM CONFIG.
-
+ .../bindings/display/msm/dp-controller.yaml        |   13 +
+ .../bindings/phy/qcom,msm8998-qmp-usb3-phy.yaml    |   21 +-
+ drivers/gpu/drm/msm/dp/dp_catalog.c                |   11 +-
+ drivers/gpu/drm/msm/dp/dp_catalog.h                |    2 +-
+ drivers/gpu/drm/msm/dp/dp_ctrl.c                   |   36 +-
+ drivers/gpu/drm/msm/dp/dp_display.c                |   87 ++
+ drivers/gpu/drm/msm/dp/dp_display.h                |    1 +
+ drivers/gpu/drm/msm/dp/dp_panel.c                  |   26 +-
+ drivers/gpu/drm/msm/dp/dp_panel.h                  |    4 +
+ drivers/phy/qualcomm/phy-qcom-qmp-dp-phy.h         |    1 +
+ drivers/phy/qualcomm/phy-qcom-qmp-usbc.c           | 1453 +++++++++++++++++---
+ 11 files changed, 1438 insertions(+), 217 deletions(-)
 ---
-Link to V2: https://lore.kernel.org/lkml/202410132233.P25W2vKq-lkp@intel.com/T/
+base-commit: f486c8aa16b8172f63bddc70116a0c897a7f3f02
+change-id: 20241129-add-displayport-support-for-qcs615-platform-f31b6dc83919
 
- v2 -> v3:
- - Updated exact usecase and scenario in the commit log description.
- - Removed bulleted points from technical description, added details in free flow.
- - Used pm_runtime_force_resume/suspend() instead customized local implementation.
- - Added debug log after pm_runtime_force_suspend().
-
----
-
- v1 -> v2:
- - Changed gi2c->se.dev to dev during dev_dbg() calls.
- - Addressed review comments from Andi and Bjorn.
- - Returned 0 instead garbage inside geni_i2c_force_resume().
- - Added comments explaining forced resume transfer when runtime PM
-   remains disabled.
----
-
-    V1 link: https://patches.linaro.org/project/linux-i2c/patch/20240328123743.1713696-1-quic_msavaliy@quicinc.com/
----
----
- drivers/i2c/busses/i2c-qcom-geni.c | 47 ++++++++++++++++++++++--------
- 1 file changed, 35 insertions(+), 12 deletions(-)
-
-diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-index 7a22e1f46e60..94f875aca9aa 100644
---- a/drivers/i2c/busses/i2c-qcom-geni.c
-+++ b/drivers/i2c/busses/i2c-qcom-geni.c
-@@ -695,17 +695,29 @@ static int geni_i2c_xfer(struct i2c_adapter *adap,
- 			 int num)
- {
- 	struct geni_i2c_dev *gi2c = i2c_get_adapdata(adap);
-+	struct device *dev = gi2c->se.dev;
- 	int ret;
- 
- 	gi2c->err = 0;
- 	reinit_completion(&gi2c->done);
--	ret = pm_runtime_get_sync(gi2c->se.dev);
--	if (ret < 0) {
--		dev_err(gi2c->se.dev, "error turning SE resources:%d\n", ret);
--		pm_runtime_put_noidle(gi2c->se.dev);
--		/* Set device in suspended since resume failed */
--		pm_runtime_set_suspended(gi2c->se.dev);
--		return ret;
-+	/* Serve I2C transfer by forced resume if Runtime PM is enbled or not */
-+	if (!pm_runtime_enabled(dev) && gi2c->suspended) {
-+		#if (IS_ENABLED(CONFIG_PM))
-+		dev_dbg(dev, "Runtime PM is disabled hence force resume, pm_usage_count: %d\n",
-+			atomic_read(&dev->power.usage_count));
-+		#endif
-+		ret = pm_runtime_force_resume(dev);
-+		if (ret)
-+			return ret;
-+	} else {
-+		ret = pm_runtime_get_sync(gi2c->se.dev);
-+		if (ret < 0) {
-+			dev_err(gi2c->se.dev, "error turning SE resources:%d\n", ret);
-+			pm_runtime_put_noidle(gi2c->se.dev);
-+			/* Set device in suspended since resume failed */
-+			pm_runtime_set_suspended(gi2c->se.dev);
-+			return ret;
-+		}
- 	}
- 
- 	qcom_geni_i2c_conf(gi2c);
-@@ -715,8 +727,20 @@ static int geni_i2c_xfer(struct i2c_adapter *adap,
- 	else
- 		ret = geni_i2c_fifo_xfer(gi2c, msgs, num);
- 
--	pm_runtime_mark_last_busy(gi2c->se.dev);
--	pm_runtime_put_autosuspend(gi2c->se.dev);
-+	/* if Runtime PM is disabled, do force_suspend() else autosuspend the driver */
-+	if (!pm_runtime_enabled(dev) && !gi2c->suspended) {
-+		ret = pm_runtime_force_suspend(dev);
-+		#if (IS_ENABLED(CONFIG_PM))
-+		dev_dbg(dev, "Runtime PM is disabled hence force suspend, pm_usage_count: %d\n",
-+			atomic_read(&dev->power.usage_count));
-+		#endif
-+		if (ret)
-+			return ret;
-+	} else {
-+		pm_runtime_mark_last_busy(gi2c->se.dev);
-+		pm_runtime_put_autosuspend(gi2c->se.dev);
-+	}
-+
- 	gi2c->cur = NULL;
- 	gi2c->err = 0;
- 	return ret;
-@@ -833,9 +857,8 @@ static int geni_i2c_probe(struct platform_device *pdev)
- 	init_completion(&gi2c->done);
- 	spin_lock_init(&gi2c->lock);
- 	platform_set_drvdata(pdev, gi2c);
--
--	/* Keep interrupts disabled initially to allow for low-power modes */
--	ret = devm_request_irq(dev, gi2c->irq, geni_i2c_irq, IRQF_NO_AUTOEN,
-+	ret = devm_request_irq(dev, gi2c->irq, geni_i2c_irq,
-+			       IRQF_NO_AUTOEN | IRQF_EARLY_RESUME | IRQF_NO_SUSPEND,
- 			       dev_name(dev), gi2c);
- 	if (ret) {
- 		dev_err(dev, "Request_irq failed:%d: err:%d\n",
+Best regards,
 -- 
-2.25.1
+xiangxuy <quic_xiangxuy@quicinc.com>
 
 
