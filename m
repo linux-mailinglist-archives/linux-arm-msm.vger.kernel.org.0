@@ -1,86 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-39565-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39566-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2CA4D9DC295
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2024 12:14:12 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2FFF49DC29A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2024 12:14:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E163C2818EF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2024 11:14:10 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6068AB217DA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2024 11:14:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8AA11990C5;
-	Fri, 29 Nov 2024 11:14:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FDF01991BB;
+	Fri, 29 Nov 2024 11:14:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="N+ba56HH"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fpuDW79n"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D85143C40
-	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Nov 2024 11:14:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C369C1990DC;
+	Fri, 29 Nov 2024 11:14:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732878849; cv=none; b=ood+B17+eSd7Ocdxam5VvvA1eliudi8LhbYpPjJdsydAOCNbIczRcH0rmBOsBUEKVAw8fuWKOHMemm7YZprwdBFeRIMcmNg9w8groWvTY8kv1IwWEm4Q8PCmpuW7XsBKcxFRKBs/2Fh0TBZah5ao8uRtODwmSRmni2auv5iG0uM=
+	t=1732878867; cv=none; b=HOiBpM5thSe6SbntaC2diCipMCEA+IeSzgAuU8NS+B/A4rPqN1GcHXe0oWVHyb4aSrkbZrOHachSOeQ5cuaMdFrSS4YhXx/8WDm96oR7ZFOy3tEUtBpufT7e7A7qqDHMW8aiLcDH/fDUUbXecfioFuN+ZPZk0oiFP8krRdLOZn4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732878849; c=relaxed/simple;
-	bh=cstglfYBauIS3JdfffF2An7qCkZsMHY7Xxx+C8VW4Rw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fOyMgkgCiyN2dbhi2RjrHOPmyUt8x9oYoLPkws/RXMr7O+RW26okC7ebpG9FiwHsm94GDCfEHtuhc8bLaSY+G/7RhIQIzyQ0sFEiHDJKcQIrpRMlhx+TImc/khUq1raqR3U06MwL7cTfbs2SvIxUaMFocEBFEfaJ5JRrIJXyTMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=N+ba56HH; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ATAFtDs004149
-	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Nov 2024 11:14:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	s=arc-20240116; t=1732878867; c=relaxed/simple;
+	bh=UAggcOXSPNYjBkZbtIXMmGbzylHgOebjNQAjKZV03AQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=FPdLdLC4Gu+Di8+3b1toOI2UkECPjZf51PJVHyjLKV4oT/IRI8UOsZDqITPHTDsgxPLVMUSzvBQV/oa6eW01+rXyJ5F+JsClgea0u9P2CtqGGBDJmpLRbQY6TNSjmp+vcH3RCoMwvNrGbpXm69LcGs51Z6/3bHcwkett96oTzV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fpuDW79n; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AT7kmG1021947;
+	Fri, 29 Nov 2024 11:14:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	BAYSwvTyJwQulmVNF+wY/HlCJDdBfbXeIaNl/2czgb0=; b=N+ba56HHvusIT2IO
-	kx1iz/q1ttMfI8igtIpnn+FC9YmsRsALtO0X0wpI+vUNE17dazNCxzIb0motQ2bK
-	jmgxyfjq+oKfMiHKLjpF3bN2qzFYILfZBddz6bZjIDvBSGQX36Lc/6wvY7Ufnuou
-	I/fjADxFrpOtnOIiUpXhwJoM438z1hb/THqOzNX9CDHM4pQiUEJr35S3lyJFK3xM
-	mwIvVNAZFJ7oP4+0JNk39MHDtDrbQE7OACtW0jEF8+EJxbXAalQ77RyWwVgh3PCG
-	OCe41oJUrsHL8wiHdPFftZMvSaWAj8YBZpQPgtZeyugQNwDgXUHcnX1se8D7GlDT
-	R5kBQA==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 437bpv84sc-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Nov 2024 11:14:06 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-466c4b8cab2so1729741cf.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Nov 2024 03:14:06 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732878846; x=1733483646;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BAYSwvTyJwQulmVNF+wY/HlCJDdBfbXeIaNl/2czgb0=;
-        b=L+PZRlgDdHtdmm1OHACTGzJnhzFADzbsiLD/tN6+/VLIwXD6NcRpqe00lhPFxOkQGy
-         DAXmrYP1nj82JmipnbNh31/I7mClKgy2NltSItKjiXVlTyPcmQFIR1pD8WDKF3F22AIT
-         u8+VgKC5/Cl21Kt57cIKBPG81XGtMC1fC4bDzyroYoPWXQqKlUCRdztQEfZ+EI0TgFfo
-         3shWQFu437zlpFTeyqbwYNWscvpzl3vzSdmcR610EcOtcdfD7Z03insgDZO8Uwj82YO5
-         M4wCg2jRVPAj58yk2mJv80l3vsLFko6PnVcoidp2qLiuHMB45TMd68SU7QYQ9JeEkp8e
-         b79A==
-X-Gm-Message-State: AOJu0YzSoOjz31cBaMCO7YJRczT2NaqQ+WGcFY1kp5NnjlNRO6B/7gAQ
-	DB9k9do4Rwum0CG+fiN/gr4LJQTnEzXc4ucKVCQWgt/BIzaurkGusAVixPGe10Bn/TgcvtRKsdI
-	mbBujfVlImTDMdsLgiLNYMh3ZSLvG1nrNyDCjmqLB8aguhlQLXpehAkYGheQx7BUt
-X-Gm-Gg: ASbGnctGDmNHNN4EpKIHA4cbLNRj12B2fL6CvDi4ta/uKeA5hIw/lfxUVm2wukkxfts
-	izyeV5EvG+LFKNMxgThklcjKgg2Ttaq6Csbh4UXSVIBjeXG6WZJKx6sKugsFsE/MMHk3d1yJHHo
-	B7N0LRPQIP4VIYJwvzNIBJbXsEvh3IN5E6p/86HD3YblmAaSHH3gH2/+60QmEph0bhOQod89d3P
-	5XNef6EIjJo8DpByXhiSihLJtnIkNVlbppZ9a67JStCNklQiHOuVXGKeZkS0T4v13+VjXL7NuSg
-	NARRDx4ErhV32pNkKNFH/L7lJf7yxUg=
-X-Received: by 2002:a05:622a:15c8:b0:463:5391:de49 with SMTP id d75a77b69052e-466b3687a32mr71373031cf.11.1732878846169;
-        Fri, 29 Nov 2024 03:14:06 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE0IkMRxCz6HR49nl4DM/5oNGJ9HIJVwhr8KR8G6mkB7EYgbxMsXDp14lpVrXF+HS3SvrioVQ==
-X-Received: by 2002:a05:622a:15c8:b0:463:5391:de49 with SMTP id d75a77b69052e-466b3687a32mr71372741cf.11.1732878845666;
-        Fri, 29 Nov 2024 03:14:05 -0800 (PST)
-Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5d097eb1fe8sm1723809a12.74.2024.11.29.03.14.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 Nov 2024 03:14:05 -0800 (PST)
-Message-ID: <5ae55ca2-d9ef-49c0-8868-2c5bb665ddb1@oss.qualcomm.com>
-Date: Fri, 29 Nov 2024 12:14:02 +0100
+	B8kB42OjvsVzHHyeN1+LTWmBTzToIdxnFDbwMTnjmas=; b=fpuDW79ngTRrJo+m
+	W26vkaEH4Po4JRPDiE/ZBQrMwimKpSDQseKRtVOcqm2sAWavQXtuDq3fXlufbT3p
+	LzjAHuKIXkAn8xFwrI+JXuSV2rAkCxCTuN8wnYxxqF4OqTdkzYxZEaIAMvEXc5AL
+	zkOHhP6ozPuvEYzjJdtr05Ng1wIxXQoQOndOqO+yIaQ4bFP5ghyhJqrH21ZflNV7
+	lpX7cHXQDhAz5/OQXH+5CAGHXFAKJrQmiKcnYPvK5CT+KGCoRcjoaNt29L54VTBo
+	MxPzgzE5cR0eNTRHMYy2rUdo0xb1KDGw3bREdRRrANjPI/W2ansq4XOw9XKI/ss9
+	xUc0HQ==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4379h68hn4-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 29 Nov 2024 11:14:22 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4ATBEMPQ002468
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 29 Nov 2024 11:14:22 GMT
+Received: from [10.216.24.185] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 29 Nov
+ 2024 03:14:19 -0800
+Message-ID: <ad5388d5-b7ff-4059-b974-948cdfa42d12@quicinc.com>
+Date: Fri, 29 Nov 2024 16:44:16 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,83 +65,172 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: qcs8300-ride: Enable PMIC
- peripherals
-To: Tingguo Cheng <quic_tingguoc@quicinc.com>, quic_fenglinw@quicinc.com,
-        quic_tingweiz@quicinc.com, kernel@quicinc.com,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20241126-adds-spmi-pmic-peripherals-for-qcs8300-v1-0-28af84cb86f8@quicinc.com>
- <20241126-adds-spmi-pmic-peripherals-for-qcs8300-v1-2-28af84cb86f8@quicinc.com>
+Subject: Re: [PATCH v2 1/2] dmaengine: qcom: gpi: Add GPI immediate DMA
+ support
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Vinod Koul <vkoul@kernel.org>, Mark Brown <broonie@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-spi@vger.kernel.org>,
+        <quic_msavaliy@quicinc.com>, <quic_vtanuku@quicinc.com>
+References: <20241128133351.24593-1-quic_jseerapu@quicinc.com>
+ <20241128133351.24593-2-quic_jseerapu@quicinc.com>
+ <b2awih7g7wq2o7546qfpnf5ft27n6zzial7w35jvwpcjlrg5qm@tqrbl7wueiks>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20241126-adds-spmi-pmic-peripherals-for-qcs8300-v1-2-28af84cb86f8@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+From: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
+In-Reply-To: <b2awih7g7wq2o7546qfpnf5ft27n6zzial7w35jvwpcjlrg5qm@tqrbl7wueiks>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: pJaNNCWBAbq_wY5QstL_65NjqxrLX6oH
-X-Proofpoint-GUID: pJaNNCWBAbq_wY5QstL_65NjqxrLX6oH
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: E6YodBPESOHPO4aDtxV7feczir534rH2
+X-Proofpoint-ORIG-GUID: E6YodBPESOHPO4aDtxV7feczir534rH2
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 malwarescore=0
- priorityscore=1501 impostorscore=0 spamscore=0 mlxlogscore=999 bulkscore=0
- adultscore=0 suspectscore=0 phishscore=0 mlxscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2411290092
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ malwarescore=0 mlxlogscore=999 mlxscore=0 suspectscore=0
+ priorityscore=1501 lowpriorityscore=0 bulkscore=0 phishscore=0
+ adultscore=0 spamscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2411120000 definitions=main-2411290092
 
-On 26.11.2024 10:35 AM, Tingguo Cheng wrote:
-> Enable PMIC and PMIC peripherals for qcs8300-ride board. The qcs8
-> 300-ride uses 2 pmics(pmm8620au:0,pmm8650au:1) on the board, which
-> are variants of pmm8654au used on sa8775p/qcs9100 -ride(4x pmics).
+
+
+On 11/28/2024 7:37 PM, Dmitry Baryshkov wrote:
+> On Thu, Nov 28, 2024 at 07:03:50PM +0530, Jyothi Kumar Seerapu wrote:
+>> The DMA TRE(Transfer ring element) buffer contains the DMA
+>> buffer address. Accessing data from this address can cause
+>> significant delays in SPI transfers, which can be mitigated to
+>> some extent by utilizing immediate DMA support.
+>>
+>> QCOM GPI DMA hardware supports an immediate DMA feature for data
+>> up to 8 bytes, storing the data directly in the DMA TRE buffer
+>> instead of the DMA buffer address. This enhancement enables faster
+>> SPI data transfers.
+>>
+>> This optimization reduces the average transfer time from 25 us to
+>> 16 us for a single SPI transfer of 8 bytes length, with a clock
+>> frequency of 50 MHz.
+>>
+>> Signed-off-by: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
+>> ---
+>> v1 -> v2:
+>>     - Separated the patches to dmaengine and spi subsystems
+>>     - Removed the changes which are not required for this feature from
+>>       qcom-gpi-dma.h file.
+>>     - Removed the type conversions used in gpi_create_spi_tre.
+>>
+>>   drivers/dma/qcom/gpi.c           | 32 +++++++++++++++++++++++++++-----
+>>   include/linux/dma/qcom-gpi-dma.h |  6 ++++++
+>>   2 files changed, 33 insertions(+), 5 deletions(-)
+>>
+>> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
+>> index 52a7c8f2498f..4c5df696ddd8 100644
+>> --- a/drivers/dma/qcom/gpi.c
+>> +++ b/drivers/dma/qcom/gpi.c
+>> @@ -27,6 +27,7 @@
+>>   #define TRE_FLAGS_IEOT		BIT(9)
+>>   #define TRE_FLAGS_BEI		BIT(10)
+>>   #define TRE_FLAGS_LINK		BIT(11)
+>> +#define TRE_FLAGS_IMMEDIATE_DMA	BIT(16)
+>>   #define TRE_FLAGS_TYPE		GENMASK(23, 16)
+>>   
+>>   /* SPI CONFIG0 WD0 */
+>> @@ -64,6 +65,7 @@
+>>   
+>>   /* DMA TRE */
+>>   #define TRE_DMA_LEN		GENMASK(23, 0)
+>> +#define TRE_DMA_IMMEDIATE_LEN	GENMASK(3, 0)
+>>   
+>>   /* Register offsets from gpi-top */
+>>   #define GPII_n_CH_k_CNTXT_0_OFFS(n, k)	(0x20000 + (0x4000 * (n)) + (0x80 * (k)))
+>> @@ -1711,6 +1713,8 @@ static int gpi_create_spi_tre(struct gchan *chan, struct gpi_desc *desc,
+>>   	dma_addr_t address;
+>>   	struct gpi_tre *tre;
+>>   	unsigned int i;
+>> +	u8 *buf;
+>> +	int len = 0;
+>>   
+>>   	/* first create config tre if applicable */
+>>   	if (direction == DMA_MEM_TO_DEV && spi->set_config) {
+>> @@ -1763,14 +1767,32 @@ static int gpi_create_spi_tre(struct gchan *chan, struct gpi_desc *desc,
+>>   	tre_idx++;
+>>   
+>>   	address = sg_dma_address(sgl);
+>> -	tre->dword[0] = lower_32_bits(address);
+>> -	tre->dword[1] = upper_32_bits(address);
+>> +	len = sg_dma_len(sgl);
+>>   
+>> -	tre->dword[2] = u32_encode_bits(sg_dma_len(sgl), TRE_DMA_LEN);
+>> +	/* Support Immediate dma for write transfers for data length up to 8 bytes */
+>> +	if ((spi->flags & QCOM_GPI_IMMEDIATE_DMA) && direction == DMA_MEM_TO_DEV) {
 > 
-> Signed-off-by: Tingguo Cheng <quic_tingguoc@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/qcs8300-ride.dts | 23 +++++++++++++++++++++++
->  1 file changed, 23 insertions(+)
+> Please defer applying the patch until the discussion on v1 comes to
+> conclusion.
+Sure.
+
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-> index 7eed19a694c39dbe791afb6a991db65acb37e597..9447efb9cd01654b74ec4c18dec58b1956ffe710 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-> +++ b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-> @@ -9,6 +9,7 @@
->  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
->  
->  #include "qcs8300.dtsi"
-> +#include "sa8775p-pmics.dtsi"
->  / {
->  	model = "Qualcomm Technologies, Inc. QCS8300 Ride";
->  	compatible = "qcom,qcs8300-ride", "qcom,qcs8300";
-> @@ -223,6 +224,28 @@ &gcc {
->  		 <0>;
->  };
->  
-> +&pmm8654au_0_pon_resin{
-> +	linux,code = <KEY_VOLUMEDOWN>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&pmm8654au_2{
-> +	status = "disabled";
-> +};
-> +
-> +&pmm8654au_2_thermal{
-> +	status = "disabled";
-> +};
-> +
-> +&pmm8654au_3{
-> +	status = "disabled";
-> +};
-> +
-> +&pmm8654au_3_thermal{
-> +	status = "disabled";
-> +};
-
-Are all these PMICs absent?
-
-Konrad
+>> +		buf = sg_virt(sgl);
+>>   
+>> -	tre->dword[3] = u32_encode_bits(TRE_TYPE_DMA, TRE_FLAGS_TYPE);
+>> -	if (direction == DMA_MEM_TO_DEV)
+>> +		/* memcpy may not always be length of 8, hence pre-fill both dword's with 0 */
+>> +		tre->dword[0] = 0;
+>> +		tre->dword[1] = 0;
+>> +		memcpy(&tre->dword[0], buf, len);
+>> +
+>> +		tre->dword[2] = u32_encode_bits(len, TRE_DMA_IMMEDIATE_LEN);
+>> +
+>> +		tre->dword[3] = u32_encode_bits(TRE_TYPE_DMA, TRE_FLAGS_TYPE);
+>>   		tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_IEOT);
+>> +		tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_IMMEDIATE_DMA);
+>> +	} else {
+>> +		tre->dword[0] = lower_32_bits(address);
+>> +		tre->dword[1] = upper_32_bits(address);
+>> +
+>> +		tre->dword[2] = u32_encode_bits(len, TRE_DMA_LEN);
+>> +
+>> +		tre->dword[3] = u32_encode_bits(TRE_TYPE_DMA, TRE_FLAGS_TYPE);
+>> +		if (direction == DMA_MEM_TO_DEV)
+>> +			tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_IEOT);
+>> +	}
+>>   
+>>   	for (i = 0; i < tre_idx; i++)
+>>   		dev_dbg(dev, "TRE:%d %x:%x:%x:%x\n", i, desc->tre[i].dword[0],
+>> diff --git a/include/linux/dma/qcom-gpi-dma.h b/include/linux/dma/qcom-gpi-dma.h
+>> index 6680dd1a43c6..84598848d53a 100644
+>> --- a/include/linux/dma/qcom-gpi-dma.h
+>> +++ b/include/linux/dma/qcom-gpi-dma.h
+>> @@ -15,6 +15,10 @@ enum spi_transfer_cmd {
+>>   	SPI_DUPLEX,
+>>   };
+>>   
+>> +#define QCOM_GPI_IMMEDIATE_DMA		BIT(1)
+>> +
+>> +#define QCOM_GPI_IMMEDIATE_DMA_LEN	8
+>> +
+>>   /**
+>>    * struct gpi_spi_config - spi config for peripheral
+>>    *
+>> @@ -30,6 +34,7 @@ enum spi_transfer_cmd {
+>>    * @cs: chip select toggle
+>>    * @set_config: set peripheral config
+>>    * @rx_len: receive length for buffer
+>> + * @flags: true for immediate dma support
+>>    */
+>>   struct gpi_spi_config {
+>>   	u8 set_config;
+>> @@ -44,6 +49,7 @@ struct gpi_spi_config {
+>>   	u32 clk_src;
+>>   	enum spi_transfer_cmd cmd;
+>>   	u32 rx_len;
+>> +	u8 flags;
+>>   };
+>>   
+>>   enum i2c_op {
+>> -- 
+>> 2.17.1
+>>
+> 
 
