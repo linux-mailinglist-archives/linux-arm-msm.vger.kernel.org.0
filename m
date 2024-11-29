@@ -1,178 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-39576-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39577-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A3E309DC30D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2024 12:45:06 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E62059DC310
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2024 12:45:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3AEB1B20DA5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2024 11:45:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AB2CF282502
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2024 11:45:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 988B0199FB2;
-	Fri, 29 Nov 2024 11:45:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17A9419CC36;
+	Fri, 29 Nov 2024 11:45:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="BLo1TyTF"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KFq0wm/U"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCCC4199FAF;
-	Fri, 29 Nov 2024 11:44:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C4AD19B3EE
+	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Nov 2024 11:45:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732880701; cv=none; b=cQoN4R4Q7T+XV29z1tUTTIFgxhR7124Oxt4yAJl+6euo/GOnL9hchN2pRcpPDCjnD3KbSXO25hNRDncjz/9qFfvRHmYNjbbQ+qDYSgbDxOwxLfROFkosw1T7QJMetSS1upHe/GLs8XJndmQb5kJkAIXw3Srv3w3njSvKqjSOQqw=
+	t=1732880704; cv=none; b=jvukvULwRuMpkeqVHh2zlgl8hrO6yZnD2RIXXebvDGnlC07pO1KClGh78J5zBh+OpfCZnjZXHzZ+ewPobVCd+S/cJDulNNIce7miJ7iuZmoFzxhGTuGDNbd1HSCE4oToU0PNArNYjukzv7mxyzjREdB2HQGmCYvv2XXuVogzG7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732880701; c=relaxed/simple;
-	bh=WL6VYT4cnVYmoZ/uwh5HBB63E17dxPA+KwxNL9WmStM=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=mRIftJdw4mqJKDNBVEYk7dHvykeOjpwstmAu1Wj3Ut48LugoYoA07wMfI/2MzNOb4vQcH5K/o0vClbsPJgvtsLY7EOTbmXC28NmNZ0RkzuLIyFLBnyixyMi5pFya9Fg4mvm80pshlWTYbF2h/EuX0gBkYuVNegrQMisIL8dc844=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=BLo1TyTF; arc=none smtp.client-ip=5.75.144.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
-Received: from localhost (docker-mailserver-web-1.docker-mailserver_default [172.22.0.5])
-	by mail.mainlining.org (Postfix) with ESMTPSA id B67CFE4804;
-	Fri, 29 Nov 2024 11:44:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mainlining.org;
-	s=psm; t=1732880691;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=+CyCn8Sr/299XRZf/a3AN7R1bJZX2Uhv3f+N4St1US4=;
-	b=BLo1TyTFi+/n2efozDsksLYnL+KXe0/X2WuE6Qnk+2OsQwDmayKNMjMPBGQpxw0MgurK1r
-	DZ8v3L8x51dJiWh5aTWUDurK3vATzyJVw1X7y+sNeVx8xltXppMkxBIYvSvTvxureTcLzK
-	PgQ2CFZ5lxq1XY2B6eecT+PPQ3XCjuDJ5aP9khCYjtJ6fG06Y9f4fJ4syFUf0rouLbU3jR
-	5ZkoFY2kjCDJqYzgmZTTc51etg7Hn55QULo69OsW6Ap3ZmsBMXpoQsxJ52WA7mvF3tpJC4
-	mprEsGfBXXbELVC/bUIxeOzohcz/k3mOrs7GrAPMISyAtHUEyhAnPXWkUELMVg==
+	s=arc-20240116; t=1732880704; c=relaxed/simple;
+	bh=vwruG2+sJ1nGAh5frWQN5bFRWPjIzvcKdp9Bgr1gc8w=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ZoIUZDa/uOJ8U89amuu0EoqJLFowlsY/2DZ/jb+rlfVxDEmzx+ID4jB5Oyk6eToLCUsI23bsr5k1LbAnryDtFhhCzeWBcbzpnzcpBC+tUiY6gjx7hs6LERfOoeiHpdeRLpkkO/5XBAdBagMVKwvQU1I5fdOJNLhgsTObjoAkRTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KFq0wm/U; arc=none smtp.client-ip=209.85.208.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2ffc068f492so613131fa.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Nov 2024 03:45:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1732880700; x=1733485500; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ZIubI06rjZ+HsV0fP2YkTawH+ehNtsEbQuHIS42n8ug=;
+        b=KFq0wm/UA11q4JrJZmbJ/WdUVVoYP48BrLwbmZVShWxDCdtLQL3/yeETPxrJnpeURS
+         kpMkxQQDmZnlePnmfldJB5mNM1J4KvVpOaU2yMT6CUlemTweEvvftpS9VEPWq51uep9w
+         aWo0igBl3XhxN3dfPmEvmZBdEjxgF1NiNERmSpjhPVFaGf6VdT2HtGSwQWiUPxCjeP4G
+         w7e0b0h1IvckLZVYfgXr3OgNICphWqumqNuSvdUBPhuwofZX/9cnAyYy98PsyG6zoyda
+         gkZ3rSlLLJxPVzrai2t7CEcFLV4+1bwWr2uu7aSUCRD9eeAq53rZPhfcEMnRmFjSD1yN
+         woUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732880700; x=1733485500;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZIubI06rjZ+HsV0fP2YkTawH+ehNtsEbQuHIS42n8ug=;
+        b=P191IXo7mqPgpuSRvyJTvD45qX/2T+jnUUX7OGnyfUZ/NUe/0iEiEUshjM5R35SlvR
+         3wHXovZwyYo+G2Zzer+Ht8Hz4AcY5h2Xs0ZT8PkTq6Kqs5dNZbMfYUYz6qUGoluqOfl/
+         GSOnLGfUYtjCDbI+XDYG+icRIcL5v+T2fw/BxL+tLExYozXAH/Qt3Uqi25gq20rgRT49
+         /1cEariL2uGBh2XGmgSHC3XlBc1SNXiTDxwXs7nueWfj/fvoHBgtXLNH6QLphouis2ZN
+         ZFxWvHPehLedpioOrNgVmRa7ToXLsK9AL+ZqDH4RbM2j3J8wNLc6Nd9RNTqWLLN3Heaq
+         v6Lg==
+X-Gm-Message-State: AOJu0Ywy38PJzzdUuo5d/ioxIuGREGirjbRPLJlDU1FYRvDCnfIVo8jD
+	NqkrDjjyYwlyPejJue+g21VyEIX7fR37aYKJ1Ni0OYp94ldFFcBEa+Z8P7SFL1I=
+X-Gm-Gg: ASbGncuoAubNsnFtDPISeUpyOW9GUp9BCfXpBMpmjmvrk9tpTGJHqBp8tUsTQtEP4wb
+	wpa+Q2e2cd5nG5CcfFIRFygFEX9QsVNJYj9s2WgcaD8ouA3eJLpxUhtLZzXtuakpI/BKZhLv3hx
+	/lxttRHlw5YxOzEYWSz+UZQaIEDTcvqiNnMC03Qd6mFQhe4nUaqJMOicGD90g5ih0ZZPCq3UCor
+	/PcJBX5+WbwzI2v8eMGbEu8PJomoPTQOlIrOHx80loZ4iyoFLqB6ioCu+MVJyUW41uUBnVdRpay
+	+R+MIFnvCBpgpHN9xJ4GH0KR7DIg
+X-Google-Smtp-Source: AGHT+IHyQtTPqhAYKXLJIJ4i6stHUjQzZgnRuUAkMJCFZKDMU3bYch34xfZyV7PfFiN8rzCQcIWeaw==
+X-Received: by 2002:a05:651c:1545:b0:2ff:a8db:4e7d with SMTP id 38308e7fff4ca-2ffd5ffeb04mr12980741fa.2.1732880700431;
+        Fri, 29 Nov 2024 03:45:00 -0800 (PST)
+Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ffdfca127fsm4432851fa.106.2024.11.29.03.44.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 29 Nov 2024 03:44:59 -0800 (PST)
+Message-ID: <4310164e-4000-4cff-a093-7986f71fc02a@linaro.org>
+Date: Fri, 29 Nov 2024 13:44:57 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 29 Nov 2024 12:44:51 +0100
-From: barnabas.czeman@mainlining.org
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Robert Foss
- <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab
- <mchehab@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Hans Verkuil
- <hverkuil@xs4all.nl>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, Yassine Oudjana
- <y.oudjana@protonmail.com>
-Subject: Re: [PATCH v2] media: qcom: camss: fix VFE pm domain off
-In-Reply-To: <d3a8d38c-9129-4fbd-8bd6-c91131d950ad@linaro.org>
-References: <20241128-vfe_pm_domain_off-v2-1-0bcbbe7daaaf@mainlining.org>
- <3a5fd596-b442-4d3f-aae2-f454d0cd8e5c@linaro.org>
- <5cccec71-0cc7-492a-9fb9-903970da05c5@linaro.org>
- <d3a8d38c-9129-4fbd-8bd6-c91131d950ad@linaro.org>
-Message-ID: <a08e95fc03fce6cb0809a06900982c6c@mainlining.org>
-X-Sender: barnabas.czeman@mainlining.org
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 2/3] clk: qcom: common: Add support for power-domain
+ attachment
+Content-Language: en-US
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20241128-b4-linux-next-24-11-18-clock-multiple-power-domains-v5-0-ca2826c46814@linaro.org>
+ <20241128-b4-linux-next-24-11-18-clock-multiple-power-domains-v5-2-ca2826c46814@linaro.org>
+ <9b9bf718-b5a5-4fef-810a-1206743495f6@linaro.org>
+ <7cf4ce25-742c-48ff-99e0-bbbaea370e89@linaro.org>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <7cf4ce25-742c-48ff-99e0-bbbaea370e89@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-On 2024-11-29 12:20, Vladimir Zapolskiy wrote:
-> On 11/29/24 13:06, Bryan O'Donoghue wrote:
->> On 29/11/2024 08:48, Vladimir Zapolskiy wrote:
->>> On 11/28/24 21:39, Barnabás Czémán wrote:
->>>> Fix NULL pointer check before device_link_del
->>>> is called.
->>>> 
->>>> Unable to handle kernel NULL pointer dereference at virtual address
->>>> 000000000000032c
->>>> Call trace:
->>>>    device_link_put_kref+0xc/0xb8
->>>>    device_link_del+0x30/0x48
->>>>    vfe_pm_domain_off+0x24/0x38 [qcom_camss]
->>>>    vfe_put+0x9c/0xd0 [qcom_camss]
->>>>    vfe_set_power+0x48/0x58 [qcom_camss]
->>>>    pipeline_pm_power_one+0x154/0x158 [videodev]
->>>>    pipeline_pm_power+0x74/0xfc [videodev]
->>>>    v4l2_pipeline_pm_use+0x54/0x90 [videodev]
->>>>    v4l2_pipeline_pm_put+0x14/0x34 [videodev]
->>>>    video_release+0x2c/0x44 [qcom_camss]
->>>>    v4l2_release+0xe4/0xec [videodev]
->>>> 
->>>> Fixes: eb73facec2c2 ("media: qcom: camss: Use common VFE 
->>>> pm_domain_on/
->>>> pm_domain_off where applicable")
->>>> Tested-by: Yassine Oudjana <y.oudjana@protonmail.com>
->>>> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->>>> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
->>>> ---
->>>> Changes in v2:
->>>> - Add backtrace to the commit message.
->>>> - Link to v1: https://lore.kernel.org/r/20241122-vfe_pm_domain_off-
->>>> v1-1-81d18f56563d@mainlining.org
->>>> ---
->>>>    drivers/media/platform/qcom/camss/camss-vfe.c | 2 +-
->>>>    1 file changed, 1 insertion(+), 1 deletion(-)
->>>> 
->>>> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c 
->>>> b/drivers/
->>>> media/platform/qcom/camss/camss-vfe.c
->>>> index
->>>> 80a62ba11295042802cbaec617fb87c492ea6a55..1bf1473331f63b9ab106d21ea263c84d851c8a31 
->>>> 100644
->>>> --- a/drivers/media/platform/qcom/camss/camss-vfe.c
->>>> +++ b/drivers/media/platform/qcom/camss/camss-vfe.c
->>>> @@ -595,7 +595,7 @@ void vfe_isr_reset_ack(struct vfe_device *vfe)
->>>>     */
->>>>    void vfe_pm_domain_off(struct vfe_device *vfe)
->>>>    {
->>>> -    if (!vfe->genpd)
->>>> +    if (!vfe->genpd_link)
->>>>            return;
->>>>        device_link_del(vfe->genpd_link);
->>>> 
->>> 
->>> I object to this change, there might be a problem in the code, 
->>> however it
->>> is not yet identified.
->>> 
->>> vfe->genpd is not NULL, if vfe_pm_domain_on()/vfe_pm_domain_off() are
->>> called appropriately, the "fix" does not fix the real problem, it 
->>> veils it.
->>> 
->>> -- Best wishes,
->>> Vladimir
->>> 
->>> 
->> 
->> Let's walk through the logic.
->> 
->> vfe->genpd =
->> 
->> Can happen in vfe_subdev_init();
->> 
->> vfe_pm_domain_on() can fail @ vfe->genpd_link =
->> 
->> If it fails then I _suppose_ we are still calling vfe_pm_domain_off() 
->> at
->> least that's the only logically way I see this error can manifest.
+On 11/29/24 13:39, Bryan O'Donoghue wrote:
+> On 29/11/2024 11:30, Vladimir Zapolskiy wrote:
+>>> +    ret = devm_pm_domain_attach_list(dev, &pd_data, &cc->pd_list);
+>>
+>> Please make a call to the function like this:
+>>
+>>       ret = devm_pm_domain_attach_list(dev, NULL, &cc->pd_list);
 > 
-> There should be no room for suppositions, the source code is open.
+> Passing &pd_data will cause devm_pd_domain_attach_list() to cycle
+> through the power-domains listed and do dev_pm_domain_attach_by_id();
+
+Doesn't it cycle for pd_data.num_pd_names times? Which is zero.
+
+> instead of dv_pm_domain_attach_by_name();
 > 
-> If the described by you case is true, and vfe_pm_domain_on() fails,
-> then vfe_pm_domain_off() shall not be called, otherwise that's the
-> real problem and it shall be fixed instead of being veiled by the
-> proposed change.
-> 
->> @Barnabás can you confirm that this is the case ?
->> 
->> If not, can you please provide more detail ?
-> 
-> The change does not describe how to reproduce the problem, which commit
-> base is tested, which platform is testes, there is no enough 
-> information,
-> unfortunately.
-I can reproduce the problem with megapixels-sensorprofile on msm8953 and
-it can be reproduced with megapixels on msm8996.
-The base is the last commit on next.
-> 
-> --
-> Best wishes,
-> Vladimir
+> That's what &pd_data is passed here. You want to have that simple
+> attachment of the power-domain list.
+
+I look at dev_pm_domain_attach_list() function with my best efforts
+to concentrate and see no functional difference between your version
+and the one proposed by me since v1.
+
+--
+Best wishes,
+Vladimir
 
