@@ -1,71 +1,71 @@
-Return-Path: <linux-arm-msm+bounces-39591-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39592-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id BCDBB9DE810
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2024 14:53:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3DCCC9DE816
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2024 14:53:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7DCDF281D70
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2024 13:53:12 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F4127281D3B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2024 13:53:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5122319F41C;
-	Fri, 29 Nov 2024 13:53:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98BE919F41C;
+	Fri, 29 Nov 2024 13:53:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Sp00FZ6Z"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sB6OaG1q"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82C9A19D8A9
-	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Nov 2024 13:53:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D071919D8A9
+	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Nov 2024 13:53:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732888389; cv=none; b=imNdeyIfx9Tw9kQWw09F8GHdxoZdnykn+mOGmyM3DkNJrsPIbQyHP02wufGaEVBWhRftRbGjuBWOzCRFsNcF/ckMDY2fj3ghYwwW5ywahaeWEdnwPl9KS3BA10utPTpzW6f4qVmThZFWFGJ/777L2hoFeyY059bpg394N8ZMhOs=
+	t=1732888428; cv=none; b=rC016KYqcR2E3sfkcJVicHb7axcVjGwPzSEq1Tj0Ep0uA45fywtAlymjmgwN4Wex441RCQvF1lDym0aSyzZ/RNRXX3ZBdgY4Lw3A65ewJqlAej65CfYuUM82NRp12qs+nxtbkd40SpqNtfAs9qzRd0Fvuf1Qx5lDv54zoYwOMbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732888389; c=relaxed/simple;
-	bh=QhLznoClrSnhWc/HsF4XPo1nyWZVKk8TSK/skm0VPUA=;
+	s=arc-20240116; t=1732888428; c=relaxed/simple;
+	bh=+dRJ7NHpUJ00cNs7INzOtHylGUJyGub0iEwQeE6ZSZI=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=iPKbopD2OaFqt4LT775G1+dOWsvtYN4e65TUqVhABcTOsHGRjufc/hXQ7XNHCLI7R/1XcmZLc7nknwAtz/fpJXuw166pQUdyhNBldTvQrGGZ3Vuo9g34EiQ+h3IrUI0CfEQN01cigpeWYA9Q/GuE5hITidmInDJB4N1VD/T7uDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Sp00FZ6Z; arc=none smtp.client-ip=209.85.208.54
+	 To:Cc:Content-Type; b=Uz0W7FyzoWd0us4kklF11hLVwc7vU+QYJuVchHqRPpqjfK2/faA4I+kIjNtM/ht1TItNjPWLSwzLyHI3E3Dh4Ohcid7RkPUQKgNmfwaMHN97Txs46vBOmA7fVqVXIL9RXVl1AXOLe0busR0zExaeIVnJAgV4dV/j2lP5/XzYlrY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sB6OaG1q; arc=none smtp.client-ip=209.85.208.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-5d0bdeb0419so364197a12.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Nov 2024 05:53:07 -0800 (PST)
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-5ceb03aaddeso2238496a12.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Nov 2024 05:53:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732888386; x=1733493186; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1732888425; x=1733493225; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=y/6PyCBkY1vrkX+kqfrrIcFxpzFnIRWJUtmo58vJb+0=;
-        b=Sp00FZ6ZKIJl44viLl+wdtqpnHGxRDf+BtiwFFelbyp4QqYtTk+dSwX8Bt7GVR2L23
-         39Jg7xiiLNA7UTyTa8myl3uRcxuxgFJpl3RPcuXOWFUtXSLdsmx+mPDU4S/ftCTYHrPC
-         Z6pMWYwRWY+SfvOlL1MIdcdLVqDOk/YYOZzwvBkSb/UEGGZvYHoX1tcLwbx9IIltgys9
-         Wf9IBWw629/xbjuCg72Cx2W5GDjUU9FPz8KUIus2XlDqXKEFD9n8VICIfUkiUQToVLxy
-         Nv+6pI0UHyCBgRSvsQm6QC42xJ288rgHXv2/JjwfYibPuQGkAj2UWDCJh4oSbhEM102v
-         2ddg==
+        bh=n/Ur8aJlkZb2O0WBY+Ja+CLRvhD2wQCX6NK6ury26eQ=;
+        b=sB6OaG1qp3BfWCImDLDbED5L9XHS3l9crclnjuRQGho++U9PYISrS9y355mlt5auEG
+         MlvJX3Xs07Po564y+EAdBltgBl1fLcsBtT0hRmu7Jn15s29AdQtpKJBskkiliNuU4siJ
+         itCGcUUyWLciFXKclpgZq7GBgTSFNlz/eprscdCKb5YbY18aLtlZ+NtbKAqY472cZZYT
+         DZXu5fG20L6dI+Tvw34axbuJ6wdtaJElORbIqvFWgTfOj6ZEgd3x/plDwGp70F/RI06P
+         hn5Ejk6mO6h2N6mwbS2W5LWtjrOn3nIuY47MSES9RvnAba66feozK12LBcBZz09XMMvD
+         ljqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732888386; x=1733493186;
+        d=1e100.net; s=20230601; t=1732888425; x=1733493225;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=y/6PyCBkY1vrkX+kqfrrIcFxpzFnIRWJUtmo58vJb+0=;
-        b=NHAVpiwgKFQ0UFounPeRM9FP+urtyu61BUYPFsXNlbCXWJfif28QMC4YVnQG61c8IW
-         1cSCT8tqFDfa/v9dn6jlYp08pVE+T+Q0tNMkza/ebMZJ1PbCjckrxLKz0cgkFM89H8oy
-         ltwA6w1LA5pq1kSk9fs8y6xoiaOf9HdpNSnhUwpTH0st6GC+yWIF9gZePnoA0juTtWWj
-         0/Fiwk3DbZFeeQHKCbIaj9//bBk6TSlCsUIWQvEDlXjZKRapC3ba9AX/BJLFiXPUC8hQ
-         sVPCy+HnBa6eweel5baqbbg0Ns43I6f01WFkIMHzliuJY88dzAi869C79coKAvJeDGym
-         I7+Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUHAurO59CdtHlm/h80mN2LXpZl8ionXHDtNa1ib4x+yCF77vtY9lGnSAeHRPF3OjDP5gpy1nL25Z8qSKkt@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw/0/7xMKsNAe7WNpDc5Tg6/fH5YsVqpnHV7lqdlyHuI8CHlvFX
-	QckfsAQ8vfKJAwsDdyodzmf0NFGKcXQU4rOY8XR0ZT0mnj8cFC75RE3A2b8kI2G7rpgvcltq1L1
-	74HUQigvuV8zmSK5lHe5dnCJ4V8o2uaN5a4KIVg==
-X-Gm-Gg: ASbGncvZJWjfvT35AuBICKoGjzpyq/3WQP0qNdejSVt5xGIcuQk5yG02rXIlG6e1Yqk
-	CpZ95GRBbet7ouabM9kdBQwMWDWcSAb4=
-X-Google-Smtp-Source: AGHT+IEXbo3g37x6S9nud/YDl8MMhJ+axeHFVYybn/OHHchZEd90wPzaHJLOrky8M8F0K8J+KDpTyQqUYKWH/+5/E5M=
-X-Received: by 2002:a05:6402:4409:b0:5cf:ead2:2a8f with SMTP id
- 4fb4d7f45d1cf-5d080c6c4admr11268097a12.33.1732888385859; Fri, 29 Nov 2024
- 05:53:05 -0800 (PST)
+        bh=n/Ur8aJlkZb2O0WBY+Ja+CLRvhD2wQCX6NK6ury26eQ=;
+        b=Q4nXvP6HP/hggUB+SP6sAbwy015Ms369pP2E0jvQV3T26SzGYhg6wXDYXGUx5uAB8n
+         i47WcOslGlvdNdzIridH5ZWozujpFV4yJ5+IvyDVWeUtqexYc7hB9XhSFpB65zxsS+8v
+         djkqhSsd9Me+YQfwVo/hWCIgnTFFcjEXQsNDg7mt0h6h/gIOZn7uuq4053MM2qNH/IHa
+         OFY6AB9LbcqWCiGq3cMub+ui7LUXGL0ZNlYm09wZvI3Aocz8NHPI1y837MnrBdKzpw3N
+         c12P3DdOGYG0EYFstWKJVifh4OAQsEG49DMnGpwGvpHnxZZYzupdjBnuQGZM8AqXjAip
+         xLnA==
+X-Forwarded-Encrypted: i=1; AJvYcCUTHZfC9ArQbilWYhVtKjPe8N7lE1iNAl/mNJPgEA5FWt8VD/8HfooubGhNf5u7u8f0WbXxW8d+qDh/X3LR@vger.kernel.org
+X-Gm-Message-State: AOJu0YwVfqSrVBgzOzJ8f5xeVymXMDZu+77jqzUB3rO6jKqqQ9saQ3Vz
+	iFMJyyloZfaWwiGSkubzzjgDcwenI5kRoThpmLL94dGPJSgfgErMABT7qvYJKqy2ntlEoZMjjQk
+	wyNg0VvheqCOdWh38EtyzKSaz5ZHey9eEJi6Mzg==
+X-Gm-Gg: ASbGnctxHTCdQp43FbmoxClFwVMwzi0irg8dCR0XKPrcNkdHjj2H/FKXlEBMjBXA0Ms
+	iAzva/TWp8RFB17eaJj10L2KK8XM06+o=
+X-Google-Smtp-Source: AGHT+IGCwqeDEnJNo83WNtmzKMJUwft+OKQaPAZ33baZKMDUQiMMr0XiZGEiUd02VQ36AikNgL9bZwlAshMXxuPC8CM=
+X-Received: by 2002:a05:6402:5194:b0:5cf:f319:4525 with SMTP id
+ 4fb4d7f45d1cf-5d080c4d37fmr10845661a12.22.1732888425147; Fri, 29 Nov 2024
+ 05:53:45 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -73,12 +73,12 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20241129-add-displayport-support-for-qcs615-platform-v1-0-09a4338d93ef@quicinc.com>
- <20241129-add-displayport-support-for-qcs615-platform-v1-6-09a4338d93ef@quicinc.com>
-In-Reply-To: <20241129-add-displayport-support-for-qcs615-platform-v1-6-09a4338d93ef@quicinc.com>
+ <20241129-add-displayport-support-for-qcs615-platform-v1-7-09a4338d93ef@quicinc.com>
+In-Reply-To: <20241129-add-displayport-support-for-qcs615-platform-v1-7-09a4338d93ef@quicinc.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 29 Nov 2024 15:52:59 +0200
-Message-ID: <CAA8EJpprTGRTxO+9BC6GRwxE4A3CuvmySsxS2Nh4Tqj0nDRT_Q@mail.gmail.com>
-Subject: Re: [PATCH 6/8] drm/msm/dp: Add maximum width limitation for modes
+Date: Fri, 29 Nov 2024 15:53:37 +0200
+Message-ID: <CAA8EJpoN1qBHyZrQJT_=e_26+tcaKRnSrhtxrK6zBP4BwpL=Hg@mail.gmail.com>
+Subject: Re: [PATCH 7/8] drm/msm/dp: Retry Link Training 2 with lower pattern
 To: Xiangxu Yin <quic_xiangxuy@quicinc.com>
 Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
 	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
@@ -96,104 +96,79 @@ Content-Type: text/plain; charset="UTF-8"
 
 On Fri, 29 Nov 2024 at 09:59, Xiangxu Yin <quic_xiangxuy@quicinc.com> wrote:
 >
-> Introduce a maximum width constraint for modes during validation. This
-> ensures that the modes are filtered based on hardware capabilities,
-> specifically addressing the line buffer limitations of individual pipes.
+> Add a mechanism to retry Link Training 2 by lowering the pattern level
+> when the link training #2 first attempt fails. This approach enhances
+> compatibility, particularly addressing issues caused by certain hub
+> configurations.
 
-This doesn't describe, why this is necessary. What does "buffer
-limitations of individual pipes" mean?
-If the platforms have hw capabilities like being unable to support 8k
-or 10k, it should go to platform data
+Please reference corresponding part of the standard, describing this lowering.
 
 >
 > Signed-off-by: Xiangxu Yin <quic_xiangxuy@quicinc.com>
 > ---
->  drivers/gpu/drm/msm/dp/dp_display.c |  3 +++
->  drivers/gpu/drm/msm/dp/dp_display.h |  1 +
->  drivers/gpu/drm/msm/dp/dp_panel.c   | 13 +++++++++++++
->  drivers/gpu/drm/msm/dp/dp_panel.h   |  1 +
->  4 files changed, 18 insertions(+)
+>  drivers/gpu/drm/msm/dp/dp_ctrl.c | 34 ++++++++++++++++++++++++++++++----
+>  1 file changed, 30 insertions(+), 4 deletions(-)
 >
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index 4c83402fc7e0d41cb7621fa2efda043269d0a608..eb6fb76c68e505fafbec563440e9784f51e1894b 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -944,6 +944,9 @@ enum drm_mode_status msm_dp_bridge_mode_valid(struct drm_bridge *bridge,
->         msm_dp_display = container_of(dp, struct msm_dp_display_private, msm_dp_display);
->         link_info = &msm_dp_display->panel->link_info;
->
-> +       if (mode->hdisplay > msm_dp_display->panel->max_dp_width)
-> +               return MODE_BAD;
-> +
->         if (drm_mode_is_420_only(&dp->connector->display_info, mode) &&
->             msm_dp_display->panel->vsc_sdp_supported)
->                 mode_pclk_khz /= 2;
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
-> index ecbc2d92f546a346ee53adcf1b060933e4f54317..7a11f7eeb691976f06afc7aff67650397d7deb90 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.h
-> @@ -11,6 +11,7 @@
->  #include "disp/msm_disp_snapshot.h"
->
->  #define DP_MAX_PIXEL_CLK_KHZ   675000
-> +#define DP_MAX_WIDTH   7680
->
->  struct msm_dp {
->         struct drm_device *drm_dev;
-> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
-> index 8654180aa259234bbd41f4f88c13c485f9791b1d..10501e301c5e073d8d34093b86a15d72e646a01f 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_panel.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_panel.c
-> @@ -4,6 +4,7 @@
->   */
->
->  #include "dp_panel.h"
-> +#include "dp_display.h"
->  #include "dp_utils.h"
->
->  #include <drm/drm_connector.h>
-> @@ -455,6 +456,16 @@ static u32 msm_dp_panel_link_frequencies(struct device_node *of_node)
->         return frequency;
+> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> index 49c8ce9b2d0e57a613e50865be3fe98e814d425a..b1862294cb98c9f756b0108b7670cb42de37bae4 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> @@ -1220,7 +1220,7 @@ static void msm_dp_ctrl_clear_training_pattern(struct msm_dp_ctrl_private *ctrl)
 >  }
 >
-> +static u32 msm_dp_panel_max_width(struct device_node *of_node)
-> +{
-> +       u32 max_width = 0;
-> +
-> +       if (of_property_read_u32(of_node, "max-width", &max_width))
-> +               max_width = DP_MAX_WIDTH;
-> +
-> +       return max_width;
-
-msm_dp_panel->max_dp_width = DP_MAX_WIDTH;
-of_property_read_u32(of_node, "max-width", &msm_dp_panel->max_dp_width);
-
-> +}
-> +
->  static int msm_dp_panel_parse_dt(struct msm_dp_panel *msm_dp_panel)
+>  static int msm_dp_ctrl_link_train_2(struct msm_dp_ctrl_private *ctrl,
+> -                       int *training_step)
+> +                       int *training_step, bool downgrade)
 >  {
->         struct msm_dp_panel_private *panel;
-> @@ -490,6 +501,8 @@ static int msm_dp_panel_parse_dt(struct msm_dp_panel *msm_dp_panel)
->         if (!msm_dp_panel->max_dp_link_rate)
->                 msm_dp_panel->max_dp_link_rate = DP_LINK_RATE_HBR2;
+>         int tries = 0, ret = 0;
+>         u8 pattern;
+> @@ -1243,6 +1243,28 @@ static int msm_dp_ctrl_link_train_2(struct msm_dp_ctrl_private *ctrl,
+>                 state_ctrl_bit = 2;
+>         }
 >
-> +       msm_dp_panel->max_dp_width = msm_dp_panel_max_width(of_node);
+> +       /*
+> +        * DP link training uses the highest allowed pattern by default.
+> +        * If it fails, the pattern is downgraded to improve cable and monitor compatibility.
+> +        */
+> +       if (downgrade) {
+> +               switch (pattern) {
+> +               case DP_TRAINING_PATTERN_4:
+> +                       pattern = DP_TRAINING_PATTERN_3;
+> +                       state_ctrl_bit = 3;
+> +                       break;
+> +               case DP_TRAINING_PATTERN_3:
+> +                       pattern = DP_TRAINING_PATTERN_2;
+> +                       state_ctrl_bit = 2;
+> +                       break;
+> +               default:
+> +                       break;
+> +               }
+> +       }
 > +
->         return 0;
->  }
+> +       drm_dbg_dp(ctrl->drm_dev, "pattern(%d) state_ctrl_bit(%d) downgrade(%d)\n",
+> +               pattern, state_ctrl_bit, downgrade);
+> +
+>         ret = msm_dp_catalog_ctrl_set_pattern_state_bit(ctrl->catalog, state_ctrl_bit);
+>         if (ret)
+>                 return ret;
+> @@ -1311,10 +1333,14 @@ static int msm_dp_ctrl_link_train(struct msm_dp_ctrl_private *ctrl,
+>         /* print success info as this is a result of user initiated action */
+>         drm_dbg_dp(ctrl->drm_dev, "link training #1 successful\n");
 >
-> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.h b/drivers/gpu/drm/msm/dp/dp_panel.h
-> index 7603b92c32902bd3d4485539bd6308537ff75a2c..61513644161209c243bbb623ee4ded951b2a0597 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_panel.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_panel.h
-> @@ -51,6 +51,7 @@ struct msm_dp_panel {
->         u32 lane_map[DP_MAX_NUM_DP_LANES];
->         u32 max_dp_lanes;
->         u32 max_dp_link_rate;
-> +       u32 max_dp_width;
+> -       ret = msm_dp_ctrl_link_train_2(ctrl, training_step);
+> +       ret = msm_dp_ctrl_link_train_2(ctrl, training_step, false);
+>         if (ret) {
+> -               DRM_ERROR("link training #2 failed. ret=%d\n", ret);
+> -               goto end;
+> +               drm_dbg_dp(ctrl->drm_dev, "link training #2 failed, retry downgrade.\n");
+> +               ret = msm_dp_ctrl_link_train_2(ctrl, training_step, true);
+> +               if (ret) {
+> +                       DRM_ERROR("link training #2 failed. ret=%d\n", ret);
+> +                       goto end;
+> +               }
+>         }
 >
->         u32 max_bw_code;
->  };
+>         /* print success info as this is a result of user initiated action */
 >
 > --
 > 2.25.1
