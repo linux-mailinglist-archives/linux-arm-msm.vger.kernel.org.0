@@ -1,93 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-39629-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39630-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id CC3AC9DEC3F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2024 19:55:11 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B3669DEC47
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2024 20:09:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 84772281D70
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2024 18:55:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9597B281EBF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2024 19:09:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF85F1A0AE1;
-	Fri, 29 Nov 2024 18:55:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 118D914D430;
+	Fri, 29 Nov 2024 19:08:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TjoxUx7v"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rAKh8Ysw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 094EF1A01B8
-	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Nov 2024 18:55:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA8B3224;
+	Fri, 29 Nov 2024 19:08:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732906506; cv=none; b=iBB4JIFYSiSabvoev6YuUXdqv0PouDMzh8GWD0WBQm5TgWAT1JbC2LqYiEBDDAcIS3Q9ITVzzr3fCswYq8rIPowXGkLoXkUGktiPKj3VwrqYsj4fc3r5YO7ulUz/TdWq1GRvoZDrIXtZCndfOAif+qSePV4fLLYQkQ+E0vSFo8Q=
+	t=1732907337; cv=none; b=bvSjqUNTITgRwZO1kgkXVw+DwBx4skehELCgZ6xxEj9Ju88uqLp7a8ojbnu8qoCs4wtANOy8AI6JsFvGOR0Yest4jaZ/IIC9HOXfbtd5hknPZRXZULrw27RrHGlljPnefsfhE5gU0Lama8U7dqmNBSZKZHUMjRGXLgAq20s07o4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732906506; c=relaxed/simple;
-	bh=E7RMchv4y+AntKAlNoeAS7PUC1xG4c0PvSI9uNkW/VY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GfYEvM5eZ3S60XHmg0a6sBrox5C2H67ZJf78NJh+E4eg40MLN97KBb/wyXOQHcrcpa0o31Tn4C9dGLtEzcoHhAFLyIDylteWPzegFJs9DZnch9gF+sHjOx+XG6jgzMuB1Gi6sBpX/0qL4oJhJIT6KYVlxsZ4g79JmL1VA93bBI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TjoxUx7v; arc=none smtp.client-ip=209.85.167.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-53de84e4005so2654103e87.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Nov 2024 10:55:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732906503; x=1733511303; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=wVpqKF5HDzWaD9sXJQFFkWoO/IvzFlRLrdhxrF/ucgg=;
-        b=TjoxUx7vdGZuQaZGe2A78MiChrQocNyS1t5jOTf+7efCA/VNSQJVBnQYDv9HiSy7No
-         2LDsU+hlcGDuFx/lnveWQ+v223wrt7+q/WqJkafXhL4Rx9mNo7MuEdM6hZrPH7bysNvr
-         CqOlQt94xSHuL1D38tYHgkxwqPCl7kQUlA+uWSbh6tjr7amQGRc4/7tdyRVerCVIIY8T
-         +/ZmkcjivmeiGhoWaSE38cweH2KBLDJp7rgFtk8V9v749KWym6/aXWpq2DgbKb+GsWUi
-         J0mUT3r7f3j0vDuOSwdZRbRmRBLjgiAR8AlZb/RFriFP8UmKp4VY+f+eM+gg7aB2ct89
-         Y8XA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732906503; x=1733511303;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wVpqKF5HDzWaD9sXJQFFkWoO/IvzFlRLrdhxrF/ucgg=;
-        b=rgzZcuOyE9oDIRu/q6SJIzntIyWMvtrvFIzkQ4R19qpKlITrs5qRKrCSKIRjMJCDmi
-         GYjlDlFRS2mops08MTaBGZpEXwVM3zBpGHETwO4O9syw3JKffAz3DRDCYa82/kYDpZyE
-         O0WzCO8tzW5a7TcQ2Mqxd3cLkOQUlEdrxk5OhZ9Kzf1xzseaTU9n65MdG6dqUWcTLIqM
-         MEVkgXoEzqwmRnW3ROipyNKn3AuMCg6NhgrKk9HMqxULiTk8gx5rovnuzyWYdIMk3DIV
-         gTcP2EgcrT/0plV+dOVqQB5S03iVX4fKQ1CC3P/AMukL7hASju2Ae7XroK4oCiUPM11l
-         veCQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX6QKdtq6vzQw5OycU0AdMTO3mLu/+VpZ0zSKHd4zOxHGTmhHTwSH4UeB1Gnu4l/cWDUQjtxQV/zh07EQFE@vger.kernel.org
-X-Gm-Message-State: AOJu0YwT+g/XZ1/DXxV8rgdK/J8gfTXApt5/ZsXYmcN1BhnoA2Q2mMRu
-	+hPoNaL6ZBTqZhewdVWqrLUBT+PrycSIeiXqG1RDFqHqo7HVXkh04ixOaFaCWR0=
-X-Gm-Gg: ASbGncu0Cb7ci8vhgkwU9PcSF8K2XsxaRh1rLCmv2HIiM8StcSJ2hP5wTxYRqrYT/IX
-	Qy9DMXMQ0ntnFCyaBXNuNfsdsU18WdN4JITgYUZtCNOUNIa0MgUhTkyDNUMlIPy+vA3E4BCI2K8
-	CafdT+jWrG+rQYp6m2EKwUdr518Kp6s0ipIALYJUXS8TelR2WC4dTpKEwr5DAeZg8xDmw4FG6Lq
-	NMdTlqGerNz4KJZCRAPBXrDkKuarRjMP9XzHLqx+HbjKQ/qSqejPSoTGPNWyvBfRsSHWwtJlOmP
-	dK5zSxztqqKEzjQtmDry0MNNcsDdkw==
-X-Google-Smtp-Source: AGHT+IHl0rMozF8fyncgtwJnZuDNJR8Pa97HnX5NDJ1ulE+L6RXtTTJfzmFUESI9fNeMlRvrFf1Ojw==
-X-Received: by 2002:a05:6512:400f:b0:53d:a93c:649e with SMTP id 2adb3069b0e04-53df0109024mr9144690e87.35.1732906503152;
-        Fri, 29 Nov 2024 10:55:03 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53df6496a43sm552760e87.213.2024.11.29.10.55.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Nov 2024 10:55:01 -0800 (PST)
-Date: Fri, 29 Nov 2024 20:55:00 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Yongxing Mou <quic_yongmou@quicinc.com>
-Cc: Ritesh Kumar <quic_riteshk@quicinc.com>, 
-	Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/5] drm/msm: mdss: Add QCS8300 support
-Message-ID: <wbw7ftf7ogcylxbeav3vegyfgz32sc2h5plneo2w7djsy2kaeo@enkcbukosern>
-References: <20241127-mdss_qcs8300-v1-0-29b2c3ee95b8@quicinc.com>
- <20241127-mdss_qcs8300-v1-3-29b2c3ee95b8@quicinc.com>
+	s=arc-20240116; t=1732907337; c=relaxed/simple;
+	bh=W7Vm0c37DPHmUeeFB1k3BNHaU33p3uZ42pyukGFCFXg=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=ED8s2xRZz//pw4gcZsW63uVIZu4XnD7Wl873H9RE4sbTdfmhUh7VC8JH3PUYkuSGkKb6WzYm61lQAnpMVs0TfLgUr09TYfDc4yQ5JisedZbL0bvq1rFuGS/6kdkqcwDGt794m6ZR8H5vV+fDGoYEA/dxgmz5oyKta4EVYJBDb+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rAKh8Ysw; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B19EDC4CECF;
+	Fri, 29 Nov 2024 19:08:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1732907336;
+	bh=W7Vm0c37DPHmUeeFB1k3BNHaU33p3uZ42pyukGFCFXg=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=rAKh8YswPbE2+n1dh1WvdhRxb1FNWEpo1HfViFmvqPNcwxyIUGLG18AJEL1WaNkxh
+	 b4B1ACVZPMY8Zn9BIrw1NfHK2tzbG7Xf5FKc39/9GAz9DdEZZ6tsuG4OH7YZsThAwe
+	 3r+rIsGleh6dWlWL+1sB5gcfRcSktRcNNEBgvg/oWpZtg2squMHReRMERSa+5AuXRw
+	 WI3LTldvfQ/aqotz/54vcPmLicGf8CFz+k2eGEzG8FtEiV5jqqwHf/LEZB3l4qLuXz
+	 dzQ+tsDmV0jVPFI/dRGy1b8Rnvx8gzxcX7wCVGo4Fo5G43YumJ8XzQIaL+KmA9UD8a
+	 jw71Yaf5sQuIA==
+Date: Fri, 29 Nov 2024 13:08:54 -0600
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+Cc: vkoul@kernel.org, kishon@kernel.org, robh+dt@kernel.org,
+	manivannan.sadhasivam@linaro.org, bhelgaas@google.com, kw@linux.com,
+	lpieralisi@kernel.org, quic_qianyu@quicinc.com, conor+dt@kernel.org,
+	neil.armstrong@linaro.org, andersson@kernel.org,
+	konradybcio@kernel.org, quic_tsoni@quicinc.com,
+	quic_shashim@quicinc.com, quic_kaushalk@quicinc.com,
+	quic_tdas@quicinc.com, quic_tingweiz@quicinc.com,
+	quic_aiquny@quicinc.com, kernel@quicinc.com,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+	linux-pci@vger.kernel.org
+Subject: Re: [PATCH v2 4/8] PCI: qcom: Add QCS8300 PCIe support
+Message-ID: <20241129190854.GA2768465@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -96,58 +65,33 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241127-mdss_qcs8300-v1-3-29b2c3ee95b8@quicinc.com>
+In-Reply-To: <20241128081056.1361739-5-quic_ziyuzhan@quicinc.com>
 
-On Wed, Nov 27, 2024 at 03:05:03PM +0800, Yongxing Mou wrote:
-> Add Mobile Display Subsystem (MDSS) support for the QCS8300 platform.
+[+cc linux-pci]
+
+On Thu, Nov 28, 2024 at 04:10:52PM +0800, Ziyue Zhang wrote:
+> Add support for QCS8300 SoC that uses controller version 5.90
+> reusing the 1.9.0 config.
 > 
-> Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
+> Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
 > ---
->  drivers/gpu/drm/msm/msm_mdss.c | 11 +++++++++++
->  1 file changed, 11 insertions(+)
-
-Once rebased on top of [1]:
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-[1] https://lore.kernel.org/dri-devel/20241127-msm-mdss-ubwc-v3-0-9782a7c2b023@linaro.org/
-
+>  drivers/pci/controller/dwc/pcie-qcom.c | 1 +
+>  1 file changed, 1 insertion(+)
 > 
-> diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
-> index b7bd899ead44bf86998e7295bccb31a334fa6811..90d8fe469d3134ec73f386153509ac257d75930a 100644
-> --- a/drivers/gpu/drm/msm/msm_mdss.c
-> +++ b/drivers/gpu/drm/msm/msm_mdss.c
-> @@ -568,6 +568,16 @@ static const struct msm_mdss_data qcm2290_data = {
->  	.reg_bus_bw = 76800,
->  };
->  
-> +static const struct msm_mdss_data qcs8300_data = {
-> +	.ubwc_enc_version = UBWC_4_0,
-> +	.ubwc_dec_version = UBWC_4_0,
-> +	.ubwc_swizzle = 6,
-> +	.ubwc_static = 1,
-> +	.highest_bank_bit = 3,
-> +	.macrotile_mode = 1,
-> +	.reg_bus_bw = 74000,
-> +};
-> +
->  static const struct msm_mdss_data sa8775p_data = {
->  	.ubwc_enc_version = UBWC_4_0,
->  	.ubwc_dec_version = UBWC_4_0,
-> @@ -715,6 +725,7 @@ static const struct of_device_id mdss_dt_match[] = {
->  	{ .compatible = "qcom,mdss" },
->  	{ .compatible = "qcom,msm8998-mdss", .data = &msm8998_data },
->  	{ .compatible = "qcom,qcm2290-mdss", .data = &qcm2290_data },
-> +	{ .compatible = "qcom,qcs8300-mdss", .data = &qcs8300_data },
->  	{ .compatible = "qcom,sa8775p-mdss", .data = &sa8775p_data },
->  	{ .compatible = "qcom,sdm670-mdss", .data = &sdm670_data },
->  	{ .compatible = "qcom,sdm845-mdss", .data = &sdm845_data },
-> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index ef44a82be058..5932b228aa17 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -1830,6 +1830,7 @@ static const struct of_device_id qcom_pcie_match[] = {
+>  	{ .compatible = "qcom,pcie-ipq8074-gen3", .data = &cfg_2_9_0 },
+>  	{ .compatible = "qcom,pcie-msm8996", .data = &cfg_2_3_2 },
+>  	{ .compatible = "qcom,pcie-qcs404", .data = &cfg_2_4_0 },
+> +	{ .compatible = "qcom,pcie-qcs8300", .data = &cfg_1_9_0 },
+>  	{ .compatible = "qcom,pcie-sa8540p", .data = &cfg_sc8280xp },
+>  	{ .compatible = "qcom,pcie-sa8775p", .data = &cfg_1_34_0},
+>  	{ .compatible = "qcom,pcie-sc7280", .data = &cfg_1_9_0 },
 > -- 
 > 2.34.1
 > 
-
--- 
-With best wishes
-Dmitry
+> 
 
