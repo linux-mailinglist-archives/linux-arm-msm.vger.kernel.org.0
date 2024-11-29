@@ -1,79 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-39567-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39568-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id F3B3B9DC2B8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2024 12:20:46 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id F18FE9DC2C0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2024 12:23:11 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A1886162471
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2024 11:23:08 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C94301993BD;
+	Fri, 29 Nov 2024 11:23:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="N17PuwrQ"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B329D281B30
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2024 11:20:45 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA0D2199938;
-	Fri, 29 Nov 2024 11:20:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kkGOZng4"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f196.google.com (mail-lj1-f196.google.com [209.85.208.196])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 930931586C8
-	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Nov 2024 11:20:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.196
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A0B019922A;
+	Fri, 29 Nov 2024 11:23:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732879240; cv=none; b=jPJcaKs2AlB9D63m2w9E7qn+R/53OaCdV0dABASmsYCq5TK3GHZYC6z7QyOfUIamnff5nr0VFy56yX1G4SHcyoUcuY2h2j/9FLKz00GEXjV/FIGuCp5BWGKmFT7ostwBnD/dX358N5jvcMsEkTxuDWjw7SZ4yi9aBTzD5m6+1ZA=
+	t=1732879389; cv=none; b=W4n4me7a4tCaAot6Rvij4eKWKVZDY5qupCTQKK4qhobxYKaKvOybem2vFMk3dAXJ3PTw1nFdif7IfWDHUq1wzV0EzfnPJI+fw4D8A80jxDQ+n3QVqmWFqWoNP0GED0+OikTn4y/eDpUpQuOMLJc9qk707VPf+LHbaU2Mq6U8tVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732879240; c=relaxed/simple;
-	bh=QiPALT6HvBmOInux1rl+mRvBSruP2GPb88EaCDzQodg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hgeW6UHqRzrcjDqjIlrry3vX9YheASYtwdxEPjBNaATtmVhsMRpvR+g1L+JFUfsog/I5Apjf48yyIhmwD3QdLA4uFq39oB7YbLhUrddSL6aFcguQ3jA8WjXOCT3MTqTy/B6G812r9qXpNZ0c6OY2Ga0QN3UUIzyFLKAAi3o5pN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kkGOZng4; arc=none smtp.client-ip=209.85.208.196
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f196.google.com with SMTP id 38308e7fff4ca-2ffd5c3622cso1469461fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Nov 2024 03:20:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732879237; x=1733484037; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=aEngJ1u6bI6pjXw8ducjp4PDvEGzLJeEExC6wehZeKI=;
-        b=kkGOZng4crPgn/i4Ir/OJoo6vX4d2o7HDzRSp4haO+DK7PAyZRxC9OHqvky/8CQUOP
-         6p8ZJYoW2EjNQVMydScPU+jY0eom8IYNBz6NpP/R3dKTjqHf44wCQWIk3Yh8K5dYPxEa
-         sh4xMWuGY+mvyRaPGewNIqrTIGwZC/byAWNbYgydK5rFB6lQKOD05mmqNj95F2R5b0XH
-         sgXHKG+ex5E7bi8btbKupd2PuGKX54V/dsX6Nat4gVDZTIiVU0XKiKoDlbLzdZYk6ZUQ
-         O0sFgO0wgp4DYVhgFPPS+PGte0vmZZ8oX5vHnQWkQhZTk8VwZa+nfkVjtqemwnaCOc4T
-         HpgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732879237; x=1733484037;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=aEngJ1u6bI6pjXw8ducjp4PDvEGzLJeEExC6wehZeKI=;
-        b=Wgj7cnUVG3YO55x3/pXQDOb5BcDorZ9MVzZlC3XwupZ8wGAXDf3HRVE8gWW+kc2uPE
-         VloLiwTKQO/wp3T/seTbrDC9OJ80APO6lm8XI3r6hN5hnGq+W4zSuEFDaCCe5x9Xud+U
-         fvR56PMd4fduvMhJXr1hoW4nQvI39rphXhRevmJvc0MWnD51GL6Zxdd9gznYfbKAeEWy
-         vBVV+wachakKIok4ej6KXLgM1VGz2JaYDEHX4imNuhNof97ElouPGaXdAQORqqlVJdLD
-         WmqkgMoF22CN+q10ACIH5CFXrrskWd7ZDslkm2dYMKrcxedTQJtZsP+BxIfzCX0YyjC+
-         YDnQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUNEA55hGWiQnyJ2OurZc1E2DxYIJM7ohun42i0mrmpNt4i2c+PLAwm0wPL+trO88+gI4UrlSuF26CLQe+m@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywq4gRVtuSeObjFNmCxj73Dl0Wobp2J/wac3WsmzG0mlqsIYkwE
-	wLu5LA6Vvv/oq5w/iAU2pDQj8M0KFUUDfVzBot42QPiXZrvIwWzqRUSA0cB5eKM=
-X-Gm-Gg: ASbGncueO2HEVlCnGtvdjWXkBk4jnAoJNGrqCaWYShjmyHmbJ+Kp5944Cm8fTHcFhY9
-	WXErzGetsFk0HVMdqf6U+D8M3Y6AXTkVmoKoaAnpIkUzkDJEMDXFxEyljU44dxcNI+PLzNgM84l
-	eVR+uDYY1nwuid+rHognADmMOZCh6HuLzpMOvNVFzGl4rQB/3B5Pk6+5m9UmZfT9haabFfZ5vIA
-	ecMA3gj54nZvXziJ8jOmRrW2UwD4InYxnTocciy1FLdSFCUW7Ky3gdxQEF7X0dLORWTBVZ/G8mb
-	K/n3j9JT+A6+mc0BvZLkdaXkWSIq
-X-Google-Smtp-Source: AGHT+IGLP9pjTswQ9pA+XlvlVMAV/Cw9gk2FVDbOAgGTKgsbtSCZ4/Q14zA7kCVHOCBJ0aMb3gbP8w==
-X-Received: by 2002:a2e:a98f:0:b0:2ff:9449:fe02 with SMTP id 38308e7fff4ca-2ffd5e9a69cmr13646731fa.0.1732879236728;
-        Fri, 29 Nov 2024 03:20:36 -0800 (PST)
-Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ffdfc7471asm4267261fa.71.2024.11.29.03.20.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 Nov 2024 03:20:35 -0800 (PST)
-Message-ID: <d3a8d38c-9129-4fbd-8bd6-c91131d950ad@linaro.org>
-Date: Fri, 29 Nov 2024 13:20:33 +0200
+	s=arc-20240116; t=1732879389; c=relaxed/simple;
+	bh=XgeP4Qxu9B2S6IWWzsEeYEc96zoazPANXVcxK61cggI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=BA3nnzsYmUgsfpMgpyHQHeSGPnJS6GA6juz6cmko3Grtl+1bwYPOoOqmt3XucXmoUTIb/bKRIe0fWmN9t5ZS5wM3XfiyV7HcgZsGWGmlSR3OebkHzADbWEUZ6Q/CV3HDZn7tIn1G/XZppR0HCiC+MwsNETDS31rFeTWMQTMluWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=N17PuwrQ; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ATAFLOk003154;
+	Fri, 29 Nov 2024 11:23:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	upsY0EPNIr6gt4kIzgkAEMRHahTuyjFtzcxQkRDoriY=; b=N17PuwrQ5tAz8trV
+	X40NoxbkynF6miVPvTlO1ZMhNF1T+ZijUuW7aSkaaKMD/CPH+h1TYZP8MeldsCiQ
+	pvShzR1AXNwvYXyDbrRms3AyhTgxLwznXbFJeeS+II24tweC7Nn0yljBW3792o7H
+	7j570zaqrERTsXG/p/GZNSnJDE4OmNwceNRIIh+zOIUTAoNszS3EJouxpVkj/d7o
+	ZvKEjNF4zXF0xR/ZRxl6ENQTxigbnA2nbozWZIK1Rw9ccAr+9myGjkdss1sPAK25
+	aJHUC/AX1A+tiJG03RsVDwYUG82+VXlLLSg5AmPTA9OwYwz2WMBE7BnulBSuwUmR
+	thy3Tw==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 437bpv85nx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 29 Nov 2024 11:23:03 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4ATBN2D8014659
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 29 Nov 2024 11:23:02 GMT
+Received: from [10.204.65.49] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 29 Nov
+ 2024 03:22:59 -0800
+Message-ID: <d9289a55-9732-4ce6-bff4-741df752b9b1@quicinc.com>
+Date: Fri, 29 Nov 2024 16:52:56 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,113 +65,217 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] media: qcom: camss: fix VFE pm domain off
+Subject: Re: [PATCH v4 1/2] misc: fastrpc: Add support for multiple PD from
+ one process
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <gregkh@linuxfoundation.org>, <quic_bkumar@quicinc.com>,
+        <linux-kernel@vger.kernel.org>, <quic_chennak@quicinc.com>,
+        <dri-devel@lists.freedesktop.org>, <arnd@arndb.de>
+References: <20241121084713.2599904-1-quic_ekangupt@quicinc.com>
+ <20241121084713.2599904-2-quic_ekangupt@quicinc.com>
+ <kq7vgfvzqhkq6kzu2zg7vr2ya5tp3igrhnqjaztwqkarh35hsf@xylvm4b4r6bu>
 Content-Language: en-US
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- =?UTF-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <barnabas.czeman@mainlining.org>,
- Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Hans Verkuil <hverkuil@xs4all.nl>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, Yassine Oudjana <y.oudjana@protonmail.com>
-References: <20241128-vfe_pm_domain_off-v2-1-0bcbbe7daaaf@mainlining.org>
- <3a5fd596-b442-4d3f-aae2-f454d0cd8e5c@linaro.org>
- <5cccec71-0cc7-492a-9fb9-903970da05c5@linaro.org>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <5cccec71-0cc7-492a-9fb9-903970da05c5@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+From: Ekansh Gupta <quic_ekangupt@quicinc.com>
+In-Reply-To: <kq7vgfvzqhkq6kzu2zg7vr2ya5tp3igrhnqjaztwqkarh35hsf@xylvm4b4r6bu>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: OzScbKxp6-bJfWTCVfOhJzAT4dBO1K92
+X-Proofpoint-GUID: OzScbKxp6-bJfWTCVfOhJzAT4dBO1K92
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 malwarescore=0
+ priorityscore=1501 impostorscore=0 spamscore=0 mlxlogscore=999 bulkscore=0
+ adultscore=0 suspectscore=0 phishscore=0 mlxscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
+ definitions=main-2411290092
 
-On 11/29/24 13:06, Bryan O'Donoghue wrote:
-> On 29/11/2024 08:48, Vladimir Zapolskiy wrote:
->> On 11/28/24 21:39, Barnabás Czémán wrote:
->>> Fix NULL pointer check before device_link_del
->>> is called.
->>>
->>> Unable to handle kernel NULL pointer dereference at virtual address
->>> 000000000000032c
->>> Call trace:
->>>    device_link_put_kref+0xc/0xb8
->>>    device_link_del+0x30/0x48
->>>    vfe_pm_domain_off+0x24/0x38 [qcom_camss]
->>>    vfe_put+0x9c/0xd0 [qcom_camss]
->>>    vfe_set_power+0x48/0x58 [qcom_camss]
->>>    pipeline_pm_power_one+0x154/0x158 [videodev]
->>>    pipeline_pm_power+0x74/0xfc [videodev]
->>>    v4l2_pipeline_pm_use+0x54/0x90 [videodev]
->>>    v4l2_pipeline_pm_put+0x14/0x34 [videodev]
->>>    video_release+0x2c/0x44 [qcom_camss]
->>>    v4l2_release+0xe4/0xec [videodev]
->>>
->>> Fixes: eb73facec2c2 ("media: qcom: camss: Use common VFE pm_domain_on/
->>> pm_domain_off where applicable")
->>> Tested-by: Yassine Oudjana <y.oudjana@protonmail.com>
->>> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->>> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
->>> ---
->>> Changes in v2:
->>> - Add backtrace to the commit message.
->>> - Link to v1: https://lore.kernel.org/r/20241122-vfe_pm_domain_off-
->>> v1-1-81d18f56563d@mainlining.org
->>> ---
->>>    drivers/media/platform/qcom/camss/camss-vfe.c | 2 +-
->>>    1 file changed, 1 insertion(+), 1 deletion(-)
->>>
->>> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/
->>> media/platform/qcom/camss/camss-vfe.c
->>> index
->>> 80a62ba11295042802cbaec617fb87c492ea6a55..1bf1473331f63b9ab106d21ea263c84d851c8a31 100644
->>> --- a/drivers/media/platform/qcom/camss/camss-vfe.c
->>> +++ b/drivers/media/platform/qcom/camss/camss-vfe.c
->>> @@ -595,7 +595,7 @@ void vfe_isr_reset_ack(struct vfe_device *vfe)
->>>     */
->>>    void vfe_pm_domain_off(struct vfe_device *vfe)
->>>    {
->>> -    if (!vfe->genpd)
->>> +    if (!vfe->genpd_link)
->>>            return;
->>>        device_link_del(vfe->genpd_link);
->>>
+
+
+On 11/22/2024 3:51 AM, Dmitry Baryshkov wrote:
+> On Thu, Nov 21, 2024 at 02:17:12PM +0530, Ekansh Gupta wrote:
+>> Memory intensive applications(which requires more tha 4GB) that wants
+>> to offload tasks to DSP might have to split the tasks to multiple
+>> user PD to make the resources available.
 >>
->> I object to this change, there might be a problem in the code, however it
->> is not yet identified.
+>> For every call to DSP, fastrpc driver passes the process tgid which
+>> works as an identifier for the DSP to enqueue the tasks to specific PD.
+>> With current design, if any process opens device node more than once
+>> and makes PD init request, same tgid will be passed to DSP which will
+>> be considered a bad request and this will result in failure as the same
+>> identifier cannot be used for multiple DSP PD.
 >>
->> vfe->genpd is not NULL, if vfe_pm_domain_on()/vfe_pm_domain_off() are
->> called appropriately, the "fix" does not fix the real problem, it veils it.
+>> Assign and pass a client ID to DSP which would be assigned during device
+>> open and will be dependent on the index of session allocated for the PD.
+>> This will allow the same process to open the device more than once and
+>> spawn multiple dynamic PD for ease of processing.
 >>
+>> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+>> ---
+>>  drivers/misc/fastrpc.c | 30 ++++++++++++++++--------------
+>>  1 file changed, 16 insertions(+), 14 deletions(-)
+>>
+>> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+>> index 74181b8c386b..08f223c95c33 100644
+>> --- a/drivers/misc/fastrpc.c
+>> +++ b/drivers/misc/fastrpc.c
+>> @@ -39,6 +39,7 @@
+>>  #define FASTRPC_INIT_HANDLE	1
+>>  #define FASTRPC_DSP_UTILITIES_HANDLE	2
+>>  #define FASTRPC_CTXID_MASK (0xFF0)
+>> +#define FASTRPC_CLIENTID_MASK GENMASK(4, 4)
+> GENMASK(4,4) is just BIT(4), isn't it?
+>
+>>  #define INIT_FILELEN_MAX (2 * 1024 * 1024)
+>>  #define INIT_FILE_NAMELEN_MAX (128)
+>>  #define FASTRPC_DEVICE_NAME	"fastrpc"
+>> @@ -299,7 +300,7 @@ struct fastrpc_user {
+>>  	struct fastrpc_session_ctx *sctx;
+>>  	struct fastrpc_buf *init_mem;
+>>  
+>> -	int tgid;
+>> +	int client_id;
+>>  	int pd;
+>>  	bool is_secure_dev;
+>>  	/* Lock for lists */
+>> @@ -614,7 +615,7 @@ static struct fastrpc_invoke_ctx *fastrpc_context_alloc(
+>>  	ctx->sc = sc;
+>>  	ctx->retval = -1;
+>>  	ctx->pid = current->pid;
+>> -	ctx->tgid = user->tgid;
+>> +	ctx->tgid = user->client_id;
+>>  	ctx->cctx = cctx;
+>>  	init_completion(&ctx->work);
+>>  	INIT_WORK(&ctx->put_work, fastrpc_context_put_wq);
+>> @@ -1115,7 +1116,7 @@ static int fastrpc_invoke_send(struct fastrpc_session_ctx *sctx,
+>>  	int ret;
+>>  
+>>  	cctx = fl->cctx;
+>> -	msg->pid = fl->tgid;
+>> +	msg->pid = fl->client_id;
+>>  	msg->tid = current->pid;
+>>  
+>>  	if (kernel)
+>> @@ -1293,7 +1294,7 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
+>>  		}
+>>  	}
+>>  
+>> -	inbuf.pgid = fl->tgid;
+>> +	inbuf.pgid = fl->client_id;
+>>  	inbuf.namelen = init.namelen;
+>>  	inbuf.pageslen = 0;
+>>  	fl->pd = USER_PD;
+>> @@ -1395,7 +1396,7 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
+>>  		goto err;
+>>  	}
+>>  
+>> -	inbuf.pgid = fl->tgid;
+>> +	inbuf.pgid = fl->client_id;
+>>  	inbuf.namelen = strlen(current->comm) + 1;
+>>  	inbuf.filelen = init.filelen;
+>>  	inbuf.pageslen = 1;
+>> @@ -1469,8 +1470,9 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
+>>  }
+>>  
+>>  static struct fastrpc_session_ctx *fastrpc_session_alloc(
+>> -					struct fastrpc_channel_ctx *cctx)
+>> +					struct fastrpc_user *fl)
+>>  {
+>> +	struct fastrpc_channel_ctx *cctx = fl->cctx;
+>>  	struct fastrpc_session_ctx *session = NULL;
+>>  	unsigned long flags;
+>>  	int i;
+>> @@ -1480,6 +1482,7 @@ static struct fastrpc_session_ctx *fastrpc_session_alloc(
+>>  		if (!cctx->session[i].used && cctx->session[i].valid) {
+>>  			cctx->session[i].used = true;
+>>  			session = &cctx->session[i];
+>> +			fl->client_id = FASTRPC_CLIENTID_MASK | i;
+> So, it's not a mask, but a flag. Why is it necessary at all? Can you
+> just pass i? Or i+1?
+This also works as I just need to pass a non-zero unique identifier to DSP. I'll update this
+in the next patch.
+
+Thanks for reviewing.
+
+--ekansh
+>
+>>  			break;
+>>  		}
+>>  	}
+>> @@ -1504,7 +1507,7 @@ static int fastrpc_release_current_dsp_process(struct fastrpc_user *fl)
+>>  	int tgid = 0;
+>>  	u32 sc;
+>>  
+>> -	tgid = fl->tgid;
+>> +	tgid = fl->client_id;
+>>  	args[0].ptr = (u64)(uintptr_t) &tgid;
+>>  	args[0].length = sizeof(tgid);
+>>  	args[0].fd = -1;
+>> @@ -1579,11 +1582,10 @@ static int fastrpc_device_open(struct inode *inode, struct file *filp)
+>>  	INIT_LIST_HEAD(&fl->maps);
+>>  	INIT_LIST_HEAD(&fl->mmaps);
+>>  	INIT_LIST_HEAD(&fl->user);
+>> -	fl->tgid = current->tgid;
+>>  	fl->cctx = cctx;
+>>  	fl->is_secure_dev = fdevice->secure;
+>>  
+>> -	fl->sctx = fastrpc_session_alloc(cctx);
+>> +	fl->sctx = fastrpc_session_alloc(fl);
+>>  	if (!fl->sctx) {
+>>  		dev_err(&cctx->rpdev->dev, "No session available\n");
+>>  		mutex_destroy(&fl->mutex);
+>> @@ -1647,7 +1649,7 @@ static int fastrpc_dmabuf_alloc(struct fastrpc_user *fl, char __user *argp)
+>>  static int fastrpc_init_attach(struct fastrpc_user *fl, int pd)
+>>  {
+>>  	struct fastrpc_invoke_args args[1];
+>> -	int tgid = fl->tgid;
+>> +	int tgid = fl->client_id;
+>>  	u32 sc;
+>>  
+>>  	args[0].ptr = (u64)(uintptr_t) &tgid;
+>> @@ -1803,7 +1805,7 @@ static int fastrpc_req_munmap_impl(struct fastrpc_user *fl, struct fastrpc_buf *
+>>  	int err;
+>>  	u32 sc;
+>>  
+>> -	req_msg.pgid = fl->tgid;
+>> +	req_msg.pgid = fl->client_id;
+>>  	req_msg.size = buf->size;
+>>  	req_msg.vaddr = buf->raddr;
+>>  
+>> @@ -1889,7 +1891,7 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
+>>  		return err;
+>>  	}
+>>  
+>> -	req_msg.pgid = fl->tgid;
+>> +	req_msg.pgid = fl->client_id;
+>>  	req_msg.flags = req.flags;
+>>  	req_msg.vaddr = req.vaddrin;
+>>  	req_msg.num = sizeof(pages);
+>> @@ -1978,7 +1980,7 @@ static int fastrpc_req_mem_unmap_impl(struct fastrpc_user *fl, struct fastrpc_me
+>>  		return -EINVAL;
+>>  	}
+>>  
+>> -	req_msg.pgid = fl->tgid;
+>> +	req_msg.pgid = fl->client_id;
+>>  	req_msg.len = map->len;
+>>  	req_msg.vaddrin = map->raddr;
+>>  	req_msg.fd = map->fd;
+>> @@ -2031,7 +2033,7 @@ static int fastrpc_req_mem_map(struct fastrpc_user *fl, char __user *argp)
+>>  		return err;
+>>  	}
+>>  
+>> -	req_msg.pgid = fl->tgid;
+>> +	req_msg.pgid = fl->client_id;
+>>  	req_msg.fd = req.fd;
+>>  	req_msg.offset = req.offset;
+>>  	req_msg.vaddrin = req.vaddrin;
 >> -- 
->> Best wishes,
->> Vladimir
+>> 2.34.1
 >>
->>
-> 
-> Let's walk through the logic.
-> 
-> vfe->genpd =
-> 
-> Can happen in vfe_subdev_init();
-> 
-> vfe_pm_domain_on() can fail @ vfe->genpd_link =
-> 
-> If it fails then I _suppose_ we are still calling vfe_pm_domain_off() at
-> least that's the only logically way I see this error can manifest.
 
-There should be no room for suppositions, the source code is open.
-
-If the described by you case is true, and vfe_pm_domain_on() fails,
-then vfe_pm_domain_off() shall not be called, otherwise that's the
-real problem and it shall be fixed instead of being veiled by the
-proposed change.
-
-> @Barnabás can you confirm that this is the case ?
-> 
-> If not, can you please provide more detail ?
-
-The change does not describe how to reproduce the problem, which commit
-base is tested, which platform is testes, there is no enough information,
-unfortunately.
-
---
-Best wishes,
-Vladimir
 
