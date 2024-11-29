@@ -1,63 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-39560-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39561-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 97F299DC216
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2024 11:27:20 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 442279DC266
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2024 11:51:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 02D90B22564
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2024 10:27:18 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9763BB22082
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2024 10:51:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 011E418A6AC;
-	Fri, 29 Nov 2024 10:27:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 303DD1991AA;
+	Fri, 29 Nov 2024 10:51:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nt6+phb8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FXd83j1N"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E8C155753;
-	Fri, 29 Nov 2024 10:27:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0D271990DE;
+	Fri, 29 Nov 2024 10:51:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732876035; cv=none; b=VLPMqwWuo+3rTRHGZckFdh82uRGW9+9UQp6yvO9ZPT7fde2Ec+h4PTcMC8rpFi1wJRAjMOdB2icAR5NJwjg6Qz5Id1GOxqGZxUS7ypRzAdL9/yIfrr3YWtq/GIkB98y6uGgq0lBuEtlQkbreMhib1VCqQnQkXZI1KJ3uX+x3w0E=
+	t=1732877494; cv=none; b=nlMs2unGdD4h4cAst22AFbBF7TE35oLravX10I21b2SG6czPAskxkYxCOOHaqxb7SAp6cAvGAJAqLTgM7gShWsZjgUd1nja97RBDtNcq6KkEJer5aC7LDWY8aF8jomVlWAoIXau76fowcEcbmFecU4Gp2ZojGJHjqLKARz0uB6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732876035; c=relaxed/simple;
-	bh=6O3v84Gzxyd2sQjHmyjsq/bns1xbRxLrZEX96ziDYMs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=NP1rI1ayT1PHTCq9mWpeUAeDdVVVBCIwxzU9eiVDG2OzhVh9oo8FE5MqH4Ikyk5owlGvyViS05bcVCjBAwLMmNF8R2yOksjgMznrBRHUg7AyghU1Rzqcy+8SOBTntbHeSc/A7EeXotA0/MHushYBZlYLKEMSlRgHuuPgPIChD4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nt6+phb8; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AT7ka6b021741;
-	Fri, 29 Nov 2024 10:26:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	c2aGFLtbPSrW2lem99GXveM1MWvzpMsUHGSM4GWK95A=; b=nt6+phb8GbZ1nniq
-	mj7aHmh/fTNsDhA2bGtjiXezuRi7ip489SqqYNhQ4KvshtRUQvb1BDBMooc+7d9+
-	lJaWOcaL352Ezgwwh06VaYNM5H8jK2xO0UE7ANLuB1Ou+wGNx2VihELafdTZOqWl
-	wxe9in5MECdkkAxSOBDLUuYjKbS522nCvDnu84QmnYQM7kWkG9jX65aIVbhSWaPj
-	5Lu/9ab6urbjcLUKs8NCobRwKgwwhRIuzlXuynWkqamyQR6VNZNLp0d2demoFKpy
-	343acNEyHKz5IZU/FnY+5mK34DL/aZCsCfqjEnZCHuP+HzMwfFR+8n6K5oeoBjbA
-	xjXNiA==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4379h68dqv-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 29 Nov 2024 10:26:40 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4ATAQep5018940
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 29 Nov 2024 10:26:40 GMT
-Received: from [10.233.17.145] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 29 Nov
- 2024 02:26:33 -0800
-Message-ID: <18e40154-f4ea-4100-9f4f-9c9aa5e251d7@quicinc.com>
-Date: Fri, 29 Nov 2024 18:26:30 +0800
+	s=arc-20240116; t=1732877494; c=relaxed/simple;
+	bh=Glmbj0DMfcjFxWhAUgiB2tFNmYA96JJlsXdCuhHmZKQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=C1qw4EkLyrxLgtRGdS2hvbbvSd63AyKbBhmcxYryps7ho+KDeIh3dYhN5pMBHVU7yFYEvTlAfzuYPBg6Z/nW235Wmoi9P8nRDujNrG7XYg1vqSoe6szcfi2TxROsel9307deX7z/UK6n2soKPZO89rc1n8n/J5Betrc1EiQ7vtA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FXd83j1N; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7479DC4CED3;
+	Fri, 29 Nov 2024 10:51:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1732877493;
+	bh=Glmbj0DMfcjFxWhAUgiB2tFNmYA96JJlsXdCuhHmZKQ=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=FXd83j1NGaShS82H4l9sYzRPRuuyVzSptiwY6DSjJh1iWJrjZ5EL0ytG482OjlOPv
+	 UcJv0nbITSIAXPLFsCc0/vIg5zS5KrxqVz3u4/kf+5DtklZVeZBi8KGSZu6m7c2cPW
+	 15AbyA80ChUhTVt+nQaLFrt0mJ+itucL+F6az258Lqf4gluegv9wT7AdSkrirmLmsi
+	 EOTNFHuWqCcO8/SsDOL45qhVpK8G69Y08Vd/k+Ae4+IYCeZe4if3f62RZpKbwcr6Sp
+	 Oc4mRbaUnnqtiQOUq9Nr/p6eE+pMoYLBw0xnT96vqpXzWSLkm7wjiLyjRcMpOCMQNA
+	 jly3H5jjBw17Q==
+Message-ID: <ccd1587a-0368-4bde-9c72-4f10393c58b0@kernel.org>
+Date: Fri, 29 Nov 2024 19:51:30 +0900
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,142 +50,196 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] phy: qcom-qusb2: Add regulator_set_load to Qualcomm
- usb phy
-To: Bjorn Andersson <andersson@kernel.org>,
-        Song Xue
-	<quic_songxue@quicinc.com>
-CC: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
-        Manu Gautam <mgautam@codeaurora.org>,
-        Vivek Gautam
-	<vivek.gautam@codeaurora.org>, <kernel@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20241121-add_set_load_to_qusb_phy-v2-1-1c5da1befec0@quicinc.com>
- <vbuo2yel2pdcwnmz32f4t5pb6v3ptt2bcs2t6ybab2jxnkd6e7@rjnsbawj4zpb>
-From: Tingwei Zhang <quic_tingweiz@quicinc.com>
-In-Reply-To: <vbuo2yel2pdcwnmz32f4t5pb6v3ptt2bcs2t6ybab2jxnkd6e7@rjnsbawj4zpb>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Subject: Re: [PATCH v2 2/4] misc: pci_endpoint_test: Fix the return value of
+ IOCTL
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, kw@linux.com,
+ gregkh@linuxfoundation.org, arnd@arndb.de, lpieralisi@kernel.org,
+ shuah@kernel.org
+Cc: kishon@kernel.org, aman1.gupta@samsung.com, p.rajanbabu@samsung.com,
+ linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+ bhelgaas@google.com, linux-arm-msm@vger.kernel.org, robh@kernel.org,
+ linux-kselftest@vger.kernel.org
+References: <20241129092415.29437-1-manivannan.sadhasivam@linaro.org>
+ <20241129092415.29437-3-manivannan.sadhasivam@linaro.org>
+From: Damien Le Moal <dlemoal@kernel.org>
+Content-Language: en-US
+Organization: Western Digital Research
+In-Reply-To: <20241129092415.29437-3-manivannan.sadhasivam@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: hWKtQbM08weiGwECLW0VKe1_HafroQCL
-X-Proofpoint-ORIG-GUID: hWKtQbM08weiGwECLW0VKe1_HafroQCL
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- malwarescore=0 mlxlogscore=999 mlxscore=0 suspectscore=0
- priorityscore=1501 lowpriorityscore=0 bulkscore=0 phishscore=0
- adultscore=0 spamscore=0 clxscore=1011 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2411120000 definitions=main-2411290086
 
-On 11/29/2024 12:43 AM, Bjorn Andersson wrote:
-> On Thu, Nov 21, 2024 at 04:09:27PM +0800, Song Xue wrote:
->> Set the current load before enable regulator supplies at QUSB phy.
->>
->> Encountered one issue where the board powered down instantly once the UVC
->> camera was attached to USB port while adding host mode on usb port and
->> testing a UVC camera with the driver on QCS615 platform. The extensible
->> boot loader mentioned that OCP(Over Current Protection) occurred at LDO12
->> from regulators-0 upon powered on board again. That indicates that the
->> current load set for QUSB phy, which use the regulator supply, is lower
->> than expected.
->>
->> As per QUSB spec, set the maximum current load at 30mA to avoid overcurrent
->> load when attach a device to the USB port.
->>
->> Fixes: 937e17f36a32 ("phy: qcom-qusb2: Power-on PHY before initialization")
->> Signed-off-by: Song Xue <quic_songxue@quicinc.com>
+On 11/29/24 18:24, Manivannan Sadhasivam wrote:
+> IOCTLs are supposed to return 0 for success and negative error codes for
+> failure. Currently, this driver is returning 0 for failure and 1 for
+> success, that's not correct. Hence, fix it!
 > 
-> The patch looks good. But if we describe the regulator(s) with
-> regulator-allow-set-load; and not all the consumers vote for load, the
-> sum of the load when USB phy is disabled goes to 0 and we will enter
-> LPM.
+> Reported-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Closes: https://lore.kernel.org/all/YvzNg5ROnxEApDgS@kroah.com
+> Fixes: 2c156ac71c6b ("misc: Add host side PCI driver for PCI test function device")
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-That's exactly the issue we encountered on QCS615 ride. Qualcomm UFS 
-driver sets load while USB phy doesn't set load. That's the reason we 
-raised this patch.
-> 
-> For this reason we're not doing any load requests today. Can you confirm
+Looks OK to me.
 
-When I grep regulator_set_load in Kernel, there are 27 hits in drivers. 
-You are correct, it will trigger issue when some consumers set load 
-while some don't.
-However, how can we prevent other drivers outside of Qualcomm to use 
-regulator_set_load? It will trigger the same issue.
-Is there something we can do in regulator driver to prevent this issue? 
-If consumer doesn't set load, regulator works in HPM even another 
-consumer set load to 0?
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
 
-> that this works fine with a dtb where only HPM is permitted (as well as
-> LPM and HPM)? If so I'd be in favor of us merging this change, but
+One nit below.
 
-Do you mean test with HPM only regulator and regulator which allows to 
-be set to HPM and LPM?
+[...]
 
-> keeping the dts HPM-only until someone confirms that all consumers of
-> these regulators specify load-votes.
-> 
-> Regards,
-> Bjorn
-> 
->> ---
->> Changes in v2:
->> - Removed "---" above the Fixes.
->> - Link to v1: https://lore.kernel.org/r/20241121-add_set_load_to_qusb_phy-v1-1-0f44f3a3290e@quicinc.com
->> ---
->>   drivers/phy/qualcomm/phy-qcom-qusb2.c | 13 ++++++++++++-
->>   1 file changed, 12 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/phy/qualcomm/phy-qcom-qusb2.c b/drivers/phy/qualcomm/phy-qcom-qusb2.c
->> index c52655a383cef008552ed4533b9f31d1cbf34a13..80f0d17c42717e843937255a9a780bbae5998535 100644
->> --- a/drivers/phy/qualcomm/phy-qcom-qusb2.c
->> +++ b/drivers/phy/qualcomm/phy-qcom-qusb2.c
->> @@ -722,16 +722,27 @@ static int __maybe_unused qusb2_phy_runtime_resume(struct device *dev)
->>   	return ret;
->>   }
->>   
->> +#define QUSB2PHY_HPM_LOAD 30000 /*uA*/
->> +
->>   static int qusb2_phy_init(struct phy *phy)
->>   {
->>   	struct qusb2_phy *qphy = phy_get_drvdata(phy);
->>   	const struct qusb2_phy_cfg *cfg = qphy->cfg;
->>   	unsigned int val = 0;
->>   	unsigned int clk_scheme;
->> -	int ret;
->> +	int ret, i;
->>   
->>   	dev_vdbg(&phy->dev, "%s(): Initializing QUSB2 phy\n", __func__);
->>   
->> +	/* set the current load */
->> +	for (i = 0; i < ARRAY_SIZE(qphy->vregs); i++) {
->> +		ret = regulator_set_load(qphy->vregs[i].consumer, QUSB2PHY_HPM_LOAD);
->> +		if (ret) {
->> +			dev_err(&phy->dev, "failed to set load at %s\n", qphy->vregs[i].supply);
->> +			return ret;
->> +		}
->> +	}
->> +
->>   	/* turn on regulator supplies */
->>   	ret = regulator_bulk_enable(ARRAY_SIZE(qphy->vregs), qphy->vregs);
->>   	if (ret)
->>
->> ---
->> base-commit: decc701f41d07481893fdea942c0ac6b226e84cd
->> change-id: 20241121-add_set_load_to_qusb_phy-d1327c797ffe
->>
->> Best regards,
->> -- 
->> Song Xue <quic_songxue@quicinc.com>
->>
->>
+>  static void pci_endpoint_test_remove(struct pci_dev *pdev)
+> diff --git a/tools/pci/pcitest.c b/tools/pci/pcitest.c
+> index 470258009ddc..545e04ad63a2 100644
+> --- a/tools/pci/pcitest.c
+> +++ b/tools/pci/pcitest.c
+> @@ -16,7 +16,6 @@
+>  
+>  #include <linux/pcitest.h>
+>  
+> -static char *result[] = { "NOT OKAY", "OKAY" };
+>  static char *irq[] = { "LEGACY", "MSI", "MSI-X" };
+>  
+>  struct pci_test {
+> @@ -52,63 +51,65 @@ static int run_test(struct pci_test *test)
+>  		ret = ioctl(fd, PCITEST_BAR, test->barnum);
+>  		fprintf(stdout, "BAR%d:\t\t", test->barnum);
+>  		if (ret < 0)
+> -			fprintf(stdout, "TEST FAILED\n");
+> +			fprintf(stdout, "NOT OKAY\n");
+>  		else
+> -			fprintf(stdout, "%s\n", result[ret]);
+> +			fprintf(stdout, "OKAY\n");
+
+Maybe replace all this "if (ret < 0) ... else ..." and all the ones below with
+something a call to:
+
+static void test_result(int ret)
+{
+	fprintf(stdout, "%sOKAY\n", ret < 0 ? "NOT " : "");
+}
+
+or simply with the call:
+
+	fprintf(stdout, "%sOKAY\n", ret < 0 ? "NOT " : "");
+
+to avoid all these repetition.
+
+>  	}
+>  
+>  	if (test->set_irqtype) {
+>  		ret = ioctl(fd, PCITEST_SET_IRQTYPE, test->irqtype);
+>  		fprintf(stdout, "SET IRQ TYPE TO %s:\t\t", irq[test->irqtype]);
+>  		if (ret < 0)
+> -			fprintf(stdout, "FAILED\n");
+> +			fprintf(stdout, "NOT OKAY\n");
+>  		else
+> -			fprintf(stdout, "%s\n", result[ret]);
+> +			fprintf(stdout, "OKAY\n");
+>  	}
+>  
+>  	if (test->get_irqtype) {
+>  		ret = ioctl(fd, PCITEST_GET_IRQTYPE);
+>  		fprintf(stdout, "GET IRQ TYPE:\t\t");
+> -		if (ret < 0)
+> -			fprintf(stdout, "FAILED\n");
+> -		else
+> +		if (ret < 0) {
+> +			fprintf(stdout, "NOT OKAY\n");
+> +		} else {
+>  			fprintf(stdout, "%s\n", irq[ret]);
+> +			ret = 0;
+> +		}
+>  	}
+>  
+>  	if (test->clear_irq) {
+>  		ret = ioctl(fd, PCITEST_CLEAR_IRQ);
+>  		fprintf(stdout, "CLEAR IRQ:\t\t");
+>  		if (ret < 0)
+> -			fprintf(stdout, "FAILED\n");
+> +			fprintf(stdout, "NOT OKAY\n");
+>  		else
+> -			fprintf(stdout, "%s\n", result[ret]);
+> +			fprintf(stdout, "OKAY\n");
+>  	}
+>  
+>  	if (test->legacyirq) {
+>  		ret = ioctl(fd, PCITEST_LEGACY_IRQ, 0);
+>  		fprintf(stdout, "LEGACY IRQ:\t");
+>  		if (ret < 0)
+> -			fprintf(stdout, "TEST FAILED\n");
+> +			fprintf(stdout, "NOT OKAY\n");
+>  		else
+> -			fprintf(stdout, "%s\n", result[ret]);
+> +			fprintf(stdout, "OKAY\n");
+>  	}
+>  
+>  	if (test->msinum > 0 && test->msinum <= 32) {
+>  		ret = ioctl(fd, PCITEST_MSI, test->msinum);
+>  		fprintf(stdout, "MSI%d:\t\t", test->msinum);
+>  		if (ret < 0)
+> -			fprintf(stdout, "TEST FAILED\n");
+> +			fprintf(stdout, "NOT OKAY\n");
+>  		else
+> -			fprintf(stdout, "%s\n", result[ret]);
+> +			fprintf(stdout, "OKAY\n");
+>  	}
+>  
+>  	if (test->msixnum > 0 && test->msixnum <= 2048) {
+>  		ret = ioctl(fd, PCITEST_MSIX, test->msixnum);
+>  		fprintf(stdout, "MSI-X%d:\t\t", test->msixnum);
+>  		if (ret < 0)
+> -			fprintf(stdout, "TEST FAILED\n");
+> +			fprintf(stdout, "NOT OKAY\n");
+>  		else
+> -			fprintf(stdout, "%s\n", result[ret]);
+> +			fprintf(stdout, "OKAY\n");
+>  	}
+>  
+>  	if (test->write) {
+> @@ -118,9 +119,9 @@ static int run_test(struct pci_test *test)
+>  		ret = ioctl(fd, PCITEST_WRITE, &param);
+>  		fprintf(stdout, "WRITE (%7ld bytes):\t\t", test->size);
+>  		if (ret < 0)
+> -			fprintf(stdout, "TEST FAILED\n");
+> +			fprintf(stdout, "NOT OKAY\n");
+>  		else
+> -			fprintf(stdout, "%s\n", result[ret]);
+> +			fprintf(stdout, "OKAY\n");
+>  	}
+>  
+>  	if (test->read) {
+> @@ -130,9 +131,9 @@ static int run_test(struct pci_test *test)
+>  		ret = ioctl(fd, PCITEST_READ, &param);
+>  		fprintf(stdout, "READ (%7ld bytes):\t\t", test->size);
+>  		if (ret < 0)
+> -			fprintf(stdout, "TEST FAILED\n");
+> +			fprintf(stdout, "NOT OKAY\n");
+>  		else
+> -			fprintf(stdout, "%s\n", result[ret]);
+> +			fprintf(stdout, "OKAY\n");
+>  	}
+>  
+>  	if (test->copy) {
+> @@ -142,14 +143,14 @@ static int run_test(struct pci_test *test)
+>  		ret = ioctl(fd, PCITEST_COPY, &param);
+>  		fprintf(stdout, "COPY (%7ld bytes):\t\t", test->size);
+>  		if (ret < 0)
+> -			fprintf(stdout, "TEST FAILED\n");
+> +			fprintf(stdout, "NOT OKAY\n");
+>  		else
+> -			fprintf(stdout, "%s\n", result[ret]);
+> +			fprintf(stdout, "OKAY\n");
+>  	}
+>  
+>  	fflush(stdout);
+>  	close(fd);
+> -	return (ret < 0) ? ret : 1 - ret; /* return 0 if test succeeded */
+> +	return ret;
+>  }
+>  
+>  int main(int argc, char **argv)
 
 
 -- 
-Thanks,
-Tingwei
+Damien Le Moal
+Western Digital Research
 
