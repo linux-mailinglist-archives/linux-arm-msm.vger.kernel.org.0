@@ -1,63 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-39566-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39567-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2FFF49DC29A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2024 12:14:34 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id F3B3B9DC2B8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2024 12:20:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6068AB217DA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2024 11:14:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B329D281B30
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2024 11:20:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FDF01991BB;
-	Fri, 29 Nov 2024 11:14:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA0D2199938;
+	Fri, 29 Nov 2024 11:20:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fpuDW79n"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kkGOZng4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f196.google.com (mail-lj1-f196.google.com [209.85.208.196])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C369C1990DC;
-	Fri, 29 Nov 2024 11:14:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 930931586C8
+	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Nov 2024 11:20:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.196
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732878867; cv=none; b=HOiBpM5thSe6SbntaC2diCipMCEA+IeSzgAuU8NS+B/A4rPqN1GcHXe0oWVHyb4aSrkbZrOHachSOeQ5cuaMdFrSS4YhXx/8WDm96oR7ZFOy3tEUtBpufT7e7A7qqDHMW8aiLcDH/fDUUbXecfioFuN+ZPZk0oiFP8krRdLOZn4=
+	t=1732879240; cv=none; b=jPJcaKs2AlB9D63m2w9E7qn+R/53OaCdV0dABASmsYCq5TK3GHZYC6z7QyOfUIamnff5nr0VFy56yX1G4SHcyoUcuY2h2j/9FLKz00GEXjV/FIGuCp5BWGKmFT7ostwBnD/dX358N5jvcMsEkTxuDWjw7SZ4yi9aBTzD5m6+1ZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732878867; c=relaxed/simple;
-	bh=UAggcOXSPNYjBkZbtIXMmGbzylHgOebjNQAjKZV03AQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=FPdLdLC4Gu+Di8+3b1toOI2UkECPjZf51PJVHyjLKV4oT/IRI8UOsZDqITPHTDsgxPLVMUSzvBQV/oa6eW01+rXyJ5F+JsClgea0u9P2CtqGGBDJmpLRbQY6TNSjmp+vcH3RCoMwvNrGbpXm69LcGs51Z6/3bHcwkett96oTzV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fpuDW79n; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AT7kmG1021947;
-	Fri, 29 Nov 2024 11:14:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	B8kB42OjvsVzHHyeN1+LTWmBTzToIdxnFDbwMTnjmas=; b=fpuDW79ngTRrJo+m
-	W26vkaEH4Po4JRPDiE/ZBQrMwimKpSDQseKRtVOcqm2sAWavQXtuDq3fXlufbT3p
-	LzjAHuKIXkAn8xFwrI+JXuSV2rAkCxCTuN8wnYxxqF4OqTdkzYxZEaIAMvEXc5AL
-	zkOHhP6ozPuvEYzjJdtr05Ng1wIxXQoQOndOqO+yIaQ4bFP5ghyhJqrH21ZflNV7
-	lpX7cHXQDhAz5/OQXH+5CAGHXFAKJrQmiKcnYPvK5CT+KGCoRcjoaNt29L54VTBo
-	MxPzgzE5cR0eNTRHMYy2rUdo0xb1KDGw3bREdRRrANjPI/W2ansq4XOw9XKI/ss9
-	xUc0HQ==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4379h68hn4-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 29 Nov 2024 11:14:22 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4ATBEMPQ002468
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 29 Nov 2024 11:14:22 GMT
-Received: from [10.216.24.185] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 29 Nov
- 2024 03:14:19 -0800
-Message-ID: <ad5388d5-b7ff-4059-b974-948cdfa42d12@quicinc.com>
-Date: Fri, 29 Nov 2024 16:44:16 +0530
+	s=arc-20240116; t=1732879240; c=relaxed/simple;
+	bh=QiPALT6HvBmOInux1rl+mRvBSruP2GPb88EaCDzQodg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=hgeW6UHqRzrcjDqjIlrry3vX9YheASYtwdxEPjBNaATtmVhsMRpvR+g1L+JFUfsog/I5Apjf48yyIhmwD3QdLA4uFq39oB7YbLhUrddSL6aFcguQ3jA8WjXOCT3MTqTy/B6G812r9qXpNZ0c6OY2Ga0QN3UUIzyFLKAAi3o5pN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kkGOZng4; arc=none smtp.client-ip=209.85.208.196
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f196.google.com with SMTP id 38308e7fff4ca-2ffd5c3622cso1469461fa.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Nov 2024 03:20:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1732879237; x=1733484037; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=aEngJ1u6bI6pjXw8ducjp4PDvEGzLJeEExC6wehZeKI=;
+        b=kkGOZng4crPgn/i4Ir/OJoo6vX4d2o7HDzRSp4haO+DK7PAyZRxC9OHqvky/8CQUOP
+         6p8ZJYoW2EjNQVMydScPU+jY0eom8IYNBz6NpP/R3dKTjqHf44wCQWIk3Yh8K5dYPxEa
+         sh4xMWuGY+mvyRaPGewNIqrTIGwZC/byAWNbYgydK5rFB6lQKOD05mmqNj95F2R5b0XH
+         sgXHKG+ex5E7bi8btbKupd2PuGKX54V/dsX6Nat4gVDZTIiVU0XKiKoDlbLzdZYk6ZUQ
+         O0sFgO0wgp4DYVhgFPPS+PGte0vmZZ8oX5vHnQWkQhZTk8VwZa+nfkVjtqemwnaCOc4T
+         HpgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732879237; x=1733484037;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=aEngJ1u6bI6pjXw8ducjp4PDvEGzLJeEExC6wehZeKI=;
+        b=Wgj7cnUVG3YO55x3/pXQDOb5BcDorZ9MVzZlC3XwupZ8wGAXDf3HRVE8gWW+kc2uPE
+         VloLiwTKQO/wp3T/seTbrDC9OJ80APO6lm8XI3r6hN5hnGq+W4zSuEFDaCCe5x9Xud+U
+         fvR56PMd4fduvMhJXr1hoW4nQvI39rphXhRevmJvc0MWnD51GL6Zxdd9gznYfbKAeEWy
+         vBVV+wachakKIok4ej6KXLgM1VGz2JaYDEHX4imNuhNof97ElouPGaXdAQORqqlVJdLD
+         WmqkgMoF22CN+q10ACIH5CFXrrskWd7ZDslkm2dYMKrcxedTQJtZsP+BxIfzCX0YyjC+
+         YDnQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUNEA55hGWiQnyJ2OurZc1E2DxYIJM7ohun42i0mrmpNt4i2c+PLAwm0wPL+trO88+gI4UrlSuF26CLQe+m@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywq4gRVtuSeObjFNmCxj73Dl0Wobp2J/wac3WsmzG0mlqsIYkwE
+	wLu5LA6Vvv/oq5w/iAU2pDQj8M0KFUUDfVzBot42QPiXZrvIwWzqRUSA0cB5eKM=
+X-Gm-Gg: ASbGncueO2HEVlCnGtvdjWXkBk4jnAoJNGrqCaWYShjmyHmbJ+Kp5944Cm8fTHcFhY9
+	WXErzGetsFk0HVMdqf6U+D8M3Y6AXTkVmoKoaAnpIkUzkDJEMDXFxEyljU44dxcNI+PLzNgM84l
+	eVR+uDYY1nwuid+rHognADmMOZCh6HuLzpMOvNVFzGl4rQB/3B5Pk6+5m9UmZfT9haabFfZ5vIA
+	ecMA3gj54nZvXziJ8jOmRrW2UwD4InYxnTocciy1FLdSFCUW7Ky3gdxQEF7X0dLORWTBVZ/G8mb
+	K/n3j9JT+A6+mc0BvZLkdaXkWSIq
+X-Google-Smtp-Source: AGHT+IGLP9pjTswQ9pA+XlvlVMAV/Cw9gk2FVDbOAgGTKgsbtSCZ4/Q14zA7kCVHOCBJ0aMb3gbP8w==
+X-Received: by 2002:a2e:a98f:0:b0:2ff:9449:fe02 with SMTP id 38308e7fff4ca-2ffd5e9a69cmr13646731fa.0.1732879236728;
+        Fri, 29 Nov 2024 03:20:36 -0800 (PST)
+Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ffdfc7471asm4267261fa.71.2024.11.29.03.20.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 29 Nov 2024 03:20:35 -0800 (PST)
+Message-ID: <d3a8d38c-9129-4fbd-8bd6-c91131d950ad@linaro.org>
+Date: Fri, 29 Nov 2024 13:20:33 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,172 +81,113 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] dmaengine: qcom: gpi: Add GPI immediate DMA
- support
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Vinod Koul <vkoul@kernel.org>, Mark Brown <broonie@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dmaengine@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-spi@vger.kernel.org>,
-        <quic_msavaliy@quicinc.com>, <quic_vtanuku@quicinc.com>
-References: <20241128133351.24593-1-quic_jseerapu@quicinc.com>
- <20241128133351.24593-2-quic_jseerapu@quicinc.com>
- <b2awih7g7wq2o7546qfpnf5ft27n6zzial7w35jvwpcjlrg5qm@tqrbl7wueiks>
+Subject: Re: [PATCH v2] media: qcom: camss: fix VFE pm domain off
 Content-Language: en-US
-From: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
-In-Reply-To: <b2awih7g7wq2o7546qfpnf5ft27n6zzial7w35jvwpcjlrg5qm@tqrbl7wueiks>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: E6YodBPESOHPO4aDtxV7feczir534rH2
-X-Proofpoint-ORIG-GUID: E6YodBPESOHPO4aDtxV7feczir534rH2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- malwarescore=0 mlxlogscore=999 mlxscore=0 suspectscore=0
- priorityscore=1501 lowpriorityscore=0 bulkscore=0 phishscore=0
- adultscore=0 spamscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2411120000 definitions=main-2411290092
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ =?UTF-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <barnabas.czeman@mainlining.org>,
+ Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Hans Verkuil <hverkuil@xs4all.nl>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Yassine Oudjana <y.oudjana@protonmail.com>
+References: <20241128-vfe_pm_domain_off-v2-1-0bcbbe7daaaf@mainlining.org>
+ <3a5fd596-b442-4d3f-aae2-f454d0cd8e5c@linaro.org>
+ <5cccec71-0cc7-492a-9fb9-903970da05c5@linaro.org>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <5cccec71-0cc7-492a-9fb9-903970da05c5@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-
-
-On 11/28/2024 7:37 PM, Dmitry Baryshkov wrote:
-> On Thu, Nov 28, 2024 at 07:03:50PM +0530, Jyothi Kumar Seerapu wrote:
->> The DMA TRE(Transfer ring element) buffer contains the DMA
->> buffer address. Accessing data from this address can cause
->> significant delays in SPI transfers, which can be mitigated to
->> some extent by utilizing immediate DMA support.
+On 11/29/24 13:06, Bryan O'Donoghue wrote:
+> On 29/11/2024 08:48, Vladimir Zapolskiy wrote:
+>> On 11/28/24 21:39, Barnabás Czémán wrote:
+>>> Fix NULL pointer check before device_link_del
+>>> is called.
+>>>
+>>> Unable to handle kernel NULL pointer dereference at virtual address
+>>> 000000000000032c
+>>> Call trace:
+>>>    device_link_put_kref+0xc/0xb8
+>>>    device_link_del+0x30/0x48
+>>>    vfe_pm_domain_off+0x24/0x38 [qcom_camss]
+>>>    vfe_put+0x9c/0xd0 [qcom_camss]
+>>>    vfe_set_power+0x48/0x58 [qcom_camss]
+>>>    pipeline_pm_power_one+0x154/0x158 [videodev]
+>>>    pipeline_pm_power+0x74/0xfc [videodev]
+>>>    v4l2_pipeline_pm_use+0x54/0x90 [videodev]
+>>>    v4l2_pipeline_pm_put+0x14/0x34 [videodev]
+>>>    video_release+0x2c/0x44 [qcom_camss]
+>>>    v4l2_release+0xe4/0xec [videodev]
+>>>
+>>> Fixes: eb73facec2c2 ("media: qcom: camss: Use common VFE pm_domain_on/
+>>> pm_domain_off where applicable")
+>>> Tested-by: Yassine Oudjana <y.oudjana@protonmail.com>
+>>> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>>> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+>>> ---
+>>> Changes in v2:
+>>> - Add backtrace to the commit message.
+>>> - Link to v1: https://lore.kernel.org/r/20241122-vfe_pm_domain_off-
+>>> v1-1-81d18f56563d@mainlining.org
+>>> ---
+>>>    drivers/media/platform/qcom/camss/camss-vfe.c | 2 +-
+>>>    1 file changed, 1 insertion(+), 1 deletion(-)
+>>>
+>>> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/
+>>> media/platform/qcom/camss/camss-vfe.c
+>>> index
+>>> 80a62ba11295042802cbaec617fb87c492ea6a55..1bf1473331f63b9ab106d21ea263c84d851c8a31 100644
+>>> --- a/drivers/media/platform/qcom/camss/camss-vfe.c
+>>> +++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+>>> @@ -595,7 +595,7 @@ void vfe_isr_reset_ack(struct vfe_device *vfe)
+>>>     */
+>>>    void vfe_pm_domain_off(struct vfe_device *vfe)
+>>>    {
+>>> -    if (!vfe->genpd)
+>>> +    if (!vfe->genpd_link)
+>>>            return;
+>>>        device_link_del(vfe->genpd_link);
+>>>
 >>
->> QCOM GPI DMA hardware supports an immediate DMA feature for data
->> up to 8 bytes, storing the data directly in the DMA TRE buffer
->> instead of the DMA buffer address. This enhancement enables faster
->> SPI data transfers.
+>> I object to this change, there might be a problem in the code, however it
+>> is not yet identified.
 >>
->> This optimization reduces the average transfer time from 25 us to
->> 16 us for a single SPI transfer of 8 bytes length, with a clock
->> frequency of 50 MHz.
+>> vfe->genpd is not NULL, if vfe_pm_domain_on()/vfe_pm_domain_off() are
+>> called appropriately, the "fix" does not fix the real problem, it veils it.
 >>
->> Signed-off-by: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
->> ---
->> v1 -> v2:
->>     - Separated the patches to dmaengine and spi subsystems
->>     - Removed the changes which are not required for this feature from
->>       qcom-gpi-dma.h file.
->>     - Removed the type conversions used in gpi_create_spi_tre.
->>
->>   drivers/dma/qcom/gpi.c           | 32 +++++++++++++++++++++++++++-----
->>   include/linux/dma/qcom-gpi-dma.h |  6 ++++++
->>   2 files changed, 33 insertions(+), 5 deletions(-)
->>
->> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
->> index 52a7c8f2498f..4c5df696ddd8 100644
->> --- a/drivers/dma/qcom/gpi.c
->> +++ b/drivers/dma/qcom/gpi.c
->> @@ -27,6 +27,7 @@
->>   #define TRE_FLAGS_IEOT		BIT(9)
->>   #define TRE_FLAGS_BEI		BIT(10)
->>   #define TRE_FLAGS_LINK		BIT(11)
->> +#define TRE_FLAGS_IMMEDIATE_DMA	BIT(16)
->>   #define TRE_FLAGS_TYPE		GENMASK(23, 16)
->>   
->>   /* SPI CONFIG0 WD0 */
->> @@ -64,6 +65,7 @@
->>   
->>   /* DMA TRE */
->>   #define TRE_DMA_LEN		GENMASK(23, 0)
->> +#define TRE_DMA_IMMEDIATE_LEN	GENMASK(3, 0)
->>   
->>   /* Register offsets from gpi-top */
->>   #define GPII_n_CH_k_CNTXT_0_OFFS(n, k)	(0x20000 + (0x4000 * (n)) + (0x80 * (k)))
->> @@ -1711,6 +1713,8 @@ static int gpi_create_spi_tre(struct gchan *chan, struct gpi_desc *desc,
->>   	dma_addr_t address;
->>   	struct gpi_tre *tre;
->>   	unsigned int i;
->> +	u8 *buf;
->> +	int len = 0;
->>   
->>   	/* first create config tre if applicable */
->>   	if (direction == DMA_MEM_TO_DEV && spi->set_config) {
->> @@ -1763,14 +1767,32 @@ static int gpi_create_spi_tre(struct gchan *chan, struct gpi_desc *desc,
->>   	tre_idx++;
->>   
->>   	address = sg_dma_address(sgl);
->> -	tre->dword[0] = lower_32_bits(address);
->> -	tre->dword[1] = upper_32_bits(address);
->> +	len = sg_dma_len(sgl);
->>   
->> -	tre->dword[2] = u32_encode_bits(sg_dma_len(sgl), TRE_DMA_LEN);
->> +	/* Support Immediate dma for write transfers for data length up to 8 bytes */
->> +	if ((spi->flags & QCOM_GPI_IMMEDIATE_DMA) && direction == DMA_MEM_TO_DEV) {
-> 
-> Please defer applying the patch until the discussion on v1 comes to
-> conclusion.
-Sure.
-
-> 
->> +		buf = sg_virt(sgl);
->>   
->> -	tre->dword[3] = u32_encode_bits(TRE_TYPE_DMA, TRE_FLAGS_TYPE);
->> -	if (direction == DMA_MEM_TO_DEV)
->> +		/* memcpy may not always be length of 8, hence pre-fill both dword's with 0 */
->> +		tre->dword[0] = 0;
->> +		tre->dword[1] = 0;
->> +		memcpy(&tre->dword[0], buf, len);
->> +
->> +		tre->dword[2] = u32_encode_bits(len, TRE_DMA_IMMEDIATE_LEN);
->> +
->> +		tre->dword[3] = u32_encode_bits(TRE_TYPE_DMA, TRE_FLAGS_TYPE);
->>   		tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_IEOT);
->> +		tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_IMMEDIATE_DMA);
->> +	} else {
->> +		tre->dword[0] = lower_32_bits(address);
->> +		tre->dword[1] = upper_32_bits(address);
->> +
->> +		tre->dword[2] = u32_encode_bits(len, TRE_DMA_LEN);
->> +
->> +		tre->dword[3] = u32_encode_bits(TRE_TYPE_DMA, TRE_FLAGS_TYPE);
->> +		if (direction == DMA_MEM_TO_DEV)
->> +			tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_IEOT);
->> +	}
->>   
->>   	for (i = 0; i < tre_idx; i++)
->>   		dev_dbg(dev, "TRE:%d %x:%x:%x:%x\n", i, desc->tre[i].dword[0],
->> diff --git a/include/linux/dma/qcom-gpi-dma.h b/include/linux/dma/qcom-gpi-dma.h
->> index 6680dd1a43c6..84598848d53a 100644
->> --- a/include/linux/dma/qcom-gpi-dma.h
->> +++ b/include/linux/dma/qcom-gpi-dma.h
->> @@ -15,6 +15,10 @@ enum spi_transfer_cmd {
->>   	SPI_DUPLEX,
->>   };
->>   
->> +#define QCOM_GPI_IMMEDIATE_DMA		BIT(1)
->> +
->> +#define QCOM_GPI_IMMEDIATE_DMA_LEN	8
->> +
->>   /**
->>    * struct gpi_spi_config - spi config for peripheral
->>    *
->> @@ -30,6 +34,7 @@ enum spi_transfer_cmd {
->>    * @cs: chip select toggle
->>    * @set_config: set peripheral config
->>    * @rx_len: receive length for buffer
->> + * @flags: true for immediate dma support
->>    */
->>   struct gpi_spi_config {
->>   	u8 set_config;
->> @@ -44,6 +49,7 @@ struct gpi_spi_config {
->>   	u32 clk_src;
->>   	enum spi_transfer_cmd cmd;
->>   	u32 rx_len;
->> +	u8 flags;
->>   };
->>   
->>   enum i2c_op {
 >> -- 
->> 2.17.1
+>> Best wishes,
+>> Vladimir
+>>
 >>
 > 
+> Let's walk through the logic.
+> 
+> vfe->genpd =
+> 
+> Can happen in vfe_subdev_init();
+> 
+> vfe_pm_domain_on() can fail @ vfe->genpd_link =
+> 
+> If it fails then I _suppose_ we are still calling vfe_pm_domain_off() at
+> least that's the only logically way I see this error can manifest.
+
+There should be no room for suppositions, the source code is open.
+
+If the described by you case is true, and vfe_pm_domain_on() fails,
+then vfe_pm_domain_off() shall not be called, otherwise that's the
+real problem and it shall be fixed instead of being veiled by the
+proposed change.
+
+> @Barnabás can you confirm that this is the case ?
+> 
+> If not, can you please provide more detail ?
+
+The change does not describe how to reproduce the problem, which commit
+base is tested, which platform is testes, there is no enough information,
+unfortunately.
+
+--
+Best wishes,
+Vladimir
 
