@@ -1,146 +1,170 @@
-Return-Path: <linux-arm-msm+bounces-39681-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39682-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 16DD79DEE90
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Nov 2024 02:58:15 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BE8689DEED2
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Nov 2024 04:16:59 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CDB1616148F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Nov 2024 01:58:11 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3635BB2158D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Nov 2024 03:16:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 76670487A5;
-	Sat, 30 Nov 2024 01:58:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59890335D3;
+	Sat, 30 Nov 2024 03:16:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TkStegRA"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NKudz865"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2FB320ED
-	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Nov 2024 01:58:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D883C2F3B;
+	Sat, 30 Nov 2024 03:16:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732931890; cv=none; b=F9cXli0W8IvDbGLPzghxFyqO9yHnzpnYvr74PoL9Y+K9W14M1NdV4FJxCW12258tfjsT7QljYGXXQREdd/95R6/29lNpenXWfFmvlKzoyKVL5CVBTm5Zo6HJdb1vefiERbDEL9Pds+GjcLboYdKMWpwE7tk7wKc4Jj/uUsy7m3c=
+	t=1732936612; cv=none; b=jhNcQNT+ejd0I8TjLWVzR/a+daFALYZCkJYtbiaRoqJBBPfSJHrI0JfcQp4yvDUM1ZJsdQNRpjbWvJiKj0GjYz/+h1om2JMBQIcU+js3UYbEKwhtbRxlw2B/qm29wqNDJ12J8hFG+4uomAo9aFQQIEaUr3GJM7ynyx7jU550Ls0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732931890; c=relaxed/simple;
-	bh=QUtxboWEpYzPJBkc8MA4gPeiIpTOWy0lung4mPgZhfk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DfZ14Dkl66aeL94sGx2JtAN3oq3rmO5mQAZxIhriCy3JvN5z9GYEq8MFmNWHCFV2weLd4L4z6NV5z9IklfFjA7XLs9Rx2yB7KXI/RyNHvZS16XDXPf4u4cXMGu3b4ZI4cpI+n8pST7ugDWmJmqrjh7rxOQT3C/eY6sbyIZSWyUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TkStegRA; arc=none smtp.client-ip=209.85.208.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2ffc357ea33so26640981fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Nov 2024 17:58:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732931886; x=1733536686; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=E8OZWsrIrTwnUzalAhGoRoN2jmtZFU/SWdczT+zM8Bg=;
-        b=TkStegRAUbkMDjlaeR2iTQ1hHFPbLFzrfeUhUR/7YX7VLgocltQ6At78/UkyQc3uta
-         kMy39ebV9GnruJZKq5bAd81suct7lege1zhcFgYGn9v8qLRje9JDUDZ3YrchehuCE9si
-         ErDTQJleokSm9Xo+XQOCAhAS3ZIICmAzbNKZxIpXyArOqcOYK3T7/IeLirZIyDb30p75
-         fkhZ3aAq9GOe1dVqXnoR0WXv3a8J8JQAt4gSfC8lTwxBAoWih4WMMWsovzZTTh6nsj7/
-         6TrOOS5St6PmK+ZeE1jUP8lekF935sB9OZHUVD1D/335tVDs+1+YPAM9lXQAQI6DWGAI
-         7nEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732931886; x=1733536686;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=E8OZWsrIrTwnUzalAhGoRoN2jmtZFU/SWdczT+zM8Bg=;
-        b=IclUcVAyyB5zMUfYv0FDmlmypxwcMnphb87sq+xSiCdGGhWQ4elKL5aiJ0ElX0KILQ
-         DNYW6mA8s8kzsrYHvdY/tHqS7kary0nJkp5y4soYeCkjo8lDHj7nDMgBBmLln2l1XAfP
-         66bajar6dDQaCWPAnKqLPE9OKYMiJg3hBSvRGwlMXjvPk0v/tmDlGsORqx+QIFMLauZ5
-         qVyob+hJjA1+rLjROJvus3x1DrN8MvocSkl004CN2d2X4klxvOzGRoVd3XAdXfXGG6ip
-         lDYGovdqb1e/uhCaqdgVcNYn1AJC/Ukm2fcJmmWHjj630m/LxLniUXCju2mBkJfdrupS
-         I9JA==
-X-Forwarded-Encrypted: i=1; AJvYcCWdzUGwlclvLBTR3p3bjB3757zY9TYEZC+T0wTCP/PqTGdwaWED320mXIelvp+znbSP9KDFDW/hXyLPjfeO@vger.kernel.org
-X-Gm-Message-State: AOJu0YwnIckbdk2wCrNnvFGk12YIHWVxz1aicA2Wi2yR3Yc8htNpWqfU
-	A8rzAA3gUQhIwamvPDBIYQR6nYP8ZUsl+sNq8buH4AfTgOZr3phYAHZD8m+vf+g=
-X-Gm-Gg: ASbGncvGL6Jhn9gsyLY1g/+8cZQob0VoSGu1eVNdEEfixWros1JXEtOZIWgKt5fgaUA
-	k4w+pxQ5cbggJ05rNgwO9AG70B9YeiAYsFdegxLT28e1CPSrlzWT7+OFoZenE4z9vLEDHD41VDz
-	VvHZwZQHEyBq/DZ0GWC3ipbGKaw6p/hSywgEFS9V6fb9JB/LcmIqWi6fyJk2r4P+XRAbT5/bjEe
-	QGeZy1ATius4CLMTdkU3Us7BHTE3e/pLeJKGWTyeFBuoVY+PaK4XRteqRQrQxsgxD8WbTE0Nm1I
-	G4qqwV468K0zVIdtwLY2dPWQo1fkYA==
-X-Google-Smtp-Source: AGHT+IH3PxC/7zsS1K0DnMW67rOahIA/SiVj7/NI8dYtx07JEByEXiIOKaepX+9HHyKUtQ3n8U7v3g==
-X-Received: by 2002:a05:6512:3181:b0:53d:a4f9:6141 with SMTP id 2adb3069b0e04-53df00d1b1cmr7390373e87.14.1732931886173;
-        Fri, 29 Nov 2024 17:58:06 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ffdfbb915esm5675341fa.19.2024.11.29.17.58.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Nov 2024 17:58:04 -0800 (PST)
-Date: Sat, 30 Nov 2024 03:58:03 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Sui Jingfeng <sui.jingfeng@linux.dev>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] drm/msm: Check return value of of_dma_configure()
-Message-ID: <6hunbphnn2m647swkujhyjywp3e7vnlxhrbye5tjakvlfclimc@j64qbwen2hh4>
-References: <20241104090738.529848-1-sui.jingfeng@linux.dev>
+	s=arc-20240116; t=1732936612; c=relaxed/simple;
+	bh=2l3KfqoOvZDkJTmLIM0ptsydik6v8ezmtCOy/dYLd3I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=W+uftp8v+xik9gA2gy+7mRByIb3o0ZfI6ZzNLg9Im9fDAUHCFDxOmP0fMKJJs1UiJVDqPNZbQ6JMbO3tEduuAg9sEWj3ZNg2N+p3Judk3Ob55DJZ/eP/Vn2UvGMRmGM8YX2dtG/Wad8N2imAYuphdy2HyTwFejEZB9o1LxtwIXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NKudz865; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AU0q3nQ020987;
+	Sat, 30 Nov 2024 03:16:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	LxpVgLo3JnamRIJ/XC6YKJPsC09k5vJCje9OieMiSLM=; b=NKudz865BFm5Ik07
+	uvx7TtMz2PMmWOZirimcJpEGW+pkhcV6WleILclDuLTgbKIIr4y21QU1EZS9tcIJ
+	o8P+xzqOQuekAKBcgj6qvKYDtVw2Ct9mgJev/5vih0GSzdT0lDwmC2cdgrh29Mx3
+	+IXOpnxMHPp0gCXw9sghoIVZ5vWMri005nS+0GwAa4/6kUzIVR8AxbEutonEuVjC
+	kN7+q4hXvxWTjf7uxDch/qGmW78FspBa03Zss000DoeruKj7pzYVPEmtxNt9ohZL
+	xD9ZeymCfM5y/svxskuAaw+nXeQuI+GLosF+bY+CMoWi8xWqeJxdQXmqipLOFxuZ
+	FI7/lQ==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43671eexg1-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 30 Nov 2024 03:16:42 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AU3Gf7u028597
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 30 Nov 2024 03:16:41 GMT
+Received: from [10.253.74.19] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 29 Nov
+ 2024 19:16:36 -0800
+Message-ID: <a82af64b-da8f-40c5-bd8c-9ea7621c4556@quicinc.com>
+Date: Sat, 30 Nov 2024 11:16:33 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241104090738.529848-1-sui.jingfeng@linux.dev>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 2/3] dt-bindings: net: Add QCA6698 Bluetooth
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Marcel Holtmann <marcel@holtmann.org>,
+        Luiz Augusto von Dentz
+	<luiz.dentz@gmail.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        "Balakrishna
+ Godavarthi" <quic_bgodavar@quicinc.com>,
+        Rocky Liao
+	<quic_rjliao@quicinc.com>,
+        <linux-bluetooth@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <quic_mohamull@quicinc.com>, <quic_zijuhu@quicinc.com>,
+        <quic_jiaymao@quicinc.com>
+References: <20241128120922.3518582-1-quic_chejiang@quicinc.com>
+ <20241128120922.3518582-3-quic_chejiang@quicinc.com>
+ <jaq7tjdq4srboo7m4byfofdbigy5hyeeqwyrgh72t23xgwb65m@lz5yivskxbwd>
+ <cd82ea16-7c37-41cf-bfb1-7cc6d743d8e9@quicinc.com>
+ <vlmdm5yfekmx5miv5twjpukwhudcpjoijk3jxoobhzvecpsb54@her62ghhpruy>
+Content-Language: en-US
+From: "Cheng Jiang (IOE)" <quic_chejiang@quicinc.com>
+In-Reply-To: <vlmdm5yfekmx5miv5twjpukwhudcpjoijk3jxoobhzvecpsb54@her62ghhpruy>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: NJw95Kfa6I3jPVzKxJ82UHrJkm85GjHt
+X-Proofpoint-GUID: NJw95Kfa6I3jPVzKxJ82UHrJkm85GjHt
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=0
+ impostorscore=0 mlxscore=0 phishscore=0 priorityscore=1501 clxscore=1015
+ bulkscore=0 lowpriorityscore=0 spamscore=0 adultscore=0 mlxlogscore=999
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
+ definitions=main-2411300025
 
-On Mon, Nov 04, 2024 at 05:07:38PM +0800, Sui Jingfeng wrote:
-> Because the of_dma_configure() will returns '-EPROBE_DEFER' if the probe
-> procedure of the specific platform IOMMU driver is not finished yet. It
-> can also return other error code for various reasons.
+Hi Dmitry,
+
+On 11/30/2024 1:13 AM, Dmitry Baryshkov wrote:
+> On Fri, Nov 29, 2024 at 10:30:00AM +0800, Cheng Jiang (IOE) wrote:
+>> Hi Dmitry,
+>>
+>> On 11/28/2024 8:58 PM, Dmitry Baryshkov wrote:
+>>> On Thu, Nov 28, 2024 at 08:09:21PM +0800, Cheng Jiang wrote:
+>>>> Add the compatible for the Bluetooth part of the Qualcomm QCA6698 chipset.
+>>>
+>>> ... 
+>>> And you have misssed to explain why do you need to add it and how it is
+>>> different from WCN6855.
+>>>
+>> Got it. I just explain in the dts/driver change, forget to explain here. 
+>>
+>> If use the firmware-name solution, do we still need add the new compatible
+>> string for qcom,qca6698-bt here? The driver may not use this string.   
 > 
-> Stop pretending that it will always suceess, quit if it fail.
+> DT describes the hardware. If you want, you can still add new string
+> _and_ use old one as a fallback compatible: "qcom,qca6698-bt",
+> "qcom,wcn6855-bt".
+Got it. Thanks! 
 > 
-> Signed-off-by: Sui Jingfeng <sui.jingfeng@linux.dev>
-> ---
->  drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
-
-Fixes: 29ac8979cdf7 ("drm/msm/a6xx: use msm_gem for GMU memory objects")
-Fixes: 5a903a44a984 ("drm/msm/a6xx: Introduce GMU wrapper support")
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-
-> 
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> index 37927bdd6fbe..b26dfe0a76c5 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> @@ -1605,7 +1605,9 @@ int a6xx_gmu_wrapper_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
->  
->  	gmu->dev = &pdev->dev;
->  
-> -	of_dma_configure(gmu->dev, node, true);
-> +	ret = of_dma_configure(gmu->dev, node, true);
-> +	if (ret)
-> +		return ret;
->  
->  	pm_runtime_enable(gmu->dev);
->  
-> @@ -1670,7 +1672,9 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
->  
->  	gmu->dev = &pdev->dev;
->  
-> -	of_dma_configure(gmu->dev, node, true);
-> +	ret = of_dma_configure(gmu->dev, node, true);
-> +	if (ret)
-> +		return ret;
->  
->  	/* Fow now, don't do anything fancy until we get our feet under us */
->  	gmu->idle_level = GMU_IDLE_STATE_ACTIVE;
-> -- 
-> 2.34.1
+>>>>
+>>>> Signed-off-by: Cheng Jiang <quic_chejiang@quicinc.com>
+>>>> ---
+>>>>  .../devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml   | 2 ++
+>>>>  1 file changed, 2 insertions(+)
+>>>>
+>>>> diff --git a/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml b/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
+>>>> index 7bb68311c..82105382a 100644
+>>>> --- a/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
+>>>> +++ b/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
+>>>> @@ -18,6 +18,7 @@ properties:
+>>>>      enum:
+>>>>        - qcom,qca2066-bt
+>>>>        - qcom,qca6174-bt
+>>>> +      - qcom,qca6698-bt
+>>>>        - qcom,qca9377-bt
+>>>>        - qcom,wcn3988-bt
+>>>>        - qcom,wcn3990-bt
+>>>> @@ -170,6 +171,7 @@ allOf:
+>>>>            contains:
+>>>>              enum:
+>>>>                - qcom,wcn6855-bt
+>>>> +              - qcom,qca6698-bt
+>>>>      then:
+>>>>        required:
+>>>>          - vddrfacmn-supply
+>>>> -- 
+>>>> 2.25.1
+>>>>
+>>>
+>>
 > 
 
--- 
-With best wishes
-Dmitry
 
