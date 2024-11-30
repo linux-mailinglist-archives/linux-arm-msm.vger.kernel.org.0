@@ -1,80 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-39670-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39671-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 52A489DEE50
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Nov 2024 02:50:11 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A6B909DEE52
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Nov 2024 02:50:20 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 121FA281C29
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Nov 2024 01:50:10 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 216C1162387
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Nov 2024 01:50:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 74C241AB52E;
-	Sat, 30 Nov 2024 01:45:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6AD721AB6E2;
+	Sat, 30 Nov 2024 01:45:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Laew7HcZ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BMnZOIED"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E871AAE2B
-	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Nov 2024 01:45:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 760A51AB534
+	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Nov 2024 01:45:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732931133; cv=none; b=t789h2HriusBDcvcugpVXU3XBFjdm5Qq9UO33ym9x+6ks2DOHR4TiirWbaoyQJNoof8H1ryleF7I1uVtzSsRI/S4kuleUWMwlsgVTmrhIeq2XmAT/KUB28EO8f4VfmgVc7Yl7F0Q5LtjNr9SCd7AaVBiwioV2vI5pI62sYgsXzo=
+	t=1732931135; cv=none; b=uNQjekjUuSgTUuLz0p1Mmd7SwGBkKsXaq5ekcA0k5mLtdD+zXxDsb5l1e9l8VYNL/qLvYmvzimKMSQET+sPRUGfz6dpbaM9TB/fHctrCRcLQFW1El7ZB/GA0/5IGc+8TNF5EPIwgTwAdpVC4e/DYt5b/WdVD/sKKbaqjZLoK4wk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732931133; c=relaxed/simple;
-	bh=Uy0U0ERr39hDg3O49x0h3zoYcwr/oL9Yd1/e2vOTYSE=;
+	s=arc-20240116; t=1732931135; c=relaxed/simple;
+	bh=FDmwUhTUBNDRmxiOJAuSVnW1s/GAN1vMfT0L5XGuvZ4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=n15fwy3CvWveKhkXsPKH6mEG4pZ0gQ0Db4zneiHBWMgzIPU+GbIO5YjI1irJZvS6BEQXAwtjf3ZgDyWnVf2vNFhsARnK37ZWvUrY5Hh2KtHLJwQcC6eGOn4s8sW5FdLwvi35lv1GVT7/O3eu1nCojhGSyhu2oWR6L+upsi/48/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Laew7HcZ; arc=none smtp.client-ip=209.85.208.173
+	 In-Reply-To:To:Cc; b=Qz7/RtPJjtYuMcORKv9OeRYsD2VRTRIzJjzLvnDiIiz/VB8Aqubk+bIHLjUvqZmUZCG+qTDBbAH7doKHx4uSoW9DLWBcqR+Z4tm5iVHdhuLykSHNKP68bZzNAwt4TEXc8QvJgKepMO1mli7zkCZp50iKNIVaVUDvVzNapDpfX/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BMnZOIED; arc=none smtp.client-ip=209.85.167.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2ffa49f623cso32056871fa.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Nov 2024 17:45:30 -0800 (PST)
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-53df1e063d8so3070953e87.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Nov 2024 17:45:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732931129; x=1733535929; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1732931132; x=1733535932; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=+c+RSzytJFjx7MIg7eaSWg+rDoxb8wPpF5exbHH8xTQ=;
-        b=Laew7HcZpjdbEBEVqR25FXOxYoGuOecpOFT2mupokanPRnN5XknJBWLHGPnVEC5a2B
-         pQLiab47EFwezf2ucR8bNz8qYPm7A6oNm/qk5htbNlgPP+7q4ekCINbZijAWz3NwJl7s
-         mthPYTAp8pVgkoJEzVgKM9Xn3+j04RIZRidycSD6CGdySwf61K3BJu/m+jEUIOVekU+t
-         sfdVKzmrwHgXQrDTvZ1Y2pi3klOjDQKpf6HmMDB5RDTO1atT8DBZ9AqR5KBOaVLuLolP
-         2ZMo7yEf21xqiMlFVzji683muN3OW6IdRmQgSU5nRj3ytJ3/piMCAY5PfI0uQE8xAX24
-         kU0g==
+        bh=1Eufja9sWCtUM98Rvs+DNij6xoEwxDceQpKUgvS2NNM=;
+        b=BMnZOIEDFsEU8526furuRAdZj64aVEYktX8tmgrQgIx3LH+RrPtSRItb0iQWRgfiEU
+         7eZr5LMPcB7ntR/lZ1MIVqmEDVoeAsiFTThv2vhTJbyqOY/M0i20u8j97Shz1xXnSWWB
+         Wc2esdPPzBjumxZlST8+WT4j7Fgux/JyyGy6lyE8Qc56gbuukt7POhAYzEjppy7L0xsW
+         YJ4ncgWqG2CwWJFtpvulKiUKJnGvWFj7p/Lh4T5MV/RunIfGzUhN4BVC0eJ6tZll+d9y
+         2tUbolGo+B90RoRnD7t+RItmtDIsE2v9oBfOf6DWo5nDCvtfwnv1BlutE8hfzvPoUa/L
+         USbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732931129; x=1733535929;
+        d=1e100.net; s=20230601; t=1732931132; x=1733535932;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=+c+RSzytJFjx7MIg7eaSWg+rDoxb8wPpF5exbHH8xTQ=;
-        b=RJUvXLaaQ3Ga52WGxqhSsMuVouqEc2bHAkpaRc+Xs2HybUPoasJRg14MPJO1NzulIJ
-         kKBcedFumMEpKFrNCb9WtDj61NfAnBazfab8lNWW6062FpScPoyUWHJnaIm5R8TD87Lr
-         V7t/0CTHGqCJTVXBpIMAhz/nxQg+OYnP/a80qhDsNRZeftHfqTxfUjdCDzY+rZREzKhv
-         AkMJhw/vtIEfbIQcpl4AlcNO88t+wRnYDPYEk6dLjyxqN1TXnKPQe3oHDuKBC6BbET4n
-         kEKEGxCMcH1AuM5Q/KP9alIM7/WpthF4IHHrHsk2VE1SPuzEkrcCax5bduvBiKCP9RVH
-         IlBg==
-X-Forwarded-Encrypted: i=1; AJvYcCXV2UTlmZf6OcV4jF/9X30416XiacbvjLIWQdfzTQlTSuTAm7Zz/WkcpszKh5SGCpjvoDBKPxMaqm8im7fd@vger.kernel.org
-X-Gm-Message-State: AOJu0YxQ2wtgueVNeTEYdDfysYYg2IoyCtGpt6tEWDze1zbroJmag4if
-	MMGvgRXaW4aR5ZbfnENrKr041M/z3ZG9I39y9fzYkdO6dU6TKbsYiyShcBUd04U=
-X-Gm-Gg: ASbGncsyNPPLFsEXPE7GPnXZC0ZZRO7xCj+UZSFO3ojk+5TqDtXgS3TZqei0lbO0mk/
-	WJL+A+Pv/fZxgnOW7y09o0MuVZaleGUsqKW0uzaEyiX0QdluOdIiW9uUZrWWKLHrcQlV0cGaG3P
-	ioUbQQYqutAcdBDxEIYLEvvaZsaSdD4jg9yqt5yAdc6Tz4bUjmH27s8kwLRAcCNOrbQBlBlRLUj
-	MsrsCwANSF12QPpHcj+Wqdwh43fxsUy/3VtGbN5N3qV/kvKbiYpuojy5Q==
-X-Google-Smtp-Source: AGHT+IE8uRm6rHrMw7TRWbEpQREzwmtNJXmz1+qCsTtCPbR+h6nvAVNL03Sp2DPMtIyUiP1Re8AeyA==
-X-Received: by 2002:a05:6512:3ba5:b0:535:82eb:21d1 with SMTP id 2adb3069b0e04-53df01178e6mr9262667e87.57.1732931129250;
-        Fri, 29 Nov 2024 17:45:29 -0800 (PST)
+        bh=1Eufja9sWCtUM98Rvs+DNij6xoEwxDceQpKUgvS2NNM=;
+        b=Wpd9ZzbAsn3VvLZjS/wJRuiOhUizqVn+Z8BM/9F5NB9WekkubbHdmhbm7aEZ06eBFH
+         4cA9dmKT4rVd0csoKExi8SXDV65ASHFPFhuyOJklrEBzK3RP+BpVk7RqDVJ1Cx4/fM7s
+         pqHU4FQDIXfbV4QHaoCChawuOjQ+mmwnDCKrU6CrZP2C88TLmikczl91TlltUmML5DbH
+         pQvKc59KYr4GqH0WDGQB7ybcrdXcAdFC3Qw8QZE/XPj2dz56YP7Nm+PeCXBpDOevCQiL
+         Vq1pExKXf+KuEAeROLmzDJXyoUH3HTEGkMy6n+jn/iGfDzFd0sguU/rJwNZREC3GJZ5E
+         tuBw==
+X-Forwarded-Encrypted: i=1; AJvYcCWfgr1lFWDuZIte4WdHXRZzIM3vsHIQ35yc6UIrUOKOk5iom0dqI028hM7L26/DtzHuswmBwcOGn7mDCZ1J@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzb4zv8fsKp/bWBTYcyD8DSUR0TRxZAIrYkvaC4DBiUnqnhP2o9
+	g0/+6Q/S2bjaB+2clT1u6YWz5QGVDTHYSRFZWhjB68F6a615FCsijr1VyS6BxMA=
+X-Gm-Gg: ASbGncuFt8v3U4H9yGc3uyp8qdWMJfu1bBKCb/J1onbn7y5M+VlLteywIfl5aU3FsVd
+	shcGjQ//tuhXfIKfuysvqzgZO1SopfvhMaxcXMh4oJv+EVc6ALc0rWBMg3uTAQqcL6RlSSM9tj+
+	1cTgawBV9NdTu791/rYITOI9b7XF2xROT0Cat6ODJeLTW7mS5b0LoKvA+rDAZLbOrJRUeOF71RD
+	RSY+vdI0oENeA3Xwz/9wxiip6ineOMx+qFYIXDYROiWPcn/Sic0Skl8eg==
+X-Google-Smtp-Source: AGHT+IHaJeND6mN7GEx9m5sQXcVEyy9vZ8S4g4Uvw9M0IPgbX5lv+rz5I8tVKCnTbKubtNKDourcbA==
+X-Received: by 2002:ac2:51cb:0:b0:53d:a8cd:4285 with SMTP id 2adb3069b0e04-53df010475fmr8842210e87.39.1732931131689;
+        Fri, 29 Nov 2024 17:45:31 -0800 (PST)
 Received: from umbar.lan ([192.130.178.90])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53df64a0742sm631946e87.261.2024.11.29.17.45.26
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53df64a0742sm631946e87.261.2024.11.29.17.45.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Nov 2024 17:45:28 -0800 (PST)
+        Fri, 29 Nov 2024 17:45:30 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sat, 30 Nov 2024 03:44:38 +0200
-Subject: [PATCH v2 26/31] arm64: dts: qcom: sm6115: move board clocks to
- sm6115.dtsi file
+Date: Sat, 30 Nov 2024 03:44:39 +0200
+Subject: [PATCH v2 27/31] arm64: dts: qcom: sm6375: move board clocks to
+ sm6375.dtsi file
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,7 +83,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241130-fix-board-clocks-v2-26-b9a35858657e@linaro.org>
+Message-Id: <20241130-fix-board-clocks-v2-27-b9a35858657e@linaro.org>
 References: <20241130-fix-board-clocks-v2-0-b9a35858657e@linaro.org>
 In-Reply-To: <20241130-fix-board-clocks-v2-0-b9a35858657e@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -117,21 +117,21 @@ Cc: Leo Yan <leo.yan@linux.dev>, Joseph Gates <jgates@squareup.com>,
  linux-kernel@vger.kernel.org, 
  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3935;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1634;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=Uy0U0ERr39hDg3O49x0h3zoYcwr/oL9Yd1/e2vOTYSE=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnSm33+KjqyOEr/xJY9QiDeHeTCec5MxeXer3v3
- /563gSdcqWJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ0pt9wAKCRCLPIo+Aiko
- 1SHpB/9HXYBNkPzn7RniXXS5K8Hjs0qzQAZvGwSnyAEaIVO595wk5rkt8gtsNyzffh3xH/XX2vC
- fmaEx/jrdtVetRV5IGsvfcCVIG7r/5sdf/kr2vyvKC6ahlTdK9e5wVElry+xK1nWvWtNtDiksz6
- 74/1NdXFLvAVzaUiNH0FkBPSMsXAbDx/m0P9FjxedLtdEb7UrY+x2lUUN+GkJNoqxAWGvC+kjL8
- 5GFGQB3iEsBRhR4PmKGMEeJMerHCk2Gj4lPk8VG59Rg9rHUAiFiDhnW9AyVDeSN2ffhx2QwsuM3
- jSdV1z8WhzA4GmoPbz9DQpLR8N5iSku9fvE9Ea5NidYBLOKP
+ bh=FDmwUhTUBNDRmxiOJAuSVnW1s/GAN1vMfT0L5XGuvZ4=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnSm33qoP/xDATuHTcyE3CQ2jcK7EJrEoQdEkDp
+ knU58FQjGmJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ0pt9wAKCRCLPIo+Aiko
+ 1WU9B/wOr2Q2QuYgJs+hRK0zMb2U7SgJ0aRUmUmFz43238xr1OboBMhr/DB8WlEas6KjGj+1pZp
+ 1hdO4FVFkDjaJ5ftmfaV2+EnVB/YjbPU7Qx22is1X4j97HydmeqAG+BIfHvi5WJPcJK6QrQtoJU
+ EAva/mniBX+CH8RI13ViWD+VOGUV/EInfC/I2545BqJdAYQRx3M7ROD8kGMyk4dn8t0ZtBAT1VO
+ 2dnXkE040FIaaef/vRPmdb080Jyj+YSrnIVBB6uFBHcf6wYHqGZWMaS0ILrlketuDecwV+ELQnH
+ +SyqnJvs0FWdftroWK47tam1miS+jB/zF0yTdF3mv5eF5cMG
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-SM6115, SM4250 and QRB4210 have board-level clocks (XO, sleep)
-definitions split between the SoC dtsi file and the board file.
+SM6375 platform has main XO clock definition split between the SoC dtsi
+file and the board file.
 This is not optimal, as the clocks are a part of the SoC + PMICs design.
 Frequencies are common for the whole set of devices using the same SoC.
 Remove the split and move frequencies to the SoC DTSI file.
@@ -139,123 +139,34 @@ Remove the split and move frequencies to the SoC DTSI file.
 Suggested-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/qrb4210-rb2.dts            | 8 --------
- arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts | 8 --------
- arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts     | 8 --------
- arch/arm64/boot/dts/qcom/sm6115.dtsi                | 2 ++
- arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts   | 8 --------
- 5 files changed, 2 insertions(+), 32 deletions(-)
+ arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts | 4 ----
+ arch/arm64/boot/dts/qcom/sm6375.dtsi                          | 1 +
+ 2 files changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-index d8d4cff7d5abed405d1b4cdf9ab8264aab076830..675f9057ed442fb4afd22064b4022df5ed8cb882 100644
---- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-@@ -544,10 +544,6 @@ can@0 {
- 	};
- };
- 
--&sleep_clk {
--	clock-frequency = <32764>;
--};
--
- &tlmm {
- 	gpio-reserved-ranges = <43 2>, <49 1>, <54 1>,
- 			       <56 3>, <61 2>, <64 1>,
-@@ -695,7 +691,3 @@ &wifi {
- 
+diff --git a/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts b/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts
+index e04a3b8f81c556713550cd22feb2d0f282564baa..9840868fc7196316bbf9d2de9b8967ba73e541d9 100644
+--- a/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts
++++ b/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts
+@@ -454,7 +454,3 @@ &wifi {
+ 	vdd-3.3-ch1-supply = <&pm6125_l21>;
  	status = "okay";
  };
 -
--&xo_board {
+-&xo_board_clk {
 -	clock-frequency = <19200000>;
 -};
-diff --git a/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts b/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
-index 9153a5a55ed9fe82ea6771ef87dae5620a4fbf2f..ae65dc2abe510d35f1aeeeac5ccf5c576d688734 100644
---- a/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
-+++ b/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
-@@ -193,10 +193,6 @@ vreg_l24a: l24 {
- 	};
- };
- 
--&sleep_clk {
--	clock-frequency = <32764>;
--};
--
- &sdhc_2 {
- 	vmmc-supply = <&vreg_l22a>;
- 	vqmmc-supply = <&vreg_l5a>;
-@@ -254,7 +250,3 @@ &usb_hsphy {
- 	vdda-phy-dpdm-supply = <&vreg_l15a>;
- 	status = "okay";
- };
--
--&xo_board {
--	clock-frequency = <19200000>;
--};
-diff --git a/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts b/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts
-index f60d36c03b9b51d1ba5fb2db7d619916fe42f084..5cf0d2383019abec53f875c727e86656f3ac4478 100644
---- a/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts
-+++ b/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts
-@@ -471,10 +471,6 @@ &sdhc_2 {
- 	status = "okay";
- };
- 
--&sleep_clk {
--	clock-frequency = <32764>;
--};
--
- &tlmm {
- 	gpio-reserved-ranges = <0 4>, <14 4>;
- 
-@@ -570,7 +566,3 @@ &wifi {
- 
- 	status = "okay";
- };
--
--&xo_board {
--	clock-frequency = <19200000>;
--};
-diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-index 9b23534c456bde8c400cc331e847f0f84ae0b74a..29eb179ac519dd0965977902ca0edf6a06fa147b 100644
---- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-@@ -28,11 +28,13 @@ clocks {
- 		xo_board: xo-board {
+diff --git a/arch/arm64/boot/dts/qcom/sm6375.dtsi b/arch/arm64/boot/dts/qcom/sm6375.dtsi
+index 7c929168ed0805e832b818516083d48968d3bbce..013666efbbe8b5b9c12f3d7dcab0b59de8a69c50 100644
+--- a/arch/arm64/boot/dts/qcom/sm6375.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6375.dtsi
+@@ -25,6 +25,7 @@ clocks {
+ 		xo_board_clk: xo-board-clk {
  			compatible = "fixed-clock";
  			#clock-cells = <0>;
 +			clock-frequency = <19200000>;
  		};
  
  		sleep_clk: sleep-clk {
- 			compatible = "fixed-clock";
- 			#clock-cells = <0>;
-+			clock-frequency = <32764>;
- 		};
- 	};
- 
-diff --git a/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts b/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
-index 9d78bb3f71901705fd22d88b472f6fc1d0c0fffb..27936023175bcb73e73a85b463c4b9f5c00541cb 100644
---- a/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
-+++ b/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
-@@ -305,10 +305,6 @@ &sdhc_2 {
- 	status = "okay";
- };
- 
--&sleep_clk {
--	clock-frequency = <32764>;
--};
--
- &tlmm {
- 	gpio-reserved-ranges = <14 4>;
- 
-@@ -382,7 +378,3 @@ &wifi {
- 	qcom,ath10k-calibration-variant = "Lenovo_P11";
- 	status = "okay";
- };
--
--&xo_board {
--	clock-frequency = <19200000>;
--};
 
 -- 
 2.39.5
