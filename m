@@ -1,59 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-39685-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39686-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1703C9DEEE1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Nov 2024 05:05:17 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9B3879DEEF2
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Nov 2024 05:30:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BE4A72815E7
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Nov 2024 04:05:15 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0FB78B21593
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Nov 2024 04:30:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ACECB82890;
-	Sat, 30 Nov 2024 04:05:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8800A13AA2F;
+	Sat, 30 Nov 2024 04:29:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gAskCHrb"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NNm2MA03"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7074A1EB3D;
-	Sat, 30 Nov 2024 04:05:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57F7413A250;
+	Sat, 30 Nov 2024 04:29:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732939512; cv=none; b=eELGwFCuyQnzarKX1GAuFDEDjeZNN9MLoWryPwpLEp0t87R954RdfYN5Hk86CXSol44uxI3oZLdG5/JhLnB6CKKum0UFtoflBdIPTqzZ2lxNlmlcio3M10xix1yIP3/6IMvFS+QD2Q6WOrA7mDaA9ytr0UrYIb4VexQ0u9syVow=
+	t=1732940998; cv=none; b=goXZjR1pYvsgxHCuvFBPT8/w4O6/Q4QbEWIbHVYHKJ+4rJqG6L/ep9ai21tkjAPU8FwxWf8V0KDxHvKHD8bQUjvxln+Nzn1MK9Z1YVkRR+04dCyumlEIZUDqjv86mUy+TksaYNk1K48VFstPsvkNAYnVoVYRAYS/9wURJbVa0r8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732939512; c=relaxed/simple;
-	bh=J+yWMeElKC/wy0LdewAgmAXpJwqJQdoSPQCF/yS6RMg=;
+	s=arc-20240116; t=1732940998; c=relaxed/simple;
+	bh=F1joQ4ywVF1V5nKjAMrUs3WswrNpQY62i1s6kb7v7Jw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JssLgw/ERLeAfgFeQu0wbkBVO0aTcsqYirpTsI4C6FsuyekIlnJFrt3lyF65pn7WhYRv/4tLaWf7b6aIkAE5f3zYyuTLWNsUc0JfQvM4Xb06d4YEUDivaNxhp6sSVGBm5H9XE2GUar9OCS8heXTHjKQxBM7iBre0RCtvjnZSgzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gAskCHrb; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B10CDC4CECC;
-	Sat, 30 Nov 2024 04:05:09 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=N1cMOs1idl4ImQIaX08RBLL1XfxnydJFeQqxO3Nq7fEe/POwIti58IG21j/e3ASwCyZuyNe/7kjLXD1SibNS/Lanejfz78lFZdXY4BKmQVfiepdvnbaQHekSfsLtPJS7YO5f5HnRGS94SxipFOA+kxFxiEPd+JWgEw+lUOryFrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NNm2MA03; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A164C4CED3;
+	Sat, 30 Nov 2024 04:29:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732939512;
-	bh=J+yWMeElKC/wy0LdewAgmAXpJwqJQdoSPQCF/yS6RMg=;
+	s=k20201202; t=1732940997;
+	bh=F1joQ4ywVF1V5nKjAMrUs3WswrNpQY62i1s6kb7v7Jw=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=gAskCHrb95155Uf1w6MZKbLwh0Gegiy8PcWe7bGNuq7Saj7PvX4KiNn0Gi4Fq3ASx
-	 lmaIKj7kSEYPcO1oIexORufR9D8bsljEeVeF/f5EoybQnoKK96Ff3SX6C4V94f4jyC
-	 x9hOXLTR31sfjPzV2SYY6WFgNxnBy1K3PL91s+1msQhL74ZY0RJYnoSdLohnyjSpCf
-	 CRIEK4atexATnJoAPWP3ldksrGuijNNPT83Xb/bfC8UkWPwe+mgQGBxlwG3gB4u+Hd
-	 G+BfqM888p22gXW9qHKlRtHQ78FIBACuz3goeEVukeBPNbFLYxbSnZio95p9glDpy7
-	 BwbWHrad6Lnmw==
-Date: Fri, 29 Nov 2024 22:05:07 -0600
+	b=NNm2MA03H9b8RVh5VLTLFXarx3XQGz/j2gLksExWTT3MiyByTOlZwlelwEMfMV+8d
+	 CVPboGdKOoKqS+IzG2VqSHVuVmtnB2WyaLpqfsORRvQabDfuPPNhOO05Peg0khKP0x
+	 AXdgwmX8xqSZlzPTiyTMXpRZS8VCe3njDAIg+9ySTSu6ZJSv2ta+/aUPbbCxXFW4Xb
+	 h4y5Nq9YlrfAQEnnLWBJu+Oi1EHqlVXJZPB7iBoIjypVNSkJ5DhzoygmEucgon9rOf
+	 nvWEbE7arM9lyyB4AeSwY6KaQU4pQ7v4ROnDpsDWcqIeqzI5jokeQWFmy482E+TvNt
+	 oKd2X3X0H3aUw==
+Date: Fri, 29 Nov 2024 22:29:55 -0600
 From: Bjorn Andersson <andersson@kernel.org>
-To: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Mark Brown <broonie@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-spi@vger.kernel.org, quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com
-Subject: Re: [PATCH v2 1/2] dmaengine: qcom: gpi: Add GPI immediate DMA
- support
-Message-ID: <fbpdzrwmlmqhyblchgaq6etmnc5wjd3ierwmtrer5hnwjf7qb3@axgwdegmbs6z>
-References: <20241128133351.24593-1-quic_jseerapu@quicinc.com>
- <20241128133351.24593-2-quic_jseerapu@quicinc.com>
- <obv72hhaqvremd7b4c4efpqv6vy7blz54upwc7jqx3pvrzg24t@zebke7igb3nl>
- <1666035c-d674-43dd-bc33-83231d64e5f7@quicinc.com>
+To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+Cc: andi.shyti@kernel.org, quic_bjorande@quicinc.com, 
+	linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	quic_vdadhani@quicinc.com, vkoul@kernel.org
+Subject: Re: [PATCH v4] i2c: i2c-qcom-geni: Serve transfer during early
+ resume stage
+Message-ID: <lun7au32tizcahzridtmx2dv3qz6onpnstadla5sf44o7o4my7@s6joggbptwgw>
+References: <20241129074742.1844031-1-quic_msavaliy@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,86 +59,201 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1666035c-d674-43dd-bc33-83231d64e5f7@quicinc.com>
+In-Reply-To: <20241129074742.1844031-1-quic_msavaliy@quicinc.com>
 
-On Fri, Nov 29, 2024 at 05:02:22PM +0530, Jyothi Kumar Seerapu wrote:
-> On 11/28/2024 8:53 PM, Bjorn Andersson wrote:
-> > On Thu, Nov 28, 2024 at 07:03:50PM +0530, Jyothi Kumar Seerapu wrote:
-> > > diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
-[..]
-> > 
-> > >   	/* first create config tre if applicable */
-> > >   	if (direction == DMA_MEM_TO_DEV && spi->set_config) {
-> > > @@ -1763,14 +1767,32 @@ static int gpi_create_spi_tre(struct gchan *chan, struct gpi_desc *desc,
-> > >   	tre_idx++;
-> > >   	address = sg_dma_address(sgl);
-> > > -	tre->dword[0] = lower_32_bits(address);
-> > > -	tre->dword[1] = upper_32_bits(address);
-> > > +	len = sg_dma_len(sgl);
-> > > -	tre->dword[2] = u32_encode_bits(sg_dma_len(sgl), TRE_DMA_LEN);
-> > > +	/* Support Immediate dma for write transfers for data length up to 8 bytes */
-> > 
-> > And what happens if the developer writing the SPI driver forgets to read
-> > this comment and sets QCOM_GPI_IMMEDIATE_DMA for a 9 byte transfer?
-> In V2 patch, QCOM_GPI_IMMEDIATE_DMA is set based on
-> QCOM_GPI_IMMEDIATE_DMA_LEN only.
+On Fri, Nov 29, 2024 at 01:17:42PM +0530, Mukesh Kumar Savaliya wrote:
+
+Your recipients list is broken because you crafted the arguments list to
+git send-email by hand. Please read go/upstream and adopt the b4 tool
+for sending patches.
+
+> pm_runtime_get_sync() function fails during PM early resume and returns
+> -EACCES because runtime PM for the device is disabled at the early stage
+> causing i2c transfer to fail. Make changes to serve transfer with forced
+> resume.
 > 
+> Few i2c clients like PCI OR touch may request i2c transfers during early
 
-I assume you mean "patch 2/2". So, what happens if someone refactors the
-SPI driver in the future, will they read this comment?
+What is "PCI OR"? Do you mean "PCI or" (or "PCIe and touch"). I'm not
+sure why touch would need access to the I2C bus during early resume.
 
-> As per Hardware programming guide, immediate dma support is for up to 8
-> bytes only.
-> Need to check what is the behavior if we want to handle 9 bytes using
-> immediate dma feature support.
+> resume stage. Any i2c client can keep transfer request very early resume
+> stage like noirq phase of PM. To serve the transfer, register an interrupt
+> with IRQF_EARLY_RESUME and IRQF_NO_SUSPEND flags to avoid timeout of
+> transfer when IRQ is not enabled during early stage.
 > 
+> The actual usecase over i2c is(Not in upstream yet), PCIe client ->
 
-I'm saying that you have a comment here which says that the caller must
-not pass len > 8. Write that comment in code to avoid mistakes - either
-now or in the future.
+This text goes into the git history, which means that this statement
+(not in upstream yet) will become incorrect before this patch becomes
+needed.
 
-> > 
-> > > +	if ((spi->flags & QCOM_GPI_IMMEDIATE_DMA) && direction == DMA_MEM_TO_DEV) {
-> > 
-> > Why is this flag introduced?
-> > 
-> > If I understand the next patch, all DMA_MEM_TO_DEV transfers of <=
-> > QCOM_GPI_IMMEDIATE_DMA_LEN can use the immediate mode, so why not move
-> > the condition here?
-> > 
-> > Also ordering[1].
-> > 
-> > 	if (direction == DMA_MEM_TO_DEV && len <= 2 * sizeof(tre->dword[0]))
-> > 
-> > 
-> Sure, thanks for the suggestion.
-> so, instead using "QCOM_GPI_IMMEDIATE_DMA_LEN" need to use " 2 *
-> sizeof(tre->dword[0])" for 8 bytes length check.
+> PCIe Driver -> I2C driver.
+> PCIe client needs certain configurations over i2c after powering on the
+> PCIe switch.
+
+In the first sentence you use the word "client". In the second you use
+"client" and "switch", but I think all three cases refer to the same
+component.
+
+The description is much better, but I think you can polish the wording
+to make it even clearer - remember, this will become the only
+documentation to why the code looks like it does; it's going to be read
+by people outside your team (and company), who hasn't been part of any
+discussions leading up to the patch, and it need to be clear why so they
+know what changes they can make.
+
+> As part of suspend it uses suspend_noirq() to turn off the
+> switch, because some PCIe clients do some transfers till suspend_noirq()
+> phase. And as part of resume_noirq(), it enables the power to the switch
+> and configures the switch again through i2c.
 > 
+> If pm_runtime_get_sync() is failing when runtime PM is not enabled, then
+> use pm_runtime_force_resume().
 
-Either one works, but I'm guessing that while 8 is the right number the
-reason for 8 is that the data is passed in 2 * dword.
+Tell us why, not what.
 
-
-The important thing is that you're encoding the length check here, so
-that the client can't by mistake trigger immediate mode with > 8 bytes.
-As a side effect, you no longer need the QCOM_GPI_IMMEDIATE_DMA flag and
-should be able to drop patch 2.
-
-> > [1] Compare "all transfers of length 8 or less, which are mem to device"
-> > vs "all transfers which are mem to device, with a length of 8 or less".
-> > The bigger "selection criteria" is the direction, then that's fine tuned
-> > by the length query.
-> > 
-> > > +		buf = sg_virt(sgl);
-> > 
-> > It's a question of style, but I think you could just put the sg_virt()
-> > directly in the memcpy() call and avoid the extra variable.
 > 
-> Okay, i will directly put sg_virt() in memcpy().
+> Co-developed-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+> ---
+> Link to V3: https://lore.kernel.org/all/20241119143031.3331753-1-quic_msavaliy@quicinc.com/T/
+> 
+> v3->v4 :
+>  - Enhanced commit log by explaining client usecase scenario during early resume.
+>  - Covered 'usage_count' of 'struct dev_pm_info' under CONFIG_PM to compile non PM CONFIG.
+> 
+> ---
+> Link to V2: https://lore.kernel.org/lkml/202410132233.P25W2vKq-lkp@intel.com/T/
+> 
+>  v2 -> v3:
+>  - Updated exact usecase and scenario in the commit log description.
+>  - Removed bulleted points from technical description, added details in free flow.
+>  - Used pm_runtime_force_resume/suspend() instead customized local implementation.
+>  - Added debug log after pm_runtime_force_suspend().
+> 
+> ---
+> 
+>  v1 -> v2:
+>  - Changed gi2c->se.dev to dev during dev_dbg() calls.
+>  - Addressed review comments from Andi and Bjorn.
+>  - Returned 0 instead garbage inside geni_i2c_force_resume().
+>  - Added comments explaining forced resume transfer when runtime PM
+>    remains disabled.
+> ---
+> 
+>     V1 link: https://patches.linaro.org/project/linux-i2c/patch/20240328123743.1713696-1-quic_msavaliy@quicinc.com/
+> ---
+> ---
+>  drivers/i2c/busses/i2c-qcom-geni.c | 47 ++++++++++++++++++++++--------
+>  1 file changed, 35 insertions(+), 12 deletions(-)
+> 
+> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+> index 7a22e1f46e60..94f875aca9aa 100644
+> --- a/drivers/i2c/busses/i2c-qcom-geni.c
+> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
+> @@ -695,17 +695,29 @@ static int geni_i2c_xfer(struct i2c_adapter *adap,
+>  			 int num)
+>  {
+>  	struct geni_i2c_dev *gi2c = i2c_get_adapdata(adap);
+> +	struct device *dev = gi2c->se.dev;
+>  	int ret;
+>  
+>  	gi2c->err = 0;
+>  	reinit_completion(&gi2c->done);
+> -	ret = pm_runtime_get_sync(gi2c->se.dev);
+> -	if (ret < 0) {
+> -		dev_err(gi2c->se.dev, "error turning SE resources:%d\n", ret);
+> -		pm_runtime_put_noidle(gi2c->se.dev);
+> -		/* Set device in suspended since resume failed */
+> -		pm_runtime_set_suspended(gi2c->se.dev);
+> -		return ret;
+> +	/* Serve I2C transfer by forced resume if Runtime PM is enbled or not */
 
-Try it out, pick the option that look the best.
+That is what the code says too, document why.
 
-Regards,
+> +	if (!pm_runtime_enabled(dev) && gi2c->suspended) {
+> +		#if (IS_ENABLED(CONFIG_PM))
+
+This condition doesn't look right.
+
+> +		dev_dbg(dev, "Runtime PM is disabled hence force resume, pm_usage_count: %d\n",
+
+Is the information that runtime PM being disable relevant information
+for the average user? I guess it can be useful to have a debug print
+telling you that power is being forced on... But this could probably be
+expressed more succinct.
+
+> +			atomic_read(&dev->power.usage_count));
+> +		#endif
+> +		ret = pm_runtime_force_resume(dev);
+> +		if (ret)
+> +			return ret;
+> +	} else {
+> +		ret = pm_runtime_get_sync(gi2c->se.dev);
+> +		if (ret < 0) {
+> +			dev_err(gi2c->se.dev, "error turning SE resources:%d\n", ret);
+
+You don't need "SE" in this sentence, but "turning on resources" would
+sound better. Please also include a space after ':'.
+
+> +			pm_runtime_put_noidle(gi2c->se.dev);
+> +			/* Set device in suspended since resume failed */
+> +			pm_runtime_set_suspended(gi2c->se.dev);
+> +			return ret;
+> +		}
+>  	}
+>  
+>  	qcom_geni_i2c_conf(gi2c);
+> @@ -715,8 +727,20 @@ static int geni_i2c_xfer(struct i2c_adapter *adap,
+>  	else
+>  		ret = geni_i2c_fifo_xfer(gi2c, msgs, num);
+>  
+> -	pm_runtime_mark_last_busy(gi2c->se.dev);
+> -	pm_runtime_put_autosuspend(gi2c->se.dev);
+> +	/* if Runtime PM is disabled, do force_suspend() else autosuspend the driver */
+
+That is what the code says.
+
+> +	if (!pm_runtime_enabled(dev) && !gi2c->suspended) {
+> +		ret = pm_runtime_force_suspend(dev);
+> +		#if (IS_ENABLED(CONFIG_PM))
+> +		dev_dbg(dev, "Runtime PM is disabled hence force suspend, pm_usage_count: %d\n",
+> +			atomic_read(&dev->power.usage_count));
+> +		#endif
+> +		if (ret)
+> +			return ret;
+> +	} else {
+> +		pm_runtime_mark_last_busy(gi2c->se.dev);
+> +		pm_runtime_put_autosuspend(gi2c->se.dev);
+> +	}
+> +
+>  	gi2c->cur = NULL;
+>  	gi2c->err = 0;
+>  	return ret;
+> @@ -833,9 +857,8 @@ static int geni_i2c_probe(struct platform_device *pdev)
+>  	init_completion(&gi2c->done);
+>  	spin_lock_init(&gi2c->lock);
+>  	platform_set_drvdata(pdev, gi2c);
+> -
+> -	/* Keep interrupts disabled initially to allow for low-power modes */
+
+This comment looks incorrect. But your change doesn't change the related
+fact. Please send a separate commit removing it - with proper
+motivation.
+
+Thanks,
 Bjorn
+
+> -	ret = devm_request_irq(dev, gi2c->irq, geni_i2c_irq, IRQF_NO_AUTOEN,
+> +	ret = devm_request_irq(dev, gi2c->irq, geni_i2c_irq,
+> +			       IRQF_NO_AUTOEN | IRQF_EARLY_RESUME | IRQF_NO_SUSPEND,
+>  			       dev_name(dev), gi2c);
+>  	if (ret) {
+>  		dev_err(dev, "Request_irq failed:%d: err:%d\n",
+> -- 
+> 2.25.1
+> 
+> 
 
