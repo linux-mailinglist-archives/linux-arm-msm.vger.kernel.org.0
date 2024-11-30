@@ -1,79 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-39651-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39652-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8E0789DEE16
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Nov 2024 02:46:04 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id B51CF9DEE19
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Nov 2024 02:46:15 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DCA0C163B40
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Nov 2024 01:46:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7569B280E3F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Nov 2024 01:46:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 922E51547FE;
-	Sat, 30 Nov 2024 01:44:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C90D3155742;
+	Sat, 30 Nov 2024 01:44:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UVFq0tvO"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QvhQx38h"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D461537CE
-	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Nov 2024 01:44:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 255DD155330
+	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Nov 2024 01:44:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732931087; cv=none; b=o14Q6iwqBytIpY/ajElIdvAiYQ0r7f60paLvneI+cjrjK2VnhBdajoQEK+AsdXvjhOxCBJ/clH8dzvIdpeBoWP6zqbfazBMsJBFufttQuP2MzsrR5JvN/lkQwKWuSLOHx8HQdz5Gwy7nV/duzTfBOawiLSKZSv5umBK2BQNmPF0=
+	t=1732931089; cv=none; b=rsyYYGZuSNx+1OUXh51dV0TTNVcjDvlXAphC8hXpE1+q8fu6429VhOmOU5buv9a3JP1LwdoqqVLC7k7iTqK9Yxph56ANnFnlmescPyxlj23IJ4cbGwlTqeMJwi15rNiafMVNFnDerH3SSkTeij6Hhu/3jfAlMJXpJY6EQSn+Q+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732931087; c=relaxed/simple;
-	bh=YYLN/oY9BZAxpdyRliEHDR3RyIM74cdws5RTMVCcPsE=;
+	s=arc-20240116; t=1732931089; c=relaxed/simple;
+	bh=cwHGT8dW2fufdVjeg8a7nAT+ERCmV5CuNqJS2eXbLFY=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=uW/kdj3eZ5TV+oYQniyJX4DnsrZ0a/Or94n4KtQJqjbm/06cS+jE/mqeO+T5s5Igln5Y5sSIuYTdl9EUrH2wCqNMXjcntgPUBRe95EWiWnESjSnwXS3/W/aszMt96y7UUyI87xh6FbIvwojzL9km26NycuMPkrOoTvtkndrOBss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UVFq0tvO; arc=none smtp.client-ip=209.85.167.46
+	 In-Reply-To:To:Cc; b=qsJsrDdkjzK5CnGMazJ9RmmzMBW0Zw6QUCMBj325sE/PzM/NOlJCOurSZoeibsCtskI4yXCDaapkx4o7JupwHgSHulD5VYWhy5C+3fPOKkB0eiwLmeNmLos9p5tuD+QLijxt4e80uufiSrYHR22dwKi6eCCSO+tC8m2cugf8jEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QvhQx38h; arc=none smtp.client-ip=209.85.167.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-53de035ea13so2444039e87.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Nov 2024 17:44:45 -0800 (PST)
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-53ddb99e9dcso2466664e87.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Nov 2024 17:44:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732931084; x=1733535884; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1732931086; x=1733535886; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=MTWn/nT9EEx5ji/oK3o3CEmYZEGrJrLG4ik4y/ciX9k=;
-        b=UVFq0tvOQdWxwjL9E8TyiLrf3i6Hnn8vv7W8gdWnQECdGRHphx5rBwnlPT+uKgBCTv
-         KkYaV0fAD5tO4Glyr1YcF6HO8Bu97rrwviKV6IoksbOKLc7CLtbbqvBCooAkrZlVMNJw
-         j69DWUPUi3/B7a6LrJenz1FAkTOfcy/3f5m4pfkbK19Zl81juXLazrV9LfgUB9u5yF8u
-         eIYHQrZ4EJWalZ56KLFi8HJ61ICMSi+WnEUCwyHA6EgPKL7XPv8vXWZEPjEu3hlpZdBj
-         iZskljEkK2a7tVHPDdQlOa+U37313USaLWt8bbo16C7XOqcCww1/foqGU/y8c31MuXVU
-         ZU/A==
+        bh=pUBAhw6SG3dsXPAFEzT6mizjETu8TuHeYIqS7qX2o8o=;
+        b=QvhQx38hQZi8XKLRmJi6P1rM4TAkRkIZAFAy4yZnv3+OUr2rbdSfuCRV3Vwh6/2LrA
+         kyBnVNmX0hqibKFLiCSZMZhvBckiUxgYTvlGymvi3vyxOv3Oj4JYsfJjZrpbIytu6Q47
+         YZU7+JplFt85KgETQY4NnhuAyOcM02NIC/GYFb8jm4MY4BeZJmxJRSM6cRs7C8XNlHSg
+         +eaN/y/Intyxxtl4gDcZZbHTD2cd9dcCUBhwEvSp4jS+sEm8MvIVA5LVLxQOI5uPZEe9
+         Y+pn5lYzOq8KAWk+EbGC9MyTz2rkqKaGF7cDnci6tPo/vuEz4pF+Srph/zN1kZ9w7uwK
+         akuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732931084; x=1733535884;
+        d=1e100.net; s=20230601; t=1732931086; x=1733535886;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=MTWn/nT9EEx5ji/oK3o3CEmYZEGrJrLG4ik4y/ciX9k=;
-        b=O6joxGCbAG1oQwi/JbynBBv2k6OiUV9V1GTF01/qJkzxbytiNhH2wQUruGmBYxzMVl
-         PeCeL6kpTpHuXviiUpTKbwjrRlOt0+9qTygdSlQusjbRn1DV2CTJtJ2eGjmuNjb5XNfR
-         F0EBUgo+dhGmI2XBXxi1XKzdc8echG4qOBBWcMeMAgzpFOB+j/JCzOJUDP12YcG4Ke2p
-         gXDMS1MOT8LM2dW/h7JZqFkTLH87jzEVpjpKLg90jB61vWilXdRZRQNGYxcvnrQYBH9x
-         4x15yrju4lgU+qemMcd7SbJiRebsobN5/C0vRlNlk7FxJb76nJPmNi7bo5W7GcQ9UwtD
-         T2ZA==
-X-Forwarded-Encrypted: i=1; AJvYcCVc+wlHlV831VnHD87YnRszFeWs8fxyxYu5QiQBU9uSi220bmu/OeYLS4+gpIj30SQgKZVihgM/s0+CyVOo@vger.kernel.org
-X-Gm-Message-State: AOJu0YxHRoGH5Y36w9vK51sIzKK0K4tLJpeLfQhpPZ8ZPJBi1zd0ExtS
-	oYKJdxipMCa/f+pmRFkB5hQvAyUWmQHGhNDElpaxIV45yns4vEL92YzFAUjLoAg=
-X-Gm-Gg: ASbGncurwlLZpdIKAeVxxKYjWaoa1DG/tOgZet653dgoeHhKx7B42HF6RJEUHGx5gKS
-	t0m3XydpymVMJ1/Ekmm/oTYteBjS9DY+4u5mSqlXuVvcJyK9ooqvz3IjVPHe8Bv2/y6qKpqvvi3
-	9AVHXiryJ/eH1yJ+XykMIJ9nOgDgp1nvd8ndhZHwD7hTFF85giV9TA/qma8CiEI8yir44EBtuVu
-	FtH6YFCquxLAI3GSB7oLFREVy2lih9mAuXcYgTMAUZ0sRmz4vUaSU9CYA==
-X-Google-Smtp-Source: AGHT+IHxK4AqlIHGoaltvjTU2ndTrXdw78O5oSUktEdK3p/i//LfD3gUSjJQ1/NVvL7gNHg75RbqAQ==
-X-Received: by 2002:a05:6512:b26:b0:53d:e4cc:f5f0 with SMTP id 2adb3069b0e04-53df00dd50emr8130191e87.33.1732931083811;
-        Fri, 29 Nov 2024 17:44:43 -0800 (PST)
+        bh=pUBAhw6SG3dsXPAFEzT6mizjETu8TuHeYIqS7qX2o8o=;
+        b=bswpQTE1dRmuVEolUb7l6BoI6XYFo7lYWBreqSyuPS5NCPEAYYDjZ2+n0UWs6B1Fn7
+         YRv4YOGcM4Qx9Qgkz7owMn/vXraanMPyYDPes5URwVvGvWYgM8CL58LQyN3hk94fJlBp
+         eW1DJ3BsQr7MSnWmUGFXmS+KNQj3D5KOuQPcmzBDQYSCxVyd9bUauauswE9lMr4VOTdh
+         v8rBVKRmFiDXNMpvoDGhXC9smx/tNX4vuXBik6So6Lbq/0Xwuc1zpy8ZDu3OlZw1I0YB
+         Edld4oSgMk/ADQyqhsR4x1MpA7NXhEIc6bZ+PCkwhS5Q7IXZH7Y3CmxU/N9ggXo9+g4m
+         HM3A==
+X-Forwarded-Encrypted: i=1; AJvYcCUYsyF7cLGbsLi4EVZWMTHA+qDMRdgA7QgGraCuFPpk9MvR3MAI50UWmbz7IrEI1/ErfI63x7coOAB2uvmU@vger.kernel.org
+X-Gm-Message-State: AOJu0YxqwREuE13pWxlAWL9yzqEOAAPfZnAYcvKmRYT+UJCzqd2GsmPK
+	mVwQ4M329W2XRJliyUG6PPDJ+q5fQMtlM+UeoKoS/ReCHjtaTS5krvjVAXuiksQ=
+X-Gm-Gg: ASbGncuCCmwMeXYI8WRWk8DB+qG83IVtiQP+4apk/zKCvYerJqamZuTyrO21UNkhthQ
+	gyHYrouBVhFfJczZlE0NTsIL1Tf6FiZ5kiZZ8pILQ9B2oBP8ry3VzbwreclYS9q5+Gs3F3QrO8C
+	J3zdDhbdlXuHXBgc5o+iuky37uKIr39Ly7L7UG6Wz2lf2o6pTj34U684R7qQJyQTy7M6FAcEC42
+	LdwcImVOq9jTEMAXnJv/8JcdeqrMFDvNWvo4PKZ3QmhHsI4vNC+swaGPw==
+X-Google-Smtp-Source: AGHT+IEPi+X71Xr5ydlpsLZUQnmiaX1oplH8lKawDP7TUOsj75l8a1wW89AwaS9jiffqrAY1bOLP7Q==
+X-Received: by 2002:a05:6512:2203:b0:53d:e43c:9c64 with SMTP id 2adb3069b0e04-53df00de2b2mr8648482e87.30.1732931086317;
+        Fri, 29 Nov 2024 17:44:46 -0800 (PST)
 Received: from umbar.lan ([192.130.178.90])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53df64a0742sm631946e87.261.2024.11.29.17.44.41
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53df64a0742sm631946e87.261.2024.11.29.17.44.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Nov 2024 17:44:42 -0800 (PST)
+        Fri, 29 Nov 2024 17:44:45 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sat, 30 Nov 2024 03:44:19 +0200
-Subject: [PATCH v2 07/31] arm64: dts: qcom: sar2130p: correct sleep clock
+Date: Sat, 30 Nov 2024 03:44:20 +0200
+Subject: [PATCH v2 08/31] arm64: dts: qcom: sc7280: correct sleep clock
  frequency
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -83,7 +83,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241130-fix-board-clocks-v2-7-b9a35858657e@linaro.org>
+Message-Id: <20241130-fix-board-clocks-v2-8-b9a35858657e@linaro.org>
 References: <20241130-fix-board-clocks-v2-0-b9a35858657e@linaro.org>
 In-Reply-To: <20241130-fix-board-clocks-v2-0-b9a35858657e@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -117,42 +117,42 @@ Cc: Leo Yan <leo.yan@linux.dev>, Joseph Gates <jgates@squareup.com>,
  linux-kernel@vger.kernel.org, 
  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=916;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=918;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=YYLN/oY9BZAxpdyRliEHDR3RyIM74cdws5RTMVCcPsE=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnSm3zvZ1CMfQQQXt/FKizxvxGmQVmawDmA5ho8
- E5VSxlMeG2JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ0pt8wAKCRCLPIo+Aiko
- 1UFWCACbOlzc7IlAG8oCNlJCwQl136NIunQVh+fy1O/hu13ZJFfYCegoa7LpJEjDn4wcrpr4z9p
- w2aVs2ptzbkgUiRVe6T+FxsHmhMrNEo8Cv9/rRVsowcz/iTYSNwGFJKu6JgnLQE8LebOTRvX+jk
- T5HP+ZPfNLwmcHHCC1Ehffa01vtJeleYbZNG8yCHYtCw6bhW9I8OmKVa8Hh2vGgP97BH5KzY1LC
- iNJ6IIsh6I8rf8F7apys1tmTE2/4MZNGHhjy9EDbL9iLX6qw1vyUrC8hcfzof2Dc/+j9jw0F8TL
- 5UOmVeQG9t19apBQNNSZfEek3wLqsX3kugYkOCUigI2hqQ7s
+ bh=cwHGT8dW2fufdVjeg8a7nAT+ERCmV5CuNqJS2eXbLFY=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnSm30t8SRmKOAuhUMuhgKfV7LHUvg4Wstu57so
+ qZdzx/edM6JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ0pt9AAKCRCLPIo+Aiko
+ 1aLuB/sECWiL2m2/MeQbPYtq6Q21sh6UP8on1KMocDd5jR4v6VgOSCOz7vTlB4l5sLpMYAXD5gp
+ Gr8eB6kG/oGpdemcwWSVhmNvmySIxn1Ad0JMVx+PtXf9Pq7yCQhtYDzCQfbk2LuhW+c03cbq/5Y
+ jrLwQC4RKjNyK9OS3grA3nKD5exT8t0y3XUKtIe2iuqnszRHuVxeXcQuAJcV1YHyyjP0EYYc4Q/
+ CiW5lhaL0VYBdVZJNsiFgrgfsnsHE9vo9noJ1g9LC+Y5O6tLzsDB/WVwJIlunnAaHTaQZVuovop
+ l6TzjBSgDM5Skn3CZZmyFNW5DkFut5i91qCIcxJizY5V0cx6
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-The SAR2130P platform uses PM8150 to provide sleep clock. According to the
+The SC7280 platform uses PMK8350 to provide sleep clock. According to the
 documentation, that clock has 32.7645 kHz frequency. Correct the sleep
 clock definition.
 
-Fixes: be9115bfe5bf ("arm64: dts: qcom: sar2130p: add support for SAR2130P")
+Fixes: 7a1f4e7f740d ("arm64: dts: qcom: sc7280: Add basic dts/dtsi files for sc7280 soc")
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sar2130p.dtsi | 2 +-
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sar2130p.dtsi b/arch/arm64/boot/dts/qcom/sar2130p.dtsi
-index 56f40e8ecae561d49331e51c57581d517dbc9b51..dd832e6816be85817fd1ecc853f8d4c800826bc4 100644
---- a/arch/arm64/boot/dts/qcom/sar2130p.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sar2130p.dtsi
-@@ -37,7 +37,7 @@ xo_board: xo-board {
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index 55db1c83ef5517f82504816baeee583695065225..d12e0a63fd087461a33622e8771422c8acfdbc25 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -83,7 +83,7 @@ xo_board: xo-board {
+ 
  		sleep_clk: sleep-clk {
  			compatible = "fixed-clock";
- 			#clock-cells = <0>;
 -			clock-frequency = <32000>;
 +			clock-frequency = <32764>;
+ 			#clock-cells = <0>;
  		};
  	};
- 
 
 -- 
 2.39.5
