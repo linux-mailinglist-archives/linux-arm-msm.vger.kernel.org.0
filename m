@@ -1,92 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-39734-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39735-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4D4BA9DF1F5
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Nov 2024 17:18:06 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E1BF49DF217
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Nov 2024 17:55:17 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EDB752813E3
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Nov 2024 16:18:04 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A0A52162AED
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Nov 2024 16:55:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FCC419E7E0;
-	Sat, 30 Nov 2024 16:18:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 351881922F1;
+	Sat, 30 Nov 2024 16:55:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NfUoPrSu"
+	dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b="DagGykFe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mout01.posteo.de (mout01.posteo.de [185.67.36.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4819E42AA4;
-	Sat, 30 Nov 2024 16:18:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 569431586C8
+	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Nov 2024 16:55:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.67.36.65
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732983482; cv=none; b=KbYJEpFBhwmiQgB/EfE1seyNEPyzc60QYxVJifVQW/gHHdVO7yAiO1ZeLWlQL+8fFoDyTJ73/9MTQ6JK+at3kXP19GrhAlvVsJQHcio+74aW83I4C12UWtlnkk2ChTJUB1Zo/8dwFA/moFEWYHw2DdUILhsPvudjK1y1+OUSmnc=
+	t=1732985715; cv=none; b=Vy0pyaDg6CVkZLblMbC3/7JnlwEQU3Pz2N5YRuKF2nbj959N6WUL/VgRdRMB0y5FRubLyYYzwZK9Ra53WUZ5KACUkNdduY11VwbP+VmnDATkm668Bl1/V+mrZjs3ZOZv5thJM3ENoFJv4w3fzbG72Wwz10aWGgj5Dh4EOAprQIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732983482; c=relaxed/simple;
-	bh=5EcFezNDIfLoX+AW+e5HPHB1UA8mXxmsmQZ1je4SRTE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JgN2RsvcCsEn8ktOHnjaSLylI3FiZ8FM1fnA6V6pvBf5e+wGA+roWShAJKKsmCLUhHk7+/9tRSSJIVKYRXFhhmftKt766VZzpM+W/S/NYWeVgL5X96IetcYdufc7VTDiS38ad6v89wYQdlMEYMSHZV+Ewn5vkV64tetNJeBPcBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NfUoPrSu; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7095DC4CECC;
-	Sat, 30 Nov 2024 16:18:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1732983482;
-	bh=5EcFezNDIfLoX+AW+e5HPHB1UA8mXxmsmQZ1je4SRTE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=NfUoPrSuDdkStWo2G8h/BgmpRn+psCwcgoPLdf/JpyN/SvrnNnY7twPksLNd06DtX
-	 5pyxApO7cDaDhUqwclpiX6m2XC2yrsm1ha6lgFmC9zdDJuH7odPoBb1m5ldp81Gf0m
-	 LAW82aUZE3UTy5dKclwgckrcGOUeCPFNWEPOZm4U=
-Date: Sat, 30 Nov 2024 17:17:58 +0100
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, kw@linux.com,
-	arnd@arndb.de, lpieralisi@kernel.org, shuah@kernel.org,
-	kishon@kernel.org, aman1.gupta@samsung.com, p.rajanbabu@samsung.com,
-	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-	bhelgaas@google.com, linux-arm-msm@vger.kernel.org, robh@kernel.org,
-	linux-kselftest@vger.kernel.org, stable+noautosel@kernel.org
-Subject: Re: [PATCH v2 1/4] PCI: qcom-ep: Mark BAR0/BAR2 as 64bit BARs and
- BAR1/BAR3 as RESERVED
-Message-ID: <2024113005-oboe-widow-d61e@gregkh>
-References: <20241129092415.29437-2-manivannan.sadhasivam@linaro.org>
- <20241129195537.GA2770926@bhelgaas>
+	s=arc-20240116; t=1732985715; c=relaxed/simple;
+	bh=6b8dwwzoDtPzKi5hwA2f/Ha1FNt8Kzg6K7AtuxiLD8I=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=GO/ex2qu+aT8NA6pdVVxXhT2ht/BDDr3hpHv04kHGUHGxiJJ/ViDkk8ianTPCcueUPlpkHBJX7+AlGY8Yk7DFUkXRNwlHHaa3gd0vndUvVidfIBRBJNWaZQBzCzKX5DGX7OFkNYJUY4wdunomYVsYbnYyozDp9QsOATXPTbyBGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de; spf=pass smtp.mailfrom=posteo.de; dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b=DagGykFe; arc=none smtp.client-ip=185.67.36.65
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=posteo.de
+Received: from submission (posteo.de [185.67.36.169]) 
+	by mout01.posteo.de (Postfix) with ESMTPS id 1E0CB240027
+	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Nov 2024 17:49:04 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.de; s=2017;
+	t=1732985344; bh=6b8dwwzoDtPzKi5hwA2f/Ha1FNt8Kzg6K7AtuxiLD8I=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:
+	 Content-Transfer-Encoding:Content-Type:Autocrypt:OpenPGP:From;
+	b=DagGykFe7NIOYeFu7cdfRfKQyiXxANwwVy4P4zi3XbW4K04APqPISk1slbiE75XGE
+	 HF9EjcboEz0oXkx9Jz/PxGyzGjuLP4NsPpw94hiyMkbd3dC+xBaga7tAioN2wbVhg8
+	 9tXFFtJ+QcwZ5gIy+ochoy8ggMxPCKyS9DtuDovVQxcIfzwnuWrBgEo/mjybo/11bP
+	 xzNDaadatLtnGEfVf+pKxndgvNOALfXmrB0KlqMHPBRfdW5PvV4makXmE1IwqOQHoM
+	 RSRyF0EN/TAyxXAH8NQMrpnm38EiWaxiDBB44TUJew/dt42OXwq+Xx4T5w8b7zZ0a0
+	 EoEBh7/k62i1g==
+Received: from customer (localhost [127.0.0.1])
+	by submission (posteo.de) with ESMTPSA id 4Y0wxC1Rbjz9rxG;
+	Sat, 30 Nov 2024 17:49:02 +0100 (CET)
+From: Alexander Reimelt <alexander.reimelt@posteo.de>
+To: linux-arm-msm@vger.kernel.org, Petr Vorel <petr.vorel@gmail.com>
+Cc: Petr Vorel <petr.vorel@gmail.com>, Konrad Dybcio <konradybcio@kernel.org>
+Subject: Re: [PATCH 1/1] arm64: dts: qcom: msm8994-angler: Enable power key,
+ volume up/down
+Date: Sat, 30 Nov 2024 16:49:02 +0000
+Message-ID: <4943360.OV4Wx5bFTl@stinkpad>
+In-Reply-To: <20241123221708.862901-1-petr.vorel@gmail.com>
+References: <20241123221708.862901-1-petr.vorel@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241129195537.GA2770926@bhelgaas>
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Autocrypt: addr=alexander.reimelt@posteo.de;
+  keydata=xjMEZg0fSRYJKwYBBAHaRw8BAQdAIcaNTdj3NWDe5HQPCUs6oYyQygAJWP9LCzhr+C7RwMrNG2Fs
+  ZXhhbmRlci5yZWltZWx0QHBvc3Rlby5kZcKZBBMWCgBBFiEEM+Wy6sI/mP5S0zIFHqi3OKk8uRIF
+  AmYNH0kCGwMFCQWjo9cFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQHqi3OKk8uRJ8ogD9
+  EVg4zgfmC2SqXCgms6LETAzVX4CrAS8yMhyd7Md921cA/R8lhm9B96RYgA7MvFPFJb1T6JFY75Jg
+  QLXrtIE5llwHzjgEZg0fSRIKKwYBBAGXVQEFAQEHQBGDuxZLOTvppxyM4G18fSR6xzT0xkkPOia7
+  Bh6L1vAAAwEIB8J+BBgWCgAmFiEEM+Wy6sI/mP5S0zIFHqi3OKk8uRIFAmYNH0kCGwwFCQWjo9cA
+  CgkQHqi3OKk8uRIa1wD8CZDdCAKXstgXY96eeSSP7MecEF5TBdmWOiVgjlEIpoEA/RnGuDaj06B1
+  F51wyGAjYXSmn5qFoNHu3yXyLUkFz1ME
+OpenPGP: url=https://posteo.de/keys/alexander.reimelt@posteo.de.asc
 
-On Fri, Nov 29, 2024 at 01:55:37PM -0600, Bjorn Helgaas wrote:
-> On Fri, Nov 29, 2024 at 02:54:12PM +0530, Manivannan Sadhasivam wrote:
-> > On all Qcom endpoint SoCs, BAR0/BAR2 are 64bit BARs by default and software
-> > cannot change the type. So mark the those BARs as 64bit BARs and also mark
-> > the successive BAR1/BAR3 as RESERVED BARs so that the EPF drivers cannot
-> > use them.
-> 
-> "Default" implies an initial setting that can be changed, but you say
-> "by default" and also "software cannot change the type."  Can they be
-> anything *other* than 64-bit BARs?
-> 
-> If they're hardwired to be 64-bit BARs, I would just say that.
-> 
-> > Cc: stable+noautosel@kernel.org # depends on patch introducing only_64bit flag
-> 
-> If stable maintainers need to act on this, do they need to search for
-> the patch introducing only_64bit flag?  That seems onerous; is there a
-> SHA1 that would make it easier?
-> 
-> > Fixes: f55fee56a631 ("PCI: qcom-ep: Add Qualcomm PCIe Endpoint controller driver")
+Hello Peter,
 
-Yes, having a sha1 that has that "feature addition" would be great,
-surely that isn't 6.13-rc1, is it?
+The changes are very similar to the H815.
+Looks good to me.
 
-thanks,
+Best regards
+Alex
 
-greg k-h
+
 
