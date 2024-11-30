@@ -1,79 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-39759-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39760-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 196949DF421
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Dec 2024 00:57:27 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B91939DF424
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Dec 2024 00:57:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8F2A8B21C4F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Nov 2024 23:57:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7A84C2815BE
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Nov 2024 23:57:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D59E91C1ABC;
-	Sat, 30 Nov 2024 23:55:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56E791BF7F9;
+	Sat, 30 Nov 2024 23:55:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eIUlA+WE"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WjY6g7QG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E474F1BF7F9
-	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Nov 2024 23:55:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 935FF1C1F11
+	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Nov 2024 23:55:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733010955; cv=none; b=GZrObOMAb1z/6+iy3uiCigg2U2/vGMZSZ5J/biepyVEm3CKIcjhQUi+8Oeax7OBpS31I8tK9vnbDXltK4Sc+s6KuiLfC80DyIXe/e9Laz3gr8s9KDFGRzN1yldKNWiiRgMDK9eCYHQjNhkTHtf6RC4139Bu6WuU0dAZgRZZmqTw=
+	t=1733010958; cv=none; b=Gac8gyvHbhOPgO/HPImHFy6UjIOz2UgDU0O4mleH4IeCCCkJDJGyKziV69RaijufinKqmuvEnpH2/bB4jM8HdY4Y6EfKDFsWSkRqguTnh7FR9E7C5310aCBLlIPO/UQQSKPQ6FBtZeVmevuoHOzlh15mTX0OUUuBT/+boVrEC84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733010955; c=relaxed/simple;
-	bh=d3Sl+FXytgREFItAwcczh3Q1vneGssZw9wmeXf8zqcs=;
+	s=arc-20240116; t=1733010958; c=relaxed/simple;
+	bh=lgKbIB6YZtC8eZYzJNVRgp7pi8XWpClyliAzF0BBx7c=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=iHfbHCxMZnnJw+Us5YdcXbBK3XD9+ioR4l+LVUip2ArQe9dAng6YyQlBBMKkAfk4S00mqNQHTWSqHvB9bI9fufQcuVTh/zMtuL28dS76R9INkERZh4doaHxj2vHu5n5JN4atEd8BMf9n9C/y+sTwvWPVWVicUS3zKPlaLbAkKEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eIUlA+WE; arc=none smtp.client-ip=209.85.167.43
+	 In-Reply-To:To:Cc; b=PHOChqjuD9bxn7uB/C4szx7lxbLrkZIKzW931DRySG8Dy3uDJWJ13s1C1x7/V6cjM4zfdTJoQs8NpQ8U1DBgwuaBHfBOE6HIBMtklx/r/hMUXgcx5y48gsUI+T24s6HYk6IYRubvyjq3lcKfy9VR8ZaSiOyLdqN/fDN9uVo3QEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WjY6g7QG; arc=none smtp.client-ip=209.85.167.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-53dde5262fdso3328429e87.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Nov 2024 15:55:53 -0800 (PST)
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-53ded167ae3so3457876e87.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Nov 2024 15:55:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733010952; x=1733615752; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1733010955; x=1733615755; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=IU6Gl7Dl4dmhuEZdQnvRmTEGRcXAkcJN0vDa70RMZrc=;
-        b=eIUlA+WE60ecrtZshtZ3cS2zJHP7ml84/Y8cdh3ZO9jNMWB9936y62LeNHObBZzzfq
-         BaJN+mfsSc9tdXftmrW633JyTtO1YVO2CoXxyX0ASCyzTfS2sAnWN9otcnwokaDrc85L
-         LuHn2lGRdaYql/piLFq843UXhm3rE7x7emAovxGG2Qhv3huYuWzajfyN4z7qtMlqoqmZ
-         +gaebchyYkTnYxkkGlOTrE+43u34+HhHI/5dX8YSwgALCI0JtCbaiimcA0t+UjClPUAJ
-         vW+Spq8RBT5ltpA77kRMXuun8wOzE+7LnvT9KZQZkAS9efuojlwy1uPxoCSbHHde2irU
-         eptA==
+        bh=IxPAXAkXtGSfHE+6MDrNppIG4p1UF1/hBXNkV/LR66A=;
+        b=WjY6g7QGJEL0Y1RELXFu2YHbkv7d0HUU+nqh2Z7eDTU6trvPj4BzhWtHy7MerdLP4h
+         dtTuRb5JJHN8Elljpj3nq2rQkHz6gGsDkAqfDSdyPzUnlvKzRltZqSt25yHU6e0VOr8l
+         1dZp8tbbGnb4eImF6DFSCzVq0hG8DWi4gjBwZt0BXKaBB6kpo3gMkjUwLq4Pkhj5MykT
+         KJ9xvmYdwOBZ82jzYxpv/Zdbz+QkQvt2ZmJ03zArt20OxOoMzBZSECwvT5Aljqi6lg2f
+         hiI/PxPHGXkU83OHkmOjTYJSpnHbx3C/nPmNDAfssDZP/bPn285CeiWyV0MTg3PloseU
+         RuZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733010952; x=1733615752;
+        d=1e100.net; s=20230601; t=1733010955; x=1733615755;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=IU6Gl7Dl4dmhuEZdQnvRmTEGRcXAkcJN0vDa70RMZrc=;
-        b=Q/17s7JnC4HQiB+I4HhaiO4rf1vF1qz1f6ej3x7fIKAMZkETDyYU2hOYG3KX2JiXZu
-         G0dYoFGhZ6HlhhidDBAy/1w5vYk57CW2xyp4+BiNL0WJccT6BhRmh2WhrY3o81NbOWjI
-         3ewfpxKwv2u260KDY9GB0JEPont1VMzK0gaoXHEw/aUnJHQLxl6bvFv4QyHJ/OjehsSc
-         Mxi2IqMVvIAqySxuDqi9JXk90yxdzfu0QI0u+SJSU83dGGPcgvxnHUxVe5V+bqmQgoGh
-         UToFxnpyZ8o+iNxhlkAaTRvD1GZ7jTUwUFl8Excv7A3GHL6UR9jNJ6Mwpdqw6oP4WgKV
-         KbHg==
-X-Forwarded-Encrypted: i=1; AJvYcCXfO2hFzU+eLN+yl9OK5/2Q+YZC2wp8DVynId9CwCWWbYwpBFbmL0T9kxNavtwwaNurD04yIyPvImrhzNv4@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx2XdbtRJlJIU5mW07E/FnQNXjJJx7htXrNG/Ewv6ukLPK8Rb1U
-	AabdHocPtnev9PgwhrZzlYAv2R0dI/fu6cn+HMDpED/Ht10V1G2Hlpz1qTqv2Sc=
-X-Gm-Gg: ASbGncuhLEngI6NxXC/UEdnjxOskKJW6rTTRgQtihO74ChMeJ/UL8smOPduR6+mRIRe
-	DnVDldBNZ/Beij1lDoWhpsa0kjFVDGMlihsn/UexwIQGyeSAuFEVnGnUT/5CYviwOlfOu9ugRag
-	8KG5pEnTIf1VygLljuXkq0edks0Dq1zyvO1PK/h9mFMjeEezYm56GVgVI8Y2H6N9BRN45YKVqgp
-	OUkrF08GTeiH8xMY3XHxB+m1aPuFuzlhnkzKu/QO7Jf0vcfLdadNb8S9Q==
-X-Google-Smtp-Source: AGHT+IF0apDYRdHR7KZD93hjbqsmabdU0vO1rz/bbiVNjvW03bvvtexlWq6c4CLLSgjKkBK26w1wwQ==
-X-Received: by 2002:a05:6512:2210:b0:53d:ed6c:26ea with SMTP id 2adb3069b0e04-53df00c79a2mr8823937e87.8.1733010952229;
-        Sat, 30 Nov 2024 15:55:52 -0800 (PST)
+        bh=IxPAXAkXtGSfHE+6MDrNppIG4p1UF1/hBXNkV/LR66A=;
+        b=JhalUgI3As3ZvN7R6tAYkjiURxNn4Bz5eqUBKfsNECOI6n6Jz9u1VU7KjCjv+rGFTi
+         7itqLWrUk/DRJXiz1kpIw9HE4/ueJdQGZL/KmQNUndXqa+yWCTkv1HT/iJJXcqd9puRd
+         VKRF7MiekMnY48Ta0xIPRZas/Ag4zDiUHbJYDM0UxXZNTCJjW+BxJY/gWyBND91a6Bgg
+         8m92CCor9USDmkEbjYah5ZjHvLOvsz1GglzIEjjpTJN2+5KQJAFlzSFkXWZdLzia1Pgj
+         Tz/aQxgl31OH3JoYPnk3dsk/ourvazdKzJ75jmjpmCBabHQjv1xuCEDEyxhMUX+QhtU+
+         Mo/A==
+X-Forwarded-Encrypted: i=1; AJvYcCWD9i5tJfNKL6EPg6wgyaggusUMWWqy+aTveVbPIWmNYKaGgMSCO++g2imPhmTJU5OHGwDmlMNBKip27V02@vger.kernel.org
+X-Gm-Message-State: AOJu0YwTXDWhMA1WrDlVxFukwZRTeviTe/XwfVqOHCk86SJ5JF5T1iat
+	qhLlwIKzUYSw0Hru+TMKufHVubi3eRSOX21BR/0ED9B1t1G7br2LQ6Sm+Bpm3Po=
+X-Gm-Gg: ASbGncvYXiNMNH0kVT94ZaicBoQxzF4Uu4+NUsQwLB5Mg6/kzi1yfEy/sE3qI3FKLVo
+	S76qciS/YjNFg9hl/4xVALJpm6/Ir05XQOPCLBeKa60emjY5gbkYEPpfQsrp/DRR8AsjO8CeenR
+	y6U4r1vBHLomNC0KVS/TXgHztfo0B+9nP+PEhpK/X0UPo7xAjOtlzYwnwori8sDCNHlfLLPq2V0
+	cLRBM/98xgM739krgBpXEnyiRm2BYjb32+l4UygIBOFakNO1FstJuHMtQ==
+X-Google-Smtp-Source: AGHT+IEiP7LHRrhx+1WZHRcdbmuf6q9u5MgJwOgShs4CTI9tBcamTyp7ARZo+XbTG2Yuz34sCo+pVA==
+X-Received: by 2002:a05:6512:2355:b0:53d:e41a:c182 with SMTP id 2adb3069b0e04-53df00dc9afmr8720884e87.31.1733010954752;
+        Sat, 30 Nov 2024 15:55:54 -0800 (PST)
 Received: from umbar.lan ([192.130.178.90])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53df649647dsm900706e87.195.2024.11.30.15.55.49
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53df649647dsm900706e87.195.2024.11.30.15.55.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 30 Nov 2024 15:55:50 -0800 (PST)
+        Sat, 30 Nov 2024 15:55:53 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sun, 01 Dec 2024 01:55:26 +0200
-Subject: [PATCH 09/10] drm/sti: hdmi: use eld_mutex to protect access to
+Date: Sun, 01 Dec 2024 01:55:27 +0200
+Subject: [PATCH 10/10] drm/vc4: hdmi: use eld_mutex to protect access to
  connector->eld
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -83,7 +83,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241201-drm-connector-eld-mutex-v1-9-ba56a6545c03@linaro.org>
+Message-Id: <20241201-drm-connector-eld-mutex-v1-10-ba56a6545c03@linaro.org>
 References: <20241201-drm-connector-eld-mutex-v1-0-ba56a6545c03@linaro.org>
 In-Reply-To: <20241201-drm-connector-eld-mutex-v1-0-ba56a6545c03@linaro.org>
 To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
@@ -119,16 +119,16 @@ Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
  intel-xe@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
  freedreno@lists.freedesktop.org
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=962;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1060;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=d3Sl+FXytgREFItAwcczh3Q1vneGssZw9wmeXf8zqcs=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnS6Xuuw73RrqNIAMj0Vd/VMNJk3KOMIlLIxeOc
- 0MnV4M5vNuJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ0ul7gAKCRCLPIo+Aiko
- 1Qv/B/4/5rLxZCjkqK+Zdlhp2+yqWP4ISG1uXt/zd2hXrjtxgOkih9U6WKdNa6Xoz/QuAEp+lKl
- oVznmDwzY+sTM1b4PwOdG5DBpKIgyXf5k7n1y/cyABsH0BdP5Tzn74sUaSZBQgnUGSYhGgKdDc/
- YAAgPkbRyOmTtniJolkAmqMYl0NihkgeU26RZ+pfNtFLhks7GHDURf3XLOq7x45EuwGaROru3jt
- SmIhwz9wcEA5r2kDJq5DDr04T/9Y0XgMWhQKi1kbsG7wK9OJlgiYKe7dSOEQ94g/A4Aet9kG185
- zd4yXm2idTSpwhIe2gyR7gCJgHyrA/FNOXXul+pcZq+liRGD
+ bh=lgKbIB6YZtC8eZYzJNVRgp7pi8XWpClyliAzF0BBx7c=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnS6XuosVGIxLVzwgwJF8Kv6UpGUOBhiO+tdbfv
+ UsZEOLUAHeJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ0ul7gAKCRCLPIo+Aiko
+ 1V2qB/9kxbcsSq/MwiRkIP4VkcbtJ6bvhuQ7s59Dqdt1LcK7+6hylNonFqksssAfCJeGxk6Rz41
+ PgtsXMXUIVf52olUBxeNBxH2OY+HNW4u5Q21SkNlRJh2M0Jmo7qcQnvJomIEF/JLLln7LE967u4
+ LJzHO8MY0j+0/Z9PGmgWmBObyPWPr4XVV5y/Wl9HZN+30NHViJDwIBGE1n0gmK2YS1053O/fbr7
+ UN4+r2D3Hx6EkhG2ZPFdgyrFznaQnOHP4P43x3PUt3CBr+Op2Wwa39k2bJPTyZy7IXk/JXc3yhM
+ OB9LNQpibUSlojNLFeX59UmOP5dzC3uJw9JhdOJFJ+2D7v9S
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
@@ -138,19 +138,21 @@ order to protect connector->eld from concurrent access.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/sti/sti_hdmi.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/vc4/vc4_hdmi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/sti/sti_hdmi.c b/drivers/gpu/drm/sti/sti_hdmi.c
-index 847470f747c0efad61c2ebdc3fb3746a7a13a863..3c8f3532c79723e7b1a720c855c90e40584cc6ca 100644
---- a/drivers/gpu/drm/sti/sti_hdmi.c
-+++ b/drivers/gpu/drm/sti/sti_hdmi.c
-@@ -1225,7 +1225,9 @@ static int hdmi_audio_get_eld(struct device *dev, void *data, uint8_t *buf, size
- 	struct drm_connector *connector = hdmi->drm_connector;
+diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
+index b9fc4d981cf4d682bedd978795cf7284d2650e74..7295834e75fb1ab0cd241ed274e675567e66870b 100644
+--- a/drivers/gpu/drm/vc4/vc4_hdmi.c
++++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
+@@ -2221,9 +2221,9 @@ static int vc4_hdmi_audio_get_eld(struct device *dev, void *data,
+ 	struct vc4_hdmi *vc4_hdmi = dev_get_drvdata(dev);
+ 	struct drm_connector *connector = &vc4_hdmi->connector;
  
- 	DRM_DEBUG_DRIVER("\n");
+-	mutex_lock(&vc4_hdmi->mutex);
 +	mutex_lock(&connector->eld_mutex);
  	memcpy(buf, connector->eld, min(sizeof(connector->eld), len));
+-	mutex_unlock(&vc4_hdmi->mutex);
 +	mutex_unlock(&connector->eld_mutex);
  
  	return 0;
