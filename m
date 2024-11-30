@@ -1,235 +1,187 @@
-Return-Path: <linux-arm-msm+bounces-39683-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39684-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 740F09DEED9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Nov 2024 04:48:18 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 297F29DEEDE
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Nov 2024 04:59:16 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2AB982818E8
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Nov 2024 03:48:17 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CE964163460
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Nov 2024 03:59:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 90B547080A;
-	Sat, 30 Nov 2024 03:48:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D0A07082D;
+	Sat, 30 Nov 2024 03:59:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XdjfO7w2"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HpN7QEkZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2DAE4409;
-	Sat, 30 Nov 2024 03:48:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D49163A9;
+	Sat, 30 Nov 2024 03:59:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732938494; cv=none; b=hHceVGnTHhJAhOOY5qNvOVgWQXIg6xOGspgt6SF5yEp7vGi61AYYLocnCm/mXtYPmm7ASYBvb9UU0OIseXyx9mhQDgULf+WSscUrJST/nGBy4LAkjECn7VOoyEVwEsWFMv1pGW1oTBFQ802KunN+O7Uhh4zRQ35UG6KBTY0LK2g=
+	t=1732939152; cv=none; b=b5CQvGGP0OlT98wpZF57qCnr8kAW4xwXwmzwxeAqrUPpfP8e8YKY3yHTpDIYlduyICBE/UeJFhhy1s+fjVypUSVgPp3AVhY1IPM7Tbw20vjXFc1DDpwfjjcug2xx+JH3Dc8Lud5OxutxSpZG9nhPWIhfAk5Bbq5mu6gNB7CmwY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732938494; c=relaxed/simple;
-	bh=1u1yknuIjL5wQT7LjOQNoAmLdWofmhNaxLsmkQqQNZQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=szOO9eeUQ+2LoWLHEF4GwoQKO+R8wHqjMsZB4/Puv8VTMHYX3m5sYe4IZa2fRrDVI/A1TstZTLW6ZZC2xpNTU9vVTdfSkrHbJDZh0YajBsNjvfWrkGDuXU4I3dvNVewTtcA+QPRhROtPgkY0XJ30cnfKlNZVN7BqpYr5e4JVpa8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=XdjfO7w2; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AU2q2Th001942;
-	Sat, 30 Nov 2024 03:47:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	yCQ2SiwnMZW1pZ368yk8MW7kCeYayQpW3AOXamZsQjM=; b=XdjfO7w2/d9P+v8B
-	S07lDjXSnAU7Upnld4Emeh62cmIgRIz5j3smZ6zXBOQiefi5qvV25wLtUNNN2EEq
-	jZ7rdvIAq8qXzB7nCgWPA1J7TH5bPKkv/ZMuk+UU4+oSPJoPyVPsRPQclTYvX4Yp
-	m7OL3+501BvwddXjDPKK55ObhYMJ3LDbeB/3K2DWgmu0myoQ9XAz0on+XNKlkN/b
-	I+rbgmNCS6dpfjh65AfHhCNSbxsRT0uvjGc9uMvUqU9BEXApA9pyulfUSUPwCy5s
-	YcOZX4T5SxV89qffka98dBuKlE/uv1WKg3ttAJSjWWaNxOdEXG6wHl8nUq+nbpNW
-	N0e12Q==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 437ta2r24f-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 30 Nov 2024 03:47:54 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4AU3lr9o008676
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 30 Nov 2024 03:47:53 GMT
-Received: from [10.253.74.19] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 29 Nov
- 2024 19:47:48 -0800
-Message-ID: <a7ec9426-8c8a-49b3-9916-4c2660c38e49@quicinc.com>
-Date: Sat, 30 Nov 2024 11:47:46 +0800
+	s=arc-20240116; t=1732939152; c=relaxed/simple;
+	bh=0GOBdCGWWrSL7+vSv3osD3eqYgmfi9cR5h0KH+QDgL4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hNf2wj7X8fNqrtkPHsHrS+YrENI0Z8r2Z4mINUqioOe45iwatWYFVcqCHb12TwO1Jgy3DIhk/yYN1XFDEmWYTJsFMHoVRJE2VoiTabo2qwk0KcHicef8a4YexCsd+0APRiov8Dd3xtx8kpFE5Pk4CuV/kKGSzk8cjpsRbKdXiSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HpN7QEkZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB561C4CECC;
+	Sat, 30 Nov 2024 03:59:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1732939151;
+	bh=0GOBdCGWWrSL7+vSv3osD3eqYgmfi9cR5h0KH+QDgL4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=HpN7QEkZZr+sR0ngqdiBz3KXhOzEvzNde7uFgolSfCYKZ6FmCwqzGvyNUPdqv9iDE
+	 H/AYrxVzeL2HrWDVIIE/tM0mwpFvjU1lLYEQGus2cy3vQozDJgx1LijfOfOpTiO7RG
+	 WecoDuYVrHgS7nRC1gsfuTuQrC4eiAbAg/33LfQQKUVm+MBH0cm+OraoHSVs513cI5
+	 2m1susl6PHvBM1Yh4Q3VD9UcU4mZCqOy/MmIAGUKB6lb9fvepyf+xWvJeWM0dyhAqq
+	 epF6hAgZ02eAthApQzNcEpjTD7NhUMd4DyFN6GcJfNoG+rvLo27qzM5y3gTVWcrDLi
+	 UmvB2LvQxhQeA==
+Date: Fri, 29 Nov 2024 21:59:08 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Tingwei Zhang <quic_tingweiz@quicinc.com>
+Cc: Song Xue <quic_songxue@quicinc.com>, Vinod Koul <vkoul@kernel.org>, 
+	Kishon Vijay Abraham I <kishon@kernel.org>, Manu Gautam <mgautam@codeaurora.org>, 
+	Vivek Gautam <vivek.gautam@codeaurora.org>, kernel@quicinc.com, linux-arm-msm@vger.kernel.org, 
+	linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] phy: qcom-qusb2: Add regulator_set_load to Qualcomm
+ usb phy
+Message-ID: <5tbevb5wv2s43pccytv4qol4yhq4s7iw2mmqp23vt3ujqd6xev@hkioqmwoitbd>
+References: <20241121-add_set_load_to_qusb_phy-v2-1-1c5da1befec0@quicinc.com>
+ <vbuo2yel2pdcwnmz32f4t5pb6v3ptt2bcs2t6ybab2jxnkd6e7@rjnsbawj4zpb>
+ <18e40154-f4ea-4100-9f4f-9c9aa5e251d7@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] dt-bindings: bluetooth: add 'qcom,product-variant'
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Marcel Holtmann <marcel@holtmann.org>,
-        Luiz Augusto von Dentz
-	<luiz.dentz@gmail.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        "Balakrishna
- Godavarthi" <quic_bgodavar@quicinc.com>,
-        Rocky Liao
-	<quic_rjliao@quicinc.com>, <quic_zijuhu@quicinc.com>,
-        <linux-bluetooth@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <quic_mohamull@quicinc.com>
-References: <20241120095428.1122935-1-quic_chejiang@quicinc.com>
- <20241120095428.1122935-2-quic_chejiang@quicinc.com>
- <454tdpuglu23nmxfqqesv42h5rk3vqiji7spo3naf2djqwojqt@6x3ram3lnlkq>
- <fb5bc38b-83b3-4924-b1d0-39219a2927b4@quicinc.com>
- <CAA8EJpqAOD_+SLG2LbiodWOs28_rquvMefmSH5CY1yB_rkiZPg@mail.gmail.com>
-Content-Language: en-US
-From: "Cheng Jiang (IOE)" <quic_chejiang@quicinc.com>
-In-Reply-To: <CAA8EJpqAOD_+SLG2LbiodWOs28_rquvMefmSH5CY1yB_rkiZPg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: s_qNxJtoX2dZ6plOiyh5CSbKM8o8HTuz
-X-Proofpoint-GUID: s_qNxJtoX2dZ6plOiyh5CSbKM8o8HTuz
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 bulkscore=0
- lowpriorityscore=0 suspectscore=0 mlxscore=0 impostorscore=0
- malwarescore=0 adultscore=0 priorityscore=1501 mlxlogscore=999
- phishscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2411300029
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <18e40154-f4ea-4100-9f4f-9c9aa5e251d7@quicinc.com>
 
-Hi Dmitry,
-
-On 11/21/2024 12:38 PM, Dmitry Baryshkov wrote:
-> On Thu, 21 Nov 2024 at 06:02, Cheng Jiang <quic_chejiang@quicinc.com> wrote:
->>
->> Hi Dmitry,
->>
->> On 11/20/2024 6:43 PM, Dmitry Baryshkov wrote:
->>> On Wed, Nov 20, 2024 at 05:54:25PM +0800, Cheng Jiang wrote:
->>>> Several Qualcomm projects will use the same Bluetooth chip, each
->>>> focusing on different features. For instance, consumer projects
->>>> prioritize the A2DP SRC feature, while IoT projects focus on the A2DP
->>>> SINK feature, which may have more optimizations for coexistence when
->>>> acting as a SINK. Due to the patch size, it is not feasible to include
->>>> all features in a single firmware.
->>>>
->>>> Therefore, the 'product-variant' devicetree property is used to provide
->>>> product information for the Bluetooth driver to load the appropriate
->>>> firmware.
->>>>
->>>> If this property is not defined, the default firmware will be loaded,
->>>> ensuring there are no backward compatibility issues with older
->>>> devicetrees.
->>>>
->>>> The product-variant defines like this:
->>>>   0 - 15 (16 bits) are product line specific definitions
->>>>   16 - 23 (8 bits) are for the product line.
->>>>   24 - 31 (8 bits) are reserved for future use, 0 currently
->>>
->>> Please use text strings instead of encoding this information into random
->>> integers and then using just 3 bits out of 32.
->> Ack. Originally intended to make it more flexible for future use. It can be
->> text strings for current requirement.
+On Fri, Nov 29, 2024 at 06:26:30PM +0800, Tingwei Zhang wrote:
+> On 11/29/2024 12:43 AM, Bjorn Andersson wrote:
+> > On Thu, Nov 21, 2024 at 04:09:27PM +0800, Song Xue wrote:
+> > > Set the current load before enable regulator supplies at QUSB phy.
+> > > 
+> > > Encountered one issue where the board powered down instantly once the UVC
+> > > camera was attached to USB port while adding host mode on usb port and
+> > > testing a UVC camera with the driver on QCS615 platform. The extensible
+> > > boot loader mentioned that OCP(Over Current Protection) occurred at LDO12
+> > > from regulators-0 upon powered on board again. That indicates that the
+> > > current load set for QUSB phy, which use the regulator supply, is lower
+> > > than expected.
+> > > 
+> > > As per QUSB spec, set the maximum current load at 30mA to avoid overcurrent
+> > > load when attach a device to the USB port.
+> > > 
+> > > Fixes: 937e17f36a32 ("phy: qcom-qusb2: Power-on PHY before initialization")
+> > > Signed-off-by: Song Xue <quic_songxue@quicinc.com>
+> > 
+> > The patch looks good. But if we describe the regulator(s) with
+> > regulator-allow-set-load; and not all the consumers vote for load, the
+> > sum of the load when USB phy is disabled goes to 0 and we will enter
+> > LPM.
 > 
-> No, fixed-format data isn't flexible. Fine-grained properties are.
-> Please define exactly what is necessary rather than leaving empty
-> holes "for future expansion".=
+> That's exactly the issue we encountered on QCS615 ride. Qualcomm UFS driver
+> sets load while USB phy doesn't set load. That's the reason we raised this
+> patch.
+> > 
+> > For this reason we're not doing any load requests today. Can you confirm
 > 
->>>
->>>>
->>>> |---------------------------------------------------------------------|
->>>> |                       32 Bits                                       |
->>>> |---------------------------------------------------------------------|
->>>> |  31 - 24 (bits)   |    23 - 16 (bits)   | 15 - 0 (16 bits)          |
->>>> |---------------------------------------------------------------------|
->>>> |   Reserved        |    0: default       | 0: default                |
->>>> |                   |    1: CE            |                           |
->>>> |                   |    2: IoT           |                           |
->>>> |                   |    3: Auto          |                           |
->>>> |                   |    4: Reserved      |                           |
->>>> |---------------------------------------------------------------------|
->>>>
->>>> Signed-off-by: Cheng Jiang <quic_chejiang@quicinc.com>
->>>> ---
->>>>  .../bindings/net/bluetooth/qualcomm-bluetooth.yaml          | 6 ++++++
->>>>  1 file changed, 6 insertions(+)
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml b/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
->>>> index 7bb68311c609..9019fe7bcdc6 100644
->>>> --- a/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
->>>> +++ b/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
->>>> @@ -110,6 +110,12 @@ properties:
->>>>      description:
->>>>        boot firmware is incorrectly passing the address in big-endian order
->>>>
->>>> +  qcom,product-variant:
->>>> +    $ref: /schemas/types.yaml#/definitions/uint32
->>>> +    description:
->>>> +      specify the product information for driver to load the appropriate firmware
->>>
->>> DT describes hardware. Is this a hardware property?
->>
->> It has been added to identify the firmware image for the platform. The driver
->> parses it, and then the rampatch is selected from a specify directory. Currently,
->> there is a 'firmware-name' parameter, but it is only used to specify the NVM
->> (config) file. We also need to specify the rampatch (TLV file).
->>
->>
->> Can we re-use the "firmware-name"? add two segments like the following?
->> firmware-name = "rampatch_xx.tlv",  "nvm_xx.bin";
+> When I grep regulator_set_load in Kernel, there are 27 hits in drivers. You
+> are correct, it will trigger issue when some consumers set load while some
+> don't.
+> However, how can we prevent other drivers outside of Qualcomm to use
+> regulator_set_load?
+
+We can avoid this by not specifying "regulator-allow-set-load" in
+DeviceTree.
+
+That said, this isn't the correct solution, we shouldn't use the
+hardware description to deal with implementation issues. It is however
+the currently chosen pragmatic solution, so feel free to follow this.
+
+> It will trigger the same issue.
+> Is there something we can do in regulator driver to prevent this issue? If
+> consumer doesn't set load, regulator works in HPM even another consumer set
+> load to 0?
 > 
-> I think this is the better solution
+> > that this works fine with a dtb where only HPM is permitted (as well as
+> > LPM and HPM)? If so I'd be in favor of us merging this change, but
 > 
-How about the following logic for handling 'firmware-name' property:
-1. If there is only one string in firmware-name, it must be the NVM file, which is used
-   for backward compatibility.
-
-2. If there are two strings in firmware-name, the first string is for the rampatch, and 
-   the second string is for the NVM.
-
-3. Due to variations in RF performance of chips from different foundries, different NVM
-   configurations are used based on the board ID. If the second string ends with boardid,
-   the NVM file will be selected according to the board ID.
-
-
-Here are two examples:
-
- firmware-name = "qca/QCA6698/hpbtfw21.tlv",  "qca/QCA6698/hpnv21.bin";
-In this configuration, the driver will use the two files directly.
-
-
- firmware-name = "qca/QCA6698/hpbtfw21.tlv",  "qca/QCA6698/hpnv21.boardid";
-In this configuration, the driver will replace boardid with the actual board information.
-If the board id is 0x0206, the nvm file name will be qca/QCA6698/hpnv21.b0206
-
->>
->> Or add a new property to specify the rampatch file?
->> rampatch-name = "rampatch_xx.tlv";
->>
->>>
->>>> +
->>>> +
->>>>  required:
->>>>    - compatible
->>>>
->>>> --
->>>> 2.25.1
->>>>
->>>
->>
-> 
+> Do you mean test with HPM only regulator and regulator which allows to be
+> set to HPM and LPM?
 > 
 
+Yes, please double check that your patch works with and without
+regulator-allow-set-load.
+
+Regards,
+Bjorn
+
+> > keeping the dts HPM-only until someone confirms that all consumers of
+> > these regulators specify load-votes.
+> > 
+> > Regards,
+> > Bjorn
+> > 
+> > > ---
+> > > Changes in v2:
+> > > - Removed "---" above the Fixes.
+> > > - Link to v1: https://lore.kernel.org/r/20241121-add_set_load_to_qusb_phy-v1-1-0f44f3a3290e@quicinc.com
+> > > ---
+> > >   drivers/phy/qualcomm/phy-qcom-qusb2.c | 13 ++++++++++++-
+> > >   1 file changed, 12 insertions(+), 1 deletion(-)
+> > > 
+> > > diff --git a/drivers/phy/qualcomm/phy-qcom-qusb2.c b/drivers/phy/qualcomm/phy-qcom-qusb2.c
+> > > index c52655a383cef008552ed4533b9f31d1cbf34a13..80f0d17c42717e843937255a9a780bbae5998535 100644
+> > > --- a/drivers/phy/qualcomm/phy-qcom-qusb2.c
+> > > +++ b/drivers/phy/qualcomm/phy-qcom-qusb2.c
+> > > @@ -722,16 +722,27 @@ static int __maybe_unused qusb2_phy_runtime_resume(struct device *dev)
+> > >   	return ret;
+> > >   }
+> > > +#define QUSB2PHY_HPM_LOAD 30000 /*uA*/
+> > > +
+> > >   static int qusb2_phy_init(struct phy *phy)
+> > >   {
+> > >   	struct qusb2_phy *qphy = phy_get_drvdata(phy);
+> > >   	const struct qusb2_phy_cfg *cfg = qphy->cfg;
+> > >   	unsigned int val = 0;
+> > >   	unsigned int clk_scheme;
+> > > -	int ret;
+> > > +	int ret, i;
+> > >   	dev_vdbg(&phy->dev, "%s(): Initializing QUSB2 phy\n", __func__);
+> > > +	/* set the current load */
+> > > +	for (i = 0; i < ARRAY_SIZE(qphy->vregs); i++) {
+> > > +		ret = regulator_set_load(qphy->vregs[i].consumer, QUSB2PHY_HPM_LOAD);
+> > > +		if (ret) {
+> > > +			dev_err(&phy->dev, "failed to set load at %s\n", qphy->vregs[i].supply);
+> > > +			return ret;
+> > > +		}
+> > > +	}
+> > > +
+> > >   	/* turn on regulator supplies */
+> > >   	ret = regulator_bulk_enable(ARRAY_SIZE(qphy->vregs), qphy->vregs);
+> > >   	if (ret)
+> > > 
+> > > ---
+> > > base-commit: decc701f41d07481893fdea942c0ac6b226e84cd
+> > > change-id: 20241121-add_set_load_to_qusb_phy-d1327c797ffe
+> > > 
+> > > Best regards,
+> > > -- 
+> > > Song Xue <quic_songxue@quicinc.com>
+> > > 
+> > > 
+> 
+> 
+> -- 
+> Thanks,
+> Tingwei
 
