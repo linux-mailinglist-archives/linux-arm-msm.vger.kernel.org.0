@@ -1,175 +1,200 @@
-Return-Path: <linux-arm-msm+bounces-39705-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39706-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id F1D419DEFF4
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Nov 2024 11:42:36 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 114649DEFF7
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Nov 2024 11:43:56 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AEFC31635BF
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Nov 2024 10:42:33 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5776FB21536
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Nov 2024 10:43:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A937A156F30;
-	Sat, 30 Nov 2024 10:42:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F1AF915665D;
+	Sat, 30 Nov 2024 10:43:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cAP30NXU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ksIB8+CL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4DA2156225
-	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Nov 2024 10:42:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B990828EA;
+	Sat, 30 Nov 2024 10:43:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732963352; cv=none; b=gzu14gkwvwI4QsEJRD1sPsDEOF8gJb+nqk4bZX3HdZB7kio09yb5O68F4mZeUBrEgaS51oN5IDkyMFP/2ztPklA9a9BHzruMtzeEA2wGbbUYbf0iiZ/AGiGHBKultMjH0X6NUoIzQ3x+MZKp2m4zfyt1mZ++Z4Ho324twhLv05Q=
+	t=1732963429; cv=none; b=I5QtOO7tFQW1cTnHwbQ3du0Jk3Gfu2XCXKbjlEbqchIPrerB9STsaim/Xw0e8Mg3j8jB+BGkZtgMR5KQlBWwcNm4YlEwrrXOt8uIKHE4BFz4hE5g/42haOSQCbZLf9qcy72vFmOUS3ewJe9x6bZwKekPGZFkjGcGp+IssE9LnwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732963352; c=relaxed/simple;
-	bh=z75So5WVYPLLMNQwnxBZPmytY0lky/GENGCw2mngOtI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fSluYAMF3Y1ooy3A3vkgmdUDK2PUicksD6JG3EK2FjYNn/xTd3oISJxWpR/MX8ExiZeZHCQf62pzh+5KAH1Dz994DtWvY3nBsQ+mhT4vK4wq7K3E3R8B1dMwTw/zuAb9BDehYA1v7ulMDh9KYROp7oZw/yhQwXIxpV38aGFtNGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cAP30NXU; arc=none smtp.client-ip=209.85.208.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2ffc357ea33so28499761fa.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Nov 2024 02:42:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732963349; x=1733568149; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=e+tgdJ0lNf5uJXDyx2na57DXS/0Gs3go1GJRqeuFoyM=;
-        b=cAP30NXUuja2eK/lAeJisCkoFbARuzbLITMqdnCTWkKyE56qMldotWZCVzdT9/gIT+
-         WL7eWGOzans7ILSVICxlSSjYzHYn56oYGYUQUyYiRpiG6hz4zyB1ogf6RGhoZdBL2ztq
-         0A+wUaJuAc5ggKgbxsPV49tSgZ1q2KvoTX/Mn/FbsAWXeHkKoCUYwVpqklAu5LWqTrEq
-         olNA3/vxVY02bMNTgS3c29I5c+vbokMpdD/8uKFzMvlbFlpfoa4u99E/u466grl9E3lt
-         ySWEf19kPh9gTEhTVMOyk2+H6NHLkh7kSO7e5hBTWLSpiBcrh8M3BbE7bm0Mmv/Onf50
-         qlkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732963349; x=1733568149;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=e+tgdJ0lNf5uJXDyx2na57DXS/0Gs3go1GJRqeuFoyM=;
-        b=ATMncpK3SN1An4ojTmUw9+p+iviqYQQ18A5AhTQSOkU8LXOgAQtfcqi9fEv/9arAMm
-         vLV4QJY7H2v0jNgRRgObHr4wv9KU1Hn4+CznaHg0ldvWIxlU0jyzaYYQjc4cKUGnCtJD
-         /EOPqVYiOFiRBAG7sMCTdeN5ZEgI3C4CsjGeOg/GMEVDkiA7oT2iYl4D+jl1Kq0z7HiG
-         Vgm5KPdwzxJL5DAOGYQ0gmlmn/Dc7DeZzdKZ3LWcbU5Jk0oEECD3kikNXa4bznnI0Z3E
-         1xJcELAJryUlC1B9X2YijSoYVId2d2Uwun5dH1CJpOAnsLPOT0870YvrvAnpN2XPLIn9
-         Z6mA==
-X-Forwarded-Encrypted: i=1; AJvYcCXDj8C4n1pr243B5N+suEy9whbnWletM64zeDuy+4B1D+tsI8w/qzSH00v/NyttvTnqOHxNI8R/jAPN4W8R@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy6xn6oo5CezeTYPIvnYKMF4UqvH9k/NSK8FJ5d8YZ0PFgXe5mm
-	QLtHLxk+QqK+MxJbe4xIyrFtCke6VbzwfQ4Jzeqno7syDubr+gvb+h6GGkskq/4=
-X-Gm-Gg: ASbGncuEDPUr78Nes0ViwDxyTnhKM+2QCUD9+x56amh/4CYpzLlKNYIq8EHtx3AtHw+
-	58I8gjk6vJIf5+vPFuJb+4pqp7ASCQ3CI6kbXRv+Eq+7qGitwnTn+Z+mYxMORbciATKr/TU9+Mv
-	SWn/22R17Tw9HDVI+OTm6HeBBzEuwVMjWDii5Dp+cGdYoS3Uoee41kDJVHluNeI3oo9Y1iakYPb
-	Zia6XcYK9vhvtYvNhOMKtTzIGFmCWwxHEyvsN2+ZtP5q1frojJADgX1xdMEhjpB1R07w9ldKnNk
-	/c8cTkR6X45+D8Mq3GnJa0/Np6h3Sw==
-X-Google-Smtp-Source: AGHT+IFcekxgU8h/tBcXQsoWXwT31IuqmouPc8u7PTpcXd1KOJ0o5hOEknnd49Db7H6F8g76yRff0Q==
-X-Received: by 2002:a05:6512:3085:b0:539:e9f8:d45d with SMTP id 2adb3069b0e04-53df01125d5mr8493039e87.52.1732963348703;
-        Sat, 30 Nov 2024 02:42:28 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53df64311a9sm732362e87.40.2024.11.30.02.42.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 30 Nov 2024 02:42:27 -0800 (PST)
-Date: Sat, 30 Nov 2024 12:42:24 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Stephan Gerhold <stephan@gerhold.net>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Leo Yan <leo.yan@linux.dev>, 
-	Joseph Gates <jgates@squareup.com>, Georgi Djakov <djakov@kernel.org>, 
-	Shawn Guo <shawn.guo@linaro.org>, Zac Crosby <zac@squareup.com>, 
-	Bastian =?utf-8?Q?K=C3=B6cher?= <git@kchr.de>, Andy Gross <andy.gross@linaro.org>, 
-	Jeremy McNicoll <jeremymc@redhat.com>, Rohit Agarwal <quic_rohiagar@quicinc.com>, 
-	Melody Olvera <quic_molvera@quicinc.com>, Bhupesh Sharma <bhupesh.sharma@linaro.org>, 
-	cros-qcom-dts-watchers@chromium.org, Stephen Boyd <swboyd@chromium.org>, 
-	Rajendra Nayak <quic_rjendra@quicinc.com>, Martin Botka <martin.botka@somainline.org>, 
-	Jonathan Marek <jonathan@marek.ca>, Vinod Koul <vkoul@kernel.org>, 
-	Tengfei Fan <quic_tengfan@quicinc.com>, Fenglin Wu <quic_fenglinw@quicinc.com>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Abel Vesa <abel.vesa@linaro.org>, 
-	Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>, Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, 
-	Sibi Sankar <quic_sibis@quicinc.com>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
-	Jun Nie <jun.nie@linaro.org>, James Willcox <jwillcox@squareup.com>, 
-	Max Chen <mchen@squareup.com>, Vincent Knecht <vincent.knecht@mailoo.org>, 
-	Benjamin Li <benl@squareup.com>, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Stephan Gerhold <stephan.gerhold@linaro.org>
-Subject: Re: [PATCH v2 01/31] arm64: dts: qcom: msm8916: correct sleep clock
- frequency
-Message-ID: <al3tckby2jg7imhieehqwemygf6y5csfg7xfjta7alawhwfqv7@6gha46tr3rhx>
-References: <20241130-fix-board-clocks-v2-0-b9a35858657e@linaro.org>
- <20241130-fix-board-clocks-v2-1-b9a35858657e@linaro.org>
- <Z0rnRC_BqgkE3w1P@gerhold.net>
+	s=arc-20240116; t=1732963429; c=relaxed/simple;
+	bh=JsEWPPVS3Tn2e8xjl6YAbjJAZSsxj83BULLAIhY9qjI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=EOxMaf9JOqfmSY6yczYaIa0MROOtMLyMSHA8AVCtlYFqPX4qnAUvRhgZSnIpZnbdZYkPxOclcOFrFYsottLHip1zLBJjaatO0dRl85dVOeEdxcmth7/2a4oYaP366bnJRVGQE0/S9MTu1E1EvZWxuV+t9YnggPgAMxVupDiYpk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ksIB8+CL; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5C15C4CECC;
+	Sat, 30 Nov 2024 10:43:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1732963429;
+	bh=JsEWPPVS3Tn2e8xjl6YAbjJAZSsxj83BULLAIhY9qjI=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=ksIB8+CLfgOJmCAKII/NrcrxK0Luz+4zOV+sGaWBCznVGYDWJMeN6MorY/Gc3YwIv
+	 N1xiojF6jeWgltB/FVE3vXqgMEUjCNrrHRcwnJ+C+93tuGUcwCdFQ2jVXZQ0p/b4Y/
+	 RQz5bA+DoTmCC8APzocCpkuphDOEWyHOg5cCIYwfaBBZRfJ//yPgcAhrI+vaT0Isnv
+	 4wLAgg3xEvVOHlpU233V00mVT0tFkH9AkjFLzCSlr7PeS2SWKIjQ/GvOgnTD3xBJ8E
+	 ZHn615c85M4vqZXdbisWVEsY43v/Xy4MViPUMzUZL+Zk7F9aIqvwQ+uojS15fbQI8E
+	 YkZvCNyR20TIA==
+Message-ID: <7778fea9-c127-428d-9653-e66e84f23c98@kernel.org>
+Date: Sat, 30 Nov 2024 11:43:34 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z0rnRC_BqgkE3w1P@gerhold.net>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 20/31] arm64: dts: qcom: ipq5018: move board clocks to
+ ipq5018.dtsi file
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Leo Yan <leo.yan@linux.dev>,
+ Joseph Gates <jgates@squareup.com>, Georgi Djakov <djakov@kernel.org>,
+ Shawn Guo <shawn.guo@linaro.org>, Stephan Gerhold <stephan@gerhold.net>,
+ Zac Crosby <zac@squareup.com>, =?UTF-8?Q?Bastian_K=C3=B6cher?=
+ <git@kchr.de>, Andy Gross <andy.gross@linaro.org>,
+ Jeremy McNicoll <jeremymc@redhat.com>,
+ Rohit Agarwal <quic_rohiagar@quicinc.com>,
+ Melody Olvera <quic_molvera@quicinc.com>,
+ Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+ cros-qcom-dts-watchers@chromium.org, Stephen Boyd <swboyd@chromium.org>,
+ Rajendra Nayak <quic_rjendra@quicinc.com>,
+ Martin Botka <martin.botka@somainline.org>,
+ Jonathan Marek <jonathan@marek.ca>, Vinod Koul <vkoul@kernel.org>,
+ Tengfei Fan <quic_tengfan@quicinc.com>,
+ Fenglin Wu <quic_fenglinw@quicinc.com>,
+ Neil Armstrong <neil.armstrong@linaro.org>, Abel Vesa
+ <abel.vesa@linaro.org>, Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Sibi Sankar <quic_sibis@quicinc.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Jun Nie <jun.nie@linaro.org>,
+ James Willcox <jwillcox@squareup.com>, Max Chen <mchen@squareup.com>,
+ Vincent Knecht <vincent.knecht@mailoo.org>, Benjamin Li <benl@squareup.com>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20241130-fix-board-clocks-v2-0-b9a35858657e@linaro.org>
+ <20241130-fix-board-clocks-v2-20-b9a35858657e@linaro.org>
+ <83990b97-3f37-47f0-9cc6-fdaa730a8df1@linaro.org>
+ <zdhevcnj6gszvaayhu2dghubwm23cdoyeik2dcnqo376gcstnz@xv46iu6l6yvu>
+ <90418b49-5b19-4bef-b0cd-398bb562aa8c@kernel.org>
+ <26lttxx7obu2oqvf4xnooqi3o7qwodhjzyjh4trjq5tlj2gzxs@uwihybmwbdid>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <26lttxx7obu2oqvf4xnooqi3o7qwodhjzyjh4trjq5tlj2gzxs@uwihybmwbdid>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Sat, Nov 30, 2024 at 11:21:56AM +0100, Stephan Gerhold wrote:
-> On Sat, Nov 30, 2024 at 03:44:13AM +0200, Dmitry Baryshkov wrote:
-> > The MSM8916 platform uses PM8916 to provide sleep clock. According to the
-> > documentation, that clock has 32.7645 kHz frequency. Correct the sleep
-> > clock definition.
-> > 
-> > Fixes: f4fb6aeafaaa ("arm64: dts: qcom: msm8916: Add fixed rate on-board oscillators")
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On 30/11/2024 11:26, Dmitry Baryshkov wrote:
+> On Sat, Nov 30, 2024 at 11:00:32AM +0100, Krzysztof Kozlowski wrote:
+>> On 30/11/2024 10:57, Dmitry Baryshkov wrote:
+>>> On Sat, Nov 30, 2024 at 10:29:38AM +0100, Krzysztof Kozlowski wrote:
+>>>> On 30/11/2024 02:44, Dmitry Baryshkov wrote:
+>>>>> IPQ5018 is one of the platforms where board-level clocks (XO, sleep)
+>>>>> definitions are split between the SoC dtsi file and the board file.
+>>>>> This is not optimal, as the clocks are a part of the SoC + PMICs design.
+>>>>> Frequencies are common for the whole set of devices using the same SoC.
+>>>>> Remove the split and move frequencies to the SoC DTSI file.
+>>>>>
+>>>>> Suggested-by: Bjorn Andersson <andersson@kernel.org>
+>>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>>
+>>>> This contradicts DTS coding style and all my existing review. Obviously
+>>>> that's a NAK from me. If you want to merge this patch, please kindly
+>>>> carry my formal objection for this and all following "move board clocks"
+>>>> patches:
+>>>>
+>>>> Nacked-by: Krzysztof Kozlowski <krzk@kernel.org>
+>>>
+>>> I'd kindly ask Bjorn to chime in as a platform maintainer.
+>>
+>>
+>> To change my NAK? NAK is still a NAK. We discussed it many, many times
+>> already. We have coding style for this explicitly mentioning this case.
+>> Could not be more specific... plus all my reviews for Qualcomm, NXP, TI,
+>> ST and other platforms. I would be quite unpredictable or unfair if I
+>> gave here some sort of exception while expecting different code from
+>> other platforms.
+>>
+>> Please carry my NAK.
 > 
-> Thanks for spotting this! This fix looks good independent of the more
-> controversial "arm64: dts: qcom: move board clocks to SoC DTSI files"
-> changes. Maybe move these to a separate series?
+> Of course. I didn't mean to drop your tag or your objection.
 > 
-> > ---
-> > arch/arm64/boot/dts/qcom/msm8916.dtsi | 2 +-
-> > 1 file changed, 1 insertion(+), 1 deletion(-)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> > index 5e558bcc9d87893486352e5e211f131d4a1f67e5..8f35c9af18782aa1da7089988692e6588c4b7c5d 100644
-> > --- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> > @@ -125,7 +125,7 @@ xo_board: xo-board {
-> > 		sleep_clk: sleep-clk {
-> > 			compatible = "fixed-clock";
-> > 			#clock-cells = <0>;
-> > -			clock-frequency = <32768>;
-> > +			clock-frequency = <32764>;
-> 
-> To be precise the PM8916 specification says the sleep clock is "The 19.2
-> MHz XO divided by 586". Maybe we can actually describe it that way with
-> a fixed-factor-clock?
-> 
-> 		sleep_clk: sleep-clk {
-> 			compatible = "fixed-factor-clock";
-> 			clocks = <&xo_board>;
-> 			#clock-cells = <0>;
-> 			clock-div = <586>;
-> 			clock-mult = <1>;
-> 		};
+> BTW, would it be possible for you to clarify the policy on external
+> references? I mean, is it fine for DTSI to reference a label which is
+> not defined within that file or within one of the files that it includes?
 
-I thought about it, but then it's also not complete truth (at least for
-some of PMICs, don't remember if that's the case for PM8916): there is
-an external XO and also there is an on-PMIC RC, which is further
-divided with PMIC actually selecting which source to use as a source for
-sleep_clk.
 
-> 
-> If we keep the fixed-clock with the hardcoded frequency I wonder if we
-> should put 32765 instead of 32764. If you calculate it exactly it's
-> slightly closer to 32765 than 32764. :-)
-> 
-> 	19200000/586 = 32764.505119453926 = ~32765
+It is fine, you have plenty of such examples of shared components like
+some audio blocks or PMICs.
 
-Well, I think according to the most typical rounding rules it is 32764.
+All Qualcomm PMICs DTSI (e.g. arch/arm64/boot/dts/qcom/pmi632.dtsi )
+reference them. Chromebooks are even "worse" here:
+arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
+Nothing gets included there but hundred of phandles!
 
-> 
-> Thanks,
-> Stephan
+Are you planning to "fix" these as well?
 
--- 
-With best wishes
-Dmitry
+These are just Qualcomm, but same cases are everywhere else.
+
+But *that's not even important* because I do not suggest to move clocks
+to DTSI. I suggest - and was almost always suggesting as best compromise
+- to follow DTS coding style by doing opposite of what this patch is
+doing. That's why I NAKed this and following patches, except last two
+which are different.
+
+
+Best regards,
+Krzysztof
 
