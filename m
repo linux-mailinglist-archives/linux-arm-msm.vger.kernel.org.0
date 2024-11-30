@@ -1,233 +1,186 @@
-Return-Path: <linux-arm-msm+bounces-39688-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39689-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 760DE9DEF55
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Nov 2024 09:24:53 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 712459DEF7E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Nov 2024 10:29:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E4E6FB21C18
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Nov 2024 08:24:50 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CF966B21638
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Nov 2024 09:29:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8125F14BF87;
-	Sat, 30 Nov 2024 08:24:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 48D8914F9FB;
+	Sat, 30 Nov 2024 09:29:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NHJt8hrc"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kaxo2LXi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBD02143871
-	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Nov 2024 08:24:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A2B77080A
+	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Nov 2024 09:29:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732955081; cv=none; b=LHXOcUyJIGZI2S9n6fc+dB5/pnVYx8LYg2TjVKSY+dr97bajpj6opH0kwE7sWkUknm+DN+Xqm3+AW4GDnTC/KXAwKvug6E3zh3KOQkLXPTxQgDWIk3eChkq1oz/V97icTYQdBs/hfSzaqFy9OAFrVMHGi7UqvcXUdyBMb35T95w=
+	t=1732958986; cv=none; b=awqTHwe5v52EypJyLedtGQoV5jNdfNVCvUfoU2yHp481NlCTlKMIJa07jI8WBBCkePScpdXUSuGH4RUjuxd+WtsteyAtOMUld70t0AoPixau8lU0WAq8vH6QE5kXj5GlCLTdzLWhkDEEB++gJjuiGltiP9Jbm4iyRG6hI5uWbXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732955081; c=relaxed/simple;
-	bh=T3ZEkR8FRmoGfS+iUyMyev1GAYYNn73koObaMJIbYTs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=biEXD6J5Jwd4OTcy8EINDhsdQqcfDfChj9Q80tYVw84hVufG8BhWeP0F4T3ZA/C7eVdbUTY8C61hU69OQYwQsad7GEG5+w3beu/OudQlfd/pDTSb5j31CkQRn0ff4+tRMuJnc0BWsv3/hKnTWIteDXi7PujAXJQR0Oi0E7QgCPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NHJt8hrc; arc=none smtp.client-ip=209.85.219.176
+	s=arc-20240116; t=1732958986; c=relaxed/simple;
+	bh=8S8NqFJcmk19vBi6hz6u1QtV0eh5xbfO3D1K8U7K38U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BJjgsAi5o8XYMqwH/4K20yxQlHwYiAi4nUmDjOpdX6H+FW/w+dsVWSf0zQ04h/UkPLc+13rUuUlcUmr2+vuISN0wDCUddl/UrNaNM1169s30jsRvogn9Qfi6CRbXnCmoaFEino/ub1uPheQ93HUrCbgIWXPC3egObTmwP8IdE3E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kaxo2LXi; arc=none smtp.client-ip=209.85.128.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-e3983426f80so1507656276.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Nov 2024 00:24:38 -0800 (PST)
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-434a29ecbceso2892215e9.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Nov 2024 01:29:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732955077; x=1733559877; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=H/ULrCe/2Ff2FSpV/AO7lLO8UIbyUN2jMxQuSykRyzA=;
-        b=NHJt8hrciPsj4dP5MblfovlRQUFihV/MU8C/dhYWcMpQrTzHiWR22MuxIc62cGSRnR
-         xbOjWKkivNTo9KZpDd+Lu1X31zAVKLJvjlnk+zuaO9rwnsciaCqn/i08AGNOpzfjnfif
-         wASpwo/Rq9ZIxxEoZdDMh0gj95Rc+CqPvj5Pt/3RuM9i/ZI9l6mpEJvR2K/Zbd4FodZV
-         SRlKzpyyYIBO+SYS+7GUmm8IZs3X4f8VE50rm/hHdE6suSbd9hpKC7xDqw8EwAay0Wx0
-         Z1J/Lu3efgKuhai4e6o45CB/LA34ccTHYr0qe3jceyLlDW1i76F4F79xyataFk82nqUt
-         2uOg==
+        d=linaro.org; s=google; t=1732958982; x=1733563782; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=FO8MN/OOdM9uSwx0W1RkFiw2siggznBougNaykngYTo=;
+        b=kaxo2LXi2g867DD6YceK/1EtaOu256XbIulHnHTY+4beIXUorP2U/wPq+NqWWol1iH
+         ZfHjc/bIjK6qj/+RWhI/FQEVBzZ3CCBZ7hEZiXveqCYePgAiVtcTYbA1+wYKDNhm5xTG
+         58gWvzQwioiN2z64Q6o7K8HlvXdkInm1HIKrjoh92if9h6zi9sd1PLFWuvUZx7b8U9C8
+         c0ZleLk97gEr2wF5+LV5PmUPb5K1SEbS6LnLugo1NfMaXaXmSUwHPKXJEr/GEYlPuv86
+         5xNS4ie9r+sJ2tgtIyQmcR6tfVxtm9nNQ4QPhWInjKC9JOT6OWKgoFOhAPZkPPMlcjTE
+         1YmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732955077; x=1733559877;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1732958982; x=1733563782;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=H/ULrCe/2Ff2FSpV/AO7lLO8UIbyUN2jMxQuSykRyzA=;
-        b=ISWjJLdLTy+n+bT6blttgXXWDf0MWp53wRPlOsr3hMSRuDCketSp7DIsF1qe9j9B3m
-         +o/tHR3/VBut0QZ3zzcya95gcUAg8I+2ZB4hnqCoUY8+RVz/6U+YolWfbhNSvm/qQ2MG
-         JvrActRjqjx+rgsAMCxL07nboybhsf0a4ahDgVZ+eqZLFmvKls5deYleuBiulfPrKc6n
-         aHKJBHRpeMvllrT+v84CZEmPhc64+ZtodJTdaWH7OeljNb3zlO+AboVAeHRSPIJDmoa8
-         twilRiQ4/u5Z6aA51Ny1gwvxNr+GoRLYeX6huhq8l7aE2hVAuIcHltZAhJg9v2h57h6C
-         di5w==
-X-Forwarded-Encrypted: i=1; AJvYcCVkZ23iAey5eeE4iQxmnOMV4/pCS71cZFVlWwEcfpVDgwT6Vr15EbOtWjvcH43dF0psa1vyrkefeA5dOOTa@vger.kernel.org
-X-Gm-Message-State: AOJu0YzB8hi6kKyK25c03VASdpt2UgnD4003l6ser35Hea7fvNqEhwW8
-	QAh1JjY5gJctzMnEH/11Q5T2S2ybJbRMN1F/LI4SIxKyczHzzfK8388pKqgZFLf0yT04YXmzWm6
-	tMYrkdnzt31HdddC0Wi9GHWOlOnxpeeusWJYT+Q==
-X-Gm-Gg: ASbGncv0P6RTMcrarrugw41wCA7W+DOgWs+76K8K7zYqZ0pd80pkNQvQu5rSZaI/dY2
-	e7VekDD7XIGqMD+nd9GpMuYERmtFmes+0
-X-Google-Smtp-Source: AGHT+IHFtwIx+xIGxgtLl06FwKCAMpkX4wI1vOoW0DJY8p3/N1CSY9tG7GAJulWq+lCQjzID8VtEYI/abuGt1T7MRbQ=
-X-Received: by 2002:a05:6902:f84:b0:e38:b6be:1d58 with SMTP id
- 3f1490d57ef6-e395b893aaemr18050418276.21.1732955077495; Sat, 30 Nov 2024
- 00:24:37 -0800 (PST)
+        bh=FO8MN/OOdM9uSwx0W1RkFiw2siggznBougNaykngYTo=;
+        b=jnmIXA4QSbAva7qXm9GhB1X/CPc8voKhv9iU2Z0rRIlT1rgQZCdwqLoO5l+aqUORJy
+         W5QakBSqIMYoVIsgdABtfrSQiMjSxPbpUKxFAVC/eQ7kKbv70A1bGtMIorm7JjNcupdu
+         YKOEc6Ol3eE+kU1ASr0K3cxiSB7te9oFJRnmbx9fejuxPGh56IuH8nRZqVUf52fIFFNo
+         n2cTNjDu/dteLIBur1WyX4E2MucaF7ePMNma6H822PpsNwsEYxIbGIR1f+xJr3bMnPYh
+         Mc2+nLaUu4sVGWOfBWwcXm4QlCVUaZ7Zl6J31gE4Z3IlLZZs9dFJpMT4qLRe/AqPDBXn
+         Fnlg==
+X-Forwarded-Encrypted: i=1; AJvYcCUBYRBcwrGvWKhHNNE6dI+S16inH4GXJOZhL5Lsrg6TBDZ3SvOTbqm4YVXOIXmicjtjP0DtvSuc0x9d+BJt@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx4Z6GNaNcX4BNNi61d+X8KxkawHHGni2T40oy0G84RCfyFQjz5
+	owaB1E3itRWI++cQrCK+EnERWyoTcEujwG+zS1FfObx2Cz8QWjV9Vz8P9W7jSec=
+X-Gm-Gg: ASbGncvKJKoSmRCgyXHdoWZULiOjVNzqZaj0SSsz/duvcUCj+upzY2A3YDNJwuuKiiu
+	AQ2Kg76/s6nMVfCYwqZ3wvBWJv1OVaupSrYljRe55QgFuMDN7z7ZIRzKmIBoIuTDHV88oRDfdHP
+	ouDFASXcuXopSv567XYox9KGlaXyPDbdDlPy7r8Kb8KViVxCzywayw7RcTdMz+kjWFNibKyvdOa
+	+LZDPIE3d/he88tEjtLb8bn/AeZ2cYi6o7jIu1wDM0M48458IIOWTVSyLAsVhYR6bpZ
+X-Google-Smtp-Source: AGHT+IFweECIUTj+FnxOhsU/0xvsrtZXue0BuXrMRxKpQRCq6QGayrOYZjhOzmFyksu73yqogy6gnw==
+X-Received: by 2002:a05:6000:4817:b0:385:c878:62f4 with SMTP id ffacd0b85a97d-385c878656amr4908415f8f.13.1732958981906;
+        Sat, 30 Nov 2024 01:29:41 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.218.23])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-385e3cbe250sm1124898f8f.94.2024.11.30.01.29.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 30 Nov 2024 01:29:41 -0800 (PST)
+Message-ID: <83990b97-3f37-47f0-9cc6-fdaa730a8df1@linaro.org>
+Date: Sat, 30 Nov 2024 10:29:38 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241120095428.1122935-1-quic_chejiang@quicinc.com>
- <20241120095428.1122935-2-quic_chejiang@quicinc.com> <454tdpuglu23nmxfqqesv42h5rk3vqiji7spo3naf2djqwojqt@6x3ram3lnlkq>
- <fb5bc38b-83b3-4924-b1d0-39219a2927b4@quicinc.com> <CAA8EJpqAOD_+SLG2LbiodWOs28_rquvMefmSH5CY1yB_rkiZPg@mail.gmail.com>
- <a7ec9426-8c8a-49b3-9916-4c2660c38e49@quicinc.com>
-In-Reply-To: <a7ec9426-8c8a-49b3-9916-4c2660c38e49@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sat, 30 Nov 2024 10:24:26 +0200
-Message-ID: <CAA8EJpqpzwGL38F_MYUJVuAT8q96QZO7CSh00ZpNBU5cGWUqqA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/4] dt-bindings: bluetooth: add 'qcom,product-variant'
-To: "Cheng Jiang (IOE)" <quic_chejiang@quicinc.com>
-Cc: Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>, Rocky Liao <quic_rjliao@quicinc.com>, 
-	quic_zijuhu@quicinc.com, linux-bluetooth@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, quic_mohamull@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 20/31] arm64: dts: qcom: ipq5018: move board clocks to
+ ipq5018.dtsi file
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: Leo Yan <leo.yan@linux.dev>, Joseph Gates <jgates@squareup.com>,
+ Georgi Djakov <djakov@kernel.org>, Shawn Guo <shawn.guo@linaro.org>,
+ Stephan Gerhold <stephan@gerhold.net>, Zac Crosby <zac@squareup.com>,
+ =?UTF-8?Q?Bastian_K=C3=B6cher?= <git@kchr.de>,
+ Andy Gross <andy.gross@linaro.org>, Jeremy McNicoll <jeremymc@redhat.com>,
+ Rohit Agarwal <quic_rohiagar@quicinc.com>,
+ Melody Olvera <quic_molvera@quicinc.com>,
+ Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+ cros-qcom-dts-watchers@chromium.org, Stephen Boyd <swboyd@chromium.org>,
+ Rajendra Nayak <quic_rjendra@quicinc.com>,
+ Martin Botka <martin.botka@somainline.org>,
+ Jonathan Marek <jonathan@marek.ca>, Vinod Koul <vkoul@kernel.org>,
+ Tengfei Fan <quic_tengfan@quicinc.com>,
+ Fenglin Wu <quic_fenglinw@quicinc.com>,
+ Neil Armstrong <neil.armstrong@linaro.org>, Abel Vesa
+ <abel.vesa@linaro.org>, Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Sibi Sankar <quic_sibis@quicinc.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Jun Nie <jun.nie@linaro.org>,
+ James Willcox <jwillcox@squareup.com>, Max Chen <mchen@squareup.com>,
+ Vincent Knecht <vincent.knecht@mailoo.org>, Benjamin Li <benl@squareup.com>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20241130-fix-board-clocks-v2-0-b9a35858657e@linaro.org>
+ <20241130-fix-board-clocks-v2-20-b9a35858657e@linaro.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Content-Language: en-US
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20241130-fix-board-clocks-v2-20-b9a35858657e@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Sat, 30 Nov 2024 at 05:48, Cheng Jiang (IOE)
-<quic_chejiang@quicinc.com> wrote:
->
-> Hi Dmitry,
->
-> On 11/21/2024 12:38 PM, Dmitry Baryshkov wrote:
-> > On Thu, 21 Nov 2024 at 06:02, Cheng Jiang <quic_chejiang@quicinc.com> wrote:
-> >>
-> >> Hi Dmitry,
-> >>
-> >> On 11/20/2024 6:43 PM, Dmitry Baryshkov wrote:
-> >>> On Wed, Nov 20, 2024 at 05:54:25PM +0800, Cheng Jiang wrote:
-> >>>> Several Qualcomm projects will use the same Bluetooth chip, each
-> >>>> focusing on different features. For instance, consumer projects
-> >>>> prioritize the A2DP SRC feature, while IoT projects focus on the A2DP
-> >>>> SINK feature, which may have more optimizations for coexistence when
-> >>>> acting as a SINK. Due to the patch size, it is not feasible to include
-> >>>> all features in a single firmware.
-> >>>>
-> >>>> Therefore, the 'product-variant' devicetree property is used to provide
-> >>>> product information for the Bluetooth driver to load the appropriate
-> >>>> firmware.
-> >>>>
-> >>>> If this property is not defined, the default firmware will be loaded,
-> >>>> ensuring there are no backward compatibility issues with older
-> >>>> devicetrees.
-> >>>>
-> >>>> The product-variant defines like this:
-> >>>>   0 - 15 (16 bits) are product line specific definitions
-> >>>>   16 - 23 (8 bits) are for the product line.
-> >>>>   24 - 31 (8 bits) are reserved for future use, 0 currently
-> >>>
-> >>> Please use text strings instead of encoding this information into random
-> >>> integers and then using just 3 bits out of 32.
-> >> Ack. Originally intended to make it more flexible for future use. It can be
-> >> text strings for current requirement.
-> >
-> > No, fixed-format data isn't flexible. Fine-grained properties are.
-> > Please define exactly what is necessary rather than leaving empty
-> > holes "for future expansion".=
-> >
-> >>>
-> >>>>
-> >>>> |---------------------------------------------------------------------|
-> >>>> |                       32 Bits                                       |
-> >>>> |---------------------------------------------------------------------|
-> >>>> |  31 - 24 (bits)   |    23 - 16 (bits)   | 15 - 0 (16 bits)          |
-> >>>> |---------------------------------------------------------------------|
-> >>>> |   Reserved        |    0: default       | 0: default                |
-> >>>> |                   |    1: CE            |                           |
-> >>>> |                   |    2: IoT           |                           |
-> >>>> |                   |    3: Auto          |                           |
-> >>>> |                   |    4: Reserved      |                           |
-> >>>> |---------------------------------------------------------------------|
-> >>>>
-> >>>> Signed-off-by: Cheng Jiang <quic_chejiang@quicinc.com>
-> >>>> ---
-> >>>>  .../bindings/net/bluetooth/qualcomm-bluetooth.yaml          | 6 ++++++
-> >>>>  1 file changed, 6 insertions(+)
-> >>>>
-> >>>> diff --git a/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml b/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
-> >>>> index 7bb68311c609..9019fe7bcdc6 100644
-> >>>> --- a/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
-> >>>> +++ b/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
-> >>>> @@ -110,6 +110,12 @@ properties:
-> >>>>      description:
-> >>>>        boot firmware is incorrectly passing the address in big-endian order
-> >>>>
-> >>>> +  qcom,product-variant:
-> >>>> +    $ref: /schemas/types.yaml#/definitions/uint32
-> >>>> +    description:
-> >>>> +      specify the product information for driver to load the appropriate firmware
-> >>>
-> >>> DT describes hardware. Is this a hardware property?
-> >>
-> >> It has been added to identify the firmware image for the platform. The driver
-> >> parses it, and then the rampatch is selected from a specify directory. Currently,
-> >> there is a 'firmware-name' parameter, but it is only used to specify the NVM
-> >> (config) file. We also need to specify the rampatch (TLV file).
-> >>
-> >>
-> >> Can we re-use the "firmware-name"? add two segments like the following?
-> >> firmware-name = "rampatch_xx.tlv",  "nvm_xx.bin";
-> >
-> > I think this is the better solution
-> >
-> How about the following logic for handling 'firmware-name' property:
-> 1. If there is only one string in firmware-name, it must be the NVM file, which is used
->    for backward compatibility.
->
-> 2. If there are two strings in firmware-name, the first string is for the rampatch, and
->    the second string is for the NVM.
+On 30/11/2024 02:44, Dmitry Baryshkov wrote:
+> IPQ5018 is one of the platforms where board-level clocks (XO, sleep)
+> definitions are split between the SoC dtsi file and the board file.
+> This is not optimal, as the clocks are a part of the SoC + PMICs design.
+> Frequencies are common for the whole set of devices using the same SoC.
+> Remove the split and move frequencies to the SoC DTSI file.
+> 
+> Suggested-by: Bjorn Andersson <andersson@kernel.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-I'd say, other way around: the first one is always NVM, the second one
-is rampatch and it is optional.
+This contradicts DTS coding style and all my existing review. Obviously
+that's a NAK from me. If you want to merge this patch, please kindly
+carry my formal objection for this and all following "move board clocks"
+patches:
 
->
-> 3. Due to variations in RF performance of chips from different foundries, different NVM
->    configurations are used based on the board ID. If the second string ends with boardid,
->    the NVM file will be selected according to the board ID.
+Nacked-by: Krzysztof Kozlowski <krzk@kernel.org>
 
-Is there a reason why you can not use the exact firmware name? The
-firmware name is a part of the board DT file. I assume you know the
-board ID that has been used for the board.
+(I'll respond in next patches as well, just for formality/b4)
 
->
->
-> Here are two examples:
->
->  firmware-name = "qca/QCA6698/hpbtfw21.tlv",  "qca/QCA6698/hpnv21.bin";
-> In this configuration, the driver will use the two files directly.
->
->
->  firmware-name = "qca/QCA6698/hpbtfw21.tlv",  "qca/QCA6698/hpnv21.boardid";
-> In this configuration, the driver will replace boardid with the actual board information.
-> If the board id is 0x0206, the nvm file name will be qca/QCA6698/hpnv21.b0206
->
-> >>
-> >> Or add a new property to specify the rampatch file?
-> >> rampatch-name = "rampatch_xx.tlv";
-> >>
-> >>>
-> >>>> +
-> >>>> +
-> >>>>  required:
-> >>>>    - compatible
-> >>>>
-> >>>> --
-> >>>> 2.25.1
-> >>>>
-> >>>
-> >>
-> >
-> >
->
-
---
-With best wishes
-Dmitry
+Best regards,
+Krzysztof
 
