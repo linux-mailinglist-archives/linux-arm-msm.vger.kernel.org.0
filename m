@@ -1,85 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-39703-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39705-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1EF219DEFE8
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Nov 2024 11:26:46 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id F1D419DEFF4
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Nov 2024 11:42:36 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4D90FB2120A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Nov 2024 10:26:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AEFC31635BF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Nov 2024 10:42:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38B62156879;
-	Sat, 30 Nov 2024 10:26:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A937A156F30;
+	Sat, 30 Nov 2024 10:42:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="p1s+mfuM"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cAP30NXU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDCCB15573D
-	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Nov 2024 10:26:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4DA2156225
+	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Nov 2024 10:42:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732962398; cv=none; b=e/m8WvjbeLWPb1XCG4WSFzymoVz2YIU4QIBuYxbdQnlEedTJs5BFx0hUM8Rdhey4nwSZWowlJKclMuiacxu+NsUiPPyMcOQ2mhY4YqnaFjNTD22eTUdZrnrGFpvtW3WXqKHMulRWgQj8mKYK8tUfSdY2hHi4HzoOS8oohPO0So8=
+	t=1732963352; cv=none; b=gzu14gkwvwI4QsEJRD1sPsDEOF8gJb+nqk4bZX3HdZB7kio09yb5O68F4mZeUBrEgaS51oN5IDkyMFP/2ztPklA9a9BHzruMtzeEA2wGbbUYbf0iiZ/AGiGHBKultMjH0X6NUoIzQ3x+MZKp2m4zfyt1mZ++Z4Ho324twhLv05Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732962398; c=relaxed/simple;
-	bh=eDJQoppfMN1lVMfa4jaHOqGoqkC2saALXH3Q4Rrsb/w=;
+	s=arc-20240116; t=1732963352; c=relaxed/simple;
+	bh=z75So5WVYPLLMNQwnxBZPmytY0lky/GENGCw2mngOtI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=H8cwX36MRSYh8hSCkilB0J8l+s8c5ObvamVldEtof67X/SXskVoOJ9sS6IRqwSQzO79d/4PLaNPsT9V4yOE2A/k8oorwSeyC10q+1KFv/k1B/7nE3vHz91MwjVF1ZDRBEiUwt4S0TU2Abvae2zMZw7hSabnd+gyhZEDHCZFgkBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=p1s+mfuM; arc=none smtp.client-ip=209.85.167.54
+	 Content-Type:Content-Disposition:In-Reply-To; b=fSluYAMF3Y1ooy3A3vkgmdUDK2PUicksD6JG3EK2FjYNn/xTd3oISJxWpR/MX8ExiZeZHCQf62pzh+5KAH1Dz994DtWvY3nBsQ+mhT4vK4wq7K3E3R8B1dMwTw/zuAb9BDehYA1v7ulMDh9KYROp7oZw/yhQwXIxpV38aGFtNGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cAP30NXU; arc=none smtp.client-ip=209.85.208.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-53de852a287so2830279e87.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Nov 2024 02:26:35 -0800 (PST)
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2ffc357ea33so28499761fa.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Nov 2024 02:42:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1732962394; x=1733567194; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1732963349; x=1733568149; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=MvTccSJmx0934Um7HOqo8o286KNWawV///lCSR0MDWU=;
-        b=p1s+mfuM3q22fyiwRCVTeI0dMR9wnST7RgZTQiCgRlNPtpdnXbC0znudziq4yklVha
-         GdhdNGHQhnVdrb0Qz6BOqjJCweOWKB4Ue52VmhvbQeiY7BK6b/W0G+8GZd/2ijsOwXV8
-         dgkeXqHyi2cfdIASvriHC7gdSm93LMX21qoPgeVPpwXX4ByzioIxGUMdEZmbd1WGc3OP
-         ESyNDXXY4lLxbkIuwEcb6nJoE8cjczJl7LfowDfrAACG+RbxlDJoenRNzoE01QhIqAsP
-         yITz7cg4ixB70LXsRBPl/3iN9HmuoHcJHfabCranBKfCQIX6GfFnabHd01x+8XU3QvsC
-         K2Cg==
+        bh=e+tgdJ0lNf5uJXDyx2na57DXS/0Gs3go1GJRqeuFoyM=;
+        b=cAP30NXUuja2eK/lAeJisCkoFbARuzbLITMqdnCTWkKyE56qMldotWZCVzdT9/gIT+
+         WL7eWGOzans7ILSVICxlSSjYzHYn56oYGYUQUyYiRpiG6hz4zyB1ogf6RGhoZdBL2ztq
+         0A+wUaJuAc5ggKgbxsPV49tSgZ1q2KvoTX/Mn/FbsAWXeHkKoCUYwVpqklAu5LWqTrEq
+         olNA3/vxVY02bMNTgS3c29I5c+vbokMpdD/8uKFzMvlbFlpfoa4u99E/u466grl9E3lt
+         ySWEf19kPh9gTEhTVMOyk2+H6NHLkh7kSO7e5hBTWLSpiBcrh8M3BbE7bm0Mmv/Onf50
+         qlkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732962394; x=1733567194;
+        d=1e100.net; s=20230601; t=1732963349; x=1733568149;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=MvTccSJmx0934Um7HOqo8o286KNWawV///lCSR0MDWU=;
-        b=Hu4ygItAbivX9MagU1pYFJe0TvJ6xZ6M5WRfEL+1+WQW8sNeIbRGbyiTwWGx+d9weN
-         uia1NNZmDET5L+d24pmFyJAr97bTZ3xzIfUCQPEfg92WHHnEcLF1ZaEUH5S021YEZx03
-         P9YnpTc8kb44WRq91xewVFmBK2IIpOljnGaer131TJR+YVYy9/+3wtAwpIrJpJ6bTXD5
-         dzXVs1VX/h9J5wB+SHJkwJcIVkzDtLjMP/uNTbcunI6k7gvRCOQt6ZUZAem1/ethyhaE
-         6ZXuEZS8fDh2ax4QH8JiRAAdZZYJp4D/6G5vHPUmJdFELVSrLgQ00IwWQrhYMvPz2kZA
-         Rhjw==
-X-Forwarded-Encrypted: i=1; AJvYcCWfTbEOsYaejP6RwV1eNJfqSLAhsRfcMHKGR19aQ1OLDOmoZ6BhW8nQ8pl7bJf3DNHonUmMsDL+NkKmaxLt@vger.kernel.org
-X-Gm-Message-State: AOJu0Yya5VIiZgxIttBLtSxDMHTcyCEzp7lHe2fovjnMn9tN0cTRs14O
-	MOYkEEtmSeYkbHdu0OnzkhKLuENH2LHozj9W8v4LQkod40ErvoH7Yct9K2via6M=
-X-Gm-Gg: ASbGncuKuCJUWQzUC33RE0m/2d/ygLcBSq7+AhzXLCXdvtx8f7wtYci91XXTo5hrmeT
-	fQtWkCdxRDk40GlHHKOlU/4we9MCfpqZlYB2CqIibo/hClD0LeC0Vhp/D2sGpsJsmvZO2TceoLT
-	uN0C6psukL7FuGJzKXASQ6qLNM3lqDqQZJF+KsAPH/vIoBLHwZGEnI3+jj3qZs9TgrVXMMin8sX
-	rOVJo7Cgg2dUoNtUNZGobStVTkftQaEpAgORXOkgDe2fEI/5o7Sx2wNv5p1aRS1ud1QgCJ0Eneo
-	UBSJtxmA0NHXAqaX5wkmc0GZLDJAHA==
-X-Google-Smtp-Source: AGHT+IGrAqc65dTA3vAAj8VxgDEeVfx2WF/Vu2h5+M8g7PoZsRRzBflVglyba38msIXK/Y9d+/AF8Q==
-X-Received: by 2002:a05:6512:3e1e:b0:52f:ca2b:1d33 with SMTP id 2adb3069b0e04-53df00d4579mr5387608e87.20.1732962393846;
-        Sat, 30 Nov 2024 02:26:33 -0800 (PST)
+        bh=e+tgdJ0lNf5uJXDyx2na57DXS/0Gs3go1GJRqeuFoyM=;
+        b=ATMncpK3SN1An4ojTmUw9+p+iviqYQQ18A5AhTQSOkU8LXOgAQtfcqi9fEv/9arAMm
+         vLV4QJY7H2v0jNgRRgObHr4wv9KU1Hn4+CznaHg0ldvWIxlU0jyzaYYQjc4cKUGnCtJD
+         /EOPqVYiOFiRBAG7sMCTdeN5ZEgI3C4CsjGeOg/GMEVDkiA7oT2iYl4D+jl1Kq0z7HiG
+         Vgm5KPdwzxJL5DAOGYQ0gmlmn/Dc7DeZzdKZ3LWcbU5Jk0oEECD3kikNXa4bznnI0Z3E
+         1xJcELAJryUlC1B9X2YijSoYVId2d2Uwun5dH1CJpOAnsLPOT0870YvrvAnpN2XPLIn9
+         Z6mA==
+X-Forwarded-Encrypted: i=1; AJvYcCXDj8C4n1pr243B5N+suEy9whbnWletM64zeDuy+4B1D+tsI8w/qzSH00v/NyttvTnqOHxNI8R/jAPN4W8R@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy6xn6oo5CezeTYPIvnYKMF4UqvH9k/NSK8FJ5d8YZ0PFgXe5mm
+	QLtHLxk+QqK+MxJbe4xIyrFtCke6VbzwfQ4Jzeqno7syDubr+gvb+h6GGkskq/4=
+X-Gm-Gg: ASbGncuEDPUr78Nes0ViwDxyTnhKM+2QCUD9+x56amh/4CYpzLlKNYIq8EHtx3AtHw+
+	58I8gjk6vJIf5+vPFuJb+4pqp7ASCQ3CI6kbXRv+Eq+7qGitwnTn+Z+mYxMORbciATKr/TU9+Mv
+	SWn/22R17Tw9HDVI+OTm6HeBBzEuwVMjWDii5Dp+cGdYoS3Uoee41kDJVHluNeI3oo9Y1iakYPb
+	Zia6XcYK9vhvtYvNhOMKtTzIGFmCWwxHEyvsN2+ZtP5q1frojJADgX1xdMEhjpB1R07w9ldKnNk
+	/c8cTkR6X45+D8Mq3GnJa0/Np6h3Sw==
+X-Google-Smtp-Source: AGHT+IFcekxgU8h/tBcXQsoWXwT31IuqmouPc8u7PTpcXd1KOJ0o5hOEknnd49Db7H6F8g76yRff0Q==
+X-Received: by 2002:a05:6512:3085:b0:539:e9f8:d45d with SMTP id 2adb3069b0e04-53df01125d5mr8493039e87.52.1732963348703;
+        Sat, 30 Nov 2024 02:42:28 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53df64a09e6sm739763e87.264.2024.11.30.02.26.31
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53df64311a9sm732362e87.40.2024.11.30.02.42.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 30 Nov 2024 02:26:32 -0800 (PST)
-Date: Sat, 30 Nov 2024 12:26:30 +0200
+        Sat, 30 Nov 2024 02:42:27 -0800 (PST)
+Date: Sat, 30 Nov 2024 12:42:24 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Leo Yan <leo.yan@linux.dev>, Joseph Gates <jgates@squareup.com>, 
-	Georgi Djakov <djakov@kernel.org>, Shawn Guo <shawn.guo@linaro.org>, 
-	Stephan Gerhold <stephan@gerhold.net>, Zac Crosby <zac@squareup.com>, 
+To: Stephan Gerhold <stephan@gerhold.net>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Leo Yan <leo.yan@linux.dev>, 
+	Joseph Gates <jgates@squareup.com>, Georgi Djakov <djakov@kernel.org>, 
+	Shawn Guo <shawn.guo@linaro.org>, Zac Crosby <zac@squareup.com>, 
 	Bastian =?utf-8?Q?K=C3=B6cher?= <git@kchr.de>, Andy Gross <andy.gross@linaro.org>, 
 	Jeremy McNicoll <jeremymc@redhat.com>, Rohit Agarwal <quic_rohiagar@quicinc.com>, 
 	Melody Olvera <quic_molvera@quicinc.com>, Bhupesh Sharma <bhupesh.sharma@linaro.org>, 
@@ -92,16 +91,15 @@ Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sibi Sankar <quic_sibis@quicinc.com>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
 	Jun Nie <jun.nie@linaro.org>, James Willcox <jwillcox@squareup.com>, 
 	Max Chen <mchen@squareup.com>, Vincent Knecht <vincent.knecht@mailoo.org>, 
-	Benjamin Li <benl@squareup.com>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 20/31] arm64: dts: qcom: ipq5018: move board clocks to
- ipq5018.dtsi file
-Message-ID: <26lttxx7obu2oqvf4xnooqi3o7qwodhjzyjh4trjq5tlj2gzxs@uwihybmwbdid>
+	Benjamin Li <benl@squareup.com>, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Stephan Gerhold <stephan.gerhold@linaro.org>
+Subject: Re: [PATCH v2 01/31] arm64: dts: qcom: msm8916: correct sleep clock
+ frequency
+Message-ID: <al3tckby2jg7imhieehqwemygf6y5csfg7xfjta7alawhwfqv7@6gha46tr3rhx>
 References: <20241130-fix-board-clocks-v2-0-b9a35858657e@linaro.org>
- <20241130-fix-board-clocks-v2-20-b9a35858657e@linaro.org>
- <83990b97-3f37-47f0-9cc6-fdaa730a8df1@linaro.org>
- <zdhevcnj6gszvaayhu2dghubwm23cdoyeik2dcnqo376gcstnz@xv46iu6l6yvu>
- <90418b49-5b19-4bef-b0cd-398bb562aa8c@kernel.org>
+ <20241130-fix-board-clocks-v2-1-b9a35858657e@linaro.org>
+ <Z0rnRC_BqgkE3w1P@gerhold.net>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -110,45 +108,66 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <90418b49-5b19-4bef-b0cd-398bb562aa8c@kernel.org>
+In-Reply-To: <Z0rnRC_BqgkE3w1P@gerhold.net>
 
-On Sat, Nov 30, 2024 at 11:00:32AM +0100, Krzysztof Kozlowski wrote:
-> On 30/11/2024 10:57, Dmitry Baryshkov wrote:
-> > On Sat, Nov 30, 2024 at 10:29:38AM +0100, Krzysztof Kozlowski wrote:
-> >> On 30/11/2024 02:44, Dmitry Baryshkov wrote:
-> >>> IPQ5018 is one of the platforms where board-level clocks (XO, sleep)
-> >>> definitions are split between the SoC dtsi file and the board file.
-> >>> This is not optimal, as the clocks are a part of the SoC + PMICs design.
-> >>> Frequencies are common for the whole set of devices using the same SoC.
-> >>> Remove the split and move frequencies to the SoC DTSI file.
-> >>>
-> >>> Suggested-by: Bjorn Andersson <andersson@kernel.org>
-> >>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >>
-> >> This contradicts DTS coding style and all my existing review. Obviously
-> >> that's a NAK from me. If you want to merge this patch, please kindly
-> >> carry my formal objection for this and all following "move board clocks"
-> >> patches:
-> >>
-> >> Nacked-by: Krzysztof Kozlowski <krzk@kernel.org>
+On Sat, Nov 30, 2024 at 11:21:56AM +0100, Stephan Gerhold wrote:
+> On Sat, Nov 30, 2024 at 03:44:13AM +0200, Dmitry Baryshkov wrote:
+> > The MSM8916 platform uses PM8916 to provide sleep clock. According to the
+> > documentation, that clock has 32.7645 kHz frequency. Correct the sleep
+> > clock definition.
 > > 
-> > I'd kindly ask Bjorn to chime in as a platform maintainer.
+> > Fixes: f4fb6aeafaaa ("arm64: dts: qcom: msm8916: Add fixed rate on-board oscillators")
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > 
+> Thanks for spotting this! This fix looks good independent of the more
+> controversial "arm64: dts: qcom: move board clocks to SoC DTSI files"
+> changes. Maybe move these to a separate series?
 > 
-> To change my NAK? NAK is still a NAK. We discussed it many, many times
-> already. We have coding style for this explicitly mentioning this case.
-> Could not be more specific... plus all my reviews for Qualcomm, NXP, TI,
-> ST and other platforms. I would be quite unpredictable or unfair if I
-> gave here some sort of exception while expecting different code from
-> other platforms.
+> > ---
+> > arch/arm64/boot/dts/qcom/msm8916.dtsi | 2 +-
+> > 1 file changed, 1 insertion(+), 1 deletion(-)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+> > index 5e558bcc9d87893486352e5e211f131d4a1f67e5..8f35c9af18782aa1da7089988692e6588c4b7c5d 100644
+> > --- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+> > @@ -125,7 +125,7 @@ xo_board: xo-board {
+> > 		sleep_clk: sleep-clk {
+> > 			compatible = "fixed-clock";
+> > 			#clock-cells = <0>;
+> > -			clock-frequency = <32768>;
+> > +			clock-frequency = <32764>;
 > 
-> Please carry my NAK.
+> To be precise the PM8916 specification says the sleep clock is "The 19.2
+> MHz XO divided by 586". Maybe we can actually describe it that way with
+> a fixed-factor-clock?
+> 
+> 		sleep_clk: sleep-clk {
+> 			compatible = "fixed-factor-clock";
+> 			clocks = <&xo_board>;
+> 			#clock-cells = <0>;
+> 			clock-div = <586>;
+> 			clock-mult = <1>;
+> 		};
 
-Of course. I didn't mean to drop your tag or your objection.
+I thought about it, but then it's also not complete truth (at least for
+some of PMICs, don't remember if that's the case for PM8916): there is
+an external XO and also there is an on-PMIC RC, which is further
+divided with PMIC actually selecting which source to use as a source for
+sleep_clk.
 
-BTW, would it be possible for you to clarify the policy on external
-references? I mean, is it fine for DTSI to reference a label which is
-not defined within that file or within one of the files that it includes?
+> 
+> If we keep the fixed-clock with the hardcoded frequency I wonder if we
+> should put 32765 instead of 32764. If you calculate it exactly it's
+> slightly closer to 32765 than 32764. :-)
+> 
+> 	19200000/586 = 32764.505119453926 = ~32765
+
+Well, I think according to the most typical rounding rules it is 32764.
+
+> 
+> Thanks,
+> Stephan
 
 -- 
 With best wishes
