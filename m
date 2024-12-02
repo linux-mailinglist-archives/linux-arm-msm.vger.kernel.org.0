@@ -1,299 +1,113 @@
-Return-Path: <linux-arm-msm+bounces-39883-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39884-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 77F029E0568
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 15:47:00 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CEFC79E0351
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 14:25:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0FEE5B27C84
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 13:25:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9D345280FD4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 13:25:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A9DEC1FE469;
-	Mon,  2 Dec 2024 13:25:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 988A21FE469;
+	Mon,  2 Dec 2024 13:25:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pTR7JXAu"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WKzZBmvu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B275D6AAD;
-	Mon,  2 Dec 2024 13:24:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21BA28F6B;
+	Mon,  2 Dec 2024 13:25:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733145900; cv=none; b=ZpsdlYzLlt+by7ENbsUxPHDHg4eDZ8h3kvQajYHTmr7wc7kv1EuKVbE8rHvn/Zdd+92G+BPb6nSrUo963iZ/OdgoflY3wZvOWyYiipR4c8iw3bScbt4L2ykLKBKZuxcZnW96MJVypJ2RzZj3FUvB16WrxGSjJkzKWr5WlBpHdqA=
+	t=1733145951; cv=none; b=jEvBGTRVecI1gT8QkQ66BJFtyClgVMKVzy4FOfHx9R1XCXgB26Glv5ZNujRdh2gZ1AlBZk7azuFMi4D9E3nqZ0G6wLOlQIM7vFBXwQKya8b9S5RVan1g4wEKEXBrMiFHx4oxAz1YRJbhnEYw92BQ1jCi9Dqin1hVqCc6KAHAcOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733145900; c=relaxed/simple;
-	bh=2RGkFkQhNXu7IplBUKMZrWxASEw31FeMxzQP7yI3tLc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=SmdH5wtRrEOpxtlWL7G2QSK4XKiIUSV3vqYGoKJ8+2NwojFmyu7BRqZcSypgBz0QtCOHDx8VT8kCIyMxrjGMKJMlI1wrK9UyYTKBc0ixMBowqJIHNnFEvvImCVCkFuBk2QUHLmat+FUx11u+g3NrlL1zlYhu/jWaFOwbrIFzcj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pTR7JXAu; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B28TqU2021908;
-	Mon, 2 Dec 2024 13:24:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Ysc6LZ2pXuLGDigdD9AfRlOq14I0mdHobGAZKT1DBDM=; b=pTR7JXAuwZei0HSO
-	wA8jfJjwxPUvx3u1yMScH4nQklIJr1tgWTrfq20H3TP5Qj1qgoHk+GGClwyl0uZB
-	Gu194iUjm7sd3qdYKCEi2XIVyNj4lcn0BhGtOuMLh9F7RzZgXh/eC9Nk2IsxPx3g
-	B3RR/n9AlJi3lP0yRmOisUO0MFndjI5BQ+b4zyuSzh57c8irtOdRUAj1w6ZplS3F
-	4ZS3bfuN/SX8PgjH+pUV/3kmUT5YwT/yhI9eSVcPFL782sFPhd9iogD85T2gyTv+
-	fUQELieicltqZw9GKhn9uAkaotUS/rAwl/Uw5SxmbD0be7KG1BSh4B5lrbycI/sy
-	VNx6pA==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 437rded2yq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 02 Dec 2024 13:24:51 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B2DOpvx012975
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 2 Dec 2024 13:24:51 GMT
-Received: from [10.204.100.69] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 2 Dec 2024
- 05:24:47 -0800
-Message-ID: <1a6d05d8-08aa-cb84-ca36-859be3c589c3@quicinc.com>
-Date: Mon, 2 Dec 2024 18:54:40 +0530
+	s=arc-20240116; t=1733145951; c=relaxed/simple;
+	bh=JzAfREBlzGyxMfq2M3UIkfA3PLTZmhEwa6RuZHSJ35g=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RY/k6QISo5WXPojumpQokJNuDHdYOf6doZoiFmFKyhYCM6SrO2cDEF9Xtq7w8qaLsQKEBmII36YVevso8kUEIfe6tARpnn0RUBvQ5SZ00n392MaBw0mUTDOLJxWNHAQxm2QLbtRub0lA75DhV4vMCVrkXwQm2nB5pG1XK/rH3Qg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WKzZBmvu; arc=none smtp.client-ip=209.85.160.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-29e71d653fbso217434fac.3;
+        Mon, 02 Dec 2024 05:25:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1733145949; x=1733750749; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JzAfREBlzGyxMfq2M3UIkfA3PLTZmhEwa6RuZHSJ35g=;
+        b=WKzZBmvuhdw02o69LehtlaP0H5WnrKT6YCMs11ilof82dA7tBaxzPvAZf+jrX9t02i
+         4dYcsh1W8SS+cHTur/SCmedhI11n+OXYHtXZVOn+x/WLuor9qs0xmgUyUdOMEnhYfwFd
+         1dRhfc3sg5TIJVw5fQPU/kVSX7VhfrJnxLZuangVX/ifzcGKPZKHV60193TFXdmA6dFx
+         mFfp5K6RJqFhDljmIsjjrCl4PfNfu+QwIjxGRpm40hiQuN2TwKgetEWOn7UeMKBv7j3o
+         NpUibk1v/iLEb2EfikUQtLHBr+/zpIARewz8LVljrrXvCWmJ3NJsYhayozl2QNB+ArtJ
+         ktVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733145949; x=1733750749;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=JzAfREBlzGyxMfq2M3UIkfA3PLTZmhEwa6RuZHSJ35g=;
+        b=S5K2MO9FwaIPA/lHkWyxVeqIDEVI4Bb+N8WWAm5s+lkDintbPSPKzS4+3lmvZarnjE
+         bJo4oHlCYhF92ppwOO4ULXHKbTo4cIMWCaFBqYHiAeVxcHglAIm95Hv/ewL0GKs+TwdU
+         lU1i17DaYMbJcqsVCgG4X5L4JpSmg19bSiKkVNhb/bvJ0EVV0Jw47AmnvN5rfKmU4u2n
+         pjGfmWYnjqPTpZ+sxiGTa6dstvRLCgq98m/jzKcJ8xDVvyfGZJ0fLt7KVVvgX96b5g9L
+         aKj+Oljo4gRqz+WgpKu16VgvG/l5pGarSqo+RPNj6Vi3BV04JI4mcvufZvmiVI/SWPaM
+         yxsA==
+X-Forwarded-Encrypted: i=1; AJvYcCVbtihUtEq9xQOJ6djXGQ+4uWHTGHLKwndvz7tsFRaIG32V2p/L3h6z611lzdZ1Yqxr2Xi9aFAUjGap0YUKHg==@vger.kernel.org, AJvYcCWUxBXuGVnlqE+cTIJLmZ/oDbhkwo8t/E/AK5Zg+E85eGp5B3XdbHy13JnE6FDCSPihVO8hQKsDJxHAtEWy@vger.kernel.org, AJvYcCXl/+3h/x7CQ5jlBP/t7d8mkVXGUyivICU+L+2wfTYk4kQdHDyUUqDXl8RrH1BV9Qos0eNLepDxr04N@vger.kernel.org
+X-Gm-Message-State: AOJu0YwlizZ9Yq7yd/1p3q48UbhF2qJcrWdJJGMByRVM/n3t0s365bfh
+	POb85lTr55U4n70LsOH2mUfy/NWnshIy5z4/WSGm0pP+N6bBvoBe3hUgSRN7FGAJ8yB0riGGLyi
+	+5IhXzbGNj3fd7vNdiWWD8A7A8wA=
+X-Gm-Gg: ASbGncs2KTi4Tkei4v3Z48JXNvH1AgjL2fage4r1xpcGOu8t8Z1CXJo2l79eJIE3xn8
+	E5o4ZJfqJP0Lc+fiQIvR/t5NKG40bgA==
+X-Google-Smtp-Source: AGHT+IEunf9HVnSmilfUsSj/yqIgpyQyjJyUhDfSWV570fxCrjjkJ0fUDzssd3DZMUWvaGkF/Ze3nmoehiVW0J9D7+w=
+X-Received: by 2002:a05:6358:6f18:b0:1ca:a296:f6fe with SMTP id
+ e5c5f4694b2df-1cab15cff10mr826643055d.6.1733145949084; Mon, 02 Dec 2024
+ 05:25:49 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v2 2/4] media: venus: hfi_parser: avoid OOB access beyond
- payload word count
-Content-Language: en-US
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Stanimir Varbanov
-	<stanimir.k.varbanov@gmail.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Tomasz Figa <tfiga@chromium.org>,
-        Hans Verkuil <hans.verkuil@cisco.com>
-CC: Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Mauro Carvalho Chehab
-	<mchehab+samsung@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <stable@vger.kernel.org>
-References: <20241128-venus_oob_2-v2-0-483ae0a464b8@quicinc.com>
- <20241128-venus_oob_2-v2-2-483ae0a464b8@quicinc.com>
- <65002924-3b8b-47ab-aa90-4733ccc2f728@linaro.org>
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <65002924-3b8b-47ab-aa90-4733ccc2f728@linaro.org>
+References: <20241008-starqltechn_integration_upstream-v6-0-5445365d3052@gmail.com>
+ <20241008-starqltechn_integration_upstream-v6-8-5445365d3052@gmail.com> <ee668cbf-54e0-4c0a-b690-8606cb3785b7@oss.qualcomm.com>
+In-Reply-To: <ee668cbf-54e0-4c0a-b690-8606cb3785b7@oss.qualcomm.com>
+From: Dzmitry Sankouski <dsankouski@gmail.com>
+Date: Mon, 2 Dec 2024 16:25:38 +0300
+Message-ID: <CABTCjFDMFTJCBm3o+5HVd5DiNF7HJETc=Lc2b=fqmKZM9Mz1gA@mail.gmail.com>
+Subject: Re: [PATCH v6 08/12] arm64: dts: qcom: sdm845-starqltechn: add
+ display PMIC
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: cros-qcom-dts-watchers@chromium.org, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Yp_rYfePQF_FHwsGFgmyACebDwgl59-R
-X-Proofpoint-GUID: Yp_rYfePQF_FHwsGFgmyACebDwgl59-R
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxscore=0
- adultscore=0 malwarescore=0 mlxlogscore=999 phishscore=0 suspectscore=0
- impostorscore=0 clxscore=1011 lowpriorityscore=0 bulkscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412020116
+Content-Transfer-Encoding: quoted-printable
+
+=D0=BF=D0=BD, 4 =D0=BD=D0=BE=D1=8F=D0=B1. 2024=E2=80=AF=D0=B3. =D0=B2 17:15=
+, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>:
+>
+> On 8.10.2024 6:51 PM, Dzmitry Sankouski wrote:
+> > Add support for s2dos05 display / touchscreen PMIC
+> >
+> > Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
+> > ---
+> > Changes in v6:
+> > - refactor: s/starqltechn/sdm845-starqltechn in subject
+> > - refactor: 'i' < 'm', so put tlmm i2c node before motor*
+>
+> Now you have 'i'2c21 before 'g'pio-regulator :/
+>
+WIll move i2c21 node before gpio-keys, too
 
 
-On 12/2/2024 5:38 PM, Bryan O'Donoghue wrote:
-> On 28/11/2024 05:05, Vikash Garodia wrote:
->> words_count denotes the number of words in total payload, while data
->> points to payload of various property within it. When words_count
->> reaches last word, data can access memory beyond the total payload. This
->> can lead to OOB access. Refactor the parsing logic such that the
->> remaining payload is checked before parsing it.
->>
->> Cc: stable@vger.kernel.org
->> Fixes: 1a73374a04e5 ("media: venus: hfi_parser: add common capability parser")
->> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
->> ---
->>   drivers/media/platform/qcom/venus/hfi_parser.c | 57 +++++++++++++++++++++-----
->>   1 file changed, 46 insertions(+), 11 deletions(-)
->>
->> diff --git a/drivers/media/platform/qcom/venus/hfi_parser.c
->> b/drivers/media/platform/qcom/venus/hfi_parser.c
->> index
->> 1cc17f3dc8948160ea6c3015d2c03e475b8aa29e..14349c2f84b205a8b79dee3acff1408bb63ac54a 100644
->> --- a/drivers/media/platform/qcom/venus/hfi_parser.c
->> +++ b/drivers/media/platform/qcom/venus/hfi_parser.c
->> @@ -282,8 +282,8 @@ static int hfi_platform_parser(struct venus_core *core,
->> struct venus_inst *inst)
->>   u32 hfi_parser(struct venus_core *core, struct venus_inst *inst, void *buf,
->>              u32 size)
->>   {
->> +    u32 *words = buf, *payload, codecs = 0, domain = 0;
->>       unsigned int words_count = size >> 2;
->> -    u32 *word = buf, *data, codecs = 0, domain = 0;
->>       int ret;
->>         ret = hfi_platform_parser(core, inst);
->> @@ -301,36 +301,71 @@ u32 hfi_parser(struct venus_core *core, struct
->> venus_inst *inst, void *buf,
->>       }
->>         while (words_count) {
->> -        data = word + 1;
->> +        payload = words + 1;
->>   -        switch (*word) {
->> +        switch (*words) {
->>           case HFI_PROPERTY_PARAM_CODEC_SUPPORTED:
->> -            parse_codecs(core, data);
->> +            if (words_count < sizeof(struct hfi_codec_supported))
->> +                return HFI_ERR_SYS_INSUFFICIENT_RESOURCES;
->> +
->> +            parse_codecs(core, payload);
->>               init_codecs(core);
->> +            words_count -= sizeof(struct hfi_codec_supported);
->> +            words += sizeof(struct hfi_codec_supported);
->>               break;
->>           case HFI_PROPERTY_PARAM_MAX_SESSIONS_SUPPORTED:
->> -            parse_max_sessions(core, data);
->> +            if (words_count < sizeof(struct hfi_max_sessions_supported))
->> +                return HFI_ERR_SYS_INSUFFICIENT_RESOURCES;
->> +
->> +            parse_max_sessions(core, payload);
->> +            words_count -= sizeof(struct hfi_max_sessions_supported);
->> +            words += sizeof(struct hfi_max_sessions_supported);
->>               break;
->>           case HFI_PROPERTY_PARAM_CODEC_MASK_SUPPORTED:
->> -            parse_codecs_mask(&codecs, &domain, data);
->> +            if (words_count < sizeof(struct hfi_codec_mask_supported))
->> +                return HFI_ERR_SYS_INSUFFICIENT_RESOURCES;
->> +
->> +            parse_codecs_mask(&codecs, &domain, payload);
->> +            words_count -= sizeof(struct hfi_codec_mask_supported);
->> +            words += sizeof(struct hfi_codec_mask_supported);
->>               break;
->>           case HFI_PROPERTY_PARAM_UNCOMPRESSED_FORMAT_SUPPORTED:
->> -            parse_raw_formats(core, codecs, domain, data);
->> +            if (words_count < sizeof(struct hfi_uncompressed_format_supported))
->> +                return HFI_ERR_SYS_INSUFFICIENT_RESOURCES;
->> +
->> +            parse_raw_formats(core, codecs, domain, payload);
->> +            words_count -= sizeof(struct hfi_uncompressed_format_supported);
->> +            words += sizeof(struct hfi_uncompressed_format_supported);
->>               break;
->>           case HFI_PROPERTY_PARAM_CAPABILITY_SUPPORTED:
->> -            parse_caps(core, codecs, domain, data);
->> +            if (words_count < sizeof(struct hfi_capabilities))
->> +                return HFI_ERR_SYS_INSUFFICIENT_RESOURCES;
->> +
->> +            parse_caps(core, codecs, domain, payload);
->> +            words_count -= sizeof(struct hfi_capabilities);
->> +            words += sizeof(struct hfi_capabilities);
->>               break;
->>           case HFI_PROPERTY_PARAM_PROFILE_LEVEL_SUPPORTED:
->> -            parse_profile_level(core, codecs, domain, data);
->> +            if (words_count < sizeof(struct hfi_profile_level_supported))
->> +                return HFI_ERR_SYS_INSUFFICIENT_RESOURCES;
->> +
->> +            parse_profile_level(core, codecs, domain, payload);
->> +            words_count -= sizeof(struct hfi_profile_level_supported);
->> +            words += sizeof(struct hfi_profile_level_supported);
->>               break;
->>           case HFI_PROPERTY_PARAM_BUFFER_ALLOC_MODE_SUPPORTED:
->> -            parse_alloc_mode(core, codecs, domain, data);
->> +            if (words_count < sizeof(struct hfi_buffer_alloc_mode_supported))
->> +                return HFI_ERR_SYS_INSUFFICIENT_RESOURCES;
->> +
->> +            parse_alloc_mode(core, codecs, domain, payload);
->> +            words_count -= sizeof(struct hfi_buffer_alloc_mode_supported);
->> +            words += sizeof(struct hfi_buffer_alloc_mode_supported);
->>               break;
->>           default:
->>               break;
->>           }
->>   -        word++;
->> +        words++;
->>           words_count--;
->>       }
->>  
-> 
-> I like the changes made here.
-> 
-> Let me suggest you have the parse_something() return the size of the buffer
-> consumed or an error code.
-> 
-> If you calculate the maximum pointer instead of the words_count
-> 
-> frame_size = payload + max;
-> 
-> /* Your while can look like this */
-> 
-> while (words < frame_size)
-> switch(*words){
-> case HFI_PROPERTY_X:
->     /* if the function returns the bytes consumed */
->     ret = parse_x();
->     break;
-> case HFI_PROPERTY_X:
->     ret = parse_x();
->     break;
-> }
-> 
-> if (ret < 0)
->     return -ret;
-> 
-> /* you can increment the pointer once at the bottom of the loop */
-> words += ret;
-> }
-> 
-> 
-> That way you can
-> 
-> 1. Get rid of words_count and not have to decrement it
-> 2. Have one variable words which is checked against the maximum
->    size while(words < frame_size)
-> 3. Have the function that consumes the data return
->    how much buffer it has consumed, instead of inlining in the
->    switch
-> 4. Increment at the bottom of the switch once instead
->    of several times in the switch
-> 
-> IMO it would be clearer/neater that way. Please consider.
-Appreciate your time to dig deeper into it. Expanding your suggestion, filling
-in the details
-
-frame_size = words + size;
-
-/* Your while can look like this */
-
-while (words < frame_size)
-remaining_size = framesize - words;
-switch(*words){
- case HFI_PROPERTY_X:
-     if (remaining_size < sizeof(payload_X)
-        return insuff_res;
-     /* if the function returns the bytes consumed */
-     ret = parse_x(core, words + 1);
-     break;
- case HFI_PROPERTY_Y:
-     if (remaining_size < sizeof(payload_X)
-        return insuff_res;
-     ret = parse_y(core, words + 1);
-     break;
- default:
-     ret = 1;
- }
-
- if (ret < 0)
-     return -ret;
-
- /* you can increment the pointer once at the bottom of the loop */
- words += ret;
- }
-
-If you see, words_count is doing the role of remaining_size. In existing
-implementation as well, we can move those increments per case to once per loop,
-just that to avoid incrementing for default case.
-
-Regards,
-Vikash
+--
+Best regards and thanks for review,
+Dzmitry
 
