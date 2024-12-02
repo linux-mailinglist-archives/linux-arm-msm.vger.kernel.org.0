@@ -1,191 +1,214 @@
-Return-Path: <linux-arm-msm+bounces-39908-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39909-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id AD77E9E07CD
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 17:00:20 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5465616DA8D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 15:23:06 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 373AE209F54;
-	Mon,  2 Dec 2024 15:18:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qV0Yu/US"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id A41FB9E07EA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 17:06:33 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09C9D209F4D;
-	Mon,  2 Dec 2024 15:18:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 65065BC20D6
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 15:24:34 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECBC2205E1F;
+	Mon,  2 Dec 2024 15:21:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ESVjXRvt"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CA76205AD5
+	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Dec 2024 15:21:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733152723; cv=none; b=kAyi36hEsmAGLyG6EsTuYjN5WbkRrgn0kK4iU9vLtq3/7XmSjmvVLZ6nDSeGhxdXuEHYbqoFplFAx95aN8XXu0p1VuAjCM5+0xb5UPjknFWO26VbRhDpGdaq7NcTVByY7hHjoO9D9ALGbDr3PyJQREbHWxkq1jBNrxY32xQCobg=
+	t=1733152893; cv=none; b=c7GJ647JNJkNxAdqXpY2yxKVlwLw+/GC6x05l8SDZ38jy9zLQJT+pnDB19KK78NuDzseYI06MLKxQ9aFZfSBb+0C29a4+MaULZmM1LSNi++j04kdnYBuWTnN6J9nsywdFvz28YpAnTj+VJ7Ys49cxGx9ltNcfoSGAvcxDVVLoHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733152723; c=relaxed/simple;
-	bh=UqawBlPgHPe0/V8FZ2gBXixgUUbPN61Mx7U2Ivpn0AU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pozYx+8ssAlkkIZqfzfn0qwZ7xMJrnq1QcDtshzkhkx4ijiKBSlYSsnHYHOMcL64I/dvnhLenFtmpB9Iw2HwOOYyypX7yG4mtIvfV7niZPCosTmiyPyEq1Nk26QigXBBuOKmO1FtWepbQL4cSelR24EAAa7P/bFob1uRbQexRw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qV0Yu/US; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A208C4CED2;
-	Mon,  2 Dec 2024 15:18:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733152721;
-	bh=UqawBlPgHPe0/V8FZ2gBXixgUUbPN61Mx7U2Ivpn0AU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=qV0Yu/UScn0KhRx6DvafyEOnXyWNw9b4RnY0C4E2rcQLre445vQh5IEzOXCs5Za/D
-	 ZCkWjBRn9BScKK9v5R58e7J1GZ/eABKRHVJMk//DjqwGmwgUDTPf+HNe8YtFo2bDyN
-	 JD5hvVN0Rv1Zn2PO8KD9F2/kQyv0FrPOYwDjsb24tc7ogAQYQij3WznRZai/npbG+l
-	 IhFhNY+i/fPrU+hF4zyZZl28wfFhZqVsn46r9yL6ZSUXiD3SjFlMi58YhUmWdBThOn
-	 TTvWT/SBywsxQPcErqkbRw1y2IycW5V58qLqcmN1o6gyspGK/wo9TXa6LMAZ5LEi8o
-	 lE4XOvYO+jTJA==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1tI8C5-000000007Ja-1j1w;
-	Mon, 02 Dec 2024 16:18:37 +0100
-Date: Mon, 2 Dec 2024 16:18:37 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Abel Vesa <abel.vesa@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH v2 1/2] arm64: dts: qcom: x1e78100-t14s: Enable support
- for both Type-A USB ports
-Message-ID: <Z03PzTsTi3EwaXcE@hovoldconsulting.com>
-References: <20241202-x1e80100-qcp-t14-enable-usb-type-a-ports-v2-0-7360ed65c769@linaro.org>
- <20241202-x1e80100-qcp-t14-enable-usb-type-a-ports-v2-1-7360ed65c769@linaro.org>
+	s=arc-20240116; t=1733152893; c=relaxed/simple;
+	bh=cp38NvHhG7bv1PV5olRpzUFbGfv1UT6tXNRFIVFhnP4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=RqHMB6EDRhhDEZCZAQmxc0/rknxJvZGY7D+EWwsMiEw2mEkvfI6kCnwtObmlqKDq6aX7zS4sKkdDmURNJsTh2+R0vHu3M/NE8FPDS3/3pQ8eXkW7Y+39tF2M9g2edkpKLBbLFJggmXWnbzBX0fIiVOljFaAL6/FchJ9ZLgn80wE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ESVjXRvt; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B28E32a001491;
+	Mon, 2 Dec 2024 15:21:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	lie0DeeFmPrXheZUwaFxP9k0m9OlEa5coXRUqnP1Hok=; b=ESVjXRvtvybhy/zR
+	e+rjkBYGzbmRyxlUivqZsKsiy3C9KCzFE/vwa8avBOa34jGWf1FQkIB4+PBuUJlU
+	pdxfi9y60YjKsZerH0wVQ+1NupXhqFToRwcPg5HRkWfBUbVFZfyxSa6RcyvNipZt
+	E1zX+ixW/BTimouALOyASGMGK6PF+ZpYWU4ntJlt+iyWUAVxSogSQJXUZGXJi5Jw
+	YUgxWRJ36YX0x0mDyid6hScdK2tBz+FDysTNcpT2zncZDwunOO+ANkDEJK5yE2U6
+	Ug3Qks4twfw/xh77YI8qeBhxM1bSX5FiMxVbmDVqcpwNvb2J+nVXHXt1J4ReDVHL
+	8Nnmog==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 437t1gd8nb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 02 Dec 2024 15:21:25 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B2FLNMG004004
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 2 Dec 2024 15:21:23 GMT
+Received: from [10.216.15.26] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 2 Dec 2024
+ 07:21:19 -0800
+Message-ID: <a730c66a-3969-3101-1ebe-88baf6184d2e@quicinc.com>
+Date: Mon, 2 Dec 2024 20:51:15 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241202-x1e80100-qcp-t14-enable-usb-type-a-ports-v2-1-7360ed65c769@linaro.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: add venus firmware file for qcs615
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>,
+        "Renjiang Han (QUIC)" <quic_renjiang@quicinc.com>,
+        "linux-firmware@kernel.org" <linux-firmware@kernel.org>,
+        "Dikshita Agarwal
+ (QUIC)" <quic_dikshita@quicinc.com>,
+        "Qiwei Liu (QUIC)"
+	<quic_qiweil@quicinc.com>,
+        "quic_zhgao@quicinc.co" <quic_zhgao@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>
+References: <pqoq64hk2jedmqta5fs4ktcadw4getwkgz324vtrzzotcurpaw@zc6dlhbqtsnz>
+ <a1bbc1d0-d3bd-e44e-e393-a7ade909a506@quicinc.com>
+ <CAA8EJpoDXKbF5cqb_vzE28zjdC6OC66Zxb5j030QXaCe+FUmfw@mail.gmail.com>
+ <egdqhgdiqqny57yiauiyekcvhxvebfttyncqoazslzjprwvakz@txvy7wn4vg7g>
+ <a259c98c-6c77-1c1e-e428-41c2550f7517@quicinc.com>
+ <pukoimsqhck5oymirmgiwad6s3l6frt7xbahp7juhvj3rt4622@wpajx6vyw5nl>
+ <rukxa3h72trvqvu6wkxmkp33entybcvxfjlpcjh7odipwds6lq@rt6ferue5nbr>
+ <5170f77f-c5d3-02f1-8deb-5d00fef7627a@quicinc.com>
+ <magmzevx4cisi5s2ytdtzsqr6klrt6wot6cex3zpxugjspdwyt@qpooycw4b2bs>
+ <41f0ebb2-02b9-a83d-6a7d-3dd03fccb687@quicinc.com>
+ <cjbdqixxxu2zrgkakcb44jnkeoktwc3vmtqauejnxjxtycqtnp@7cthmlpy5qx3>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <cjbdqixxxu2zrgkakcb44jnkeoktwc3vmtqauejnxjxtycqtnp@7cthmlpy5qx3>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: qvVjznC422OaUMTN1UdUklRKIAvkd94H
+X-Proofpoint-ORIG-GUID: qvVjznC422OaUMTN1UdUklRKIAvkd94H
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 impostorscore=0
+ adultscore=0 lowpriorityscore=0 bulkscore=0 mlxscore=0 malwarescore=0
+ spamscore=0 priorityscore=1501 clxscore=1015 suspectscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412020132
 
-On Mon, Dec 02, 2024 at 11:23:17AM +0200, Abel Vesa wrote:
-> The Thinkpad T14s has 2 USB-A ports, both connected to the USB
-> multiport controller, each one via a separate NXP PTN3222 eUSB2-to-USB2
-> redriver to the eUSB2 PHY for High-Speed support, with a dedicated QMP
-> PHY for SuperSpeed support.
+
+On 12/2/2024 8:41 PM, Dmitry Baryshkov wrote:
+> On Mon, Dec 02, 2024 at 06:20:40PM +0530, Vikash Garodia wrote:
+>>
+>> On 12/2/2024 6:16 PM, Dmitry Baryshkov wrote:
+>>> On Mon, Dec 02, 2024 at 05:30:55PM +0530, Vikash Garodia wrote:
+>>>> Hi Dmitry,
+>>>>
+>>>> On 11/29/2024 8:05 PM, Dmitry Baryshkov wrote:
+>>>>> On Wed, Nov 20, 2024 at 01:22:50PM +0200, Dmitry Baryshkov wrote:
+>>>>>> On Wed, Nov 20, 2024 at 04:40:51PM +0530, Vikash Garodia wrote:
+>>>>>>>
+>>>>>>> On 11/20/2024 4:09 PM, Dmitry Baryshkov wrote:
+>>>>>>>> On Thu, Nov 14, 2024 at 01:31:14PM +0200, Dmitry Baryshkov wrote:
+>>>>>>>>> On Thu, 14 Nov 2024 at 13:05, Vikash Garodia <quic_vgarodia@quicinc.com> wrote:
+>>>>>>>>>>
+>>>>>>>>>>
+>>>>>>>>>> On 11/14/2024 4:16 PM, Dmitry Baryshkov wrote:
+>>>>>>>>>>> On Thu, Nov 14, 2024 at 09:06:55AM +0530, Vikash Garodia wrote:
+>>>>>>>>>>>>
+>>>>>>>>>>>> On 11/13/2024 8:10 PM, Dmitry Baryshkov wrote:
+>>>>>>>>>>>>> On Wed, Nov 13, 2024 at 10:50:44AM +0000, Renjiang Han (QUIC) wrote:
+>>>>>>>>>>>>>> Hello
+>>>>>>>>>>>>>>
+>>>>>>>>>>>>>> The following changes since commit 6482750d396980a31f76edd5a84b03a96bbdf3fe:
+>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>   Merge branch 'verb' into 'main' (2024-11-11 20:01:00 +0000)
+>>>>>>>>>>>>>>
+>>>>>>>>>>>>>> are available in the Git repository at:
+>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>   git@git.codelinaro.org:clo/linux-kernel/linux-firmware.git<mailto:git@git.codelinaro.org:clo/linux-kernel/linux-firmware.git> video-firmware-qcs615
+>>>>>>>>>>>>>>
+>>>>>>>>>>>>>> for you to fetch changes up to 1e7f65883150d3b48307b4f0d6871c60151ee25b:
+>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>   qcom: venus-5.4: add venus firmware file for qcs615 (2024-11-13 15:50:29 +0530)
+>>>>>>>>>>>>>>
+>>>>>>>>>>>>>> ----------------------------------------------------------------
+>>>>>>>>>>>>>> Renjiang Han (1):
+>>>>>>>>>>>>>>       qcom: venus-5.4: add venus firmware file for qcs615
+>>>>>>>>>>>>>>
+>>>>>>>>>>>>>> WHENCE                      |   1 +
+>>>>>>>>>>>>>
+>>>>>>>>>>>>> Could you please be more specific, what is the difference between the
+>>>>>>>>>>>>> existing file and a new file? According to the soc_vers the new file
+>>>>>>>>>>>>> supports sdm845. Should it instead replace the old firmware?
+>>>>>>>>>>>> SDM845, SC7180, qcs615 can be enabled on same firmware ideally, but due to a
+>>>>>>>>>>>> different signing for qcs615, it takes a separate bin (xxx_s6.mbn).
+>>>>>>>>>>>
+>>>>>>>>>>> Can SDM845 handle v6 signatures? It supports v5 and PSS. Or can QCS615
+>>>>>>>>>>> use v5 signatures?
+>>>>>>>>>> Infact we started with loading sc7180 firmware on qc615, video init failed. So
+>>>>>>>>>> far i have seen 2 categories in signing version for video bins, either default
+>>>>>>>>>> or v6 specific tool.
+>>>>>>>>>
+>>>>>>>>> Can firmware / security engineers actually advice us on using v5
+>>>>>>>>> firmware signatures with QCS615 _and_ with older platforms?
+>>>>>>>>> Existing venus-5.4/venus.mbn uses v3
+>>>>>>>>
+>>>>>>>> Vikash, any updates on this topic? Would it be possible to have a single
+>>>>>>>> FW image with just v5 signatures?
+>>>>>>> Not yet Dmitry. Having a followup with relevant folks this friday to understand
+>>>>>>> the signing requirements across different SOCs, hopefully will be able to add
+>>>>>>> something on this by then.
+>>>>>
+>>>>> It's been more than a week since the last email. Are there any updates?
+>>>>> I'd really like to get this sorted out before next linux-firmware
+>>>>> release, otherwise we'll be stuck with these names for the foreseeable
+>>>>> future.
+>>>> I have been chasing both the firmware and security folks to align on this. So
+>>>> far the updates are that one is signed MBNv5 and other with MBNV6, hence leading
+>>>
+>>> I think the existing firmware uses v3, not v5.
+>>>
+>>> 00001000  00 00 00 00 03 00 00 00  00 00 00 00 28 00 a0 0f  |............(...|
+>>>
+>>>
+>>>> to different set of binaries. These MBN versions of signing is defined at SOC
+>>>> level and depends on secure boot libraries used in that SOC.
+>>>> At the same time, there is an experiment to check if SC7180 can be signed with
+>>>> version used for QCS615 i.e MBNV6.
+>>>
+>>> Thanks! Are you trying that without updating the whole bootloader stack? I
+>>> think some of SC7180 devices might be EOL'd, so it might be hard to get
+>>> FW/bootloader updates.
+>> Just the firmware part, by signing it with qcs615 way, as an experiment
+>> suggested by security folks.
 > 
-> Describe each redriver and then enable each pair of PHYs and the
-> USB controller itself, in order to enable support for the 2 USB-A ports.
+> Ok, that doesn't sound like a lengthy experiment: resign the FW, boot
+> the laptop, caboom or not caboom. If I remember correctly the file that
+> you've pushed even lists sc7180 as allowed.
+its used only for qcs615.
 > 
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
->  .../dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts     | 86 ++++++++++++++++++++++
->  1 file changed, 86 insertions(+)
+>>
+>>>> One query here - given that qcs615 only loads the venus_s6.mbn variant, and it
+>>>> is not enabled yet (patches in review) for video, we should be good if we
+>>>> conclude the firmware part before accepting the qcs615 enablement patches ?
+>>>
+>>> Good question. I think that depends on linux-firmware maintainer's
+>>> opinion.
+>>>
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts
-> index 975550139e1024420ed335a2a46e4d54df7ee423..f936e3246ec87972746a60080c3a48d646a356f2 100644
-> --- a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts
-> +++ b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts
-> @@ -495,6 +495,40 @@ keyboard@3a {
->  	};
->  };
->  
-> +&i2c5 {
-> +	clock-frequency = <400000>;
-> +
-> +	status = "okay";
-> +
-> +	eusb3_repeater: redriver@47 {
-> +		compatible = "nxp,ptn3222";
-> +		reg = <0x47>;
-
-The driver doesn't seem to actually communicate with these devices
-currently and the addresses you specify here do not match what the
-schematics says.
-
-Have you verified that these addresses are correct?
-
-> +		#phy-cells = <0>;
-> +
-> +		vdd3v3-supply = <&vreg_l13b_3p0>;
-> +		vdd1v8-supply = <&vreg_l4b_1p8>;
-> +
-> +		reset-gpios = <&tlmm 6 GPIO_ACTIVE_LOW>;
-> +
-> +		pinctrl-0 = <&eusb3_reset_n>;
-> +		pinctrl-names = "default";
-> +	};
-> +
-> +	eusb6_repeater: redriver@4f {
-> +		compatible = "nxp,ptn3222";
-> +		reg = <0x4f>;
-
-Same here.
-
-> +		#phy-cells = <0>;
-> +
-> +		vdd3v3-supply = <&vreg_l13b_3p0>;
-> +		vdd1v8-supply = <&vreg_l4b_1p8>;
-> +
-> +		reset-gpios = <&tlmm 184 GPIO_ACTIVE_LOW>;
-> +
-> +		pinctrl-0 = <&eusb6_reset_n>;
-> +		pinctrl-names = "default";
-> +	};
-> +};
-> +
->  &i2c8 {
->  	clock-frequency = <400000>;
->  
-> @@ -651,6 +685,22 @@ &tlmm {
->  			       <72 2>, /* Secure EC I2C connection (?) */
->  			       <238 1>; /* UFS Reset */
->  
-> +	eusb3_reset_n: eusb3-reset-n-state {
-> +		pins = "gpio6";
-> +		function = "gpio";
-> +		drive-strength = <2>;
-> +		bias-disable;
-> +		output-low;
-
-I don't think the pin configuration should assert reset, that should be
-left up to the driver to decide, that is,  when (and if) it's an
-appropriate thing to do.
-
-> +	};
-> +
-> +	eusb6_reset_n: eusb6-reset-n-state {
-> +		pins = "gpio184";
-> +		function = "gpio";
-> +		drive-strength = <2>;
-> +		bias-disable;
-> +		output-low;
-
-Same here.
-
-> +	};
-> +
->  	tpad_default: tpad-default-state {
->  		pins = "gpio3";
->  		function = "gpio";
-> @@ -808,3 +858,39 @@ &usb_1_ss1_dwc3_hs {
->  &usb_1_ss1_qmpphy_out {
->  	remote-endpoint = <&pmic_glink_ss1_ss_in>;
->  };
-
-And last, but not least, the T14s may hard reset if you disconnect a
-thumb drive connected to one of these ports while suspended (6.13-rc1).
-
-Once it survived with a lockdep splat indicating a circular locking
-dependency. I see that on the CRD as well, so possibly not related to
-the hard reset.
-
-No such issues with a FullSpeed keyboard.
-
-Johan
 
