@@ -1,292 +1,189 @@
-Return-Path: <linux-arm-msm+bounces-39782-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39783-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id BEDD09DFAE7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 07:48:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 416C59DFAFF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 08:19:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7FE412818CB
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 06:48:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 00B2B281B5F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 07:19:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC1751F9439;
-	Mon,  2 Dec 2024 06:48:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 062011F8F1B;
+	Mon,  2 Dec 2024 07:19:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kCfiJiQA"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DuWQD75t"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1833D1F9431;
-	Mon,  2 Dec 2024 06:48:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D031F8F10;
+	Mon,  2 Dec 2024 07:19:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733122110; cv=none; b=kDdKxOrOnwL/COLeiPF+A1dSpe6ySBNNHXWMXz5RpkYlK56lZC13Mp+qNgU/M4nEDnbp7wE2LczdqyaDPg3uFDNvekNF7DnOZmsdUl5lYimJpeJAhe8o33CJ/YUm/i9gMQKeT76ziIbQbWG9YDyYIb9sPMU954hACzTiFbNrzZA=
+	t=1733123972; cv=none; b=oshXV57UCopWRaOIAXh86zDXi8a9M7ENB2DwSCCEp4wqsLZ4tMglI2uNNVsSJt9Yu5rVtMT8tRERxep599v5wSsdYi6vIOxrT5ID3S6mdaT0X5wQatRzlVYO7LNBSuo1j9eu4EgOAc3pU/HcDnYBRsNz23qJGE+YATZhAej7RLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733122110; c=relaxed/simple;
-	bh=q7jDya1tBbD/aQuPTvhHyMv9hVp9GKZ0LHkD8EQ1i+U=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MYZTlK+/OJwCOEZuzJ8L47Awo+DU+Vl5bbshPwQLUIbmcFPRQhW0/q7OI+feLAPYPYEXQ7yd7gDi36C4ns7VGTH3/PvWIi1nWOxasVOGSfW7Ue8xthlJSui7z1RYNLbKB+GbDhvz2qrkNvcmSp5nUu3bjoatKTpcVSSaI9kl+xc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=kCfiJiQA; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B1NJG9b000650;
-	Mon, 2 Dec 2024 06:48:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ke0M5gWT3uydY0wm//vZNplO9FRSBaElQNSAvEyte8k=; b=kCfiJiQAzMSCMkTD
-	0qH9v3Mo8f7TbvOjzEqALLtk0JfBCHEhIrLFCd82yUtCQw5Fw2yDc3w93+NolXfI
-	PJDs/mOjJZZZkyyZ4pxCth5I6jXbYyma42m2EFsrKpBT31e5/O8F89SStCqS2ls4
-	gCgU/JRsszYdPiXlxOxN6F/QGQt0RofX1oIWqK9HIbaQ2aRdUZAz+t0D8Hm1A7GA
-	Sqv+eYlHO3z+rxNCIExksxeJogz+dV2+nLA9ZWJdaDiflJE/uXBWZ0g8rO2WxIZt
-	ZnqCGfB5XX8JOdrY95jyw4SjJdjv5PVRnkPQqQValpn7xFM5zO02Gv0UsRMcDnSo
-	WnImCg==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 437sq63pmw-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 02 Dec 2024 06:48:24 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B26mNJQ009290
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 2 Dec 2024 06:48:23 GMT
-Received: from hu-ekangupt-hyd.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Sun, 1 Dec 2024 22:48:20 -0800
-From: Ekansh Gupta <quic_ekangupt@quicinc.com>
-To: <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>
-CC: <gregkh@linuxfoundation.org>, <quic_bkumar@quicinc.com>,
-        <linux-kernel@vger.kernel.org>, <quic_chennak@quicinc.com>,
-        <dri-devel@lists.freedesktop.org>, <arnd@arndb.de>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>
-Subject: [PATCH v5 2/2] misc: fastrpc: Rename tgid and pid to client_id
-Date: Mon, 2 Dec 2024 12:18:06 +0530
-Message-ID: <20241202064806.1164800-3-quic_ekangupt@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241202064806.1164800-1-quic_ekangupt@quicinc.com>
-References: <20241202064806.1164800-1-quic_ekangupt@quicinc.com>
+	s=arc-20240116; t=1733123972; c=relaxed/simple;
+	bh=/tlgtK7JjfxgaGxdUXckjbndy/MvCZ5JS02jgL2F4tY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=n+59leWSzi8ePio/PNi8tI4Ais1xWr9Inc25oKEdd5WthYwPDr0D7GdYZsB39g+cTi7tHhJcQ7C7mrqYg3Cwy0B6x4tvrc202AQL3irjJZStJgyO9ihl3MktckcNYdZPs18ZjJSE9e1Z1Dl5chTKiokuB7Lw5+Vxg0bUx4Tfwzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DuWQD75t; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BC9AC4CED2;
+	Mon,  2 Dec 2024 07:19:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1733123972;
+	bh=/tlgtK7JjfxgaGxdUXckjbndy/MvCZ5JS02jgL2F4tY=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=DuWQD75tMUHZxM2tvrZXS3O4zFJz9l9V9IazfY1a3YWdYlf7+72kel91ViGtVCodF
+	 yoiWqR1VXnaemtZbtaiBkucEwrFeCXoaUerGCOgc4MxJaq834fBN2e9nm69caMycNY
+	 J+uqP7RZeYQKtGuN7hY4HNM6yUDdYgrWX74f6OzeHbQP2QH1lvyz4HNY1r2dtOanrx
+	 FkVUuxmZc5uoU6gZ7pUKgzrq1lnsLPkFfFap4gdV3raMUtCNTeYAezDfYLLtEMnOTi
+	 0TnAYooAJjtw6Hv4HIdhivf42dzjCtyFxc8V47cSgBgOuTNBT7/aD/lkOtRpq34bqx
+	 6oh4m0LDtEvvA==
+Message-ID: <fc33c4ed-32e5-46cc-87d6-921f2e58b4ff@kernel.org>
+Date: Mon, 2 Dec 2024 08:19:23 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: A9rUT2_dVvqIaANea9ycxl1EQK6AiEou
-X-Proofpoint-ORIG-GUID: A9rUT2_dVvqIaANea9ycxl1EQK6AiEou
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
- priorityscore=1501 mlxscore=0 clxscore=1015 lowpriorityscore=0
- suspectscore=0 adultscore=0 spamscore=0 impostorscore=0 mlxlogscore=999
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412020058
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 1/4] dt-bindindgs: i2c: qcom,i2c-geni: Document shared
+ flag
+To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
+ konrad.dybcio@linaro.org, andersson@kernel.org, andi.shyti@kernel.org,
+ linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org,
+ conor+dt@kernel.org, agross@kernel.org, devicetree@vger.kernel.org,
+ vkoul@kernel.org, linux@treblig.org, dan.carpenter@linaro.org,
+ Frank.Li@nxp.com, konradybcio@kernel.org, bryan.odonoghue@linaro.org,
+ krzk+dt@kernel.org, robh@kernel.org
+Cc: quic_vdadhani@quicinc.com
+References: <20241129144357.2008465-1-quic_msavaliy@quicinc.com>
+ <20241129144357.2008465-2-quic_msavaliy@quicinc.com>
+ <db428697-a9dc-46e1-abbe-73341306403f@kernel.org>
+ <a8b1ccd2-c37b-4a6f-b592-caf1a53be02c@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <a8b1ccd2-c37b-4a6f-b592-caf1a53be02c@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-The information passed as request tgid and pid is actually the
-client id of the process. This client id is used as an
-identifier by DSP to identify the DSP PD corresponding to the
-process. Currently process tgid is getting passed as the
-identifier which is getting replaced by a custom client id.
-Rename the data which uses this client id.
+On 02/12/2024 05:00, Mukesh Kumar Savaliya wrote:
+> Hi Krzysztof,
+> 
+> On 11/29/2024 8:44 PM, Krzysztof Kozlowski wrote:
+>> On 29/11/2024 15:43, Mukesh Kumar Savaliya wrote:
+>>> Adds qcom,shared-se flag usage. Use this flag when I2C serial controller
+>>> needs to be shared in multiprocessor system(APPS,Modem,ADSP) environment.
+>>>
+>>> SE(Serial Engine HW controller acting as protocol master controller) is an
+>>> I2C controller. Basically a programmable SERDES(serializer/deserializer)
+>>> coupled with data DMA entity, capable in handling a bus protocol, and data
+>>> moves to/from system memory.
+>>>
+>>> Two clients from different processors can share an I2C controller for same
+>>> slave device OR their owned slave devices. Assume I2C Slave EEPROM device
+>>> connected with I2C controller. Each client from ADSP SS and APPS Linux SS
+>>> can perform i2c transactions.
+>>>
+>>> Transfer gets serialized by Lock TRE + DMA xfer + Unlock TRE at HW level.
+>>>
+>>> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+>>> ---
+>>>   .../devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml       | 8 ++++++++
+>>>   1 file changed, 8 insertions(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml b/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
+>>> index 9f66a3bb1f80..88682a333399 100644
+>>> --- a/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
+>>> +++ b/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
+>>> @@ -60,6 +60,14 @@ properties:
+>>>     power-domains:
+>>>       maxItems: 1
+>>>   
+>>> +  qcom,shared-se:
+>>> +    description: True if I2C controller is shared between two or more system processors.
+>>> +        SE(Serial Engine HW controller working as protocol master controller) is an
+>>> +        I2C controller. Basically, a programmable SERDES(serializer/deserializer)
+>>> +        coupled with data DMA entity, capable in handling a bus protocol, and data
+>>> +        moves to/from system memory.
+>> I replied why I NAK it. You did not really address my concerns, but
+>> replied with some generic statement. After that generic statement you
+>> gave me exactly 0 seconds to react and you sent v5.
+>>
+> Sorry for 0 seconds, i thought of addressing comment and uploading it 
+> new patch as i wanted to explain SE. whatever i have added for SE 
+> explanation is in qualcomm hardware programming guide document.
+>> Really 0 seconds to respond to your comment, while you give yourself
+>> days to respond to my comments.
+>>
+>> This is not how it works.
+>>
+> Sure, let me first conclude here what exactly should be done.
+>> NAK
+>>
+>> Implement previous feedback. Don't send any new versions before you
+>> understand what you have to do and get some agreement with reviewers.
+>>
+> Sure, this is definitely a good way. what did i do for previous comment ?
+> I have opened SE and expanded, explained.
+> 
+> which statement or explanation should i rephrase ? Is it description 
+> statement from this yaml file ? Could you please suggested better word 
+> instead of shared-se if this flag name is not suitable ?
+> 
+> I could not get this ask -
+> "There are few of such flags already and there are some patches adding 
+> it in different flavors."
 
-Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/misc/fastrpc.c | 48 +++++++++++++++++++++---------------------
- 1 file changed, 24 insertions(+), 24 deletions(-)
+Come with one flag or enum, if needed, covering all your cases like this.
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index de6d423ff0b6..2d8e0e55eec8 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -139,14 +139,14 @@ struct fastrpc_mmap_rsp_msg {
- };
- 
- struct fastrpc_mmap_req_msg {
--	s32 pgid;
-+	s32 client_id;
- 	u32 flags;
- 	u64 vaddr;
- 	s32 num;
- };
- 
- struct fastrpc_mem_map_req_msg {
--	s32 pgid;
-+	s32 client_id;
- 	s32 fd;
- 	s32 offset;
- 	u32 flags;
-@@ -156,20 +156,20 @@ struct fastrpc_mem_map_req_msg {
- };
- 
- struct fastrpc_munmap_req_msg {
--	s32 pgid;
-+	s32 client_id;
- 	u64 vaddr;
- 	u64 size;
- };
- 
- struct fastrpc_mem_unmap_req_msg {
--	s32 pgid;
-+	s32 client_id;
- 	s32 fd;
- 	u64 vaddrin;
- 	u64 len;
- };
- 
- struct fastrpc_msg {
--	int pid;		/* process group id */
-+	int client_id;		/* process client id */
- 	int tid;		/* thread id */
- 	u64 ctx;		/* invoke caller context */
- 	u32 handle;	/* handle to invoke */
-@@ -234,7 +234,7 @@ struct fastrpc_invoke_ctx {
- 	int nbufs;
- 	int retval;
- 	int pid;
--	int tgid;
-+	int client_id;
- 	u32 sc;
- 	u32 *crc;
- 	u64 ctxid;
-@@ -614,7 +614,7 @@ static struct fastrpc_invoke_ctx *fastrpc_context_alloc(
- 	ctx->sc = sc;
- 	ctx->retval = -1;
- 	ctx->pid = current->pid;
--	ctx->tgid = user->client_id;
-+	ctx->client_id = user->client_id;
- 	ctx->cctx = cctx;
- 	init_completion(&ctx->work);
- 	INIT_WORK(&ctx->put_work, fastrpc_context_put_wq);
-@@ -1115,11 +1115,11 @@ static int fastrpc_invoke_send(struct fastrpc_session_ctx *sctx,
- 	int ret;
- 
- 	cctx = fl->cctx;
--	msg->pid = fl->client_id;
-+	msg->client_id = fl->client_id;
- 	msg->tid = current->pid;
- 
- 	if (kernel)
--		msg->pid = 0;
-+		msg->client_id = 0;
- 
- 	msg->ctx = ctx->ctxid | fl->pd;
- 	msg->handle = handle;
-@@ -1244,7 +1244,7 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
- 	int err;
- 	bool scm_done = false;
- 	struct {
--		int pgid;
-+		int client_id;
- 		u32 namelen;
- 		u32 pageslen;
- 	} inbuf;
-@@ -1293,7 +1293,7 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
- 		}
- 	}
- 
--	inbuf.pgid = fl->client_id;
-+	inbuf.client_id = fl->client_id;
- 	inbuf.namelen = init.namelen;
- 	inbuf.pageslen = 0;
- 	fl->pd = USER_PD;
-@@ -1363,7 +1363,7 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
- 	int memlen;
- 	int err;
- 	struct {
--		int pgid;
-+		int client_id;
- 		u32 namelen;
- 		u32 filelen;
- 		u32 pageslen;
-@@ -1395,7 +1395,7 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
- 		goto err;
- 	}
- 
--	inbuf.pgid = fl->client_id;
-+	inbuf.client_id = fl->client_id;
- 	inbuf.namelen = strlen(current->comm) + 1;
- 	inbuf.filelen = init.filelen;
- 	inbuf.pageslen = 1;
-@@ -1503,12 +1503,12 @@ static void fastrpc_session_free(struct fastrpc_channel_ctx *cctx,
- static int fastrpc_release_current_dsp_process(struct fastrpc_user *fl)
- {
- 	struct fastrpc_invoke_args args[1];
--	int tgid = 0;
-+	int client_id = 0;
- 	u32 sc;
- 
--	tgid = fl->client_id;
--	args[0].ptr = (u64)(uintptr_t) &tgid;
--	args[0].length = sizeof(tgid);
-+	client_id = fl->client_id;
-+	args[0].ptr = (u64)(uintptr_t) &client_id;
-+	args[0].length = sizeof(client_id);
- 	args[0].fd = -1;
- 	sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_RELEASE, 1, 0);
- 
-@@ -1648,11 +1648,11 @@ static int fastrpc_dmabuf_alloc(struct fastrpc_user *fl, char __user *argp)
- static int fastrpc_init_attach(struct fastrpc_user *fl, int pd)
- {
- 	struct fastrpc_invoke_args args[1];
--	int tgid = fl->client_id;
-+	int client_id = fl->client_id;
- 	u32 sc;
- 
--	args[0].ptr = (u64)(uintptr_t) &tgid;
--	args[0].length = sizeof(tgid);
-+	args[0].ptr = (u64)(uintptr_t) &client_id;
-+	args[0].length = sizeof(client_id);
- 	args[0].fd = -1;
- 	sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_ATTACH, 1, 0);
- 	fl->pd = pd;
-@@ -1804,7 +1804,7 @@ static int fastrpc_req_munmap_impl(struct fastrpc_user *fl, struct fastrpc_buf *
- 	int err;
- 	u32 sc;
- 
--	req_msg.pgid = fl->client_id;
-+	req_msg.client_id = fl->client_id;
- 	req_msg.size = buf->size;
- 	req_msg.vaddr = buf->raddr;
- 
-@@ -1890,7 +1890,7 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
- 		return err;
- 	}
- 
--	req_msg.pgid = fl->client_id;
-+	req_msg.client_id = fl->client_id;
- 	req_msg.flags = req.flags;
- 	req_msg.vaddr = req.vaddrin;
- 	req_msg.num = sizeof(pages);
-@@ -1979,7 +1979,7 @@ static int fastrpc_req_mem_unmap_impl(struct fastrpc_user *fl, struct fastrpc_me
- 		return -EINVAL;
- 	}
- 
--	req_msg.pgid = fl->client_id;
-+	req_msg.client_id = fl->client_id;
- 	req_msg.len = map->len;
- 	req_msg.vaddrin = map->raddr;
- 	req_msg.fd = map->fd;
-@@ -2032,7 +2032,7 @@ static int fastrpc_req_mem_map(struct fastrpc_user *fl, char __user *argp)
- 		return err;
- 	}
- 
--	req_msg.pgid = fl->client_id;
-+	req_msg.client_id = fl->client_id;
- 	req_msg.fd = req.fd;
- 	req_msg.offset = req.offset;
- 	req_msg.vaddrin = req.vaddrin;
--- 
-2.34.1
-
+Best regards,
+Krzysztof
 
