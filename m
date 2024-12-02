@@ -1,131 +1,186 @@
-Return-Path: <linux-arm-msm+bounces-39852-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39853-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id F0D419E0129
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 13:00:30 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 940449E0133
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 13:01:41 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B69E0280E62
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 12:00:29 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1366B163B09
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 12:01:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD6D31FDE0B;
-	Mon,  2 Dec 2024 12:00:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0FC161FE475;
+	Mon,  2 Dec 2024 12:01:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YNJkDSvb"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="T2dwXdRm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACF531D95A9;
-	Mon,  2 Dec 2024 12:00:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ABD21FE46C
+	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Dec 2024 12:01:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733140826; cv=none; b=kps4c3wUqYQ7EU1GV8KBv0D7nXmLaVPa7RH3H4JIJ7qY5cWNiJl4V5ucGBoAztTMp3ymi5chcb/tDYPfA7xLmNLFZ+UH7mKkJ4txvpeXIdlLi+f1SLWFYOjuxNPFHz4tmXQg/j2cLYsrbknc/wcXmZ+xCg69ApvmLt7isjr8VjI=
+	t=1733140890; cv=none; b=Ak0kApsZu8DxAhYeQktsV+l3g8UxbP49RVoGOl2sUzeOisImXJ0G4JJS6zEydW227h3T6u4koFLV0xuV0L7HRIBp4nceBQQAd4DC3vbUOBrmdXVbxIK27Rjen1tYlzo9OPIK9NRSa5VISAM4s6fwLNIXlETIDWxbfL7MxiDkWSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733140826; c=relaxed/simple;
-	bh=uq6P50nPVqYzYznK6CDOgelQtYASy802lUz2VNa3X4k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=P3M1kYLotY/66eZlesArPbYxVa+3zdMPLf4QmOHsC7BcIBRi1CoGo8aGx1qdvjv+fOZfjbfa3qFOisHOHXxln+6dFodx7mr4wn+5xsrCQ4nrT18VRUeQq+SnsZQ93mhaeL9ea6qWND37hcxLfhbmedGnPPq3InpxklVUjv/nGwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YNJkDSvb; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89875C4CED2;
-	Mon,  2 Dec 2024 12:00:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733140826;
-	bh=uq6P50nPVqYzYznK6CDOgelQtYASy802lUz2VNa3X4k=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=YNJkDSvbo8lkY9GLqT/hIrlkLQ08AZHdWUxs5r6bl3m2EBQ5pBgHM/mjPWR+I6JMf
-	 WHkFLn1IDnuQbsHQe0nadbr8vKz3xRW21XdUSdb4xT+i2Zor5fgGmzAoSEMfYcJPEX
-	 fwGe0wsbkhNxUqOwQeGiP8NfPPrneSL6Q9Sw24mlIlLforIDucg4Oz6evGeFxOliV0
-	 MWA8nqkra3Zn8VhWEpF06jAI0MaT8iKhzitPgCHIdv1qO0FwMpYUOE7uBvzD2uekk0
-	 +LA/RyRMTlyePXs6iJYth+3uw/OLHT4f3rvhAG9K2jgL+C9JqGuyzaknOpMmRTdq0t
-	 0COIRkOoz/T+w==
-Date: Mon, 2 Dec 2024 13:00:23 +0100
-From: Maxime Ripard <mripard@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, intel-gfx@lists.freedesktop.org, intel-xe@lists.freedesktop.org, 
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-samsung-soc@vger.kernel.org, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Alain Volmat <alain.volmat@foss.st.com>, Alex Deucher <alexander.deucher@amd.com>, 
-	Alim Akhtar <alim.akhtar@samsung.com>, Andrzej Hajda <andrzej.hajda@intel.com>, 
-	Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>, Dave Stevenson <dave.stevenson@raspberrypi.com>, 
-	David Airlie <airlied@gmail.com>, Harry Wentland <harry.wentland@amd.com>, 
-	Inki Dae <inki.dae@samsung.com>, Jani Nikula <jani.nikula@linux.intel.com>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Jonas Karlman <jonas@kwiboo.se>, 
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>, Krzysztof Kozlowski <krzk@kernel.org>, 
-	Kyungmin Park <kyungmin.park@samsung.com>, Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
-	Leo Li <sunpeng.li@amd.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, =?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Phong LE <ple@baylibre.com>, 
-	Raphael Gallais-Pou <rgallaispou@gmail.com>, Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>, 
-	Rob Clark <robdclark@gmail.com>, Robert Foss <rfoss@kernel.org>, 
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>, Rodrigo Vivi <rodrigo.vivi@intel.com>, 
-	Sean Paul <sean@poorly.run>, Seung-Woo Kim <sw0312.kim@samsung.com>, 
-	Simona Vetter <simona@ffwll.ch>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	Tvrtko Ursulin <tursulin@ursulin.net>, Xinhui Pan <Xinhui.Pan@amd.com>
-Subject: Re: [PATCH 00/10] drm/connector: add eld_mutex to protect
- connector->eld
-Message-ID: <20241202-hummingbird-of-hypothetical-aptitude-646def@houat>
-References: <20241201-drm-connector-eld-mutex-v1-0-ba56a6545c03@linaro.org>
- <77545786331df8bfaf5fdcb309437358@kernel.org>
- <ohbtatnn33jj6y3q4milf4txi4n7yirnny2eefdjddlkn2dnhp@eqjedetct4q3>
+	s=arc-20240116; t=1733140890; c=relaxed/simple;
+	bh=v3BIJFIIcMVr/QEK2NEEOq7FtfI1h4ZOKDcraq2sM6s=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=YqI7tzg6mkHzGgxtpz4y8X6sAnVNODNrpgZ8Aze5tkkx28N9ZK/gKrjoRLnHVhRNE1ri9O6vgbowFGp2bcKwiEiUvpxcc8meKg2eEj2KGnj0NjTK8SGwNBT3P0Z7DZQqwP8fhi70d3sjwea6l5qbpHQkyAWi8vsVxp3sEKdR/ss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=T2dwXdRm; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B2930d7026565;
+	Mon, 2 Dec 2024 12:01:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	LBaR9O33z2N3EOhsE1Dwnu0g3a8HZ4kA35JKBZOwS9w=; b=T2dwXdRmCaqD2xa+
+	W/quwM+i0q8RzJsDSe+U06Io4lE83JqpLVw5D17wSwTeKQOeHp1mwgv47hLkx8M8
+	fEGs6cuUB+JW2phVfoZQ7rQcDubiMawBdLqR5fMRokmOPN9Pvauzux8M5gv+/SuV
+	ShYg0nXMIATcgx2uOdMhMtJh57eTjhetOVXX7Lqgw23hHgv8tbkr2CK9NlYPJVac
+	C75qC5jS7E/Nei4UckDRUl03qrRqLr/6LJskG983VIcncxmZV1nPgKhkkR4wvV/N
+	oSDpPodw2XOhMSoBSFPujM2HPBJmEJXbMb0itjbkW9+UTOFx4O/bjHqZUfgWVl6F
+	VQnFUg==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 437ta2vp4y-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 02 Dec 2024 12:01:02 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B2C11Si020022
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 2 Dec 2024 12:01:01 GMT
+Received: from [10.204.100.69] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 2 Dec 2024
+ 04:00:58 -0800
+Message-ID: <5170f77f-c5d3-02f1-8deb-5d00fef7627a@quicinc.com>
+Date: Mon, 2 Dec 2024 17:30:55 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha384;
-	protocol="application/pgp-signature"; boundary="rf5ewnb7ayc4e2uu"
-Content-Disposition: inline
-In-Reply-To: <ohbtatnn33jj6y3q4milf4txi4n7yirnny2eefdjddlkn2dnhp@eqjedetct4q3>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: add venus firmware file for qcs615
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>,
+        "Renjiang Han (QUIC)" <quic_renjiang@quicinc.com>,
+        "linux-firmware@kernel.org" <linux-firmware@kernel.org>,
+        "Dikshita Agarwal
+ (QUIC)" <quic_dikshita@quicinc.com>,
+        "Qiwei Liu (QUIC)"
+	<quic_qiweil@quicinc.com>,
+        "quic_zhgao@quicinc.co" <quic_zhgao@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>
+References: <83153c5ab8374e008d62646f200f9a04@quicinc.com>
+ <ng4o7sdejoh4jn4nnarjd4lio4lbx2tiuiz5c6bigjbtxldinr@xl5wx6dmdivy>
+ <ab4f83c1-5cd6-a80b-fd85-ccc337c8f301@quicinc.com>
+ <pqoq64hk2jedmqta5fs4ktcadw4getwkgz324vtrzzotcurpaw@zc6dlhbqtsnz>
+ <a1bbc1d0-d3bd-e44e-e393-a7ade909a506@quicinc.com>
+ <CAA8EJpoDXKbF5cqb_vzE28zjdC6OC66Zxb5j030QXaCe+FUmfw@mail.gmail.com>
+ <egdqhgdiqqny57yiauiyekcvhxvebfttyncqoazslzjprwvakz@txvy7wn4vg7g>
+ <a259c98c-6c77-1c1e-e428-41c2550f7517@quicinc.com>
+ <pukoimsqhck5oymirmgiwad6s3l6frt7xbahp7juhvj3rt4622@wpajx6vyw5nl>
+ <rukxa3h72trvqvu6wkxmkp33entybcvxfjlpcjh7odipwds6lq@rt6ferue5nbr>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <rukxa3h72trvqvu6wkxmkp33entybcvxfjlpcjh7odipwds6lq@rt6ferue5nbr>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: GTgQFG5DHC5fhwO5tgAzjs9HX4W5Vp9t
+X-Proofpoint-GUID: GTgQFG5DHC5fhwO5tgAzjs9HX4W5Vp9t
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 bulkscore=0
+ lowpriorityscore=0 suspectscore=0 mlxscore=0 impostorscore=0
+ malwarescore=0 adultscore=0 priorityscore=1501 mlxlogscore=999
+ phishscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412020106
 
+Hi Dmitry,
 
---rf5ewnb7ayc4e2uu
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH 00/10] drm/connector: add eld_mutex to protect
- connector->eld
-MIME-Version: 1.0
+On 11/29/2024 8:05 PM, Dmitry Baryshkov wrote:
+> On Wed, Nov 20, 2024 at 01:22:50PM +0200, Dmitry Baryshkov wrote:
+>> On Wed, Nov 20, 2024 at 04:40:51PM +0530, Vikash Garodia wrote:
+>>>
+>>> On 11/20/2024 4:09 PM, Dmitry Baryshkov wrote:
+>>>> On Thu, Nov 14, 2024 at 01:31:14PM +0200, Dmitry Baryshkov wrote:
+>>>>> On Thu, 14 Nov 2024 at 13:05, Vikash Garodia <quic_vgarodia@quicinc.com> wrote:
+>>>>>>
+>>>>>>
+>>>>>> On 11/14/2024 4:16 PM, Dmitry Baryshkov wrote:
+>>>>>>> On Thu, Nov 14, 2024 at 09:06:55AM +0530, Vikash Garodia wrote:
+>>>>>>>>
+>>>>>>>> On 11/13/2024 8:10 PM, Dmitry Baryshkov wrote:
+>>>>>>>>> On Wed, Nov 13, 2024 at 10:50:44AM +0000, Renjiang Han (QUIC) wrote:
+>>>>>>>>>> Hello
+>>>>>>>>>>
+>>>>>>>>>> The following changes since commit 6482750d396980a31f76edd5a84b03a96bbdf3fe:
+>>>>>>>>>>
+>>>>>>>>>>   Merge branch 'verb' into 'main' (2024-11-11 20:01:00 +0000)
+>>>>>>>>>>
+>>>>>>>>>> are available in the Git repository at:
+>>>>>>>>>>
+>>>>>>>>>>   git@git.codelinaro.org:clo/linux-kernel/linux-firmware.git<mailto:git@git.codelinaro.org:clo/linux-kernel/linux-firmware.git> video-firmware-qcs615
+>>>>>>>>>>
+>>>>>>>>>> for you to fetch changes up to 1e7f65883150d3b48307b4f0d6871c60151ee25b:
+>>>>>>>>>>
+>>>>>>>>>>   qcom: venus-5.4: add venus firmware file for qcs615 (2024-11-13 15:50:29 +0530)
+>>>>>>>>>>
+>>>>>>>>>> ----------------------------------------------------------------
+>>>>>>>>>> Renjiang Han (1):
+>>>>>>>>>>       qcom: venus-5.4: add venus firmware file for qcs615
+>>>>>>>>>>
+>>>>>>>>>> WHENCE                      |   1 +
+>>>>>>>>>
+>>>>>>>>> Could you please be more specific, what is the difference between the
+>>>>>>>>> existing file and a new file? According to the soc_vers the new file
+>>>>>>>>> supports sdm845. Should it instead replace the old firmware?
+>>>>>>>> SDM845, SC7180, qcs615 can be enabled on same firmware ideally, but due to a
+>>>>>>>> different signing for qcs615, it takes a separate bin (xxx_s6.mbn).
+>>>>>>>
+>>>>>>> Can SDM845 handle v6 signatures? It supports v5 and PSS. Or can QCS615
+>>>>>>> use v5 signatures?
+>>>>>> Infact we started with loading sc7180 firmware on qc615, video init failed. So
+>>>>>> far i have seen 2 categories in signing version for video bins, either default
+>>>>>> or v6 specific tool.
+>>>>>
+>>>>> Can firmware / security engineers actually advice us on using v5
+>>>>> firmware signatures with QCS615 _and_ with older platforms?
+>>>>> Existing venus-5.4/venus.mbn uses v3
+>>>>
+>>>> Vikash, any updates on this topic? Would it be possible to have a single
+>>>> FW image with just v5 signatures?
+>>> Not yet Dmitry. Having a followup with relevant folks this friday to understand
+>>> the signing requirements across different SOCs, hopefully will be able to add
+>>> something on this by then.
+> 
+> It's been more than a week since the last email. Are there any updates?
+> I'd really like to get this sorted out before next linux-firmware
+> release, otherwise we'll be stuck with these names for the foreseeable
+> future.
+I have been chasing both the firmware and security folks to align on this. So
+far the updates are that one is signed MBNv5 and other with MBNV6, hence leading
+to different set of binaries. These MBN versions of signing is defined at SOC
+level and depends on secure boot libraries used in that SOC.
+At the same time, there is an experiment to check if SC7180 can be signed with
+version used for QCS615 i.e MBNV6.
+One query here - given that qcs615 only loads the venus_s6.mbn variant, and it
+is not enabled yet (patches in review) for video, we should be good if we
+conclude the firmware part before accepting the qcs615 enablement patches ?
 
-On Mon, Dec 02, 2024 at 01:03:07PM +0200, Dmitry Baryshkov wrote:
-> On Mon, Dec 02, 2024 at 10:19:41AM +0000, Maxime Ripard wrote:
-> > On Sun, 1 Dec 2024 01:55:17 +0200, Dmitry Baryshkov wrote:
-> > > The connector->eld is accessed by the .get_eld() callback. This access
-> > > can collide with the drm_edid_to_eld() updating the data at the same
-> > > time. Add drm_connector.eld_mutex to protect the data from concurrenct
-> > > access.
-> > >=20
-> > >=20
-> > > [ ... ]
-> >=20
-> > Reviewed-by: Maxime Ripard <mripard@kernel.org>
->=20
-> Thanks!
->=20
-> I'm going to post v2 to fix Jani's comment, but what should be the merge
-> strategy? Merge patches 1-3, 5, 9-10 through drm-misc and the rest (AMD,
-> i915, MSM, radeon) through the driver trees?
-
-The easiest is probably to merge everything through drm-misc if everyone ag=
-rees.
-
-Maxime
-
---rf5ewnb7ayc4e2uu
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCZ02hVgAKCRAnX84Zoj2+
-did2AYCKqjIX2aHftKtybJaUPI3aEKi2s1lRBLYyjb1Uwicsybws1tIK08t+OLLX
-OfIShgYBfiJJHZ+4Gj/u8uuAs91T4EvzTss9Zo2aF+YDFdrV47edIsjbVE2McJQO
-YLEiS8Wy0Q==
-=Idbn
------END PGP SIGNATURE-----
-
---rf5ewnb7ayc4e2uu--
+Regards
+Vikash
 
