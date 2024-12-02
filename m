@@ -1,62 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-39916-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39917-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E90999E087F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 17:29:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 15EDA9E0858
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 17:23:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F0A83171444
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 15:51:17 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C053B16EC72
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 15:51:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B02C970826;
-	Mon,  2 Dec 2024 15:51:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2762E13A265;
+	Mon,  2 Dec 2024 15:51:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D875zyDz"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iGDVJ2sp"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F24E4D9FE;
-	Mon,  2 Dec 2024 15:51:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F05EA133987;
+	Mon,  2 Dec 2024 15:51:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733154672; cv=none; b=CdlRmS4Clr/gOzJRT7e1ajserZz7gYstC+5/G/LiyHA6vDibLIrFNyjMwfndBTKGsJjE4nQ/PwG9xBS4fM2iyuEGbCoqBXUwN31fc+WGGwFiHTX7drVCHj4zhvfvYndC6VciQ2UrsxgFj9BbS+ujoIdgICSDnJD3U/TyPWMScRo=
+	t=1733154674; cv=none; b=WWb8HyrF/Humyz6o2TYj+UaeH/UdY5wkuZxxxEaFYCsKDgm7t1aMVRAxTZSgAoUB7Ka6WZiDx8NzLEDATDdieoAfW4DAtqppOymzw/CIWQYWpgGi64p2//1FJYLVBWxKWyxEFNBRdyPxIy/OkWDzzkpooUmDMW//ZPKBTw4087E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733154672; c=relaxed/simple;
-	bh=TdJIo9rbpSkZfR4W04BrtErK00BVRHFt+iRd8f3zNwg=;
+	s=arc-20240116; t=1733154674; c=relaxed/simple;
+	bh=gbHV1EoEzQJJvxuJn73SsUNo9/m3Oy47dqOO9nLPSwI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=n5MygeMY/w2Ad8mb9IiHYdc0baCicxD4ihIx4iV/aJL/icZfXBoPlu8+oVMyxeo+F27TFfkoByYO0ifn9ksRLknjHE9IytVS8hp7meWyhWuRYBaQfRjBmq2eVNNS8zI3ZT/Rc/6Muwe89hUAQWodjpC3Dsa6aluWkONyja59fWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D875zyDz; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 885B3C4CED9;
-	Mon,  2 Dec 2024 15:51:11 +0000 (UTC)
+	 MIME-Version:Content-Type; b=tkJX1K0bXbHY7RkCfTzewKy5i8m2cklxt87yQEyPnB3Wl4oI4C7JuyDtcmMH8TjwhlzCZIdZWLfla+/hnXVOtfgta25FTRjvb4i39GGEotZKdwRTRySbhhqdzvFTc48IFyFBOreOnTeQFeNDpOsFIInP15lTHOEPnsj7ro4+fTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iGDVJ2sp; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8584EC4CEDD;
+	Mon,  2 Dec 2024 15:51:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733154672;
-	bh=TdJIo9rbpSkZfR4W04BrtErK00BVRHFt+iRd8f3zNwg=;
+	s=k20201202; t=1733154673;
+	bh=gbHV1EoEzQJJvxuJn73SsUNo9/m3Oy47dqOO9nLPSwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D875zyDzvbC7embwPNcDmI8b8WRxaML1SR7hhoT/eEngpaucpISXMgCkfR7H2LXGe
-	 PcONtEVqcsD9pUjib5w/vPCLXhxvpszpmCj/Lo0rLhwtCqbwPBhFsR3MzRPiKzw/Bh
-	 tsOnqjkYCsAgiVs/j2JpKo3DYSJqsydV0pPt+z7pKvsHp5C6fcUI4FdMw4ykVnDQqJ
-	 edwctG52X40+7U/VAtrAu9gxK3RnZeLgpr5L0PRybOB2ZCUIn3WklV7oAFJ1NGbKQN
-	 ny2WT5cPoi7MhXnHGzFD+BMRMaq0YmbMmLVXXV8Z/l5IyoYxENY/WEfpLqObJYFyh0
-	 Uhr8J5rGPlx+Q==
+	b=iGDVJ2spEKU4wxtLTNH2qF/RBG49INUAljtd7/xGFefUVYTjq58yQUuiCr2Qq7yTt
+	 NpIS1GMzDxVlWhib6D4W7JoPkblNqhaRPHtW77EFupVIsqmA7VeR0WxTzwZQ87sXV1
+	 Df8Ezzf/Gh2W/qpQ8o5kTo6kQiINIL1dbNitynuHtij8CaWkXQUucSNWmnYOn4Qm0M
+	 9uM0tR8cL9O6nuBDr4I9YiRXRZU7mUED2hJWZeHFDwVkmYA7oeNOq8nDZMk8qUGth0
+	 J36gRGow4N8Jjp2X2Q692o1dHCVX1x52+wINx0SEPLUMiDL2zHAU8AkdqG3VPc8qgc
+	 75Vh9fAT5Z4RA==
 From: Bjorn Andersson <andersson@kernel.org>
 To: konradybcio@kernel.org,
 	robh@kernel.org,
 	krzk+dt@kernel.org,
 	conor+dt@kernel.org,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+	Kyle Deng <quic_chunkaid@quicinc.com>
 Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sa8775p: Fix the size of 'addr_space' regions
-Date: Mon,  2 Dec 2024 09:50:59 -0600
-Message-ID: <173315466523.263019.5335489688536018100.b4-ty@kernel.org>
+	quic_tingweiz@quicinc.com,
+	quic_aiquny@quicinc.com,
+	quic_sudeepgo@quicinc.com,
+	quic_taozhan@quicinc.com
+Subject: Re: (subset) [PATCH v2 0/3] Add aoss_qmp nodes for qcs615
+Date: Mon,  2 Dec 2024 09:51:00 -0600
+Message-ID: <173315466528.263019.18336873215209666544.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241128145147.145618-1-manivannan.sadhasivam@linaro.org>
-References: <20241128145147.145618-1-manivannan.sadhasivam@linaro.org>
+In-Reply-To: <20241018073417.2338864-1-quic_chunkaid@quicinc.com>
+References: <20241018073417.2338864-1-quic_chunkaid@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,18 +70,16 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Thu, 28 Nov 2024 20:21:47 +0530, Manivannan Sadhasivam wrote:
-> For both the controller instances, size of the 'addr_space' region should
-> be 0x1fe00000 as per the hardware memory layout.
-> 
-> Otherwise, endpoint drivers cannot request even reasonable BAR size of 1MB.
+On Fri, 18 Oct 2024 15:34:14 +0800, Kyle Deng wrote:
+> Add dts nodes and to enable AOSS_QMP on QCS615. These nodes provide basic
+> AOSS side-channel message RAM information and mailbox capacity.
 > 
 > 
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: sa8775p: Fix the size of 'addr_space' regions
-      commit: e60b14f47d779edc38bc1f14d2c995d477cec6f9
+[3/3] arm64: dts: qcom: qcs615: add AOSS_QMP node
+      commit: 0775021783b5536e390d1602d054542a29875593
 
 Best regards,
 -- 
