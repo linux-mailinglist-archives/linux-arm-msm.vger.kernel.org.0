@@ -1,65 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-39950-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B50FF9E0D3B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 21:42:49 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8531B16507A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 20:42:46 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF4231DEFCC;
-	Mon,  2 Dec 2024 20:42:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="a9AA9Nqz"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1FE879E0D8D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 22:10:27 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 108D21DEFC1;
-	Mon,  2 Dec 2024 20:42:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D63EEB265E4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 19:41:44 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B82DB1DED4E;
+	Mon,  2 Dec 2024 19:41:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Qj4K8j2w"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 855121DE8B1;
+	Mon,  2 Dec 2024 19:41:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733172165; cv=none; b=PE4sRi+F8+L0T2t3hGl/FhgZ9k0d1CqjX4wpsr8HrkxTfkCoxRwYXymR9aSqZPYuELx1CKDa+J9ebcXvWKGdxY1AYjhNv1co0UEzJaAjzCeU/QlB6UCgDEa7wRHrsFo3xtYQs6nX/8cwNoV9J2w9i7Q7xPiQKp5fIwJ2HxnIF5I=
+	t=1733168492; cv=none; b=fbuTHFKMvA5C1HKHgzaZ9vTq16S9bq0ADOq42qjD3hIDiOw8yUhmUAgqapngEMqlkVkkKrPtszmU01myq5CRVw78WHS9OLoNgqU+D5AoRu3+W6A5oRR4RA+c/Cyz7UwaJBQ0w0+IfksYsJcrlGUuJZ8CK75Cfk/0qr+E04jCEPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733172165; c=relaxed/simple;
-	bh=jn+N9zwIOsPHht+9CIjwP5bJju34BSnF8zN3S7G1imQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=kSivocxOjY+bjst/7vm7m82UVF14n3qK977D4d+qXPV/lSlI1QE744KWyrvfCBaKqHnBSKLgPQ6RMGzI0ajMSiPBBecwVhqHgso1alYnUcp3R+hB/YiwFb68Kk1Eef+looiVuZXIPF5EkRBiNiUiiORd5N2ZaEhJ6e+EnYnyhQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=a9AA9Nqz; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B2IU6fV030649;
-	Mon, 2 Dec 2024 20:42:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	GlLdvDlRzxdx5tP7v68vMBpASgo7Y0IjadtFWKOVMbM=; b=a9AA9NqzxjvZK59X
-	y2/sFVlMka69A0u3rQZGQxVQ07eMCM8KZWo9RCJjF21vajyq5r6NJoYix2hTaoRc
-	CgBPNpOxaiR2QBWMFc4LfaVCIJi8TxIV4oP3jMfBl7Dr09EUSDNap9Bi5u6djTn3
-	lj4n+ec8wCIzfhXMAoIoXX0s0zwkutHsnkX3V1JF6fgIxJx9XhY3nvsJWoKnLTQP
-	As9S1OhNC27toy7SVTECzKsxXUJy2ZWjLX1MQS2+S7CwvDaTcJ+hB/B2zUN1yEce
-	fj28MpzFe/hW4m6LK8nZ8ZrzJkNCBS7VFucdPvTXYXyAqdgBN4w1VaJtWKdMNcS1
-	fyHKpQ==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 437t1ge15w-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 02 Dec 2024 20:42:36 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B2KgZ1M019541
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 2 Dec 2024 20:42:35 GMT
-Received: from abhinavk-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Mon, 2 Dec 2024 12:42:34 -0800
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Date: Mon, 2 Dec 2024 12:41:58 -0800
-Subject: [PATCH 1/3] drm/msm/dp: account for widebus in
- msm_dp_catalog_panel_tpg_enable()
+	s=arc-20240116; t=1733168492; c=relaxed/simple;
+	bh=COLrg2AbV+4KaQRU2Xw2S5L8rp55JjS366Yv/REeB7o=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=pyVtKQQfg9tlQnLM14yB3PUEEBzKGWM8QEfmYh0E8JZDc4cOs65OWRGpBLOIXWP0/D1m2vrHPc66nescrx9fPHjPSE+2X1UiBRcFewg2hFtrnNoOUZg6Ol3pLvrQuLzRP1/C4PBsILtGMtxXy9ajMrhQq5JgvmPwah0Z9XDhvm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Qj4K8j2w; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id E3FD9C4AF0D;
+	Mon,  2 Dec 2024 19:41:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1733168491;
+	bh=COLrg2AbV+4KaQRU2Xw2S5L8rp55JjS366Yv/REeB7o=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=Qj4K8j2ww8UVzzpyWXa6nhUv1TFhoo6m7C8XYiSpWJJY8b7NWNKrGNHzKY4fIf08s
+	 EHBa7pgtzlyid00u3T/DzA8zEjQjE0X8E03mJVrZLa8gesvXq2MT3JXCJbMTc4KZSo
+	 Vd51VL3c+oUZdQaMUL0m2orlHqZRq4CByThPvziau905SKp9a3TRXViNbTbpA2kmZK
+	 7z1gddksE9xNOaviBVEYaOTeOIihExuy4iYJ/OCjjggUwG95uGgs03o0h9CNDFYQbN
+	 3pQxYB1h5librzicU4vd/5vs2OsAx4NAtfIr3ZVVm+W9bXYiolSqlVFq0s8V9rLCX8
+	 MystByqjlX5fg==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D47BEE69E8C;
+	Mon,  2 Dec 2024 19:41:31 +0000 (UTC)
+From: Jens Glathe via B4 Relay <devnull+jens.glathe.oldschoolsolutions.biz@kernel.org>
+Date: Mon, 02 Dec 2024 20:41:30 +0100
+Subject: [PATCH v3 2/3] firmware: qcom: scm: Allow QSEECOM for HP Omnibook
+ X14
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,85 +56,56 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-ID: <20241202-tpg-v1-1-0fd6b518b914@quicinc.com>
-References: <20241202-tpg-v1-0-0fd6b518b914@quicinc.com>
-In-Reply-To: <20241202-tpg-v1-0-0fd6b518b914@quicinc.com>
-To: Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, "Simona
- Vetter" <simona@ffwll.ch>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Kuogee Hsieh
-	<quic_khsieh@quicinc.com>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        "Jessica
- Zhang" <quic_jesszhan@quicinc.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Message-Id: <20241202-hp-omnibook-x14-v3-2-0fcd96483723@oldschoolsolutions.biz>
+References: <20241202-hp-omnibook-x14-v3-0-0fcd96483723@oldschoolsolutions.biz>
+In-Reply-To: <20241202-hp-omnibook-x14-v3-0-0fcd96483723@oldschoolsolutions.biz>
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Kalle Valo <kvalo@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Jens Glathe <jens.glathe@oldschoolsolutions.biz>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1733172154; l=1329;
- i=quic_abhinavk@quicinc.com; s=20240509; h=from:subject:message-id;
- bh=jn+N9zwIOsPHht+9CIjwP5bJju34BSnF8zN3S7G1imQ=;
- b=3cKObY/EEQ7Wt+Pxq+KLoA5TrTbhA/vocKACaaY10Z1XzeLCocFPlgRvxKndNgK4RpW0LxIqk
- HfAalffFinmCBGiAiBvIfVM5huvk89Q7QJK4rF4Wu1Ed7wmB1IUSaEo
-X-Developer-Key: i=quic_abhinavk@quicinc.com; a=ed25519;
- pk=SD3D8dOKDDh6BoX3jEYjsHrTFwuIK8+o0cLPgQok9ys=
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: N63Ymxed8R_ETFDIoL6dXhi0Z5GWXAXt
-X-Proofpoint-ORIG-GUID: N63Ymxed8R_ETFDIoL6dXhi0Z5GWXAXt
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 impostorscore=0
- adultscore=0 lowpriorityscore=0 bulkscore=0 mlxscore=0 malwarescore=0
- spamscore=0 priorityscore=1501 clxscore=1015 suspectscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412020174
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1733168490; l=867;
+ i=jens.glathe@oldschoolsolutions.biz; s=20240919;
+ h=from:subject:message-id;
+ bh=5Oq4MdNKXVyJJvjmJFPu8lXVv7qb44phd5FkFC6DLHc=;
+ b=DCkZgJqU7s8ayLGPhLMi/Ea2aN1ZrE17xovmsmP/VglNQN3GrW3m0b2+fdqQ4bVne8tNGa56K
+ Ux+fTQJBVvBBwwnxKoYD90fyNR2Tme2ZwXxJ8zNnljHe1khKMwsgis1
+X-Developer-Key: i=jens.glathe@oldschoolsolutions.biz; a=ed25519;
+ pk=JcRJqJc/y8LsxOlPakALD3juGfOKmFBWtO+GfELMJVg=
+X-Endpoint-Received: by B4 Relay for
+ jens.glathe@oldschoolsolutions.biz/20240919 with auth_id=216
+X-Original-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+Reply-To: jens.glathe@oldschoolsolutions.biz
 
-Adjust the h_active calculation to account for widebus in tpg.
+From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
 
-Fixes: 757a2f36ab09 ("drm/msm/dp: enable widebus feature for display port")
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+add "hp,omnibook-x14" as compatible device for QSEECOM
+
+This is required to get access to efivars and uefi boot loader support.
+
+Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
 ---
- drivers/gpu/drm/msm/dp/dp_catalog.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/firmware/qcom/qcom_scm.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
-index b4c8856fb25d..05c8e1996f60 100644
---- a/drivers/gpu/drm/msm/dp/dp_catalog.c
-+++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
-@@ -1011,9 +1011,21 @@ void msm_dp_catalog_panel_tpg_enable(struct msm_dp_catalog *msm_dp_catalog,
- 	u32 v_sync_width;
- 	u32 hsync_ctl;
- 	u32 display_hctl;
-+	u32 h_sync_width;
-+	u32 h_front_porch;
-+	u32 h_back_porch;
-+	u32 h_active;
-+
-+	h_active = drm_mode->hdisplay;
-+	h_back_porch = drm_mode->htotal - drm_mode->hsync_end;
-+	h_sync_width = drm_mode->htotal - (drm_mode->hsync_start + h_back_porch);
-+	h_front_porch = drm_mode->hsync_start - drm_mode->hdisplay;
-+
-+	if (msm_dp_catalog->wide_bus_en)
-+		h_active /= 2;
- 
- 	/* TPG config parameters*/
--	hsync_period = drm_mode->htotal;
-+	hsync_period = h_sync_width + h_back_porch + h_active + h_front_porch;
- 	vsync_period = drm_mode->vtotal;
- 
- 	display_v_start = ((drm_mode->vtotal - drm_mode->vsync_start) *
+diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+index 72bf87ddcd969..2e148fb7167be 100644
+--- a/drivers/firmware/qcom/qcom_scm.c
++++ b/drivers/firmware/qcom/qcom_scm.c
+@@ -1769,6 +1769,7 @@ EXPORT_SYMBOL_GPL(qcom_scm_qseecom_app_send);
+  */
+ static const struct of_device_id qcom_scm_qseecom_allowlist[] __maybe_unused = {
+ 	{ .compatible = "dell,xps13-9345" },
++	{ .compatible = "hp,omnibook-x14" },
+ 	{ .compatible = "lenovo,flex-5g" },
+ 	{ .compatible = "lenovo,thinkpad-t14s" },
+ 	{ .compatible = "lenovo,thinkpad-x13s", },
 
 -- 
-2.34.1
+2.43.0
+
 
 
