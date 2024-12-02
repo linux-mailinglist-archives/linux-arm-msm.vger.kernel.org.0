@@ -1,152 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-39851-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39852-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1AD149E00FA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 12:53:14 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id F0D419E0129
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 13:00:30 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CD1D61611CB
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 11:53:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B69E0280E62
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 12:00:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 966DF1FE475;
-	Mon,  2 Dec 2024 11:53:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD6D31FDE0B;
+	Mon,  2 Dec 2024 12:00:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yagIull6"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YNJkDSvb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B35FF1FCD16
-	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Dec 2024 11:53:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACF531D95A9;
+	Mon,  2 Dec 2024 12:00:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733140385; cv=none; b=WGghkTb/D7UMgLClrTkw46g6PLsCg8fa/Zm4vBw9R9p9xjG3fMJ7qor3csDHRIHYRuxjctj34ya8coZhmaAiuXBuQ4WNA+UaAx8lzONlUDb+4+WSUuSg2rPPkfaT+8667+JY9Uur/caPFeVaB3PQo9NN7ig+Wm+wC33WpbM5Ibc=
+	t=1733140826; cv=none; b=kps4c3wUqYQ7EU1GV8KBv0D7nXmLaVPa7RH3H4JIJ7qY5cWNiJl4V5ucGBoAztTMp3ymi5chcb/tDYPfA7xLmNLFZ+UH7mKkJ4txvpeXIdlLi+f1SLWFYOjuxNPFHz4tmXQg/j2cLYsrbknc/wcXmZ+xCg69ApvmLt7isjr8VjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733140385; c=relaxed/simple;
-	bh=8u0/pKiZzR0QMfbIwSXjbnuu80JXSFmRExSsBIV679g=;
+	s=arc-20240116; t=1733140826; c=relaxed/simple;
+	bh=uq6P50nPVqYzYznK6CDOgelQtYASy802lUz2VNa3X4k=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Mxu0z3qbPLN3VC4T2j5Z8tfdVCzF3MQxnebq4FzfHlFx0zr+TYYPYXmN4cwklOW3R8YyU0ROpf0BiBcNQ+wilaJP9bTvWFDcfQdxyctw24p+WdoMkgTydg0RuZHYL+3suJnpnzcnhRtkGejZa/3qU8Dhk2BRN2rPKo4iRv6jCTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yagIull6; arc=none smtp.client-ip=209.85.208.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2ff976ab0edso40339771fa.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Dec 2024 03:53:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733140382; x=1733745182; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=UfgDbmGn22ssjxiKjmQ0kPNy7r0F8TDilTFlsUWSPaw=;
-        b=yagIull6sud+PgG6fzBASbhFh+RN7LAIsfF+pQMzZUztK4nQguYz+K7va14ZIfj+t0
-         T3fR3aLzHgu+X3EHE7HauEmsozCQl9ULR/etDVe+XuZreXhWQ8UkXt4G2oeVqgZIF2At
-         KyJaCpM0mL1/RU8O0zNIHMOG5tew8B/3oPbEyd7ra1rhr6PLE32nFqlCsQGHrvCSg7wN
-         RXVAlbY3t4Wxj5lFygmuTTFNahgFvDewLTUS5FjAdGnq+i0mbrbvTjAI77OQzhC97ZZa
-         F7v/M+mcQ6dpJhhcxowhATIG3AaONhkeTYbCepzyTuxNOLvbvPx1tH+UiZHfLVQATmqj
-         IaaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733140382; x=1733745182;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UfgDbmGn22ssjxiKjmQ0kPNy7r0F8TDilTFlsUWSPaw=;
-        b=butPb3iNHaz3I46cJQukFsJu2zN4CbpKRxYOgZJxP7CKtlF0Q55bND+S9QWxmtNsy7
-         8MfRfQCH0jq/MfK22mCDdCNwDzpU7wJpNKa47dK2FvecalMcTtX0WFfP96uA+fKyT0Jb
-         qFau/QbWsZVU+6CxZMkggcgA9D4zBAaq8C6U9k6huFCFSasb7WEmSTerEAj8aCOThMFF
-         QOJi/C7OBBQIS4Zb7CgjutqX/Z0TCncOoqb0QXPPt1xSLojHY3ZycGRiXYX5pZY2RT0o
-         OfAttIuFw0Wo/h/LOV6A+iYWp/sxJOPifukhuzTbcbwqMyce7KoZk5VKoq2IfS/RZqj2
-         l9lw==
-X-Forwarded-Encrypted: i=1; AJvYcCU93PZ/EIeYw5KjVY3Rw7JPOC+d8mhoUj59uiFNppxNq0IoiuVGyz22CF8TgrjcaOVcU/gQUr+9tr1eYgRQ@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyi10NLWBMhzI5XKT3Hdo7hojpQDMMrNt4kpfzQcoFSqWEgojCe
-	YqqZvsRDkZkJeTbHtaEk74hraY2ZQLASWZxdRAyDt5/VRMVAL2dOMztiYym6Xek=
-X-Gm-Gg: ASbGnctHMvLKmw1XBWScsi8r9G/SdK0mr9wSVpXFGVvQ6ee0PVuiZeLwMCrDcNNFBY5
-	4KzlNz6n6/jKojBVL/vUA52PaeIM08gGRpCEVDPZxaxxW32L8XqwjDmfZNN39yfJ239uvyoFR62
-	PgKQDF0borsru0Kj4Knb+kKsautQRGnsnBxK9he5EKy84qMFlIJOzLMs+rNVpS/Wg/eIoojZYSo
-	uiiV6UQ9oGedG21qpIlRXCpcDmChUxYvXlfI3kUn4ahuXmWFtZq7uIX4+31CBI5sKgaWqWDRZfj
-	wjwq20kQk1z+XME+VsgEMpq56WeKBg==
-X-Google-Smtp-Source: AGHT+IF7qcUlqwZCH0DJeBeEV13wXeWiYQJ32iffEYuN9hp6lhdLXbyTbs8ChuNW2LVLJzXXZe/bZw==
-X-Received: by 2002:a2e:b8c7:0:b0:2ff:559e:c94b with SMTP id 38308e7fff4ca-2ffd6059c0amr97739501fa.17.1733140380217;
-        Mon, 02 Dec 2024 03:53:00 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ffdfc097c3sm12501411fa.54.2024.12.02.03.52.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Dec 2024 03:52:58 -0800 (PST)
-Date: Mon, 2 Dec 2024 13:52:57 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Taniya Das <quic_tdas@quicinc.com>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>, 
-	"Rob Herring (Arm)" <robh@kernel.org>, Will Deacon <will@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Abhishek Sahu <absahu@codeaurora.org>, 
-	Jagadeesh Kona <quic_jkona@quicinc.com>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Stephen Boyd <sboyd@kernel.org>, 
-	Imran Shaik <quic_imrashai@quicinc.com>, Catalin Marinas <catalin.marinas@arm.com>, 
-	Conor Dooley <conor+dt@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
-	Ajit Pandey <quic_ajipan@quicinc.com>
-Subject: Re: [PATCH v3 05/11] dt-bindings: clock: Add Qualcomm QCS615 Display
- clock controller
-Message-ID: <afbxakprrm62hnlirqr3244wuf4zzlureejlce76av5xyqsuyy@gadkbshd3dam>
-References: <20241108-qcs615-mm-clockcontroller-v3-0-7d3b2d235fdf@quicinc.com>
- <20241108-qcs615-mm-clockcontroller-v3-5-7d3b2d235fdf@quicinc.com>
- <173104478441.565041.9851772057058427001.robh@kernel.org>
- <s5rie2osuh2ngkwd2jinly7ulogqqeqois724h3e54a7rqrn2w@wn3yypxi7wca>
- <74e5b8b5-ee09-4fb5-9643-14ea11c445e5@quicinc.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=P3M1kYLotY/66eZlesArPbYxVa+3zdMPLf4QmOHsC7BcIBRi1CoGo8aGx1qdvjv+fOZfjbfa3qFOisHOHXxln+6dFodx7mr4wn+5xsrCQ4nrT18VRUeQq+SnsZQ93mhaeL9ea6qWND37hcxLfhbmedGnPPq3InpxklVUjv/nGwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YNJkDSvb; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89875C4CED2;
+	Mon,  2 Dec 2024 12:00:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1733140826;
+	bh=uq6P50nPVqYzYznK6CDOgelQtYASy802lUz2VNa3X4k=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=YNJkDSvbo8lkY9GLqT/hIrlkLQ08AZHdWUxs5r6bl3m2EBQ5pBgHM/mjPWR+I6JMf
+	 WHkFLn1IDnuQbsHQe0nadbr8vKz3xRW21XdUSdb4xT+i2Zor5fgGmzAoSEMfYcJPEX
+	 fwGe0wsbkhNxUqOwQeGiP8NfPPrneSL6Q9Sw24mlIlLforIDucg4Oz6evGeFxOliV0
+	 MWA8nqkra3Zn8VhWEpF06jAI0MaT8iKhzitPgCHIdv1qO0FwMpYUOE7uBvzD2uekk0
+	 +LA/RyRMTlyePXs6iJYth+3uw/OLHT4f3rvhAG9K2jgL+C9JqGuyzaknOpMmRTdq0t
+	 0COIRkOoz/T+w==
+Date: Mon, 2 Dec 2024 13:00:23 +0100
+From: Maxime Ripard <mripard@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, intel-gfx@lists.freedesktop.org, intel-xe@lists.freedesktop.org, 
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-samsung-soc@vger.kernel.org, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Alain Volmat <alain.volmat@foss.st.com>, Alex Deucher <alexander.deucher@amd.com>, 
+	Alim Akhtar <alim.akhtar@samsung.com>, Andrzej Hajda <andrzej.hajda@intel.com>, 
+	Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>, Dave Stevenson <dave.stevenson@raspberrypi.com>, 
+	David Airlie <airlied@gmail.com>, Harry Wentland <harry.wentland@amd.com>, 
+	Inki Dae <inki.dae@samsung.com>, Jani Nikula <jani.nikula@linux.intel.com>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Jonas Karlman <jonas@kwiboo.se>, 
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>, Krzysztof Kozlowski <krzk@kernel.org>, 
+	Kyungmin Park <kyungmin.park@samsung.com>, Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
+	Leo Li <sunpeng.li@amd.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, =?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Phong LE <ple@baylibre.com>, 
+	Raphael Gallais-Pou <rgallaispou@gmail.com>, Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>, 
+	Rob Clark <robdclark@gmail.com>, Robert Foss <rfoss@kernel.org>, 
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>, Rodrigo Vivi <rodrigo.vivi@intel.com>, 
+	Sean Paul <sean@poorly.run>, Seung-Woo Kim <sw0312.kim@samsung.com>, 
+	Simona Vetter <simona@ffwll.ch>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	Tvrtko Ursulin <tursulin@ursulin.net>, Xinhui Pan <Xinhui.Pan@amd.com>
+Subject: Re: [PATCH 00/10] drm/connector: add eld_mutex to protect
+ connector->eld
+Message-ID: <20241202-hummingbird-of-hypothetical-aptitude-646def@houat>
+References: <20241201-drm-connector-eld-mutex-v1-0-ba56a6545c03@linaro.org>
+ <77545786331df8bfaf5fdcb309437358@kernel.org>
+ <ohbtatnn33jj6y3q4milf4txi4n7yirnny2eefdjddlkn2dnhp@eqjedetct4q3>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha384;
+	protocol="application/pgp-signature"; boundary="rf5ewnb7ayc4e2uu"
 Content-Disposition: inline
-In-Reply-To: <74e5b8b5-ee09-4fb5-9643-14ea11c445e5@quicinc.com>
+In-Reply-To: <ohbtatnn33jj6y3q4milf4txi4n7yirnny2eefdjddlkn2dnhp@eqjedetct4q3>
 
-On Mon, Dec 02, 2024 at 01:05:54PM +0530, Taniya Das wrote:
-> 
-> 
-> On 11/8/2024 5:09 PM, Krzysztof Kozlowski wrote:
-> > > dtschema/dtc warnings/errors:
-> > > Documentation/devicetree/bindings/clock/qcom,qcs615-dispcc.example.dts:19:18: fatal error: dt-bindings/clock/qcom,qcs615-gcc.h: No such file or directory
-> > >     19 |         #include <dt-bindings/clock/qcom,qcs615-gcc.h>
-> > >        |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> > > compilation terminated.
-> > > make[2]: *** [scripts/Makefile.dtbs:129: Documentation/devicetree/bindings/clock/qcom,qcs615-dispcc.example.dtb] Error 1
-> > > make[2]: *** Waiting for unfinished jobs....
-> > > make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1442: dt_binding_check] Error 2
-> > > make: *** [Makefile:224: __sub-make] Error 2
-> > > 
-> > > doc reference errors (make refcheckdocs):
-> > > 
-> > > Seehttps://patchwork.ozlabs.org/project/devicetree-bindings/patch/20241108-qcs615-mm-clockcontroller-v3-5-7d3b2d235fdf@quicinc.com
-> > > 
-> > > The base for the series is generally the latest rc1. A different dependency
-> > > should be noted in*this*  patch.
-> > I see this patchset being sent again without changes and receiving same
-> > errors again, so maybe you expect different results, like some review? I
-> > don't know, but just in case that's the case please carefully read
-> > message you got.
-> > 
-> > If lack of review is expected, then of course no problem here.
-> 
-> The base patch dependency(GCC) clock controller was mentioned in the cover
-> letter:
-> https://lore.kernel.org/all/20241022-qcs615-clock-driver-v4-0-3d716ad0d987@quicinc.com/
-> 
-> Thanks, I will keep a note to notify reviewers explicitly mentioning the
-> dependency.
 
-This is usually being solved by:
-- specifying correct base id and prerequisites in b4 prep --edit-deps,
-- using ephemeral DT nodes in the bindings examples.
+--rf5ewnb7ayc4e2uu
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH 00/10] drm/connector: add eld_mutex to protect
+ connector->eld
+MIME-Version: 1.0
 
-I think either of the options could have worked here. I don't know if
-the bot picks up prerequisites from the cover letter, but even if it
-doesn't, the issue is on its side, not on yours. However we still see
-the same issue on and on. Could you please update the internal
-guidelines on writing DT bindings so that the issue of (not) using
-bindings of (other) clock controllers gets handled there?
+On Mon, Dec 02, 2024 at 01:03:07PM +0200, Dmitry Baryshkov wrote:
+> On Mon, Dec 02, 2024 at 10:19:41AM +0000, Maxime Ripard wrote:
+> > On Sun, 1 Dec 2024 01:55:17 +0200, Dmitry Baryshkov wrote:
+> > > The connector->eld is accessed by the .get_eld() callback. This access
+> > > can collide with the drm_edid_to_eld() updating the data at the same
+> > > time. Add drm_connector.eld_mutex to protect the data from concurrenct
+> > > access.
+> > >=20
+> > >=20
+> > > [ ... ]
+> >=20
+> > Reviewed-by: Maxime Ripard <mripard@kernel.org>
+>=20
+> Thanks!
+>=20
+> I'm going to post v2 to fix Jani's comment, but what should be the merge
+> strategy? Merge patches 1-3, 5, 9-10 through drm-misc and the rest (AMD,
+> i915, MSM, radeon) through the driver trees?
 
--- 
-With best wishes
-Dmitry
+The easiest is probably to merge everything through drm-misc if everyone ag=
+rees.
+
+Maxime
+
+--rf5ewnb7ayc4e2uu
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCZ02hVgAKCRAnX84Zoj2+
+did2AYCKqjIX2aHftKtybJaUPI3aEKi2s1lRBLYyjb1Uwicsybws1tIK08t+OLLX
+OfIShgYBfiJJHZ+4Gj/u8uuAs91T4EvzTss9Zo2aF+YDFdrV47edIsjbVE2McJQO
+YLEiS8Wy0Q==
+=Idbn
+-----END PGP SIGNATURE-----
+
+--rf5ewnb7ayc4e2uu--
 
