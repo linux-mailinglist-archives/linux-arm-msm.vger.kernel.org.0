@@ -1,65 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-39917-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39919-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 15EDA9E0858
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 17:23:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 360D79E082A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 17:15:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C053B16EC72
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 15:51:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1167416ECDF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 15:52:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2762E13A265;
-	Mon,  2 Dec 2024 15:51:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 718DD1632C5;
+	Mon,  2 Dec 2024 15:51:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iGDVJ2sp"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fzCj7D4I"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F05EA133987;
-	Mon,  2 Dec 2024 15:51:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4515B15C14F;
+	Mon,  2 Dec 2024 15:51:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733154674; cv=none; b=WWb8HyrF/Humyz6o2TYj+UaeH/UdY5wkuZxxxEaFYCsKDgm7t1aMVRAxTZSgAoUB7Ka6WZiDx8NzLEDATDdieoAfW4DAtqppOymzw/CIWQYWpgGi64p2//1FJYLVBWxKWyxEFNBRdyPxIy/OkWDzzkpooUmDMW//ZPKBTw4087E=
+	t=1733154676; cv=none; b=W5jC/s3s6JJFWLbOlYR3CNpGqI1oP2oHev0fpIs/WzenaCuvgCun9y27HbwJVchjKW5Go4YmBOjrdIsSMrqLTklh0ws6XvGA9qw1naK3KgIxVGOxvnn79lyGedK0Wr7DAmSxG1SNMwSQAI8xAEpkZN76Gb+fmpycukS4RdsNh5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733154674; c=relaxed/simple;
-	bh=gbHV1EoEzQJJvxuJn73SsUNo9/m3Oy47dqOO9nLPSwI=;
+	s=arc-20240116; t=1733154676; c=relaxed/simple;
+	bh=AcITv8v7xwO3OcPABb6z0A8v9LpEl+qK/t+N2ODkNrY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tkJX1K0bXbHY7RkCfTzewKy5i8m2cklxt87yQEyPnB3Wl4oI4C7JuyDtcmMH8TjwhlzCZIdZWLfla+/hnXVOtfgta25FTRjvb4i39GGEotZKdwRTRySbhhqdzvFTc48IFyFBOreOnTeQFeNDpOsFIInP15lTHOEPnsj7ro4+fTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iGDVJ2sp; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8584EC4CEDD;
-	Mon,  2 Dec 2024 15:51:12 +0000 (UTC)
+	 MIME-Version:Content-Type; b=jd/CyIkBOdSa0rLtDtq72apmmVNR69Ohe6QBGiE006dMSmgURjZW4Y2LfMpVXdpV7feC2PbOidTmbxTH5Ka1y0PmIePpXHq7KSTiXmUUOooRqnzZQpFZi10V6pOWq2XQBzZS5C47ILyv/9EJi0NhCeO5svUh0YrW29Py9N55ok4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fzCj7D4I; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02FABC4CED9;
+	Mon,  2 Dec 2024 15:51:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733154673;
-	bh=gbHV1EoEzQJJvxuJn73SsUNo9/m3Oy47dqOO9nLPSwI=;
+	s=k20201202; t=1733154676;
+	bh=AcITv8v7xwO3OcPABb6z0A8v9LpEl+qK/t+N2ODkNrY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iGDVJ2spEKU4wxtLTNH2qF/RBG49INUAljtd7/xGFefUVYTjq58yQUuiCr2Qq7yTt
-	 NpIS1GMzDxVlWhib6D4W7JoPkblNqhaRPHtW77EFupVIsqmA7VeR0WxTzwZQ87sXV1
-	 Df8Ezzf/Gh2W/qpQ8o5kTo6kQiINIL1dbNitynuHtij8CaWkXQUucSNWmnYOn4Qm0M
-	 9uM0tR8cL9O6nuBDr4I9YiRXRZU7mUED2hJWZeHFDwVkmYA7oeNOq8nDZMk8qUGth0
-	 J36gRGow4N8Jjp2X2Q692o1dHCVX1x52+wINx0SEPLUMiDL2zHAU8AkdqG3VPc8qgc
-	 75Vh9fAT5Z4RA==
+	b=fzCj7D4Iv0UmlDFLVKF4TSbNp9g7i8UYQjML9it1xvog2TWHy/3P+OkyjrigfyV1q
+	 AlmT54s5sdmZU2Yt5cQpDTAKDKgAZT4JB1QoJTot2qqjrSCNK+um/EGQkyGA6WP6rY
+	 iYEqdYk1ww8D6TTTaYVNyVk205RImiaG9s3J4Ko+lYqES3JrN7g6nXuFM2CjazzWWH
+	 FbatlltOpHAT/1Lxqt01DXghJOzXf1ES0b5ezzROO/hOy87qdQi/6fMOZVz6poSkxl
+	 4oegBzcpha5WOzGrYW/sJ6aFQcpoaWxqIWnUJfzi7ZZTC5k01BrlhX7ticcFVVjLop
+	 pv91zCgpNTb1w==
 From: Bjorn Andersson <andersson@kernel.org>
-To: konradybcio@kernel.org,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	Kyle Deng <quic_chunkaid@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org,
+To: Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Krishna Kurapati <quic_kriskura@quicinc.com>
+Cc: linux-kernel@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	quic_tingweiz@quicinc.com,
-	quic_aiquny@quicinc.com,
-	quic_sudeepgo@quicinc.com,
-	quic_taozhan@quicinc.com
-Subject: Re: (subset) [PATCH v2 0/3] Add aoss_qmp nodes for qcs615
-Date: Mon,  2 Dec 2024 09:51:00 -0600
-Message-ID: <173315466528.263019.18336873215209666544.b4-ty@kernel.org>
+	linux-arm-msm@vger.kernel.org,
+	quic_ppratap@quicinc.com,
+	quic_jackp@quicinc.com
+Subject: Re: [PATCH v2 0/2] Add DT Support for primary USB on QCS615
+Date: Mon,  2 Dec 2024 09:51:02 -0600
+Message-ID: <173315466532.263019.3718496755521104621.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241018073417.2338864-1-quic_chunkaid@quicinc.com>
-References: <20241018073417.2338864-1-quic_chunkaid@quicinc.com>
+In-Reply-To: <20241121063007.2737908-1-quic_kriskura@quicinc.com>
+References: <20241121063007.2737908-1-quic_kriskura@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,16 +68,22 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Fri, 18 Oct 2024 15:34:14 +0800, Kyle Deng wrote:
-> Add dts nodes and to enable AOSS_QMP on QCS615. These nodes provide basic
-> AOSS side-channel message RAM information and mailbox capacity.
+On Thu, 21 Nov 2024 12:00:05 +0530, Krishna Kurapati wrote:
+> QCS615 has two USB controllers. Adding primary USB controller support
+> in this series. Both the HS Phys are QUSB2 ones. Although the HS PHY
+> is a QUSB2, it still uses DP/DM interrupts for wakeup instead of QUSB2.
 > 
+> The primary port has been enabled in peripheral mode as it is intended
+> for debugging purposes.
 > 
+> [...]
 
 Applied, thanks!
 
-[3/3] arm64: dts: qcom: qcs615: add AOSS_QMP node
-      commit: 0775021783b5536e390d1602d054542a29875593
+[1/2] arm64: dts: qcom: Add support for usb node on QCS615
+      commit: 4b2769c7d7ce47a64f874eac92b324f3561339ab
+[2/2] arm64: dts: qcom: Enable Primary USB controller on QCS615 Ride
+      commit: 5c66811c9251303b2806caa04b278b4826e7a408
 
 Best regards,
 -- 
