@@ -1,226 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-39970-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39971-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9361E9E0E9D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 23:09:17 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id DE3A89E0EAA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 23:10:19 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 544152856D7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 22:09:16 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A0616165757
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 22:10:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 77E7E1DFD95;
-	Mon,  2 Dec 2024 22:04:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3DBB11E0B62;
+	Mon,  2 Dec 2024 22:07:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="a+P4AJsd"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="P/y1nxVs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68BD51DF982;
-	Mon,  2 Dec 2024 22:04:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05D4B1E04AE;
+	Mon,  2 Dec 2024 22:07:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733177083; cv=none; b=bZiFyMtsArzr/pwosMxtxfan0o4aNPtBjCVh2K7s5jXilxk1D28nSI3a1aa9qhGnAwwb3MdAWLHB+RwTr3MV4Hf5LIvt82ujEQrxQ1UNgnBiTCNr2ZylDOoHGSbvjU6QDYDKbKk+IeOchJNy8cvmcmpgpeGcB0+ra/Z0fO4axqA=
+	t=1733177256; cv=none; b=LPXSGZff3MXn85zF8Xi3+bMYGgGQfrKR3L8xIjDGKCGXnYrCIzcHICqtYxOkEjXBCNwukCkwOrrS4n7Lqx3hTHXd7DqSEJJbUXEelEhsspWqGiwOjeXNK1jeD03iubn14AEildmFyiFTIUG3KzHZhZtLAkrUkPlGPdmVmvwpZqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733177083; c=relaxed/simple;
-	bh=q/Ic+s3SZvETNGJok37A4PwA4bp+UZZj/hgihTIel9k=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
-	 In-Reply-To:Content-Type; b=qD1o+XJcfqVrFMrV/3g4ggGTeSV7KGf6vPbSu37JJCQ5ud5J5oUhVmZwlc55i/Q3aiR7SHpyMY3553MXp+RRB9VnzpGaZcCUmhJ918VLjQEewnd5KrjvL+Ec+mUvvYbhOBcgYhZyevw9BzGISuMJcHzoHWpBerePzgBNS0/pN18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=a+P4AJsd; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B2J08Z7014485;
-	Mon, 2 Dec 2024 22:04:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	MlGH2do0xST6uhPx34NtEeQA5aEeqEZm7SPrhK5pCCQ=; b=a+P4AJsdRWZfMTzW
-	BPXAjxmCJCveDq0QCki3QvBV+9Y/Fq5vJ2NyT5JWe4VKVKikvtFsmoW1iw1bvpsN
-	QjyH2iyIvUr//Y0fHHpA6QSU3eFlcgi4nwBS/okz2svwWtKiYqVWw0ZWY6rffLaZ
-	jKsRF9WkJJWeRujQrgamvU1w3es4ikpfAQxRejl0T1LQjSP5m68DQLHOuK5Y/+B2
-	GmYJL6XgVVVnVGWQdFTMRpnVop1R6PmrMh+yxNvu+8vAFcAYmKfPtfyWzveg9nPp
-	LEbLusKGvqzUs4xq5o0jUNp/YEYIsn0WqE+rDFxnzT6n5zi6WXBEbUL0KOykJ6Va
-	IhXrYQ==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 437ta2x2xt-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 02 Dec 2024 22:04:32 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B2M4VoX016181
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 2 Dec 2024 22:04:31 GMT
-Received: from [10.71.111.113] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 2 Dec 2024
- 14:04:30 -0800
-Message-ID: <828dbdb1-d987-43e6-8cd1-7ba267da9e67@quicinc.com>
-Date: Mon, 2 Dec 2024 14:04:30 -0800
+	s=arc-20240116; t=1733177256; c=relaxed/simple;
+	bh=aMgTNU2yQUgiORpUOLaG95XWh8lcGtVhKx2wlzXx0UI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nGvfXH4tebQOXldDHGzcRhcNtBJNgSpESqh36Gt6SHm+cUJeR/pZAKgencbg7okAMiu7lyQ7G0pkSDuKvDZ6baj7JZBSgCN1l3F+89rq1WoAqbA1oBtrVV5MqaDJDX71sy6qWEn679lpiv/HbAfjhoxihNjy3G0xf/ufINkFhgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=P/y1nxVs; arc=none smtp.client-ip=78.32.30.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=DNZbvfSssXQBAkiV5QTgDDOLM6EYzMUfUsQTp9Qh59c=; b=P/y1nxVsQCqb6BHriX1MZF8U9a
+	818SykCwB5uibSFiEL2BRG36HPz12PcI7MYGuwd/WD+uUtYnw443MuvK2vKIOZT97kvCoMrE1v9PL
+	yTkjZ56zl9bgaudh/WxpsLHQb7tBabUB5cHL4cIunL1cujspL9Kczr+Xdw0eBro0HIwyB9ByTMmaj
+	/HB/Q5We/yeyjL/HSatP3N1cCgi3nLQQhIw4V3g3/jsHCEv5DRjZGodJJE4nGVUh8eXBPsmxouuRe
+	8JFq9jvxvY2KR+8SQ5teVspEdynY49lB8kVje7mRfh0MdAb+1gsYorFY99HwfFYNmAPaRhvpnznIH
+	CA9whG8w==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:34274)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1tIEZF-0000rO-2S;
+	Mon, 02 Dec 2024 22:06:58 +0000
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.96)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1tIEZ6-0003v0-1J;
+	Mon, 02 Dec 2024 22:06:48 +0000
+Date: Mon, 2 Dec 2024 22:06:48 +0000
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: jan.petrous@oss.nxp.com
+Cc: Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Jose Abreu <joabreu@synopsys.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Richard Cochran <richardcochran@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Emil Renner Berthing <kernel@esmil.dk>,
+	Minda Chen <minda.chen@starfivetech.com>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Iyappan Subramanian <iyappan@os.amperecomputing.com>,
+	Keyur Chudgar <keyur@os.amperecomputing.com>,
+	Quan Nguyen <quan@os.amperecomputing.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	imx@lists.linux.dev, devicetree@vger.kernel.org,
+	NXP S32 Linux Team <s32@nxp.com>, 0x1207@gmail.com,
+	fancer.lancer@gmail.com, Jacob Keller <jacob.e.keller@intel.com>
+Subject: Re: [PATCH net-next v7 01/15] net: driver: stmmac: Fix CSR divider
+ comment
+Message-ID: <Z04veAM7wBJCLkhu@shell.armlinux.org.uk>
+References: <20241202-upstream_s32cc_gmac-v7-0-bc3e1f9f656e@oss.nxp.com>
+ <20241202-upstream_s32cc_gmac-v7-1-bc3e1f9f656e@oss.nxp.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] interconnect: qcom: Add interconnect provider
- driver for SM8750
-From: Melody Olvera <quic_molvera@quicinc.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Adam Skladowski <a39.skl@gmail.com>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?=
-	<u.kleine-koenig@baylibre.com>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        Danila Tikhonov <danila@jiaxyga.com>,
-        Raviteja Laggyshetty
-	<quic_rlaggysh@quicinc.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Mike Tipton
-	<quic_mdtipton@quicinc.com>,
-        Abel Vesa <abel.vesa@linaro.org>,
-        Trilok Soni
-	<quic_tsoni@quicinc.com>,
-        Satya Durga Srinivasu Prabhala
-	<quic_satyap@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20241112003017.2805670-1-quic_molvera@quicinc.com>
- <20241112003017.2805670-3-quic_molvera@quicinc.com>
- <em4vkg4totsg435s4usu7kqn45vfqfot2j7sikzmnof2kkyidi@26b6kkpz7z4c>
- <0ca812e7-bf5b-463a-83dc-9195aee14589@quicinc.com>
-Content-Language: en-US
-In-Reply-To: <0ca812e7-bf5b-463a-83dc-9195aee14589@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: VPkTGJhjafRwf07vrgV4XwT-yILOP9Sf
-X-Proofpoint-GUID: VPkTGJhjafRwf07vrgV4XwT-yILOP9Sf
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 bulkscore=0
- lowpriorityscore=0 suspectscore=0 mlxscore=0 impostorscore=0
- malwarescore=0 adultscore=0 priorityscore=1501 mlxlogscore=999
- phishscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412020183
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241202-upstream_s32cc_gmac-v7-1-bc3e1f9f656e@oss.nxp.com>
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
 
+Hi,
 
+No need for "driver:" in the subject line.
 
-On 11/18/2024 10:01 AM, Melody Olvera wrote:
->
->
-> On 11/15/2024 7:27 AM, Dmitry Baryshkov wrote:
->> On Mon, Nov 11, 2024 at 04:30:17PM -0800, Melody Olvera wrote:
->>> From: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
->>>
->>> Introduce SM8750 interconnect provider driver using the interconnect
->>> framework.
->>>
->>> Signed-off-by: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
->>> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
->>> ---
->>>   drivers/interconnect/qcom/Kconfig  |    9 +
->>>   drivers/interconnect/qcom/Makefile |    2 +
->>>   drivers/interconnect/qcom/sm8750.c | 1585 
->>> ++++++++++++++++++++++++++++
->>>   drivers/interconnect/qcom/sm8750.h |  132 +++
->>>   4 files changed, 1728 insertions(+)
->>>   create mode 100644 drivers/interconnect/qcom/sm8750.c
->>>   create mode 100644 drivers/interconnect/qcom/sm8750.h
->>>
->>> diff --git a/drivers/interconnect/qcom/Kconfig 
->>> b/drivers/interconnect/qcom/Kconfig
->>> index 362fb9b0a198..1219f4f23d40 100644
->>> --- a/drivers/interconnect/qcom/Kconfig
->>> +++ b/drivers/interconnect/qcom/Kconfig
->>> @@ -337,6 +337,15 @@ config INTERCONNECT_QCOM_SM8650
->>>         This is a driver for the Qualcomm Network-on-Chip on 
->>> SM8650-based
->>>         platforms.
->>>   +config INTERCONNECT_QCOM_SM8750
->>> +    tristate "Qualcomm SM8750 interconnect driver"
->>> +    depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
->>> +    select INTERCONNECT_QCOM_RPMH
->>> +    select INTERCONNECT_QCOM_BCM_VOTER
->>> +    help
->>> +      This is a driver for the Qualcomm Network-on-Chip on 
->>> SM8750-based
->>> +      platforms.
->>> +
->>>   config INTERCONNECT_QCOM_X1E80100
->>>       tristate "Qualcomm X1E80100 interconnect driver"
->>>       depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
->>> diff --git a/drivers/interconnect/qcom/Makefile 
->>> b/drivers/interconnect/qcom/Makefile
->>> index 9997728c02bf..7887b1e8d69b 100644
->>> --- a/drivers/interconnect/qcom/Makefile
->>> +++ b/drivers/interconnect/qcom/Makefile
->>> @@ -40,6 +40,7 @@ qnoc-sm8350-objs            := sm8350.o
->>>   qnoc-sm8450-objs            := sm8450.o
->>>   qnoc-sm8550-objs            := sm8550.o
->>>   qnoc-sm8650-objs            := sm8650.o
->>> +qnoc-sm8750-objs            := sm8750.o
->>>   qnoc-x1e80100-objs            := x1e80100.o
->>>   icc-smd-rpm-objs            := smd-rpm.o icc-rpm.o icc-rpm-clocks.o
->>>   @@ -80,5 +81,6 @@ obj-$(CONFIG_INTERCONNECT_QCOM_SM8350) += 
->>> qnoc-sm8350.o
->>>   obj-$(CONFIG_INTERCONNECT_QCOM_SM8450) += qnoc-sm8450.o
->>>   obj-$(CONFIG_INTERCONNECT_QCOM_SM8550) += qnoc-sm8550.o
->>>   obj-$(CONFIG_INTERCONNECT_QCOM_SM8650) += qnoc-sm8650.o
->>> +obj-$(CONFIG_INTERCONNECT_QCOM_SM8750) += qnoc-sm8750.o
->>>   obj-$(CONFIG_INTERCONNECT_QCOM_X1E80100) += qnoc-x1e80100.o
->>>   obj-$(CONFIG_INTERCONNECT_QCOM_SMD_RPM) += icc-smd-rpm.o
->>> diff --git a/drivers/interconnect/qcom/sm8750.c 
->>> b/drivers/interconnect/qcom/sm8750.c
->>> new file mode 100644
->>> index 000000000000..bc72954d54ff
->>> --- /dev/null
->>> +++ b/drivers/interconnect/qcom/sm8750.c
->>> @@ -0,0 +1,1585 @@
->>> +// SPDX-License-Identifier: GPL-2.0-only
->>> +/*
->>> + * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights 
->>> reserved.
->>> + *
->>> + */
->>> +
->>> +#include <linux/device.h>
->>> +#include <linux/interconnect.h>
->>> +#include <linux/interconnect-provider.h>
->>> +#include <linux/module.h>
->>> +#include <linux/of_platform.h>
->>> +#include <dt-bindings/interconnect/qcom,sm8750-rpmh.h>
->>> +
->>> +#include "bcm-voter.h"
->>> +#include "icc-rpmh.h"
->>> +#include "sm8750.h"
->> Nit: please merge sm8750.h here, there is no need to have a separate
->> header, there are no other users.
->
-> Ack.
->
->>
->> Also, is there QoS support? I see no qcom_icc_qosbox entries.
->
-> Unsure; will let Raviteja comment.
->
+On Mon, Dec 02, 2024 at 11:03:40PM +0100, Jan Petrous via B4 Relay wrote:
+> From: "Jan Petrous (OSS)" <jan.petrous@oss.nxp.com>
+> 
+> The comment in declaration of STMMAC_CSR_250_300M
+> incorrectly describes the constant as '/* MDC = clk_scr_i/122 */'
+> but the DWC Ether QOS Handbook version 5.20a says it is
+> CSR clock/124.
+> 
+> Signed-off-by: Jan Petrous (OSS) <jan.petrous@oss.nxp.com>
+> Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
 
-Spoke w Raviteja; looks like he wants to do this later.
+With that fixed,
 
-Thanks,
-Melody
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 
+Thanks!
 
-
+-- 
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
