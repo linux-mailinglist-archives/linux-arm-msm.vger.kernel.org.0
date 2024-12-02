@@ -1,156 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-39804-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39805-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id A985E9DFD46
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 10:35:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D51159DFD47
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 10:35:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2BA24B21DE3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 09:35:32 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 62A06B225FE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 09:35:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 544311FA831;
-	Mon,  2 Dec 2024 09:35:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A73491FA16B;
+	Mon,  2 Dec 2024 09:35:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PPaxCPzd"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Qvr61mc/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B03E51F8F14
-	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Dec 2024 09:35:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4B3D1F9EAC
+	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Dec 2024 09:35:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733132126; cv=none; b=ccfsevnSZTvQjjlRWSpKraXUdYc7Se+KHU8VhMEbww6OG+mtZymONjHswaY9W8vB0otCfBx3wQprv4yRHNuYGRFR/uSJ5yyNYA+rkv0PQXEeZjo5QrR8mFBFNc1xo77xFwQbNkFMB0sqd1RCa8voQYxIsN+BHas+C6VenqGvizI=
+	t=1733132133; cv=none; b=ebvyOuNJic+0gZ/izEgcbh6px7gTRYGSb4bFUk0c0TJ9zRmNkTsFIwxoJWtThxBvOovcdUpYYSFRmM2SNMlFLllSV/jYgg8Iai+ER6FT5UGJyMSIYqBAkdXuFrNNUyTrrrydbXOIevGMtEPxp3dUl4Cp8On5NtdeRYHWtYIIUR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733132126; c=relaxed/simple;
-	bh=4Ls56rRdnVJ9EpHYJal+FjHAigp26UK24vfmyXe9/Ww=;
+	s=arc-20240116; t=1733132133; c=relaxed/simple;
+	bh=6autZL+1MODvSSer7+vC85PoRulLEMMO7PS+fzCsIgs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=S0gZuNYCE2NjwVDNxPBYA3VFUsEmwc7nMBDCPMMCD+QuJ1x36U64wI33b7Aw8hjQRPwxSA+ixU23jWS9S4z+iwfWT30B0/QxhDNdIyG2XzQ9CnZJHmt1AufCevV1z6N7T5kwlzwue7P57uDWo2NSezQAGZYWicyIKlSkkTrUrg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PPaxCPzd; arc=none smtp.client-ip=209.85.214.175
+	 Content-Type:Content-Disposition:In-Reply-To; b=OkFDoaOO+230DxK6H6ijHhtS1R7y9DaKXjUHGeePd+fFMM5VzK8O8nxmuwUhv0pOd8jlcqo3V0IrBMtwDKilq4ik4FZGtuHMsVSgq0OkhEpwWh3tttp2BVXpbFjVgu+rkoe0L3cjDgR32zVtdG/Q/F7SBVRoMGLxHnLC4kR1iIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Qvr61mc/; arc=none smtp.client-ip=209.85.208.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-21527bb7eb0so26075675ad.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Dec 2024 01:35:23 -0800 (PST)
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2ffc80318c9so40789431fa.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Dec 2024 01:35:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733132123; x=1733736923; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=D0/jNAjkVdudPnX4cpNWF1d7Eupiz108pESERY6Okt4=;
-        b=PPaxCPzdImX3W0PMJOn4VF5xSp9jVWczpsplWPgkqJsLbMbCldSsadph4l1HBUmMha
-         FaaolOc2DaoHFtoPNfLCgNf8QzGly46rSwZ/bv85Hgj/rr3MZrFFWprGlGyRs+Q+iLfv
-         /3VH0YxRh3Pkdf8D2w4gSkYjOLaRNoQ41sRh13KHXzr5KvdYxkHo+SqjV2mH7V+X0JZl
-         rS9gmAjhjv+xBpjr14NhbjWf7DCgojGksAnbbVmB6JSPFWyBmGAbqwlv65ZEZ6urHeyV
-         iTzUNNHlNxG6cZmx1K/x1n4KF/AQG6rwtiP3YE3snGC95hNs4oXarC7eLVavW1BbviIz
-         XS4w==
+        d=linaro.org; s=google; t=1733132130; x=1733736930; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=dt2TVt20eO+6fZpSm814SQa3ex5u0vscKnXHANIdRWE=;
+        b=Qvr61mc/OtwDzDfNKliRuBG9NOewazCrtpdYR8EdMY4ULKN3ST4Ydro0W8rDeJx9Re
+         r7OkJ21Fu0CkIHAi9Chf4q/8NHLNFfjFrr/jnUPwoHrTAbLq4bFwwt3CUrXvnaz3XzJd
+         4ALslKyM9nYM0IyPm7PxX4HOwE82+Fus2ZbEJgAVUxhBJKuNCUDQ/00/Zl8cjQvLQa2D
+         XUuaUecUbin9suGOkOpUTeXI3C3nLuQjsamCSvrsI0MFBu1oJxBVbrN3Yx8s27VkydJu
+         aVFi2HF4JfCbsMOAS9kCFr7auoeJweoZFD03RkTeQroWr6vfLRIPyxFeOVzE+El0bxWy
+         aeVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733132123; x=1733736923;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=D0/jNAjkVdudPnX4cpNWF1d7Eupiz108pESERY6Okt4=;
-        b=usNtIMzr0fFllXoa4MtCCF/MBmpG35LKDlLmYmO0Mro1picpo6yjIxYll2nAWVN1DR
-         LlP7Ola14xwbq2UCQsW/YLC8PNrbZ/8r4P+SwfhGjzXllMdbG4S0baHEcNsN5TqC8rvl
-         Ew9wTaHg+VeMP5bEA+17TrWAbfxuDZGzFfZ2i/kLP4VvYGfDaxEEB7do/GBbXzBFUR5O
-         5RCmQ5eUDpMc0hv31p4js1VYP9VBwSREEkmqPKfAvg3vAWFofKsdvLrKg0COf2JKntL6
-         mbtIo6s78T3P+KcdtVe/sKIicDaXTXVA8ycMuJTd9fKdZw1/w0ObraQH1zY3apl7F/G2
-         Vwqw==
-X-Forwarded-Encrypted: i=1; AJvYcCVtOZ25VvMt0+g3gf8pXcuP4JngL26DYboso3mfz41FiyySX1VOeF7in/ZuugI25Cw1OcRtM7RLAG8+P69x@vger.kernel.org
-X-Gm-Message-State: AOJu0YzVYE1E/2TOdDo8K7NWRMssE2kavcdFY1hdALya84bMgpeJ8RBd
-	PGSCHHsOTvmMGlCtkLBY77BCZ1+7lbKa5DSkt4rlMqEOdWjVqv4Q5w6MbUDxb/iChpC0RXikuyc
-	=
-X-Gm-Gg: ASbGncvGk/SsCpA8Wbfsv3hf3iWhSVXKRJlHICqyqbXJDrjK7BEQb6nJ2NHjm4yq+bT
-	GBWujrwqpSpml4Mk5nSV3Jpn6Rh8vFHF4eE7Z3o+zkjAbo3u7kNrE1IcpxmPn0igGBvReGz9nT6
-	/ljbfEbyaKpnCM0MnmcCJR4hatzlczXZkVTYHHBUiIe886meuTkRSuF6b0CMmrQPWArhVG16uEC
-	agJbz7dNOG0jGHLIkl0nul2uJgb71gliuddlqHuBftNOLLlq+SYqXnHpui4Dw==
-X-Google-Smtp-Source: AGHT+IH6WqX5McwcnER4/bmD3nrKzgQKw8S99c/9pxMGg83RDoUGvFiPAnv49QNfV8BiBVRyQvzg2g==
-X-Received: by 2002:a17:902:ec87:b0:215:9642:4d6d with SMTP id d9443c01a7336-21596424f7fmr34824995ad.17.1733132122840;
-        Mon, 02 Dec 2024 01:35:22 -0800 (PST)
-Received: from thinkpad ([120.60.140.110])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-215218f479asm72459645ad.41.2024.12.02.01.35.20
+        d=1e100.net; s=20230601; t=1733132130; x=1733736930;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dt2TVt20eO+6fZpSm814SQa3ex5u0vscKnXHANIdRWE=;
+        b=jJEXHE3YYySKRO+mHwQTo+HTuLeQjoeTASP56Iqv2F6o7/jqsj17cxhnAgKA3phH8d
+         OYoyNOZarhyonS8bPr2bv9VUp2Syw9EYGcgX3d+eeEHhxiihY75WRYzgfTBkTcA1bJGu
+         jEP8vocAhFi+goQuYXtUvxaZt71ODo2747oZtMHxxsrV4ymhXwe13VC/Ipb6tR1mgTsZ
+         K4pCDdmOfbBrwF/3qjWQJgbEyLQkaDhDRvZ2YVodsAjoSkzb0WnEigY+8PA1Lt7wHiqe
+         U54q5vrSm7QcBrQptHejp5vDoel8GwtsnfpdMWdTz090x//HTWHfSEobCs5IcNyRF806
+         luDQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVhcxc57ZWinLP2lsprdE+AD19zq/YX2YO9NaCByYpjfhq6/7a6sIGFQlLniCjb98Dw//7yVWIgDQHgi6dJ@vger.kernel.org
+X-Gm-Message-State: AOJu0YwobAhcSSpZ+FobxTMLhSM0LoBJxnAvZ9rbPZFoa2NrdqtdhTjg
+	9FONqHkGt+dTVL7Ack+WcLtl3Lkqj7gD4lApdF5K0xk8uwj5+JbpLw/iUmrqi/4=
+X-Gm-Gg: ASbGncuAMpPbIHEeOAL7H01Oee9/z++keBCmDxu3UC41Cl/M3S9yqhvQ2305zuSJspF
+	2Myi0SbJo9Eisev8dK8oTbw3N7nVtmZIqvTGZMwIsxbjwpY2JG5Gc0qxj82RC0DBc49F/sptH2x
+	Ic+i0CsnNnUg6w9CXoqyFn0h989l7FJ6eAuYWzZQqf8lz46qlcFgHkFvkQ0YmSBbF7/YYDGBmmN
+	2DImVJUHD0WhjPrvvWKhUHL+2JEE7Btd2u5nr7YAU0WrBM9bVYRoGWvMSHEF9CelXyO5syD8D/A
+	jwvx8DuuUlFq3lk+r8V77ICZ+M8v6w==
+X-Google-Smtp-Source: AGHT+IHNU47uQDa5zlYUyUe13GGmMqDc5+hiwAOH746/APHiIUBloLMtC0ny5VGjuUcBVKRBt4XeOw==
+X-Received: by 2002:a2e:a987:0:b0:2ff:c8a1:c4d1 with SMTP id 38308e7fff4ca-2ffd60ac1c8mr100084341fa.22.1733132130015;
+        Mon, 02 Dec 2024 01:35:30 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ffdfca1302sm12472391fa.103.2024.12.02.01.35.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Dec 2024 01:35:22 -0800 (PST)
-Date: Mon, 2 Dec 2024 15:05:17 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Johan Hovold <johan+linaro@kernel.org>
-Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, Mayank Rana <quic_mrana@quicinc.com>
-Subject: Re: [PATCH] bus: mhi: host: pci_generic: fix MHI BAR mapping
-Message-ID: <20241202093517.qhiy7larutekuk2l@thinkpad>
-References: <20241201171120.31616-1-johan+linaro@kernel.org>
+        Mon, 02 Dec 2024 01:35:28 -0800 (PST)
+Date: Mon, 2 Dec 2024 11:35:26 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Ekansh Gupta <quic_ekangupt@quicinc.com>
+Cc: srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org, 
+	gregkh@linuxfoundation.org, quic_bkumar@quicinc.com, linux-kernel@vger.kernel.org, 
+	quic_chennak@quicinc.com, dri-devel@lists.freedesktop.org, arnd@arndb.de
+Subject: Re: [PATCH v5 1/2] misc: fastrpc: Add support for multiple PD from
+ one process
+Message-ID: <pqes6ixjbcvvicnfairzmy4gqokffy5aixqnadu2exi2d5rxar@ywify4ambmtr>
+References: <20241202064806.1164800-1-quic_ekangupt@quicinc.com>
+ <20241202064806.1164800-2-quic_ekangupt@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241201171120.31616-1-johan+linaro@kernel.org>
+In-Reply-To: <20241202064806.1164800-2-quic_ekangupt@quicinc.com>
 
-On Sun, Dec 01, 2024 at 06:11:20PM +0100, Johan Hovold wrote:
-> A recent change converting the MHI pci_generic driver to use
-> pcim_iomap_region() failed to update the BAR parameter which is an index
-> rather than a mask.
+On Mon, Dec 02, 2024 at 12:18:05PM +0530, Ekansh Gupta wrote:
+> Memory intensive applications(which requires more tha 4GB) that wants
+> to offload tasks to DSP might have to split the tasks to multiple
+> user PD to make the resources available.
 > 
-
-That's silly on me. Thanks for the fix!
-
-> This specifically broke the modem on machines like the Lenovo ThinkPad
-> X13s and x1e80100 CRD:
+> For every call to DSP, fastrpc driver passes the process tgid which
+> works as an identifier for the DSP to enqueue the tasks to specific PD.
+> With current design, if any process opens device node more than once
+> and makes PD init request, same tgid will be passed to DSP which will
+> be considered a bad request and this will result in failure as the same
+> identifier cannot be used for multiple DSP PD.
 > 
-> 	mhi-pci-generic 0004:01:00.0: failed to map pci region: -22
-> 	mhi-pci-generic 0004:01:00.0: probe with driver mhi-pci-generic failed with error -22
+> Assign and pass a client ID to DSP which would be assigned during device
+> open and will be dependent on the index of session allocated for the PD.
+> This will allow the same process to open the device more than once and
+> spawn multiple dynamic PD for ease of processing.
 > 
-> Fixes: bd23e836423e ("bus: mhi: host: pci_generic: Use pcim_iomap_region() to request and map MHI BAR")
-> Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> Cc: Mayank Rana <quic_mrana@quicinc.com>
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-
+> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
 > ---
+>  drivers/misc/fastrpc.c | 29 +++++++++++++++--------------
+>  1 file changed, 15 insertions(+), 14 deletions(-)
 > 
-> The offending patch was marked as "Compile tested only", but that just
-> makes you wonder *why* the patch was never tested...
-> 
+> @@ -1480,6 +1481,7 @@ static struct fastrpc_session_ctx *fastrpc_session_alloc(
+>  		if (!cctx->session[i].used && cctx->session[i].valid) {
+>  			cctx->session[i].used = true;
+>  			session = &cctx->session[i];
+> +			fl->client_id = i + 1;
 
-Because I didn't had a modem platform to test my change and since it was a
-simple API conversion, I merged it after some time.
+/* any non-zero ID will work, session_idx + 1 is the simplest one */
 
-- Mani
+With the comment in place, LGTM
 
-> 	https://lore.kernel.org/all/20241004023351.6946-1-manivannan.sadhasivam@linaro.org/
-> 
-> Johan
-> 
-> 
-> #regzbot introduced: bd23e836423e
-> 
-> 
->  drivers/bus/mhi/host/pci_generic.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> index 07645ce2119a..56ba4192c89c 100644
-> --- a/drivers/bus/mhi/host/pci_generic.c
-> +++ b/drivers/bus/mhi/host/pci_generic.c
-> @@ -917,7 +917,7 @@ static int mhi_pci_claim(struct mhi_controller *mhi_cntrl,
->  		return err;
+
+>  			break;
+>  		}
 >  	}
->  
-> -	mhi_cntrl->regs = pcim_iomap_region(pdev, 1 << bar_num, pci_name(pdev));
-> +	mhi_cntrl->regs = pcim_iomap_region(pdev, bar_num, pci_name(pdev));
->  	if (IS_ERR(mhi_cntrl->regs)) {
->  		err = PTR_ERR(mhi_cntrl->regs);
->  		dev_err(&pdev->dev, "failed to map pci region: %d\n", err);
-> -- 
-> 2.45.2
-> 
 
 -- 
-மணிவண்ணன் சதாசிவம்
+With best wishes
+Dmitry
 
