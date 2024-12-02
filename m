@@ -1,112 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-39779-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39780-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7CB339DFADD
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 07:47:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CF5E69DFAE3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 07:48:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3DA3A16228A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 06:47:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 99870162095
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 06:48:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F30F71F8EEC;
-	Mon,  2 Dec 2024 06:47:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8FAC01F8AFE;
+	Mon,  2 Dec 2024 06:48:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qNwt8sVu"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="EClH382l"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B92631D63F9;
-	Mon,  2 Dec 2024 06:47:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D96BF1D63F9;
+	Mon,  2 Dec 2024 06:48:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733122056; cv=none; b=pjgv2ObZktBF99tWHvTgINMFm5eIx2DMUkL5c1PftxDAIu70At64SGv5bqn7gexAJbEumYeXQSfmAS9YQAPHZKOJFR+nhOM92Ay2GpfMRBuxC3b0guDlI6PGSdW5VOfVOTg6YGsesALO9TGMjHu25HjxR5SlHKA+iHQ6bol15vQ=
+	t=1733122105; cv=none; b=TPb5I/B0ir+zVWFSbv4dNZoHWX7HeY/5j8Ku/wJXVLkr1oCO8Dzx1wEJmJvp0mm7WVT7P27YrsAsUlUD8LTiajpXEnffiYfWni6Blgn/gKS4X/PX1g7c7LcLheqrTgzfZ3Ysyx/tWaioKqYbEKDVwSYxr3YHgnlEOi9R7HILJBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733122056; c=relaxed/simple;
-	bh=z/cz3c3hFkz0Gio6sYD3YWpb3ggl8bL0o8oBCRF0WyY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ejlu6G2uTMqzPfOxThGGlkiWZUgYE7i7lDWKg+9mX6MD3KlYUDklKGELAMK6BmCebBk+qHRXmpfqFh8FrRV/40fa3g6R/JitE5h3LKhXn7u9hVQPtqcDMQmOcy8ZK+pZ31aeltHExcEMY7kSl9h1V5PwohCJ9YF+GL2xrZQ1cs8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qNwt8sVu; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D3D0C4CED2;
-	Mon,  2 Dec 2024 06:47:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733122056;
-	bh=z/cz3c3hFkz0Gio6sYD3YWpb3ggl8bL0o8oBCRF0WyY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=qNwt8sVuBb4Ch1NFUlkSsq7493tZMEqhNdM9CbkxwHbdxRbGM32XGRLSFWc64Pr+2
-	 HGQfFVEZkEuk+r2BtDM+vEs5eOS7Awlc6orEdPEkiytiejeu/Y+BtIVy9LT3jSvpwm
-	 +Guk1dbjVI+1ogloSRR1NezuVrSANj2uB575BEOtzJsiUQGSeuwpMojEvLYyl1HShC
-	 3G15fCcaWZ26Ia4kV3seizrUX/ILug7yqX90nYHjYa8GeohputC/RZ4NOPilJsrqag
-	 1PVVMTSuyOxcIFzyv3a2Y2MNXvOpuBv0Apwte+jldoqpG6TN+AX09c6BcAaQEO27zg
-	 DPlWdI30IgxEQ==
-Date: Mon, 2 Dec 2024 12:17:32 +0530
-From: Vinod Koul <vkoul@kernel.org>
-To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-Cc: konrad.dybcio@linaro.org, andersson@kernel.org, andi.shyti@kernel.org,
-	linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org,
-	conor+dt@kernel.org, agross@kernel.org, devicetree@vger.kernel.org,
-	linux@treblig.org, dan.carpenter@linaro.org, Frank.Li@nxp.com,
-	konradybcio@kernel.org, bryan.odonoghue@linaro.org,
-	krzk+dt@kernel.org, robh@kernel.org, quic_vdadhani@quicinc.com
-Subject: Re: [PATCH v5 2/4] dmaengine: gpi: Add Lock and Unlock TRE support
- to access I2C exclusively
-Message-ID: <Z01YBLcxDXI2UwXR@vaman>
-References: <20241129144357.2008465-1-quic_msavaliy@quicinc.com>
- <20241129144357.2008465-3-quic_msavaliy@quicinc.com>
+	s=arc-20240116; t=1733122105; c=relaxed/simple;
+	bh=w4Im53Zv924krnpGjoQ8X3vVW1o47ZdklR6s2TaDpyk=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=oF38Lm4VUdEEoLN3z2i3zn31YBsxMAY/PK70hcPfAgaZ6EHSTJ5S1xGXKCfjkXnvbFjEkhbk5WW3NOb31/YZtoYFgSrP4MPRIuA/U5NkGamBxODGEyslWVFjh91hpZQi/0+VXMnnII73emSnRWIhJH8dvjUNdhJk605zLtUgLZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=EClH382l; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B21ufd0015990;
+	Mon, 2 Dec 2024 06:48:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=pViOy2kXUO0v1zVrZeadHW
+	GjToPcySQoy/Cj7VWaDfA=; b=EClH382lG9yxxiizY39gfDPzDPOOUK+vvohEcY
+	37cTZYihG3AKQiJi8UflvttVGoe6YGVhRsmrBJlNVI5oGil5Rdk1fJJ/+ElQsqi2
+	lHsgKCllLkfxb13i3ES8xHgXxK8z4SDEy8g/QyS4jWp2YzqcUe6q5v6bIlzoPvA1
+	WwLhEetYtMGqvDORUxKhmJy0HoCuWRxLFq5jhKscUPLoqv5gRRWbYtYAMzpj52KB
+	lNhQcroDLSyO7H38lFxz5Bx79V25wy2zWaxiCwtnbVhUW49Es3PTAR8AEvBbNl5B
+	qVHQspQkKEqOZJIYxJN0XkH5m0GCMYipfjzhpkpJ1vDqfC5Q==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4393mp8jns-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 02 Dec 2024 06:48:17 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B26mHrU016168
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 2 Dec 2024 06:48:17 GMT
+Received: from hu-ekangupt-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Sun, 1 Dec 2024 22:48:14 -0800
+From: Ekansh Gupta <quic_ekangupt@quicinc.com>
+To: <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>
+CC: <gregkh@linuxfoundation.org>, <quic_bkumar@quicinc.com>,
+        <linux-kernel@vger.kernel.org>, <quic_chennak@quicinc.com>,
+        <dri-devel@lists.freedesktop.org>, <arnd@arndb.de>
+Subject: [PATCH v5 0/2] Add changes to use session index as identifier
+Date: Mon, 2 Dec 2024 12:18:04 +0530
+Message-ID: <20241202064806.1164800-1-quic_ekangupt@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241129144357.2008465-3-quic_msavaliy@quicinc.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: giMYcr789_GRqNqaJHHYgwZ007z_yHf4
+X-Proofpoint-GUID: giMYcr789_GRqNqaJHHYgwZ007z_yHf4
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxlogscore=862
+ impostorscore=0 mlxscore=0 malwarescore=0 suspectscore=0
+ lowpriorityscore=0 adultscore=0 spamscore=0 priorityscore=1501
+ clxscore=1015 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412020058
 
-On 29-11-24, 20:13, Mukesh Kumar Savaliya wrote:
-> GSI DMA provides specific TREs(Transfer ring element) namely Lock and
-> Unlock TRE. It provides mutually exclusive access to I2C controller from
-> any of the processor(Apps,ADSP). Lock prevents other subsystems from
-> concurrently performing DMA transfers and avoids disturbance to data path.
-> Basically for shared I2C usecase, lock the SE(Serial Engine) for one of
-> the processor, complete the transfer, unlock the SE.
-> 
-> Apply Lock TRE for the first transfer of shared SE and Apply Unlock
-> TRE for the last transfer.
-> 
-> Also change MAX_TRE macro to 5 from 3 because of the two additional TREs.
-> 
+This patch series carries changes to use a masked session index
+as an identifier instead of process tgid to support mutiple PDs
+from same process.
+Patch [v4]: https://lore.kernel.org/all/20241121084713.2599904-1-quic_ekangupt@quicinc.com/
 
-...
+Changes in v5:
+  - Remove mask and just modify session index.
+Changes in v4:
+  - Use GENMASK for client ID mask
+  - Add a new patch to rename tid and pgid as client ID.
+Changes in v3:
+  - Modified commit text.
+  - Removed idr implementation.
+  - Using session index for client id.
+Changes in v2:
+  - Reformatted commit text.
+  - Moved from ida to idr.
+  - Changed dsp_pgid data type.
+  - Resolved memory leak.
 
-> @@ -65,6 +65,9 @@ enum i2c_op {
->   * @rx_len: receive length for buffer
->   * @op: i2c cmd
->   * @muli-msg: is part of multi i2c r-w msgs
-> + * @shared_se: bus is shared between subsystems
-> + * @bool first_msg: use it for tracking multimessage xfer
-> + * @bool last_msg: use it for tracking multimessage xfer
->   */
->  struct gpi_i2c_config {
->  	u8 set_config;
-> @@ -78,6 +81,9 @@ struct gpi_i2c_config {
->  	u32 rx_len;
->  	enum i2c_op op;
->  	bool multi_msg;
-> +	bool shared_se;
+Ekansh Gupta (2):
+  misc: fastrpc: Add support for multiple PD from one process
+  misc: fastrpc: Rename tgid and pid to client_id
 
-Looking at this why do you need this field? It can be internal to your
-i2c driver... Why not just set an enum for lock and use the values as
-lock/unlock/dont care and make the interface simpler. I see no reason to
-use three variables to communicate the info which can be handled in
-simpler way..?
-
-> +	bool first_msg;
-> +	bool last_msg;
+ drivers/misc/fastrpc.c | 57 +++++++++++++++++++++---------------------
+ 1 file changed, 29 insertions(+), 28 deletions(-)
 
 -- 
-~Vinod
+2.34.1
+
 
