@@ -1,268 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-39927-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39931-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 688009E0B48
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 19:47:26 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 07C149E09F4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 18:31:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B738AB45065
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 16:42:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C0EF3283139
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 17:31:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E44B1D8DFE;
-	Mon,  2 Dec 2024 16:42:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F6D61DBB21;
+	Mon,  2 Dec 2024 17:31:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ae7u+agM"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Abvbe3+T"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 058721D86F1
-	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Dec 2024 16:42:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DD381DB548;
+	Mon,  2 Dec 2024 17:31:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733157741; cv=none; b=qIJ3xDy52RAjrPgTe9luQq73rQpXX8bNSMTpGqlIFm0zYZmazSHbm6jVJB0wSJJQ5gtGbRWr12SMWE/aB3lEZKNr45RLvTOwI7xv0eB28v4Boqw0XkNfqLEgsV8dZGk7N6tQdzJnDTyjpVBS/AGTRyAVCTXfT0cuNJ83ZsqEzss=
+	t=1733160667; cv=none; b=YJiGo/S9o3dJKx5knm+u0NQ7OPQTYQdO907gzGm2dSancHXhBN/+uTlFYIn5D7srusbaHR0rZtkY2bAIgdVArSzEvjAmsv4+2atBywWiRugGuuZjAL7Guxmprg+bDWYZe7IUnh+SP6pjtgjV83vgXZKYYG9YZ9qrQQ3961GKUOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733157741; c=relaxed/simple;
-	bh=8ZyXh8TCH4QhT/YV/uAlx1sWa6cJN39K3SxCDNSBg38=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=unrDVotAX0A7vE3ScGYe7dkcEaRS4lQI30sPXCoY8wzFnwGbfXpYYvOIntNhEG2QIoG/cKzHSi/Z0OYRugLhRSzKpNY5LhCiUQy/NATovubMVioKTbI4N2oJnYID6HwRyq+F2fmSzIeW4p6phYklnyQhMpq7HFo0s0Ib/bzspBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ae7u+agM; arc=none smtp.client-ip=209.85.210.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-724f383c5bfso3410041b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Dec 2024 08:42:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733157737; x=1733762537; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=wqsRUP7wAfSp8NquH353cBwoUcX5EWbVc93C8IvKtmY=;
-        b=ae7u+agMnPdtVIyU765MBzf6CcoqF1rXftJ06xK30RmFxsyQ6APTxpv/FEpSmlLTD7
-         y12EKvPDT5q5XjwWpxgoCLY0w2ip9Pn6Pi8R3sy86nmwbpnx1/2rkIrqHXCfUAe/3lKY
-         95yC26H6irA1CFRwFJ2h76y7kQD5PXLgZQedpyec4hR9+hscZvVowPJU6yx60T1or6xo
-         n3GKLFTopNyZblORKpNptmynv/lHpzhkX7ywvjny9IQfJGjS5d1K4bUntmTnuUE2qgYw
-         kWhiIZjJqibf+xifzbbuEomKmILBhDwGI9Mq/ZZmxS5IpW802qGwyz9SsPgYSHtTW/bD
-         ysGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733157737; x=1733762537;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wqsRUP7wAfSp8NquH353cBwoUcX5EWbVc93C8IvKtmY=;
-        b=IYZTak7RJK+5KFVZJaWabawl0wNPKve83/kny+Q/mwGx/5rgWud9kUl6Q0ZDk6absX
-         YMmn+zmaTaVZ/RiQf81fc/iGF35W3kflnL+xiXW4if/aYc8Z2hLpLw3Uqhbye3x+8JBx
-         S9jufPDI1+1U/LPZw1NuJ5M0jS9oPXZrr6kvFzVNHdfCzzaJ94yP93mYNH0Hwf8KVhqm
-         bRvRuRpor1Ffjngp5muaa7JozQZYKcb1pB7Filfo9zfEnr0WNmLBkZ4+CmFQFEqYEgeh
-         Bvd6twv/vrBFz3EhqSjnyjoTnUvdVK7FKe1HJcXyR0ZHdZPc6fr3GK3OfVoxUZ2Krl8U
-         7Kyw==
-X-Forwarded-Encrypted: i=1; AJvYcCWZ2OAP+yhAo4uECW0Te1yUfRarihCRUZFB7LfEUgfHhrPLpxAYgd5lx8LR2zysGrfVyXq9Luu67k33FWK7@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw/txj0lpW/u/fidMJnrxWlnjyQCeFXaSsSfyUJWMpsU45V30t2
-	hiC2qLVovcUSCzT9sU1S8wg6Bx62nf+9gmDC38/6nfs5y/8Oz8lwOUeuQoG41w==
-X-Gm-Gg: ASbGncumUdloxhVZSabg4eT4tS8a9CYARxIVBsZHTr681FwRBfZSYWSrU8zhEaMfzdM
-	xSfMBECNYRxlA/45PMXj894AOf8oyZ2sJhcLaY9r37v/BZGDLO27+hTh399sWAcbwUqOzXOTvev
-	yjYBcfJwEaxlCAEmxWD8neiS72RR7rSacew4W06iE7q/lTLq21uxDuG2mXXsbCln5XwV+WnfRGC
-	B6vqiyXGs5+3YS4iCL3YZ//TAL9xsoKdUC5Q/2/yyIq8JaeZvgqufdBq+OoQg==
-X-Google-Smtp-Source: AGHT+IEWaG9hQw5W6hzV7999Ggbcuv8yF8PM05Z2+btXJbT9F2Q01zZZ3zFPGUloFY/+vMM6LHEd7w==
-X-Received: by 2002:a17:90b:1d11:b0:2ee:8008:b583 with SMTP id 98e67ed59e1d1-2ee8008b80bmr16187368a91.16.1733157737232;
-        Mon, 02 Dec 2024 08:42:17 -0800 (PST)
-Received: from thinkpad ([120.60.140.110])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2eea942f6a8sm3097181a91.41.2024.12.02.08.42.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Dec 2024 08:42:16 -0800 (PST)
-Date: Mon, 2 Dec 2024 22:12:03 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc: cros-qcom-dts-watchers@chromium.org,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Bjorn Helgaas <bhelgaas@google.com>, quic_vbadigan@quicinc.com,
-	quic_ramkri@quicinc.com, quic_nitegupt@quicinc.com,
-	quic_skananth@quicinc.com, quic_vpernami@quicinc.com,
-	quic_mrana@quicinc.com, mmareddy@quicinc.com,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org
-Subject: Re: [PATCH 2/3] PCI: dwc: Add ECAM support with iATU configuration
-Message-ID: <20241202164203.tpjqqgq6hzzedudc@thinkpad>
-References: <20241117-ecam-v1-0-6059faf38d07@quicinc.com>
- <20241117-ecam-v1-2-6059faf38d07@quicinc.com>
+	s=arc-20240116; t=1733160667; c=relaxed/simple;
+	bh=27hbzCnEIwzOJ0IGzzylVzuWfUp7oqVpT0YFWxcLVsg=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=eEimQnOQnJGnRuv/w0BOIMWdJzcW7rCgJ3nM3772tKUKgEFShx/iPQu1Kdy5iufofhi/lCpUjvxdphTsKrfH1zeCMd61lUrl6hl7Z5eJmbtIH6mW6mDo7sxovHvvkN8j+qAOMrW23ZOYZkeeNIncU41NpJ4KKWX9UczdZP9ZQlU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Abvbe3+T; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56DC0C4CED1;
+	Mon,  2 Dec 2024 17:31:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1733160666;
+	bh=27hbzCnEIwzOJ0IGzzylVzuWfUp7oqVpT0YFWxcLVsg=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=Abvbe3+T9OICU0YToDA+15POVSCNlTQPhv0L/gb1zWq9gMrmMkDwedpIvo0yo4jg3
+	 XnctuyOpcU3YiHFViBXg4iNG8msrmEpjW5outJn5uC1QguV72RkJuInPE5gmj71fQa
+	 q9uo5YteQyX7kpZtbWnYT3ZmQsGkOFLnkhgGG8s7IyrNUNDFliMSMAoJxpWuqyBbeh
+	 sA7mMQ6N9gOi45nF+eqo3oaQMffhsoxa8kRhBHZ9FKcOVA+5laQ2+/kGGt9phy7wC8
+	 ianbSwBs0hy4b52nDYO4mlpZ02/aA/ubP5+UOth9wrj+Ifx2/6MRnE6AGOtX1NfAXg
+	 E9sLIfNPvnRqQ==
+From: Vinod Koul <vkoul@kernel.org>
+To: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+ linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Viken Dadhaniya <quic_vdadhani@quicinc.com>
+Cc: quic_msavaliy@quicinc.com, quic_anupkulk@quicinc.com, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20241115092854.1877369-1-quic_vdadhani@quicinc.com>
+References: <20241115092854.1877369-1-quic_vdadhani@quicinc.com>
+Subject: Re: [PATCH v2] dt-bindings: dma: qcom,gpi: Add QCS615 compatible
+Message-Id: <173316066288.538095.7308879081334615310.b4-ty@kernel.org>
+Date: Mon, 02 Dec 2024 23:01:02 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241117-ecam-v1-2-6059faf38d07@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.14.2
 
-On Sun, Nov 17, 2024 at 03:30:19AM +0530, Krishna chaitanya chundru wrote:
-> The current implementation requires iATU for every configuration
-> space access which increases latency & cpu utilization.
+
+On Fri, 15 Nov 2024 14:58:54 +0530, Viken Dadhaniya wrote:
+> Document compatible for GPI DMA controller on QCS615 platform.
 > 
-> Configuring iATU in config shift mode enables ECAM feature to access the
-
-Can you please elaborate 'config shift mode'? Quote relevant section in DWC
-databook for reference.
-
-> config space, which avoids iATU configuration for every config access.
-> 
-> Add "ctrl2" into struct dw_pcie_ob_atu_cfg  to enable config shift mode.
-> 
-> As DBI comes under config space, this avoids remapping of DBI space
-> separately. Instead, it uses the mapped config space address returned from
-> ECAM initialization. Change the order of dw_pcie_get_resources() execution
-> to acheive this.
-> 
-> Introduce new ecam_init() function op for the clients to configure after
-
-We use 'DWC glue drivers' to refer the 'clients' of this driver.
-
-> ecam window creation has been done.
 > 
 
-Use 'ECAM' everywhere.
+Applied, thanks!
 
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> ---
->  drivers/pci/controller/dwc/pcie-designware-host.c | 114 ++++++++++++++++++----
->  drivers/pci/controller/dwc/pcie-designware.c      |   2 +-
->  drivers/pci/controller/dwc/pcie-designware.h      |   6 ++
->  3 files changed, 102 insertions(+), 20 deletions(-)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-> index 3e41865c7290..e98cc841a2a9 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
-> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-> @@ -418,6 +418,62 @@ static void dw_pcie_host_request_msg_tlp_res(struct dw_pcie_rp *pp)
->  	}
->  }
->  
-> +static int dw_pcie_config_ecam_iatu(struct dw_pcie_rp *pp)
-> +{
-> +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-> +	struct dw_pcie_ob_atu_cfg atu = {0};
-> +	struct resource_entry *bus;
-> +	int ret, bus_range_max;
-> +
-> +	bus = resource_list_first_type(&pp->bridge->windows, IORESOURCE_BUS);
-> +
-> +	/*
-> +	 * Bus 1 config space needs type 0 atu configuration
-> +	 * Remaining buses need type 1 atu configuration
-> +	 */
-> +	atu.index = 0;
-> +	atu.type = PCIE_ATU_TYPE_CFG0;
-> +	atu.cpu_addr = pp->cfg0_base + SZ_1M;
+[1/1] dt-bindings: dma: qcom,gpi: Add QCS615 compatible
+      commit: c841f9909b0d947ae7593040cc59646dc9f14455
 
-You didn't mention what occupies the first 1MB.
-
-> +	atu.size = SZ_1M;
-> +	atu.ctrl2 = PCIE_ATU_CFG_SHIFT_MODE_ENABLE;
-> +	ret = dw_pcie_prog_outbound_atu(pci, &atu);
-> +	if (ret)
-> +		return ret;
-> +
-> +	bus_range_max = bus->res->end - bus->res->start + 1;
-
-resource_size(bus->res)
-
-> +
-> +	/* Configure for bus 2 - bus_range_max in type 1 */
-> +	atu.index = 1;
-> +	atu.type = PCIE_ATU_TYPE_CFG1;
-> +	atu.cpu_addr = pp->cfg0_base + SZ_2M;
-> +	atu.size = (SZ_1M * (bus_range_max - 2));
-> +	atu.ctrl2 = PCIE_ATU_CFG_SHIFT_MODE_ENABLE;
-> +	return dw_pcie_prog_outbound_atu(pci, &atu);
-> +}
-> +
-> +static int dw_pcie_create_ecam_window(struct dw_pcie_rp *pp, struct resource *res)
-> +{
-> +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-> +	struct device *dev = pci->dev;
-> +	struct resource_entry *bus;
-> +
-> +	bus = resource_list_first_type(&pp->bridge->windows, IORESOURCE_BUS);
-> +	if (!bus)
-> +		return -ENODEV;
-> +
-> +	pp->cfg = pci_ecam_create(dev, res, bus->res, &pci_generic_ecam_ops);
-> +	if (IS_ERR(pp->cfg))
-> +		return PTR_ERR(pp->cfg);
-> +
-> +	pci->dbi_base = pp->cfg->win;
-> +	pci->dbi_phys_addr = res->start;
-> +
-> +	if (pp->ops->ecam_init)
-> +		pp->ops->ecam_init(pci, pp->cfg);
-> +
-> +	return 0;
-> +}
-> +
->  int dw_pcie_host_init(struct dw_pcie_rp *pp)
->  {
->  	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-> @@ -431,19 +487,8 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
->  
->  	raw_spin_lock_init(&pp->lock);
->  
-> -	ret = dw_pcie_get_resources(pci);
-> -	if (ret)
-> -		return ret;
-> -
->  	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "config");
-> -	if (res) {
-> -		pp->cfg0_size = resource_size(res);
-> -		pp->cfg0_base = res->start;
-> -
-> -		pp->va_cfg0_base = devm_pci_remap_cfg_resource(dev, res);
-> -		if (IS_ERR(pp->va_cfg0_base))
-> -			return PTR_ERR(pp->va_cfg0_base);
-> -	} else {
-> +	if (!res) {
->  		dev_err(dev, "Missing *config* reg space\n");
->  		return -ENODEV;
->  	}
-> @@ -454,6 +499,30 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
->  
->  	pp->bridge = bridge;
->  
-> +	pp->cfg0_size = resource_size(res);
-> +	pp->cfg0_base = res->start;
-> +
-> +	if (!pp->enable_ecam) {
-
-Why can't you just use the ECAM mode when there is enough memory defined in DT?
-Using this flag slightly defeats the purpose of the ECAM mode.
-
-> +		pp->va_cfg0_base = devm_pci_remap_cfg_resource(dev, res);
-> +		if (IS_ERR(pp->va_cfg0_base))
-> +			return PTR_ERR(pp->va_cfg0_base);
-> +
-> +		/* Set default bus ops */
-> +		bridge->ops = &dw_pcie_ops;
-> +		bridge->child_ops = &dw_child_pcie_ops;
-> +		bridge->sysdata = pp;
-> +	} else {
-> +		ret = dw_pcie_create_ecam_window(pp, res);
-> +		if (ret)
-> +			return ret;
-> +		bridge->ops = (struct pci_ops *)&pci_generic_ecam_ops.pci_ops;
-> +		pp->bridge->sysdata = pp->cfg;
-
-'bridge->sysdata = pp->cfg'?
-
-- Mani
-
+Best regards,
 -- 
-மணிவண்ணன் சதாசிவம்
+~Vinod
+
+
 
