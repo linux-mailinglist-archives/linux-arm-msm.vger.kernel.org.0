@@ -1,87 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-39890-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39891-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8923D9E04E6
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 15:29:14 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AA908168225
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 14:27:04 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D3E5204F95;
-	Mon,  2 Dec 2024 14:26:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="akdzHQk2"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3287D9E04DE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 15:27:46 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34AE11FF5F9
-	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Dec 2024 14:26:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ECE3F2855E4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 14:27:44 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0150B204F79;
+	Mon,  2 Dec 2024 14:27:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="myY+Y8Bf"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55AD6203705
+	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Dec 2024 14:27:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733149579; cv=none; b=qKlSmxFdEkgvlx+CEu1EWlb61jzOrKWvlj/frVgqau1DRyfspwE45o7pOYAqQ8US8DTQazWcNZjyfQO04mBW9nvmNyWQKbh2IoXJC+8A2IHJ7RWbDg/K9GUNnmqi9Yy3A0VRsgkz0grLepYwJIn2SLr5btPgxWsQTN0Iikh5GQI=
+	t=1733149637; cv=none; b=P/zJlS9/dtjlRosrM6Sivb2Ev782lHLiGA2H8poQtQEQ0e/af0OzhV2CsH4XlayQ4nmLSUK8ddgpgIm6+siFomvUsUxiaFF95x6xjT0UMukwnNcvwj14UdQe2IPsxL8FmgejtsvQULjQlSsVp0xs3taCSvzwSF/3jlDV9JBDlt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733149579; c=relaxed/simple;
-	bh=U5V8w3BHhDumOMT4/n+/DHbu+Z9WvE7y+HF6Y3k+6k0=;
+	s=arc-20240116; t=1733149637; c=relaxed/simple;
+	bh=+0lEVZpYuOv7o3FMPc0Pv3lmHWLz3wqPArGyGpNBM20=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Jpzw5D/wwz/iBBlIh2zulYtpI7ShwiR/m/ETMfDkHBjLaTMKrq78gDr4pKQyzdkt3ReGsbOmySqHWW4wwngiY5P78u8CNEICOKjoXZhXTHFw6JejUA5ioxgS5YXu1vRSAEP4jtQXaL7uccYp3HxKC2hRcZVF+bQ+m3YPXExI2SQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=akdzHQk2; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=aJRFkLDKPlMXRMtOIeJO9zW2Io3a1OQQWSxED60iRuOJ8H/r0Sw8KNIWKIFTeRCxUSJGAXvfL7DCWEmoAsKXiwav6MrhlCshfkUVBKsQgCCbv9qs79KvIyZONOCzQEdDiiO1+Ckn4IYS8M1cDVuppFcK/rJnFKVXwl+2zJHG3KA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=myY+Y8Bf; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B28IZrA019784
-	for <linux-arm-msm@vger.kernel.org>; Mon, 2 Dec 2024 14:26:16 GMT
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B28O13M030853
+	for <linux-arm-msm@vger.kernel.org>; Mon, 2 Dec 2024 14:27:15 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	C9+aPPZFAJemDOGMrrzpUMQVAlKiCGsFemq1XONcpZk=; b=akdzHQk2JJvu6c+o
-	cnFE7I42krUUOtwqd6rQMddEcSyZd066KzphvS2c5B8jHDcf8YX5ToDEA/uDVnt6
-	hWGds3Ugt3t7R9qfBjptMG7h2noyxlp4Ese/lk4TC5iDt1Ip7ZaqZ3Dbd1uwVSNe
-	Yf1fdh74no9Uc3h98tFdTt3NSQws5xi5geUPf1pDYGD4MoUONLk60xfR8bfHfKmQ
-	KmZzIRxZfUeG+UQLOB3XBC3owX97GqPJjTarEcsQ/PRE3ZaY7Syg3kkCXqo7ztCC
-	4WWR5SAGdxobqnE6fC50Fciu8kPSLUJCtWLZh0uayWxFFcQUvBYOThAWt0Ocdf7q
-	YDzpmw==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 437v07my65-1
+	YeWkuqOLf9DYYwHwIizxBSFI7lURFVcVl25PyvH6Ucs=; b=myY+Y8BfM83vi9/6
+	KyvIhFydFf27ZZ0D8+FSH1xmDRyfOP5d2itdVgarA0LnYGow2Qa9vMVla2tyX3bk
+	I6Npbco5QYdWo/rGV+EG39AjHz468w45/yvPx3fHa9k4vvEOZvAmbWRQyRCOwrk+
+	28TZ4qKU8CDgeiOC4Pe8YP0UpDDxkCgSsLT2BSHIWbfyuLylBYPh2XoqPJPv9fKL
+	OP7p9NA4MFBcgfIh4EljFLLJ/6NrjIjihjDhoUaZEjUOoYvbfav0FJ37p4RIBLP2
+	iGWe5Id3ls7fPSeBGWCxyLJQJWKp0Y/Uru774w6y3wcSxUhhNosQlUxCDBB0AenQ
+	M9YiXA==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 437t1gd4dc-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 02 Dec 2024 14:26:16 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-6d885b3003cso7994326d6.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Dec 2024 06:26:16 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 02 Dec 2024 14:27:15 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4667cab5e1bso6967821cf.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Dec 2024 06:27:15 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733149575; x=1733754375;
+        d=1e100.net; s=20230601; t=1733149634; x=1733754434;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=C9+aPPZFAJemDOGMrrzpUMQVAlKiCGsFemq1XONcpZk=;
-        b=e4tnaVZIFPfWLBwFG3HSNE2mA0vAxzyychvrysBphUmth9FQb5TRX4jt1V+uzevvVp
-         IXEFlYo7Ct4MnWcvFI47r3yXZnCzp4LkNf3Y+kjf/H6tzln8VUmINx5Qk3FNbP3ZeUJT
-         JZFlF+Tf8UZzISWno0i3bfAGBB2lYsq1AlUEOMXcFZNbB+ZwigjJNq+ay/l3DQqGU/Vr
-         UVvPsmXKObeSGBouUGTI+rLoF9DDONhaeOUDprcprnJUUFaRMKrdSEWY3wwA26HVJ8/P
-         VeE2/pidhLfC6ZTYDtJegZoXcs6mI+NCLVxzEoLFpqi5lf693r/brknTrB5dLSsxmeQV
-         yoaw==
-X-Forwarded-Encrypted: i=1; AJvYcCWIz44f7lOOjLYUsAxzD1McCEPHbQZ54fcDpP6Xp0GALdFLRIstMnHCNheldgC4edh+asi3GDJpnRySG858@vger.kernel.org
-X-Gm-Message-State: AOJu0YyXI9wdlcuGBlCyAxeZ58tPexzu+A2Zi8qPEfTpNw5G/HSffXlL
-	CA6bfEYUpN8mzX0bmNILQlYHzWw/CBdr6AkV9qKK2gD7xtjEOeCsTB7drIStCAkLNObZzadWenV
-	xQGK+8UUQXryy4Lq+6R6Y1ClXSLGfroMwclXms6Qq1l7vqXo57sHYvvt2wLG1f3nG
-X-Gm-Gg: ASbGncs0bT8AO6HzsiZirqgYrGvp0qGwJaIJuu4YNWPn4K+dOjomZ7UVGFIGYlG6chk
-	4r0RqeP3b6cCOtfn7wc1RBmRP68uVYkc7MkGLcxRxVjAu6go3h5Qhp0NAUN/A1qgP3C9Fa74INL
-	MMvQpzpDshc9YNx0JRUReez0kgFsXaBSOF9h1j0zVN9IeWl6cvFnupyjofO85jxBnO+InVzVyuM
-	wa6i+O0Wzrj41iipFm7NxSm8fqXG3VPzhxyVqoxDueZAV/NYYOLeG4s5CH/16q96Z3MM7B2DS3g
-	rhMkcEJE5VZhAqm2djtZbQaLDf9XzCU=
-X-Received: by 2002:ac8:5f46:0:b0:466:85eb:6114 with SMTP id d75a77b69052e-466b34eb098mr142606471cf.4.1733149575108;
-        Mon, 02 Dec 2024 06:26:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEks5Q89gw/Ra65Tb+SUhB7kvtV72Gy/kgkC1JbMoRUkpqIZ4f3DHNc/WA4iENdSFUUHOA4+w==
-X-Received: by 2002:ac8:5f46:0:b0:466:85eb:6114 with SMTP id d75a77b69052e-466b34eb098mr142606291cf.4.1733149574666;
-        Mon, 02 Dec 2024 06:26:14 -0800 (PST)
+        bh=YeWkuqOLf9DYYwHwIizxBSFI7lURFVcVl25PyvH6Ucs=;
+        b=mOv8s/uEjrUqaPcLn2H86krNxfcazR/JKDViayLZw+Ns2+ySOANZqxNomhavVASmj4
+         5c3DXLb/x7hZAduuTxncijeijuFcTkWte+Qlchs1aN3nyLzJrF3gY+pmmTDEnkMTyzN9
+         uNvDXntH5y0GhXjsMYBdC5RGcwpdkNG10nZImy7AafHZQ1R+O0Gb0jkoNX5OGwkW4+Fr
+         itdSUGKS4UkaWO9/UWfKdn3XFlj1qVwKPUFAcm/AZEcYOkpWQiS35Pz1U+1WH/F6ic+/
+         gz62y9e6X6+o1hbz5g4MVIoh9CxaHBnM0pSLCys9Q9lcv+ynwlBAvZ+fzk5RJBkVjztG
+         Ol7g==
+X-Forwarded-Encrypted: i=1; AJvYcCVPjvSV/ntpTfQ6WxN3nZFTzukJ8pv62AxCxS367Hzcrpk1w1ra7TJJ9trodQS2miaVJ8zJaFgB1YYb252A@vger.kernel.org
+X-Gm-Message-State: AOJu0YydsR2cWo/Dt/j8+0LJ5D56tC43sKP5YtSaQXoRMb3Zs9sR65tj
+	AH7TigwawHKaCw0fQdG4oyJcjaAc7Io4CQNEMONMXiladfb1ADbEP5tEvjyszxSuccSNU++b95V
+	9SA5SAFblEsRVwRCEoOFhaeLBcNbyMqq9h1jVER3TwV5TJMUBE6XxfqHD8f7bU96D
+X-Gm-Gg: ASbGncvtUoyzAPcaDHqHUMdCbVroGeNCfH9+enTZrotxJqfOOngV13GDb6MKocSBXjW
+	nI9/5O0IxvYFcM5PD72wSRbXQoWx/29ubw+Vk5tahCldb0fDPCU+wNOcK4Z7ifiw5RbNWL0On4O
+	Mkw3opNPAQ+3Mg05EvIR9x0UqmXva/eZy02gKneHD1Z9GqsO2zEHw5r7bQM0chbxzo+F0/5LRnw
+	gSOjjZ02LYCUFpvw/aSBlJSG64z/Wwc+sm74lVmvU4ckQfSg/gKLiMK8UtiJ5xGUi5+CzoTFtbr
+	Oi6URVyRLPKoQC/ZvgJZlMQIWJ1kXFU=
+X-Received: by 2002:a05:622a:60e:b0:466:8c48:7232 with SMTP id d75a77b69052e-466b34b8be0mr143537411cf.1.1733149634238;
+        Mon, 02 Dec 2024 06:27:14 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHbCAAkr1jr6A8ylVsfj4i+aRWKGXXG6vAOJ8y8M6v6CeAJ/2w+sO2qpxpRsd+Y8DVmjmRKuw==
+X-Received: by 2002:a05:622a:60e:b0:466:8c48:7232 with SMTP id d75a77b69052e-466b34b8be0mr143537111cf.1.1733149633883;
+        Mon, 02 Dec 2024 06:27:13 -0800 (PST)
 Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa599800a6dsm515436666b.90.2024.12.02.06.26.10
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa599953c51sm512391466b.179.2024.12.02.06.27.12
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Dec 2024 06:26:14 -0800 (PST)
-Message-ID: <25873cef-2871-46c0-a764-9b5ee85e9a58@oss.qualcomm.com>
-Date: Mon, 2 Dec 2024 15:26:10 +0100
+        Mon, 02 Dec 2024 06:27:13 -0800 (PST)
+Message-ID: <02dd5593-38ba-4344-aa64-0913eca45808@oss.qualcomm.com>
+Date: Mon, 2 Dec 2024 15:27:11 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,49 +89,75 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/6] arm64: dts: qcom: qcs615: enable pcie for qcs615
- platform dts
-To: Ziyue Zhang <quic_ziyuzhan@quicinc.com>, vkoul@kernel.org,
-        kishon@kernel.org, robh+dt@kernel.org,
-        manivannan.sadhasivam@linaro.org, bhelgaas@google.com, kw@linux.com,
-        lpieralisi@kernel.org, quic_qianyu@quicinc.com, conor+dt@kernel.org,
-        neil.armstrong@linaro.org, andersson@kernel.org,
-        konradybcio@kernel.org
-Cc: quic_tsoni@quicinc.com, quic_shashim@quicinc.com,
-        quic_kaushalk@quicinc.com, quic_tdas@quicinc.com,
-        quic_tingweiz@quicinc.com, quic_aiquny@quicinc.com, kernel@quicinc.com,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
-        Krishna chaitanya chundru <quic_krichai@quicinc.com>
-References: <20241122020305.1584577-1-quic_ziyuzhan@quicinc.com>
- <20241122020305.1584577-7-quic_ziyuzhan@quicinc.com>
+Subject: Re: [PATCH 4/6] arm64: dts: qcom: x1e80100: Add CAMCC block
+ definition
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>, Robert Foss <rfoss@kernel.org>,
+        Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd
+ <sboyd@kernel.org>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org, linux-clk@vger.kernel.org
+References: <20241119-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v1-0-54075d75f654@linaro.org>
+ <20241119-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v1-4-54075d75f654@linaro.org>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20241122020305.1584577-7-quic_ziyuzhan@quicinc.com>
+In-Reply-To: <20241119-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v1-4-54075d75f654@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: mgCbR2GeUeQoszmJoE0Hq36hPZ5PAgyC
-X-Proofpoint-GUID: mgCbR2GeUeQoszmJoE0Hq36hPZ5PAgyC
+X-Proofpoint-GUID: 9SVWIxFl2Qsj2Cv8EUYdPXa1cAd6_Alu
+X-Proofpoint-ORIG-GUID: 9SVWIxFl2Qsj2Cv8EUYdPXa1cAd6_Alu
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 phishscore=0
- adultscore=0 mlxlogscore=734 bulkscore=0 suspectscore=0 priorityscore=1501
- impostorscore=0 lowpriorityscore=0 spamscore=0 mlxscore=0 clxscore=1015
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2412020124
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 impostorscore=0
+ adultscore=0 lowpriorityscore=0 bulkscore=0 mlxscore=0 malwarescore=0
+ spamscore=0 priorityscore=1501 clxscore=1015 suspectscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412020124
 
-On 22.11.2024 3:03 AM, Ziyue Zhang wrote:
-> From: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+On 19.11.2024 2:10 PM, Bryan O'Donoghue wrote:
+> Add the CAMCC block for x1e80100. The x1e80100 CAMCC block is an iteration
+> of previous CAMCC blocks with the exception of having two required
+> power-domains not just one.
 > 
-> Add platform configurations in devicetree for PCIe, board related
-> gpios, PMIC regulators, etc.
-> 
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > ---
+>  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 17 +++++++++++++++++
+>  1 file changed, 17 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> index c18b99765c25c901b3d0a3fbaddc320c0a8c1716..5119cf64b461eb517e9306869ad0ec1b2cae629e 100644
+> --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> @@ -3,6 +3,7 @@
+>   * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+>   */
+>  
+> +#include <dt-bindings/clock/qcom,x1e80100-camcc.h>
+>  #include <dt-bindings/clock/qcom,rpmh.h>
+>  #include <dt-bindings/clock/qcom,sc8280xp-lpasscc.h>
+>  #include <dt-bindings/clock/qcom,x1e80100-dispcc.h>
+> @@ -4647,6 +4648,22 @@ usb_1_ss1_dwc3_ss: endpoint {
+>  			};
+>  		};
+>  
+> +		camcc: clock-controller@ade0000 {
+> +			compatible = "qcom,x1e80100-camcc";
+> +			reg = <0 0x0ade0000 0 0x20000>;
+> +			clocks = <&gcc GCC_CAMERA_AHB_CLK>,
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+This clock is not registered with the CCF
 
 Konrad
 
