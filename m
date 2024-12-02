@@ -1,203 +1,281 @@
-Return-Path: <linux-arm-msm+bounces-39906-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39907-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id BB1BA9E0781
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 16:49:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 12FE09E0735
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 16:38:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 67E03168CBB
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 15:18:29 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3942716B4BE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 15:21:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C0A620FA81;
-	Mon,  2 Dec 2024 15:11:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B44F209F27;
+	Mon,  2 Dec 2024 15:14:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="S3qGzJvh"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PLJE1dPj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44C5E20E327
-	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Dec 2024 15:11:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4050D204F6D
+	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Dec 2024 15:14:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733152305; cv=none; b=E4KUg0nNSlB6JwS6XmBqVnNeqrZOwUmOVlgmSt87Oudgc6FXZAtG/UvHEf3V9pdqafAmakhffBIDb1RqjVP2NgeZqdvaysmPBHEk9g82/C6E9fGBGgOi0l56+IK0isayobtfETkOSO0pEkJivxzL6FX+S9IOPZHe0s3Pq0iU1fs=
+	t=1733152497; cv=none; b=WHJ0l9M8Rm1jtuoNs3qLdsHP9Tmq9AcBjHspzK6kl6F4GMx1KSIgzUBiKdzxqxpqtJiM5LzpyC+0IciexHPGxkAh9+JUO5kkmjtY7ObhDQsTvrQlTzk73TgUNagLTcnAhJvyNT5+PJ0rJpqxH7RswDaRyBWzeFatcuOxOxELm28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733152305; c=relaxed/simple;
-	bh=TpL0LHs65p56d9EwEFOItEdeR5R3gBOZmwdkCUb8xW4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Q/ZHZI+ghwPrnTIQEev8m2iBSGUePFI78ixDVPgp/3aq8QMJlzqRdVg8/2iihi7zCrpo63GGitLCa3JNIRqcdr2cwj/VBr3UgA3wX072i9Cpx1a98CnmC0z/9T5wJYK39fIUn5m/cmmwbwa1eWsB4Gi9EQKZDIVSPk2lOIPYxfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=S3qGzJvh; arc=none smtp.client-ip=209.85.208.175
+	s=arc-20240116; t=1733152497; c=relaxed/simple;
+	bh=KpbBb9LzkFtJK58lCHF0v1Z3JHq622hksZSIbRBCl0g=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=jVrTOu5PsmFlLa6lrTQYx33Gzz8jT7sYw1itbELA/D9FeIq3YxTS6qYBYWjPkDCU23Jyd1PeFZdzk3CJf8SBF2g7V1OSX2estkpQoJ5OiITnSXkhqqIM/XBSAcEyAOV70RmCaNnBRtDt+XdZu7LcEiWjRJObaL/GGN+FKxj6VNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PLJE1dPj; arc=none smtp.client-ip=209.85.219.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-2ffc380b1d0so43786781fa.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Dec 2024 07:11:42 -0800 (PST)
+Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-e3970ac2dddso3373652276.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Dec 2024 07:14:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733152301; x=1733757101; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=fw7YEoYIbKyZeOPjx3DPUW4jWlQB+qg3r3Sh5MM8ZwY=;
-        b=S3qGzJvhtwbfKX+/iXEV5LNFs3ji3FzfWTFFSk391RJ4TazJWbGX00G9hCknid92NO
-         6Ple/p2GGhUmBclwRMHcmoSAeAlWU3P8PFoDIzoHDl9Cf4kq8CSbHATmaLZq/WQRnpHb
-         wq/WbhhxYOcc/qXSf8M1ivVKP4lxYd4kads8wwTwAV36+8KBRl6m/ijfdKjy0hn3/G82
-         ayzEDdq/HGXctFU+fgeSN6ppSvXtQSDF1OEl2UWsKDbm9hE7lDqYEcRhInLvaRlRnqXT
-         zDQLJC/qV/uPnj2GTZNbCl/tRUstvlZX34wkBPNGIi7KMkw0Z+TdlQhepPYY8oIYc3Cp
-         43LQ==
+        d=linaro.org; s=google; t=1733152494; x=1733757294; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=qgQqAmUH/5qaUZ/FJ2uuZznRVamzcHOkuY3OD4Ps5BA=;
+        b=PLJE1dPjXIVznliCdSp+UlhxtKkxfSt2y+ydkpuZl8kdtHVygA2D50m+sjil2p47sW
+         /bCeI1ZiaWy8RemxSNzqjqptCm3N9/+yQNQEBPbi8++DCjgW0vDntMzlS/j8oZ2m5SkB
+         BnOQRjQl+4E5OGqK/KrKkhNKcMntsLmuZuJploYYJhWlQOTVH5yYM02mamDRY/vCT4JZ
+         CBDel8IP1vIkk7/MyJDSY7nH4fd+Fezs1sg3izI2H/FZi3zQa3SqkYtFQoooiyQ7/jFn
+         RCs6m/htUzUWQyIMCY1hX/RPitke7pPo3NAZsGmNnAM6iTeF4yq20SiVmzWyXS8LZvkU
+         O9qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733152301; x=1733757101;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fw7YEoYIbKyZeOPjx3DPUW4jWlQB+qg3r3Sh5MM8ZwY=;
-        b=SuvrxaGGtEU2nD80Bdy3p5U1ph8OWzxV9miFCok4QVQZ983g+OQfl4YKVRFj7/pP5F
-         ZaXdysmaPg0SGcLH0W4l2BCOFqLuLMZMOdobk6gfcIZAN5LOOaOlFIEwpsHR6r8g13sv
-         xd+hpJcGdRDa+ll6mlZEJX+W7ZfwYUGKK4upjWDQCamzbjTIGl+llWGb1RMsjPDN+CBU
-         YwIniF7mwIWV3R843bj48dx8oe9jCU0PPn5FZqGSwEHb5Xo2xYyuaUGQRX9IFE6GY1B1
-         cw1i8BxYbSBwPmXrlnENKkq2WXkdrfA7beYSSiL/jssn1SRX+TXdEo0tTL6JkmED1Jso
-         796A==
-X-Forwarded-Encrypted: i=1; AJvYcCX/EqbzvgQMcKm77maAYfAPjegi0x2F8Pa9ECqNGrFnkfCXsyAgaznTjnRUYgZRka9gzpRwgrRXC1dc0vPh@vger.kernel.org
-X-Gm-Message-State: AOJu0YwaKjyjH9Lis1dis3zuoaS20+u9nTUMOo0RfKE7N9PcpR9ooxIQ
-	uPMOLR2h3WxAaSiF8vRXNRt4LGJ13N0PnarHSgZKhffsRRGF04nbx5/sMldneYE=
-X-Gm-Gg: ASbGncvl+U2nBqZX8oHZ5ri8spetbo+nwywqb/osW+vzWF/vbUWFaxYqjpW8rffg0Oh
-	6AvQ04X6qAG9MHTYs1mlV4G1Qy2RGwnMgEcyud3MK+hvJGTlquUiqCj0JUVuu02GN9HzZUauYyT
-	VyQheCbHinSm38pFJRxjAspwwJpVrldESnR4MjIdGUsMF79o9wSZtoD/UA3H32WbuaubqA+gU1p
-	XNhbW7ntfG1uvHpCdgP3aJ/3imWC30rJ9bkEcZREV/Wu+uC3LYuF6cckXmVzFOzmlCP5o4KI7K/
-	uRLOM2BnopW8j6/TTFVDwmBoaPnutA==
-X-Google-Smtp-Source: AGHT+IGTOCHVZ8wHsV6r+9tCOEInpxzT1dTiCgbnax192RHUBILvYulxGuD27uXpLfbri9gV662KLg==
-X-Received: by 2002:a2e:be8b:0:b0:2ff:4e4b:cbe2 with SMTP id 38308e7fff4ca-2ffde23e3cdmr64660161fa.14.1733152299652;
-        Mon, 02 Dec 2024 07:11:39 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ffdfbb915esm13211121fa.19.2024.12.02.07.11.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Dec 2024 07:11:38 -0800 (PST)
-Date: Mon, 2 Dec 2024 17:11:34 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Vikash Garodia <quic_vgarodia@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, "Renjiang Han (QUIC)" <quic_renjiang@quicinc.com>, 
-	"linux-firmware@kernel.org" <linux-firmware@kernel.org>, "Dikshita Agarwal (QUIC)" <quic_dikshita@quicinc.com>, 
-	"Qiwei Liu (QUIC)" <quic_qiweil@quicinc.com>, "quic_zhgao@quicinc.co" <quic_zhgao@quicinc.com>, 
-	linux-arm-msm@vger.kernel.org
-Subject: Re: add venus firmware file for qcs615
-Message-ID: <cjbdqixxxu2zrgkakcb44jnkeoktwc3vmtqauejnxjxtycqtnp@7cthmlpy5qx3>
-References: <pqoq64hk2jedmqta5fs4ktcadw4getwkgz324vtrzzotcurpaw@zc6dlhbqtsnz>
- <a1bbc1d0-d3bd-e44e-e393-a7ade909a506@quicinc.com>
- <CAA8EJpoDXKbF5cqb_vzE28zjdC6OC66Zxb5j030QXaCe+FUmfw@mail.gmail.com>
- <egdqhgdiqqny57yiauiyekcvhxvebfttyncqoazslzjprwvakz@txvy7wn4vg7g>
- <a259c98c-6c77-1c1e-e428-41c2550f7517@quicinc.com>
- <pukoimsqhck5oymirmgiwad6s3l6frt7xbahp7juhvj3rt4622@wpajx6vyw5nl>
- <rukxa3h72trvqvu6wkxmkp33entybcvxfjlpcjh7odipwds6lq@rt6ferue5nbr>
- <5170f77f-c5d3-02f1-8deb-5d00fef7627a@quicinc.com>
- <magmzevx4cisi5s2ytdtzsqr6klrt6wot6cex3zpxugjspdwyt@qpooycw4b2bs>
- <41f0ebb2-02b9-a83d-6a7d-3dd03fccb687@quicinc.com>
+        d=1e100.net; s=20230601; t=1733152494; x=1733757294;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qgQqAmUH/5qaUZ/FJ2uuZznRVamzcHOkuY3OD4Ps5BA=;
+        b=GWWhF0B2KJwf82tQNX0a128R5oWHI+/TCbvardRV9971m9rLA/o/m71Em/FkvTdGC7
+         LsWHvZR3ez2Ag3mFpVBAU+7mXBZKsBhOXSYAOxconnAay79oC8UtU9UB0xGDOUbwTlz0
+         yq20TX3r8C7UcBbYCD1vMdCh3vAj5yKzQcUxJXhAqlUaAGsuZ8izRxR7+1lczeJafT/l
+         eeZc9CQAtMRYm0ZwIVvMUMd3Bls03u6IMFLR9uRQs6TFC5Y3qMlWS9wQCavZCNGYR0G/
+         OD4LEWlwR1pHHWGGILaA6fyUvQ5TIB9BkRgJ0Zh94PE1Zlvfrp3c8xKKjQnFWMQOuFVj
+         MI0w==
+X-Forwarded-Encrypted: i=1; AJvYcCW196/Ya8w9Ah/HCbJpL+fnb7FQTjx7C+Ky6G9JOEP4kj3wh4gPO2s3tbKBGRoFG25ah0VinP9QoM3oyhlj@vger.kernel.org
+X-Gm-Message-State: AOJu0YxzAZGQFr8PqHpPTxueNeYbcZs+A9u79Lv0EkX+viNKZem1zEz3
+	9SxKdzowTVPnPayRgvoJQc4t9ALOTS1ecjvCaLgCvygwU4AiE9ga8Y79Tsvca/46+EsLTHiK2tA
+	UPhRkaXhjhFoFELUbS/8EYobbk0JoCOroRercFA==
+X-Gm-Gg: ASbGncubBkGZIWze1jljPcSmKbIlmR96Zp6uW6rCZMOx32doTgmVqc+UmHwdnjPC5Yd
+	lyv66IBHc1kbM2X+xbwl3k4hjiR4GrA==
+X-Google-Smtp-Source: AGHT+IG0eZmZdCpjszUFPQKzsE1pjfh6dUFyWF3HVs2HVQq6iY1PVz+uppjKox4aaeidt2hxIDY0FGQr5/t0c8vw8OQ=
+X-Received: by 2002:a05:6902:1242:b0:e39:826a:c746 with SMTP id
+ 3f1490d57ef6-e39826aca1emr13293016276.40.1733152494114; Mon, 02 Dec 2024
+ 07:14:54 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <41f0ebb2-02b9-a83d-6a7d-3dd03fccb687@quicinc.com>
+References: <20241120095428.1122935-1-quic_chejiang@quicinc.com>
+ <20241120095428.1122935-2-quic_chejiang@quicinc.com> <454tdpuglu23nmxfqqesv42h5rk3vqiji7spo3naf2djqwojqt@6x3ram3lnlkq>
+ <fb5bc38b-83b3-4924-b1d0-39219a2927b4@quicinc.com> <CAA8EJpqAOD_+SLG2LbiodWOs28_rquvMefmSH5CY1yB_rkiZPg@mail.gmail.com>
+ <a7ec9426-8c8a-49b3-9916-4c2660c38e49@quicinc.com> <CAA8EJpqpzwGL38F_MYUJVuAT8q96QZO7CSh00ZpNBU5cGWUqqA@mail.gmail.com>
+ <944fdc7f-313e-48b9-8917-370942d4f073@quicinc.com> <qsaiic4jvhf6nqe7efchxvja6tjvsiquem6ofsgq52iygfflya@huv6x7kz6emd>
+ <c3394a08-edab-45a4-9ed8-db2a06598a0a@quicinc.com>
+In-Reply-To: <c3394a08-edab-45a4-9ed8-db2a06598a0a@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Mon, 2 Dec 2024 17:14:42 +0200
+Message-ID: <CAA8EJprgYM1zqzoJvvUAFbauMLQR0zpvQ93eVY6wzxU5YGvhiw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/4] dt-bindings: bluetooth: add 'qcom,product-variant'
+To: "Cheng Jiang (IOE)" <quic_chejiang@quicinc.com>
+Cc: Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>, Rocky Liao <quic_rjliao@quicinc.com>, 
+	quic_zijuhu@quicinc.com, linux-bluetooth@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, quic_mohamull@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Dec 02, 2024 at 06:20:40PM +0530, Vikash Garodia wrote:
-> 
-> On 12/2/2024 6:16 PM, Dmitry Baryshkov wrote:
-> > On Mon, Dec 02, 2024 at 05:30:55PM +0530, Vikash Garodia wrote:
+On Mon, 2 Dec 2024 at 16:25, Cheng Jiang (IOE)
+<quic_chejiang@quicinc.com> wrote:
+>
+>
+>
+> On 12/2/2024 7:38 PM, Dmitry Baryshkov wrote:
+> > On Mon, Dec 02, 2024 at 10:22:52AM +0800, Cheng Jiang (IOE) wrote:
 > >> Hi Dmitry,
 > >>
-> >> On 11/29/2024 8:05 PM, Dmitry Baryshkov wrote:
-> >>> On Wed, Nov 20, 2024 at 01:22:50PM +0200, Dmitry Baryshkov wrote:
-> >>>> On Wed, Nov 20, 2024 at 04:40:51PM +0530, Vikash Garodia wrote:
-> >>>>>
-> >>>>> On 11/20/2024 4:09 PM, Dmitry Baryshkov wrote:
-> >>>>>> On Thu, Nov 14, 2024 at 01:31:14PM +0200, Dmitry Baryshkov wrote:
-> >>>>>>> On Thu, 14 Nov 2024 at 13:05, Vikash Garodia <quic_vgarodia@quicinc.com> wrote:
-> >>>>>>>>
-> >>>>>>>>
-> >>>>>>>> On 11/14/2024 4:16 PM, Dmitry Baryshkov wrote:
-> >>>>>>>>> On Thu, Nov 14, 2024 at 09:06:55AM +0530, Vikash Garodia wrote:
-> >>>>>>>>>>
-> >>>>>>>>>> On 11/13/2024 8:10 PM, Dmitry Baryshkov wrote:
-> >>>>>>>>>>> On Wed, Nov 13, 2024 at 10:50:44AM +0000, Renjiang Han (QUIC) wrote:
-> >>>>>>>>>>>> Hello
-> >>>>>>>>>>>>
-> >>>>>>>>>>>> The following changes since commit 6482750d396980a31f76edd5a84b03a96bbdf3fe:
-> >>>>>>>>>>>>
-> >>>>>>>>>>>>   Merge branch 'verb' into 'main' (2024-11-11 20:01:00 +0000)
-> >>>>>>>>>>>>
-> >>>>>>>>>>>> are available in the Git repository at:
-> >>>>>>>>>>>>
-> >>>>>>>>>>>>   git@git.codelinaro.org:clo/linux-kernel/linux-firmware.git<mailto:git@git.codelinaro.org:clo/linux-kernel/linux-firmware.git> video-firmware-qcs615
-> >>>>>>>>>>>>
-> >>>>>>>>>>>> for you to fetch changes up to 1e7f65883150d3b48307b4f0d6871c60151ee25b:
-> >>>>>>>>>>>>
-> >>>>>>>>>>>>   qcom: venus-5.4: add venus firmware file for qcs615 (2024-11-13 15:50:29 +0530)
-> >>>>>>>>>>>>
-> >>>>>>>>>>>> ----------------------------------------------------------------
-> >>>>>>>>>>>> Renjiang Han (1):
-> >>>>>>>>>>>>       qcom: venus-5.4: add venus firmware file for qcs615
-> >>>>>>>>>>>>
-> >>>>>>>>>>>> WHENCE                      |   1 +
-> >>>>>>>>>>>
-> >>>>>>>>>>> Could you please be more specific, what is the difference between the
-> >>>>>>>>>>> existing file and a new file? According to the soc_vers the new file
-> >>>>>>>>>>> supports sdm845. Should it instead replace the old firmware?
-> >>>>>>>>>> SDM845, SC7180, qcs615 can be enabled on same firmware ideally, but due to a
-> >>>>>>>>>> different signing for qcs615, it takes a separate bin (xxx_s6.mbn).
-> >>>>>>>>>
-> >>>>>>>>> Can SDM845 handle v6 signatures? It supports v5 and PSS. Or can QCS615
-> >>>>>>>>> use v5 signatures?
-> >>>>>>>> Infact we started with loading sc7180 firmware on qc615, video init failed. So
-> >>>>>>>> far i have seen 2 categories in signing version for video bins, either default
-> >>>>>>>> or v6 specific tool.
-> >>>>>>>
-> >>>>>>> Can firmware / security engineers actually advice us on using v5
-> >>>>>>> firmware signatures with QCS615 _and_ with older platforms?
-> >>>>>>> Existing venus-5.4/venus.mbn uses v3
+> >> On 11/30/2024 4:24 PM, Dmitry Baryshkov wrote:
+> >>> On Sat, 30 Nov 2024 at 05:48, Cheng Jiang (IOE)
+> >>> <quic_chejiang@quicinc.com> wrote:
+> >>>>
+> >>>> Hi Dmitry,
+> >>>>
+> >>>> On 11/21/2024 12:38 PM, Dmitry Baryshkov wrote:
+> >>>>> On Thu, 21 Nov 2024 at 06:02, Cheng Jiang <quic_chejiang@quicinc.com> wrote:
 > >>>>>>
-> >>>>>> Vikash, any updates on this topic? Would it be possible to have a single
-> >>>>>> FW image with just v5 signatures?
-> >>>>> Not yet Dmitry. Having a followup with relevant folks this friday to understand
-> >>>>> the signing requirements across different SOCs, hopefully will be able to add
-> >>>>> something on this by then.
+> >>>>>> Hi Dmitry,
+> >>>>>>
+> >>>>>> On 11/20/2024 6:43 PM, Dmitry Baryshkov wrote:
+> >>>>>>> On Wed, Nov 20, 2024 at 05:54:25PM +0800, Cheng Jiang wrote:
+> >>>>>>>> Several Qualcomm projects will use the same Bluetooth chip, each
+> >>>>>>>> focusing on different features. For instance, consumer projects
+> >>>>>>>> prioritize the A2DP SRC feature, while IoT projects focus on the A2DP
+> >>>>>>>> SINK feature, which may have more optimizations for coexistence when
+> >>>>>>>> acting as a SINK. Due to the patch size, it is not feasible to include
+> >>>>>>>> all features in a single firmware.
+> >>>>>>>>
+> >>>>>>>> Therefore, the 'product-variant' devicetree property is used to provide
+> >>>>>>>> product information for the Bluetooth driver to load the appropriate
+> >>>>>>>> firmware.
+> >>>>>>>>
+> >>>>>>>> If this property is not defined, the default firmware will be loaded,
+> >>>>>>>> ensuring there are no backward compatibility issues with older
+> >>>>>>>> devicetrees.
+> >>>>>>>>
+> >>>>>>>> The product-variant defines like this:
+> >>>>>>>>   0 - 15 (16 bits) are product line specific definitions
+> >>>>>>>>   16 - 23 (8 bits) are for the product line.
+> >>>>>>>>   24 - 31 (8 bits) are reserved for future use, 0 currently
+> >>>>>>>
+> >>>>>>> Please use text strings instead of encoding this information into random
+> >>>>>>> integers and then using just 3 bits out of 32.
+> >>>>>> Ack. Originally intended to make it more flexible for future use. It can be
+> >>>>>> text strings for current requirement.
+> >>>>>
+> >>>>> No, fixed-format data isn't flexible. Fine-grained properties are.
+> >>>>> Please define exactly what is necessary rather than leaving empty
+> >>>>> holes "for future expansion".=
+> >>>>>
+> >>>>>>>
+> >>>>>>>>
+> >>>>>>>> |---------------------------------------------------------------------|
+> >>>>>>>> |                       32 Bits                                       |
+> >>>>>>>> |---------------------------------------------------------------------|
+> >>>>>>>> |  31 - 24 (bits)   |    23 - 16 (bits)   | 15 - 0 (16 bits)          |
+> >>>>>>>> |---------------------------------------------------------------------|
+> >>>>>>>> |   Reserved        |    0: default       | 0: default                |
+> >>>>>>>> |                   |    1: CE            |                           |
+> >>>>>>>> |                   |    2: IoT           |                           |
+> >>>>>>>> |                   |    3: Auto          |                           |
+> >>>>>>>> |                   |    4: Reserved      |                           |
+> >>>>>>>> |---------------------------------------------------------------------|
+> >>>>>>>>
+> >>>>>>>> Signed-off-by: Cheng Jiang <quic_chejiang@quicinc.com>
+> >>>>>>>> ---
+> >>>>>>>>  .../bindings/net/bluetooth/qualcomm-bluetooth.yaml          | 6 ++++++
+> >>>>>>>>  1 file changed, 6 insertions(+)
+> >>>>>>>>
+> >>>>>>>> diff --git a/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml b/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
+> >>>>>>>> index 7bb68311c609..9019fe7bcdc6 100644
+> >>>>>>>> --- a/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
+> >>>>>>>> +++ b/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
+> >>>>>>>> @@ -110,6 +110,12 @@ properties:
+> >>>>>>>>      description:
+> >>>>>>>>        boot firmware is incorrectly passing the address in big-endian order
+> >>>>>>>>
+> >>>>>>>> +  qcom,product-variant:
+> >>>>>>>> +    $ref: /schemas/types.yaml#/definitions/uint32
+> >>>>>>>> +    description:
+> >>>>>>>> +      specify the product information for driver to load the appropriate firmware
+> >>>>>>>
+> >>>>>>> DT describes hardware. Is this a hardware property?
+> >>>>>>
+> >>>>>> It has been added to identify the firmware image for the platform. The driver
+> >>>>>> parses it, and then the rampatch is selected from a specify directory. Currently,
+> >>>>>> there is a 'firmware-name' parameter, but it is only used to specify the NVM
+> >>>>>> (config) file. We also need to specify the rampatch (TLV file).
+> >>>>>>
+> >>>>>>
+> >>>>>> Can we re-use the "firmware-name"? add two segments like the following?
+> >>>>>> firmware-name = "rampatch_xx.tlv",  "nvm_xx.bin";
+> >>>>>
+> >>>>> I think this is the better solution
+> >>>>>
+> >>>> How about the following logic for handling 'firmware-name' property:
+> >>>> 1. If there is only one string in firmware-name, it must be the NVM file, which is used
+> >>>>    for backward compatibility.
+> >>>>
+> >>>> 2. If there are two strings in firmware-name, the first string is for the rampatch, and
+> >>>>    the second string is for the NVM.
 > >>>
-> >>> It's been more than a week since the last email. Are there any updates?
-> >>> I'd really like to get this sorted out before next linux-firmware
-> >>> release, otherwise we'll be stuck with these names for the foreseeable
-> >>> future.
-> >> I have been chasing both the firmware and security folks to align on this. So
-> >> far the updates are that one is signed MBNv5 and other with MBNV6, hence leading
-> > 
-> > I think the existing firmware uses v3, not v5.
-> > 
-> > 00001000  00 00 00 00 03 00 00 00  00 00 00 00 28 00 a0 0f  |............(...|
-> > 
-> > 
-> >> to different set of binaries. These MBN versions of signing is defined at SOC
-> >> level and depends on secure boot libraries used in that SOC.
-> >> At the same time, there is an experiment to check if SC7180 can be signed with
-> >> version used for QCS615 i.e MBNV6.
-> > 
-> > Thanks! Are you trying that without updating the whole bootloader stack? I
-> > think some of SC7180 devices might be EOL'd, so it might be hard to get
-> > FW/bootloader updates.
-> Just the firmware part, by signing it with qcs615 way, as an experiment
-> suggested by security folks.
+> >>> I'd say, other way around: the first one is always NVM, the second one
+> >>> is rampatch and it is optional.
+> >>>
+> >> OK, Got it.
+> >>>>
+> >>>> 3. Due to variations in RF performance of chips from different foundries, different NVM
+> >>>>    configurations are used based on the board ID. If the second string ends with boardid,
+> >>>>    the NVM file will be selected according to the board ID.
+> >>>
+> >>> Is there a reason why you can not use the exact firmware name? The
+> >>> firmware name is a part of the board DT file. I assume you know the
+> >>> board ID that has been used for the board.
+> >>>
+> >> The boardid is the connectivity board's id. NVM is a board specific configuration file,
+> >> it's related to the connectivity board. We may attach different connectivity board on the
+> >> same platform. For example, we have connectivity boards based on the QCA6698 chipset that
+> >> can support either a two-antenna or three-antenna solution. Both boards work fine on the
+> >> sa8775p-ride platform.
+> >
+> > Please add such an info to the commit messages (plural for it being a
+> > generic feedback: please describe the reasons for your design
+> > decisions),
+> >
+> Ack.
+> > I really don't like the .boardid template. What if we change property
+> > behaviour in the following way: if there is no file extension then .bNN
+> > will be probed, falling back to .bin. This will require reading board ID
+> > for all the platforms that support it (do wcn3990 have board ID?)
+> >
+> Ack, this proposal is great.
+> Yes, We have board ID for each connectivity card. An NVM file maps to it
+> if necessary.
 
-Ok, that doesn't sound like a lengthy experiment: resign the FW, boot
-the laptop, caboom or not caboom. If I remember correctly the file that
-you've pushed even lists sc7180 as allowed.
+The question was about the WiFI generations, not about the NVM cards.
+Do wcn3990 also support reading board ID?
 
-> 
-> >> One query here - given that qcs615 only loads the venus_s6.mbn variant, and it
-> >> is not enabled yet (patches in review) for video, we should be good if we
-> >> conclude the firmware part before accepting the qcs615 enablement patches ?
-> > 
-> > Good question. I think that depends on linux-firmware maintainer's
-> > opinion.
-> > 
+>
+> Let me provide a new patchset based on this solution. Thank you very much for
+> the valuable comments.
+
+:-)
+
+> >>>>
+> >>>>
+> >>>> Here are two examples:
+> >>>>
+> >>>>  firmware-name = "qca/QCA6698/hpbtfw21.tlv",  "qca/QCA6698/hpnv21.bin";
+> >>>> In this configuration, the driver will use the two files directly.
+> >>>>
+> >>>>
+> >>>>  firmware-name = "qca/QCA6698/hpbtfw21.tlv",  "qca/QCA6698/hpnv21.boardid";
+> >>>> In this configuration, the driver will replace boardid with the actual board information.
+> >>>> If the board id is 0x0206, the nvm file name will be qca/QCA6698/hpnv21.b0206
+> >>>>
+> >>>>>>
+> >>>>>> Or add a new property to specify the rampatch file?
+> >>>>>> rampatch-name = "rampatch_xx.tlv";
+> >>>>>>
+> >>>>>>>
+> >>>>>>>> +
+> >>>>>>>> +
+> >>>>>>>>  required:
+> >>>>>>>>    - compatible
+> >>>>>>>>
+> >>>>>>>> --
+> >>>>>>>> 2.25.1
+> >>>>>>>>
+> >>>>>>>
+> >>>>>>
+> >>>>>
+> >>>>>
+> >>>>
+> >>>
+> >>> --
+> >>> With best wishes
+> >>> Dmitry
+> >>
+> >
+>
+
 
 -- 
 With best wishes
