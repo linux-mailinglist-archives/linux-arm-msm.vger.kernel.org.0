@@ -1,205 +1,268 @@
-Return-Path: <linux-arm-msm+bounces-39848-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39849-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 06AE19E00A7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 12:35:32 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CC75116514F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 11:34:45 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BFEF31FDE2B;
-	Mon,  2 Dec 2024 11:26:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ZYwWEpon"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D65FE9E00C0
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 12:38:54 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DC8D1FDE27
-	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Dec 2024 11:26:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6DCD3281CDD
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 11:38:53 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0F4E1FA244;
+	Mon,  2 Dec 2024 11:38:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PARdwWvm"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 883C41FDE22
+	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Dec 2024 11:38:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733138816; cv=none; b=UnNKasNgoX+hcNoOgwxlvjSV8EQhH1RqwWrR9tNe/nJBMUNCie0jT55t3VVMUDnvLfP4eFH1buCE1yBPJP5zLtgqgwO9C2dz+RTdi2iLdkLAXQm1ygqblrNBFmgOgTSHnHLZEqTuGvK15tB4RBMXeqn55Nc2/n9bXPOeZR1Fnfs=
+	t=1733139527; cv=none; b=BDYxJkq9rvbJEQS4x91a2cwzZ713WDiltTLwRQ5SwNYNxLM6Eu3ZMk+lUglwzOWBsVjaAh9CxndXGx1mcsE7b5ofkWadnNe/8SW59SVv6cE3K3JArGoQGDCmPf1t94n9uZqT+5TNOqX1s2FoyXO3uNKdwUqSjlhf0v+ldhyPfgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733138816; c=relaxed/simple;
-	bh=dTbW9WH8iV44QNUaqfXXpQ+d7TfLVjs921a0DJ2BEqQ=;
-	h=Content-Type:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To; b=DLD2mlNXPUu6/fsj/i2+aP2L1go2ooM0zRUJYYbjxMKunCLC9GQK4dhN/gj0IaFHFpxH3ctJzvU2xK3Xzffen6vt2Cvo9AAjeu4SmNFYncF6rQuVSLIALcIe7B0SVV9kNVuNwhL4I/mTyueOBKyq8mf3S2iJ81kkKWsOe5epI/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ZYwWEpon; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B28aurI030649
-	for <linux-arm-msm@vger.kernel.org>; Mon, 2 Dec 2024 11:26:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=NdR39HmW7zxxIIftOBgqz9ic
-	yfJX08U76Xc+eWA70r4=; b=ZYwWEponam54KZdsDLSlZ8rT4yki9Xqx8uBDaW1Y
-	pvD86XHOn2qltFQdjil0M7SDMnLBCwFUHaNgo3m5wCOLZuo4DJ2Kk0ZpEHypbdyy
-	nZKmJyGyawX5vPJoao+VWJdjh2zzhc4H0023z1DKv0n6xL+M1xVl7bcEgjikollF
-	1yJO9cmIW7N1stOGUEJMjFce2QwA02LI8EGl6TGz0vl30TwnEy59HGfc30B20r8Q
-	oq/Tv7CD6MjqcVOaB6GXe75a8BKidEWH8Fxe9RjHbgNVubev2kq5E6A2QMKhR112
-	6/TS7L+i1RFcMjS09j61f1kOKt5MHILySo7BIB4fwoJMsg==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 437t1gcp7d-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 02 Dec 2024 11:26:52 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-466cbd99b11so4653261cf.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Dec 2024 03:26:52 -0800 (PST)
+	s=arc-20240116; t=1733139527; c=relaxed/simple;
+	bh=VHpsjdX+mFBKbpBkSvt3k5S8qv4fIuY67V0z8HafAuM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WStougzNSmGwK5qimedVOJuI3vsAn7vE69UyNK59P64B+FsscKCQTAE6dXynkG6MFUEuyfOYrVbJISk56dw9SwICyQiU437Q8niB7UxYToX7K0aPx5amlCU+r4IIKeBF78sctanYh+8YSnRGGZ8xthuGThNvJtFuuxtmIIoCyMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PARdwWvm; arc=none smtp.client-ip=209.85.167.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-53dd668c5easo4371801e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Dec 2024 03:38:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1733139524; x=1733744324; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=bvhHF3GkAtduvqLl3j8Ag11hKjyOarRlGM6h2Ek1Z5g=;
+        b=PARdwWvm/Bnu4eLMgvBfk51/WcyHbfr/jkRk9QfdN/icPDkqWNNnIlRjTA0XH4QBgp
+         kLLvhATw0fUP2z5ryBKTjFrR4JZT0QHEuIVbjlOG79sfDbSX4ebkd4vHdmJ/scR8X9u8
+         Fb6rc4BEXtaMyl6ndPZP9QLotrlji5x7ugiLuEIXlzBVGJApQf1jSsI5U+rUs3J87mKT
+         aSmJwfjKlImpCr0SQOWf9wRcMLUGNRcwNxLdeEGTrYvUV4gZdwbaTINQ57zVbODZj72e
+         6k3Uk3Z3TuNuV3xraTWHawH34FARRZ1rtA01pZsNHLGQo/opd8af/Dm/qDXawEjgMcbz
+         npCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733138812; x=1733743612;
-        h=in-reply-to:from:content-language:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=NdR39HmW7zxxIIftOBgqz9icyfJX08U76Xc+eWA70r4=;
-        b=rPXWvr955t0Pq9+UWLJ8Ba8pMpslutk1HVHOJBC+chF4RFsJVdVHAcF4k4I0FOM7RE
-         HLhFQszPLaLDDIIN+JNgRO09U6bf0Bf1R1Z81gvZOzsP6WRI+vvLTOLAYMwvE8mfT4F3
-         iGyeahzkLxTPOATEGXNctErtLfbs0oUyWsFtvI61buxstdOJx+/CVZgvFGBUq1tsah0i
-         UIJf6v5IqksOGGH0tFgE4zXj99mMWjpJtjcBxd2GW3a4e15f3hKYG0crKFbmPCOuJXCz
-         KrQgSZqOgJ2snH61IeP2MuY/P/a5Y/b42j1Ra4dAlwspEEMqmfnwJrrJXupDaKMSIlY2
-         zbtg==
-X-Forwarded-Encrypted: i=1; AJvYcCUtGX0RVRwc+OK9BLr7QlCrKpbIuXSepn+RGFo35aeYGBp5QHVMxv7hOtUIPP6A7A/ootyjUJ6brfo8E/uQ@vger.kernel.org
-X-Gm-Message-State: AOJu0YxhfiCYis7Ze9vv1dtbQcOCIWsuNIak5FH3i5ky4qpPOo5P6V5V
-	eywG3kJQ458NYWOyGtTkqjukReLBJMuLdUaRZidvz8Qgr4sb1pPjiIIQZahmMgxXiBLQ9UDTiyR
-	C3dxz+ab2WseLF0ZQFCulh/yBmgvv1uHoNWalLBwfuT6evuUPg2MhrsZlxq856+TC
-X-Gm-Gg: ASbGncs0e+127i5wtlgsSBMPRywH4KizZ/w5BQCG/VS2ZxeYIzbWMtLmq2uWJpKbLYY
-	ItYuDjxXPApVTSzwBhwk8ikjs6tr9GJdyqornQyTL1P30AQVz9xOxjvYE48J/7OaPPxgI+G+zrg
-	iRhNjfEb+lQFQvFgfKmxvO2fp0Cg+gNGzsFx6j8P8HnJXDpWMlsQID1yynFlG1F+RF17kJktmvm
-	QreHi7hdOPtBD3DoJjrZUXBtsXaHewy++JnAF27IvhIc5Q07w/z5BkIOvNRZJ+/AZE0Igg2YhNG
-	49phn9Nb+NQW7rPTaM+zWL83H1FXu/4=
-X-Received: by 2002:a05:620a:2a11:b0:7b3:2107:302c with SMTP id af79cd13be357-7b67c471d58mr1188590185a.15.1733138812187;
-        Mon, 02 Dec 2024 03:26:52 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHRZon7sa9KOdQRz5kupzrOIszKjCWkZoAuM6of5NdC7MVNKFSYAWFVGHkG+qrtDxpktlo8Og==
-X-Received: by 2002:a05:620a:2a11:b0:7b3:2107:302c with SMTP id af79cd13be357-7b67c471d58mr1188587885a.15.1733138811735;
-        Mon, 02 Dec 2024 03:26:51 -0800 (PST)
-Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa5999058e0sm498969566b.139.2024.12.02.03.26.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Dec 2024 03:26:50 -0800 (PST)
-Content-Type: multipart/mixed; boundary="------------1TAgxLQql009S0B6wFpCivJo"
-Message-ID: <3f0b67f7-32ca-4b5a-a655-df6f92258cce@oss.qualcomm.com>
-Date: Mon, 2 Dec 2024 12:26:48 +0100
+        d=1e100.net; s=20230601; t=1733139524; x=1733744324;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bvhHF3GkAtduvqLl3j8Ag11hKjyOarRlGM6h2Ek1Z5g=;
+        b=RIzNCCtKzfSx8xEblw2S7L/mKTVg/Ksk1hycd/7zx8kdXwi02Uz05OGoDFQbwoO4B+
+         uyrpVG0aiItIShqn7pPh/MVVJUw/uZgqQnZzgQeBAn/7MGaUOz7aSBNJ0N4oAJr94psX
+         wAUAuYBtzHNTpIIdPvLggHSPVNoWDLQXqKKnS1CcxvlJWMaZnjA6ElYG/CGNyqe8Jgtb
+         XPECKydjWRBqCnwVz7ahM7EGocX4DqQOsQmURcRyGoJY+fyJziksUQC4P1wWx1uHE2xY
+         n+Ypyyr20nfAbcKjYkclcTcULxu9FW2/QCrZXjEFU138kW1gHNdAAnNgrZ2WSrcM5vBo
+         QPmA==
+X-Forwarded-Encrypted: i=1; AJvYcCWB8R8dhKyq4qt+JZW/WefbPZlnZKnYzzRxVBCcKPyLntVXoE4/jjCKb5+9Uk/ojU7B56AZRu+ybphEHMh1@vger.kernel.org
+X-Gm-Message-State: AOJu0YyhFHKBCtrNZmD/rTOwtzTAiB3ZAMOO5RNig7Jk0Ng8ICQg/U+V
+	ccPW7Q1YE/b3iXmuE44Qrf2qIbDq6H6/shGufMHzbhFc4gQZnOK4WajgakgQnvo=
+X-Gm-Gg: ASbGncvWjIvHEk9m1Krgbn00fJugebPowNfT47ac9Iv5ByUUEQQzihSLAVT+bpwaF0A
+	0CHNHyvIBcs5JdilAuUXJSNnRIN4aasdIgldE9xZ4axgCpWUzmU0Bf6rsO1iAoALhTdN4yYiBkO
+	Z/VE6Tv5g4F9R0G6vCxJVeEXWKGCSAIxlu4JysHoJNspPtTK/MALeYnCa9+dSBpnMY0gx9g6Bp0
+	Nsp8fW6E6lT/GRUg8tpDIMeUFfEfPwxk+Y7eQw8o08IbPGYHX8so6vKkcmjgd9kgpnMdlhULk9F
+	78yJ+FqTv1J1HMnD/Cz4qVV/CzOvJg==
+X-Google-Smtp-Source: AGHT+IGr9uMxo93wJGxFzArfg+pP1wZ9tCEQ5bUA25+sg+xbIvGjRMQfn/tHm4PwS77Cqpq1oIootg==
+X-Received: by 2002:a05:6512:230d:b0:53d:f5e9:ec4b with SMTP id 2adb3069b0e04-53df5e9ed27mr6247121e87.0.1733139523571;
+        Mon, 02 Dec 2024 03:38:43 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53df6430ea0sm1450279e87.18.2024.12.02.03.38.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Dec 2024 03:38:42 -0800 (PST)
+Date: Mon, 2 Dec 2024 13:38:39 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: "Cheng Jiang (IOE)" <quic_chejiang@quicinc.com>
+Cc: Marcel Holtmann <marcel@holtmann.org>, 
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>, Rocky Liao <quic_rjliao@quicinc.com>, quic_zijuhu@quicinc.com, 
+	linux-bluetooth@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, quic_mohamull@quicinc.com
+Subject: Re: [PATCH v2 1/4] dt-bindings: bluetooth: add 'qcom,product-variant'
+Message-ID: <qsaiic4jvhf6nqe7efchxvja6tjvsiquem6ofsgq52iygfflya@huv6x7kz6emd>
+References: <20241120095428.1122935-1-quic_chejiang@quicinc.com>
+ <20241120095428.1122935-2-quic_chejiang@quicinc.com>
+ <454tdpuglu23nmxfqqesv42h5rk3vqiji7spo3naf2djqwojqt@6x3ram3lnlkq>
+ <fb5bc38b-83b3-4924-b1d0-39219a2927b4@quicinc.com>
+ <CAA8EJpqAOD_+SLG2LbiodWOs28_rquvMefmSH5CY1yB_rkiZPg@mail.gmail.com>
+ <a7ec9426-8c8a-49b3-9916-4c2660c38e49@quicinc.com>
+ <CAA8EJpqpzwGL38F_MYUJVuAT8q96QZO7CSh00ZpNBU5cGWUqqA@mail.gmail.com>
+ <944fdc7f-313e-48b9-8917-370942d4f073@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] arm64: dts: qcom: qcs6490-rb3gen2: enable Bluetooth
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Janaki Ramaiah Thota <quic_janathot@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: quic_mohamull@quicinc.com, quic_hbandi@quicinc.com,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_msavaliy@quicinc.com
-References: <20241022104600.3228-1-quic_janathot@quicinc.com>
- <dd008ff5-ee2a-47be-8a5b-d4f3a1e2bac3@kernel.org>
- <75dc7814-a55e-4a6f-9df9-39b7c875dee9@quicinc.com>
- <6a40b442-6c4e-4abb-aeba-54ff9e86dfde@kernel.org>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <6a40b442-6c4e-4abb-aeba-54ff9e86dfde@kernel.org>
-X-Proofpoint-GUID: 5_lgVWxSghAhKgu3t_cG25aWD7Sv7DoP
-X-Proofpoint-ORIG-GUID: 5_lgVWxSghAhKgu3t_cG25aWD7Sv7DoP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 impostorscore=0
- adultscore=0 lowpriorityscore=0 bulkscore=0 mlxscore=0 malwarescore=0
- spamscore=0 priorityscore=1501 clxscore=1015 suspectscore=0
- mlxlogscore=968 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412020101
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <944fdc7f-313e-48b9-8917-370942d4f073@quicinc.com>
 
-This is a multi-part message in MIME format.
---------------1TAgxLQql009S0B6wFpCivJo
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-On 2.12.2024 10:36 AM, Krzysztof Kozlowski wrote:
-> On 02/12/2024 10:32, Janaki Ramaiah Thota wrote:
->>>
->>>> +	pinctrl-names = "default", "sleep";
->>>> +	pinctrl-1 = <&qup_uart7_sleep_cts>, <&qup_uart7_sleep_rts>,
->>>> +			<&qup_uart7_sleep_tx>, <&qup_uart7_sleep_rx>;
->>>
->>> This could be just one phandle to state node with multiple pins subnode.
->>>
->>
->> Since we have different configuration for 3 GPIOs, it’s not good to 
->> combine all 4 GPIOs into one common sleep configuration. Each GPIO 
->> configuration is having separate requirements based on the Bluetooth SOC.
+On Mon, Dec 02, 2024 at 10:22:52AM +0800, Cheng Jiang (IOE) wrote:
+> Hi Dmitry,
 > 
-> I did not propose that. Please read bindings and other existing DTS sources.
+> On 11/30/2024 4:24 PM, Dmitry Baryshkov wrote:
+> > On Sat, 30 Nov 2024 at 05:48, Cheng Jiang (IOE)
+> > <quic_chejiang@quicinc.com> wrote:
+> >>
+> >> Hi Dmitry,
+> >>
+> >> On 11/21/2024 12:38 PM, Dmitry Baryshkov wrote:
+> >>> On Thu, 21 Nov 2024 at 06:02, Cheng Jiang <quic_chejiang@quicinc.com> wrote:
+> >>>>
+> >>>> Hi Dmitry,
+> >>>>
+> >>>> On 11/20/2024 6:43 PM, Dmitry Baryshkov wrote:
+> >>>>> On Wed, Nov 20, 2024 at 05:54:25PM +0800, Cheng Jiang wrote:
+> >>>>>> Several Qualcomm projects will use the same Bluetooth chip, each
+> >>>>>> focusing on different features. For instance, consumer projects
+> >>>>>> prioritize the A2DP SRC feature, while IoT projects focus on the A2DP
+> >>>>>> SINK feature, which may have more optimizations for coexistence when
+> >>>>>> acting as a SINK. Due to the patch size, it is not feasible to include
+> >>>>>> all features in a single firmware.
+> >>>>>>
+> >>>>>> Therefore, the 'product-variant' devicetree property is used to provide
+> >>>>>> product information for the Bluetooth driver to load the appropriate
+> >>>>>> firmware.
+> >>>>>>
+> >>>>>> If this property is not defined, the default firmware will be loaded,
+> >>>>>> ensuring there are no backward compatibility issues with older
+> >>>>>> devicetrees.
+> >>>>>>
+> >>>>>> The product-variant defines like this:
+> >>>>>>   0 - 15 (16 bits) are product line specific definitions
+> >>>>>>   16 - 23 (8 bits) are for the product line.
+> >>>>>>   24 - 31 (8 bits) are reserved for future use, 0 currently
+> >>>>>
+> >>>>> Please use text strings instead of encoding this information into random
+> >>>>> integers and then using just 3 bits out of 32.
+> >>>> Ack. Originally intended to make it more flexible for future use. It can be
+> >>>> text strings for current requirement.
+> >>>
+> >>> No, fixed-format data isn't flexible. Fine-grained properties are.
+> >>> Please define exactly what is necessary rather than leaving empty
+> >>> holes "for future expansion".=
+> >>>
+> >>>>>
+> >>>>>>
+> >>>>>> |---------------------------------------------------------------------|
+> >>>>>> |                       32 Bits                                       |
+> >>>>>> |---------------------------------------------------------------------|
+> >>>>>> |  31 - 24 (bits)   |    23 - 16 (bits)   | 15 - 0 (16 bits)          |
+> >>>>>> |---------------------------------------------------------------------|
+> >>>>>> |   Reserved        |    0: default       | 0: default                |
+> >>>>>> |                   |    1: CE            |                           |
+> >>>>>> |                   |    2: IoT           |                           |
+> >>>>>> |                   |    3: Auto          |                           |
+> >>>>>> |                   |    4: Reserved      |                           |
+> >>>>>> |---------------------------------------------------------------------|
+> >>>>>>
+> >>>>>> Signed-off-by: Cheng Jiang <quic_chejiang@quicinc.com>
+> >>>>>> ---
+> >>>>>>  .../bindings/net/bluetooth/qualcomm-bluetooth.yaml          | 6 ++++++
+> >>>>>>  1 file changed, 6 insertions(+)
+> >>>>>>
+> >>>>>> diff --git a/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml b/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
+> >>>>>> index 7bb68311c609..9019fe7bcdc6 100644
+> >>>>>> --- a/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
+> >>>>>> +++ b/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
+> >>>>>> @@ -110,6 +110,12 @@ properties:
+> >>>>>>      description:
+> >>>>>>        boot firmware is incorrectly passing the address in big-endian order
+> >>>>>>
+> >>>>>> +  qcom,product-variant:
+> >>>>>> +    $ref: /schemas/types.yaml#/definitions/uint32
+> >>>>>> +    description:
+> >>>>>> +      specify the product information for driver to load the appropriate firmware
+> >>>>>
+> >>>>> DT describes hardware. Is this a hardware property?
+> >>>>
+> >>>> It has been added to identify the firmware image for the platform. The driver
+> >>>> parses it, and then the rampatch is selected from a specify directory. Currently,
+> >>>> there is a 'firmware-name' parameter, but it is only used to specify the NVM
+> >>>> (config) file. We also need to specify the rampatch (TLV file).
+> >>>>
+> >>>>
+> >>>> Can we re-use the "firmware-name"? add two segments like the following?
+> >>>> firmware-name = "rampatch_xx.tlv",  "nvm_xx.bin";
+> >>>
+> >>> I think this is the better solution
+> >>>
+> >> How about the following logic for handling 'firmware-name' property:
+> >> 1. If there is only one string in firmware-name, it must be the NVM file, which is used
+> >>    for backward compatibility.
+> >>
+> >> 2. If there are two strings in firmware-name, the first string is for the rampatch, and
+> >>    the second string is for the NVM.
+> > 
+> > I'd say, other way around: the first one is always NVM, the second one
+> > is rampatch and it is optional.
+> > 
+> OK, Got it.
+> >>
+> >> 3. Due to variations in RF performance of chips from different foundries, different NVM
+> >>    configurations are used based on the board ID. If the second string ends with boardid,
+> >>    the NVM file will be selected according to the board ID.
+> > 
+> > Is there a reason why you can not use the exact firmware name? The
+> > firmware name is a part of the board DT file. I assume you know the
+> > board ID that has been used for the board.
+> > 
+> The boardid is the connectivity board's id. NVM is a board specific configuration file, 
+> it's related to the connectivity board. We may attach different connectivity board on the
+> same platform. For example, we have connectivity boards based on the QCA6698 chipset that
+> can support either a two-antenna or three-antenna solution. Both boards work fine on the
+> sa8775p-ride platform. 
 
-Janaki,
+Please add such an info to the commit messages (plural for it being a
+generic feedback: please describe the reasons for your design
+decisions),
 
-you can refer to my older patch (attached)
+I really don't like the .boardid template. What if we change property
+behaviour in the following way: if there is no file extension then .bNN
+will be probed, falling back to .bin. This will require reading board ID
+for all the platforms that support it (do wcn3990 have board ID?)
 
-Konrad
---------------1TAgxLQql009S0B6wFpCivJo
-Content-Type: text/x-patch; charset=UTF-8;
- name="29a6e0ddbaf7bafc22b44062890bb9915eb665b6.patch"
-Content-Disposition: attachment;
- filename="29a6e0ddbaf7bafc22b44062890bb9915eb665b6.patch"
-Content-Transfer-Encoding: base64
+> >>
+> >>
+> >> Here are two examples:
+> >>
+> >>  firmware-name = "qca/QCA6698/hpbtfw21.tlv",  "qca/QCA6698/hpnv21.bin";
+> >> In this configuration, the driver will use the two files directly.
+> >>
+> >>
+> >>  firmware-name = "qca/QCA6698/hpbtfw21.tlv",  "qca/QCA6698/hpnv21.boardid";
+> >> In this configuration, the driver will replace boardid with the actual board information.
+> >> If the board id is 0x0206, the nvm file name will be qca/QCA6698/hpnv21.b0206
+> >>
+> >>>>
+> >>>> Or add a new property to specify the rampatch file?
+> >>>> rampatch-name = "rampatch_xx.tlv";
+> >>>>
+> >>>>>
+> >>>>>> +
+> >>>>>> +
+> >>>>>>  required:
+> >>>>>>    - compatible
+> >>>>>>
+> >>>>>> --
+> >>>>>> 2.25.1
+> >>>>>>
+> >>>>>
+> >>>>
+> >>>
+> >>>
+> >>
+> > 
+> > --
+> > With best wishes
+> > Dmitry
+> 
 
-RnJvbSAyOWE2ZTBkZGJhZjdiYWZjMjJiNDQwNjI4OTBiYjk5MTVlYjY2NWI2IE1vbiBTZXAg
-MTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBLb25yYWQgRHliY2lvIDxxdWljX2tkeWJjaW9AcXVp
-Y2luYy5jb20+CkRhdGU6IEZyaSwgMjMgQXVnIDIwMjQgMDI6MDE6NDkgKzAyMDAKU3ViamVj
-dDogW1BBVENIXSBhcm02NDogZHRzOiBxY29tOiBxY3M2NDkwLXJiM2dlbjI6IENvbmZpZ3Vy
-ZSB0aGUgYmx1ZXRvb3RoCiBtb2R1bGUKClJCM0dlbjIgZmVhdHVyZXMgYSBXQ042ODU2LzY1
-NzAgV2ktRmkgKyBCbHVldG9vdGggY2hpcC4gQ29uZmlndXJlIHRoZQpsYXR0ZXIgcGFydC4K
-ClNpZ25lZC1vZmYtYnk6IEtvbnJhZCBEeWJjaW8gPHF1aWNfa2R5YmNpb0BxdWljaW5jLmNv
-bT4KLS0tCiBhcmNoL2FybTY0L2Jvb3QvZHRzL3Fjb20vcWNzNjQ5MC1yYjNnZW4yLmR0cyB8
-IDczICsrKysrKysrKysrKysrKysrKysrCiAxIGZpbGUgY2hhbmdlZCwgNzMgaW5zZXJ0aW9u
-cygrKQoKZGlmZiAtLWdpdCBhL2FyY2gvYXJtNjQvYm9vdC9kdHMvcWNvbS9xY3M2NDkwLXJi
-M2dlbjIuZHRzIGIvYXJjaC9hcm02NC9ib290L2R0cy9xY29tL3FjczY0OTAtcmIzZ2VuMi5k
-dHMKaW5kZXggZGE2MWU3YjkwNzk4ZWQuLjJjNjFkNDJkZWQ1NTNiIDEwMDY0NAotLS0gYS9h
-cmNoL2FybTY0L2Jvb3QvZHRzL3Fjb20vcWNzNjQ5MC1yYjNnZW4yLmR0cworKysgYi9hcmNo
-L2FybTY0L2Jvb3QvZHRzL3Fjb20vcWNzNjQ5MC1yYjNnZW4yLmR0cwpAQCAtMzMsNiArMzMs
-NyBAQAogCiAJYWxpYXNlcyB7CiAJCXNlcmlhbDAgPSAmdWFydDU7CisJCXNlcmlhbDEgPSAm
-dWFydDc7CiAJfTsKIAogCWNob3NlbiB7CkBAIC03ODEsMTIgKzc4Miw4NCBAQAogJnRsbW0g
-ewogCWdwaW8tcmVzZXJ2ZWQtcmFuZ2VzID0gPDMyIDI+LCAvKiBBRFNQICovCiAJCQkgICAg
-ICAgPDQ4IDQ+OyAvKiBORkMgKi8KKworCXF1cF91YXJ0N19zbGVlcDogcXVwLXVhcnQ3LXNs
-ZWVwLXN0YXRlIHsKKwkJcXVwX3VhcnQ3X3NsZWVwX2N0czogcXVwLXVhcnQ3LXNsZWVwLWN0
-cy1waW5zIHsKKwkJCXBpbnMgPSAiZ3BpbzI4IjsKKwkJCWZ1bmN0aW9uID0gImdwaW8iOwor
-CQkJYmlhcy1idXMtaG9sZDsKKwkJfTsKKworCQlxdXBfdWFydDdfc2xlZXBfcnRzOiBxdXAt
-dWFydDctc2xlZXAtcnRzLXBpbnMgeworCQkJcGlucyA9ICJncGlvMjkiOworCQkJZnVuY3Rp
-b24gPSAiZ3BpbyI7CisJCQliaWFzLXB1bGwtZG93bjsKKwkJfTsKKworCQlxdXBfdWFydDdf
-c2xlZXBfdHg6IHF1cC11YXJ0Ny1zbGVlcC10eC1waW5zIHsKKwkJCXBpbnMgPSAiZ3BpbzMw
-IjsKKwkJCWZ1bmN0aW9uID0gImdwaW8iOworCQkJYmlhcy1wdWxsLXVwOworCQl9OworCisJ
-CXF1cF91YXJ0N19zbGVlcF9yeDogcXVwLXVhcnQ3LXNsZWVwLXJ4LXBpbnMgeworCQkJcGlu
-cyA9ICJncGlvMzEiOworCQkJZnVuY3Rpb24gPSAiZ3BpbyI7CisJCQliaWFzLXB1bGwtdXA7
-CisJCX07CisJfTsKKworCXdjbl9idF9lbl9kZWZhdWx0OiB3Y24tYnQtZW4tZGVmYXVsdC1z
-dGF0ZSB7CisJCXBpbnMgPSAiZ3Bpbzg1IjsKKwkJZnVuY3Rpb24gPSAiZ3BpbyI7CisJCWJp
-YXMtZGlzYWJsZTsKKwkJb3V0cHV0LWxvdzsKKwl9OworCisJc3dfY3RybF9kZWZhdWx0OiBz
-dy1jdHJsLWRlZmF1bHQtc3RhdGUgeworCQlwaW5zID0gImdwaW84NiI7CisJCWZ1bmN0aW9u
-ID0gImdwaW8iOworCQliaWFzLXB1bGwtZG93bjsKKwl9OwogfTsKIAogJnVhcnQ1IHsKIAlz
-dGF0dXMgPSAib2theSI7CiB9OwogCismdWFydDcgeworCS9kZWxldGUtcHJvcGVydHkvIGlu
-dGVycnVwdHM7CisJaW50ZXJydXB0cy1leHRlbmRlZCA9IDwmaW50YyBHSUNfU1BJIDYwOCBJ
-UlFfVFlQRV9MRVZFTF9ISUdIPiwKKwkJCSAgICAgIDwmdGxtbSAzMSBJUlFfVFlQRV9FREdF
-X0ZBTExJTkc+OworCisJcGluY3RybC0xID0gPCZxdXBfdWFydDdfc2xlZXA+OworCXBpbmN0
-cmwtbmFtZXMgPSAiZGVmYXVsdCIsICJzbGVlcCI7CisKKwlzdGF0dXMgPSAib2theSI7CisK
-KwlibHVldG9vdGg6IGJsdWV0b290aCB7CisJCWNvbXBhdGlibGUgPSAicWNvbSx3Y242NzUw
-LWJ0IjsKKworCQlwaW5jdHJsLTAgPSA8Jndjbl9idF9lbl9kZWZhdWx0PiwgPCZzd19jdHJs
-X2RlZmF1bHQ+OworCQlwaW5jdHJsLW5hbWVzID0gImRlZmF1bHQiOworCisJCWVuYWJsZS1n
-cGlvcyA9IDwmdGxtbSA4NSBHUElPX0FDVElWRV9ISUdIPjsKKwkJc3djdHJsLWdwaW9zID0g
-PCZ0bG1tIDg2IEdQSU9fQUNUSVZFX0hJR0g+OworCisJCXZkZGlvLXN1cHBseSA9IDwmdnJl
-Z19sMTliXzFwOD47CisJCXZkZGFvbi1zdXBwbHkgPSA8JnZyZWdfczdiXzBwOTcyPjsKKwkJ
-dmRkYnRjeG14LXN1cHBseSA9IDwmdnJlZ19zN2JfMHA5NzI+OworCQl2ZGRyZmFjbW4tc3Vw
-cGx5ID0gPCZ2cmVnX3M3Yl8wcDk3Mj47CisJCXZkZHJmYTBwOC1zdXBwbHkgPSA8JnZyZWdf
-czdiXzBwOTcyPjsKKwkJdmRkcmZhMXA3LXN1cHBseSA9IDwmdnJlZ19zMWJfMXA4NzI+Owor
-CQl2ZGRyZmExcDItc3VwcGx5ID0gPCZ2cmVnX3M4Yl8xcDI3Mj47CisJCXZkZHJmYTJwMi1z
-dXBwbHkgPSA8JnZyZWdfczFjXzJwMTk+OworCQl2ZGRhc2Qtc3VwcGx5ID0gPCZ2cmVnX2wx
-MWNfMnA4PjsKKworCQltYXgtc3BlZWQgPSA8MzIwMDAwMD47CisJfTsKK307CisKICZ1c2Jf
-MSB7CiAJc3RhdHVzID0gIm9rYXkiOwogfTsK
-
---------------1TAgxLQql009S0B6wFpCivJo--
+-- 
+With best wishes
+Dmitry
 
