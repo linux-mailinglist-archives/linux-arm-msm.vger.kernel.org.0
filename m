@@ -1,231 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-39798-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39799-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8F3E29DFCC1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 10:06:16 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C98D99DFCF8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 10:23:35 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4F01F281D25
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 09:06:15 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 86F69162194
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 09:23:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D8FFB1FA154;
-	Mon,  2 Dec 2024 09:06:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F02C41FA244;
+	Mon,  2 Dec 2024 09:23:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Lvk0Nskf"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GOMeniLB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21B571F9F7C;
-	Mon,  2 Dec 2024 09:06:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 163B71FA160
+	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Dec 2024 09:23:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733130371; cv=none; b=WZOtU97Hgd1loE0u72KO/xkbiKajNTOFCSpDd8jS1mBVuBmegH477aqBByXLkNkXb0YUpzF4rPaihg8AXId9HHY6SmtUGw8wUCYeTd8RgjFVsHb180nbXB+chczu2D7XG3kcwhV7RzEB/hYw/C6769JvYzvNZPARaFFSVXGiAYo=
+	t=1733131410; cv=none; b=qnSCOj2Eyjx0yenO5gUvui2FFhL1VsM4owhbVA81V9OCKNMAGlfCisorwrpW5p/NaYNnhMhde9CGYZP/jkkyv4SF7htroW/WFcLcjtAd8bHnG0+UExzIQWU6+w03a7SV2688pnzC5uvySkopu/p+VDmxZ9rMcUDY52nEAIcb9Zk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733130371; c=relaxed/simple;
-	bh=FeRiWK/Mi3cvW5oP5QNPzPX/ZuOrxFunwvbdy+KhMlA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=ceHqJabEpi+lx5SD6NrAO3jV6jaRJ9LKdOBMYKtZUUzief3Rx3zzaz+ktCSBXhywsQGfsIP4uCWP3qDVvDbww+2qa5lopNNGbsZnZ8IDNCud5+LdUKOvhv4LrYEf/lPm+ldQmOLBZQeT0/YflFoZZ/5M95S2mWUBou3meQX9ihs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Lvk0Nskf; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B290TwE010338;
-	Mon, 2 Dec 2024 09:05:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Q+PjIrCert+/x3e/5SEkFOVcd9o7Q54etqy826imJuw=; b=Lvk0Nskf1gPfvfDw
-	6oiXQJKJretf1FbX6tCF65Oin00bzsNqPMVLSqto5EjPwoOpWEPYgs+gRxPnYPvJ
-	OugShnOB3gSM79fEDqRmEQ8XPhpWD3KqT1LC5gxg6NKa8wQee/sdLBKJLOJl84Ml
-	z+puN4qOi2uAEjJAArl7BULURcrB2m5egdBKKGFp/IT0RtKVgs+rMAS1BZAtm56/
-	9edM3NsNnYyqQnpTLI6H7otEPojliXVkq7xuuxMSf5t+cW/0HXwfYHh0sttMSi+0
-	OipxLk/k6/UWv5z098AG+rtXMIaiTw8GXzuHuhrR3+ki+ByzTzCeacU2DFtjVHIh
-	9ZfvvQ==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 437v07m479-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 02 Dec 2024 09:05:52 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B295qEj015760
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 2 Dec 2024 09:05:52 GMT
-Received: from [10.64.16.135] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 2 Dec 2024
- 01:05:45 -0800
-Message-ID: <95a78722-8266-4d5d-8d2f-e8efa1aa2e87@quicinc.com>
-Date: Mon, 2 Dec 2024 17:05:37 +0800
+	s=arc-20240116; t=1733131410; c=relaxed/simple;
+	bh=A3r+QOe6Np4QfCUQPaZfHssorye0JJK4Sy3TkMzCgqY=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=SR40ZPRapgTYQhLBIGbFP3cbePlFw1wXV1uxsNpmIKuDC7fGur3Fq58THK++zhPUZIu8ohRzQQg21kfWUfNKlM2bB10yvEkm+Jh3TNIEezB+jp5rS+qAzQRDJnQAsMBOCUKTY75FfHSQn62fB0r8CgoesITf9vBBMTyzYHDBrI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GOMeniLB; arc=none smtp.client-ip=209.85.167.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-53de771c5ebso4396013e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Dec 2024 01:23:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1733131407; x=1733736207; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=QwFuu4fYjZZJNMv4MxzvoaazN1Cffk/HJgugwqmFgW8=;
+        b=GOMeniLBWg5nodExGYAL/IphWz3dzc3rTh9eM43OynxOGydMie1EBhCTtFs23z+f6b
+         Plp4Foy0kww0VXCpNRXcSbtG2ixse30o7tJiKtRQEpalGjtSgqEjR4BDu41bQSDsEZ7y
+         YS0ZCfdGV/Ws2CQ8h9sOsKRNclV6nIDfUGHPjvX7DKMj1UXlmwXsDqkO5+2whR4IC+rs
+         9WwNw4DA/n+Sh/bgppEjTRoIGDz9FbT+JQ2bLabcnjKF7WBq6TX0IWt4vb5X2Well26k
+         VWATlsniCMWGd6mp4beHb1y3WoImQVDFxONHHiKfMwB0/hycEwNyF/gi0PeaSCV/bsCW
+         sO9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733131407; x=1733736207;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=QwFuu4fYjZZJNMv4MxzvoaazN1Cffk/HJgugwqmFgW8=;
+        b=tGvLZ/hV40vm1NmD0UWiPd2cAu+YxLFLt7SxvJyLKUSntZkxwCsYMfRdguGPj6eJF2
+         E+69n5x6H5GHLxCeIGVJ/jLil2+LNxuUBc+1DXdrateVtN8x6lIX40d8L0gvHLibilG5
+         kQsWFWxvVkKzO9Lwpi4DauAhE2J+sk9uCbVwFlW5JGPwXT9eeFiElUZEML+gxZJ08otp
+         YJmNV/lXvOYVRnr0eQn6RCIWbb0qROqRNPIfm0mZtfUk1054vBgMd6BcUd75flKf85L7
+         t/+ao6yi8pwAC5+4/2evyrDrB9BYzm0hGBZFfrCov3CV4JuQfJ1C09txSOw42ikJuulE
+         FQ1w==
+X-Forwarded-Encrypted: i=1; AJvYcCWzVzBL85CBD/OT2Bg0HA4DolZGFbgIaMHq91WoVfn2Lu5H59EVIV08F0Wd3X833mTMeQGBnB/l08yaJ7so@vger.kernel.org
+X-Gm-Message-State: AOJu0YzkLe6QIcNsRCuRKketKZCZ23jw9aLI/D0al0MYWrIC53dHAtk8
+	XuCE5CwopdkzwHszOaB6I4zNsA2J8eAs+RZvU0FipGvYvFl1nx3hClznLPtUcKs=
+X-Gm-Gg: ASbGnctJUhm8aYNWlgnL9cMMPhawvKA2LJalePfloMtW3YyejYjMMotWokXPzHAaCdc
+	WlhAArQwSPwZTqhbMrHpNIjxBsNR/GPLezWsEaw1W8UeS9cKAC9dPH5ERcXB16WP5hR7JCBVOKZ
+	cemiPU07+2sVbTjNmB4ZVk2BZoTif2+A6dIWyprXyXzZ1NIHvgNblKWI3SpCeYtk8Q/fwa6v25z
+	0vpXjuwP/gTtn/tWK6Yk/QwYGNnGofggxiUkuy0A/WfkWLnow==
+X-Google-Smtp-Source: AGHT+IGQUKasx5DVEulQmB48IgfBZD18etF9SKhktXSn1/vLHY3A2CfDRwa9VxuQ8IxHa+Sfcm9Ftg==
+X-Received: by 2002:a05:6512:1115:b0:539:918c:5124 with SMTP id 2adb3069b0e04-53df00dce95mr11697944e87.31.1733131407212;
+        Mon, 02 Dec 2024 01:23:27 -0800 (PST)
+Received: from [127.0.1.1] ([82.76.168.176])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-385d7264f27sm11014744f8f.80.2024.12.02.01.23.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Dec 2024 01:23:26 -0800 (PST)
+From: Abel Vesa <abel.vesa@linaro.org>
+Subject: [PATCH v2 0/2] arm64: dts: qcom: x1e80100: qcp/t14s: Enable USB
+ multi-port controller related ports
+Date: Mon, 02 Dec 2024 11:23:16 +0200
+Message-Id: <20241202-x1e80100-qcp-t14-enable-usb-type-a-ports-v2-0-7360ed65c769@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/8] drm/msm/dp: Add maximum width limitation for modes
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar
-	<quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        Maarten Lankhorst
-	<maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Rob Herring <robh@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "Kuogee
- Hsieh" <quic_khsieh@quicinc.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        "Kishon
- Vijay Abraham I" <kishon@kernel.org>,
-        Linus Walleij
-	<linus.walleij@linaro.org>,
-        Bartosz Golaszewski <brgl@bgdev.pl>, <quic_lliu6@quicinc.com>,
-        <quic_fangez@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <linux-gpio@vger.kernel.org>
-References: <20241129-add-displayport-support-for-qcs615-platform-v1-0-09a4338d93ef@quicinc.com>
- <20241129-add-displayport-support-for-qcs615-platform-v1-6-09a4338d93ef@quicinc.com>
- <CAA8EJpprTGRTxO+9BC6GRwxE4A3CuvmySsxS2Nh4Tqj0nDRT_Q@mail.gmail.com>
-From: Xiangxu Yin <quic_xiangxuy@quicinc.com>
-In-Reply-To: <CAA8EJpprTGRTxO+9BC6GRwxE4A3CuvmySsxS2Nh4Tqj0nDRT_Q@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: GJp2ATP3aUD-3hgyB8FaFF86sI5EXzVQ
-X-Proofpoint-GUID: GJp2ATP3aUD-3hgyB8FaFF86sI5EXzVQ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 phishscore=0
- adultscore=0 mlxlogscore=999 bulkscore=0 suspectscore=0 priorityscore=1501
- impostorscore=0 lowpriorityscore=0 spamscore=0 mlxscore=0 clxscore=1015
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2412020079
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAIR8TWcC/53NQQ6DIBCF4asY1p2GQWxsV71H4wJkVBIDFKjRG
+ O9e6hG6/N/ifTtLFC0l9qh2FmmxyXpXQlwq1k/KjQTWlGaCC4nIG1iRWo6cw7sPkFECOaVngk/
+ SkLdAoCD4mBM0jejJ1FrKmrNyFyINdj2pV1d6sin7uJ3ygr/1D2RB4KBl3d4MDXc07XO2TkV/9
+ XFk3XEcX60fU5/hAAAA
+X-Change-ID: 20241105-x1e80100-qcp-t14-enable-usb-type-a-ports-552ced3b4430
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+ Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Abel Vesa <abel.vesa@linaro.org>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.15-dev-dedf8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1336; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=A3r+QOe6Np4QfCUQPaZfHssorye0JJK4Sy3TkMzCgqY=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBnTXyH8O+JENQg+ADzguGlqw15V6h2aBa82XZ8T
+ ENBUVtvgUmJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZ018hwAKCRAbX0TJAJUV
+ VmEwD/4s3GECGL49agL3ystNcSB8bWifU6JcscHVeFU/X9J/bgfrBOKSujfLzUZbo+rqY3P2qwY
+ A1nl/IkyqLMOAuT2+Lq2ck5U31Anid+r7MGig1RMf9GbhR1iDIz2tVH+BIyhvHKQd6+8pV0MVk7
+ 9m0/nemh1/VhvKyycC7pZkJ2xS854G8j89zVeC/bAuN+ks7ZEfuOmstJxEJosUskM6xKbwstOJ8
+ lVnVzVnG3Rzt2s93HgWl+R0VCnUULkJta9ZEw8G3nvA5WkDkH56XaU2whfENuTjhGJbzSRn9RhC
+ 8qwoJzp51KpXLJo5XnmqSLtY3cgAxsKRLMzEDtDfY/vEMtRF194v7cofWyMWeFYJiqoJKMApW1D
+ Txne7wQVYZMlYkStEZb6zQ19FJEthGitZP8YoIpnr/szxVio6GEnATHmPbJ/T0sFDu/qYTq8DwF
+ cfcQjzuCKrfWHO4b6GcV/p1BjzX9jJuOR5Tvvq2tBvSfRiS3+t/WHWihRqhOQWrDQnGyv7YTy8a
+ OggqCpvm+16BHKKQ9W3lt46d+TX+MJYfvXHfVZNL07C0SsZJEaleUPU0h4n4tP0iAFaN6UMF4H+
+ SFwFspZ5358iAdzUuXwJwDgf6i4QCFnLcmU9eJF10fjJl3tLzhbXn5TzxBbhjz5bVysg0S7h/ku
+ K8bn22lLhU3uDlg==
+X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
+ fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
+Both QCP and T14s have 2 NXP PTN3222 eUSB-to-USB2 redrivers used to level-shift
+between the USB multi-port controller High-Speed PHY eUSB2 and the USB
+Type-A ports connected to it. The QCP has a 3rd instance of this
+redriver but is connected to the USB2S controller.
 
+Describe the redrivers used for the USB multi-port and enable each pair
+of PHYS and controller in order to enable USB support on those 2 Type-A ports
+on each board.
 
-On 11/29/2024 9:52 PM, Dmitry Baryshkov wrote:
-> On Fri, 29 Nov 2024 at 09:59, Xiangxu Yin <quic_xiangxuy@quicinc.com> wrote:
->>
->> Introduce a maximum width constraint for modes during validation. This
->> ensures that the modes are filtered based on hardware capabilities,
->> specifically addressing the line buffer limitations of individual pipes.
-> 
-> This doesn't describe, why this is necessary. What does "buffer
-> limitations of individual pipes" mean?
-> If the platforms have hw capabilities like being unable to support 8k
-> or 10k, it should go to platform data
-> 
-It's SSPP line buffer limitation for this platform and only support to 2160 mode width.
-Then, shall I add max_width config to struct msm_dp_desc in next patch? for other platform will set defualt value to ‘DP_MAX_WIDTH 7680'
->>
->> Signed-off-by: Xiangxu Yin <quic_xiangxuy@quicinc.com>
->> ---
->>  drivers/gpu/drm/msm/dp/dp_display.c |  3 +++
->>  drivers/gpu/drm/msm/dp/dp_display.h |  1 +
->>  drivers/gpu/drm/msm/dp/dp_panel.c   | 13 +++++++++++++
->>  drivers/gpu/drm/msm/dp/dp_panel.h   |  1 +
->>  4 files changed, 18 insertions(+)
->>
->> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
->> index 4c83402fc7e0d41cb7621fa2efda043269d0a608..eb6fb76c68e505fafbec563440e9784f51e1894b 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_display.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
->> @@ -944,6 +944,9 @@ enum drm_mode_status msm_dp_bridge_mode_valid(struct drm_bridge *bridge,
->>         msm_dp_display = container_of(dp, struct msm_dp_display_private, msm_dp_display);
->>         link_info = &msm_dp_display->panel->link_info;
->>
->> +       if (mode->hdisplay > msm_dp_display->panel->max_dp_width)
->> +               return MODE_BAD;
->> +
->>         if (drm_mode_is_420_only(&dp->connector->display_info, mode) &&
->>             msm_dp_display->panel->vsc_sdp_supported)
->>                 mode_pclk_khz /= 2;
->> diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
->> index ecbc2d92f546a346ee53adcf1b060933e4f54317..7a11f7eeb691976f06afc7aff67650397d7deb90 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_display.h
->> +++ b/drivers/gpu/drm/msm/dp/dp_display.h
->> @@ -11,6 +11,7 @@
->>  #include "disp/msm_disp_snapshot.h"
->>
->>  #define DP_MAX_PIXEL_CLK_KHZ   675000
->> +#define DP_MAX_WIDTH   7680
->>
->>  struct msm_dp {
->>         struct drm_device *drm_dev;
->> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
->> index 8654180aa259234bbd41f4f88c13c485f9791b1d..10501e301c5e073d8d34093b86a15d72e646a01f 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_panel.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_panel.c
->> @@ -4,6 +4,7 @@
->>   */
->>
->>  #include "dp_panel.h"
->> +#include "dp_display.h"
->>  #include "dp_utils.h"
->>
->>  #include <drm/drm_connector.h>
->> @@ -455,6 +456,16 @@ static u32 msm_dp_panel_link_frequencies(struct device_node *of_node)
->>         return frequency;
->>  }
->>
->> +static u32 msm_dp_panel_max_width(struct device_node *of_node)
->> +{
->> +       u32 max_width = 0;
->> +
->> +       if (of_property_read_u32(of_node, "max-width", &max_width))
->> +               max_width = DP_MAX_WIDTH;
->> +
->> +       return max_width;
-> 
-> msm_dp_panel->max_dp_width = DP_MAX_WIDTH;
-> of_property_read_u32(of_node, "max-width", &msm_dp_panel->max_dp_width);
-> 
->> +}
->> +
->>  static int msm_dp_panel_parse_dt(struct msm_dp_panel *msm_dp_panel)
->>  {
->>         struct msm_dp_panel_private *panel;
->> @@ -490,6 +501,8 @@ static int msm_dp_panel_parse_dt(struct msm_dp_panel *msm_dp_panel)
->>         if (!msm_dp_panel->max_dp_link_rate)
->>                 msm_dp_panel->max_dp_link_rate = DP_LINK_RATE_HBR2;
->>
->> +       msm_dp_panel->max_dp_width = msm_dp_panel_max_width(of_node);
->> +
->>         return 0;
->>  }
->>
->> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.h b/drivers/gpu/drm/msm/dp/dp_panel.h
->> index 7603b92c32902bd3d4485539bd6308537ff75a2c..61513644161209c243bbb623ee4ded951b2a0597 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_panel.h
->> +++ b/drivers/gpu/drm/msm/dp/dp_panel.h
->> @@ -51,6 +51,7 @@ struct msm_dp_panel {
->>         u32 lane_map[DP_MAX_NUM_DP_LANES];
->>         u32 max_dp_lanes;
->>         u32 max_dp_link_rate;
->> +       u32 max_dp_width;
->>
->>         u32 max_bw_code;
->>  };
->>
->> --
->> 2.25.1
->>
-> 
-> 
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
+Changes in v2:
+- Reordered alphabetically the HS PHYs and QMP PHYs in each dtsi, as per
+  Konrad's request.
+- Picked up Konrad's R-b tags
+- Link to v1: https://lore.kernel.org/r/20241105-x1e80100-qcp-t14-enable-usb-type-a-ports-v1-0-b4386def91d8@linaro.org
+
+---
+Abel Vesa (2):
+      arm64: dts: qcom: x1e78100-t14s: Enable support for both Type-A USB ports
+      arm64: dts: qcom: x1e78100-qcp: Enable Type-A USB ports labeled 3 and 4/6
+
+ .../dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts     | 86 ++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/x1e80100-qcp.dts          | 86 ++++++++++++++++++++++
+ 2 files changed, 172 insertions(+)
+---
+base-commit: f486c8aa16b8172f63bddc70116a0c897a7f3f02
+change-id: 20241105-x1e80100-qcp-t14-enable-usb-type-a-ports-552ced3b4430
+
+Best regards,
+-- 
+Abel Vesa <abel.vesa@linaro.org>
 
 
