@@ -1,181 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-39881-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39882-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id A8C369E02DE
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 14:08:34 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0D61B9E0494
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 15:15:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4958FB42BAD
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 13:03:16 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 91A95B465CF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 13:18:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55547209685;
-	Mon,  2 Dec 2024 12:59:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 83A2E1FF7C9;
+	Mon,  2 Dec 2024 13:18:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DKyK0hww"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="npBdrIyG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+Received: from mail-oo1-f41.google.com (mail-oo1-f41.google.com [209.85.161.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09B4B209689
-	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Dec 2024 12:59:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC5E91FE469;
+	Mon,  2 Dec 2024 13:18:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733144344; cv=none; b=MIvZtnaypuUqlA5vFblx3/C6BrZWTNAjx03p8te1Hw7sGZHH4tC7zPoVr7e0DN8FuP1ZTXprbZ8dRMNutM9SKcBLUWT2sCjMRSKAJS/yNKz40Qnhi2mj8TXYvJMTGyleB6FhpRIAT6T8/tdAl5VAmJcSTXrM0VOBqo0kE1OHpMU=
+	t=1733145493; cv=none; b=BZa6qYQUa5ewZ5EncDM23IcqWIG1LXN70eqrxeiadAd2jkfAkyW5yD6P7MEUmldMjNX78ckSNmbseISAZtytpQ1K30hGNwdPDr2m0VYpolNkXPlotEOKeA44ft+/OFqPxuIbfnp/5siijnoUTTaz2wGZsghS9lIRNhlmFeM9RMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733144344; c=relaxed/simple;
-	bh=84F50RDLSxwvaiL/Ut5/RJLgaAhNDidEJM6Aelx6NOw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SoGsfGzqlnznxaJKpVSY/nVzYmF+IBarEVf58nrFrjIMYpJTE4SP1tZGcAFdQkjfIgEthCkc5UpM5D0H90ybcPCKcIAvMZid2q/P0qpblL+hcfWTNjTRLzfP1clekI1f4w+GEMTZeBr+1X5AyFPzb7Mbw75udGesBE+Ix03LYew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DKyK0hww; arc=none smtp.client-ip=209.85.214.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-21583cf5748so9462265ad.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Dec 2024 04:59:01 -0800 (PST)
+	s=arc-20240116; t=1733145493; c=relaxed/simple;
+	bh=5/X2VWZcLhb884B2U06+UxdVUml1aa+Rb3ufKfjRT9I=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=BbI8vO5ceB9gxU3kcSmJ7Hos+TwO1r0uZ8MyThZG5dCTjUIn8I48HpeBjGk6fWUdHKLY881l/FlbWLf/F5LB9kMpP7yf6c+mlBqvrvx1Ovj1wo55RESezz/c4vxj7ZClJnWHRq7r+nVv0wRykqmYOT4XLtOCjpNRMnl+eh7Q+Uc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=npBdrIyG; arc=none smtp.client-ip=209.85.161.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-oo1-f41.google.com with SMTP id 006d021491bc7-5f1ef6324aeso1729829eaf.2;
+        Mon, 02 Dec 2024 05:18:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733144341; x=1733749141; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=6CCvtQVXQrLvAOM+4VRXFfpLmG3wrstufKddBuVhAJQ=;
-        b=DKyK0hwwQNncIv2W+kktnDsm+uwGi61NVsPGfzI7wRLdfQ3Ka06Bz5srnrjKpCnLN5
-         2vBDGzgB4LEll0nb7jnCWNlmaUxAEPbSBgTDoGA7A316P+8f9B3GuYx+WfJ2oH8bi51z
-         JUdDipAhSc/o+zOrFYarR7G3a/EkeY3zFAyIG9pHwDE2SoefVa107fA1iheDoY6FOGM6
-         p6ek52PQAGAnJySRRmfaBdQQQktJV4gtRdlcIUmqY6JG5BS1+1B/DwtoXBJtsTiSJW6V
-         HDDYwwwFxkTVUFck4r8P4zxAW5DJDOqJ/xH6D/g33C0zG8Q4VXCOv0iRf8Gy7G3Folys
-         yJow==
+        d=gmail.com; s=20230601; t=1733145491; x=1733750291; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oNkzhZsX5grWLCVpB7LFS/T82bw7a5CHASaDFwVA1Hk=;
+        b=npBdrIyGhfNK07Un0W8DcI8ZMbodwXav7ebnkVpM6H21F1CGKDmv4XiWlBeJZGeN5A
+         ySRpoZvjx0WcO6xcH52dLpHHQIYQ2oMOGB9pPR1jjOA4z/LJ7pQZnldWgdwpcUVY0qbY
+         JUdJ5qUngRn+1qSVqxWQkDxcUKLTWYhtOC1DWyEw+bhUvxzdnP0HKJX/Y13bJTEROY+0
+         8KIuKzIJoyGtBwGQBZp4XIkYYEAiZenA0CGr5YtYV+utcjCLTHQP+IXx+qbul2+EbSmY
+         xI+e7t30/osdp3lqdo+Ak1BvLp6B/5XFllCmMQUuYNkHJiwmmwTsQRY+kpu1/cwG5Xas
+         C+NA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733144341; x=1733749141;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6CCvtQVXQrLvAOM+4VRXFfpLmG3wrstufKddBuVhAJQ=;
-        b=THtKJlFKjaASR/nQNIH6+R2yRlJTxJ/nlpc03sU2Gn3BoceDJ/XGi1K8lIdQznF5aC
-         bf93KEeVravd5j6ZF2CHE4fwvBOTqi9Pbu3BjfYrbiZBAnSmU7QNBfnv7FeY8HEFjqz8
-         J95xq3+c8F59yva75lFIUMCFMbCw5WEDKk2QHeL21yWKOrf9SrOx9Xj0ZnvoRAYUdblt
-         O71/qXwqOFgSZoWVNR1xQbwLtd5n7JGXyOKQw+HN2Gvyml051D7hZmuQK30zHkMBuhrd
-         yHnJD2yhLK0yTmgE1It9oKasOZlq2/MIdVQmzncEQrm6yOiLGenBI3EUxpLhTZDBnvYD
-         JUjw==
-X-Forwarded-Encrypted: i=1; AJvYcCVVhs6HG0BnEHJlfUzqgVQ6DvMcBNHCQ75+/ijQEhS12x219h84gh8etqSk17/arjwM2D5UH4jMv6ykI7wS@vger.kernel.org
-X-Gm-Message-State: AOJu0YwjT5IkUFv4G/tTooS/DiswFXf5COtnOAAKHQhKaDnzLd9gKysg
-	VMthWaL/7UvgSd66uFt6+8GDZv+OgpAAXHpJ552vXQAh0NHh5hGbSLSZ+U1OcQ==
-X-Gm-Gg: ASbGncuSg3hppe9FKuPeYdp9wAzoEvVvDKcn9L3E9c5/ur/1W1TSKniikzsqfoautil
-	cHLGpiCsnEMVR4P9kABN3KKtFTBi7ntSiFICiFy3QI8U6y80gb9Xf7B4r2FnZ1BSDpKR7tRvn0i
-	/Jyc7OGrHCd5W55G6iAgGcZRTlY+IQ2GODbW6XJDmaSRMBji3E0tgKB0lbwrNLG750YmnsRYgmx
-	4yP3BAyZ/+JHfsXc3C5b3N2Cf497UYo0OuC75aV6NtKiGbtnr+kv7vjECIgKw==
-X-Google-Smtp-Source: AGHT+IGb8lymZBMlKvEv3D6XKmMObg2pfnQBEi8/oeAOIIzR3QMSbRXUP7cxeVvRLLDRh2EmtlIy1g==
-X-Received: by 2002:a17:902:e5c5:b0:215:6cb2:787e with SMTP id d9443c01a7336-2156cb27b96mr105778365ad.9.1733144341390;
-        Mon, 02 Dec 2024 04:59:01 -0800 (PST)
-Received: from thinkpad ([120.60.140.110])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2156c99a827sm34935945ad.166.2024.12.02.04.58.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Dec 2024 04:59:00 -0800 (PST)
-Date: Mon, 2 Dec 2024 18:28:45 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: kw@linux.com, gregkh@linuxfoundation.org, arnd@arndb.de,
-	lpieralisi@kernel.org, shuah@kernel.org, kishon@kernel.org,
-	aman1.gupta@samsung.com, p.rajanbabu@samsung.com,
-	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-	bhelgaas@google.com, linux-arm-msm@vger.kernel.org, robh@kernel.org,
-	linux-kselftest@vger.kernel.org, stable+noautosel@kernel.org
-Subject: Re: [PATCH v2 1/4] PCI: qcom-ep: Mark BAR0/BAR2 as 64bit BARs and
- BAR1/BAR3 as RESERVED
-Message-ID: <20241202125845.rp4vc7ape52v4bwd@thinkpad>
-References: <20241129092415.29437-2-manivannan.sadhasivam@linaro.org>
- <20241129195537.GA2770926@bhelgaas>
+        d=1e100.net; s=20230601; t=1733145491; x=1733750291;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=oNkzhZsX5grWLCVpB7LFS/T82bw7a5CHASaDFwVA1Hk=;
+        b=aIZ5xxkluhzptAMLtKDVAZrxcJCea9/4QH39EYwyqr8u/Dopo8TgnPC808pGAiqxO3
+         qaGQV7gcrTv9733/Qzv5uXcnLqhJh0OEzVYJZ8q4LSrl71q4EJkLPwTIyqGEuvfnBaLG
+         dQVSSdH2a1/26s0j6zfrzqKDuxFcs9E92zBh0+ixUz+6E5ntfBFdgLRliJu3LW++KtLE
+         oyzYIj+1OAk7FQ9+xf23f4wP5KcdGtY6jJMKVzCIoP5C4UQd1PJ3R/XRY7GW4NU+98sz
+         hFZA+ckUJglSL/haoHan/eAsiM88VrgJf/HkDYkS3G5s3MRcaO0jbvj2CVHKzlrhNTyr
+         1dlQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUoVh1fcTHouWTHKwlxt5OU+T68hKfrWqZK5Az3RjMGDCP4HDKARenI7pZCBsvcjUEe/ahakzd4Rflq@vger.kernel.org, AJvYcCWm+v21yorREAlL4fQ4bppJTymihkencX9UQ6AkOv4o+0SMpjLQseZ1MKfxVxVnJ+XWuBE4jZIFjIPpTAAr@vger.kernel.org, AJvYcCXtKjA8fnbiAAoKQUGKhHfRlsxV5e+6PCkMrf3KlSefE/uoatpYv53dXvuZd7gz7LHFt/CbCbYjtvzK7eTH3g==@vger.kernel.org
+X-Gm-Message-State: AOJu0YzhUqNdKjhaCU+hASSjbccBYtNpw1gSV4eqvwgfg0ANftAKqYdP
+	BZVAe/mijCFCVZ2mSnQRnV+sahyCNTx7Fw40HTdjGAWViY18IBtw21wd3gzoQZaKun8rFP/bc2P
+	irfJiI19jDfiKKgbI2HgV++EgrcM=
+X-Gm-Gg: ASbGncut4Ht4L6L/KmqzHeauHpBBRtUnokKUkXZieTrDVqm3q23cGLqEvtf9FvzAeb5
+	L3iRw41++SKhg3TYy+Yv63JH3BjIZ9w==
+X-Google-Smtp-Source: AGHT+IFRt02lZMTpOM1bIS2v4MnRUOIjLLxGB7sjqggzgFKovM0VxSCGDIp3nEMxIqbchMvq1WVzeeNNUcq8+NihUfQ=
+X-Received: by 2002:a05:6358:7e95:b0:1ca:9540:33d4 with SMTP id
+ e5c5f4694b2df-1cab16a8c0bmr850755055d.23.1733145490862; Mon, 02 Dec 2024
+ 05:18:10 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241129195537.GA2770926@bhelgaas>
+References: <20241008-starqltechn_integration_upstream-v6-0-5445365d3052@gmail.com>
+ <20241008-starqltechn_integration_upstream-v6-8-5445365d3052@gmail.com> <ee668cbf-54e0-4c0a-b690-8606cb3785b7@oss.qualcomm.com>
+In-Reply-To: <ee668cbf-54e0-4c0a-b690-8606cb3785b7@oss.qualcomm.com>
+From: Dzmitry Sankouski <dsankouski@gmail.com>
+Date: Mon, 2 Dec 2024 16:18:00 +0300
+Message-ID: <CABTCjFAUp9Oa_qRweO-EpLHDTi78=07i_St+L9EDSgYxHMrc4w@mail.gmail.com>
+Subject: Re: [PATCH v6 08/12] arm64: dts: qcom: sdm845-starqltechn: add
+ display PMIC
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: cros-qcom-dts-watchers@chromium.org, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Nov 29, 2024 at 01:55:37PM -0600, Bjorn Helgaas wrote:
-> On Fri, Nov 29, 2024 at 02:54:12PM +0530, Manivannan Sadhasivam wrote:
-> > On all Qcom endpoint SoCs, BAR0/BAR2 are 64bit BARs by default and software
-> > cannot change the type. So mark the those BARs as 64bit BARs and also mark
-> > the successive BAR1/BAR3 as RESERVED BARs so that the EPF drivers cannot
-> > use them.
-> 
-> "Default" implies an initial setting that can be changed, but you say
-> "by default" and also "software cannot change the type."  Can they be
-> anything *other* than 64-bit BARs?
-> 
-> If they're hardwired to be 64-bit BARs, I would just say that.
-> 
-> > Cc: stable+noautosel@kernel.org # depends on patch introducing only_64bit flag
-> 
-> If stable maintainers need to act on this, do they need to search for
-> the patch introducing only_64bit flag?  That seems onerous; is there a
-> SHA1 that would make it easier?
-> 
-
-But that's not the point of having noautosel tag, AFAIK.
-
-Documentation/process/stable-kernel-rules.rst clearly says that this tag is to
-be used when we do not want the stable team to backport the commit due to a
-missing dependency.
-
-If we really want stable team to backport the change with dependencies, then the
-dependencies should be mentioned using the SHAs:
-
-From Documentation/process/stable-kernel-rules.rst:
-
-```
-* Specify any additional patch prerequisites for cherry picking::
-
-    Cc: <stable@vger.kernel.org> # 3.3.x: a1f84a3: sched: Check for idle
-    Cc: <stable@vger.kernel.org> # 3.3.x: 1b9508f: sched: Rate-limit newidle
-    Cc: <stable@vger.kernel.org> # 3.3.x: fd21073: sched: Fix affinity logic
-    Cc: <stable@vger.kernel.org> # 3.3.x
-    Signed-off-by: Ingo Molnar <mingo@elte.hu>
-
-  The tag sequence has the meaning of::
-
-    git cherry-pick a1f84a3
-    git cherry-pick 1b9508f
-    git cherry-pick fd21073
-    git cherry-pick <this commit>
-```
-
-Here I did not intend to backport this change with commit adding only_64bit flag
-because, I'm not sure if that dependency alone would be sufficient. If someone
-really cares about backporting this change, then they should figure out the
-dependencies, test the functionality and then ask the stable team.
-
-- Mani
-
-> > Fixes: f55fee56a631 ("PCI: qcom-ep: Add Qualcomm PCIe Endpoint controller driver")
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+=D0=BF=D0=BD, 4 =D0=BD=D0=BE=D1=8F=D0=B1. 2024=E2=80=AF=D0=B3. =D0=B2 17:15=
+, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>:
+>
+> On 8.10.2024 6:51 PM, Dzmitry Sankouski wrote:
+> > Add support for s2dos05 display / touchscreen PMIC
+> >
+> > Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
 > > ---
-> >  drivers/pci/controller/dwc/pcie-qcom-ep.c | 4 ++++
-> >  1 file changed, 4 insertions(+)
-> > 
-> > diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> > index e588fcc54589..f925c4ad4294 100644
-> > --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> > +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> > @@ -823,6 +823,10 @@ static const struct pci_epc_features qcom_pcie_epc_features = {
-> >  	.msi_capable = true,
-> >  	.msix_capable = false,
-> >  	.align = SZ_4K,
-> > +	.bar[BAR_0] = { .only_64bit = true, },
-> > +	.bar[BAR_1] = { .type = BAR_RESERVED, },
-> > +	.bar[BAR_2] = { .only_64bit = true, },
-> > +	.bar[BAR_3] = { .type = BAR_RESERVED, },
-> >  };
-> >  
-> >  static const struct pci_epc_features *
-> > -- 
-> > 2.25.1
-> > 
+> > Changes in v6:
+> > - refactor: s/starqltechn/sdm845-starqltechn in subject
+> > - refactor: 'i' < 'm', so put tlmm i2c node before motor*
+>
+> Now you have 'i'2c21 before 'g'pio-regulator :/
 
--- 
-மணிவண்ணன் சதாசிவம்
+That refactor was about tlmm inner nodes. For soc nodes
+rule `nodes of the same type can be grouped together` should apply I guess.
+I think I should move it to regulators.
+
+> [...]
+>
+> >
+> > +     i2c21 {
+> > +             compatible =3D "i2c-gpio";
+>
+> I'm not sure this has been asked before - is the GENI SE for I2C21
+> disabled? Or are there reasons to use i2c-gpio instead?
+>
+
+I2c21 is wired on pins 127, 128, and those pins don't have a GENI SE functi=
+on.
+
+--
+Best regards and thanks for review,
+Dzmitry
 
