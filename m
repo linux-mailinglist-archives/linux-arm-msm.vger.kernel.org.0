@@ -1,160 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-39903-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39904-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 755E19E0656
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 16:08:31 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C8A739E0752
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 16:43:26 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CFAE9B29894
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 15:04:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A958216690B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 15:07:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9DC43205E07;
-	Mon,  2 Dec 2024 15:03:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F643204F8D;
+	Mon,  2 Dec 2024 15:06:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YxeMPYfp"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="b5TRXOqL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D383F204F87;
-	Mon,  2 Dec 2024 15:03:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD3D3204093
+	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Dec 2024 15:06:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733151830; cv=none; b=nVHb4YoppgWHPVLZ6EbOWS+bS+cGtVC6eqVzFMlLWTiYegDzLYn27v9aX902/0PpdpNkzIFx0j3yxc1pIevTcsauy95xYfA50qil7Liej1QExCNMWT0JaeGN5t7rnffEcSTG5VB43vm1QwBMo40K2TxP3V5qTl/pWZy7ZLOxjMc=
+	t=1733152019; cv=none; b=bOzcqATvifAiJGgU0uBrxgnbPunVcvEtOKrwY+tdyLFKlEIWXFPQX6Ce5Xgx9EQ8qkoPTRLXcu4cLE72bfHC1cZS6Puj84tDAUEmctBGP0EbBbiF4thRSoNS3fEs8FdpeWMhV80IA3OVoQYnrUma13n8oJ4JXQUyn4w9oPOwHgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733151830; c=relaxed/simple;
-	bh=85lFhRO/J/E7HnOpdb/OWr3TDzN8MFbfHpzs1aekHnE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=somauUTaPQBm77DfAzzTtfREDxi27cFvmc/pQY7it3O5O1tUOrxW8wm+l5/0V2QZ6yq5+MdaH3z8hIusAE3Blgn1PKNvnm0frnkFDsLjsulrddhUlM+LXyYSEg3Fs+7vlBJULGPtBnHqNi7Eupg+FXeclMoC9JIexg+pPvbVyz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YxeMPYfp; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4349fd77b33so35397675e9.2;
-        Mon, 02 Dec 2024 07:03:48 -0800 (PST)
+	s=arc-20240116; t=1733152019; c=relaxed/simple;
+	bh=1EX3Q/6V7Sjs15HKyRfyVFj2pNMzzOFk0u9V9vlZJYA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fOC7qznW/DytZ7dPxGNMiLke59g+jNC43Yqc3/cQXRnirgUF0SyBQEffl8ueRJLj3dCI+rPuaTR6roxx6QQr1kZfqS4Sw7+VCgXkDHH6GrMCkx5Ym7RYex1IK3e6WOat+n+x/6GPbmbTub2EbdCobDO9r7f9Uy+KWPZEENelBR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=b5TRXOqL; arc=none smtp.client-ip=209.85.210.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-723f37dd76cso3793050b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Dec 2024 07:06:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733151827; x=1733756627; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=qujM4d7qCY1L5TaGGSMsXfZ1apvo+jAfsCE8VLdjQ4I=;
-        b=YxeMPYfpHXluLj3ygBiMae5nBLu1cWPbg/KKohLUPfQ4ytIXeiJBvl6AyGZ9SR5CeP
-         CXpdNd8fOTEfu8N9nU89ywU9ZrP0l8t3qBMFOpYyN4cseO1VfpuF03X2nxO3Tk9rwyVY
-         ec0K0xgbFKETO85sD1tn69FwZH7+wnPRIGg1qBDDMf6n161dp3jLdrKijN9e49DthDmH
-         +tSCeNjJa1E+fvLxavAiLJaihgYPVJln9zYiOQOf+IEGQNIuAjYtFwpEsvWKtHq6cokS
-         nWiJ11Fcg+kK3ZHuT7JdQtCHfa3UvCxw50tVulaDWIMMSCt3D9AwDXsDLoXBEKhRoERt
-         uY6Q==
+        d=linaro.org; s=google; t=1733152017; x=1733756817; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=rhh1F0FNt93OWks/1WTeBIrSdzXMhFaYNcAsFDXPT8E=;
+        b=b5TRXOqLyMkneZu+DnXQuUD7bvlUpwIFiiElKNUbUXI2zD2FTD3mWl7fS2ag5V/t+o
+         FJHjHFgesW3oAMZe72MTtaO+XvkTFuRU2Fbzs4MymAx/MNtQuqkm1mbNFo6DFOzQJTty
+         USzIFP8M0JvhiX2KDktHWxKvnHMGmwnvyjq1jVSRZneTfOozRTGD0tzrDG392HedUPbV
+         oo0eobFCOi7FPveFrG9MxQLU0U+rUDOE5owNMRU/ZwxrhFqq0JzgwPiIBrVcMvXtY4L+
+         UTesjtq0C/6A0H7riYvz9a8SBWzsKITTcM+c/hhkNQoyTwewPgMC/yukgoV5iU5yqaBy
+         hFKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733151827; x=1733756627;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1733152017; x=1733756817;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qujM4d7qCY1L5TaGGSMsXfZ1apvo+jAfsCE8VLdjQ4I=;
-        b=wZuA4rsb0xPnvie/bAryQ1ush5M7Z6t147tmhKklSZH0Cvjnm++RT85LH4g2cYbOfl
-         Sw0kFs6riqFfCgywbR45gOOVSLBv6Ejig3bzWbChNVDt95tMwk02Ha+cP9g3U3ioEs44
-         OpzfXRgDLTimTgWBQC6A7Yy6afmmojwo+txuS+Oy84cPq0e6xPsKFysQS9clwLrK3vcy
-         Rdpa5W7GYXVvW+o4MSq7tUhPOAECXiZSUQfTsss9PXLTCOoA8T5NNjqOb677yFcR+mPB
-         N08dMOjwLIW7lgDX0ris2QaJDl16l9/Rxy6JJ4/OvfUgWK5ByEOVmmwp0v4rqR+jBsQK
-         M+aA==
-X-Forwarded-Encrypted: i=1; AJvYcCUGaoQtDUXekFBAuNlGM1FzcDjjxhbE2FSYdQGvQ+g+jIwKhRVqwuSe+dA7e252KBfkpxJonFRAOkopb20v@vger.kernel.org, AJvYcCUvGqrR4GJFphQXiyZ7hGvF9Z8lN+vajydwSFk00kdyefU4JC1gV1bjqv+QYC5fov5IAXxXbM5QAJcSNAZa@vger.kernel.org, AJvYcCVE3oPAVfoc/N0jjXp4jzNbIm4NFKv8lmXREVlgTy9sjeXAHr/yRTNycubPwq4xwuJSgq6hAJCwjUcZKvEQN6fQ14c=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwyZD02S0rQidhfRRWqGdmvT+9gc/513XSHD+dI8JzIqUa05yH5
-	fupSEK/OkRYpxVifiy2Sc9gZJeaGIS2JXnpTP34MJjq4C6OF/Swk
-X-Gm-Gg: ASbGncvnyCZTrKZACnGOxaXJHVTfM+E4O4pjpGu3pnmayLlXa5eIHa3Vbic8wJ9CSzQ
-	pAa2MnsmwCqqRCt3un0elO1ANs51+7yXQpPIsDOt+v0+Yp2pft/19UosCrw/tK9v6EymcZ0N7N9
-	G5JrRN7+e1+SDuE5u5tNkGMGYZVaRl+GliRS4/UOefIO48XD/ggcgYnlFRHiLIt9N2O4HhRnVVT
-	9XTyl8ruQk9zDGvI+nvhl0ypafFxkBizs5rfPZNHP76z6k65BeXG8a0PVg0PxBdoQ/D4aozr1tC
-	AMLEI+f8Mwvx8mazepE=
-X-Google-Smtp-Source: AGHT+IGDnqoQPM9S2ZXAYcJFrCBwMFmcYVdD5NrlXMVFXBAOrzgALnyLT6wqVMw+fFjssl311bGusQ==
-X-Received: by 2002:a5d:64cc:0:b0:385:f092:e16 with SMTP id ffacd0b85a97d-385f0a153ccmr4698133f8f.55.1733151825042;
-        Mon, 02 Dec 2024 07:03:45 -0800 (PST)
-Received: from ?IPV6:2001:861:3385:e20:6384:4cf:52c5:3194? ([2001:861:3385:e20:6384:4cf:52c5:3194])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-385ec6a3d8fsm5080310f8f.101.2024.12.02.07.03.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Dec 2024 07:03:44 -0800 (PST)
-Message-ID: <0eb908f2-2304-4a91-9c91-e7f291da9dcd@gmail.com>
-Date: Mon, 2 Dec 2024 16:03:42 +0100
+        bh=rhh1F0FNt93OWks/1WTeBIrSdzXMhFaYNcAsFDXPT8E=;
+        b=wEqNH6teFzBumpHYPxE/faQpP2aFl338x+VAc159Th4bUaQCgXOGNPDJX9NxgPaUZ2
+         XgJD4Z6mRJMItB2NreDHhzqCs48V+hZ0YWTnFkXMwss2FsQpNlINDlIt2qKYus2l/OD2
+         1qWoKx/S9smtnbRJZ3TMNHdl2kAX78JOBBlwpZm1uYlSzsAEpAj79424NVwq1QQW4I4g
+         s2HIHNy8vnW/kjWgLQPsHkfFHhQxeN0yxqQ8WciyCcE+EbF09YZ6AbWQDsy1twunrc1G
+         6/QAlYIeXmFRG7Gyp3/jqUp8diRqArtr6XC2dLKeTfKBW5hgeMSdjj+rjp1iM4301SoI
+         pD3A==
+X-Forwarded-Encrypted: i=1; AJvYcCX8cph/8Phjr6UoZxAzpvr3O1GwkMhpbkBZoVtj5BdHB+MCW3R9JCqPn7Ntmm2ajnjtkk7K1DRcihFniRSz@vger.kernel.org
+X-Gm-Message-State: AOJu0YxHmS8RVX2cMRSsSZNDz40ouyUnFf/AN52tDGlvMQGgDEtCK/8G
+	sZKndeMhXtvJ/BufOOmyBdRM8TaO3y7+y1YZpC2TAXF3Qx2Ojo+1H+YNw9c+Xw==
+X-Gm-Gg: ASbGncu7aF9F3JSVMdRxMIACJTJpYd3uRVLTm7NSEeYk+ubJPVnDnn+Qv69dzcU9vW2
+	dg5Se9ztU9OsV2iFSTJBTO1xGskOBdBKIZbppdESOZfM421Rk6Y7WG9/9H5ATijRc2TcuU91pEt
+	Q+E3oq6nOBnEWUqvb3ZihJouzN9GW3V6aaHld9u8seX/rjmiogj//cFIngUBBEu3vHx1o6e7pcU
+	lHY4Jr1YMQJgkMZMRtvXfOKB7C7AIpFrI6dTlpq6ySnd3cqZVApSsX4nx8W0Q==
+X-Google-Smtp-Source: AGHT+IHc2nR+uOEZidcr15cshfEn4P+vpBs4f+sVjGhFr5D8hxW5/7LO0D+hvIuBPYBe1VGyJsW1Rw==
+X-Received: by 2002:a17:903:2347:b0:215:6c9a:15 with SMTP id d9443c01a7336-2156c9a0365mr117358825ad.42.1733152016720;
+        Mon, 02 Dec 2024 07:06:56 -0800 (PST)
+Received: from thinkpad ([120.60.140.110])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2158103ba15sm26841555ad.280.2024.12.02.07.06.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Dec 2024 07:06:55 -0800 (PST)
+Date: Mon, 2 Dec 2024 20:36:48 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc: cros-qcom-dts-watchers@chromium.org,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Bjorn Helgaas <bhelgaas@google.com>, quic_vbadigan@quicinc.com,
+	quic_ramkri@quicinc.com, quic_nitegupt@quicinc.com,
+	quic_skananth@quicinc.com, quic_vpernami@quicinc.com,
+	quic_mrana@quicinc.com, mmareddy@quicinc.com,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org
+Subject: Re: [PATCH 1/3] arm64: dts: qcom: sc7280: Increase config size to
+ 256MB for ECAM feature
+Message-ID: <20241202150648.fwi2wzbdyyedueby@thinkpad>
+References: <20241117-ecam-v1-0-6059faf38d07@quicinc.com>
+ <20241117-ecam-v1-1-6059faf38d07@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/10] drm/sti: hdmi: use eld_mutex to protect access to
- connector->eld
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Harry Wentland <harry.wentland@amd.com>, Leo Li <sunpeng.li@amd.com>,
- Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xinhui Pan <Xinhui.Pan@amd.com>, Andrzej Hajda <andrzej.hajda@intel.com>,
- Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>,
- Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
- Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>,
- Phong LE <ple@baylibre.com>, Inki Dae <inki.dae@samsung.com>,
- Seung-Woo Kim <sw0312.kim@samsung.com>,
- Kyungmin Park <kyungmin.park@samsung.com>,
- Krzysztof Kozlowski <krzk@kernel.org>, Alim Akhtar
- <alim.akhtar@samsung.com>, Jani Nikula <jani.nikula@linux.intel.com>,
- Rodrigo Vivi <rodrigo.vivi@intel.com>,
- Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
- Tvrtko Ursulin <tursulin@ursulin.net>, Rob Clark <robdclark@gmail.com>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- Alain Volmat <alain.volmat@foss.st.com>,
- Dave Stevenson <dave.stevenson@raspberrypi.com>,
- =?UTF-8?Q?Ma=C3=ADra_Canal?= <mcanal@igalia.com>,
- Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>
-Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- amd-gfx@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org,
- linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
- intel-xe@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
- freedreno@lists.freedesktop.org
-References: <20241201-drm-connector-eld-mutex-v1-0-ba56a6545c03@linaro.org>
- <20241201-drm-connector-eld-mutex-v1-9-ba56a6545c03@linaro.org>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?Rapha=C3=ABl_Gallais-Pou?= <rgallaispou@gmail.com>
-In-Reply-To: <20241201-drm-connector-eld-mutex-v1-9-ba56a6545c03@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20241117-ecam-v1-1-6059faf38d07@quicinc.com>
 
-
-
-Le 01/12/2024 à 00:55, Dmitry Baryshkov a écrit :
-> Reading access to connector->eld can happen at the same time the
-> drm_edid_to_eld() updates the data. Take the newly added eld_mutex in
-> order to protect connector->eld from concurrent access.
+On Sun, Nov 17, 2024 at 03:30:18AM +0530, Krishna chaitanya chundru wrote:
+> Increase the configuration size to 256MB as required by the ECAM feature.
+> And also move config space, DBI, ELBI, IATU to upper PCIe region and use
+> lower PCIe region entierly for BAR region.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Hi Dmitry,
+Is this change compatible with old kernels before commit '10ba0854c5e6 ("PCI:
+qcom: Disable mirroring of DBI and iATU register space in BAR region")'?
 
-Acked-by: Raphael Gallais-Pou <rgallaispou@gmail.com>
+- Mani
 
-Thanks,
-Raphaël
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
 > ---
->   drivers/gpu/drm/sti/sti_hdmi.c | 2 ++
->   1 file changed, 2 insertions(+)
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 12 ++++++------
+>  1 file changed, 6 insertions(+), 6 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/sti/sti_hdmi.c b/drivers/gpu/drm/sti/sti_hdmi.c
-> index 847470f747c0efad61c2ebdc3fb3746a7a13a863..3c8f3532c79723e7b1a720c855c90e40584cc6ca 100644
-> --- a/drivers/gpu/drm/sti/sti_hdmi.c
-> +++ b/drivers/gpu/drm/sti/sti_hdmi.c
-> @@ -1225,7 +1225,9 @@ static int hdmi_audio_get_eld(struct device *dev, void *data, uint8_t *buf, size
->   	struct drm_connector *connector = hdmi->drm_connector;
->   
->   	DRM_DEBUG_DRIVER("\n");
-> +	mutex_lock(&connector->eld_mutex);
->   	memcpy(buf, connector->eld, min(sizeof(connector->eld), len));
-> +	mutex_unlock(&connector->eld_mutex);
->   
->   	return 0;
->   }
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index 3d8410683402..a7e3d3e9d034 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -2196,10 +2196,10 @@ wifi: wifi@17a10040 {
+>  		pcie1: pcie@1c08000 {
+>  			compatible = "qcom,pcie-sc7280";
+>  			reg = <0 0x01c08000 0 0x3000>,
+> -			      <0 0x40000000 0 0xf1d>,
+> -			      <0 0x40000f20 0 0xa8>,
+> -			      <0 0x40001000 0 0x1000>,
+> -			      <0 0x40100000 0 0x100000>;
+> +			      <4 0x00000000 0 0xf1d>,
+> +			      <4 0x00000f20 0 0xa8>,
+> +			      <4 0x10000000 0 0x1000>,
+> +			      <4 0x00000000 0 0x10000000>;
+>  
+>  			reg-names = "parf", "dbi", "elbi", "atu", "config";
+>  			device_type = "pci";
+> @@ -2210,8 +2210,8 @@ pcie1: pcie@1c08000 {
+>  			#address-cells = <3>;
+>  			#size-cells = <2>;
+>  
+> -			ranges = <0x01000000 0x0 0x00000000 0x0 0x40200000 0x0 0x100000>,
+> -				 <0x02000000 0x0 0x40300000 0x0 0x40300000 0x0 0x1fd00000>;
+> +			ranges = <0x01000000 0x0 0x00000000 0x0 0x40000000 0x0 0x100000>,
+> +				 <0x02000000 0x0 0x40100000 0x0 0x40100000 0x0 0x1ff00000>;
+>  
+>  			interrupts = <GIC_SPI 307 IRQ_TYPE_LEVEL_HIGH>,
+>  				     <GIC_SPI 308 IRQ_TYPE_LEVEL_HIGH>,
+> 
+> -- 
+> 2.34.1
 > 
 
+-- 
+மணிவண்ணன் சதாசிவம்
 
