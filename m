@@ -1,111 +1,90 @@
-Return-Path: <linux-arm-msm+bounces-39833-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39834-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A7B09DFE81
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 11:14:14 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 42C3C9DFEBE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 11:23:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E39E6281732
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 10:14:12 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 61F15B22749
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 10:19:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 13ED71FDE35;
-	Mon,  2 Dec 2024 10:12:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD37A1FBC9B;
+	Mon,  2 Dec 2024 10:19:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jTioyHDM"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kmhsd5qN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D41911FCCE1
-	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Dec 2024 10:12:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7923A1D8E10;
+	Mon,  2 Dec 2024 10:19:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733134360; cv=none; b=fatYleqqqo/idcdmkxVg2ieND9ssW7C+ugzKF+EjY9ijrz8K6D2WMjSQdv1oepDPavrd8aJWq4VQD6b2CcdxJzWNdcbXLFoTsrd5/in5RSGnR2QxxoXoIBFGKpKpolOOQs20ISOSWbWpkyqPynFZQuz1GpuemLZHHgSVQSa/uUQ=
+	t=1733134784; cv=none; b=bwNF1wIwTparFVA4FW67ftq8oNezDm/FD4KtLLIjYwmPRVIsGpDHUR+izY3yZ6mvn2i/7+L7wNyoN0ofg9yqq9NBC91E4uhi3+F158SRYuVuX1FSbLBa7MqPkZtB+Wsow910mGMl32ct7a/2yDpp4dMDM7TBO5nEbUb3eZ2AUSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733134360; c=relaxed/simple;
-	bh=cEz5WCEcvO0LA3NyHkeRpJjFKEfwc7Bb03yBcNKzoGM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oudEyeA4UnbQKTDKZAeLNYM/9LGpLFePoAx9awsZ3Uk7pZiAPZXA+JyAEqqUdCASUEaF7q8Gh55Cx26Z2nsq613oAvvB5rH6+WA+NEMtOZ363p1CoAGwKWf7mwFVpoYbYg5QMOC8EGlTKMVB8UNrsrIuhigYw09fy1a0tvT1OG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jTioyHDM; arc=none smtp.client-ip=209.85.167.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-53de84e4005so4416024e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Dec 2024 02:12:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733134355; x=1733739155; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=PdrLpX+axI2CPbjnNH3X9noFZkYJRbcHp1c258OKeSY=;
-        b=jTioyHDM/gKwYzRH83ICipPzoAfVgg/0SIwxVXVOChYhXA0icuZJDNukrXo2yPaBJV
-         OjkWaXDpCgQDMK0d4w0JGEKtVt45gVeM/RKEWNt/YzBQX1Co16Sl00R+IZL9+rnQ+rFt
-         IeoLScFYA7+PHsoz7CSORUuidhHKIV0fPWQU2shS/4f1BvyhOwcrc34OdyyEOAf278cp
-         MSFAPvDQZbzt8DMHtxZy9j5VCIGQWj6joAtwmvNH5TEycb3o/VNeqq+g3elSpJRDCrcp
-         RQAF3foIzsfRJuqhtBD7jmgV5oNO4rEiWnHPK8Lk/Mg/UVhqHoHhi5D4eAbinGqYQT1y
-         L8Dw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733134355; x=1733739155;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PdrLpX+axI2CPbjnNH3X9noFZkYJRbcHp1c258OKeSY=;
-        b=MPau5Nom+lhDxnvcuZ3rxzlii7kUmKlbNvL9QexuBCqpD/8+2FGYd7aJoo+tJsH1c7
-         /h7Gq5Hdk4A8HkM6SYWuZA237M0w0OdwOaNwtF2wAl9z26vMYClyHzAK16md1lj4k3+I
-         o8i1dwJT3vEpX843iiufx5MmHaVd0pGp7Ge6V1D19uYfEKh17BldRkmK7qWdTtJ2IgUH
-         fLeUHzfgmhdDecpIO5xiiq0yShwnWVDJzL1bqehHaMraDBpGZmtNtZsxFg5cjpkSey2J
-         ebhbwSLVeLBplsVWqUpgoYzo86detUkgqYi+PZ4QAhLQAPamgu+RhFB9N3xWDeiGjNe9
-         gy0A==
-X-Forwarded-Encrypted: i=1; AJvYcCUXtfPeM5uxBSqdgb8wozWguJ6X56Owxt63JMho31bnXSa+cy7NEVoOMXAyoMtgN0juz/6bP5AlRcvIW7rm@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyc1/bMgrKzCdCuiKY4BtfJMlH4TVCQgn83yNCJ4IEcFR89Hqac
-	EboAS4nAWWwen5MJykPmzRhPWa6VjvbLyvVR8P0vKtd7v3CLIAS1ebcQfRRVEMU=
-X-Gm-Gg: ASbGncs2QNo14TcyovLXZqhTAImQNrGzEVMoEToUndjRl+p3HtCld+Soes74vqV8Zph
-	lle8jFLZlju5krAxZmyVeVEpOW5TAwYECI3yUxS6tkqJsPJQ9bU2k7Use6SGO/jVYzKpVymibKl
-	+Owk7FyBpnrmQDedVpPPZnxtFrDekM/AtWC9mHlG4VjOxF9M0Ed5Kt6G3/amVsqLAa3mLMDterp
-	SWp4kR+lqdxljIv6n/zyBHbVzm1rwhp5rgLfx1TfMHZujdKl9fH3WgSoANBYL7HqxgFFklchRNz
-	3hVqOpbx185D4IeeRiVt57zVW9nt8A==
-X-Google-Smtp-Source: AGHT+IENA1UtOB2vC+9sMeQjU5RSPscJVa+h3RiiqVEgdoucohrY/p3JAOJdi4XwYr8/MGauEsX3WA==
-X-Received: by 2002:a05:6512:400f:b0:53d:a93c:649e with SMTP id 2adb3069b0e04-53df0109024mr12516120e87.35.1733134355114;
-        Mon, 02 Dec 2024 02:12:35 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53df64968d6sm1380786e87.200.2024.12.02.02.12.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Dec 2024 02:12:33 -0800 (PST)
-Date: Mon, 2 Dec 2024 12:12:31 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Tingguo Cheng <quic_tingguoc@quicinc.com>
-Cc: quic_fenglinw@quicinc.com, quic_tingweiz@quicinc.com, 
-	kernel@quicinc.com, quic_eberman@quicinc.com, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v6 3/3] arm64: dts: qcom: qcs615-ride: Enable PMIC
- peripherals
-Message-ID: <lzmfmo2ll5izofq2pcpv7dkhcdawwijxotw45cqu4vlydt4cle@yta6qyume6e5>
-References: <20241202-adds-spmi-pmic-peripherals-for-qcs615-v6-0-bdd306b4940d@quicinc.com>
- <20241202-adds-spmi-pmic-peripherals-for-qcs615-v6-3-bdd306b4940d@quicinc.com>
+	s=arc-20240116; t=1733134784; c=relaxed/simple;
+	bh=0nLS4J9qXeFv/L92DDeQg9+azIKURqKYfy9mdnxjm3k=;
+	h=Message-ID:Date:From:To:Subject:In-Reply-To:References:Cc; b=SypZiVOmf+BgXxaNwwYA5kuUb0Qp/yR+ZrXk6OHZzxY/Xqfv+aZ2u5jyeI9rqEwIc868edplJPEwHTUXe6MXk/AJZlu74URrT1+p6VnD5kV/I7t9tvTJxjT9Cu83Bo7OaQSwA6BM/A6PbdWnVXLC6OAKE2Ch25IP/sWiyVtO1Q4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kmhsd5qN; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA1B3C4CED1;
+	Mon,  2 Dec 2024 10:19:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1733134784;
+	bh=0nLS4J9qXeFv/L92DDeQg9+azIKURqKYfy9mdnxjm3k=;
+	h=Date:From:To:Subject:In-Reply-To:References:Cc:From;
+	b=kmhsd5qNP8PjnFw7JW1cgOBNkW9mQLZPH4pXX5/8dwKvqwnJuyfirt1aqyztIlDdV
+	 IH1fjkg7XyFypJst+r31tBHNAEr7/qTjDQF2oM/8PA2tPcxtUxuYqdYsN77yJxxDxE
+	 D49bbL44XFfS1wbpfVfBn5YTyxG+t99wmK43EiWT1WvygzcP6G28C/zlIKWPnlzfCe
+	 zAxLiPTwPN1zh6Klz9GCZ0auLZ+9TcEQ0RsSi8QLjmsaMREjCrwaybirjM8aDu7HJp
+	 PiDC4e0R7txSroxQpjqcg7C7CBbHK/g+gMX1VhGs3ZGwVqMxES1G+5DNd4QBX8vEir
+	 0VvpMFIv5dbLw==
+Message-ID: <77545786331df8bfaf5fdcb309437358@kernel.org>
+Date: Mon, 02 Dec 2024 10:19:41 +0000
+From: "Maxime Ripard" <mripard@kernel.org>
+To: "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH 00/10] drm/connector: add eld_mutex to protect
+ connector->eld
+In-Reply-To: <20241201-drm-connector-eld-mutex-v1-0-ba56a6545c03@linaro.org>
+References: <20241201-drm-connector-eld-mutex-v1-0-ba56a6545c03@linaro.org>
+Cc: amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, intel-gfx@lists.freedesktop.org, intel-xe@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org, "Abhinav
+ Kumar" <quic_abhinavk@quicinc.com>, "Alain Volmat" <alain.volmat@foss.st.com>, "Alex
+ Deucher" <alexander.deucher@amd.com>, "Alim Akhtar" <alim.akhtar@samsung.com>, "Andrzej
+ Hajda" <andrzej.hajda@intel.com>, =?utf-8?b?Q2hyaXN0aWFuIEvDtm5pZw==?= <christian.koenig@amd.com>, "Dave
+ Stevenson" <dave.stevenson@raspberrypi.com>, "David Airlie" <airlied@gmail.com>, "Harry
+ Wentland" <harry.wentland@amd.com>, "Inki Dae" <inki.dae@samsung.com>, "Jani
+ Nikula" <jani.nikula@linux.intel.com>, "Jernej Skrabec" <jernej.skrabec@gmail.com>, "Jonas
+ Karlman" <jonas@kwiboo.se>, "Joonas Lahtinen" <joonas.lahtinen@linux.intel.com>, "Krzysztof
+ Kozlowski" <krzk@kernel.org>, "Kyungmin Park" <kyungmin.park@samsung.com>, "Laurent
+ Pinchart" <Laurent.pinchart@ideasonboard.com>, "Leo Li" <sunpeng.li@amd.com>, "Maarten
+ Lankhorst" <maarten.lankhorst@linux.intel.com>, "Marijn Suijten" <marijn.suijten@somainline.org>, "Maxime
+ Ripard" <mripard@kernel.org>, =?utf-8?b?TWHDrXJhIENhbmFs?= <mcanal@igalia.com>, "Neil
+ Armstrong" <neil.armstrong@linaro.org>, "Phong LE" <ple@baylibre.com>, "Raphael
+ Gallais-Pou" <rgallaispou@gmail.com>, "Raspberry Pi Kernel Maintenance" <kernel-list@raspberrypi.com>, "Rob
+ Clark" <robdclark@gmail.com>, "Robert Foss" <rfoss@kernel.org>, "Rodrigo
+ Siqueira" <Rodrigo.Siqueira@amd.com>, "Rodrigo Vivi" <rodrigo.vivi@intel.com>, "Sean
+ Paul" <sean@poorly.run>, "Seung-Woo Kim" <sw0312.kim@samsung.com>, "Simona
+ Vetter" <simona@ffwll.ch>, "Thomas Zimmermann" <tzimmermann@suse.de>, "Tvrtko
+ Ursulin" <tursulin@ursulin.net>, "Xinhui Pan" <Xinhui.Pan@amd.com>
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241202-adds-spmi-pmic-peripherals-for-qcs615-v6-3-bdd306b4940d@quicinc.com>
 
-On Mon, Dec 02, 2024 at 05:37:24PM +0800, Tingguo Cheng wrote:
-> Enable PMIC and PMIC peripherals for qcs615-ride board.
+On Sun, 1 Dec 2024 01:55:17 +0200, Dmitry Baryshkov wrote:
+> The connector->eld is accessed by the .get_eld() callback. This access
+> can collide with the drm_edid_to_eld() updating the data at the same
+> time. Add drm_connector.eld_mutex to protect the data from concurrenct
+> access.
 > 
-> Signed-off-by: Tingguo Cheng <quic_tingguoc@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/qcs615-ride.dts | 11 +++++++++++
->  1 file changed, 11 insertions(+)
 > 
+> [ ... ]
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Maxime Ripard <mripard@kernel.org>
 
--- 
-With best wishes
-Dmitry
+Thanks!
+Maxime
 
