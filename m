@@ -1,99 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-39934-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39936-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3FD4E9E0A62
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 18:48:04 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1FBEC9E0ACE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 19:18:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A829EB2A32F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 17:40:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D97D1281F7D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2024 18:18:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DAACE1DB37B;
-	Mon,  2 Dec 2024 17:40:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E2B4E1DDC24;
+	Mon,  2 Dec 2024 18:18:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XwzL9nrR"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LFGSH9jX"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACD031D61A2;
-	Mon,  2 Dec 2024 17:40:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B4F1DD0F6;
+	Mon,  2 Dec 2024 18:18:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733161209; cv=none; b=Ut5ScEp+iwRFIP1+tFposbgFWoPen+cryQl84XwkBTWl/BicqqDf02MW5jGE562LSshjDi8/7qR0rkbfPmgYXQ+gD7gZ38yk3sEUIB4am+eKNTzlRqq+bz4EOs5F23SG1aA0SdprhoCgIqF5BsBs1YrGsFGBgjqdK5qqQDVoB9w=
+	t=1733163503; cv=none; b=eKtZJHnvdlp0d0suLoLFPlcRLmy/kwsOZaaJk4XJUuA/VJdB1fFaIeWw3Px6PlT9nO12mk4tLVlxcJBsIDuhW+70vYhN7kNz2YyhMKxFJQ/mugdGb5c71hwPmy0TJyHEiG2EpPlDM7TDA9b2OYhACEpvFP6incQxLUMTyru4kK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733161209; c=relaxed/simple;
-	bh=eaL8cC21xnf23Ecwe2rInbBhfl0hfiNSoyNwp9NMFTI=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=TMceABs4umpaqp3yM2a55HCLLh/qwzLlgvqqbg00mI9hkNuTccomuW8wyxA457rtUNE324znY+SOsrGnfZ7BIWBOk63cYxamAfvQj9Py7EikQ9AmcwM3iK/qCalqxFgypxosxQRPki0tagCcN2i2EwViwx0lbNo5R1OcdXbELXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XwzL9nrR; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02BA7C4CED1;
-	Mon,  2 Dec 2024 17:40:08 +0000 (UTC)
+	s=arc-20240116; t=1733163503; c=relaxed/simple;
+	bh=tcxvbR1FAr5OU+Ae2DnYPGRw2+BZE+xh7hbNlNtOolE=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=vFHhpOLeMST8bwlaFa9xInQh4c15Acid3tj/SqAo7tuYDtNAcCb/42VLPigjDHz84zuejdIojQ5BZqqjm+rwga/bZv1Eo8YED3Jb+Jqxc1g5vGIRaGvYjaS8wpFv0i7z5CnGG6RyM4vh8uou4WFodzjs/qC31zq+ifF+D2SaN0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LFGSH9jX; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 42FDBC4CED1;
+	Mon,  2 Dec 2024 18:18:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733161209;
-	bh=eaL8cC21xnf23Ecwe2rInbBhfl0hfiNSoyNwp9NMFTI=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=XwzL9nrR46ZUQQBF/Cfqgfs1w85invh8HKkiybCnyLrEAtVqNB1p68veHs8gpbJ2A
-	 /hq1NkFqHuPqePepEotMIWmvb0CUvsez4rFylJtAuXgRW+lUMwYMxJp/ggkvrc04IO
-	 O7ZHYiWVvUfb2uxuewRaeY3txjgR9NxWbVj3I/aLJPus3ZRwAeV7y58XSBgx4e2G0W
-	 NSIMcaUOqF8bISHy7KoAjYmboKzhD7SjH6a1e4r/5B+Yncjp0auvf7p29ztozgTzmU
-	 ibMvf6dcSOaeByzIu8DgAVoeigO3Oo8ZO0Vfs7yza43w4TtijMK+7ZNc0kid2/gy1F
-	 74sTjn3Ni7ZcA==
-Date: Mon, 2 Dec 2024 11:40:07 -0600
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: kw@linux.com, gregkh@linuxfoundation.org, arnd@arndb.de,
-	lpieralisi@kernel.org, shuah@kernel.org, kishon@kernel.org,
-	aman1.gupta@samsung.com, p.rajanbabu@samsung.com,
-	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-	bhelgaas@google.com, linux-arm-msm@vger.kernel.org, robh@kernel.org,
-	linux-kselftest@vger.kernel.org, stable+noautosel@kernel.org
-Subject: Re: [PATCH v2 1/4] PCI: qcom-ep: Mark BAR0/BAR2 as 64bit BARs and
- BAR1/BAR3 as RESERVED
-Message-ID: <20241202174007.GA2902663@bhelgaas>
+	s=k20201202; t=1733163503;
+	bh=tcxvbR1FAr5OU+Ae2DnYPGRw2+BZE+xh7hbNlNtOolE=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=LFGSH9jXOMABRKfPLbPUYaYC4oiLOZIXkNU0ltX96PVvgNB3cRx8Q8vBJSUfeMaK0
+	 u2bvi5v7b+W4pxjxSYvgIOEQI1s/+xo8UZ0fx46FklNHH4FGUGvwxC9rHppaXa+7c4
+	 tF+LVvc7sLJK3jY8lwOyfk+NjljIFQeWBc7FErnr56NIeQ+O9InMk7Y42DBthPnBQv
+	 JAXQtxxAyLmR4XEgE2+XyNMpkwR0V59t4p13lMfscZB3y7sgzWS7Pf0p/qSulm9Izi
+	 yLYu1mxU/2LwyL/Zg0LXhEAqxatt+KljQrZAB3Yi6bH4QkMvuE1Jcj4IwIP1KGs5JX
+	 o8NRaEutEW1Aw==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 27E27E69E83;
+	Mon,  2 Dec 2024 18:18:23 +0000 (UTC)
+From: Maud Spierings via B4 Relay <devnull+maud_spierings.hotmail.com@kernel.org>
+Subject: [PATCH v5 0/3] Asus vivobook s15 improvements
+Date: Mon, 02 Dec 2024 19:18:10 +0100
+Message-Id: <20241202-asus_qcom_display-v5-0-e0d3752ff71f@hotmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241202125845.rp4vc7ape52v4bwd@thinkpad>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAOL5TWcC/4XPTQ6CMBAF4KuYrq1ppz+IK+9hjBmglSYgSpVIC
+ Hd3IC40krh8kzffZAYWXRtcZLvVwFrXhRiaCwWzXrG8xMvZ8VBQZiBASyktx/iIp1ve1KcixGu
+ FPc+d8T6BVCktGO1dW+fDczYPR8pliPem7ecTnZymbw3UgtZJLvjWYOp9Clog7svmXmOoNtRik
+ 9fBXwPIQJF5vzWJpd6voT4NvWQoMoSALAGVyRTEr6E/DbNkaDKsRF2gtPSM/TbGcXwBHe90c4A
+ BAAA=
+X-Change-ID: 20241116-asus_qcom_display-ce5ff7293340
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+ Maud Spierings <maud_spierings@hotmail.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1733163500; l=2074;
+ i=maud_spierings@hotmail.com; s=20241110; h=from:subject:message-id;
+ bh=tcxvbR1FAr5OU+Ae2DnYPGRw2+BZE+xh7hbNlNtOolE=;
+ b=ohRxTArBAYUdhoIgMRFpdrg9/yJh+2+tZgfkLMpmkp9Pv4KW0YofZetk3vbXtVqUnw38Y+db9
+ VO1cd4syZT1DzriVb3xnKZOdzXfOC0tpAm1iuz/lZqkysi4PxgR0h+U
+X-Developer-Key: i=maud_spierings@hotmail.com; a=ed25519;
+ pk=CeFKVnZvRfX2QjB1DpdiAe2N+MEjwLEB9Yhx/OAcxRc=
+X-Endpoint-Received: by B4 Relay for maud_spierings@hotmail.com/20241110
+ with auth_id=273
+X-Original-From: Maud Spierings <maud_spierings@hotmail.com>
+Reply-To: maud_spierings@hotmail.com
 
-On Mon, Dec 02, 2024 at 06:28:45PM +0530, Manivannan Sadhasivam wrote:
-> On Fri, Nov 29, 2024 at 01:55:37PM -0600, Bjorn Helgaas wrote:
-> > On Fri, Nov 29, 2024 at 02:54:12PM +0530, Manivannan Sadhasivam wrote:
-> > > On all Qcom endpoint SoCs, BAR0/BAR2 are 64bit BARs by default
-> > > and software cannot change the type. So mark the those BARs as
-> > > 64bit BARs and also mark the successive BAR1/BAR3 as RESERVED
-> > > BARs so that the EPF drivers cannot use them.
-> ...
+Improves several parts of the devicetree:
+1. The eDP panel bindings
+2. Add a lid switch
+3. Add bluetooth and describe wlan (depends on [1])
 
-> > > Cc: stable+noautosel@kernel.org # depends on patch introducing only_64bit flag
-> > 
-> > If stable maintainers need to act on this, do they need to search for
-> > the patch introducing only_64bit flag?  That seems onerous; is there a
-> > SHA1 that would make it easier?
-> 
-> But that's not the point of having noautosel tag, AFAIK.
-> 
-> Documentation/process/stable-kernel-rules.rst clearly says that this
-> tag is to be used when we do not want the stable team to backport
-> the commit due to a missing dependency.
-> ...
+[1]: https://lore.kernel.org/all/20241007-x1e80100-pwrseq-qcp-v1-0-f7166510ab17@linaro.org/
 
-> Here I did not intend to backport this change with commit adding
-> only_64bit flag because, I'm not sure if that dependency alone would
-> be sufficient. If someone really cares about backporting this
-> change, then they should figure out the dependencies, test the
-> functionality and then ask the stable team.
+---
+I seem to get a warning that the pci17cb vendor is undocumented (wlan)
+I can find this compatible in
+Documentation/devicetree/bindings/net/wireless/qcom,ath12k.yaml
+But pci17cb doesn't really seem like a vendor name to me, I have ignored
+this warning for now.
 
-Oh, sorry, I was assuming "stable+noautosel@kernel.org" was a hint for
-stable maintainers to pick this up, not a hint to ignore it.
-Eventually this meaning will sink in.
+Changes in v5:
+- Fix the pinctrl-# definition in the wcn7850-pmu node in the
+  bluetooth/wifi patch
+- Link to v4: https://lore.kernel.org/r/20241125-asus_qcom_display-v4-0-61a4da162406@hotmail.com
 
-Bjorn
+Changes in v4:
+- Fixed the pin parameters for the backlight enable pin
+- Fixed the wcn_sw_en drive-strength, this was not in the acpi table I
+  checked.
+- Fixed the ordering of several nodes in the bluetooth/wifi patch
+- Link to v3: https://lore.kernel.org/r/20241124-asus_qcom_display-v3-0-002b723b1920@hotmail.com
+
+Changes in v3:
+- Fixed commit message formatting (line wrapping)
+- Fixed bad indentation (lid switch pinctrl)
+- Fixed bluetooth addition and added wifi description
+- Link to v2: https://lore.kernel.org/r/20241123-asus_qcom_display-v2-0-a0bff8576024@hotmail.com
+
+Changes in v2:
+- Add missing gpiokeys include in the lid switch patch
+- Add depends on for the bluetooth patch
+- Link to v1: https://lore.kernel.org/r/20241123-asus_qcom_display-v1-0-85a9ff9240aa@hotmail.com
+
+---
+Maud Spierings (3):
+      arm64: dts: qcom: x1e80100-vivobook-s15: Use the samsung,atna33xc20 panel driver
+      arm64: dts: qcom: x1e80100-vivobook-s15: Add lid switch
+      arm64: dts: qcom: x1e80100-vivobook-s15: Add bluetooth
+
+ .../boot/dts/qcom/x1e80100-asus-vivobook-s15.dts   | 202 ++++++++++++++++++++-
+ 1 file changed, 201 insertions(+), 1 deletion(-)
+---
+base-commit: 5f48de798324665d18f539ee09a61de1a9221f33
+change-id: 20241116-asus_qcom_display-ce5ff7293340
+
+Best regards,
+-- 
+Maud Spierings <maud_spierings@hotmail.com>
+
+
 
