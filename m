@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-40028-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40029-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 59FBD9E159D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 09:26:24 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 443779E14F7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 09:03:07 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8721EB2287D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 08:00:08 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0BDE6161B6E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 08:03:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27FFC1D90A4;
-	Tue,  3 Dec 2024 07:58:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B682E1DE3BD;
+	Tue,  3 Dec 2024 07:58:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XAActp/a"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZTmmdU5F"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC3241D7E21;
-	Tue,  3 Dec 2024 07:58:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82F331D5AC0;
+	Tue,  3 Dec 2024 07:58:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733212685; cv=none; b=ILm9pFE3oEQ9KTs9qvSRJEmWZumhzdTk3VnhAnQBqzjw3UXU+76Sm2CuUEUvMQWc0F0+ZcUVtIdHBTMsEC2pfpiaqiBaMPmWgRI5PrikUiP/DV5fHw1bWguFTQJzHRmB7IYxs/GH7OTTqBq7JA3bQ8kHQ3t+AdAZ4uD0wY6Uuhs=
+	t=1733212710; cv=none; b=TZhFtpl/wzyJDHj7maaC+lpfcaoZaVkBEKlLBqA7xHVZAVxiR3FlYM8Q97oF6/M97i32h0+lDDVLE5xTFxfzjkJS9fWovWnq/gEsr2aWBPt5/5ynvmRK8K4wNyv19qyvebiE8Fdf1YwxNKODKhvgApiMAKkl3vGD06szg4hWuIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733212685; c=relaxed/simple;
-	bh=oeDwSYbDtumcWtXKju7ig4LuBaFcBdeCDLukpWkhVjk=;
+	s=arc-20240116; t=1733212710; c=relaxed/simple;
+	bh=3ux9ghz4qT1R8VG9p3TvHCxBMQnVG/ICSjqWQFAM5Ww=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=iAuUImg3+N0URpwiJBQxknjUSqjIY/ut73EmOCwpZnwZYzoEAc6F1WOIPyjtZZ3AG5tlthfnrIOuQJKt2R7JfwNyhOINNz/ZNavY6dN0Udv78A0Mt+axkMCaVSl1GgRAAPfnJmcMJ1m7zPUrwtYLl/i/VXPPgVYXkrY8FAA4x4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XAActp/a; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E0BFC4CECF;
-	Tue,  3 Dec 2024 07:57:59 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=m/jlT/91UfZHejpkms1A/gY0reI9ClKBksSmeg24EAT3vo3UdIBiajXpDlllIFhO6XMo8RnEl2tUPsJDRk9c11dTYESNzLTd9AVkPYDz7+TaDSgYN5HcuFt3a3RG+WY45Tz4cTgf+KpF3HAmjaIeafQOwTjSAiFH7t+V4nebk04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZTmmdU5F; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CC98C4CECF;
+	Tue,  3 Dec 2024 07:58:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733212684;
-	bh=oeDwSYbDtumcWtXKju7ig4LuBaFcBdeCDLukpWkhVjk=;
+	s=k20201202; t=1733212710;
+	bh=3ux9ghz4qT1R8VG9p3TvHCxBMQnVG/ICSjqWQFAM5Ww=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=XAActp/a3d/1FEPPdChndcExrPN5zf5hJJ2JE5jKPbV9k4bbkdWCwYaMzUe63RKT6
-	 f85LqG6uXO4kgScKGdcXz23Y0kwgsH4MZwAchznbe0+rsX6pUPbU18hnzimKDNv6MY
-	 YAbPgosIyC2xaxI2u1wsGZx7Oz6oufjckyXxTTUwbBn4ng50fZa5ieOXMI7DgL14t7
-	 tpeBe/yyfIPncGqeZ5tATagOKfDR4aZuxZVA1KDpQ4gds6Swcu0ZRJVYU/ykddBPeF
-	 8chXBQ9+oC/A8wiKPnqjeu5COJr987FlN7GDfmUebSInifNnb3tKntd5ElG1rDXD1a
-	 2Fdh2NygbvG6Q==
-Message-ID: <00e3bd13-eab8-47b0-b577-dfdb3bd5900e@kernel.org>
-Date: Tue, 3 Dec 2024 08:57:57 +0100
+	b=ZTmmdU5FBl58zu9IFXzqvd4qJ0yOSh+B4jCur6QnV896zIAIaINDHVztglJ5lbD6V
+	 KTVvYcEp/mRpxDLFNhaxPlVl67s2cmY61QKBYuo5TdtpPafHhhY3fNWdh+0H/Fkccv
+	 HRHfMa0yubZyq2TAoHdOb5ucT/44He64jVhx6fPOEivBesOl16Gx2ifMgFTlUh3F0H
+	 GktfVeG/plYPV030PzLRmLxBmB0TTDxlu8lWneF5xBLg7qeYJiv9tSRME0PIEoMMLh
+	 WvMHTPi2fZUaRJHkaw6jg5oGC+5YjUALx5o5GVUpEOtO9bb4E9zI0mpo+/9AJ7Ipe5
+	 PrxNR7uwHRUyw==
+Message-ID: <01af47d7-fcc1-4e1e-bf36-e39e2e04eafd@kernel.org>
+Date: Tue, 3 Dec 2024 08:58:22 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/10] tee: add Qualcomm TEE driver
+Subject: Re: [PATCH 10/10] Documentation: tee: Add Qualcomm TEE driver
 To: Amirreza Zarrabi <quic_azarrabi@quicinc.com>,
  Jens Wiklander <jens.wiklander@linaro.org>,
  Sumit Garg <sumit.garg@linaro.org>, Bjorn Andersson <andersson@kernel.org>,
@@ -62,7 +62,7 @@ Cc: linux-arm-msm@vger.kernel.org, op-tee@lists.trustedfirmware.org,
  linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
  linux-doc@vger.kernel.org
 References: <20241202-qcom-tee-using-tee-ss-without-mem-obj-v1-0-f502ef01e016@quicinc.com>
- <20241202-qcom-tee-using-tee-ss-without-mem-obj-v1-8-f502ef01e016@quicinc.com>
+ <20241202-qcom-tee-using-tee-ss-without-mem-obj-v1-10-f502ef01e016@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -108,85 +108,24 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20241202-qcom-tee-using-tee-ss-without-mem-obj-v1-8-f502ef01e016@quicinc.com>
+In-Reply-To: <20241202-qcom-tee-using-tee-ss-without-mem-obj-v1-10-f502ef01e016@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 03/12/2024 05:19, Amirreza Zarrabi wrote:
-> +static const struct tee_desc qcom_tee_desc = {
-> +	.name = "qcom_tee",
-> +	.ops = &qcom_tee_ops,
-> +	.owner = THIS_MODULE,
-> +};
+> +[1] https://docs.qualcomm.com/bundle/publicresource/topics/80-70015-11/qualcomm-trusted-execution-environment.html
 > +
-> +static int qcom_tee_probe(struct platform_device *pdev)
-> +{
-> +	struct tee_device *teedev;
-> +	int err;
+> +[2] http://infocenter.arm.com/help/topic/com.arm.doc.den0028a/index.html
 > +
-> +	if (!qcom_scm_is_available())
-> +		return -EPROBE_DEFER;
+> +[3] drivers/firmware/qcom/qcom_scm.c
+> +
+> +[4] /local/mnt/workspace/Linux/drivers/tee/qcomtee/qcom_scm.c
+> +
+> +[5] drivers/tee/qcomtee/qcomtee_msg.h
+> \ No newline at end of file
 
-So this is part of SCM? Instantiate it there instead of creating fake
-DTS nodes.
 
-> +
-> +	teedev = tee_device_alloc(&qcom_tee_desc, NULL, NULL, NULL);
-> +	if (IS_ERR(teedev))
-> +		return PTR_ERR(teedev);
-> +
-> +	err = tee_device_register(teedev);
-> +	if (err)
-> +		goto err_unreg_teedev;
-> +
-> +	platform_set_drvdata(pdev, teedev);
-> +	return 0;
-> +
-> +err_unreg_teedev:
-> +	tee_device_unregister(teedev);
-> +
-> +	return err;
-> +}
-> +
-> +static void qcom_tee_remove(struct platform_device *pdev)
-> +{
-> +	struct tee_device *teedev = platform_get_drvdata(pdev);
-> +
-> +	/* Keep a copy, tee_device_unregister() sets it to NULL. */
-> +	struct tee_shm_pool *pool = teedev->pool;
-> +
-> +	/* Wait for users to go away. */
-> +	tee_device_unregister(teedev);
-> +	tee_shm_pool_free(pool);
-> +}
-> +
-> +static const struct of_device_id qcom_tee_dt_match[] = {
-> +	{ .compatible = "qcom,tee" },
-> +	{},
-> +};
-> +MODULE_DEVICE_TABLE(of, qcom_tee_dt_match);
-> +
-> +static struct platform_driver qcom_tee_platform_driver = {
-> +	.probe = qcom_tee_probe,
-> +	.remove = qcom_tee_remove,
-> +	.driver = {
-> +		.name = "qcom_tee",
-> +		.of_match_table = qcom_tee_dt_match,
-> +	},
-> +};
-> +
-> +int qcom_tee_driver_register(void)
-> +{
-> +	return platform_driver_register(&qcom_tee_platform_driver);
-> +}
-> +
-> +void qcom_tee_driver_unregister(void)
-> +{
-> +	platform_driver_unregister(&qcom_tee_platform_driver);
-> +}
-
-Why open-coding typical module platform driver macro?
-
+You have patch warnings. Check your patches before sending.
 
 Best regards,
 Krzysztof
