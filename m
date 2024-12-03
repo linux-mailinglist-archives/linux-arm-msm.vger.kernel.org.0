@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-40033-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40034-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8818D9E150D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 09:05:52 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3B2AC9E163A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 09:50:17 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5B31E164BF0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 08:05:49 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C7740B23350
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 08:11:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3200C1E04A4;
-	Tue,  3 Dec 2024 08:02:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E66AA1E379F;
+	Tue,  3 Dec 2024 08:04:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tEKfuRrO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E1OLJTvP"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 045EB1E0496;
-	Tue,  3 Dec 2024 08:02:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B928D1E3799;
+	Tue,  3 Dec 2024 08:04:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733212928; cv=none; b=TFpKq8DKWJFsYgrtx6LwzMQBOWLN9pcqImx6G2Fc8ThxkZczvnPfpzx4UvJe3iyPMhQiSkjykmd5kvx1Z9GTKCBehc4LtJ2ybNTsNdNZPDrZ3SEkqm0Qe47XcDP4JSZwzzzCygVhu3xyBRoDxk4Dcf/VuG1eROeauLz2dshDy+I=
+	t=1733213088; cv=none; b=esen2XRGlk1E5azn4eq+++Tb9isWq1rQaX5pmhiZI99KGs3RBIG2KV9KSUcGlYdhSR9Md/XPdfWCOmnDb5CuPAHkCK45v1ZSEtAdBnYyR0802OTOmP9YS/9B8Cu1AM0PEmBAjIATj09zQ0nOfBBxpy82j2lL9hS56KGebYi8UOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733212928; c=relaxed/simple;
-	bh=TY2CTVQLZDBZSpPG3TOd4Vss8QMMAeKC2lgYdcC23NI=;
+	s=arc-20240116; t=1733213088; c=relaxed/simple;
+	bh=ogGT+tEgRtvtjmlcfLtQ/kpDFOq88/tpRAoBFCiwBaM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UOaRVlzcbTK7GYHGPrct24pKn0RACpFlhlTJjkOQXi7PhZJkh5LHoDxOEnjIz4vCvejpMfchrlUSl5quZUWL6P6ktAr8c3zWVZALRWJiyMF9Jbta3cmGPbpRxZDJbRs7UuC3deAMVv1nqm/T9fPmwjmI5akOIKWErwk7/8MG5FE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tEKfuRrO; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C781C4CECF;
-	Tue,  3 Dec 2024 08:02:00 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=itOwcQqse84E8j2h+MZeN7oVfwqdHLLq3otKe0gEOyc2jqnixopimkc0BiJORNNdRlPPjsdm+Na+A/8xi5whDPvw/ZbExV82CbAcGuQx/wmSCQZmdUXr4LeGBMJqP4ffVytYqScJJXMTqElsJWPpJpt+FhUtgW1UKs68Zgf7hJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E1OLJTvP; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB014C4CECF;
+	Tue,  3 Dec 2024 08:04:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733212927;
-	bh=TY2CTVQLZDBZSpPG3TOd4Vss8QMMAeKC2lgYdcC23NI=;
+	s=k20201202; t=1733213088;
+	bh=ogGT+tEgRtvtjmlcfLtQ/kpDFOq88/tpRAoBFCiwBaM=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=tEKfuRrOMJv8493iIDmbaFpdTTaIxxhGSqdGE+HDe5vdg47HuPFeVIYLq5UV8UyEb
-	 WxipH4EVEilfFYaLgzl9DHb8flIM3ERVPomw0ldZLenyqb/lwaWhAp7Heur1FGtVJO
-	 uSRulUdiYm3M/MVUKlRcKXurCfL0dXz7tME5T7hixBKmxg5ivlw+5B2CPly6fS38yh
-	 DrxDCYrVzsP9oFvxlFwPKUZWoZoGQdSHlnXdig93bh7pbmtVcQRczKAuYeP7dsvkMC
-	 O9pzCCerjVmdaeDMYVYs5O/RxId9KIHv2atpYgZAtDyrkyahX18AbSqkDIthANyyM7
-	 B2R+9jH8DIZkg==
-Message-ID: <e8f2e17c-13c1-4485-8e9a-d67705e461d6@kernel.org>
-Date: Tue, 3 Dec 2024 09:01:59 +0100
+	b=E1OLJTvPW7aL/ytZ91En4Qv5s9bDlLu2RRY9dHv4QaFIhJzj0eNcqCmmSDx6b3Zq2
+	 lk6GcRXGj/o8I857pOw9AWhVcjnuXxyELZvmPY9xwvtZvUdXA7jJcI/yCehkHMpMSv
+	 fvm1Oqp4YKbyiGtN7S3AB5kHwdFeYsCcjZTcghAfSVOJg5TOxLZnXlKTKmQ/mQNaQ1
+	 kn82yo4q+CxS/xd8VXvgwRB1oyIsoBo2vHjQmjLG3ywMfC1E9Jw9BsXLprO1HVT+QE
+	 tHyPk8ye7D5aMmJZJIGD1CHbjTmRj3MG4efWlRsxufCSBDLxWVPMRUMEuPEbSy8suD
+	 8FJ/4wV5L0aEA==
+Message-ID: <39f8e20a-e8c3-4625-abb1-9f35f416705d@kernel.org>
+Date: Tue, 3 Dec 2024 09:04:39 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] dt-bindings: display: msm: dp-controller: document
- pixel clock stream
+Subject: Re: [PATCH 3/4] dt-bindings: display/msm: add stream 1 pixel clock
+ binding
 To: Abhinav Kumar <quic_abhinavk@quicinc.com>, Rob Clark
  <robdclark@gmail.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
  Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
@@ -65,7 +65,7 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
 References: <20241202-dp_mst_bindings-v1-0-9a9a43b0624a@quicinc.com>
- <20241202-dp_mst_bindings-v1-1-9a9a43b0624a@quicinc.com>
+ <20241202-dp_mst_bindings-v1-3-9a9a43b0624a@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -111,16 +111,114 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20241202-dp_mst_bindings-v1-1-9a9a43b0624a@quicinc.com>
+In-Reply-To: <20241202-dp_mst_bindings-v1-3-9a9a43b0624a@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 03/12/2024 04:31, Abhinav Kumar wrote:
-> Display port controller on some MSM chipsets are capable of supporting
-> multiple streams. In order to distinguish the streams better, describe
-> the current pixel clock better to emphasize that it drives the stream 0.
+> On some chipsets the display port controller can support more
+
+Which chipsets?
+
+> than one pixel stream (multi-stream transport). To support MST
+> on such chipsets, add the binding for stream 1 pixel clock for
+> display port controller. Since this mode is not supported on all
+> chipsets, add exception rules and min/max items to clearly mark
+> which chipsets support only SST mode (single stream) and which ones
+> support MST.
 > 
-This should be squashed with patch adding stream 1.
+> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> ---
+>  .../bindings/display/msm/dp-controller.yaml        | 32 ++++++++++++++++++++++
+>  .../bindings/display/msm/qcom,sa8775p-mdss.yaml    |  9 ++++--
+>  2 files changed, 38 insertions(+), 3 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> index 9fe2bf0484d8..650d19e58277 100644
+> --- a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> @@ -50,30 +50,38 @@ properties:
+>      maxItems: 1
+>  
+>    clocks:
+> +    minItems: 5
+>      items:
+>        - description: AHB clock to enable register access
+>        - description: Display Port AUX clock
+>        - description: Display Port Link clock
+>        - description: Link interface clock between DP and PHY
+>        - description: Display Port stream 0 Pixel clock
+> +      - description: Display Port stream 1 Pixel clock
+>  
+>    clock-names:
+> +    minItems: 5
+>      items:
+>        - const: core_iface
+>        - const: core_aux
+>        - const: ctrl_link
+>        - const: ctrl_link_iface
+>        - const: stream_pixel
+> +      - const: stream_1_pixel
+>  
+>    assigned-clocks:
+> +    minItems: 2
+>      items:
+>        - description: link clock source
+>        - description: stream 0 pixel clock source
+> +      - description: stream 1 pixel clock source
+>  
+>    assigned-clock-parents:
+> +    minItems: 2
+>      items:
+>        - description: Link clock PLL output provided by PHY block
+>        - description: Stream 0 pixel clock PLL output provided by PHY block
+> +      - description: Stream 1 pixel clock PLL output provided by PHY block
+>  
+>    phys:
+>      maxItems: 1
+> @@ -175,6 +183,30 @@ allOf:
+>        required:
+>          - "#sound-dai-cells"
+>  
+
+Missing if: narrowing this to 5 items for other devices.
+
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,sa8775p-dp
+> +
+> +    then:
+> +      properties:
+> +        clocks:
+
+Missing minItems, otherwise it is pointless.
+
+> +          maxItems: 6
+> +        clock-names:
+> +          items:
+> +            - const: core_iface
+> +            - const: core_aux
+> +            - const: ctrl_link
+> +            - const: ctrl_link_iface
+> +            - const: stream_pixel
+> +            - const: stream_1_pixel
+> +        assigned-clocks:
+> +          maxItems: 3
+
+Missing minItems... or just drop, it's not accurate or not even correct.
+I can assign 4 clocks, why not? Or rather: why do you stop users from
+assigning 4 clocks?
+
+
+> +        assigned-clock-parents:
+> +          maxItems: 3
+> +
+>  additionalProperties: false
+
+
 
 Best regards,
 Krzysztof
