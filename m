@@ -1,213 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-40035-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40037-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5CF159E15DB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 09:33:55 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E76649E160F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 09:43:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 10E4FB329D2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 08:13:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AB1582841C3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 08:43:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E758F199235;
-	Tue,  3 Dec 2024 08:13:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ekr9OIgf"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3750C1D90A1;
+	Tue,  3 Dec 2024 08:43:48 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mail-gw02.astralinux.ru (mail-gw02.astralinux.ru [195.16.41.108])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24A912500C5;
-	Tue,  3 Dec 2024 08:13:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2211DDC39;
+	Tue,  3 Dec 2024 08:43:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.16.41.108
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733213630; cv=none; b=RbGheORS13VBAcOCwu7iIi+Rh2NOVGMs0gbx6jgrhG+gQN5OyfyDJDVyFf6j0HvvBRplcCfI0ekvZl2uDdTeZlwUfbkOlmH/d8XiTnKqncNg6dbSMOKQrf15NvgaPgn7qrla9kSdmLC4CaU9M/uV1vWEfLQel40uPzvgezxg2Bk=
+	t=1733215428; cv=none; b=j9gsWw+vfTgFfjVR2wn0k6ctaBF59vYPhUf4U/KPPWJ9GRlgbtN85E+LG/PrUAbKO1QKWkgugzpumvLUP34V/hcDgvQYLZ1ZqF6SNlH5thied2OTgzTAWF9xoZv7CkVlEe61FmDds4ckcIgV3fPY9v0LcifcL7mevj9MMBA0iN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733213630; c=relaxed/simple;
-	bh=/XS7+NaTYsRXMzZRiA2stq2PaMpZLMlA8OfguCk9Amk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=orkdJ5NWKM4P8xdObxo6Us7CZym+wii/CcFkmyMj0WVoZ4Y+8m2FAV92EKgVOohR1+MEEF2A6UflQVcOnH0eAqC2YU4X8XPOFG3NquSRJdWZxREUvaPVtPOIyMXcSKXCFrdcIQCg/G6rGTFk4aujpWtwN/MQgORDf+M44oq70AY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ekr9OIgf; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B38DHm7021372;
-	Tue, 3 Dec 2024 08:13:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	lyio5c/QsJpciT6SfoU0fRT+8D6R60aiIJYgWs6p97M=; b=ekr9OIgfslsb1awo
-	JKMf8PrdseqcAamEcRBSfXr0t60vThSOxHPKUYOKNVQNge/ROrx2xjIYczxAOHJX
-	c2XSjm2rA32/Kw7MR3b5Ms7y1eZIVFeae78357DdASe9spHdhiSYN+BTypIhVIO+
-	XLK+4DFyVZ3xpJmcLABse6PrWFhlayAYlUQ2qxxYOqo6IYIp+658abNSQ9MJeLWI
-	TRRixQrqmVl+7ZKErEDmDbvYmELIUuI6lxn+qDvBBIYBehoKxlfsGM2XqmVomdym
-	K/2wieTsaSZc5auVtrriwoXgp+/rJGaRdqJkJGCkWqvSynUHymiHSeXduXrSXMC+
-	1RaMhw==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 437ufe79g4-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 03 Dec 2024 08:13:32 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B38DV8n018083
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 3 Dec 2024 08:13:31 GMT
-Received: from [10.64.16.135] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 3 Dec 2024
- 00:13:25 -0800
-Message-ID: <b4345b9e-62c6-470d-b1b0-4758cef7f175@quicinc.com>
-Date: Tue, 3 Dec 2024 16:13:22 +0800
+	s=arc-20240116; t=1733215428; c=relaxed/simple;
+	bh=jeXNRj5gqwqoLLCuPCrhuzvU5etRv7agVADjw5vEYb0=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=VSVlmmpj+LPcJ8mn8y+5h/Ex3oyyFO9+QAoSJmlWKDRdJ4YUNackYTbVFqSoANqOFUL/aoM8m0hyvoVz+/hI6PicoOwFJWHO3y7prN7U6AqBbnv3i6X2K0fXjXgGBBcZU0CZ5+yj7wyLseCLTrgkh+BVnqQZnd4z+ZVQfYL9KJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=astralinux.ru; spf=pass smtp.mailfrom=astralinux.ru; arc=none smtp.client-ip=195.16.41.108
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=astralinux.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=astralinux.ru
+Received: from gca-msk-a-srv-ksmg01.astralinux.ru (localhost [127.0.0.1])
+	by mail-gw02.astralinux.ru (Postfix) with ESMTP id 92B261F9D9;
+	Tue,  3 Dec 2024 11:43:33 +0300 (MSK)
+Received: from new-mail.astralinux.ru (gca-yc-ruca-srv-mail05.astralinux.ru [10.177.185.111])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mail-gw02.astralinux.ru (Postfix) with ESMTPS;
+	Tue,  3 Dec 2024 11:43:32 +0300 (MSK)
+Received: from rbta-msk-lt-106062.astralinux.ru (unknown [10.177.20.58])
+	by new-mail.astralinux.ru (Postfix) with ESMTPA id 4Y2Z1Z4RlKz1c0sD;
+	Tue,  3 Dec 2024 11:43:30 +0300 (MSK)
+From: Anastasia Belova <abelova@astralinux.ru>
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Anastasia Belova <abelova@astralinux.ru>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	David Dai <daidavid1@codeaurora.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org,
+	lvc-project@linuxtesting.org
+Subject: [PATCH] clk: qcom: clk-rpmh: prevent integer overflow in recalc_rate
+Date: Tue,  3 Dec 2024 11:42:31 +0300
+Message-Id: <20241203084231.6001-1-abelova@astralinux.ru>
+X-Mailer: git-send-email 2.30.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7/8] drm/msm/dp: Retry Link Training 2 with lower pattern
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar
-	<quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        Maarten Lankhorst
-	<maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Rob Herring <robh@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "Kuogee
- Hsieh" <quic_khsieh@quicinc.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        "Kishon
- Vijay Abraham I" <kishon@kernel.org>,
-        Linus Walleij
-	<linus.walleij@linaro.org>,
-        Bartosz Golaszewski <brgl@bgdev.pl>, <quic_lliu6@quicinc.com>,
-        <quic_fangez@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <linux-gpio@vger.kernel.org>
-References: <20241129-add-displayport-support-for-qcs615-platform-v1-0-09a4338d93ef@quicinc.com>
- <20241129-add-displayport-support-for-qcs615-platform-v1-7-09a4338d93ef@quicinc.com>
- <CAA8EJpoN1qBHyZrQJT_=e_26+tcaKRnSrhtxrK6zBP4BwpL=Hg@mail.gmail.com>
-From: Xiangxu Yin <quic_xiangxuy@quicinc.com>
-In-Reply-To: <CAA8EJpoN1qBHyZrQJT_=e_26+tcaKRnSrhtxrK6zBP4BwpL=Hg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: t1dX3nC9GUAWYDcJWQ-NfbM5Ailiyc0r
-X-Proofpoint-GUID: t1dX3nC9GUAWYDcJWQ-NfbM5Ailiyc0r
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=0
- spamscore=0 impostorscore=0 lowpriorityscore=0 priorityscore=1501
- mlxlogscore=999 clxscore=1015 adultscore=0 bulkscore=0 mlxscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412030069
+Content-Transfer-Encoding: 8bit
+X-KSMG-AntiPhishing: NotDetected
+X-KSMG-AntiSpam-Auth: dkim=none
+X-KSMG-AntiSpam-Envelope-From: abelova@astralinux.ru
+X-KSMG-AntiSpam-Info: LuaCore: 44 0.3.44 5149b91aab9eaefa5f6630aab0c7a7210c633ab6, {Tracking_internal2}, {Tracking_from_domain_doesnt_match_to}, astralinux.ru:7.1.1;d41d8cd98f00b204e9800998ecf8427e.com:7.1.1;127.0.0.199:7.1.2;new-mail.astralinux.ru:7.1.1, FromAlignment: s
+X-KSMG-AntiSpam-Interceptor-Info: scan successful
+X-KSMG-AntiSpam-Lua-Profiles: 189567 [Dec 03 2024]
+X-KSMG-AntiSpam-Method: none
+X-KSMG-AntiSpam-Rate: 0
+X-KSMG-AntiSpam-Status: not_detected
+X-KSMG-AntiSpam-Version: 6.1.1.7
+X-KSMG-AntiVirus: Kaspersky Secure Mail Gateway, version 2.1.0.7854, bases: 2024/12/03 00:44:00 #26930054
+X-KSMG-AntiVirus-Status: NotDetected, skipped
+X-KSMG-LinksScanning: NotDetected
+X-KSMG-Message-Action: skipped
+X-KSMG-Rule-ID: 1
 
+aggr_state and unit fields are u32. The result of their
+multiplication may not fit in this type.
 
+Add explicit casting to prevent overflow.
 
-On 11/29/2024 9:53 PM, Dmitry Baryshkov wrote:
-> On Fri, 29 Nov 2024 at 09:59, Xiangxu Yin <quic_xiangxuy@quicinc.com> wrote:
->>
->> Add a mechanism to retry Link Training 2 by lowering the pattern level
->> when the link training #2 first attempt fails. This approach enhances
->> compatibility, particularly addressing issues caused by certain hub
->> configurations.
-> 
-> Please reference corresponding part of the standard, describing this lowering.
-> 
-Per DisplayPort 1.4a specification Section 3.5.1.2 and Table 3-10, while the standard doesn't explicitly define a TPS downgrade mechanism, it does specify:
-- All devices shall support TPS1 and TPS2
-- HDR2-capable devices shall support TPS3
-- HDR3-capable devices shall support TPS4
-While these capabilities are explicitly defined DPCD for sink devices, source device capabilities are less strictly defined, with the minimum requirement being support for TPS1 and TPS2.
-In QCS615 DP phy is only supporting to HBR2, we observed a critical interoperability scenario with a DP->HDMI bridge. When link training at TPS4 consistently failed, downgrading to the next lower training pattern successfully established the link and display output successfully.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-This experience suggests that implementing a flexible link training pattern downgrade mechanism can significantly improve compatibility with third-party, non-standard hubs and displays,
-especially in scenarios where strict adherence to the highest training pattern might prevent successful connection.
->>
->> Signed-off-by: Xiangxu Yin <quic_xiangxuy@quicinc.com>
->> ---
->>  drivers/gpu/drm/msm/dp/dp_ctrl.c | 34 ++++++++++++++++++++++++++++++----
->>  1 file changed, 30 insertions(+), 4 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
->> index 49c8ce9b2d0e57a613e50865be3fe98e814d425a..b1862294cb98c9f756b0108b7670cb42de37bae4 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
->> @@ -1220,7 +1220,7 @@ static void msm_dp_ctrl_clear_training_pattern(struct msm_dp_ctrl_private *ctrl)
->>  }
->>
->>  static int msm_dp_ctrl_link_train_2(struct msm_dp_ctrl_private *ctrl,
->> -                       int *training_step)
->> +                       int *training_step, bool downgrade)
->>  {
->>         int tries = 0, ret = 0;
->>         u8 pattern;
->> @@ -1243,6 +1243,28 @@ static int msm_dp_ctrl_link_train_2(struct msm_dp_ctrl_private *ctrl,
->>                 state_ctrl_bit = 2;
->>         }
->>
->> +       /*
->> +        * DP link training uses the highest allowed pattern by default.
->> +        * If it fails, the pattern is downgraded to improve cable and monitor compatibility.
->> +        */
->> +       if (downgrade) {
->> +               switch (pattern) {
->> +               case DP_TRAINING_PATTERN_4:
->> +                       pattern = DP_TRAINING_PATTERN_3;
->> +                       state_ctrl_bit = 3;
->> +                       break;
->> +               case DP_TRAINING_PATTERN_3:
->> +                       pattern = DP_TRAINING_PATTERN_2;
->> +                       state_ctrl_bit = 2;
->> +                       break;
->> +               default:
->> +                       break;
->> +               }
->> +       }
->> +
->> +       drm_dbg_dp(ctrl->drm_dev, "pattern(%d) state_ctrl_bit(%d) downgrade(%d)\n",
->> +               pattern, state_ctrl_bit, downgrade);
->> +
->>         ret = msm_dp_catalog_ctrl_set_pattern_state_bit(ctrl->catalog, state_ctrl_bit);
->>         if (ret)
->>                 return ret;
->> @@ -1311,10 +1333,14 @@ static int msm_dp_ctrl_link_train(struct msm_dp_ctrl_private *ctrl,
->>         /* print success info as this is a result of user initiated action */
->>         drm_dbg_dp(ctrl->drm_dev, "link training #1 successful\n");
->>
->> -       ret = msm_dp_ctrl_link_train_2(ctrl, training_step);
->> +       ret = msm_dp_ctrl_link_train_2(ctrl, training_step, false);
->>         if (ret) {
->> -               DRM_ERROR("link training #2 failed. ret=%d\n", ret);
->> -               goto end;
->> +               drm_dbg_dp(ctrl->drm_dev, "link training #2 failed, retry downgrade.\n");
->> +               ret = msm_dp_ctrl_link_train_2(ctrl, training_step, true);
->> +               if (ret) {
->> +                       DRM_ERROR("link training #2 failed. ret=%d\n", ret);
->> +                       goto end;
->> +               }
->>         }
->>
->>         /* print success info as this is a result of user initiated action */
->>
->> --
->> 2.25.1
->>
-> 
-> 
+Fixes: 04053f4d23a4 ("clk: qcom: clk-rpmh: Add IPA clock support")
+Cc: stable@vger.kernel.org # 5.4+
+Signed-off-by: Anastasia Belova <abelova@astralinux.ru>
+---
+ drivers/clk/qcom/clk-rpmh.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
+index eefc322ce367..e6c33010cfbf 100644
+--- a/drivers/clk/qcom/clk-rpmh.c
++++ b/drivers/clk/qcom/clk-rpmh.c
+@@ -329,7 +329,7 @@ static unsigned long clk_rpmh_bcm_recalc_rate(struct clk_hw *hw,
+ {
+ 	struct clk_rpmh *c = to_clk_rpmh(hw);
+ 
+-	return c->aggr_state * c->unit;
++	return (unsigned long)c->aggr_state * c->unit;
+ }
+ 
+ static const struct clk_ops clk_rpmh_bcm_ops = {
+-- 
+2.30.2
 
 
