@@ -1,143 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-40116-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40117-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6559D9E2173
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 16:13:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3E6A89E2182
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 16:14:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 24A65285B22
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 15:13:38 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F3138281FF8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 15:14:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3EBCD1F9A94;
-	Tue,  3 Dec 2024 15:10:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3EAE41FBCAD;
+	Tue,  3 Dec 2024 15:11:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="SouZNHzi"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TTNZgXCU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
+Received: from mail-wm1-f65.google.com (mail-wm1-f65.google.com [209.85.128.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D050D1F9437
-	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Dec 2024 15:10:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FEA21FBCAA
+	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Dec 2024 15:11:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.65
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238618; cv=none; b=NDSnfjc1vaACUX8wc/oB9TtteoF4ICCXdNNY+XoYVDydpRHFzz0a5ncF7WULwjBtDmEB17IZtxpauxWhERxXPHk8P228idqdPN7IdxG6MKCID5HyEltE9ngOaA8K5jhID+T6KfS7H/5y0B1zLUIgfBULureWA0mOYqQwEgxwvwY=
+	t=1733238691; cv=none; b=YREOixK1LxKJqpxgGgK4BxY8r9xxYuMVbFjne3A2xaMcykDk1bBgsYeRC+GgYYFENYRvlmKO7Bxg0ky1loEE43I7tAyblEAgKrNGH3IipBe9roB1v+6a6W7o10v6kUjr3EtzlSLhwnvT4ETXcH3ZaTqTttT6HqJSG4uRScglu2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238618; c=relaxed/simple;
-	bh=U/OoOzXsIi2r7sSP/cLR0FzyZqfuU3DiHqvIkCvcvj8=;
-	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=uzq9INFTFhKvyHEb3nNf03E82D4VvByKLvLfuY5NBBoHEKSW9CxdPnJUz70SUTgrdJ9/JUTluLsIm8XJoPGL07KFH9l4rpRTUC4HTcAV+2UyqiuATZaRuK7GGCPXzEtXih/+hkR/8+M3tvYMcztnGbNzrLT5P1/KL488fio63bM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=SouZNHzi; arc=none smtp.client-ip=209.85.215.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-pg1-f173.google.com with SMTP id 41be03b00d2f7-7ee51d9ae30so3887936a12.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Dec 2024 07:10:16 -0800 (PST)
+	s=arc-20240116; t=1733238691; c=relaxed/simple;
+	bh=Uei6j24yL3vgxy4vncTGsY2siuJb0kM1VOXijaR88jw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=D+aXlBLzlhG1CeUArKYGGPEmlVzOYLd7yhWDQLWZn0bxDUpkRwHA2aRM0UXM+eYoKE7f5FjRe3L7Z0Mok7wOPEO1CVlBk9RW3Hjvze/m/BY4OoUCuLM6Z/0JR6bd1uOaYyBTPFr2ed1rHHbMxgsrcWX5lx6Po7lzOzWEXf6KqYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TTNZgXCU; arc=none smtp.client-ip=209.85.128.65
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f65.google.com with SMTP id 5b1f17b1804b1-434a1fe2b43so50911965e9.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Dec 2024 07:11:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1733238616; x=1733843416; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:references:mime-version:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=p0ezAqCKNWBAiuxAl3Y2kJKU1te23QxF0JI4IxEegt0=;
-        b=SouZNHzingFWow5COB5W5tgVUhP/qi8eFeiHs4lESYZtkRSF2bGbFC1c5NmE97OfZq
-         DKb5APHfqw8Q9OIT2nSClQ6gAWzIuHc9ZI7DwsPmX+taeYs9kSVKyg9TYLDFDZud5Up8
-         vfIrWcXGdfk+U4eZ3f5Cs4hGQrNpbNSR/6XywidzeuDOqN0XHoeu3S090pUaGOxse7z2
-         whcN4x8YlDM5yRkqrvy7vJmnVOG5z+LL73ozPlsYYWCIaDm2UkyvFJ+l84/7oLnpR2rO
-         JUDy4k6+sDFzL9DHoY3k537qGV+rFV8pDRZm3dr96hIr9XE4ZHQYw+/zrac1Sxg44i3h
-         wU7A==
+        d=linaro.org; s=google; t=1733238687; x=1733843487; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=zREpKid1FijkM8w3fvUJYYcepCZqPc1/enXnI+QFhQI=;
+        b=TTNZgXCU8vVl158hgBSDkr+Zx0cG0tZLufC86xognLJ6Os3DvGbcuG4ssB2k14dKOv
+         l4yUZDM6ysHGjQNU5QPfapoDS07SEnjfz364PZyazpVkxUtfJLJh1heBO9UcmWMUVNdf
+         dBKB92KSnfVJiWQXDgOTSEc7VFmrF2KiJ21wh7yQTAhr+ReXLBTksV2Jl9l1JJSC20+h
+         4ZBxnZIA1LSaKiK/nTEF/sCjoLEMpgzNfbKiDr61GPfiWssx8EW/zy4aSy3Q+kN8P7aA
+         rr2FmXe1Wl0YLiI6D1smAnXDypdol8MCbuS9ZaUzsvxt0FlG+8AkYDHJcTasoCVZeOAW
+         nusQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733238616; x=1733843416;
-        h=cc:to:subject:message-id:date:references:mime-version:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=p0ezAqCKNWBAiuxAl3Y2kJKU1te23QxF0JI4IxEegt0=;
-        b=stT95JFWE4jFBo1RSY6Ui1gRykqI5Vqd4hOJ0xOjmFp8NsS7Af0/aYVVVAh8QP2T8o
-         4pMpp+Uo+nACotca+Y/VGtK6mL7qOHXXb2IxS+rsJ/NkAckZiViTFC6UypNAi7nBFNqE
-         nBWd18eMQD0OcwjZPBWgg8aIe1iLDl4yvVuFBQS7IG21lRFG77QY37yKP5SFVdM1B9Qw
-         +qkPEXiAHgNpmsAXODvureAqCsQaSzkas/ALuUU/Qf/Z2R2Zvu/Isz/7GeI9hreUr9wv
-         S5Ef+7DTtVw19cJs6ykmALJCg41XvqO8vFMTcIBNCis6bj6cL3HKRpaSjjU7Lm9OSNxU
-         Hnwg==
-X-Forwarded-Encrypted: i=1; AJvYcCXfUdeQEViA5euxsXA4saqSSU3kl3WF3Opm9PeL7iA0V+7qEdT5EAdg5yKhxl8GA94ZH6Ra3d0jGK0GIJn2@vger.kernel.org
-X-Gm-Message-State: AOJu0YzJaVIhY9vyBJwVI3IJKnU768VmG8K+vFvShKrpydpxYSMR/ICZ
-	EFibRqj2KqYm+h+vrI3IfmF6zLiSkkPzyDjMjqtwwYHOjgO8V/vJZ307YuA6sqvxzyaBXdP39rQ
-	QI9OEffnTkHsKvDkmGUMuypNc94na4+SaXoOX6A==
-X-Gm-Gg: ASbGncsB+4V2xD7xRKS3AOwmT1GfwP+BJ814crOegjHg6jFAu+nXtZZQpNg4vvDX5EY
-	cahzVQTbXbSZ5ryGDSRBO9+s9RU59co8=
-X-Google-Smtp-Source: AGHT+IGIUqVE82b+dvpoCo08vBA9hrCj+aCzVv5qZgUaQJourUSn2MQUzu2S39lm+R0r8d/vqoADCueK4RgwsGjH9Bk=
-X-Received: by 2002:a05:6a21:38b:b0:1e0:d9e9:a2c7 with SMTP id
- adf61e73a8af0-1e1653b9c06mr3889882637.15.1733238616139; Tue, 03 Dec 2024
- 07:10:16 -0800 (PST)
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 3 Dec 2024 10:10:13 -0500
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-In-Reply-To: <d6220576-eaf5-4415-b25f-b5984255ab78@linaro.org>
+        d=1e100.net; s=20230601; t=1733238687; x=1733843487;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zREpKid1FijkM8w3fvUJYYcepCZqPc1/enXnI+QFhQI=;
+        b=Jry+Tptzyx1lwZr+99wPR0SC0bnqWeWH1kxZUb5wxIDeJkr8TO3RQGTAgL7e3WxhcU
+         06M8mKmuJ6sktPBj1qolGLT3+Mcjq7VUGTY+We2alPD2xhEX7vSD+ThLnH/PkxM0NFvY
+         afOrCQiiaKaETBz4rvUR/zRoVGvEGA6rzT1WXkKsW+gAEc1lmTLn9uZg3yI0TqPzBrxp
+         XZnJs65sPD3QSEzUmwxlbDgl7FEFYpZLlnljS0NDpy9Gw/Jbj6MQmeUS0Hjggki6HjYO
+         dtyeh1KSfMrwcQuPQqj2FJmEPKsUZs8SnGH4QFqYkJ9MlRGzOsP5gHNJR8ROhNo5wTXP
+         uiUw==
+X-Forwarded-Encrypted: i=1; AJvYcCUWrb9DMUNETF1mQTQNOM+L9qsdbcZb74wjSK5YY3/OOxVNmoV2aRjjDuhmji4YNxwyf7tLPBSRIYLOy0Ti@vger.kernel.org
+X-Gm-Message-State: AOJu0YzJbE9Nvp+R1EFvBKwUdSsHYUwHujZuxr9eNwaT+e/kHpTqNOQu
+	vSOEZuezHO8wuBHjrogsJUFtQ5BlVwfGzWRndI1SrfbfRShqR+FxyYWRwGTDhgI=
+X-Gm-Gg: ASbGncufWFgf+/t9GDO4VtQiT5cjBA1+Y45/phXYbI8DsDb4EKuQ2XQfHm1iKCV38vr
+	HVQOZN/x4DXcidc5bQtu4DN0Pp8oA9esZUvYK5mf32HGUrJmQ4ISoz77vhyS8mWJeJYweUjZ1Hl
+	p0/Ru5IYOXzTItPb+kWpzchsgKcnLA53B1tXzighTE+sBM218YAIfsC1Z47ib84/aRJRg7zWHm5
+	ZMQd9RL36VqQbi2gUZ82lpBK5dCVuhCWrWMu3YT410sFPbvsm83IxmBqbkc6w==
+X-Google-Smtp-Source: AGHT+IHpG+YYkt5XvDCdFdtRCKt3GJs9wG1S7RmUFMFyXfoO+hh7Lfjm2kqMdLvybUfLqLTQRDejCw==
+X-Received: by 2002:a05:600c:3ca7:b0:431:12a8:7f1a with SMTP id 5b1f17b1804b1-434d09c12bfmr28153625e9.16.1733238687261;
+        Tue, 03 Dec 2024 07:11:27 -0800 (PST)
+Received: from linaro.org ([2a02:2454:ff21:ef80:41ad:5703:2486:8f59])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-434b0dc99b3sm191481505e9.24.2024.12.03.07.11.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Dec 2024 07:11:26 -0800 (PST)
+Date: Tue, 3 Dec 2024 16:11:22 +0100
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Abel Vesa <abel.vesa@linaro.org>, Johan Hovold <johan@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	Krishna Kurapati <quic_kriskura@quicinc.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>, linux-usb@vger.kernel.org,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: x1e80100-crd: Add USB multiport
+ fingerprint readery
+Message-ID: <Z08fmvBEh6dYQimN@linaro.org>
+References: <20241118-x1e80100-crd-fp-v1-0-ec6b553a2e53@linaro.org>
+ <20241118-x1e80100-crd-fp-v1-1-ec6b553a2e53@linaro.org>
+ <Z07bgH5vVk44zuEH@hovoldconsulting.com>
+ <Z07r3Upr50vLluyn@linaro.org>
+ <Z07zeVJU3Y1GiSLL@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241203-crypto-qce-refactor-v1-0-c5901d2dd45c@linaro.org>
- <20241203-crypto-qce-refactor-v1-9-c5901d2dd45c@linaro.org> <d6220576-eaf5-4415-b25f-b5984255ab78@linaro.org>
-Date: Tue, 3 Dec 2024 10:10:13 -0500
-Message-ID: <CAMRc=MevaM4tUNQUs_LjFYaUtDH=YqE-t2gBponGqtK5xE9Gpw@mail.gmail.com>
-Subject: Re: [PATCH 9/9] crypto: qce - switch to using a mutex
-To: neil.armstrong@linaro.org
-Cc: linux-crypto@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Bartosz Golaszewski <brgl@bgdev.pl>, 
-	Thara Gopinath <thara.gopinath@gmail.com>, Herbert Xu <herbert@gondor.apana.org.au>, 
-	"David S. Miller" <davem@davemloft.net>, Stanimir Varbanov <svarbanov@mm-sol.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z07zeVJU3Y1GiSLL@linaro.org>
 
-On Tue, 3 Dec 2024 14:53:21 +0100, neil.armstrong@linaro.org said:
-> On 03/12/2024 10:19, Bartosz Golaszewski wrote:
->> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->>
->> Having switched to workqueue from tasklet, we are no longer limited to
->> atomic APIs and can now convert the spinlock to a mutex. This, along
->> with the conversion from tasklet to workqueue grants us ~15% improvement
->> in cryptsetup benchmarks for AES encryption.
->
-> Can you share on which platforms you did the tests and the results you got ?
->
++Cc Dmitry
 
-Sure, I tested on sm8650 with the following results (they vary from
-one run to other but are more or less in this range):
+On Tue, Dec 03, 2024 at 02:03:05PM +0200, Abel Vesa wrote:
+> On 24-12-03 12:30:37, Stephan Gerhold wrote:
+> > On Tue, Dec 03, 2024 at 11:20:48AM +0100, Johan Hovold wrote:
+> > > [ +CC: Krishna, Thinh and the USB list ]
+> > > 
+> > > On Mon, Nov 18, 2024 at 11:34:29AM +0100, Stephan Gerhold wrote:
+> > > > The X1E80100 CRD has a Goodix fingerprint reader connected to the USB
+> > > > multiport controller on eUSB6. All other ports (including USB super-speed
+> > > > pins) are unused.
+> > > > 
+> > > > Set it up in the device tree together with the NXP PTN3222 repeater.
+> > > > 
+> > > > Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+> > > > ---
+> > > >  arch/arm64/boot/dts/qcom/x1e80100-crd.dts | 48 +++++++++++++++++++++++++++++++
+> > > >  1 file changed, 48 insertions(+)
+> > > > 
+> > > > diff --git a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
+> > > > index 39f9d9cdc10d..44942931c18f 100644
+> > > > --- a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
+> > > > +++ b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
+> > > > @@ -735,6 +735,26 @@ keyboard@3a {
+> > > >  	};
+> > > >  };
+> > > >  
+> > > > +&i2c5 {
+> > > > +	clock-frequency = <400000>;
+> > > > +
+> > > > +	status = "okay";
+> > > > +
+> > > > +	eusb6_repeater: redriver@4f {
+> > > > +		compatible = "nxp,ptn3222";
+> > > > +		reg = <0x4f>;
+> > > 
+> > > The driver does not currently check that there's actually anything at
+> > > this address. Did you verify that this is the correct address? 
+> > > 
+> > > (Abel is adding a check to the driver as we speak to catch any such
+> > > mistakes going forward).
+> > > 
+> > 
+> > Yes, I verified this using
+> > https://git.codelinaro.org/stephan.gerhold/linux/-/commit/45d5add498612387f88270ca944ee16e2236fddd
+> > 
+> > (I sent this to Abel back then, so I'm surprised he didn't run that :-))
+> 
+> I don't remember seeing this commit back then. Maybe I didn't look
+> careful enough. Sorry.
+> 
+> Since you already did the work, can you send that on the list?
+> 
 
-With this series:
+Sure, no problem. What exactly do we want for upstream?
 
-#     Algorithm |       Key |      Encryption |      Decryption
-        aes-cbc        128b        94.1 MiB/s       138.6 MiB/s
-    serpent-cbc        128b               N/A               N/A
-    twofish-cbc        128b               N/A               N/A
-        aes-cbc        256b        94.8 MiB/s       128.5 MiB/s
-    serpent-cbc        256b               N/A               N/A
-    twofish-cbc        256b               N/A               N/A
-        aes-xts        256b       132.9 MiB/s       131.8 MiB/s
-    serpent-xts        256b               N/A               N/A
-    twofish-xts        256b               N/A               N/A
-        aes-xts        512b       122.6 MiB/s       122.4 MiB/s
-    serpent-xts        512b               N/A               N/A
-    twofish-xts        512b               N/A               N/A
+My patch above isn't ideal, because it checks the CHIP_ID on every PHY
+power up. But briefly powering up the PHY during probe() just for
+reading the CHIP_ID is also a bit weird. Not sure what the best approach
+here is.
 
-Without it:
-
-#     Algorithm |       Key |      Encryption |      Decryption
-        aes-cbc        128b        96.4 MiB/s       141.0 MiB/s
-    serpent-cbc        128b               N/A               N/A
-    twofish-cbc        128b               N/A               N/A
-        aes-cbc        256b        67.0 MiB/s        97.8 MiB/s
-    serpent-cbc        256b               N/A               N/A
-    twofish-cbc        256b               N/A               N/A
-        aes-xts        256b       131.7 MiB/s       132.0 MiB/s
-    serpent-xts        256b               N/A               N/A
-    twofish-xts        256b               N/A               N/A
-        aes-xts        512b        93.9 MiB/s        96.8 MiB/s
-    serpent-xts        512b               N/A               N/A
-    twofish-xts        512b               N/A               N/A
-
-AES-CBC and AES-XTS with shorter keys remain pretty much the same. I'm not
-sure why that is. I also tested on sa8775p but there are no visible
-improvements there. :(
-
-Bart
+Thanks,
+Stephan
 
