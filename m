@@ -1,141 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-40019-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40020-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 322CE9E135D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 07:33:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id AB9989E13BC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 08:08:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C1E4C2825C8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 06:33:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A653C280F30
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 07:08:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F0041487CD;
-	Tue,  3 Dec 2024 06:33:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 538A61885A0;
+	Tue,  3 Dec 2024 07:08:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b="1WyptBjK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from inva020.nxp.com (inva020.nxp.com [92.121.34.13])
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.17.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B8C2173;
-	Tue,  3 Dec 2024 06:33:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=92.121.34.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C97142AA3;
+	Tue,  3 Dec 2024 07:08:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.24
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733207598; cv=none; b=h+cVfOPKPONi8maFrf2Rz1vHsPD7NfneJwHu/JF1W955HT2nsAOf94/TKJGVtYuTvtALViQluwjeYzeI7qwuwPp580rM1A7fgDBbGMDzGt++6AL5xX9McGjI2SpM+SRdPrFF2Pc41f9BxN9tOlBa5IGLYE+AIfKe51/m5bOcs6I=
+	t=1733209703; cv=none; b=tlkcIAh9VDoHV0gcHn5ukEGfCdA0opbCrJz/PZ8mb+iLyXDboKWWRgRDg7vusDN7Ku1YW+MlJYQv0ZBqJY4yy/0+wTtktQ6chzSrDOweOF8bPTOSqEARmuVuCTLnsx/L4xYIHCWjHGAnCg6XdusIl3DivxC05+2JjEcay90uchU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733207598; c=relaxed/simple;
-	bh=xXzj5lui4mmh8UNRyRnUSzrAo+0fyVSgY5TeYZqjTo4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=plhMKvES51WxcU9ZHMD5ZMJyE5gORlzVXT53fAyhwCNbzkQGKNPNW+76wy0Z4/avObc9qNk/KfibJnrfKV6oUG3chDaYUDQqh4QxOvtOLgXJezfqHOa5ORJlN/LXElAmBYGVzgPeAO9kfcnY/V5n6HOaMg+GSdoKqZqtWF6XUlg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; arc=none smtp.client-ip=92.121.34.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
-Received: from inva020.nxp.com (localhost [127.0.0.1])
-	by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 099B91A05B3;
-	Tue,  3 Dec 2024 07:33:15 +0100 (CET)
-Received: from inva024.eu-rdc02.nxp.com (inva024.eu-rdc02.nxp.com [134.27.226.22])
-	by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id F00441A05A5;
-	Tue,  3 Dec 2024 07:33:14 +0100 (CET)
-Received: from lsv051416.swis.nl-cdc01.nxp.com (lsv051416.swis.nl-cdc01.nxp.com [10.168.48.122])
-	by inva024.eu-rdc02.nxp.com (Postfix) with ESMTP id 48117202A7;
-	Tue,  3 Dec 2024 07:33:14 +0100 (CET)
-Date: Tue, 3 Dec 2024 07:33:14 +0100
-From: Jan Petrous <jan.petrous@oss.nxp.com>
-To: Andrew Lunn <andrew@lunn.ch>
-Cc: Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Jose Abreu <joabreu@synopsys.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Richard Cochran <richardcochran@gmail.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Russell King <linux@armlinux.org.uk>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Emil Renner Berthing <kernel@esmil.dk>,
-	Minda Chen <minda.chen@starfivetech.com>,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Iyappan Subramanian <iyappan@os.amperecomputing.com>,
-	Keyur Chudgar <keyur@os.amperecomputing.com>,
-	Quan Nguyen <quan@os.amperecomputing.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	imx@lists.linux.dev, devicetree@vger.kernel.org,
-	NXP S32 Linux Team <s32@nxp.com>, 0x1207@gmail.com,
-	fancer.lancer@gmail.com
-Subject: Re: [PATCH net-next v7 14/15] net: stmmac: dwmac-s32: add basic NXP
- S32G/S32R glue driver
-Message-ID: <Z06mKpcvBO23RSx+@lsv051416.swis.nl-cdc01.nxp.com>
-References: <20241202-upstream_s32cc_gmac-v7-0-bc3e1f9f656e@oss.nxp.com>
- <20241202-upstream_s32cc_gmac-v7-14-bc3e1f9f656e@oss.nxp.com>
- <b9ad385b-7702-4c71-b14f-64f2714a35a4@lunn.ch>
+	s=arc-20240116; t=1733209703; c=relaxed/simple;
+	bh=sv/ZLZNiP+ORYCqKhKoa1tROOZS7hHnvR4oSVaz6GKA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NEzONaIig5+ydWNUlkSVI3OvFafyqwz4qFMN9+Z1IceVwSU7+iL4QoypQKR9h3YlsVWDPNr6vHQT5txhXcSYOSqM/n+GPaipYVNIuAypBggPMoSpvtSOceaAdLfj5zmowZksUgQgLlZHD61fXMUTViYMjpqIErcyqe/k5XSu8Y0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz; spf=pass smtp.mailfrom=oldschoolsolutions.biz; dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b=1WyptBjK; arc=none smtp.client-ip=212.227.17.24
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oldschoolsolutions.biz
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=oldschoolsolutions.biz; s=s1-ionos; t=1733209676; x=1733814476;
+	i=jens.glathe@oldschoolsolutions.biz;
+	bh=sv/ZLZNiP+ORYCqKhKoa1tROOZS7hHnvR4oSVaz6GKA=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=1WyptBjKNhHiqJNh8cQZueublvUjY6F7C5tt6kytTzW/16O45V1RTDzpY37rc4d3
+	 y9DFHa4zlknelPMcuu4Gxz2F1yJKuGxjKN2E4Ennr79Qi/3lwyl4i2WLKg45N2qcq
+	 C57/Z2msEzrrL+IjjovVquqjwDVe5gYeGTteUCYcVbnnzVQIwmS7XvdtFUHw6rctZ
+	 9rIYfRC814clNGeQc0ztVxgsCsch0FxA3G5f9bWzvZAg2XLBTEsDbc8AKAueXOaRz
+	 oPWbXgwop7r/a+MhSNuIZ8Wp/TH8Jxw8e+jgyvxBlwQYw+BP3AvLr3mV9ni39HJBn
+	 AvDH6tc2Vvv70x3jPw==
+X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
+Received: from [192.168.0.174] ([91.64.229.215]) by mrelayeu.kundenserver.de
+ (mreue109 [212.227.15.183]) with ESMTPSA (Nemesis) id
+ 1MJV9S-1sydCW2ICe-00TY9Z; Tue, 03 Dec 2024 08:07:56 +0100
+Message-ID: <7f5d424d-09a1-46ca-92a6-a1e7f8084bf0@oldschoolsolutions.biz>
+Date: Tue, 3 Dec 2024 08:07:55 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b9ad385b-7702-4c71-b14f-64f2714a35a4@lunn.ch>
-X-Virus-Scanned: ClamAV using ClamSMTP
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 3/3] arm64: dts: qcom: sc8280xp-blackrock: dt
+ definition for WDK2023
+To: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: Kalle Valo <kvalo@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Rob Herring <robh@kernel.org>, Merck Hung <merckhung@gmail.com>,
+ xlazom00@gmail.com, Conor Dooley <conor+dt@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>
+References: <20241202-jg-blackrock-for-upstream-v9-0-385bb46ca122@oldschoolsolutions.biz>
+ <20241202-jg-blackrock-for-upstream-v9-3-385bb46ca122@oldschoolsolutions.biz>
+ <0352b36d-92fa-42ba-bc20-40cef0f9ea42@oss.qualcomm.com>
+Content-Language: en-US
+From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+In-Reply-To: <0352b36d-92fa-42ba-bc20-40cef0f9ea42@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:tWOFzcbo+m+ObCOiNlwoCMMFHZX41Levru0sbPKXuhwKAASYWST
+ fyBC0QtCcJoFmuAQ7ET6NKAZHh/jPmRh10gEyGNY4CyCWapsiiiUhHvP1tEcd18RuHXgWZc
+ sXv/rnYuF6uso3VsXPet71gcNVPSzv7qCVBkdd81DGzI+Mz7vc8bmjSGxdY87SObOFkdfxr
+ 9BT55lV2G4CJOOyvVQrlw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:FD4rmPGlEW4=;j2SPBrS/ywcUJ4QmXa8fDkTDkG1
+ cORRp8hCXcarqbGLeHcQfugA68zlus5gxsgB0olmhfe0Qxt0LVLf7mm3ZU2ThaHlXAmCxMCeY
+ oZggykU6Zc/Jvlh6f434yPDG3WmAZa6EvgB4iiYqgzhd74GpkcXo1riOb22WrmnmWILFE/skO
+ 5nzyjVGTmKs87FYY2aRdEM4+qyjs2PNBfz7rBC6pL5CkS92D68JUL8iEtdRqK/siQGlVqlVR4
+ pylB0K4tA8MSXvBtaBc1jEbrQGFK7mNrpb80cGsZz9QTodpLrWHq7LUZBBHgAXAeunky5IA/v
+ CrM7lVmI/2+IfJCwO5pkutexuvyYsaDkb+6PMcnhy80RV3kWHZcEwxTJ5WVKxHQ/n/LMlX08/
+ oolAbqPeWvPuoWOzhkEpGoQ9ovM+mGvvRsLXQAppLze3KItlHICabfJMbnNVQOHV2c2wM34KP
+ f8FJJ4LJ44x8nERG6ztA9BBbmn/GPectVzwWpRbpCTdjQI+0H9e0ksDuOUCy/5GoCj8cuPJK/
+ sdfsmTMuhYipPxpltTM3N7rTTVRWMjtIgHxrGzk/W9IVGnfnpZLCV7Ndp0p6VC6vijGZ0u7K6
+ bgHGTV3gBUgIchiPDytg7YCfRQGqxewLyrBPwh1bmLPny13JGVEpvsbnq+pMhmkvLGly9EpT+
+ isMuQIe/KdSAgTIiRg+ub6ljEgabcMixb/z1e+vv8G/U196BvhsW1ArU8igrsdbZ6aAbzwW17
+ TVXWiBdTBS6P1gqc+Y91xdOfwFi0dJ9bAfyUSSYRh43DcOZS2nmSo6HZSC+Fi09RIeztRJCcV
+ /o0w0yVscx5pieXC3zNhWW14RN4cCOvwZ9AZbeiyb13/NSdeVI6zXEfOI0lofFO6I1hxdYIig
+ gEYkoRGCqGupP3AZzRYKlK+a4V1Iqn0wj5yl0Az0U1+kSmPBi+bxHUm4C1RtNl+/lFqb5uUMY
+ PV0AJnW3+cfFd0NKgTu53K1KVQBHSM2cn7dBlSTvDhb2i9gnZSNqDYPt2unaKbWal3WQ9U17Q
+ NcSUfNnx2G7Str4LrNFTq0B7/7Ua3B5Ifhoq2NV
 
-On Tue, Dec 03, 2024 at 12:43:58AM +0100, Andrew Lunn wrote:
-> > +static int s32_gmac_init(struct platform_device *pdev, void *priv)
-> > +{
-> > +	struct s32_priv_data *gmac = priv;
-> > +	int ret;
-> > +
-> > +	ret = clk_set_rate(gmac->tx_clk, GMAC_TX_RATE_125M);
-> > +	if (!ret)
-> > +		ret = clk_prepare_enable(gmac->tx_clk);
-> > +
-> > +	if (ret) {
-> > +		dev_err(&pdev->dev, "Can't set tx clock\n");
-> > +		return ret;
-> > +	}
-> 
-> The ordering is a bit odd here. Normally you would test each operation
-> individually for errors. So:
-> 
-> 	ret = clk_set_rate(gmac->tx_clk, GMAC_TX_RATE_125M);
-> 	if (ret) {
-> 		dev_err(&pdev->dev, "Can't set tx clock\n");
-> 		return ret;
-> 	}
-> 	ret = clk_prepare_enable(gmac->tx_clk);
-> 	if (ret) {
-> 		dev_err(&pdev->dev, "Can't enable tx clock\n");
-> 		return ret;
-> 	}
-> 
+On 03.12.24 06:08, Krishna Kurapati wrote:
 
-Thanks for it. The ordering is incorrect, agree. I will fix it in v8.
+[...]
+>
+> Although functionally unused, there is one more connector node that
+> runs between QMPPHY and DWC3 node. For example in [1], please check
+> "usb_dp_qmpphy_usb_ss_in" and "usb_1_dwc3_ss"
+>
+> Would be good to check why it is missing and add it further.
+>
+> [1]:
+> https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/q=
+cs6490-rb3gen2.dts
+>
+>
+I checked, there's an extra endpoint for usb_?_qmpphy_usb_ss_in and
+usb_?_qmpphy_dp_in.=C2=A0 usb_?_qmpphy_usb_ss_in=C2=A0 are defined (and "w=
+ired")
+between port@1 of usb_?_qmpphy and port@1 of usb_?_dwc3, in
+sc8280xp.dtsi. On port@2 of the qmpphy is usb_?_qmpphy_dp_in as
+endpoint, which is further defined in sc8280xp-microsoft-blackrock.dts
+as connecting to mdss0_dp?_out. Maybe that's wrong, it's the same as in
+sc8280xp-lenvo-thinkpad-x13s.dts.
 
-> 
-> > +
-> > +	ret = clk_prepare_enable(gmac->rx_clk);
-> > +	if (ret) {
-> > +		clk_disable_unprepare(gmac->tx_clk);
-> > +		dev_err(&pdev->dev, "Can't set rx clock\n");
-> > +		return ret;
-> > +	}
-> 
-> Is there no need to set the TX clock rate?
-> 
+with best regards
 
-Do you mean RX clock, right? Yes, I'll add it in v8 too.
+Jens
 
-BR.
-/Jan
+
 
