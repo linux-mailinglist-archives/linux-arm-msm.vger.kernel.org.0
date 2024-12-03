@@ -1,93 +1,90 @@
-Return-Path: <linux-arm-msm+bounces-40062-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40068-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9E85E9E1ACE
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 12:24:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id EB7739E1C92
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 13:46:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8C940B382BA
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 09:59:35 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CA5A2B24AA0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 11:12:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 660A91DDC25;
-	Tue,  3 Dec 2024 09:59:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A14EA1E378C;
+	Tue,  3 Dec 2024 11:12:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ie0Cxm+Q"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="u/3b56oh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FAB51E0488
-	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Dec 2024 09:59:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A54E61E3786
+	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Dec 2024 11:12:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733219967; cv=none; b=YWeflzdiKg3gfNNErd94xT7Av0lzpgVcn4E/9ixoAvjtZlWVbmRzVVsNN1njKSw14g35UwMxbmCixJ3wU83lw0XIiDkRaStKIZAG45el+K/2WszjC/SqIyxwpUMRCEbOZDPMmuw0FSwqqyhjytA/epasc27NRvvJLXpqlgycSbA=
+	t=1733224359; cv=none; b=fb8XkIV8MVOr+74ZnMX1zbfUx3DWkfFbZT23o1zQOy4d1WLLgnQDnmgF5mtPmaV9myjDtLOyAoJ9JwMujjVG5I3vqpu/TEjNc4B8YgDRK4xeJZwk/olmxDUsmt//yF1KhGT66fF9hCS4AD2FcVqVn25iwiSK7DJj/QYn+cFiL7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733219967; c=relaxed/simple;
-	bh=gmqMnRDZERHRwRbrL3Cxbp/S4U0KNibXieuqv/Lz/+M=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LiANC/6aN1dpbJOOt97UIN6pn2JAscPuJbUHEowrVExSiMWREwNcmhKpKwda1C+YYS69wVKJogD3OeRK4z7k2exoNZZH3Gtdx6nFGp9GNt0m7Vsba8dAR7oGHvGiGhT52i+kkr2LfA020zzyKnYgas4HPfxc2zs25clFPBlXRrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ie0Cxm+Q; arc=none smtp.client-ip=209.85.208.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5d0d32cd31aso1743229a12.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Dec 2024 01:59:25 -0800 (PST)
+	s=arc-20240116; t=1733224359; c=relaxed/simple;
+	bh=EqMT1lpbEY5/Che+UX6Bncb4AL1x5DYytCF5K+qiu2c=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=pAbnwuRuWGH/q1qIKeGANTBKF2zjTJm9FV0MnbVj8kH4+eksKp74eRPZRETFlrTIZbdCtJJz84iH0j7ewc6nNYVpQR8Y5wwvIOeKXcwnfBI8LwSMpXwyZMapVaXbx7/mEFXkz0ywA/SNYFBg0On0r3Yc6Udr4CbXeS5iXOIlAVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=u/3b56oh; arc=none smtp.client-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-385d851e7c3so296846f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Dec 2024 03:12:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733219964; x=1733824764; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QAdT/AkYZrS/JPMTUkdta47w083O08CKaY0xULIptt0=;
-        b=ie0Cxm+Q4jKM4T90E75jwE5ojCpV7BayvCqedvO7pG8Pp5EZWHxsfg1w0zJ6qx3o2v
-         19cJwHs7vpkujdZKTUKek0AlAtwJdNvpI6AcWfVyyMpy791QT+DlKQvGvI0rcFuo+1M7
-         k1MmqvAtL2Erx/WRZICx1GXEntp/PZ3kFc3jE8wZr2Pt0PKUTDeNVBfUmyDNs4JxFJv8
-         HQoO8lmqS4c9m8G7K1NUJFebj2d/tGp98LM1lc8IHHjnV/CRwdZC046x9nn+73vaFL68
-         SxJjwtryTmLlY5XLPQLmBCydJZkK39Ny6MVrU9JX4zzmPTCgzGFOyw/IO362v10GR1P1
-         cLhw==
+        d=linaro.org; s=google; t=1733224356; x=1733829156; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=g6kGDnTLAfubcmw4OwqnnlfFoodRzVFFUo0D9f7Dre4=;
+        b=u/3b56ohB59V7WSPv7Yc+k/ITb/sqs9PvMHunBnLemxoO8w6UzU3ss3/rvIWaz1Bz5
+         rVJTDWBnzbQH2p0GHS7PJdCYggAAP6CSKzv/xfMkL6RJScBupHWLekkK+ADszeBRRJyG
+         oqAoUlrB2vdUXkYT7lguY+uw2234PriOkjgm5gCmYjWj+EBIRZ1LD+pgE+c/SzJQEGPB
+         8itqFdInJVDNjcy98Th40s+h8ux4f8C5/ZwXfxfe0sA8dkLdtzX//B4O4/mBbhhcDrz5
+         Xt3Hu7FNYL2gyGq8nmx/kPZ/uCE9Gsw4765BSGVcmty8+xF8EGQ2idCmYCg+C778W+qw
+         oG3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733219964; x=1733824764;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QAdT/AkYZrS/JPMTUkdta47w083O08CKaY0xULIptt0=;
-        b=khIA3V3WhlAkZz+QNJbzln5F2WJau3OohyDIGr57WkC2z9FG8nZ8WpZTq0OqDRp5pn
-         T1/6AbeaiouD2Y0f6w0VfcwzrwgFCwa+1oAYoT3CvYaQzOJYqv0WAv8fb5O752FHFxv2
-         QKl0Z2kNLcQ7ty0vKM18lo3/ln8rYN6fJY/zn7yauLdm7K9L8UElagYnPz2J3PtDklyu
-         jWqsbi6vn6QvsibYQrRFcctF+yGhDDgGaR6UU+d+IEksQtlLUnijFb+vWhP34pWAiRna
-         JE9gROEVVgxedxHVSrT0YkOXGP4jyEK/BbJoXkqkRJ5voZH3wS6ScjlEODIe12IFjIUx
-         gmSQ==
-X-Gm-Message-State: AOJu0YzCcTwrGS/G9tJvzbzp1ZuMEuqeu+pO2dCIjJsLnftJq4kNsTWL
-	yUZHMkeOIAu7WuVeGnqQgkbOFju7FlM6jdiCi4fBWARJPZoJipBP
-X-Gm-Gg: ASbGncuOMjheAL807JJdzSxpjg6oAlwsmv2D9D2CM645FTwOFKGN62RACj6TYUMffV3
-	Ggt3PzJ+918rMriYKNOWW8n6M33CiVaZx3WDJzWzzO0W+NtgXBx6CE4GXIVnfaRog0hErcs9E74
-	bqQFC1Yxg3MVXwRn6pxilzrwZEaT1JPQsxJ0jU+V+bxXDsrzc+pzLDVpN6yArT4Z/ahT3YDpi2d
-	Y3N1RpEd4RMIZ05fksrKjekv544l+NwX1pFtj8an05+8bv2fCyDCJMcYXzDA0I72bZECg==
-X-Google-Smtp-Source: AGHT+IE+nKQiODkBKKztGbX5w++24oO3vwTU2xi/fRQzXUC8Vxl/wFOnwoz/+JerkyLYsF28728AGg==
-X-Received: by 2002:a05:6402:35d1:b0:5d0:d786:b894 with SMTP id 4fb4d7f45d1cf-5d10cb80107mr1823931a12.26.1733219963450;
-        Tue, 03 Dec 2024 01:59:23 -0800 (PST)
-Received: from archlinux.tail7f7b1.ts.net ([195.136.68.87])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5d097d9f6b6sm5867365a12.2.2024.12.03.01.59.21
+        d=1e100.net; s=20230601; t=1733224356; x=1733829156;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=g6kGDnTLAfubcmw4OwqnnlfFoodRzVFFUo0D9f7Dre4=;
+        b=BwHgcE3/kErspw6vj4E5aGXNaS0GiYpceAkXMaOfTF1jyp5YezZObT7M4XGoSZL1ce
+         mOuxFEWghH+RakkcOrtKcxN8ef4zen3+61ZDSZJe87Z4jBmhNci/PtiJWZD3+9URQJ47
+         R3cV0u6M/hpEE/o2ir1dYfPXbnyv3I6zUtSzUnrjFdyn9VNjM/xguNtheymXvCurp+BN
+         r0Eto2rTU8k3yu7i+BkOqNJbe0eEit+ZuV+gmZgSyWJevSXISmbJnG56AScVxMokCpcw
+         3HP7ojg2n87UhdFMiGcIjwEmObDgiC9GauTZ9Ppnqo8SKWXL0MJThtfkrpmlMwm+wabC
+         KF6A==
+X-Forwarded-Encrypted: i=1; AJvYcCUQPgVKVGSLg2IKUdJrnImBsfO4LviovKuSYsqbKYLdzNRAqn2wcshjDhsR1DwN6tLlJrny6Y+2gDw/v5xi@vger.kernel.org
+X-Gm-Message-State: AOJu0YzRfzTpjul3hfT8S76+ASqmdi+KyKZ4M7X/p8k8ikivb/DbejLN
+	GmQAzLHC+Y3LQM984VfIGgo69VXhlT+CIHk5ZhHwTEoGGN4PQRoMeFiZoyDasns=
+X-Gm-Gg: ASbGncvjQHgKclift+hOV6virwln7DnWCh8PrBhac08FfXzVUukCmcOwe+/aPD/iAwf
+	+BD8QuYginxRDBQnIn2C3Syu3V63RSFMiTGSL8YWVHOBcJnb+TcD3/2B3JWtenHsM37nwjizdJN
+	KXj1KQDu03kmM7CJowNGAFLNOVHebm2t/N/lfgvzo8R3HgIuxJrV84Mlbrdsh+OFbcYNaMjEGSi
+	jxy9gINSo0cfoT5qjolpLmXmJfbg0eKrdqVmv9Sknpgh61FVGnawy/lkaRehV4=
+X-Google-Smtp-Source: AGHT+IF2uKiqbnRf8oPSGgAbSOfSre2/+2HTW+tki4BL9CRri386VoZIy2wTzWLIDJ68hlU91fsw9g==
+X-Received: by 2002:a05:6000:1fa3:b0:385:eb17:cd3c with SMTP id ffacd0b85a97d-385fd42bcebmr628032f8f.13.1733224355836;
+        Tue, 03 Dec 2024 03:12:35 -0800 (PST)
+Received: from krzk-bin.. ([178.197.218.23])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-385e3896b76sm9683819f8f.33.2024.12.03.03.12.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Dec 2024 01:59:22 -0800 (PST)
-From: Danylo Piliaiev <danylo.piliaiev@gmail.com>
-X-Google-Original-From: Danylo Piliaiev <dpiliaiev@igalia.com>
-To: Rob Clark <robdclark@gmail.com>,
-	Sean Paul <sean@poorly.run>,
+        Tue, 03 Dec 2024 03:12:35 -0800 (PST)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konradybcio@kernel.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>
-Cc: linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	danylo.piliaiev@gmail.com
-Subject: [PATCH 1/1] drm/msm: Expose uche trap base via uapi
-Date: Tue,  3 Dec 2024 10:59:20 +0100
-Message-ID: <20241203095920.505018-2-dpiliaiev@igalia.com>
-X-Mailer: git-send-email 2.46.2
-In-Reply-To: <20241203095920.505018-1-dpiliaiev@igalia.com>
-References: <20241203095920.505018-1-dpiliaiev@igalia.com>
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v2] arm64: dts: qcom: x1e78100-t14s: add sound support
+Date: Tue,  3 Dec 2024 12:12:29 +0100
+Message-ID: <20241203111229.48967-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -96,141 +93,261 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This adds MSM_PARAM_UCHE_TRAP_BASE that will be used by Mesa
-implementation for VK_KHR_shader_clock and GL_ARB_shader_clock.
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
-Signed-off-by: Danylo Piliaiev <dpiliaiev@igalia.com>
+Add support for audio on Lenovo T14s laptop, coming with two speakers,
+audio jack and two digital microphones.
+
+This is very early work, not yet complete:
+1. 2x speakers: work OK.
+2. 2x digital microphones: work OK.
+3. Headset (audio jack) recording: does not work.
+4. Headphones playback (audio jack): channels are intermixed.
+
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+[krzysztof: correct DMIC routing and vamacro pinctrl, re-order nodes,
+ add commit msg]
+Co-developed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
 ---
- drivers/gpu/drm/msm/adreno/a4xx_gpu.c   |  6 ++++--
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c   | 10 ++++++----
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c   | 12 +++++++-----
- drivers/gpu/drm/msm/adreno/adreno_gpu.c |  3 +++
- drivers/gpu/drm/msm/adreno/adreno_gpu.h |  2 ++
- include/uapi/drm/msm_drm.h              |  1 +
- 6 files changed, 23 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a4xx_gpu.c b/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
-index 50c490b492f0..f1b18a6663f7 100644
---- a/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
-@@ -251,8 +251,8 @@ static int a4xx_hw_init(struct msm_gpu *gpu)
- 		gpu_write(gpu, REG_A4XX_UCHE_CACHE_WAYS_VFD, 0x07);
+Changes in v2:
+1. Flip pinctrl-0 and names (Konrad)
+2. Add Rb tag.
+
+1. Audioreach topology was already pushed to main branch:
+https://github.com/linux-msm/audioreach-topology
+
+2. ALSA UCM files are ready and soon will be pushed by Srini.
+---
+ .../qcom/x1e78100-lenovo-thinkpad-t14s.dts    | 183 ++++++++++++++++++
+ 1 file changed, 183 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts
+index 975550139e10..386dee8c0412 100644
+--- a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts
++++ b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts
+@@ -19,6 +19,32 @@ / {
+ 	compatible = "lenovo,thinkpad-t14s", "qcom,x1e78100", "qcom,x1e80100";
+ 	chassis-type = "laptop";
  
- 	/* Disable L2 bypass to avoid UCHE out of bounds errors */
--	gpu_write(gpu, REG_A4XX_UCHE_TRAP_BASE_LO, 0xffff0000);
--	gpu_write(gpu, REG_A4XX_UCHE_TRAP_BASE_HI, 0xffff0000);
-+	gpu_write(gpu, REG_A4XX_UCHE_TRAP_BASE_LO, lower_32_bits(adreno_gpu->uche_trap_base));
-+	gpu_write(gpu, REG_A4XX_UCHE_TRAP_BASE_HI, upper_32_bits(adreno_gpu->uche_trap_base));
- 
- 	gpu_write(gpu, REG_A4XX_CP_DEBUG, (1 << 25) |
- 			(adreno_is_a420(adreno_gpu) ? (1 << 29) : 0));
-@@ -693,6 +693,8 @@ struct msm_gpu *a4xx_gpu_init(struct drm_device *dev)
- 	if (ret)
- 		goto fail;
- 
-+	adreno_gpu->uche_trap_base = 0xffff0000ffff0000ull;
++	wcd938x: audio-codec {
++		compatible = "qcom,wcd9385-codec";
 +
- 	if (!gpu->aspace) {
- 		/* TODO we think it is possible to configure the GPU to
- 		 * restrict access to VRAM carveout.  But the required
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-index ee89db72e36e..caf2c0a7a29f 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-@@ -750,10 +750,10 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
- 	gpu_write(gpu, REG_A5XX_UCHE_CACHE_WAYS, 0x02);
- 
- 	/* Disable L2 bypass in the UCHE */
--	gpu_write(gpu, REG_A5XX_UCHE_TRAP_BASE_LO, 0xFFFF0000);
--	gpu_write(gpu, REG_A5XX_UCHE_TRAP_BASE_HI, 0x0001FFFF);
--	gpu_write(gpu, REG_A5XX_UCHE_WRITE_THRU_BASE_LO, 0xFFFF0000);
--	gpu_write(gpu, REG_A5XX_UCHE_WRITE_THRU_BASE_HI, 0x0001FFFF);
-+	gpu_write(gpu, REG_A5XX_UCHE_TRAP_BASE_LO, lower_32_bits(adreno_gpu->uche_trap_base));
-+	gpu_write(gpu, REG_A5XX_UCHE_TRAP_BASE_HI, upper_32_bits(adreno_gpu->uche_trap_base));
-+	gpu_write(gpu, REG_A5XX_UCHE_WRITE_THRU_BASE_LO, lower_32_bits(adreno_gpu->uche_trap_base));
-+	gpu_write(gpu, REG_A5XX_UCHE_WRITE_THRU_BASE_HI, upper_32_bits(adreno_gpu->uche_trap_base));
- 
- 	/* Set the GMEM VA range (0 to gpu->gmem) */
- 	gpu_write(gpu, REG_A5XX_UCHE_GMEM_RANGE_MIN_LO, 0x00100000);
-@@ -1805,5 +1805,7 @@ struct msm_gpu *a5xx_gpu_init(struct drm_device *dev)
- 	adreno_gpu->ubwc_config.macrotile_mode = 0;
- 	adreno_gpu->ubwc_config.ubwc_swizzle = 0x7;
- 
-+	adreno_gpu->uche_trap_base = 0x0001ffffffff0000ull;
++		pinctrl-0 = <&wcd_default>;
++		pinctrl-names = "default";
 +
- 	return gpu;
- }
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 019610341df1..0ae29a7c8a4d 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -1123,12 +1123,12 @@ static int hw_init(struct msm_gpu *gpu)
- 
- 	/* Disable L2 bypass in the UCHE */
- 	if (adreno_is_a7xx(adreno_gpu)) {
--		gpu_write64(gpu, REG_A6XX_UCHE_TRAP_BASE, 0x0001fffffffff000llu);
--		gpu_write64(gpu, REG_A6XX_UCHE_WRITE_THRU_BASE, 0x0001fffffffff000llu);
-+		gpu_write64(gpu, REG_A6XX_UCHE_TRAP_BASE, adreno_gpu->uche_trap_base);
-+		gpu_write64(gpu, REG_A6XX_UCHE_WRITE_THRU_BASE, adreno_gpu->uche_trap_base);
- 	} else {
--		gpu_write64(gpu, REG_A6XX_UCHE_WRITE_RANGE_MAX, 0x0001ffffffffffc0llu);
--		gpu_write64(gpu, REG_A6XX_UCHE_TRAP_BASE, 0x0001fffffffff000llu);
--		gpu_write64(gpu, REG_A6XX_UCHE_WRITE_THRU_BASE, 0x0001fffffffff000llu);
-+		gpu_write64(gpu, REG_A6XX_UCHE_WRITE_RANGE_MAX, adreno_gpu->uche_trap_base + 0xfc0);
-+		gpu_write64(gpu, REG_A6XX_UCHE_TRAP_BASE, adreno_gpu->uche_trap_base);
-+		gpu_write64(gpu, REG_A6XX_UCHE_WRITE_THRU_BASE, adreno_gpu->uche_trap_base);
- 	}
- 
- 	if (!(adreno_is_a650_family(adreno_gpu) ||
-@@ -2533,6 +2533,8 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
- 		}
- 	}
- 
-+	adreno_gpu->uche_trap_base = 0x1fffffffff000ull;
++		qcom,micbias1-microvolt = <1800000>;
++		qcom,micbias2-microvolt = <1800000>;
++		qcom,micbias3-microvolt = <1800000>;
++		qcom,micbias4-microvolt = <1800000>;
++		qcom,mbhc-buttons-vthreshold-microvolt = <75000 150000 237000 500000 500000 500000 500000 500000>;
++		qcom,mbhc-headset-vthreshold-microvolt = <1700000>;
++		qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
++		qcom,rx-device = <&wcd_rx>;
++		qcom,tx-device = <&wcd_tx>;
 +
- 	if (gpu->aspace)
- 		msm_mmu_set_fault_handler(gpu->aspace->mmu, gpu,
- 				a6xx_fault_handler);
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-index 076be0473eb5..774ff6eacb9f 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-@@ -385,6 +385,9 @@ int adreno_get_param(struct msm_gpu *gpu, struct msm_file_private *ctx,
- 	case MSM_PARAM_MACROTILE_MODE:
- 		*value = adreno_gpu->ubwc_config.macrotile_mode;
- 		return 0;
-+	case MSM_PARAM_UCHE_TRAP_BASE:
-+		*value = adreno_gpu->uche_trap_base;
-+		return 0;
- 	default:
- 		DBG("%s: invalid param: %u", gpu->name, param);
- 		return -EINVAL;
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-index e71f420f8b3a..9bd38dda4308 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-@@ -253,6 +253,8 @@ struct adreno_gpu {
- 	bool gmu_is_wrapper;
- 
- 	bool has_ray_tracing;
++		reset-gpios = <&tlmm 191 GPIO_ACTIVE_LOW>;
 +
-+	u64 uche_trap_base;
++		vdd-buck-supply = <&vreg_l15b_1p8>;
++		vdd-rxtx-supply = <&vreg_l15b_1p8>;
++		vdd-io-supply = <&vreg_l15b_1p8>;
++		vdd-mic-bias-supply = <&vreg_bob1>;
++
++		#sound-dai-cells = <1>;
++	};
++
+ 	gpio-keys {
+ 		compatible = "gpio-keys";
+ 
+@@ -153,6 +179,85 @@ vph_pwr: regulator-vph-pwr {
+ 		regulator-always-on;
+ 		regulator-boot-on;
+ 	};
++
++	sound {
++		compatible = "qcom,x1e80100-sndcard";
++		model = "X1E80100-LENOVO-Thinkpad-T14s";
++		audio-routing = "SpkrLeft IN", "WSA WSA_SPK1 OUT",
++				"SpkrRight IN", "WSA WSA_SPK2 OUT",
++				"IN1_HPHL", "HPHL_OUT",
++				"IN2_HPHR", "HPHR_OUT",
++				"AMIC2", "MIC BIAS2",
++				"VA DMIC0", "MIC BIAS1",
++				"VA DMIC1", "MIC BIAS1",
++				"VA DMIC0", "VA MIC BIAS1",
++				"VA DMIC1", "VA MIC BIAS1",
++				"TX SWR_INPUT1", "ADC2_OUTPUT";
++
++		wcd-playback-dai-link {
++			link-name = "WCD Playback";
++
++			cpu {
++				sound-dai = <&q6apmbedai RX_CODEC_DMA_RX_0>;
++			};
++
++			codec {
++				sound-dai = <&wcd938x 0>, <&swr1 0>, <&lpass_rxmacro 0>;
++			};
++
++			platform {
++				sound-dai = <&q6apm>;
++			};
++		};
++
++		wcd-capture-dai-link {
++			link-name = "WCD Capture";
++
++			cpu {
++				sound-dai = <&q6apmbedai TX_CODEC_DMA_TX_3>;
++			};
++
++			codec {
++				sound-dai = <&wcd938x 1>, <&swr2 1>, <&lpass_txmacro 0>;
++			};
++
++			platform {
++				sound-dai = <&q6apm>;
++			};
++		};
++
++		wsa-dai-link {
++			link-name = "WSA Playback";
++
++			cpu {
++				sound-dai = <&q6apmbedai WSA_CODEC_DMA_RX_0>;
++			};
++
++			codec {
++				sound-dai = <&left_spkr>, <&right_spkr>, <&swr0 0>, <&lpass_wsamacro 0>;
++			};
++
++			platform {
++				sound-dai = <&q6apm>;
++			};
++		};
++
++		va-dai-link {
++			link-name = "VA Capture";
++
++			cpu {
++				sound-dai = <&q6apmbedai VA_CODEC_DMA_TX_0>;
++			};
++
++			codec {
++				sound-dai = <&lpass_vamacro 0>;
++			};
++
++			platform {
++				sound-dai = <&q6apm>;
++			};
++		};
++	};
  };
- #define to_adreno_gpu(x) container_of(x, struct adreno_gpu, base)
  
-diff --git a/include/uapi/drm/msm_drm.h b/include/uapi/drm/msm_drm.h
-index b916aab80dde..2342cb90857e 100644
---- a/include/uapi/drm/msm_drm.h
-+++ b/include/uapi/drm/msm_drm.h
-@@ -90,6 +90,7 @@ struct drm_msm_timespec {
- #define MSM_PARAM_RAYTRACING 0x11 /* RO */
- #define MSM_PARAM_UBWC_SWIZZLE 0x12 /* RO */
- #define MSM_PARAM_MACROTILE_MODE 0x13 /* RO */
-+#define MSM_PARAM_UCHE_TRAP_BASE 0x14 /* RO */
+ &apps_rsc {
+@@ -185,6 +290,13 @@ vreg_bob2: bob2 {
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
  
- /* For backwards compat.  The original support for preemption was based on
-  * a single ring per priority level so # of priority levels equals the #
++		vreg_l1b_1p8: ldo1 {
++			regulator-name = "vreg_l1b_1p8";
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1800000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
+ 		vreg_l2b_3p0: ldo2 {
+ 			regulator-name = "vreg_l2b_3p0";
+ 			regulator-min-microvolt = <3072000>;
+@@ -515,6 +627,24 @@ touchscreen@10 {
+ 	/* TODO: second-sourced touchscreen @ 0x41 */
+ };
+ 
++&lpass_tlmm {
++	spkr_01_sd_n_active: spkr-01-sd-n-active-state {
++		pins = "gpio12";
++		function = "gpio";
++		drive-strength = <16>;
++		bias-disable;
++		output-low;
++	};
++};
++
++&lpass_vamacro {
++	pinctrl-0 = <&dmic01_default>;
++	pinctrl-names = "default";
++
++	vdd-micb-supply = <&vreg_l1b_1p8>;
++	qcom,dmic-sample-rate = <4800000>;
++};
++
+ &mdss {
+ 	status = "okay";
+ };
+@@ -645,6 +775,59 @@ &smb2360_1_eusb2_repeater {
+ 	vdd3-supply = <&vreg_l14b_3p0>;
+ };
+ 
++&swr0 {
++	status = "okay";
++
++	pinctrl-0 = <&wsa_swr_active>, <&spkr_01_sd_n_active>;
++	pinctrl-names = "default";
++
++	/* WSA8845, Left Speaker */
++	left_spkr: speaker@0,0 {
++		compatible = "sdw20217020400";
++		reg = <0 0>;
++		reset-gpios = <&lpass_tlmm 12 GPIO_ACTIVE_LOW>;
++		#sound-dai-cells = <0>;
++		sound-name-prefix = "SpkrLeft";
++		vdd-1p8-supply = <&vreg_l15b_1p8>;
++		vdd-io-supply = <&vreg_l12b_1p2>;
++		qcom,port-mapping = <1 2 3 7 10 13>;
++	};
++
++	/* WSA8845, Right Speaker */
++	right_spkr: speaker@0,1 {
++		compatible = "sdw20217020400";
++		reg = <0 1>;
++		reset-gpios = <&lpass_tlmm 12 GPIO_ACTIVE_LOW>;
++		#sound-dai-cells = <0>;
++		sound-name-prefix = "SpkrRight";
++		vdd-1p8-supply = <&vreg_l15b_1p8>;
++		vdd-io-supply = <&vreg_l12b_1p2>;
++		qcom,port-mapping = <4 5 6 7 11 13>;
++	};
++};
++
++&swr1 {
++	status = "okay";
++
++	/* WCD9385 RX */
++	wcd_rx: codec@0,4 {
++		compatible = "sdw20217010d00";
++		reg = <0 4>;
++		qcom,rx-port-mapping = <1 2 3 4 5>;
++	};
++};
++
++&swr2 {
++	status = "okay";
++
++	/* WCD9385 TX */
++	wcd_tx: codec@0,3 {
++		compatible = "sdw20217010d00";
++		reg = <0 3>;
++		qcom,tx-port-mapping = <2 2 3 4>;
++	};
++};
++
+ &tlmm {
+ 	gpio-reserved-ranges = <34 2>, /* Unused */
+ 			       <44 4>, /* SPI (TPM) */
 -- 
-2.46.2
+2.43.0
 
 
