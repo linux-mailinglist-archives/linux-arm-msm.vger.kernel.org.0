@@ -1,215 +1,241 @@
-Return-Path: <linux-arm-msm+bounces-40071-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40073-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 162249E1D8E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 14:29:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id DE57B9E1D5F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 14:19:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E9219B3B74B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 11:57:58 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3E7BDB2AE0A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 12:53:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5309E1E47C8;
-	Tue,  3 Dec 2024 11:57:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F20C31EBFE4;
+	Tue,  3 Dec 2024 12:53:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="c+fZm+EU"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RvoTiBZz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D481E47B9
-	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Dec 2024 11:57:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DB541EBA04
+	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Dec 2024 12:53:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733227073; cv=none; b=u+XeBXUG0iDu/Zag9WsvI100HkWIkCjdn/1NZVyB46drn+zBg2oWGUNqvs1J39f5mhAOQWk5wwzTNwT/iDh8fzlD0sdn2qCyThhaCqHsX+F8azh1ORWu173AdrEx79i5U+w0+9sm2Df4+JDqSaKbYmc3dDu5WDINdn1425RX9uM=
+	t=1733230384; cv=none; b=eJVc2auUcWlKyvVepJ/YABM8kKz40TNDzJQrVI/3dtbiPV0vTJhtYjNkvQmpfmxxyF8ffzzx8Vjj+GaEr/iWpLk1WjsWMiJJK2xfajH5oKz8ni5YhdQyla6lTFmGGSYIofj6bd05tiTJI9Yi2vaFvAyOOnjN6Cr9mNNTLqvRwQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733227073; c=relaxed/simple;
-	bh=Q9+AiQ6s0aWeS6kzWsVPhOJmvynbGm/ye7+xXZgGDSc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=NJYWfKUmhrRr9iwOhiYjSF6GCWpwf7678ND2QpNDeiWDh3FTF14fv2B9ubGLKSc5EYwcDCSJkbZp268cbftjesdo4rSnCE2mXAO1NICUdWOkohmj9nvKeHefB5I+JjVvDU0P42lD+B0q5KZwKQS4pD4gY18pOWpWMosk48cZA9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=c+fZm+EU; arc=none smtp.client-ip=209.85.219.181
+	s=arc-20240116; t=1733230384; c=relaxed/simple;
+	bh=lhmbSI69R0BUgtQUAs/Zz2F+6BHIrRK0q9of+q2iZ6c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=V/zBS2h47gr1VjvwmojC5N6aAStQaLSLxaEu+u18G6xDgau+YsEd5F0/XLhgYFEewQTeuWNPzyH9OachcMGtW23iKi3xJb7sYegFyGC/U62RRb8HPqiJCnE0o8WM74AbBF/xeDb4wombV+6mzzgAlDP1vqx1MnQUF5R5KCp7qy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RvoTiBZz; arc=none smtp.client-ip=209.85.208.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-e3984b1db09so3933661276.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Dec 2024 03:57:50 -0800 (PST)
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2ffdf564190so63943231fa.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Dec 2024 04:53:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733227070; x=1733831870; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=BbMpTWPQcQsU0HRaX/c6zM2bDkZbOjiVConTuGe+jZE=;
-        b=c+fZm+EU/RrrAoTPD83ZHxZFQxF30ZORotoDDljCAlRv92VWJGoYrgX6pJ7lFAPl0U
-         /Wx1EmEeOylVASJrEjYSgVqibv/G0iw2CMJApCmvmxM2AGI/z1EpC+urSvb/UkwuBU/6
-         qGDys60o8ZCZVsit2MK+Nb9s4/cHUXCqraw4uL9CG/FgJ2MniMivtYkyO1Rrykvgzstn
-         rJcXku1kYyRJOoN+jIq8Nblr2PRzruaJwXRreBnVnQ1e9nEsfnVIu7NRKHlDFSDZBlxx
-         2ORzaeKw1+lOcH+Qola+3CXbdYMvGTdkxtVPCQqSE/HIMHq8+VThm8teCAH9z8J400Tr
-         5Etw==
+        d=linaro.org; s=google; t=1733230381; x=1733835181; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=cgOp9XciNPobuDZogrWrTiS66ohIUz+olcA2lkcJj8w=;
+        b=RvoTiBZzXxUPKjibBvy0Dqi8SG5GwrTnp4nf5W1mydXi3UqmaE6ZI1bprDh4Y7FcHR
+         58qYASQsz25JQXOwwp5kh0gHc4ACUxBAQhZ6AT4yDFvTc9BUifFFjFuWVwuI7njLHGVJ
+         jW/QSWVBHTbEBFsIb2d7uvXizRX3hWWdufKdqQaGnlKTsPseclUH9Tmwa/G9b/XJnXVr
+         woLB6V8nA+f84m8zFzORGmYNnyfz8ChUnSBUEBTyzdhwWcLqnNPuUh/uc/HkrNfbRQhb
+         YNGzfNk1YwHexwdu3ooyNTVlcAk499lYQ52n3gd6Crcx0IS0MP5425rjjo7CJPEQnJN9
+         T3lQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733227070; x=1733831870;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=BbMpTWPQcQsU0HRaX/c6zM2bDkZbOjiVConTuGe+jZE=;
-        b=C1fBYPMo4UKuIciKT/aeZax0C4QCJXRLza+mRH3XVjyfRAse0PCilPGKRxtHKpHv5m
-         +bEp51J9boo3e9N4QMcFCkMbXgOzYLqTmOyaUX/ftXqJBCjU/ixqV9wjzE285nRimwc6
-         COb2EaRzUYy8DxZTcOPrHj/JT5tNQ4cEws7lJ2Dz+5XUsupp72iOacvdxI4kiQMMegRK
-         QOHe1AYf+WBoXdJ4hG3kphLuIJZzzCCwGGLvPrWxd4eW4evVUVPHj8gYFDQrBOTeBW+o
-         uMEhtFktokfOuvjeDSXCoVijsktNOY9bu2E86QV0aq+yazFejOvjHqG2AntA77p4XhHx
-         +IYg==
-X-Forwarded-Encrypted: i=1; AJvYcCUfDaVC6jJDpyw+92Dzhjxcc0KZkZ/Ejxg08+97VQadnR/p/vGn3Te8Q7lQFFq+RS8ShIYXDsiMNO2ECFEC@vger.kernel.org
-X-Gm-Message-State: AOJu0YyIwG7zbJ2e/BDqWrJrCuqRmSC9ffNh9W1yVJ0m63eHI1wKt6Bh
-	mcsKob0xy2VFgZ7bCPxL+bw8itWir4NWQM3/emiFm/rlk2QFlMUmOar04cFtZCeD+qnBryQLBmw
-	hGZjx1bMYyx3f6i1tOlPuWMVznFu81JhX5zNaJA==
-X-Gm-Gg: ASbGncshsS6hlTxXDXXoIJrvo+nMXM73ewAjwe9szor86pKci/aaGLowWb8lR/q6Lq0
-	hKylrEgHwPDpN4Y6mZPmNWh0+hh9C6g==
-X-Google-Smtp-Source: AGHT+IGQ/9s5DEKVq56LcELRCgbbSUJDxrGME9rneM000XHdp2t+8py1fz0BjAa9e/C+4ixWTgkXDY5JwOAFrvAaJEA=
-X-Received: by 2002:a05:6902:20c9:b0:e39:93ab:dbab with SMTP id
- 3f1490d57ef6-e39d3e39f09mr2319862276.28.1733227069673; Tue, 03 Dec 2024
- 03:57:49 -0800 (PST)
+        d=1e100.net; s=20230601; t=1733230381; x=1733835181;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cgOp9XciNPobuDZogrWrTiS66ohIUz+olcA2lkcJj8w=;
+        b=MjAFNm67DFcwd7XuINiu7ewaRGEgAv3MuXcwXeRt2gm88Dg984dQ0+7lPaAgLHaijZ
+         k/E+MwXZsN8vaPukAqhkClzmxEgNBhWZt9N/asT0K8VgKgDklXcFWfU7Y5igCfCCvpgT
+         O+plufiq9XIhrqI3ps61OyXH/yCncOf2IlmSx+HohRS8gbBH73mOGRlbi5Y5GP0sGkPx
+         llDSaEggjs869BRkzfWp3dl0O9kNqq3avhxLf17V4ggJTwLdiqbwGvO/vSNn8c1NcOPB
+         eatjMqCY8SeNJIIlRMI3QXnn+xJnbd6O8ENZmMBAIy8/iwI8YznER1Ke9Xhf6LOLJvCB
+         QZOA==
+X-Forwarded-Encrypted: i=1; AJvYcCW2J3ppcbfqC24+QPDTGXMcyaUc4fJm1noKeJtymaO+rxyWsfxy0ISpNlOei0ze2LVAAgliGiq03I37vFEy@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywo77YrGOGFI3ANiXrsyy8XNsExwtTZZH3hfpjex9mkp0WpvW3Z
+	MYObENXuJ3tVfc/ZH6UQjs9Rcp6VZSZvIS5/Ctb3owlIxpmqd+m/B82pZdscZXRcwUtcplCb8DL
+	Z
+X-Gm-Gg: ASbGncsrBXGrGRGqYj+FF7pgAZ5qq2grcDxuhX9gQ2tH4vqr7uH8/ff0MHM1yzlvsSS
+	ugu0uA+Wk5Pha6ps7f04lt3v/Ez7kOxCkcOK9XdlPMVUMkFUPHeHGolslHum2S1EHOSpAnm7ofC
+	UESj6YEuhaT0hsIWOMZSclNDxSZNZEfKZ8PLy75lL1lIGc6b8zLKM6cGSVFvHdOzVRsrKThJr6U
+	+EZoswhGN5HpEeQDjufH0SLKfneVln/DUQwGujKz+DvOCzyd9UNUkusfHphF1xGAyF0VqNEYUJd
+	EuFDDXufLIz4GvAsqWUXNZLIiPoCOA==
+X-Google-Smtp-Source: AGHT+IEpNqcECccRh4l7n5a+xTcPnLC8zwWnHNryhKJgbaE6P1ez0VKjp2pUHX9jWAZQKmTS2jZ21g==
+X-Received: by 2002:a05:651c:2204:b0:2ff:b7ff:53b1 with SMTP id 38308e7fff4ca-30009caa37cmr15651031fa.25.1733230381206;
+        Tue, 03 Dec 2024 04:53:01 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-300142fffaasm330231fa.10.2024.12.03.04.52.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Dec 2024 04:52:59 -0800 (PST)
+Date: Tue, 3 Dec 2024 14:52:57 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Danylo Piliaiev <danylo.piliaiev@gmail.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org
+Subject: Re: [PATCH 1/1] drm/msm: Expose uche trap base via uapi
+Message-ID: <lhi5ni5i4kuwzu2627nf5pnhhzcx7rglza5lxeadpkdekwtisj@3cacpo2r3tzx>
+References: <20241203095920.505018-1-dpiliaiev@igalia.com>
+ <20241203095920.505018-2-dpiliaiev@igalia.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241118084046.3201290-1-quic_ekangupt@quicinc.com>
- <20241118084046.3201290-5-quic_ekangupt@quicinc.com> <2024111804-doze-reflected-0feb@gregkh>
- <c3b285b0-33d1-4bfa-b8ab-6783ff5ed78d@quicinc.com> <cn7pqvhw4x4y7s5hbgzjpvyjnw4g6hoyepic4jai7x2fjdenxr@ikr4hkorbuwb>
- <365c4709-b421-4af8-b521-a195630242de@quicinc.com> <nsaq3zungvyhuikz35arvxmle2fovxh422jpyqxuleh57ufqnk@bekeh7qr7y76>
- <697e90db-6ecc-44ac-af86-6c7f910fc902@quicinc.com>
-In-Reply-To: <697e90db-6ecc-44ac-af86-6c7f910fc902@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 3 Dec 2024 13:57:41 +0200
-Message-ID: <CAA8EJppbptPryu_O3G3YAapHT=Ai+MAdA38FtSU=YvWb+mqa1g@mail.gmail.com>
-Subject: Re: [PATCH v1 4/4] misc: fastrpc: Add debugfs support for fastrpc
-To: Ekansh Gupta <quic_ekangupt@quicinc.com>
-Cc: Greg KH <gregkh@linuxfoundation.org>, srinivas.kandagatla@linaro.org, 
-	linux-arm-msm@vger.kernel.org, quic_bkumar@quicinc.com, 
-	linux-kernel@vger.kernel.org, quic_chennak@quicinc.com, 
-	dri-devel@lists.freedesktop.org, arnd@arndb.de
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241203095920.505018-2-dpiliaiev@igalia.com>
 
-On Tue, 3 Dec 2024 at 07:22, Ekansh Gupta <quic_ekangupt@quicinc.com> wrote:
->
->
->
-> On 12/2/2024 6:18 PM, Dmitry Baryshkov wrote:
-> > On Mon, Dec 02, 2024 at 03:27:43PM +0530, Ekansh Gupta wrote:
-> >>
-> >> On 11/22/2024 12:23 AM, Dmitry Baryshkov wrote:
-> >>> On Thu, Nov 21, 2024 at 12:12:17PM +0530, Ekansh Gupta wrote:
-> >>>> On 11/18/2024 7:32 PM, Greg KH wrote:
-> >>>>> On Mon, Nov 18, 2024 at 02:10:46PM +0530, Ekansh Gupta wrote:
-> >>>>>> Add changes to support debugfs. The fastrpc directory will be
-> >>>>>> created which will carry debugfs files for all fastrpc processes.
-> >>>>>> The information of fastrpc user and channel contexts are getting
-> >>>>>> captured as part of this change.
-> >>>>>>
-> >>>>>> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-> >>>>>> ---
-> >>>>>>  drivers/misc/fastrpc/Makefile        |   3 +-
-> >>>>>>  drivers/misc/fastrpc/fastrpc_debug.c | 156 +++++++++++++++++++++++++++
-> >>>>>>  drivers/misc/fastrpc/fastrpc_debug.h |  31 ++++++
-> >>>>>>  drivers/misc/fastrpc/fastrpc_main.c  |  18 +++-
-> >>>>>>  4 files changed, 205 insertions(+), 3 deletions(-)
-> >>>>>>  create mode 100644 drivers/misc/fastrpc/fastrpc_debug.c
-> >>>>>>  create mode 100644 drivers/misc/fastrpc/fastrpc_debug.h
-> >>>>>>
-> >>>>>> diff --git a/drivers/misc/fastrpc/Makefile b/drivers/misc/fastrpc/Makefile
-> >>>>>> index 020d30789a80..4ff6b64166ae 100644
-> >>>>>> --- a/drivers/misc/fastrpc/Makefile
-> >>>>>> +++ b/drivers/misc/fastrpc/Makefile
-> >>>>>> @@ -1,3 +1,4 @@
-> >>>>>>  # SPDX-License-Identifier: GPL-2.0
-> >>>>>>  obj-$(CONFIG_QCOM_FASTRPC)      += fastrpc.o
-> >>>>>> -fastrpc-objs    := fastrpc_main.o
-> >>>>>> \ No newline at end of file
-> >>>>>> +fastrpc-objs    := fastrpc_main.o \
-> >>>>>> +                fastrpc_debug.o
-> >>>>> Only build this file if debugfs is enabled.
-> >>>>>
-> >>>>> And again, "debug.c"?
-> >>>> I'll add change to build this only if debugfs is enabled. Going forward I have plans to add
-> >>>> few more debug specific changes, maybe then I'll need to change the build rules again.
-> >>>>>> diff --git a/drivers/misc/fastrpc/fastrpc_debug.c b/drivers/misc/fastrpc/fastrpc_debug.c
-> >>>>>> new file mode 100644
-> >>>>>> index 000000000000..cdb4fc6845a8
-> >>>>>> --- /dev/null
-> >>>>>> +++ b/drivers/misc/fastrpc/fastrpc_debug.c
-> >>>>>> @@ -0,0 +1,156 @@
-> >>>>>> +// SPDX-License-Identifier: GPL-2.0
-> >>>>>> +// Copyright (c) 2024 Qualcomm Innovation Center.
-> >>>>>> +
-> >>>>>> +#include <linux/debugfs.h>
-> >>>>>> +#include <linux/seq_file.h>
-> >>>>>> +#include "fastrpc_shared.h"
-> >>>>>> +#include "fastrpc_debug.h"
-> >>>>>> +
-> >>>>>> +#ifdef CONFIG_DEBUG_FS
-> >>>>> Please put the #ifdef in the .h file, not in the .c file.
-> >>>> Ack
-> >>>>>> +void fastrpc_create_user_debugfs(struct fastrpc_user *fl)
-> >>>>>> +{
-> >>>>>> +        char cur_comm[TASK_COMM_LEN];
-> >>>>>> +        int domain_id, size;
-> >>>>>> +        char *debugfs_buf;
-> >>>>>> +        struct dentry *debugfs_dir = fl->cctx->debugfs_dir;
-> >>>>>> +
-> >>>>>> +        memcpy(cur_comm, current->comm, TASK_COMM_LEN);
-> >>>>>> +        cur_comm[TASK_COMM_LEN-1] = '\0';
-> >>>>>> +        if (debugfs_dir != NULL) {
-> >>>>>> +                domain_id = fl->cctx->domain_id;
-> >>>>>> +                size = snprintf(NULL, 0, "%.10s_%d_%d_%d", cur_comm,
-> >>>>>> +                                current->pid, fl->tgid, domain_id) + 1;
-> >>>>>> +                debugfs_buf = kzalloc(size, GFP_KERNEL);
-> >>>>>> +                if (debugfs_buf == NULL)
-> >>>>>> +                        return;
-> >>>>>> +                /*
-> >>>>>> +                 * Use HLOS process name, HLOS PID, fastrpc user TGID,
-> >>>>>> +                 * domain_id in debugfs filename to create unique file name
-> >>>>>> +                 */
-> >>>>>> +                snprintf(debugfs_buf, size, "%.10s_%d_%d_%d",
-> >>>>>> +                        cur_comm, current->pid, fl->tgid, domain_id);
-> >>>>>> +                fl->debugfs_file = debugfs_create_file(debugfs_buf, 0644,
-> >>>>>> +                                debugfs_dir, fl, &fastrpc_debugfs_fops);
-> >>>>> Why are you saving the debugfs file?  What do you need to do with it
-> >>>>> that you can't just delete the whole directory, or look up the name
-> >>>>> again in the future when removing it?
-> >>>> fl structure is specific to a process using fastrpc driver. The reason to save
-> >>>> this debugfs file is to delete is when the process releases fastrpc device.
-> >>>> If the file is not deleted, it might flood multiple files in debugfs directory.
-> >>>>
-> >>>> As part of this change, only the file that is getting created by a process is
-> >>>> getting removed when process is releasing device and I don't think we
-> >>>> can clean up the whole directory at this point.
-> >>> My 2c: it might be better to create a single file that conains
-> >>> information for all the processes instead of that. Or use fdinfo data to
-> >>> export process / FD information to userspace.
-> >> Thanks for your review. The reason of not having single file for all processes is that
-> >> I can run 100s of iteration for any process(say calculator) and every time the properties
-> >> of the process can differ(like buffer, session etc.). For this reason, I'm creating and
-> >> deleting the debugfs files for every process run.
-> >>
-> >> Do you see any advantage of using fdinfo over debugfs? I'm not sure if we can add all
-> >> the information(like in debugfs) here.
-> > Which information is actually useful / interesting for application
-> > developers? If not for the fdinfo, I might still vote for a single file
-> > rather than a pile of per-process data.
-> I have tried to capture all the information that could be useful.
->
-> I can try changes to maintain single file for all active processes. Having this file specific
-> to a channel should be fine, right? like fastrpc_adsp, fastrpc_cdsp, etc.? Each file will
-> carry information of all processes using that remoteproc.
+On Tue, Dec 03, 2024 at 10:59:20AM +0100, Danylo Piliaiev wrote:
+> This adds MSM_PARAM_UCHE_TRAP_BASE that will be used by Mesa
+> implementation for VK_KHR_shader_clock and GL_ARB_shader_clock.
 
-I think it's a better idea, yes.
+Could you please spend more words, describing what it is and why is it
+necessary for those extensions. For a5xx+ it looks like some kind of an
+internal address (what kind of?). For a4xx I'm completely lost.
 
->
-> --ekansh
-> >
-> >> --ekansh
-> >>>
->
-
+> 
+> Signed-off-by: Danylo Piliaiev <dpiliaiev@igalia.com>
+> ---
+>  drivers/gpu/drm/msm/adreno/a4xx_gpu.c   |  6 ++++--
+>  drivers/gpu/drm/msm/adreno/a5xx_gpu.c   | 10 ++++++----
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c   | 12 +++++++-----
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.c |  3 +++
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.h |  2 ++
+>  include/uapi/drm/msm_drm.h              |  1 +
+>  6 files changed, 23 insertions(+), 11 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/a4xx_gpu.c b/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
+> index 50c490b492f0..f1b18a6663f7 100644
+> --- a/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
+> @@ -251,8 +251,8 @@ static int a4xx_hw_init(struct msm_gpu *gpu)
+>  		gpu_write(gpu, REG_A4XX_UCHE_CACHE_WAYS_VFD, 0x07);
+>  
+>  	/* Disable L2 bypass to avoid UCHE out of bounds errors */
+> -	gpu_write(gpu, REG_A4XX_UCHE_TRAP_BASE_LO, 0xffff0000);
+> -	gpu_write(gpu, REG_A4XX_UCHE_TRAP_BASE_HI, 0xffff0000);
+> +	gpu_write(gpu, REG_A4XX_UCHE_TRAP_BASE_LO, lower_32_bits(adreno_gpu->uche_trap_base));
+> +	gpu_write(gpu, REG_A4XX_UCHE_TRAP_BASE_HI, upper_32_bits(adreno_gpu->uche_trap_base));
+>  
+>  	gpu_write(gpu, REG_A4XX_CP_DEBUG, (1 << 25) |
+>  			(adreno_is_a420(adreno_gpu) ? (1 << 29) : 0));
+> @@ -693,6 +693,8 @@ struct msm_gpu *a4xx_gpu_init(struct drm_device *dev)
+>  	if (ret)
+>  		goto fail;
+>  
+> +	adreno_gpu->uche_trap_base = 0xffff0000ffff0000ull;
+> +
+>  	if (!gpu->aspace) {
+>  		/* TODO we think it is possible to configure the GPU to
+>  		 * restrict access to VRAM carveout.  But the required
+> diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> index ee89db72e36e..caf2c0a7a29f 100644
+> --- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> @@ -750,10 +750,10 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
+>  	gpu_write(gpu, REG_A5XX_UCHE_CACHE_WAYS, 0x02);
+>  
+>  	/* Disable L2 bypass in the UCHE */
+> -	gpu_write(gpu, REG_A5XX_UCHE_TRAP_BASE_LO, 0xFFFF0000);
+> -	gpu_write(gpu, REG_A5XX_UCHE_TRAP_BASE_HI, 0x0001FFFF);
+> -	gpu_write(gpu, REG_A5XX_UCHE_WRITE_THRU_BASE_LO, 0xFFFF0000);
+> -	gpu_write(gpu, REG_A5XX_UCHE_WRITE_THRU_BASE_HI, 0x0001FFFF);
+> +	gpu_write(gpu, REG_A5XX_UCHE_TRAP_BASE_LO, lower_32_bits(adreno_gpu->uche_trap_base));
+> +	gpu_write(gpu, REG_A5XX_UCHE_TRAP_BASE_HI, upper_32_bits(adreno_gpu->uche_trap_base));
+> +	gpu_write(gpu, REG_A5XX_UCHE_WRITE_THRU_BASE_LO, lower_32_bits(adreno_gpu->uche_trap_base));
+> +	gpu_write(gpu, REG_A5XX_UCHE_WRITE_THRU_BASE_HI, upper_32_bits(adreno_gpu->uche_trap_base));
+>  
+>  	/* Set the GMEM VA range (0 to gpu->gmem) */
+>  	gpu_write(gpu, REG_A5XX_UCHE_GMEM_RANGE_MIN_LO, 0x00100000);
+> @@ -1805,5 +1805,7 @@ struct msm_gpu *a5xx_gpu_init(struct drm_device *dev)
+>  	adreno_gpu->ubwc_config.macrotile_mode = 0;
+>  	adreno_gpu->ubwc_config.ubwc_swizzle = 0x7;
+>  
+> +	adreno_gpu->uche_trap_base = 0x0001ffffffff0000ull;
+> +
+>  	return gpu;
+>  }
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> index 019610341df1..0ae29a7c8a4d 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -1123,12 +1123,12 @@ static int hw_init(struct msm_gpu *gpu)
+>  
+>  	/* Disable L2 bypass in the UCHE */
+>  	if (adreno_is_a7xx(adreno_gpu)) {
+> -		gpu_write64(gpu, REG_A6XX_UCHE_TRAP_BASE, 0x0001fffffffff000llu);
+> -		gpu_write64(gpu, REG_A6XX_UCHE_WRITE_THRU_BASE, 0x0001fffffffff000llu);
+> +		gpu_write64(gpu, REG_A6XX_UCHE_TRAP_BASE, adreno_gpu->uche_trap_base);
+> +		gpu_write64(gpu, REG_A6XX_UCHE_WRITE_THRU_BASE, adreno_gpu->uche_trap_base);
+>  	} else {
+> -		gpu_write64(gpu, REG_A6XX_UCHE_WRITE_RANGE_MAX, 0x0001ffffffffffc0llu);
+> -		gpu_write64(gpu, REG_A6XX_UCHE_TRAP_BASE, 0x0001fffffffff000llu);
+> -		gpu_write64(gpu, REG_A6XX_UCHE_WRITE_THRU_BASE, 0x0001fffffffff000llu);
+> +		gpu_write64(gpu, REG_A6XX_UCHE_WRITE_RANGE_MAX, adreno_gpu->uche_trap_base + 0xfc0);
+> +		gpu_write64(gpu, REG_A6XX_UCHE_TRAP_BASE, adreno_gpu->uche_trap_base);
+> +		gpu_write64(gpu, REG_A6XX_UCHE_WRITE_THRU_BASE, adreno_gpu->uche_trap_base);
+>  	}
+>  
+>  	if (!(adreno_is_a650_family(adreno_gpu) ||
+> @@ -2533,6 +2533,8 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
+>  		}
+>  	}
+>  
+> +	adreno_gpu->uche_trap_base = 0x1fffffffff000ull;
+> +
+>  	if (gpu->aspace)
+>  		msm_mmu_set_fault_handler(gpu->aspace->mmu, gpu,
+>  				a6xx_fault_handler);
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> index 076be0473eb5..774ff6eacb9f 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> @@ -385,6 +385,9 @@ int adreno_get_param(struct msm_gpu *gpu, struct msm_file_private *ctx,
+>  	case MSM_PARAM_MACROTILE_MODE:
+>  		*value = adreno_gpu->ubwc_config.macrotile_mode;
+>  		return 0;
+> +	case MSM_PARAM_UCHE_TRAP_BASE:
+> +		*value = adreno_gpu->uche_trap_base;
+> +		return 0;
+>  	default:
+>  		DBG("%s: invalid param: %u", gpu->name, param);
+>  		return -EINVAL;
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> index e71f420f8b3a..9bd38dda4308 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> @@ -253,6 +253,8 @@ struct adreno_gpu {
+>  	bool gmu_is_wrapper;
+>  
+>  	bool has_ray_tracing;
+> +
+> +	u64 uche_trap_base;
+>  };
+>  #define to_adreno_gpu(x) container_of(x, struct adreno_gpu, base)
+>  
+> diff --git a/include/uapi/drm/msm_drm.h b/include/uapi/drm/msm_drm.h
+> index b916aab80dde..2342cb90857e 100644
+> --- a/include/uapi/drm/msm_drm.h
+> +++ b/include/uapi/drm/msm_drm.h
+> @@ -90,6 +90,7 @@ struct drm_msm_timespec {
+>  #define MSM_PARAM_RAYTRACING 0x11 /* RO */
+>  #define MSM_PARAM_UBWC_SWIZZLE 0x12 /* RO */
+>  #define MSM_PARAM_MACROTILE_MODE 0x13 /* RO */
+> +#define MSM_PARAM_UCHE_TRAP_BASE 0x14 /* RO */
+>  
+>  /* For backwards compat.  The original support for preemption was based on
+>   * a single ring per priority level so # of priority levels equals the #
+> -- 
+> 2.46.2
+> 
 
 -- 
 With best wishes
