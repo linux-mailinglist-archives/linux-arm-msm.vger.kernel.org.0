@@ -1,178 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-40032-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40031-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id E69449E158C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 09:23:40 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BEDD79E1508
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 09:05:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 80703B2E5B8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 08:05:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 85516282CEA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 08:05:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 853051E00B5;
-	Tue,  3 Dec 2024 08:02:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 30FE11DF75E;
+	Tue,  3 Dec 2024 08:01:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="DS9EMnKI"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tnRpPtR/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB7B11E0086;
-	Tue,  3 Dec 2024 08:02:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3D9A1D79BE;
+	Tue,  3 Dec 2024 08:01:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733212927; cv=none; b=VTP/2SmaNKrF04GTsDj1ufDhtslQlBV5cVendMMtDKMQlsIgvukkCnTNHg6fu++p3DspMkzK1XFPN46I6cgls1RgPRkPJk5tVFxVnkP7ijoxvg9UBvUJN0eLF52p+po5DMW2u4X6B2ciBzD+dPcv3LxDlkm4AHJqx/3yDI0IJKo=
+	t=1733212901; cv=none; b=rDKWPOR9tNcOl7P0MWcZE4Z9vybx4rNTFvq8PjPXUMehdiErNxmU6r+l2pEzIReQmJ+dMigQLAR/SZTXzp5pfIXk80mExuESzkjyquuPn02ebY1BsYTZixPUMjxfx7xEeSiKX5GkxjzzjHaEtOUMHCYfjNCAk95jSDTzJzG/Q7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733212927; c=relaxed/simple;
-	bh=TLdYz69D4oSs9byzuY4TBv15PtsAimwWNEYs64grDXE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=l56QKj9PXcZ0Ys2741AIR1AT7/fI3hxf6ndcSm+aBmS59mw4lbFg/9wg1hHRr8HHU6lOACQHa5ZR8OpNh9uqOHyHUj36XnWdRw1OHJbU53QvuXvYZ1RXyJiWKMegotoOCedG4tpFdOtw+kZBAublN4eLKB4LrpFyMugE+yETZ0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=DS9EMnKI; arc=none smtp.client-ip=192.198.163.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1733212926; x=1764748926;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=TLdYz69D4oSs9byzuY4TBv15PtsAimwWNEYs64grDXE=;
-  b=DS9EMnKIV3kQX/SUG33STGveorN8tQd4CsHUNA35lGHaF+SG11ph+68I
-   uVBvYCvw+BcymQzy03OwJYxJSz//h5nNxu6zE7CXnvPmDi14clVdnvUy4
-   QBv/+HO2Dt0I7ZUlPHdTB/l5dhE5tNVMbqywqI1bhKgfgeO2wck0pGXn/
-   gTHccG5jZ7IbMfHvn2vQ00O/fIh030KZgwZhdSq2BWerOkBVbBZY4hXIU
-   L1P7ybeyQKT2DafNO95nSHjE3+176qlq3Z8DhB9a0mimF7FiXtfULskKn
-   V0ezUEqaJuvDsscYwurGwocbMDdrlgT8Uk/Cq4oPNBrjyv48ianfJ1uiv
-   A==;
-X-CSE-ConnectionGUID: dqmHe9+ISHaVghZw6uMf/Q==
-X-CSE-MsgGUID: NFb7WOmXT2SlfK1OEPDWLQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11274"; a="20995785"
-X-IronPort-AV: E=Sophos;i="6.12,204,1728975600"; 
-   d="scan'208";a="20995785"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
-  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Dec 2024 00:02:05 -0800
-X-CSE-ConnectionGUID: jlSieFyFTw21jcpHKNe2xQ==
-X-CSE-MsgGUID: ciUaPcTSQCWYpyhrqVDYag==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,204,1728975600"; 
-   d="scan'208";a="93816380"
-Received: from lkp-server01.sh.intel.com (HELO 388c121a226b) ([10.239.97.150])
-  by fmviesa009.fm.intel.com with ESMTP; 03 Dec 2024 00:02:01 -0800
-Received: from kbuild by 388c121a226b with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1tINr5-0000KF-1C;
-	Tue, 03 Dec 2024 08:01:59 +0000
-Date: Tue, 3 Dec 2024 16:01:25 +0800
-From: kernel test robot <lkp@intel.com>
-To: Amirreza Zarrabi <quic_azarrabi@quicinc.com>,
-	Jens Wiklander <jens.wiklander@linaro.org>,
-	Sumit Garg <sumit.garg@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc: oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	op-tee@lists.trustedfirmware.org, linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-doc@vger.kernel.org,
-	Amirreza Zarrabi <quic_azarrabi@quicinc.com>
-Subject: Re: [PATCH 02/10] tee: add TEE_IOCTL_PARAM_ATTR_TYPE_MEMBUF
-Message-ID: <202412031510.Oh9kNGeK-lkp@intel.com>
-References: <20241202-qcom-tee-using-tee-ss-without-mem-obj-v1-2-f502ef01e016@quicinc.com>
+	s=arc-20240116; t=1733212901; c=relaxed/simple;
+	bh=zjPIbEhtW1+E9dxrS28Qf8oLMzie0UIPL/ztZ9hT0ps=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Xl7FIYFdPcc9+ivOyeb/dVdz8kAFn9yXvQupTy5IqrAHcDJ8tI6Ead7pgZ8upeno+6oEzlVak1uPaT9Gb8EpBXtGIUXrK986snAzJSlPpN/KzzbGs7SOvDqfomP2V+1kv1QYUsjDP1aUVuZ/sej+zc4bBMzlUtUzI+ecJee4r7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tnRpPtR/; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 025ABC4CECF;
+	Tue,  3 Dec 2024 08:01:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1733212900;
+	bh=zjPIbEhtW1+E9dxrS28Qf8oLMzie0UIPL/ztZ9hT0ps=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=tnRpPtR/vyxrY1PW4DbKl10xGVlpEAXRfoV6NUaXS9O84buoFJmLu4upVx+HohxYR
+	 RAME+IN6PIpr3FDDcuxRhu4GNRTgscJqSxfXPnojklJUTG+pDhzYGhYXwEILvuSF7o
+	 vAPN9BnDuz++EKgOItE8UrVLudK0KziIQzJFtMb23FE6u1TyJfHk+KLgkoYBOzEiGF
+	 8AQe70FltXppTDF1M/z4TNDrMbqVcnaCbw3Z25igEipcPTjUxBynj5wWP1D7XrNB6J
+	 DcpRO4YfRlZ0VS/COZlqtDfCC+con7JWCmGEhwwoO1lCsbeG/0kds8XCbEyQ4Ef++Q
+	 B2JqCRpdRROcA==
+Message-ID: <bfa857c2-cd74-4fe2-a88c-3b35a58710b0@kernel.org>
+Date: Tue, 3 Dec 2024 09:01:31 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241202-qcom-tee-using-tee-ss-without-mem-obj-v1-2-f502ef01e016@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/4] dt-bindings: display: msm: dp-controller: document
+ clock parents better
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>, Rob Clark
+ <robdclark@gmail.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Kuogee Hsieh <quic_khsieh@quicinc.com>,
+ Mahadevan <quic_mahap@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20241202-dp_mst_bindings-v1-0-9a9a43b0624a@quicinc.com>
+ <20241202-dp_mst_bindings-v1-2-9a9a43b0624a@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20241202-dp_mst_bindings-v1-2-9a9a43b0624a@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Amirreza,
-
-kernel test robot noticed the following build warnings:
-
-[auto build test WARNING on f486c8aa16b8172f63bddc70116a0c897a7f3f02]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Amirreza-Zarrabi/tee-allow-a-driver-to-allocate-a-tee_device-without-a-pool/20241203-122412
-base:   f486c8aa16b8172f63bddc70116a0c897a7f3f02
-patch link:    https://lore.kernel.org/r/20241202-qcom-tee-using-tee-ss-without-mem-obj-v1-2-f502ef01e016%40quicinc.com
-patch subject: [PATCH 02/10] tee: add TEE_IOCTL_PARAM_ATTR_TYPE_MEMBUF
-config: i386-buildonly-randconfig-002-20241203 (https://download.01.org/0day-ci/archive/20241203/202412031510.Oh9kNGeK-lkp@intel.com/config)
-compiler: gcc-12 (Debian 12.2.0-14) 12.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20241203/202412031510.Oh9kNGeK-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202412031510.Oh9kNGeK-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
-   drivers/tee/tee_core.c: In function 'params_to_supp':
->> drivers/tee/tee_core.c:669:32: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
-     669 |                         ip.a = (u64)p->u.membuf.uaddr;
-         |                                ^
+On 03/12/2024 04:31, Abhinav Kumar wrote:
+> Document the assigned-clock-parents better for the DP controller node
+> to indicate its functionality better.
 
 
-vim +669 drivers/tee/tee_core.c
+You change the clocks entirely, not "document". I would say that's an
+ABI break if it really is a Linux requirement. You could avoid any
+problems by just dropping the property from binding.
 
-   648	
-   649	static int params_to_supp(struct tee_context *ctx,
-   650				  struct tee_ioctl_param __user *uparams,
-   651				  size_t num_params, struct tee_param *params)
-   652	{
-   653		size_t n;
-   654	
-   655		for (n = 0; n < num_params; n++) {
-   656			struct tee_ioctl_param ip;
-   657			struct tee_param *p = params + n;
-   658	
-   659			ip.attr = p->attr;
-   660			switch (p->attr & TEE_IOCTL_PARAM_ATTR_TYPE_MASK) {
-   661			case TEE_IOCTL_PARAM_ATTR_TYPE_VALUE_INPUT:
-   662			case TEE_IOCTL_PARAM_ATTR_TYPE_VALUE_INOUT:
-   663				ip.a = p->u.value.a;
-   664				ip.b = p->u.value.b;
-   665				ip.c = p->u.value.c;
-   666				break;
-   667			case TEE_IOCTL_PARAM_ATTR_TYPE_MEMBUF_INPUT:
-   668			case TEE_IOCTL_PARAM_ATTR_TYPE_MEMBUF_INOUT:
- > 669				ip.a = (u64)p->u.membuf.uaddr;
-   670				ip.b = p->u.membuf.size;
-   671				ip.c = 0;
-   672				break;
-   673			case TEE_IOCTL_PARAM_ATTR_TYPE_MEMREF_INPUT:
-   674			case TEE_IOCTL_PARAM_ATTR_TYPE_MEMREF_OUTPUT:
-   675			case TEE_IOCTL_PARAM_ATTR_TYPE_MEMREF_INOUT:
-   676				ip.b = p->u.memref.size;
-   677				if (!p->u.memref.shm) {
-   678					ip.a = 0;
-   679					ip.c = (u64)-1; /* invalid shm id */
-   680					break;
-   681				}
-   682				ip.a = p->u.memref.shm_offs;
-   683				ip.c = p->u.memref.shm->id;
-   684				break;
-   685			default:
-   686				ip.a = 0;
-   687				ip.b = 0;
-   688				ip.c = 0;
-   689				break;
-   690			}
-   691	
-   692			if (copy_to_user(uparams + n, &ip, sizeof(ip)))
-   693				return -EFAULT;
-   694		}
-   695	
-   696		return 0;
-   697	}
-   698	
+> 
+> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/display/msm/dp-controller.yaml | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> index 35ae2630c2b3..9fe2bf0484d8 100644
+> --- a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> @@ -72,8 +72,8 @@ properties:
+>  
+>    assigned-clock-parents:
+>      items:
+> -      - description: phy 0 parent
+> -      - description: phy 1 parent
+> +      - description: Link clock PLL output provided by PHY block
+> +      - description: Stream 0 pixel clock PLL output provided by PHY block
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+
+Best regards,
+Krzysztof
 
