@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-40141-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40140-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 17DEE9E2B85
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 19:59:48 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id CCC759E2BB8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 20:10:51 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E2E58164E46
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 18:59:44 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E541DB24B4F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 18:55:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 291091FE46D;
-	Tue,  3 Dec 2024 18:59:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 99ACE1FDE14;
+	Tue,  3 Dec 2024 18:55:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OJ/rffnc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OUSTOJ+T"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E96331FDE26;
-	Tue,  3 Dec 2024 18:59:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF971362;
+	Tue,  3 Dec 2024 18:55:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733252383; cv=none; b=PP9wciCgtJqzG2TUvt2AZTG41bSTLxADzu19jwUo0emGnTgaqZFkSgl/U6M4wGGpdW2s0H3megnGyUBPwTMQYTnIsqK30QByVz3HPKqwnddZ5quz7E/I47vdKibjCEx5cDeDICoseOkJ2it32gXx3chF5jnoQiH4r/pAhPxrVb4=
+	t=1733252136; cv=none; b=SEOM1izVuTQ2tvX637dXDOag1ypadsR2czuNoKWZ9+4dMvrXkUdH5KYbs82bBZCovRUq5GR4eLpw/Gvz/Hy1FFXU2UTZW4LIRYTdEUs4/R2dP2QGvsL12yPG6bfoyJiTCNfrqNVWyD0+odMMXGVGG3OVty3uOA5xz4Jss1UfsDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733252383; c=relaxed/simple;
-	bh=zNkpo8H89tmms49Rp+rl0QDB/6wIVSL/SKuA8+xZqvY=;
+	s=arc-20240116; t=1733252136; c=relaxed/simple;
+	bh=RwT+fnDrboieIPEA7JR3/Pyc460cjUeXQCozuRE4M7w=;
 	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=FUkkf39bHMsfwuQByrYfaEFpg3Zxjf9urxHwE5yFLfSzPU1jAJM7O0vVSsbKvu9tgWkgJp8dtqspZaiSeai1NHEEwZI7wI1c55Pde604cPh4lAQV0VGx18jpN7jkjhrs3ObaQrMrpkQN+POdrTaGG57eA3qMqgTdtDQKRyjVuKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OJ/rffnc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0101C4CECF;
-	Tue,  3 Dec 2024 18:59:41 +0000 (UTC)
+	 Content-Disposition:In-Reply-To; b=UnkBQsI7IYe7ws3n67VnAbX3g53fJ6VS39GuBC9/ezQTAcrvPnqIpu6DH/wz3syP5CHyZPej9GxlWIvatPmEjniTWcsa7hYQ70tupNQ2JiZH5uxn6NGWx8b+2INhaLZLARQ6a7VKFfz2xoIUbHPcBepw2fB06sDct0ZlnYgNEsw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OUSTOJ+T; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2049C4CECF;
+	Tue,  3 Dec 2024 18:55:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733252382;
-	bh=zNkpo8H89tmms49Rp+rl0QDB/6wIVSL/SKuA8+xZqvY=;
+	s=k20201202; t=1733252135;
+	bh=RwT+fnDrboieIPEA7JR3/Pyc460cjUeXQCozuRE4M7w=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=OJ/rffnc+chhzGjKiolyoS0CekuLEm/cMW1wHkJ24aQBuKF3/l8DQ2n47LAFwWHlr
-	 xkAvtiNFfv+5Or16fQswtR2N3163Sh7O5yE+EaWEtQWz6UOCvY7a1JojYyifCQ4j9A
-	 8XBkLaNuu1wW8O1TmbEBkPL2VmBrIveE13ewdtJ2PxsdeoRf+pZLsozwrSdqQiD7Qj
-	 CfTLrxxtMaFsOsJMuEyD57AJCSsgcjzEUJCa9+yli6vVEmLaLKB5OM5kNLaLRW6f7y
-	 Sq8evEJ2VglWRqjfUdHnuIR3OmnULg/400vNtjtzyD+AAq5D4tb2C/7ge/0d9BFRGL
-	 kTu4wSF4Si4mQ==
-Date: Tue, 3 Dec 2024 12:59:40 -0600
+	b=OUSTOJ+TUZ14+u83JYK8GPm8MNxZjF4pBy2zS6YU8mLy38FqQriYaXJOIgpHNy3uW
+	 xOpRBv7dGodr3F+vh3BDBQOwaclP272iCxD2XEMphC2uH6quZnzK1qbV9WxG8iE62c
+	 yw/NzE4p4UoGhv5aB9biob1bY+rw8GZjEQA7ljD6XxqCNLcpbkdulUR2hdp5y/7SGh
+	 8C659+vUqjS0aO6OpD0P3SpjHRwwOIGdzXtA8ytd6oFbJ39B4HtLkFnZ7tILvrmuOu
+	 Ib5P/0Iqk7VU13BTariAL1Fw4nJBmr1oKE5sEVBtTCDzkOB4K86nK5V9FEYTtjd8bq
+	 CscJnkLfdbHig==
+Date: Tue, 3 Dec 2024 12:55:34 -0600
 From: Bjorn Helgaas <helgaas@kernel.org>
 To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
 Cc: cros-qcom-dts-watchers@chromium.org,
@@ -60,8 +60,8 @@ Cc: cros-qcom-dts-watchers@chromium.org,
 	quic_mrana@quicinc.com, mmareddy@quicinc.com,
 	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org
-Subject: Re: [PATCH 3/3] PCI: qcom: Enable ECAM feature based on config size
-Message-ID: <20241203185940.GA2910223@bhelgaas>
+Subject: Re: [PATCH 2/3] PCI: dwc: Add ECAM support with iATU configuration
+Message-ID: <20241203185534.GA2910014@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,98 +70,154 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241117-ecam-v1-3-6059faf38d07@quicinc.com>
+In-Reply-To: <20241117-ecam-v1-2-6059faf38d07@quicinc.com>
 
-On Sun, Nov 17, 2024 at 03:30:20AM +0530, Krishna chaitanya chundru wrote:
-> Enable the ECAM feature if the config space size is equal to size required
-> to represent number of buses in the bus range property.
+On Sun, Nov 17, 2024 at 03:30:19AM +0530, Krishna chaitanya chundru wrote:
+> The current implementation requires iATU for every configuration
+> space access which increases latency & cpu utilization.
 > 
-> The ELBI registers falls after the DBI space, so use the cfg win returned
-> from the ecam init to map these regions instead of doing the ioremap again.
-> ELBI starts at offset 0xf20 from dbi.
+> Configuring iATU in config shift mode enables ECAM feature to access the
+> config space, which avoids iATU configuration for every config access.
 > 
-> On bus 0, we have only the root complex. Any access other than that should
-> not go out of the link and should return all F's. Since the IATU is
-> configured for bus 1 onwards, block the transactions for bus 0:0:1 to
-> 0:31:7 (i.e., from dbi_base + 4KB to dbi_base + 1MB) from going outside the
-> link through ecam blocker through parf registers.
+> Add "ctrl2" into struct dw_pcie_ob_atu_cfg  to enable config shift mode.
+> 
+> As DBI comes under config space, this avoids remapping of DBI space
+> separately. Instead, it uses the mapped config space address returned from
+> ECAM initialization. Change the order of dw_pcie_get_resources() execution
+> to acheive this.
 
-s/ecam/ECAM/
-s/dbi/DBI/
-s/IATU/iATU/ (Seems to be the convention?  Also below)
-s/parf/PARF/ (I assume an initialism?)
+s/acheive/achieve/
 
-Use conventional format for PCI bus addresses ... I assume "0:0:1"
-means bus 0, device 0, function 1, which would normally be formatted
-as "00:00.1" (also below).
-
-> +static int qcom_pci_config_ecam_blocker(struct dw_pcie_rp *pp)
+> Introduce new ecam_init() function op for the clients to configure after
+> ecam window creation has been done.
+> 
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> ---
+>  drivers/pci/controller/dwc/pcie-designware-host.c | 114 ++++++++++++++++++----
+>  drivers/pci/controller/dwc/pcie-designware.c      |   2 +-
+>  drivers/pci/controller/dwc/pcie-designware.h      |   6 ++
+>  3 files changed, 102 insertions(+), 20 deletions(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+> index 3e41865c7290..e98cc841a2a9 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
+> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+> @@ -418,6 +418,62 @@ static void dw_pcie_host_request_msg_tlp_res(struct dw_pcie_rp *pp)
+>  	}
+>  }
+>  
+> +static int dw_pcie_config_ecam_iatu(struct dw_pcie_rp *pp)
 > +{
 > +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-> +	struct qcom_pcie *pcie = to_qcom_pcie(pci);
-> +	u64 addr, addr_end;
-> +	u32 val;
+> +	struct dw_pcie_ob_atu_cfg atu = {0};
+> +	struct resource_entry *bus;
+> +	int ret, bus_range_max;
 > +
-> +	/* Set the ECAM base */
-> +	writel(lower_32_bits(pci->dbi_phys_addr), pcie->parf + PARF_ECAM_BASE);
-> +	writel(upper_32_bits(pci->dbi_phys_addr), pcie->parf + PARF_ECAM_BASE_HI);
+> +	bus = resource_list_first_type(&pp->bridge->windows, IORESOURCE_BUS);
 > +
 > +	/*
-> +	 * On bus 0, we have only the root complex. Any access other than that
-> +	 * should not go out of the link and should return all F's. Since the
-> +	 * IATU is configured for bus 1 onwards, block the transactions for
-> +	 * bus 0:0:1 to 0:31:7 (i.e from dbi_base + 4kb to dbi_base + 1MB) from
-> +	 * going outside the link.
+> +	 * Bus 1 config space needs type 0 atu configuration
+> +	 * Remaining buses need type 1 atu configuration
 
-s/IATU/iATU/ to match other usage.
+s/atu/ATU/ (initialism, looks like "iATU" might be appropriate here?)
 
-Use conventional formatting of PCI bus/device/function addresses.
+I'm confused about the bus numbering; you refer to "bus 1" and "bus
+2".  Is bus 1 the root bus, i.e., the primary bus of a Root Port?
 
-Unless the root bus number is hard-wired to be zero, maybe this should
-say "root bus" instead of "bus 0"?
+The root bus number would typically be 0, not 1, and is sometimes
+programmable.  I don't know how the DesignWare core works, but since
+you have "bus" here, referring to "bus 1" and "bus 2" here seems
+overly specific.
 
-There is no architected presence of a PCIe Root Complex as a PCI
-device.  Maybe this should say "the only device on bus 0 is the *Root
-Port*"?
-
-Or maybe there's a PCI device with some sort of device-specific
-interface to Root Complex registers?  But if that were the *only*
-device on bus 0, there would be no Root Port to reach other devices,
-so this doesn't seem likely.
-
-> +static bool qcom_pcie_check_ecam_support(struct device *dev)
-
-Rename to be an assertion that can be either true or false, e.g.,
-"ecam_supported".  "Check" doesn't hint about what true/false mean.
-
-> +{
-> +	struct platform_device *pdev = to_platform_device(dev);
-> +	struct resource bus_range, *config_res;
-> +	u64 bus_config_space_count;
-> +	int ret;
+> +	 */
+> +	atu.index = 0;
+> +	atu.type = PCIE_ATU_TYPE_CFG0;
+> +	atu.cpu_addr = pp->cfg0_base + SZ_1M;
+> +	atu.size = SZ_1M;
+> +	atu.ctrl2 = PCIE_ATU_CFG_SHIFT_MODE_ENABLE;
+> +	ret = dw_pcie_prog_outbound_atu(pci, &atu);
+> +	if (ret)
+> +		return ret;
 > +
-> +	/* If bus range is not present, keep the bus range as maximum value */
-> +	ret = of_pci_parse_bus_range(dev->of_node, &bus_range);
-> +	if (ret) {
-> +		bus_range.start = 0x0;
-> +		bus_range.end = 0xff;
+> +	bus_range_max = bus->res->end - bus->res->start + 1;
+> +
+> +	/* Configure for bus 2 - bus_range_max in type 1 */
+> +	atu.index = 1;
+> +	atu.type = PCIE_ATU_TYPE_CFG1;
+> +	atu.cpu_addr = pp->cfg0_base + SZ_2M;
+> +	atu.size = (SZ_1M * (bus_range_max - 2));
+> +	atu.ctrl2 = PCIE_ATU_CFG_SHIFT_MODE_ENABLE;
+> +	return dw_pcie_prog_outbound_atu(pci, &atu);
+> +}
+> +
+> +static int dw_pcie_create_ecam_window(struct dw_pcie_rp *pp, struct resource *res)
+> +{
+> +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> +	struct device *dev = pci->dev;
+> +	struct resource_entry *bus;
+> +
+> +	bus = resource_list_first_type(&pp->bridge->windows, IORESOURCE_BUS);
+> +	if (!bus)
+> +		return -ENODEV;
+> +
+> +	pp->cfg = pci_ecam_create(dev, res, bus->res, &pci_generic_ecam_ops);
+> +	if (IS_ERR(pp->cfg))
+> +		return PTR_ERR(pp->cfg);
+> +
+> +	pci->dbi_base = pp->cfg->win;
+> +	pci->dbi_phys_addr = res->start;
+> +
+> +	if (pp->ops->ecam_init)
+> +		pp->ops->ecam_init(pci, pp->cfg);
+
+.ecam_init() is defined to return int, but you ignore the return value.
+If it's practical, I think it would be nicer if you could manage to:
+
+  - Drop .enable_ecam.
+
+  - Have .ecam_init() return failure if there's not enough ECAM space
+    or whatever, i.e., move the qcom_pcie_check_ecam_support() code
+    there.
+
+  - Handle .ecam_init() failure here by doing whatever we did before.
+
+If there's no useful return value from .ecam_init(), make it void.
+
+> +	return 0;
+> +}
+
+> @@ -454,6 +499,30 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
+>  
+>  	pp->bridge = bridge;
+>  
+> +	pp->cfg0_size = resource_size(res);
+> +	pp->cfg0_base = res->start;
+> +
+> +	if (!pp->enable_ecam) {
+
+If you can't get rid of .enable_ecam, reverse order so this uses
+positive logic:
+
+  if (pp->enable_ecam) {
+    ...
+  } else {
+    ...
+  }
+
+> +		pp->va_cfg0_base = devm_pci_remap_cfg_resource(dev, res);
+> +		if (IS_ERR(pp->va_cfg0_base))
+> +			return PTR_ERR(pp->va_cfg0_base);
+> +
+> +		/* Set default bus ops */
+> +		bridge->ops = &dw_pcie_ops;
+> +		bridge->child_ops = &dw_child_pcie_ops;
+> +		bridge->sysdata = pp;
+> +	} else {
+> +		ret = dw_pcie_create_ecam_window(pp, res);
+> +		if (ret)
+> +			return ret;
+> +		bridge->ops = (struct pci_ops *)&pci_generic_ecam_ops.pci_ops;
+> +		pp->bridge->sysdata = pp->cfg;
 > +	}
 
-I would have thought the generic OF parsing would already default to
-[bus 00-ff]?
-
-> +	config_res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "config");
-> +	if (!config_res)
-> +		return false;
-
-Move of_pci_parse_bus_range() (if it's needed) down here so it's
-together with the use of the results.  No point in calling it before
-looking for "config".
-
-> +	bus_config_space_count = resource_size(config_res) >> PCIE_ECAM_BUS_SHIFT;
-> +	if (resource_size(&bus_range) > bus_config_space_count)
-> +		return false;
-> +
-> +	return true;
-> +}
 
