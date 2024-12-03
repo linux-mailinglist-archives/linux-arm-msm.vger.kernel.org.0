@@ -1,123 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-40045-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40046-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B83D9E170E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 10:19:21 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CD9AF9E1715
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 10:19:59 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C4DFE281B81
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 09:19:19 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 24584161C42
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 09:19:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 678561DE4EE;
-	Tue,  3 Dec 2024 09:19:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 95BB31DEFE8;
+	Tue,  3 Dec 2024 09:19:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="j/ZyoZ3w"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="cy4f+sUj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E29B33F8F7;
-	Tue,  3 Dec 2024 09:19:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A21E81DE4CB
+	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Dec 2024 09:19:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733217556; cv=none; b=aWmJ+8aX5gmnacIGel2NSD2523HVCW5UN/7BlZ5i7U+wr+HtcWu4NZ6Z18ZQyOh+sNQRWv0FCmZaCNrisDecuz1S8ENaYK38FsieBn3L0g6TJwzmbMkgDi++FcS2IEvmLMNC+5lR3rrlKsSeWaxEm0QswaaCIM+ZvsTYt5GCe80=
+	t=1733217592; cv=none; b=O1ShY1dac1/wr80YWosqMiIu2YwJkEva+9FhOjl4DapGYRGdu5T8nnmiu2k97Ji4gOMnJ2pRo93pT6NRxuCL2JakLWncIjltKu9qieiot3U+sxFaIrRtEZBF/Q8ExhSXlOaqvYi8UM6PlEzhaBbkKAwvYmZCji3o599f7T5Uy1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733217556; c=relaxed/simple;
-	bh=x2vsnah+FQn6F5RImqP2xAcLMZpjRl3druEdJIaaO14=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=fKrtNyn/44tVU7hCa5/BYretO2Z8YCeCmo2P9Fh1k7R2CNR/Q6ES0JwUwCY6xBCV/vnGh8jxahFwVZQhWcpsZdYxZvhUB+lrBMwMDuEwDFJTD2TBsZg+mz6XoURqdDrvM4gClreRtIA3Cr5IofB1MWgPDIpzI4AawBMHyslRt10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=j/ZyoZ3w; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B38O3YD028930;
-	Tue, 3 Dec 2024 09:19:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	4FmtQeza1CzHNqrTW/NmGRcEE/2b9bklTjsRtN7+/ds=; b=j/ZyoZ3wwk69T1oX
-	I+VmYIq1lpIxXpbAuFsg+MPHzSgrKr/lfrpS+ubkueH66xhY8WFt+b/Vv7UuXsbj
-	g0G4q8MI1Sef1BhtPuNKZ3BkmYgYbQvBNdsjxoEat/ftcNpELSEuYgaao3PYGsvq
-	pjzTCmOa6HmXWHeyjhP6r7kmrowC2VX7lDfOd1uUQbpKVIdHdG3EaaSnMU3Yw7d8
-	EdNvAFXp1v6ra5JqfwJ6U2nbP0zhL4Gy4tZtoTbP21wUM2nDBkiRd8ZDTlAxgEEd
-	KJd7TWCi1tJUOT6bWD34URQ7UGcRWjN7N/33BmKymETbbd9hF0hV53SwKJ7VAqqD
-	smkpvg==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 437tstfk69-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 03 Dec 2024 09:19:06 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B39J5Ze021551
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 3 Dec 2024 09:19:05 GMT
-Received: from [10.151.41.184] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 3 Dec 2024
- 01:19:01 -0800
-Message-ID: <0796510c-20bd-4a81-bd60-40aacbcf61c0@quicinc.com>
-Date: Tue, 3 Dec 2024 14:48:58 +0530
+	s=arc-20240116; t=1733217592; c=relaxed/simple;
+	bh=+RUkhSp74pt31GI7QEfwoh1/meW8bvxnwhCmfShcZDc=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=e0KkS+swm0Hr7y4n9tX9U13ZxxXnKwdH82myTDk8OHtahOtkD4DYwlvPUDZUr1plEwbUdy3fIXwsosZbSx7P5mDYK4DozIKxxflDTat8QN+kOxjYF79l3Yuy/34vR9+Du1QANneAIekXRQT/AMXUfU8XOtWmhD8nVVwtrnUyhx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=cy4f+sUj; arc=none smtp.client-ip=209.85.208.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2ffa49f623cso66467641fa.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Dec 2024 01:19:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1733217588; x=1733822388; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=CC9LNLFc1Hh67gjWV5vx9a18ct4bVImqOXc1JIJKqZg=;
+        b=cy4f+sUjSjWYmuhKK9+4rP/+hrxuWrb4EtDv+mvkimG1Ys83MTxbz/kukQQ1Liaefs
+         vCBS2uxC9omhO6/FRUIt/B0o8yC+OwILZmhbpC5vcPlJWNhKuZQpjuYDwlORvvvYUGqg
+         /BPXcNx02RYtSi3eBIBpHTn9t3dB7Fm1YxPwZpn7Hp1ap9gQOSchvzB83WK68reLpUuL
+         dwpY2vcIZ6pYFWNH+yzpNwDyXAwPZBtOQ09yiuDqbRP0QEUZHXuUbwuiJp2o38Y8Gq8U
+         O3QW+GhjkzCBBPOVST26Bxm/ZOlkZKX02yRydtShCQ0Xt+/5QnVqWK+4fwalSYQpIfEb
+         oLRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733217588; x=1733822388;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CC9LNLFc1Hh67gjWV5vx9a18ct4bVImqOXc1JIJKqZg=;
+        b=XUkMqmPEA+i004LHdgYsJyMmdNu1q2Mq5FRCzcC0K/4IKx680aJddz7QHmKVi35AsM
+         TFAXor9zBUVDWGLUqqwfD5tXvf6A8pCNWjWihXi/S10GHG7xVP9VG+B8PCiOtLKMBklA
+         1OPDmqVdwtxVdbvzzOD7xoSdtgSDopitvWvxQ8No0aMC6YswOVd4iVbwG4Kw7joFyxLg
+         ItI+VgwEvFjkHQOYN28+y4Kdt7PWF3bQ+C8OhoQML/RFie0447bEhI+uixiTGH7Tev+r
+         TV354UVAEn6usozoK/1FDOSJhm5xxLQMazCbpX6zrKDXR1XSmD4jEdo1RG1k7ovUwRf3
+         ZjJA==
+X-Forwarded-Encrypted: i=1; AJvYcCUfQVMrlVB8RqDzHtv6JCy50nhIOeu4LeBhp2P6FJTujdARbzoC7cXcMP86lR6ILG2RGxWbgK01oqA5BbF8@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx9VD0s1lq+vtJ3xVmYeRiJkczZJ4pJ0btf7gQYlMlDZAtJLL4g
+	aDMcRxtvIAQTN9P3obYulW1JlROXbE2TL3LUHFfO+7SSKLFVStpKUNi5xitAlc6R4M5o2eGrE4s
+	JY/A=
+X-Gm-Gg: ASbGnct48hZlIm6qms3u+KYLaCz5F0Jh7gOmL5JWNGn0Duv5AAMKrccvDwaeuwT0/+4
+	7JOoIlYr3OMytGXK9T49Varpe20I9KGb6EgfeumSlu+VdCQ5WIfm75XgjDGUvYyL4H5IyDCHg8Y
+	CRHOhp96BsoUPCukvaRujdP/LYXyDMWcvCZTng5afdOyCRXxphcv4Y6tfMu3iOrGkyHo+IS/Lzq
+	vozZ7zCWRnS/+ey352tZL5PXWpwGJ6oRLlmAxa3bZ8f/mdRHh0WKYNMlizpf0r+6isfQ1AmuFmL
+	pw6go0U=
+X-Google-Smtp-Source: AGHT+IF+pYErz1kpD3eIIL5x4sUIrRIiDsWqlvfMTbuZhhsoChxhFgBLXzN+QJSiFdHDv6SmgVXa1g==
+X-Received: by 2002:a05:651c:2114:b0:2ff:a95c:df1 with SMTP id 38308e7fff4ca-30009c0d858mr12308381fa.6.1733217588457;
+        Tue, 03 Dec 2024 01:19:48 -0800 (PST)
+Received: from [127.0.1.1] (217.97.33.231.ipv4.supernova.orange.pl. [217.97.33.231])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ffdfbb915esm15591811fa.19.2024.12.03.01.19.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Dec 2024 01:19:48 -0800 (PST)
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Subject: [PATCH 0/9] crypto: qce - refactor the driver
+Date: Tue, 03 Dec 2024 10:19:28 +0100
+Message-Id: <20241203-crypto-qce-refactor-v1-0-c5901d2dd45c@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 15/22] wifi: ath12k: add BDF address in hardware
- parameter
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        <ath12k@lists.infradead.org>
-CC: <linux-wireless@vger.kernel.org>, Kalle Valo <kvalo@kernel.org>,
-        "Rob
- Herring" <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        "Conor
- Dooley" <conor+dt@kernel.org>,
-        Jeff Johnson <jjohnson@kernel.org>,
-        "Bjorn
- Andersson" <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-References: <20241015182637.955753-1-quic_rajkbhag@quicinc.com>
- <20241015182637.955753-16-quic_rajkbhag@quicinc.com>
- <142f92d7-72e1-433b-948d-2c7e7d37ecfc@oss.qualcomm.com>
-Content-Language: en-US
-From: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
-In-Reply-To: <142f92d7-72e1-433b-948d-2c7e7d37ecfc@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 2sj9l3bAucBR50kKxPni91PBON0uv-o0
-X-Proofpoint-GUID: 2sj9l3bAucBR50kKxPni91PBON0uv-o0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- malwarescore=0 spamscore=0 impostorscore=0 mlxlogscore=999 mlxscore=0
- priorityscore=1501 suspectscore=0 phishscore=0 adultscore=0 clxscore=1015
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412030079
+X-B4-Tracking: v=1; b=H4sIACDNTmcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxNDQyML3eSiyoKSfN3C5FTdotS0xOSS/CLdxCRTCwszy9TUZGMTJaDOAqB
+ MZgXY1OjY2loAwmn4e2UAAAA=
+To: Thara Gopinath <thara.gopinath@gmail.com>, 
+ Herbert Xu <herbert@gondor.apana.org.au>, 
+ "David S. Miller" <davem@davemloft.net>, 
+ Stanimir Varbanov <svarbanov@mm-sol.com>
+Cc: linux-crypto@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
+ stable@vger.kernel.org
+X-Mailer: b4 0.14.1
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1337;
+ i=bartosz.golaszewski@linaro.org; h=from:subject:message-id;
+ bh=+RUkhSp74pt31GI7QEfwoh1/meW8bvxnwhCmfShcZDc=;
+ b=owEBbQKS/ZANAwAKARGnLqAUcddyAcsmYgBnTs0vT2Q2VlnO/jIG3fZpQwI3Q0yjeNlv2gNCq
+ xzoBdmSemeJAjMEAAEKAB0WIQQWnetsC8PEYBPSx58Rpy6gFHHXcgUCZ07NLwAKCRARpy6gFHHX
+ cp/nD/0WCGIDjIpD1NFtXulwrj1wA0XucQewSAWAplsNUDPNn0CNPa4BkRzhxoiBFf5+tS15M2M
+ lPGMGgrMhiZa0CLexY3xvIHNDPNRUr5Zb3JVDav1fCqxEubeNODjtiiKiw+piuNk2AF6djuc1Ln
+ dZm6A4r15cbXRLqAB2cqYabA82OH0R53A7P79B339FNTkt1SfHJBNiZ+c5QG6EvIaZgwdrwHXwo
+ AINH2F/QmfrE+lMi2qE1knd2sOIh9qicx8QlVzH6cvgmc8MzdcfJjKXMFno75Dg0BLdEjH2eTNU
+ FcipUP5frmOFb26gJct8damAlS73BhIdBlQMq9JELarIWcNI+IvApci3kgwtkv52WEYAECwQ6ha
+ RSktu8EjLazohZO7fnVffs8rs759oZCGpbCJoQ1PpARXWiNYXBgATwo9cS3XzxM9REIVZGWTt4T
+ iyT6CVBY30k8pkMS+CI9zxs7Lxqh3br4ZiLPg1cgdDRoF0sivBkND82jMtn5vBk2hQpNWVG/KDH
+ EkrgKGtAMHd/bfVQwREmjjqk49m8g/bPCkeC1w30XScsbOWH5AunokWLf0UvHgG31vGqpG/cn1e
+ QlL2D2QSf02UCjKwfWIUAyTiluB8HVAs6LUHO/8E1Z7wvGgBmvCENq05he3EspxmQkRHE4aaX7p
+ ARB1UL2sixR893w==
+X-Developer-Key: i=bartosz.golaszewski@linaro.org; a=openpgp;
+ fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
 
-On 11/4/2024 7:46 PM, Konrad Dybcio wrote:
-> On 15.10.2024 8:26 PM, Raj Kumar Bhagat wrote:
->> The Ath2k AHB device (IPQ5332) firmware requests BDF_MEM_REGION_TYPE
->> memory during QMI memory requests. This memory is part of the
->> HOST_DDR_REGION_TYPE. Therefore, add the BDF memory address to the
->> hardware parameter and provide this memory address to the firmware
->> during QMI memory requests.
-> 
-> Sounds like something to put in the device tree, no?
-> 
+This driver will soon be getting more features so show it some 
+refactoring love in the meantime. Switching to using a workqueue and 
+sleeping locks improves cryptsetup benchmark results for AES encryption.
 
-This BDF memory address is the RAM offset. We did add this in device tree in
-version 1. This is removed from device tree in v2 based on the review comment that
-DT should not store RAM offset.
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+---
+Bartosz Golaszewski (9):
+      crypto: qce - fix goto jump in error path
+      crypto: qce - unregister previously registered algos in error path
+      crypto: qce - remove unneeded call to icc_set_bw() in error path
+      crypto: qce - shrink code with devres clk helpers
+      crypto: qce - convert qce_dma_request() to use devres
+      crypto: qce - make qce_register_algs() a managed interface
+      crypto: qce - use __free() for a buffer that's always freed
+      crypto: qce - convert tasklet to workqueue
+      crypto: qce - switch to using a mutex
 
-refer below link:
-Link: https://lore.kernel.org/all/f8cd9c3d-47e1-4709-9334-78e4790acef0@kernel.org/
+ drivers/crypto/qce/core.c | 131 ++++++++++++++++------------------------------
+ drivers/crypto/qce/core.h |   9 ++--
+ drivers/crypto/qce/dma.c  |  22 ++++----
+ drivers/crypto/qce/dma.h  |   3 +-
+ drivers/crypto/qce/sha.c  |   6 +--
+ 5 files changed, 68 insertions(+), 103 deletions(-)
+---
+base-commit: f486c8aa16b8172f63bddc70116a0c897a7f3f02
+change-id: 20241128-crypto-qce-refactor-ab58869eec34
+
+Best regards,
+-- 
+Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+
 
