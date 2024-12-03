@@ -1,266 +1,469 @@
-Return-Path: <linux-arm-msm+bounces-40126-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40128-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 44AA69E2798
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 17:35:16 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 196EB9E2812
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 17:50:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 47E6CBC647F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 16:18:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D60D028C0FA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 16:50:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E50131F8AC1;
-	Tue,  3 Dec 2024 16:18:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 52F221F9A8C;
+	Tue,  3 Dec 2024 16:49:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="WDUlO4rH"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cfiq3Hbj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDD201F8930;
-	Tue,  3 Dec 2024 16:18:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.19
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242684; cv=fail; b=nAgsytbC3opMtdpcSJQcRqTPWjOgyRWU6wtRggJlr1b25Fst/Aihv0cGSaiKuMi0hYxQgM3ePM2vcx+FC3R41/HDdAJo38IW0G5SvtHXUMc/aSse1zuSM4BMO9FurCke3NqlyGxG8rKhxm7qrGyXklbNvht/I+k7TGdUq1rXwaQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242684; c=relaxed/simple;
-	bh=pV8wnFybLjxtsoPTx2QWhvUaFZPLAia0i9DdbeobF38=;
-	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=q+gkaKF9VfXKaPob7hodayfWtCvXIIEvnQaZdLMt/5Meo7m5x8vumz9GElsxDTbrXg0K83TYRcMdfO80P0Pzz9E9UB49EPQSeTsMhLlk+p7VRuzJMBGB+g1aa/ToAH100YK4dwR14H6DizHnLJmVrNoteVaBEXGAuQVrt8B2FqA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=WDUlO4rH; arc=fail smtp.client-ip=198.175.65.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1733242684; x=1764778684;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=pV8wnFybLjxtsoPTx2QWhvUaFZPLAia0i9DdbeobF38=;
-  b=WDUlO4rHC6yAwSDQE4cA8ZqbN8M+eSxNvGU8nImf2Bzf6UPml13h+vvr
-   3eIaWobHKGm5aoJNX34Gpj6CggukeBWoAi/KH7uVX/vqNW6JDuni/HXom
-   S1NzWeVMwL+T8PEATHl948vULOIc+AGP0Jp45CkL1+HqGvLZ6eAV0NUIm
-   ZDRk5hPlIuaxo28cSi/++Bw7HCpqiAvAJlqtx+PefkI6lytlvSbl5bY8h
-   y773H7yAE1eECYwQOd6a1Bf2zTfCERZnF1ADpjxNxvpyw61iswin7P1Gd
-   VcnH2HpGg1CmK1wJLQt+QEEOzXA1/h+ZzIDdI0goJT9Tbvhq18gwC6K6V
-   w==;
-X-CSE-ConnectionGUID: m6M4ZQzhT2uaMr+LaOzsPQ==
-X-CSE-MsgGUID: lF8zwdTKQGWd+nbQnpe97Q==
-X-IronPort-AV: E=McAfee;i="6700,10204,11275"; a="33344852"
-X-IronPort-AV: E=Sophos;i="6.12,205,1728975600"; 
-   d="scan'208";a="33344852"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
-  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Dec 2024 08:18:03 -0800
-X-CSE-ConnectionGUID: xt0A7vc+T0CjJkMCPdsoyQ==
-X-CSE-MsgGUID: riygdoIWSAuM723RGmSFzg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,205,1728975600"; 
-   d="scan'208";a="93887580"
-Received: from orsmsx601.amr.corp.intel.com ([10.22.229.14])
-  by orviesa007.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 03 Dec 2024 08:18:02 -0800
-Received: from orsmsx601.amr.corp.intel.com (10.22.229.14) by
- ORSMSX601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Tue, 3 Dec 2024 08:18:01 -0800
-Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
- orsmsx601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39 via Frontend Transport; Tue, 3 Dec 2024 08:18:01 -0800
-Received: from NAM02-SN1-obe.outbound.protection.outlook.com (104.47.57.42) by
- edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Tue, 3 Dec 2024 08:18:01 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=sAur5mm+K/ApckcYRL6PE/b+lHoXjo+6GNRtiYG1KLzCI+ae21QkLXyyad4WPcOFip1bnKzIwhavhK+PUC4u/HIyVs6PUlLEDqqHwq+5lhPZTrR0RZoVkFA7CjdttIEQYOc2Dm34ezsc326TwqXeqneJPZ6t2hauknKHBbg3WJdnpGCrwGJLjvQ9fG61I4JKZ0J/azsAMfqAItKp9OM2Qf6sB46ONg8SMXyA/RaLY74rf3TQjZjdvINSCoCxguALaTRlIAM7U2lAjCzCue65ILhm8lfSl0lwaMDv0ns5FRD7XHd4vRLB7sr6OMzqcRb7dKnEWR7EJ52fJ3pror5f6A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=W8t4VPdnzJlTimzj3FBtQFScHoB1NHsK/4KAmKnlTdg=;
- b=vMR+FhQFyFrfYbE6wjXP57DuFFRLt6oip8++NyRg+Ge4XCiQEkW9cTyHO2WVhSJKtxPTpLZGEbqUhbut9ZuVZTy4qsM6LCJYhqmuZsW5+loRVX+FWImdx0xpn/VyQdj2VWA7A6UZmVUJUzhV43cQCNlvcuTzyBq3huYhmzg+JFJuoVMx5Wx7Sa6KPgQ2kzA+5m4RD+zgNPvM5dcSSsEYtRXVB3Lkm9wmGNhlRRbnw3JuxoJQTbhvStmvlWqYPnB6orZ3V0NbXYB8gLrV12GUV94VprDPKuBvXdRMLIdyRcL8VASufd9ICOlAYQGEC+ZXANkZ2N1uTMJ7hCZgzaeOQg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from DS0PR11MB6375.namprd11.prod.outlook.com (2603:10b6:8:c9::21) by
- IA1PR11MB7892.namprd11.prod.outlook.com (2603:10b6:208:3fc::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8207.19; Tue, 3 Dec
- 2024 16:17:56 +0000
-Received: from DS0PR11MB6375.namprd11.prod.outlook.com
- ([fe80::cd01:59f6:b0f8:c832]) by DS0PR11MB6375.namprd11.prod.outlook.com
- ([fe80::cd01:59f6:b0f8:c832%4]) with mapi id 15.20.8207.017; Tue, 3 Dec 2024
- 16:17:56 +0000
-Message-ID: <65273bba-5ec1-44ea-865b-fb815afccc91@intel.com>
-Date: Tue, 3 Dec 2024 17:17:48 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v30 00/30] Introduce QC USB SND audio offloading support
-To: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>, Wesley Cheng
-	<quic_wcheng@quicinc.com>
-CC: Takashi Iwai <tiwai@suse.de>, Greg KH <gregkh@linuxfoundation.org>,
-	<srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
-	<perex@perex.cz>, <conor+dt@kernel.org>, <dmitry.torokhov@gmail.com>,
-	<corbet@lwn.net>, <broonie@kernel.org>, <lgirdwood@gmail.com>,
-	<krzk+dt@kernel.org>, <Thinh.Nguyen@synopsys.com>, <tiwai@suse.com>,
-	<robh@kernel.org>, <linux-kernel@vger.kernel.org>,
-	<devicetree@vger.kernel.org>, <linux-sound@vger.kernel.org>,
-	<linux-usb@vger.kernel.org>, <linux-input@vger.kernel.org>,
-	<linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>
-References: <20241106193413.1730413-1-quic_wcheng@quicinc.com>
- <edfeb642-297e-42bb-ad09-cbf74f995514@quicinc.com>
- <2024111655-approve-throwback-e7df@gregkh>
- <2f512d8d-e5f3-4bdd-8172-37114a382a69@quicinc.com>
- <875xoi3wqw.wl-tiwai@suse.de>
- <d0da6552-238a-41be-b596-58da6840efbb@quicinc.com>
- <CF49CA0A-4562-40BC-AA98-E550E39B366A@linux.dev>
-Content-Language: en-US
-From: Cezary Rojewski <cezary.rojewski@intel.com>
-In-Reply-To: <CF49CA0A-4562-40BC-AA98-E550E39B366A@linux.dev>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: WA2P291CA0027.POLP291.PROD.OUTLOOK.COM
- (2603:10a6:1d0:1f::18) To DS0PR11MB6375.namprd11.prod.outlook.com
- (2603:10b6:8:c9::21)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE20F1FA270
+	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Dec 2024 16:49:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1733244595; cv=none; b=aAlqHRaEKrK5kH8na672Vci0x9uYw4OAbAG8se/x9tgAGFZKOuk/dpiql0ayW56RcFgAz8RIrfuQZutKAYZYqxr32hiqdvmBN0E3mEsoNXNBSPPIrffJTzCHAKiQ51Jf6b4/mZaOsWcj9+8/KEM+3zLBBa3DDW2qP5AygV4AvS4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1733244595; c=relaxed/simple;
+	bh=7DpNYavETN2GjTvatWXWYBF1KoMu2GdCiT4meUFxbWY=;
+	h=Content-Type:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To; b=Tr8+p3Vid4yes4Qu1yQVHmEs5s+N6XctbpRe/DJsDw6MErjr9g/3TBj7wshxSyne5ai9oE6K9l+quyFALeqyFE4vRLZvKa4jMZiIN6TGVi+buFer/OJfcAf0WIxFFxAv66WVwECsFUL+pVeeevLpzQHSmMArv0rBO+Fr95jvHtQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cfiq3Hbj; arc=none smtp.client-ip=209.85.218.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-aa55da18f89so868890066b.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Dec 2024 08:49:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1733244591; x=1733849391; darn=vger.kernel.org;
+        h=in-reply-to:from:content-language:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zMfCcuMn564j015FqFPplbnrfdjiJRXe3+6HwWrf1v8=;
+        b=cfiq3Hbj5+qHBIFNANSkEy7/oB2p2B1DHE8NqcGSfEYBFdIv/N0E1ID02pM3L+9Akc
+         xmnHXmdiyy0Y14QNwv1OerUeanE3oodHeZ5565Zoya+RX/NjR1WZvJth2oKOGnCSuMpT
+         n86LbsbDM+1wSXVgtI+tGXVIiFbaYpOcEqDnpl+qFzL2iobmKrjjvAaErsNtqVPQKAL7
+         d1xIJAU5CTOeceAla4DJdueF6aRbqi3v+0NUkqPx/l5wbE/XoSMNR0F/9jXYQlv+gWNg
+         /5utM74jDtD+a+qz2IACW8oSYs1bBx4SGHVQX0BntSNcaw1cXYf8/1bX/FgHtZoGzaGA
+         CIXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733244591; x=1733849391;
+        h=in-reply-to:from:content-language:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=zMfCcuMn564j015FqFPplbnrfdjiJRXe3+6HwWrf1v8=;
+        b=FD+SXZbq5kIhL/XnabOlUWXlqYQfBq/fTBf5nv15I0Xn+U3b1Nw5CaPbsJIWTI/aSd
+         WMQZiNBYxaiLBo52d+Zt0sFJ0Un67EedLfghRZ9AXhRWYagwNM0WxPOqRXsNjA9fOcJz
+         F1PePzqFvJB+gIK6CEK+RcxihXKsp40R2x6r0pES5/jZvce+KEAy2bXkeiGnOKjVqFu4
+         KWEkPXxOfgZ5FO07Re1OKBm3/Lp1YfeutCpcTtiQWlRQjQEZRDdlSwGzHBbgG4sRuTuz
+         vLt2d9fbrtJLn4Z0tAp15yetH9MYOhWYmozF6MNL+8sz9fxNHA5ss0ABZdH0BJwD2JtG
+         pduQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVKwkMEDBzYYXHOvveHSVsTucNRlht1TPtfYRQPi7bYy4d/+wJ4PA328S59+GN7LCtW8jokJRK4KO7NRhhU@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzt2Jy0elU6+FQ8Fb2JXkUrt7saZc4zZWGJ/dYtPMWJ27A1k6uS
+	Qe/ntqMiTV+podFrLnkLzX1r+wnE58oMoqINmUPNQCo4IunZcAGWQW35ngBXgC8=
+X-Gm-Gg: ASbGncs2Ys5ttdKHt1mhak53c60WokjxgOCbqDN1TmkVfH/ODPrkKE+Ay/xfsZPGZ5V
+	S2G98PuQHkYgZH1ZLUk8Cz3tiS3Hu1RZKvlN1c4B/R/PfCGHoq8wOw2KNVFo8wONE3pWq2uD7IY
+	WPvFQuwpCjCjppaNC7JraG5UmyM19yk3n0enWwv1DnfG18h/GdHv0+tbQjYXA26/kWy78jyZkY2
+	bFIWO8oFQPaC5jeH0r7NCZ/AZe/jTE/LwsLkqHplq8JEnUksDKGjBFX7hFnSxg=
+X-Google-Smtp-Source: AGHT+IFD3Arl8AmcgUDQ3Lj1pQpvjiOwhhih1TjlphLpshL3+0cadHOB7alLC91/6k1J8o0UCXIAKg==
+X-Received: by 2002:a17:906:1db2:b0:aa5:d7c:2ad0 with SMTP id a640c23a62f3a-aa5f7d4f3camr198086466b.23.1733244590828;
+        Tue, 03 Dec 2024 08:49:50 -0800 (PST)
+Received: from [192.168.0.40] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa5998e6a1asm633188366b.98.2024.12.03.08.49.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 03 Dec 2024 08:49:50 -0800 (PST)
+Content-Type: multipart/mixed; boundary="------------a0xltVuvLhEkCIBL8XCdaP1F"
+Message-ID: <13fc0174-8d47-4863-8a5f-5f6f7a0f7a2f@linaro.org>
+Date: Tue, 3 Dec 2024 16:49:49 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS0PR11MB6375:EE_|IA1PR11MB7892:EE_
-X-MS-Office365-Filtering-Correlation-Id: 77c4c17c-2e04-4b23-bb80-08dd13b60bed
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|366016|1800799024;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?MTdZY2pGaC8ycytaRlRsSDZLUE1GaWptVGhhT3IyRjlaQlNEdGx1VVQrN0VR?=
- =?utf-8?B?ODBQUTdrRWt3Q21jeDF4U014LzJvTW1mUWNIbEJLNkNvL254ZU1VaDB0Z1dj?=
- =?utf-8?B?bi9Vd3dJd2V4UURFc0RRTnU0TDFQb3Uxbit5RXBnQlE1RXpqaDc4aThmTGtP?=
- =?utf-8?B?VmFxN0pReUhvTllpNmYyZy9xd3Bjb3FDTitDU0dvL3piTnJNTnN1NE1mYUdM?=
- =?utf-8?B?SER4STJZTVBDbWVHK1NZT240VjlTS2lQVkJVWHdGN05IL3BrTUdTbXRJdWdz?=
- =?utf-8?B?RkpaWEx6R05idkVneUpac2YwaUhlbm5GOXdNYzhWSW40REdwcUo1a2JIOHdC?=
- =?utf-8?B?VzA1NjJLcDFpckcxQ3FncE9lM3RTM25jV0ZaaS9ZOUtLY0xVYkZlcFlIZTJs?=
- =?utf-8?B?VlBQZ1pWM2dQMGg1Y1VNRFlvMFRrQkd0NTZJRWxJb1FkdGY3VW1HTFVxSWNG?=
- =?utf-8?B?aGMzMUIvS1pQTDhXL0hXSDRDakRYTG5hMVJ5Tk1vZTNIYzcrcjBPbWJselBl?=
- =?utf-8?B?UXc5Zk9LeXlQcnlLWHFkT3Rhc1YvamQ1akR6bG53U0lucG1GYU5FSWxkelZi?=
- =?utf-8?B?aTlHdFkvbSs4dWtieUR4dGxRMHV3UWRQQWFyWTRrLzZlam9lTnRjZWE4ZDdL?=
- =?utf-8?B?TFY5dGVmaUxoNElZOExobjZQZEJ2U2ZkSzdIMDJYOTJhZkFmQ3lBc0RMRHRU?=
- =?utf-8?B?V3UweFYxdFQ3NjhZaU1NRnBlb3FCRUYvSDRnaXdtTG55TitmalFZOVJ5TUw5?=
- =?utf-8?B?Tnh3Nld1eHBMT0w2eG1pUEd2ek94TjMyUzZzZmY2T0dFU1I3bHB5MnJuVWhx?=
- =?utf-8?B?T0pSVTlMUHc0YlA3bm5YelZjUGZMazFaQmZBd3NmTFFGMmdvRU85NkZoYVVm?=
- =?utf-8?B?MzVTcFVPTnozWlpXTnVkbHQ1WlkvUzFUMDdwa3E1RXhQdW5ZNkpKcWNLZGUy?=
- =?utf-8?B?Nm8vS3lZSHg1WWp5K0poYlF4aGRRb3hqTXlTNkovMFlJaCt0aEhJcEViZmo5?=
- =?utf-8?B?RGtjQ0NLNTNscG96aHBBaUgwZXRUeTg5SVZLbzIyNmlWbjZBaDluQklnUmRo?=
- =?utf-8?B?ZzFYTU9pSFJsUUpnU21WMzFlQTdXOEhVcVF3dnNJMXNGZ1B5VDdTc0czLzJl?=
- =?utf-8?B?U0ljd2x3TDRFWGtBS3lhLy9ZMjZsY0R1S04xbWpONzd3dDBmc1FyZmJLTWY5?=
- =?utf-8?B?Z3VRTzFaRnpUYUpyTUtPcVBRcE1yamNsbTJUZ09lWXU4aEZiSmhBdkNiQkNB?=
- =?utf-8?B?NWwxODFUYWdkVEI3bXNCYm5YZFFleWdOaTdqODc5NVVRQTRWRno3c2tRY1V5?=
- =?utf-8?B?d1o1RzdIa1YxNHZ0V0RmeVpMeHBkRXl2T2xMNTY2WmRPQXFPU0hoK0g3Vjlq?=
- =?utf-8?B?ZUQvbFk0anJ0YytscElnN0N3VFRqSzdGcldNVXp6bENmT3NqcWw3VnpwVEV3?=
- =?utf-8?B?Ui84dWUrZS9kUXdWdGV0MXVYNmMwOHhGZmFnMEVCRmdCdE5uNWl4Q2dVWGtj?=
- =?utf-8?B?Y0dJRjZYckRyY0dyWHhiaDdWdDRsbnJwS1piRlhZNlJRbkdJVFdVQkd1YVN4?=
- =?utf-8?B?dTlETlB6QVpzVE9mUGJhWVA5eTN5TStDMTA0SGJLdnlWYXR1QjB3cXMrbGpw?=
- =?utf-8?B?dDhzY0Y1YXVlKy9URHdpRjY3aDQ5S3R0SXZoWW5jQWEvbGsydVBzc3FJTWhD?=
- =?utf-8?B?Z3liNVdUZSswT3p1c1NNalpwRGd2bUgwbjNMYWZld1B6NUtsaEVLeVhPckw0?=
- =?utf-8?B?OU5Ra2J4d0hVWXRmcWRTK3RKNVlueWlHYzJZNnN4REFzNXB5MVllV2o5M2tk?=
- =?utf-8?B?Z1NQSFdtQkI5eXlZVHFtdz09?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS0PR11MB6375.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(366016)(1800799024);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?K1ZQMktveTBuTVV4b3BYU3pYTDRSbldoR0s1Nnk3NWJjTjRVcEppNGptb1pl?=
- =?utf-8?B?WG1rZUFIZStKcTVYejRaMzFJZnRZNk1XOEkrV3hJMW1PQTIxUWlZOHFlcG1j?=
- =?utf-8?B?eGc3ZmZRNnhFZFJwSERQY3JrUzhoWDQ5akx0VDFhR3huT1J2ZXZWLzJ3Q09l?=
- =?utf-8?B?MVl5aGdLQUt5M3RTSjVHUEdLRDNkUzRsMHVNUTR3SDIvNGZoT0swWjFoSVN3?=
- =?utf-8?B?WTcwQ0h5STJNSmdkN2hRb0dXdC9vQS8xRHdsNjk2emUycHlYTHVJSTZjNW9Q?=
- =?utf-8?B?RlpkSzg0dUJWT3RISWF3QVFJc09vSW9CU0FFSHRUK1J1eXBZeTJWa2Zramwy?=
- =?utf-8?B?V1lHdmRFbzdla1FZdlZLcTFzTnJwaVVpZUNlYXh6aTMyMW43YjAzUnRVUmRQ?=
- =?utf-8?B?aGQvcmZyWmJySkhsc2x4Y1FsYkpPUUxwd29ZUnV5YXhFRFhiZzNIMjZidEE1?=
- =?utf-8?B?THB5NmlQa243RkZJMFVtcUFLOXdMMkk0eVNqUUtWZmxJTGR1Qk9OWGJEY2Jv?=
- =?utf-8?B?QSswZWVQVGZ1eWhESEhpdmduNVJIRmtPcW5PaUJWRjFZSTJFb3I4eTlVK3B1?=
- =?utf-8?B?QkpDKzNwTHJveHZtaHBJeGMxaTZocmF3OW5oanFjalVEQWtEelhVNjJCeklQ?=
- =?utf-8?B?VHJhL2dZZ0diYjB4dWZFa2JNalNObTFiMHFoZDBVYlJOdkdIOWx2dGF6WStv?=
- =?utf-8?B?ZStqMlhWYUl5OCtmVyswUmF0ZnVRWEJrTzdKNisycis0dHJpU2RJUWF6T1pL?=
- =?utf-8?B?R1NMUW1KaEJlMFI1TEpwQ0d5THpieUhTWnpmYmx3cVE0cGtkenBGRitHWGE2?=
- =?utf-8?B?S01rZ0w3OEVJMTdOTHFiRE5FWGZMVUxXbW5NQU9JcGhRcUhTdFh3a3RjNVFl?=
- =?utf-8?B?OFlLcUtIQlphRFo4ZnlMa1RQaVVKTnAvY29tcjZyZkNIQ0ZwT1RWTkEwREFK?=
- =?utf-8?B?QVYwWWZ4WjhBWmJ0aXRQdElqSEJpb0RkR3c1d0xEZ3FWTGFLODVjWStVRTNa?=
- =?utf-8?B?N1JnT2tQY0lDY2l3Q3N5aWlrTFpDMGhnblVSa3Vqd0s4andVUDQrV3hQdDgv?=
- =?utf-8?B?Y2tzcTRVa3ZDeUlBMEV4S0g1ZnlRTlkvSW1MMVpJMjd4Y1ljazNxNXd6U0g5?=
- =?utf-8?B?VEQzYlBsTGc0Q0pBa3ZBMkNmZGxNL1JGN2ZwSGgxNDV4dFhnK2o4aGk5RmJ5?=
- =?utf-8?B?dm1RSjZpMko3eDFLZFlXVk9IMzhLSHFZZ1B6cTY4SklzSkVsQTFSTFhTYW5w?=
- =?utf-8?B?S3UwM1k5YmxGelRsWkFVSlZxcjQybnZsdjBldE1tNE5VTjR6Zmw2L1E3dE1V?=
- =?utf-8?B?TUUxRGNJeFIvOStsQlB2QVdpOE1rcnBSTktIcjRreUdoOGFydmVTQWNpNzRV?=
- =?utf-8?B?K0NJeEUvK1hYNFZHbWJtYWo5VysrWFBhRWFGVmZsVlB2b3JpdTViVzYzcjYx?=
- =?utf-8?B?Wis2M3E3RFBBWVUyeTJhK3NkVVEvSHZuM0pYTy9nSTZEV3VVMzJ2RkQ0aUk3?=
- =?utf-8?B?cW5mQWVvSDkwSHVtbGFHWFFtUXp4YkNBL3pJQzRaVVFNVmwvcmtVSjJzZzk3?=
- =?utf-8?B?bXVaUUV2Qlg2S0hsZ1paem00VUNzdVduekoxK041a2RCa1p4dkx5RmNyWTRh?=
- =?utf-8?B?aHhMbWZjejFxaU9QdnRIWVFKamZpdDhOSVYyRmVSYVEvbkdjUnNiYzkzMnpa?=
- =?utf-8?B?dGtlOG8yeTFOajVwdVVsalRHUWhSUlo1UWNMdVNoVHdGUGNvVGVnaG51UFRs?=
- =?utf-8?B?UFJEdVBlaG1laTNPU2Rncm9Xamh4V2NDbTdlZ29iUXFVZ25kais2aVZZL293?=
- =?utf-8?B?YlM4NVBjdXlFTVZJcXdQeEVHc1FPOHMrMER3VlZ0d3ZXVU1NMUJOdHZ3UnJk?=
- =?utf-8?B?cjhrTS93NzNNdVF1WXNFZ2NqZGdRWlJWazNIRXFBcWpVVGZwNmZDek55U1Ar?=
- =?utf-8?B?UjhmNUZkNXZIaXdoWHNsY0ZCQkRDT1JESnV3bXMwclo5ZFdtaExRRjFOdlVr?=
- =?utf-8?B?MU1RWmIxc2JncG96K0o5blF4aHViazl2Yk45SzI5aDVoSUQwdDdiczNSTzZE?=
- =?utf-8?B?K3ZvZ3VZNkttKzB3dS9uWGNQWEtBbkJTWHgvb2w4VU5LSWtVdnFTSFRGdTBL?=
- =?utf-8?B?alJ1aWtiN3MwUWFydUh3Q0xPTDh5Wm5kQUMwVXFBTlZFZk0xOHJoalN1NWx0?=
- =?utf-8?B?eXc9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 77c4c17c-2e04-4b23-bb80-08dd13b60bed
-X-MS-Exchange-CrossTenant-AuthSource: DS0PR11MB6375.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Dec 2024 16:17:56.6000
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: EOxsAjPAumgMej79D1jjM6KM0Qv3EKF7l9WpKMvZ6VZX3qxpKbmzogt981x/dZz3oCRHrCiNbw53sxO05yPnCr96DevRCBpImoseB31vnnY=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR11MB7892
-X-OriginatorOrg: intel.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] media: qcom: camss: fix VFE pm domain off
+To: barnabas.czeman@mainlining.org
+Cc: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Hans Verkuil <hverkuil@xs4all.nl>,
+ linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Yassine Oudjana <y.oudjana@protonmail.com>
+References: <20241128-vfe_pm_domain_off-v2-1-0bcbbe7daaaf@mainlining.org>
+ <3a5fd596-b442-4d3f-aae2-f454d0cd8e5c@linaro.org>
+ <5cccec71-0cc7-492a-9fb9-903970da05c5@linaro.org>
+ <d3a8d38c-9129-4fbd-8bd6-c91131d950ad@linaro.org>
+ <a08e95fc03fce6cb0809a06900982c6c@mainlining.org>
+ <8dfd2ee1-9baf-441f-8eb9-fa11e830334a@linaro.org>
+ <ac765a062e94d549f4c34cf4c8b2c199@mainlining.org>
+ <f4e47953-5a68-4ec5-860b-820b8eff2a2a@linaro.org>
+ <05e91ae70902f0cd9c47bb4197d8fef1@mainlining.org>
+ <93028653-9919-460e-83d3-84bf5ade56d4@linaro.org>
+ <c7a9a43eea8bd1e6302ae4fa2d79dd80@mainlining.org>
+ <c8020803-ecbd-4496-9361-f19352ddf462@linaro.org>
+ <02282c0d493153c633e7eccf5559452a@mainlining.org>
+ <1d3650f9-fe4d-4972-968a-aaab6fed1044@linaro.org>
+ <f6c88d78c53f8a14c91677c90bfb0500@mainlining.org>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <f6c88d78c53f8a14c91677c90bfb0500@mainlining.org>
 
-On 2024-12-01 4:14 AM, Pierre-Louis Bossart wrote:
-> Sorry to chime in late, I only look at email occasionally.
-> 
+This is a multi-part message in MIME format.
+--------------a0xltVuvLhEkCIBL8XCdaP1F
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-...
-
-> My Reviewed-by tags were added in the last updates. I am not sure if anyone else at Intel had the time to review this large patchset.
-> 
->> I believe Amadeusz was still against having the two card design, and wants the routing to automatically happen when playback happens on the sound card created by the USB SND layer.  However, even with that kind of implementation, the major pieces brought in by this series should still be relevant, ie soc-usb and the vendor offload driver.  The only thing that would really change is adding a path from the USB SND PCM ops to interact with the ASoC entities.  Complexity-wise, this would obviously have a good amount of changes to the USB SND/ASoC core drivers.  Some things I can think of that we'd need to introduce:
-> 
-> The notion of two cards was agreed inside Intel as far back as 2018, when Rakesh first looked at USB offload.
-
-
-Well, I believe a lot has changed since then, not sure if USB Audio 
-Offload (UAOL) was even stable on the Windows solution back then. 
-Obviously we want to incorporate what we have learned during all that 
-time into our solution before it lands on upstream.
-
-UAOL is one of our priorities right now and some (e.g.: me) prefer to 
-not pollute their mind with another approaches until what they have in 
-mind is crystalized. In short, I'd vote for a approach where USB device 
-has a ASoC representative in sound/soc/codecs/ just like it is the case 
-for HDAudio. Either that or at least a ASoC-component representative, a 
-dependency for UAOL-capable card to enumerate.
-
-Currently struct snd_soc_usb does not represent any component at all. 
-Lack of codec representative, component representative and, given my 
-current understanding, mixed dependency of sound/usb on 
-sound/soc/soc-usb does lead to hard-to-understand ASoC solution.
-
-> 
-> Having a single USB card in IMHO more complicated:  what happens for example if you plug-in two or more USB devices? Which of the USB cards will expose an optimized path? The design with an ASoC-based card which exposes as many PCM devices as the SOC can support is simpler conceptually and scales well. This would allow e.g. to allocate these PCM devices with different policies (last plugged, preferred, etc).
-> 
-> Conceptually for the simple case with a single USB device, it does not really matter if there are two cards or not. What matters is that there is a clear mapping visible to userspace so that application can decide to use the optimized PCM device, when enabled, instead of the legacy one. And in the end, the application is *always* in control in terms of routing. It’s really similar to the compress offload path, some application changes will be required.
-> 
+On 03/12/2024 01:02, barnabas.czeman@mainlining.org wrote:
+> On 2024-12-03 00:10, Bryan O'Donoghue wrote:
+>> On 30/11/2024 22:58, barnabas.czeman@mainlining.org wrote:
+>>> On 2024-11-30 22:48, Bryan O'Donoghue wrote:
+>>>> On 29/11/2024 23:52, barnabas.czeman@mainlining.org wrote:
+>>>>> On 2024-11-30 00:07, Bryan O'Donoghue wrote:
+>>>>>> On 29/11/2024 22:45, barnabas.czeman@mainlining.org wrote:
+>>>>>>> On 2024-11-29 23:08, Bryan O'Donoghue wrote:
+>>>>>>>> On 29/11/2024 13:46, barnabas.czeman@mainlining.org wrote:
+>>>>>>>>> On 2024-11-29 13:25, Bryan O'Donoghue wrote:
+>>>>>>>>>> On 29/11/2024 11:44, barnabas.czeman@mainlining.org wrote:
+>>>>>>>>>>>> The change does not describe how to reproduce the problem, 
+>>>>>>>>>>>> which commit
+>>>>>>>>>>>> base is tested, which platform is testes, there is no enough 
+>>>>>>>>>>>> information,
+>>>>>>>>>>>> unfortunately.
+>>>>>>>>>>> I can reproduce the problem with megapixels-sensorprofile on 
+>>>>>>>>>>> msm8953 and
+>>>>>>>>>>> it can be reproduced with megapixels on msm8996.
+>>>>>>>>>>> The base is the last commit on next.
+>>>>>>>>>>
+>>>>>>>>>> Can you verify if vfe_domain_on has run and if so whether or 
+>>>>>>>>>> not genpd_link is NULL when that function exists.
+>>>>>>>>>>
+>>>>>>>>> I have added some debug logs it seems pm_domain_on and 
+>>>>>>>>> pm_domain_off is called twice on the same object.
+>>>>>>>>> [   63.473360] qcom-camss 1b00020.camss: pm_domain_on 19842ce8 
+>>>>>>>>> link 42973800
+>>>>>>>>> [   63.481524] qcom-camss 1b00020.camss: pm_domain_on 19840080 
+>>>>>>>>> link 4e413800
+>>>>>>>>> [   63.481555] qcom-camss 1b00020.camss: pm_domain_on 19842ce8 
+>>>>>>>>> link 42973800
+>>>>>>>>> [   63.481632] qcom-camss 1b00020.camss: pm_domain_off 19840080 
+>>>>>>>>> link 4e413800
+>>>>>>>>> [   63.481641] qcom-camss 1b00020.camss: pm_domain_off 19842ce8 
+>>>>>>>>> link 42973800
+>>>>>>>>> [   63.654004] qcom-camss 1b00020.camss: pm_domain_off 19842ce8 
+>>>>>>>>> link 0
+>>>>>>>>>> That's the question.
+>>>>>>>>>>
+>>>>>>>>>> ---
+>>>>>>>>>> bod
+>>>>>>>>
+>>>>>>>> Could you provide this output ?
+>>>>>>>>
+>>>>>>>> index 80a62ba112950..b25b8f6b00be1 100644
+>>>>>>>> --- a/drivers/media/platform/qcom/camss/camss-vfe.c
+>>>>>>>> +++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+>>>>>>>> @@ -595,6 +595,9 @@ void vfe_isr_reset_ack(struct vfe_device *vfe)
+>>>>>>>>   */
+>>>>>>>>  void vfe_pm_domain_off(struct vfe_device *vfe)
+>>>>>>>>  {
+>>>>>>>> +dev_info(camss->dev, "%s VFE %d genpd %pK genpd_link %pK\n",
+>>>>>>>> +        __func__, vfe->id, vfe->genpd, vfe->genpd_link);
+>>>>>>>> +
+>>>>>>>>         if (!vfe->genpd)
+>>>>>>>>                 return;
+>>>>>>>>
+>>>>>>>> @@ -609,7 +612,8 @@ void vfe_pm_domain_off(struct vfe_device *vfe)
+>>>>>>>>  int vfe_pm_domain_on(struct vfe_device *vfe)
+>>>>>>>>  {
+>>>>>>>>         struct camss *camss = vfe->camss;
+>>>>>>>> -
+>>>>>>>> +dev_info(camss->dev, "%s VFE %d genpd %pK genpd_link %pK\n",
+>>>>>>>> +        __func__, vfe->id, vfe->genpd, vfe->genpd_link);
+>>>>>>>>         if (!vfe->genpd)
+>>>>>>>>                 return 0;
+>>>>>>>>
+>>>>>>>> ---
+>>>>>>>> bod
+>>>>>>> I think logging in pm_domain_on should be placed after 
+>>>>>>> device_link_add because only NULL
+>>>>>>> will be visible.
+>>>>>>> [   83.040694] qcom-camss 1b00020.camss: vfe_pm_domain_on VFE 1 
+>>>>>>> genpd 000000009bd8355f genpd_link 0000000000000000
+>>>>>>> [   83.049293] qcom-camss 1b00020.camss: vfe_pm_domain_on VFE 0 
+>>>>>>> genpd 00000000bfb65e7c genpd_link 0000000000000000
+>>>>>>> [   83.049353] qcom-camss 1b00020.camss: vfe_pm_domain_on VFE 1 
+>>>>>>> genpd 000000009bd8355f genpd_link 00000000ccb0acd9
+>>>>>>> [   83.049641] qcom-camss 1b00020.camss: vfe_pm_domain_off VFE 0 
+>>>>>>> genpd 00000000bfb65e7c genpd_link 00000000348ac3c1
+>>>>>>> [   83.049654] qcom-camss 1b00020.camss: vfe_pm_domain_off VFE 1 
+>>>>>>> genpd 000000009bd8355f genpd_link 00000000ccb0acd9
+>>>>>>> [   83.241498] qcom-camss 1b00020.camss: vfe_pm_domain_off VFE 1 
+>>>>>>> genpd 000000009bd8355f genpd_link 0000000000000000
+>>>>>>
+>>>>>> Could you add
+>>>>>>
+>>>>>> +++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+>>>>>> @@ -786,7 +786,7 @@ int vfe_get(struct vfe_device *vfe)
+>>>>>>         int ret;
+>>>>>>
+>>>>>>         mutex_lock(&vfe->power_lock);
+>>>>>> -
+>>>>>> +dev_info(vfe->camss->dev, "%s vfe %d power_count %d\n", __func__, 
+>>>>>> vfe->id, vfe->power_count);
+>>>>>>         if (vfe->power_count == 0) {
+>>>>>>                 ret = vfe->res->hw_ops->pm_domain_on(vfe);
+>>>>>>                 if (ret < 0)
+>>>>>> @@ -823,6 +823,7 @@ int vfe_get(struct vfe_device *vfe)
+>>>>>>
+>>>>>>         mutex_unlock(&vfe->power_lock);
+>>>>>>
+>>>>>> +dev_info(camss->vfe->dev, "%s vfe %d err=%d\n", __func__, camss- 
+>>>>>> >vfe- >id, 0);
+>>>>>>         return 0;
+>>>>>>
+>>>>>>  error_reset:
+>>>>>> @@ -835,7 +836,7 @@ int vfe_get(struct vfe_device *vfe)
+>>>>>>
+>>>>>>  error_pm_domain:
+>>>>>>         mutex_unlock(&vfe->power_lock);
+>>>>>> -
+>>>>>> +dev_info(camss->vfe->dev, "%s vfe %d err=%d\n", __func__, camss- 
+>>>>>> >vfe- >id, ret);
+>>>>>>         return ret;
+>>>>>>  }
+>>>>>>
+>>>>>> ?
+>>>>>>
+>>>>>> ---
+>>>>>> bod
+>>>>> I have added little more from the logs because it is only failing 
+>>>>> in edge cases megapixels-sensorprofile failing by
+>>>>> different reason quickly and trying to release the device.
+>>>>> [   54.719030] qcom-camss 1b00020.camss: vfe_get vfe 0 err=0
+>>>>> [   54.750124] qcom-camss 1b00020.camss: vfe_get vfe 0 power_count 1
+>>>>> [   54.750236] qcom-camss 1b00020.camss: vfe_get vfe 0 err=0
+>>>>> [   54.751270] qcom-camss 1b00020.camss: vfe_pm_domain_on VFE 0 
+>>>>> genpd 00000000beaef03c genpd_link 00000000251644d9
+>>>>
+>>>>> [   54.751433] qcom-camss 1b00020.camss: vfe_pm_domain_on VFE 1 
+>>>>> genpd 000000007ce2da53 genpd_link 0000000000000000
+>>>>> [   54.755531] qcom-camss 1b00020.camss: vfe_pm_domain_off VFE 1 
+>>>>> genpd 000000007ce2da53 genpd_link 0000000058dcd4d6
+>>>>
+>>>> that's a bug genpd_link should be NULL unless power_count != 0
+>>>>
+>>>>> [  143.922868] qcom-camss 1b00020.camss: vfe_pm_domain_off VFE 1 
+>>>>> genpd 000000007ce2da53 genpd_link 00000000d1fcd54b
+>>>>> [  144.126535] qcom-camss 1b00020.camss: vfe_pm_domain_off VFE 1 
+>>>>> genpd 000000007ce2da53 genpd_link 0000000000000000
+>>>>
+>>>> this is the corollary of the bug
+>>>>
+>>>> can you provide the output of the attached please ?
+>>> [   50.787730] qcom-camss 1b00020.camss: vfe_get/806 vfe 1 power_count 0
+>>> [   50.794888] qcom-camss 1b00020.camss: vfe_get/811 vfe 1 power_count 0
+>>> [   50.795040] qcom-camss 1b00020.camss: vfe_get/816 vfe 1 power_count 0
+>>> [   50.795131] qcom-camss 1b00020.camss: vfe_get/822 vfe 1 power_count 0
+>>> [   50.795172] qcom-camss 1b00020.camss: vfe_get/827 vfe 1 power_count 0
+>>> [   50.795180] qcom-camss 1b00020.camss: vfe_get/830 vfe 1 power_count 0
+>>> [   50.795188] qcom-camss 1b00020.camss: vfe_get/841 vfe 1 power_count 1
+>>> [   50.795413] qcom-camss 1b00020.camss: vfe_put/868 vfe 1 power_count 1
+>>> [   50.795422] qcom-camss 1b00020.camss: vfe_put/874 vfe 1 power_count 1
+>>> [   50.795429] qcom-camss 1b00020.camss: vfe_put/882 vfe 1 power_count 1
+>>> [   50.795468] qcom-camss 1b00020.camss: vfe_put/884 vfe 1 power_count 1
+>>> [   50.799936] qcom-camss 1b00020.camss: vfe_put/886 vfe 1 power_count 1
+>>> [   50.800247] qcom-camss 1b00020.camss: vfe_put/888 vfe 1 power_count 1
+>>> [   50.800257] qcom-camss 1b00020.camss: vfe_put/891 vfe 1 power_count 1
+>>> [   50.800263] qcom-camss 1b00020.camss: vfe_put/893 vfe 1 power_count 0
+>>> [   51.086159] qcom-camss 1b00020.camss: vfe_get/801 vfe 0 power_count 0
+>>> [   51.088158] qcom-camss 1b00020.camss: vfe_get/806 vfe 0 power_count 0
+>>> [   51.092782] qcom-camss 1b00020.camss: vfe_get/811 vfe 0 power_count 0
+>>> [   51.092872] qcom-camss 1b00020.camss: vfe_get/816 vfe 0 power_count 0
+>>> [   51.092945] qcom-camss 1b00020.camss: vfe_get/822 vfe 0 power_count 0
+>>> [   51.092980] qcom-camss 1b00020.camss: vfe_get/827 vfe 0 power_count 0
+>>> [   51.092987] qcom-camss 1b00020.camss: vfe_get/830 vfe 0 power_count 0
+>>> [   51.092994] qcom-camss 1b00020.camss: vfe_get/841 vfe 0 power_count 1
+>>> [   51.117104] qcom-camss 1b00020.camss: vfe_get/841 vfe 0 power_count 2
+>>> [   52.181802] qcom-camss 1b00020.camss: vfe_put/868 vfe 0 power_count 2
+>>> [   52.181828] qcom-camss 1b00020.camss: vfe_put/891 vfe 0 power_count 2
+>>> [   52.181834] qcom-camss 1b00020.camss: vfe_put/893 vfe 0 power_count 1
+>>> [   52.189017] qcom-camss 1b00020.camss: vfe_get/841 vfe 0 power_count 2
+>>> [   64.920259] qcom-camss 1b00020.camss: vfe_get/841 vfe 0 power_count 3
+>>> [   64.920337] qcom-camss 1b00020.camss: vfe_get/841 vfe 0 power_count 4
+>>> [   64.920368] qcom-camss 1b00020.camss: vfe_get/801 vfe 1 power_count 0
+>>> [   64.920656] qcom-camss 1b00020.camss: vfe_get/806 vfe 1 power_count 0
+>>> [   64.920667] qcom-camss 1b00020.camss: vfe_get/811 vfe 1 power_count 0
+>>> [   64.920706] qcom-camss 1b00020.camss: vfe_get/816 vfe 1 power_count 0
+>>> [   64.920734] qcom-camss 1b00020.camss: vfe_get/822 vfe 1 power_count 0
+>>> [   64.920868] qcom-camss 1b00020.camss: vfe_get/827 vfe 1 power_count 0
+>>> [   64.920877] qcom-camss 1b00020.camss: vfe_get/830 vfe 1 power_count 0
+>>> [   64.920886] qcom-camss 1b00020.camss: vfe_get/841 vfe 1 power_count 1
+>>> [   64.920963] qcom-camss 1b00020.camss: vfe_get/841 vfe 1 power_count 2
+>>> [   64.921008] qcom-camss 1b00020.camss: vfe_get/841 vfe 1 power_count 3
+>>> [   64.921871] qcom-camss 1b00020.camss: vfe_put/868 vfe 0 power_count 4
+>>> [   64.921896] qcom-camss 1b00020.camss: vfe_put/891 vfe 0 power_count 4
+>>> [   64.921904] qcom-camss 1b00020.camss: vfe_put/893 vfe 0 power_count 3
+>>> [   64.927278] qcom-camss 1b00020.camss: vfe_get/841 vfe 0 power_count 4
+>>> [   65.096857] qcom-camss 1b00020.camss: vfe_put/868 vfe 1 power_count 3
+>>> [   65.096883] qcom-camss 1b00020.camss: vfe_put/891 vfe 1 power_count 3
+>>> [   65.096889] qcom-camss 1b00020.camss: vfe_put/893 vfe 1 power_count 2
+>>> [   65.096903] qcom-camss 1b00020.camss: vfe_put/868 vfe 1 power_count 2
+>>> [   65.096908] qcom-camss 1b00020.camss: vfe_put/891 vfe 1 power_count 2
+>>> [   65.096914] qcom-camss 1b00020.camss: vfe_put/893 vfe 1 power_count 1
+>>> [   65.096927] qcom-camss 1b00020.camss: vfe_put/868 vfe 1 power_count 1
+>>> [   65.096933] qcom-camss 1b00020.camss: vfe_put/874 vfe 1 power_count 1
+>>> [   65.096938] qcom-camss 1b00020.camss: vfe_put/882 vfe 1 power_count 1
+>>> [   65.096958] qcom-camss 1b00020.camss: vfe_put/884 vfe 1 power_count 1
+>>> [   65.096964] qcom-camss 1b00020.camss: vfe_put/886 vfe 1 power_count 1
 >>
->> 1.  Exposing some of the ASoC PCM (soc-pcm) APIs to be able to be called by soc-usb (to mimic a FE open from ASoC), so we can trigger ASoC DAI ops when USB SND FE is opened.
+>> Ah could you supply this output along with the output from the previous ?
+> [   55.993565] qcom-camss 1b00020.camss: vfe_pm_domain_on VFE 0 genpd 
+> 0000000003dcc927 genpd_link 00000000b216e0c0
+> [   55.993886] qcom-camss 1b00020.camss: vfe_pm_domain_on VFE 1 genpd 
+> 0000000012d2fc9c genpd_link 00000000e1d78ab3
+> [   55.993956] qcom-camss 1b00020.camss: vfe_pm_domain_off VFE 0 genpd 
+> 0000000003dcc927 genpd_link 00000000b216e0c0
+> [   55.993966] qcom-camss 1b00020.camss: vfe_pm_domain_off VFE 1 genpd 
+> 0000000012d2fc9c genpd_link 00000000e1d78ab3
+> [   95.804026] qcom-camss 1b00020.camss: vfe_get vfe 0 power_count 2
+> [   95.804092] qcom-camss 1b00020.camss: vfe_get/845 vfe 0 power_count 3
+> [   95.804104] qcom-camss 1b00020.camss: vfe_get vfe 0 err=0
+> [   95.804138] qcom-camss 1b00020.camss: vfe_get vfe 0 power_count 3
+> [   95.804158] qcom-camss 1b00020.camss: vfe_get/845 vfe 0 power_count 4
+> [   95.804169] qcom-camss 1b00020.camss: vfe_get vfe 0 err=0
+> [   95.804203] qcom-camss 1b00020.camss: vfe_get vfe 1 power_count 0
+> [   95.804214] qcom-camss 1b00020.camss: vfe_get/805 vfe 1 power_count 0
+> [   95.804526] qcom-camss 1b00020.camss: vfe_pm_domain_on VFE 1 genpd 
+> 0000000012d2fc9c genpd_link 00000000cf5c896a
+> [   95.804543] qcom-camss 1b00020.camss: vfe_get/810 vfe 1 power_count 0
+> [   95.804555] qcom-camss 1b00020.camss: vfe_get/815 vfe 1 power_count 0
+> [   95.804593] qcom-camss 1b00020.camss: vfe_get/820 vfe 1 power_count 0
+> [   95.804629] qcom-camss 1b00020.camss: vfe_get/826 vfe 1 power_count 0
+> [   95.804951] qcom-camss 1b00020.camss: vfe_get/831 vfe 1 power_count 0
+> [   95.804964] qcom-camss 1b00020.camss: vfe_get/834 vfe 1 power_count 0
+> [   95.804976] qcom-camss 1b00020.camss: vfe_get/845 vfe 1 power_count 1
+> [   95.804987] qcom-camss 1b00020.camss: vfe_get vfe 1 err=0
+> [   95.805028] qcom-camss 1b00020.camss: vfe_get vfe 1 power_count 1
+> [   95.805048] qcom-camss 1b00020.camss: vfe_get/845 vfe 1 power_count 2
+> [   95.805058] qcom-camss 1b00020.camss: vfe_get vfe 1 err=0
+> [   95.805094] qcom-camss 1b00020.camss: vfe_get vfe 1 power_count 2
+> [   95.805113] qcom-camss 1b00020.camss: vfe_get/845 vfe 1 power_count 3
+> [   95.805123] qcom-camss 1b00020.camss: vfe_get vfe 1 err=0
+> [   95.806117] qcom-camss 1b00020.camss: vfe_put/873 vfe 0 power_count 4
+> [   95.806131] qcom-camss 1b00020.camss: vfe_put/894 vfe 0 power_count 4
+> [   95.806142] qcom-camss 1b00020.camss: vfe_put/896 vfe 0 power_count 3
+> [   95.814108] qcom-camss 1b00020.camss: vfe_get vfe 0 power_count 3
+> [   95.814134] qcom-camss 1b00020.camss: vfe_get/845 vfe 0 power_count 4
+> [   95.814143] qcom-camss 1b00020.camss: vfe_get vfe 0 err=0
+> [   95.814886] qcom-camss 1b00020.camss: vfe_pm_domain_on VFE 0 genpd 
+> 0000000003dcc927 genpd_link 00000000b216e0c0
+> [   95.814910] qcom-camss 1b00020.camss: vfe_pm_domain_on VFE 1 genpd 
+> 0000000012d2fc9c genpd_link 00000000cf5c896a
+> [   95.815176] qcom-camss 1b00020.camss: vfe_pm_domain_off VFE 0 genpd 
+> 0000000003dcc927 genpd_link 00000000b216e0c0
+> [   95.815190] qcom-camss 1b00020.camss: vfe_pm_domain_off VFE 1 genpd 
+> 0000000012d2fc9c genpd_link 00000000cf5c896a
+> [   96.025733] qcom-camss 1b00020.camss: vfe_put/873 vfe 1 power_count 3
+> [   96.025756] qcom-camss 1b00020.camss: vfe_put/894 vfe 1 power_count 3
+> [   96.025762] qcom-camss 1b00020.camss: vfe_put/896 vfe 1 power_count 2
+> [   96.025775] qcom-camss 1b00020.camss: vfe_put/873 vfe 1 power_count 2
+> [   96.025790] qcom-camss 1b00020.camss: vfe_put/894 vfe 1 power_count 2
+> [   96.025806] qcom-camss 1b00020.camss: vfe_put/896 vfe 1 power_count 1
+> [   96.025839] qcom-camss 1b00020.camss: vfe_put/873 vfe 1 power_count 1
+> [   96.025856] qcom-camss 1b00020.camss: vfe_put/879 vfe 1 power_count 1
+> [   96.025907] qcom-camss 1b00020.camss: vfe_put/886 vfe 1 power_count 1
+> [   96.025952] qcom-camss 1b00020.camss: vfe_put/888 vfe 1 power_count 1
+> [   96.025972] qcom-camss 1b00020.camss: vfe_pm_domain_off VFE 1 genpd 
+> 0000000012d2fc9c genpd_link 0000000000000000
 >>
->> 2.  Proper fallback mechanism in case offload path enablement fails to the legacy USB SND path.
+>> I'm thinking we are calling get() from inside of get().
 >>
->> 3.  Master kcontrol to disable offload logic for each USB SND device.
->>
->> IMO, both the points you mentioned correspond to the same topic.  If we go with having offload being operated on one FE, then there is no need for the kcontrol of PCM mapping.  If we have two cards, then we will need the control for offload device mapping.  Can't speak for Pierre, but at least with my discussions with him, I don't think he's against the two card design, just as long as we have the proper kcontrol that notifies userspace of how to utilize the offload path.
-> 
-> Even if there’s a single card you need to have a mapping between a ‘legacy’ PCM device and an ‘optimized’ one. This would be a scalar mapping instead of a (card, device) pair, but it’s a minor change.
-> 
-> -Pierre
+>> ---
+>> bod
 
+Pardon me and once more - your full demsg this time.
+
+
+--------------a0xltVuvLhEkCIBL8XCdaP1F
+Content-Type: text/x-patch; charset=UTF-8; name="debug.diff"
+Content-Disposition: attachment; filename="debug.diff"
+Content-Transfer-Encoding: base64
+
+ZGlmZiAtLWdpdCBhL2RyaXZlcnMvbWVkaWEvcGxhdGZvcm0vcWNvbS9jYW1zcy9jYW1zcy12
+ZmUuYyBiL2RyaXZlcnMvbWVkaWEvcGxhdGZvcm0vcWNvbS9jYW1zcy9jYW1zcy12ZmUuYwpp
+bmRleCA4MGE2MmJhMTEyOTUwLi5mYTVkYTA1ZDAyY2YxIDEwMDY0NAotLS0gYS9kcml2ZXJz
+L21lZGlhL3BsYXRmb3JtL3Fjb20vY2Ftc3MvY2Ftc3MtdmZlLmMKKysrIGIvZHJpdmVycy9t
+ZWRpYS9wbGF0Zm9ybS9xY29tL2NhbXNzL2NhbXNzLXZmZS5jCkBAIC01OTUsOSArNTk1LDEy
+IEBAIHZvaWQgdmZlX2lzcl9yZXNldF9hY2soc3RydWN0IHZmZV9kZXZpY2UgKnZmZSkKICAq
+Lwogdm9pZCB2ZmVfcG1fZG9tYWluX29mZihzdHJ1Y3QgdmZlX2RldmljZSAqdmZlKQogewor
+CVdBUk4oMSwgIm9mZiIpOworZGV2X2luZm8odmZlLT5jYW1zcy0+ZGV2LCAiJXMvJWQgdmZl
+ICVkIHZmZS0+Z2VucGQgJXBLIGdlbnBkX2xpbmsgJXBLIHBvd2VyLWNvdW50ICVkXG4iLCBf
+X2Z1bmNfXywgX19MSU5FX18sIHZmZS0+aWQsIHZmZS0+Z2VucGQsIHZmZS0+Z2VucGRfbGlu
+aywgdmZlLT5wb3dlcl9jb3VudCk7CiAJaWYgKCF2ZmUtPmdlbnBkKQogCQlyZXR1cm47CiAK
+K2Rldl9pbmZvKHZmZS0+Y2Ftc3MtPmRldiwgIiVzLyVkIHZmZSAlZCB2ZmUtPmdlbnBkICVw
+SyBnZW5wZF9saW5rICVwSyBwb3dlci1jb3VudCAlZFxuIiwgX19mdW5jX18sIF9fTElORV9f
+LCB2ZmUtPmlkLCB2ZmUtPmdlbnBkLCB2ZmUtPmdlbnBkX2xpbmssIHZmZS0+cG93ZXJfY291
+bnQpOwogCWRldmljZV9saW5rX2RlbCh2ZmUtPmdlbnBkX2xpbmspOwogCXZmZS0+Z2VucGRf
+bGluayA9IE5VTEw7CiB9CkBAIC02MDksMTQgKzYxMiwxNyBAQCB2b2lkIHZmZV9wbV9kb21h
+aW5fb2ZmKHN0cnVjdCB2ZmVfZGV2aWNlICp2ZmUpCiBpbnQgdmZlX3BtX2RvbWFpbl9vbihz
+dHJ1Y3QgdmZlX2RldmljZSAqdmZlKQogewogCXN0cnVjdCBjYW1zcyAqY2Ftc3MgPSB2ZmUt
+PmNhbXNzOwotCisJV0FSTigxLCAib24iKTsKK2Rldl9pbmZvKHZmZS0+Y2Ftc3MtPmRldiwg
+IiVzLyVkIHZmZSAlZCB2ZmUtPmdlbnBkICVwSyBnZW5wZF9saW5rICVwSyBwb3dlci1jb3Vu
+dCAlZFxuIiwgX19mdW5jX18sIF9fTElORV9fLCB2ZmUtPmlkLCB2ZmUtPmdlbnBkLCB2ZmUt
+PmdlbnBkX2xpbmssIHZmZS0+cG93ZXJfY291bnQpOwogCWlmICghdmZlLT5nZW5wZCkKIAkJ
+cmV0dXJuIDA7CiAKK2Rldl9pbmZvKHZmZS0+Y2Ftc3MtPmRldiwgIiVzLyVkIHZmZSAlZCB2
+ZmUtPmdlbnBkICVwSyBnZW5wZF9saW5rICVwSyBwb3dlci1jb3VudCAlZFxuIiwgX19mdW5j
+X18sIF9fTElORV9fLCB2ZmUtPmlkLCB2ZmUtPmdlbnBkLCB2ZmUtPmdlbnBkX2xpbmssIHZm
+ZS0+cG93ZXJfY291bnQpOwogCXZmZS0+Z2VucGRfbGluayA9IGRldmljZV9saW5rX2FkZChj
+YW1zcy0+ZGV2LCB2ZmUtPmdlbnBkLAogCQkJCQkgIERMX0ZMQUdfU1RBVEVMRVNTIHwKIAkJ
+CQkJICBETF9GTEFHX1BNX1JVTlRJTUUgfAogCQkJCQkgIERMX0ZMQUdfUlBNX0FDVElWRSk7
+CitkZXZfaW5mbyh2ZmUtPmNhbXNzLT5kZXYsICIlcy8lZCB2ZmUgJWQgdmZlLT5nZW5wZCAl
+cEsgZ2VucGRfbGluayAlcEsgcG93ZXItY291bnQgJWRcbiIsIF9fZnVuY19fLCBfX0xJTkVf
+XywgdmZlLT5pZCwgdmZlLT5nZW5wZCwgdmZlLT5nZW5wZF9saW5rLCB2ZmUtPnBvd2VyX2Nv
+dW50KTsKIAlpZiAoIXZmZS0+Z2VucGRfbGluaykKIAkJcmV0dXJuIC1FSU5WQUw7CiAKQEAg
+LTc3NCw2ICs3ODAsNyBAQCBzdGF0aWMgaW50IHZmZV9jaGVja19jbG9ja19yYXRlcyhzdHJ1
+Y3QgdmZlX2RldmljZSAqdmZlKQogCiAJcmV0dXJuIDA7CiB9CisjZGVmaW5lIHZmZV9idWdf
+dHJhY2UodmZlKSBkZXZfaW5mbyh2ZmUtPmNhbXNzLT5kZXYsICIlcy8lZCB2ZmUgJWQgcG93
+ZXJfY291bnQgJWRcbiIsIF9fZnVuY19fLCBfX0xJTkVfXywgdmZlLT5pZCwgdmZlLT5wb3dl
+cl9jb3VudCk7CiAKIC8qCiAgKiB2ZmVfZ2V0IC0gUG93ZXIgdXAgYW5kIHJlc2V0IFZGRSBt
+b2R1bGUKQEAgLTc4NiwzMSArNzkzLDM3IEBAIGludCB2ZmVfZ2V0KHN0cnVjdCB2ZmVfZGV2
+aWNlICp2ZmUpCiAJaW50IHJldDsKIAogCW11dGV4X2xvY2soJnZmZS0+cG93ZXJfbG9jayk7
+Ci0KIAlpZiAodmZlLT5wb3dlcl9jb3VudCA9PSAwKSB7CisJCXZmZV9idWdfdHJhY2UodmZl
+KTsKIAkJcmV0ID0gdmZlLT5yZXMtPmh3X29wcy0+cG1fZG9tYWluX29uKHZmZSk7CiAJCWlm
+IChyZXQgPCAwKQogCQkJZ290byBlcnJvcl9wbV9kb21haW47CiAKKwkJdmZlX2J1Z190cmFj
+ZSh2ZmUpOwogCQlyZXQgPSBwbV9ydW50aW1lX3Jlc3VtZV9hbmRfZ2V0KHZmZS0+Y2Ftc3Mt
+PmRldik7CiAJCWlmIChyZXQgPCAwKQogCQkJZ290byBlcnJvcl9kb21haW5fb2ZmOwogCisJ
+CXZmZV9idWdfdHJhY2UodmZlKTsKIAkJcmV0ID0gdmZlX3NldF9jbG9ja19yYXRlcyh2ZmUp
+OwogCQlpZiAocmV0IDwgMCkKIAkJCWdvdG8gZXJyb3JfcG1fcnVudGltZV9nZXQ7CiAKKwkJ
+dmZlX2J1Z190cmFjZSh2ZmUpOwogCQlyZXQgPSBjYW1zc19lbmFibGVfY2xvY2tzKHZmZS0+
+bmNsb2NrcywgdmZlLT5jbG9jaywKIAkJCQkJICB2ZmUtPmNhbXNzLT5kZXYpOwogCQlpZiAo
+cmV0IDwgMCkKIAkJCWdvdG8gZXJyb3JfcG1fcnVudGltZV9nZXQ7CiAKKwkJdmZlX2J1Z190
+cmFjZSh2ZmUpOwogCQlyZXQgPSB2ZmVfcmVzZXQodmZlKTsKIAkJaWYgKHJldCA8IDApCiAJ
+CQlnb3RvIGVycm9yX3Jlc2V0OwogCisJCXZmZV9idWdfdHJhY2UodmZlKTsKIAkJdmZlX3Jl
+c2V0X291dHB1dF9tYXBzKHZmZSk7CiAKKwkJdmZlX2J1Z190cmFjZSh2ZmUpOwogCQl2ZmVf
+aW5pdF9vdXRwdXRzKHZmZSk7CiAKIAkJdmZlLT5yZXMtPmh3X29wcy0+aHdfdmVyc2lvbih2
+ZmUpOwpAQCAtODIxLDYgKzgzNCw3IEBAIGludCB2ZmVfZ2V0KHN0cnVjdCB2ZmVfZGV2aWNl
+ICp2ZmUpCiAJfQogCXZmZS0+cG93ZXJfY291bnQrKzsKIAorCXZmZV9idWdfdHJhY2UodmZl
+KTsKIAltdXRleF91bmxvY2soJnZmZS0+cG93ZXJfbG9jayk7CiAKIAlyZXR1cm4gMDsKQEAg
+LTgzNSw3ICs4NDksNyBAQCBpbnQgdmZlX2dldChzdHJ1Y3QgdmZlX2RldmljZSAqdmZlKQog
+CiBlcnJvcl9wbV9kb21haW46CiAJbXV0ZXhfdW5sb2NrKCZ2ZmUtPnBvd2VyX2xvY2spOwot
+CitkZXZfaW5mbyh2ZmUtPmNhbXNzLT5kZXYsICIlcyB2ZmUgJWQgZXJyPSVkXG4iLCBfX2Z1
+bmNfXywgdmZlLT5pZCwgcmV0KTsKIAlyZXR1cm4gcmV0OwogfQogCkBAIC04NDcsMjAgKzg2
+MSwzMiBAQCB2b2lkIHZmZV9wdXQoc3RydWN0IHZmZV9kZXZpY2UgKnZmZSkKIHsKIAltdXRl
+eF9sb2NrKCZ2ZmUtPnBvd2VyX2xvY2spOwogCisJdmZlX2J1Z190cmFjZSh2ZmUpOwogCWlm
+ICh2ZmUtPnBvd2VyX2NvdW50ID09IDApIHsKKwkJdmZlX2J1Z190cmFjZSh2ZmUpOwogCQlk
+ZXZfZXJyKHZmZS0+Y2Ftc3MtPmRldiwgInZmZSBwb3dlciBvZmYgb24gcG93ZXJfY291bnQg
+PT0gMFxuIik7CiAJCWdvdG8gZXhpdDsKIAl9IGVsc2UgaWYgKHZmZS0+cG93ZXJfY291bnQg
+PT0gMSkgeworCQl2ZmVfYnVnX3RyYWNlKHZmZSk7CiAJCWlmICh2ZmUtPndhc19zdHJlYW1p
+bmcpIHsKKwkJCXZmZV9idWdfdHJhY2UodmZlKTsKIAkJCXZmZS0+d2FzX3N0cmVhbWluZyA9
+IDA7CisJCQl2ZmVfYnVnX3RyYWNlKHZmZSk7CiAJCQl2ZmUtPnJlcy0+aHdfb3BzLT52ZmVf
+aGFsdCh2ZmUpOworCQkJdmZlX2J1Z190cmFjZSh2ZmUpOwogCQl9CisJCXZmZV9idWdfdHJh
+Y2UodmZlKTsKIAkJY2Ftc3NfZGlzYWJsZV9jbG9ja3ModmZlLT5uY2xvY2tzLCB2ZmUtPmNs
+b2NrKTsKKwkJdmZlX2J1Z190cmFjZSh2ZmUpOwogCQlwbV9ydW50aW1lX3B1dF9zeW5jKHZm
+ZS0+Y2Ftc3MtPmRldik7CisJCXZmZV9idWdfdHJhY2UodmZlKTsKIAkJdmZlLT5yZXMtPmh3
+X29wcy0+cG1fZG9tYWluX29mZih2ZmUpOworCQl2ZmVfYnVnX3RyYWNlKHZmZSk7CiAJfQog
+CisJdmZlX2J1Z190cmFjZSh2ZmUpOwogCXZmZS0+cG93ZXJfY291bnQtLTsKKwl2ZmVfYnVn
+X3RyYWNlKHZmZSk7CiAKIGV4aXQ6CiAJbXV0ZXhfdW5sb2NrKCZ2ZmUtPnBvd2VyX2xvY2sp
+Owo=
+
+--------------a0xltVuvLhEkCIBL8XCdaP1F--
 
