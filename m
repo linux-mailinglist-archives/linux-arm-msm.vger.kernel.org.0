@@ -1,89 +1,67 @@
-Return-Path: <linux-arm-msm+bounces-40139-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40141-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8B2729E2AE9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 19:32:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 17DEE9E2B85
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 19:59:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5381D1660D9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 18:32:08 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E2E58164E46
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 18:59:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C471C1FAC54;
-	Tue,  3 Dec 2024 18:32:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 291091FE46D;
+	Tue,  3 Dec 2024 18:59:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="exzalodJ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OJ/rffnc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07CEC1632EF
-	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Dec 2024 18:32:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E96331FDE26;
+	Tue,  3 Dec 2024 18:59:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733250728; cv=none; b=J40KM2I5j4MxPrr1lLKJjJ1JRUPQBsrefVD8XND7+x3a0pPG/26Hy9na8qKkgBwARxOzYvSbX9yBS/X4vCGoyab1oc/i9lAQN3qZQdxMQbl+TnT8haXAgvxhgvcYDwjyRBQ8drOutKTQC7KiGixl+G1vMXm2j0jbjYlbHYk6krU=
+	t=1733252383; cv=none; b=PP9wciCgtJqzG2TUvt2AZTG41bSTLxADzu19jwUo0emGnTgaqZFkSgl/U6M4wGGpdW2s0H3megnGyUBPwTMQYTnIsqK30QByVz3HPKqwnddZ5quz7E/I47vdKibjCEx5cDeDICoseOkJ2it32gXx3chF5jnoQiH4r/pAhPxrVb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733250728; c=relaxed/simple;
-	bh=teJpmPTMJwM4XhRCt98E5exgGcMwwsgs/+69aF/6jTs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gQIdhrTNTbijP/z0Nmw7iVA9oDdeMbLFR76FOUwt5nsrf66MOBbNtXnz3ppgXHmq+QlI3Z4XHadWdWN6l667d0wDC9lqyO/YSLPwd97dOuEYIYw9DC7CBRBLuu1qfEPGK2ChBkvlvoG6pCAyc2BJHX+irhTMGq7uXNZpigSWFAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=exzalodJ; arc=none smtp.client-ip=209.85.221.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-385f07cd1a4so2337980f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Dec 2024 10:32:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733250725; x=1733855525; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=MA0OIWYEx7lhE8KpQkBc+3xSlNCUl4o5/5suXDXfAEw=;
-        b=exzalodJ3+4UvOvky5pv0KEAEC2BqruWTai0ibunjgHRPzg7OITLYowpyr/jAvQUdt
-         9i/Qc/iB3GdPbXsXmXyepfPtoCQtsogpGiv2aIwkge3wUCTCNtL1v8ZfVg5uHntPCLl4
-         n1cNtT2hT1ufMD4FvNUym+NQ8d0umRv/guiiHHdqumXxAtTJmpnLGft6+CCfoHLsLuon
-         8gHabPQANiACfh3wMa7ohAikk8/7yM+J8GwXcEAK7uBR0B7PiG4gURXSyQdwVqXkueU1
-         YKHMYZqOJuRdVdPz4w507PVnit0eXjBaQwiRutvfIRD36mq7sQC5BX9lQal/N5o7989V
-         nINg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733250725; x=1733855525;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MA0OIWYEx7lhE8KpQkBc+3xSlNCUl4o5/5suXDXfAEw=;
-        b=bb4bpGu0JOTWx+6e1bzgj4EnNeKNCAFz7+e/e9x1jQqvqsvN4wr4mWkwBO80K2TvXg
-         U3TT6391Qc/i5yCDzb7Wsn/yttXEkUoue2bPiL5eTnRjOJH0t3JXMX4eSqru4jnKfHWk
-         uU2jZgQECTGXpqU0gwJGkmPlP0Qm/37oCSF6IKsG0bT3hYVc3xtFGvGz15MuyEA0w+5m
-         wGCZSRGlehniNkcHVWUO6zSxO+bGrRub7frt5cXQTIb4JLSun1yx3qdJNeoOKl6001kB
-         0cfqsNUKL8eNPW0TRuCeSdcNg+oPdSfbKRC1Cx5QLwg/zWanR12TCYP2mMiO547FkuQB
-         o4bg==
-X-Forwarded-Encrypted: i=1; AJvYcCW/KjFTWNuMG1Is9yTJPIuw7Tuo3uvSqcxU9KlQktMFelMc7wGnIl3em6yGVciL6QGQC683JTLiKwR7ZSjW@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzwfhr4dZM5OBGUO9RQ32RliwZLSEnpkHp4eNCiilsuTeDID9pT
-	0+YpYuF8XK5tccwgoKjEJVNcvf3KE7Ab0j8ebVrhdDhEWh4K9yzll+EzY+UkA5A=
-X-Gm-Gg: ASbGncv/US/oWyQQx/6Op93A0q3g2EaCvyTbNSiH5arGT0A7CbYVQwkNWqK9RzuLso2
-	Wgz9dRxD/QdamCOg0TJnwu6MwmkJk3TORpXwyTRagt3NsLcDfzKP250KxyAyKiSoQZYZjdyv8s4
-	+pS8JQdfIzbJrVgTjwjLQHlDOKDj3PuQV/63Jfb2ABAluj39iuLWZm6TMiV8monB7HBcWwA/ljx
-	vOK+bWpZ4x+2A5ZVEGlOVCP2+eGRkeLDK+2JgUQEI/ec41u8+mBN/UKslsqFg==
-X-Google-Smtp-Source: AGHT+IHf+LjEeT/CgO0kZ2nnAkyl6mj5vAV7M9tzUOSZ6upVeF6Bbz1t4dAO1PkPUN1PMAflp/yrXQ==
-X-Received: by 2002:a5d:6483:0:b0:385:df2c:91b5 with SMTP id ffacd0b85a97d-385fd378ddamr3163149f8f.0.1733250725408;
-        Tue, 03 Dec 2024 10:32:05 -0800 (PST)
-Received: from linaro.org ([2a02:2454:ff21:ef80:41ad:5703:2486:8f59])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-385ee2c7559sm7964163f8f.12.2024.12.03.10.32.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Dec 2024 10:32:05 -0800 (PST)
-Date: Tue, 3 Dec 2024 19:32:01 +0100
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Thara Gopinath <thara.gopinath@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	"David S. Miller" <davem@davemloft.net>,
-	Stanimir Varbanov <svarbanov@mm-sol.com>,
-	linux-crypto@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH 4/9] crypto: qce - shrink code with devres clk helpers
-Message-ID: <Z09OX3vnMC8bB6LG@linaro.org>
-References: <20241203-crypto-qce-refactor-v1-0-c5901d2dd45c@linaro.org>
- <20241203-crypto-qce-refactor-v1-4-c5901d2dd45c@linaro.org>
+	s=arc-20240116; t=1733252383; c=relaxed/simple;
+	bh=zNkpo8H89tmms49Rp+rl0QDB/6wIVSL/SKuA8+xZqvY=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=FUkkf39bHMsfwuQByrYfaEFpg3Zxjf9urxHwE5yFLfSzPU1jAJM7O0vVSsbKvu9tgWkgJp8dtqspZaiSeai1NHEEwZI7wI1c55Pde604cPh4lAQV0VGx18jpN7jkjhrs3ObaQrMrpkQN+POdrTaGG57eA3qMqgTdtDQKRyjVuKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OJ/rffnc; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0101C4CECF;
+	Tue,  3 Dec 2024 18:59:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1733252382;
+	bh=zNkpo8H89tmms49Rp+rl0QDB/6wIVSL/SKuA8+xZqvY=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=OJ/rffnc+chhzGjKiolyoS0CekuLEm/cMW1wHkJ24aQBuKF3/l8DQ2n47LAFwWHlr
+	 xkAvtiNFfv+5Or16fQswtR2N3163Sh7O5yE+EaWEtQWz6UOCvY7a1JojYyifCQ4j9A
+	 8XBkLaNuu1wW8O1TmbEBkPL2VmBrIveE13ewdtJ2PxsdeoRf+pZLsozwrSdqQiD7Qj
+	 CfTLrxxtMaFsOsJMuEyD57AJCSsgcjzEUJCa9+yli6vVEmLaLKB5OM5kNLaLRW6f7y
+	 Sq8evEJ2VglWRqjfUdHnuIR3OmnULg/400vNtjtzyD+AAq5D4tb2C/7ge/0d9BFRGL
+	 kTu4wSF4Si4mQ==
+Date: Tue, 3 Dec 2024 12:59:40 -0600
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc: cros-qcom-dts-watchers@chromium.org,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Bjorn Helgaas <bhelgaas@google.com>, quic_vbadigan@quicinc.com,
+	quic_ramkri@quicinc.com, quic_nitegupt@quicinc.com,
+	quic_skananth@quicinc.com, quic_vpernami@quicinc.com,
+	quic_mrana@quicinc.com, mmareddy@quicinc.com,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org
+Subject: Re: [PATCH 3/3] PCI: qcom: Enable ECAM feature based on config size
+Message-ID: <20241203185940.GA2910223@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -92,25 +70,98 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241203-crypto-qce-refactor-v1-4-c5901d2dd45c@linaro.org>
+In-Reply-To: <20241117-ecam-v1-3-6059faf38d07@quicinc.com>
 
-On Tue, Dec 03, 2024 at 10:19:32AM +0100, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On Sun, Nov 17, 2024 at 03:30:20AM +0530, Krishna chaitanya chundru wrote:
+> Enable the ECAM feature if the config space size is equal to size required
+> to represent number of buses in the bus range property.
 > 
-> Use devm_clk_get_optional_enabled() to avoid having to enable the clocks
-> separately as well as putting the clocks in error path and the remove()
-> callback.
+> The ELBI registers falls after the DBI space, so use the cfg win returned
+> from the ecam init to map these regions instead of doing the ioremap again.
+> ELBI starts at offset 0xf20 from dbi.
 > 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> On bus 0, we have only the root complex. Any access other than that should
+> not go out of the link and should return all F's. Since the IATU is
+> configured for bus 1 onwards, block the transactions for bus 0:0:1 to
+> 0:31:7 (i.e., from dbi_base + 4KB to dbi_base + 1MB) from going outside the
+> link through ecam blocker through parf registers.
 
-FWIW: Ideally, the driver shouldn't keep on the clock all the time in
-the first place, since this will prevent reaching deeper low power
-states. So while this cleanup is nice, I think it will have to be
-reverted again once someone fixes that.
+s/ecam/ECAM/
+s/dbi/DBI/
+s/IATU/iATU/ (Seems to be the convention?  Also below)
+s/parf/PARF/ (I assume an initialism?)
 
-If you're working on refactoring this rarely cared for driver, is there
-any chance you could add some form of runtime PM while you're at it? :-)
+Use conventional format for PCI bus addresses ... I assume "0:0:1"
+means bus 0, device 0, function 1, which would normally be formatted
+as "00:00.1" (also below).
 
-Thanks,
-Stephan
+> +static int qcom_pci_config_ecam_blocker(struct dw_pcie_rp *pp)
+> +{
+> +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> +	struct qcom_pcie *pcie = to_qcom_pcie(pci);
+> +	u64 addr, addr_end;
+> +	u32 val;
+> +
+> +	/* Set the ECAM base */
+> +	writel(lower_32_bits(pci->dbi_phys_addr), pcie->parf + PARF_ECAM_BASE);
+> +	writel(upper_32_bits(pci->dbi_phys_addr), pcie->parf + PARF_ECAM_BASE_HI);
+> +
+> +	/*
+> +	 * On bus 0, we have only the root complex. Any access other than that
+> +	 * should not go out of the link and should return all F's. Since the
+> +	 * IATU is configured for bus 1 onwards, block the transactions for
+> +	 * bus 0:0:1 to 0:31:7 (i.e from dbi_base + 4kb to dbi_base + 1MB) from
+> +	 * going outside the link.
+
+s/IATU/iATU/ to match other usage.
+
+Use conventional formatting of PCI bus/device/function addresses.
+
+Unless the root bus number is hard-wired to be zero, maybe this should
+say "root bus" instead of "bus 0"?
+
+There is no architected presence of a PCIe Root Complex as a PCI
+device.  Maybe this should say "the only device on bus 0 is the *Root
+Port*"?
+
+Or maybe there's a PCI device with some sort of device-specific
+interface to Root Complex registers?  But if that were the *only*
+device on bus 0, there would be no Root Port to reach other devices,
+so this doesn't seem likely.
+
+> +static bool qcom_pcie_check_ecam_support(struct device *dev)
+
+Rename to be an assertion that can be either true or false, e.g.,
+"ecam_supported".  "Check" doesn't hint about what true/false mean.
+
+> +{
+> +	struct platform_device *pdev = to_platform_device(dev);
+> +	struct resource bus_range, *config_res;
+> +	u64 bus_config_space_count;
+> +	int ret;
+> +
+> +	/* If bus range is not present, keep the bus range as maximum value */
+> +	ret = of_pci_parse_bus_range(dev->of_node, &bus_range);
+> +	if (ret) {
+> +		bus_range.start = 0x0;
+> +		bus_range.end = 0xff;
+> +	}
+
+I would have thought the generic OF parsing would already default to
+[bus 00-ff]?
+
+> +	config_res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "config");
+> +	if (!config_res)
+> +		return false;
+
+Move of_pci_parse_bus_range() (if it's needed) down here so it's
+together with the use of the results.  No point in calling it before
+looking for "config".
+
+> +	bus_config_space_count = resource_size(config_res) >> PCIE_ECAM_BUS_SHIFT;
+> +	if (resource_size(&bus_range) > bus_config_space_count)
+> +		return false;
+> +
+> +	return true;
+> +}
 
