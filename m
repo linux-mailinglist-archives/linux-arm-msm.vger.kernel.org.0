@@ -1,132 +1,279 @@
-Return-Path: <linux-arm-msm+bounces-40119-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40120-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 588D59E2392
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 16:39:45 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A0C0A9E23CD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 16:43:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1D94C287181
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 15:39:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 60DFE2874EB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 15:43:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C7DBF1F9A94;
-	Tue,  3 Dec 2024 15:34:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 486FA205E35;
+	Tue,  3 Dec 2024 15:37:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=163.com header.i=@163.com header.b="BuAmIfQp"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="XD/PUHdv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.5])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 287B01F9427;
-	Tue,  3 Dec 2024 15:34:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.5
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D3021F892C
+	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Dec 2024 15:37:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733240084; cv=none; b=YyJ5HiRwVYb8o39ZMCam7cqKc1MOvkSBAPj4GymcGUmgfiUFgI6RcnPsaOfdcTNpfiWlaiK7/LYM4RlVGE/GkU+Uo1B29x5iqzfyXEbYhLP38pkjM5VWrdJoStmHBYRMZhm7eXZoaS11OJyVO3DlLtyynLf3XZJ7BVenfeqDl5w=
+	t=1733240256; cv=none; b=Dl49N6yhuswIdi45fXcBdX9/OJMLeqifbavWG21/Mg83V8zAB+kt0N9YeNGm8/zfC2n7FiN0Pjb75pznN+AIHAx0o7YS7nkwGQVSwMnsJb4O0X1O1YzfiXb7QVrnJod3MxNVjTpItw7/lZ6QJP3+j0UYZOZ+Vg+OuPmzNFmV9mc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733240084; c=relaxed/simple;
-	bh=rvNUSBrexrgvn6qC5F5NGhEbMHkIN1b9AQXKqKFKjcM=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=e2Ms8Z2GwHTjgsM0QJFhItjl3KP9HmJ7B72vCDDUTOy9cOVU/6obznx8bzTBoPjbNaOEdYo5+8VaIbL7GCV/r7qA4/yIiZJsVp5sZUjl1wHd9KZUHOjqLZ1PgSs5WeuDtpmEK4jiht8Q5S3jUoxwVIvQjcrFacm/xPMsYeCQwnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=fail (1024-bit key) header.d=163.com header.i=@163.com header.b=BuAmIfQp reason="signature verification failed"; arc=none smtp.client-ip=117.135.210.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
-	Message-ID; bh=wjZN+HxTPKuwwQ6Fd9vf5fIHwqabYcyUg3ydJhnu5jw=; b=B
-	uAmIfQp3ND6qF26J3ebVN7ErDckCFUm8PXMX7+I5QFjM2WvYkd4lNcoJraoBkLGJ
-	Qdeq05gYs+wAwIbtXVjX1kGRynoQhsdt1/ZYAaI/sCTdf1WpcoZ9qu4Xb1+Syyek
-	17kxq0vuLRSm0So8yoVYjpEBLkXnvdLTh4YBtuq7JE=
-Received: from 00107082$163.com ( [111.35.188.140] ) by
- ajax-webmail-wmsvr-40-129 (Coremail) ; Tue, 3 Dec 2024 23:33:45 +0800 (CST)
-Date: Tue, 3 Dec 2024 23:33:45 +0800 (CST)
-From: "David Wang" <00107082@163.com>
-To: "Geert Uytterhoeven" <geert+renesas@glider.be>
-Cc: "Thomas Gleixner" <tglx@linutronix.de>, 
-	"Michael Ellerman" <mpe@ellerman.id.au>, 
-	"Nicholas Piggin" <npiggin@gmail.com>, 
-	"Christophe Leroy" <christophe.leroy@csgroup.eu>, 
-	"Naveen N Rao" <naveen@kernel.org>, 
-	"Madhavan Srinivasan" <maddy@linux.ibm.com>, 
-	=?GBK?Q?Marek_Beh=A8=B2n?= <kabel@kernel.org>, 
-	"Bjorn Andersson" <andersson@kernel.org>, 
-	"Konrad Dybcio" <konradybcio@kernel.org>, 
-	linuxppc-dev@lists.ozlabs.org, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re:[PATCH] genirq: Remove leading space from .irq_print_chip()
- callbacks
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20240801(9da12a7b)
- Copyright (c) 2002-2024 www.mailtech.cn 163com
-In-Reply-To: <a779f3f44c24716d783d782c935be9fe4f410bff.1733238060.git.geert+renesas@glider.be>
-References: <a779f3f44c24716d783d782c935be9fe4f410bff.1733238060.git.geert+renesas@glider.be>
-X-NTES-SC: AL_Qu2YAf6fv0gp4ymRZukZnEYQheY4XMKyuPkg1YJXOp80mCT8/CAnbG5PJ0TM/PmyMBCmoQmQYj1Eyv51WqJ0Wrq3/ixk5Y2YjnuPGeDTokBU
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=GBK
+	s=arc-20240116; t=1733240256; c=relaxed/simple;
+	bh=fO/qh5sqTmf1eBA7gFi+J1C/OQQ+064q95v0fANMQ3E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CQ/H+wTaTijlTYCvX1J56inQGhZ1ubHJM3scg7EpxHgvmQN0Ut64cGZzNCNz7YdlWJzMOren7MpEY1EbMVpP+Bn8nKdxalzfzy8NDaSSuUPZtUXgDkDEbnnyZxbmv7qLokhywDVyHkeA+PJxoLczTeiE5HclDI0cV4lbEiLkbjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=XD/PUHdv; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B373dMS031023
+	for <linux-arm-msm@vger.kernel.org>; Tue, 3 Dec 2024 15:37:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	WVsAf3br7q2QiAZQkRJosEe0peHLoK9e9ACnt+YXgwE=; b=XD/PUHdv0pH24DGj
+	QktgXOvaT1YY7+tqc+sgFM6pJkrFYRvvxXEqjtw1dSD7jCicsW4iTFdW3HiSbkTV
+	ASikHoLrlvz00Cm+zbDh1SHI6CQeEQiRIL9c2SSAekoxzsYOuw+w2DTtKzm612mk
+	r/uu/ASE56q8BW3hia+/A2B42PTA7tN/HaR7r/2MCVY/V2/GeHeooLnZJlPI6eaj
+	kAij6dxg7dAJiq1qGxSk+etXFAnwNzrDjI+vjitoWWqy038DcNEytwb14Vztyt2y
+	Z6gLrF4nsybrJsXcqnbNlpmwFGPIhdlYlaxHydpZEaWCko4sD5fU5cdx2HAi1xpi
+	yX/3Iw==
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 439w90s92h-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 03 Dec 2024 15:37:32 +0000 (GMT)
+Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-2ee46799961so6050034a91.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Dec 2024 07:37:31 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733240251; x=1733845051;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=WVsAf3br7q2QiAZQkRJosEe0peHLoK9e9ACnt+YXgwE=;
+        b=W3q+letA5Ao/k5d5UmYT6ocKGgsRxyxijVWM0OLYQ0DcsyKOzkh4crPM2KHbJAb52T
+         JJ9PV1N0N12f+6K4T9jKpm1AEW6XwGmzSFApYo79GXwIAxukIAQsygiejTnaw2P/hT80
+         HKZYsqiUr/rlWCcQuaqQonbbSHX5rlHTPaNUNKyQWGBdsHcLI+L+4qroz6OR4FSw6qhO
+         FS+W6ADvKPgqiiTcnW0Nzgxa6WANMhvypEpQoc1cfTimmMmgrvRZFHR259zQ0sGyy0vS
+         wSAIjY1xtbR2GOcwy5rR4qJXj3hlvvl3/2//anxf53lZQVa5FIZXTObz/fxm5PF0atdq
+         rYVg==
+X-Forwarded-Encrypted: i=1; AJvYcCWYkfvEfOzJYYFgSqsvbcmXLGjZS9uyxYu5B3sucrtg7XddWP/0cY7V7n9W0sSJcZfV3lOhfVPVLcp8BbSa@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx08XT+QOXeRIOeOsH/mgsL42L6m0KUFmu5pvZT1NR/YhHuQYr4
+	qL5h37ysIaqPFk8ai3GCAtjkORmsq1FUT8L7r1IjsYaVMBLzAOK0gOoGgNzMJaCxjs8rwZLQ3gr
+	QIoT8wDrM9xVL6XbeRUqr9TZ2lsiQhGqiC+JqYUshfLDFewmHj8b+Y47QEWn7v4Px
+X-Gm-Gg: ASbGnctRyzR86aG1CiieiQSTKPgQl5kp1hGD/haJc+vMIj5j8VgPPIgdGNBONTovHkm
+	ypQciSmLm7wKxJjWMDwleyFK5lfXty8Ce6XF5apRM2fisESrvvcxY8bm5+XnAb76kFSwsYp+D/6
+	hKIDQjp7ZlnzY0l2nM1Eq04Xqcmc+TjI13leFN0OBdCM19PMvnoV2Ex585ysll6PKFPwP22/hlF
+	0rgLHIIKPTGRcuw7R8GrHLlO9UBExAsFghWKDNyX+cNHeLyy3zJuv7Xqsht9zfAskDByYHqJ8ts
+	XrCK7BiFpo3t
+X-Received: by 2002:a17:90b:4e90:b0:2ee:a58d:cd96 with SMTP id 98e67ed59e1d1-2ef01204128mr3593123a91.18.1733240250760;
+        Tue, 03 Dec 2024 07:37:30 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF1wCFkJuDY3iAo1YW3xzVreeVpHJUxKTejY6gq824aM6cXlEoKfgBRQ345ghJyDtEXjV2f1g==
+X-Received: by 2002:a17:90b:4e90:b0:2ee:a58d:cd96 with SMTP id 98e67ed59e1d1-2ef01204128mr3593087a91.18.1733240250314;
+        Tue, 03 Dec 2024 07:37:30 -0800 (PST)
+Received: from [192.168.31.128] ([152.58.197.11])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2ee488af41dsm8955256a91.28.2024.12.03.07.37.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 03 Dec 2024 07:37:29 -0800 (PST)
+Message-ID: <41106fd7-5348-4d21-9ae7-8466f5634b4c@oss.qualcomm.com>
+Date: Tue, 3 Dec 2024 21:07:22 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-ID: <6392704d.c158.1938d27f38e.Coremail.00107082@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:gSgvCgD3vwzbJE9nqmU2AA--.1844W
-X-CM-SenderInfo: qqqrilqqysqiywtou0bp/1tbiqR+qqmdPHZAA7gACs-
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: x1e80100-crd: Add USB multiport
+ fingerprint readery
+To: Stephan Gerhold <stephan.gerhold@linaro.org>,
+        Johan Hovold <johan@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, Abel Vesa <abel.vesa@linaro.org>,
+        Krishna Kurapati <quic_kriskura@quicinc.com>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>, linux-usb@vger.kernel.org
+References: <20241118-x1e80100-crd-fp-v1-0-ec6b553a2e53@linaro.org>
+ <20241118-x1e80100-crd-fp-v1-1-ec6b553a2e53@linaro.org>
+ <Z07bgH5vVk44zuEH@hovoldconsulting.com> <Z07r3Upr50vLluyn@linaro.org>
+Content-Language: en-US
+From: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+In-Reply-To: <Z07r3Upr50vLluyn@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: WBEOSz7c5N7csTRKWUV0oUv2peXU6NpU
+X-Proofpoint-GUID: WBEOSz7c5N7csTRKWUV0oUv2peXU6NpU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 bulkscore=0
+ impostorscore=0 phishscore=0 suspectscore=0 adultscore=0 mlxscore=0
+ spamscore=0 clxscore=1011 priorityscore=1501 malwarescore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412030131
 
-SEksIApBdCAyMDI0LTEyLTAzIDIzOjAyOjMxLCAiR2VlcnQgVXl0dGVyaG9ldmVuIiA8Z2VlcnQr
-cmVuZXNhc0BnbGlkZXIuYmU+IHdyb3RlOgo+VGhlIHNwYWNlIHNlcGFyYXRvciB3YXMgZmFjdG9y
-ZWQgb3V0IGZyb20gdGhlIG11bHRpcGxlIGNoaXAgbmFtZSBwcmludHMsCj5idXQgc2V2ZXJhbCBp
-cnFfY2hpcC5pcnFfcHJpbnRfY2hpcCgpIGNhbGxiYWNrcyBzdGlsbCBwcmludCBhIGxlYWRpbmcK
-PnNwYWNlLiAgUmVtb3ZlIHRoZSBzdXBlcmZsdW91cyBkb3VibGUgc3BhY2VzLgo+Cj5GaXhlczog
-OWQ5ZjIwNGJkZjcyNDNiZiAoImdlbmlycS9wcm9jOiBBZGQgbWlzc2luZyBzcGFjZSBzZXBhcmF0
-b3IgYmFjayIpCj5TaWduZWQtb2ZmLWJ5OiBHZWVydCBVeXR0ZXJob2V2ZW4gPGdlZXJ0K3JlbmVz
-YXNAZ2xpZGVyLmJlPgo+LS0tCj5Ob3QgZXZlbiBjb21waWxlLXRlc3RlZC4uLgo+Cj5GZWVsIGZy
-ZWUgdG8gZm9sZCB0aGlzIGludG8gdGhlIG9yaWdpbmFsLCBhbmQgZml4IHRoZSBzcGVsbGluZwo+
-cy9wcmV2aW9zdWx5L3ByZXZpb3VzbHkvIHdoaWxlIGF0IGl0Lgo+LS0tCj4gYXJjaC9wb3dlcnBj
-L3N5c2Rldi9mc2xfbXNpLmMgICAgICAgICAgfCAyICstCj4gZHJpdmVycy9idXMvbW94dGV0LmMg
-ICAgICAgICAgICAgICAgICAgfCAyICstCj4gZHJpdmVycy9pcnFjaGlwL2lycS1wYXJ0aXRpb24t
-cGVyY3B1LmMgfCAyICstCj4gZHJpdmVycy9zb2MvcWNvbS9zbXAycC5jICAgICAgICAgICAgICAg
-fCAyICstCj4gNCBmaWxlcyBjaGFuZ2VkLCA0IGluc2VydGlvbnMoKyksIDQgZGVsZXRpb25zKC0p
-Cj4KPmRpZmYgLS1naXQgYS9hcmNoL3Bvd2VycGMvc3lzZGV2L2ZzbF9tc2kuYyBiL2FyY2gvcG93
-ZXJwYy9zeXNkZXYvZnNsX21zaS5jCj5pbmRleCAxYWEwY2IwOTdjOWM5ZDdjLi43YjlhNWVhOWNh
-ZDlkM2M3IDEwMDY0NAo+LS0tIGEvYXJjaC9wb3dlcnBjL3N5c2Rldi9mc2xfbXNpLmMKPisrKyBi
-L2FyY2gvcG93ZXJwYy9zeXNkZXYvZnNsX21zaS5jCj5AQCAtNzUsNyArNzUsNyBAQCBzdGF0aWMg
-dm9pZCBmc2xfbXNpX3ByaW50X2NoaXAoc3RydWN0IGlycV9kYXRhICppcnFkLCBzdHJ1Y3Qgc2Vx
-X2ZpbGUgKnApCj4gCXNycyA9IChod2lycSA+PiBtc2lfZGF0YS0+c3JzX3NoaWZ0KSAmIE1TSV9T
-UlNfTUFTSzsKPiAJY2FzY2FkZV92aXJxID0gbXNpX2RhdGEtPmNhc2NhZGVfYXJyYXlbc3JzXS0+
-dmlycTsKPiAKPi0Jc2VxX3ByaW50ZihwLCAiIGZzbC1tc2ktJWQiLCBjYXNjYWRlX3ZpcnEpOwo+
-KwlzZXFfcHJpbnRmKHAsICJmc2wtbXNpLSVkIiwgY2FzY2FkZV92aXJxKTsKPiB9Cj4gCj4gCj5k
-aWZmIC0tZ2l0IGEvZHJpdmVycy9idXMvbW94dGV0LmMgYi9kcml2ZXJzL2J1cy9tb3h0ZXQuYwo+
-aW5kZXggNjI3NjU1MWQ3OTY4MGU4NS4uMWU1N2ViZmI3NjIyOWFhMCAxMDA2NDQKPi0tLSBhL2Ry
-aXZlcnMvYnVzL21veHRldC5jCj4rKysgYi9kcml2ZXJzL2J1cy9tb3h0ZXQuYwo+QEAgLTY1Nyw3
-ICs2NTcsNyBAQCBzdGF0aWMgdm9pZCBtb3h0ZXRfaXJxX3ByaW50X2NoaXAoc3RydWN0IGlycV9k
-YXRhICpkLCBzdHJ1Y3Qgc2VxX2ZpbGUgKnApCj4gCj4gCWlkID0gbW94dGV0LT5tb2R1bGVzW3Bv
-cy0+aWR4XTsKPiAKPi0Jc2VxX3ByaW50ZihwLCAiIG1veHRldC0lcy4laSMlaSIsIG1veF9tb2R1
-bGVfbmFtZShpZCksIHBvcy0+aWR4LAo+KwlzZXFfcHJpbnRmKHAsICJtb3h0ZXQtJXMuJWkjJWki
-LCBtb3hfbW9kdWxlX25hbWUoaWQpLCBwb3MtPmlkeCwKPiAJCSAgIHBvcy0+Yml0KTsKPiB9Cj4g
-Cj5kaWZmIC0tZ2l0IGEvZHJpdmVycy9pcnFjaGlwL2lycS1wYXJ0aXRpb24tcGVyY3B1LmMgYi9k
-cml2ZXJzL2lycWNoaXAvaXJxLXBhcnRpdGlvbi1wZXJjcHUuYwo+aW5kZXggOGU3NmQyOTEzZTZi
-ZWJiZi4uNDQ0MWZmZTE0OWVhMGQ5NiAxMDA2NDQKPi0tLSBhL2RyaXZlcnMvaXJxY2hpcC9pcnEt
-cGFydGl0aW9uLXBlcmNwdS5jCj4rKysgYi9kcml2ZXJzL2lycWNoaXAvaXJxLXBhcnRpdGlvbi1w
-ZXJjcHUuYwo+QEAgLTk4LDcgKzk4LDcgQEAgc3RhdGljIHZvaWQgcGFydGl0aW9uX2lycV9wcmlu
-dF9jaGlwKHN0cnVjdCBpcnFfZGF0YSAqZCwgc3RydWN0IHNlcV9maWxlICpwKQo+IAlzdHJ1Y3Qg
-aXJxX2NoaXAgKmNoaXAgPSBpcnFfZGVzY19nZXRfY2hpcChwYXJ0LT5jaGFpbmVkX2Rlc2MpOwo+
-IAlzdHJ1Y3QgaXJxX2RhdGEgKmRhdGEgPSBpcnFfZGVzY19nZXRfaXJxX2RhdGEocGFydC0+Y2hh
-aW5lZF9kZXNjKTsKPiAKPi0Jc2VxX3ByaW50ZihwLCAiICU1cy0lbHUiLCBjaGlwLT5uYW1lLCBk
-YXRhLT5od2lycSk7Cj4rCXNlcV9wcmludGYocCwgIiU1cy0lbHUiLCBjaGlwLT5uYW1lLCBkYXRh
-LT5od2lycSk7Cj4gfQo+IAo+IHN0YXRpYyBzdHJ1Y3QgaXJxX2NoaXAgcGFydGl0aW9uX2lycV9j
-aGlwID0gewo+ZGlmZiAtLWdpdCBhL2RyaXZlcnMvc29jL3Fjb20vc21wMnAuYyBiL2RyaXZlcnMv
-c29jL3Fjb20vc21wMnAuYwo+aW5kZXggNDc4M2FiMWFkYjhkOTUzYi4uYTNlODhjZWQzMjhhOTFm
-MSAxMDA2NDQKPi0tLSBhL2RyaXZlcnMvc29jL3Fjb20vc21wMnAuYwo+KysrIGIvZHJpdmVycy9z
-b2MvcWNvbS9zbXAycC5jCj5AQCAtMzY1LDcgKzM2NSw3IEBAIHN0YXRpYyB2b2lkIHNtcDJwX2ly
-cV9wcmludF9jaGlwKHN0cnVjdCBpcnFfZGF0YSAqaXJxZCwgc3RydWN0IHNlcV9maWxlICpwKQo+
-IHsKPiAJc3RydWN0IHNtcDJwX2VudHJ5ICplbnRyeSA9IGlycV9kYXRhX2dldF9pcnFfY2hpcF9k
-YXRhKGlycWQpOwo+IAo+LQlzZXFfcHJpbnRmKHAsICIgJThzIiwgZGV2X25hbWUoZW50cnktPnNt
-cDJwLT5kZXYpKTsKPisJc2VxX3ByaW50ZihwLCAiJThzIiwgZGV2X25hbWUoZW50cnktPnNtcDJw
-LT5kZXYpKTsKPiB9Cj4gCj4gc3RhdGljIHN0cnVjdCBpcnFfY2hpcCBzbXAycF9pcnFfY2hpcCA9
-IHsKPi0tIAo+Mi4zNC4xCgpNYXRjaCB3aXRoIG15IGNoZWNrIHJlc3VsdCBhZ2FpbnN0IC5pcnFf
-cHJpbnRfY2hpcCBpbXBsZW1lbnRhdGlvbiB1bmRlciBkcml2ZXJzLgpCdXQgSSB0aGluayAiJThz
-IiBhbmQgIiU1cy0lbHUiIHNob3VsZCBiZSAiJXMiIGFuZCAiJXMtJWx1Iiwgb3RoZXJ3aXNlIHRo
-ZXJlIHdvdWxkIHN0aWxsCmJlIGxlYWRpbmcgc3BhY2VzIHdoZW4gdGhlIGRldmljZSBuYW1lIHN0
-cmluZyBpcyBzaG9ydC4KCgpUaGFua3MKRGF2aWQK
+
+
+On 12/3/2024 5:00 PM, Stephan Gerhold wrote:
+> On Tue, Dec 03, 2024 at 11:20:48AM +0100, Johan Hovold wrote:
+>> [ +CC: Krishna, Thinh and the USB list ]
+>>
+>> On Mon, Nov 18, 2024 at 11:34:29AM +0100, Stephan Gerhold wrote:
+>>> The X1E80100 CRD has a Goodix fingerprint reader connected to the USB
+>>> multiport controller on eUSB6. All other ports (including USB super-speed
+>>> pins) are unused.
+>>>
+>>> Set it up in the device tree together with the NXP PTN3222 repeater.
+>>>
+>>> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+>>> ---
+>>>   arch/arm64/boot/dts/qcom/x1e80100-crd.dts | 48 +++++++++++++++++++++++++++++++
+>>>   1 file changed, 48 insertions(+)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
+>>> index 39f9d9cdc10d..44942931c18f 100644
+>>> --- a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
+>>> +++ b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
+>>> @@ -735,6 +735,26 @@ keyboard@3a {
+>>>   	};
+>>>   };
+>>>   
+>>> +&i2c5 {
+>>> +	clock-frequency = <400000>;
+>>> +
+>>> +	status = "okay";
+>>> +
+>>> +	eusb6_repeater: redriver@4f {
+>>> +		compatible = "nxp,ptn3222";
+>>> +		reg = <0x4f>;
+>>
+>> The driver does not currently check that there's actually anything at
+>> this address. Did you verify that this is the correct address?
+>>
+>> (Abel is adding a check to the driver as we speak to catch any such
+>> mistakes going forward).
+>>
+> 
+> Yes, I verified this using
+> https://git.codelinaro.org/stephan.gerhold/linux/-/commit/45d5add498612387f88270ca944ee16e2236fddd
+> 
+> (I sent this to Abel back then, so I'm surprised he didn't run that :-))
+> 
+>>> +		#phy-cells = <0>;
+>>
+>> nit: I'd put provider properties like this one last.
+>>
+>>> +		vdd3v3-supply = <&vreg_l13b_3p0>;
+>>> +		vdd1v8-supply = <&vreg_l4b_1p8>;
+>>
+>> Sort by supply name?
+>>
+> 
+> Ack.
+> 
+>>> +		reset-gpios = <&tlmm 184 GPIO_ACTIVE_LOW>;
+>>> +
+>>> +		pinctrl-0 = <&eusb6_reset_n>;
+>>> +		pinctrl-names = "default";
+>>> +	};
+>>> +};
+>>> +
+>>>   &i2c8 {
+>>>   	clock-frequency = <400000>;
+>>>   
+>>> @@ -1047,6 +1067,14 @@ edp_reg_en: edp-reg-en-state {
+>>>   		bias-disable;
+>>>   	};
+>>>   
+>>> +	eusb6_reset_n: eusb6-reset-n-state {
+>>> +		pins = "gpio184";
+>>> +		function = "gpio";
+>>> +		drive-strength = <2>;
+>>> +		bias-disable;
+>>> +		output-low;
+>>
+>> I don't think the pin config should assert reset, that should be up to
+>> the driver to control.
+>>
+> 
+> I can drop it I guess, but pinctrl is applied before the driver takes
+> control of the GPIO. This means if the GPIO happens to be in input mode
+> before the driver loads (with pull up or pull down), then we would
+> briefly leave it floating when applying the bias-disable.
+> 
+> Or I guess we could drop the bias-disable, since it shouldn't be
+> relevant for a pin we keep in output mode all the time?
+> 
+>>> +	};
+>>> +
+>>>   	hall_int_n_default: hall-int-n-state {
+>>>   		pins = "gpio92";
+>>>   		function = "gpio";
+>>> @@ -1260,3 +1288,23 @@ &usb_1_ss2_dwc3_hs {
+>>>   &usb_1_ss2_qmpphy_out {
+>>>   	remote-endpoint = <&pmic_glink_ss2_ss_in>;
+>>>   };
+>>> +
+>>> +&usb_mp {
+>>> +	status = "okay";
+>>> +};
+>>> +
+>>> +&usb_mp_dwc3 {
+>>> +	/* Limit to USB 2.0 and single port */
+>>> +	maximum-speed = "high-speed";
+>>> +	phys = <&usb_mp_hsphy1>;
+>>> +	phy-names = "usb2-1";
+>>> +};
+>>
+>> The dwc3 driver determines (and acts on) the number of ports based on
+>> the port interrupts in DT and controller capabilities.
+>>
+>> I'm not sure we can (should) just drop the other HS PHY and the SS PHYs
+>> that would still be there in the SoC (possibly initialised by the boot
+>> firmware).
+>>
+>> I had a local patch to enable the multiport controller (for the suspend
+>> work) and I realise that you'd currently need to specify a repeater also
+>> for the HS PHY which does not have one, but that should be possible to
+>> fix somehow.
+>>
+> 
+> I think there are two separate questions here:
+> 
+>   1. Should we (or do we even need to) enable unused PHYs?
+>   2. Do we need to power off unused PHYs left enabled by the firmware?
+> 
+> For (1), I'm not not sure if there is a technical reason that requires
+> us to. And given that PHYs typically consume quite a bit of power, I'm
+> not sure if we should. Perhaps it's not worth spending effort on this
+> minor optimization now, but then the device tree would ideally still
+> tell us which PHYs are actually used (for future optimizations).
+> 
+> For (2), yes, we probably need to. But my impression so far is that this
+> might be a larger problem that we need to handle on the SoC level. I
+> have seen some firmware versions that blindly power up all USB
+> controllers, even completely unused ones. Ideally we would power down
+> unused components during startup and then leave them off.
+>
+
+This question might be a dumb one, if so please ignore it.
+
+But if we skip adding unused phys in DTS node, the core driver wouldn't 
+have access to all phys and we wouldn't be able to get references to 
+unused ones (un-mentioned ones in DTS). So how can we power them off 
+from core driver if we don't have reference to them ?
+
+Regards,
+Krishna,
 
