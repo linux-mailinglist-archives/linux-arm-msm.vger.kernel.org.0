@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-40027-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40028-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id AC3069E14AF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 08:55:20 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 59FBD9E159D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 09:26:24 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6F5AB1602A9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 07:55:17 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8721EB2287D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 08:00:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F8BC199247;
-	Tue,  3 Dec 2024 07:55:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27FFC1D90A4;
+	Tue,  3 Dec 2024 07:58:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tyzQFlgt"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XAActp/a"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56300185B48;
-	Tue,  3 Dec 2024 07:55:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC3241D7E21;
+	Tue,  3 Dec 2024 07:58:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733212513; cv=none; b=tnI6MSX1XqMwSAAL+XYnnRazVG9LdTB4g6j7PUhST3jeRiyNS4ex3HvkOdYszqtKApl4MoWEIZdiaSYIXkyIhglyX58wDw5CnUwU39DvNQUF/kHuVNxtfxZgnVvWYilf2eGJco7vWmc4c6lxzuD+ZHBAzI+HaIXeIxOTznUbivw=
+	t=1733212685; cv=none; b=ILm9pFE3oEQ9KTs9qvSRJEmWZumhzdTk3VnhAnQBqzjw3UXU+76Sm2CuUEUvMQWc0F0+ZcUVtIdHBTMsEC2pfpiaqiBaMPmWgRI5PrikUiP/DV5fHw1bWguFTQJzHRmB7IYxs/GH7OTTqBq7JA3bQ8kHQ3t+AdAZ4uD0wY6Uuhs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733212513; c=relaxed/simple;
-	bh=WrHlyr23JlkF3WQuc2H2dadcp19Wdg5V79yaG1l9A0A=;
+	s=arc-20240116; t=1733212685; c=relaxed/simple;
+	bh=oeDwSYbDtumcWtXKju7ig4LuBaFcBdeCDLukpWkhVjk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pIHWivNk5114AmsSvrjgAkg8jSeiduNwHLcDnbnZ9NfrGwE6vp9D2mBoOBg7rMDzzRf12Iwy+IyXKWKlU2hPo2bT/Pr20XfxUUJrWCM26fxNYePFM2rf7Dy+pRKlhr6UxiR1wPDXXMjb8bl5EuiZEHsQonyNl8g7FL/o3xys6Q0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tyzQFlgt; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A1ECC4CED9;
-	Tue,  3 Dec 2024 07:55:07 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=iAuUImg3+N0URpwiJBQxknjUSqjIY/ut73EmOCwpZnwZYzoEAc6F1WOIPyjtZZ3AG5tlthfnrIOuQJKt2R7JfwNyhOINNz/ZNavY6dN0Udv78A0Mt+axkMCaVSl1GgRAAPfnJmcMJ1m7zPUrwtYLl/i/VXPPgVYXkrY8FAA4x4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XAActp/a; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E0BFC4CECF;
+	Tue,  3 Dec 2024 07:57:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733212512;
-	bh=WrHlyr23JlkF3WQuc2H2dadcp19Wdg5V79yaG1l9A0A=;
+	s=k20201202; t=1733212684;
+	bh=oeDwSYbDtumcWtXKju7ig4LuBaFcBdeCDLukpWkhVjk=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=tyzQFlgt45fO47xEmlGNLTRAwrwbk+D156dnkI0ekGAi6LwR2KeFy9LfnxV4cWy9/
-	 EZ0MYDCcwz+jOqtoc7bfwRJxZYyHqB3Yr+m9KtpP3//ApR4/TqZc1R4xFw8Y/cYNhJ
-	 TC2O2i+Fu+WeVaZFUNJcHUF3NG5znsVzsq7Yhk1WISl+nx0m61wV4j5ZrcdCG+gTMi
-	 JLgmkWZxjnJ2ZKXrVbQ2YCNsmTQYit8AZnaweIrPtVFOXZRi4REUU3EhvQS0moGkSc
-	 9Ex+o/G5eZSLwJRmJLgPCjfDgIupbuAPyeZ897lWPF1csm1YkY/JhqgFgvEOElTI8F
-	 HjNkwABKsyYlQ==
-Message-ID: <ccaff25d-d757-4b0a-851b-8f6c2dd9fb4b@kernel.org>
-Date: Tue, 3 Dec 2024 08:55:05 +0100
+	b=XAActp/a3d/1FEPPdChndcExrPN5zf5hJJ2JE5jKPbV9k4bbkdWCwYaMzUe63RKT6
+	 f85LqG6uXO4kgScKGdcXz23Y0kwgsH4MZwAchznbe0+rsX6pUPbU18hnzimKDNv6MY
+	 YAbPgosIyC2xaxI2u1wsGZx7Oz6oufjckyXxTTUwbBn4ng50fZa5ieOXMI7DgL14t7
+	 tpeBe/yyfIPncGqeZ5tATagOKfDR4aZuxZVA1KDpQ4gds6Swcu0ZRJVYU/ykddBPeF
+	 8chXBQ9+oC/A8wiKPnqjeu5COJr987FlN7GDfmUebSInifNnb3tKntd5ElG1rDXD1a
+	 2Fdh2NygbvG6Q==
+Message-ID: <00e3bd13-eab8-47b0-b577-dfdb3bd5900e@kernel.org>
+Date: Tue, 3 Dec 2024 08:57:57 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/10] dt-bindings: arm: qcomtee: add QTEE driver
- devicetree binding for TEE subsystem
+Subject: Re: [PATCH 08/10] tee: add Qualcomm TEE driver
 To: Amirreza Zarrabi <quic_azarrabi@quicinc.com>,
  Jens Wiklander <jens.wiklander@linaro.org>,
  Sumit Garg <sumit.garg@linaro.org>, Bjorn Andersson <andersson@kernel.org>,
@@ -63,7 +62,7 @@ Cc: linux-arm-msm@vger.kernel.org, op-tee@lists.trustedfirmware.org,
  linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
  linux-doc@vger.kernel.org
 References: <20241202-qcom-tee-using-tee-ss-without-mem-obj-v1-0-f502ef01e016@quicinc.com>
- <20241202-qcom-tee-using-tee-ss-without-mem-obj-v1-7-f502ef01e016@quicinc.com>
+ <20241202-qcom-tee-using-tee-ss-without-mem-obj-v1-8-f502ef01e016@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,97 +108,84 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20241202-qcom-tee-using-tee-ss-without-mem-obj-v1-7-f502ef01e016@quicinc.com>
+In-Reply-To: <20241202-qcom-tee-using-tee-ss-without-mem-obj-v1-8-f502ef01e016@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 03/12/2024 05:19, Amirreza Zarrabi wrote:
-> Introduce qcom,tee compatible string.
-
-Why? What is it for? You have entire commit msg for this, instead of
-repeating subject.
-
-A nit, subject: drop second/last, redundant "devicetree binding". The
-"dt-bindings" prefix is already stating that these are bindings.
-See also:
-https://elixir.bootlin.com/linux/v6.7-rc8/source/Documentation/devicetree/bindings/submitting-patches.rst#L18
-
-Also drop driver, bindings are not for drivers.
-
-> 
-> Signed-off-by: Amirreza Zarrabi <quic_azarrabi@quicinc.com>
-> ---
->  .../devicetree/bindings/arm/firmware/qcom,tee.yaml | 34 ++++++++++++++++++++++
->  1 file changed, 34 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/arm/firmware/qcom,tee.yaml b/Documentation/devicetree/bindings/arm/firmware/qcom,tee.yaml
-> new file mode 100644
-> index 000000000000..43b7e8ac944e
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/arm/firmware/qcom,tee.yaml
-> @@ -0,0 +1,34 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/arm/firmware/qcom,tee.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +static const struct tee_desc qcom_tee_desc = {
+> +	.name = "qcom_tee",
+> +	.ops = &qcom_tee_ops,
+> +	.owner = THIS_MODULE,
+> +};
 > +
-> +title: Qualcomm TEE
+> +static int qcom_tee_probe(struct platform_device *pdev)
+> +{
+> +	struct tee_device *teedev;
+> +	int err;
 > +
-> +maintainers:
-> +  - Amirreza Zarrabi <quic_azarrabi@quicinc.com>
-> +
-> +description: |
+> +	if (!qcom_scm_is_available())
+> +		return -EPROBE_DEFER;
 
-Do not need '|' unless you need to preserve formatting.
-
-> +  QTEE is a piece of software provide a Trusted Execution Environment using ARM
-> +  TrustZone for Qualcomm SoC.
-> +
-> +properties:
-> +  $nodename:
-> +    const: qcom_tee
-
-No, first it is not correct (see coding style), second is not even
-needed. Drop.
+So this is part of SCM? Instantiate it there instead of creating fake
+DTS nodes.
 
 > +
-> +  compatible:
-> +    const: qcom,tee
-
-One, same interface for all devices? Nothing SoC specific? You are
-making now a contract, so please carefully analyze it internally what it
-means.
-
+> +	teedev = tee_device_alloc(&qcom_tee_desc, NULL, NULL, NULL);
+> +	if (IS_ERR(teedev))
+> +		return PTR_ERR(teedev);
 > +
-> +required:
-> +  - compatible
+> +	err = tee_device_register(teedev);
+> +	if (err)
+> +		goto err_unreg_teedev;
 > +
-> +additionalProperties: false
+> +	platform_set_drvdata(pdev, teedev);
+> +	return 0;
 > +
-> +examples:
-> +  - |
-> +    firmware {
+> +err_unreg_teedev:
+> +	tee_device_unregister(teedev);
+> +
+> +	return err;
+> +}
+> +
+> +static void qcom_tee_remove(struct platform_device *pdev)
+> +{
+> +	struct tee_device *teedev = platform_get_drvdata(pdev);
+> +
+> +	/* Keep a copy, tee_device_unregister() sets it to NULL. */
+> +	struct tee_shm_pool *pool = teedev->pool;
+> +
+> +	/* Wait for users to go away. */
+> +	tee_device_unregister(teedev);
+> +	tee_shm_pool_free(pool);
+> +}
+> +
+> +static const struct of_device_id qcom_tee_dt_match[] = {
+> +	{ .compatible = "qcom,tee" },
+> +	{},
+> +};
+> +MODULE_DEVICE_TABLE(of, qcom_tee_dt_match);
+> +
+> +static struct platform_driver qcom_tee_platform_driver = {
+> +	.probe = qcom_tee_probe,
+> +	.remove = qcom_tee_remove,
+> +	.driver = {
+> +		.name = "qcom_tee",
+> +		.of_match_table = qcom_tee_dt_match,
+> +	},
+> +};
+> +
+> +int qcom_tee_driver_register(void)
+> +{
+> +	return platform_driver_register(&qcom_tee_platform_driver);
+> +}
+> +
+> +void qcom_tee_driver_unregister(void)
+> +{
+> +	platform_driver_unregister(&qcom_tee_platform_driver);
+> +}
 
-Drop
-
-> +        qcom_tee {
-
-See DTS coding style.
-
-Node names should be generic. See also an explanation and list of
-examples (not exhaustive) in DT specification:
-https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
-
-
-> +            compatible = "qcom,tee";
-
-No resources? Nothing here? What is the point except of instantiating
-your driver?
-
-> +        };
-> +    };
-> 
+Why open-coding typical module platform driver macro?
 
 
 Best regards,
