@@ -1,253 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-40151-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40155-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 24F7B9E2F94
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 00:13:51 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D33E29E2F9D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 00:15:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 288D4B3AD08
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 22:07:22 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 99FCC2827AF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 23:15:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7DAF520A5C6;
-	Tue,  3 Dec 2024 22:07:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 174941E1C03;
+	Tue,  3 Dec 2024 23:15:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cbUqH586"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="eR+qloIo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B9391D79A0;
-	Tue,  3 Dec 2024 22:07:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E71C8460;
+	Tue,  3 Dec 2024 23:15:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733263629; cv=none; b=C4YSgCSPCGqBOk1ImxwcliopEwMod9xvQ/Qx32HnzxPW2xLR8MtQortesUndhdNbiGZlFYGNmqTjle8RSv1q9wzVZ4Q7MWv+N3uIB40kD3YcgfpQDWei5OyWpVAHaSkXNUQ+eMaZhpvtJrkAsn2+BOzEzle5YrZeaBsD3NUHUk8=
+	t=1733267748; cv=none; b=Wj0277Ubfp92cCbas3NNjwhlfqF/ypLl9HjROnas0ADtV7rVCyAl45G1Kz1Eh/2KVoHdL2GKMnxNAy5II36qCm04DVmvGjCl2R8zTxByWXUJ7e1HdhaRXfnMCdGsTuiczf3Srh5hBLVkzLbUER5ukMet0WJT5lCIW9VH7Ua0A2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733263629; c=relaxed/simple;
-	bh=HQAKDlz0KUN+mZdkSSDyvm1hQM8fcKSAsXSTKruZoaM=;
-	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
-	 Subject:From:Cc:To:Date; b=LR0TE7k8sn7VcD/eMbs7EsiYigf0bECedLjkX9dm9PoEUYf0l/ol2ZR/bm6vxLMJTx4L2zQzB5TSqGB8FBSvp7uyy3MIZgQTXe+WKRVYoIvFCUNh+MldK6Ch4DA5lF2VqO8Io2aGdOqiWjq3HOFJzgOrujRyNfxesndPaRrXdsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cbUqH586; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF969C4CEE0;
-	Tue,  3 Dec 2024 22:07:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733263628;
-	bh=HQAKDlz0KUN+mZdkSSDyvm1hQM8fcKSAsXSTKruZoaM=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=cbUqH586dG+KmiWrRHmTyZRZsuzD7YDxfWa1ndkhcxeC3GrrtyNtx1yOM99RQmwxO
-	 1+7DrwXwAomzzBjsDdacvHF/kOzendaJEL3cHuCcfpcVIoFee9AzbqB+0XteFF0AhP
-	 VADJVyKBQXUdvEzWVgdOIJtDHFv5B8FJYV2Y+e3Lh6x3dsjQZmmoUwKqwawu8OEHd8
-	 TGZMycwjLDg9QrezrfdA4xTMHJfmzp73wVDNPNep1SkxBYBWnNFnI87Ou9fXzHTxRu
-	 PXstezL6Aau/79W6HL6Hhv4vwUh6qO3F8CABb1iqN4UuR099M0gp4Gw+gkJEjVfzL1
-	 BjnmBtbXlCF7A==
-Message-ID: <aed888b8c2f49eaaffcd6cfbdda84078.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1733267748; c=relaxed/simple;
+	bh=YkZAsANfAmRYtI/Mt+2RDqFV4yBRm6bxvA1qhI5AL7s=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=u8nmnksC9KFvaRTk2rCge+BSJPk8HtYF0BCsaKCwajQvMerIuXetZVbslltpwYoVS+R48yVYSDllae0ZY1f9sHMrTus1mjZSaP4Ujp9lPMaiQz1AYH1PCW5KDqitgINl48oBwBUt5v8gArN5EoOP9g1ITtyMmPixhkPL3pLdfT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=eR+qloIo; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B3HoXEb030978;
+	Tue, 3 Dec 2024 23:15:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	YkZAsANfAmRYtI/Mt+2RDqFV4yBRm6bxvA1qhI5AL7s=; b=eR+qloIoJOhXZhC3
+	+GWiiJaVz2i49lUqyAj6fCUrb9PgOUliB6bWQccpZaGU7P93SrpaGtY8kEJUIjIb
+	W9z5tEKDGINKGUU+XBLRhXY62FlwSMfe/FNsKjPr9B0Kcz/Nwj4OOzynEPAMMTwO
+	bXIrTZZkm4fDBk5+S/Qr54JN0+6zp5xJ0fKsKTqF7aZgZiRYD8RXIPIzwQPSCvgJ
+	CR45+vroSXgspmZXj9cLOj47Llb6i8HJr2TdX/G5SfE2QEbm+X5k+KPE2krE1axX
+	Kvz36WzMH4+93BgHFa37ZdPjfIRnsc33wR+f1a2+5s+CzN3dc928N5JS+D+fh8zO
+	jNHveA==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 439w90tdtb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 03 Dec 2024 23:15:26 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B3NFOQc010563
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 3 Dec 2024 23:15:24 GMT
+Received: from [10.110.57.23] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 3 Dec 2024
+ 15:15:23 -0800
+Message-ID: <28023a83-04a5-4c62-85a9-ca41be0ba9e1@quicinc.com>
+Date: Tue, 3 Dec 2024 15:15:23 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20241128-sm8750-dispcc-v1-2-120705a4015c@linaro.org>
-References: <20241128-sm8750-dispcc-v1-0-120705a4015c@linaro.org> <20241128-sm8750-dispcc-v1-2-120705a4015c@linaro.org>
-Subject: Re: [PATCH 2/3] clk: qcom: clk-alpha-pll: Add Pongo PLL
-From: Stephen Boyd <sboyd@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Michael Turquette <mturquette@baylibre.com>, Neil Armstrong <neil.armstrong@linaro.org>, Rob Herring <robh@kernel.org>
-Date: Tue, 03 Dec 2024 14:07:06 -0800
-User-Agent: alot/0.12.dev1+gaa8c22fdeedb
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v30 28/30] ALSA: usb-audio: Add USB offload route kcontrol
+To: Cezary Rojewski <cezary.rojewski@intel.com>
+CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-input@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-doc@vger.kernel.org>, <srinivas.kandagatla@linaro.org>,
+        <mathias.nyman@intel.com>, <perex@perex.cz>, <conor+dt@kernel.org>,
+        <dmitry.torokhov@gmail.com>, <corbet@lwn.net>, <broonie@kernel.org>,
+        <lgirdwood@gmail.com>, <krzk+dt@kernel.org>,
+        <pierre-louis.bossart@linux.intel.com>, <Thinh.Nguyen@synopsys.com>,
+        <tiwai@suse.com>, <robh@kernel.org>, <gregkh@linuxfoundation.org>
+References: <20241106193413.1730413-1-quic_wcheng@quicinc.com>
+ <20241106193413.1730413-29-quic_wcheng@quicinc.com>
+ <1a361446-7a18-4f49-9eeb-d60d1adaa088@intel.com>
+Content-Language: en-US
+From: Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <1a361446-7a18-4f49-9eeb-d60d1adaa088@intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: IBwKgWcd3KUzuxMkopp3EOItLDqwSWCj
+X-Proofpoint-GUID: IBwKgWcd3KUzuxMkopp3EOItLDqwSWCj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=709 bulkscore=0
+ impostorscore=0 phishscore=0 suspectscore=0 adultscore=0 mlxscore=0
+ spamscore=0 clxscore=1011 priorityscore=1501 malwarescore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412030192
 
-Quoting Krzysztof Kozlowski (2024-11-28 07:08:00)
-> @@ -360,13 +384,14 @@ static int wait_for_pll(struct clk_alpha_pll *pll, =
-u32 mask, bool inverse,
->         u32 val;
->         int count;
->         int ret;
-> -       const char *name =3D clk_hw_get_name(&pll->clkr.hw);
-> +       const char *name;
-> =20
->         ret =3D regmap_read(pll->clkr.regmap, PLL_MODE(pll), &val);
->         if (ret)
->                 return ret;
-> =20
-> -       for (count =3D 200; count > 0; count--) {
-> +       /* Pongo PLLs using a 32KHz reference can take upwards of 1500us =
-to lock. */
-> +       for (count =3D 1500; count > 0; count--) {
->                 ret =3D regmap_read(pll->clkr.regmap, PLL_MODE(pll), &val=
-);
->                 if (ret)
->                         return ret;
-> @@ -378,6 +403,13 @@ static int wait_for_pll(struct clk_alpha_pll *pll, u=
-32 mask, bool inverse,
->                 udelay(1);
->         }
-> =20
-> +       /* Called with clocks already registered ... */
-> +       if (pll->clkr.hw.core)
-> +               name =3D clk_hw_get_name(&pll->clkr.hw);
-> +       else
-> +               /* or before registering, when init data is present */
-> +               name =3D pll->clkr.hw.init->name;
 
-This is sad. Why can't we enable the PLL from the clk prepare/enable
-path? PLLs are typically calibrated during clk_prepare().
+On 12/3/2024 8:13 AM, Cezary Rojewski wrote:
+> On 2024-11-06 8:34 PM, Wesley Cheng wrote:
+>> In order to allow userspace/applications know about USB offloading status,
+>> expose a sound kcontrol that fetches information about which sound card
+>> and PCM index the USB device is mapped to for supporting offloading.  In
+>> the USB audio offloading framework, the ASoC BE DAI link is the entity
+>> responsible for registering to the SOC USB layer.
+>
+> ...
+>
+> R) += mixer_usb_offload.o
+>> diff --git a/sound/usb/mixer_usb_offload.c b/sound/usb/mixer_usb_offload.c
+>> new file mode 100644
+>> index 000000000000..e0689a3b9b86
+>> --- /dev/null
+>> +++ b/sound/usb/mixer_usb_offload.c
+>> @@ -0,0 +1,102 @@
+>> +// SPDX-License-Identifier: GPL-2.0
+>> +/*
+>> + * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+>> + */
+>> +
+>> +#include <linux/usb.h>
+>> +
+>> +#include <sound/core.h>
+>> +#include <sound/control.h>
+>> +#include <sound/soc-usb.h>
+>
+> ALSA-components should not be dependent on ASoC ones. It should be done the other way around: ALSA <- ASoC.
+>
 
-> +
->         WARN(1, "%s failed to %s!\n", name, action);
->         return -ETIMEDOUT;
->  }
-> @@ -2524,6 +2556,129 @@ const struct clk_ops clk_alpha_pll_reset_lucid_ev=
-o_ops =3D {
->  };
->  EXPORT_SYMBOL_GPL(clk_alpha_pll_reset_lucid_evo_ops);
-> =20
-> +static int alpha_pll_pongo_elu_enable(struct clk_hw *hw)
-> +{
-> +       struct clk_alpha_pll *pll =3D to_clk_alpha_pll(hw);
-> +       struct regmap *regmap =3D pll->clkr.regmap;
-> +       int ret;
-> +
-> +       /* Check if PLL is already enabled */
-> +       if (trion_pll_is_enabled(pll, regmap))
-> +               return 0;
-> +
-> +       ret =3D regmap_update_bits(regmap, PLL_MODE(pll), PLL_RESET_N, PL=
-L_RESET_N);
-> +       if (ret)
-> +               return ret;
-> +
-> +       /* Set operation mode to RUN */
-> +       regmap_write(regmap, PLL_OPMODE(pll), PLL_RUN);
-> +
-> +       ret =3D wait_for_pll_enable_lock(pll);
-> +       if (ret)
-> +               return ret;
-> +
-> +       /* Enable the global PLL outputs */
-> +       ret =3D regmap_update_bits(regmap, PLL_MODE(pll), PLL_OUTCTRL, PL=
-L_OUTCTRL);
-> +       if (ret)
-> +               return ret;
-> +
-> +       /* Ensure that the write above goes through before returning. */
-> +       mb();
-> +
-> +       return ret;
-> +}
-> +
-> +static void alpha_pll_pongo_elu_disable(struct clk_hw *hw)
-> +{
-> +       struct clk_alpha_pll *pll =3D to_clk_alpha_pll(hw);
-> +       struct regmap *regmap =3D pll->clkr.regmap;
-> +       int ret;
-> +
-> +       /* Disable the global PLL output */
-> +       ret =3D regmap_update_bits(regmap, PLL_MODE(pll), PLL_OUTCTRL, 0);
-> +       if (ret)
-> +               return;
-> +
-> +       /* Place the PLL mode in STANDBY */
-> +       regmap_write(regmap, PLL_OPMODE(pll), PLL_STANDBY);
-> +}
-> +
-> +static unsigned long alpha_pll_pongo_elu_recalc_rate(struct clk_hw *hw,
-> +                                                    unsigned long parent=
-_rate)
-> +{
-> +       struct clk_alpha_pll *pll =3D to_clk_alpha_pll(hw);
-> +       struct regmap *regmap =3D pll->clkr.regmap;
-> +       u32 l;
-> +
-> +       if (regmap_read(regmap, PLL_L_VAL(pll), &l))
-> +               return 0;
-> +
-> +       l &=3D PONGO_PLL_L_VAL_MASK;
-> +
-> +       return alpha_pll_calc_rate(parent_rate, l, 0, pll_alpha_width(pll=
-));
-> +}
-> +
-> +const struct clk_ops clk_alpha_pll_pongo_elu_ops =3D {
-> +       .enable =3D alpha_pll_pongo_elu_enable,
-> +       .disable =3D alpha_pll_pongo_elu_disable,
-> +       .recalc_rate =3D alpha_pll_pongo_elu_recalc_rate,
-> +};
-> +EXPORT_SYMBOL(clk_alpha_pll_pongo_elu_ops);
+At least for this kcontrol, we need to know the status of the ASoC state, so that we can communicate the proper path to userspace.  If the ASoC path is not probed or ready, then this module isn't blocked.  It will just communicate that there isn't a valid offload path.
 
-GPL please.
 
-> +
-> +void clk_pongo_elu_pll_configure(struct clk_alpha_pll *pll,
-> +                                struct regmap *regmap,
-> +                                const struct alpha_pll_config *config)
-> +{
-> +       u32 val;
-> +
-> +       regmap_update_bits(regmap, PLL_USER_CTL(pll), PONGO_PLL_OUT_MASK,
-> +                          PONGO_PLL_OUT_MASK);
-> +
-> +       if (trion_pll_is_enabled(pll, regmap))
-> +               return;
-> +
-> +       if (regmap_read(regmap, PLL_L_VAL(pll), &val))
-> +               return;
-> +       val &=3D PONGO_PLL_L_VAL_MASK;
-> +       if (val)
-> +               return;
-> +
-> +       clk_alpha_pll_write_config(regmap, PLL_L_VAL(pll), config->l);
-> +       clk_alpha_pll_write_config(regmap, PLL_ALPHA_VAL(pll), config->al=
-pha);
-> +       clk_alpha_pll_write_config(regmap, PLL_CONFIG_CTL(pll), config->c=
-onfig_ctl_val);
-> +       clk_alpha_pll_write_config(regmap, PLL_CONFIG_CTL_U(pll), config-=
->config_ctl_hi_val);
-> +       clk_alpha_pll_write_config(regmap, PLL_CONFIG_CTL_U1(pll), config=
-->config_ctl_hi1_val);
-> +       clk_alpha_pll_write_config(regmap, PLL_CONFIG_CTL_U2(pll), config=
-->config_ctl_hi2_val);
-> +       clk_alpha_pll_write_config(regmap, PLL_USER_CTL(pll),
-> +                                  config->user_ctl_val | PONGO_PLL_OUT_M=
-ASK);
-> +       clk_alpha_pll_write_config(regmap, PLL_USER_CTL_U(pll), config->u=
-ser_ctl_hi_val);
-> +       clk_alpha_pll_write_config(regmap, PLL_TEST_CTL(pll), config->tes=
-t_ctl_val);
-> +       clk_alpha_pll_write_config(regmap, PLL_TEST_CTL_U(pll), config->t=
-est_ctl_hi_val);
-> +       clk_alpha_pll_write_config(regmap, PLL_TEST_CTL_U1(pll), config->=
-test_ctl_hi1_val);
-> +       clk_alpha_pll_write_config(regmap, PLL_TEST_CTL_U2(pll), config->=
-test_ctl_hi2_val);
-> +       clk_alpha_pll_write_config(regmap, PLL_TEST_CTL_U3(pll), config->=
-test_ctl_hi3_val);
-> +
-> +       /* Disable PLL output */
-> +       regmap_update_bits(regmap, PLL_MODE(pll), PLL_OUTCTRL, 0);
-> +
-> +       /* Enable PLL intially to one-time calibrate against XO. */
-> +       regmap_write(regmap, PLL_OPMODE(pll), PLL_RUN);
-> +       regmap_update_bits(regmap, PLL_MODE(pll), PLL_RESET_N, PLL_RESET_=
-N);
-> +       regmap_update_bits(regmap, PLL_MODE(pll), PONGO_XO_PRESENT, PONGO=
-_XO_PRESENT);
-> +
-> +       /* Set regmap for wait_for_pll() */
-> +       pll->clkr.regmap =3D regmap;
-> +       if (wait_for_pll_enable_lock(pll))
-> +               return;
-> +
-> +       /* Disable PLL after one-time calibration. */
-> +       regmap_write(regmap, PLL_OPMODE(pll), PLL_STANDBY);
-> +
-> +       /* Select internally generated clock. */
-> +       regmap_update_bits(regmap, PLL_MODE(pll), PONGO_CLOCK_SELECT, PON=
-GO_CLOCK_SELECT);
-> +}
-> +EXPORT_SYMBOL(clk_pongo_elu_pll_configure);
-
-GPL please.
+>> +
+>> +#include "usbaudio.h"
+>> +#include "card.h"
+>> +#include "helper.h"
+>> +#include "mixer.h"
+>> +
+>> +#include "mixer_usb_offload.h"
 
