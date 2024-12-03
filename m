@@ -1,199 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-40152-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40153-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 34E719E2F56
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 23:56:05 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 130869E2EDC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 23:14:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5DF58B2B3F9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 22:09:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CCEE9283979
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 22:14:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B33920A5C6;
-	Tue,  3 Dec 2024 22:09:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 913E0209F4C;
+	Tue,  3 Dec 2024 22:13:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z1lYktJw"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Za/D1pmU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A3441DDA3D;
-	Tue,  3 Dec 2024 22:09:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE4D7207A20;
+	Tue,  3 Dec 2024 22:13:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733263786; cv=none; b=u6Q3Xj0W4F7QsHuJa0khlYQyteCJ/pFxea9Vgcy4QsBiohP9OZaRc4JaBCpsJTfg+1Ln1Bm+V8sk5Kd1O6Q0TslpYB6iGjC/05Ak8JHVmd3l7T3bHksd6eo/EFLHA6IQc72c5D8iXsvuNU0LefSDqWmqO4XMejI9rjMwYXA9Kas=
+	t=1733264036; cv=none; b=VDdChSRr5HPgXhRkVpUJwRvl17X6WPQxLdJLY8Z7V8NHtH6s8ARM67lcfaPxflDn64OBwcUmZYyqlZcnxFzdcB8RK+GWZeoSjlxMhdUtyWKdq1QJZlQH0Pk6ImUo6buIcWPjZHm9rE9AC39Y+HOGu4T32CPhQLyi0JRL0Aqzlpo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733263786; c=relaxed/simple;
-	bh=N8XGQ/OdIAHqBKWwDiHLRvWWphx300ZW1+T6n2w3q4Q=;
-	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
-	 Subject:From:Cc:To:Date; b=LhVY8UNYxy0cVh/VXnNPgS6aUJRCZFAUw8rRpC18qZZRGeQo5oz1CSbTU770dzojFC/dXGBytztj2jqKJurmm9oWl6vHE06ztP4xm9Ucji8TRI5kvDT7VLLjjB4Mx9rNlCUUGp3+7avHcXJqKlSDwgtwvfNkI9h/l2O1q1oSQDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z1lYktJw; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C300EC4CEE1;
-	Tue,  3 Dec 2024 22:09:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733263785;
-	bh=N8XGQ/OdIAHqBKWwDiHLRvWWphx300ZW1+T6n2w3q4Q=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=Z1lYktJwhwxb4fl0qRkD2ddZzctqBiHfP5C0SeKomjElccyY1GJ3KwuyilqX2aoy5
-	 LZYkhStNAttnie1om9fp1q0NL5A3xpvZIvL6sakKxLzCZyAxMo4j1Fiuv3TxD7BMuh
-	 RrdIvv/4/erDRZqUvnrEiiLb9GP69a4UCyRiRdQhzjvZlYwGDs+Y8kMkFFKaPMxPk7
-	 OhnD5ekygSOJLwOC91T+BWgecZXe1PX9Ar9mrPoUP6cUPJzm5GhYV8ZRlWZ+TTEpkk
-	 rwjm9txMzlfIDjdb7UK/KUMg/22P5PTmIPn6yptjY2NADzHiQGdniGdsSkDFnenbqL
-	 VY9ybUsoBkWlA==
-Message-ID: <5f05f2305f37bd40bf92299c04480fbf.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1733264036; c=relaxed/simple;
+	bh=BkbrVzdOiRECikibD4L1YGd8E6iWdSVVwdyBf+AYo/s=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=GySMKxeNBzD6JMwisolXmmodaIb6gtwHKAUhcPDmq3nUzX33aoyS2ye48nlhOK8wZttnPuEyRGxSNtE6AkAZ7v02/olTnXHzNLtBM2suYa92klmjRc9TTLOcnuE8O5EzgiGRo9ZBA5FxUOjH1fYSOryXXSM+9z/mFQQVY3qfuIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Za/D1pmU; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B3DX5RW031984;
+	Tue, 3 Dec 2024 22:13:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	o638fS9a+Kgl6sSSM4E5PIbTqYncs25H9BZwPzS/vgQ=; b=Za/D1pmU1C0oej/1
+	l5hAliFZZxo+iTJmfoXovUIf8RFNArDJ6bkxojpH4AJYtmjEM2+5t8iuzeuPoDQK
+	U7zhYkQVtbmEIU+SUdIZJTV6Lmg0EcHYto2j7d3I/ha4u8psVNylov139DPuJ7gw
+	AS+ULkrpJWbGBJNZgeZ6tqLhFBLniG9koWAiRqIG8uJaNgU34o67qifBdzhZNhrA
+	Izr+2Khc6c6EXXm7BM/Qu8MeMUEGNGy0UeOatUfWVsD2t4q5ULmKPuCmEd5+nR7V
+	bYp/1zh6nIvWgj8+n6uoMSO4hhrgB8RrI7afqpn8U2J81jo75tOEjnuT7OcWLiFF
+	fvaePQ==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 439trbjpym-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 03 Dec 2024 22:13:49 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B3MDmdc030640
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 3 Dec 2024 22:13:48 GMT
+Received: from [10.4.85.39] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 3 Dec 2024
+ 14:13:45 -0800
+Message-ID: <0df58435-94e7-4b81-b688-ec0e1c49c0e0@quicinc.com>
+Date: Wed, 4 Dec 2024 09:13:43 +1100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20241128-sm8750-dispcc-v1-3-120705a4015c@linaro.org>
-References: <20241128-sm8750-dispcc-v1-0-120705a4015c@linaro.org> <20241128-sm8750-dispcc-v1-3-120705a4015c@linaro.org>
-Subject: Re: [PATCH 3/3] clk: qcom: dispcc-sm8750: Add SM8750 Display clock controller
-From: Stephen Boyd <sboyd@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Michael Turquette <mturquette@baylibre.com>, Neil Armstrong <neil.armstrong@linaro.org>, Rob Herring <robh@kernel.org>
-Date: Tue, 03 Dec 2024 14:09:43 -0800
-User-Agent: alot/0.12.dev1+gaa8c22fdeedb
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/10] Trusted Execution Environment (TEE) driver for
+ Qualcomm TEE (QTEE)
+To: Trilok Soni <quic_tsoni@quicinc.com>,
+        Jens Wiklander
+	<jens.wiklander@linaro.org>,
+        Sumit Garg <sumit.garg@linaro.org>,
+        "Bjorn
+ Andersson" <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        "Rob Herring" <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        "Conor Dooley" <conor+dt@kernel.org>,
+        Bartosz Golaszewski
+	<bartosz.golaszewski@linaro.org>,
+        Srinivas Kandagatla
+	<srinivas.kandagatla@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <op-tee@lists.trustedfirmware.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-doc@vger.kernel.org>
+References: <20241202-qcom-tee-using-tee-ss-without-mem-obj-v1-0-f502ef01e016@quicinc.com>
+ <518ee3f1-b871-4349-ba85-3b3fc835a4ca@quicinc.com>
+Content-Language: en-US
+From: Amirreza Zarrabi <quic_azarrabi@quicinc.com>
+In-Reply-To: <518ee3f1-b871-4349-ba85-3b3fc835a4ca@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ul74uRlLCFN8ibDVqsxhKq7DcVbsTQSq
+X-Proofpoint-ORIG-GUID: ul74uRlLCFN8ibDVqsxhKq7DcVbsTQSq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=891 mlxscore=0
+ suspectscore=0 spamscore=0 malwarescore=0 adultscore=0 priorityscore=1501
+ clxscore=1015 phishscore=0 lowpriorityscore=0 impostorscore=0 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
+ definitions=main-2412030184
 
-Quoting Krzysztof Kozlowski (2024-11-28 07:08:01)
-> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-> index 2ec9be21ff678e3343cccafa85801aa68805f440..d9ab42c625ddd61f9bf185752=
-2d44d4547e42bf5 100644
-> --- a/drivers/clk/qcom/Kconfig
-> +++ b/drivers/clk/qcom/Kconfig
-> @@ -1022,6 +1022,16 @@ config SM_DISPCC_8550
->           Say Y if you want to support display devices and functionality =
-such as
->           splash screen.
-> =20
-> +config SM_DISPCC_8750
-> +       tristate "SM8750 Display Clock Controller"
-> +       depends on ARM64 || COMPILE_TEST
+Based on our discussions, we implemented significant changes. We essentially
+rewrote most of the files and altered the overall direction, except for a
+couple of files. The changelog entry would have been extensive.
 
-Please select QCOM_GDSC
+- Amir
 
-> +       depends on SM_GCC_8750
-
-select? Or imply? It's a functional dependency, not a build time one.
-
-> +       help
-> diff --git a/drivers/clk/qcom/dispcc-sm8750.c b/drivers/clk/qcom/dispcc-s=
-m8750.c
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..ff64ff93c4dbdd2aae22b55dd=
-0e404544cc9373e
-> --- /dev/null
-> +++ b/drivers/clk/qcom/dispcc-sm8750.c
-> @@ -0,0 +1,1960 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2023-2024, Linaro Ltd.
-> + */
-> +
-> +#include <linux/clk.h>
-
-Is this include used?
-
-> +#include <linux/clk-provider.h>
-> +#include <linux/err.h>
-> +#include <linux/kernel.h>
-> +#include <linux/module.h>
-> +#include <linux/of.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/regmap.h>
-> +#include <linux/pm_runtime.h>
-> +
-> +#include <dt-bindings/clock/qcom,sm8750-dispcc.h>
-> +
-> +#include "common.h"
-> +#include "clk-alpha-pll.h"
-> +#include "clk-branch.h"
-> +#include "clk-pll.h"
-> +#include "clk-rcg.h"
-> +#include "clk-regmap.h"
-> +#include "clk-regmap-divider.h"
-> +#include "clk-regmap-mux.h"
-> +#include "reset.h"
-> +#include "gdsc.h"
-[...]
-> +};
-> +
-> +static struct clk_rcg2 disp_cc_mdss_mdp_clk_src =3D {
-> +       .cmd_rcgr =3D 0x8150,
-> +       .mnd_width =3D 0,
-> +       .hid_width =3D 5,
-> +       .parent_map =3D disp_cc_parent_map_9,
-> +       .freq_tbl =3D ftbl_disp_cc_mdss_mdp_clk_src,
-> +       .clkr.hw.init =3D &(const struct clk_init_data) {
-> +               .name =3D "disp_cc_mdss_mdp_clk_src",
-> +               .parent_data =3D disp_cc_parent_data_9,
-> +               .num_parents =3D ARRAY_SIZE(disp_cc_parent_data_9),
-> +               .flags =3D CLK_SET_RATE_PARENT,
-> +               .ops =3D &clk_rcg2_shared_ops, /* TODO: switch to cesta m=
-anaged clocks */
-
-What is cesta?
-
-> +       },
-> +};
-> +
-> +static struct clk_rcg2 disp_cc_mdss_pclk0_clk_src =3D {
-> +       .cmd_rcgr =3D 0x8108,
-> +       .mnd_width =3D 8,
-> +       .hid_width =3D 5,
-> +       .parent_map =3D disp_cc_parent_map_1,
-> +       .freq_tbl =3D ftbl_disp_cc_esync0_clk_src,
-> +       .clkr.hw.init =3D &(const struct clk_init_data) {
-> +               .name =3D "disp_cc_mdss_pclk0_clk_src",
-> +               .parent_data =3D disp_cc_parent_data_1,
-> +               .num_parents =3D ARRAY_SIZE(disp_cc_parent_data_1),
-> +               .flags =3D CLK_SET_RATE_PARENT,
-> +               .ops =3D &clk_pixel_ops,
-> +       },
-[...]
-> +               .enable_reg =3D 0x80b4,
-> +               .enable_mask =3D BIT(0),
-> +               .hw.init =3D &(const struct clk_init_data) {
-> +                       .name =3D "disp_cc_osc_clk",
-> +                       .parent_hws =3D (const struct clk_hw*[]) {
-> +                               &disp_cc_osc_clk_src.clkr.hw,
-> +                       },
-> +                       .num_parents =3D 1,
-> +                       .flags =3D CLK_SET_RATE_PARENT,
-> +                       .ops =3D &clk_branch2_ops,
-> +               },
-> +       },
-> +};
-> +
-> +static struct gdsc mdss_gdsc =3D {
-> +       .gdscr =3D 0x9000,
-> +       .en_rest_wait_val =3D 0x2,
-> +       .en_few_wait_val =3D 0x2,
-> +       .clk_dis_wait_val =3D 0xf,
-> +       .pd =3D {
-> +               .name =3D "mdss_gdsc",
-> +       },
-> +       .pwrsts =3D PWRSTS_OFF_ON,
-> +       .flags =3D POLL_CFG_GDSCR | HW_CTRL | RETAIN_FF_ENABLE,
-> +       // TODO: no supply?
-
-What is this?
-
-> +};
-> +
-> +static struct gdsc mdss_int2_gdsc =3D {
-> +       .gdscr =3D 0xb000,
-> +       .en_rest_wait_val =3D 0x2,
-> +       .en_few_wait_val =3D 0x2,
-> +       .clk_dis_wait_val =3D 0xf,
-> +       .pd =3D {
-> +               .name =3D "mdss_int2_gdsc",
-> +       },
-> +       .pwrsts =3D PWRSTS_OFF_ON,
-> +       .flags =3D POLL_CFG_GDSCR | HW_CTRL | RETAIN_FF_ENABLE,
+On 12/3/2024 5:06 PM, Trilok Soni wrote:
+> On 12/2/2024 8:19 PM, Amirreza Zarrabi wrote:
+>> This patch series introduces a Trusted Execution Environment (TEE)
+>> driver for Qualcomm TEE (QTEE). QTEE enables Trusted Applications (TAs)
+>> and services to run securely. It uses an object-based interface, where
+>> each service is an object with sets of operations. Clients can invoke
+>> these operations on objects, which can generate results, including other
+>> objects. For example, an object can load a TA and return another object
+>> that represents the loaded TA, allowing access to its services.
+> 
+> The first patch series was RFC and now you had removed the RFC. Can you please
+> provide the reasons?
+> 
+> https://lwn.net/ml/all/20240702-qcom-tee-object-and-ioctls-v1-0-633c3ddf57ee@quicinc.com/
+> 
+> I understand that you have now changed to tee framework but I want to check
+> if we should continue with the version and increment here or start from [00]?
+> 
 
