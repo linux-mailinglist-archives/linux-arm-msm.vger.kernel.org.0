@@ -1,353 +1,246 @@
-Return-Path: <linux-arm-msm+bounces-40068-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40069-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id EB7739E1C92
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 13:46:11 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 159599E1C38
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 13:33:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CA5A2B24AA0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 11:12:43 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A8377B300A0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 11:30:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A14EA1E378C;
-	Tue,  3 Dec 2024 11:12:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 612041E048B;
+	Tue,  3 Dec 2024 11:30:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="u/3b56oh"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Thtairp1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+Received: from mail-wr1-f68.google.com (mail-wr1-f68.google.com [209.85.221.68])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A54E61E3786
-	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Dec 2024 11:12:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B8671E0E12
+	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Dec 2024 11:30:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.68
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733224359; cv=none; b=fb8XkIV8MVOr+74ZnMX1zbfUx3DWkfFbZT23o1zQOy4d1WLLgnQDnmgF5mtPmaV9myjDtLOyAoJ9JwMujjVG5I3vqpu/TEjNc4B8YgDRK4xeJZwk/olmxDUsmt//yF1KhGT66fF9hCS4AD2FcVqVn25iwiSK7DJj/QYn+cFiL7I=
+	t=1733225447; cv=none; b=WIvhuXjl6QYyRCTo2oUqJZ00sNfMuXyY9VV3/Q+EcSLT4QVqJk2X6snDDUS0DekSgvLWtdcrE5CrTEOhb61k1YOduhgr49QqeWpeFIHJ13AYupRPWta0iewV+9qBm7ylCSfNxeaHpWKxAhQAZnhprePN6SsMdpp/a9N8G3ahW8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733224359; c=relaxed/simple;
-	bh=EqMT1lpbEY5/Che+UX6Bncb4AL1x5DYytCF5K+qiu2c=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=pAbnwuRuWGH/q1qIKeGANTBKF2zjTJm9FV0MnbVj8kH4+eksKp74eRPZRETFlrTIZbdCtJJz84iH0j7ewc6nNYVpQR8Y5wwvIOeKXcwnfBI8LwSMpXwyZMapVaXbx7/mEFXkz0ywA/SNYFBg0On0r3Yc6Udr4CbXeS5iXOIlAVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=u/3b56oh; arc=none smtp.client-ip=209.85.221.54
+	s=arc-20240116; t=1733225447; c=relaxed/simple;
+	bh=XQKBWrT8ks1Ct4PewBxKAAw4CBuc3RSkP2JdRArH02Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SNJ0rrb4MJph8bi7WRcRuBB2q+VR7PEeTUr6hLwlfFIRyLzelLYJdKJmtLI7kn/eg8MwlGUeW86iEdOwyij5zgWSPLVfLSrIUmR6zrD6ZrU6GiMYdrZh2g7xU8pqvGvJSEKnvh9jL6U1u76CeV1r0y3Ti9aTM54ttU19yunKRjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Thtairp1; arc=none smtp.client-ip=209.85.221.68
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-385d851e7c3so296846f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Dec 2024 03:12:37 -0800 (PST)
+Received: by mail-wr1-f68.google.com with SMTP id ffacd0b85a97d-385dfb168cbso2589345f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Dec 2024 03:30:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733224356; x=1733829156; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=g6kGDnTLAfubcmw4OwqnnlfFoodRzVFFUo0D9f7Dre4=;
-        b=u/3b56ohB59V7WSPv7Yc+k/ITb/sqs9PvMHunBnLemxoO8w6UzU3ss3/rvIWaz1Bz5
-         rVJTDWBnzbQH2p0GHS7PJdCYggAAP6CSKzv/xfMkL6RJScBupHWLekkK+ADszeBRRJyG
-         oqAoUlrB2vdUXkYT7lguY+uw2234PriOkjgm5gCmYjWj+EBIRZ1LD+pgE+c/SzJQEGPB
-         8itqFdInJVDNjcy98Th40s+h8ux4f8C5/ZwXfxfe0sA8dkLdtzX//B4O4/mBbhhcDrz5
-         Xt3Hu7FNYL2gyGq8nmx/kPZ/uCE9Gsw4765BSGVcmty8+xF8EGQ2idCmYCg+C778W+qw
-         oG3g==
+        d=linaro.org; s=google; t=1733225443; x=1733830243; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=k5QpSnqZsvHI5RdTuW6YI5wmM0DD916U9oPMDkb1hRw=;
+        b=Thtairp1YZWUiMOdW8kaisxxUXoFG+spED+10OM3QUnavi7ELWW2SKz6iNWX079xq2
+         2VJZOgc2P2AerWF8DiTKi15iqVdb9fKMfTY3zuXzRik5dUGPhhIUrpY02IcrftazAVPh
+         hALYSAVZHfhZTvBfudXSjMHXBKJ2SkfEPIhBf0N8ryOBy8ehDJF4PZgLTIu8CD/T3AuQ
+         BB/la3OQt9dGLFMcWu8sm63HNJhKHZ93Rb8kQSshe7Qf1mYt7WdXqzxYIlSoIOKckse9
+         Ncy2jMFArX6BP0JHWY4wHCXrwk5HlaBEvRyvkZGS/rWMszQYZc21QO+FdVtWP0oLYXAv
+         fDjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733224356; x=1733829156;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=g6kGDnTLAfubcmw4OwqnnlfFoodRzVFFUo0D9f7Dre4=;
-        b=BwHgcE3/kErspw6vj4E5aGXNaS0GiYpceAkXMaOfTF1jyp5YezZObT7M4XGoSZL1ce
-         mOuxFEWghH+RakkcOrtKcxN8ef4zen3+61ZDSZJe87Z4jBmhNci/PtiJWZD3+9URQJ47
-         R3cV0u6M/hpEE/o2ir1dYfPXbnyv3I6zUtSzUnrjFdyn9VNjM/xguNtheymXvCurp+BN
-         r0Eto2rTU8k3yu7i+BkOqNJbe0eEit+ZuV+gmZgSyWJevSXISmbJnG56AScVxMokCpcw
-         3HP7ojg2n87UhdFMiGcIjwEmObDgiC9GauTZ9Ppnqo8SKWXL0MJThtfkrpmlMwm+wabC
-         KF6A==
-X-Forwarded-Encrypted: i=1; AJvYcCUQPgVKVGSLg2IKUdJrnImBsfO4LviovKuSYsqbKYLdzNRAqn2wcshjDhsR1DwN6tLlJrny6Y+2gDw/v5xi@vger.kernel.org
-X-Gm-Message-State: AOJu0YzRfzTpjul3hfT8S76+ASqmdi+KyKZ4M7X/p8k8ikivb/DbejLN
-	GmQAzLHC+Y3LQM984VfIGgo69VXhlT+CIHk5ZhHwTEoGGN4PQRoMeFiZoyDasns=
-X-Gm-Gg: ASbGncvjQHgKclift+hOV6virwln7DnWCh8PrBhac08FfXzVUukCmcOwe+/aPD/iAwf
-	+BD8QuYginxRDBQnIn2C3Syu3V63RSFMiTGSL8YWVHOBcJnb+TcD3/2B3JWtenHsM37nwjizdJN
-	KXj1KQDu03kmM7CJowNGAFLNOVHebm2t/N/lfgvzo8R3HgIuxJrV84Mlbrdsh+OFbcYNaMjEGSi
-	jxy9gINSo0cfoT5qjolpLmXmJfbg0eKrdqVmv9Sknpgh61FVGnawy/lkaRehV4=
-X-Google-Smtp-Source: AGHT+IF2uKiqbnRf8oPSGgAbSOfSre2/+2HTW+tki4BL9CRri386VoZIy2wTzWLIDJ68hlU91fsw9g==
-X-Received: by 2002:a05:6000:1fa3:b0:385:eb17:cd3c with SMTP id ffacd0b85a97d-385fd42bcebmr628032f8f.13.1733224355836;
-        Tue, 03 Dec 2024 03:12:35 -0800 (PST)
-Received: from krzk-bin.. ([178.197.218.23])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-385e3896b76sm9683819f8f.33.2024.12.03.03.12.34
+        d=1e100.net; s=20230601; t=1733225443; x=1733830243;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=k5QpSnqZsvHI5RdTuW6YI5wmM0DD916U9oPMDkb1hRw=;
+        b=CLGhrecK7BxIcqHuXsFtRgbeGb4LKePL0O4gQ22GwB7EUNGQjDOvokaj4pv1yFyP87
+         XtIKdjM0VRRZhwlDYwVa+12xIj1itCx4EG+pqRJF1TkaXV4+3E2izGJqxwDDlS8pGNAH
+         Vl4HhE2ggsPibH/9EOivQeM1mHtnPrinrMasAXF3gDGqY8Sqr5d4FVEsO5CCRRzkaLrg
+         c51SIIQJW38s6oyKLQgVwUsOcV7t2+l2a1DKYXoKT2DBvxKEEdN9KTo91/dWr3fd2ddo
+         3t6CHWGXagwXsUgswCgTO46ALwg7zkV2wpFTEY9PIPyzrq+71Lkj26Vj58m06gKCw2+k
+         YPcQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWlp1l5J5tZQwtsvpjG00fY4DZVRyy/etChd5kDNLvLHo0xVbD4DJD4SYDDnLCuli0YDaD1LLdrhxiRR+iN@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyj2q6g1J6UIS4kipgK2CVxPWgQkARoeEJFB4FSMs2gF+wOe7Gs
+	L6WxlHqAYaBd7/Nrqrm1jtxQeeGv431ZCZ34mxkNzq0AuVzbIhK1mctg82ZG2ls=
+X-Gm-Gg: ASbGnct4BM/Y94oDXL2K+CfZc16PSxRick5Mu8EPfvRuceqoQUP+MINbfXJgJXRAhgg
+	+xqK0ON0QrzyH45ZG6afjIrGSGHMfmCjW5ytOFUqJXB2etCqX4gvkiqnN3a0+pA9TCjfIypEBug
+	ID+KxmuOCGYFdU7djtSHRhr1IfRC1mpsoIp9NXoMPsOWFnCKfQ5aFoKli5juqBoVRDCQENqEyc1
+	RoeDGEynFNg4cmYojmFgXL52jDmOhRyHvhK24DGNdx6lwgNpkOF62F+PATM
+X-Google-Smtp-Source: AGHT+IH34y7jHvFYEfoZxdYAaLv1kB29M7msviDEnioq7JmNTaNVxGRtN4bXS3pbvxOss6/WmLYc6A==
+X-Received: by 2002:a05:6000:18a3:b0:385:e055:a28d with SMTP id ffacd0b85a97d-385fd42a6cfmr1723185f8f.57.1733225441788;
+        Tue, 03 Dec 2024 03:30:41 -0800 (PST)
+Received: from linaro.org ([2a02:2454:ff21:ef80:5c38:843:f8a3:a2ba])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-385dd99504csm13253045f8f.85.2024.12.03.03.30.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Dec 2024 03:12:35 -0800 (PST)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>,
+        Tue, 03 Dec 2024 03:30:41 -0800 (PST)
+Date: Tue, 3 Dec 2024 12:30:37 +0100
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Johan Hovold <johan@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v2] arm64: dts: qcom: x1e78100-t14s: add sound support
-Date: Tue,  3 Dec 2024 12:12:29 +0100
-Message-ID: <20241203111229.48967-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.43.0
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Krishna Kurapati <quic_kriskura@quicinc.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>, linux-usb@vger.kernel.org
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: x1e80100-crd: Add USB multiport
+ fingerprint readery
+Message-ID: <Z07r3Upr50vLluyn@linaro.org>
+References: <20241118-x1e80100-crd-fp-v1-0-ec6b553a2e53@linaro.org>
+ <20241118-x1e80100-crd-fp-v1-1-ec6b553a2e53@linaro.org>
+ <Z07bgH5vVk44zuEH@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z07bgH5vVk44zuEH@hovoldconsulting.com>
 
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+On Tue, Dec 03, 2024 at 11:20:48AM +0100, Johan Hovold wrote:
+> [ +CC: Krishna, Thinh and the USB list ]
+> 
+> On Mon, Nov 18, 2024 at 11:34:29AM +0100, Stephan Gerhold wrote:
+> > The X1E80100 CRD has a Goodix fingerprint reader connected to the USB
+> > multiport controller on eUSB6. All other ports (including USB super-speed
+> > pins) are unused.
+> > 
+> > Set it up in the device tree together with the NXP PTN3222 repeater.
+> > 
+> > Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/x1e80100-crd.dts | 48 +++++++++++++++++++++++++++++++
+> >  1 file changed, 48 insertions(+)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
+> > index 39f9d9cdc10d..44942931c18f 100644
+> > --- a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
+> > +++ b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
+> > @@ -735,6 +735,26 @@ keyboard@3a {
+> >  	};
+> >  };
+> >  
+> > +&i2c5 {
+> > +	clock-frequency = <400000>;
+> > +
+> > +	status = "okay";
+> > +
+> > +	eusb6_repeater: redriver@4f {
+> > +		compatible = "nxp,ptn3222";
+> > +		reg = <0x4f>;
+> 
+> The driver does not currently check that there's actually anything at
+> this address. Did you verify that this is the correct address? 
+> 
+> (Abel is adding a check to the driver as we speak to catch any such
+> mistakes going forward).
+> 
 
-Add support for audio on Lenovo T14s laptop, coming with two speakers,
-audio jack and two digital microphones.
+Yes, I verified this using
+https://git.codelinaro.org/stephan.gerhold/linux/-/commit/45d5add498612387f88270ca944ee16e2236fddd
 
-This is very early work, not yet complete:
-1. 2x speakers: work OK.
-2. 2x digital microphones: work OK.
-3. Headset (audio jack) recording: does not work.
-4. Headphones playback (audio jack): channels are intermixed.
+(I sent this to Abel back then, so I'm surprised he didn't run that :-))
 
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-[krzysztof: correct DMIC routing and vamacro pinctrl, re-order nodes,
- add commit msg]
-Co-developed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> > +		#phy-cells = <0>;
+> 
+> nit: I'd put provider properties like this one last.
+> 
+> > +		vdd3v3-supply = <&vreg_l13b_3p0>;
+> > +		vdd1v8-supply = <&vreg_l4b_1p8>;
+> 
+> Sort by supply name?
+> 
 
----
+Ack.
 
-Changes in v2:
-1. Flip pinctrl-0 and names (Konrad)
-2. Add Rb tag.
+> > +		reset-gpios = <&tlmm 184 GPIO_ACTIVE_LOW>;
+> > +
+> > +		pinctrl-0 = <&eusb6_reset_n>;
+> > +		pinctrl-names = "default";
+> > +	};
+> > +};
+> > +
+> >  &i2c8 {
+> >  	clock-frequency = <400000>;
+> >  
+> > @@ -1047,6 +1067,14 @@ edp_reg_en: edp-reg-en-state {
+> >  		bias-disable;
+> >  	};
+> >  
+> > +	eusb6_reset_n: eusb6-reset-n-state {
+> > +		pins = "gpio184";
+> > +		function = "gpio";
+> > +		drive-strength = <2>;
+> > +		bias-disable;
+> > +		output-low;
+> 
+> I don't think the pin config should assert reset, that should be up to
+> the driver to control.
+> 
 
-1. Audioreach topology was already pushed to main branch:
-https://github.com/linux-msm/audioreach-topology
+I can drop it I guess, but pinctrl is applied before the driver takes
+control of the GPIO. This means if the GPIO happens to be in input mode
+before the driver loads (with pull up or pull down), then we would
+briefly leave it floating when applying the bias-disable.
 
-2. ALSA UCM files are ready and soon will be pushed by Srini.
----
- .../qcom/x1e78100-lenovo-thinkpad-t14s.dts    | 183 ++++++++++++++++++
- 1 file changed, 183 insertions(+)
+Or I guess we could drop the bias-disable, since it shouldn't be
+relevant for a pin we keep in output mode all the time?
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts
-index 975550139e10..386dee8c0412 100644
---- a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts
-@@ -19,6 +19,32 @@ / {
- 	compatible = "lenovo,thinkpad-t14s", "qcom,x1e78100", "qcom,x1e80100";
- 	chassis-type = "laptop";
- 
-+	wcd938x: audio-codec {
-+		compatible = "qcom,wcd9385-codec";
-+
-+		pinctrl-0 = <&wcd_default>;
-+		pinctrl-names = "default";
-+
-+		qcom,micbias1-microvolt = <1800000>;
-+		qcom,micbias2-microvolt = <1800000>;
-+		qcom,micbias3-microvolt = <1800000>;
-+		qcom,micbias4-microvolt = <1800000>;
-+		qcom,mbhc-buttons-vthreshold-microvolt = <75000 150000 237000 500000 500000 500000 500000 500000>;
-+		qcom,mbhc-headset-vthreshold-microvolt = <1700000>;
-+		qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
-+		qcom,rx-device = <&wcd_rx>;
-+		qcom,tx-device = <&wcd_tx>;
-+
-+		reset-gpios = <&tlmm 191 GPIO_ACTIVE_LOW>;
-+
-+		vdd-buck-supply = <&vreg_l15b_1p8>;
-+		vdd-rxtx-supply = <&vreg_l15b_1p8>;
-+		vdd-io-supply = <&vreg_l15b_1p8>;
-+		vdd-mic-bias-supply = <&vreg_bob1>;
-+
-+		#sound-dai-cells = <1>;
-+	};
-+
- 	gpio-keys {
- 		compatible = "gpio-keys";
- 
-@@ -153,6 +179,85 @@ vph_pwr: regulator-vph-pwr {
- 		regulator-always-on;
- 		regulator-boot-on;
- 	};
-+
-+	sound {
-+		compatible = "qcom,x1e80100-sndcard";
-+		model = "X1E80100-LENOVO-Thinkpad-T14s";
-+		audio-routing = "SpkrLeft IN", "WSA WSA_SPK1 OUT",
-+				"SpkrRight IN", "WSA WSA_SPK2 OUT",
-+				"IN1_HPHL", "HPHL_OUT",
-+				"IN2_HPHR", "HPHR_OUT",
-+				"AMIC2", "MIC BIAS2",
-+				"VA DMIC0", "MIC BIAS1",
-+				"VA DMIC1", "MIC BIAS1",
-+				"VA DMIC0", "VA MIC BIAS1",
-+				"VA DMIC1", "VA MIC BIAS1",
-+				"TX SWR_INPUT1", "ADC2_OUTPUT";
-+
-+		wcd-playback-dai-link {
-+			link-name = "WCD Playback";
-+
-+			cpu {
-+				sound-dai = <&q6apmbedai RX_CODEC_DMA_RX_0>;
-+			};
-+
-+			codec {
-+				sound-dai = <&wcd938x 0>, <&swr1 0>, <&lpass_rxmacro 0>;
-+			};
-+
-+			platform {
-+				sound-dai = <&q6apm>;
-+			};
-+		};
-+
-+		wcd-capture-dai-link {
-+			link-name = "WCD Capture";
-+
-+			cpu {
-+				sound-dai = <&q6apmbedai TX_CODEC_DMA_TX_3>;
-+			};
-+
-+			codec {
-+				sound-dai = <&wcd938x 1>, <&swr2 1>, <&lpass_txmacro 0>;
-+			};
-+
-+			platform {
-+				sound-dai = <&q6apm>;
-+			};
-+		};
-+
-+		wsa-dai-link {
-+			link-name = "WSA Playback";
-+
-+			cpu {
-+				sound-dai = <&q6apmbedai WSA_CODEC_DMA_RX_0>;
-+			};
-+
-+			codec {
-+				sound-dai = <&left_spkr>, <&right_spkr>, <&swr0 0>, <&lpass_wsamacro 0>;
-+			};
-+
-+			platform {
-+				sound-dai = <&q6apm>;
-+			};
-+		};
-+
-+		va-dai-link {
-+			link-name = "VA Capture";
-+
-+			cpu {
-+				sound-dai = <&q6apmbedai VA_CODEC_DMA_TX_0>;
-+			};
-+
-+			codec {
-+				sound-dai = <&lpass_vamacro 0>;
-+			};
-+
-+			platform {
-+				sound-dai = <&q6apm>;
-+			};
-+		};
-+	};
- };
- 
- &apps_rsc {
-@@ -185,6 +290,13 @@ vreg_bob2: bob2 {
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
-+		vreg_l1b_1p8: ldo1 {
-+			regulator-name = "vreg_l1b_1p8";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
- 		vreg_l2b_3p0: ldo2 {
- 			regulator-name = "vreg_l2b_3p0";
- 			regulator-min-microvolt = <3072000>;
-@@ -515,6 +627,24 @@ touchscreen@10 {
- 	/* TODO: second-sourced touchscreen @ 0x41 */
- };
- 
-+&lpass_tlmm {
-+	spkr_01_sd_n_active: spkr-01-sd-n-active-state {
-+		pins = "gpio12";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		bias-disable;
-+		output-low;
-+	};
-+};
-+
-+&lpass_vamacro {
-+	pinctrl-0 = <&dmic01_default>;
-+	pinctrl-names = "default";
-+
-+	vdd-micb-supply = <&vreg_l1b_1p8>;
-+	qcom,dmic-sample-rate = <4800000>;
-+};
-+
- &mdss {
- 	status = "okay";
- };
-@@ -645,6 +775,59 @@ &smb2360_1_eusb2_repeater {
- 	vdd3-supply = <&vreg_l14b_3p0>;
- };
- 
-+&swr0 {
-+	status = "okay";
-+
-+	pinctrl-0 = <&wsa_swr_active>, <&spkr_01_sd_n_active>;
-+	pinctrl-names = "default";
-+
-+	/* WSA8845, Left Speaker */
-+	left_spkr: speaker@0,0 {
-+		compatible = "sdw20217020400";
-+		reg = <0 0>;
-+		reset-gpios = <&lpass_tlmm 12 GPIO_ACTIVE_LOW>;
-+		#sound-dai-cells = <0>;
-+		sound-name-prefix = "SpkrLeft";
-+		vdd-1p8-supply = <&vreg_l15b_1p8>;
-+		vdd-io-supply = <&vreg_l12b_1p2>;
-+		qcom,port-mapping = <1 2 3 7 10 13>;
-+	};
-+
-+	/* WSA8845, Right Speaker */
-+	right_spkr: speaker@0,1 {
-+		compatible = "sdw20217020400";
-+		reg = <0 1>;
-+		reset-gpios = <&lpass_tlmm 12 GPIO_ACTIVE_LOW>;
-+		#sound-dai-cells = <0>;
-+		sound-name-prefix = "SpkrRight";
-+		vdd-1p8-supply = <&vreg_l15b_1p8>;
-+		vdd-io-supply = <&vreg_l12b_1p2>;
-+		qcom,port-mapping = <4 5 6 7 11 13>;
-+	};
-+};
-+
-+&swr1 {
-+	status = "okay";
-+
-+	/* WCD9385 RX */
-+	wcd_rx: codec@0,4 {
-+		compatible = "sdw20217010d00";
-+		reg = <0 4>;
-+		qcom,rx-port-mapping = <1 2 3 4 5>;
-+	};
-+};
-+
-+&swr2 {
-+	status = "okay";
-+
-+	/* WCD9385 TX */
-+	wcd_tx: codec@0,3 {
-+		compatible = "sdw20217010d00";
-+		reg = <0 3>;
-+		qcom,tx-port-mapping = <2 2 3 4>;
-+	};
-+};
-+
- &tlmm {
- 	gpio-reserved-ranges = <34 2>, /* Unused */
- 			       <44 4>, /* SPI (TPM) */
--- 
-2.43.0
+> > +	};
+> > +
+> >  	hall_int_n_default: hall-int-n-state {
+> >  		pins = "gpio92";
+> >  		function = "gpio";
+> > @@ -1260,3 +1288,23 @@ &usb_1_ss2_dwc3_hs {
+> >  &usb_1_ss2_qmpphy_out {
+> >  	remote-endpoint = <&pmic_glink_ss2_ss_in>;
+> >  };
+> > +
+> > +&usb_mp {
+> > +	status = "okay";
+> > +};
+> > +
+> > +&usb_mp_dwc3 {
+> > +	/* Limit to USB 2.0 and single port */
+> > +	maximum-speed = "high-speed";
+> > +	phys = <&usb_mp_hsphy1>;
+> > +	phy-names = "usb2-1";
+> > +};
+> 
+> The dwc3 driver determines (and acts on) the number of ports based on
+> the port interrupts in DT and controller capabilities. 
+> 
+> I'm not sure we can (should) just drop the other HS PHY and the SS PHYs
+> that would still be there in the SoC (possibly initialised by the boot
+> firmware).
+> 
+> I had a local patch to enable the multiport controller (for the suspend
+> work) and I realise that you'd currently need to specify a repeater also
+> for the HS PHY which does not have one, but that should be possible to
+> fix somehow.
+> 
 
+I think there are two separate questions here:
+
+ 1. Should we (or do we even need to) enable unused PHYs?
+ 2. Do we need to power off unused PHYs left enabled by the firmware?
+
+For (1), I'm not not sure if there is a technical reason that requires
+us to. And given that PHYs typically consume quite a bit of power, I'm
+not sure if we should. Perhaps it's not worth spending effort on this
+minor optimization now, but then the device tree would ideally still
+tell us which PHYs are actually used (for future optimizations).
+
+For (2), yes, we probably need to. But my impression so far is that this
+might be a larger problem that we need to handle on the SoC level. I
+have seen some firmware versions that blindly power up all USB
+controllers, even completely unused ones. Ideally we would power down
+unused components during startup and then leave them off.
+
+Thanks,
+Stephan
 
