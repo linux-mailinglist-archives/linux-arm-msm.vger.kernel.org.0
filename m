@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-40031-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40033-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BEDD79E1508
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 09:05:03 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8818D9E150D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 09:05:52 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 85516282CEA
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 08:05:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5B31E164BF0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 08:05:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 30FE11DF75E;
-	Tue,  3 Dec 2024 08:01:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3200C1E04A4;
+	Tue,  3 Dec 2024 08:02:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tnRpPtR/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tEKfuRrO"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3D9A1D79BE;
-	Tue,  3 Dec 2024 08:01:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 045EB1E0496;
+	Tue,  3 Dec 2024 08:02:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733212901; cv=none; b=rDKWPOR9tNcOl7P0MWcZE4Z9vybx4rNTFvq8PjPXUMehdiErNxmU6r+l2pEzIReQmJ+dMigQLAR/SZTXzp5pfIXk80mExuESzkjyquuPn02ebY1BsYTZixPUMjxfx7xEeSiKX5GkxjzzjHaEtOUMHCYfjNCAk95jSDTzJzG/Q7M=
+	t=1733212928; cv=none; b=TFpKq8DKWJFsYgrtx6LwzMQBOWLN9pcqImx6G2Fc8ThxkZczvnPfpzx4UvJe3iyPMhQiSkjykmd5kvx1Z9GTKCBehc4LtJ2ybNTsNdNZPDrZ3SEkqm0Qe47XcDP4JSZwzzzCygVhu3xyBRoDxk4Dcf/VuG1eROeauLz2dshDy+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733212901; c=relaxed/simple;
-	bh=zjPIbEhtW1+E9dxrS28Qf8oLMzie0UIPL/ztZ9hT0ps=;
+	s=arc-20240116; t=1733212928; c=relaxed/simple;
+	bh=TY2CTVQLZDBZSpPG3TOd4Vss8QMMAeKC2lgYdcC23NI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Xl7FIYFdPcc9+ivOyeb/dVdz8kAFn9yXvQupTy5IqrAHcDJ8tI6Ead7pgZ8upeno+6oEzlVak1uPaT9Gb8EpBXtGIUXrK986snAzJSlPpN/KzzbGs7SOvDqfomP2V+1kv1QYUsjDP1aUVuZ/sej+zc4bBMzlUtUzI+ecJee4r7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tnRpPtR/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 025ABC4CECF;
-	Tue,  3 Dec 2024 08:01:33 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=UOaRVlzcbTK7GYHGPrct24pKn0RACpFlhlTJjkOQXi7PhZJkh5LHoDxOEnjIz4vCvejpMfchrlUSl5quZUWL6P6ktAr8c3zWVZALRWJiyMF9Jbta3cmGPbpRxZDJbRs7UuC3deAMVv1nqm/T9fPmwjmI5akOIKWErwk7/8MG5FE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tEKfuRrO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C781C4CECF;
+	Tue,  3 Dec 2024 08:02:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733212900;
-	bh=zjPIbEhtW1+E9dxrS28Qf8oLMzie0UIPL/ztZ9hT0ps=;
+	s=k20201202; t=1733212927;
+	bh=TY2CTVQLZDBZSpPG3TOd4Vss8QMMAeKC2lgYdcC23NI=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=tnRpPtR/vyxrY1PW4DbKl10xGVlpEAXRfoV6NUaXS9O84buoFJmLu4upVx+HohxYR
-	 RAME+IN6PIpr3FDDcuxRhu4GNRTgscJqSxfXPnojklJUTG+pDhzYGhYXwEILvuSF7o
-	 vAPN9BnDuz++EKgOItE8UrVLudK0KziIQzJFtMb23FE6u1TyJfHk+KLgkoYBOzEiGF
-	 8AQe70FltXppTDF1M/z4TNDrMbqVcnaCbw3Z25igEipcPTjUxBynj5wWP1D7XrNB6J
-	 DcpRO4YfRlZ0VS/COZlqtDfCC+con7JWCmGEhwwoO1lCsbeG/0kds8XCbEyQ4Ef++Q
-	 B2JqCRpdRROcA==
-Message-ID: <bfa857c2-cd74-4fe2-a88c-3b35a58710b0@kernel.org>
-Date: Tue, 3 Dec 2024 09:01:31 +0100
+	b=tEKfuRrOMJv8493iIDmbaFpdTTaIxxhGSqdGE+HDe5vdg47HuPFeVIYLq5UV8UyEb
+	 WxipH4EVEilfFYaLgzl9DHb8flIM3ERVPomw0ldZLenyqb/lwaWhAp7Heur1FGtVJO
+	 uSRulUdiYm3M/MVUKlRcKXurCfL0dXz7tME5T7hixBKmxg5ivlw+5B2CPly6fS38yh
+	 DrxDCYrVzsP9oFvxlFwPKUZWoZoGQdSHlnXdig93bh7pbmtVcQRczKAuYeP7dsvkMC
+	 O9pzCCerjVmdaeDMYVYs5O/RxId9KIHv2atpYgZAtDyrkyahX18AbSqkDIthANyyM7
+	 B2R+9jH8DIZkg==
+Message-ID: <e8f2e17c-13c1-4485-8e9a-d67705e461d6@kernel.org>
+Date: Tue, 3 Dec 2024 09:01:59 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] dt-bindings: display: msm: dp-controller: document
- clock parents better
+Subject: Re: [PATCH 1/4] dt-bindings: display: msm: dp-controller: document
+ pixel clock stream
 To: Abhinav Kumar <quic_abhinavk@quicinc.com>, Rob Clark
  <robdclark@gmail.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
  Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
@@ -65,7 +65,7 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
 References: <20241202-dp_mst_bindings-v1-0-9a9a43b0624a@quicinc.com>
- <20241202-dp_mst_bindings-v1-2-9a9a43b0624a@quicinc.com>
+ <20241202-dp_mst_bindings-v1-1-9a9a43b0624a@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -111,38 +111,16 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20241202-dp_mst_bindings-v1-2-9a9a43b0624a@quicinc.com>
+In-Reply-To: <20241202-dp_mst_bindings-v1-1-9a9a43b0624a@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 03/12/2024 04:31, Abhinav Kumar wrote:
-> Document the assigned-clock-parents better for the DP controller node
-> to indicate its functionality better.
-
-
-You change the clocks entirely, not "document". I would say that's an
-ABI break if it really is a Linux requirement. You could avoid any
-problems by just dropping the property from binding.
-
+> Display port controller on some MSM chipsets are capable of supporting
+> multiple streams. In order to distinguish the streams better, describe
+> the current pixel clock better to emphasize that it drives the stream 0.
 > 
-> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> ---
->  Documentation/devicetree/bindings/display/msm/dp-controller.yaml | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-> index 35ae2630c2b3..9fe2bf0484d8 100644
-> --- a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-> +++ b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-> @@ -72,8 +72,8 @@ properties:
->  
->    assigned-clock-parents:
->      items:
-> -      - description: phy 0 parent
-> -      - description: phy 1 parent
-> +      - description: Link clock PLL output provided by PHY block
-> +      - description: Stream 0 pixel clock PLL output provided by PHY block
-
+This should be squashed with patch adding stream 1.
 
 Best regards,
 Krzysztof
