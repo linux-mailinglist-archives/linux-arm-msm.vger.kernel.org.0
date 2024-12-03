@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-40087-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40088-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 564599E1E18
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 14:47:44 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id EB0FD9E1E1F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 14:48:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 568B6166724
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 13:47:36 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 90DE5166A93
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 13:47:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB7EE1F6660;
-	Tue,  3 Dec 2024 13:45:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 81EF61F130A;
+	Tue,  3 Dec 2024 13:46:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VDI5WFVV"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="c58VJW03"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BBEE1EE019
-	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Dec 2024 13:45:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F3011E32CB
+	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Dec 2024 13:46:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733233554; cv=none; b=XGI5ys5F4kdEOGYB6UePdPdMiB3INkEeik9gXpplCf3le2e9Rd/vYrfSMDvMXR4zi9dfMdEEll9k+uyaWU8XHOi6N7z4tM0WLqO6Ht2WPz7DY3E5RkoLevBx4ADOMuIcS18nYY3g09456FK6U5QILHx6NmeO1Z8uLNoo56aR8eI=
+	t=1733233617; cv=none; b=TU+L2ywdiPeyxMPaC++q4ttnwCvlg9r7YQqVR3DJqa4qLggX6Flug9LCi7clWklTMu3ZsXLvx7rMp+wKoH+KFyyCzQX3uPFzwZ11b9x7umnqG7Q/kiI1Bjs+DExDXHE6TwqHx2hdlLyJo6x8Gq6InWFGGchpqRcmYuaBeuIExBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733233554; c=relaxed/simple;
-	bh=GlGFLFxkx9DQRevrZLmFiK+InFPz3jweBTqDoqK96kM=;
+	s=arc-20240116; t=1733233617; c=relaxed/simple;
+	bh=fWA2tPCLl/ES0tlHVWzu++uojHotf7agg7wzoHwW4hM=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=gZpQRKdkR4bRtPeBN+Vo1/87b1EVJbX0fVcUTDgvJNyp6ntQEGP+n2EYJ0AxOWjiRKAB/EUPpnvNtNw27UmN75gU/JQe+DjcqPnP8SUlfD3VtW5IRRCrteOc3nCHbAzk2iB8d3eS7fyeA0aYbYoC0RJmDXJI5NlxOb6BtnxtTfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VDI5WFVV; arc=none smtp.client-ip=209.85.128.41
+	 In-Reply-To:Content-Type; b=DWSE8j0L+95K27N2U5OhzNZNetMWq8x9fwpWmjAMJpPwulAB3lSnbHttOdcOgsZxk96c5oGbUMl7EhYeb30876eCSiZZv3SfXHdNP4EE4w9YbAT+FycKnVBg04APjioW96uT0fnstywVJgYMRy1g9bXelcFu2hhXK0Hr4eVyHaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=c58VJW03; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-434aafd68e9so47445325e9.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Dec 2024 05:45:52 -0800 (PST)
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-434a2033562so45467675e9.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Dec 2024 05:46:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733233551; x=1733838351; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1733233614; x=1733838414; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=eiGu8iByhbNDv/BuFyFFUdvZqp5bBysIB/4YrkuJL6w=;
-        b=VDI5WFVVlKBQAILKHjZlnCGaZ7jky0jNJqTtI1xt+dG1zMVOcQPUq2kWi1+0Mtvkcf
-         AH7E4QDVEynrAtKxQT1lzNyGHXA6l8E7VRwibeDsHX20sOSlzljMyWnuAmdBrRtndUgh
-         cRNbceGU6Vw9fl8iNVYBi6pgIrDBk+JJM4slqgykD81pyFZvlEoH4jyTtx6+J5FenmYx
-         MYhF/1lp8q5uTyhs2EG0OkHq3mfBbAKIMbxUwVH67aFzVplpKE0sAqh4wJD65rYBIoRL
-         IskuScpBOePmy7zHeIAYPxVZ1ri4d/UqdeqIuWrp5rA9LEl5sWNbSpwyvplU6OGLH8kB
-         QhEQ==
+        bh=Mk2Kw/m5YtDRatnRv3x9OtW9dTxfZBESul9L2QNgRng=;
+        b=c58VJW03fWQwFC0h6xIZYUB5YPI/7QUsN1mclL3fcX8oa1Ha0Qx3Rc9KtPyJrQyju9
+         w4NA5a60aLJE6lqW7L/7prYe1/4xzzUXGCPcLgIfV6JE+TpLXvAQIZynMmMDqq0ci6Y0
+         VqEgawuwMWSlp6kJWqQR4WnGxSXvTHWoD/dr+xsJ2x3XZFFTtzxnHeddZQBeD5Htj6iD
+         VFuoIgXzMqqXdMV03iitSLWS2v2URLPdL/i0EFAES0+0sh0QzxKJHOeF+z2ML/vtp25/
+         ovfGBIXHvTHZEQXJEr2WyuDqhmuvTT70PxeKAPrd6x4uT3lbtVCnvdPKdHpLWtzSgCyF
+         CAIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733233551; x=1733838351;
+        d=1e100.net; s=20230601; t=1733233614; x=1733838414;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=eiGu8iByhbNDv/BuFyFFUdvZqp5bBysIB/4YrkuJL6w=;
-        b=Bu1JOkrd2oV+4aRtlrNr4BeIM72i/Muem1vqpb7DJef1IJmFGt40zZ/z5hj6fYoyY1
-         4SbaRInbDzv81XcJA4UImVyKZk2HDz7+DAxcdskEtkzHiHVIqSWqAE1Af9/yttTn2WAs
-         5N1GNihPJWWNuF80r8CNjBSGdUw+r4fEbPN+CY5k/AJYukbKmvkcFfdDw/ZqnLcx4fdY
-         9l+w0udn74fbxtov/SyvqKpa2dAgfT1d7/Ft46dAotd7eFCXam3yEO4UHpTSC7+7FvL/
-         N7IhvtkcjR3R9P92424nCc2UC3TLSJ4Yf4pUbYf5pv+YrflbiCKfeE98ohSIQSggqsE2
-         /Mew==
-X-Forwarded-Encrypted: i=1; AJvYcCVuoyeeS9gHrPjE3/RTYRX2qshPr9xwGNuSaFW6b9Oa7vWxYfraMgzG440CbRs3CvHsrh+z2Y4JnAK5oW7y@vger.kernel.org
-X-Gm-Message-State: AOJu0YwGtSUlyd8m3yYL8ueRdD0dHxzmNzitLhittNsi/0+7rZphEB1B
-	gkY65HsoQEqTZbRvDUM3RfzrI8tioZeTcX8mdeBgE4blHGYBf12dPxcym0e1Ofk=
-X-Gm-Gg: ASbGncvisI6BGj+z/MAEv7Ed5VlXpAj9h5zwpNKW776TxX4I3CoHQOmNuP7NZqYXjZT
-	AZM0vt6J6e7IcH2x8vpPXLAs35tW5m6UJT/T6mCFSKpBU2diDO9fN7pWcX2D+r8+P4jZtMayW9A
-	DIhSUMDSJ0kiicCtltRrQaitx1JqH/kvpwIh01yOi157WGr2pKgRJUY1F2CRzoZHlXbIoQ7+459
-	iDDKcLiA8HM7jy9gNIj2yBXV8EMxk7cPCcG7GMeOTEWad4YG8M6EBsDU+doxZufWigvfYwe4IFD
-	foMrxKLRx7f9GGzMRxAJlw4G
-X-Google-Smtp-Source: AGHT+IFR3RZIfTjKRyeR0jXC1Qh4UbpjEPkmqwhoQ9/lk/ngk6B1oqiy+DgsJrL0SU5IWmcaPRjp/Q==
-X-Received: by 2002:a05:6000:1a86:b0:385:df59:1141 with SMTP id ffacd0b85a97d-385fd3c56a5mr2525765f8f.5.1733233551341;
-        Tue, 03 Dec 2024 05:45:51 -0800 (PST)
+        bh=Mk2Kw/m5YtDRatnRv3x9OtW9dTxfZBESul9L2QNgRng=;
+        b=o+G5UARsBqpqx7r6qopzpgao0WfRWgDKe8eSn+PBggeSi9i3CCy9hFehwJ3r+6u9pn
+         hsVmlezmPFHBbIclcbL76f8AGCRS25YQaN2XEIVww+Ydq+fKliBAIZalSdT+0hR24wW+
+         LeQrT3QBHeO+q3Di0fnAgxTS0I0L0mtRW0fYegJJEBKUDWM8bJFEFUCvDswubRWBa6HB
+         6VRe7dr0AOLX/fnXpBHUtlHVNYXlRSGgPs/Gdek/3ibsSORTsZLptxMQuO+xT13dPkfF
+         XBX89AjhAVxLFpf6AJJp+vbvZjSvm+IC2Gp/8FQKnwH3d4lPhdDx8kEw6u2hOlP33a0/
+         WOGw==
+X-Forwarded-Encrypted: i=1; AJvYcCUKjAQ3Un2PIxqbvZb9xEtMqm1/6oO6+mRcY3BhwLWR//hnTlZwjk05OHhRK/8Ujif6qgONetMwK1eBP7V4@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzt0Cp7r6NxJnDPe8nYYWv4Ii5GB/9TPfsSvsHqZjGXg8LoB6nm
+	vC16KbIvTpCGkFQQCCEu1l0RXafZJxS9zGQkGwJHbDR4u3tHK4N1YBg87i8tyy4=
+X-Gm-Gg: ASbGncsYeOOtkEW46VG3X/HKILlg1e6MU1Q2M8a/JY29jEhzUY8oLmlcEnFovC1MLuh
+	QNsqW0MkD7+XC5VIsA6l0k+9DkDKf8wH9RCvXhztHMxntiuAePLkNAxLhPjpG95XhnzU8Bz4x31
+	gZW0JPeASD/Vg/AJhgAzCI1YCQ3gowEQchO21UZKW1KpKqyuz+LTDLLhOEf2keDQOjRkl2JPgXL
+	ZawGn+9CZ79bYRnhR0qdv3PH0EKiUV1U5OAEu2ZaQV0e34qnWrQHtpjL0IejzeFU1WTUZ/q4KCS
+	d2hdWxj2Ax/xzfBSCmcLlcz7
+X-Google-Smtp-Source: AGHT+IEXo5W59XeQghjqzdAPoW0OgS7GVomBPYYtKL+q6xkSkB7bH2/jhF2wKg8rpuvM6fG6Rat3/g==
+X-Received: by 2002:a05:600c:1ca2:b0:434:9e1d:7626 with SMTP id 5b1f17b1804b1-434d0a03d92mr21451925e9.25.1733233613893;
+        Tue, 03 Dec 2024 05:46:53 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:982:cbb0:b668:b88:4ecf:c065? ([2a01:e0a:982:cbb0:b668:b88:4ecf:c065])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-385f8448d32sm4019410f8f.96.2024.12.03.05.45.50
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-385e32ee381sm10597471f8f.76.2024.12.03.05.46.52
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 Dec 2024 05:45:50 -0800 (PST)
-Message-ID: <38579511-0265-4884-9a1b-d7e2d0bc07f5@linaro.org>
-Date: Tue, 3 Dec 2024 14:45:49 +0100
+        Tue, 03 Dec 2024 05:46:53 -0800 (PST)
+Message-ID: <99f11abf-2417-40b1-a5c5-73c2f87e2eb3@linaro.org>
+Date: Tue, 3 Dec 2024 14:46:52 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,8 +85,7 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: neil.armstrong@linaro.org
 Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 3/9] crypto: qce - remove unneeded call to icc_set_bw() in
- error path
+Subject: Re: [PATCH 4/9] crypto: qce - shrink code with devres clk helpers
 To: Bartosz Golaszewski <brgl@bgdev.pl>,
  Thara Gopinath <thara.gopinath@gmail.com>,
  Herbert Xu <herbert@gondor.apana.org.au>,
@@ -96,7 +95,7 @@ Cc: linux-crypto@vger.kernel.org, linux-arm-msm@vger.kernel.org,
  linux-kernel@vger.kernel.org,
  Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 References: <20241203-crypto-qce-refactor-v1-0-c5901d2dd45c@linaro.org>
- <20241203-crypto-qce-refactor-v1-3-c5901d2dd45c@linaro.org>
+ <20241203-crypto-qce-refactor-v1-4-c5901d2dd45c@linaro.org>
 Content-Language: en-US, fr
 Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
@@ -123,46 +122,92 @@ Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
  QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
 Organization: Linaro
-In-Reply-To: <20241203-crypto-qce-refactor-v1-3-c5901d2dd45c@linaro.org>
+In-Reply-To: <20241203-crypto-qce-refactor-v1-4-c5901d2dd45c@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 03/12/2024 10:19, Bartosz Golaszewski wrote:
 > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > 
-> There's no need to call icc_set_bw(qce->mem_path, 0, 0); in error path
-> as this will already be done in the release path of devm_of_icc_get().
+> Use devm_clk_get_optional_enabled() to avoid having to enable the clocks
+> separately as well as putting the clocks in error path and the remove()
+> callback.
 > 
 > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > ---
->   drivers/crypto/qce/core.c | 4 +---
->   1 file changed, 1 insertion(+), 3 deletions(-)
+>   drivers/crypto/qce/core.c | 29 ++++-------------------------
+>   1 file changed, 4 insertions(+), 25 deletions(-)
 > 
 > diff --git a/drivers/crypto/qce/core.c b/drivers/crypto/qce/core.c
-> index 848e5e802b92b..f9ff1dfc1defe 100644
+> index f9ff1dfc1defe..cdcddf8f9f02b 100644
 > --- a/drivers/crypto/qce/core.c
 > +++ b/drivers/crypto/qce/core.c
-> @@ -234,7 +234,7 @@ static int qce_crypto_probe(struct platform_device *pdev)
+> @@ -212,15 +212,15 @@ static int qce_crypto_probe(struct platform_device *pdev)
+>   	if (ret < 0)
+>   		return ret;
 >   
->   	ret = clk_prepare_enable(qce->core);
+> -	qce->core = devm_clk_get_optional(qce->dev, "core");
+> +	qce->core = devm_clk_get_optional_enabled(qce->dev, "core");
+>   	if (IS_ERR(qce->core))
+>   		return PTR_ERR(qce->core);
+>   
+> -	qce->iface = devm_clk_get_optional(qce->dev, "iface");
+> +	qce->iface = devm_clk_get_optional_enabled(qce->dev, "iface");
+>   	if (IS_ERR(qce->iface))
+>   		return PTR_ERR(qce->iface);
+>   
+> -	qce->bus = devm_clk_get_optional(qce->dev, "bus");
+> +	qce->bus = devm_clk_get_optional_enabled(qce->dev, "bus");
+>   	if (IS_ERR(qce->bus))
+>   		return PTR_ERR(qce->bus);
+>   
+> @@ -232,21 +232,9 @@ static int qce_crypto_probe(struct platform_device *pdev)
 >   	if (ret)
-> -		goto err_mem_path_disable;
+>   		return ret;
+>   
+> -	ret = clk_prepare_enable(qce->core);
+> -	if (ret)
+> -		return ret;
+> -
+> -	ret = clk_prepare_enable(qce->iface);
+> -	if (ret)
+> -		goto err_clks_core;
+> -
+> -	ret = clk_prepare_enable(qce->bus);
+> -	if (ret)
+> -		goto err_clks_iface;
+> -
+>   	ret = qce_dma_request(qce->dev, &qce->dma);
+>   	if (ret)
+> -		goto err_clks;
 > +		return ret;
 >   
->   	ret = clk_prepare_enable(qce->iface);
+>   	ret = qce_check_version(qce);
 >   	if (ret)
-> @@ -274,8 +274,6 @@ static int qce_crypto_probe(struct platform_device *pdev)
->   	clk_disable_unprepare(qce->iface);
->   err_clks_core:
->   	clk_disable_unprepare(qce->core);
-> -err_mem_path_disable:
-> -	icc_set_bw(qce->mem_path, 0, 0);
+> @@ -268,12 +256,6 @@ static int qce_crypto_probe(struct platform_device *pdev)
+>   
+>   err_dma:
+>   	qce_dma_release(&qce->dma);
+> -err_clks:
+> -	clk_disable_unprepare(qce->bus);
+> -err_clks_iface:
+> -	clk_disable_unprepare(qce->iface);
+> -err_clks_core:
+> -	clk_disable_unprepare(qce->core);
 >   
 >   	return ret;
 >   }
+> @@ -285,9 +267,6 @@ static void qce_crypto_remove(struct platform_device *pdev)
+>   	tasklet_kill(&qce->done_tasklet);
+>   	qce_unregister_algs(qce);
+>   	qce_dma_release(&qce->dma);
+> -	clk_disable_unprepare(qce->bus);
+> -	clk_disable_unprepare(qce->iface);
+> -	clk_disable_unprepare(qce->core);
+>   }
+>   
+>   static const struct of_device_id qce_crypto_of_match[] = {
 > 
-
-Indeed, Good catch
 
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 
