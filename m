@@ -1,144 +1,219 @@
-Return-Path: <linux-arm-msm+bounces-40155-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40156-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D33E29E2F9D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 00:15:51 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id B572D9E2FF9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 00:39:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 99FCC2827AF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 23:15:50 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9D35DB28A1E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 23:38:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 174941E1C03;
-	Tue,  3 Dec 2024 23:15:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 774EC20A5E0;
+	Tue,  3 Dec 2024 23:38:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="eR+qloIo"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oDPxV6H8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E71C8460;
-	Tue,  3 Dec 2024 23:15:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E876205E1C
+	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Dec 2024 23:38:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733267748; cv=none; b=Wj0277Ubfp92cCbas3NNjwhlfqF/ypLl9HjROnas0ADtV7rVCyAl45G1Kz1Eh/2KVoHdL2GKMnxNAy5II36qCm04DVmvGjCl2R8zTxByWXUJ7e1HdhaRXfnMCdGsTuiczf3Srh5hBLVkzLbUER5ukMet0WJT5lCIW9VH7Ua0A2I=
+	t=1733269099; cv=none; b=Mekuz87jE0Dz78XHHay5EBGcjr1LHkD9rWts3sEGiYh4jdvaObVSyhP8lULuboTZxqa5A9R1oztBQ5U08nAqb1h9Eldmmc8djseqyTezM7l6/m6aK0u9xTsQyu3p6DN7/Li2dVu/S/+JnpAls5FjxbQbw6JocDA96W6WxxnRyFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733267748; c=relaxed/simple;
-	bh=YkZAsANfAmRYtI/Mt+2RDqFV4yBRm6bxvA1qhI5AL7s=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=u8nmnksC9KFvaRTk2rCge+BSJPk8HtYF0BCsaKCwajQvMerIuXetZVbslltpwYoVS+R48yVYSDllae0ZY1f9sHMrTus1mjZSaP4Ujp9lPMaiQz1AYH1PCW5KDqitgINl48oBwBUt5v8gArN5EoOP9g1ITtyMmPixhkPL3pLdfT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=eR+qloIo; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B3HoXEb030978;
-	Tue, 3 Dec 2024 23:15:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	YkZAsANfAmRYtI/Mt+2RDqFV4yBRm6bxvA1qhI5AL7s=; b=eR+qloIoJOhXZhC3
-	+GWiiJaVz2i49lUqyAj6fCUrb9PgOUliB6bWQccpZaGU7P93SrpaGtY8kEJUIjIb
-	W9z5tEKDGINKGUU+XBLRhXY62FlwSMfe/FNsKjPr9B0Kcz/Nwj4OOzynEPAMMTwO
-	bXIrTZZkm4fDBk5+S/Qr54JN0+6zp5xJ0fKsKTqF7aZgZiRYD8RXIPIzwQPSCvgJ
-	CR45+vroSXgspmZXj9cLOj47Llb6i8HJr2TdX/G5SfE2QEbm+X5k+KPE2krE1axX
-	Kvz36WzMH4+93BgHFa37ZdPjfIRnsc33wR+f1a2+5s+CzN3dc928N5JS+D+fh8zO
-	jNHveA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 439w90tdtb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 03 Dec 2024 23:15:26 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B3NFOQc010563
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 3 Dec 2024 23:15:24 GMT
-Received: from [10.110.57.23] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 3 Dec 2024
- 15:15:23 -0800
-Message-ID: <28023a83-04a5-4c62-85a9-ca41be0ba9e1@quicinc.com>
-Date: Tue, 3 Dec 2024 15:15:23 -0800
+	s=arc-20240116; t=1733269099; c=relaxed/simple;
+	bh=7HPRDhBmNX229it5gZJpFg3uexTNN2BzNHQC2yu+IS0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cmUiZfgtecGcLMq5EhX2MC+sPNeZCPUoSGcb3aNCFFeAhFo8vr/n4+FFWExAibe4Ny/8bfBnKVCY4+j+nfgt8NOScTYbWEYnHL89fEMb3xk6QpsR9LHfieHW1wRiL7IKXFrED5H1d8mznB9E7D3xFQ3+/tOXyQtthov8NHwGzMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oDPxV6H8; arc=none smtp.client-ip=209.85.167.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-53de79c2be4so7428639e87.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Dec 2024 15:38:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1733269094; x=1733873894; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=PvIkRrq0tXitj5MQqLQ3oqy5bggdWAmTtXbggggiuHU=;
+        b=oDPxV6H8xIYc2tK/rpEa/CmuCJ6dY56vdJx8foBvsyawW483k5QolaXacWIdFpXLGL
+         C3dvpoNhGGywbcHYg0QJwOgSxlP9wVb1dvFDuMpTM9jRmrip7VgBjGMbOo+CbFpQR2Eo
+         9XN5d+PQAxneala9O9k4My7ZA/HqMtrTio+kFBax78lQ+SYoS08XxSd1doQLf3he3av0
+         HXbbWnhfem3WktBW7S/4OiWjLYwlLSMJiKmP96kaDi1s69HvcRcr6WTyKfUaV67JlkSY
+         WqjXPAmlz/j1TaMVEvVxP4DqdPfex8NFJsl66h0/LGFt8WH96Srcx9jGStwAjiNRE7+Z
+         8s5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733269094; x=1733873894;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PvIkRrq0tXitj5MQqLQ3oqy5bggdWAmTtXbggggiuHU=;
+        b=JhI7XbtR6je3HJCbcVeJIdgwPG4uzDpHkJp4gv2zcVLvLDBUbe7dbanwvaWOkPh5z6
+         +8RGFMsdUdPblcmRtDd3VYFd6VUAyDHGz5CXmytJ+BOrHN0iALvslr1JJGR72q65v2M+
+         /sXOIFJWRm/M65QVwAbNS2yrZUfLWHy2u9Cc4ee6YRptG+qWVbcEbwWGsiwLRW+YjQ5S
+         nbq5OJwfF+eh46WlIOR68qJsSPPxIfPqYLTE4s23KmmD4LYfEUDQ9wABFuWHJ//pP+pW
+         yH852xJXpR1N4t7k2FgLr5rw1omzN+dlcptKTln5WXYTdEoha7lYIEYqdUsJxAAn9a7b
+         vO5A==
+X-Forwarded-Encrypted: i=1; AJvYcCVn/Pdx64TN8aEkPW4heSTyzU3gYaCgFBHz1OLzPPtE2goEaYnvHaQ/bFpoHTOFm3GK7q/z8yUqXE4pZflj@vger.kernel.org
+X-Gm-Message-State: AOJu0YwHXVTJefmm6zOQNV5e+/UlyhEv1uReDCCEa7dkADPBTXK6/RDI
+	ubdKkzhFrDHlvA33gx+AJ/0GWJDsl5dz1G+kThkGC2GrcK1y1JWrXCrR6C+uZ9k=
+X-Gm-Gg: ASbGncvaWNYknrI98uM0fjlwRnSE2LtaSn6R6/Xyk6bmDvw4OUuScB2vQvqVj8j0Ica
+	LHMwKEien5JEtJCCn4I9eyFIdhkMfv2XluXbf+55pTkl6aOLuGpviULmwwsS5/IVXGZjOjQNhyp
+	gN5KxkHRXuq52L99Xp/NT4Lq5vRKX5jI5+9W7lbC0ClPJ7ZSJxou6/BSpdeE4MXMkDfwVJBgnHX
+	M5ALJWKqYzDbtWRWGRgVvnL7Lrk0cKQy80leE576BCu/pHhohHM+2DMetP0YLxnFE4brp2svktZ
+	DLCa5tVbHeJh3x6Io0CE5F5Jtd2oOw==
+X-Google-Smtp-Source: AGHT+IFEAY3DxNqKHxw8mhGMitDTHIqwhcTfqELsGsjzfMmTb1zcKOW4rDkr5UYxAPj+4eEnCeVPww==
+X-Received: by 2002:a05:6512:10c5:b0:53e:1c3d:d1ae with SMTP id 2adb3069b0e04-53e1c3dd2c2mr500865e87.29.1733269094445;
+        Tue, 03 Dec 2024 15:38:14 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53df6496903sm1980271e87.210.2024.12.03.15.38.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Dec 2024 15:38:13 -0800 (PST)
+Date: Wed, 4 Dec 2024 01:38:10 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Stephen Boyd <swboyd@chromium.org>, 
+	Kuogee Hsieh <quic_khsieh@quicinc.com>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+	Jessica Zhang <quic_jesszhan@quicinc.com>
+Subject: Re: [PATCH 3/3] drm/msm/dp: add a debugfs node for using tpg
+Message-ID: <uv2phgi72mmw5c462ijsqlqedeiv4gahrwi26i2luqkhgwmfxc@ycj7jrujdj6w>
+References: <20241202-tpg-v1-0-0fd6b518b914@quicinc.com>
+ <20241202-tpg-v1-3-0fd6b518b914@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v30 28/30] ALSA: usb-audio: Add USB offload route kcontrol
-To: Cezary Rojewski <cezary.rojewski@intel.com>
-CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-input@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>, <srinivas.kandagatla@linaro.org>,
-        <mathias.nyman@intel.com>, <perex@perex.cz>, <conor+dt@kernel.org>,
-        <dmitry.torokhov@gmail.com>, <corbet@lwn.net>, <broonie@kernel.org>,
-        <lgirdwood@gmail.com>, <krzk+dt@kernel.org>,
-        <pierre-louis.bossart@linux.intel.com>, <Thinh.Nguyen@synopsys.com>,
-        <tiwai@suse.com>, <robh@kernel.org>, <gregkh@linuxfoundation.org>
-References: <20241106193413.1730413-1-quic_wcheng@quicinc.com>
- <20241106193413.1730413-29-quic_wcheng@quicinc.com>
- <1a361446-7a18-4f49-9eeb-d60d1adaa088@intel.com>
-Content-Language: en-US
-From: Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <1a361446-7a18-4f49-9eeb-d60d1adaa088@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: IBwKgWcd3KUzuxMkopp3EOItLDqwSWCj
-X-Proofpoint-GUID: IBwKgWcd3KUzuxMkopp3EOItLDqwSWCj
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=709 bulkscore=0
- impostorscore=0 phishscore=0 suspectscore=0 adultscore=0 mlxscore=0
- spamscore=0 clxscore=1011 priorityscore=1501 malwarescore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412030192
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241202-tpg-v1-3-0fd6b518b914@quicinc.com>
 
+On Mon, Dec 02, 2024 at 12:42:00PM -0800, Abhinav Kumar wrote:
+> DP test pattern generator is a very useful tool to debug issues
+> where monitor is showing incorrect output as it helps to isolate
+> whether the issue is due to rest of DPU pipeline or in the DP
+> controller itself. Expose a debugfs to use the TPG configuration
+> to help debug DP issues.
+> 
+> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> ---
+>  drivers/gpu/drm/msm/dp/dp_debug.c | 61 +++++++++++++++++++++++++++++++++++++++
+>  drivers/gpu/drm/msm/dp/dp_panel.h |  2 ++
+>  2 files changed, 63 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/dp/dp_debug.c b/drivers/gpu/drm/msm/dp/dp_debug.c
+> index 22fd946ee201..843fe77268f8 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_debug.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_debug.c
+> @@ -197,6 +197,65 @@ static const struct file_operations test_active_fops = {
+>  	.write = msm_dp_test_active_write
+>  };
+>  
+> +static ssize_t msm_dp_tpg_write(struct file *file, const char __user *ubuf,
+> +				size_t len, loff_t *offp)
+> +{
+> +	const struct msm_dp_debug_private *debug;
+> +	char *input_buffer;
+> +	int val;
+> +	int status = 0;
+> +	struct msm_dp_panel *dp_panel;
+> +
+> +	debug = ((struct seq_file *)file->private_data)->private;
+> +	dp_panel = debug->panel;
+> +
+> +	input_buffer = memdup_user_nul(ubuf, len);
+> +	if (IS_ERR(input_buffer))
+> +		return PTR_ERR(input_buffer);
+> +
+> +	status = kstrtoint(input_buffer, 10, &val);
+> +	if (status < 0) {
+> +		kfree(input_buffer);
+> +		return status;
+> +	}
+> +
+> +	msm_dp_panel_tpg_config(dp_panel, val);
+> +
+> +	dp_panel->tpg_enabled = val;
 
-On 12/3/2024 8:13 AM, Cezary Rojewski wrote:
-> On 2024-11-06 8:34 PM, Wesley Cheng wrote:
->> In order to allow userspace/applications know about USB offloading status,
->> expose a sound kcontrol that fetches information about which sound card
->> and PCM index the USB device is mapped to for supporting offloading.  In
->> the USB audio offloading framework, the ASoC BE DAI link is the entity
->> responsible for registering to the SOC USB layer.
->
-> ...
->
-> R) += mixer_usb_offload.o
->> diff --git a/sound/usb/mixer_usb_offload.c b/sound/usb/mixer_usb_offload.c
->> new file mode 100644
->> index 000000000000..e0689a3b9b86
->> --- /dev/null
->> +++ b/sound/usb/mixer_usb_offload.c
->> @@ -0,0 +1,102 @@
->> +// SPDX-License-Identifier: GPL-2.0
->> +/*
->> + * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
->> + */
->> +
->> +#include <linux/usb.h>
->> +
->> +#include <sound/core.h>
->> +#include <sound/control.h>
->> +#include <sound/soc-usb.h>
->
-> ALSA-components should not be dependent on ASoC ones. It should be done the other way around: ALSA <- ASoC.
->
+Does this need any kind of locking? The driver performs some actions,
+then we write the global state. What if the user in parallel writes
+different values to the file?
 
-At least for this kcontrol, we need to know the status of the ASoC state, so that we can communicate the proper path to userspace.  If the ASoC path is not probed or ready, then this module isn't blocked.  It will just communicate that there isn't a valid offload path.
+> +
+> +	kfree(input_buffer);
+> +
+> +	*offp += len;
+> +	return len;
+> +}
+> +
+> +static int msm_dp_tpg_show(struct seq_file *f, void *data)
+> +{
+> +	struct msm_dp_debug_private *debug = f->private;
+> +	struct msm_dp_panel *dp_panel = debug->panel;
+> +
+> +	if (dp_panel->tpg_enabled)
+> +		seq_puts(f, "1");
+> +	else
+> +		seq_puts(f, "0");
+> +
+> +	return 0;
+> +}
+> +
+> +static int msm_dp_tpg_open(struct inode *inode, struct file *file)
+> +{
+> +	return single_open(file, msm_dp_tpg_show, inode->i_private);
+> +}
+> +
+> +static const struct file_operations msm_dp_tpg_fops = {
+> +	.owner = THIS_MODULE,
+> +	.open = msm_dp_tpg_open,
+> +	.read = seq_read,
+> +	.llseek = seq_lseek,
+> +	.release = single_release,
+> +	.write = msm_dp_tpg_write
+> +};
+> +
+>  int msm_dp_debug_init(struct device *dev, struct msm_dp_panel *panel,
+>  		  struct msm_dp_link *link,
+>  		  struct drm_connector *connector,
+> @@ -231,6 +290,8 @@ int msm_dp_debug_init(struct device *dev, struct msm_dp_panel *panel,
+>  		debugfs_create_file("dp_test_type", 0444,
+>  				    root,
+>  				    debug, &msm_dp_test_type_fops);
+> +
+> +		debugfs_create_file("dp_tpg", 0444, root, debug, &msm_dp_tpg_fops);
 
+I'd say, skip the dp_ part of the name, everything in that dir is
+DP-related.
 
->> +
->> +#include "usbaudio.h"
->> +#include "card.h"
->> +#include "helper.h"
->> +#include "mixer.h"
->> +
->> +#include "mixer_usb_offload.h"
+>  	}
+>  
+>  	return 0;
+> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.h b/drivers/gpu/drm/msm/dp/dp_panel.h
+> index 0e944db3adf2..7910b11fd685 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_panel.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_panel.h
+> @@ -50,6 +50,8 @@ struct msm_dp_panel {
+>  	u32 max_dp_link_rate;
+>  
+>  	u32 max_bw_code;
+> +
+> +	bool tpg_enabled;
+>  };
+>  
+>  int msm_dp_panel_init_panel_info(struct msm_dp_panel *msm_dp_panel);
+> 
+> -- 
+> 2.34.1
+> 
+
+-- 
+With best wishes
+Dmitry
 
