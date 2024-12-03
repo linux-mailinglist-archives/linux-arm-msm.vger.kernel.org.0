@@ -1,150 +1,227 @@
-Return-Path: <linux-arm-msm+bounces-40113-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40084-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id AC5289E20EF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 16:05:36 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 606E79E254A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 16:59:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 729B5281F2A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 15:05:35 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6807EB61134
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 13:46:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C42C1E3DF9;
-	Tue,  3 Dec 2024 15:05:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E34FF1F12F8;
+	Tue,  3 Dec 2024 13:43:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="qcgRW6FX"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DpNk56ja"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E8E51F7558
-	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Dec 2024 15:05:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B4281E009F
+	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Dec 2024 13:43:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733238335; cv=none; b=KPOI6Ri4hGZdrM64FAUUEPsf3IGJw3cfvWr6Z1iB0as5w6hJlFRXeKCxMRQcWBEJD9rTSzWexlrvGobMo9pF40bjKCPmUd41Zk13tHjRyrFz/JKQijzDsGpcQckI05Gf38T2pEXogOsdaxo1iVOqjmz3VmG8umk0GI43uDc1XKU=
+	t=1733233421; cv=none; b=o/GeaAL1I/j+Uae/dNJ62NP6RRthfuPGbuqN8jZwd7w0GsV8Aushu8hXtORbJk6eBLI5z15UoWS9tadnrFeTaNJRM+99jNmHyZcgtZb/k7VBT1ZsnT3ROdkHXBpXQz+MS/lUmWWzuRBUlgLlTYt49WFvl+5ZP7vOH8ZXTqtwxAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733238335; c=relaxed/simple;
-	bh=+uMifMZiAcMA3nATNagPBAOmW0eThPHsSBWPDm8brnM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BTNvvw3XD1SQfM1JIKeW+rqWbHzl+CmZE2sbTm+ZIkHiGyh0hKGrSMEiFZEXjJsPwP0dLE+Q5fZWVBxI/VkwU52eaW01cWTNPA4mbNXJjTDbSPCkLloA3tpwmG74+vtECk3rxJ/l7mG2KiMEQGguhEVnv4pgtzHelGKQtUHiuTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=qcgRW6FX; arc=none smtp.client-ip=209.85.208.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2ffc81cee68so58016741fa.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Dec 2024 07:05:32 -0800 (PST)
+	s=arc-20240116; t=1733233421; c=relaxed/simple;
+	bh=F6JTPbaZ0AnfReoQLyIReQvRzUqbdKV8lK42/skKSls=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KiYbYQGN+Ju4qgnXskXADbRe0s9bWqfzdm11y1TRmhPnZ2JsubFhwFVUnCtGzdkd82X/VQn9O6SPhTGSIh4My7+Sb9Aao5I8ug4RBTy1ljsmnfcQb4P/wg0ACmjn3vXn/UTIihZK2x77RMxIiVtduYtI4VFdiHnTScAoo5iRz/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DpNk56ja; arc=none smtp.client-ip=209.85.167.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-53de880c77eso6556482e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Dec 2024 05:43:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1733238331; x=1733843131; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RtbEhhKoiTh0qiQnRaAPey6dwf1k7ZRMkRrGbgxGB18=;
-        b=qcgRW6FXOmVZqr/7ItfiiT4o+GpW9CiMQGqeLHaYy5YYDiPs3QPRDA70zm1++WBCA6
-         3n9M9QdGjwcDsvL76n9/3+Atcz4d8pOltWtz5KD1tS37jJBAnnPAn/y7lPePup+TUgj8
-         zF8X7lIVE6tjEsyRbn5vLvq993MELPmScUvGpwcLtmjE96jrOnDF9heHTg26BBGxmVEu
-         buyF1DiadpMX7BnYI208GatUBSzHWTDR1Ser8GUrhDrm5sVeRxBTYpiKcJuAh+BmeUWB
-         yWl8dVGbpipppX/1YBo1Geluupu86ofHQiJI0z0sbDYPZidH9CUAc39HGh84BgClzFsP
-         8gUQ==
+        d=linaro.org; s=google; t=1733233418; x=1733838218; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=BexXqu1YANquKbhWrZTOr7m0R8hKt1AEONAGEhu8ML8=;
+        b=DpNk56jauH1VgV1EFVhyi8NKrDtLYmWxaJ1llpxq5Bz1lbg4x+hD+gWz6VwoSo/Q8i
+         uzqYgEZz84KA55k7CJ4VTo4rJa2Ygj73OuC5jC5aRqy9v0woVUAZvJsYNaOCIfp+pCRx
+         jdhk7rtbwzEEMrRIGr/SHPejX6dvaV9d5MWwKkk8MRE5hxX8e3ps5XqBYfZ9+Dxjbijj
+         loIHr3/4SBZLZ8odYI6MSX2vdSMaQedhiCfKx9DEqU0MsWokPerJaETqSSVWxJMShkv3
+         64NEqei5qVdCXS87Lw5tcdLwoOq5vGwnCye/NSv9y4xlrTt1mepDxXRu3RjOeRTJYYOF
+         tglQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733238331; x=1733843131;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=RtbEhhKoiTh0qiQnRaAPey6dwf1k7ZRMkRrGbgxGB18=;
-        b=wPTJ39RWY7z7wUKmW2pcOgNcIKAysi/dLRmrjDz1nKsk4wl21WwjD+p2Pgdz5H4hSv
-         4nA0r433ePtU8NDU4591/QhUKFYhBqrihI0LIKQ6Pd62vgYwfYesK/KK1OJEAnNOz7Rk
-         q6kOLLFMkxpqImnkmUjTQZa8azZMf/uHEc9dlj/cZrm9EFLeh516qrkPmyTOxIa+jriO
-         lZtiyR6+VRAXBHcyhqCOVIjLmWTqM1Jh7IHAUeR50I+xFiYG9qwluLqP1Hwb1CdIKKBm
-         xq0RNkEBXfVwI9sytdsPgCCRFacEvhi9/r/rSsH61Mss+3aCT8YYe/01ZkBfPg6Vwoc8
-         89mA==
-X-Forwarded-Encrypted: i=1; AJvYcCW0dYYl+h7LPr4Gx9OPZbAthUfQSDrWXxXUB817ccxqXuuU047jcM4OECdjBP/u0bJ3eBMtb6EsGHG9/E3t@vger.kernel.org
-X-Gm-Message-State: AOJu0YzMd5DiKfC5HerTQMj4i6ktm/i1mwYzw3SxKg0c2+wUr0XScJxE
-	ig5GFU8/WVBDS6PwTPI0JZIxutUm2uSrLvDybYstGkhWisz3rDquONs8HXuzK26PPqpiE/otUny
-	Xz4ueCoCzsMPyWBCg4DjuCgIukohEctMauoiRnw==
-X-Gm-Gg: ASbGncuYX9xFHTe3TlfhKlK2Wwjp5l3L+CgezXqSfn3Kw1sdrh/VTGrGwNZhgZoM1IO
-	BZp/BW1nRBssMAdWhLKKrRfySj2gewfM=
-X-Google-Smtp-Source: AGHT+IFXcMRum6Fgpn/fpkHjlbTye37au8KaG1skCplnVjgk7auCVG9uYkhWXukENlDICE2p3O83N7kw41MOt8qO7js=
-X-Received: by 2002:a05:6512:2804:b0:53e:1b6a:60f5 with SMTP id
- 2adb3069b0e04-53e1b6a61d3mr623994e87.29.1733238329662; Tue, 03 Dec 2024
- 07:05:29 -0800 (PST)
+        d=1e100.net; s=20230601; t=1733233418; x=1733838218;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BexXqu1YANquKbhWrZTOr7m0R8hKt1AEONAGEhu8ML8=;
+        b=NFu/bulHH1B8At7zYS1rwyXwi6I1qubn1kBa0NamJ/6S17GDLJsd74lAHFtukEQrF7
+         t07rpWwijBvAc7NjjZPH+Lk694TD9HSLix7nxhEiDyzqa52LbdGeMfVblZT67oT782dd
+         lvb3IBEENNBVTfFSO6NgOqRUo+jXMHO8gmU5GlA0xJJqdlwz1kCYhqUSLZOx/SnT4vgX
+         TGeH6vOMEhxb2/7XSy4vIlO5sM1rSUoVDrwt0jemFY0QJT2cQeQlky7cZuVZEPO/I4Q7
+         wHAr9L7EJ0uG0eaN+NaZka9BxX+8JZyxKxxuzfruul0/hn6YW0fzqTHZCCKpNwpHWQQp
+         Z72w==
+X-Forwarded-Encrypted: i=1; AJvYcCUaXmfI02qQLuD5TX0BMOSh6MayPzm8k7lgFTB5hHVgtMTH0MeuGcc4Fnw330zxBLCwge/NT6p1LsHMhAzU@vger.kernel.org
+X-Gm-Message-State: AOJu0YzfH5e3ZrZceACDleWFzMbr8pjthED5WEelLc2DAewn6wQlLucy
+	syRPnD7C5huIuXfkiO4WPCnoV0L0qfRXhPVU26ZMeMGPCYlbGeugh5KRjYFhVnc=
+X-Gm-Gg: ASbGncuisNJuLI3LIB1oDjYUjvOrBIbde8vVm0Zpim3pMtFUAM9qb4VyZq1zRdC+0wZ
+	jAG9c8QKOOvxzM9ca2OdWDoqXbFNKhfg3nkmV9LILuifwh95dFeAM1sGS67mWGnOSlflcGNRujr
+	gUdAFMs5rO4ptcrqeZF1+/XkBLG44LDWt5IF73lytEWEO/R5w46tGNwJKLOpyv+92POdgmQK4KO
+	2xZ8NSCVNTJGD6dUOu9fdstg0TlamAlZ6eXakV6EU6OM/efY6+JZkiq53IbdhxF9Dj6zfuYpwIM
+	eUTBzAjq2+ZLK1eRB7ZIFC7mOvi3Yg==
+X-Google-Smtp-Source: AGHT+IE8R6jm4cCT/ek6WXdRlNZG6O64AcF1SkyDRfFBDn4mzR/uUulOEMTuStC5oxV2xJ+QqSD9DQ==
+X-Received: by 2002:a05:6512:12cd:b0:53d:ea1d:50fc with SMTP id 2adb3069b0e04-53e12a28351mr1659356e87.48.1733233418239;
+        Tue, 03 Dec 2024 05:43:38 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53e1394662fsm197862e87.38.2024.12.03.05.43.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Dec 2024 05:43:37 -0800 (PST)
+Date: Tue, 3 Dec 2024 15:43:35 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Kuogee Hsieh <quic_khsieh@quicinc.com>, 
+	Mahadevan <quic_mahap@quicinc.com>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 3/4] dt-bindings: display/msm: add stream 1 pixel clock
+ binding
+Message-ID: <edlw7grqy74rihy5jw5t2krcyfn24c6b2lfxht4b52wx6fvck6@pqeqrbnwtsf3>
+References: <20241202-dp_mst_bindings-v1-0-9a9a43b0624a@quicinc.com>
+ <20241202-dp_mst_bindings-v1-3-9a9a43b0624a@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241203-crypto-qce-refactor-v1-0-c5901d2dd45c@linaro.org>
- <20241203-crypto-qce-refactor-v1-2-c5901d2dd45c@linaro.org> <b3e5184d-19bc-45ed-92e3-a751842839b3@linaro.org>
-In-Reply-To: <b3e5184d-19bc-45ed-92e3-a751842839b3@linaro.org>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Tue, 3 Dec 2024 16:05:18 +0100
-Message-ID: <CAMRc=Mc+hKeAwyvm_aaWe_r07iXuBMy0hRQrXSQjpy0irKzvMw@mail.gmail.com>
-Subject: Re: [PATCH 2/9] crypto: qce - unregister previously registered algos
- in error path
-To: neil.armstrong@linaro.org
-Cc: Thara Gopinath <thara.gopinath@gmail.com>, Herbert Xu <herbert@gondor.apana.org.au>, 
-	"David S. Miller" <davem@davemloft.net>, Stanimir Varbanov <svarbanov@mm-sol.com>, linux-crypto@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241202-dp_mst_bindings-v1-3-9a9a43b0624a@quicinc.com>
 
-On Tue, Dec 3, 2024 at 2:55=E2=80=AFPM <neil.armstrong@linaro.org> wrote:
->
-> On 03/12/2024 10:19, Bartosz Golaszewski wrote:
-> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> >
-> > If we encounter an error when registering alorithms with the crypto
-> > framework, we just bail out and don't unregister the ones we
-> > successfully registered in prior iterations of the loop.
-> >
-> > Add code that goes back over the algos and unregisters them before
-> > returning an error from qce_register_algs().
-> >
-> > Cc: stable@vger.kernel.org
-> > Fixes: ec8f5d8f6f76 ("crypto: qce - Qualcomm crypto engine driver")
-> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > ---
-> >   drivers/crypto/qce/core.c | 11 +++++++----
-> >   1 file changed, 7 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/drivers/crypto/qce/core.c b/drivers/crypto/qce/core.c
-> > index 58ea93220f015..848e5e802b92b 100644
-> > --- a/drivers/crypto/qce/core.c
-> > +++ b/drivers/crypto/qce/core.c
-> > @@ -51,16 +51,19 @@ static void qce_unregister_algs(struct qce_device *=
-qce)
-> >   static int qce_register_algs(struct qce_device *qce)
-> >   {
-> >       const struct qce_algo_ops *ops;
-> > -     int i, ret =3D -ENODEV;
-> > +     int i, j, ret =3D -ENODEV;
-> >
-> >       for (i =3D 0; i < ARRAY_SIZE(qce_ops); i++) {
-> >               ops =3D qce_ops[i];
-> >               ret =3D ops->register_algs(qce);
-> > -             if (ret)
-> > -                     break;
-> > +             if (ret) {
-> > +                     for (j =3D i - 1; j >=3D 0; j--)
-> > +                             ops->unregister_algs(qce);
-> > +                     return ret;
-> > +             }
-> >       }
-> >
-> > -     return ret;
-> > +     return 0;
-> >   }
-> >
-> >   static int qce_handle_request(struct crypto_async_request *async_req)
-> >
->
-> Perhaps you can also use the devm trick here aswell ?
->
+On Mon, Dec 02, 2024 at 07:31:41PM -0800, Abhinav Kumar wrote:
+> On some chipsets the display port controller can support more
+> than one pixel stream (multi-stream transport). To support MST
+> on such chipsets, add the binding for stream 1 pixel clock for
+> display port controller. Since this mode is not supported on all
+> chipsets, add exception rules and min/max items to clearly mark
+> which chipsets support only SST mode (single stream) and which ones
+> support MST.
+> 
+> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> ---
+>  .../bindings/display/msm/dp-controller.yaml        | 32 ++++++++++++++++++++++
+>  .../bindings/display/msm/qcom,sa8775p-mdss.yaml    |  9 ++++--
+>  2 files changed, 38 insertions(+), 3 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> index 9fe2bf0484d8..650d19e58277 100644
+> --- a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> @@ -50,30 +50,38 @@ properties:
+>      maxItems: 1
+>  
+>    clocks:
+> +    minItems: 5
+>      items:
+>        - description: AHB clock to enable register access
+>        - description: Display Port AUX clock
+>        - description: Display Port Link clock
+>        - description: Link interface clock between DP and PHY
+>        - description: Display Port stream 0 Pixel clock
+> +      - description: Display Port stream 1 Pixel clock
+>  
+>    clock-names:
+> +    minItems: 5
+>      items:
+>        - const: core_iface
+>        - const: core_aux
+>        - const: ctrl_link
+>        - const: ctrl_link_iface
+>        - const: stream_pixel
+> +      - const: stream_1_pixel
+>  
+>    assigned-clocks:
+> +    minItems: 2
+>      items:
+>        - description: link clock source
+>        - description: stream 0 pixel clock source
+> +      - description: stream 1 pixel clock source
+>  
+>    assigned-clock-parents:
+> +    minItems: 2
+>      items:
+>        - description: Link clock PLL output provided by PHY block
+>        - description: Stream 0 pixel clock PLL output provided by PHY block
+> +      - description: Stream 1 pixel clock PLL output provided by PHY block
+>  
+>    phys:
+>      maxItems: 1
+> @@ -175,6 +183,30 @@ allOf:
+>        required:
+>          - "#sound-dai-cells"
+>  
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,sa8775p-dp
 
-I wanted to keep this one brief for backporting but I also think that
-scheduling a separate action here for every algo would be a bit
-overkill. This is quite concise so I'd keep it this way.
+Why do you need an extra platform conditional?
 
-Bart
+> +
+> +    then:
+> +      properties:
+> +        clocks:
+> +          maxItems: 6
+> +        clock-names:
+> +          items:
+> +            - const: core_iface
+> +            - const: core_aux
+> +            - const: ctrl_link
+> +            - const: ctrl_link_iface
+> +            - const: stream_pixel
+> +            - const: stream_1_pixel
+> +        assigned-clocks:
+> +          maxItems: 3
+> +        assigned-clock-parents:
+> +          maxItems: 3
+> +
+>  additionalProperties: false
+>  
+>  examples:
+> diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sa8775p-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sa8775p-mdss.yaml
+> index 58f8a01f29c7..7f10e6ad8f63 100644
+> --- a/Documentation/devicetree/bindings/display/msm/qcom,sa8775p-mdss.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/qcom,sa8775p-mdss.yaml
+> @@ -177,16 +177,19 @@ examples:
+>                       <&dispcc_dptx0_aux_clk>,
+>                       <&dispcc_dptx0_link_clk>,
+>                       <&dispcc_dptx0_link_intf_clk>,
+> -                     <&dispcc_dptx0_pixel0_clk>;
+> +                     <&dispcc_dptx0_pixel0_clk>,
+> +                     <&dispcc_dptx0_pixel1_clk>;
+>              clock-names = "core_iface",
+>                            "core_aux",
+>                            "ctrl_link",
+>                            "ctrl_link_iface",
+> -                          "stream_pixel";
+> +                          "stream_pixel",
+> +                          "stream_1_pixel";
+>  
+>              assigned-clocks = <&dispcc_mdss_dptx0_link_clk_src>,
+> +                              <&dispcc_mdss_dptx0_pixel1_clk_src>,
+>                                <&dispcc_mdss_dptx0_pixel0_clk_src>;
+> -            assigned-clock-parents = <&mdss0_edp_phy 0>, <&mdss0_edp_phy 1>;
+> +            assigned-clock-parents = <&mdss0_edp_phy 0>, <&mdss0_edp_phy 1>, <&mdss0_edp_phy 1>;
+>  
+>              phys = <&mdss0_edp_phy>;
+>              phy-names = "dp";
+> 
+> -- 
+> 2.34.1
+> 
+
+-- 
+With best wishes
+Dmitry
 
