@@ -1,63 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-40103-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40107-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 086959E2242
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 16:22:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4C3E79E24EE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 16:54:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 88AA9B42C54
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 14:15:28 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B90C3B3A6CA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 14:37:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0CB8D1F4260;
-	Tue,  3 Dec 2024 14:15:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA1EB1F6679;
+	Tue,  3 Dec 2024 14:36:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="N1o4VhC2"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QzV49IoZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 040F71F427C;
-	Tue,  3 Dec 2024 14:15:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1DB31F7073
+	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Dec 2024 14:36:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733235314; cv=none; b=dBXiTDMcrSMxe1yHWXOXD1D1wmJync2fk6nVvABge1Nk2XOZ9yJP23mCLn/4Xm3m3Pt+W/qh/ZVfKrivl5SvniOhSLAIVRsQvq/q+CSVih3XPz22pJ/0DnfGnV0DR2eAKUblZA8tE8tyyt8UjCseSjfjCDQx7bX9GZ9Dm5EHdkc=
+	t=1733236573; cv=none; b=XZsKpGbR5fYWo5Qx0bkmJD5aIQSNJO/N+05orlb7l0os3oGydViTYJs4AJnatlQgn33XEiIWaLLjplPOZiCInybpH0dZtGSPB+XvQFv4Z8KzOu3vlmwP6NBcclpSvBL1WD+FgfpopQlwvaUO+E1ww91P160OPZAZ1CcsKq7FjhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733235314; c=relaxed/simple;
-	bh=2jX203YX84ritlNUy+v1E1INaBB/sf0hID3irOMOLzo=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
-	 In-Reply-To:Content-Type; b=HxIYOLcyy6YkJwHOxiRVCekNk7ZLSr530/UOmo2CEwoOeVo4BNu1i2ZHFBG71O9JRkZuxJ0XQBUNlXQob5qAFeFXMnB37LPwcYRr0p+vy4acrB0YW70YvvQHHMxi4KcY8PlQoWh7HndWdNwF7ffIuO2+nq5o9SL3E8Fv2H6v+qM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=N1o4VhC2; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B37PraO017944;
-	Tue, 3 Dec 2024 14:15:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	tvgG8trdTiN/soQFzs7dfBWxVYWGArbsfDhV4LVl9/k=; b=N1o4VhC2uCFY8YlE
-	Yn81UrhVzGEdP7+fZmhsbx09YHfvNkTDMb5RxVIy/AK8l5t6jwMVxD3UIwb/S3pF
-	4jsY+N0xqWtFlnMSDFKXJV0Mkxzkb4dP19jJ+N0g2u2EM2QuJVl+qhYuRwTT4xmc
-	r4+151brHvhAJ1ehJGN9yZYg0BLnMlF7HViLUZENhQZI9HVJcBy4ByDyFxIzXMVp
-	H9hxNuocp59xMnq9EEyVtDsgVcqAD+9/DhQZeKvdJ8o0xaZ7ZN50Cm4y7U+JULLq
-	BVK1wl9U1nndwfqihNRbQ62Q0nM4o9ocxIzMMJoDgVv3G/LYM2HLpUWalbIWOQOX
-	Penz9g==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 437tstg95q-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 03 Dec 2024 14:15:07 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B3EF62t030342
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 3 Dec 2024 14:15:06 GMT
-Received: from [10.217.219.62] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 3 Dec 2024
- 06:15:03 -0800
-Message-ID: <bb683a73-5d80-4a40-b554-b77b0aa17a7d@quicinc.com>
-Date: Tue, 3 Dec 2024 19:44:55 +0530
+	s=arc-20240116; t=1733236573; c=relaxed/simple;
+	bh=VoloerIYtuD4Kf9hzsRoF48FaEfryw1QZS1CTNPTMkM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=b10tn34MVHKbVJxmj/hcpku8NiHDYqz/Lr9Jkzto7zlipwoR7U8phO/SYKACPHiqR57EYPinwvLjC7DGU43T+WQea5QAfoqQHUvUg0gV4kZ4GVFlCraw3ulIK1Ni4HwDZtp6QrDlBgS9ZjokQgRqSOpEot9kTqMOl3Fp+EH46pc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QzV49IoZ; arc=none smtp.client-ip=209.85.167.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-53df67d6659so8795208e87.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Dec 2024 06:36:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1733236570; x=1733841370; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=4UdbFlmq11p+eASdBnxObk/yRdYyyhts6n06xqRje/4=;
+        b=QzV49IoZULvkSqnVWWGWJnIooHDytsbZZ6tSSEjqCSIIcQal7RPqpKPJj3bstLJJD/
+         3RZNxwKThuVWarhPCLOcrUBav/ilvrhT+y1AsLtGy5BM+pXshWz4gDgzX3JeH855OuKi
+         l2pyupIeSyreStXmpymFKf/K/bRudupK4pybdgW5fRlaQRPEsWaxMmTtWagtm5fndRVl
+         iUweDpG2lfoVRu3az/God0nRU50ffc550bQtp7VcfIL7ay8QIumoqAscBCUJuSRlN+kV
+         f5tABjZnFY5Uv54LXiIZqwcIpO++H6XqyH8Gu3JoMsAJStbeggZZlmKPgnsJrJ7th4/8
+         coxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733236570; x=1733841370;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=4UdbFlmq11p+eASdBnxObk/yRdYyyhts6n06xqRje/4=;
+        b=QyqbgPnc6XT0+m2W0ssw1loSIeG2I+CFqBSDRUJJTnaeUev2k2Ryd8biYHf+Y7cTEK
+         xDM0C0CAV9hPMLw+TdtGy2ZeTr7jYGTzhqzrVgW3n1IJSK1IbjR3Sx0abf/Ma0BJhzJl
+         stfm+CRDIviqHwzPcbXGL1bwIghvuIG0wkN1hCPqQ2PhnNrFM1XlIlgAZsvrgiuJB6/S
+         6OVWh4pMuN9uqzRyzdB3B68a+SxdpYzv3TX/A3s/3rXy+rIVtR6F90XmjtNjq7PIzQK8
+         3OhpBMG518SWmz24pdmNB4lxpmDFOOg4shg8zK62zSYJ4HujvmgF1RTWLp3Y2CFQhgI+
+         tBiA==
+X-Forwarded-Encrypted: i=1; AJvYcCVtUjPPHKScXQFsIxqoeUsWDott/eh+2XDLXyX91iyUx8JCGnvW3jK/i1yqpO0R+BQcLshHU7C5mH06CkwE@vger.kernel.org
+X-Gm-Message-State: AOJu0YzlBfgOyQGs2/dJ2pWRGKaSQNKW0gxMK7YxjMaKdlJirLfQbAEI
+	00BZ5HstBomyOoyO4lI+IJUO2aHwX8cm1leMVPzOnOY0PdoNMgQdFLUCfXRM
+X-Gm-Gg: ASbGncvNxhpPWwYf+qFahowksWPhHriwQgd8d1Ncqmnle/g00Gwv2NPuvsXlpbuyAyB
+	E8nXRzbI1nCfc9IVdhP9UkBwH71mYgDYj7njAW+Ss/Uz74b52WkH9TC7Fm55Scmis0VpheSTYmQ
+	bB9/rvbdFrAxKoRZuViUe/sMOfo4mdDAH/U+OaR3W5IJ4ZLx3ezhtzIiWbMym7vo5fkWgQcqwtU
+	KhbhdeDCBRSPAPG/0nv0P/aNbnWENciajq18DaJHswD2eYdVQz0fnqwKC/GHXw=
+X-Google-Smtp-Source: AGHT+IEtiGgdnjzwS+6qliEstHFZt4D+WconNrWNE54EW5G6CLa24DZTyDgOoGvRfKazsixde2AXjQ==
+X-Received: by 2002:a05:6512:3096:b0:53b:4a6c:1849 with SMTP id 2adb3069b0e04-53e12a3195bmr2515865e87.35.1733236569615;
+        Tue, 03 Dec 2024 06:36:09 -0800 (PST)
+Received: from [192.168.50.169] ([195.136.68.87])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53df6443172sm1858540e87.84.2024.12.03.06.36.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 03 Dec 2024 06:36:09 -0800 (PST)
+Message-ID: <38445cf6-0f09-42df-a033-cd2a00c71e0a@gmail.com>
+Date: Tue, 3 Dec 2024 15:36:08 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,272 +80,190 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] dmaengine: qcom: gpi: Add GPI immediate DMA
- support
-From: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>
-CC: Vinod Koul <vkoul@kernel.org>, Mark Brown <broonie@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dmaengine@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-spi@vger.kernel.org>,
-        <quic_msavaliy@quicinc.com>, <quic_vtanuku@quicinc.com>
-References: <20241128133351.24593-1-quic_jseerapu@quicinc.com>
- <20241128133351.24593-2-quic_jseerapu@quicinc.com>
- <obv72hhaqvremd7b4c4efpqv6vy7blz54upwc7jqx3pvrzg24t@zebke7igb3nl>
- <1666035c-d674-43dd-bc33-83231d64e5f7@quicinc.com>
+Subject: Re: [PATCH 1/1] drm/msm: Expose uche trap base via uapi
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org
+References: <20241203095920.505018-1-dpiliaiev@igalia.com>
+ <20241203095920.505018-2-dpiliaiev@igalia.com>
+ <lhi5ni5i4kuwzu2627nf5pnhhzcx7rglza5lxeadpkdekwtisj@3cacpo2r3tzx>
+ <b63d73ce-0845-4c0b-a110-4e10b8f587eb@gmail.com>
+ <s6yaog7kffvbfzz3uhwvkfzxxe2n32sdefia3g75gffqhgjcjw@6fbifjd36yr7>
 Content-Language: en-US
-In-Reply-To: <1666035c-d674-43dd-bc33-83231d64e5f7@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: Danylo <danylo.piliaiev@gmail.com>
+In-Reply-To: <s6yaog7kffvbfzz3uhwvkfzxxe2n32sdefia3g75gffqhgjcjw@6fbifjd36yr7>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: kPECOWntndPu6smSnMTXJKWaT8TElIpw
-X-Proofpoint-GUID: kPECOWntndPu6smSnMTXJKWaT8TElIpw
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- malwarescore=0 spamscore=0 impostorscore=0 mlxlogscore=999 mlxscore=0
- priorityscore=1501 suspectscore=0 phishscore=0 adultscore=0 clxscore=1015
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412030121
 
 
 
-On 11/29/2024 5:02 PM, Jyothi Kumar Seerapu wrote:
-> 
-> 
-> On 11/28/2024 8:53 PM, Bjorn Andersson wrote:
->> On Thu, Nov 28, 2024 at 07:03:50PM +0530, Jyothi Kumar Seerapu wrote:
->>> The DMA TRE(Transfer ring element) buffer contains the DMA
->>> buffer address. Accessing data from this address can cause
->>> significant delays in SPI transfers, which can be mitigated to
->>> some extent by utilizing immediate DMA support.
->>>
->>> QCOM GPI DMA hardware supports an immediate DMA feature for data
->>> up to 8 bytes, storing the data directly in the DMA TRE buffer
->>> instead of the DMA buffer address. This enhancement enables faster
->>> SPI data transfers.
->>>
->>> This optimization reduces the average transfer time from 25 us to
->>> 16 us for a single SPI transfer of 8 bytes length, with a clock
->>> frequency of 50 MHz.
->>>
->>> Signed-off-by: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
->>> ---
->>> v1 -> v2:
->>>     - Separated the patches to dmaengine and spi subsystems
->>>     - Removed the changes which are not required for this feature from
->>>       qcom-gpi-dma.h file.
->>>     - Removed the type conversions used in gpi_create_spi_tre.
->>>
->>>   drivers/dma/qcom/gpi.c           | 32 +++++++++++++++++++++++++++-----
->>>   include/linux/dma/qcom-gpi-dma.h |  6 ++++++
->>>   2 files changed, 33 insertions(+), 5 deletions(-)
->>>
->>> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
->>> index 52a7c8f2498f..4c5df696ddd8 100644
->>> --- a/drivers/dma/qcom/gpi.c
->>> +++ b/drivers/dma/qcom/gpi.c
->>> @@ -27,6 +27,7 @@
->>>   #define TRE_FLAGS_IEOT        BIT(9)
->>>   #define TRE_FLAGS_BEI        BIT(10)
->>>   #define TRE_FLAGS_LINK        BIT(11)
->>> +#define TRE_FLAGS_IMMEDIATE_DMA    BIT(16)
->>>   #define TRE_FLAGS_TYPE        GENMASK(23, 16)
->>>   /* SPI CONFIG0 WD0 */
->>> @@ -64,6 +65,7 @@
->>>   /* DMA TRE */
->>>   #define TRE_DMA_LEN        GENMASK(23, 0)
->>> +#define TRE_DMA_IMMEDIATE_LEN    GENMASK(3, 0)
->>>   /* Register offsets from gpi-top */
->>>   #define GPII_n_CH_k_CNTXT_0_OFFS(n, k)    (0x20000 + (0x4000 * (n)) 
->>> + (0x80 * (k)))
->>> @@ -1711,6 +1713,8 @@ static int gpi_create_spi_tre(struct gchan 
->>> *chan, struct gpi_desc *desc,
->>>       dma_addr_t address;
->>>       struct gpi_tre *tre;
->>>       unsigned int i;
->>> +    u8 *buf;
->>> +    int len = 0;
->>
->> First use of "len" is an assignment, so you shouldn't zero-initialize it
->> here.
-> Sure, will do it in V3.
->>
->>>       /* first create config tre if applicable */
->>>       if (direction == DMA_MEM_TO_DEV && spi->set_config) {
->>> @@ -1763,14 +1767,32 @@ static int gpi_create_spi_tre(struct gchan 
->>> *chan, struct gpi_desc *desc,
->>>       tre_idx++;
->>>       address = sg_dma_address(sgl);
->>> -    tre->dword[0] = lower_32_bits(address);
->>> -    tre->dword[1] = upper_32_bits(address);
->>> +    len = sg_dma_len(sgl);
->>> -    tre->dword[2] = u32_encode_bits(sg_dma_len(sgl), TRE_DMA_LEN);
->>> +    /* Support Immediate dma for write transfers for data length up 
->>> to 8 bytes */
->>
->> And what happens if the developer writing the SPI driver forgets to read
->> this comment and sets QCOM_GPI_IMMEDIATE_DMA for a 9 byte transfer?
-> In V2 patch, QCOM_GPI_IMMEDIATE_DMA is set based on 
-> QCOM_GPI_IMMEDIATE_DMA_LEN only.
-> 
-> As per Hardware programming guide, immediate dma support is for up to 8 
-> bytes only.
-> Need to check what is the behavior if we want to handle 9 bytes using 
-> immediate dma feature support.
-> 
->>
->>> +    if ((spi->flags & QCOM_GPI_IMMEDIATE_DMA) && direction == 
->>> DMA_MEM_TO_DEV) {
->>
->> Why is this flag introduced?
->>
->> If I understand the next patch, all DMA_MEM_TO_DEV transfers of <=
->> QCOM_GPI_IMMEDIATE_DMA_LEN can use the immediate mode, so why not move
->> the condition here?
->>
->> Also ordering[1].
->>
->>     if (direction == DMA_MEM_TO_DEV && len <= 2 * sizeof(tre->dword[0]))
->>
->>
-> Sure, thanks for the suggestion.
-> so, instead using "QCOM_GPI_IMMEDIATE_DMA_LEN" need to use " 2 * 
-> sizeof(tre->dword[0])" for 8 bytes length check.
-> 
->> [1] Compare "all transfers of length 8 or less, which are mem to device"
->> vs "all transfers which are mem to device, with a length of 8 or less".
->> The bigger "selection criteria" is the direction, then that's fine tuned
->> by the length query.
->>
->>> +        buf = sg_virt(sgl);
->>
->> It's a question of style, but I think you could just put the sg_virt()
->> directly in the memcpy() call and avoid the extra variable.
-> 
-> Okay, i will directly put sg_virt() in memcpy().
->>
->>> -    tre->dword[3] = u32_encode_bits(TRE_TYPE_DMA, TRE_FLAGS_TYPE);
->>> -    if (direction == DMA_MEM_TO_DEV)
->>> +        /* memcpy may not always be length of 8, hence pre-fill both 
->>> dword's with 0 */
->>
->> The implementation of memcpy() is always more than 8 bytes, it's buf
->> that might be less than 8 bytes ;)
->>
->> Also you're not "pre-filling", you're "zero-initializing", or just
->> "initialize".
- >
-Sure, will correct it to use initialize instead pre-fill.  i will update 
-it in V3.
- >
->>
->>
->> That said, does it matter? Will the QUP read beyond the
->> TRE_DMA_IMMEDIATE_LEN bytes? If so, please put _that_ in the comment
->> ("QUP reads beyond the provided len, so additional content needs to be
->> cleared", or similar)
- >
-Data lengths upto 8 bytes(len <=8) can be handled using immediate dma.
-QUP won't handle beyond 8 bytes in immediate dma, if more than 8 bytes 
-then it process using the logic mentioned in else path.
 
-Each dword is of size 4 bytes and so in this immediate dma case, dword0 
-and dword1 is used to hold 8 bytes data.In scenarios like data size 
-lesss then 8 bytes, for example if the spi data transfer size is 4bytes 
-then 4 bytes data will be updated into dword0 and dword1 might contain 
-some garbage data and so make sure to initialize both dword0 and dword1 
-with 0 and then memcpy the actual spi transfer data based on the length 
-to the dword's.
+On 12/3/24 14:34, Dmitry Baryshkov wrote:
+> On Tue, Dec 03, 2024 at 02:09:59PM +0100, Danylo wrote:
+>>
+>>
+>> On 12/3/24 13:52, Dmitry Baryshkov wrote:
+>>> On Tue, Dec 03, 2024 at 10:59:20AM +0100, Danylo Piliaiev wrote:
+>>>> This adds MSM_PARAM_UCHE_TRAP_BASE that will be used by Mesa
+>>>> implementation for VK_KHR_shader_clock and GL_ARB_shader_clock.
+>>> Could you please spend more words, describing what it is and why is it
+>>> necessary for those extensions. For a5xx+ it looks like some kind of an
+>>> internal address (what kind of?). For a4xx I'm completely lost.
+>> Yes, my bad. On at least a6xx+, shader could read 64b ALWAYSON counter
+>> from UCHE_TRAP_BASE+0 address. We use it to implement VK_KHR_shader_clock:
+>>   "This extension advertises the SPIR-V ShaderClockKHR capability for Vulkan,
+>> which
+>>    allows a shader to query a real-time or monotonically incrementing counter
+>> at
+>>    the subgroup level or across the device level."
+>> And there is no other proper way to get such counter. Same with
+>> GL_ARB_shader_clock.
+> Yes, please add this to the commit message.
+Ok.
 
-> 
->>
->>> +        tre->dword[0] = 0;
->>> +        tre->dword[1] = 0;
->>> +        memcpy(&tre->dword[0], buf, len);
->>> +
->>> +        tre->dword[2] = u32_encode_bits(len, TRE_DMA_IMMEDIATE_LEN);
->>
->> Does the format of tre->dword[2] really change when
->> TRE_FLAGS_IMMEDIATE_DMA is set, or is TRE_DMA_IMMEDIATE_LEN just a
->> mask to highlight that len can't be more than 4 bits?
->>
->> It seems like you could drop TRE_DMA_IMMEDIATE_LEN and just use
->> TRE_DMA_LEN here? (But it should match what the hardware programming
->> guide states)
-> As per hardware programming guide, for Immediate dma, in dword2 length 
-> should be 4 bytes only and so need to use TRE_DMA_IMMEDIATE_LEN .
->>
->>
->> Perhaps you could reduce the scope of this if/else then as well, as the
->> assignment of of dword[2] and dword[3] is mostly the same with and
->> without immediate mode (just the one bit to enable it)
-> sure, will check it and update in V3.
->>
->>> +
->>> +        tre->dword[3] = u32_encode_bits(TRE_TYPE_DMA, TRE_FLAGS_TYPE);
->>>           tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_IEOT);
->>> +        tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_IMMEDIATE_DMA);
->>> +    } else {
->>> +        tre->dword[0] = lower_32_bits(address);
->>> +        tre->dword[1] = upper_32_bits(address);
->>> +
->>> +        tre->dword[2] = u32_encode_bits(len, TRE_DMA_LEN);
->>> +
->>> +        tre->dword[3] = u32_encode_bits(TRE_TYPE_DMA, TRE_FLAGS_TYPE);
->>> +        if (direction == DMA_MEM_TO_DEV)
->>> +            tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_IEOT);
->>> +    }
->>>       for (i = 0; i < tre_idx; i++)
->>>           dev_dbg(dev, "TRE:%d %x:%x:%x:%x\n", i, desc->tre[i].dword[0],
->>> diff --git a/include/linux/dma/qcom-gpi-dma.h 
->>> b/include/linux/dma/qcom-gpi-dma.h
->>> index 6680dd1a43c6..84598848d53a 100644
->>> --- a/include/linux/dma/qcom-gpi-dma.h
->>> +++ b/include/linux/dma/qcom-gpi-dma.h
->>> @@ -15,6 +15,10 @@ enum spi_transfer_cmd {
->>>       SPI_DUPLEX,
->>>   };
->>> +#define QCOM_GPI_IMMEDIATE_DMA        BIT(1)
->>> +
->>> +#define QCOM_GPI_IMMEDIATE_DMA_LEN    8
->>> +
->>>   /**
->>>    * struct gpi_spi_config - spi config for peripheral
->>>    *
->>> @@ -30,6 +34,7 @@ enum spi_transfer_cmd {
->>>    * @cs: chip select toggle
->>>    * @set_config: set peripheral config
->>>    * @rx_len: receive length for buffer
->>> + * @flags: true for immediate dma support
->>
->> Per above I think you can remove this flag, but "true for immediate DMA
->> support" doesn't match what you have written in the code. (Also in
->> general u8 shouldn't be "true")
-> 
-> Sure, will update in V3.
-> 
-> Thanks for providing the review comments.
->>
->> Regards,
->> Bjorn
->>
->>>    */
->>>   struct gpi_spi_config {
->>>       u8 set_config;
->>> @@ -44,6 +49,7 @@ struct gpi_spi_config {
->>>       u32 clk_src;
->>>       enum spi_transfer_cmd cmd;
->>>       u32 rx_len;
->>> +    u8 flags;
->>>   };
->>>   enum i2c_op {
->>> -- 
->>> 2.17.1
->>>
->>>
-> 
+>> Not sure what's there on older gens, I exposed the value on them for the
+>> completeness sake. But I don't know whether it is desired or not (I don't
+>> expect
+>> the value being read and used on a4xx/a5xx in Mesa).
+> Do you know if there is anything interesting in that region on a4xx /
+> a5xx (or at least if it's a region on a4xx?) Also how will that
+> GET_PARAM behave on a2xx-a3xx? Will it return 0 or some -EINVAL?
+I don't know if there is anything interesting there on a5xx or a4xx.
+I booted a5xx board I dug up, but found out that on a5xx we are
+even missing the instruction to read from memory address, so I wasn't
+able to check what's at that address.
+
+As for what to return on a2xx-a3xx, as suggested by Rob,
+I'll rebase on https://patchwork.freedesktop.org/series/141667/ then
+I will return EINVAL:
+         if (adreno_gpu->uche_trap_base == 0)
+             return UERR(EINVAL, drm, "no uche trap base");
+
+>>>> Signed-off-by: Danylo Piliaiev <dpiliaiev@igalia.com>
+>>>> ---
+>>>>    drivers/gpu/drm/msm/adreno/a4xx_gpu.c   |  6 ++++--
+>>>>    drivers/gpu/drm/msm/adreno/a5xx_gpu.c   | 10 ++++++----
+>>>>    drivers/gpu/drm/msm/adreno/a6xx_gpu.c   | 12 +++++++-----
+>>>>    drivers/gpu/drm/msm/adreno/adreno_gpu.c |  3 +++
+>>>>    drivers/gpu/drm/msm/adreno/adreno_gpu.h |  2 ++
+>>>>    include/uapi/drm/msm_drm.h              |  1 +
+>>>>    6 files changed, 23 insertions(+), 11 deletions(-)
+>>>>
+>>>> diff --git a/drivers/gpu/drm/msm/adreno/a4xx_gpu.c b/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
+>>>> index 50c490b492f0..f1b18a6663f7 100644
+>>>> --- a/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
+>>>> +++ b/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
+>>>> @@ -251,8 +251,8 @@ static int a4xx_hw_init(struct msm_gpu *gpu)
+>>>>    		gpu_write(gpu, REG_A4XX_UCHE_CACHE_WAYS_VFD, 0x07);
+>>>>    	/* Disable L2 bypass to avoid UCHE out of bounds errors */
+>>>> -	gpu_write(gpu, REG_A4XX_UCHE_TRAP_BASE_LO, 0xffff0000);
+>>>> -	gpu_write(gpu, REG_A4XX_UCHE_TRAP_BASE_HI, 0xffff0000);
+>>>> +	gpu_write(gpu, REG_A4XX_UCHE_TRAP_BASE_LO, lower_32_bits(adreno_gpu->uche_trap_base));
+>>>> +	gpu_write(gpu, REG_A4XX_UCHE_TRAP_BASE_HI, upper_32_bits(adreno_gpu->uche_trap_base));
+>>>>    	gpu_write(gpu, REG_A4XX_CP_DEBUG, (1 << 25) |
+>>>>    			(adreno_is_a420(adreno_gpu) ? (1 << 29) : 0));
+>>>> @@ -693,6 +693,8 @@ struct msm_gpu *a4xx_gpu_init(struct drm_device *dev)
+>>>>    	if (ret)
+>>>>    		goto fail;
+>>>> +	adreno_gpu->uche_trap_base = 0xffff0000ffff0000ull;
+>>>> +
+>>>>    	if (!gpu->aspace) {
+>>>>    		/* TODO we think it is possible to configure the GPU to
+>>>>    		 * restrict access to VRAM carveout.  But the required
+>>>> diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+>>>> index ee89db72e36e..caf2c0a7a29f 100644
+>>>> --- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+>>>> +++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+>>>> @@ -750,10 +750,10 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
+>>>>    	gpu_write(gpu, REG_A5XX_UCHE_CACHE_WAYS, 0x02);
+>>>>    	/* Disable L2 bypass in the UCHE */
+>>>> -	gpu_write(gpu, REG_A5XX_UCHE_TRAP_BASE_LO, 0xFFFF0000);
+>>>> -	gpu_write(gpu, REG_A5XX_UCHE_TRAP_BASE_HI, 0x0001FFFF);
+>>>> -	gpu_write(gpu, REG_A5XX_UCHE_WRITE_THRU_BASE_LO, 0xFFFF0000);
+>>>> -	gpu_write(gpu, REG_A5XX_UCHE_WRITE_THRU_BASE_HI, 0x0001FFFF);
+>>>> +	gpu_write(gpu, REG_A5XX_UCHE_TRAP_BASE_LO, lower_32_bits(adreno_gpu->uche_trap_base));
+>>>> +	gpu_write(gpu, REG_A5XX_UCHE_TRAP_BASE_HI, upper_32_bits(adreno_gpu->uche_trap_base));
+>>>> +	gpu_write(gpu, REG_A5XX_UCHE_WRITE_THRU_BASE_LO, lower_32_bits(adreno_gpu->uche_trap_base));
+>>>> +	gpu_write(gpu, REG_A5XX_UCHE_WRITE_THRU_BASE_HI, upper_32_bits(adreno_gpu->uche_trap_base));
+>>>>    	/* Set the GMEM VA range (0 to gpu->gmem) */
+>>>>    	gpu_write(gpu, REG_A5XX_UCHE_GMEM_RANGE_MIN_LO, 0x00100000);
+>>>> @@ -1805,5 +1805,7 @@ struct msm_gpu *a5xx_gpu_init(struct drm_device *dev)
+>>>>    	adreno_gpu->ubwc_config.macrotile_mode = 0;
+>>>>    	adreno_gpu->ubwc_config.ubwc_swizzle = 0x7;
+>>>> +	adreno_gpu->uche_trap_base = 0x0001ffffffff0000ull;
+>>>> +
+>>>>    	return gpu;
+>>>>    }
+>>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+>>>> index 019610341df1..0ae29a7c8a4d 100644
+>>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+>>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+>>>> @@ -1123,12 +1123,12 @@ static int hw_init(struct msm_gpu *gpu)
+>>>>    	/* Disable L2 bypass in the UCHE */
+>>>>    	if (adreno_is_a7xx(adreno_gpu)) {
+>>>> -		gpu_write64(gpu, REG_A6XX_UCHE_TRAP_BASE, 0x0001fffffffff000llu);
+>>>> -		gpu_write64(gpu, REG_A6XX_UCHE_WRITE_THRU_BASE, 0x0001fffffffff000llu);
+>>>> +		gpu_write64(gpu, REG_A6XX_UCHE_TRAP_BASE, adreno_gpu->uche_trap_base);
+>>>> +		gpu_write64(gpu, REG_A6XX_UCHE_WRITE_THRU_BASE, adreno_gpu->uche_trap_base);
+>>>>    	} else {
+>>>> -		gpu_write64(gpu, REG_A6XX_UCHE_WRITE_RANGE_MAX, 0x0001ffffffffffc0llu);
+>>>> -		gpu_write64(gpu, REG_A6XX_UCHE_TRAP_BASE, 0x0001fffffffff000llu);
+>>>> -		gpu_write64(gpu, REG_A6XX_UCHE_WRITE_THRU_BASE, 0x0001fffffffff000llu);
+>>>> +		gpu_write64(gpu, REG_A6XX_UCHE_WRITE_RANGE_MAX, adreno_gpu->uche_trap_base + 0xfc0);
+>>>> +		gpu_write64(gpu, REG_A6XX_UCHE_TRAP_BASE, adreno_gpu->uche_trap_base);
+>>>> +		gpu_write64(gpu, REG_A6XX_UCHE_WRITE_THRU_BASE, adreno_gpu->uche_trap_base);
+>>>>    	}
+>>>>    	if (!(adreno_is_a650_family(adreno_gpu) ||
+>>>> @@ -2533,6 +2533,8 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
+>>>>    		}
+>>>>    	}
+>>>> +	adreno_gpu->uche_trap_base = 0x1fffffffff000ull;
+>>>> +
+>>>>    	if (gpu->aspace)
+>>>>    		msm_mmu_set_fault_handler(gpu->aspace->mmu, gpu,
+>>>>    				a6xx_fault_handler);
+>>>> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+>>>> index 076be0473eb5..774ff6eacb9f 100644
+>>>> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+>>>> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+>>>> @@ -385,6 +385,9 @@ int adreno_get_param(struct msm_gpu *gpu, struct msm_file_private *ctx,
+>>>>    	case MSM_PARAM_MACROTILE_MODE:
+>>>>    		*value = adreno_gpu->ubwc_config.macrotile_mode;
+>>>>    		return 0;
+>>>> +	case MSM_PARAM_UCHE_TRAP_BASE:
+>>>> +		*value = adreno_gpu->uche_trap_base;
+>>>> +		return 0;
+>>>>    	default:
+>>>>    		DBG("%s: invalid param: %u", gpu->name, param);
+>>>>    		return -EINVAL;
+>>>> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+>>>> index e71f420f8b3a..9bd38dda4308 100644
+>>>> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+>>>> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+>>>> @@ -253,6 +253,8 @@ struct adreno_gpu {
+>>>>    	bool gmu_is_wrapper;
+>>>>    	bool has_ray_tracing;
+>>>> +
+>>>> +	u64 uche_trap_base;
+>>>>    };
+>>>>    #define to_adreno_gpu(x) container_of(x, struct adreno_gpu, base)
+>>>> diff --git a/include/uapi/drm/msm_drm.h b/include/uapi/drm/msm_drm.h
+>>>> index b916aab80dde..2342cb90857e 100644
+>>>> --- a/include/uapi/drm/msm_drm.h
+>>>> +++ b/include/uapi/drm/msm_drm.h
+>>>> @@ -90,6 +90,7 @@ struct drm_msm_timespec {
+>>>>    #define MSM_PARAM_RAYTRACING 0x11 /* RO */
+>>>>    #define MSM_PARAM_UBWC_SWIZZLE 0x12 /* RO */
+>>>>    #define MSM_PARAM_MACROTILE_MODE 0x13 /* RO */
+>>>> +#define MSM_PARAM_UCHE_TRAP_BASE 0x14 /* RO */
+>>>>    /* For backwards compat.  The original support for preemption was based on
+>>>>     * a single ring per priority level so # of priority levels equals the #
+>>>> -- 
+>>>> 2.46.2
+>>>>
+
 
