@@ -1,158 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-40025-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40026-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3426E9E147D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 08:42:28 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 082D7162589
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 07:42:25 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE3DD192D7B;
-	Tue,  3 Dec 2024 07:42:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JEo43xnv"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 308CA9E14AA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 08:54:13 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38BE317BB25;
-	Tue,  3 Dec 2024 07:42:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CB92FB286C6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 07:53:19 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5A6DA19AA58;
+	Tue,  3 Dec 2024 07:53:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="5mreDrvi"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05EFE1B21AA
+	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Dec 2024 07:53:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733211744; cv=none; b=AwZLk2FwaMGvZryolmDnoFQ6ZoA7RZZ9WxmR/mbek9OGvsNn4w4Nuf/ZDWjEdeH1vOmUkmqXUK09+jCIOl77AX0kkzaa3Cw2zSy+1Gf+VnH71aa74w2oewNzFdmjHEPhnMZljxcBohm7Jl18O0SIKCL8//qinFZwDVAAFXq44h4=
+	t=1733212385; cv=none; b=WVLHuXW6B9eqNSEnnQ0MeENUfjyJX+Eh4mwH6vk32B6ZNy+sbDvsu9alZfxJre5xY/lQCtAwLWtuhTYBP8Byh2x6OsnVoUgP0H2QizPua6DPEyMVKHm8KyzbYbwtqZYXZ3zUFyT0z67Cg0ukLuN7lVMyzm+SaMnJ345cgro5TTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733211744; c=relaxed/simple;
-	bh=uJpAWbtffBXMYvdF0d8RLjBLt5cDK1OhE1wwPna9wEY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=BCprtaag0WRpOO275pdRsLV6aBu1CDKQSVGg4v81Ggw2V2CSVMEHknDxrygVvBy9QD65rrP8YfKu9FQAejc0GHe3qH2jwNezlhvHro0+U12bEK+ov9h0yq76ddEna2/Agh69fRVlg/aUJC9WrIO9M4294wEwwS6DdzR1KzQ/MWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JEo43xnv; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B373dY7031023;
-	Tue, 3 Dec 2024 07:42:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	iHnc1l0YpCh8KNyPY+LZmpCKvM4O8DE/NokifUNNwt0=; b=JEo43xnvdfC4duyA
-	sD1c/RQnr6HUVckU3xD9c0AGtAbSyBxmDvkHjhTOl9zm6ugJfvC94y4otx+Ag0wt
-	17rjQoBNQvF0/Y6P2snPJpP9T78cLwaHzrBVmaSQlipNYPSkEgB9TmckN9d9JdTT
-	N4FwVBT/FjnTxAP/Be2ACpkIWHbdU53KEev5tU3od+qxD4dATN3SdxEGFkFhxNNO
-	DlN1LpvWYbdgPZXARlBC0YoDs2kmq5UHX6kXcECwDwCfAeSrzx3zzsvpyBRw65yt
-	XIkh86WIYn4cZbW1Ke5g+ZSq3Qe/h+2V3sZkguBPaPuzQyClFFkAs9GYtcW2FkP5
-	WF2IoQ==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 439w90r316-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 03 Dec 2024 07:42:05 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B37g4Lf004198
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 3 Dec 2024 07:42:04 GMT
-Received: from [10.64.16.135] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 2 Dec 2024
- 23:41:56 -0800
-Message-ID: <86b9a8be-8972-4c19-af0c-da6b3667cbf4@quicinc.com>
-Date: Tue, 3 Dec 2024 15:41:53 +0800
+	s=arc-20240116; t=1733212385; c=relaxed/simple;
+	bh=7rsJx8PPlBUPhNYZpY4C2T1GcmfaUB0tv/4wQt6eSwQ=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=V6se9VZtAuu9WQ/76ezwv5lMoW526VeJqPW2OUzoFp0o9tSknRcEPsJQyLCZqAbXdzZkZJsg9BQaXnYut68QD315h9e7QVMai3MjvkfiiH0V8Yzd14vkV1skQ/N3hDSCdBkQB6p+HBTenbp8h+oiktLRxX3N8pcnjRRIYDunb1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=5mreDrvi; arc=none smtp.client-ip=209.85.218.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-aa51d32fa69so797474166b.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Dec 2024 23:53:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1733212380; x=1733817180; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0D7zw9MHhki0fQyrcbsaXtFGQSkwrEFiOvoXEAaY/xE=;
+        b=5mreDrvisXdmU0+p8DFDxeGIiyupLJoDkLv8XDdd/CHi1lEy02hanxmk6zWLfyowjR
+         NgwFRMJhnZUkHQCmbdMAwZ9oaIgmrnI6bHF0UbKkxXXBX4idrgEOQxE1V7WsnQjPqMcK
+         LWB5Wn4HAXF6vAVBCGDeMMrC9xLJbivTWv/Vw68v3bxumnEP+D8B9s4De3u46ttvBdI1
+         R/5OB80A02susf0LbhHs3YlOcHElYWGW5LRqF5prvB0ohAq1rcZKHjqZQ1o6qS8bvAfB
+         uW/d6CyPf2N+HUBOkMofkRBU6pBkKW7m9DyGXnH3xkl5iBb9v2C9eUBTS0B9samKgHCW
+         /EwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733212380; x=1733817180;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=0D7zw9MHhki0fQyrcbsaXtFGQSkwrEFiOvoXEAaY/xE=;
+        b=S6nJriN2sMnBgYxn6v3MSTOvDJ9RG4Q+gX8bAh+C1yKlO0ZDdLmqCv/jfY5lpQNFkA
+         zDRk69Ss4bYmVYGl2HvGoOD0w6QsnGRml/k2NrzUAsKJYZo7GY/uv7mONa8NV6ErL3cV
+         P6y7UT2x0KdM5Dsn1KE6Mp6ob/sdvMq5yRfC9g0EqT9SPH7gXGXSRMncNugIuTFxgbRH
+         JSshSBnAaT8rTiGgvBy5zKb3CSj2/Cf62DYFRCNfjVI0t/pkb9Ae8WyuqBG3QmC9dyv3
+         d6rw+lBB37Nd6PhbgAYnGHVXwbJswV3WtH1sT/D+CGgvkCdt/Xc2jMSgYLhudZNNbrCO
+         pZSg==
+X-Forwarded-Encrypted: i=1; AJvYcCWtVscQrKMtCMcGnCkxLqQRSKeBtuqll6jcDQVHecht2jPCygNNN6B0LTZga/mUQObkS6oCc5xXwBBcrgYY@vger.kernel.org
+X-Gm-Message-State: AOJu0YzVi5vd2t39j5od5GPGskdoRMZVTqCYwILSmFyysZQk4sa954nE
+	PGIfNXVOSn73vbnkKJslUfLTfYspHO2snCZsQYECqeRJRC/ws+RV6BjvFVpPBIk=
+X-Gm-Gg: ASbGnct7Lvu1EtAXIkg6xqH8Q8XIXrODK+1nDQmXT9pr0cqEirVIvknGnowFZTx5b33
+	phkWPCvbbmOo4fzn4cd+mcN6+RuRUj8OQ2BBudfWpm1nJoOOp10rzK1E0UjrC01aQLzVRzr6nGF
+	tlFujXO/93UiswtIpN/olRTWKfeeOAidL8tisFyYND3En5o59YTyqm4OjB6h1e2MwyT+PwRD7zM
+	3ZM+0nrFLIna+vxOMxoO3MIf17R/xvR/lkCpASzVK2aRgI9ja2RFMVlHbPDoShQheVg8CSkc08f
+	k7SnwDT1YeXt5x9SMhs=
+X-Google-Smtp-Source: AGHT+IH5Y4Euy0lKtptex0iUPrTdDlymLHlyKHDlm+teFEcJLphIHtL9LraZ6mJjjupisyuttL8ryg==
+X-Received: by 2002:a17:906:1db2:b0:aa5:152c:1995 with SMTP id a640c23a62f3a-aa5f7eefc47mr81228366b.45.1733212380291;
+        Mon, 02 Dec 2024 23:53:00 -0800 (PST)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa5998e771csm591681166b.127.2024.12.02.23.52.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 02 Dec 2024 23:53:00 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/8] drm/msm/dp: Add maximum width limitation for modes
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar
-	<quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        Maarten Lankhorst
-	<maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Rob Herring <robh@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "Kuogee
- Hsieh" <quic_khsieh@quicinc.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        "Kishon
- Vijay Abraham I" <kishon@kernel.org>,
-        Linus Walleij
-	<linus.walleij@linaro.org>,
-        Bartosz Golaszewski <brgl@bgdev.pl>, <quic_lliu6@quicinc.com>,
-        <quic_fangez@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <linux-gpio@vger.kernel.org>
-References: <20241129-add-displayport-support-for-qcs615-platform-v1-0-09a4338d93ef@quicinc.com>
- <20241129-add-displayport-support-for-qcs615-platform-v1-6-09a4338d93ef@quicinc.com>
- <CAA8EJpprTGRTxO+9BC6GRwxE4A3CuvmySsxS2Nh4Tqj0nDRT_Q@mail.gmail.com>
- <95a78722-8266-4d5d-8d2f-e8efa1aa2e87@quicinc.com>
- <CAA8EJpo-1o9i4JhZgdbvRxvoYQE2v18Lz_8dVg=Za7a_pk5EDA@mail.gmail.com>
-From: Xiangxu Yin <quic_xiangxuy@quicinc.com>
-In-Reply-To: <CAA8EJpo-1o9i4JhZgdbvRxvoYQE2v18Lz_8dVg=Za7a_pk5EDA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Q1qP-vfrtkvEYCb2L1IbQAc1v8C0dnsc
-X-Proofpoint-GUID: Q1qP-vfrtkvEYCb2L1IbQAc1v8C0dnsc
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=655 bulkscore=0
- impostorscore=0 phishscore=0 suspectscore=0 adultscore=0 mlxscore=0
- spamscore=0 clxscore=1015 priorityscore=1501 malwarescore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412030065
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 03 Dec 2024 08:52:59 +0100
+Message-Id: <D61WIF2XWKL8.MWU6PK2XGX4F@fairphone.com>
+Cc: "Rob Herring" <robh@kernel.org>, "Krzysztof Kozlowski"
+ <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
+ <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
+ <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] dt-bindings: power: rpmpd: Fix comment for SM6375
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>
+X-Mailer: aerc 0.18.2-0-ge037c095a049
+References: <20241202-rpmpd-sm6375-v1-1-12a4f0182133@fairphone.com>
+ <yo5cc3cvvwwdrqrrgwlquztj52sijip3ffyyqag55jrnztxi2m@hn75ylkhnxie>
+In-Reply-To: <yo5cc3cvvwwdrqrrgwlquztj52sijip3ffyyqag55jrnztxi2m@hn75ylkhnxie>
+
+On Mon Dec 2, 2024 at 9:00 PM CET, Dmitry Baryshkov wrote:
+> On Mon, Dec 02, 2024 at 04:45:02PM +0100, Luca Weiss wrote:
+> > During an earlier commit, the comment from SM6350 was copied without
+> > modifying. Adjust the comment to reflect the defines.
+> >=20
+> > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>
+> Fixes tag, please.
+
+I thought for just a comment fix it's not necessary / desired.
+
+Anyways:
+
+Fixes: 2d48e6ea3080 ("dt-bindings: power: rpmpd: Add SM6375 power domains")
 
 
-
-On 12/2/2024 5:32 PM, Dmitry Baryshkov wrote:
-> On Mon, 2 Dec 2024 at 11:05, Xiangxu Yin <quic_xiangxuy@quicinc.com> wrote:
->>
->>
->>
->> On 11/29/2024 9:52 PM, Dmitry Baryshkov wrote:
->>> On Fri, 29 Nov 2024 at 09:59, Xiangxu Yin <quic_xiangxuy@quicinc.com> wrote:
->>>>
->>>> Introduce a maximum width constraint for modes during validation. This
->>>> ensures that the modes are filtered based on hardware capabilities,
->>>> specifically addressing the line buffer limitations of individual pipes.
->>>
->>> This doesn't describe, why this is necessary. What does "buffer
->>> limitations of individual pipes" mean?
->>> If the platforms have hw capabilities like being unable to support 8k
->>> or 10k, it should go to platform data
->>>
->> It's SSPP line buffer limitation for this platform and only support to 2160 mode width.
->> Then, shall I add max_width config to struct msm_dp_desc in next patch? for other platform will set defualt value to ‘DP_MAX_WIDTH 7680'
-> 
-> SSPP line buffer limitations are to be handled in the DPU driver. The
-> DP driver shouldn't care about those.
-> 
-Ok, Will drop this part in next patch.
->>>>
->>>> Signed-off-by: Xiangxu Yin <quic_xiangxuy@quicinc.com>
->>>> ---
->>>>  drivers/gpu/drm/msm/dp/dp_display.c |  3 +++
->>>>  drivers/gpu/drm/msm/dp/dp_display.h |  1 +
->>>>  drivers/gpu/drm/msm/dp/dp_panel.c   | 13 +++++++++++++
->>>>  drivers/gpu/drm/msm/dp/dp_panel.h   |  1 +
->>>>  4 files changed, 18 insertions(+)
-> 
-> 
+>
+> > ---
+> >  include/dt-bindings/power/qcom-rpmpd.h | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >=20
+> > diff --git a/include/dt-bindings/power/qcom-rpmpd.h b/include/dt-bindin=
+gs/power/qcom-rpmpd.h
+> > index df599bf462207267a412eac8e01634189a696a59..d9b7bac309537cbfd2488e7=
+d4fe21d195c919ef5 100644
+> > --- a/include/dt-bindings/power/qcom-rpmpd.h
+> > +++ b/include/dt-bindings/power/qcom-rpmpd.h
+> > @@ -65,7 +65,7 @@
+> >  #define SM6350_MSS	4
+> >  #define SM6350_MX	5
+> > =20
+> > -/* SM6350 Power Domain Indexes */
+> > +/* SM6375 Power Domain Indexes */
+> >  #define SM6375_VDDCX		0
+> >  #define SM6375_VDDCX_AO	1
+> >  #define SM6375_VDDCX_VFL	2
+> >=20
+> > ---
+> > base-commit: 40384c840ea1944d7c5a392e8975ed088ecf0b37
+> > change-id: 20241202-rpmpd-sm6375-06582e126d7f
+> >=20
+> > Best regards,
+> > --=20
+> > Luca Weiss <luca.weiss@fairphone.com>
+> >=20
 
 
