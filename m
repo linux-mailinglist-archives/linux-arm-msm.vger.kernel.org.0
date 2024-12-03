@@ -1,78 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-40105-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40106-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E3FC19E1F35
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 15:32:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1A0039E1F59
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 15:35:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 97A6F165DBF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 14:31:48 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9D85A166FD1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 14:34:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D28151F1313;
-	Tue,  3 Dec 2024 14:31:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 741381F707A;
+	Tue,  3 Dec 2024 14:34:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wjbbINYo"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YR0pNFpB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B931F707D
-	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Dec 2024 14:31:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 870E11F4707
+	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Dec 2024 14:34:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733236280; cv=none; b=eq5E0vlyejJh2xtCCyCLlyPdd+pQl8IGNbF8opLNiZS45xLuV01pS58KomHChJlMyk2lfdkKHG8pGbilHX7hXisrw2Daw04vdR6LduBUNR2olAR4byPsI6Ho/dwNTfi8G0pXQtE0gsuJ6DF1INJvGHPwNUJkxnlRwPjLAgE4mSo=
+	t=1733236455; cv=none; b=rkfZ/tgVoStWE2PMqud6jpplAEZKONe5Xj75lif33mW8dzD/BmJQsnxuHh9lEB9ObyGQHOlV6r7YwAcdGckCDdLTwV86VvVS9N0rxdrJslgEEN5kcIe7R0CNmoo2L0Vxw80kI014+RBeZcX9Ov8LeyrXjZLAGIaKA7Ljlb26x4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733236280; c=relaxed/simple;
-	bh=IdfdE4oGe59ktpRAQkGYROtaYHi9zupa6uXfpEHHnPE=;
+	s=arc-20240116; t=1733236455; c=relaxed/simple;
+	bh=pYO9Ik7h6Sy05p7jQh246VoAGtssBLsMf5ZGe5lS1pQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iowwExSBLMSOiOHJUvnZrPH3vLUHVA8UWwAfMI/QG7TGeQec+iOtZgxJzH6LZ2H42gcuQjcoCLUwYz6rUSWDR8imd7io0JhkILBheCPInSKrBqpBTh6De+3Kczr6mhaFFw3JXS3KI7fAmXv/ObH7CTR57p4K3DqPLnizU+vT+gU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wjbbINYo; arc=none smtp.client-ip=209.85.167.46
+	 Content-Type:Content-Disposition:In-Reply-To; b=onWnnsYtcSXRpDFz6up8qLP48Ttp3ZMr1ZRLoe+ergCcNaOq4TTGORRRikxbp+U3BFb+GF6wZ3Q7ENUjrUAeZkUCBLkU3d4tlcDExUTwDt57oQBA01PMw0IB7mRMjZrIrCxsbmJVSxpo1UErr7nBzdpONkM1chnqBH8fMaEYiB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YR0pNFpB; arc=none smtp.client-ip=209.85.167.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-53df1d1b726so6732475e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Dec 2024 06:31:17 -0800 (PST)
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-53dd9e853ccso5942413e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Dec 2024 06:34:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733236276; x=1733841076; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1733236452; x=1733841252; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=0ppjUCx+akaTFnajbfVQ++O9bxKq4WYvR9tllyJseno=;
-        b=wjbbINYoKhwn6gzEjckSSf05gxJrHGtLpegFphu4wAPo10at+F3kvMdBQg1nfkNBIV
-         6QhlzKVDTgl1an09B7XIv+9ntyeslTjxXaMylM3lQHwjLzj3FJQrlBvdgJhohqFevEZl
-         iFWVF9MhuiHkhS4GVhFLd0qJHY45p8iT1NF4DWuhWa4VzKlzTRrzQrHDmHF8AarbAkYT
-         GUDKIVlu8vNRwRfMXXKK2ZDEQwct9B0nOAS6DD2pwLwabpIzOXLnAj/WMpqwWH2rUuKE
-         Qf6deASxq7HjU4DvHbhe9jxXBd/zVVdD1ca5f1O8Rq6tGZIQ6wOyoZfvEYKW/bcu8RAq
-         KLmA==
+        bh=OTwLeT3aQeMpcOp4Q1BFPHKxDtrlDP9yLmVoPEGdsN0=;
+        b=YR0pNFpBhbrq1w/uinww+THsp2QGkGLmruULyQT94jyDONQEIKLgLMIC9FhmJcC05j
+         TCcymrIN2XjysZHn5D78TWrid9s0/IS6SrJJvSAarALfA0juvfX7j5LP732qlx4sYa2Z
+         524T/8piDCt5XVMzFwRiKk58HGCcNTWDjB//kJJpk77FTzpuhjrJ1ZnCD3kDPC5jV7k/
+         AYRnO+Pdk3pzq/Uz+rwz89F0UZEZv1YMgIQTFNAoXdYl9Ja8HTwMI0A5fzGE/qGlj8lM
+         zKijekm+jd5Umeoo4tkql1tneMvGLV7HV9aMJ1aJWODKdfVlwNve0ehOWavE0a3fDLXt
+         FlTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733236276; x=1733841076;
+        d=1e100.net; s=20230601; t=1733236452; x=1733841252;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=0ppjUCx+akaTFnajbfVQ++O9bxKq4WYvR9tllyJseno=;
-        b=D/lFR1778FyW9Z4OELfJtpvJkFGGdZcw0G4DUGkoudn6jWItJgF1LPEF/tED447P+q
-         ZnUDuAf6AQsgYDyfIdCvxlPFFnYwFYEPY+p9v32g+YLk5eHTcL+Mw0pR+WXcu5P5X55J
-         BZODhUBqiS+G7dvYG81AQRJtz/gC6ocSPU1ZNHUP/dCQydv9pXEigiJKmsro/Ri7NAhf
-         wtVn+5gtknJyNFKwA4C1XGv8OGJOQg/b8XSMAhCSl/+zZdGZY5AqnSsUuWwyZmmYc0mS
-         ld+LDi0R99ttQ3WVmVYuTLKZy9EIMYOg9AUEQb1sQXTOUqY+AJmtjFCiXcnx+MmzMgfJ
-         kjWA==
-X-Forwarded-Encrypted: i=1; AJvYcCVG0QVfF5KCwtUptPZ6fVCtqqHiuVHlCBv5Qhx7xEuHtSRNjQiiiBGAjznoGtR3IvxTsA5WRw79pv62dmjH@vger.kernel.org
-X-Gm-Message-State: AOJu0YzLMebNOa4dLoZELS9Lh20A/KD1pdt+pSpFiNn5wufxkFKPsQFo
-	cJloccWvyehP0Bm+OHWfBHtAz5SgEZum5XRrluL5ZKkCn4O+tUkjRdlfdoowinJodt2hYkp+joR
-	6
-X-Gm-Gg: ASbGncuOufgpmR/31PEaK4KTfIv5y++rFeLCfTjgfmakbu/eHQXKnkFcaSs8YkjN98L
-	FyoFlVTD0lZPbNZ5bp8AWzh/xBH64t3c89FddPJ8Tc/dw9BrJGTiHdFzHxUVx60AGCkZLeUdWSx
-	qv2Xevs0BNFoPntXeLkDb0uwWiDlJ0WcoxsOn9/HeXxNRydznXGprxYTaLPfLc8yjas6YWD/Byp
-	b4ka7Y1V2dWIaJ0F1Dz74XrsqX4rDoMKf4yllT6vPxqYVf2+gW8w2OQQOeoFhPU8nSZh8DTfPJx
-	Yta8QaTxx7wxJ8bAxsl0VL+Mrrf/Vw==
-X-Google-Smtp-Source: AGHT+IH+C+nsRz5D3FTagtbct/svuhNvAQpqymCZAx0WUlFs66GBL4uvVcP+kOsYG099fP8ZE7IRGQ==
-X-Received: by 2002:a05:6512:3a93:b0:53d:e5fd:a44a with SMTP id 2adb3069b0e04-53e12a281f8mr1564355e87.54.1733236275798;
-        Tue, 03 Dec 2024 06:31:15 -0800 (PST)
+        bh=OTwLeT3aQeMpcOp4Q1BFPHKxDtrlDP9yLmVoPEGdsN0=;
+        b=N9lTRofBH+ffbIBmebX8JW8zJ2+3Uk9QrGvq2RmVaVbHE3tU7NHJNEss6d0FcbkXIC
+         LKKo9cjV5sudtY0Y2SA9PFdly1ocCBg5aRgHgI42iIh9dbOckV8ctIMf4k7jNtr99tkf
+         6QVN0BQfvlFDPKWIq3+8mYXjGkLvxcXMR65uPunz/icdmq7HFdvAKJxnbgTi4Xycl8bH
+         JpC0ghzap6sQBGU8drgR76NDXfU3BKqEjNdkU109PJbRq5YNeO9IugP8LrquAYfjLQB9
+         3Gx5JgXtIqYiffgnyveAGeqeG5KZ8m7odkBI1a7ZSq/RKsqfyCbja2+2CCPdQ9uMK7pN
+         W3sg==
+X-Forwarded-Encrypted: i=1; AJvYcCWmkYC09DALF93FoWTGtuo/t2GbWDt+SAmxqd1FrTNf909JngiKSjywGul6Tb0ohSaX8PZd2pqPeW9zFFs/@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx7xzcCbQx9pXnWeTXuM9tIgV6zezWT5stQ3W9hFW0dcdPe39Wy
+	jp84iSKtf1uPzxeQ1iipFIlOwemApsecb/xx2k85yK2cKa12lB6TXwZrPMdwN7M=
+X-Gm-Gg: ASbGncsCujokeeYu4WKJmViWDLy2bOm2Jnp1s/uMAlNio9qhRxmpIm5Z12tYDqlLvWW
+	3dkoJKPpJCtgXl/+8+hTQFEXf5EKd/oXp1z0/iSr3Pjw5DkBo+CYxrztYi5nSjICXlyzdv3r/PR
+	2Y3EoRmjiIuJ+LpnXSofpjQtFQUs9VCIS8rrx43v9G9rY++e4GzuirGprEAa6DVm/Nt/WDxj5g7
+	NTbndbm74nGCtntKssGxZCqq4Aqc1g2pGu2vsm/gQfn96W9EfETPs02RITgLtZufTAuQo84i1ce
+	LsZthJCN1Q3lGQgkQ9n8ABHotOaApQ==
+X-Google-Smtp-Source: AGHT+IEy1sx0BWSMOp5Z7xI7HaeVkaEKc3qbAGcaYeHf/G5vYZpDUtVEJUQzItIhVGsMUW1ZYWXRpw==
+X-Received: by 2002:a05:6512:b8e:b0:53d:ed62:e653 with SMTP id 2adb3069b0e04-53e129fdbebmr1839987e87.15.1733236451759;
+        Tue, 03 Dec 2024 06:34:11 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53df64968cbsm1829701e87.212.2024.12.03.06.31.13
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53df646f097sm1840541e87.161.2024.12.03.06.34.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Dec 2024 06:31:14 -0800 (PST)
-Date: Tue, 3 Dec 2024 16:31:11 +0200
+        Tue, 03 Dec 2024 06:34:10 -0800 (PST)
+Date: Tue, 3 Dec 2024 16:34:08 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
@@ -81,9 +80,11 @@ Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
 	Kuogee Hsieh <quic_khsieh@quicinc.com>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
 	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
 	Jessica Zhang <quic_jesszhan@quicinc.com>
-Subject: Re: [PATCH 0/3] drm/msm/dp: Fix and utilize TPG with a debugfs
-Message-ID: <lpkhftx62hbnrftzoy6zprhvir7dffz5ynwo3kr5j5obc3dcle@73ljnmpdt7ts>
+Subject: Re: [PATCH 1/3] drm/msm/dp: account for widebus in
+ msm_dp_catalog_panel_tpg_enable()
+Message-ID: <hwomnwmuak3optjooe6g5szqi77nc7znsfjrxqbxx72nqe3e7k@om2e65vaurov>
 References: <20241202-tpg-v1-0-0fd6b518b914@quicinc.com>
+ <20241202-tpg-v1-1-0fd6b518b914@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -92,58 +93,59 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241202-tpg-v1-0-0fd6b518b914@quicinc.com>
+In-Reply-To: <20241202-tpg-v1-1-0fd6b518b914@quicinc.com>
 
-On Mon, Dec 02, 2024 at 12:41:57PM -0800, Abhinav Kumar wrote:
-> DP Test Patten Generator is a very useful tool to debug issues such
-> as blank screen or corruption seen on the DP monitor by isolating it
-> to whether the corruption is coming from further upstream such as DPU
-> OR from the DP controller and below. It was noted in [1] that this API
-> is unused. Rather than dropping the API, it should be fixed and used.
+On Mon, Dec 02, 2024 at 12:41:58PM -0800, Abhinav Kumar wrote:
+> Adjust the h_active calculation to account for widebus in tpg.
 > 
-> Hence, this series fixes the DP Test Patten Generator API and also utilizes
-> it by adding a debugfs for it.
-> 
-> [1] : https://patchwork.freedesktop.org/patch/623508/?series=141074&rev=1
-
-I'd prefer for this to be rebased on top of [2]. The series has been
-posted a month ago.
-
-[2] https://patchwork.freedesktop.org/series/141074/
-
-> 
-> To: Rob Clark <robdclark@gmail.com>
-> To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> To: Sean Paul <sean@poorly.run>
-> To: Marijn Suijten <marijn.suijten@somainline.org>
-> To: David Airlie <airlied@gmail.com>
-> To: Simona Vetter <simona@ffwll.ch>
-> To: Stephen Boyd <swboyd@chromium.org>
-> To: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: dri-devel@lists.freedesktop.org
-> Cc: freedreno@lists.freedesktop.org
-> Cc: linux-kernel@vger.kernel.org
-> Cc: Jessica Zhang <quic_jesszhan@quicinc.com>
-> 
+> Fixes: 757a2f36ab09 ("drm/msm/dp: enable widebus feature for display port")
 > Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 > ---
-> Abhinav Kumar (3):
->       drm/msm/dp: account for widebus in msm_dp_catalog_panel_tpg_enable()
->       drm/msm/dp: do not touch the MMSS_DP_INTF_CONFIG for tpg
->       drm/msm/dp: add a debugfs node for using tpg
+>  drivers/gpu/drm/msm/dp/dp_catalog.c | 14 +++++++++++++-
+>  1 file changed, 13 insertions(+), 1 deletion(-)
 > 
->  drivers/gpu/drm/msm/dp/dp_catalog.c | 15 +++++++--
->  drivers/gpu/drm/msm/dp/dp_debug.c   | 61 +++++++++++++++++++++++++++++++++++++
->  drivers/gpu/drm/msm/dp/dp_panel.h   |  2 ++
->  3 files changed, 76 insertions(+), 2 deletions(-)
-> ---
-> base-commit: 798bb342e0416d846cf67f4725a3428f39bfb96b
-> change-id: 20241202-tpg-3f7543c036ac
+> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
+> index b4c8856fb25d..05c8e1996f60 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_catalog.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
+> @@ -1011,9 +1011,21 @@ void msm_dp_catalog_panel_tpg_enable(struct msm_dp_catalog *msm_dp_catalog,
+>  	u32 v_sync_width;
+>  	u32 hsync_ctl;
+>  	u32 display_hctl;
+> +	u32 h_sync_width;
+> +	u32 h_front_porch;
+> +	u32 h_back_porch;
+> +	u32 h_active;
+> +
+> +	h_active = drm_mode->hdisplay;
+> +	h_back_porch = drm_mode->htotal - drm_mode->hsync_end;
+> +	h_sync_width = drm_mode->htotal - (drm_mode->hsync_start + h_back_porch);
+
+It's at least drm_mode->hsync_end - drm_mode->hsync_start
+
+> +	h_front_porch = drm_mode->hsync_start - drm_mode->hdisplay;
+> +
+> +	if (msm_dp_catalog->wide_bus_en)
+> +		h_active /= 2;
+>  
+>  	/* TPG config parameters*/
+> -	hsync_period = drm_mode->htotal;
+> +	hsync_period = h_sync_width + h_back_porch + h_active + h_front_porch;
+
+Is it equivalent to:
+
+hsync_period = drm_mode->htotal;
+if (msm_dp_catalog->wide_bus_en)
+    hsync_period -= drm_mode->hdisplay / 2;
+
+I think it's simpler to handle.
+
+>  	vsync_period = drm_mode->vtotal;
+>  
+>  	display_v_start = ((drm_mode->vtotal - drm_mode->vsync_start) *
 > 
-> Best regards,
 > -- 
-> Abhinav Kumar <quic_abhinavk@quicinc.com>
+> 2.34.1
 > 
 
 -- 
