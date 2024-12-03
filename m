@@ -1,264 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-40078-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40079-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DDC959E1D2E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 14:11:44 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D925C9E1D47
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 14:15:13 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E9F16161468
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 13:11:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 899822838CD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 13:15:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50C761B0F39;
-	Tue,  3 Dec 2024 13:11:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7943F1E3789;
+	Tue,  3 Dec 2024 13:15:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nKYsU8vR"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QEDfXVvx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5783619A297
-	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Dec 2024 13:11:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 986731DE4FA
+	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Dec 2024 13:15:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733231501; cv=none; b=bkmVY3gx4YKrWFj/BnUD55dNsDUx3lg1d6qsRQFgzzXGQhOzB3OLZssmbYxeHP3019RpmC4obs5HH82zZ8/VqO+nrl0diIl6d37HE7sDbZ7sNt4v/BRSJTPodkXU2o1XnuN467wknd/6/FL5Ayi7Y89glZwrhDtpffRSTpMLt7A=
+	t=1733231710; cv=none; b=qXdPr1Uy5CVlukrYw4a41Ze1xbc1m8HSdIwbZOdbO4q90zWca3r5Ib9ra1Vc/e6GfbXQkdcF13HxIg5mYsk4sXOgSs5NYpmFZZUe0gnKJmvVdAmV67g8hHZ33IodqVZKV7ypPMhGywmSoHrx4+h+H0NM9G6/HEqhLi1vwgYUy80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733231501; c=relaxed/simple;
-	bh=F+xf2YdZ9ZHuA2EJVQXEMV7Kyt4fq2r7m1VRKj5i9vA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZeQ2AwCEGGls1ZJST5WGkzxeYYyrnxbdorBOlm0xfge/BnZZbDdwn3l1elEaQRXutJT3fPZf0HKtwxeHqHu/v8CpBCekdy/onshkdDyysl5bmVOBh8ru4GTl6jO9SUjE6pPBGFXoIOU1oS9GVNve0/qNj6ppBcUsoXiQp6NvmVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nKYsU8vR; arc=none smtp.client-ip=209.85.208.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2ffe2700e91so47598061fa.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Dec 2024 05:11:39 -0800 (PST)
+	s=arc-20240116; t=1733231710; c=relaxed/simple;
+	bh=owTdevYxAcudamP7xRMmaN1JsUNs4wfnBZCOK8eAEQA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ueVOmBDBUUQT8aQ5LQBJ3wM7tyAOjCey9Mmp16wJOBTIY+UviykUAHCIZtFWMLYu6ECd+u9HsT3yQPvWR8zhdzfJlZVOBZmAcNZTEeY7B/lm08SE6um3c904ldQJz5nHmhIx0jZkcsnGlTVuIL8JyeyVeCz445sWBwne12GaL2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QEDfXVvx; arc=none smtp.client-ip=209.85.208.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2ffd6af012eso66566601fa.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Dec 2024 05:15:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733231497; x=1733836297; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mLu545PqDQlxiRA32gSM5zrC3EABG/mkn9my0+hj+vE=;
-        b=nKYsU8vR7z8pTzwJjEBzRj9gTYZr8mcwGYNiW9CQQdxbXIXCUNs1HLoxqIiTMQmoAD
-         pOy0AvleurovXdWjFCdrWd6XNhhc/Z68ACF1HgcbR+JiyFx/U8qT+bwyTvNmeZIfcerc
-         GTWMCqrI1sXWddsQ9KWpwb8XuhI7S2879muEn2KLRGXj1ST7W55UXfp2Ocu5BAAtq0YV
-         hDKnnIImkCSFixy6nLW+TQgGnDriRVp0J2TQRJso+Jkd7XZN5LvoeAB7C5bb3dgak/VD
-         nJQHQbAbKh+2xpF1Apsvyr0ovk+fK2K3iuRfvY0ekl94/CP39lC/MkIFEMMjD+ApE6m6
-         Yb8Q==
+        d=linaro.org; s=google; t=1733231707; x=1733836507; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=DeNA/Lpr5Y08mM6YBqUTV889AOBT4B5h0p2YGNFMqw8=;
+        b=QEDfXVvx6RjVmuE9bIuZsrO+8IQIZlfouPYtC/2IQqw6JJMvv+6jMQ9XhZG8whiCAl
+         O4csQMndC3Jmcgu51MreySW2mqG95cK1foFL4Er6r5BjRdGnfOZoK48zINgCMs+/i2uO
+         X5XvaBAkxZxr+k5T6qoNWXEWuAt1pTUy/omV+THx2ZXxRCvplyjWWPpLu/B83seR1NLo
+         kuHzoMAjxsydSfHVNq6A0Ei2Cn1/gBLm0RVT74lUIxvmeJrgB7M/1s2ukT2Rs2eaIkoB
+         QiF508eanmJ+a6DyM0YVtCt1Zz3yIQF1YpoBwNJNQ20iE04VOwmWECAVlygQKaTPben1
+         YdxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733231497; x=1733836297;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mLu545PqDQlxiRA32gSM5zrC3EABG/mkn9my0+hj+vE=;
-        b=YzMCrdmx4jTQgwSavaLviGa0Laf8jRspMZxlsApnZx3w1qmFwEWIJCu+wtSwhyO5zx
-         HmKxTDheV/XuLLlITnPwmh/lOoreH5v0VcHFwySnBxI4Y98a+BfG3Em4JA6+shHUHoYG
-         3IXV7Tdoys0XOwFp+Th0uDiqavfdDzuc8WzsWxONgYa96RZSIYCjhmPCdwOyby0j4mjG
-         vy3bHN1L1atQ5hC9nQ5wTP0ALjFaUHP8niVMdGU1z2l4JamhkbL+plIXn7HY/MpngSf8
-         kE2LfvOxkSw3B+ugZoe2R1FT+5NfYNEfAX5Tq7oEZo+lNyD0zfWqRbrULvbi2cNVoH6y
-         KGpg==
-X-Forwarded-Encrypted: i=1; AJvYcCWDD6rM8uT9YyXeD+LgdHcTMQl83p3zX3M+ZD0vrfgvwysc02PXeDV3Gt+Nrcnwi0N+iwxF7P8XnbRoYIZq@vger.kernel.org
-X-Gm-Message-State: AOJu0YxojdT4+nM9A7itE3uuMbuVRgYOcZG7Ev4g6ZNwtZv1xKEF+gjf
-	0HSmlE9T7/EquEq0nPKlB6GISx0Ad3Dei9V41aMP0wyyvq/Js4cYg0eARoF3vH5KnuoAO2bkddM
-	LThJ/yHoI9YFXWGiOTibzLmwTRAk=
-X-Gm-Gg: ASbGncu3ZmKcaAlaO0W96YIxGjFtw2z3YX34pmSudjjGKuqUW81mUPP9WDgeZOwJ0ye
-	cfrEy7VGlDH1I6Him9hdv/N7rMZx1wIY=
-X-Google-Smtp-Source: AGHT+IFZF/HasRFYEWJ1KdVu0ybRDr3hQa5ZiwXWxqtZSA9EIVu86JPEMjTVegsKBCDFcYq0BMh9MhkKO5fdQZ6ONMo=
-X-Received: by 2002:a2e:bd84:0:b0:2ff:c016:f293 with SMTP id
- 38308e7fff4ca-30009c30148mr12327951fa.15.1733231496996; Tue, 03 Dec 2024
- 05:11:36 -0800 (PST)
+        d=1e100.net; s=20230601; t=1733231707; x=1733836507;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DeNA/Lpr5Y08mM6YBqUTV889AOBT4B5h0p2YGNFMqw8=;
+        b=HOb0oqKF/wzH3Dcog08uOElG5ypZ2KixSJj+4l/KIACczA3ddraxDnghT7aaMZmL5i
+         q9SInkNe7m1otv4wGXoXk5l4zqwlVr6iXEJN8VLalo5xNyeyoVX3B6+nYzUAtq2VWVgS
+         fvcYcMuU2KbwCzhUwcbchaJSRQ1b6HWJ+C20LONJD1c1TQBYr3hu9O9DP7fhHLpFqXI1
+         gNwoVOUNIrE7S1PDXhb+2JO1Pyru/E47sI1g9YGrfcKnzs3DZywmyt+xGJnNbWlc7Z6E
+         rKwAhcrGrNNT6dWtHajtck6G5uegbeC+B3Yvdekksdf0rQL5fJkFy1P5qZWYYdtevh2n
+         0BlQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWwR7+dUDdxxuJL7nQz9HjCbrlKMBRtZHqUWGGB93LySB7yvurUksye/XHfYfMqCg2LTe5D1htjyVdOF5OQ@vger.kernel.org
+X-Gm-Message-State: AOJu0YxitPANnSrb8sL5OjlKu13ZT2asBPfgPNGMsB7CQurhGcVPtmbX
+	GciBGSJAURl6KBKpk+ndp/le9TV1ALOHiBmRndxKgD+W3bnxb9rhld/bG1a598s=
+X-Gm-Gg: ASbGnctyZGz8h/oyQ1GprTZrmvJo3wXs0KQwyz2mrlmnMa73woBSIrfBMeIMYeeC9XL
+	9dEaE0vdet5vhQYBE2UvQYftgCdQkE7bn3u7JrdQoj/P6vh5CjEc6RRVn0/gItEngx/t+Puwfmv
+	lBsFzHoPF1zSnhYUsGsYwqfW/8WOHKdoJHkm441X/4lzu0tPnOiCZ7KUiBmhC5/dHjXfcZZptjy
+	ydi7ak9cDwR42/9EiVIHi1Hgl4eGNOWURb5oyoDYcplMjoipMo3IXYTciHDnoc7NtHRgjlrQuHo
+	RWoSWmu60ESMzDw822XYbpYbrsXxrg==
+X-Google-Smtp-Source: AGHT+IFM4VOdavQf7x5htmcA35f00mFlqCG9/SJ4fIIkch6bLXMhzCxhmHzzSYybmwSFt0nJpKD1UQ==
+X-Received: by 2002:a2e:a815:0:b0:2fb:382e:4120 with SMTP id 38308e7fff4ca-30009cb82cemr11050501fa.38.1733231706751;
+        Tue, 03 Dec 2024 05:15:06 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ffdfcc9fdesm16115781fa.119.2024.12.03.05.15.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Dec 2024 05:15:05 -0800 (PST)
+Date: Tue, 3 Dec 2024 15:15:03 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Ekansh Gupta <quic_ekangupt@quicinc.com>
+Cc: srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org, 
+	gregkh@linuxfoundation.org, quic_bkumar@quicinc.com, linux-kernel@vger.kernel.org, 
+	quic_chennak@quicinc.com, dri-devel@lists.freedesktop.org, arnd@arndb.de
+Subject: Re: [PATCH v6 1/2] misc: fastrpc: Add support for multiple PD from
+ one process
+Message-ID: <c6wcllahx5edgn3jkaqvbtp6agye5jwvzftldt775xi55sjmub@5msaghvdkflq>
+References: <20241203053048.1690069-1-quic_ekangupt@quicinc.com>
+ <20241203053048.1690069-2-quic_ekangupt@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241203095920.505018-1-dpiliaiev@igalia.com> <20241203095920.505018-2-dpiliaiev@igalia.com>
-In-Reply-To: <20241203095920.505018-2-dpiliaiev@igalia.com>
-From: Rob Clark <robdclark@gmail.com>
-Date: Tue, 3 Dec 2024 05:11:13 -0800
-Message-ID: <CAF6AEGvuG_TMSVd5i3aMR=--LJUJNRnTJNTzyesOXhZKjY8jaQ@mail.gmail.com>
-Subject: Re: [PATCH 1/1] drm/msm: Expose uche trap base via uapi
-To: Danylo Piliaiev <danylo.piliaiev@gmail.com>
-Cc: Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241203053048.1690069-2-quic_ekangupt@quicinc.com>
 
-On Tue, Dec 3, 2024 at 1:59=E2=80=AFAM Danylo Piliaiev
-<danylo.piliaiev@gmail.com> wrote:
->
-> This adds MSM_PARAM_UCHE_TRAP_BASE that will be used by Mesa
-> implementation for VK_KHR_shader_clock and GL_ARB_shader_clock.
->
-> Signed-off-by: Danylo Piliaiev <dpiliaiev@igalia.com>
+On Tue, Dec 03, 2024 at 11:00:47AM +0530, Ekansh Gupta wrote:
+> Memory intensive applications(which requires more tha 4GB) that wants
+> to offload tasks to DSP might have to split the tasks to multiple
+> user PD to make the resources available.
+> 
+> For every call to DSP, fastrpc driver passes the process tgid which
+> works as an identifier for the DSP to enqueue the tasks to specific PD.
+> With current design, if any process opens device node more than once
+> and makes PD init request, same tgid will be passed to DSP which will
+> be considered a bad request and this will result in failure as the same
+> identifier cannot be used for multiple DSP PD.
+> 
+> Assign and pass a client ID to DSP which would be assigned during device
+> open and will be dependent on the index of session allocated for the PD.
+> This will allow the same process to open the device more than once and
+> spawn multiple dynamic PD for ease of processing.
+> 
+> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
 > ---
->  drivers/gpu/drm/msm/adreno/a4xx_gpu.c   |  6 ++++--
->  drivers/gpu/drm/msm/adreno/a5xx_gpu.c   | 10 ++++++----
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.c   | 12 +++++++-----
->  drivers/gpu/drm/msm/adreno/adreno_gpu.c |  3 +++
->  drivers/gpu/drm/msm/adreno/adreno_gpu.h |  2 ++
->  include/uapi/drm/msm_drm.h              |  1 +
->  6 files changed, 23 insertions(+), 11 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/adreno/a4xx_gpu.c b/drivers/gpu/drm/msm/=
-adreno/a4xx_gpu.c
-> index 50c490b492f0..f1b18a6663f7 100644
-> --- a/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
-> @@ -251,8 +251,8 @@ static int a4xx_hw_init(struct msm_gpu *gpu)
->                 gpu_write(gpu, REG_A4XX_UCHE_CACHE_WAYS_VFD, 0x07);
->
->         /* Disable L2 bypass to avoid UCHE out of bounds errors */
-> -       gpu_write(gpu, REG_A4XX_UCHE_TRAP_BASE_LO, 0xffff0000);
-> -       gpu_write(gpu, REG_A4XX_UCHE_TRAP_BASE_HI, 0xffff0000);
-> +       gpu_write(gpu, REG_A4XX_UCHE_TRAP_BASE_LO, lower_32_bits(adreno_g=
-pu->uche_trap_base));
-> +       gpu_write(gpu, REG_A4XX_UCHE_TRAP_BASE_HI, upper_32_bits(adreno_g=
-pu->uche_trap_base));
->
->         gpu_write(gpu, REG_A4XX_CP_DEBUG, (1 << 25) |
->                         (adreno_is_a420(adreno_gpu) ? (1 << 29) : 0));
-> @@ -693,6 +693,8 @@ struct msm_gpu *a4xx_gpu_init(struct drm_device *dev)
->         if (ret)
->                 goto fail;
->
-> +       adreno_gpu->uche_trap_base =3D 0xffff0000ffff0000ull;
-> +
->         if (!gpu->aspace) {
->                 /* TODO we think it is possible to configure the GPU to
->                  * restrict access to VRAM carveout.  But the required
-> diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/=
-adreno/a5xx_gpu.c
-> index ee89db72e36e..caf2c0a7a29f 100644
-> --- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-> @@ -750,10 +750,10 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
->         gpu_write(gpu, REG_A5XX_UCHE_CACHE_WAYS, 0x02);
->
->         /* Disable L2 bypass in the UCHE */
-> -       gpu_write(gpu, REG_A5XX_UCHE_TRAP_BASE_LO, 0xFFFF0000);
-> -       gpu_write(gpu, REG_A5XX_UCHE_TRAP_BASE_HI, 0x0001FFFF);
-> -       gpu_write(gpu, REG_A5XX_UCHE_WRITE_THRU_BASE_LO, 0xFFFF0000);
-> -       gpu_write(gpu, REG_A5XX_UCHE_WRITE_THRU_BASE_HI, 0x0001FFFF);
-> +       gpu_write(gpu, REG_A5XX_UCHE_TRAP_BASE_LO, lower_32_bits(adreno_g=
-pu->uche_trap_base));
-> +       gpu_write(gpu, REG_A5XX_UCHE_TRAP_BASE_HI, upper_32_bits(adreno_g=
-pu->uche_trap_base));
-> +       gpu_write(gpu, REG_A5XX_UCHE_WRITE_THRU_BASE_LO, lower_32_bits(ad=
-reno_gpu->uche_trap_base));
-> +       gpu_write(gpu, REG_A5XX_UCHE_WRITE_THRU_BASE_HI, upper_32_bits(ad=
-reno_gpu->uche_trap_base));
->
->         /* Set the GMEM VA range (0 to gpu->gmem) */
->         gpu_write(gpu, REG_A5XX_UCHE_GMEM_RANGE_MIN_LO, 0x00100000);
-> @@ -1805,5 +1805,7 @@ struct msm_gpu *a5xx_gpu_init(struct drm_device *de=
-v)
->         adreno_gpu->ubwc_config.macrotile_mode =3D 0;
->         adreno_gpu->ubwc_config.ubwc_swizzle =3D 0x7;
->
-> +       adreno_gpu->uche_trap_base =3D 0x0001ffffffff0000ull;
-> +
->         return gpu;
->  }
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/=
-adreno/a6xx_gpu.c
-> index 019610341df1..0ae29a7c8a4d 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> @@ -1123,12 +1123,12 @@ static int hw_init(struct msm_gpu *gpu)
->
->         /* Disable L2 bypass in the UCHE */
->         if (adreno_is_a7xx(adreno_gpu)) {
-> -               gpu_write64(gpu, REG_A6XX_UCHE_TRAP_BASE, 0x0001fffffffff=
-000llu);
-> -               gpu_write64(gpu, REG_A6XX_UCHE_WRITE_THRU_BASE, 0x0001fff=
-ffffff000llu);
-> +               gpu_write64(gpu, REG_A6XX_UCHE_TRAP_BASE, adreno_gpu->uch=
-e_trap_base);
-> +               gpu_write64(gpu, REG_A6XX_UCHE_WRITE_THRU_BASE, adreno_gp=
-u->uche_trap_base);
->         } else {
-> -               gpu_write64(gpu, REG_A6XX_UCHE_WRITE_RANGE_MAX, 0x0001fff=
-fffffffc0llu);
-> -               gpu_write64(gpu, REG_A6XX_UCHE_TRAP_BASE, 0x0001fffffffff=
-000llu);
-> -               gpu_write64(gpu, REG_A6XX_UCHE_WRITE_THRU_BASE, 0x0001fff=
-ffffff000llu);
-> +               gpu_write64(gpu, REG_A6XX_UCHE_WRITE_RANGE_MAX, adreno_gp=
-u->uche_trap_base + 0xfc0);
-> +               gpu_write64(gpu, REG_A6XX_UCHE_TRAP_BASE, adreno_gpu->uch=
-e_trap_base);
-> +               gpu_write64(gpu, REG_A6XX_UCHE_WRITE_THRU_BASE, adreno_gp=
-u->uche_trap_base);
->         }
->
->         if (!(adreno_is_a650_family(adreno_gpu) ||
-> @@ -2533,6 +2533,8 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *de=
-v)
->                 }
->         }
->
-> +       adreno_gpu->uche_trap_base =3D 0x1fffffffff000ull;
-> +
->         if (gpu->aspace)
->                 msm_mmu_set_fault_handler(gpu->aspace->mmu, gpu,
->                                 a6xx_fault_handler);
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/ms=
-m/adreno/adreno_gpu.c
-> index 076be0473eb5..774ff6eacb9f 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> @@ -385,6 +385,9 @@ int adreno_get_param(struct msm_gpu *gpu, struct msm_=
-file_private *ctx,
->         case MSM_PARAM_MACROTILE_MODE:
->                 *value =3D adreno_gpu->ubwc_config.macrotile_mode;
->                 return 0;
-> +       case MSM_PARAM_UCHE_TRAP_BASE:
-> +               *value =3D adreno_gpu->uche_trap_base;
-> +               return 0;
+>  drivers/misc/fastrpc.c | 30 ++++++++++++++++--------------
+>  1 file changed, 16 insertions(+), 14 deletions(-)
+> 
 
-Maybe this should return an error on earlier gens.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Also, if possible, rebase on https://patchwork.freedesktop.org/series/14166=
-7/
-
-BR,
--R
-
->         default:
->                 DBG("%s: invalid param: %u", gpu->name, param);
->                 return -EINVAL;
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/ms=
-m/adreno/adreno_gpu.h
-> index e71f420f8b3a..9bd38dda4308 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> @@ -253,6 +253,8 @@ struct adreno_gpu {
->         bool gmu_is_wrapper;
->
->         bool has_ray_tracing;
-> +
-> +       u64 uche_trap_base;
->  };
->  #define to_adreno_gpu(x) container_of(x, struct adreno_gpu, base)
->
-> diff --git a/include/uapi/drm/msm_drm.h b/include/uapi/drm/msm_drm.h
-> index b916aab80dde..2342cb90857e 100644
-> --- a/include/uapi/drm/msm_drm.h
-> +++ b/include/uapi/drm/msm_drm.h
-> @@ -90,6 +90,7 @@ struct drm_msm_timespec {
->  #define MSM_PARAM_RAYTRACING 0x11 /* RO */
->  #define MSM_PARAM_UBWC_SWIZZLE 0x12 /* RO */
->  #define MSM_PARAM_MACROTILE_MODE 0x13 /* RO */
-> +#define MSM_PARAM_UCHE_TRAP_BASE 0x14 /* RO */
->
->  /* For backwards compat.  The original support for preemption was based =
-on
->   * a single ring per priority level so # of priority levels equals the #
-> --
-> 2.46.2
->
+-- 
+With best wishes
+Dmitry
 
