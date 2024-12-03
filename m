@@ -1,89 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-40156-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40157-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id B572D9E2FF9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 00:39:04 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E901D9E2FFC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 00:41:37 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9D35DB28A1E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 23:38:24 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C071C1620FB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 23:41:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 774EC20A5E0;
-	Tue,  3 Dec 2024 23:38:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D13F205E1C;
+	Tue,  3 Dec 2024 23:41:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oDPxV6H8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yEpoBOFN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E876205E1C
-	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Dec 2024 23:38:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33BD7204F6C
+	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Dec 2024 23:41:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733269099; cv=none; b=Mekuz87jE0Dz78XHHay5EBGcjr1LHkD9rWts3sEGiYh4jdvaObVSyhP8lULuboTZxqa5A9R1oztBQ5U08nAqb1h9Eldmmc8djseqyTezM7l6/m6aK0u9xTsQyu3p6DN7/Li2dVu/S/+JnpAls5FjxbQbw6JocDA96W6WxxnRyFs=
+	t=1733269296; cv=none; b=JnBFXGZLe4+PI3IT5erA20nbXXO7MJltmjm2GiQadhw23C3Fn8u6lcgeLqw1xWPEGl6+f/xlMDT2AFMCM8wWd54iEbckelMtv2B4o3aWBISkn36J01AoavG566PKiAWzQP+Pjr06s2UkOf17ituZt3nbCCv4VZYy03iSPB0nBvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733269099; c=relaxed/simple;
-	bh=7HPRDhBmNX229it5gZJpFg3uexTNN2BzNHQC2yu+IS0=;
+	s=arc-20240116; t=1733269296; c=relaxed/simple;
+	bh=IAZbSEl7axZpnA0Rp9RrVKGXmVc6T23ttnL5W5XppM8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cmUiZfgtecGcLMq5EhX2MC+sPNeZCPUoSGcb3aNCFFeAhFo8vr/n4+FFWExAibe4Ny/8bfBnKVCY4+j+nfgt8NOScTYbWEYnHL89fEMb3xk6QpsR9LHfieHW1wRiL7IKXFrED5H1d8mznB9E7D3xFQ3+/tOXyQtthov8NHwGzMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oDPxV6H8; arc=none smtp.client-ip=209.85.167.54
+	 Content-Type:Content-Disposition:In-Reply-To; b=kVxAPjKuuU4ncfb2ufEIWSceYzYuyn7cMpd79iDIXEHiaMvbf13lh8thK0WZjgWTrUNzZ0eopYBbCC7otHmPfX8CzC+hwRmj2tdvuMIU+cs7vafMQuXvrR+ZJdiC7TNychp8LfB6fikR3buMdf2+2r83wuiHYLZha2Tb1wD7Wo0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yEpoBOFN; arc=none smtp.client-ip=209.85.167.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-53de79c2be4so7428639e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Dec 2024 15:38:16 -0800 (PST)
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-53de035ea13so6285829e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Dec 2024 15:41:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733269094; x=1733873894; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1733269292; x=1733874092; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=PvIkRrq0tXitj5MQqLQ3oqy5bggdWAmTtXbggggiuHU=;
-        b=oDPxV6H8xIYc2tK/rpEa/CmuCJ6dY56vdJx8foBvsyawW483k5QolaXacWIdFpXLGL
-         C3dvpoNhGGywbcHYg0QJwOgSxlP9wVb1dvFDuMpTM9jRmrip7VgBjGMbOo+CbFpQR2Eo
-         9XN5d+PQAxneala9O9k4My7ZA/HqMtrTio+kFBax78lQ+SYoS08XxSd1doQLf3he3av0
-         HXbbWnhfem3WktBW7S/4OiWjLYwlLSMJiKmP96kaDi1s69HvcRcr6WTyKfUaV67JlkSY
-         WqjXPAmlz/j1TaMVEvVxP4DqdPfex8NFJsl66h0/LGFt8WH96Srcx9jGStwAjiNRE7+Z
-         8s5w==
+        bh=8VaC+AymHtSt0FKShOF4pPudg6QHjxqRoyWJzcS7cQs=;
+        b=yEpoBOFNMztwSrI7gT4n5qVnfN1CR/oXSF5dGrouXKMqmZU8NFooOvGXgVPhSphNBF
+         O5i2MV9cYgAv/NlsCX0lTukNGcJAd8/vGYnA69ms3nIaeD2AmuyFW7XwmoVHWBqQMmCo
+         pQ8iECET8wSkbRONKIQoD1l7jy/ftUsgaxwc7SPO1rp1Trr8UqO1NTpX867bDSG1LkFt
+         PYljy6ujHVwMrIaJgi+wd1Rm/D9rnY9eIqRHRtqF2d6nUASu0dO/cP8F47guizciS0Db
+         JzqljQwvXEAq49dE/3ciauwP6j9zuTzP9Qi4ktlyMaShd9IpEyjZP9w8ezNIQRn8isX5
+         XZEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733269094; x=1733873894;
+        d=1e100.net; s=20230601; t=1733269292; x=1733874092;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PvIkRrq0tXitj5MQqLQ3oqy5bggdWAmTtXbggggiuHU=;
-        b=JhI7XbtR6je3HJCbcVeJIdgwPG4uzDpHkJp4gv2zcVLvLDBUbe7dbanwvaWOkPh5z6
-         +8RGFMsdUdPblcmRtDd3VYFd6VUAyDHGz5CXmytJ+BOrHN0iALvslr1JJGR72q65v2M+
-         /sXOIFJWRm/M65QVwAbNS2yrZUfLWHy2u9Cc4ee6YRptG+qWVbcEbwWGsiwLRW+YjQ5S
-         nbq5OJwfF+eh46WlIOR68qJsSPPxIfPqYLTE4s23KmmD4LYfEUDQ9wABFuWHJ//pP+pW
-         yH852xJXpR1N4t7k2FgLr5rw1omzN+dlcptKTln5WXYTdEoha7lYIEYqdUsJxAAn9a7b
-         vO5A==
-X-Forwarded-Encrypted: i=1; AJvYcCVn/Pdx64TN8aEkPW4heSTyzU3gYaCgFBHz1OLzPPtE2goEaYnvHaQ/bFpoHTOFm3GK7q/z8yUqXE4pZflj@vger.kernel.org
-X-Gm-Message-State: AOJu0YwHXVTJefmm6zOQNV5e+/UlyhEv1uReDCCEa7dkADPBTXK6/RDI
-	ubdKkzhFrDHlvA33gx+AJ/0GWJDsl5dz1G+kThkGC2GrcK1y1JWrXCrR6C+uZ9k=
-X-Gm-Gg: ASbGncvaWNYknrI98uM0fjlwRnSE2LtaSn6R6/Xyk6bmDvw4OUuScB2vQvqVj8j0Ica
-	LHMwKEien5JEtJCCn4I9eyFIdhkMfv2XluXbf+55pTkl6aOLuGpviULmwwsS5/IVXGZjOjQNhyp
-	gN5KxkHRXuq52L99Xp/NT4Lq5vRKX5jI5+9W7lbC0ClPJ7ZSJxou6/BSpdeE4MXMkDfwVJBgnHX
-	M5ALJWKqYzDbtWRWGRgVvnL7Lrk0cKQy80leE576BCu/pHhohHM+2DMetP0YLxnFE4brp2svktZ
-	DLCa5tVbHeJh3x6Io0CE5F5Jtd2oOw==
-X-Google-Smtp-Source: AGHT+IFEAY3DxNqKHxw8mhGMitDTHIqwhcTfqELsGsjzfMmTb1zcKOW4rDkr5UYxAPj+4eEnCeVPww==
-X-Received: by 2002:a05:6512:10c5:b0:53e:1c3d:d1ae with SMTP id 2adb3069b0e04-53e1c3dd2c2mr500865e87.29.1733269094445;
-        Tue, 03 Dec 2024 15:38:14 -0800 (PST)
+        bh=8VaC+AymHtSt0FKShOF4pPudg6QHjxqRoyWJzcS7cQs=;
+        b=DKKDlHmvekVeIdpl5v5JJiGXo/wHpqX1iEsvS09n21PBqT8O16HQhNanlmF3nX+pAf
+         T/zYKA5ahmrddqqOaPkf86ttCXtXginCZQ859tV5TxJmn+wmDv3CwALHhNIVU9ZHg3rZ
+         nTj1+qw6KW+VUSwsRxcRQ0hMxwOLWSaj0rCaUSOP9O8NZSmUS7G5dCX/DRwZUBiA31eY
+         lGiJ3+XVfpCXUrTZlpe2ygpadyMHtw0CkhV/9oDa7K0Rb8B46hbNIBhStwwp3kv0cXBe
+         fH1RdDXhpA6H12NHaoDuxAHmeML/pJmGeN3qO1+I/DqAacDcEFZEBgZtjkKxhgG57dRg
+         LnfQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXEyS8eWJM0woTrR4G5LwIu6RpNMaj7vNQoL0FZMGmIaeI4SZ1+jfMvzW/t/zPBoJ9O0yZhPt0GRzLjhhYS@vger.kernel.org
+X-Gm-Message-State: AOJu0YyqqpVjCTUjirK6o9k3r2EAIH1DJmRwAruhc9m72AaY/njnLgAf
+	BK7l7cHgKkI7qVIXvYfxvxh1gkaM1l+AhKDZ/lukl32Lz06ryCN0KpLV3bky1C4=
+X-Gm-Gg: ASbGnct0g5RSnKe4mnMJWiHAYDtHFFsFHCW3KZ+DwGcBDO66n22udUGU4jryD/IN+Cv
+	C2Hs4EiqfX1/MqSS1CVJUp8uZ8ysKEOxNGUSx0wyvtFRzw0sZn+GsTpCJKxVpRHJ8XJrwkgIpi5
+	A/AIlFE+l1JABtvUUmt7Dp4mbpNHVPBJVp5kzs72Vlj1NAowsMJw2DLheTW5MPumqsBVLRz3HX3
+	VNoB0iYIrovCDCOY3Fsd9WOAKfqdsUSRCa3C9BEHoSUNG3+7YxFQ2HEpoKf/jKW2x2QlS+OoIv2
+	fnFu28o0zy1G0tA09uB0tIMOyrRkyQ==
+X-Google-Smtp-Source: AGHT+IHKVny7lfTjFjv8vQ1LYIothrll+JFM6c9K9LYC/aAoAQoTnV/eiGZCUxd2b4XbU8ATpvpJTA==
+X-Received: by 2002:a05:6512:239a:b0:53e:1364:f982 with SMTP id 2adb3069b0e04-53e1364fa93mr2296539e87.17.1733269292308;
+        Tue, 03 Dec 2024 15:41:32 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53df6496903sm1980271e87.210.2024.12.03.15.38.11
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53e1356906esm371633e87.15.2024.12.03.15.41.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Dec 2024 15:38:13 -0800 (PST)
-Date: Wed, 4 Dec 2024 01:38:10 +0200
+        Tue, 03 Dec 2024 15:41:30 -0800 (PST)
+Date: Wed, 4 Dec 2024 01:41:28 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+To: Danylo Piliaiev <danylo.piliaiev@gmail.com>
 Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Stephen Boyd <swboyd@chromium.org>, 
-	Kuogee Hsieh <quic_khsieh@quicinc.com>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	Jessica Zhang <quic_jesszhan@quicinc.com>
-Subject: Re: [PATCH 3/3] drm/msm/dp: add a debugfs node for using tpg
-Message-ID: <uv2phgi72mmw5c462ijsqlqedeiv4gahrwi26i2luqkhgwmfxc@ycj7jrujdj6w>
-References: <20241202-tpg-v1-0-0fd6b518b914@quicinc.com>
- <20241202-tpg-v1-3-0fd6b518b914@quicinc.com>
+	Konrad Dybcio <konradybcio@kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v2 1/1] drm/msm: Expose uche trap base via uapi
+Message-ID: <owl2yqfvo3riismpltxu2puytquy63hrx375mxedntfjxq3wve@yhofuagrozeh>
+References: <20241203095920.505018-1-dpiliaiev@igalia.com>
+ <20241203174011.731980-1-dpiliaiev@igalia.com>
+ <20241203174011.731980-2-dpiliaiev@igalia.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -92,126 +91,40 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241202-tpg-v1-3-0fd6b518b914@quicinc.com>
+In-Reply-To: <20241203174011.731980-2-dpiliaiev@igalia.com>
 
-On Mon, Dec 02, 2024 at 12:42:00PM -0800, Abhinav Kumar wrote:
-> DP test pattern generator is a very useful tool to debug issues
-> where monitor is showing incorrect output as it helps to isolate
-> whether the issue is due to rest of DPU pipeline or in the DP
-> controller itself. Expose a debugfs to use the TPG configuration
-> to help debug DP issues.
+On Tue, Dec 03, 2024 at 06:40:11PM +0100, Danylo Piliaiev wrote:
+> On at least a6xx+, shader could read 64b ALWAYSON counter
+> from UCHE_TRAP_BASE+0 address. In Mesa it will be used
+> to implement VK_KHR_shader_clock and GL_ARB_shader_clock.
+> These extensions provide shader functions to query a real-time or
+> monotonically incrementing counter at the subgroup level or
+> across the device level.
 > 
-> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> On a4xx and a5xx it was not tested what is at UCHE_TRAP_BASE
+> address, there uche trap base is exposed just for completeness.
+> 
+> Signed-off-by: Danylo Piliaiev <dpiliaiev@igalia.com>
 > ---
->  drivers/gpu/drm/msm/dp/dp_debug.c | 61 +++++++++++++++++++++++++++++++++++++++
->  drivers/gpu/drm/msm/dp/dp_panel.h |  2 ++
->  2 files changed, 63 insertions(+)
+> Changes in v2:
+> - Rebased on top of https://patchwork.freedesktop.org/series/141667/
+>   in order to return error via UERR when there is no uche trap base.
+> - Updated commit message to explain why we need to expose the value.
 > 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_debug.c b/drivers/gpu/drm/msm/dp/dp_debug.c
-> index 22fd946ee201..843fe77268f8 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_debug.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_debug.c
-> @@ -197,6 +197,65 @@ static const struct file_operations test_active_fops = {
->  	.write = msm_dp_test_active_write
->  };
->  
-> +static ssize_t msm_dp_tpg_write(struct file *file, const char __user *ubuf,
-> +				size_t len, loff_t *offp)
-> +{
-> +	const struct msm_dp_debug_private *debug;
-> +	char *input_buffer;
-> +	int val;
-> +	int status = 0;
-> +	struct msm_dp_panel *dp_panel;
-> +
-> +	debug = ((struct seq_file *)file->private_data)->private;
-> +	dp_panel = debug->panel;
-> +
-> +	input_buffer = memdup_user_nul(ubuf, len);
-> +	if (IS_ERR(input_buffer))
-> +		return PTR_ERR(input_buffer);
-> +
-> +	status = kstrtoint(input_buffer, 10, &val);
-> +	if (status < 0) {
-> +		kfree(input_buffer);
-> +		return status;
-> +	}
-> +
-> +	msm_dp_panel_tpg_config(dp_panel, val);
-> +
-> +	dp_panel->tpg_enabled = val;
-
-Does this need any kind of locking? The driver performs some actions,
-then we write the global state. What if the user in parallel writes
-different values to the file?
-
-> +
-> +	kfree(input_buffer);
-> +
-> +	*offp += len;
-> +	return len;
-> +}
-> +
-> +static int msm_dp_tpg_show(struct seq_file *f, void *data)
-> +{
-> +	struct msm_dp_debug_private *debug = f->private;
-> +	struct msm_dp_panel *dp_panel = debug->panel;
-> +
-> +	if (dp_panel->tpg_enabled)
-> +		seq_puts(f, "1");
-> +	else
-> +		seq_puts(f, "0");
-> +
-> +	return 0;
-> +}
-> +
-> +static int msm_dp_tpg_open(struct inode *inode, struct file *file)
-> +{
-> +	return single_open(file, msm_dp_tpg_show, inode->i_private);
-> +}
-> +
-> +static const struct file_operations msm_dp_tpg_fops = {
-> +	.owner = THIS_MODULE,
-> +	.open = msm_dp_tpg_open,
-> +	.read = seq_read,
-> +	.llseek = seq_lseek,
-> +	.release = single_release,
-> +	.write = msm_dp_tpg_write
-> +};
-> +
->  int msm_dp_debug_init(struct device *dev, struct msm_dp_panel *panel,
->  		  struct msm_dp_link *link,
->  		  struct drm_connector *connector,
-> @@ -231,6 +290,8 @@ int msm_dp_debug_init(struct device *dev, struct msm_dp_panel *panel,
->  		debugfs_create_file("dp_test_type", 0444,
->  				    root,
->  				    debug, &msm_dp_test_type_fops);
-> +
-> +		debugfs_create_file("dp_tpg", 0444, root, debug, &msm_dp_tpg_fops);
-
-I'd say, skip the dp_ part of the name, everything in that dir is
-DP-related.
-
->  	}
->  
->  	return 0;
-> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.h b/drivers/gpu/drm/msm/dp/dp_panel.h
-> index 0e944db3adf2..7910b11fd685 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_panel.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_panel.h
-> @@ -50,6 +50,8 @@ struct msm_dp_panel {
->  	u32 max_dp_link_rate;
->  
->  	u32 max_bw_code;
-> +
-> +	bool tpg_enabled;
->  };
->  
->  int msm_dp_panel_init_panel_info(struct msm_dp_panel *msm_dp_panel);
+> ---
+>  drivers/gpu/drm/msm/adreno/a4xx_gpu.c   |  6 ++++--
+>  drivers/gpu/drm/msm/adreno/a5xx_gpu.c   | 10 ++++++----
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c   | 12 +++++++-----
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.c |  5 +++++
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.h |  2 ++
+>  include/uapi/drm/msm_drm.h              |  1 +
+>  6 files changed, 25 insertions(+), 11 deletions(-)
 > 
-> -- 
-> 2.34.1
-> 
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+Nit: in future please don't send new versions of the patch as a reply to
+the previous version. Please start a new thread for each new revision.
 
 -- 
 With best wishes
