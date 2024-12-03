@@ -1,188 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-40092-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40094-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 30B339E1F10
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 15:25:43 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 84AB99E1EF2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 15:22:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0E721B2BC7F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 13:52:46 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 91EA8B628FC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 13:53:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3ED181F4266;
-	Tue,  3 Dec 2024 13:52:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B5E82AD02;
+	Tue,  3 Dec 2024 13:53:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qZg3N+y+"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="P4xGGWBI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CCF61EE01F
-	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Dec 2024 13:52:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2C871EF0AA
+	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Dec 2024 13:53:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733233954; cv=none; b=iIO5d8Og0SKu0vCO/9rGasnvdLUu9QOHgZq7E6OABeZ2t5OrYlHDy/HsA3RBtAueuEYT/vrh4hfQFWYY+AJN7DCnL80KOuDyDxPk/y0qS/xu3aMtSpi3FJiKY2GRp3CNuROJcQvNQiPrb7Bacjr9zueC/PdPAA1CkuyTPls6l2A=
+	t=1733234001; cv=none; b=tgUfB2CHsOTlDnPzagLrB183sLK85V6oBHdT+qWv0tutnxoj6wzlZJ33lSoa8eFTndq/eAPeC4FPIXRgLrrb9qFzot1m9C0t0upUvKbhB+RYnDlPznb+xWU/xxml8vajT5lieIzHQBe6a0nMNcq6aK+3EIjzdAU/Aw3vYKLCLBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733233954; c=relaxed/simple;
-	bh=vQyNRZyfktd4dZ/VfxPnrD450fKtsTU4U0K5AmvMOA4=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=fOAxOq0Uj6VWiHLm35IHph4fLv5FBtS7Q5GdpzNLb4KLushuoAz1O4CHNI5c7qTq9FBOy1eOXO+YVpkwMn0PFrsDGhskThf+9YH1OjlFzD3QrDGB5Nayv48vI5McKOHa4KY58HSKk5eo3f29c+d/5QKr6bwBZx0rHjKLRPhiSeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qZg3N+y+; arc=none smtp.client-ip=209.85.128.46
+	s=arc-20240116; t=1733234001; c=relaxed/simple;
+	bh=3atVv1mAWnuY5nRv4mJyKTmYsdawy/26BkqrwuAK54Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ujDRKBk5Xt9r3vFtvYCaLc6yl6B8q6mnwlTzhZu4YfXCrr56WQ3c7C8dmNAiNvVfph1Yu7oj0SOV3WB7DPQRW9Luu5kRTf+d2FzEqnszoNzlj2koFqQLZVoRbHj/IwDUodiq6h38ZOZtHSNvC3CQQEUm2YgEZPU2S/FxOPOytao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=P4xGGWBI; arc=none smtp.client-ip=209.85.167.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4349e1467fbso48658665e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Dec 2024 05:52:31 -0800 (PST)
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-53df1d1b6e8so5671123e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Dec 2024 05:53:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733233950; x=1733838750; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ABkNR+66cga4jI8z0RZ2Hsh7LoVsEWiOT9UTom3Spu8=;
-        b=qZg3N+y+GRR/kFH8MEewLuHAVvQpTuAxENwx9L+wxRu2/O2zN6+SvstcTF8fM0QETO
-         0HK/6unrkmCwx4xq7HJgig8weVC91HzrRAsc8vJ1IcHD+LgYNZDdk+SQj5dI61XAmqp3
-         I8ALwMzlwvImrR5RWd/nVBFTJF7USfYMGm49s4nfhHXk2CdwOaMKIHvEq5F7ViY56Eg4
-         xe00RVnvLV/dG7g8xw32Z2uawtn6USxyP9Jw1guHMVLuqrbsXpeFvukB83ZjVwZ+5VyV
-         bEaC0Xhe3F1qVbuWIo7KlDNWt2x94r9PxMgkouLgVA9WfE/sSV3grz+fFYyY1T7ZrRmq
-         TgGQ==
+        d=linaro.org; s=google; t=1733233998; x=1733838798; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=g8tb3PPgv++CfPZVKWrMsVoIqmBSMscd8BSedQU9tSk=;
+        b=P4xGGWBI36umz+tF6xzabP4jDfxOvQGd+O20PB4uiQiTmtVahVdfRuPUwLZFDmdUyE
+         BucZyUgRLsHpWATmcfrNYMEWVL3cuvwAbAEAf5gQoXi2kAQ6E1iozbTHQQfimJFd1Abj
+         0nfOJw9rU97d8Fzo4cQoknHL6/pZNvCYukz1ckljcvtTrEoU3O+8hYzuccv+xqO1n0Ye
+         YomPvVRvxkFcIkogj1utlvuIO31/7RCVurEuITiz6cufZf8vP7DC/sSlUgxBOcjQEaby
+         Pdv13yiw/ryFFx/uRRan4xcrdAYpk4oISOWOSxrjQ7iHMuH2qygctrvywzTlZNOks4j8
+         rC7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733233950; x=1733838750;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=ABkNR+66cga4jI8z0RZ2Hsh7LoVsEWiOT9UTom3Spu8=;
-        b=tivchXMq2YWyVzz7PlHQMwfeHErkdtcTRQlIYGjX9viBq+Xt2XZ/PdwbTDrCx/hJ8E
-         kfRMiFqeMAp8GMfaJcsa0W8GzvIi/Vob+nDNjD4wx7SM8UBYm5iRmqorI3zw/P7AruK3
-         Ni3zDRj+39HlFn/EO5NyyPU033HxXymP2+uSJOMPHtkydYe/VKJUZV0EU0ibQjNT8O4t
-         tziJoKHOXFXls094AVpMLbx9U6exjMP2m6rA79Z6i+qBUuCrylH/lKkxaCqGPJ2IOiOB
-         EReuJzJmVudjMUvGD3kEqALfE3ECvXxJjQonQw93PKMOAQu+VXJvSCgoRy6k6QAl1iVO
-         FA0Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXK7U6+VpRquyIkozKwzDx7CbIeGmm+5swd10Tq0vqtmRjp7hXgFzPIv+6eadvICBp9Qf3QN/PD+96ss2M7@vger.kernel.org
-X-Gm-Message-State: AOJu0YxrHDZ6nGFOouCqRETxNLd29JZPQHX3pvUmvarY2pseOk474gpd
-	wfrkYq2Lk2PZBfcDRghaGl0FlIYcaWD0XQGjzZ6EjeLPShh4xiTmYG6wTUJRtIk=
-X-Gm-Gg: ASbGnctaS2sZnZAeAmaIvc968uVjPoKHLvdepxSEWZdMqwV9MEYi7FE7FZBchKzNDEL
-	HtCs/E1v7iozU/D2E7BiavlpN9E6WQWoaQtfOKbuD6n3U3KjmA3btR7++OeqQMK0dj/D8ETLGQk
-	LcphYqiKwoYwkhk7XzjPTa4sHG7k/xqm+nOsSdILhqTmoxtSw8abJ6nV7/XekKbtzu7EbZdqY2w
-	dy/cB2mkXbvEofcNNS4fCVhER75Ez2LFRJFvfiE4fWsXdRseJ0JCnyWctj7ZfFMj2vRMCI4t5tp
-	9L/5t2sqNdKYgRY2bdzaJaCl
-X-Google-Smtp-Source: AGHT+IFkJh1EUhfAJne4bE1d9lfMNE+K3tGMuLLZgbRBdMCN+TtCafvJ11ltFQ+c8Zv8qJ9vt2sg9Q==
-X-Received: by 2002:a5d:47cb:0:b0:385:e8b0:df13 with SMTP id ffacd0b85a97d-385fd437301mr2434207f8f.40.1733233949965;
-        Tue, 03 Dec 2024 05:52:29 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:b668:b88:4ecf:c065? ([2a01:e0a:982:cbb0:b668:b88:4ecf:c065])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-385ccd3a710sm15397849f8f.57.2024.12.03.05.52.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 Dec 2024 05:52:29 -0800 (PST)
-Message-ID: <d0d4ce7a-033a-4a5f-8952-1cb46b24b8ce@linaro.org>
-Date: Tue, 3 Dec 2024 14:52:28 +0100
+        d=1e100.net; s=20230601; t=1733233998; x=1733838798;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=g8tb3PPgv++CfPZVKWrMsVoIqmBSMscd8BSedQU9tSk=;
+        b=DPacJSvNBVreKcyaU8pxF+J4ZE3brBdrCK0CYZMa8mR7LrV4qKl1Nf33z6q2BxeWK5
+         HO0umidomFW9WKkWZ98u6FUx7LUqic5sDl+Dxp/qZ8NK0DLC7Y7ZqmXJmQYXHPWmIPq+
+         UlgaxsU5aBNbh0emskoSlTeFQuuismeAQWE4jY6jiyRVepE6CP4hg71ltTOVy2zKw405
+         C3oHWPCnqYw/HPBi3wrukemvQc5jgawflK4SxOmQ1ntGOQImPG9NR+nb1pAS7SJOBR43
+         vBX+kSmMNDfAWujZVSQrYEXf/tX7iOxj9P+1ZRokHLx4q3LZLRqiXcJIS8nBFl6I0giD
+         8bhA==
+X-Forwarded-Encrypted: i=1; AJvYcCV6cbyjWo2TWEe9L0phj2Wa+0ZSEaNWo+gAfGa7gp0t6pl95SsKvfyCTmeTeOqEmHxyw9U+IcR3ozg+L98S@vger.kernel.org
+X-Gm-Message-State: AOJu0YyPAkWZrjinSH1ypWfc69b+dvjL160CThcJDMqC/+qebB6/ioZl
+	TBZteGQED++NvZUXOqs/xNp/cN/IR5KEH/x6kriBmbCBkM9femt6ToNSl3OFrmg=
+X-Gm-Gg: ASbGncugHPe7mkkchInXKsywz8qbW7gNJB4Up2HlAXM7WyvUwrkRHt38BWkk0bdzM3L
+	8172HI5qURkAZGqpDDnIwQ9jmx4FDEFwW8yEW5SqiP1v5VMkzYTtlsWmHax29ZTLRmwg69yzRe9
+	9H+WMfgbu3aDQGkIIm4Tfmw/zCCLJkSsn8Dg64LSd0GbTHcs9C8uRpoDNDmQn5GS/hsTA6LlR1i
+	Lb8eCFxkGLotqOJaG0qHlfqS0B/eca33ufW3d1MjIcV/FtlsECkCl7JQcbWT7m8O7MRwmag9PTh
+	mALTgpwzBVyY2CwnViQvIjDzO8KESg==
+X-Google-Smtp-Source: AGHT+IHmwhiWYRAUKFwNF3ZPoG27Uk1n5LAAWFLyHl2lAlSgMJV5sQBtJbBDUsi85Xo7F4t3kAwO1g==
+X-Received: by 2002:a05:6512:10cd:b0:53d:eefc:260f with SMTP id 2adb3069b0e04-53e1b881433mr165323e87.16.1733233997647;
+        Tue, 03 Dec 2024 05:53:17 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53e1356906esm215368e87.15.2024.12.03.05.53.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Dec 2024 05:53:16 -0800 (PST)
+Date: Tue, 3 Dec 2024 15:53:14 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, Stephen Boyd <swboyd@chromium.org>, 
+	Doug Anderson <dianders@chromium.org>, Johan Hovold <johan@kernel.org>, 
+	Bjorn Andersson <quic_bjorande@quicinc.com>
+Subject: Re: [PATCH 2/4] drm/msm/dp: remove redundant ST_DISPLAY_OFF checks
+ in msm_dp_bridge_atomic_enable()
+Message-ID: <f6oh3kid5dfiqe7jy7j3d4gcv4evbtztzpgiygvzfsu6qlim2j@2vsulwcau6tr>
+References: <20241202-hpd_display_off-v1-0-8d0551847753@quicinc.com>
+ <20241202-hpd_display_off-v1-2-8d0551847753@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 7/9] crypto: qce - use __free() for a buffer that's always
- freed
-To: Bartosz Golaszewski <brgl@bgdev.pl>,
- Thara Gopinath <thara.gopinath@gmail.com>,
- Herbert Xu <herbert@gondor.apana.org.au>,
- "David S. Miller" <davem@davemloft.net>,
- Stanimir Varbanov <svarbanov@mm-sol.com>
-Cc: linux-crypto@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20241203-crypto-qce-refactor-v1-0-c5901d2dd45c@linaro.org>
- <20241203-crypto-qce-refactor-v1-7-c5901d2dd45c@linaro.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20241203-crypto-qce-refactor-v1-7-c5901d2dd45c@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241202-hpd_display_off-v1-2-8d0551847753@quicinc.com>
 
-On 03/12/2024 10:19, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On Mon, Dec 02, 2024 at 04:39:01PM -0800, Abhinav Kumar wrote:
+> The checks in msm_dp_display_prepare() for making sure that we are in
+> ST_DISPLAY_OFF OR ST_MAINLINK_READY seem redundant.
 > 
-> The buffer allocated in qce_ahash_hmac_setkey is always freed before
-> returning to use __free() to automate it.
+> DRM fwk shall not issue any commits if state is not ST_MAINLINK_READY as
+> msm_dp's atomic_check callback returns a failure if state is not ST_MAINLINK_READY.
 
-I think you wanted to use "so" instead of "to", otherwise it means nothing ^^
+Can the state change between atomic_check() and atomic_commit()?
 
 > 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> For the ST_DISPLAY_OFF check, its mainly to guard against a scenario that
+> there is an atomic_enable() without a prior atomic_disable() which once again
+> should not really happen.
+> 
+> To simplify the code, get rid of these checks.
+> 
+> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 > ---
->   drivers/crypto/qce/sha.c | 6 +++---
->   1 file changed, 3 insertions(+), 3 deletions(-)
+>  drivers/gpu/drm/msm/dp/dp_display.c | 6 ------
+>  1 file changed, 6 deletions(-)
 > 
-> diff --git a/drivers/crypto/qce/sha.c b/drivers/crypto/qce/sha.c
-> index fc72af8aa9a72..916908c04b635 100644
-> --- a/drivers/crypto/qce/sha.c
-> +++ b/drivers/crypto/qce/sha.c
-> @@ -3,6 +3,7 @@
->    * Copyright (c) 2010-2014, The Linux Foundation. All rights reserved.
->    */
->   
-> +#include <linux/cleanup.h>
->   #include <linux/device.h>
->   #include <linux/dma-mapping.h>
->   #include <linux/interrupt.h>
-> @@ -336,7 +337,6 @@ static int qce_ahash_hmac_setkey(struct crypto_ahash *tfm, const u8 *key,
->   	struct scatterlist sg;
->   	unsigned int blocksize;
->   	struct crypto_ahash *ahash_tfm;
-> -	u8 *buf;
->   	int ret;
->   	const char *alg_name;
->   
-> @@ -370,7 +370,8 @@ static int qce_ahash_hmac_setkey(struct crypto_ahash *tfm, const u8 *key,
->   				   crypto_req_done, &wait);
->   	crypto_ahash_clear_flags(ahash_tfm, ~0);
->   
-> -	buf = kzalloc(keylen + QCE_MAX_ALIGN_SIZE, GFP_KERNEL);
-> +	u8 *buf __free(kfree) = kzalloc(keylen + QCE_MAX_ALIGN_SIZE,
-> +					GFP_KERNEL);
->   	if (!buf) {
->   		ret = -ENOMEM;
->   		goto err_free_req;
-> @@ -382,7 +383,6 @@ static int qce_ahash_hmac_setkey(struct crypto_ahash *tfm, const u8 *key,
->   
->   	ret = crypto_wait_req(crypto_ahash_digest(req), &wait);
->   
-> -	kfree(buf);
->   err_free_req:
->   	ahash_request_free(req);
->   err_free_ahash:
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index 992184cc17e4..614fff09e5f2 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -1513,12 +1513,6 @@ void msm_dp_bridge_atomic_enable(struct drm_bridge *drm_bridge,
+>  		return;
+>  	}
+>  
+> -	state = msm_dp_display->hpd_state;
+> -	if (state != ST_DISPLAY_OFF && state != ST_MAINLINK_READY) {
+> -		mutex_unlock(&msm_dp_display->event_mutex);
+> -		return;
+> -	}
+> -
+>  	rc = msm_dp_display_set_mode(dp, &msm_dp_display->msm_dp_mode);
+>  	if (rc) {
+>  		DRM_ERROR("Failed to perform a mode set, rc=%d\n", rc);
+> 
+> -- 
+> 2.34.1
 > 
 
-With the typo fixes:
-
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-
+-- 
+With best wishes
+Dmitry
 
