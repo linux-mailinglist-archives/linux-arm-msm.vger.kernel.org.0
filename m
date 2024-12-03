@@ -1,246 +1,208 @@
-Return-Path: <linux-arm-msm+bounces-40069-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40070-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 159599E1C38
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 13:33:19 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 181059E1B5C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 12:52:58 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A8377B300A0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 11:30:56 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id ECA23167617
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2024 11:52:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 612041E048B;
-	Tue,  3 Dec 2024 11:30:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D683F1E501C;
+	Tue,  3 Dec 2024 11:51:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Thtairp1"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="X0Bu4nmo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f68.google.com (mail-wr1-f68.google.com [209.85.221.68])
+Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B8671E0E12
-	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Dec 2024 11:30:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.68
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F30D31E503D
+	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Dec 2024 11:51:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733225447; cv=none; b=WIvhuXjl6QYyRCTo2oUqJZ00sNfMuXyY9VV3/Q+EcSLT4QVqJk2X6snDDUS0DekSgvLWtdcrE5CrTEOhb61k1YOduhgr49QqeWpeFIHJ13AYupRPWta0iewV+9qBm7ylCSfNxeaHpWKxAhQAZnhprePN6SsMdpp/a9N8G3ahW8o=
+	t=1733226717; cv=none; b=az7Qd5DmncrbPL6zaoyBAGgCDTspuLxcjHhs0p4i/Zhkl+zr1dCql40a085dbmCbO81MgEpbmuOK0mGWIHc23G1TuJtj8QAs56qgU6QjbCS8ipT8j2RoH4RjafyZFGEuyEJqpwCDFLq01mazxTZ955/H7qCMz3yJWAsQIyNQFpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733225447; c=relaxed/simple;
-	bh=XQKBWrT8ks1Ct4PewBxKAAw4CBuc3RSkP2JdRArH02Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SNJ0rrb4MJph8bi7WRcRuBB2q+VR7PEeTUr6hLwlfFIRyLzelLYJdKJmtLI7kn/eg8MwlGUeW86iEdOwyij5zgWSPLVfLSrIUmR6zrD6ZrU6GiMYdrZh2g7xU8pqvGvJSEKnvh9jL6U1u76CeV1r0y3Ti9aTM54ttU19yunKRjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Thtairp1; arc=none smtp.client-ip=209.85.221.68
+	s=arc-20240116; t=1733226717; c=relaxed/simple;
+	bh=xODsXxgFfNZd8MjPBZGqmi3sIBbEKRslq024Q4XA774=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=eZ2HNfuXa7RWvgT/Jt7+mDdc43fAar2R6P5ts0pl8Q2peKnpCz5krouMZ655pVeW4MiCG7ULeInjeUt29M509H9NWUVGPRGxOjfuK4HS6usxkE99aOIY6PP6zSV7CCRpMBp4XdhMUsGB3HmCgDKxXgGD1c4JpzyzzPAKrwWcxg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=X0Bu4nmo; arc=none smtp.client-ip=209.85.128.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f68.google.com with SMTP id ffacd0b85a97d-385dfb168cbso2589345f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Dec 2024 03:30:44 -0800 (PST)
+Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-6efa5bf5202so16234987b3.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Dec 2024 03:51:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733225443; x=1733830243; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=k5QpSnqZsvHI5RdTuW6YI5wmM0DD916U9oPMDkb1hRw=;
-        b=Thtairp1YZWUiMOdW8kaisxxUXoFG+spED+10OM3QUnavi7ELWW2SKz6iNWX079xq2
-         2VJZOgc2P2AerWF8DiTKi15iqVdb9fKMfTY3zuXzRik5dUGPhhIUrpY02IcrftazAVPh
-         hALYSAVZHfhZTvBfudXSjMHXBKJ2SkfEPIhBf0N8ryOBy8ehDJF4PZgLTIu8CD/T3AuQ
-         BB/la3OQt9dGLFMcWu8sm63HNJhKHZ93Rb8kQSshe7Qf1mYt7WdXqzxYIlSoIOKckse9
-         Ncy2jMFArX6BP0JHWY4wHCXrwk5HlaBEvRyvkZGS/rWMszQYZc21QO+FdVtWP0oLYXAv
-         fDjQ==
+        d=linaro.org; s=google; t=1733226715; x=1733831515; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=jJmN9vm0KKdkbgYJY1kJ2PT7vRHayhKSRB17RM5kC5E=;
+        b=X0Bu4nmocEtYnkYNZV3jm3+ODoDpXf7OFUSD4BK/eNEAnGS92mxk0QKcWlfWaqd/t0
+         bKan83juUuc5txilEUJnJKr266BkeuwZs11HmnfIIFId0bUZK942UkyzZjafisK9doDa
+         5uB31FoFPQSAcVIMtrd3oHZZEFpZAdOUXNu46lVNiBlb2B8OF9ub7va69WFNwxtQmIaU
+         vTMyZCyG3++mj5oF+xqTNthMlYM4Untn1TvWhS/s5z0QjaD1NKuD8Vwz6cCO6E/OTwRr
+         pVI3kW668KSehmrYZZye/FIFtvSjCLqF5ROYDf4byEq7/hFVlyROhu7oO+AjQ7lkRd4G
+         MJBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733225443; x=1733830243;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=k5QpSnqZsvHI5RdTuW6YI5wmM0DD916U9oPMDkb1hRw=;
-        b=CLGhrecK7BxIcqHuXsFtRgbeGb4LKePL0O4gQ22GwB7EUNGQjDOvokaj4pv1yFyP87
-         XtIKdjM0VRRZhwlDYwVa+12xIj1itCx4EG+pqRJF1TkaXV4+3E2izGJqxwDDlS8pGNAH
-         Vl4HhE2ggsPibH/9EOivQeM1mHtnPrinrMasAXF3gDGqY8Sqr5d4FVEsO5CCRRzkaLrg
-         c51SIIQJW38s6oyKLQgVwUsOcV7t2+l2a1DKYXoKT2DBvxKEEdN9KTo91/dWr3fd2ddo
-         3t6CHWGXagwXsUgswCgTO46ALwg7zkV2wpFTEY9PIPyzrq+71Lkj26Vj58m06gKCw2+k
-         YPcQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWlp1l5J5tZQwtsvpjG00fY4DZVRyy/etChd5kDNLvLHo0xVbD4DJD4SYDDnLCuli0YDaD1LLdrhxiRR+iN@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyj2q6g1J6UIS4kipgK2CVxPWgQkARoeEJFB4FSMs2gF+wOe7Gs
-	L6WxlHqAYaBd7/Nrqrm1jtxQeeGv431ZCZ34mxkNzq0AuVzbIhK1mctg82ZG2ls=
-X-Gm-Gg: ASbGnct4BM/Y94oDXL2K+CfZc16PSxRick5Mu8EPfvRuceqoQUP+MINbfXJgJXRAhgg
-	+xqK0ON0QrzyH45ZG6afjIrGSGHMfmCjW5ytOFUqJXB2etCqX4gvkiqnN3a0+pA9TCjfIypEBug
-	ID+KxmuOCGYFdU7djtSHRhr1IfRC1mpsoIp9NXoMPsOWFnCKfQ5aFoKli5juqBoVRDCQENqEyc1
-	RoeDGEynFNg4cmYojmFgXL52jDmOhRyHvhK24DGNdx6lwgNpkOF62F+PATM
-X-Google-Smtp-Source: AGHT+IH34y7jHvFYEfoZxdYAaLv1kB29M7msviDEnioq7JmNTaNVxGRtN4bXS3pbvxOss6/WmLYc6A==
-X-Received: by 2002:a05:6000:18a3:b0:385:e055:a28d with SMTP id ffacd0b85a97d-385fd42a6cfmr1723185f8f.57.1733225441788;
-        Tue, 03 Dec 2024 03:30:41 -0800 (PST)
-Received: from linaro.org ([2a02:2454:ff21:ef80:5c38:843:f8a3:a2ba])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-385dd99504csm13253045f8f.85.2024.12.03.03.30.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Dec 2024 03:30:41 -0800 (PST)
-Date: Tue, 3 Dec 2024 12:30:37 +0100
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Johan Hovold <johan@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Krishna Kurapati <quic_kriskura@quicinc.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>, linux-usb@vger.kernel.org
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: x1e80100-crd: Add USB multiport
- fingerprint readery
-Message-ID: <Z07r3Upr50vLluyn@linaro.org>
-References: <20241118-x1e80100-crd-fp-v1-0-ec6b553a2e53@linaro.org>
- <20241118-x1e80100-crd-fp-v1-1-ec6b553a2e53@linaro.org>
- <Z07bgH5vVk44zuEH@hovoldconsulting.com>
+        d=1e100.net; s=20230601; t=1733226715; x=1733831515;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jJmN9vm0KKdkbgYJY1kJ2PT7vRHayhKSRB17RM5kC5E=;
+        b=Da8JIqdvGNcEp+35lVjqXR+FCH1OL2tm4CgZYxaGwlvFwRtGCEbDROEORHzbnpFRwo
+         rkKwnUjUDJcdMZ0F/LR5Dxff8Bp8wCueze6oLywVCoipLY9PKiUxdgg14Z3U0CGI/0rJ
+         5GfbxAaQ/0SgcR1NFWjRSbSWE/HRh/wAa3xNW5MnJyTIzQWypsrnuKUbXx1jorr8PjLU
+         KkIal/PKMPoB1CK6h145wWMFZEs5OHd2M1nI6xVfs/8o2DgbGkyoKzozixo7wfaMJblm
+         pYw8MIvjx6f9WDqNreoP7LW/yDygTGi3kYEBV66JQhJVe08cWYlJ/lAXNBolL3eGeHVS
+         7yjQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUWGvQ+wwX6e35MoI7mRy3bxLqhyEB25pabR6TPKdEOs4BRl6q1Je+dbTpLzVGGqp042jPp+bqchdcrPQnd@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxm+NrSvkVvcPTzlRL+mJE/AskvVu/35E0QCpNqhcgRJ1Uyqflg
+	lpfKRfM6DT231qiKyhoCiylE7E4QwdJqdlUQUXmfH/1BuEzX/yHKxUF0UrXrxteK0CHlmzb67kR
+	N5HI0fwgp+4YgkUFquIvZpKeYU0/exeKebtQV9A==
+X-Gm-Gg: ASbGncupKUosqA2utL0BCynuLaj55Z8XIQy7ZHsoE2L0/kEbptZOk+y+MF1cJORJbSR
+	ITrn07tN+vUyS9om62t9db3wXN1AjFw==
+X-Google-Smtp-Source: AGHT+IEjsHAYwArBu8zqyJKRiaq0r1rzH6TwAontXOXbJw7jEjz6js3BPKBbGiqM6LVavcAfeIYgmun7BtLOfMgwhmU=
+X-Received: by 2002:a05:6902:150d:b0:e39:772b:4bae with SMTP id
+ 3f1490d57ef6-e39d39ee384mr1903823276.6.1733226714940; Tue, 03 Dec 2024
+ 03:51:54 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z07bgH5vVk44zuEH@hovoldconsulting.com>
+References: <20241112003017.2805670-1-quic_molvera@quicinc.com>
+ <20241112003017.2805670-3-quic_molvera@quicinc.com> <em4vkg4totsg435s4usu7kqn45vfqfot2j7sikzmnof2kkyidi@26b6kkpz7z4c>
+ <0ca812e7-bf5b-463a-83dc-9195aee14589@quicinc.com> <828dbdb1-d987-43e6-8cd1-7ba267da9e67@quicinc.com>
+In-Reply-To: <828dbdb1-d987-43e6-8cd1-7ba267da9e67@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 3 Dec 2024 13:51:46 +0200
+Message-ID: <CAA8EJpqPRpV_aGH_LHoG8EWkaQ_tCR3u0jM3C_jXKowCAUEqPQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] interconnect: qcom: Add interconnect provider
+ driver for SM8750
+To: Melody Olvera <quic_molvera@quicinc.com>
+Cc: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Adam Skladowski <a39.skl@gmail.com>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Sibi Sankar <quic_sibis@quicinc.com>, =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <u.kleine-koenig@baylibre.com>, 
+	Vladimir Lypak <vladimir.lypak@gmail.com>, Danila Tikhonov <danila@jiaxyga.com>, 
+	Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Rajendra Nayak <quic_rjendra@quicinc.com>, Mike Tipton <quic_mdtipton@quicinc.com>, 
+	Abel Vesa <abel.vesa@linaro.org>, Trilok Soni <quic_tsoni@quicinc.com>, 
+	Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>, linux-arm-msm@vger.kernel.org, 
+	linux-pm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Dec 03, 2024 at 11:20:48AM +0100, Johan Hovold wrote:
-> [ +CC: Krishna, Thinh and the USB list ]
-> 
-> On Mon, Nov 18, 2024 at 11:34:29AM +0100, Stephan Gerhold wrote:
-> > The X1E80100 CRD has a Goodix fingerprint reader connected to the USB
-> > multiport controller on eUSB6. All other ports (including USB super-speed
-> > pins) are unused.
-> > 
-> > Set it up in the device tree together with the NXP PTN3222 repeater.
-> > 
-> > Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-> > ---
-> >  arch/arm64/boot/dts/qcom/x1e80100-crd.dts | 48 +++++++++++++++++++++++++++++++
-> >  1 file changed, 48 insertions(+)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-> > index 39f9d9cdc10d..44942931c18f 100644
-> > --- a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-> > +++ b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-> > @@ -735,6 +735,26 @@ keyboard@3a {
-> >  	};
-> >  };
-> >  
-> > +&i2c5 {
-> > +	clock-frequency = <400000>;
-> > +
-> > +	status = "okay";
-> > +
-> > +	eusb6_repeater: redriver@4f {
-> > +		compatible = "nxp,ptn3222";
-> > +		reg = <0x4f>;
-> 
-> The driver does not currently check that there's actually anything at
-> this address. Did you verify that this is the correct address? 
-> 
-> (Abel is adding a check to the driver as we speak to catch any such
-> mistakes going forward).
-> 
+On Tue, 3 Dec 2024 at 00:04, Melody Olvera <quic_molvera@quicinc.com> wrote:
+>
+>
+>
+> On 11/18/2024 10:01 AM, Melody Olvera wrote:
+> >
+> >
+> > On 11/15/2024 7:27 AM, Dmitry Baryshkov wrote:
+> >> On Mon, Nov 11, 2024 at 04:30:17PM -0800, Melody Olvera wrote:
+> >>> From: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
+> >>>
+> >>> Introduce SM8750 interconnect provider driver using the interconnect
+> >>> framework.
+> >>>
+> >>> Signed-off-by: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
+> >>> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+> >>> ---
+> >>>   drivers/interconnect/qcom/Kconfig  |    9 +
+> >>>   drivers/interconnect/qcom/Makefile |    2 +
+> >>>   drivers/interconnect/qcom/sm8750.c | 1585
+> >>> ++++++++++++++++++++++++++++
+> >>>   drivers/interconnect/qcom/sm8750.h |  132 +++
+> >>>   4 files changed, 1728 insertions(+)
+> >>>   create mode 100644 drivers/interconnect/qcom/sm8750.c
+> >>>   create mode 100644 drivers/interconnect/qcom/sm8750.h
+> >>>
+> >>> diff --git a/drivers/interconnect/qcom/Kconfig
+> >>> b/drivers/interconnect/qcom/Kconfig
+> >>> index 362fb9b0a198..1219f4f23d40 100644
+> >>> --- a/drivers/interconnect/qcom/Kconfig
+> >>> +++ b/drivers/interconnect/qcom/Kconfig
+> >>> @@ -337,6 +337,15 @@ config INTERCONNECT_QCOM_SM8650
+> >>>         This is a driver for the Qualcomm Network-on-Chip on
+> >>> SM8650-based
+> >>>         platforms.
+> >>>   +config INTERCONNECT_QCOM_SM8750
+> >>> +    tristate "Qualcomm SM8750 interconnect driver"
+> >>> +    depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
+> >>> +    select INTERCONNECT_QCOM_RPMH
+> >>> +    select INTERCONNECT_QCOM_BCM_VOTER
+> >>> +    help
+> >>> +      This is a driver for the Qualcomm Network-on-Chip on
+> >>> SM8750-based
+> >>> +      platforms.
+> >>> +
+> >>>   config INTERCONNECT_QCOM_X1E80100
+> >>>       tristate "Qualcomm X1E80100 interconnect driver"
+> >>>       depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
+> >>> diff --git a/drivers/interconnect/qcom/Makefile
+> >>> b/drivers/interconnect/qcom/Makefile
+> >>> index 9997728c02bf..7887b1e8d69b 100644
+> >>> --- a/drivers/interconnect/qcom/Makefile
+> >>> +++ b/drivers/interconnect/qcom/Makefile
+> >>> @@ -40,6 +40,7 @@ qnoc-sm8350-objs            := sm8350.o
+> >>>   qnoc-sm8450-objs            := sm8450.o
+> >>>   qnoc-sm8550-objs            := sm8550.o
+> >>>   qnoc-sm8650-objs            := sm8650.o
+> >>> +qnoc-sm8750-objs            := sm8750.o
+> >>>   qnoc-x1e80100-objs            := x1e80100.o
+> >>>   icc-smd-rpm-objs            := smd-rpm.o icc-rpm.o icc-rpm-clocks.o
+> >>>   @@ -80,5 +81,6 @@ obj-$(CONFIG_INTERCONNECT_QCOM_SM8350) +=
+> >>> qnoc-sm8350.o
+> >>>   obj-$(CONFIG_INTERCONNECT_QCOM_SM8450) += qnoc-sm8450.o
+> >>>   obj-$(CONFIG_INTERCONNECT_QCOM_SM8550) += qnoc-sm8550.o
+> >>>   obj-$(CONFIG_INTERCONNECT_QCOM_SM8650) += qnoc-sm8650.o
+> >>> +obj-$(CONFIG_INTERCONNECT_QCOM_SM8750) += qnoc-sm8750.o
+> >>>   obj-$(CONFIG_INTERCONNECT_QCOM_X1E80100) += qnoc-x1e80100.o
+> >>>   obj-$(CONFIG_INTERCONNECT_QCOM_SMD_RPM) += icc-smd-rpm.o
+> >>> diff --git a/drivers/interconnect/qcom/sm8750.c
+> >>> b/drivers/interconnect/qcom/sm8750.c
+> >>> new file mode 100644
+> >>> index 000000000000..bc72954d54ff
+> >>> --- /dev/null
+> >>> +++ b/drivers/interconnect/qcom/sm8750.c
+> >>> @@ -0,0 +1,1585 @@
+> >>> +// SPDX-License-Identifier: GPL-2.0-only
+> >>> +/*
+> >>> + * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights
+> >>> reserved.
+> >>> + *
+> >>> + */
+> >>> +
+> >>> +#include <linux/device.h>
+> >>> +#include <linux/interconnect.h>
+> >>> +#include <linux/interconnect-provider.h>
+> >>> +#include <linux/module.h>
+> >>> +#include <linux/of_platform.h>
+> >>> +#include <dt-bindings/interconnect/qcom,sm8750-rpmh.h>
+> >>> +
+> >>> +#include "bcm-voter.h"
+> >>> +#include "icc-rpmh.h"
+> >>> +#include "sm8750.h"
+> >> Nit: please merge sm8750.h here, there is no need to have a separate
+> >> header, there are no other users.
+> >
+> > Ack.
+> >
+> >>
+> >> Also, is there QoS support? I see no qcom_icc_qosbox entries.
+> >
+> > Unsure; will let Raviteja comment.
+> >
+>
+> Spoke w Raviteja; looks like he wants to do this later.
 
-Yes, I verified this using
-https://git.codelinaro.org/stephan.gerhold/linux/-/commit/45d5add498612387f88270ca944ee16e2236fddd
+Will that cause bindings changes?
 
-(I sent this to Abel back then, so I'm surprised he didn't run that :-))
-
-> > +		#phy-cells = <0>;
-> 
-> nit: I'd put provider properties like this one last.
-> 
-> > +		vdd3v3-supply = <&vreg_l13b_3p0>;
-> > +		vdd1v8-supply = <&vreg_l4b_1p8>;
-> 
-> Sort by supply name?
-> 
-
-Ack.
-
-> > +		reset-gpios = <&tlmm 184 GPIO_ACTIVE_LOW>;
-> > +
-> > +		pinctrl-0 = <&eusb6_reset_n>;
-> > +		pinctrl-names = "default";
-> > +	};
-> > +};
-> > +
-> >  &i2c8 {
-> >  	clock-frequency = <400000>;
-> >  
-> > @@ -1047,6 +1067,14 @@ edp_reg_en: edp-reg-en-state {
-> >  		bias-disable;
-> >  	};
-> >  
-> > +	eusb6_reset_n: eusb6-reset-n-state {
-> > +		pins = "gpio184";
-> > +		function = "gpio";
-> > +		drive-strength = <2>;
-> > +		bias-disable;
-> > +		output-low;
-> 
-> I don't think the pin config should assert reset, that should be up to
-> the driver to control.
-> 
-
-I can drop it I guess, but pinctrl is applied before the driver takes
-control of the GPIO. This means if the GPIO happens to be in input mode
-before the driver loads (with pull up or pull down), then we would
-briefly leave it floating when applying the bias-disable.
-
-Or I guess we could drop the bias-disable, since it shouldn't be
-relevant for a pin we keep in output mode all the time?
-
-> > +	};
-> > +
-> >  	hall_int_n_default: hall-int-n-state {
-> >  		pins = "gpio92";
-> >  		function = "gpio";
-> > @@ -1260,3 +1288,23 @@ &usb_1_ss2_dwc3_hs {
-> >  &usb_1_ss2_qmpphy_out {
-> >  	remote-endpoint = <&pmic_glink_ss2_ss_in>;
-> >  };
-> > +
-> > +&usb_mp {
-> > +	status = "okay";
-> > +};
-> > +
-> > +&usb_mp_dwc3 {
-> > +	/* Limit to USB 2.0 and single port */
-> > +	maximum-speed = "high-speed";
-> > +	phys = <&usb_mp_hsphy1>;
-> > +	phy-names = "usb2-1";
-> > +};
-> 
-> The dwc3 driver determines (and acts on) the number of ports based on
-> the port interrupts in DT and controller capabilities. 
-> 
-> I'm not sure we can (should) just drop the other HS PHY and the SS PHYs
-> that would still be there in the SoC (possibly initialised by the boot
-> firmware).
-> 
-> I had a local patch to enable the multiport controller (for the suspend
-> work) and I realise that you'd currently need to specify a repeater also
-> for the HS PHY which does not have one, but that should be possible to
-> fix somehow.
-> 
-
-I think there are two separate questions here:
-
- 1. Should we (or do we even need to) enable unused PHYs?
- 2. Do we need to power off unused PHYs left enabled by the firmware?
-
-For (1), I'm not not sure if there is a technical reason that requires
-us to. And given that PHYs typically consume quite a bit of power, I'm
-not sure if we should. Perhaps it's not worth spending effort on this
-minor optimization now, but then the device tree would ideally still
-tell us which PHYs are actually used (for future optimizations).
-
-For (2), yes, we probably need to. But my impression so far is that this
-might be a larger problem that we need to handle on the SoC level. I
-have seen some firmware versions that blindly power up all USB
-controllers, even completely unused ones. Ideally we would power down
-unused components during startup and then leave them off.
-
-Thanks,
-Stephan
+-- 
+With best wishes
+Dmitry
 
