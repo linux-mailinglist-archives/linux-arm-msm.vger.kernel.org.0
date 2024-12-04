@@ -1,299 +1,187 @@
-Return-Path: <linux-arm-msm+bounces-40239-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40241-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 72A9E9E3A22
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 13:41:19 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D56439E3A02
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 13:31:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DD74DB310C3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 12:28:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9B337286195
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 12:31:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF6CB1B87CE;
-	Wed,  4 Dec 2024 12:27:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 453CE1B395D;
+	Wed,  4 Dec 2024 12:31:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TEg+sV1R"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ou3bnwiV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C32431CD1EA;
-	Wed,  4 Dec 2024 12:27:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 458311974EA
+	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Dec 2024 12:31:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733315236; cv=none; b=DzgKrFzIEPK4+wWJnkTQBiS1IxxL91Jgus2G5D0suBACN20OHjxOC8aAorGNyuxslHY7dlZgxUWF2vciQSGO3tWIDYDBidPeawl4N5c4/Tn13eMwH+TpPX+Uc2bz1Ma+9AdhyJhLmvzVF/lIuZ+dMg4MhrofK4XLPOiRRoxpnhI=
+	t=1733315483; cv=none; b=i9/kvSkvbOIAN15otJUFbf/zvc0wlNYw8+creYatKEP51tzYyW6uPvZ254NpRek0Hj7miy/pnSpSsAsf1DmBenc2L6kGaxTiEW7oLq0AcjjI92IOwAWt8OIwjfgNGQ/bwAAg8A3OILiS/JfoUsvs3Eg98OJgK3cS8Jou67DS9Pw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733315236; c=relaxed/simple;
-	bh=UxizGPyiKooAv1o2lgGxygM1OJg+7KaIJs+QdQqJngE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=EhmV74ZjKsQ9oYnN1N5llPBaDB0zXbC719TuxKtE+D1MjFr9mvLW/lhI874XwaV90JKu5qbz3RPapvElroMocsr3EOgwYbuoQbJPeiTXk7PHaa+2SmIowWq59GOpTppK23OpaXjglACA26lt7dX7Q05tN7TQMUu3qeuePpPFYOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TEg+sV1R; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 734B2C4CEE5;
-	Wed,  4 Dec 2024 12:27:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733315236;
-	bh=UxizGPyiKooAv1o2lgGxygM1OJg+7KaIJs+QdQqJngE=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=TEg+sV1Rb4Ibip2EhkX2eVJvOErSBta1V+8g+RV0GIwXuD1Wn3ocDQa3DO9av4xNE
-	 EFllm7ni2UWBjQwP9jQQGtut5o82He49+QuhVDOdIATFzaAqrHhzegemu2o1ebAVc6
-	 lmsSpOJ/e3wA61e5/fabaHIbLCl2MK9BtJO3qEjm8uq37jw9LVYW06lrN1FvobQnI+
-	 BysOtr+Xolzdulk0DGkGOUV1wGRrT8RPCFsRkipDCCHD5hQRPceaeTrt2xe98BcOik
-	 /wMeKQbLHn3DfZsPY711R56dFJt52Z1yWS8LBIFSWEsQcwjyZT6xCpsLJOuRm0TN/f
-	 PibELoDUPGW5Q==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 669BAE7716E;
-	Wed,  4 Dec 2024 12:27:16 +0000 (UTC)
-From: Maud Spierings via B4 Relay <devnull+maud_spierings.hotmail.com@kernel.org>
-Date: Wed, 04 Dec 2024 13:26:39 +0100
-Subject: [PATCH v6 3/3] arm64: dts: qcom: x1e80100-vivobook-s15: Add
- bluetooth
+	s=arc-20240116; t=1733315483; c=relaxed/simple;
+	bh=AqCXH3JLVIO2d5FcjwyUEOOgKwBIBl8MV2/t7UJiXr0=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=jSIroKHLluT257qN/GAJcc7et36HHQsN+AiwYCaI8w/DiEbDAJgkRVgkostU6Mf+vKIRkCUh2k6ypxTZNd0KhB+pzMuskfauJWaBlPt9El97qUQvGSaHKxBly+eu6+wP1SUDSrpdfr4z6ittWdbenx3hE8vquDcH8tlDxYpzcsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Ou3bnwiV; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-434a45f05feso81833315e9.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Dec 2024 04:31:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1733315480; x=1733920280; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cbWwdT7tE9INHbs3KzJyjOSIJ8TmE2VppwJHxa8fgK0=;
+        b=Ou3bnwiVYN1lAlL32xZh3CitOrSNKGpYvn8acBSSUag4dN8746QWkWW9KGACFVWuz0
+         7hxKXQ0vVydlL51F9UcpLMFnLzehuh8UI2uWh032Kc9Knb8OTTcgZNBRYsAq22dmZIHo
+         rMlQc+bU1MGZN6vO83r8Ih3YSPaUwWXkgzEyDAQJcsROmBipN3ZsIvlQUk6fE7FsOoKH
+         4yKC+6sNSnhVwmsjSr3n8Gl7tT9hnlBe4ltVCQNalJpONZlIMo+a4Tny6klx23uXxkdP
+         EQBG+aSxfUAVQDt1flUL1FXv4LWOgc7DbX5jVISMCxC42wOLAHNC0sC/oeFrfs2O8muI
+         Fwug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733315480; x=1733920280;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=cbWwdT7tE9INHbs3KzJyjOSIJ8TmE2VppwJHxa8fgK0=;
+        b=mvQWIky2pOHURlzDpWq9b1GHpb5keSP2P156HEK09tLlkF0zQr06wGRz1fWc358jUS
+         LE9ChduXpMf37WazQSxsOoWoo2rThN51DoVyJizgMz6pFNi+1dYoNHlcMuNex8oegm1Q
+         cBST36DlX3Fvfkm4Y63eq5k0fSSivtjzGhPVsncoaKbaixHJf9DOXniLAF8Q4Mxiz1E7
+         13B9ezUHXNRwL+or2t1cbtQO1GdLrSzlb6s0ciRSEPXrhw+QXxuTTUcKlTa9CmHIM8rs
+         OvMXcfFox51J59kywIbny+NOAh/XIjPbv3FXCSRz99JIz5+nsApLJabZ5hm35MwsKCG7
+         7W5w==
+X-Forwarded-Encrypted: i=1; AJvYcCW/dmSc6R2KzchD9Qnal8cjKONuy1TeJWxDlgSsI27E47XhPPn+bhYe1ApKv5WyTh5qJ9JvGOwu9B1PCbb2@vger.kernel.org
+X-Gm-Message-State: AOJu0YwiGTLKUbilpir9qXQaKBVrpixDWVUrIf7kBTijrcgBwfIFESs1
+	0ySYHoO+QHgmscmgVWgNG7IFFDlFe0P2/Vi+7nIy2IG2qDDtXK0eizemz8tDr3s=
+X-Gm-Gg: ASbGnctq6xQ4DJ6Og85iwT0GlZ6OkbsX390qySVhh6kW3DObA7TCAfI8ReREFIuNL/c
+	I6nuuzXKZ2o95HbOniODDZonYBByWjGE3UbIytpq+SeUyDMw/nb98FZjV2V37HqVPgadpkKHhNB
+	V3Whrwunk+mfAOF6zVeKLbE5CwijAu3PMMq5MRgZ02BBlbWlJrFLPsjTvtsJN4FQYcBC98XwSy1
+	0BCAv80e5EwajOe5mXGwWbfw1uBBrThhgOIixK/SFQ1XZKb2x5w+2ouomC3MjXM/LJQutSZhrLA
+	P6l5wirV0SQqrVJksniI6vBv
+X-Google-Smtp-Source: AGHT+IHlnaIAnJCdDW1tnpOh5zG5O4kkYOWjTdY1ooDYR2tXwky8ii+ehLuUnq0yb/fUFPuqeP2PTQ==
+X-Received: by 2002:a5d:47cb:0:b0:385:eb7c:5d0f with SMTP id ffacd0b85a97d-385fd3f29dfmr7132352f8f.26.1733315479660;
+        Wed, 04 Dec 2024 04:31:19 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:740:b323:3531:5c75? ([2a01:e0a:982:cbb0:740:b323:3531:5c75])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-385e5e3629fsm12188615f8f.93.2024.12.04.04.31.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 04 Dec 2024 04:31:19 -0800 (PST)
+Message-ID: <6e4f39c4-fe74-4b17-b333-47ce64d458fb@linaro.org>
+Date: Wed, 4 Dec 2024 13:31:18 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH] dt-bindings: display: msm: sm8350-mdss: document the
+ third interconnect path
+To: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: Robert Foss <rfoss@kernel.org>, Maxime Ripard <mripard@kernel.org>,
+ freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+ devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Simona Vetter <simona@ffwll.ch>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>,
+ David Airlie <airlied@gmail.com>, Rob Clark <robdclark@gmail.com>,
+ Conor Dooley <conor+dt@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>
+References: <20241204-topic-misc-sm8350-mdss-bindings-fix-v1-1-aa492a306bdb@linaro.org>
+ <173331176548.4095099.9767845657326548018.robh@kernel.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <173331176548.4095099.9767845657326548018.robh@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241204-asus_qcom_display-v6-3-91079cd8234e@hotmail.com>
-References: <20241204-asus_qcom_display-v6-0-91079cd8234e@hotmail.com>
-In-Reply-To: <20241204-asus_qcom_display-v6-0-91079cd8234e@hotmail.com>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Johan Hovold <johan@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
- Maud Spierings <maud_spierings@hotmail.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1733315235; l=5300;
- i=maud_spierings@hotmail.com; s=20241110; h=from:subject:message-id;
- bh=dNILjRbnJ8l6wI0B1HRe9YcN+zM+h5wgYgzS1Wi5B5M=;
- b=aM0ecy6evLFXeJloga0iyZRezMHEVmKFBahslAuBGck1N0Y3PWE/9xEn99TYyqYiDEWXDmoOM
- XEetiJgeBUSAfienYwLcbFaL2anaZ+KaI+PPqvyqH6QfB+FAMmhaQFW
-X-Developer-Key: i=maud_spierings@hotmail.com; a=ed25519;
- pk=CeFKVnZvRfX2QjB1DpdiAe2N+MEjwLEB9Yhx/OAcxRc=
-X-Endpoint-Received: by B4 Relay for maud_spierings@hotmail.com/20241110
- with auth_id=273
-X-Original-From: Maud Spierings <maud_spierings@hotmail.com>
-Reply-To: maud_spierings@hotmail.com
 
-From: Maud Spierings <maud_spierings@hotmail.com>
+On 04/12/2024 12:29, Rob Herring (Arm) wrote:
+> 
+> On Wed, 04 Dec 2024 11:36:37 +0100, Neil Armstrong wrote:
+>> Document the missing third "cpu-cfg" interconnect path for the MDSS hardware
+>> found on the Qualcomm SM8350 platform.
+>>
+>> This fixes:
+>> display-subsystem@ae00000: interconnects: [[121, 7, 0, 77, 1, 0], [121, 8, 0, 77, 1, 0], [78, 2, 3, 79, 16, 3]] is too long
+>> 	from schema $id: http://devicetree.org/schemas/display/msm/qcom,sm8350-mdss.yaml#
+>> display-subsystem@ae00000: interconnect-names: ['mdp0-mem', 'mdp1-mem', 'cpu-cfg'] is too long
+>> 	from schema $id: http://devicetree.org/schemas/display/msm/qcom,sm8350-mdss.yaml#
+>>
+>> Fixes: 430e11f42bff ("dt-bindings: display: msm: Add qcom, sm8350-mdss binding")
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>> ---
+>>   Documentation/devicetree/bindings/display/msm/qcom,sm8350-mdss.yaml | 3 ++-
+>>   1 file changed, 2 insertions(+), 1 deletion(-)
+>>
+> 
+> My bot found errors running 'make dt_binding_check' on your patch:
+> 
+> yamllint warnings/errors:
+> 
+> dtschema/dtc warnings/errors:
+> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm8350-mdss.example.dtb: display-subsystem@ae00000: interconnects: [[4294967295, 7, 0, 4294967295, 1, 0], [4294967295, 8, 0, 4294967295, 1, 0]] is too short
+> 	from schema $id: http://devicetree.org/schemas/display/msm/qcom,sm8350-mdss.yaml#
+> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm8350-mdss.example.dtb: display-subsystem@ae00000: interconnect-names: ['mdp0-mem', 'mdp1-mem'] is too short
+> 	from schema $id: http://devicetree.org/schemas/display/msm/qcom,sm8350-mdss.yaml#
 
-Add bluetooth for the asus vivobook s15
-Describe wlan configuration
+Oh, indeed, will fix in v2
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Maud Spierings <maud_spierings@hotmail.com>
----
- .../boot/dts/qcom/x1e80100-asus-vivobook-s15.dts   | 161 +++++++++++++++++++++
- 1 file changed, 161 insertions(+)
+Thanks,
+Neil
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-index ba52c0eef4e32019f6eb7c7ae3c4cd727df23490..6564386e92e5c8c08ae2807ba512f83537358cf5 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-@@ -19,6 +19,10 @@ / {
- 	compatible = "asus,vivobook-s15", "qcom,x1e80100";
- 	chassis-type = "laptop";
- 
-+	aliases {
-+		serial1 = &uart14;
-+	};
-+
- 	gpio-keys {
- 		compatible = "gpio-keys";
- 		pinctrl-0 = <&hall_int_n_default>;
-@@ -153,6 +157,101 @@ vph_pwr: regulator-vph-pwr {
- 		regulator-always-on;
- 		regulator-boot-on;
- 	};
-+
-+	vreg_wcn_0p95: regulator-wcn-0p95 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_WCN_0P95";
-+		regulator-min-microvolt = <950000>;
-+		regulator-max-microvolt = <950000>;
-+
-+		vin-supply = <&vreg_wcn_3p3>;
-+	};
-+
-+	vreg_wcn_1p9: regulator-wcn-1p9 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_WCN_1P9";
-+		regulator-min-microvolt = <1900000>;
-+		regulator-max-microvolt = <1900000>;
-+
-+		vin-supply = <&vreg_wcn_3p3>;
-+	};
-+
-+	vreg_wcn_3p3: regulator-wcn-3p3 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_WCN_3P3";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		gpio = <&tlmm 214 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&wcn_sw_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-boot-on;
-+	};
-+
-+	wcn7850-pmu {
-+		compatible = "qcom,wcn7850-pmu";
-+
-+		vdd-supply = <&vreg_wcn_0p95>;
-+		vddio-supply = <&vreg_l15b_1p8>;
-+		vddaon-supply = <&vreg_wcn_0p95>;
-+		vdddig-supply = <&vreg_wcn_0p95>;
-+		vddrfa1p2-supply = <&vreg_wcn_1p9>;
-+		vddrfa1p8-supply = <&vreg_wcn_1p9>;
-+
-+		wlan-enable-gpios = <&tlmm 117 GPIO_ACTIVE_HIGH>;
-+		bt-enable-gpios = <&tlmm 116 GPIO_ACTIVE_HIGH>;
-+
-+		pinctrl-0 = <&wcn_wlan_en>, <&wcn_bt_en>;
-+		pinctrl-names = "default";
-+
-+		regulators {
-+			vreg_pmu_rfa_cmn: ldo0 {
-+				regulator-name = "vreg_pmu_rfa_cmn";
-+			};
-+
-+			vreg_pmu_aon_0p59: ldo1 {
-+				regulator-name = "vreg_pmu_aon_0p59";
-+			};
-+
-+			vreg_pmu_wlcx_0p8: ldo2 {
-+				regulator-name = "vreg_pmu_wlcx_0p8";
-+			};
-+
-+			vreg_pmu_wlmx_0p85: ldo3 {
-+				regulator-name = "vreg_pmu_wlmx_0p85";
-+			};
-+
-+			vreg_pmu_btcmx_0p85: ldo4 {
-+				regulator-name = "vreg_pmu_btcmx_0p85";
-+			};
-+
-+			vreg_pmu_rfa_0p8: ldo5 {
-+				regulator-name = "vreg_pmu_rfa_0p8";
-+			};
-+
-+			vreg_pmu_rfa_1p2: ldo6 {
-+				regulator-name = "vreg_pmu_rfa_1p2";
-+			};
-+
-+			vreg_pmu_rfa_1p8: ldo7 {
-+				regulator-name = "vreg_pmu_rfa_1p8";
-+			};
-+
-+			vreg_pmu_pcie_0p9: ldo8 {
-+				regulator-name = "vreg_pmu_pcie_0p9";
-+			};
-+
-+			vreg_pmu_pcie_1p8: ldo9 {
-+				regulator-name = "vreg_pmu_pcie_1p8";
-+			};
-+		};
-+	};
- };
- 
- &apps_rsc {
-@@ -198,6 +297,13 @@ vreg_l14b_3p0: ldo14 {
- 			regulator-max-microvolt = <3072000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
-+
-+		vreg_l15b_1p8: ldo15 {
-+			regulator-name = "vreg_l15b_1p8";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
- 	};
- 
- 	regulators-1 {
-@@ -476,6 +582,23 @@ &pcie4_phy {
- 	status = "okay";
- };
- 
-+&pcie4_port0 {
-+	wifi@0 {
-+		compatible = "pci17cb,1107";
-+		reg = <0x10000 0x0 0x0 0x0 0x0>;
-+
-+		vddaon-supply = <&vreg_pmu_aon_0p59>;
-+		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
-+		vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
-+		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
-+		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
-+		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
-+		vddrfa1p8-supply = <&vreg_pmu_rfa_1p8>;
-+		vddpcie0p9-supply = <&vreg_pmu_pcie_0p9>;
-+		vddpcie1p8-supply = <&vreg_pmu_pcie_1p8>;
-+	};
-+};
-+
- &pcie6a {
- 	perst-gpios = <&tlmm 152 GPIO_ACTIVE_LOW>;
- 	wake-gpios = <&tlmm 154 GPIO_ACTIVE_LOW>;
-@@ -625,6 +748,44 @@ tpad_default: tpad-default-state {
- 		function = "gpio";
- 		bias-disable;
- 	};
-+
-+	wcn_bt_en: wcn-bt-en-state {
-+		pins = "gpio116";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		bias-pull-down;
-+	};
-+
-+	wcn_sw_en: wcn-sw-en-state {
-+		pins = "gpio214";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		bias-disable;
-+	};
-+
-+	wcn_wlan_en: wcn-wlan-en-state {
-+		pins = "gpio117";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		bias-disable;
-+	};
-+};
-+
-+&uart14 {
-+	status = "okay";
-+
-+	bluetooth {
-+		compatible = "qcom,wcn7850-bt";
-+		max-speed = <3200000>;
-+
-+		vddaon-supply = <&vreg_pmu_aon_0p59>;
-+		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
-+		vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
-+		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
-+		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
-+		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
-+		vddrfa1p8-supply = <&vreg_pmu_rfa_1p8>;
-+	};
- };
- 
- &usb_1_ss0_hsphy {
-
--- 
-2.47.1
-
+> 
+> doc reference errors (make refcheckdocs):
+> 
+> See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20241204-topic-misc-sm8350-mdss-bindings-fix-v1-1-aa492a306bdb@linaro.org
+> 
+> The base for the series is generally the latest rc1. A different dependency
+> should be noted in *this* patch.
+> 
+> If you already ran 'make dt_binding_check' and didn't see the above
+> error(s), then make sure 'yamllint' is installed and dt-schema is up to
+> date:
+> 
+> pip3 install dtschema --upgrade
+> 
+> Please check and re-submit after running the above command yourself. Note
+> that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+> your schema. However, it must be unset to test all examples with your schema.
+> 
 
 
