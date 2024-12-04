@@ -1,215 +1,189 @@
-Return-Path: <linux-arm-msm+bounces-40166-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40167-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6C1129E3164
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 03:27:27 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AD85B9E3178
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 03:37:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 273D4285319
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 02:27:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 72DD1285AED
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 02:37:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E7DA2B9B4;
-	Wed,  4 Dec 2024 02:27:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27D7F42A97;
+	Wed,  4 Dec 2024 02:37:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="KHGIcJEO"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Ew5hCMAB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6CDA848C;
-	Wed,  4 Dec 2024 02:27:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 841BD29415
+	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Dec 2024 02:36:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733279243; cv=none; b=FPk5SMU6QSs8bZTalnPNny7Owu5DhtkGjnoZe8yyhfNYB2l2Ue+yypkZYbTQPX1jvkhg1cpDWZzc3csVSA8DpzOc9eGUu/6mxxAW4ovsEf08I1gvUUI3M5lZb9GI3pwLWVvxAjJHONrDGXglzkevHIPPpzjvQr2d/009s4aTNvI=
+	t=1733279820; cv=none; b=MxfFcLDPxfgfCChZ2L5uts0DQzUJ4syNslhKmsqGTUyENSKHdStxVFrwc4yXHC++Y9enXNMRFrEri3Wqwxr5oqaaRWVmZFzJgG7/oAlVyp/Vq6mArWGP2nvDicfPr61wZWCWxPrvmCtGX62SqFLpfcFa+MQ2VNl64faa6LwwQqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733279243; c=relaxed/simple;
-	bh=hx7v1B76dY053B26XoQD504O+I06ilPZ43rOw9Yqivc=;
+	s=arc-20240116; t=1733279820; c=relaxed/simple;
+	bh=y2Mc665t8a3BBdgF9oXThUZp4tPTcUL4caGYm3fBsbY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=enDQ9D3TSA6asxjsTCDn8N2mBrh0b6/7i3DvW0g6uGEQww2aUZbPrB7J95RYYJbXjlSD+jFoCKAsMpmYU8+tu4gDo1ipF2PVr0hHOwCvxzgH5EJOOtm7q3ioYbpvTVbh4z3cUoQA46CvK14s0D8sLc9ow9JycrXbxGjgYI0+xv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=KHGIcJEO; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=nrp9dyUWzkzvdKw2qNOByawIGYxnqOQbmEIqy8hc3N8TdoRtOY//Amdnd2Rarc5zWKVg0KkAGU1AyCCMzV3jNxSkS3UpzLvyjuyrnKBfCuw4UP9To3ZAcTtLd0k0pxjjqA0/bXPHo1py1ushDt+leXzDw3p8XCAgGqtn6IlFfxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Ew5hCMAB; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B3F7hKX010056;
-	Wed, 4 Dec 2024 02:27:09 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B3H9kZ9006043;
+	Wed, 4 Dec 2024 02:36:47 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	4X3SSLIuY8M2ZOHAWH5VFOFsrGomUxA4d6wWDghmVHg=; b=KHGIcJEO1Cvcq7ol
-	vF36q+Wj7SZCeuMXC9JS15Mp5QaORgKzIsWlR+fx8VJZzq6bXZ733jJKT9HLawAY
-	LTgFmad9W9zkFR1SAFvvaXRTS70Og4xftpqIuUHcO4q+ygPoRpLGTB/6tMTctyfV
-	0Tc0GKgBovB6u00iTVkUXA/9HZL80aNOtwbzCcwXXrq7vRMOxvMHveWVBgzGXAgj
-	7N6TnL+5XiAmCS1SHMwSjeYWetwp4T9hVdVyOjeWR3/FmiV9g38tM0jEJRdTyqSh
-	/2sYuUYMhLQ9bLjATMmIi326oRFRsdHgr8tu6P09VnDbvJUExuOdtN1TGjSvziwd
-	FmhZvA==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43a4by1hpg-1
+	t3T0mqUa9sTQWb1BXIXhHaYCIxwf//4VB0Ss4dGNzvs=; b=Ew5hCMABEvwYzzbU
+	74j3SZx5pp+lAcmq/K8Ac8OJ8uVHT4jCX+N0M2ZpQemiUg/1PnxfScxekAR2XSL8
+	dpGhq8pe0G48DX1/twuLoYUy/En56CVsrEi0azWtLauxNrfSUii6TcAXBYD09kC2
+	27/tQ7Etu3hM877lWKTEX8vWI6+6ZEp2e71BuzA3Y+DbwJp61KZGqCi1NVhuPjcy
+	moJC690cIX5F9HW6se2ZQzk1bOLFlaSesEkj9JuY99eJ/KAH+IHGv/4Tr2RHnYOJ
+	JUjL1cMgVknLp/jIJue+NgJ13Wmze/jYbibOCWUQv4FfvZU/VoyPEBD//BzAGpzg
+	kO8QPg==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 439w3ejs79-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 04 Dec 2024 02:27:09 +0000 (GMT)
+	Wed, 04 Dec 2024 02:36:46 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B42R854014979
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B42akfb029027
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 4 Dec 2024 02:27:08 GMT
-Received: from [10.216.45.237] (10.80.80.8) by nalasex01a.na.qualcomm.com
+	Wed, 4 Dec 2024 02:36:46 GMT
+Received: from [10.134.71.247] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 3 Dec 2024
- 18:26:59 -0800
-Message-ID: <5bb0d96d-0d11-99c2-a569-7c928e0ae4fe@quicinc.com>
-Date: Wed, 4 Dec 2024 07:56:54 +0530
+ 18:36:45 -0800
+Message-ID: <41725f98-5c23-47d2-966b-ebd5f4e1c532@quicinc.com>
+Date: Tue, 3 Dec 2024 18:36:45 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH 3/3] PCI: qcom: Enable ECAM feature based on config size
-Content-Language: en-US
-To: Bjorn Helgaas <helgaas@kernel.org>
-CC: <cros-qcom-dts-watchers@chromium.org>,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] drm/msm/dp: remove redundant checks related to
+ ST_DISPLAY_OFF in plug/irq_ipd handlers
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        "Marijn
+ Suijten" <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>,
+        "Stephen Boyd" <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        "Johan Hovold" <johan@kernel.org>,
         Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>, Jingoo Han <jingoohan1@gmail.com>,
-        "Manivannan
- Sadhasivam" <manivannan.sadhasivam@linaro.org>,
-        Lorenzo Pieralisi
-	<lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?=
-	<kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>, <quic_vbadigan@quicinc.com>,
-        <quic_ramkri@quicinc.com>, <quic_nitegupt@quicinc.com>,
-        <quic_skananth@quicinc.com>, <quic_vpernami@quicinc.com>,
-        <quic_mrana@quicinc.com>, <mmareddy@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-pci@vger.kernel.org>
-References: <20241203185940.GA2910223@bhelgaas>
-From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-In-Reply-To: <20241203185940.GA2910223@bhelgaas>
+	<quic_bjorande@quicinc.com>
+References: <20241202-hpd_display_off-v1-0-8d0551847753@quicinc.com>
+ <20241202-hpd_display_off-v1-1-8d0551847753@quicinc.com>
+ <pa3jwxpnipj7lcusioqnjesz4cpgc2oyqgspqqvk2i5kb6ud4k@fi4grx6w5k7d>
+Content-Language: en-US
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <pa3jwxpnipj7lcusioqnjesz4cpgc2oyqgspqqvk2i5kb6ud4k@fi4grx6w5k7d>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: yUl1Y0VGFPKtIWk0Smd_9C-HNUe7Bts5
-X-Proofpoint-ORIG-GUID: yUl1Y0VGFPKtIWk0Smd_9C-HNUe7Bts5
+X-Proofpoint-GUID: L2e5QloQhN0dgRPNSNM_BHnx-bVK-6QN
+X-Proofpoint-ORIG-GUID: L2e5QloQhN0dgRPNSNM_BHnx-bVK-6QN
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1015
- impostorscore=0 suspectscore=0 adultscore=0 phishscore=0 spamscore=0
- priorityscore=1501 malwarescore=0 lowpriorityscore=0 mlxlogscore=999
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412040020
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
+ bulkscore=0 mlxscore=0 adultscore=0 priorityscore=1501 mlxlogscore=999
+ spamscore=0 malwarescore=0 suspectscore=0 phishscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
+ definitions=main-2412040021
 
 
 
-On 12/4/2024 12:29 AM, Bjorn Helgaas wrote:
-> On Sun, Nov 17, 2024 at 03:30:20AM +0530, Krishna chaitanya chundru wrote:
->> Enable the ECAM feature if the config space size is equal to size required
->> to represent number of buses in the bus range property.
+On 12/3/2024 5:50 AM, Dmitry Baryshkov wrote:
+> On Mon, Dec 02, 2024 at 04:39:00PM -0800, Abhinav Kumar wrote:
+>> In commit 8ede2ecc3e5ee ("drm/msm/dp: Add DP compliance tests on Snapdragon Chipsets"),
+>> checks were introduced to avoid handling any plug or irq hpd events in
+>> ST_DISPLAY_OFF state.
 >>
->> The ELBI registers falls after the DBI space, so use the cfg win returned
->> from the ecam init to map these regions instead of doing the ioremap again.
->> ELBI starts at offset 0xf20 from dbi.
+>> Even if we do get hpd events, after the bridge was disabled,
+>> it should get handled. Moreover, its unclear under what circumstances
+>> these events will fire because ST_DISPLAY_OFF means that the link was
+>> still connected but only the bridge was disabled. If the link was untouched,
+>> then interrupts shouldn't fire.
+> 
+> What about the link being untouched, but the monitor being toggled
+> somehow, which might generate HPD / attention events?
+> 
+
+To confirm my understanding of this, I tested this case again with and 
+without a dongle on sc7180.
+
+Without a dongle - When the monitor is powered off and powered on, 
+without physically disturbing the cable, it still generates a hotplug 
+disconnect event when powered off and hotplug connect event when its 
+powered on again.
+
+It gets handled the same way as a user would hotplug it using the cable.
+
+With a dongle - When the monitor is powered off , nothing happens and it 
+stays in connected state. When the monitor is powered back on, it 
+generates a hotplug disable followed by hotplug enable event. This 
+behavior is consistent with or without this series with this dongle.
+
+So from the DP driver point of view, for both these cases, its just 
+another hotlplug disconnect/connect.
+
+Both these cases still work fine with these changes.
+
 >>
->> On bus 0, we have only the root complex. Any access other than that should
->> not go out of the link and should return all F's. Since the IATU is
->> configured for bus 1 onwards, block the transactions for bus 0:0:1 to
->> 0:31:7 (i.e., from dbi_base + 4KB to dbi_base + 1MB) from going outside the
->> link through ecam blocker through parf registers.
+>> Even in the case of the DP compliance equipment, it should be raising these
+>> interrupts during the start of the test which is usually accompanied with either
+>> a HPD pulse or a IRQ HPD but after the bridge is disabled it should be fine
+>> to handle these anyway. In the absence of a better reason to keep these checks,
+>> drop these and if any other issues do arise, it should be handled in a different
+>> way.
+>>
+>> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/dp/dp_display.c | 10 ----------
+>>   1 file changed, 10 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+>> index aba925aab7ad..992184cc17e4 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+>> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+>> @@ -562,11 +562,6 @@ static int msm_dp_hpd_plug_handle(struct msm_dp_display_private *dp, u32 data)
+>>   	drm_dbg_dp(dp->drm_dev, "Before, type=%d hpd_state=%d\n",
+>>   			dp->msm_dp_display.connector_type, state);
+>>   
+>> -	if (state == ST_DISPLAY_OFF) {
+>> -		mutex_unlock(&dp->event_mutex);
+>> -		return 0;
+>> -	}
+>> -
+>>   	if (state == ST_MAINLINK_READY || state == ST_CONNECTED) {
+>>   		mutex_unlock(&dp->event_mutex);
+>>   		return 0;
+>> @@ -689,11 +684,6 @@ static int msm_dp_irq_hpd_handle(struct msm_dp_display_private *dp, u32 data)
+>>   	drm_dbg_dp(dp->drm_dev, "Before, type=%d hpd_state=%d\n",
+>>   			dp->msm_dp_display.connector_type, state);
+>>   
+>> -	if (state == ST_DISPLAY_OFF) {
+>> -		mutex_unlock(&dp->event_mutex);
+>> -		return 0;
+>> -	}
+>> -
+>>   	if (state == ST_MAINLINK_READY || state == ST_DISCONNECT_PENDING) {
+>>   		/* wait until ST_CONNECTED */
+>>   		msm_dp_add_event(dp, EV_IRQ_HPD_INT, 0, 1); /* delay = 1 */
+>>
+>> -- 
+>> 2.34.1
+>>
 > 
-> s/ecam/ECAM/
-> s/dbi/DBI/
-> s/IATU/iATU/ (Seems to be the convention?  Also below)
-> s/parf/PARF/ (I assume an initialism?)
-> 
-> Use conventional format for PCI bus addresses ... I assume "0:0:1"
-> means bus 0, device 0, function 1, which would normally be formatted
-> as "00:00.1" (also below).
-> 
->> +static int qcom_pci_config_ecam_blocker(struct dw_pcie_rp *pp)
->> +{
->> +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
->> +	struct qcom_pcie *pcie = to_qcom_pcie(pci);
->> +	u64 addr, addr_end;
->> +	u32 val;
->> +
->> +	/* Set the ECAM base */
->> +	writel(lower_32_bits(pci->dbi_phys_addr), pcie->parf + PARF_ECAM_BASE);
->> +	writel(upper_32_bits(pci->dbi_phys_addr), pcie->parf + PARF_ECAM_BASE_HI);
->> +
->> +	/*
->> +	 * On bus 0, we have only the root complex. Any access other than that
->> +	 * should not go out of the link and should return all F's. Since the
->> +	 * IATU is configured for bus 1 onwards, block the transactions for
->> +	 * bus 0:0:1 to 0:31:7 (i.e from dbi_base + 4kb to dbi_base + 1MB) from
->> +	 * going outside the link.
-> 
-> s/IATU/iATU/ to match other usage.
-> 
-> Use conventional formatting of PCI bus/device/function addresses.
-> 
-> Unless the root bus number is hard-wired to be zero, maybe this should
-> say "root bus" instead of "bus 0"?
-> 
-> There is no architected presence of a PCIe Root Complex as a PCI
-> device.  Maybe this should say "the only device on bus 0 is the *Root
-> Port*"?
-> 
-> Or maybe there's a PCI device with some sort of device-specific
-> interface to Root Complex registers?  But if that were the *only*
-> device on bus 0, there would be no Root Port to reach other devices,
-> so this doesn't seem likely.
-> 
->> +static bool qcom_pcie_check_ecam_support(struct device *dev)
-> 
-> Rename to be an assertion that can be either true or false, e.g.,
-> "ecam_supported".  "Check" doesn't hint about what true/false mean.
-> 
->> +{
->> +	struct platform_device *pdev = to_platform_device(dev);
->> +	struct resource bus_range, *config_res;
->> +	u64 bus_config_space_count;
->> +	int ret;
->> +
->> +	/* If bus range is not present, keep the bus range as maximum value */
->> +	ret = of_pci_parse_bus_range(dev->of_node, &bus_range);
->> +	if (ret) {
->> +		bus_range.start = 0x0;
->> +		bus_range.end = 0xff;
->> +	}
-> 
-> I would have thought the generic OF parsing would already default to
-> [bus 00-ff]?
-> 
-if there is no bus-range of_pci_parse_bus_range is not updating it[1],
-the bus ranges is being updated to default value in
-devm_of_pci_get_host_bridge_resources()[2]
-
-[1]https://elixir.bootlin.com/linux/v6.12.1/source/drivers/pci/of.c#L193
-[2]https://elixir.bootlin.com/linux/v6.12.1/source/drivers/pci/of.c#L347
-
-- Krishna Chaitanya.
->> +	config_res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "config");
->> +	if (!config_res)
->> +		return false;
-> 
-> Move of_pci_parse_bus_range() (if it's needed) down here so it's
-> together with the use of the results.  No point in calling it before
-> looking for "config".
-> 
->> +	bus_config_space_count = resource_size(config_res) >> PCIE_ECAM_BUS_SHIFT;
->> +	if (resource_size(&bus_range) > bus_config_space_count)
->> +		return false;
->> +
->> +	return true;
->> +}
 
