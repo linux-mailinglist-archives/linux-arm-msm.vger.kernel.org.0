@@ -1,59 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-40332-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40333-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D1D7F9E4137
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 18:21:13 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 79E209E413C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 18:21:35 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 678EB284226
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 17:21:12 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D81B8167E59
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 17:21:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F44421C9FB;
-	Wed,  4 Dec 2024 17:02:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3BA0215F7F;
+	Wed,  4 Dec 2024 17:02:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="koHK4Mng"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lvy++nzZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4151A21C9F2;
-	Wed,  4 Dec 2024 17:02:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C750F21C9EF;
+	Wed,  4 Dec 2024 17:02:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733331725; cv=none; b=BCCmx4gvfe8TQ3LC9mx7bpJYnqIQcoLkiZcZdm++2cF7Y0V/wWYYcG4Z9slj6b53+ZUAbh9AsgG9HX0BKMq7LhKf2FacqR0hz+cWb149pE256LU0V/0vKwuljI3Phn/rxJRoL1GjQt/2UZE4OKG2fywJZ8a1ElwTw9V2cuMlYQs=
+	t=1733331726; cv=none; b=QMSy/gKicoFSz/HR2e7ub6BPVWVIXbh/UQAEFuY4wpZHd/xRdfMzV+wSpVZlaYmKS8lgI//x1P41qViMFH18f2IgcuLStLVaCPdYq8fzCRM6f2SR7INDp0rN8fSmFZMzBb7rzeRKBzrLezn67mUAkTpGsqH7oySbGfVUk82VZ6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733331725; c=relaxed/simple;
-	bh=+ZKVrXOCYBLVt8Ak43JKeh6DPrPVObu9UTY2iSU88Io=;
+	s=arc-20240116; t=1733331726; c=relaxed/simple;
+	bh=kHYfCnF2W10W2c/6rhFhdRAr3NERXQwySnI8TYIPp24=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nkLofDWIHbU1QN78dSFksAOhIIFbNb4E9b7dEbA9c7JiRQLHPEt/nOuWA+EdhEW0rsqAQuaGHJkWrRRSM/X0iGzPoA0/9ahkRL+EVNmnhC949W5oSRlyqysMAYiBbfr+W71IwlLHaAoxfqtF1lfvQAsMDJizv6PE15ubQvA/KK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=koHK4Mng; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA4BFC4CECD;
-	Wed,  4 Dec 2024 17:02:03 +0000 (UTC)
+	 MIME-Version:Content-Type; b=UgfwOx2jzjm2kCdzpTU55S6hUZjSU3xPRm4uMQpC9xEc9mT1B2z3dLZrUGOEIfM9wQQ08H4JMdP7npLjhEMBOT9LBL2WUURhw7xN5Q/Sehg8v4/GtAmlx4wmFthFXu7ZpVknRBSH8DG9s7qvzr1Hbi44oT0s/G+A01OSvOWupuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lvy++nzZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E6A1C4CECD;
+	Wed,  4 Dec 2024 17:02:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733331724;
-	bh=+ZKVrXOCYBLVt8Ak43JKeh6DPrPVObu9UTY2iSU88Io=;
+	s=k20201202; t=1733331726;
+	bh=kHYfCnF2W10W2c/6rhFhdRAr3NERXQwySnI8TYIPp24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=koHK4Mnga24xaPtTrPryirgMd9Ups21/TPRCKcZ4vAi6yNQbmaFoLn++d/+4ze+En
-	 ZldPIP3erjag4vpydfgSfjbMbBWKf7T4g3AyX8g3ZiGcscSuZMwr2JqzixubQojk9n
-	 iw+p6+4DFfyNko/8it+EwZc1SRSOO4uTJq2bZLOoCsuClBcydMDHscHkQZYiD/oJAr
-	 EyKJSJothUQJUWUB6M4xDg94IMP3Ji2i7k894d9//tYLuY9Gl+8NgvPWTJysHQoDao
-	 4yHKa9O7MUcbaxGDgTdVHpie33lsJUEikp+2zOgf/WOyUWdmKHnRH0rNLm6mUEMBT3
-	 Vg/WJrM095GDQ==
+	b=lvy++nzZ1xg3O2v6Q0urBopf4aD2JTmsSey4tuOdFgeSVUs/lATWdmNnnyLJ4WMoN
+	 6rycgG4tpZijPyuKwZqycSsN1blKirSZgjig/4NcYG8Jczh6zOq9wQvE1vfsMHakNm
+	 ikf8T3NZToTTQige+/E4WD8A1jqGLoGpgHZhj/so3AVcsf0CGVk1/AzfSt2TUENA8J
+	 5K+gyYO2MFpN0O8m9zdUaLCo4EWqwu6QxE3AHS7qDU/MmOzpxjDiD56uoOD84pGyg4
+	 R64q8Mo2YpGcJxxpSefpPm95X39mch2qUXlmRBhKnEYpRSsbGI7q4XmDq4tNZEnQhi
+	 tVmLe6AuG/GJw==
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
 Cc: =?UTF-8?q?Barnab=C3=A1s=20Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>,
-	andersson@kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-gpio@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 20/24] pinctrl: qcom: spmi-mpp: Add PM8937 compatible
-Date: Wed,  4 Dec 2024 10:49:40 -0500
-Message-ID: <20241204155003.2213733-20-sashal@kernel.org>
+	amitk@kernel.org,
+	thara.gopinath@gmail.com,
+	rafael@kernel.org,
+	linux-pm@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.6 21/24] thermal/drivers/qcom/tsens-v1: Add support for MSM8937 tsens
+Date: Wed,  4 Dec 2024 10:49:41 -0500
+Message-ID: <20241204155003.2213733-21-sashal@kernel.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241204155003.2213733-1-sashal@kernel.org>
 References: <20241204155003.2213733-1-sashal@kernel.org>
@@ -71,32 +73,96 @@ Content-Transfer-Encoding: 8bit
 
 From: Barnabás Czémán <barnabas.czeman@mainlining.org>
 
-[ Upstream commit f755261190e88f5d19fe0a3b762f0bbaff6bd438 ]
+[ Upstream commit e2ffb6c3a40ee714160e35e61f0a984028b5d550 ]
 
-The PM8937 provides 4 MPPs.
-Add a compatible to support them.
+Add support for tsens v1.4 block what can be found in
+MSM8937 and MSM8917.
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
-Link: https://lore.kernel.org/20241031-msm8917-v2-4-8a075faa89b1@mainlining.org
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20241113-msm8917-v6-5-c348fb599fef@mainlining.org
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/qcom/pinctrl-spmi-mpp.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/thermal/qcom/tsens-v1.c | 21 ++++++++++++++-------
+ drivers/thermal/qcom/tsens.c    |  3 +++
+ drivers/thermal/qcom/tsens.h    |  2 +-
+ 3 files changed, 18 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-mpp.c b/drivers/pinctrl/qcom/pinctrl-spmi-mpp.c
-index fe0393829c207..08255a87897cf 100644
---- a/drivers/pinctrl/qcom/pinctrl-spmi-mpp.c
-+++ b/drivers/pinctrl/qcom/pinctrl-spmi-mpp.c
-@@ -984,6 +984,7 @@ static const struct of_device_id pmic_mpp_of_match[] = {
- 	{ .compatible = "qcom,pm8226-mpp", .data = (void *) 8 },
- 	{ .compatible = "qcom,pm8841-mpp", .data = (void *) 4 },
- 	{ .compatible = "qcom,pm8916-mpp", .data = (void *) 4 },
-+	{ .compatible = "qcom,pm8937-mpp", .data = (void *) 4 },
- 	{ .compatible = "qcom,pm8941-mpp", .data = (void *) 8 },
- 	{ .compatible = "qcom,pm8950-mpp", .data = (void *) 4 },
- 	{ .compatible = "qcom,pmi8950-mpp", .data = (void *) 4 },
+diff --git a/drivers/thermal/qcom/tsens-v1.c b/drivers/thermal/qcom/tsens-v1.c
+index dc1c4ae2d8b01..1a7874676f68e 100644
+--- a/drivers/thermal/qcom/tsens-v1.c
++++ b/drivers/thermal/qcom/tsens-v1.c
+@@ -162,28 +162,35 @@ struct tsens_plat_data data_tsens_v1 = {
+ 	.fields	= tsens_v1_regfields,
+ };
+ 
+-static const struct tsens_ops ops_8956 = {
+-	.init		= init_8956,
++static const struct tsens_ops ops_common = {
++	.init		= init_common,
+ 	.calibrate	= tsens_calibrate_common,
+ 	.get_temp	= get_temp_tsens_valid,
+ };
+ 
+-struct tsens_plat_data data_8956 = {
++struct tsens_plat_data data_8937 = {
+ 	.num_sensors	= 11,
+-	.ops		= &ops_8956,
++	.ops		= &ops_common,
+ 	.feat		= &tsens_v1_feat,
+ 	.fields		= tsens_v1_regfields,
+ };
+ 
+-static const struct tsens_ops ops_8976 = {
+-	.init		= init_common,
++static const struct tsens_ops ops_8956 = {
++	.init		= init_8956,
+ 	.calibrate	= tsens_calibrate_common,
+ 	.get_temp	= get_temp_tsens_valid,
+ };
+ 
++struct tsens_plat_data data_8956 = {
++	.num_sensors	= 11,
++	.ops		= &ops_8956,
++	.feat		= &tsens_v1_feat,
++	.fields		= tsens_v1_regfields,
++};
++
+ struct tsens_plat_data data_8976 = {
+ 	.num_sensors	= 11,
+-	.ops		= &ops_8976,
++	.ops		= &ops_common,
+ 	.feat		= &tsens_v1_feat,
+ 	.fields		= tsens_v1_regfields,
+ };
+diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+index ee22672471e81..0aff3318aa19a 100644
+--- a/drivers/thermal/qcom/tsens.c
++++ b/drivers/thermal/qcom/tsens.c
+@@ -1118,6 +1118,9 @@ static const struct of_device_id tsens_table[] = {
+ 	}, {
+ 		.compatible = "qcom,msm8916-tsens",
+ 		.data = &data_8916,
++	}, {
++		.compatible = "qcom,msm8937-tsens",
++		.data = &data_8937,
+ 	}, {
+ 		.compatible = "qcom,msm8939-tsens",
+ 		.data = &data_8939,
+diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
+index 2805de1c68279..b94a84c94e29a 100644
+--- a/drivers/thermal/qcom/tsens.h
++++ b/drivers/thermal/qcom/tsens.h
+@@ -642,7 +642,7 @@ extern struct tsens_plat_data data_8960;
+ extern struct tsens_plat_data data_8226, data_8909, data_8916, data_8939, data_8974, data_9607;
+ 
+ /* TSENS v1 targets */
+-extern struct tsens_plat_data data_tsens_v1, data_8976, data_8956;
++extern struct tsens_plat_data data_tsens_v1, data_8937, data_8976, data_8956;
+ 
+ /* TSENS v2 targets */
+ extern struct tsens_plat_data data_8996, data_ipq8074, data_tsens_v2;
 -- 
 2.43.0
 
