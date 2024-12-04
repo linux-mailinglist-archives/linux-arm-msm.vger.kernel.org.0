@@ -1,117 +1,92 @@
-Return-Path: <linux-arm-msm+bounces-40342-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40345-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id BB6DD9E422F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 18:46:38 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0CD0C9E42C5
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 19:02:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7997C287534
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 17:46:37 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C20012859A9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 18:02:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93418207672;
-	Wed,  4 Dec 2024 17:12:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 103C02066D3;
+	Wed,  4 Dec 2024 17:46:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n0OrDanE"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c/jv1T6H"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61CE020765C;
-	Wed,  4 Dec 2024 17:12:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D74B02066CF;
+	Wed,  4 Dec 2024 17:46:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733332361; cv=none; b=GNbdkmtc7GYQOVsG6i8Wzh3+HzAoCoD12g4GHrtgTe70MzJ6wi6MkK6RAAsM40mqZ9Kx6M35gcvTM3IK7qSke/ORCTsWlm93LsSRGZ4yiSJdwHxI4pWOKSv1KnXXWM6RJdKMDvg85bA/MjOcegNKk1yUX9VYhpa4RerZksBmADk=
+	t=1733334396; cv=none; b=F8nRdUArmTQRzqUhniRtHnVP3CmzJRvjx0G4JLNWFFRA52lSUWypp/Sp4UfdE8AKVmSG69+0tAbbvJBEhaszRpybMpFsGOOR4ZF1FQpUfLJvvNfjJdyX4TdQzN81MFWLZtCOPMKSz7+9ZCuaXZHwmRUCTFStV1sV4uVgnL7uifI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733332361; c=relaxed/simple;
-	bh=G0vd4FDjx3uLl/Z+msCeyMHX4sbiyxk8MJ1jBLPFtkk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=X9KU82zE39Nry4Nub6A/IxVZN/WAkEIlgSoxhrvCP4B+PSuvMNOTgZE2nVjwL7Q5FqeFKHROjEhMHWwjxvwmYtBkP2VE3XZYfneBgin6istnzi4QBJ0Qugsebd1GORZQcL7Edy4KoE9ZgU91xBksbnGyiDOAH4B7NcAnWWpv70c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n0OrDanE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B39B9C4CED1;
-	Wed,  4 Dec 2024 17:12:39 +0000 (UTC)
+	s=arc-20240116; t=1733334396; c=relaxed/simple;
+	bh=wUa+JkE2RUtcqn7XNNQ88PQJGiolCj0UUBSyZYkVs/E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hahKqMe26gS0Ir/MbNxWXr61Azt2GX1FLwyBQa2O9ZrGqKQdc4wxzN2lMB3rlROLn3rFszxvtualxG/CHzinvzR088x5IaWAYBFQ1xai9sCdiW06p7AP/eYVSZOq+JEBcsI55/Chz9IGmxH9+EieUutXWnnWRS5bC+Sac4r9e98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c/jv1T6H; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BE55C4CEDF;
+	Wed,  4 Dec 2024 17:46:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733332361;
-	bh=G0vd4FDjx3uLl/Z+msCeyMHX4sbiyxk8MJ1jBLPFtkk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n0OrDanEyg0vGqmALVxhicz+GLD2upC7qQcNNqLoto0/FdqUpBOd0XRNUgbsvKSBi
-	 MG0zp6sDpxbUeQHuFMeJ1BqHR+XsGYDZQMqmqMBQqNiAcUz2GzdYlRbuy4vdBVIYMb
-	 QTF89hY7d6O9+Meb9JWOOSaDqqRMjGdPYtM4gpHit1Jzsl9q9c9NlEd1NdPO1M/+j8
-	 InHGVAOSO4Trm3Dpb3Mj2yOC1bWYJ4x/jfHqyNJsYIA9iFwTy/xZYiCeDFfefGt48x
-	 cOpZPtanu1LAD+1kPWTRVCBM0HnupGD10ze93ZziraNayXT6AxGJAR+/NzI3tqb+xV
-	 8UNQP7u7swoOA==
-From: Sasha Levin <sashal@kernel.org>
-To: linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Cc: devi priya <quic_devipriy@quicinc.com>,
-	Anusha Rao <quic_anusha@quicinc.com>,
-	Sricharan Ramabadhran <quic_srichara@quicinc.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Sasha Levin <sashal@kernel.org>,
-	lpieralisi@kernel.org,
-	kw@linux.com,
-	bhelgaas@google.com,
-	linux-arm-msm@vger.kernel.org,
-	linux-pci@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 04/12] PCI: qcom: Add support for IPQ9574
-Date: Wed,  4 Dec 2024 11:01:01 -0500
-Message-ID: <20241204160115.2216718-4-sashal@kernel.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241204160115.2216718-1-sashal@kernel.org>
-References: <20241204160115.2216718-1-sashal@kernel.org>
+	s=k20201202; t=1733334395;
+	bh=wUa+JkE2RUtcqn7XNNQ88PQJGiolCj0UUBSyZYkVs/E=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=c/jv1T6HGttJoVwQj+dv1IxBoqkNPGxDDEIBL+Ki8fseJf5lUNL3/0vJ0mrjrhuH1
+	 jyVBpRnv5nNWZvjCWyJgK5v/XczKmpTAZ8hP7OiY2WbDq7BnttOHECgOoAuk6QhJc3
+	 40KuZvH1P0S0ajqIQE6hsGPeqcV50jBBtUCb/3hSkOPhF9FzPHXNd3UQDZlkPr5Dj/
+	 hcIVJ+UloxFnx/h/Ps8fHbv/p0msrJvQIzL4YVIePHVVGDxig61pb6Y7SIcD/nLZ1B
+	 67d//HSwZEcoL9ShtMqlFgz2ODOjH0z4EyUV8xhlrEidhmmLQpbA6hGoa6cGxNg55i
+	 MEXaEav2R4/7A==
+Date: Wed, 4 Dec 2024 17:46:30 +0000
+From: Conor Dooley <conor@kernel.org>
+To: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+	krzk+dt@kernel.org, conor+dt@kernel.org, robimarko@gmail.com,
+	quic_gurus@quicinc.com, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	quic_srichara@quicinc.com, quic_varada@quicinc.com
+Subject: Re: [PATCH 1/2] dt-bindings: firmware: qcom,scm: Document ipq5424 SCM
+Message-ID: <20241204-detest-overshoot-90470523378e@spud>
+References: <20241204133627.1341760-1-quic_mmanikan@quicinc.com>
+ <20241204133627.1341760-2-quic_mmanikan@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.6.63
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="fACjiKA501eq81FY"
+Content-Disposition: inline
+In-Reply-To: <20241204133627.1341760-2-quic_mmanikan@quicinc.com>
 
-From: devi priya <quic_devipriy@quicinc.com>
 
-[ Upstream commit a63b74f2e35be3829f256922037ae5cee6bb844a ]
+--fACjiKA501eq81FY
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Add the new IPQ9574 platform which is based on the Qcom IP rev. 1.27.0
-and Synopsys IP rev. 5.80a.
+On Wed, Dec 04, 2024 at 07:06:26PM +0530, Manikanta Mylavarapu wrote:
+> Document the scm compatible for ipq5424 SoC.
+>=20
+> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
 
-The platform itself has four PCIe Gen3 controllers: two single-lane and
-two dual-lane, all are based on Synopsys IP rev. 5.70a. As such, reuse
-all the members of 'ops_2_9_0'.
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
 
-Link: https://lore.kernel.org/r/20240801054803.3015572-5-quic_srichara@quicinc.com
-Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
-Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
-Signed-off-by: devi priya <quic_devipriy@quicinc.com>
-Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-[kwilczynski: commit log]
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/pci/controller/dwc/pcie-qcom.c | 1 +
- 1 file changed, 1 insertion(+)
+--fACjiKA501eq81FY
+Content-Type: application/pgp-signature; name="signature.asc"
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index d3ca6d3493130..2427237cbe9c7 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -1618,6 +1618,7 @@ static const struct of_device_id qcom_pcie_match[] = {
- 	{ .compatible = "qcom,pcie-ipq8064-v2", .data = &cfg_2_1_0 },
- 	{ .compatible = "qcom,pcie-ipq8074", .data = &cfg_2_3_3 },
- 	{ .compatible = "qcom,pcie-ipq8074-gen3", .data = &cfg_2_9_0 },
-+	{ .compatible = "qcom,pcie-ipq9574", .data = &cfg_2_9_0 },
- 	{ .compatible = "qcom,pcie-msm8996", .data = &cfg_2_3_2 },
- 	{ .compatible = "qcom,pcie-qcs404", .data = &cfg_2_4_0 },
- 	{ .compatible = "qcom,pcie-sa8540p", .data = &cfg_1_9_0 },
--- 
-2.43.0
+-----BEGIN PGP SIGNATURE-----
 
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZ1CVdgAKCRB4tDGHoIJi
+0lpAAQDZVcAqQ52MB0o3a09WHlt3q3vdFrKpd6C1WbNoxlInxwD9EfMysKFmg2Rr
+orEuyI106kKxJCu9Yxwi8VAaG1QfbAA=
+=HZK3
+-----END PGP SIGNATURE-----
+
+--fACjiKA501eq81FY--
 
