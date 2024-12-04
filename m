@@ -1,149 +1,182 @@
-Return-Path: <linux-arm-msm+bounces-40365-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40366-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D292A9E453A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 20:59:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 90EB99E4583
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 21:20:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8BF1B2814AA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 19:59:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4A3BB284E6E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 20:20:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6544C1E2306;
-	Wed,  4 Dec 2024 19:59:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EFC9E1F03E6;
+	Wed,  4 Dec 2024 20:20:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RJmuq6mS"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="M8lm2Enu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2708239197;
-	Wed,  4 Dec 2024 19:59:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 961A21F1316;
+	Wed,  4 Dec 2024 20:20:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733342387; cv=none; b=hVy8L6rXV7HWbc9I0Z46/bKuQeiA7k1sV7TtnJCnkbY2amUm1gvKKPFTTzdry0M1SyJH4FJgH6MYm6oYW8/hbxcwUMekN2TdvMcZUKl8KcGmPXj7Q+/YgVkFaGTLR8xKJCDj4LsvQ6DBY983hM2kZllQTQq+d9M4Ey922898gZo=
+	t=1733343617; cv=none; b=M8a3wKHxnvP81mTGOx5hcVBRi1iFdDh2hQrIhn40S4aj919wOmq6p1/EgtRWqCn5aO2DwuJhyVVru2BHuy+IY5MgcX8JfRKnAzC6j9PXSejtl9VKGXcJBkOTv+/PNbm1eFMbdLZs3XOqXQhtlBDwPly519XKARpORUrTiOoiFSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733342387; c=relaxed/simple;
-	bh=xWstmY3Hr31E1fOJtGGF/va2mLQR04ZEhwXpM0EJlDA=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=sraKigfS3iEAxPaM96s1NCAdAnGHHTqJoaI+kSmpoqxB4kDFPDO/4Skgv8ifxZwYzyUzqT7pYTsROkJJ+Y9ljNK5gEu64lH9iGdNKrc6lbDUFNOLtnYCnWspntcC6zzvl5RgjHo9mIod7DH4IrGi0DM3JXQCGkix9x74/+5YeYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RJmuq6mS; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B4FfhmK023308;
-	Wed, 4 Dec 2024 19:59:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=y6fk9H3NDt759WdvQan1se
-	azgqXTkpLD8a9wnOIDlRg=; b=RJmuq6mSgdBytxin4Anl2QpEb4WQPWPzBgHAlW
-	n5+4lfoBcjoJ4erS79BrsZqobZQVgqkFMHDqqC3slwT6NUT7sY33oBU4mLvGoLuG
-	7r8G71HFNPSkcZcxYP8OhAHl+UJPwJikdXTMZec+arWmC0WWs+aIsCsqaXvYn9BF
-	ZDUAIqjpytTdQGN7IawpGRuXiBhCjjaxoANBwNBN/P9/oslySuZN60n9/7oYsE+5
-	ph2u94rNqAZYwsPPzP5pvi2uneKoFdLC+dSknLP1P6hTcDaTd7neWKc84sMQsjvW
-	4W9o6XgDW5+Pl9OJeyBf6q0BzlNx03IR7OtwabnRPoNGOuxw==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43aj42a22y-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 04 Dec 2024 19:59:32 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B4JxVIv019421
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 4 Dec 2024 19:59:31 GMT
-Received: from abhinavk-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 4 Dec 2024 11:59:30 -0800
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Date: Wed, 4 Dec 2024 11:59:20 -0800
-Subject: [PATCH v2] drm/ci: add kms_cursor_legacy@torture-bo to apq8016
- flakes
+	s=arc-20240116; t=1733343617; c=relaxed/simple;
+	bh=2DwAxXKr5OmgZNqp/rw57rkElXZOOYwlLMtsGH2s168=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UD68N60d+sJbWJd50e3Xd33ApvWkVMqAnwapFo8fz/bALE8xYJqRc7G6SvqsgoFHWI0nOewfPdPRq7Itmq0WIOBAHjFYsENsGCxaDNlJjHZkmksFyF974dNVKIv1I0P7a2eREeQz+WUnpss9CKeWBSbfC2YfLwhnoXIuA9FciNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=M8lm2Enu; arc=none smtp.client-ip=198.175.65.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1733343616; x=1764879616;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=2DwAxXKr5OmgZNqp/rw57rkElXZOOYwlLMtsGH2s168=;
+  b=M8lm2EnuJ0A1mAPggTtULvCr0HyMm8n5UMxEj1yZuzhfzAbkQQPjHo3v
+   yiF7Qsl2a9USGG2xcEv3PirZIW5klCmMmrVoLM8MMeRQBcCBTe1hn4EW+
+   0nlIiGtWUO/I7JKtRbUsITLkxRM7lPb0TTXVWSs/ZYXnTrquxB9c8NtgW
+   XGw7Xp8tYThoVzhkiWYrh3APMfxpgtsazlVNrByxouKkrx0X3YdaMwnTO
+   s0cXaeZkauDM1uHqtsF76gECj+cIbjyVYH5Q3HxaTh/jxnZ7Oerf3dk9B
+   7JkaJr45J88t1fMQjRPWMFVxfXFC9FOgXrD88R25CIWXCZZwSr0vX7yaQ
+   w==;
+X-CSE-ConnectionGUID: D333gxziSWa6AoiQmKwpAw==
+X-CSE-MsgGUID: SoWwH3IQRXy/m68ZNPLIKA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11276"; a="44664944"
+X-IronPort-AV: E=Sophos;i="6.12,208,1728975600"; 
+   d="scan'208";a="44664944"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Dec 2024 12:20:15 -0800
+X-CSE-ConnectionGUID: IU3ZpTEuTOejbQP8wEFewg==
+X-CSE-MsgGUID: bE2DErQ6T+qJMIn+xvSW/A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,208,1728975600"; 
+   d="scan'208";a="93773478"
+Received: from lkp-server02.sh.intel.com (HELO 1f5a171d57e2) ([10.239.97.151])
+  by orviesa009.jf.intel.com with ESMTP; 04 Dec 2024 12:20:09 -0800
+Received: from kbuild by 1f5a171d57e2 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1tIvqs-0003SH-1D;
+	Wed, 04 Dec 2024 20:20:02 +0000
+Date: Thu, 5 Dec 2024 04:19:25 +0800
+From: kernel test robot <lkp@intel.com>
+To: Viken Dadhaniya <quic_vdadhani@quicinc.com>, andi.shyti@kernel.org,
+	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+	gregkh@linuxfoundation.org, jirislaby@kernel.org, broonie@kernel.or,
+	andersson@kernel.org, konradybcio@kernel.org,
+	johan+linaro@kernel.org, dianders@chromium.org, agross@kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-serial@vger.kernel.org, linux-spi@vger.kernel.org
+Cc: oe-kbuild-all@lists.linux.dev, =quic_msavaliy@quicinc.com,
+	quic_anupkulk@quicinc.com,
+	Viken Dadhaniya <quic_vdadhani@quicinc.com>,
+	Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+Subject: Re: [PATCH v1 4/7] soc: qcom: geni-se:: Add support to load QUP SE
+ Firmware via Linux subsystem
+Message-ID: <202412050429.SJvNsU2f-lkp@intel.com>
+References: <20241204150326.1470749-5-quic_vdadhani@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20241204-cursor_tor_skip-v2-1-f03bcbc4b455@quicinc.com>
-X-B4-Tracking: v=1; b=H4sIAJe0UGcC/3WNyw7CIBBFf6WZtRgg1NfK/zCNKQPYibFUxhJNw
- 7+L3bu4i3NzHwuwT+QZTs0CyWdiimMFvWkAh368eUGuMmipjdLSCJwTx3R9VfGdJnF0Sh+c22k
- 0AWprSj7Qe128dJUH4pr9rAdZ/dz/W1kJJUIbpLV968Lenp8zIY24xfiArpTyBbQMT42wAAAA
-To: Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        Helen Koike <helen.koike@collabora.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard
-	<mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie
-	<airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
-CC: <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
-        "Abhinav Kumar" <quic_abhinavk@quicinc.com>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1733342370; l=1312;
- i=quic_abhinavk@quicinc.com; s=20240509; h=from:subject:message-id;
- bh=xWstmY3Hr31E1fOJtGGF/va2mLQR04ZEhwXpM0EJlDA=;
- b=VthJSGD02NrSGUscc1VXqVDgeERAWahgL9ZvP95E8CAo5SILOb5/8KW5/gBXen/7svHqGfNww
- vJIbC/KkO9SDHU7b5d5hs1IaZidGjdOmjZZ293Qc8Nkzrb7EkwBB5MR
-X-Developer-Key: i=quic_abhinavk@quicinc.com; a=ed25519;
- pk=SD3D8dOKDDh6BoX3jEYjsHrTFwuIK8+o0cLPgQok9ys=
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: TCErn7gk3O4HiumVDxaWSNPQoMf8NNho
-X-Proofpoint-ORIG-GUID: TCErn7gk3O4HiumVDxaWSNPQoMf8NNho
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 bulkscore=0
- mlxscore=0 mlxlogscore=822 lowpriorityscore=0 clxscore=1015 malwarescore=0
- priorityscore=1501 spamscore=0 adultscore=0 suspectscore=0 impostorscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2412040152
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241204150326.1470749-5-quic_vdadhani@quicinc.com>
 
-From the jobs [1] and [2] of pipeline [3], its clear that
-kms_cursor_legacy@torture-bo is most certainly a flake and
-not a fail for apq8016. Mark the test accordingly to match the results.
+Hi Viken,
 
-[1] : https://gitlab.freedesktop.org/drm/msm/-/jobs/67676481
-[2] : https://gitlab.freedesktop.org/drm/msm/-/jobs/67677430
-[3]: https://gitlab.freedesktop.org/drm/msm/-/pipelines/1322770
+kernel test robot noticed the following build warnings:
 
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
----
-Changes in v2:
-- Fix the failure rate from 100 to 33 as thats the accurate one
-- Link to v1: https://lore.kernel.org/r/20241204-cursor_tor_skip-v1-1-f5f0bba5df7b@quicinc.com
----
- drivers/gpu/drm/ci/xfails/msm-apq8016-flakes.txt | 5 +++++
- 1 file changed, 5 insertions(+)
+[auto build test WARNING on andi-shyti/i2c/i2c-host]
+[also build test WARNING on tty/tty-testing tty/tty-next tty/tty-linus broonie-spi/for-next linus/master v6.13-rc1 next-20241204]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-diff --git a/drivers/gpu/drm/ci/xfails/msm-apq8016-flakes.txt b/drivers/gpu/drm/ci/xfails/msm-apq8016-flakes.txt
-new file mode 100644
-index 000000000000..2fb192c92559
---- /dev/null
-+++ b/drivers/gpu/drm/ci/xfails/msm-apq8016-flakes.txt
-@@ -0,0 +1,5 @@
-+# Board Name: msm-apq8016-db410c
-+# Failure Rate: 33
-+# IGT Version: 1.28-ga73311079
-+# Linux Version: 6.12.0-rc2
-+kms_cursor_legacy@torture-bo
+url:    https://github.com/intel-lab-lkp/linux/commits/Viken-Dadhaniya/dt-bindings-i2c-qcom-i2c-geni-Document-DT-properties-for-QUP-firmware-loading/20241204-230736
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/andi.shyti/linux.git i2c/i2c-host
+patch link:    https://lore.kernel.org/r/20241204150326.1470749-5-quic_vdadhani%40quicinc.com
+patch subject: [PATCH v1 4/7] soc: qcom: geni-se:: Add support to load QUP SE Firmware via Linux subsystem
+config: arm-randconfig-002 (https://download.01.org/0day-ci/archive/20241205/202412050429.SJvNsU2f-lkp@intel.com/config)
+compiler: arm-linux-gnueabi-gcc (GCC) 14.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20241205/202412050429.SJvNsU2f-lkp@intel.com/reproduce)
 
----
-base-commit: 798bb342e0416d846cf67f4725a3428f39bfb96b
-change-id: 20241204-cursor_tor_skip-9d128dd62c4f
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202412050429.SJvNsU2f-lkp@intel.com/
 
-Best regards,
+All warnings (new ones prefixed by >>):
+
+   drivers/soc/qcom/qcom-geni-se.c: In function 'read_elf':
+>> drivers/soc/qcom/qcom-geni-se.c:975:23: warning: assignment discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
+     975 |                 *phdr = &phdrs[i];
+         |                       ^
+   drivers/soc/qcom/qcom-geni-se.c: At top level:
+   drivers/soc/qcom/qcom-geni-se.c:1268:5: warning: no previous prototype for 'qup_fw_load' [-Wmissing-prototypes]
+    1268 | int qup_fw_load(struct qup_se_rsc *rsc)
+         |     ^~~~~~~~~~~
+
+
+vim +/const +975 drivers/soc/qcom/qcom-geni-se.c
+
+   946	
+   947	/**
+   948	 * read_elf: Function to read elf file.
+   949	 * @rsc: A pointer to SE resources structure.
+   950	 * @fw: A pointer to the fw buffer.
+   951	 * @pelfseg: A pointer to SE specific elf header.
+   952	 * @phdr: pointer to one of the valid headers from list from fw buffer.
+   953	 *
+   954	 * This function reads the ELF file and outputs the pointer to header
+   955	 * data which contains the FW data and any other details.
+   956	 *
+   957	 * return: Return 0 if no error, else return error value.
+   958	 */
+   959	static int read_elf(struct qup_se_rsc *rsc, const struct firmware *fw,
+   960			    struct elf_se_hdr **pelfseg, struct elf32_phdr **phdr)
+   961	{
+   962		const struct elf32_phdr *phdrs;
+   963		const struct elf32_hdr *ehdr;
+   964		const u8 *addr;
+   965		int i;
+   966	
+   967		ehdr = (struct elf32_hdr *)fw->data;
+   968	
+   969		if (ehdr->e_phnum < 2)
+   970			return -EINVAL;
+   971	
+   972		phdrs = (struct elf32_phdr *)(ehdr + 1);
+   973	
+   974		for (i = 0; i < ehdr->e_phnum; i++) {
+ > 975			*phdr = &phdrs[i];
+   976			if (!elf_phdr_valid(*phdr))
+   977				continue;
+   978	
+   979			if ((*phdr)->p_filesz >= sizeof(struct elf_se_hdr)) {
+   980				addr =  fw->data + (*phdr)->p_offset;
+   981				*pelfseg = (struct elf_se_hdr *)addr;
+   982	
+   983				if ((*pelfseg)->magic == MAGIC_NUM_SE &&
+   984				    (*pelfseg)->version == 1 &&
+   985				    valid_seg_size(*pelfseg, (*phdr)->p_filesz))
+   986					if ((*pelfseg)->serial_protocol == rsc->protocol &&
+   987					    (*pelfseg)->serial_protocol != GENI_SE_NONE)
+   988						return 0;
+   989			}
+   990		}
+   991		return -EINVAL;
+   992	}
+   993	
+
 -- 
-Abhinav Kumar <quic_abhinavk@quicinc.com>
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
