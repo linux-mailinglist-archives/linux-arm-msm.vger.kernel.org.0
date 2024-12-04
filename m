@@ -1,92 +1,97 @@
-Return-Path: <linux-arm-msm+bounces-40168-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40169-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A1E2B9E31C0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 04:03:53 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3F6B59E31EC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 04:13:46 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C6D2BB27A89
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 03:03:50 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F26361616E2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 03:13:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 427433A1B5;
-	Wed,  4 Dec 2024 03:03:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 749E013C9A3;
+	Wed,  4 Dec 2024 03:13:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VukSHNlT"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="grNPOvON"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27EA3FC1D
-	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Dec 2024 03:03:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94708136658
+	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Dec 2024 03:13:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733281428; cv=none; b=TvdnEoj5v9od9etK3QjFuxw64vjpInqLe7TP+SEyWIf6nwusf/209O9t2AcCpQmxoQpZnlcQPVfaY0OWUHK2tesMa4iYd2h+il1UBe97CsLTtYr3ueBRLmtoKCeVF5CwPRInzbiEN0fqSiTsWy/IFsrBIKQduHYytn3yn2fCRP8=
+	t=1733282023; cv=none; b=ju6ZTjqMjMEr4PoANmyLD9fWyh3NL17WCnAMEwKWyAtvmrDHkI25/ifIrAEqBt/EHaKGz6CB6layfO5VG6H+anfceh8PuIPo8bEzKZgylAaqBE89FOXshsKPFaLg7mTaC/q9dm6OSz//4el13i+z5Z3/yerWvTLLQJzTRupg57g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733281428; c=relaxed/simple;
-	bh=fgTz9nUgN36pJrxvwLjwsa2qQatAA4azTOLT2xmXX8A=;
+	s=arc-20240116; t=1733282023; c=relaxed/simple;
+	bh=gbT/tqDPD3nB0PJX+wsYJ9apOxpJ+FbSFGzmb/PuRpA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ndjQ0LGNbD2dkytgTR0sdbKQRNyNd3JOE7mgkiX+T/KcV55aCxdeH6cNa7AHNKPYhFD1ANsxSNe9b6SsyrxYIBAvqH1vIoqO64CtPMyfUiZqq8sB+0f29Ojw/RXaSdrlvf0bujwzpw9s68PuL07qhygVhebNl6c8olI+Wu+eQ4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VukSHNlT; arc=none smtp.client-ip=209.85.167.54
+	 Content-Type:Content-Disposition:In-Reply-To; b=Z6Ap3nyP2WtHjkGR9pz1ISFb+ztmVj4t4hQrnZX78qkCRSwDB+JpBVBl/sQ2V++CVERziV1MVPDAOhBgPmo7SVhJUJ62EV68hwKp6ooHdy5mjrAsVQHKwazIH20gs+4KGgOzN+LN6/dGQEIbPMcduHI6ahBD9afHBtXCQX5Ec/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=grNPOvON; arc=none smtp.client-ip=209.85.167.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-53de852a287so6963035e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Dec 2024 19:03:45 -0800 (PST)
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-53dd668c5easo473008e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Dec 2024 19:13:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733281424; x=1733886224; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1733282020; x=1733886820; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ikLnrq2neiQXCnlo3R5J5faufHu5wG48WhuaguFzsfQ=;
-        b=VukSHNlTy0CcJG2iNLVQziohKrgaT0WTK2Gqt8jVhP2RUf4AwI7mJoldgnWFqBp9YE
-         KgIoV0ZYAzsoRq4BqAsKNAQiMDwkb0/IQKpmjDVWN8iImRcKIpxqq99YJx8S6Ry02O3P
-         f2YmRzKDE4AwTRAiUjqBopW+4PZDX6f3d4+V3nFTzrpmjfZBvMqLm4IM/UD/IUynxsHc
-         1mlmQRGVvRqgKKyiKRtebtLTCwDtUsCy9U5Qhnxarjr5ehJTisr8u7Obo4GysopxKGiG
-         MJEslUOA3O/zRF4nG/cpKEHL2Qltb7nbozEm2ZHjqChnfOEd2NRGOyp0TS/7jGbnV9MC
-         fO9g==
+        bh=peSSYZg+zC8zrxxal5znpAy/l849p/IvfHjMT8o7PE8=;
+        b=grNPOvONGqDOln1Df5BRuLd0MMsWylr20F66unI5YfXtTttKttFfyNBbpC7iIyYVpb
+         9ylVLR+Miw4MAVmH9Dsw2cAmG16xnmuh68zbp7ad4L5JUXHBv0v78LKFHEfNrcSe8Zyz
+         DCytWeiCN+IY2WGSoZ6Kvs/MBDh9d2HFAcfVP4hwBWk/mBhKRWdztTj/zU1h7dKqUegJ
+         cTYyeDtPeLfc1liUr0uOneRZaeqpJlFqATZO11ZO122H/GH70tAaldFlTMvIWyhmbb7z
+         pSUWWJ5Sv3mhLCtdIu0+SY9C4PhOHIVl1PLkLE7J7SaSgxBwNQyxOnGORk176lYXRvao
+         wC2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733281424; x=1733886224;
+        d=1e100.net; s=20230601; t=1733282020; x=1733886820;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ikLnrq2neiQXCnlo3R5J5faufHu5wG48WhuaguFzsfQ=;
-        b=mxQFyWK/apZpur19mKJN+GKgSYCiCnLo2GKTgacZMYqfQG+qO/a7LJb22apk+EQ5j+
-         Q146QEot1/eUPVSZdQ1L1eTthZm9t+aq4Up0Jjt5ECus9bzm4GBC3SEWi3uQefS2UWia
-         eBlvwcmhewMh9PzZl1/day71vguWR4Y0DdMMQrzm20pL9/KYVwARlZL5BS6tbeRLjz8h
-         AC4v9mJ72cuEZ6O5D4FX22u2eylzyVsROYtF/qvZdtuGqQD2x8PLLanSHcqA61Cke/SI
-         E9p3Pt1Taa4iRfjTgeKRGneHgS8Ul71cZipqdYmSMniS+YIGTWkdXRjHrrSlQJg6+iG8
-         GFUQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXI1gVnbjuN5l7fTIV8cOmW8s5lnqci1WsdffDF4i1peii9ex3WNI/DLStksEbilwgXsEYc/FTE6O/Cabyj@vger.kernel.org
-X-Gm-Message-State: AOJu0YzjXdt8rzj2uiECB2eirataFKRbBuV8Zh0JvoTAy4Hehw3Z8IBJ
-	WCU9BIze3EIRt8Z5FJIEkBZi5rEP0kyYICEDIUEK+c7qEq7zXkNeiSYKhHLh9Ho=
-X-Gm-Gg: ASbGnctXn/U3LNNGzs3OVDruXGMS/+4SYms9z4WSyLPqHkuFPJOlRn3UqsiAV+qaZOf
-	f0ajbZ/VoJTcxDWrT6RiyRf+8E8NMk1RKCyNCAicxqHj2sKSi5Oh4UiIzrz6T1a02m0eMjabfKT
-	kZ6/gXFRjjXcfdgx8XTCZgsBn1oSyViYECHcI4SKJsDvMfMftBYaZylFUKj0JLDt+gzTJUaWJqt
-	+4Dt0NG+GfwqcQnG1XWligwvu/q18AYrijrrqKANK2cxf0+J5PV1u+5dbrYiXFNUh6ZKzCe3e+f
-	iqYiDCeAiHX57pX/vFrfmdx8d5J8XQ==
-X-Google-Smtp-Source: AGHT+IHvj3GK9mvvHsYxtJ/AYW0XXXhWSJ/ZzMycuoNBeFIBdIFiRzpwHVHkl0tRH7tUUn0ZNFCc4A==
-X-Received: by 2002:a05:6512:2209:b0:53d:a264:f25a with SMTP id 2adb3069b0e04-53e1b8c11e5mr907942e87.47.1733281424214;
-        Tue, 03 Dec 2024 19:03:44 -0800 (PST)
+        bh=peSSYZg+zC8zrxxal5znpAy/l849p/IvfHjMT8o7PE8=;
+        b=jhbchsMkOVHGS+hc52d7lwBPMQko3v2iT5jZLoxU0cxe36fLaDWC9kag+X1MrXb1SC
+         Q5itjuUG0lQxjT1c6mZ+8yL3zZA+wOozzD7YcLuf4T462Xs7n72fEmXf/q1tuHZL45pY
+         tI5xbhma+Us8OXrca/fcReWgkH3VSi4u+Dd/ojr02RWEsehxzjTyE6QZlLDd28tfo+Ft
+         5v3iDSjB9s/iIJWEqH9C4KKTPaSviDoTzlnRuVWLeigkjDHYXqjbUAIWus1n/Fq4f824
+         1aAnURcBo0EpSt+XdwPIr9YTaL5ApfbV5l8NwP4gBOMGD82cyFMQ48P2pvwNtHB9yRi4
+         t1vA==
+X-Forwarded-Encrypted: i=1; AJvYcCXKYagPakHaFvPCMYwqKf3TbJ6eLMOdTrWRk0C8HazuzjkjL96y/5rkH2QKQ2c9HcBbcYq9GeLg7Nh9vCjg@vger.kernel.org
+X-Gm-Message-State: AOJu0YwyqrLE/+uhgzHpekkNwD2ai+ZQoUK21isnBdoVI74mkwSf2lrI
+	Iw8Gy3lxL7zg/Vae+uKrr58U5PxSXhs7NhjokklDT18zBHwExHhy7VTRNmTfF9I=
+X-Gm-Gg: ASbGnctKbQ6qwSl1khAY+dGndd4CP/3pDKC/RKLGqZUBe0HEksd/2B26PvmqBqYNBL5
+	gTYnVhRidtkwjDcBKt281cvz0uJtmKgZtS81icgxp9j91H9oOAvvciac+CZ2GA+BI+cZGiHElkZ
+	D5/E+eU5WZgZ4CzcFiidGGffSCYXgTBGFCmqM9CrnTDHU1VWI4PU86B54pQSzsrNbjTrolnzm1Z
+	opp5iy+bc0e/+klHKBG0uP0DHnzuNfFm70YPpiI06uJnXhejEFE3Zer59RM2ANbZ/ogoxs/IR/O
+	6vqmqANM2xZEkmizCBanNZ7Cg4ToCA==
+X-Google-Smtp-Source: AGHT+IGE48k3yZcCcWW+WVZc5BahwqReyyQoqnlQUw2hufiIoLIfZCom+M1TBjfEqb4YqW0RsjLWSg==
+X-Received: by 2002:a05:6512:689:b0:53d:f8aa:abaf with SMTP id 2adb3069b0e04-53df8aaaca6mr7853078e87.9.1733282019569;
+        Tue, 03 Dec 2024 19:13:39 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53df646efd9sm2067551e87.143.2024.12.03.19.03.41
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53df646f08csm2032703e87.164.2024.12.03.19.13.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Dec 2024 19:03:42 -0800 (PST)
-Date: Wed, 4 Dec 2024 05:03:40 +0200
+        Tue, 03 Dec 2024 19:13:38 -0800 (PST)
+Date: Wed, 4 Dec 2024 05:13:35 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, Stephen Boyd <swboyd@chromium.org>, 
-	Doug Anderson <dianders@chromium.org>, Johan Hovold <johan@kernel.org>, 
-	Bjorn Andersson <quic_bjorande@quicinc.com>
-Subject: Re: [PATCH 1/4] drm/msm/dp: remove redundant checks related to
- ST_DISPLAY_OFF in plug/irq_ipd handlers
-Message-ID: <evnnydsvr5ur7sl2lnahqo7ni6y5bwbdfkajhrmbues5uyeb2c@zym27uj553yy>
-References: <20241202-hpd_display_off-v1-0-8d0551847753@quicinc.com>
- <20241202-hpd_display_off-v1-1-8d0551847753@quicinc.com>
- <pa3jwxpnipj7lcusioqnjesz4cpgc2oyqgspqqvk2i5kb6ud4k@fi4grx6w5k7d>
- <41725f98-5c23-47d2-966b-ebd5f4e1c532@quicinc.com>
+To: Jagadeesh Kona <quic_jkona@quicinc.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+	Brian Masney <bmasney@redhat.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Ajit Pandey <quic_ajipan@quicinc.com>, Imran Shaik <quic_imrashai@quicinc.com>, 
+	Taniya Das <quic_tdas@quicinc.com>, Satya Priya Kakitapalli <quic_skakitap@quicinc.com>, 
+	Shivnandan Kumar <quic_kshivnan@quicinc.com>
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: sa8775p: Add CPU OPP tables to
+ scale DDR/L3
+Message-ID: <fhueah2gfi7fartnitasetvxiax3vgpgnbjis6ydjt523cnksk@vs4jmmtxk5jw>
+References: <20241017-sa8775p-cpufreq-l3-ddr-scaling-v1-0-074e0fb80b33@quicinc.com>
+ <20241017-sa8775p-cpufreq-l3-ddr-scaling-v1-2-074e0fb80b33@quicinc.com>
+ <ZxEwVShJuMH4J1Hp@x1>
+ <9179759d-7af1-409f-8130-1136c9ae4ecd@quicinc.com>
+ <daqa3krsp6emdha6h7tlcelsggb6qeilnojgtfxjbp5zw4n6ow@xzwdmu55ygjf>
+ <5c3d91e3-e9d3-4e8d-bd4f-f7cbe765dddc@oss.qualcomm.com>
+ <d78e6fc9-2238-4f55-a604-f60df8565166@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -95,97 +100,83 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <41725f98-5c23-47d2-966b-ebd5f4e1c532@quicinc.com>
+In-Reply-To: <d78e6fc9-2238-4f55-a604-f60df8565166@quicinc.com>
 
-On Tue, Dec 03, 2024 at 06:36:45PM -0800, Abhinav Kumar wrote:
+On Tue, Dec 03, 2024 at 08:33:46PM +0530, Jagadeesh Kona wrote:
 > 
 > 
-> On 12/3/2024 5:50 AM, Dmitry Baryshkov wrote:
-> > On Mon, Dec 02, 2024 at 04:39:00PM -0800, Abhinav Kumar wrote:
-> > > In commit 8ede2ecc3e5ee ("drm/msm/dp: Add DP compliance tests on Snapdragon Chipsets"),
-> > > checks were introduced to avoid handling any plug or irq hpd events in
-> > > ST_DISPLAY_OFF state.
-> > > 
-> > > Even if we do get hpd events, after the bridge was disabled,
-> > > it should get handled. Moreover, its unclear under what circumstances
-> > > these events will fire because ST_DISPLAY_OFF means that the link was
-> > > still connected but only the bridge was disabled. If the link was untouched,
-> > > then interrupts shouldn't fire.
+> On 11/30/2024 8:02 PM, Konrad Dybcio wrote:
+> > On 14.11.2024 11:48 PM, Dmitry Baryshkov wrote:
+> >> On Mon, Nov 11, 2024 at 06:39:48PM +0530, Jagadeesh Kona wrote:
+> >>>
+> >>>
+> >>> On 10/17/2024 9:12 PM, Brian Masney wrote:
+> >>>> On Thu, Oct 17, 2024 at 02:58:31PM +0530, Jagadeesh Kona wrote:
+> >>>>> +	cpu0_opp_table: opp-table-cpu0 {
+> >>>>> +		compatible = "operating-points-v2";
+> >>>>> +		opp-shared;
+> >>>>> +
+> >>>>> +		cpu0_opp_1267mhz: opp-1267200000 {
+> >>>>> +			opp-hz = /bits/ 64 <1267200000>;
+> >>>>> +			opp-peak-kBps = <6220800 29491200>;
+> >>>>> +		};
+> >>>>> +
+> >>>>> +		cpu0_opp_1363mhz: opp-1363200000 {
+> >>>>> +			opp-hz = /bits/ 64 <1363200000>;
+> >>>>> +			opp-peak-kBps = <6220800 29491200>;
+> >>>>> +		};
+> >>>>
+> >>>> [snip]
+> >>>>
+> >>>>> +	cpu4_opp_table: opp-table-cpu4 {
+> >>>>> +		compatible = "operating-points-v2";
+> >>>>> +		opp-shared;
+> >>>>> +
+> >>>>> +		cpu4_opp_1267mhz: opp-1267200000 {
+> >>>>> +			opp-hz = /bits/ 64 <1267200000>;
+> >>>>> +			opp-peak-kBps = <6220800 29491200>;
+> >>>>> +		};
+> >>>>> +
+> >>>>> +		cpu4_opp_1363mhz: opp-1363200000 {
+> >>>>> +			opp-hz = /bits/ 64 <1363200000>;
+> >>>>> +			opp-peak-kBps = <6220800 29491200>;
+> >>>>> +		};
+> >>>>
+> >>>> There's no functional differences in the cpu0 and cpu4 opp tables. Can
+> >>>> a single table be used?
+> >>>>
+> >>>> This aligns with my recollection that this particular SoC only has the
+> >>>> gold cores.
+> >>>>
+> >>>> Brian
+> >>>>
+> >>>
+> >>> Thanks Brian for your review. Sorry for the delayed response.
+> >>>
+> >>> We require separate OPP tables for CPU0 and CPU4 to allow independent
+> >>> scaling of DDR and L3 frequencies for each CPU domain, with the final
+> >>> DDR and L3 frequencies being an aggregate of both.
+> >>>
+> >>> If we use a single OPP table for both CPU domains, then _allocate_opp_table() [1]
+> >>> won't be invoked for CPU4. As a result both CPU devices will end up in sharing
+> >>> the same ICC path handle, which could lead to one CPU device overwriting the bandwidth
+> >>> votes of other.
 > > 
-> > What about the link being untouched, but the monitor being toggled
-> > somehow, which might generate HPD / attention events?
+> > Oh that's a fun find.. clocks get the same treatment.. very bad,
+> > but may explain some schroedingerbugs.
 > > 
-> 
-> To confirm my understanding of this, I tested this case again with and
-> without a dongle on sc7180.
-> 
-> Without a dongle - When the monitor is powered off and powered on, without
-> physically disturbing the cable, it still generates a hotplug disconnect
-> event when powered off and hotplug connect event when its powered on again.
-> 
-> It gets handled the same way as a user would hotplug it using the cable.
-> 
-> With a dongle - When the monitor is powered off , nothing happens and it
-> stays in connected state. When the monitor is powered back on, it generates
-> a hotplug disable followed by hotplug enable event. This behavior is
-> consistent with or without this series with this dongle.
-> 
-> So from the DP driver point of view, for both these cases, its just another
-> hotlplug disconnect/connect.
-> 
-> Both these cases still work fine with these changes.
-
-Thanks for the confirmation!
-
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-
-> 
-> > > 
-> > > Even in the case of the DP compliance equipment, it should be raising these
-> > > interrupts during the start of the test which is usually accompanied with either
-> > > a HPD pulse or a IRQ HPD but after the bridge is disabled it should be fine
-> > > to handle these anyway. In the absence of a better reason to keep these checks,
-> > > drop these and if any other issues do arise, it should be handled in a different
-> > > way.
-> > > 
-> > > Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> > > ---
-> > >   drivers/gpu/drm/msm/dp/dp_display.c | 10 ----------
-> > >   1 file changed, 10 deletions(-)
-> > > 
-> > > diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> > > index aba925aab7ad..992184cc17e4 100644
-> > > --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> > > +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> > > @@ -562,11 +562,6 @@ static int msm_dp_hpd_plug_handle(struct msm_dp_display_private *dp, u32 data)
-> > >   	drm_dbg_dp(dp->drm_dev, "Before, type=%d hpd_state=%d\n",
-> > >   			dp->msm_dp_display.connector_type, state);
-> > > -	if (state == ST_DISPLAY_OFF) {
-> > > -		mutex_unlock(&dp->event_mutex);
-> > > -		return 0;
-> > > -	}
-> > > -
-> > >   	if (state == ST_MAINLINK_READY || state == ST_CONNECTED) {
-> > >   		mutex_unlock(&dp->event_mutex);
-> > >   		return 0;
-> > > @@ -689,11 +684,6 @@ static int msm_dp_irq_hpd_handle(struct msm_dp_display_private *dp, u32 data)
-> > >   	drm_dbg_dp(dp->drm_dev, "Before, type=%d hpd_state=%d\n",
-> > >   			dp->msm_dp_display.connector_type, state);
-> > > -	if (state == ST_DISPLAY_OFF) {
-> > > -		mutex_unlock(&dp->event_mutex);
-> > > -		return 0;
-> > > -	}
-> > > -
-> > >   	if (state == ST_MAINLINK_READY || state == ST_DISCONNECT_PENDING) {
-> > >   		/* wait until ST_CONNECTED */
-> > >   		msm_dp_add_event(dp, EV_IRQ_HPD_INT, 0, 1); /* delay = 1 */
-> > > 
-> > > -- 
-> > > 2.34.1
-> > > 
+> > Taking a peek at some code paths, wouldn't dropping opp-shared
+> > solve our issues? dev_pm_opp_set_sharing_cpus() overrides it
 > > 
+> > Konrad
+> 
+> Thanks Konrad for your review.
+> 
+> Yes, correct. I tried dropping opp-shared but it is again getting set due to
+> dev_pm_opp_set_sharing_cpus().
+
+It should be set, but then it should get the limited CPU mask rather
+than the full CPU set. Isn't that enough for your case?
 
 -- 
 With best wishes
