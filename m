@@ -1,199 +1,243 @@
-Return-Path: <linux-arm-msm+bounces-40389-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40390-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A5D109E46E7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 22:38:12 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F1C1F9E4726
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 22:47:52 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 746CE16155A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 21:38:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A78D5284E67
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 21:47:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31A6E207E05;
-	Wed,  4 Dec 2024 21:35:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F30618FDDB;
+	Wed,  4 Dec 2024 21:47:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JLYbAuyo"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Bctgae+s"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+Received: from mail-io1-f46.google.com (mail-io1-f46.google.com [209.85.166.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C88C20767C;
-	Wed,  4 Dec 2024 21:35:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 929ED19BBA;
+	Wed,  4 Dec 2024 21:47:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733348128; cv=none; b=XRE3N5zDuuLSCr91xRy7+1MeuMhGjufES7gzF7KZ5fy+rEdYqqybms/jFy7wqJ/We9GllHHC8qoJjYGOmGVtpByIVFKx6aimFK+8dxXK+pGOPklDbUQhaSc36FGa27lctBLh3hbsHPngF4OFF2L7rymfBQlN5YbkZsC5bEA6F8k=
+	t=1733348871; cv=none; b=OE2UhDt8nTSvTaCw4m0eujRA64romk6yYpEeD3se7l2l8xfOTyBOQ9xUYKr4gjJJXgRXgMR9nTrd5PMkm7HoYai9CqpVN1H7IJ/jMNz67Heu50eU3phc9h4H+Fc4ErqrayHCwm/3nJ33J/UfaPOra7Gm/w0OhspUcgpEiODkQq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733348128; c=relaxed/simple;
-	bh=2tHzmSguC9B88sWflOmx2hAs+IwmerQrL2ci2kCVlbc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=hAphVaTBQpppsvm2B7sTbh6RHsPtu76ErdhxVc5ztLeGog74FYn5KQyKwic+XcLI7Hkxw4XF8S+3p3CwXPKwiTbFZBNkgbhcyZHIpQsObf4FY+sboA4RClx3pnfp17/aXcZ+Azn3B07HpANp5xvlfE2jHx3fgBOHXQ649YnzOEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JLYbAuyo; arc=none smtp.client-ip=209.85.218.48
+	s=arc-20240116; t=1733348871; c=relaxed/simple;
+	bh=NAPaQLLw3n6isfvXnNYqz9XhcTLA+zHOJ8U2ZEJFbIY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=kX4gQbkOYNK3WsdyBabWjGCdiUFVsvlDOVUhQLfug3u90CiT1H5RjDfQOQ6QkFC0hxAHrRFwVSE20BJgqqpEr8j4bJ/oAUTbRlu/Hm0NAc+/MhXrHGEG6hnIO59mD0+DbQ8MKmlyIkKJBKw3WyEppwQ49z3Qdjp1iQVvHnI6d2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Bctgae+s; arc=none smtp.client-ip=209.85.166.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-aa1e6ecd353so28659466b.1;
-        Wed, 04 Dec 2024 13:35:26 -0800 (PST)
+Received: by mail-io1-f46.google.com with SMTP id ca18e2360f4ac-84386a6669bso8217239f.3;
+        Wed, 04 Dec 2024 13:47:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733348124; x=1733952924; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=yxgQfg2BOAQCHKqqupwnI8lgxyjM2FrMmQmc5aOhDZM=;
-        b=JLYbAuyow1f7o3FHUSQOGFpNEf6OSSVmfHiSylJf6d5mQd+5SnDa4e8q6+cUP8xTrj
-         9d9crOgTRG6r9JIXtPwiIL67HVQoQxaW2u235MAQqQiJAMuh1qZUIMyiFNW3NFZv4gB6
-         tRVmYaaA1ta+N/Vf0rIAVf9DwsQRJuEJ3T7qg9clkldiBbkncB1ljVXYRMvlo/u2FLCZ
-         LIbEd37STlFzx9t/+Nr5w2D3BLvHAc30gOayRtVTrm8YiYcu1duhuTVFMbiJA3qNy8y9
-         VgqIUDXgtHV77H+IcC6h5B9QJI+eIJgMNB74SMblLEF03XnH4QeEYqqORWBcYZ1PQYG7
-         MDvQ==
+        d=gmail.com; s=20230601; t=1733348868; x=1733953668; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=YkUWpt632yNwjVGL7Px9OoDHkkL3C4ca4wA/IGFSQ2g=;
+        b=Bctgae+spGYTZjL30/xulOUOI0az9JbGYhD1+E7c9ZjkgY8PX50lTx/d5OvJ7SMK+M
+         dnQpJYlEws/9LnjwvGVnrnejr6gm6RtCWT942iUYRU2ej2oqALcTpW388nGQTGjIz9pX
+         Dr10LNVIoh+OupOn5km4niEBaoed89EAZdc52e95jdEEfPzpGvhzAOo3V76xH5W+T5s+
+         gpKLP8IGtXTu/jcRwIT7WnMrzv2FNjN7F6Iya8+8v5SkueGFHz0AtlTKalLwcpHOFfnY
+         pa0f7ptISjQUoMO/AeiAntXLPP37QIQRx6LXzzQNtIF6arXdJRJZrPEilS/rRlRsmmcu
+         CHNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733348124; x=1733952924;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1733348868; x=1733953668;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=yxgQfg2BOAQCHKqqupwnI8lgxyjM2FrMmQmc5aOhDZM=;
-        b=UpeoDDKfOGW+d5oNRz7YQcftNkuMasV1cMDIIWbgXaiiXutKn/8hfldpLEwCs0gWWv
-         4DEqwgOfUKcUFOJa6ciJswK3MsGDXR9l3DvtXfWqL9ATj5POmSxOuzzsRRz6E0sFgowv
-         JMh0pawQmhN7RlPa+DjQ4nUyDoNSebWscx0nZmRFiEcqdmAHSCD/PaXxD9ENjdcqtFY1
-         OSZd+PQYMiJHxNb+24RrsMLmrM8AWHD0NfDA79/prmXh9+5Suz/9fcLW30l9xbpAkcwf
-         B/7I/JM2vKoSglLo0wJvxHxUNtwNekHXbDYhBtEA3L9LvH/r0ONjPyot2Irh3oAG4Cuy
-         Nohw==
-X-Forwarded-Encrypted: i=1; AJvYcCUOaYLIJcFHnUygNbKmeFGZkVy0YARH9C5Fe1/hywZpyKgPcip25U8snCyfDmd2wnWMG4TJCgY/Tf9VqfXl@vger.kernel.org, AJvYcCUR0MLJdQgJqB30jTX3w2adncajcb0WBXADfJKOkd0vzvLl03vhZe9y4egVrOSDAUKpiMwvP9M5UF2B@vger.kernel.org, AJvYcCUxa7gONAdkeKJyT835LEPoP0i/qVzUP0uS32/NQMv5tCwmPt2Ks3lr5Puc9IE6fLEM/h/CmmoLo/IXnLY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwPZwDPfL+xTsU8CVmG7c7j5i8jEhqksatQ/eFH/2ctXIMgI4/l
-	te4EJnYIJrds/ZXSrEa4ApXIkoCgmiegINzWEc/0Si9l2uiWZYoLL+sfsA==
-X-Gm-Gg: ASbGnctEWsXn5H9CT3e1t1uC99iab/bXW3meVnIeogAN+JmGbUVXpjug/eDJfsU9/mb
-	eRx/4D6Fd/o5jV/85vqNSJrUhviwBTR/Zku9g+pKIKp6ZaEbwwQ254jDBjag4IBT3quatIS0YfW
-	wpraYjjgVlMJLE4IxlArrmEPnpGEBA48WyOmYmQBgrlrHAj9PjsInUngVrezBTi6GpIfFSPXqLZ
-	kAfQntc/nKcdef8l1hVqnTtdJRN6yrmKi1ay36eGRmcEKXg
-X-Google-Smtp-Source: AGHT+IH6mG9xi/70k6iJ4wp2PEjv/SLud4unNTG9xLbEgrvPdO0recQ1Sim7i3L2L47S1NWkk+2mYw==
-X-Received: by 2002:a05:6402:26d6:b0:5d0:8225:aa19 with SMTP id 4fb4d7f45d1cf-5d10cb4e6f4mr11331230a12.2.1733348124368;
-        Wed, 04 Dec 2024 13:35:24 -0800 (PST)
-Received: from [127.0.1.1] ([46.53.242.72])
-        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-aa62601b5ddsm4506966b.118.2024.12.04.13.35.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Dec 2024 13:35:24 -0800 (PST)
-From: Dzmitry Sankouski <dsankouski@gmail.com>
-Date: Thu, 05 Dec 2024 00:35:01 +0300
-Subject: [PATCH v7 14/14] arm64: dts: qcom: sdm845-starqltechn: add modem
- support
+        bh=YkUWpt632yNwjVGL7Px9OoDHkkL3C4ca4wA/IGFSQ2g=;
+        b=HdbU0M9iZEgO1wYsSbfXQ/t/RGU3z8QXCb02HUW+XjHaZJSwr/JVGTLqav4PT6sXH6
+         hLkXq1t9wi8KqXeSyUeIEB5R80G2vCXsRGuqVpj+COTKrwO+D6hhm48RCkfOr0889srW
+         IqVBaNEHlpsGzj+TYYA+CLtoYZ8lROw3hNVi7TN+uFwdFmIpzMC0ha73vru3nxC/eXk/
+         S+N0DM/JvLUwz1g3KjaNyTfIoeUeNqXQPmZ9wLHetJZuY+JgQYbiG9nntNdlSS2xJeTm
+         elSYlCGxU7UQehwpvhczxX3NBUH7JqeF+qRAAuligapgipdVoo+kL3oatCyEyT7jgJfw
+         HKWg==
+X-Forwarded-Encrypted: i=1; AJvYcCU7oNnrocsCgX2kPasyZPDrvtyKpD0uXgb5bn/2l1ermTz4lpWhslRfU5ZwFnxrp6QEJTr+xm4nnfBvxpI5@vger.kernel.org, AJvYcCVOtj9QrlST5eD78wvIzPZ0AOFXhGoPGsx+/RDgjw8euiE4y3pjnmalFUrOlUomshYq4lknILwl9jTnswi4@vger.kernel.org
+X-Gm-Message-State: AOJu0YzO32pvynMzV7AG1HSr6Gm0c1uYCGblKgSOk41inPu3Da70YfkI
+	qUbo2d2a/k14InxIyr7XjsJztjs0EgklVnwn28Gq0auco1DTKt54P0fO58yWE5tlw8bhnpV9oa4
+	ZiyCf6YInCw4Dg0qqasg98+2/j+s=
+X-Gm-Gg: ASbGnct4OvvnyIN+5m9Q2uJhQYPN9JkPBZ3nDdScOz/Itoel7MBl0z69GLySLZXG1zN
+	arPy1bHrBqMa979tAx1FbwQ74/xdc+kMmsWj5NjCaScA1+zcmIOwnDnYw/EaHFfgKzQ==
+X-Google-Smtp-Source: AGHT+IEQ7xEThkcg5PY00J7uHpV2UKEhB5xX4Rm23g6H9R7iyEVJfwjFNZv40WQcyubiRxoi2BHB25XQxHAoYB3sERo=
+X-Received: by 2002:a05:6602:13c5:b0:835:4402:e2eb with SMTP id
+ ca18e2360f4ac-8445b574378mr878085539f.7.1733348868624; Wed, 04 Dec 2024
+ 13:47:48 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241205-starqltechn_integration_upstream-v7-14-84f9a3547803@gmail.com>
-References: <20241205-starqltechn_integration_upstream-v7-0-84f9a3547803@gmail.com>
-In-Reply-To: <20241205-starqltechn_integration_upstream-v7-0-84f9a3547803@gmail.com>
-To: cros-qcom-dts-watchers@chromium.org, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
- Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
- Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-sound@vger.kernel.org, 
- Dzmitry Sankouski <dsankouski@gmail.com>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1733348104; l=2190;
- i=dsankouski@gmail.com; s=20240619; h=from:subject:message-id;
- bh=2tHzmSguC9B88sWflOmx2hAs+IwmerQrL2ci2kCVlbc=;
- b=q2wZX3JTiwbyE2T0qQQbPRWF/TcfHXn33BTKtXaRAQF62LHBipGA48X+qNaNrBIeJ/jHS0Utt
- JYDZG1Osu9ICk+CPnxhmmQFdDhvlUfkLXkvSretPAZ+oI4OpwXXU+Pj
-X-Developer-Key: i=dsankouski@gmail.com; a=ed25519;
- pk=YJcXFcN1EWrzBYuiE2yi5Mn6WLn6L1H71J+f7X8fMag=
+References: <20241125-a612-gpu-support-v2-0-b7cc38e60191@quicinc.com>
+ <20241125-a612-gpu-support-v2-1-b7cc38e60191@quicinc.com> <752484b5-2db1-4714-8046-17cd5496d81d@oss.qualcomm.com>
+ <0aa547fc-4c88-4457-8d01-81f93fb3832c@quicinc.com> <CAF6AEGvqPEFN+j0Txa5KPmxF8tXCn_uUsM86i4uo+tc2mTWYgg@mail.gmail.com>
+ <f603f71c-64f4-4f29-b8b9-430d758a738b@quicinc.com>
+In-Reply-To: <f603f71c-64f4-4f29-b8b9-430d758a738b@quicinc.com>
+From: Rob Clark <robdclark@gmail.com>
+Date: Wed, 4 Dec 2024 13:47:36 -0800
+Message-ID: <CAF6AEGt-wojTde=OfqSyez3fD1jiyUTP08TWxNQMgkoWhF-MVA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] drm/msm/adreno: Introduce ADRENO_QUIRK_NO_SYSCACHE
+To: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org, Rob Clark <robdclark@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Add support for modem and ipa(IP Accelerator).
-Add spss reserved memory node.
+On Wed, Dec 4, 2024 at 11:04=E2=80=AFAM Akhil P Oommen <quic_akhilpo@quicin=
+c.com> wrote:
+>
+> On 12/1/2024 10:06 PM, Rob Clark wrote:
+> > On Sat, Nov 30, 2024 at 12:30=E2=80=AFPM Akhil P Oommen
+> > <quic_akhilpo@quicinc.com> wrote:
+> >>
+> >> On 11/30/2024 7:01 PM, Konrad Dybcio wrote:
+> >>> On 25.11.2024 5:33 PM, Akhil P Oommen wrote:
+> >>>> There are a few chipsets which don't have system cache a.k.a LLC.
+> >>>> Currently, the assumption in the driver is that the system cache
+> >>>> availability correlates with the presence of GMU or RPMH, which
+> >>>> is not true. For instance, Snapdragon 6 Gen 1 has RPMH and a GPU
+> >>>> with a full blown GMU, but doesnot have a system cache. So,
+> >>>> introduce an Adreno Quirk flag to check support for system cache
+> >>>> instead of using gmu_wrapper flag.
+> >>>>
+> >>>> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+> >>>> ---
+> >>>>  drivers/gpu/drm/msm/adreno/a6xx_catalog.c | 3 ++-
+> >>>>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c     | 7 +------
+> >>>>  drivers/gpu/drm/msm/adreno/adreno_gpu.h   | 1 +
+> >>>>  3 files changed, 4 insertions(+), 7 deletions(-)
+> >>>>
+> >>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c b/drivers/gpu=
+/drm/msm/adreno/a6xx_catalog.c
+> >>>> index 0c560e84ad5a..5e389f6b8b8a 100644
+> >>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+> >>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+> >>>> @@ -682,6 +682,7 @@ static const struct adreno_info a6xx_gpus[] =3D =
+{
+> >>>>              },
+> >>>>              .gmem =3D (SZ_128K + SZ_4K),
+> >>>>              .inactive_period =3D DRM_MSM_INACTIVE_PERIOD,
+> >>>> +            .quirks =3D ADRENO_QUIRK_NO_SYSCACHE,
+> >>>>              .init =3D a6xx_gpu_init,
+> >>>>              .zapfw =3D "a610_zap.mdt",
+> >>>>              .a6xx =3D &(const struct a6xx_info) {
+> >>>> @@ -1331,7 +1332,7 @@ static const struct adreno_info a7xx_gpus[] =
+=3D {
+> >>>>              },
+> >>>>              .gmem =3D SZ_128K,
+> >>>>              .inactive_period =3D DRM_MSM_INACTIVE_PERIOD,
+> >>>> -            .quirks =3D ADRENO_QUIRK_HAS_HW_APRIV,
+> >>>> +            .quirks =3D ADRENO_QUIRK_HAS_HW_APRIV | ADRENO_QUIRK_NO=
+_SYSCACHE,
+> >>>>              .init =3D a6xx_gpu_init,
+> >>>>              .zapfw =3D "a702_zap.mbn",
+> >>>>              .a6xx =3D &(const struct a6xx_info) {
+> >>>
+> >>> +a619_holi
+> >>>
+> >>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm=
+/msm/adreno/a6xx_gpu.c
+> >>>> index 019610341df1..a8b928d0f320 100644
+> >>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> >>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> >>>> @@ -1863,10 +1863,6 @@ static void a7xx_llc_activate(struct a6xx_gpu=
+ *a6xx_gpu)
+> >>>>
+> >>>>  static void a6xx_llc_slices_destroy(struct a6xx_gpu *a6xx_gpu)
+> >>>>  {
+> >>>> -    /* No LLCC on non-RPMh (and by extension, non-GMU) SoCs */
+> >>>> -    if (adreno_has_gmu_wrapper(&a6xx_gpu->base))
+> >>>> -            return;
+> >>>> -
+> >>>>      llcc_slice_putd(a6xx_gpu->llc_slice);
+> >>>>      llcc_slice_putd(a6xx_gpu->htw_llc_slice);
+> >>>>  }
+> >>>> @@ -1876,8 +1872,7 @@ static void a6xx_llc_slices_init(struct platfo=
+rm_device *pdev,
+> >>>>  {
+> >>>>      struct device_node *phandle;
+> >>>>
+> >>>> -    /* No LLCC on non-RPMh (and by extension, non-GMU) SoCs */
+> >>>> -    if (adreno_has_gmu_wrapper(&a6xx_gpu->base))
+> >>>> +    if (a6xx_gpu->base.info->quirks & ADRENO_QUIRK_NO_SYSCACHE)
+> >>>>              return;
+> >>>
+> >>> I think A612 is the "quirky" one here.. it has some sort of a GMU,
+> >>> but we're choosing not to implement it. maybe a check for
+> >>>
+> >>> if (adreno_has_gmu_wrapper && !adreno_is_a612)
+> >>>
+> >>> would be clearer here, with a comment that RGMU support is not
+> >>> implemented
+> >>>
+> >>>
+> >>>
+> >>> But going further, I'm a bit concerned about dt-bindings.. If we
+> >>> implement RGMU on the driver side in the future, that will require
+> >>> DT changes which will make the currently proposed description invalid=
+.
+> >>>
+> >>> I think a better angle would be to add a adreno_has_rgmu() func with
+> >>> a qcom,adreno-rgmu compatible and plumb it correctly from the get-go.
+> >>>
+> >>> This way, we can avoid this syscache quirk as well.
+> >>>
+> >>
+> >> I am aware of at least Adreno 710 which doesn't have syscache, but has
+> >> proper GMU. And I don't see any reason why there couldn't be another o=
+ne
+> >> in future to save silicon area. So, a quirk flag doesn't seem so bad i=
+n
+> >> this case.
+> >>
+> >> The correct way to avoid this quirk flag is by making LLCC driver retu=
+rn
+> >> a proper error to detect the absence of syscache. Currently, it just
+> >> returns EPROBE_DEFER which put driver in an infinite probe loop.
+> >
+> > Hmm, this seems solvable?  llcc has a node in the dt, so it seems like
+> > it should be able to tell the difference between not existing and not
+> > being probed yet.  Something maybe like, initialize drv_data to NULL
+> > instead of -EPROBE_DEFER, and then in the various entry points, if
+> > (!drv_data) return not_probed_helper(); which would check if a
+> > compatible node exists in dt?
+>
+> Sounds like that would work. Can we explore that separately?
+>
+> I am a bit worried about adding another subsystem's patch to this
+> series. That might delay this series by weeks.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
----
-Changes in v6:
-- refactor: s/starqltechn/sdm845-starqltechn in subject.
----
- arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts | 39 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
+I don't think there is a dependency between the two, so it shouldn't
+delay anything.  We can just merge the first patch in this series as
+it is and drop the second.  And the llcc change is a legit bug fix,
+IMO, -EPROBE_DEFER is the incorrect return value when the device is
+not present.
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-index 15997cb88576..4583d071409d 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-@@ -19,6 +19,8 @@
- #include "pm8998.dtsi"
- #include "sdm845-wcd9340.dtsi"
- 
-+/delete-node/ &rmtfs_mem;
-+/delete-node/ &spss_mem;
- /delete-node/ &adsp_mem;
- /delete-node/ &slpi_mem;
- 
-@@ -106,15 +108,39 @@ memory@a1300000 {
- 			pmsg-size = <0x40000>;
- 		};
- 
-+		/*
-+		 * It seems like reserving the old rmtfs_mem region is also needed to prevent
-+		 * random crashes which are most likely modem related, more testing needed.
-+		 */
-+		removed_region: removed-region@88f00000 {
-+			reg = <0 0x88f00000 0 0x1c00000>;
-+			no-map;
-+		};
-+
- 		slpi_mem: slpi@96700000 {
- 			reg = <0 0x96700000 0 0xf00000>;
- 			no-map;
- 		};
- 
-+		spss_mem: spss@97700000 {
-+			reg = <0 0x97700000 0 0x100000>;
-+			no-map;
-+		};
-+
- 		adsp_mem: memory@97800000 {
- 			reg = <0 0x97800000 0 0x2000000>;
- 			no-map;
- 		};
-+
-+		rmtfs_mem: rmtfs-mem@fde00000 {
-+			compatible = "qcom,rmtfs-mem";
-+			reg = <0 0xfde00000 0 0x202000>;
-+			qcom,use-guard-pages;
-+			no-map;
-+
-+			qcom,client-id = <1>;
-+			qcom,vmid = <QCOM_SCM_VMID_MSS_MSA>;
-+		};
- 	};
- 
- 	i2c21 {
-@@ -860,6 +886,19 @@ dai@5 {
- 	};
- };
- 
-+&mss_pil {
-+	firmware-name = "qcom/sdm845/starqltechn/mba.mbn",
-+			"qcom/sdm845/starqltechn/modem.mbn";
-+	status = "okay";
-+};
-+
-+&ipa {
-+	qcom,gsi-loader = "self";
-+	memory-region = <&ipa_fw_mem>;
-+	firmware-name = "qcom/sdm845/starqltechn/ipa_fws.mbn";
-+	status = "okay";
-+};
-+
- &usb_1 {
- 	status = "okay";
- };
+BR,
+-R
 
--- 
-2.39.5
-
+> -Akhil
+>
+> >
+> > BR,
+> > -R
+> >
+> >> Agree about the dt binding suggestion. I will define a new compatible
+> >> string for rgmu.
+> >>
+> >> -Akhil.
+> >>
+> >>> Konrad
+> >>
+>
 
