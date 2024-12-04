@@ -1,195 +1,244 @@
-Return-Path: <linux-arm-msm+bounces-40232-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40233-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id AAAFA9E38F6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 12:36:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 50ADD9E3935
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 12:48:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 70581285462
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 11:36:16 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 10A622815A3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 11:48:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7573B1BFDFC;
-	Wed,  4 Dec 2024 11:34:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="duPQ4uni"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2B281B3949;
+	Wed,  4 Dec 2024 11:48:41 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2D471BCA1C;
-	Wed,  4 Dec 2024 11:34:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7BC6B1B4152;
+	Wed,  4 Dec 2024 11:48:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733312095; cv=none; b=p+/wJ9OZrAFPFYujdIN4SkxSrJzp5nQB8vHIOlOh5sY16EKw6eUaHeYQGc/cM77A4/0mvfSs4NWL4n6iHZUb06ju4w3igx37YAQgUL3eXB/CrsFRrqVzQcfVwEZxwMzY9bFJGgkCrs8gDV0XidRF7SdMgr6P9v4KX87D0awy8Ww=
+	t=1733312921; cv=none; b=rDysUAIQD3EgG3mOXH5yxozVTY19x4oGzwp2zv9hTJ+fMHZt/doBHxYK/ONWFbeCAWl4Ed1+2BhvmLaSLMksFHEKxunsPWpePoJFMgDcVc+tTJ8ZfOofGbhESlqnizm+Ngxq+a0fmQneJCV2qmlHiLGfgIEu2OCEHqIo5WpAIOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733312095; c=relaxed/simple;
-	bh=ZNPn3OUHgs654omndsNWSDHy4Rb7fo2Qhuxvg1MRzHk=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XH8JXI0FuUYaF3ubFPyNdLOhhNMbl+VCyit9zuNU3cV4saR1+p5dtX9nbtgEP7SWpJ/cj18JxaCJSbl6AAbjuT7zxtltJps4XuoW6+ghkokRFkWCPj1F+LecHy7a5/rrBpC8OzGfskdM5bER+1dZ0r0IsQNkKE0kH/i0pxC3D30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=duPQ4uni; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B43RkWn001101;
-	Wed, 4 Dec 2024 11:34:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	iiByAk0cX0/wcGs7iFI1tDw/VgKafpo5zFmvzCqogyA=; b=duPQ4univGDIWKls
-	bpakfaaEn6nYh7m/5Ybqv7Q3ZWE+QniwV9uZi4LwhNma9m48/BDPnW9quE9XDZIH
-	rf3KrpMMwH3TXV4ImFAe51gdcJk5t58+3TYYZ4k96fOLQG6Xw+ao+tf1uvob3xnC
-	KI1qJrvraeAGEiM3igJeq1nCSyVoj8xzD3a08l/nQDTy6P3mu0hM52RjYaxJ446f
-	UFd+ZBAXWgq846NDOlWMyJXm7uRevAA15Ev1TiomXBGHbciaeFPeuSZPxJBt/ARD
-	PpUGzyUY2VlONzIK7l8j8+XFonvhhcMJb0v/elZYI7iqKVOTPab6MpicHFwa5JQ7
-	gT8ESA==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 439trbmg0y-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 04 Dec 2024 11:34:41 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B4BYeB2028552
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 4 Dec 2024 11:34:40 GMT
-Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 4 Dec 2024 03:34:34 -0800
-From: Varadarajan Narayanan <quic_varada@quicinc.com>
-To: <lpieralisi@kernel.org>, <kw@linux.com>,
-        <manivannan.sadhasivam@linaro.org>, <robh@kernel.org>,
-        <bhelgaas@google.com>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <vkoul@kernel.org>, <kishon@kernel.org>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>, <p.zabel@pengutronix.de>,
-        <quic_nsekar@quicinc.com>, <dmitry.baryshkov@linaro.org>,
-        <quic_varada@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-pci@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-phy@lists.infradead.org>
-CC: Praveenkumar I <quic_ipkumar@quicinc.com>
-Subject: [PATCH v2 6/6] arm64: dts: qcom: ipq5332: Enable PCIe phys and controllers
-Date: Wed, 4 Dec 2024 17:03:29 +0530
-Message-ID: <20241204113329.3195627-7-quic_varada@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241204113329.3195627-1-quic_varada@quicinc.com>
-References: <20241204113329.3195627-1-quic_varada@quicinc.com>
+	s=arc-20240116; t=1733312921; c=relaxed/simple;
+	bh=/yIIYUBP7kkSoJoC2I9xEAcI7i1lAFny+D59IeEc0IQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Q33tQ3TAtpvEqGkzB4f4gCk39Rlrqi3eyj672FdMzIsO9DgZJ+wJUIHf7+xaJyEf1ZL3ZlTYfR049veR8Imacy2lxgzQtdE0k/DtU9E8bVDbFSE8/r+dlcGerCzJrhyxWb11COYKO3fRWeZFdEu/ufYGFk4ef5mSj8W0ZIfjSvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 6DA49FEC;
+	Wed,  4 Dec 2024 03:49:05 -0800 (PST)
+Received: from pluto (usa-sjc-mx-foss1.foss.arm.com [172.31.20.19])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 3E3B73F71E;
+	Wed,  4 Dec 2024 03:48:35 -0800 (PST)
+Date: Wed, 4 Dec 2024 11:48:26 +0000
+From: Cristian Marussi <cristian.marussi@arm.com>
+To: Sibi Sankar <quic_sibis@quicinc.com>
+Cc: sudeep.holla@arm.com, cristian.marussi@arm.com, andersson@kernel.org,
+	konrad.dybcio@linaro.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	quic_rgottimu@quicinc.com, quic_kshivnan@quicinc.com,
+	arm-scmi@vger.kernel.org
+Subject: Re: [PATCH V5 1/2] firmware: arm_scmi: Add QCOM Generic Vendor
+ Protocol documentation
+Message-ID: <Z1BBirNWH1eaSKtr@pluto>
+References: <20241115011515.1313447-1-quic_sibis@quicinc.com>
+ <20241115011515.1313447-2-quic_sibis@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: SjvZoOP9NAs9WFY07JgoiO0CJKxQMbqn
-X-Proofpoint-ORIG-GUID: SjvZoOP9NAs9WFY07JgoiO0CJKxQMbqn
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=917 mlxscore=0
- suspectscore=0 spamscore=0 malwarescore=0 adultscore=0 priorityscore=1501
- clxscore=1011 phishscore=0 lowpriorityscore=0 impostorscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2412040090
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241115011515.1313447-2-quic_sibis@quicinc.com>
 
-From: Praveenkumar I <quic_ipkumar@quicinc.com>
+On Fri, Nov 15, 2024 at 06:45:14AM +0530, Sibi Sankar wrote:
+> Add QCOM System Control Management Interface (SCMI) Generic Vendor
+> Extensions Protocol documentation.
+> 
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> ---
+> 
+> v4:
+> * Update the protol attributes doc with more information. [Cristian]
+> 
+>  .../arm_scmi/vendors/qcom/qcom_generic.rst    | 211 ++++++++++++++++++
+>  1 file changed, 211 insertions(+)
+>  create mode 100644 drivers/firmware/arm_scmi/vendors/qcom/qcom_generic.rst
+> 
+> diff --git a/drivers/firmware/arm_scmi/vendors/qcom/qcom_generic.rst b/drivers/firmware/arm_scmi/vendors/qcom/qcom_generic.rst
+> new file mode 100644
+> index 000000000000..141bc932e30f
+> --- /dev/null
+> +++ b/drivers/firmware/arm_scmi/vendors/qcom/qcom_generic.rst
+> @@ -0,0 +1,211 @@
+> +.. SPDX-License-Identifier: GPL-2.0
+> +.. include:: <isonum.txt>
+> +
+> +===============================================================================
+> +QCOM System Control and Management Interface(SCMI) Vendor Protocols Extension
+> +===============================================================================
+> +
+> +:Copyright: |copy| 2024, Qualcomm Innovation Center, Inc. All rights reserved.
+> +
+> +:Author: Sibi Sankar <quic_sibis@quicinc.com>
+> +
+> +SCMI_GENERIC: System Control and Management Interface QCOM Generic Vendor Protocol
+> +==================================================================================
+> +
+> +This protocol is intended as a generic way of exposing a number of Qualcomm
+> +SoC specific features through a mixture of pre-determined algorithm string and
+> +param_id pairs hosted on the SCMI controller. It implements an interface compliant
+> +with the Arm SCMI Specification with additional vendor specific commands as
+> +detailed below.
+> +
+> +Commands:
+> +_________
+> +
+> +PROTOCOL_VERSION
+> +~~~~~~~~~~~~~~~~
+> +
+> +message_id: 0x0
+> +protocol_id: 0x80
+> +
+> ++---------------+--------------------------------------------------------------+
+> +|Return values                                                                 |
+> ++---------------+--------------------------------------------------------------+
+> +|Name           |Description                                                   |
+> ++---------------+--------------------------------------------------------------+
+> +|int32 status   |See ARM SCMI Specification for status code definitions.       |
+> ++---------------+--------------------------------------------------------------+
+> +|uint32 version |For this revision of the specification, this value must be    |
+> +|               |0x10000.                                                      |
+> ++---------------+--------------------------------------------------------------+
+> +
+> +PROTOCOL_ATTRIBUTES
+> +~~~~~~~~~~~~~~~~~~~
+> +
+> +message_id: 0x1
+> +protocol_id: 0x80
+> +
+> ++---------------+--------------------------------------------------------------+
+> +|Return values                                                                 |
+> ++------------------+-----------------------------------------------------------+
+> +|Name              |Description                                                |
+> ++------------------+-----------------------------------------------------------+
+> +|int32 status      |See ARM SCMI Specification for status code definitions.    |
+> ++------------------+-----------------------------------------------------------+
+> +|uint32 attributes |Bits[31:16] Reserved, must be to 0.                        |
+> +|                  |Bits[15:8] Number of agents in the system                  |
+> +|                  |Bits[7:0] Number of vendor protocols in the system         |
+> ++------------------+-----------------------------------------------------------+
 
-Enable the PCIe controller and PHY nodes for RDP 441.
+Thanks of clarifing this....may I ask why number of agents is reported
+here too given that it is already exposed by Base protocol ?
 
-Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
----
- arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts | 74 +++++++++++++++++++++
- 1 file changed, 74 insertions(+)
+Not really arguing about this so much, but you will end up having to maintain this
+on 2 different protocols fw side...or are they not 'agents' in the SCMI meaning ?
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts b/arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts
-index 846413817e9a..83eca8435cff 100644
---- a/arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts
-+++ b/arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts
-@@ -62,4 +62,78 @@ data-pins {
- 			bias-pull-up;
- 		};
- 	};
-+
-+	pcie0_default: pcie0-default-state {
-+		clkreq-n-pins {
-+			pins = "gpio37";
-+			function = "pcie0_clk";
-+			drive-strength = <8>;
-+			bias-pull-up;
-+		};
-+
-+		perst-n-pins {
-+			pins = "gpio38";
-+			function = "gpio";
-+			drive-strength = <8>;
-+			bias-pull-up;
-+			output-low;
-+		};
-+
-+		wake-n-pins {
-+			pins = "gpio39";
-+			function = "pcie0_wake";
-+			drive-strength = <8>;
-+			bias-pull-up;
-+		};
-+	};
-+
-+	pcie1_default: pcie1-default-state {
-+		clkreq-n-pins {
-+			pins = "gpio46";
-+			function = "pcie1_clk";
-+			drive-strength = <8>;
-+			bias-pull-up;
-+		};
-+
-+		perst-n-pins {
-+			pins = "gpio47";
-+			function = "gpio";
-+			drive-strength = <8>;
-+			bias-pull-up;
-+			output-low;
-+		};
-+
-+		wake-n-pins {
-+			pins = "gpio48";
-+			function = "pcie1_wake";
-+			drive-strength = <8>;
-+			bias-pull-up;
-+		};
-+	};
-+};
-+
-+&pcie0_phy {
-+	status = "okay";
-+};
-+
-+&pcie0 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pcie0_default>;
-+
-+	perst-gpios = <&tlmm 38 GPIO_ACTIVE_LOW>;
-+	wake-gpios = <&tlmm 39 GPIO_ACTIVE_LOW>;
-+	status = "okay";
-+};
-+
-+&pcie1_phy {
-+	status = "okay";
-+};
-+
-+&pcie1 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pcie1_default>;
-+
-+	perst-gpios = <&tlmm 47 GPIO_ACTIVE_LOW>;
-+	wake-gpios = <&tlmm 48 GPIO_ACTIVE_LOW>;
-+	status = "okay";
- };
--- 
-2.34.1
+Anyway, I'm fine with it, even though you dont seem to use this
+anywhere.
 
+> +
+> +PROTOCOL_MESSAGE_ATTRIBUTES
+> +~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> +
+> +message_id: 0x2
+> +protocol_id: 0x80
+> +
+> ++---------------+--------------------------------------------------------------+
+> +|Return values                                                                 |
+> ++------------------+-----------------------------------------------------------+
+> +|Name              |Description                                                |
+> ++------------------+-----------------------------------------------------------+
+> +|int32 status      |See ARM SCMI Specification for status code definitions.    |
+> ++------------------+-----------------------------------------------------------+
+> +|uint32 attributes |For all message id's the parameter has a value of 0.       |
+> ++------------------+-----------------------------------------------------------+
+> +
+> +QCOM_SCMI_SET_PARAM
+> +~~~~~~~~~~~~~~~~~~~
+> +
+> +message_id: 0x10
+> +protocol_id: 0x80
+> +
+> ++------------------+-----------------------------------------------------------+
+> +|Parameters                                                                    |
+> ++------------------+-----------------------------------------------------------+
+> +|Name              |Description                                                |
+> ++------------------+-----------------------------------------------------------+
+> +|uint32 ext_id     |Reserved, must be zero.                                    |
+> ++------------------+-----------------------------------------------------------+
+> +|uint32 algo_low   |Lower 32-bit value of the algorithm string.                |
+> ++------------------+-----------------------------------------------------------+
+> +|uint32 algo_high  |Upper 32-bit value of the algorithm string.                |
+> ++------------------+-----------------------------------------------------------+
+> +|uint32 param_id   |Serves as the token message id for the algorithm string    |
+> +|                  |and is used to set various parameters supported by it.     |
+> ++------------------+-----------------------------------------------------------+
+> +|uint32 buf[]      |Serves as the payload for the specified param_id and       |
+> +|                  |algorithm string pair.                                     |
+> ++------------------+-----------------------------------------------------------+
+> +|Return values                                                                 |
+> ++------------------+-----------------------------------------------------------+
+> +|Name              |Description                                                |
+> ++------------------+-----------------------------------------------------------+
+> +|int32 status      |SUCCESS: if the param_id and buf[] is parsed successfully  |
+> +|                  |by the chosen algorithm string.                            |
+> +|                  |NOT_SUPPORTED: if the algorithm string does not have any   |
+> +|                  |matches.                                                   |
+> +|                  |INVALID_PARAMETERS: if the param_id and the buf[] passed   |
+> +|                  |is rejected by the algorithm string.                       |
+> ++------------------+-----------------------------------------------------------+
+> +
+> +QCOM_SCMI_GET_PARAM
+> +~~~~~~~~~~~~~~~~~~~
+> +
+> +message_id: 0x11
+> +protocol_id: 0x80
+> +
+> ++------------------+-----------------------------------------------------------+
+> +|Parameters                                                                    |
+> ++------------------+-----------------------------------------------------------+
+> +|Name              |Description                                                |
+> ++------------------+-----------------------------------------------------------+
+> +|uint32 ext_id     |Reserved, must be zero.                                    |
+> ++------------------+-----------------------------------------------------------+
+> +|uint32 algo_low   |Lower 32-bit value of the algorithm string.                |
+> ++------------------+-----------------------------------------------------------+
+> +|uint32 algo_high  |Upper 32-bit value of the algorithm string.                |
+> ++------------------+-----------------------------------------------------------+
+> +|uint32 param_id   |Serves as the token message id for the algorithm string.   |
+> ++------------------+-----------------------------------------------------------+
+> +|uint32 buf[]      |Serves as the payload and store of value for the specified |
+> +|                  |param_id and algorithm string pair.                        |
+> ++------------------+-----------------------------------------------------------+
+> +|Return values                                                                 |
+> ++------------------+-----------------------------------------------------------+
+> +|Name              |Description                                                |
+> ++------------------+-----------------------------------------------------------+
+> +|int32 status      |SUCCESS: if the param_id and buf[] is parsed successfully  |
+> +|                  |by the chosen algorithm string and the result is copied    |
+> +|                  |into buf[].                                                |
+> +|                  |NOT_SUPPORTED: if the algorithm string does not have any   |
+> +|                  |matches.                                                   |
+> +|                  |INVALID_PARAMETERS: if the param_id and the buf[] passed   |
+> +|                  |is rejected by the algorithm string.                       |
+> ++------------------+-----------------------------------------------------------+
+
+..missed this last time...so you should add here also a field describing
+the reply buf right ? (as it happenns really in your code) something
+like:
+
+ ++------------------+-----------------------------------------------------------+
+ +|uint32 buf[]      |Holds the payload of the result of the query.	 	 |
+ +|                  |					                         |
+ ++------------------+-----------------------------------------------------------+
+
+Thanks,
+Cristian
 
