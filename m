@@ -1,182 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-40366-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40353-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 90EB99E4583
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 21:20:19 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id DEE3C9E4689
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 22:23:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4A3BB284E6E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 20:20:18 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CDA1EBC0B16
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 19:18:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EFC9E1F03E6;
-	Wed,  4 Dec 2024 20:20:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 238CC1C3BFC;
+	Wed,  4 Dec 2024 19:14:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="M8lm2Enu"
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=helen.koike@collabora.com header.b="foW57rbE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 961A21F1316;
-	Wed,  4 Dec 2024 20:20:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733343617; cv=none; b=M8a3wKHxnvP81mTGOx5hcVBRi1iFdDh2hQrIhn40S4aj919wOmq6p1/EgtRWqCn5aO2DwuJhyVVru2BHuy+IY5MgcX8JfRKnAzC6j9PXSejtl9VKGXcJBkOTv+/PNbm1eFMbdLZs3XOqXQhtlBDwPly519XKARpORUrTiOoiFSg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733343617; c=relaxed/simple;
-	bh=2DwAxXKr5OmgZNqp/rw57rkElXZOOYwlLMtsGH2s168=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UD68N60d+sJbWJd50e3Xd33ApvWkVMqAnwapFo8fz/bALE8xYJqRc7G6SvqsgoFHWI0nOewfPdPRq7Itmq0WIOBAHjFYsENsGCxaDNlJjHZkmksFyF974dNVKIv1I0P7a2eREeQz+WUnpss9CKeWBSbfC2YfLwhnoXIuA9FciNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=M8lm2Enu; arc=none smtp.client-ip=198.175.65.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1733343616; x=1764879616;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=2DwAxXKr5OmgZNqp/rw57rkElXZOOYwlLMtsGH2s168=;
-  b=M8lm2EnuJ0A1mAPggTtULvCr0HyMm8n5UMxEj1yZuzhfzAbkQQPjHo3v
-   yiF7Qsl2a9USGG2xcEv3PirZIW5klCmMmrVoLM8MMeRQBcCBTe1hn4EW+
-   0nlIiGtWUO/I7JKtRbUsITLkxRM7lPb0TTXVWSs/ZYXnTrquxB9c8NtgW
-   XGw7Xp8tYThoVzhkiWYrh3APMfxpgtsazlVNrByxouKkrx0X3YdaMwnTO
-   s0cXaeZkauDM1uHqtsF76gECj+cIbjyVYH5Q3HxaTh/jxnZ7Oerf3dk9B
-   7JkaJr45J88t1fMQjRPWMFVxfXFC9FOgXrD88R25CIWXCZZwSr0vX7yaQ
-   w==;
-X-CSE-ConnectionGUID: D333gxziSWa6AoiQmKwpAw==
-X-CSE-MsgGUID: SoWwH3IQRXy/m68ZNPLIKA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11276"; a="44664944"
-X-IronPort-AV: E=Sophos;i="6.12,208,1728975600"; 
-   d="scan'208";a="44664944"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Dec 2024 12:20:15 -0800
-X-CSE-ConnectionGUID: IU3ZpTEuTOejbQP8wEFewg==
-X-CSE-MsgGUID: bE2DErQ6T+qJMIn+xvSW/A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,208,1728975600"; 
-   d="scan'208";a="93773478"
-Received: from lkp-server02.sh.intel.com (HELO 1f5a171d57e2) ([10.239.97.151])
-  by orviesa009.jf.intel.com with ESMTP; 04 Dec 2024 12:20:09 -0800
-Received: from kbuild by 1f5a171d57e2 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1tIvqs-0003SH-1D;
-	Wed, 04 Dec 2024 20:20:02 +0000
-Date: Thu, 5 Dec 2024 04:19:25 +0800
-From: kernel test robot <lkp@intel.com>
-To: Viken Dadhaniya <quic_vdadhani@quicinc.com>, andi.shyti@kernel.org,
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-	gregkh@linuxfoundation.org, jirislaby@kernel.org, broonie@kernel.or,
-	andersson@kernel.org, konradybcio@kernel.org,
-	johan+linaro@kernel.org, dianders@chromium.org, agross@kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-serial@vger.kernel.org, linux-spi@vger.kernel.org
-Cc: oe-kbuild-all@lists.linux.dev, =quic_msavaliy@quicinc.com,
-	quic_anupkulk@quicinc.com,
-	Viken Dadhaniya <quic_vdadhani@quicinc.com>,
-	Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-Subject: Re: [PATCH v1 4/7] soc: qcom: geni-se:: Add support to load QUP SE
- Firmware via Linux subsystem
-Message-ID: <202412050429.SJvNsU2f-lkp@intel.com>
-References: <20241204150326.1470749-5-quic_vdadhani@quicinc.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 630CC1A8F95;
+	Wed,  4 Dec 2024 19:14:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1733339696; cv=pass; b=NfrBlDmX8KdljdrKQU7DbQn3bveTh2gQ+8x0aT2sCgak8d7z0COPmCc1rfwbHbDiaayt0wLFN0PTjrVW4sVa4rhegUIFi6yGeKb0ZB83grycqP+mXbyl/GPGOWJC2Gs62CDYz+mG5pnrbzC0gQZ5z+WmLstacWXBIEiwoV7H49M=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1733339696; c=relaxed/simple;
+	bh=4QEWfLZKhkRKHZmTv/xOicqSbHyQa9vjUoVZgI36YTs=;
+	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type; b=fR8aBMjw4PmXnweC5Io4QQ+/iT265xaHOoKurkBO5LaguUs1tEZiBOX9oHAwU74HPW/RrUPkL9sVkLzje6tuccGirI1sW+w+p/ti1Fpv9NX5CCMrVHRdIH9Ul/kH/KCOI+ubJYDm3RscWok+5JuvhFQUne8jq6KUexLEv4d1vng=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=helen.koike@collabora.com header.b=foW57rbE; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+ARC-Seal: i=1; a=rsa-sha256; t=1733339672; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=G0eYWHb1WI0eq99x3/jjESsRM0PHKl3oNj0IqguOBfaO8BT33SE7EpsgNdI0ejJqQDXmWxEwFeXCykQX56IipMeG/1VCpE/cPQE9/DXlr7QV3dTWJeFRDC3x80bd61oqlz6QJd3jBw+0Ra19pCp4KAVNtYkjaUMXE05PR81zq6o=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1733339672; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=xNql7HZ635pXOjw9MZHeIc0tn8TsOE40r41049HwSoc=; 
+	b=dBNfk5S4YhwVjEDRSRrcyPSaOJdTjN8q13HZIOEUBVp93QaVTQllesAb82o7RzYqZx/bvNVbHI+ZTC1wPwKvztAL09K1g61IdUbZTrJir1lccdEMoT9sjpUizy595xrsVxFUT+57aRY/sSZG5AlNHs1kGozdRJ0XAfW5Ke0ISRY=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=helen.koike@collabora.com;
+	dmarc=pass header.from=<helen.koike@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1733339672;
+	s=zohomail; d=collabora.com; i=helen.koike@collabora.com;
+	h=Date:Date:From:From:To:To:Cc:Cc:Message-ID:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=xNql7HZ635pXOjw9MZHeIc0tn8TsOE40r41049HwSoc=;
+	b=foW57rbEuBcp4jR/tr+riz2FgmIzIKT4dXFzTTm20NcXr35Gxd1dDNaWkGS3JoTG
+	0En8FGYDzGHmB+lfu2SiAqrPd1TIx8hg3UQmGn7j5yvkY+g00Mv6V1GfLRzMxGilCDR
+	oq6jiZtrY4SYwhyVNk1EZfj9foqahkkx35UERRy0=
+Received: from mail.zoho.com by mx.zohomail.com
+	with SMTP id 1733339670975851.2409563242871; Wed, 4 Dec 2024 11:14:30 -0800 (PST)
+Date: Wed, 04 Dec 2024 16:14:30 -0300
+From: Helen Mae Koike Fornazier <helen.koike@collabora.com>
+To: "Abhinav Kumar" <quic_abhinavk@quicinc.com>
+Cc: "Rob Clark" <robdclark@gmail.com>,
+	"Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
+	"Sean Paul" <sean@poorly.run>,
+	"Marijn Suijten" <marijn.suijten@somainline.org>,
+	"Maarten Lankhorst" <maarten.lankhorst@linux.intel.com>,
+	"Maxime Ripard" <mripard@kernel.org>,
+	"Thomas Zimmermann" <tzimmermann@suse.de>,
+	"David Airlie" <airlied@gmail.com>,
+	"Simona Vetter" <simona@ffwll.ch>,
+	"linux-kernel" <linux-kernel@vger.kernel.org>,
+	"linux-arm-msm" <linux-arm-msm@vger.kernel.org>,
+	"dri-devel" <dri-devel@lists.freedesktop.org>,
+	"freedreno" <freedreno@lists.freedesktop.org>
+Message-ID: <193931869a5.f923adf2270026.8321075661083367617@collabora.com>
+In-Reply-To: <20241204-cursor_tor_skip-v1-1-f5f0bba5df7b@quicinc.com>
+References: <20241204-cursor_tor_skip-v1-1-f5f0bba5df7b@quicinc.com>
+Subject: Re: [PATCH] drm/ci: add kms_cursor_legacy@torture-bo to apq8016
+ flakes
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241204150326.1470749-5-quic_vdadhani@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Importance: Medium
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
 
-Hi Viken,
+Hi Abhinav,
 
-kernel test robot noticed the following build warnings:
-
-[auto build test WARNING on andi-shyti/i2c/i2c-host]
-[also build test WARNING on tty/tty-testing tty/tty-next tty/tty-linus broonie-spi/for-next linus/master v6.13-rc1 next-20241204]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Viken-Dadhaniya/dt-bindings-i2c-qcom-i2c-geni-Document-DT-properties-for-QUP-firmware-loading/20241204-230736
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/andi.shyti/linux.git i2c/i2c-host
-patch link:    https://lore.kernel.org/r/20241204150326.1470749-5-quic_vdadhani%40quicinc.com
-patch subject: [PATCH v1 4/7] soc: qcom: geni-se:: Add support to load QUP SE Firmware via Linux subsystem
-config: arm-randconfig-002 (https://download.01.org/0day-ci/archive/20241205/202412050429.SJvNsU2f-lkp@intel.com/config)
-compiler: arm-linux-gnueabi-gcc (GCC) 14.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20241205/202412050429.SJvNsU2f-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202412050429.SJvNsU2f-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
-   drivers/soc/qcom/qcom-geni-se.c: In function 'read_elf':
->> drivers/soc/qcom/qcom-geni-se.c:975:23: warning: assignment discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
-     975 |                 *phdr = &phdrs[i];
-         |                       ^
-   drivers/soc/qcom/qcom-geni-se.c: At top level:
-   drivers/soc/qcom/qcom-geni-se.c:1268:5: warning: no previous prototype for 'qup_fw_load' [-Wmissing-prototypes]
-    1268 | int qup_fw_load(struct qup_se_rsc *rsc)
-         |     ^~~~~~~~~~~
+Thanks for your patch.
 
 
-vim +/const +975 drivers/soc/qcom/qcom-geni-se.c
 
-   946	
-   947	/**
-   948	 * read_elf: Function to read elf file.
-   949	 * @rsc: A pointer to SE resources structure.
-   950	 * @fw: A pointer to the fw buffer.
-   951	 * @pelfseg: A pointer to SE specific elf header.
-   952	 * @phdr: pointer to one of the valid headers from list from fw buffer.
-   953	 *
-   954	 * This function reads the ELF file and outputs the pointer to header
-   955	 * data which contains the FW data and any other details.
-   956	 *
-   957	 * return: Return 0 if no error, else return error value.
-   958	 */
-   959	static int read_elf(struct qup_se_rsc *rsc, const struct firmware *fw,
-   960			    struct elf_se_hdr **pelfseg, struct elf32_phdr **phdr)
-   961	{
-   962		const struct elf32_phdr *phdrs;
-   963		const struct elf32_hdr *ehdr;
-   964		const u8 *addr;
-   965		int i;
-   966	
-   967		ehdr = (struct elf32_hdr *)fw->data;
-   968	
-   969		if (ehdr->e_phnum < 2)
-   970			return -EINVAL;
-   971	
-   972		phdrs = (struct elf32_phdr *)(ehdr + 1);
-   973	
-   974		for (i = 0; i < ehdr->e_phnum; i++) {
- > 975			*phdr = &phdrs[i];
-   976			if (!elf_phdr_valid(*phdr))
-   977				continue;
-   978	
-   979			if ((*phdr)->p_filesz >= sizeof(struct elf_se_hdr)) {
-   980				addr =  fw->data + (*phdr)->p_offset;
-   981				*pelfseg = (struct elf_se_hdr *)addr;
-   982	
-   983				if ((*pelfseg)->magic == MAGIC_NUM_SE &&
-   984				    (*pelfseg)->version == 1 &&
-   985				    valid_seg_size(*pelfseg, (*phdr)->p_filesz))
-   986					if ((*pelfseg)->serial_protocol == rsc->protocol &&
-   987					    (*pelfseg)->serial_protocol != GENI_SE_NONE)
-   988						return 0;
-   989			}
-   990		}
-   991		return -EINVAL;
-   992	}
-   993	
+---- On Wed, 04 Dec 2024 15:55:17 -0300 Abhinav Kumar  wrote ---
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+ > From the jobs [1] and [2] of pipeline [3], its clear that 
+ > kms_cursor_legacy@torture-bo is most certainly a flake and 
+ > not a fail for apq8016. Mark the test accordingly to match the results. 
+ >  
+ > [1] : https://gitlab.freedesktop.org/drm/msm/-/jobs/67676481 
+ > [2] : https://gitlab.freedesktop.org/drm/msm/-/jobs/67677430 
+ > [3]: https://gitlab.freedesktop.org/drm/msm/-/pipelines/1322770 
+ >  
+ > Signed-off-by: Abhinav Kumar quic_abhinavk@quicinc.com> 
+ > --- 
+ >  drivers/gpu/drm/ci/xfails/msm-apq8016-flakes.txt | 5 +++++ 
+ >  1 file changed, 5 insertions(+) 
+ >  
+ > diff --git a/drivers/gpu/drm/ci/xfails/msm-apq8016-flakes.txt b/drivers/gpu/drm/ci/xfails/msm-apq8016-flakes.txt 
+ > new file mode 100644 
+ > index 000000000000..18639853f18f 
+ > --- /dev/null 
+ > +++ b/drivers/gpu/drm/ci/xfails/msm-apq8016-flakes.txt 
+ > @@ -0,0 +1,5 @@ 
+ > +# Board Name: msm-apq8016-db410c 
+ > +# Failure Rate: 100 
+
+Is failure rate is 100%, isn't it a fail than?
+(I know we have other cases with Failure Rate: 100, maybe we should fix them as well)
+
+Regards,
+Helen
+
+ > +# IGT Version: 1.28-ga73311079 
+ > +# Linux Version: 6.12.0-rc2 
+ > +kms_cursor_legacy@torture-bo 
+ >  
+ > --- 
+ > base-commit: 798bb342e0416d846cf67f4725a3428f39bfb96b 
+ > change-id: 20241204-cursor_tor_skip-9d128dd62c4f 
+ >  
+ > Best regards, 
+ > -- 
+ > Abhinav Kumar quic_abhinavk@quicinc.com> 
+ >  
+ > 
+
 
