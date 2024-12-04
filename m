@@ -1,63 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-40256-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40257-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 83A7C9E3B42
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 14:29:26 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 50736164262
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 13:29:23 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BCC721BAED6;
-	Wed,  4 Dec 2024 13:29:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="b9ahTYN1"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8809C9E3B7B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 14:41:51 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FC4F189F57;
-	Wed,  4 Dec 2024 13:29:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0B05AB25A6D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 13:30:34 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 127ED1C3054;
+	Wed,  4 Dec 2024 13:30:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="R5PotgG+"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from mail-lf1-f68.google.com (mail-lf1-f68.google.com [209.85.167.68])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02E571ABEAC
+	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Dec 2024 13:30:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.68
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733318963; cv=none; b=kfpI+4AtH72F1GobDi2XtEib/uzwMmmJ45R8VHz0ooWWKrYUxx513xnDmm/69J7tsGZPrMFHzH8Y344yUt4rsX3BIK1zi4GnE9x3EQubbGDCUc4BJBI8h040EVIwjwvwXKyWDd0Qc4YkHPhPgtZiFVwRxEyEHI3Bt9NTW1Qc530=
+	t=1733319027; cv=none; b=r0gLJ38YKeHDmHhjxJeaCH9mWcfX32ADY1mvOcyeMNSGoNRQCS8WZLdxI057Z8ZuF1LRc0oDeNkGXzip2gnIute+Wvl4b7kxZqTu2GO6N823wdbD9gy2wmvRphk3nvVfsUZtg0NVWp4DwAZN+rhsc0yOY2ECtluV3nXVctHRe7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733318963; c=relaxed/simple;
-	bh=RmBGqspqXsajXwu4RLl1HIg3BMspCKtkk7gAJW/krkg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=iB1dVYSzhnyMYRzKchqBTktmx0UjfMPTKnbc2NTtPPull8Ue53NouXP29GTt82W0wDbpQibc8aD+ksAF+jEhcKaRzwH19lsSWQmlNL/TQCJ4LYpgdr0UvGmju+ThMfc7xTUidhN0rPGyVpoK9IZdFc4y28mQOkOFtbCDOpgUv58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=b9ahTYN1; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B4CVKQQ027245;
-	Wed, 4 Dec 2024 13:29:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	QMDnXqoZZqkTdv7hAKhPDMUmYWXJrFRc1vxAvkZ6ZIg=; b=b9ahTYN1U0Sqig1d
-	hHim4MF/OYa1nHm5+WBFikKYZT2aorqvKfUxBBm/YROSkNGakhlEbdX9VwuuoL5H
-	+MVFTwNtxXlDmoTFsNBYbfIOK6WYYCe692t9ynFvES2Tu14bn6u3yJzNN5B2TzDZ
-	lcBR1i2JhZyvBqa5htdpvho3oXHmQ47+MmmiMeGTYvJxEakLOpAufqOqsEcTwTK+
-	0BPNNHIZd4hlCwv/PEn4sMk3ncEdo4ycPMUmIUHyjsdEwZ9tJJFeMXnpWUhYkXdI
-	4bFDH1hShu0NRAimriAwm/vlN77JPopmEsH3hLudZVSAhOmZux4CmUNdOmr+YIo9
-	17elkw==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43a1g5kj3q-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 04 Dec 2024 13:29:18 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B4DTHwx008420
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 4 Dec 2024 13:29:17 GMT
-Received: from [10.217.219.62] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 4 Dec 2024
- 05:29:15 -0800
-Message-ID: <9c6127e3-17e1-4235-90b6-91f5dfa3166d@quicinc.com>
-Date: Wed, 4 Dec 2024 18:59:12 +0530
+	s=arc-20240116; t=1733319027; c=relaxed/simple;
+	bh=616Wed4qFzQ70DBWRsYGpsHgbkDViom1lwYe9lI8zc0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DZ15C/7ZBdPrsXB/AVOdw/Pgyztglaci3GyH99bIqRj+dgNBM7sHtXy4L/gbBuaaMProjMpVR6emXk+LZUqHLBBDi3ZUBWCokRB3URC1nM0fkfs0/4YBiqcuvliEHLx9BTi733n5BtXuF0sKoBIdIR+W3eI7+eKZzyD9YaBTiZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=R5PotgG+; arc=none smtp.client-ip=209.85.167.68
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f68.google.com with SMTP id 2adb3069b0e04-53e1f7b8717so41960e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Dec 2024 05:30:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1733319022; x=1733923822; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=hhS54bTqI4gBJF5OBvLmxts+dPXcxqo3w/BOpDYlZEQ=;
+        b=R5PotgG+m4GSCCIJQTyf4BducorS7Rv2qJ2pWKtisbR5u1BZjkGfAoxuarZDCQTyWr
+         wPrZd8izOgoOH2b6+NZWtjboD5YJv4PqOysyWlcWu9ibdrXUjUk6DOQjo56z4Kmzaopc
+         OPwfGPPeXCkDuCnqtW2TXEJFx33gjGtQd8b0TGpq2GQcxvzWcEZlGeLsaftOJLHtV7Zx
+         kpkiNQ1rp6ugUp904Yx/4dxpfg9miUMTLOBOdnO1l3kmMcNmyHOEPp3VN42Fur7RGGlB
+         ANUYHCDOirklI3xMmj8lKCp551n675Tnv1oVMlQ9s6PGC29U/srh7tK9Wx3BW0AsZPlU
+         YwEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733319022; x=1733923822;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=hhS54bTqI4gBJF5OBvLmxts+dPXcxqo3w/BOpDYlZEQ=;
+        b=Tr55zVj8VK3Gnx7hW9iQUaAqtqxySH29g54gja7obSBucH2rQ1KLvuNHBCLw4zkzpk
+         4bYQZSvHtYem3fE5WAnzfNBW1rhYRg/FZNDekvgm0AjEgHMggurpz8oinqEwsfOB3dUt
+         4saevlAWLEpt0TsMz1LY209+j2x9cqaCOIsH9HJTVqxXjIkGrSkNmAcOfe1p0lMwYEy9
+         SFjTdxvR3qdecXERK7zfuhituJ6qaeTczVR8TK41ir1D8Ob4qtDlW4CAOuTYfuzjUMQA
+         DtuK3k2q6Cs3SVExjGLCE8KQh3xqNe/4rjYzancw99IQhjqNw1p7bOLoswZP0LX94dbE
+         SMaw==
+X-Forwarded-Encrypted: i=1; AJvYcCVVwalQxrVEZbT46HVnq5YQlgfBwtrf+Slr8//OLJjZEzZMgviR+PdV7TJ3M0MHEgDHWQq7s0ewZ1j09K6L@vger.kernel.org
+X-Gm-Message-State: AOJu0YzcXK6rXzlZGMqV+sfrDobCVRV6ZIgUjeGkgO0KaTP0O8bTxu9u
+	LLSwzOi9NxV5wxdO2J+LfGq4PLgrhyqKI3bRI0JVpn8NHWzv+cT0wRQDjZHMnTU=
+X-Gm-Gg: ASbGncv0QSXYcqKuJPDW0fy5pG9MdrqDXkHbyxZZsupNfSkBCNHTtV76IO+JaNML+ba
+	l/fdjSM9QY7lTHehHvP3vMYVF16g15TbvpQyeXLvrh2PRQFrFS9rSse9+yjmXza5fyjpJgy3YNr
+	eLXparjol1c/MMXvM1fmz+Rk7D5MsO465qsMSjPgQy3g2ghecjlpIkrbMAWHLqkbQYdxo5Tg+X5
+	GH7HHk+EuDXBr4qQI5AL3ZvqvFF2DahpVem7Pepa0eK/ZrQlmkhNlcAoxZIf+eI5FrRUZRBixCf
+	N/S7px9DkBhq1fuA6FVBGe+SyiBv
+X-Google-Smtp-Source: AGHT+IEwzrSZ05xPopmPfXok5R/ZwJML7B2PctFZX9a7zl+gsTPvnPIDtSr+qaR7Wbr331/QCbHvCA==
+X-Received: by 2002:a05:6512:2815:b0:53e:134f:9408 with SMTP id 2adb3069b0e04-53e134f9462mr791296e87.8.1733319022171;
+        Wed, 04 Dec 2024 05:30:22 -0800 (PST)
+Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53e1ed46cfesm166403e87.249.2024.12.04.05.30.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 04 Dec 2024 05:30:21 -0800 (PST)
+Message-ID: <e9e8e34b-cd6a-41d8-a267-3b9336e3ca24@linaro.org>
+Date: Wed, 4 Dec 2024 15:30:19 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,173 +81,90 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] dmaengine: qcom: gpi: Add GPI immediate DMA support
- for SPI protocol
-To: <neil.armstrong@linaro.org>, Vinod Koul <vkoul@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <dmaengine@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_msavaliy@quicinc.com>,
-        <quic_vtanuku@quicinc.com>
-References: <20241204122059.24239-1-quic_jseerapu@quicinc.com>
- <2c66c9df-49f1-42d5-8f80-27e36476e19b@linaro.org>
+Subject: Re: [PATCH 2/5] arm64: dts: qcom: sdm845-db845c-navigation-mezzanine:
+ fix ov7251 lane properties
 Content-Language: en-US
-From: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
-In-Reply-To: <2c66c9df-49f1-42d5-8f80-27e36476e19b@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To: neil.armstrong@linaro.org, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20241204-topic-misc-dt-fixes-v1-0-6d320b6454e6@linaro.org>
+ <20241204-topic-misc-dt-fixes-v1-2-6d320b6454e6@linaro.org>
+ <vlvchjynnwvevr2raosrwggwmjd5bdrs5skbsztskmzxjjdg7v@6qkhrjyaxlsz>
+ <0c1f4e6a-a77b-46d1-b944-9eb47d66556d@linaro.org>
+ <cd754842-42f0-4938-b590-34ed7c4503c6@linaro.org>
+ <eb7fc499-d60f-4a3f-8279-1c9de19c2328@linaro.org>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <eb7fc499-d60f-4a3f-8279-1c9de19c2328@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: _h_59ho68LYZmAPh7NEIY-tmcHUdnZLP
-X-Proofpoint-ORIG-GUID: _h_59ho68LYZmAPh7NEIY-tmcHUdnZLP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- bulkscore=0 clxscore=1011 malwarescore=0 impostorscore=0
- lowpriorityscore=0 suspectscore=0 mlxlogscore=999 spamscore=0 adultscore=0
- mlxscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412040103
 
+On 12/4/24 15:16, neil.armstrong@linaro.org wrote:
+> On 04/12/2024 14:10, Vladimir Zapolskiy wrote:
+>> On 12/4/24 14:16, Neil Armstrong wrote:
+>>> On 04/12/2024 12:05, Dmitry Baryshkov wrote:
+>>>> On Wed, Dec 04, 2024 at 11:56:54AM +0100, Neil Armstrong wrote:
+>>>>> Bindings documents data-lanes as a single entry with a separate
+>>>>> clock-lanes property, but DT uses 2 entries in data-lanes.
+>>>>>
+>>>>> This would suggest clock-lanes is missing, fix the DT using the
+>>>>> bindings example.
+>>>>>
+>>>>> This fixes:
+>>>>> sdm845-db845c-navigation-mezzanine.dtso: camera@60: port:endpoint:data-lanes: [0, 1] is too long
+>>>>>      from schema $id: http://devicetree.org/schemas/media/i2c/ovti,ov7251.yaml#
+>>>>>
+>>>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>>>>> ---
+>>>>>     arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso | 3 ++-
+>>>>>     1 file changed, 2 insertions(+), 1 deletion(-)
+>>>>>
+>>>>> diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso b/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
+>>>>> index 0a87df806cafc8e726aacc07a772ca478d0ee3df..5a16f4c2b346b314af3d614266e1ca034057e643 100644
+>>>>> --- a/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
+>>>>> +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
+>>>>> @@ -115,7 +115,8 @@ camera@60 {
+>>>>>             port {
+>>>>>                 ov7251_ep: endpoint {
+>>>>> -                data-lanes = <0 1>;
+>>>>> +                clock-lanes = <1>;
+>>>>> +                data-lanes = <0>;
+>>>>
+>>>> Is it really this way or the other way around, clock = <0>, data = <1>?
+>>>
+>>> No idea actually, on the schematics the lanes from the DB845 are :
+>>>
+>>> CSI0_P/N -> OV7251_CSI3_LANE0_P/N -> MIPI_CSI3_LANE0_P -> SoC
+>>> and
+>>> CLKP/N -> OV7251_CSI3_CLK_P/N -> MIPI_CSI3_CLK_P/N -> SoC
+>>>
+>>> So I assume the data-lane is 0, for clock-lane I just used
+>>> the example, but I found nothing in the code using those assignments
+>>>
+>>
+>> It's a sensor property, and OV7251 sensor has the non-selectable clock lane.
+>>
+>> If it's technically acceptable, I would rather suggest to deprecate and
+>> remove "clock-lanes" property and hard-code "data-lanes" value to <1>.
+> 
+> 
+> Ok indeed while looking at the OV7251 sensor datasheet, there's a single
+> fixed data lane and a single fixed clock lane, so on the sensor side we
+> can't select anything but how would we define lane0 is used on the SoC side ?
 
+It's done right in the common way, there are clock-lanes and data-lanes
+properties on the ISP endpoint side.
 
-On 12/4/2024 6:19 PM, neil.armstrong@linaro.org wrote:
-> Hi,
-> 
-> On 04/12/2024 13:20, Jyothi Kumar Seerapu wrote:
->> The DMA TRE(Transfer ring element) buffer contains the DMA
->> buffer address. Accessing data from this address can cause
->> significant delays in SPI transfers, which can be mitigated to
->> some extent by utilizing immediate DMA support.
 >>
->> QCOM GPI DMA hardware supports an immediate DMA feature for data
->> up to 8 bytes, storing the data directly in the DMA TRE buffer
->> instead of the DMA buffer address. This enhancement enables faster
->> SPI data transfers.
+>> By the way, this particular device tree bindings miss bus-type property,
+>> it could be either MIPI or LVDS serial output.
 >>
->> This optimization reduces the average transfer time from 25 us to
->> 16 us for a single SPI transfer of 8 bytes length, with a clock
->> frequency of 50 MHz.
->>
->> Signed-off-by: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
->> ---
->>
->> v2-> v3:
->>     - When to enable Immediate DMA support, control is moved to GPI 
->> driver
->>       from SPI driver.
->>     - Optimizations are done in GPI driver related to immediate dma 
->> changes.
->>     - Removed the immediate dma supported changes in qcom-gpi-dma.h file
->>       and handled in GPI driver.
->>
->>     Link to v2:
->>     https://lore.kernel.org/all/20241128133351.24593-2-quic_jseerapu@quicinc.com/
->>     https://lore.kernel.org/all/20241128133351.24593-3-quic_jseerapu@quicinc.com/
->>
->> v1 -> v2:
->>     - Separated the patches to dmaengine and spi subsystems
->>     - Removed the changes which are not required for this feature from
->>       qcom-gpi-dma.h file.
->>     - Removed the type conversions used in gpi_create_spi_tre.
->>     Link to v1:
->>     https://lore.kernel.org/lkml/20241121115201.2191-2-quic_jseerapu@quicinc.com/
->>
->>   drivers/dma/qcom/gpi.c | 32 +++++++++++++++++++++++++++-----
->>   1 file changed, 27 insertions(+), 5 deletions(-)
->>
->> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
->> index 52a7c8f2498f..35451d5a81f7 100644
->> --- a/drivers/dma/qcom/gpi.c
->> +++ b/drivers/dma/qcom/gpi.c
->> @@ -27,6 +27,7 @@
->>   #define TRE_FLAGS_IEOT        BIT(9)
->>   #define TRE_FLAGS_BEI        BIT(10)
->>   #define TRE_FLAGS_LINK        BIT(11)
->> +#define TRE_FLAGS_IMMEDIATE_DMA    BIT(16)
->>   #define TRE_FLAGS_TYPE        GENMASK(23, 16)
->>   /* SPI CONFIG0 WD0 */
->> @@ -64,6 +65,7 @@
->>   /* DMA TRE */
->>   #define TRE_DMA_LEN        GENMASK(23, 0)
->> +#define TRE_DMA_IMMEDIATE_LEN    GENMASK(3, 0)
->>   /* Register offsets from gpi-top */
->>   #define GPII_n_CH_k_CNTXT_0_OFFS(n, k)    (0x20000 + (0x4000 * (n)) 
->> + (0x80 * (k)))
->> @@ -1711,6 +1713,8 @@ static int gpi_create_spi_tre(struct gchan 
->> *chan, struct gpi_desc *desc,
->>       dma_addr_t address;
->>       struct gpi_tre *tre;
->>       unsigned int i;
->> +    int len;
->> +    u8 immediate_dma;
-> 
-> Should be bool
-Hi Neil, Thanks for the review.
-Sure, will change it to bool.
-> 
->>       /* first create config tre if applicable */
->>       if (direction == DMA_MEM_TO_DEV && spi->set_config) {
->> @@ -1763,14 +1767,32 @@ static int gpi_create_spi_tre(struct gchan 
->> *chan, struct gpi_desc *desc,
->>       tre_idx++;
->>       address = sg_dma_address(sgl);
->> -    tre->dword[0] = lower_32_bits(address);
->> -    tre->dword[1] = upper_32_bits(address);
->> +    len = sg_dma_len(sgl);
->> -    tre->dword[2] = u32_encode_bits(sg_dma_len(sgl), TRE_DMA_LEN);
->> +    immediate_dma = (direction == DMA_MEM_TO_DEV) && len <= 2 * 
->> sizeof(tre->dword[0]);
-> 
-> I would have added () around 2 * sizeof(tre->dword[0])
 
-Below condition is fine or should i add brackets ?
+-- 
+Best wishes,
+Vladimir
 
-immediate_dma = direction == DMA_MEM_TO_DEV &&
-                 len <= 2 * sizeof(tre->dword[0]);
-> 
->> +
->> +    /* Support Immediate dma for write transfers for data length up 
->> to 8 bytes */
->> +    if (immediate_dma) {
->> +        /*
->> +         * For Immediate dma, data length may not always be length of 
->> 8 bytes,
->> +         * it can be length less than 8, hence initialize both 
->> dword's with 0
->> +         */
->> +        tre->dword[0] = 0;
->> +        tre->dword[1] = 0;
->> +        memcpy(&tre->dword[0], sg_virt(sgl), len);
->> +
->> +        tre->dword[2] = u32_encode_bits(len, TRE_DMA_IMMEDIATE_LEN);
->> +    } else {
->> +        tre->dword[0] = lower_32_bits(address);
->> +        tre->dword[1] = upper_32_bits(address);
->> +
->> +        tre->dword[2] = u32_encode_bits(len, TRE_DMA_LEN);
->> +    }
->>       tre->dword[3] = u32_encode_bits(TRE_TYPE_DMA, TRE_FLAGS_TYPE);
->> -    if (direction == DMA_MEM_TO_DEV)
->> -        tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_IEOT);
->> +    tre->dword[3] |= u32_encode_bits(!!immediate_dma, 
->> TRE_FLAGS_IMMEDIATE_DMA);
-> 
-> And you can drop !! if it's a bool
-Sure thanks, i will drop !! in V4.
-> 
->> +    tre->dword[3] |= u32_encode_bits(!!(direction == DMA_MEM_TO_DEV),
->> +                     TRE_FLAGS_IEOT);
-> 
-> I thingk you can drop !! here aswell, the check will return a bool
-Sure thanks, i will drop !! in V4.
-> 
->>       for (i = 0; i < tre_idx; i++)
->>           dev_dbg(dev, "TRE:%d %x:%x:%x:%x\n", i, desc->tre[i].dword[0],
-> 
-> Otherwise I like the simplification :-)
-Thanks, i will incorporate the changes in V4.
-> 
-> Thanks,
-> Neil
 
