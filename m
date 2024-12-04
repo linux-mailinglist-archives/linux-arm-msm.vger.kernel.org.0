@@ -1,92 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-40402-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40403-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 81FD89E47FB
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 23:37:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A65209E47FF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 23:38:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4244228300A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 22:37:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6245C2813A4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 22:38:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8776E1F541B;
-	Wed,  4 Dec 2024 22:37:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF4BF1F03F8;
+	Wed,  4 Dec 2024 22:38:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="n6d4EGvm"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ylRCSmsI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6845C1F03D5
-	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Dec 2024 22:37:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C39118DF6D
+	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Dec 2024 22:38:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733351857; cv=none; b=Gv13pUE9hPQTKgRS0BlZA4R914mz7nWbg2BZVt8SYWEm1Znbd0IEJj1x52vZjlGeSdq3y4FvI4Jpm/MQN+YUwZXs0ezhvky09gBcpdHjeBbb5hSefYj6gfCcsP2FRLAXMBO+RbNv7OPg7elTk7QB323j6WQgS9aNjWjpmALL6/8=
+	t=1733351886; cv=none; b=nURuS+uFU0vg5tbe8EFcGFrbAkDZpsj2u9K2B/3NZbywsghDw+RSnzdOrwPuenjG6DdxcxhKm2gSR49qqSTw5u1r1u9o4XdkXYd0bxiIdX4T6llZBUgq0yHYPVRl0zTrJur3gbIfxFubrCDIvPa4cYOmbGwL5w/ZekGEJ4k92kw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733351857; c=relaxed/simple;
-	bh=POdnmzd1BwpN+rTYy9qwuw16Q1+HWaZPsMmd69hHKmo=;
+	s=arc-20240116; t=1733351886; c=relaxed/simple;
+	bh=xkg4TmuAgcOBlNXpCz+wAftbtt3ceUi42NCmtOro4zk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CwLmfcEjz2iifCYHsfA88CsKBugPOQGagg+mHI52f18iriE7rmtGYzfMpz1w08Z6/msjP+R/ppGB/u/oMZ56d3hF4OeYBVFVVfq8MGIe4ROuZmgFSC1zMjUSW+Hau4I4YR6lOovWjuxk93eGr+tZZhNJgPegoM1K8mtxKswvWQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=n6d4EGvm; arc=none smtp.client-ip=209.85.167.48
+	 Content-Type:Content-Disposition:In-Reply-To; b=b92iGMJB9F30iMpNc6+x0iYvrheZeGJ6ei1nfUgFLErq40MhWkaUv4gtEBbLlgiG0Zfz1S3Gx8Rp96AZPUIrHuiPhOW3wHaI6PNtHr9vIf7bfJgbKepruh74J6Qlf0Uw8uA4Vffo3iPrkX+vQwxcF/Gr6Do2ZeSaZYD1bpG4wdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ylRCSmsI; arc=none smtp.client-ip=209.85.167.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-53de79c2be4so310310e87.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Dec 2024 14:37:35 -0800 (PST)
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-53de6b7da14so308469e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Dec 2024 14:38:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733351854; x=1733956654; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1733351883; x=1733956683; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=HnWatFIPmnccGlZwUZNxD71tRzMsuLeasLd0swmh5OI=;
-        b=n6d4EGvm/qBFEHJU0A3Vp+C4yF3YYuh/+kHuMkbyfLFp7d4iXC9C6mHD2kpXFU5IVQ
-         Ell8C/Z/K5EaOCBCcPMRo439Ln29OsM2hBlPGljOztrG+Z5EPGF+qC4tzlj+oUjCD70u
-         sPP4if+1JQhh6oIVd/V1IE5W9vIMz/iCGG5lCPY9YC8xAx2RnDpoMadLOePiO3BFd1tC
-         I2/83n45anhRdAZK7ZRb5MM8eZkTiuJoK1AxuVgznpA56dylyblgAejAFWtmzYrz6bV4
-         vkhHx7MGLmC0cdcY4BS4jxFsIzJ2UaMca5SKW0hdvTkNoImr646h6b2dTTcd3v/lRWTM
-         cFpw==
+        bh=hl9jh+TWg3sLdFu2Nz9fBaQFVbFiJS8tYrgpEHAnTls=;
+        b=ylRCSmsIq1iFD6WgDIgutJU7jDSQ0rt9tB7j7hWcADsNAO/vpOBlXOqa7CLMrhZJ1C
+         98sl4ivGQmOWfMfix2CeKn9BN4tPH1vO6Z6Ysd+flZZfpwJmYSzL9JsDK9TPIIeMvfFY
+         gWuaFWjIJsjquuhf3dMoyMEn7P0bp1HruCSo1YWBWPcP01XStMXT77/zTNM6Y/SKiPH/
+         bhfsE4Q8GBGMklqh1QEw2btnVoYDNc9lCY2HuelZcxGg17OmxQo1/sNn7Ve9jK7U7BCf
+         UNOCn+2+zi4j31k9sBT2BCAYV/A4jqzsewaze9kCwnziTE+IZppF+IadBfE2bHJy6iRV
+         +T8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733351854; x=1733956654;
+        d=1e100.net; s=20230601; t=1733351883; x=1733956683;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=HnWatFIPmnccGlZwUZNxD71tRzMsuLeasLd0swmh5OI=;
-        b=SVmRs1FNAfum1n654kP5sXxz7MOgaOss0Ddo1kK3GTxiETTDaN03yj/tO1rfjPTg8J
-         MCtmbRvZ4PGkXDsMdF0esfNmyXn0FONHsh9/EQD8P1hnQCYKlpxm5tlDVF5SoZ+A27Md
-         HiBUmbMwWQ5t83beYnLZfQ7jcU1VjkLevi9aTJn2Nfnezloryz9JT1gCHJ1xK8voDeEt
-         fOKoK2kNsYv0IoIkuRy1bkNLNh0Ew5fzf2qp5KETQUOuBxPp4XebEBiblURNBS1UzF3W
-         ULdfas29uMoj8bPMTPYxqXIK7rGcQbf9qOoTat9tDbZ0JIKaPEOQ3GYmIgcpS/Y2Vk8H
-         RGwA==
-X-Forwarded-Encrypted: i=1; AJvYcCWbxGqiVdR5dgpHVPIRCLzBklt/yFVxxBRUamE33K7FtkB4UmmT3V2vaYvIgXoYrH4j7JwjlmvfPT4n4/8u@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzea1FOWZN1lpFvIcAqaEXWeVwYUV8PNZ7IhF7HJVwSwoJ9jOdt
-	neSIT6RpeSFmvfXKfsz7kCfmu/H+LNvDg8qgTWj/QU4fe2sUAREw1DCcD9rq9oQ=
-X-Gm-Gg: ASbGncuPh1w/jQsCm9vzEu4mbYJezAVaqK6JZSJ37vnKMgkQt3pdaAEKVB1zmTPwHNN
-	pgxe68OMdKg68J1xkQaDUa2wR1N72yz5o4ut0s9urC4lGH43hIl3+rbH+/Jt4gZa4X4FNpMOFeS
-	JiY9ICZHfSsWpMnK3xe2ZXzzzAOyW/KhmyWjeKThjXftOtT30rjJHbXmJL0URCbMV8ziUpY0kBO
-	oB6DqQputzpELjlRoOVGdNX4DKwdY2+Ca+zOhxHfKUlN7R4v9Pkjwlc0iBqfvH9IdGpwjDQvWks
-	Zf/9uDUT5wykjF45c7n1Z9X52Nglww==
-X-Google-Smtp-Source: AGHT+IF9ZCG3qMcJKun4Nqjsn74bToQ1plUYb38GzwepHbZ/WeGz6MaSKqA2QFB+Dtkj7t4l5nk2ZQ==
-X-Received: by 2002:a05:6512:3b23:b0:53d:c2f6:8399 with SMTP id 2adb3069b0e04-53e12a35234mr4334401e87.53.1733351853604;
-        Wed, 04 Dec 2024 14:37:33 -0800 (PST)
+        bh=hl9jh+TWg3sLdFu2Nz9fBaQFVbFiJS8tYrgpEHAnTls=;
+        b=XrtRjFxx/fHgKfsAyB1nR7I+6tF43XfpZr+itUoQ65GwhBLln9E+s1e5luFPf6YFQW
+         X5MJK3pQY7mGZ0rfAfYQpoPF8Nzp8QSE12codkW2Bb2RXGjvZDBhsgL7MjBTh3j9O+Ri
+         jNSlQX3TOLhNQYIwh4mTkTUz1KzGq4t1TyuC3/icWPHb+kqO05x02dFguX8q8Br4Xfy/
+         3x8XHIF8Gv/mOF1c1ftrXUEE+9g9vFtcv3xzZrwcrsMRHlIrLs3ZcQquwUN/wuZ0xvLq
+         kyaHLF86J8bpO1KQb0wS+rZV0u+FB25mHxO9cemgBtV/vjI6m30eIQZHycskI9rbvFUG
+         mMSQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUEUlFUPaFKGPqCDcNvkrFgkL7NMOr4j5nK7RkjFMR2bkCiWXaLH/yo+6jLwHTI2t4b2Xj9YSbxtSEf2Xhd@vger.kernel.org
+X-Gm-Message-State: AOJu0YyLAbFe1YuC67QtQBpjdYOkpL3A9djeVzfXY1RBvMDLqATH8/1V
+	kVCjxNxtxgnTODTJyGUgAHdzAOuUSMCIhwdDT/9cISAaMjPQvXZg1n+tB2cso+s=
+X-Gm-Gg: ASbGncumzQRYodFmTPTnvqbO2cV6oHgse1Ds4XTNDjMBDb3NgJh11Vh7vlfxPsoIrEJ
+	MOGKG92DLOfJW1m/Rr27/AzN/gMmUfxb3Ne+TJD+EInPHHto+XPGy5+2q9xsdxGMdnVmYZWTRhx
+	eKYuDGmWy4BS4/ajuUcje9o6TIuPK8dcSEfZ/HTBM4NWDeLhlnQylPuYiciETsjC/1WT0WrZBPl
+	3iMDBLn+MJJOTrCdd8/tHrW7bO7ucBIr3GCzV3wQ0rySwyQdmQGaF36B8VwDm2+mNnq17jiWB6+
+	mns1R3Ttz/EnKf2JxlnDl4ZGDfj3JQ==
+X-Google-Smtp-Source: AGHT+IHRALAbQfybBTi3vgYPJn6lmJUNAP0mUN/xuWtAx3rCNJI5389sVGMg/Z3sKLeIyXa/zOSW+A==
+X-Received: by 2002:a05:6512:3a82:b0:53e:1b79:adaa with SMTP id 2adb3069b0e04-53e1b87856bmr2395601e87.9.1733351883289;
+        Wed, 04 Dec 2024 14:38:03 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53e229c2386sm21821e87.215.2024.12.04.14.37.31
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53e229c1fc5sm22370e87.199.2024.12.04.14.38.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Dec 2024 14:37:32 -0800 (PST)
-Date: Thu, 5 Dec 2024 00:37:30 +0200
+        Wed, 04 Dec 2024 14:38:02 -0800 (PST)
+Date: Thu, 5 Dec 2024 00:37:59 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: kernel test robot <lkp@intel.com>
-Cc: Viken Dadhaniya <quic_vdadhani@quicinc.com>, andi.shyti@kernel.org, 
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
-	gregkh@linuxfoundation.org, jirislaby@kernel.org, broonie@kernel.or, andersson@kernel.org, 
-	konradybcio@kernel.org, johan+linaro@kernel.org, dianders@chromium.org, 
-	agross@kernel.org, linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org, 
-	linux-spi@vger.kernel.org, oe-kbuild-all@lists.linux.dev, =quic_msavaliy@quicinc.com, 
-	quic_anupkulk@quicinc.com, Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-Subject: Re: [PATCH v1 4/7] soc: qcom: geni-se:: Add support to load QUP SE
- Firmware via Linux subsystem
-Message-ID: <5sni4plocjjtzdijtmlxnipthpfz4w3x27th3mergdhhaqjs3y@aqyngjkmg33h>
-References: <20241204150326.1470749-5-quic_vdadhani@quicinc.com>
- <202412050429.SJvNsU2f-lkp@intel.com>
+To: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+Cc: lee@kernel.org, robh@kernel.org, krzk+dt@kernel.org, 
+	conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	quic_srichara@quicinc.com, quic_varada@quicinc.com
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: ipq5424: enable the download mode
+ support
+Message-ID: <o2o73f4arkmqyuvzyisxtafqo4wbzkfkdnvd4a336wuwh6idra@x2fqbpgnf35a>
+References: <20241204141416.1352545-1-quic_mmanikan@quicinc.com>
+ <20241204141416.1352545-3-quic_mmanikan@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -95,47 +91,19 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <202412050429.SJvNsU2f-lkp@intel.com>
+In-Reply-To: <20241204141416.1352545-3-quic_mmanikan@quicinc.com>
 
-On Thu, Dec 05, 2024 at 04:19:25AM +0800, kernel test robot wrote:
-> Hi Viken,
+On Wed, Dec 04, 2024 at 07:44:16PM +0530, Manikanta Mylavarapu wrote:
+> Enable support for download mode to collect RAM dumps in case
+> of system crash, facilitating post mortem analysis.
 > 
-> kernel test robot noticed the following build warnings:
+> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/ipq5424.dtsi | 6 ++++++
+>  1 file changed, 6 insertions(+)
 > 
-> [auto build test WARNING on andi-shyti/i2c/i2c-host]
-> [also build test WARNING on tty/tty-testing tty/tty-next tty/tty-linus broonie-spi/for-next linus/master v6.13-rc1 next-20241204]
-> [If your patch is applied to the wrong git tree, kindly drop us a note.
-> And when submitting patch, we suggest to use '--base' as documented in
-> https://git-scm.com/docs/git-format-patch#_base_tree_information]
-> 
-> url:    https://github.com/intel-lab-lkp/linux/commits/Viken-Dadhaniya/dt-bindings-i2c-qcom-i2c-geni-Document-DT-properties-for-QUP-firmware-loading/20241204-230736
-> base:   https://git.kernel.org/pub/scm/linux/kernel/git/andi.shyti/linux.git i2c/i2c-host
-> patch link:    https://lore.kernel.org/r/20241204150326.1470749-5-quic_vdadhani%40quicinc.com
-> patch subject: [PATCH v1 4/7] soc: qcom: geni-se:: Add support to load QUP SE Firmware via Linux subsystem
-> config: arm-randconfig-002 (https://download.01.org/0day-ci/archive/20241205/202412050429.SJvNsU2f-lkp@intel.com/config)
-> compiler: arm-linux-gnueabi-gcc (GCC) 14.2.0
-> reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20241205/202412050429.SJvNsU2f-lkp@intel.com/reproduce)
-> 
-> If you fix the issue in a separate patch/commit (i.e. not just a new version of
-> the same patch/commit), kindly add following tags
-> | Reported-by: kernel test robot <lkp@intel.com>
-> | Closes: https://lore.kernel.org/oe-kbuild-all/202412050429.SJvNsU2f-lkp@intel.com/
-> 
-> All warnings (new ones prefixed by >>):
-> 
->    drivers/soc/qcom/qcom-geni-se.c: In function 'read_elf':
-> >> drivers/soc/qcom/qcom-geni-se.c:975:23: warning: assignment discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
->      975 |                 *phdr = &phdrs[i];
->          |                       ^
->    drivers/soc/qcom/qcom-geni-se.c: At top level:
->    drivers/soc/qcom/qcom-geni-se.c:1268:5: warning: no previous prototype for 'qup_fw_load' [-Wmissing-prototypes]
->     1268 | int qup_fw_load(struct qup_se_rsc *rsc)
->          |     ^~~~~~~~~~~
 
-This doesn't looks like it was properly compile-tested. Please always
-make sure that the build cleanly passes "make W=1" for the changed
-paths.
-
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 -- 
 With best wishes
