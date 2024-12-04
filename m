@@ -1,143 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-40409-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40410-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB48D9E482C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 23:54:07 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 40C1D1880179
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 22:54:07 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD6E01F03F8;
-	Wed,  4 Dec 2024 22:54:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="iP/8hB6x"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D0CBD9E483E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 23:59:34 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A65E2391AD;
-	Wed,  4 Dec 2024 22:54:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 930AF280C71
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 22:59:33 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B2F86202C2A;
+	Wed,  4 Dec 2024 22:59:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IXiSUX49"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BE5A1F541A
+	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Dec 2024 22:59:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733352843; cv=none; b=PxUSKhGSsDRAqBEMRtMwGmNuyzY84qOOs/PlW1AnaHuRiRwV0vfvTVkmCh/9EKxaPMspKj34L/tdZve5PQTg3SiBC1DuVKXhh2zt3QGdwR8fjlbBu/aZ8PCsMHF9NjyAmHcLw0v+it9hqGDlbE2XmzStn6pcYoQkQZl7JXuKcpc=
+	t=1733353167; cv=none; b=PP3MYY+QaqjXUrt93JLXAqaoG0bXmzzBAbUwjPgi4v+h4XMjQezKF8nVbifT5FJLtEJ2853WXc+tx+gYTaf3DaHge3mn0LeLDzT9nVSALfefGx1pxRMQKDYptsPvcmfBelxAunbcBDypqhRpbUA2WA7Pymkaa+PXc1b/1DLFoqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733352843; c=relaxed/simple;
-	bh=phBG4qPWzZ0qStQD5GB5kfJM1TvRh39dWaqrGwY+E64=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=rqG14DWh+CvrHyNv6Dh2byjlW9x7oxpnvr3REx6b6EnZlcpgWjqzZtY6Nl6YqY5IGshqD1Nrct+it6Idn9Fpd61Nua/7vkqGUJVuwLHx1h7Nd2xcVHlLeKeIueMkcpJAkGy0UbyZDXucMhRtWTDqrfojCCc+BjcZ4eesT1xd1bI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=iP/8hB6x; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B4MfLcS026173;
-	Wed, 4 Dec 2024 22:53:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=/Q+3VnkjXBFaSuC92/iafg
-	3bdPqJUT22HKrS5ADna5o=; b=iP/8hB6x86ighS1gD4YgJj6pmJ/AnX7rAo+qtE
-	TDWnq2xLHZiwlY0TEqaqjCEPeHY00abtg4ufi9q2NMgO30KZJSSLKlJbvLCThT/P
-	2FXQ51qn24HPjomaph+/h3i+pdyZfnvdsPCKPfiSq+q9ZzB14i9CnXQto8YUzdzc
-	YXPaJJqFEE0+r9RW+JUUeCyf3GaV2jbBImEfxe2JKj5S/tJWnAuy+tUp112p3IZ9
-	4apqrcSuNzw/NszZ7Yn9S/j8PDY88hEKfKPDm4t3lHf+0itk2EXsU4BCxgzsCpFk
-	FxY8cfvoocEK2PBHdn85+F3iq7hjxS/10QzBj0YRxphY2vRw==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 439yr9n4s7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 04 Dec 2024 22:53:46 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B4MrjlI000790
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 4 Dec 2024 22:53:45 GMT
-Received: from hu-molvera-lv.qualcomm.com (10.49.16.6) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 4 Dec 2024 14:53:45 -0800
-From: Melody Olvera <quic_molvera@quicinc.com>
-Date: Wed, 4 Dec 2024 14:53:37 -0800
-Subject: [PATCH RESEND] dt-bindings: interrupt-controller: qcom,pdc:
- Document SM8750 PDC
+	s=arc-20240116; t=1733353167; c=relaxed/simple;
+	bh=zu2zn/CG8LATXGnamKjYNIPIAQAZIUfMCZnfMDljbJw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CaqQFYCeQVWIQOulbmD+BYo2c32ORZEy9Th/Dey6SaHU6n1ejZDwcLAA3TcBfni8bsB5iKfJ4dInaQ5u57A84SG2wU05UBUvXr3T/UGdezmBMAdnTrgWhvT90MsXDW1pLzi7D0FkAGX6qpzGypWjf4ude2y1RjZoFd58mPPJmXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IXiSUX49; arc=none smtp.client-ip=209.85.167.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-53e224bbaccso196481e87.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Dec 2024 14:59:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1733353163; x=1733957963; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=YTycC8k0POiTYVULvZ4XnFfri7Upa5YgerEMaIs+Jd8=;
+        b=IXiSUX49C5EBU55+Vp5Lm6WBVLlKpOw12VSzXQiQ9BctKqBt2mNbFdy4bApo0/hCL6
+         y/1P++taUn1sfQz75tL3k466L2ZAbQXHbOXbRkbMQ8lp+FjfM9HTWkO/7BM2j4yKfZ6S
+         XJnL2Mc1oJaj3iEzTBGlpjCS+IbsqQcWckJWcvM7qQ5WRGSB8pr0GT/1aRJzELYvB1u4
+         717qhqxcVAKjrFo8pWSqOhcYn+MjtR3MHrn1d4ABUjMe15DpzGI8+A/4Kb4Zf7DMBgqi
+         eM4sUPSErrJ8SO4gOlICgpUtTXcp4cLqlmxuzaEiyHEH4ms1PTjQq3aBi1pO89Ie94ve
+         uzwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733353163; x=1733957963;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=YTycC8k0POiTYVULvZ4XnFfri7Upa5YgerEMaIs+Jd8=;
+        b=jzn+0btFXaK3B/yn+XYoD8nxPIyU8aG0P+/fyPbu/3EAa4gUeMrFU6cWcupkfdi1mS
+         Q4ztqNiN7yAykPYqW8SL+6Lc8xdTeAZx2hW/+uWtDCZ606cFIf21fbBYtazMnHtH/UR8
+         C7eCm2w6gyP0/7eQzGKGXEQ5F+fykOI7276lepUhlLInB2TvDFJj6/J4TT3LdwLKxlIz
+         wjRjMhU9L6N1c/VmKb7zQSlyWG2OmZ6oJ01jckRNDq+lex3yhqDvnNyyIOd1ieSRXxep
+         bII3tl2McI1vg2W2zEP+f98RvBC8Uj55rrn9+aiXPyqR9Adl3lqOwt2OxSW7p+3goTDj
+         1h8g==
+X-Forwarded-Encrypted: i=1; AJvYcCX6nSwezUuAqxC9m/BUt8p9+ht2Cgj1N1SVJZ2+uGYkEJWUZbyhBE3jwbrxQl+YbzKwIn2Y/pchZtNsLirY@vger.kernel.org
+X-Gm-Message-State: AOJu0YzphlNt0GoygOUl2Woqzr/an7XIni/3P0hnQ2gGeB2NjSO8rcRv
+	OdUQ0iFVOY4TXSmIvjkNRKF2Qr3LK5Im6dM1d5A97MSgHjpV2oVY6bkXBKeTW8Q=
+X-Gm-Gg: ASbGncty5omsDS1qKnJGhTw5gGKe1LsjDTVaYjBYsasXrmUl+0ejxDfAogxkwbeRxpe
+	d3RyVKNML/dF3y/8lG7d9mJUK9pU75NCbKs2/6nWnB6NvBpxG6rPZcnaGk3+Dy66kK1RQZTVH8F
+	Og2HC/kokm+UdGiRtbb4p2I+8bY1PdjleBgNlhPwj55HwMB/vT0MmBcH4pjSQFF1FD+phRK2inF
+	rOswLDIeut3qaqynoQFiKpw28DhXhdQeE/fGsKbycBWB21rCDDL72ICfq+Q95yjb+qEexq9im5+
+	703smd1JIVWI++P/IhnYXDtNe4N6mA==
+X-Google-Smtp-Source: AGHT+IFRjL/KhmDcGC8MucpwxgwNr0ZNRoGoJL7sxAYkJFIl0HN1ssgHjTDj9GY1umPdAlN+l8LS0A==
+X-Received: by 2002:a05:6512:2252:b0:53d:d3ff:77f6 with SMTP id 2adb3069b0e04-53e12a22f22mr5085713e87.46.1733353163247;
+        Wed, 04 Dec 2024 14:59:23 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53e22947a16sm29976e87.33.2024.12.04.14.59.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Dec 2024 14:59:21 -0800 (PST)
+Date: Thu, 5 Dec 2024 00:59:19 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
+Cc: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Marcel Holtmann <marcel@holtmann.org>, 
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Bartosz Golaszewski <brgl@bgdev.pl>, quic_mohamull@quicinc.com, 
+	quic_hbandi@quicinc.com, quic_anubhavg@quicinc.com, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-bluetooth@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: Re: [PATCH v4 2/4] arm64: dts: qcom: qcs6490-rb3gen: add and enable
+ BT node
+Message-ID: <pzkijkdswskaq6232uldapz3b6v6zplif7uah24iwq3ymlezft@skbcy2vod3c5>
+References: <20241204131706.20791-1-quic_janathot@quicinc.com>
+ <20241204131706.20791-3-quic_janathot@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20241204-sm8750_master_pdc-v1-1-3a06cb62a28f@quicinc.com>
-X-B4-Tracking: v=1; b=H4sIAHDdUGcC/0XMPQ+CMBSF4b9C7mzJ7QeCTg6yOuhoDGnKRZpYi
- i0SE8J/t7o4Pic57wKRgqUI+2yBQLON1g8JfJOB6fVwJ2bbZBAoFBeoWHRVWWDjdJwoNGNrmCg
- LKjSiJDKQfmOgzr5/zSuc60t9OsIt7V3wjk19IP0vouBCopK7XGylUBUyzp4vaxrnHzMFffjCD
- iY33sG6fgDA978GrwAAAA==
-X-Change-ID: 20241204-sm8750_master_pdc-275e5a003eec
-To: Thomas Gleixner <tglx@linutronix.de>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Satya Durga Srinivasu Prabhala
-	<quic_satyap@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski@linaro.org>,
-        Melody Olvera <quic_molvera@quicinc.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1733352825; l=1221;
- i=quic_molvera@quicinc.com; s=20241204; h=from:subject:message-id;
- bh=phBG4qPWzZ0qStQD5GB5kfJM1TvRh39dWaqrGwY+E64=;
- b=iiXf6Qjb/hsHC45eAXMlOWfmC2zrz5+cqteIPU35vh9zkc/MpPRJr9Et2Ong94e/ZQuifgREA
- cMuxRmoT3k5DiGwzBRFRUKFQoQP9yxI6XKecvnB4+7KSJe99HBF10fA
-X-Developer-Key: i=quic_molvera@quicinc.com; a=ed25519;
- pk=1DGLp3zVYsHAWipMaNZZTHR321e8xK52C9vuAoeca5c=
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: G8oFa1XUxzk6P31GiSuHHsJrRSYElQ_Z
-X-Proofpoint-GUID: G8oFa1XUxzk6P31GiSuHHsJrRSYElQ_Z
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 impostorscore=0
- clxscore=1015 priorityscore=1501 mlxlogscore=712 phishscore=0
- lowpriorityscore=0 malwarescore=0 mlxscore=0 suspectscore=0 adultscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412040175
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241204131706.20791-3-quic_janathot@quicinc.com>
 
-Document the PDC block on the SM8750 SoC.
+On Wed, Dec 04, 2024 at 06:47:04PM +0530, Janaki Ramaiah Thota wrote:
+> Add a node for the PMU module of the WCN6750 present on the
+> qcs6490-rb3gen board and assign its power outputs to the Bluetooth
+> module.
+> 
+> Signed-off-by: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 165 ++++++++++++++++++-
+>  1 file changed, 164 insertions(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> index 27695bd54220..07650648214e 100644
+> --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> @@ -1,6 +1,6 @@
+>  // SPDX-License-Identifier: BSD-3-Clause
+>  /*
+> - * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+> + * Copyright (c) 2023-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+>   */
+>  
+>  /dts-v1/;
+> @@ -33,6 +33,7 @@
+>  
+>  	aliases {
+>  		serial0 = &uart5;
+> +		serial1 = &uart7;
+>  	};
+>  
+>  	chosen {
+> @@ -217,6 +218,63 @@
+>  		regulator-min-microvolt = <3700000>;
+>  		regulator-max-microvolt = <3700000>;
+>  	};
+> +
+> +	wcn6750-pmu {
+> +		compatible = "qcom,wcn6750-pmu";
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&bt_en>;
+> +		vddaon-supply = <&vreg_s7b_0p972>;
+> +		vddasd-supply = <&vreg_l11c_2p8>;
+> +		vddpmu-supply = <&vreg_s7b_0p972>;
+> +		vddrfa0p8-supply = <&vreg_s7b_0p972>;
+> +		vddrfa1p2-supply = <&vreg_s8b_1p272>;
+> +		vddrfa1p7-supply = <&vreg_s1b_1p872>;
+> +		vddrfa2p2-supply = <&vreg_s1c_2p19>;
+> +
+> +		bt-enable-gpios = <&tlmm 85 GPIO_ACTIVE_HIGH>;
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
----
-Resending in case this fell through the cracks.
-Original:
-https://lore.kernel.org/all/20241021230439.2632480-1-quic_molvera@quicinc.com/
----
- Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml | 1 +
- 1 file changed, 1 insertion(+)
+Doesn't WCN6750 also have SW_CTRL and wifi-enable pins?
 
-diff --git a/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
-index a54da66a89e73212f7b965997dc487d9f0d421b0..5d4a22322c45528a1a8b9a41cc9d4c88387b5a0f 100644
---- a/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
-+++ b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
-@@ -47,6 +47,7 @@ properties:
-           - qcom,sm8450-pdc
-           - qcom,sm8550-pdc
-           - qcom,sm8650-pdc
-+          - qcom,sm8750-pdc
-           - qcom,x1e80100-pdc
-       - const: qcom,pdc
- 
+> +
 
----
-base-commit: bcf2acd8f64b0a5783deeeb5fd70c6163ec5acd7
-change-id: 20241204-sm8750_master_pdc-275e5a003eec
-
-Best regards,
 -- 
-Melody Olvera <quic_molvera@quicinc.com>
-
+With best wishes
+Dmitry
 
