@@ -1,228 +1,113 @@
-Return-Path: <linux-arm-msm+bounces-40422-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40412-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3780D9E4903
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 00:30:16 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9B5869E4875
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 00:11:03 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E7A17281078
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 23:30:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0E3FE18803CF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 23:11:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55E9920E6E7;
-	Wed,  4 Dec 2024 23:27:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 902351F541D;
+	Wed,  4 Dec 2024 23:10:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kbwQXztN"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YT0nZoWG"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2954D20E6E4;
-	Wed,  4 Dec 2024 23:27:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E4E91917D7;
+	Wed,  4 Dec 2024 23:10:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733354821; cv=none; b=DGlz/qJALnXWYlRpnv5JObE3T3tpDnlAKEjJsmOOp1RoyiyaTU5nozAtq1npAFk2Q/KMUd8H6S4KcV1FN68GlI8irChtzcYSIX7EgfvKW2EEhVdrseAfAQQ+mDk+DLhT/2e2VDKyLVXIv7ubHq5njXuXAH6DxXcRKsxsP1ptGCo=
+	t=1733353859; cv=none; b=b/vlm+4BMhPkQAvU71MLp9Pt7ZPK/dqKGW6JNzY8aO8r5XEoDr4TBEOVqjgmZGPSxHxronkCiExW0gifYDxqMZ0pscWXKAks6QkbSNF6JMNSCnwK3/DT9RGdKxC2L+FWnlTPD2EUIJS0Tm/ujjdYhwyt9VBKn88hTD1L3snGvgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733354821; c=relaxed/simple;
-	bh=OfX0VCRFKCJwPJLI2Er/a/RLQ2MNZ24Q8i7MTYwVaYw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DY944X5Usq1m8pShEMq9yvBQlWmfIVLOXbyzLB5EOzZ2BP6nM7Eg///IRBT2d/3UCOM/hjuhCMyy3QBOsUe9/qzpPBDsdZgY/BK4v6mJ27O5GLwW4WqN+3MR4y4SRDsdrYr1VZ8v43ByQRSblqaN3rOxca08Q/qzJTtI1FyXZ9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kbwQXztN; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F6B7C4CEE1;
-	Wed,  4 Dec 2024 23:27:00 +0000 (UTC)
+	s=arc-20240116; t=1733353859; c=relaxed/simple;
+	bh=7XpoUhfG8MJEb4Fmy8iGPH/58klFSTC5STKYSZRdPQ4=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=UtzD4Hu8sSL/8ZgxaCQk4phASol2w72vC09M2DFQ57yxnDfbaBHy/o4DyqisNPSGVMphEr/6OMKEESIWfXjVvrbHIlR0Iyj2GHZzTZ/ujC1oVBFiTKrmE13BGDWStG1rI50m5sdfcSF9gd7ovQ4yQZcOU94a6OyXZABA/QOh120=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YT0nZoWG; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4CD4C4CECD;
+	Wed,  4 Dec 2024 23:10:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733354821;
-	bh=OfX0VCRFKCJwPJLI2Er/a/RLQ2MNZ24Q8i7MTYwVaYw=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kbwQXztNm9CtYvazp/wz+4S5owcVwvy7KqRtn8OPnlIVAe2zAwm26oU1H1RHESOyJ
-	 UNBJc9ae2lQLchrZeraA+5tKxiS94Jxb2u3o4VkYTCxcvpXvK2fSgmJSK5/zyQXvoR
-	 +CoKYjAoqgwAjjC4QJcChxM8ppMKuvePRgR/UUTwleM7/0llvGBXuc2u7CVED9qrJL
-	 lxlC3xdtAB4idnJaiK1sM8p/X00UsGpK6HUnp7PpFtmSVopqqTdcXMGD1o+/DzhpAd
-	 +eIm5/yfe+CWZW2TjscHSwpBy0IgkTbqEUX/JIR99bDopy0JEyXyVt5KVLuYDmbtYr
-	 Dyi1rYxCtP2IA==
-From: Sasha Levin <sashal@kernel.org>
-To: linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Cc: Melody Olvera <quic_molvera@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	lgirdwood@gmail.com,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.11 2/2] regulator: qcom-rpmh: Update ranges for FTSMPS525
-Date: Wed,  4 Dec 2024 17:15:39 -0500
-Message-ID: <20241204221539.2247447-2-sashal@kernel.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241204221539.2247447-1-sashal@kernel.org>
-References: <20241204221539.2247447-1-sashal@kernel.org>
+	s=k20201202; t=1733353858;
+	bh=7XpoUhfG8MJEb4Fmy8iGPH/58klFSTC5STKYSZRdPQ4=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=YT0nZoWGHpepu2vQiyPAF527lbR3ZNU77EGCUanhHJ0GR2NX7HGuJ2Zcb2mUNzvN9
+	 F0vxJRbNdB7uch7LnST0dlKcrNVXV2rRPnX5/pjMkYHsQwObfG416NeTW+IBsCQqPg
+	 FniktmAElhIppocLFaR7yyGbgV7qYGKzQdCvHK6ZyRCbMMwBmFKYWcKbGc5s+TCi4d
+	 zPcdCptwyvqZBi5y7YdqUYIiIT4OCGmLc5hQpZdZXHLrq2V32fvtkAp/jYIe4iiYp/
+	 BO9vfBmSMRdZiJh9024capOJ3W+pTRtag30efwd9yB8ccNh3mb592XD2iyNJKwHaUK
+	 teATnJWy4pbJQ==
+Date: Wed, 4 Dec 2024 17:10:57 -0600
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc: lpieralisi@kernel.org, kw@linux.com, manivannan.sadhasivam@linaro.org,
+	robh@kernel.org, bhelgaas@google.com, krzk+dt@kernel.org,
+	conor+dt@kernel.org, vkoul@kernel.org, kishon@kernel.org,
+	andersson@kernel.org, konradybcio@kernel.org,
+	p.zabel@pengutronix.de, quic_nsekar@quicinc.com,
+	dmitry.baryshkov@linaro.org, linux-arm-msm@vger.kernel.org,
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+	Praveenkumar I <quic_ipkumar@quicinc.com>
+Subject: Re: [PATCH v2 4/6] pci: qcom: Add support for IPQ5332
+Message-ID: <20241204231057.GA3026683@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.11.10
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241204113329.3195627-5-quic_varada@quicinc.com>
 
-From: Melody Olvera <quic_molvera@quicinc.com>
+On Wed, Dec 04, 2024 at 05:03:27PM +0530, Varadarajan Narayanan wrote:
+> From: Praveenkumar I <quic_ipkumar@quicinc.com>
+> 
+> The Qualcomm IPQ5332 PCIe controller instances are based on
+> SNPS core 5.90a with Gen3 Single-lane and Dual-lane support.
+> The Qualcomm IP can be handled by the 2.9.0 ops, hence using
+> that for IPQ5332.
 
-[ Upstream commit eeecf953d697cb7f0d916f9908a2b9f451bb2667 ]
+If you have occasion to update this series, please update the subject
+to follow the drivers/pci convention (use "git log --oneline
+drivers/pci/controller/dwc/pcie-qcom.c" and match the capitalization
+style):
 
-All FTSMPS525 regulators support LV and MV ranges; however,
-the boot loader firmware will determine which range to use as
-the device boots.
+  PCI: qcom: Add IPQ5332 support
 
-Nonetheless, the driver cannot determine which range was selected,
-so hardcoding the ranges as either LV or MV will not cover all cases
-as it's possible for the firmware to select a range not supported by
-the driver's current hardcoded values.
-
-To this end, combine the ranges for the FTSMPS525s into one struct
-and point all regulators to the updated combined struct. This should
-work on all boards regardless of which range is selected by the firmware
-and more accurately caputres the capability of this regulator on a
-hardware level.
-
-Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://patch.msgid.link/20241112002645.2803506-1-quic_molvera@quicinc.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/regulator/qcom-rpmh-regulator.c | 83 +++++++++++--------------
- 1 file changed, 36 insertions(+), 47 deletions(-)
-
-diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
-index 80e304711345b..acd69443056c2 100644
---- a/drivers/regulator/qcom-rpmh-regulator.c
-+++ b/drivers/regulator/qcom-rpmh-regulator.c
-@@ -843,26 +843,15 @@ static const struct rpmh_vreg_hw_data pmic5_ftsmps520 = {
- 	.of_map_mode = rpmh_regulator_pmic4_smps_of_map_mode,
- };
- 
--static const struct rpmh_vreg_hw_data pmic5_ftsmps525_lv = {
-+static const struct rpmh_vreg_hw_data pmic5_ftsmps525 = {
- 	.regulator_type = VRM,
- 	.ops = &rpmh_regulator_vrm_ops,
- 	.voltage_ranges = (struct linear_range[]) {
- 		REGULATOR_LINEAR_RANGE(300000, 0, 267, 4000),
-+		REGULATOR_LINEAR_RANGE(1376000, 268, 438, 8000),
- 	},
--	.n_linear_ranges = 1,
--	.n_voltages = 268,
--	.pmic_mode_map = pmic_mode_map_pmic5_smps,
--	.of_map_mode = rpmh_regulator_pmic4_smps_of_map_mode,
--};
--
--static const struct rpmh_vreg_hw_data pmic5_ftsmps525_mv = {
--	.regulator_type = VRM,
--	.ops = &rpmh_regulator_vrm_ops,
--	.voltage_ranges = (struct linear_range[]) {
--		REGULATOR_LINEAR_RANGE(600000, 0, 267, 8000),
--	},
--	.n_linear_ranges = 1,
--	.n_voltages = 268,
-+	.n_linear_ranges = 2,
-+	.n_voltages = 439,
- 	.pmic_mode_map = pmic_mode_map_pmic5_smps,
- 	.of_map_mode = rpmh_regulator_pmic4_smps_of_map_mode,
- };
-@@ -1190,12 +1179,12 @@ static const struct rpmh_vreg_init_data pm8550_vreg_data[] = {
- };
- 
- static const struct rpmh_vreg_init_data pm8550vs_vreg_data[] = {
--	RPMH_VREG("smps1",  "smp%s1",  &pmic5_ftsmps525_lv, "vdd-s1"),
--	RPMH_VREG("smps2",  "smp%s2",  &pmic5_ftsmps525_lv, "vdd-s2"),
--	RPMH_VREG("smps3",  "smp%s3",  &pmic5_ftsmps525_lv, "vdd-s3"),
--	RPMH_VREG("smps4",  "smp%s4",  &pmic5_ftsmps525_lv, "vdd-s4"),
--	RPMH_VREG("smps5",  "smp%s5",  &pmic5_ftsmps525_lv, "vdd-s5"),
--	RPMH_VREG("smps6",  "smp%s6",  &pmic5_ftsmps525_mv, "vdd-s6"),
-+	RPMH_VREG("smps1",  "smp%s1",  &pmic5_ftsmps525, "vdd-s1"),
-+	RPMH_VREG("smps2",  "smp%s2",  &pmic5_ftsmps525, "vdd-s2"),
-+	RPMH_VREG("smps3",  "smp%s3",  &pmic5_ftsmps525, "vdd-s3"),
-+	RPMH_VREG("smps4",  "smp%s4",  &pmic5_ftsmps525, "vdd-s4"),
-+	RPMH_VREG("smps5",  "smp%s5",  &pmic5_ftsmps525, "vdd-s5"),
-+	RPMH_VREG("smps6",  "smp%s6",  &pmic5_ftsmps525, "vdd-s6"),
- 	RPMH_VREG("ldo1",   "ldo%s1",  &pmic5_nldo515,   "vdd-l1"),
- 	RPMH_VREG("ldo2",   "ldo%s2",  &pmic5_nldo515,   "vdd-l2"),
- 	RPMH_VREG("ldo3",   "ldo%s3",  &pmic5_nldo515,   "vdd-l3"),
-@@ -1203,14 +1192,14 @@ static const struct rpmh_vreg_init_data pm8550vs_vreg_data[] = {
- };
- 
- static const struct rpmh_vreg_init_data pm8550ve_vreg_data[] = {
--	RPMH_VREG("smps1", "smp%s1", &pmic5_ftsmps525_lv, "vdd-s1"),
--	RPMH_VREG("smps2", "smp%s2", &pmic5_ftsmps525_lv, "vdd-s2"),
--	RPMH_VREG("smps3", "smp%s3", &pmic5_ftsmps525_lv, "vdd-s3"),
--	RPMH_VREG("smps4", "smp%s4", &pmic5_ftsmps525_mv, "vdd-s4"),
--	RPMH_VREG("smps5", "smp%s5", &pmic5_ftsmps525_lv, "vdd-s5"),
--	RPMH_VREG("smps6", "smp%s6", &pmic5_ftsmps525_lv, "vdd-s6"),
--	RPMH_VREG("smps7", "smp%s7", &pmic5_ftsmps525_lv, "vdd-s7"),
--	RPMH_VREG("smps8", "smp%s8", &pmic5_ftsmps525_lv, "vdd-s8"),
-+	RPMH_VREG("smps1", "smp%s1", &pmic5_ftsmps525, "vdd-s1"),
-+	RPMH_VREG("smps2", "smp%s2", &pmic5_ftsmps525, "vdd-s2"),
-+	RPMH_VREG("smps3", "smp%s3", &pmic5_ftsmps525, "vdd-s3"),
-+	RPMH_VREG("smps4", "smp%s4", &pmic5_ftsmps525, "vdd-s4"),
-+	RPMH_VREG("smps5", "smp%s5", &pmic5_ftsmps525, "vdd-s5"),
-+	RPMH_VREG("smps6", "smp%s6", &pmic5_ftsmps525, "vdd-s6"),
-+	RPMH_VREG("smps7", "smp%s7", &pmic5_ftsmps525, "vdd-s7"),
-+	RPMH_VREG("smps8", "smp%s8", &pmic5_ftsmps525, "vdd-s8"),
- 	RPMH_VREG("ldo1",  "ldo%s1", &pmic5_nldo515,   "vdd-l1"),
- 	RPMH_VREG("ldo2",  "ldo%s2", &pmic5_nldo515,   "vdd-l2"),
- 	RPMH_VREG("ldo3",  "ldo%s3", &pmic5_nldo515,   "vdd-l3"),
-@@ -1218,14 +1207,14 @@ static const struct rpmh_vreg_init_data pm8550ve_vreg_data[] = {
- };
- 
- static const struct rpmh_vreg_init_data pmc8380_vreg_data[] = {
--	RPMH_VREG("smps1", "smp%s1", &pmic5_ftsmps525_lv, "vdd-s1"),
--	RPMH_VREG("smps2", "smp%s2", &pmic5_ftsmps525_lv, "vdd-s2"),
--	RPMH_VREG("smps3", "smp%s3", &pmic5_ftsmps525_lv, "vdd-s3"),
--	RPMH_VREG("smps4", "smp%s4", &pmic5_ftsmps525_mv, "vdd-s4"),
--	RPMH_VREG("smps5", "smp%s5", &pmic5_ftsmps525_lv, "vdd-s5"),
--	RPMH_VREG("smps6", "smp%s6", &pmic5_ftsmps525_lv, "vdd-s6"),
--	RPMH_VREG("smps7", "smp%s7", &pmic5_ftsmps525_lv, "vdd-s7"),
--	RPMH_VREG("smps8", "smp%s8", &pmic5_ftsmps525_lv, "vdd-s8"),
-+	RPMH_VREG("smps1", "smp%s1", &pmic5_ftsmps525, "vdd-s1"),
-+	RPMH_VREG("smps2", "smp%s2", &pmic5_ftsmps525, "vdd-s2"),
-+	RPMH_VREG("smps3", "smp%s3", &pmic5_ftsmps525, "vdd-s3"),
-+	RPMH_VREG("smps4", "smp%s4", &pmic5_ftsmps525, "vdd-s4"),
-+	RPMH_VREG("smps5", "smp%s5", &pmic5_ftsmps525, "vdd-s5"),
-+	RPMH_VREG("smps6", "smp%s6", &pmic5_ftsmps525, "vdd-s6"),
-+	RPMH_VREG("smps7", "smp%s7", &pmic5_ftsmps525, "vdd-s7"),
-+	RPMH_VREG("smps8", "smp%s8", &pmic5_ftsmps525, "vdd-s8"),
- 	RPMH_VREG("ldo1",  "ldo%s1", &pmic5_nldo515,   "vdd-l1"),
- 	RPMH_VREG("ldo2",  "ldo%s2", &pmic5_nldo515,   "vdd-l2"),
- 	RPMH_VREG("ldo3",  "ldo%s3", &pmic5_nldo515,   "vdd-l3"),
-@@ -1409,16 +1398,16 @@ static const struct rpmh_vreg_init_data pmx65_vreg_data[] = {
- };
- 
- static const struct rpmh_vreg_init_data pmx75_vreg_data[] = {
--	RPMH_VREG("smps1",   "smp%s1",    &pmic5_ftsmps525_lv, "vdd-s1"),
--	RPMH_VREG("smps2",   "smp%s2",    &pmic5_ftsmps525_lv, "vdd-s2"),
--	RPMH_VREG("smps3",   "smp%s3",    &pmic5_ftsmps525_lv, "vdd-s3"),
--	RPMH_VREG("smps4",   "smp%s4",    &pmic5_ftsmps525_mv, "vdd-s4"),
--	RPMH_VREG("smps5",   "smp%s5",    &pmic5_ftsmps525_lv, "vdd-s5"),
--	RPMH_VREG("smps6",   "smp%s6",    &pmic5_ftsmps525_lv, "vdd-s6"),
--	RPMH_VREG("smps7",   "smp%s7",    &pmic5_ftsmps525_lv, "vdd-s7"),
--	RPMH_VREG("smps8",   "smp%s8",    &pmic5_ftsmps525_lv, "vdd-s8"),
--	RPMH_VREG("smps9",   "smp%s9",    &pmic5_ftsmps525_lv, "vdd-s9"),
--	RPMH_VREG("smps10",  "smp%s10",   &pmic5_ftsmps525_lv, "vdd-s10"),
-+	RPMH_VREG("smps1",   "smp%s1",    &pmic5_ftsmps525, "vdd-s1"),
-+	RPMH_VREG("smps2",   "smp%s2",    &pmic5_ftsmps525, "vdd-s2"),
-+	RPMH_VREG("smps3",   "smp%s3",    &pmic5_ftsmps525, "vdd-s3"),
-+	RPMH_VREG("smps4",   "smp%s4",    &pmic5_ftsmps525, "vdd-s4"),
-+	RPMH_VREG("smps5",   "smp%s5",    &pmic5_ftsmps525, "vdd-s5"),
-+	RPMH_VREG("smps6",   "smp%s6",    &pmic5_ftsmps525, "vdd-s6"),
-+	RPMH_VREG("smps7",   "smp%s7",    &pmic5_ftsmps525, "vdd-s7"),
-+	RPMH_VREG("smps8",   "smp%s8",    &pmic5_ftsmps525, "vdd-s8"),
-+	RPMH_VREG("smps9",   "smp%s9",    &pmic5_ftsmps525, "vdd-s9"),
-+	RPMH_VREG("smps10",  "smp%s10",   &pmic5_ftsmps525, "vdd-s10"),
- 	RPMH_VREG("ldo1",    "ldo%s1",    &pmic5_nldo515,   "vdd-l1"),
- 	RPMH_VREG("ldo2",    "ldo%s2",    &pmic5_nldo515,   "vdd-l2-18"),
- 	RPMH_VREG("ldo3",    "ldo%s3",    &pmic5_nldo515,   "vdd-l3"),
--- 
-2.43.0
-
+> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> ---
+> v2: Removed dependency on [1]
+> 
+> 1. https://lore.kernel.org/all/20230519090219.15925-1-quic_devipriy@quicinc.com/
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index dc102d8bd58c..68e6f97535db 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -1835,6 +1835,7 @@ static const struct of_device_id qcom_pcie_match[] = {
+>  	{ .compatible = "qcom,pcie-apq8064", .data = &cfg_2_1_0 },
+>  	{ .compatible = "qcom,pcie-apq8084", .data = &cfg_1_0_0 },
+>  	{ .compatible = "qcom,pcie-ipq4019", .data = &cfg_2_4_0 },
+> +	{ .compatible = "qcom,pcie-ipq5332", .data = &cfg_2_9_0 },
+>  	{ .compatible = "qcom,pcie-ipq6018", .data = &cfg_2_9_0 },
+>  	{ .compatible = "qcom,pcie-ipq8064", .data = &cfg_2_1_0 },
+>  	{ .compatible = "qcom,pcie-ipq8064-v2", .data = &cfg_2_1_0 },
+> -- 
+> 2.34.1
+> 
+> 
+> -- 
+> linux-phy mailing list
+> linux-phy@lists.infradead.org
+> https://lists.infradead.org/mailman/listinfo/linux-phy
 
