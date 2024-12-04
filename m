@@ -1,101 +1,116 @@
-Return-Path: <linux-arm-msm+bounces-40340-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40341-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 53AA39E41FC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 18:41:25 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2BAA89E420E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 18:43:28 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0E7A4287D75
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 17:41:24 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 062E81685C1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 17:43:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 378D023099B;
-	Wed,  4 Dec 2024 17:11:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4EAE1F494D;
+	Wed,  4 Dec 2024 17:12:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hEKAezYZ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QpCym4cO"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2009230995;
-	Wed,  4 Dec 2024 17:11:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B01B81F4947;
+	Wed,  4 Dec 2024 17:12:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733332310; cv=none; b=HMzBDsTmE7okLiFqpbWwbhcvzAgw6G40ioxc40SyPOwrlF/6dCEKrNcaRNBtAasQ18q1HtPzaue6KmjAfiTnHnD1QslvrRedp/imnVAtCeV8NDNuhiDfBUkBXbHM/1GMAkMOejtHcdL3LkOwzDjSCnY5i8cXQtP42NMqQK6IIEM=
+	t=1733332330; cv=none; b=NX4OK0bQRQfObsnoF++ZRz+HruDX4wHvVs4MutDBS44mB4nejG/B4AAAvq+nykS6zgtWoS4C/bmvLCcphRaEa+SX0noT6uXnHh6h1oLRRZkhtLPSpUlgnzbqYONZ4tKsIbPX+PiL0F6XHKXq6T/cPoIPSVWRwRsn3KzZgFfTRns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733332310; c=relaxed/simple;
-	bh=k1jOQVgSF2aXA8uiylaUo68g12VS2FuU1O43wOhZ6cU=;
+	s=arc-20240116; t=1733332330; c=relaxed/simple;
+	bh=z0BA4xGG5DLCB8Mgq9SQflCwkM33QXWAGI+BP0ooRlo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oGj6u18xPbyze+rrEGZjTFNEBrrgpnOAxpvFkUhLIzWErkwYl9+GF4OMLUvDnED1NrIl7g/TSpw9uoX7E4xlzumqNGcOsuA+tLsysvGXxp4YEea8zSuaJq3/R8vA5RQGsZrbfjfEwzckoLhjgGHmCOeEX5SjQqrU+WrSMJmxOhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hEKAezYZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C608CC4CEDF;
-	Wed,  4 Dec 2024 17:11:48 +0000 (UTC)
+	 MIME-Version:Content-Type; b=J6617SUZLDC9/2llxw3kldixB7qdhqxAycMGnQvlKXO67Gm9+lrfRPVmpGg+teCBCI7268gzEqGnJ1mNaPZ7EVGkWkKTpDYvADkEJUaKohNhcKLv6g1AvE3JMNO1ntGj6ayEjMG53O9Zuoiq2yxtqf2qOyNRjkuKllkMu3bkiB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QpCym4cO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16F9FC4CED6;
+	Wed,  4 Dec 2024 17:12:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733332309;
-	bh=k1jOQVgSF2aXA8uiylaUo68g12VS2FuU1O43wOhZ6cU=;
+	s=k20201202; t=1733332330;
+	bh=z0BA4xGG5DLCB8Mgq9SQflCwkM33QXWAGI+BP0ooRlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hEKAezYZgBOTWO7+H8Y1DAlDeJhhO1+i0Y0gspGdtWMFWB0wdcjzi9z4nRufdDcTo
-	 pk96gDYFB/eBa4vKCqXxb/B78DKOxIW0rjpCxIgk5jiaCazb0IhZNd6erAM0C6f7XB
-	 w36txTowlGc3S7kmME8waHBYN/BE8aqo4D89T7mQR/F1M0Y4ejZrMQLc6MSoTPk7dr
-	 ooqGXvF2hbLaKzie3odW9xSgNGF3VaHqR8Vh2HPsTHGY4E/Bp0VFcp73O58ynaPz16
-	 m9Sd/XVRdgElSofOu8jBBtfKAG9Dc9HZRQLaHBhKwRbfF5Rrr7DHp05h8f59dIXjL/
-	 TrDbZ4oAiBGSw==
+	b=QpCym4cOIt2Oe85oIYCU8RJuaNBjhfLbFEtvHyTJ2AjiYjTq8OahJqHLN2bb3lArN
+	 AX3hYjOm29KIvpsLWeLzMjxPwv8EZHwsaSSDilxGIKnN+H+itxank+cys8lsMP8o2c
+	 xFVXksUPIsZ9PFfBwFruK4cqjjwOysaPksSmvBKyecmVilu3zJ/Md/OKsIx0khj3Mt
+	 8v+JKItUGkEroRLn/dSRMwAEcUper0zihZ0OEFOM/4QYCc1s4njGOzMqPIR+4kQMwH
+	 BzL2b0vZQla+KAFrbodMylwcR20E9IDN1D5q2EgU2Qf6PyEaSF48KI0pxYccbQm6ag
+	 r2Wk69Xiefdbw==
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+Cc: devi priya <quic_devipriy@quicinc.com>,
+	Anusha Rao <quic_anusha@quicinc.com>,
+	Sricharan Ramabadhran <quic_srichara@quicinc.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Sasha Levin <sashal@kernel.org>,
-	mathieu.poirier@linaro.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-remoteproc@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 11/15] remoteproc: qcom: pas: enable SAR2130P audio DSP support
-Date: Wed,  4 Dec 2024 10:59:59 -0500
-Message-ID: <20241204160010.2216008-11-sashal@kernel.org>
+	lpieralisi@kernel.org,
+	kw@linux.com,
+	bhelgaas@google.com,
+	linux-pci@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.11 04/13] PCI: qcom: Add support for IPQ9574
+Date: Wed,  4 Dec 2024 11:00:29 -0500
+Message-ID: <20241204160044.2216380-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241204160010.2216008-1-sashal@kernel.org>
-References: <20241204160010.2216008-1-sashal@kernel.org>
+In-Reply-To: <20241204160044.2216380-1-sashal@kernel.org>
+References: <20241204160044.2216380-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.12.1
+X-stable-base: Linux 6.11.10
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: devi priya <quic_devipriy@quicinc.com>
 
-[ Upstream commit 009e288c989b3fe548a45c82da407d7bd00418a9 ]
+[ Upstream commit a63b74f2e35be3829f256922037ae5cee6bb844a ]
 
-Enable support for the Audio DSP on the Qualcomm SAR2130P platform,
-reusing the SM8350 resources.
+Add the new IPQ9574 platform which is based on the Qcom IP rev. 1.27.0
+and Synopsys IP rev. 5.80a.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20241027-sar2130p-adsp-v1-3-bd204e39d24e@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+The platform itself has four PCIe Gen3 controllers: two single-lane and
+two dual-lane, all are based on Synopsys IP rev. 5.70a. As such, reuse
+all the members of 'ops_2_9_0'.
+
+Link: https://lore.kernel.org/r/20240801054803.3015572-5-quic_srichara@quicinc.com
+Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
+Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
+Signed-off-by: devi priya <quic_devipriy@quicinc.com>
+Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+[kwilczynski: commit log]
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/qcom_q6v5_pas.c | 1 +
+ drivers/pci/controller/dwc/pcie-qcom.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-index ef82835e98a4e..0a7477ea832ed 100644
---- a/drivers/remoteproc/qcom_q6v5_pas.c
-+++ b/drivers/remoteproc/qcom_q6v5_pas.c
-@@ -1421,6 +1421,7 @@ static const struct of_device_id adsp_of_match[] = {
- 	{ .compatible = "qcom,sa8775p-cdsp1-pas", .data = &sa8775p_cdsp1_resource},
- 	{ .compatible = "qcom,sa8775p-gpdsp0-pas", .data = &sa8775p_gpdsp0_resource},
- 	{ .compatible = "qcom,sa8775p-gpdsp1-pas", .data = &sa8775p_gpdsp1_resource},
-+	{ .compatible = "qcom,sar2130p-adsp-pas", .data = &sm8350_adsp_resource},
- 	{ .compatible = "qcom,sc7180-adsp-pas", .data = &sm8250_adsp_resource},
- 	{ .compatible = "qcom,sc7180-mpss-pas", .data = &mpss_resource_init},
- 	{ .compatible = "qcom,sc7280-adsp-pas", .data = &sm8350_adsp_resource},
+diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+index 0b3020c7a50a4..ee8b08f6a641a 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -1769,6 +1769,7 @@ static const struct of_device_id qcom_pcie_match[] = {
+ 	{ .compatible = "qcom,pcie-ipq8064-v2", .data = &cfg_2_1_0 },
+ 	{ .compatible = "qcom,pcie-ipq8074", .data = &cfg_2_3_3 },
+ 	{ .compatible = "qcom,pcie-ipq8074-gen3", .data = &cfg_2_9_0 },
++	{ .compatible = "qcom,pcie-ipq9574", .data = &cfg_2_9_0 },
+ 	{ .compatible = "qcom,pcie-msm8996", .data = &cfg_2_3_2 },
+ 	{ .compatible = "qcom,pcie-qcs404", .data = &cfg_2_4_0 },
+ 	{ .compatible = "qcom,pcie-sa8540p", .data = &cfg_sc8280xp },
 -- 
 2.43.0
 
