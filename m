@@ -1,128 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-40371-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40372-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 498FC9E4695
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 22:26:09 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A0FB618809BE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 21:26:08 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4AEBA191F62;
-	Wed,  4 Dec 2024 21:26:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YX2Y0r/b"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 018D69E4699
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 22:26:31 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 123B818FC9F;
-	Wed,  4 Dec 2024 21:26:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AFCD9286A5B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 21:26:29 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B3B8A191F6D;
+	Wed,  4 Dec 2024 21:26:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oT1t4ck+"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED62E18FC9F;
+	Wed,  4 Dec 2024 21:26:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733347563; cv=none; b=ozbn2k8CKbR2rp/Xj5HrC00jp9awSfwNOLmcneO93+zD0otjLrGU69ufoK3PySIgyRr1/fPpaWz3JlPNGB2XUdfY+kctSv5laRepDF5OsFxOF32g4f75fj41LE4Q3Euk/B/axNsRrDmrX6sB9gQ6heT6c5//5pjqZKJdiYDBaQU=
+	t=1733347585; cv=none; b=WGex3X4DFwebklzhTc7GyRNIfrDzW1FejZ3NqIAWOrXGv7Req4J9jVbwqzpnM0xLHNrBBRfgpyCHsmm28lZkZaqg6ZfkpT2FwGPMDBC6aavD/SZZNi/ws6pqEHZI93+hsbQa+U813rpRWiXBDA31K6Xhg4FS7/mAyCHilWWt3tA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733347563; c=relaxed/simple;
-	bh=DscPDxPjQQtywiUUDcE+YVrQwSFEki0Lzq8DayalJvM=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=k3yyH//O0q4Os6hs+Re+SzSPk0o1AIuR/mfN9jPbkOKWF3zpZqt1xp5uC/mZnEEviyNRdOD9H0JtLCAjI3Olg0Ni+uEE43r4DwldiX3sJz+BFKlIQZJFCtv0xG2SFf7z1dNIO89XoQEqEl510m8RIMtxqijCKnVb+8SlKzzJFRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YX2Y0r/b; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43516C4CECD;
-	Wed,  4 Dec 2024 21:26:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733347562;
-	bh=DscPDxPjQQtywiUUDcE+YVrQwSFEki0Lzq8DayalJvM=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=YX2Y0r/bEPLEC5E/UHU3/2F05Vrzawad2TeiHHQtcQs/hozwXiulCqOwhBTQ+ZT1g
-	 yj4hkVZSMa0bR8Ug5Mlfc4BxGPjSFwwsXzZxsgb96yfVgLZUk9NW+Pa1YB0XbCwBQP
-	 e9xL1Q80+4eQkq9n18Pr/J+8gKGWUtjaoPVZqIqhc7xOlSmmd0zYGYIQ65N2VBCM3+
-	 9dYa9tw2PiY99ZhZLaE7WUItxfo632TGIMzBz+RxvZN9R6lsfxTK6PxjCCx25pP7xi
-	 68uKzOzdmg+cqNb7qUsq4InQjeoCvPrkOuq/mvtPXKi2euqmwxeecBT1w4UinJK+00
-	 OgPYF2rJIruEg==
-Date: Wed, 4 Dec 2024 15:25:59 -0600
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc: andersson@kernel.org, Bjorn Helgaas <bhelgaas@google.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	cros-qcom-dts-watchers@chromium.org,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Bartosz Golaszewski <brgl@bgdev.pl>, quic_vbadigan@quicinc.com,
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 1/6] dt-bindings: PCI: Add binding for qps615
-Message-ID: <20241204212559.GA3007963@bhelgaas>
+	s=arc-20240116; t=1733347585; c=relaxed/simple;
+	bh=5G3TI8FG7sx1hTKz198fF2W7ZL8MBP0RnBOKm4yaOA4=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=gDxMalyGHSJ1JGnFaM7pVJeb+otbhfjZA+7fTAqkvyquXrN053ORIchPrdZWSiwVcBSU80Z+BylJzfWblsX+9+eLqMGHorAIiT5ZgekcpcOGzBNfOMwJzHbvgWhRRex9ANzNsFglvi6HG4ejbXAwtvGYFS7B8dO1Bq9El0CYMrw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=oT1t4ck+; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B4FamBT023344;
+	Wed, 4 Dec 2024 21:26:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=wyOcFOKWssh3221kmAxkUj
+	HamyXIeCZqHEsBuUMyod0=; b=oT1t4ck+o3yyRmGVKFkbASCxbAzlFbJq9NHL0Z
+	QNravvUcxTBYMajP8hc7QZ7qPM15TPk5DGX3TAtXeI5OEKOj24tUuvIDHYcB50PI
+	y+pebh2LeFigkVGXP4Wr9mfO+DJU/n2LW48KEuBZLNnTBr167irXJ4GRY5HUHf9+
+	lXSvgSceNOW9L0hR0QotwYpg5Kqk60HC8s6FF3JQaGNxzEtyaoGBJA3gS++VOfAR
+	qNzN5/zu2tDMy3X4QieRTbzfqASuOu2Wc6aDJfFepKtjbVvTWztUJQWte2CgnH0x
+	KQC4btLrOsiF/TDoEBCrtAhFMV4Hnk8B2GJgPhqCygCObc5Q==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43aj42a7bc-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 04 Dec 2024 21:26:19 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B4LQI5W023737
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 4 Dec 2024 21:26:18 GMT
+Received: from hu-molvera-lv.qualcomm.com (10.49.16.6) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 4 Dec 2024 13:26:17 -0800
+From: Melody Olvera <quic_molvera@quicinc.com>
+Subject: [PATCH v3 0/2] interconnect: qcom: Introduce interconnects for
+ SM8750
+Date: Wed, 4 Dec 2024 13:26:04 -0800
+Message-ID: <20241204-sm8750_master_interconnects-v3-0-3d9aad4200e9@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241112-qps615_pwr-v3-1-29a1e98aa2b0@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAOzIUGcC/x3MSwqAMAwA0atI1hZitfi5iohIjZqFUZoignh3i
+ 5uBt5kHlAKTQpc9EOhi5UMSyjwDv02ykuE5GSzaqrBYGd2b2uG4TxopjCyp/hAhH9U4bFrvWpw
+ XcpAOZ6CF7//eD+/7AaEvLVJtAAAA
+X-Change-ID: 20241204-sm8750_master_interconnects-5089c590dfe5
+To: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, Abel Vesa <abel.vesa@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+        Trilok Soni
+	<quic_tsoni@quicinc.com>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Melody Olvera
+	<quic_molvera@quicinc.com>,
+        Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1733347577; l=1291;
+ i=quic_molvera@quicinc.com; s=20241204; h=from:subject:message-id;
+ bh=5G3TI8FG7sx1hTKz198fF2W7ZL8MBP0RnBOKm4yaOA4=;
+ b=icVDrlcbHKuXpmcJFvAOZXy8n1nhVtUGFHk/nLDyT/LcU8c1Dw8FzHkQs+9EF4kpix94/H1cl
+ pK5ii4xKoJ1CvHI0IFrdO/bBsLsgCe/pMIFk/yvXnNDmhbO5HvPJlHI
+X-Developer-Key: i=quic_molvera@quicinc.com; a=ed25519;
+ pk=1DGLp3zVYsHAWipMaNZZTHR321e8xK52C9vuAoeca5c=
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: B5wiJXMgj_mT11rTF0wxszeozJCdXf4H
+X-Proofpoint-ORIG-GUID: B5wiJXMgj_mT11rTF0wxszeozJCdXf4H
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 bulkscore=0
+ mlxscore=0 mlxlogscore=638 lowpriorityscore=0 clxscore=1015 malwarescore=0
+ priorityscore=1501 spamscore=0 adultscore=0 suspectscore=0 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
+ definitions=main-2412040165
 
-On Tue, Nov 12, 2024 at 08:31:33PM +0530, Krishna chaitanya chundru wrote:
-> Add binding describing the Qualcomm PCIe switch, QPS615,
-> which provides Ethernet MAC integrated to the 3rd downstream port
-> and two downstream PCIe ports.
+Add interconnect support for SM8750 SoC.
 
-> +$defs:
-> +  qps615-node:
-> +    type: object
-> +
-> +    properties:
-> +      qcom,l0s-entry-delay-ns:
-> +        description: Aspm l0s entry delay.
-> +
-> +      qcom,l1-entry-delay-ns:
-> +        description: Aspm l1 entry delay.
+The Qualcomm Technologies, Inc. SM8750 SoC is the latest in the line of
+consumer mobile device SoCs. See more at:
+https://www.qualcomm.com/content/dam/qcomm-martech/dm-assets/images/company/news-media/media-center/press-kits/snapdragon-summit-2024/day-1/documents/Snapdragon8EliteProductBrief.pdf
 
-To match spec usage:
-s/Aspm/ASPM/
-s/l0s/L0s/
-s/l1/L1/
+Changes in V3:
+- merged sm8750.h into sm8750.c
 
-Other than the fact that qps615 needs the driver to configure these,
-there's nothing qcom-specific here, so I suggest the names should omit
-"qcom" and include "aspm".
+Changes in V2:
+- updating style to be consistent with other interconnect drivers
+- removed dead code
 
-> +    pcie {
-> +        #address-cells = <3>;
-> +        #size-cells = <2>;
-> +
-> +        pcie@0 {
-> +            device_type = "pci";
-> +            reg = <0x0 0x0 0x0 0x0 0x0>;
-> +
-> +            #address-cells = <3>;
-> +            #size-cells = <2>;
-> +            ranges;
-> +            bus-range = <0x01 0xff>;
-> +
-> +            pcie@0,0 {
-> +                compatible = "pci1179,0623";
-> +                reg = <0x10000 0x0 0x0 0x0 0x0>;
-> +                device_type = "pci";
-> +                #address-cells = <3>;
-> +                #size-cells = <2>;
-> +                ranges;
-> +                bus-range = <0x02 0xff>;
+Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+---
+Raviteja Laggyshetty (2):
+      dt-bindings: interconnect: add interconnect bindings for SM8750
+      interconnect: qcom: Add interconnect provider driver for SM8750
 
-This binding describes a switch.  I don't think bus-range should
-appear here at all because it is not a feature of the hardware (unless
-the switch ports are broken and their Secondary/Subordinate Bus
-Numbers are hard-wired).
+ .../bindings/interconnect/qcom,sm8750-rpmh.yaml    |  136 ++
+ drivers/interconnect/qcom/Kconfig                  |    9 +
+ drivers/interconnect/qcom/Makefile                 |    2 +
+ drivers/interconnect/qcom/sm8750.c                 | 1705 ++++++++++++++++++++
+ .../dt-bindings/interconnect/qcom,sm8750-rpmh.h    |  143 ++
+ 5 files changed, 1995 insertions(+)
+---
+base-commit: bcf2acd8f64b0a5783deeeb5fd70c6163ec5acd7
+change-id: 20241204-sm8750_master_interconnects-5089c590dfe5
 
-The Primary/Secondary/Subordinate Bus Numbers of all switch ports
-should be writable and the PCI core knows how to manage them.
+Best regards,
+-- 
+Melody Olvera <quic_molvera@quicinc.com>
 
-Bjorn
 
