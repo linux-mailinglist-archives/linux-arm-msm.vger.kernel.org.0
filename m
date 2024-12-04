@@ -1,117 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-40225-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40226-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 558859E391F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 12:44:27 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 422009E38E2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 12:34:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 37866B24858
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 11:29:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ECDDC283940
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 11:34:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2FD5A1B0F29;
-	Wed,  4 Dec 2024 11:29:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CF51B1B21AE;
+	Wed,  4 Dec 2024 11:34:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nX5Ft9Df"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ajhtGZZ/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 019571AC884;
-	Wed,  4 Dec 2024 11:29:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 544651AE863;
+	Wed,  4 Dec 2024 11:34:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733311768; cv=none; b=mtJbSRLIDGQj+lD+Xlwsto4SSP2VvsNS2fexM389W4N418Kzf7LnFIc8QyA0wHTSg+DD95czJKDJHArOGBLQMfb9kJbI7ZGcrimHtseru1AZBMsbyquivtMgG8HItgdFTd+TRN0yf0CBNysE5H1KPHFjcUKwir2NBFiccGGmQ/0=
+	t=1733312062; cv=none; b=l9WbBZiN7+L8ZhoWBrAHFKKDJEhDc0SLHe3h6ejXlmyt+DN6A5/92tA4Sf8QyQVTz3w672E2n2YEaJWRm0Xw0cjpICJY/gwFC7bs/ZFk6mN6gS2j3Z3F42CTnSmwBvqzAjmsKFEqujO+WMsRfdsl+wu342Q/VmCCrp3rfnSgIpk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733311768; c=relaxed/simple;
-	bh=QRBMAHrwweIqh048wM3KrM83eMO0ESk41FRcpvhVQmA=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=c5FOUEBUanjg1TOCmtbXh8xeW+n15+oYT8Djh/saLfOHAYzzwT+Q6LdHCo5ivXfQ6Lcg/VTrLUuBl4oDEYdhBm1uiQQziUq98AS6PnE6SS2rwDN5u6B6tiQLsjaJd1vhpkGXRZ3zS+NhkKZeZFUyvuM+irV3vPLnyKK3+NWePas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nX5Ft9Df; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39183C4CED1;
-	Wed,  4 Dec 2024 11:29:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733311767;
-	bh=QRBMAHrwweIqh048wM3KrM83eMO0ESk41FRcpvhVQmA=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=nX5Ft9DfBblqTs7c/nKmC+u/cjdwSptI6KfxNp8KyaP0WN1Z4AdxJfQRgjvetJw7k
-	 Vu9K3ukcc67MVsdy+kzgRtRURd5bi7R2M5G+by0u0Bd0SzGgePKRD3FMzVzJ9Sopsk
-	 42ajT/s48EXlA+Sv/LpnmHROrRko3fPD4CipF8lINrSlKG9n1OZDrhhr1WJ9J8cJ+S
-	 R5ESBVDoQ95urYk1uhiuEekhyM/HeJ6cpLeiiUpd5nbD65QeUcR5Pgczn8wOb7CpP+
-	 lobaClyc5+jRr00bf4SjtrPMWA7fzv/RcivJLWUZ0zoFaSP5almJSmMX4rYok6IzJy
-	 0NCAIDx2WUoeQ==
-Date: Wed, 04 Dec 2024 05:29:25 -0600
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1733312062; c=relaxed/simple;
+	bh=cvwsTS1vuvkeERAv/DMzFpbBYJZuxhT0B9Q1Haruk7I=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=GO3BsWtTyXJWvSde+49Z88nxRlBVxLn65M1+WolwsfR5hWDrlB2WdqpbfP07bFeG63aZTxF779cIJ7vx8wpYPYdRwa9nqe93AVSfzP5I2YOaXTsuimeoGCPCe+Wgu6tvcvsZ9bo5gyvhUAisE65BAt8rSS5GB03XyOBzKqwqHwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ajhtGZZ/; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B4771Ne028017;
+	Wed, 4 Dec 2024 11:34:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=n8FzvXPu/r1w5IB0fnY3Eb
+	oOn0VyN99tXURnZCbiJME=; b=ajhtGZZ/ZZRd4WEU7fjXfTJqdOB8KPXZxWkbqg
+	JFhslDAKYFnxkikmKChhAYdRGdqJ5y5DrJifxgTuk2gaKtYjR5OBk/Ptg+XAk83L
+	Nw9CHrJqMHOOEaXXiVmutEwKNptLtmNB7iLISLlJna2y11toFy9em6G9NIkgH3hU
+	IPCUUgcAkgeO7V+2bL0UYm/I+vsrnju0Y05O2j9ExyZ+KUviJxFPfaFeqQn8wb9N
+	+WtepOMsI1k7jBNuyafCizRj0ZVnpSLbNQ/4PFh7V9wklRpxy/d59yYQCdEW2UfV
+	fn3EzFWgotoEjpjAPtRExLd91g/JUq0Z3+QlX/HoqM7dSDxg==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 439vcem6p4-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 04 Dec 2024 11:34:05 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B4BY43s025568
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 4 Dec 2024 11:34:04 GMT
+Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 4 Dec 2024 03:33:58 -0800
+From: Varadarajan Narayanan <quic_varada@quicinc.com>
+To: <lpieralisi@kernel.org>, <kw@linux.com>,
+        <manivannan.sadhasivam@linaro.org>, <robh@kernel.org>,
+        <bhelgaas@google.com>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <vkoul@kernel.org>, <kishon@kernel.org>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <p.zabel@pengutronix.de>,
+        <quic_nsekar@quicinc.com>, <dmitry.baryshkov@linaro.org>,
+        <quic_varada@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pci@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-phy@lists.infradead.org>
+Subject: [PATCH v2 0/6] Add PCIe support for Qualcomm IPQ5332
+Date: Wed, 4 Dec 2024 17:03:23 +0530
+Message-ID: <20241204113329.3195627-1-quic_varada@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Robert Foss <rfoss@kernel.org>, Maxime Ripard <mripard@kernel.org>, 
- freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org, 
- devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Simona Vetter <simona@ffwll.ch>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
- David Airlie <airlied@gmail.com>, Rob Clark <robdclark@gmail.com>, 
- Conor Dooley <conor+dt@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>
-To: Neil Armstrong <neil.armstrong@linaro.org>
-In-Reply-To: <20241204-topic-misc-sm8350-mdss-bindings-fix-v1-1-aa492a306bdb@linaro.org>
-References: <20241204-topic-misc-sm8350-mdss-bindings-fix-v1-1-aa492a306bdb@linaro.org>
-Message-Id: <173331176548.4095099.9767845657326548018.robh@kernel.org>
-Subject: Re: [PATCH] dt-bindings: display: msm: sm8350-mdss: document the
- third interconnect path
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ICLesSqubqArBsr7fqycsN6rPZ2JpE2B
+X-Proofpoint-ORIG-GUID: ICLesSqubqArBsr7fqycsN6rPZ2JpE2B
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ bulkscore=0 mlxlogscore=810 adultscore=0 suspectscore=0 spamscore=0
+ impostorscore=0 phishscore=0 mlxscore=0 malwarescore=0 clxscore=1011
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412040090
+
+Patch series adds support for enabling the PCIe controller and
+UNIPHY found on Qualcomm IPQ5332 platform. PCIe0 is Gen3 X1 and
+PCIe1 is Gen3 X2 are added.
+
+v2: Combined [1] & [2]
+	- take the phy driver related changes from [1]
+	- drop IPQ5018 related changes
+    Address review comments from [1] & [2] for the patches included in v2
+    Please see individual patches for the differences between v1 and v2
+
+    1. https://lore.kernel.org/all/20231003120846.28626-1-quic_nsekar@quicinc.com/
+    2. https://lore.kernel.org/linux-arm-msm/20231214062847.2215542-1-quic_ipkumar@quicinc.com/
+
+v1: https://lore.kernel.org/linux-arm-msm/20231214062847.2215542-1-quic_ipkumar@quicinc.com/
+
+Nitheesh Sekar (2):
+  dt-bindings: phy: qcom,uniphy-pcie: Document PCIe uniphy
+  phy: qcom: Introduce PCIe UNIPHY 28LP driver
+
+Praveenkumar I (4):
+  dt-bindings: PCI: qcom: Add IPQ5332 SoC
+  pci: qcom: Add support for IPQ5332
+  arm64: dts: qcom: ipq5332: Add PCIe related nodes
+  arm64: dts: qcom: ipq5332: Enable PCIe phys and controllers
+
+ .../devicetree/bindings/pci/qcom,pcie.yaml    |   4 +
+ .../bindings/phy/qcom,uniphy-pcie.yaml        |  82 +++++
+ arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts   |  74 +++++
+ arch/arm64/boot/dts/qcom/ipq5332.dtsi         | 214 +++++++++++-
+ drivers/pci/controller/dwc/pcie-qcom.c        |   1 +
+ drivers/phy/qualcomm/Kconfig                  |  12 +
+ drivers/phy/qualcomm/Makefile                 |   1 +
+ .../phy/qualcomm/phy-qcom-uniphy-pcie-28lp.c  | 307 ++++++++++++++++++
+ 8 files changed, 693 insertions(+), 2 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,uniphy-pcie.yaml
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-uniphy-pcie-28lp.c
 
 
-On Wed, 04 Dec 2024 11:36:37 +0100, Neil Armstrong wrote:
-> Document the missing third "cpu-cfg" interconnect path for the MDSS hardware
-> found on the Qualcomm SM8350 platform.
-> 
-> This fixes:
-> display-subsystem@ae00000: interconnects: [[121, 7, 0, 77, 1, 0], [121, 8, 0, 77, 1, 0], [78, 2, 3, 79, 16, 3]] is too long
-> 	from schema $id: http://devicetree.org/schemas/display/msm/qcom,sm8350-mdss.yaml#
-> display-subsystem@ae00000: interconnect-names: ['mdp0-mem', 'mdp1-mem', 'cpu-cfg'] is too long
-> 	from schema $id: http://devicetree.org/schemas/display/msm/qcom,sm8350-mdss.yaml#
-> 
-> Fixes: 430e11f42bff ("dt-bindings: display: msm: Add qcom, sm8350-mdss binding")
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->  Documentation/devicetree/bindings/display/msm/qcom,sm8350-mdss.yaml | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-
-My bot found errors running 'make dt_binding_check' on your patch:
-
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm8350-mdss.example.dtb: display-subsystem@ae00000: interconnects: [[4294967295, 7, 0, 4294967295, 1, 0], [4294967295, 8, 0, 4294967295, 1, 0]] is too short
-	from schema $id: http://devicetree.org/schemas/display/msm/qcom,sm8350-mdss.yaml#
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm8350-mdss.example.dtb: display-subsystem@ae00000: interconnect-names: ['mdp0-mem', 'mdp1-mem'] is too short
-	from schema $id: http://devicetree.org/schemas/display/msm/qcom,sm8350-mdss.yaml#
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20241204-topic-misc-sm8350-mdss-bindings-fix-v1-1-aa492a306bdb@linaro.org
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+base-commit: f486c8aa16b8172f63bddc70116a0c897a7f3f02
+-- 
+2.34.1
 
 
