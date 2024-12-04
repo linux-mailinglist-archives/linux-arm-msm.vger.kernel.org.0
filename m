@@ -1,128 +1,228 @@
-Return-Path: <linux-arm-msm+bounces-40411-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40421-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B868C9E4862
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 00:01:46 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1B35A9E4916
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 00:31:32 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5E6E416B696
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 23:29:45 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D909020E038;
+	Wed,  4 Dec 2024 23:26:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mpMdGRG9"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6DAB32837C1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 23:01:45 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49CDD18DF6D;
-	Wed,  4 Dec 2024 23:01:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fY5Oqv6i"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E4B918C932
-	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Dec 2024 23:01:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD03220E032;
+	Wed,  4 Dec 2024 23:26:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733353301; cv=none; b=C8dFKJ8wOBeKX8anstIe9HGapDPV57BJxaP6TXC4tAifR19FL5xz3Dvyf1x5ih9tN5gG++cTDDeDjyf+n6G7p65up3bDNbro203yeZou0B0xM8JwvV++njA6V3As9Pc65OiE2x6RUUYPV3pOEpaxwp6L8M+yB0gFLY3vER5o+DQ=
+	t=1733354816; cv=none; b=kRsq/yKNxqijLgV9EUCfA0VZuoEKoj8ZV9evhnQp432UDfisnzIP2MnEonM+NtKBldMgnnB8td5e/6dbJkpII0hagza6yxpGSnWZF2HjZXR6rDvIf/IMwFd2wNJXuE1vXiIFEX7uz4dJsDv4XK0ofgjRasllgogVq/pT8WI1lJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733353301; c=relaxed/simple;
-	bh=dZvdIAAIVCb1Gn6fGg1mI/DXu0J+s56rXzMjSqtVB7k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=B5XQEEDhrvIyOReyhdipANoUfoghiicywFyEpz4MG2fvufk8svFs6A6MsKQKKaPzG+v4u9fAZSn8zUqj51htbCv20TTFp+ZZnhhJSPIJCtUWam1qpa7toFpGFD3C9cuTPLNB4MKokTy25c87fjDwmKSZ1ij/OeqejcKTl+S3lQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fY5Oqv6i; arc=none smtp.client-ip=209.85.208.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2ffa8df8850so2440461fa.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Dec 2024 15:01:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733353296; x=1733958096; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=9vaTYGf0bQtIjfkF3yhPnmJiZRJ8Kz7bkXSyKGXSTLE=;
-        b=fY5Oqv6iVNGz5a75L+TcLjyw/m0PcoKYfX2u+3vz7J+XJEfIdxt+th9QCWAoAqe2t0
-         +MAxCoS2mz0tKnEzfOL5itN7zigHBrKLJMvhtIRqDK05fp5sdWxpQAl8tMAQW/VtOohy
-         ScFtWSzw+lPFQk8GIJD+OEqVLuOprqC5Aj0+XTX7fNkdRgFCg5LtGphGyOuokdk9QtON
-         jd5THf5Ce5IcMC+knBDKoEWJaGGHW6L4nZFyMJrivM/oWRzMbUjtjPLQd2cLu5DEBusU
-         OJoup6a7e0KNG84/wp82ODxa/t/Ro+y/HXtc1IMPx/AzFpZXdXwUA+sUBmQJsEprcs8Z
-         REGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733353296; x=1733958096;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9vaTYGf0bQtIjfkF3yhPnmJiZRJ8Kz7bkXSyKGXSTLE=;
-        b=wwtnEZV3q/xaiXm89bzeuI4QV3zY6lzoPI5lNKE/4TZJE0GzRmzf3XPXoJEroQWDH8
-         /I3ZV00dywOwo1FJwH72LIVRgGhs0vfNtxSNhcWqYhDWl+m4CARkG3vy6WS42AXiJheP
-         /nJI6TnzGnpzUUOffL8mDjrvWqSnEfw9sDwdVnzi1O4DxakgPwvIUKjaGgj6rAJ6QG4P
-         Jt5X9kqn0p/i4YbFejnbKfRE6POdmfxDnpPBFA3Hr/XfieCkrTwonGU//3k1VsrFxmUq
-         Iso+TCArXD1u5rolif4YYG8kfbAk6z8oa6xN/+ENKYXT8hEc83Goty5eKLtydQ1GUkqT
-         OhEA==
-X-Forwarded-Encrypted: i=1; AJvYcCVXvLomLEJGIwtN7cUL7D/C5Bd4yq7p/gNEsyIE3LnJsJup/SD4ZD1xE3eo+AT5SsKf97mYSVrfMbHtMgCY@vger.kernel.org
-X-Gm-Message-State: AOJu0YwFhdr5iB9MGNzhesN3XUNACsotTI7tiDs4F5K8qe2rEgdFhX6V
-	AhBDqCClkd37wnSAWphdSC7PliRMsv1yufSGw9tmIvVt0I88M04uiItfcE/aVYY=
-X-Gm-Gg: ASbGncsHaTeB3+up5C/e9olBH+GSbMgfL500ly4yrYvXuU4g4L2dyxEXGAkEry8BSrX
-	S44QO2U0Rb7wvliYyh2UASlM2lVDQuH6Lta6FrB83WY3rQ+DbdyEIH0YqZhLfsZqzRRN4I1kNQa
-	ubhTMJ65vPTyaU0sSqP9Ndp8fP37HPtC22WuuxAl5JOqcZVLooPR9WuLGquLF6ZuuDy61juXlbB
-	PEXshAFcUhvVaj2dDsXOj08Xa2VPYmDjJhpLUd6BqAszezpEowWjKE0bs+DUosyOUqvm0jS5zDj
-	ZDLADcziaC7s0GpXqLJpI8+Ah47VWg==
-X-Google-Smtp-Source: AGHT+IFTuplv2isdxHj5cnxXRgLfLSYqhiljXH2if0rM2tCYLl4uD9OrVYwTUyo0WS8OVxU2kC/gEw==
-X-Received: by 2002:a2e:bd0c:0:b0:2ff:d7e8:b71b with SMTP id 38308e7fff4ca-30009c940a7mr53718381fa.12.1733353296270;
-        Wed, 04 Dec 2024 15:01:36 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30020da27f1sm124871fa.37.2024.12.04.15.01.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Dec 2024 15:01:34 -0800 (PST)
-Date: Thu, 5 Dec 2024 01:01:32 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Varadarajan Narayanan <quic_varada@quicinc.com>
-Cc: lpieralisi@kernel.org, kw@linux.com, manivannan.sadhasivam@linaro.org, 
-	robh@kernel.org, bhelgaas@google.com, krzk+dt@kernel.org, conor+dt@kernel.org, 
-	vkoul@kernel.org, kishon@kernel.org, andersson@kernel.org, konradybcio@kernel.org, 
-	p.zabel@pengutronix.de, quic_nsekar@quicinc.com, linux-arm-msm@vger.kernel.org, 
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-phy@lists.infradead.org
-Subject: Re: [PATCH v2 2/6] phy: qcom: Introduce PCIe UNIPHY 28LP driver
-Message-ID: <f2yfxyuhoiavwziq3nd64mly3qdxif5abt2qp4qvrizqytqrid@fqfb22rpu6ug>
-References: <20241204113329.3195627-1-quic_varada@quicinc.com>
- <20241204113329.3195627-3-quic_varada@quicinc.com>
+	s=arc-20240116; t=1733354816; c=relaxed/simple;
+	bh=hZRmBR8TK07ATQMZjbSqRZrX3HsV7qSn55WQTuBe1yA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=DBptSn6LV6wUETGlDfbut9i1w457HKLcx2QRBMAZMcnalj2P173K/SEYTRILaL3BUkk9BZOdAbcsUHErxkdDGGQXw8z4d805l5r6sSDs2VGPXYOh7GQOa5Xn+djOobwtjdP4t5st4zUUvlKYlwGw1/YNkCkOu7ss7CkUyi8YlHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mpMdGRG9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F03BC4CED2;
+	Wed,  4 Dec 2024 23:26:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1733354816;
+	bh=hZRmBR8TK07ATQMZjbSqRZrX3HsV7qSn55WQTuBe1yA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=mpMdGRG91GNeoKgN2p8jj4kt87SfXuQaVrVOdiRXXMSZSHxdg0qon8apCY5b4LiA4
+	 Qf0ymSYQINX70BKIYKPwgvpai+9JvFAAyS/SBDLviBmfV4kMFobN+LYjp7LDclL5cG
+	 ohAQJqzTv2DKRZpOiAz7sjiaOISym9aM2RUXb6KL/WM52s6x944aoAccJkAsCRMNVg
+	 xImMbDqQET4LlXKrNpd5KoD6jJ62z0tgc0Kqomx2VBOPFmqiFBpQ1rP52fTRKTFIs6
+	 ptaYp/SBV7GIFATDu1BdQmz2uUlf2Z+2LoqurXd6IZagcwORuLDQGwPwr9K4Rwk76y
+	 lR1BU5VgQjFIQ==
+From: Sasha Levin <sashal@kernel.org>
+To: linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Cc: Melody Olvera <quic_molvera@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	lgirdwood@gmail.com,
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.12 3/3] regulator: qcom-rpmh: Update ranges for FTSMPS525
+Date: Wed,  4 Dec 2024 17:15:32 -0500
+Message-ID: <20241204221534.2247369-3-sashal@kernel.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20241204221534.2247369-1-sashal@kernel.org>
+References: <20241204221534.2247369-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241204113329.3195627-3-quic_varada@quicinc.com>
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.12.1
+Content-Transfer-Encoding: 8bit
 
-On Wed, Dec 04, 2024 at 05:03:25PM +0530, Varadarajan Narayanan wrote:
-> From: Nitheesh Sekar <quic_nsekar@quicinc.com>
-> 
-> Add Qualcomm PCIe UNIPHY 28LP driver support present
-> in Qualcomm IPQ5332 SoC and the phy init sequence.
-> 
-> Signed-off-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
-> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> ---
-> v2: Drop IPQ5018 related code and data
->     Use uniform prefix for struct names
->     Place "}, {", on the same line
->     In qcom_uniphy_pcie_init(), use for-loop instead of while
->     Swap reset and clock disable order in qcom_uniphy_pcie_power_off
->     Add reset assert to qcom_uniphy_pcie_power_on's error path
->     Use macros for usleep duration
->     Inlined qcom_uniphy_pcie_get_resources & use devm_platform_get_and_ioremap_resource
->     Drop 'clock-output-names' from phy_pipe_clk_register
-> ---
->  drivers/phy/qualcomm/Kconfig                  |  12 +
->  drivers/phy/qualcomm/Makefile                 |   1 +
->  .../phy/qualcomm/phy-qcom-uniphy-pcie-28lp.c  | 307 ++++++++++++++++++
->  3 files changed, 320 insertions(+)
->  create mode 100644 drivers/phy/qualcomm/phy-qcom-uniphy-pcie-28lp.c
-> 
+From: Melody Olvera <quic_molvera@quicinc.com>
 
+[ Upstream commit eeecf953d697cb7f0d916f9908a2b9f451bb2667 ]
+
+All FTSMPS525 regulators support LV and MV ranges; however,
+the boot loader firmware will determine which range to use as
+the device boots.
+
+Nonetheless, the driver cannot determine which range was selected,
+so hardcoding the ranges as either LV or MV will not cover all cases
+as it's possible for the firmware to select a range not supported by
+the driver's current hardcoded values.
+
+To this end, combine the ranges for the FTSMPS525s into one struct
+and point all regulators to the updated combined struct. This should
+work on all boards regardless of which range is selected by the firmware
+and more accurately caputres the capability of this regulator on a
+hardware level.
+
+Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://patch.msgid.link/20241112002645.2803506-1-quic_molvera@quicinc.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/regulator/qcom-rpmh-regulator.c | 83 +++++++++++--------------
+ 1 file changed, 36 insertions(+), 47 deletions(-)
 
+diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
+index 6c343b4b9d15a..7870722b6ee21 100644
+--- a/drivers/regulator/qcom-rpmh-regulator.c
++++ b/drivers/regulator/qcom-rpmh-regulator.c
+@@ -843,26 +843,15 @@ static const struct rpmh_vreg_hw_data pmic5_ftsmps520 = {
+ 	.of_map_mode = rpmh_regulator_pmic4_smps_of_map_mode,
+ };
+ 
+-static const struct rpmh_vreg_hw_data pmic5_ftsmps525_lv = {
++static const struct rpmh_vreg_hw_data pmic5_ftsmps525 = {
+ 	.regulator_type = VRM,
+ 	.ops = &rpmh_regulator_vrm_ops,
+ 	.voltage_ranges = (struct linear_range[]) {
+ 		REGULATOR_LINEAR_RANGE(300000, 0, 267, 4000),
++		REGULATOR_LINEAR_RANGE(1376000, 268, 438, 8000),
+ 	},
+-	.n_linear_ranges = 1,
+-	.n_voltages = 268,
+-	.pmic_mode_map = pmic_mode_map_pmic5_smps,
+-	.of_map_mode = rpmh_regulator_pmic4_smps_of_map_mode,
+-};
+-
+-static const struct rpmh_vreg_hw_data pmic5_ftsmps525_mv = {
+-	.regulator_type = VRM,
+-	.ops = &rpmh_regulator_vrm_ops,
+-	.voltage_ranges = (struct linear_range[]) {
+-		REGULATOR_LINEAR_RANGE(600000, 0, 267, 8000),
+-	},
+-	.n_linear_ranges = 1,
+-	.n_voltages = 268,
++	.n_linear_ranges = 2,
++	.n_voltages = 439,
+ 	.pmic_mode_map = pmic_mode_map_pmic5_smps,
+ 	.of_map_mode = rpmh_regulator_pmic4_smps_of_map_mode,
+ };
+@@ -1190,12 +1179,12 @@ static const struct rpmh_vreg_init_data pm8550_vreg_data[] = {
+ };
+ 
+ static const struct rpmh_vreg_init_data pm8550vs_vreg_data[] = {
+-	RPMH_VREG("smps1",  "smp%s1",  &pmic5_ftsmps525_lv, "vdd-s1"),
+-	RPMH_VREG("smps2",  "smp%s2",  &pmic5_ftsmps525_lv, "vdd-s2"),
+-	RPMH_VREG("smps3",  "smp%s3",  &pmic5_ftsmps525_lv, "vdd-s3"),
+-	RPMH_VREG("smps4",  "smp%s4",  &pmic5_ftsmps525_lv, "vdd-s4"),
+-	RPMH_VREG("smps5",  "smp%s5",  &pmic5_ftsmps525_lv, "vdd-s5"),
+-	RPMH_VREG("smps6",  "smp%s6",  &pmic5_ftsmps525_mv, "vdd-s6"),
++	RPMH_VREG("smps1",  "smp%s1",  &pmic5_ftsmps525, "vdd-s1"),
++	RPMH_VREG("smps2",  "smp%s2",  &pmic5_ftsmps525, "vdd-s2"),
++	RPMH_VREG("smps3",  "smp%s3",  &pmic5_ftsmps525, "vdd-s3"),
++	RPMH_VREG("smps4",  "smp%s4",  &pmic5_ftsmps525, "vdd-s4"),
++	RPMH_VREG("smps5",  "smp%s5",  &pmic5_ftsmps525, "vdd-s5"),
++	RPMH_VREG("smps6",  "smp%s6",  &pmic5_ftsmps525, "vdd-s6"),
+ 	RPMH_VREG("ldo1",   "ldo%s1",  &pmic5_nldo515,   "vdd-l1"),
+ 	RPMH_VREG("ldo2",   "ldo%s2",  &pmic5_nldo515,   "vdd-l2"),
+ 	RPMH_VREG("ldo3",   "ldo%s3",  &pmic5_nldo515,   "vdd-l3"),
+@@ -1203,14 +1192,14 @@ static const struct rpmh_vreg_init_data pm8550vs_vreg_data[] = {
+ };
+ 
+ static const struct rpmh_vreg_init_data pm8550ve_vreg_data[] = {
+-	RPMH_VREG("smps1", "smp%s1", &pmic5_ftsmps525_lv, "vdd-s1"),
+-	RPMH_VREG("smps2", "smp%s2", &pmic5_ftsmps525_lv, "vdd-s2"),
+-	RPMH_VREG("smps3", "smp%s3", &pmic5_ftsmps525_lv, "vdd-s3"),
+-	RPMH_VREG("smps4", "smp%s4", &pmic5_ftsmps525_mv, "vdd-s4"),
+-	RPMH_VREG("smps5", "smp%s5", &pmic5_ftsmps525_lv, "vdd-s5"),
+-	RPMH_VREG("smps6", "smp%s6", &pmic5_ftsmps525_lv, "vdd-s6"),
+-	RPMH_VREG("smps7", "smp%s7", &pmic5_ftsmps525_lv, "vdd-s7"),
+-	RPMH_VREG("smps8", "smp%s8", &pmic5_ftsmps525_lv, "vdd-s8"),
++	RPMH_VREG("smps1", "smp%s1", &pmic5_ftsmps525, "vdd-s1"),
++	RPMH_VREG("smps2", "smp%s2", &pmic5_ftsmps525, "vdd-s2"),
++	RPMH_VREG("smps3", "smp%s3", &pmic5_ftsmps525, "vdd-s3"),
++	RPMH_VREG("smps4", "smp%s4", &pmic5_ftsmps525, "vdd-s4"),
++	RPMH_VREG("smps5", "smp%s5", &pmic5_ftsmps525, "vdd-s5"),
++	RPMH_VREG("smps6", "smp%s6", &pmic5_ftsmps525, "vdd-s6"),
++	RPMH_VREG("smps7", "smp%s7", &pmic5_ftsmps525, "vdd-s7"),
++	RPMH_VREG("smps8", "smp%s8", &pmic5_ftsmps525, "vdd-s8"),
+ 	RPMH_VREG("ldo1",  "ldo%s1", &pmic5_nldo515,   "vdd-l1"),
+ 	RPMH_VREG("ldo2",  "ldo%s2", &pmic5_nldo515,   "vdd-l2"),
+ 	RPMH_VREG("ldo3",  "ldo%s3", &pmic5_nldo515,   "vdd-l3"),
+@@ -1218,14 +1207,14 @@ static const struct rpmh_vreg_init_data pm8550ve_vreg_data[] = {
+ };
+ 
+ static const struct rpmh_vreg_init_data pmc8380_vreg_data[] = {
+-	RPMH_VREG("smps1", "smp%s1", &pmic5_ftsmps525_lv, "vdd-s1"),
+-	RPMH_VREG("smps2", "smp%s2", &pmic5_ftsmps525_lv, "vdd-s2"),
+-	RPMH_VREG("smps3", "smp%s3", &pmic5_ftsmps525_lv, "vdd-s3"),
+-	RPMH_VREG("smps4", "smp%s4", &pmic5_ftsmps525_mv, "vdd-s4"),
+-	RPMH_VREG("smps5", "smp%s5", &pmic5_ftsmps525_lv, "vdd-s5"),
+-	RPMH_VREG("smps6", "smp%s6", &pmic5_ftsmps525_lv, "vdd-s6"),
+-	RPMH_VREG("smps7", "smp%s7", &pmic5_ftsmps525_lv, "vdd-s7"),
+-	RPMH_VREG("smps8", "smp%s8", &pmic5_ftsmps525_lv, "vdd-s8"),
++	RPMH_VREG("smps1", "smp%s1", &pmic5_ftsmps525, "vdd-s1"),
++	RPMH_VREG("smps2", "smp%s2", &pmic5_ftsmps525, "vdd-s2"),
++	RPMH_VREG("smps3", "smp%s3", &pmic5_ftsmps525, "vdd-s3"),
++	RPMH_VREG("smps4", "smp%s4", &pmic5_ftsmps525, "vdd-s4"),
++	RPMH_VREG("smps5", "smp%s5", &pmic5_ftsmps525, "vdd-s5"),
++	RPMH_VREG("smps6", "smp%s6", &pmic5_ftsmps525, "vdd-s6"),
++	RPMH_VREG("smps7", "smp%s7", &pmic5_ftsmps525, "vdd-s7"),
++	RPMH_VREG("smps8", "smp%s8", &pmic5_ftsmps525, "vdd-s8"),
+ 	RPMH_VREG("ldo1",  "ldo%s1", &pmic5_nldo515,   "vdd-l1"),
+ 	RPMH_VREG("ldo2",  "ldo%s2", &pmic5_nldo515,   "vdd-l2"),
+ 	RPMH_VREG("ldo3",  "ldo%s3", &pmic5_nldo515,   "vdd-l3"),
+@@ -1409,16 +1398,16 @@ static const struct rpmh_vreg_init_data pmx65_vreg_data[] = {
+ };
+ 
+ static const struct rpmh_vreg_init_data pmx75_vreg_data[] = {
+-	RPMH_VREG("smps1",   "smp%s1",    &pmic5_ftsmps525_lv, "vdd-s1"),
+-	RPMH_VREG("smps2",   "smp%s2",    &pmic5_ftsmps525_lv, "vdd-s2"),
+-	RPMH_VREG("smps3",   "smp%s3",    &pmic5_ftsmps525_lv, "vdd-s3"),
+-	RPMH_VREG("smps4",   "smp%s4",    &pmic5_ftsmps525_mv, "vdd-s4"),
+-	RPMH_VREG("smps5",   "smp%s5",    &pmic5_ftsmps525_lv, "vdd-s5"),
+-	RPMH_VREG("smps6",   "smp%s6",    &pmic5_ftsmps525_lv, "vdd-s6"),
+-	RPMH_VREG("smps7",   "smp%s7",    &pmic5_ftsmps525_lv, "vdd-s7"),
+-	RPMH_VREG("smps8",   "smp%s8",    &pmic5_ftsmps525_lv, "vdd-s8"),
+-	RPMH_VREG("smps9",   "smp%s9",    &pmic5_ftsmps525_lv, "vdd-s9"),
+-	RPMH_VREG("smps10",  "smp%s10",   &pmic5_ftsmps525_lv, "vdd-s10"),
++	RPMH_VREG("smps1",   "smp%s1",    &pmic5_ftsmps525, "vdd-s1"),
++	RPMH_VREG("smps2",   "smp%s2",    &pmic5_ftsmps525, "vdd-s2"),
++	RPMH_VREG("smps3",   "smp%s3",    &pmic5_ftsmps525, "vdd-s3"),
++	RPMH_VREG("smps4",   "smp%s4",    &pmic5_ftsmps525, "vdd-s4"),
++	RPMH_VREG("smps5",   "smp%s5",    &pmic5_ftsmps525, "vdd-s5"),
++	RPMH_VREG("smps6",   "smp%s6",    &pmic5_ftsmps525, "vdd-s6"),
++	RPMH_VREG("smps7",   "smp%s7",    &pmic5_ftsmps525, "vdd-s7"),
++	RPMH_VREG("smps8",   "smp%s8",    &pmic5_ftsmps525, "vdd-s8"),
++	RPMH_VREG("smps9",   "smp%s9",    &pmic5_ftsmps525, "vdd-s9"),
++	RPMH_VREG("smps10",  "smp%s10",   &pmic5_ftsmps525, "vdd-s10"),
+ 	RPMH_VREG("ldo1",    "ldo%s1",    &pmic5_nldo515,   "vdd-l1"),
+ 	RPMH_VREG("ldo2",    "ldo%s2",    &pmic5_nldo515,   "vdd-l2-18"),
+ 	RPMH_VREG("ldo3",    "ldo%s3",    &pmic5_nldo515,   "vdd-l3"),
 -- 
-With best wishes
-Dmitry
+2.43.0
+
 
