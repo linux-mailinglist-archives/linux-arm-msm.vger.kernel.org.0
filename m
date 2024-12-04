@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-40421-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40422-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1B35A9E4916
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 00:31:32 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3780D9E4903
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 00:30:16 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5E6E416B696
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 23:29:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E7A17281078
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 23:30:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D909020E038;
-	Wed,  4 Dec 2024 23:26:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55E9920E6E7;
+	Wed,  4 Dec 2024 23:27:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mpMdGRG9"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kbwQXztN"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD03220E032;
-	Wed,  4 Dec 2024 23:26:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2954D20E6E4;
+	Wed,  4 Dec 2024 23:27:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733354816; cv=none; b=kRsq/yKNxqijLgV9EUCfA0VZuoEKoj8ZV9evhnQp432UDfisnzIP2MnEonM+NtKBldMgnnB8td5e/6dbJkpII0hagza6yxpGSnWZF2HjZXR6rDvIf/IMwFd2wNJXuE1vXiIFEX7uz4dJsDv4XK0ofgjRasllgogVq/pT8WI1lJQ=
+	t=1733354821; cv=none; b=DGlz/qJALnXWYlRpnv5JObE3T3tpDnlAKEjJsmOOp1RoyiyaTU5nozAtq1npAFk2Q/KMUd8H6S4KcV1FN68GlI8irChtzcYSIX7EgfvKW2EEhVdrseAfAQQ+mDk+DLhT/2e2VDKyLVXIv7ubHq5njXuXAH6DxXcRKsxsP1ptGCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733354816; c=relaxed/simple;
-	bh=hZRmBR8TK07ATQMZjbSqRZrX3HsV7qSn55WQTuBe1yA=;
+	s=arc-20240116; t=1733354821; c=relaxed/simple;
+	bh=OfX0VCRFKCJwPJLI2Er/a/RLQ2MNZ24Q8i7MTYwVaYw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DBptSn6LV6wUETGlDfbut9i1w457HKLcx2QRBMAZMcnalj2P173K/SEYTRILaL3BUkk9BZOdAbcsUHErxkdDGGQXw8z4d805l5r6sSDs2VGPXYOh7GQOa5Xn+djOobwtjdP4t5st4zUUvlKYlwGw1/YNkCkOu7ss7CkUyi8YlHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mpMdGRG9; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F03BC4CED2;
-	Wed,  4 Dec 2024 23:26:55 +0000 (UTC)
+	 MIME-Version; b=DY944X5Usq1m8pShEMq9yvBQlWmfIVLOXbyzLB5EOzZ2BP6nM7Eg///IRBT2d/3UCOM/hjuhCMyy3QBOsUe9/qzpPBDsdZgY/BK4v6mJ27O5GLwW4WqN+3MR4y4SRDsdrYr1VZ8v43ByQRSblqaN3rOxca08Q/qzJTtI1FyXZ9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kbwQXztN; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F6B7C4CEE1;
+	Wed,  4 Dec 2024 23:27:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733354816;
-	bh=hZRmBR8TK07ATQMZjbSqRZrX3HsV7qSn55WQTuBe1yA=;
+	s=k20201202; t=1733354821;
+	bh=OfX0VCRFKCJwPJLI2Er/a/RLQ2MNZ24Q8i7MTYwVaYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mpMdGRG91GNeoKgN2p8jj4kt87SfXuQaVrVOdiRXXMSZSHxdg0qon8apCY5b4LiA4
-	 Qf0ymSYQINX70BKIYKPwgvpai+9JvFAAyS/SBDLviBmfV4kMFobN+LYjp7LDclL5cG
-	 ohAQJqzTv2DKRZpOiAz7sjiaOISym9aM2RUXb6KL/WM52s6x944aoAccJkAsCRMNVg
-	 xImMbDqQET4LlXKrNpd5KoD6jJ62z0tgc0Kqomx2VBOPFmqiFBpQ1rP52fTRKTFIs6
-	 ptaYp/SBV7GIFATDu1BdQmz2uUlf2Z+2LoqurXd6IZagcwORuLDQGwPwr9K4Rwk76y
-	 lR1BU5VgQjFIQ==
+	b=kbwQXztNm9CtYvazp/wz+4S5owcVwvy7KqRtn8OPnlIVAe2zAwm26oU1H1RHESOyJ
+	 UNBJc9ae2lQLchrZeraA+5tKxiS94Jxb2u3o4VkYTCxcvpXvK2fSgmJSK5/zyQXvoR
+	 +CoKYjAoqgwAjjC4QJcChxM8ppMKuvePRgR/UUTwleM7/0llvGBXuc2u7CVED9qrJL
+	 lxlC3xdtAB4idnJaiK1sM8p/X00UsGpK6HUnp7PpFtmSVopqqTdcXMGD1o+/DzhpAd
+	 +eIm5/yfe+CWZW2TjscHSwpBy0IgkTbqEUX/JIR99bDopy0JEyXyVt5KVLuYDmbtYr
+	 Dyi1rYxCtP2IA==
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
@@ -50,12 +50,12 @@ Cc: Melody Olvera <quic_molvera@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>,
 	lgirdwood@gmail.com,
 	linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 3/3] regulator: qcom-rpmh: Update ranges for FTSMPS525
-Date: Wed,  4 Dec 2024 17:15:32 -0500
-Message-ID: <20241204221534.2247369-3-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.11 2/2] regulator: qcom-rpmh: Update ranges for FTSMPS525
+Date: Wed,  4 Dec 2024 17:15:39 -0500
+Message-ID: <20241204221539.2247447-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241204221534.2247369-1-sashal@kernel.org>
-References: <20241204221534.2247369-1-sashal@kernel.org>
+In-Reply-To: <20241204221539.2247447-1-sashal@kernel.org>
+References: <20241204221539.2247447-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,7 +64,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.12.1
+X-stable-base: Linux 6.11.10
 Content-Transfer-Encoding: 8bit
 
 From: Melody Olvera <quic_molvera@quicinc.com>
@@ -96,7 +96,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 36 insertions(+), 47 deletions(-)
 
 diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
-index 6c343b4b9d15a..7870722b6ee21 100644
+index 80e304711345b..acd69443056c2 100644
 --- a/drivers/regulator/qcom-rpmh-regulator.c
 +++ b/drivers/regulator/qcom-rpmh-regulator.c
 @@ -843,26 +843,15 @@ static const struct rpmh_vreg_hw_data pmic5_ftsmps520 = {
