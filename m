@@ -1,170 +1,213 @@
-Return-Path: <linux-arm-msm+bounces-40242-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40243-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E9E0F9E3A13
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 13:37:36 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 18F2A9E3A31
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 13:45:26 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B762A16601C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 12:37:33 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CDDA9285F79
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 12:45:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F1361B652B;
-	Wed,  4 Dec 2024 12:37:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A36831B395B;
+	Wed,  4 Dec 2024 12:45:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PQ7+584v"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OZ5Odcm0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 883281B415A
-	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Dec 2024 12:37:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DFBE189F56
+	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Dec 2024 12:45:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733315854; cv=none; b=pyxkR0+Hhn+OhoxA6ZksW8sIc3O7OERlHfR6ch6gmg0mv+eQfVLmA1x/rTLVB+3X0HInmr8BdwusIvkBi3gje8tLjnqApBpsh5aeryL8WJC1sV3rHPi8+MG7AyNmk9vmhilNVdU8inbrpWvJQQqQDjWQze7QpMpGtBo4jiTTk1U=
+	t=1733316321; cv=none; b=huM6HkvQvz2TYXonLl/ElRZBCnW4LPP2mTA95IrNv/pfICl5HtV5HFk8tuJb/UiQAPNSK7QNe79xgDg4eo//RSMm9740CQOblquLgXNOE74kkLyfhwlg+AH6NYdN0M0AR7hWpYx6ZWyGWfUgV/S0WpMrnSSSfRrPspOwUxceZiU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733315854; c=relaxed/simple;
-	bh=f4JdU7Rzzmj+R1/OxrSn7f29PwCd20slBxMMB9kdPKs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=kZR6SJemz5rWKpQx9eiIl27p/KVrlz3yGHt2ZquqffZlkovcP0EL5/S6vwFuFqNSC+CZZ0AxDzf2WmddqplbcJGzmhJlU77vbdpc4F9baaRNrxtBjVcVt5tksX8HGGzNNMLf8xCo+nmcCs8N88OhEZvoQQMLaHdLzN0sp9LzSnw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PQ7+584v; arc=none smtp.client-ip=209.85.128.54
+	s=arc-20240116; t=1733316321; c=relaxed/simple;
+	bh=HvLXew/ekNZYNw4+Tzj0GTsu0hLpHjPce/LR5fnETRg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=msuTQkHOBOsTLN2yjMdg4BQtrWh9wwE3rwe9KA2E/Ws1xiMi+kDlOPr+DefjKnok2wwY3n5lxEZ53pIQf+9Pca1AjQpCZMYeMlkOYlrBPsLCNRGOQRF/Zyky0+FdT+CUjzC/WBMB+uN9kWvQhsep654M+nYxH62efJ+TqJU4tZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OZ5Odcm0; arc=none smtp.client-ip=209.85.167.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-434a7cef2e3so6828225e9.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Dec 2024 04:37:32 -0800 (PST)
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-53de6b7da14so6582207e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Dec 2024 04:45:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733315851; x=1733920651; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5qn3ZnxaGnMmpvUaH/GWWsPm6fs0ctmSrJSJyOBSwzM=;
-        b=PQ7+584vap2efqAj383P/ocERXP5pUqCVX37ySM/5PH4LNUSQIB5LGPFlCgDfTLMj4
-         UGSJ5IcAsCxarP0dv78ry1H6KOR2MtcYA93RKAk2CCIuxJl0xLXe3f9DFEsTMQMUfEiE
-         xCnsASuTe7PCCcaw59WSNEFCj9EDX87IdYgFxpZLo5LBsRzBZzAIGMoe7QjcAbcQrYDu
-         N9v2k1fVZ0LmxX1DPgWbO12NTbqpjbcvrAo3YUN47GOr6VTj5Q1kUNkau52BTk7W7gAS
-         jJ68aG4SK3bPW7TvZSNRcJ6BTu2wB+qFWCO4i17t/M4dKaYrEvz/7ecTQLO34HV/OlEU
-         ygBA==
+        d=linaro.org; s=google; t=1733316318; x=1733921118; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=WTp0TBvwsa7+s4hy1diR7pekA2iSgGBReO3LOvUKkxQ=;
+        b=OZ5Odcm0kIlvs4fsY9zfhvSyf3ObiQ08uglgV60jmdkMoXJ0rejitZh6jFlFBuBnzO
+         VnYkF2AMcXOda+qtGz2wWqtq/alc0BblaYkl40YvpVRACFtGzl3XgerRi4Z9ZB2O+e2/
+         /WvwX8kG7MABjUKgNA24JlsyY2dAjjl793nTGSV6TOO1Cl30245KO2fEUeZNnYVOjQlZ
+         65+c1gAF1+gHAD74LFyX/mOiqWsIUlk/UYcgiqBNksXo6JEziK4/sXhp/WUB1/o2/kZx
+         Y0odP8YfvpF8U16hsSgohh3MTm+YSh/Zhpv3MX0harJG5avVAq+nbQD5vX4ZN/QaqjOI
+         wKyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733315851; x=1733920651;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5qn3ZnxaGnMmpvUaH/GWWsPm6fs0ctmSrJSJyOBSwzM=;
-        b=FcaINWNBSieb5GlVjvICc98n34j2hRlcC5ZsOo8Mo32ZdtFrcPL9ChAZLS6HJCoklQ
-         wjiLgn7ft6EXTjyNhETyjnes6yDSts9CFkAdB+zlLk+XRkQ9TH1We+/la11LeDpwcfr6
-         zrHe9kMVZhMV5BpE88xfLT3GGRYy1G2WLjflw+Sj1aCrskEl0uuphPemAPN9MpsF7wzt
-         4jGlXxj/3tEUHFa+mX8ntUXxQpW5jLoXVxyk/q4WKnCTNmIgIGkDoK09yxFdrOvD8UXC
-         wzb83RyhRITar0nBZmNJDbEzkEO49NZasyGdefXOCRUOWsV1J20IYRvIoRvM1Gboa4j0
-         86OA==
-X-Forwarded-Encrypted: i=1; AJvYcCW2N3gK8i72XuJ3fIR5vZFfW2PRpAamiY6Hcw7nhQKM5leTWolsjB7dh9NOlfgcAmVhCawJTSoGaJaxxRxa@vger.kernel.org
-X-Gm-Message-State: AOJu0YyzibjLAYl/agsQPJKpNl1XgvYglyleycYyqKNTw/tuUplr7gCf
-	75eF/18yK/f1XlcoOBaEvysT57OFfGg4cmYi5uX43zBL9nKeEAVq9SGWJQB+W/Y=
-X-Gm-Gg: ASbGncsDeX6/G2BklFSUr+S3+6eM8tOZVoxdx/v5/JPFgaHbdolfkE+TsRpmTRa3SRW
-	VKMBz7T1g2XxogCS17DXhqffbOKEeV/zDNOw13kQjBhwGV3maNpFgtX22LttBMJjtmd4aZGomCE
-	BMc1W1LPqKoHe9xv9cxAfaEHcDU5cjCfRZeZ979DvGoJrJ1q2C1yCwgIbXxmfopuAFXLCSKj1fO
-	TncFaGwpfX9/aEf39p60NxCOsdoi9iy0uBu8CQhJpYs3nN8btzLJ9/R1/qDMSlJ+9lmLQ==
-X-Google-Smtp-Source: AGHT+IEeTkgOdeZUpGGaxGsdrx0QZvZ/CXigi7dcaDUgno+cC1CWkj77HFnwYP7ok2mKArIY6+M5Qw==
-X-Received: by 2002:a05:600c:46cf:b0:42c:aeee:e603 with SMTP id 5b1f17b1804b1-434d0a1f397mr20263365e9.7.1733315850582;
-        Wed, 04 Dec 2024 04:37:30 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.223.165])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-434d52cbd72sm23817815e9.44.2024.12.04.04.37.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 04 Dec 2024 04:37:30 -0800 (PST)
-Message-ID: <03631258-545f-4f31-a849-9450a1a50ae7@linaro.org>
-Date: Wed, 4 Dec 2024 13:37:28 +0100
+        d=1e100.net; s=20230601; t=1733316318; x=1733921118;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WTp0TBvwsa7+s4hy1diR7pekA2iSgGBReO3LOvUKkxQ=;
+        b=iS9Jgk7Rp8hS4WIYE3ojjZmNBvMgkVofGLEkHirajC8H3sH58IewLNE8aiVtTPFVz6
+         wHrJRGHckxVBv8cf7vB40rWjJSQQCx/wj+yBxuJB4gGgcqsAsGaPNqNgXg3hC9rReHyq
+         fRJn+wsZYxA8BGDsqiLimtyPKwfeBTHvyZPhUT4ycO4qRHQQ+fYJ5L/ffyDKyIE/+Y4t
+         YIDE1gDFjnedCjXtkq8bTx+ihDaIGpNVejgNTcW6f/qnwy/i9W8GTsXcRSbBFstg6Y7d
+         0OjkmfrIzBraqsLtJ+aWYkM7SF70gesY73i7m/XkJNgRUg6lULrOTqrWNLNPrNs9PGG0
+         5KDw==
+X-Forwarded-Encrypted: i=1; AJvYcCU8rRsbQjmWZqIjrjRxMTOdWa9gRZ9FfXnwXCdyaVtELcBnhQE0/Fz+ytxh9Rkry6uM66N9wagmksJqALzi@vger.kernel.org
+X-Gm-Message-State: AOJu0YwYOuExgO0lvdbEZ88XsmoG3Rmfi0p4Ld2Qe3MEl2WGMiVhcRS+
+	+A8d8ntpFDm6oUUjHC8MP4NeoEwnofwmwIOX6dj4lb75K2pMz8H1PymlxmthWzlFn/m4G0FSR55
+	R
+X-Gm-Gg: ASbGncsJ5nUDsUSIbB8cSeVC0J6KdBWcXH70BQZLfIf6aJ6vr4rR7YHZ1akb0EPZEmd
+	DatmKr0XOzdcL9qppmvwbPAKAMvMB3kdXtkDD0tf3mtby2jqt52QvtxIZxVFbN4V6SH3E4Rparu
+	eHdr8b3u8gDPGQim/G3TdkROuDtGZCoDEY4Fzgn9XlSSfZEkJbNGU1/qd9fOszuyJhk0yjEy/Tz
+	NGYRs+1ZQFuCuAf3CyhI8yMRWtTEUJubTTpQPZ4/HREXT90zbqrUXAI1AP2ADjceCIDJf5bahM2
+	ChmQ8PiOTi/zk4IFBPKlFzVuAWLuiQ==
+X-Google-Smtp-Source: AGHT+IH0r+x2jrOlaIXcqF4xiCo9+ErTtCXYbj7uwSRx6lcnQBk1/ALdLJelIohTiEnYb6ScgPxCSg==
+X-Received: by 2002:a05:6512:3d18:b0:53d:a2b5:d8b9 with SMTP id 2adb3069b0e04-53e1b898282mr1393294e87.34.1733316317683;
+        Wed, 04 Dec 2024 04:45:17 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53e16b169f7sm501102e87.16.2024.12.04.04.45.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Dec 2024 04:45:16 -0800 (PST)
+Date: Wed, 4 Dec 2024 14:45:14 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
+Cc: Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, quic_msavaliy@quicinc.com, 
+	quic_vtanuku@quicinc.com
+Subject: Re: [PATCH v3] dmaengine: qcom: gpi: Add GPI immediate DMA support
+ for SPI protocol
+Message-ID: <higpzg6b4e66zpykuu3wlcmaxzplzz3qasoycfytidunp7yqbn@nunjmucxkjbe>
+References: <20241204122059.24239-1-quic_jseerapu@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] clk: qcom: Drop unused header includes
-To: Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20241204110348.100841-1-krzysztof.kozlowski@linaro.org>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Content-Language: en-US
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20241204110348.100841-1-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241204122059.24239-1-quic_jseerapu@quicinc.com>
 
-On 04/12/2024 12:03, Krzysztof Kozlowski wrote:
-> Drivers should include only headers they use so drop:
-> 1. of.h and of_address.h: When no OF call is used (of_device_id is
->    coming from mod_devicetable.h).
-> 2. clk.h, property.h and reset-controller.h: No calls to clock consumer
->    or reset framework, no fwnode/property calls.
+On Wed, Dec 04, 2024 at 05:50:59PM +0530, Jyothi Kumar Seerapu wrote:
+> The DMA TRE(Transfer ring element) buffer contains the DMA
+> buffer address. Accessing data from this address can cause
+> significant delays in SPI transfers, which can be mitigated to
+> some extent by utilizing immediate DMA support.
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> QCOM GPI DMA hardware supports an immediate DMA feature for data
+> up to 8 bytes, storing the data directly in the DMA TRE buffer
+> instead of the DMA buffer address. This enhancement enables faster
+> SPI data transfers.
+> 
+> This optimization reduces the average transfer time from 25 us to
+> 16 us for a single SPI transfer of 8 bytes length, with a clock
+> frequency of 50 MHz.
+> 
+> Signed-off-by: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
 > ---
->  drivers/clk/qcom/camcc-sa8775p.c      | 1 -
->  drivers/clk/qcom/camcc-sc7180.c       | 1 -
->  drivers/clk/qcom/camcc-sc7280.c       | 1 -
->  drivers/clk/qcom/camcc-sm4450.c       | 1 -
->  drivers/clk/qcom/camcc-sm7150.c       | 1 -
->  drivers/clk/qcom/camcc-sm8150.c       | 1 -
->  drivers/clk/qcom/camcc-sm8250.c       | 1 -
->  drivers/clk/qcom/dispcc-qcm2290.c     | 1 -
->  drivers/clk/qcom/dispcc-sc8280xp.c    | 2 --
->  drivers/clk/qcom/dispcc-sdm845.c      | 1 -
->  drivers/clk/qcom/dispcc-sm4450.c      | 1 -
->  drivers/clk/qcom/dispcc-sm6115.c      | 1 -
->  drivers/clk/qcom/dispcc-sm7150.c      | 1 -
->  drivers/clk/qcom/dispcc-sm8250.c      | 1 -
->  drivers/clk/qcom/dispcc-sm8450.c      | 2 --
->  drivers/clk/qcom/dispcc-sm8550.c      | 2 --
->  drivers/clk/qcom/dispcc-sm8750.c      | 2 --
-This file should not be part of this patchset. I'll wait for review and
-send a v2 tomorrow.
+> 
+> v2-> v3:
+>    - When to enable Immediate DMA support, control is moved to GPI driver
+>      from SPI driver. 
+>    - Optimizations are done in GPI driver related to immediate dma changes.
+>    - Removed the immediate dma supported changes in qcom-gpi-dma.h file
+>      and handled in GPI driver. 
+> 
+>    Link to v2: 
+> 	https://lore.kernel.org/all/20241128133351.24593-2-quic_jseerapu@quicinc.com/
+> 	https://lore.kernel.org/all/20241128133351.24593-3-quic_jseerapu@quicinc.com/ 
+> 
+> v1 -> v2:
+>    - Separated the patches to dmaengine and spi subsystems
+>    - Removed the changes which are not required for this feature from
+>      qcom-gpi-dma.h file.
+>    - Removed the type conversions used in gpi_create_spi_tre.
+>   
+>    Link to v1:
+> 	https://lore.kernel.org/lkml/20241121115201.2191-2-quic_jseerapu@quicinc.com/ 
+> 
+>  drivers/dma/qcom/gpi.c | 32 +++++++++++++++++++++++++++-----
+>  1 file changed, 27 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
+> index 52a7c8f2498f..35451d5a81f7 100644
+> --- a/drivers/dma/qcom/gpi.c
+> +++ b/drivers/dma/qcom/gpi.c
+> @@ -27,6 +27,7 @@
+>  #define TRE_FLAGS_IEOT		BIT(9)
+>  #define TRE_FLAGS_BEI		BIT(10)
+>  #define TRE_FLAGS_LINK		BIT(11)
+> +#define TRE_FLAGS_IMMEDIATE_DMA	BIT(16)
+>  #define TRE_FLAGS_TYPE		GENMASK(23, 16)
+>  
+>  /* SPI CONFIG0 WD0 */
+> @@ -64,6 +65,7 @@
+>  
+>  /* DMA TRE */
+>  #define TRE_DMA_LEN		GENMASK(23, 0)
+> +#define TRE_DMA_IMMEDIATE_LEN	GENMASK(3, 0)
+>  
+>  /* Register offsets from gpi-top */
+>  #define GPII_n_CH_k_CNTXT_0_OFFS(n, k)	(0x20000 + (0x4000 * (n)) + (0x80 * (k)))
+> @@ -1711,6 +1713,8 @@ static int gpi_create_spi_tre(struct gchan *chan, struct gpi_desc *desc,
+>  	dma_addr_t address;
+>  	struct gpi_tre *tre;
+>  	unsigned int i;
+> +	int len;
+> +	u8 immediate_dma;
+>  
+>  	/* first create config tre if applicable */
+>  	if (direction == DMA_MEM_TO_DEV && spi->set_config) {
+> @@ -1763,14 +1767,32 @@ static int gpi_create_spi_tre(struct gchan *chan, struct gpi_desc *desc,
+>  	tre_idx++;
+>  
+>  	address = sg_dma_address(sgl);
+> -	tre->dword[0] = lower_32_bits(address);
+> -	tre->dword[1] = upper_32_bits(address);
+> +	len = sg_dma_len(sgl);
+>  
+> -	tre->dword[2] = u32_encode_bits(sg_dma_len(sgl), TRE_DMA_LEN);
+> +	immediate_dma = (direction == DMA_MEM_TO_DEV) && len <= 2 * sizeof(tre->dword[0]);
 
-Best regards,
-Krzysztof
+inline this condition, remove extra brackets and split the line after &&.
+
+> +
+> +	/* Support Immediate dma for write transfers for data length up to 8 bytes */
+> +	if (immediate_dma) {
+> +		/*
+> +		 * For Immediate dma, data length may not always be length of 8 bytes,
+> +		 * it can be length less than 8, hence initialize both dword's with 0
+> +		 */
+> +		tre->dword[0] = 0;
+> +		tre->dword[1] = 0;
+> +		memcpy(&tre->dword[0], sg_virt(sgl), len);
+> +
+> +		tre->dword[2] = u32_encode_bits(len, TRE_DMA_IMMEDIATE_LEN);
+> +	} else {
+> +		tre->dword[0] = lower_32_bits(address);
+> +		tre->dword[1] = upper_32_bits(address);
+> +
+> +		tre->dword[2] = u32_encode_bits(len, TRE_DMA_LEN);
+> +	}
+>  
+>  	tre->dword[3] = u32_encode_bits(TRE_TYPE_DMA, TRE_FLAGS_TYPE);
+> -	if (direction == DMA_MEM_TO_DEV)
+> -		tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_IEOT);
+> +	tre->dword[3] |= u32_encode_bits(!!immediate_dma, TRE_FLAGS_IMMEDIATE_DMA);
+> +	tre->dword[3] |= u32_encode_bits(!!(direction == DMA_MEM_TO_DEV),
+> +					 TRE_FLAGS_IEOT);
+>  
+>  	for (i = 0; i < tre_idx; i++)
+>  		dev_dbg(dev, "TRE:%d %x:%x:%x:%x\n", i, desc->tre[i].dword[0],
+> -- 
+> 2.17.1
+> 
+
+-- 
+With best wishes
+Dmitry
 
