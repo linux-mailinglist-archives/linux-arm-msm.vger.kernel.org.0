@@ -1,228 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-40244-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40247-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 68A329E3AD4
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 14:07:31 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A0E869E3ADD
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 14:11:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id ECE17B25E3A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 12:46:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 65233281B78
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 13:11:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2BD21B6CFF;
-	Wed,  4 Dec 2024 12:45:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E21B81B4F02;
+	Wed,  4 Dec 2024 13:10:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ev1ho5M6"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="U/bR2/XE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f66.google.com (mail-lf1-f66.google.com [209.85.167.66])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 715381AF0AA;
-	Wed,  4 Dec 2024 12:45:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08386746E
+	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Dec 2024 13:10:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.66
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733316358; cv=none; b=jsfYxxwMCEl++2tHfVpGga9b2ICnp00ugcvAJ46SGaxzloF5G9Rd08SoWtERk49ZilGWvB0zRDoKKp65DFNd1aLIUrB/ji9OxCFC/k/GcaNjAAKQFtsEy2ETuQdaYe85R8bynbe3NPAwuHWd7yRfaryGLSGky/U6qRW6NMs3kBY=
+	t=1733317859; cv=none; b=eVwr6N79T4FAJcs8tmpiX5vqX9Z7IrdaqcxQoetDVeTyPxTM9GhE0SUOBsiHr7anGMYixrD7eB1I/LfZQ3QRvjwTIfgVZDGwFErc+oPc/f7aI+Rq3zRyvkY3px5RWYhUv5UTOo42lO59uvoFPi+BbzAzcJmpsjEjZQNCmcP2P8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733316358; c=relaxed/simple;
-	bh=2QDSecObE6wwLJzkdSzKWQZqdDB/m3+uI1Nge5/iGTg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KBVR0ktdEyOHcwRfPLhCKqoQTKn2BeV4r5jbBmVQr2KG0NoGRMSdhm7Dq+6be4VOL+fhQdW3Sm1V+czmr5A7JY4sIweyC6tuxOx4ezTMtHLp8G/1najC0pB3nkwt8kNkDOrQJBTKE/YdSUpchMc4+R+BrWEsOiY6WqiS1zl2bzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ev1ho5M6; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 768F7C4CED1;
-	Wed,  4 Dec 2024 12:45:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733316358;
-	bh=2QDSecObE6wwLJzkdSzKWQZqdDB/m3+uI1Nge5/iGTg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ev1ho5M6lAHwSLKXZG9JKWEIYTfGOXSGYuqsck413CBkUqkmTAIsbHyhybpRfTHxT
-	 Y5tANApUnQCtCeGxHzgfyVfe/y4UQv6cV2R1P4SFudt5zFvsOqpHvNiGtHyh7KV7Li
-	 pavqLH/GzZnJwm+eTk/BAL/HTT1VRo3je8GoAqxlzJtnPEm83wHpfnjwvlq73C3lMV
-	 w/zjgv1cREfq0KeUiLFyPymeNzN7C/5UXIyh3CFwSHdpE5ZBh4ryEkK6nezJ66mYic
-	 8qC6keGoZLt+8o51A2p47xtsVZV9//MihEXZw6rRyPeeyv6COXesdk9LPmYJC0m/7d
-	 y9tKzAOLVcGCw==
-Date: Wed, 4 Dec 2024 18:15:54 +0530
-From: Vinod Koul <vkoul@kernel.org>
-To: Md Sadre Alam <quic_mdalam@quicinc.com>
-Cc: thara.gopinath@gmail.com, herbert@gondor.apana.org.au,
-	davem@davemloft.net, kees@kernel.org, robin.murphy@arm.com,
-	fenghua.yu@intel.com, av2082000@gmail.com,
-	u.kleine-koenig@pengutronix.d, linux-crypto@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	dmaengine@vger.kernel.org, quic_varada@quicinc.com,
-	quic_srichara@quicinc.com
-Subject: Re: [PATCH v4 02/11] dmaengine: qcom: bam_dma: add LOCK & UNLOCK
- flag support
-Message-ID: <Z1BPApOvYoDaTR57@vaman>
-References: <20240909092632.2776160-1-quic_mdalam@quicinc.com>
- <20240909092632.2776160-3-quic_mdalam@quicinc.com>
+	s=arc-20240116; t=1733317859; c=relaxed/simple;
+	bh=d9srN0x/w14KgArGFuugj5uKagGGfKV7pLkuONxS+Dw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Oox9RaqJprwa5IHGwrCGzDOMNDKa6+TIssNw9uvbGEsOJgvI/DKC7zdlTVa408Atye8MofpDfGGxZfLtT+ywzGYt+UTg6ZGO1XGYmUUKIlqPDAgaXSPiwgpIdRMCff9LrxoUcF9uQvikERMso+jsss7UKss7gSQrbu2nZY5UJUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=U/bR2/XE; arc=none smtp.client-ip=209.85.167.66
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f66.google.com with SMTP id 2adb3069b0e04-53de3ba3d39so1167504e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Dec 2024 05:10:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1733317856; x=1733922656; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=v90yvB7RAiniL1C2+QudwZhiuoJT9vTsYZRhdNmXhhc=;
+        b=U/bR2/XE1pLGEwUhn6Y8QPGosmAFEYSvYHhcPjHJUFAGxUi3wFYWoI08zykZUHulgL
+         GG0RD3+N2llGfANP0g30nd0YL8AO1ni/GMVstW664ebzGlEKrMwcMiJya6hKAzNmOQ3x
+         pPo8LvwI9yrNCcirxN2/y6fRuPbeBQUZnmyI9MWud2Rm/ed3JIayDiTz5ipV4I6hju0K
+         /fw71MBTzcVgaFNWGj5Nw+3jEoqHCslSGrNZO649bWPBV6zFfgu0NaX3q2JUXx3EUaqG
+         33hu8lMxw/7mmfYll9A4VxXCymiBlGMeFbpvaf/O/zzS0WzWQ7tA/802uudMT2L+xLVQ
+         5vmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733317856; x=1733922656;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=v90yvB7RAiniL1C2+QudwZhiuoJT9vTsYZRhdNmXhhc=;
+        b=Quk17UJ8MTJnG0VS9uG5kJb0OsuLipw3edkZdblJ5BQBaIyH770DwkKq+oaDH+K5QO
+         ex7wCqhycxbpWOte8xR4HukLB9fDYwVOfBJ2Rx3sYetkTaKURJ/ArfRq9N2b9PpPfRg4
+         9dP61WpSE0BRL4nuDlbeu03kami1SbmzETf9xkCXzwloFF1JUvkyT5PEb8tOmHUp2c9o
+         xM71RdvfQYszk7t1GsVcajluw8jmaF9flKhSVZSG2jTbq4qcep9i9ikV1z4c2KtqS6KL
+         Mia7cJ1qiyXpW0l8AIJYeLdijdVTKFrJgE4mQldesEV9tIhFEOGzpG7qqJXJAMgpdaQu
+         +aEA==
+X-Forwarded-Encrypted: i=1; AJvYcCWJzg5PcyaY/to7br25j9CwD1rVoFIzBxvC26VlgJXSybdtDgu/kjOvKehhAF9QU5lysv8E65cF1GgngTw/@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz9JzRAWpgeXNsHNcF1bm0GojDNLzljZvbSvLmnyxsQ2RhCA0uz
+	g8r8AsFe/Y20u/hAnu12O6c89tVtRYxDIVvVQo28L1ipMGsLU5FEE7vOVfLVNRw=
+X-Gm-Gg: ASbGncvcKwBGrojIrjCfnFhPE0BNVnvG9d7Uo+qouEI/kqEVM+tMLOMQZAOYociIOGl
+	O4iGfhEqLoJG+rQj3biX7+rT8NbnQWFrsZibOMzrsZH19eGQ/YsRJOBS6AqSE/51W7JjBVQ4i/M
+	bCDgBszQjytC5G8/sQ/qsJVq3HAkwsG+4rXhCDlEzxVtOvcMw1LMmnZdLDEN9Ugd+q63/0W4NTp
+	u849OQCKzZ0FfSq+KiFnWEhl7iztruMZTk86668bCIJWjcA3rz08St3plYmERMa5ZPAeFtNGvJS
+	fuF9kV5rpfH5Pe3DYtgOyi2cz3gR
+X-Google-Smtp-Source: AGHT+IH8wgGCDm9wMUjZa+Ps9/xwljaqHUU5uVvMp2BZp/GBAgPi1/iYQ27QcuFH9QI7yv36jUzghQ==
+X-Received: by 2002:a05:6512:2397:b0:53e:1f1e:130d with SMTP id 2adb3069b0e04-53e1f1e17demr168656e87.3.1733317856104;
+        Wed, 04 Dec 2024 05:10:56 -0800 (PST)
+Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53e1c715607sm274323e87.39.2024.12.04.05.10.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 04 Dec 2024 05:10:54 -0800 (PST)
+Message-ID: <cd754842-42f0-4938-b590-34ed7c4503c6@linaro.org>
+Date: Wed, 4 Dec 2024 15:10:47 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240909092632.2776160-3-quic_mdalam@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/5] arm64: dts: qcom: sdm845-db845c-navigation-mezzanine:
+ fix ov7251 lane properties
+Content-Language: en-US
+To: neil.armstrong@linaro.org, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20241204-topic-misc-dt-fixes-v1-0-6d320b6454e6@linaro.org>
+ <20241204-topic-misc-dt-fixes-v1-2-6d320b6454e6@linaro.org>
+ <vlvchjynnwvevr2raosrwggwmjd5bdrs5skbsztskmzxjjdg7v@6qkhrjyaxlsz>
+ <0c1f4e6a-a77b-46d1-b944-9eb47d66556d@linaro.org>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <0c1f4e6a-a77b-46d1-b944-9eb47d66556d@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 09-09-24, 14:56, Md Sadre Alam wrote:
-> Add lock and unlock flag support on command descriptor.
-> Once lock set in requester pipe, then the bam controller
-> will lock all others pipe and process the request only
-> from requester pipe. Unlocking only can be performed from
-> the same pipe.
+On 12/4/24 14:16, Neil Armstrong wrote:
+> On 04/12/2024 12:05, Dmitry Baryshkov wrote:
+>> On Wed, Dec 04, 2024 at 11:56:54AM +0100, Neil Armstrong wrote:
+>>> Bindings documents data-lanes as a single entry with a separate
+>>> clock-lanes property, but DT uses 2 entries in data-lanes.
+>>>
+>>> This would suggest clock-lanes is missing, fix the DT using the
+>>> bindings example.
+>>>
+>>> This fixes:
+>>> sdm845-db845c-navigation-mezzanine.dtso: camera@60: port:endpoint:data-lanes: [0, 1] is too long
+>>> 	from schema $id: http://devicetree.org/schemas/media/i2c/ovti,ov7251.yaml#
+>>>
+>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>>> ---
+>>>    arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso | 3 ++-
+>>>    1 file changed, 2 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso b/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
+>>> index 0a87df806cafc8e726aacc07a772ca478d0ee3df..5a16f4c2b346b314af3d614266e1ca034057e643 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
+>>> +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
+>>> @@ -115,7 +115,8 @@ camera@60 {
+>>>    
+>>>    		port {
+>>>    			ov7251_ep: endpoint {
+>>> -				data-lanes = <0 1>;
+>>> +				clock-lanes = <1>;
+>>> +				data-lanes = <0>;
+>>
+>> Is it really this way or the other way around, clock = <0>, data = <1>?
 > 
-> If DMA_PREP_LOCK flag passed in command descriptor then requester
-> of this transaction wanted to lock the BAM controller for this
-> transaction so BAM driver should set LOCK bit for the HW descriptor.
+> No idea actually, on the schematics the lanes from the DB845 are :
 > 
-> If DMA_PREP_UNLOCK flag passed in command descriptor then requester
-> of this transaction wanted to unlock the BAM controller.so BAM driver
-> should set UNLOCK bit for the HW descriptor.
+> CSI0_P/N -> OV7251_CSI3_LANE0_P/N -> MIPI_CSI3_LANE0_P -> SoC
+> and
+> CLKP/N -> OV7251_CSI3_CLK_P/N -> MIPI_CSI3_CLK_P/N -> SoC
 > 
-> BAM IP version 1.4.0 and above only supports this LOCK/UNLOCK
-> feature. So adding check for the same and setting bam_pipe_lock
-> based on BAM SW Version.
+> So I assume the data-lane is 0, for clock-lane I just used
+> the example, but I found nothing in the code using those assignments
 > 
-> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
-> ---
-> 
-> Change in [v4]
-> 
-> * Added BAM_SW_VERSION read for major & minor
->   version
-> 
-> * Added bam_pipe_lock flag 
-> 
-> Change in [v3]
-> 
-> * Moved lock/unlock bit set inside loop
-> 
-> Change in [v2]
-> 
-> * No change
->  
-> Change in [v1]
-> 
-> * Added initial support for BAM pipe lock/unlock
-> 
->  drivers/dma/qcom/bam_dma.c | 25 ++++++++++++++++++++++++-
->  include/linux/dmaengine.h  |  6 ++++++
->  2 files changed, 30 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-> index 3a2965939531..d30416a26d8e 100644
-> --- a/drivers/dma/qcom/bam_dma.c
-> +++ b/drivers/dma/qcom/bam_dma.c
-> @@ -53,11 +53,20 @@ struct bam_desc_hw {
->  
->  #define BAM_DMA_AUTOSUSPEND_DELAY 100
->  
-> +#define SW_VERSION_MAJOR_SHIFT	28
-> +#define SW_VERSION_MINOR_SHIFT	16
-> +#define SW_VERSION_MAJOR_MASK	(0xf << SW_VERSION_MAJOR_SHIFT)
 
-Use GENMASK for this
+It's a sensor property, and OV7251 sensor has the non-selectable clock lane.
 
-> +#define SW_VERSION_MINOR_MASK	0xf
+If it's technically acceptable, I would rather suggest to deprecate and
+remove "clock-lanes" property and hard-code "data-lanes" value to <1>.
 
-Can you define only masks and use FIELD_PREP etc to handle this
+By the way, this particular device tree bindings miss bus-type property,
+it could be either MIPI or LVDS serial output.
 
-> +#define SW_MAJOR_1	0x1
-> +#define SW_VERSION_4	0x4
-> +
->  #define DESC_FLAG_INT BIT(15)
->  #define DESC_FLAG_EOT BIT(14)
->  #define DESC_FLAG_EOB BIT(13)
->  #define DESC_FLAG_NWD BIT(12)
->  #define DESC_FLAG_CMD BIT(11)
-> +#define DESC_FLAG_LOCK BIT(10)
-> +#define DESC_FLAG_UNLOCK BIT(9)
->  
->  struct bam_async_desc {
->  	struct virt_dma_desc vd;
-> @@ -393,6 +402,7 @@ struct bam_device {
->  	u32 ee;
->  	bool controlled_remotely;
->  	bool powered_remotely;
-> +	bool bam_pipe_lock;
->  	u32 active_channels;
->  	u32 bam_sw_version;
->  
-> @@ -696,9 +706,15 @@ static struct dma_async_tx_descriptor *bam_prep_slave_sg(struct dma_chan *chan,
->  		unsigned int curr_offset = 0;
->  
->  		do {
-> -			if (flags & DMA_PREP_CMD)
-> +			if (flags & DMA_PREP_CMD) {
->  				desc->flags |= cpu_to_le16(DESC_FLAG_CMD);
->  
-> +				if (bdev->bam_pipe_lock && flags & DMA_PREP_LOCK)
-> +					desc->flags |= cpu_to_le16(DESC_FLAG_LOCK);
-> +				else if (bdev->bam_pipe_lock && flags & DMA_PREP_UNLOCK)
-> +					desc->flags |= cpu_to_le16(DESC_FLAG_UNLOCK);
-> +			}
-> +
->  			desc->addr = cpu_to_le32(sg_dma_address(sg) +
->  						 curr_offset);
->  
-> @@ -1242,6 +1258,7 @@ static int bam_dma_probe(struct platform_device *pdev)
->  {
->  	struct bam_device *bdev;
->  	const struct of_device_id *match;
-> +	u32 sw_major, sw_minor;
->  	int ret, i;
->  
->  	bdev = devm_kzalloc(&pdev->dev, sizeof(*bdev), GFP_KERNEL);
-> @@ -1305,6 +1322,12 @@ static int bam_dma_probe(struct platform_device *pdev)
->  
->  	bdev->bam_sw_version = readl_relaxed(bam_addr(bdev, 0, BAM_SW_VERSION));
->  	dev_info(bdev->dev, "BAM software version:0x%08x\n", bdev->bam_sw_version);
-> +	sw_major = (bdev->bam_sw_version & SW_VERSION_MAJOR_MASK) >> SW_VERSION_MAJOR_SHIFT;
-> +	sw_minor = (bdev->bam_sw_version >> SW_VERSION_MINOR_SHIFT) & SW_VERSION_MINOR_MASK;
-
-FIELD_GET
-
-> +
-> +	if (sw_major == SW_MAJOR_1 && sw_minor >= SW_VERSION_4)
-> +		bdev->bam_pipe_lock = true;
-> +
->  
->  	ret = bam_init(bdev);
->  	if (ret)
-> diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
-> index b137fdb56093..70f23068bfdc 100644
-> --- a/include/linux/dmaengine.h
-> +++ b/include/linux/dmaengine.h
-> @@ -200,6 +200,10 @@ struct dma_vec {
->   *  transaction is marked with DMA_PREP_REPEAT will cause the new transaction
->   *  to never be processed and stay in the issued queue forever. The flag is
->   *  ignored if the previous transaction is not a repeated transaction.
-> + *  @DMA_PREP_LOCK: tell the driver that there is a lock bit set on command
-> + *  descriptor.
-> + *  @DMA_PREP_UNLOCK: tell the driver that there is a un-lock bit set on command
-> + *  descriptor.
->   */
->  enum dma_ctrl_flags {
->  	DMA_PREP_INTERRUPT = (1 << 0),
-> @@ -212,6 +216,8 @@ enum dma_ctrl_flags {
->  	DMA_PREP_CMD = (1 << 7),
->  	DMA_PREP_REPEAT = (1 << 8),
->  	DMA_PREP_LOAD_EOT = (1 << 9),
-> +	DMA_PREP_LOCK = (1 << 10),
-> +	DMA_PREP_UNLOCK = (1 << 11),
-
-this should be a separate patch to define how to use these new flags,
-what it means etc...
-
-
->  };
->  
->  /**
-> -- 
-> 2.34.1
-
--- 
-~Vinod
+--
+Best wishes,
+Vladimir
 
