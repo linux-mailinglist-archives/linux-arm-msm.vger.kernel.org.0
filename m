@@ -1,97 +1,91 @@
-Return-Path: <linux-arm-msm+bounces-40178-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40179-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id AD9739E354D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 09:29:04 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C7DD39E35E5
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 09:50:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 722FA281340
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 08:29:03 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 952A8B27AD1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 08:33:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C7552193436;
-	Wed,  4 Dec 2024 08:29:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5038D1946AA;
+	Wed,  4 Dec 2024 08:33:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nX5cXpuX"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UKEAdfmq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C8EB192D87;
-	Wed,  4 Dec 2024 08:28:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68AFD192D6B
+	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Dec 2024 08:33:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733300940; cv=none; b=pUC2tozQFqorQINEsWBBh6yGY4khRRCIQYse6MJ7yzpsgd87UeEFj7us2FyH3Iok1OaEOAqlViNvEdZ1WgyCSM+diY+V4tf3e2E8aj38KXtL4Ca1HQDhA0JiHxTthH3pzcLBh41NdY5rVcc1i2imgzTo4KxyBfaSnl9Bk+195fA=
+	t=1733301196; cv=none; b=ui2xpmFMK0hDZRKO1zLtLYHZ0w+VaFQbr/8R9KCmlNzYg3kGUfEi+FypUeB/Il4YxuSSbliqMahtL1EhIACxaUfdkX4KOG3vZ5BAkpAatAmd24mADh7zmda//u2sl2GUrwi7ggiyy+BmfJpCWQ66hvo8ghaR96jzi+72fig2yDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733300940; c=relaxed/simple;
-	bh=txIE/I72Y8y4XvomCX31CWB0nBeznf49Izae2g+/X2U=;
-	h=From:Date:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=J+HIOC1K5EIxj4QQAkLDaU8cva4FkIgJ0NxTAEojeHMoogSGbEM59hkQOVDO2Jz11vTVi5OhiswlcqfRTrvgacIJ15YcBr/pAcUUFWFEszAZZ3P/hqafVWLEW6xKqyIBMbuDrj6mVxq8lVkqtXXZGG+Ul9B1gI85z1dSWkrRaxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nX5cXpuX; arc=none smtp.client-ip=209.85.214.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-215c4000c20so15207445ad.3;
-        Wed, 04 Dec 2024 00:28:58 -0800 (PST)
+	s=arc-20240116; t=1733301196; c=relaxed/simple;
+	bh=M2eKzihSk3zbwqoKclOvGsiEA5sAA8t8v+QDneKkB3o=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=k93Zx1X4PTtySSmhX0s/lZhn28tylQDz1q6HKivFmiiIsIbyEtcjwXWJFw4BXwI4ZgnLIqwkhOef7DMU7B9JRJe7cGHh3NlOKT84k6lKr0oSVLaWmAMnksXIKRoKcU8/57iiHpOMt9PyYeLoU3Tu1q4hmGHih/KzTRYEN1hm7Yw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UKEAdfmq; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-434a14d6bf4so58613315e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Dec 2024 00:33:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733300938; x=1733905738; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:cc:to:date:from
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=GUWkO09ScmfYLGTWW9HNvL8CRZ3OvigAhD+dzpuCh8U=;
-        b=nX5cXpuXM0a0Mx2y3z/bi2a6yjHfKST1i7eM3FoW1P9dpa+3gAyGVuKUBuA2VTtPhD
-         RSNyJ0ybJtD3hIv4mTzNFerTVPVMpx6RwrHx8tcW5xLKv4l3OQUhH1vvYfgFF3QKX5BE
-         b2bxI+KUKmRa2JYt/L4ClRfQjpvzVoctppXxmN+hdzoGGSOkFBnDSXgFi525taT3t8+M
-         2goVZN/ZNQLTMrf2UQrzpR9gkx5kXGM+2aLtTDanLbekP0WjAVORhKlbFSFjxMn2cxtt
-         V8u3AWzRjuxt4R8ysShn16pmB+KQ3ZhETGDB9MW4y2Qzuk0b4wz4z3nUdeXrTYWWm5fB
-         YCPg==
+        d=linaro.org; s=google; t=1733301193; x=1733905993; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=U0QxTyPXrbU54XhvjWQfoHpd062jsI/RF0Hf0rs28i8=;
+        b=UKEAdfmqSetK47Xx1WcUn7Yr2shYmfYvV+/JjXBF+f741WqDt3W4gmGSL8OkffN/hD
+         3DISG9Kv8+nEGytaO0ztJ3UrRZqP2jeF8XL1V73J61YYmxJ/BhP+MzuegtjPKrpjkLIQ
+         Ss/q0q9cQYVB9FYhoraigz7/ckWtSGoUGq4fnFFqESLQ05LwhGP2SSd3cDJTxn8YGDdA
+         fvqx3Dej2wPsETbNM2KLSQGqspWpJgSVLfUDxcFgB742psW1vL2YWUwhe2GfMNWZbF+n
+         oFcycxhVa3YhZGXIPEHkPpWItteqzAPE6Jn67SjGG6OjInXCeFC65TZWKLC8p6GYYz7W
+         TpVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733300938; x=1733905738;
-        h=content-disposition:mime-version:message-id:subject:cc:to:date:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GUWkO09ScmfYLGTWW9HNvL8CRZ3OvigAhD+dzpuCh8U=;
-        b=lHH2yGK/5osigesCNuKplcUBPyBusz+aWGAKs+GhVqMEThxtXo7roWwJZDAZ5SPQ2y
-         QM2GA1S7Kq4eVC+rH7zUAFUs6VR/x6Y4/gR9PJZD8C3D1vgDjIz+xAFoeCZlYJu1Bt7c
-         lvlcH3Bq2wWMpe5g5oCAkLOgwlzbAxIMl8SY/MivhGF5s9vmokMp00CWH4ICLFZmaTj9
-         3E6jyRmJ7NSWMa0SgrSpWi7IYObH+njJs+VSH7YUHjGHhvojI6vPy3MVsHV9sFVA3IYS
-         db7SENKVSGE0ByqdrupzHrkp5HOR8o/cYD19ZKq9K5VXXqjRDtqqaYvpgNXggWJIRFSx
-         w5fQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV5xlHMdY80Htvk8DA9vQSBiTlGqB+QW6AsT10/fE+bCCFui2XAGAaMMPZBJ1UmNQLwlsslwTWw+LHboSj1@vger.kernel.org, AJvYcCVw4/K2qV7aI7qjbBfj5yV+BcBepoZRUIh+y7oPguJegWHU6PHAQ4ucNx1Iu02tZBZbfviAthcOCmv9@vger.kernel.org, AJvYcCWL4xK3gPH98v+P5o2qT4D7BEAZEmoB73Fd1a8a08q3hFZyf9u8QnNiwfQEBzAt5Vzp8rqgmVzviZI=@vger.kernel.org, AJvYcCX40PDvodNOjapy37hxSXwttG4MuEd4dkU8GTPEzXK1q7GehvqKpVWN9vXc0R9KOMvUlBu3Exdofn7Q8x/8TA==@vger.kernel.org
-X-Gm-Message-State: AOJu0YzXjYGJ9aaoR20kIwkJnY9YWkBcXfq/NjrNdKA0WCBY8P0GyZwZ
-	9visETcJaMjLWbo4BDraaEizLZmmgxFw8ADUb55icSi4UpSr+FJ0
-X-Gm-Gg: ASbGnct3Inkv9ipearv8OgYsN6dXXP+F5hqFZ1R8OSW3dm4oddCXHpgVZPDuSGbPIIu
-	JNNyS/2HsHDHfmLL1aamw++hX0mwLfgLX23aN1w+y+sRTwq/2QDAfbV+FjWsyM/l0w9R54cEV33
-	UVcDxPKJ3rsd5s/bLfFap4T8lYsCaEU+8j76vMlSS2MV7scDtXOn+ioJSQnwBUsKZbGLte9WlJb
-	fnb2mnHsr/qu51zjAmWY9LhWALGe9mSkrJb1ON9lOIq8E7YhU1Vd+x5RpM=
-X-Google-Smtp-Source: AGHT+IHBB8zm57kTineu1HQVncxbz7lNJJvZp2gDMacf/P23sMkeqR8Um6ILeNeARtCklWIsKTJOgg==
-X-Received: by 2002:a17:903:183:b0:215:acb3:375d with SMTP id d9443c01a7336-215bd1ce3a6mr68186245ad.18.1733300937791;
-        Wed, 04 Dec 2024 00:28:57 -0800 (PST)
-Received: from gmail.com ([113.240.217.127])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2155f195b2asm71157375ad.273.2024.12.04.00.28.52
+        d=1e100.net; s=20230601; t=1733301193; x=1733905993;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=U0QxTyPXrbU54XhvjWQfoHpd062jsI/RF0Hf0rs28i8=;
+        b=Lkes2bW6lQumQ5OpVEvIBe/wy1LFCLYZfBqxIb18zfSPxcu5hQmhjEmSd68gSH6o53
+         SRHkPWO1kphtLreRM0Cz8piNeno4WQcoSCHuZkVLHyxXVZnKqIBqY7VnQcd0pps0VWrr
+         iLqQD+fbbDMI+pJm+aHYUCYcJpp1D0mrLXdmo4wfRJDLw1za1BHqTpXSSXxY6N9tayEM
+         SPAN6V/qGJk8HrFgFNDwZKA4lKHOBdoeLNkA3IsfovqSApmnkyGVbecUpHlX/3qamdi/
+         ooB5/PfS/SzVYz9I383y7jOYPruWr2koSVJE6rqvd5flmLfrAQvK2m1eg6JA6l8A4kVT
+         nWyQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUh+vabWkQf/JsVpKytMQcLaIxu0Zh9L8NcGNj6qOwMGqIwdz1sXxclzpvk+kM5+U1WUD2aO3un8yVFNrhH@vger.kernel.org
+X-Gm-Message-State: AOJu0YzclbMu6aTYws7dPcfuxqwApNgbg/XWXo5wRSc4Mq5PLTg14TkU
+	PCJTCCak7irtOGAxhRQENHMxHi02vJqn9BRXSCU+bfFX8/fmau62Z8ti0k1igqU=
+X-Gm-Gg: ASbGncusOo7coZ74S5HiDGtWSSVmdTpAuP5GIwu2Y9RhSD0x1Np+d7DNpUh+2+HnxTK
+	1nppHzD8DNLZXnK2UmgnBz7FPekrol679Jhwe6iFBZCpLWcFG7WI9QlDN4rxV9lTROAC2/UbUc0
+	Ns6RbwoKH5xNid2t0T+IeVzwlU0iH4/kkdZrh3Fj7dir5Gx7tyhYldFpv+IH+Z/sjpgFx9MD5pc
+	Z3V/YZjSIH/ncxyd2xjLLzyn5rCbdgNBzB5TB7WHK6ofiThA8TySVw+Cc3RuA==
+X-Google-Smtp-Source: AGHT+IH/7NRyoCVatSSiPzY0lDOkM5NNriw1/JOeMDKXPeT6FeWVOrUY6eKDYQWOZSPdNThD4dF1gQ==
+X-Received: by 2002:a05:600c:3509:b0:434:9c60:95a3 with SMTP id 5b1f17b1804b1-434d09b50b1mr47760175e9.11.1733301192760;
+        Wed, 04 Dec 2024 00:33:12 -0800 (PST)
+Received: from linaro.org ([2a02:2454:ff21:ef80:9a15:2a41:210f:f75b])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-434d5281229sm16285055e9.26.2024.12.04.00.33.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Dec 2024 00:28:57 -0800 (PST)
-From: Dmitry Baryshkov <lee.lockhey@gmail.com>
-X-Google-Original-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 4 Dec 2024 16:28:49 +0800
-To: Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Akhil P Oommen <quic_akhilpo@quicinc.com>,
-	Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Wed, 04 Dec 2024 00:33:12 -0800 (PST)
+Date: Wed, 4 Dec 2024 09:33:08 +0100
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konradybcio@kernel.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Connor Abbott <cwabbott0@gmail.com>, linux-pm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-	devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 04/11] drm/msm: adreno: add GMU_BW_VOTE feature flag
-Message-ID: <Z1ASwcMuxEWmudzP@gmail.com>
+	Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>,
+	Johan Hovold <johan@kernel.org>
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: x1e80100-crd: Drop duplicate DMIC
+ supplies
+Message-ID: <Z1ATxAsXFhQraQwH@linaro.org>
+References: <20241203-x1e80100-va-mic-bias-v1-0-0dfd4d9b492c@linaro.org>
+ <20241203-x1e80100-va-mic-bias-v1-2-0dfd4d9b492c@linaro.org>
+ <f65e1559-b409-4906-aabb-eb24b5b0fcf2@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -100,59 +94,51 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <f65e1559-b409-4906-aabb-eb24b5b0fcf2@linaro.org>
 
-On Wed, Nov 20, 2024 at 01:37:48PM +0100, Neil Armstrong wrote:
-> On 20/11/2024 12:19, Dmitry Baryshkov wrote:
-> > On Tue, Nov 19, 2024 at 06:56:39PM +0100, Neil Armstrong wrote:
-> > > The Adreno GMU Management Unit (GNU) can also scale the DDR Bandwidth
-> > > along the Frequency and Power Domain level, but by default we leave the
-> > > OPP core vote for the interconnect ddr path.
-> > > 
-> > > While scaling via the interconnect path was sufficient, newer GPUs
-> > > like the A750 requires specific vote paremeters and bandwidth to
-> > > achieve full functionality.
-> > > 
-> > > While the feature will require some data in a6xx_info, it's safer
-> > > to only enable tested platforms with this flag first.
-> > > 
-> > > Add a new feature enabling DDR Bandwidth vote via GMU.
+On Wed, Dec 04, 2024 at 08:20:15AM +0100, Krzysztof Kozlowski wrote:
+> On 03/12/2024 18:44, Stephan Gerhold wrote:
+> > The WCD938x codec provides two controls for each of the MIC_BIASn outputs:
 > > 
-> > Squash into the implementation patch.
+> >  - "MIC BIASn" enables an internal regulator to generate the output
+> >    with a configurable voltage (qcom,micbiasN-microvolt).
+> > 
+> >  - "VA MIC BIASn" enables "pull-up mode" that bypasses the internal
+> >    regulator and directly outputs fixed 1.8V from the VDD_PX pin.
+> >    This is intended for low-power VA (voice activation) use cases.
+> > 
+> > The audio-routing setup for the X1E80100 CRD currently specifies both
+> > as power supplies for the DMICs, but only one of them can be active
+> > at the same time. In practice, only the internal regulator is used
+> > with the current setup because the driver prefers it over pull-up mode.
+> > 
+> > Make this more clear by dropping the redundant routes to the pull-up
+> > "VA MIC BIASn" supply. There is no functional difference except that we
+> > skip briefly switching to pull-up mode when shutting down the microphone.
+> > 
+> > Fixes: 4442a67eedc1 ("arm64: dts: qcom: x1e80100-crd: add sound card")
 > 
-> Which one ? the flag is use in the next 3 patches
-
-First one which uses it
-
-> 
-> > 
-> > > 
-> > > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> > > ---
-> > >   drivers/gpu/drm/msm/adreno/adreno_gpu.h | 1 +
-> > >   1 file changed, 1 insertion(+)
-> > > 
-> > > diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> > > index 4702d4cfca3b58fb3cbb25cb6805f1c19be2ebcb..394b96eb6c83354ae008b15b562bedb96cd391dd 100644
-> > > --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> > > +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> > > @@ -58,6 +58,7 @@ enum adreno_family {
-> > >   #define ADRENO_FEAT_HAS_HW_APRIV		BIT(0)
-> > >   #define ADRENO_FEAT_HAS_CACHED_COHERENT		BIT(1)
-> > >   #define ADRENO_FEAT_PREEMPTION			BIT(2)
-> > > +#define ADRENO_FEAT_GMU_BW_VOTE			BIT(3)
-> > >   /* Helper for formating the chip_id in the way that userspace tools like
-> > >    * crashdec expect.
-> > > 
-> > > -- 
-> > > 2.34.1
-> > > 
-> > 
+> If there is no functional difference and this is just redundant, then
+> there is nothing to fix, so drop the tag. But the point is that users
+> might want the low-power VA. You claim they don't want... sure, I am
+> fine with that but there is nothing to fix in such case.
 > 
 
--- 
-With best wishes
-Dmitry
+The fix here is that two mutually exclusive power supplies for the DMIC
+are specified in the device tree. You can only have one of them active
+at the same time. The Linux driver handles that gracefully, but the
+device tree is still wrong and IMO deserves a fixes tag.
 
+The functional difference is that we skip briefly switching to pull-up
+mode when shutting down the microphone. Users won't notice that, but
+it's not the intended behavior.
 
------ End forwarded message -----
+I don't claim that users don't want to switch to the low-power pull-up
+mode (VA MIC BIASn). However, we would need a different mechanism to
+give them the option to switch at runtime. "audio-routing" just
+specifies static routes, so the current description does not allow
+switching between the two modes either.
+
+Thanks,
+Stephan
 
