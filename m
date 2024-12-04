@@ -1,195 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-40214-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40219-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E39479E38CE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 12:29:33 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 504839E38D8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 12:32:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F1647B33EF8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 10:58:09 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C9392B36483
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 11:05:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 511251B6CF8;
-	Wed,  4 Dec 2024 10:57:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CEA9D1AF0BE;
+	Wed,  4 Dec 2024 11:05:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qMklZTWH"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yoKTlx46"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4956E1B21BD
-	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Dec 2024 10:57:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E76FE16F851
+	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Dec 2024 11:05:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733309825; cv=none; b=SnstmLM31hM801VCDNuNibNU2GoinJJuGuweGJVVQKZO5WHo0KyS/uclYcrRXcFtsKki2nbL4ScB2Ay5Qsoud9LxrNGsh12LQ/hiUF0KA7Hg5toS42vLYUAakLu0W0d5+oACoHTH5Tm9GbmD6CppK3Np19peMTieD4tiQQwMXlA=
+	t=1733310337; cv=none; b=eJ9HlMRS/CvPnIm9ZSwOB77kj3nAPQVYM1bPikg+zVvDz52LKopLxdyDcItSxJL7Lkve7UiNBmbfWmNJUoZ7PAL1x8OfuwZ0RtuTOKd+KAASvfFk4wBeOxomxEZS10h2I/i7GcOMLTMOLsuaGhyDbn+cL7MHUK4gxOn/i2zwNHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733309825; c=relaxed/simple;
-	bh=X0jc67fLpdkoLWvGYPtJ2t6lBko+be5V42GTdXCU6OQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ah2thSV4schWOLaQuC8ieYm3eYFvr5pU9FqeyvtcE6wgnBQmqrIoMamRM7O0QN3ZGn0pMe7a2BI3+w/YvYDzEkSMNa5osT0YR9bN5KmF0Q9979fDdJxHhoEEKl60pmQc+4fsMGl8fu7bKeW54rxhxbjWATaVgJLYTZ5ZWzb4mJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qMklZTWH; arc=none smtp.client-ip=209.85.221.43
+	s=arc-20240116; t=1733310337; c=relaxed/simple;
+	bh=SAidZjBk+fYmt5AwPP6zN/DjTwTQx3RLqG4jvfGi1A0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NuNvvZCZJY63XxsfFnKmhfz4ivmH32imsFUkQT1uxvWjRUA+XmnyK/ZynZgdG71+X5m7PIkrtyPy8R0IOHbJafQiAdGGMFzYJ2cNgx+ek7iiAQ8UTndRZzWgrEfrSiaRLuFMRytymIWLeyroNLJTZhDeeR8R2KRTB6TInioSDrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yoKTlx46; arc=none smtp.client-ip=209.85.167.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-385e1f3f2a6so3226280f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Dec 2024 02:57:03 -0800 (PST)
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-53df6322ea7so11529261e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Dec 2024 03:05:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733309822; x=1733914622; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=3S9eHrj096rces9dTnn414lc2v6tceqMDXtlGmwyprw=;
-        b=qMklZTWH3Q/jOMelZyE7x5NMO9gfHJ82k0IgvO6nJ7FCChkBanUa+8OmSAYxTsAvZQ
-         RqNzB3Hy++OqdlvKI31ehWeNX5cmPCU6K1xKgUx8FszUKjywXEhQK6xuuoB+6unKO8+0
-         ES8BgNfUw0WC6WEedNatolEsCXu0/n9exXfNGSCgOuvh9DP3Zu/PGmGGatiiMJzTPpJC
-         0noaMXg+Xha+Cuacs5pgrONENsp8XYprvCCieziRxrZp3VrAyI0ziJnobBAYpVAYX203
-         i9osp0wYCKrWNX6vD+MD17zO1uDx/wsdsu71bh+5bEgu0WKlgjRKk6AoACYHzcKLPVn3
-         aqSg==
+        d=linaro.org; s=google; t=1733310334; x=1733915134; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ANxqChj2I4LzNaOLgxVnoZiKM49rhNSRtgRob9N8xcA=;
+        b=yoKTlx46HI58pC3x4tYD54F8OmpMSE9hQaU0XwKYn79XCm/vPJVydO04iO0xllpQ3n
+         /AM4mifHZYaDXQnf3zD/3v+eiciVNHMJ+vUDeP6nz9ZqmVOPa759TTTvzgAR/jAhbeax
+         TU4XSHOP+FQ9RvWYG0nlhHrQHUtW3ACeGdE8YGXjraksh9gGUv7NQgGbKLQNDTtPRpHt
+         yaDwEOwoMevLB8tQDeceqn3YZOioRzeoe9QXSHWVwIfaYIy2h659rlo42rob630vSTkq
+         rwGxhld1FWhSLdnPXStbmQimfmCoEAm+z3HO7y7pLIy9gAY9ylr3vy/9dK6y3m7MZ43X
+         rQYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733309822; x=1733914622;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3S9eHrj096rces9dTnn414lc2v6tceqMDXtlGmwyprw=;
-        b=r7qcrvhf/wmN7/fA1WHl8OhL+vkqmYRFeLrtbQXzmWueAyo20AM9ZMOTJ+4gKYpTZA
-         UhJUuc/qd3dEsFKrayYmpImEw1Vfbcyb3Q2pG6q4sUPAlImT9f9TP5Bs+ziRMZcF/CC2
-         Ipj88aPkJEsnB1B/qPa5jKvbfhBvgnDUkOaPhiBEmZOED1Ar9iCYnQv+fuJ4yRGFn3mY
-         Dc01bJFdt6+9KUsfszhNAnr1V+erBtoB83CsCaMMpdDMI/QVdWT+7QXZKAl1iWMuGh54
-         O6tjdVAZ0sFE7KzviuLXhWkD+eI8UH8bOvQ8dB6s46a5LnSbC+aRvyA4AHtFdkm3RzUF
-         2e4w==
-X-Gm-Message-State: AOJu0YzO1t8xdJ5NTgkOul4gj9gS8V42omTrQNazdHYg6/hurRZ6BYUP
-	ZizCpIQWYRG2Q6jFWZoLwg3NZTEvPfJQqSkDgFT+G7YOdvt9I4cYFODvgpW1jss=
-X-Gm-Gg: ASbGncsoccohk/xDNtrSsCaGHwTyTjoA90URwFLdkUvYREJtVuXFzxzIATy66pLCXFa
-	5bWAAxX+QqazbuaLynnUsZbVbfzOewTEi0L2rCsMORBT9E6f8d7Pppc90gCkbg2r+4kRD4YIR9Z
-	n5qkcXgIYeuh/izYKS0xVaRab9rd0c5aT8xc9qUnAljmhfbxUNckqVW7JlsWGUAOppLk0fpg36E
-	NeRTo5f5E7mAPP1bV5zFSPia3UOYaftkuiYuIkP6nnI6iSb/6OyubfZAE1XUIhjcDVzrcg=
-X-Google-Smtp-Source: AGHT+IEEM9AsEZljH5GjZsXEAk+mrPOJrw9hP44cLvyc3CTJQnaqJ4zsxawmC4hW80yomi0T8mh7Ow==
-X-Received: by 2002:a05:6000:18a3:b0:386:5b2:a9d9 with SMTP id ffacd0b85a97d-38605b2abd8mr3656724f8f.53.1733309821653;
-        Wed, 04 Dec 2024 02:57:01 -0800 (PST)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-385ccd687c3sm18459063f8f.77.2024.12.04.02.57.00
+        d=1e100.net; s=20230601; t=1733310334; x=1733915134;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ANxqChj2I4LzNaOLgxVnoZiKM49rhNSRtgRob9N8xcA=;
+        b=vuvJxDzWEYsy+mDKzqAzWauWCEsS0k9rzUEo7GwxrvO8gXNwjOHvXyJ845X6ZMebE9
+         f03qBbBb9BqP92vGRUM1MFVg9EeSUW221wjVA3zFx7Dkrk1GL273hkDNp4VCvJe2XSDC
+         JLILseBUtD/9oOaLg958mqVy6xeflWT0enXfHvKFWM7LJwqVjv8t2jtxnVIve8gQxLb6
+         IodFVVyGmtLyyd7ZbnbE6nVk+yy8aPVPjiKK119ucOFQt+F/jppGdcLCU15shIPWIiYo
+         xx4U0oyJ6lzDhoSJjMHsmn8GZqfrY5VLl5Kp+4OE6TG8CTPdYG3eGskujlRepc4UL6VC
+         kjVg==
+X-Forwarded-Encrypted: i=1; AJvYcCUqiRPKi/eo5hT5tv4JLtHobCAtUTDDlEB0K0q3uDojkx4tm2W7fjeYz/kxd4AryDefxXW2FhNmnBg+c6Us@vger.kernel.org
+X-Gm-Message-State: AOJu0YynZZPb2OebJmdl9Ucw+GvJIxtGgH415Jzo8a1c54iTDqqTw5vz
+	S2gs8kwUSnIJmwoaaasEAkfDInuMTavIB02TKCjwZmFeX7kh59nmY61HT/j1pA0=
+X-Gm-Gg: ASbGncuBYOAvVboIVAHMkYBhHLzQpXeNkZgRSOUCiBmZB2qwcNlU062nLSiAUJezONB
+	F7SnqIIAdfS1Hc8X1A3Z5PNq4nz25ZB6qWGDJfDGXTYYNBf+TvPdvKH3RZQSl1EWTdKsRs+uFij
+	E+f7FtmKjQnbOjUw8g5UaPK4KmtrTSsrn7YpaQaBPnzQiikTW3boou6FAlll2RtqFRZ/Ifsoari
+	6tuCcJRzpBLEw36wd3El2C3mpRJrhCBBvlT71j2m1pTb4gC3IIcTtALKIaUweHuoMznj6EyPxcw
+	ZxET2iLsGlyl+tTQpsmbmYhexeqwzQ==
+X-Google-Smtp-Source: AGHT+IE02OylWuhmLiv9NeZ+y1tMELUVhyM1NPSDRneMYjkQCw9UUjW5chQGb5NxXW58BcIkBAdcuw==
+X-Received: by 2002:a05:6512:3ba3:b0:539:8f3c:4586 with SMTP id 2adb3069b0e04-53e12a3930fmr4678078e87.55.1733310334049;
+        Wed, 04 Dec 2024 03:05:34 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53df64a0065sm2182327e87.263.2024.12.04.03.05.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Dec 2024 02:57:01 -0800 (PST)
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Wed, 04 Dec 2024 11:56:57 +0100
-Subject: [PATCH 5/5] arm64: dts: qcom: sc7180: fix psci power domain node
- names
+        Wed, 04 Dec 2024 03:05:32 -0800 (PST)
+Date: Wed, 4 Dec 2024 13:05:30 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/5] arm64: dts: qcom:
+ sdm845-db845c-navigation-mezzanine: fix ov7251 lane properties
+Message-ID: <vlvchjynnwvevr2raosrwggwmjd5bdrs5skbsztskmzxjjdg7v@6qkhrjyaxlsz>
+References: <20241204-topic-misc-dt-fixes-v1-0-6d320b6454e6@linaro.org>
+ <20241204-topic-misc-dt-fixes-v1-2-6d320b6454e6@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241204-topic-misc-dt-fixes-v1-5-6d320b6454e6@linaro.org>
-References: <20241204-topic-misc-dt-fixes-v1-0-6d320b6454e6@linaro.org>
-In-Reply-To: <20241204-topic-misc-dt-fixes-v1-0-6d320b6454e6@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2585;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=X0jc67fLpdkoLWvGYPtJ2t6lBko+be5V42GTdXCU6OQ=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBnUDV4WWqHWIKjlb6aDDBeDzpTK6Gcc6KvSw48blx2
- BsqVofiJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZ1A1eAAKCRB33NvayMhJ0TXlD/
- 9ydTp6OJnbwT4nYhnKvWUL4PXt2eLBMUFXNtfytH3fNIvMv9Dn4cPtSfN/vIqB91udb+9e079PJZKd
- TxgaHog/ba6IA9w4d2O199Z3DbUX2pNUczVpYdCLCrHp3wf6TRoPHEVWB92Btu5n6anDR2fXdPXGSW
- Zu6VnYYvizOLOW5EgaSPhBcl/i7nboQEVFNOnQE475zGeYvRg1IpbPUn6VD9h86Ky92TaZW22kT1K9
- el3P09nPiIdxU5oq6BptRs9SsDdpFC4fF1wMlF1FEG180AdqLFQUt3vFuqNH4ZR3h53qQZb3c03h27
- vqZ1negPaeoERmLxBQkip0/EGoPxH+/SHN/UU/l3/xVA8Sl/pho95AlNtkBSmnWjyKZkHvd1cIqJKw
- YXGdyXsniO8g+kTXHttv0vWuia/Ha2cDz7Hnr4HvXak7WYBMJ5joUGfhAgGK65+sDKdXYRPvC8v5Fk
- 6cmhVgFGJfjfnQSHbpCkFrLOGiaOtAnIWeVP4uOdZdkqLNaQDlKpUMBzwibXkMROBAar0unXqNWxSr
- MwC/hE+9Syb4UHmAXT3/CIwYBQVobgaZSN0gRq/A9yqlKxY/BsI9hJv84TueCpj7f5BHZ9ojcEzpQW
- fUvqzd08T5Dm9jRROaXDR8vuvdojz3ZXtn2i54/uFeX7c/80KDb8IuAfOpYQ==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241204-topic-misc-dt-fixes-v1-2-6d320b6454e6@linaro.org>
 
-Rename the psci power domain node names to match the bindings.
+On Wed, Dec 04, 2024 at 11:56:54AM +0100, Neil Armstrong wrote:
+> Bindings documents data-lanes as a single entry with a separate
+> clock-lanes property, but DT uses 2 entries in data-lanes.
+> 
+> This would suggest clock-lanes is missing, fix the DT using the
+> bindings example.
+> 
+> This fixes:
+> sdm845-db845c-navigation-mezzanine.dtso: camera@60: port:endpoint:data-lanes: [0, 1] is too long
+> 	from schema $id: http://devicetree.org/schemas/media/i2c/ovti,ov7251.yaml#
+> 
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso b/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
+> index 0a87df806cafc8e726aacc07a772ca478d0ee3df..5a16f4c2b346b314af3d614266e1ca034057e643 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
+> @@ -115,7 +115,8 @@ camera@60 {
+>  
+>  		port {
+>  			ov7251_ep: endpoint {
+> -				data-lanes = <0 1>;
+> +				clock-lanes = <1>;
+> +				data-lanes = <0>;
 
-This Fixes:
-sc7180-acer-aspire1.dts: psci: 'cpu-cluster0', 'cpu0', 'cpu1', 'cpu2', 'cpu3', 'cpu4', 'cpu5', 'cpu6', 'cpu7' do not match any of the regexes: '^power-domain-', 'pinctrl-[0-9]+'
+Is it really this way or the other way around, clock = <0>, data = <1>?
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 76fe314d2ad50d002ee6adf4659fa685ddae89de..e7773d215f34eba9a42808eb37fac7fa1fda87b1 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -580,55 +580,55 @@ psci {
- 		compatible = "arm,psci-1.0";
- 		method = "smc";
- 
--		cpu_pd0: cpu0 {
-+		cpu_pd0: power-domain-cpu0 {
- 			#power-domain-cells = <0>;
- 			power-domains = <&cluster_pd>;
- 			domain-idle-states = <&little_cpu_sleep_0 &little_cpu_sleep_1>;
- 		};
- 
--		cpu_pd1: cpu1 {
-+		cpu_pd1: power-domain-cpu1 {
- 			#power-domain-cells = <0>;
- 			power-domains = <&cluster_pd>;
- 			domain-idle-states = <&little_cpu_sleep_0 &little_cpu_sleep_1>;
- 		};
- 
--		cpu_pd2: cpu2 {
-+		cpu_pd2: power-domain-cpu2 {
- 			#power-domain-cells = <0>;
- 			power-domains = <&cluster_pd>;
- 			domain-idle-states = <&little_cpu_sleep_0 &little_cpu_sleep_1>;
- 		};
- 
--		cpu_pd3: cpu3 {
-+		cpu_pd3: power-domain-cpu3 {
- 			#power-domain-cells = <0>;
- 			power-domains = <&cluster_pd>;
- 			domain-idle-states = <&little_cpu_sleep_0 &little_cpu_sleep_1>;
- 		};
- 
--		cpu_pd4: cpu4 {
-+		cpu_pd4: power-domain-cpu4 {
- 			#power-domain-cells = <0>;
- 			power-domains = <&cluster_pd>;
- 			domain-idle-states = <&little_cpu_sleep_0 &little_cpu_sleep_1>;
- 		};
- 
--		cpu_pd5: cpu5 {
-+		cpu_pd5: power-domain-cpu5 {
- 			#power-domain-cells = <0>;
- 			power-domains = <&cluster_pd>;
- 			domain-idle-states = <&little_cpu_sleep_0 &little_cpu_sleep_1>;
- 		};
- 
--		cpu_pd6: cpu6 {
-+		cpu_pd6: power-domain-cpu6 {
- 			#power-domain-cells = <0>;
- 			power-domains = <&cluster_pd>;
- 			domain-idle-states = <&big_cpu_sleep_0 &big_cpu_sleep_1>;
- 		};
- 
--		cpu_pd7: cpu7 {
-+		cpu_pd7: power-domain-cpu7 {
- 			#power-domain-cells = <0>;
- 			power-domains = <&cluster_pd>;
- 			domain-idle-states = <&big_cpu_sleep_0 &big_cpu_sleep_1>;
- 		};
- 
--		cluster_pd: cpu-cluster0 {
-+		cluster_pd: power-domain-cluster {
- 			#power-domain-cells = <0>;
- 			domain-idle-states = <&cluster_sleep_pc
- 					      &cluster_sleep_cx_ret
+>  /*				remote-endpoint = <&csiphy3_ep>; */
+>  			};
+>  		};
+> 
+> -- 
+> 2.34.1
+> 
 
 -- 
-2.34.1
-
+With best wishes
+Dmitry
 
