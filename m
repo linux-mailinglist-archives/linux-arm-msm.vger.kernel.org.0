@@ -1,184 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-40169-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40170-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3F6B59E31EC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 04:13:46 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8994E9E3215
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 04:25:06 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F26361616E2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 03:13:42 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 083E3B20C08
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 03:25:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 749E013C9A3;
-	Wed,  4 Dec 2024 03:13:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BECC412C470;
+	Wed,  4 Dec 2024 03:25:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="grNPOvON"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="icfXCgcn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94708136658
-	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Dec 2024 03:13:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C3332745E
+	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Dec 2024 03:24:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733282023; cv=none; b=ju6ZTjqMjMEr4PoANmyLD9fWyh3NL17WCnAMEwKWyAtvmrDHkI25/ifIrAEqBt/EHaKGz6CB6layfO5VG6H+anfceh8PuIPo8bEzKZgylAaqBE89FOXshsKPFaLg7mTaC/q9dm6OSz//4el13i+z5Z3/yerWvTLLQJzTRupg57g=
+	t=1733282701; cv=none; b=rbtUIFY7je9BwpPisFv8k4Hsbdo75g24fsaG2tqLr1Voqld4CsAEtL6IJZZFWkGdOoTI0BtVtjB3fOVMkkncLw/tNg7zZNpy67OioJ7BVW7NSP+CFMbem2ElP+AWtdz5OXyNqa9tENxUoZS4H7dV5OtG/WsbM5qJFXE1EMYrgnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733282023; c=relaxed/simple;
-	bh=gbT/tqDPD3nB0PJX+wsYJ9apOxpJ+FbSFGzmb/PuRpA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Z6Ap3nyP2WtHjkGR9pz1ISFb+ztmVj4t4hQrnZX78qkCRSwDB+JpBVBl/sQ2V++CVERziV1MVPDAOhBgPmo7SVhJUJ62EV68hwKp6ooHdy5mjrAsVQHKwazIH20gs+4KGgOzN+LN6/dGQEIbPMcduHI6ahBD9afHBtXCQX5Ec/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=grNPOvON; arc=none smtp.client-ip=209.85.167.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-53dd668c5easo473008e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Dec 2024 19:13:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733282020; x=1733886820; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=peSSYZg+zC8zrxxal5znpAy/l849p/IvfHjMT8o7PE8=;
-        b=grNPOvONGqDOln1Df5BRuLd0MMsWylr20F66unI5YfXtTttKttFfyNBbpC7iIyYVpb
-         9ylVLR+Miw4MAVmH9Dsw2cAmG16xnmuh68zbp7ad4L5JUXHBv0v78LKFHEfNrcSe8Zyz
-         DCytWeiCN+IY2WGSoZ6Kvs/MBDh9d2HFAcfVP4hwBWk/mBhKRWdztTj/zU1h7dKqUegJ
-         cTYyeDtPeLfc1liUr0uOneRZaeqpJlFqATZO11ZO122H/GH70tAaldFlTMvIWyhmbb7z
-         pSUWWJ5Sv3mhLCtdIu0+SY9C4PhOHIVl1PLkLE7J7SaSgxBwNQyxOnGORk176lYXRvao
-         wC2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733282020; x=1733886820;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=peSSYZg+zC8zrxxal5znpAy/l849p/IvfHjMT8o7PE8=;
-        b=jhbchsMkOVHGS+hc52d7lwBPMQko3v2iT5jZLoxU0cxe36fLaDWC9kag+X1MrXb1SC
-         Q5itjuUG0lQxjT1c6mZ+8yL3zZA+wOozzD7YcLuf4T462Xs7n72fEmXf/q1tuHZL45pY
-         tI5xbhma+Us8OXrca/fcReWgkH3VSi4u+Dd/ojr02RWEsehxzjTyE6QZlLDd28tfo+Ft
-         5v3iDSjB9s/iIJWEqH9C4KKTPaSviDoTzlnRuVWLeigkjDHYXqjbUAIWus1n/Fq4f824
-         1aAnURcBo0EpSt+XdwPIr9YTaL5ApfbV5l8NwP4gBOMGD82cyFMQ48P2pvwNtHB9yRi4
-         t1vA==
-X-Forwarded-Encrypted: i=1; AJvYcCXKYagPakHaFvPCMYwqKf3TbJ6eLMOdTrWRk0C8HazuzjkjL96y/5rkH2QKQ2c9HcBbcYq9GeLg7Nh9vCjg@vger.kernel.org
-X-Gm-Message-State: AOJu0YwyqrLE/+uhgzHpekkNwD2ai+ZQoUK21isnBdoVI74mkwSf2lrI
-	Iw8Gy3lxL7zg/Vae+uKrr58U5PxSXhs7NhjokklDT18zBHwExHhy7VTRNmTfF9I=
-X-Gm-Gg: ASbGnctKbQ6qwSl1khAY+dGndd4CP/3pDKC/RKLGqZUBe0HEksd/2B26PvmqBqYNBL5
-	gTYnVhRidtkwjDcBKt281cvz0uJtmKgZtS81icgxp9j91H9oOAvvciac+CZ2GA+BI+cZGiHElkZ
-	D5/E+eU5WZgZ4CzcFiidGGffSCYXgTBGFCmqM9CrnTDHU1VWI4PU86B54pQSzsrNbjTrolnzm1Z
-	opp5iy+bc0e/+klHKBG0uP0DHnzuNfFm70YPpiI06uJnXhejEFE3Zer59RM2ANbZ/ogoxs/IR/O
-	6vqmqANM2xZEkmizCBanNZ7Cg4ToCA==
-X-Google-Smtp-Source: AGHT+IGE48k3yZcCcWW+WVZc5BahwqReyyQoqnlQUw2hufiIoLIfZCom+M1TBjfEqb4YqW0RsjLWSg==
-X-Received: by 2002:a05:6512:689:b0:53d:f8aa:abaf with SMTP id 2adb3069b0e04-53df8aaaca6mr7853078e87.9.1733282019569;
-        Tue, 03 Dec 2024 19:13:39 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53df646f08csm2032703e87.164.2024.12.03.19.13.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Dec 2024 19:13:38 -0800 (PST)
-Date: Wed, 4 Dec 2024 05:13:35 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Jagadeesh Kona <quic_jkona@quicinc.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
-	Brian Masney <bmasney@redhat.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Ajit Pandey <quic_ajipan@quicinc.com>, Imran Shaik <quic_imrashai@quicinc.com>, 
-	Taniya Das <quic_tdas@quicinc.com>, Satya Priya Kakitapalli <quic_skakitap@quicinc.com>, 
-	Shivnandan Kumar <quic_kshivnan@quicinc.com>
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: sa8775p: Add CPU OPP tables to
- scale DDR/L3
-Message-ID: <fhueah2gfi7fartnitasetvxiax3vgpgnbjis6ydjt523cnksk@vs4jmmtxk5jw>
-References: <20241017-sa8775p-cpufreq-l3-ddr-scaling-v1-0-074e0fb80b33@quicinc.com>
- <20241017-sa8775p-cpufreq-l3-ddr-scaling-v1-2-074e0fb80b33@quicinc.com>
- <ZxEwVShJuMH4J1Hp@x1>
- <9179759d-7af1-409f-8130-1136c9ae4ecd@quicinc.com>
- <daqa3krsp6emdha6h7tlcelsggb6qeilnojgtfxjbp5zw4n6ow@xzwdmu55ygjf>
- <5c3d91e3-e9d3-4e8d-bd4f-f7cbe765dddc@oss.qualcomm.com>
- <d78e6fc9-2238-4f55-a604-f60df8565166@quicinc.com>
+	s=arc-20240116; t=1733282701; c=relaxed/simple;
+	bh=E96leH8qIb7gi+vY/79Rfl2GOTxI2Y1Jav3vBnr++uI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=nKaHhQjCoEvo+gnUBTNf/0vZrLZCJSbG7ted0b2/khIrjEpY5PikHBhbFWb7MIphv/SV+m9Mg/eJBH07xtnH0VYHB59K6Xd6NJZgaNqxQ1XEJiOoRKh8jk9vL53UQUqH1oIbA++vkMGMYxUtrQuufLZOm9Uzj7R9OrIl2iwkRB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=icfXCgcn; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B3GefrG030963;
+	Wed, 4 Dec 2024 03:24:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Yi546urIkz6lFveQDWq8wCs7jA2kcBqfdVl74TuXpJo=; b=icfXCgcn1wsLRbs9
+	S7u+LYXzvVaPkHpLqNSDWcPg8U3J94LcuhinUTxjREHHu57GsPxQR/tt3U+c8TSo
+	4qcosO5nuEuV5Xu6wg0ORopJI8SXYH+9evmV2+5w5GBHturuDnfBmFQlsS9DePg4
+	J88e+TAopUUIBFSFGMwKQ9QAWypwuX5fxUcIGPZrZdV8vMzk6bIoEDQitWsR1GmJ
+	uqLdmdz7nNhUDuTICPXsRRI0nUAoq6DCm5y6Di3FUbNU3GGRSQEMJ0sPkP1nbQIi
+	9RcIZYHQlcgf9Xs0fcAKoOd693z2sl6dqVdlBFR86DDR6OeGS9YsPPUtysQFI5UX
+	muriiw==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 439w90twg6-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 04 Dec 2024 03:24:48 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B43OlZo008482
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 4 Dec 2024 03:24:47 GMT
+Received: from [10.134.71.247] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 3 Dec 2024
+ 19:24:47 -0800
+Message-ID: <58d28874-0fcc-42f4-831d-1f304f7d9d4f@quicinc.com>
+Date: Tue, 3 Dec 2024 19:24:46 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <d78e6fc9-2238-4f55-a604-f60df8565166@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/4] drm/msm/dp: remove redundant ST_DISPLAY_OFF checks in
+ msm_dp_bridge_atomic_enable()
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        "Marijn
+ Suijten" <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>,
+        "Stephen Boyd" <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        "Johan Hovold" <johan@kernel.org>,
+        Bjorn Andersson
+	<quic_bjorande@quicinc.com>
+References: <20241202-hpd_display_off-v1-0-8d0551847753@quicinc.com>
+ <20241202-hpd_display_off-v1-2-8d0551847753@quicinc.com>
+ <f6oh3kid5dfiqe7jy7j3d4gcv4evbtztzpgiygvzfsu6qlim2j@2vsulwcau6tr>
+Content-Language: en-US
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <f6oh3kid5dfiqe7jy7j3d4gcv4evbtztzpgiygvzfsu6qlim2j@2vsulwcau6tr>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: LMYWga17l-beLuQplgpCkbSrnwK8c8tZ
+X-Proofpoint-GUID: LMYWga17l-beLuQplgpCkbSrnwK8c8tZ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 bulkscore=0
+ impostorscore=0 phishscore=0 suspectscore=0 adultscore=0 mlxscore=0
+ spamscore=0 clxscore=1015 priorityscore=1501 malwarescore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412040026
 
-On Tue, Dec 03, 2024 at 08:33:46PM +0530, Jagadeesh Kona wrote:
-> 
-> 
-> On 11/30/2024 8:02 PM, Konrad Dybcio wrote:
-> > On 14.11.2024 11:48 PM, Dmitry Baryshkov wrote:
-> >> On Mon, Nov 11, 2024 at 06:39:48PM +0530, Jagadeesh Kona wrote:
-> >>>
-> >>>
-> >>> On 10/17/2024 9:12 PM, Brian Masney wrote:
-> >>>> On Thu, Oct 17, 2024 at 02:58:31PM +0530, Jagadeesh Kona wrote:
-> >>>>> +	cpu0_opp_table: opp-table-cpu0 {
-> >>>>> +		compatible = "operating-points-v2";
-> >>>>> +		opp-shared;
-> >>>>> +
-> >>>>> +		cpu0_opp_1267mhz: opp-1267200000 {
-> >>>>> +			opp-hz = /bits/ 64 <1267200000>;
-> >>>>> +			opp-peak-kBps = <6220800 29491200>;
-> >>>>> +		};
-> >>>>> +
-> >>>>> +		cpu0_opp_1363mhz: opp-1363200000 {
-> >>>>> +			opp-hz = /bits/ 64 <1363200000>;
-> >>>>> +			opp-peak-kBps = <6220800 29491200>;
-> >>>>> +		};
-> >>>>
-> >>>> [snip]
-> >>>>
-> >>>>> +	cpu4_opp_table: opp-table-cpu4 {
-> >>>>> +		compatible = "operating-points-v2";
-> >>>>> +		opp-shared;
-> >>>>> +
-> >>>>> +		cpu4_opp_1267mhz: opp-1267200000 {
-> >>>>> +			opp-hz = /bits/ 64 <1267200000>;
-> >>>>> +			opp-peak-kBps = <6220800 29491200>;
-> >>>>> +		};
-> >>>>> +
-> >>>>> +		cpu4_opp_1363mhz: opp-1363200000 {
-> >>>>> +			opp-hz = /bits/ 64 <1363200000>;
-> >>>>> +			opp-peak-kBps = <6220800 29491200>;
-> >>>>> +		};
-> >>>>
-> >>>> There's no functional differences in the cpu0 and cpu4 opp tables. Can
-> >>>> a single table be used?
-> >>>>
-> >>>> This aligns with my recollection that this particular SoC only has the
-> >>>> gold cores.
-> >>>>
-> >>>> Brian
-> >>>>
-> >>>
-> >>> Thanks Brian for your review. Sorry for the delayed response.
-> >>>
-> >>> We require separate OPP tables for CPU0 and CPU4 to allow independent
-> >>> scaling of DDR and L3 frequencies for each CPU domain, with the final
-> >>> DDR and L3 frequencies being an aggregate of both.
-> >>>
-> >>> If we use a single OPP table for both CPU domains, then _allocate_opp_table() [1]
-> >>> won't be invoked for CPU4. As a result both CPU devices will end up in sharing
-> >>> the same ICC path handle, which could lead to one CPU device overwriting the bandwidth
-> >>> votes of other.
-> > 
-> > Oh that's a fun find.. clocks get the same treatment.. very bad,
-> > but may explain some schroedingerbugs.
-> > 
-> > Taking a peek at some code paths, wouldn't dropping opp-shared
-> > solve our issues? dev_pm_opp_set_sharing_cpus() overrides it
-> > 
-> > Konrad
-> 
-> Thanks Konrad for your review.
-> 
-> Yes, correct. I tried dropping opp-shared but it is again getting set due to
-> dev_pm_opp_set_sharing_cpus().
 
-It should be set, but then it should get the limited CPU mask rather
-than the full CPU set. Isn't that enough for your case?
 
--- 
-With best wishes
-Dmitry
+On 12/3/2024 5:53 AM, Dmitry Baryshkov wrote:
+> On Mon, Dec 02, 2024 at 04:39:01PM -0800, Abhinav Kumar wrote:
+>> The checks in msm_dp_display_prepare() for making sure that we are in
+>> ST_DISPLAY_OFF OR ST_MAINLINK_READY seem redundant.
+>>
+>> DRM fwk shall not issue any commits if state is not ST_MAINLINK_READY as
+>> msm_dp's atomic_check callback returns a failure if state is not ST_MAINLINK_READY.
+> 
+> Can the state change between atomic_check() and atomic_commit()?
+> 
+
+Good question.
+
+I cannot deny that such a possibility does exist.
+
+ From what I can see in the state machine today, the only possibility I 
+can think of here is if a user very quickly removes the cable as soon as 
+they connect the cable like so fast that the connect was not yet 
+processed before disconnect.
+
+Similarly, if an irq_hpd fires after atomic_check but before 
+atomic_enable(), and moreover if we hit the sink_count == 0 case in 
+msm_dp_display_handle_port_status_changed() during this irq_hpd,
+
+In both these cases, then we will transition to ST_DISCONNECT_PENDING state.
+
+Without this change, we would have bailed out in the 
+ST_DISCONNECT_PENDING case.
+
+But other than this, I cannot atleast think of a case where a different 
+state transition can happen between atomic_check() and atomic_commit() 
+because for other transitions, I think we should be still okay.
+
+But this is purely based on theoretical observation and hypothesis.
+
+Is it better to add a check to bail out in the DISCONNECT_PENDING case?
+
+OR document this as "To-do: Need to bail out if DISCONNECT_PENDING" 
+because even if I add this check, I dont know if can make sure this can 
+be validated as the check could never hit.
+
+
+>>
+>> For the ST_DISPLAY_OFF check, its mainly to guard against a scenario that
+>> there is an atomic_enable() without a prior atomic_disable() which once again
+>> should not really happen.
+>>
+>> To simplify the code, get rid of these checks.
+>>
+>> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/dp/dp_display.c | 6 ------
+>>   1 file changed, 6 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+>> index 992184cc17e4..614fff09e5f2 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+>> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+>> @@ -1513,12 +1513,6 @@ void msm_dp_bridge_atomic_enable(struct drm_bridge *drm_bridge,
+>>   		return;
+>>   	}
+>>   
+>> -	state = msm_dp_display->hpd_state;
+>> -	if (state != ST_DISPLAY_OFF && state != ST_MAINLINK_READY) {
+>> -		mutex_unlock(&msm_dp_display->event_mutex);
+>> -		return;
+>> -	}
+>> -
+>>   	rc = msm_dp_display_set_mode(dp, &msm_dp_display->msm_dp_mode);
+>>   	if (rc) {
+>>   		DRM_ERROR("Failed to perform a mode set, rc=%d\n", rc);
+>>
+>> -- 
+>> 2.34.1
+>>
+> 
 
