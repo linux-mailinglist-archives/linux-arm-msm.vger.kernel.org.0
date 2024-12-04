@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-40336-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40337-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9C3B49E417B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 18:28:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 55B089E4197
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 18:30:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 59371289C84
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 17:28:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1196528C123
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 17:30:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 723B3226ED8;
-	Wed,  4 Dec 2024 17:03:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B1BC218ACC;
+	Wed,  4 Dec 2024 17:03:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o+RcrQ3b"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HVYI9wIr"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46395226ED0;
-	Wed,  4 Dec 2024 17:03:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AFFC218AC5;
+	Wed,  4 Dec 2024 17:03:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733331791; cv=none; b=UpuZQrA7bF3CaoLhtZ7GCrO6/v2JbUDHXOQi/teJ/Oq2VZwXUvtyjigvPpc2QZDMEQQIdC+8pFN+U5LkdbfdiqFwbH+bmx/8h2k7bqFZvkTouK4d63W56tVOuoqtZLfO5flzekMHr1WMXvVfOwvAI9u8m+VscT83fXo5wLsH3uA=
+	t=1733331808; cv=none; b=Xf8Bf8jhN7cvGJZ8j7mjwgbJHUSq2C4m3w6MF+sbJjnMx28YHWV0AB1A1TZcxlgJA3x1XOyqwokY9ekZ8iGDKs85CoP+sI0RMu+ZXgEj6ikg9E8nAEOdQQysrqHab70VCHACz6wRPV5O+bltGUnWvwSgxPPBwL9ynXXEgtYUFsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733331791; c=relaxed/simple;
-	bh=XJDQxIdlkmIqGQfjP5HpKi0zsi8ZCuk2mF71PYsEefc=;
+	s=arc-20240116; t=1733331808; c=relaxed/simple;
+	bh=BAtYgzy4rvRUDcmcLeuuSuc7wPnz3hH/LbP+TPbtIzs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Wic8HZbDHBDv8TugiqQ+JPku6z/g4IBCgvX4muFGCoToydY3cKyUCTOOuzcTXM537l+qbw5JWEjBVlA5A5eAfwEt1vFQ76X0GOW6nJbpAUZNd3JPPbE5CA18ImGxXdMgnwujRtgZlTPKPE7Mt4W5fmGEhngbazPd1eTRvROyCmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o+RcrQ3b; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FD18C4CED6;
-	Wed,  4 Dec 2024 17:03:10 +0000 (UTC)
+	 MIME-Version:Content-Type; b=ZBhqMN821S2gY4/cPli3WmTwN6MCe7Q2OssPyr6G/emXVAhER0urRGOshp47Eof/v2fWapoHLD+0JUr3xDYJ/m18WAS9aS9T25DUhYv1tBO8cS51uPGZ4M+iNLN9rRNRbaly2jGccVDaVmY4S7ARxmZw8v5djwchHjpD4YeqCjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HVYI9wIr; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE0AFC4CECD;
+	Wed,  4 Dec 2024 17:03:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733331791;
-	bh=XJDQxIdlkmIqGQfjP5HpKi0zsi8ZCuk2mF71PYsEefc=;
+	s=k20201202; t=1733331808;
+	bh=BAtYgzy4rvRUDcmcLeuuSuc7wPnz3hH/LbP+TPbtIzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o+RcrQ3bynBWlHOpxSSZVdfVazrJOZxszpGyauTvd9XxqqhTfDQmF6O7iOBVLF+7T
-	 FUbgf48hFD0BeDacNptxB4cxweR1VkJF+AACosz4MxENlwvU7nRO/krSGhVZO/5OqX
-	 y13henmv6p5RAtykH6Ej7KdAa5xiizFzQt8Ei83PYif00G+u+Enfs+PbLr8+MhWjwR
-	 jGLzxtsT+5SsWZMc2AYpmDO3ybAJ/8Dlzwj3FK5h11WI4gfRicVnjeQ2Vsw+Eq6ALH
-	 OsBHp2nTEFzC+kNqtL6qzl4uUPxCh9xHdnLuqaFoW1kLyIP438leDn7E+a+zJpnjOb
-	 pauqeDMD6DC4g==
+	b=HVYI9wIrMa0FoaHE6R0x9OdTCWbxk/REHmHxirDlTn3zrMnb3iEaQkCrUUlX/uE+x
+	 Ed4ABdEgwOZIN+V6pIhDsVDaqd5dDmoVUR/eWl0FxYsJvTs3TiaflH2otKV1ATKLND
+	 PWlTsJTKGEf75lXSKAAkQnA9Y8qiZ1b9cOc5voXP+OBxi1Rc2/LF7S7TPqu0DVh4MO
+	 /JyDpwHyqcmzU3NOlOzF7tQbVCJGOiAV09sTdyfxv7iTqJB4RUDkmFBCF6lx4u53z8
+	 urTpbSiVkiPELXlhCBbv/l/bF44qQno0vKCrJqDtTeVfS99tSmzoDoSlp6UIxJvoJt
+	 jzZTjfRKvGJrg==
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
@@ -51,12 +51,12 @@ Cc: =?UTF-8?q?Barnab=C3=A1s=20Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org
 	andersson@kernel.org,
 	linux-arm-msm@vger.kernel.org,
 	linux-gpio@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.15 8/9] pinctrl: qcom-pmic-gpio: add support for PM8937
-Date: Wed,  4 Dec 2024 10:51:38 -0500
-Message-ID: <20241204155141.2214748-8-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.10 8/9] pinctrl: qcom-pmic-gpio: add support for PM8937
+Date: Wed,  4 Dec 2024 10:51:54 -0500
+Message-ID: <20241204155157.2214959-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241204155141.2214748-1-sashal@kernel.org>
-References: <20241204155141.2214748-1-sashal@kernel.org>
+In-Reply-To: <20241204155157.2214959-1-sashal@kernel.org>
+References: <20241204155157.2214959-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,7 +66,7 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 5.15.173
+X-stable-base: Linux 5.10.230
 Content-Transfer-Encoding: 8bit
 
 From: Barnabás Czémán <barnabas.czeman@mainlining.org>
@@ -85,12 +85,12 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 2 insertions(+)
 
 diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-index b2562e8931397..42f8b661f19c0 100644
+index 17441388ce8f5..fd1e4fb176c79 100644
 --- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
 +++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-@@ -1156,6 +1156,8 @@ static const struct of_device_id pmic_gpio_of_match[] = {
- 	{ .compatible = "qcom,pm8350b-gpio", .data = (void *) 8 },
- 	{ .compatible = "qcom,pm8350c-gpio", .data = (void *) 9 },
+@@ -1106,6 +1106,8 @@ static int pmic_gpio_remove(struct platform_device *pdev)
+ static const struct of_device_id pmic_gpio_of_match[] = {
+ 	{ .compatible = "qcom,pm8005-gpio", .data = (void *) 4 },
  	{ .compatible = "qcom,pm8916-gpio", .data = (void *) 4 },
 +	/* pm8937 has 8 GPIOs with holes on 3, 4 and 6 */
 +	{ .compatible = "qcom,pm8937-gpio", .data = (void *) 8 },
