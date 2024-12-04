@@ -1,251 +1,213 @@
-Return-Path: <linux-arm-msm+bounces-40185-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40186-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E40259E3685
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 10:25:38 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3330C9E3701
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 11:00:54 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EFA84163C3B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 10:00:50 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0FAEF1AB52F;
+	Wed,  4 Dec 2024 10:00:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="l3Zh0Lt2"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A0A84285E0F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2024 09:25:37 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AACF81AB517;
-	Wed,  4 Dec 2024 09:25:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uEAUnB0T"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58FBE1AAE10
-	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Dec 2024 09:25:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A3F71946B1;
+	Wed,  4 Dec 2024 10:00:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733304316; cv=none; b=E07IbYtPG1yxufwhew2me7jqR4MDVxeYqozxojUOK1q9IaF47Gk8sAQqp08rCR0D33NxQhu20Snznhoa9Gi5f8Oyn5Uw1ns6hbpq3Qbo5FXVCLURB3RFvs4jrCv9BvuuCP4KdtVwrIwnMHQpu5ifvyZLZei8HOV1C0m6WrY5QI8=
+	t=1733306443; cv=none; b=jifsvbpSIZ6NoSgXpxX4rs9iAkZuswkkPTe+ffHeSIxcuDlvlbftjNjK3jwkJXJwC3y+V8ioapWiUeEawbhMP4ZgzvUkDzLC8Zkl2YZcb1gIxq5FPFSzo5ex6zyHH8LPha5HUqmdMyInbDnlznzM6mP6O4ajjeTlLf5AqgrA4As=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733304316; c=relaxed/simple;
-	bh=IOioREQ7k18L3jP39Gc/HqqFJ0dRj9fDrGSgDDoODFM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cKlU0X4hc0Jm+TiRbh61IEGwJxPu+6hzVWRWuSvykFaIRc+dCl3TuPtO5JQA17ogF7penYC1mdqThHJF96pMWzNccZdKUqj1bv72cLmmJEkEwGniiOriX6CqV1+CyE3ZQuL+RAU4tfzRVQM6J6xJjRbCm5AkXIIjEs6yMCVSk/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uEAUnB0T; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-434a7cef2e3so6640375e9.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Dec 2024 01:25:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733304312; x=1733909112; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=m8DaQdDkfEfGBJ2lNaIrewpoCtOfg7AdvFQ8X4rPfJ8=;
-        b=uEAUnB0TJ+0M/cZiPi30tL11ZRoZ8P8KUSnv9VP99ZKv3+gTAycXSavhg9PprWP70h
-         tLzsE6CXVDYyh/7Slarn9Pbnbp9WOnGQhPqT/e+0I11yWag/mV7Pvg7iFqaDs1MSE7+x
-         57fHsCBYHNKhx+1W5lBCk6pDzqtHR3w3e5+UDji2f5Y8eKkjbj9hYmpE23WUa6EBNfQl
-         t0czJeafnVPWUufeqCFTJgWCmg8IwdV2d1Hhn+QQoIBzW8r5zOk5gimmeWOuDg9kJv+u
-         qy4VyeJUVoP+x3S24mJupYsYaaHfllYB4ekYXl6EgPlTMdHP1b8UJ3X6pHt3YNwplQmT
-         9NyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733304312; x=1733909112;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=m8DaQdDkfEfGBJ2lNaIrewpoCtOfg7AdvFQ8X4rPfJ8=;
-        b=gNvcS55uGNNXGruXINUyIHl5Hm3LQOUJSRLJap+H51QcvVRkA3/VkzrZbN64c9Ztx0
-         TOB3ILM3TwZeruKcM2pV3FLynFjxntTP8iu24K4HYGTJJb8r2Z0l5AtkcnSZQvnxLcSP
-         X6kP8cbg3XpR92fhBOzqT7fJVPA70DSDx1S+1wMdZLbMbTZv3iEFQStsxMNVhDHZsv97
-         xVM0RC0N9EsVFwDzZwvPkivKH5+XzbBT4XIc8TFJx+54argSY+qmJeufzYmoyTcJW3H7
-         4t/D4NDuUlny94Jc2k/7Qm3Ylx4hncc0tCPPN/pDotKXNNWthAn/HT4/vkCsW9TCLiaq
-         fVAA==
-X-Gm-Message-State: AOJu0Yxz7uopO38KyPNTm3jbZw7hUhsf7Dz7J+wYvlj0cdvbnNLoLhvU
-	0CQRJZy5WOlY3PSwyHvhZlp8CvG0EZb/oZpNSK7WNCi1BLz5YTOrlVQyiRNv3uBgYvUYRlOF+uP
-	Uuc0=
-X-Gm-Gg: ASbGncv4NRANHgYK7J00UZKHjP+h5HcQHlu5J5D8ZLpp8/JX1rV0674eyd8n6ncCuHe
-	M+SJtBa73L5DRZM9vGEBk1dIY7lcpwKhCbvi6GU4W575Hg4svq72RSlMepSQ9GVkXCWrO9TmLlW
-	F4h4MziCRLk3XjAVdUO7X0gX/WebgJgIiyzvyUndQlKUpRiadzy40nDvSeEiU2ChuVBYVL7g9aR
-	cGhM4FKFgUqyvDQPVxE43kDXnlx/ISaT4kC5xkJ+14pLyXEhPA0JdDChIByCogF086Abw==
-X-Google-Smtp-Source: AGHT+IFPDrgwPysTQNJ4gCRHmPmwekHSCTmDhMf33Hj14KtYSarTwzVoBNgKPkKaUfDyt0l7DW5IFw==
-X-Received: by 2002:a05:600c:46cf:b0:42c:aeee:e603 with SMTP id 5b1f17b1804b1-434d0a1f397mr18009855e9.7.1733304311559;
-        Wed, 04 Dec 2024 01:25:11 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.223.165])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-434d526b312sm18208205e9.6.2024.12.04.01.25.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 04 Dec 2024 01:25:11 -0800 (PST)
-Message-ID: <52f7ce30-0159-4779-982d-7714d0b45ae3@linaro.org>
-Date: Wed, 4 Dec 2024 10:25:09 +0100
+	s=arc-20240116; t=1733306443; c=relaxed/simple;
+	bh=Yv5GKLduOrWu+WhJRLVImR8n2c+XRhxD/ae2ISiLxyk=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=KqkEt/JFGliej5aphreMXgh0VRUV7utLHZhHCkeentcyuBODmQTOLngn3mjetSKa1VDGWOqYlYNjJXLF3RWBfGD0qn9jee6r3y8+ee40mmISC4ncNcUZZPkwKcqkYlEHWWkZfZb0FrWQLcrtIlInWvZyM0IHse78JJ0NnH+DHOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=l3Zh0Lt2; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B47NYEP024930;
+	Wed, 4 Dec 2024 10:00:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=lBBqGBJLHohEpzT+U1FwwU
+	G2gW3aBlgOeo4o4LomNRU=; b=l3Zh0Lt20gYVPzw7Jm3bfnHMtHnwVp6objrLZJ
+	Kcx28r6h2NKTwYh+IMWDAKEZUDYJ0WlpDFVLbghZGa+96CSHqKMc3RWlX4bh22uU
+	+It/hBwLshDsihU9RmX/pnRzkydStFZp4b+LsYzGxMS240jFr4gqvsSvzv+7LdLu
+	PQcjJH4L2IPfVNIW6PiDskjM0ibq4L6A4/5kK3Y3SBxfHmTN5pv0q/+sxDzo2pnP
+	2qwpYX03mE5lmp2KyCLxVS/BxcAC6p7lA30je7zk7lyehM3pPm+SdgkKqmmMv1iL
+	/s3GTufWi+EW3GKKSqFS/AYd+FOWibbgK9d2lp09hKhqpRog==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 439vnyuu5v-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 04 Dec 2024 10:00:29 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B4A0Skv032380
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 4 Dec 2024 10:00:28 GMT
+Received: from hu-vikramsa-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 4 Dec 2024 02:00:18 -0800
+From: Vikram Sharma <quic_vikramsa@quicinc.com>
+To: <rfoss@kernel.org>, <todor.too@gmail.com>, <bryan.odonoghue@linaro.org>,
+        <mchehab@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <akapatra@quicinc.com>, <hariramp@quicinc.com>,
+        <andersson@kernel.org>, <konradybcio@kernel.org>,
+        <hverkuil-cisco@xs4all.nl>, <cros-qcom-dts-watchers@chromium.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>
+CC: <linux-arm-kernel@lists.infradead.org>, <quic_vikramsa@quicinc.com>,
+        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <kernel@quicinc.com>
+Subject: [PATCH v7 0/5] media: qcom: camss: Add sc7280 support
+Date: Wed, 4 Dec 2024 15:29:58 +0530
+Message-ID: <20241204100003.300123-1-quic_vikramsa@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] clk: qcom: clk-alpha-pll: Add Pongo PLL
-To: Stephen Boyd <sboyd@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Krzysztof Kozlowski
- <krzk+dt@kernel.org>, Michael Turquette <mturquette@baylibre.com>,
- Neil Armstrong <neil.armstrong@linaro.org>, Rob Herring <robh@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20241128-sm8750-dispcc-v1-0-120705a4015c@linaro.org>
- <20241128-sm8750-dispcc-v1-2-120705a4015c@linaro.org>
- <aed888b8c2f49eaaffcd6cfbdda84078.sboyd@kernel.org>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Content-Language: en-US
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <aed888b8c2f49eaaffcd6cfbdda84078.sboyd@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: jd4WG3UjoQWK1npN1UdffERvs9_jNovl
+X-Proofpoint-GUID: jd4WG3UjoQWK1npN1UdffERvs9_jNovl
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
+ mlxlogscore=999 bulkscore=0 impostorscore=0 mlxscore=0 suspectscore=0
+ spamscore=0 priorityscore=1501 lowpriorityscore=0 phishscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412040077
 
-On 03/12/2024 23:07, Stephen Boyd wrote:
->> -       for (count = 200; count > 0; count--) {
->> +       /* Pongo PLLs using a 32KHz reference can take upwards of 1500us to lock. */
->> +       for (count = 1500; count > 0; count--) {
->>                 ret = regmap_read(pll->clkr.regmap, PLL_MODE(pll), &val);
->>                 if (ret)
->>                         return ret;
->> @@ -378,6 +403,13 @@ static int wait_for_pll(struct clk_alpha_pll *pll, u32 mask, bool inverse,
->>                 udelay(1);
->>         }
->>  
->> +       /* Called with clocks already registered ... */
->> +       if (pll->clkr.hw.core)
->> +               name = clk_hw_get_name(&pll->clkr.hw);
->> +       else
->> +               /* or before registering, when init data is present */
->> +               name = pll->clkr.hw.init->name;
-> 
-> This is sad. Why can't we enable the PLL from the clk prepare/enable
-> path? PLLs are typically calibrated during clk_prepare().
+SC7280 is a Qualcomm SoC. This series adds support to bring up the CSIPHY,
+CSID, VFE/RDI interfaces in SC7280.
 
-I don't know. I'll move it to prepare() and see what happens.
+SC7280 provides
 
-> 
->> +
->>         WARN(1, "%s failed to %s!\n", name, action);
->>         return -ETIMEDOUT;
->>  }
->> @@ -2524,6 +2556,129 @@ const struct clk_ops clk_alpha_pll_reset_lucid_evo_ops = {
->>  };
->>  EXPORT_SYMBOL_GPL(clk_alpha_pll_reset_lucid_evo_ops);
->>  
->> +static int alpha_pll_pongo_elu_enable(struct clk_hw *hw)
->> +{
->> +       struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
->> +       struct regmap *regmap = pll->clkr.regmap;
->> +       int ret;
->> +
->> +       /* Check if PLL is already enabled */
->> +       if (trion_pll_is_enabled(pll, regmap))
->> +               return 0;
->> +
->> +       ret = regmap_update_bits(regmap, PLL_MODE(pll), PLL_RESET_N, PLL_RESET_N);
->> +       if (ret)
->> +               return ret;
->> +
->> +       /* Set operation mode to RUN */
->> +       regmap_write(regmap, PLL_OPMODE(pll), PLL_RUN);
->> +
->> +       ret = wait_for_pll_enable_lock(pll);
->> +       if (ret)
->> +               return ret;
->> +
->> +       /* Enable the global PLL outputs */
->> +       ret = regmap_update_bits(regmap, PLL_MODE(pll), PLL_OUTCTRL, PLL_OUTCTRL);
->> +       if (ret)
->> +               return ret;
->> +
->> +       /* Ensure that the write above goes through before returning. */
->> +       mb();
->> +
->> +       return ret;
->> +}
->> +
->> +static void alpha_pll_pongo_elu_disable(struct clk_hw *hw)
->> +{
->> +       struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
->> +       struct regmap *regmap = pll->clkr.regmap;
->> +       int ret;
->> +
->> +       /* Disable the global PLL output */
->> +       ret = regmap_update_bits(regmap, PLL_MODE(pll), PLL_OUTCTRL, 0);
->> +       if (ret)
->> +               return;
->> +
->> +       /* Place the PLL mode in STANDBY */
->> +       regmap_write(regmap, PLL_OPMODE(pll), PLL_STANDBY);
->> +}
->> +
->> +static unsigned long alpha_pll_pongo_elu_recalc_rate(struct clk_hw *hw,
->> +                                                    unsigned long parent_rate)
->> +{
->> +       struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
->> +       struct regmap *regmap = pll->clkr.regmap;
->> +       u32 l;
->> +
->> +       if (regmap_read(regmap, PLL_L_VAL(pll), &l))
->> +               return 0;
->> +
->> +       l &= PONGO_PLL_L_VAL_MASK;
->> +
->> +       return alpha_pll_calc_rate(parent_rate, l, 0, pll_alpha_width(pll));
->> +}
->> +
->> +const struct clk_ops clk_alpha_pll_pongo_elu_ops = {
->> +       .enable = alpha_pll_pongo_elu_enable,
->> +       .disable = alpha_pll_pongo_elu_disable,
->> +       .recalc_rate = alpha_pll_pongo_elu_recalc_rate,
->> +};
->> +EXPORT_SYMBOL(clk_alpha_pll_pongo_elu_ops);
-> 
-> GPL please.
+- 3 x VFE, 3 RDI per VFE
+- 2 x VFE Lite, 4 RDI per VFE
+- 3 x CSID
+- 2 x CSID Lite
+- 5 x CSI PHY
 
-Ack (and one more as well)
+The changes are verified on SC7280 qcs6490-rb3gen2 board, with attached vision mezzanine
+TPG (mode 1-9) and IMX577 sensor.
+The base dts for qcs6490-rb3gen2 is:
+https://lore.kernel.org/all/20231103184655.23555-1-quic_kbajaj@quicinc.com/
 
-Best regards,
-Krzysztof
+This change is dependent on below series. As it is raised on top of
+this. Please take both to validate.
+https://lore.kernel.org/lkml/20241126100126.2743795-1-quic_vikramsa@quicinc.com/
+
+Used following tools for the sanity check of these changes.
+
+- make CHECK_DTBS=y W=1 DT_SCHEMA_FILES=media/qcom,sc7280-camss.yaml
+qcom/qcs6490-rb3gen2-vision-mezzanine.dtb
+- make DT_CHECKER_FLAGS=-m W=1
+DT_SCHEMA_FILES=media/qcom,sc7280-camss.yaml dt_binding_check
+- Smatch: make CHECK="smatch --full-path"
+M=drivers/media/platform/qcom/camss/
+- Sparse: make C=2 M=drivers/media/platform/qcom/camss/
+- coccicheck : make coccicheck M=drivers/media/platform/qcom/camss/
+- make -j32 W=1
+- ./scripts/checkpatch.pl
+ 
+Changes in V7:
+- Changed unit address for camss in documention and dts.
+- Added avdd-supply and dvdd-supply for sensor.
+- Changed reg/clocks/interrupts name for vfe_lite and csid_lite.
+- Link to v6: https://lore.kernel.org/linux-arm-msm/20241127100421.3447601-1-quic_vikramsa@quicinc.com/
+
+Changes in V6:
+- Changed order of properties in Documentation [PATCH 1/5].
+- Updated description for ports in Documentaion [PATCH 1/5].
+- Moved regulators from csid to csiphy [PATCH 3/5].
+- Link to v5: https://lore.kernel.org/linux-arm-msm/20241112173032.2740119-1-quic_vikramsa@quicinc.com/ 
+
+Changes in V5:
+- Updated Commit text for [PATCH v5 1/6].
+- Moved reg after compatible string.
+- Renamed csi'x' clocks to vfe'x'_csid
+- Removed [PATCH v4 4/6] and raised a seprate series for this one.
+- Moved gpio states to mezzanine dtso.
+- Added more clock levels to address TPG related issues.
+- Renamed power-domains-names -> power-domain-names. 
+- Link to v4: https://lore.kernel.org/linux-arm-msm/20241030105347.2117034-1-quic_vikramsa@quicinc.com/ 
+
+Changes in V4:
+- V3 had 8 patches and V4 is reduced to 6.
+- Removed [Patch v3 2/8] as binding change is not required for dtso.
+- Removed [Patch v3 3/8] as the fix is already taken care in latest
+  kernel tip. 
+- Updated alignment for dtsi and dt-bindings.
+- Adding qcs6490-rb3gen2-vision-mezzanine as overlay. 
+- Link to v3: https://lore.kernel.org/linux-arm-msm/20241011140932.1744124-1-quic_vikramsa@quicinc.com/
+
+Changes in V3:
+- Added missed subject line for cover letter of V2.
+- Updated Alignment, indentation and properties order.
+- edit commit text for [PATCH 02/10] and [PATCH 03/10].
+- Refactor camss_link_entities.
+- Removed camcc enablement changes as it already done.
+- Link to v2: https://lore.kernel.org/linux-arm-msm/20240904-camss_on_sc7280_rb3gen2_vision_v2_patches-v1-0-b18ddcd7d9df@quicinc.com/
+
+Changes in V2:
+- Improved indentation/formatting.
+- Removed _src clocks and misleading code comments.
+- Added name fields for power domains and csid register offset in DTSI.
+- Dropped minItems field from YAML file.
+- Listed changes in alphabetical order.
+- Updated description and commit text to reflect changes
+- Changed the compatible string from imx412 to imx577.
+- Added board-specific enablement changes in the newly created vision
+  board DTSI file.
+- Fixed bug encountered during testing.
+- Moved logically independent changes to a new/seprate patch.
+- Removed cci0 as no sensor is on this port and MCLK2, which was a
+  copy-paste error from the RB5 board reference.
+- Added power rails, referencing the RB5 board.
+- Discarded Patch 5/6 completely (not required).
+- Removed unused enums.
+- Link to v1: https://lore.kernel.org/linux-arm-msm/20240629-camss_first_post_linux_next-v1-0-bc798edabc3a@quicinc.com/
+
+Suresh Vankadara (1):
+  media: qcom: camss: Add support for camss driver on sc7280
+
+Vikram Sharma (4):
+  media: dt-bindings: Add qcom,sc7280-camss
+  media: qcom: camss: Sort camss version enums and compatible strings
+  arm64: dts: qcom: sc7280: Add support for camss
+  arm64: dts: qcom: qcs6490-rb3gen2-vision-mezzanine: Add vision
+    mezzanine
+
+ .../bindings/media/qcom,sc7280-camss.yaml     | 418 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/Makefile             |   4 +
+ .../qcs6490-rb3gen2-vision-mezzanine.dtso     | 110 +++++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi          | 172 +++++++
+ .../qcom/camss/camss-csiphy-3ph-1-0.c         |  13 +-
+ .../media/platform/qcom/camss/camss-csiphy.c  |   5 +
+ .../media/platform/qcom/camss/camss-csiphy.h  |   1 +
+ drivers/media/platform/qcom/camss/camss-vfe.c |   8 +-
+ drivers/media/platform/qcom/camss/camss.c     | 321 +++++++++++++-
+ drivers/media/platform/qcom/camss/camss.h     |   5 +-
+ 10 files changed, 1047 insertions(+), 10 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/media/qcom,sc7280-camss.yaml
+ create mode 100644 arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-vision-mezzanine.dtso
+
+-- 
+2.25.1
+
 
