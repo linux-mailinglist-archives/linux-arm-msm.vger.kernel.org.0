@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-40441-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40442-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 758E59E4E29
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 08:24:12 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 49E899E4EB6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 08:36:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 75A9E168919
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 07:23:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 17F581881841
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 07:36:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 878AF19A2B0;
-	Thu,  5 Dec 2024 07:22:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 070C91D4612;
+	Thu,  5 Dec 2024 07:33:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dpI1q1VN"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Udkuqoi/"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53EBB17CA17;
-	Thu,  5 Dec 2024 07:22:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDB741B3949;
+	Thu,  5 Dec 2024 07:33:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733383369; cv=none; b=cXRrlk/PzBV8AyzT2GnqGeH4+cq3Dc5DEhW23XKQjROrNviU2VK/a4R6MVz1rs8E7+qy0aC3djDLeNnVXxHPdbztORQMQWL0nqXHfsJduXb5jFcOLN/ylI/5Wl4F351Wr4ui3JHnLVS8unPxEsZjMGDQ7tgyn2ZEGb0/M3pk/1s=
+	t=1733384012; cv=none; b=PCsl5bmMal3WNZO7HkMshFaScqlyOKJ5YD2Z0K5bSfGOBfOgmcJK/lewBIGe33bz9r6QD9EMHb4G1s3by5nITX87ydKQ0NuueGxKkofkrOzG3KUodC7AwNmXNw0fxrEGNhU/5HlRQU2ckjiQsL3lvE93wwsBYzra+2JMG5cFFLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733383369; c=relaxed/simple;
-	bh=yF1f57k9A+hujmFThFOhTBMVCV93i6o7rVGRB0bp+ZU=;
+	s=arc-20240116; t=1733384012; c=relaxed/simple;
+	bh=N6b6G1hccUjy50KfZUwq8KJZvPbyplkKkBKQG+61mK4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Msn2FJOR7j20HcHKDi+o7vTr/qVwLaZmaks/Rnb+qFJ7BFMq+B9UDUiFF6u6zmLbLSN9j0gfw/zT+VQJSaSRcVcoS7WtpIs/tPhk4dpQiGB7XYbmTRo5fUE5V3dJ3hBpeAwIRMhOEfiOTDa3nvnuF2k4yJbPw5tZbsd9NtwjKUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dpI1q1VN; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43DC3C4CED1;
-	Thu,  5 Dec 2024 07:22:43 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=qjXP+FMfm1F9NB33iOWypg3mcDN/CT5IAPcel5wklsczX3qj7dumSuRHGOtCQmtnGL6u5GyM6OsnfUly2ImDAwYoWxOrZIkin2Oze09adhkSjvvH8SLfAZhV9DZnvC9QBWsR2QEaOgH2sHfv3f+MQQGoVSB3tTPXuSJitDMp+Gg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Udkuqoi/; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58075C4CED1;
+	Thu,  5 Dec 2024 07:33:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733383368;
-	bh=yF1f57k9A+hujmFThFOhTBMVCV93i6o7rVGRB0bp+ZU=;
+	s=k20201202; t=1733384012;
+	bh=N6b6G1hccUjy50KfZUwq8KJZvPbyplkKkBKQG+61mK4=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=dpI1q1VNezzvola/nf/Uai9FeKQTrwuzthVW5m24cPEyd/224wswmBHoOD//345L9
-	 lftN6KRbNLiCs8e8jw23n/DFCle/s3+e6tLOm8MtEOtlAWEFbBXtdcBY1/3dcA4oHt
-	 JyjorgCzy6cgabVdhzjq8AcQEn9HGp1XY9yFS6iQl1lhj7gTyk6W2Fm4NR6r2ZeIA/
-	 y/RbwhnEiVUOPBJEZqONIE+1I68hYz3zfQ2cvTwJcPqW9vn11obJglk1Gzhdmna2c+
-	 Jkxj3nCtflmb2PszICplrlP2GJsq7da3y0WK0N2iaRahBmOX/mjajeWDK2HhdeuDp7
-	 k0LRF+UBmz3WQ==
-Message-ID: <2517ef0e-4d13-4c51-b479-863229783223@kernel.org>
-Date: Thu, 5 Dec 2024 08:22:42 +0100
+	b=Udkuqoi/TpU9taIdDluAHlQrGzg6PJ7ZcepZ46TL+2pOJv5/uDBzoNUi9AflB3bbL
+	 LI3Ty6ZLopqblld66CarHdx51UdnCkXemecjuzLG+y4oO2pNF57czqKCJhfVYP2jPN
+	 4aRzBbGGOhrPFWq78yJB6aN4uxBgxEu5Zu4Sth/XSkEFyw5vEwV+AMcGp6awb/AqhJ
+	 bXVvupEqNwl0TjfcDF9Xe62OwsNEfX9BZ6iwwp6xFdw/4DrRlV0uQlSrz+uwdIBl6l
+	 Vp30G1UFU6yrQvmow6p2bT7j4niPxYcg3Ea0VUGd0rkkE0NShtM4KrWAbyLuDDTIR1
+	 rilfwuA60BvwQ==
+Message-ID: <2ef59c6d-bef2-4763-9463-06116a2e7d04@kernel.org>
+Date: Thu, 5 Dec 2024 08:33:24 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,23 +50,26 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/5] ASoC: dt-bindings: wcd937x-sdw: Add static channel
- mapping support
-To: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
- Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+Subject: Re: [PATCH 2/4] dt-bindings: display: msm: dp-controller: document
+ clock parents better
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>, Rob Clark
+ <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
  Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
- Bard Liao <yung-chuan.liao@linux.intel.com>, Jaroslav Kysela
- <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
- Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
- Sanyog Kale <sanyog.r.kale@intel.com>, linux-arm-msm@vger.kernel.org,
- linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com, kernel@quicinc.com
-References: <20241126164300.3305903-1-quic_mohs@quicinc.com>
- <20241126164300.3305903-3-quic_mohs@quicinc.com>
- <jnetmj5ibmmoiputq52vsvfqjz2auwjeqwt36g7sg4kjrrxyso@nrugsa6px4h7>
- <6bb8fe59-a1fc-9813-4623-d27e74a1b882@quicinc.com>
+ Conor Dooley <conor+dt@kernel.org>, Kuogee Hsieh <quic_khsieh@quicinc.com>,
+ Mahadevan <quic_mahap@quicinc.com>, linux-arm-msm@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20241202-dp_mst_bindings-v1-0-9a9a43b0624a@quicinc.com>
+ <20241202-dp_mst_bindings-v1-2-9a9a43b0624a@quicinc.com>
+ <bfa857c2-cd74-4fe2-a88c-3b35a58710b0@kernel.org>
+ <gpqrugcsyhz32bvip5mgjtcservhral2o5b6c5nz4ocwbjw5uo@eypv4x6jyrdr>
+ <hqe2pipkcnxftoq5mvdk36xmkj3ybr3oto6eghimq75rqlncsm@v45smglhedy7>
+ <pxi2nf4h34xtkickkkuwh4svvhbtsutuz5u3ukzgfgd5rzzcps@g4gct5zuc6kj>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -112,51 +115,41 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <6bb8fe59-a1fc-9813-4623-d27e74a1b882@quicinc.com>
+In-Reply-To: <pxi2nf4h34xtkickkkuwh4svvhbtsutuz5u3ukzgfgd5rzzcps@g4gct5zuc6kj>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 05/12/2024 04:56, Mohammad Rafi Shaik wrote:
-> On 11/27/2024 1:38 PM, Krzysztof Kozlowski wrote:
->> On Tue, Nov 26, 2024 at 10:12:57PM +0530, Mohammad Rafi Shaik wrote:
->>> diff --git a/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml b/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml
->>> index d3cf8f59cb23..7893b1c1f80b 100644
->>> --- a/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml
->>> +++ b/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml
->>> @@ -58,6 +58,44 @@ properties:
->>>       items:
->>>         enum: [1, 2, 3, 4, 5]
->>>   
->>> +  qcom,tx-channel-mapping:
->>> +    description: |
->>> +      Specifies static channel mapping between slave and master tx port
->>> +      channels.
->>> +      In the order of slave port channels which is adc1, adc2, adc3,
->>> +      dmic0, dmic1, mbhc, dmic2, dmic3, dmci4, dmic5, dmic6, dmic7.
->>> +      The channel map index values are fixed values.
->>> +      SWRM_CH1 ==> 1
->>> +      SWRM_CH2 ==> 2
->>> +      SWRM_CH3 ==> 4
->>> +      SWRM_CH4 ==> 8
+On 04/12/2024 11:09, Dmitry Baryshkov wrote:
+> On Wed, Dec 04, 2024 at 09:02:18AM +0100, Krzysztof Kozlowski wrote:
+>> On Tue, Dec 03, 2024 at 03:41:48PM +0200, Dmitry Baryshkov wrote:
+>>> On Tue, Dec 03, 2024 at 09:01:31AM +0100, Krzysztof Kozlowski wrote:
+>>>> On 03/12/2024 04:31, Abhinav Kumar wrote:
+>>>>> Document the assigned-clock-parents better for the DP controller node
+>>>>> to indicate its functionality better.
+>>>>
+>>>>
+>>>> You change the clocks entirely, not "document". I would say that's an
+>>>> ABI break if it really is a Linux requirement. You could avoid any
+>>>> problems by just dropping the property from binding.
+>>>
+>>> But if you take a look at the existing usage, the proposed change
+>>> matches the behaviour. So, I'd say, it's really a change that makes
+>>> documentation follow the actual hardware.
 >>
->> I am surprised to see here again 1/2/4/8. My comments were not
->> addressed. I think we agreed during our off-list talk that you will use
->> 1, 2, 3 and 4.
+>> First, this should be in the commit msg, instead of "document better to
+>> indicate functionality better".
 >>
-> Ack,
+>> Second, what is the point of documenting it in the first place if you
+>> can change it and changing has no impact? So maybe just drop?
 > 
-> Yes right,
+> So, do you suggest setting both of the property descriptions to true? Or
+> dropping them completely and using unevaluatedProperties instead of
+> additionalProperties?
 > 
-> Will add the change in next patch set.
-> 
-> will add the channel map values starting from 0 based on order of slave 
-> port channels which are starting from 0.
-> 
-> SWRM_CH1 ==> 0
-> SWRM_CH2 ==> 1
-> SWRM_CH3 ==> 2
-> SWRM_CH4 ==> 3
-These are supposed to be channels, so 1=1, 2=2 not 1=0.
+
+Dropping them entirely, without any changes of additionalProperties.
+Unless this property was added due to limitation of dtschema?
+
 
 Best regards,
 Krzysztof
