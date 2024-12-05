@@ -1,87 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-40610-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40611-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id BB0869E5D89
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 18:43:06 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 973FC16031E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 17:43:03 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02308224B04;
-	Thu,  5 Dec 2024 17:43:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="I6Fm9oz4"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 945E19E5DCA
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 19:00:37 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E07521A42B
-	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Dec 2024 17:43:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 54690286CB8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 18:00:36 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55C4E221476;
+	Thu,  5 Dec 2024 18:00:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="FI43LJmA"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C89EE217F3C;
+	Thu,  5 Dec 2024 18:00:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733420582; cv=none; b=TwIDT0lym3PGS1UPRxrB9mq30pCNMSgs4iEQ4hstO8fgnFsCj0B/TYjohChQeq8elTpGNSvsI8E3aEJOEIP0jibwOj+76tkoupEPuTKwO5cC80tC9/+ivg/BDa1XCjFS/LsKbUTWkdDI26shIT7p+t2XAIQX7C9ua7u6jjDUkyQ=
+	t=1733421633; cv=none; b=aja2hlJHwljYWE6XtAj7xY7R4EEmmOl6LkiMhGWoiOo27aStuf0woIJ3lEctVb9ERXK/JblCUEBteEy4mzPFYr2xf4mpujUHRXjCk22raCKl4ceaD9NP768p41YAQGvSPimeLSkU9J+QrEqzy2Hd9dvN0/2OfRsMvaOPoThbMSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733420582; c=relaxed/simple;
-	bh=83LLzNzqiW7Cv7hs/AaVSW4+DKsidQGfdG7Ia9j+bnc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kXtZoFSTlTTtV/Rcq7U2cSFVy1rrqi8Gfm+bAj6IA6CgC+WvO0PhyNdakeMzj9j8n9SMimrY869D5bxAFbaSt1G2DK8I+fpZglST0v5wOmhonvDUIYKCZjoY1/Pv5fAW9pwwc+f4V4kOfjvc8sOzR/lNQbt3h81f9eTdi5vqxCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=I6Fm9oz4; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B5HaCsl019116
-	for <linux-arm-msm@vger.kernel.org>; Thu, 5 Dec 2024 17:43:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	s=arc-20240116; t=1733421633; c=relaxed/simple;
+	bh=DoE5xA9xyi5p2e98u9ZbaYAK68xpaq+1Bs3+aldkt5Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=rl0uKp0qabOh0OpzKcLExKEimu+f0lcdxGzw2WKHUhTe1q/g7qzVJMG+PV+PQuMVNydEJqyGFLtesbHMk0PTSPdXISZXRPk9Us8lq3uFGSAFHyZ/lRjF/bVvfojbN7lFRl/ZfxED7pHDx51VnRDm04BZJ6gB74T2S+n9vSavx3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=FI43LJmA; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B5HaWL9007445;
+	Thu, 5 Dec 2024 18:00:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	hx57Lu41ib8MxOqYtwF0SnxIqxAgV7Fue5Y4OtnFhH8=; b=I6Fm9oz4a1EJ7ENG
-	PsbiW0IRJMvanLT1b9O8hYQ4fjnKE5m5MnpbeVEjgveE9lo/7NOchAiXMv+8Iu4K
-	i7iWuzZ582HcXBmKdY/07iKVFf+bgv5DVpRHBEcdH/1TSGMVRk750D3jtEOHEeHf
-	9e6HAOEat3PO6YoEwX1HoDEZs7JRj/FUuezoSRSLIEPka8mHcrNP3u8ulxkVDpZL
-	83ErgxQFuDcEdaTCVMHd0lzTbLaleatr+fK+J29Dgg9wWyhNa0WmVUzC2NpADBeF
-	sh2xeVw8yQSBe7m3xmDGcLDXSUWtecJPRnLBgXqG9MUi4GGeNZ36p9ydt9paBbak
-	bnBO3g==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 439w910eh4-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 05 Dec 2024 17:43:00 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7b66cd9b7f8so3737785a.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Dec 2024 09:43:00 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733420579; x=1734025379;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hx57Lu41ib8MxOqYtwF0SnxIqxAgV7Fue5Y4OtnFhH8=;
-        b=Cx5pFmLiwwn2p1bl1etawRmTbO3v6KrdenftXfUl5IhPu94RV+sCnri7MXUCtLQMoe
-         9Z702CvVm10Wux9ol4Pvb5uHFVVIoXlxA0Es/s3w8NnHK5OP3y97AJJc1mJFSFAd3nUN
-         GnWgcwZHWDFHXUjLamyi+GfXPNP7Pk2N+LWasrDO7OWak6wA4xErMK2KsV0aGC/fHFE4
-         a4R5l6ARziZJFsnKHy5mvV6QHiXiiHKvD8fKpJxr0TmyWHmk7PI8h/BQdFV2AWYtGWdd
-         BxSrQDOZE/CZUH0/xeSdTKknBNQ/Zf1f4v4Nnlw+B/qiHjU11DNc7dTaJroTBQ5YDc9m
-         aAoQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWtfcOrMk552DIWphyHL8GRwrbu8eVHCK0hSZYsJDjMnyVWnPcfiOzNy5+zxGrMt3hfa9PweET6lUFaOjW9@vger.kernel.org
-X-Gm-Message-State: AOJu0YxcO3TKIzJW8Wt5rAakaQoFrMhHV6QO7zFIBoji4MZGiebQerdH
-	VQtewoWOOmQL3K8Z6bD8FNO5Y6icSl6axRCEHTL9B1GlXAOD7lphUqNsdRlY7I2OF+eJl233Uwc
-	UIvixxZ7/r6ecpZCV9a9H1GEJqxUc6v+MbPXOo29NUpxB3TgFqTW6mCugeOfZHvdz
-X-Gm-Gg: ASbGncu4o+x8YPMxWblYMadxaDnZbCXBFSk4R5w4Y2J09BxOO/li8uARyd6X7Ur9Tu5
-	ocN/PgN36Klk7XD0bmTf7NQMpUbtvhZhKTtXJ0JT2N6gP3J50UuzGlCfkozTaMtJ9/5xCwsoGQW
-	60DS7+3xFu8H6rlCn3APtGNkEjITmMjYP3VNKGJW583nEOOVx9ga0PSaddSECu8CZfLEk2a3Shu
-	UVMga12ABFncLvCzYx3tPAl060Ffi4XDbAmv3vwfePHIWXRBCOMgqKbhMFcu0MaR/HPmxPOZjYq
-	PB+ZxBikLktEoypIrkY+dx+UWliT1XI=
-X-Received: by 2002:a05:620a:2a0a:b0:7b1:3bf8:b3c4 with SMTP id af79cd13be357-7b6bca1437cmr6493485a.0.1733420579475;
-        Thu, 05 Dec 2024 09:42:59 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGqTIBVAUtYMFwIH7nMUAnsmsAxJGz+whkQJCNEPVEIPV7Fzd+DE/MjzrxB52NAzHD9Q0SRpg==
-X-Received: by 2002:a05:620a:2a0a:b0:7b1:3bf8:b3c4 with SMTP id af79cd13be357-7b6bca1437cmr6491285a.0.1733420579088;
-        Thu, 05 Dec 2024 09:42:59 -0800 (PST)
-Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa625e4dbf3sm121879066b.12.2024.12.05.09.42.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Dec 2024 09:42:58 -0800 (PST)
-Message-ID: <83d216c4-bf9e-4eb4-86d3-e189602f37cc@oss.qualcomm.com>
-Date: Thu, 5 Dec 2024 18:42:55 +0100
+	7ZYlfxZKV+ppmVXJGBfOMTmVD1CYCHv0LcoKCzf3A6Y=; b=FI43LJmAZ4ELiHhT
+	AIJeED6ddo6kdXywLI0LG/IrwK6DRQxm4noQ1EtzdI+NIKhXNvVqdgjP8MmuTM+k
+	tvMFpg5I5kamJGtWOf39dcpZPS+qyaHRLmLnObT5Sv6vrNPETgC3yIMUtDWHTzQR
+	5cog6SVX3pylQthlQvjqTAU3fT2OrN/ECyD9nXWzR+A8kkf4xp23vuGk61bvW8ZF
+	qLARkHqxFc/ZIDoBhy7+YtMeaE4N4jgBLpzXoE0VL9wl/gvkzOz/bIAMouJfHjTz
+	eD62tGefpi5zqTdtVXKQjj0v32DmvKEak6RP8KFblvSYqvkzhkHWmtH4deLEPpnX
+	jsLt6g==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43ben88g3q-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 05 Dec 2024 18:00:27 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B5I0QHZ029550
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 5 Dec 2024 18:00:26 GMT
+Received: from [10.71.111.113] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 5 Dec 2024
+ 10:00:26 -0800
+Message-ID: <affbe506-6a74-4822-ad83-9db5faa60cf6@quicinc.com>
+Date: Thu, 5 Dec 2024 10:00:25 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,58 +65,103 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 15/22] wifi: ath12k: add BDF address in hardware
- parameter
-To: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        ath12k@lists.infradead.org
-Cc: linux-wireless@vger.kernel.org, Kalle Valo <kvalo@kernel.org>,
-        Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH v3 5/8] dt-bindings: clock: qcom: Add SM8750 GCC
+To: Krzysztof Kozlowski <krzk@kernel.org>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette
+	<mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring
+	<robh@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Jeff Johnson <jjohnson@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20241015182637.955753-1-quic_rajkbhag@quicinc.com>
- <20241015182637.955753-16-quic_rajkbhag@quicinc.com>
- <142f92d7-72e1-433b-948d-2c7e7d37ecfc@oss.qualcomm.com>
- <0796510c-20bd-4a81-bd60-40aacbcf61c0@quicinc.com>
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Taniya Das <quic_tdas@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20241204-sm8750_master_clks-v3-0-1a8f31a53a86@quicinc.com>
+ <20241204-sm8750_master_clks-v3-5-1a8f31a53a86@quicinc.com>
+ <lgkjp7aocv2sij6tiectv5vm3yygcfnaguj4nomxu27scvtggu@uwzvgbvm44nn>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <0796510c-20bd-4a81-bd60-40aacbcf61c0@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+From: Melody Olvera <quic_molvera@quicinc.com>
+In-Reply-To: <lgkjp7aocv2sij6tiectv5vm3yygcfnaguj4nomxu27scvtggu@uwzvgbvm44nn>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: UEoZFkPGvIOscrgDYT_3V9NTgJRAiWEV
-X-Proofpoint-GUID: UEoZFkPGvIOscrgDYT_3V9NTgJRAiWEV
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: qt6cIDWZyLdFd-N4y8m6xA7IJVU2AqSR
+X-Proofpoint-GUID: qt6cIDWZyLdFd-N4y8m6xA7IJVU2AqSR
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 bulkscore=0
- impostorscore=0 phishscore=0 suspectscore=0 adultscore=0 mlxscore=0
- spamscore=0 clxscore=1015 priorityscore=1501 malwarescore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412050128
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 phishscore=0
+ priorityscore=1501 impostorscore=0 mlxlogscore=999 clxscore=1015
+ malwarescore=0 suspectscore=0 spamscore=0 mlxscore=0 lowpriorityscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412050132
 
-On 3.12.2024 10:18 AM, Raj Kumar Bhagat wrote:
-> On 11/4/2024 7:46 PM, Konrad Dybcio wrote:
->> On 15.10.2024 8:26 PM, Raj Kumar Bhagat wrote:
->>> The Ath2k AHB device (IPQ5332) firmware requests BDF_MEM_REGION_TYPE
->>> memory during QMI memory requests. This memory is part of the
->>> HOST_DDR_REGION_TYPE. Therefore, add the BDF memory address to the
->>> hardware parameter and provide this memory address to the firmware
->>> during QMI memory requests.
+
+
+On 12/5/2024 1:28 AM, Krzysztof Kozlowski wrote:
+> On Wed, Dec 04, 2024 at 11:37:17AM -0800, Melody Olvera wrote:
+>> From: Taniya Das <quic_tdas@quicinc.com>
 >>
->> Sounds like something to put in the device tree, no?
+>> Add device tree bindings for the global clock controller on Qualcomm
+>> SM8750 platform.
 >>
-> 
-> This BDF memory address is the RAM offset. We did add this in device tree in
-> version 1. This is removed from device tree in v2 based on the review comment that
-> DT should not store RAM offset.
-> 
-> refer below link:
-> Link: https://lore.kernel.org/all/f8cd9c3d-47e1-4709-9334-78e4790acef0@kernel.org/
+>> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+>> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+>> ---
+>>   .../devicetree/bindings/clock/qcom,sm8750-gcc.yaml |  62 ++++++
+>>   include/dt-bindings/clock/qcom,sm8750-gcc.h        | 226 +++++++++++++++++++++
+>>   2 files changed, 288 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8750-gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8750-gcc.yaml
+>> new file mode 100644
+>> index 0000000000000000000000000000000000000000..aab7039fd28db2f4e2a6b9b7a6340d17ad05156d
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/clock/qcom,sm8750-gcc.yaml
+>> @@ -0,0 +1,62 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/clock/qcom,sm8750-gcc.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm Global Clock & Reset Controller on SM8750
+>> +
+>> +maintainers:
+>> +  - Taniya Das <quic_tdas@quicinc.com>
+>> +
+>> +description: |
+>> +  Qualcomm global clock control module provides the clocks, resets and power
+>> +  domains on SM8750
+>> +
+>> +  See also: include/dt-bindings/clock/qcom,sm8750-gcc.h
+>> +
+>> +properties:
+>> +  compatible:
+>> +    const: qcom,sm8750-gcc
+>> +
+>> +  clocks:
+>> +    items:
+>> +      - description: Board XO source
+>> +      - description: Board Always On XO source
+>> +      - description: Sleep clock source
+>> +      - description: PCIE 0 Pipe clock source
+> Are you absolutely sure there is no PCIE 1 Pipe clock? List will only be
+> able to grow at the end, breaking the order, if it turns out there is
+> such clock input.
 
-Right, I think this could be something under /reserved-memory instead
+Yes; I've checked all our dts and documentation and as far as I can 
+tell, there's
+no PCIE 1 pipe clk.
 
-Konrad
+Thanks,
+Melody
+
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>
+
 
