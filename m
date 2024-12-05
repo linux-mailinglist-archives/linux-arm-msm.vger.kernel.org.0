@@ -1,87 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-40557-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40558-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7FC0F9E5B98
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 17:40:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0143E9E5BA3
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 17:41:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3957D289F0B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 16:40:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AF23B281BDF
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 16:41:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB892221458;
-	Thu,  5 Dec 2024 16:40:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC3C4221471;
+	Thu,  5 Dec 2024 16:41:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Ix/GHlMD"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="cUF+4QTf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D24A8F54
-	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Dec 2024 16:40:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FDAD21D5B4
+	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Dec 2024 16:41:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733416823; cv=none; b=QWTXUztAA3tk+yJsoXBnyt7NyRtSpYd8cbi83R6BIaydhcvS9f9Vrcv9T8LvoQFgmUnWF9px9Rz6tzFHm8Kp2HS4o78kVVzK1U5az4qPtAzd4faltw2NtvST4WbAUqNQuzlg2WYovJJAtiivAWWuNx4DyP2TK9ujddYsxTZptOM=
+	t=1733416907; cv=none; b=J2V4rp7SI3VKwJDe0mPPII0m6zZpxMgfN1/8N6LSBD9Q5gG1mKzwm1tG4b7FN1sFoDScueVAqnOFCRNAM4aOGSyZi2bBIqCq4AqZVP2s5mdYuiyHuh3rgT7/0+kOM/8MQARvuJE6pMy5o5jhXodYYKga3nwHRHkNFPhi9WsVJBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733416823; c=relaxed/simple;
-	bh=O/rZrRQu475vd7ZMflZJoDlOQhu1aGuLBhIqoLYN0sI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=BASXNL93G0jMaOhhNVfBniJJXmD3SqGNZUXDbj41KMRkXxKdexmIDlSyVWgZ8Lszuw42u2ZymmLzpyM8qnNEn57/QDp5ZPavcrvjbO+mvdZrLJV9ym80gS1wlYcx4FSpBE6ynzLz3CV/zEA1Oyg5dgl3mKHD0Eu9FWvIokM2/x8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Ix/GHlMD; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1733416907; c=relaxed/simple;
+	bh=8tCfC6DI8nuiZrU/l+7ThDzR1R+6npDRvcbfa4SjJvk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=K+EpJtZozvOLsgfYo8FMClTGPF4W9YNC/85bARTRgNZs1VI8WOsx17U1cHwH7faedLFyMcL06IiPYIF8SvR8QCgppHC2izYqjIdo3QgwflJKdpdj21r2v/RGS/gEdHP7W2pA5EDJ6pJ7EDWZpiQ5Oy6Cix20SvUi9KEx1pOECWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=cUF+4QTf; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B5EW3tK015930
-	for <linux-arm-msm@vger.kernel.org>; Thu, 5 Dec 2024 16:40:21 GMT
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B5AOL4u029778
+	for <linux-arm-msm@vger.kernel.org>; Thu, 5 Dec 2024 16:41:45 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	content-transfer-encoding:content-type:date:from:in-reply-to
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	aLw29Pi7z7qUWfxhLPSPGB8n/z1YvzoWA9mAxcNsR00=; b=Ix/GHlMDJO3GphmL
-	0kssS+ysRF1FXwcUqysgaOG59L1dsLB+SnhVEesECmxDmsngOXD/aqlEcjpo9h8J
-	608+KDEiyX0yqmbUi7mjbEgLN/WOAJJy+Q8LfRXnE5h1iGTMqsVQ4rFpmmZnXtB6
-	n/wKN4wWpiG1offZU8IaAKTTN+oJ5I6NGSpppjUq6c/B8/J8HsU6+eW2JQV45yZ0
-	AF8RWTPw0bOEc6sI2kev7EeteMfL0j8cwtwekdYc1tj3Gta0fQvYhCYy0TV/uh7M
-	wJumsAvk+3VTA01InyV6dk8XUWzm5IdRmzzgUTFV8pxz0VuDQczWrZHUUFiWYYjt
-	e2gWJg==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43be170c7c-1
+	+VFuxyop2PNnaSHls4qUW96mpevEXDauAAvPu4uj094=; b=cUF+4QTfTryaaSAQ
+	Igi16o5VeA5W+NR+D66HhfrmKAHoDfXB7pnCJMkAiGzLgfQc5uWiqCeh/13+Tcib
+	whg/bnX5Bj554PEuDDwReSB1S44DeQhznfdWNYrWTFEDhh1LeBBzdM1su6q3Qsi3
+	KocdHlzvYZMIcugnMvPqyuCjIuaPp+EK6Pxgzi2dSWX1red8w/GGNIvKf9bibc42
+	slkVoc0Bn76/qLuDS4LsJ43a6N7vL8o0mg/j/V13LqO6t/WWx73HNTNK36jDpHb8
+	fItg0CEgIDKoaWUkGC6qx5L2BTNIkt3j2LadeLxNg4IW+BKepBcOiLhawXmfukBY
+	r5K+lw==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43ayemanpv-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 05 Dec 2024 16:40:20 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-6d3b1d1d8c1so2621786d6.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Dec 2024 08:40:20 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 05 Dec 2024 16:41:45 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7b67127ab77so6996785a.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Dec 2024 08:41:45 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733416820; x=1734021620;
+        d=1e100.net; s=20230601; t=1733416904; x=1734021704;
         h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=aLw29Pi7z7qUWfxhLPSPGB8n/z1YvzoWA9mAxcNsR00=;
-        b=VWnQIbsTSKGNPscMaNZEVJ+rU0r/lCUUus/taUjZA+475rQ3DcxlBbCCEYdYamJ/WC
-         3zynFpfvMdtmWRM+d8SR6JFol5BZNbO+P2VEMqAtEDyFBjlYP5iK2mhZPsW5Fmsrd3Gf
-         Vf61wKV9jEqI/1FlIhKrYtaRFN4ThLak/Bw5Y19nOXaEtawXNmVjK1FL9Ush4JQaBx6p
-         06q9Jg6wPwidlo54a7js4RdXv7yyvNsIuUtT3Lrnue8YApNsviwN12buBhkRy7p39Nvs
-         ho/sOw77FMzy6tTLUtj1JIvqvkEnLMDoX2Bz81CWwhgqM8r/VccsXJjDotELbUODrxe6
-         vstw==
-X-Forwarded-Encrypted: i=1; AJvYcCVhzsTOZMcKYgsDVPEY07axCVBzpnH2cHKlrW2JoSaBj7I6stjgcQNloFzPYSXrkQ7W2caLPJtNOailtElH@vger.kernel.org
-X-Gm-Message-State: AOJu0YxWohTvzH7rBF+Z1K8XBUqgTLlPb4PlT7vBUWdHmPiOEBcqlQZg
-	unzn7yISSxR+EJFjXAPfB7QuRkb1ienSVHnzUJWnGg2GAtDY2Us3c+dumvGTouzXAmAtW+7h4uA
-	unMHCnjaTBJ5yTvg4c19j0j/YZRB9RcQH3Ple4BlOQRgwgyq1jRk2J+GY+bQZWlPZ
-X-Gm-Gg: ASbGnctV7RWxbutVHeO9vooOnThr+PwSTvNub4RnNDxmnjfQ8tIP3CDhNtedN18uv5w
-	LJL5T/Z3UZfp6Ol5hspFhFSr+9GPu2w3QPvMwH2B1tRfrJbehoGpLqiu079wRReyOz2Ca+Whh4D
-	w+4tgP0Iq6555PsFH+sy/Eiv5oqmGXbvLDZ5ZjZbjaU5N13swv8+Kl3Ye796aLMY3beefvCG72+
-	9JZqir5tsBzFcouw008y7XrvhV9KKGrQ3p9vWo5LT/AxNQRCUa69Y993RpXzWQUbKNQD+v1Ys1C
-	MnJjR8yi4iTqgrYBw/Y6SX6BPmpuXY4=
-X-Received: by 2002:ad4:576c:0:b0:6d8:a67e:b2ff with SMTP id 6a1803df08f44-6d8bb81ffdamr62000526d6.8.1733416819955;
-        Thu, 05 Dec 2024 08:40:19 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGQx8n0UgIEsXZ8s+AlTdnCo2VrzHdMoxFqa+DhiPMk0FP4LFAb01Hav3JtSk0XoXhGnAOfHA==
-X-Received: by 2002:ad4:576c:0:b0:6d8:a67e:b2ff with SMTP id 6a1803df08f44-6d8bb81ffdamr62000196d6.8.1733416819528;
-        Thu, 05 Dec 2024 08:40:19 -0800 (PST)
+        bh=+VFuxyop2PNnaSHls4qUW96mpevEXDauAAvPu4uj094=;
+        b=ai0xb64pI+YyymFRgJluhXBo+VHS4VvxUJFGTTf0F+Acw+pXGYffaM7PVUEuKMwl2I
+         lcVxPrCQ/3s2WWyTLLW2j/PNAIxz/TbGc+dkw7pd222M2OEUh5ysw5N1PDbq1LA4k2AC
+         6Z45j/TfPLpeEWO/U2aTiRSxpapJ4OqZKPtMvesrYEJ/xTJVHC0OCuJDv4js2i71fOgM
+         JrH92P1X9HTU9dSGg1tAZSaNAgZFhcH2f30iJXt3EpKL3bM4NdYg1heTLL5o4KWG5YDz
+         Dym2/s+t0cnXJwH9Ce/wv+iOX5tCbhgxnfPhQQux+RSnDms86HVSm2blB9FDtDExoUYi
+         OVdg==
+X-Forwarded-Encrypted: i=1; AJvYcCWL9jtiPlE8a2dnYQvMP9Sr23VhElDYLkhoPd+hygD41RydvprSN1ey9HSp+s05908RuUeVLbGD949xMlll@vger.kernel.org
+X-Gm-Message-State: AOJu0YyUbKayQehq7sfmQ1ARzaGa1YV6LU5+eQNq5ji7cdhfB96tXBiO
+	5Z+WpWz+hbxNfRKmImcNzPV4FPZ3DpaXmPeUByr06bh92gPbgozH9Z+QkTbEeLzyEV0qq0y3igV
+	joDQR4eXeelPWoWpRLkZyCyDsXTCDiWh5ag1bloW5wKBlRVTExhhSwZqtmWiOdshm
+X-Gm-Gg: ASbGnct2irh6gtCkcG9OEwGl7bal4vyk5f5zOJsxn7JehHWhvumrwWShDdaDAukv1II
+	BrN6gglccf8gP6+lezALr8R1eeg2RZysNfKg7ldoZWk52442ogW2Mid4h1nObdkjTuarjNdcmmU
+	eQC+LcjeGQgepiId3jIVxSdi9msJIiZ44lusywKbSGY13RTpptgBa9wra/BnwsTimMX3Kzgs8QH
+	i2v/64hOR/9QJ/McVyEW/T+m4/WjuAo+bThLM2cYKc0v2PQFta6xdZbWpNF7ukKiA+6JA6epjA2
+	mMhxquXRqjOw8XEcKUKl7SHT/JZm5Cg=
+X-Received: by 2002:a05:620a:40c1:b0:7b3:2107:2eef with SMTP id af79cd13be357-7b6a61fc9e3mr649624385a.16.1733416903994;
+        Thu, 05 Dec 2024 08:41:43 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHDAYsrnvectLyVPPs3uQAzrZhInb/RiKYTZnAB1ahxYrWqzq0rvF35LDg9VeTAi8PUk++rCw==
+X-Received: by 2002:a05:620a:40c1:b0:7b3:2107:2eef with SMTP id af79cd13be357-7b6a61fc9e3mr649622885a.16.1733416903640;
+        Thu, 05 Dec 2024 08:41:43 -0800 (PST)
 Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa625e4db6csm114422066b.39.2024.12.05.08.40.15
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5d149a25cc5sm998819a12.7.2024.12.05.08.41.42
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Dec 2024 08:40:18 -0800 (PST)
-Message-ID: <710aa948-d27f-49f6-a4a8-73f6208502c3@oss.qualcomm.com>
-Date: Thu, 5 Dec 2024 17:40:15 +0100
+        Thu, 05 Dec 2024 08:41:43 -0800 (PST)
+Message-ID: <b0702e0d-b33d-4df5-a0d9-06928e102d0b@oss.qualcomm.com>
+Date: Thu, 5 Dec 2024 17:41:41 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,162 +89,110 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/6] phy: qcom: Introduce PCIe UNIPHY 28LP driver
-To: Varadarajan Narayanan <quic_varada@quicinc.com>, lpieralisi@kernel.org,
-        kw@linux.com, manivannan.sadhasivam@linaro.org, robh@kernel.org,
-        bhelgaas@google.com, krzk+dt@kernel.org, conor+dt@kernel.org,
-        vkoul@kernel.org, kishon@kernel.org, andersson@kernel.org,
-        konradybcio@kernel.org, p.zabel@pengutronix.de,
-        quic_nsekar@quicinc.com, dmitry.baryshkov@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-phy@lists.infradead.org
-References: <20241204113329.3195627-1-quic_varada@quicinc.com>
- <20241204113329.3195627-3-quic_varada@quicinc.com>
+Subject: Re: [PATCH v6 03/12] arm64: dts: qcom: sdm845-starqltechn: fix usb
+ regulator mistake
+To: Dzmitry Sankouski <dsankouski@gmail.com>
+Cc: cros-qcom-dts-watchers@chromium.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20241008-starqltechn_integration_upstream-v6-0-5445365d3052@gmail.com>
+ <20241008-starqltechn_integration_upstream-v6-3-5445365d3052@gmail.com>
+ <33e14868-e6ee-45ca-b36c-c553e0dcfbef@oss.qualcomm.com>
+ <CABTCjFCTggnU7UvqcKYq53iRLACBxWE7C1TKRi7dr42o-=0Mqg@mail.gmail.com>
+ <df3e3989-f588-4e53-b6f3-bf8c36330911@oss.qualcomm.com>
+ <CABTCjFAMLOmUrr5+spyWJb_XFmwqC_wE94cHLLRrUeVZGJkJrQ@mail.gmail.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20241204113329.3195627-3-quic_varada@quicinc.com>
+In-Reply-To: <CABTCjFAMLOmUrr5+spyWJb_XFmwqC_wE94cHLLRrUeVZGJkJrQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: x-cyfjTQ9SBT31UW3UvAl1b6bW1DAmkc
-X-Proofpoint-ORIG-GUID: x-cyfjTQ9SBT31UW3UvAl1b6bW1DAmkc
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: EqOCx-IRoi99EE0RZouiW-X0FzEHsxwa
+X-Proofpoint-ORIG-GUID: EqOCx-IRoi99EE0RZouiW-X0FzEHsxwa
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- phishscore=0 spamscore=0 bulkscore=0 priorityscore=1501 mlxscore=0
- impostorscore=0 suspectscore=0 adultscore=0 malwarescore=0 clxscore=1015
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ priorityscore=1501 mlxlogscore=979 phishscore=0 malwarescore=0 mlxscore=0
+ adultscore=0 lowpriorityscore=0 bulkscore=0 suspectscore=0 spamscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2411120000 definitions=main-2412050121
 
-On 4.12.2024 12:33 PM, Varadarajan Narayanan wrote:
-> From: Nitheesh Sekar <quic_nsekar@quicinc.com>
+On 2.12.2024 9:10 PM, Dzmitry Sankouski wrote:
+> пн, 2 дек. 2024 г. в 18:09, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>:
+>>
+>> On 2.12.2024 2:41 PM, Dzmitry Sankouski wrote:
+>>> сб, 26 окт. 2024 г. в 13:41, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>:
+>>>>
+>>>> On 8.10.2024 6:51 PM, Dzmitry Sankouski wrote:
+>>>>> Usb regulator was wrongly pointed to vreg_l1a_0p875.
+>>>>> However, on starqltechn it's powered from vreg_l5a_0p8.
+>>>>>
+>>>>> Fixes: d711b22eee55 ("arm64: dts: qcom: starqltechn: add initial device tree for starqltechn")
+>>>>> Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
+>>>>>
+>>>>> ---
+>>>>
+>>>> I really really doubt that the supplies for on-SoC PHYs were altered,
+>>>> given these regulators are assigned based on their specific characteristics
+>>>>
+>>>
+>>> From rooted android system from klabit87 on starqltechn:
+>>>
+>>> ```
+>>> starqltechn:/ # cat /proc/cpuinfo | grep Hardware
+>>> Hardware        : Qualcomm Technologies, Inc SDM845
+>>> starqltechn:/ # uname -a
+>>> Linux localhost 4.9.186-klabitV6.5 #1 SMP PREEMPT Thu Dec 10 19:42:53
+>>> CST 2020 aarch64
+>>> starqltechn:/ # cat
+>>> /sys/kernel/debug/regulator/soc:rpmh-regulator-ldoa1-pm8998_l1/consumers
+>>> Device-Supply                    EN    Min_uV   Max_uV  load_uA
+>>> ae90000.qcom,dp_display-vdda-0p9 N     880000   880000        0
+>>> 1d87000.ufsphy_mem-vdda-phy      Y     880000   880000    62900
+>>> ae96400.qcom,mdss_dsi_phy0-vdda-0p9 N          0        0        0
+>>> ae94400.qcom,mdss_dsi_phy0-vdda-0p9 Y     880000   880000    36000
+>>> 1c00000.qcom,pcie-vreg-0.9       Y     880000   880000    24000
+>>> pm8998_l1                        N          0        0        0
+>>> starqltechn:/ # cat
+>>> /sys/kernel/debug/regulator/soc:rpmh-regulator-ldoa5-pm8998_l5/consumers
+>>> Device-Supply                    EN    Min_uV   Max_uV  load_uA
+>>> ae90000.qcom,dp_display-vdda-usb1-ss-core N          0        0        0
+>>> 88e2000.qusb-vdd                 Y     800000   800000        0
+>>> 88e8000.ssphy-vdd                Y     800000   800000        0
+>>> pm8998_l5                        N          0        0        0
+>>> ```
+>>>
+>>> I also downloaded kernel source from Samsung, to check its dts,
+>>> and it also powers qusb@88e2000 and ssphy@88e8000 from 'pm8998_l5' regulator.
+>>
+>> Interesting.. could you try to forcefully shut down L5A (I doubt you'll
+>> be able to do so with L1A given it powers so much digital logic), or
+>> set its regulator-min&max-microvolt to a way-too-low voltage (vmin
+>> seems to be 312000)?
+>>
+>> You should then be able to tell fairly easily, depending on whether usb2
+>> still works after a replug
+>>
 > 
-> Add Qualcomm PCIe UNIPHY 28LP driver support present
-> in Qualcomm IPQ5332 SoC and the phy init sequence.
-> 
-> Signed-off-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
-> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> ---
+> Usb doesn't worked in such experiment:
+> Here's the log:
+> ```
+> [    3.541733] ldo5: Setting 312000-312000uV
+> ......
+> [    3.808224] dwc3 a600000.usb: Adding to iommu group 5
+> [    3.823116] qcom-qmp-combo-phy 88e8000.phy: phy initialization timed-out
+> [    3.824323] phy phy-88e8000.phy.0: phy init failed --> -110
+> [    3.825916] dwc3 a600000.usb: error -ETIMEDOUT: failed to initialize core
+> [    3.827208] dwc3 a600000.usb: probe with driver dwc3 failed with error -110
+> [    3.828548] probe of a600000.usb returned 110 after 20399 usecs
 
-[...]
+Wow, I'm really surprised
 
-> +struct qcom_uniphy_pcie_regs {
-> +	unsigned int offset;
-> +	unsigned int val;
-
-u32
-
-> +};
-> +
-> +struct qcom_uniphy_pcie_data {
-> +	int lanes;
-> +	/* 2nd lane offset */
-> +	int lane_offset;
-
-'lanes', 'lane_offset' and '2nd lane' together imply one of:
-
-- there can be more lines, all at an equal offset
-- there can only ever be two lines
-
-Please specify which one is the case
-
-> +	unsigned int phy_type;
-> +	const struct qcom_uniphy_pcie_regs *init_seq;
-> +	unsigned int init_seq_num;
-> +	unsigned int pipe_clk_rate;
-> +};
-> +
-> +struct qcom_uniphy_pcie {
-> +	struct phy phy;
-> +	struct device *dev;
-> +	const struct qcom_uniphy_pcie_data *data;
-> +	struct clk_bulk_data *clks;
-> +	int num_clks;
-> +	struct reset_control *resets;
-> +	void __iomem *base;
-> +};
-> +
-> +#define	phy_to_dw_phy(x)	container_of((x), struct qca_uni_pcie_phy, phy)
-
-A space after #define, please
-
-> +
-> +static const struct qcom_uniphy_pcie_regs ipq5332_regs[] = {
-> +	{
-> +		.offset = PHY_CFG_PLLCFG,
-> +		.val = 0x30,
-> +	}, {
-> +		.offset = PHY_CFG_EIOS_DTCT_REG,
-> +		.val = 0x53ef,
-> +	}, {
-> +		.offset = PHY_CFG_GEN3_ALIGN_HOLDOFF_TIME,
-> +		.val = 0xCf,
-
-mixed case hex.. please make it lowercase
-
-> +	},
-> +};
-> +
-> +static const struct qcom_uniphy_pcie_data ipq5332_x1_data = {
-> +	.lanes		= 1,
-> +	.phy_type	= PHY_TYPE_PCIE_GEN3,
-> +	.init_seq	= ipq5332_regs,
-> +	.init_seq_num	= ARRAY_SIZE(ipq5332_regs),
-> +	.pipe_clk_rate	= 250000000,
-> +};
-> +
-> +static const struct qcom_uniphy_pcie_data ipq5332_x2_data = {
-> +	.lanes		= 2,
-> +	.lane_offset	= 0x800,
-> +	.phy_type	= PHY_TYPE_PCIE_GEN3,
-> +	.init_seq	= ipq5332_regs,
-> +	.init_seq_num	= ARRAY_SIZE(ipq5332_regs),
-> +	.pipe_clk_rate	= 250000000,
-> +};
-
-Are there going to be more UNIPHY-equipped SoCs?
-
-
-> +
-> +static void qcom_uniphy_pcie_init(struct qcom_uniphy_pcie *phy)
-> +{
-> +	const struct qcom_uniphy_pcie_data *data = phy->data;
-> +	const struct qcom_uniphy_pcie_regs *init_seq;
-> +	void __iomem *base = phy->base;
-> +	int lane, i;
-> +
-> +	for (lane = 0; lane != data->lanes; lane++) {
-
-while effectively the same, < would be less eyebrow-raising
-
-> +		init_seq = data->init_seq;
-> +
-> +		for (i = 0; i < data->init_seq_num; i++, init_seq++)
-> +			writel(init_seq->val, base + init_seq->offset);
-
-writel(init_seq[i].val, ...)
-
-> +
-> +		base += data->lane_offset;
-> +	}
-> +}
-> +
-> +static int qcom_uniphy_pcie_power_off(struct phy *x)
-> +{
-> +	struct qcom_uniphy_pcie *phy = phy_get_drvdata(x);
-> +
-> +	clk_bulk_disable_unprepare(phy->num_clks, phy->clks);
-> +
-> +	reset_control_assert(phy->resets);
-
-This can fail, return it instead of zero
-
-[...]
-
-> +MODULE_LICENSE("Dual BSD/GPL");
-
-I think this is too vague, there are many BSD variants
+That said, thank you for confirming
 
 Konrad
 
