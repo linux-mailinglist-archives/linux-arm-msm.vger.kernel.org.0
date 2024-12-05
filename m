@@ -1,220 +1,176 @@
-Return-Path: <linux-arm-msm+bounces-40598-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40599-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 28F899E5CD7
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 18:17:49 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D2EE89E5CE5
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 18:19:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D6EE1284D4C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 17:17:47 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8DB40285451
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 17:19:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4178222576A;
-	Thu,  5 Dec 2024 17:16:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1FC6E224AFB;
+	Thu,  5 Dec 2024 17:19:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BnH/cwnU"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="lMWjN/ih"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16A67222572
-	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Dec 2024 17:16:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3202224AE9
+	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Dec 2024 17:19:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733419019; cv=none; b=e5DjktT9T1UQYYzvWAx2jJd+ti4w4APO1HjLTnH994apKLxj+d2T7myb6QOh0a2uVsBT1a07G5JqU/Llq8Gd0zAiLkIdPWHlklpo7km+OO8VBY/k5X1oEDHDHYyoBaoUA/gjn8ptaECg1tMIDJatvDloRiEaE9Wq5Ji/nRsivHs=
+	t=1733419171; cv=none; b=L9LpGj0fsK54kpoGPFi0zXoAYthrCn/BkwUsJWmj298CHKf8vmPG5NN7iyLMYNL00V/CMr8YT4sNnIGRVk6R01bfWYyi8zbqNz6HyNW1vIJ+K7xACt3z4ay8fmpxaiH/EVAytihCnrM1s6WvTeVUR7JdIBfFJ6x1obl/JSxNh0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733419019; c=relaxed/simple;
-	bh=bq3+bNN7RlTO3LzluOulsa1FFZoUNl4cRiM8pa4tVJg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BgV/gWjYIXuTN7Tz4N2AQKsmY/3pcqrd4EEtxPUKZyvvGRDu+hXPlnfIZeLdmMIA8UDeBQzalXB43VRuADOWCbG48zx+dH1+d3hsy2quS09kH2F8DWYzaO2mxTBV2TfPBpc5KiPm/V2/ZRnMhw3+e++KwvN4BgG5dOc7vV6CNEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BnH/cwnU; arc=none smtp.client-ip=209.85.167.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-53df1d1b726so1200175e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Dec 2024 09:16:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733419015; x=1734023815; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=dk6qeu/c0aGQfq+iRGPsbk8IOsfqn1Rscd5YILluES4=;
-        b=BnH/cwnUIxgrOlQcrvIzL5k5FYyrzFXriVP9v6rT00mU3hmp3yoN1HOtshV03Y2G1r
-         vxCCMXQc52Uf8vaIfv74OzPs5LCSeu2tST7yr9PHTB0do1R0RB9JZ6hI/fe/CXB4BQPu
-         GSqGiOIkQsuCDrbVcJ3Ir2HRh/k+CXd0SuNo/rTIMhkwEz/nQfozUz8Z8lm818BvVyPc
-         IVUFMaRm89L95467XLACtZJVpBvWOS6W1nFL7eqPlUcub0rX3B8e9SkJxueZgGvJb+vx
-         Et0XkaqeYM1h9RoEXoBS2mrWVU6Vi4rYoIknb5Lx0MeaD4U+vddmEaC4eRVHW19ZCt8T
-         bbdA==
+	s=arc-20240116; t=1733419171; c=relaxed/simple;
+	bh=FGdLII5M2j68FMwyvtPhVuF7iwrg4WLaaHEdlGb8rF8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=qx4yP0WnH1yMneiZVxLvwBEN+lXjhy77A9pD1jzsXoqCspnArF4KgYfYnWvW01dS2OTRfn2QzdyYgpnXxLxletm/9aG/mIfPpwo7HucUHLGnU4/HpzJ39Ng5FeFiiDqwJ75JMEvdL/JQ8co97DgBRjozLeo+RAqSKCnB6CrWT6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=lMWjN/ih; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B59vcs9026540
+	for <linux-arm-msm@vger.kernel.org>; Thu, 5 Dec 2024 17:19:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	b2LZXubXxt0wXoBWUWDvvdcZjo8ptXI01DoAjxRfdtY=; b=lMWjN/ihVKDTbF27
+	/9o7ls8/KzeIgN0rOdEyPVBdhVcQTuC+L473GzrXFYcs35I7Q3FPfIx21YWNL4Vi
+	gO6K8npY5ApznvQtDKlEGdR/l/G2+JAUO8v/kUhRkbYIdPsib4YB0pKgdVlOdFg+
+	yZjU+d1K+4j1x59OdFWROS6sg5X2cKGoW+msfvpOysVSPiNeu5FiRyWEO5TnP6n9
+	kyc6JP8a6masegVwmZ32/brPpW7aA8ek9YL+s7hW/TwTlHZkiJj8G0Q8jJXyWU7Y
+	MKFwHlKLqG4crLdAEUuPlijtXPDeK2zmLIa9Vhvg0mp3P4B1nGDII8TuBxIdumFw
+	41RPqQ==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43ba0kh7fh-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 05 Dec 2024 17:19:28 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-466a20c8e57so1589111cf.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Dec 2024 09:19:28 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733419015; x=1734023815;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dk6qeu/c0aGQfq+iRGPsbk8IOsfqn1Rscd5YILluES4=;
-        b=VibsxfTPjU1MFSWn9jGmDoHz7+O/hEM+he2KKXQHnfI/IJd3WOd/MUA4ZjNolw/3wN
-         yU11paLS46j+iinSOurtywNM1c4KOM/vK2YveSbRHfdiqKPfJwkMkATYWzCf1Yl9v3Ix
-         RS3D4tkuH47+lZBX3QLcTg0ljeKpe4utwOll73pco41LzBoYAy/FKcSZKeeUGnKhrYiV
-         kM5htyQ+v3VEDr5uVpQArS/iZ5bCqCkqaDicBYJD3V2Rac9EHtRk8ZdI6I2LAwtCUYG7
-         3dsBWXxkPL9Ch0xmJeSwBuZEC/iD3NcWKeHZB4T/0Q+qcN+/ZTS7u1tW4Q8myjCj49G5
-         89Lw==
-X-Forwarded-Encrypted: i=1; AJvYcCUfbIXhgc2RePlKSTxH89PaVjehqj2/VJ2FxxXopjtbfg/G7HRc57uddWB1KyrY8YzgdQp+FSnVp47FmkuG@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy+p+Tv7To1RNYSg3CuOs7WfSG+ZA8JaE33AY9nXBETp8WtVmFR
-	cY7RhnaSPMjuExZIGVyLgLb17R+HmnabBmV807KyQNvu0eBXIfYSK8rqdUQjt+DI5AO8O6KV6We
-	z
-X-Gm-Gg: ASbGnct2ZfTgsbW0+sgQ6WPmGjmoK3YNtkkE0gr/3C6Zzbg+pOMlC3iFD3i8qHFLqxt
-	j9d+48qasmt0EETHdbgZwvmtYz5IXGAX4iZ8kBPLMBU/shWlbX5gagBDlDOJGCn2hD+00t/Wokx
-	7xozjpZJfxueoBLzcEKTPlWjF9ncUX+TbMsvMJFsztZL5zOEXvxKujeYx7KgnSRv2hrXnqCCt2R
-	x6uI9BYRoD++fBPICacnYOiYlCiszWu8nThGTG50WM+KAMXgpsH8NEdlvqq730IC5x8EzZX5LJv
-	Wn4Aq7htdro1CbRuGSZoQ+NQdOhW4A==
-X-Google-Smtp-Source: AGHT+IEQVBkrgjioAw00LjhLtyaVjJhAuyebF7gUV1LhQmmwc8b638t447Vk/yLDEXbFDy5Y4yCjMA==
-X-Received: by 2002:a05:6512:4024:b0:53e:28ec:6000 with SMTP id 2adb3069b0e04-53e28ec6045mr525398e87.34.1733419014352;
-        Thu, 05 Dec 2024 09:16:54 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53e22974fccsm295501e87.69.2024.12.05.09.16.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Dec 2024 09:16:53 -0800 (PST)
-Date: Thu, 5 Dec 2024 19:16:50 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
-Cc: Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, quic_msavaliy@quicinc.com, 
-	quic_vtanuku@quicinc.com
-Subject: Re: [PATCH v4] dmaengine: qcom: gpi: Add GPI immediate DMA support
- for SPI protocol
-Message-ID: <d74ibj74mrluovh3ylok3dyctf3r4iimoosegdair5acvpre6c@w5xfl6adtfto>
-References: <20241205170611.18566-1-quic_jseerapu@quicinc.com>
+        d=1e100.net; s=20230601; t=1733419167; x=1734023967;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=b2LZXubXxt0wXoBWUWDvvdcZjo8ptXI01DoAjxRfdtY=;
+        b=hyrLP04BAN1F8rJxDNbdX5rDpYZCOIYGfe6ggiPWmdH5/CTz0eauV4wGPTcsbMhor7
+         mfbF03wDZVJZofkSgfmqqRuTFU9aI5rbCwBi/Z608MR1mEROVXOXt+vzhhrdX0ozmARf
+         EfubR7YMZIppx4TwsIld9H0X+kXWxP4s08gjJDtGfXs3sq9VoF4VLNdaZuVruv+x+oX6
+         vW90/1vp6fIffFaQfNL+g4qJSlXVNZNyFKjmHMn3X8IqFeZVlB4SPZQ7LnUD6/WYPcdp
+         50FVI+1SlaS3dGJTtSTuvRapW1Hf6/KjrjWOrkkmsRYJoKXE4O1y1UkQ4mqgYTlV+8tW
+         r20w==
+X-Forwarded-Encrypted: i=1; AJvYcCVGcXVamKec16ncwhJghkLQtiLVZ6X8qNFwGuAEXqwnpenw81aiVbb7NkmZUtIMW9QNaSeBTvJIavTuSMwz@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw6S2gYttRdJ/W2s8Hx2ejNEkbMcl/E0n2K6YNQXP8Cm4ko2ixE
+	332wj+6rf9axR95WpL+eZZa7Pe0Orr39qmlq6bCGekn640n/uW9/tExb3dBZYhlD3UVX5xVpfRC
+	IckpT6ncxZ1p33k6sb2IIzbIrSRF7KYijY4f7GEVan45COmP3W43us12w960/WarO7sDwINl4
+X-Gm-Gg: ASbGncvPED5SjWjp95ItmeasVR6lIZTpqjqxa669RX9XAm2RkmbeDlnq6LT4eTKwxNw
+	EBkpaGkBJgXwyjP9cZ2QRdpk86m43fogY4d2Qf6D7OSGJ5GEmnbRX25M3ejiHe3dSy0h8SscMuI
+	xIGjOQakf16ARmgQQl9Y6Cmchwzv7JCnO2s1As0oiAs1gyPduPLvvkkaw55yDanDNPolwSoMrdl
+	YdwN9lojNfkdlO4NFVcn+MpT0uGSD2+9VmPW6occuA2fwaejCBXNQReoIysrtt3WVc3spB2HmvU
+	x8RGLldgdyz8BE+5R1hOP+H2gRwdqrc=
+X-Received: by 2002:ac8:5f07:0:b0:461:6599:b9a with SMTP id d75a77b69052e-4670c3742e7mr76163451cf.11.1733419165705;
+        Thu, 05 Dec 2024 09:19:25 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEU+qJE6QKbgG5HlW99mhr99xiUoytBvTGuUz4N/wFy5f4STO28PHZ+UXuC1vGJjl+c0VW2ow==
+X-Received: by 2002:ac8:5f07:0:b0:461:6599:b9a with SMTP id d75a77b69052e-4670c3742e7mr76163011cf.11.1733419165176;
+        Thu, 05 Dec 2024 09:19:25 -0800 (PST)
+Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa625e4db84sm120014166b.41.2024.12.05.09.19.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 05 Dec 2024 09:19:24 -0800 (PST)
+Message-ID: <4c1fe789-5190-465d-bb41-3fe1534d2523@oss.qualcomm.com>
+Date: Thu, 5 Dec 2024 18:19:21 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241205170611.18566-1-quic_jseerapu@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v14 7/8] arm64: dts: qcom: ipq9574: Add SPI nand support
+To: Md Sadre Alam <quic_mdalam@quicinc.com>, broonie@kernel.org,
+        robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+        andersson@kernel.org, konradybcio@kernel.org,
+        miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
+        manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-spi@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-mtd@lists.infradead.org
+Cc: quic_srichara@quicinc.com, quic_varada@quicinc.com
+References: <20241120091507.1404368-1-quic_mdalam@quicinc.com>
+ <20241120091507.1404368-8-quic_mdalam@quicinc.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20241120091507.1404368-8-quic_mdalam@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: lbQZR29emyJkwXtnxR7KizxoGoPxfwyW
+X-Proofpoint-GUID: lbQZR29emyJkwXtnxR7KizxoGoPxfwyW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 suspectscore=0
+ mlxscore=0 bulkscore=0 mlxlogscore=999 spamscore=0 malwarescore=0
+ impostorscore=0 lowpriorityscore=0 clxscore=1015 priorityscore=1501
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412050126
 
-On Thu, Dec 05, 2024 at 10:36:11PM +0530, Jyothi Kumar Seerapu wrote:
-> The DMA TRE(Transfer ring element) buffer contains the DMA
-> buffer address. Accessing data from this address can cause
-> significant delays in SPI transfers, which can be mitigated to
-> some extent by utilizing immediate DMA support.
+On 20.11.2024 10:15 AM, Md Sadre Alam wrote:
+> Add SPI NAND support for ipq9574 SoC.
 > 
-> QCOM GPI DMA hardware supports an immediate DMA feature for data
-> up to 8 bytes, storing the data directly in the DMA TRE buffer
-> instead of the DMA buffer address. This enhancement enables faster
-> SPI data transfers.
-> 
-> This optimization reduces the average transfer time from 25 us to
-> 16 us for a single SPI transfer of 8 bytes length, with a clock
-> frequency of 50 MHz.
-> 
-> Signed-off-by: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
+> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
 > ---
-> 
-> v3 -> v4:
->    - Instead using extra variable(immediate_dma) for Immediate dma
->      condition check, made it to inlined.
->    - Removed the extra brackets around Immediate dma condition check.
-> 
->    Link to v3:
-> 	https://lore.kernel.org/lkml/20241204122059.24239-1-quic_jseerapu@quicinc.com/ 
-> 
-> v2 -> v3:
->    - When to enable Immediate DMA support, control is moved to GPI driver
->      from SPI driver.
->    - Optimizations are done in GPI driver related to immediate dma changes.
->    - Removed the immediate dma supported changes in qcom-gpi-dma.h file
->      and handled in GPI driver.
-> 
->    Link to v2:
-> 	https://lore.kernel.org/all/20241128133351.24593-2-quic_jseerapu@quicinc.com/
-> 	https://lore.kernel.org/all/20241128133351.24593-3-quic_jseerapu@quicinc.com/
-> 
-> v1 -> v2:
->    - Separated the patches to dmaengine and spi subsystems
->    - Removed the changes which are not required for this feature from
->      qcom-gpi-dma.h file.
->    - Removed the type conversions used in gpi_create_spi_tre.
-> 
->    Link to v1:
-> 	https://lore.kernel.org/lkml/20241121115201.2191-2-quic_jseerapu@quicinc.com/
-> 
->  drivers/dma/qcom/gpi.c | 31 ++++++++++++++++++++++++++-----
->  1 file changed, 26 insertions(+), 5 deletions(-)
-> 
-> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
-> index 52a7c8f2498f..9d4fc760bbe6 100644
-> --- a/drivers/dma/qcom/gpi.c
-> +++ b/drivers/dma/qcom/gpi.c
-> @@ -27,6 +27,7 @@
->  #define TRE_FLAGS_IEOT		BIT(9)
->  #define TRE_FLAGS_BEI		BIT(10)
->  #define TRE_FLAGS_LINK		BIT(11)
-> +#define TRE_FLAGS_IMMEDIATE_DMA	BIT(16)
->  #define TRE_FLAGS_TYPE		GENMASK(23, 16)
+
+[...]
+
+Feel free to put dt patches in a separate series after Miquel picks
+up the mtd changes
+
+>  &usb_0_dwc3 {
+> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> index d1fd35ebc4a2..45fb26bc9480 100644
+
+board and dtsi patches should be 2 separate ones
+
+> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> @@ -330,6 +330,33 @@ tcsr: syscon@1937000 {
+>  			reg = <0x01937000 0x21000>;
+>  		};
 >  
->  /* SPI CONFIG0 WD0 */
-> @@ -64,6 +65,7 @@
->  
->  /* DMA TRE */
->  #define TRE_DMA_LEN		GENMASK(23, 0)
-> +#define TRE_DMA_IMMEDIATE_LEN	GENMASK(3, 0)
->  
->  /* Register offsets from gpi-top */
->  #define GPII_n_CH_k_CNTXT_0_OFFS(n, k)	(0x20000 + (0x4000 * (n)) + (0x80 * (k)))
-> @@ -1711,6 +1713,7 @@ static int gpi_create_spi_tre(struct gchan *chan, struct gpi_desc *desc,
->  	dma_addr_t address;
->  	struct gpi_tre *tre;
->  	unsigned int i;
-> +	int len;
->  
->  	/* first create config tre if applicable */
->  	if (direction == DMA_MEM_TO_DEV && spi->set_config) {
-> @@ -1763,14 +1766,32 @@ static int gpi_create_spi_tre(struct gchan *chan, struct gpi_desc *desc,
->  	tre_idx++;
->  
->  	address = sg_dma_address(sgl);
-> -	tre->dword[0] = lower_32_bits(address);
-> -	tre->dword[1] = upper_32_bits(address);
-> +	len = sg_dma_len(sgl);
->  
-> -	tre->dword[2] = u32_encode_bits(sg_dma_len(sgl), TRE_DMA_LEN);
-> +	/* Support Immediate dma for write transfers for data length up to 8 bytes */
-> +	if (direction == DMA_MEM_TO_DEV && len <= 2 * sizeof(tre->dword[0])) {
-> +		/*
-> +		 * For Immediate dma, data length may not always be length of 8 bytes,
-> +		 * it can be length less than 8, hence initialize both dword's with 0
-> +		 */
-> +		tre->dword[0] = 0;
-> +		tre->dword[1] = 0;
-> +		memcpy(&tre->dword[0], sg_virt(sgl), len);
+> +		qpic_bam: dma-controller@7984000 {
+> +			compatible = "qcom,bam-v1.7.0";
+> +			reg = <0x7984000 0x1c000>;
+
+Please pad the address part to 8 hex digits with leading zeroes
+
+> +			interrupts = <GIC_SPI 146 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks = <&gcc GCC_QPIC_AHB_CLK>;
+> +			clock-names = "bam_clk";
+> +			#dma-cells = <1>;
+> +			qcom,ee = <0>;
+> +			status = "disabled";
+> +		};
 > +
-> +		tre->dword[2] = u32_encode_bits(len, TRE_DMA_IMMEDIATE_LEN);
-> +	} else {
-> +		tre->dword[0] = lower_32_bits(address);
-> +		tre->dword[1] = upper_32_bits(address);
-> +
-> +		tre->dword[2] = u32_encode_bits(len, TRE_DMA_LEN);
-> +	}
->  
->  	tre->dword[3] = u32_encode_bits(TRE_TYPE_DMA, TRE_FLAGS_TYPE);
-> -	if (direction == DMA_MEM_TO_DEV)
-> -		tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_IEOT);
-> +	tre->dword[3] |= u32_encode_bits(direction == DMA_MEM_TO_DEV &&
-> +					 len <= 2 * sizeof(tre->dword[0]),
-> +					 TRE_FLAGS_IMMEDIATE_DMA);
+> +		qpic_nand: spi@79b0000 {
+> +			compatible = "qcom,ipq9574-snand";
+> +			reg = <0x79b0000 0x10000>;
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +			clocks = <&gcc GCC_QPIC_CLK>,
+> +				 <&gcc GCC_QPIC_AHB_CLK>,
+> +				 <&gcc GCC_QPIC_IO_MACRO_CLK>;
+> +			clock-names = "core", "aon", "iom";
+> +			dmas = <&qpic_bam 0>,
+> +			       <&qpic_bam 1>,
+> +			       <&qpic_bam 2>;
+> +			dma-names = "tx", "rx", "cmd";
 
-Don't repeat the condition, put it inside if.
+Please make clock/dma names a vertical list, like clocks/dmas
 
-> +	tre->dword[3] |= u32_encode_bits(direction == DMA_MEM_TO_DEV,
-> +					 TRE_FLAGS_IEOT);
->  
->  	for (i = 0; i < tre_idx; i++)
->  		dev_dbg(dev, "TRE:%d %x:%x:%x:%x\n", i, desc->tre[i].dword[0],
-> -- 
-> 2.17.1
-> 
+Also, is it okay not to use any of the GCC_QPIC_BCR/
+GCC_QPIC_AHB_ARES/GCC_QPIC_ARES resets found in GCC?
 
--- 
-With best wishes
-Dmitry
+Konrad
 
