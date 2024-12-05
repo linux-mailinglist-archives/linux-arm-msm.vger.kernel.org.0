@@ -1,60 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-40469-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40470-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7C2909E518F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 10:40:59 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6AEEC9E51A8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 10:47:47 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3C99C281CE2
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 09:40:58 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 182151881520
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 09:47:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2BBD41D5AC6;
-	Thu,  5 Dec 2024 09:40:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8CBAB1D61BC;
+	Thu,  5 Dec 2024 09:47:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HEywny6v"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CJqGGy5p"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFCD318FC70;
-	Thu,  5 Dec 2024 09:40:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A5C41D5171;
+	Thu,  5 Dec 2024 09:47:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733391655; cv=none; b=tY6TTKgxQlUJ5vcAGSPP7YGgo2zGW9aNUPtGGSnJJiNJGJKdxmvpAx833/sPz3XosLMKTBMeb0tNe2wA0Jj1HQDiu6iGUb1YtiyqJh0KpZsSyUgK5yyJeYUhvNIU5kH2x6t59h/o6S8Vc70r5JOcMo7AzA4Vw1If3BJotMaMROY=
+	t=1733392061; cv=none; b=Nk1c1x5ksrKwBojSoGPPjxSa+sFesWR5wTgNGgzZzRajpxLeGs9uUPnk4c8Iziqwoyb0JQWwN3v/KWTQ9j0ey3hajC50lkVdgtBvob/63Z79lD7XO7qOw9AqEb4amxWMj95JSufWAilecil6+LLjYJFUcDFZDYtmaXLCRPG0vEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733391655; c=relaxed/simple;
-	bh=5ROpg4tyy9Zr0FNDj5tkTa7O3Ob1JCqoHg4b4OHAoKw=;
+	s=arc-20240116; t=1733392061; c=relaxed/simple;
+	bh=xkjQ1LCSn0m1UxXdzzbdUaPfHjEpu/TP8K1XT00Hy1E=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ak0/b72p3rPDMcMUR06X6ujNCPiRyZ+X0oTY4xTHOn0Nnrt7/1Yu7lyPtnVGtfgma3MAloF1Lf5zUyPz6PMKMiP9QFRqy9j7JZ6LhkhIxVSP7qnK7fY2ckpjdaqXCW74GHBAYJJvxerlNsZCe/gFqndq9hG8hcv+1nW9cfd9NmM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HEywny6v; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 031DCC4CED6;
-	Thu,  5 Dec 2024 09:40:53 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=lOvl+g9ZEWNcW+by1QRObFYBQcT9n/PJQHwo/SHELESFiNPti92DPiAB/7yvbotwcHqjs27lbeD/EmRi1EAWS/aRCsjV7tlssUtckL0iSLibHi0t3XIUUNS7Ark6C1VF1kJOJhrwGVvUeQdr+BzoiLPZ5RRRFSYWDeqE/xzGyIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CJqGGy5p; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23B98C4CED1;
+	Thu,  5 Dec 2024 09:47:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733391654;
-	bh=5ROpg4tyy9Zr0FNDj5tkTa7O3Ob1JCqoHg4b4OHAoKw=;
+	s=k20201202; t=1733392054;
+	bh=xkjQ1LCSn0m1UxXdzzbdUaPfHjEpu/TP8K1XT00Hy1E=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HEywny6vCtZ6O1yZ4OB5Q4IVM5/WAOz7K5EkjdMhzMQx+gojGyCEgks+w+tYxQ9K4
-	 1q4JfnW//05XU3N+gYiYckdpxisa96txECEuQXgA96a55lv0QEyqdeZrE3eHui/Rbl
-	 Zv0SfxxayRKEcjKS/C+wMK8GKNMTxf6TIgZHI/8W1XdfkDw05DQjfFO5t+lzZhYVNU
-	 t8inZMOZDP1wzkY75Lxv0b4rCQi6x4vMcPkKiLKNQdvksZx7yTMwoQ0Zj5S8Tx40BF
-	 amJMJX/YA/RiTQaeAAgtALig+wDHF2EoZ+7Sh6hKYOT9Y5tKt/XpBHsi0ZEcb64OUs
-	 fWse9Xj0hNSog==
-Date: Thu, 5 Dec 2024 10:40:52 +0100
+	b=CJqGGy5pxlef3RiAbt0dxRPk8mUiaP+guKX9nc2EviVw7+EF7xo7kxqnY/1V4s5lz
+	 Xjh5KPmFIo0V109eYqmeOgf2RaBH95Xc9AWZeeq4RfsqP5gVia2KH/+V3TBFmHay2v
+	 +F9qUXZxkD2IRjmcEVXQmluebLnb2o4Fhuew1IdcR1i5zcMRVwiWNA7ZbRrLaK+N6S
+	 q3Hp0eUjtBezxnW5iDpfa+sZRcZmzROj67WRI2YTpsObmudDvSZXH5Hp3kbzQrVTuP
+	 lLzTEyMtOzfxR7bAsS4JPlIo0BuAAM/GhkBws2oREg0DQ61ZVnD1+SOQ/f8HTmwzug
+	 QG6yaIfjPVIoQ==
+Date: Thu, 5 Dec 2024 10:47:17 +0100
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Varadarajan Narayanan <quic_varada@quicinc.com>
-Cc: lpieralisi@kernel.org, kw@linux.com, manivannan.sadhasivam@linaro.org, 
-	robh@kernel.org, bhelgaas@google.com, krzk+dt@kernel.org, conor+dt@kernel.org, 
-	vkoul@kernel.org, kishon@kernel.org, andersson@kernel.org, konradybcio@kernel.org, 
-	p.zabel@pengutronix.de, quic_nsekar@quicinc.com, dmitry.baryshkov@linaro.org, 
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org, 
-	Praveenkumar I <quic_ipkumar@quicinc.com>
-Subject: Re: [PATCH v2 3/6] dt-bindings: PCI: qcom: Add IPQ5332 SoC
-Message-ID: <zgu3ygylkuayheq5lampite7dpli2sxsbgaa2cgwcshmm2sax4@6uprsoldacof>
-References: <20241204113329.3195627-1-quic_varada@quicinc.com>
- <20241204113329.3195627-4-quic_varada@quicinc.com>
+To: Lei Wei <quic_leiwei@quicinc.com>
+Cc: "David S. Miller" <davem@davemloft.net>, 
+	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, 
+	Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Andrew Lunn <andrew@lunn.ch>, 
+	Heiner Kallweit <hkallweit1@gmail.com>, Russell King <linux@armlinux.org.uk>, netdev@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, quic_kkumarcs@quicinc.com, 
+	quic_suruchia@quicinc.com, quic_pavir@quicinc.com, quic_linchen@quicinc.com, 
+	quic_luoj@quicinc.com, srinivas.kandagatla@linaro.org, bartosz.golaszewski@linaro.org, 
+	vsmuthu@qti.qualcomm.com, john@phrozen.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH net-next v2 1/5] dt-bindings: net: pcs: Add Ethernet PCS
+ for Qualcomm IPQ9574 SoC
+Message-ID: <hjdvvki5semqcqn3au7kiqe7njehzxn5rxb4fq3exfzww6zdat@xrzen7rjvckb>
+References: <20241204-ipq_pcs_rc1-v2-0-26155f5364a1@quicinc.com>
+ <20241204-ipq_pcs_rc1-v2-1-26155f5364a1@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,34 +66,24 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20241204113329.3195627-4-quic_varada@quicinc.com>
+In-Reply-To: <20241204-ipq_pcs_rc1-v2-1-26155f5364a1@quicinc.com>
 
-On Wed, Dec 04, 2024 at 05:03:26PM +0530, Varadarajan Narayanan wrote:
-> From: Praveenkumar I <quic_ipkumar@quicinc.com>
+On Wed, Dec 04, 2024 at 10:43:53PM +0800, Lei Wei wrote:
+> The 'UNIPHY' PCS block in the IPQ9574 SoC includes PCS and SerDes
+> functions. It supports different interface modes to enable Ethernet
+> MAC connections to different types of external PHYs/switch. It includes
+> PCS functions for 1Gbps and 2.5Gbps interface modes and XPCS functions
+> for 10Gbps interface modes. There are three UNIPHY (PCS) instances
+> in IPQ9574 SoC which provide PCS/XPCS functions to the six Ethernet
+> ports.
 > 
-> Add support for the PCIe controller on the Qualcomm
-> IPQ5332 SoC to the bindings.
-> 
-> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> Signed-off-by: Lei Wei <quic_leiwei@quicinc.com>
 > ---
-> v2: Use ipq9574 clock & reset details instead of a new one for ipq5332
-> ---
->  Documentation/devicetree/bindings/pci/qcom,pcie.yaml | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> index bd87f6b49d68..a7c5d0ce7de8 100644
-> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> @@ -21,6 +21,7 @@ properties:
->            - qcom,pcie-apq8064
->            - qcom,pcie-apq8084
->            - qcom,pcie-ipq4019
-> +          - qcom,pcie-ipq5332
+>  .../bindings/net/pcs/qcom,ipq9574-pcs.yaml         | 190 +++++++++++++++++++++
+>  include/dt-bindings/net/qcom,ipq9574-pcs.h         |  15 ++
+>  2 files changed, 205 insertions(+)
 
-Looks like qcom,pcie-ipq6018 to me. Don't grow ID table in your driver
-needlessly, but use proper fallbacks.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
