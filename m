@@ -1,142 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-40580-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40582-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 253A69E5C06
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 17:49:10 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3DB6C9E5C1F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 17:51:35 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CFFB428F994
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 16:49:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 65FBB1882ACE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 16:50:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA06E226EC8;
-	Thu,  5 Dec 2024 16:45:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D324222593;
+	Thu,  5 Dec 2024 16:50:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="MmadT7w0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Clce7oIH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36859221473
-	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Dec 2024 16:45:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 392BB221463;
+	Thu,  5 Dec 2024 16:50:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733417119; cv=none; b=GfstwYOutpjXYOpRT/CcTM0v1YuHxNxjZZwuLS5Hf+qmun8eQvjz8qY1MPswNCXFZQQdqPblQ5DJ+iDtgYwWIW63e5sx395Aq9lPLcbgezRg2k8IkHZDKN3ejpyaZk0WZBYsEdlyEv8+5e/+FFk4VDawvzo2F5tHHN2uPmPoPTA=
+	t=1733417449; cv=none; b=Yl+fC/QnkiN9257FRDCL3u8HEDwOV6i+OuO2l8G8wgzaMs8HfCoeJ/3vDR/355JsXJEjQhflpS43tjArVKfpGsH2aXhIXKgdV6+1akrIL5GE8sn64lsA8RnKRXwneKxoS9tM1Qqpq8YXQYutSGBoHrhzucHaG5q8+uKeTqQzWR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733417119; c=relaxed/simple;
-	bh=zGxUDR6c4ZU+Y5Se8IU+zzOYqXF4mfTOL3cNhJL7c5o=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=caQqpC9Lr+8uI40DB8hKtFkqtY3cC228wpEfh4yTQb0hFRpziWy9rdshsz5XRqi/qDwOzJpgbdGtGHZ2mlE+6BlK+579EbAnJ8maOuTssPc+eUHMX1mEOpxs+rUWSzfqu1ijb1iOy8S+BgecpSpI+AKdGNDfQZ8DwQM/QLNeOTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=MmadT7w0; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B5BoZmU029227
-	for <linux-arm-msm@vger.kernel.org>; Thu, 5 Dec 2024 16:45:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	L6x0KHCQDiAykCeDoL6SPhnPeHMpJmBzuR92rcSSHCE=; b=MmadT7w0t4FI82xy
-	/QDeA8tEaN4ILLY5OyZZ9btHhflbxwFDE/wj5RAIHom883jTYjujOJiZdG9Fl6Ux
-	mFlCxztrCxUvSWwSKs6l421UBlr4U7LjQeYzCEoS0XdhJUy1NGIBwXH2u3hW36Tj
-	x/vol0xl2GJEmgpORubvQwpbCmw+7qtJFOao4JJlbLR1VUPArGt3tmGrOUIWoMQH
-	hDYL9GPChX9QVtVaHnmeDY1TeeFDyGrJHsjULT+XtkF44tdLkEGgQcNzP7VGM228
-	ZcWhznX2WNYGcMLvRXQWcTeCYZ3lXPHOkMHvwsb3tB2TWUYi0Hzey9pXO7NWm8Jq
-	O1fdEw==
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43bbnj0tuj-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 05 Dec 2024 16:45:16 +0000 (GMT)
-Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-6d880eea0a1so2956086d6.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Dec 2024 08:45:16 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733417116; x=1734021916;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=L6x0KHCQDiAykCeDoL6SPhnPeHMpJmBzuR92rcSSHCE=;
-        b=uHR4b0DtInqSY1h8eE/ZN8pj44Ims7H6Dv+VdUfHsJtaXM0i7hQMjedwSQuGCbjRKH
-         u42KjU7IoAwYuE/AVzVJQZEXGQd/2fXBscW1pc4j6Z3PBMWVCPjsdzLU0bGG/8vESK6D
-         Qo5SAlRfmhcKup3XJu2quFq9427oaMLSz6MI9WFQ5gviX9fjSeYcDTSgMJovHmqtDrHg
-         rA8N65ZcNsSbr6X2Npxo78E7gxojzWjGlWH/JIRfLuxT465dWkvtN7MzLQtWDePzcMUr
-         cp1xW/RqeWzBILQlmczVQp/+AwW2biUQUDdr/k1QFrpMqIgsUR9sJ7YCKEJa8Gn9NJbb
-         QtVQ==
-X-Gm-Message-State: AOJu0YxPermmkbtw5ps7rObvfsz/dccv1zWcZK2zwpki+tsNLXp8GKmf
-	qxzLQCmik5QoPCnTSzGLuiOb/kGNcQSZq7T3ylXh7CGOhr9qdHicaiQfBvqhOikmyn5srhSFQcM
-	k+rHM1re3IIn513sxGBUsDgrYt5Dz/6VR7Apl3fs+dPk670tcsJUfUW09WVwOrPxa
-X-Gm-Gg: ASbGncvjwJQD3KkAUDQsz9DinMRyU67I3kxIq2rb7HExvbqVmmPyS+yU6Fgq31oNEKb
-	Od2gTbO4cOqLsiD4ygsWoYaomeMVT8Q66YrU05ArOf/+8dbcQhAF/x6nrVU0q0YrgKyM9wXtCGP
-	gbft4jtpxe8h8tee8QcAEvMmF77S7IkSznEAjiFx0re/6m2Qpib9YAjlIHj5SZ2jWvTzYOdlzKh
-	tRsVrzLHVggwwlgS32Kc6Vlyv5NdYnBuHUaopBLNoXZqPa+Y8PAtUj8lK+SgOxBqxGGjsmEyhmH
-	ezngs/zALkA8CuQ4ENdeu2IWLvsM7VU=
-X-Received: by 2002:a05:6214:2627:b0:6d8:b562:efcd with SMTP id 6a1803df08f44-6d8b73a489cmr65325316d6.7.1733417116174;
-        Thu, 05 Dec 2024 08:45:16 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHMc4CkwAoyme+72kcypxiH9g4yohl2nQ8tC0nVxXgfCDWMGWk+Bw8wSqwheuFgPrHSioLgfA==
-X-Received: by 2002:a05:6214:2627:b0:6d8:b562:efcd with SMTP id 6a1803df08f44-6d8b73a489cmr65325086d6.7.1733417115832;
-        Thu, 05 Dec 2024 08:45:15 -0800 (PST)
-Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa62601b5d2sm115958266b.93.2024.12.05.08.45.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Dec 2024 08:45:15 -0800 (PST)
-Message-ID: <b9225284-7830-4aa4-aed2-7f58fb7320e8@oss.qualcomm.com>
-Date: Thu, 5 Dec 2024 17:45:13 +0100
+	s=arc-20240116; t=1733417449; c=relaxed/simple;
+	bh=eRPnmWYSQhSAftRfnhYQ4HXep5ZbnD5fgGUew/TmFlk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=RxYnQN+a0UNOeoIc4RYsgeLgixuYspFJfOC7L4OiDhvtcO+HPF52F0jdXEPOdH3PnuDNreSjtK8ISFLxpb98yIqm5Sypv0HBiLQckIgw0qhdpb7rSXDNB5E9/nUxzprcHriw3HEOV/ZGwrz98lf0VSceDu7/n66/F4U/V1z+O4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Clce7oIH; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id B4C7FC4CED1;
+	Thu,  5 Dec 2024 16:50:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1733417448;
+	bh=eRPnmWYSQhSAftRfnhYQ4HXep5ZbnD5fgGUew/TmFlk=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=Clce7oIHQ8D58lkYxmHINUg+XNNoK/LhpP0LOOuhTb0Bxa44m+4NL5+0mFWvgkl2V
+	 rKNJozgLbbJtE+XvoWzSx7xBW+XrMYQHUKNdT/Dqi4oi+uSCpE+tdSyml1p+CT1NLr
+	 RA40iYXECF8WqKXnbLU6gQMS9x8cf7ouJA01YuhFG7FhxqomIhQu6XqheVjMfbIOMU
+	 +609M9hPhPFKilP3gRd78Qzc0aNkaJEOH+9bTl/OdAdrc2a0tOa66RewpEIvl7poe6
+	 c50dx9ebUyXD54lr2Jz7jLjQfQisxGkZQe7A3WV/y/Tqmf0KVoOpwJwC+lnFST61lx
+	 XTeeELDtC0L9A==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 99FF3E77170;
+	Thu,  5 Dec 2024 16:50:48 +0000 (UTC)
+From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.linaro.org@kernel.org>
+Subject: [PATCH 0/2] cpufreq: qcom: Clock provider fixes
+Date: Thu, 05 Dec 2024 22:20:27 +0530
+Message-Id: <20241205-qcom-cpufreq-clk-fix-v1-0-de46c82e0fe5@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 6/7] arm64: dts: qcom: Add board dts files for SM8750
- MTP and QRD
-To: Melody Olvera <quic_molvera@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-References: <20241204-sm8750_master_dt-v3-0-4d5a8269950b@quicinc.com>
- <20241204-sm8750_master_dt-v3-6-4d5a8269950b@quicinc.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20241204-sm8750_master_dt-v3-6-4d5a8269950b@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: mgA-PUvsbUgKlSc4uwTfuHMp7nj8DCJs
-X-Proofpoint-ORIG-GUID: mgA-PUvsbUgKlSc4uwTfuHMp7nj8DCJs
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 adultscore=0
- clxscore=1015 priorityscore=1501 mlxscore=0 phishscore=0 impostorscore=0
- malwarescore=0 mlxlogscore=830 lowpriorityscore=0 spamscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2412050121
+X-B4-Tracking: v=1; b=H4sIANPZUWcC/x2MSQqAMBDAviJzdqAWN/yKeKjtVAe3LiiC+HeLx
+ wSSByIFpghd9kCgiyMfe4Iiz0DPap8I2SQGKWRZSFGh18eG2p02kEe9Lmj5RlULO1pjmrEtIaU
+ uUNL/th/e9wNM/J98ZgAAAA==
+To: "Rafael J. Wysocki" <rafael@kernel.org>, 
+ Viresh Kumar <viresh.kumar@linaro.org>, 
+ Xiu Jianfeng <xiujianfeng@huawei.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
+ linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Johan Hovold <johan+linaro@kernel.org>, Stephen Boyd <sboyd@kernel.org>, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+X-Mailer: b4 0.14.1
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1286;
+ i=manivannan.sadhasivam@linaro.org; h=from:subject:message-id;
+ bh=eRPnmWYSQhSAftRfnhYQ4HXep5ZbnD5fgGUew/TmFlk=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBnUdnlN4Zr7BQSl7WojL2S8I1Hp6T7Kvw8mk7HT
+ 09RtBftfCWJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCZ1HZ5QAKCRBVnxHm/pHO
+ 9aA/CACJ/g/EEk/bHPAxG0CiFqR6jDDHBhVCpzWWDbQv+5L+cQDLw5GmgiiZ/sYzcHS3+pXS09p
+ cDdXyDqQjZaN+up+agDGQc9EPzSuaE6I1PWoNJ/eyeR3UjB5/x7eBBAwmJdVTo4chS7AdYUv18V
+ ghz7NBoCQvqFXKmEf2r3RbHn/D0lI9kTpxfs7SepHAqzifg8bHYq1gw+XWbYazjgzM8OBGAKb1c
+ CUnWjysjDfvL/ilLiJgONqPH00Wzh6JBeZ5jtIovE+uwW0DTHSTEBbwegIWKIUMsx3Vyxh8bR4F
+ NtA+Eqgc0IEKyNYa+NAYPmAstOnOjVPV91gWFt7/jw5OuL+A
+X-Developer-Key: i=manivannan.sadhasivam@linaro.org; a=openpgp;
+ fpr=C668AEC3C3188E4C611465E7488550E901166008
+X-Endpoint-Received: by B4 Relay for
+ manivannan.sadhasivam@linaro.org/default with auth_id=185
+X-Original-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reply-To: manivannan.sadhasivam@linaro.org
 
-On 5.12.2024 12:18 AM, Melody Olvera wrote:
-> Add MTP and QRD dts files for SM8750 describing board clocks, regulators,
-> gpio keys, etc.
-> 
-> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
-> ---
+Hi,
 
-[...]
+This series has a couple of fixes for the Qcom CPUFreq clock provider.
+Patch 1 fixes an issue where incorrect rate might be reported if LMh IRQ is not
+available for a platform (issue identified based on code inspection). Patch 2
+fixes a regression reported for v6.13-rc1 [1]. The regression was triggered by
+commit 25f1c96a0e84 ("clk: Fix invalid execution of clk_set_rate"), which fixed
+the behavior of the clk_set_rate() API. Even though the commit got reverted now,
+patch 2 fixes the issue in the clock provider code.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+This series is tested on Qcom RB5 development board.
 
-> +&tlmm {
-> +	/* reserved for secure world */
-> +	gpio-reserved-ranges = <36 4>, <74 1>;
-> +};
+[1] https://lore.kernel.org/all/20241202100621.29209-1-johan+linaro@kernel.org
 
-Any chance you could describe what those specifically are?
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+Manivannan Sadhasivam (2):
+      cpufreq: qcom: Fix qcom_cpufreq_hw_recalc_rate() to query LUT if LMh IRQ is not available
+      cpufreq: qcom: Implement clk_ops::determine_rate() for qcom_cpufreq* clocks
 
-Konrad
+ drivers/cpufreq/qcom-cpufreq-hw.c | 34 ++++++++++++++++++++++++----------
+ 1 file changed, 24 insertions(+), 10 deletions(-)
+---
+base-commit: 40384c840ea1944d7c5a392e8975ed088ecf0b37
+change-id: 20241205-qcom-cpufreq-clk-fix-a60fbfdd7b84
+
+Best regards,
+-- 
+Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+
+
 
