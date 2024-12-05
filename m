@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-40514-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40515-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A2549E5895
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 15:36:28 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7D8AC9E589C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 15:37:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 05D7A16ADD5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 14:36:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id F19D21884131
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 14:37:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D252219A9F;
-	Thu,  5 Dec 2024 14:36:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E0D5521A420;
+	Thu,  5 Dec 2024 14:37:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gZDqDnKx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HecOzWY9"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B78D149C64;
-	Thu,  5 Dec 2024 14:36:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE835218AA2;
+	Thu,  5 Dec 2024 14:37:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733409385; cv=none; b=NRa4WpJ1kYybVEDosT0Bpy1nzv0bSka7EsriDFpkZQaCavPpYDEdPmsYCiZ9W+9A42xroAit6RUmfKH8ZHCU4KuIRsWIG/r0eYZaIi0e2oqFzpEUjZvASlEwsJLaAqJGWSUzXecfGGvaQvRppc24sAhSgvF7Ebd16lcx1qa8GHM=
+	t=1733409450; cv=none; b=l5EGRljUpCwvt1kQAw+4qmxVl//jU8BhN6hOjVv9mR27yrPOUH+l1cvRiZsDZpRCu/cPlqXZxc8ABEHqRMqMAd23Foi7ROZOiUQ4GMsq/XSto6Trr2Jac8BLJ+Z3OqaVBcsLbRiBZaXO05jyrEU27QP/SFRWUC0UCsldEE0wbXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733409385; c=relaxed/simple;
-	bh=wtomcVo0XIDbkQJd7QmUU1q9BragtQICINz8u7Zpi5c=;
+	s=arc-20240116; t=1733409450; c=relaxed/simple;
+	bh=0J2hMWSvco7vFNnExN7blNk3xokHHwbt/opqG9+nv2U=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lg0HYBn0cemFMJJhB4HqzCMXxkp4iahnQIHM6Eh/jkRuxxaAscLv6qq/5gB3aEWcN/AibI5NLk3Lcaf+CdJB4enqe2H7fmnHHre1XQu+rlhFdXx8ARUK7CwAwfwfGGlsDrgt7vjTwKzEds2St3av7dRMWZqe62U52jTgyYnqnio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gZDqDnKx; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E781DC4CED1;
-	Thu,  5 Dec 2024 14:36:18 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=HtiEz0SbpqLuKjgkuSZXNeve1C7pO/WOnoSrEjHodHUnegROJgRXnRA2C5DTEi6MYvQIR3xGMUDsms2xofBWjocLVGPxtBubJEZXpNoPFs19FO5UVXTB0/FaTtQVbQcid812c2YTNdRIqw1azPTuIlVblsv4MsoAd3p9gZnrf2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HecOzWY9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6766C4CEDF;
+	Thu,  5 Dec 2024 14:37:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733409384;
-	bh=wtomcVo0XIDbkQJd7QmUU1q9BragtQICINz8u7Zpi5c=;
+	s=k20201202; t=1733409450;
+	bh=0J2hMWSvco7vFNnExN7blNk3xokHHwbt/opqG9+nv2U=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=gZDqDnKxYAR/aJxBMKEPI6HxnFpjYkzUWfq3KHVRK1SRJdac98xCO9Y9IIABPKAdg
-	 8CZ7xP6JnAncGlXbWVbyucVeThh1njkWduW8A65xrx8FNeimQDmLf6YjrsLPMic9DM
-	 8n434RwBq2anNhcbQ74RoJbKHBU7KR5ugPUpYd44pG+7mciyLbBwHTjJATPnM+n3Ft
-	 PjWrf+WT/a/EGL9/x374qwu/LqUB7YLmAHmlHedTXH8kXVTPbll0Gz4gEDnTBWOxu9
-	 KQuCT9p9WFMo8GRjMJXF0ztCozNXaGPjzTyJuTjtRyWbSk7CMgjlUMZ/UVqtqPqIWa
-	 DKMDGEkFX9Hgg==
-Message-ID: <21ba63be-9a43-479f-93f8-ce1553135e15@kernel.org>
-Date: Thu, 5 Dec 2024 15:36:17 +0100
+	b=HecOzWY9oxB6giuA0i3riAvoH2KbXNUuHf4Xm8KAVIbUNodZVLTlaPRD+/Jl9z/ko
+	 weYs7+nfnFi4pu8bvG7dWQ1n1+6DHLREEsBQHmeaw3rRZjyiAQTtA8enaNFL/BQDCU
+	 wFi77rH64CcC+NvuaLsvKMcUuSLz3luJLbYXdZqfKGNqxXuyhZ+8G2W+O6UQuBH6au
+	 gssy43sznVD1sbsBKN86xeFcYKPjYiT8d0qGzwS8DowvMowTmHJtl+xP7Jtb/R/jgJ
+	 XH5M2nUaxC3qqBHoB+3j4QAGuQSsXEk7HPFGuQyFMdYXCLA9HsB3r2qSpImMJWLb5S
+	 ky8ZtgRZpEKaA==
+Message-ID: <ce3237d3-e281-4534-ae40-f6762d25a690@kernel.org>
+Date: Thu, 5 Dec 2024 15:37:22 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/3] dt-bindings: net: bluetooth: qca: Expand
- firmware-name property
+Subject: Re: [PATCH v3 2/3] Bluetooth: qca: Expand firmware-name to load
+ specific nvm and rampatch
 To: Cheng Jiang <quic_chejiang@quicinc.com>,
  Marcel Holtmann <marcel@holtmann.org>,
  Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Rob Herring
@@ -65,7 +65,7 @@ Cc: linux-bluetooth@vger.kernel.org, devicetree@vger.kernel.org,
  quic_jiaymao@quicinc.com, quic_shuaz@quicinc.com, quic_zijuhu@quicinc.com,
  quic_mohamull@quicinc.com
 References: <20241205102213.1281865-1-quic_chejiang@quicinc.com>
- <20241205102213.1281865-2-quic_chejiang@quicinc.com>
+ <20241205102213.1281865-3-quic_chejiang@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -111,34 +111,24 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20241205102213.1281865-2-quic_chejiang@quicinc.com>
+In-Reply-To: <20241205102213.1281865-3-quic_chejiang@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 05/12/2024 11:22, Cheng Jiang wrote:
-> Expand the firmware-name property to specify the names of NVM and
-> rampatch firmware to load. This update will support loading specific
-> firmware (nvm and rampatch) for certain chips, like the QCA6698
-> Bluetooth chip, which shares the same IP core as the WCN6855 but has
-> different RF components and RAM sizes, requiring new firmware files.
-> 
-> We might use different connectivity boards on the same platform. For
-> example, QCA6698-based boards can support either a two-antenna or
-> three-antenna solution, both of which work on the sa8775p-ride platform.
-> Due to differences in connectivity boards and variations in RF
-> performance from different foundries, different NVM configurations are
-> used based on the board ID.
-> 
-> So In firmware-name, if the NVM file has an extension, the NVM file will
-> be used. Otherwise, the system will first try the .bNN (board ID) file,
-> and if that fails, it will fall back to the .bin file.
-> 
-> Possible configurations:
-> firmware-name = "QCA6698/hpnv21.bin", "QCA6698/hpbtfw21.tlv";
-> firmware-name = "QCA6698/hpnv21", "QCA6698/hpbtfw21.tlv";
-> firmware-name = "QCA6698/hpnv21.bin";
-This configuration will fail tests. Please test the binding and DTS
-before v4.
+> @@ -2309,8 +2322,10 @@ static int qca_serdev_probe(struct serdev_device *serdev)
+>  	qcadev->serdev_hu.serdev = serdev;
+>  	data = device_get_match_data(&serdev->dev);
+>  	serdev_device_set_drvdata(serdev, qcadev);
+> -	device_property_read_string(&serdev->dev, "firmware-name",
+> -					 &qcadev->firmware_name);
+> +	of_property_read_string_index(serdev->dev.of_node, "firmware-name",
+> +					 0, &qcadev->firmware_name);
+> +	of_property_read_string_index(serdev->dev.of_node, "firmware-name",
+> +					 1, &qcadev->rampatch_name);
+No, that's entirely different API. You are not supposed to drop here
+device-API and revert to OF. It is not a related change, either.
+
 
 Best regards,
 Krzysztof
