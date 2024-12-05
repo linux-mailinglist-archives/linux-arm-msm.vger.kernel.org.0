@@ -1,100 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-40511-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40512-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3783A9E572F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 14:32:17 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 467F19E577D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 14:44:38 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E6EB928210C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 13:32:15 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 219F9162536
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 13:44:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 06B39218EB7;
-	Thu,  5 Dec 2024 13:31:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03DD4218AD1;
+	Thu,  5 Dec 2024 13:44:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DXL2acNq"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pSeNvS1F"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF745218EAF;
-	Thu,  5 Dec 2024 13:31:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4CC820D51C;
+	Thu,  5 Dec 2024 13:44:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733405509; cv=none; b=VSKe50kuR6IpP4DfAf2EZdopjOGdYQvjLKyeyCh4RkGzQEw67esTqV+cMbTBmbm0yfuA7LXsSPiXSmLS07vc6WxaPeGFA9OpsHzEY4QtYOpRot3tuCvQk6dfizUVurJLgJ3YeVtuE+XiwNm8+EnSfnfbRCGDRu2zwf5YL4eaUH4=
+	t=1733406273; cv=none; b=VLb6t9Ji8OMUAjhv3EvSE1YeqJvgCqW2cY6CCeGRMe+EDB5xHjfB+61cnUCx02kdsfIaEpIv+MjPBxjVk0m4rZ6fGBHzmaFibSKMlQ8StejnXjQB9YlqBfD/tA3+GAZfJMlnWDfpI1uPyzVeq3KmUsW/uMKQCYBJJLcNgHT+l9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733405509; c=relaxed/simple;
-	bh=WlgjCAS3F3ARAKZEAKQFnrIjg4AKSbxmMgw9Hy07CCY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mWFWiDMRUcunGNUoaPfn7JYbGuYANsWCSAOXRzMItB/fPcRDT+2/uK5+h+TYIM7P/InpvOiGLQNgeZRUp5KMy4qS1+E0eYe2y2pBR7XO77N4FnXYFseHR5NN2dpe9JLNbvJFU0t+TYF/cNTukjTSZEQNqSQ5bEQQsM4bkL8vLOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DXL2acNq; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98E8BC4CEDC;
-	Thu,  5 Dec 2024 13:31:46 +0000 (UTC)
+	s=arc-20240116; t=1733406273; c=relaxed/simple;
+	bh=7qd9ukMCfLX+3kIyTtuM6RCc1gUTy6aBIeGgFPUmZM0=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=AL/wdvFtUawH28VwBVeFv3UIutRhmp3EPcq+QQybf7e7o64ZSieItiBXbTnvoOnSddKYUJ35yzxpE6xljkk08UP0QBAOCs4YYi3YdZZUg87q49y0rlvbVyBH4Ht855lf0zYLoZDIgJnmXsIF0OoELgOulhj4zIHZ+fIUrQCcNO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pSeNvS1F; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 549C1C4CED1;
+	Thu,  5 Dec 2024 13:44:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733405509;
-	bh=WlgjCAS3F3ARAKZEAKQFnrIjg4AKSbxmMgw9Hy07CCY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=DXL2acNq5+laWr1VhdgaBXuIKQ4YiJeo2ypPoNMc0niOp9v2TxSps34kFoGhXz+b1
-	 nBjusCQ9hRRqM4+I64mLmuYVes585Rvbd2dSkQLst79TSGZPNKZT+dmRaCKO2Z5spG
-	 G6WyHWCP8egps+ZwztSS80aa7EMXjgm0AEKgEGQ0xReZXAeKvxRXew6hHVLm9LNaKC
-	 HqbVoCvzMFH4F83NAgdyajKdCsrzbEw8kSefIIYuPBWLYTubbdOKHMjS1tKnN4XObj
-	 eFtSqYYi44Bnp/oOADtGFmPF1Pqyrwhbo1bDD0W6haoUKwwb7c6klLOFj6C9UwlDNt
-	 4JJ7IXTar3fUg==
-Date: Thu, 5 Dec 2024 13:31:43 +0000
-From: Mark Brown <broonie@kernel.org>
-To: Dzmitry Sankouski <dsankouski@gmail.com>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Liam Girdwood <lgirdwood@gmail.com>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
-	linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] ASoC: codecs: wcd9335: Add define for number of DAIs
-Message-ID: <08e07421-8a9b-4535-9cd5-9383ca9024b3@sirena.org.uk>
-References: <20241205084021.35610-1-krzysztof.kozlowski@linaro.org>
- <c3d2477b-f12a-47dd-bf95-927e6c0d8fd5@sirena.org.uk>
- <CABTCjFA9DyRzca93qoS5_+sfc2RLfNVNqN14WVfKODjHykwGJQ@mail.gmail.com>
+	s=k20201202; t=1733406273;
+	bh=7qd9ukMCfLX+3kIyTtuM6RCc1gUTy6aBIeGgFPUmZM0=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=pSeNvS1FGTNF5y+od7mzfK7pk/9WxWuXPQzi5NTurX7TbotP1nEyp4F5v7XRqrxPR
+	 mbvo8QpaSWo6Hv2U2yVX62Y3jZ08zySNZCnsm6MZJjpzYxcQSpVJ1Waax48jqmKk7G
+	 KYEyoRgvQL6th3hJXwVQfUALAF6GvNHF0m1ifjOos0D4/0cIgPhJdEIPhK878NiF70
+	 IrmC4lmAogYFGHxJoVQEIIkj3XZjXN5zZRowgyyTij6G/GNKJhgg7zVTznDNuGSnYR
+	 46xfspmrtQtnhxJalP4uu5iAR8qjVpnsJFI2uj9f9joXux+jFlO1HXdUk+IiX0e+vf
+	 mS/YiKUQV1I6w==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <maz@kernel.org>)
+	id 1tJC9f-000pdd-5a;
+	Thu, 05 Dec 2024 13:44:31 +0000
+Date: Thu, 05 Dec 2024 13:44:30 +0000
+Message-ID: <86frn2tfb5.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Sibi Sankar <quic_sibis@quicinc.com>
+Cc: Johan Hovold <johan@kernel.org>,
+	<sudeep.holla@arm.com>,
+	<cristian.marussi@arm.com>,
+	<andersson@kernel.org>,
+	<konrad.dybcio@linaro.org>,
+	<robh+dt@kernel.org>,
+	<krzysztof.kozlowski+dt@linaro.org>,
+	<dmitry.baryshkov@linaro.org>,
+	<linux-kernel@vger.kernel.org>,
+	<linux-arm-msm@vger.kernel.org>,
+	<devicetree@vger.kernel.org>,
+	<quic_rgottimu@quicinc.com>,
+	<quic_kshivnan@quicinc.com>,
+	<conor+dt@kernel.org>,
+	<quic_nkela@quicinc.com>,
+	<quic_psodagud@quicinc.com>,
+	<abel.vesa@linaro.org>
+Subject: Re: [PATCH V7 0/2] qcom: x1e80100: Enable CPUFreq
+In-Reply-To: <0fd14fb1-736d-cf7f-128f-658bda0de583@quicinc.com>
+References: <20241030130840.2890904-1-quic_sibis@quicinc.com>
+	<ZyTQ9QD1tEkhQ9eu@hovoldconsulting.com>
+	<86plnf11yf.wl-maz@kernel.org>
+	<ZyTjiiGc2ApoID9Y@hovoldconsulting.com>
+	<86o72z10b6.wl-maz@kernel.org>
+	<ZypOY-NCDN9fdMAR@hovoldconsulting.com>
+	<86ed3p1rdq.wl-maz@kernel.org>
+	<0fd14fb1-736d-cf7f-128f-658bda0de583@quicinc.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/29.4
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="I3DviFfx2zdhxkGX"
-Content-Disposition: inline
-In-Reply-To: <CABTCjFA9DyRzca93qoS5_+sfc2RLfNVNqN14WVfKODjHykwGJQ@mail.gmail.com>
-X-Cookie: System checkpoint complete.
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: quic_sibis@quicinc.com, johan@kernel.org, sudeep.holla@arm.com, cristian.marussi@arm.com, andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, dmitry.baryshkov@linaro.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, quic_rgottimu@quicinc.com, quic_kshivnan@quicinc.com, conor+dt@kernel.org, quic_nkela@quicinc.com, quic_psodagud@quicinc.com, abel.vesa@linaro.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
+On Thu, 05 Dec 2024 11:23:05 +0000,
+Sibi Sankar <quic_sibis@quicinc.com> wrote:
+> 
+> 
+> 
+> On 11/5/24 23:42, Marc Zyngier wrote:
+> > On Tue, 05 Nov 2024 16:57:07 +0000,
+> > Johan Hovold <johan@kernel.org> wrote:
+> >> 
+> >> On Fri, Nov 01, 2024 at 02:43:57PM +0000, Marc Zyngier wrote:
+> >>> On Fri, 01 Nov 2024 14:19:54 +0000,
+> >>> Johan Hovold <johan@kernel.org> wrote:
+> >> 
+> >>>> The side-effects and these remaining warnings are addressed by this
+> >>>> series:
+> >>>> 
+> >>>> 	https://lore.kernel.org/all/20241030125512.2884761-1-quic_sibis@quicinc.com/
+> >>>> 
+> >>>> but I think we should try to make the warnings a bit more informative
+> >>>> (and less scary) by printing something along the lines of:
+> >>>> 
+> >>>> 	arm-scmi arm-scmi.0.auto: [Firmware Bug]: Ignoring duplicate OPP 3417600 for NCC
+> >>>> 
+> >>>> instead.
+> >>> 
+> >>> Indeed. Seeing [Firmware Bug] has a comforting feeling of
+> >>> familiarity... :)
+> >>> 
+> >>> I wonder whether the same sort of reset happen on more "commercial"
+> >>> systems (such as some of the laptops). You expect that people look at
+> >>> the cpufreq stuff closely, and don't see things exploding like we are.
+> >> 
+> >> I finally got around to getting my Lenovo ThinkPad T14s to boot (it
+> >> refuses to start the kernel when using GRUB, and it's not due to the
+> >> known 64 GB memory issue as it only has 32 GB)
+> > 
+> > <cry>
+> > I know the feeling. My devkit can't use GRUB either, so I added a
+> > hook to the GRUB config to generate EFI scripts that directly execute
+> > the kernel with initrd, dtb, and command line.
+> > 
+> > This is probably the worse firmware I've seen in a very long while.
+> 
+> The PERF_LEVEL_GET implementation in the SCP firmware side
+> is the reason for the crash :|, currently there is a bug
+> in the kernel that picks up index that we set with LEVEL_SET
+> with fast channel and that masks the crash. I was told the
+> crash happens when idle states are enabled and a regular
+> LEVEL_GET message is triggered from the kernel. This was
+> fixed a while back but it will take a while to flow back
+> to all the devices. It should already be out CRD's.
 
---I3DviFfx2zdhxkGX
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+But this fix will never reach some platforms, such as the devkit, and
+we cannot mandate that people update to the latest anyway. How do we
+distinguish between good and bad firmware versions?
 
-On Thu, Dec 05, 2024 at 04:29:45PM +0300, Dzmitry Sankouski wrote:
+Thanks,
 
-> This is the 1st patch in series, and NUM_CODEC_DAIS redefine from bindings
-> is deleted in the 2nd one.
+	M.
 
-I know, that still means this change is broken.
-
---I3DviFfx2zdhxkGX
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmdRqz4ACgkQJNaLcl1U
-h9Dcygf5ATT2STPmD4jp75AW1WldR0rtXa+QNBp3VmNI3O3U2tIDbpr4rVuICxiV
-WdRUEb08sXFyWuHV4k294ySDbdl7umtfI0eHx4NCug915XsAzbzv0MzMFXITeV83
-RC0NuOa05QdzhtVHfoRvvqBd89xJX6aoDQ+z1PKAkTy8a3iVwlQ4bMlnKJQ+HLk3
-zlFYVAgXgBGRzXH78vJwUzx0D+KVjTFSt7atuxgRVekJCXEy5AnpRHgP3bwFMlSO
-6eaUaJEiNpJydyukMrVLkOMr32R4+72Jax4mPZPVk/9ClJ0yo3d7jcpnztbO0KU+
-Sg2CvQnNqtqYCrFaeKfx3v00NwPpvQ==
-=dh68
------END PGP SIGNATURE-----
-
---I3DviFfx2zdhxkGX--
+-- 
+Without deviation from the norm, progress is not possible.
 
