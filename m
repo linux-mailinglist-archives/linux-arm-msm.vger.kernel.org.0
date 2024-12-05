@@ -1,116 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-40466-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40467-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 322489E5178
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 10:35:45 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 11B079E5180
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 10:38:28 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D21D61881C7D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 09:35:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BB107285737
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 09:38:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D0A901D5AD3;
-	Thu,  5 Dec 2024 09:35:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B0481D63C5;
+	Thu,  5 Dec 2024 09:38:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TtY1vNeR"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tFoBwUq9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD2B81CF7A1
-	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Dec 2024 09:35:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF5431D5175;
+	Thu,  5 Dec 2024 09:38:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733391338; cv=none; b=SwvrU899vs2G0AfbJHSRjaLI4PJDVyKdGjZrWKvqlLrkNz3fUvQFypnYUi4IQ+dthWIg/HtjksDgxAsl7XiRhMfwxOcZck7R2SWubqCuem2FB6qULU6nqJ8pMH2UXcUmGpcTy+Lndk07H1F7fwr9J92BOAhvJUgPvnS90HgUV1A=
+	t=1733391488; cv=none; b=eF8fkIvLF4JXOZWZiZB+bHP4vEqQRG5CROJ6ZwvK9/6CPJ+IAApFU5+QX7jxFnXpHdw8+9HQZ/ZPqoyOeZBegXOk7HXotEoGQG5oyULM/W5GAFg9eV+7R8wQNlgUKvTEfnFfsv3skIWHqpLsLlfK5vrMJUxUFDRMrHyie8grINs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733391338; c=relaxed/simple;
-	bh=ioj11kRVt4ZzslmCkvbLnmBtMfYRxYdlCp3WQpO83Kk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Xm04HaHe2xeC+4pyOngwM26DBjd82xuVcxAAlcg+rM/wkUXB1VeBlQdZZSqAq+bxqokMmJqzZWurB1GskvbDytJYKVZ1DpNAXrEvQ9UdfdtNkCTl2QWx+3pRkKfgzqJaUwtWxipF09l/UZRfgQ1trkj3bB3Vs01Ra23QxL2boXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TtY1vNeR; arc=none smtp.client-ip=209.85.218.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a9f1d76dab1so132432766b.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Dec 2024 01:35:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733391335; x=1733996135; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=tjDqS05st+cDBpUDwPN55de5TW7/RedGp9MsJFKfa1A=;
-        b=TtY1vNeRwVPA7C2f9kOILVD+K2JN3BjkhbBN2fmGzwDDKHyiLYZtWnri0Miffn1ZbS
-         wy4wJLHVt21F28iQNiEnstnDe5BoksA5p3WJ+C34lJgKv/T3glfpSCvq9AVnidOH5TeO
-         qlbK0q3+fr67YVsAqBjDz8AwqI4HoFGyqtG2oxDPLxvLQ2HSaEMTcglOtaqgx6xK5tSe
-         zS0u6gxtecC2MPKzDZBc3edT9wgXcOPBKJh1Vw5Za94xAAlV9jCA4gm2VUykMu6QmkW9
-         A+e1KdLLnZNP3pl/zkN13Niju0bZhfd2/IFaSjsvyczB9LZaF0uyxWCvIKrINFgJy+rM
-         APXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733391335; x=1733996135;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tjDqS05st+cDBpUDwPN55de5TW7/RedGp9MsJFKfa1A=;
-        b=HD7fKrU956L1DtB0G5PIqxX7EW600F97fPdcCHay/c90WAbs9dUR3dGhplRYTRUl9m
-         a7zgsyKEHrI/q460091YSyQ3oAdzryVev94hvTiUyXKBS7+UoSuMo9jQpTPLhlBoip5F
-         5LXWRdm7hLZ5toZWdASi+JwgmUDS5v02W9+ATF2g0vlrw/1TLx6z96H65whA/hmV863N
-         NNJAqIgM0rKQpW+6BHnpgxkFHB0kK8SoCAq16WUzUO6z5jg3un9QC7Pg3zgSqFupxyZQ
-         QlSaEq41ep056VHvUTRiaUEgs0kVOqC2jzu0NEpWlrX3U6erjr9/Phg34dx4sX2GM0M9
-         23Ig==
-X-Forwarded-Encrypted: i=1; AJvYcCWW9UgqGsNSA1RGRQnSLUsD5Q5KKBg8287GUaOynp1G9ssLwxtGSeCDXJ1Mp/rYMxbVP8wAgiFnTVKDU8xP@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxvon0CgMJ1NYJjjkM4s/gTIS6RxItnJkO8NWWSQCoavMILetcS
-	uzZ0kt0ZxRd+OImr5yP1wdkmgso5KSEJPqm/GcKZrC8hO49kM9DMfe684WPLXOY=
-X-Gm-Gg: ASbGnctrp18CvAWQqHx5WeUzCrRZRX0ak4E2kdGaUUBVfFar8rUKtE0snZFoSEHQpM7
-	dZ0nDNmpA0YBK5WCJ1uRrcqokvJQzC2K6R5MZMs8pt8m+GJwdm9FNmVY41qbidVM+9pCTgq1NSO
-	bNlX18tlKRer0LZWwWpoFf3UYJy/MO2PnrvKqQ1YILSd8rCRXDEYUbDZMUl9+q/Hj2srk+mS3mB
-	AqqD+TMmfhoAqYcWTfcCjKwC3tDGvLqZFCtVIzirkGOK9x6iWIjsTFyzwFpJos=
-X-Google-Smtp-Source: AGHT+IHFm4UZarfubQus9XeHuRq9CcZZpSvgMn+7LHQv0GsiN/Tz1ExqT9VocSpHFgTuSVRxvEIx3A==
-X-Received: by 2002:a17:907:b98:b0:aa6:1678:fdc with SMTP id a640c23a62f3a-aa616781260mr394843066b.58.1733391335136;
-        Thu, 05 Dec 2024 01:35:35 -0800 (PST)
-Received: from [192.168.0.40] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa62601b609sm66188266b.109.2024.12.05.01.35.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Dec 2024 01:35:34 -0800 (PST)
-Message-ID: <51d340e1-a62a-4851-a2be-545580bf4088@linaro.org>
-Date: Thu, 5 Dec 2024 09:35:33 +0000
+	s=arc-20240116; t=1733391488; c=relaxed/simple;
+	bh=HRontmhpAXB7zdihojZafgOYClH6jtz6uOSjDmx3JAk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Fqk98II6EWBvvxljJEVhvhcj3X6CIeP7fQDbAIrv2tkrfEJXonT7rxSnzz+8mnsZLb3xvURBdCydwYvB397WgTAV4+crXaYXPbTTCB3xHyemKZOoWTHyuaWRBRJ8paJg8nRRczRvuPTXeieRXfInJMxMHHupYcE/606HShAYjyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tFoBwUq9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B35C8C4CED1;
+	Thu,  5 Dec 2024 09:38:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1733391488;
+	bh=HRontmhpAXB7zdihojZafgOYClH6jtz6uOSjDmx3JAk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=tFoBwUq9bZELbs1gPcSWPBGsHkmsk3f/29dSssqqA6F50wGecvEPVdaSEEafRy5uN
+	 P+2gXv0Voh/tJKZjq/0TGWE/TwzmSrh6GpidUcRJ+e2ELuzMNuLMhHq/oObNZUfc7i
+	 2q5eaf4mVO1EdZssgcAxOvWdaLTHXUg605ovkVilAqH4xjRooGfLTwRF/axKPrAGxx
+	 YU5B0hZGViS+Zn8ww2JN7cXN6lE4QtEas6qllxk/0P62nNJFmHvHOWW0h3GqFCuud5
+	 5e+vZZjBNTRiwfgr+SDtznU0f33DxLzlaTymhGp8/v90+rB3RbSdKdyCLj0rMId3CE
+	 +mo4+LgVOkg8w==
+Date: Thu, 5 Dec 2024 10:38:05 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc: lpieralisi@kernel.org, kw@linux.com, manivannan.sadhasivam@linaro.org, 
+	robh@kernel.org, bhelgaas@google.com, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	vkoul@kernel.org, kishon@kernel.org, andersson@kernel.org, konradybcio@kernel.org, 
+	p.zabel@pengutronix.de, quic_nsekar@quicinc.com, dmitry.baryshkov@linaro.org, 
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org
+Subject: Re: [PATCH v2 1/6] dt-bindings: phy: qcom,uniphy-pcie: Document PCIe
+ uniphy
+Message-ID: <7js7lswzde67izdradhuzgvlixwiblgf7aosdvavknbclbtjew@6w3y2e2k3mtk>
+References: <20241204113329.3195627-1-quic_varada@quicinc.com>
+ <20241204113329.3195627-2-quic_varada@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 4/5] arm64: dts: qcom: sc7280: Add support for camss
-To: Vikram Sharma <quic_vikramsa@quicinc.com>, rfoss@kernel.org,
- todor.too@gmail.com, mchehab@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, akapatra@quicinc.com,
- hariramp@quicinc.com, andersson@kernel.org, konradybcio@kernel.org,
- hverkuil-cisco@xs4all.nl, cros-qcom-dts-watchers@chromium.org,
- catalin.marinas@arm.com, will@kernel.org
-Cc: linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, kernel@quicinc.com
-References: <20241204100003.300123-1-quic_vikramsa@quicinc.com>
- <20241204100003.300123-5-quic_vikramsa@quicinc.com>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20241204100003.300123-5-quic_vikramsa@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20241204113329.3195627-2-quic_varada@quicinc.com>
 
-On 04/12/2024 10:00, Vikram Sharma wrote:
-> Add changes to support the camera subsystem on the SC7280.
+On Wed, Dec 04, 2024 at 05:03:24PM +0530, Varadarajan Narayanan wrote:
+> From: Nitheesh Sekar <quic_nsekar@quicinc.com>
 > 
-> Signed-off-by: Suresh Vankadara <quic_svankada@quicinc.com>
-> Signed-off-by: Trishansh Bhardwaj <quic_tbhardwa@quicinc.com>
-> Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
+> Document the Qualcomm UNIPHY PCIe 28LP present in IPQ5332.
+> 
+> Signed-off-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
 > ---
->   arch/arm64/boot/dts/qcom/sc7280.dtsi | 172 +++++++++++++++++++++++++++
->   1 file changed, 172 insertions(+)
+> v2: Rename the file to match the compatible
+
+Either I look at wrong v1 from your cover letter or there was no such
+file in v1, so how it can be a rename?
+
+What happened here?
+
+
+>     Drop 'driver' from title
+>     Dropped 'clock-names'
+>     Fixed 'reset-names'
+> --
+>  .../bindings/phy/qcom,uniphy-pcie.yaml        | 82 +++++++++++++++++++
+>  1 file changed, 82 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/phy/qcom,uniphy-pcie.yaml
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> index 55db1c83ef55..e363996602d6 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,uniphy-pcie.yaml b/Documentation/devicetree/bindings/phy/qcom,uniphy-pcie.yaml
+> new file mode 100644
+> index 000000000000..e0ad98a9f324
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/phy/qcom,uniphy-pcie.yaml
+
+This does not match compatible, so I don't see how it even matches your
+changelog.
+
+> @@ -0,0 +1,82 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/phy/qcom,uniphy-pcie.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm UNIPHY PCIe 28LP PHY
+> +
+> +maintainers:
+> +  - Nitheesh Sekar <quic_nsekar@quicinc.com>
+> +  - Varadarajan Narayanan <quic_varada@quicinc.com>
+> +
+> +description:
+> +  PCIe and USB combo PHY found in Qualcomm IPQ5332 SoC
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,ipq5332-uniphy-pcie-gen3x1
+
+Odd naming. Did anyone suggest this? I would expect something matches
+like everything else recent (see X1 for example).
+
+
+> +      - qcom,ipq5332-uniphy-pcie-gen3x2
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    minItems: 2
+
+What happened here? This cannot be minItems and it never was.
+
+> +
+> +  resets:
+> +    minItems: 2
+> +    maxItems: 3
+
+Why this varies?
+
+This patch is odd. Confusing changelog, v1 entirely different and not
+matching what is here, unusual and incorrect code in the binding itself.
+
+Provide changelog explaining WHY you did such odd changes.
+
+Open *LATEST* existing Qcom bindings and look how they do it. Do not
+implement things differently.
+
+Best regards,
+Krzysztof
+
 
