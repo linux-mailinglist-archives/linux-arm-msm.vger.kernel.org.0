@@ -1,158 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-40512-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40513-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 467F19E577D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 14:44:38 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 219F9162536
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 13:44:35 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03DD4218AD1;
-	Thu,  5 Dec 2024 13:44:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pSeNvS1F"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A33489E5817
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 15:03:15 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4CC820D51C;
-	Thu,  5 Dec 2024 13:44:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5E587289E65
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 14:03:14 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0808F218AAF;
+	Thu,  5 Dec 2024 14:03:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="NRUx6/rv"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9F021A28D;
+	Thu,  5 Dec 2024 14:03:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733406273; cv=none; b=VLb6t9Ji8OMUAjhv3EvSE1YeqJvgCqW2cY6CCeGRMe+EDB5xHjfB+61cnUCx02kdsfIaEpIv+MjPBxjVk0m4rZ6fGBHzmaFibSKMlQ8StejnXjQB9YlqBfD/tA3+GAZfJMlnWDfpI1uPyzVeq3KmUsW/uMKQCYBJJLcNgHT+l9c=
+	t=1733407392; cv=none; b=Pbqb32qsYTlj8720wvCEHdriOx34HW77zjDnO26tb27VPalrM0MxnoDPHGik2XwhoWGYAIFJ6yS1ZWYspBQwTOrlFl6UAAZAc1BkU/FqAMsC4UDAN9ReeEmG6K+tqTPLVpo441EQoNh20LuNgV1Ccre+Jj132uDuLAOjT2CVDqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733406273; c=relaxed/simple;
-	bh=7qd9ukMCfLX+3kIyTtuM6RCc1gUTy6aBIeGgFPUmZM0=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AL/wdvFtUawH28VwBVeFv3UIutRhmp3EPcq+QQybf7e7o64ZSieItiBXbTnvoOnSddKYUJ35yzxpE6xljkk08UP0QBAOCs4YYi3YdZZUg87q49y0rlvbVyBH4Ht855lf0zYLoZDIgJnmXsIF0OoELgOulhj4zIHZ+fIUrQCcNO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pSeNvS1F; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 549C1C4CED1;
-	Thu,  5 Dec 2024 13:44:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733406273;
-	bh=7qd9ukMCfLX+3kIyTtuM6RCc1gUTy6aBIeGgFPUmZM0=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=pSeNvS1FGTNF5y+od7mzfK7pk/9WxWuXPQzi5NTurX7TbotP1nEyp4F5v7XRqrxPR
-	 mbvo8QpaSWo6Hv2U2yVX62Y3jZ08zySNZCnsm6MZJjpzYxcQSpVJ1Waax48jqmKk7G
-	 KYEyoRgvQL6th3hJXwVQfUALAF6GvNHF0m1ifjOos0D4/0cIgPhJdEIPhK878NiF70
-	 IrmC4lmAogYFGHxJoVQEIIkj3XZjXN5zZRowgyyTij6G/GNKJhgg7zVTznDNuGSnYR
-	 46xfspmrtQtnhxJalP4uu5iAR8qjVpnsJFI2uj9f9joXux+jFlO1HXdUk+IiX0e+vf
-	 mS/YiKUQV1I6w==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
-	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.95)
-	(envelope-from <maz@kernel.org>)
-	id 1tJC9f-000pdd-5a;
-	Thu, 05 Dec 2024 13:44:31 +0000
-Date: Thu, 05 Dec 2024 13:44:30 +0000
-Message-ID: <86frn2tfb5.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
-To: Sibi Sankar <quic_sibis@quicinc.com>
-Cc: Johan Hovold <johan@kernel.org>,
-	<sudeep.holla@arm.com>,
-	<cristian.marussi@arm.com>,
-	<andersson@kernel.org>,
-	<konrad.dybcio@linaro.org>,
-	<robh+dt@kernel.org>,
-	<krzysztof.kozlowski+dt@linaro.org>,
-	<dmitry.baryshkov@linaro.org>,
-	<linux-kernel@vger.kernel.org>,
-	<linux-arm-msm@vger.kernel.org>,
-	<devicetree@vger.kernel.org>,
-	<quic_rgottimu@quicinc.com>,
-	<quic_kshivnan@quicinc.com>,
-	<conor+dt@kernel.org>,
-	<quic_nkela@quicinc.com>,
-	<quic_psodagud@quicinc.com>,
-	<abel.vesa@linaro.org>
-Subject: Re: [PATCH V7 0/2] qcom: x1e80100: Enable CPUFreq
-In-Reply-To: <0fd14fb1-736d-cf7f-128f-658bda0de583@quicinc.com>
-References: <20241030130840.2890904-1-quic_sibis@quicinc.com>
-	<ZyTQ9QD1tEkhQ9eu@hovoldconsulting.com>
-	<86plnf11yf.wl-maz@kernel.org>
-	<ZyTjiiGc2ApoID9Y@hovoldconsulting.com>
-	<86o72z10b6.wl-maz@kernel.org>
-	<ZypOY-NCDN9fdMAR@hovoldconsulting.com>
-	<86ed3p1rdq.wl-maz@kernel.org>
-	<0fd14fb1-736d-cf7f-128f-658bda0de583@quicinc.com>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/29.4
- (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+	s=arc-20240116; t=1733407392; c=relaxed/simple;
+	bh=OIckFGTFyrvwTHgdkzBEMtNkFA4+ORG0DJIsmkpwtX8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LUgHjyTDn75nxm45Rab9Hu3gGwgPeJFo48S/B+w3Kenu1QEd5wdcM9TNNvEyrOL0f5ybaSTx2j5Q8QWTz4NEMRw+r4mFRG3mTVpjFULmmOh8XjfWQfYwH2c4vTlp/Ci5XIptno96q8BBFcRXUUp+zosRI+KDWoEL+VGHO0n28Co=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=NRUx6/rv; arc=none smtp.client-ip=192.198.163.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1733407388; x=1764943388;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=OIckFGTFyrvwTHgdkzBEMtNkFA4+ORG0DJIsmkpwtX8=;
+  b=NRUx6/rvJo/BwsQQRh6bEEzVyzIMbDWtXxJWE7ywSiQK/tMGyeKJaiVe
+   +1WCAHGYSM4MoK61YgK24nrtOwFH7BZpM/JRRrSxr9HDah/NeR91t3v9E
+   aB6VioOKsSUjJW5YZrFfK9XnCZxAoU7M8UR9HA33qfyb8WpnahCyr6FxI
+   8r3ZV42qM01RTFIvk6t5/OzAKh3qqbxSt5MhXx1GqdyRGy4iT5xXxX07O
+   cvnTQj6UvTVR7N2Id8lJdmp2oM7HSkP7i8mW1NHEuHOhKLYSuhOpRhF9B
+   XLHSzgvwryjRHp0Y1CdJLbZZlP/Q+ptCLneS3cyNkjKrQlBCM3zAerOtE
+   A==;
+X-CSE-ConnectionGUID: 9DaH2bvCSGK7XN0Ol1+8wQ==
+X-CSE-MsgGUID: ga9y99FUTBeGWK/0EnbRuA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11276"; a="33051201"
+X-IronPort-AV: E=Sophos;i="6.12,210,1728975600"; 
+   d="scan'208";a="33051201"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Dec 2024 06:03:07 -0800
+X-CSE-ConnectionGUID: iXwf/TSFRg68PmixVnZL7w==
+X-CSE-MsgGUID: Jkpzol86RpuhwoMeiFmzgA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,210,1728975600"; 
+   d="scan'208";a="125011957"
+Received: from lkp-server01.sh.intel.com (HELO 82a3f569d0cb) ([10.239.97.150])
+  by fmviesa001.fm.intel.com with ESMTP; 05 Dec 2024 06:03:02 -0800
+Received: from kbuild by 82a3f569d0cb with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1tJCRY-00003m-1m;
+	Thu, 05 Dec 2024 14:03:00 +0000
+Date: Thu, 5 Dec 2024 22:02:08 +0800
+From: kernel test robot <lkp@intel.com>
+To: Cheng Jiang <quic_chejiang@quicinc.com>,
+	Marcel Holtmann <marcel@holtmann.org>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>,
+	Rocky Liao <quic_rjliao@quicinc.com>
+Cc: oe-kbuild-all@lists.linux.dev, linux-bluetooth@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, quic_chejiang@quicinc.com,
+	quic_jiaymao@quicinc.com, quic_shuaz@quicinc.com,
+	quic_zijuhu@quicinc.com, quic_mohamull@quicinc.com
+Subject: Re: [PATCH v3 2/3] Bluetooth: qca: Expand firmware-name to load
+ specific nvm and rampatch
+Message-ID: <202412052157.4fOQCv3u-lkp@intel.com>
+References: <20241205102213.1281865-3-quic_chejiang@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: quic_sibis@quicinc.com, johan@kernel.org, sudeep.holla@arm.com, cristian.marussi@arm.com, andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, dmitry.baryshkov@linaro.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, quic_rgottimu@quicinc.com, quic_kshivnan@quicinc.com, conor+dt@kernel.org, quic_nkela@quicinc.com, quic_psodagud@quicinc.com, abel.vesa@linaro.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241205102213.1281865-3-quic_chejiang@quicinc.com>
 
-On Thu, 05 Dec 2024 11:23:05 +0000,
-Sibi Sankar <quic_sibis@quicinc.com> wrote:
-> 
-> 
-> 
-> On 11/5/24 23:42, Marc Zyngier wrote:
-> > On Tue, 05 Nov 2024 16:57:07 +0000,
-> > Johan Hovold <johan@kernel.org> wrote:
-> >> 
-> >> On Fri, Nov 01, 2024 at 02:43:57PM +0000, Marc Zyngier wrote:
-> >>> On Fri, 01 Nov 2024 14:19:54 +0000,
-> >>> Johan Hovold <johan@kernel.org> wrote:
-> >> 
-> >>>> The side-effects and these remaining warnings are addressed by this
-> >>>> series:
-> >>>> 
-> >>>> 	https://lore.kernel.org/all/20241030125512.2884761-1-quic_sibis@quicinc.com/
-> >>>> 
-> >>>> but I think we should try to make the warnings a bit more informative
-> >>>> (and less scary) by printing something along the lines of:
-> >>>> 
-> >>>> 	arm-scmi arm-scmi.0.auto: [Firmware Bug]: Ignoring duplicate OPP 3417600 for NCC
-> >>>> 
-> >>>> instead.
-> >>> 
-> >>> Indeed. Seeing [Firmware Bug] has a comforting feeling of
-> >>> familiarity... :)
-> >>> 
-> >>> I wonder whether the same sort of reset happen on more "commercial"
-> >>> systems (such as some of the laptops). You expect that people look at
-> >>> the cpufreq stuff closely, and don't see things exploding like we are.
-> >> 
-> >> I finally got around to getting my Lenovo ThinkPad T14s to boot (it
-> >> refuses to start the kernel when using GRUB, and it's not due to the
-> >> known 64 GB memory issue as it only has 32 GB)
-> > 
-> > <cry>
-> > I know the feeling. My devkit can't use GRUB either, so I added a
-> > hook to the GRUB config to generate EFI scripts that directly execute
-> > the kernel with initrd, dtb, and command line.
-> > 
-> > This is probably the worse firmware I've seen in a very long while.
-> 
-> The PERF_LEVEL_GET implementation in the SCP firmware side
-> is the reason for the crash :|, currently there is a bug
-> in the kernel that picks up index that we set with LEVEL_SET
-> with fast channel and that masks the crash. I was told the
-> crash happens when idle states are enabled and a regular
-> LEVEL_GET message is triggered from the kernel. This was
-> fixed a while back but it will take a while to flow back
-> to all the devices. It should already be out CRD's.
+Hi Cheng,
 
-But this fix will never reach some platforms, such as the devkit, and
-we cannot mandate that people update to the latest anyway. How do we
-distinguish between good and bad firmware versions?
+kernel test robot noticed the following build warnings:
 
-Thanks,
+[auto build test WARNING on c245a7a79602ccbee780c004c1e4abcda66aec32]
 
-	M.
+url:    https://github.com/intel-lab-lkp/linux/commits/Cheng-Jiang/dt-bindings-net-bluetooth-qca-Expand-firmware-name-property/20241205-182449
+base:   c245a7a79602ccbee780c004c1e4abcda66aec32
+patch link:    https://lore.kernel.org/r/20241205102213.1281865-3-quic_chejiang%40quicinc.com
+patch subject: [PATCH v3 2/3] Bluetooth: qca: Expand firmware-name to load specific nvm and rampatch
+config: arm-randconfig-002-20241205 (https://download.01.org/0day-ci/archive/20241205/202412052157.4fOQCv3u-lkp@intel.com/config)
+compiler: arm-linux-gnueabi-gcc (GCC) 14.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20241205/202412052157.4fOQCv3u-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202412052157.4fOQCv3u-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+   drivers/bluetooth/btqca.c: In function 'qca_get_nvm_name_by_board':
+>> drivers/bluetooth/btqca.c:775:21: warning: variable 'variant' set but not used [-Wunused-but-set-variable]
+     775 |         const char *variant;
+         |                     ^~~~~~~
+   drivers/bluetooth/btqca.c: In function 'qca_get_alt_nvm_path.constprop':
+>> drivers/bluetooth/btqca.c:288:45: warning: '.bin' directive output may be truncated writing 4 bytes into a region of size between 1 and 64 [-Wformat-truncation=]
+     288 |         snprintf(fwname, sizeof(fwname), "%s.bin", fwname);
+         |                                             ^~~~
+   drivers/bluetooth/btqca.c:288:9: note: 'snprintf' output between 5 and 68 bytes into a destination of size 64
+     288 |         snprintf(fwname, sizeof(fwname), "%s.bin", fwname);
+         |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>> drivers/bluetooth/btqca.c:288:9: warning: 'snprintf' argument 4 overlaps destination object 'fwname' [-Wrestrict]
+   drivers/bluetooth/btqca.c:277:14: note: destination object referenced by 'restrict'-qualified argument 1 was declared here
+     277 |         char fwname[64];
+         |              ^~~~~~
+
+
+vim +/variant +775 drivers/bluetooth/btqca.c
+
+   770	
+   771	static void qca_get_nvm_name_by_board(char *fwname, size_t max_size,
+   772			const char *firmware_name, struct qca_btsoc_version ver,
+   773			enum qca_btsoc_type soc_type, u16 bid)
+   774	{
+ > 775		const char *variant;
+   776	
+   777		/* Set the variant to empty by default */
+   778		variant = "";
+   779		/* hsp gf chip */
+   780		if (soc_type == QCA_WCN6855) {
+   781			if ((le32_to_cpu(ver.soc_id) & QCA_HSP_GF_SOC_MASK) == QCA_HSP_GF_SOC_ID)
+   782				variant = "g";
+   783		}
+   784	
+   785		if (bid == 0x0)
+   786			snprintf(fwname, max_size, "qca/%s.bin", firmware_name);
+   787		else if (bid & 0xff00)
+   788			snprintf(fwname, max_size, "qca/%s.b%x", firmware_name, bid);
+   789		else
+   790			snprintf(fwname, max_size, "qca/%s.b%02x", firmware_name, bid);
+   791	}
+   792	
 
 -- 
-Without deviation from the norm, progress is not possible.
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
