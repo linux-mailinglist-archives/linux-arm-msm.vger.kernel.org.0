@@ -1,263 +1,1605 @@
-Return-Path: <linux-arm-msm+bounces-40432-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40433-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2DF959E4D47
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 06:40:41 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1BB5F9E4D5E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 06:49:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id ECD7A166D95
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 05:40:37 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5DE8A18809C8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 05:49:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 671C11917EB;
-	Thu,  5 Dec 2024 05:40:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 356EB16DEB3;
+	Thu,  5 Dec 2024 05:49:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Xc5fh/Oa"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nBJ1NT/W"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5900212E5D;
-	Thu,  5 Dec 2024 05:40:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9820912CDA5;
+	Thu,  5 Dec 2024 05:49:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733377237; cv=none; b=idTcigrnEDyYquaK99Zg9RW3xyTWToiFQ8Sk3aGkRk3a2+iEHqZhMEw+zMSRXvvq51D426Jdk0ufEx7qc7++H1s2QLMYzCVfZnQYEWd8mWQawS2MITzqXKeKZVDF5c7r+J6rzlwNknQ16yA9XhTEH8U2fMMAfwoNbJdhvWtQwHI=
+	t=1733377776; cv=none; b=RYt+qI6buDwReeLrVgDXz3l6zD1DEGDHF13nZSq6KRLUMhcuRPnBkTrBw7SvlmUTnj9e70vSom8IOLh/HRh8fmWkkVSGZ3C3k0C3qkWnitt5RXV1Veg8PH3D6dKcM68nfZz9FADKBAtEKp68qL3KU1kIaxZ9OeQyPTlC0izsd68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733377237; c=relaxed/simple;
-	bh=NP1zZ7XIIedYM8KiFX12kyRxIwcvwU2WDdo0gOJdRsk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=i06EjLR3s6pADajkU7ulXk1NnUF1v8m791FvS75I+RSIPrwVNE4Rd22CYqXeR0qNHXSV2lSqkGt6BR+UTbu7Pf5NW5g1woWsZZQUd6OpKOQGlONOgyXTU3TSnJkCYQ0weu3iwTf6a6CykFQ7Y36bGwDG2y5dMr5x3A2PC8p2aFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Xc5fh/Oa; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1733377776; c=relaxed/simple;
+	bh=vx/yGuH62/XGLWZr8gCD2r9hOtb5qzNhv/etlDDuYnY=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=WwFlZyVbAmapIH49eT6vGRpVcwb+WdvqMrJWLkz8FzV2PoPzsy23N3/WV4qYduo21/D3ycDCTa6juNlbSjRFQB/4IBoC5RXj160HrBkyUwTP78PEaWwe7uiuJ1B5tgbROCpDL1uSmLh7b2LW0sAXM3LCjHSfKXeJiHIvQd1kCEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nBJ1NT/W; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B557anA020051;
-	Thu, 5 Dec 2024 05:40:25 GMT
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B50LRC4026044;
+	Thu, 5 Dec 2024 05:49:28 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	M2VDEL1ICrdsryjdIWKUOL10bx8/yShHzmpadPZFBXc=; b=Xc5fh/OaRwjqGYp+
-	paMTx5GpDQMneBMEkbBtQkLa7adQ0XqBhxYs3fDfA8dIATisCbjZfaHUVYcGhckX
-	ptlZB04E/M7XHUJJYXt0fJlVcS6k/oSaxI0OCzKc+BzZW+h3d/onL7iFsxninPIB
-	cSMANHVjeI47nc7UOtmdiw35LfpRBEOwI0RwCbngIJtQx8nfQY9ZXU5rjbpdZi9G
-	KFEZwlMTe3QvL06XuQc0IhMjY+pVnCm1Ugi12H7k0b2gDlVRyCXu5vnsm77U1T3/
-	KBwuZtI5Trrc25KxdfJXbHyuheVpWGhTH9lQpKD4A9q+CuvOkvQu7Y5dlEpOLtSj
-	LHVrvw==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43a3exdck7-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=Hnaw+eyrYDlznV9ExMWMmt
+	Gwv+x9zCF4HrgcI1Ei91o=; b=nBJ1NT/WeNJDi1kyGfEXj5Xb6Ydbz7BHk4ceB8
+	JMaAX4vSmWopZlM2MT0cBsj0hrF2/ISKDJHZgqKl4j4iXknHYSPUC3oy0Z5yY1Ui
+	EOyhQ9qAZQKSKRi43kP9f72oAen6P3WW6R0uis4uwOBVEq6dRs+ncMjsXR2oD/+Y
+	wJFYsqNULSzuLjEoYW+VZvxuBUzrqK4PnJvMJhQ87QyQfgeZvjyTutaVS/P+U+dO
+	V3xR/s/ODAMeE6UqDTTT3v93AW9qnq2yl9tD70s2kmafP2VpmBqrgscwO6nGLu8p
+	9xT8+eaQl/N3aw7YTpx9jb6LXfBkCt6733GkQbN6yGHrv/JA==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 439yr9nwyf-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 05 Dec 2024 05:40:24 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B55eOc4032161
+	Thu, 05 Dec 2024 05:49:28 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B55nRmt012791
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 5 Dec 2024 05:40:24 GMT
-Received: from [10.217.219.62] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 4 Dec 2024
- 21:40:21 -0800
-Message-ID: <fd7ea0d7-6e08-4000-b840-03e2da837e8d@quicinc.com>
-Date: Thu, 5 Dec 2024 11:10:18 +0530
+	Thu, 5 Dec 2024 05:49:27 GMT
+Received: from jiegan-gv.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 4 Dec 2024 21:49:23 -0800
+From: Jie Gan <quic_jiegan@quicinc.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        "Konrad
+ Dybcio" <konrad.dybcio@oss.qualcomm.com>,
+        Yushan Li <quic_yushli@quicinc.com>
+Subject: [PATCH RESEND v5] arm64: dts: qcom: Add coresight nodes for x1e80100
+Date: Thu, 5 Dec 2024 13:49:03 +0800
+Message-ID: <20241205054904.535465-1-quic_jiegan@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] dmaengine: qcom: gpi: Add GPI immediate DMA support
- for SPI protocol
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Vinod Koul <vkoul@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_msavaliy@quicinc.com>, <quic_vtanuku@quicinc.com>
-References: <20241204122059.24239-1-quic_jseerapu@quicinc.com>
- <higpzg6b4e66zpykuu3wlcmaxzplzz3qasoycfytidunp7yqbn@nunjmucxkjbe>
- <052c98ab-1ba4-4665-8b45-3e5ad4fa553b@quicinc.com>
- <CAA8EJppynecscUbUW7Ue=+oYyhFzftiYVgTc6rEuXbUhpxF7iQ@mail.gmail.com>
- <07f627cd-e5ea-4491-8c3e-2693554e6032@quicinc.com>
- <CAA8EJppsya+mav+-e6uUmdehk+CEV5vXN3iDaY0kW0sT-243aw@mail.gmail.com>
-Content-Language: en-US
-From: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
-In-Reply-To: <CAA8EJppsya+mav+-e6uUmdehk+CEV5vXN3iDaY0kW0sT-243aw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ua83y2zKZAuDwdq6ophIKyvp29-LqEk4
-X-Proofpoint-GUID: ua83y2zKZAuDwdq6ophIKyvp29-LqEk4
+X-Proofpoint-ORIG-GUID: DgOO02M8sxgjjOsjJZ1Oj_Uii94JIguf
+X-Proofpoint-GUID: DgOO02M8sxgjjOsjJZ1Oj_Uii94JIguf
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
- mlxlogscore=999 clxscore=1015 phishscore=0 adultscore=0 suspectscore=0
- malwarescore=0 spamscore=0 priorityscore=1501 impostorscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2412050043
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 impostorscore=0
+ clxscore=1015 priorityscore=1501 mlxlogscore=999 phishscore=0
+ lowpriorityscore=0 malwarescore=0 mlxscore=0 suspectscore=0 adultscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412050045
 
+Add following coresight components for x1e80100 platform.
+It includes CTI, dummy sink, dynamic Funnel, Replicator, STM,
+TPDM, TPDA and TMC ETF.
 
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Tested-by: Yushan Li <quic_yushli@quicinc.com>
+Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
+---
+Change in V2:
+1. Check the dtb with dtbs_check W=1, and fix the warnings for
+the change.
+Link to V1 - https://lore.kernel.org/linux-arm-msm/20240826061900.790715-1-quic_jiegan@quicinc.com/
 
-On 12/5/2024 3:53 AM, Dmitry Baryshkov wrote:
-> On Wed, 4 Dec 2024 at 15:54, Jyothi Kumar Seerapu
-> <quic_jseerapu@quicinc.com> wrote:
->>
->>
->>
->> On 12/4/2024 7:09 PM, Dmitry Baryshkov wrote:
->>> On Wed, 4 Dec 2024 at 15:25, Jyothi Kumar Seerapu
->>> <quic_jseerapu@quicinc.com> wrote:
->>>>
->>>>
->>>>
->>>> On 12/4/2024 6:15 PM, Dmitry Baryshkov wrote:
->>>>> On Wed, Dec 04, 2024 at 05:50:59PM +0530, Jyothi Kumar Seerapu wrote:
->>>>>> The DMA TRE(Transfer ring element) buffer contains the DMA
->>>>>> buffer address. Accessing data from this address can cause
->>>>>> significant delays in SPI transfers, which can be mitigated to
->>>>>> some extent by utilizing immediate DMA support.
->>>>>>
->>>>>> QCOM GPI DMA hardware supports an immediate DMA feature for data
->>>>>> up to 8 bytes, storing the data directly in the DMA TRE buffer
->>>>>> instead of the DMA buffer address. This enhancement enables faster
->>>>>> SPI data transfers.
->>>>>>
->>>>>> This optimization reduces the average transfer time from 25 us to
->>>>>> 16 us for a single SPI transfer of 8 bytes length, with a clock
->>>>>> frequency of 50 MHz.
->>>>>>
->>>>>> Signed-off-by: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
->>>>>> ---
->>>>>>
->>>>>> v2-> v3:
->>>>>>       - When to enable Immediate DMA support, control is moved to GPI driver
->>>>>>         from SPI driver.
->>>>>>       - Optimizations are done in GPI driver related to immediate dma changes.
->>>>>>       - Removed the immediate dma supported changes in qcom-gpi-dma.h file
->>>>>>         and handled in GPI driver.
->>>>>>
->>>>>>       Link to v2:
->>>>>>        https://lore.kernel.org/all/20241128133351.24593-2-quic_jseerapu@quicinc.com/
->>>>>>        https://lore.kernel.org/all/20241128133351.24593-3-quic_jseerapu@quicinc.com/
->>>>>>
->>>>>> v1 -> v2:
->>>>>>       - Separated the patches to dmaengine and spi subsystems
->>>>>>       - Removed the changes which are not required for this feature from
->>>>>>         qcom-gpi-dma.h file.
->>>>>>       - Removed the type conversions used in gpi_create_spi_tre.
->>>>>>
->>>>>>       Link to v1:
->>>>>>        https://lore.kernel.org/lkml/20241121115201.2191-2-quic_jseerapu@quicinc.com/
->>>>>>
->>>>>>     drivers/dma/qcom/gpi.c | 32 +++++++++++++++++++++++++++-----
->>>>>>     1 file changed, 27 insertions(+), 5 deletions(-)
->>>>>>
->>>>>> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
->>>>>> index 52a7c8f2498f..35451d5a81f7 100644
->>>>>> --- a/drivers/dma/qcom/gpi.c
->>>>>> +++ b/drivers/dma/qcom/gpi.c
->>>>>> @@ -27,6 +27,7 @@
->>>>>>     #define TRE_FLAGS_IEOT             BIT(9)
->>>>>>     #define TRE_FLAGS_BEI              BIT(10)
->>>>>>     #define TRE_FLAGS_LINK             BIT(11)
->>>>>> +#define TRE_FLAGS_IMMEDIATE_DMA     BIT(16)
->>>>>>     #define TRE_FLAGS_TYPE             GENMASK(23, 16)
->>>>>>
->>>>>>     /* SPI CONFIG0 WD0 */
->>>>>> @@ -64,6 +65,7 @@
->>>>>>
->>>>>>     /* DMA TRE */
->>>>>>     #define TRE_DMA_LEN                GENMASK(23, 0)
->>>>>> +#define TRE_DMA_IMMEDIATE_LEN       GENMASK(3, 0)
->>>>>>
->>>>>>     /* Register offsets from gpi-top */
->>>>>>     #define GPII_n_CH_k_CNTXT_0_OFFS(n, k)     (0x20000 + (0x4000 * (n)) + (0x80 * (k)))
->>>>>> @@ -1711,6 +1713,8 @@ static int gpi_create_spi_tre(struct gchan *chan, struct gpi_desc *desc,
->>>>>>        dma_addr_t address;
->>>>>>        struct gpi_tre *tre;
->>>>>>        unsigned int i;
->>>>>> +    int len;
->>>>>> +    u8 immediate_dma;
->>>>>>
->>>>>>        /* first create config tre if applicable */
->>>>>>        if (direction == DMA_MEM_TO_DEV && spi->set_config) {
->>>>>> @@ -1763,14 +1767,32 @@ static int gpi_create_spi_tre(struct gchan *chan, struct gpi_desc *desc,
->>>>>>        tre_idx++;
->>>>>>
->>>>>>        address = sg_dma_address(sgl);
->>>>>> -    tre->dword[0] = lower_32_bits(address);
->>>>>> -    tre->dword[1] = upper_32_bits(address);
->>>>>> +    len = sg_dma_len(sgl);
->>>>>>
->>>>>> -    tre->dword[2] = u32_encode_bits(sg_dma_len(sgl), TRE_DMA_LEN);
->>>>>> +    immediate_dma = (direction == DMA_MEM_TO_DEV) && len <= 2 * sizeof(tre->dword[0]);
->>>>>
->>>>> inline this condition, remove extra brackets and split the line after &&.
->>>> Hi Dmitry Baryshkov, thanks for the review.
->>>> Sure, i will make the changes mentioned below. Please let me know otherwise.
->>>>
->>>> immediate_dma = direction == DMA_MEM_TO_DEV &&
->>>>                    len <= 2 * sizeof(tre->dword[0]);
->>>
->>> I was suggesting to _inline_ this condition rather than having a
->>> separate variable for it.
->>
->> I can directly use the condition as follows:
->> if (direction == DMA_MEM_TO_DEV && len <= 2 * sizeof(tre->dword[0]))
->>
->> However, this condition also needs to account for the
->> "TRE_FLAGS_IMMEDIATE_DMA" update. Therefore, I introduced a separate
->> variable.
->>
->> tre->dword[3] |= u32_encode_bits(!!immediate_dma, TRE_FLAGS_IMMEDIATE_DMA);
->>
->> Please let me know if it's acceptable to mention the entire condition in
->> both places instead of using a separate variable.
-> 
-> Move the flag setting under the if() too.
-Sure thanks. I will make use of this condition directly instead using 
-separate variable all over the applicable places.
-> 
->>
->>
->>>
->>>>>> +
->>>>>> +    /* Support Immediate dma for write transfers for data length up to 8 bytes */
->>>>>> +    if (immediate_dma) {
->>>>>> +            /*
->>>>>> +             * For Immediate dma, data length may not always be length of 8 bytes,
->>>>>> +             * it can be length less than 8, hence initialize both dword's with 0
->>>>>> +             */
->>>>>> +            tre->dword[0] = 0;
->>>>>> +            tre->dword[1] = 0;
->>>>>> +            memcpy(&tre->dword[0], sg_virt(sgl), len);
->>>>>> +
->>>>>> +            tre->dword[2] = u32_encode_bits(len, TRE_DMA_IMMEDIATE_LEN);
->>>>>> +    } else {
->>>>>> +            tre->dword[0] = lower_32_bits(address);
->>>>>> +            tre->dword[1] = upper_32_bits(address);
->>>>>> +
->>>>>> +            tre->dword[2] = u32_encode_bits(len, TRE_DMA_LEN);
->>>>>> +    }
->>>>>>
->>>>>>        tre->dword[3] = u32_encode_bits(TRE_TYPE_DMA, TRE_FLAGS_TYPE);
->>>>>> -    if (direction == DMA_MEM_TO_DEV)
->>>>>> -            tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_IEOT);
->>>>>> +    tre->dword[3] |= u32_encode_bits(!!immediate_dma, TRE_FLAGS_IMMEDIATE_DMA);
->>>>>> +    tre->dword[3] |= u32_encode_bits(!!(direction == DMA_MEM_TO_DEV),
->>>>>> +                                     TRE_FLAGS_IEOT);
->>>>>>
->>>>>>        for (i = 0; i < tre_idx; i++)
->>>>>>                dev_dbg(dev, "TRE:%d %x:%x:%x:%x\n", i, desc->tre[i].dword[0],
->>>>>> --
->>>>>> 2.17.1
->>>>>>
->>>>>
->>>
->>>
->>>
-> 
-> 
-> 
+Change in V3:
+1. Disable two TPDM devices, that will break the booting of the secure device.
+Tested with commercial product.
+Link to V2 - https://lore.kernel.org/linux-arm-msm/20240827072724.2585859-1-quic_jiegan@quicinc.com/ 
+
+Changes in V4:
+1. Sort the properties with alphabet order.
+2. Fix format issue(add a new line between last property and the
+following subnode).
+Link to V3 - https://lore.kernel.org/linux-arm-msm/20240905103825.2154633-1-quic_jiegan@quicinc.com/
+
+Changes in V5:
+1. Rebased on tag next-20241008.
+Link to V4 - https://lore.kernel.org/linux-arm-msm/20240911012254.2198067-1-quic_jiegan@quicinc.com/
+
+Changes in V5 RESEND:
+1. Rebased on tag next-20241204.
+2. Add Reviewed-by tag from Konrad Dybcio.
+Link to V5 - https://lore.kernel.org/linux-arm-msm/20241016063113.673179-1-quic_jiegan@quicinc.com/
+---
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi | 1453 ++++++++++++++++++++++++
+ 1 file changed, 1453 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+index c18b99765c25..a5471b51e05b 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+@@ -303,6 +303,18 @@ cluster_cl5: cluster-sleep-1 {
+ 		};
+ 	};
+ 
++	dummy-sink {
++		compatible = "arm,coresight-dummy-sink";
++
++		in-ports {
++			port {
++				eud_in: endpoint {
++					remote-endpoint = <&swao_rep_out1>;
++				};
++			};
++		};
++	};
++
+ 	firmware {
+ 		scm: scm {
+ 			compatible = "qcom,scm-x1e80100", "qcom,scm";
+@@ -5854,6 +5866,1447 @@ rx-pins {
+ 			};
+ 		};
+ 
++		stm@10002000 {
++			compatible = "arm,coresight-stm", "arm,primecell";
++			reg = <0x0 0x10002000 0x0 0x1000>,
++			      <0x0 0x16280000 0x0 0x180000>;
++			reg-names = "stm-base",
++				    "stm-stimulus-base";
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			out-ports {
++				port {
++					stm_out: endpoint {
++						remote-endpoint = <&funnel0_in7>;
++					};
++				};
++			};
++		};
++
++		tpdm@10003000 {
++			compatible = "qcom,coresight-tpdm", "arm,primecell";
++			reg = <0x0 0x10003000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			qcom,cmb-element-bits = <32>;
++			qcom,cmb-msrs-num = <32>;
++			status = "disabled";
++
++			out-ports {
++				port {
++					dcc_tpdm_out: endpoint {
++						remote-endpoint = <&qdss_tpda_in0>;
++					};
++				};
++			};
++		};
++
++		tpda@10004000 {
++			compatible = "qcom,coresight-tpda", "arm,primecell";
++			reg = <0x0 0x10004000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			in-ports {
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				port@0 {
++					reg = <0>;
++
++					qdss_tpda_in0: endpoint {
++						remote-endpoint = <&dcc_tpdm_out>;
++					};
++				};
++
++				port@1 {
++					reg = <1>;
++
++					qdss_tpda_in1: endpoint {
++						remote-endpoint = <&qdss_tpdm_out>;
++					};
++				};
++			};
++
++			out-ports {
++				port {
++					qdss_tpda_out: endpoint {
++						remote-endpoint = <&funnel0_in6>;
++					};
++				};
++			};
++		};
++
++		tpdm@1000f000 {
++			compatible = "qcom,coresight-tpdm", "arm,primecell";
++			reg = <0x0 0x1000f000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			qcom,cmb-element-bits = <32>;
++			qcom,cmb-msrs-num = <32>;
++
++			out-ports {
++				port {
++					qdss_tpdm_out: endpoint {
++						remote-endpoint = <&qdss_tpda_in1>;
++					};
++				};
++			};
++		};
++
++		funnel@10041000 {
++			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
++			reg = <0x0 0x10041000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			in-ports {
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				port@6 {
++					reg = <6>;
++
++					funnel0_in6: endpoint {
++						remote-endpoint = <&qdss_tpda_out>;
++					};
++				};
++
++				port@7 {
++					reg = <7>;
++
++					funnel0_in7: endpoint {
++						remote-endpoint = <&stm_out>;
++					};
++				};
++			};
++
++			out-ports {
++				port {
++					funnel0_out: endpoint {
++						remote-endpoint = <&qdss_funnel_in0>;
++					};
++				};
++			};
++		};
++
++		funnel@10042000 {
++			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
++			reg = <0x0 0x10042000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			in-ports {
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				port@2 {
++					reg = <2>;
++
++					funnel1_in2: endpoint {
++						remote-endpoint = <&tmess_funnel_out>;
++					};
++				};
++
++				port@5 {
++					reg = <5>;
++
++					funnel1_in5: endpoint {
++						remote-endpoint = <&dlst_funnel_out>;
++					};
++				};
++
++				port@6 {
++					reg = <6>;
++
++					funnel1_in6: endpoint {
++						remote-endpoint = <&dlct1_funnel_out>;
++					};
++				};
++			};
++
++			out-ports {
++				port {
++					funnel1_out: endpoint {
++						remote-endpoint = <&qdss_funnel_in1>;
++					};
++				};
++			};
++		};
++
++		funnel@10045000 {
++			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
++			reg = <0x0 0x10045000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			in-ports {
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				port@0 {
++					reg = <0>;
++
++					qdss_funnel_in0: endpoint {
++						remote-endpoint = <&funnel0_out>;
++					};
++				};
++
++				port@1 {
++					reg = <1>;
++
++					qdss_funnel_in1: endpoint {
++						remote-endpoint = <&funnel1_out>;
++					};
++				};
++			};
++
++			out-ports {
++				port {
++					qdss_funnel_out: endpoint {
++						remote-endpoint = <&aoss_funnel_in7>;
++					};
++				};
++			};
++		};
++
++		tpdm@10800000 {
++			compatible = "qcom,coresight-tpdm", "arm,primecell";
++			reg = <0x0 0x10800000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			qcom,cmb-element-bits = <64>;
++			qcom,cmb-msrs-num = <32>;
++
++			out-ports {
++				port {
++					mxa_tpdm_out: endpoint {
++						remote-endpoint = <&dlct2_tpda_in15>;
++					};
++				};
++			};
++		};
++
++		tpdm@1082c000 {
++			compatible = "qcom,coresight-tpdm", "arm,primecell";
++			reg = <0x0 0x1082c000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			qcom,dsb-element-bits = <32>;
++			qcom,dsb-msrs-num = <32>;
++
++			out-ports {
++				port {
++					gcc_tpdm_out: endpoint {
++						remote-endpoint = <&dlct1_tpda_in21>;
++					};
++				};
++			};
++		};
++
++		tpdm@10841000 {
++			compatible = "qcom,coresight-tpdm", "arm,primecell";
++			reg = <0x0 0x10841000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			qcom,cmb-element-bits = <32>;
++			qcom,cmb-msrs-num = <32>;
++
++			out-ports {
++				port {
++					prng_tpdm_out: endpoint {
++						remote-endpoint = <&dlct1_tpda_in19>;
++					};
++				};
++			};
++		};
++
++		tpdm@10844000 {
++			compatible = "qcom,coresight-tpdm", "arm,primecell";
++			reg = <0x0 0x10844000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			qcom,dsb-element-bits = <32>;
++			qcom,dsb-msrs-num = <32>;
++
++			out-ports {
++				port {
++					lpass_cx_tpdm_out: endpoint {
++						remote-endpoint = <&lpass_cx_funnel_in0>;
++					};
++				};
++			};
++		};
++
++		funnel@10846000 {
++			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
++			reg = <0x0 0x10846000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			in-ports {
++				port {
++					lpass_cx_funnel_in0: endpoint {
++						remote-endpoint = <&lpass_cx_tpdm_out>;
++					};
++				};
++			};
++
++			out-ports {
++				port {
++					lpass_cx_funnel_out: endpoint {
++						remote-endpoint = <&dlct1_tpda_in4>;
++					};
++				};
++			};
++		};
++
++		cti@1098b000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x0 0x1098b000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++		};
++
++		tpdm@109d0000 {
++			compatible = "qcom,coresight-tpdm", "arm,primecell";
++			reg = <0x0 0x109d0000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			qcom,dsb-element-bits = <32>;
++			qcom,dsb-msrs-num = <32>;
++			status = "disabled";
++
++			out-ports {
++				port {
++					qm_tpdm_out: endpoint {
++						remote-endpoint = <&dlct1_tpda_in20>;
++					};
++				};
++			};
++		};
++
++		tpdm@10ac0000 {
++			compatible = "qcom,coresight-tpdm", "arm,primecell";
++			reg = <0x0 0x10ac0000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			qcom,dsb-element-bits = <32>;
++			qcom,dsb-msrs-num = <32>;
++			status = "disabled";
++
++			out-ports {
++				port {
++					dlst_tpdm0_out: endpoint {
++						remote-endpoint = <&dlst_tpda_in8>;
++					};
++				};
++			};
++		};
++
++		tpdm@10ac1000 {
++			compatible = "qcom,coresight-tpdm", "arm,primecell";
++			reg = <0x0 0x10ac1000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			qcom,cmb-element-bits = <64>;
++			qcom,cmb-msrs-num = <32>;
++
++			out-ports {
++				port {
++					dlst_tpdm1_out: endpoint {
++						remote-endpoint = <&dlst_tpda_in9>;
++					};
++				};
++			};
++		};
++
++		tpda@10ac4000 {
++			compatible = "qcom,coresight-tpda", "arm,primecell";
++			reg = <0x0 0x10ac4000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			in-ports {
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				port@8 {
++					reg = <8>;
++
++					dlst_tpda_in8: endpoint {
++						remote-endpoint = <&dlst_tpdm0_out>;
++					};
++				};
++
++				port@9 {
++					reg = <9>;
++
++					dlst_tpda_in9: endpoint {
++						remote-endpoint = <&dlst_tpdm1_out>;
++					};
++				};
++			};
++
++			out-ports {
++				port {
++					dlst_tpda_out: endpoint {
++						remote-endpoint = <&dlst_funnel_in0>;
++					};
++				};
++			};
++		};
++
++		funnel@10ac5000 {
++			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
++			reg = <0x0 0x10ac5000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			in-ports {
++				port {
++					dlst_funnel_in0: endpoint {
++						remote-endpoint = <&dlst_tpda_out>;
++					};
++				};
++			};
++
++			out-ports {
++				port {
++					dlst_funnel_out: endpoint {
++						remote-endpoint = <&funnel1_in5>;
++					};
++				};
++			};
++		};
++
++		funnel@10b04000 {
++			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
++			reg = <0x0 0x10b04000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			in-ports {
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				port@3 {
++					reg = <3>;
++
++					aoss_funnel_in3: endpoint {
++						remote-endpoint = <&ddr_lpi_funnel_out>;
++					};
++				};
++
++				port@6 {
++					reg = <6>;
++
++					aoss_funnel_in6: endpoint {
++						remote-endpoint = <&aoss_tpda_out>;
++					};
++				};
++
++				port@7 {
++					reg = <7>;
++
++					aoss_funnel_in7: endpoint {
++						remote-endpoint = <&qdss_funnel_out>;
++					};
++				};
++			};
++
++			out-ports {
++				port {
++					aoss_funnel_out: endpoint {
++						remote-endpoint = <&etf0_in>;
++					};
++				};
++			};
++		};
++
++		etf0: tmc@10b05000 {
++			compatible = "arm,coresight-tmc", "arm,primecell";
++			reg = <0x0 0x10b05000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			in-ports {
++				port {
++					etf0_in: endpoint {
++						remote-endpoint = <&aoss_funnel_out>;
++					};
++				};
++			};
++
++			out-ports {
++				port {
++					etf0_out: endpoint {
++						remote-endpoint = <&swao_rep_in>;
++					};
++				};
++			};
++		};
++
++		replicator@10b06000 {
++			compatible = "arm,coresight-dynamic-replicator", "arm,primecell";
++			reg = <0x0 0x10b06000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			in-ports {
++				port {
++					swao_rep_in: endpoint {
++						remote-endpoint = <&etf0_out>;
++					};
++				};
++			};
++
++			out-ports {
++				port {
++					swao_rep_out1: endpoint {
++						remote-endpoint = <&eud_in>;
++					};
++				};
++			};
++		};
++
++		tpda@10b08000 {
++			compatible = "qcom,coresight-tpda", "arm,primecell";
++			reg = <0x0 0x10b08000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			in-ports {
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				port@0 {
++					reg = <0>;
++
++					aoss_tpda_in0: endpoint {
++						remote-endpoint = <&aoss_tpdm0_out>;
++					};
++				};
++
++				port@1 {
++					reg = <1>;
++
++					aoss_tpda_in1: endpoint {
++						remote-endpoint = <&aoss_tpdm1_out>;
++					};
++				};
++
++				port@2 {
++					reg = <2>;
++
++					aoss_tpda_in2: endpoint {
++						remote-endpoint = <&aoss_tpdm2_out>;
++					};
++				};
++
++				port@3 {
++					reg = <3>;
++
++					aoss_tpda_in3: endpoint {
++						remote-endpoint = <&aoss_tpdm3_out>;
++					};
++				};
++
++				port@4 {
++					reg = <4>;
++
++					aoss_tpda_in4: endpoint {
++						remote-endpoint = <&aoss_tpdm4_out>;
++					};
++				};
++			};
++
++			out-ports {
++				port {
++					aoss_tpda_out: endpoint {
++						remote-endpoint = <&aoss_funnel_in6>;
++					};
++				};
++			};
++		};
++
++		tpdm@10b09000 {
++			compatible = "qcom,coresight-tpdm", "arm,primecell";
++			reg = <0x0 0x10b09000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			qcom,cmb-element-bits = <64>;
++			qcom,cmb-msrs-num = <32>;
++
++			out-ports {
++				port {
++					aoss_tpdm0_out: endpoint {
++						remote-endpoint = <&aoss_tpda_in0>;
++					};
++				};
++			};
++		};
++
++		tpdm@10b0a000 {
++			compatible = "qcom,coresight-tpdm", "arm,primecell";
++			reg = <0x0 0x10b0a000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			qcom,cmb-element-bits = <64>;
++			qcom,cmb-msrs-num = <32>;
++
++			out-ports {
++				port {
++					aoss_tpdm1_out: endpoint {
++						remote-endpoint = <&aoss_tpda_in1>;
++					};
++				};
++			};
++		};
++
++		tpdm@10b0b000 {
++			compatible = "qcom,coresight-tpdm", "arm,primecell";
++			reg = <0x0 0x10b0b000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			qcom,cmb-element-bits = <64>;
++			qcom,cmb-msrs-num = <32>;
++
++			out-ports {
++				port {
++					aoss_tpdm2_out: endpoint {
++						remote-endpoint = <&aoss_tpda_in2>;
++					};
++				};
++			};
++		};
++
++		tpdm@10b0c000 {
++			compatible = "qcom,coresight-tpdm", "arm,primecell";
++			reg = <0x0 0x10b0c000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			qcom,cmb-element-bits = <64>;
++			qcom,cmb-msrs-num = <32>;
++
++			out-ports {
++				port {
++					aoss_tpdm3_out: endpoint {
++						remote-endpoint = <&aoss_tpda_in3>;
++					};
++				};
++			};
++		};
++
++		tpdm@10b0d000 {
++			compatible = "qcom,coresight-tpdm", "arm,primecell";
++			reg = <0x0 0x10b0d000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			qcom,dsb-element-bits = <32>;
++			qcom,dsb-msrs-num = <32>;
++
++			out-ports {
++				port {
++					aoss_tpdm4_out: endpoint {
++						remote-endpoint = <&aoss_tpda_in4>;
++					};
++				};
++			};
++		};
++
++		tpdm@10b20000 {
++			compatible = "qcom,coresight-tpdm", "arm,primecell";
++			reg = <0x0 0x10b20000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			qcom,dsb-element-bits = <32>;
++			qcom,dsb-msrs-num = <32>;
++			status = "disabled";
++
++			out-ports {
++				port {
++					lpicc_tpdm_out: endpoint {
++						remote-endpoint = <&ddr_lpi_tpda_in>;
++					};
++				};
++			};
++		};
++
++		tpda@10b23000 {
++			compatible = "qcom,coresight-tpda", "arm,primecell";
++			reg = <0x0 0x10b23000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++			status = "disabled";
++
++			in-ports {
++				port {
++					ddr_lpi_tpda_in: endpoint {
++						remote-endpoint = <&lpicc_tpdm_out>;
++					};
++				};
++			};
++
++			out-ports {
++				port {
++					ddr_lpi_tpda_out: endpoint {
++						remote-endpoint = <&ddr_lpi_funnel_in0>;
++					};
++				};
++			};
++		};
++
++		funnel@10b24000 {
++			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
++			reg = <0x0 0x10b24000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++			status = "disabled";
++
++			in-ports {
++				port {
++					ddr_lpi_funnel_in0: endpoint {
++						remote-endpoint = <&ddr_lpi_tpda_out>;
++					};
++				};
++			};
++
++			out-ports {
++				port {
++					ddr_lpi_funnel_out: endpoint {
++						remote-endpoint = <&aoss_funnel_in3>;
++					};
++				};
++			};
++		};
++
++		tpdm@10c08000 {
++			compatible = "qcom,coresight-tpdm", "arm,primecell";
++			reg = <0x0 0x10c08000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			qcom,dsb-element-bits = <32>;
++			qcom,dsb-msrs-num = <32>;
++
++			out-ports {
++				port {
++					mm_tpdm_out: endpoint {
++						remote-endpoint = <&mm_funnel_in4>;
++					};
++				};
++			};
++		};
++
++		funnel@10c0b000 {
++			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
++			reg = <0x0 0x10c0b000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			in-ports {
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				port@4 {
++					reg = <4>;
++
++					mm_funnel_in4: endpoint {
++						remote-endpoint = <&mm_tpdm_out>;
++					};
++				};
++			};
++
++			out-ports {
++				port {
++					mm_funnel_out: endpoint {
++						remote-endpoint = <&dlct2_tpda_in4>;
++					};
++				};
++			};
++		};
++
++		tpdm@10c28000 {
++			compatible = "qcom,coresight-tpdm", "arm,primecell";
++			reg = <0x0 0x10c28000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			qcom,dsb-element-bits = <32>;
++			qcom,dsb-msrs-num = <32>;
++
++			out-ports {
++				port {
++					dlct1_tpdm_out: endpoint {
++						remote-endpoint = <&dlct1_tpda_in26>;
++					};
++				};
++			};
++		};
++
++		tpdm@10c29000 {
++			compatible = "qcom,coresight-tpdm", "arm,primecell";
++			reg = <0x0 0x10c29000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			qcom,cmb-element-bits = <64>;
++			qcom,cmb-msrs-num = <32>;
++
++			out-ports {
++				port {
++					ipcc_tpdm_out: endpoint {
++						remote-endpoint = <&dlct1_tpda_in27>;
++					};
++				};
++			};
++		};
++
++		tpda@10c2b000 {
++			compatible = "qcom,coresight-tpda", "arm,primecell";
++			reg = <0x0 0x10c2b000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			in-ports {
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				port@4 {
++					reg = <4>;
++
++					dlct1_tpda_in4: endpoint {
++						remote-endpoint = <&lpass_cx_funnel_out>;
++					};
++				};
++
++				port@13 {
++					reg = <19>;
++
++					dlct1_tpda_in19: endpoint {
++						remote-endpoint = <&prng_tpdm_out>;
++					};
++				};
++
++				port@14 {
++					reg = <20>;
++
++					dlct1_tpda_in20: endpoint {
++						remote-endpoint = <&qm_tpdm_out>;
++					};
++				};
++
++				port@15 {
++					reg = <21>;
++
++					dlct1_tpda_in21: endpoint {
++						remote-endpoint = <&gcc_tpdm_out>;
++					};
++				};
++
++				port@1a {
++					reg = <26>;
++
++					dlct1_tpda_in26: endpoint {
++						remote-endpoint = <&dlct1_tpdm_out>;
++					};
++				};
++
++				port@1b {
++					reg = <27>;
++
++					dlct1_tpda_in27: endpoint {
++						remote-endpoint = <&ipcc_tpdm_out>;
++					};
++				};
++			};
++
++			out-ports {
++				port {
++					dlct1_tpda_out: endpoint {
++						remote-endpoint = <&dlct1_funnel_in0>;
++					};
++				};
++			};
++		};
++
++		funnel@10c2c000 {
++			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
++			reg = <0x0 0x10c2c000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			in-ports {
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				port@0 {
++					reg = <0>;
++
++					dlct1_funnel_in0: endpoint {
++						remote-endpoint = <&dlct1_tpda_out>;
++					};
++				};
++
++				port@4 {
++					reg = <4>;
++
++					dlct1_funnel_in4: endpoint {
++						remote-endpoint = <&dlct2_funnel_out>;
++					};
++				};
++
++				port@5 {
++					reg = <5>;
++
++					dlct1_funnel_in5: endpoint {
++						remote-endpoint = <&ddr_funnel0_out>;
++					};
++				};
++			};
++
++			out-ports {
++				port {
++					dlct1_funnel_out: endpoint {
++						remote-endpoint = <&funnel1_in6>;
++					};
++				};
++			};
++		};
++
++		tpdm@10c38000 {
++			compatible = "qcom,coresight-tpdm", "arm,primecell";
++			reg = <0x0 0x10c38000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			qcom,cmb-element-bits = <64>;
++			qcom,cmb-msrs-num = <32>;
++
++			out-ports {
++				port {
++					dlct2_tpdm0_out: endpoint {
++						remote-endpoint = <&dlct2_tpda_in16>;
++					};
++				};
++			};
++		};
++
++		tpdm@10c39000 {
++			compatible = "qcom,coresight-tpdm", "arm,primecell";
++			reg = <0x0 0x10c39000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			qcom,cmb-element-bits = <64>;
++			qcom,cmb-msrs-num = <32>;
++
++			out-ports {
++				port {
++					dlct2_tpdm1_out: endpoint {
++						remote-endpoint = <&dlct2_tpda_in17>;
++					};
++				};
++			};
++		};
++
++		tpda@10c3c000 {
++			compatible = "qcom,coresight-tpda", "arm,primecell";
++			reg = <0x0 0x10c3c000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			in-ports {
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				port@4 {
++					reg = <4>;
++
++					dlct2_tpda_in4: endpoint {
++						remote-endpoint = <&mm_funnel_out>;
++					};
++				};
++
++				port@f {
++					reg = <15>;
++
++					dlct2_tpda_in15: endpoint {
++						remote-endpoint = <&mxa_tpdm_out>;
++					};
++				};
++
++				port@10 {
++					reg = <16>;
++
++					dlct2_tpda_in16: endpoint {
++						remote-endpoint = <&dlct2_tpdm0_out>;
++					};
++				};
++
++				port@11 {
++					reg = <17>;
++
++					dlct2_tpda_in17: endpoint {
++						remote-endpoint = <&dlct2_tpdm1_out>;
++					};
++				};
++			};
++
++			out-ports {
++				port {
++					dlct2_tpda_out: endpoint {
++						remote-endpoint = <&dlct2_funnel_in0>;
++					};
++				};
++			};
++		};
++
++		funnel@10c3d000 {
++			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
++			reg = <0x0 0x10c3d000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			in-ports {
++				port {
++					dlct2_funnel_in0: endpoint {
++						remote-endpoint = <&dlct2_tpda_out>;
++					};
++				};
++			};
++
++			out-ports {
++				port {
++					dlct2_funnel_out: endpoint {
++						remote-endpoint = <&dlct1_funnel_in4>;
++					};
++				};
++			};
++		};
++
++		tpdm@10cc1000 {
++			compatible = "qcom,coresight-tpdm", "arm,primecell";
++			reg = <0x0 0x10cc1000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			qcom,cmb-element-bits = <64>;
++			qcom,cmb-msrs-num = <32>;
++			qcom,dsb-element-bits = <32>;
++			qcom,dsb-msrs-num = <32>;
++			status = "disabled";
++
++			out-ports {
++				port {
++					tmess_tpdm1_out: endpoint {
++						remote-endpoint = <&tmess_tpda_in2>;
++					};
++				};
++			};
++		};
++
++		tpda@10cc4000 {
++			compatible = "qcom,coresight-tpda", "arm,primecell";
++			reg = <0x0 0x10cc4000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			in-ports {
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				port@2 {
++					reg = <2>;
++
++					tmess_tpda_in2: endpoint {
++						remote-endpoint = <&tmess_tpdm1_out>;
++					};
++				};
++			};
++
++			out-ports {
++				port {
++					tmess_tpda_out: endpoint {
++						remote-endpoint = <&tmess_funnel_in0>;
++					};
++				};
++			};
++		};
++
++		funnel@10cc5000 {
++			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
++			reg = <0x0 0x10cc5000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			in-ports {
++				port {
++					tmess_funnel_in0: endpoint {
++						remote-endpoint = <&tmess_tpda_out>;
++					};
++				};
++			};
++
++			out-ports {
++				port {
++					tmess_funnel_out: endpoint {
++						remote-endpoint = <&funnel1_in2>;
++					};
++				};
++			};
++		};
++
++		funnel@10d04000 {
++			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
++			reg = <0x0 0x10d04000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			in-ports {
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				port@6 {
++					reg = <6>;
++
++					ddr_funnel0_in6: endpoint {
++						remote-endpoint = <&ddr_funnel1_out>;
++					};
++				};
++			};
++
++			out-ports {
++				port {
++					ddr_funnel0_out: endpoint {
++						remote-endpoint = <&dlct1_funnel_in5>;
++					};
++				};
++			};
++		};
++
++		tpdm@10d08000 {
++			compatible = "qcom,coresight-tpdm", "arm,primecell";
++			reg = <0x0 0x10d08000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			qcom,cmb-element-bits = <32>;
++			qcom,cmb-msrs-num = <32>;
++
++			out-ports {
++				port {
++					llcc0_tpdm_out: endpoint {
++						remote-endpoint = <&llcc_tpda_in0>;
++					};
++				};
++			};
++		};
++
++		tpdm@10d09000 {
++			compatible = "qcom,coresight-tpdm", "arm,primecell";
++			reg = <0x0 0x10d09000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			qcom,cmb-element-bits = <32>;
++			qcom,cmb-msrs-num = <32>;
++
++			out-ports {
++				port {
++					llcc1_tpdm_out: endpoint {
++						remote-endpoint = <&llcc_tpda_in1>;
++					};
++				};
++			};
++		};
++
++		tpdm@10d0a000 {
++			compatible = "qcom,coresight-tpdm", "arm,primecell";
++			reg = <0x0 0x10d0a000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			qcom,cmb-element-bits = <32>;
++			qcom,cmb-msrs-num = <32>;
++
++			out-ports {
++				port {
++					llcc2_tpdm_out: endpoint {
++						remote-endpoint = <&llcc_tpda_in2>;
++					};
++				};
++			};
++		};
++
++		tpdm@10d0b000 {
++			compatible = "qcom,coresight-tpdm", "arm,primecell";
++			reg = <0x0 0x10d0b000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			qcom,cmb-element-bits = <32>;
++			qcom,cmb-msrs-num = <32>;
++
++			out-ports {
++				port {
++					llcc3_tpdm_out: endpoint {
++						remote-endpoint = <&llcc_tpda_in3>;
++					};
++				};
++			};
++		};
++
++		tpdm@10d0c000 {
++			compatible = "qcom,coresight-tpdm", "arm,primecell";
++			reg = <0x0 0x10d0c000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			qcom,cmb-element-bits = <32>;
++			qcom,cmb-msrs-num = <32>;
++
++			out-ports {
++				port {
++					llcc4_tpdm_out: endpoint {
++						remote-endpoint = <&llcc_tpda_in4>;
++					};
++				};
++			};
++		};
++
++		tpdm@10d0d000 {
++			compatible = "qcom,coresight-tpdm", "arm,primecell";
++			reg = <0x0 0x10d0d000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			qcom,cmb-element-bits = <32>;
++			qcom,cmb-msrs-num = <32>;
++
++			out-ports {
++				port {
++					llcc5_tpdm_out: endpoint {
++						remote-endpoint = <&llcc_tpda_in5>;
++					};
++				};
++			};
++		};
++
++		tpdm@10d0e000 {
++			compatible = "qcom,coresight-tpdm", "arm,primecell";
++			reg = <0x0 0x10d0e000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			qcom,cmb-element-bits = <32>;
++			qcom,cmb-msrs-num = <32>;
++
++			out-ports {
++				port {
++					llcc6_tpdm_out: endpoint {
++						remote-endpoint = <&llcc_tpda_in6>;
++					};
++				};
++			};
++		};
++
++		tpdm@10d0f000 {
++			compatible = "qcom,coresight-tpdm", "arm,primecell";
++			reg = <0x0 0x10d0f000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			qcom,cmb-element-bits = <32>;
++			qcom,cmb-msrs-num = <32>;
++
++			out-ports {
++				port {
++					llcc7_tpdm_out: endpoint {
++						remote-endpoint = <&llcc_tpda_in7>;
++					};
++				};
++			};
++		};
++
++		tpda@10d12000 {
++			compatible = "qcom,coresight-tpda", "arm,primecell";
++			reg = <0x0 0x10d12000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			in-ports {
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				port@0 {
++					reg = <0>;
++
++					llcc_tpda_in0: endpoint {
++						remote-endpoint = <&llcc0_tpdm_out>;
++					};
++				};
++
++				port@1 {
++					reg = <1>;
++
++					llcc_tpda_in1: endpoint {
++						remote-endpoint = <&llcc1_tpdm_out>;
++					};
++				};
++
++				port@2 {
++					reg = <2>;
++
++					llcc_tpda_in2: endpoint {
++						remote-endpoint = <&llcc2_tpdm_out>;
++					};
++				};
++
++				port@3 {
++					reg = <3>;
++
++					llcc_tpda_in3: endpoint {
++						remote-endpoint = <&llcc3_tpdm_out>;
++					};
++				};
++
++				port@4 {
++					reg = <4>;
++
++					llcc_tpda_in4: endpoint {
++						remote-endpoint = <&llcc4_tpdm_out>;
++					};
++				};
++
++				port@5 {
++					reg = <5>;
++
++					llcc_tpda_in5: endpoint {
++						remote-endpoint = <&llcc5_tpdm_out>;
++					};
++				};
++
++				port@6 {
++					reg = <6>;
++
++					llcc_tpda_in6: endpoint {
++						remote-endpoint = <&llcc6_tpdm_out>;
++					};
++				};
++
++				port@7 {
++					reg = <7>;
++
++					llcc_tpda_in7: endpoint {
++						remote-endpoint = <&llcc7_tpdm_out>;
++					};
++				};
++			};
++
++			out-ports {
++				port {
++					llcc_tpda_out: endpoint {
++						remote-endpoint = <&ddr_funnel1_in0>;
++					};
++				};
++			};
++		};
++
++		funnel@10d13000 {
++			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
++			reg = <0x0 0x10d13000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			in-ports {
++				port {
++					ddr_funnel1_in0: endpoint {
++						remote-endpoint = <&llcc_tpda_out>;
++					};
++				};
++			};
++
++			out-ports {
++				port {
++					ddr_funnel1_out: endpoint {
++						remote-endpoint = <&ddr_funnel0_in6>;
++					};
++				};
++			};
++		};
++
+ 		apps_smmu: iommu@15000000 {
+ 			compatible = "qcom,x1e80100-smmu-500", "qcom,smmu-500", "arm,mmu-500";
+ 			reg = <0 0x15000000 0 0x100000>;
+-- 
+2.34.1
+
 
