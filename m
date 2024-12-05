@@ -1,170 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-40451-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40452-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2DD079E4F78
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 09:14:53 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 23E639E4F82
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 09:16:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F3241167D1F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 08:14:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4AD761683F2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 08:16:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F1731CF7A1;
-	Thu,  5 Dec 2024 08:14:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 730541D416B;
+	Thu,  5 Dec 2024 08:16:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B/uGT4iW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WIgPuRN4"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F0D6EC0;
-	Thu,  5 Dec 2024 08:14:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 362461D364C;
+	Thu,  5 Dec 2024 08:16:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733386489; cv=none; b=DoN4eo+VRqTGdA6AoaI6dHC+maXmWy/HFc36XZmJI4v3pAhAkph7DVYwvyucMz8EMr4YQQnZjA/OmIcNOcNhaZtR8lYuKMOE5f8tIXv9KCWWA71qBe62yb//9NmKodpxz+sX1Qm0tQzUH+uU9Y7pNEavfVhquruj8Pp4eQTNyMQ=
+	t=1733386567; cv=none; b=j/aR3Pe4rzwdBmve8mGNdRZXaMYYlFqVqDIq2oYQWEXzIkXL3LmK4jCge4o59FmlPa3Ci0+Q/wfTzR8y7fC/3Y2MSwwOi8IplElNDNVsAUVM2DSe2RUZXMDjrgxDWPLkvXuVU1vLSe7aMf6UWp/8W9SC16obwGwd5/2cnJXXbk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733386489; c=relaxed/simple;
-	bh=9X/aD4pGIV+/vcIq+d1mvHuyyzWzoMkOv/nQxabgb3Y=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=lexTR+YxEbP6yV7q5XN7bqXTqrcNDFM3Dvh+iCFN5bZVu8qAXL0JzcINPnjACKu+aLtPVkTh2JKtksgs8Hwb5/ypDZYHTI/mHGQclUp+SR08Z5qpCrod3FUTbjfkCScZcGMMbZSP2XrI2NvMEGHpy4GhPYhWovk08ryQB04Yb/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B/uGT4iW; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFDFBC4CED1;
-	Thu,  5 Dec 2024 08:14:45 +0000 (UTC)
+	s=arc-20240116; t=1733386567; c=relaxed/simple;
+	bh=3FQdoGHbtK4vxVzpu1LkgtvENvTPq08yLxgUVs8oYPw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kMt7nWh3iHSQRX5vu0erW1to8CGj/6Etu8KcmQ0zAloI6hzSbsIWW59h+lFLAE4sbO4gZ+QcRECpP2Rm5ExxRHjXlCghTSaqM5rS/f0gDLpq6nEFa8rYQgMWsPJF2MIZQxT8/4mtiPPoNJlnReg+7nWha+5gWW/5O5QbgxX8aSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WIgPuRN4; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A770FC4CEE1;
+	Thu,  5 Dec 2024 08:16:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733386488;
-	bh=9X/aD4pGIV+/vcIq+d1mvHuyyzWzoMkOv/nQxabgb3Y=;
-	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=B/uGT4iWS1yLra8zmrdmfM8yUajCKQl/59T2fdZDiknqmCTvxVF+wLlxVYSdMih7y
-	 ZKsXUH/B9vbpq12pfTpRbPEvGmER+BVPTO2KP+2Iu6ERzlg/TdoLAjHlKqM5CjXQPG
-	 eGu4qCHdDZ1FPACqK2E3JgSyiI7ehng+lxhFQ2zo6pj6r+QWalJN5W306PNM/8qnIw
-	 EA+UwIHYt8u3I5SLpiYkA+UG5oV/0w4t5vpC5xJLpHCyx7ZA/SaXzy+cVq97TQZwCI
-	 328kPv3USgqbnQy0eCyk9N07DzQRbb2kF+UGnwjp4niue18cKhl+hWTjTlU6BBZ8bo
-	 CvjjfX2Rl7J6w==
-Message-ID: <06b48a7f-de53-4b53-b3ac-be9efcee5558@kernel.org>
-Date: Thu, 5 Dec 2024 09:14:43 +0100
+	s=k20201202; t=1733386565;
+	bh=3FQdoGHbtK4vxVzpu1LkgtvENvTPq08yLxgUVs8oYPw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=WIgPuRN4Xrn4bkadyn8DMZ/h9U0a9wSzY3HJyFpYa9fMErDpJhXWuK5tEdnuPwttX
+	 vNNF7fxByZr7Kzh1eASsFa5nHv5yWVyuqm+4YxRXxxR7n6zFl+hUygtRpzK1ZMfPPv
+	 YJmPFtytJInKofdzmnJWlzc1UVBpZA+sSpHGCYXKL36zGudTTEtLKHvcDaLBaJOVPc
+	 IkrpmJ6BaiFkGyqBn/tlANtL/q2emfE+0pNNqupvwUozTQTttLRqTx4kVRvSO0OZtB
+	 cgivhs/DQ/b4rTIaYHfMg/0lcOccEqXeRjEJZvBYDyMLdqVMxqw2HpWxvRYPQU+gT7
+	 9X/aiHpEdGHeg==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1tJ71n-000000007QL-2hW1;
+	Thu, 05 Dec 2024 09:16:04 +0100
+Date: Thu, 5 Dec 2024 09:16:03 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+Cc: Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Krishna Kurapati <quic_kriskura@quicinc.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>, linux-usb@vger.kernel.org
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: x1e80100-crd: Add USB multiport
+ fingerprint reader
+Message-ID: <Z1FhQ3OUI0t3k1_q@hovoldconsulting.com>
+References: <20241118-x1e80100-crd-fp-v1-0-ec6b553a2e53@linaro.org>
+ <20241118-x1e80100-crd-fp-v1-1-ec6b553a2e53@linaro.org>
+ <Z07bgH5vVk44zuEH@hovoldconsulting.com>
+ <d095ae2a-3f9d-464c-9dc8-a3e73eac6598@oss.qualcomm.com>
+ <98b2b88b-9690-44a7-9b22-2f23e6606e82@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 2/2] mailbox: tmelite-qmp: Introduce QCOM TMEL QMP
- mailbox driver
-To: Sricharan R <quic_srichara@quicinc.com>, jassisinghbrar@gmail.com,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org
-References: <20241205080633.2623142-1-quic_srichara@quicinc.com>
- <20241205080633.2623142-3-quic_srichara@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20241205080633.2623142-3-quic_srichara@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <98b2b88b-9690-44a7-9b22-2f23e6606e82@oss.qualcomm.com>
 
-On 05/12/2024 09:06, Sricharan R wrote:
-> From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-> 
-> The QMP mailbox is the primary means of communication between TME-L SS
-> and other subsystem on the SoC. A dedicated pair of inbound and outbound
-> mailboxes is implemented for each subsystem/external execution environment
-> which needs to communicate with TME-L for security services. The inbound
-> mailboxes are used to send IPC requests to TME-L, which are then processed
-> by TME-L firmware and accordingly the responses are sent to the requestor
-> via outbound mailboxes.
-> 
-> It is an IPC transport protocol which is light weight and supports
-> a subset of API's. It handles link initialization, negotiation,
-> establishment and communication across client(APPSS/BTSS/AUDIOSS)
-> and server(TME-L SS).
-> 
->    -----------------------------------------------       ---------------------------------------------------
->   |                                              |       |                                                 |
->   |                 SOC  CLIENT                  | SOC   |                TME-L  SS                        |
->   |                                              | AHB   |                                                 |
->   |     ----------    ---------   ---------      |       | ------    -------     --------    ------------  |
->   |     |        |    |       |   |       |      | WO    | |     | R |     |     |      |    |SERVICES   | |
->   |     | APPS   |<-->| TMEL  |<->|       |------------->| | IN  |-->|     |     | TMEL |    |--------   | |
->   |     |        |    | COM   |   | QMP   |      | RO    | |     | W | QMP |<--->| COM  |<-->| a) ATTEST | |
->   |     |        |    |       |   |       |<-------------| | OUT |<--|     |     |      |    | b) CRYPTO | |
->   |     |        |    |       |   |       |      |       | |     |   |     |     |      |    | .. more   | |
->   |     ---------     ---------   ---------      |       | ------    -------     -------     ------------  |
->   |                                              |       |                                                 |
->    -----------------------------------------------       --------------------------------------------------
+On Thu, Dec 05, 2024 at 01:32:29PM +0530, Krishna Kurapati wrote:
+> On 12/3/2024 6:45 PM, Krishna Kurapati wrote:
+> > On 12/3/2024 3:50 PM, Johan Hovold wrote:
+> >> On Mon, Nov 18, 2024 at 11:34:29AM +0100, Stephan Gerhold wrote:
 
+> >>> +&usb_mp_dwc3 {
+> >>> +    /* Limit to USB 2.0 and single port */
+> >>> +    maximum-speed = "high-speed";
+> >>> +    phys = <&usb_mp_hsphy1>;
+> >>> +    phy-names = "usb2-1";
+> >>> +};
+> >>
+> >> The dwc3 driver determines (and acts on) the number of ports based on
+> >> the port interrupts in DT and controller capabilities.
+> >>
+> >> I'm not sure we can (should) just drop the other HS PHY and the SS PHYs
+> >> that would still be there in the SoC (possibly initialised by the boot
+> >> firmware).
+> > 
+> > The DWC3 core driver identifies number of ports based on xHCI registers. 
+> > The QC Wrapper reads this number via interrupts. But these two values 
+> > are independent of each other. The core driver uses these values to 
+> > identify and manipulate phys. Even if only one HS is given in multiport 
+> > it would be sufficient if the name is "usb2-1". If the others are 
+> > missing, those phys would be read by driver as NULL and any ops to phys 
+> > would be NOP.
 
-Hardware description is much more suitable for the binding, not to the
-driver. You wrote the same in cover letter and here... but not in actual
-hardware description - binding.
+No, the core driver still acts on these ports (to some extent) even if
+there is no PHY specified (e.g. updates DWC3_GUSB2PHYCFG on suspend).
 
-> 
-> TME-L SS provides different kinds of services like secureboot, remote image authentication,
-> key management, crypto, OEM provisioning etc. This patch adds support for remote image
-> authentication. Support for rest of the services can be added.
+And IIRC I even had to specify more than just the fingerprint reader PHY
+on the X13s to get it to enumerate. I never had time to fully determine
+why this was the case though.
 
+> However do we need to reduce the number of interrupts used in DTS ?
+> We don't need to give all interrupts as there is only one port present.
+> We don't want to enable all interrupts when ports are not exposed.
 
-Please wrap commit message according to Linux coding style / submission
-process (neither too early nor over the limit):
-https://elixir.bootlin.com/linux/v6.4-rc1/source/Documentation/process/submitting-patches.rst#L597
+No, the interrupts are still there, wired up in the SoC, so we should
+not change that.
 
-> 
-> Remote proc driver subscribes to this mailbox and uses the mbox_send_message to use
-> TME-L to securely authenticate/teardown the images.
-> 
-> The intention of posting this is to get the design reviewed/corrected since there are also
-> other possible ways of having this SS support.
+With runtime PM eventually enabled and working as it should, the OS
+should be able to power down any unused ports. And we could also
+consider marking some ports as not physically accessible and not
+connected as a further hint to the OS that they can be disabled even
+sooner.
 
-
-If you do not Cc maintainers, don't expect much answer. Missing Qcom amd
-remoteproc maintainers.
-
-
-
-Best regards,
-Krzysztof
+Johan
 
