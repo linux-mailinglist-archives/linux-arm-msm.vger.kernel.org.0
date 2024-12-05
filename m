@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-40450-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40451-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8408C9E4F6E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 09:12:34 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2DD079E4F78
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 09:14:53 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3A90E2804A3
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 08:12:33 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F3241167D1F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2024 08:14:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1DD791CF5EC;
-	Thu,  5 Dec 2024 08:12:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F1731CF7A1;
+	Thu,  5 Dec 2024 08:14:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nXhsRD7u"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B/uGT4iW"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0605EC0;
-	Thu,  5 Dec 2024 08:12:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F0D6EC0;
+	Thu,  5 Dec 2024 08:14:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733386352; cv=none; b=eAHqFCOuO6I4ivq1Dc+qgMDxmHj03TTMVQa0eUpNucLZkohxVRA8zGXK8AytzoFNpCj0D/xEmRXJDLI++gJcXYIFpdlXswkZqkwYLTHqVWYjqIDGlgmMfQmCEbJT3KYuYwnbHWkfjuUaq2Xf5qjFe7WCceFcssmIU5dECJf4jvE=
+	t=1733386489; cv=none; b=DoN4eo+VRqTGdA6AoaI6dHC+maXmWy/HFc36XZmJI4v3pAhAkph7DVYwvyucMz8EMr4YQQnZjA/OmIcNOcNhaZtR8lYuKMOE5f8tIXv9KCWWA71qBe62yb//9NmKodpxz+sX1Qm0tQzUH+uU9Y7pNEavfVhquruj8Pp4eQTNyMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733386352; c=relaxed/simple;
-	bh=0SB1Q0op60vhl5EfbizZUhTQUTf9r76GONCXBLsMDfA=;
+	s=arc-20240116; t=1733386489; c=relaxed/simple;
+	bh=9X/aD4pGIV+/vcIq+d1mvHuyyzWzoMkOv/nQxabgb3Y=;
 	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=rGNBZ7qD2vJa8W5b62JzHKS4eJ0msMSurEYWmWWNzonHWuhVyFusJ4oNxilmpXDPr79EorXieqB7MuvgUHRnAsDBlhyhyuuSqoCTbveCQuTpQnXLdJxoRa6r+u9TQv55n66q6AtI5cZ4yoDJjvkFScOlN8/P5LQhndTIu3uKsf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nXhsRD7u; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54664C4CEDF;
-	Thu,  5 Dec 2024 08:12:28 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=lexTR+YxEbP6yV7q5XN7bqXTqrcNDFM3Dvh+iCFN5bZVu8qAXL0JzcINPnjACKu+aLtPVkTh2JKtksgs8Hwb5/ypDZYHTI/mHGQclUp+SR08Z5qpCrod3FUTbjfkCScZcGMMbZSP2XrI2NvMEGHpy4GhPYhWovk08ryQB04Yb/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B/uGT4iW; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFDFBC4CED1;
+	Thu,  5 Dec 2024 08:14:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733386351;
-	bh=0SB1Q0op60vhl5EfbizZUhTQUTf9r76GONCXBLsMDfA=;
+	s=k20201202; t=1733386488;
+	bh=9X/aD4pGIV+/vcIq+d1mvHuyyzWzoMkOv/nQxabgb3Y=;
 	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=nXhsRD7u//XLpgyG+lRxF/WT4QwNvK4XpF/PpbcDJOZPzMg4oi9edkuXGN1zL1EVJ
-	 icPekV7iyMJYVhWbUXuwJwpwyRVk6E1S7f/V44zxO7OfwQCAgFda7o4UXxjnsEhn+B
-	 lOFlJXtrZ+D9WX0xohqn1yTRDzn8r49JyO9wQ2yLMdBTxXeLprppJ0xC3PDUPzJOgO
-	 0gUJa/60mVkXp4fNVTS9vnmvQk3r50nD08URRBYAGifyJAeWMkEy+tagUMJhjsaNzh
-	 akw8DMKYD9UA8gKnS+rnNlVdaSv2VT09GZcEr2NfA1BkG0XlUGhy2DzUN1tGBweKTX
-	 i36eGpHNZ0Ztw==
-Message-ID: <e6759ca4-bcfb-4817-8a72-d1e9eb5d3d02@kernel.org>
-Date: Thu, 5 Dec 2024 09:12:26 +0100
+	b=B/uGT4iWS1yLra8zmrdmfM8yUajCKQl/59T2fdZDiknqmCTvxVF+wLlxVYSdMih7y
+	 ZKsXUH/B9vbpq12pfTpRbPEvGmER+BVPTO2KP+2Iu6ERzlg/TdoLAjHlKqM5CjXQPG
+	 eGu4qCHdDZ1FPACqK2E3JgSyiI7ehng+lxhFQ2zo6pj6r+QWalJN5W306PNM/8qnIw
+	 EA+UwIHYt8u3I5SLpiYkA+UG5oV/0w4t5vpC5xJLpHCyx7ZA/SaXzy+cVq97TQZwCI
+	 328kPv3USgqbnQy0eCyk9N07DzQRbb2kF+UGnwjp4niue18cKhl+hWTjTlU6BBZ8bo
+	 CvjjfX2Rl7J6w==
+Message-ID: <06b48a7f-de53-4b53-b3ac-be9efcee5558@kernel.org>
+Date: Thu, 5 Dec 2024 09:14:43 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,14 +50,14 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 1/2] dt-bindings: mailbox: qcom: Document
- qcom,tmelite-qmp
+Subject: Re: [PATCH RFC 2/2] mailbox: tmelite-qmp: Introduce QCOM TMEL QMP
+ mailbox driver
 To: Sricharan R <quic_srichara@quicinc.com>, jassisinghbrar@gmail.com,
  robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
  linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
  devicetree@vger.kernel.org
 References: <20241205080633.2623142-1-quic_srichara@quicinc.com>
- <20241205080633.2623142-2-quic_srichara@quicinc.com>
+ <20241205080633.2623142-3-quic_srichara@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -103,125 +103,66 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20241205080633.2623142-2-quic_srichara@quicinc.com>
+In-Reply-To: <20241205080633.2623142-3-quic_srichara@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 05/12/2024 09:06, Sricharan R wrote:
 > From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
 > 
-> This binding describes the component responsible for communication
-> between the TME-L server based subsystems (Q6) and the TME-L client
-> (APPSS/BTSS/AUDIOSS), used for security services like secure image
-> authentication, enable/disable efuses, crypto services. Each client
-> in the   SoC has its own block of message RAM and IRQ for communication
-> with the TME-L SS. The protocol used to communicate in the message RAM
-> is known as Qualcomm Messaging Protocol (QMP).
+> The QMP mailbox is the primary means of communication between TME-L SS
+> and other subsystem on the SoC. A dedicated pair of inbound and outbound
+> mailboxes is implemented for each subsystem/external execution environment
+> which needs to communicate with TME-L for security services. The inbound
+> mailboxes are used to send IPC requests to TME-L, which are then processed
+> by TME-L firmware and accordingly the responses are sent to the requestor
+> via outbound mailboxes.
+> 
+> It is an IPC transport protocol which is light weight and supports
+> a subset of API's. It handles link initialization, negotiation,
+> establishment and communication across client(APPSS/BTSS/AUDIOSS)
+> and server(TME-L SS).
+> 
+>    -----------------------------------------------       ---------------------------------------------------
+>   |                                              |       |                                                 |
+>   |                 SOC  CLIENT                  | SOC   |                TME-L  SS                        |
+>   |                                              | AHB   |                                                 |
+>   |     ----------    ---------   ---------      |       | ------    -------     --------    ------------  |
+>   |     |        |    |       |   |       |      | WO    | |     | R |     |     |      |    |SERVICES   | |
+>   |     | APPS   |<-->| TMEL  |<->|       |------------->| | IN  |-->|     |     | TMEL |    |--------   | |
+>   |     |        |    | COM   |   | QMP   |      | RO    | |     | W | QMP |<--->| COM  |<-->| a) ATTEST | |
+>   |     |        |    |       |   |       |<-------------| | OUT |<--|     |     |      |    | b) CRYPTO | |
+>   |     |        |    |       |   |       |      |       | |     |   |     |     |      |    | .. more   | |
+>   |     ---------     ---------   ---------      |       | ------    -------     -------     ------------  |
+>   |                                              |       |                                                 |
+>    -----------------------------------------------       --------------------------------------------------
 
-This is RFC, so only limited review follows. I will review more once
-this is ready for review.
+
+Hardware description is much more suitable for the binding, not to the
+driver. You wrote the same in cover letter and here... but not in actual
+hardware description - binding.
 
 > 
-> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-> ---
->  .../bindings/mailbox/qcom,tmelite-qmp.yaml    | 70 +++++++++++++++++++
->  1 file changed, 70 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/mailbox/qcom,tmelite-qmp.yaml
+> TME-L SS provides different kinds of services like secureboot, remote image authentication,
+> key management, crypto, OEM provisioning etc. This patch adds support for remote image
+> authentication. Support for rest of the services can be added.
+
+
+Please wrap commit message according to Linux coding style / submission
+process (neither too early nor over the limit):
+https://elixir.bootlin.com/linux/v6.4-rc1/source/Documentation/process/submitting-patches.rst#L597
+
 > 
-> diff --git a/Documentation/devicetree/bindings/mailbox/qcom,tmelite-qmp.yaml b/Documentation/devicetree/bindings/mailbox/qcom,tmelite-qmp.yaml
-> new file mode 100644
-> index 000000000000..1f2b3e02b894
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/mailbox/qcom,tmelite-qmp.yaml
-> @@ -0,0 +1,70 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/mailbox/qcom,tmelite-qmp.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm TMELITE IPCC channel
-> +
-> +maintainers:
-> +  - Sricharan Ramabadhran <quic_srichara@quicinc.com>
-> +
-> +description:
-> +  This binding describes the component responsible for communication
+> Remote proc driver subscribes to this mailbox and uses the mbox_send_message to use
+> TME-L to securely authenticate/teardown the images.
+> 
+> The intention of posting this is to get the design reviewed/corrected since there are also
+> other possible ways of having this SS support.
 
 
-Describe the hardware, not the binding.
+If you do not Cc maintainers, don't expect much answer. Missing Qcom amd
+remoteproc maintainers.
 
-> +  between the TME-L server based subsystems (Q6) and the TME-L client
-> +  (APPSS/BTSS/AUDIOSS), used for security services like secure image
-> +  authentication, enable/disable efuses, crypto services. Each client
-> +  in the   SoC has its own block of message RAM and IRQ for communication
-> +  with the TME-L SS. The protocol used to communicate in the message RAM
-> +  is known as Qualcomm Messaging Protocol (QMP).
-> +
-> +properties:
-> +  compatible:
-> +    items:
-> +      - enum:
-> +          - qcom,ipq5424-tmelite-qmp
-> +      - const: qcom,tmelite-qmp
-
-Drop generic compatible.
-
-
-> +
-> +  reg:
-> +    maxItems: 1
-> +    description:
-> +      The base address and size of the message RAM for this client's
-> +      communication with the TMELITE core
-
-Drop obvious description. Same everywhere else.
-
-> +
-> +  interrupts:
-> +    maxItems: 1
-> +    description:
-> +      Should specify the TMELITE message IRQ for this client
-> +
-> +  mboxes:
-> +    maxItems: 1
-> +    description:
-> +      Reference to the mailbox representing the outgoing doorbell in APCS for
-> +      this client, as described in mailbox/mailbox.txt
-> +
-> +  "#mbox-cells":
-> +    const: 2
-> +    description:
-> +      The first cell is the client-id, and the second cell is the signal-id.
-
-I guess that's the only description not stating obvious.
-
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - interrupts
-> +  - mboxes
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +
-> +    tmel_qmp: qmp@32090000 {
-
-Node names should be generic. See also an explanation and list of
-examples (not exhaustive) in DT specification:
-https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
-
-
-> +           compatible = "qcom,ipq5424-tmelite-qmp", "qcom,tmelite-qmp";
-
-Use 4 spaces for example indentation.
-
-> +           reg = <0x32090000 0x2000>;
-> +...
 
 
 Best regards,
