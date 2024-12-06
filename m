@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-40705-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40706-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DECD69E66D4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 06:27:52 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3D8499E66E6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 06:30:52 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 99F9B284DBA
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 05:27:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 15676169D71
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 05:30:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5EE40199392;
-	Fri,  6 Dec 2024 05:27:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E6DE0194AF4;
+	Fri,  6 Dec 2024 05:30:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LWVYgCwf"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="C4DXNqz9"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC9B5194C6F;
-	Fri,  6 Dec 2024 05:27:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5166C191F7C;
+	Fri,  6 Dec 2024 05:30:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733462864; cv=none; b=ZdLJgty7Lk7r/poDQH9eprSsBXiHb4dxQyK82R1ScKJ+fZ7yshv/F+6ZWW5EIs82hXq3L1PCvAWs24UPo+bj8KUGrT7smFmepeuOAJfvRAPR9xmMmMnW7kr5Myw4HG/YF+/EDcUmkGlPCd28S4qaGrqlhZ14nOjZgJm1F172okY=
+	t=1733463047; cv=none; b=gfsxXEakrtlOt2UPZgw4hokjxjm/eziPSba+aLBT3nN/AksEJxPweOPRDa68oi5KcFBowrAwVlpbUlmMhEGIjbDaFo07U/MI/+FRGV2Ew+9lZlTPqWUCJsaMIbOY5m5VSSAGiCydV8KcMxuFw6gysDepdr6iDaK6+wK7L3mgtEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733462864; c=relaxed/simple;
-	bh=n49cZMt8fyzcEOsPskmd0i1C0Ujbbl232rPfrhh5Pc4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=r8pRiG0TIZuTv3wwahN9LOuWgagIAZtoKsEpZYUBtA7sJxzwy528nYgVHYqT+ct/L1A8bSyvhh+R8QnMWIuxKFr3aZbSxWXV3+YwGe8vFhi/4H7Gt4h6YWVUWgAjB/9K7I82OY0KZZTW9woaOwUSUjdjtiEbFWkRozX3BMGTjgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LWVYgCwf; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1733463047; c=relaxed/simple;
+	bh=I7ezur48GTOr90mXFX/d7EPuBwbaQzfn8C4/oP7yzOw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=u6Kr2tr78Efvs1bQIYgoSMU+fWdfVCoAz62OTNOAK54BHpqKXDTJCI9n/m+A4z68hqbnNLXHrh1wze99I0yZwz8euCARv/K7BwAhl43pfvkuBI15dyY/1RvI5LxDnRshuGa6KiwUn2hmbN0IrS84/4Ses/qok6OjyQtYJ/CrhmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=C4DXNqz9; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B5HaRHI004903;
-	Fri, 6 Dec 2024 05:27:38 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B5HaNiK020813;
+	Fri, 6 Dec 2024 05:30:42 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	content-transfer-encoding:content-type:date:from:in-reply-to
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	MdckaWPuNfCGb6nEWiCV1VdAHxRdIKi2c95j7PHO29o=; b=LWVYgCwf936SiNgh
-	c3woNL0aNsIL3e4ZYTZ8invyzRTF/ep3XvLrsJ0bRWl3CbM/i+sWhw/WhNjoTJdV
-	F5iQFuXHsHjEhoy2Yz4M+BybX2hYuD7/pwCDyc7pKdVn2imUOlpwbzVe5VtJMAqe
-	G1tSHOAkwGJgjC6hNxtCYhqH8Fa2dHx/lRSdCD70pK8o9U0udbgUMzQ/3kqp0FVH
-	iaNn+7xic/QP2iDplHO9Mdc93Ib69uR1EqlOsX49JSeUT4+YlEcdA8SWW83PnF3+
-	CKai0AiGp52QsoVihbNkdNh3Fd234hqBsa7MUm4Oy3u1PfhcYrIf0jUr8tLaD8ed
-	ePP/dA==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43ba142qbf-1
+	K/YhsUfDB5MCFMGonVP60D00jRenznk+EdT6M7F5qL8=; b=C4DXNqz9rfciZfQD
+	Xy6UF/aaOIEngzECYklXP+gOsalc/0p4XbGRpNCK/ASFxt+ISf43SSq1iKGMX6ve
+	7/XNvmNeIh1idWNS2jl1Qb507NztNY8BkwSDeSML8ixEsqDMQWT5YDq/HKWWU1p9
+	dR4jQm91ZntkrBl1g/yEnNG2aVj2a4kGgKrlebhjat70XE/TxrqliQlKtuiRaIW8
+	sKpfQ9vA51Qniaqd89yt8CiC6lFP5+9UfVlOg6bsbKF/d+bQ6zgyVc2XqwFT8Ftv
+	1kyrcBkvLe6ej78KpRlDyxNCXSm604a4eGLzZv6rbirbt/zAOZiTBIvmKpjDzyJs
+	xx+7LA==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 439v8021vv-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 06 Dec 2024 05:27:37 +0000 (GMT)
+	Fri, 06 Dec 2024 05:30:42 +0000 (GMT)
 Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B65RaJM011802
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B65Uf9n022934
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 6 Dec 2024 05:27:36 GMT
+	Fri, 6 Dec 2024 05:30:41 GMT
 Received: from [10.50.18.22] (10.80.80.8) by nasanex01b.na.qualcomm.com
  (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 5 Dec 2024
- 21:27:34 -0800
-Message-ID: <01a4eb57-d7bc-4d0b-82f6-d3c19a089966@quicinc.com>
-Date: Fri, 6 Dec 2024 10:57:31 +0530
+ 21:30:38 -0800
+Message-ID: <2f4363b0-3a15-49b2-8f4d-1dc82abd6e21@quicinc.com>
+Date: Fri, 6 Dec 2024 11:00:35 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,63 +67,119 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH RFC 1/2] dt-bindings: mailbox: qcom: Document
  qcom,tmelite-qmp
-To: Krzysztof Kozlowski <krzk@kernel.org>, <jassisinghbrar@gmail.com>,
-        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <jassisinghbrar@gmail.com>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>
 References: <20241205080633.2623142-1-quic_srichara@quicinc.com>
  <20241205080633.2623142-2-quic_srichara@quicinc.com>
- <e6759ca4-bcfb-4817-8a72-d1e9eb5d3d02@kernel.org>
- <360dda0a-35e0-4fcb-a2bf-77d400d71623@quicinc.com>
- <640201c7-84d5-4564-8ef3-afcc39929fd9@kernel.org>
+ <h5franuhsumreqz2l6l2lq3lyfzqtzjvz5py6q3smuds46j7rr@kcexrs5qn4be>
 Content-Language: en-US
 From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-In-Reply-To: <640201c7-84d5-4564-8ef3-afcc39929fd9@kernel.org>
+In-Reply-To: <h5franuhsumreqz2l6l2lq3lyfzqtzjvz5py6q3smuds46j7rr@kcexrs5qn4be>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: u1h9VA74s-AR7A9uzWuOcYv1H4rUJp_3
-X-Proofpoint-ORIG-GUID: u1h9VA74s-AR7A9uzWuOcYv1H4rUJp_3
+X-Proofpoint-ORIG-GUID: LUDl2tOqBI51gqZvDVbaqYgnBubYk7bQ
+X-Proofpoint-GUID: LUDl2tOqBI51gqZvDVbaqYgnBubYk7bQ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
- phishscore=0 clxscore=1015 mlxscore=0 lowpriorityscore=0 adultscore=0
- priorityscore=1501 suspectscore=0 mlxlogscore=680 malwarescore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxscore=0
+ impostorscore=0 adultscore=0 priorityscore=1501 clxscore=1015
+ lowpriorityscore=0 suspectscore=0 mlxlogscore=999 malwarescore=0
+ bulkscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2411120000 definitions=main-2412060038
 
 
 
-On 12/5/2024 5:13 PM, Krzysztof Kozlowski wrote:
-> On 05/12/2024 10:17, Sricharan Ramabadhran wrote:
+On 12/5/2024 5:54 PM, Dmitry Baryshkov wrote:
+> On Thu, Dec 05, 2024 at 01:36:32PM +0530, Sricharan R wrote:
+>> From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
 >>
->>
->> On 12/5/2024 1:42 PM, Krzysztof Kozlowski wrote:
->>> On 05/12/2024 09:06, Sricharan R wrote:
->>>> From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
->>>>
->>>> This binding describes the component responsible for communication
->>>> between the TME-L server based subsystems (Q6) and the TME-L client
->>>> (APPSS/BTSS/AUDIOSS), used for security services like secure image
->>>> authentication, enable/disable efuses, crypto services. Each client
->>>> in the   SoC has its own block of message RAM and IRQ for communication
->>>> with the TME-L SS. The protocol used to communicate in the message RAM
->>>> is known as Qualcomm Messaging Protocol (QMP).
->>>
->>> This is RFC, so only limited review follows. I will review more once
->>> this is ready for review.
->>>
->> Thanks. Once i get the design/approach confirmed, will post the V1.
+>> This binding describes the component responsible for communication
+>> between the TME-L server based subsystems (Q6) and the TME-L client
 > 
-> Not a v1, but next version. This was v1 already, because we do not count
-> from 0. Please use b4 to avoid such mistakes.
+> This should start by explaining what is TME-L.
+> 
+ok, will change.
 
-Ok, understand.
+>> (APPSS/BTSS/AUDIOSS), used for security services like secure image
+>> authentication, enable/disable efuses, crypto services. Each client
+>> in the   SoC has its own block of message RAM and IRQ for communication
+>> with the TME-L SS. The protocol used to communicate in the message RAM
+>> is known as Qualcomm Messaging Protocol (QMP).
+>>
+>> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+>> ---
+>>   .../bindings/mailbox/qcom,tmelite-qmp.yaml    | 70 +++++++++++++++++++
+>>   1 file changed, 70 insertions(+)
+>>   create mode 100644 Documentation/devicetree/bindings/mailbox/qcom,tmelite-qmp.yaml
+>>
+>> diff --git a/Documentation/devicetree/bindings/mailbox/qcom,tmelite-qmp.yaml b/Documentation/devicetree/bindings/mailbox/qcom,tmelite-qmp.yaml
+>> new file mode 100644
+>> index 000000000000..1f2b3e02b894
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/mailbox/qcom,tmelite-qmp.yaml
+>> @@ -0,0 +1,70 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/mailbox/qcom,tmelite-qmp.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm TMELITE IPCC channel
+> 
+> So, TME-L or TMELITE or TME-LITE?
+> 
+ok, will use TME-L in all places.
+
+>> +
+>> +maintainers:
+>> +  - Sricharan Ramabadhran <quic_srichara@quicinc.com>
+>> +
+>> +description:
+>> +  This binding describes the component responsible for communication
+> 
+> It's already a description of the binding, no need to repeat the obvious.
+> 
+ok
+
+>> +  between the TME-L server based subsystems (Q6) and the TME-L client
+>> +  (APPSS/BTSS/AUDIOSS), used for security services like secure image
+>> +  authentication, enable/disable efuses, crypto services. Each client
+>> +  in the   SoC has its own block of message RAM and IRQ for communication
+>> +  with the TME-L SS. The protocol used to communicate in the message RAM
+>> +  is known as Qualcomm Messaging Protocol (QMP).
+>> +
+>> +properties:
+>> +  compatible:
+>> +    items:
+>> +      - enum:
+>> +          - qcom,ipq5424-tmelite-qmp
+>> +      - const: qcom,tmelite-qmp
+>> +
+>> +  reg:
+>> +    maxItems: 1
+>> +    description:
+>> +      The base address and size of the message RAM for this client's
+>> +      communication with the TMELITE core
+>> +
+>> +  interrupts:
+>> +    maxItems: 1
+>> +    description:
+>> +      Should specify the TMELITE message IRQ for this client
+> 
+> Just should? This is a very relaxed constraint. Just "the message IRQ
+> for the client" sounds better.
+> 
+ok, will reword.
+
 
 Regards,
   Sricharan
+
 
