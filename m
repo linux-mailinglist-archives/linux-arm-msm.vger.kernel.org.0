@@ -1,162 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-40776-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40777-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 41A119E6CB4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 12:04:45 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id BD24C9E6CBD
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 12:07:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1353C166DC4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 11:04:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 56D16188431E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 11:07:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 577EB1FBC95;
-	Fri,  6 Dec 2024 11:04:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1574F1FC7D8;
+	Fri,  6 Dec 2024 11:07:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="eOOPYcXS"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dy5rMnjI"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E95C155C94;
-	Fri,  6 Dec 2024 11:04:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A9FF155C94;
+	Fri,  6 Dec 2024 11:07:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733483080; cv=none; b=WJDja/a+ZQ00VbBy0Ea3SDUshu3WhhiHkgO5okRPfyvPuCyaDxPSU22cEShmZHedCNmIeF3F/wkJRxIAGXab02mDA60MR9Jwvsz2MKKFH35FLDPqSDX/jxkyPm2FxieuOGujK5AfYhhNc1NbH4dRn+RZ1DZz17BpyBeDvbCF5T4=
+	t=1733483270; cv=none; b=VjPzWPDkKkO4M8QMMRGN7N8iQMdHypVe4rynMgFPmQ933KkkpZdZHm5LeEDRy5n5DYpiM65deAKpqnJeUP76g8vyon5gZ0HZznCW4cabZMyVtlFxyGzX4oXG9MQhb0AiA4DJZPxPeFHY1A/VdWpWNAeoHkAzLlsgSl9WqQ7y/hk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733483080; c=relaxed/simple;
-	bh=0NQHcKcA/lGzLsNFSaXSHfGyrL2zqGNg9b9wT7QGn2g=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=G3bFMmc6pFk3bIaOkVqNyJC4GZPlY9WiT08mXa1VzogrP/YjE43u9HX0mgnVk7ChIrYbfrw0J8pvNDb89Mzad5LnkyXXeQ8wSipuxqdcS27V18LVai9DqVjuy2JJxGsFN4Fng4WXyC1wNbSK8FgMrc2u91urjUZu7PyvNNpEHzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=eOOPYcXS; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1733483270; c=relaxed/simple;
+	bh=y5vOAzuNQWniC5L3Do5/e/IVCLQaEme8W9EdB+yFzXQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=g29jR/Xpg0usg5/v5UsrAukQ/liRzzSH91ndsQ+TACZmtXpF4/KtSQtPEcKhOnwqDnayzkm9C/wkklNShTUTnz+bxNSJNOKIrphJOKU3bKQ3C/91SwbiVzKi2EbDuz22YfxF6dsh6SkWR5S5f/n7Bk+F8tyN8OgqcnMe/VQGtsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dy5rMnjI; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B68keOM020526;
-	Fri, 6 Dec 2024 11:04:35 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B66kkrY016877;
+	Fri, 6 Dec 2024 11:07:42 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	qAWDc9ZzjlTESBGI0sKOtRqIHdQ2PdS9CfJbT653hnM=; b=eOOPYcXSeLoZLmAB
-	0172f6EAxNUdEEjBmRQ6RWwrroaTfvBEuk3P4zA4ko2JX7U5a7p+nl82bHix5sGd
-	O6Ad8ajTg0M+ETYgIScCccXSVa7h6AFRQW/pnuM2+tZn59U/1uqB1SvXO/II9OW3
-	7bQ+PAk5FtwL5sENWf+ghBKrIExP3CbV1mWky+GKHA2AF2MEgwN6yXg+KKG3CcFc
-	5nNfNq0FGqqn2RST1LCzPsCdAPtl1qZZqifIrRsq9Jh6yHVZygjpdPKuQaXrAcma
-	+AzCs0UG8m/ZMen1NuxCBXvXxV3C4IF5JdZuVXN9udEVhocLQmeKTCSHjWadY4A+
-	BK3KqA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43bjk8t2ug-1
+	1lLeIj9ZC2mS5g76o4o6f2hDmvee13oLz6cpCNvUnj8=; b=dy5rMnjIK+eVLGV0
+	DRi3yvvhbGzm0GRgSVNXASuBB53vAacRbiImSrU42xFRiiUFtfYHMStJTfKZOtYi
+	I3aT7wmNdWEbwwjQJtzlFWjSRKQBBBRSsk8HSO6NSHmugQdN64FRgGV9ZM6u+hto
+	qpn3a67NQRov7lkdT+/bdsTOc0uoNwPYeQy9AMRlOrFyVcnbJ26cglVDDiLodQ5Y
+	FoDoR5tItjU1LATal8Umo6pjqIWmmnNhP4rVTeibkSlsiqNeTY6F8D7AUqZK2wVr
+	u9J226wOmU2KmpcUh4qlB9eXqCs4zoDEwSU8HIkFfeSVnnwJFkaegft8JrGLt2JC
+	GfpkbA==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43bbnmkbv1-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 06 Dec 2024 11:04:34 +0000 (GMT)
+	Fri, 06 Dec 2024 11:07:42 +0000 (GMT)
 Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B6B4XWI021686
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B6B7f2x031107
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 6 Dec 2024 11:04:33 GMT
-Received: from hu-wasimn-hyd.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Fri, 6 Dec 2024 03:04:27 -0800
-Date: Fri, 6 Dec 2024 16:34:23 +0530
-From: Wasim Nazir <quic_wasimn@quicinc.com>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <kernel@quicinc.com>
-Subject: Re: [PATCH v3 5/5] arm64: dts: qcom: Add support for QCS9075 Ride &
- Ride-r3
-Message-ID: <Z1LaN9nFr5msfq61@hu-wasimn-hyd.qualcomm.com>
-References: <20241119174954.1219002-1-quic_wasimn@quicinc.com>
- <20241119174954.1219002-6-quic_wasimn@quicinc.com>
- <9e351979-be01-4d38-9b94-cc23efac4c3f@kernel.org>
+	Fri, 6 Dec 2024 11:07:41 GMT
+Received: from [10.151.41.184] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 6 Dec 2024
+ 03:07:36 -0800
+Message-ID: <0b2f8734-f502-42d7-bdc5-b0d382d2aa70@quicinc.com>
+Date: Fri, 6 Dec 2024 16:37:33 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <9e351979-be01-4d38-9b94-cc23efac4c3f@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 00/22] wifi: ath12k: add Ath12k AHB driver support for
+ IPQ5332
+To: Krzysztof Kozlowski <krzk@kernel.org>
+CC: <ath12k@lists.infradead.org>, <linux-wireless@vger.kernel.org>,
+        Kalle Valo
+	<kvalo@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Jeff Johnson
+	<jjohnson@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
+References: <20241015182637.955753-1-quic_rajkbhag@quicinc.com>
+ <ou5kgedz5aga4dtda6k23uhybcjy7mfwie74p6q3qyn5bdajz7@ftejp7lqrise>
+Content-Language: en-US
+From: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
+In-Reply-To: <ou5kgedz5aga4dtda6k23uhybcjy7mfwie74p6q3qyn5bdajz7@ftejp7lqrise>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: nQ9LVPraClAtFh8MU31IiNUD0MOeCykD
-X-Proofpoint-GUID: nQ9LVPraClAtFh8MU31IiNUD0MOeCykD
+X-Proofpoint-ORIG-GUID: eOj5rPgQ7y1SBrL_GUqGg7AwhE9HK2UZ
+X-Proofpoint-GUID: eOj5rPgQ7y1SBrL_GUqGg7AwhE9HK2UZ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- impostorscore=0 bulkscore=0 phishscore=0 suspectscore=0 spamscore=0
- lowpriorityscore=0 adultscore=0 mlxscore=0 mlxlogscore=868
- priorityscore=1501 clxscore=1015 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2411120000 definitions=main-2412060081
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ mlxlogscore=999 priorityscore=1501 spamscore=0 impostorscore=0 bulkscore=0
+ suspectscore=0 adultscore=0 clxscore=1015 phishscore=0 mlxscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412060082
 
-On Wed, Nov 20, 2024 at 05:44:11PM +0100, Krzysztof Kozlowski wrote:
-> On 19/11/2024 18:49, Wasim Nazir wrote:
-> > Add device tree support for QCS9075 Ride & Ride-r3 boards.
-> > QCS9075 Ride & Ride-r3 are similar to QCS9100 Ride and Ride-r3
-> > boards but without safety monitoring feature of SAfety-IsLand
-> > subsystem.
-> > 
-> > Difference between ride and ride-r3 is the ethernet phy.
-> > Ride uses 1G ethernet phy while ride-r3 uses 2.5G ethernet phy.
-> > 
-> > Signed-off-by: Wasim Nazir <quic_wasimn@quicinc.com>
-> > ---
-> >  arch/arm64/boot/dts/qcom/Makefile            |  2 ++
-> >  arch/arm64/boot/dts/qcom/qcs9075-ride-r3.dts | 12 ++++++++++++
-> >  arch/arm64/boot/dts/qcom/qcs9075-ride.dts    | 12 ++++++++++++
-> >  3 files changed, 26 insertions(+)
-> >  create mode 100644 arch/arm64/boot/dts/qcom/qcs9075-ride-r3.dts
-> >  create mode 100644 arch/arm64/boot/dts/qcom/qcs9075-ride.dts
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> > index 5d9847119f2e..91c811aca2ca 100644
-> > --- a/arch/arm64/boot/dts/qcom/Makefile
-> > +++ b/arch/arm64/boot/dts/qcom/Makefile
-> > @@ -116,6 +116,8 @@ dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= qcs8550-aim300-aiot.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= qcs9075-rb8.dtb
-> > +dtb-$(CONFIG_ARCH_QCOM)	+= qcs9075-ride.dtb
-> > +dtb-$(CONFIG_ARCH_QCOM)	+= qcs9075-ride-r3.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride-r3.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= qdu1000-idp.dtb
-> > diff --git a/arch/arm64/boot/dts/qcom/qcs9075-ride-r3.dts b/arch/arm64/boot/dts/qcom/qcs9075-ride-r3.dts
-> > new file mode 100644
-> > index 000000000000..a04c8d1fa258
-> > --- /dev/null
-> > +++ b/arch/arm64/boot/dts/qcom/qcs9075-ride-r3.dts
-> > @@ -0,0 +1,12 @@
-> > +// SPDX-License-Identifier: BSD-3-Clause
-> > +/*
-> > + * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
-> > + */
-> > +/dts-v1/;
-> > +
-> > +#include "sa8775p-ride-r3.dts"
-> No guys, you are making these things up. This is EXACTLY the same as
-> qcs9100.
+On 10/16/2024 12:27 PM, Krzysztof Kozlowski wrote:
+> On Tue, Oct 15, 2024 at 11:56:15PM +0530, Raj Kumar Bhagat wrote:
+>> Currently, Ath12k driver only supports WiFi devices that are based on
+>> PCI bus. New Ath12k device IPQ5332 is based on AHB bus. Hence, add
+>> Ath12k AHB support for IPQ5332.
+>>
+>> IPQ5332 is IEEE802.11be 2 GHz 2x2 Wifi device. To bring-up IPQ5332
+>> device:
+>> - Add hardware parameters for IPQ5332.
+>> - CE and CMEM register address space in IPQ5332 is separate from WCSS
+>>   register space. Hence, add logic to remap CE and CMEM register
+>>   address.
+>> - Add support for fixed QMI firmware memory for IPQ5332.
+>> - Support userPD handling for WCSS secure PIL driver to enable ath12k
+>>   AHB support.
+>>
+>> Depends-On: [PATCH V7 0/5] remove unnecessary q6 clocks
+>> Depends-On: [PATCH V2 0/4] Add new driver for WCSS secure PIL loading
+>> Link: https://lore.kernel.org/all/20240820055618.267554-1-quic_gokulsri@quicinc.com/
+>> Link: https://lore.kernel.org/all/20240829134021.1452711-1-quic_gokulsri@quicinc.com/
+> 
+> These are series targetting other subsystems. I do not understand why
+> you created such dependency. It does not look needed and for sure is not
+> good: nothing here can be tested, nothing can be applied.
 
-9100 & 9075 are different from “safe” perspective. They differ in
-changes related to thermal which will be added later in devicetree.
+To validate this series, the dependencies mentioned above were necessary, which
+is why they were included.
 
-> 
-> NAK
-> 
-> 
-> 
-> Best regards,
-> Krzysztof
+Currently, the "[PATCH V7 0/5] remove unnecessary q6 clocks" has been merged,
+so this dependency will not be required in the next version.
 
-Thanks & Regards,
-Wasim
+The "[PATCH V2 0/4] Add new driver for WCSS secure PIL loading" series is still
+under review and is required for validation.
+
+However, this series can still be applied and compiled without these dependencies.
+Please let us know if we should remove the dependency in the next version.
 
