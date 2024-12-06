@@ -1,205 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-40843-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40844-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F6FC9E79F2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 21:17:59 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4396C16BE12
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 20:17:56 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC8421C54BB;
-	Fri,  6 Dec 2024 20:17:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pfzvquSl"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E73EF9E7A1C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 21:42:41 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27B2E1C54B9;
-	Fri,  6 Dec 2024 20:17:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A66D9281F43
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 20:42:40 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A49111F63F0;
+	Fri,  6 Dec 2024 20:42:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mBi9HbMl"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from mail-vs1-f50.google.com (mail-vs1-f50.google.com [209.85.217.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271A11C549F;
+	Fri,  6 Dec 2024 20:42:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733516274; cv=none; b=PwhHZRxAwNTU6BvNx3BXxioyD5b5q2G7nILTXxEK1eIbSO7b2p54Ny0oUl0sR9w12pp+LqNhti6esjy0rIxO/N94VGCpEVxA2hsYc0L7oT1eZFSyCqjNyDTTtMSIbWVSKjSXdRLItzwWNjKuySThFjbXChlwr8EswnJ8bKWN1xE=
+	t=1733517757; cv=none; b=NJiIMHGVIgQN4Y4hY0c6Q2ZGP5RNb0u4a9aBOF5nK5L509Je41tWLJzJnOAP4NPWn2tuUcBw9mhFJrHPHUYyrgF03Hp0+XRwpWDGiGuIpm98mgxuVv3maTenxKNOiWbDucMzroNkTZaQesuuXbRH/St0EZOk6bzohCNgNSfYqfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733516274; c=relaxed/simple;
-	bh=gag2NaY+fv9iWbCwyZ9EE4Jq6vngSsQq2UumuLYv3Ic=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=rBOL6A5aS+1lgO2u8CQSpcYcOSvvfnXLm8KBYwDkQ1/RTKfmzMl2uMrOFWME0oHqPBQSzq6z7SmxG3BeQgq222LMKKApcB+90QxVxPbD/mEHYLfs3kay5nL0CY22tmRS7U9mIvxJKCi6uEqwKkNBVGSPP6uh+blVX0zBi5llA74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pfzvquSl; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B6KA5Nx018614;
-	Fri, 6 Dec 2024 20:17:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	V8TXl6zc2x9wr3hGp8Wkq7mrYvv14H9MajeE4l2soGU=; b=pfzvquSl9jFS5XtS
-	tAoOZtrim8gZQPs9cdpo363apKv0TijVSBDzpZFsDW/mSMypc/57phqSljh2+sFL
-	Apb/yVPWVM62UtABfUz2U7Dhb3D3mtmMjKu3r2I7NaPHNEbEEkZHA9TawigrCHzi
-	cR1KXgfY9nuOT0PUpswQjWZ0LKOQ6w4N4qIDwpSidzKLgx4SJcLyHUIr/RZ8fDOS
-	Pnw5+CZHbD+G1oJ7O+ma0ZZaVuGn4hTDvdBRjpDUn1YNXNiFYy/mJyzLJbUp23zp
-	V7yIG7Vwvac+mp88zkp3fba7fmelzFUY8+ysrI93f5QsduheLtejRA/eNzgvqds1
-	tI5Pcg==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43bjk8ufkb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 06 Dec 2024 20:17:37 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B6KHael018454
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 6 Dec 2024 20:17:36 GMT
-Received: from [10.110.95.46] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 6 Dec 2024
- 12:17:31 -0800
-Message-ID: <c1b2fe04-e43e-4ab7-b0f8-2bb2ce6e1313@quicinc.com>
-Date: Fri, 6 Dec 2024 12:17:29 -0800
+	s=arc-20240116; t=1733517757; c=relaxed/simple;
+	bh=7FMBJvtBDWTo+KIE2Hy4+YE3DFqzJBO80QHhIdJI0Bg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=PM+qw6UYkG1cpmy6z+5r+vTPP/VxrsO/6a7inXcQP/+yPQVS5fl+TQhJ8qHeJhG4QduSdw29ptOgBjB0a+/UhJi/LL/gvUZI45RPu9EtcxKwBsk5TMtpswagTteKkLz2G0XeGDstgdMHFNj/6UdU74gDHzh1DWwBaQdgAYBjUnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mBi9HbMl; arc=none smtp.client-ip=209.85.217.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-vs1-f50.google.com with SMTP id ada2fe7eead31-4afdfefc6c1so7093137.0;
+        Fri, 06 Dec 2024 12:42:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1733517755; x=1734122555; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7FMBJvtBDWTo+KIE2Hy4+YE3DFqzJBO80QHhIdJI0Bg=;
+        b=mBi9HbMlrIToGwKFVNW4TDkXqCV+HWlg6rulpEDqy6AINH+6YOVRjq9IZx6pUQAJWk
+         LbPn+1If+MxMxxIQlU3vu86X1CcZV9Vuwqr+n2HirmXgWryWEkPn/dliMSjPpPdj2ZG3
+         zKHIs7pRprMYnyGDkJkDfnQELDrDbvR8ypkt6n91HIlwj1ukaPxPY4kWzTYUvWXzHCFr
+         Nv4Jhg6E5ZjPaahuoxHnfCgDMz8sZ7eFlqZaBPT2J3GgtC0Vyghx9Hva22m1UPUya9E6
+         ikMJ40mxaTpMkHeR2YJcswFwbPKROlJmAEaSjLV3OpZ+Z6iDCsTye3KUWf5gVzKUykcJ
+         atbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733517755; x=1734122555;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7FMBJvtBDWTo+KIE2Hy4+YE3DFqzJBO80QHhIdJI0Bg=;
+        b=A1j6qJevO6CLgxDUSUCady/1hVC/6EI+rdquHD4c2ZyxP77fuk0yiPyjUlF/4FXcbz
+         VXTwAsnU53SLAMN5DCqgt+PMIC7vRbyaKVEARwafnMXLedmD481Iu3M0mnzhnxgxdusP
+         j4yTRIg+XATtk5LXUHjbk+S/1QNfZXeVmFPEZF4jN3wC+nLqco2sOpjpIBSl0txxAD5l
+         i8oV1bsTVu0673TpIN0I+NXdPhibNM/RU0tt71Jv8RMfHcx8dmQuXMMwT/d2DdT915V3
+         3+pzX27LxVB0xSrZHcIwsva3gWOfHxrnRP3KU5ruv1qrm/2cxKpSZNV9ZZUpRe9ucRaU
+         GyCg==
+X-Forwarded-Encrypted: i=1; AJvYcCV7EPJX20VC6wHX/K2ldGleCEvRnRjQsvNQNEbr6ehbFcbcpNsOcAaZGmAN+nRr+WvNehNi5SZ0hCAPyojb@vger.kernel.org, AJvYcCVXKsnC/O9a2xdteEGGcbVIUW9NaLVUzPvvwBF02Wta7Q+T4LS7M6oP2KA8Zok+9MdSG35Pf/8DhO84@vger.kernel.org, AJvYcCWKvwKGuDEJrMjFpOA5EQ2fuEOWhT3WRybPGVW0yxNEW+SPwdrY1S4kOv+mOaykH7KI1eRKf+rCfST+wxWeeQ==@vger.kernel.org, AJvYcCXG8E/I03EZ+bHMRgv4ed43mlN6YRzwX8aqAdct+peV2AModXgQNWCICWGOFD91oeuhVT6MgntmXp4I+Kk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwoHBTlfj0M7HbqEMvkIbgaJPMk+eAaNUIJkTa1p7j/PvGolWRP
+	6xXrOG/7qbHyIFiXnjz6s4D7e9PJ0gWXfeCI+vWieiT9zvsJs/ESjQKMEnQWzyJTZ/vH3yoBJ0T
+	8ehpgl5UmFtjP0aohNCxlYcWsyg57shCd
+X-Gm-Gg: ASbGncsEY3jM0luCaLUco+JukiFkplKUyvFlSwrqZtbrndNS89xmdBUQUbqMLWsamZn
+	bfjSHFdpGiGw6ZO8Hdx3tsbbATiflGA==
+X-Google-Smtp-Source: AGHT+IFAc0eiukV4w2HsnxXwh119RzhcP435O4SRLXGkUh5TImPlsVPMnvFdkUldt52feLqWQVqNzSjYSdXVodDyWuk=
+X-Received: by 2002:a05:6102:3909:b0:4af:4974:a489 with SMTP id
+ ada2fe7eead31-4afcaaecdb6mr5723337137.20.1733517755127; Fri, 06 Dec 2024
+ 12:42:35 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/9] drm/msm/dpu: Add SM6150 support
-To: Fange Zhang <quic_fangez@quicinc.com>, Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Maarten Lankhorst
-	<maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Rob Herring <robh@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "Krishna
- Manikandan" <quic_mkrishn@quicinc.com>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        "Catalin
- Marinas" <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Li Liu
-	<quic_lliu6@quicinc.com>,
-        Xiangxu Yin <quic_xiangxuy@quicinc.com>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>
-References: <20241122-add-display-support-for-qcs615-platform-v3-0-35252e3a51fe@quicinc.com>
- <20241122-add-display-support-for-qcs615-platform-v3-5-35252e3a51fe@quicinc.com>
-Content-Language: en-US
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20241122-add-display-support-for-qcs615-platform-v3-5-35252e3a51fe@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: yj9fXnaj5lnOP6LN3qd6Slds2MgrbGF-
-X-Proofpoint-GUID: yj9fXnaj5lnOP6LN3qd6Slds2MgrbGF-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- impostorscore=0 bulkscore=0 phishscore=0 suspectscore=0 spamscore=0
- lowpriorityscore=0 adultscore=0 mlxscore=0 mlxlogscore=999
- priorityscore=1501 clxscore=1011 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2411120000 definitions=main-2412060152
+References: <20241205084021.35610-1-krzysztof.kozlowski@linaro.org>
+ <c3d2477b-f12a-47dd-bf95-927e6c0d8fd5@sirena.org.uk> <CABTCjFA9DyRzca93qoS5_+sfc2RLfNVNqN14WVfKODjHykwGJQ@mail.gmail.com>
+ <08e07421-8a9b-4535-9cd5-9383ca9024b3@sirena.org.uk>
+In-Reply-To: <08e07421-8a9b-4535-9cd5-9383ca9024b3@sirena.org.uk>
+From: Dzmitry Sankouski <dsankouski@gmail.com>
+Date: Fri, 6 Dec 2024 23:42:24 +0300
+Message-ID: <CABTCjFB7XiR6_+r375h0fJipA+OC2i94ruTG-sWB=s=0qYRReQ@mail.gmail.com>
+Subject: Re: [PATCH 1/2] ASoC: codecs: wcd9335: Add define for number of DAIs
+To: Mark Brown <broonie@kernel.org>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, Liam Girdwood <lgirdwood@gmail.com>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, linux-sound@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+=D1=87=D1=82, 5 =D0=B4=D0=B5=D0=BA. 2024=E2=80=AF=D0=B3. =D0=B2 16:31, Mark=
+ Brown <broonie@kernel.org>:
+>
+> On Thu, Dec 05, 2024 at 04:29:45PM +0300, Dzmitry Sankouski wrote:
+>
+> > This is the 1st patch in series, and NUM_CODEC_DAIS redefine from bindi=
+ngs
+> > is deleted in the 2nd one.
+>
+> I know, that still means this change is broken.
 
+How to avoid broken change, when moving constant from dt-binding to*.c
+file, given we have constraint of separate patch for bindings?
 
-On 11/22/2024 1:56 AM, Fange Zhang wrote:
-> From: Li Liu <quic_lliu6@quicinc.com>
-> 
-> Add definitions for the display hardware used on the Qualcomm SM6150
-> platform.
-> 
-> Signed-off-by: Li Liu <quic_lliu6@quicinc.com>
-> Signed-off-by: Fange Zhang <quic_fangez@quicinc.com>
-> ---
->   .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h | 263 +++++++++++++++++++++
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |   1 +
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   1 +
->   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   1 +
->   4 files changed, 266 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..e8b7f694b885d69a9bbfaa85b0faf0c7af677a75
-> --- /dev/null
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h
-> @@ -0,0 +1,263 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
-> +/*
-> + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#ifndef _DPU_5_3_SM6150_H
-> +#define _DPU_5_3_SM6150_H
-> +
-> +
-
-<snip>
-
-> +static const struct dpu_sspp_cfg sm6150_sspp[] = {
-> +	{
-> +		.name = "sspp_0", .id = SSPP_VIG0,
-> +		.base = 0x4000, .len = 0x1f0,
-> +		.features = VIG_SDM845_MASK,
-
-This is not correct. Smartdma is supported on this chipset on both Vig 
-and DMA SSPPs.
-
-Please use VIG_SDM845_MASK_SDMA and DMA_SDM845_MASK_SDMA respectively.
-
-
-> +		.sblk = &dpu_vig_sblk_qseed3_2_4,
-> +		.xin_id = 0,
-> +		.type = SSPP_TYPE_VIG,
-> +		.clk_ctrl = DPU_CLK_CTRL_VIG0,
-> +	}, {
-> +		.name = "sspp_8", .id = SSPP_DMA0,
-> +		.base = 0x24000, .len = 0x1f0,
-> +		.features = DMA_SDM845_MASK,
-> +		.sblk = &dpu_dma_sblk,
-> +		.xin_id = 1,
-> +		.type = SSPP_TYPE_DMA,
-> +		.clk_ctrl = DPU_CLK_CTRL_DMA0,
-> +	}, {
-> +		.name = "sspp_9", .id = SSPP_DMA1,
-> +		.base = 0x26000, .len = 0x1f0,
-> +		.features = DMA_SDM845_MASK,
-> +		.sblk = &dpu_dma_sblk,
-> +		.xin_id = 5,
-> +		.type = SSPP_TYPE_DMA,
-> +		.clk_ctrl = DPU_CLK_CTRL_DMA1,
-> +	}, {
-> +		.name = "sspp_10", .id = SSPP_DMA2,
-> +		.base = 0x28000, .len = 0x1f0,
-> +		.features = DMA_CURSOR_SDM845_MASK_SDMA,
-> +		.sblk = &dpu_dma_sblk,
-> +		.xin_id = 9,
-> +		.type = SSPP_TYPE_DMA,
-> +		.clk_ctrl = DPU_CLK_CTRL_DMA2,
-> +	}, {
-> +		.name = "sspp_11", .id = SSPP_DMA3,
-> +		.base = 0x2a000, .len = 0x1f0,
-> +		.features = DMA_CURSOR_SDM845_MASK_SDMA,
-> +		.sblk = &dpu_dma_sblk,
-> +		.xin_id = 13,
-> +		.type = SSPP_TYPE_DMA,
-> +		.clk_ctrl = DPU_CLK_CTRL_DMA3,
-> +	},
-> +};
-> +
-
-<snip>
+--=20
+Best regards,
+Dzmitry
 
