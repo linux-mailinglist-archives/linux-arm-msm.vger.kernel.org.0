@@ -1,128 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-40827-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40828-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3764E9E7625
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 17:35:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E05BF9E771D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 18:27:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6630416EB0B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 16:34:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5D89816C6A9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 17:27:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9DCDA21B187;
-	Fri,  6 Dec 2024 16:32:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 736EF1FFC55;
+	Fri,  6 Dec 2024 17:24:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="APkY/E2T"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jazwbNVL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CFBB1FFC76;
-	Fri,  6 Dec 2024 16:31:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 453901F4E21;
+	Fri,  6 Dec 2024 17:24:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733502720; cv=none; b=BrVN3wr2gvJhO3r1R3R78lQy60RujVNnYiodc4hjbRlXuz5gZskp+K1r1OLRA2aI2T1dFq5YXQzlF+VLQvarozIbmlUOQ0SDEdR/4otGG0ivIj9tk3mR20H81xWJsMeDNJzOCiO24BMDGfBbRZ91I8JqHnhI2tc3UjK35dBU37Q=
+	t=1733505854; cv=none; b=MLRegSwCAU7rb0JCel5dP3Z8yuugDGsl1A+cJ6iwm3TVLVaLdvPq35uK0WIPklDA69iOxTBGyEinRXQ+EA7ZCjzhGdoL/z4y0wPG+bz3ghrVHP7Qm7WG1Y5W5RdFBJAK0tD180CNqu216/tPC7oVM/bzGkAtclha5R6Tn6N/FbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733502720; c=relaxed/simple;
-	bh=tGxxB+XljXcuE0hRcX2Nqt/vxo0R6CzixL3bi2d2wEE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ISANPAp/fE2VINM9im2PHOlgBHGyhCy8XrfgOmVKHmALM0mlwyym+zWwNiI5UwDoG1rvvAIGkk5X9WG50KuZeY0rbbaH4T4FCV0U4pzn5FHImyQrZwJUI8RZ7qySrjqqDtc7gB+RUbS+VP1+NgONlzjQd6ngbYCjCLHZ4mB4/GI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=APkY/E2T; arc=none smtp.client-ip=78.32.30.218
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=o1vL76URTK41WeEd0opGeSEdVV53xsw2rWEY8OQ/ulA=; b=APkY/E2TP7kW+DlfgfAUkVH/tJ
-	pDde5UjrykoRcsopffzWphPbr7BGeBcyrTEolWm1OPh+UB58yGKlpPpgdEcjZ41b1aE01UK8tc9Ee
-	jgVNP3Zyi+wkChgoKb4a2kXrj3S/JKuvVwxsw3xOc6elrAflggMJQYRbIasxkIY+bQFLWyNigXJ4H
-	j4bmxWn9DCnm3heXF60lcdi3QG6WsyMne2ie/Uw92po4PeVO9nhFQLRDWerbYGsvxOZ/s4hWnoi95
-	AGPCJtMiiD8bUAGou6kVvtlwaxVFdQnP9Tq21vC9HHgrfCRluPlpGMMhUMhbTijGOPFwwl/BMupTj
-	1bwuSKcw==;
-Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:37298)
-	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <linux@armlinux.org.uk>)
-	id 1tJbF6-0006Uj-1E;
-	Fri, 06 Dec 2024 16:31:48 +0000
-Received: from linux by shell.armlinux.org.uk with local (Exim 4.96)
-	(envelope-from <linux@shell.armlinux.org.uk>)
-	id 1tJbF4-0007g4-3D;
-	Fri, 06 Dec 2024 16:31:47 +0000
-Date: Fri, 6 Dec 2024 16:31:46 +0000
-From: "Russell King (Oracle)" <linux@armlinux.org.uk>
-To: Lei Wei <quic_leiwei@quicinc.com>
-Cc: "David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh@kernel.org>,
+	s=arc-20240116; t=1733505854; c=relaxed/simple;
+	bh=9BDcKEAhfhMZi3RjBnhUfLl8xU6wPyN7nhmV8t6I0vQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=lhsdhKXOTTdTfXHWNBikZsbItg8x/8WScyqau6nOZPJ7B9t6grGn9tDoBuZGbv+thHv28bh8/pAO+LAn62+or4gCmCfeyUj9Af7PxbdsX80wdLlddVNt9zUYeDok40IHFcmPXO5jW+uObz+QYtUQ7TDFrQi7osnWjrs/bf/4kuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jazwbNVL; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3777C4CEDE;
+	Fri,  6 Dec 2024 17:24:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1733505853;
+	bh=9BDcKEAhfhMZi3RjBnhUfLl8xU6wPyN7nhmV8t6I0vQ=;
+	h=From:To:Cc:Subject:Date:From;
+	b=jazwbNVL8wgxmXqa7v94y4RXzWRAHjPxZOrK4pkCbQDWHZmmzKKGSGijD74i/G1Cq
+	 0u+EDx4LXvUxlHr4r+Ms28LCb9GZ8Vz/oP4TKcW0drHs/IGWcxCdpGU3MS2iCdH4Ri
+	 RAocRq+xv5FKF8Byrh6OObWnzYwDA2ruSWFZhAxiONU21zd1P9mPkjKS5SBVG2pXaC
+	 lOavV2MAd8caiG4Ky2u/F0zxmiVG8ByDUohtLA4pdlED78yT+pMnoRClEjV/zCC7XS
+	 qvXWxq33JyYQ4lKDvH4mvP94eOMUOUAW9Q/5V0Ebb93bRMnW6BH8D8cuL2+SgmNTTf
+	 mfDkkZW+o2dnQ==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan+linaro@kernel.org>)
+	id 1tJc3q-000000005Oc-2blJ;
+	Fri, 06 Dec 2024 18:24:15 +0100
+From: Johan Hovold <johan+linaro@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>
+Cc: Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Andrew Lunn <andrew@lunn.ch>,
-	Heiner Kallweit <hkallweit1@gmail.com>, netdev@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	quic_kkumarcs@quicinc.com, quic_suruchia@quicinc.com,
-	quic_pavir@quicinc.com, quic_linchen@quicinc.com,
-	quic_luoj@quicinc.com, srinivas.kandagatla@linaro.org,
-	bartosz.golaszewski@linaro.org, vsmuthu@qti.qualcomm.com,
-	john@phrozen.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH net-next v2 4/5] net: pcs: qcom-ipq9574: Add USXGMII
- interface mode support
-Message-ID: <Z1Mm8nBR_sYyzBUh@shell.armlinux.org.uk>
-References: <20241204-ipq_pcs_rc1-v2-0-26155f5364a1@quicinc.com>
- <20241204-ipq_pcs_rc1-v2-4-26155f5364a1@quicinc.com>
- <Z1B3W94-8qjn17Sj@shell.armlinux.org.uk>
- <dc40d847-9a98-4f46-94cb-208257334aed@quicinc.com>
+	Conor Dooley <conor+dt@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Jonathan Marek <jonathan@marek.ca>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	regressions@lists.linux.dev,
+	Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH] Revert "arm64: dts: qcom: x1e78100-t14s: enable otg on usb-c ports"
+Date: Fri,  6 Dec 2024 18:24:02 +0100
+Message-ID: <20241206172402.20724-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <dc40d847-9a98-4f46-94cb-208257334aed@quicinc.com>
-Sender: Russell King (Oracle) <linux@armlinux.org.uk>
+Content-Transfer-Encoding: 8bit
 
-On Sat, Dec 07, 2024 at 12:20:57AM +0800, Lei Wei wrote:
-> On 12/4/2024 11:38 PM, Russell King (Oracle) wrote:
-> > On Wed, Dec 04, 2024 at 10:43:56PM +0800, Lei Wei wrote:
-> > > +static int ipq_pcs_link_up_config_usxgmii(struct ipq_pcs *qpcs, int speed)
-> > > +{
-> > ...
-> > > +	/* USXGMII only support full duplex mode */
-> > > +	val |= XPCS_DUPLEX_FULL;
-> > 
-> > Again... this restriction needs to be implemented in .pcs_validate() by
-> > knocking out the half-duplex link modes when using USXGMII mode.
-> > 
-> > .pcs_validate() needs to be implemented whenever the PCS has
-> > restrictions beyond what is standard for the PHY interface mode.
-> > 
-> 
-> Currently, it seems there is no phylink_validate() call in
-> phylink_resolve(), to validate the resolved duplex/speed which is notified
-> by phydev when the PHY is linked up. So I am thinking to add this duplex
-> check in this link_up op, and return an appropriate error in case of
-> half-duplex. (Kindly correct me if I am wrong).
+This reverts commit 1a48dd7b9ac809d1bd0fd2fef509abba83433846.
 
-Doing validation at that point is way too late.
+A recent change enabling OTG mode on the Lenovo ThinkPad T14s USB-C
+ports can break SuperSpeed device hotplugging. The host controller is
+enumerated, but the device is not:
 
-We don't want the PHY e.g. even advertising a half-duplex link mode if
-the system as a whole can not support half-duplex modes. If the system
-can't support half-duplex, then trying to trap it out at resolve time
-would be way too late - the media has already negotiated a half-duplex
-link, and that's that.
+	xhci-hcd xhci-hcd.5.auto: xHCI Host Controller
+	xhci-hcd xhci-hcd.5.auto: new USB bus registered, assigned bus number 3
+	xhci-hcd xhci-hcd.5.auto: hcc params 0x0110ffc5 hci version 0x110 quirks 0x000080a000000810
+	xhci-hcd xhci-hcd.5.auto: irq 247, io mem 0x0a800000
+	xhci-hcd xhci-hcd.5.auto: xHCI Host Controller
+	xhci-hcd xhci-hcd.5.auto: new USB bus registered, assigned bus number 4
+	xhci-hcd xhci-hcd.5.auto: Host supports USB 3.1 Enhanced SuperSpeed
+	hub 3-0:1.0: USB hub found
+	hub 3-0:1.0: 1 port detected
+	hub 4-0:1.0: USB hub found
+	hub 4-0:1.0: 1 port detected
 
-Instead, phylink takes the approach of restricting the media
-advertisement according to the properties of the system, thereby
-preventing invalid configurations _way_ before we get to autoneg
-completion and calling phylink_resolve().
+Once this happens on either of the two ports, no amount of disconnecting
+and reconnecting makes the SuperSpeed device be enumerated, while
+FullSpeed device enumeration still works.
 
+With retimer (and orientation detection) support not even merged yet,
+let's revert at least until we have stable host mode in mainline.
+
+Fixes: 1a48dd7b9ac8 ("arm64: dts: qcom: x1e78100-t14s: enable otg on usb-c ports")
+Cc: Jonathan Marek <jonathan@marek.ca>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+---
+
+I have not been able to reproduce this on the (third port of) the CRD,
+but I hit this constantly with the T14s so let's start with reverting
+there.
+
+Note that Stephan has already identified another problem with the
+offending commit here:
+
+	https://lore.kernel.org/all/ZxZO6Prrm2ITUZMQ@linaro.org/
+
+Johan
+
+
+#regzbot introduced: 1a48dd7b9ac8
+
+
+
+ .../arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts
+index 5a4a72a030d4..b4b6260c670c 100644
+--- a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts
++++ b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts
+@@ -1515,6 +1515,10 @@ &usb_1_ss0 {
+ 	status = "okay";
+ };
+ 
++&usb_1_ss0_dwc3 {
++	dr_mode = "host";
++};
++
+ &usb_1_ss0_dwc3_hs {
+ 	remote-endpoint = <&pmic_glink_ss0_hs_in>;
+ };
+@@ -1543,6 +1547,10 @@ &usb_1_ss1 {
+ 	status = "okay";
+ };
+ 
++&usb_1_ss1_dwc3 {
++	dr_mode = "host";
++};
++
+ &usb_1_ss1_dwc3_hs {
+ 	remote-endpoint = <&pmic_glink_ss1_hs_in>;
+ };
 -- 
-RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
+2.45.2
+
 
