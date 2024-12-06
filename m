@@ -1,250 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-40639-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40640-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D26639E6372
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 02:36:30 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id ADF881884D7C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 01:36:28 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 92DC31465AB;
-	Fri,  6 Dec 2024 01:36:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="i2DZKL2O"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id AC4FE9E63F8
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 03:19:28 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAB6E76048;
-	Fri,  6 Dec 2024 01:36:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3E5612846A2
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 02:19:27 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 500401547E8;
+	Fri,  6 Dec 2024 02:19:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="b2aY1Q/L"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4A861428E3;
+	Fri,  6 Dec 2024 02:19:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733448971; cv=none; b=b4qiMIQkc1NNM868/YKEp8MCGvn6DM5msPun4OkH7PqcPkPcaEYUNqxgf4i/gQ7sEmEBU2x7OGl0YMybNnUPh3AcF/k3HFZ9oYZvRjrrxOPh5Lahur2ezTQ4OQH+J7KRbKYx6cP2axqXG8InuJIJZSB9qww6zhfXXWlMMipOng0=
+	t=1733451565; cv=none; b=OnXpOvpXOywBZfTRcdSOI1L+q+T5MyXOZFrBDoyl6hgCMvpB7H4eeFskWiEbq10a4KCqgNV15JTtPnXan1A9YfQlbZYraK+0pkzGQadxaJq0PbW+zjiOq4qO/x8qgLqNLlMDpd+BMMenxZOUg9CBEmm5ZecfyUTy6ilh9VuqAAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733448971; c=relaxed/simple;
-	bh=ClaGFAjT9OGVQE76hOKxuFpp303e0oLCe8weGGn/BF0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=hq3m97r32Zp5CrpC0N2Wm24dfrLLLN95exIWlFEWyUhXRsA5hNGDlRHG1Y/9CDaeDfhXeWNNdWhVRHF+Na/q8r+zJ5kNVCK22lov1/qziu5krgDVCJOIaQ/leiAgFG29vHTtC3B90TWVOQxu17FZhosNgX1ng8lqy975xGDaN/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=i2DZKL2O; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1733451565; c=relaxed/simple;
+	bh=gtEI/vSC3vn1ZJO8coR0WY55fHXA7wZp1KSOEqCOsGg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=uGuNJvofPQxtqX7gzNl0l7m7Nl3Q2ahI0m82hzOfq5pZMkmuaB9DK5Wn0PYX+GV8AMpDncZcPFbVi4AHfqcpNYPF+ML1OY1CdfMMI/7m+OPkcXcKi7CUIIkMJVRCOijY0mSN1LidvezcjKiX0gas7LqzAMnwUWLQWJoe0OMUh+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=b2aY1Q/L; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B5Jhls8018707;
-	Fri, 6 Dec 2024 01:36:05 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B5HaSc5004131;
+	Fri, 6 Dec 2024 02:19:18 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	yNYu94Th3Iya8IXrhslB+e6H0wzazy9Px1RZDyHR+wU=; b=i2DZKL2OFQpQSlAE
-	VV5s869xrWJY5GgsolEK4gz7tngMMg3ZD1HFjMMEfJ3ul9D2mkClTdgkeqvNnm9S
-	Nw9VtdPeTUmlvsn37RpKF9KaeDpmcphIXFbxvHVKcZ183JEyjDYdf8kZkexb2HNU
-	ZUdXs5ASLvHmc3YIKqCsoxeJ4gYZytFbbuCPN6iM6PkMsSAe0LkSXKMFbj8UbcWp
-	dFwSVcstyk0lM6DmH8WZysTlm8vcqY4aS23e7GjK2xEuBDEkyAVY2imNRP59Sb1q
-	wdvNVZeQmDuLoHVGjtfEtDBwfAl3hT0VZbNr480YSCsxd9WCrt+lQ4JRcyBOskcW
-	v3j2Kw==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43bjk8rmnm-1
+	G2D8rAoH16OqsWuf3RVlXZosO01WmKmlS16FYMONfhY=; b=b2aY1Q/LZQJywBvR
+	7sdrlYIzHRE6FJrnMyLlU2iXhMM2Z82btWtpbHfSwAqNoj4UElvWbY6ewXastPHq
+	KpkKHf03R4vp6DFuqzYfuX1Dunw72dABM8grsz+2b+OqH0DcNcnIExKtTksZZHFo
+	Semezw0BrD/zkjNRf+neIyS8bXXizydle7awT6tyvn33nQlt5J9XcDtBe8YkKs0C
+	E77aj/4ZmZMU/IJ293+MqoAYCV8jOVR0mGCRzgavDJn58+2bDhAt3DKgBphNRg4S
+	6jUg+d5GZRaa0YkLfKN0JM2xjwu3mfJhWr7sU/NedZGyOowMcwpA+HDrxlJWKyLC
+	aIQwTg==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43bbqm2027-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 06 Dec 2024 01:36:04 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B61a3VT026895
+	Fri, 06 Dec 2024 02:19:18 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B62JHuV018842
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 6 Dec 2024 01:36:03 GMT
-Received: from yijiyang-gv.ap.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 5 Dec 2024 17:36:00 -0800
-From: Yijie Yang <quic_yijiyang@quicinc.com>
-Date: Fri, 6 Dec 2024 09:35:05 +0800
-Subject: [PATCH v5 2/2] arm64: dts: qcom: qcs8300-ride: enable ethernet0
+	Fri, 6 Dec 2024 02:19:17 GMT
+Received: from [10.239.97.152] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 5 Dec 2024
+ 18:19:11 -0800
+Message-ID: <2515c9d8-0e9d-4e1e-b8ff-764b53ea3edb@quicinc.com>
+Date: Fri, 6 Dec 2024 10:18:50 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20241206-dts_qcs8300-v5-2-422e4fda292d@quicinc.com>
-References: <20241206-dts_qcs8300-v5-0-422e4fda292d@quicinc.com>
-In-Reply-To: <20241206-dts_qcs8300-v5-0-422e4fda292d@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Richard Cochran
-	<richardcochran@gmail.com>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <netdev@vger.kernel.org>,
-        Yijie Yang
-	<quic_yijiyang@quicinc.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1733448952; l=3108;
- i=quic_yijiyang@quicinc.com; s=20240408; h=from:subject:message-id;
- bh=ClaGFAjT9OGVQE76hOKxuFpp303e0oLCe8weGGn/BF0=;
- b=hLHPgWQw7Sh3FtbqC0fsflhj/VE77j1iXd7qPLxEBosRToXZx462MYjvOrzeT9itOIbe+wxHw
- s6UfuBcc4LEDZZcQjdsE9J1FWgCKuhCj9Yfmx1HbOvlmTac9CIfN170
-X-Developer-Key: i=quic_yijiyang@quicinc.com; a=ed25519;
- pk=XvMv0rxjrXLYFdBXoFjTdOdAwDT5SPbQ5uAKGESDihk=
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 11/16] dt-bindings: media: camss: Add qcom,sm8550-camss
+ binding
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, <rfoss@kernel.org>,
+        <todor.too@gmail.com>, <mchehab@kernel.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <vladimir.zapolskiy@linaro.org>
+CC: <quic_eberman@quicinc.com>, <linux-media@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>,
+        Yongsheng Li
+	<quic_yon@quicinc.com>
+References: <20241205155538.250743-1-quic_depengs@quicinc.com>
+ <20241205155538.250743-12-quic_depengs@quicinc.com>
+ <0909a2b2-089d-41f3-82e6-f0e05682ce27@linaro.org>
+Content-Language: en-US
+From: Depeng Shao <quic_depengs@quicinc.com>
+In-Reply-To: <0909a2b2-089d-41f3-82e6-f0e05682ce27@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: XzXVAiHDyQB2hv3MpR8yUC6ispzRnyKG
-X-Proofpoint-GUID: XzXVAiHDyQB2hv3MpR8yUC6ispzRnyKG
+X-Proofpoint-GUID: vIaesf_CUR5QiCPf8nZeMxVL4CnhD0Pi
+X-Proofpoint-ORIG-GUID: vIaesf_CUR5QiCPf8nZeMxVL4CnhD0Pi
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- impostorscore=0 bulkscore=0 phishscore=0 suspectscore=0 spamscore=0
- lowpriorityscore=0 adultscore=0 mlxscore=0 mlxlogscore=901
- priorityscore=1501 clxscore=1015 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2411120000 definitions=main-2412060012
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ lowpriorityscore=0 mlxlogscore=821 spamscore=0 adultscore=0 suspectscore=0
+ malwarescore=0 mlxscore=0 impostorscore=0 bulkscore=0 phishscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412060016
 
-Enable the SerDes PHY on qcs8300-ride. Add the MDC and MDIO pin functions
-for ethernet0 on qcs8300-ride. Enable the ethernet port on qcs8300-ride.
+Hi Bryan,
 
-Signed-off-by: Yijie Yang <quic_yijiyang@quicinc.com>
----
- arch/arm64/boot/dts/qcom/qcs8300-ride.dts | 112 ++++++++++++++++++++++++++++++
- 1 file changed, 112 insertions(+)
+On 12/6/2024 12:11 AM, Bryan O'Donoghue wrote:
+> On 05/12/2024 15:55, Depeng Shao wrote:
+>> +            iommus = <&apps_smmu 0x800 0x20>;
+> 
+> This iommu list looks a bit spartan.
+> 
+> Here's what I have for X1E:
+> 
+> https://git.codelinaro.org/bryan.odonoghue/kernel/-/ 
+> commit/9686eaf9557c386a2525d6668da6fe24ffd518c4#5b6ff684e5292a4c0b51f6a38631777fafae7561_4749_4874
+> 
+> Could you double check this list ?
+> 
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-index 7eed19a694c39dbe791afb6a991db65acb37e597..302542305726da669f0c515da12cbdec51036c51 100644
---- a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-+++ b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-@@ -210,6 +210,95 @@ vreg_l9c: ldo9 {
- 	};
- };
- 
-+&ethernet0 {
-+	phy-mode = "2500base-x";
-+	phy-handle = <&phy0>;
-+
-+	pinctrl-0 = <&ethernet0_default>;
-+	pinctrl-names = "default";
-+
-+	snps,mtl-rx-config = <&mtl_rx_setup>;
-+	snps,mtl-tx-config = <&mtl_tx_setup>;
-+	snps,ps-speed = <1000>;
-+
-+	status = "okay";
-+
-+	mdio {
-+		compatible = "snps,dwmac-mdio";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		phy0: phy@8 {
-+			compatible = "ethernet-phy-id31c3.1c33";
-+			reg = <0x8>;
-+			device_type = "ethernet-phy";
-+			interrupts-extended = <&tlmm 4 IRQ_TYPE_EDGE_FALLING>;
-+			reset-gpios = <&tlmm 31 GPIO_ACTIVE_LOW>;
-+			reset-assert-us = <11000>;
-+			reset-deassert-us = <70000>;
-+		};
-+	};
-+
-+	mtl_rx_setup: rx-queues-config {
-+		snps,rx-queues-to-use = <4>;
-+		snps,rx-sched-sp;
-+
-+		queue0 {
-+			snps,dcb-algorithm;
-+			snps,map-to-dma-channel = <0x0>;
-+			snps,route-up;
-+			snps,priority = <0x1>;
-+		};
-+
-+		queue1 {
-+			snps,dcb-algorithm;
-+			snps,map-to-dma-channel = <0x1>;
-+			snps,route-ptp;
-+		};
-+
-+		queue2 {
-+			snps,avb-algorithm;
-+			snps,map-to-dma-channel = <0x2>;
-+			snps,route-avcp;
-+		};
-+
-+		queue3 {
-+			snps,avb-algorithm;
-+			snps,map-to-dma-channel = <0x3>;
-+			snps,priority = <0xc>;
-+		};
-+	};
-+
-+	mtl_tx_setup: tx-queues-config {
-+		snps,tx-queues-to-use = <4>;
-+		snps,tx-sched-sp;
-+
-+		queue0 {
-+			snps,dcb-algorithm;
-+		};
-+
-+		queue1 {
-+			snps,dcb-algorithm;
-+		};
-+
-+		queue2 {
-+			snps,avb-algorithm;
-+			snps,send_slope = <0x1000>;
-+			snps,idle_slope = <0x1000>;
-+			snps,high_credit = <0x3e800>;
-+			snps,low_credit = <0xffc18000>;
-+		};
-+
-+		queue3 {
-+			snps,avb-algorithm;
-+			snps,send_slope = <0x1000>;
-+			snps,idle_slope = <0x1000>;
-+			snps,high_credit = <0x3e800>;
-+			snps,low_credit = <0xffc18000>;
-+		};
-+	};
-+};
-+
- &gcc {
- 	clocks = <&rpmhcc RPMH_CXO_CLK>,
- 		 <&sleep_clk>,
-@@ -247,6 +336,29 @@ &rpmhcc {
- 	clock-names = "xo";
- };
- 
-+&serdes0 {
-+	phy-supply = <&vreg_l5a>;
-+	status = "okay";
-+};
-+
-+&tlmm {
-+	ethernet0_default: ethernet0-default-state {
-+		ethernet0_mdc: ethernet0-mdc-pins {
-+			pins = "gpio5";
-+			function = "emac0_mdc";
-+			drive-strength = <16>;
-+			bias-pull-up;
-+		};
-+
-+		ethernet0_mdio: ethernet0-mdio-pins {
-+			pins = "gpio6";
-+			function = "emac0_mdio";
-+			drive-strength = <16>;
-+			bias-pull-up;
-+		};
-+	};
-+};
-+
- &uart7 {
- 	status = "okay";
- };
+Since the camss driver just support ife, so I think only ife related 
+iommus are needed, just like we don't add ipe,bps,jpeg related clk and 
+register in the dt-binding.
 
--- 
-2.34.1
+	msm_cam_smmu_ife { 
+  
+
+		compatible = "qcom,msm-cam-smmu-cb"; 
+  
+
+		iommus = <&apps_smmu 0x800 0x20>;
+		......
+	};
+
+> ---
+> bod
+
+
+Thanks,
+Depeng
 
 
