@@ -1,165 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-40696-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40704-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A0519E6638
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 05:40:30 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6669D16A1B5
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 04:40:27 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5A7F9201105;
-	Fri,  6 Dec 2024 04:33:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dgqtqFUy"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C47489E6666
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 05:43:17 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD0F720013B;
-	Fri,  6 Dec 2024 04:33:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7F4DB281B84
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 04:43:16 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 685A21991C6;
+	Fri,  6 Dec 2024 04:34:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="IQX0GNBE"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02437198E8C;
+	Fri,  6 Dec 2024 04:34:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733459607; cv=none; b=fqmPcW8M3VItCmQRNfMrF/xSZmSauooe5vu9znE0WRPom1mpMqRp4pitIbr6H8cc6SF3QXXSOOIfMonVqsVn4hbj4wDYL4akyxX62tC8DBgXjc4sCe+lSHhWKtnogVkhodteYSeav3fknJ2oHs4Gg9cXWOiJjdoOOx3J5m+qQlM=
+	t=1733459688; cv=none; b=V69yc/rgnK7eGGccUwV3/4G+GvfcnasK6R+ptmE/LPNUvfytgCawK180ru+XQ+rQNBafPkb/+sCpelBcTWTbWGipL+jlJr6LSX+o60VJCaAQ7c7NmpZZ4cQq9enMJ6qk0W1qhf0pvIv2pvNFwZpcYDWSdDI3YcLMgaFLmNxmjjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733459607; c=relaxed/simple;
-	bh=9dQSgm4KiqkWjMM4BQC3NkVdvm7HecV3brSOWbHShQo=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=nl3r/QEArYqY68pDYABaDrDA8Su4g8IHvMQWp3rUP3Mo447Sd2D3JjBOK9TznL/HpdbFTw4fPXJVLzA+LP9E49qiwx04XqleJh6Kw3PUMYbQoICCAqNARsMYmWTaiFQZrZZ8lMlDuP+Yc2+6db9chUSIlrq/ejCUw9ncEa+rOjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dgqtqFUy; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1733459688; c=relaxed/simple;
+	bh=YnOdqyx460AEGQLDLcP13+RV6PoE8tfEs5IdshHSOL0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=GheZWCvhWCo0+FcYlr2qdHDvvxePN5KqOkPuODxtlGhumShfX0xEaApKU/iRCulSXWHfzMERyIQo9GwnOFbcJSRQt4UPoLcztecgtwaO9Kj1S3lJp6h3mg3KjLANbHWwJLrybyCMRo3M9bVTXetRoLXuND2hEa9tGNmAtv+6k9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=IQX0GNBE; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B5HaX6j005176;
-	Fri, 6 Dec 2024 04:32:51 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B5HaLpa006894;
+	Fri, 6 Dec 2024 04:34:41 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Ak+w7IZIW70MXDLCuRaoJehJIlI6+AMtLCoHAVyHz8U=; b=dgqtqFUy3jGlh6gG
-	LlPFsckQcBtYS0kEgC1/t/djQrriXlS65S+BcBoUmI/gE6/1o4J5kjqG8mmEo3dR
-	xkZNv3n+xDcrXs+T4Qi0RPP9lYrpcT6Sowy976+34pEAFTGCf1Y6gro+wyA2mse2
-	y4Td/yeEIRMqN2Apvb2mfh3HOOndUvVY5xS3AeTrr3rZaflyiSxYeojFIG53s6pq
-	jlabBBKdoKzhRH2xxJYf4JXsZ+iKzpeIH8FmWmHQ7j9mxfSJf8ATh+0KECvjPYgL
-	kcESTxxltwy7OHFv+JMZz8HDmVbTMyOXXMUFw0darKlqzXHEELFfUOYnzuc+9dOA
-	h05tgQ==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43ba142k8g-1
+	TP542XJNSvkrzwUEMLEQpg0/BQLxgfqDs8i4N0BglIc=; b=IQX0GNBErrXSp8tf
+	9trCowkcz2k/aRmLWprqO7Ka+LK8yFH32UQfaY990ZgQtUDhDwRwNGdZKgFdp0a/
+	+sGHVW07NEZLHprzxfIPuB+rwFTWdPs7eMHGHd3EWhF/145dJzzLZMNmiDa1nPKC
+	qNyOCkdieoaSDStBVDbknDoBHmYIocqTVD4ji3B3ntscSSC2ExPZl4gstAfV645s
+	b/fGwP/JdP+rT10uvgohrmlG13a1J6/Oj/VshmyxIXN4s+SwjxiTb3FSsH/+i0+j
+	7FjAhru4WHDwAfJ0Oy/1p1rJ6CiOWiz/ytkwp00Ef24TnwbHtIisKrq3qR2n/Gd7
+	qRlHeQ==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43ben89rv9-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 06 Dec 2024 04:32:51 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B64WoQ5022205
+	Fri, 06 Dec 2024 04:34:41 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B64Ye7i008688
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 6 Dec 2024 04:32:50 GMT
-Received: from abhinavk-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 5 Dec 2024 20:32:49 -0800
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Date: Thu, 5 Dec 2024 20:32:16 -0800
-Subject: [PATCH 45/45] arm64: dts: qcom: add mst support for pixel 1 stream
- clk for DP1
+	Fri, 6 Dec 2024 04:34:41 GMT
+Received: from [10.151.41.184] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 5 Dec 2024
+ 20:34:36 -0800
+Message-ID: <30e5d714-2e52-4a0e-9dc8-b6cacf6ad382@quicinc.com>
+Date: Fri, 6 Dec 2024 10:04:25 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20241205-dp_mst-v1-45-f8618d42a99a@quicinc.com>
-References: <20241205-dp_mst-v1-0-f8618d42a99a@quicinc.com>
-In-Reply-To: <20241205-dp_mst-v1-0-f8618d42a99a@quicinc.com>
-To: Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, "Simona
- Vetter" <simona@ffwll.ch>,
-        Stephen Boyd <swboyd@chromium.org>,
-        "Chandan
- Uddaraju" <chandanu@codeaurora.org>,
-        Guenter Roeck <groeck@chromium.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring
-	<robh@kernel.org>,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 15/22] wifi: ath12k: add BDF address in hardware
+ parameter
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        <ath12k@lists.infradead.org>
+CC: <linux-wireless@vger.kernel.org>, Kalle Valo <kvalo@kernel.org>,
+        "Rob
+ Herring" <robh@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>
-CC: Vara Reddy <quic_varar@quicinc.com>, Rob Clark <robdclark@chromium.org>,
-        Tanmay Shah <tanmay@codeaurora.org>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Jessica Zhang
-	<quic_jesszhan@quicinc.com>,
-        Laurent Pinchart
-	<laurent.pinchart@ideasonboard.com>,
-        Abhinav Kumar
-	<quic_abhinavk@quicinc.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1733459543; l=1621;
- i=quic_abhinavk@quicinc.com; s=20240509; h=from:subject:message-id;
- bh=9dQSgm4KiqkWjMM4BQC3NkVdvm7HecV3brSOWbHShQo=;
- b=lW9jMPpoPcgGypB7t4XQ+PFsEUD/Ii/JnWzOxCyjr3o+kINijcthU1IOZhNg0EmOD431IcuMD
- TUQQY9VV/szAmJpEPo46Fu21C7DEJjPX56MxZzcZ5tb+Kr+TsFvBwLP
-X-Developer-Key: i=quic_abhinavk@quicinc.com; a=ed25519;
- pk=SD3D8dOKDDh6BoX3jEYjsHrTFwuIK8+o0cLPgQok9ys=
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+        "Conor
+ Dooley" <conor+dt@kernel.org>,
+        Jeff Johnson <jjohnson@kernel.org>,
+        "Bjorn
+ Andersson" <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
+References: <20241015182637.955753-1-quic_rajkbhag@quicinc.com>
+ <20241015182637.955753-16-quic_rajkbhag@quicinc.com>
+ <142f92d7-72e1-433b-948d-2c7e7d37ecfc@oss.qualcomm.com>
+ <0796510c-20bd-4a81-bd60-40aacbcf61c0@quicinc.com>
+ <83d216c4-bf9e-4eb4-86d3-e189602f37cc@oss.qualcomm.com>
+Content-Language: en-US
+From: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
+In-Reply-To: <83d216c4-bf9e-4eb4-86d3-e189602f37cc@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: tU7AOb7CLnDZXCFoUmBazXCIRozQynN6
-X-Proofpoint-ORIG-GUID: tU7AOb7CLnDZXCFoUmBazXCIRozQynN6
+X-Proofpoint-ORIG-GUID: ZegeMDTdfZJGKPTq4W6wq0pR_khR401k
+X-Proofpoint-GUID: ZegeMDTdfZJGKPTq4W6wq0pR_khR401k
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
- phishscore=0 clxscore=1015 mlxscore=0 lowpriorityscore=0 adultscore=0
- priorityscore=1501 suspectscore=0 mlxlogscore=808 malwarescore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 phishscore=0
+ priorityscore=1501 impostorscore=0 mlxlogscore=999 clxscore=1015
+ malwarescore=0 suspectscore=0 spamscore=0 mlxscore=0 lowpriorityscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2411120000 definitions=main-2412060030
 
-Populate the pixel clock for stream 1 for DP1 for sa8775p DP controller.
+On 12/5/2024 11:12 PM, Konrad Dybcio wrote:
+> On 3.12.2024 10:18 AM, Raj Kumar Bhagat wrote:
+>> On 11/4/2024 7:46 PM, Konrad Dybcio wrote:
+>>> On 15.10.2024 8:26 PM, Raj Kumar Bhagat wrote:
+>>>> The Ath2k AHB device (IPQ5332) firmware requests BDF_MEM_REGION_TYPE
+>>>> memory during QMI memory requests. This memory is part of the
+>>>> HOST_DDR_REGION_TYPE. Therefore, add the BDF memory address to the
+>>>> hardware parameter and provide this memory address to the firmware
+>>>> during QMI memory requests.
+>>>
+>>> Sounds like something to put in the device tree, no?
+>>>
+>>
+>> This BDF memory address is the RAM offset. We did add this in device tree in
+>> version 1. This is removed from device tree in v2 based on the review comment that
+>> DT should not store RAM offset.
+>>
+>> refer below link:
+>> Link: https://lore.kernel.org/all/f8cd9c3d-47e1-4709-9334-78e4790acef0@kernel.org/
+> 
+> Right, I think this could be something under /reserved-memory instead
+> 
 
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sa8775p.dtsi | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-index 0150ce27b98e9894fa9ee6cccd020528d716f543..91149f8b3adb93ece159f30bfea39f9725b6c9e8 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-@@ -4027,15 +4027,18 @@ mdss0_dp1: displayport-controller@af5c000 {
- 					 <&dispcc0 MDSS_DISP_CC_MDSS_DPTX1_AUX_CLK>,
- 					 <&dispcc0 MDSS_DISP_CC_MDSS_DPTX1_LINK_CLK>,
- 					 <&dispcc0 MDSS_DISP_CC_MDSS_DPTX1_LINK_INTF_CLK>,
--					 <&dispcc0 MDSS_DISP_CC_MDSS_DPTX1_PIXEL0_CLK>;
-+					 <&dispcc0 MDSS_DISP_CC_MDSS_DPTX1_PIXEL0_CLK>,
-+					 <&dispcc0 MDSS_DISP_CC_MDSS_DPTX1_PIXEL1_CLK>;
- 				clock-names = "core_iface",
- 					      "core_aux",
- 					      "ctrl_link",
- 					      "ctrl_link_iface",
--					      "stream_pixel";
-+					      "stream_pixel",
-+					      "stream_1_pixel";
- 				assigned-clocks = <&dispcc0 MDSS_DISP_CC_MDSS_DPTX1_LINK_CLK_SRC>,
--						  <&dispcc0 MDSS_DISP_CC_MDSS_DPTX1_PIXEL0_CLK_SRC>;
--				assigned-clock-parents = <&mdss0_dp1_phy 0>, <&mdss0_dp1_phy 1>;
-+						  <&dispcc0 MDSS_DISP_CC_MDSS_DPTX1_PIXEL0_CLK_SRC>,
-+						  <&dispcc0 MDSS_DISP_CC_MDSS_DPTX1_PIXEL1_CLK_SRC>;
-+				assigned-clock-parents = <&mdss0_dp1_phy 0>, <&mdss0_dp1_phy 1>, <&mdss0_dp1_phy 1>;
- 				phys = <&mdss0_dp1_phy>;
- 				phy-names = "dp";
- 
-
--- 
-2.34.1
-
+Thanks for the suggestion. However, the BDF_MEM_REGION_TYPE is already within the
+memory reserved for HOST_DDR_REGION_TYPE through /reserved-memory. Therefore, reserving
+the memory for BDF_MEM_REGION_TYPE again in the Device Tree (DT) will cause a warning
+for 'overlapping memory reservation'.
 
