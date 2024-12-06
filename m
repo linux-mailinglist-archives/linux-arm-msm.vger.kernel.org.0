@@ -1,233 +1,190 @@
-Return-Path: <linux-arm-msm+bounces-40778-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40779-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 992D69E6D92
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 12:46:49 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0E5F9163B2D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 11:46:37 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED5471FF7D2;
-	Fri,  6 Dec 2024 11:46:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="m2eMtTxj"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 233219E6DD8
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 13:12:21 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA2BB1DB361
-	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Dec 2024 11:46:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CD8D7283607
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 12:12:19 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D96681FDE2F;
+	Fri,  6 Dec 2024 12:12:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="d7GGvaxZ"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E1581FF7A1
+	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Dec 2024 12:12:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733485592; cv=none; b=IWliJL771RX0/GfbDxTPOd11Kx48DLKqoJeuIeVBpfI/SVtK9iGVeo/c+sEXJeIjraAaMLfA64tdSq/5Mea6f1ThWM2Zqib8RYSu2/VWxogSRvJ3aQvEVEvbgnjeGqehNwJZRa7MNSllyBW19Ghnv7dqfKL9lv2rzOF59+OA9ps=
+	t=1733487136; cv=none; b=dxYTewhlUNSJBa2SayQOAFaV/0nnQQ9BgYlFHGLeebs7bwLMGLFzaN5zkQzQRCDD0aBtlK3uQx/mFndl4ggFpgR8Xl/NEhCcFCtqUdC5FeVvJ7cTHS+G4l9xXZ1mx18+WtUtjbDcRiO7gGV9QVZSgFnaOAX1NJSRBDExhvRLo6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733485592; c=relaxed/simple;
-	bh=jTMtrDLnjk5W3t/iPqQBtaBROJ7vQIK3Plh8o9UC2sc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TwF+QJL2qiBxjubVDhk5aWVkswL8u9XpmyYig/svyE1Htov+BJvXSqNmVWi/alRqVBobXoFsVjZp4GyOfHNa2UKNuSmwzxS+S9Rg4Z/tqkKLHkKxDjrN7gTf2be8YT61Lhan0gJK4Sy0oWDGJVAZX35GSjDsLwd5f47rSko7vWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=m2eMtTxj; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B6AICJM029121
-	for <linux-arm-msm@vger.kernel.org>; Fri, 6 Dec 2024 11:46:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	5hUY1e/YxiySi/wLCkZ/A7ok8yUIQYxm2Ew51lyeXS4=; b=m2eMtTxjm3bJXk29
-	l5wPFxi/4jimYBJzvV9mpPXTAA3Z1gI6uNZYM2ZB7W+REvLS+NTmbRFCr6wv/K73
-	O75U48bocJPWLGWM9Mn1uew6H8Uc7jzEbMKj5mVgiO+BRLZydmmfHydYkTiZCQsG
-	RuCu/YUxFciy4wllLrDTSuvmcIastvTRJtYxWaEhOK6VNvWPWZCpLGDoqQhdn5Qv
-	qpzhXVlYdOf8e4YRS4yx456wmd6GidtE8A/sCC3mU0Fo/7pS4L3GYctTH9F6MP4t
-	Knu5OonPBr8MrpeuYUIo0OV4dx9qxCfAw5mgDtP+KvqJhQL8D4fTeBITQqTJn6F+
-	qDvh4A==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43byd80769-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 06 Dec 2024 11:46:28 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7b67c9624d1so7408385a.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Dec 2024 03:46:28 -0800 (PST)
+	s=arc-20240116; t=1733487136; c=relaxed/simple;
+	bh=rjc/9LVlo/NRPqr5hAWSZAQnrZyro27R+IJbWLilJ0A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PatzaEggL1OOHsfw3un1DCDXnsIvCSYuLGateA2EwAQReKJHgyf0PrITqM/r8hBvnBdRuJa7JesvtqD8v5RTMhS/pz8Kp6wDNbALtdreDFE27BXq1ejqnA2eO1wpvsKo2VDoU3vMfOcFuUQQifqoZDfWzVVUSC6ier/EMnhsEDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=d7GGvaxZ; arc=none smtp.client-ip=209.85.218.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-aa636f6f0efso113535666b.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Dec 2024 04:12:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1733487132; x=1734091932; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=q3dVJRMa0TfmjWnvrA4GwhBptLmOPXIzRSr4Tl/7cq0=;
+        b=d7GGvaxZQinRL9sZ8IHzevd4tAoPjt1SMnziYEaJw9+hmHkwsoreYRNmSW7U/8Hono
+         iLRZADgBmH7A1hl3k7feB/mQt9Vhktbr9DeR+CCJvrZJWdHPfB6jpLSgPmQs60aBNREF
+         HuabqPgAOFGS8d/34JISbiC9A7I9MMMj4uDuMK3t+nUq9iib4Nuzv9CzuDMIO8rIAIgV
+         JWfK0J/VY813+N3/XZXwNUQkAFznFW9rgV4Oe7jKiOwxL9v47P+T7g5IyKMUDBDiyZFI
+         SQLwySd7eEU5zN8uf2u09BeNlMfinWRk9O/2vQkbV84OpEtYsWQpWa0i5/vugv1Wfd4v
+         eNUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733485588; x=1734090388;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5hUY1e/YxiySi/wLCkZ/A7ok8yUIQYxm2Ew51lyeXS4=;
-        b=RHQSaYlIB1syytPDyyhl5n9yPDMnC/xQzSQxZ3k/gVzKzwHzaa8DnoJX4ABBNISvm0
-         mB7jPUFfFN2uNCS6OKtn5G5KGmbhvTfbSMkrqP+alLrF8bYQSul9uMyKDEGyr9/Y7Nfh
-         lEITAmdK2ZU/UfliRapBLf3u7Qam7x/r3OrMHMhvrFZejh8Z9zhSPqk5yf9H1Y/Kc2ws
-         w8gT2wo9qNrR/ikjQ9IuDHcKsVlHwxLS0ZtSvXnTD99OcINxkAg1pRDNNBg7lHEBttfE
-         biTeubDBV5eRWrCF2w5NYD/EC4wZVjGHNRV1qpund7esmXud+hlfErv/Y/RPfVoPzgm1
-         5MOw==
-X-Forwarded-Encrypted: i=1; AJvYcCVU8Hbj0F9Y41zcVq+ou156NHlU0UIPMkjfQ5xHmPXnzKlUKdTwYdQtfLqPkFNOpJuz85DazQNHIPc+tgyK@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy1q11kZZWujpmhA+bwlpVzDJZl6q4o2H0rcWYBBYxBLrLbE7X4
-	mkpH+FfwFFnOaKHyth9Suv7G24NX0HlyB4ID8KRMUjxsOdVq2mFZM0OGroKLFGfrtccdYECyTdZ
-	EhcEFw4AIdc7N0opMteJjyF/hCi4Ylv/fWRDIs78pprB1HofPpUEp0jakdCCY0JsF
-X-Gm-Gg: ASbGncsRhZ6Fe7671K1nVKk0bIw+IX7WW+LTiPsEAY0oFuCO89damKR1ppLPRIqEc4z
-	KswUHoxPaj+tI1Qm75D3JadVqVyrOO0kdA+VlVZob32LeV2UkvR1yOX9l0bwUs4nWye/N4tW84u
-	gm6GmpJ2Q6mpAhrKr4p1yPqYwk0VTi6Tp8Oc5NXnjQMmQMUQcQWjtkipDxtzwkZYGc59CV6xKwf
-	JHzVb06Hk+hsVBc85I17fLxgTW/6SvvsVF27r0uuxSORvMBEqv9nMGtl/jf55eHKvhLpBeqm0mg
-	AVIvBXA5CltRH+ybfw23PovRV94Fnow=
-X-Received: by 2002:a05:620a:469f:b0:7b6:6634:5a3a with SMTP id af79cd13be357-7b6bcace083mr134724685a.6.1733485587823;
-        Fri, 06 Dec 2024 03:46:27 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE2ztyWlSb4kx6b26cpg9MuRvCCN2v3JqU/i03b5FNDZ8dzZTlaEdkLBo8DgxUk1CP0/Qt3mw==
-X-Received: by 2002:a05:620a:469f:b0:7b6:6634:5a3a with SMTP id af79cd13be357-7b6bcace083mr134722785a.6.1733485587363;
-        Fri, 06 Dec 2024 03:46:27 -0800 (PST)
-Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa625e96aebsm229571566b.65.2024.12.06.03.46.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Dec 2024 03:46:26 -0800 (PST)
-Message-ID: <153a9d51-6fc8-47d8-934b-4c53365077bc@oss.qualcomm.com>
-Date: Fri, 6 Dec 2024 12:46:23 +0100
+        d=1e100.net; s=20230601; t=1733487132; x=1734091932;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=q3dVJRMa0TfmjWnvrA4GwhBptLmOPXIzRSr4Tl/7cq0=;
+        b=KF51kDfGVr/7MSMBuodKqLSYya1lyDKJOzq2TPgIJftt+0LhUDTCT8+bTK+gbbIbOT
+         O7baV0TQg82BVVe1D3NDdzrstv7kjz8hd2wn+m7QPb2yZ6DkPLFLjJRu4DRcUOFYIzx/
+         4318BF/4SqzJM9fbCYOwNeUhpl6i/hCzjWXd5ILdp+UnzNc8fwvS3+9QvufBVVi22AKE
+         z+zhPINhtTQvBR+q+E4UECyJ9ZbcPOtjlFntscA5yn/2+oWs3BYRx75bKALzFoTqsdvs
+         z8K30WPdonEwNSnci06mffskuyDMLmcYQwlUpX4KvfjPX5Pnae70KU1Q6CM5A81OcTgW
+         vJ5Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUgYV7/co5DmbR94qC4IcxLVv4MRUn2+rWyMN6GGhJyBZhyA3SLbWxaCmqTRKVGEosM1sOY8CzRY6MQiOb4@vger.kernel.org
+X-Gm-Message-State: AOJu0YyoPA4in/skB9at1XywksjzvM+9Q5MHyBPrZ1C+k4KySxRnKTM5
+	/UfU65d9+Lzh72O8nu7UkvwXrzwNC+P7l+1i3LBG7PtQ7hTfQ9fCgQw4gdOjT6A=
+X-Gm-Gg: ASbGnct6GnQ6ERPxI3tj0g/qqMl0Ug4/j74o3G/0Bc3i4FATD1VajGZct6wTuqL0A6v
+	5WNFxNyoq9Oyqy4VKhqIRzTOqnmXlxAMLC7Ukul7N3g+T8xlUiANyXAP884V2Sa93Sqo4Co6F2A
+	d/KtnzT5SLOxVYCF3HhDLqq0yGtyheIiqcbU5ApwGbdDXX8TiYziSpuRW+lOCfau57kohXqdEgx
+	cVkCA/ws+T1Lda5nv9GPEK6vXvRRfQB6qWQmLZJqz8Bgaytt2Ht4LPPHtMOcw==
+X-Google-Smtp-Source: AGHT+IFUBtKqDnQ9TdUxArZ0TKaVsJSrVKXuzX74MKt4//gCX0PMHcMHzQXS+cSEiOZgDyWc5Brq9g==
+X-Received: by 2002:a17:906:2922:b0:aa5:76f1:4051 with SMTP id a640c23a62f3a-aa63a1a162cmr145435666b.35.1733487132526;
+        Fri, 06 Dec 2024 04:12:12 -0800 (PST)
+Received: from linaro.org ([2a02:2454:ff21:ef80:7aba:3257:28e7:dce9])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa62601c1ddsm235148666b.126.2024.12.06.04.12.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 Dec 2024 04:12:12 -0800 (PST)
+Date: Fri, 6 Dec 2024 13:12:07 +0100
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Chandan Uddaraju <chandanu@codeaurora.org>,
+	Guenter Roeck <groeck@chromium.org>,
+	Kuogee Hsieh <quic_khsieh@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Vara Reddy <quic_varar@quicinc.com>,
+	Rob Clark <robdclark@chromium.org>,
+	Tanmay Shah <tanmay@codeaurora.org>, linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Subject: Re: [PATCH 13/45] drm/msm/dp: separate dp_display_prepare() into its
+ own API
+Message-ID: <Z1LqF_jIHhqRImsf@linaro.org>
+References: <20241205-dp_mst-v1-0-f8618d42a99a@quicinc.com>
+ <20241205-dp_mst-v1-13-f8618d42a99a@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 17/22] wifi: ath12k: add AHB driver support for IPQ5332
-To: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        ath12k@lists.infradead.org
-Cc: linux-wireless@vger.kernel.org, Kalle Valo <kvalo@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Jeff Johnson <jjohnson@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Balamurugan S <quic_bselvara@quicinc.com>,
-        P Praneesh <quic_ppranees@quicinc.com>
-References: <20241015182637.955753-1-quic_rajkbhag@quicinc.com>
- <20241015182637.955753-18-quic_rajkbhag@quicinc.com>
- <243cd21d-6a35-4ff0-9b38-ec519a804670@oss.qualcomm.com>
- <9093b41c-986d-4304-8414-61e4ee2d9950@quicinc.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <9093b41c-986d-4304-8414-61e4ee2d9950@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: npGZT0-25d25-jhYkHQrBzbogu8S5H_S
-X-Proofpoint-ORIG-GUID: npGZT0-25d25-jhYkHQrBzbogu8S5H_S
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- spamscore=0 lowpriorityscore=0 impostorscore=0 clxscore=1015
- malwarescore=0 bulkscore=0 mlxlogscore=999 mlxscore=0 suspectscore=0
- adultscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412060087
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241205-dp_mst-v1-13-f8618d42a99a@quicinc.com>
 
-On 6.12.2024 10:56 AM, Raj Kumar Bhagat wrote:
-> On 10/19/2024 1:59 AM, Konrad Dybcio wrote:
->> On 15.10.2024 8:26 PM, Raj Kumar Bhagat wrote:
->>> From: Balamurugan S <quic_bselvara@quicinc.com>
->>>
->>> Add Initial Ath12k AHB driver support for IPQ5332. IPQ5332 is AHB
->>> based IEEE802.11be 2 GHz 2x2 WiFi device.
->>>
->>> Tested-on: IPQ5332 hw1.0 AHB WLAN.WBE.1.3.1-00130-QCAHKSWPL_SILICONZ-1
->>> Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.1.1-00210-QCAHKSWPL_SILICONZ-1
->>>
->>> Signed-off-by: Balamurugan S <quic_bselvara@quicinc.com>
->>> Co-developed-by: P Praneesh <quic_ppranees@quicinc.com>
->>> Signed-off-by: P Praneesh <quic_ppranees@quicinc.com>
->>> Co-developed-by: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
->>> Signed-off-by: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
->>> ---
->>
->> [...]
->>
->>> +enum ext_irq_num {
->>> +	host2wbm_desc_feed = 16,
->>> +	host2reo_re_injection,
->>
->> Why?
->>
+On Thu, Dec 05, 2024 at 08:31:44PM -0800, Abhinav Kumar wrote:
+> dp_display_prepare() only prepares the link in case its not
+> already ready before dp_display_enable(). Hence separate it into
+> its own API.
 > 
-> This enum is used as a IRQ number for Ath12k AHB. Based on this enum
-> we can get the IRQ name from irq_name[]. This helps to request the original
-> IRQ number from the DT.
-> It is starting from 16 becasue, in irq_name[], the name for ext IRQ starts
-> from 16 index.
+> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> ---
+>  drivers/gpu/drm/msm/dp/dp_display.c | 24 +++++++++++++++++-------
+>  drivers/gpu/drm/msm/dp/dp_display.h |  1 +
+>  drivers/gpu/drm/msm/dp/dp_drm.c     |  2 ++
+>  3 files changed, 20 insertions(+), 7 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index 2f8650d60202deaa90de1a5e0dd6d8bc50f09782..02282f58f1b31594601692b406215cee4ca41032 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -1525,26 +1525,36 @@ int msm_dp_modeset_init(struct msm_dp *msm_dp_display, struct drm_device *dev,
+>  	return 0;
+>  }
+>  
+> -void msm_dp_display_atomic_enable(struct msm_dp *dp)
+> +void msm_dp_display_atomic_prepare(struct msm_dp *dp)
+>  {
+>  	int rc = 0;
+> -
+>  	struct msm_dp_display_private *msm_dp_display;
+>  
+>  	msm_dp_display = container_of(dp, struct msm_dp_display_private, msm_dp_display);
+>  
+> -	if (dp->is_edp)
+> -		msm_dp_hpd_plug_handle(msm_dp_display, 0);
+> -
+>  	mutex_lock(&msm_dp_display->event_mutex);
+>  
+>  	rc = msm_dp_display_prepare(msm_dp_display);
+>  	if (rc) {
+>  		DRM_ERROR("DP display prepare failed, rc=%d\n", rc);
+> -		mutex_unlock(&msm_dp_display->event_mutex);
+> -		return;
+>  	}
 
+FWIW: This patch breaks the eDP panel on the X1E80100 CRD for me. If you
+don't do the msm_dp_hpd_plug_handle() before msm_dp_display_prepare(),
+then the link_params (rate/num_lanes etc) are not initialized. Moving it
+back here seems to fix it.
+
+Maybe I'm missing some dependent patches or so, I was just experimenting
+a bit. :-)
+
+Thanks,
+Stephan
+
+[   17.724076] phy phy-aec5a00.phy.15: phy poweron failed --> -22
+[   17.724698] ------------[ cut here ]------------
+[   17.724699] disp_cc_mdss_dptx3_link_clk status stuck at 'off'
+[   17.724709] WARNING: CPU: 9 PID: 705 at drivers/clk/qcom/clk-branch.c:88 clk_branch_toggle+0x124/0x16c
+[   17.724877] CPU: 9 UID: 0 PID: 705 Comm: (udev-worker) Not tainted 6.13.0-rc1 #1
+[   17.724883] pstate: 614000c5 (nZCv daIF +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+[   17.724887] pc : clk_branch_toggle+0x124/0x16c
+[   17.724889] lr : clk_branch_toggle+0x120/0x16c
+[   17.724927] Call trace:
+[   17.724929]  clk_branch_toggle+0x124/0x16c (P)
+[   17.724933]  clk_branch_toggle+0x120/0x16c (L)
+[   17.724935]  clk_branch2_enable+0x1c/0x28
+[   17.724938]  clk_core_enable+0x78/0xb4
+[   17.724944]  clk_core_enable_lock+0x88/0x118
+[   17.724947]  clk_enable+0x1c/0x28
+[   17.724950]  clk_bulk_enable+0x38/0xb0
+[   17.724953]  msm_dp_ctrl_enable_mainlink_clocks+0x140/0x234 [msm]
+[   17.724974]  msm_dp_ctrl_prepare_stream_on+0x10c/0x19c [msm]
+[   17.724985]  msm_dp_display_atomic_prepare+0x9c/0x1b4 [msm]
+[   17.724994]  msm_edp_bridge_atomic_enable+0x60/0x78 [msm]
 [...]
-
-> 
->>> +				irq_grp->irqs[num_irq++] =
->>> +					reo2host_destination_ring1 - j;
->>> +			}
->>> +
->>> +			if (ab->hw_params->ring_mask->rx_err[i] & BIT(j))
->>> +				irq_grp->irqs[num_irq++] = reo2host_exception;
->>> +
->>> +			if (ab->hw_params->ring_mask->rx_wbm_rel[i] & BIT(j))
->>> +				irq_grp->irqs[num_irq++] = wbm2host_rx_release;
->>> +
->>> +			if (ab->hw_params->ring_mask->reo_status[i] & BIT(j))
->>> +				irq_grp->irqs[num_irq++] = reo2host_status;
->>> +
->>> +			if (ab->hw_params->ring_mask->rx_mon_dest[i] & BIT(j))
->>> +				irq_grp->irqs[num_irq++] =
->>> +					rxdma2host_monitor_destination_mac1;
->>> +		}
->>> +
->>> +		irq_grp->num_irq = num_irq;
->>> +
->>> +		for (j = 0; j < irq_grp->num_irq; j++) {
->>> +			irq_idx = irq_grp->irqs[j];
->>> +
->>> +			irq = platform_get_irq_byname(ab->pdev,
->>> +						      irq_name[irq_idx]);
->>> +			ab->irq_num[irq_idx] = irq;
->>> +			irq_set_status_flags(irq, IRQ_NOAUTOEN | IRQ_DISABLE_UNLAZY);
->>> +			ret = request_irq(irq, ath12k_ahb_ext_interrupt_handler,
->>> +					  IRQF_TRIGGER_RISING,
->>> +					  irq_name[irq_idx], irq_grp);
->>> +			if (ret) {
->>> +				ath12k_err(ab, "failed request_irq for %d\n",
->>> +					   irq);
->>> +			}
->>> +		}
->>
->> Instead of doing all this magic, can we request the IRQs manually, as we
->> have interrupt-names in dt?
->>
-> 
-> I'm not sure if I fully understood this comment.
-> If we manually request IRQs using their names from the DT, we won't be able to
-> group the IRQs. Grouping the IRQs is one of our main objectives here. Additionally,
-> we are not using all the IRQ names defined in the DT, so the logic in this function
-> is crucial for grouping and requesting the IRQs according to the ring-mask.
-
-Surely you can name these "foo_bar_ring%d" in DT and use the OF APIs
-
-[...]
-
->>
->>> +	/* Set fixed_mem_region to true for platforms that support fixed memory
->>> +	 * reservation from DT. If memory is reserved from DT for FW, ath12k driver
->>> +	 * need not to allocate memory.
->>> +	 */
->>> +	if (!of_property_read_u32(ab->dev->of_node, "memory-region", &addr)) {
->>> +		set_bit(ATH12K_FLAG_FIXED_MEM_REGION, &ab->dev_flags);
->>> +		mem_node = of_find_node_by_name(NULL, "mlo_global_mem_0");
->>
->> This is not mentioned or documented anywhere.
->>
-> 
-> In next version, will document the below info:
-> 
-> "If the platform supports fixed memory, then it should define/reserve
-> MLO global memory in DT to support Multi Link Operation.
-> If MLO global memory is not reserved in fixed memory mode, then
-> MLO cannot be supported."
-
-You should also explain what Multi Link Operation means
-
-Konrad
+[   17.725216] ---[ end trace 0000000000000000 ]---
+[   17.725218] Failed to enable clk 'ctrl_link': -16
+[   17.725220] [drm:msm_dp_ctrl_enable_mainlink_clocks [msm]] *ERROR* Unable to start link clocks. ret=-16
+[   17.725231] [drm:msm_dp_ctrl_prepare_stream_on [msm]] *ERROR* Failed to start link clocks. ret=-16
+[   17.725240] [drm:msm_dp_display_atomic_prepare [msm]] *ERROR* DP display prepare failed, rc=-16
 
