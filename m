@@ -1,138 +1,238 @@
-Return-Path: <linux-arm-msm+bounces-40823-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40824-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 90F309E74F5
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 16:56:19 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7A7489E75C1
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 17:21:21 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4F84B188740A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 15:56:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 29A892876C6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 16:21:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 95BB820B807;
-	Fri,  6 Dec 2024 15:56:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7203620E32A;
+	Fri,  6 Dec 2024 16:21:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="42fbc/5q"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ALqLwO+t"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B27491EC013
-	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Dec 2024 15:56:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F74720DD79;
+	Fri,  6 Dec 2024 16:21:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733500575; cv=none; b=mglY8ktBGCSiNL98xVX0NhV3eoZuBfh32qpg0QI/GetIoUw7iWKNyvD8leEg/9A5KuCEKZF2S37O26IbA3bjWzfPRJbnzssx0DIeIVACjLJzVJjawdtV9LR8wcGNT5PHoIVfFlPbsYoUT3j6LEflrzbhAubYnaf/9IkqE/JUqHo=
+	t=1733502070; cv=none; b=noGc8OfVTalrOz3rO3xZgg+2Gvrxmk3SFA84ZXP0w2PHy38t6Wy+KuyYyrxgLlXpHMZaTz3rNql0Fpzjb4goMY6aeLE6EOTfzMheds2GX/7ZAtliEJFj5Z1fnKmMGIyFuMnAIYk71RNhbmG2m/XW8LmzosxldpSlxqXM8g/rNwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733500575; c=relaxed/simple;
-	bh=HiRM9JCXoPNEMuQmDgPmwpM+IFO+Ml8AHljm1CLjQw0=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=LPu/c3ltNy5ZCQDiQKxbAew3+lBWcIO2RPKn9HVLHRGLvrn4gTWKT3JHvPUGDdYHfqv687c/Xk/LwCWK6Ku+mRljqkaDxV9kSmBHrPOpBKr/YjmkZJ+RLaHmIEdzcuXtqnOwKmBeW/1OpV9DrO60WgnNoDuMvCm19Hv96SoWvnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=42fbc/5q; arc=none smtp.client-ip=209.85.208.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5cedf5fe237so3363476a12.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Dec 2024 07:56:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1733500572; x=1734105372; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fhXG7usYN1Ndp7KrExGMRuLhz9e4x8sMn6Z7NQ1u10E=;
-        b=42fbc/5qlLGJUg79O+blBo/u341Y48NLRBrg2VHTutSGPbhN4OcFx8W18R1Mfj8wJg
-         AM1BhGMwgqeeM4Ft3XMC0mqmeIq+2WkhgZjyjZkPSI+b8/RRzijjpoQs5DbwI9nc9j1p
-         n0e3dzV/QXFY/YcziU15pnrUVMJcf3kM8h9zYuG/R/VYLoCGYL4MLtgby+NhIoQEVKQG
-         KoknmcC7OljJsRTuZqPf0nPmTnQq9kxlnVKaTRI68TdFUTm4sUfuCvEVVzUTB5E1NFZ+
-         6TfqnI5x1MJiN1IZE4SruVr69HcoTwzw9531cvd/nh65ay75f1HJ5THPhWR8xzfhzoJL
-         e3JA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733500572; x=1734105372;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=fhXG7usYN1Ndp7KrExGMRuLhz9e4x8sMn6Z7NQ1u10E=;
-        b=EaMou7k6a7umzvB0lIzEJ+MZAZFZF671Hye0WYkjev3q7ch5iChuEx5FbG0Am9jeEx
-         8kH4g/zHt5nMiFxdqa6IOjrKwNXnPqkD4JDv19eb4T9Hb+/Jmy4B3XQrbZhppR+Q2t9C
-         qIj7WBOBCPFH9ImRvQRCsGssteMZq4MCPZ1y3ghWJvtHFGp8IKxZ1XpQMaH5NukGakKz
-         nCs5cEFvjRGCLxAhTqK/VOcB4RA1Ok3FUeO1g6iYdpVEZ+13xZcQBtKV9aGogT3hFKFr
-         01lh6GpCohOkMbhfpzVTw61ht/tEMcmJsISGQ+uvkcx/AQUzgsp8tYRnvI5SbSE/SWlN
-         ajMg==
-X-Gm-Message-State: AOJu0YyVBKqbaY0XaMei1eUb0t02Silpzey/FnX4qSzgfg5uhCf8g5C9
-	AKubdrBJpwC8whNXjWy+3ez+26VVJMgXaF2n9iA6sriT9q3ZPdStDYagYUsVkm8=
-X-Gm-Gg: ASbGncvBrorAUuQvKyCLKWVm8Xs8iX8b+FZm3ox7MJilUn2lduLL+q1ZkJ/yC7EdUi/
-	tgGyJnS0doTaUdbAMqF0coIKXS1K9cSe7z1dFF/8RxYj+fkPfSrQg1iGurptO1NxjAd/bDZCa2R
-	raQaUjb1DCmtiPlhYm/qkD47SarMGTSGZtld772QxsloNw9zcaMEnpMpla6daqGf9q2qcq1fsaa
-	PBfsu5EBDzOaDLZTCAAcP/ESjB1CdepzLw5nFdVWvZDqKYN/11TBhJfLZXo5KWP3ILEjtVVp31r
-	v+/Rc/rch6usHMy4UnccBF3W1azJCcY0Y5fnGbjIdVAegX7LUaPkhpZpuQOpxw==
-X-Google-Smtp-Source: AGHT+IH3JbFPMFTV/3kFiyKdRIaHb2mLz54BeVoJjzVAmHboemNCWABvF8tJd2pSZsnQF9LYk/+aug==
-X-Received: by 2002:a05:6402:51cb:b0:5d0:8359:7a49 with SMTP id 4fb4d7f45d1cf-5d3be46563amr4160654a12.0.1733500572121;
-        Fri, 06 Dec 2024 07:56:12 -0800 (PST)
-Received: from localhost (2a02-8388-6584-6400-d322-7350-96d2-429d.cable.dynamic.v6.surfer.at. [2a02:8388:6584:6400:d322:7350:96d2:429d])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa62601b5d2sm260347966b.93.2024.12.06.07.56.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Dec 2024 07:56:11 -0800 (PST)
+	s=arc-20240116; t=1733502070; c=relaxed/simple;
+	bh=JA9swdKidEphhW5MGht/Hzh1q4Pi43LbfowCrjRYTcQ=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:CC:References:
+	 In-Reply-To:Content-Type; b=XVX/za7XvU9/lWD+UQ5cZyQt5mFp6+JZ4tGxG49JFmeYiz2t4B7IdR3PvH9iUb7cJBzPcoaeV4vNYVcBc2bpzG5loNzFYr8+eXN/RPdzGbUezjMI3193/yVL/5WKqo0QurmarSORVKsT481Suz2YyXDiS7D9XAReY75uOVG38l8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ALqLwO+t; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B69c0mp026486;
+	Fri, 6 Dec 2024 16:20:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	9rgdpypyMiuZFb/Kzr4lfbY2QURoDj3O7jTtUsLfNq4=; b=ALqLwO+tFzQ8S3N0
+	P5ZuZe7SffahvrYKAIW5KudVet22F7lPk9rJn2ukE50lYTAUeLxKurMBnVfUt7wJ
+	2hCPYqteUnt+kr0HY9JJ2M5WazDSJKJ3L4Xl2OZySmOtLJUme00vzbW64uEiUyAX
+	e47/Re/oZmSHGw6TTAZgYzSC/rsGF5lWJfHeed73TslAkDbpXfvB2EhC5DbvhY3Y
+	Q8AFfhWZAz5oRgYnmopcN54maND7T/RSFrVvIVoLJOl1CDXnKL8XW52MwicW1bx6
+	/sL9BoO8Oo+ZGJfBnpMDEplFqPdzLqD/HhlRptwZYd7R7ojIc77Wv7gsXknExfcq
+	hYfnZQ==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43bxtc92y9-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 06 Dec 2024 16:20:48 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B6GKlVI003601
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 6 Dec 2024 16:20:47 GMT
+Received: from [10.253.9.12] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 6 Dec 2024
+ 08:20:42 -0800
+Message-ID: <f54ad0e2-10d7-40ff-872f-d7c92ae8519b@quicinc.com>
+Date: Sat, 7 Dec 2024 00:20:25 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 06 Dec 2024 16:56:11 +0100
-Message-Id: <D64QO0GGTG1H.1XNALA48Y0LX4@fairphone.com>
-Cc: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <stable@vger.kernel.org>
-Subject: Re: [PATCH PATCH RFT 16/19] arm64: dts: qcom: sm6350: Fix MPSS
- memory length
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>, "Bjorn
- Andersson" <andersson@kernel.org>, "Konrad Dybcio"
- <konradybcio@kernel.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
- "Vinod Koul" <vkoul@kernel.org>, "Dmitry Baryshkov"
- <dmitry.baryshkov@linaro.org>, "Neil Armstrong"
- <neil.armstrong@linaro.org>, "Abel Vesa" <abel.vesa@linaro.org>, "Sibi
- Sankar" <quic_sibis@quicinc.com>
-X-Mailer: aerc 0.18.2-0-ge037c095a049
-References: <20241206-dts-qcom-cdsp-mpss-base-address-v1-0-2f349e4d5a63@linaro.org> <20241206-dts-qcom-cdsp-mpss-base-address-v1-16-2f349e4d5a63@linaro.org>
-In-Reply-To: <20241206-dts-qcom-cdsp-mpss-base-address-v1-16-2f349e4d5a63@linaro.org>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Lei Wei <quic_leiwei@quicinc.com>
+Subject: Re: [PATCH net-next v2 3/5] net: pcs: qcom-ipq9574: Add PCS
+ instantiation and phylink operations
+To: "Russell King (Oracle)" <linux@armlinux.org.uk>
+CC: "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet
+	<edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni
+	<pabeni@redhat.com>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, Andrew Lunn
+	<andrew@lunn.ch>,
+        Heiner Kallweit <hkallweit1@gmail.com>, <netdev@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_kkumarcs@quicinc.com>, <quic_suruchia@quicinc.com>,
+        <quic_pavir@quicinc.com>, <quic_linchen@quicinc.com>,
+        <quic_luoj@quicinc.com>, <srinivas.kandagatla@linaro.org>,
+        <bartosz.golaszewski@linaro.org>, <vsmuthu@qti.qualcomm.com>,
+        <john@phrozen.org>, <linux-arm-msm@vger.kernel.org>
+References: <20241204-ipq_pcs_rc1-v2-0-26155f5364a1@quicinc.com>
+ <20241204-ipq_pcs_rc1-v2-3-26155f5364a1@quicinc.com>
+ <Z1B1HuvxsjuMxtt0@shell.armlinux.org.uk>
+Content-Language: en-US
+In-Reply-To: <Z1B1HuvxsjuMxtt0@shell.armlinux.org.uk>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: RtqHHX_6FB2oPxCVouKABH1lM6wz7rPc
+X-Proofpoint-ORIG-GUID: RtqHHX_6FB2oPxCVouKABH1lM6wz7rPc
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ spamscore=0 adultscore=0 lowpriorityscore=0 clxscore=1011 malwarescore=0
+ suspectscore=0 impostorscore=0 phishscore=0 mlxscore=0 bulkscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412060123
 
-On Fri Dec 6, 2024 at 4:32 PM CET, Krzysztof Kozlowski wrote:
-> The address space in MPSS/Modem PAS (Peripheral Authentication Service)
-> remoteproc node should point to the QDSP PUB address space
-> (QDSP6...SS_PUB) which has a length of 0x10000.  Value of 0x4040 was
-> copied from older DTS, but it grew since then.
->
-> This should have no functional impact on Linux users, because PAS loader
-> does not use this address space at all.
 
-Like with adsp, I can't verify this information, but with this change
-modem is still starting up as expected:
 
-Tested-by: Luca Weiss <luca.weiss@fairphone.com>
+On 12/4/2024 11:28 PM, Russell King (Oracle) wrote:
+> On Wed, Dec 04, 2024 at 10:43:55PM +0800, Lei Wei wrote:
+>> +static int ipq_pcs_enable(struct phylink_pcs *pcs)
+>> +{
+>> +	struct ipq_pcs_mii *qpcs_mii = phylink_pcs_to_qpcs_mii(pcs);
+>> +	struct ipq_pcs *qpcs = qpcs_mii->qpcs;
+>> +	int index = qpcs_mii->index;
+>> +	int ret;
+>> +
+>> +	ret = clk_prepare_enable(qpcs_mii->rx_clk);
+>> +	if (ret) {
+>> +		dev_err(qpcs->dev, "Failed to enable MII %d RX clock\n", index);
+>> +		return ret;
+>> +	}
+>> +
+>> +	ret = clk_prepare_enable(qpcs_mii->tx_clk);
+>> +	if (ret) {
+>> +		dev_err(qpcs->dev, "Failed to enable MII %d TX clock\n", index);
+>> +		clk_disable_unprepare(qpcs_mii->rx_clk);
+>> +		return ret;
+>> +	}
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static void ipq_pcs_disable(struct phylink_pcs *pcs)
+>> +{
+>> +	struct ipq_pcs_mii *qpcs_mii = phylink_pcs_to_qpcs_mii(pcs);
+>> +
+>> +	if (__clk_is_enabled(qpcs_mii->rx_clk))
+>> +		clk_disable_unprepare(qpcs_mii->rx_clk);
+>> +
+>> +	if (__clk_is_enabled(qpcs_mii->tx_clk))
+>> +		clk_disable_unprepare(qpcs_mii->tx_clk);
+> 
+> Why do you need the __clk_is_enabled() calls here? Phylink should be
+> calling pcs_enable() once when the PCS when starting to use the PCS,
+> and then pcs_disable() when it stops using it - it won't call
+> pcs_disable() without a preceeding call to pcs_enable().
+> 
+> Are you seeing something different?
+> 
 
->
-> Cc: <stable@vger.kernel.org>
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sm6350.dtsi | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/q=
-com/sm6350.dtsi
-> index 3df506c2745ea27f956ef7d7a4b5fbaf6285c428..64b9602c912c970b49f57e7f2=
-b3d557c44717d38 100644
-> --- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-> @@ -1503,7 +1503,7 @@ gpucc: clock-controller@3d90000 {
-> =20
->  		mpss: remoteproc@4080000 {
->  			compatible =3D "qcom,sm6350-mpss-pas";
-> -			reg =3D <0x0 0x04080000 0x0 0x4040>;
-> +			reg =3D <0x0 0x04080000 0x0 0x10000>;
-> =20
->  			interrupts-extended =3D <&intc GIC_SPI 136 IRQ_TYPE_EDGE_RISING>,
->  					      <&modem_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
+Yes, understand that phylink won't call pcs_disable() without a 
+preceeding call to pcs_enable(). However, the "clk_prepare_enable" may 
+fail in the pcs_enable() method, so I added the __clk_is_enabled() check 
+in pcs_disable() method. This is because the phylink_major_config() 
+function today does not interpret the return value of phylink_pcs_enable().
+
+>> +static void ipq_pcs_get_state(struct phylink_pcs *pcs,
+>> +			      struct phylink_link_state *state)
+>> +{
+>> +	struct ipq_pcs_mii *qpcs_mii = phylink_pcs_to_qpcs_mii(pcs);
+>> +	struct ipq_pcs *qpcs = qpcs_mii->qpcs;
+>> +	int index = qpcs_mii->index;
+>> +
+>> +	switch (state->interface) {
+>> +	case PHY_INTERFACE_MODE_SGMII:
+>> +	case PHY_INTERFACE_MODE_QSGMII:
+>> +		ipq_pcs_get_state_sgmii(qpcs, index, state);
+>> +		break;
+>> +	default:
+>> +		break;
+> ...
+>> +static int ipq_pcs_config(struct phylink_pcs *pcs,
+>> +			  unsigned int neg_mode,
+>> +			  phy_interface_t interface,
+>> +			  const unsigned long *advertising,
+>> +			  bool permit)
+>> +{
+>> +	struct ipq_pcs_mii *qpcs_mii = phylink_pcs_to_qpcs_mii(pcs);
+>> +	struct ipq_pcs *qpcs = qpcs_mii->qpcs;
+>> +	int index = qpcs_mii->index;
+>> +
+>> +	switch (interface) {
+>> +	case PHY_INTERFACE_MODE_SGMII:
+>> +	case PHY_INTERFACE_MODE_QSGMII:
+>> +		return ipq_pcs_config_sgmii(qpcs, index, neg_mode, interface);
+>> +	default:
+>> +		dev_err(qpcs->dev,
+>> +			"Unsupported interface %s\n", phy_modes(interface));
+>> +		return -EOPNOTSUPP;
+>> +	};
+>> +}
+>> +
+>> +static void ipq_pcs_link_up(struct phylink_pcs *pcs,
+>> +			    unsigned int neg_mode,
+>> +			    phy_interface_t interface,
+>> +			    int speed, int duplex)
+>> +{
+>> +	struct ipq_pcs_mii *qpcs_mii = phylink_pcs_to_qpcs_mii(pcs);
+>> +	struct ipq_pcs *qpcs = qpcs_mii->qpcs;
+>> +	int index = qpcs_mii->index;
+>> +	int ret;
+>> +
+>> +	switch (interface) {
+>> +	case PHY_INTERFACE_MODE_SGMII:
+>> +	case PHY_INTERFACE_MODE_QSGMII:
+>> +		ret = ipq_pcs_link_up_config_sgmii(qpcs, index,
+>> +						   neg_mode, speed);
+>> +		break;
+>> +	default:
+>> +		dev_err(qpcs->dev,
+>> +			"Unsupported interface %s\n", phy_modes(interface));
+>> +		return;
+>> +	}
+> 
+> So you only support SGMII and QSGMII. Rather than checking this in every
+> method implementation, instead provide a .pcs_validate method that
+> returns an error for unsupported interfaces please.
+> 
+
+Yes, I can add the pcs_validate() method to validate the link 
+configurations. This will catch invalid interface mode during the PCS 
+initialization time, earlier than the pcs_config and pcs_link_up contexts.
+
+But after of the PCS init, if at a later point the PHY interface mode 
+changes, it seems phylink today is not calling the pcs_validate() op to 
+validate the changed new interface mode at the time of 
+"phylink_resolve". (Hope my understanding is correct).
+So, In the pcs ops methods, I will keep the switch case to check and 
+handle the unsupported interface modes.
+
+> Thanks.
+> 
 
 
