@@ -1,322 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-40729-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40731-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 281199E69C2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 10:09:47 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7022E9E69CE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 10:11:01 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D8971280C3E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 09:09:45 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4A0C2161C9D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 09:10:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55FF81E1041;
-	Fri,  6 Dec 2024 09:09:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 77AF81E0DEA;
+	Fri,  6 Dec 2024 09:10:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Rxlitcze"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pKDiHV30"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EBE01DED74
-	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Dec 2024 09:09:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A40671CCB4B
+	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Dec 2024 09:10:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733476184; cv=none; b=NdQGB5KawMbJG5wg4gqd9gjzgkJDiJN20g3MtbBjlsrlZR+p9tonJfMIJiL11Pndy/Zrhzs66OfKul8+k4SrgBT61+5YvN3cf7TxVe7cbaQyYWAME5fJrL0jhIxf1vMenIJlyM0GYyj9qSCrXAaQjXdBiSdDOX2FtlUgzkRFuaI=
+	t=1733476257; cv=none; b=KzDQuF6mXkeU+RyOJI6BkUqPR6cKvFk7sck3dAzzv4/FBBae2irY5TlmpijubkGyw4LDtkZfJ+9R1MP4Mdgbrmsw30oH1KBiuYzhit9sklf7bW8FNiZCHhUg0hRfX9o7D/Z2mg11+dcF0dzvMEy+fOYtHd7U0px+xqk8jrDa8cI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733476184; c=relaxed/simple;
-	bh=uhenj0LLC5a0rq4dBOlVJh0Z8JWNBZh/M2/Sxs1PgRk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sedQMJAO7YxIl1pWC6dkBTixIcQ0igEXgb+jtnS2jf3TY7zb1J9lBks0JUYrGAxdu805Sg8FZ+XCp8xYV9yBtD3aDqYxUqzQCUvvyBuPYYjbgONnS6knk8Z1EmnnDVN60t4ttu0Wkw0Qa5D51L9/BjMaRytwtLKtfa1LBq+j1Yk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Rxlitcze; arc=none smtp.client-ip=209.85.208.176
+	s=arc-20240116; t=1733476257; c=relaxed/simple;
+	bh=TwLhHmqCmT8mbikMr2K5idtH7gqvcB7QcvMt6aClul4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=COeIB4Z7zB0ruakifQ8sgDRyGHEmJlh60hCDzzJJOAAOLvmqvdJEYHjocO4UCgfqEV8EzlsvxkByP5rl/BLxdQwj1K91fxt8UMf+ZMMr+CO+xS0j+BgK78XSWSLm6oNh+FKZX+tkJQ3skJQMrzydhDnEbtPQxDLmk4FO5ay8LxE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pKDiHV30; arc=none smtp.client-ip=209.85.218.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-3002c324e7eso11124041fa.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Dec 2024 01:09:41 -0800 (PST)
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-aa63584e157so13693966b.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Dec 2024 01:10:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733476180; x=1734080980; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=6VCu5IuBNknOEvtDWTAOICbOzdvqtJ8gIgp8PClwSbg=;
-        b=RxlitczeO9Q+WjDHmtIe5WrX3xqqoo7FZkGiesZdvLoy72wdDpXcG0SaFTbD7VbUzO
-         P3gqnvVggbRWNSx1440B3CdrqD2SpS3ajQJ28/M4foj/BDuBxA+kpXDlVTPHzoB74VW2
-         JdsvdE+waOxQmDfBBR53C3tDNnTDK1cIxeeUDpWTJJZy0v5wZsFVO3x8HHi8ao5k18us
-         LG7f3BntknF84rRZvXmkNHdSJwCHdg4rJ0kGLZl0NJD8p1UyojLKyGsKXskFO8H99yyh
-         b3SCCbg6oGZw0FA6gdygGrjNTPpgbUYlmENqpJVGT+8pMOelU9mJrSqAJ1ttv2M+G/Pk
-         uExA==
+        d=linaro.org; s=google; t=1733476254; x=1734081054; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=yfIqdChuVNmxTU9TsoTw4NafbW5EbErVPJediA5XYwE=;
+        b=pKDiHV30FeVWQ4Q6pVmOo1fFI4LjWAVyI9w56yEeFz2I7mZ8/mtqnCKxeRsUklFwmP
+         WDNiT4lPDAlGzKaZUH1wmIrwnkkgnF0RbTqCfIAK4/vxXqdkF1ch6uw9Qc4wjxOn0fYH
+         BnNFLq2s7EzyAx2tOIwpEqgVT2EAVMRMc1X4NymBMsODnkW/6yBu9FRE4BsCwpbLiy2G
+         BWLlWT52ZiOVGlWrARDjL5FnbyqdOuuIJU+Gz6GiaLEe03fLkOVCgUz0tGYCujqVuiwG
+         UYuloI7pW//08rlmv3yWYZ+Cc9S5oTvaaNNp5vf8mbZX/QtaSEalmY1oX45B94sUqACI
+         PU8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733476180; x=1734080980;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20230601; t=1733476254; x=1734081054;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=6VCu5IuBNknOEvtDWTAOICbOzdvqtJ8gIgp8PClwSbg=;
-        b=NSX9CLp1CzjK931LIXZ21L7IrE6Op4kr+biBS/jM1sSHqdoN2s/Sd39Du3vKn2cr/f
-         nS1PEnbbYbMvll4ZMngVV1J0aeXiQTrMKEKX7BsckRyKypn/tHMi7NGmb24B4tQXkWPx
-         7+jWwY8Jn3odLVueR0HKTRTpFStl9ZJBD4SxWzg6R2u2hhQp3wDa7TRB0MvNMQrMbWPh
-         xQBD6D6zyAJiD6MBjD3SImKHvClqLXKCkI/LNf9FVlWusTsG2TFp/Bif+PprYc64vpFi
-         1OSHeofzaZ8GRZlQCCatxqsp7UUqB6lZtA6oXe9QLB0Y8/4D8zayMIRrHhaXhMmxMIyp
-         qy2w==
-X-Forwarded-Encrypted: i=1; AJvYcCWhXKPLp9Eg+DYUlsyPnnnlQylFKBzzJ167N7TIQWrN6zkBkNV40y1miJwX1HowpPOOEuObyHeF2m29pFjc@vger.kernel.org
-X-Gm-Message-State: AOJu0YzhhMUooZ5qffa+XZ5yF+s6gfOrFEuxF1e8Ixcw7ctTFVyWM+ry
-	GwtnStKgqkd2tcAzdvVnPCGj8YOJw3XJ/qvLG8VEfSUvgJ2wSWvOVk4+IlJPLMYZTQjEU+w/FB+
-	m
-X-Gm-Gg: ASbGncu/LCQd1kgM4pYXx3in6mHzOqTjj6FNlhvm54wZ5loR2vMyQAILPe9dcX8beWL
-	HsIem+exTglzOOOplxqoo+kWW0GsPmeWWunEU13WtX4UFktLcp4ylq9hBx84qhUEo7bDaY6c8Tc
-	Sb2OofUPy0A/z+up1G1rxUS2oXmrIHnM1ZyhsquI2FM0ETFGNcfvIitIIxzvBiqJ7nLJuzMdIPk
-	zRBO+BWMB6mYuL7pNt+yttWWIeOXS5AeDoSVFj1W0dUiBKH4gZU3+zjyntkeHcF/ppEecvjo/c0
-	lW+m6oaDzQrwVy/93S9zxO/rMDSIzw==
-X-Google-Smtp-Source: AGHT+IGGD7BpEU4LTmFRtF3Uq6Kc+gY9kNk+2fkbJjTYIYQ/unDQIyFXp07CwDoGJjyIkme/z7Qb0g==
-X-Received: by 2002:a05:651c:b29:b0:300:2d54:c2c8 with SMTP id 38308e7fff4ca-3002f8b588dmr11105671fa.8.1733476180093;
-        Fri, 06 Dec 2024 01:09:40 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30020db3854sm4204331fa.51.2024.12.06.01.09.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Dec 2024 01:09:38 -0800 (PST)
-Date: Fri, 6 Dec 2024 11:09:36 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Stephen Boyd <swboyd@chromium.org>, 
-	Chandan Uddaraju <chandanu@codeaurora.org>, Guenter Roeck <groeck@chromium.org>, 
-	Kuogee Hsieh <quic_khsieh@quicinc.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Vara Reddy <quic_varar@quicinc.com>, Rob Clark <robdclark@chromium.org>, 
-	Tanmay Shah <tanmay@codeaurora.org>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
-	Jessica Zhang <quic_jesszhan@quicinc.com>, Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Subject: Re: [PATCH 09/45] drm/msm/dp: allow dp_ctrl stream APIs to use any
- panel passed to it
-Message-ID: <4pituhltil4qy5p4yhupnfc2zppqdwe2eqp3h4v5wcf6esz7gy@kekccysqb3q3>
-References: <20241205-dp_mst-v1-0-f8618d42a99a@quicinc.com>
- <20241205-dp_mst-v1-9-f8618d42a99a@quicinc.com>
+        bh=yfIqdChuVNmxTU9TsoTw4NafbW5EbErVPJediA5XYwE=;
+        b=Seq8WV2z0PSBMge7v8cT+9eyvrjsRyC9B4Z0weQLnX1X1Py8p0eTtUetHSMfcz6EKb
+         CIozoXx/+FS9PlrvNQ4By+PKqDiejtA/Xq5Nkrqmpqc6Y2MK+QyIHkFfNX7qQ5HeTaod
+         UEjxuBZe6dpBwTh+PUmWV0bPSvoDjLBM5P8o+HZVhnXUzToCR4E3U641EqfYW4AdZfDi
+         dhKimsqBO27fyqH4Aifjh2Ijw9ta9mJ34f7AcWnZtCD2TUrPto2q8wql+W1rFnfiBo+p
+         svSoS7UO5byR/gYBcaSQ2PHCmlNidXLDbxV7v806IWtAn8joKxREK6+Uk2ovR+qGWEwA
+         R1XA==
+X-Gm-Message-State: AOJu0Yy7Nv2fWQjOZQDzY2KCI9chIIB92e6eQ1NK7l0cKfODJRbzsWiD
+	SmvRIGM93pNHx2tdubAX6m/pXKavoNGHVMHm2KVfQDKpJwWT0We5ClOnaOlD4qw=
+X-Gm-Gg: ASbGncvOuLHdyQ0NtyxZKx50z/BdSzDZcAcVVj0h04MHVMUX61JpVw8zsqs/TGAJpFi
+	4l0dCzoe57NJAsuGknqREN52ucS7eDYljTd24R1pSAudl5pHKc4XZEo/eqIFms4SJrZwseWOoSR
+	dtI3VNpAV62uXTsvhMwRUMdUUGV7xIiZeQ4l6G28LYpzVfd/EzxKL8aC0BT75rv5pj9dlklCjnJ
+	0LlkHxiQ6fNTjNPllcU3duvt8XHVm1MIPeBs+cZUgRVvQvpmsrP8krnT8XciMNFemtMXVWVgw==
+X-Google-Smtp-Source: AGHT+IFxqJUXLlMbfJtoxC5AzYLLmlMF+kGaXWc2+23SxnIMoTz+RZIR/OP34nQZqW+haBfmzAvOIQ==
+X-Received: by 2002:a17:907:7247:b0:a9e:80ed:5cc6 with SMTP id a640c23a62f3a-aa63a2f34b9mr66910866b.13.1733476253920;
+        Fri, 06 Dec 2024 01:10:53 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.223.165])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa625e92fe3sm210151066b.51.2024.12.06.01.10.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 06 Dec 2024 01:10:53 -0800 (PST)
+Message-ID: <8e359b6c-ee68-4606-a485-057df0b27d92@linaro.org>
+Date: Fri, 6 Dec 2024 10:10:51 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241205-dp_mst-v1-9-f8618d42a99a@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] arm64: dts: qcom: sm8750: Add CDSP
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20241122-b4-sm8750-cdsp-v1-0-9a69a889d1b7@linaro.org>
+ <20241122-b4-sm8750-cdsp-v1-1-9a69a889d1b7@linaro.org>
+ <ba887e6a-7bb2-4170-a957-d4299012ae01@oss.qualcomm.com>
+Content-Language: en-US
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
+ cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
+ JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
+ gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
+ J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
+ NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
+ BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
+ vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
+ Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
+ TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzTRLcnp5c3p0b2Yg
+ S296bG93c2tpIDxrcnp5c3p0b2Yua296bG93c2tpQGxpbmFyby5vcmc+wsGUBBMBCgA+FiEE
+ m9B+DgxR+NWWd7dUG5NDfTtBYpsFAmI+BxMCGwMFCRRfreEFCwkIBwIGFQoJCAsCBBYCAwEC
+ HgECF4AACgkQG5NDfTtBYptgbhAAjAGunRoOTduBeC7V6GGOQMYIT5n3OuDSzG1oZyM4kyvO
+ XeodvvYv49/ng473E8ZFhXfrre+c1olbr1A8pnz9vKVQs9JGVa6wwr/6ddH7/yvcaCQnHRPK
+ mnXyP2BViBlyDWQ71UC3N12YCoHE2cVmfrn4JeyK/gHCvcW3hUW4i5rMd5M5WZAeiJj3rvYh
+ v8WMKDJOtZFXxwaYGbvFJNDdvdTHc2x2fGaWwmXMJn2xs1ZyFAeHQvrp49mS6PBQZzcx0XL5
+ cU9ZjhzOZDn6Apv45/C/lUJvPc3lo/pr5cmlOvPq1AsP6/xRXsEFX/SdvdxJ8w9KtGaxdJuf
+ rpzLQ8Ht+H0lY2On1duYhmro8WglOypHy+TusYrDEry2qDNlc/bApQKtd9uqyDZ+rx8bGxyY
+ qBP6bvsQx5YACI4p8R0J43tSqWwJTP/R5oPRQW2O1Ye1DEcdeyzZfifrQz58aoZrVQq+innR
+ aDwu8qDB5UgmMQ7cjDSeAQABdghq7pqrA4P8lkA7qTG+aw8Z21OoAyZdUNm8NWJoQy8m4nUP
+ gmeeQPRc0vjp5JkYPgTqwf08cluqO6vQuYL2YmwVBIbO7cE7LNGkPDA3RYMu+zPY9UUi/ln5
+ dcKuEStFZ5eqVyqVoZ9eu3RTCGIXAHe1NcfcMT9HT0DPp3+ieTxFx6RjY3kYTGLOwU0EVUNc
+ NAEQAM2StBhJERQvgPcbCzjokShn0cRA4q2SvCOvOXD+0KapXMRFE+/PZeDyfv4dEKuCqeh0
+ hihSHlaxTzg3TcqUu54w2xYskG8Fq5tg3gm4kh1Gvh1LijIXX99ABA8eHxOGmLPRIBkXHqJY
+ oHtCvPc6sYKNM9xbp6I4yF56xVLmHGJ61KaWKf5KKWYgA9kfHufbja7qR0c6H79LIsiYqf92
+ H1HNq1WlQpu/fh4/XAAaV1axHFt/dY/2kU05tLMj8GjeQDz1fHas7augL4argt4e+jum3Nwt
+ yupodQBxncKAUbzwKcDrPqUFmfRbJ7ARw8491xQHZDsP82JRj4cOJX32sBg8nO2N5OsFJOcd
+ 5IE9v6qfllkZDAh1Rb1h6DFYq9dcdPAHl4zOj9EHq99/CpyccOh7SrtWDNFFknCmLpowhct9
+ 5ZnlavBrDbOV0W47gO33WkXMFI4il4y1+Bv89979rVYn8aBohEgET41SpyQz7fMkcaZU+ok/
+ +HYjC/qfDxT7tjKXqBQEscVODaFicsUkjheOD4BfWEcVUqa+XdUEciwG/SgNyxBZepj41oVq
+ FPSVE+Ni2tNrW/e16b8mgXNngHSnbsr6pAIXZH3qFW+4TKPMGZ2rZ6zITrMip+12jgw4mGjy
+ 5y06JZvA02rZT2k9aa7i9dUUFggaanI09jNGbRA/ABEBAAHCwXwEGAEKACYCGwwWIQSb0H4O
+ DFH41ZZ3t1Qbk0N9O0FimwUCYDzvagUJFF+UtgAKCRAbk0N9O0Fim9JzD/0auoGtUu4mgnna
+ oEEpQEOjgT7l9TVuO3Qa/SeH+E0m55y5Fjpp6ZToc481za3xAcxK/BtIX5Wn1mQ6+szfrJQ6
+ 59y2io437BeuWIRjQniSxHz1kgtFECiV30yHRgOoQlzUea7FgsnuWdstgfWi6LxstswEzxLZ
+ Sj1EqpXYZE4uLjh6dW292sO+j4LEqPYr53hyV4I2LPmptPE9Rb9yCTAbSUlzgjiyyjuXhcwM
+ qf3lzsm02y7Ooq+ERVKiJzlvLd9tSe4jRx6Z6LMXhB21fa5DGs/tHAcUF35hSJrvMJzPT/+u
+ /oVmYDFZkbLlqs2XpWaVCo2jv8+iHxZZ9FL7F6AHFzqEFdqGnJQqmEApiRqH6b4jRBOgJ+cY
+ qc+rJggwMQcJL9F+oDm3wX47nr6jIsEB5ZftdybIzpMZ5V9v45lUwmdnMrSzZVgC4jRGXzsU
+ EViBQt2CopXtHtYfPAO5nAkIvKSNp3jmGxZw4aTc5xoAZBLo0OV+Ezo71pg3AYvq0a3/oGRG
+ KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
+ fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <ba887e6a-7bb2-4170-a957-d4299012ae01@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Thu, Dec 05, 2024 at 08:31:40PM -0800, Abhinav Kumar wrote:
-> Currently, the dp_ctrl stream APIs operate on their own dp_panel
-> which is cached inside the dp_ctrl's private struct. However with MST,
-> the cached panel represents the fixed link and not the sinks which
-> are hotplugged. Allow the stream related APIs to work on the panel
-> which is passed to them rather than the cached one. For SST cases,
-> this shall continue to use the cached dp_panel.
-
-"cached inside the dp_ctrl's private struct" usually means that dp_ctrl
-stores a copy of the msm_dp_panel, not just a pointer to it, so the
-commit message needs rephrasing.
-
-Also if the stored pointer is (or will be) no longer applicable, can we
-drop it completely and always pass the dp_panel by reference? Otherwise
-it's hard to know when to pass a new one and when to use ctrl->panel
-instead.
-
+On 05/12/2024 18:32, Konrad Dybcio wrote:
+> On 22.11.2024 4:26 PM, Krzysztof Kozlowski wrote:
+>> Add nodes for the CDSP and its SMP2P.  These are compatible with earlier
+>> SM8650 with difference in one more interrupt.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
 > 
-> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/dp/dp_ctrl.c    | 37 ++++++++++++++++++++-----------------
->  drivers/gpu/drm/msm/dp/dp_ctrl.h    |  5 +++--
->  drivers/gpu/drm/msm/dp/dp_display.c |  4 ++--
->  3 files changed, 25 insertions(+), 21 deletions(-)
+> [...]
 > 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> index 9e08996be0cb969cb96d9a3019c445ab4dfc92ef..0bed85b5c8e8133ffa8c74d5de22668905396d09 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> @@ -134,7 +134,8 @@ void msm_dp_ctrl_push_idle(struct msm_dp_ctrl *msm_dp_ctrl)
->  	drm_dbg_dp(ctrl->drm_dev, "mainlink off\n");
->  }
->  
-> -static void msm_dp_ctrl_config_ctrl(struct msm_dp_ctrl_private *ctrl)
-> +static void msm_dp_ctrl_config_ctrl(struct msm_dp_ctrl_private *ctrl,
-> +				    struct msm_dp_panel *msm_dp_panel)
->  {
->  	u32 config = 0, tbd;
->  	const u8 *dpcd = ctrl->panel->dpcd;
-> @@ -142,7 +143,7 @@ static void msm_dp_ctrl_config_ctrl(struct msm_dp_ctrl_private *ctrl)
->  	/* Default-> LSCLK DIV: 1/4 LCLK  */
->  	config |= (2 << DP_CONFIGURATION_CTRL_LSCLK_DIV_SHIFT);
->  
-> -	if (ctrl->panel->msm_dp_mode.out_fmt_is_yuv_420)
-> +	if (msm_dp_panel->msm_dp_mode.out_fmt_is_yuv_420)
->  		config |= DP_CONFIGURATION_CTRL_RGB_YUV; /* YUV420 */
->  
->  	/* Scrambler reset enable */
-> @@ -150,7 +151,7 @@ static void msm_dp_ctrl_config_ctrl(struct msm_dp_ctrl_private *ctrl)
->  		config |= DP_CONFIGURATION_CTRL_ASSR;
->  
->  	tbd = msm_dp_link_get_test_bits_depth(ctrl->link,
-> -			ctrl->panel->msm_dp_mode.bpp);
-> +			msm_dp_panel->msm_dp_mode.bpp);
->  
->  	config |= tbd << DP_CONFIGURATION_CTRL_BPC_SHIFT;
->  
-> @@ -173,20 +174,21 @@ static void msm_dp_ctrl_config_ctrl(struct msm_dp_ctrl_private *ctrl)
->  	msm_dp_catalog_ctrl_config_ctrl(ctrl->catalog, config);
->  }
->  
-> -static void msm_dp_ctrl_configure_source_params(struct msm_dp_ctrl_private *ctrl)
-> +static void msm_dp_ctrl_configure_source_params(struct msm_dp_ctrl_private *ctrl,
-> +						struct msm_dp_panel *msm_dp_panel)
->  {
->  	u32 cc, tb;
->  
->  	msm_dp_catalog_ctrl_lane_mapping(ctrl->catalog);
->  	msm_dp_catalog_setup_peripheral_flush(ctrl->catalog);
->  
-> -	msm_dp_ctrl_config_ctrl(ctrl);
-> +	msm_dp_ctrl_config_ctrl(ctrl, msm_dp_panel);
->  
->  	tb = msm_dp_link_get_test_bits_depth(ctrl->link,
-> -		ctrl->panel->msm_dp_mode.bpp);
-> +		msm_dp_panel->msm_dp_mode.bpp);
->  	cc = msm_dp_link_get_colorimetry_config(ctrl->link);
->  	msm_dp_catalog_ctrl_config_misc(ctrl->catalog, cc, tb);
-> -	msm_dp_panel_timing_cfg(ctrl->panel);
-> +	msm_dp_panel_timing_cfg(msm_dp_panel);
->  }
->  
->  /*
-> @@ -1279,7 +1281,7 @@ static int msm_dp_ctrl_link_train(struct msm_dp_ctrl_private *ctrl,
->  	u8 assr;
->  	struct msm_dp_link_info link_info = {0};
->  
-> -	msm_dp_ctrl_config_ctrl(ctrl);
-> +	msm_dp_ctrl_config_ctrl(ctrl, ctrl->panel);
->  
->  	link_info.num_lanes = ctrl->link->link_params.num_lanes;
->  	link_info.rate = ctrl->link->link_params.rate;
-> @@ -1696,7 +1698,8 @@ static bool msm_dp_ctrl_send_phy_test_pattern(struct msm_dp_ctrl_private *ctrl)
->  	return success;
->  }
->  
-> -static int msm_dp_ctrl_process_phy_test_request(struct msm_dp_ctrl_private *ctrl)
-> +static int msm_dp_ctrl_process_phy_test_request(struct msm_dp_ctrl_private *ctrl,
-> +						struct msm_dp_panel *msm_dp_panel)
->  {
->  	int ret;
->  	unsigned long pixel_rate;
-> @@ -1720,7 +1723,7 @@ static int msm_dp_ctrl_process_phy_test_request(struct msm_dp_ctrl_private *ctrl
->  		return ret;
->  	}
->  
-> -	pixel_rate = ctrl->panel->msm_dp_mode.drm_mode.clock;
-> +	pixel_rate = msm_dp_panel->msm_dp_mode.drm_mode.clock;
->  	ret = clk_set_rate(ctrl->pixel_clk, pixel_rate * 1000);
->  	if (ret) {
->  		DRM_ERROR("Failed to set pixel clock rate. ret=%d\n", ret);
-> @@ -1758,7 +1761,7 @@ void msm_dp_ctrl_handle_sink_request(struct msm_dp_ctrl *msm_dp_ctrl)
->  
->  	if (sink_request & DP_TEST_LINK_PHY_TEST_PATTERN) {
->  		drm_dbg_dp(ctrl->drm_dev, "PHY_TEST_PATTERN request\n");
-> -		if (msm_dp_ctrl_process_phy_test_request(ctrl)) {
-> +		if (msm_dp_ctrl_process_phy_test_request(ctrl, ctrl->panel)) {
->  			DRM_ERROR("process phy_test_req failed\n");
->  			return;
->  		}
-> @@ -1976,7 +1979,7 @@ int msm_dp_ctrl_prepare_stream_on(struct msm_dp_ctrl *msm_dp_ctrl, bool force_li
->  	return ret;
->  }
->  
-> -int msm_dp_ctrl_on_stream(struct msm_dp_ctrl *msm_dp_ctrl)
-> +int msm_dp_ctrl_on_stream(struct msm_dp_ctrl *msm_dp_ctrl, struct msm_dp_panel *msm_dp_panel)
->  {
->  	int ret = 0;
->  	bool mainlink_ready = false;
-> @@ -1989,9 +1992,9 @@ int msm_dp_ctrl_on_stream(struct msm_dp_ctrl *msm_dp_ctrl)
->  
->  	ctrl = container_of(msm_dp_ctrl, struct msm_dp_ctrl_private, msm_dp_ctrl);
->  
-> -	pixel_rate = pixel_rate_orig = ctrl->panel->msm_dp_mode.drm_mode.clock;
-> +	pixel_rate = pixel_rate_orig = msm_dp_panel->msm_dp_mode.drm_mode.clock;
->  
-> -	if (msm_dp_ctrl->wide_bus_en || ctrl->panel->msm_dp_mode.out_fmt_is_yuv_420)
-> +	if (msm_dp_ctrl->wide_bus_en || msm_dp_panel->msm_dp_mode.out_fmt_is_yuv_420)
->  		pixel_rate >>= 1;
->  
->  	drm_dbg_dp(ctrl->drm_dev, "pixel_rate=%lu\n", pixel_rate);
-> @@ -2019,12 +2022,12 @@ int msm_dp_ctrl_on_stream(struct msm_dp_ctrl *msm_dp_ctrl)
->  	 */
->  	reinit_completion(&ctrl->video_comp);
->  
-> -	msm_dp_ctrl_configure_source_params(ctrl);
-> +	msm_dp_ctrl_configure_source_params(ctrl, msm_dp_panel);
->  
->  	msm_dp_catalog_ctrl_config_msa(ctrl->catalog,
->  		ctrl->link->link_params.rate,
->  		pixel_rate_orig,
-> -		ctrl->panel->msm_dp_mode.out_fmt_is_yuv_420);
-> +		msm_dp_panel->msm_dp_mode.out_fmt_is_yuv_420);
->  
->  	msm_dp_ctrl_setup_tr_unit(ctrl);
->  
-> @@ -2042,7 +2045,7 @@ int msm_dp_ctrl_on_stream(struct msm_dp_ctrl *msm_dp_ctrl)
->  	return ret;
->  }
->  
-> -void msm_dp_ctrl_clear_vsc_sdp_pkt(struct msm_dp_ctrl *msm_dp_ctrl)
-> +void msm_dp_ctrl_clear_vsc_sdp_pkt(struct msm_dp_ctrl *msm_dp_ctrl, struct msm_dp_panel *dp_panel)
->  {
->  	struct msm_dp_ctrl_private *ctrl;
->  
-> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-> index 0f58b63c5c7c5aab43c0db2a697ba491959b79d2..547155ffa50fbe2f3a1f2c2e1ee17420daf0f3da 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-> @@ -18,7 +18,7 @@ struct msm_dp_ctrl {
->  struct phy;
->  
->  int msm_dp_ctrl_on_link(struct msm_dp_ctrl *msm_dp_ctrl);
-> -int msm_dp_ctrl_on_stream(struct msm_dp_ctrl *msm_dp_ctrl);
-> +int msm_dp_ctrl_on_stream(struct msm_dp_ctrl *msm_dp_ctrl, struct msm_dp_panel *msm_dp_panel);
->  int msm_dp_ctrl_prepare_stream_on(struct msm_dp_ctrl *dp_ctrl, bool force_link_train);
->  void msm_dp_ctrl_off_link_stream(struct msm_dp_ctrl *msm_dp_ctrl);
->  void msm_dp_ctrl_off_link(struct msm_dp_ctrl *msm_dp_ctrl);
-> @@ -42,7 +42,8 @@ void msm_dp_ctrl_config_psr(struct msm_dp_ctrl *msm_dp_ctrl);
->  int msm_dp_ctrl_core_clk_enable(struct msm_dp_ctrl *msm_dp_ctrl);
->  void msm_dp_ctrl_core_clk_disable(struct msm_dp_ctrl *msm_dp_ctrl);
->  
-> -void msm_dp_ctrl_clear_vsc_sdp_pkt(struct msm_dp_ctrl *msm_dp_ctrl);
-> +void msm_dp_ctrl_clear_vsc_sdp_pkt(struct msm_dp_ctrl *msm_dp_ctrl,
-> +				   struct msm_dp_panel *msm_dp_panel);
->  void msm_dp_ctrl_psm_config(struct msm_dp_ctrl *msm_dp_ctrl);
->  void msm_dp_ctrl_reinit_phy(struct msm_dp_ctrl *msm_dp_ctrl);
->  
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index bbce8ca09ff70059458231982f002e1f22d2c3ab..c059f749c1f204deac9dfb0c56f537f5545d9acb 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -852,7 +852,7 @@ static int msm_dp_display_enable(struct msm_dp_display_private *dp)
->  		return 0;
->  	}
->  
-> -	rc = msm_dp_ctrl_on_stream(dp->ctrl);
-> +	rc = msm_dp_ctrl_on_stream(dp->ctrl, dp->panel);
->  	if (!rc)
->  		msm_dp_display->power_on = true;
->  
-> @@ -905,7 +905,7 @@ static int msm_dp_display_disable(struct msm_dp_display_private *dp)
->  	if (!msm_dp_display->power_on)
->  		return 0;
->  
-> -	msm_dp_ctrl_clear_vsc_sdp_pkt(dp->ctrl);
-> +	msm_dp_ctrl_clear_vsc_sdp_pkt(dp->ctrl, dp->panel);
->  
->  	/* dongle is still connected but sinks are disconnected */
->  	if (dp->link->sink_count == 0)
+>> +
+>> +		remoteproc_cdsp: remoteproc@32300000 {
+>> +			compatible = "qcom,sm8750-cdsp-pas", "qcom,sm8650-cdsp-pas";
+>> +			reg = <0x0 0x32300000 0x0 0x1400000>;
 > 
-> -- 
-> 2.34.1
-> 
+> The size seems to be 0x100000
+Even 0x10000 (one less 0) according to downstream DTS. 0x100000 would be
+entire touring qdsp6v7 map (1 MB).
 
--- 
-With best wishes
-Dmitry
+However we always - sm8450, sm8550, sm8650 - map here 20 MB for some
+reason. Any ideas? Let's correct all platforms to 0x100000?
+
+For the record, there were no differences in downstream kernel.
+
+Best regards,
+Krzysztof
 
