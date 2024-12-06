@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-40786-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40787-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 679EF9E6E8D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 13:51:42 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 531559E6EA3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 13:55:22 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 80F5C1680F9
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 12:49:58 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0E8A6281D63
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 12:55:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 57A16202C29;
-	Fri,  6 Dec 2024 12:49:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C299A201006;
+	Fri,  6 Dec 2024 12:55:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OYh6kRf9"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W2CHW3jJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 252F410E6;
-	Fri,  6 Dec 2024 12:49:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9115C1F6681;
+	Fri,  6 Dec 2024 12:55:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733489398; cv=none; b=LJ5JJgJ6d+FE+wuX9/JV5lkkxc+U+XcBjTwfxBZOF2OHTeozq0nnimGVmtBqqH66IR3wwvS3d2YCS120qUh0YapSs5Ty+bd7/ngh7N/VzwjN5bJ2sGppF+GmxrHKOMAHT9TmV7mJnAJm/ZIm5GuNGMEn5MZfJRHMLWElpuyV8JQ=
+	t=1733489717; cv=none; b=qpBtw/CLPClp0kfZmWBVcFZDBIQOzOLAxsGWZHEQwMVAgLDi8vRPHZI86j1VgJbVYZKGk4r1h3pSq36axou5ZJERfSE3gMMzHVicavcxiQOvcxGQ1B+KRO7gDE52tZALyVeY1MDqGZwzK1O7SSsM0C0IKNStcgtGkF2eY9dVxvw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733489398; c=relaxed/simple;
-	bh=TFG+bim7icdVhxwWzSqoHwXSxC+pOqSThunna8oKFyY=;
+	s=arc-20240116; t=1733489717; c=relaxed/simple;
+	bh=ut+n6OkeEePipWNKkILbIw1fd3nezu+R13ATMigoLes=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ILJPnExV+uUkgbDu0o3taKl1cieEq/VHqMG+2GmwagDVB5hN2xooby6eCKHZmheMutRkKJ1ftMLg76yFT6xFFqg1Z8d7ca3q6PAabM5jZvIGsd45M664TD3t6vVkRr77sodPrYJWbS+y3wTpa8peU09wTFyyKXJt8pAZ42AmApQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OYh6kRf9; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3477C4CED1;
-	Fri,  6 Dec 2024 12:49:53 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=BJYgtcdXOpv82c190+qk0d060Da8ZKkJCz1BXIaKxt/XgIp7O+mg7J7WGTeFL7xLht27UAGb0+6sqkyH+AJ7bN+rkdgMYJ/VbKWJAaGTc64k9IraCdK/5iCytBmOYH8Jd5qAnhi7Y7kVNJ4TZfcs4DO4Q0S3mxcS2G18RjvqKn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W2CHW3jJ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 915C6C4CED1;
+	Fri,  6 Dec 2024 12:55:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733489397;
-	bh=TFG+bim7icdVhxwWzSqoHwXSxC+pOqSThunna8oKFyY=;
+	s=k20201202; t=1733489717;
+	bh=ut+n6OkeEePipWNKkILbIw1fd3nezu+R13ATMigoLes=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=OYh6kRf9+4G5NYKJuxoeu8dcah5TpFxeFP+8yVx+kk/rsrvYIyesNQJOkHapaV60s
-	 vQTAvZA1AgKdLo2jt61/LxeuyJEvyXt5LyNwyWUpdnT5ER/rytPk8sSA+ZmjjdY7B1
-	 5j3sP3e+gSN94UxoWinZEyJ+mG9kWavcRiVtCK4RWqUrOFF7asg1Szk9qiNi16yRIy
-	 E8Pn8yns3d3XBkRqiwD3dWkFuSurPRux44knRPqRE6awo4C1EifOmw7MQbype0b0DR
-	 hYv3FSJrFCm8boM/tzGghdifDd1Z58wU6rqwqxGoepT8uxumIgFTAOQhoIgOrwmxBo
-	 BwglYTuWvih1Q==
-Message-ID: <c639ca40-9e4f-4882-8441-57413e835422@kernel.org>
-Date: Fri, 6 Dec 2024 13:49:51 +0100
+	b=W2CHW3jJc24Sw0orGRez001VEhUVd30dX9BD9pO5031wGocVLxDblhdG4rJV3pewp
+	 wkV9jDnJ54AZKZJBqIn9J/zXCiPcnSxtIkad6velCia5lDH9ayz7UR7FaoPdJ6gubQ
+	 cpoOdGaf1t+Eyd+ppx4ySRBJBZNip5LbSBGRrpMoA5IHkduDdx0gah/weQPrBrK4Ph
+	 qNGe861N9yb5uEMeFsAL7QiJSRXtfydImiy1JXa5dKZmD2Ac6nByXmoUItRvWrFdQA
+	 00CfBV2bb/oYsu+ZjffbI91NLFN9jtMQXSB8eM14QwcaDcL1gLVwf6WWSKIFyVPjl6
+	 s26MAdx7mXzUQ==
+Message-ID: <cda109c9-a1e2-42cb-b830-6764c6eef519@kernel.org>
+Date: Fri, 6 Dec 2024 13:55:11 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,20 +50,19 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/5] arm64: dts: qcom: Add support for QCS9075 Ride &
- Ride-r3
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Wasim Nazir <quic_wasimn@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH v2 00/22] wifi: ath12k: add Ath12k AHB driver support for
+ IPQ5332
+To: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
+Cc: ath12k@lists.infradead.org, linux-wireless@vger.kernel.org,
+ Kalle Valo <kvalo@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, kernel@quicinc.com
-References: <20241119174954.1219002-1-quic_wasimn@quicinc.com>
- <20241119174954.1219002-6-quic_wasimn@quicinc.com>
- <9e351979-be01-4d38-9b94-cc23efac4c3f@kernel.org>
- <Z1LaN9nFr5msfq61@hu-wasimn-hyd.qualcomm.com>
- <cbed17c2-d839-42cb-8a33-b59538bfccf3@oss.qualcomm.com>
+ <conor+dt@kernel.org>, Jeff Johnson <jjohnson@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20241015182637.955753-1-quic_rajkbhag@quicinc.com>
+ <ou5kgedz5aga4dtda6k23uhybcjy7mfwie74p6q3qyn5bdajz7@ftejp7lqrise>
+ <0b2f8734-f502-42d7-bdc5-b0d382d2aa70@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,36 +108,55 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <cbed17c2-d839-42cb-8a33-b59538bfccf3@oss.qualcomm.com>
+In-Reply-To: <0b2f8734-f502-42d7-bdc5-b0d382d2aa70@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 06/12/2024 13:14, Konrad Dybcio wrote:
->>>> diff --git a/arch/arm64/boot/dts/qcom/qcs9075-ride-r3.dts b/arch/arm64/boot/dts/qcom/qcs9075-ride-r3.dts
->>>> new file mode 100644
->>>> index 000000000000..a04c8d1fa258
->>>> --- /dev/null
->>>> +++ b/arch/arm64/boot/dts/qcom/qcs9075-ride-r3.dts
->>>> @@ -0,0 +1,12 @@
->>>> +// SPDX-License-Identifier: BSD-3-Clause
->>>> +/*
->>>> + * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
->>>> + */
->>>> +/dts-v1/;
->>>> +
->>>> +#include "sa8775p-ride-r3.dts"
->>> No guys, you are making these things up. This is EXACTLY the same as
->>> qcs9100.
+On 06/12/2024 12:07, Raj Kumar Bhagat wrote:
+> On 10/16/2024 12:27 PM, Krzysztof Kozlowski wrote:
+>> On Tue, Oct 15, 2024 at 11:56:15PM +0530, Raj Kumar Bhagat wrote:
+>>> Currently, Ath12k driver only supports WiFi devices that are based on
+>>> PCI bus. New Ath12k device IPQ5332 is based on AHB bus. Hence, add
+>>> Ath12k AHB support for IPQ5332.
+>>>
+>>> IPQ5332 is IEEE802.11be 2 GHz 2x2 Wifi device. To bring-up IPQ5332
+>>> device:
+>>> - Add hardware parameters for IPQ5332.
+>>> - CE and CMEM register address space in IPQ5332 is separate from WCSS
+>>>   register space. Hence, add logic to remap CE and CMEM register
+>>>   address.
+>>> - Add support for fixed QMI firmware memory for IPQ5332.
+>>> - Support userPD handling for WCSS secure PIL driver to enable ath12k
+>>>   AHB support.
+>>>
+>>> Depends-On: [PATCH V7 0/5] remove unnecessary q6 clocks
+>>> Depends-On: [PATCH V2 0/4] Add new driver for WCSS secure PIL loading
+>>> Link: https://lore.kernel.org/all/20240820055618.267554-1-quic_gokulsri@quicinc.com/
+>>> Link: https://lore.kernel.org/all/20240829134021.1452711-1-quic_gokulsri@quicinc.com/
 >>
->> 9100 & 9075 are different from “safe” perspective. They differ in
->> changes related to thermal which will be added later in devicetree.
+>> These are series targetting other subsystems. I do not understand why
+>> you created such dependency. It does not look needed and for sure is not
+>> good: nothing here can be tested, nothing can be applied.
 > 
-> Since this can't be inferred from just looking at the changes, please
-> make sure to add that to the commit message
+> To validate this series, the dependencies mentioned above were necessary, which
+> is why they were included.
 
-Any include of other DTS is clear sign something is odd here. Including
-multiple times without any added nodes is showing these are not real
-products/boards .
+What does it mean "validate"? You are supposed to describe how upstream
+can consume this.
+
+> 
+> Currently, the "[PATCH V7 0/5] remove unnecessary q6 clocks" has been merged,
+> so this dependency will not be required in the next version.
+> 
+> The "[PATCH V2 0/4] Add new driver for WCSS secure PIL loading" series is still
+> under review and is required for validation.
+> 
+> However, this series can still be applied and compiled without these dependencies.
+> Please let us know if we should remove the dependency in the next version.
+
+So write proper cover letter not bringing up fake dependencies.
+Otherwise answer is: this cannot be tested, thus it will not be reviewed.
+
 Best regards,
 Krzysztof
 
