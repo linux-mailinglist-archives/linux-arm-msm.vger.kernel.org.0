@@ -1,304 +1,273 @@
-Return-Path: <linux-arm-msm+bounces-40657-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40670-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF9859E64E7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 04:26:31 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A8AAB9E65E2
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 05:34:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4B8F018833F2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 03:26:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8103416A453
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 04:34:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D98DD194AEB;
-	Fri,  6 Dec 2024 03:25:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C81B1D5172;
+	Fri,  6 Dec 2024 04:33:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="N5WNdaP4"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="O4cG5wUE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8A7919340C;
-	Fri,  6 Dec 2024 03:25:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5711195FF0;
+	Fri,  6 Dec 2024 04:33:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733455555; cv=none; b=KnyDmCANiNPRpnMwBMQZ7ytAfcerhDsYXzMfojMO39gj4gLoQRhqIeFtgG01WKXSYjyhU8Z2cw2dRNHWlq7DvxHB3PqM4q3wrVw73W13bcBb+fERyJ/gzUYSLUzMdR7EfQBP2jH49P0tSfOcJi7emgt308XDSOAsLpbaV23f5hM=
+	t=1733459590; cv=none; b=qTxakV32kkHdrhFbm6E20AAu0lCrwvkVZjmrRHrIDi0pXMgOXAZv0s4F5X4yCDyLsIKshIppJ2A7nut9MOzPZ9iNjA+a78ZphmdnF0bD7Hw5pguwlE+rwNz/GRc6Gn2hY/ywLCaNKEnu+BRINSekgT/Nv0UrznyceZhxAqilkbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733455555; c=relaxed/simple;
-	bh=xMirmCHVS0lrRZ4cTLNGba8hedkBy/2Prr2PwxDJeVc=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MC2Qtuc42jEGrrpqYpwTq4rmU2Foh/Sz3EZdvBISL8FTyVLLFd4gyoqsrj5/mgkIWpBMpMur3zafrPHSLsXhyzDgiKh5KMpbVdclO2CHp46XhLEGCmeHTpZI/e8wOPuvng3v6Kz69OVPaGICeZMXk1sxLOfLRmKixv2QWxvbTe0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=N5WNdaP4; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1733459590; c=relaxed/simple;
+	bh=EU2JtcZpBp+VFZjJhYqk9PEb6U34sJyO5sCF3jKMsCE=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=QHyBe/u5Tl8WJzc9RgElY4qeBGVP4bxX4FPTp8Hk9Ct8p4hm2cmEuJ4LvuogS3NfVaDmSV5tT0lLTvIbtx6dBY9sa2eOb9p/HC2QsNRxneA7hWQrpW/1sFFcoTn3dXgDlk2MUD0iYWi203d7z5ibSWAtwY5SnbEnjREFofoptsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=O4cG5wUE; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B5HaMpM020793;
-	Fri, 6 Dec 2024 03:25:48 GMT
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B5HaF4X003703;
+	Fri, 6 Dec 2024 04:32:25 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=SnltfcSCBo4D4mhycStlIBBn
-	/z7ImSFBCKeEvs5Nhm8=; b=N5WNdaP44+KqYxfrsXBN+ofnrM8EyvCP3MfBOsFq
-	WGsIix25pS81nuQ+cUBWGD8BUpwrVllKB+3mt8qiqUNjc75RjtKV9t9jJg05EB/J
-	aBJVu9pNqFeTr8llxoWEJgrWcSAkNazxYOMpd+2app60REAirdmagmPEexZC+y0N
-	BZxksk4BiTq9G6Mh/F5Rkhua11z2eSHI2Dq5imUVXeSnwhm9zXH1D7Ccy3zbk9/H
-	3YyKvyr7iJWMLbyexZjj2C5WQEY0htSoAQVVGxf3bK+5bRdj82CzJVvGGpvxeNwt
-	EdG3obNDDF3F2du0zwgFWdhfwlx8Gs87bB3L1ShWBvVytQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 439v801rn0-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=6T5H/9atI2YkDyttOMAADP
+	l9KFjLb1dn0gViohSs2uE=; b=O4cG5wUEuTNNNuSGnFMY0mJJlHlwl3oI4sRzfF
+	EHFFWDqF5PqnHqs1yjEYF3UJHvPNJdXG47yq/uPgsYnUmUQ69NeST4TuuxbbrQIF
+	PP+chmnjadYJre0MGKzJBEke0hRzo/lMsSuwTTlpvGrOsFryJqpf24T6HbFrwl5c
+	PSXlxCzJCYNRDiIdSKL1qc6w5vdeTLj55LbhJOhSqelQgpKUljec5CYvPN8+ZHhT
+	TeMC32Kgit3eLdAVtyQJhyOW7oeqQXgvyviLwOHS65SeWKqCbuLCBAxdB8FEEk3u
+	eaOLzvXIlu5ir+ge+GiGYQ4u9YyQyQizx6Do2iZ0+eyaU2KA==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43ba0kjkjx-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 06 Dec 2024 03:25:47 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B63PknD020353
+	Fri, 06 Dec 2024 04:32:25 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B64WOOw017137
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 6 Dec 2024 03:25:46 GMT
-Received: from cse-cd02-lnx.ap.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+	Fri, 6 Dec 2024 04:32:24 GMT
+Received: from abhinavk-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 5 Dec 2024 19:25:43 -0800
-Date: Fri, 6 Dec 2024 11:25:38 +0800
-From: Yuanjie Yang <quic_yuanjiey@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>
-CC: <adrian.hunter@intel.com>, <ulf.hansson@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_tingweiz@quicinc.com>,
-        <quic_zhgao@quicinc.com>, <quic_yuanjiey@quicinc.com>
-Subject: Re: [PATCH v2] mmc: sdhci-msm: Correctly set the load for the
- regulator
-Message-ID: <Z1JusoQc0dFdPoNv@cse-cd02-lnx.ap.qualcomm.com>
-References: <20241127095029.3918290-1-quic_yuanjiey@quicinc.com>
- <lza5dbabt2eoipyrbgo47ftpsftcwggb4v6d53lqvsh7w7vp3n@f2ld34a53a2z>
+ 15.2.1544.9; Thu, 5 Dec 2024 20:32:23 -0800
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Subject: [PATCH 00/45] drm/msm/dp: Add MST support for MSM chipsets
+Date: Thu, 5 Dec 2024 20:31:31 -0800
+Message-ID: <20241205-dp_mst-v1-0-f8618d42a99a@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <lza5dbabt2eoipyrbgo47ftpsftcwggb4v6d53lqvsh7w7vp3n@f2ld34a53a2z>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIACN+UmcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxNDIwNT3ZSC+NziEt0UM6O0RAszI1Pz1BQloOKCotS0zAqwQdGxtbUAZIA
+ D8VgAAAA=
+X-Change-ID: 20241205-dp_mst-d62fa86257ed
+To: Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, "Simona
+ Vetter" <simona@ffwll.ch>,
+        Stephen Boyd <swboyd@chromium.org>,
+        "Chandan
+ Uddaraju" <chandanu@codeaurora.org>,
+        Guenter Roeck <groeck@chromium.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: Vara Reddy <quic_varar@quicinc.com>, Rob Clark <robdclark@chromium.org>,
+        Tanmay Shah <tanmay@codeaurora.org>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        Jessica Zhang
+	<quic_jesszhan@quicinc.com>,
+        Laurent Pinchart
+	<laurent.pinchart@ideasonboard.com>,
+        Abhinav Kumar
+	<quic_abhinavk@quicinc.com>,
+        Yongxing Mou <quic_yongmou@quicinc.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1733459543; l=7610;
+ i=quic_abhinavk@quicinc.com; s=20240509; h=from:subject:message-id;
+ bh=EU2JtcZpBp+VFZjJhYqk9PEb6U34sJyO5sCF3jKMsCE=;
+ b=DTK2GXtju7LXou7I+UiHk6ph7/L8VhooCQA9gH3YB2ir3j3mhCXy/E7/QEyF0acEZMtQC+Y3a
+ nAkvSRUlWSYAiLBPQkeoEOX5gJ0reEJVK6cyPcSla61qRcItLLE3kLN
+X-Developer-Key: i=quic_abhinavk@quicinc.com; a=ed25519;
+ pk=SD3D8dOKDDh6BoX3jEYjsHrTFwuIK8+o0cLPgQok9ys=
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: REQgGjyFLtKTFBsgiA4tIK-ue4Fuu7XH
-X-Proofpoint-GUID: REQgGjyFLtKTFBsgiA4tIK-ue4Fuu7XH
+X-Proofpoint-ORIG-GUID: 2dfXIJpBgntRwP2pEh58DM8tmZglvK6O
+X-Proofpoint-GUID: 2dfXIJpBgntRwP2pEh58DM8tmZglvK6O
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxscore=0
- impostorscore=0 adultscore=0 priorityscore=1501 clxscore=1015
- lowpriorityscore=0 suspectscore=0 mlxlogscore=999 malwarescore=0
- bulkscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412060023
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 suspectscore=0
+ mlxscore=0 bulkscore=0 mlxlogscore=999 spamscore=0 malwarescore=0
+ impostorscore=0 lowpriorityscore=0 clxscore=1011 priorityscore=1501
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412060030
 
-On Thu, Nov 28, 2024 at 11:15:54AM -0600, Bjorn Andersson wrote:
-> On Wed, Nov 27, 2024 at 05:50:29PM +0800, Yuanjie Yang wrote:
-> > Qualcomm regulator supports two power supply modes: HPM and LPM.
-> > Currently, the sdhci-msm.c driver does not set the load to adjust
-> > the current for eMMC and SD. Therefore, if the regulator set load
-> > in LPM state, it will lead to the inability to properly initialize
-> > eMMC and SD.
-> > 
-> > Set the correct regulator current for eMMC and SD to ensure that the
-> > device can work normally even when the regulator is in LPM.
-> > 
-> > Signed-off-by: Yuanjie Yang <quic_yuanjiey@quicinc.com>
-> > ---
-> > Changes in v2:
-> > - Add enum msm_reg_type to optimize the code
-> 
-> Please re-optimize the code to make it easy to read and understand.
-Thanks, I will re-optimize my code.
+Add support for Multi-stream transport for MSM chipsets that allow
+a single instance of DP controller to send multiple streams. 
 
-> > - Delete redundant emmc type judgment
-> > - Link to v1: https://lore.kernel.org/linux-arm-msm/20241122075048.2006894-1-quic_yuanjiey@quicinc.com/
-> > 
-> > ---
-> >  drivers/mmc/host/sdhci-msm.c | 92 +++++++++++++++++++++++++++++++++++-
-> >  1 file changed, 90 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> > index e00208535bd1..fc13ef60ab61 100644
-> > --- a/drivers/mmc/host/sdhci-msm.c
-> > +++ b/drivers/mmc/host/sdhci-msm.c
-> > @@ -134,9 +134,22 @@
-> >  /* Timeout value to avoid infinite waiting for pwr_irq */
-> >  #define MSM_PWR_IRQ_TIMEOUT_MS 5000
-> >  
-> > +/* Max load for eMMC Vdd supply */
-> > +#define MMC_VMMC_MAX_LOAD_UA	570000
-> > +
-> >  /* Max load for eMMC Vdd-io supply */
-> >  #define MMC_VQMMC_MAX_LOAD_UA	325000
-> >  
-> > +/* Max load for SD Vdd supply */
-> > +#define SD_VMMC_MAX_LOAD_UA	800000
-> > +
-> > +/* Max load for SD Vdd-io supply */
-> > +#define SD_VQMMC_MAX_LOAD_UA	22000
-> > +
-> > +#define MAX_MMC_SD_VMMC_LOAD_UA  max(MMC_VMMC_MAX_LOAD_UA, SD_VMMC_MAX_LOAD_UA)
-> > +
-> > +#define MAX_MMC_SD_VQMMC_LOAD_UA max(MMC_VQMMC_MAX_LOAD_UA, SD_VQMMC_MAX_LOAD_UA)
-> > +
-> >  #define msm_host_readl(msm_host, host, offset) \
-> >  	msm_host->var_ops->msm_readl_relaxed(host, offset)
-> >  
-> > @@ -147,6 +160,11 @@
-> >  #define CQHCI_VENDOR_CFG1	0xA00
-> >  #define CQHCI_VENDOR_DIS_RST_ON_CQ_EN	(0x3 << 13)
-> >  
-> > +enum msm_reg_type {
-> > +	VMMC_REGULATOR,
-> > +	VQMMC_REGULATOR,
-> > +};
-> > +
-> >  struct sdhci_msm_offset {
-> >  	u32 core_hc_mode;
-> >  	u32 core_mci_data_cnt;
-> > @@ -1403,11 +1421,71 @@ static int sdhci_msm_set_pincfg(struct sdhci_msm_host *msm_host, bool level)
-> >  	return ret;
-> >  }
-> >  
-> > -static int sdhci_msm_set_vmmc(struct mmc_host *mmc)
-> > +static int sdhci_msm_get_regulator_load(struct mmc_host *mmc, int max_current,
-> > +					enum msm_reg_type type)
-> > +{
-> > +	int load = 0;
-> > +
-> > +	/*
-> > +	 * When eMMC and SD are powered on for the first time, select a higher
-> > +	 * current value from the corresponding current for eMMC and SD to
-> > +	 * ensure that the eMMC and SD cards start up properly and complete
-> > +	 * initialization. After the initialization process is finished, use
-> > +	 * the corresponding current to set the eMMC and SD to ensure the
-> > +	 * normal work of the device.
-> > +	 */
-> > +
-> > +	if (!mmc->card)
-> > +		return max_current;
-> 
-> max_current is type == VMMC_REGULATOR ? MAX_MMC_SD_VMMC_LOAD_UA :
-> MAX_MMC_SD_VQMMC_LOAD_UA;
-> 
-> Try to rewrite the patch so that you don't have the decisions spread
-> across multiple levels in the callstack.
-Thanks, I will optimzie this funcition in next version.
+This series has been validated on sa8775p ride platform using multiple
+MST dongles and also daisy chain method on both DP0 and DP1 upto 1080P.
 
-> > +
-> > +	if (mmc_card_mmc(mmc->card))
-> > +		load = (type == VMMC_REGULATOR) ? MMC_VMMC_MAX_LOAD_UA : MMC_VQMMC_MAX_LOAD_UA;
-> > +	else if (mmc_card_sd(mmc->card))
-> > +		load = (type == VMMC_REGULATOR) ? SD_VMMC_MAX_LOAD_UA : SD_VQMMC_MAX_LOAD_UA;
-> > +
-> > +	return load;
-> > +}
-> > +
-> > +static int msm_config_regulator_load(struct sdhci_msm_host *msm_host, struct mmc_host *mmc,
-> > +				     bool hpm, int max_current, enum msm_reg_type type)
-> > +{
-> > +	int ret;
-> > +	int load = 0;
-> > +
-> > +	/*
-> > +	 * After the initialization process is finished, Once the type of card
-> > +	 * is determined, only set the corresponding current for SD and eMMC.
-> > +	 */
-> > +
-> > +	if (mmc->card && !(mmc_card_mmc(mmc->card) || mmc_card_sd(mmc->card)))
-> > +		return 0;
-> > +
-> > +	if (hpm)
-> > +		load = sdhci_msm_get_regulator_load(mmc, max_current, type);
-> 
-> Does !hpm happen when regulators are enabled or always together with a
-> regulator_disable? (The regulator framework skips the load of disabled
-> regulators when aggregating)
-> 
-Thanks.
-When two or more consumer use the same regulator as eMMC/SD.
-When !hpm happen, the regulator state can be enabled or disabled.
+With 4x4K monitors, due to lack of layer mixers that combination will not
+work but this can be supported as well after some rework on the DPU side.
 
-When the regulotor only used by eMMC/SD.
-When !hpm happen, the regulator state is enabled, set load 0 means to
-set let regulator enter LPM state.
+In addition, SST was re-validated with all these changes to ensure there
+were no regressions.
 
-Recently our team are discussing this issue, when two or more consumer
-use the same regulator, one consumer set load can affect other consumer.
+This patch series was made on top of:
 
-We are trying to do some fix on DTS, just to delete "regulator-allow-set-load"
-and set regulator-allowed-modes = <RPMH_REGULATOR_MODE_HPM>.
-We are doing some experiment.
+[1] : https://patchwork.freedesktop.org/patch/622243/ (to avoid a log spam)
+[2] : https://patchwork.freedesktop.org/series/142010/ (to fix up HPD)
+[3] : https://patchwork.freedesktop.org/patch/612740/ (to avoid blank screens)
+[4] : https://patchwork.freedesktop.org/series/140216/ (MDSS DT for sa8775p)
+[5] : https://patchwork.kernel.org/project/linux-arm-msm/list/?series=912200
+      (Display Port DT changes for sa8775p)
 
-> > +
-> > +	if (type == VMMC_REGULATOR)
-> > +		ret = regulator_set_load(mmc->supply.vmmc, load);
-> > +	else
-> > +		ret = regulator_set_load(mmc->supply.vqmmc, load);
-> > +	if (ret)
-> > +		dev_err(mmc_dev(mmc), "%s: set load failed: %d\n",
-> > +			mmc_hostname(mmc), ret);
-> > +	return ret;
-> > +}
-> > +
-> > +static int sdhci_msm_set_vmmc(struct sdhci_msm_host *msm_host,
-> > +			      struct mmc_host *mmc, bool hpm)
-> >  {
-> > +	int ret;
-> > +
-> >  	if (IS_ERR(mmc->supply.vmmc))
-> >  		return 0;
-> >  
-> > +	ret = msm_config_regulator_load(msm_host, mmc, hpm,
-> > +					MAX_MMC_SD_VMMC_LOAD_UA, VMMC_REGULATOR);
-> 
-> msm_config_regulator_load() is mostly 2 different functions with
-> multiple levels of conditional code paths depending on this last
-> parameter. Please try to refactor this to avoid overloading the
-> functions like that.
-Thanks, I will optimize my code in next version.
+Bindings for the pixel clock for additional stream is available at :
 
-> 
-> Regards,
-> Bjorn
-> 
-> > +	if (ret)
-> > +		return ret;
-> > +
-> >  	return mmc_regulator_set_ocr(mmc, mmc->supply.vmmc, mmc->ios.vdd);
-> >  }
-> >  
-> > @@ -1435,6 +1513,15 @@ static int msm_toggle_vqmmc(struct sdhci_msm_host *msm_host,
-> >  				goto out;
-> >  			}
-> >  		}
-> > +
-> > +		ret = msm_config_regulator_load(msm_host, mmc, level,
-> > +						MAX_MMC_SD_VQMMC_LOAD_UA, VQMMC_REGULATOR);
-> > +		if (ret < 0) {
-> > +			dev_err(mmc_dev(mmc), "%s: vqmmc set regulator load failed: %d\n",
-> > +				mmc_hostname(mmc), ret);
-> > +			goto out;
-> > +		}
-> > +
-> >  		ret = regulator_enable(mmc->supply.vqmmc);
-> >  	} else {
-> >  		ret = regulator_disable(mmc->supply.vqmmc);
-> > @@ -1642,7 +1729,8 @@ static void sdhci_msm_handle_pwr_irq(struct sdhci_host *host, int irq)
-> >  	}
-> >  
-> >  	if (pwr_state) {
-> > -		ret = sdhci_msm_set_vmmc(mmc);
-> > +		ret = sdhci_msm_set_vmmc(msm_host, mmc,
-> > +					 pwr_state & REQ_BUS_ON);
-> >  		if (!ret)
-> >  			ret = sdhci_msm_set_vqmmc(msm_host, mmc,
-> >  					pwr_state & REQ_BUS_ON);
-> > -- 
-> > 2.34.1
-> > 
-> >
+[6] : https://patchwork.freedesktop.org/series/142016/
 
-Thanks,
-Yuanjie
+Overall, the patch series has been organized in the following way:
+
+1) First set are a couple of fixes made while debugging MST but applicable
+to SST as well so go ahead of everything else
+2) Prepare the DP driver to get ready to handle multiple streams. This is the bulk
+of the work as current DP driver design had to be adjusted to make this happen.
+3) Finally, new files to handle MST related operations
+
+Validation was done on the latest linux-next on top of above changes and
+both FB console and weston compositors were validated with these changes.
+
+To: Rob Clark <robdclark@gmail.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Sean Paul <sean@poorly.run>
+To: Marijn Suijten <marijn.suijten@somainline.org>
+To: David Airlie <airlied@gmail.com>
+To: Simona Vetter <simona@ffwll.ch>
+To: Stephen Boyd <swboyd@chromium.org>
+To: Chandan Uddaraju <chandanu@codeaurora.org>
+To: Guenter Roeck <groeck@chromium.org>
+To: Kuogee Hsieh <quic_khsieh@quicinc.com>
+To: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konradybcio@kernel.org>
+To: Rob Herring <robh@kernel.org>
+To: Krzysztof Kozlowski <krzk+dt@kernel.org>
+To: Conor Dooley <conor+dt@kernel.org>
+Cc: Vara Reddy <quic_varar@quicinc.com>
+Cc: Rob Clark <robdclark@chromium.org>
+Cc: Tanmay Shah <tanmay@codeaurora.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: dri-devel@lists.freedesktop.org
+Cc: freedreno@lists.freedesktop.org
+Cc: linux-kernel@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Cc: Jessica Zhang <quic_jesszhan@quicinc.com>
+Cc: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+---
+Abhinav Kumar (43):
+      drm/msm/dp: dont call dp_catalog_ctrl_mainlink_ctrl in dp_ctrl_configure_source_params()
+      drm/msm/dp: disable the opp table request even for dp_ctrl_off_link()
+      drm/msm/dp: fix the intf_type of MST interfaces
+      drm/msm/dp: split msm_dp_panel_read_sink_caps() into two parts
+      drm/msm/dp: add a helper to read mst caps for dp_panel
+      drm/msm/dp: remove dp_display's dp_mode and use dp_panel's instead
+      drm/msm/dp: break up dp_display_enable into two parts
+      drm/msm/dp: re-arrange dp_display_disable() into functional parts
+      drm/msm/dp: allow dp_ctrl stream APIs to use any panel passed to it
+      drm/msm/dp: move the pixel clock control to its own API
+      drm/msm/dp: split dp_ctrl_off() into stream and link parts
+      drm/msm/dp: make bridge helpers use dp_display to allow re-use
+      drm/msm/dp: separate dp_display_prepare() into its own API
+      drm/msm/dp: introduce stream_id for each DP panel
+      drm/msm/dp: convert dp_display_set_mode() to use dp_panel argument
+      drm/msm/dp: add support for programming p1 register block
+      drm/msm/dp: use stream_id to change offsets in dp_catalog
+      drm/msm/dp: add support to send ACT packets for MST
+      drm/msm/dp: add support to program mst support in mainlink
+      drm/msm/dp: no need to update tu calculation for mst
+      drm/msm/dp: add support for mst channel slot allocation
+      drm/msm/dp: add support to send vcpf packets in dp controller
+      drm/msm/dp: always program MST_FIFO_CONSTANT_FILL for MST
+      drm/msm/dp: abstract out the dp_display stream helpers to accept a panel
+      drm/msm/dp: move link related operations to dp_display_unprepare()
+      drm/msm/dp: replace power_on with active_stream_cnt for dp_display
+      drm/msm/dp: make the SST bridge disconnected when mst is active
+      drm/msm/dp: add an API to initialize MST on sink side
+      drm/msm/dp: skip reading the EDID for MST cases
+      drm/msm/dp: add dp_display_get_panel() to initialize DP panel
+      drm/msm/dp: add dp_mst_drm to manage DP MST bridge operations
+      drm/msm/dp: add connector abstraction for DP MST
+      drm/msm/dp: add irq hpd callback for dp mst
+      drm/msm/dp: add support to re-use and clear the panel edid
+      drm/msm/dp: add a mst session mutex to protect bridge ops
+      drm/msm: add support for non-blocking commits
+      drm/msm: initialize DRM MST encoders for DP controllers
+      drm/msm/dp: initialize dp_mst module for each DP MST controller
+      drm/msm: add a stream to intf map for DP controller
+      drm/msm/dpu: use msm_dp_get_mst_intf_id() to get the intf id
+      drm/msm/dp: mark ST_DISCONNECTED only if all streams are disabled
+      drm/msm/dp: populate the max_streams for sa8775 mst controller
+      arm64: dts: qcom: add mst support for pixel 1 stream clk for DP1
+
+Yongxing Mou (2):
+      drm/msm/dp: propagate hpd state changes to dp mst module
+      arm64: dts: qcom: add mst support for pixel stream clk for DP0
+
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi              |   23 +-
+ drivers/gpu/drm/msm/Makefile                       |    3 +-
+ .../drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h    |    8 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        |   25 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h        |    2 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   29 +-
+ drivers/gpu/drm/msm/dp/dp_audio.c                  |    2 +-
+ drivers/gpu/drm/msm/dp/dp_aux.h                    |    1 +
+ drivers/gpu/drm/msm/dp/dp_catalog.c                |  292 ++++-
+ drivers/gpu/drm/msm/dp/dp_catalog.h                |   27 +
+ drivers/gpu/drm/msm/dp/dp_ctrl.c                   |  454 ++++++--
+ drivers/gpu/drm/msm/dp/dp_ctrl.h                   |   21 +-
+ drivers/gpu/drm/msm/dp/dp_display.c                |  559 +++++++---
+ drivers/gpu/drm/msm/dp/dp_display.h                |   33 +-
+ drivers/gpu/drm/msm/dp/dp_drm.c                    |   53 +-
+ drivers/gpu/drm/msm/dp/dp_drm.h                    |   12 -
+ drivers/gpu/drm/msm/dp/dp_mst_drm.c                | 1118 ++++++++++++++++++++
+ drivers/gpu/drm/msm/dp/dp_mst_drm.h                |  110 ++
+ drivers/gpu/drm/msm/dp/dp_panel.c                  |   41 +-
+ drivers/gpu/drm/msm/dp/dp_panel.h                  |   15 +-
+ drivers/gpu/drm/msm/dp/dp_reg.h                    |   25 +-
+ drivers/gpu/drm/msm/msm_atomic.c                   |    2 +
+ drivers/gpu/drm/msm/msm_drv.h                      |   29 +
+ drivers/gpu/drm/msm/msm_kms.c                      |    1 +
+ 24 files changed, 2589 insertions(+), 296 deletions(-)
+---
+base-commit: b166256c1e6ce356fa1404d4c8531830e6f100a8
+change-id: 20241205-dp_mst-d62fa86257ed
+
+Best regards,
+-- 
+Abhinav Kumar <quic_abhinavk@quicinc.com>
+
 
