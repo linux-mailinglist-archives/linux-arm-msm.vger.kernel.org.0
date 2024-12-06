@@ -1,111 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-40844-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40845-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E73EF9E7A1C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 21:42:41 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 197F69E7A1E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 21:43:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A66D9281F43
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 20:42:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CDD80281F22
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 20:43:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A49111F63F0;
-	Fri,  6 Dec 2024 20:42:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CCC61FFC4C;
+	Fri,  6 Dec 2024 20:43:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mBi9HbMl"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NC1lA9kX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-vs1-f50.google.com (mail-vs1-f50.google.com [209.85.217.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271A11C549F;
-	Fri,  6 Dec 2024 20:42:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 571ED1C54AF;
+	Fri,  6 Dec 2024 20:43:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733517757; cv=none; b=NJiIMHGVIgQN4Y4hY0c6Q2ZGP5RNb0u4a9aBOF5nK5L509Je41tWLJzJnOAP4NPWn2tuUcBw9mhFJrHPHUYyrgF03Hp0+XRwpWDGiGuIpm98mgxuVv3maTenxKNOiWbDucMzroNkTZaQesuuXbRH/St0EZOk6bzohCNgNSfYqfo=
+	t=1733517822; cv=none; b=BiIcj6rRFwHu3c9eug+ECSMl7XTt2j02fH3bqxuCCid/BKNNAFAKymOV7pLRdmzDB6c47jMxwsMkuPQFJa/A08X08RF8Vsd5kZmD3vUkeX+99ryA81BfddH3LsqQpAaR1k+6MlwL96pG1rZR65MXduJ/csO5hBljp3Gj8mkXZMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733517757; c=relaxed/simple;
-	bh=7FMBJvtBDWTo+KIE2Hy4+YE3DFqzJBO80QHhIdJI0Bg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PM+qw6UYkG1cpmy6z+5r+vTPP/VxrsO/6a7inXcQP/+yPQVS5fl+TQhJ8qHeJhG4QduSdw29ptOgBjB0a+/UhJi/LL/gvUZI45RPu9EtcxKwBsk5TMtpswagTteKkLz2G0XeGDstgdMHFNj/6UdU74gDHzh1DWwBaQdgAYBjUnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mBi9HbMl; arc=none smtp.client-ip=209.85.217.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-vs1-f50.google.com with SMTP id ada2fe7eead31-4afdfefc6c1so7093137.0;
-        Fri, 06 Dec 2024 12:42:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733517755; x=1734122555; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7FMBJvtBDWTo+KIE2Hy4+YE3DFqzJBO80QHhIdJI0Bg=;
-        b=mBi9HbMlrIToGwKFVNW4TDkXqCV+HWlg6rulpEDqy6AINH+6YOVRjq9IZx6pUQAJWk
-         LbPn+1If+MxMxxIQlU3vu86X1CcZV9Vuwqr+n2HirmXgWryWEkPn/dliMSjPpPdj2ZG3
-         zKHIs7pRprMYnyGDkJkDfnQELDrDbvR8ypkt6n91HIlwj1ukaPxPY4kWzTYUvWXzHCFr
-         Nv4Jhg6E5ZjPaahuoxHnfCgDMz8sZ7eFlqZaBPT2J3GgtC0Vyghx9Hva22m1UPUya9E6
-         ikMJ40mxaTpMkHeR2YJcswFwbPKROlJmAEaSjLV3OpZ+Z6iDCsTye3KUWf5gVzKUykcJ
-         atbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733517755; x=1734122555;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=7FMBJvtBDWTo+KIE2Hy4+YE3DFqzJBO80QHhIdJI0Bg=;
-        b=A1j6qJevO6CLgxDUSUCady/1hVC/6EI+rdquHD4c2ZyxP77fuk0yiPyjUlF/4FXcbz
-         VXTwAsnU53SLAMN5DCqgt+PMIC7vRbyaKVEARwafnMXLedmD481Iu3M0mnzhnxgxdusP
-         j4yTRIg+XATtk5LXUHjbk+S/1QNfZXeVmFPEZF4jN3wC+nLqco2sOpjpIBSl0txxAD5l
-         i8oV1bsTVu0673TpIN0I+NXdPhibNM/RU0tt71Jv8RMfHcx8dmQuXMMwT/d2DdT915V3
-         3+pzX27LxVB0xSrZHcIwsva3gWOfHxrnRP3KU5ruv1qrm/2cxKpSZNV9ZZUpRe9ucRaU
-         GyCg==
-X-Forwarded-Encrypted: i=1; AJvYcCV7EPJX20VC6wHX/K2ldGleCEvRnRjQsvNQNEbr6ehbFcbcpNsOcAaZGmAN+nRr+WvNehNi5SZ0hCAPyojb@vger.kernel.org, AJvYcCVXKsnC/O9a2xdteEGGcbVIUW9NaLVUzPvvwBF02Wta7Q+T4LS7M6oP2KA8Zok+9MdSG35Pf/8DhO84@vger.kernel.org, AJvYcCWKvwKGuDEJrMjFpOA5EQ2fuEOWhT3WRybPGVW0yxNEW+SPwdrY1S4kOv+mOaykH7KI1eRKf+rCfST+wxWeeQ==@vger.kernel.org, AJvYcCXG8E/I03EZ+bHMRgv4ed43mlN6YRzwX8aqAdct+peV2AModXgQNWCICWGOFD91oeuhVT6MgntmXp4I+Kk=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwoHBTlfj0M7HbqEMvkIbgaJPMk+eAaNUIJkTa1p7j/PvGolWRP
-	6xXrOG/7qbHyIFiXnjz6s4D7e9PJ0gWXfeCI+vWieiT9zvsJs/ESjQKMEnQWzyJTZ/vH3yoBJ0T
-	8ehpgl5UmFtjP0aohNCxlYcWsyg57shCd
-X-Gm-Gg: ASbGncsEY3jM0luCaLUco+JukiFkplKUyvFlSwrqZtbrndNS89xmdBUQUbqMLWsamZn
-	bfjSHFdpGiGw6ZO8Hdx3tsbbATiflGA==
-X-Google-Smtp-Source: AGHT+IFAc0eiukV4w2HsnxXwh119RzhcP435O4SRLXGkUh5TImPlsVPMnvFdkUldt52feLqWQVqNzSjYSdXVodDyWuk=
-X-Received: by 2002:a05:6102:3909:b0:4af:4974:a489 with SMTP id
- ada2fe7eead31-4afcaaecdb6mr5723337137.20.1733517755127; Fri, 06 Dec 2024
- 12:42:35 -0800 (PST)
+	s=arc-20240116; t=1733517822; c=relaxed/simple;
+	bh=HkUtFt5yNEyOKOT57xnkxN4TB3SkK29GTeg3yPR2eEA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=qipZy33vViKbPlasb2TpKxizm/Prjyu9CDMOqmSlhbPXOPaw3bkXjV9rmW1WD8nM9DhMOZqXJDu+y1zg5kLCtnfIek6lxrJMHSCfnIlfBfLcnc/2u5Oa7KVSA0wx7Pme3anA032TBro8WI/1D9cJmF4Qmf9Yor7Pn0ljOFSOcD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NC1lA9kX; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B6BZ57X003204;
+	Fri, 6 Dec 2024 20:43:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	HkUtFt5yNEyOKOT57xnkxN4TB3SkK29GTeg3yPR2eEA=; b=NC1lA9kXljJwRNZ/
+	jyGx38NCt6kSZMSxw27ZZQfIFXopTSQNDIoHiJnfYnod7Mm+fb87sgx76mNM19za
+	LWD8J1KHKzhJ05C31MdD0xuQ2SYc47yExWP0wfjsiNa4cuTKeMV0tlYRyHt4hDm1
+	FBMz71HGYCu7v8CgEAnlv52Uc9XA3rWVch5dkeQjLxE7XTSYF+qCfdLDPgvZY/Gn
+	wZYZ6zjftxmSzfIqHZdNw5DZmFQYv6qawfnlO6tG81rOvzCZxd3Arss7rUh4qfmf
+	EfHd9juph0xL0aVcnIC3XvqnWpwONZeFXfOkq3y4v6FdKPCz2ThZ65BpsbXeOMUe
+	aq1Wkg==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43brgp2qny-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 06 Dec 2024 20:43:22 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B6KhLiq013837
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 6 Dec 2024 20:43:21 GMT
+Received: from [10.71.112.120] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 6 Dec 2024
+ 12:43:21 -0800
+Message-ID: <3e246be8-22a9-4473-8c78-39788ae95650@quicinc.com>
+Date: Fri, 6 Dec 2024 12:43:20 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241205084021.35610-1-krzysztof.kozlowski@linaro.org>
- <c3d2477b-f12a-47dd-bf95-927e6c0d8fd5@sirena.org.uk> <CABTCjFA9DyRzca93qoS5_+sfc2RLfNVNqN14WVfKODjHykwGJQ@mail.gmail.com>
- <08e07421-8a9b-4535-9cd5-9383ca9024b3@sirena.org.uk>
-In-Reply-To: <08e07421-8a9b-4535-9cd5-9383ca9024b3@sirena.org.uk>
-From: Dzmitry Sankouski <dsankouski@gmail.com>
-Date: Fri, 6 Dec 2024 23:42:24 +0300
-Message-ID: <CABTCjFB7XiR6_+r375h0fJipA+OC2i94ruTG-sWB=s=0qYRReQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] ASoC: codecs: wcd9335: Add define for number of DAIs
-To: Mark Brown <broonie@kernel.org>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, Liam Girdwood <lgirdwood@gmail.com>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, linux-sound@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v30 28/30] ALSA: usb-audio: Add USB offload route kcontrol
+To: Cezary Rojewski <cezary.rojewski@intel.com>
+CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-input@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-doc@vger.kernel.org>, <srinivas.kandagatla@linaro.org>,
+        <mathias.nyman@intel.com>, <perex@perex.cz>, <conor+dt@kernel.org>,
+        <dmitry.torokhov@gmail.com>, <corbet@lwn.net>, <broonie@kernel.org>,
+        <lgirdwood@gmail.com>, <krzk+dt@kernel.org>,
+        <pierre-louis.bossart@linux.intel.com>, <Thinh.Nguyen@synopsys.com>,
+        <tiwai@suse.com>, <robh@kernel.org>, <gregkh@linuxfoundation.org>
+References: <20241106193413.1730413-1-quic_wcheng@quicinc.com>
+ <20241106193413.1730413-29-quic_wcheng@quicinc.com>
+ <1a361446-7a18-4f49-9eeb-d60d1adaa088@intel.com>
+ <28023a83-04a5-4c62-85a9-ca41be0ba9e1@quicinc.com>
+ <1644aa6b-a4e0-4dbd-a361-276cb95eb534@intel.com>
+Content-Language: en-US
+From: Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <1644aa6b-a4e0-4dbd-a361-276cb95eb534@intel.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 4H_AQnMFekfz5gW6YWnFHVmnH-Jb32Ho
+X-Proofpoint-ORIG-GUID: 4H_AQnMFekfz5gW6YWnFHVmnH-Jb32Ho
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 clxscore=1015
+ adultscore=0 lowpriorityscore=0 mlxscore=0 spamscore=0 suspectscore=0
+ priorityscore=1501 phishscore=0 impostorscore=0 mlxlogscore=870
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412060156
 
-=D1=87=D1=82, 5 =D0=B4=D0=B5=D0=BA. 2024=E2=80=AF=D0=B3. =D0=B2 16:31, Mark=
- Brown <broonie@kernel.org>:
->
-> On Thu, Dec 05, 2024 at 04:29:45PM +0300, Dzmitry Sankouski wrote:
->
-> > This is the 1st patch in series, and NUM_CODEC_DAIS redefine from bindi=
-ngs
-> > is deleted in the 2nd one.
->
-> I know, that still means this change is broken.
 
-How to avoid broken change, when moving constant from dt-binding to*.c
-file, given we have constraint of separate patch for bindings?
+On 12/6/2024 1:09 AM, Cezary Rojewski wrote:
+> On 2024-12-04 12:15 AM, Wesley Cheng wrote:
+>>
+>> On 12/3/2024 8:13 AM, Cezary Rojewski wrote:
+>>> On 2024-11-06 8:34 PM, Wesley Cheng wrote:
+>>>> In order to allow userspace/applications know about USB offloading status,
+>>>> expose a sound kcontrol that fetches information about which sound card
+>>>> and PCM index the USB device is mapped to for supporting offloading.  In
+>>>> the USB audio offloading framework, the ASoC BE DAI link is the entity
+>>>> responsible for registering to the SOC USB layer.
+>
+> ...
+>
+>>> R) += mixer_usb_offload.o
+>>>> diff --git a/sound/usb/mixer_usb_offload.c b/sound/usb/mixer_usb_offload.c
+>>>> new file mode 100644
+>>>> index 000000000000..e0689a3b9b86
+>>>> --- /dev/null
+>>>> +++ b/sound/usb/mixer_usb_offload.c
+>>>> @@ -0,0 +1,102 @@
+>>>> +// SPDX-License-Identifier: GPL-2.0
+>>>> +/*
+>>>> + * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+>>>> + */
+>>>> +
+>>>> +#include <linux/usb.h>
+>>>> +
+>>>> +#include <sound/core.h>
+>>>> +#include <sound/control.h>
+>>>> +#include <sound/soc-usb.h>
+>>>
+>>> ALSA-components should not be dependent on ASoC ones. It should be done the other way around: ALSA <- ASoC.
+>>>
+>>
+>> At least for this kcontrol, we need to know the status of the ASoC state, so that we can communicate the proper path to userspace.  If the ASoC path is not probed or ready, then this module isn't blocked.  It will just communicate that there isn't a valid offload path.
+>
+> I'm not asking _why_ you need soc-usb.h header, your reasoning is probably perfectly fine. The code hierarchy is not though. If a sound module is dependent on soc-xxx.h i.e. ASoC symbols, it shall be part of sound/soc/ space.
 
---=20
-Best regards,
-Dzmitry
+
+That would basically require a significant change in the current design.  Was that requirement documented somewhere, where ALSA components should not be dependent on ASoC?  What was the reasoning for making it one direction, but not the other?
+
+
+Thanks
+
+Wesley Cheng
+
 
