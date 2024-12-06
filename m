@@ -1,36 +1,36 @@
-Return-Path: <linux-arm-msm+bounces-40756-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40757-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 071229E6B1E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 10:54:12 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EF2889E6B25
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 10:54:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B6A4C281219
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 09:54:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ABF992811C4
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 09:54:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 77C561F12FE;
-	Fri,  6 Dec 2024 09:54:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 977BF1F472F;
+	Fri,  6 Dec 2024 09:54:49 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F3341EF08A;
-	Fri,  6 Dec 2024 09:54:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 711FC1BD9E4;
+	Fri,  6 Dec 2024 09:54:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733478847; cv=none; b=U222WbL9ZUiPT7doraceoAchaL3Vfwo+NX2+GAuM1H1idUmgxmxy6QOl9/rwU1LisXCX5WmgLlNEfAV/i1NsMCTbiwry9gOPNavXLFy3jltgMFqEIcY7TwpCBnwTLGhkne9g2HvNq96EusER1EykfEIx9i/fbrY2IfdEkp8D9TE=
+	t=1733478889; cv=none; b=iihgzPjQYL2nx1KodKSpG+Qmrxy/prPbDLAYFiDTjArvCI3JgVnX+vFXMs3yen9L3nitai2ydkeiUHEZxxUXXGd5B//gCvt9nHMcmjeCi8FH+BRugDBcTGGs4PAXomblWmcTrlt4Zc3oA4Ty0jcJ+V1FtTuCPfr1aJ11U3F57es=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733478847; c=relaxed/simple;
-	bh=BDMpZghQBBtqhQ88Ahq4qT3gw1J7MCGDYfjmOw3G41k=;
+	s=arc-20240116; t=1733478889; c=relaxed/simple;
+	bh=s35Wvs4XT+fU4eKDyVLaEuQZAnpK60PL6Khj1auDNtQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lJ87CXbJECWrqYcyp+ngdgvNpfSlmiDBwo/Xx+5yovTHfS+lbRwU3mVl6EFj9zbThu+li+59T3AKGORhR4EmTKkiXOPr41z/ehGQioqK/jT4juZU7crfTjT8121PHS25GVyxIOpo0Z37caywpeorJlt3aSuSicqQy/skw8gMC7w=
+	 In-Reply-To:Content-Type; b=b5Z7qlbDj9/HC8BwNL6+GMJ+ePsmeaV4xcwfCCUlaGkIz0Vn8KjeAa12tSB7XpMKpVtaGTAiyztBbT9+ZgzBx8mRTHYGdYe//wKctLJqlWcJN8ml+770nw5leYiBZ5tPaf51Of0O54QM9O8c5tXEXYbTSO/8EcjeeqUdS2UcvgY=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E213C4CED1;
-	Fri,  6 Dec 2024 09:54:02 +0000 (UTC)
-Message-ID: <280982a6-8e62-44f8-962b-a126b966a9d1@xs4all.nl>
-Date: Fri, 6 Dec 2024 10:54:01 +0100
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6A89C4CED1;
+	Fri,  6 Dec 2024 09:54:44 +0000 (UTC)
+Message-ID: <cc5e4f00-70c8-46aa-aa3d-0f8eddf3fd01@xs4all.nl>
+Date: Fri, 6 Dec 2024 10:54:43 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -38,8 +38,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 13/28] media: iris: implement subscribe_event and
- unsubscribe_event ioctls
+Subject: Re: [PATCH v6 11/28] media: iris: implement g_selection ioctl
 To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
  Vikash Garodia <quic_vgarodia@quicinc.com>,
  Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -56,7 +55,7 @@ Cc: Sebastian Fricke <sebastian.fricke@collabora.com>,
  linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, Vedang Nagar <quic_vnagar@quicinc.com>
 References: <20241120-qcom-video-iris-v6-0-a8cf6704e992@quicinc.com>
- <20241120-qcom-video-iris-v6-13-a8cf6704e992@quicinc.com>
+ <20241120-qcom-video-iris-v6-11-a8cf6704e992@quicinc.com>
 Content-Language: en-US, nl
 From: Hans Verkuil <hverkuil@xs4all.nl>
 Autocrypt: addr=hverkuil@xs4all.nl; keydata=
@@ -102,138 +101,71 @@ Autocrypt: addr=hverkuil@xs4all.nl; keydata=
  e8tSeEXX8BZIen6y/y+U2CedzEsMKGjy5WNmufiPOzB3q2JwFQCw8AoNic7soPN9CVCEgd2r
  XS+OUZb8VvEDVRSK5Yf79RveqHvmhAdNOVh70f5CvwR/bfX/Ei2Szxz47KhZXpn1lxmcds6b
  LYjTAZF0anym44vsvOEuQg3rqxj/7Hiz4A3HIkrpTWclV6ru1tuGp/ZJ7aY8bdvztP2KTw==
-In-Reply-To: <20241120-qcom-video-iris-v6-13-a8cf6704e992@quicinc.com>
+In-Reply-To: <20241120-qcom-video-iris-v6-11-a8cf6704e992@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 20/11/2024 15:46, Dikshita Agarwal wrote:
 > From: Vedang Nagar <quic_vnagar@quicinc.com>
 > 
-> Implement subscribe_event and unsubscribe_event iocts with necessary
-> hooks.
+> Implement g_selection ioctl in the driver with necessary hooks.
 > 
 > Signed-off-by: Vedang Nagar <quic_vnagar@quicinc.com>
 > Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-> ---
->  drivers/media/platform/qcom/iris/iris_instance.h |  2 ++
->  drivers/media/platform/qcom/iris/iris_vdec.c     | 25 ++++++++++++++++++++++++
->  drivers/media/platform/qcom/iris/iris_vdec.h     |  1 +
->  drivers/media/platform/qcom/iris/iris_vidc.c     | 10 ++++++++++
->  4 files changed, 38 insertions(+)
-> 
-> diff --git a/drivers/media/platform/qcom/iris/iris_instance.h b/drivers/media/platform/qcom/iris/iris_instance.h
-> index 1e9a6075357f..ef4515d2086c 100644
-> --- a/drivers/media/platform/qcom/iris/iris_instance.h
-> +++ b/drivers/media/platform/qcom/iris/iris_instance.h
-> @@ -30,6 +30,7 @@
->   * @once_per_session_set: boolean to set once per session property
->   * @m2m_dev:	a reference to m2m device structure
->   * @m2m_ctx:	a reference to m2m context structure
-> + * @subscriptions: variable to hold current events subscriptions
->   */
->  
->  struct iris_inst {
-> @@ -48,6 +49,7 @@ struct iris_inst {
->  	bool				once_per_session_set;
->  	struct v4l2_m2m_dev		*m2m_dev;
->  	struct v4l2_m2m_ctx		*m2m_ctx;
-> +	unsigned int			subscriptions;
->  };
->  
->  #endif
-> diff --git a/drivers/media/platform/qcom/iris/iris_vdec.c b/drivers/media/platform/qcom/iris/iris_vdec.c
-> index 742b45432481..9afeb681b7a7 100644
-> --- a/drivers/media/platform/qcom/iris/iris_vdec.c
-> +++ b/drivers/media/platform/qcom/iris/iris_vdec.c
-> @@ -3,6 +3,7 @@
->   * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
->   */
->  
-> +#include <media/v4l2-event.h>
->  #include <media/v4l2-mem2mem.h>
->  
->  #include "iris_buffer.h"
-> @@ -193,3 +194,27 @@ int iris_vdec_s_fmt(struct iris_inst *inst, struct v4l2_format *f)
->  
->  	return 0;
->  }
-> +
-> +int iris_vdec_subscribe_event(struct iris_inst *inst, const struct v4l2_event_subscription *sub)
-> +{
-> +	int ret = 0;
-> +
-> +	switch (sub->type) {
-> +	case V4L2_EVENT_EOS:
-> +		ret = v4l2_event_subscribe(&inst->fh, sub, 0, NULL);
-> +		inst->subscriptions |= V4L2_EVENT_EOS;
-> +		break;
-> +	case V4L2_EVENT_SOURCE_CHANGE:
-> +		ret = v4l2_src_change_event_subscribe(&inst->fh, sub);
-> +		inst->subscriptions |= V4L2_EVENT_SOURCE_CHANGE;
-> +		break;
-> +	case V4L2_EVENT_CTRL:
-> +		ret = v4l2_ctrl_subscribe_event(&inst->fh, sub);
-> +		inst->subscriptions |= V4L2_EVENT_CTRL;
 
-No need to keep track of which events are subscribed to. Leave that to the event
-framework.
-
-See also my comment to patch 20/28.
+Reviewed-by: Hans Verkuil <hverkuil@xs4all.nl>
 
 Regards,
 
 	Hans
 
+> ---
+>  drivers/media/platform/qcom/iris/iris_vidc.c | 28 ++++++++++++++++++++++++++++
+>  1 file changed, 28 insertions(+)
+> 
+> diff --git a/drivers/media/platform/qcom/iris/iris_vidc.c b/drivers/media/platform/qcom/iris/iris_vidc.c
+> index 6707eb9917fe..6a32fd8d6123 100644
+> --- a/drivers/media/platform/qcom/iris/iris_vidc.c
+> +++ b/drivers/media/platform/qcom/iris/iris_vidc.c
+> @@ -259,6 +259,33 @@ static int iris_g_fmt_vid_mplane(struct file *filp, void *fh, struct v4l2_format
+>  	return ret;
+>  }
+>  
+> +static int iris_g_selection(struct file *filp, void *fh, struct v4l2_selection *s)
+> +{
+> +	struct iris_inst *inst = iris_get_inst(filp, NULL);
+> +
+> +	if (s->type != V4L2_BUF_TYPE_VIDEO_CAPTURE)
+> +		return -EINVAL;
+> +
+> +	switch (s->target) {
+> +	case V4L2_SEL_TGT_CROP_BOUNDS:
+> +	case V4L2_SEL_TGT_CROP_DEFAULT:
+> +	case V4L2_SEL_TGT_CROP:
+> +	case V4L2_SEL_TGT_COMPOSE_BOUNDS:
+> +	case V4L2_SEL_TGT_COMPOSE_PADDED:
+> +	case V4L2_SEL_TGT_COMPOSE_DEFAULT:
+> +	case V4L2_SEL_TGT_COMPOSE:
+> +		s->r.left = inst->crop.left;
+> +		s->r.top = inst->crop.top;
+> +		s->r.width = inst->crop.width;
+> +		s->r.height = inst->crop.height;
 > +		break;
 > +	default:
 > +		return -EINVAL;
 > +	}
 > +
-> +	return ret;
-> +}
-> diff --git a/drivers/media/platform/qcom/iris/iris_vdec.h b/drivers/media/platform/qcom/iris/iris_vdec.h
-> index ae456676e578..f64ce3234e6a 100644
-> --- a/drivers/media/platform/qcom/iris/iris_vdec.h
-> +++ b/drivers/media/platform/qcom/iris/iris_vdec.h
-> @@ -13,5 +13,6 @@ void iris_vdec_inst_deinit(struct iris_inst *inst);
->  int iris_vdec_enum_fmt(struct iris_inst *inst, struct v4l2_fmtdesc *f);
->  int iris_vdec_try_fmt(struct iris_inst *inst, struct v4l2_format *f);
->  int iris_vdec_s_fmt(struct iris_inst *inst, struct v4l2_format *f);
-> +int iris_vdec_subscribe_event(struct iris_inst *inst, const struct v4l2_event_subscription *sub);
->  
->  #endif
-> diff --git a/drivers/media/platform/qcom/iris/iris_vidc.c b/drivers/media/platform/qcom/iris/iris_vidc.c
-> index bc77dfc2ba67..3a138172e674 100644
-> --- a/drivers/media/platform/qcom/iris/iris_vidc.c
-> +++ b/drivers/media/platform/qcom/iris/iris_vidc.c
-> @@ -4,6 +4,7 @@
->   */
->  
->  #include <linux/pm_runtime.h>
-> +#include <media/v4l2-event.h>
->  #include <media/v4l2-ioctl.h>
->  #include <media/v4l2-mem2mem.h>
->  
-> @@ -322,6 +323,13 @@ static int iris_g_selection(struct file *filp, void *fh, struct v4l2_selection *
->  	return 0;
->  }
->  
-> +static int iris_subscribe_event(struct v4l2_fh *fh, const struct v4l2_event_subscription *sub)
-> +{
-> +	struct iris_inst *inst = container_of(fh, struct iris_inst, fh);
-> +
-> +	return iris_vdec_subscribe_event(inst, sub);
+> +	return 0;
 > +}
 > +
 >  static struct v4l2_file_operations iris_v4l2_file_ops = {
 >  	.owner                          = THIS_MODULE,
 >  	.open                           = iris_open,
-> @@ -347,6 +355,8 @@ static const struct v4l2_ioctl_ops iris_v4l2_ioctl_ops = {
->  	.vidioc_enum_framesizes         = iris_enum_framesizes,
+> @@ -280,6 +307,7 @@ static const struct v4l2_ioctl_ops iris_v4l2_ioctl_ops = {
+>  	.vidioc_g_fmt_vid_cap_mplane    = iris_g_fmt_vid_mplane,
+>  	.vidioc_g_fmt_vid_out_mplane    = iris_g_fmt_vid_mplane,
 >  	.vidioc_reqbufs                 = v4l2_m2m_ioctl_reqbufs,
->  	.vidioc_g_selection             = iris_g_selection,
-> +	.vidioc_subscribe_event         = iris_subscribe_event,
-> +	.vidioc_unsubscribe_event       = v4l2_event_unsubscribe,
+> +	.vidioc_g_selection             = iris_g_selection,
 >  };
 >  
 >  void iris_init_ops(struct iris_core *core)
