@@ -1,77 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-40740-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40741-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 159D49E6A8C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 10:40:00 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E4E439E6A9F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 10:42:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C560528C3A7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 09:39:58 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A35B3285583
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 09:42:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6513C1DF980;
-	Fri,  6 Dec 2024 09:39:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A266E1B4129;
+	Fri,  6 Dec 2024 09:42:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uwElul9D"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hCZMsQ0I"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 596191EF0BF
-	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Dec 2024 09:39:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3271E130F
+	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Dec 2024 09:42:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733477996; cv=none; b=e0sbN5B4zBogdCHlzK44hXUvfH19/d7Dv46sDozQrv1AvDo+yP661pXt9ZgCYERTZWEPRFux0E+zNeqtvpuQKxPIFbjSoI29hB4tpGORXAtcfGpY3HNPvhCKTHcIE5YVGNlEKqMnrpgPecjI2vU2GkZh/1UIrZb/1sSblnGQlb8=
+	t=1733478149; cv=none; b=ApcqcvqA/OrU1JAYRu2eU0LRH5RNOcaUq3qBc8PwtrG7dXdcEMYZyzMw2tweByvfBWLAqXBjwGxzSAYaWiTg/14rhxJtJbei1UZ8+R92u6dJWvCnRxkZ7InAQSNWPyVt8vA18C8NuDNleLk5qgDUEHr4dBO9XhZFvfwi5eVIj+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733477996; c=relaxed/simple;
-	bh=hP9AIVICyv/HViIOvkl6GKCZizMiepmoi0uyK3av/ro=;
+	s=arc-20240116; t=1733478149; c=relaxed/simple;
+	bh=fnD8ZUeN3LHdllxutyGeLabN8SdYiuHEWMknGyQWBhA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=r7+4iLFYclhLIxWf51JCpi/WELARwGYPfUWrzUEVmoq4VOIR7tOeqmAlHqavPblWnDLAUJCdZfwGOUgi5uP8kE2bFxlp+a/Ad1vvtNU/zLQJQki+R48ukVdpbBuwVlDpycjOXc+fN48TXJA/y1C8fA1yjYiZXIRbwlPd4OHRWf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uwElul9D; arc=none smtp.client-ip=209.85.167.52
+	 Content-Type:Content-Disposition:In-Reply-To; b=JfM8pHR/X77KUGBWwgHzc6dRbIwdGuFk6ZtsTvXBau5XgGxt5PWEV/1Dt4IKVE35RGti7P5u+ZaWwL0wXtgXLH7p7uU5oR9yQGcqnDb9FxXw54W1n9HbHjCAPO5dsx7zaS/QKu+z8pKAf0mPKv8xph8BohGZ6d271RVYayT50p4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hCZMsQ0I; arc=none smtp.client-ip=209.85.167.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-53e22458fb5so1679816e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Dec 2024 01:39:54 -0800 (PST)
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-53e2129be67so2167568e87.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Dec 2024 01:42:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733477992; x=1734082792; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1733478145; x=1734082945; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=lyjy+B1BzCuYPV6TYOZ9W+qMOzIQt8vOgPam9Y/pajs=;
-        b=uwElul9DLy1Km94Rp5aTvm61eD509czFHJ0raIfKiaqvDJqz4nPak0iyp5R69Yhw5M
-         mDg9Vy7BJ37irliuB3yhFdVqLi/AgWWWgN6RbSadwUCfbrdQctimpTPl+2ofsZlkEiF9
-         mPQEwalwSfSeZwJSD03aThKX2l3IJl4P6zNDidSSX5jCML6ZfenJiyWC2qO2SfaDbqfM
-         szzHok+0ovdFnZc4YZX5UepXDRJWEbP2/Gm1U82gIvrtZv/ryZBtVdfIEhlEijVm/2+8
-         UZhrXpFjqHN4JWqpP5zoCs1pXg9NlI5qGek8YIBNFyOu8QKJtzNZkLRvttuNCdmJodWk
-         ADdg==
+        bh=uUIRQbMczpjfL2wu8QV4pEN4I4ysbDGkQQGhfj0T2t4=;
+        b=hCZMsQ0IqP2C55RV8sunKoXwVdRE4CMOB4aOleXM5o9OaCTxZXxLFQp8m7eaM4FVHm
+         7zqPUpOzOVuFjcqeXzYyDZXeNXBNce+xMVkE/3WK+HYfwhFkZBAoffcjHXyX5YZMXC65
+         VtmPnlQLrr+07s4YcNIFTrCK9u4k227jsQADiu1MIY/kxm34B5aaoWflRA0rVZIJZTue
+         CwzTQQ5Jk/spUWNiihdyZLi6U4wplDbn4jbx8obJxMZeTI29ZyKH98svzqso7N3/4I2K
+         /GUbwZNfS/RHqwbEUq3f/iYawSe05FzPjrani0R287sT2+oUZvIbeK4v7O+zonAqDUOb
+         abrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733477992; x=1734082792;
+        d=1e100.net; s=20230601; t=1733478145; x=1734082945;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=lyjy+B1BzCuYPV6TYOZ9W+qMOzIQt8vOgPam9Y/pajs=;
-        b=Mm2cmJwUTbGCvtFIctU6Em818dNcYqZr/e02Noe3ME8ODzU19/owsBa7rC6OBr2BOH
-         AFTYm5qmnT/ALi4Uf7XRF2agRixKM3x1oqtZOTYGFBVSIJAYB8IQXc2Z4pVihIkR4MlH
-         52so+xpc2MhHX1ceyeDPEDUI5xUg5DfikLdNQzTl4jtg9dZMxPvaV8rHqHTiBJqc7i2j
-         60qXh9iIKPR+cSJ+gMniRqv8IgUtl5bXr/9ZTwHTWveOUocrw9ouClssOeYeknPy5nX1
-         Ey/1s65CQFcn9RGHb2Ejxsc+F8QsY8hMvq43+I3MPp7JAKQyFC4GEMhTxkIBIcptROQU
-         alMA==
-X-Forwarded-Encrypted: i=1; AJvYcCXVbUcPu31vVQxarX7kmHZLsGYIZY8MO+bgcyJuD9ov2trQqubnlDInchb5e6nSOoNXKDQ83I+xrr3ps0tc@vger.kernel.org
-X-Gm-Message-State: AOJu0YyENxKLs/pptECehQ7pJFuQiCoW4Tk3/WW3hczcxfpE3UB+JgOg
-	IBVmnxqp4WQE3fRRMhJ9+IxQnzcVP2qhXBn2w9HrKltNj0/uQHAKOTj59orC90k=
-X-Gm-Gg: ASbGnculsxxk9DtH3Kc4usbrlFoyQmqi/LvoFsA2+V/ZVGwSo+MzKkKGzczET6wqiUd
-	xeTfBp4yy0lYM0G1nhJ4GFpPXYa0Pfyf84a9/da/bI2ks3sCrIYf8Z+BYqbYCgMDVmXO+x4pIPf
-	49MeeTvpoxH/EOHiMNw6aby0Zj8p0UEFm6+tj1ixy0MbAW2AsDV7zEhHHNpEWS60g8yDKDK3HUK
-	WDTybQoeLrYh0TeTLrqXYkxGDHNG/cNhBwfBXdZ/eTp7ldRkDCtTqDu/B8bS+pqL96oBYRecMSd
-	hKX1qFz2lqg7wrIbKyo8Dywzy121Jw==
-X-Google-Smtp-Source: AGHT+IGNBPdaS1w4uQtjk5trf2hXxJbni2d/hlEYqanCr4EtCYjz+uzjDBO9Y74HuWm6AMKmFcMGVQ==
-X-Received: by 2002:a05:6512:138a:b0:53e:232b:6864 with SMTP id 2adb3069b0e04-53e2c2b17f4mr621540e87.2.1733477992487;
-        Fri, 06 Dec 2024 01:39:52 -0800 (PST)
+        bh=uUIRQbMczpjfL2wu8QV4pEN4I4ysbDGkQQGhfj0T2t4=;
+        b=nBOcxt9Hqo86ndU+Irzs3STjDjBdcRY8rOHqOhiGPZVbZTqRvk/epikwsua7nB8BoU
+         Ic0LAoAPTXjuqpCGP8iG1D1p4xlJptXyaxr17NlDqpbY6PmCtas0DLOM8FAsE6MqENjK
+         1CiokyjJZBnUJz717/BwPT8FlxjF+z6hj6ut7iW+1/cBAvRo3OA2r8Iby4qajy94qop6
+         HW/doWn442tJTIwM2Z2aYGKG6stELYMXa3DjAxQvzoCaM2scp6InUCxvKF1wzZY+HYr9
+         Mk6vbiDB+hnPKX/nhO64JYDOLzm5rWtrCDYdpNGb1L+2dstSbrhkE9VBfBopQvd57mLc
+         aDpw==
+X-Forwarded-Encrypted: i=1; AJvYcCVZi+1TbTxa7ceBECoHGBWSV/maqBZSKkm+pJ9nK+4P59Hyc+tO3DzOsboZEyn+jR29W/1Vlb1pZehVhX3y@vger.kernel.org
+X-Gm-Message-State: AOJu0YzgBUtp1e2+P8iAa3GdecmO+ZH3AdznNRiCAVKIGDDgvPIkEbwp
+	AypLxbKaIUv1e4mutEorU1eLmhD2e0LptEW3AXMbEBNZyjEwbEPr4ZAwkp988V8=
+X-Gm-Gg: ASbGncuJguXdXCDXPhgS2ov81pQUAgi6bqFAfq7cQOZc1enLIpowThITOW7oDd71Smk
+	8VEjwVRPyogPrpvDuvmeM4e1Z8GSrsFL9uDnN6JI+vkkMFesNHzw0v4E5RMpNVAQGwR7J3HMkqh
+	mV5EqeTwtvXwZQ1QVPpHydNevqLgp85oN7bsw280sa+JmHfTDb/GCBe1IBsG8y7AKQAHK8vUtgc
+	WbwSrnvo9WJJCVqIIOH1M5KMdJ8Qw8OFLBoyzEcJ+1mgQLLrIH0BeRqtEHLBl2l24usmeZ6VwsN
+	BJ18MSwt5uF5fz0rExlzQEKVHwY+wg==
+X-Google-Smtp-Source: AGHT+IH4esxK0uLXH9slo3btbx6QQTuIap6lMO09rzPOg/wiHUYCi6471yfGuoXePGv2SFTfDWGePw==
+X-Received: by 2002:a05:6512:3092:b0:53d:ecfc:306d with SMTP id 2adb3069b0e04-53e2c2b575cmr685333e87.19.1733478144895;
+        Fri, 06 Dec 2024 01:42:24 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53e229ca4aasm448445e87.244.2024.12.06.01.39.50
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53e22975264sm450841e87.92.2024.12.06.01.42.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Dec 2024 01:39:51 -0800 (PST)
-Date: Fri, 6 Dec 2024 11:39:48 +0200
+        Fri, 06 Dec 2024 01:42:23 -0800 (PST)
+Date: Fri, 6 Dec 2024 11:42:21 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
@@ -87,7 +87,7 @@ Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
 	Jessica Zhang <quic_jesszhan@quicinc.com>, Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Subject: Re: [PATCH 16/45] drm/msm/dp: add support for programming p1
  register block
-Message-ID: <d6hwd3mktcgrczwiqmkuf53byjushkdxgadilcjb5dqu2sdq2n@z7tzffqkn6tg>
+Message-ID: <ewwpuc3f7vqjeazgeebecc3ygrha4ujq5r7bg5cow56zzb564l@kef4v3bwo3bi>
 References: <20241205-dp_mst-v1-0-f8618d42a99a@quicinc.com>
  <20241205-dp_mst-v1-16-f8618d42a99a@quicinc.com>
 Precedence: bulk
@@ -109,74 +109,20 @@ On Thu, Dec 05, 2024 at 08:31:47PM -0800, Abhinav Kumar wrote:
 >  drivers/gpu/drm/msm/dp/dp_catalog.c | 29 +++++++++++++++++++++++++++++
 >  1 file changed, 29 insertions(+)
 > 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
-> index b4c8856fb25d01dd1b30c5ec33ce821aafa9551d..ee7f2d0b23aa034428a01ef2c9752f51013c5e01 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_catalog.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
-> @@ -73,6 +73,7 @@ struct dss_io_data {
->  	struct dss_io_region aux;
->  	struct dss_io_region link;
->  	struct dss_io_region p0;
-> +	struct dss_io_region p1;
->  };
->  
->  struct msm_dp_catalog_private {
-> @@ -93,6 +94,8 @@ void msm_dp_catalog_snapshot(struct msm_dp_catalog *msm_dp_catalog, struct msm_d
->  	msm_disp_snapshot_add_block(disp_state, dss->aux.len, dss->aux.base, "dp_aux");
->  	msm_disp_snapshot_add_block(disp_state, dss->link.len, dss->link.base, "dp_link");
->  	msm_disp_snapshot_add_block(disp_state, dss->p0.len, dss->p0.base, "dp_p0");
-> +
-
-Drop extra empty line, please
-
-> +	msm_disp_snapshot_add_block(disp_state, dss->p1.len, dss->p0.base, "dp_p1");
->  }
->  
->  static inline u32 msm_dp_read_aux(struct msm_dp_catalog_private *catalog, u32 offset)
-> @@ -145,6 +148,26 @@ static inline u32 msm_dp_read_p0(struct msm_dp_catalog_private *catalog,
->  	return readl_relaxed(catalog->io.p0.base + offset);
->  }
->  
-> +static inline void msm_dp_write_p1(struct msm_dp_catalog_private *catalog,
-> +				   u32 offset, u32 data)
-> +{
-> +	/*
-> +	 * To make sure interface reg writes happens before any other operation,
-> +	 * this function uses writel() instread of writel_relaxed()
-> +	 */
-> +	writel(data, catalog->io.p1.base + offset);
-> +}
-> +
-> +static inline u32 msm_dp_read_p1(struct msm_dp_catalog_private *catalog,
-> +				 u32 offset)
-> +{
-> +	/*
-> +	 * To make sure interface reg writes happens before any other operation,
-> +	 * this function uses writel() instread of writel_relaxed()
-> +	 */
-
-Not applicable to the actual function.
-
-> +	return readl_relaxed(catalog->io.p1.base + offset);
-> +}
-> +
->  static inline u32 msm_dp_read_link(struct msm_dp_catalog_private *catalog, u32 offset)
->  {
->  	return readl_relaxed(catalog->io.link.base + offset);
 > @@ -1137,6 +1160,12 @@ static int msm_dp_catalog_get_io(struct msm_dp_catalog_private *catalog)
 >  			DRM_ERROR("unable to remap p0 region: %pe\n", dss->p0.base);
 >  			return PTR_ERR(dss->p0.base);
 >  		}
 > +
 > +		dss->p1.base = msm_dp_ioremap(pdev, 4, &dss->p1.len);
-
-p1 is not populated for eDP case, it wasn't always present in DT, etc.
-So please make it optional.
-
 > +		if (IS_ERR(dss->p1.base)) {
 > +			DRM_ERROR("unable to remap p1 region: %pe\n", dss->p1.base);
 > +			return PTR_ERR(dss->p1.base);
 > +		}
+
+Forgot to mention, please also map p1 in the legacy bingdings branch in
+this function.
+
 >  	}
 >  
 >  	return 0;
