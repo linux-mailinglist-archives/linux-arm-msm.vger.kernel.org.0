@@ -1,232 +1,170 @@
-Return-Path: <linux-arm-msm+bounces-40734-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40735-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 753059E69EF
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 10:20:55 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id F3A9D9E69F4
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 10:22:20 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D0DF9281BE7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 09:20:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3A85B18849FB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 09:22:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8AAF61DFDA8;
-	Fri,  6 Dec 2024 09:20:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CF01F1EBFFC;
+	Fri,  6 Dec 2024 09:22:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OZ1wBGo5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="COxAS6TA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 851CD1DED74
-	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Dec 2024 09:20:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A4FC1E1A05
+	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Dec 2024 09:22:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733476850; cv=none; b=fdVLoLCS4kgrp38NoMFBzBrnRgYjI+1PrdaDtadWgtOd/AGN2bjdIzO8CGPFmGLSYa6ROUKWMHBRRczfpaBDmQp7wVBSt/vCEUNIwGfzGyDYnaPQkdEeQDEqHDWahfQ3jDg80NYuymD8Wp0y8nTyfqEytRSL0e5yIvsby3d0Csw=
+	t=1733476933; cv=none; b=bUdtCohsL+Sx4pU+jNSquifrdunStq3fLpQ18HHZ1APPa8y8LbjqoV4wLSZlamLubmLeHJtJzS95WrHAcq4PbIjFARXIIfA5FqGQLMEceX3zrPQyn1HKhHZQzv+VYB54huyVSnVMDwSfrpv4GWmZvUtkPoXAb3vbUN6NzLjnOKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733476850; c=relaxed/simple;
-	bh=TtuKGPOmoByFFofycXBbE4r/ApB0wI0JsvmsEiQC7lk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mzURjXxk+R2cH2ocC5t7Yp/8RGQ0q8Q8bsiOZvSgvpFXF4IkeO+noaVFOxHm+ngpxZQhaKRGFiD32P3XUi8+Cysrk4WGgXfUCSg/kEcYJy4eFJ4TjXIuk508UzvcK24njA63Q+kLaoEvjzdK+rwYYbAKeODExwCMhtp/P6JGNSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OZ1wBGo5; arc=none smtp.client-ip=209.85.208.171
+	s=arc-20240116; t=1733476933; c=relaxed/simple;
+	bh=3TzHUklU+x8y23N2d2Ko1lJMWGqRfx2SVa1/zlhM/tk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=g0SAxPoJOBNzJCC/rekKIU2AkJ0cGz37JVBVpjhkzEY4VBEfJ270o3ZEnDuptJa90fsWkD887DhqxB8YtK70OVy/pZZYJB+eszbjCylgf4s47liJIeAMg8VcAcHj3e5sGBgSPMdj9zpzxGKdT3tI//I4BEyTMFtzQImxZsjkKK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=COxAS6TA; arc=none smtp.client-ip=209.85.128.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2ffd6882dcbso15165611fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Dec 2024 01:20:48 -0800 (PST)
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4349d25eb5bso1998765e9.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Dec 2024 01:22:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733476847; x=1734081647; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=IRA3/L1MtueZJgMZJQTJG4nr5iZomdRWg1qoH/eWPx4=;
-        b=OZ1wBGo5YsBD8g59fDHaaNljkQojIJuszzac/cE4IgNeEFvqKIlQndkxkG1JR+OvqH
-         bZCZ/fquGMtHYB5Z4hEqTVNq83mJmrnglS0a8dpchP+8KokhGSwAXfHHn+ERzsMdWC+N
-         CxfqTFTKNmQEg/wJHoXYab7MOrp1dC/2U0m9lkzNvKHTqFAy9cwijcwMaYEWx5EO8ugo
-         yIYG1Cg4Xp74MZelOgBBtIESF2BOG6EYZbw079RRvNdVhdX4q/d91B7aOVMRg1jh9R2X
-         cSLZ5EVVQIujv9ZvpadMAj7YVmk3Im7caqWrXzLoh+KvMh4zGhfCgaRnwtWtrkgMkyeg
-         AZQg==
+        d=linaro.org; s=google; t=1733476930; x=1734081730; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=XRdOx+zo0jplOeBc/ZvBXWu4laRz8I4SHuVyG1dEGEI=;
+        b=COxAS6TANLZxBl717daWR/QvwV92Bz0GULy7skS1yWj2Mxy0wz3ADRFERTcqOsRA/l
+         JEs4juEAsnwk0TY5D5sNK4jKsXdnZu3+Hkeqf4Y5iPdXR0SDs1I5vfR/ouy6oQ73+8fs
+         QiKXlF7Ey5nLqytkRhw2rs4HFQsbM/oyB6hnDmB6qBjFhW5hw+iQpXrZr/P2iVdaO4jW
+         UKW/2gnj843fl7sGI+cFRRzL8GVW/w07ze9lmgXOzgHjqQMZG+UfSNccNSFkaS6lxntS
+         ZIviIWZdSAo8xujikUwFCKL4cXgo1BqMEe/GlGgBQ7MvmZNKpdk/7KjmvxHRGfR+L8W7
+         qWpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733476847; x=1734081647;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IRA3/L1MtueZJgMZJQTJG4nr5iZomdRWg1qoH/eWPx4=;
-        b=mIkXhkXDaX+UyR0Ywtuv94F+HtscbxZaJ9cJreCpXTfV4ySxRUHGRa89gaa4N7lOe/
-         ps4XhdAf7mW37GM4QqBT5vckdEM0S7jQh1g5L4leN+xA8rPWeyYw9vdAFLTOVYM2rqki
-         txnd8K2ihRoBdf/cy5nYRG+q6mEEB0/oo9Ds8wHNteGrlb8draHIZl0gQ82buo7DyEtf
-         wF67NynvaTgTQK2jku/LHMK4p8QKqSHbBMe9IUuaRIaClcdEYhrirbvRJ9jyvnmnn3+j
-         7vrNQfl6ulyI9nE65IsaEfwMYT8MWZi21gx8xLg0LBUjobkWkgWWs8HVgFxdZrtE9b/V
-         ztIA==
-X-Forwarded-Encrypted: i=1; AJvYcCWwbGHSJ5bPcekBZ5mCyVjYkE/iFdHC8zZsGTvSbgojZFXnfF9oId6iHGy7c6KeYiWCjQd3UfKeobHGl5/u@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxlhz4/bOOfc8ZQP9fN65oxRcZ9vUxQUHbKz9mXxYpV6PAjk4YY
-	MmEBC7j7RNV5967c2b5mxglq56xevYKAOP2NTfJITB9Q6uZB6PSzWES3LsgZeUs=
-X-Gm-Gg: ASbGncvVdkuE0mu1aC6dL5i/iPo/MhQQuK4u/T5845nJ/WdLMXoaDEV9JG9mwrww+LG
-	uVbtQfTuoSYDgX5s5784+p0VoQlbZTNuxKJlvCbkRG3VunO0YUX9L1khjSLXaVEt0DJ5keD9eUi
-	8kvM8U1K7LV4BklqwxT2crGGOzvh2los2C4lFatwCBt6Ep2SubDhkJvg2HJnTwP6Xnemo878x2G
-	a3ivLuMr1Q2AGW3fGS73Dv569CtYmsYMy4whjMR0sgF/hFZlrLnjT86NT0Lu6ckurvkZ6SK7FYH
-	3FrwZRD808fYt9WVfktgaolKCHkzJA==
-X-Google-Smtp-Source: AGHT+IECiQCAbYzEAjTKkWFCv1BZNgR1l7qD78Lgn6sV9wEMLOHQj41O396xk2oN3Wdy+DhHim++Vg==
-X-Received: by 2002:a05:651c:1541:b0:300:264f:d002 with SMTP id 38308e7fff4ca-3002fc68eb9mr6568881fa.27.1733476846623;
-        Fri, 06 Dec 2024 01:20:46 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30020dbe28asm4556091fa.63.2024.12.06.01.20.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Dec 2024 01:20:45 -0800 (PST)
-Date: Fri, 6 Dec 2024 11:20:42 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Stephen Boyd <swboyd@chromium.org>, 
-	Chandan Uddaraju <chandanu@codeaurora.org>, Guenter Roeck <groeck@chromium.org>, 
-	Kuogee Hsieh <quic_khsieh@quicinc.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Vara Reddy <quic_varar@quicinc.com>, Rob Clark <robdclark@chromium.org>, 
-	Tanmay Shah <tanmay@codeaurora.org>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
-	Jessica Zhang <quic_jesszhan@quicinc.com>, Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Subject: Re: [PATCH 40/45] drm/msm: add a stream to intf map for DP controller
-Message-ID: <by3wnkql4mguqi3u4w6iuzmt747hictbdzit2wktd5zkordhum@53njkt7dzf7e>
-References: <20241205-dp_mst-v1-0-f8618d42a99a@quicinc.com>
- <20241205-dp_mst-v1-40-f8618d42a99a@quicinc.com>
+        d=1e100.net; s=20230601; t=1733476930; x=1734081730;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=XRdOx+zo0jplOeBc/ZvBXWu4laRz8I4SHuVyG1dEGEI=;
+        b=nNblvVFmSsghDE+VoXsRa0vtTFH0JRV88gyA+TDygZw5Qx6j/vK4F6z10BOZOSefVG
+         fCs8+t4UJo+P5Q1cKNBQlNImnz4A8vnwbHvJeAdlZBhT7wa1FKFu9Is06Ti7Fb5Ky0Yf
+         VBKvKCUZ/HuOYq20uyUTFryfkdYZGy0y13WCtesJ90sQiUCLdessp+EQJXTByak860wR
+         ZWEBA5KJvR5no+HzWBDzXUsQI5unM/xYSmqd6s5pWehuS0wP4XL5WE1C+vnl9ExrNqFp
+         p4N7klY1v6CCVbSire3O52iy6GTCJ6W+0lrO7luSFS+8vx4tTTPyL4J1Pp59HJuPd7FU
+         xNhQ==
+X-Gm-Message-State: AOJu0Ywm8QKXKtyYhMfMHOP3efvLcQ2ToDUxQTkoBbr46t4noSWxYXwK
+	oYVxngwotABK7wq0H2MjRYhaeqOzTVTSdNUnRDHSKUnSMWddKuagzinoaPmhXE8+uPZkemvV4CA
+	VHE0=
+X-Gm-Gg: ASbGncvYml5d4jxBy89sfQQLX782n5LE1gKPGH36OnJ9EkBSSeusfnhWHdNofjqQsU7
+	qpnKRE99oRMxRGibVO36K4rll2mds3pfj2fk8h/TbD+Ybple7jm8tEsVd5kmtDqXV8B94hZkCdW
+	hUt9H0u4/lffaGOqTOjfq2NiSDwNeBZrtDNqs0FryJoNXNAXsmaz6QcHk0LH2FgY+tVCRaJUrti
+	wK9hShwmEHgFWzS5mqVsK+4zvyUwGVroLafmG24l1aSuhEMsoNfZXKqifvAhuMwzw/8Zw==
+X-Google-Smtp-Source: AGHT+IHFmsPxPDKr+57ClyHXQ24d1OlqnEgYm+jKKrkZbuei0eOs5Jp84DPGWgGP4Vpbt4Ri7iToTQ==
+X-Received: by 2002:a05:600c:138c:b0:434:941c:9df2 with SMTP id 5b1f17b1804b1-434dded98a6mr7812595e9.8.1733476930248;
+        Fri, 06 Dec 2024 01:22:10 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.223.165])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-434da0dab9esm50714455e9.22.2024.12.06.01.22.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 06 Dec 2024 01:22:09 -0800 (PST)
+Message-ID: <bbf73ff7-1f7a-40a8-a313-f8b70e661f78@linaro.org>
+Date: Fri, 6 Dec 2024 10:22:08 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241205-dp_mst-v1-40-f8618d42a99a@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/4] arm64: dts: qcom: sm8750: Add Modem / MPSS
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20241122-b4-sm8750-cdsp-v1-0-9a69a889d1b7@linaro.org>
+ <20241122-b4-sm8750-cdsp-v1-2-9a69a889d1b7@linaro.org>
+ <4e6ec861-ef4f-4384-aab9-107c710987af@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Content-Language: en-US
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <4e6ec861-ef4f-4384-aab9-107c710987af@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Thu, Dec 05, 2024 at 08:32:11PM -0800, Abhinav Kumar wrote:
-> Each DP controller capable of MST can support multiple streams
-> and each of the streams maps to an interface block ID which can
-> vary based on chipset. Add a stream to interface map for MST capable
-> DP controllers.
+On 05/12/2024 18:34, Konrad Dybcio wrote:
+> On 22.11.2024 4:26 PM, Krzysztof Kozlowski wrote:
+>> Add nodes for the MPSS and its SMP2P.  These are compatible with earlier
+>> SM8650 with difference in lack of fifth memory region for Qlink Logging.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
 > 
-> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/dp/dp_display.c | 46 +++++++++++++++++++++++++++++++++++--
->  drivers/gpu/drm/msm/msm_drv.h       |  7 ++++++
->  2 files changed, 51 insertions(+), 2 deletions(-)
+> [...]
 > 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index 7f2eace17c126e3758c68bb0dee67662463a6e05..caac0cd3ec94e7be1389d8129fbd506998cf77da 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -116,6 +116,8 @@ struct msm_dp_display_private {
->  
->  	u32 active_stream_cnt;
->  
-> +	const unsigned int *intf_map;
-> +
->  	struct msm_dp_audio *audio;
->  };
->  
-> @@ -123,11 +125,36 @@ struct msm_dp_desc {
->  	phys_addr_t io_start;
->  	unsigned int id;
->  	bool wide_bus_supported;
-> +	const unsigned int *intf_map;
-> +};
-> +
-> +/* to be kept in sync with enum dpu_intf of dpu_hw_mdss.h */
+>> +
+>> +		remoteproc_mpss: remoteproc@4080000 {
+>> +			compatible = "qcom,sm8750-mpss-pas";
+>> +			reg = <0x0 0x04080000 0x0 0x4040>;
+> 
+> This also seems to be 0x100000-long
 
-This points out that it's not the best place to handle the mapping.
-Please move the mapping to the DPU's hw_catalog instead.
+Oh, we all love to copy code, starting from sm8150, I think. Depends
+which block we actually assign here - this should be 0x10000 (downstream
+DTS) or 0x100000.
 
-> +enum dp_mst_intf {
-> +	INTF_0 = 1,
-> +	INTF_1,
-> +	INTF_2,
-> +	INTF_3,
-> +	INTF_4,
-> +	INTF_5,
-> +	INTF_6,
-> +	INTF_7,
-> +	INTF_8,
-> +	INTF_MAX
-> +};
-> +
-> +static const unsigned int stream_intf_map_sa_8775p[][DP_STREAM_MAX] = {
-> +	{INTF_0, INTF_3},
-> +	{INTF_4, INTF_8},
-> +	{}
->  };
->  
->  static const struct msm_dp_desc msm_dp_desc_sa8775p[] = {
-> -	{ .io_start = 0x0af54000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true },
-> -	{ .io_start = 0x0af5c000, .id = MSM_DP_CONTROLLER_1, .wide_bus_supported = true },
-> +	{ .io_start = 0x0af54000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true,
-> +	  .intf_map = stream_intf_map_sa_8775p[MSM_DP_CONTROLLER_0],
-> +	},
-> +	{ .io_start = 0x0af5c000, .id = MSM_DP_CONTROLLER_1, .wide_bus_supported = true,
-> +	  .intf_map = stream_intf_map_sa_8775p[MSM_DP_CONTROLLER_1],
-> +	},
->  	{ .io_start = 0x22154000, .id = MSM_DP_CONTROLLER_2, .wide_bus_supported = true },
->  	{ .io_start = 0x2215c000, .id = MSM_DP_CONTROLLER_3, .wide_bus_supported = true },
->  	{}
-> @@ -1489,6 +1516,9 @@ static int msm_dp_display_probe(struct platform_device *pdev)
->  		(dp->msm_dp_display.connector_type == DRM_MODE_CONNECTOR_eDP);
->  
->  	dp->max_stream = DEFAULT_STREAM_COUNT;
-> +
-> +	dp->intf_map = desc->intf_map;
-> +
->  	rc = msm_dp_init_sub_modules(dp);
->  	if (rc) {
->  		DRM_ERROR("init sub module failed\n");
-> @@ -1646,6 +1676,18 @@ bool msm_dp_wide_bus_available(const struct msm_dp *msm_dp_display)
->  	return dp->wide_bus_supported;
->  }
->  
-> +int msm_dp_get_mst_intf_id(struct msm_dp *dp_display, int stream_id)
-> +{
-> +	struct msm_dp_display_private *dp;
-> +
-> +	dp = container_of(dp_display, struct msm_dp_display_private, msm_dp_display);
-> +
-> +	if (dp->intf_map)
-> +		return dp->intf_map[stream_id];
-> +
-> +	return 0;
-> +}
-> +
->  void msm_dp_display_debugfs_init(struct msm_dp *msm_dp_display, struct dentry *root, bool is_edp)
->  {
->  	struct msm_dp_display_private *dp;
-> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-> index 7ed0e25d6c2bc9e4e3d78895742226d22d103e4c..50719e188732acd3652e4a7063d1ba1e2963b48a 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.h
-> +++ b/drivers/gpu/drm/msm/msm_drv.h
-> @@ -378,6 +378,8 @@ int msm_dp_mst_bridge_init(struct msm_dp *dp_display, struct drm_encoder *encode
->  
->  int msm_dp_mst_register(struct msm_dp *dp_display);
->  
-> +int msm_dp_get_mst_intf_id(struct msm_dp *dp_display, int stream_id);
-> +
->  #else
->  static inline int __init msm_dp_register(void)
->  {
-> @@ -430,6 +432,11 @@ static inline bool msm_dp_wide_bus_available(const struct msm_dp *dp_display)
->  	return false;
->  }
->  
-> +int msm_dp_get_mst_intf_id(struct msm_dp *dp_display, int stream_id)
-> +{
-> +	return -EINVAL;
-> +}
-> +
->  #endif
->  
->  #ifdef CONFIG_DRM_MSM_MDP4
-> 
-> -- 
-> 2.34.1
-> 
+Older PIL remoteproc loaders (qcom_q6v5_adsp.c) seem to access only the
+smaller 0x10000 region.
 
--- 
-With best wishes
-Dmitry
+Best regards,
+Krzysztof
 
