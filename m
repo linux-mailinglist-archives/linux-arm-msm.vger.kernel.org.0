@@ -1,100 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-40821-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40822-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7D9049E74DD
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 16:49:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 586F39E74F2
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 16:55:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3BFEE188585C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 15:49:45 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 100DA1887447
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2024 15:55:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E030F1C3C1F;
-	Fri,  6 Dec 2024 15:49:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 614D320B81D;
+	Fri,  6 Dec 2024 15:55:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NzE9VJB7"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="QhOry9qg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9BC9146A66;
-	Fri,  6 Dec 2024 15:49:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 703FF1EC013
+	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Dec 2024 15:55:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733500180; cv=none; b=kB/kD5MxTMuLJ5XLcDnrKBQemYLe7NPJ4XPTYHiS6LGo/PqzjPxJjHXAQwA6GeIKLgHmKVVnf5/ekVprNvbaFm4IhU54VICwANRBZvvrlSLkwersiQYaaFjiv4Zxj/92Kdr2RhYI7hcMD3CQ7qWAaGqg3buW4giOB+U8f12BIwU=
+	t=1733500548; cv=none; b=tD1c4SdVlBihE05SxF8kQ6MFVwyYqXREYi5N5fdZPxbYk5UvP9OcLN/wVlMzxVDCYFjt7jMZSKmlYzqyk/5dxKtyn7fNuKYvqKVwho1gOjHWZleiap3NBfRcAJ3ZCCF+ltcK1RZV6sIQs8zatioD6aKK1wRlO1AhiQk85P9JUf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733500180; c=relaxed/simple;
-	bh=KCCzFSRJIW7N26XWNzKmNOTynAPmRVKVA1U1nMv205E=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mTER1JK3odSUzm3OavX9rrun8Ygyl/IDz5lRRVEa0lZuZ5GPHjyyGryXbMxUPa/wpRm7B5cPFPwxcy+VJBPxu+PvZpDJj1DVV2YQOLbvx4FARCuIZXUwRaWjQchgRK3xfRcZUJLgJA2CiPbdDKnY9AvDtucy3yJyPZSNWn4Gerc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NzE9VJB7; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3408AC4CEDE;
-	Fri,  6 Dec 2024 15:49:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733500179;
-	bh=KCCzFSRJIW7N26XWNzKmNOTynAPmRVKVA1U1nMv205E=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=NzE9VJB7tG/93XIDQAek2WvTvDOtR2goO81jVVDCkFhin7OzjN+k/XjCLR0kJwlL0
-	 guFCLkUOp2p/NyeSuBE/xJrJgp/xYgQGsza6uZx8tIwq2oAlHbOzadWb1ALXQa8O6E
-	 K1fguTg9HVeSmcqXT9kwt0CGMpwqgZB+t36SnOPpE5dm2ewnxwTedsdDiS8qtyIFXv
-	 3NMZfNzVqLpCefPYNXToTBKduCnxS8mM5NqoZJwDzj5i3VhthaMdmWWPFIUWnlr7J4
-	 wOujU+Y8P7jVBKKGL7fmT7TC4lGn3tXzfGvZERZfBvhj5Rgcm2h9cemCDqSqX59mIX
-	 2b+WvznhHkYmQ==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1tJaaK-000000004ob-2r0a;
-	Fri, 06 Dec 2024 16:49:40 +0100
-Date: Fri, 6 Dec 2024 16:49:40 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Sibi Sankar <quic_sibis@quicinc.com>,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH 13/19] arm64: dts: qcom: x1e80100: Fix ADSP memory base
- and length
-Message-ID: <Z1MdFLXygNeICNfG@hovoldconsulting.com>
-References: <20241206-dts-qcom-cdsp-mpss-base-address-v1-0-2f349e4d5a63@linaro.org>
- <20241206-dts-qcom-cdsp-mpss-base-address-v1-13-2f349e4d5a63@linaro.org>
+	s=arc-20240116; t=1733500548; c=relaxed/simple;
+	bh=1yO6WKMg7Reae+Xm/8d6dxOzkvnym7CeZdHFGZWhpNY=;
+	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
+	 References:In-Reply-To; b=g/gTSJRzwga6W/eZ8b2xpOXghzSR6r3hGEegxRbIfumU05fVtw0FLWOiCPPIxGwnYz4Kg4O+lxOly1XNCZAVjD7eHp8lCFpheroYnwOoeOmoDXMIuxkFiUw3YftgAjQJKZyTZw1gAis/0xkTuePWkM0KIcgEPn/F09L9StCvS/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=QhOry9qg; arc=none smtp.client-ip=209.85.221.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-385f07cd1a4so1592840f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Dec 2024 07:55:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1733500544; x=1734105344; darn=vger.kernel.org;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CfETEog9kNwm+ZEaU4iUILsAuYULWf3mToje1NA0XUs=;
+        b=QhOry9qgOlNRdlW+MykgpdjdeSYk4BTQ9q4iXxQ5lcycMTITZ0T7ATYJ2UL91aLfah
+         4k9Kis0MOD9lBgviO/sUbsp9zjhQsc/Z9qxScLpEDFpPJqanIWvi75iEKlT4w2S3faig
+         /MbSo1ne1WrBxTFL3IaZ+SaLg3ujNAt/DQ3QJprmCVMIUGQnuwJhO0sYxMyCvnYbXALZ
+         AxTBmJy0jhj/5O4jHeW/SkyQPmWeM+sfsl9i5LP20z+qMR+dLOeJKoKCZvSUI2iYu8if
+         ZpsD1xJmhuBKi8foWaPcOwlRBtc7d2TxcbyHZaM2co6C989iLF8vxdv0iDuYJXQYF3Pm
+         uAEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733500544; x=1734105344;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=CfETEog9kNwm+ZEaU4iUILsAuYULWf3mToje1NA0XUs=;
+        b=dnTyvDgUo+lQ0PYil+z9l5VACLg6xCWUcV/Q/6c6hEpPJCTKoNJgiLArqRQTwetWT3
+         AaNIXYypUjjUJs747l8b7hC/LcKMnsDjmF7n6rWB2TqBdHgn3w8i7TpmuXdSlSRdM/1J
+         LTkpWJF83vua8NnBvdsAInEmNBUzNUyZ2OOEA3YvdaQ4QClNVmPbNHuvf+kzKYCAVv4G
+         upe1YP77aHpTRBpsB0LQY8r70tOoTwLoY+Wg+kCF1x2QxkKuGvf9NjtcrQQIRrmSdxbV
+         EzKtZEUgxvBCcphoQqkFojMSLk2J/Bl812zgQpSsy71V25AAS1UTjNfovNh139uD2nhC
+         XAtw==
+X-Gm-Message-State: AOJu0YyYBc3YxACGHu0txKt4FOckeOg/DDGacbz94BFvuy9G4TbKkSlW
+	80aEv48mcEuJj07LKKh/qsve9V0Rykb8YheDmDOKaGhI8S9MO1kkjgMIbz1cM+c=
+X-Gm-Gg: ASbGncuhOL0Gai5Uvc40u1B/fLhWFmK2Cpecz0wj5oJpbfyg7SMVIlJjWvEix0TopYU
+	XQ5iw611kXvY2EO4fJxr2Pl5sx2KDBE73ceJycbiBK4yVR3GvFAqpLs0kb1FeqlupHIy5GE4OHi
+	syMcwrxWCIVpccvT96XxUDOngYFvqbp5phNWd+ni5jUat8fcZ4S0x+uoSv6DZTQKoiBk+qkwoGD
+	E6fQdxLNiQF8pICbS9F04n1mcZKUxBhhBDdedbQDNKw2JBYkou3vfviVD9vbSLOmjxCKEx/KHeu
+	G1KSMKXnBEBnw/D/F+Kn3cLVHYwdq9y6E9d8AhvaJxhvBZGxlNNEAHl1Vj9rpA==
+X-Google-Smtp-Source: AGHT+IGju/HpCMcyMpb2m3aBcogWdUR4ZrgWhZBrYlBGJa0J4A5vDrFJeCwRWq9jcVih3UR26XBMqg==
+X-Received: by 2002:a05:6000:1f85:b0:385:ec8d:8ca9 with SMTP id ffacd0b85a97d-3862b3d09eamr2648760f8f.42.1733500543773;
+        Fri, 06 Dec 2024 07:55:43 -0800 (PST)
+Received: from localhost (2a02-8388-6584-6400-d322-7350-96d2-429d.cable.dynamic.v6.surfer.at. [2a02:8388:6584:6400:d322:7350:96d2:429d])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3862d7158c4sm1698774f8f.54.2024.12.06.07.55.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 06 Dec 2024 07:55:43 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241206-dts-qcom-cdsp-mpss-base-address-v1-13-2f349e4d5a63@linaro.org>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 06 Dec 2024 16:55:42 +0100
+Message-Id: <D64QNNAMVMJM.3NDC6J100E8ME@fairphone.com>
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>, "Bjorn
+ Andersson" <andersson@kernel.org>, "Konrad Dybcio"
+ <konradybcio@kernel.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
+ "Vinod Koul" <vkoul@kernel.org>, "Dmitry Baryshkov"
+ <dmitry.baryshkov@linaro.org>, "Neil Armstrong"
+ <neil.armstrong@linaro.org>, "Abel Vesa" <abel.vesa@linaro.org>, "Sibi
+ Sankar" <quic_sibis@quicinc.com>
+Cc: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, <stable@vger.kernel.org>
+Subject: Re: [PATCH PATCH RFT 15/19] arm64: dts: qcom: sm6350: Fix ADSP
+ memory length
+X-Mailer: aerc 0.18.2-0-ge037c095a049
+References: <20241206-dts-qcom-cdsp-mpss-base-address-v1-0-2f349e4d5a63@linaro.org> <20241206-dts-qcom-cdsp-mpss-base-address-v1-15-2f349e4d5a63@linaro.org>
+In-Reply-To: <20241206-dts-qcom-cdsp-mpss-base-address-v1-15-2f349e4d5a63@linaro.org>
 
-On Fri, Dec 06, 2024 at 04:32:37PM +0100, Krzysztof Kozlowski wrote:
-> The address space in ADSP PAS (Peripheral Authentication Service)
-> remoteproc node should point to the QDSP PUB address space
-> (QDSP6...SS_PUB): 0x0680_0000 with length of 0x10000.
-> 
-> 0x3000_0000, value used so far, is the main region of CDSP.  Downstream
-> DTS uses 0x0300_0000, which is oddly similar to 0x3000_0000, yet quite
-> different and points to unused area.
+On Fri Dec 6, 2024 at 4:32 PM CET, Krzysztof Kozlowski wrote:
+> The address space in ADSP (Peripheral Authentication Service) remoteproc
+> node should point to the QDSP PUB address space (QDSP6...SS_PUB) which
+> has a length of 0x10000.
+>
+> This should have no functional impact on Linux users, because PAS loader
+> does not use this address space at all.
 
-This looks like a copy-paste error since there is no downstream DTS for
-x1e80100.
+I can't verify this information, but with this change ADSP is still
+starting up as expected:
 
-And this paragraph is about the CDSP so probably does not belong in the
-commit message of the ADSP patches (e.g. sm8650).
- 
-> Correct the base address and length, which also moves the node to
-> different place to keep things sorted by unit address.  The diff looks
-> big, but only the unit address and "reg" property were changed.  This
-> should have no functional impact on Linux users, because PAS loader does
-> not use this address space at all.
+Tested-by: Luca Weiss <luca.weiss@fairphone.com>
 
-Johan
+>
+> Fixes: efc33c969f23 ("arm64: dts: qcom: sm6350: Add ADSP nodes")
+> Cc: <stable@vger.kernel.org>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sm6350.dtsi | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/q=
+com/sm6350.dtsi
+> index 8d697280249fefcc62ab0848e949b5509deb32a6..3df506c2745ea27f956ef7d7a=
+4b5fbaf6285c428 100644
+> --- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+> @@ -1283,7 +1283,7 @@ tcsr_mutex: hwlock@1f40000 {
+> =20
+>  		adsp: remoteproc@3000000 {
+>  			compatible =3D "qcom,sm6350-adsp-pas";
+> -			reg =3D <0 0x03000000 0 0x100>;
+> +			reg =3D <0x0 0x03000000 0x0 0x10000>;
+> =20
+>  			interrupts-extended =3D <&pdc 6 IRQ_TYPE_EDGE_RISING>,
+>  					      <&smp2p_adsp_in 0 IRQ_TYPE_EDGE_RISING>,
+
 
