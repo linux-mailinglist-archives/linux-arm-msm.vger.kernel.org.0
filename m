@@ -1,77 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-40865-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40864-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 344159E80D6
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Dec 2024 17:18:47 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1AE429E80D5
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Dec 2024 17:18:45 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E2A232832BD
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Dec 2024 16:18:45 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F1769165A7E
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Dec 2024 16:18:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D13E015278E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ACF651509B4;
 	Sat,  7 Dec 2024 16:17:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fZWkrPRW"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Nrd5ro/2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FE8E14F9FA;
-	Sat,  7 Dec 2024 16:17:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 095D114D717;
+	Sat,  7 Dec 2024 16:17:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733588266; cv=none; b=dLQnzyLPjt++dA8wa+hz5254UarCgYwkovSFP4QTq0QGoXSxc+95aF1YtiAT7wr7fANmmvFe9Am38l1BlbesD5p203ngDyVlPv4KX2YvlF6jq//3xsWAk8kTJDWJg2JJAJ2BEIz4/RBJQTYPB5OZ6UbthBqBwDnBlCu6rEBseYo=
+	t=1733588266; cv=none; b=JamtMXx2BblCR4pOhOO5hOpCoPNeRMvw1/s24u1nT3qb+xEsvykQ7ywYk/CqN1lU1A+eowkEqw8IL0Gm0Ue8zRq+ZLQ96IQPxCahFizChBbCfomxvaQ5vOjo0iBVD1IeGrGO/FgESWUxQ1YLo7EfVyOPGCr4iUsENr8JEwPv/k8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1733588266; c=relaxed/simple;
-	bh=x959h/MIbQeMPwRohoSRvpp75clWi3271X1vvXgiU+g=;
+	bh=H1jOr7hhxh9q/ZeIo4nh4aWqyRjbWUXG4Mz42VYN0j8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dOsj4kgfB+/YTVz1IEfAkkmOJ9l7Ok1PV/FHKAtSpesXRVsR6zWiKm9Yfa/ZVh3V5IDcn0zq83Ro8yVSiH5ISXABwIajSHfqp1iShwlZ2mzVZGLEQvVuC1Bqus06mJQORpCZndXhHsbKSwSHaYYezKLq6iuH0qzw/yEiROjdW+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fZWkrPRW; arc=none smtp.client-ip=209.85.214.172
+	 MIME-Version; b=nNK86zlITIjrqBt2SiPZpiARuzFnyUD0cik+tpjEm4f44SinrhdwZ52htv8615T1oaWb8bppuBwrCq+19iT7C4IGRDZ/DOTluy//7QNGiLdPlVSI+6PhT+yUstRxDXpy6L82WUZPup4QzThWY6WGc+HXAx6JnBmf5PSzxcWyNBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Nrd5ro/2; arc=none smtp.client-ip=209.85.214.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-215b0582aaeso23670055ad.3;
-        Sat, 07 Dec 2024 08:17:44 -0800 (PST)
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-2163b0c09afso472775ad.0;
+        Sat, 07 Dec 2024 08:17:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1733588264; x=1734193064; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=UDaYepScugWukq2XI1zi50Sp415jY0K0KC3SJsPCP2g=;
-        b=fZWkrPRWCJtGlDYQ+Bhjx6wROp0gawyP/oR90ejtm2WRLtigMFbepmnbcst9iF+M1V
-         D/S4XKQvboywfROvBIRh5HcSQzd/M02NpvLd2Jl9qV2i5c1Vj1JGuTHzHbMeb9CRBPIk
-         Pk4kxmd0ERm4iDuP9pW+X0S4/Iwt08nh+c9OD3bhenkOM6n0dgs0mL1fGs29csDLG+LS
-         6WReuZ4i2SY+W8CCbmLAQdghDYlABNIZejujRkZmErDFGU5cpAT0BWJSCGWPrjSacPBr
-         CTO84fsyVWJTZjE5xhHsGmgcU9xPuGYco0lWLoilVpKCw9WNHlQUeDpjd+3QmzagUxBE
-         m/2g==
+        bh=7cLXBR3G1z3bRKzv5+3ECPLKbEckhX9iHHy43Juue4w=;
+        b=Nrd5ro/2cMC3tz0rUnoAcNP9Du8XJdExTRYr0jt0IaZYO24inwCtdDJpviOrpQHfp1
+         jAO9bhHzFursM+g3BzQP+9eOL2LkZAcZzFGgcj4YHyts2uYR782RZs74zSdpVAYe71ca
+         8n14RHKfAWORSondHFhoGpOiFOUI2/h3wiUZAbtFgq/sgSep8ES8ZsxYt2S+J3xMwZan
+         f9mzMCwfJLamAvsFIK9DY0A+UDdZymCdK6CGqWXIaam0amSNHF8ao+69Ow6nh9iKVBvW
+         jMoOsk3AsOCgHy84YpUPG9v6L45/DgswDwPnwxHEtEnFvB9cbncwcM+rU0OSD9XqhDjT
+         AoUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1733588264; x=1734193064;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=UDaYepScugWukq2XI1zi50Sp415jY0K0KC3SJsPCP2g=;
-        b=c7OPyDj3ztK6yOLXf/NP6Hq16kdtzmumlk1UQ7xQaO7qBsn4+ZQ2cSr8jrubV8uvSN
-         ruhK19PsGk9YZVJpp0U4r4Z0cebp9Vzn34s9O1dFQ2hLpMMwnRfAjLdVv4Yq1qyvdWos
-         KAcKkB4PYyIwlLLW9LQz6FmYdoQa8ybQaeroijn/ZUq3wTGK5uFtU99htTu1LN7LtPQZ
-         RKhGNEi6unhWq/rCZCjz0RGCGlXyJNXRTnTr0STFYAwW7VRH2LfczkbufeDD75d70deb
-         lhDHmciWgnBsgG5TuGgon42n72604k1zPXe2OeBKWf9cR5H0RUc1MEdRvJ39pryYSsZY
-         EEsg==
-X-Forwarded-Encrypted: i=1; AJvYcCVuoBShjYbMSTNLcHxCUHTSMQnRIHxvA0JfchtUSCyGXPgjh8JkdzyRka8OR+z3x4INPhmlHWcZXdiegz4W@vger.kernel.org, AJvYcCWM2FV768ij/Pqvf/TxdXPtRtOaRh4q6RBN7yjbtsPOO9Pfh9uh02ocqpBq84BYSHsxY2R6NsBFcpDrNasw@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywfju9AIkrxDn41N1T26fWGT3kdtl9RxyysPuDtwG1wA+lErzDH
-	skaW/BXSGZTT4J+Yz0hG0mcdHPCl7BkDF3cYf0tr1KINLzvxAvcs
-X-Gm-Gg: ASbGncuyWDPfYaBsxIRnmkkZs49ncrT0DFhQ4fRaesR20dUCYni1BR+lryqcxV6rrmV
-	wb91inDpIh0NKHLm8cSfJ+qbqQxcNZ8Y9GlZ7V3Ya+gWlHn8CfJ8H/xliAVCU+DycjGYm3hAsx7
-	BBpmbTD4PzBkLv9kvCMYcpBM5PvKpGGyiJyDURyMWKIbtMCP23+3cx/ul9ykKddykH9vl5bImKk
-	tNj4WQ1EgLzVxkG/JFacjJYoLqXL1AIi5vo3s2aj2fAH8M0lJdE+lkWHM7E5JdSrhPYSJSK2OQf
-	SQDAeAXp
-X-Google-Smtp-Source: AGHT+IGlm8gy6Zo+nDRsiVqmOjnQSJxEkmCuTB/KlVGLgBqx8VVYfJC/KbklIO4245KngxH8QdN8+g==
-X-Received: by 2002:a17:902:f641:b0:215:9091:4f4c with SMTP id d9443c01a7336-21614dabf5bmr99810815ad.41.1733588262908;
-        Sat, 07 Dec 2024 08:17:42 -0800 (PST)
+        bh=7cLXBR3G1z3bRKzv5+3ECPLKbEckhX9iHHy43Juue4w=;
+        b=sKiKrWoayhNMRGGhz1gL7QIFFwR1bP5xSYyp7DEWPihpDbxA5dcQZsUjo9vyo3tyMS
+         yAtT6ou0DwOuApjnM+yL6iIwe3VGciRJzxNaW4BbHjFmUoMI8m8U43f1480q/p7FCFtx
+         OFyVy32c0hnrvNWczbnzc9zSzFR/7U3su/3IVaXxqZItmj+uT3NjoO3Psdofe8rAVqiK
+         jk3RQS/avvIvxSHkQr5M8MhWUx6r/sjiMuWQcJPJHMSHvdCoHeeJuRi3ks6bKDiO7e7S
+         eoSaYzTadLhJcH5ln992VCNIWlY8Q5N20vWQbGjGSFZOy4b4HX2ecC9/jqmAW7fh2S2d
+         G1pQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUULQ6RobdjnLZ3BmlWPW12+VwVtZoLAaviwyNaly9TFMrGeekb08W8Wqb3/HDuRFAcPILYGk6iu2lrC22G@vger.kernel.org, AJvYcCWKGChoPxBu2ooNqXInBJEVd7cGBMYgLbExoVcDMw5tjaOZEUT6cC1xPmrv6N8LpYQ9stvTOuU/dOWGOnAp@vger.kernel.org
+X-Gm-Message-State: AOJu0YxgdXyvt+tJB1z5c/K54m2RH00WdScyrGj4bVZekhAXTRz+Sbxd
+	0WlLBrZDxWbHabHy/NrIlkK37GREgPzG9+21UTsXkhlpwCpGGXu7
+X-Gm-Gg: ASbGncuFeRwAN0Q8fk5MsY7HIXpQ60b8UWrWur7/aBuUK1T+8leQp7ZLAzQNVDAa+pe
+	pzXi/uhllEX7DVr7MpiwL2ujeBSaqgVLcttvQjGUHuWBa6qmW3C8gqWyJrdfl7ja1F5gNe7yavf
+	tQdFu+zFa2u5C4rdD/HeEFMgjcHz6Qr1Fryz6CBc4UsDNoAQ3eqw4lHVjQXvv/n/smeuQ0Z4Nnr
+	mzfsnmNl9+4eM/stnyt7U+/6aMXrfynxb8fase50zdJ9SZ9wT3YL3TNk6kNsa7MHdfQHfi9pJD8
+	9fBar39d
+X-Google-Smtp-Source: AGHT+IFL+Sua+ojXGweDlYroK3L9HhW3YLR6oBasrEevNtDTKzyG2vcnQthcGfElhNM2StSthsN+4w==
+X-Received: by 2002:a17:903:18a:b0:20d:cb6:11e with SMTP id d9443c01a7336-21614d50de0mr84997175ad.26.1733588264429;
+        Sat, 07 Dec 2024 08:17:44 -0800 (PST)
 Received: from localhost (c-73-37-105-206.hsd1.or.comcast.net. [73.37.105.206])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-215f8efa1a0sm45432785ad.165.2024.12.07.08.17.41
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2162b13d486sm13240525ad.191.2024.12.07.08.17.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 07 Dec 2024 08:17:41 -0800 (PST)
+        Sat, 07 Dec 2024 08:17:43 -0800 (PST)
 From: Rob Clark <robdclark@gmail.com>
 To: dri-devel@lists.freedesktop.org
 Cc: freedreno@lists.freedesktop.org,
@@ -87,9 +87,9 @@ Cc: freedreno@lists.freedesktop.org,
 	David Airlie <airlied@gmail.com>,
 	Simona Vetter <simona@ffwll.ch>,
 	linux-kernel@vger.kernel.org (open list)
-Subject: [RFC 08/24] drm/msm: Collapse vma allocation and initialization
-Date: Sat,  7 Dec 2024 08:15:08 -0800
-Message-ID: <20241207161651.410556-9-robdclark@gmail.com>
+Subject: [RFC 09/24] drm/msm: Collapse vma close and delete
+Date: Sat,  7 Dec 2024 08:15:09 -0800
+Message-ID: <20241207161651.410556-10-robdclark@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241207161651.410556-1-robdclark@gmail.com>
 References: <20241207161651.410556-1-robdclark@gmail.com>
@@ -103,156 +103,80 @@ Content-Transfer-Encoding: 8bit
 
 From: Rob Clark <robdclark@chromium.org>
 
-Now that we've dropped vram carveout support, we can collapse vma
-allocation and initialization.  This better matches how things work
-with drm_gpuvm.
+This fits better drm_gpuvm/drm_gpuva.
 
 Signed-off-by: Rob Clark <robdclark@chromium.org>
 ---
- drivers/gpu/drm/msm/msm_gem.c     | 30 +++-----------------------
- drivers/gpu/drm/msm/msm_gem.h     |  4 ++--
- drivers/gpu/drm/msm/msm_gem_vma.c | 36 +++++++++++++------------------
- 3 files changed, 20 insertions(+), 50 deletions(-)
+ drivers/gpu/drm/msm/msm_gem.c     | 16 +++-------------
+ drivers/gpu/drm/msm/msm_gem_vma.c |  2 ++
+ 2 files changed, 5 insertions(+), 13 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-index f42bfa70502a..6f11ce1d0191 100644
+index 6f11ce1d0191..326764026ebb 100644
 --- a/drivers/gpu/drm/msm/msm_gem.c
 +++ b/drivers/gpu/drm/msm/msm_gem.c
-@@ -333,23 +333,6 @@ uint64_t msm_gem_mmap_offset(struct drm_gem_object *obj)
- 	return offset;
+@@ -349,15 +349,6 @@ static struct msm_gem_vma *lookup_vma(struct drm_gem_object *obj,
+ 	return NULL;
  }
  
--static struct msm_gem_vma *add_vma(struct drm_gem_object *obj,
--		struct msm_gem_vm *vm)
+-static void del_vma(struct msm_gem_vma *vma)
 -{
--	struct msm_gem_object *msm_obj = to_msm_bo(obj);
--	struct msm_gem_vma *vma;
--
--	msm_gem_assert_locked(obj);
--
--	vma = msm_gem_vma_new(vm);
 -	if (!vma)
--		return ERR_PTR(-ENOMEM);
+-		return;
 -
--	list_add_tail(&vma->list, &msm_obj->vmas);
--
--	return vma;
+-	list_del(&vma->list);
+-	kfree(vma);
 -}
 -
- static struct msm_gem_vma *lookup_vma(struct drm_gem_object *obj,
- 		struct msm_gem_vm *vm)
+ /*
+  * If close is true, this also closes the VMA (releasing the allocated
+  * iova range) in addition to removing the iommu mapping.  In the eviction
+@@ -368,11 +359,11 @@ static void
+ put_iova_spaces(struct drm_gem_object *obj, bool close)
  {
-@@ -416,6 +399,7 @@ static struct msm_gem_vma *get_vma_locked(struct drm_gem_object *obj,
- 		struct msm_gem_vm *vm,
- 		u64 range_start, u64 range_end)
- {
-+	struct msm_gem_object *msm_obj = to_msm_bo(obj);
- 	struct msm_gem_vma *vma;
+ 	struct msm_gem_object *msm_obj = to_msm_bo(obj);
+-	struct msm_gem_vma *vma;
++	struct msm_gem_vma *vma, *tmp;
  
  	msm_gem_assert_locked(obj);
-@@ -423,18 +407,10 @@ static struct msm_gem_vma *get_vma_locked(struct drm_gem_object *obj,
- 	vma = lookup_vma(obj, vm);
  
- 	if (!vma) {
--		int ret;
--
--		vma = add_vma(obj, vm);
-+		vma = msm_gem_vma_new(vm, obj, range_start, range_end);
- 		if (IS_ERR(vma))
- 			return vma;
--
--		ret = msm_gem_vma_init(vma, obj->size,
--			range_start, range_end);
--		if (ret) {
--			del_vma(vma);
--			return ERR_PTR(ret);
--		}
-+		list_add_tail(&vma->list, &msm_obj->vmas);
- 	} else {
- 		GEM_WARN_ON(vma->iova < range_start);
- 		GEM_WARN_ON((vma->iova + obj->size) > range_end);
-diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
-index c16b11182831..9bd78642671c 100644
---- a/drivers/gpu/drm/msm/msm_gem.h
-+++ b/drivers/gpu/drm/msm/msm_gem.h
-@@ -66,8 +66,8 @@ struct msm_gem_vma {
- 	bool mapped;
- };
+-	list_for_each_entry(vma, &msm_obj->vmas, list) {
++	list_for_each_entry_safe(vma, tmp, &msm_obj->vmas, list) {
+ 		if (vma->vm) {
+ 			msm_gem_vma_purge(vma);
+ 			if (close)
+@@ -391,7 +382,7 @@ put_iova_vmas(struct drm_gem_object *obj)
+ 	msm_gem_assert_locked(obj);
  
--struct msm_gem_vma *msm_gem_vma_new(struct msm_gem_vm *vm);
--int msm_gem_vma_init(struct msm_gem_vma *vma, int size,
-+struct msm_gem_vma *
-+msm_gem_vma_new(struct msm_gem_vm *vm, struct drm_gem_object *obj,
- 		u64 range_start, u64 range_end);
- void msm_gem_vma_purge(struct msm_gem_vma *vma);
- int msm_gem_vma_map(struct msm_gem_vma *vma, int prot, struct sg_table *sgt, int size);
+ 	list_for_each_entry_safe(vma, tmp, &msm_obj->vmas, list) {
+-		del_vma(vma);
++		msm_gem_vma_close(vma);
+ 	}
+ }
+ 
+@@ -556,7 +547,6 @@ static int clear_iova(struct drm_gem_object *obj,
+ 
+ 	msm_gem_vma_purge(vma);
+ 	msm_gem_vma_close(vma);
+-	del_vma(vma);
+ 
+ 	return 0;
+ }
 diff --git a/drivers/gpu/drm/msm/msm_gem_vma.c b/drivers/gpu/drm/msm/msm_gem_vma.c
-index 9419692f0cc8..6d18364f321c 100644
+index 6d18364f321c..ca29e81d79d2 100644
 --- a/drivers/gpu/drm/msm/msm_gem_vma.c
 +++ b/drivers/gpu/drm/msm/msm_gem_vma.c
-@@ -106,47 +106,41 @@ void msm_gem_vma_close(struct msm_gem_vma *vma)
- 	msm_gem_vm_put(vm);
- }
- 
--struct msm_gem_vma *msm_gem_vma_new(struct msm_gem_vm *vm)
-+/* Create a new vma and allocate an iova for it */
-+struct msm_gem_vma *
-+msm_gem_vma_new(struct msm_gem_vm *vm, struct drm_gem_object *obj,
-+		u64 range_start, u64 range_end)
- {
- 	struct msm_gem_vma *vma;
-+	int ret;
- 
- 	vma = kzalloc(sizeof(*vma), GFP_KERNEL);
- 	if (!vma)
--		return NULL;
-+		return ERR_PTR(-ENOMEM);
- 
- 	vma->vm = vm;
- 
--	return vma;
--}
--
--/* Initialize a new vma and allocate an iova for it */
--int msm_gem_vma_init(struct msm_gem_vma *vma, int size,
--		u64 range_start, u64 range_end)
--{
--	struct msm_gem_vm *vm = vma->vm;
--	int ret;
--
--	if (GEM_WARN_ON(!vm))
--		return -EINVAL;
--
--	if (GEM_WARN_ON(vma->iova))
--		return -EBUSY;
--
- 	spin_lock(&vm->lock);
- 	ret = drm_mm_insert_node_in_range(&vm->mm, &vma->node,
--					  size, PAGE_SIZE, 0,
-+					  obj->size, PAGE_SIZE, 0,
- 					  range_start, range_end, 0);
+@@ -102,8 +102,10 @@ void msm_gem_vma_close(struct msm_gem_vma *vma)
  	spin_unlock(&vm->lock);
  
- 	if (ret)
--		return ret;
-+		goto err_free_vma;
+ 	vma->iova = 0;
++	list_del(&vma->list);
  
- 	vma->iova = vma->node.start;
- 	vma->mapped = false;
- 
-+	INIT_LIST_HEAD(&vma->list);
-+
- 	kref_get(&vm->kref);
- 
--	return 0;
-+	return vma;
-+
-+err_free_vma:
+ 	msm_gem_vm_put(vm);
 +	kfree(vma);
-+	return ERR_PTR(ret);
  }
  
- struct msm_gem_vm *
+ /* Create a new vma and allocate an iova for it */
 -- 
 2.47.1
 
