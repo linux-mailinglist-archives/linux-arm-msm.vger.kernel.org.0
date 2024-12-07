@@ -1,63 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-40849-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40850-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D8DD9E7D9D
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Dec 2024 01:49:16 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id B7BBB9E7FBD
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Dec 2024 12:59:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 199DE286B45
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Dec 2024 00:49:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6192E281715
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Dec 2024 11:59:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 583564C7C;
-	Sat,  7 Dec 2024 00:49:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6208A1448E4;
+	Sat,  7 Dec 2024 11:59:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="OpS0FShT"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="lsjcO5Jg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC3122C6DC;
-	Sat,  7 Dec 2024 00:49:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D32A7DA9F
+	for <linux-arm-msm@vger.kernel.org>; Sat,  7 Dec 2024 11:59:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733532552; cv=none; b=UdvbvoUYX6xnpBUknpBlP4Ljoa0zkBUUPrDdgOpMmiQooW7UiSmTl771BrXo1JsVuzY/Rj1ZW5cqHfPAx0zLaQ0qOmeDPNU1OCVU4g7j7L5+waZK0U2DP56gXqYuv6bevslDD1pil0nRpV2Ti0vNXJ+jxnnlo8Ba+ArJtlGCJBQ=
+	t=1733572759; cv=none; b=Uvh2RGXi+S2DVuWFaPT4pkwJXKFfZ98Qtb96L6R4SqgU53BkNMGHY++lp7l6tlUf5qd4kBZQ6MCyOmw91HCxOSgFKobUihdo1IXUtDUYI5/H6qDaT4CY8qi2m1zFkgD2RxWhGjBvqsEiswZq7wHVNBAATzybzgENEW96/2uhn7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733532552; c=relaxed/simple;
-	bh=kBTarmwfIO+GCCWNjyURqN3Jc9erv0BphZuS6jWcWdE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=BTt8PrSKmH8C5EZ1oRD0FoeN/xg/uB+tKOh4w8C2hBUYNWiGTs6QGu6c4B+qXoPzeL4y0QrH9QhT58lonai2v9fy2qj4gaYNxZj9OIRyPjHfmqEkGJ8at9c2wqCvPog37Vt7I5ZuTzYpFrEW71rW9dNzIXzS1HaWZ5zFFz+LNIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=OpS0FShT; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B70JxQX023369;
-	Sat, 7 Dec 2024 00:48:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	s=arc-20240116; t=1733572759; c=relaxed/simple;
+	bh=mGZn0CG4Ny68vFgd1+6X3q26cRYW734PaY3Qehg7YCE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=B5OuhnMQfND/Wr7QC33Fx9sFpraFAkpLiLrOjacqs3HotW/+p3Vu8mInylcXGRUDULj8A8YxIqEB+I/Obxhza5eS7hZF7jNAGW1Mv4fuupwRK3MvNnC5i03e7zMnluwsvrPJVXICCfAgtMDP65flSYLl1tQnvf0Ctp+JQSCJO54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=lsjcO5Jg; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B75KoxI029454
+	for <linux-arm-msm@vger.kernel.org>; Sat, 7 Dec 2024 11:59:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	AK74VPG6A9e2QYgKpR9cQJBVCOoLg7G7LnluO38hQd4=; b=OpS0FShTGFm0IoR/
-	6a64wEG/tISKcsQYtnmqcQQVyFbhRSZDPkh+D/Y/UUzcqL80PTLKhKl8xgDUbbLF
-	6vxADF+2/CztOaUPLELPJC7FbWbf3YbZJKsJRl6sqNUJWcA9mL63+EZdIJ6VN2CN
-	2gvvpwsbsDCC/+5T7IBMsra+cFIpRPrdRDMGGV9pPEHIndEjzugHM3ZG1dOwUnsh
-	ybHwv5y77qP0o6htqAFDlfP0geOckmGewnGz+/s87BK1aeutBU8840IYzan04gPG
-	DsQb+Ogelkz0Fn6rED2K54b2J0t/lboOiY1uzy833azMCB/tQOHZlEztvbtA1S8L
-	Fepf9A==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43cbqn019d-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 07 Dec 2024 00:48:45 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B70miY1011072
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 7 Dec 2024 00:48:44 GMT
-Received: from [10.134.70.212] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 6 Dec 2024
- 16:48:44 -0800
-Message-ID: <80d08449-71de-4a7f-8b2a-8af565d8d701@quicinc.com>
-Date: Fri, 6 Dec 2024 16:48:43 -0800
+	VGXhR18Fq97qh7TbUSa0kKhL/ZByCAhy9VcD/gJL5ME=; b=lsjcO5JgY9n/l930
+	dD5YoEleoZmmaNmxtMyiIQbAl6lMueD0jtsqgwWixSfoa7rqEOUgV6NhrYKz3d9J
+	S4Ok3T/JQn+JFXBxw9HXCxHmIZ5Kl38SMgUD+7dMiTAWaqBwLJnzUnoZLQAAHKGg
+	Hjv71GKm9lThlvPa5cKpfW3B7RJgzG76JRXrLLrWxRT9j614zUS6GJyMU3kenEgi
+	oKCUKxxD1ZTwd2iyoOl5YD74POtXmVq2hMb0eE2N6h0KcnqugC4LKaCgpHCnKVcv
+	MFr5Fg6BTP7catpxvb2GjGyYP9f26lQmf7RFEEp21wzO3Sye+1X00AfU9rYVOs7D
+	s18E2A==
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43cfhk8g8k-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 07 Dec 2024 11:59:11 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-6d8a3cb9dbfso7663536d6.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 07 Dec 2024 03:59:10 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733572750; x=1734177550;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=VGXhR18Fq97qh7TbUSa0kKhL/ZByCAhy9VcD/gJL5ME=;
+        b=EDu6Ux0ElYPJFVGfn1zI8Srk+JD1wh5Ox8TYcljhsL0zvceASiUHsfprg8mu6R/bGZ
+         hzXEku+/1/ofuVTngKxVwaFS8U9ri29j/7H68dLtKuPqQwCilVqPKR6/CUjt2VS1HNGv
+         AyiMCX45JPj/6EE+hQTojNNdVhbdXfWy/moQyB/eeL1pYOIfN+cnr13TV5dZ1q6sswhc
+         O5/iMOR/zyckWxK1zo+Vj0mQkAkgIM7v/uPShJ/hphmV84jZ8zOBP2Twx5z9SUZSSoCy
+         GZ8A3AjrvOZIO6mKoS/1hVJtL7UcxmwWYEvqBdBaPyYLeCHQQVf084MNOMummDpfuCPk
+         3Xmw==
+X-Forwarded-Encrypted: i=1; AJvYcCWDrcCSr4aH0vn7iYHXRXLChKIyhP75qiS4en7IBz7h41h291RiZX8e+UuEcS57zW4MRd2pVRKJ/VAUXRfY@vger.kernel.org
+X-Gm-Message-State: AOJu0YwxERzHXXBbk8v0lsIc415wlxyoKhuPqddZnNLRrmusbqssA6WN
+	L6YNa/VjgRXf4zUUT0WeIkdS9Vpn/fTpUFMDsL6VVSjs90JLn5b3uUum5w3B2dYihavH+qmOi/9
+	L6RFxGkHGQcpnIZeGVVoA3+9ETZMm8E6N5Is/7a3j4Fg8xLSStVcvRfDq+OmUWKHV
+X-Gm-Gg: ASbGncvY6MwFuO0N71vJ1ir+xK6e4E4rCQw3s5g9FqRmsSgZJpN68cCvihEHVwZc0K8
+	q3nwmwbHAMp2aeAYWvuQ+lfz2AutR0I0cEkOKWSYa4kQ6Lx4/VDkQY9r3LpgKFidKc6rNnOi3oV
+	3KkeiWrKQ3TUtSM6J9AIk0wk8Z4eIQIF3pCxoZV8dXPm+v177rXxPvswl/+SuWQCgPSz2d1x7qP
+	Omt50X99gzrp4IeODpzNPROTDX+xYd2GMC5zDq/9bNZRjZJXL4we8uWXRR+PcQcKmZPj9bdQbMd
+	8RqeRSxS3meBP3iCRgqz+hlp3sXfoaI=
+X-Received: by 2002:ac8:578d:0:b0:463:5391:de49 with SMTP id d75a77b69052e-46734fa37b7mr39903271cf.11.1733572749704;
+        Sat, 07 Dec 2024 03:59:09 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGPlffbEBpmwwLn07e4NjXlSpPb++V4AbkGPE+RE6e5rhThB9Z+v/f84NfUnlbSCUlfPWRp0Q==
+X-Received: by 2002:ac8:578d:0:b0:463:5391:de49 with SMTP id d75a77b69052e-46734fa37b7mr39903151cf.11.1733572749290;
+        Sat, 07 Dec 2024 03:59:09 -0800 (PST)
+Received: from [192.168.212.163] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa625e96aabsm381402266b.63.2024.12.07.03.59.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 07 Dec 2024 03:59:08 -0800 (PST)
+Message-ID: <b5400627-6359-4dfc-abb2-2c142217a28b@oss.qualcomm.com>
+Date: Sat, 7 Dec 2024 12:59:05 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,119 +89,85 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/22] drm: Add valid clones check
-To: Maxime Ripard <mripard@kernel.org>
-CC: Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>,
-        <quic_abhinavk@quicinc.com>, Sean Paul
-	<sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        "David
- Airlie" <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        "Maarten
- Lankhorst" <maarten.lankhorst@linux.intel.com>,
-        Thomas Zimmermann
-	<tzimmermann@suse.de>, <quic_ebharadw@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        Rob Clark
-	<robdclark@chromium.org>,
-        =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?=
-	<ville.syrjala@linux.intel.com>
-References: <20240924-concurrent-wb-v2-0-7849f900e863@quicinc.com>
- <20240924-concurrent-wb-v2-2-7849f900e863@quicinc.com>
- <20240925-hasty-bald-caribou-eedbf5@houat>
+Subject: Re: [PATCH 5/6] arm64: dts: qcom: x1e80100: Add CCI definitions
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>, Robert Foss <rfoss@kernel.org>,
+        Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd
+ <sboyd@kernel.org>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org, linux-clk@vger.kernel.org
+References: <20241119-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v1-0-54075d75f654@linaro.org>
+ <20241119-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v1-5-54075d75f654@linaro.org>
 Content-Language: en-US
-From: Jessica Zhang <quic_jesszhan@quicinc.com>
-In-Reply-To: <20240925-hasty-bald-caribou-eedbf5@houat>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20241119-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v1-5-54075d75f654@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: -zKcDFja7cx9ZYMB7kSujIe0CKHcr77J
-X-Proofpoint-GUID: -zKcDFja7cx9ZYMB7kSujIe0CKHcr77J
+X-Proofpoint-ORIG-GUID: 1M8LrlR3jWh01Bud362nUSl1WPlFGeyZ
+X-Proofpoint-GUID: 1M8LrlR3jWh01Bud362nUSl1WPlFGeyZ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
- spamscore=0 bulkscore=0 adultscore=0 clxscore=1015 mlxlogscore=999
- malwarescore=0 phishscore=0 lowpriorityscore=0 impostorscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412070003
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ impostorscore=0 mlxlogscore=999 mlxscore=0 adultscore=0 lowpriorityscore=0
+ phishscore=0 clxscore=1015 priorityscore=1501 spamscore=0 bulkscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412070100
 
-
-
-On 9/25/2024 12:23 AM, Maxime Ripard wrote:
-> On Tue, Sep 24, 2024 at 03:59:18PM GMT, Jessica Zhang wrote:
->> Check that all encoders attached to a given CRTC are valid
->> possible_clones of each other.
->>
->> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
->> ---
->>   drivers/gpu/drm/drm_atomic_helper.c | 23 +++++++++++++++++++++++
->>   1 file changed, 23 insertions(+)
->>
->> diff --git a/drivers/gpu/drm/drm_atomic_helper.c b/drivers/gpu/drm/drm_atomic_helper.c
->> index 43cdf39019a4..cc4001804fdc 100644
->> --- a/drivers/gpu/drm/drm_atomic_helper.c
->> +++ b/drivers/gpu/drm/drm_atomic_helper.c
->> @@ -574,6 +574,25 @@ mode_valid(struct drm_atomic_state *state)
->>   	return 0;
->>   }
->>   
->> +static int drm_atomic_check_valid_clones(struct drm_atomic_state *state,
->> +					 struct drm_crtc *crtc)
->> +{
->> +	struct drm_encoder *drm_enc;
->> +	struct drm_crtc_state *crtc_state = drm_atomic_get_new_crtc_state(state,
->> +									  crtc);
->> +
->> +	drm_for_each_encoder_mask(drm_enc, crtc->dev, crtc_state->encoder_mask) {
->> +		if ((crtc_state->encoder_mask & drm_enc->possible_clones) !=
->> +		    crtc_state->encoder_mask) {
->> +			DRM_DEBUG("crtc%d failed valid clone check for mask 0x%x\n",
->> +				  crtc->base.id, crtc_state->encoder_mask);
->> +			return -EINVAL;
->> +		}
->> +	}
->> +
->> +	return 0;
->> +}
->> +
->>   /**
->>    * drm_atomic_helper_check_modeset - validate state object for modeset changes
->>    * @dev: DRM device
->> @@ -745,6 +764,10 @@ drm_atomic_helper_check_modeset(struct drm_device *dev,
->>   		ret = drm_atomic_add_affected_planes(state, crtc);
->>   		if (ret != 0)
->>   			return ret;
->> +
->> +		ret = drm_atomic_check_valid_clones(state, crtc);
->> +		if (ret != 0)
->> +			return ret;
->>   	}
+On 19.11.2024 2:10 PM, Bryan O'Donoghue wrote:
+> Add in 2 CCI busses. One bus has two CCI bus master pinouts:
+> cci_i2c_scl0 = gpio101
+> cci_i2c_sda0 = gpio102
+> cci_i2c_scl1 = gpio103
+> cci_i2c_sda1 = gpio104
 > 
-> Pretty much the same comment, we should have kunit tests for this.
-
-Hey Maxime,
-
-I'm working on the kunit test for this and had a question on the design 
-for the unit test:
-
-Since this is a static helper that returns a pretty common error code, 
-how would you recommend going about making sure that 
-`drm_atomic_check_valid_clones()` specifically is returning the error 
-(and not a different part of check_modeset) when testing the 
-check_valid_clones() failure path?
-
-Thanks,
-
-Jessica Zhang
-
+> A second bus has a single CCI bus master pinout:
+> cci_i2c_scl2 = gpio105
+> cci_i2c_sda2 = gpio106
 > 
-> Maxime
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 162 +++++++++++++++++++++++++++++++++
+>  1 file changed, 162 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> index 5119cf64b461eb517e9306869ad0ec1b2cae629e..c19754fdc7e0fa4f674ce19f813db77fe2615cf3 100644
+> --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> @@ -4648,6 +4648,88 @@ usb_1_ss1_dwc3_ss: endpoint {
+>  			};
+>  		};
+>  
+> +		cci0: cci@ac15000 {
 
+[...]
+
+> +			cci0_default: cci0-default-state {
+> +				cci0_i2c0_default: cci0-i2c0-default-pins {
+> +					/* cci_i2c_sda0, cci_i2c_scl0 */
+> +					pins = "gpio101", "gpio102";
+> +					function = "cci_i2c";
+> +
+> +					bias-pull-up;
+> +					drive-strength = <2>; /* 2 mA */
+> +				};
+
+Please match the style of other nodes (flip drive-strength and bias, remove
+the newline and remove the mA comment)
+
+Otherwise looks good and I can attest to this working, as the sensor on the
+SL7 happily talks back
+
+Konrad
 
