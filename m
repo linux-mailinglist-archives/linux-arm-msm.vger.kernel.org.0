@@ -1,137 +1,209 @@
-Return-Path: <linux-arm-msm+bounces-40905-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40906-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 116099E84A5
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Dec 2024 12:27:28 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C288E9E84AF
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Dec 2024 12:39:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C6A602817DB
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Dec 2024 11:27:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 20DE228163A
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Dec 2024 11:39:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC0AC13E02E;
-	Sun,  8 Dec 2024 11:27:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4EB61448E0;
+	Sun,  8 Dec 2024 11:39:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="V0IH9upu"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="D+bfxCX4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0088B535B9
-	for <linux-arm-msm@vger.kernel.org>; Sun,  8 Dec 2024 11:27:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B044C1448DC
+	for <linux-arm-msm@vger.kernel.org>; Sun,  8 Dec 2024 11:39:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733657238; cv=none; b=nkzyQaH1+MlfKd6lDskkjru53qFPvfZhDWHR8IU7272qrJ1mAMfVefaCi1c/HjxYPktQTTD2GpxL1Q7RCpYAvUmXsMtwWkxymkKKLl3SDb/icyIw+o+3zNQ2YIeTc9Iw39XvsXd0RBoBee9H+q52kibU9alj78zhS4Jmgg0/a9c=
+	t=1733657966; cv=none; b=nswb9xkFTq3qC1M2AYryDPda6bmgkDL4jlTQ5Q0pj4bKrjPiRPzV3r3d2dneyMVDS0sJg6ZMccH5I6ZuOEm2jHSqyBDbp6VynZDqtTcubGssheLaCm3e67aYAGHc00Yik5Sih6+kGxwA/htwy703wo/ooJSjCCXS0VWOMBsUtkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733657238; c=relaxed/simple;
-	bh=f0Jo04c/T2mEssbQZfNecevl2eZUZV/9cEdpBG53Pu0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jtnrtLMnDwhtICqfqTP/6CgDHEmnpnjXZ5C3TzfhOmFhU5pal0cI74MJEEpnp6u1TEOAagJJl/MeHJPCpQ0xjr75u/lRlJsOEOl+3rPI9s89K9/pVWqvK0TXHoeau/PKQLF91Zb7DaQWyzKrgBmBIzdzKEMekVrMYYALwDMFJ08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=V0IH9upu; arc=none smtp.client-ip=209.85.221.50
+	s=arc-20240116; t=1733657966; c=relaxed/simple;
+	bh=jQk/Q7ElUFDJ8+2z16EsiGL4/k6YTUMKj3wkKJkf2G4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kxpEe/nR29BzhhtfolKS16UDQ1nNfzbV3DpMrbY9aI5NZFy0WUZsX+Y4/NNlIedo662MW/H0ow/yu7dCK+xe/OuG5/tbBP10AIX8EymCgk0X4E9scJGJH9W4TIrpyg9jG4F0XfoDZI2pnTAB8GC4twQ/wqgY+mQXgNvzjwDXgck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=D+bfxCX4; arc=none smtp.client-ip=209.85.167.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-3862b364538so1140499f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Dec 2024 03:27:16 -0800 (PST)
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-5401bd6cdb7so298159e87.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Dec 2024 03:39:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733657235; x=1734262035; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=CsVvC94nl2+83Y2oLBYdgCRMUN1ZyQsu5kZ8QEDXwqU=;
-        b=V0IH9upuOgAkkRZjlkrU0Dmw5gHwzfLvi74Ag7cMDEC3L+crwxac+Uwbm0K9st8szB
-         cR2jFbISYyTNWCIOPwaUCEegR8zhm/BIap/bIJLGMPkVEHldvE0igGZIT9NDx5O5HV0g
-         tqdeTtwpUCuhPZtaHDa+S+FCW6C74+zJPKgZMuR/xpkJ6TSkME0qI5n6KxFKpvH2TW+2
-         G938cU4p6LbaiUT/s6LM9tX2kh5W51ln4kuECy6D/e/ScPfMVDLpPMrm4/JQ26mV9dK+
-         a13oofKQ6pRpR0sDAbLKoh6RtYx+ZnhwUL+jdwu/nZtiRJiz4Q4bAl0xGYdEp3+VZ9VY
-         NZNg==
+        d=linaro.org; s=google; t=1733657963; x=1734262763; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=W9morjBPw/QOjQQuL/hx7w1FC0q/DCLfzZD9bWcXHsg=;
+        b=D+bfxCX4WQMLLCHwzT43hp0Sm07dB8/0QFiLz6E6cDknd0cjLwNUyur6wZVx7mu02b
+         EkxPVGbCRShkHOFyerrZZzeyGRLnxUt8tg7xulpXdQa2DWgUd0GUfPjP+JqtWnXnVLqq
+         /gYLAa+v5idTTqoYRDyjDpGLkte545CZ/MP3wb9QIOfMj1alLNjV/bcGqygZS3XBEJMr
+         1MXAloKa0F/BPYa5W5bbRlwUhKzcKeQiFKrqmLFmgRRDlvghPoMfEBAE8Zuj9BP6gOdC
+         kb5nsPZJ8DAg9hGevjVP9wIrp7p9ld3VdTfo3MHBR1SOrHao8/INeeNnfdoMKNeBBEkK
+         OL0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733657235; x=1734262035;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CsVvC94nl2+83Y2oLBYdgCRMUN1ZyQsu5kZ8QEDXwqU=;
-        b=QtTJaTCStvROhWAOc2fhV7I1kTplX+BXR/o3rw/vizcrz8ihoq7Kjl83vGBhCk9ZuF
-         50uGQ7T+GC9ItiKxBmo8lMzKTsr/thhSFUIOpPq+a6NR/wRWWEXe0DaBFdteuyCp+lSh
-         2iDPBM1G2/mPKyJiCi4ll5Xjs1PhiU/UN6Q/VDz0GHQKv4JVM+JqrUVdn25B6nZsjZCQ
-         CV7z5cfPoZPrL5D3/WTSbYYU1CEHxCvq23tQAbHW666VPn7pMJUYBQeBHhynFjLslK8L
-         NZ1e773dm2Ktg1JzoTX14Or6er5GQsi/J+qYaVCubW8YB1mKc308yXQA0ljET7oPkOub
-         dYSg==
-X-Forwarded-Encrypted: i=1; AJvYcCXXCVIvL7uewg8qZdjUHVvveIku71D0WFbTW211hkfV4W/CAkXkb4vYdE5MgIwoEcrQ4MtM2eqs2W6Ji+1J@vger.kernel.org
-X-Gm-Message-State: AOJu0Yypa6dsCbKScB1KXIze4FuIKfrmA9TW0poBNiVOqEzb+Kpf/O9f
-	4wPZeec2w72QA78Dmdk62uPHNAjcyQIRKnQqpkn9GKgFStDHJU+r7rHpZRVYACw=
-X-Gm-Gg: ASbGncvvzTFPuIoQ8Ut8Jl47eQFcRsKiNOnBCNOhADxMvUcRIxQzKBOOE0EGmmzEeIg
-	yfxes5G/fTd8zCSLTIoeRbJiAWLaEXPJfLXUMyeRmHQ8rR9YbXE0hjAQ8YQya/pAUOyi+p/0dBz
-	lpe+VJh5nmv6un9lvqoWWE4j3/TlMUV2SuROmaoqf5cLCAI8rjhjNpe8aMWk9m4uP/Zv0/l+qvg
-	9jjb60fCm9G+fX7aeMXmbmoHHUcyEAV1oULxpwVhos8U6LdWRbti3VTAWcP2E8=
-X-Google-Smtp-Source: AGHT+IH//Ct388igxpj5Bg2HRBO2RyulR3RmoCk+xAmpaxF9sT8ZNwoRAF+tNrtLfoOXVJ033QX4iQ==
-X-Received: by 2002:a5d:5889:0:b0:386:3d33:a61a with SMTP id ffacd0b85a97d-3863d33a7d8mr433893f8f.27.1733657235343;
-        Sun, 08 Dec 2024 03:27:15 -0800 (PST)
-Received: from [192.168.0.40] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3861ecf4008sm9654693f8f.22.2024.12.08.03.27.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 08 Dec 2024 03:27:14 -0800 (PST)
-Message-ID: <fd8538b6-4c9f-411c-89db-6936ebed7464@linaro.org>
-Date: Sun, 8 Dec 2024 11:27:14 +0000
+        d=1e100.net; s=20230601; t=1733657963; x=1734262763;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=W9morjBPw/QOjQQuL/hx7w1FC0q/DCLfzZD9bWcXHsg=;
+        b=pvDtQ/vIiRlW5ZQ4xdG2MqLkYDKQLHuAY7ldKFsNBkpBxrL8mzXqTap1sMVXuJxhPY
+         NMqgv/tnfghH5tEHZxTiav9WD+RTkwA1oDchEPCPjWtsPBSvnCyGpqZkK2NiqO6wxtL2
+         IS60nNNssQYFJz16RoR1dVKF/d0/hxAMaksTfU5zEoBGrLBiU6AuLaOkzGyuixWz/NLI
+         WY+vNUD6pJ+n9FdpK/p9vvMR2EU1y8pRfnOWLK844eQAlm8aMyujGFk9UWN2MRZqnEUX
+         LA3X7BhA/ATsdP6tTrUXGmjm6NR9ukKa7OrYF6H9QeiwxGOC/JSJNad+zmgVJEGLZVL9
+         2w5Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUqcf4b7ixVpdDNw3VJe/5J59ZPQMoeqgccIIOk53LbhYZ+sE/ewkCpT2FGE5GVPY7iZvSL6epFDMgwzk43@vger.kernel.org
+X-Gm-Message-State: AOJu0YxIHqrqhOE5dMJ3t1MIjpop76p5G48rhJdL9I8ngNav3gqTfsBj
+	ijxAKByOoXPbNYelqxZ4rmStZeSFteQ9127Gg45TRLu1PDRfiZp6N0/JJkClnho=
+X-Gm-Gg: ASbGnct/NNcJsTwO345foYnRc6Zx5GtsSNv26CMl8bHWV2oWi+HJ0TfioX5nasZvV81
+	KiH1u8mj7DmHkdrREh3ZsoNaoaPVw7VNWIHQGzqOv0C+K2ZYH13UE5NywHqBn/MapzmJ2vlCRx/
+	3Qq4vo38MzLsTHLHgzMYruLQw70+W3EofgAP3L64PnOHkHrushMvnVCdZ0PGC26lcF/h0IeDEae
+	P7H9Jh1JCnPO4k0xiKqlC29F2xZq+dP+NK449flc/xO0f0BRVmjmXF8Yo7uZ6zsjN9aUVEI1EAr
+	I6+JqsvlDjqjLy7Tzmh1qQCy9Rx44Q==
+X-Google-Smtp-Source: AGHT+IEmYeJ2ZQRN84qHuhel52Yb+lkGV4iCWlUilYcgQ5pTjCo0FNpG1AeVpIwExJma9YYEjfC7yQ==
+X-Received: by 2002:a05:6512:3dac:b0:540:1d37:e6c with SMTP id 2adb3069b0e04-5401d371124mr371746e87.30.1733657962669;
+        Sun, 08 Dec 2024 03:39:22 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53e36421f61sm680978e87.137.2024.12.08.03.39.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 08 Dec 2024 03:39:21 -0800 (PST)
+Date: Sun, 8 Dec 2024 13:39:18 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Stephen Boyd <swboyd@chromium.org>, 
+	Chandan Uddaraju <chandanu@codeaurora.org>, Guenter Roeck <groeck@chromium.org>, 
+	Kuogee Hsieh <quic_khsieh@quicinc.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Vara Reddy <quic_varar@quicinc.com>, Rob Clark <robdclark@chromium.org>, 
+	Tanmay Shah <tanmay@codeaurora.org>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+	Jessica Zhang <quic_jesszhan@quicinc.com>, Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Subject: Re: [PATCH 15/45] drm/msm/dp: convert dp_display_set_mode() to use
+ dp_panel argument
+Message-ID: <zw4np7nvrd627wvrdveisnfuyep5vp7rmrxm4vnmpmqiz7enev@uarpgh753fyc>
+References: <20241205-dp_mst-v1-0-f8618d42a99a@quicinc.com>
+ <20241205-dp_mst-v1-15-f8618d42a99a@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] media: qcom: camss: Add sm845 named power-domain support
-To: David Heidelberg <david@ixit.cz>, Robert Foss <rfoss@kernel.org>,
- Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: Caleb Connolly <caleb.connolly@linaro.org>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20241208040055.30509-1-david@ixit.cz>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20241208040055.30509-1-david@ixit.cz>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241205-dp_mst-v1-15-f8618d42a99a@quicinc.com>
 
-On 08/12/2024 04:00, David Heidelberg wrote:
-> From: Caleb Connolly <caleb.connolly@linaro.org>
+On Thu, Dec 05, 2024 at 08:31:46PM -0800, Abhinav Kumar wrote:
+> Convert dp_display_set_mode() to use the dp_panel passed to it
+> as an argument rather than the cached one in dp_display_private.
+
+Why?
+
 > 
-> Declare power-domain names "top", "ife0" and "ife1" eponymously for the
-> power-domains TITAN_TOP_GDSC, IFE_0_GDSC and IFE_1_GDSC respectively.
-> 
-> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
-> Signed-off-by: David Heidelberg <david@ixit.cz>
+> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 > ---
->   drivers/media/platform/qcom/camss/camss.c | 3 +++
->   1 file changed, 3 insertions(+)
+>  drivers/gpu/drm/msm/dp/dp_display.c | 60 ++++++++++++++++++-------------------
+>  1 file changed, 30 insertions(+), 30 deletions(-)
 > 
-> diff --git ./drivers/media/platform/qcom/camss/camss.c ./drivers/media/platform/qcom/camss/camss.c
-> index 67fb11cbe865..62c556c4fcf8 100644
-> --- ./drivers/media/platform/qcom/camss/camss.c
-> +++ ./drivers/media/platform/qcom/camss/camss.c
-> @@ -927,6 +927,7 @@ static const struct camss_subdev_resources vfe_res_845[] = {
->   		.interrupt = { "vfe0" },
->   		.vfe = {
->   			.line_num = 4,
-> +			.pd_name = "ife0",
->   			.has_pd = true,
->   			.hw_ops = &vfe_ops_170,
->   			.formats_rdi = &vfe_formats_rdi_845,
-> @@ -954,6 +955,7 @@ static const struct camss_subdev_resources vfe_res_845[] = {
->   		.interrupt = { "vfe1" },
->   		.vfe = {
->   			.line_num = 4,
-> +			.pd_name = "ife1",
->   			.has_pd = true,
->   			.hw_ops = &vfe_ops_170,
->   			.formats_rdi = &vfe_formats_rdi_845,
-> @@ -2647,6 +2649,7 @@ static const struct camss_resources sdm660_resources = {
->   
->   static const struct camss_resources sdm845_resources = {
->   	.version = CAMSS_845,
-> +	.pd_name = "top",
->   	.csiphy_res = csiphy_res_845,
->   	.csid_res = csid_res_845,
->   	.vfe_res = vfe_res_845,
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index b506159191184a2a2c83d0735260ac040a33be98..5fa6c003cf6c51eae77573549a555a00dc33f476 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -798,16 +798,38 @@ static int msm_dp_init_sub_modules(struct msm_dp_display_private *dp)
+>  }
+>  
+>  static int msm_dp_display_set_mode(struct msm_dp *msm_dp_display,
+> -			       struct msm_dp_display_mode *mode)
+> +				   const struct drm_display_mode *adjusted_mode,
+> +				   struct msm_dp_panel *msm_dp_panel)
+>  {
+> -	struct msm_dp_display_private *dp;
+> +	struct msm_dp_display_mode msm_dp_mode;
+>  
+> -	dp = container_of(msm_dp_display, struct msm_dp_display_private, msm_dp_display);
+> +	memset(&msm_dp_mode, 0x0, sizeof(struct msm_dp_display_mode));
+> +
+> +	if (msm_dp_display_check_video_test(msm_dp_display))
+> +		msm_dp_mode.bpp = msm_dp_display_get_test_bpp(msm_dp_display);
+> +	else /* Default num_components per pixel = 3 */
+> +		msm_dp_mode.bpp = msm_dp_panel->connector->display_info.bpc * 3;
+> +
+> +	if (!msm_dp_mode.bpp)
+> +		msm_dp_mode.bpp = 24; /* Default bpp */
+> +
+> +	drm_mode_copy(&msm_dp_mode.drm_mode, adjusted_mode);
+> +
+> +	msm_dp_mode.v_active_low =
+> +		!!(msm_dp_mode.drm_mode.flags & DRM_MODE_FLAG_NVSYNC);
+> +
+> +	msm_dp_mode.h_active_low =
+> +		!!(msm_dp_mode.drm_mode.flags & DRM_MODE_FLAG_NHSYNC);
+> +
+> +	msm_dp_mode.out_fmt_is_yuv_420 =
+> +		drm_mode_is_420_only(&msm_dp_display->connector->display_info, adjusted_mode) &&
+> +		msm_dp_panel->vsc_sdp_supported;
+> +
+> +	drm_mode_copy(&msm_dp_panel->msm_dp_mode.drm_mode, &msm_dp_mode.drm_mode);
+> +	msm_dp_panel->msm_dp_mode.bpp = msm_dp_mode.bpp;
+> +	msm_dp_panel->msm_dp_mode.out_fmt_is_yuv_420 = msm_dp_mode.out_fmt_is_yuv_420;
+> +	msm_dp_panel_init_panel_info(msm_dp_panel);
+>  
+> -	drm_mode_copy(&dp->panel->msm_dp_mode.drm_mode, &mode->drm_mode);
+> -	dp->panel->msm_dp_mode.bpp = mode->bpp;
+> -	dp->panel->msm_dp_mode.out_fmt_is_yuv_420 = mode->out_fmt_is_yuv_420;
+> -	msm_dp_panel_init_panel_info(dp->panel);
+>  	return 0;
+>  }
+>  
+> @@ -1662,34 +1684,12 @@ void msm_dp_display_mode_set(struct msm_dp *dp,
+>  {
+>  	struct msm_dp_display_private *msm_dp_display;
+>  	struct msm_dp_panel *msm_dp_panel;
+> -	struct msm_dp_display_mode msm_dp_mode;
+>  
+>  	msm_dp_display = container_of(dp, struct msm_dp_display_private, msm_dp_display);
+>  	msm_dp_panel = msm_dp_display->panel;
+>  
+> -	memset(&msm_dp_mode, 0x0, sizeof(struct msm_dp_display_mode));
+> -
+> -	if (msm_dp_display_check_video_test(dp))
+> -		msm_dp_mode.bpp = msm_dp_display_get_test_bpp(dp);
+> -	else /* Default num_components per pixel = 3 */
+> -		msm_dp_mode.bpp = dp->connector->display_info.bpc * 3;
+> -
+> -	if (!msm_dp_mode.bpp)
+> -		msm_dp_mode.bpp = 24; /* Default bpp */
+> -
+> -	drm_mode_copy(&msm_dp_mode.drm_mode, adjusted_mode);
+> -
+> -	msm_dp_mode.v_active_low =
+> -		!!(msm_dp_mode.drm_mode.flags & DRM_MODE_FLAG_NVSYNC);
+> -
+> -	msm_dp_mode.h_active_low =
+> -		!!(msm_dp_mode.drm_mode.flags & DRM_MODE_FLAG_NHSYNC);
+> -
+> -	msm_dp_mode.out_fmt_is_yuv_420 =
+> -		drm_mode_is_420_only(&dp->connector->display_info, adjusted_mode) &&
+> -		msm_dp_panel->vsc_sdp_supported;
+>  
+> -	msm_dp_display_set_mode(dp, &msm_dp_mode);
+> +	msm_dp_display_set_mode(dp, adjusted_mode, msm_dp_panel);
+>  
+>  	/* populate wide_bus_support to different layers */
+>  	msm_dp_display->ctrl->wide_bus_en =
+> 
+> -- 
+> 2.34.1
+> 
 
-Acked-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+-- 
+With best wishes
+Dmitry
 
