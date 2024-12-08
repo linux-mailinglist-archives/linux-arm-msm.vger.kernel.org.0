@@ -1,169 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-40930-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40931-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 173869E870F
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Dec 2024 18:29:23 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 94D009E8720
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Dec 2024 18:47:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 03F45163D42
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Dec 2024 17:29:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5BF2B18854D5
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Dec 2024 17:47:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F6C4176240;
-	Sun,  8 Dec 2024 17:29:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 10FC6188915;
+	Sun,  8 Dec 2024 17:47:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DQC+WJCo"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JeFfeIW7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76CFA170A15
-	for <linux-arm-msm@vger.kernel.org>; Sun,  8 Dec 2024 17:29:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 285D115D5B7
+	for <linux-arm-msm@vger.kernel.org>; Sun,  8 Dec 2024 17:47:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733678959; cv=none; b=elWD56L9vQhuzWeW2ZY7ZPxbY6+Ww7eqY+lmO9xrUi2W/r3rbm3S9sXcMVsSTMr2AV1A4F6AEYF3yOSCH3FH4aB7ZIWcjPmbn2lwYpWgzsJ2E2BWk6BQS5p7O69i1vWFJ48JQ4VE1f/nXcUGNKtHA8e3T1u431vKCvOIt2ZK7g8=
+	t=1733680023; cv=none; b=KnXWxrZ0BpYOSViNyh15pg/1K7bHzT6lfMshcbiyFIIDEzbXnTzOmS9WXjQMdmi75tOkxtjyYONrGHJwrp4BXQQjv/mhF7Xy9U/f+Km15iehQkRtVtll3tZtSq9IqF5X6ImO35VdvyX/OVsKQ1s5xEBZ6gn3jWbSGqr5AYOU/mc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733678959; c=relaxed/simple;
-	bh=l0e+YjJJLUTTCME2U2RfwtoWLrRTp83OMNrgSpxIf3U=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=UCm463d0LNsF+qBM6xpySB9UMpXOmTSkGSVvdPF+xvHnmoh28JIUhdxqbt5bzFHkgeU4+g0Rt2/9Li7iT6wczaKRsbukdTuVVbtGvqGBBfyAEQrGaD8L2RDJ4rXCogwecj9dE2SkqjU2ATnVWJm1DDh0ulykevjrTqOWZk8lacM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DQC+WJCo; arc=none smtp.client-ip=209.85.208.173
+	s=arc-20240116; t=1733680023; c=relaxed/simple;
+	bh=DKRo/Nv0Y8HbOJvLk3acS15e0zEitScFgX15VqdGeyE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=oo+ejZhwpFDgE3x8ZD58qYjD+SBEELMwdAN5wx4RxkyqDfDPtS0wLamnnurSfukJxrYEinxw7rogJ9wUow54tAzaVPScP+7e7QENdHAnp2YwdgBpL/jj5757EAT8zhd2Tk9rOGrokDPHTZkNZbPoCwlUAfS5/L1V0nZdMPwSo2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JeFfeIW7; arc=none smtp.client-ip=209.85.167.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-30167f4c1deso8355691fa.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Dec 2024 09:29:16 -0800 (PST)
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-53df80eeeedso3608284e87.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Dec 2024 09:47:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733678954; x=1734283754; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=/tzoYaJ92Gqbh47fpsJMbKGuzwxMycmsQJXhBU4UoPU=;
-        b=DQC+WJCo9cPS1F50ICY+x5OBxiGD3hFK6sBm5PFZvXDa5IbWUtsuJLm3C34sGT57Lj
-         /IVCjnxSyUbP9WYWkkhmIbApFHNlauufJFloyxERpaToMsWBNmRF6tRANpZi/dV9mnpE
-         h0mPfbe+UyJJZbdTcPpikwI9STxkc6Js3bJM1+B0pY8cFe4C39f0MqKf8TEHZgQNtQ9/
-         ohLRevIV1u3T6ccwV4jNkS7GM13AzbgVQc+UwlTn5JuwyK5PD8hu2a5Q4nLNCoKsOQVa
-         UBpOmvGf8LF24lnkg1MbNCJVn5gnvqr9yPM55NkOhFIUlZjYWl018PhvJxApsb+PDA9M
-         7STg==
+        d=linaro.org; s=google; t=1733680019; x=1734284819; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=KXLchoBaMxB9S9j2NPKIN0e4atGZZxZFtq8qcdJcxUU=;
+        b=JeFfeIW7Nz46QeXQlwHi6c/Z00OpFPpw4t2As1GsLAM8O6z1WQJ1xYp/Oqj9ZHpjbA
+         ur9o23E3PFTT7TzunfwTse+2iSR8RPy0uMDwAJfitGHauqI5pxatOQY1lCCfh73QSUiu
+         AUN+wJHkD2Iy+cizPS6bzwJFcUuQreNPjQwqKoGjgnxEGz5t4OSrINFiFshEWOoNBmIF
+         puI1P/XtEFgZrsivo3Uf0VcXQOzVuPC5/ilCoBVwHv/ie1VP7yaLLm/F96wYaQ+CEY1S
+         6UIPQyVY7wq4FiSymcHnNEorQlz88Cp6PxS7GsuK2GqR/XdBjFNXlfZEEyiUce5FeXr6
+         DU8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733678954; x=1734283754;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/tzoYaJ92Gqbh47fpsJMbKGuzwxMycmsQJXhBU4UoPU=;
-        b=Qud18cN+WkC7NJDES3822knx2oK7r29XwV+lzbCz1mFzqZj5Zy+EwE+tuXlSABYblw
-         wNgO/paRZ8NPTTGx9AtpHmxX16+q58BltIfprbnmuFYzfA+yh8cZpebj9d5Jt2USIVv5
-         NqmL8zMFasb4ruYPvYrWVVdDNTvFHnXq6BH0n2IyaU3EhiUozaoKnXOu6xTB8H3QtvO7
-         bW20wm0VkOm18Xdne2TsZVnfpXlu1lQeuPGd2JbkBfGRu+KVQF0rH64oviEX86Td/WzZ
-         HoLtp6BilR52aAus9EoGXqeoGbZROjTuw6tDQe9QyoYgwzW03onUSigcrsobEQQbseCG
-         ih/w==
-X-Gm-Message-State: AOJu0Yy2nT8VcdDdjQdMLOGDO6+eL4NbmWAxMGWposX4H316SE8sWcam
-	/qLG/VK+CMbpkTdz3nslGKhjVdfb15ZDDFVv9F94LtT1JMVf4WPf6pvCPzfwA0M=
-X-Gm-Gg: ASbGncuH8aoxdJ5MJ8qCedjmQx9rUz2ODU9tRw0wQ/4hNcr9jhakFekGaFy0xhBAfTu
-	uH4jP4z3nD5ZKZ7CoM8OLWyyaiaGX2bwhyCHyGP0hrfX1NiC1B8nTuMPWpYbVoDN1U8FTmBcZWD
-	3SnnCOYWjUM7MVkmDl/vV1oY6z+nfzpLCJKWEvmsSD73xnzYzo8G5gzwgVloJuJbAj2hnmwDH/4
-	TyM1draDhzzI7I54E5fMnew8It9xfUY9aBbY5Fzf9mfy+ZKlDfhVl0D1Q==
-X-Google-Smtp-Source: AGHT+IGpl4LZsuCLYc4o6t6jeFwINzov0q8HwajESXX2p2xRlg9YhxiyKZwpcpZtqT6qPbhArxAsDg==
-X-Received: by 2002:a05:6512:39d1:b0:53e:27d5:85db with SMTP id 2adb3069b0e04-53e2c2b1ab8mr3133570e87.12.1733678954527;
-        Sun, 08 Dec 2024 09:29:14 -0800 (PST)
-Received: from umbar.lan ([192.130.178.90])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53e3160ebe8sm783253e87.180.2024.12.08.09.29.12
+        d=1e100.net; s=20230601; t=1733680019; x=1734284819;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KXLchoBaMxB9S9j2NPKIN0e4atGZZxZFtq8qcdJcxUU=;
+        b=JIJFxKZJggWKgcYEY7aikppNzV1lA3Meje4ntoxZ43Jn1dE9I0AFdV6H/TaxvpvdjN
+         eov5QU1eqzhkrtvTlUGo2sGdXjdVub93TsktZYf3dXA4xaDQ2yBC7O7qzn4YLrbDTpOa
+         A/KA5dQwoLoCskfHlPkL/0ACXL+d/DPXMBcGjWHsuOGKcvg29jvXwmn7urRYb9azT/3O
+         hoLr5iPaZOfxmxyL7JiCTWGIkNB8l6m5vZO5KUv/0QvIgb9LvvNzHh9Ue5vy9/M07u3T
+         HSryz1VxMoY5tuASMjGki2jPHMmDBxEYStrTxCZIsZiyXnZ3IlCo/NBzJFcg2lLFC3m0
+         SIPA==
+X-Forwarded-Encrypted: i=1; AJvYcCW8SwFgXNX1EyqDSc3IFDrSB0EcPVNA/9364emmnMWYlH+XYyLO3AUe/imbfwzXFflW2MnqyrQnITx3Ek4f@vger.kernel.org
+X-Gm-Message-State: AOJu0YyfjX8Yhuc45H8FxpsiDb/iBjmzryCG/vtdB0n/kNh4GKJ4h3hY
+	IT4TuoGoK50aN4MvGCYeQoALh9IQ/uURsMYfabPfEHFc+R0ZB9Q/zOQJp4nS+oY=
+X-Gm-Gg: ASbGnctefmjMc1y3hRkAJz3xpzdirwMxgm1P3VK+yPK7tbU9oVXVmoLhZTusHch/87m
+	DS/fkm21FVuGQHQYUjj0QZWZ+fqYLGViT0y7RIIFZMVs5O/dRY7ea6eEekRQ3M+7ceju5vqVcm7
+	VAuQz8iTunx1tOQ9KNbvTJ0h/nJ56siTSfMPqeN27WNM35GUNNRQRLv4s6dkokeXvPxsp3L5nkm
+	24zqhckbnut+jpg339pozbAIh72iphnOKJv8eBJLEFQigxyewkqJ6zzsdQBI00ZwPYMUVLzWt9r
+	tXgeHsKVsP6owvkXjefJ8YceHZ858Q==
+X-Google-Smtp-Source: AGHT+IHKwzZsrTkeCVLClrojGrlSuHRyQuLTzbAD6SRgqOJefWQsJjXNC7HllTA/XNvZyQZu69EI6g==
+X-Received: by 2002:a05:6512:3e09:b0:53e:39ed:85e6 with SMTP id 2adb3069b0e04-53e39ed86b0mr2161676e87.32.1733680019099;
+        Sun, 08 Dec 2024 09:46:59 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53f93369b98sm433326e87.280.2024.12.08.09.46.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Dec 2024 09:29:13 -0800 (PST)
+        Sun, 08 Dec 2024 09:46:57 -0800 (PST)
+Date: Sun, 8 Dec 2024 19:46:55 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sun, 08 Dec 2024 19:29:11 +0200
-Subject: [PATCH v3] drm/msm/dpu1: don't choke on disabling the writeback
- connector
+To: Wasim Nazir <quic_wasimn@quicinc.com>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, kernel@quicinc.com
+Subject: Re: [PATCH v3 0/5] arm64: qcom: Add support for QCS9075 boards
+Message-ID: <cpxuqo5luqqk6wtk2d3wqsbchq4awrmna4xoye3klatrzu4j54@axbgklv6kdqs>
+References: <20241119174954.1219002-1-quic_wasimn@quicinc.com>
+ <7f52e0d2-0934-49ca-9c7d-4ba88460096a@kernel.org>
+ <Z1LVYelWl3sPPHcD@hu-wasimn-hyd.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20241208-dpu-fix-wb-v3-1-a1de69ce4a1b@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAGbXVWcC/22MwQ6CMBAFf4Xs2ZrSFime/A/jgbYLbGIoabVqC
- P9u4WJIPM57mZkhYiCMcC5mCJgokh8zyEMBdmjHHhm5zCC4ULzmDXPTk3X0Zi/DTtZVNUo0pRa
- QhSlgfrbY9ZZ5oPjw4bO1U7mufzOpZJwppaXSpnPKmsudxjb4ow89rJ0kfq7mYueK7NbY2gaNR
- t1UO3dZli/ruPa24QAAAA==
-X-Change-ID: 20240709-dpu-fix-wb-6cd57e3eb182
-To: Rob Clark <robdclark@gmail.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Simona Vetter <simona.vetter@ffwll.ch>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- stable@vger.kernel.org, Leonard Lausen <leonard@lausen.nl>, 
- =?utf-8?q?Gy=C3=B6rgy_Kurucz?= <me@kuruczgy.com>, 
- Johan Hovold <johan+linaro@kernel.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2341;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=l0e+YjJJLUTTCME2U2RfwtoWLrRTp83OMNrgSpxIf3U=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnVddoeaOWxNJOEBGnhGweCcRBMxR3mJut6WFda
- BRnKILovEqJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ1XXaAAKCRCLPIo+Aiko
- 1c1SCACznZ0DjA+m7Xyt+NmXA+EGu7YA91e/a5pV0heywojgc9cKCkh4DnloshzjCdKmzf+Y6r5
- 3dMN62m79U+sfGHXhZ9YKSB/7lZOL8lR15ewqPtxcbiyiqG3gC/xBPnIXJfD66fXZGqlUSkrs87
- QLHEPRb8cjqR2Y3Mw4ktwFlFoLLz0ZqCoQ50S+kMRLLZJPsT2qtiTli42NG+9l0hLN7iIIGYpuU
- yBErwWqTg3wON4+gRHEV4wdcjcs+GZ95SzsYvFBKVfaCkisiiDfVfHoxn5gDK1+qFB24fgF663u
- D1BLlaBUdwTfdgtRLOj27qHXQnwSYPaW+n+Np5C9UXzVKEiP
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z1LVYelWl3sPPHcD@hu-wasimn-hyd.qualcomm.com>
 
-During suspend/resume process all connectors are explicitly disabled and
-then reenabled. However resume fails because of the connector_status check:
+On Fri, Dec 06, 2024 at 04:13:45PM +0530, Wasim Nazir wrote:
+> On Wed, Nov 20, 2024 at 05:41:39PM +0100, Krzysztof Kozlowski wrote:
+> > On 19/11/2024 18:49, Wasim Nazir wrote:
+> > > This series:
+> > > 
+> > > Add support for Qualcomm's rb8, ride/ride-r3 boards using QCS9075 SoC.
+> > > 
+> > > QCS9075 is compatible IoT-industrial grade variant of SA8775p SoC
+> > How does it relate to qcs9100? Why this is not compatible with the
+> > other? It looks like you duplicate here a lot without trying to make
+> > these built on top of each other.
+> > 
+> 
+> QCS9075 is non-safe while QCS9100 is safe.
+> Reference: https://docs.qualcomm.com/bundle/publicresource/87-83840-1_REV_A_Qualcomm_IQ9_Series_Product_Brief.pdf
+> 
+> Separate board files are needed as thermal mitigation changes are
+> required for non-safe variant only.
 
-[ 1185.831970] [dpu error]connector not connected 3
+To reduce possible questions, please include those in the initial
+submission.
 
-It doesn't make sense to check for the Writeback connected status (and
-other drivers don't perform such check), so drop the check.
-
-Fixes: 71174f362d67 ("drm/msm/dpu: move writeback's atomic_check to dpu_writeback.c")
-Cc: stable@vger.kernel.org
-Reported-by: Leonard Lausen <leonard@lausen.nl>
-Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/57
-Tested-by: Leonard Lausen <leonard@lausen.nl> # on sc7180 lazor
-Tested-by: György Kurucz <me@kuruczgy.com>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
-Leonard Lausen reported an issue with suspend/resume of the sc7180
-devices. Fix the WB atomic check, which caused the issue.
----
-Changes in v3:
-- Rebased on top of msm-fixes
-- Link to v2: https://lore.kernel.org/r/20240802-dpu-fix-wb-v2-0-7eac9eb8e895@linaro.org
-
-Changes in v2:
-- Reworked the writeback to just drop the connector->status check.
-- Expanded commit message for the debugging patch.
-- Link to v1: https://lore.kernel.org/r/20240709-dpu-fix-wb-v1-0-448348bfd4cb@linaro.org
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c | 3 ---
- 1 file changed, 3 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
-index 16f144cbc0c986ee266412223d9e605b01f9fb8c..8ff496082902b1ee713e806140f39b4730ed256a 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
-@@ -42,9 +42,6 @@ static int dpu_wb_conn_atomic_check(struct drm_connector *connector,
- 	if (!conn_state || !conn_state->connector) {
- 		DPU_ERROR("invalid connector state\n");
- 		return -EINVAL;
--	} else if (conn_state->connector->status != connector_status_connected) {
--		DPU_ERROR("connector not connected %d\n", conn_state->connector->status);
--		return -EINVAL;
- 	}
- 
- 	crtc = conn_state->crtc;
-
----
-base-commit: 86313a9cd152330c634b25d826a281c6a002eb77
-change-id: 20240709-dpu-fix-wb-6cd57e3eb182
-
-Best regards,
 -- 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
+With best wishes
+Dmitry
 
