@@ -1,79 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-41119-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41121-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 607F69E99D7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 16:02:40 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B49B09E99F3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 16:05:09 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A40B31886121
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 15:03:38 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1FBC1B0407;
+	Mon,  9 Dec 2024 15:03:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="jSFrKtRI"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1930F284C7A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 15:02:39 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D53C1BEF99;
-	Mon,  9 Dec 2024 15:02:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="E4RJQUFU"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BF7E1BEF91
-	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Dec 2024 15:02:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B36E198831
+	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Dec 2024 15:03:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733756523; cv=none; b=g5wLpFYmxysRxhMae7/I+k+S46W+z9ebqELI6iWYJepfUPOV/Iq72hPVDa9E9CNNlJQajjRGiRhkzq/8T24uOuCgqdJNbtR/dH9Zzt3K05yf787+mw65wo4XaEYXzTJsLgcD9HNUITYPSA2kSfPqPLVMeG551vc+lswV/zEE3+c=
+	t=1733756616; cv=none; b=nkvnL/V2+9MK499gh/pyB3hs3I/qPD8b1Pezg4HMs+k6J5k8TQJIjlui9tSdN96rXPzL5tG2ZN/VlY+CQ208MRl7r/H6sVsHhRJbC035ahfKVCw81jCotUNsNui/2af5VnI83rGqNZ+BPcEKZ4OdtCgTGVa4NOz67QtpeDYG/0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733756523; c=relaxed/simple;
-	bh=gaS3F/AQeFd7VrSw3ZiPxomrJ5kbQNrmRNOjyFntjPs=;
+	s=arc-20240116; t=1733756616; c=relaxed/simple;
+	bh=ZSQrnKkfmxrTvqvhEa/4dkTEy+IJtxHFyOGLF9TsANw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gUWOe0eMwbOGv68UL94ja8Unhyj2v7eDvp2i8CfSNl27X3k9dRm3lcrv1lYcPazz4PNBklWVZK9XXF2JX375a2R8D7lX81Ank3M0PYSAYNyxXCSkqmbPHIjeG23MZfnGVWf4QfgsozZnbOibvA199ma/SnWIFNkURYnW4Yc6WLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=E4RJQUFU; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-434941aac88so2867795e9.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Dec 2024 07:02:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733756520; x=1734361320; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Poqt7clq9YoBt3tHK/AIlc6WS0JoBH4g1M9GZwtdhqo=;
-        b=E4RJQUFUNNK/xEXkYXrGetAx4bGEcokQpcrksoUCmd8/K4xh2lysPFAAdI4jf1OQ6t
-         kzmbTPctiuwVOH/MLdX3NHd6bgyY3F4U1WKTaMx9NT2zxxtT1otXY5Mxkttbjpah82u5
-         4bsJk6H2W9PPfr5rsJWmo/Oe/thuQCHwoVkwJ1KqsZgRSSYKbdfhdh4iAmQfAj7iFKuT
-         rpVv1r3l5bj8JEEwekQZJl/Y6LFmUaoYkfhV+Ux8JJ3B+miZszFDhUoaThuJNK+cvP3u
-         u+KO3JtGZZWhaYV8GOvXRcYDayLYUbRTBE+qpm3AkufHlOCMwueoPhVSeBq4LjtvIg4j
-         GclQ==
+	 In-Reply-To:Content-Type; b=o5mTunfy9+mXsmR+PAEU7ZKLtnkK4lDUs/MNpaxZJGjEljOJGKW3hrn6QXFMevmM3izvTO6MW2jCcw4aGUp070dl7Nbk2YtolK7DYVeqi8KkeXcuENOUrhEZn3jL0l7MR5Z0Eo/hHLUSPGIcIy+JD8djnEWpUK3M3osOgb6b5uY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=jSFrKtRI; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B9AGSjv031261
+	for <linux-arm-msm@vger.kernel.org>; Mon, 9 Dec 2024 15:03:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	O1NX/w+RRXRMNKqZKOVFD80ajURS0nT9KzUnQ2eXmK8=; b=jSFrKtRIpp/uh1HI
+	1ZSMggM2zktXcxYeEg12mY5F5vZhV6xdyJWwngeTJFfhhvO7OjURTjDRlx5i8T7C
+	QaNYPvfsEYVxy7MjWd1m+EL5J/r2ycVkakFH8xA8BHBK15Rhsm0sh03/hGNSSqS9
+	6gFkhhN9OsgRXeCUejhs/vTxNlh3UVqQwsX2Vs9HPJxoBFS66+ie//XrPKbu0iIQ
+	pS6bz6sfNjJMLtlkY5SlNyfLCPavVO5ALJtvbVFFxPaoscIH1WEBTSWUuFktmuc4
+	oAUqopvQgikVlUkEhtOI9G079DqLTQ7It5ufNv5IKzMB9gMOFwqX03Lrtr9f0vqj
+	MfSAQg==
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43cdpgn8r7-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 09 Dec 2024 15:03:33 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-6d88a5bb5e6so14867216d6.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Dec 2024 07:03:33 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733756520; x=1734361320;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Poqt7clq9YoBt3tHK/AIlc6WS0JoBH4g1M9GZwtdhqo=;
-        b=xOLA/0MrpMTQqDD0xgNvyu31Ir3Wwft9DPMiA3znx2zg6D7vaMtkuVLhK8Ih6vG3TA
-         yNEmun8aUBdeXDja5vgwizYoAzJ/GzUtrX+zXb5D3NYLMWq0RhJ7VES7sSTeVx13Ka53
-         cKlAs9UC1k7H+NBbsaHHe2T4YxUFAhkH92xgrPQLT5KAsqPa49wo7XJZ59Er0Vkbkd8I
-         JbpAB6E9D0iBkK0+ckkyi672K3qLh8mrM8H9KKFU0CharZn8xUIo+TkYP/bjhaMBNEL4
-         gjXtTNU9cGw7fBIMWDo7blDbwEUsGduBFUG7EI03gWSxZ5BBH3IAPgQjhlymQmKBQ+mO
-         sisg==
-X-Forwarded-Encrypted: i=1; AJvYcCWnK8/xeO3uUpC4nUvTC4pMU2JUKpkmmmYLMDOUbRmpQahrdI6WAy2edXKFVW53bQx223giUTbeh5euxB6K@vger.kernel.org
-X-Gm-Message-State: AOJu0YxohqfkrMovAKDIUzvCTMXcm58n35yiuBo2IYbmC1SfoBz7v4Yf
-	uII3niAputeiJUR4XLIqNmzVNdzLV/d6WgxqzqXxJqwTztpXrIgu+hjmO6ToKxY=
-X-Gm-Gg: ASbGncsWJx8jR+XvFu6nlLnmK1OJyDWBzJ/sCS0DC+ou44H/Dk15m8kpPH2WagUmp3+
-	apZUg87yElD2fSr/vv07o1w7uOQliNbHZIgGYUABnoeCof+G1bie7/MsteGIufEoFS1kj8VubwN
-	vtvW/5lK3Zeae/dmrX/YvDQs70r9QUP0CzQ5ZaCTAiyTyl9gzogX1xlKBU+FgLoszXAHP6PujP6
-	AY/099hoBzWHi20ga7SD2RtI/VXVkw0+/5pS32P2Qy26XdyPW2iAvs3kJkZJjeXGU7jpw==
-X-Google-Smtp-Source: AGHT+IG5wVQR5zn0qEech3PQk/RnOBKRD4dBMIi5KxVndIm/gYii/E5xHicvVJNvwfJrL+0LRQzBkg==
-X-Received: by 2002:a05:600c:35ce:b0:42c:bb35:b6d0 with SMTP id 5b1f17b1804b1-4350197e966mr97995e9.1.1733756519724;
-        Mon, 09 Dec 2024 07:01:59 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.223.165])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-434fd8b84f0sm17714245e9.28.2024.12.09.07.01.58
+        d=1e100.net; s=20230601; t=1733756612; x=1734361412;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=O1NX/w+RRXRMNKqZKOVFD80ajURS0nT9KzUnQ2eXmK8=;
+        b=hPALovA5RbdcCQHb5THnk/xpmVSHyfTwFR/vfWAeeublDWs1TmvGxsaqx19i00c7kI
+         dzTeFVxFK6bAd2Bmfp3GusQA0YfS1qsCgOx+GnXfhVUMZmjiqMwvDss+AfIkFzKeZRUm
+         9SXLaMU0xYgPkkQrhzjn1xANQlB/W0h/bZEtFHs4scrUqyPl+fjD4UtTHsRAXAhPKePJ
+         QQVhllO73WNpkZ8wibXeOaoyqCrQ6BtG9wRfh9Tp2JlxqMgjYNM3IxLZk/XgggVM00Px
+         M0W02FfN62eeqCcev+ixoxZLaOHRhbxZQRvnrw9x9UFAicqqfcxVqUEEhIq5r/6wmtw3
+         hBpA==
+X-Gm-Message-State: AOJu0YzHOKH5K1hblTqLpzafY8JAwhBKkpPn/CFrSKa2AajEjp1iMsQq
+	ePTrPdpltDMaZ4TvUPEPx4mghA0oTcrQOBLUEKbymweog3mJas7QGoHQmF+y1FvSfKcIpj9GWGH
+	t1Ynhnw1alvrxOQEB40uUSt6V0265b7IM8i21dYD2MjaqRgIFOXfUDImXz/JpOJWi
+X-Gm-Gg: ASbGnctiobM8OyDeaJ5f/ii90vjjzk1XQL0jjZs7PNH3LOk1yNS+taIx/Xkjur6xr0V
+	MBeOabAiHN4q6YnfwZ6mcD+ZXT+t87Kxtcnb8lH9NllplwI5IumpOOK11NgdHCeQFw4kqhKFl9f
+	VecgPr16az8ZIu/ckzzP3sQiPa8N//gz6YPlVQaYGigWOD6RsGZKumxw8xkIAkKdcxMzwZooANK
+	hMxNjSefWzklIZMW9YtMbfqF5XzeDSwvuqt015rekJUjmHwkri6yAVzTkiAVT/0dRIWN8nqJaq9
+	LlLnhCLoH41AnhUH2ng5/IGFkDC4FmQ=
+X-Received: by 2002:a05:620a:2909:b0:7ac:b95b:7079 with SMTP id af79cd13be357-7b6bcb32067mr860495185a.10.1733756612376;
+        Mon, 09 Dec 2024 07:03:32 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHP91iP55Oeu6qjVs4Q6wCz7SyJ+UWO9ki0Vk/JiuqKFG8xeOAuOXTb1bf9EcxOg8/+s23jtw==
+X-Received: by 2002:a05:620a:2909:b0:7ac:b95b:7079 with SMTP id af79cd13be357-7b6bcb32067mr860493285a.10.1733756611833;
+        Mon, 09 Dec 2024 07:03:31 -0800 (PST)
+Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa698e922dasm64701866b.84.2024.12.09.07.03.30
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Dec 2024 07:01:59 -0800 (PST)
-Message-ID: <0c6a20fc-113d-4113-87c4-7b97c041d2a2@linaro.org>
-Date: Mon, 9 Dec 2024 16:01:58 +0100
+        Mon, 09 Dec 2024 07:03:31 -0800 (PST)
+Message-ID: <08440076-3c04-4bb1-b339-071b82d638d2@oss.qualcomm.com>
+Date: Mon, 9 Dec 2024 16:03:29 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,95 +88,80 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] clk: qcom: Add missing header includes
-To: Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc: Taniya Das <quic_tdas@quicinc.com>
-References: <20241209111315.60776-1-krzysztof.kozlowski@linaro.org>
- <20241209111315.60776-2-krzysztof.kozlowski@linaro.org>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH] drm/msm/a6xx: Skip gpu secure fw load in EL2 mode
+To: Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Rob Clark
+ <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Pavan Kondeti <quic_pkondeti@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+References: <20241209-drm-msm-kvm-support-v1-1-1c983a8a8087@quicinc.com>
 Content-Language: en-US
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20241209111315.60776-2-krzysztof.kozlowski@linaro.org>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20241209-drm-msm-kvm-support-v1-1-1c983a8a8087@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: 51GypIzprx8Fe0FWtLC063UCYJEm5HbR
+X-Proofpoint-ORIG-GUID: 51GypIzprx8Fe0FWtLC063UCYJEm5HbR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ adultscore=0 clxscore=1015 suspectscore=0 mlxscore=0 priorityscore=1501
+ phishscore=0 mlxlogscore=933 spamscore=0 malwarescore=0 bulkscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412090118
 
-On 09/12/2024 12:13, Krzysztof Kozlowski wrote:
-> Include mod_devicetable.h for the 'struct of_device_id' and
-> clk-provider.h for the 'struct clk_hw'.
+On 9.12.2024 9:19 AM, Akhil P Oommen wrote:
+> When kernel is booted in EL2, SECVID registers are accessible to the
+> KMD. So we can use that to switch GPU's secure mode to avoid dependency
+> on Zap firmware. Also, we can't load a secure firmware without a
+> hypervisor that supports it.
 > 
-> Reviewed-by: Taniya Das <quic_tdas@quicinc.com>
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Tested following configurations on sa8775p chipset (Adreno 663 gpu):
 > 
+> 1. Gunyah (No KVM) - Loads zap shader based on DT
+> 2. KVM in VHE - Skips zap shader load and programs SECVID register
+> 3. KVM in nVHE - Loads zap shader based on DT
+> 4. Kernel in EL2 with CONFIG_KVM=n - Skips zap shader load and
+> 	programs SECVID register
+> 
+> For (1) and (3) configuration, this patch doesn't have any impact.
+> Driver loads secure firmware based on other existing hints.
+> 
+> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
 > ---
-> 
-> Changes in v2:
-> 1. Rename subject (Include->Add)
-> 2. Rb tag
-> ---
 
-...
+[...]
 
-> diff --git a/drivers/clk/qcom/dispcc-sm4450.c b/drivers/clk/qcom/dispcc-sm4450.c
-> index 465725f9bfeb..cd8a284258b2 100644
-> --- a/drivers/clk/qcom/dispcc-sm4450.c
-> +++ b/drivers/clk/qcom/dispcc-sm4450.c
-> @@ -4,6 +4,7 @@
->   */
->  
->  #include <linux/clk-provider.h>
-> +#include <linux/mod_devicetable.h>
->  #include <linux/module.h>
->  #include <linux/mod_devicetable.h>
+> +
+> +#ifdef CONFIG_ARM64
+> +	/*
+> +	 * We can access SECVID_TRUST_CNTL register when kernel is booted in EL2 mode. So, use it
+> +	 * to switch the secure mode to avoid the dependency on zap shader.
+> +	 */
+> +	if (is_kernel_in_hyp_mode())
+> +		goto direct_switch;
 
-That's a duplicate. I missed earlier LKP report. I will send a v3 tomorrow.
+So I suppose this would ideally be like hv_is_hyperv_initialized()
+but for QHEE/Gunyah, which is not going to happen, as we have
+millions of devices with old unupstreamable-ABI-Gunyah running..
 
+This looks like the next best things then, so no objections, but..
 
-Best regards,
-Krzysztof
+[...]
+
+> +	ret = a6xx_switch_secure_mode(gpu);
+> +	if (!ret)
+
+this should definitely be a if (ret)
+
+Konrad
 
