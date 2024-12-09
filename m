@@ -1,383 +1,353 @@
-Return-Path: <linux-arm-msm+bounces-41127-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41128-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2F5AD9E9B34
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 17:05:51 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D87489E9B40
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 17:09:26 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 602501885322
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 16:05:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6B463280E02
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 16:09:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 651AC14A60D;
-	Mon,  9 Dec 2024 16:05:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Mt8g8hOy"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B730B136358;
+	Mon,  9 Dec 2024 16:09:22 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A94F1494DF
-	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Dec 2024 16:05:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 903AD233139;
+	Mon,  9 Dec 2024 16:09:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733760314; cv=none; b=iv5AAc0pHeQqdmzWyB3BYTMIl/bAZVMe8Y/Xp5MI/Qx5yypJHnobLPAm6anwPkPN2lywmfQ6NdUbun/LChNxb4LLc1AKY5Cw4pW9Jj2m7A9PpNIMBlRv1JSMLJ/EzECAMcEw4eKy4vkV4Htw+7+H1llCofQIcBPi8QaoY85yaxE=
+	t=1733760562; cv=none; b=IQ0ddUf/s0EUHUAuzqW72xm2owOq8YXS2YMqnsKXaK20aahV00J/hr0amHa+u5qtH8df5ppdBNTW6cafwiF1lVpVwpm/RWJTrQVfa94bM6WyzRyH9iVEBJKokuYbJgoL4LwBOdTZRHB/RZpLuw35+VwDG+EZhp0h2464AZELf94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733760314; c=relaxed/simple;
-	bh=ibIL7wE5j9OcyphuzydeeWr2dAKu6nyImkYYqCQazzA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LxthyjRxYbrRBsGbIBv7vE6DUwJwinOe0pqLtdjbBfjQn91sjugOV83dgRb4HLY50Q/0lqJ+E9vbMoPaHyoBkjhLRkxgeRINOZZWherKJUrb7KLXcgKBXAHVAwMnupyKKAKSZt1kEk4SJOS2HWtNulLHq9t7XaSbYpcT/9D+L1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Mt8g8hOy; arc=none smtp.client-ip=209.85.219.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-e39f43344c5so4468114276.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Dec 2024 08:05:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733760311; x=1734365111; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=4L0GE01RzZFWdV4djt+EFtHeGWlyZ6F7pD4qzSza7PI=;
-        b=Mt8g8hOyPAbSpEEjk5qWAeT65kc0Wxm9DogaGwvSIEaLwvRfCEuSvbNOIHBz6Iq46c
-         z4SxvBbmLS46FIwuRMOIk7SiNBLP8kjYQRbEOTjZUMltAyJXBRmIwdY9HgY6WEZavA38
-         1CO4J7JQtND7hwUs5q/hae6qnA4H1eN1c+OH0Y5Oumkv/UEgt45Wu3skeUVrW59BZQbF
-         RW3/VZXC9+h+rabA78vHC99MthJOxiltRV6ZKbuBfh/1qoWfpxn3WEgm4xSoh1IolOEe
-         SPeeZ1UP64K8ljcSQkaLTRqG6UIfhNijKCMNZEUAew19EM3HLntDSdiqD1pYZeKi30jn
-         bC9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733760311; x=1734365111;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=4L0GE01RzZFWdV4djt+EFtHeGWlyZ6F7pD4qzSza7PI=;
-        b=SuBzxxXVmJoBtrjNkm4hhyLFUfXythJLGeFz9IWKIT6xtvdOyf0O7S9XpCm2ikb53K
-         Rv/KsDlapWxipscib8TDAEsw+5oHP4/Ztg+L41HYbnScOUibALDupKHeco7xTDDdycP6
-         HaL7SWmvQj5MnVi9o2OahHtV8aMIxf5p0pH+lSiw+pjukgVF5AEkNEgxS+J3c/AG4LOe
-         RF4j01nEkXfQwo+qXf1a9prw+HdAByF/MtXdHhQiXPZmstFNKv1a6rkxEXvfC1/526FA
-         6ZsaSUUoZDaMTXoOifFE0SBjbRuDu5KPyMqrS55egIlx51ffB06x+xqAKCMlPPvV8S9q
-         aDJw==
-X-Forwarded-Encrypted: i=1; AJvYcCU/b7Bg+Kpy4LeNgsnT8gXXifYdTwCklpBnM2Ld2Res89lQBB7DO10YNwu5TMmjmc9meah79kr5jnR4Dj9H@vger.kernel.org
-X-Gm-Message-State: AOJu0YwMRN1CdgwR9CKbqF4PpBNraPETA5HFQIcTndVHth1q9OO1zTj7
-	LBdGJJIDIhJLiPhS7auy2QTjMRRVsm5+/Jm4QLwsOroTJfE+eXIg33Iqgykeo4wc94T4ieZZlf9
-	ETW4ESNVmt3vqwc6SuV6Wy5SQQ+RAwTIEyjEjkA==
-X-Gm-Gg: ASbGncuSMwhxskC1qIHRhn45KZ7RO99SMkq4RrRBaTYgDDr1TGGJAmSdlkyg5klZ8ny
-	zu3W1/mW8G1ZxgduDyCpflY4IsH3/hRIc
-X-Google-Smtp-Source: AGHT+IFozvx+rv0IcEm7C+2zQ2DjInp9PNXX9dXRhlHTIctCkiuNrP7tjJKi9WfwZc4l7UvIJYV4bX+4BvOJWcqCON8=
-X-Received: by 2002:a05:6902:2e0e:b0:e39:7ca5:736c with SMTP id
- 3f1490d57ef6-e3a0b4d228bmr9218959276.45.1733760310890; Mon, 09 Dec 2024
- 08:05:10 -0800 (PST)
+	s=arc-20240116; t=1733760562; c=relaxed/simple;
+	bh=Oa0NcaS5Sj+C0xA+zr2JRtIBbAV81lJVMssIx3qVL0o=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=o6O1qPjf8oNTGJOEBEg60keOHea6BT0sWtoYzjnvJS12xtrH3543+uyK/tZThVM9rcTqXgQerRq0pm+2fUFx3XAEvSpJK3xwDIK/oeHPnRi2D6S8e0n9Tl4INS6XfSbbdNhXeNwErgxZ6igvtiYrqlTUY0zp6c1wy0ZzCKsBjDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0A49C4CED1;
+	Mon,  9 Dec 2024 16:09:17 +0000 (UTC)
+Message-ID: <8b8cad45-87cd-44bc-a4cb-3b59c559cb7b@xs4all.nl>
+Date: Mon, 9 Dec 2024 17:09:16 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241205102213.1281865-1-quic_chejiang@quicinc.com>
- <20241205102213.1281865-3-quic_chejiang@quicinc.com> <w7r4itwyrh3jva3rx3kmsm4kqtawqkgkneqrlin4hpjkqb3deo@2qmjd3ijzqn3>
- <541a5682-5b99-4793-84ee-a7c9168cb9a0@quicinc.com> <CAA8EJppmTSovZKTPb+syrc0Vvfu8U=HoP18tW072OEZ5nYyOgg@mail.gmail.com>
- <4ef61f91-f1ae-4593-9522-2229680a9707@quicinc.com> <fb7exdibh4f5r3io6m34i7lqqe7qo2kk357bfdzcdbie6cppui@mqwwq5w4c57j>
- <f7dd3758-c1c8-43bb-9a5c-4674077a5e1b@quicinc.com>
-In-Reply-To: <f7dd3758-c1c8-43bb-9a5c-4674077a5e1b@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 9 Dec 2024 18:04:59 +0200
-Message-ID: <CAA8EJpqRAqH-+3xYpSyF3cqFoF9bDbEKSqx5o5XrLZMgati41A@mail.gmail.com>
-Subject: Re: [PATCH v3 2/3] Bluetooth: qca: Expand firmware-name to load
- specific nvm and rampatch
-To: "Cheng Jiang (IOE)" <quic_chejiang@quicinc.com>
-Cc: Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>, Rocky Liao <quic_rjliao@quicinc.com>, 
-	linux-bluetooth@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	quic_jiaymao@quicinc.com, quic_shuaz@quicinc.com, quic_zijuhu@quicinc.com, 
-	quic_mohamull@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 10/28] media: iris: implement s_fmt, g_fmt and try_fmt
+ ioctls
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>
+Cc: Sebastian Fricke <sebastian.fricke@collabora.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Nicolas Dufresne <nicolas@ndufresne.ca>,
+ =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+ Jianhua Lu <lujianhua000@gmail.com>, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Vedang Nagar <quic_vnagar@quicinc.com>
+References: <20241209-qcom-video-iris-v7-0-05c6bdead47b@quicinc.com>
+ <20241209-qcom-video-iris-v7-10-05c6bdead47b@quicinc.com>
+Content-Language: en-US, nl
+From: Hans Verkuil <hverkuil@xs4all.nl>
+Autocrypt: addr=hverkuil@xs4all.nl; keydata=
+ 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
+In-Reply-To: <20241209-qcom-video-iris-v7-10-05c6bdead47b@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Mon, 9 Dec 2024 at 15:59, Cheng Jiang (IOE)
-<quic_chejiang@quicinc.com> wrote:
->
-> Hi Dmitry,
->
-> On 12/9/2024 6:49 PM, Dmitry Baryshkov wrote:
-> > On Mon, Dec 09, 2024 at 05:03:55PM +0800, Cheng Jiang (IOE) wrote:
-> >> Hi Dmitry,
-> >>
-> >> On 12/6/2024 4:34 PM, Dmitry Baryshkov wrote:
-> >>> On Fri, 6 Dec 2024 at 05:05, Cheng Jiang (IOE)
-> >>> <quic_chejiang@quicinc.com> wrote:
-> >>>>
-> >>>> Hi Dmitry,
-> >>>>
-> >>>> On 12/5/2024 8:00 PM, Dmitry Baryshkov wrote:
-> >>>>> On Thu, Dec 05, 2024 at 06:22:12PM +0800, Cheng Jiang wrote:
-> >>>>>> The firmware-name property has been expanded to specify the names of NVM
-> >>>>>> and rampatch firmware for certain chips, such as the QCA6698 Bluetooth
-> >>>>>> chip. Although it shares the same IP core as the WCN6855, the QCA6698
-> >>>>>> has different RF components and RAM sizes, necessitating new firmware
-> >>>>>> files. This change allows for the configuration of NVM and rampatch in
-> >>>>>> DT.
-> >>>>>>
-> >>>>>> Different connectivity boards may be attached to the same platform. For
-> >>>>>> example, QCA6698-based boards can support either a two-antenna or
-> >>>>>> three-antenna solution, both of which work on the sa8775p-ride platform.
-> >>>>>> Due to differences in connectivity boards and variations in RF
-> >>>>>> performance from different foundries, different NVM configurations are
-> >>>>>> used based on the board ID.
-> >>>>>
-> >>>>> Two separate commits, one for NVM, another one for RAM patch.
-> >>>>>
-> >>>> Ack.
-> >>>>>>
-> >>>>>> Therefore, in the firmware-name property, if the NVM file has an
-> >>>>>> extension, the NVM file will be used. Otherwise, the system will first
-> >>>>>> try the .bNN (board ID) file, and if that fails, it will fall back to
-> >>>>>> the .bin file.
-> >>>>>>
-> >>>>>> Possible configurations:
-> >>>>>> firmware-name = "QCA6698/hpnv21.bin", "QCA6698/hpbtfw21.tlv";
-> >>>>>> firmware-name = "QCA6698/hpnv21", "QCA6698/hpbtfw21.tlv";
-> >>>>>> firmware-name = "QCA6698/hpnv21.bin";
-> >>>>>>
-> >>>>>> Signed-off-by: Cheng Jiang <quic_chejiang@quicinc.com>
-> >>>>>> ---
-> >>>>>>  drivers/bluetooth/btqca.c   | 154 ++++++++++++++++++++++++++----------
-> >>>>>>  drivers/bluetooth/btqca.h   |   5 +-
-> >>>>>>  drivers/bluetooth/hci_qca.c |  21 ++++-
-> >>>>>>  3 files changed, 134 insertions(+), 46 deletions(-)
-> >>>>>>
-> >>>>>> diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-> >>>>>> index dfbbac922..e8b89b8cc 100644
-> >>>>>> --- a/drivers/bluetooth/btqca.c
-> >>>>>> +++ b/drivers/bluetooth/btqca.c
-> >>>>>> @@ -272,6 +272,31 @@ int qca_send_pre_shutdown_cmd(struct hci_dev *hdev)
-> >>>>>>  }
-> >>>>>>  EXPORT_SYMBOL_GPL(qca_send_pre_shutdown_cmd);
-> >>>>>>
-> >>>>>> +static int qca_get_alt_nvm_path(char *path, size_t max_size)
-> >>>>>
-> >>>>> int is usually for errors, the code suggests bool return type.
-> >>>>>
-> >>>> Ack.
-> >>>>>> +{
-> >>>>>> +    char fwname[64];
-> >>>>>> +    const char *suffix;
-> >>>>>> +
-> >>>>>> +    suffix = strrchr(path, '.');
-> >>>>>> +
-> >>>>>> +    if (!suffix)
-> >>>>>> +            return 0;
-> >>>>>> +
-> >>>>>> +    strscpy(fwname, path, strlen(path));
-> >>>>>
-> >>>>> 64 bytes ought to be enough for anybody, correct?
-> >>>>>
-> >>>> Yes, in current driver, the max f/w path length is 64.
-> >>>>
-> >>>>>> +    fwname[suffix - path] = 0;
-> >>>>>
-> >>>>> with path = "qcom/sc7180/Oh.My.Device/name" this is broken.
-> >>>>>
-> >>>> Let me test this and fix in next patch.
-> >>>>>> +
-> >>>>>> +    snprintf(fwname, sizeof(fwname), "%s.bin", fwname);
-> >>>>>> +
-> >>>>>> +    /* If nvm file is already the default one, return false to
-> >>>>>> +     * skip the retry.
-> >>>>>> +     */
-> >>>>>> +    if (strcmp(fwname, path) == 0)
-> >>>>>> +            return 0;
-> >>>>>> +
-> >>>>>> +    snprintf(path, max_size, "%s", fwname);
-> >>>>>> +    return 1;
-> >>>>>> +}
-> >>>>>> +
-> >>>>>>  static int qca_tlv_check_data(struct hci_dev *hdev,
-> >>>>>>                             struct qca_fw_config *config,
-> >>>>>>                             u8 *fw_data, size_t fw_size,
-> >>>>>> @@ -564,6 +589,19 @@ static int qca_download_firmware(struct hci_dev *hdev,
-> >>>>>>                                         config->fwname, ret);
-> >>>>>>                              return ret;
-> >>>>>>                      }
-> >>>>>> +            }
-> >>>>>> +            /* For nvm, if desired nvm file is not present and it's not the
-> >>>>>> +             * default nvm file(ends with .bin), try to load the default nvm.
-> >>>>>> +             */
-> >>>>>> +            else if (config->type == TLV_TYPE_NVM &&
-> >>>>>> +                     qca_get_alt_nvm_path(config->fwname, sizeof(config->fwname))) {
-> >>>>>
-> >>>>> Please, don't rewrite the config. The file may be not present now, but
-> >>>>> it will reappear later (e.g. when rootfs gets mounted).
-> >>>>>
-> >>>> This tries to load a default NVM file if the board-specific NVM is not found.
-> >>>> It is called when request_firmware fails. It's safe to rewrite the config->fwname
-> >>>> here since we have already tried to load the board-specific NVM. The config
-> >>>> is a local variable in qca_uart_setup and will return after downloading the NVM.
-> >>>
-> >>> Please read my question before answering it.
-> >>>
-> >> Sorry, I'm not clear about your question. Could you please explain it in more detail?
-> >> I'm not quite sure how the situation you mentioned affects this code flow if you mean
-> >> not downloading another NVM file.
-> >>
-> >> The board-specific NVM and the default NVM should be in the same folder and should
-> >> appear simultaneously.
-> >>
-> >> From the Bluetooth firmware load flow perspective, the firmware is loaded either
-> >> when the kernel module is inserted (insmod) or when Bluetooth is turned off and
-> >> then on again via a user-space command. If the firmware is not found at this time,
-> >> the ROM code is used instead. It does not attempt to load the firmware automatically,
-> >> even if the firmware appears later.
-> >
-> > I was thinking about the following scenario:
-> >
-> > - BT firmware is attempted to load during driver probe, /lib/firmware is
-> >   not fully populated, so the config is rewritten to use the default
-> > - rootfs is fully mounted and populated with the board-specific file
-> > - BT interface is being turned on. It is expected that the
-> >   board-specific file will be loaded, however because the config was
-> >   changed in one of the previous steps, the driver still loads the
-> >   default one.
-> >
-> > That said, the driver should perform the fallback, etc, but the config
-> > should stay intact even in the fallback case.
-> >
-> Thank you for the detail explanation. Current flow of BT enable in driver
-> likes this:
->
-> Enable the soc(Assert BT_EN) -->  read the SOC info --> Change baud rate -->
-> get rampatch file name (based on soc info or dts) --> download rampatch -->
-> get nvm file name(based on soc info or dts) --> download nvm file -->
-> download default nvm (if the board-specific file not found).
->
-> Every time the driver probe or the BT interface is turned on, it follows the
-> flow described above. The rampatch and NVM file names are reconstructed by
-> the SoC information each time, so the driver always attempts to download the
-> board-specific file first.
->
-> Here is the log, there is no hpnv21.b206 and re-insmod the driver.
+On 09/12/2024 13:51, Dikshita Agarwal wrote:
+> From: Vedang Nagar <quic_vnagar@quicinc.com>
+> 
+> Implement s_fmt, g_fmt and try_fmt ioctl ops with necessary hooks.
+> 
+> Signed-off-by: Vedang Nagar <quic_vnagar@quicinc.com>
+> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
 
-You are re-insmodding the driver. I was talking about a different scenario:
-- there is no BDF
-- modprobe the driver
-- wait for the hci0 to become available
-- hciconfig hci0 down
-- provide BDF
-- hciconfig hci0 up
+Reviewed-by: Hans Verkuil <hverkuil@xs4all.nl>
 
-Check the dmesg. If everything is implemented correctly, second
-hciconfig command should load the firmware files again (because BT was
-unpowered in between). Second time it should load the proper board
-file instead of loading the default or falling back to the ROM.
+Regards,
 
-> [11850.644220] Bluetooth: HCI UART driver ver 2.3
-> [11850.644232] Bluetooth: HCI UART protocol H4 registered
-> [11850.644284] Bluetooth: HCI UART protocol LL registered
-> [11850.644314] Bluetooth: HCI UART protocol QCA registered
-> [11850.645055] Bluetooth: hci0: setting up wcn6855
-> [11850.706962] Bluetooth: hci0: QCA Product ID   :0x00000013
-> [11850.706975] Bluetooth: hci0: QCA SOC Version  :0x400c0210
-> [11850.706978] Bluetooth: hci0: QCA ROM Version  :0x00000201
-> [11850.706981] Bluetooth: hci0: QCA Patch Version:0x000038e6
-> [11850.714508] Bluetooth: hci0: QCA controller version 0x02100201
-> [11850.714518] Bluetooth: hci0: QCA Downloading qca/QCA6698/hpbtfw21.tlv
-> [11851.406475] Bluetooth: hci0: QCA Downloading qca/QCA6698/hpnv21.b206
-> [11851.406515] bluetooth hci0: Direct firmware load for qca/QCA6698/hpnv21.b206 failed with error -2
-> [11851.406522] Bluetooth: hci0: QCA Downloading qca/QCA6698/hpnv21.bin
-> [11851.570125] Bluetooth: hci0: QCA setup on UART is completed
->
-> hpnv21.b206 exists and then re-insmod the driver.
-> [11878.551494] Bluetooth: HCI UART driver ver 2.3
-> [11878.551505] Bluetooth: HCI UART protocol H4 registered
-> [11878.551553] Bluetooth: HCI UART protocol LL registered
-> [11878.551580] Bluetooth: HCI UART protocol QCA registered
-> [11878.552131] Bluetooth: hci0: setting up wcn6855
-> [11878.618865] Bluetooth: hci0: QCA Product ID   :0x00000013
-> [11878.618877] Bluetooth: hci0: QCA SOC Version  :0x400c0210
-> [11878.618881] Bluetooth: hci0: QCA ROM Version  :0x00000201
-> [11878.618884] Bluetooth: hci0: QCA Patch Version:0x000038e6
-> [11878.629674] Bluetooth: hci0: QCA controller version 0x02100201
-> [11878.629681] Bluetooth: hci0: QCA Downloading qca/QCA6698/hpbtfw21.tlv
-> [11879.318475] Bluetooth: hci0: QCA Downloading qca/QCA6698/hpnv21.b206
-> [11879.482082] Bluetooth: hci0: QCA setup on UART is completed
-> [11879.505086] Bluetooth: MGMT ver 1.22
->
-> Turn on BT has the similar log.
-> >>
-> >>>>>> +                    bt_dev_info(hdev, "QCA Downloading %s", config->fwname);
-> >>>>>> +                    ret = request_firmware(&fw, config->fwname, &hdev->dev);
-> >>>>>> +                    if (ret) {
-> >>>>>> +                            bt_dev_err(hdev, "QCA Failed to request file: %s (%d)",
-> >>>>>> +                                       config->fwname, ret);
-> >>>>>> +                            return ret;
-> >>>>>> +                    }
-> >>>>>>              } else {
-> >>>>>>                      bt_dev_err(hdev, "QCA Failed to request file: %s (%d)",
-> >>>>>>                                 config->fwname, ret);
-> >>>>>> @@ -730,15 +768,38 @@ static inline void qca_get_nvm_name_generic(struct qca_fw_config *cfg,
-> >>>>>>                       "qca/%snv%02x.b%02x", stem, rom_ver, bid);
-> >>>>>>  }
-> >>>>>>
-> >>>>>> +static void qca_get_nvm_name_by_board(char *fwname, size_t max_size,
-> >>>>>> +            const char *firmware_name, struct qca_btsoc_version ver,
-> >>>>>> +            enum qca_btsoc_type soc_type, u16 bid)
-> >>>>>> +{
-> >>>>>> +    const char *variant;
-> >>>>>> +
-> >>>>>> +    /* Set the variant to empty by default */
-> >>>>>> +    variant = "";
-> >>>>>> +    /* hsp gf chip */
-> >>>>>> +    if (soc_type == QCA_WCN6855) {
-> >>>>>> +            if ((le32_to_cpu(ver.soc_id) & QCA_HSP_GF_SOC_MASK) == QCA_HSP_GF_SOC_ID)
-> >>>>>> +                    variant = "g";
-> >>>>>
-> >>>>> Didn't you get the 'set but unused' here?
-> >>>>>
-> >>>> Yes, miss this part. Thank you!
-> >>>>>> +    }
-> >>>>>> +
-> >>>>>> +    if (bid == 0x0)
-> >>>>>
-> >>>>> 0x0 or 0xff?
-> >>>> board is set to 0 by default, 0x0 means read board id fails, then we should use
-> >>>> the default one.
-> >>>
-> >>> What is the 'unprogrammed' board_id? On the WiFi side it's usually 0xff.
-> >>>
-> >> Yes, the 'unprogrammed' board_id should be 0xffff. Then 0 and 0xffff should use the
-> >> default nvm.
-> >
-> > Good. I think it's safe to safe board_id to 0xffff by default, then you
-> > don't have to handle '0' specially.
-> >
-> >>>>>
-> >>>>>> +            snprintf(fwname, max_size, "qca/%s.bin", firmware_name);
-> >>>>>> +    else if (bid & 0xff00)
-> >>>>>> +            snprintf(fwname, max_size, "qca/%s.b%x", firmware_name, bid);
-> >>>>>
-> >>>>> Doesn't ".b%02x" work in this case too?
-> >>>>>
-> >>>> No, board id are two bytes, it coudl be 0x0206, then we need .b206. Or it is
-> >>>> 0x000a, then we need .b0a.
-> >>>
-> >>> What will ".b%02x" write in those two cases?
-> >>>
-> >> Yes, it works for both cases. Thanks!
-> >
-> > :-)
-> >
-> >>>>>> +    else
-> >>>>>> +            snprintf(fwname, max_size, "qca/%s.b%02x", firmware_name, bid);
-> >>>>>> +}
-> >>>>>> +
-> >>>
-> >>>
-> >>
-> >
->
+	Hans
 
+> ---
+>  drivers/media/platform/qcom/iris/iris_vdec.c | 122 +++++++++++++++++++++++++++
+>  drivers/media/platform/qcom/iris/iris_vdec.h |   2 +
+>  drivers/media/platform/qcom/iris/iris_vidc.c |  48 +++++++++++
+>  3 files changed, 172 insertions(+)
+> 
+> diff --git a/drivers/media/platform/qcom/iris/iris_vdec.c b/drivers/media/platform/qcom/iris/iris_vdec.c
+> index 2ed50ad5d58b..38a5df8191cc 100644
+> --- a/drivers/media/platform/qcom/iris/iris_vdec.c
+> +++ b/drivers/media/platform/qcom/iris/iris_vdec.c
+> @@ -3,6 +3,8 @@
+>   * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+>   */
+>  
+> +#include <media/v4l2-mem2mem.h>
+> +
+>  #include "iris_buffer.h"
+>  #include "iris_instance.h"
+>  #include "iris_vdec.h"
+> @@ -10,6 +12,7 @@
+>  
+>  #define DEFAULT_WIDTH 320
+>  #define DEFAULT_HEIGHT 240
+> +#define DEFAULT_CODEC_ALIGNMENT 16
+>  
+>  void iris_vdec_inst_init(struct iris_inst *inst)
+>  {
+> @@ -54,3 +57,122 @@ void iris_vdec_inst_deinit(struct iris_inst *inst)
+>  	kfree(inst->fmt_dst);
+>  	kfree(inst->fmt_src);
+>  }
+> +
+> +int iris_vdec_try_fmt(struct iris_inst *inst, struct v4l2_format *f)
+> +{
+> +	struct v4l2_pix_format_mplane *pixmp = &f->fmt.pix_mp;
+> +	struct v4l2_m2m_ctx *m2m_ctx = inst->m2m_ctx;
+> +	struct v4l2_format *f_inst;
+> +	struct vb2_queue *src_q;
+> +
+> +	memset(pixmp->reserved, 0, sizeof(pixmp->reserved));
+> +	switch (f->type) {
+> +	case V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE:
+> +		if (f->fmt.pix_mp.pixelformat != V4L2_PIX_FMT_H264) {
+> +			f_inst = inst->fmt_src;
+> +			f->fmt.pix_mp.width = f_inst->fmt.pix_mp.width;
+> +			f->fmt.pix_mp.height = f_inst->fmt.pix_mp.height;
+> +			f->fmt.pix_mp.pixelformat = f_inst->fmt.pix_mp.pixelformat;
+> +		}
+> +		break;
+> +	case V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE:
+> +		if (f->fmt.pix_mp.pixelformat != V4L2_PIX_FMT_NV12) {
+> +			f_inst = inst->fmt_dst;
+> +			f->fmt.pix_mp.pixelformat = f_inst->fmt.pix_mp.pixelformat;
+> +			f->fmt.pix_mp.width = f_inst->fmt.pix_mp.width;
+> +			f->fmt.pix_mp.height = f_inst->fmt.pix_mp.height;
+> +		}
+> +
+> +		src_q = v4l2_m2m_get_src_vq(m2m_ctx);
+> +		if (vb2_is_streaming(src_q)) {
+> +			f_inst = inst->fmt_src;
+> +			f->fmt.pix_mp.height = f_inst->fmt.pix_mp.height;
+> +			f->fmt.pix_mp.width = f_inst->fmt.pix_mp.width;
+> +		}
+> +		break;
+> +	default:
+> +		return -EINVAL;
+> +	}
+> +
+> +	if (pixmp->field == V4L2_FIELD_ANY)
+> +		pixmp->field = V4L2_FIELD_NONE;
+> +
+> +	pixmp->num_planes = 1;
+> +
+> +	return 0;
+> +}
+> +
+> +int iris_vdec_s_fmt(struct iris_inst *inst, struct v4l2_format *f)
+> +{
+> +	struct v4l2_format *fmt, *output_fmt;
+> +	struct vb2_queue *q;
+> +	u32 codec_align;
+> +
+> +	q = v4l2_m2m_get_vq(inst->m2m_ctx, f->type);
+> +	if (!q)
+> +		return -EINVAL;
+> +
+> +	if (vb2_is_busy(q))
+> +		return -EBUSY;
+> +
+> +	iris_vdec_try_fmt(inst, f);
+> +
+> +	switch (f->type) {
+> +	case V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE:
+> +		if (f->fmt.pix_mp.pixelformat != V4L2_PIX_FMT_H264)
+> +			return -EINVAL;
+> +
+> +		fmt = inst->fmt_src;
+> +		fmt->type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE;
+> +
+> +		codec_align = DEFAULT_CODEC_ALIGNMENT;
+> +		fmt->fmt.pix_mp.width = ALIGN(f->fmt.pix_mp.width, codec_align);
+> +		fmt->fmt.pix_mp.height = ALIGN(f->fmt.pix_mp.height, codec_align);
+> +		fmt->fmt.pix_mp.num_planes = 1;
+> +		fmt->fmt.pix_mp.plane_fmt[0].bytesperline = 0;
+> +		fmt->fmt.pix_mp.plane_fmt[0].sizeimage = iris_get_buffer_size(inst, BUF_INPUT);
+> +		inst->buffers[BUF_INPUT].min_count = iris_vpu_buf_count(inst, BUF_INPUT);
+> +		inst->buffers[BUF_INPUT].size = fmt->fmt.pix_mp.plane_fmt[0].sizeimage;
+> +
+> +		fmt->fmt.pix_mp.colorspace = f->fmt.pix_mp.colorspace;
+> +		fmt->fmt.pix_mp.xfer_func = f->fmt.pix_mp.xfer_func;
+> +		fmt->fmt.pix_mp.ycbcr_enc = f->fmt.pix_mp.ycbcr_enc;
+> +		fmt->fmt.pix_mp.quantization = f->fmt.pix_mp.quantization;
+> +
+> +		output_fmt = inst->fmt_dst;
+> +		output_fmt->fmt.pix_mp.colorspace = f->fmt.pix_mp.colorspace;
+> +		output_fmt->fmt.pix_mp.xfer_func = f->fmt.pix_mp.xfer_func;
+> +		output_fmt->fmt.pix_mp.ycbcr_enc = f->fmt.pix_mp.ycbcr_enc;
+> +		output_fmt->fmt.pix_mp.quantization = f->fmt.pix_mp.quantization;
+> +
+> +		inst->crop.left = 0;
+> +		inst->crop.top = 0;
+> +		inst->crop.width = f->fmt.pix_mp.width;
+> +		inst->crop.height = f->fmt.pix_mp.height;
+> +		break;
+> +	case V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE:
+> +		fmt = inst->fmt_dst;
+> +		fmt->type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE;
+> +		if (fmt->fmt.pix_mp.pixelformat != V4L2_PIX_FMT_NV12)
+> +			return -EINVAL;
+> +		fmt->fmt.pix_mp.pixelformat = f->fmt.pix_mp.pixelformat;
+> +		fmt->fmt.pix_mp.width = ALIGN(f->fmt.pix_mp.width, 128);
+> +		fmt->fmt.pix_mp.height = ALIGN(f->fmt.pix_mp.height, 32);
+> +		fmt->fmt.pix_mp.num_planes = 1;
+> +		fmt->fmt.pix_mp.plane_fmt[0].bytesperline = ALIGN(f->fmt.pix_mp.width, 128);
+> +		fmt->fmt.pix_mp.plane_fmt[0].sizeimage = iris_get_buffer_size(inst, BUF_OUTPUT);
+> +		inst->buffers[BUF_OUTPUT].min_count = iris_vpu_buf_count(inst, BUF_OUTPUT);
+> +		inst->buffers[BUF_OUTPUT].size = fmt->fmt.pix_mp.plane_fmt[0].sizeimage;
+> +
+> +		inst->crop.top = 0;
+> +		inst->crop.left = 0;
+> +		inst->crop.width = f->fmt.pix_mp.width;
+> +		inst->crop.height = f->fmt.pix_mp.height;
+> +		break;
+> +	default:
+> +		return -EINVAL;
+> +	}
+> +	memcpy(f, fmt, sizeof(*fmt));
+> +
+> +	return 0;
+> +}
+> diff --git a/drivers/media/platform/qcom/iris/iris_vdec.h b/drivers/media/platform/qcom/iris/iris_vdec.h
+> index 353b73b76230..85e93f33e9e7 100644
+> --- a/drivers/media/platform/qcom/iris/iris_vdec.h
+> +++ b/drivers/media/platform/qcom/iris/iris_vdec.h
+> @@ -10,5 +10,7 @@ struct iris_inst;
+>  
+>  void iris_vdec_inst_init(struct iris_inst *inst);
+>  void iris_vdec_inst_deinit(struct iris_inst *inst);
+> +int iris_vdec_try_fmt(struct iris_inst *inst, struct v4l2_format *f);
+> +int iris_vdec_s_fmt(struct iris_inst *inst, struct v4l2_format *f);
+>  
+>  #endif
+> diff --git a/drivers/media/platform/qcom/iris/iris_vidc.c b/drivers/media/platform/qcom/iris/iris_vidc.c
+> index ab3b63171c1d..bec965284b6e 100644
+> --- a/drivers/media/platform/qcom/iris/iris_vidc.c
+> +++ b/drivers/media/platform/qcom/iris/iris_vidc.c
+> @@ -217,6 +217,48 @@ int iris_close(struct file *filp)
+>  	return 0;
+>  }
+>  
+> +static int iris_try_fmt_vid_mplane(struct file *filp, void *fh, struct v4l2_format *f)
+> +{
+> +	struct iris_inst *inst = iris_get_inst(filp, NULL);
+> +	int ret;
+> +
+> +	mutex_lock(&inst->lock);
+> +	ret = iris_vdec_try_fmt(inst, f);
+> +	mutex_unlock(&inst->lock);
+> +
+> +	return ret;
+> +}
+> +
+> +static int iris_s_fmt_vid_mplane(struct file *filp, void *fh, struct v4l2_format *f)
+> +{
+> +	struct iris_inst *inst = iris_get_inst(filp, NULL);
+> +	int ret;
+> +
+> +	mutex_lock(&inst->lock);
+> +	ret = iris_vdec_s_fmt(inst, f);
+> +	mutex_unlock(&inst->lock);
+> +
+> +	return ret;
+> +}
+> +
+> +static int iris_g_fmt_vid_mplane(struct file *filp, void *fh, struct v4l2_format *f)
+> +{
+> +	struct iris_inst *inst = iris_get_inst(filp, NULL);
+> +	int ret = 0;
+> +
+> +	mutex_lock(&inst->lock);
+> +	if (V4L2_TYPE_IS_OUTPUT(f->type))
+> +		*f = *inst->fmt_src;
+> +	else if (V4L2_TYPE_IS_CAPTURE(f->type))
+> +		*f = *inst->fmt_dst;
+> +	else
+> +		ret = -EINVAL;
+> +
+> +	mutex_unlock(&inst->lock);
+> +
+> +	return ret;
+> +}
+> +
+>  static struct v4l2_file_operations iris_v4l2_file_ops = {
+>  	.owner                          = THIS_MODULE,
+>  	.open                           = iris_open,
+> @@ -231,6 +273,12 @@ static const struct vb2_ops iris_vb2_ops = {
+>  };
+>  
+>  static const struct v4l2_ioctl_ops iris_v4l2_ioctl_ops = {
+> +	.vidioc_try_fmt_vid_cap_mplane  = iris_try_fmt_vid_mplane,
+> +	.vidioc_try_fmt_vid_out_mplane  = iris_try_fmt_vid_mplane,
+> +	.vidioc_s_fmt_vid_cap_mplane    = iris_s_fmt_vid_mplane,
+> +	.vidioc_s_fmt_vid_out_mplane    = iris_s_fmt_vid_mplane,
+> +	.vidioc_g_fmt_vid_cap_mplane    = iris_g_fmt_vid_mplane,
+> +	.vidioc_g_fmt_vid_out_mplane    = iris_g_fmt_vid_mplane,
+>  	.vidioc_reqbufs                 = v4l2_m2m_ioctl_reqbufs,
+>  };
+>  
+> 
 
--- 
-With best wishes
-Dmitry
 
