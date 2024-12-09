@@ -1,222 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-41061-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41062-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E58679E9395
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 13:14:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 580259E93C5
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 13:24:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 82CF11650A6
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 12:14:11 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A4C96165CCA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 12:24:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA41A227B8F;
-	Mon,  9 Dec 2024 12:11:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 348FA2236F4;
+	Mon,  9 Dec 2024 12:24:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BbrWr7il"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FufHW/pQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12EE6227571;
-	Mon,  9 Dec 2024 12:11:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A153A222587
+	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Dec 2024 12:24:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733746303; cv=none; b=nZ1ZDH+/CenV2/MdW50vXeLrOJ/JsJdpdlt67KmumO/MgJXLTk2x6mUtL/uEqv60BAcPbKRkOxY/7Xd3SuuGRj566ttxwE03xLwvKp6Ed7EOdTh+qq44IuGYLcHdycNHvV39ZaZwfJP2lMI/DrMHQtUXqkDoTJ9fBC/nVRkbRFg=
+	t=1733747056; cv=none; b=BZ4WFmFZ2uGPEV23fivpWC1yKczB+GgcOfFboXzHOFTS9Zj107Ktl1unFjGZK8bJH7Ld/38niv38w9mvkM6vp6kgrPiM9dgrFhAtvXAc73ExJcJFYuir0hIaoWHt5NfPvFnUalkFipLCZhZLcxVeBkMJN33CkkxLflBxvSo9sl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733746303; c=relaxed/simple;
-	bh=MbxzqFAIzaHkb7EzY55VB+Z+jqX43pw9PJdfd4UvVG8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=edj7ZK6lJcCJHatUVEvVSpIXKM0dZBHkvNFLdbELv0d++U0sOSFRYCBmcmJv5VGq79WyY4Ltb+4iyW8QaqMqO5e0Jy3iC9NDDMa/6L08MIeF63JobmfntFHq60CahuJiO8HIActZlztSn/zf6v1KJ/Kr+l0qNkfRRs4xnM/FCOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BbrWr7il; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B9ABTpv017843;
-	Mon, 9 Dec 2024 12:11:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	1EfcYrU9ZjyRlIViYvH//2YxkrWtkjOKIS3LXBhbDOk=; b=BbrWr7ilhzETJIyH
-	EGvKOE1C5Lq66aUiHpGM5j9QF3t+JjmbpKQsNUmxEfBCf4bLRH3abWgQitLYMFVD
-	KtA615yfo09gb2YUiricfXSGADmVxoYw/OB8yad07Eq8rLdakWw4z6rfsaMspl1C
-	0zzD0xYfhvEbMfSv7KljIliG8zWXZ81pyguybuvMdor9vqRzFhOpeLT+3kAjTI1Z
-	5sktnTxjMQNIcZjKXa99l6ZBNOCpHsr0yw4rqrSyu9ZaeGJ2nvMUktZVkpOHA3V8
-	BKfASYs8orTHuB6m2pFAIXNVLNvt9KMVAnskfTd31xnZl9VOrfD1NDx3gpItEQzf
-	ew6eJQ==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43cf4e4jrx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 09 Dec 2024 12:11:33 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B9CBXRq018268
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 9 Dec 2024 12:11:33 GMT
-Received: from [10.216.3.14] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 9 Dec 2024
- 04:11:27 -0800
-Message-ID: <93ed4511-55b5-42a9-a3fe-32f29bd01bab@quicinc.com>
-Date: Mon, 9 Dec 2024 17:41:24 +0530
+	s=arc-20240116; t=1733747056; c=relaxed/simple;
+	bh=2ItpBQPODjnIYSjwoQvA06FlkQRZbhoJv5RXLp+oLuc=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=HN1nF/W7aSjNZFudmqpEbKXQ9vjHvtiOOOgmspOWZLs5WgE5H/DMQcW5jNTmhl97SuqsK1GFp8PxWcpIIAreFbkN5dognIbBHGqmW3YYRYCi0uF49wljFa8+BQvGfGLa2qfWljkZlVmIxNdSn/5BSWnoq0amj1aZUaIumt0qC60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FufHW/pQ; arc=none smtp.client-ip=209.85.208.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-5d3cfa1da14so217557a12.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Dec 2024 04:24:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1733747052; x=1734351852; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=+GhPtI8wgOnDMaTV/aebDQBDsWOSAP4QkIO0/UH54kQ=;
+        b=FufHW/pQUrV6WYzCyKuEDPZmvfI9Q7AAb3H/XHFhb6lSXL41DlcMWxgiBUNlU6mD5P
+         vKLFJV5QSfNxT84CLxkLeChRMS3DDjvKtVMB3QgZSTnyU7cnhPpwwkE41ZovmXZkIhTh
+         4To1QLWqqgv2e1611bFyWqjkHpkZkV47SIgeF1+9sFCx+91xwiN2/Oe4c07rhjn9DdPg
+         i8fqFqx5Z92KmSY0SiqlF0YGlICvZ/JOagWufBUrYiVvVfDvThmCsAk1U6FllYIrNXK8
+         aau/EeBnCKGqHVqTFrMAUbhie7LU/7W35rDakhi5jrbyQQHABYpNE8OprtaD5FNIEhsm
+         IGVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733747052; x=1734351852;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+GhPtI8wgOnDMaTV/aebDQBDsWOSAP4QkIO0/UH54kQ=;
+        b=PRG7x2ezNMCrZ5HMPicPIox9JqjDM1cSrRrAucVUO0jK/myHPs0oUatMEl1S2cWVqG
+         ITJDnOnHM4nGLb0WonX7bpb/W5gHnspCCGwuJ5Jhwiip3j152mfY4YXGBwF8FTnR65F6
+         agPlZqv1Dh/34Y5n3kiTBdC0k50eA/xR7YKplaPAFsfAnUSL3v8SNVkhFuj1mEhxO/ha
+         6xCeM6XmjYWg9B1qcxkcjQZofKkzfEXmjHICfEbtKpMsRCRGriLmpKqX7rhBHNmn6cRX
+         MMz7croUEldfJYrtT1VaZTeq9hcdCCu0vJPVMQppsmWBqZO4xZxDfZKpQsQc9n26PCo/
+         fSjQ==
+X-Gm-Message-State: AOJu0Yzc5WDaiebUhT9qUbx/xmtmMMwvWVGIajAZNX4RwVanoJ9OJshU
+	osjDVuusVzniZAZ2SgBPY/d0Yv5U+Wg/6dNla406UAC566YbIb527C3sbX3lfms=
+X-Gm-Gg: ASbGncsylyQtfTdkAC1i2UvNMKDmNn0nWW/O3FoaoiJMQAbaZDwi2NF0DjAzEYuhaPt
+	EOlThy0rZ29l+dJwxAC6dDlbdJm+dE/C2YQpcgBCD/aRynVk6tnU32bJmZQIDKT2F1rotQI0w0/
+	1m6Oex+G3xenJuvbfpDzMF75OadtnPvARgD8f+Cf7pYZ9NT6s5lqla5UiP+wuFTNPqnL4gfdheW
+	EsdHLiLJLHRbuywAkiZO3ZhSzEbmp12AMkEsVBfvG/dEEYmUo+d+ACgJjv4yueXoA==
+X-Google-Smtp-Source: AGHT+IHOTya6h+M4f2qaVjLOGQqZ6THQS3TTb1fVk2LGehqwscKKRp3o8NGiskXXumu0NDWCobOvLQ==
+X-Received: by 2002:a17:907:3f24:b0:aa6:9c29:86d1 with SMTP id a640c23a62f3a-aa69c29dd7emr15261366b.3.1733747051987;
+        Mon, 09 Dec 2024 04:24:11 -0800 (PST)
+Received: from [127.0.1.1] ([178.197.223.165])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa66b96a249sm309925866b.159.2024.12.09.04.24.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Dec 2024 04:24:11 -0800 (PST)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH RESEND 0/3] clk: qcom: simplify locking with guard()
+Date: Mon, 09 Dec 2024 13:24:03 +0100
+Message-Id: <20241209-cleanup-h-guard-clk-qcom-v1-0-b1077540230c@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/7] drm/msm: adreno: dynamically generate GMU bw table
-To: Neil Armstrong <neil.armstrong@linaro.org>,
-        Rob Clark
-	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        "Dmitry
- Baryshkov" <dmitry.baryshkov@linaro.org>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, "Simona
- Vetter" <simona@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>, Rob
- Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor
- Dooley <conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-References: <20241205-topic-sm8x50-gpu-bw-vote-v4-0-9650d15dd435@linaro.org>
- <20241205-topic-sm8x50-gpu-bw-vote-v4-3-9650d15dd435@linaro.org>
-Content-Language: en-US
-From: Akhil P Oommen <quic_akhilpo@quicinc.com>
-In-Reply-To: <20241205-topic-sm8x50-gpu-bw-vote-v4-3-9650d15dd435@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 1v-WJvdjJY3pm-lpggcA_yoERX4z_dLk
-X-Proofpoint-ORIG-GUID: 1v-WJvdjJY3pm-lpggcA_yoERX4z_dLk
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- lowpriorityscore=0 mlxlogscore=999 clxscore=1015 impostorscore=0
- spamscore=0 priorityscore=1501 mlxscore=0 adultscore=0 phishscore=0
- bulkscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412090096
+X-B4-Tracking: v=1; b=H4sIAGPhVmcC/4WNvQ6CMBSFX4Xc2WvaSio4OcjqoKNh6J/QiC220
+ mgI727DCzh+5+R8Z4ZogjURDsUMwSQbrXcZ6KYA1QvXGbQ6MzDCSlKxHarBCDeN2GM3iaAzP/C
+ l/BOZ2HNOCJGy5JDnYzB3+1nVN7g01+Z8gjbnvY1vH77rY6Jr+1+eKBLklZQ1J1TVWh8H60TwW
+ x86aJdl+QGBIKycyQAAAA==
+X-Change-ID: 20240823-cleanup-h-guard-clk-qcom-2a766000bb46
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=873;
+ i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
+ bh=2ItpBQPODjnIYSjwoQvA06FlkQRZbhoJv5RXLp+oLuc=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBnVuFnCVQSN2Xt7Diw10/bZEjtDrP5veCHDkbPR
+ eHx1ZloLmSJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZ1bhZwAKCRDBN2bmhouD
+ 1zITD/4rAJjeVDGqDdJHuFMtCcZ4nTslkuTsYFzw2NFIjrL0hBVzs+l/xgH8BseAHD3ZdDuknGx
+ k3Ha/RJOGmLYIHHuq8bynkElOex7ggmCHa+YaiDtXcCN9go+BLt8eMFZ5dyhD0yeV2K9+Zlmi3D
+ qOnW9MkCDw5CEZ4qDJyFMBr43nSJEIOGUbJDz+6I2Yarddkc/3F3+jFo+P5tymXAPxxKddmSkFg
+ XPlfwTo+x6AD3lxyvOVlppqCJArK+H68CenofZ2PdPkgCbLKRynGU+BflBRC0W1qC4mTiX4i7iL
+ ahmCd6qwcpfM8Ld7MV4GcU+dkrIwhSYx4Vxq1CeB29d2BPr3WvfzBEca0JZ7vLcFarPLNoyrMZB
+ wxCDZWSzBCzHO6CC4Qi7iv/LbYLm+M+F1v2/uMWrM6rDmsI3qpnQ5EU8EWMGootTdfz0lz38auG
+ BoSi/EpKYtkAFwDeh6W+z5dmAjEH8pRLpLfkmJ59asbPF+tVoW0UEKCTvH4FOGHxpZ/Eft49liY
+ DBMOxnymQFtVYp/rdT9d7VhcUtQFp2cX+t7O2NdxEEej3Qf8LJ1tY1NKFODqtUr3aPowRycDSqX
+ cZNlG4jt538P1GZbtdh9dDItoXxW1cY015Xy1nSMCgo4K2OGGBaEvK4QPYWNydZZw3mIE8XaTCf
+ LX9WGs8JMxnYhpQ==
+X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
+ fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
-On 12/5/2024 8:31 PM, Neil Armstrong wrote:
-> The Adreno GPU Management Unit (GMU) can also scale the ddr
-> bandwidth along the frequency and power domain level, but for
-> now we statically fill the bw_table with values from the
-> downstream driver.
-> 
-> Only the first entry is used, which is a disable vote, so we
-> currently rely on scaling via the linux interconnect paths.
-> 
-> Let's dynamically generate the bw_table with the vote values
-> previously calculated from the OPPs.
-> 
-> Those entries will then be used by the GMU when passing the
-> appropriate bandwidth level while voting for a gpu frequency.
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->  drivers/gpu/drm/msm/adreno/a6xx_hfi.c | 41 ++++++++++++++++++++++++++++++++++-
->  1 file changed, 40 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
-> index cb8844ed46b29c4569d05eb7a24f7b27e173190f..fc4bfad51de9a3b6617fbbd03471a5851d43ce88 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
-> @@ -5,7 +5,10 @@
->  #include <linux/circ_buf.h>
->  #include <linux/list.h>
->  
-> +#include <dt-bindings/interconnect/qcom,icc.h>
-> +
->  #include <soc/qcom/cmd-db.h>
-> +#include <soc/qcom/tcs.h>
->  
->  #include "a6xx_gmu.h"
->  #include "a6xx_gmu.xml.h"
-> @@ -259,6 +262,39 @@ static int a6xx_hfi_send_perf_table(struct a6xx_gmu *gmu)
->  		NULL, 0);
->  }
->  
-> +static void a6xx_generate_bw_table(const struct a6xx_info *info, struct a6xx_gmu *gmu,
-> +				   struct a6xx_hfi_msg_bw_table *msg)
-> +{
-> +	unsigned int i, j;
-> +
-> +	msg->ddr_wait_bitmask = QCOM_ICC_TAG_ALWAYS;
+No feedback, resending.
+https://lore.kernel.org/r/20240823-cleanup-h-guard-clk-qcom-v1-0-68bb9601c9dd@linaro.org
 
-Why this is QCOM_ICC_TAG_ALWAYS?
+Simplify error handling around locks with guard().  Less gotos needed.
 
-IIRC, this bitmask informs RPMH whether it should wait for previous BCM
-vote to complete. Can we implement the same logic from kgsl to create
-this bitmask?
+Best regards,
+Krzysztof
 
+---
+Krzysztof Kozlowski (3):
+      clk: qcom: rpm: simplify locking with guard()
+      clk: qcom: smd-rpm: simplify locking with guard()
+      clk: qcom: spmi-pmic-div: simplify locking with guard()
 
-> +
-> +	for (i = 0; i < GMU_MAX_BCMS; i++) {
-> +		if (!info->bcms[i].name)
-> +			break;
-> +		msg->ddr_cmds_addrs[i] = cmd_db_read_addr(info->bcms[i].name);
-> +	}
-> +	msg->ddr_cmds_num = i;
-> +
-> +	for (i = 0; i < gmu->nr_gpu_bws; ++i)
-> +		for (j = 0; j < msg->ddr_cmds_num; j++)
-> +			msg->ddr_cmds_data[i][j] = gmu->gpu_ib_votes[i][j];
-> +	msg->bw_level_num = gmu->nr_gpu_bws;
-> +
-> +	/*
-> +	 * These are the CX (CNOC) votes - these are used by the GMU
-> +	 * The 'CN0' BCM is used on all targets, and votes are basically
-> +	 * 'off' and 'on' states with first bit to enable the path.
-> +	 */
-> +
-> +	msg->cnoc_cmds_num = 1;
-> +	msg->cnoc_wait_bitmask = QCOM_ICC_TAG_AMC;
+ drivers/clk/qcom/clk-rpm.c           | 27 +++++++++++----------------
+ drivers/clk/qcom/clk-smd-rpm.c       | 25 ++++++++++---------------
+ drivers/clk/qcom/clk-spmi-pmic-div.c | 13 +++++--------
+ 3 files changed, 26 insertions(+), 39 deletions(-)
+---
+base-commit: 294c646feab33931bd459930fa28360f5e97c294
+change-id: 20240823-cleanup-h-guard-clk-qcom-2a766000bb46
 
-Same here.
-
-Rest looks fine to me.
-
--Akhil
-
-> +
-> +	msg->cnoc_cmds_addrs[0] = cmd_db_read_addr("CN0");
-> +	msg->cnoc_cmds_data[0][0] = BCM_TCS_CMD(true, false, 0, 0);
-> +	msg->cnoc_cmds_data[1][0] = BCM_TCS_CMD(true, true, 0, BIT(0));
-> +}
-> +
->  static void a618_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
->  {
->  	/* Send a single "off" entry since the 618 GMU doesn't do bus scaling */
-> @@ -664,6 +700,7 @@ static int a6xx_hfi_send_bw_table(struct a6xx_gmu *gmu)
->  	struct a6xx_hfi_msg_bw_table *msg;
->  	struct a6xx_gpu *a6xx_gpu = container_of(gmu, struct a6xx_gpu, gmu);
->  	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
-> +	const struct a6xx_info *info = adreno_gpu->info->a6xx;
->  
->  	if (gmu->bw_table)
->  		goto send;
-> @@ -672,7 +709,9 @@ static int a6xx_hfi_send_bw_table(struct a6xx_gmu *gmu)
->  	if (!msg)
->  		return -ENOMEM;
->  
-> -	if (adreno_is_a618(adreno_gpu))
-> +	if (info->bcms && gmu->nr_gpu_bws > 1)
-> +		a6xx_generate_bw_table(info, gmu, msg);
-> +	else if (adreno_is_a618(adreno_gpu))
->  		a618_build_bw_table(msg);
->  	else if (adreno_is_a619(adreno_gpu))
->  		a619_build_bw_table(msg);
-> 
+Best regards,
+-- 
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 
