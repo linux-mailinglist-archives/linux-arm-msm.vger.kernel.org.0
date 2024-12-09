@@ -1,169 +1,188 @@
-Return-Path: <linux-arm-msm+bounces-40968-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40969-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EA4919E8BA3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 07:43:50 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 728F19E8C32
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 08:32:14 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A65D32817A4
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 06:43:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6F95F1885A56
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 07:32:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EAD1621481B;
-	Mon,  9 Dec 2024 06:43:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1ECA62147F8;
+	Mon,  9 Dec 2024 07:32:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JL95D+/m"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="KowAMxse"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47C262135D0;
-	Mon,  9 Dec 2024 06:43:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45CFD155751;
+	Mon,  9 Dec 2024 07:32:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733726622; cv=none; b=VvhF92fikdt1OeOerzmaCqGO8Y2h+yKDp5e/uN5XGF5CDouOEyXGSUkiS1EzdCEZJ1DkTziLXL2rvSCKfgX1zwtdzd2anSkcXDsBJpgHi93+tuJ70mYyB2phW7UmYFrv8kXEiXamHX77oq67phIZm9Kdx+CuwRrBHmlkHTWAKXI=
+	t=1733729530; cv=none; b=JWq9bnenMlDG/0xx5Md9mxKuCyOdf+E68+I97KsE9A1Pjqrshql8jN/fsAVpcnSI8cYK7cdCDKcQitRBDN1MSlkYZCpyyH5Tw57AbmaTAgsB3M+o1+u8NvOzZGfwHnxe/70RAz0hx7A5yREDEG36JtRB3P69d5894qy2zebowTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733726622; c=relaxed/simple;
-	bh=vLK+Yed2BeeQ8DSf6jqpnA9LNHXJjh09orawJilA99k=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=dQCBy6u8pfMvJTP9QZhcw2rnpdgfbjw0tUdbHCILd3K7um1OcOUQjpURDFaSxKnEpWYKYAqMHTqHFv5XTBFGb+IScnN8ZaLPv2nhvytytfwcl+JO8+ixRi208rAcHXREqEVT2sKES+foGR2U7d94PLQCgFRThYTIo3H50aGhK6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JL95D+/m; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1733729530; c=relaxed/simple;
+	bh=64Nt/EKDpKv3h+ScLXYg+esUX5yXpwZo3YoIS3YvFUc=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Jw2MtdpZ/CVIkdBLXyrvTtsPFd/v2uydqxbj6Ntj8Q8TvtIQa9q5HdpNaEwLOAlfH99ila+yh3ZlMsIesR5JwUk5kRtOFNNkcrjnPtsQLWYKiIb4vHyM046NBvgM3ZsBtCvLeiL0bQUusIjOVXqO50Gnfk5jsQWzBhz1p6rRAhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=KowAMxse; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B8M024R025063;
-	Mon, 9 Dec 2024 06:43:37 GMT
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B8NQgTN005177;
+	Mon, 9 Dec 2024 07:32:02 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	bjZFA3oy2Si6WnAP3k2skZKTYXVLLfhTiMOnT+d73m0=; b=JL95D+/mW+l0hxcY
-	/SajKDTxEWp2377xIoa/5yqCIR/0P9iwY+wZWUIGWWUFX5GZBqKLU+i7KAAhg52a
-	XsGkTlV7kTtKjAuG8j3lpbhGgp9nqCwcX1HMxkjmjrgQeRJoFSlGM9TO6RQwb/nP
-	pjdUszt3T7KDv/8YP60bW0OSF+MjdUw1UEjff7m23z5pCvGw39h9CZWAV3T69hN1
-	Uo760CH3qp4WHpJO5V/g4wWciudI3ussYYE7HHmPeJjOCMLWDE6yg5WABwOcwS0k
-	M5qbdXxXPmu+dhXOcL3UGZFYE/IfXhBs5jVI6AX53TRru0eiO5fZf5/fQH8xez4T
-	zKyamA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43cek1ukc5-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=cUQ50lwmYhvXWnneukU2aE
+	UXJJ0s/KcuuNUa7W/c03I=; b=KowAMxsePZVpzJL8526ffQVR0ggj2nnJHXicC5
+	pVFPXW7hNOe7w8IVEmslqobJ6MQiWPihPr5azTM2ye1u6ucnQbCwVAcsBLfAQLM9
+	59fSRZK2jirT9HHLNaLrgaqciosQildVR09kuHCVSnjMpT9LL5gzMylKbAFxXGne
+	GRRAhAfoQHqpZidVzKM8sdnjuNTMxssr5iJOUY6MuUAodscolOCp+g6jC0tK8Qd0
+	P4cAimdplSAXBiVs9ymK5f8NXTjXJ3YKRSRfgf2ivaOnDmjPzqVGP4Ekwq13nYo1
+	egyPmEQrbf8mYaY7O4XCc8g5CWzhP/HGdsm+xrZEmCOsUfAg==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43cdpgkt2n-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 09 Dec 2024 06:43:36 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B96haCg024382
+	Mon, 09 Dec 2024 07:32:02 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B97W17O020614
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 9 Dec 2024 06:43:36 GMT
-Received: from [10.152.195.140] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 8 Dec 2024
- 22:43:32 -0800
-Message-ID: <aa8a252d-cb7c-45c9-bb44-dcaaa01d10bb@quicinc.com>
-Date: Mon, 9 Dec 2024 12:13:29 +0530
+	Mon, 9 Dec 2024 07:32:01 GMT
+Received: from hu-mdalam-blr.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Sun, 8 Dec 2024 23:31:58 -0800
+From: Md Sadre Alam <quic_mdalam@quicinc.com>
+To: <vkoul@kernel.org>, <martin.petersen@oracle.com>, <ulf.hansson@linaro.org>,
+        <av2082000@gmail.com>, <linux-arm-msm@vger.kernel.org>,
+        <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+CC: <uic_mdalam@quicinc.com>, <quic_srichara@quicinc.com>,
+        <quic_varada@quicinc.com>
+Subject: [PATCH v3] dmaengine: qcom: bam_dma: Avoid writing unavailable register
+Date: Mon, 9 Dec 2024 13:01:43 +0530
+Message-ID: <20241209073143.3413552-1-quic_mdalam@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] arm64: dts: qcom: ipq5424: configure spi0 node for
- rdp466
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, <andersson@kernel.org>,
-        <linus.walleij@linaro.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <konradybcio@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-CC: <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
-References: <20241122124505.1688436-1-quic_mmanikan@quicinc.com>
- <20241122124505.1688436-5-quic_mmanikan@quicinc.com>
- <249fb0aa-5624-41cb-8a3b-c2e54dba87df@oss.qualcomm.com>
-Content-Language: en-US
-From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-In-Reply-To: <249fb0aa-5624-41cb-8a3b-c2e54dba87df@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ocV8A6s3eBXsm7eJxQd1IJenPenF7FPs
-X-Proofpoint-ORIG-GUID: ocV8A6s3eBXsm7eJxQd1IJenPenF7FPs
+X-Proofpoint-GUID: qWTXuQbAZjq2_6X0EnqmBGP5grXcY6Hx
+X-Proofpoint-ORIG-GUID: qWTXuQbAZjq2_6X0EnqmBGP5grXcY6Hx
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
- mlxscore=0 adultscore=0 clxscore=1015 malwarescore=0 phishscore=0
- spamscore=0 mlxlogscore=881 lowpriorityscore=0 priorityscore=1501
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412090052
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ adultscore=0 clxscore=1015 suspectscore=0 mlxscore=0 priorityscore=1501
+ phishscore=0 mlxlogscore=999 spamscore=0 malwarescore=0 bulkscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412090058
 
+Avoid writing unavailable register in BAM-Lite mode.
+BAM_DESC_CNT_TRSHLD register is unavailable in BAM-Lite
+mode. Its only available in BAM-NDP mode. So only write
+this register for clients who is using BAM-NDP.
 
+Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+---
 
-On 12/5/2024 11:00 PM, Konrad Dybcio wrote:
-> On 22.11.2024 1:45 PM, Manikanta Mylavarapu wrote:
->> Enable the SPI0 node and configure the associated gpio pins.
->>
->> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
->> ---
->>  arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts | 45 +++++++++++++++++++++
->>  1 file changed, 45 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts b/arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts
->> index d4d31026a026..6256216ca764 100644
->> --- a/arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts
->> +++ b/arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts
->> @@ -23,6 +23,36 @@ &sleep_clk {
->>  };
->>  
->>  &tlmm {
->> +	spi0_default_state: spi0-default-state {
->> +		clk-pins {
->> +			pins = "gpio6";
->> +			function = "spi0_clk";
->> +			drive-strength = <8>;
->> +			bias-pull-down;
->> +		};
->> +
->> +		cs-pins {
->> +			pins = "gpio7";
->> +			function = "spi0_cs";
->> +			drive-strength = <8>;
->> +			bias-pull-up;
->> +		};
->> +
->> +		miso-pins {
->> +			pins = "gpio8";
->> +			function = "spi0_miso";
->> +			drive-strength = <8>;
->> +			bias-pull-down;
->> +		};
->> +
->> +		mosi-pins {
->> +			pins = "gpio9";
->> +			function = "spi0_mosi";
->> +			drive-strength = <8>;
->> +			bias-pull-down;
->> +		};
->> +	};
->> +
->>  	sdc_default_state: sdc-default-state {
->>  		clk-pins {
->>  			pins = "gpio5";
->> @@ -57,3 +87,18 @@ &xo_board {
->>  	clock-frequency = <24000000>;
->>  };
->>  
->> +&qupv3 {
->> +	spi0: spi@1a90000 {
-> 
-> &spi0 {
-> 	pinctrl-0 = <..
-> 	...
-> };
-> 
+Change in [v3]
 
-Thanks for reviewing the patch.
-I will update in the next version.
+* Removed BAM_LITE macro
 
-Thanks & Regards,
-Manikanta.
+* Updated commit message
+
+* Adjusted if condition check
+
+* Renamed BAM-NDP macro to BAM_NDP_REVISION_START and 
+  BAM_NDP_REVISION_END
+
+Change in [v2]
+
+* Replace 0xff with REVISION_MASK in the statement
+  bdev->bam_revision = val & REVISION_MASK
+
+Change in [v1]
+
+* Added initial patch
+
+ drivers/dma/qcom/bam_dma.c | 24 ++++++++++++++++--------
+ 1 file changed, 16 insertions(+), 8 deletions(-)
+
+diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+index d43a881e43b9..a00dd0331ff5 100644
+--- a/drivers/dma/qcom/bam_dma.c
++++ b/drivers/dma/qcom/bam_dma.c
+@@ -59,6 +59,9 @@ struct bam_desc_hw {
+ #define DESC_FLAG_NWD BIT(12)
+ #define DESC_FLAG_CMD BIT(11)
+ 
++#define BAM_NDP_REVISION_START	0x20
++#define BAM_NDP_REVISION_END	0x27
++
+ struct bam_async_desc {
+ 	struct virt_dma_desc vd;
+ 
+@@ -398,6 +401,7 @@ struct bam_device {
+ 
+ 	/* dma start transaction tasklet */
+ 	struct tasklet_struct task;
++	u32 bam_revision;
+ };
+ 
+ /**
+@@ -441,8 +445,10 @@ static void bam_reset(struct bam_device *bdev)
+ 	writel_relaxed(val, bam_addr(bdev, 0, BAM_CTRL));
+ 
+ 	/* set descriptor threshold, start with 4 bytes */
+-	writel_relaxed(DEFAULT_CNT_THRSHLD,
+-			bam_addr(bdev, 0, BAM_DESC_CNT_TRSHLD));
++	if (bdev->bam_revision >= BAM_NDP_REVISION_START &&
++	    bdev->bam_revision <= BAM_NDP_REVISION_END)
++		writel_relaxed(DEFAULT_CNT_THRSHLD,
++			       bam_addr(bdev, 0, BAM_DESC_CNT_TRSHLD));
+ 
+ 	/* Enable default set of h/w workarounds, ie all except BAM_FULL_PIPE */
+ 	writel_relaxed(BAM_CNFG_BITS_DEFAULT, bam_addr(bdev, 0, BAM_CNFG_BITS));
+@@ -1000,9 +1006,10 @@ static void bam_apply_new_config(struct bam_chan *bchan,
+ 			maxburst = bchan->slave.src_maxburst;
+ 		else
+ 			maxburst = bchan->slave.dst_maxburst;
+-
+-		writel_relaxed(maxburst,
+-			       bam_addr(bdev, 0, BAM_DESC_CNT_TRSHLD));
++		if (bdev->bam_revision >= BAM_NDP_REVISION_START &&
++		    bdev->bam_revision <= BAM_NDP_REVISION_END)
++			writel_relaxed(maxburst,
++				       bam_addr(bdev, 0, BAM_DESC_CNT_TRSHLD));
+ 	}
+ 
+ 	bchan->reconfigure = 0;
+@@ -1192,10 +1199,11 @@ static int bam_init(struct bam_device *bdev)
+ 	u32 val;
+ 
+ 	/* read revision and configuration information */
+-	if (!bdev->num_ees) {
+-		val = readl_relaxed(bam_addr(bdev, 0, BAM_REVISION));
++	val = readl_relaxed(bam_addr(bdev, 0, BAM_REVISION));
++	if (!bdev->num_ees)
+ 		bdev->num_ees = (val >> NUM_EES_SHIFT) & NUM_EES_MASK;
+-	}
++
++	bdev->bam_revision = val & REVISION_MASK;
+ 
+ 	/* check that configured EE is within range */
+ 	if (bdev->ee >= bdev->num_ees)
+-- 
+2.34.1
+
 
