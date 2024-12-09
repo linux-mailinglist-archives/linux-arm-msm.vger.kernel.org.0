@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-40933-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40934-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6782F9E8906
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 02:44:59 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0F4BD9E8912
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 02:58:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3EDF41885C94
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 01:44:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F4003160FC2
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 01:58:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2427121364;
-	Mon,  9 Dec 2024 01:44:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85DF0224F6;
+	Mon,  9 Dec 2024 01:58:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CRdQVIiV"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="aYVL/QDI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30B9B17741;
-	Mon,  9 Dec 2024 01:44:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0756FC0E;
+	Mon,  9 Dec 2024 01:58:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733708694; cv=none; b=UKlIbfALHb3N+E1sotX7HSHOaiIb04P+dOYcA99CpLIVFlAIbA7M3rLOu0RT1oANOwsXHVGpK7yOh60baiK16p0BUKj2bO2SaLWI4r3V+KVP3MxejJic9XlKX/XLzAhl+Jq0qXYsVr+JdsnbRsZ8ucBBGwbJWTJhLnDN3pT4uPA=
+	t=1733709486; cv=none; b=SnAmk/GB03yQn/0n/Oijyefqpg1lyOR4qQYaGQOzgNanDuyPXglYUo1ssl8X/ascB/1IOdSLeLSYrUrsANlGvkxlmsd2XqByMpH1l0ZrmC1x19FaQD6JBg3dbzwSZLnhXcOugv2YYjW/YwrrLfDOX5qMCAhQQNFS+QahClkjRnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733708694; c=relaxed/simple;
-	bh=a+3NWevTMSLdvyul6UXKHhoFsx7DeZhvWJAsNvUVMjA=;
+	s=arc-20240116; t=1733709486; c=relaxed/simple;
+	bh=26ws/KgChiIeAZTv7IM2pgQp+NqAg4iGZ7rpERs3Gs8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=nktbuuiO2q6dhQlE0vISOzOiNehVElEc4+7Rlkc3YZ8DbbCpQ1W3xBGUocXY1KYCwPyV0+pe+IE8j2BdRHVIM9uH54QgLir6lsuaqs3UzhrlWV9G0hdDvufVADJ1xJyEkW/FYdXH0IjQs8ytEfir29+6jqp6z3gRNNlsE77pvUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CRdQVIiV; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=kq7uzIk28QGG/v/brGMY+pgbvwk/RkDNyElnibe5R0H1bUdU62+26c6AmJIo0Kc2e7EtxvdcexjWnzVHPLucpe6p6GgdnsLYfNo6g2Y/vNc8+RYwyHWIHQSpgVLFSaHeq0lg74rRF3/HZNYMZB/QZ7/SSrEjlXTW1k+hCqKT5/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=aYVL/QDI; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B9017xs012697;
-	Mon, 9 Dec 2024 01:44:30 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B90QGVn020262;
+	Mon, 9 Dec 2024 01:57:43 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	mONfncm9hTek7jcougy3xSCm6rv4bmG3B6zaPol5p8s=; b=CRdQVIiVJoyJvgfP
-	sNwJrCXjY0zLONqgfds4bqv3EyyGmMjgD45okpHdukbx7fb/MH9gXYxIcu0vHCgE
-	aeDkX90GyuwF1jPUR6M3EUuKD3VdqsFPKG7WmXXi1JcgtP7fcncdYF08ZZO6HN64
-	r/bvWnBERBZ4xPHX50JSRRhexDQ2+eNk6ni/dyM7j/gRou9MLLBI7M5anFUPhAdV
-	7ZYXBzbSOO0zabPL1Y7qvJFG150maTpp4OiMs/Cq2skBSQLpNHssfpC3Z6L1Jnjm
-	7ly3FVDqjZW6GfZn4scPciwGlimNLoIqBUDwrB8M56pB+P+0KhXS9q1fkqZo0Iog
-	2MgtFA==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43ceetk03m-1
+	CG8II9ztrbXAFXn/IH/2hf7r1GGna+rqHK57zUB/bNU=; b=aYVL/QDI5hRBCESG
+	gYYAxB1Jr0qodPz2M2xbt/JMNcoRoBNZs8xC1V3uwoq+Jf5P+cWv2D0SU1UQR0/M
+	T2eLohmOtOyA2bFSvoz123IpkZOeURYCf/nIfYwjVwv7eQAyXZDZ5SCRtJr0SBng
+	IXT3p1usNWdSsO1rXlSYeeyZJkabKG8rxnEgZIoI8gDFj189N7VQ+kb/PZA8iBMJ
+	xdJaUjqCZOymB7MLaSm/ISPhx/oeXiftwxMpDfoDtjq/rH0umXmv1xD7IP9w9UD4
+	KYv5rP+18JY4MYCm+Fy6ZR5eaJ4O8abTulwPAzZohbPvopy/cJQRwjQeFg6bXXYH
+	h0Jcmg==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43cc2eb7p3-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 09 Dec 2024 01:44:29 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B91iSBn020361
+	Mon, 09 Dec 2024 01:57:43 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B91vgCk012972
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 9 Dec 2024 01:44:28 GMT
-Received: from [10.64.16.151] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+	Mon, 9 Dec 2024 01:57:42 GMT
+Received: from [10.64.16.135] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 8 Dec 2024
- 17:44:22 -0800
-Message-ID: <afd00fdf-af62-46b5-9131-ed360a93e094@quicinc.com>
-Date: Mon, 9 Dec 2024 09:44:19 +0800
+ 17:57:35 -0800
+Message-ID: <5cdd9f7a-2c28-4ac2-a4da-304d25efbca3@quicinc.com>
+Date: Mon, 9 Dec 2024 09:57:33 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,154 +65,128 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/9] drm/msm/dpu: Add SM6150 support
+Subject: Re: [PATCH 6/8] drm/msm/dp: Add maximum width limitation for modes
 To: Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Rob Clark
-	<robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        "Sean
- Paul" <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard
-	<mripard@kernel.org>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>
+CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        "Marijn
+ Suijten" <marijn.suijten@somainline.org>,
+        Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
         Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie
-	<airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        "Bjorn
- Andersson" <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, "Li
- Liu" <quic_lliu6@quicinc.com>,
-        Xiangxu Yin <quic_xiangxuy@quicinc.com>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>
-References: <20241122-add-display-support-for-qcs615-platform-v3-0-35252e3a51fe@quicinc.com>
- <20241122-add-display-support-for-qcs615-platform-v3-5-35252e3a51fe@quicinc.com>
- <c1b2fe04-e43e-4ab7-b0f8-2bb2ce6e1313@quicinc.com>
-Content-Language: en-US
-From: fange zhang <quic_fangez@quicinc.com>
-In-Reply-To: <c1b2fe04-e43e-4ab7-b0f8-2bb2ce6e1313@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "Kuogee
+ Hsieh" <quic_khsieh@quicinc.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        "Kishon
+ Vijay Abraham I" <kishon@kernel.org>,
+        Linus Walleij
+	<linus.walleij@linaro.org>,
+        Bartosz Golaszewski <brgl@bgdev.pl>, <quic_lliu6@quicinc.com>,
+        <quic_fangez@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>, <linux-gpio@vger.kernel.org>
+References: <20241129-add-displayport-support-for-qcs615-platform-v1-0-09a4338d93ef@quicinc.com>
+ <20241129-add-displayport-support-for-qcs615-platform-v1-6-09a4338d93ef@quicinc.com>
+ <CAA8EJpprTGRTxO+9BC6GRwxE4A3CuvmySsxS2Nh4Tqj0nDRT_Q@mail.gmail.com>
+ <95a78722-8266-4d5d-8d2f-e8efa1aa2e87@quicinc.com>
+ <CAA8EJpo-1o9i4JhZgdbvRxvoYQE2v18Lz_8dVg=Za7a_pk5EDA@mail.gmail.com>
+ <86b9a8be-8972-4c19-af0c-da6b3667cbf4@quicinc.com>
+ <fb6enh3wzusadc6r7clg7n7ik2jsucimoi7dnecnsstcz4r6e6@dtahvlm522jj>
+ <3e7660b3-934a-4b11-82a3-48137d63ea5d@quicinc.com>
+From: Xiangxu Yin <quic_xiangxuy@quicinc.com>
+In-Reply-To: <3e7660b3-934a-4b11-82a3-48137d63ea5d@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: FwBFuB_mvjA8on_c0eMLzgSptP0zqSaY
-X-Proofpoint-ORIG-GUID: FwBFuB_mvjA8on_c0eMLzgSptP0zqSaY
+X-Proofpoint-ORIG-GUID: Uka-izgVnq1gjnLi7O1BlO94c-l0rngb
+X-Proofpoint-GUID: Uka-izgVnq1gjnLi7O1BlO94c-l0rngb
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
- spamscore=0 adultscore=0 clxscore=1015 impostorscore=0 mlxlogscore=999
- bulkscore=0 suspectscore=0 lowpriorityscore=0 malwarescore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412090012
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxscore=0
+ mlxlogscore=710 priorityscore=1501 impostorscore=0 lowpriorityscore=0
+ adultscore=0 malwarescore=0 clxscore=1015 suspectscore=0 spamscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412090014
 
 
 
-On 2024/12/7 4:17, Abhinav Kumar wrote:
+On 12/7/2024 4:13 AM, Abhinav Kumar wrote:
 > 
 > 
-> On 11/22/2024 1:56 AM, Fange Zhang wrote:
->> From: Li Liu <quic_lliu6@quicinc.com>
+> On 12/3/2024 5:58 AM, Dmitry Baryshkov wrote:
+>> On Tue, Dec 03, 2024 at 03:41:53PM +0800, Xiangxu Yin wrote:
+>>>
+>>>
+>>> On 12/2/2024 5:32 PM, Dmitry Baryshkov wrote:
+>>>> On Mon, 2 Dec 2024 at 11:05, Xiangxu Yin <quic_xiangxuy@quicinc.com> wrote:
+>>>>>
+>>>>>
+>>>>>
+>>>>> On 11/29/2024 9:52 PM, Dmitry Baryshkov wrote:
+>>>>>> On Fri, 29 Nov 2024 at 09:59, Xiangxu Yin <quic_xiangxuy@quicinc.com> wrote:
+>>>>>>>
+>>>>>>> Introduce a maximum width constraint for modes during validation. This
+>>>>>>> ensures that the modes are filtered based on hardware capabilities,
+>>>>>>> specifically addressing the line buffer limitations of individual pipes.
+>>>>>>
+>>>>>> This doesn't describe, why this is necessary. What does "buffer
+>>>>>> limitations of individual pipes" mean?
+>>>>>> If the platforms have hw capabilities like being unable to support 8k
+>>>>>> or 10k, it should go to platform data
+>>>>>>
+>>>>> It's SSPP line buffer limitation for this platform and only support to 2160 mode width.
+>>>>> Then, shall I add max_width config to struct msm_dp_desc in next patch? for other platform will set defualt value to ‘DP_MAX_WIDTH 7680'
+>>>>
+>>>> SSPP line buffer limitations are to be handled in the DPU driver. The
+>>>> DP driver shouldn't care about those.
+>>>>
+>>> Ok, Will drop this part in next patch.
 >>
->> Add definitions for the display hardware used on the Qualcomm SM6150
->> platform.
+>> If you drop it, what will be left from the patch itself?
 >>
->> Signed-off-by: Li Liu <quic_lliu6@quicinc.com>
->> Signed-off-by: Fange Zhang <quic_fangez@quicinc.com>
->> ---
->>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h | 263 +++++++++++ 
->> ++++++++++
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |   1 +
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   1 +
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   1 +
->>   4 files changed, 266 insertions(+)
+> 
+> Yes agree with Dmitry, max_width is really not a DP related terminology.
+> 
+> This patch should be dropped.
+> 
+> So there were two issues, overall in this series causing this patch:
+> 
+> 1) In https://patchwork.freedesktop.org/patch/625822/, instead of using VIG_SDM845_MASK, we should be using VIG_SDM845_MASK_SDMA. Without that even 2k will not work, will leave a comment there.
+> 
+> 2) 4k will still fail. I dont think we can even support 4k on QCS615 but the modes should be filtered out because there is no 3dmux.
+> 
+> I have submitted https://patchwork.freedesktop.org/patch/627694/ to address this.
+> 
+> Xiangxu, please let me know if that works for you.
+> 
+> Thanks
+> 
+> Abhinav
+Thanks for your patchsets,
+After apply patch 625822 & 627694，mode filter works correctly on QCS615 platform with both 4k and 2k monitor.
+work>>>>>>>
+>>>>>>> Signed-off-by: Xiangxu Yin <quic_xiangxuy@quicinc.com>
+>>>>>>> ---
+>>>>>>>   drivers/gpu/drm/msm/dp/dp_display.c |  3 +++
+>>>>>>>   drivers/gpu/drm/msm/dp/dp_display.h |  1 +
+>>>>>>>   drivers/gpu/drm/msm/dp/dp_panel.c   | 13 +++++++++++++
+>>>>>>>   drivers/gpu/drm/msm/dp/dp_panel.h   |  1 +
+>>>>>>>   4 files changed, 18 insertions(+)
+>>>>
+>>>>
+>>>
 >>
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h b/ 
->> drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h
->> new file mode 100644
->> index 
->> 0000000000000000000000000000000000000000..e8b7f694b885d69a9bbfaa85b0faf0c7af677a75
->> --- /dev/null
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h
->> @@ -0,0 +1,263 @@
->> +/* SPDX-License-Identifier: GPL-2.0-only */
->> +/*
->> + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights 
->> reserved.
->> + */
->> +
->> +#ifndef _DPU_5_3_SM6150_H
->> +#define _DPU_5_3_SM6150_H
->> +
->> +
-> 
-> <snip>
-> 
->> +static const struct dpu_sspp_cfg sm6150_sspp[] = {
->> +    {
->> +        .name = "sspp_0", .id = SSPP_VIG0,
->> +        .base = 0x4000, .len = 0x1f0,
->> +        .features = VIG_SDM845_MASK,
-> 
-> This is not correct. Smartdma is supported on this chipset on both Vig 
-> and DMA SSPPs.
-> 
-> Please use VIG_SDM845_MASK_SDMA and DMA_SDM845_MASK_SDMA respectively.
-Got it, will replace them in next patch
-> 
-> 
->> +        .sblk = &dpu_vig_sblk_qseed3_2_4,
->> +        .xin_id = 0,
->> +        .type = SSPP_TYPE_VIG,
->> +        .clk_ctrl = DPU_CLK_CTRL_VIG0,
->> +    }, {
->> +        .name = "sspp_8", .id = SSPP_DMA0,
->> +        .base = 0x24000, .len = 0x1f0,
->> +        .features = DMA_SDM845_MASK,
->> +        .sblk = &dpu_dma_sblk,
->> +        .xin_id = 1,
->> +        .type = SSPP_TYPE_DMA,
->> +        .clk_ctrl = DPU_CLK_CTRL_DMA0,
->> +    }, {
->> +        .name = "sspp_9", .id = SSPP_DMA1,
->> +        .base = 0x26000, .len = 0x1f0,
->> +        .features = DMA_SDM845_MASK,
->> +        .sblk = &dpu_dma_sblk,
->> +        .xin_id = 5,
->> +        .type = SSPP_TYPE_DMA,
->> +        .clk_ctrl = DPU_CLK_CTRL_DMA1,
->> +    }, {
->> +        .name = "sspp_10", .id = SSPP_DMA2,
->> +        .base = 0x28000, .len = 0x1f0,
->> +        .features = DMA_CURSOR_SDM845_MASK_SDMA,
->> +        .sblk = &dpu_dma_sblk,
->> +        .xin_id = 9,
->> +        .type = SSPP_TYPE_DMA,
->> +        .clk_ctrl = DPU_CLK_CTRL_DMA2,
->> +    }, {
->> +        .name = "sspp_11", .id = SSPP_DMA3,
->> +        .base = 0x2a000, .len = 0x1f0,
->> +        .features = DMA_CURSOR_SDM845_MASK_SDMA,
->> +        .sblk = &dpu_dma_sblk,
->> +        .xin_id = 13,
->> +        .type = SSPP_TYPE_DMA,
->> +        .clk_ctrl = DPU_CLK_CTRL_DMA3,
->> +    },
->> +};
->> +
-> 
-> <snip>
 
 
