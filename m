@@ -1,187 +1,173 @@
-Return-Path: <linux-arm-msm+bounces-41030-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41031-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F3149E928B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 12:35:39 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 296BD9E92A5
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 12:42:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0679218819F4
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 11:35:39 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5090E1884186
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 11:42:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 77D0621D00C;
-	Mon,  9 Dec 2024 11:35:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C01D32206B9;
+	Mon,  9 Dec 2024 11:42:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mEZZV6+1"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="h+KeJB1g"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD24021B915;
-	Mon,  9 Dec 2024 11:35:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9A5921B8F2
+	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Dec 2024 11:42:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733744135; cv=none; b=JIyK9nqvCpCkdg8uRs9N2ECct9QrMsoVsdIxPhEZN4ABayTa8+yaVwqTWllGbG8bveb8TbAWNR5zrUoZEHXaHED08Dlmlf2gEvYlK2dS0YJZ6hkfHdlkuN18dBWPGiKn8COfbEmH4yV5bpwqC+WNK1oqwZDLCxVUkKZMMtf0Tl0=
+	t=1733744562; cv=none; b=Rl8CS16cFtpKPZgEfTYoipLyrqBIuqjRecuXoOly9H5BeAnFoJ9gyMhRo8iunNYl5muaUxPWzx67dKRehHX8enTzNt8tnev2dyjrHUr3ANX2uz9GElX0R98SDGew2i+Dt0xSZ1/pLViiak3AQ+L/O1gtuA+oZGV59Kw84F0H16Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733744135; c=relaxed/simple;
-	bh=e22vLaMLov6DH7nqa5cuHa7cqpYR1vrCoYAtLC8Ml3I=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=lZi2J0q9U9D5aXj11Qz+lYuCSOzzzhROuFUF0KdpF+Kp7Rq19ease5JEdXHP0a65R9qELl3i55Agv9zo0PQnMis8tLpTe9QYVE5R1+PVnUrzjLT2AwTBJau/JE3Gn3IjDGDJDjzJTsvW4I9b7xQ/sVWb8AEvheNbEyCyx43gQR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=mEZZV6+1; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B99rnha018318;
-	Mon, 9 Dec 2024 11:35:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Xrt0SiwLePva/gzbejYMiBPWVCtlmDQ2qlq0ibPbPQg=; b=mEZZV6+18hd3SMcO
-	T804LhVkEUVGcFGeMiCxLy9f08UCDFPCMq85e6HPCh9WiTnIiOv0ox8/6eul5pau
-	8PM0ou24LI4PMb8mDg05N9+6qAHS1ROgItnMU6Aou2qnCACVa50ZK/H2vBo/Stp4
-	q0FaXYpFT7xryvbnBmEcExj6/5eBKX7VhHT5kod8D8Xdhb7shTZ0sSw5dMTZYLLe
-	VRpEjJ4m3/cBqEyYj/2wLoXaPb3aN8jM7Izq2hw9GfTtJxPC8zi7cL7gIBiGS7gq
-	JUuTV4+cYwdV9vPfndf8sZzsCOZrtnYUtmYZCBNCBf5MzbxzyYA0eUVkK23g+C8i
-	QATxAg==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43ceetmma6-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 09 Dec 2024 11:35:17 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B9BZGxn013724
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 9 Dec 2024 11:35:16 GMT
-Received: from [10.216.1.80] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 9 Dec 2024
- 03:35:08 -0800
-Message-ID: <222b6e5b-d673-b57c-43b9-a80b37d28d2d@quicinc.com>
-Date: Mon, 9 Dec 2024 17:05:05 +0530
+	s=arc-20240116; t=1733744562; c=relaxed/simple;
+	bh=IK6FGWxcat9ec7DwdOXaucjjIx7nIWIyPdA4xF3OYr8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=S4YKy1y0XDDEIcZORfv+bYc8vr27Zf+Qtkv+CI5lZ0J425FXWdqMarmGLd2VANPM6fp/b4DpT5Z7bYYqMVOj708ofuTWNnnBAd9RoDGtnxQZzEYRN2WK0Y5idgNEX9rIg1S65t/sx95rFYCHCxN45YgcHudrTZPE5CZl4iZl+0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=h+KeJB1g; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-434e406a547so13550675e9.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Dec 2024 03:42:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1733744559; x=1734349359; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=W10XgeMj5m+No6tcPataZmZSnoW6PK2I9Ff3cBJBg7k=;
+        b=h+KeJB1gWZdA0O+YbfYnqu6t/91chujbV4h5r0f9p23mFbZxGx9LYr7R66e4dHQhxH
+         IwJHEvNhcw1B6UOoqno3SqgF8b3T+7lar07e6unVNQ9CtMSKe5TLqL3IGsyH6wuaoiKT
+         AlqVzMnH5suHl54M8nLjsqZ5VJwhIWTqe/N9FtVE5eDdzD8/f91qHjVBIcYdmy94LSnf
+         lA67k5kPTJ1b4Pn4jECvfbW4MlKOaCrGXJhX+4XJMJZYkt9HKmyEidSDdUo6EPitZaDv
+         jEZzOCmihztbi0vonrZqV8DCjZTlGCY1oF2Spj2JXEtEyjzzRTXmtCjQQNfHprxjF8Rg
+         EM5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733744559; x=1734349359;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=W10XgeMj5m+No6tcPataZmZSnoW6PK2I9Ff3cBJBg7k=;
+        b=BEBJE6GEafM4w3bPZjJnGABPaKm2F+mXnuH/5rbnV0kpDKK7I3FxcWNe2YfcX/SKPe
+         zdLtDDa2ZCJmJJ1fz7clble3c/qbUPNRCZiZur3Zx+P/GUeN+JVqNGPswL+ptj5c7N1b
+         HxH/QlpAwxfxRRLwossl7fUIA3U1fArHZ2I/1IG+ZRITiKHObVw3nnwExzZtG6Ml6Fh2
+         8KepYabSwJO+kqi58Uo9pOY4xl+7sLUHJOFYj/0j0I47yG72HFr56i6yvf6kGVM26EIr
+         KqWU8dThBOU6dRotXU50TMRrfH0DwGi+ShkRP07FJQLKJcAkFzn4uEfL9Nkeqy6CL+p2
+         VdpA==
+X-Forwarded-Encrypted: i=1; AJvYcCUjxhkLPpFRCmCyjyYLJC5dO6WNktL/rMrpjnug81f+ZV6kzEd/QWdI3vjbSs6JkZEf6xq5s4LIqkjpfyZ6@vger.kernel.org
+X-Gm-Message-State: AOJu0YySCTP4yIgYVJNrZai50o1mHMzgyr7EJLBa3JE1rWLP1W0CKF8A
+	nJgGn5ZuSK54dS8KP+j/PgzJafNcM5eSi08LOJuzv3XSEUlXRxn0FirjEtddYN0=
+X-Gm-Gg: ASbGncsdn3N/crrUSc1VyLejSr18Lx5uAvv2+SHhzXQ2/e4cr6MA2RvEsaPFz0HcP9T
+	zX+kQB2cKjf0U3U+MpGDSMayTwSKxlWUO3WTGD6xAtftVqu8CXj8qtV4HkgjeWqZEYremtN17PJ
+	OyH9KIORMv13yw1CBowZSBHzczVNaY7saiRMYfnNEVBTfj+BGJcYchU30n8zDCUzFilix24127W
+	l2xn15bTdPAfJYU4H/4jGU9IeoDVTlKNcdrBNR0smQqUJZl3NY9YutUGeyTdZw=
+X-Google-Smtp-Source: AGHT+IEbIQYg8EnIUDUPigKjpDEo3nHZn5oUqp1eGUTq6LEGGzSr1WjwD8bOZqQ7VZz3k53CLChrPw==
+X-Received: by 2002:a05:600c:1da7:b0:434:f871:1b97 with SMTP id 5b1f17b1804b1-434fffca42dmr648225e9.33.1733744559181;
+        Mon, 09 Dec 2024 03:42:39 -0800 (PST)
+Received: from [192.168.0.40] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-434f2b08972sm60014355e9.27.2024.12.09.03.42.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 09 Dec 2024 03:42:38 -0800 (PST)
+Message-ID: <c8f42175-3501-4d65-92ba-5878fe5ea5f4@linaro.org>
+Date: Mon, 9 Dec 2024 11:42:35 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v4 1/4] ASoC: dt-bindings: wcd937x-sdw: Add static channel
- mapping support
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RESEND PATCH] media: dt-bindings: trivial white-space and
+ example cleanup
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Chen-Yu Tsai <wens@csie.org>,
+ Jernej Skrabec <jernej.skrabec@gmail.com>,
+ Samuel Holland <samuel@sholland.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>,
+ Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+ Ming Qian <ming.qian@nxp.com>, Zhou Peng <eagle.zhou@nxp.com>,
+ Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>,
+ Pengutronix Kernel Team <kernel@pengutronix.de>,
+ Fabio Estevam <festevam@gmail.com>, Tiffany Lin <tiffany.lin@mediatek.com>,
+ Andrew-CT Chen <andrew-ct.chen@mediatek.com>,
+ Yunfei Dong <yunfei.dong@mediatek.com>,
+ Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
+ Philipp Zabel <p.zabel@pengutronix.de>, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>, Heiko Stuebner <heiko@sntech.de>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Viktor Prutyanov <viktor.prutyanov@phystech.edu>,
+ Shijie Qin <shijie.qin@nxp.com>, Michael Tretter <m.tretter@pengutronix.de>,
+ Emil Velikov <emil.velikov@collabora.com>,
+ Del Regno <angelogioacchino.delregno@somainline.org>,
+ Nicolas Frattaroli <frattaroli.nicolas@gmail.com>,
+ linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev,
+ linux-kernel@vger.kernel.org, linux-amlogic@lists.infradead.org,
+ imx@lists.linux.dev, linux-rockchip@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org
+References: <20241209113405.74226-1-krzysztof.kozlowski@linaro.org>
 Content-Language: en-US
-To: Krzysztof Kozlowski <krzk@kernel.org>
-CC: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Liam Girdwood
-	<lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
-        Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Bard Liao
-	<yung-chuan.liao@linux.intel.com>,
-        Jaroslav Kysela <perex@perex.cz>, "Takashi
- Iwai" <tiwai@suse.com>,
-        Pierre-Louis Bossart
-	<pierre-louis.bossart@linux.dev>,
-        Sanyog Kale <sanyog.r.kale@intel.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-sound@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_pkumpatl@quicinc.com>,
-        <kernel@quicinc.com>
-References: <20241209045551.1404782-1-quic_mohs@quicinc.com>
- <20241209045551.1404782-2-quic_mohs@quicinc.com>
- <fq5p4ubdpv3dc5jzqgakvnqzpcrhkfqar2dbcvclqlvbmbegfc@llq3kzkzegl3>
-From: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-In-Reply-To: <fq5p4ubdpv3dc5jzqgakvnqzpcrhkfqar2dbcvclqlvbmbegfc@llq3kzkzegl3>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20241209113405.74226-1-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 4OZ7VcKdA7AtwmVkfClTP1B-1j6rF_u4
-X-Proofpoint-ORIG-GUID: 4OZ7VcKdA7AtwmVkfClTP1B-1j6rF_u4
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
- spamscore=0 adultscore=0 clxscore=1015 impostorscore=0 mlxlogscore=999
- bulkscore=0 suspectscore=0 lowpriorityscore=0 malwarescore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412090091
 
-On 12/9/2024 1:19 PM, Krzysztof Kozlowski wrote:
-> On Mon, Dec 09, 2024 at 10:25:48AM +0530, Mohammad Rafi Shaik wrote:
->> Add static channel mapping between master and slave rx/tx ports for
->> Qualcomm wcd937x soundwire codec.
->>
->> Currently, the channel map index value for each soundwire port is
->> hardcoded in the wcd937x-sdw driver, and the same channel map index
->> value is configured in the soundwire master.
->>
->> The Qualcomm board like the QCM6490-IDP require static channel map
->> settings for the soundwire master and slave ports.
->>
->> If another boards which are using enable wcd937x, the channel mapping
->> index values between master and slave may be different depending on the
->> board hw design and requirements. If the above properties are not used
->> in a SoC specific device tree, the channel mapping index values are set
->> to default.
->>
->> With the introduction of the following channel mapping properties, it is
->> now possible to configure the master channel mapping directly from the
->> device tree.
->>
->> The qcom,tx-channel-mapping property specifies the static channel mapping
->> between the slave and master tx ports in the order of slave port channels
->> which is adc1, adc2, adc3, adc4, dmic0, dmic1, mbhc, dmic2, dmic3, dmci4,
->> dmic5, dmic6, dmic7.
->>
->> The qcom,rx-channel-mapping property specifies the static channel mapping
->> between the slave and master rx ports in the order of slave port channels
->> which is hph_l, hph_r, clsh, comp_l, comp_r, lo, dsd_r, dsd_l.
->>
->> Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
->> ---
->>   .../bindings/sound/qcom,wcd937x-sdw.yaml      | 36 +++++++++++++++++++
->>   1 file changed, 36 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml b/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml
->> index d3cf8f59cb23..9209667044ba 100644
->> --- a/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml
->> +++ b/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml
->> @@ -58,6 +58,40 @@ properties:
->>       items:
->>         enum: [1, 2, 3, 4, 5]
->>   
->> +  qcom,tx-channel-mapping:
->> +    description: |
->> +      Specifies static channel mapping between slave and master tx port
->> +      channels.
->> +      In the order of slave port channels which is adc1, adc2, adc3,
->> +      dmic0, dmic1, mbhc, dmic2, dmic3, dmci4, dmic5, dmic6, dmic7.
->> +    $ref: /schemas/types.yaml#/definitions/uint8-array
->> +    minItems: 12
->> +    maxItems: 12
->> +    additionalItems: false
->> +    items:
->> +      enum:
->> +        - 0  # WCD9370_SWRM_CH1
-> 
-> Drop the comments. This does not implement my feedback and you sent it
-> four days after I replied to you.
-> 
-ACK
+On 09/12/2024 11:34, Krzysztof Kozlowski wrote:
+> diff --git a/Documentation/devicetree/bindings/media/qcom,msm8916-camss.yaml b/Documentation/devicetree/bindings/media/qcom,msm8916-camss.yaml
+> index 9cc0a968a401..3469a43f00d4 100644
+> --- a/Documentation/devicetree/bindings/media/qcom,msm8916-camss.yaml
+> +++ b/Documentation/devicetree/bindings/media/qcom,msm8916-camss.yaml
+> @@ -1,5 +1,4 @@
+>   # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> -
+>   %YAML 1.2
+>   ---
+>   $id:http://devicetree.org/schemas/media/qcom,msm8916-camss.yaml#
+> diff --git a/Documentation/devicetree/bindings/media/qcom,msm8996-camss.yaml b/Documentation/devicetree/bindings/media/qcom,msm8996-camss.yaml
+> index 5cb0e337ea6e..644646de338a 100644
+> --- a/Documentation/devicetree/bindings/media/qcom,msm8996-camss.yaml
+> +++ b/Documentation/devicetree/bindings/media/qcom,msm8996-camss.yaml
+> @@ -1,5 +1,4 @@
+>   # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> -
+>   %YAML 1.2
+>   ---
+>   $id:http://devicetree.org/schemas/media/qcom,msm8996-camss.yaml#
+> diff --git a/Documentation/devicetree/bindings/media/qcom,sdm660-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sdm660-camss.yaml
+> index 584106e275f6..68d8670557f5 100644
+> --- a/Documentation/devicetree/bindings/media/qcom,sdm660-camss.yaml
+> +++ b/Documentation/devicetree/bindings/media/qcom,sdm660-camss.yaml
+> @@ -1,5 +1,4 @@
+>   # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> -
+>   %YAML 1.2
+>   ---
+>   $id:http://devicetree.org/schemas/media/qcom,sdm660-camss.yaml#
+> diff --git a/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
+> index d32daaef1b50..289494f561e5 100644
+> --- a/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
+> +++ b/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
+> @@ -1,5 +1,4 @@
+>   # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> -
+>   %YAML 1.2
+>   ---
+>   $id:http://devicetree.org/schemas/media/qcom,sdm845-camss.yaml#
+> diff --git a/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
+> index 06db2c1e6079..a372d991e652 100644
+> --- a/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
+> +++ b/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
+> @@ -1,5 +1,4 @@
+>   # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> -
+>   %YAML 1.2
 
-Somehow, I missed the comments in the last email.
-
-I will address them and will update in next version.
-
-Thanks & Regards,
-Rafi.
-
-> Best regards,
-> Krzysztof
-> 
-
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
