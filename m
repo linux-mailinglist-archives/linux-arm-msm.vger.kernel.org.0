@@ -1,76 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-41038-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41040-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 085929E9303
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 12:56:40 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7B1829E9306
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 12:56:56 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7CEBB18804CA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 11:56:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E1A462873A7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 11:56:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41AF2221DAB;
-	Mon,  9 Dec 2024 11:56:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C4F222370A;
+	Mon,  9 Dec 2024 11:56:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jldf+6SX"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="j/BQYd1b"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC9622069F
-	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Dec 2024 11:56:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D46E2236E7
+	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Dec 2024 11:56:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733745389; cv=none; b=uLmV+UmzJjr1x7X7bFN0DcwouFpLAQMGa4dt/epzNqwRH+0Wts4jLLbtGRXk6iqHca5dw9XclukrcxFNWmiolFnq+YUwLJVIacN8Rm9USISu7DBM3Lm44ZVUWs9cgZF6yHs0bFapyUbtmWXwccqFTW+qZCYhbJE2X042RwZr9Jo=
+	t=1733745392; cv=none; b=mtgDKB7eCDsDlcqkxHzaz4qgm0AHNb4gnxS4fq1b4soHE7p8KkOezELJj5e34gsKOn8EcHPhXNpMp2HEKz1Lcn9Zgz9Lpfm3HbSiJHFsPQT4bkkSXrKG2l8Gh52EkSHswWwU3HhVi7nHkc0iAiD6GJsmxEJyauLwmxojQwILOb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733745389; c=relaxed/simple;
-	bh=UYoZ37RyjculWpGQiCFSZYiIahzyfcf1uiQSJqQ8/ac=;
+	s=arc-20240116; t=1733745392; c=relaxed/simple;
+	bh=njRJMFS53oVLlFPOfYmEgfNE0jHwMkDusGCNOuUeDQE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F1aO57KgmiQyO5nwmpHsd67Gdim4M0SOeKw05sdyeXv7ziISjTF6gubUBgnVIzlRPH9Yjhz/ka1D9msP85rLobnmkvBSFu59R9ZE2I92C395Gt8fgmC9IjWkZI2v7qnqtO0/niXiyK60sKIkqOLsV5GhTzQ9D8DdOMVYXDw5ou4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jldf+6SX; arc=none smtp.client-ip=209.85.218.53
+	 MIME-Version; b=UloTsBv0G987AymiqGsAc3CFkT2ebzV3TVmCzvIJEFiMxR21R0m+t/J77HNuFmvRs3mtbek/6y6k6uq/Wc7qer1cthvNzjO3GbM/Ydflxhl3L1Eha2JoaZn1RuoNHiC9ChhSwwBfvswM8oDceFeJDhY3OhCGjwItAErwJcRcDDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=j/BQYd1b; arc=none smtp.client-ip=209.85.218.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-aa65f707419so40362066b.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Dec 2024 03:56:27 -0800 (PST)
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-aa62fc2675cso64920066b.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Dec 2024 03:56:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733745386; x=1734350186; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1733745388; x=1734350188; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=hn1iITUqCTWw5geBpowIVLe7vef2f6kBTXYqRCfLbA0=;
-        b=jldf+6SXzkNxO5eR3FCMfMXk3TTrrbFryRvlxyefDC7+Iwip4K7LQPakSquKhcKnFL
-         lbr97RAcmoHMlmUyuVYB8wTpeyTxEd3FNfWzSviBxo7kr+lQKy3/P02GyPhB3gO7ce2p
-         5jqTWKk8to0zr5qzfCr5416wlMDlleqtVsD+qZGN8eRmqLv1R/wNg+4hgjawG8TtWXMY
-         Wq9kkJ1M7Tgsn8mNPanOXDMZCfrwzyQ5Pqcj2iot29w63epl1aVyZq5zECCk48fg2K4f
-         DdEH2+O9BD9IEd0fzegfKcPMH4PJo0eQeMO7aNsK2/VAzdnLXKc02dKewZNOyeRifXA6
-         1aYA==
+        bh=dDkrPmX+rnC8j6/Av609kaQIfkDAMEkIyzULcEtJ5go=;
+        b=j/BQYd1bNGzUkFsKBJ97waycncUj6HWilLt2nGPQr9Wp3LE/rBSW1qHpru2HWJoQlO
+         MRqLdiQSGJv7ewJXBGrY+Vnei/L0QJhg/NJTVdrvKtKfO42H7jcyHCwntu3aJhUIl8UY
+         t0qj9Qdmu9+E5A36Lxn1ee0Pauim0RJLtyfeSxmlYODjfher7O6LKzeAoNeftXWAqipG
+         sCky3v+8JHnfUzd6e3nQ9ruQl/zpbIg5R2hazKrLL1o3fmO5r/8mXAyoFizp0zMadLv3
+         VKUw9LeYn5RJiP27gE9ydGgFq4kRocg80kt1/oWxkSx2MEFDaq20LIuDU9A8cPZw06KE
+         MneA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733745386; x=1734350186;
+        d=1e100.net; s=20230601; t=1733745388; x=1734350188;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=hn1iITUqCTWw5geBpowIVLe7vef2f6kBTXYqRCfLbA0=;
-        b=bYUyKQP8JiXg2JZW9DeFfnhd+Wuf/b6MKbuvOZ07hHUatv8kQzViBvVolAFvgSpY2s
-         /EVWWiuy9L9f2mrZWA1eQCjLd4b9IDEZ9F/8nZ0xpaefwXD86f+J2CFkxer/RIk5bSLT
-         BaRd99m+b0mFrh21Cob5ZdFrxfgJeQWACcSWzhWbiwq5+kRIbRp4SLaKVYx7a/Rd4nyk
-         6eC/2hrqnnm2VEL0ARStr2FV18ID3SqgsZt0tAm1fVTu5F54/SLsK79PNEUorh6pSP1p
-         CAq4kPY6hGggK/gOmO9WaB40oGuoUavNHK7+QUzqsOoAwa7pxRHaP20L9jCNP9UQkNpQ
-         CUcg==
-X-Forwarded-Encrypted: i=1; AJvYcCVvjri7I2/vvRvSE/LzjDdCpJWp5/aKNUZGIBE4JKu3SMbrv1ns+GkRb2Ek5wwkfCF6U6dbQzj4d267TVE9@vger.kernel.org
-X-Gm-Message-State: AOJu0Yysdb95imgnftvpoaCLZm1zFs00Kzo6vGoIjSd+Su1gkUgKVBsp
-	gihkASO/ItaxK8LToN0c0XE2DEQMSS68CVWoHPpwNDS5OsG0kCD3MdrYNHOWE5U=
-X-Gm-Gg: ASbGncurDy0pnjUKRquISKYFr/o1fm00ga/L+j4hGq2x9PfuFXF/R8+6XBOt1xjEDPq
-	mHZ0G+qb0D+0WZ1d7QckgESE7cQBiK8EZdnX1phcUtcThVD2gWa6pQyatHYnkthSD0ePHikWEzq
-	fnpyfAlrcu3cJFAzxJIRLHCAynEbuiA/ZNk2pwMJtOYeqcYltGZ3Oyen2VeAuAVWyvtXmuVojHG
-	LIg9+Ncb0PtQrXO9RcVeh6MfnHExm0GQQHbbm05zgmTNiAN2k01Uz//g2YTcikF
-X-Google-Smtp-Source: AGHT+IH6FhBYyaKwHnnukYERgUgguK/+8BJ07//maa179WbVCtwvOKPm8MChdcKGphqtryASdBJurg==
-X-Received: by 2002:a17:907:944d:b0:aa6:3736:bad4 with SMTP id a640c23a62f3a-aa639bd5e31mr533078466b.0.1733745385627;
-        Mon, 09 Dec 2024 03:56:25 -0800 (PST)
+        bh=dDkrPmX+rnC8j6/Av609kaQIfkDAMEkIyzULcEtJ5go=;
+        b=jYZJxUUvco20y6+UQoKfjlJT/PVvYlTd2tr69p55pLdym6K4veB5b5o5MnLNxUgBbg
+         3DkCobK0uAXMGXmpSSH1XaaS9J1kPXSFSOG/HHtg1Rm7zUW9FLXA2IjTx65pkKSPEGbJ
+         1n6AR5NhEof+HYvwBFD4l2+6D8+wgQvreCjkNp6ECgvfEOitk6E4kS9lce5MHPSUKs31
+         xnBzDYHmzoOP1fa8kgt5Djow7C4fYoBF7ia5nuex5EmUonpEINOQXuvFk6Y6sUdKxVUe
+         doILV3y3a1IOXMjHt+wTSnbASV8L2PCW+Strx1TSdacobt2fdu29+QoNWqqjRvKTbN+K
+         KgLA==
+X-Forwarded-Encrypted: i=1; AJvYcCX53oGGW8ikM/CHcAeqOQAqost9BBGhHkSE8xlMrVZlYzmunC8UKqq3aFmUhj6J+rTQ0m/r3/W3vc87q5K/@vger.kernel.org
+X-Gm-Message-State: AOJu0YzlXBUWGuY8BY3JXDNoOaXss8iVKU8fMKwQnt8riRlCMAmR8Kyu
+	XySS9ARM9GVsRr2CodaYvQTU1Ziq7G10E+vxknP2kXpBrKtZr7al9Y6RXiMuZkQ=
+X-Gm-Gg: ASbGncuwQ9/K3B3osfs8bih540CcbPyuRgVxg5HwrjUqBoDYbECXYO3oxOyTGgTghKY
+	nOzVGnVTjsKWgGUII3q4vLB4Sd2XvcoKrnYt72cKymCb8zGCN5bfEn6LtHGJ5sDjkQZDQiWmMbL
+	Nc9O6oaYL5wcxM5uSXnqLPYkPm8wj7w+JkdEMOTWh+2jGeyClNH+sOk4Mp2zCFjwGjOS/0Ef1b6
+	w6ol905K87UcFweTwuHWs5HNiKuhtu5UV1AyywWdtUZK313i5+3VzJFwguOn/Oy
+X-Google-Smtp-Source: AGHT+IGaZyqKQzZD247wMomlUwBJH4NbdZftbTBnrY74rFdm2bKBbV7DjbALRQ98dOG8bxWswacXHw==
+X-Received: by 2002:a17:907:3f1d:b0:aa6:2572:563a with SMTP id a640c23a62f3a-aa63a10f275mr510577066b.6.1733745387038;
+        Mon, 09 Dec 2024 03:56:27 -0800 (PST)
 Received: from krzk-bin.. ([178.197.223.165])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa6651c01c5sm343333766b.23.2024.12.09.03.56.24
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa6651c01c5sm343333766b.23.2024.12.09.03.56.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Dec 2024 03:56:25 -0800 (PST)
+        Mon, 09 Dec 2024 03:56:26 -0800 (PST)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konradybcio@kernel.org>,
@@ -78,10 +78,12 @@ To: Bjorn Andersson <andersson@kernel.org>,
 	Andy Gross <agross@codeaurora.org>,
 	linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v3 2/4] soc: qcom: pmic_glink: simplify locking with guard()
-Date: Mon,  9 Dec 2024 12:56:11 +0100
-Message-ID: <20241209115613.83675-2-krzysztof.kozlowski@linaro.org>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	stable@vger.kernel.org,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH v3 3/4] soc: qcom: smem_state: fix missing of_node_put in error path
+Date: Mon,  9 Dec 2024 12:56:12 +0100
+Message-ID: <20241209115613.83675-3-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241209115613.83675-1-krzysztof.kozlowski@linaro.org>
 References: <20241209115613.83675-1-krzysztof.kozlowski@linaro.org>
@@ -93,162 +95,38 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Simplify error handling over locks with guard().  In few places this
-elimiates error gotos and local variables.  Switch to guard() everywhere
-(except when jumps would go over scoped guard) for consistency, even if
-it does not bring benefit in such places.
+If of_parse_phandle_with_args() succeeds, the OF node reference should
+be dropped, regardless of number of phandle arguments.
 
+Cc: stable@vger.kernel.org
+Fixes: 9460ae2ff308 ("soc: qcom: Introduce common SMEM state machine code")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 ---
 
-The part in pmic_glink_rpmsg_probe() depends on previous fix.
-
 Changes in v3:
-1. Rebase - bigger changes in pmic_glink_send() comparing to v2.
-
-Changes in v2:
-1. Do not use guard() in pmic_glink_probe() because of jump.
+1. Add Rb tag, combine from other series.
+I don't quite get why rest of other series was applied, but not this fix.
+https://lore.kernel.org/all/20240822164853.231087-1-krzysztof.kozlowski@linaro.org/
 ---
- drivers/soc/qcom/pmic_glink.c | 51 ++++++++++++-----------------------
- 1 file changed, 17 insertions(+), 34 deletions(-)
+ drivers/soc/qcom/smem_state.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/soc/qcom/pmic_glink.c b/drivers/soc/qcom/pmic_glink.c
-index 11e88053cc11..f842ffa3c356 100644
---- a/drivers/soc/qcom/pmic_glink.c
-+++ b/drivers/soc/qcom/pmic_glink.c
-@@ -4,6 +4,7 @@
-  * Copyright (c) 2022, Linaro Ltd
-  */
- #include <linux/auxiliary_bus.h>
-+#include <linux/cleanup.h>
- #include <linux/delay.h>
- #include <linux/module.h>
- #include <linux/of.h>
-@@ -100,15 +101,13 @@ void pmic_glink_client_register(struct pmic_glink_client *client)
- 	struct pmic_glink *pg = client->pg;
- 	unsigned long flags;
+diff --git a/drivers/soc/qcom/smem_state.c b/drivers/soc/qcom/smem_state.c
+index d9bfac6c54fb..cc5be8019b6a 100644
+--- a/drivers/soc/qcom/smem_state.c
++++ b/drivers/soc/qcom/smem_state.c
+@@ -112,7 +112,8 @@ struct qcom_smem_state *qcom_smem_state_get(struct device *dev,
  
--	mutex_lock(&pg->state_lock);
-+	guard(mutex)(&pg->state_lock);
- 	spin_lock_irqsave(&pg->client_lock, flags);
- 
- 	list_add(&client->node, &pg->clients);
- 	client->pdr_notify(client->priv, pg->client_state);
- 
- 	spin_unlock_irqrestore(&pg->client_lock, flags);
--	mutex_unlock(&pg->state_lock);
--
- }
- EXPORT_SYMBOL_GPL(pmic_glink_client_register);
- 
-@@ -119,28 +118,23 @@ int pmic_glink_send(struct pmic_glink_client *client, void *data, size_t len)
- 	unsigned long start;
- 	int ret;
- 
--	mutex_lock(&pg->state_lock);
-+	guard(mutex)(&pg->state_lock);
- 	if (!pg->ept) {
--		ret = -ECONNRESET;
-+		return -ECONNRESET;
- 	} else {
- 		start = jiffies;
- 		for (;;) {
- 			ret = rpmsg_send(pg->ept, data, len);
- 			if (ret != -EAGAIN)
--				break;
-+				return ret;
- 
--			if (timeout_reached) {
--				ret = -ETIMEDOUT;
--				break;
--			}
-+			if (timeout_reached)
-+				return -ETIMEDOUT;
- 
- 			usleep_range(1000, 5000);
- 			timeout_reached = time_after(jiffies, start + PMIC_GLINK_SEND_TIMEOUT);
- 		}
+ 	if (args.args_count != 1) {
+ 		dev_err(dev, "invalid #qcom,smem-state-cells\n");
+-		return ERR_PTR(-EINVAL);
++		state = ERR_PTR(-EINVAL);
++		goto put;
  	}
--	mutex_unlock(&pg->state_lock);
--
--	return ret;
- }
- EXPORT_SYMBOL_GPL(pmic_glink_send);
  
-@@ -227,52 +221,42 @@ static void pmic_glink_pdr_callback(int state, char *svc_path, void *priv)
- {
- 	struct pmic_glink *pg = priv;
- 
--	mutex_lock(&pg->state_lock);
-+	guard(mutex)(&pg->state_lock);
- 	pg->pdr_state = state;
- 
- 	pmic_glink_state_notify_clients(pg);
--	mutex_unlock(&pg->state_lock);
- }
- 
- static int pmic_glink_rpmsg_probe(struct rpmsg_device *rpdev)
- {
- 	struct pmic_glink *pg;
--	int ret = 0;
- 
--	mutex_lock(&__pmic_glink_lock);
-+	guard(mutex)(&__pmic_glink_lock);
- 	pg = __pmic_glink;
--	if (!pg) {
--		ret = dev_err_probe(&rpdev->dev, -ENODEV, "no pmic_glink device to attach to\n");
--		goto out_unlock;
--	}
-+	if (!pg)
-+		return dev_err_probe(&rpdev->dev, -ENODEV, "no pmic_glink device to attach to\n");
- 
- 	dev_set_drvdata(&rpdev->dev, pg);
- 
--	mutex_lock(&pg->state_lock);
-+	guard(mutex)(&pg->state_lock);
- 	pg->ept = rpdev->ept;
- 	pmic_glink_state_notify_clients(pg);
--	mutex_unlock(&pg->state_lock);
- 
--out_unlock:
--	mutex_unlock(&__pmic_glink_lock);
--	return ret;
-+	return 0;
- }
- 
- static void pmic_glink_rpmsg_remove(struct rpmsg_device *rpdev)
- {
- 	struct pmic_glink *pg;
- 
--	mutex_lock(&__pmic_glink_lock);
-+	guard(mutex)(&__pmic_glink_lock);
- 	pg = __pmic_glink;
- 	if (!pg)
--		goto out_unlock;
-+		return;
- 
--	mutex_lock(&pg->state_lock);
-+	guard(mutex)(&pg->state_lock);
- 	pg->ept = NULL;
- 	pmic_glink_state_notify_clients(pg);
--	mutex_unlock(&pg->state_lock);
--out_unlock:
--	mutex_unlock(&__pmic_glink_lock);
- }
- 
- static const struct rpmsg_device_id pmic_glink_rpmsg_id_match[] = {
-@@ -379,9 +363,8 @@ static void pmic_glink_remove(struct platform_device *pdev)
- 	if (pg->client_mask & BIT(PMIC_GLINK_CLIENT_UCSI))
- 		pmic_glink_del_aux_device(pg, &pg->ucsi_aux);
- 
--	mutex_lock(&__pmic_glink_lock);
-+	guard(mutex)(&__pmic_glink_lock);
- 	__pmic_glink = NULL;
--	mutex_unlock(&__pmic_glink_lock);
- }
- 
- static const unsigned long pmic_glink_sc8280xp_client_mask = BIT(PMIC_GLINK_CLIENT_BATT) |
+ 	state = of_node_to_state(args.np);
 -- 
 2.43.0
 
