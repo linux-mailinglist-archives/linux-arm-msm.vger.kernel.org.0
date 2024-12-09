@@ -1,210 +1,179 @@
-Return-Path: <linux-arm-msm+bounces-40972-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40973-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 537079E8C9B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 08:51:01 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 868909E8CAF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 08:57:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3349718863FA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 07:51:01 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 48BEC164B9C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 07:57:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 61685214A93;
-	Mon,  9 Dec 2024 07:50:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC36E215171;
+	Mon,  9 Dec 2024 07:56:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="IhR5s7uF"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pii0iYuF"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6371C5588B;
-	Mon,  9 Dec 2024 07:50:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AC5821516D;
+	Mon,  9 Dec 2024 07:56:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733730657; cv=none; b=lWhgiKQ49+I++6I3CROxbgf4uzwC197gpHYtUb3EM57xcagpf6uVRswFdKVmgKyuw/lIOllcK/BeAd9HSgenJW9FeW2+PMuGLTR79bQ3HZfp8kX18F9LhYsz6XSOm/piSP6Kn1vSxjzX1nERskW1FOe7Q5cK7Uv7+g9bviIzACk=
+	t=1733731013; cv=none; b=L3DccL/xldxQRuC8m9VB04EXUy2iWK4sfqMrX2ldIkl+XboUMO78YCAKJKBXKpC3s4WKbmSQX1Qp5woD9hlLgWV/ZY1y1j8x41h7I62bkimr/9qGTy/5ZppeOGDvNifPIfI8ORfJH8jkA6GNQamNIiNsuHc+pG5QfoiQmQMizpY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733730657; c=relaxed/simple;
-	bh=auazOFGND/yAf5G+6jGRmxDE2uDZn3SMEVPVM7giZbU=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=rQ3DKNZbJV3ZBKW/2DoCRH24li+K5IGS9NTHDky10yJwzRzAOZO7cqGD85kPPdcAvot6NHMApksuNHCihHN6W0vFWQWe033kwB8lA0ewdcnfkPyTU35uE1V2TZPB/ie9DQlGi1P5tJ8KOpHkq/XfwNqhem04HYliRfagv0iX/mc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=IhR5s7uF; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1733731013; c=relaxed/simple;
+	bh=gG2Y3+aeTdOP8f/7CLet/ESHYKiFA5sPQqqjSmZQd1o=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=WfhmS3jGSjds1UQf+IkH7ocO5Cr7o8HrCfxDtQZtyloeVb90xNurMDekmbtAOQJl952QfSP+NaUAJYo7hSWTea59qlhjapOL54o7UWNpqg0NZQMYxqWF5xzfAk/Bl9O7WfAyr2pwRFxCjWiTxhbBIU/1PutFxpOCaxHWzJmUsw4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pii0iYuF; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B8KeSQc020616;
-	Mon, 9 Dec 2024 07:50:50 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B8NHupS027535;
+	Mon, 9 Dec 2024 07:56:23 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:message-id:mime-version:subject:to; s=
-	qcppdkim1; bh=0VPlfYGdLQ3wfIEV6ZiIRshkflZhmoztvCNqNToLX6M=; b=Ih
-	R5s7uFIsmgpnxr9nbd36ZwJ+Y1HZzKPzy5yIgDMQb4MvQlzUFULh+joTP5gJUlys
-	ueC3/zRAtm47Fv3GyGi36zJ7qVdHyCFJrSyUyqLBRw5fW3MCB0p/DiPsIq6m+ZkH
-	i7Zi4uE74FF7Ati4YRDT69IqaY9kyTdsjDUxlvz/2Md25KcYKtKyVtqc4BuO3meY
-	hPGA/We/casDZg2mZxzWw20TzDbRuvIIyQd4RCpJQ7lYPpKilMTj9iSDQZs70sTs
-	rzcbb0yfJC48AE8QmJW15zGE/oGJeubz20pNUlNg5UbE/g+VtfO6u/rnvOIbdqp1
-	x5VNbYcgR5QR944FTLUA==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43cdpgkukp-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	//fyAi5zWyKw6AlYlMQlperLUy5r1PNdg265IdOPf3I=; b=pii0iYuF6CfLIWnm
+	fJSWkR5b0XDIZIdEe3BZPqUO4ZDF+x/BkWr2ovOxRRp3qGzgYxpz9fNrz74uyCcy
+	ahFlRRc6NhrExD5575dhvqfRPI7N+qQ8Vq66qRc0LWPXXC2cJGJhSt+8RPMiXzy9
+	nFaYi07iC3b2lAjIon5ktYDtnW7CaG6wwBPIQMCVuCakLHIIYbPeg/Ptm/9lp669
+	Vx9ui+GcexLvnOkF/FmdOhtriRrgc8j3a7K2SWbtWo7crqb9uVo6Vk966FPuOFHN
+	CTjAn8qjIzqIbpahcQ1gg9qemoAO1wKbV2DAy/JIOqCVMS6YUQRO+AfL630CtJrX
+	nAx4Jw==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43cdxxbswb-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 09 Dec 2024 07:50:50 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B97on5V027936
+	Mon, 09 Dec 2024 07:56:22 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B97uL0V012615
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 9 Dec 2024 07:50:49 GMT
-Received: from hu-jseerapu-hyd.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Sun, 8 Dec 2024 23:50:46 -0800
-From: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
-To: Vinod Koul <vkoul@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <dmaengine@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_msavaliy@quicinc.com>,
-        <quic_vtanuku@quicinc.com>
-Subject: [PATCH v5] dmaengine: qcom: gpi: Add GPI immediate DMA support for SPI protocol
-Date: Mon, 9 Dec 2024 13:20:33 +0530
-Message-ID: <20241209075033.16860-1-quic_jseerapu@quicinc.com>
-X-Mailer: git-send-email 2.17.1
+	Mon, 9 Dec 2024 07:56:21 GMT
+Received: from [10.64.68.72] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 8 Dec 2024
+ 23:56:15 -0800
+Message-ID: <677251eb-d3c3-48e1-ba79-fb8ec1e29c6f@quicinc.com>
+Date: Mon, 9 Dec 2024 15:56:13 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/3] arm64: dts: qcom: qcs615: add UFS node
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Manivannan Sadhasivam
+	<manivannan.sadhasivam@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+CC: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>, Andy Gross <agross@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-scsi@vger.kernel.org>, <quic_jiegan@quicinc.com>,
+        <quic_aiquny@quicinc.com>, <quic_tingweiz@quicinc.com>,
+        <quic_sayalil@quicinc.com>
+References: <20241122064428.278752-1-quic_liuxin@quicinc.com>
+ <20241122064428.278752-3-quic_liuxin@quicinc.com>
+ <d4f7ca97-b37e-4b8f-918c-9976e4a9cf41@oss.qualcomm.com>
+From: Xin Liu <quic_liuxin@quicinc.com>
+In-Reply-To: <d4f7ca97-b37e-4b8f-918c-9976e4a9cf41@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: fOyYx7c7ku0RLEjGLN5iXPozNefUS5cd
-X-Proofpoint-ORIG-GUID: fOyYx7c7ku0RLEjGLN5iXPozNefUS5cd
+X-Proofpoint-ORIG-GUID: fhcH6imOFbF_y0RnyThXz3P6qCy6QLoS
+X-Proofpoint-GUID: fhcH6imOFbF_y0RnyThXz3P6qCy6QLoS
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- adultscore=0 clxscore=1015 suspectscore=0 mlxscore=0 priorityscore=1501
- phishscore=0 mlxlogscore=999 spamscore=0 malwarescore=0 bulkscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412090059
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 spamscore=0
+ phishscore=0 mlxlogscore=999 priorityscore=1501 clxscore=1015
+ malwarescore=0 impostorscore=0 bulkscore=0 lowpriorityscore=0 mlxscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412090060
 
-The DMA TRE(Transfer ring element) buffer contains the DMA
-buffer address. Accessing data from this address can cause
-significant delays in SPI transfers, which can be mitigated to
-some extent by utilizing immediate DMA support.
 
-QCOM GPI DMA hardware supports an immediate DMA feature for data
-up to 8 bytes, storing the data directly in the DMA TRE buffer
-instead of the DMA buffer address. This enhancement enables faster
-SPI data transfers.
 
-This optimization reduces the average transfer time from 25 us to
-16 us for a single SPI transfer of 8 bytes length, with a clock
-frequency of 50 MHz.
-
-Signed-off-by: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
----
-v4 -> v5:
-   - For Immediate DMA, instead of making dma type as 0x10 and then
-     enable 16th bit of dword3, directly updating the dma type as 0x11.
-
-   Link to v4:
-	https://lore.kernel.org/all/20241205170611.18566-1-quic_jseerapu@quicinc.com/  
-
-v3 -> v4:
-   - Instead using extra variable(immediate_dma) for Immediate dma
-     condition check, made it to inlined.
-   - Removed the extra brackets around Immediate dma condition check.
-
-   Link to v3:
-        https://lore.kernel.org/lkml/20241204122059.24239-1-quic_jseerapu@quicinc.com/
-
-v2 -> v3:
-   - When to enable Immediate DMA support, control is moved to GPI driver
-     from SPI driver.
-   - Optimizations are done in GPI driver related to immediate dma changes.
-   - Removed the immediate dma supported changes in qcom-gpi-dma.h file
-     and handled in GPI driver.
-
-   Link to v2:
-        https://lore.kernel.org/all/20241128133351.24593-2-quic_jseerapu@quicinc.com/
-        https://lore.kernel.org/all/20241128133351.24593-3-quic_jseerapu@quicinc.com/
-
-v1 -> v2:
-   - Separated the patches to dmaengine and spi subsystems
-   - Removed the changes which are not required for this feature from
-     qcom-gpi-dma.h file.
-   - Removed the type conversions used in gpi_create_spi_tre.
-
-   Link to v1:
-        https://lore.kernel.org/lkml/20241121115201.2191-2-quic_jseerapu@quicinc.com/
-
- drivers/dma/qcom/gpi.c | 31 +++++++++++++++++++++++++------
- 1 file changed, 25 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
-index 52a7c8f2498f..b1f0001cc99c 100644
---- a/drivers/dma/qcom/gpi.c
-+++ b/drivers/dma/qcom/gpi.c
-@@ -18,6 +18,7 @@
- #include "../virt-dma.h"
- 
- #define TRE_TYPE_DMA		0x10
-+#define TRE_TYPE_IMMEDIATE_DMA	0x11
- #define TRE_TYPE_GO		0x20
- #define TRE_TYPE_CONFIG0	0x22
- 
-@@ -64,6 +65,7 @@
- 
- /* DMA TRE */
- #define TRE_DMA_LEN		GENMASK(23, 0)
-+#define TRE_DMA_IMMEDIATE_LEN	GENMASK(3, 0)
- 
- /* Register offsets from gpi-top */
- #define GPII_n_CH_k_CNTXT_0_OFFS(n, k)	(0x20000 + (0x4000 * (n)) + (0x80 * (k)))
-@@ -1711,6 +1713,7 @@ static int gpi_create_spi_tre(struct gchan *chan, struct gpi_desc *desc,
- 	dma_addr_t address;
- 	struct gpi_tre *tre;
- 	unsigned int i;
-+	int len;
- 
- 	/* first create config tre if applicable */
- 	if (direction == DMA_MEM_TO_DEV && spi->set_config) {
-@@ -1763,14 +1766,30 @@ static int gpi_create_spi_tre(struct gchan *chan, struct gpi_desc *desc,
- 	tre_idx++;
- 
- 	address = sg_dma_address(sgl);
--	tre->dword[0] = lower_32_bits(address);
--	tre->dword[1] = upper_32_bits(address);
-+	len = sg_dma_len(sgl);
- 
--	tre->dword[2] = u32_encode_bits(sg_dma_len(sgl), TRE_DMA_LEN);
-+	/* Support Immediate dma for write transfers for data length up to 8 bytes */
-+	if (direction == DMA_MEM_TO_DEV && len <= 2 * sizeof(tre->dword[0])) {
-+		/*
-+		 * For Immediate dma, data length may not always be length of 8 bytes,
-+		 * it can be length less than 8, hence initialize both dword's with 0
-+		 */
-+		tre->dword[0] = 0;
-+		tre->dword[1] = 0;
-+		memcpy(&tre->dword[0], sg_virt(sgl), len);
- 
--	tre->dword[3] = u32_encode_bits(TRE_TYPE_DMA, TRE_FLAGS_TYPE);
--	if (direction == DMA_MEM_TO_DEV)
--		tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_IEOT);
-+		tre->dword[2] = u32_encode_bits(len, TRE_DMA_IMMEDIATE_LEN);
-+		tre->dword[3] = u32_encode_bits(TRE_TYPE_IMMEDIATE_DMA, TRE_FLAGS_TYPE);
-+	} else {
-+		tre->dword[0] = lower_32_bits(address);
-+		tre->dword[1] = upper_32_bits(address);
-+
-+		tre->dword[2] = u32_encode_bits(len, TRE_DMA_LEN);
-+		tre->dword[3] = u32_encode_bits(TRE_TYPE_DMA, TRE_FLAGS_TYPE);
-+	}
-+
-+	tre->dword[3] |= u32_encode_bits(direction == DMA_MEM_TO_DEV,
-+					 TRE_FLAGS_IEOT);
- 
- 	for (i = 0; i < tre_idx; i++)
- 		dev_dbg(dev, "TRE:%d %x:%x:%x:%x\n", i, desc->tre[i].dword[0],
--- 
-2.17.1
+在 2024/12/6 5:21, Konrad Dybcio 写道:
+> On 22.11.2024 7:44 AM, Xin Liu wrote:
+>> From: Sayali Lokhande <quic_sayalil@quicinc.com>
+>>
+>> Add the UFS Host Controller node and its PHY for QCS615 SoC.
+>>
+>> Signed-off-by: Sayali Lokhande <quic_sayalil@quicinc.com>
+>> Co-developed-by: Xin Liu <quic_liuxin@quicinc.com>
+>> Signed-off-by: Xin Liu <quic_liuxin@quicinc.com>
+>> ---
+> 
+> [...]
+> 
+>> +
+>> +			operating-points-v2 = <&ufs_opp_table>;
+>> +			interconnects = <&aggre1_noc MASTER_UFS_MEM QCOM_ICC_TAG_ALWAYS
+>> +					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+>> +					<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
+>> +					 &config_noc SLAVE_UFS_MEM_CFG QCOM_ICC_TAG_ALWAYS>;
+> 
+> QCOM_ICC_TAG_ACTIVE_ONLY for the cpu path
+I need to ask you for advice. I have reviewed the ufs_mem_hc of many 
+devices and found that all of them use QCOM_ICC_TAG_ALWAYS for their 
+interconnects cpu path. Why do I need to use QCOM_ICC_TAG_ACTIVE_ONLY here?
+> 
+>> +			interconnect-names = "ufs-ddr",
+>> +					     "cpu-ufs";
+>> +
+>> +			power-domains = <&gcc UFS_PHY_GDSC>;
+>> +			required-opps = <&rpmhpd_opp_nom>;
+> 
+> this contradicts the levels in the OPP table:
+The required-opps here corresponds to opp-200000000 in the opp_table 
+below. Similarly, I referred to sm8550.dtsi, whose required-opps also 
+corresponds to the opp table.
+> 
+>> +
+>> +			iommus = <&apps_smmu 0x300 0x0>;
+>> +			dma-coherent;
+>> +
+>> +			lanes-per-direction = <1>;
+>> +
+>> +			phys = <&ufs_mem_phy>;
+>> +			phy-names = "ufsphy";
+>> +
+>> +			#reset-cells = <1>;
+>> +
+>> +			status = "disabled";
+>> +
+>> +			ufs_opp_table: opp-table {
+>> +				compatible = "operating-points-v2";
+>> +
+>> +				opp-50000000 {
+>> +					opp-hz = /bits/ 64 <50000000>,
+>> +						 /bits/ 64 <0>,
+>> +						 /bits/ 64 <0>,
+>> +						 /bits/ 64 <37500000>,
+>> +						 /bits/ 64 <75000000>,
+>> +						 /bits/ 64 <0>,
+>> +						 /bits/ 64 <0>,
+>> +						 /bits/ 64 <0>;
+>> +					required-opps = <&rpmhpd_opp_low_svs>;
+>> +				};
+>> +
+> 
+> Konrad
 
 
