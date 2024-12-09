@@ -1,173 +1,233 @@
-Return-Path: <linux-arm-msm+bounces-41032-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41033-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D93EB9E92B6
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 12:47:14 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2AC249E92D7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 12:53:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A56BF1881AFC
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 11:47:14 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 69A7F1636F5
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 11:53:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A8F3218580;
-	Mon,  9 Dec 2024 11:47:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B592E221D8B;
+	Mon,  9 Dec 2024 11:52:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="EKQoQe/M"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FOwKesER"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 891321F931;
-	Mon,  9 Dec 2024 11:47:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6A36221D80
+	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Dec 2024 11:52:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733744832; cv=none; b=r9PAOVLy3kQDOT7l6Beq7F+wIBXkzYEVhQ+nPgFjtRZaK67zU9ANrlTqU/9gMe7rHhth263ID7vW0x2Kui8ea59TlmUq3uHyCeEMTrm1CitfUAdmbjjsnzuIUP+1FN5gHNa5OJohy1UynLLEfrNedo1G2f2ZUzkUtYNyeGPbu08=
+	t=1733745179; cv=none; b=NO8yE+4rVbeNkfnwpCmgSt8vvZGr04T94eqYrLzSnSm7yT/O3z8k5SUQFQ8q2UGT0/UBzE4B09GiVTM2ioTveQUk4TTG31qWvim8y75D26ihBWSTVBWrXE15pj0cg06xJwe+N4mQYgp94Xm/xE3Zn+rLcy1OYm5XpDfTxp5oCew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733744832; c=relaxed/simple;
-	bh=UIjErGmqfqU1Sd/W91SEMmcgWCt4YKrvAVeLp7upHjY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=dvmOo5+QWDiXrYcAGGfseHaBRlc8MCzdzxOnA+Yk3JslplNrhWmgbdEf0aLpi8EHojWPO3KSPWlYPSxfGnW7cCssD4KCiVtSUai2MKBAVh/BMltSTAt+aU65XIdyljcFdiz60cVir/KerKBBPKwKMP4npDi9salVXD9k8v6QH5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=EKQoQe/M; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B9ADOe5007595;
-	Mon, 9 Dec 2024 11:46:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	qdPw/W6LeGcWVMLio8NyLtLxoHG6Pis1h/7WcJzxaDY=; b=EKQoQe/MEmgVmKbS
-	+wUtB/96D8F476YM3nv39zqIPRlcDSO+MgNaWMVOdC8LY7garhyaGhBhXQzJmoqb
-	QdEjlgRqmT/axpuOritaDCipl/j6JLAC9sF6/lVzTpPiL0xW42XHPxLswt9R5Iv1
-	3ZB7tuB2hUwh7vAyl5AVCGlXttvgaSpUgFVI3FLA9C5bKQTU7NZW9rqOFoAdCEKN
-	Hd18LbPScFuUpaoST7EjGq/rv1M7YG1DojPsNr/hxBCRPKRpQYp4NXQtTBeSyb+l
-	fqdON4lp2QCrAeIjPEo0JmnGyTbYHHAsVX0EQTtF4IsY2M9AeBhZqGE13AazZMcU
-	DCi9CA==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43cdc6cpue-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 09 Dec 2024 11:46:56 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B9Bkt9E027017
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 9 Dec 2024 11:46:55 GMT
-Received: from [10.216.1.80] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 9 Dec 2024
- 03:46:48 -0800
-Message-ID: <44496510-0dfc-aa14-7793-93abd614fc37@quicinc.com>
-Date: Mon, 9 Dec 2024 17:16:45 +0530
+	s=arc-20240116; t=1733745179; c=relaxed/simple;
+	bh=cvAbGHmCA6HFonkR/rlrLWgZtYodAHJQHyMIJqJEv+U=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=ROF3RRoMKMbWj3iyZbaHCo2zsiIyjxpWtyInxIQpjWdVzFA/SiF74gAduyED46hSXPHtccb381kLcwQi5JwEo/mDTl338JstD3A+GTqx/76YKODdChmr6RUTLIgSbGaRwui4AsCXPi3/d1UvqHD9dLd8hfU95RZWTcsRY3uy7mA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FOwKesER; arc=none smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-aa67af4dc60so181553066b.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Dec 2024 03:52:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1733745175; x=1734349975; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=D9ovQ7fdh6FLjUrJajFuZQHiSCvQ7SCuMMDnXva1GGg=;
+        b=FOwKesERNRHXZljEaCDdtAGa/zg3FLJeca5b0Nz+SLGE/08ajBrWeMr/LtOFtiLRDs
+         6ccEAIyN6nHr5CZJmGd6DuPm2pdfnyThWp9ihdg+ypwY028RHUm6ZysPvK8SZCP2+a7K
+         Eco4yBNSFFmaS+xcwcqRGqr3Egxji3pctitrlSeB2EKAZYvxFhyGCEqj8abSeeeQBLCQ
+         UTCqsKmq8+eGZQw9DGzOnZeMRXKLdxf3yZ2dtmWhuAp81KMU3Re9hdXciixiDpJDrfCN
+         ujvwxKKaDg3zvTl9v9YpNY2jsyGVOTlJRjsYdAYq5e6lbJCfy/Yab34RmH6/TDnQ4Wyg
+         fB8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733745175; x=1734349975;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=D9ovQ7fdh6FLjUrJajFuZQHiSCvQ7SCuMMDnXva1GGg=;
+        b=rZDhLbYiyRyihFxF7k/koGuhrh3FOV+IoOMUpdA6eNsY3jz+R1jSH6DIB474Z09PqU
+         Qtd9PqIJTTI2EFRKiiL/Bf+f8I/ZLb9pocqkKOMaZoamPkw2vvzsxG35WBSarpIAHzH+
+         f2yi7kVVD8mhuHipw5lbUZST6Rm/7nYBYON3cLsCMbayaIxpRzS2Hh0NJzQEzJSGjF/Y
+         QKJ8lVRUlxYdOyElrU2fNJH1E/MoepvHQ5ABZUduBGR2415oMVMHK3GJJos318APeI7E
+         Mg3lV5oKyQu9BuQywMfPcgbF/rlzwlogXHGa0c1V6H55EcJH+nJwzKJNrPBpKaFCHFXE
+         Bokg==
+X-Forwarded-Encrypted: i=1; AJvYcCVDt8mJ8sXX/kSIu03maQXpDdL2Zaj4rZYThK3R7e56p0zIGxGfcUr8NPFqp7RPhKJXuz8KxXsb5XKEjI9y@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyv6j/4SQlvRzNQZ11o/SDJLm0F4uKGz63okstAr8i4Wbn1E0n9
+	B3nFdKITU7N5RDw3mga+bdAMly1fKk6aEFEN0IaEOXIU2/hsV02LFtnZpNnPLs+ghXhAkCmIiVI
+	B
+X-Gm-Gg: ASbGncvQSY5ZL134xdg8xLr8gYJZpdKGKKtMKGgGvxhYxb4adw1zr1fY5YNuOaSbkGj
+	HEbVXr/6DkpFdL4jzJn0rgTrREbaI0BKNgObfbLdtZ3Nu0lpMySs4OGOCa42lDzDicRkrS7FQBi
+	HDLz8hZBZRSrVukTw5qTv/1phEZt4OzBchSe02iSO++3aeQdoyfs0gGL+giaMVGkuDdKfZ/SHOF
+	9Ph2A6vpnLr4zRLaoodBhy3g4ezlCFDP4LzWNvfXC7M5uZ2ls2tUbZZWH8=
+X-Google-Smtp-Source: AGHT+IGBRhPT3vaZi3eebdghDDF9iBVSFo1g/+gVcmQjGLJ8zAkwqKigQ1Qiiq7VOGU4IyjiHrIOHg==
+X-Received: by 2002:a17:906:4ca:b0:aa6:2d86:bd2c with SMTP id a640c23a62f3a-aa63a0ed36cmr983840666b.21.1733745175408;
+        Mon, 09 Dec 2024 03:52:55 -0800 (PST)
+Received: from [127.0.0.1] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa677968cdbsm247614266b.125.2024.12.09.03.52.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Dec 2024 03:52:54 -0800 (PST)
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: [PATCH v5 0/3] media: venus: Provide support for selecting
+ encoder/decoder from in-driver
+Date: Mon, 09 Dec 2024 11:52:52 +0000
+Message-Id: <20241209-media-staging-24-11-25-rb3-hw-compat-string-v5-0-ef7e5f85f302@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v3 2/5] ASoC: dt-bindings: wcd937x-sdw: Add static channel
- mapping support
-Content-Language: en-US
-To: Krzysztof Kozlowski <krzk@kernel.org>
-CC: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Liam Girdwood
-	<lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
-        Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Bard Liao
-	<yung-chuan.liao@linux.intel.com>,
-        Jaroslav Kysela <perex@perex.cz>, "Takashi
- Iwai" <tiwai@suse.com>,
-        Pierre-Louis Bossart
-	<pierre-louis.bossart@linux.dev>,
-        Sanyog Kale <sanyog.r.kale@intel.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-sound@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_rohkumar@quicinc.com>,
-        <kernel@quicinc.com>
-References: <20241126164300.3305903-1-quic_mohs@quicinc.com>
- <20241126164300.3305903-3-quic_mohs@quicinc.com>
- <jnetmj5ibmmoiputq52vsvfqjz2auwjeqwt36g7sg4kjrrxyso@nrugsa6px4h7>
- <6bb8fe59-a1fc-9813-4623-d27e74a1b882@quicinc.com>
- <2517ef0e-4d13-4c51-b479-863229783223@kernel.org>
-From: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-In-Reply-To: <2517ef0e-4d13-4c51-b479-863229783223@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 2vVXxcrrBXQAvSz_CVtLjVu91yy0-gYM
-X-Proofpoint-GUID: 2vVXxcrrBXQAvSz_CVtLjVu91yy0-gYM
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxscore=0
- mlxlogscore=999 malwarescore=0 bulkscore=0 lowpriorityscore=0
- clxscore=1015 suspectscore=0 spamscore=0 phishscore=0 priorityscore=1501
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412090093
+X-B4-Tracking: v=1; b=H4sIABTaVmcC/6XRO27DMBAE0KsYrLMBuaQo0VXuEaTgV1ogFg1Sk
+ B0YunsoVwlcJS5nB3hT7I3VWChWdjzcWIkrVcpzC93LgfnJzmMECi0z5KiEwB5OMZCFutiR5hF
+ QgRCAHRQnYbqAz6ezXVpd9jZa6Y0xcuAoWBPPJSa63tfeP1qeqC65fN3HV7Ff/7ezCuBgjBc6o
+ dZO6bdPmm3Jr7mMbB9a8QkcG+654CmoLvUpPeDyCVw2PCbtAnbRDME94OonPvwNVw1PgWt0sn2
+ hV7/wbdu+AR0/Gxf+AQAA
+X-Change-ID: 20241127-media-staging-24-11-25-rb3-hw-compat-string-ea3c99938021
+To: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, 
+ Vikash Garodia <quic_vgarodia@quicinc.com>, 
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: quic_renjiang@quicinc.com, quic_vnagar@quicinc.com, 
+ quic_dikshita@quicinc.com, konradybcio@kernel.org, 
+ linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+ Stanimir Varbanov <stanimir.varbanov@linaro.org>, 
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.15-dev-dedf8
 
-On 12/5/2024 12:52 PM, Krzysztof Kozlowski wrote:
-> On 05/12/2024 04:56, Mohammad Rafi Shaik wrote:
->> On 11/27/2024 1:38 PM, Krzysztof Kozlowski wrote:
->>> On Tue, Nov 26, 2024 at 10:12:57PM +0530, Mohammad Rafi Shaik wrote:
->>>> diff --git a/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml b/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml
->>>> index d3cf8f59cb23..7893b1c1f80b 100644
->>>> --- a/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml
->>>> +++ b/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml
->>>> @@ -58,6 +58,44 @@ properties:
->>>>        items:
->>>>          enum: [1, 2, 3, 4, 5]
->>>>    
->>>> +  qcom,tx-channel-mapping:
->>>> +    description: |
->>>> +      Specifies static channel mapping between slave and master tx port
->>>> +      channels.
->>>> +      In the order of slave port channels which is adc1, adc2, adc3,
->>>> +      dmic0, dmic1, mbhc, dmic2, dmic3, dmci4, dmic5, dmic6, dmic7.
->>>> +      The channel map index values are fixed values.
->>>> +      SWRM_CH1 ==> 1
->>>> +      SWRM_CH2 ==> 2
->>>> +      SWRM_CH3 ==> 4
->>>> +      SWRM_CH4 ==> 8
->>>
->>> I am surprised to see here again 1/2/4/8. My comments were not
->>> addressed. I think we agreed during our off-list talk that you will use
->>> 1, 2, 3 and 4.
->>>
->> Ack,
->>
->> Yes right,
->>
->> Will add the change in next patch set.
->>
->> will add the channel map values starting from 0 based on order of slave
->> port channels which are starting from 0.
->>
->> SWRM_CH1 ==> 0
->> SWRM_CH2 ==> 1
->> SWRM_CH3 ==> 2
->> SWRM_CH4 ==> 3
-> These are supposed to be channels, so 1=1, 2=2 not 1=0.
-> 
+v5:
+- Fixes venus_remove_dynamic_nodes() on probe err path - Dikshita
+- Link to v4: https://lore.kernel.org/r/20241128-media-staging-24-11-25-rb3-hw-compat-string-v4-0-fd062b399374@linaro.org
 
-Thanks for comment.
+v4:
 
-Ack,
+- Adds some unavoidable conditional CONFIG_OF_DYNAMIC to fix media-ci testcase # Test build:OF x86_64
+- Added logic for of_changeset_revert() and of_changeset_destroy() on
+  error/remove paths - Bryan
+- Link to v3: https://lore.kernel.org/r/20241127-media-staging-24-11-25-rb3-hw-compat-string-v3-0-ef6bd25e98db@linaro.org
 
-i somehow missed this V3 patch mail comment and posted V4 patch set.
+v3:
+- Adds select OF_DYNAMIC to venus/Kconfig to ensure of_changeset_*() is
+  available. Instead of ifdefing and have the fix not work without
+  OF_DYNAMIC, select OF_DYANMIC with venus - linux-media-ci
+- Link to v2: https://lore.kernel.org/r/20241127-media-staging-24-11-25-rb3-hw-compat-string-v2-0-c010fd45f7ff@linaro.org
 
-will address the comment and update change in v5 patch set
+v2:
+- Removes useless dev_info() leftover from debugging - Bryan
+  Link: https://lore.kernel.org/r/ce9ac473-2f73-4c7a-97b1-08be39f3adb4@linaro.org
+- Trivial newline change @ np = of_changeset_create_node(ocs, dev->of_node, node_name); - Bryan
+- Fixes a missing goto identified by smatch - Smatch/Bryan
+- Adds Krzysztof's RB to deprecated - Krzysztof
+- Link to v1: https://lore.kernel.org/r/20241127-media-staging-24-11-25-rb3-hw-compat-string-v1-0-99c16f266b46@linaro.org
 
-Thanks & Regards,
-Rafi.
+v1:
+Various venus patches have been held up due to the misuse of DT to provide
+a configuration input to venus as to which mode a given transcoder should
+be in.
 
-> Best regards,
-> Krzysztof
+Link: https://lore.kernel.org/linux-arm-msm/436145fd-d65f-44ec-b950-c434775187ca@kernel.org
+Link: https://lore.kernel.org/linux-media/ba40de82-b308-67b1-5751-bb2d95f2b8a5@linaro.org/
+
+This series provides support for static configuration of venus from the resource
+structure via:
+
+1. Adding two strings to the resource structure.
+   One string for the decoder one for the encoder.
+2. The string for each SoC has been matched to the existing in the
+   DT which currently specifies the mode as decoder or encoder.
+3. New logic in the driver parses the DTB looking for the node name
+   specified for the decoder and encoder .
+4. If the DTB contains the node name, then no new node is added as
+   we assume to be working with an "old" DTB.
+5. If the DTB does not contain the specified decoder/encoder string
+   then a new in-memory node is added which contains a compat string
+   consistent with upstream compat strings used to currently select
+   between the decoder and encoder respectively.
+6. In this way new venus driver entries may be added which respect
+   the requirement to move mode selection out of DTB and into driver.
+7. Simple instances of decoder/encoder nodes in the yaml schema have been
+   marked as deprecated.
+8. Since the proposed scheme here always defers to what the DTB says that
+   means it would be possible to remove decoder/encoder entries for the
+   deprecated schema should we choose to do so at a later date but,
+   that step is not taken in this series.
+9. Some of the upstream encoder/decoder nodes for example sdm630/sdm660
+   also contain clock and power-domain information and have not been
+   updated with the static configuration data or had the schema amended to
+   deprecate values. Because these nodes impart hardware specific
+   information and are already upstream this series proposes to leave
+   those as-is.
+
+However if this scheme is adopted it should allow for addition of venus for
+both qcs615[1] and sc8280xp[2].
+
+Other SoCs such as sm8550, sm8650 and beyond are expected to be supported
+by Iris.
+
+The sm8350 and sm8280xp in the second series would then be able to excise
+the offending compat = "video-encoder" | "video-decoder" in the schema and
+DT.
+
+I considered making this series an all singing all dancing method to select
+between encoder and decoder for all SoCs but, the objective here is not to
+add functionality but to provide support for configuration in-driver
+consistent with current usage and to do so with a minimal code
+intervention.
+
+So far I've tested on RB3 by removing:
+
+video-core0 {
+	compatible = "venus-decoder";
+};
+
+video-core1 {
+	compatible = "venus-encoder";
+};
+
+This works - the code adds the nodes into memory and the video
+encoder/decoder logic in the plaform code runs.
+
+Similarly if the nodes are left in-place then no new nodes are added by the
+code in this series and still both encoder and decoder probe.
+
+Thus proving the code works and will provide support for new platforms
+while also leaving open the option of dropping nodes from upstream.
+
+I've left the dropping step out for now, it can be implemented later.
+
+[1] https://lore.kernel.org/linux-arm-msm/20241125-add-venus-for-qcs615-v3-0-5a376b97a68e@quicinc.com
+[2] https://lore.kernel.org/linux-media/20230731-topic-8280_venus-v1-0-8c8bbe1983a5@linaro.org/
+
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+---
+Bryan O'Donoghue (3):
+      media: venus: Add support for static video encoder/decoder declarations
+      media: venus: Populate video encoder/decoder nodename entries
+      media: dt-bindings: qcom-venus: Deprecate video-decoder and video-encoder where applicable
+
+ .../bindings/media/qcom,msm8916-venus.yaml         |  12 +--
+ .../bindings/media/qcom,sc7180-venus.yaml          |  12 +--
+ .../bindings/media/qcom,sc7280-venus.yaml          |  12 +--
+ .../bindings/media/qcom,sdm845-venus-v2.yaml       |  12 +--
+ .../bindings/media/qcom,sm8250-venus.yaml          |  12 +--
+ drivers/media/platform/qcom/venus/Kconfig          |   1 +
+ drivers/media/platform/qcom/venus/core.c           | 104 ++++++++++++++++++++-
+ drivers/media/platform/qcom/venus/core.h           |   4 +
+ 8 files changed, 118 insertions(+), 51 deletions(-)
+---
+base-commit: 72ad4ff638047bbbdf3232178fea4bec1f429319
+change-id: 20241127-media-staging-24-11-25-rb3-hw-compat-string-ea3c99938021
+
+Best regards,
+-- 
+Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
 
