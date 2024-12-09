@@ -1,181 +1,186 @@
-Return-Path: <linux-arm-msm+bounces-40987-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40988-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 96A3B9E8F8A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 11:00:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A37FC9E8F9C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 11:04:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5FCDA1886A7B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 10:00:22 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7AEB2188397F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 10:04:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DEB252163BA;
-	Mon,  9 Dec 2024 10:00:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C084C215066;
+	Mon,  9 Dec 2024 10:04:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sIZWq4iM"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NeDTtaW9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B20632163B5
-	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Dec 2024 10:00:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1CFE2156FD
+	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Dec 2024 10:04:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733738419; cv=none; b=slkwfKTU4qAjdkBHOHYYhZh5ehi0aOXj/8LUpzEajQdoIJwzYRKtbHIZSVOIhYoQXlZEHO2hWizT7d8iM8Y0gqnlxL7242TTPmhLi3jjTVy0YP/UfidHA4WBK0GZevShA22kxYeuUTZ9uaOohk8PrvB7VIZasF6lXyFHdo+gpIk=
+	t=1733738670; cv=none; b=rltgGaBiWC2ePSWqGpYbcqKaLIZGv8KG7TIvrpDDyAkDtmhDMU+gFAZCXWfQ6q/2D2aL4EstiLFdm66m/3Y1SOoagWQU4oxM5R1s9XhmMT1I3Z/UwXUnHt3PEhon5cW4kbMk5Pd4g9XSWB4A+qpoSJJXa6xrneX5BqMfq5kwooQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733738419; c=relaxed/simple;
-	bh=9S1OgwK5FtDALXZaBtPeWSCifcuG4huzgVs3mX6EYro=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Xw2XGZMq7Sy282JRmgGtHiWFBpYo731Ik45uLX9yGmkK/ExqyqugHP4H1qnmSzZtxdGEtu1v/W0UneW1S/8sms+/ghS0Rpm3Srz4BXT2wgV3kZyp/C1HziJcxwE8D8F+o+Mr3D+fNHPEYMFEvN3plkbiyWFGQKA2td/XRNR6Y5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sIZWq4iM; arc=none smtp.client-ip=209.85.219.176
+	s=arc-20240116; t=1733738670; c=relaxed/simple;
+	bh=HvzRy8I7qIhgbnNkEXgHJ7c/6fH0498enq7qcWDIymM=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=d3dr1SLWz0AfEIbaCJ7YX/sEUB/fqGnR0Q62UfeoPJ2eo6Ih9qmwXbc8gqhD7xNGWrGgjP/SSDbRwYFY9DMDXmujLMe6aE3pUOyCCTO8iFv+i98rKV7kGwLscAxNnNZy5flHUS1Eu5FMN/juqBUS/ME8/rIE57XjmtuB5HiINEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NeDTtaW9; arc=none smtp.client-ip=209.85.208.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-e397269c68fso3935990276.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Dec 2024 02:00:16 -0800 (PST)
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2f7657f9f62so36709491fa.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Dec 2024 02:04:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733738416; x=1734343216; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NaKxBgaq02X8de3kQjZpaBJzI71CtFoxfGULZINgpO0=;
-        b=sIZWq4iMuY3qqVnov5zv/W/cXZRPYwbthhusAw3rmTPgtWCduZ8fTFGmcY/MGU4EqS
-         0uqm6VsQLlKOP2OYZHK9NJK/uuLjPUWsxnAdwk0siOU966DDZDc9RPXsycQ+/k2uwe9g
-         YURWfDjmI5ReeoEhHT/q0hwQ4Ps0q/aZ7A5brCsvj9yO0UUybxjH9U9357hqrM7HYPRX
-         +YY1ITRxxs1qxxIXSU2hd7Ryde1lh1EBhMy361V/hZzmlmN7Tc5wf6p2sN6y1zfXpf6Y
-         DNvv1vqMMU2oj8l35wg5c0h6aBRB6JIIxED55TU9h84dLd6TgmG2+LYL56H9wXjvWHR3
-         sCHw==
+        d=linaro.org; s=google; t=1733738667; x=1734343467; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=rmWxFsC0cXeaHocQ2mD5SsVuM9dd3gaFPe/qAhBEfRw=;
+        b=NeDTtaW9iIBCm5oiYfpw5yUhl7Brd1hvtnqswhlyrho4y1S3C7nsCd1lzTm2vZq9j2
+         40ePDyo21AjyYjsOBqA2z6GR4KZX6+fTwUxZ/cpYPbsOkQiaeGx+xPaFpg/Ean3CLYNx
+         aGiLmb6Psmf8aBt5kql1/ZOFEQb9ggfE1Q9SY5wh2dD7f4fm2FdCtYwZzEVCMGoj/mlp
+         9vDpvHHueurNOhotOd/VaUEz7qKlnzZRYiW/9P53P+b6xxM5sdE4Y6plII+9l7VQ6aFE
+         9xlkLiwgzWMW+ma7WI9hdz2xKt5ozcQbTnqost7o9jMZf4lo+Tt04CRwL0/BvdhIlc5a
+         RwVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733738416; x=1734343216;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=NaKxBgaq02X8de3kQjZpaBJzI71CtFoxfGULZINgpO0=;
-        b=jLETN61EGxuY/EXE2y+OHkT45A1ZbALpuJA2nXSVQ3rPazx2vovEZK4dEP5b+d27x3
-         31JHoxu5mJ9XNoUO+6eANYu5WgEITSRmwKRGrFot2pKlbI5fcEO+rcKx9KUO+ih5gpAV
-         YDoG6lrOQNFj/NXHeCl3qjrr67GOhJBMRauBbMlaeFeGYU7RihGDUOreQo3mYwCloLiz
-         VD3Ky0ZWgW68o3tg8fAv3/LCsAazfr1OmLey6hgEfuPfqGC28CieKuMOQBx4wy3eUtVL
-         0drXgL0tosGc7Ps+lORSjjX9/ZMhIo2tTuRuveP4JhNyM99iR8TKVCKVDze6XaakrxOw
-         RcxA==
-X-Forwarded-Encrypted: i=1; AJvYcCX2WGhm25Xs4JdDB4ovk5rcbnXM9lR1FfKj+tGH2Jv1AiYJGK7JymH3lSQv5Evehml6f17dvM/5L8EyuWx/@vger.kernel.org
-X-Gm-Message-State: AOJu0YwxotgQTPJ8GcOhcBGUdc+F1GL0jtxSmXyuRtpE+19E9AfdVy/w
-	q3slbYv7aVlSR6r9Yz7DNFHwM7mx7/43zUr3ZpdSHHEPlDWeniOv+BMAGXZ88HtxYy6Asht57+g
-	2vvkj/QkawqHx1nd9NAS1T9akN6GCFHwHZ5DSbA==
-X-Gm-Gg: ASbGnctKsRjJ2pnfdluCf/y96AXO8B/eeYpu/feG4s9ovR7eihEfCaGSElHVdlHiJSI
-	C0Nr03cnACkq7KVrhoPQjQavL55HkM9Y=
-X-Google-Smtp-Source: AGHT+IH+mgmmr4qqUrNvXi89RebxgrqqEnj6NinYEcPLT9jjbWocaOUTk5gkEpMuQlwCgNRcU7QqZkyyvUYXic93/so=
-X-Received: by 2002:a05:6902:250e:b0:e39:b0de:fed8 with SMTP id
- 3f1490d57ef6-e3a0b0ca18amr10550531276.17.1733738415719; Mon, 09 Dec 2024
- 02:00:15 -0800 (PST)
+        d=1e100.net; s=20230601; t=1733738667; x=1734343467;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rmWxFsC0cXeaHocQ2mD5SsVuM9dd3gaFPe/qAhBEfRw=;
+        b=CFb2vOSGih8zWRZ/L2NLxiynGT6xwO+mD8YGkISEo+hIM1aSd66G79RTMk7tC4E5J3
+         NqnBJ+ZBt16EOw2S3d1AgcTHLG7PUbYPZ1pe1ncvDQjo0E/PnJszrL1xDkgqQXbSnf3I
+         2FTxeTZHE+J9u+BGvLXyCrg60hqvwuSm1b5MeowhtJfPAExf7WDAUkQQB2O3NCr6RiQi
+         MbwfOkOHvY9rdOpnUp5sxVAE5/BEJKZGzimq6XcK2w387qqZ5YHI6uEhOuIxefnPZr3w
+         tb6FMr9ZArjoLEjgOzOO4pJGbZELUs3d4hhNtCodAO9dHw8MwVo4yew7d7T3hmT9kxRE
+         JwtQ==
+X-Gm-Message-State: AOJu0YwrdzTwxxXtWtqS120qxG3PYo+a48XxGsqtQDF3fTQ64fhB4rct
+	xpBPdcsnG9TygBaKt8pRRhRsmKg2vNLiH9FZemlDJIsESIdy3dIevZmD+9OGrhzai4o0kYwmcCE
+	c3GouQw==
+X-Gm-Gg: ASbGncuZnWQbAGXD+wi6qeUlQZUbHoXIX2Kb+NPIzUvmUeaHXkVHj8+1jpiI3jJvO/L
+	J6HR3MsaskPnYUPk6+fr1CURc0JbkW2uWMUzr3V3BR/KatJuIpm5NN7Ka2Vrf/kdV/wKfqZsfl3
+	U6Bs9bOCfcE0IfbpWhgO+qMISSsg+MQHv+1oJuW4XFfqUGO6YW1lGc9Fu4mxuiovDEC0AV38BVk
+	hT+rHXxDZstk+/l0svGbDcFtf8ia7OI4fk5rc6qPKK+1jdPJD9n30m9qQ==
+X-Google-Smtp-Source: AGHT+IEA2GYxmDBoJ502nhZ16cRFkhfaqap2OWSHilCKRJ2N75D188EFfdgljBH1J1ODmQJpCG9YTA==
+X-Received: by 2002:a2e:a9ab:0:b0:300:2d54:c2ae with SMTP id 38308e7fff4ca-3002fc97f7bmr61678071fa.27.1733738666847;
+        Mon, 09 Dec 2024 02:04:26 -0800 (PST)
+Received: from umbar.lan ([192.130.178.90])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30226a67ea2sm1876041fa.67.2024.12.09.02.04.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Dec 2024 02:04:25 -0800 (PST)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Mon, 09 Dec 2024 12:04:24 +0200
+Subject: [PATCH v4] drm/msm/dpu1: don't choke on disabling the writeback
+ connector
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241208-dpu-fix-wb-v3-1-a1de69ce4a1b@linaro.org> <Z1a3jOB8CutzRZud@hovoldconsulting.com>
-In-Reply-To: <Z1a3jOB8CutzRZud@hovoldconsulting.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 9 Dec 2024 12:00:07 +0200
-Message-ID: <CAA8EJprxosWNWojXWAzkM5eeNXewpT1hpBxCq3irmkuGf==b+w@mail.gmail.com>
-Subject: Re: [PATCH v3] drm/msm/dpu1: don't choke on disabling the writeback connector
-To: Johan Hovold <johan@kernel.org>
-Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Simona Vetter <simona.vetter@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org, stable@vger.kernel.org, 
-	Leonard Lausen <leonard@lausen.nl>, =?UTF-8?Q?Gy=C3=B6rgy_Kurucz?= <me@kuruczgy.com>, 
-	Johan Hovold <johan+linaro@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20241209-dpu-fix-wb-v4-1-7fe93059f9e0@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAKfAVmcC/23NTQ7CIBCG4asY1o4BSltw5T2MC36mLYkpDWjVN
+ L27tAtNo8tvyPMykYTRYyLH3UQijj750Och9jtiO923CN7lTTjlgtZUgRvu0PgnPAxU1pU1Fmi
+ Y5CSDIWJ+WWPnS96dT7cQX2t7ZMv1b2ZkQEEIWQhpGiesOV19r2M4hNiSpTPyr5WUbyzPtkZtF
+ RqJUpU/tvhYxqnc2AIYaOawUhaFZtt/53l+A/DSKt0dAQAA
+X-Change-ID: 20240709-dpu-fix-wb-6cd57e3eb182
+To: Rob Clark <robdclark@gmail.com>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+ Simona Vetter <simona.vetter@ffwll.ch>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+ stable@vger.kernel.org, Leonard Lausen <leonard@lausen.nl>, 
+ =?utf-8?q?Gy=C3=B6rgy_Kurucz?= <me@kuruczgy.com>, 
+ Johan Hovold <johan+linaro@kernel.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3165;
+ i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
+ bh=HvzRy8I7qIhgbnNkEXgHJ7c/6fH0498enq7qcWDIymM=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnVsCo1otrThiFKBxfGVywT0U/P8lNlp0sgAoFs
+ yvoXA7m952JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ1bAqAAKCRCLPIo+Aiko
+ 1fcZCAChAoJdoT7F0d/6QTsPBk8IT5e4HF/Ss5EzzMJGjqh/+L6zSIQnULAogk2+TkwvekhIV5W
+ pR2UR0IPmorIPSzHVDKpbxh5Duc9Yc20M6fP9LwFpxgn6x8YVCYx5iStNgeRFrUnpIwtduXMdb7
+ yUwJpQVZ4K2Tu6uKP2gr06E8ORewHdnRUR5Q6Tkkr7MiGO58/fTed41/aVxqYyvwoVELNlkpXk9
+ gnf02UyCqCnBu6TMiOZSk014nuA6kheL01F1HsBZCtQyaHcys3eksBFtsWZjUFEw9DMYC3vdHsH
+ N1B+Z6memFX0PiCkiSXGNUnhMfY2iQENm329sbPT3o0JXlDW
+X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-On Mon, 9 Dec 2024 at 11:25, Johan Hovold <johan@kernel.org> wrote:
->
-> Dmitry,
->
-> Looks like you just silently ignored my reviewed feedback, yet included
-> my conditional reviewed-by tag. Repeating below.
+During suspend/resume process all connectors are explicitly disabled and
+then reenabled. However resume fails because of the connector_status check:
 
-Excuse me. I'll expand the commit message.
+[dpu error]connector not connected 3
+[drm:drm_mode_config_helper_resume [drm_kms_helper]] *ERROR* Failed to resume (-22)
 
->
-> On Sun, Dec 08, 2024 at 07:29:11PM +0200, Dmitry Baryshkov wrote:
-> > During suspend/resume process all connectors are explicitly disabled an=
-d
-> > then reenabled. However resume fails because of the connector_status ch=
-eck:
-> >
-> > [ 1185.831970] [dpu error]connector not connected 3
->
-> Please also include the follow-on resume error. I'm seeing:
->
->         [dpu error]connector not connected 3
->         [drm:drm_mode_config_helper_resume [drm_kms_helper]] *ERROR* Fail=
-ed to resume (-22)
->
-> and say something about that this can prevent *displays* from being
-> enabled on resume in *some* setups (preferably with an explanation why
-> if you have one).
->
-> > It doesn't make sense to check for the Writeback connected status (and
-> > other drivers don't perform such check), so drop the check.
-> >
-> > Fixes: 71174f362d67 ("drm/msm/dpu: move writeback's atomic_check to dpu=
-_writeback.c")
->
-> I noticed that the implementation had this status check also before
-> 71174f362d67 ("drm/msm/dpu: move writeback's atomic_check to
-> dpu_writeback.c").
->
-> Why did this not cause any trouble back then? Or is this not the right
-> Fixes tag?
+It doesn't make sense to check for the Writeback connected status (and
+other drivers don't perform such check), so drop the check.
 
-If I remember correctly, the encoder's atomic_check() is called only
-if the corresponding connector is a part of the new state, if there is
-a connected CRTC, etc, while the connector's atomic_check() is called
-both for old and new connectors.
+It wasn't a problem before the commit 71174f362d67 ("drm/msm/dpu: move
+writeback's atomic_check to dpu_writeback.c"), since encoder's
+atomic_check() is called under a different conditions that the
+connector's atomic_check() (e.g. it is not called if there is no
+connected CRTC or if the corresponding connector is not a part of the
+new state).
 
->
-> > Cc: stable@vger.kernel.org
-> > Reported-by: Leonard Lausen <leonard@lausen.nl>
-> > Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/57
->
-> Please include mine an Gy=C3=B6rgy's reports here too.
->
-> Since this has dragged on for many months now, more people have run into
-> this issue and have reported this to you. Giving them credit for this is
-> the least you can do especially since you failed to include the
-> corresponding details about how this manifests itself to users in the
-> commit message:
->
-> Reported-by: Gy=C3=B6rgy Kurucz <me@kuruczgy.com>
-> Link: https://lore.kernel.org/all/b70a4d1d-f98f-4169-942c-cb9006a42b40@ku=
-ruczgy.com/
->
-> Reported-by: Johan Hovold <johan+linaro@kernel.org>
-> Link: https://lore.kernel.org/all/ZzyYI8KkWK36FfXf@hovoldconsulting.com/
->
-> > Tested-by: Leonard Lausen <leonard@lausen.nl> # on sc7180 lazor
-> > Tested-by: Gy=C3=B6rgy Kurucz <me@kuruczgy.com>
-> > Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-> > Tested-by: Johan Hovold <johan+linaro@kernel.org>
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> > Leonard Lausen reported an issue with suspend/resume of the sc7180
-> > devices. Fix the WB atomic check, which caused the issue.
-> > ---
-> > Changes in v3:
-> > - Rebased on top of msm-fixes
-> > - Link to v2: https://lore.kernel.org/r/20240802-dpu-fix-wb-v2-0-7eac9e=
-b8e895@linaro.org
->
-> Johan
+Fixes: 71174f362d67 ("drm/msm/dpu: move writeback's atomic_check to dpu_writeback.c")
+Cc: stable@vger.kernel.org
+Reported-by: Leonard Lausen <leonard@lausen.nl>
+Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/57
+Tested-by: Leonard Lausen <leonard@lausen.nl> # on sc7180 lazor
+Reported-by: György Kurucz <me@kuruczgy.com>
+Link: https://lore.kernel.org/all/b70a4d1d-f98f-4169-942c-cb9006a42b40@kuruczgy.com/
+Reported-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/all/ZzyYI8KkWK36FfXf@hovoldconsulting.com/
+Tested-by: György Kurucz <me@kuruczgy.com>
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+Leonard Lausen reported an issue with suspend/resume of the sc7180
+devices. Fix the WB atomic check, which caused the issue.
+---
+Changes in v4:
+- Epanded commit message (Johan)
+- Link to v3: https://lore.kernel.org/r/20241208-dpu-fix-wb-v3-1-a1de69ce4a1b@linaro.org
 
+Changes in v3:
+- Rebased on top of msm-fixes
+- Link to v2: https://lore.kernel.org/r/20240802-dpu-fix-wb-v2-0-7eac9eb8e895@linaro.org
 
+Changes in v2:
+- Reworked the writeback to just drop the connector->status check.
+- Expanded commit message for the debugging patch.
+- Link to v1: https://lore.kernel.org/r/20240709-dpu-fix-wb-v1-0-448348bfd4cb@linaro.org
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
---=20
-With best wishes
-Dmitry
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
+index 16f144cbc0c986ee266412223d9e605b01f9fb8c..8ff496082902b1ee713e806140f39b4730ed256a 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
+@@ -42,9 +42,6 @@ static int dpu_wb_conn_atomic_check(struct drm_connector *connector,
+ 	if (!conn_state || !conn_state->connector) {
+ 		DPU_ERROR("invalid connector state\n");
+ 		return -EINVAL;
+-	} else if (conn_state->connector->status != connector_status_connected) {
+-		DPU_ERROR("connector not connected %d\n", conn_state->connector->status);
+-		return -EINVAL;
+ 	}
+ 
+ 	crtc = conn_state->crtc;
+
+---
+base-commit: 86313a9cd152330c634b25d826a281c6a002eb77
+change-id: 20240709-dpu-fix-wb-6cd57e3eb182
+
+Best regards,
+-- 
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
 
