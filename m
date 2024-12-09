@@ -1,215 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-41169-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41170-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id DFB2E9EA22C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 23:56:11 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 985DF9EA234
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 23:56:53 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B0A17164543
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 22:56:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3A79A2829E9
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 22:56:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4335819DF47;
-	Mon,  9 Dec 2024 22:56:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A3E719E98A;
+	Mon,  9 Dec 2024 22:56:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rgeXeJw0"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mCo6WJfz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31D402C9A
-	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Dec 2024 22:56:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C40E19E96A
+	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Dec 2024 22:56:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733784965; cv=none; b=Kppdv3GSpnuMxcrDF9eG9kszBVAUTGbZ3oK6D7aJ4AHqamIGAc2KCFFA7AQP6Si8GtlnZDyyVm2WBQR+hgh5l2rnQRf2aFZCIOL91qFc0OqPQpF+U+bBl32VGIyIjCWPAxKtbIQwD/deo/4OKMhTKYffvxII5fskNxLaHuKMNps=
+	t=1733784999; cv=none; b=fTf9NI1ddZnFkHLSprvrrcVaqr9SUEEqKx+Wuaqgl9uJOTKBcrrcfCNZEh1Koz3yAlexzSOMT9qbNujxIr4jzABSSzp0OzxMLOBhAv8XBigDyBC1tkL0yfekaiH26T6URSX3oSr3/ojmK8b2qwJNhILbRdoJXlbXoK/sN0aYHIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733784965; c=relaxed/simple;
-	bh=12hQphzsjjUkW1d9H8mxTIKNWUmFq/0NOxwXiPmnEYU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=N42/3kCVy9Ee0U5z6URwzNA6L3f8Fcd/LSljaB8G7Eh6J8acPhAENer2U+IZcf+EoipMhQusW6sfqZE1dZcaPflycw1/Cz9gNXswDmpr3FTEBtSP1RYzJUMz6xJ0n+nMdc3QTAitsfFHeX+f7oHdUAYazVjDWAldVcYrLcEG4zI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rgeXeJw0; arc=none smtp.client-ip=209.85.128.170
+	s=arc-20240116; t=1733784999; c=relaxed/simple;
+	bh=5L90UKWKJXXDkcZ7/MXmDxJO4Cp7aHrP5iZaxK7W07Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=V5BS4UAHQvxyS+7KM3whQbDl80ZWEQ7HwBMiSbJ2BGtrUgMJoi9UCzgavpsGBQWgkYsFJhmYZA+XjDz82VLgw1ZtPF/d7J688fyNHUQRQppGtKyic5wQpjwt2yalOTkQGiwo7Ls6QhlC6c3PM6A5E0Mho5fAonqKb8JAQr2d01U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mCo6WJfz; arc=none smtp.client-ip=209.85.167.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-6ef7f8acc33so40936887b3.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Dec 2024 14:56:01 -0800 (PST)
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-5401ab97206so1703338e87.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Dec 2024 14:56:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733784961; x=1734389761; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=zg360WQmWUIYP8x3ZHAPjL5tUINcGUKvmQ6oZ/CIGO4=;
-        b=rgeXeJw0eEcq29aZERXFxoa/dt8qQ6JFh4c7p9zjHZ4+AhNt1b+lyHTDFj8r+1f4F8
-         IhAl3vGiXLZVBfrAtnnqdhpWu0CSnfm7FGtkPU9OYmJjBeC56UssKf/B3APvE06pq6BV
-         o3/cMLjzxe9NoGzac/VgUSPfKx7huZbzg2U0RQuKGTtEvGCPMo588Myrwb1wEHIcpv7U
-         lOiiqqBcPYMoSy58XmqAdmVLW+JHnGcMrONhrE1Z8xkuO4vhVGa8sa1Pktbwdmo/vAI9
-         dBnFOsy1jRqVP3vzfgdHsbwjO3tzw1WhT1BSpxeh2i3IUYMX7DT4l/TULZCVfW+Nue5p
-         Jujw==
+        d=linaro.org; s=google; t=1733784995; x=1734389795; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=k3A1k+Apjq9O2ocS5a9hIgUNttSFxzpyEaBV4mfnunw=;
+        b=mCo6WJfzMT7+dzaDGmjgT9pK8E3dbqapIM+/hP5ifaChbYq4R1nA+PfenlRayf7eKv
+         XUNDNq2YwHRkxIgoExt95rU9M44e32Xbh8750oKD/ks0TLHvAjN/U3BDk0GEUeeNn5qF
+         BWm8wwUGXFOcoqzWTjWw4hi0hWjXJhOMZiV9RjrHrJMLFw3efpEKEAkQa7/fnqlqCUEu
+         ys2yHViedFatBknF2F+Eko4RRHF46j6k2gwHBzc3X8fTGpN+iLS93+i7TDzwUPNmeWxW
+         jdYqphnIZn4BrCc/ZST1S60oYUJCuWKjPVbUF0u7OSPZ+lEtflF2UbNAbHsPWLMc73Iy
+         RF1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733784961; x=1734389761;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=zg360WQmWUIYP8x3ZHAPjL5tUINcGUKvmQ6oZ/CIGO4=;
-        b=GEQ5RpMS3o1rJIkHYgFFOs+v+O5HLDyaoVt85ceTKdGYDKSXxcFrhLjLDd9IVhd83L
-         9BANBMm4BSR8MYUfgz1o/Or7kB8E3o+Xnjyb5AcKuoBIOoCyyjKelnmEYeZbYr63tcxG
-         x8pDG2SloLdQHp1UmM+aOrLZeYPyDJBrhP3eTySw8XKPd4ZWDGcUl/Twqfx2ciKaUbe3
-         +nPEj6cJIaSMsKw2zGJQLvG4GCh8aa6JWDAA3bDBU30WxDmX2Xv71dXZPn1K7aQAlJDe
-         BmwjuyBh87e1uMw8/xWlFsg6I/lIN3cB8ESmIa2FMKPBRzn7anH8MrDCeMFj1Bg7W7gK
-         rRWw==
-X-Forwarded-Encrypted: i=1; AJvYcCWpdN1WwY5m42i0tN5q4JwKtaqU+rC4SZWgrkHmMwEYusOql1Sw+rCZ5ysvKOUb51vL7X8dID8Z+0Hd+YFN@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx8/C2tgPoRz6T9/vYssg+QVN1uNV9q5Ti2TcrUcZeu+9HsdFiC
-	Lfkj+ogolnxZjCn66CXyq9XEHUlzjEIVBgzntXpCaBlnT8YOLStAqcDp/+GtYp7m6miDN7HTac6
-	cCGvgzGoRm/iiUQ37xvTnUBc4xPoe285MY0kNHw==
-X-Gm-Gg: ASbGnctrMJTX4RJBIFrI9znJ5Zwyd0avhqUq1CKEdLK/HxuTZkPn6Ubou2CtIcIM5my
-	EO/kU06glD13qR2xYjdqkJZyQDT+LEVUwf1g=
-X-Google-Smtp-Source: AGHT+IGBS529CP3nkBRL/hSBck7KZQ3bTAxMxZelGrotzUE4fm9stmMtccbFjnXYDNdhGC2bqHRBAtW7fsN53rpNuQ8=
-X-Received: by 2002:a05:6902:288f:b0:e39:7b55:ff7d with SMTP id
- 3f1490d57ef6-e3a59bde21fmr2097243276.49.1733784961163; Mon, 09 Dec 2024
- 14:56:01 -0800 (PST)
+        d=1e100.net; s=20230601; t=1733784995; x=1734389795;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=k3A1k+Apjq9O2ocS5a9hIgUNttSFxzpyEaBV4mfnunw=;
+        b=R84/z6RwzeP4oS+XVyYbZcgTojDl8fdO1bJZ6higYOD31k+zy/WBjwWwIery3w2WG0
+         xCyZG7XWqeWAkhGlb8w2MGURg+8tFw6yhv+ZAGYQLMk4XhWjCfyVfLe7lL5XJXf7jRe+
+         DUF3JysYIEeIqg9cTDvK8jfT/Hv2CGAx7sTPtH8sQvktKlbC5px6eAk8rJLOAjdBZrJI
+         8wM0m7ialTovGnGasxd6wYCfahQHOVgsiuiM9U6ANFbOFCubzH4ka9EDQHeyk9hzZytU
+         SrX0zIa8/a6ZA9IepAvNY1xAtRDnwnzblZX7Ij8cKneUgnOHSTlKeuUDqOno2/rrPkZB
+         NoFQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXT22qmrncpfiNYrZFL+qvbeb073kdWZEpwe0PxcrwZ7gmnoyy1dPMSS/kN9I5xrFMrmMjsliETRz6VvLFX@vger.kernel.org
+X-Gm-Message-State: AOJu0YxIZ4eiY+1nmy8tYTrNKDhIoRGthjOIvSr8q1gVp1ayCg4vWZIl
+	rzZrIQBUDQ8cqnw3JVnPLjrECbmOnznzDZLeCZYMLN4ANzi4xmS22clMvOoCfnQ=
+X-Gm-Gg: ASbGncsFpKCoTTqaGIeJ0/dH58I0jujMHc7DtcqK1GQSPH7a8eK1J4VuCi1HXgoEiJn
+	bWoCvDxvircvt97WTMlXEEUm/qAS4oN1jC7QlZ4Zpz62BXIUAPBxPyFt8GWa4pzwbyQX/j6glxQ
+	WNS0NYYOfZM4INmiPZ96mAa5t2jnjz1Qn6+nW/9xW+UsIMzZlEq9uYb+i79AFAVMcDeJiSeSgFr
+	qfXE3dqBaJcS4XIiIfcm3VjEM53pns+7pkt6RRXn/IYEpd+LlXXZGmaQTcj/kO3jZUvo2QkuuxL
+	NIAFQWzdwEubRmUoy3dEQCLRG6kTJMxyTQ==
+X-Google-Smtp-Source: AGHT+IHiXsoJOwZjiLBWplafOKbA1GHw3HlIwWuqcon2AqQvv21BwklgIEqY4mWvDfuXx6g/4hQk/g==
+X-Received: by 2002:a05:6512:3a8a:b0:540:1b07:e031 with SMTP id 2adb3069b0e04-540240d9a8bmr1013012e87.24.1733784995434;
+        Mon, 09 Dec 2024 14:56:35 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53e3115cb25sm1144888e87.56.2024.12.09.14.56.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Dec 2024 14:56:34 -0800 (PST)
+Date: Tue, 10 Dec 2024 00:56:31 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3] drm/msm/dpu: filter out too wide modes if no 3dmux is
+ present
+Message-ID: <ouufiq72x46hxmatao6xyjbb4qk527pktowqpsutlu63sftwyu@uupkodk5ty4b>
+References: <20241209-no_3dmux-v3-1-48aaa555b0d3@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241206-no_3dmux-v1-1-72ad2677a323@quicinc.com>
- <zae7rlojv5iiq2dx7bxhdsmmzj73o65cwk7kmryxsst36gy2of@k3vcm6omcias>
- <b784049f-a72c-47ff-a618-e7c85c132d28@quicinc.com> <CAA8EJpojwG+_Q_9GYBFzQ_ReDbnO=+GbTPZscWgS1f=fkU0Anw@mail.gmail.com>
- <ab8a9d0e-e786-47ea-833d-59d2f2988898@quicinc.com>
-In-Reply-To: <ab8a9d0e-e786-47ea-833d-59d2f2988898@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 10 Dec 2024 00:55:50 +0200
-Message-ID: <CAA8EJpoNSJ64+JWsmrdFVce-ADtjDhZzEjC2ZcJbqvfQ47F-_A@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/dpu: filter out too wide modes if no 3dmux is present
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241209-no_3dmux-v3-1-48aaa555b0d3@quicinc.com>
 
-Hi Abhinav,
+On Mon, Dec 09, 2024 at 01:18:36PM -0800, Abhinav Kumar wrote:
+> On chipsets such as QCS615, there is no 3dmux present. In such
+> a case, a layer exceeding the max_mixer_width cannot be split,
+> hence cannot be supported.
+> 
+> Filter out the modes which exceed the max_mixer_width when there
+> is no 3dmux present. Also, add a check in the dpu_crtc_atomic_check()
+> to return failure for such modes.
+> 
+> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> ---
+> Note: this was only compile tested, so its pending validation on QCS615
+> ---
+> Changes in v3:
+> - Move && to previous line
+> - Link to v2: https://lore.kernel.org/r/20241209-no_3dmux-v2-1-fcad057eb92e@quicinc.com
+> 
+> Changes in v2:
+> - replace MODE_BAD with MODE_BAD_HVALUE to indicate the failure better
+> - Link to v1: https://lore.kernel.org/r/20241206-no_3dmux-v1-1-72ad2677a323@quicinc.com
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 13 +++++++++++++
+>  1 file changed, 13 insertions(+)
 
-On Tue, 10 Dec 2024 at 00:30, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->
-> Hi Dmitry
->
-> On 12/9/2024 2:16 PM, Dmitry Baryshkov wrote:
-> > Hi Abhinav,
-> >
-> > On Mon, 9 Dec 2024 at 22:07, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
-> >>
-> >>
-> >>
-> >> On 12/7/2024 9:29 PM, Dmitry Baryshkov wrote:
-> >>> On Fri, Dec 06, 2024 at 12:00:53PM -0800, Abhinav Kumar wrote:
-> >>>> On chipsets such as QCS615, there is no 3dmux present. In such
-> >>>> a case, a layer exceeding the max_mixer_width cannot be split,
-> >>>> hence cannot be supported.
-> >>>>
-> >>>> Filter out the modes which exceed the max_mixer_width when there
-> >>>> is no 3dmux present. Also, add a check in the dpu_crtc_atomic_check()
-> >>>> to return failure for such modes.
-> >>>>
-> >>>> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> >>>> ---
-> >>>> Note: this was only compile tested, so its pending validation on QCS615
-> >>>> ---
-> >>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 13 +++++++++++++
-> >>>>    1 file changed, 13 insertions(+)
-> >>>>
-> >>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> >>>> index 9f6ffd344693ecfb633095772a31ada5613345dc..e6e5540aae83be7c20d8ae29115b8fdd42056e55 100644
-> >>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> >>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> >>>> @@ -732,6 +732,13 @@ static int _dpu_crtc_check_and_setup_lm_bounds(struct drm_crtc *crtc,
-> >>>>       struct dpu_kms *dpu_kms = _dpu_crtc_get_kms(crtc);
-> >>>>       int i;
-> >>>>
-> >>>> +    /* if we cannot merge 2 LMs (no 3d mux) better to fail earlier
-> >>>> +     * before even checking the width after the split
-> >>>> +     */
-> >>>> +    if (!dpu_kms->catalog->caps->has_3d_merge
-> >>>> +        && adj_mode->hdisplay > dpu_kms->catalog->caps->max_mixer_width)
-> >>>> +            return -E2BIG;
-> >>>
-> >>> Is it the same as checking that there are LMs which support
-> >>> DPU_MIXER_SOURCESPLIT ?
-> >>>
-> >>
-> >> DPU_MIXER_SOURCESPLIT tells whether we can have more than one SSPP in
-> >> the same blend stage.
-> >
-> > Do we have a feature bit that corresponds to the ability to use 2 LMs?
-> > I mean, there are other *split topologies, not necessarily the 3DMux
-> > ones. E.g. PPSPLIT.
-> >
->
-> A layer can always be split across LMs. There is not really any feature
-> bit for this as it can always be done in pretty much all DPU chipsets.
->
-> Here the issue is we are not able to merge because there are no 3d mux
-> blocks and hence we cannot split.
->
-> We need to merge because, the same display is requiring multiple LMs.
->
-> PP split will be a single LM going to two PPs and that going to two INTFs.
->
-> Hence the way to look at this patch would be we are avoiding split
-> because we cannot merge and not that we cannot split.
-
-Ack, thanks a lot for the explanation!
-
->
-> >>
-> >> 494     if (test_bit(DPU_MIXER_SOURCESPLIT,
-> >> 495             &ctx->mixer_hw_caps->features))
-> >> 496             pipes_per_stage = PIPES_PER_STAGE;
-> >> 497     else
-> >> 498             pipes_per_stage = 1;
-> >>
-> >> That is different from this one. Here we are checking if we can actually
-> >> blend two LM outputs using the 3dmux (so its post blend).
-> >>
-> >>>> +
-> >>>>       for (i = 0; i < cstate->num_mixers; i++) {
-> >>>>               struct drm_rect *r = &cstate->lm_bounds[i];
-> >>>>               r->x1 = crtc_split_width * i;
-> >>>> @@ -1251,6 +1258,12 @@ static enum drm_mode_status dpu_crtc_mode_valid(struct drm_crtc *crtc,
-> >>>>    {
-> >>>>       struct dpu_kms *dpu_kms = _dpu_crtc_get_kms(crtc);
-> >>>>
-> >>>> +    /* if there is no 3d_mux block we cannot merge LMs so we cannot
-> >>>> +     * split the large layer into 2 LMs, filter out such modes
-> >>>> +     */
-> >>>> +    if (!dpu_kms->catalog->caps->has_3d_merge
-> >>>> +        && mode->hdisplay > dpu_kms->catalog->caps->max_mixer_width)
-> >>>> +            return MODE_BAD;
-> >>>
-> >>> This can be more specific, like MODE_BAD_HVALUE.
-> >>>
-> >>
-> >> Yes for sure, will fix this up.
-> >>
-> >>>>       /*
-> >>>>        * max crtc width is equal to the max mixer width * 2 and max height is 4K
-> >>>>        */
-> >>>>
-> >>>> ---
-> >>>> base-commit: af2ea8ab7a546b430726183458da0a173d331272
-> >>>> change-id: 20241206-no_3dmux-521a55ea0669
-> >>>>
-> >>>> Best regards,
-> >>>> --
-> >>>> Abhinav Kumar <quic_abhinavk@quicinc.com>
-> >>>>
-> >>>
-> >
-> >
-> >
-
-
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 -- 
 With best wishes
