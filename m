@@ -1,156 +1,198 @@
-Return-Path: <linux-arm-msm+bounces-41098-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41099-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id AA7CE9E9570
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 14:02:52 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 73A4B9E9595
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 14:05:49 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4F91E2820C0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 13:02:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EB4F31888E2F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 13:04:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44BFA230D22;
-	Mon,  9 Dec 2024 12:55:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19C69233D69;
+	Mon,  9 Dec 2024 12:57:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CBN2UJ40"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="oJfzU7Ih"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF8BF230D1A;
-	Mon,  9 Dec 2024 12:55:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 056F6231CA5;
+	Mon,  9 Dec 2024 12:57:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733748930; cv=none; b=GaGpoBb/MHYTy67E1NmmHhyFLBfor4BGR+jEvTA9MlZiAFsQCqz4F6EwEx1sXOY99EV2XsvMyHUccPaRyMWYA8VtO1eWQoN9UI/qJ6pMN7gV8VY7rWi5mdA3XYSy4jnsq5R8oXvSxRzBmJ8m6mu4L1EanaLvdBmsbo9z4h2ZpJk=
+	t=1733749064; cv=none; b=hedwEkDhZemLJxtd37h0jSHfT4NARKSE0ckdgMrmDUmcTZF6rOSegU7F4MUkHvdsJB6peH72Owau0KeeOJP50x4Dsne48H1z9TWwrUwQU1Hy+M2isaLw5sN4xz+EFesfJIBJ3J/AJQXnoPw/BeveskVvCsqzS7CyiPSESmFDS1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733748930; c=relaxed/simple;
-	bh=ljYka+yEPL7dtoadjp4FCBcNXplDLLPRhCJ9St112Pw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=i8+6f2o7pQ9W92UYPjzJgnCn/RXU5SYGrDz2DwpRw+dsIIMcBuyv4DXIXMXIWjuBuIXu8rjImY02HURUtZVQ59Ue+1c6DGdyIeU+Cz6HrvPPBp/euw7UGJvQFc6bbDdAiaBbQN4A9i5PlaE4ZYnGNXXltqnPnHTPiGTPXlZjcfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CBN2UJ40; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B9Aw6B8015561;
-	Mon, 9 Dec 2024 12:55:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Oxkw5D/JPs2UYjgb4jIX/CzNiPXlr+l6xOKDFt/4wo8=; b=CBN2UJ40MryjT2Tn
-	00IWnKasxog7ImiBS3IKYdRVx7lCy5jdxEWH+AHZuXqelJdDSd94qHBcoessMIsx
-	wUHoo1dzYl9jhN+YoBghI1+zW8f+23j1kogd173TzOM9alfxibayUE8HKUvkBqnZ
-	03++C+wAF42D092X6cM2ALHkzRGBkyE1a9peYIyP8+O7bkkVqxyps5gQ8bBBTI2I
-	JJpN/0eetfz53MA9nRdS3+/y8sk6qcL+bV9sUreLET0mMtQw4gnXjZat3d0vcl81
-	wOFhm/v4LUeMeyi5EwaAXTgCTTEvYbImxuswrwUkmMGrCpXPZbi9pZGTNVx/hO2Y
-	NT0fuA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43dy8trfg4-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 09 Dec 2024 12:55:16 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B9CtGE8015325
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 9 Dec 2024 12:55:16 GMT
-Received: from hu-dikshita-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Mon, 9 Dec 2024 04:55:10 -0800
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
-Date: Mon, 9 Dec 2024 18:22:13 +0530
-Subject: [PATCH v7 28/28] media: MAINTAINERS: add Qualcomm iris video
- accelerator driver
+	s=arc-20240116; t=1733749064; c=relaxed/simple;
+	bh=EbuJhA4qQx4XDk7llJVA7OD1EXIiE7sPMPIq2v+X2vY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BfRxd1/Fto0AfWjObp1gaqJyo7EgpTiqH2635miTi8qbdWuNZt0elzmhYfQCOQSLXYh4sUGhALP+50eDaSImClxtafQaw8Fy69y6/rC9hCAQH5xSlm3ruO/Co5zI3bs/+WmcN15DsALOCfEIn1/hpT5+JrP87c98102ltfoV5Qs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=oJfzU7Ih; arc=none smtp.client-ip=192.198.163.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1733749062; x=1765285062;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=EbuJhA4qQx4XDk7llJVA7OD1EXIiE7sPMPIq2v+X2vY=;
+  b=oJfzU7IhXwkVAVrBqi5Wf4krzSXzxq46HlunoS+q2IZSmnJ264VKJq8W
+   6fodg63iP38eeJrblN52iDSb+8MrrImgiclEJIjHAHOiYjYfeZjKZPaZC
+   lfKz4LbWweFc3fxsfEH09kYpWcFD05L3q6vFhi0aszyhyX9/q2zL/fLjO
+   7vrhKJgj9te9pPsU5jjcwJkgLJkQlRSv508b8V9KH8XluJ/4wwPw7Grcz
+   z1tRG2acHJjhh/Xd42qmEmHXd/Nk+IcwOeFVEvxCkkrUDENBHz9k7L6qM
+   zkafjOaXtAjggJAuSwWfYyuNVs9EUiN3IUJ8oiTxshqXm259P2qse7uw+
+   Q==;
+X-CSE-ConnectionGUID: 0u/8TbIoTDOuLLmReWyEvA==
+X-CSE-MsgGUID: 2HlJ2vTyRWa7B7KRxZnerg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11281"; a="21632660"
+X-IronPort-AV: E=Sophos;i="6.12,219,1728975600"; 
+   d="scan'208";a="21632660"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Dec 2024 04:57:37 -0800
+X-CSE-ConnectionGUID: U8+Nfyd1TY6n08jUrXsG2Q==
+X-CSE-MsgGUID: Ptj6aMXxQvqLGUEjw6vqGQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,219,1728975600"; 
+   d="scan'208";a="100023631"
+Received: from lkp-server01.sh.intel.com (HELO 82a3f569d0cb) ([10.239.97.150])
+  by orviesa005.jf.intel.com with ESMTP; 09 Dec 2024 04:57:32 -0800
+Received: from kbuild by 82a3f569d0cb with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1tKdKL-0004LJ-0i;
+	Mon, 09 Dec 2024 12:57:29 +0000
+Date: Mon, 9 Dec 2024 20:57:06 +0800
+From: kernel test robot <lkp@intel.com>
+To: Eric Biggers <ebiggers@kernel.org>, linux-block@vger.kernel.org,
+	linux-fscrypt@vger.kernel.org, linux-mmc@vger.kernel.org,
+	linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
+	Gaurav Kashyap <quic_gaurkash@quicinc.com>
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Avri Altman <avri.altman@wdc.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	"James E . J . Bottomley" <James.Bottomley@hansenpartnership.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	"Martin K . Petersen" <martin.petersen@oracle.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: Re: [PATCH v9 04/12] mmc: sdhci-msm: convert to use custom crypto
+ profile
+Message-ID: <202412092047.I2fWyclK-lkp@intel.com>
+References: <20241209045530.507833-5-ebiggers@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20241209-qcom-video-iris-v7-28-05c6bdead47b@quicinc.com>
-References: <20241209-qcom-video-iris-v7-0-05c6bdead47b@quicinc.com>
-In-Reply-To: <20241209-qcom-video-iris-v7-0-05c6bdead47b@quicinc.com>
-To: Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Abhinav Kumar
-	<quic_abhinavk@quicinc.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        "Rob
- Herring" <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        "Conor
- Dooley" <conor+dt@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>
-CC: Hans Verkuil <hverkuil@xs4all.nl>,
-        Sebastian Fricke
-	<sebastian.fricke@collabora.com>,
-        Bryan O'Donoghue
-	<bryan.odonoghue@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Nicolas Dufresne
-	<nicolas@ndufresne.ca>,
-        =?utf-8?q?Uwe_Kleine-K=C3=B6nig?=
-	<u.kleine-koenig@baylibre.com>,
-        Jianhua Lu <lujianhua000@gmail.com>, <linux-media@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        "Dikshita
- Agarwal" <quic_dikshita@quicinc.com>
-X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1733748748; l=1060;
- i=quic_dikshita@quicinc.com; s=20240917; h=from:subject:message-id;
- bh=ljYka+yEPL7dtoadjp4FCBcNXplDLLPRhCJ9St112Pw=;
- b=xxeYrghB0So5ldljWVJAS0eV738kSStgvQaIDThbBhAtMv9jptnDtOY3q3RbVD5VWrGMvgKry
- M5yCZ0X6epjAwm1LBo2qHlBDV3af0lIUu2dStQ7B2oo97F+Oz2Tg883
-X-Developer-Key: i=quic_dikshita@quicinc.com; a=ed25519;
- pk=EEvKY6Ar1OI5SWf44FJ1Ebo1KuQEVbbf5UNPO+UHVhM=
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 91iZ3z-fKEImQ5DciA7MH_XRfjxsI6c_
-X-Proofpoint-GUID: 91iZ3z-fKEImQ5DciA7MH_XRfjxsI6c_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
- priorityscore=1501 mlxlogscore=841 clxscore=1015 mlxscore=0 spamscore=0
- lowpriorityscore=0 malwarescore=0 bulkscore=0 phishscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2412090101
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241209045530.507833-5-ebiggers@kernel.org>
 
-Add an entry for iris video decoder accelerator driver.
+Hi Eric,
 
-Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
-Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
----
- MAINTAINERS | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+kernel test robot noticed the following build warnings:
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 7a14891a8fa9..d647e59d9912 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -19156,6 +19156,16 @@ S:	Maintained
- F:	Documentation/devicetree/bindings/regulator/vqmmc-ipq4019-regulator.yaml
- F:	drivers/regulator/vqmmc-ipq4019-regulator.c
- 
-+QUALCOMM IRIS VIDEO ACCELERATOR DRIVER
-+M:	Vikash Garodia <quic_vgarodia@quicinc.com>
-+M:	Dikshita Agarwal <quic_dikshita@quicinc.com>
-+R:	Abhinav Kumar <quic_abhinavk@quicinc.com>
-+L:	linux-media@vger.kernel.org
-+L:	linux-arm-msm@vger.kernel.org
-+S:	Maintained
-+F:	Documentation/devicetree/bindings/media/qcom,*-iris.yaml
-+F:	drivers/media/platform/qcom/iris/
-+
- QUALCOMM NAND CONTROLLER DRIVER
- M:	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
- L:	linux-mtd@lists.infradead.org
+[auto build test WARNING on f486c8aa16b8172f63bddc70116a0c897a7f3f02]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Eric-Biggers/ufs-crypto-add-ufs_hba_from_crypto_profile/20241209-130301
+base:   f486c8aa16b8172f63bddc70116a0c897a7f3f02
+patch link:    https://lore.kernel.org/r/20241209045530.507833-5-ebiggers%40kernel.org
+patch subject: [PATCH v9 04/12] mmc: sdhci-msm: convert to use custom crypto profile
+config: s390-allmodconfig (https://download.01.org/0day-ci/archive/20241209/202412092047.I2fWyclK-lkp@intel.com/config)
+compiler: clang version 19.1.3 (https://github.com/llvm/llvm-project ab51eccf88f5321e7c60591c5546b254b6afab99)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20241209/202412092047.I2fWyclK-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202412092047.I2fWyclK-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+   In file included from drivers/mmc/host/cqhci-crypto.c:8:
+   In file included from include/linux/blk-crypto.h:72:
+   In file included from include/linux/blk_types.h:10:
+   In file included from include/linux/bvec.h:10:
+   In file included from include/linux/highmem.h:10:
+   In file included from include/linux/mm.h:2223:
+   include/linux/vmstat.h:504:43: warning: arithmetic between different enumeration types ('enum zone_stat_item' and 'enum numa_stat_item') [-Wenum-enum-conversion]
+     504 |         return vmstat_text[NR_VM_ZONE_STAT_ITEMS +
+         |                            ~~~~~~~~~~~~~~~~~~~~~ ^
+     505 |                            item];
+         |                            ~~~~
+   include/linux/vmstat.h:511:43: warning: arithmetic between different enumeration types ('enum zone_stat_item' and 'enum numa_stat_item') [-Wenum-enum-conversion]
+     511 |         return vmstat_text[NR_VM_ZONE_STAT_ITEMS +
+         |                            ~~~~~~~~~~~~~~~~~~~~~ ^
+     512 |                            NR_VM_NUMA_EVENT_ITEMS +
+         |                            ~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/vmstat.h:518:36: warning: arithmetic between different enumeration types ('enum node_stat_item' and 'enum lru_list') [-Wenum-enum-conversion]
+     518 |         return node_stat_name(NR_LRU_BASE + lru) + 3; // skip "nr_"
+         |                               ~~~~~~~~~~~ ^ ~~~
+   include/linux/vmstat.h:524:43: warning: arithmetic between different enumeration types ('enum zone_stat_item' and 'enum numa_stat_item') [-Wenum-enum-conversion]
+     524 |         return vmstat_text[NR_VM_ZONE_STAT_ITEMS +
+         |                            ~~~~~~~~~~~~~~~~~~~~~ ^
+     525 |                            NR_VM_NUMA_EVENT_ITEMS +
+         |                            ~~~~~~~~~~~~~~~~~~~~~~
+>> drivers/mmc/host/cqhci-crypto.c:176:6: warning: variable 'num_keyslots' is used uninitialized whenever 'if' condition is true [-Wsometimes-uninitialized]
+     176 |         if (cq_host->ops->uses_custom_crypto_profile)
+         |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   drivers/mmc/host/cqhci-crypto.c:230:24: note: uninitialized use occurs here
+     230 |         for (slot = 0; slot < num_keyslots; slot++)
+         |                               ^~~~~~~~~~~~
+   drivers/mmc/host/cqhci-crypto.c:176:2: note: remove the 'if' if its condition is always false
+     176 |         if (cq_host->ops->uses_custom_crypto_profile)
+         |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     177 |                 goto profile_initialized;
+         |                 ~~~~~~~~~~~~~~~~~~~~~~~~
+   drivers/mmc/host/cqhci-crypto.c:166:27: note: initialize the variable 'num_keyslots' to silence this warning
+     166 |         unsigned int num_keyslots;
+         |                                  ^
+         |                                   = 0
+   5 warnings generated.
+
+
+vim +176 drivers/mmc/host/cqhci-crypto.c
+
+   147	
+   148	/**
+   149	 * cqhci_crypto_init - initialize CQHCI crypto support
+   150	 * @cq_host: a cqhci host
+   151	 *
+   152	 * If the driver previously set MMC_CAP2_CRYPTO and the CQE declares
+   153	 * CQHCI_CAP_CS, initialize the crypto support.  This involves reading the
+   154	 * crypto capability registers, initializing the blk_crypto_profile, clearing
+   155	 * all keyslots, and enabling 128-bit task descriptors.
+   156	 *
+   157	 * Return: 0 if crypto was initialized or isn't supported; whether
+   158	 *	   MMC_CAP2_CRYPTO remains set indicates which one of those cases it is.
+   159	 *	   Also can return a negative errno value on unexpected error.
+   160	 */
+   161	int cqhci_crypto_init(struct cqhci_host *cq_host)
+   162	{
+   163		struct mmc_host *mmc = cq_host->mmc;
+   164		struct device *dev = mmc_dev(mmc);
+   165		struct blk_crypto_profile *profile = &mmc->crypto_profile;
+   166		unsigned int num_keyslots;
+   167		unsigned int cap_idx;
+   168		enum blk_crypto_mode_num blk_mode_num;
+   169		unsigned int slot;
+   170		int err = 0;
+   171	
+   172		if (!(mmc->caps2 & MMC_CAP2_CRYPTO) ||
+   173		    !(cqhci_readl(cq_host, CQHCI_CAP) & CQHCI_CAP_CS))
+   174			goto out;
+   175	
+ > 176		if (cq_host->ops->uses_custom_crypto_profile)
 
 -- 
-2.34.1
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
