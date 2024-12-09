@@ -1,92 +1,67 @@
-Return-Path: <linux-arm-msm+bounces-41180-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41181-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D0849EA32E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 00:52:54 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id EC0D49EA332
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 00:55:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CFBBF282523
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 23:52:52 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 09AA1282546
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 23:55:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14EB61F63F1;
-	Mon,  9 Dec 2024 23:52:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 83C141F63F7;
+	Mon,  9 Dec 2024 23:55:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KZy/V4FA"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uJSprN3B"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2169519ABD8
-	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Dec 2024 23:52:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54136197A8F;
+	Mon,  9 Dec 2024 23:55:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733788370; cv=none; b=GBRtd3sCEOPty2SPWYupTfYbDaAbDW4DMOlzy1tL8l79D5xxDxCRIEMU5OHLTqGbw3knDFwQ2wxfwc6yI7UB5AfNhrtzdvYabAts7ukUjWTbA04bhULKHApMVxK9jAu+o2AqQc82OByCHVGOWLiMZlJ5FwnFcPa4qEOYlqrtZOc=
+	t=1733788532; cv=none; b=f8b7YoH9ZEnLeiYmDHxICNgZil2/fYI3tNJXE0c74JGuxL5QU/3e2v3/qTHZwyD89BNozf+WJ99qoOJV/nZp/JjgjV24VEop2FoVfSNDueaRx6M4+jDCoIPtc3lvvQYSTNlLzB3+L5qOMPoMl9ejSfnd7M1NbK0tMrldLQ6O4A4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733788370; c=relaxed/simple;
-	bh=ee9Yq/Rd/pSfnwyk+Gw8BNSUwK2jpwcl/Kc8CNSpHtQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=O998JJAts2zqveJ3BMHQidad4kTVAFw3oliHSRMxY3fbWjpj6RDX4i9HePgD4uuTCYRtbZxuQ9enRtjjnH7ZZnZFfQ5UoqthmDjqnbUzhhR4KmvRP26jWBTq9FBFpR1H7513ESPpeR771TP1oPfQelWWNqF2HaDyMr9Q8fiLo60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KZy/V4FA; arc=none smtp.client-ip=209.85.208.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-30039432861so32290751fa.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Dec 2024 15:52:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733788366; x=1734393166; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=8pM7U1GSGMw58mKFSa/5KwQJ4aVmx/cTtBUSfrJJX6Q=;
-        b=KZy/V4FA4JmjcMWKJzC0CMi4z9PMTSG9duuO62z73+pvK95akpS8I8uoMottvAazcu
-         twcSM0ZjqOKjrCNvxkT+/EgkKNc9MZ6DESiy8jAvXyeU4w/AEZ7KuUNGfr1y8kiW8CWp
-         JyTvKEHXSh/0MsyuGriBZFZvL4OdUT6H79g3hpZN9NTPGBsPg3sngiEoHRh91YvHQ6S+
-         wWgMEqD6VEEr4XeJxqzVW/7IsabapXPa/lVHbjEjwFOSHY8e+k/6vxNQFmf9i21rncEo
-         UBgD1mMjKSAGoBNaLzbrUjAJdz+1pI2TUrQap5gXtzDnwr7yqlYtkfSVbIvNl1Jc8QP7
-         mQDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733788366; x=1734393166;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8pM7U1GSGMw58mKFSa/5KwQJ4aVmx/cTtBUSfrJJX6Q=;
-        b=eOXBUpfAYQatlpnWQlX6yRzDkUYHBQDbfip2hNpH/1YRKO4bd51pBDh2dv0y824Cn0
-         b6R8h97f8ZRlSbYdWZdHmDaAlC+JzdHhu738fbfbgPsTR14McOx7MkXs4wRKKvciCPag
-         gUQCieu5iHMAd0NwTHjgNoQdkHHoLsQ5heWfJrSPOpGU7ezQk7by8FH+Q92MnegesECq
-         9a5TAaatqhgzMZv/PwLyDGLS0p6wKIXnFphjIfTuGmcZ5Tx8+98jUH55D7EC1ytY3M9X
-         pSOlZzcYnVuCSU/lmyyGVmsrZYMuGOsRIkl2AYL7CwsctfFu6lTqiRK2dhPU+XpRIqHo
-         7aMw==
-X-Forwarded-Encrypted: i=1; AJvYcCWSsmal/uo+9fBfxkOxWgd8Ga68ZVbGvUk1yF8cJFCLc2lHBM6+sY44BEEkjFr88O90HUGe36QAKhAPvsvw@vger.kernel.org
-X-Gm-Message-State: AOJu0YysGKhsXOVQ32FpZQ93M0sIANO4UlCH/n8CotgVywFbG5lTPxnU
-	50VYXS46iBpFiK1f2XpCxsUc3Wj56monZFrbCNpUiWBXCnhGw5tUdZWxA0PbzTU=
-X-Gm-Gg: ASbGncuIDc1WURlhIjXVZuKixt5/iTqHY28Quo2NvZJ4t4D4NMX8HCaowIsXnetxlF9
-	Whix7zydZvgnYvEX//Ny/OQDNgB261ka0c5jgD2OGWqlpu1AQDK9h86UKUWgxB/01HHZPDjuzmv
-	qtZc0MQEuwCFGSHy6Nf4Vt8Jl5UcXevgjSrZ9E445/7sWSleq0U9OEoHabpj8pB/uCqAlrxJgKC
-	xVf9kymLZEjpprpPQass/dmt7XGmWIWK3qXlAPJ7kwXlZfb7e0ibR4xAY2IkGxN+hUiAgCxAEbc
-	BjS8ca4JonrO1wh8YKFPpqqL7/PePtlPoA==
-X-Google-Smtp-Source: AGHT+IHyF5rktCxD8kY/bacLUOJzx36QikPDeY4Bw3Za1LgYmjbnjgANCIKBZa1aDn+yZRzJ2gM1lA==
-X-Received: by 2002:a2e:b8d0:0:b0:2fb:5035:a03 with SMTP id 38308e7fff4ca-3022fd42e9amr6845101fa.14.1733788366224;
-        Mon, 09 Dec 2024 15:52:46 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3021a5fa257sm6740481fa.81.2024.12.09.15.52.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Dec 2024 15:52:44 -0800 (PST)
-Date: Tue, 10 Dec 2024 01:52:43 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Julius Werner <jwerner@chromium.org>
-Cc: Douglas Anderson <dianders@chromium.org>, 
-	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
-	Mark Rutland <mark.rutland@arm.com>, Jeffrey Hugo <quic_jhugo@quicinc.com>, 
-	Roxana Bradescu <roxabee@google.com>, bjorn.andersson@oss.qualcomm.com, 
-	linux-arm-kernel@lists.infradead.org, Trilok Soni <quic_tsoni@quicinc.com>, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/6] arm64: errata: Add QCOM_KRYO_2XX_GOLD to the
- spectre_bhb_firmware_mitigated_list
-Message-ID: <w725lby34vpavm3knq3ikz2wb4tzlfr4elbgf25mjbvgamtq5t@zgc52dc2wvsy>
-References: <20241209174430.2904353-1-dianders@chromium.org>
- <20241209094310.2.Ia3dfc0afadbfbee81bb2efb0672262470973dd08@changeid>
- <wx6qbdbcrvbq34snzkxawlbpxm6vogt5ccjmdqqyazukfbjy7t@qkvax7tr27bs>
- <CAODwPW8mq-saJuTYnMhA6bCopcjQwBxEoyWhQB60Jg1m7wUZkw@mail.gmail.com>
+	s=arc-20240116; t=1733788532; c=relaxed/simple;
+	bh=CG06Lv7MHNV3x4UA2INq8o2HNvD8GFR6sCPVSGN6fsI=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=btyXaQ4faAfy3Aun23y8DQZxFK2OTuzNcPvyx5o6rVGS8NoYydWiMiMxc9SK1W9A7445K0SAkkiZGL+C8dUXbgWq64uaWN74PvbkjXlPDVXHqep4LtDJBJO+JzBPPEIu2EqYSPHP/4N91u0V8HOFu1/JbcF0/u2xAe0+HE4yzJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uJSprN3B; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CD37C4CEE0;
+	Mon,  9 Dec 2024 23:55:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1733788531;
+	bh=CG06Lv7MHNV3x4UA2INq8o2HNvD8GFR6sCPVSGN6fsI=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=uJSprN3BCwn9frkpjNwK4Iq1wZPfr9xCZc6BSp3ncgGB+PuqHdudUAPo4Pc2oVaSm
+	 m9N2N+UG34fJhYXV6yEVBKNITMjPW6MdDYazGlOBK6kf9RTAF/HNWOs1+mpmGLd8nz
+	 SPAvukc0EtfjOx0jTwLsW57CPLCWJJXuM+SSByVRrjTTT5qjD79nqNrCU0Qvm9CAcs
+	 eOWfIK1OqECAHyQrY+tYafaPJQpJzHgiGMBiMqjhe8HJ2HGvL88zLYd/sKzYnCD0jc
+	 y9Aj8Gh5/CWzIHcOEX6G/SRk0GNtCaXxF6Anv8F73n4A1wmDYpZq7d1xCna2d3IOSB
+	 l89X1V+aZslLQ==
+Date: Mon, 9 Dec 2024 17:55:30 -0600
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+Cc: cros-qcom-dts-watchers@chromium.org,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Bjorn Helgaas <bhelgaas@google.com>, quic_vbadigan@quicinc.com,
+	quic_ramkri@quicinc.com, quic_nitegupt@quicinc.com,
+	quic_skananth@quicinc.com, quic_vpernami@quicinc.com,
+	quic_mrana@quicinc.com, mmareddy@quicinc.com,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org
+Subject: Re: [PATCH 2/3] PCI: dwc: Add ECAM support with iATU configuration
+Message-ID: <20241209235530.GA3221939@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -95,35 +70,70 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAODwPW8mq-saJuTYnMhA6bCopcjQwBxEoyWhQB60Jg1m7wUZkw@mail.gmail.com>
+In-Reply-To: <17c9839d-c61e-3c2f-4d77-5e8813f3a9c8@quicinc.com>
 
-On Mon, Dec 09, 2024 at 03:34:59PM -0800, Julius Werner wrote:
-> > > NOTE: presumably this patch won't actually do much on its own because
-> > > (I believe) it requires a firmware update to go with it.
-> >
-> > Why? is_spectre_bhb_fw_affected() returns true if (cpu in list OR fw
-> > mitigated)
-> 
-> That affects reporting, but the mitigation works by making an
-> ARM_SMCCC_ARCH_WORKAROUND_3 Secure Monitor Call to firmware, and that
-> only works if that call is implemented in firmware. Trusted-Firmware-A
-> is currently the only open source firmware I'm aware of that
-> implements this call, and it only supports Kryo 4 and 6 upstream (not
-> 2 or 3).
-> 
-> So in order for this patch to actually be able to do anything other
-> than report that the mitigation is missing, it would need to run on
-> devices that either use a downstream fork of TF-A with added Kryo 2/3
-> support (I doubt this exists because AFAIK Kryo 4 was Qualcomm's first
-> attempt to use TF-A) or use some other proprietary kind of Secure
-> Monitor firmware that has this SMC and mitigation implemented
-> separately. (It seems unlikely that Qualcomm did this in their QTEE
-> firmware, since if they had they would have probably also added the
-> MIDRs here to Linux to activate it.)
+On Mon, Dec 09, 2024 at 10:00:06AM +0530, Krishna Chaitanya Chundru wrote:
+> On 12/5/2024 3:47 AM, Bjorn Helgaas wrote:
+> > On Wed, Dec 04, 2024 at 07:45:29AM +0530, Krishna Chaitanya Chundru wrote:
+> > > On 12/4/2024 12:25 AM, Bjorn Helgaas wrote:
+> > > > On Sun, Nov 17, 2024 at 03:30:19AM +0530, Krishna chaitanya chundru wrote:
+> > > > > The current implementation requires iATU for every configuration
+> > > > > space access which increases latency & cpu utilization.
+> > > > > 
+> > > > > Configuring iATU in config shift mode enables ECAM feature to access the
+> > > > > config space, which avoids iATU configuration for every config access.
+> > 
+> > > > > +static int dw_pcie_config_ecam_iatu(struct dw_pcie_rp *pp)
+> > > > > +{
+> > > > > +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> > > > > +	struct dw_pcie_ob_atu_cfg atu = {0};
+> > > > > +	struct resource_entry *bus;
+> > > > > +	int ret, bus_range_max;
+> > > > > +
+> > > > > +	bus = resource_list_first_type(&pp->bridge->windows, IORESOURCE_BUS);
+> > > > > +
+> > > > > +	/*
+> > > > > +	 * Bus 1 config space needs type 0 atu configuration
+> > > > > +	 * Remaining buses need type 1 atu configuration
+> > > > 
+> > > > I'm confused about the bus numbering; you refer to "bus 1" and "bus
+> > > > 2".  Is bus 1 the root bus, i.e., the primary bus of a Root Port?
+> > > > 
+> > > > The root bus number would typically be 0, not 1, and is sometimes
+> > > > programmable.  I don't know how the DesignWare core works, but since
+> > > > you have "bus" here, referring to "bus 1" and "bus 2" here seems
+> > > > overly specific.
+> > > > 
+> > > root bus is bus 0 and we don't need any iATU configuration for it as
+> > > its config space is accessible from the system memory, for usp port of
+> > > the switch or the direct the endpoint i.e bus 1 we need to send
+> > > Configuration Type 0 requests and for other buses we need to send
+> > > Configuration Type 1 requests this is as per PCIe spec, I will try to
+> > > include PCIe spec details in next patch.
+> > 
+> > I understand the Type 0/Type 1 differences.  The question is whether
+> > the root bus number is hard-wired to 0.
+> > 
+> It is not hard-wired to 0, we can configure it though bus-range property
+>
+> > I don't think specifying "bus 1" really adds anything.  The point is
+> > that we need Type 0 accesses for anything directly below a Root Port
+> > (regardless of what the RP's secondary bus number is), and Type 1 for
+> > things deeper.
+>
+> I will update the comment without mentioning the buses as suggested.
+>
+> > When DWC supports multiple Root Ports in a Root Complex, they will not
+> > all have a secondary bus number of 1.
+>
+> mostly they should be in bus number 0 with different device numbers, but
+> it mostly depends upon the design, currently we don't have any multiple
+> root ports.
 
-Ack, thanks for the detailed explanation.
+Say "root bus" instead of "bus 0", since you said above that the root
+bus number is configurable.
 
--- 
-With best wishes
-Dmitry
+Root Ports should all have a *primary* bus number of the root bus, but
+if there are multiple Root Ports, they will all have different
+secondary bus numbers.
 
