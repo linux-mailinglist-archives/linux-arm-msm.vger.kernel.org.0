@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-41060-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41061-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AAC5E9E9391
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 13:14:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E58679E9395
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 13:14:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8C833165221
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 12:14:01 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 82CF11650A6
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 12:14:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37F0B227588;
-	Mon,  9 Dec 2024 12:11:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA41A227B8F;
+	Mon,  9 Dec 2024 12:11:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="AGBr6oI7"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BbrWr7il"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DFFE227581;
-	Mon,  9 Dec 2024 12:11:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12EE6227571;
+	Mon,  9 Dec 2024 12:11:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733746301; cv=none; b=k+Tkx+OG3rdkWe+KG5RSagNmP3XmzSRvMQpqRGL6bWRQMGnHYHkDRVeHUmqFg7fUhOcMSOgj5insn/EEYXswUCEJyrQp7lIttIlrI7zRrtV0b+ht3i06qFk4WYMeaGzf6kGXUwM61IVBVbt7obCqpnY5PTCjaPOlWduN2iq3+xU=
+	t=1733746303; cv=none; b=nZ1ZDH+/CenV2/MdW50vXeLrOJ/JsJdpdlt67KmumO/MgJXLTk2x6mUtL/uEqv60BAcPbKRkOxY/7Xd3SuuGRj566ttxwE03xLwvKp6Ed7EOdTh+qq44IuGYLcHdycNHvV39ZaZwfJP2lMI/DrMHQtUXqkDoTJ9fBC/nVRkbRFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733746301; c=relaxed/simple;
-	bh=9XibONZU9a9Q8okfbU0WP6mWeKHcWBaE3xTZhD6aJdY=;
+	s=arc-20240116; t=1733746303; c=relaxed/simple;
+	bh=MbxzqFAIzaHkb7EzY55VB+Z+jqX43pw9PJdfd4UvVG8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=AiDYERaMbT40tsZyZ5o3ks1zxb+ExM8p2O9ZQvCbC6oOeDzHJF5antjcKfCEA+lMIaVcEcF6xvAhCGKVeM9cnvLvxNn0BeF+9QnIFB6nT4OY3a5VlhjzuRS7Yu/AUWe7qRL5+xPQsXiD78LZmrVr4KcKqxKk/xVHCH0EqDTu+QE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=AGBr6oI7; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=edj7ZK6lJcCJHatUVEvVSpIXKM0dZBHkvNFLdbELv0d++U0sOSFRYCBmcmJv5VGq79WyY4Ltb+4iyW8QaqMqO5e0Jy3iC9NDDMa/6L08MIeF63JobmfntFHq60CahuJiO8HIActZlztSn/zf6v1KJ/Kr+l0qNkfRRs4xnM/FCOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BbrWr7il; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B9Aaf9e023581;
-	Mon, 9 Dec 2024 12:11:27 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B9ABTpv017843;
+	Mon, 9 Dec 2024 12:11:34 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	2d1epkqFH3jvvmJ4YNIHzTpA7APESqdOMC6Q17ONsSw=; b=AGBr6oI7A6/jsCi0
-	T8mbTgjMd8DGoZXsgdKP09BnXagrXpzPAVQVpewUYjiDAie8ByXqDmwjnH01+mp3
-	qMYMhtVRfztTjFVGJS89LkyE7sfx9iVxPesJMizSdzZuRzQ+qFRJc33jHkkzzDf5
-	kMMSIOu5vi5QnxOE1zbYJHf7A5qCO0llmCr19UiP413Umery9QlssZwbXAzyTMfA
-	T3PFz5uzRrapjYjr/z/MLj66Mk+84duX6kZlK9DoGGIZNYlVs4IhuFody7AxzQGL
-	3Nfhq038mC+E/U9fCsUzp30CXG/ine8sbZjc9KrIE4n4U0FihubHNde0jNJICtKy
-	oS3img==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43cfhkchys-1
+	1EfcYrU9ZjyRlIViYvH//2YxkrWtkjOKIS3LXBhbDOk=; b=BbrWr7ilhzETJIyH
+	EGvKOE1C5Lq66aUiHpGM5j9QF3t+JjmbpKQsNUmxEfBCf4bLRH3abWgQitLYMFVD
+	KtA615yfo09gb2YUiricfXSGADmVxoYw/OB8yad07Eq8rLdakWw4z6rfsaMspl1C
+	0zzD0xYfhvEbMfSv7KljIliG8zWXZ81pyguybuvMdor9vqRzFhOpeLT+3kAjTI1Z
+	5sktnTxjMQNIcZjKXa99l6ZBNOCpHsr0yw4rqrSyu9ZaeGJ2nvMUktZVkpOHA3V8
+	BKfASYs8orTHuB6m2pFAIXNVLNvt9KMVAnskfTd31xnZl9VOrfD1NDx3gpItEQzf
+	ew6eJQ==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43cf4e4jrx-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 09 Dec 2024 12:11:07 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B9CB6Ma032414
+	Mon, 09 Dec 2024 12:11:33 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B9CBXRq018268
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 9 Dec 2024 12:11:06 GMT
-Received: from [10.253.38.68] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+	Mon, 9 Dec 2024 12:11:33 GMT
+Received: from [10.216.3.14] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 9 Dec 2024
- 04:11:00 -0800
-Message-ID: <25619909-90c2-40a8-9e49-83ab26b6cf79@quicinc.com>
-Date: Mon, 9 Dec 2024 20:10:58 +0800
+ 04:11:27 -0800
+Message-ID: <93ed4511-55b5-42a9-a3fe-32f29bd01bab@quicinc.com>
+Date: Mon, 9 Dec 2024 17:41:24 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,138 +65,158 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 0/5] Add CMN PLL clock controller driver for IPQ9574
-To: Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette
-	<mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring
-	<robh@kernel.org>,
+Subject: Re: [PATCH v4 3/7] drm/msm: adreno: dynamically generate GMU bw table
+To: Neil Armstrong <neil.armstrong@linaro.org>,
+        Rob Clark
+	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        "Dmitry
+ Baryshkov" <dmitry.baryshkov@linaro.org>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, "Simona
+ Vetter" <simona@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>, Rob
+ Herring <robh@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon
-	<will@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
-        <dmitry.baryshkov@linaro.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <quic_kkumarcs@quicinc.com>,
-        <quic_suruchia@quicinc.com>, <quic_pavir@quicinc.com>,
-        <quic_linchen@quicinc.com>, <quic_leiwei@quicinc.com>,
-        <bartosz.golaszewski@linaro.org>, <srinivas.kandagatla@linaro.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>
-References: <20241106-qcom_ipq_cmnpll-v6-0-9d398db2fe0f@quicinc.com>
+        Conor
+ Dooley <conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>
+References: <20241205-topic-sm8x50-gpu-bw-vote-v4-0-9650d15dd435@linaro.org>
+ <20241205-topic-sm8x50-gpu-bw-vote-v4-3-9650d15dd435@linaro.org>
 Content-Language: en-US
-From: Jie Luo <quic_luoj@quicinc.com>
-In-Reply-To: <20241106-qcom_ipq_cmnpll-v6-0-9d398db2fe0f@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: Akhil P Oommen <quic_akhilpo@quicinc.com>
+In-Reply-To: <20241205-topic-sm8x50-gpu-bw-vote-v4-3-9650d15dd435@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: nB23Cp8rjEWwJoZ9YLt_mk0m4rYZYATy
-X-Proofpoint-GUID: nB23Cp8rjEWwJoZ9YLt_mk0m4rYZYATy
+X-Proofpoint-GUID: 1v-WJvdjJY3pm-lpggcA_yoERX4z_dLk
+X-Proofpoint-ORIG-GUID: 1v-WJvdjJY3pm-lpggcA_yoERX4z_dLk
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- impostorscore=0 mlxlogscore=999 mlxscore=0 adultscore=0 lowpriorityscore=0
- phishscore=0 clxscore=1015 priorityscore=1501 spamscore=0 bulkscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ lowpriorityscore=0 mlxlogscore=999 clxscore=1015 impostorscore=0
+ spamscore=0 priorityscore=1501 mlxscore=0 adultscore=0 phishscore=0
+ bulkscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2411120000 definitions=main-2412090096
 
-
-
-On 11/6/2024 6:52 PM, Luo Jie wrote:
-> The CMN PLL clock controller in Qualcomm IPQ chipsets provides
-> the clocks to the networking hardware blocks that are internal
-> or external to the SoC, and to the GCC. This driver configures
-> the CMN PLL clock controller to enable the output clocks. The
-> networking blocks include the internal blocks such as PPE
-> (Packet Process Engine) and PCS blocks, and external hardware
-> such as Ethernet PHY or switch. The CMN PLL block also outputs
-> fixed rate clocks to GCC, such as 24 MHZ as XO clock and 32 KHZ
-> as sleep clock supplied to GCC.
+On 12/5/2024 8:31 PM, Neil Armstrong wrote:
+> The Adreno GPU Management Unit (GMU) can also scale the ddr
+> bandwidth along the frequency and power domain level, but for
+> now we statically fill the bw_table with values from the
+> downstream driver.
 > 
-> The controller expects the input reference clock from the internal
-> Wi-Fi block acting as the clock source. The output clocks supplied
-> by the controller are fixed rate clocks.
+> Only the first entry is used, which is a disable vote, so we
+> currently rely on scaling via the linux interconnect paths.
 > 
-> The CMN PLL hardware block does not include any other function
-> other than enabling the clocks to the networking hardware blocks
-> and GCC.
+> Let's dynamically generate the bw_table with the vote values
+> previously calculated from the OPPs.
 > 
-> The driver is being enabled to support IPQ9574 SoC initially, and
-> will be extended for other SoCs.
+> Those entries will then be used by the GMU when passing the
+> appropriate bandwidth level while voting for a gpu frequency.
 > 
-> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 > ---
-> Changes in v6:
-> - Rename the reference clock of CMN PLL to ref_48mhz_clk.
-> - Add the patch to update xo_board_clk to use fixed factor clock.
-> - Link to v5: https://lore.kernel.org/r/20241028-qcom_ipq_cmnpll-v5-0-339994b0388d@quicinc.com
+>  drivers/gpu/drm/msm/adreno/a6xx_hfi.c | 41 ++++++++++++++++++++++++++++++++++-
+>  1 file changed, 40 insertions(+), 1 deletion(-)
 > 
-> Changes in v5:
-> - Move the hardware configurations into set_rate() from determine_rate().
-> - Remove the dependency on IPQ_GCC_9574.
-> - Correct the header files included.
-> - Update reference clock of CMN PLL to use fixed factor clock.
-> - Link to v4: https://lore.kernel.org/r/20241015-qcom_ipq_cmnpll-v4-0-27817fbe3505@quicinc.com
-> 
-> Changes in v4:
-> - Rename driver file to ipq-cmn-pll.c
-> - Register CMN PLL as a 12 GHZ clock.
-> - Configure CMN PLL input ref clock using clk_ops::determine_rate().
->    Add the additional output clocks to GCC and PCS.
-> - Update the same information in dtbindings.
-> - Use PM clock APIs for input clock enablement.
-> - Link to v3: https://lore.kernel.org/r/20240827-qcom_ipq_cmnpll-v3-0-8e009cece8b2@quicinc.com
-> 
-> Changes in v3:
-> - Update description of dt-binding to explain scope of 'CMN' in CMN PLL.
-> - Collect Reviewed-by tags for dtbindings and defconfig patches.
-> - Enable PLL_LOCKED check for the stability of output clocks.
-> - Link to v2: https://lore.kernel.org/r/20240820-qcom_ipq_cmnpll-v2-0-b000dd335280@quicinc.com
-> 
-> Changes in v2:
-> - Rename the dt-binding file with the compatible.
-> - Remove property 'clock-output-names' from dt-bindings and define
->    names in the driver. Add qcom,ipq-cmn-pll.h to export the output
->    clock specifier.
-> - Alphanumeric ordering of 'cmn_pll_ref_clk' node in DTS.
-> - Fix allmodconfig error reported by test robot.
-> - Replace usage of "common" to "CMN" to match the name with the
->    hardware specification.
-> - Clarify in commit message on scope of CMN PLL function.
-> - Link to v1: https://lore.kernel.org/r/20240808-qcom_ipq_cmnpll-v1-0-b0631dcbf785@quicinc.com
-> 
-> ---
-> Luo Jie (5):
->        dt-bindings: clock: qcom: Add CMN PLL clock controller for IPQ SoC
->        clk: qcom: Add CMN PLL clock controller driver for IPQ SoC
->        arm64: defconfig: Enable Qualcomm IPQ CMN PLL clock controller
->        arm64: dts: qcom: Add CMN PLL node for IPQ9574 SoC
->        arm64: dts: qcom: Update IPQ9574 xo_board_clk to use fixed factor clock
-> 
->   .../bindings/clock/qcom,ipq9574-cmn-pll.yaml       |  85 ++++
->   arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi   |  23 +-
->   arch/arm64/boot/dts/qcom/ipq9574.dtsi              |  27 +-
->   arch/arm64/configs/defconfig                       |   1 +
->   drivers/clk/qcom/Kconfig                           |   9 +
->   drivers/clk/qcom/Makefile                          |   1 +
->   drivers/clk/qcom/ipq-cmn-pll.c                     | 436 +++++++++++++++++++++
->   include/dt-bindings/clock/qcom,ipq-cmn-pll.h       |  22 ++
->   8 files changed, 601 insertions(+), 3 deletions(-)
-> ---
-> base-commit: d61a00525464bfc5fe92c6ad713350988e492b88
-> change-id: 20241014-qcom_ipq_cmnpll-bde0638f4116
-> 
-> Best regards,
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+> index cb8844ed46b29c4569d05eb7a24f7b27e173190f..fc4bfad51de9a3b6617fbbd03471a5851d43ce88 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+> @@ -5,7 +5,10 @@
+>  #include <linux/circ_buf.h>
+>  #include <linux/list.h>
+>  
+> +#include <dt-bindings/interconnect/qcom,icc.h>
+> +
+>  #include <soc/qcom/cmd-db.h>
+> +#include <soc/qcom/tcs.h>
+>  
+>  #include "a6xx_gmu.h"
+>  #include "a6xx_gmu.xml.h"
+> @@ -259,6 +262,39 @@ static int a6xx_hfi_send_perf_table(struct a6xx_gmu *gmu)
+>  		NULL, 0);
+>  }
+>  
+> +static void a6xx_generate_bw_table(const struct a6xx_info *info, struct a6xx_gmu *gmu,
+> +				   struct a6xx_hfi_msg_bw_table *msg)
+> +{
+> +	unsigned int i, j;
+> +
+> +	msg->ddr_wait_bitmask = QCOM_ICC_TAG_ALWAYS;
 
-Hello Bjorn, Stephen, Dmitry,
+Why this is QCOM_ICC_TAG_ALWAYS?
 
-Gentle reminder, to re-review the updated patch series V6 at your
-convenience to let me know if this patch series is fine to be merged.
-Thanks in advance.
+IIRC, this bitmask informs RPMH whether it should wait for previous BCM
+vote to complete. Can we implement the same logic from kgsl to create
+this bitmask?
+
+
+> +
+> +	for (i = 0; i < GMU_MAX_BCMS; i++) {
+> +		if (!info->bcms[i].name)
+> +			break;
+> +		msg->ddr_cmds_addrs[i] = cmd_db_read_addr(info->bcms[i].name);
+> +	}
+> +	msg->ddr_cmds_num = i;
+> +
+> +	for (i = 0; i < gmu->nr_gpu_bws; ++i)
+> +		for (j = 0; j < msg->ddr_cmds_num; j++)
+> +			msg->ddr_cmds_data[i][j] = gmu->gpu_ib_votes[i][j];
+> +	msg->bw_level_num = gmu->nr_gpu_bws;
+> +
+> +	/*
+> +	 * These are the CX (CNOC) votes - these are used by the GMU
+> +	 * The 'CN0' BCM is used on all targets, and votes are basically
+> +	 * 'off' and 'on' states with first bit to enable the path.
+> +	 */
+> +
+> +	msg->cnoc_cmds_num = 1;
+> +	msg->cnoc_wait_bitmask = QCOM_ICC_TAG_AMC;
+
+Same here.
+
+Rest looks fine to me.
+
+-Akhil
+
+> +
+> +	msg->cnoc_cmds_addrs[0] = cmd_db_read_addr("CN0");
+> +	msg->cnoc_cmds_data[0][0] = BCM_TCS_CMD(true, false, 0, 0);
+> +	msg->cnoc_cmds_data[1][0] = BCM_TCS_CMD(true, true, 0, BIT(0));
+> +}
+> +
+>  static void a618_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
+>  {
+>  	/* Send a single "off" entry since the 618 GMU doesn't do bus scaling */
+> @@ -664,6 +700,7 @@ static int a6xx_hfi_send_bw_table(struct a6xx_gmu *gmu)
+>  	struct a6xx_hfi_msg_bw_table *msg;
+>  	struct a6xx_gpu *a6xx_gpu = container_of(gmu, struct a6xx_gpu, gmu);
+>  	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
+> +	const struct a6xx_info *info = adreno_gpu->info->a6xx;
+>  
+>  	if (gmu->bw_table)
+>  		goto send;
+> @@ -672,7 +709,9 @@ static int a6xx_hfi_send_bw_table(struct a6xx_gmu *gmu)
+>  	if (!msg)
+>  		return -ENOMEM;
+>  
+> -	if (adreno_is_a618(adreno_gpu))
+> +	if (info->bcms && gmu->nr_gpu_bws > 1)
+> +		a6xx_generate_bw_table(info, gmu, msg);
+> +	else if (adreno_is_a618(adreno_gpu))
+>  		a618_build_bw_table(msg);
+>  	else if (adreno_is_a619(adreno_gpu))
+>  		a619_build_bw_table(msg);
+> 
+
 
