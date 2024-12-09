@@ -1,134 +1,173 @@
-Return-Path: <linux-arm-msm+bounces-41155-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41156-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 23AE59EA053
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 21:35:41 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 564A99EA062
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 21:38:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D7325166695
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 20:35:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EC5B918876ED
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 20:38:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0ACC7199239;
-	Mon,  9 Dec 2024 20:35:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 308FD155743;
+	Mon,  9 Dec 2024 20:38:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="nSW7CS0Y"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ILeUc3CQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2158F1531EF
-	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Dec 2024 20:35:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8931C14F121;
+	Mon,  9 Dec 2024 20:38:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733776534; cv=none; b=WYr8sGwdwQKAmA5j2adksmKQZrNy3AA8n18yv8Gx125+QWpZw8sNrtIeYHvzjkNLf7UNLmFQG5jE7HFl4p0AITE6artEQ31JI2noOnqF7ij55HaYB3ruSqIsDLxW5hexAmD6JTv4u0m322d0/AnM3Jd/5xc+fcIFcuqk6LYzbog=
+	t=1733776693; cv=none; b=ctZlj/vycPEVtlHdNKCvFIU9i+yCfCsH6JMrp9emOAy+izupi/r3HWkXdSit3/NpHoMWx6/9uRrcW/P0eO5f1DMt/SJ7zW5+vk6PMqGzjYzvQ+kyCxH4oZQB+YeC6X++IrVNAzDECRymwDxDlVvxys0dFTJyA/+sDm2F9M42w68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733776534; c=relaxed/simple;
-	bh=eAOEVYminb645n0faah7aMs6X15Nsaf5goPu8nyF+6o=;
-	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bLMJiZSUcLDdGogICTRk+x6B3S8oJnBpcak+wxHAKL8t6UChivSkqf19ljCiV8kbZWb9ftn8vMqDi+G5GQCS5SfUw74rj3edr996ys7RzC5Ov+YssnSsSqXN6pb0YJjbtd82LrNzaDQgW89+2FB4Inhf0i87dCJmPHbTmCQCxtk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=nSW7CS0Y; arc=none smtp.client-ip=209.85.208.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-300479ca5c6so21486611fa.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Dec 2024 12:35:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1733776531; x=1734381331; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:references:mime-version:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Q6meGJSR6TFEtc79fnopCaEDJRi1TmVlCHaOBF/ByVQ=;
-        b=nSW7CS0YLqSETIKjSO0TQuMyRb4a2JXZG6qp6KZnaul74IY/yMUTYxvg2QjI0TUdit
-         Vjs5/sha8gSR//YUOq/8Vjg2DmpbNvSVoiQH+vLudOIpSQeTdi1qUhFz+RtPuKhUNQd2
-         gVrHhWuZpn7L5lo5h9nMvw+28f+idME3jeQrmYkEo7dBl6C5ofweg4l8ES/AjYSY8Ax4
-         kACuERuNWPQN/OwbhOGVRwqjSjcmylsDh6kXNtxBywfNpZEtM9vdIHEe+9gAPg00ZJPp
-         kKsuVBiK++vSr5MSiA+fOq32RsHOTYl69NKKF4i4io/aL/AvZYVDyfOIir7Dkubf+/UI
-         BRRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733776531; x=1734381331;
-        h=cc:to:subject:message-id:date:references:mime-version:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Q6meGJSR6TFEtc79fnopCaEDJRi1TmVlCHaOBF/ByVQ=;
-        b=MPhdP02fh5TzB/4pv0gSTlUJ1ZNIfVxr6UkPDyEpHk++LqrvPqWTBWPEZpGyXDjUX7
-         zI2u6nX80isBiiXa9yuM5RPyTAhiZJqy+qcwCcJUHoZZWATwlP+LtX/JA/UPG635y2/c
-         Pd3+xClVmh/rCn4F1flPFCwvrULGf9+hMr9yyi0uTf25aLaPuz4ep+m26iietzgYB+ZD
-         FWlfpZLt6HOVjS5ev+VcgbcXuoCUy9zbAqwfL6C4bEBzRJGVN6f5SFY54nGn9EvMm2KT
-         OLm5MG1KEjZC9g06cFqgJzNNJvLxNwn+tElGJnceRb89M3uGxldnm24oiQNs3J9cxajh
-         XwTQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWreEEQvyuurlGxYX/OfhW+swE1VMhE+826ZRusdzVfe20vj7Uy6Zt6uxkyV4snHoQ0Mnp7FrcDNEpaY2qf@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxj9SKPweXDcS9eX61+o2OJkpvGrgKUhnffiQ7iug3TSxpp9mTj
-	4jvlyAaq/0L6xCZNa7EGoXz8ZmjDTg7trUBvubxxmjOUAC4kQUbyjshtwadgHO7EsnIb1K7tvzs
-	kARAu6DfSIFKgj+dpeLVl9a2LorecGlVkHJqqbQ==
-X-Gm-Gg: ASbGncsB3Pmp9Ey3vV7fblfkdOv9BAmBvjVTLUHlVcWlBRYdzKbf7Biag5JglrzJ/r8
-	SnpdJEvY6dYhvj8rn21lwqEnxbtEHJqdTwTPwSu7w70IKqenoNHgGdGLDYPnQ0b/BKd4=
-X-Google-Smtp-Source: AGHT+IHymsOIaOPZPl6kBT694eWAVY0RGnB3iP+D+2pYOF4u/+ntIMZdJ1ab7zwXBPXlvQVIeOrk64ttwKY8rAoeyHg=
-X-Received: by 2002:a05:651c:514:b0:2ff:caf8:3011 with SMTP id
- 38308e7fff4ca-3022fb4e66amr5905541fa.11.1733776531008; Mon, 09 Dec 2024
- 12:35:31 -0800 (PST)
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 9 Dec 2024 14:35:29 -0600
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-In-Reply-To: <20241209201516.GA1742@sol.localdomain>
+	s=arc-20240116; t=1733776693; c=relaxed/simple;
+	bh=C5d2g63eLwibyWB5dWw7Utj/EJvAdBmky2bZEuj5EEk=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=Wj3m9Wpi6P3TyxRZpVJiWw3u2exO8WTbn+08b0F3dSMVSN1gW+x4HlTaV9dQ0Vw04ugyAZXauNgjcHjC2bx4I0umVhNKpqP2j659+9ja7PRS05f4eXiKgZsm0vhLTy6mAom3n4iMFVE5aA3sdAeN6Y5ssiRsL/AT7OS+bmv+PLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ILeUc3CQ; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B9E6kMp006934;
+	Mon, 9 Dec 2024 20:38:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=fvwwTNIF8h8l5wvlor8WVW
+	f38A1m4+BOueQ7v7bM4Bg=; b=ILeUc3CQYP+N1pnr0W0Dozudn4AeQ0ZxsMOm0Z
+	hXkig7xumy981u2wKhqxH3b+edyau19lFPLFybGpsmxhi4kuiWfQH/TGZYLXIQe9
+	3odTKH9N+JLMCqycDOby33R2/qAfhqg/lMo41yg7JxK3zJJNUhltOzOVS4djdWad
+	mlfg2DLHGidhtvzPbjvi79YR4wTAz4jr6Rlf+RJRI7X0RMPghzbJFiJQICrTUVJe
+	uLuwBGDqp/lbjyT90u9dMUnktLm63ApcLbuZPg4FbxEk+/4m2gUf9Gr09X3n4Yr5
+	3mBNgQgw3o2I04M30Olr/GRK71E9zLeCndz4AGxg0B681CxA==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43e21bh3ny-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 09 Dec 2024 20:38:03 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B9Kc3WF016322
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 9 Dec 2024 20:38:03 GMT
+Received: from abhinavk-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Mon, 9 Dec 2024 12:38:02 -0800
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Date: Mon, 9 Dec 2024 12:37:51 -0800
+Subject: [PATCH] drm/msm/dpu: check dpu_plane_atomic_print_state() for
+ valid sspp
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241209045530.507833-1-ebiggers@kernel.org> <CAMRc=MfLzuNjRqURpVwLzVTsdr8OmtK+NQZ6XU4hUsawKWTcqQ@mail.gmail.com>
- <20241209201516.GA1742@sol.localdomain>
-Date: Mon, 9 Dec 2024 14:35:29 -0600
-Message-ID: <CAMRc=Me7kEBHW1BTDkJ6w+3GjucCfC+GNZBch3kX=gsZniFHvA@mail.gmail.com>
-Subject: Re: [PATCH v9 00/12] Support for hardware-wrapped inline encryption keys
-To: Eric Biggers <ebiggers@kernel.org>
-Cc: linux-block@vger.kernel.org, linux-fscrypt@vger.kernel.org, 
-	linux-mmc@vger.kernel.org, linux-scsi@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, Gaurav Kashyap <quic_gaurkash@quicinc.com>, 
-	Adrian Hunter <adrian.hunter@intel.com>, Alim Akhtar <alim.akhtar@samsung.com>, 
-	Avri Altman <avri.altman@wdc.com>, Bart Van Assche <bvanassche@acm.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	"James E . J . Bottomley" <James.Bottomley@hansenpartnership.com>, Jens Axboe <axboe@kernel.dk>, 
-	Konrad Dybcio <konradybcio@kernel.org>, 
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
-	"Martin K . Petersen" <martin.petersen@oracle.com>, Ulf Hansson <ulf.hansson@linaro.org>, 
-	Bartosz Golaszewski <brgl@bgdev.pl>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-ID: <20241209-check-state-before-dump-v1-1-7a9d8bc6048f@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAB5VV2cC/x3MOwqAMBBF0a3I1A4kQQvdiljE+KKD+CFREYJ7N
+ 1ie4t5EEUEQqS0SBdwSZd8ydFmQm+02gWXMJqNMpY1q2M1wC8fTnuABfg/g8VoPNlbp2jrUvmo
+ o10eAl+c/d/37ft2QiuBpAAAA
+X-Change-ID: 20241209-check-state-before-dump-2a015ace5f49
+To: Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, "Simona
+ Vetter" <simona@ffwll.ch>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        "Abhinav
+ Kumar" <quic_abhinavk@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1733776682; l=2773;
+ i=quic_abhinavk@quicinc.com; s=20240509; h=from:subject:message-id;
+ bh=C5d2g63eLwibyWB5dWw7Utj/EJvAdBmky2bZEuj5EEk=;
+ b=ppM7s6p5sqiHgSgi+Umf86/swZhXI7/NHhoArJ3NiWopNobSJt1f36HAaXtd9a2H1mFDLJMUV
+ NrtGBo0CcZcAap2FD/n8D9GZ8z2gGQA8CTAiD0F72c/SWrNIHUNJ3Wh
+X-Developer-Key: i=quic_abhinavk@quicinc.com; a=ed25519;
+ pk=SD3D8dOKDDh6BoX3jEYjsHrTFwuIK8+o0cLPgQok9ys=
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 4cOgugvzjWwoBsE5EswnqeB_W7uKadFu
+X-Proofpoint-ORIG-GUID: 4cOgugvzjWwoBsE5EswnqeB_W7uKadFu
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 clxscore=1015
+ malwarescore=0 lowpriorityscore=0 mlxlogscore=999 priorityscore=1501
+ spamscore=0 impostorscore=0 adultscore=0 bulkscore=0 phishscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412090159
 
-On Mon, 9 Dec 2024 21:15:16 +0100, Eric Biggers <ebiggers@kernel.org> said:
-> On Mon, Dec 09, 2024 at 04:00:18PM +0100, Bartosz Golaszewski wrote:
->>
->> I haven't gotten to the bottom of this yet but the
->> FS_IOC_ADD_ENCRYPTION_KEY ioctl doesn't work due to the SCM call
->> returning EINVAL. Just FYI. I'm still figuring out what's wrong.
->>
->> Bart
->>
->
-> Can you try the following?
->
-> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-> index 180220d663f8b..36f3ddcb90207 100644
-> --- a/drivers/firmware/qcom/qcom_scm.c
-> +++ b/drivers/firmware/qcom/qcom_scm.c
-> @@ -1330,11 +1330,11 @@ int qcom_scm_derive_sw_secret(const u8 *eph_key, size_t eph_key_size,
->  								  sw_secret_size,
->  								  GFP_KERNEL);
->  	if (!sw_secret_buf)
->  		return -ENOMEM;
->
-> -	memcpy(eph_key_buf, eph_key_buf, eph_key_size);
-> +	memcpy(eph_key_buf, eph_key, eph_key_size);
->  	desc.args[0] = qcom_tzmem_to_phys(eph_key_buf);
->  	desc.args[1] = eph_key_size;
->  	desc.args[2] = qcom_tzmem_to_phys(sw_secret_buf);
->  	desc.args[3] = sw_secret_size;
->
->
+Similar to the r_pipe sspp protect, add a check to protect
+the pipe state prints to avoid NULL ptr dereference for cases when
+the state is dumped without a corresponding atomic_check() where the
+pipe->sspp is assigned.
 
-That's better, thanks. Now it's fscryptctl set_policy that fails like this:
+Fixes: 31f7148fd370 ("drm/msm/dpu: move pstate->pipe initialization to dpu_plane_atomic_check")
+Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/67
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+---
+To: Rob Clark <robdclark@gmail.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Sean Paul <sean@poorly.run>
+To: Marijn Suijten <marijn.suijten@somainline.org>
+To: David Airlie <airlied@gmail.com>
+To: Simona Vetter <simona@ffwll.ch>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: dri-devel@lists.freedesktop.org
+Cc: freedreno@lists.freedesktop.org
+Cc: linux-kernel@vger.kernel.org
+Cc: Stephen Boyd <swboyd@chromium.org>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
-ioctl(3, FS_IOC_SET_ENCRYPTION_POLICY, 0xffffcaf8bb20) = -1 EINVAL
-(Invalid argument)
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+index 3ffac24333a2a5b01135d4ece418432d4a74dc04..fe3fd9587ec61f241ccb8c28925c7902b92bcdcd 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+@@ -1333,14 +1333,17 @@ static void dpu_plane_atomic_print_state(struct drm_printer *p,
+ 	const struct dpu_sw_pipe *r_pipe = &pstate->r_pipe;
+ 	const struct dpu_sw_pipe_cfg *r_pipe_cfg = &pstate->r_pipe_cfg;
+ 
+-	drm_printf(p, "\tstage=%d\n", pstate->stage);
+-
+-	drm_printf(p, "\tsspp[0]=%s\n", pipe->sspp->cap->name);
+-	drm_printf(p, "\tmultirect_mode[0]=%s\n", dpu_get_multirect_mode(pipe->multirect_mode));
+-	drm_printf(p, "\tmultirect_index[0]=%s\n",
+-		   dpu_get_multirect_index(pipe->multirect_index));
+-	drm_printf(p, "\tsrc[0]=" DRM_RECT_FMT "\n", DRM_RECT_ARG(&pipe_cfg->src_rect));
+-	drm_printf(p, "\tdst[0]=" DRM_RECT_FMT "\n", DRM_RECT_ARG(&pipe_cfg->dst_rect));
++	if (pipe->sspp) {
++		drm_printf(p, "\tstage=%d\n", pstate->stage);
++
++		drm_printf(p, "\tsspp[0]=%s\n", pipe->sspp->cap->name);
++		drm_printf(p, "\tmultirect_mode[0]=%s\n",
++			   dpu_get_multirect_mode(pipe->multirect_mode));
++		drm_printf(p, "\tmultirect_index[0]=%s\n",
++			   dpu_get_multirect_index(pipe->multirect_index));
++		drm_printf(p, "\tsrc[0]=" DRM_RECT_FMT "\n", DRM_RECT_ARG(&pipe_cfg->src_rect));
++		drm_printf(p, "\tdst[0]=" DRM_RECT_FMT "\n", DRM_RECT_ARG(&pipe_cfg->dst_rect));
++	}
+ 
+ 	if (r_pipe->sspp) {
+ 		drm_printf(p, "\tsspp[1]=%s\n", r_pipe->sspp->cap->name);
 
-Bartosz
+---
+base-commit: 9d6a414ad31e8eb296cd6f2c1834b2c6994960a0
+change-id: 20241209-check-state-before-dump-2a015ace5f49
+
+Best regards,
+-- 
+Abhinav Kumar <quic_abhinavk@quicinc.com>
+
 
