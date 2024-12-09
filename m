@@ -1,82 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-41042-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41043-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3905D9E9323
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 13:01:37 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id ED1DA9E932B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 13:02:07 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 986CD28315C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 12:01:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3B152165588
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2024 12:01:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70D781EB2E;
-	Mon,  9 Dec 2024 12:01:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D1B872248B8;
+	Mon,  9 Dec 2024 12:01:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="HAsTprHA"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="BndbPVXi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15FF6215168
-	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Dec 2024 12:01:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15F37221DB7
+	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Dec 2024 12:01:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733745673; cv=none; b=qeYTgIduyCGccUDkUWXCDdZ6UmRebbeEMyFhDGnBoA/c4K3rxebvanFNl5CKoBLwk4LSPf66/AUnSK5AK4YGAxcazHmMc1FCPTZiiNOu1trEhLlVVAf0vYh+nynKgnzLY4Tg7+T1lB8/ZTyb5B7FpVOdie82WfmYg0owor5gFjo=
+	t=1733745674; cv=none; b=RY16TYBqBjrQ3IGxKOAnSbo1LVmlIJjqx7PGMC/6V/7myYpp/Sg4DgSUAJ4vKR9dnguEz7p0b5YPuPJVpDFRSQ5hspz025dxNSQk0uQQE2jJLUEAblhTZlnttqFR1AMqHjWG/L2ALFIBt/nJxjljNX9m47POCI7lWWRDZxZkXlk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733745673; c=relaxed/simple;
-	bh=EayO3poauy5/rht+2wdYMwLDBTRR4tdjIRay8qW3Xeo=;
+	s=arc-20240116; t=1733745674; c=relaxed/simple;
+	bh=8pFX+27nmjk/7KfdfuKsPNR83Jiahya68QV//JkHJU8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=rQQvDuyj2gmgAONXKi+dcDj/kcj63mBrtRrSgWXjbmPSqqTx8GXg+0C63tRp9UzW5gA0ye/lpZ6bhwcfGAB/ox0B3++4S5L5vQ3IaP03pxdssUpD7j1PfoWn9QiWPBYe8awtQpY2ATDsg5kBuH1fren2TIUGNJr7zXU9Dv+NGLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=HAsTprHA; arc=none smtp.client-ip=209.85.208.51
+	 In-Reply-To:To:Cc; b=Fi49lMOkOKsBZzMhFONlNJHmY0xEPghGVR9aUdjV67TCqscIbCdL6VM+M3QzSrKy9RcDZuRRdhEYIH5KVdfmxDACBUrlGeLw3mt7idL5r9v9dSRR/83yeCgrDFLSpfmbCC7ZSoPhFvqoTOQJ0ly/VNRmwnzvSMITeIKOzdcUZ9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=BndbPVXi; arc=none smtp.client-ip=209.85.218.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5d2726c0d45so6332462a12.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Dec 2024 04:01:10 -0800 (PST)
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-aa64f3c5a05so359832766b.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Dec 2024 04:01:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1733745669; x=1734350469; darn=vger.kernel.org;
+        d=fairphone.com; s=fair; t=1733745670; x=1734350470; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=cJN+RDGJvasm5eLSW6rewyUE2UnqBa7DZC8SLRN3C/Y=;
-        b=HAsTprHANCgQ+t3XVQLmEIFv9nDGiALvmFL0chTgKcWI+RRMsHBd87QM6Im4Kqmift
-         04JmHuNbhIGlekInf8WTVifv+0UIEd4/seYle0hhYFD8BgTuU6+vwf6fAFEasOwE15qu
-         eyIt4U7OI/DCffAgYdEzlTTA9lw9Y7TCMVEx1uESynmdTNASKfXx9unmiMqZj4x9VAdP
-         6+R1F5a2SHu7HWvHD/ml9+YxFgHMDnJobDlT80EQl4NMhlGaYW+SIER0NA2Fb+DsUYRM
-         AyEagYDDE7Jf8vu5o1s8ejOH2Maw0IJ/ZY/KkUIVmOEbcER4Ef+/zQVVbkF5hLovcz1A
-         4x9w==
+        bh=0tR6QupvutEPi+0B6/genbHIfRkFvdzSANWIhNibRjA=;
+        b=BndbPVXiWkZ2Hymlx4djmvk3gopkES+g2ciCMtH9KuwLm8K+AKenJwUnTmlB/GOHGS
+         wMonUq50IRzSn65wKpPNKm98Aq/INhm9tZQp9EMohv2B/OYFNPS6tpm/m0rGXSMckI3l
+         6QvvheUI4ft+hvwcntSi7r/aOghQMpsNiQdcUwGVNSbM1YM8a5SErFyLN5cNCcntNJmb
+         U8OM2ROcxY1oFdHvdXVxMBNbeoAgV0vi0B3gkYrrqhxxa3PzJOps2TF0xE25omtiNzRY
+         R4XD658MZRpjGFdtaRVlxnfoNX2ApzbIHHKesmRu7Xg//cK7epW8/LhBUnjftgwoMW5C
+         xRFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733745669; x=1734350469;
+        d=1e100.net; s=20230601; t=1733745670; x=1734350470;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=cJN+RDGJvasm5eLSW6rewyUE2UnqBa7DZC8SLRN3C/Y=;
-        b=D/CuyMr3wH1G6zy4BpWL5GXmQDqEDZzqVdeg0yYxVIZ5u8866xTiWVBwKJuIEzu4JJ
-         DXjODaF9/L8ahe7KBna6vF6CRGCJcb7nAirBx090yyY0JSeM33OljIxk38ItOh6Slbv8
-         iI3BrLVth+xWhcWEhwp/fIxMfexsGUM40ZjOoyZmO+i0xMUklw39j77hV1UTbwJoSXkp
-         sP//dXqRs6W5UK4t6PB/jp366GNKuURSL8CmtD/NFD8HgAEw+2qNL0SBfPL//6/thYP9
-         e3h/EmPEOllwExgJ9sAr9SdVTsLR43xaxc7ucI9MUmQT/QZGm6Ovjmuf0ZjjnDG4o9mp
-         GtYQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVXftdzBpVrs85uhHCrkPCIS7IPsx08jpC4pUG+fVVBviZtZC03PbREh+leivInmvxGsNb/fh7LDBfkEBfo@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxm5PVNpg6p8pqg+oVHcPR73j2Jz2pvWfEAoCkgb0+tlMrpS9Cs
-	e039XPEe+GG5wehOV2mXZWKNE8G3A4dOdFyWD1ruGyrNR97GK7SBiFVrtwKgA45qfj88BvfnZWR
-	2zZ4=
-X-Gm-Gg: ASbGnctISQDYr54kErlo/1wKVpzOn4lhjY0BjfuE1LPolM9QRKMdJqTzncSy2iaGRC6
-	nJMh9eC8p+cfbSVRaVh08uV22BGAKScvURS36LxTkiHJFXq2ezINxFXVcL+ASqTypvCQs+Y9NsK
-	17Kepd8pU4TXxm9WX3A5C0WU1QMfwzw3/UculendE97NFNTagPMQMfY69ToHOBHmAyq+5jleUbB
-	9KUeqWY/DfQHjLxz7ziUs1OX0CFVxBWx3c4DWCbg8EYWIe9F8+hpmDOPB8llL92+vABs9Fh/xn4
-	AcoUu+anJGkZRwlYkDIZ6Vr/EtNbdQI8HwvgiIRm1pCvo1/B3SPvirk5mQJ3pKHCUQ==
-X-Google-Smtp-Source: AGHT+IF+p9gVWhFaOEldkR3XDKLXXb1rK4KX30ftSf7RjwBOAfR7BnsNTeQR8MNatD02QvNHIJdwOw==
-X-Received: by 2002:a17:907:770c:b0:aa6:8160:8495 with SMTP id a640c23a62f3a-aa69ce00080mr4712666b.42.1733745669239;
-        Mon, 09 Dec 2024 04:01:09 -0800 (PST)
+        bh=0tR6QupvutEPi+0B6/genbHIfRkFvdzSANWIhNibRjA=;
+        b=M0r8qH9fiD+tXQqrmPbYmBkRcPNb80HAkEhO1YXtHv9Q2p9gh0WzhrigKEyFza5+fW
+         iXFgO3i+n4LaKTPx47jcpNEOfORaDRoQ8lLXj+Z3jig8/Rr2OIQY0zuPrOpsHOIKmd5d
+         qwFF16KkfCvl0rjtMUCkelwRYUUolGCIKBkkblcbgtmPEepDdrIemxWQWW0GXebTy8A8
+         xEg52IK8MmmhbECGDrQV9JM+yFZr3Jo5/0mevSgXbXazaOeRlYjyV+KRlve7a8vRvTap
+         9dIQAEdAQ2a+XkOsGVpfr/p4W0zF0ipQCYcNyl2O8B+R7C9h84wpM63n1yhtiYrkAOPQ
+         gJ7w==
+X-Forwarded-Encrypted: i=1; AJvYcCWcGaMRazILIqr4Vb7oPc2zXKhOOOJAeGtKA1wIp85i/vKMDYwmqC0oq9JXBYnemvT4r3SVPKSRwD8lbQm6@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx/mG43JVXrcQlwn46ail8tbE60nf/7puo7R8mWaPfEgmrbreeM
+	dTTPuJHSIeZEnSWnfc/5xfKTtHC4XC/wNNPDx0xLLnLfvGgT0kqstY7ld0W5fJ0=
+X-Gm-Gg: ASbGncvjXsET+ulExvVctbpVToMEfjoXlOIZqFIAyOZG9LXoPzBmdPwokjAxBA7e2qz
+	36u6mE1bUYO7KTqjHnLuffGaGN6GuhBXuq/BvHuO2ZpCj73mtP1vzURijbnzlVLnXUtNDNA5MCv
+	1SLyrSfeHGNSiHMq7BWsjcnIf3L4x174gUcXfNQ5/OHOAj8IsSl0o1EFAnSSnA4QQ5cPNOirCQh
+	qEONhhgn1onmnwqeDlZCAjswqE7+LxfyzGt3tqsJR8pSuP2gJKRb6/KC4BL7jyFOqs5ZgX7alO6
+	zGgl09n6r8n6inAAnxGEbC2IpAj+mXsbGXsT1/O1WGwaGFn7kk983M3T0QGtJxfR7Q==
+X-Google-Smtp-Source: AGHT+IGCASHop4+PMr/ElwoRqpZmRPYooFBqBNoyvG1DRpnbL890d/4qkOvn0rbSSu4AIgl1YOMZNg==
+X-Received: by 2002:a17:907:aa6:b0:aa6:945c:453d with SMTP id a640c23a62f3a-aa69cda0d94mr5001966b.27.1733745670385;
+        Mon, 09 Dec 2024 04:01:10 -0800 (PST)
 Received: from [100.64.0.4] (2a02-8388-6584-6400-d322-7350-96d2-429d.cable.dynamic.v6.surfer.at. [2a02:8388:6584:6400:d322:7350:96d2:429d])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa69afa395csm22555066b.71.2024.12.09.04.01.08
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa69afa395csm22555066b.71.2024.12.09.04.01.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Dec 2024 04:01:08 -0800 (PST)
+        Mon, 09 Dec 2024 04:01:10 -0800 (PST)
 From: Luca Weiss <luca.weiss@fairphone.com>
-Date: Mon, 09 Dec 2024 13:01:05 +0100
-Subject: [PATCH 1/2] media: dt-bindings: media: camss: Restrict bus-type
- property
+Date: Mon, 09 Dec 2024 13:01:06 +0100
+Subject: [PATCH 2/2] media: qcom: camss: Restrict endpoint bus-type to
+ D-PHY
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,7 +84,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241209-camss-dphy-v1-1-5f1b6f25ed92@fairphone.com>
+Message-Id: <20241209-camss-dphy-v1-2-5f1b6f25ed92@fairphone.com>
 References: <20241209-camss-dphy-v1-0-5f1b6f25ed92@fairphone.com>
 In-Reply-To: <20241209-camss-dphy-v1-0-5f1b6f25ed92@fairphone.com>
 To: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, 
@@ -103,376 +102,35 @@ Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
  Luca Weiss <luca.weiss@fairphone.com>
 X-Mailer: b4 0.14.2
 
-The CSIPHY of Qualcomm SoCs support both D-PHY and C-PHY standards for
-CSI-2, but not any others so restrict the bus-type property describing
-this to the supported values.
-
-The only exception here is MSM8916 which only supports D-PHY. C-PHY was
-introduced with newer SoCs.
-
-Do note, that currently the Linux driver only supports D-PHY.
+Currently the Qualcomm CAMSS driver only supports D-PHY while the
+hardware on most SoCs also supports C-PHY. Until this support is added,
+check for D-PHY to make it somewhat explicit that C-PHY won't work.
 
 Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 ---
- .../bindings/media/qcom,msm8916-camss.yaml         |  8 ++++++
- .../bindings/media/qcom,msm8953-camss.yaml         | 15 +++++++++++
- .../bindings/media/qcom,msm8996-camss.yaml         | 20 +++++++++++++++
- .../bindings/media/qcom,sc8280xp-camss.yaml        | 20 +++++++++++++++
- .../bindings/media/qcom,sdm660-camss.yaml          | 20 +++++++++++++++
- .../bindings/media/qcom,sdm845-camss.yaml          | 20 +++++++++++++++
- .../bindings/media/qcom,sm8250-camss.yaml          | 30 ++++++++++++++++++++++
- 7 files changed, 133 insertions(+)
+ drivers/media/platform/qcom/camss/camss.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/media/qcom,msm8916-camss.yaml b/Documentation/devicetree/bindings/media/qcom,msm8916-camss.yaml
-index 9cc0a968a401836814560c1af3ee84d946500b4f..3de2a3d2b5b761106975aab65ff614b2ef579ef5 100644
---- a/Documentation/devicetree/bindings/media/qcom,msm8916-camss.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,msm8916-camss.yaml
-@@ -94,6 +94,10 @@ properties:
-                 minItems: 1
-                 maxItems: 4
+diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+index 9fb31f4c18adee886cd0bcf84438a8f27635e07f..b99af35074cdf6fa794a0d2f0d54ecf12ac354d9 100644
+--- a/drivers/media/platform/qcom/camss/camss.c
++++ b/drivers/media/platform/qcom/camss/camss.c
+@@ -1855,6 +1855,15 @@ static int camss_of_parse_endpoint_node(struct device *dev,
+ 	if (ret)
+ 		return ret;
  
-+              bus-type:
-+                enum:
-+                  - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
++	/*
++	 * Most SoCs support both D-PHY and C-PHY standards, but currently only
++	 * D-PHY is supported in the driver.
++	 */
++	if (vep.bus_type != V4L2_MBUS_CSI2_DPHY) {
++		dev_err(dev, "Unsupported bus type %d\n", vep.bus_type);
++		return -EINVAL;
++	}
 +
-             required:
-               - data-lanes
+ 	csd->interface.csiphy_id = vep.base.port;
  
-@@ -113,6 +117,10 @@ properties:
-                 minItems: 1
-                 maxItems: 4
- 
-+              bus-type:
-+                enum:
-+                  - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
-+
-             required:
-               - data-lanes
- 
-diff --git a/Documentation/devicetree/bindings/media/qcom,msm8953-camss.yaml b/Documentation/devicetree/bindings/media/qcom,msm8953-camss.yaml
-index 8856fba385b1123d748199b46c5009c97700ad9b..6d776b0ca71140c0816b246dbaf41ef376205bba 100644
---- a/Documentation/devicetree/bindings/media/qcom,msm8953-camss.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,msm8953-camss.yaml
-@@ -112,6 +112,11 @@ properties:
-                 minItems: 1
-                 maxItems: 4
- 
-+              bus-type:
-+                enum:
-+                  - 1 # MEDIA_BUS_TYPE_CSI2_CPHY
-+                  - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
-+
-             required:
-               - data-lanes
- 
-@@ -131,6 +136,11 @@ properties:
-                 minItems: 1
-                 maxItems: 4
- 
-+              bus-type:
-+                enum:
-+                  - 1 # MEDIA_BUS_TYPE_CSI2_CPHY
-+                  - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
-+
-             required:
-               - data-lanes
- 
-@@ -150,6 +160,11 @@ properties:
-                 minItems: 1
-                 maxItems: 4
- 
-+              bus-type:
-+                enum:
-+                  - 1 # MEDIA_BUS_TYPE_CSI2_CPHY
-+                  - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
-+
-             required:
-               - data-lanes
- 
-diff --git a/Documentation/devicetree/bindings/media/qcom,msm8996-camss.yaml b/Documentation/devicetree/bindings/media/qcom,msm8996-camss.yaml
-index 5cb0e337ea6e4274dbb75b7b25a9b4ac44069cfd..cae4c4f19574be30e8a9f8ca08f26d67be1e455c 100644
---- a/Documentation/devicetree/bindings/media/qcom,msm8996-camss.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,msm8996-camss.yaml
-@@ -116,6 +116,11 @@ properties:
-                 minItems: 1
-                 maxItems: 4
- 
-+              bus-type:
-+                enum:
-+                  - 1 # MEDIA_BUS_TYPE_CSI2_CPHY
-+                  - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
-+
-             required:
-               - data-lanes
- 
-@@ -135,6 +140,11 @@ properties:
-                 minItems: 1
-                 maxItems: 4
- 
-+              bus-type:
-+                enum:
-+                  - 1 # MEDIA_BUS_TYPE_CSI2_CPHY
-+                  - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
-+
-             required:
-               - data-lanes
- 
-@@ -154,6 +164,11 @@ properties:
-                 minItems: 1
-                 maxItems: 4
- 
-+              bus-type:
-+                enum:
-+                  - 1 # MEDIA_BUS_TYPE_CSI2_CPHY
-+                  - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
-+
-             required:
-               - data-lanes
- 
-@@ -173,6 +188,11 @@ properties:
-                 minItems: 1
-                 maxItems: 4
- 
-+              bus-type:
-+                enum:
-+                  - 1 # MEDIA_BUS_TYPE_CSI2_CPHY
-+                  - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
-+
-             required:
-               - data-lanes
- 
-diff --git a/Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml
-index c0bc31709873c20b63c011148394f10b45c1655e..f9e3f514c61bf6fd48e15904b62b59c390e63b20 100644
---- a/Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml
-@@ -143,6 +143,11 @@ properties:
-                 minItems: 1
-                 maxItems: 4
- 
-+              bus-type:
-+                enum:
-+                  - 1 # MEDIA_BUS_TYPE_CSI2_CPHY
-+                  - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
-+
-             required:
-               - clock-lanes
-               - data-lanes
-@@ -166,6 +171,11 @@ properties:
-                 minItems: 1
-                 maxItems: 4
- 
-+              bus-type:
-+                enum:
-+                  - 1 # MEDIA_BUS_TYPE_CSI2_CPHY
-+                  - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
-+
-             required:
-               - clock-lanes
-               - data-lanes
-@@ -189,6 +199,11 @@ properties:
-                 minItems: 1
-                 maxItems: 4
- 
-+              bus-type:
-+                enum:
-+                  - 1 # MEDIA_BUS_TYPE_CSI2_CPHY
-+                  - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
-+
-             required:
-               - clock-lanes
-               - data-lanes
-@@ -212,6 +227,11 @@ properties:
-                 minItems: 1
-                 maxItems: 4
- 
-+              bus-type:
-+                enum:
-+                  - 1 # MEDIA_BUS_TYPE_CSI2_CPHY
-+                  - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
-+
-             required:
-               - clock-lanes
-               - data-lanes
-diff --git a/Documentation/devicetree/bindings/media/qcom,sdm660-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sdm660-camss.yaml
-index 584106e275f67aca814de5dd70563d395305399c..a3e2ee7f643d2a8c1490b4d02e16e509cf85f85f 100644
---- a/Documentation/devicetree/bindings/media/qcom,sdm660-camss.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,sdm660-camss.yaml
-@@ -122,6 +122,11 @@ properties:
-                 minItems: 1
-                 maxItems: 4
- 
-+              bus-type:
-+                enum:
-+                  - 1 # MEDIA_BUS_TYPE_CSI2_CPHY
-+                  - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
-+
-             required:
-               - data-lanes
- 
-@@ -141,6 +146,11 @@ properties:
-                 minItems: 1
-                 maxItems: 4
- 
-+              bus-type:
-+                enum:
-+                  - 1 # MEDIA_BUS_TYPE_CSI2_CPHY
-+                  - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
-+
-             required:
-               - data-lanes
- 
-@@ -160,6 +170,11 @@ properties:
-                 minItems: 1
-                 maxItems: 4
- 
-+              bus-type:
-+                enum:
-+                  - 1 # MEDIA_BUS_TYPE_CSI2_CPHY
-+                  - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
-+
-             required:
-               - data-lanes
- 
-@@ -179,6 +194,11 @@ properties:
-                 minItems: 1
-                 maxItems: 4
- 
-+              bus-type:
-+                enum:
-+                  - 1 # MEDIA_BUS_TYPE_CSI2_CPHY
-+                  - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
-+
-             required:
-               - data-lanes
- 
-diff --git a/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
-index ec4380a0a03f7dce2539085e24d9d9ec7205e825..98cd0df4570ed168fc1495619c408c4fbaac66fa 100644
---- a/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
-@@ -109,6 +109,11 @@ properties:
-                 minItems: 1
-                 maxItems: 4
- 
-+              bus-type:
-+                enum:
-+                  - 1 # MEDIA_BUS_TYPE_CSI2_CPHY
-+                  - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
-+
-             required:
-               - data-lanes
- 
-@@ -128,6 +133,11 @@ properties:
-                 minItems: 1
-                 maxItems: 4
- 
-+              bus-type:
-+                enum:
-+                  - 1 # MEDIA_BUS_TYPE_CSI2_CPHY
-+                  - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
-+
-             required:
-               - data-lanes
- 
-@@ -147,6 +157,11 @@ properties:
-                 minItems: 1
-                 maxItems: 4
- 
-+              bus-type:
-+                enum:
-+                  - 1 # MEDIA_BUS_TYPE_CSI2_CPHY
-+                  - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
-+
-             required:
-               - data-lanes
- 
-@@ -166,6 +181,11 @@ properties:
-                 minItems: 1
-                 maxItems: 4
- 
-+              bus-type:
-+                enum:
-+                  - 1 # MEDIA_BUS_TYPE_CSI2_CPHY
-+                  - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
-+
-             required:
-               - data-lanes
- 
-diff --git a/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
-index fa5073c0fd1efaa94f171e4ec26b918d8a5261d6..c95533ac92002c70efe7ef56ab2712565a5a7297 100644
---- a/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
-@@ -129,6 +129,11 @@ properties:
-                 minItems: 1
-                 maxItems: 4
- 
-+              bus-type:
-+                enum:
-+                  - 1 # MEDIA_BUS_TYPE_CSI2_CPHY
-+                  - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
-+
-             required:
-               - clock-lanes
-               - data-lanes
-@@ -152,6 +157,11 @@ properties:
-                 minItems: 1
-                 maxItems: 4
- 
-+              bus-type:
-+                enum:
-+                  - 1 # MEDIA_BUS_TYPE_CSI2_CPHY
-+                  - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
-+
-             required:
-               - clock-lanes
-               - data-lanes
-@@ -175,6 +185,11 @@ properties:
-                 minItems: 1
-                 maxItems: 4
- 
-+              bus-type:
-+                enum:
-+                  - 1 # MEDIA_BUS_TYPE_CSI2_CPHY
-+                  - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
-+
-             required:
-               - clock-lanes
-               - data-lanes
-@@ -198,6 +213,11 @@ properties:
-                 minItems: 1
-                 maxItems: 4
- 
-+              bus-type:
-+                enum:
-+                  - 1 # MEDIA_BUS_TYPE_CSI2_CPHY
-+                  - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
-+
-             required:
-               - clock-lanes
-               - data-lanes
-@@ -221,6 +241,11 @@ properties:
-                 minItems: 1
-                 maxItems: 4
- 
-+              bus-type:
-+                enum:
-+                  - 1 # MEDIA_BUS_TYPE_CSI2_CPHY
-+                  - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
-+
-             required:
-               - clock-lanes
-               - data-lanes
-@@ -244,6 +269,11 @@ properties:
-                 minItems: 1
-                 maxItems: 4
- 
-+              bus-type:
-+                enum:
-+                  - 1 # MEDIA_BUS_TYPE_CSI2_CPHY
-+                  - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
-+
-             required:
-               - clock-lanes
-               - data-lanes
+ 	mipi_csi2 = &vep.bus.mipi_csi2;
 
 -- 
 2.47.1
