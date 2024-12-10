@@ -1,204 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-41348-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41349-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0990F9EB724
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 17:53:12 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id CC6EA9EB734
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 17:54:35 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6E1E3283698
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 16:53:10 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 87EBE18827C7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 16:54:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26CB2237A57;
-	Tue, 10 Dec 2024 16:52:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 923771BD9CB;
+	Tue, 10 Dec 2024 16:54:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="RRdDX4sV";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="TFGrJV/q";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="RRdDX4sV";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="TFGrJV/q"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="bw27l8ia"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 511AF2343CF;
-	Tue, 10 Dec 2024 16:52:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC2381AA7A3
+	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2024 16:54:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733849538; cv=none; b=BAl76jn3sCwhnok8qDQ5+cz6/r+zq7KVKdveN4q/uaU9NgZr3G7z3McPnusx4kkejl4CHaKS1aMLuDQsZ5dgbyvwlmQJ0bwClnMbh4C9u/xUs5nOdRw8LhvO2h4C7PGNqNoi8Rr2XvDql5sKILRZcnq++fr5v7wZJmlHJ5/rRfY=
+	t=1733849642; cv=none; b=eU27fmTP1alyFIla1jchBjClvf5aR2mQz/HFiHyVUBSwZW2BMhF9fPiqqsnEt9e28a10+TffhI3yP9ce4Vw4+K4PZQ0SyZeXik/jTgdTgHv+yieKMHZJb2wFfPexoS4mGMcV90qd6auDrs/ypQcI2vMkln9lrxgaI06D+rsnk34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733849538; c=relaxed/simple;
-	bh=F768FKvg7FF4b66UZ/Q7WEOc2p7Zd5GIQR2lUzGMMtE=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=G9+TjuwpqV0RUha+2Jv4z6gBwqVMA6ynVDn76ARPNZ8ZA3/CquAInHAY2fPeG55jLsTIjI8yOejlD75LzbGqrlGKRGzKcOm0IgzcyKDT9G68i+yS+TTeAgHdnngH6Qt8RrDKTbffWYNcWWQ/AhDxrgsuJ5bW1kHJbJWh4l9gXKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=RRdDX4sV; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=TFGrJV/q; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=RRdDX4sV; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=TFGrJV/q; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 786C31F396;
-	Tue, 10 Dec 2024 16:52:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1733849534; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=/aIP4i4jvUV/G+qzhtRhmfq3gIeQW3kA9mI6aymWOb0=;
-	b=RRdDX4sVHqwXSpZmO5qyaLk+OT0prHhbpm2RuVO3tADPrjjC51flgdy0bBMhilMgSqfKc4
-	Dv+yE6TghAluhsMrjkHgGNWID+PoJ/WHqwfFkxouFBh0COAXQtRzDSLaPKulw82QS7hBhP
-	+JNegq3x34VwLUziHLi3yWibLzKHsDM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1733849534;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=/aIP4i4jvUV/G+qzhtRhmfq3gIeQW3kA9mI6aymWOb0=;
-	b=TFGrJV/qKUuxfk4pwQ3vf4hKGth7ZcX/alooGyybcmiPTp3F4ONZLxZLopwxTQX7o9od+3
-	MfCkzXC7nWsDVODA==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1733849534; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=/aIP4i4jvUV/G+qzhtRhmfq3gIeQW3kA9mI6aymWOb0=;
-	b=RRdDX4sVHqwXSpZmO5qyaLk+OT0prHhbpm2RuVO3tADPrjjC51flgdy0bBMhilMgSqfKc4
-	Dv+yE6TghAluhsMrjkHgGNWID+PoJ/WHqwfFkxouFBh0COAXQtRzDSLaPKulw82QS7hBhP
-	+JNegq3x34VwLUziHLi3yWibLzKHsDM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1733849534;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=/aIP4i4jvUV/G+qzhtRhmfq3gIeQW3kA9mI6aymWOb0=;
-	b=TFGrJV/qKUuxfk4pwQ3vf4hKGth7ZcX/alooGyybcmiPTp3F4ONZLxZLopwxTQX7o9od+3
-	MfCkzXC7nWsDVODA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D559C138D2;
-	Tue, 10 Dec 2024 16:52:13 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id lzzyMr1xWGcDRAAAD6G6ig
-	(envelope-from <tiwai@suse.de>); Tue, 10 Dec 2024 16:52:13 +0000
-Date: Tue, 10 Dec 2024 17:52:13 +0100
-Message-ID: <87wmg732gy.wl-tiwai@suse.de>
-From: Takashi Iwai <tiwai@suse.de>
-To: Cezary Rojewski <cezary.rojewski@intel.com>
-Cc: Wesley Cheng <quic_wcheng@quicinc.com>,
-	<linux-kernel@vger.kernel.org>,
-	<devicetree@vger.kernel.org>,
-	<linux-sound@vger.kernel.org>,
-	<linux-usb@vger.kernel.org>,
-	<linux-input@vger.kernel.org>,
-	<linux-arm-msm@vger.kernel.org>,
-	<linux-doc@vger.kernel.org>,
-	<srinivas.kandagatla@linaro.org>,
-	<mathias.nyman@intel.com>,
-	<perex@perex.cz>,
-	<conor+dt@kernel.org>,
-	<dmitry.torokhov@gmail.com>,
-	<corbet@lwn.net>,
-	<broonie@kernel.org>,
-	<lgirdwood@gmail.com>,
-	<krzk+dt@kernel.org>,
-	<pierre-louis.bossart@linux.intel.com>,
-	<Thinh.Nguyen@synopsys.com>,
-	<tiwai@suse.com>,
-	<robh@kernel.org>,
-	<gregkh@linuxfoundation.org>
-Subject: Re: [PATCH v30 28/30] ALSA: usb-audio: Add USB offload route kcontrol
-In-Reply-To: <1b77ad01-9621-4d2e-84c0-077032fbc5ef@intel.com>
-References: <20241106193413.1730413-1-quic_wcheng@quicinc.com>
-	<20241106193413.1730413-29-quic_wcheng@quicinc.com>
-	<1a361446-7a18-4f49-9eeb-d60d1adaa088@intel.com>
-	<28023a83-04a5-4c62-85a9-ca41be0ba9e1@quicinc.com>
-	<1644aa6b-a4e0-4dbd-a361-276cb95eb534@intel.com>
-	<3e246be8-22a9-4473-8c78-39788ae95650@quicinc.com>
-	<1b77ad01-9621-4d2e-84c0-077032fbc5ef@intel.com>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) Emacs/27.2 Mule/6.0
+	s=arc-20240116; t=1733849642; c=relaxed/simple;
+	bh=l/8HBPCwyuNycmVKwayvf4SiKQB/PKOeP06ko+JSfEI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=h4AbVcJh8mmI53C+EJS7RYB8r+5I2LSoCtWtAaAKnuRkCK5w/ewYhDvbLaZ5eJAENZsNiqEN0D26179Ufpez8fq+hNNYI6sm6sLsV2mGbX5QzV3nea5qiMfrm4Rp9iqAEzBqZLUcpTGr2izWvjRqZaf7/c98nxvZcur8Tv+dsZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=bw27l8ia; arc=none smtp.client-ip=209.85.167.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-53ff1f7caaeso3344036e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2024 08:54:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1733849639; x=1734454439; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=l/8HBPCwyuNycmVKwayvf4SiKQB/PKOeP06ko+JSfEI=;
+        b=bw27l8iad13d4Cmi/mQWI9jGXu3i5QP02b5Qmga7NWQJcF6bInx2YO9rnsr2neI+nj
+         7X/8vGlPxK8MrBl6SOsyzcYly5qzuJgWM9/bpNOVEmizHc3eZieNlS6XpRuM57KSUMdL
+         muWofN2ECSremabdbtAE/U0YFbE40T9XkLp5U=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733849639; x=1734454439;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=l/8HBPCwyuNycmVKwayvf4SiKQB/PKOeP06ko+JSfEI=;
+        b=eVI3yQxMTrtAhWmw9l/PO3xD8oVVyRXkD+urLzs/uni2R2h69JZpznNprH7xoiJWml
+         XvOOp8AXuQM9N9a1YSoWEVf4F0nMcDvAkQi7on3VjVbLjeVm3hXNn7fkzLpRXv5IFiRc
+         5YyC8ybIez9WJgKD/Hijho6fyMvJgzcGaCwVh2tHuIsybdo+Y5Z0WL2UO2wtn9gr1oeH
+         jKWeWirHWkKuona9/zIC68GMmU1afD++v7LtG+Vbzn4vPBI1MG5E1/BrhSkZSMmPKsuK
+         8g4QN4H1Hb8MuxIpcK4lsZrNWBcDr1xMBHj5egBRtFshw035L2CWEpJVoTojSTeEVN9H
+         xKbQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUY5kC03SQ6nW2du+S4QMmrnIZmsAfMmFNOG9FO22LhhLtqoCv7r7c/HvwlFcEnpRSjfNk79Y9asBL6F7GN@vger.kernel.org
+X-Gm-Message-State: AOJu0YwIF1C1O8YbpkA/Fd6Cpi3HeGLbRrRxQw/bQV0rGNrAYhOwTiCQ
+	fYuG5Vza+kH/RCQC/dP2FYFMj+r5C0Ocf+c4DrjnWNJJ9h2nLnnk/vS/IF8FLg0EWHRaNI4Z1p1
+	8Yg==
+X-Gm-Gg: ASbGnctZbaeQmOYlALP5NlZgdxyi3ufwQKV6CAVmM0yPVFsXInTr9WCw53GBL3JcMxm
+	NJc7HD6iKSQo3RLh/WpCBz8TjOLXzGBmZ2YQOJpfg4jvOSsRJ5k+9zRITE2HzhwOicFvTmn9mOt
+	uT+KWOd7td0+Ho5MrHifiSfBfGWUXU9Duqbfk2SrrcKWFGb3poQF8mEgrcl+IWANVWdjAsbLqDn
+	z7EIqMDGjO8yfv3I9kBs2qckH0ORGmppbbWWLB2NVnJVw4KYmdgsGPQAFWy1mUQ/wlGtzoDup5u
+	U8cnHZfX9uZMWgkL0Q==
+X-Google-Smtp-Source: AGHT+IGLDHvFVN6B177Q6GoLsv+H+971JMKvcuGr6f0BIH4xb5JGPnvtnxqEK4qBVxAniav7o6l0WA==
+X-Received: by 2002:a05:6512:4011:b0:540:2180:da3e with SMTP id 2adb3069b0e04-540241077d0mr1834900e87.46.1733849638774;
+        Tue, 10 Dec 2024 08:53:58 -0800 (PST)
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com. [209.85.167.51])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54020798a43sm606690e87.12.2024.12.10.08.53.58
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Dec 2024 08:53:58 -0800 (PST)
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-54026562221so754671e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2024 08:53:58 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCWI964LkQRBzGo6Uf7lMqV85gcrlO2bDhX8mGkOE5gA7b704IeR89LPv2RDsOnrxa7aBFy6Zgtf19mbz7dR@vger.kernel.org
+X-Received: by 2002:a05:6512:318b:b0:53e:3103:b967 with SMTP id
+ 2adb3069b0e04-54024108256mr1868839e87.35.1733849637744; Tue, 10 Dec 2024
+ 08:53:57 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 8bit
-X-Spam-Level: 
-X-Spamd-Result: default: False [-1.80 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	SUSPICIOUS_RECIPS(1.50)[];
-	MID_CONTAINS_FROM(1.00)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	TAGGED_RCPT(0.00)[dt];
-	RCPT_COUNT_TWELVE(0.00)[23];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	ARC_NA(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_CC(0.00)[quicinc.com,vger.kernel.org,linaro.org,intel.com,perex.cz,kernel.org,gmail.com,lwn.net,linux.intel.com,synopsys.com,suse.com,linuxfoundation.org];
-	TO_DN_SOME(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	FUZZY_BLOCKED(0.00)[rspamd.com];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid]
-X-Spam-Score: -1.80
-X-Spam-Flag: NO
+MIME-Version: 1.0
+References: <20241209174430.2904353-1-dianders@chromium.org> <20241210155604.GA15918@willie-the-truck>
+In-Reply-To: <20241210155604.GA15918@willie-the-truck>
+From: Doug Anderson <dianders@chromium.org>
+Date: Tue, 10 Dec 2024 08:53:46 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=U5xraosVuDGXxBN5Ajo0n=s50JZqtgQGPs1C9jM3YaFw@mail.gmail.com>
+X-Gm-Features: AZHOrDk7WvPRzq9z4VNazAXpYtL75nSHpExN5slME765TfN80XYGbQfqOs7VNn0
+Message-ID: <CAD=FV=U5xraosVuDGXxBN5Ajo0n=s50JZqtgQGPs1C9jM3YaFw@mail.gmail.com>
+Subject: Re: [PATCH 0/6] arm64: errata: Add Qualcomm CPUs to the Spectre
+ mitigation lists
+To: Will Deacon <will@kernel.org>
+Cc: Catalin Marinas <catalin.marinas@arm.com>, Mark Rutland <mark.rutland@arm.com>, 
+	Julius Werner <jwerner@chromium.org>, Jeffrey Hugo <quic_jhugo@quicinc.com>, 
+	Roxana Bradescu <roxabee@google.com>, bjorn.andersson@oss.qualcomm.com, 
+	linux-arm-kernel@lists.infradead.org, Trilok Soni <quic_tsoni@quicinc.com>, 
+	linux-arm-msm@vger.kernel.org, Anshuman Khandual <anshuman.khandual@arm.com>, 
+	Besar Wicaksono <bwicaksono@nvidia.com>, D Scott Phillips <scott@os.amperecomputing.com>, 
+	Easwar Hariharan <eahariha@linux.microsoft.com>, Oliver Upton <oliver.upton@linux.dev>, 
+	linux-kernel@vger.kernel.org, james.morse@arm.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, 10 Dec 2024 16:24:30 +0100,
-Cezary Rojewski wrote:
-> 
-> On 2024-12-06 9:43 PM, Wesley Cheng wrote:
-> > 
-> > On 12/6/2024 1:09 AM, Cezary Rojewski wrote:
-> 
-> ...
-> 
-> >>>>> +#include <linux/usb.h>
-> >>>>> +
-> >>>>> +#include <sound/core.h>
-> >>>>> +#include <sound/control.h>
-> >>>>> +#include <sound/soc-usb.h>
-> >>>> 
-> >>>> ALSA-components should not be dependent on ASoC ones. It should be done the other way around: ALSA <- ASoC.
-> >>>> 
-> >>> 
-> >>> At least for this kcontrol, we need to know the status of the ASoC state, so that we can communicate the proper path to userspace.  If the ASoC path is not probed or ready, then this module isn't blocked.  It will just communicate that there isn't a valid offload path.
-> >> 
-> >> I'm not asking _why_ you need soc-usb.h header, your reasoning is probably perfectly fine. The code hierarchy is not though. If a sound module is dependent on soc-xxx.h i.e. ASoC symbols, it shall be part of sound/soc/ space.
-> > 
-> > 
-> > That would basically require a significant change in the current design.  Was that requirement documented somewhere, where ALSA components should not be dependent on ASoC?  What was the reasoning for making it one direction, but not the other?
-> 
-> Well, some may call this a common sense. ASoC is founded on
-> ALSA. There are no ALSA-core components which I'm aware of which have
-> a dependency on ASoC components. You may not get compilation problems
-> now, but such approach does not scale and will hit circular dependency
-> problem sooner or later.
+Hi,
 
-In this particular case, I guess we don't have to be too strict.
-As long as it's a dynamic add-on, there is less dependency problem.
-OTOH, if it were linked directly, that can cause an issue, though.
+On Tue, Dec 10, 2024 at 7:56=E2=80=AFAM Will Deacon <will@kernel.org> wrote=
+:
+>
+> Hi Doug,
+>
+> On Mon, Dec 09, 2024 at 09:43:10AM -0800, Douglas Anderson wrote:
+> >
+> > Since Qualcomm CPUs are all derivatives of ARM cores they all have
+> > unique MIDR values. This means that the tables listing necessary
+> > Spectre mitigations need special entries for them. However, those
+> > entries are not present and that means that some Spectre mitigations
+> > are lacking for Qualcomm CPUs.
+> >
+> > I've made an attempt at **GUESSING** what the right patches should be
+> > to enable mitigations for Qualcomm CPUs. This is mostly me searching
+> > the web to figure out what ARM cores various Qualcomm cores are based
+> > off of.
+> >
+> > These patches get more and more sketchy as the series progresses and I
+> > have noted that the later patces DON'T EVEN COMPILE. I have included
+> > them to make it obvious that I think these cores are affected even if
+> > I don't have all the right information to mitigate them. Hopefully
+> > Qualcomm can come and fix this mess for me.
+> >
+> > I'll note that I am certainly no expert on Spectre. Mostly I ended up
+> > here running `lscpu` on a device and noticing that it thought that it
+> > wasn't affected by Spectre v2 when I thought it was.
+>
+> Whilst only Qualcomm can say definitively whether or not they are
+> affected (and what values of 'k' are required for the loop-based
+> workarounds), I can't help but wonder whether the current mitigation
+> code is structured the wrong way around in this case.
+>
+> It looks to me like we don't have a way to identify a "vulnerable" CPU
+> for Spectre-BHB; either a CPU has some sort of mitigation or it's
+> unaffected. That means that there's very little incentive for vendors
+> to add their CPUs to one of the lists -- if they do nothing, userspace
+> is told that everything is golden and they don't pay the performance
+> hit of a workaround!
+>
+> So I think we should consider turning this on its head and assume that
+> CPUs we don't know about are vulnerable, having a list of unaffected
+> cores that predate the introduction of CSV2.3 which can be queried by
+> is_spectre_bhb_affected(). We can do that without the assistance of the
+> CPU vendors.
+>
+> Does that make sense, or did I miss something?
 
-But, which code is put at which place can be reconsidered, yes.  The
-right placing may help better understanding of the code, too.
+It makes sense to me. I'm not sure I'd be the best person to actually
+implement that, though. Maybe someone CCed on this thread could take a
+stab at it? It seems like folks from ARM would know the most about the
+various mitigations and which pre-CSV2.3 cores were safe.
 
-
-thanks,
-
-Takashi
+-Doug
 
