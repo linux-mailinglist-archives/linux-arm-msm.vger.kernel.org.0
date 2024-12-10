@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-41228-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41229-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5BECA9EA97B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 08:23:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B2FF99EA984
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 08:25:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0C4842868FA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 07:23:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6B019287D6E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 07:25:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F2F622CBEC;
-	Tue, 10 Dec 2024 07:23:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 64C5222CBF7;
+	Tue, 10 Dec 2024 07:25:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bVE1tsBW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AIhg58dw"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E30013B280;
-	Tue, 10 Dec 2024 07:23:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 372A21FCCE6;
+	Tue, 10 Dec 2024 07:25:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733815430; cv=none; b=Z8gmnrTxQ6uKxC5CLBRGgoamdxVRYN7K+BFkCN1o5XoFk87LvSzI6HuenFrnCG3pMEdntKMQqoVLXgHVUgTcaNM6jY61xF9DbuUHEMeSujo2xODn7sY8NG+WqY5IUw4JUtWPp0SuSrHf2uo3EMUiOQdBo6d6G4yOqZUQ0vF4wfc=
+	t=1733815541; cv=none; b=tLdo0H/DzfxdjUH6wrix1jq5+YpTZzN3G54ZyFdg9HJHWM55JkW622w/zqar/d6qqqhCZNWLhsXZR+Bdt2Elq1X75+IQOb36DnhpC6Tk1qM3x50EhmCEBm+Kl4ceUpOenixDToaIUhsqX+CuUwxk3+1k12ENbkkllju40zrbWWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733815430; c=relaxed/simple;
-	bh=C+u8g83KCxT/nbDzJu9qW5mBPgHJajxnd1sqC3ctG5s=;
+	s=arc-20240116; t=1733815541; c=relaxed/simple;
+	bh=ox/K7B152a5pImlzTHzezl1rRj8orN8GA7FhCyBAK0o=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZaPAy+rgk2Z0BJPLEBhmkXyn6qALPK+34GEf7mS/47Eg40uXwG1CdltphFUpEUnh1WMjUOOU4XU3EtqTx79Ig3ZwFh/anm2oWK8XIENFht46hIQDSEvRGJFW/qKoDMkyeNcfaRPKipWXzLRVNNmFeZ5dh0C9eOGn1GDuvzF+FNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bVE1tsBW; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ECA8C4CED6;
-	Tue, 10 Dec 2024 07:23:44 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=Par9qrO8CVFSn2KdFJFIQRAPTNDxU/ul0ekbZeBGml0i32Qq6S+beFZKpu8dTP99KUTUBCC3JRAl848aptUVGQO2Q54Y6brqPYerUKQJqXeiiOhsJHLqasDzDxLlLkfyVCUG+xHeTMXsXeOrkma4lxCAm0FP7YefjoTUTItwz1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AIhg58dw; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2518C4CED6;
+	Tue, 10 Dec 2024 07:25:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733815429;
-	bh=C+u8g83KCxT/nbDzJu9qW5mBPgHJajxnd1sqC3ctG5s=;
+	s=k20201202; t=1733815540;
+	bh=ox/K7B152a5pImlzTHzezl1rRj8orN8GA7FhCyBAK0o=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=bVE1tsBWChJQfIvoakA6dzr78bWNmi7ILz3zm2woT47v0B5zsegAdY4cpD3ErQxjc
-	 TJlJFvyGT+FN8MvurOS3WsOwO6oQh8RZKC/QAdfv+Bg4Kbel81YTwlyVAZCadIAxR0
-	 poMXtexrzCupgpuzZvKVYSHwLCddugBcGAaoeL8oV6e3xPODwHH5MHebA4RMq6m/jO
-	 c69jqffmiFAxnjWM3uZQQlumEoL21/OpBaP8x56z952jZAijwy/fiVnEONkA3QgO/L
-	 gvD5sUJbZq0OyClxeXhw3gf64Vq7DsusAhtmTHmppoZ0jYltOnrx1LVLEdnUhGffoY
-	 KFJbzKFMBiqKA==
-Message-ID: <9df703d9-b2c3-4978-9325-7ad50087e8f1@kernel.org>
-Date: Tue, 10 Dec 2024 08:23:42 +0100
+	b=AIhg58dwmlzZpg2yhpF2D0JbUjEVZR+SzL13y3fTSQ63IiHl93ADmSOzDhGtCjk7i
+	 oixba8olwZQeop/2ghMlxum3DeP43l5KJZ9fwFPsBu7vf6u65mia59JdTSRhfBMS6u
+	 PW+2fG/fUvs5Gzm+0OFtjvgI74ml0xoWxmICyWTFRT6ZxXAF7MleiGVPIRRw00zBOA
+	 FlbSaq0NZrRR/yS/6tElL1/XcR8het/GQFhfBiBs+G2ef9xEKKMZLP3i2XYOmzVZee
+	 65X9jIX0ZZkBz0E8H79ESWvvzgXif1t7Y2k5PU9nEpth0X1JpGqfCTKp3FfV5QYuTH
+	 2PxTA1E/m8C7A==
+Message-ID: <5782d7c6-1a75-4f15-8942-387742e0ae09@kernel.org>
+Date: Tue, 10 Dec 2024 08:25:34 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,22 +50,25 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/7] dt-bindings: i2c: qcom,i2c-geni: Document DT
- properties for QUP firmware loading
-To: Viken Dadhaniya <quic_vdadhani@quicinc.com>, andi.shyti@kernel.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- gregkh@linuxfoundation.org, jirislaby@kernel.org, broonie@kernel.or,
- andersson@kernel.org, konradybcio@kernel.org, johan+linaro@kernel.org,
- dianders@chromium.org, agross@kernel.org, linux-arm-msm@vger.kernel.org,
- linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org,
- linux-spi@vger.kernel.org
-Cc: quic_anupkulk@quicinc.com,
- Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-References: <20241204150326.1470749-1-quic_vdadhani@quicinc.com>
- <20241204150326.1470749-2-quic_vdadhani@quicinc.com>
- <dacfdaf0-329f-4580-94e0-7c3e26b52776@kernel.org>
- <2d615fdb-a661-4fb5-bde7-46f4690ecdce@quicinc.com>
+Subject: Re: [PATCH v3 5/5] arm64: dts: qcom: Add support for QCS9075 Ride &
+ Ride-r3
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Wasim Nazir <quic_wasimn@quicinc.com>,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, kernel@quicinc.com
+References: <20241119174954.1219002-1-quic_wasimn@quicinc.com>
+ <20241119174954.1219002-6-quic_wasimn@quicinc.com>
+ <9e351979-be01-4d38-9b94-cc23efac4c3f@kernel.org>
+ <Z1LaN9nFr5msfq61@hu-wasimn-hyd.qualcomm.com>
+ <cbed17c2-d839-42cb-8a33-b59538bfccf3@oss.qualcomm.com>
+ <c639ca40-9e4f-4882-8441-57413e835422@kernel.org>
+ <Z1c9wMxQ5xSqvPmf@hu-wasimn-hyd.qualcomm.com>
+ <8cf9edc0-a0cb-4fd0-b10e-2138784dfba3@kernel.org>
+ <iu6ssjczkdfkhfy2n6vxf3f3c2pepsepslzvnh5z4susxgxgqa@engwsvhu533x>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -111,28 +114,34 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <2d615fdb-a661-4fb5-bde7-46f4690ecdce@quicinc.com>
+In-Reply-To: <iu6ssjczkdfkhfy2n6vxf3f3c2pepsepslzvnh5z4susxgxgqa@engwsvhu533x>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 10/12/2024 05:43, Viken Dadhaniya wrote:
->>>       maxItems: 1
->>>   
->>> +  qcom,load-firmware:
->>> +    type: boolean
->>> +    description: Optional property to load SE (serial engine) Firmware from protocol driver.
+On 10/12/2024 00:25, Dmitry Baryshkov wrote:
+>>>>>> 9100 & 9075 are different from “safe” perspective. They differ in
+>>>>>> changes related to thermal which will be added later in devicetree.
+>>>>>
+>>>>> Since this can't be inferred from just looking at the changes, please
+>>>>> make sure to add that to the commit message
+>>>>
+>>>> Any include of other DTS is clear sign something is odd here. Including
+>>>> multiple times without any added nodes is showing these are not real
+>>>> products/boards .
+>>>
+>>> We're adding DTS to reuse the common board changes, with plans to
+>>> include the differences in upcoming patches. To provide more clarity, I
+>>> will include patches in this series to highlight the differences between
+>>> the 9100 and 9075 boards.
 >>
->>
->> Please wrap code according to coding style (checkpatch is not a coding
->> style description, but only a tool).
-> Actually i have ran dt-schema for yaml validation. I couldn't get if you 
-> have any comment for description statement OR it's related to code ? 
-> Could you please be more descriptive so i can adopt the suggestions.
+>> Sure, still do not include DTS. Just like C files don't include C files.
+> 
+> So, is the solution simple, rename .dts to .dtsi and include it from
+> both .dts files?
 
-This code is not conforming to coding style in terms of wrapping, what
-dtschema has to do with it? Please read coding style.
-
-
+For example. This leads to more questions - what is common here? We do
+not create shared DTSI files just because someone wants, but to really
+note shared components or shared designs.
 
 Best regards,
 Krzysztof
