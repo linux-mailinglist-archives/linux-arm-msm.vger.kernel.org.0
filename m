@@ -1,120 +1,167 @@
-Return-Path: <linux-arm-msm+bounces-41318-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41319-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 578F09EB231
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 14:50:12 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 69F149EB29E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 15:05:33 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4A008282C8B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 13:50:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EBF2416E1E1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 14:03:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BE801A08A0;
-	Tue, 10 Dec 2024 13:49:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 670521BAEDC;
+	Tue, 10 Dec 2024 14:02:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nxc8ezmA"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="p7pee7gc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C9571E515;
-	Tue, 10 Dec 2024 13:49:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8FA91B4F04;
+	Tue, 10 Dec 2024 14:02:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733838592; cv=none; b=AtD4RiFFgrMtYG5AcyooG5C3d0rATV6wxlOfCvIpxY17w3MEll1SXv5uhGJg3aD6Glvbnyl0LhOpeEzU6MVYD4KuxPScDzmtQ6kvT+McFY05HSpChipdMYCI6Ssvsazlp8umIetM3rl4GPEcfyRWDgvtckwqh1vGzQ36Se5Wbnw=
+	t=1733839362; cv=none; b=o1sqz2W5uN6IKwrfHClgRVH9H5OKCFSrDkOfaJqCfI4cBfFbS7dBg2f7PpAqW6amdKXuxWLQcYn8nehIoqz0WLP8a8oMrNlkqCnOV5gnjip9IjtXltiI4rG6gyKYsVFBJmQl0nCMDYoOUliXJNLYsagYdxSGL/cmjafWWt91u7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733838592; c=relaxed/simple;
-	bh=e0jZuI/DKh2/Xu1++9G8Hh1Ryx/GiiP7Fc2SzdCbW/o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QR2aSdvfO7dZNOsDjRkE5oBDLqHWWVkjjwzHyjz/SzdgQDEmKnllcRFst70g0U9rwDBETJ988+/XCJ/qD7NGsV7s+h6GyVTeR6TJVMhm3uaIBcx9bEeVLazH3N9LcJgBn1l/9Z/tO2aTgfyvrQRVCg0LOo3qwpyCuL4rD9UMaR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nxc8ezmA; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B20BCC4CED6;
-	Tue, 10 Dec 2024 13:49:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733838591;
-	bh=e0jZuI/DKh2/Xu1++9G8Hh1Ryx/GiiP7Fc2SzdCbW/o=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=nxc8ezmAQKuVvEC4VDxSFSlaB/KhNZSOwO0U5V0DM1Zzjdjs64Vf89mZd6WE+vD3c
-	 gcMBush/8NmtIkKoKKABT2qJF5dk4V4XEHL6t4ej5lDfsouIKKlE9tQhAYPi9+jqgK
-	 segniSDhLUt34iiHcDJMoKF6sYlZVrDPAVtMT9e20g646XY+cR8rMOHFA7g4z8lBHo
-	 t31lsTHyqBR+lkDSsq+OlUKcxdycDqAkNHS5B75SN1zl24Bd7Xvs0qI/8gNqnM73xk
-	 FbSkK/kTbKhbSPtfMCFt/7/yDbfC92s9Kfv5EhJh7eRz2d2g/2kKA1QfHsjuetLPx0
-	 r3IOU8hNLpCrA==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1tL0cc-0000000039o-1jgo;
-	Tue, 10 Dec 2024 14:49:54 +0100
-Date: Tue, 10 Dec 2024 14:49:54 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Ard Biesheuvel <ardb@kernel.org>
-Cc: Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Ricardo Salveti <ricardo@foundries.io>,
-	Marc Zyngier <maz@kernel.org>, linux-efi@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: UEFI EBS() failures on Lenovo T14s
-Message-ID: <Z1hHAtAcgivajR7i@hovoldconsulting.com>
-References: <Z0gn1N3IsP8r3gTA@hovoldconsulting.com>
- <CAMj1kXGjiA1HydMaY82MQsYvkchpN7v7CMOB5i3NEdqcYGn19Q@mail.gmail.com>
- <Z0g_HL01eqXu4cwQ@hovoldconsulting.com>
- <CAMj1kXFtr7ejEjjSRj9dcRa7YbO0SR5OR3pm+K6OvbX2=RfhAQ@mail.gmail.com>
- <CAMj1kXHS_TY=jfBT=dqUQSXf2pBXbt12uaLsMw-FLX3uU_X6uA@mail.gmail.com>
- <Z0iCNJVWNzBzdq0C@hovoldconsulting.com>
+	s=arc-20240116; t=1733839362; c=relaxed/simple;
+	bh=qKuGnKrDI8tSu8y0laNgchv/TAlzf72FKxm9pJA01ek=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YgO37iWx0LoeQcCE3u8uHouXdjxA7TeDeiw/OljJzNrmzXnmj+iV+32XdjibkEbz0yXor4E+wxtfPYyJnnQtKaV3ZkZ5OHI58Qn/XSLm11Wx6gThQOQSN4lHFWi+erWhHvBcQixMeOFPGXiLjlAIA3azaZ3FTqo1JNuJ23H1QHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=p7pee7gc; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BA8P2I8015737;
+	Tue, 10 Dec 2024 14:02:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	qxWpVhRjhZwE295T3kgsrVOGaciQb5Kgk+jkfYqg6CQ=; b=p7pee7gcu4pMXx5H
+	oDfqgVsDvVoo8msqleGs1OtDwLKxo7COWn80JKt1NCZ2LfgnMh7jpu9dXVT/xz6s
+	N6bn1uIKcceJLucyBabLKtYDQGQzoAoEvAu012X7HEtQdDnwsdXTR1dkR7J3XkRj
+	ZkqvqTUw3TGxRwfCU5UYrtDiualMkEUZbyMobqdcMEHgm9I5P66n0dwgvcWQv39Z
+	BIWGI8Yk7axJ7YwuUs/J6dFzP6F8igWNXp974sLwvInX1lIHfplVpm+xZLcfbpLz
+	+/hEq9TIwhq1SIrwyZGzDqpDpqWSz/3kuE2q8xyMorKj4aOwuB7oVL595AQET7Mm
+	79+sFQ==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43dy8tv808-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 10 Dec 2024 14:02:32 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BAE2VRx014982
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 10 Dec 2024 14:02:31 GMT
+Received: from hu-wasimn-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 10 Dec 2024 06:02:24 -0800
+Date: Tue, 10 Dec 2024 19:32:16 +0530
+From: Wasim Nazir <quic_wasimn@quicinc.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+CC: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Konrad Dybcio
+	<konrad.dybcio@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <kernel@quicinc.com>
+Subject: Re: [PATCH v3 5/5] arm64: dts: qcom: Add support for QCS9075 Ride &
+ Ride-r3
+Message-ID: <Z1hJ6GRB6u50PmlN@hu-wasimn-hyd.qualcomm.com>
+References: <9e351979-be01-4d38-9b94-cc23efac4c3f@kernel.org>
+ <Z1LaN9nFr5msfq61@hu-wasimn-hyd.qualcomm.com>
+ <cbed17c2-d839-42cb-8a33-b59538bfccf3@oss.qualcomm.com>
+ <c639ca40-9e4f-4882-8441-57413e835422@kernel.org>
+ <Z1c9wMxQ5xSqvPmf@hu-wasimn-hyd.qualcomm.com>
+ <8cf9edc0-a0cb-4fd0-b10e-2138784dfba3@kernel.org>
+ <iu6ssjczkdfkhfy2n6vxf3f3c2pepsepslzvnh5z4susxgxgqa@engwsvhu533x>
+ <5782d7c6-1a75-4f15-8942-387742e0ae09@kernel.org>
+ <Z1gIsrWAT3QftC4c@hu-wasimn-hyd.qualcomm.com>
+ <d3f1d92b-cc08-4a7d-a48f-89081a615c48@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="utf-8"
 Content-Disposition: inline
-In-Reply-To: <Z0iCNJVWNzBzdq0C@hovoldconsulting.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <d3f1d92b-cc08-4a7d-a48f-89081a615c48@kernel.org>
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: gyDQnnuAzdRtmsRSHi2HyCj0R63x__Eb
+X-Proofpoint-GUID: gyDQnnuAzdRtmsRSHi2HyCj0R63x__Eb
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
+ priorityscore=1501 mlxlogscore=790 clxscore=1015 mlxscore=0 spamscore=0
+ lowpriorityscore=0 malwarescore=0 bulkscore=0 phishscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
+ definitions=main-2412100105
 
-On Thu, Nov 28, 2024 at 03:46:12PM +0100, Johan Hovold wrote:
-
-> From 1464360c7c16d1a6ce454bf88ee5815663f27283 Mon Sep 17 00:00:00 2001
-> From: Johan Hovold <johan+linaro@kernel.org>
-> Date: Wed, 27 Nov 2024 16:05:37 +0100
-> Subject: [PATCH] hack: efi/libstub: fix t14s exit_boot_services() failure
+On Tue, Dec 10, 2024 at 12:50:51PM +0100, Krzysztof Kozlowski wrote:
+> On 10/12/2024 10:24, Wasim Nazir wrote:
+> > On Tue, Dec 10, 2024 at 08:25:34AM +0100, Krzysztof Kozlowski wrote:
+> >> On 10/12/2024 00:25, Dmitry Baryshkov wrote:
+> >>>>>>>> 9100 & 9075 are different from “safe” perspective. They differ in
+> >>>>>>>> changes related to thermal which will be added later in devicetree.
+> >>>>>>>
+> >>>>>>> Since this can't be inferred from just looking at the changes, please
+> >>>>>>> make sure to add that to the commit message
+> >>>>>>
+> >>>>>> Any include of other DTS is clear sign something is odd here. Including
+> >>>>>> multiple times without any added nodes is showing these are not real
+> >>>>>> products/boards .
+> >>>>>
+> >>>>> We're adding DTS to reuse the common board changes, with plans to
+> >>>>> include the differences in upcoming patches. To provide more clarity, I
+> >>>>> will include patches in this series to highlight the differences between
+> >>>>> the 9100 and 9075 boards.
+> >>>>
+> >>>> Sure, still do not include DTS. Just like C files don't include C files.
+> >>>
+> >>> So, is the solution simple, rename .dts to .dtsi and include it from
+> >>> both .dts files?
+> >>
+> >> For example. This leads to more questions - what is common here? We do
+> >> not create shared DTSI files just because someone wants, but to really
+> >> note shared components or shared designs.
+> >>
+> > 
+> > We can reuse the common dtsi for ride boards, i.e., sa8775p-ride.dtsi,
+> > and then add board-specific changes in the corresponding files.
 > 
-> The UEFI firmware on the Lenovo ThinkPad T14s is broken and
-> ExitBootServices() often fails and prevents the kernel from starting:
 > 
-> 	EFI stub: Exiting boot services...
-> 	EFI stub: Exit boot services failed.
+> So you will create shared DTSI because "someone wants"? Did you read the
+> question above and valid reasons/answers to it?
 > 
-> One bootloader entry may fail to start almost consistently (once in a
-> while it may start), while a second entry may always work even when the
-> kernel, dtb and initramfs images are copies of the failing entry on the
-> same ESP.
+
+Sorry, if I couldn't able to answer your question.
+
+We will not be creating any new DTSI files. Since QCS9075 is derived
+from SA8775P, we will be reusing the existing common DTSI files for
+the ride boards of the SA8775P and its derivative SoCs.
+
+Here is the change reference for common ride dtsi:
+https://lore.kernel.org/all/20240627114212.25400-3-brgl@bgdev.pl/
+
+Please let me know if I missed anything.
+
 > 
-> This can be worked around by starting and exiting a UEFI shell from the
-> bootloader or by starting the bootloader manually via the Boot Menu
-> (F12) before starting the kernel.
+> > 
+> > If this approach is acceptable, I can proceed with sending the
+> > next patch series. I hope this will help clarify things further.
 > 
-> Notably starting the kernel automatically from the shell startup.nsh
-> does not work, while calling the same script manually works.
-> 
-> Experiments have revealed that allocating an event before calling
-> ExitBootServices() can make the call succeed. When providing a
-> notification function there apparently is no need to actually signal the
-> event group and CloseEvent() could also be called directly.
+> Best regards,
+> Krzysztof
 
-As feared, this does not really fix anything and probably just works
-by changing timing or alignment or similar.
-
-When trying to find a workaround for the EBS() failure I had moved
-loading of the dtb and initamfs images from systemd-boot to the stub as
-that seemed to increase the chance of getting the kernel to start.
-
-When I tried moving the loading back to the bootloader the other day I
-saw EBS() fail with the event hack still in place in the stub. This time
-it did not seem to fail gracefully however, and the machine was reset by
-the hypervisor after a timeout.
-
-And now I'm occasionally seeing EBS() fail also when the stub is loading
-the images.
-
-Johan
+Thanks & Regards,
+Wasim
 
