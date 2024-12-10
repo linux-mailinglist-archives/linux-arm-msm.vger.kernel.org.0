@@ -1,172 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-41358-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41359-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5FC179EBBC5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 22:24:11 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AC3139EBC00
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 22:42:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 57B7C167BDD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 21:24:08 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D1370167D25
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 21:42:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4956230273;
-	Tue, 10 Dec 2024 21:24:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 601D723A569;
+	Tue, 10 Dec 2024 21:42:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BqNi3BmZ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HNhcZIPZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA8AB23ED4A;
-	Tue, 10 Dec 2024 21:24:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24C5F23A561;
+	Tue, 10 Dec 2024 21:42:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733865846; cv=none; b=q69WpWaQ1wgF5Vwdqp2NUNexN/mtwl7Cc/i1qyw6n8upB/AkId/rp4yXEZ3UjDYqyr5agCfaHHdLdo81ah5M0EIbyxeBjBdUyr5AvmJBRS082Z8rR5+4a/cLj86KmuS4mfNeU/GA0+sVhSydpOwZZibeuPEibx4Chusuw/6dYs4=
+	t=1733866925; cv=none; b=YSe9OD4GreU+A4aZqSPkeBQkMUVcQS0WZ2sUNz7CpJ6CkCYNIupTYq72zJwiJ8Ftjzt/Ol1g5SQcvsc43oq/POvLw8Vqs5jUx69iUjXQ+2UqURj5DO3SNee2UWhel7s8qzgae/RWvnkM0P2G3SuU0mvaoYUyfA3/4TUO3iFZQDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733865846; c=relaxed/simple;
-	bh=Z5QvjqXjt7nt1q0SyE0Y+TbsCeMskbC5KMAyiIhNWlM=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=g0RNfekqGpRhFzG/vKLHnXyVTTb408dOkFyMNonCxkrzshGrPtAJw0L2oUyOtbzne4kHm1liPEXPoyqRoSfmcvkoHW/y2r6gvx63Pqku+j9DJ6Cuu906Wol+B4G3Koi871BdoxaFHUKCr4JOFcWDmTAWB8Wx6U061ddSEeGBRz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BqNi3BmZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4674DC4CED6;
-	Tue, 10 Dec 2024 21:24:06 +0000 (UTC)
+	s=arc-20240116; t=1733866925; c=relaxed/simple;
+	bh=J7RAxM/q6Q/8DwyccS9Kg3PsZEkN8XyD8RVXJt3my1s=;
+	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=cS3fPTnvG852yEh91QZBZpFUXG+LzDUKs3UVXcIy54HCGPPS3F0/0EAjSDUZarLUNoPt2jYf2ZwlU3+iNX6rF1AEcOiMyriE66czo9mhwxNz6ePKx5/DqW45xBfwzUVUz5qxZb9pby8edvAT11sVnakrWzSt1ittgx+r4ATCh7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HNhcZIPZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFCFBC4CED6;
+	Tue, 10 Dec 2024 21:42:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733865846;
-	bh=Z5QvjqXjt7nt1q0SyE0Y+TbsCeMskbC5KMAyiIhNWlM=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=BqNi3BmZUbZUW6Zfk5jruHxc91Vc4ndIr/HQATGRfe4AEuzMXIuAGGUZM02wiCxcU
-	 BeyzmRVUEOWnu6w7P25Q3tNM6A5L7XIqjGQnbHR1Gh8i1sI/UNVYTxfvF/uFg7uBMq
-	 3bXhLuQF1VVtz5EtLDVeBpv1Mms4q3OVr21jfz+lABscBw7b1+N63WhnyUFDq8/6Md
-	 j9D8ka0190Ef4Bkbk5+KViXESKdYnWegZS3OIB2elS7T/8Dlesll/WZRpfygMKbR42
-	 hFjSfqkMPqCqor/LGEx1gO52loRWGpwHIWlgdTlszXXSCH9Ibrc0MwtdQ6O4+8rVlb
-	 uEL4n4cfioiIQ==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=wait-a-minute.misterjones.org)
-	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.95)
-	(envelope-from <maz@kernel.org>)
-	id 1tL7i7-002QNJ-Ry;
-	Tue, 10 Dec 2024 21:24:03 +0000
-Date: Tue, 10 Dec 2024 21:24:03 +0000
-Message-ID: <87ed2fs03w.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
-To: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>,
-	Sean Paul <sean@poorly.run>,
-	"Konrad\
- Dybcio" <konradybcio@kernel.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Marijn Suijten
-	<marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>,
-	"Simona\
- Vetter" <simona@ffwll.ch>,
-	Elliot Berman <quic_eberman@quicinc.com>,
-	"Pavan\
- Kondeti" <quic_pkondeti@quicinc.com>,
-	<linux-arm-msm@vger.kernel.org>,
-	<dri-devel@lists.freedesktop.org>,
-	<freedreno@lists.freedesktop.org>,
-	<linux-kernel@vger.kernel.org>,
-	<linux-arm-kernel@lists.infradead.org>
-Subject: Re: [PATCH] drm/msm/a6xx: Skip gpu secure fw load in EL2 mode
-In-Reply-To: <20241209-drm-msm-kvm-support-v1-1-1c983a8a8087@quicinc.com>
-References: <20241209-drm-msm-kvm-support-v1-1-1c983a8a8087@quicinc.com>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/29.4
- (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+	s=k20201202; t=1733866925;
+	bh=J7RAxM/q6Q/8DwyccS9Kg3PsZEkN8XyD8RVXJt3my1s=;
+	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
+	b=HNhcZIPZ3f9Tae9yxevgtUmOhA9UE6hjFegL/J7gs1+9JKN9iCVqgVnYqvPMVjYke
+	 +wZssjSG5CvWjvFFoNrtPCIlSZVIxUa42MvJ2vHUgU5uNEdIa5OzxEceQy8PTpDzQf
+	 8XDQK2FbCnNmYq+gzrn9Dj2hCGr4+VWoEFc1SmzjVBkpuk1MJrnMqb07vGTS9RAIuG
+	 qOcqwbnxIVkeE/6/ytrxU9yDQ0Ked2fHToHHN8cAiuI9XyVoGzXjdmAGVtbMCotvxX
+	 5yD5fSjFPWaCwXAzi0jguMkvOiQFoPY4jRcLTHztkH/2j7mLyb27pVkS0olnYKC7Ez
+	 QrdWXY14WSmkA==
+Date: Tue, 10 Dec 2024 15:42:03 -0600
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: quic_akhilpo@quicinc.com, robdclark@gmail.com, sean@poorly.run, konradybcio@kernel.org, quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org, marijn.suijten@somainline.org, airlied@gmail.com, simona@ffwll.ch, quic_eberman@quicinc.com, quic_pkondeti@quicinc.com, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+MIME-Version: 1.0
+From: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, quic_anubhavg@quicinc.com, 
+ Mark Brown <broonie@kernel.org>, 
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
+ linux-pm@vger.kernel.org, quic_mohamull@quicinc.com, 
+ quic_hbandi@quicinc.com, devicetree@vger.kernel.org, 
+ Marcel Holtmann <marcel@holtmann.org>, 
+ Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
+ Liam Girdwood <lgirdwood@gmail.com>, Conor Dooley <conor+dt@kernel.org>, 
+ linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Bartosz Golaszewski <brgl@bgdev.pl>
+To: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
+In-Reply-To: <20241209103455.9675-1-quic_janathot@quicinc.com>
+References: <20241209103455.9675-1-quic_janathot@quicinc.com>
+Message-Id: <173386568587.497565.1413799827375300987.robh@kernel.org>
+Subject: Re: [PATCH v5 0/4] Enable Bluetooth on qcs6490-rb3gen2 board
 
-On Mon, 09 Dec 2024 08:19:15 +0000,
-Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
+
+On Mon, 09 Dec 2024 16:04:51 +0530, Janaki Ramaiah Thota wrote:
+> - Patch 1/4 Add description of the PMU of the WCN6750 module.
+> - Patch 2/4 add and enable BT node for qcs6490-rb3gen board.
+> - Patch 3/4 use the power sequencer for wcn6750.
+> - Patch 4/4 add support for the WCN6750 PMU.
 > 
-> When kernel is booted in EL2, SECVID registers are accessible to the
-> KMD. So we can use that to switch GPU's secure mode to avoid dependency
-> on Zap firmware. Also, we can't load a secure firmware without a
-> hypervisor that supports it.
+> ----
+> Changes from v4:
+> * Added reviewed tag by Krzysztof in p1
+> * Updated the p2 commit message with sw_ctrl and wifi-enable are
+>   handled in wifi FW.
+> * Added blank line between the nodes in p2
+> * Placed the structures in proper order in p4
+> * Link to v4: https://lore.kernel.org/all/20241204131706.20791-1-quic_janathot@quicinc.com/
 > 
-> Tested following configurations on sa8775p chipset (Adreno 663 gpu):
+> Changes from v3:
+> * Defined the PMU node and used the its output to power up BT
+> * Used power sequencer for wcn wcn6750 module
+> * Split the patch to multiple as per subtree
+> * Add description of the PMU of the WCN6750 module
+> * Include separate UART state node for sleep pin configuarion
+> * Link to v3: https://lore.kernel.org/linux-arm-msm/20241022104600.3228-1-quic_janathot@quicinc.com/
 > 
-> 1. Gunyah (No KVM) - Loads zap shader based on DT
-> 2. KVM in VHE - Skips zap shader load and programs SECVID register
-> 3. KVM in nVHE - Loads zap shader based on DT
-> 4. Kernel in EL2 with CONFIG_KVM=n - Skips zap shader load and
-> 	programs SECVID register
->
-> For (1) and (3) configuration, this patch doesn't have any impact.
-> Driver loads secure firmware based on other existing hints.
-
-The moment the kernel is entered at EL2, this is a bare metal
-situation, and everything is accessible. So your distinction between
-VHE and nVHE (which would equally apply to hVHE and pKVM) makes no
-sense at all. Same thing for KVM being disabled, which has no bearing
-on what can be accessed.
-
+> Changes from v2:
+> * Sorted nodes alphabetically
+> * Link to v2: https://lore.kernel.org/linux-arm-msm/20241010105107.30118-1-quic_janathot@quicinc.com/
 > 
-> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-> ---
-> ---
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 82 +++++++++++++++++++++++------------
->  1 file changed, 54 insertions(+), 28 deletions(-)
+> Changes from v1:
+> * Corrected the board name in subject
+> * Link to v1: https://lore.kernel.org/linux-arm-msm/20241009111436.23473-1-quic_janathot@quicinc.com/
 > 
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> index 019610341df1..9dcaa8472430 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> @@ -14,6 +14,10 @@
->  #include <linux/pm_domain.h>
->  #include <linux/soc/qcom/llcc-qcom.h>
->  
-> +#ifdef CONFIG_ARM64
-> +#include <asm/virt.h>
-> +#endif
+> Janaki Ramaiah Thota (4):
+>   regulator:·dt-bindings:·qcom,qca6390-pmu:·document wcn6750-pmu
+>   arm64: dts: qcom: qcs6490-rb3gen: add and enable BT node
+>   Bluetooth: hci_qca: use the power sequencer for wcn6750
+>   power: sequencing: qcom-wcn: add support for the WCN6750 PMU
+> 
+>  .../bindings/regulator/qcom,qca6390-pmu.yaml  |  27 +++
+>  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts  | 168 +++++++++++++++++-
+>  drivers/bluetooth/hci_qca.c                   |   2 +-
+>  drivers/power/sequencing/pwrseq-qcom-wcn.c    |  22 +++
+>  4 files changed, 217 insertions(+), 2 deletions(-)
+> 
+> --
+> 
+> 
+> 
 
-How about 32bit ARM?
 
-> +
->  #define GPU_PAS_ID 13
->  
->  static inline bool _a6xx_check_idle(struct msm_gpu *gpu)
-> @@ -998,6 +1002,54 @@ static int a6xx_zap_shader_init(struct msm_gpu *gpu)
->  	return ret;
->  }
->  
-> +static int a6xx_switch_secure_mode(struct msm_gpu *gpu)
-> +{
-> +	int ret;
-> +
-> +#ifdef CONFIG_ARM64
-> +	/*
-> +	 * We can access SECVID_TRUST_CNTL register when kernel is booted in EL2 mode. So, use it
-> +	 * to switch the secure mode to avoid the dependency on zap shader.
-> +	 */
-> +	if (is_kernel_in_hyp_mode())
-> +		goto direct_switch;
+My bot found new DTB warnings on the .dts files added or changed in this
+series.
 
-No, please. To check whether you are *booted* at EL2, you need to
-check for is_hyp_available(). Whether the kernel runs at EL1 or EL2 is
-none of the driver's business, really. This is still absolutely
-disgusting from an abstraction perspective, but I guess we don't have
-much choice here.
+Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
+are fixed by another series. Ultimately, it is up to the platform
+maintainer whether these warnings are acceptable or not. No need to reply
+unless the platform maintainer has comments.
 
-In the future, for anything involving KVM, please Cc the maintainers,
-reviewers and mailing list listed in the MAINTAINERS file.
+If you already ran DT checks and didn't see these error(s), then
+make sure dt-schema is up to date:
 
-Thanks,
+  pip3 install dtschema --upgrade
 
-	M.
 
--- 
-Without deviation from the norm, progress is not possible.
+New warnings running 'make CHECK_DTBS=y qcom/qcs6490-rb3gen2.dtb' for 20241209103455.9675-1-quic_janathot@quicinc.com:
+
+arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: bluetooth: 'enable-gpios' is a required property
+	from schema $id: http://devicetree.org/schemas/net/bluetooth/qualcomm-bluetooth.yaml#
+arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: bluetooth: 'swctrl-gpios' is a required property
+	from schema $id: http://devicetree.org/schemas/net/bluetooth/qualcomm-bluetooth.yaml#
+arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: bluetooth: 'vddio-supply' is a required property
+	from schema $id: http://devicetree.org/schemas/net/bluetooth/qualcomm-bluetooth.yaml#
+arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: bluetooth: 'vddbtcxmx-supply' is a required property
+	from schema $id: http://devicetree.org/schemas/net/bluetooth/qualcomm-bluetooth.yaml#
+arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: bluetooth: 'vddasd-supply' is a required property
+	from schema $id: http://devicetree.org/schemas/net/bluetooth/qualcomm-bluetooth.yaml#
+arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: pinctrl@f100000: Unevaluated properties are not allowed ('qup_uart7_sleep' was unexpected)
+	from schema $id: http://devicetree.org/schemas/pinctrl/qcom,sc7280-pinctrl.yaml#
+
+
+
+
+
 
