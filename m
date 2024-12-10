@@ -1,113 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-41342-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41343-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id CB8589EB706
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 17:50:33 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id BF86F9EB711
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 17:51:51 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AB424281290
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 16:50:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8A13718820BB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 16:51:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 72EE022FE1D;
-	Tue, 10 Dec 2024 16:50:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EEE3922FE15;
+	Tue, 10 Dec 2024 16:51:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="P6SpWtgv"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XYini5tk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C917122FE07
-	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2024 16:50:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DCD61A76AC;
+	Tue, 10 Dec 2024 16:51:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733849427; cv=none; b=XPr32l6JwwVk9UMPrbDLAUHnXKVxshRbP3etEhtjfx3HKbvXysKeyCnomE4ZITn78cdX0nWjknef0uQKwILlt3iEO+WBu/A6w8SbkRkzFZOZBCxtIpc1gQlZw6HUa/mPn3zE98XcXV56mBdHl1YOUrEgxW4a2u9xjEep7msA1G0=
+	t=1733849506; cv=none; b=BjilVpQYJ9GWz2XPuMrGq2ObS7Rf9jwcn4ay07gFKxPijQmRGBgD7+Q9uo8UtM3ta2oVC2VAPw2mvZRtsxatMSqbIb4jfsMpSU9mG9CakwXO9/i1BgVkfaX758lfIk2oRczwClli6NmCfiDXJswf7+rE5bRKN1q0t7MJxDl8tjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733849427; c=relaxed/simple;
-	bh=HsR6u5GkvXD7ULQKj36Umti20DpL+0zqbiGBiz0zkCI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=SutZLSPcj6+d8oipw0HC8lSZVSPYd5/gFTxvlNmT1/w3Pl2rPihrw+Y/3Hh2QJFtoczhh3sEqq20uo5YLD/7oeC7KYyttTaWE1b4my47Dj/tZQ6HgWTb8bLA/LHcXGX7PgslL5DrnfiRfMOpRqALAuj79lpANXbzEYR8HUuleTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=P6SpWtgv; arc=none smtp.client-ip=209.85.218.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-aa662795ca3so543053866b.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2024 08:50:25 -0800 (PST)
+	s=arc-20240116; t=1733849506; c=relaxed/simple;
+	bh=Mxw/pGwRlstlF+sMsnwXXRjVPqmnOa+upzVXrXLGTd8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ng53blHNkMe5wX5GUgknG3nmm+E19UOBAPwU6CcjKBGikfsFVPZeBjpzQSDjjC9s3C+g2t+N9WThgbACzsLHOLmT0+MNS4Er1hH3/QUw1G5OoAEpwrdycUvKlFgV810ikEt/geVn8vRSqNqu5057ryNcfqrku47ZgyvVn+5uKok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XYini5tk; arc=none smtp.client-ip=209.85.214.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-21636268e43so35163455ad.2;
+        Tue, 10 Dec 2024 08:51:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733849424; x=1734454224; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=+DqC+MYPAbbx8P8+tjZh10yMabSG3vK45igpyvKpPMU=;
-        b=P6SpWtgvXhHKgrUpT+/e4fjpT0O/APs5D5bdJWqnVxZJ6MUrQ/8VvBHtvwwR6ds62t
-         JLjImABkpA45cz5Y8mQNsoxanWMXu6xocmp+rX7uYcHi6uryK0tksVWoe5QNBY8lPD2f
-         zWuWirUhqHJPBd3FwdAxgOJeTJmstFS0zhN7pgHIzoeZC/p3lPYMKwW1eXS1sXgO8vm7
-         j6Ho2Yi20dFXzsI0qxRnQZ2OY3A02eAV1sLImgNy6dWFKEgxAfDFAl63s4ixydIBF5Oj
-         cNFkUQK/qTpo6N6FKlMHzmsnXLgefdaS4o+RPQrzAlZ1ChpU9+lI1uFKLEbK/E3z7sEE
-         1gjA==
+        d=gmail.com; s=20230601; t=1733849505; x=1734454305; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=JuzEEwZKQf9j9mqhaN0lST/eQY9CbMt5tK8I46FKdZM=;
+        b=XYini5tkdpS1NzH6m0i0TTJ6MkThJ1d+n9qrQNzp7/1DvLw24m1iFxqeiWhVymJi5B
+         3oQY5WNEcP+zPdNX+bRqqBkHtIDpj9OBt7LZ67tlWZpowCdC9QqpTdNvfUX4r5NxN/A6
+         BRCDKOXYiFeT/HJC8XUGe+VtjWKHWn27NVL8aM6nHbudtJAlsTOHRIQLbJDRkA9Ioomg
+         +NGEimPDf2BRvJFHcYM5eRfV0RKZuhsYkbhZln0ikmZuO4MJY2xM+Ym20pteNtZauaPg
+         xvWkVwdt9465CAS1cwVZHKkAFhJ84WPFwp1ixeBHbccdggLOFCMILuX6V94gzKe44N1w
+         xMFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733849424; x=1734454224;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1733849505; x=1734454305;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=+DqC+MYPAbbx8P8+tjZh10yMabSG3vK45igpyvKpPMU=;
-        b=SsMV9GLjbpfdUd9zN+xi84v/Yy+x/TQt+gVfqGo7s7paf4bHfnMjadXyqW7/Yw+wpf
-         ZtFzgmza4ChD02kn2IC0MkPV3uam6+Z1pih6ulNS1z0NV+mEWwyNp/Qfwe7/2+T4cxrt
-         Wt0VJ+8dyEquW765hHwxx7oMrCE8qONMuwdwl5CrU8EvDTVJphBuzn6Mq/bTbUt/toca
-         bV9CRUKcVAZ7HAoxMca3pCP05d49TxVW7PGvDJ6fYSKn6U2RXBMoc7BJfydjYE2Fx411
-         u3cG+mOU7BjV2CdZl0VG+fktjVPzFszBejntfe5dLaJRqtUtCcs0ImLmlxSkVNCEbAUm
-         M+VA==
-X-Forwarded-Encrypted: i=1; AJvYcCV+c1tQ7CcvCxXwjjISq1M6KaYERG6Fyp86FZk17N73meYlk7I6Dn9Emi9dkkIfheON4NL0km/K0jkZbJaj@vger.kernel.org
-X-Gm-Message-State: AOJu0YyfSf+BYQhcRQAZkMG+RdpwBXjRAE2OlK17aQsRJ20BfsoUHbC+
-	2Z7Qjz5u71T8M7II0L9EuTNeYIWdYzGz9Kf3LA5NnQ/8yTz4yMuSQ3r6jlx9B7pRx1poZYHRW1a
-	szBfM60Xc0oTqiLXGQg7eTw3GT5kL+i9IW9Xaag==
-X-Gm-Gg: ASbGncv6JidcOe4KPWPxFjzVI0d9A4P+YgfuOGANvsGgLMaMR4PCgcH5cgYlUey56F0
-	2aJ4e7uIFnV4MBDkupmqqL6+Y3hmnAPg0UFc=
-X-Google-Smtp-Source: AGHT+IH1qOThi05+FQaxtQVOf1BOtPYsAHF4Eo2G34Soq2l2ruTqO8or8v0sP6hLQ+NYFOkce6I3HslaJ3ZMDDi5J3A=
-X-Received: by 2002:a17:906:2182:b0:aa6:54df:6abf with SMTP id
- a640c23a62f3a-aa6a01c0fb4mr427827566b.18.1733849424185; Tue, 10 Dec 2024
- 08:50:24 -0800 (PST)
+        bh=JuzEEwZKQf9j9mqhaN0lST/eQY9CbMt5tK8I46FKdZM=;
+        b=bpvRMZMjtSxQqUJeMyuMZlaq0/2irSdVVNp9EOltpvO/IXPRyG+hTjUT3zVe7o2SR3
+         yCgPKv8TDcbNi3iQ4ptAVYnjeEPK9j5SO2urCOjFTzzjHW2DMwdmbpoAyBx9IvuC5L6b
+         oIu84la+o2yg8UXAcOOqxAdyqeybeQKN8aaIsKfO42CTqpgCjWNy+eZg2jmpNBYu7MBl
+         0fnqzbkU9dT7bl9PzlI26d5WXoPReWrzKZ/HnugAfVR/EHv2KPTBIFelg5lD1Q/RMl3S
+         PZy5HqSuPs6e1nd5ihY3D8BtyVVQ7sgR5LvsHu2vkDRssiiS7um0q9zHS3yfEFmJPra4
+         wNSg==
+X-Forwarded-Encrypted: i=1; AJvYcCW2Gq+as6KUo51q0HvTxz3Ky7hhtmQiB40LGwHm3MyG0Is+k9f7hSgRoANh37E4kXqX4Yn/B9M7czg=@vger.kernel.org, AJvYcCWIsc6PWJ9iQp4GXeeHctnxOboE16XnyinQJ6Z4Lkx3W8xWh9YSdvGIVDTzbfsbhzxgmhi2goeDKST0bNk=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy8qRa/JeTtCN1I0jGCgNLcQcie0eC9HbFMeDGov8uerGuDo8OL
+	MXzZgbp6vlUJKv5DBv0GqTrw4i8f/Nh1MIk4JY2lh9xVg+K+8/c8
+X-Gm-Gg: ASbGncv0b06jAnfgvW5ssBG6LodDDy2C20u4xJoZ6f0rv0yGe9YxXOGDwK4o76IlWsG
+	VS/FRzSdz83o4i91nySSOBGOAcd9Q+BIcJA/cxunthRbEgwb1ekJ+ATfGX5oPqe80DmkIVZBibe
+	9ZWraGCBco4rsm0IDcp0uZAamPsBGKwvIWXEw/DvnKWIBPmYNsOUXtraBxOi2Y4Xz1tocxecJ61
+	UodmxDRimbgGXS8UsDH0/1iem7ATi88Mcjp1fnsHgjSyX6SzWvQzkLYod+/L4+YMPGKJ4G6EKkK
+	D85s1BzOx7MzdI0c7XITqVJlgAth
+X-Google-Smtp-Source: AGHT+IHq5GJLA69hWJIqMBI3xX9I2B1vs+oiOQMLHk1Gt8OrfhdtpCShimUSU+G1kzy0p/Cgwakamg==
+X-Received: by 2002:a17:902:e750:b0:216:3c36:69a7 with SMTP id d9443c01a7336-2166a0987ddmr69103725ad.45.1733849504588;
+        Tue, 10 Dec 2024 08:51:44 -0800 (PST)
+Received: from localhost ([2a00:79e1:2e00:1301:12e9:d196:a1e9:ab67])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-216363a3176sm51054905ad.246.2024.12.10.08.51.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Dec 2024 08:51:44 -0800 (PST)
+From: Rob Clark <robdclark@gmail.com>
+To: iommu@lists.linux.dev
+Cc: linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org,
+	Mostafa Saleh <smostafa@google.com>,
+	Will Deacon <will@kernel.org>,
+	Rob Clark <robdclark@chromium.org>,
+	dri-devel@lists.freedesktop.org (open list:DRM DRIVER for Qualcomm Adreno GPUs),
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	Joao Martins <joao.m.martins@oracle.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	linux-arm-kernel@lists.infradead.org (moderated list:ARM SMMU DRIVERS),
+	linux-kernel@vger.kernel.org (open list),
+	linux-pm@vger.kernel.org (open list:SUSPEND TO RAM),
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Sean Paul <sean@poorly.run>
+Subject: [PATCH v11 0/4] io-pgtable-arm + drm/msm: Extend iova fault debugging
+Date: Tue, 10 Dec 2024 08:51:18 -0800
+Message-ID: <20241210165127.600817-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.47.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241210-qcom-video-iris-v8-0-42c5403cb1a3@quicinc.com>
-In-Reply-To: <20241210-qcom-video-iris-v8-0-42c5403cb1a3@quicinc.com>
-From: Stefan Schmidt <stefan.schmidt@linaro.org>
-Date: Tue, 10 Dec 2024 17:50:13 +0100
-Message-ID: <CAEvtbuviHys9V6Fa7GveUP0mWH4fJf=r_5iLCVh0bbhy8x=H7Q@mail.gmail.com>
-Subject: Re: [PATCH v8 00/28] Qualcomm iris video decoder driver
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>
-Cc: Vikash Garodia <quic_vgarodia@quicinc.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Philipp Zabel <p.zabel@pengutronix.de>, Hans Verkuil <hverkuil@xs4all.nl>, 
-	Sebastian Fricke <sebastian.fricke@collabora.com>, 
-	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Nicolas Dufresne <nicolas@ndufresne.ca>, 
-	=?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <u.kleine-koenig@baylibre.com>, 
-	Jianhua Lu <lujianhua000@gmail.com>, linux-media@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Vedang Nagar <quic_vnagar@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-Hello Dikshita,
+From: Rob Clark <robdclark@chromium.org>
 
-On Tue, 10 Dec 2024 at 12:05, Dikshita Agarwal
-<quic_dikshita@quicinc.com> wrote:
->
-> Note: A harmless onetime error log "Lucid PLL latch failed. Output may
-> be unstable!" is seen during bootup.  It doesn't impact any video
-> usecase and is currently under discussion.
+This series extends io-pgtable-arm with a method to retrieve the page
+table entries traversed in the process of address translation, and then
+beefs up drm/msm gpu devcore dump to include this (and additional info)
+in the devcore dump.
 
-I also see this coming up on x1e (not surprising, given its basically
-SM8550 for this part).
-Any chance we can get this fixed? Merging this series and introducing
-this error is not very reassuring to use the driver. :-)
-Maybe getting the QC clock driver folks involved?
+This is a respin of https://patchwork.freedesktop.org/series/94968/
+(minus a patch that was already merged)
 
-regards
-Stefan Schmidt
+v2:  Fix an armv7/32b build error in the last patch
+v3:  Incorperate Will Deacon's suggestion to make the interface
+     callback based.
+v4:  Actually wire up the callback
+v5:  Drop the callback approach
+v6:  Make walk-data struct pgtable specific and rename
+     io_pgtable_walk_data to arm_lpae_io_pgtable_walk_data
+v7:  Re-use the pgtable walker added for arm_lpae_read_and_clear_dirty()
+v8:  Pass pte pointer to callback so it can modify the actual pte
+v9:  Fix selftests_running case
+v10: Call visit cb for all nodes traversed, leave the decision about
+     whether to care about non-leaf nodes to the callback
+v11: Adjust logic in 3/4 [smostafa@]
+
+Rob Clark (4):
+  iommu/io-pgtable-arm: Make pgtable walker more generic
+  iommu/io-pgtable-arm: Re-use the pgtable walk for iova_to_phys
+  iommu/io-pgtable-arm: Add way to debug pgtable walk
+  drm/msm: Extend gpu devcore dumps with pgtbl info
+
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c |  10 ++
+ drivers/gpu/drm/msm/msm_gpu.c           |   9 ++
+ drivers/gpu/drm/msm/msm_gpu.h           |   8 ++
+ drivers/gpu/drm/msm/msm_iommu.c         |  22 ++++
+ drivers/gpu/drm/msm/msm_mmu.h           |   3 +-
+ drivers/iommu/io-pgtable-arm.c          | 157 +++++++++++++++---------
+ include/linux/io-pgtable.h              |  15 +++
+ 7 files changed, 167 insertions(+), 57 deletions(-)
+
+-- 
+2.47.1
+
 
