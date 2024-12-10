@@ -1,199 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-41300-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41301-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id F17D39EB06B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 13:05:49 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EACD31889558
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 12:05:49 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68B451A08C2;
-	Tue, 10 Dec 2024 12:05:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FluYWaZO"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0BDE69EB0A3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 13:20:07 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 337D923DEBA;
-	Tue, 10 Dec 2024 12:05:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A02D3283617
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 12:20:05 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B258A19B3CB;
+	Tue, 10 Dec 2024 12:20:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pf-is-s-u-tokyo-ac-jp.20230601.gappssmtp.com header.i=@pf-is-s-u-tokyo-ac-jp.20230601.gappssmtp.com header.b="Rh2f8h4N"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EBCA23DE9A
+	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2024 12:20:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733832347; cv=none; b=BlnywGnfbDR+Z6xt84t7T6SOfiG5TpW8wzyZe9U+KTbLnYWnc2efscHC3qRdcRnm3GPTBwmVFtScPtd2RooAUarkG93ztKMVylgmFRbZ0FI87nuWruqy8+862Pk2LFwd5uPIckTFWE+/IqrFQbNBQaKf9oVczqT39MqSwpLQ8Cg=
+	t=1733833204; cv=none; b=dttZJdUodnWRkcyw3pNmu2g8BzVPj13bqwW1Df3AZN9TDpnDYOlfvtqx3ChIeCuWw0Ju9ooQIeV/sWMvjSs8QDoyKLgUFddt2qdbZiC+g1ZnDeE7iPvc3KbqOQXU8XiOORdhdzMNtOdU4BtVImja0+XFuC8nhI8CU97IvHa5V9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733832347; c=relaxed/simple;
-	bh=nBO5Ds3JwYoGI0hwO79o3kkiya7ohUrrfSkZ0bb/Wb4=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=VRl/FWEr3DH1LSUH1KLEHMFpjoyuGUDTJq+zhKOhJfbHIkPqJ9zcAm1EkjoqvacV4Z/V004LlAZdzNDAcEiCa0Hh3LUYixWH04r+pWaGSdAzlz7vVAwRgyol0TVYs5RGCexrd+gmMIZp2v1qmpZblmHgPD4tICKMkh9YsAewoM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FluYWaZO; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81B12C4CED6;
-	Tue, 10 Dec 2024 12:05:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733832347;
-	bh=nBO5Ds3JwYoGI0hwO79o3kkiya7ohUrrfSkZ0bb/Wb4=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=FluYWaZOcxnf6cXZGyGj8Gml7fo8VPRETZiBZsI5+Agj+Zaq3SZ4FyC0YpaEtVBX5
-	 dslZvImb9rOk6qIbs4ozbhRt5PDoQcCqQAJXiLuo3Qh9Zusq7rKuvv8FDwk15h1Ptv
-	 A8xIQWhXGU/LtLLIWXiRjl3o34gS0PE4fnsqDSvPjJU6fzFUzd+SZ/PzaCo5ZMb1hi
-	 Qv0KuCg0xl2WpHxe5Tq21Q1NBEuIvK3VDP68l3cET05JhCURdAWtq+vkacSabokTlK
-	 ztNlXCBAx+cxpm3env+x2oZWUg1QRSRU2eVD3RQmHzmf8bqjKJCBmrHissS/cwBCEW
-	 VnWAP1X+5oMkw==
-Message-ID: <8b33f935-04a9-48df-8ea1-f6b98efecb9d@kernel.org>
-Date: Tue, 10 Dec 2024 13:05:38 +0100
+	s=arc-20240116; t=1733833204; c=relaxed/simple;
+	bh=lRGvbtPo8c5CemC5heJzHziBJmuR/9cIpI88W0duL2o=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Dv+ek6z6oJbiXx1361ShaTP0Ibpu1ICHfZutW2NCqn1Gd2KVSmFpexgKmZ/vfYYMvW0YWg8mIlyJtRHt9ByhiYMN7jebqFH1xLnLdmDj/o1x0T2HJHcG03YCG0UNGoNkoYic/F19vMEQA9QbGdoJsDHOQvs+tJInmgBAKqocp3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pf.is.s.u-tokyo.ac.jp; spf=none smtp.mailfrom=pf.is.s.u-tokyo.ac.jp; dkim=pass (2048-bit key) header.d=pf-is-s-u-tokyo-ac-jp.20230601.gappssmtp.com header.i=@pf-is-s-u-tokyo-ac-jp.20230601.gappssmtp.com header.b=Rh2f8h4N; arc=none smtp.client-ip=209.85.210.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pf.is.s.u-tokyo.ac.jp
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=pf.is.s.u-tokyo.ac.jp
+Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-725ee27e905so2254504b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2024 04:20:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=pf-is-s-u-tokyo-ac-jp.20230601.gappssmtp.com; s=20230601; t=1733833201; x=1734438001; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=GHHCYDNmykE5FThdvTIbfOJEbHz7L1lKYf1Su/Mmo/8=;
+        b=Rh2f8h4N9o8XojCYMnuaOFqjwI8fBH/Utt8yErVfy3nF/rQAuiUtlEjeSgty5//L9F
+         T/XgMrk9/nvYd2oHx3SfrIPaeTE0oZaev4XHdJlnDNsE/alZ07uZaLpPwM7SC0w5Gshm
+         HwwlaF35mYkww1xCoaZjqXytjRG4tgInRhW2U+6NWI/oSLYJj+MCnpohovdYI4BntSZ8
+         phxwezE9lPqhqdViHnaZ0yRy5hHhzX2tPx1ThpxF4u68s9JPi4/QHjriFN9yDM+ZTG89
+         E4UDTZmNRtp24lI1wWWr1It0DWdMNYGQSizFbDiza5JylpTyq07EbPgHSLoSFqgGRUwQ
+         xc0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733833201; x=1734438001;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GHHCYDNmykE5FThdvTIbfOJEbHz7L1lKYf1Su/Mmo/8=;
+        b=gWcTMCT8BjI4z1SUaKMCrproJUMU0tmN9RN5NfijG42VuJflrZj3aBMzcLoQhYlU/1
+         AcvZpU44GfG8FGWxYqpW4JTxap5SHey51QhSKfGhsvqP/Kx9p+DJRyYqvcemok9goVhA
+         gi7OqfOGN8p/CWacUrcT5Gz5KXfEUaF6hENlA6aShILMXgF8BkEKfQGShLkRdMq0x5eZ
+         FwX5Ldt9HicGdJd1/tbyE90hE7o69ufAx6FzbnuUr0HizqzPGuLByKXjqEOrVU5uHIhz
+         4sN0uUBMCJqy+qd/8tcw+FfPOHXKAyabjuwXbkx+lfm6xKSB/DGNiwdBc/lOtfR8ONdS
+         Hpaw==
+X-Gm-Message-State: AOJu0Yz3usL3QT/FwQRt6QYRRer1zCns5sdugEzO8mBJKyPyAne4rOZh
+	WtpOWbDm9pnu2QfUtZI06rXcOFaHMELDu9o9j7ZRP3B22w0zar48kHRUj1M/AV5ygCwbIPTIfIL
+	/mHo=
+X-Gm-Gg: ASbGncvxTDSbrCNMaKFiP7400lcmOrsoIpYbq4miE7OzBlrgm0YdtWw+8rdJy3FKyrD
+	m+lFR8dr+Iphdd1R9Hn4R7ITJn8DepCqvyWrPPPv38LSwyZZH4y9bxSR6ILGjggEBvwu90LgD/C
+	iAGsFH5OmnfDojf9OOXo6gplMlhWY2OTl52yepJayaeUht1L3GtrNOaS9BObwgxUtIC7ki4ihya
+	8bHKoM/Bbwq6km7Uiku/N1L+GFTTkLLyNGtg6Acacf/ZkaHA9N0WCLXBKvm+RpRgsMIk3l/Gg42
+	Ug==
+X-Google-Smtp-Source: AGHT+IErxmUjkbpdOVTBZRei6/lxrXtJY3REuHrmbihlqvMLjIkHsQV2ILFyasonDLVFlXXQ//H17Q==
+X-Received: by 2002:a05:6a21:8986:b0:1e1:90bd:21a0 with SMTP id adf61e73a8af0-1e190bd2695mr17071059637.42.1733833201546;
+        Tue, 10 Dec 2024 04:20:01 -0800 (PST)
+Received: from localhost.localdomain ([2001:f70:39c0:3a00:d462:7845:5eb0:91e1])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7fd50e37084sm2558856a12.76.2024.12.10.04.19.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Dec 2024 04:20:00 -0800 (PST)
+From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+To: andersson@kernel.org,
+	konradybcio@kernel.org
+Cc: linux-arm-msm@vger.kernel.org,
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+Subject: [PATCH] soc: qcom: smem_state: fix an OF node reference leak in qcom_smem_state_get()
+Date: Tue, 10 Dec 2024 21:19:55 +0900
+Message-Id: <20241210121955.992519-1-joe@pf.is.s.u-tokyo.ac.jp>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/4] dt-bindindgs: i2c: qcom,i2c-geni: Document shared
- flag
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Konrad Dybcio <konradybcio@gmail.com>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>, konrad.dybcio@linaro.org,
- andersson@kernel.org, andi.shyti@kernel.org, linux-arm-msm@vger.kernel.org,
- dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-i2c@vger.kernel.org, conor+dt@kernel.org, agross@kernel.org,
- devicetree@vger.kernel.org, vkoul@kernel.org, linux@treblig.org,
- dan.carpenter@linaro.org, Frank.Li@nxp.com, konradybcio@kernel.org,
- bryan.odonoghue@linaro.org, krzk+dt@kernel.org, robh@kernel.org
-Cc: quic_vdadhani@quicinc.com
-References: <20241129144357.2008465-1-quic_msavaliy@quicinc.com>
- <20241129144357.2008465-2-quic_msavaliy@quicinc.com>
- <db428697-a9dc-46e1-abbe-73341306403f@kernel.org>
- <a8b1ccd2-c37b-4a6f-b592-caf1a53be02c@quicinc.com>
- <fc33c4ed-32e5-46cc-87d6-921f2e58b4ff@kernel.org>
- <75f2cc08-e3ab-41fb-aa94-22963c4ffd82@quicinc.com>
- <904ae8ea-d970-4b4b-a30a-cd1b65296a9b@kernel.org>
- <da2ba3df-eb47-4b55-a0c9-e038a3b9da30@quicinc.com>
- <a7186553-d8f6-46d4-88da-d042a4a340e2@oss.qualcomm.com>
- <e9fb294b-b6b8-4034-84c9-a25b83321399@kernel.org>
- <835ac8c6-3fbb-4a0d-aa07-716d1c8aad7c@gmail.com>
- <f1fa2bde-95ce-45e9-ad2d-f1d82ec6303c@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <f1fa2bde-95ce-45e9-ad2d-f1d82ec6303c@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 10/12/2024 12:53, Krzysztof Kozlowski wrote:
->>>> I'm not sure a single property name+description can fit all possible
->>>> cases here. The hardware being "shared" can mean a number of different
->>>
->>> Existing property does not explain anything more, either. To recap -
->>> this block is SE and property is named "se-shared", so basically it is
->>> equal to just "shared". "shared" is indeed quite vague, so I was
->>> expecting some wider work here.
->>>
->>>
->>>> things, with some blocks having hardware provisions for that, while
->>>> others may have totally none and rely on external mechanisms (e.g.
->>>> a shared memory buffer) to indicate whether an external entity
->>>> manages power to them.
->>>
->>> We have properties for that too. Qualcomm SoCs need once per year for
->>> such shared properties. BAM has two or three. IPA has two. There are
->>> probably even more blocks which I don't remember now.
->>
->> So, the problem is "driver must not toggle GPIO states", because
->> "the bus controller must not be muxed away from the endpoint".
->> You can come up with a number of similar problems by swapping out
->> the quoted text.
->>
->> We can either describe what the driver must do (A), or what the
->> reason for it is (B).
->>
->>
->> If we go with A, we could have a property like:
->>
->> &i2c1 {
->> 	externally-handled-resources = <(EHR_PINCTRL_STATE | EHR_CLOCK_RATE)>
->> };
->>
->> which would be a generic list of things that the OS would have to
->> tiptoe around, fitting Linux's framework split quite well
->>
->>
->>
->> or if we go with B, we could add a property like:
->>
->> &i2c1 {
->> 	qcom,shared-controller;
->> };
->>
->> which would hide the implementation details into the driver
->>
->> I could see both approaches having their place, but in this specific
->> instance I think A would be more fitting, as the problem is quite
->> simple.
-> 
-> 
-> The second is fine with me, maybe missing information about "whom" do
-> you share it with. Or maybe we get to the point that all this is
-> specific to SoC, thus implied by compatible and we do not need
-> downstream approach (another discussion in USB pushed by Qcom: I want
-> one compatible and 1000 properties).
-> 
-> I really wished Qualcomm start reworking their bindings before they are
-> being sent upstream to match standard DT guidelines, not downstream
-> approach. Somehow these hundreds reviews we give could result in new
-> patches doing things better, not just repeating the same issues.
+qcom_smem_state_get() leaks an OF node when args.args_count != 1 holds.
+Add a of_node_put() call before returning an error.
 
-This is BTW v5, with all the same concerns from v1 and still no answers
-in commit msg about these concerns. Nothing explained in commit msg
-which hardware needs it or why the same SoC have it once shared, once
-not (exclusive). Basically there is nothing here corresponding to any
-real product, so since five versions all this for me is just copy-paste
-from downstream approach.
+This bug was found by an experimental static analysis tool that I am
+currently developing.
 
+Fixes: 9460ae2ff308 ("soc: qcom: Introduce common SMEM state machine code")
+Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+---
+ drivers/soc/qcom/smem_state.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Best regards,
-Krzysztof
+diff --git a/drivers/soc/qcom/smem_state.c b/drivers/soc/qcom/smem_state.c
+index d9bfac6c54fb..6a477e3c1316 100644
+--- a/drivers/soc/qcom/smem_state.c
++++ b/drivers/soc/qcom/smem_state.c
+@@ -112,6 +112,7 @@ struct qcom_smem_state *qcom_smem_state_get(struct device *dev,
+ 
+ 	if (args.args_count != 1) {
+ 		dev_err(dev, "invalid #qcom,smem-state-cells\n");
++		of_node_put(args.np);
+ 		return ERR_PTR(-EINVAL);
+ 	}
+ 
+-- 
+2.34.1
+
 
