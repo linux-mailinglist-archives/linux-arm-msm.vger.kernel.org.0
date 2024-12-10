@@ -1,147 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-41253-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41254-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9B3FC9EABE0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 10:24:48 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 33DDC163EA3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 09:24:45 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D6A7233D75;
-	Tue, 10 Dec 2024 09:24:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LLqFsB0A"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4E3099EAD4E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 10:59:28 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83A352327BD;
-	Tue, 10 Dec 2024 09:24:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 48343290B97
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 09:59:15 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FCA978F49;
+	Tue, 10 Dec 2024 09:56:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="n/E/OdtD"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8D3023DEA9
+	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2024 09:56:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733822685; cv=none; b=bnaGekPEGOT6+Q1VQfE//41Jzc0BC5HgIsh5XESHl4IdnxpG8Br4onSZ7OL1kGJrFfY0pvVtpB1s6wX967T+0gPXVIfW4m+3dRoUuKq/AZDLzWtf1fwwBjIfamdrXynkwID9Po5yStVdYTGSGH7MuSWRR5KO5p0S4uPRUcjbLUU=
+	t=1733824601; cv=none; b=rLCg83JFnW2onsHa+vHb8VndfqFr1geFYj8dcnmxRUwrIhpjGMU0IeCqgx8H4OdVr9yc+PGX+ZqFhdq7DobJkN0CWsbjiikQj6o+Y3jWkjfGrIatN4JvrZvam1IYEIahQmLt7z3arhi6o9Fr7Rg98ipTBYg1KQFzNAuoS0n3uG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733822685; c=relaxed/simple;
-	bh=Bld1RYwFPgcAVNG09chT8LEMCMyY+cirvfjtjyHOHgE=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bou6wJj+PwJMZ8zwHRZH8wLLrgedLoQPop+afLszxjJugSLfxI/8ry4Ld3VegjAbFUDFdfdB2PAotOeZRpl2eu8JeYyetTGuzKjk8qFUmRIwHOUaWs+FkBOw25ZWDxKBZPvMelbZIOs3TPvtbQcQmtLxPfuRsSAe8eKFm4TnBJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LLqFsB0A; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BA7rowa002485;
-	Tue, 10 Dec 2024 09:24:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	bMguorV0nYqmE3rzkK2Y78lQNVVtcEmW+iqDqJDT4wQ=; b=LLqFsB0AhrVmz3X8
-	Yyr1elm6cagmq531ChjsQYBAJhtlqaY5Nl4gBC3NmjRU7Q9OV8Aa2QrnT5FTvR1B
-	72MCVn1fCzCT5QQtyKB3au/62xwq6fPOFp3DZcZzToWWSLcr20+6Qz279vj1t40g
-	0+Nrk1Jyd9l5BB+jSNgTi/mVudpLrFkqkiSd2cIQUKj1RHJZjhsjMAObwnPpBrvz
-	6BkboaF4k6kHiLVAvrc5CXDyVkIJfxAACOH0NWdu+BY6YGXDS3O1bZkOI0Hh7ep4
-	NWBLcKqiT9SnVxrM1sRMRYP6jbJXth0gR9AhOJaO8LwZhnS9saCO9MA4DKohtqFp
-	w4mvjA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43dxw43jtw-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 10 Dec 2024 09:24:39 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BA9ObmM028576
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 10 Dec 2024 09:24:37 GMT
-Received: from hu-wasimn-hyd.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 10 Dec 2024 01:24:30 -0800
-Date: Tue, 10 Dec 2024 14:54:22 +0530
-From: Wasim Nazir <quic_wasimn@quicinc.com>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-CC: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Konrad Dybcio
-	<konrad.dybcio@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <kernel@quicinc.com>
-Subject: Re: [PATCH v3 5/5] arm64: dts: qcom: Add support for QCS9075 Ride &
- Ride-r3
-Message-ID: <Z1gIsrWAT3QftC4c@hu-wasimn-hyd.qualcomm.com>
-References: <20241119174954.1219002-1-quic_wasimn@quicinc.com>
- <20241119174954.1219002-6-quic_wasimn@quicinc.com>
- <9e351979-be01-4d38-9b94-cc23efac4c3f@kernel.org>
- <Z1LaN9nFr5msfq61@hu-wasimn-hyd.qualcomm.com>
- <cbed17c2-d839-42cb-8a33-b59538bfccf3@oss.qualcomm.com>
- <c639ca40-9e4f-4882-8441-57413e835422@kernel.org>
- <Z1c9wMxQ5xSqvPmf@hu-wasimn-hyd.qualcomm.com>
- <8cf9edc0-a0cb-4fd0-b10e-2138784dfba3@kernel.org>
- <iu6ssjczkdfkhfy2n6vxf3f3c2pepsepslzvnh5z4susxgxgqa@engwsvhu533x>
- <5782d7c6-1a75-4f15-8942-387742e0ae09@kernel.org>
+	s=arc-20240116; t=1733824601; c=relaxed/simple;
+	bh=C6dLWR01cRv8FPjeu3uMmdCJ92SNjbws/Q2KoohADSs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=OFCyfGPUSi0FCqhEMMLXHjbNKIeL99ROafABLn+3v5KH1R/Sykhr1F/yyonfI9QNdtBAzAlG6h718RB+iMNLsW5T71Eq9qthWJ2eoIWMbs6KE9rZ8bQu0gWEoAhDTsHK+ijugJVHVX/PYJgNYnz2bI0V7fICbQ/9J3wLL+QZLj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=n/E/OdtD; arc=none smtp.client-ip=209.85.218.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-aa692211331so291016466b.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2024 01:56:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1733824598; x=1734429398; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=eB4R97+dFiQJvfWzO4gzWibCc3j87hwW/JO+idp2Qys=;
+        b=n/E/OdtDLL9hzTqffXDMLovfS8g4iJNRICqaVcxMo/VIFPvbIaC6ADZsKkHIFPFP6d
+         H6mM7Ag+qWPDsro0iJ3XbcmVt3tbxBhLrXwiesncFmdcZMVHsQwRPpDb4ppLAfwGJlYy
+         aO3B0kNRBaUglM/gubvcbNt/mMlOWyXrX79CtTPNcLnZnBHjWbbRTfu9voac5/88SjRo
+         4VmT7dL6NGwMNSBw+VZDg2SqzF7NEzdYjagKqzWta8pHe5TFcsZG19fZoHgQwUrK7QDP
+         tMxcKqMo5haDmth5WgMqs5uqrw3/lQgdbrJzVUtzOdnPyuBaVFGTIjbibVtfxDwZugLy
+         DQbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733824598; x=1734429398;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=eB4R97+dFiQJvfWzO4gzWibCc3j87hwW/JO+idp2Qys=;
+        b=d44N7wIQSsphuzFgPbYd6R4OusUfxuWee6JN742iF7uk5RjdC8czjwiwsW6olTg3vf
+         nJv0fhmLnH6H2tzSXhmE/0GtL7qkfwWuZ5Eazc0kWPNoRbJBCLDZ6xT+v6QXmFHsq4bm
+         fh89kwvnZxgN7DA53HS6DsadUcEGyeP0BBW2CTt3y9ugqB3LRU25URPdLgn2brt4YSbG
+         oo2jV70yT6wty5pM/jD4+1MRcCUCoHxvyZzxIcPCipSXQd6RDWDVLl2Aghwx7w2ANCme
+         oGq4yFABMU9cvl7+wNbD+WRX9c1KUhc9q1GQIx4zov7pLyURykl6XSJSVX0WyngabYbY
+         BvQA==
+X-Forwarded-Encrypted: i=1; AJvYcCWGQHFk95XSzrkhzW5YVlwV1uoDKybhTU4aTEIUYAB9HIbo61wIi2Fp67cSyAHr+KsmNFwHWiomYS03s+p4@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw6MDPgPfuPv26Qs3y3zR72wkEpJMimJK567DPQXly7V1I3o0qB
+	686My9v1X2nizXJ12vjY4RVqtqDnWVNFrgq00FRJrt07PKriZYAfdecSYmtFw95p62e5clZWASm
+	JoVzPqgoCyvqMUwHxjCyU8Ttb9HP71F9IZYtJ7Q==
+X-Gm-Gg: ASbGncuwZD1ov98fkBfV32aaNMO0cAf/Sw6aMM8oCe5GrnJ6qhRIv6z+oxpEIVaynXw
+	8RIvHrCxCLh/XZzVYvsDCm0CsqUwxIr8X2/Y=
+X-Google-Smtp-Source: AGHT+IF2Cs6izMr0EPP8N4VEwRkQaw+ITA2b5QjAYykMlPPNbijyGbmHJi1bx5RG8uxupuDZsjfmD96K8rOQcz6jL7Y=
+X-Received: by 2002:a17:907:3d93:b0:aa6:9dcf:e273 with SMTP id
+ a640c23a62f3a-aa6a00715b0mr264787866b.12.1733824597988; Tue, 10 Dec 2024
+ 01:56:37 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <5782d7c6-1a75-4f15-8942-387742e0ae09@kernel.org>
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 9rMVKJ6zcSB1_APun9m_PZObBHhyzWVl
-X-Proofpoint-GUID: 9rMVKJ6zcSB1_APun9m_PZObBHhyzWVl
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
- suspectscore=0 priorityscore=1501 adultscore=0 mlxlogscore=644
- clxscore=1015 spamscore=0 mlxscore=0 lowpriorityscore=0 phishscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412100069
+References: <20241209-qcom-video-iris-v7-0-05c6bdead47b@quicinc.com> <20241209-qcom-video-iris-v7-9-05c6bdead47b@quicinc.com>
+In-Reply-To: <20241209-qcom-video-iris-v7-9-05c6bdead47b@quicinc.com>
+From: Stefan Schmidt <stefan.schmidt@linaro.org>
+Date: Tue, 10 Dec 2024 10:56:27 +0100
+Message-ID: <CAEvtbut6e=08fP68fjUjb29YvV7ieJ7jXdVdCG+XA80fVnAd_Q@mail.gmail.com>
+Subject: Re: [PATCH v7 09/28] media: iris: implement reqbuf ioctl with vb2_queue_setup
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Cc: Vikash Garodia <quic_vgarodia@quicinc.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Philipp Zabel <p.zabel@pengutronix.de>, Hans Verkuil <hverkuil@xs4all.nl>, 
+	Sebastian Fricke <sebastian.fricke@collabora.com>, 
+	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Nicolas Dufresne <nicolas@ndufresne.ca>, 
+	=?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <u.kleine-koenig@baylibre.com>, 
+	Jianhua Lu <lujianhua000@gmail.com>, linux-media@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Dec 10, 2024 at 08:25:34AM +0100, Krzysztof Kozlowski wrote:
-> On 10/12/2024 00:25, Dmitry Baryshkov wrote:
-> >>>>>> 9100 & 9075 are different from “safe” perspective. They differ in
-> >>>>>> changes related to thermal which will be added later in devicetree.
-> >>>>>
-> >>>>> Since this can't be inferred from just looking at the changes, please
-> >>>>> make sure to add that to the commit message
-> >>>>
-> >>>> Any include of other DTS is clear sign something is odd here. Including
-> >>>> multiple times without any added nodes is showing these are not real
-> >>>> products/boards .
-> >>>
-> >>> We're adding DTS to reuse the common board changes, with plans to
-> >>> include the differences in upcoming patches. To provide more clarity, I
-> >>> will include patches in this series to highlight the differences between
-> >>> the 9100 and 9075 boards.
-> >>
-> >> Sure, still do not include DTS. Just like C files don't include C files.
-> > 
-> > So, is the solution simple, rename .dts to .dtsi and include it from
-> > both .dts files?
-> 
-> For example. This leads to more questions - what is common here? We do
-> not create shared DTSI files just because someone wants, but to really
-> note shared components or shared designs.
-> 
+Hello Dikshita,
 
-We can reuse the common dtsi for ride boards, i.e., sa8775p-ride.dtsi,
-and then add board-specific changes in the corresponding files.
+> +#define HFI_SESSION_ERROR_BEGIN                        0x04000000
+> +#define HFI_ERROR_UNKNOWN_SESSION              0x04000001
+> +#define HFI_ERROR_MAX_SESSIONS                 0x04000002
+> +#define HFI_ERROR_FATAL                                0x04000003
+> +#define HFI_ERROR_INVALID_STATE                        0x04000004
+> +#define HFI_ERROR_INSUFFICIENT_RESOURCES       0x04000005
+> +#define HFI_ERROR_BUFFER_NOT_SET               0x04000006
+> +#define HFI_SESSION_ERROR_END                  0x04FFFFFF
 
-If this approach is acceptable, I can proceed with sending the
-next patch series. I hope this will help clarify things further.
+I am running this set on x1e. During tests with fluster I often see
+error code 0x04000008
 
-> Best regards,
-> Krzysztof
+[  103.787979] qcom-iris aa00000.video-codec: session error received
+0x4000008: unknown
 
-Thanks & Regards,
-Wasim
+Seems worthwhile to add this one, and maybe other missing error codes
+as well, here and to iris_hfi_gen2_handle_session_error() below.
+
+regards
+Stefan Schmidt
 
