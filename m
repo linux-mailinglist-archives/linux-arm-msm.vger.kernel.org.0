@@ -1,153 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-41357-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41358-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 074899EBBBA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 22:20:40 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5FC179EBBC5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 22:24:11 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 57B7C167BDD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 21:24:08 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4956230273;
+	Tue, 10 Dec 2024 21:24:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BqNi3BmZ"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B442F280F66
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 21:20:38 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26C3E23099A;
-	Tue, 10 Dec 2024 21:20:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cAZPPXkL"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D56ED23ED4A
-	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2024 21:20:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA8AB23ED4A;
+	Tue, 10 Dec 2024 21:24:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733865635; cv=none; b=bBmDiXkq4Bhs+raH7waPIQqni2oZdblWGXLEyuhMr7dJoOnZlVfDxZgYO1x5iFVbIBWXeNru4St+D7gn0iUigIf3WhhmliMoA4Gs6u2TsC9amDAs004wlhYSmu4fZDTaORe7ZXN2i+YwVUImSnMVFb4Lx635z0BfNAn04AuygLw=
+	t=1733865846; cv=none; b=q69WpWaQ1wgF5Vwdqp2NUNexN/mtwl7Cc/i1qyw6n8upB/AkId/rp4yXEZ3UjDYqyr5agCfaHHdLdo81ah5M0EIbyxeBjBdUyr5AvmJBRS082Z8rR5+4a/cLj86KmuS4mfNeU/GA0+sVhSydpOwZZibeuPEibx4Chusuw/6dYs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733865635; c=relaxed/simple;
-	bh=LV357DiRMd/D1axwAIAqWggD9i3wgG9VYZQtR6NIW8o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Uewl59yMpq9FSLa0XC3bI5hc0iDw5rt/suAmDeRHNYgn5siAKl1Af6fb30pLb0u4KpVrF6hOE7sehPGs0vIjw3sU7BVcB8yCqyT6IlDC+5+qbiXqWK/pcVQb+X5Pc7b9GmHRlTPdqI9Geln/caYM9cjWqJqeaF0r+NjRW0kbl/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cAZPPXkL; arc=none smtp.client-ip=209.85.208.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-3002c324e7eso45729781fa.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2024 13:20:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733865630; x=1734470430; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=yF3vBmNZS9MU6AYhmkZOCnnb/mhvQHCH0jIPUUHFQrU=;
-        b=cAZPPXkLE8AeyMHkIKnZx5r5lUA03pLx3rgzuoNVrTpgYRDY9s37+ftQtPc6Mih6Iu
-         8iNtCyfQWTSadjxGQdpliJAGoRGs8wD3qhLREfBJtq5T5ue7a/87RghQpneDpnu3LZHh
-         0NonQmxpjkB9fUD1xA4Uwc8IpytJXcWdcEAuOIMz6+1zXDkemNMzRu37JMDHVqSUQnWk
-         k1vr15DkhhdMFzARVHqImQwDmrZHkCq51mgDMSiq+0pXAEKBzeuSS1TfEdAzG4Ia+iNR
-         M6vZ+ECwMnxf2RnC8ZvLI/r9OglgVz9AXBjpb71TJKtYIjtIJTl0ZGSHi2JwhaMa5zoL
-         JuKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733865630; x=1734470430;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yF3vBmNZS9MU6AYhmkZOCnnb/mhvQHCH0jIPUUHFQrU=;
-        b=GDo/yv4RvwtdbOXYzGuUuab0wh7k4NvNjDYiqsgu4ECy0XOxb/2BOjv4anl1Hso0VW
-         9Edg3ym4qTs/twXO1/8o7hfMOoUIBGQXZRlRQuuJP6z7XM/fHoPfkN78u5AlEo3Pnc/X
-         XAunLdBAWbfOarLNJ40mSaSSqpmOLGaSFn4wCxKNxm8W+STRfOpTU9z+c8gDH6mJdfaC
-         DOZYkjkScKf5OYPudL4+iGv+hvcoD4YSdsbXm+3zB/6i8jKMhc0Wx0kcXm5OdEbdDdEd
-         WvNLts4quhOVILr8Pv5jeTqds67r81BTd9LeHNu+dtxwJxXFcVAkMe4HNEk2YchYmmf2
-         i83Q==
-X-Forwarded-Encrypted: i=1; AJvYcCVtqhE/LhCNTaiAmX/GH+3Ukk7kn1nDDbbw3rnzdaC7hBXikxPr1JqgsRKpQyy44TzNe/njhAMs05cP6G3c@vger.kernel.org
-X-Gm-Message-State: AOJu0YxGsfcTzbqU46CUhYrg1Gn/O+4Wan79u//HqoA4R6yUuM2alRHV
-	AVXt+daHZN/iTCsT7c1+xD0ScPkMt6ILc7HFJT7EqjLQXG87HoV0b40g+9DY1X0=
-X-Gm-Gg: ASbGncvNo/R8xLwQwetHfGCQ9CXCPwEc+vtdqN73cRB9LmBPOvQ28VVuD44CEzshJgI
-	7FQjekCjI9xKjOZ3m07+N1eLdvrS2xrppHoOcDTcV4pVvXiRKtN9s2iA0pnV+iuyOc9atg1/NZc
-	8PSgs0G1kjZJiPwfupTjE7J6K7d5deW53ZSGnt/kEZR6GcYJ5+bI/uXlQw+pejqCM9z093u6UXJ
-	4n80GCpMtKmIUpJkQVuMkz+pJoPA9JAmzalLaf04F1KpL1Pd+pt2/rmI9gNF82409Vy4vS/tdlu
-	iIr0C8T1GJUeI0uS4qIOf8cyGBZEtvrd7A==
-X-Google-Smtp-Source: AGHT+IHCODZIQ0z4mmWtV1wEX8j8zg9S/BNFluONyQd2XvnZpEGUwS4bPVxg3YoPJtWqjVmMgWar/A==
-X-Received: by 2002:a05:6512:3990:b0:53e:368c:ac4f with SMTP id 2adb3069b0e04-5402a5d3d6cmr107076e87.9.1733865629981;
-        Tue, 10 Dec 2024 13:20:29 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53e34569209sm1395827e87.128.2024.12.10.13.20.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Dec 2024 13:20:28 -0800 (PST)
-Date: Tue, 10 Dec 2024 23:20:26 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Harry Wentland <harry.wentland@amd.com>, Leo Li <sunpeng.li@amd.com>, 
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>, Alex Deucher <alexander.deucher@amd.com>, 
-	Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>, Xinhui Pan <Xinhui.Pan@amd.com>, 
-	Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Robert Foss <rfoss@kernel.org>, Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
-	Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
-	Phong LE <ple@baylibre.com>, Inki Dae <inki.dae@samsung.com>, 
-	Seung-Woo Kim <sw0312.kim@samsung.com>, Kyungmin Park <kyungmin.park@samsung.com>, 
-	Krzysztof Kozlowski <krzk@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>, 
-	Jani Nikula <jani.nikula@linux.intel.com>, Rodrigo Vivi <rodrigo.vivi@intel.com>, 
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>, Tvrtko Ursulin <tursulin@ursulin.net>, 
-	Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	Alain Volmat <alain.volmat@foss.st.com>, Raphael Gallais-Pou <rgallaispou@gmail.com>, 
-	Dave Stevenson <dave.stevenson@raspberrypi.com>, =?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>, 
-	Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>
-Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	amd-gfx@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org, 
-	linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org, intel-xe@lists.freedesktop.org, 
-	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v2 04/10] drm/amd/display: use eld_mutex to protect
- access to connector->eld
-Message-ID: <pgi7p3aemxm3db2k27vi5euh6q6ppayrw6y7tcfeq4g5z23hzr@xousag2qhobp>
-References: <20241206-drm-connector-eld-mutex-v2-0-c9bce1ee8bea@linaro.org>
- <20241206-drm-connector-eld-mutex-v2-4-c9bce1ee8bea@linaro.org>
+	s=arc-20240116; t=1733865846; c=relaxed/simple;
+	bh=Z5QvjqXjt7nt1q0SyE0Y+TbsCeMskbC5KMAyiIhNWlM=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=g0RNfekqGpRhFzG/vKLHnXyVTTb408dOkFyMNonCxkrzshGrPtAJw0L2oUyOtbzne4kHm1liPEXPoyqRoSfmcvkoHW/y2r6gvx63Pqku+j9DJ6Cuu906Wol+B4G3Koi871BdoxaFHUKCr4JOFcWDmTAWB8Wx6U061ddSEeGBRz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BqNi3BmZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4674DC4CED6;
+	Tue, 10 Dec 2024 21:24:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1733865846;
+	bh=Z5QvjqXjt7nt1q0SyE0Y+TbsCeMskbC5KMAyiIhNWlM=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=BqNi3BmZUbZUW6Zfk5jruHxc91Vc4ndIr/HQATGRfe4AEuzMXIuAGGUZM02wiCxcU
+	 BeyzmRVUEOWnu6w7P25Q3tNM6A5L7XIqjGQnbHR1Gh8i1sI/UNVYTxfvF/uFg7uBMq
+	 3bXhLuQF1VVtz5EtLDVeBpv1Mms4q3OVr21jfz+lABscBw7b1+N63WhnyUFDq8/6Md
+	 j9D8ka0190Ef4Bkbk5+KViXESKdYnWegZS3OIB2elS7T/8Dlesll/WZRpfygMKbR42
+	 hFjSfqkMPqCqor/LGEx1gO52loRWGpwHIWlgdTlszXXSCH9Ibrc0MwtdQ6O4+8rVlb
+	 uEL4n4cfioiIQ==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=wait-a-minute.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <maz@kernel.org>)
+	id 1tL7i7-002QNJ-Ry;
+	Tue, 10 Dec 2024 21:24:03 +0000
+Date: Tue, 10 Dec 2024 21:24:03 +0000
+Message-ID: <87ed2fs03w.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>,
+	Sean Paul <sean@poorly.run>,
+	"Konrad\
+ Dybcio" <konradybcio@kernel.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Marijn Suijten
+	<marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>,
+	"Simona\
+ Vetter" <simona@ffwll.ch>,
+	Elliot Berman <quic_eberman@quicinc.com>,
+	"Pavan\
+ Kondeti" <quic_pkondeti@quicinc.com>,
+	<linux-arm-msm@vger.kernel.org>,
+	<dri-devel@lists.freedesktop.org>,
+	<freedreno@lists.freedesktop.org>,
+	<linux-kernel@vger.kernel.org>,
+	<linux-arm-kernel@lists.infradead.org>
+Subject: Re: [PATCH] drm/msm/a6xx: Skip gpu secure fw load in EL2 mode
+In-Reply-To: <20241209-drm-msm-kvm-support-v1-1-1c983a8a8087@quicinc.com>
+References: <20241209-drm-msm-kvm-support-v1-1-1c983a8a8087@quicinc.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/29.4
+ (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241206-drm-connector-eld-mutex-v2-4-c9bce1ee8bea@linaro.org>
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: quic_akhilpo@quicinc.com, robdclark@gmail.com, sean@poorly.run, konradybcio@kernel.org, quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org, marijn.suijten@somainline.org, airlied@gmail.com, simona@ffwll.ch, quic_eberman@quicinc.com, quic_pkondeti@quicinc.com, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-On Fri, Dec 06, 2024 at 11:43:07AM +0200, Dmitry Baryshkov wrote:
-> Reading access to connector->eld can happen at the same time the
-> drm_edid_to_eld() updates the data. Take the newly added eld_mutex in
-> order to protect connector->eld from concurrent access.
+On Mon, 09 Dec 2024 08:19:15 +0000,
+Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
 > 
-> Reviewed-by: Maxime Ripard <mripard@kernel.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> When kernel is booted in EL2, SECVID registers are accessible to the
+> KMD. So we can use that to switch GPU's secure mode to avoid dependency
+> on Zap firmware. Also, we can't load a secure firmware without a
+> hypervisor that supports it.
+> 
+> Tested following configurations on sa8775p chipset (Adreno 663 gpu):
+> 
+> 1. Gunyah (No KVM) - Loads zap shader based on DT
+> 2. KVM in VHE - Skips zap shader load and programs SECVID register
+> 3. KVM in nVHE - Loads zap shader based on DT
+> 4. Kernel in EL2 with CONFIG_KVM=n - Skips zap shader load and
+> 	programs SECVID register
+>
+> For (1) and (3) configuration, this patch doesn't have any impact.
+> Driver loads secure firmware based on other existing hints.
+
+The moment the kernel is entered at EL2, this is a bare metal
+situation, and everything is accessible. So your distinction between
+VHE and nVHE (which would equally apply to hVHE and pKVM) makes no
+sense at all. Same thing for KVM being disabled, which has no bearing
+on what can be accessed.
+
+> 
+> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
 > ---
->  drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 2 ++
->  1 file changed, 2 insertions(+)
-
-Harry, Leo, Rodrigo, Alex, Christian, Xinhui, any response to this one
-and to the radeon patches? I'd like to be able to pick the series for
-drm-misc and these two are not reviewed by you.
-
+> ---
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 82 +++++++++++++++++++++++------------
+>  1 file changed, 54 insertions(+), 28 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-> index 19a58630e774029767bf2a27eb4ddf17e3c21129..04c68c320252b5ce9647f0606fb86fe57f347639 100644
-> --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-> +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-> @@ -1037,8 +1037,10 @@ static int amdgpu_dm_audio_component_get_eld(struct device *kdev, int port,
->  			continue;
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> index 019610341df1..9dcaa8472430 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -14,6 +14,10 @@
+>  #include <linux/pm_domain.h>
+>  #include <linux/soc/qcom/llcc-qcom.h>
 >  
->  		*enabled = true;
-> +		mutex_lock(&connector->eld_mutex);
->  		ret = drm_eld_size(connector->eld);
->  		memcpy(buf, connector->eld, min(max_bytes, ret));
-> +		mutex_unlock(&connector->eld_mutex);
+> +#ifdef CONFIG_ARM64
+> +#include <asm/virt.h>
+> +#endif
+
+How about 32bit ARM?
+
+> +
+>  #define GPU_PAS_ID 13
 >  
->  		break;
->  	}
-> 
-> -- 
-> 2.39.5
-> 
+>  static inline bool _a6xx_check_idle(struct msm_gpu *gpu)
+> @@ -998,6 +1002,54 @@ static int a6xx_zap_shader_init(struct msm_gpu *gpu)
+>  	return ret;
+>  }
+>  
+> +static int a6xx_switch_secure_mode(struct msm_gpu *gpu)
+> +{
+> +	int ret;
+> +
+> +#ifdef CONFIG_ARM64
+> +	/*
+> +	 * We can access SECVID_TRUST_CNTL register when kernel is booted in EL2 mode. So, use it
+> +	 * to switch the secure mode to avoid the dependency on zap shader.
+> +	 */
+> +	if (is_kernel_in_hyp_mode())
+> +		goto direct_switch;
+
+No, please. To check whether you are *booted* at EL2, you need to
+check for is_hyp_available(). Whether the kernel runs at EL1 or EL2 is
+none of the driver's business, really. This is still absolutely
+disgusting from an abstraction perspective, but I guess we don't have
+much choice here.
+
+In the future, for anything involving KVM, please Cc the maintainers,
+reviewers and mailing list listed in the MAINTAINERS file.
+
+Thanks,
+
+	M.
 
 -- 
-With best wishes
-Dmitry
+Without deviation from the norm, progress is not possible.
 
