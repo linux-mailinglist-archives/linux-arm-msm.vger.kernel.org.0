@@ -1,174 +1,171 @@
-Return-Path: <linux-arm-msm+bounces-41353-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41354-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7D4AB9EB9DD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 20:13:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3CED59EBAE6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 21:37:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4016D1888536
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 19:13:22 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0AD6F18864D9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 20:37:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E2FF321420F;
-	Tue, 10 Dec 2024 19:13:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A44DE227576;
+	Tue, 10 Dec 2024 20:37:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b="LJVfFRJn"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LuabywJN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from EUR05-VI1-obe.outbound.protection.outlook.com (mail-vi1eur05olkn2102.outbound.protection.outlook.com [40.92.90.102])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E62421420E;
-	Tue, 10 Dec 2024 19:13:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.92.90.102
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733857996; cv=fail; b=BwkVALiIOYu7pgsbw4UymOe0n6ElU55axcUkOl8TD1ZNSbsyQTLs4lozs05tSQTTT0lN3+/k/xc1YW1tdMa24Km5kW3w6r1BXo0Zt8hqw4tLd+gYZ7fD33lnYJbCiq2PJ/35vqyYcVr7FEPN2KQS2l02kZabrnvVcZFKqfZaNQc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733857996; c=relaxed/simple;
-	bh=1fwjhauCeKa6ZTrqL1OHm3GuCYtqyf2dSABgxXOinTg=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=Owb7YzSDBRLOgSZLDhXq8JyJS2sz5C9RpUi2tlEdlmWPlCMC8KNnWhS2ZAFq1y0vBiK5MnIBzwGlS/6KpjvBspZK3ov592HR4b23IYkJKp+tQnon5Hgw9U94t2V7avrEaU61RXcezekhq1VxHzebu4Za7+sXF1EuD1TCtkAmh8Y=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com; spf=pass smtp.mailfrom=hotmail.com; dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b=LJVfFRJn; arc=fail smtp.client-ip=40.92.90.102
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hotmail.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ivdcmVcE0BQzjSppOfHL4O2+nzEJMdF6xOZsZ3KBPIg0dSLLp9Rf1MIiOxl0+XcOHZexQ6g+gPE8w8tn4ljVgWUCgxSYTdhEIua8Cqr7VGQ0ptOiB6+G5XjnxZHIQccv/gD5RSo4p0WVvVWmidZdjgPe1aLrtxNjPBYkwguonrTx5AeD/W1zgUSoX7LT/ZSIv7IRoZjiAKLyEg7oim9YPc3xXLLOoohwN5zl9vjY1FcRoGaL4qFTi84GZJ0lODXz/qE84HBmK0YSex3amYETz4fBgdeCwgzx4lRmz7Q8u7SaqOj8f5foyuFjbjly3xNFFt4fmnBCVQLVO83vwiGQ2w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=CF1KrpCjNIHcVR2LTXdt/428XEbLQGGADtFw/7lUomo=;
- b=VpWjgCWTuPf9RPwst00rxoUg38zwLHmYvtVNoiPKyFQGBA9wk0raFI9kto3GgjeW+Ik6r/asx27WmGNQWpzqSrkTXwyuCuWAd8ksEF7OgjFtnuNTlS2VajPI/WGi2UkRAYCf+TUjHxL3fyIxXRcVVWraOOjBGcTyuT4pCFrTtVKCq7reiPNderTgxMyIC3jbvY+ROVgCPvXB/gq8Yr2+4lM8bo/t7rA6hk7jRw5UiGm/LkFsArSgdEJaSJoOoMmJutsFOgbbQkRp6xywTNzQf07rSs4XWEWyv+IPRDKsguMBn8988q5rMNpQLFZZEurDOUVN4i7AQlTFwIFbgaf8Rw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=CF1KrpCjNIHcVR2LTXdt/428XEbLQGGADtFw/7lUomo=;
- b=LJVfFRJnlByqfDol1l+GHsIpc0HWW/mZ9ISbLea+VKW+oFq/EKcVOK68lgQzhsa0KVW4a7oTHzZ+lE/eEilyfnxeAUAf5Y3nKPRhepcij2IWxPtxZnoYx0T9XPezr3hopY0x2tlWQcCxiDKZg9VYCM2m75X5KaCYYUOoIWxnBtteIgJCTZ8xKJX6iMnAJ0K+LQp3QTM3f7JpbTk3RFzOXdqTRQxw5wtm49PwWWUh3XHDfHHdclwJ4R4VuMkLw/02PepBuuG90vwZhaRDsQcivvPRd/nX16LJBX/hG98rFMSwXpCn21+KxIs/aeQC9hqG9lss2lnCyGaKfphtAnrMaQ==
-Received: from AM7P189MB1009.EURP189.PROD.OUTLOOK.COM (2603:10a6:20b:175::17)
- by PAXP189MB1975.EURP189.PROD.OUTLOOK.COM (2603:10a6:102:281::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8207.17; Tue, 10 Dec
- 2024 19:13:12 +0000
-Received: from AM7P189MB1009.EURP189.PROD.OUTLOOK.COM
- ([fe80::e9f1:a878:e797:ee1a]) by AM7P189MB1009.EURP189.PROD.OUTLOOK.COM
- ([fe80::e9f1:a878:e797:ee1a%5]) with mapi id 15.20.8230.016; Tue, 10 Dec 2024
- 19:13:12 +0000
-Message-ID:
- <AM7P189MB10099F929FCE7AE7B348399DE33D2@AM7P189MB1009.EURP189.PROD.OUTLOOK.COM>
-Date: Tue, 10 Dec 2024 20:13:10 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] firmware: qcom: scm: Allow QSEECOM on the asus vivobook
- s15
-To: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20241116-add_asus_qcom_scm-v1-1-5aa2b0fb52bd@hotmail.com>
-Content-Language: en-US
-From: Maud Spierings <maud_spierings@hotmail.com>
-In-Reply-To: <20241116-add_asus_qcom_scm-v1-1-5aa2b0fb52bd@hotmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: AM9P250CA0018.EURP250.PROD.OUTLOOK.COM
- (2603:10a6:20b:21c::23) To AM7P189MB1009.EURP189.PROD.OUTLOOK.COM
- (2603:10a6:20b:175::17)
-X-Microsoft-Original-Message-ID:
- <94251344-4d9f-4fa4-9bc9-2ed1d8002acc@hotmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96D78227595
+	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2024 20:37:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1733863025; cv=none; b=TbcEWdImI+z/c05PGo2DYkUWsdekbDIqAfAdXqKG1ktJwXRW2JU03Qo7pmF6vBby88SU9UFR2JGBn/J6WuPiIaxLjdmf9ncFhc4NgZTjyCPSOnvPckgSt2mtPmcRmq3LIwRMWUWZN9qXMV9Mr0NMK1jXVMD//kK7NZY40nW1kSQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1733863025; c=relaxed/simple;
+	bh=0fQX49mSHPQYrzA8Z31PEJhbNQ8oFJAfOm9cbO8QOh0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=sYl5+F7G7uVftgPLZShgGHmWQ7YX4CxEjzNmbR6yQxB3HDCEtppymVNTIIt/ecQgYAMzmfFky8YvYY1npwHPxprnJdd6O1K+WMbnJ06VdZm5iijg5euP6dNrtxnz9BpBuqt7WtiYf8t+WoCjOZHSOA26nWBVRDGirwJyMtnVPUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LuabywJN; arc=none smtp.client-ip=209.85.218.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-aa689a37dd4so504362666b.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2024 12:37:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1733863022; x=1734467822; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zn4VZjCebgcs43D4JwNn5+c65Hi6gGT2rIBjaMw3GPQ=;
+        b=LuabywJN8jBkE/zSeMixqqnREhLRL/DAC9oGA2N6BEDh6Nbu+LLmD2pj8R1vRaZiLu
+         JrVfnJR0gCfqNB+Y21fm+0FORNBncEuPb2yqYr3lFuH7EIXHEOdEO/o2hdb6cLSo9F9K
+         zVKUYNVs5PeifzUnmz6prTLwStUMvhF3PCeVZlXhTv4WivMOcofDgMBO0iF8EXV5fRl8
+         FkksjkpYJNZXebcJoAoIOWj3dyZ9zdwrUV9yoUxpcy515pisHmcA5uM8Sn0E36wCeEj3
+         6esjjrJg1Kd59pElCyGtAwQVIRfDBtRnLc052DzqHsE8wIaRbq9+BHMGTWRo5K5/EfOb
+         XBcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733863022; x=1734467822;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=zn4VZjCebgcs43D4JwNn5+c65Hi6gGT2rIBjaMw3GPQ=;
+        b=RNaLPguLcDb7zQkJrVG0xCnYMpbWZ39xdZgo5InU0Jajqgfu4g42sPCH9rQr1H9Zpf
+         yRxKbSmzIOn6zqvKENQXNVfgOIrAkOoCuEAFbxoNH5NbuRTCc+YpWa5tEAFBNDs9WJxT
+         5Pnzn4ixcmIdkNEiFQFd7wNj1vrzX+t78egNcgjuFGrNalfTpT4UcwK1Fg7Nlic3ODTc
+         O71eig/NJghnP/4Dwg0ktWrONjTJcV6IOharKPe6uZEX+6DcvNLm760Yu2OUPrQ6NO8V
+         ookje3YxdUn/uXhbC4fkKV2OUKSikn767AbqSaP18bIQ8OcuGDI4qT/3i59Rc8eZq3Jm
+         ofhg==
+X-Forwarded-Encrypted: i=1; AJvYcCUUNPDDboTb76SxPDrwjYIt/klUBCAGbI06fZKWp5WDi+xntzc8zgQTB3lZj27frLy9TU3RpftZfcf52FU/@vger.kernel.org
+X-Gm-Message-State: AOJu0YyZVi1nFALYQerucYIhLNzYkmj9sspPskvu+AJJVTbC9/MmJcUx
+	nmHwW/76skXP7FTS2MNNHoRPG+e+HqwDuMaOkC+yMG+mDDzqf/HY7mqWgeDK4ePPkP2kmkikFeA
+	5+nZGjX+bt2djRxBY0eIt2dR343QWu5KDCqtLZg==
+X-Gm-Gg: ASbGncv3c3NvrQdodYqTcsX/jAfior9ApTTpvlN68MPYj6Ff8Bu5WDLM36watqYak27
+	tRJ5iSbVYDPwRrdQx7P2uNG2VkvAzWwihpO4=
+X-Google-Smtp-Source: AGHT+IGWUXD7IWZ/eeOLyw9PNNJAuQCg5LPrjaY10z82+Km24i2uSdLaLZdXA6A5BFJA17MApH7HCIysDMV+DYBFD2w=
+X-Received: by 2002:a17:907:7703:b0:aa6:74a9:ce6e with SMTP id
+ a640c23a62f3a-aa6b1179ab6mr16738566b.16.1733863021774; Tue, 10 Dec 2024
+ 12:37:01 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AM7P189MB1009:EE_|PAXP189MB1975:EE_
-X-MS-Office365-Filtering-Correlation-Id: d784ac96-bf96-40a7-b061-08dd194eb059
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|461199028|6090799003|5072599009|8060799006|19110799003|15080799006|10035399004|440099028|3412199025|4302099013|1602099012;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?RTY4Y1Fod2tCRzNVYmlDRW5TZm9HYzhEbytOR3Zibm1lQ3l0Qk10M0xacUJ5?=
- =?utf-8?B?bEVweWVYRWl1dVpaZ0dHUU1PWUZQNEd4dTdOM2ZkSDRwanRYRkVKakNmZ1o5?=
- =?utf-8?B?bjd1YTJEcmhmM1pxaEFpY3BLWjdDSW5KckE2dUV6TzJpMytkY0ZKM2EzQXN3?=
- =?utf-8?B?Y0h1VVgxY0lYVHprYk9qbG8xOXJSSHZHbk1YUEN2TUZPSE5IekR4Yzk0SjZN?=
- =?utf-8?B?eGh3dUlIbDE4cElJWlp5SEFGbTdRS1VpeUlIRXViR3JPUlIwNWRWbmhkZ3ZL?=
- =?utf-8?B?RmNxN3cvRUZlZXlMV0pSRkJSUXRmbWFsU0g2aE1kRFdIbUZrUXFyOCtTcjgy?=
- =?utf-8?B?ajRIb2RUUS9QeUpVaEdmMlgwVVc0TGZuaG5URTVkeVQybWFMRVJNSFJicGhJ?=
- =?utf-8?B?TFJVaW1FdXh5Tlp0djN4OXptZkpvcUdNQndJOTZnQjViSWQydmZOOEJKc1dw?=
- =?utf-8?B?ZE9VWHZ5NlhhaVlLS2dCNFQrbVlXRFMzbDcyd2E5TnZ2TDBNcFU5NU1GenR2?=
- =?utf-8?B?Rk5USTZnZzZEZVpwM21KWXlKdnNKR1dsQTk3SVgrbUhUYlBMYms5d2pTS2Ru?=
- =?utf-8?B?ZmlGNDR0TlV0bFY4YlVhYlVFMDJPKzM1czBvMEFhVmFoZ24vbURaUXhYL09O?=
- =?utf-8?B?RHRCOWtzZFNHTXJtaGdtMkxwdXNoMXZQYXFqUmROcnc2bncyeG5nQnoxc2Vm?=
- =?utf-8?B?SGU3VXpIWGhzY2EycitaOFJxNlIwbXQxSW5qUjZYd2V3MnVER3dGbm4yYXhP?=
- =?utf-8?B?WjMvN0hjcVd5UWxLR0J2d1lkRk8zMk9TZ0YrcDQrUkMyWWJiSXV5RmFiUmsr?=
- =?utf-8?B?ZWZnZWJtVnlkdHRZS21kVDRBRjlIQUI3aVJ0THlRVjRQTmxEazB5U0JOVCt6?=
- =?utf-8?B?WnhjOGZsdjhwb0xHZGQ3Mi9pRldWL2tCNW52Vis0OFFuejB1YXBjK0h0aDJu?=
- =?utf-8?B?ZjlwbUNWdjhoaUltdTdHSXNBdUFYeS9CSHpxTkZLS0txM2pkekJnek9wa1FV?=
- =?utf-8?B?VzlFNHU4cGZQc1FaNEtETHV4UStNUThSZ1BqRGk1YXoyakNrTUo3N1VmZFBw?=
- =?utf-8?B?QkM3dG9FY0xMRWhCaWp3SGVYbjBWMmdSeGNHSFNuNVZ4cWY3OFIwVmR3a3JG?=
- =?utf-8?B?aVlkZzdoZm5GRmlsT0paM3FvcjZueWd1ZWhnMlF1SU1xMG4wbEV3VFpOOFdz?=
- =?utf-8?B?WkNYcUZTZzYycWNxQXo4ZnJVS2FXY1hhWkhwWTg2d0VHNHB0bjhUMnVxbHNV?=
- =?utf-8?B?S3FIVzlrbFFOS1Btbk9HSmFhUHZqTmc4RlpMVkxTNGx3aERtRzBRczBrZlJQ?=
- =?utf-8?B?WXhVcUNDdHhTRVk3WjFjSXJuVG1DaVVPaGhwRHBlenE5U0lYSjRkdVZ0N1Z0?=
- =?utf-8?B?K0RuTkphandldXRiYWtoYnVNazNaMlNFWkp4eDV4b3UzTVlmcVZVNEVjYVpk?=
- =?utf-8?B?SmJEanpvaGs1bldRMWFpTHhLSDhWWXRKNEtwNEVlelp3N2padW15aU4yNEh4?=
- =?utf-8?B?a0ZQMXVncXJCVEk0R0dtU0pJd3RveFR2aGdlUGFVMlJyd3VoWGxIRFBCQXhK?=
- =?utf-8?B?cWpDTzJOM1lyQ3Q3Uitwa0F4blZUV3JFcklKVDN4NjBNTEFZL1hsZ1UrR2Jm?=
- =?utf-8?B?ek5nUWs2S3o3bFBvcGtrdGFnVThMOEE9PQ==?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?T3BaaFZPMjFmUXFtRG5Hc3dGdWNaRHpQMUx3THBhSVdnQXlMTEtncUVzMlNJ?=
- =?utf-8?B?SUMrTUtoT1FQZHVHMDljaUFpL1BWR2wyUm1KZXBhRFloVVhTekNCUm9JS0Np?=
- =?utf-8?B?eTZQaFBxa2xVZ0dVSVE5V3ZscDlhTEUvd0piZlBxL083S2JNalFuMVQzRndr?=
- =?utf-8?B?NWRFUEpSV1Yva080aEpjdnQ4V3EwWDBqQUhXTkRnc0FLUWdFbjN2NFpYQkp3?=
- =?utf-8?B?ZW5nTmp1V3Vld0o5YUQ4YVZObEE5MzFPZ1k2eFl2TlRZSy9ZeXhzSVd1RTV2?=
- =?utf-8?B?RVo2Y0pjRnJVTXk4QzlxMTNQeFV1bERrK2RGU3FnSlVackp5dnFydG10Q0h3?=
- =?utf-8?B?UEV0Y2l5QmNBOUZFNGxjWDBsK0RYRWZERkh6cW1XNjRjbFpQTmJ2YWtXU3lT?=
- =?utf-8?B?UjZNeHFDQkY5Z3VJdkk0MWsyZno3UGp0UUg1eEpaMXRqaDhJZU5xcXhtaHZM?=
- =?utf-8?B?aktuLzdCYm9YQzVHaGttTjJsaGRFbXpPUHNna041SDFWb1AyNEVTSFhzcXQ1?=
- =?utf-8?B?cS9TeWRTdmhydWJRWHNXbzNaSVJnMVVyTFc5UzBsWnFwWEx5U29jeWd2MGlJ?=
- =?utf-8?B?UTYxMlRIZ2Y1eGFzVzNjeGUrc04vZHlhdkVvMmxkc2NSbTM2SmRRcEJHTy9x?=
- =?utf-8?B?UmR4bmpOc3AySXZpdkNNaStFWEp3RHlmVHk0bE9aSmlZLzdRNHdnVXYrUjYx?=
- =?utf-8?B?OHR3a25OM0NDTHBMRCsxYWRnZi83OS9vcmpaN2gxVVZsM3BlblZIMFA3Qm5x?=
- =?utf-8?B?eWQvSU9QTUxOYXRvMEpGTUd4SDFqVDNCRzJ0Vi9MMStJdm82d3BBMFpwVlBs?=
- =?utf-8?B?dHpHRlZaeGdJcUZ6TUxCSCsrbHZJYjdkSmw2T2w5dTU3MStxcGp3bTlzZ2JY?=
- =?utf-8?B?NjlxZHMrdGRuYXFUbkNaenE3dGJSNitlMzNCZFdQSjRSVExGaGZVdHg5ZVAx?=
- =?utf-8?B?RW5tSlhNLzY3UktsNmpBbzBzWWFTZk9BdHk3eDJOMi9acldOaXJHMERoQUxQ?=
- =?utf-8?B?aTI2RVc3ajVaVTFMNEVmYmtkbG1WbTVYTHlmeXNKYW90eVZjOUVoRGdZc25h?=
- =?utf-8?B?cUxnY2hSNXhOZDJaVU5HL1lZd3hpYzdRQXlIWkxqQkVtdVJMaGRMSWpOcFFV?=
- =?utf-8?B?UWZEUk1Ka1JyS01WQ1pGMFArSExZbEgwOWVzNUttSkREci9OUDVYTGdPR05L?=
- =?utf-8?B?aTZJclNCeEJ5UTlIb0ZLdUhJTTNoWEFVZFhmRFdiaVNTZWZ1ZGs0M0NFc2ZE?=
- =?utf-8?B?cEpveW1zSm0yVHB6Y0ErbEhMY0I1bFVQVUMxYjdiRWpVQ0ZoblRBdzY3ejhJ?=
- =?utf-8?B?TEtJZ0dMYkpuNXdjS1lsMWpkdzJOaTNxQjRCeUFqZUc1U1VwTnM3cFlPYXZi?=
- =?utf-8?B?RE54d1FjTGYwbEZWSTNnZGtXME5STmMxZi92aXRubjlHaHkrV2RGZnB2eEtk?=
- =?utf-8?B?QXR0d29GdEZVTlhvSlBQM3JRc056SVhPRlVJSE1jTUViZTRCa1VFRkNSZjRj?=
- =?utf-8?B?clVnbU0wekFsbWJOZHYwcUU3RG1nSjlueHBMcDZ1K3ZWaWJYelVVR2xYTm1w?=
- =?utf-8?B?c1FUNk1ZaDNubWs2ZHdpYXNrdlhtMk8vZ3lManNON3E3dk9COFVjZHdZMUtx?=
- =?utf-8?B?N1o4dEpNdHVRblRRS1l3cEUzdG10YWlzWFB2dTk4RDFVWTFESkhmOUg4Y0xl?=
- =?utf-8?B?d0NNQ3MvWFgwTHRkbEJzWmpRYUwwR0VtVERnanBZZTBwZ21kdklVS2NiT3lE?=
- =?utf-8?Q?L/1WSIgNkoVesKu7ssU+XY5csqQS4Yy30kT+QUj?=
-X-OriginatorOrg: sct-15-20-7719-19-msonline-outlook-3b3e0.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: d784ac96-bf96-40a7-b061-08dd194eb059
-X-MS-Exchange-CrossTenant-AuthSource: AM7P189MB1009.EURP189.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Dec 2024 19:13:12.4127
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAXP189MB1975
+References: <20241210-qcom-video-iris-v8-0-42c5403cb1a3@quicinc.com>
+In-Reply-To: <20241210-qcom-video-iris-v8-0-42c5403cb1a3@quicinc.com>
+From: Stefan Schmidt <stefan.schmidt@linaro.org>
+Date: Tue, 10 Dec 2024 21:36:51 +0100
+Message-ID: <CAEvtbuubfZq2jtoUesrmitStAyXy3HJXqvdYQYO=BA8L-1eHTA@mail.gmail.com>
+Subject: Re: [PATCH v8 00/28] Qualcomm iris video decoder driver
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Cc: Vikash Garodia <quic_vgarodia@quicinc.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Philipp Zabel <p.zabel@pengutronix.de>, Hans Verkuil <hverkuil@xs4all.nl>, 
+	Sebastian Fricke <sebastian.fricke@collabora.com>, 
+	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Nicolas Dufresne <nicolas@ndufresne.ca>, 
+	=?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <u.kleine-koenig@baylibre.com>, 
+	Jianhua Lu <lujianhua000@gmail.com>, linux-media@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Vedang Nagar <quic_vnagar@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-I fear this may have slipped through the cracks as it has not yet gotten 
-a response.
+Hello Dikshita,
 
-or does it have to do with [1]?
+On Tue, 10 Dec 2024 at 12:05, Dikshita Agarwal
+<quic_dikshita@quicinc.com> wrote:
+>
+> Introduce support for Qualcomm new video acceleration hardware i.e.
+> iris, used for video stream decoding.
+>
+> Iris is a multi pipe based hardware that offloads video stream decoding
+> from the application processor (AP). It supports H.264 decoding. The AP
+> communicates with hardware through a well defined protocol, called as
+> host firmware interface (HFI), which provides fine-grained and
+> asynchronous control over individual hardware features.
+>
+> This driver implements upgraded HFI gen2 to communicate with firmware.
+> It supports SM8550 which is based out of HFI gen 2. It also supports
+> SM8250 which is based out of HFI gen1.
+>
+> This driver comes with below capabilities:
+> - V4L2 complaint video driver with M2M and STREAMING capability.
+> - Supports H264 decoder.
+>
+> This driver comes with below features:
+> - Centralized resource management.
+> - Centralized management of core and instance states.
+> - Defines platform specific capabilities and features. As a results, it
+>   provides a single point of control to enable/disable a given feature
+>   depending on specific platform capabilities.
+> - Handles various video recommended sequences, like DRC, Drain, Seek,
+>   EOS.
+> - Implements asynchronous communication with hardware to achieve better
+>   experience in low latency usecases.
+> - Output and capture planes are controlled independently. Thereby
+>   providing a way to reconfigure individual plane.
+> - Native hardware support of LAST flag which is mandatory to align with
+>   port reconfiguration and DRAIN sequence as per V4L guidelines.
 
-[1]: 
-https://lore.kernel.org/all/20241103-rework-qseecom-v1-0-1d75d4eedc1e@linaro.org/
+[...]
 
-kind regards,
-Maud
+>
+> To: Vikash Garodia <quic_vgarodia@quicinc.com>
+> To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> To: Mauro Carvalho Chehab <mchehab@kernel.org>
+> To: Rob Herring <robh@kernel.org>
+> To: Krzysztof Kozlowski <krzk+dt@kernel.org>
+> To: Conor Dooley <conor+dt@kernel.org>
+> To: Philipp Zabel <p.zabel@pengutronix.de>
+> Cc: Hans Verkuil <hverkuil@xs4all.nl>
+> Cc: Sebastian Fricke <sebastian.fricke@collabora.com>
+> Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Cc: Neil Armstrong <neil.armstrong@linaro.org>
+> Cc: Nicolas Dufresne <nicolas@ndufresne.ca>
+> Cc: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@baylibre.com>
+> Cc: Jianhua Lu <lujianhua000@gmail.com>
+> Cc: Stefan Schmidt <stefan.schmidt@linaro.org>
+> Cc: linux-media@vger.kernel.org
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: devicetree@vger.kernel.org
+> Cc: linux-kernel@vger.kernel.org
+>
+> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
 
+With my few pending questions and remarks taken into account you can add my
 
+Tested-by: Stefan Schmidt <stefan.schmidt@linaro.org> # x1e80100 (Dell
+XPS 13 9345)
+Reviewed-by: Stefan Schmidt <stefan.schmidt@linaro.org>
+
+for the full series.
+
+regards
+Stefan Schmidt
 
