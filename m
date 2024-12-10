@@ -1,203 +1,267 @@
-Return-Path: <linux-arm-msm+bounces-41256-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41257-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB9E69EADED
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 11:24:48 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 812BE9EAE23
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 11:38:52 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 55ED3281A5D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 10:24:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8AA5A1888216
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 10:38:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33D2119924A;
-	Tue, 10 Dec 2024 10:24:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 908FF1DC9BE;
+	Tue, 10 Dec 2024 10:38:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="W3TDEH+7"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KXLf2MVj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ot1-f51.google.com (mail-ot1-f51.google.com [209.85.210.51])
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 655AF23DE9F
-	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2024 10:24:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94DAA166F0C
+	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2024 10:38:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733826281; cv=none; b=eR4Z4d87x7kLtosxMQ5dgfXQvr7ebrmto6CmifbzPNs730GiApLzgCqlkqNyaeZZcc7RBM0qq4gPWhd//9X2Y/jv6JE2wH9+1c76nZA/jn3lKJh4sTd20rxhApMDpv2Eczi7c6u1PTVjAmDQkYIPQW731L5M0UipPGs/p2pM5ic=
+	t=1733827124; cv=none; b=Aw9COFrvFrr2JD3qCG4iyymUGEhNYUz9UL5tNH70MXgAQt7nByocP7m4mLUYroBzkerbBmWlBKgpKj8/cnKPqsJoKxzwXJXi9ZR8rgRej9t+o7dPzMz9/iXEOWpdz2F7nq++j3wuJUGFWLnEKYDRlRTLhzO58EwGhb4WpdgwYEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733826281; c=relaxed/simple;
-	bh=KacdTMDwGHOubfAMUMEA0y3RYV/hoieH8eSRxF9Vy/k=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Psrv1JuhqFHdI5+vSKmLiLSVzqcz+zNcHPslusRURTcQgjEF5QB1ZgsIq1spptcwXu9Tpa8/7CbcfwngBoDmPkaRNX5da8nBtc+Zs1J1+axn56bfD0ufGHk6zMaw1PLmCFt1x+lIcS6HbEwp01kLcWprsVT05sp3YbErphUdVlQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=W3TDEH+7; arc=none smtp.client-ip=209.85.210.51
+	s=arc-20240116; t=1733827124; c=relaxed/simple;
+	bh=h44+dyKGKKuqJkpvjJETwC8EkeHJa+UH7zPpXtgHUvI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gqRqRma/rJctLlsnEuOPDHoeGbzMgt75EAqaSCx1SB6vj+lopar4nxzAeq+AgM4J+FsVCNOA+WTQ3jewAKc0bDTtLYXGx4EjqRUC8f22kcVzev9SFzQm2UhGPAs8kkf0pexc6eNsWRU4o3+mo+oSrBRz92OTcD241xjWHlh+pwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KXLf2MVj; arc=none smtp.client-ip=209.85.208.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ot1-f51.google.com with SMTP id 46e09a7af769-71dfc9ac7caso686868a34.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2024 02:24:39 -0800 (PST)
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-3011c7b39c7so23492651fa.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2024 02:38:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733826278; x=1734431078; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dnxhJKvx9jYvossMLwXlm6WCMeoNqlxmsqhx0tMAQvc=;
-        b=W3TDEH+7hUB3uOktZN2+rAjiIzsIwLe+nbUQCCdTKz617Ax7EZ/Y3eF+MSPcBXZ4Ho
-         ePy9bnnabXq3LtLEEzZrhjJ5VtKelBWpnCR1BQIGToBAKPtbCxC/uvZfz9i0+ZHQPpb/
-         Jy+gYdDntjUUVu2zkZoClfQukKNE+lt0HayX/a+sMioPmZ1bDlLooBJgut/7vUfEfJvW
-         ov6QB3LbJrxszoUsTlLC+DjBamKy0eZ5axYBENbM+H/l3avG7DP+MUx2WJtt3eANoyhg
-         g+OgETo/g1XgsujhdyYaUOI60pZkZ6wX15/9RWIPu2pwh3hi75W/N66hD0byPx4KN743
-         gYnA==
+        d=linaro.org; s=google; t=1733827119; x=1734431919; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=+XZK8mlHOVAhY/lRiEPttNWsrY1uEn18gobmjnDJZnA=;
+        b=KXLf2MVj5No6UqCigv62I4CufP6uXL6xAzzTvIlahlB2D8pHgNaUNefEqOZqAcSGP0
+         3qIQRiQKi1XnQx9Fe1K5IUCmD2Apz426iXk3ywZuAt9Q81zTLOkmt4qFQU8Dm0WzGFFX
+         svCGcxW0PqEB6L7a/KEPQAX3GBaaCjkNa/AG1a1AcY/MUpyIJFuLUQu012eWGWXKR65N
+         bXV99IgYo/pML38NXcWjXMDj6BQUJzBo5hajAFfzwLf71j+VFQZWa2NgcuS7G17XFpf9
+         3zHSDDqvJNKfRImpprA74t/y7tXGcZb1uFlhes+ry5XILXQw7s/M7TYCQK+grJ6OA/yR
+         SZ+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733826278; x=1734431078;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=dnxhJKvx9jYvossMLwXlm6WCMeoNqlxmsqhx0tMAQvc=;
-        b=v0V/JZLcpnKK2Nc7JvSFyeadTcfEpqSL4aumgxJ0PE6scyzF8SB6DzdnN9rQkfW4Qw
-         PRjX+wnTTdo3ZtH2kuR6kXlriXR6RwOQLe6uQw7qPq1nRtcfOJYtADAKnxgwVlmrqR7P
-         PWIbzdNtTQVV/pxu7qnSnG52xpQ9v9xEd7EUgFuyiL9hT7jEC+WkxD5vpHby+HC8U4mD
-         j81hikrH+8DIDN6MVDSKWfYm0Br83+llWabYIoLREI8j2CjwRbJUsuqeH8HoLALBOMPS
-         t2v9d4G2KZAXazxk+cHsCSPeob6z9nfWjct36txsTN8snQtxOoojytMo0FUTurRgZAPR
-         1mjg==
-X-Forwarded-Encrypted: i=1; AJvYcCXeI50t/K0uN1sdSjI9euyo6Anw1QnEjlhA+92++v9zsK72ulAsxW8mQwtaJ6axViFMMMcORv0GSdWGkyzW@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywf6gi4OumEASsLSYlXAgpoPuX9uN7MT7CuA5CN0ry7Jqqyz9j8
-	z59NG23S2IndckuLKy7Ux3F/dwuLNJqW7fxKPW5VFYNo2GyJtpmN70nQwEGKHXqunqqz33zursy
-	PvoiPKfM2YJ5WEm1i4JplxldmBeAdpSOfB0z8mpU+bkk1MwXjYuk=
-X-Gm-Gg: ASbGnctx7a2fGVOw3/r/vO0bT2mt0GRoz1YR/XLE8rsC9jsbnjJIRR3Je9KsZAWc4F7
-	lzvCIruIoXkSpuH+0Adb6m/RJ6SyaSwa93tKa
-X-Google-Smtp-Source: AGHT+IFqSNy/U675xZEjsmCHP/7RnRexS72dnpn/UvAKcfve/GQogygTf20YsSMYxyFib0NlWI+JrNXv9DbPSym+qsU=
-X-Received: by 2002:a9d:7d99:0:b0:71d:eee3:fd27 with SMTP id
- 46e09a7af769-71deee3fe91mr4254214a34.1.1733826278464; Tue, 10 Dec 2024
- 02:24:38 -0800 (PST)
+        d=1e100.net; s=20230601; t=1733827119; x=1734431919;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+XZK8mlHOVAhY/lRiEPttNWsrY1uEn18gobmjnDJZnA=;
+        b=ntROgBVvYSepoId7AE77TTJaFpjGxrKmpNiptn3Gq8UFxheqeNDKqJ7q6u1tZIfWG1
+         lSpAfAyQboAmckYDrPtNeWuKu9AMWC4JbPBSeAroEXUyLmnB3he+GCR5Kopwg4CjD0Tj
+         8baIfE54sH4Gh74W4E0SculF/tM5PuVyDR10VzeZKUy7xUmE7wPtLKMT+PalcwVwijgT
+         aswlOO5K1xXES7p42GUL4xQ/54xu7yhZbUazg8MLXmjpLpJqrynHMjZqcOtsTpg8xPL8
+         KAiRL2hrbzo/p70aFMyPkfolzZtTn4RBlzVv8KbuM6cVlLIk7N6mEQLiAjJ/ClGGzikk
+         fA1g==
+X-Forwarded-Encrypted: i=1; AJvYcCVTf8bkW3BjsDe3POk1tt0j7lIydZAZwKpTEANTu2oNrEy30D9RtbEnUHcCsZuRcIX6c85od94/bPWJ9kP0@vger.kernel.org
+X-Gm-Message-State: AOJu0YxT5YUPrnltAfLhu8nQJkocBqp85lBaWW2JrYSGOeKw2R1hyB8+
+	TQH08PeFL0BC4Q3jcgUGYiAuNr39x3x7nhvLICd2OgiB6O/+W9Z/M7/VXSc7B/HcNWJQeFJE01N
+	ImsI=
+X-Gm-Gg: ASbGncskKNCycqmTOhl3019+QP+UQD/QEoNOkP2HN6cqO5P59p2DBl/uwOzwAVNvrUu
+	mbTWk/astkCL8kwk6xYhGjHxEGtUj2B4uKvL3ZXXR/gxbRaWmu6Vw0n2nfQJzTpMdTklfOmxwXt
+	12S3xDLuKDXY+I2V0xlWHcYoUNXr/e10fbeYap+7XAU21fesmscnDWpReul20RlIeSzE4Ye0qfJ
+	2prSNwU9NbfwxN1lmXuH7jfVAPBJgviqIdGkZbuTtZjrfu3B7FcVSZwIsdCBFSMOMoNQWcqcePO
+	dmTBP0oU5TISMXDucNPb8aTQFlCzn7LF6A==
+X-Google-Smtp-Source: AGHT+IFwNunZUPzwt3T0CqWqQAHy20Eg37A0H8eltYTc4tnYVPfwbB1+UM//AWLsraLtkpPIouA3OQ==
+X-Received: by 2002:a05:6512:3b13:b0:540:274f:a494 with SMTP id 2adb3069b0e04-540274fa588mr411966e87.42.1733827118749;
+        Tue, 10 Dec 2024 02:38:38 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5401eb916bfsm640174e87.252.2024.12.10.02.38.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Dec 2024 02:38:38 -0800 (PST)
+Date: Tue, 10 Dec 2024 12:38:35 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Xiangxu Yin <quic_xiangxuy@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Fange Zhang <quic_fangez@quicinc.com>, Li Liu <quic_lliu6@quicinc.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: Add DisplayPort support for QCS615
+Message-ID: <5tao3qowqb5av5bhvwn4l3bfdumbfgqcvzxl3doojhjtd4hxsa@yc6wzmx5zets>
+References: <20241210-add-displayport-support-to-qcs615-devicetree-v1-0-02f84a92c44b@quicinc.com>
+ <20241210-add-displayport-support-to-qcs615-devicetree-v1-1-02f84a92c44b@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241202-qcom-tee-using-tee-ss-without-mem-obj-v1-0-f502ef01e016@quicinc.com>
- <20241202-qcom-tee-using-tee-ss-without-mem-obj-v1-5-f502ef01e016@quicinc.com>
-In-Reply-To: <20241202-qcom-tee-using-tee-ss-without-mem-obj-v1-5-f502ef01e016@quicinc.com>
-From: Jens Wiklander <jens.wiklander@linaro.org>
-Date: Tue, 10 Dec 2024 11:24:27 +0100
-Message-ID: <CAHUa44FhZc1ZVgJQrqbDdY1kegNgHrC4VTs66-5CDfY04D6MMw@mail.gmail.com>
-Subject: Re: [PATCH 05/10] qcomtee: implement object invoke support
-To: Amirreza Zarrabi <quic_azarrabi@quicinc.com>
-Cc: Sumit Garg <sumit.garg@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, linux-arm-msm@vger.kernel.org, 
-	op-tee@lists.trustedfirmware.org, linux-kernel@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-doc@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241210-add-displayport-support-to-qcs615-devicetree-v1-1-02f84a92c44b@quicinc.com>
 
-On Tue, Dec 3, 2024 at 5:20=E2=80=AFAM Amirreza Zarrabi
-<quic_azarrabi@quicinc.com> wrote:
->
-> Introduce qcom_tee_object, which represents an object in both QTEE and
-> the kernel. QTEE clients can invoke an instance of qcom_tee_object to
-> access QTEE services. If this invocation produces a new object in QTEE,
-> an instance of qcom_tee_object will be returned.
->
-> Similarly, QTEE can request services from the kernel by issuing a callbac=
-k
-> request, which invokes an instance of qcom_tee_object in the kernel.
-> Any subsystem that exposes a service to QTEE should allocate and initiali=
-ze
-> an instance of qcom_tee_object with a dispatcher callback that is called
-> when the object is invoked.
->
-> Signed-off-by: Amirreza Zarrabi <quic_azarrabi@quicinc.com>
+On Tue, Dec 10, 2024 at 05:11:05PM +0800, Xiangxu Yin wrote:
+> Add DisplayPort controller and phy configuration for QCS615 platform.
+> 
+> Signed-off-by: Xiangxu Yin <quic_xiangxuy@quicinc.com>
 > ---
->  drivers/tee/Kconfig                    |   1 +
->  drivers/tee/Makefile                   |   1 +
->  drivers/tee/qcomtee/Kconfig            |  10 +
->  drivers/tee/qcomtee/Makefile           |   6 +
->  drivers/tee/qcomtee/async.c            | 153 ++++++
->  drivers/tee/qcomtee/core.c             | 928 +++++++++++++++++++++++++++=
-++++++
->  drivers/tee/qcomtee/qcom_scm.c         |  36 ++
->  drivers/tee/qcomtee/qcomtee_msg.h      | 217 ++++++++
->  drivers/tee/qcomtee/qcomtee_private.h  |  47 ++
->  drivers/tee/qcomtee/release.c          |  66 +++
->  include/linux/firmware/qcom/qcom_tee.h | 284 ++++++++++
->  11 files changed, 1749 insertions(+)
->
-[snip]
-
-> +/**
-> + * DOC: Overview
-> + *
-> + * qcom_tee_object provides object ref-counting, id allocation for objec=
-ts hosted in
-> + * REE, and necessary message marshaling for Qualcomm TEE (QTEE).
-> + *
-> + * To invoke an object in QTEE, user calls qcom_tee_object_do_invoke() w=
-hile passing
-> + * an instance of &struct qcom_tee_object and the requested operation + =
-arguments.
-> + *
-> + * After the boot, QTEE provides a static object %ROOT_QCOM_TEE_OBJECT (=
-type of
-> + * %QCOM_TEE_OBJECT_TYPE_ROOT). The root object is invoked to pass user'=
-s credentials and
-> + * obtain other instances of &struct qcom_tee_object (type of %QCOM_TEE_=
-OBJECT_TYPE_TEE)
-> + * that represents services and TAs in QTEE, see &enum qcom_tee_object_t=
-ype.
-> + *
-> + * The object received from QTEE are refcounted. So the owner of these o=
-bjects can
-> + * issue qcom_tee_object_get(), to increase the refcount, and pass objec=
-ts to other
-> + * clients, or issue qcom_tee_object_put() to decrease the refcount, and=
- releasing
-> + * the resources in QTEE.
-> + *
-> + * REE can host services accessible to QTEE. A driver should embed an in=
-stance of
-> + * &struct qcom_tee_object in the struct it wants to export to QTEE (it =
-is called
-> + * callback object). It issues qcom_tee_object_user_init() to set the di=
-spatch()
-> + * operation for the callback object and set its type to %QCOM_TEE_OBJEC=
-T_TYPE_CB_OBJECT.
-> + *
-> + * core.c holds an object table for callback objects. An object id is as=
-signed
-> + * to each callback object which is an index to the object table. QTEE u=
-ses these ids
-> + * to reference or invoke callback objects.
-> + *
-> + * If QTEE invoke a callback object in REE, the dispatch() operation is =
-called in the
-> + * context of thread that called qcom_tee_object_do_invoke(), originally=
-.
-> + */
+>  arch/arm64/boot/dts/qcom/qcs615.dtsi | 107 ++++++++++++++++++++++++++++++++++-
+>  1 file changed, 105 insertions(+), 2 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/qcs615.dtsi b/arch/arm64/boot/dts/qcom/qcs615.dtsi
+> index 0a629c44e960e38891f48a8a021b86a6c1dadea1..dbd6eae267d7470d9b9a6c303eac03b64c3df3fc 100644
+> --- a/arch/arm64/boot/dts/qcom/qcs615.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/qcs615.dtsi
+> @@ -17,6 +17,7 @@
+>  #include <dt-bindings/power/qcom-rpmpd.h>
+>  #include <dt-bindings/power/qcom,rpmhpd.h>
+>  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+> +#include <dt-bindings/phy/phy-qcom-qmp.h>
+>  
+>  / {
+>  	interrupt-parent = <&intc>;
+> @@ -2889,6 +2890,7 @@ ports {
+>  					port@0 {
+>  						reg = <0>;
+>  						dpu_intf0_out: endpoint {
+> +							remote-endpoint = <&mdss_dp0_in>;
+>  						};
+>  					};
+>  
+> @@ -3002,6 +3004,107 @@ mdss_dsi0_phy: phy@ae94400 {
+>  
+>  				status = "disabled";
+>  			};
 > +
-> +/**
-> + * enum qcom_tee_object_typ - Object types.
-> + * @QCOM_TEE_OBJECT_TYPE_TEE: object hosted on QTEE.
-> + * @QCOM_TEE_OBJECT_TYPE_CB_OBJECT: object hosted on REE.
-> + * @QCOM_TEE_OBJECT_TYPE_ROOT: 'primordial' object.
-> + * @QCOM_TEE_OBJECT_TYPE_NULL: NULL object.
-> + *
-> + * Primordial object is used for bootstrapping the IPC connection betwee=
-n a REE
-> + * and QTEE. It is invoked by REE when it wants to get a 'client env'.
-> + */
-> +enum qcom_tee_object_type {
-> +       QCOM_TEE_OBJECT_TYPE_TEE,
-> +       QCOM_TEE_OBJECT_TYPE_CB_OBJECT,
+> +			mdss_dp0: displayport-controller@ae90000 {
 
-The second OBJECT seems redundant. How about QCOM_TEE_OBJECT_TYPE_CB
-or QCOM_TEE_OBJECT_TYPE_CALLBACK instead?
+Which order should nodes follow in DT?
 
-> +       QCOM_TEE_OBJECT_TYPE_ROOT,
-> +       QCOM_TEE_OBJECT_TYPE_NULL,
-> +};
-[snip]
+> +				compatible = "qcom,sm6150-dp";
+> +
+> +				reg = <0x0 0xae90000 0x0 0x200>,
+> +				      <0x0 0xae90200 0x0 0x200>,
+> +				      <0x0 0xae90400 0x0 0x600>,
+> +				      <0x0 0xae90a00 0x0 0x600>;
 
-Cheers,
-Jens
+0x0ae90000, etc. If it is not written in your company's "upstreaming"
+document, please update it. If it is written there, why didn't you
+follow it?
+
+> +
+> +				interrupt-parent = <&mdss>;
+> +				interrupts = <12>;
+> +
+> +				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_DP_AUX_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_DP_LINK_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_DP_LINK_INTF_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK>;
+> +				clock-names = "core_iface",
+> +					      "core_aux",
+> +					      "ctrl_link",
+> +					      "ctrl_link_iface",
+> +					      "stream_pixel";
+> +
+> +				assigned-clocks = <&dispcc DISP_CC_MDSS_DP_LINK_CLK_SRC>,
+> +						  <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK_SRC>;
+> +				assigned-clock-parents = <&mdss_dp_phy QMP_USB43DP_DP_LINK_CLK>,
+> +							 <&mdss_dp_phy QMP_USB43DP_DP_VCO_DIV_CLK>;
+> +
+> +				phys = <&mdss_dp_phy QMP_USB43DP_DP_PHY>;
+> +				phy-names = "dp";
+> +
+> +				operating-points-v2 = <&dp_opp_table>;
+> +				power-domains = <&rpmhpd RPMHPD_CX>;
+> +
+> +				#sound-dai-cells = <0>;
+> +
+> +				status = "disabled";
+> +
+> +				ports {
+> +					#address-cells = <1>;
+> +					#size-cells = <0>;
+> +
+> +					port@0 {
+> +						reg = <0>;
+> +						mdss_dp0_in: endpoint {
+> +							remote-endpoint = <&dpu_intf0_out>;
+> +						};
+> +					};
+> +
+> +					port@1 {
+> +						reg = <1>;
+> +						mdss_dp0_out: endpoint {
+> +						};
+> +					};
+> +				};
+> +
+> +				dp_opp_table: opp-table {
+> +					compatible = "operating-points-v2";
+> +
+> +					opp-160000000 {
+> +						opp-hz = /bits/ 64 <160000000>;
+> +						required-opps = <&rpmhpd_opp_low_svs>;
+> +					};
+> +
+> +					opp-270000000 {
+> +						opp-hz = /bits/ 64 <270000000>;
+> +						required-opps = <&rpmhpd_opp_svs>;
+> +					};
+> +
+> +					opp-540000000 {
+> +						opp-hz = /bits/ 64 <540000000>;
+> +						required-opps = <&rpmhpd_opp_svs_l1>;
+> +					};
+> +				};
+> +			};
+> +
+> +			mdss_dp_phy: phy@88e9000 {
+
+Also misplaced node.
+
+> +				compatible = "qcom,qcs615-qmp-dp-phy";
+> +
+> +				reg = <0x0 0x88e9000 0x0 0x200>,
+> +				      <0x0 0x88e9400 0x0 0x10c>,
+> +				      <0x0 0x88e9800 0x0 0x10c>,
+> +				      <0x0 0x88e9c00 0x0 0x200>;
+
+0x088e9000, etc.
+
+> +
+> +				clocks = <&gcc GCC_AHB2PHY_WEST_CLK>,
+> +					 <&gcc GCC_USB3_SEC_CLKREF_CLK>;
+> +				clock-names = "cfg_ahb",
+> +					      "ref";
+> +				clock-output-names = "dp_phy_link_clk",
+> +						     "dp_phy_vco_div_clk";
+> +
+> +				resets = <&gcc GCC_USB3_DP_PHY_SEC_BCR>;
+> +				reset-names = "phy";
+> +
+> +				qcom,tcsr-reg = <&tcsr 0xb24c>;
+> +
+> +				#clock-cells = <1>;
+> +				#phy-cells = <1>;
+> +
+> +				status = "disabled";
+> +			};
+>  		};
+>  
+>  		dispcc: clock-controller@af00000 {
+> @@ -3013,8 +3116,8 @@ dispcc: clock-controller@af00000 {
+>  				 <&mdss_dsi0_phy 0>,
+>  				 <&mdss_dsi0_phy 1>,
+>  				 <0>,
+> -				 <0>,
+> -				 <0>;
+> +				 <&mdss_dp_phy QMP_USB43DP_DP_LINK_CLK>,
+> +				 <&mdss_dp_phy QMP_USB43DP_DP_VCO_DIV_CLK>;
+>  
+>  			#clock-cells = <1>;
+>  			#reset-cells = <1>;
+> 
+> -- 
+> 2.34.1
+> 
+
+-- 
+With best wishes
+Dmitry
 
