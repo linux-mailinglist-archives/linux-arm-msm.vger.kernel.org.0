@@ -1,120 +1,107 @@
-Return-Path: <linux-arm-msm+bounces-41311-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41312-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 078889EB18B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 14:02:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id BFE819EB1C0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 14:18:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D2F1116BDFF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 13:02:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 46E5F168813
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 13:18:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE1C11A9B5A;
-	Tue, 10 Dec 2024 13:00:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B12A01A256B;
+	Tue, 10 Dec 2024 13:18:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="myzlr3nP"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cas5dQYS"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 986A51B3938;
-	Tue, 10 Dec 2024 13:00:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8329519DF99;
+	Tue, 10 Dec 2024 13:18:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733835643; cv=none; b=bDgtvgIfoTcWxK1wjxihTLoZmbwVk+kv67DyDB/3Yyim22vUoMti4EBhzP5u19jqdRAcDecO0SKJp3EjVvtdHSfnfTFTGXpVGsmBREcSu6PD5lDwmNoLKI8bq5rkzvhZPpvymbeYiVEwVG73daBLyplBkUfl+Wy+xSYnV8+IQCI=
+	t=1733836699; cv=none; b=dj2S3JjVA16YJzc/XfohlPGyrriYk6vb0ZQdl60NCGySm/MmxBYEdbV9d/Sc0Z79JwqcE1ry4LqRmKoM685pr8WoMK7YufPy+/MWmS/rgT4ZoG6wSFu9EJo/MC4N3msJ3++ghm1r6hyMMdCqThTyWjpNqPlbGXYWMcCvr3cB3MI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733835643; c=relaxed/simple;
-	bh=7G7GfT4yW3zCpkGqBz2K23Qi2P4CWzTVgsILI8yLq8o=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=sgAeHDvPxsSUZEiJ868zvQllQf3PcpYo+TNnSGV3bn9p3QuoBj/2VhBZwRFkblvJ4WDF9jL5VRtrtMh8HeC8GTnNuXFg4JLJO/8oIPmGa9pbSAWDbk4WUTsK4uzZPbHj48+6yqfcmHxtUP76GUK0cYwmHF2tsQmHlwf/k/AYbeA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=myzlr3nP; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F094C4CED6;
-	Tue, 10 Dec 2024 13:00:39 +0000 (UTC)
+	s=arc-20240116; t=1733836699; c=relaxed/simple;
+	bh=uIhQoJGYiDFo8tFm8p4NlRafWkGjon8JvpSmePl2JMk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LOAu4q06wPDkrw6NSbAtfK+FihnKfRnuOKIpq7ZJ0s1TXGs7mPZkjBirFTrDLcX1mzmZUVmOZOkmBi3JEQ5aPCKPNCxrKJpPYyvOmvHuBZrIc8iYFAPCbBmNoTcZmv5zVFkdGyQTuo90RZ6DbOBWENVlHQ+AiU+RtUyKazG7cUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cas5dQYS; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEBB9C4CED6;
+	Tue, 10 Dec 2024 13:18:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733835643;
-	bh=7G7GfT4yW3zCpkGqBz2K23Qi2P4CWzTVgsILI8yLq8o=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=myzlr3nPEt0OthL5kbLhQpwnV1PTKaxRgW/URgQv9tsEAswweBdDjRnp/JLpdKFQv
-	 NpuCNUSbgDe/ylBd3hJQOZX7mr1OUADsFxFpqpD9nconhWgOF8PM1B62JF/Qj/lL61
-	 9KWWTX7sG2RGT1FBZcm0A7x8h7PERX+1KNPQYtSFxlnMdC6kU+Qtzs3KrSu5vx30+K
-	 vNPVYdgLeP7lG/9usdwAANSRVOgc9BtBFLdFRgJ0kCa0qJczFsVl11NXeeEFI9scWJ
-	 0NqKiGfxmI6Q3DOcxh78TYm2eUAmoFQia9AHIlHpHCk+EMjhAbc+xUa77jgCGapUul
-	 YKrUaxWuPfctw==
-From: Mark Brown <broonie@kernel.org>
-To: Liam Girdwood <lgirdwood@gmail.com>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Marcel Holtmann <marcel@holtmann.org>, 
- Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
- Bartosz Golaszewski <brgl@bgdev.pl>, 
- Janaki Ramaiah Thota <quic_janathot@quicinc.com>
-Cc: quic_mohamull@quicinc.com, quic_hbandi@quicinc.com, 
- quic_anubhavg@quicinc.com, 
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
- linux-pm@vger.kernel.org
-In-Reply-To: <20241209103455.9675-1-quic_janathot@quicinc.com>
-References: <20241209103455.9675-1-quic_janathot@quicinc.com>
-Subject: Re: (subset) [PATCH v5 0/4] Enable Bluetooth on qcs6490-rb3gen2
- board
-Message-Id: <173383563938.33920.16190333165637044320.b4-ty@kernel.org>
-Date: Tue, 10 Dec 2024 13:00:39 +0000
+	s=k20201202; t=1733836699;
+	bh=uIhQoJGYiDFo8tFm8p4NlRafWkGjon8JvpSmePl2JMk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=cas5dQYSHHhm8M/gB6qwrIbPiixehQJUFtK1qDl77QQXEQHApgI27VWeZaKte04bC
+	 JW5qTVuFuMOWZb/XdcV4Rbg68xnRHEGf6ZH1+vmhL+De5BCzl2xJLBYQPuSONEPBfx
+	 yRDchOYP9r94Q+2N7I8DifGBcu1zFQodE8ehMRXjBnuVE9/J7Mc0PjVRQUzzDq1JwP
+	 3UQEA2fPGVK1rHZuIK+6f6kNPKvHxYDjy3ye8zNBneDsDkbuseMdSvvx/Cr8UeT6mb
+	 Y/+yiBj9nfjI8nhHlczlTW0bYrJ4rJIeB8rT4LcUODRsS7Ni+ZpOiQaZKdeAeMQ+qC
+	 jGFA+XgCE6xpw==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1tL084-000000000ye-2T37;
+	Tue, 10 Dec 2024 14:18:21 +0100
+Date: Tue, 10 Dec 2024 14:18:20 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Stephan Gerhold <stephan.gerhold@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Sibi Sankar <quic_sibis@quicinc.com>, Marc Zyngier <maz@kernel.org>,
+	Xilin Wu <wuxilin123@gmail.com>, Abel Vesa <abel.vesa@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Aleksandrs Vinarskis <alex.vinarskis@gmail.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/8] arm64: dts: qcom: x1e*: Fix USB QMP PHY supplies
+Message-ID: <Z1g_nFhYXrBxHtrb@hovoldconsulting.com>
+References: <20241210-x1e80100-usb-qmp-supply-fix-v1-0-0adda5d30bbd@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Mailer: b4 0.15-dev-9b746
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241210-x1e80100-usb-qmp-supply-fix-v1-0-0adda5d30bbd@linaro.org>
 
-On Mon, 09 Dec 2024 16:04:51 +0530, Janaki Ramaiah Thota wrote:
-> - Patch 1/4 Add description of the PMU of the WCN6750 module.
-> - Patch 2/4 add and enable BT node for qcs6490-rb3gen board.
-> - Patch 3/4 use the power sequencer for wcn6750.
-> - Patch 4/4 add support for the WCN6750 PMU.
+On Tue, Dec 10, 2024 at 10:07:31AM +0100, Stephan Gerhold wrote:
+> On the X1E80100 CRD, &vreg_l3e_1p2 only powers &usb_mp_qmpphy0/1
+> (i.e. USBSS_3 and USBSS_4). The QMP PHYs for USB_0, USB_1 and USB_2
+> are actually powered by &vreg_l2j_1p2.
 > 
-> ----
-> Changes from v4:
-> * Added reviewed tag by Krzysztof in p1
-> * Updated the p2 commit message with sw_ctrl and wifi-enable are
->   handled in wifi FW.
-> * Added blank line between the nodes in p2
-> * Placed the structures in proper order in p4
-> * Link to v4: https://lore.kernel.org/all/20241204131706.20791-1-quic_janathot@quicinc.com/
-> 
-> [...]
+> Since most X1E device trees just mirror the power supplies from the
+> x1e80100-crd device tree, this series fixes up all the X1E boards with
+> the same change.
 
-Applied to
+Nice find! I've confirmed that this matches both the CRD and T14s
+schematics.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
+> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-Thanks!
+> Stephan Gerhold (8):
+>       arm64: dts: qcom: x1e001de-devkit: Fix USB QMP PHY supplies
+>       arm64: dts: qcom: x1e78100-lenovo-thinkpad-t14s: Fix USB QMP PHY supplies
 
-[1/4] regulator:·dt-bindings:·qcom,qca6390-pmu:·document wcn6750-pmu
-      commit: 8099b1f7e37e98f73664b883464d54e2e2d9522f
+nit: We've been using the shorter "x1e78100-t14s" prefix for this one so
+far. This may apply to some of the others as well.
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+>       arm64: dts: qcom: x1e80100-asus-vivobook-s15: Fix USB QMP PHY supplies
+>       arm64: dts: qcom: x1e80100-crd: Fix USB QMP PHY supplies
+>       arm64: dts: qcom: x1e80100-dell-xps13-9345: Fix USB QMP PHY supplies
+>       arm64: dts: qcom: x1e80100-lenovo-yoga-slim7x: Fix USB QMP PHY supplies
+>       arm64: dts: qcom: x1e80100-microsoft-romulus: Fix USB QMP PHY supplies
+>       arm64: dts: qcom: x1e80100-qcp: Fix USB QMP PHY supplies
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
-
+Johan
 
