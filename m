@@ -1,160 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-41324-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41325-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D5A69EB45C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 16:09:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 314C29EB474
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 16:17:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D165316865A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 15:09:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 17F8C168B70
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 15:17:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26D0E1B0F2C;
-	Tue, 10 Dec 2024 15:09:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2EABA1B6539;
+	Tue, 10 Dec 2024 15:17:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="v343TJ32"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="J8iHWTWK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 270BA1A072A
-	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2024 15:09:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E71E1CD15;
+	Tue, 10 Dec 2024 15:17:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733843367; cv=none; b=O/yKQJhgxMc0G15v4oXBsBwcusJAHZ7lJtcT1RabRI8t0hAxkxzvY+nrdnyN4fs/xWWg2xzTlk8Dg/Q1laziSun4ErS19gulbQQh4XH0pfErKJmiMXXLt7NZmdNNRLcZDqnLksWZ2YZwiYK5+aJouTzRf0EjQVySfrJs2vZ1SOw=
+	t=1733843862; cv=none; b=lkzPvQEenYQ1yUaCuFo2NE7WKY/vf7/Qpf/lvqeMyKTtUkjDylbhj7oZhQBfT6/WofCQu2lgOKyQQLKG5sOf/prk/Q2dQhUefYTeWY+Sz1WIoeqywFztqJaCGXeIGE+5alrozGZXJH7HHRES+Vo97ldNby9aScQcG2Fdk8ilYEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733843367; c=relaxed/simple;
-	bh=80/01DvwhCk8ER/fRhyWLCJzR9PTogDCxXobO9F/RVQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=U1qwl/c63szr82H0roOnLqqkh7bu0I/kAsETvC7a39QOtcFjRXfLzoq00lDxAkX+6QPGcqGn4/LMwMDSXaObet+bDtEozImpYvVIGU8UJEcrRMBqmO/vPLoCGyh/URxCuYsvFxCgpyVLQFf1vQnX55jblh5jl3f2u/6vU10B1kk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=v343TJ32; arc=none smtp.client-ip=209.85.208.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-30225b2586cso19724931fa.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2024 07:09:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733843363; x=1734448163; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=ONPoAWCr/z6lJfjDFKtgqfFAw1BGCZer+GCPiaXmPhw=;
-        b=v343TJ323DUGi5/m5/FrFrr89Ph+Zv0XeBvNt5huqxBnTkff5QRbzRW4pZWUNVttAH
-         Tlu95DPvvAHT6zUodswBHcvRf56JzyawVTfBR3dNWKdZBuljZlgr98bGiaYlYhsT2uPr
-         gu2V6zwkFTh/b0OkdHryyJxrj6RtGPrHiLfKlc7gYXsQf9dCVs7btgZvkKZX6c2s7A5D
-         j16flk5a/dCWOovI+7SnICyPlYr2x69lQCEDNw3b+KKPoQstS9stPw88m8Cgd+fcoYjM
-         k5eTuUxolSI1b/X9ta78apmdeiOgLYvib+f/TqAunaMr6fsiBMlz4PwghoiKHHVF7aMN
-         xuOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733843363; x=1734448163;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ONPoAWCr/z6lJfjDFKtgqfFAw1BGCZer+GCPiaXmPhw=;
-        b=NdVmj3OXOQ5sRzXgfs6bFFfnUg9CVhtOPtlTKUxehkwjMAuR2QyH3NQQGOBcdYKSQB
-         DAhPzlEDJ7koP2FWdvKt7mXi7/xf5vVIHm/X0ZuSCpGTO4IqWEQYVyuhzxL55RXBcS00
-         Xzhu+q+spK9QlUsExNoQtMKNflytjod1IcCQFUv/5kAXUts/kx5jI06S85Y3CFCH+uri
-         Zf7Yoq0cDfbOTaDTOs/lUGbAnh9gqPsyJkBNCU5wXsFh6VixG1v7dKeuGSPes8dGwNnZ
-         vmDO6TyKLw+XO9cx6I+u+TPsCmyUXLUfhbBWoXKGAURXMb6DDW5BkAbs362VZ3zrQHHm
-         hWEQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUovP9iwRf6Lj6mLUZ/4VAuLkjG8kZNiiL7ycm0oMpKvlqZSq6xA49wLbwFze0Q5JbRLEKZIihpNhruNTJW@vger.kernel.org
-X-Gm-Message-State: AOJu0YySrpqTg5sxIF4vSyCBAef+X0z5jBhNpoxJ3CAULCW7qPWYX6nK
-	VtNBBQf3+FcBHm0tsCOe5oyC95p/xycC6UaR4yQ0bu7V7GeoWtQnW/SYwF/BMeY=
-X-Gm-Gg: ASbGnctQ+gEIT9Z6kxfvFOJCbZtZ77244xwpjHJFDNVSTsFI31yjgw7UEl6ftWzRPiT
-	XkoIJAXs7z/B8qOd95ANBHZPq0ikj75hfLeaqIfua3SKA+YbNdF0gmszLKoj3B4SQQs0aDBaRdD
-	Ojla9nRJ02PMEbumQJkIJOKp6Az9SesIplg/qPXquyOjKSlY3HONmV7vMW3THze6sdPCoTXvtSn
-	QRuv/kLkYL4HFln6NFzFLl9SQipUHSjK/4anw07WftdIhMvc+wBtWDbYFAMwjRUlDyh4tlyrkdI
-	NouIWNefFVrXgvsUx7hk1dEinNEFdNx2zg==
-X-Google-Smtp-Source: AGHT+IH4LG5o5SbyEh1Vovj71WLwSfFbBGhk7NJh/k58qLpSj2p2TBBGrOFSDDq9rnPlmsaGShNmLg==
-X-Received: by 2002:a2e:be0b:0:b0:2ff:b8f5:5a17 with SMTP id 38308e7fff4ca-3023282c1femr12568441fa.5.1733843363188;
-        Tue, 10 Dec 2024 07:09:23 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-302259416c5sm5907321fa.6.2024.12.10.07.09.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Dec 2024 07:09:22 -0800 (PST)
-Date: Tue, 10 Dec 2024 17:09:21 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Xiangxu Yin <quic_xiangxuy@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Kuogee Hsieh <quic_khsieh@quicinc.com>, Vinod Koul <vkoul@kernel.org>, 
-	Kishon Vijay Abraham I <kishon@kernel.org>, Linus Walleij <linus.walleij@linaro.org>, 
-	Bartosz Golaszewski <brgl@bgdev.pl>, quic_lliu6@quicinc.com, quic_fangez@quicinc.com, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org, 
-	linux-gpio@vger.kernel.org
-Subject: Re: [PATCH 3/8] phy: qcom: qmp-usbc: Add DP phy mode support on
- QCS615
-Message-ID: <iqcofcntirmlwcpyfr4yabymqfcgyrij57bibf337tmxpa73t6@npkt6wquenf6>
-References: <20241129-add-displayport-support-for-qcs615-platform-v1-0-09a4338d93ef@quicinc.com>
- <20241129-add-displayport-support-for-qcs615-platform-v1-3-09a4338d93ef@quicinc.com>
- <CAA8EJppOR_UXoVpMt-dhfWdCz3UNfsXGdz8X9NqpaSmYj3AZDg@mail.gmail.com>
- <5ea14162-567b-462d-be02-b73b954b7507@quicinc.com>
- <5whv4z7u6fkfwlv5muox5dmv6fow4mga76ammapw7wph7vwv3f@xibcjdfqorgf>
+	s=arc-20240116; t=1733843862; c=relaxed/simple;
+	bh=Wi43FCd/dRAQg29x1UTQvXfGbBTo+bNPgW6UooecDZI=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=cQt2KSe19A0RCqb0gAWZqBQv4mdrA0fiTtkyutZTXzraX4qqR7WySw5vsWpFGX3Iz2Lhdrd5BV7PqPuHz4LDpheh6b2e6Yc/MtCCw5pUXMnTVDVJFVC7ElxvVIeLQza3PnjkjDsc95PQZXmrIwgQzWG/X14od8V8Z7HqRddg3w0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=J8iHWTWK; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BADtdMF019489;
+	Tue, 10 Dec 2024 15:17:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=iW0ylusmUm4idK/1N8NKEi
+	Jzigzfo5wNMkGkkJEwHv4=; b=J8iHWTWKUVe3o2nsaXvl4pCzNqGrqARXDlzWzM
+	o3rSRPNeLTaaiZIMc1QE2Cam+gtD0kh+3fKYmuyT8paFR0efpbQlfRBks1VvX70H
+	duEUkq9hp62sazoT06fi9lA3HWwqfxwNTBQEJarxZ2HBY9vIv6CABfZG6VVqH1dt
+	5/K3AryxRV9hSE3ZEwYB1Ub0Fg+xdXeDbvr+CNb8jvgSkcmgKpyJk7S5iWNm+3tG
+	PD+PO3AvJDXn+h6iKna7ENq68jwsZU6xZO04XkniEtpVMsx+SpJEqGvWcGdNnUlY
+	//0cWPzLDRSdOiMy9dxd1hP1cL+Nf7YxBx+OC6PAFGw3FjVg==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43e341bjwh-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 10 Dec 2024 15:17:32 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BAFHWo5026060
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 10 Dec 2024 15:17:32 GMT
+Received: from bt-iot-sh01-lnx.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 10 Dec 2024 07:17:27 -0800
+From: Cheng Jiang <quic_chejiang@quicinc.com>
+To: Marcel Holtmann <marcel@holtmann.org>,
+        Luiz Augusto von Dentz
+	<luiz.dentz@gmail.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        "Balakrishna
+ Godavarthi" <quic_bgodavar@quicinc.com>,
+        Rocky Liao <quic_rjliao@quicinc.com>
+CC: <linux-bluetooth@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <quic_chejiang@quicinc.com>, <quic_jiaymao@quicinc.com>,
+        <quic_shuaz@quicinc.com>, <quic_zijuhu@quicinc.com>,
+        <quic_mohamull@quicinc.com>
+Subject: [PATCH v4 0/3] Expand firmware-name property to load specific
+Date: Tue, 10 Dec 2024 23:16:32 +0800
+Message-ID: <20241210151636.2474809-1-quic_chejiang@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <5whv4z7u6fkfwlv5muox5dmv6fow4mga76ammapw7wph7vwv3f@xibcjdfqorgf>
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: dohx0REGJxgIzHUW94Wd9g18vtbzLHiK
+X-Proofpoint-ORIG-GUID: dohx0REGJxgIzHUW94Wd9g18vtbzLHiK
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
+ priorityscore=1501 suspectscore=0 mlxlogscore=999 clxscore=1015 mlxscore=0
+ spamscore=0 phishscore=0 malwarescore=0 adultscore=0 impostorscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412100114
 
-On Thu, Dec 05, 2024 at 08:31:24PM +0200, Dmitry Baryshkov wrote:
-> On Thu, Dec 05, 2024 at 09:26:47PM +0800, Xiangxu Yin wrote:
-> > 
-> > 
-> > On 11/29/2024 10:33 PM, Dmitry Baryshkov wrote:
-> > > On Fri, 29 Nov 2024 at 09:59, Xiangxu Yin <quic_xiangxuy@quicinc.com> wrote:
-> > >>
-> > >> Extended DP support for QCS615 USB or DP phy. Differentiated between
-> > >> USBC and DP PHY using the match table’s type, dynamically generating
-> > >> different types of cfg and layout attributes during initialization based
-> > >> on this type. Static variables are stored in cfg, while parsed values
-> > >> are organized into the layout structure.
-> > > 
-> > > We didn't have an understanding / conclusion whether
-> > > qcom,usb-ssphy-qmp-usb3-or-dp PHYs are actually a single device / PHY
-> > > or two PHYs being placed next to each other. Could you please start
-> > > your commit message by explaining it? Or even better, make that a part
-> > > of the cover letter for a new series touching just the USBC PHY
-> > > driver. DP changes don't have anything in common with the PHY changes,
-> > > so you can split the series into two.
-> > > 
-> > Before implement DP extension, we have discussed with abhinav and krishna about whether use combo, usbc or separate phy.
-> 
-> What is "DP extension"?
-> 
-> > 
-> > We identified that DP and USB share some common controls for phy_mode and orientation.
-> > Specifically, 'TCSR_USB3_0_DP_PHYMODE' controls who must use the lanes - USB or DP,
-> > while PERIPH_SS_USB0_USB3PHY_PCS_MISC_TYPEC_CTRL controls the orientation.
-> > It would be more efficient for a single driver to manage these controls. 
-> 
-> The question is about the hardware, not about the driver.
-> 
-> > Additionally, this PHY does not support Alt Mode, and the two control registers are located in separate address spaces. 
-> > Therefore, even though the orientation for DP on this platform is always normal and connected to the video output board, 
-> > we still decided to base it on the USBC extension.
-> 
-> Could you please clarify, do usb3-or-dp PHYs support DP-over-USB-C? I
-> thought that usbc-or-dp platforms support that, but they don't
-> support DP+USB pin configuration. Note, the question is broader than
-> just QCS615, it covers the PHY type itself.
-> 
-> Also, is TCSR configuration read/write or read-only? Are we supposed to
-> set the register from OS or are we supposed to read it and thus detemine
-> the PHY mode?
+Expand the firmware-name property to specify the names of NVM and
+rampatch firmware to load.
 
-Any updates on these two topics?
+This update will support loading specific firmware (nvm and rampatch)
+for certain chips, like the QCA6698 Bluetooth chip, which shares the
+same IP core as the WCN6855 but has different RF components and RAM
+sizes, requiring new firmware files.
 
+Different connectivity boards may be attached to the same platform. For
+example, QCA6698-based boards can support either a two-antenna or
+three-antenna solution, both of which work on the sa8775p-ride platform.
+Due to differences in connectivity boards and variations in RF
+performance from different foundries, different NVM configurations are
+used based on the board ID.
+
+So In firmware-name, if the NVM file has an extension, the NVM file will
+be used. Otherwise, the system will first try the .bNN (board ID) file,
+and if that fails, it will fall back to the .bin file.
+
+Possible configurations:
+firmware-name = "QCA6698/hpnv21.bin", "QCA6698/hpbtfw21.tlv";
+firmware-name = "QCA6698/hpnv21", "QCA6698/hpbtfw21.tlv";
+firmware-name = "QCA6698/hpnv21.bin";
+
+---
+v4:
+  1. Split nvm and rampatch changes to 2 commits
+  2. Code fix according to review comments
+
+v3:
+  1.Expand firmware-name property to specify the nvm and rampatch to
+  load.
+  2.Change the driver to support two items in firmware-name and choose
+  the NVM file according to board id if there is no extension in NVM
+  file.
+  3.Update the dts file to idendify the firmware for QCA6698.
+---
+
+Cheng Jiang (4):
+  dt-bindings: net: bluetooth: qca: Expand firmware-name property
+  Bluetooth: qca: Add support in firmware-name to load board specific
+    nvm
+  Bluetooth: qca: Expand firmware-name to load specific rampatch
+  arm64: dts: qcom: sa8775p-ride: Add firmware-name in BT node
+
+ .../net/bluetooth/qualcomm-bluetooth.yaml     |   5 +-
+ arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi    |   1 +
+ drivers/bluetooth/btqca.c                     | 149 +++++++++++++-----
+ drivers/bluetooth/btqca.h                     |   5 +-
+ drivers/bluetooth/hci_qca.c                   |  22 ++-
+ 5 files changed, 133 insertions(+), 49 deletions(-)
+
+
+base-commit: ebe1b11614e079c5e366ce9bd3c8f44ca0fbcc1b
 -- 
-With best wishes
-Dmitry
+2.25.1
+
 
