@@ -1,134 +1,209 @@
-Return-Path: <linux-arm-msm+bounces-41320-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41321-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EB8A09EB357
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 15:31:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C2B329EB3CB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 15:45:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AAEC9281D3F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 14:31:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DDA07281F21
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 14:45:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F6221AA1D0;
-	Tue, 10 Dec 2024 14:31:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCB2A1A08C5;
+	Tue, 10 Dec 2024 14:45:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L3PCMEa/"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="JdCZz+k/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-io1-f41.google.com (mail-io1-f41.google.com [209.85.166.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F32019D082;
-	Tue, 10 Dec 2024 14:30:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9628513D8B1;
+	Tue, 10 Dec 2024 14:45:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733841060; cv=none; b=MByJJU7JzGnK1/wWpdtzvaGgIlp+oyiB6Ku1uHoZDclJeelBd35asg36A+/nn+axQdIfkCpPSWSMaLQ3XpWSXHMz6TaXotVz5xFPwRs40uyzjQqTuk7KBWVEycB72o6p2AARYv1JMOZmnvKSbiHgHQcE5rxFewxmFh8CtdkEhXY=
+	t=1733841949; cv=none; b=KVEEeZF1OQHPm+2WII9gfsEmBXnDukW0y6dyRJN9/EpcBuZIBpQjsXkfXkComcx6x80sixwZC41V7tVLnvAacu19QPh8WetHLysq61ogQxU/IUiMuYo1XkEACaU2PiyJ0z5iO3kkF6b5ZFXk/c335AFANjXSeQjr8vMuScCXER4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733841060; c=relaxed/simple;
-	bh=6PWfkKXT/AMHAqxX7cfEJo3L2lk7EqER7ygybDmzlBc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FFAGqfS+DRKhFCDKVXWW9rWCqfB3vynCPQt4QPqCnR6UJFUzk2rt5tct+IHw8s1lcQYLi0kjY+igQmNX57osoGmN1JbctVTf7ecodY6nziquBQQOiHxF4cJBD5GeK0psqDInQI1Q+GxGxJzu0FJon6zjE71VV20eGuB6OmvborA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L3PCMEa/; arc=none smtp.client-ip=209.85.166.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-io1-f41.google.com with SMTP id ca18e2360f4ac-84386a6669bso292631639f.3;
-        Tue, 10 Dec 2024 06:30:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733841058; x=1734445858; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=i2N7XAtorM72yACmDgop2No+2dzqpehTFwae9k1iios=;
-        b=L3PCMEa/gyJx4h65LyeEKPw2U96YiAVTlhNsrQBSBBmUYh2KOvslo4Gn3WUmrsAwwQ
-         734XS+Z6eL7EYvkMKgTo277gytrlrWS1ib7yAQpwvhF9gEvqZkWCcAonjLF4SlRS1ZzG
-         mvS1J5FtFqMyQ0cyH9ysUfo5VTdWJhABq6nVGz24kdvF7zRaTjiOIndTR77OkE6K8pDT
-         jsrGTDR7ds1QUBstZuhEZN1wu4hE8/cOFG9Hr6XeHDpG6W21e68QX+G8ic/QzXntpGV9
-         1LmbhLMRrUzFcoSMMUQRzAJU+7JlpDRM2ssDAK2q+bigVbU5eaWRHxAQwI4oC1Pk1FNv
-         SNVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733841058; x=1734445858;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=i2N7XAtorM72yACmDgop2No+2dzqpehTFwae9k1iios=;
-        b=R8pribiYX5DYOf/oxds/NTmnWHYRoqnwQDkec+DY3gOfA0sG85X7vQdGAxpbmME5rC
-         grIxMcJHFfioX0e37Vry1p5qjsNYHGSIspDbi9BljlSzR+2VgeYR2IDjEi+P/vGrV3Zy
-         j10BCb9mXRlNAflSGj6uhW3aL5CTATi2mMVsNm1d+xAui7Q8ktF7pTFfO0BmVYZ1NZZW
-         aZ8IcedwT4kCJwL83QWM0DZJBNd3V5SrZLKrWFu1VFbN9QuSmGJo7cF7lf/5iJmvAeJd
-         kDdcysdW5YLDTP9b114R8WlO+nAX8UiyQd6U+H+vLqCfeQETnpJO2mNRbP+hlmdOqz8I
-         +T7g==
-X-Forwarded-Encrypted: i=1; AJvYcCWRDWtikDKMu45sLwt9TmW+j/Ot1YCeARuPVWWxTZ/bfaI0hsirpT6SREeQtjkaCYZ+JoQrKTzjcG8=@vger.kernel.org, AJvYcCWqT3i+bEemucQ8ahSvYWRwDay4MMLv92CZg39EEc8s78ZzxK2dWPhkea+TYCdJs7VPfH/rzuZ4kkcj7n2R@vger.kernel.org, AJvYcCXudHXPAC1zCeIlfbG/HKbjFui3pYRM12w6a5fnEZMpad6vOYZ25bgN7pJC+TvmHZAl8yBw8zSsJIYj6xge@vger.kernel.org
-X-Gm-Message-State: AOJu0Yywdv570w5ztDqY06JCbFo5fCZOfNU/gPVVJlXSWIBrJxKKnMMf
-	WP+k84IO9lrHjV3lkiEMutAfKJmBascbDW8wxzVRKmMUzevPssbO5IK+KZ7eEMtk5DIOdFEjFXf
-	QN56eJgn5Ugt2VvQhKnV3P4CFTHk=
-X-Gm-Gg: ASbGncuHy7ghI2UlzYq1LgUv1nG+a8kYTn81WfhrORcPj98x5RkQ6MVX7xSl5bOzabo
-	NKvpKp4awNIyMJKXJf533tPeL8brCYUXtInk=
-X-Google-Smtp-Source: AGHT+IGZsjUHNHgZScctt9GhUUISo0b3ncG99pwHqmoX8StIWNsTQgzRKfAm5Fp0Di2hDokmvL3agPwZ+93jj5g8oTU=
-X-Received: by 2002:a05:6e02:1ca7:b0:3a7:6e34:9219 with SMTP id
- e9e14a558f8ab-3a811db26admr175649315ab.14.1733841056498; Tue, 10 Dec 2024
- 06:30:56 -0800 (PST)
+	s=arc-20240116; t=1733841949; c=relaxed/simple;
+	bh=ACWubjbg/0OAMr73e1vjVeOan2O+yI5lU5+DUnXaa1c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Lrx74cwc3CXLIKeHGChz/4e4i3bP36geLqK+pCxg2D54gXkn929L4jHOqOmfDpBcNnvfbh0+CWuZOatM4y/fbVomvYqQsE23PXK/2RVpRBkUMUKNT012pXY38OSqeC7TU08H4KdXYz2SYNes2MZ4C4uSUASkJOy47nWTrS/Fkkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=JdCZz+k/; arc=none smtp.client-ip=198.175.65.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1733841948; x=1765377948;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=ACWubjbg/0OAMr73e1vjVeOan2O+yI5lU5+DUnXaa1c=;
+  b=JdCZz+k/WnhFWnypVo1j2iyejU/rM22LVmSmIW3qMqRej6cecVRIO6bQ
+   CRQa5gPozX0uzQ/ztd02o4InMNwVr2i7icKZZWw4YsLUw5GsEtvHB9nTd
+   3GTd3XU7d/UV7P10ev6+IX0NpDHretKPXVzydlW1e7R5OlQAwASRaDJZh
+   6E0LBhOWqJpBOpNptrBSE0Gql7HLdP4lvRQJmv+ER8JAxg6mjUlLIhwMz
+   LlV8iOrjy7oGxsedw34zQG/06DHwIpQubZS2oIQg5TdH1c2B9rflG3qAl
+   eiNeNNCWc6mb7MTTVFZMg5hvSIO/4pDpCa7oiIi454jyV0TPQz6K2FJGQ
+   A==;
+X-CSE-ConnectionGUID: ebPGIQJiRpCB4MKbLvdA0g==
+X-CSE-MsgGUID: dObyvy4WRN2C4oHue82xJg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11282"; a="33918487"
+X-IronPort-AV: E=Sophos;i="6.12,222,1728975600"; 
+   d="scan'208";a="33918487"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Dec 2024 06:45:47 -0800
+X-CSE-ConnectionGUID: qT8wLg0PSEW6xc/uf1vFWA==
+X-CSE-MsgGUID: mHHXr/tqQRG98djWwKiR/g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,222,1728975600"; 
+   d="scan'208";a="95904071"
+Received: from lkp-server01.sh.intel.com (HELO 82a3f569d0cb) ([10.239.97.150])
+  by fmviesa009.fm.intel.com with ESMTP; 10 Dec 2024 06:45:44 -0800
+Received: from kbuild by 82a3f569d0cb with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1tL1Ub-0005fh-23;
+	Tue, 10 Dec 2024 14:45:41 +0000
+Date: Tue, 10 Dec 2024 22:45:17 +0800
+From: kernel test robot <lkp@intel.com>
+To: Douglas Anderson <dianders@chromium.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>, Mark Rutland <mark.rutland@arm.com>
+Cc: oe-kbuild-all@lists.linux.dev, Julius Werner <jwerner@chromium.org>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Roxana Bradescu <roxabee@google.com>,
+	bjorn.andersson@oss.qualcomm.com,
+	linux-arm-kernel@lists.infradead.org,
+	Trilok Soni <quic_tsoni@quicinc.com>, linux-arm-msm@vger.kernel.org,
+	Douglas Anderson <dianders@chromium.org>,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 5/6] arm64: errata: Add QCOM_KRYO_5XX_GOLD to the
+ spectre_bhb_k24_list
+Message-ID: <202412102250.hPlsx2c8-lkp@intel.com>
+References: <20241209094310.5.I41e227ed809ea607114027209b57d02dc0e98384@changeid>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241028213146.238941-1-robdclark@gmail.com> <20241210111450.GA14735@willie-the-truck>
-In-Reply-To: <20241210111450.GA14735@willie-the-truck>
-From: Rob Clark <robdclark@gmail.com>
-Date: Tue, 10 Dec 2024 06:30:44 -0800
-Message-ID: <CAF6AEGs72rxvguSYbALWPL2FrO5coyijQXY4HEQdwvr8Fj4XKQ@mail.gmail.com>
-Subject: Re: [PATCH v10 0/4] io-pgtable-arm + drm/msm: Extend iova fault debugging
-To: Will Deacon <will@kernel.org>
-Cc: iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
-	freedreno@lists.freedesktop.org, Robin Murphy <robin.murphy@arm.com>, 
-	Mostafa Saleh <smostafa@google.com>, Rob Clark <robdclark@chromium.org>, 
-	Boris Brezillon <boris.brezillon@collabora.com>, 
-	"open list:DRM DRIVER for Qualcomm Adreno GPUs" <dri-devel@lists.freedesktop.org>, Jason Gunthorpe <jgg@ziepe.ca>, 
-	Joao Martins <joao.m.martins@oracle.com>, Joerg Roedel <jroedel@suse.de>, 
-	Konrad Dybcio <konradybcio@kernel.org>, 
-	"moderated list:ARM SMMU DRIVERS" <linux-arm-kernel@lists.infradead.org>, 
-	open list <linux-kernel@vger.kernel.org>, 
-	"open list:POWER MANAGEMENT CORE" <linux-pm@vger.kernel.org>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	"Rafael J. Wysocki" <rafael@kernel.org>, Sean Paul <sean@poorly.run>, Steven Price <steven.price@arm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241209094310.5.I41e227ed809ea607114027209b57d02dc0e98384@changeid>
 
-On Tue, Dec 10, 2024 at 3:14=E2=80=AFAM Will Deacon <will@kernel.org> wrote=
-:
->
-> Hi Rob,
->
-> On Mon, Oct 28, 2024 at 02:31:36PM -0700, Rob Clark wrote:
-> > From: Rob Clark <robdclark@chromium.org>
-> >
-> > This series extends io-pgtable-arm with a method to retrieve the page
-> > table entries traversed in the process of address translation, and then
-> > beefs up drm/msm gpu devcore dump to include this (and additional info)
-> > in the devcore dump.
-> >
-> > This is a respin of https://patchwork.freedesktop.org/series/94968/
-> > (minus a patch that was already merged)
-> >
-> > v2:  Fix an armv7/32b build error in the last patch
-> > v3:  Incorperate Will Deacon's suggestion to make the interface
-> >      callback based.
-> > v4:  Actually wire up the callback
-> > v5:  Drop the callback approach
-> > v6:  Make walk-data struct pgtable specific and rename
-> >      io_pgtable_walk_data to arm_lpae_io_pgtable_walk_data
-> > v7:  Re-use the pgtable walker added for arm_lpae_read_and_clear_dirty(=
-)
-> > v8:  Pass pte pointer to callback so it can modify the actual pte
-> > v9:  Fix selftests_running case
-> > v10: Call visit cb for all nodes traversed, leave the decision about
-> >      whether to care about non-leaf nodes to the callback
->
-> Do you plan to respin this? I see Mostafa left a proposal on patch 3.
+Hi Douglas,
 
-Yeah, his suggestion looked reasonable.  I'll try to get back to this
-patchset today.
+kernel test robot noticed the following build errors:
 
-BR,
--R
+[auto build test ERROR on arm64/for-next/core]
+[also build test ERROR on arm-perf/for-next/perf kvmarm/next soc/for-next arm/for-next arm/fixes linus/master v6.13-rc2 next-20241210]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Douglas-Anderson/arm64-errata-Add-QCOM_KRYO_4XX_GOLD-to-the-spectre_bhb_k24_list/20241210-014833
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/arm64/linux.git for-next/core
+patch link:    https://lore.kernel.org/r/20241209094310.5.I41e227ed809ea607114027209b57d02dc0e98384%40changeid
+patch subject: [PATCH 5/6] arm64: errata: Add QCOM_KRYO_5XX_GOLD to the spectre_bhb_k24_list
+config: arm64-allnoconfig (https://download.01.org/0day-ci/archive/20241210/202412102250.hPlsx2c8-lkp@intel.com/config)
+compiler: aarch64-linux-gcc (GCC) 14.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20241210/202412102250.hPlsx2c8-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202412102250.hPlsx2c8-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+   In file included from arch/arm64/include/asm/cache.h:43,
+                    from include/linux/cache.h:6,
+                    from include/linux/jiffies.h:5,
+                    from include/linux/ktime.h:25,
+                    from include/linux/timer.h:6,
+                    from include/linux/workqueue.h:9,
+                    from include/linux/bpf.h:10,
+                    from arch/arm64/kernel/proton-pack.c:21:
+   arch/arm64/kernel/proton-pack.c: In function 'spectre_bhb_loop_affected':
+>> arch/arm64/kernel/proton-pack.c:870:43: error: 'MIDR_QCOM_KRYO_5XX_GOLD' undeclared (first use in this function); did you mean 'MIDR_QCOM_KRYO_4XX_GOLD'?
+     870 |                         MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_5XX_GOLD),
+         |                                           ^~~~~~~~~~~~~~~~~~~~~~~
+   arch/arm64/include/asm/cputype.h:251:26: note: in definition of macro 'MIDR_RANGE'
+     251 |                 .model = m,                                     \
+         |                          ^
+   arch/arm64/kernel/proton-pack.c:870:25: note: in expansion of macro 'MIDR_ALL_VERSIONS'
+     870 |                         MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_5XX_GOLD),
+         |                         ^~~~~~~~~~~~~~~~~
+   arch/arm64/kernel/proton-pack.c:870:43: note: each undeclared identifier is reported only once for each function it appears in
+     870 |                         MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_5XX_GOLD),
+         |                                           ^~~~~~~~~~~~~~~~~~~~~~~
+   arch/arm64/include/asm/cputype.h:251:26: note: in definition of macro 'MIDR_RANGE'
+     251 |                 .model = m,                                     \
+         |                          ^
+   arch/arm64/kernel/proton-pack.c:870:25: note: in expansion of macro 'MIDR_ALL_VERSIONS'
+     870 |                         MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_5XX_GOLD),
+         |                         ^~~~~~~~~~~~~~~~~
+
+
+vim +870 arch/arm64/kernel/proton-pack.c
+
+   843	
+   844	/*
+   845	 * This must be called with SCOPE_LOCAL_CPU for each type of CPU, before any
+   846	 * SCOPE_SYSTEM call will give the right answer.
+   847	 */
+   848	u8 spectre_bhb_loop_affected(int scope)
+   849	{
+   850		u8 k = 0;
+   851		static u8 max_bhb_k;
+   852	
+   853		if (scope == SCOPE_LOCAL_CPU) {
+   854			static const struct midr_range spectre_bhb_k32_list[] = {
+   855				MIDR_ALL_VERSIONS(MIDR_CORTEX_A78),
+   856				MIDR_ALL_VERSIONS(MIDR_CORTEX_A78AE),
+   857				MIDR_ALL_VERSIONS(MIDR_CORTEX_A78C),
+   858				MIDR_ALL_VERSIONS(MIDR_CORTEX_X1),
+   859				MIDR_ALL_VERSIONS(MIDR_CORTEX_A710),
+   860				MIDR_ALL_VERSIONS(MIDR_CORTEX_X2),
+   861				MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N2),
+   862				MIDR_ALL_VERSIONS(MIDR_NEOVERSE_V1),
+   863				{},
+   864			};
+   865			static const struct midr_range spectre_bhb_k24_list[] = {
+   866				MIDR_ALL_VERSIONS(MIDR_CORTEX_A76),
+   867				MIDR_ALL_VERSIONS(MIDR_CORTEX_A77),
+   868				MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N1),
+   869				MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_4XX_GOLD),
+ > 870				MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_5XX_GOLD),
+   871				{},
+   872			};
+   873			static const struct midr_range spectre_bhb_k11_list[] = {
+   874				MIDR_ALL_VERSIONS(MIDR_AMPERE1),
+   875				{},
+   876			};
+   877			static const struct midr_range spectre_bhb_k8_list[] = {
+   878				MIDR_ALL_VERSIONS(MIDR_CORTEX_A72),
+   879				MIDR_ALL_VERSIONS(MIDR_CORTEX_A57),
+   880				{},
+   881			};
+   882	
+   883			if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k32_list))
+   884				k = 32;
+   885			else if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k24_list))
+   886				k = 24;
+   887			else if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k11_list))
+   888				k = 11;
+   889			else if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k8_list))
+   890				k =  8;
+   891	
+   892			max_bhb_k = max(max_bhb_k, k);
+   893		} else {
+   894			k = max_bhb_k;
+   895		}
+   896	
+   897		return k;
+   898	}
+   899	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
