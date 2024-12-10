@@ -1,95 +1,134 @@
-Return-Path: <linux-arm-msm+bounces-41339-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41340-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2B51D9EB5E6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 17:17:55 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9BE88188A6BC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 16:17:09 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E95F2309BD;
-	Tue, 10 Dec 2024 16:16:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a89O4Bfm"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 41CD19EB62F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 17:24:13 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BF9319D06E;
-	Tue, 10 Dec 2024 16:16:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B8B22280C0A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 16:24:11 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A49F11BBBFE;
+	Tue, 10 Dec 2024 16:24:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ta+vKn2r"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D22BA1AAA1F
+	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2024 16:24:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733847393; cv=none; b=lszwN5V1qCAC7z1zYGzfbY+u4LmwrGAEh84RRUMIgIURaFu0NVDO8HcJmNgnyF6e968ofT/J2u6krkdJLJccbvqfUPvLpyB6CU96jlsd3Gt7ZiDXuey+yQDs1iHo/iCy3OI0KBZNV2gSq7ke5KUZxBGsn84tqXVkVQ4sad6KoxM=
+	t=1733847850; cv=none; b=uyjVaO0hiCpzxRtC8ZSrgFCmD3pO6zLFgG63L50ioCo3XWgmF24VnFjuo7p3+QvBx2MJDeAKHcjZPvffmaawtTaI5ok8jaGVmemWNhomhod/tcMMvIviFVP8YfQRP9tNA5jirBjFyLWuRyXaLXW/ffmOLmgx+RQzEFYd1itvF58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733847393; c=relaxed/simple;
-	bh=rzsJ9NMMTP/m0KBPr+ghsEHE/q4mLK8kQfUUsuyDk1s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WxrquiZ9pYLyWesbRSJwjeCLh4ngZZyuhbr/aI4HmvLFDcIwRiT9P9CFfWbOmGt6xCF6Tr2V4inWyfMeCiTzCcgMpgR83hG9n9B2qHF/I3a2QKBEQgoWlWQQEiUw3XDNMwzcBnHESK+Q0fQd8Mf7Z026QdWmtzPm7KufRQX2rQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a89O4Bfm; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B37CC4CEDE;
-	Tue, 10 Dec 2024 16:16:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733847392;
-	bh=rzsJ9NMMTP/m0KBPr+ghsEHE/q4mLK8kQfUUsuyDk1s=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=a89O4BfmDzVbneHeA9lJ7ce0/9RV85QCJfEd9zoaXsAcOijiRFeiHlJoes6ShV2AW
-	 4zEJU/fu+MrZrtGJ50pWMZTsqryXBDjKBReV3iabg74VpRSU2a+NWR5lpLlSZStJUF
-	 Vi2bbZwxGb8b+HyuC/XJd5Ap9MSvmd7mDiMEEq/cKbSFP2roURj3UIewMAE4fLYuDt
-	 92WB2frvTdYyoSgQr0ZLtSzA8i+QH0XQU7NfxPYsN8prCmVT5fyWu1Zo+k0B2wfAtz
-	 WFHqBC8b+CkbWa2YfKZt9ltUAirwCq4ezeJWkjdcg5lcwiZX2CUec7nkscGVdvq0Js
-	 ojycG3hVQJJFw==
-Date: Tue, 10 Dec 2024 11:16:31 -0500
-From: Sasha Levin <sashal@kernel.org>
-To: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Cc: linux-kernel@vger.kernel.org, stable@vger.kernel.org,
-	Troy Hanson <quic_thanson@quicinc.com>,
-	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
-	ogabbay@kernel.org, corbet@lwn.net, linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org, linux-doc@vger.kernel.org
-Subject: Re: [PATCH AUTOSEL 6.12 033/107] accel/qaic: Add AIC080 support
-Message-ID: <Z1hpX_BduAF4b54s@sashalap>
-References: <20241124133301.3341829-1-sashal@kernel.org>
- <20241124133301.3341829-33-sashal@kernel.org>
- <51afee37-2c90-d31a-978c-5681dccd5ccb@quicinc.com>
+	s=arc-20240116; t=1733847850; c=relaxed/simple;
+	bh=lqZ6jfWQv518JCCW7cIDrKpuYmAnQVHmRlFDMQF5Ifg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=D8hSyZkZ/dQkVF+KQtkhfLHkdRf4M6zDGU2YYmP8YBMd6vP9sTegp+xEpMF1E9Jfyl7ObqnTXTGpXmfzeEDJxNfY395ybdTQBQzXAuWTBIcO+v+5uAdk7+a4RijfLEPWFe2jmk9Rl9kEwxmm6TIhuRayc3VunMLLqVXS22zQSTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Ta+vKn2r; arc=none smtp.client-ip=209.85.218.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-aa6a618981eso145139566b.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2024 08:24:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1733847847; x=1734452647; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=l1Zl6mnBjiQBNeF1Q3VMTAkh1KaygVJextd08NrJPLQ=;
+        b=Ta+vKn2r6vus4DWqB4e7Mp2tp0yqU5NWY5BVE9UuqdXHqRjo193jP7ZZVYRL3wYqQa
+         KACoAFyF6kE3oERfdu8r3Re3yb2CzH1IjWeLAuYzay7bypjBE6Ax4hV7nI5hCOkK0cn2
+         TAdzpdqZtQwflhVCn4WlDPXNgzOstm8lYyEjb/S+4DHUFOQqWb0Uc9Ial65LSsUhHbfp
+         +x2gkiNGziimVWfjhqnt3WVxGSwBOyyj/i0UmEGUhT0LC/a9jnD6Xr3pb3DC1DUf7xAW
+         i0sy2kNugbSn7ufck5Ei4FpZjB7kgN91MN1fAtvviXVe/5pq3WWF0WbIZJSTqJ5SxDkA
+         TjEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733847847; x=1734452647;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=l1Zl6mnBjiQBNeF1Q3VMTAkh1KaygVJextd08NrJPLQ=;
+        b=Q8TViPGr4XAscNoCErMChcWztPRV1yGA1F9kAtVRrJRA5hnzx3tFPww+bzwvU7IFEP
+         Msp8GfXFYryt2SzHtXXJ+0lgpOT3tq8w8QXJALkppoEEQCU7oQZ3QFX6+GMZU0B8JY5E
+         Pq+jn0QsqJzQ+TTvBeHrCTdcK8GOsQ5B6uwnUNw8CEK7J0bRRaaipSGv0VpdcCqcBzt2
+         n9VaVEYwI/h7LT7O8belHkT2xVjVtJv4izpGF30WivXLuGxJIlqtRdQUi+725Dwvjl7l
+         JUuXUYlXMfbudGht+Q2gQGmI6lbVDbGOjC4bd93254ZbpcPoN4Swspk94kD+tFBVWN+n
+         Y85w==
+X-Forwarded-Encrypted: i=1; AJvYcCVDAfVbtdC9dV7/gwjfwoMqZPiVZ1kBSspqZfKlm+W4/uoWk/FptCx8mvmhxBQ+1PVKyEaOjyA++fMo9SKv@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz16jKUxAsiy6Z+RZOcqQam//5fycGCdIjy+X5sRwzqONKAR8DM
+	w3r53IXeMkLuyHAH8B53ekicLVyfYM8/OvxhVfdZ5l5ACnMRptcCjDosICdTu7/4xygRq205XGX
+	L9AVw2h+G2J+eunX4AIflkU/HoyEsC8fl4ypYAw==
+X-Gm-Gg: ASbGncvw9ims3KYV9OJs2IGfJoXNTQgGOB+iHzZl7Eznn4cBUpbnXTolLmDyG+3S46T
+	8eAB3y6URSVAc+UfGHFyWoJKjx+02XrgXPYQ=
+X-Google-Smtp-Source: AGHT+IEDe+ZlasDaSk7kkMNC2p4PajKO8n+r9pHmoj0mnmgFy9RuiKu/RGzpGKCUoMbkgvfshlUA8vwl2fXnyVlspYY=
+X-Received: by 2002:a17:907:6ea0:b0:aa6:7285:469b with SMTP id
+ a640c23a62f3a-aa69cd5c6cdmr593652366b.18.1733847847098; Tue, 10 Dec 2024
+ 08:24:07 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <51afee37-2c90-d31a-978c-5681dccd5ccb@quicinc.com>
+References: <20241210-qcom-video-iris-v8-0-42c5403cb1a3@quicinc.com> <20241210-qcom-video-iris-v8-27-42c5403cb1a3@quicinc.com>
+In-Reply-To: <20241210-qcom-video-iris-v8-27-42c5403cb1a3@quicinc.com>
+From: Stefan Schmidt <stefan.schmidt@linaro.org>
+Date: Tue, 10 Dec 2024 17:23:56 +0100
+Message-ID: <CAEvtbuuO5Ga+wW9rstX_e_RGnm5jSNSHmyy3w3M9FTopNhKttQ@mail.gmail.com>
+Subject: Re: [PATCH v8 27/28] media: iris: enable video driver probe of SM8250 SoC
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Cc: Vikash Garodia <quic_vgarodia@quicinc.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Philipp Zabel <p.zabel@pengutronix.de>, Hans Verkuil <hverkuil@xs4all.nl>, 
+	Sebastian Fricke <sebastian.fricke@collabora.com>, 
+	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Nicolas Dufresne <nicolas@ndufresne.ca>, 
+	=?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <u.kleine-koenig@baylibre.com>, 
+	Jianhua Lu <lujianhua000@gmail.com>, linux-media@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Sun, Nov 24, 2024 at 12:07:20PM -0700, Jeffrey Hugo wrote:
->On 11/24/2024 6:28 AM, Sasha Levin wrote:
->>From: Jeffrey Hugo <quic_jhugo@quicinc.com>
->>
->>[ Upstream commit b8128f7815ff135f0333c1b46dcdf1543c41b860 ]
->>
->>Add basic support for the new AIC080 product. The PCIe Device ID is
->>0xa080. AIC080 is a lower cost, lower performance SKU variant of AIC100.
->> From the qaic perspective, it is the same as AIC100.
->>
->>Reviewed-by: Troy Hanson <quic_thanson@quicinc.com>
->>Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
->>Reviewed-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
->>Link: https://patchwork.freedesktop.org/patch/msgid/20241004195209.3910996-1-quic_jhugo@quicinc.com
->>Signed-off-by: Sasha Levin <sashal@kernel.org>
+hello Dikshita,
+
+On Tue, 10 Dec 2024 at 12:08, Dikshita Agarwal
+<quic_dikshita@quicinc.com> wrote:
 >
->Sasha, it feels like autosel was a bit aggressive here.  This is an 
->enablement patch for new hardware, and not a bug fix.  Therefore, it 
->does not appear to be stable material to me.
+> Initialize the platform data and enable video driver probe of SM8250
+> SoC. Add a kernel param to select between venus and iris drivers for
+> platforms supported by both drivers, for ex: SM8250.
 >
->Am I missing something?
+> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
 
-Yup, we also take patches that enable new hardware by adding PCI/USB/etc
-IDs as well as quirks.
+[...]
 
--- 
-Thanks,
-Sasha
+> --- a/drivers/media/platform/qcom/iris/iris_ctrls.c
+> +++ b/drivers/media/platform/qcom/iris/iris_ctrls.c
+> @@ -17,6 +17,8 @@ static inline bool iris_valid_cap_id(enum platform_inst_fw_cap_type cap_id)
+>  static enum platform_inst_fw_cap_type iris_get_cap_id(u32 id)
+>  {
+>         switch (id) {
+> +       case V4L2_CID_MPEG_VIDEO_DECODER_MPEG4_DEBLOCK_FILTER:
+> +               return DEBLOCK;
+>         case V4L2_CID_MPEG_VIDEO_H264_PROFILE:
+>                 return PROFILE;
+>         case V4L2_CID_MPEG_VIDEO_H264_LEVEL:
+> @@ -32,6 +34,8 @@ static u32 iris_get_v4l2_id(enum platform_inst_fw_cap_type cap_id)
+>                 return 0;
+>
+>         switch (cap_id) {
+> +       case DEBLOCK:
+> +               return V4L2_CID_MPEG_VIDEO_DECODER_MPEG4_DEBLOCK_FILTER;
+>         case PROFILE:
+
+The handling for DEBLOCK does not seem to be part of the SM8250
+enablement. Or did I miss something?
+It seems they should be part of a different patch that makes use of
+the DEBLOCK cap.
+
+regards
+Stefan Schmidt
 
