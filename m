@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-41229-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41230-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B2FF99EA984
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 08:25:45 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 94CF59EA997
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 08:29:08 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6B019287D6E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 07:25:44 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8FE361882694
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 07:29:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 64C5222CBF7;
-	Tue, 10 Dec 2024 07:25:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C97B22E3E3;
+	Tue, 10 Dec 2024 07:28:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AIhg58dw"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T7pwzmDy"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 372A21FCCE6;
-	Tue, 10 Dec 2024 07:25:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4551C22D4EF;
+	Tue, 10 Dec 2024 07:28:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733815541; cv=none; b=tLdo0H/DzfxdjUH6wrix1jq5+YpTZzN3G54ZyFdg9HJHWM55JkW622w/zqar/d6qqqhCZNWLhsXZR+Bdt2Elq1X75+IQOb36DnhpC6Tk1qM3x50EhmCEBm+Kl4ceUpOenixDToaIUhsqX+CuUwxk3+1k12ENbkkllju40zrbWWU=
+	t=1733815728; cv=none; b=Jc56OozG6Zka1N55Vjr65TIZKECDTU3q/Md6T6FsbvkMCpCrzTTSuNjf1K6YCUSyD/C8dyNuyfXOVigQXEsso+UQ2ZuM2R2xoln+eoV6AkDnCDXtxK3I2ss9h8yTH3JkXUkc/wV0mJNq6gmNbzqdyyxfpaS3JxR1QHj69o9OQRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733815541; c=relaxed/simple;
-	bh=ox/K7B152a5pImlzTHzezl1rRj8orN8GA7FhCyBAK0o=;
+	s=arc-20240116; t=1733815728; c=relaxed/simple;
+	bh=WfI9MIDmQkfVGJXe1dghmZU3Qae8DM78AtagwgUE1W4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Par9qrO8CVFSn2KdFJFIQRAPTNDxU/ul0ekbZeBGml0i32Qq6S+beFZKpu8dTP99KUTUBCC3JRAl848aptUVGQO2Q54Y6brqPYerUKQJqXeiiOhsJHLqasDzDxLlLkfyVCUG+xHeTMXsXeOrkma4lxCAm0FP7YefjoTUTItwz1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AIhg58dw; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2518C4CED6;
-	Tue, 10 Dec 2024 07:25:36 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=XyufrPJiVCN77h7zgXchVBs1HSzCNv4Ylhg0qM6CXsm6Oyh4Ko166kyYjsWq7KElt2M5bA2JsO4uQQXg3vLFeIm7MUfCCTE6xPGT3a//vs1efJAX1W4H3W5Rgj6x6kDdJwucc5MZLlYCg1Y8OgZ6yzG+AM9WptIiYRK/qgMrt7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T7pwzmDy; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC741C4CED6;
+	Tue, 10 Dec 2024 07:28:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733815540;
-	bh=ox/K7B152a5pImlzTHzezl1rRj8orN8GA7FhCyBAK0o=;
+	s=k20201202; t=1733815727;
+	bh=WfI9MIDmQkfVGJXe1dghmZU3Qae8DM78AtagwgUE1W4=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=AIhg58dwmlzZpg2yhpF2D0JbUjEVZR+SzL13y3fTSQ63IiHl93ADmSOzDhGtCjk7i
-	 oixba8olwZQeop/2ghMlxum3DeP43l5KJZ9fwFPsBu7vf6u65mia59JdTSRhfBMS6u
-	 PW+2fG/fUvs5Gzm+0OFtjvgI74ml0xoWxmICyWTFRT6ZxXAF7MleiGVPIRRw00zBOA
-	 FlbSaq0NZrRR/yS/6tElL1/XcR8het/GQFhfBiBs+G2ef9xEKKMZLP3i2XYOmzVZee
-	 65X9jIX0ZZkBz0E8H79ESWvvzgXif1t7Y2k5PU9nEpth0X1JpGqfCTKp3FfV5QYuTH
-	 2PxTA1E/m8C7A==
-Message-ID: <5782d7c6-1a75-4f15-8942-387742e0ae09@kernel.org>
-Date: Tue, 10 Dec 2024 08:25:34 +0100
+	b=T7pwzmDyLKxkvcy1AMP8oM6TPtMbGjHsFKrnvrn8FmfDGEp9WNssBj0rAQruYNCyE
+	 MrIFi7x9zdidTF8JbOuFDlIpj5/B40bQKSlJWPL1x1TYpB7slCtHx7ShQZX6Kycuy6
+	 Io70wRja94fj7FGbi+6ZY78eUZkdIV0oWr+CmYW6Im0A+pJSFLnFjmDJK7szOisbCy
+	 RXtNyJPU8u85O3YJiS7ERvuRFks49ONnOSJXczkYLvMmIp6+0QPWbC/Cz5Haytpf0+
+	 E9r781XYA/WBvX7cK9JfxA6Sz/eX+xdjQPNuJXIrHwSYH/MMPtbUMWywDhGWlfxaEz
+	 injBwl8e2d5gw==
+Message-ID: <e9fb294b-b6b8-4034-84c9-a25b83321399@kernel.org>
+Date: Tue, 10 Dec 2024 08:28:38 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,25 +50,26 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/5] arm64: dts: qcom: Add support for QCS9075 Ride &
- Ride-r3
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Wasim Nazir <quic_wasimn@quicinc.com>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, kernel@quicinc.com
-References: <20241119174954.1219002-1-quic_wasimn@quicinc.com>
- <20241119174954.1219002-6-quic_wasimn@quicinc.com>
- <9e351979-be01-4d38-9b94-cc23efac4c3f@kernel.org>
- <Z1LaN9nFr5msfq61@hu-wasimn-hyd.qualcomm.com>
- <cbed17c2-d839-42cb-8a33-b59538bfccf3@oss.qualcomm.com>
- <c639ca40-9e4f-4882-8441-57413e835422@kernel.org>
- <Z1c9wMxQ5xSqvPmf@hu-wasimn-hyd.qualcomm.com>
- <8cf9edc0-a0cb-4fd0-b10e-2138784dfba3@kernel.org>
- <iu6ssjczkdfkhfy2n6vxf3f3c2pepsepslzvnh5z4susxgxgqa@engwsvhu533x>
+Subject: Re: [PATCH v5 1/4] dt-bindindgs: i2c: qcom,i2c-geni: Document shared
+ flag
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>, konrad.dybcio@linaro.org,
+ andersson@kernel.org, andi.shyti@kernel.org, linux-arm-msm@vger.kernel.org,
+ dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-i2c@vger.kernel.org, conor+dt@kernel.org, agross@kernel.org,
+ devicetree@vger.kernel.org, vkoul@kernel.org, linux@treblig.org,
+ dan.carpenter@linaro.org, Frank.Li@nxp.com, konradybcio@kernel.org,
+ bryan.odonoghue@linaro.org, krzk+dt@kernel.org, robh@kernel.org
+Cc: quic_vdadhani@quicinc.com
+References: <20241129144357.2008465-1-quic_msavaliy@quicinc.com>
+ <20241129144357.2008465-2-quic_msavaliy@quicinc.com>
+ <db428697-a9dc-46e1-abbe-73341306403f@kernel.org>
+ <a8b1ccd2-c37b-4a6f-b592-caf1a53be02c@quicinc.com>
+ <fc33c4ed-32e5-46cc-87d6-921f2e58b4ff@kernel.org>
+ <75f2cc08-e3ab-41fb-aa94-22963c4ffd82@quicinc.com>
+ <904ae8ea-d970-4b4b-a30a-cd1b65296a9b@kernel.org>
+ <da2ba3df-eb47-4b55-a0c9-e038a3b9da30@quicinc.com>
+ <a7186553-d8f6-46d4-88da-d042a4a340e2@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -114,34 +115,51 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <iu6ssjczkdfkhfy2n6vxf3f3c2pepsepslzvnh5z4susxgxgqa@engwsvhu533x>
+In-Reply-To: <a7186553-d8f6-46d4-88da-d042a4a340e2@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On 10/12/2024 00:25, Dmitry Baryshkov wrote:
->>>>>> 9100 & 9075 are different from “safe” perspective. They differ in
->>>>>> changes related to thermal which will be added later in devicetree.
->>>>>
->>>>> Since this can't be inferred from just looking at the changes, please
->>>>> make sure to add that to the commit message
->>>>
->>>> Any include of other DTS is clear sign something is odd here. Including
->>>> multiple times without any added nodes is showing these are not real
->>>> products/boards .
+On 02/12/2024 15:04, Konrad Dybcio wrote:
+>>>>   >
+>>>> IP blocks like SE can be shared. Here we are talking about I2C sharing.
+>>>> In future it can be SPI sharing. But design wise it fits better to add
+>>>> flag per SE node. Same we shall be adding for SPI too in future.
 >>>
->>> We're adding DTS to reuse the common board changes, with plans to
->>> include the differences in upcoming patches. To provide more clarity, I
->>> will include patches in this series to highlight the differences between
->>> the 9100 and 9075 boards.
->>
->> Sure, still do not include DTS. Just like C files don't include C files.
+>>>
+>>> How flag per SE node is relevant? I did not ask to move the property.
+>>>
+>>>>
+>>>> Please let me know your further suggestions.
+>>> We do not talk about I2C or SPI here only. We talk about entire SoC.
+>>> Since beginning. Find other patch proposals and align with rest of
+>>> Qualcomm developers so that you come with only one definition for this
+>>> feature/characteristic. Or do you want to say that I am free to NAK all
+>>> further properties duplicating this one?
 > 
-> So, is the solution simple, rename .dts to .dtsi and include it from
-> both .dts files?
+> I'm not sure a single property name+description can fit all possible
+> cases here. The hardware being "shared" can mean a number of different
 
-For example. This leads to more questions - what is common here? We do
-not create shared DTSI files just because someone wants, but to really
-note shared components or shared designs.
+Existing property does not explain anything more, either. To recap -
+this block is SE and property is named "se-shared", so basically it is
+equal to just "shared". "shared" is indeed quite vague, so I was
+expecting some wider work here.
+
+
+> things, with some blocks having hardware provisions for that, while
+> others may have totally none and rely on external mechanisms (e.g.
+> a shared memory buffer) to indicate whether an external entity
+> manages power to them.
+
+We have properties for that too. Qualcomm SoCs need once per year for
+such shared properties. BAM has two or three. IPA has two. There are
+probably even more blocks which I don't remember now.
+
+> 
+> Even here, I'm not particularly sure whether dt is the right place.
+> Maybe we could think about checking for clock_is_enabled()? That's
+> just an idea, as it may fall apart if CCF gets a .sync_state impl.
+
+
 
 Best regards,
 Krzysztof
