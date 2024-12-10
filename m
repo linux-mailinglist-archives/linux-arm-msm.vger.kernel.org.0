@@ -1,80 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-41240-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41241-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1571B9EAB5B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 10:08:31 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id DFCCB9EAB60
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 10:08:57 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8AFAF2838C7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 09:08:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E2564168BCC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 09:08:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36BBD232797;
-	Tue, 10 Dec 2024 09:08:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1614F233D7A;
+	Tue, 10 Dec 2024 09:08:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wjyn51r9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rkMVD7IU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A31E231C99
-	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2024 09:07:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 054ED231CAF
+	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2024 09:07:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733821680; cv=none; b=eVgjfsZrTZwSeQxx6tRWsmNZS3jpCk41K+5tGjAvnjUlC7LdWpFIhQetIV9if8MOUI0DXPGqhfRQXMm6k77E1jK9uxcS9t8Mq/c/7QNCr0RnvfCA8uDgEofvziS/5XdAmZ1PQvy54UOwVHBltDojNYqhN4Nqe2nkXiW5N9MWfz0=
+	t=1733821681; cv=none; b=rZJO05h50VQfHT1yhk7ySTbQJxQmJDPRwUIR5mv++6GtEH1ZsDoJ3WeDHphV6kQCKGrLCcOGQTWhF+Cl+/FumfC9dQWUEFazygceiAU7Ax2jr7+ZxwtvmkCfc8puaSbxxoi1OXVr19IwGLgYg6THJ2TiomrexJ/viO/iGXoqhBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733821680; c=relaxed/simple;
-	bh=G62QDR9KzGAuOEXgvjGcNdCa05MWSfkst/s7DaSFLxs=;
+	s=arc-20240116; t=1733821681; c=relaxed/simple;
+	bh=+FZI7p90x8pKuXu4wG+Lh/pKwT4cM9Ld+dZ7EPC/XaY=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=CECDubXWcvsyaf08crjdCMr7MoUtTmXquQiV7b2sz89wKbo3ujzdgrA6v3OeeBn+qLOwqGj0dj/kT7ycEaNlp/McsZD9eLJwUgHLmvTHEl29ADaU5VuGDBtrMDHdD2RyAQiFhYwGLY3QgiVCNHkDr9AdDLXcs1GxUwbKCNGAAro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wjyn51r9; arc=none smtp.client-ip=209.85.208.51
+	 In-Reply-To:To:Cc; b=gWinBIhCfkSv4vh4fe4c355L9fC1psZMTlvvHxfQIr5eLghZ7DjlpgP9qyNapxTx1DZSMtYJt1n7GOKsdQ1H7o1N/0AOt6eVYJ68nhD2uSXI0RD8r3LRTk6X+rJlsV4Z/kNMWdYyyaeq1dCWkgF2LbUt0KiCJ8B1OhM1jqo0zBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rkMVD7IU; arc=none smtp.client-ip=209.85.218.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5d3d479b1e6so4400869a12.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2024 01:07:57 -0800 (PST)
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-aa6413fc7c5so521652966b.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2024 01:07:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733821676; x=1734426476; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1733821677; x=1734426477; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=spfdeCDp4ZwiXNukmisW5nOmm3Xu2k+GZv9IXO8bo4c=;
-        b=wjyn51r9C+OuGy4RoyTA9Piof1S1gPG2IKUQgqSWi+k8M0tO/F/D24ap6XrzRpWLCq
-         hqNbd6ONnsbVNL28cbiJmgoTJkjaxzYQQZ1+bN2yMHiZC3X1bfmYrPsX+dazbVi/t67R
-         9kbRtrVrYTghpaIMSZTXpSd3RGU6YyCAgsNCrlcH38cTuyEWUqCHHndmDO2pLa2fNW4l
-         xINN12gE6ETfYqmSAFtHA0RtuTQk5ZZW3GtsufAYnF2wHklTWsvLSpM6lIDCKTI/Ap5N
-         pxoyx454Vvf7G7fGhQcPdCLlhvJRI44mMfKdDwEWtM1u7XRGm+Ny3h5Tpe5TcS1S8vbc
-         R7AQ==
+        bh=efJ++Y02aMYEZf39htR14MgkTrlByWoeM1Gi0XFn3zk=;
+        b=rkMVD7IUX3julo9hyuCB0d6T0Ixb6nwXDmiZJ3Ar3j4msLKcYfFs3PyPvZGhHjQ1mA
+         zHFgsPkaII0dr2sKqKGcOf3cPkV55DQ5VgByhB+hJXD3a7iCUotfzuhihEfFeoArpkEc
+         sPDuiaQ82bI3cyRYPXdCHIUCtVNuWMM8GVIbqcQG1EF2Eio4QDKFvjBonpalTKOMCo4o
+         VJDKuqwCUuc2PmB11Ny5SEykCKW9CA98gGgjgsqAUoaH3sd0HKCRRWkJWS6fekNK8jRV
+         C5Pch4BcANdTL8Z1gQz17GpcFlDYrWSjtYvEHtKHjjvyZ1y0qeyJwXLwVtw6iHZ0//ky
+         CEMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733821676; x=1734426476;
+        d=1e100.net; s=20230601; t=1733821677; x=1734426477;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=spfdeCDp4ZwiXNukmisW5nOmm3Xu2k+GZv9IXO8bo4c=;
-        b=Sl2rMWitIGxap98t3DoXOHEU6cLCIAXWeTf3Ai/7KAiyQcqEpSxsHhMLpGNq2YwH19
-         2feoIzhImqMfAaOO2z/T18xpuGI/U7RYHbv5tTPlVuEGde5w4OAxtZAUzMLDA5p4wU4M
-         isx9CNtwKmtgYozy/BfTvBRerAl7TxW4ZUeAbv3AZMj5hxbc6FmJHAh6nc1U9tW3Cl+4
-         GEtffk8qln0z9vjCgmWyz9+/mk3N9FTHmw3xA/KJgcPsl3VAqOlqUc24DJGbnhlSJEml
-         w/c54iNFTNfYDhC0YT/fKlyMcYHaWSPtO+4d+EJm+OmNTGK+ARM6G4zQr5bNkM7GKjp3
-         V/WQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVNMHS2hds1iWKUQ+RNgIvNupWSLvSSfRL2arN6+oPcIzClCOEliVKt1ycFR4WSc9MR0xllSgaL5kQw2eOY@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw00ofonjFnTdWCtpQorPX/LHIzHl79FBcNv5+FzzLbkWB6n/MA
-	9KX/eBIBPWb/mLZBrrZ8OwcEUrXa9JFpHydPwj5IxElst7AKpKlTbAXyLCU9DlM=
-X-Gm-Gg: ASbGnctIplA3TMRJybb3Qacajl19N1Y8dPXizeWUC1roRbaSRfUPMdEdb7Dqperj8hd
-	XRDx/jB0aywc00kMAPwtFQt/poEvjd1xvucrIUSEIZyy6czfWaHfu6TyviDX4UiQRbxElUybMyG
-	7rZVIhFjlXQWWvEuJjuwk6pvkLTiArWL1NcMiCso0g0CXfALnbTz3FZOY/x+yIArlw8tYzl7DlE
-	dhf2JFIrVo8dgN8M+Q1uk4IN4qWi29sY25YjGBMkVe2pW8Kkaf2crq5l4m1IHC8Qbg=
-X-Google-Smtp-Source: AGHT+IH7bYRBDYrJ7HrKSF7yLAUmxKHJQ8udj3GCZqmJfB19omJ47klADUOW0EXIJovlwM0emjdl1g==
-X-Received: by 2002:a05:6402:50cd:b0:5d0:fb56:3f with SMTP id 4fb4d7f45d1cf-5d4185073d1mr8704901a12.12.1733821676417;
-        Tue, 10 Dec 2024 01:07:56 -0800 (PST)
+        bh=efJ++Y02aMYEZf39htR14MgkTrlByWoeM1Gi0XFn3zk=;
+        b=QApg9VgSXKV5qgh13now5rVoUN46bF8ZOPQ71eUBBNHjiGXLBF0QMeC4i2TLu1yyql
+         PDLIK4jt6jcfjfmhcpCaO/ZgROdS9W3ehEWnotQ1D0kgsQOqciBoN0ZMS73M05nYP7PM
+         5Riled7/KZ3q7XvuZxiD4viJwIYHKUHzHqcClJeuxybGcqEAUXOcvs1eOPWOguyHh2p8
+         jz/c6YYzvvOCtBi99DnxfWU5/G31no2lEv2CkjzDX/cAFidL+3pl+0vsFpKpGRasU13+
+         93jO2wjj1k3S4629qxfr7C//gs2cWpG2osEslElMjK9mUr78evoq+dJEkgVZo6w2rbWT
+         1pCw==
+X-Forwarded-Encrypted: i=1; AJvYcCVL+xmjeCmSJNYNIRqulC6Az5YS4frzwjS7fyCsNsgVom9wUSbWtDUwnrpKRt9o1jpKrDL26AGp6ruKMeZ5@vger.kernel.org
+X-Gm-Message-State: AOJu0YxqAwrNdd9S2bbhRX9Tf5DEPUjP+ZiOQHV+mlw4GURPMj+pp6Jo
+	rv/ArhkRVaGNo3J9rjS4O5B8b1XP9d/176AneBC4Rj6cBY18vCvWXBB3q6r/fqs=
+X-Gm-Gg: ASbGncvzdZgAFyfO0esoW2tXiQ7ytKUUTpkUN9fN1IlSDt6ZZ/pKgBNgyRTAXY9ECID
+	v93MivWYTrW10e4cjmF7xupojgXXbg1xmvL0xmcdtHpjzpewfGUtA686O0DkeAatlXFt5LCCm1r
+	qRCfRFWyOPFrRFwvo1dTyReKCCXT7R+tteBojTs2VjEVxsAUmn9yYRVQIN2d+vx/7ZE7Spv87i/
+	rLvKRViuEKDplvbN6rmF0ajBbUkLWQeS8Eu20rqRHHFKN9SdhveAc7oSk3lJAFTBDs=
+X-Google-Smtp-Source: AGHT+IHOSLN91GRMFwbfXF4p+jpX74rYIBidttA0YEKYP9pNN983icoBOo6bymBwpvzHTUdD2SCK/A==
+X-Received: by 2002:a05:6402:274d:b0:5d0:9054:b119 with SMTP id 4fb4d7f45d1cf-5d4185d5fb5mr8775267a12.21.1733821677437;
+        Tue, 10 Dec 2024 01:07:57 -0800 (PST)
 Received: from [127.0.0.2] ([2a02:2454:ff21:ef40:6709:8d26:5167:3c1d])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa699618041sm173148066b.81.2024.12.10.01.07.55
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa699618041sm173148066b.81.2024.12.10.01.07.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Dec 2024 01:07:56 -0800 (PST)
+        Tue, 10 Dec 2024 01:07:57 -0800 (PST)
 From: Stephan Gerhold <stephan.gerhold@linaro.org>
-Date: Tue, 10 Dec 2024 10:07:34 +0100
-Subject: [PATCH 3/8] arm64: dts: qcom: x1e80100-asus-vivobook-s15: Fix USB
- QMP PHY supplies
+Date: Tue, 10 Dec 2024 10:07:35 +0100
+Subject: [PATCH 4/8] arm64: dts: qcom: x1e80100-crd: Fix USB QMP PHY
+ supplies
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,7 +83,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241210-x1e80100-usb-qmp-supply-fix-v1-3-0adda5d30bbd@linaro.org>
+Message-Id: <20241210-x1e80100-usb-qmp-supply-fix-v1-4-0adda5d30bbd@linaro.org>
 References: <20241210-x1e80100-usb-qmp-supply-fix-v1-0-0adda5d30bbd@linaro.org>
 In-Reply-To: <20241210-x1e80100-usb-qmp-supply-fix-v1-0-0adda5d30bbd@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -103,21 +103,18 @@ On the X1E80100 CRD, &vreg_l3e_1p2 only powers &usb_mp_qmpphy0/1
 (i.e. USBSS_3 and USBSS_4). The QMP PHYs for USB_0, USB_1 and USB_2
 are actually powered by &vreg_l2j_1p2.
 
-Since x1e80100-asus-vivobook-s15 mostly just mirrors the power supplies
-from the x1e80100-crd device tree, assume that the fix also applies here.
-
 Cc: stable@vger.kernel.org
-Fixes: d0e2f8f62dff ("arm64: dts: qcom: Add device tree for ASUS Vivobook S 15")
+Fixes: ae5cee8e7349 ("arm64: dts: qcom: x1e80100-crd: Fix USB PHYs regulators")
 Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/x1e80100-crd.dts | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-index f25991b887de3fca0092c5f81c881c5d8bd71aac..bcb25782d541f43166229695ea1b83ee7b94a6c8 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-@@ -599,7 +599,7 @@ &usb_1_ss0_hsphy {
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
+index 39f9d9cdc10d8e79824b72288e2529536144fa9e..401326123db6619552b9ff2b90aa16dbb6649b92 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
++++ b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
+@@ -1187,7 +1187,7 @@ &usb_1_ss0_hsphy {
  };
  
  &usb_1_ss0_qmpphy {
@@ -126,10 +123,19 @@ index f25991b887de3fca0092c5f81c881c5d8bd71aac..bcb25782d541f43166229695ea1b83ee
  	vdda-pll-supply = <&vreg_l1j_0p8>;
  
  	status = "okay";
-@@ -631,7 +631,7 @@ &usb_1_ss1_hsphy {
+@@ -1215,7 +1215,7 @@ &usb_1_ss1_hsphy {
  };
  
  &usb_1_ss1_qmpphy {
+-	vdda-phy-supply = <&vreg_l3e_1p2>;
++	vdda-phy-supply = <&vreg_l2j_1p2>;
+ 	vdda-pll-supply = <&vreg_l2d_0p9>;
+ 
+ 	status = "okay";
+@@ -1243,7 +1243,7 @@ &usb_1_ss2_hsphy {
+ };
+ 
+ &usb_1_ss2_qmpphy {
 -	vdda-phy-supply = <&vreg_l3e_1p2>;
 +	vdda-phy-supply = <&vreg_l2j_1p2>;
  	vdda-pll-supply = <&vreg_l2d_0p9>;
