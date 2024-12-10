@@ -1,157 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-41336-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41337-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 213B69EB55C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 16:49:11 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4FF859EB571
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 16:56:15 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8766C164C2E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 15:49:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D246A2830ED
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 15:56:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5BBC720767C;
-	Tue, 10 Dec 2024 15:49:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A508F20767C;
+	Tue, 10 Dec 2024 15:56:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AYnf0lkm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-vk1-f182.google.com (mail-vk1-f182.google.com [209.85.221.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE9219D060;
-	Tue, 10 Dec 2024 15:49:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B2AF38DEC;
+	Tue, 10 Dec 2024 15:56:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733845746; cv=none; b=XX477iNq1+KgSpBfb6V2jlp44MVkjL2730xrsdDxYHlUzx1uF7QnwGD2WCT7jyKVh72eZ7yQK/3RYypbY08bi00lgqgmF+0OLxb0+cDrU9nwV2uzUq4K4Va+EKVdmU+cFouyr3l5vs06+L5y5dSi/Zd6GacZHWhxFdP7R8Do5Go=
+	t=1733846171; cv=none; b=c3GKTsqUMkOzG/Ty2EsB128FD1kaF51GmFx0C++adNiYAF3DIKjXlnZLUaNHEDnfHEhVmkWNOjIORsEO4HpNRV7BxOq0skgPY/2eT9OocoAJTHgZ/UbyrwTvI/PAZQoLjinAYzfqLOPKLiiuknv4s9XuWHobX99PM57a0Eu59wM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733845746; c=relaxed/simple;
-	bh=peHE+DJbLeZLy74+idXHUoT1cVdhbshNNIJ0NAsfJy0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bc4+TBLsn23mOoFHnAXdTXVhd1Ko/rCC8q9rFx7DcsLhfj4bEyKPdzGkGLbAMjUapA4qxPbkbUD9b/cdeW2OlRcq5Bxa5mINoQA/fT/iNiwYkFkjnoPCGsiF9vQbYklcwiPYI0ydBXHcXyP5m1dHSeAIMsZs/ovCGESYnBQ8o+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.221.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-vk1-f182.google.com with SMTP id 71dfb90a1353d-5187cd9b8e5so639240e0c.1;
-        Tue, 10 Dec 2024 07:49:04 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733845743; x=1734450543;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=D/Rwez1TpZi0OQAp5ylPL1NO7to/Przt1wcc1OfzevU=;
-        b=O1nE0J8v0UFlD48KVKrzlls3XhziD+AxASLc+9zzZYQYYaQZyYYDW4zbnID1mI+UkT
-         zjD2XjfSoGLuPGcowRhMwAWu0RhlWDiCJeX4ooFq7bQsAdO9TMZPRGZlydKuVNTBqPqz
-         3KGR36DFhrnWCI6MSbqgdGK+xGrGJ1/uLBvA03FQVYr4bYA+siYioRDalnxIs8UXcdYp
-         uxsMz0ZlQajeXBKz/7o0Gzu/T5jQY5VKupIWAg2ZUzoYSY0yayFRQodu0JEp7m+4cJ6P
-         H0ZqEW269Imz1oOrEFshbel3PYdHscGmPvSfwCz0d6TaLG7SdgjQFHsf+N9u7/JZGLV5
-         MUlg==
-X-Forwarded-Encrypted: i=1; AJvYcCUqeE+QGs87Ce5lyos52IJ3mpHmoCFjaNtweO4qA5KD42OxWYHvZXxTbe/fGlrgcxDB/ooMbkXtEM36Qr9N@vger.kernel.org, AJvYcCVZv1B9KUwVSuwnu1LZ+3A5ff9F52o/PJeP7uYLgxh3gCRF55UgK1aMeU4G1/D/TvIAqbVV9/ohLKE3W/3z@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzl3cgXgofDivCCkYz4Q/O0zJkc+DlekvmoBXywFKZVJYpHq3DE
-	CXwMBomABC+UWONzd0p4DFlvMEE5u2+JViW176dcKxvBXRYJ5HIbJL8xyp5B
-X-Gm-Gg: ASbGncsjc0nW9J2FHhO0Ue+XONSZYz80MhIqzn9SSIt131+sNIMj+nuvF1Gobr3QFtI
-	9zjl2uEO+uvv4DdpT8KzuicLjowaWd/+19VBhq/OmBfTKpVE1iL3ulUhij1LzDHMdS6+AEOqT/1
-	9BDhoH9F6XD6z8e5A2RAqNwWFvuq4NrQAFEOstmEsYdXKYy113NCgJEYwxsfPXjbZ9l3dHz6dE8
-	ILp02f09rHs+2hCcBDzAHwScl2vcUJHoJVR+gkKuXWjRiKx7lRgNSggez32shokXZ/7n5w0HpvU
-	9Os7Fjwp0fJ/HUhb
-X-Google-Smtp-Source: AGHT+IFAmbUgg8c9/53gYmcUQuhJWQmkxebLELy5nmWvMoktgAOdMnIEerSEhuJAqxrxK428wDDUuQ==
-X-Received: by 2002:a05:6122:46a0:b0:515:d38a:e168 with SMTP id 71dfb90a1353d-515fc9fcf79mr16829781e0c.4.1733845743298;
-        Tue, 10 Dec 2024 07:49:03 -0800 (PST)
-Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com. [209.85.217.48])
-        by smtp.gmail.com with ESMTPSA id 71dfb90a1353d-516244bafa8sm516481e0c.26.2024.12.10.07.49.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Dec 2024 07:49:03 -0800 (PST)
-Received: by mail-vs1-f48.google.com with SMTP id ada2fe7eead31-4aff620b232so764515137.0;
-        Tue, 10 Dec 2024 07:49:03 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCVxhT31kInDs9U5k5L6GxLTqqu37UYfkwVcWAxvEl62El6c8NpD+1oCYVgKI3hp9qH37zRY94dbbogUsZFw@vger.kernel.org, AJvYcCX0DCN8VlHe1bwhCiHhvvPxlgZrkjMpunzHYBLE86wifb+WL/UN+8xQOpn/uAl3U+s0828h9XP5+boaHH/n@vger.kernel.org
-X-Received: by 2002:a67:e916:0:b0:4af:d487:45ef with SMTP id
- ada2fe7eead31-4afd4874811mr12030637137.5.1733845742841; Tue, 10 Dec 2024
- 07:49:02 -0800 (PST)
+	s=arc-20240116; t=1733846171; c=relaxed/simple;
+	bh=HhaKkPOWT5t8vHReXiS0uw+iv66ryKvHxe3eQejeGhc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LQgSDF2C/lQQ9VZA3j5B0WgrHKpQmQBQvQ1U/sGoIjDCx+nbh07owWpd9Qrm6/2oraRkHaObceWu20DDVdtHobAyRN8LGpH9tIpjtwYDdaIrKVlLk+y5Uxp7vg5GrhJoA35yxYqWf/qAFNN9bRaVI2chx3zhDGRq2SEwssM94ko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AYnf0lkm; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E08EC4CED6;
+	Tue, 10 Dec 2024 15:56:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1733846171;
+	bh=HhaKkPOWT5t8vHReXiS0uw+iv66ryKvHxe3eQejeGhc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=AYnf0lkmS2caHfW7c0KzqTuWpehCijP/2ZLpxOSHTHEYqm/JZhMCxKvROr3HrA9G1
+	 O5AgjLUjvSm3P1Q9Wqu+jAgWKPbiGaZxOxdaHjAIB4vLgKnNRT/lWY59ZK8mKO4oke
+	 TXZ9UIfD1wVCzuoVqcRwrz02qMsAtherzVCKZpsY9UHc0gk4/p80931LUCyxbTvxTB
+	 AIMXvwSxi9Fi+BlEPzbg/CGjEatYT+Ev1Q7v+C107xo4YsthKH4Y+0l8DArI+39mK7
+	 c1pD08WZmG8xk2MV1F97AUWI102nYXuCgUKqI2iJOOljLlvyAtGho8k3SWw3fWhq/Z
+	 HpZpeTygf83kQ==
+Date: Tue, 10 Dec 2024 15:56:04 +0000
+From: Will Deacon <will@kernel.org>
+To: Douglas Anderson <dianders@chromium.org>
+Cc: Catalin Marinas <catalin.marinas@arm.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Julius Werner <jwerner@chromium.org>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Roxana Bradescu <roxabee@google.com>,
+	bjorn.andersson@oss.qualcomm.com,
+	linux-arm-kernel@lists.infradead.org,
+	Trilok Soni <quic_tsoni@quicinc.com>, linux-arm-msm@vger.kernel.org,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Besar Wicaksono <bwicaksono@nvidia.com>,
+	D Scott Phillips <scott@os.amperecomputing.com>,
+	Easwar Hariharan <eahariha@linux.microsoft.com>,
+	Oliver Upton <oliver.upton@linux.dev>, linux-kernel@vger.kernel.org,
+	james.morse@arm.com
+Subject: Re: [PATCH 0/6] arm64: errata: Add Qualcomm CPUs to the Spectre
+ mitigation lists
+Message-ID: <20241210155604.GA15918@willie-the-truck>
+References: <20241209174430.2904353-1-dianders@chromium.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <a779f3f44c24716d783d782c935be9fe4f410bff.1733238060.git.geert+renesas@glider.be>
- <6392704d.c158.1938d27f38e.Coremail.00107082@163.com>
-In-Reply-To: <6392704d.c158.1938d27f38e.Coremail.00107082@163.com>
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Tue, 10 Dec 2024 16:48:51 +0100
-X-Gmail-Original-Message-ID: <CAMuHMdWTSnHnO7wm04TSBKPu+-aAO9JehW6rK5y6D0uBWu+6Pg@mail.gmail.com>
-Message-ID: <CAMuHMdWTSnHnO7wm04TSBKPu+-aAO9JehW6rK5y6D0uBWu+6Pg@mail.gmail.com>
-Subject: Re: [PATCH] genirq: Remove leading space from .irq_print_chip() callbacks
-To: David Wang <00107082@163.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>, Michael Ellerman <mpe@ellerman.id.au>, 
-	Nicholas Piggin <npiggin@gmail.com>, Christophe Leroy <christophe.leroy@csgroup.eu>, 
-	Naveen N Rao <naveen@kernel.org>, Madhavan Srinivasan <maddy@linux.ibm.com>, 
-	=?UTF-8?B?TWFyZWsgQmVow7pu?= <kabel@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	linuxppc-dev@lists.ozlabs.org, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241209174430.2904353-1-dianders@chromium.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-Hi David,
+Hi Doug,
 
-On Tue, Dec 3, 2024 at 4:34=E2=80=AFPM David Wang <00107082@163.com> wrote:
-> At 2024-12-03 23:02:31, "Geert Uytterhoeven" <geert+renesas@glider.be> wr=
-ote:
-> >The space separator was factored out from the multiple chip name prints,
-> >but several irq_chip.irq_print_chip() callbacks still print a leading
-> >space.  Remove the superfluous double spaces.
-> >
-> >Fixes: 9d9f204bdf7243bf ("genirq/proc: Add missing space separator back"=
-)
-> >Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+On Mon, Dec 09, 2024 at 09:43:10AM -0800, Douglas Anderson wrote:
+> 
+> Since Qualcomm CPUs are all derivatives of ARM cores they all have
+> unique MIDR values. This means that the tables listing necessary
+> Spectre mitigations need special entries for them. However, those
+> entries are not present and that means that some Spectre mitigations
+> are lacking for Qualcomm CPUs.
+> 
+> I've made an attempt at **GUESSING** what the right patches should be
+> to enable mitigations for Qualcomm CPUs. This is mostly me searching
+> the web to figure out what ARM cores various Qualcomm cores are based
+> off of.
+> 
+> These patches get more and more sketchy as the series progresses and I
+> have noted that the later patces DON'T EVEN COMPILE. I have included
+> them to make it obvious that I think these cores are affected even if
+> I don't have all the right information to mitigate them. Hopefully
+> Qualcomm can come and fix this mess for me.
+> 
+> I'll note that I am certainly no expert on Spectre. Mostly I ended up
+> here running `lscpu` on a device and noticing that it thought that it
+> wasn't affected by Spectre v2 when I thought it was.
 
-> >--- a/drivers/irqchip/irq-partition-percpu.c
-> >+++ b/drivers/irqchip/irq-partition-percpu.c
-> >@@ -98,7 +98,7 @@ static void partition_irq_print_chip(struct irq_data *=
-d, struct seq_file *p)
-> >       struct irq_chip *chip =3D irq_desc_get_chip(part->chained_desc);
-> >       struct irq_data *data =3D irq_desc_get_irq_data(part->chained_des=
-c);
-> >
-> >-      seq_printf(p, " %5s-%lu", chip->name, data->hwirq);
-> >+      seq_printf(p, "%5s-%lu", chip->name, data->hwirq);
-> > }
-> >
-> > static struct irq_chip partition_irq_chip =3D {
-> >diff --git a/drivers/soc/qcom/smp2p.c b/drivers/soc/qcom/smp2p.c
-> >index 4783ab1adb8d953b..a3e88ced328a91f1 100644
-> >--- a/drivers/soc/qcom/smp2p.c
-> >+++ b/drivers/soc/qcom/smp2p.c
-> >@@ -365,7 +365,7 @@ static void smp2p_irq_print_chip(struct irq_data *ir=
-qd, struct seq_file *p)
-> > {
-> >       struct smp2p_entry *entry =3D irq_data_get_irq_chip_data(irqd);
-> >
-> >-      seq_printf(p, " %8s", dev_name(entry->smp2p->dev));
-> >+      seq_printf(p, "%8s", dev_name(entry->smp2p->dev));
-> > }
-> >
-> > static struct irq_chip smp2p_irq_chip =3D {
-> >--
-> >2.34.1
->
-> Match with my check result against .irq_print_chip implementation under d=
-rivers.
-> But I think "%8s" and "%5s-%lu" should be "%s" and "%s-%lu", otherwise th=
-ere would still
-> be leading spaces when the device name string is short.
+Whilst only Qualcomm can say definitively whether or not they are
+affected (and what values of 'k' are required for the loop-based
+workarounds), I can't help but wonder whether the current mitigation
+code is structured the wrong way around in this case.
 
-I believe these are present for alignment of later columns within the
-same irqchip.
+It looks to me like we don't have a way to identify a "vulnerable" CPU
+for Spectre-BHB; either a CPU has some sort of mitigation or it's
+unaffected. That means that there's very little incentive for vendors
+to add their CPUs to one of the lists -- if they do nothing, userspace
+is told that everything is golden and they don't pay the performance
+hit of a workaround!
 
-Gr{oetje,eeting}s,
+So I think we should consider turning this on its head and assume that
+CPUs we don't know about are vulnerable, having a list of unaffected
+cores that predate the introduction of CSV2.3 which can be queried by
+is_spectre_bhb_affected(). We can do that without the assistance of the
+CPU vendors.
 
-                        Geert
+Does that make sense, or did I miss something?
 
---=20
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
-.org
-
-In personal conversations with technical people, I call myself a hacker. Bu=
-t
-when I'm talking to journalists I just say "programmer" or something like t=
-hat.
-                                -- Linus Torvalds
+Will
 
