@@ -1,91 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-41314-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41315-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9E8A09EB1DD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 14:27:26 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 08F519EB1E3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 14:27:55 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 609E7285113
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 13:27:24 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 01096188A1FC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 13:27:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 526B71A9B2B;
-	Tue, 10 Dec 2024 13:27:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02C741AA786;
+	Tue, 10 Dec 2024 13:27:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Avlx0FOc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hpej9FEk"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2138341C64;
-	Tue, 10 Dec 2024 13:27:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8C5341C64;
+	Tue, 10 Dec 2024 13:27:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733837241; cv=none; b=A3AGjGMOiAuXFRTvIRAHms7/MEvnKLvSU++j3iBlLPAenZNqqMO++w2Cx7aN4nLwRgkLNyoi65P9wE4olm0zb++uwg5XiLarkraSxi4L84jD3cVq7UoxSN2K+L+gP4yL1MaBZB5/U7bPuYxzUzNdQmZEajV/SP2UPZJZ9FWY3TE=
+	t=1733837249; cv=none; b=fPnE3/JVr575dktGR8BMRph36v+t9ZlPAiFazwg3p3sV3EfaU6ella+6ioJW9xTAkXsjvAOiD6wN/vXDOivUKlogIGvDANpQTQL7sglrbPQnXUNONoQ5nF0cjIpyPV95R7xe1Ozqqf5Fb/DX/0ydlD6aHK3LwouwFd2R3/Su/Mc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733837241; c=relaxed/simple;
-	bh=4GUOAJnO+Ff2qNvgD//gQ6bsOnPHFswMxK4h/Ko2Icc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kl9ZXPlpNsCFMoPvrdsXB0m+nEjO7kzs3gJTVT1w5nJboCbu9pDsTVPwSAg7MizhaxBazmAy7/JXghnw/M1hp6XhOLfGkwaOn8/uzGojgBgE3Sn8mLsuBM40oKIiI+ed0Pd4mVKDUvDyzbZTR77YjAqT3jghLvdyjfUlzvL988A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Avlx0FOc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E816C4CED6;
-	Tue, 10 Dec 2024 13:27:20 +0000 (UTC)
+	s=arc-20240116; t=1733837249; c=relaxed/simple;
+	bh=xKJFRBNkKx36JPMJ2Eqydxn/VKUnHFFI1tFunwaj/FA=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=AsygHAt4UHR4oG6iZ6FFpSFClEFNdnPLEPanw+ybV8dT1rEYw/rs22Fx8K9qv8oXtUXGZrMnuGd1V9INAcBCnvm1ch0T0B2SkY2MPW18+NN0CYSDdRl/8iDPcYtdM29laZoxx4pfENJjAULEJ/h5R0ipZ2oVmIuuhVn3LXyIXcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hpej9FEk; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EA4DC4CED6;
+	Tue, 10 Dec 2024 13:27:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733837240;
-	bh=4GUOAJnO+Ff2qNvgD//gQ6bsOnPHFswMxK4h/Ko2Icc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Avlx0FOc7L7HB5fL5ZPiT4zdMVFOhtSL20HJD2Pf2UGT5lHAh0W2ux7jbHQbN1R+h
-	 ws4tXO2FHBJuooY46JPyY3JR0HbIbx2PKsmnxbszBRG7YuJz5pkDYgSHLiCAD/N1xA
-	 GsQMRqlKx+hECfBhINf7CpV3w03/3XM1ehjOl1qzF9P6VFOFl7QBrOnBWyiQ7CAHA3
-	 XugFf0b9F4IHMpTo8CRUSzm1AAaZeAj7yBI9B0+Mdd8N13W/Pdy+YfjjtWRihlVFDZ
-	 xmt/bhDTmyUVJ9DgfxXvmG9MZ7a179gQVAX58Yn+M8EYiDg/mk6y2r2BMsnHeiWStz
-	 uohI3KLRtto3Q==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1tL0Go-000000002GJ-2wDZ;
-	Tue, 10 Dec 2024 14:27:23 +0100
-Date: Tue, 10 Dec 2024 14:27:22 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Stephan Gerhold <stephan.gerhold@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
+	s=k20201202; t=1733837249;
+	bh=xKJFRBNkKx36JPMJ2Eqydxn/VKUnHFFI1tFunwaj/FA=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=hpej9FEk32LaoiE/JiWn0CjjiN+vw1q/H+CbqlnE8moxODyTdWs5PmgWnWuPD+KAs
+	 jyzJwgkx+0LOEcWYxlBPzknrCKZdpSNbjKH/11Lkz+AZPk3+sJDh+jloDAo9cHJahR
+	 EHT47KLkDLVMcu7zjjsrJNOjiidqoxTPx18rk9BvMB5FZ+6KQEZszvWBk3ahsXhIGG
+	 XOaNfhe8dgd5c5A0kAY5htAIKCG9t9PkjwejDfhMpkZp1EYxJlIFjuzWTtmcSpfr+f
+	 MHcR/Aoni7d4VdPAE+LVl+G42LPLzN47C9+30fjAcsE1dOXPcc8dWog2HF1Mh7ysuv
+	 2zg8WWaMQPHqQ==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <maz@kernel.org>)
+	id 1tL0Gt-002HGH-9I;
+	Tue, 10 Dec 2024 13:27:27 +0000
+Date: Tue, 10 Dec 2024 13:27:26 +0000
+Message-ID: <86ttbbsm69.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Stephan Gerhold <stephan.gerhold@linaro.org>, Johan Hovold <johan@kernel.org>
+Cc: 	Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Conor Dooley <conor+dt@kernel.org>,
+	Sibi Sankar <quic_sibis@quicinc.com>,
+	Xilin Wu <wuxilin123@gmail.com>,
 	Abel Vesa <abel.vesa@linaro.org>,
-	"Aiqun Yu (Maria)" <quic_aiquny@quicinc.com>
-Subject: Re: [PATCH v2] arm64: dts: qcom: x1e80100-pmics: Enable all SMB2360
- separately
-Message-ID: <Z1hBuliHmuOkqTZj@hovoldconsulting.com>
-References: <20241210-x1e80100-disable-smb2360-v2-1-2449be2eca29@linaro.org>
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Aleksandrs Vinarskis <alex.vinarskis@gmail.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/8] arm64: dts: qcom: x1e*: Fix USB QMP PHY supplies
+In-Reply-To: <Z1g_nFhYXrBxHtrb@hovoldconsulting.com>
+References: <20241210-x1e80100-usb-qmp-supply-fix-v1-0-0adda5d30bbd@linaro.org>
+	<Z1g_nFhYXrBxHtrb@hovoldconsulting.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/29.4
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241210-x1e80100-disable-smb2360-v2-1-2449be2eca29@linaro.org>
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: stephan.gerhold@linaro.org, johan@kernel.org, andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, quic_sibis@quicinc.com, wuxilin123@gmail.com, abel.vesa@linaro.org, dmitry.baryshkov@linaro.org, alex.vinarskis@gmail.com, srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-On Tue, Dec 10, 2024 at 09:36:01AM +0100, Stephan Gerhold wrote:
-> At the moment, x1e80100-pmics.dtsi enables two of the SMB2360 PMICs by
-> default and leaves the other two disabled. The third one was originally
-> also enabled by default, but then disabled in commit a237b8da413c ("arm64:
-> dts: qcom: x1e80100: Disable SMB2360_2 by default"). This is inconsistent
-> and confusing. Some laptops will even need SMB2360_1 disabled by default if
-> they just have a single USB-C port.
+On Tue, 10 Dec 2024 13:18:20 +0000,
+Johan Hovold <johan@kernel.org> wrote:
 > 
-> Make this consistent by keeping all SMB2360 disabled in x1e80100-pmics.dtsi
-> and enable them separately for all boards where needed. That way it is
-> always clear which ones are available and avoids accidentally trying to
-> read/write from missing chips when some of the PMICs are not present.
+> On Tue, Dec 10, 2024 at 10:07:31AM +0100, Stephan Gerhold wrote:
+> > On the X1E80100 CRD, &vreg_l3e_1p2 only powers &usb_mp_qmpphy0/1
+> > (i.e. USBSS_3 and USBSS_4). The QMP PHYs for USB_0, USB_1 and USB_2
+> > are actually powered by &vreg_l2j_1p2.
+> > 
+> > Since most X1E device trees just mirror the power supplies from the
+> > x1e80100-crd device tree, this series fixes up all the X1E boards with
+> > the same change.
 > 
-> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+> Nice find! I've confirmed that this matches both the CRD and T14s
+> schematics.
 
-Makes perfect sense:
+Can someone with access to the schematics confirm that the devkit
+indeed has the same supplies?
 
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Thanks,
+
+	M.
+
+-- 
+Without deviation from the norm, progress is not possible.
 
