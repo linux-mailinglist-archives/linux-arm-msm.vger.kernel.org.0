@@ -1,209 +1,335 @@
-Return-Path: <linux-arm-msm+bounces-41322-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41323-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C5A089EB3CF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 15:46:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3C8939EB442
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 16:04:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 73CC516654E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 14:46:48 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AEC571675DC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 15:03:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50A2C1A08C5;
-	Tue, 10 Dec 2024 14:46:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B1E51AA786;
+	Tue, 10 Dec 2024 15:03:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="c5cd9jzt"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Lc0IP/im"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9192219ADA2;
-	Tue, 10 Dec 2024 14:46:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613D91A072A;
+	Tue, 10 Dec 2024 15:03:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733842009; cv=none; b=uiV24HGyZO2OGALsLEyebBuHR6cC5LibDMXtINLDDFIb4aDrA3aRMuBphZnRAN4XX72axZ6s/uwXF44U3v3SzIaZBEw2xf71vLzCs9euc+NiRw6JHReqR5BJrNmR/2Rtmh7Nowcu7uMy1NsIypNZcF+VS6Y85tLd9jrp82laMz4=
+	t=1733843035; cv=none; b=eVF/Zwny1fpkyj/Kl/jat5SxBd8247LlYAl9l18KifxQ5uyJfZvfz8NRlAZ4nu0DYKcSs5ZEBECpcdAm0zzKRUtYzn0Vxwkukz6B/lkmzaF2y8vo/9AXX+iJIKHgef4MB4zL/EFcNcTZhACOsrKqk4Dy9cCOgseOb4h29nKS1Zw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733842009; c=relaxed/simple;
-	bh=Do7dwzzjllAqqtvBa73eePMIDuR9IMn0/w3h50zwnJw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iiiPaHPtGzVPeCKcW2VhBy1nHzsYqyKrqRwRpxooDShnLPPf5cpl/cnDmXqiOuOARW9QxQMP8P3y7hg7MibfwSyXLuRo3wYwc6ZCtw+2n0Qhkk+GvRk1MYm8J5qwODu6EPFSDZjCvSIpk8/JbjOqnMRVSvKo+T64vkNpo125Rvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=c5cd9jzt; arc=none smtp.client-ip=198.175.65.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1733842008; x=1765378008;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=Do7dwzzjllAqqtvBa73eePMIDuR9IMn0/w3h50zwnJw=;
-  b=c5cd9jztjX3CZLQY2Dt4fZP7Ahl7coHY/r+QqruIA3qvQU58UPQUJWhU
-   C/qZjXmj/wcMf3O43FicwuG1kO76AohpWBhF8jyzPO7fP8liOrmM2ZjRn
-   tTXnyljnwkipRPujyXZgrkMOptHFIfS1yLsrlFc68lk4iMGi7fGw27n6W
-   LBIlVn3WiQ7T+Z4nZo+pu/78lKHMI9VQahv8nReUTtqvOD0Ad6qN6uaF8
-   O8skTB+EefUkTIHhZJKgYdcSzfQbkWlq1WwMx/BHVbGI3g3mpf31h32v+
-   bfi1bZOBvfPZtFd+XxR5UzQ0VxCCcxzunLj2naWXhDOVrG98PARohv4Fx
-   A==;
-X-CSE-ConnectionGUID: fW68VaGjTROd4e281rCX9A==
-X-CSE-MsgGUID: Kwbdr4/KTnuzfD7kpSk9bg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11282"; a="33918595"
-X-IronPort-AV: E=Sophos;i="6.12,222,1728975600"; 
-   d="scan'208";a="33918595"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Dec 2024 06:46:47 -0800
-X-CSE-ConnectionGUID: 8UXF8N9lQmy0iqLdrqk76A==
-X-CSE-MsgGUID: dgzL6dt7ThijvCzrvWlGLA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,222,1728975600"; 
-   d="scan'208";a="95264819"
-Received: from lkp-server01.sh.intel.com (HELO 82a3f569d0cb) ([10.239.97.150])
-  by fmviesa007.fm.intel.com with ESMTP; 10 Dec 2024 06:46:44 -0800
-Received: from kbuild by 82a3f569d0cb with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1tL1VZ-0005fp-2N;
-	Tue, 10 Dec 2024 14:46:41 +0000
-Date: Tue, 10 Dec 2024 22:45:42 +0800
-From: kernel test robot <lkp@intel.com>
-To: Douglas Anderson <dianders@chromium.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>, Mark Rutland <mark.rutland@arm.com>
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	Julius Werner <jwerner@chromium.org>,
-	Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	Roxana Bradescu <roxabee@google.com>,
-	bjorn.andersson@oss.qualcomm.com,
-	linux-arm-kernel@lists.infradead.org,
-	Trilok Soni <quic_tsoni@quicinc.com>, linux-arm-msm@vger.kernel.org,
-	Douglas Anderson <dianders@chromium.org>,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 5/6] arm64: errata: Add QCOM_KRYO_5XX_GOLD to the
- spectre_bhb_k24_list
-Message-ID: <202412102224.bmEeK15u-lkp@intel.com>
-References: <20241209094310.5.I41e227ed809ea607114027209b57d02dc0e98384@changeid>
+	s=arc-20240116; t=1733843035; c=relaxed/simple;
+	bh=u8AsEspJ2r2jjfbPPlHBTU6WBJYa4HlD1it/c/fJdzo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=g2FXYNoa1D7zK54Q9q4PIClrJj4zbPCLN1+O5d5qBTNaQZuYpC82pidAcc6CQK0+k2YuQqgZgGaITYQ9Yk3SB+3bbnoTw7bO3yqInnsXDnrZ7L+cmsV8AiXOuMujLKxbTDhPkFzHKcmbWcJBoJ3/KUrOPHvwSxNRok1ieSvoGAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Lc0IP/im; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BA9sTsd018809;
+	Tue, 10 Dec 2024 15:03:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	wsQwKmZ2gnyeT1g80gOnM7x0rgtDoVWxp5S4GUfBf/I=; b=Lc0IP/imNQJ3RI0J
+	KmPahm0CZEprcscglCWg+dglJ7kX9GmyGh7udy7yn1a+M8TytrYoZHZJZQsqaTsj
+	zjMjvXCY/dq+dW8eeCPffZa/SuYIO8Nb4D+bhHmMcd7bJdATYh2Qs7Q8F8H1MhE/
+	C3jHCVjLgmyCtPvOMkDVDbtDrj5H57sv+bdJHBqDjFnZmOvQi4XmTDba3DHVtj+7
+	8nMc+CAuyWQHxQ9ix/30mkn6LoioLGacaNRrfaxKJDFZ2IN4v2VrEOyZqqajJTEV
+	mKtgpqOq1fNqIkSblCbh3sxKI08i4YfC6WGn8Loxu0H4U72eZQvZAW0hmARg0yIj
+	r4ARHA==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43eak3a9s3-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 10 Dec 2024 15:03:43 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BAF3gOd007183
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 10 Dec 2024 15:03:42 GMT
+Received: from [10.253.78.12] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 10 Dec
+ 2024 07:03:37 -0800
+Message-ID: <ccce8ed3-1bf9-434c-bcb9-943d380544a2@quicinc.com>
+Date: Tue, 10 Dec 2024 23:03:35 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241209094310.5.I41e227ed809ea607114027209b57d02dc0e98384@changeid>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/3] Bluetooth: qca: Expand firmware-name to load
+ specific nvm and rampatch
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Marcel Holtmann <marcel@holtmann.org>,
+        Luiz Augusto von Dentz
+	<luiz.dentz@gmail.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        "Balakrishna
+ Godavarthi" <quic_bgodavar@quicinc.com>,
+        Rocky Liao
+	<quic_rjliao@quicinc.com>,
+        <linux-bluetooth@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <quic_jiaymao@quicinc.com>, <quic_shuaz@quicinc.com>,
+        <quic_zijuhu@quicinc.com>, <quic_mohamull@quicinc.com>
+References: <20241205102213.1281865-1-quic_chejiang@quicinc.com>
+ <20241205102213.1281865-3-quic_chejiang@quicinc.com>
+ <w7r4itwyrh3jva3rx3kmsm4kqtawqkgkneqrlin4hpjkqb3deo@2qmjd3ijzqn3>
+ <541a5682-5b99-4793-84ee-a7c9168cb9a0@quicinc.com>
+ <CAA8EJppmTSovZKTPb+syrc0Vvfu8U=HoP18tW072OEZ5nYyOgg@mail.gmail.com>
+ <4ef61f91-f1ae-4593-9522-2229680a9707@quicinc.com>
+ <fb7exdibh4f5r3io6m34i7lqqe7qo2kk357bfdzcdbie6cppui@mqwwq5w4c57j>
+Content-Language: en-US
+From: "Cheng Jiang (IOE)" <quic_chejiang@quicinc.com>
+In-Reply-To: <fb7exdibh4f5r3io6m34i7lqqe7qo2kk357bfdzcdbie6cppui@mqwwq5w4c57j>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: RUsAdvfJMAisksEi8FexfJmGHJebrhDw
+X-Proofpoint-GUID: RUsAdvfJMAisksEi8FexfJmGHJebrhDw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ mlxlogscore=999 clxscore=1015 spamscore=0 mlxscore=0 impostorscore=0
+ malwarescore=0 lowpriorityscore=0 priorityscore=1501 adultscore=0
+ bulkscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412100112
 
-Hi Douglas,
+Hi Dmitry,
 
-kernel test robot noticed the following build errors:
+On 12/9/2024 6:49 PM, Dmitry Baryshkov wrote:
+> On Mon, Dec 09, 2024 at 05:03:55PM +0800, Cheng Jiang (IOE) wrote:
+>> Hi Dmitry,
+>>
+>> On 12/6/2024 4:34 PM, Dmitry Baryshkov wrote:
+>>> On Fri, 6 Dec 2024 at 05:05, Cheng Jiang (IOE)
+>>> <quic_chejiang@quicinc.com> wrote:
+>>>>
+>>>> Hi Dmitry,
+>>>>
+>>>> On 12/5/2024 8:00 PM, Dmitry Baryshkov wrote:
+>>>>> On Thu, Dec 05, 2024 at 06:22:12PM +0800, Cheng Jiang wrote:
+>>>>>> The firmware-name property has been expanded to specify the names of NVM
+>>>>>> and rampatch firmware for certain chips, such as the QCA6698 Bluetooth
+>>>>>> chip. Although it shares the same IP core as the WCN6855, the QCA6698
+>>>>>> has different RF components and RAM sizes, necessitating new firmware
+>>>>>> files. This change allows for the configuration of NVM and rampatch in
+>>>>>> DT.
+>>>>>>
+>>>>>> Different connectivity boards may be attached to the same platform. For
+>>>>>> example, QCA6698-based boards can support either a two-antenna or
+>>>>>> three-antenna solution, both of which work on the sa8775p-ride platform.
+>>>>>> Due to differences in connectivity boards and variations in RF
+>>>>>> performance from different foundries, different NVM configurations are
+>>>>>> used based on the board ID.
+>>>>>
+>>>>> Two separate commits, one for NVM, another one for RAM patch.
+>>>>>
+>>>> Ack.
+>>>>>>
+>>>>>> Therefore, in the firmware-name property, if the NVM file has an
+>>>>>> extension, the NVM file will be used. Otherwise, the system will first
+>>>>>> try the .bNN (board ID) file, and if that fails, it will fall back to
+>>>>>> the .bin file.
+>>>>>>
+>>>>>> Possible configurations:
+>>>>>> firmware-name = "QCA6698/hpnv21.bin", "QCA6698/hpbtfw21.tlv";
+>>>>>> firmware-name = "QCA6698/hpnv21", "QCA6698/hpbtfw21.tlv";
+>>>>>> firmware-name = "QCA6698/hpnv21.bin";
+>>>>>>
+>>>>>> Signed-off-by: Cheng Jiang <quic_chejiang@quicinc.com>
+>>>>>> ---
+>>>>>>  drivers/bluetooth/btqca.c   | 154 ++++++++++++++++++++++++++----------
+>>>>>>  drivers/bluetooth/btqca.h   |   5 +-
+>>>>>>  drivers/bluetooth/hci_qca.c |  21 ++++-
+>>>>>>  3 files changed, 134 insertions(+), 46 deletions(-)
+>>>>>>
+>>>>>> diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
+>>>>>> index dfbbac922..e8b89b8cc 100644
+>>>>>> --- a/drivers/bluetooth/btqca.c
+>>>>>> +++ b/drivers/bluetooth/btqca.c
+>>>>>> @@ -272,6 +272,31 @@ int qca_send_pre_shutdown_cmd(struct hci_dev *hdev)
+>>>>>>  }
+>>>>>>  EXPORT_SYMBOL_GPL(qca_send_pre_shutdown_cmd);
+>>>>>>
+>>>>>> +static int qca_get_alt_nvm_path(char *path, size_t max_size)
+>>>>>
+>>>>> int is usually for errors, the code suggests bool return type.
+>>>>>
+>>>> Ack.
+>>>>>> +{
+>>>>>> +    char fwname[64];
+>>>>>> +    const char *suffix;
+>>>>>> +
+>>>>>> +    suffix = strrchr(path, '.');
+>>>>>> +
+>>>>>> +    if (!suffix)
+>>>>>> +            return 0;
+>>>>>> +
+>>>>>> +    strscpy(fwname, path, strlen(path));
+>>>>>
+>>>>> 64 bytes ought to be enough for anybody, correct?
+>>>>>
+>>>> Yes, in current driver, the max f/w path length is 64.
+>>>>
+>>>>>> +    fwname[suffix - path] = 0;
+>>>>>
+>>>>> with path = "qcom/sc7180/Oh.My.Device/name" this is broken.
+>>>>>
+>>>> Let me test this and fix in next patch.
+>>>>>> +
+>>>>>> +    snprintf(fwname, sizeof(fwname), "%s.bin", fwname);
+>>>>>> +
+>>>>>> +    /* If nvm file is already the default one, return false to
+>>>>>> +     * skip the retry.
+>>>>>> +     */
+>>>>>> +    if (strcmp(fwname, path) == 0)
+>>>>>> +            return 0;
+>>>>>> +
+>>>>>> +    snprintf(path, max_size, "%s", fwname);
+>>>>>> +    return 1;
+>>>>>> +}
+>>>>>> +
+>>>>>>  static int qca_tlv_check_data(struct hci_dev *hdev,
+>>>>>>                             struct qca_fw_config *config,
+>>>>>>                             u8 *fw_data, size_t fw_size,
+>>>>>> @@ -564,6 +589,19 @@ static int qca_download_firmware(struct hci_dev *hdev,
+>>>>>>                                         config->fwname, ret);
+>>>>>>                              return ret;
+>>>>>>                      }
+>>>>>> +            }
+>>>>>> +            /* For nvm, if desired nvm file is not present and it's not the
+>>>>>> +             * default nvm file(ends with .bin), try to load the default nvm.
+>>>>>> +             */
+>>>>>> +            else if (config->type == TLV_TYPE_NVM &&
+>>>>>> +                     qca_get_alt_nvm_path(config->fwname, sizeof(config->fwname))) {
+>>>>>
+>>>>> Please, don't rewrite the config. The file may be not present now, but
+>>>>> it will reappear later (e.g. when rootfs gets mounted).
+>>>>>
+>>>> This tries to load a default NVM file if the board-specific NVM is not found.
+>>>> It is called when request_firmware fails. It's safe to rewrite the config->fwname
+>>>> here since we have already tried to load the board-specific NVM. The config
+>>>> is a local variable in qca_uart_setup and will return after downloading the NVM.
+>>>
+>>> Please read my question before answering it.
+>>>
+>> Sorry, I'm not clear about your question. Could you please explain it in more detail? 
+>> I'm not quite sure how the situation you mentioned affects this code flow if you mean
+>> not downloading another NVM file.
+>>
+>> The board-specific NVM and the default NVM should be in the same folder and should
+>> appear simultaneously.
+>>
+>> From the Bluetooth firmware load flow perspective, the firmware is loaded either 
+>> when the kernel module is inserted (insmod) or when Bluetooth is turned off and 
+>> then on again via a user-space command. If the firmware is not found at this time, 
+>> the ROM code is used instead. It does not attempt to load the firmware automatically,
+>> even if the firmware appears later.
+> 
+> I was thinking about the following scenario:
+> 
+> - BT firmware is attempted to load during driver probe, /lib/firmware is
+>   not fully populated, so the config is rewritten to use the default
+> - rootfs is fully mounted and populated with the board-specific file
+> - BT interface is being turned on. It is expected that the
+>   board-specific file will be loaded, however because the config was
+>   changed in one of the previous steps, the driver still loads the
+>   default one.
+> 
+> That said, the driver should perform the fallback, etc, but the config
+> should stay intact even in the fallback case.
+> 
+>>
+>>>>>> +                    bt_dev_info(hdev, "QCA Downloading %s", config->fwname);
+>>>>>> +                    ret = request_firmware(&fw, config->fwname, &hdev->dev);
+>>>>>> +                    if (ret) {
+>>>>>> +                            bt_dev_err(hdev, "QCA Failed to request file: %s (%d)",
+>>>>>> +                                       config->fwname, ret);
+>>>>>> +                            return ret;
+>>>>>> +                    }
+>>>>>>              } else {
+>>>>>>                      bt_dev_err(hdev, "QCA Failed to request file: %s (%d)",
+>>>>>>                                 config->fwname, ret);
+>>>>>> @@ -730,15 +768,38 @@ static inline void qca_get_nvm_name_generic(struct qca_fw_config *cfg,
+>>>>>>                       "qca/%snv%02x.b%02x", stem, rom_ver, bid);
+>>>>>>  }
+>>>>>>
+>>>>>> +static void qca_get_nvm_name_by_board(char *fwname, size_t max_size,
+>>>>>> +            const char *firmware_name, struct qca_btsoc_version ver,
+>>>>>> +            enum qca_btsoc_type soc_type, u16 bid)
+>>>>>> +{
+>>>>>> +    const char *variant;
+>>>>>> +
+>>>>>> +    /* Set the variant to empty by default */
+>>>>>> +    variant = "";
+>>>>>> +    /* hsp gf chip */
+>>>>>> +    if (soc_type == QCA_WCN6855) {
+>>>>>> +            if ((le32_to_cpu(ver.soc_id) & QCA_HSP_GF_SOC_MASK) == QCA_HSP_GF_SOC_ID)
+>>>>>> +                    variant = "g";
+>>>>>
+>>>>> Didn't you get the 'set but unused' here?
+>>>>>
+>>>> Yes, miss this part. Thank you!
+>>>>>> +    }
+>>>>>> +
+>>>>>> +    if (bid == 0x0)
+>>>>>
+>>>>> 0x0 or 0xff?
+>>>> board is set to 0 by default, 0x0 means read board id fails, then we should use
+>>>> the default one.
+>>>
+>>> What is the 'unprogrammed' board_id? On the WiFi side it's usually 0xff.
+>>>
+>> Yes, the 'unprogrammed' board_id should be 0xffff. Then 0 and 0xffff should use the
+>> default nvm.  
+> 
+> Good. I think it's safe to safe board_id to 0xffff by default, then you
+> don't have to handle '0' specially.
+> 
+Sorry, I missed this comment, we have read board id of 0 from some boards in other project.
+So it's better to check both 0 and 0xffff. It aligns with current driver implementation. 
+>>>>>
+>>>>>> +            snprintf(fwname, max_size, "qca/%s.bin", firmware_name);
+>>>>>> +    else if (bid & 0xff00)
+>>>>>> +            snprintf(fwname, max_size, "qca/%s.b%x", firmware_name, bid);
+>>>>>
+>>>>> Doesn't ".b%02x" work in this case too?
+>>>>>
+>>>> No, board id are two bytes, it coudl be 0x0206, then we need .b206. Or it is
+>>>> 0x000a, then we need .b0a.
+>>>
+>>> What will ".b%02x" write in those two cases?
+>>>
+>> Yes, it works for both cases. Thanks! 
+> 
+> :-)
+> 
+>>>>>> +    else
+>>>>>> +            snprintf(fwname, max_size, "qca/%s.b%02x", firmware_name, bid);
+>>>>>> +}
+>>>>>> +
+>>>
+>>>
+>>
+> 
 
-[auto build test ERROR on arm64/for-next/core]
-[also build test ERROR on arm-perf/for-next/perf kvmarm/next soc/for-next arm/for-next arm/fixes linus/master v6.13-rc2 next-20241210]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Douglas-Anderson/arm64-errata-Add-QCOM_KRYO_4XX_GOLD-to-the-spectre_bhb_k24_list/20241210-014833
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/arm64/linux.git for-next/core
-patch link:    https://lore.kernel.org/r/20241209094310.5.I41e227ed809ea607114027209b57d02dc0e98384%40changeid
-patch subject: [PATCH 5/6] arm64: errata: Add QCOM_KRYO_5XX_GOLD to the spectre_bhb_k24_list
-config: arm64-randconfig-002-20241210 (https://download.01.org/0day-ci/archive/20241210/202412102224.bmEeK15u-lkp@intel.com/config)
-compiler: clang version 20.0.0git (https://github.com/llvm/llvm-project 592c0fe55f6d9a811028b5f3507be91458ab2713)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20241210/202412102224.bmEeK15u-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202412102224.bmEeK15u-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
-   In file included from arch/arm64/kernel/proton-pack.c:21:
-   In file included from include/linux/bpf.h:21:
-   In file included from include/linux/kallsyms.h:13:
-   In file included from include/linux/mm.h:2223:
-   include/linux/vmstat.h:504:43: warning: arithmetic between different enumeration types ('enum zone_stat_item' and 'enum numa_stat_item') [-Wenum-enum-conversion]
-     504 |         return vmstat_text[NR_VM_ZONE_STAT_ITEMS +
-         |                            ~~~~~~~~~~~~~~~~~~~~~ ^
-     505 |                            item];
-         |                            ~~~~
-   include/linux/vmstat.h:511:43: warning: arithmetic between different enumeration types ('enum zone_stat_item' and 'enum numa_stat_item') [-Wenum-enum-conversion]
-     511 |         return vmstat_text[NR_VM_ZONE_STAT_ITEMS +
-         |                            ~~~~~~~~~~~~~~~~~~~~~ ^
-     512 |                            NR_VM_NUMA_EVENT_ITEMS +
-         |                            ~~~~~~~~~~~~~~~~~~~~~~
-   include/linux/vmstat.h:518:36: warning: arithmetic between different enumeration types ('enum node_stat_item' and 'enum lru_list') [-Wenum-enum-conversion]
-     518 |         return node_stat_name(NR_LRU_BASE + lru) + 3; // skip "nr_"
-         |                               ~~~~~~~~~~~ ^ ~~~
-   include/linux/vmstat.h:524:43: warning: arithmetic between different enumeration types ('enum zone_stat_item' and 'enum numa_stat_item') [-Wenum-enum-conversion]
-     524 |         return vmstat_text[NR_VM_ZONE_STAT_ITEMS +
-         |                            ~~~~~~~~~~~~~~~~~~~~~ ^
-     525 |                            NR_VM_NUMA_EVENT_ITEMS +
-         |                            ~~~~~~~~~~~~~~~~~~~~~~
->> arch/arm64/kernel/proton-pack.c:870:22: error: use of undeclared identifier 'MIDR_QCOM_KRYO_5XX_GOLD'
-     870 |                         MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_5XX_GOLD),
-         |                                           ^
-   4 warnings and 1 error generated.
-
-
-vim +/MIDR_QCOM_KRYO_5XX_GOLD +870 arch/arm64/kernel/proton-pack.c
-
-   843	
-   844	/*
-   845	 * This must be called with SCOPE_LOCAL_CPU for each type of CPU, before any
-   846	 * SCOPE_SYSTEM call will give the right answer.
-   847	 */
-   848	u8 spectre_bhb_loop_affected(int scope)
-   849	{
-   850		u8 k = 0;
-   851		static u8 max_bhb_k;
-   852	
-   853		if (scope == SCOPE_LOCAL_CPU) {
-   854			static const struct midr_range spectre_bhb_k32_list[] = {
-   855				MIDR_ALL_VERSIONS(MIDR_CORTEX_A78),
-   856				MIDR_ALL_VERSIONS(MIDR_CORTEX_A78AE),
-   857				MIDR_ALL_VERSIONS(MIDR_CORTEX_A78C),
-   858				MIDR_ALL_VERSIONS(MIDR_CORTEX_X1),
-   859				MIDR_ALL_VERSIONS(MIDR_CORTEX_A710),
-   860				MIDR_ALL_VERSIONS(MIDR_CORTEX_X2),
-   861				MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N2),
-   862				MIDR_ALL_VERSIONS(MIDR_NEOVERSE_V1),
-   863				{},
-   864			};
-   865			static const struct midr_range spectre_bhb_k24_list[] = {
-   866				MIDR_ALL_VERSIONS(MIDR_CORTEX_A76),
-   867				MIDR_ALL_VERSIONS(MIDR_CORTEX_A77),
-   868				MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N1),
-   869				MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_4XX_GOLD),
- > 870				MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_5XX_GOLD),
-   871				{},
-   872			};
-   873			static const struct midr_range spectre_bhb_k11_list[] = {
-   874				MIDR_ALL_VERSIONS(MIDR_AMPERE1),
-   875				{},
-   876			};
-   877			static const struct midr_range spectre_bhb_k8_list[] = {
-   878				MIDR_ALL_VERSIONS(MIDR_CORTEX_A72),
-   879				MIDR_ALL_VERSIONS(MIDR_CORTEX_A57),
-   880				{},
-   881			};
-   882	
-   883			if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k32_list))
-   884				k = 32;
-   885			else if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k24_list))
-   886				k = 24;
-   887			else if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k11_list))
-   888				k = 11;
-   889			else if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k8_list))
-   890				k =  8;
-   891	
-   892			max_bhb_k = max(max_bhb_k, k);
-   893		} else {
-   894			k = max_bhb_k;
-   895		}
-   896	
-   897		return k;
-   898	}
-   899	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
 
