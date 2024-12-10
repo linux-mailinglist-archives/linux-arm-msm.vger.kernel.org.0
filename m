@@ -1,245 +1,244 @@
-Return-Path: <linux-arm-msm+bounces-41333-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41334-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 19F269EB4C0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 16:24:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 852019EB4E7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 16:28:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CD98A28558D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 15:24:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D9BBF281264
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 15:28:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26F471BBBC5;
-	Tue, 10 Dec 2024 15:24:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A09F1BBBFC;
+	Tue, 10 Dec 2024 15:28:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="b9y1B0zt"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="foNHM3XR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C39911B86DC;
-	Tue, 10 Dec 2024 15:24:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.19
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733844290; cv=fail; b=da5TB9aWf7DPQBZev8bbxen4APPqhS0LvlSiEzFW2DAhpPARu+2/ljR8FN2PAUKf5yclU7hyUopoFTVH8wLgyenaKPJeNji7ZOKAiMEXRev7Os3KeeEMBsXXNswUC/Dain4rrPjzcbMwCv6UrSRjJVNfxWvIzHHG/iR+pfra+AQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733844290; c=relaxed/simple;
-	bh=yUccVUFFqDMg/T8DWyOwXiLG3BxYWZJZpzDGCk7GgbA=;
-	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=om3GYEWiAkKuZT7lDvXT9agCevIrQiJL+jNjJl2VSbK/xrYIR3/6/jIRqbGxdzoowXSfvMpmQHkXk3EMCQhxGURzEGzeDX15DPerniVfkfjensR8U3QsYX2f60jVmeNhD93flzKhyyEl80pFzP8wy2FRjk4Fgds8uGxNMFV45rE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=b9y1B0zt; arc=fail smtp.client-ip=198.175.65.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1733844288; x=1765380288;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=yUccVUFFqDMg/T8DWyOwXiLG3BxYWZJZpzDGCk7GgbA=;
-  b=b9y1B0ztdFbXOVsG/fXmfDwDZTrCQ+aCbc1gckFy8YnNo+f1AdJBoA+L
-   ViR5B9oghDZvYEGyI4UJdp5Zeb1M/oCgZ274os2+dGnC4fdiE4kgBwWxA
-   3BRHR96IEJmm83ImbnkE1Pm7uUu7FYBnBYBSLl5xnPR0Jx6Y0dRddOdU/
-   yjCM8YYSoGo7U5s8z1OTTjFrBtp+wB9rrKQ2xt6LXCkivv4K6i/tDDfva
-   cCkwHWWEYAJdeXwzOVUws0HhPFXzRvhlA513Z5uaXWlQzZCCUIGCStJd7
-   AxAlW0Yxw5NN4Q/BW1BVg6nDAsd+vRHB1+Gg/UICjcPFjBWIW8dRHzUQd
-   g==;
-X-CSE-ConnectionGUID: anI8b2I7TmqeDFgVy1QYZg==
-X-CSE-MsgGUID: wsIqLJjCQMaqzPjYeWO2Bw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11282"; a="34074969"
-X-IronPort-AV: E=Sophos;i="6.12,222,1728975600"; 
-   d="scan'208";a="34074969"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
-  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Dec 2024 07:24:47 -0800
-X-CSE-ConnectionGUID: yZTSiiU/Qk+8wkHxbWSsXw==
-X-CSE-MsgGUID: 4Jwv2PDeQpu2Abh+PBM3yw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; 
-   d="scan'208";a="100498402"
-Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
-  by orviesa003.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 10 Dec 2024 07:24:47 -0800
-Received: from orsmsx601.amr.corp.intel.com (10.22.229.14) by
- ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Tue, 10 Dec 2024 07:24:46 -0800
-Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
- orsmsx601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39 via Frontend Transport; Tue, 10 Dec 2024 07:24:46 -0800
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com (104.47.56.176)
- by edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Tue, 10 Dec 2024 07:24:45 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=W9vtCCoYd+qxxH5PQlzFS/ZfG/uvNPoW/aOBy3NugL64SR1BKN2vOODAZQ39Rof4FqOZ02lmJFEYfTbBN15Q9JazNyXiWBTtI8EtqfyLDzaj0SDa5mQoQik/y9Vz7zkC48lpOmJiMG23P+th97RtePzjEV29PfsQHfXnPZf4maKF/VROkYa3nbFdH65E/F7gOATaV1F6lRtTCXrM05gt8jGmGUBjAfApcSFurNnJB86+/ucRGhmxyndmfHIH08J+z3r6NXYBLpEimwvX6vxqXEHVi2j7YNTtrfr3KL9kOknE44wzWjYbWyjwzXxDD1IRvmuJDYcuJ21ZwVg7tu9hfQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=nc3u65XXM/K8l7uQsyRGkeMV+19d41MCBdn7d6OKULQ=;
- b=jl+sv8kllM/4jwf1RkqunAYE/1rWHMg1vLEGV1cLpm+bY0+giDZjFnG5nRay3eAg5S4W1U1KxhKkYv2AYqZdV377YBApvDgyYgVm1/NGr/u1pEGq2Q0UBvrbZ3pit0zUrUmJSpzA1eP0ijutJavUdvEnNvXqqLW4jL9RZTv4/uUbZqtPKvOF1imj/syFfg/BdkFNBS/ReOUW7XNjk25xTqTLdDkDU+ii40fNXVQzO2xUqk0j8XIBnZXbb1nkx0Szf9Vu6RY5ZC/30QofXw95zALM5EJ96LXkTnBqrwY+QuySxyjOoGD/GsDD8ZVJ0X0wShb4n3l9diIAoMunLrrDcA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from DS0PR11MB6375.namprd11.prod.outlook.com (2603:10b6:8:c9::21) by
- DM4PR11MB5311.namprd11.prod.outlook.com (2603:10b6:5:392::20) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8230.18; Tue, 10 Dec 2024 15:24:42 +0000
-Received: from DS0PR11MB6375.namprd11.prod.outlook.com
- ([fe80::cd01:59f6:b0f8:c832]) by DS0PR11MB6375.namprd11.prod.outlook.com
- ([fe80::cd01:59f6:b0f8:c832%4]) with mapi id 15.20.8230.016; Tue, 10 Dec 2024
- 15:24:38 +0000
-Message-ID: <1b77ad01-9621-4d2e-84c0-077032fbc5ef@intel.com>
-Date: Tue, 10 Dec 2024 16:24:30 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v30 28/30] ALSA: usb-audio: Add USB offload route kcontrol
-To: Wesley Cheng <quic_wcheng@quicinc.com>
-CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-	<linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-	<linux-input@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-	<linux-doc@vger.kernel.org>, <srinivas.kandagatla@linaro.org>,
-	<mathias.nyman@intel.com>, <perex@perex.cz>, <conor+dt@kernel.org>,
-	<dmitry.torokhov@gmail.com>, <corbet@lwn.net>, <broonie@kernel.org>,
-	<lgirdwood@gmail.com>, <krzk+dt@kernel.org>,
-	<pierre-louis.bossart@linux.intel.com>, <Thinh.Nguyen@synopsys.com>,
-	<tiwai@suse.com>, <robh@kernel.org>, <gregkh@linuxfoundation.org>
-References: <20241106193413.1730413-1-quic_wcheng@quicinc.com>
- <20241106193413.1730413-29-quic_wcheng@quicinc.com>
- <1a361446-7a18-4f49-9eeb-d60d1adaa088@intel.com>
- <28023a83-04a5-4c62-85a9-ca41be0ba9e1@quicinc.com>
- <1644aa6b-a4e0-4dbd-a361-276cb95eb534@intel.com>
- <3e246be8-22a9-4473-8c78-39788ae95650@quicinc.com>
-Content-Language: en-US
-From: Cezary Rojewski <cezary.rojewski@intel.com>
-In-Reply-To: <3e246be8-22a9-4473-8c78-39788ae95650@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: MI2P293CA0002.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:290:45::17) To DS0PR11MB6375.namprd11.prod.outlook.com
- (2603:10b6:8:c9::21)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 403A01B0433
+	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2024 15:28:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1733844504; cv=none; b=Z3X/PgGrroLwOdvfVfL/sx59a2+Py9jSSNEGDqqvoGXCVtY+aeJhArs+TTwGeDk5SxwOsghTvpVQrkgl+jxyvW99oBbs3/nMT3BvwWaMlRsmrUtH173U0N1WrynsS5BF8swoGSizwoKIFEx/OZH34jHViRIA2Af149a2uV145AY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1733844504; c=relaxed/simple;
+	bh=RGx/4zBsSMwPqrQWbZ4pbyO14Aa3YKWohJLO/gCree0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=C9SUvuQ8kPmNJ7yR0atj/pswCeuV59QMZo+9FxWGFez3M+lanOUXJfvtM4TG7NzvDH+uKwElnjl/aab77vTzBEPCJpP1prYWfPgP1yJYeWFDtyxUiXsitdGD2otUajZYcQxxWEPZz6CEG/E8HhwYifNFcw/0CDQfW7N9exSNbhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=foNHM3XR; arc=none smtp.client-ip=209.85.208.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-30219437e63so25051121fa.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2024 07:28:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1733844499; x=1734449299; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=3KTmXu/GwcDjLblR23LnM4eXZJnu7tzwhaXJ+YJcxbQ=;
+        b=foNHM3XRdoco9RjELiiD8nywhN8Udq4F+xprUKMmF1Gyx+vIh0hIe4bU/AtEi54s1l
+         hsWpLdTBiHh3mIrXhp2WRHs7ncOaK3+p7PgJAKp03uJUU1Y5sv2ifHgvshqAzXjEyQuW
+         X3WXWE4+vge95ubWqdbTLIaPQov23RqZ9c+xLeZ73boojEO9R5ouz/QPFDXZwEWum3Li
+         PFNvehxgFOyP8EoLjFr41HBZ+SO1EwhdOgkmnoAz7kQBiRdY+apEKcmfae5XNbw/f6pe
+         Gr6hInUF/fdTmmE6xTlisvjXBrsWKSy3IMKQ03jtT7Sua8+rwt1wlvXDCizdJmaqBiFZ
+         CY2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733844499; x=1734449299;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3KTmXu/GwcDjLblR23LnM4eXZJnu7tzwhaXJ+YJcxbQ=;
+        b=Wew75HGbuctATqzbKe1yA9Xtaxpljb+zYvbcPrlA7ofwFmEMVWfvb1UA4bpPERSwOc
+         IH8qk+d9S4xe+4x3JazmSDbFayV6D9C2+KjvEdEMSKfeGJC7hPzfAWG7lg0OnDnehOtb
+         BUVYrsJUT5m2jeRXjkuObbJoejCmDwfSi5Lgt3jebUtKFkdD2OXwmRpESYQldkbgny1x
+         CVRM7pCxsFtXJhU7q2gWjtBWfZ/LHHlmwIwa4eYjYLuSY6lN6Fi5aVAbYUS9j/D5XJ9G
+         9W+DFB4mExZIXIq/iRl5p+GtOTJdkTP8wLJONaz23yg6QuS98y7GHMwo04k6Ti0EcrNs
+         1THA==
+X-Forwarded-Encrypted: i=1; AJvYcCVxkvh9Qxm9AqYQs9Bvotk67SeUg+N/fF8ogfc3Ny2xSKOFATQzwB/qVj9eYrpxGpGMKNP8YNLsyhLnsb0H@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw/y4UuicIRCsFrAeYVnkMluZBDtXdYHFuTjCQ3lFxhpBaQllkW
+	DW/rBTqfk/itFSixL5CenpnE2NPnlIc6AaRRAy12J3DzQ9gqcY/GZqwsLb9JOwM=
+X-Gm-Gg: ASbGncuyxh2XwqDGtWevJRsQA3eolPkMwZeuEhOnTUlwIEOHKErXgfeo7zuUWksOxd5
+	J0d7lTxfCwMrBwJIdgzTXyQ8iDRo2aEihxrfwxI3bEpZLFB8ZWT2JNvZDijEGuOuNmlcjJoy1MA
+	G1KGTrkC3cphZPb6ZeSBubCuAk0/7q+G907sIoJ3UdfYC67lEQfbkQXWdL7uHxFMgK5kTcNm0AQ
+	oKdNdYP5iC5s013E9fi8FA2EgZcuqQIU54iGzaO/iQL6HPiTsMtQAo4PtadHYoz0hxYe/AJhkd3
+	noHXQs/0TPUmMuMWqrwgN+SiQ2ReiVKcWg==
+X-Google-Smtp-Source: AGHT+IE0XKiVkUgg9tF/sqxHHXF50bH/FmLp2/h2auq4iq6OuW3GAlEcYLIz8mLjof0Tf/Bo6/ygjQ==
+X-Received: by 2002:a2e:a548:0:b0:300:3307:389f with SMTP id 38308e7fff4ca-302327404afmr11387881fa.0.1733844499239;
+        Tue, 10 Dec 2024 07:28:19 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3023c5115d2sm1304271fa.12.2024.12.10.07.28.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Dec 2024 07:28:17 -0800 (PST)
+Date: Tue, 10 Dec 2024 17:28:16 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Cheng Jiang <quic_chejiang@quicinc.com>
+Cc: Marcel Holtmann <marcel@holtmann.org>, 
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>, Rocky Liao <quic_rjliao@quicinc.com>, 
+	linux-bluetooth@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, quic_jiaymao@quicinc.com, quic_shuaz@quicinc.com, 
+	quic_zijuhu@quicinc.com, quic_mohamull@quicinc.com
+Subject: Re: [PATCH v4 2/4] Bluetooth: qca: Add support in firmware-name to
+ load board specific nvm
+Message-ID: <wxb6oo3f7cri27eq3fnqttbl74lkn3rjo5o5rfttbwz7k5v2ug@w4hlrtig2nza>
+References: <20241210151636.2474809-1-quic_chejiang@quicinc.com>
+ <20241210151636.2474809-3-quic_chejiang@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS0PR11MB6375:EE_|DM4PR11MB5311:EE_
-X-MS-Office365-Filtering-Correlation-Id: d3d21132-a032-4522-8842-08dd192ec275
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|376014|366016|1800799024;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?bU94MHV0N1kzNWlrWVhsQXVkeXdoZzd5RTBzV3hadUJJOFB0Yk1RcnFMQkVt?=
- =?utf-8?B?VEYzTVJlbFk5dDhkL2N2cWc3b3JtLzJkSXMvVndINVJwUDBDd0lVQ2lzcEh5?=
- =?utf-8?B?TGVFRy9pejhadXlIbW9KQ0N2dFZPR01MTlZJZWNmSklGaXZIdzVRUG9HN1li?=
- =?utf-8?B?bUtKRk5YUmVaVUMvWGJPUWpyR2lkK2Juc3ZzVzVNK2J6Y0Q3VG9rQUpkM2dk?=
- =?utf-8?B?RVdPcldhREhrczdzMndZOVFBY204M3RPY0gvTUF6bnBxVHoybDdHYVRsem81?=
- =?utf-8?B?TDZpcDFDTWtKVHRxZnhBVldjWmhUeGxSZGN3bldzamJ2V2lMSnFYbXUxdTEy?=
- =?utf-8?B?RW9BME5MakhOQTFKd1FKcGcyaGJvSko1NWxpUGkzUG41MXQvc0t4eUd4VFdL?=
- =?utf-8?B?RklqU3huaTFpNDhMbFY4NlZEK0gzUEp3dFdzME1BbnBtejBMUklMN1plZy8x?=
- =?utf-8?B?d3cxaVRpenZCUEp1c2RxUE5zOURBc2tQTkFIcmY5VkVEQzE0WGE1ZnF6RFN2?=
- =?utf-8?B?WjJQQ1l4cTJvNHMrWXF2ZGtJSkpiWENFYnhuNmxaZEx2TGNtZHI4c1FtelI2?=
- =?utf-8?B?djkyVkNkcGJBRlVOd3Z6WXNlWW1lZ2NaUGtQRWFwcTJmZndFbEJHTkUvVk94?=
- =?utf-8?B?S1dJSkFONFQwWWRIK1ZZRmJVeHVCVGNzYklyT1BOSVh4RG5GWEQ3VTRmWDlU?=
- =?utf-8?B?enQ2QTBQdFVsT0huaGh6ZUhKWGxwZUFxMUpRMGlOenBQNmxINlZOSk5VNFpn?=
- =?utf-8?B?VUlTclQrc1YwSnd5V0JmL2FjMGJqSFJrVmZZL3lnUkJ6WENNY1duYXFyY0NP?=
- =?utf-8?B?ay9XSktzWW5GY2JRcnZaTFgxVjFOTGsvbXN1V3NncW5XWGxhV1hlSFpEOWdD?=
- =?utf-8?B?KzVtaG9heDhmUDVtTzJlNFVDcTd2a002UU9HbWpYVGlyRTBscGhpaVdlenlo?=
- =?utf-8?B?aitpTUxNanlFQldjc1Qza2xhbmxPY2NQd2NkMzNOVjNYYzZIL3M4VGhZb05K?=
- =?utf-8?B?dnh5czlBZyt6NkxXSDB0Y0lNQmdhSjVxSWhkaTVKZm1zd2RUQmJjV0tSdmp2?=
- =?utf-8?B?UXhRNHZIV0FCcFppVlluVFdPQkJ3TmJSZjFkWWw2TUJXT1R5eS9FKythc3lT?=
- =?utf-8?B?S1NRTFVEUDA0RUtRNm5DTFZuRnpSVUNQVWtWQU1TVHN6dTVLcGZqR3BXZ1NM?=
- =?utf-8?B?ZDNiN093dlJkTnphcWtIRGlKTFNrd0hpT2JiVEhWRXBqRThWZEdjcG1zTm16?=
- =?utf-8?B?UVVFM2p4M24xd3BBTmdCbXlQcGcxRDJCRXpxNi9obERRaVNtN3ZZd3RiRmRq?=
- =?utf-8?B?bzhwQ0kvZ1hwRHV6eEJFM2I1RmhRczVTaUxVU2tMcDJ0dVlXSDdSbXViOTZT?=
- =?utf-8?B?empIYlo4L2JiZU9CaUMzUVBiSWhXMzM0Wnk3YjFkOEN0U1JDQzFiaERac1hU?=
- =?utf-8?B?amRaMDZlUGxhbitKV2hjVzhZcjM3NWIwdzd6MFE0aWMwSVZ3S29hd2VqZE9w?=
- =?utf-8?B?cmtnV3M4Q01pdG5JTm5UenNsTGdpT2xYOExBWUFNYmNBTlVQUWJnSlBmUWVC?=
- =?utf-8?B?WWxsdENSUytaUUxGeU1PUXdEUU8rVGNjM1V6SjBnU3V4K0lnUmNoMTc0cFJm?=
- =?utf-8?B?WjBHMFJROFR3ejdQWUFPSWRldFFKYTJrN0krOE13RmRSYllOcEVmZ056cExo?=
- =?utf-8?B?dUFENmdGRk0zcksyLzZ6SVhyc1p2TzhPRlZNS2VDSkt1WWlIZmZJWmlwbCtu?=
- =?utf-8?B?cTBxQk44U2ViS3RWVElRcFQ4V0RXaXVaNGVEZG51TFRQNkdWdVRhRG1VNDRE?=
- =?utf-8?B?MlczYW9XV1VvRmFQTFZuZz09?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS0PR11MB6375.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(366016)(1800799024);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?YWdweEtibFNLaERvUDViM3JIQllCMy8yajk5bnVCRVFDOFErM01EWnp6eGlK?=
- =?utf-8?B?azl1NFdJRXhuckhDWEdSOXVjTXpYNWRYa3ZlQlpCWGJqQk44TTR0ck5EMFoy?=
- =?utf-8?B?NEZiak5McHdYWjEyeTQ5TWNYaVJraVd3MVpKZjdhSlVFb0t1YS9DelZSaWI5?=
- =?utf-8?B?aHpHT3ZQdE1JK0VKbHV4ZlQ5YUd4cDMyckpXYXJjbExDeE1odysvR0VtNUNn?=
- =?utf-8?B?N0NXaUhJQmFQVnpweXB0YXlxazlNY1IzS3ZiVGxvY0ZNMUZoVG56Smd1RXp3?=
- =?utf-8?B?dCswWFAvTE1UNCt0UG1aS0lSckZPRWM2QVhXS0NVeVZFRVRuaXRuUW1vNElB?=
- =?utf-8?B?NEg0aExnY0R3VFg2L2xjaEw1NitPcXovd2dGMzh4Zy95SnhxSXlydmV1M2Jv?=
- =?utf-8?B?MjZhZ0w2QmxZdFUyZkhYVUh3SmI1Z3B2aFAwVUpKQjA1VnNqWXo1V3JzUUlN?=
- =?utf-8?B?ZCs0RVVHb2didzNwaStkWmVNYnJ1dUdvQ0czOGJGK2oxR1p0TzZQekhmeWJ6?=
- =?utf-8?B?SDAzaFR4YlExQTA3YnpJY0tFdDBic1NxcGcvOEhSN3d0WlRCcVZ4TzJ1VjBo?=
- =?utf-8?B?WUxrQXIzSFBuS2EzU3Rpb2ErVEtOb0ZtQk1zOWNDZ0E5alo5cTRhdFk1Nk1R?=
- =?utf-8?B?emhJWXFWNzA1RXJZTVBjU2xPVzR2bm9CUXl3RmlISG1QK1BrbzZzb1RKbWF2?=
- =?utf-8?B?VzUwQXF0U0U2WmVadXBsbnZXc210S2hiaGZRS1JVNEZkM1M0NlBKUGcvcFFP?=
- =?utf-8?B?SnpieTB1V2tmaTZUaVYrMzBkSDU4VjZ0UHdFK0JRbW9GcGJHRG5neUVRcTJm?=
- =?utf-8?B?RTBXSE40RXRNemphQlQ5T1B0d2VxWm5LZ1lJaE5iaXVaZzMyaTZUdS9PYlRW?=
- =?utf-8?B?K0VDLzZHTEp0WmM3bGhiWTBhcTJrOU4zWWxtUHl6Y09OMHZGaVJJUzYyTFhr?=
- =?utf-8?B?RnlPU0lpRmdpcTNPU2dMZzFubG1hU1NUUXNPS1Q1L05YMW9MSklzYm9rY2dJ?=
- =?utf-8?B?cHZZRG9kdStuVnBnSG5rL0RGMmI3NWF1YWg0RTl3N0V2OWZrTlYxclQvWnhh?=
- =?utf-8?B?Vi9PQ0ZrOWpzS1lNTnpmZnMrU1N4Szg1Z1kwcnl1YkF6Y2pBYi9NYjVpVzhK?=
- =?utf-8?B?L0prZ0VXcm51TmF4SVhUbXdmaFkxRk53aXpIL241ZjU1VkM1VndodCs0THZG?=
- =?utf-8?B?dXlOdHJMUHhKVGI1MTllbnZoeXZBcHkvZHNaZS9FaFBQcW1XOS9WbjFVQWR1?=
- =?utf-8?B?cmpjcS9MOHYzcUgvdFhVL3A1b1F3NGxVN3ZJY0plRTF1WGJqVU0yUzllblgr?=
- =?utf-8?B?U0ZnMzBzaGd3RTdoeUtreEk4ZGNOUW8yQ1J6YzArOXMyNlhqL2JydUcvUk5a?=
- =?utf-8?B?amZRRkMzR25sblByQWVYeFVXL1ZYdTFoVUpRcHVJazB1dXIzYVB6VzdNOVV4?=
- =?utf-8?B?elhZeUxPbWJVaENtelEwak00TnZINXlRWjUzUkJKUzdUVldlTTNOVEpPZ2tB?=
- =?utf-8?B?aU9rdDc5alNadEJncThqNjlKZzBqSlZvZGplMlAwUzQ4NTNjT3B4ZjdmV25I?=
- =?utf-8?B?SEltNlhEVWxJV3pJNnpkK3hmOEhOY0VnUjNjWFFya1ZEMnhST0xtYnBjZzFp?=
- =?utf-8?B?NzY3SVB0eHRGRTVuS1p6K1g5Ujg5NzNsS3l0b1BrOFM0VXJlNWx2R01haVVG?=
- =?utf-8?B?KzN1YmVzZXJSY1VqeGlJWUhUUEN3OVI5RWx3SGY2TjlkajRzSWxpZWErdy9H?=
- =?utf-8?B?UGpRME5QYU9ZRE1EaGVDWHAzNGJ3S0laVnc3cE1DT3pIQXdSNm9ZR24rSTli?=
- =?utf-8?B?UGtLR0RQb0Raai84YkcwQXZZeWxpS1dkeHFaazlWYklsWG1DQWFsdTVEZ1p4?=
- =?utf-8?B?eVJjdHJ5T3JZQytnVG9MS2wrR1pjSDhZWjJVRVR0TW45YmpacERXK2V6d0or?=
- =?utf-8?B?NU5KK2dxOHl0eWZYMklKZmQ5VENYcE5SaXB2d2gvcUVpUlMvd0JJd1RsR1BJ?=
- =?utf-8?B?Z0JPNVM4dmJHZVpXQnVxc2Y5SXlFRTFZcFVVU2ZtQVRIMXZ4RUlnZkx4K3Ns?=
- =?utf-8?B?bUc1c3F0RVdjd0dWNC9IeFNQc242N29lMXNvaThCRWNuNStoanlSSWQyNmRj?=
- =?utf-8?B?NlJBQTc3VkZ3OVZMTXFFTGYrL3FWeThHMGtsZVRXcE9Vc245c1pKRFpNMTV1?=
- =?utf-8?B?RWc9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: d3d21132-a032-4522-8842-08dd192ec275
-X-MS-Exchange-CrossTenant-AuthSource: DS0PR11MB6375.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Dec 2024 15:24:37.9690
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: gdt8vUNme/g7xnpuk2HfbUUoyPcgNhbV12K2rXRu/dxAv26h304cheNQRBV4m6rv2/A79tsOirL5vOC/3cevZ1d5vPlP+hugqP3Lhaca4vk=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR11MB5311
-X-OriginatorOrg: intel.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241210151636.2474809-3-quic_chejiang@quicinc.com>
 
-On 2024-12-06 9:43 PM, Wesley Cheng wrote:
+On Tue, Dec 10, 2024 at 11:16:34PM +0800, Cheng Jiang wrote:
+> Different connectivity boards may be attached to the same platform. For
+> example, QCA6698-based boards can support either a two-antenna or
+> three-antenna solution, both of which work on the sa8775p-ride platform.
+> Due to differences in connectivity boards and variations in RF
+> performance from different foundries, different NVM configurations are
+> used based on the board ID.
 > 
-> On 12/6/2024 1:09 AM, Cezary Rojewski wrote:
-
-...
-
->>>>> +#include <linux/usb.h>
->>>>> +
->>>>> +#include <sound/core.h>
->>>>> +#include <sound/control.h>
->>>>> +#include <sound/soc-usb.h>
->>>>
->>>> ALSA-components should not be dependent on ASoC ones. It should be done the other way around: ALSA <- ASoC.
->>>>
->>>
->>> At least for this kcontrol, we need to know the status of the ASoC state, so that we can communicate the proper path to userspace.  If the ASoC path is not probed or ready, then this module isn't blocked.  It will just communicate that there isn't a valid offload path.
->>
->> I'm not asking _why_ you need soc-usb.h header, your reasoning is probably perfectly fine. The code hierarchy is not though. If a sound module is dependent on soc-xxx.h i.e. ASoC symbols, it shall be part of sound/soc/ space.
+> Therefore, in the firmware-name property, if the NVM file has an
+> extension, the NVM file will be used. Otherwise, the system will first
+> try the .bNN (board ID) file, and if that fails, it will fall back to
+> the .bin file.
 > 
+> Possible configurations:
+> firmware-name = "QCA6698/hpnv21";
+> firmware-name = "QCA6698/hpnv21.bin";
 > 
-> That would basically require a significant change in the current design.  Was that requirement documented somewhere, where ALSA components should not be dependent on ASoC?  What was the reasoning for making it one direction, but not the other?
+> Signed-off-by: Cheng Jiang <quic_chejiang@quicinc.com>
+> ---
+>  drivers/bluetooth/btqca.c | 67 +++++++++++++++++++++++++++++++++++++--
+>  1 file changed, 65 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
+> index dfbbac922..deb2b1753 100644
+> --- a/drivers/bluetooth/btqca.c
+> +++ b/drivers/bluetooth/btqca.c
+> @@ -272,6 +272,27 @@ int qca_send_pre_shutdown_cmd(struct hci_dev *hdev)
+>  }
+>  EXPORT_SYMBOL_GPL(qca_send_pre_shutdown_cmd);
+>  
+> +static bool qca_get_alt_nvm_path(char *path, size_t max_size)
+> +{
+> +	char fwname[64];
+> +	const char *suffix;
+> +
+> +	suffix = strrchr(path, '.');
+> +
+> +	/* nvm file name has a suffix, replace with .bin */
+> +	if (suffix && suffix != path && *(suffix + 1) != '\0' && strchr(suffix, '/') == NULL) {
+> +		strscpy(fwname, path, suffix - path + 1);
+> +		snprintf(fwname + (suffix - path), sizeof(fwname) - (suffix - path), ".bin");
+> +		/* If nvm file is already the default one, return false to skip the retry. */
+> +		if (strcmp(fwname, path) == 0)
+> +			return false;
+> +
+> +		snprintf(path, max_size, "%s", fwname);
+> +		return true;
+> +	}
+> +	return false;
+> +}
+> +
+>  static int qca_tlv_check_data(struct hci_dev *hdev,
+>  			       struct qca_fw_config *config,
+>  			       u8 *fw_data, size_t fw_size,
+> @@ -564,6 +585,19 @@ static int qca_download_firmware(struct hci_dev *hdev,
+>  					   config->fwname, ret);
+>  				return ret;
+>  			}
+> +		}
+> +		/* For nvm, if desired nvm file is not present and it's not the
+> +		 * default nvm file(ends with .bin), try to load the default nvm.
+> +		 */
+> +		else if (config->type == TLV_TYPE_NVM &&
+> +			 qca_get_alt_nvm_path(config->fwname, sizeof(config->fwname))) {
+> +			bt_dev_info(hdev, "QCA Downloading %s", config->fwname);
+> +			ret = request_firmware(&fw, config->fwname, &hdev->dev);
+> +			if (ret) {
+> +				bt_dev_err(hdev, "QCA Failed to request file: %s (%d)",
+> +					   config->fwname, ret);
+> +				return ret;
+> +			}
+>  		} else {
+>  			bt_dev_err(hdev, "QCA Failed to request file: %s (%d)",
+>  				   config->fwname, ret);
+> @@ -730,6 +764,26 @@ static inline void qca_get_nvm_name_generic(struct qca_fw_config *cfg,
+>  			 "qca/%snv%02x.b%02x", stem, rom_ver, bid);
+>  }
+>  
+> +static void qca_get_nvm_name_by_board(char *fwname, size_t max_size,
+> +		const char *firmware_name, struct qca_btsoc_version ver,
+> +		enum qca_btsoc_type soc_type, u16 bid)
+> +{
+> +	const char *variant;
+> +
+> +	/* Set the variant to empty by default */
+> +	variant = "";
+> +	/* hsp gf chip */
+> +	if (soc_type == QCA_WCN6855) {
+> +		if ((le32_to_cpu(ver.soc_id) & QCA_HSP_GF_SOC_MASK) == QCA_HSP_GF_SOC_ID)
+> +			variant = "g";
+> +	}
+> +
+> +	if (bid == 0x0 || bid == 0xffff)
+> +		snprintf(fwname, max_size, "qca/%s%s.bin", firmware_name, variant);
+> +	else
+> +		snprintf(fwname, max_size, "qca/%s%s.b%02x", firmware_name, variant, bid);
 
-Well, some may call this a common sense. ASoC is founded on ALSA. There 
-are no ALSA-core components which I'm aware of which have a dependency 
-on ASoC components. You may not get compilation problems now, but such 
-approach does not scale and will hit circular dependency problem sooner 
-or later.
+So, we have qca_generate_hsp_nvm_name(), qca_get_nvm_name_generic(), now
+you are adding a third one. Can we please have a single function that
+handles that?
 
-Kind regards,
-Czarek
+> +}
+> +
+>  int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+>  		   enum qca_btsoc_type soc_type, struct qca_btsoc_version ver,
+>  		   const char *firmware_name)
+> @@ -739,6 +793,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+>  	u8 rom_ver = 0;
+>  	u32 soc_ver;
+>  	u16 boardid = 0;
+> +	const char *suffix;
+>  
+>  	bt_dev_dbg(hdev, "QCA setup on UART");
+>  
+> @@ -816,8 +871,16 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+>  	/* Download NVM configuration */
+>  	config.type = TLV_TYPE_NVM;
+>  	if (firmware_name) {
+> -		snprintf(config.fwname, sizeof(config.fwname),
+> -			 "qca/%s", firmware_name);
+> +		/* The firmware name has suffix, use it directly */
+> +		suffix = strrchr(firmware_name, '.');
+> +		if (suffix && suffix != firmware_name &&
+> +			*(suffix + 1) != '\0' && strchr(suffix, '/') == NULL) {
+
+The have-suffix code should be extracted to a helper function. You have
+two copies of it.
+
+> +			snprintf(config.fwname, sizeof(config.fwname), "qca/%s", firmware_name);
+> +		} else {
+> +			qca_read_fw_board_id(hdev, &boardid);
+> +			qca_get_nvm_name_by_board(config.fwname, sizeof(config.fwname),
+> +				 firmware_name, ver, soc_type, boardid);
+> +		}
+>  	} else {
+>  		switch (soc_type) {
+>  		case QCA_WCN3990:
+> -- 
+> 2.25.1
+> 
+
+-- 
+With best wishes
+Dmitry
 
