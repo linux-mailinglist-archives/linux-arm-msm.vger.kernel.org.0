@@ -1,136 +1,214 @@
-Return-Path: <linux-arm-msm+bounces-41205-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41206-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id BEAC69EA790
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 06:10:27 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 066609EA7B0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 06:22:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9720F16675D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 05:10:24 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 03AC0163C90
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 05:22:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8870B1D9A40;
-	Tue, 10 Dec 2024 05:10:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9A8D223C6B;
+	Tue, 10 Dec 2024 05:22:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r5DIW0r/"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="F7wJbo2b"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 484A1168BE;
-	Tue, 10 Dec 2024 05:10:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CBEC23312A;
+	Tue, 10 Dec 2024 05:22:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733807422; cv=none; b=Xafm2nRJHV1uj+Or9iMqKieREUCMEEu92X+04d/d/114qk2izD28P15vz8hcYBgrLoreBQDaYoOuv4MnB73ZqIdWwsB8DCpqMuxFH5itn/wVRqtbib8z3LJ0hT59gt/OUFDS8MTBjTZ7gSabNj1I8ADt2UgHJdpVNzy8kjFBTH8=
+	t=1733808174; cv=none; b=CJ/wn0/KlnLw2RztblNmmYtD4zN4udEe4124G69N/7qunE61TPMxDtItUgW+3JkIHOS+p7I7g8YYLRUNJTkKCsWSZStJVR9ZGm4zrFprPO/VVaMTBOok1ChHFeVWYOld/6QAivU8gDJN+trzKDWYT/oMT5SQR4Cmxa1PyPTNPN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733807422; c=relaxed/simple;
-	bh=3PFxSSpWAf1uej3O7h8d+RzULqKyQZ0CsWOcHahIS8Y=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=HQTyrxVuz9t/j7XyzronW3pVQBFLEMPhWQbfFE3063TxE/q9Zn4nCOKd4YB6KCSc6fr3ZnizGREE0tvUiCNAPvR5DdbflrcMgK7wZStI/xlHFhX+O8WPU91NKAETgODU3yb9SQrJuSzGE+J6KbZ+qj3vFuteNbDY7j9AnFlxzJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=r5DIW0r/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CE6FC4CED6;
-	Tue, 10 Dec 2024 05:10:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733807421;
-	bh=3PFxSSpWAf1uej3O7h8d+RzULqKyQZ0CsWOcHahIS8Y=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=r5DIW0r/VhAd2ECaJf98oP2OK0PH5pluM0LmVmvuXQftBAz3Kvc0GBB1gYNAWofoU
-	 OvWYB4nuOAJP48oZC8JU3OMa89t5wynMF/6vWpKf6mgKoLBg15ElQJcYnPRRIZZQ3g
-	 7BPWUKVGpiTSTo1uzVTiyeFOTVmFlEn/wjsc5dX60ETAFfBFEj4dnZ0w9MnPa5tXy4
-	 YO4s3JkG5/CuHuN3to7O8HnS3i3evzVxJWa7ivs39csiVplv63toxbTbTnwJfRexh0
-	 QCrB7X697iWUdw0gmKR4deBPF9E0U5bVl8MpuuTTkwq7NjjMEoXt057QK6aOP1oc3L
-	 /foaMsTnmJ8Kg==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 716FC380A95E;
-	Tue, 10 Dec 2024 05:10:38 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1733808174; c=relaxed/simple;
+	bh=zJUBuHFfZ5MhenPpO2nkxGxrUh/tpO38Y2cdDaU6zmI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=NkjB0TngA/+pK3yRSSTkeV8xs97eHp46rsshGu2IIkhcBNQMrN0i5q93euJ/u7q0rKT432mPcUr0iWfsZs0GpSyMiExvXCfZk+GZoQeWPQ4lXRlXnwv7aPEaJtvQw0JVpmxumX8mfiTzq2I3QR/Z2e9JaAbYMSaXAH6DIybxsKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=F7wJbo2b; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BA3ovFe014620;
+	Tue, 10 Dec 2024 05:22:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	dP14CTz/69rtTmc+A6xvwGc7j5vxWtLdUQfQ2Wk3Q5Q=; b=F7wJbo2bkHjctD+O
+	0Qsc9Xjq9KTkf4BGpWK1KckjHs06Scj7egkW29tZJjIXPt8sDEfEez1D6Lpt6fdn
+	oD/qUxvZPapGc0+xVGuTpDR2JRXRD4AvOzEEGCftrJz31nAkVdfh4anj1XQhHaNr
+	+odhibYqaetX/uUVtaqtSc+yoa6+rHUQ3aWE+CV9BAh49dEHVRis4wQC/i3nU1VK
+	AAd6U6OeLyIS+6vScgP0QW8ILrar/DF2wZ4ALTMniLFKBMjuwQSPuhKqt+p9wK1v
+	AuMS0Ser1gODngAvrAkj1RdVPdI//9MIwwb6+YDqPvDBVtAM1ImCdF+CSwHypAzB
+	br5RpA==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43ee3n85sd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 10 Dec 2024 05:22:47 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BA5MkUw021716
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 10 Dec 2024 05:22:46 GMT
+Received: from [10.216.2.81] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 9 Dec 2024
+ 21:22:40 -0800
+Message-ID: <95a64663-2e48-400d-b4e9-a99e18e62825@quicinc.com>
+Date: Tue, 10 Dec 2024 10:52:37 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 0/7] Add support to load QUP SE firmware from
+To: <neil.armstrong@linaro.org>,
+        Konrad Dybcio
+	<konrad.dybcio@oss.qualcomm.com>,
+        <andi.shyti@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <gregkh@linuxfoundation.org>,
+        <jirislaby@kernel.org>, <broonie@kernel.or>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <johan+linaro@kernel.org>,
+        <dianders@chromium.org>, <agross@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-serial@vger.kernel.org>, <linux-spi@vger.kernel.org>
+CC: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
+        <quic_anupkulk@quicinc.com>
+References: <20241204150326.1470749-1-quic_vdadhani@quicinc.com>
+ <9d5e5b8b-aeaf-4ec8-b34a-8edeaec20037@oss.qualcomm.com>
+ <42b1c187-e924-4690-8338-4c694f3e16d9@linaro.org>
+Content-Language: en-US
+From: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+In-Reply-To: <42b1c187-e924-4690-8338-4c694f3e16d9@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net-next v8 00/15] Add support for Synopsis DWMAC IP on NXP
- Automotive SoCs S32G2xx/S32G3xx/S32R45
-From: patchwork-bot+netdevbpf@kernel.org
-Message-Id: 
- <173380743727.355055.17303486442146316315.git-patchwork-notify@kernel.org>
-Date: Tue, 10 Dec 2024 05:10:37 +0000
-References: <20241205-upstream_s32cc_gmac-v8-0-ec1d180df815@oss.nxp.com>
-In-Reply-To: <20241205-upstream_s32cc_gmac-v8-0-ec1d180df815@oss.nxp.com>
-To: Jan Petrous via B4 Relay <devnull+jan.petrous.oss.nxp.com@kernel.org>
-Cc: mcoquelin.stm32@gmail.com, alexandre.torgue@foss.st.com,
- joabreu@synopsys.com, davem@davemloft.net, edumazet@google.com,
- kuba@kernel.org, pabeni@redhat.com, vkoul@kernel.org,
- richardcochran@gmail.com, andrew@lunn.ch, hkallweit1@gmail.com,
- linux@armlinux.org.uk, shawnguo@kernel.org, s.hauer@pengutronix.de,
- kernel@pengutronix.de, festevam@gmail.com, kernel@esmil.dk,
- minda.chen@starfivetech.com, nicolas.ferre@microchip.com,
- claudiu.beznea@tuxon.dev, iyappan@os.amperecomputing.com,
- keyur@os.amperecomputing.com, quan@os.amperecomputing.com, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, peppe.cavallaro@st.com,
- andrew+netdev@lunn.ch, linux-stm32@st-md-mailman.stormreply.com,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
- netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org, imx@lists.linux.dev,
- devicetree@vger.kernel.org, s32@nxp.com, 0x1207@gmail.com,
- fancer.lancer@gmail.com, jan.petrous@oss.nxp.com, jacob.e.keller@intel.com,
- rmk+kernel@armlinux.org.uk, emil.renner.berthing@canonical.com
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: t4JlOE0tJ5BqbHKQrbJxi6tQ0uA6ctZ3
+X-Proofpoint-ORIG-GUID: t4JlOE0tJ5BqbHKQrbJxi6tQ0uA6ctZ3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 suspectscore=0
+ malwarescore=0 spamscore=0 priorityscore=1501 mlxscore=0 impostorscore=0
+ mlxlogscore=999 lowpriorityscore=0 adultscore=0 clxscore=1015 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
+ definitions=main-2412100038
 
-Hello:
 
-This series was applied to netdev/net-next.git (main)
-by Jakub Kicinski <kuba@kernel.org>:
 
-On Thu, 05 Dec 2024 17:42:57 +0100 you wrote:
-> The SoC series S32G2xx and S32G3xx feature one DWMAC instance,
-> the SoC S32R45 has two instances. The devices can use RGMII/RMII/MII
-> interface over Pinctrl device or the output can be routed
-> to the embedded SerDes for SGMII connectivity.
+On 12/9/2024 8:15 PM, neil.armstrong@linaro.org wrote:
+> On 05/12/2024 16:59, Konrad Dybcio wrote:
+>> On 4.12.2024 4:03 PM, Viken Dadhaniya wrote:
+>>> In Qualcomm SoCs, firmware loading for Serial Engines (SE) in the QUP
+>>> hardware has traditionally been managed by TrustZone (TZ). This setup
+>>> handled Serial Engines(SE) assignments and access control permissions,
+>>> ensuring a high level of security but limiting flexibility and
+>>> accessibility.
+>>> This limitation poses a significant challenge for developers who need 
+>>> more
+>>> flexibility to enable any protocol on any of the SEs within the QUP
+>>> hardware.
+>>> To address this, we are introducing a change that opens the firmware
+>>> loading mechanism to the Linux environment. This enhancement increases
+>>> flexibility and allows for more streamlined and efficient management. We
+>>> can now handle SE assignments and access control permissions directly
+>>> within Linux, eliminating the dependency on TZ.
+>>> We propose an alternative method for firmware loading and SE
+>>> ownership/transfer mode configuration based on device tree 
+>>> configuration.
+>>> This method does not rely on other execution environments, making it
+>>> accessible to all developers.
+>>> For SEs used prior to the kernel, their firmware will be loaded by the
+>>> respective image drivers (e.g., Debug UART, Secure or trusted SE).
+>>> Additionally, the GSI firmware, which is common to all SEs per QUPV3 
+>>> core,
+>>> will not be loaded by Linux driver but TZ only. At the kernel level, 
+>>> only
+>>> the SE protocol driver should load the respective protocol firmware.
+>>
+>> I think this is a great opportunity to rethink the SE node in general.
+>>
+>> Currently, for each supported protocol, we create a new node that
+>> differs in (possibly) interconnects and pinctrl states. These are really
+>> defined per-SE however and we can programmatically determine which ones
+>> are relevant.
+>>
+>> With the growing number of protocols supported, we would have to add
+>> 20+ nodes in some cases for each one of them. I think a good one would
+>> look like:
+>>
+>> geni_se10: serial-engine@abcdef {
+>>     compatible = "qcom,geni-se";
+>>
+>>     reg
+>>     clocks
+>>     power-domains
+>>     interconnects
+>>     ...
+>>
+>>     status
+>>
+>>     geni_se10_i2c: i2c {
+>>         // i2c-controller.yaml
+>>     };
+>>
+>>     geni_se10_spi: spi {
+>>         // spi-controller.yaml
+>>     };
+>>
+>>     ...
+>> }
+>>
+>> Or maybe even get rid of the subnodes and restrict that to a single
+>> se-protocol = <SE_PROTOCOL_xyz> property, if the bindings folks agree.
+>>
+>> We could extend the DMA APIs to dynamically determine the protocol
+>> ID and get rid of hardcoding it.
+>>
+>> And then we could spawn an instance of the spi, i2c, etc. driver from
+>> the GENI SE driver.
 > 
-> The provided stmmac glue code implements only basic functionality,
-> interface support is restricted to RGMII only. More, including
-> SGMII/SerDes support will come later.
+> How/where would you add the peripheral subnodes ? A Serial Engine can 
+> only be a
+> single type on a board, but I agree we could have a "generic" serial 
+> engine node
+> that would be differenciated in the board DT with the protocol, and use 
+> the bindings
+> yaml checked to properly check the subnodes/properties depending on the 
+> protocol
+> property.
 > 
-> [...]
+> But we would still need all the serial nodes in the SoC DT.
+> 
+> This may make the software support harder, meaning we would either need to
+> have the same compatible probed in sequence from the i2c/spi/uart driver 
+> until
+> one matches the protocol, or have the qup driver spawn an auxiliary device.
+> 
+> Honestly, not sure it would be much simpler...
+> 
 
-Here is the summary with links:
-  - [net-next,v8,01/15] net: stmmac: Fix CSR divider comment
-    https://git.kernel.org/netdev/net-next/c/31cdd8418234
-  - [net-next,v8,02/15] net: stmmac: Extend CSR calc support
-    https://git.kernel.org/netdev/net-next/c/c8fab05d021d
-  - [net-next,v8,03/15] net: stmmac: Fix clock rate variables size
-    https://git.kernel.org/netdev/net-next/c/cb09f61a9ab8
-  - [net-next,v8,04/15] net: phy: Add helper for mapping RGMII link speed to clock rate
-    https://git.kernel.org/netdev/net-next/c/386aa60abdb6
-  - [net-next,v8,05/15] net: dwmac-dwc-qos-eth: Use helper rgmii_clock
-    https://git.kernel.org/netdev/net-next/c/37b66c483e4c
-  - [net-next,v8,06/15] net: dwmac-imx: Use helper rgmii_clock
-    https://git.kernel.org/netdev/net-next/c/839b75ea4d94
-  - [net-next,v8,07/15] net: dwmac-intel-plat: Use helper rgmii_clock
-    https://git.kernel.org/netdev/net-next/c/8470bfc83515
-  - [net-next,v8,08/15] net: dwmac-rk: Use helper rgmii_clock
-    https://git.kernel.org/netdev/net-next/c/30b4a9b5c335
-  - [net-next,v8,09/15] net: dwmac-starfive: Use helper rgmii_clock
-    https://git.kernel.org/netdev/net-next/c/b561d717a799
-  - [net-next,v8,10/15] net: macb: Use helper rgmii_clock
-    https://git.kernel.org/netdev/net-next/c/04207d28f468
-  - [net-next,v8,11/15] net: xgene_enet: Use helper rgmii_clock
-    https://git.kernel.org/netdev/net-next/c/fd59bca4d5ea
-  - [net-next,v8,12/15] net: dwmac-sti: Use helper rgmii_clock
-    https://git.kernel.org/netdev/net-next/c/1ead57775507
-  - [net-next,v8,13/15] dt-bindings: net: Add DT bindings for DWMAC on NXP S32G/R SoCs
-    https://git.kernel.org/netdev/net-next/c/91f10e589520
-  - [net-next,v8,14/15] net: stmmac: dwmac-s32: add basic NXP S32G/S32R glue driver
-    https://git.kernel.org/netdev/net-next/c/cd197ac5d661
-  - [net-next,v8,15/15] MAINTAINERS: Add Jan Petrous as the NXP S32G/R DWMAC driver maintainer
-    https://git.kernel.org/netdev/net-next/c/6bc6234cbd5e
+Agree Neil, it has it's own challenges in terms actual code changes per 
+driver and common driver redesign when we move the SE nodes and make it 
+common. We may come up with some solution to make one SE DTSI node for 
+all protocols having different (pinctrl configuration, DMA 
+configuration) but it's also going to add some level of code 
+complexities and yaml changes.
+Can we exclude this design change for this firmware loading and later 
+align to this new design change ?
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+> Neil
+> 
+>>
+>> Konrad
+>>
+> 
 
