@@ -1,318 +1,271 @@
-Return-Path: <linux-arm-msm+bounces-41331-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41332-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0173C9EB493
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 16:19:51 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7984D9EB4BA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 16:24:29 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 042F4284B1D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 15:19:48 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DD9C4166991
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 15:24:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2E051BEF75;
-	Tue, 10 Dec 2024 15:18:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D3B681BBBE5;
+	Tue, 10 Dec 2024 15:24:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="GVFc8mu+"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lc4YDsw5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE5241BD9EA;
-	Tue, 10 Dec 2024 15:18:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.13
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733843926; cv=fail; b=fa/Fqq6LmRKChIYfHun4b8N1g0bNHVSpVMsT3nN/5/PS8pRe3i+IVh+YF2bilVsBHkLxLB98ZGO7TAQisA0iq2GDgNNPDv+my4AatJSkAyTOAxUJL06KcI9b7QqQFJG31P8l4iKi76OJpPlCoTDzrw3Dxlu6XOa+YCMaK9VTEf4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733843926; c=relaxed/simple;
-	bh=uEG5fZ98OmDxks5m3gcXE0Taf7+fhsPkUjOXoFRPAeg=;
-	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=fIWNX8NJ2f2bbWG+dEP/AfK1BlT2SD7NV2sFQcwOK1odCegDXboMjpD+340M4iLUjieZ0eU4uW7It5F/8x33rpPaEZVHPRw6gA4RPhdDpbTCjo4E1buZ8z2WOvjhSjlC8UFRwQMVC5kd2Lp1sHwFBf8gjdsOktNr1mAngzdZGgc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=GVFc8mu+; arc=fail smtp.client-ip=198.175.65.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1733843924; x=1765379924;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=uEG5fZ98OmDxks5m3gcXE0Taf7+fhsPkUjOXoFRPAeg=;
-  b=GVFc8mu+UVj9Yqmpv9T4sDXWc4hpdLeAlN3aohpAtgOeo5sJn/0p06q0
-   D6+01CVrIM+j1VVEJ704yoIinjNQfQFiOl/GtaFghcYRiXDGn+b8zAPp9
-   8hwflbB0kMu/g144THeE+0xoQpCVbALfzY6VyK24asNIRZL5t+kWfnWAW
-   83Ar788sXwvPYJi6GoWaM+W7Rxxkyvwi9FGw8O3KRWd5o7WkDQGA9bdmD
-   eIUBkKHhmpm/co3R46Rm+OQauYupvzPNwBXmg+TcKhXw1bvD8zanKChXe
-   g/Wqca1o940iW4aJuCmyQnKBBootwjHu28OYRM9TxsP22VkJpBB0ODUCM
-   w==;
-X-CSE-ConnectionGUID: iISfRVTbR6qZ1+RiiWxsTw==
-X-CSE-MsgGUID: NvwupBgORhuAAPGbz1MrIw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11282"; a="45206224"
-X-IronPort-AV: E=Sophos;i="6.12,222,1728975600"; 
-   d="scan'208";a="45206224"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Dec 2024 07:18:43 -0800
-X-CSE-ConnectionGUID: abjEqhWTQBGn5TLtnL/AVQ==
-X-CSE-MsgGUID: 04aTEqXQSga4W6W3/sAx0A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,222,1728975600"; 
-   d="scan'208";a="95255222"
-Received: from orsmsx601.amr.corp.intel.com ([10.22.229.14])
-  by orviesa010.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 10 Dec 2024 07:18:43 -0800
-Received: from orsmsx601.amr.corp.intel.com (10.22.229.14) by
- ORSMSX601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Tue, 10 Dec 2024 07:18:43 -0800
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
- orsmsx601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39 via Frontend Transport; Tue, 10 Dec 2024 07:18:43 -0800
-Received: from NAM12-BN8-obe.outbound.protection.outlook.com (104.47.55.174)
- by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Tue, 10 Dec 2024 07:18:42 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=zUp9Ir1SDpYuCSy7XmPstyJBCqv1bDLednmtH0J75eWYZbyswHgDBbCZgfDqEX3hT99ltO9IZ1XTMWXcZLN/XAvOgBl8eTzf0VRK344QWuHJGMvxfuobVKZNzawQtDX3o6VSiBNyUFb5MTSG5TzXjMx4twEkUthtXQsGAI4CwSiwhuKio0atEoV7Tl0tALfGVoQxMahIRnu6HsF8uC9sP94cxFYe1SmeLQFa2PCNc27OJ5R3fHDIHZ+wspz8otvwSuJ01RQqwSecuQJleEFeSA7eelnYgr0dBzANWCpocqVGcybwIUEINzZA9F7BUQuBjG55WC8gORaGg1CtoIr5ng==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=6yrSMP+Z+SoIQFBMd0QNkAy1PEGzss7HShQ7xn2lKHk=;
- b=S77U+GgbtKUCyNNp6K5+bzXSQKMHPeQtZDJqYkDfsEf/93N5zGfi7A44bjGlG14Peas0Cx0HqVBDNn7pJsXbeZmzPMdkMzFvQZaebN2gg/RsVvwnjivvSr7L0nExWhxWsIxkLZDWkmp7DLtUoaD23ATRm1TplMtnTQ8+hV45wyRLCFOpsfcT63cmZurNyfMb3Eb1NI27UQAScuRiHrtd2N22qrFqq2tB2FaW4Ca1gcMPvxLvN3brwJIJCHb+TnCbuZ0TeVxC1uIKRq1429+ssC/yOmvcOm3BmtCCZpLQk+d2zdGWcUYzrFa5K84CGF61/3Rwp1cqaBsP6Ga2BkmM0g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from DS0PR11MB6375.namprd11.prod.outlook.com (2603:10b6:8:c9::21) by
- DS0PR11MB6494.namprd11.prod.outlook.com (2603:10b6:8:c2::14) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8207.23; Tue, 10 Dec 2024 15:18:37 +0000
-Received: from DS0PR11MB6375.namprd11.prod.outlook.com
- ([fe80::cd01:59f6:b0f8:c832]) by DS0PR11MB6375.namprd11.prod.outlook.com
- ([fe80::cd01:59f6:b0f8:c832%4]) with mapi id 15.20.8230.016; Tue, 10 Dec 2024
- 15:18:36 +0000
-Message-ID: <3d9932fa-dbc3-4393-862f-92916e6e821c@intel.com>
-Date: Tue, 10 Dec 2024 16:18:27 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v30 00/30] Introduce QC USB SND audio offloading support
-To: Wesley Cheng <quic_wcheng@quicinc.com>
-CC: Takashi Iwai <tiwai@suse.de>, Greg KH <gregkh@linuxfoundation.org>,
-	<srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
-	<perex@perex.cz>, <conor+dt@kernel.org>, <dmitry.torokhov@gmail.com>,
-	<corbet@lwn.net>, <broonie@kernel.org>, <lgirdwood@gmail.com>,
-	<krzk+dt@kernel.org>, <Thinh.Nguyen@synopsys.com>, <tiwai@suse.com>,
-	<robh@kernel.org>, <linux-kernel@vger.kernel.org>,
-	<devicetree@vger.kernel.org>, <linux-sound@vger.kernel.org>,
-	<linux-usb@vger.kernel.org>, <linux-input@vger.kernel.org>,
-	<linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>, "Pierre-Louis
- Bossart" <pierre-louis.bossart@linux.dev>
-References: <20241106193413.1730413-1-quic_wcheng@quicinc.com>
- <edfeb642-297e-42bb-ad09-cbf74f995514@quicinc.com>
- <2024111655-approve-throwback-e7df@gregkh>
- <2f512d8d-e5f3-4bdd-8172-37114a382a69@quicinc.com>
- <875xoi3wqw.wl-tiwai@suse.de>
- <d0da6552-238a-41be-b596-58da6840efbb@quicinc.com>
- <CF49CA0A-4562-40BC-AA98-E550E39B366A@linux.dev>
- <65273bba-5ec1-44ea-865b-fb815afccc91@intel.com>
- <fbc04c06-c210-416b-9b77-a6bd8a71a637@quicinc.com>
- <9d95e6fa-afcb-4445-9fe3-e0eed95ec953@intel.com>
- <d7c52a11-bd2b-4cce-a0c2-6dc2dadfeaa3@quicinc.com>
-Content-Language: en-US
-From: Cezary Rojewski <cezary.rojewski@intel.com>
-In-Reply-To: <d7c52a11-bd2b-4cce-a0c2-6dc2dadfeaa3@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: VI1P190CA0013.EURP190.PROD.OUTLOOK.COM
- (2603:10a6:802:2b::26) To DS0PR11MB6375.namprd11.prod.outlook.com
- (2603:10b6:8:c9::21)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E27921BAEDC;
+	Tue, 10 Dec 2024 15:24:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1733844264; cv=none; b=qV3fjJRTK1xzuAzaCVtRjS0pdLrvm32xWDbzhtZy+GbgSi3JOErZ7meU7170ObOAq8dT3HKMRot4dYdLcmdCHOsrTKej+WSN7nAqco//0y2x/gZzBHuGw2gkCd2QXunwKfNH7RLCi9Rs2X6nmg4oGH5lmdYmkc0z0LuCwTIpvWo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1733844264; c=relaxed/simple;
+	bh=DCJJAhxraPMWeJQqQMdmgN91P3xzxgNO6pU1v2rqAKU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WHb7NyEb8BdOjdyr1xejnlhwsue0zFvOMoVmGUiMbX/oE24ERq9CrSO11dNrG/vHOOnmCCs8HoGb4VZR/vN5As1BPa41itGisYMCIFcAP//LDYrfs+XNzIoQ9JzUGR4sObFZ5qT+G1MUM1jkBXLnZUYcYcAHuuE5oUHtBYR5nw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lc4YDsw5; arc=none smtp.client-ip=209.85.221.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-3862d16b4f5so2537225f8f.0;
+        Tue, 10 Dec 2024 07:24:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1733844261; x=1734449061; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=03GzMk02coPKaNJAtWZUYl4k0s2AMlv61xu1tyOz560=;
+        b=lc4YDsw5DeYbSBVZPHTmx1E+P73215YfAuo5iJMDkztFq8GliCUEFR70GyMaA6Kge9
+         AuTTwzJ65ql6kU2sISNHKnGgp1cBuysLLBmkkAo1QYSj+jH3ZGrBdlDdKY23V3AbG4ok
+         bR24AziwS5FNTCHIQTi6YCCldht1+Q2Wz5dwRDEqx4jBzciQFI17xUxxwktL2BWyggbT
+         wcw67YExjoxSM2BUySXHBfIFhVpePRrCO3S4jS7MizWml11sH2HzMSketGiV0I18XYm+
+         37nEwSuH+hWeVBnYY48WICM3QB5ga4/kvIHbePTBQHVDdqC71vsJk/V0mdWEl3kcFeON
+         uuqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733844261; x=1734449061;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=03GzMk02coPKaNJAtWZUYl4k0s2AMlv61xu1tyOz560=;
+        b=QurAyLqgU0yRmKYNmpnpCnXUZXo4QJ8sne09cgBJ84uD6yn8tB3fOkUSiprjJMhPVu
+         P1PuQ3Hg6od/KzU9htoSFr9SLGoYNKM2xgZJ8T43+fNt9rf5hF7H+qhiSp6bSZ1OuzjU
+         TceUeDLECjs07qYcZzXkaJm7At2wS7mQv0Ke+lkSwGod8q8CiR5QFnxy3fKALTNiTBMq
+         bJvZSDuA/Md/pP+iFQ0srdR8vxIeopc9KHlYC4P9PJJhkL5fOSHRxYHsdgE3WvYws/Gu
+         4TRipUyNQ2KL77oKNgPXHDmsm7Ip92sryrVzKJou54low69/pT6uV+p76Q/pRSbWT9Ov
+         sEAQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVZKW9YlUYbu4G7woQ5brho0+u0gTz8Pacpwn2K+sYFQLyOOKNZON8WY/XmL50Bz7x3medagv9pPxSz@vger.kernel.org, AJvYcCVsB+WZH8b9wxheb58pcUhnGsWE98nbhpOPniUjLcrkncYFxlu/a9Yk0fuhCmq+3Tx28ki29faFvBzA@vger.kernel.org, AJvYcCWVoVDTCIGWyOeBWrNJWx6yLugISROioJFKXjH0OfBFaRB+rMGjKvE9hdSvtcSQN+UnyCVtaUwfAClbQiuLjg==@vger.kernel.org, AJvYcCWnkQSgnFhqHh+lN/yzg2uj6B8/RJo762kNBBLap68SZ5O3IaqtZCfYF8easdEIOi1VJ+V/bNFKaEFQzxGU@vger.kernel.org, AJvYcCXnVuITuQmch98CrD66OcMXYB+1TL1dhkBuFZwYc1uzgnvv+CSAdozlBw7N9/fbC2QR8hmtfdm1SylG@vger.kernel.org
+X-Gm-Message-State: AOJu0YwzcCRVT6dG5fHDRs8rB+JL9BXSDRpO0cx6c5cJ5pMA8/s2sME2
+	4zPOE37SCmXHWQEGxeckXCjgmlv/16h+r/uXOQ7EFQ0EJn01NcQV
+X-Gm-Gg: ASbGnct0icYX1rTswf2Q2z3DRaMKf2Te/EyzF1duXPr/WQVoKxA5j2afdUoVfk6ZC6a
+	pxeDRkkk0CR7w0veJy1a8ZMuSQ1cK+Le3GNBeZUGhljx9kFw4r3GZAE9A3xdlqiV8bGvEVwftCA
+	stn7hUNCb6iqeXLPDrY6DtUd0iM4PQ2YK+G55yJ4UFpny1pCZkhiMAyh8QTUBFZy+qeXwMzN3+w
+	ka2kET9O7qQPi6vec3hnVRxmxpfFL/8RKShXZkajEObsvovYaTwvHvo5+7HyO1KoPon
+X-Google-Smtp-Source: AGHT+IH/LC/VPhxslf621w1BFDt8Fj/gULSnEYHyXB7ig8IW5h8xmq2mY4qXCGKteZHWEMppL6Gd/w==
+X-Received: by 2002:a5d:6daa:0:b0:386:3672:73e7 with SMTP id ffacd0b85a97d-386469a4d02mr2935028f8f.9.1733844260961;
+        Tue, 10 Dec 2024 07:24:20 -0800 (PST)
+Received: from [10.66.66.2] (9.ip-51-91-159.eu. [51.91.159.9])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38637072adasm10389407f8f.81.2024.12.10.07.24.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Dec 2024 07:24:20 -0800 (PST)
+Message-ID: <1035d5c0-7034-4797-8a89-d0d92811c0ef@gmail.com>
+Date: Tue, 10 Dec 2024 16:24:07 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS0PR11MB6375:EE_|DS0PR11MB6494:EE_
-X-MS-Office365-Filtering-Correlation-Id: e0f9feba-0e38-4056-ed5d-08dd192deab2
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|7416014|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?YVJEUCtITVJoN1FNRUN3OE1TaC94RThGdkxoVWVlTHVlQTRMZ2hjZEw2NFRO?=
- =?utf-8?B?aDJjL1ZaRWxpbkorMmhQU1I4M0tBdWhxSUVjdkpFR241TnlzU1hwSW1sdlNy?=
- =?utf-8?B?TFhJK1h0TGswK3dLTmF5UTkzUlRocVNLMStJSkg0Zk9uLzR5ZHBQNk53WHFx?=
- =?utf-8?B?M0JHcmkrSk9hNkppWko5T09kV082R21FcW5PQ3B6V3JMTk8ycUt4MVpUQ1I5?=
- =?utf-8?B?UGlJYm5EVzJpNGoxUkV4am1TT0lHUjZycHk5M2V3L2lUcFZZZzBmY1M0SktU?=
- =?utf-8?B?Rkcxem0wRnRLWEphV1hMb1h5UWJwS3F1dmgxRFlJbzNKT1lTM0thNUtlbUMy?=
- =?utf-8?B?cE5HWlBldkRlUmJlcEJRVDlNTjExNk1IQ2ROOGNGdndVUmZFeWZvcWsyNjl3?=
- =?utf-8?B?SXNicExhQTFFRkRNWSsrSzdHTXg3Z0N5N2VVUnR6TFdhek9vaUtTdzM3L3pl?=
- =?utf-8?B?MXBkODRmUHRzK1lsdW9lQmh0S0UvanZiUXpEN2lGZzhFZXl4WTYxK0ZMdnZP?=
- =?utf-8?B?ckF6RUgwcEdSR3FudzZQN1IzNXU3V0I1a2JJaFFoUit0aEZXaE9PNW1leWV0?=
- =?utf-8?B?LzVxVzZpelowQUpTVUNnYTY0dzBibS91by8vUkZhS0N3aHg0UDZvV05tVHR4?=
- =?utf-8?B?VGFiZzYwbVB1Y3diRUVSSHNEOGt3cDcvcFl2Q285SmJ5eVl3d3NsM1ltd2Vk?=
- =?utf-8?B?bFRDZHpmeHFHb3ZOamNnUWs3NWVGOTVRYnc4YWVnbGRQbzR2ODk3SG1wS0Zw?=
- =?utf-8?B?QmxYUTRTMUtNaXNPblJvOVN6R3YyZUxCMkoxSmdjTHg4ckNhVEQzbzc4aXBD?=
- =?utf-8?B?eXBFZEpFR3MyYXJmTkZxdHBGVWZzQTNNTUlMQmhXbnI3RElQNjJ4S1JibmUv?=
- =?utf-8?B?YmsvMHl1aFhqNTRqOU9WZFIwSDVKdWZmOC9WYXJDemwyWGNvWUFyQmlWakc5?=
- =?utf-8?B?Z2hsOWRsUUR3Mm5uNzNEK0dQM2wxNnZSSkpCM0dweWN4RitwS2gxUVl4QUg3?=
- =?utf-8?B?bzdTVXlBTGxlSFhHQ3Qvb2hYb3ZoU1ZYRTlLSWFlbXNyUkNpL1ovdlhOajlH?=
- =?utf-8?B?c2k4cnZna2RVaTVJb2x4TEN3L1RjVXpNTURZejlFeFBoWWxLNnpQU2VlblRs?=
- =?utf-8?B?RjIwcnE4QTZkVmZzWERkWkY1K3Z5L081cGxTa0Z4UmtrcmNJTEtoakd2THZ5?=
- =?utf-8?B?L2RSbGR5cGJPTEFxZnBnR0ZJMjVmSm5FOU0zNEhrc0VUek1mcmhpR0FMMFZP?=
- =?utf-8?B?TWxNU1U3ZTBKNUhJZDBHTUlOcGZGa1E2R0lMSjF3WWhrcnFNeE92YVpnTTli?=
- =?utf-8?B?a1I2cU11QTRnYlNCL0hKTCsxV0dFK254Ti9TZFpTcWFwVGI1LzhPMVRaaHlo?=
- =?utf-8?B?MWw2TlBvYVdZelRKcStyNVMySm5aajFQd0c1NmxXaDRjV1JrdW5kN3RDTEQr?=
- =?utf-8?B?ZmZ6VHZtWCt6RlA3cHEyNWVNaVhRZlFhWnVLb1E1cDFFSHZmYWF5VGNBdm9L?=
- =?utf-8?B?cmNMMWlHaTNRZlBXTytJR3A2ZGtnZWowY2VxRmJTMDJoa1Aza1lndUpuZFVw?=
- =?utf-8?B?TzhSSVQwSncxMU1wNHBqdTY3Nk5TbjdTakhZVmFDbmlhK3BEWWUyWnRQNkZs?=
- =?utf-8?B?SEc3aFVPcVc3VHpZOHpzdnh2VEswOTI4aFRPL1BBY2E1TFQzS1dwNkhIZlV4?=
- =?utf-8?B?ZGtFdFJGQVFtQTNKQVVvYXMwU1NwQk1VaEtWSXNBUE9nUlRrRytOSlhQUzJp?=
- =?utf-8?B?QjNaTjE4NHgwNHl0OXd3a0VsSEhXMXFrajA2RkZTeThZdE93RFI3SlZ0Q2N6?=
- =?utf-8?Q?4yvks+mSrNfcvfpH7Ss2dn15ap6cTg+rho+pM=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS0PR11MB6375.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(7416014)(376014);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?YTFoTml1MFN4Rk5qdkVQSytEelgzTUJNRE83Y0huT0hqUFpCUkRNbzg5NlI4?=
- =?utf-8?B?YXhPY3RqNXp4aXdwOUswbUJ1c3hTQ1NCd0dqZ0NGcFV3SHIyWG1uUnVMN0xO?=
- =?utf-8?B?OVB2ZFhTbkxzbVdtRVVCdnFsUjZZTkxWQk1KZllzOCsrQ3MvdlAzV3pmUFhz?=
- =?utf-8?B?Ym93MCtXK3FrMW9USjhYazh5MlRKTzMxcklOb0pISjNjUGlnT0phMG1id1Ay?=
- =?utf-8?B?dFF5MmhGMVRyc0QyaXd3UHI2emYwdzNkTFJsUmdkK2xYR1BxTkV4QlZGUm10?=
- =?utf-8?B?OXRJUkx2aUhudmcxQW4xMWdBd1NyV01sMTU1cDZHTi9kM09TZkprZWtGTnZz?=
- =?utf-8?B?b2lxbklKbnBqYWgzS0p1V0ZLbkp0Zk9EcVllV1ZTWmMvMFdWTEtqMVZlTVFi?=
- =?utf-8?B?L2RJMHhGUUw4RWxoSTA5bk5oQUJCV0FjNGVvQ3FIWm5ZUlhVcWZuUzdvT1Jj?=
- =?utf-8?B?Mi9LTUJmb2FlNW04TFl0dTFsRWFib2Mwam8xdVdVRXhtMk1uMC9kTE9NUWc3?=
- =?utf-8?B?YS9ZczV0UG9IYUxWUE9JVnlyUkw1d3VWTzd0dlNEQ3h3MG5icEQxUGNQTjZG?=
- =?utf-8?B?SU9NaGI1Y2VjQjkveWNoeXFYbTNLOG4vbmtRZXIyYTJNQmREaGlIK3Nxcita?=
- =?utf-8?B?YkI1d2YzZzRvZFlqV1UyNitNWmoyZEE4YUMrZXVpZHBsMEhZT2dMaEM3QVBL?=
- =?utf-8?B?VVR0NlNPRGNxdmd5ZHZZM3YyUjdlSEZRaEtNaVdUY1FoK3IyRlJKQ3BtZW5r?=
- =?utf-8?B?TkcwWjlrWTVUbHF6NXI2SXZIaS94d2JZVk96MVA4cnRnQ1FRU3AxSzZyM0Vr?=
- =?utf-8?B?ZnoxemJsUWMxbUc4QmEwemVyTlYrQW0zZDJTSktDOTcxVnoycGlGeDVuaHRk?=
- =?utf-8?B?UW5vWVQweUhKUWx3dHZ6OCt0dURQek9QcE53aUZWZ2U0VWwrdENwcFRjZ2ls?=
- =?utf-8?B?TGpkVUo0UTI1TG1ScitocHNJckdlY0ZoNmxDVTlwVFo4R3hCaGEyQUVjbVpG?=
- =?utf-8?B?d0kzbVE4ZmtlOUNWdnRBdFBiWTdLd3B6VjFxcWt3NWJJZUpHaUw1czhBT3hY?=
- =?utf-8?B?bXllWEY3YTRjRG5LTW1pK1JRZ2xGRjNWUXNrU0NBdE9yd3E2ME04UGxRZWNN?=
- =?utf-8?B?d253YXpvc21hVUU0N00xaWtmbVdsek5hbHp3aU9hWGVjcTZrQTVBV004T3VF?=
- =?utf-8?B?TVBpYWg5SGN4cGc2WkhpYzg0TzEzT3VLc1hlVVFzZytRWnJIN0R0T2NYM0pu?=
- =?utf-8?B?NnJ5ZkNzNEtzWVlSM2VvQVBNZ2tFWkJ5WXA0c0JldGlBelNhQU05L052UFZn?=
- =?utf-8?B?RmFLM1h5M0NCQ1JIRnVOZjRmY1V2YTJWeThhd0ZLc1BwN2JCRlgxQ1Z0TGw3?=
- =?utf-8?B?Q1VaRTVXM21aRmlnWXcyU0JQU0NhNUFoQS9mTFJuazRFdlhzRzM3b3Q5UHAv?=
- =?utf-8?B?ZXlGZ2RJTWZHWHgvYnhXTTFGQUdQQ3lsWXN1S0djWTE0d0ZVcXF2WmdTdEtT?=
- =?utf-8?B?REppemRJdmw1VEpTcS8rUDRiV2RUTHZiVDhZbjN3ZUg3ZndkU012MXVLeUJ1?=
- =?utf-8?B?dWpnQU5FNkNweWVXUjBIbnpqUkI0WHJuUEVvT0tNR2JISm03M2E3ZVd0MFBW?=
- =?utf-8?B?RFF1WlJEMEJDWjgxNGZsa25DZnR3YnVCOStSVVBCTEkvN1hmMTBqcDZneXpL?=
- =?utf-8?B?MDZWM1dyY1UyU2ZZVXNRTTRFVi9rZVdXME9uRGVwWWJXanRVOGxtdXB6SjBt?=
- =?utf-8?B?cHgvSmE3Y2VXalI4Z3dSUVRBVVRpM2VaenFyYUhFM3NVeS84czdpU1FCQVd6?=
- =?utf-8?B?aXgxa2ZNWm9rVFpqVDRCKzBPalJId3RnQzQvcFBhK0pmNTBZWVNEcnhoa3hq?=
- =?utf-8?B?bUlPZm94R003ZW1jQ29UZlJwWlVRYUM0UndJY2RpZW1PQVdXYjlMZHUyaHk5?=
- =?utf-8?B?R0xSUXF0Umt4SjVpQVZ0ZWNlVHR3VVQ5ZzMyVmRTd1pNZldJT0QyV0M4VDNP?=
- =?utf-8?B?RDVjd1FnemFDQ3I2d3BlTEFGakxpQ1VkSys0Tjhnak9zSzJyR05kM0Y3Tk02?=
- =?utf-8?B?SGl5MnBCQlZYeHBvZjJocDgyM2M0VXlOQzJkekVtMDFLc3lIZFZLdjVEOU9S?=
- =?utf-8?B?WjZIcE9sMVFwU3pTQzZIYUY0UkpqdHowM3ErTXFOUUtZRHVTN2F5clljamdW?=
- =?utf-8?B?bVE9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: e0f9feba-0e38-4056-ed5d-08dd192deab2
-X-MS-Exchange-CrossTenant-AuthSource: DS0PR11MB6375.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Dec 2024 15:18:36.0792
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Be7pUvSZqNW+aOpvVY7D5y7x7SWuYN+UCxMEw8QC+4Qh4tUAWBwRaoZDorH5t5X5+U3wLAUW1Z7kiHRmSpUpMvK5GA78fIpFfpVvU6q3auQ=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR11MB6494
-X-OriginatorOrg: intel.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 1/4] dt-bindindgs: i2c: qcom,i2c-geni: Document shared
+ flag
+To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
+ Krzysztof Kozlowski <krzk@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, konrad.dybcio@linaro.org,
+ andersson@kernel.org, andi.shyti@kernel.org, linux-arm-msm@vger.kernel.org,
+ dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-i2c@vger.kernel.org, conor+dt@kernel.org, agross@kernel.org,
+ devicetree@vger.kernel.org, vkoul@kernel.org, linux@treblig.org,
+ dan.carpenter@linaro.org, Frank.Li@nxp.com, konradybcio@kernel.org,
+ bryan.odonoghue@linaro.org, krzk+dt@kernel.org, robh@kernel.org
+Cc: quic_vdadhani@quicinc.com
+References: <20241129144357.2008465-1-quic_msavaliy@quicinc.com>
+ <20241129144357.2008465-2-quic_msavaliy@quicinc.com>
+ <db428697-a9dc-46e1-abbe-73341306403f@kernel.org>
+ <a8b1ccd2-c37b-4a6f-b592-caf1a53be02c@quicinc.com>
+ <fc33c4ed-32e5-46cc-87d6-921f2e58b4ff@kernel.org>
+ <75f2cc08-e3ab-41fb-aa94-22963c4ffd82@quicinc.com>
+ <904ae8ea-d970-4b4b-a30a-cd1b65296a9b@kernel.org>
+ <da2ba3df-eb47-4b55-a0c9-e038a3b9da30@quicinc.com>
+ <a7186553-d8f6-46d4-88da-d042a4a340e2@oss.qualcomm.com>
+ <e9fb294b-b6b8-4034-84c9-a25b83321399@kernel.org>
+ <835ac8c6-3fbb-4a0d-aa07-716d1c8aad7c@gmail.com>
+ <f1fa2bde-95ce-45e9-ad2d-f1d82ec6303c@kernel.org>
+ <8b33f935-04a9-48df-8ea1-f6b98efecb9d@kernel.org>
+ <422e6a1e-e76a-4ebc-a0a5-64c47ea57823@gmail.com>
+ <aad3c217-a6f6-4415-8e08-8fc113504756@quicinc.com>
+Content-Language: en-US
+From: Konrad Dybcio <konradybcio@gmail.com>
+Autocrypt: addr=konradybcio@gmail.com; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <aad3c217-a6f6-4415-8e08-8fc113504756@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On 2024-12-06 1:28 AM, Wesley Cheng wrote:
+
+
+On 12/10/24 16:17, Mukesh Kumar Savaliya wrote:
+> Thanks Konrad !
 > 
-> On 12/4/2024 2:01 PM, Cezary Rojewski wrote:
->> On 2024-12-03 9:38 PM, Wesley Cheng wrote:
->>> Hi Cezary,
->>>
->>> On 12/3/2024 8:17 AM, Cezary Rojewski wrote:
-
-...
-
->>>> UAOL is one of our priorities right now and some (e.g.: me) prefer to not pollute their mind with another approaches until what they have in mind is crystalized. In short, I'd vote for a approach where USB device has a ASoC representative in sound/soc/codecs/ just like it is the case for HDAudio. Either that or at least a ASoC-component representative, a dependency for UAOL-capable card to enumerate.
+> On 12/10/2024 6:08 PM, Konrad Dybcio wrote:
+>>
+>>
+>> On 12/10/24 13:05, Krzysztof Kozlowski wrote:
+>>> On 10/12/2024 12:53, Krzysztof Kozlowski wrote:
+>>>>>>> I'm not sure a single property name+description can fit all possible
+>>>>>>> cases here. The hardware being "shared" can mean a number of different
+>>>>>>
+>>>>>> Existing property does not explain anything more, either. To recap -
+>>>>>> this block is SE and property is named "se-shared", so basically it is
+>>>>>> equal to just "shared". "shared" is indeed quite vague, so I was
+>>>>>> expecting some wider work here.
+>>>>>>
+>>>>>>
+>>>>>>> things, with some blocks having hardware provisions for that, while
+>>>>>>> others may have totally none and rely on external mechanisms (e.g.
+>>>>>>> a shared memory buffer) to indicate whether an external entity
+>>>>>>> manages power to them.
+>>>>>>
+>>>>>> We have properties for that too. Qualcomm SoCs need once per year for
+>>>>>> such shared properties. BAM has two or three. IPA has two. There are
+>>>>>> probably even more blocks which I don't remember now.
+>>>>>
+>>>>> So, the problem is "driver must not toggle GPIO states", because
+>>>>> "the bus controller must not be muxed away from the endpoint".
+>>>>> You can come up with a number of similar problems by swapping out
+>>>>> the quoted text.
+>>>>>
+>>>>> We can either describe what the driver must do (A), or what the
+>>>>> reason for it is (B).
+>>>>>
+>>>>>
+>>>>> If we go with A, we could have a property like:
+>>>>>
+>>>>> &i2c1 {
+>>>>>     externally-handled-resources = <(EHR_PINCTRL_STATE | EHR_CLOCK_RATE)>
+>>>>> };
+>>>>>
+>>>>> which would be a generic list of things that the OS would have to
+>>>>> tiptoe around, fitting Linux's framework split quite well
+>>>>>
+>>>>>
+>>>>>
+>>>>> or if we go with B, we could add a property like:
+>>>>>
+>>>>> &i2c1 {
+>>>>>     qcom,shared-controller;
+>>>>> };
+>>>>>
+>>>>> which would hide the implementation details into the driver
+>>>>>
+>>>>> I could see both approaches having their place, but in this specific
+>>>>> instance I think A would be more fitting, as the problem is quite
+>>>>> simple.
 >>>>
+>>>>
+>>>> The second is fine with me, maybe missing information about "whom" do
+>>>> you share it with. Or maybe we get to the point that all this is
+>>>> specific to SoC, thus implied by compatible and we do not need
+>>>> downstream approach (another discussion in USB pushed by Qcom: I want
+>>>> one compatible and 1000 properties).
+>>>>
+>>>> I really wished Qualcomm start reworking their bindings before they are
+>>>> being sent upstream to match standard DT guidelines, not downstream
+>>>> approach. Somehow these hundreds reviews we give could result in new
+>>>> patches doing things better, not just repeating the same issues.
 >>>
->>> Just to clarify, "struct snd_soc_usb" does have some correlation with our "codec" entity within the QCOM ASoC design.  This would be the q6usb driver.
->>>
->>>
->>>> Currently struct snd_soc_usb does not represent any component at all. Lack of codec representative, component representative and, given my current understanding, mixed dependency of sound/usb on sound/soc/soc-usb does lead to hard-to-understand ASoC solution.
->>>
->>>
->>> IMO the dependency on USB SND is necessary, so that we can leverage all the pre-existing sequences used to identify USB audio devices, and have some ability to utilize USB HCD APIs as well within the offload driver.
+>>> This is BTW v5, with all the same concerns from v1 and still no answers
+>>> in commit msg about these concerns. Nothing explained in commit msg
+>>> which hardware needs it or why the same SoC have it once shared, once
+>>> not (exclusive). Basically there is nothing here corresponding to any
+>>> real product, so since five versions all this for me is just copy-paste
+>>> from downstream approach.
 >>
->> So, while I do not have patches in shape good enough to be shared, what we have in mind is closer to existing HDAudio solution and how it is covered in both ALSA and ASoC.
+>> So since this is a software contract and not a hardware
+>> feature, this is not bound to any specific SoC or "firmware",
+>> but rather to what runs on other cores (e.g. DSPs, MCUs spread
+>> across the SoC or in a different software world, like TZ).
 >>
->> A ASoC sound card is effectively a combination of instances of struct snd_soc_component. Think of it as an MFD device. Typically at least two components are needed:
+>> Specifying the specific intended use would be helpful though,
+>> indeed.
 >>
->> - platform component, e.g.: for representing DSP-capable device
->> - codec component, e.g.: for representing the codec device
->>
->> USB could be represented by such a component, listed as a dependency of a sound card. By component I literally mean it extending the base struct:
->>
->> stuct snd_soc_usb {
->>      struct snd_soc_component base;
->>      (...)
->> };
->>
->> In my opinion HDAudio is a good example of how to mesh existing ALSA-based implementation with ASoC. Full, well implemented behaviour of HDAudio codec device drivers is present at sound/pci/hda/patch_*.c and friends. That part of devoid of any ASoC members. At the same time, an ASoC wrapper is present at sound/soc/codecs/hda.c. It will represent each and every HDAudio codec device on the HDAudio bus as a ASoC-component. This follows the ASoC design and thus is easy understand for any daily ASoC user, at least in my opinion.
->>
->> Next, the USB Audio Offload streams are a limited resource but I do not see a reason to not treat it as a pool. Again, HDAudio comes into picture. The HDAudio streams are assigned and released with help of HDAudio library, code found in sound/hda/hdac_stream.c. In essence, as long as UAOL-capable streaming is allowed, a pcm->open() could approach a UAOL-lib (? component perhaps?) and perform ->assign(). If no resources available, fallback to the non-offloaded case.
->>
->> While I have not commented on the kcontrol part, the above means that our current design does go into a different direction. We'd like to avoid stream-assignment hardcoding i.e.: predefining who owns a UAOL-capable stream if possible.
+>> Let's see if we can somehow make this saner.
 >>
 >>
-> 
-> Thanks for sharing the implementation for HDA.  I did take a look to the best of my ability on how the HDAudio library was built, and I see the differences that are there with the current proposal.  However, I think modifying the current design to something like that would also require the QCOM ASoC side to change a bit too.  As mentioned by Pierre, I think its worthwhile to see if we can get the initial changes in, which is the major part of the challenge.  For the most part, I think we could eventually refactor soc-usb to behave similarly to what hda_bind.c is doing.  Both entities are the ones that handle linking (or creation in case of HDA) of ASoC components.  The one major factor I can see is that within the HDA implementation vs USB SND is that, for USB, hot plugging is a common practice, and that's a scenario that will probably need more discussion if we do make that shift.
-> 
-> 
-> Anyway, I just wanted to acknowledge the technical details that are utilized by HDAudio, and that we could potentially get there with USB SoC as well.
+>> Mukesh, do we have any spare registers that we could use to
+>> indicate that a given SE is shared? Preferably within the
+>> SE's register space itself. The bootloader or another entity
+>> (DSP or what have you) would then set that bit before Linux
+>> runs and we could skip the bindings story altogether.
+>>
+> There would be spare register but i think it should be in sync with hardware team. let me check with them and update back if any bit can be repurposed for this feature. I agree, if any register is available, it can programmed prior to kernel.
+>> It would need to be reserved on all SoCs though (future and
+>> past), to make sure the contract is always held up, but I
+>> think finding a persistent bit that has never been used
+>> shouldn't be impossible.
+>>
+> Yes, let me check it with hardware and firmware team and update back. Does this mean, there can't be a such software sharing mechanism (purely software decision) based on DTSI flag ?
 
-Hello,
+I suppose that depends on our needs. If we can set that bit
+before Linux starts (i.e. in UEFI), we can avoid touching
+the pinctrl state regardless of whether the other entities
+have started up yet to avoid overcomplicating it.
 
+If we need Linux to set that bit, we would still need some
+mechanism like a dt property. But I really think that the
+bootloader should be burdened with this instead, given it
+has a better understanding of the hardware due to it being
+well, the bootloader).
 
-After analyzing the USB for some time to get an even better 
-understanding of what's present in this series, I arrived at a 
-conclusion that indeed, the approach present here clearly differs from 
-what I would call _by the book_ approach for hardware-based USB Audio 
-offloading.
+Krzysztof, I'm assuming that sounds sane from your
+perspective too?
 
-All sections below refer to the public xHCI spec [1].
-A high-level bullets for the probing procedure:
-
-1. xHCI root and resources probe() as they do today
-2. xHCI reads HCCPARAMS2 (section 5.3.9) and checks GSC bit
-2a. If GSC==0, the UAOL enumeration halts
-
-3. xHCI sends GET_EXTPROP_TRB with ECI=1 to retrieve capabilities 
-supported (section 4.6.17 and Table 4-3)
-3a. If AUDIO_SIDEBAND bit is not set, the UAOL enumeration halts
-
-4. Create a platform_device instance. This instance will act as a bridge 
-between USB and ASoC world. For simplicity, let's call it usb-component, 
-a representative of USB in struct snd_soc_component.
-
-5. On the platform_device->probe() the device requests information about 
-resources available from xHCI (section 7.9.1.1), ECI=1, SubType=001
-6. Allocate a list of streams per device or list per endpoint supported 
-based on the data retrieved with the followup TRB of SubType=010.
-
-(things get more complicated here, stopping)
-
-Now, any time a sound card with bound usb-component would begin PCM 
-operation, starting with substream->open(), the component would first 
-check if the device and/or the endpoint has resources necessary to 
-support offloading. If not, it would fallback to the non-offloaded case.
-
-
-I do not see implementation for any TRBs I mentioned above here. The 
-HCCPARAMS2 seem to be ignored too. At the same time, I'm unsure about 
-the "interrupters" piece. I believe they make the approach present here 
-somehow work, yet may not be required by the _by the book_ approach at all.
-
-
-[1]: 
-https://www.intel.com/content/dam/www/public/us/en/documents/technical-specifications/extensible-host-controler-interface-usb-xhci.pdf
-
-
-Kind regards,
-Czarek
+Konrad
 
