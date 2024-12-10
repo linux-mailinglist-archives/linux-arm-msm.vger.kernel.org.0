@@ -1,237 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-41304-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41305-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8B0069EB0AE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 13:24:05 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 664999EB0B0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 13:24:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3DB86188B203
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 12:24:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5E391165BDE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 12:24:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D89841A76B6;
-	Tue, 10 Dec 2024 12:23:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9241F1A3BAD;
+	Tue, 10 Dec 2024 12:23:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Ra7FzKHs"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BcHQwKEH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DC851A7264;
-	Tue, 10 Dec 2024 12:23:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5EEB1A3A94
+	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2024 12:23:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733833417; cv=none; b=p89onzjX0XMDIs1qR9D/1u8OFsvQ4B9NCcJyeLnd686QrpRS6CF67lMK+8dPLe7He7/wQygw3+hb5zpa4ebWXtO/DrcUyXFFcGuAEtmN36zCTadFfQj9FB3zdPvrbKTWtbno77Ef8bx3ncRULInrXGhmuXpY59i90Xe1U9M5Y0E=
+	t=1733833427; cv=none; b=jbWxTpF8EBPMaqw1CPdaT44SQt/yvEhqLzsCurTvHSF1AfoOSiza+byN7rbqGUtWFg7hXA+++C6wHBFlrBRIfYaJ3XRKee1XZ9OSm/eM/eXT594Caje/kM1QKfX0Rj1/8pkImqTBbVhCVL/fCg7Kq8kBPwN47UaUEAj3qj1wwXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733833417; c=relaxed/simple;
-	bh=knKg0GyZ6s1THrGy5KGJpuEwraTlHdp7E6Hg7qaXbVs=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=X1HKFnIg7UTwBOjOg8jWyQN3zBLEv5bIRcPemgkUOkKrhXYQhTugFH4UQ08TPmqI1ObyuuaKS98BAQ5nnf0lrDhu/bA4BaG6Dcx+OA+vVHZxoopWOdqV7l3PmvEAN81iz2kdqPM5mxDf5/cdpuA3t9aOnGU4a+jpX4nqFuv2Fwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Ra7FzKHs; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BA8ombQ027535;
-	Tue, 10 Dec 2024 12:23:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=pbVmZ6HK9dcqzLToTV+hRf2v
-	00ulze3+7nHmp0caKxo=; b=Ra7FzKHsJ9lFY7iqUid4cW+ItkxNTgm+t84rOTdv
-	IgJqB3kdWyoj0+IUd/obl89xDCw7n4Ns9Vv8YJdC75ov27OQFSb2UWUeiaDzA3B3
-	VtAcjTFiBffPLIsfVyb7oxN6PCs1372Uq2m8HPnxynNwUnEXIlMMZZ7mWAqXiAWa
-	ibSV12F5w7kP7vopjkY9rxW3E6L/nFGpiggW9WpWza3WS5OtlyRLaRyKBZIK9M4g
-	Qr9HFIk2Tp3fB9fyvwSTRNtws+QlnVQlMJpVPJwwZDaQAwVr5wzokKUt0Ns2uD8Y
-	QSi/pwteaie7qPtDuFO/OYts4aFijm61B0LNdR6Ewo7KNw==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43cdxxg98a-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 10 Dec 2024 12:23:26 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BACNPQ9022580
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 10 Dec 2024 12:23:25 GMT
-Received: from jinlmao-gv.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 10 Dec 2024 04:23:21 -0800
-From: Mao Jinlong <quic_jinlmao@quicinc.com>
-To: Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach
-	<mike.leach@linaro.org>, James Clark <james.clark@arm.com>,
-        Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        "Bjorn
- Andersson" <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-CC: Mao Jinlong <quic_jinlmao@quicinc.com>, <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-Subject: [PATCH v5 2/2] coresight: Add label sysfs node support
-Date: Tue, 10 Dec 2024 20:22:53 +0800
-Message-ID: <20241210122253.31926-3-quic_jinlmao@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20241210122253.31926-1-quic_jinlmao@quicinc.com>
-References: <20241210122253.31926-1-quic_jinlmao@quicinc.com>
+	s=arc-20240116; t=1733833427; c=relaxed/simple;
+	bh=lUtYIb9FWysANuBVRjGqvIA7tKeEyU84yMrXWdg5+fY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=jZftZl6Jbfs1Z0CVAh0s1gUhkq1lJxhFrNnhtIWjUQS8AQjF6zNfodJYEXnGA6ppqmsUWNloNuVyNCF3cWGlkk2pmLMd419dTFmdz2SBmDRWen3SrLWgXaJIW4/1HyL0Hat/pdxlFxxats6Vz4OHUckEfoaNwcTvxajiKtbXZso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BcHQwKEH; arc=none smtp.client-ip=209.85.218.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-aa66c1345caso182316966b.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2024 04:23:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1733833424; x=1734438224; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=kXv1q2+I00SEA4qivPj7ki5hHn17ZgKv03WB0L5X0HI=;
+        b=BcHQwKEHVqSPK0XUnBzCrM8R2LizwxAzY+Qcz0h8Wqi+CmKHPK17OqqEcTSfsHUU3y
+         SjZe/AwFEVW+knc3JwCubVg1J2R3Y/VitEOcIU0atswcZTWzABzXeXvfv+yNMTQ9QhYd
+         0ofhE7+SDbXkAoR6WkLe+iKDBcUOYzSNBU8LMY05xpgSZ+b/e2JM4BA8U6J4iw7mekNG
+         mTucQyG4yH3Qa/PpmkWqYAIujNOe+dfTh4zqyNZyhVetbIPhmFg8lZ7/U8xPWWr9O8+6
+         pjbhFliDmZQi7hKjmpOlYkUI0zw/5rjmMh5QPzYGwlHehxHvZiZTsO5aMyHb4rO+CPls
+         pNZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733833424; x=1734438224;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kXv1q2+I00SEA4qivPj7ki5hHn17ZgKv03WB0L5X0HI=;
+        b=Vca3DxlxGv9y/lWUzUe0kMf9eX3QarsuU6C70/FXmn6uig03Rayc4gWAKb3r8QEzji
+         g9RuuMakaS7IwoTdxKZTamoP5kq5cOTATKztMJoM8Qdg5LBtv3Er5wv8kJ9pyBIX8jE2
+         LTcL7a6Tf1fpMYQY5OsQcg5mtQ13m7mWQaumLfHaPW8WHmRKBdla30U2aHOSlX8tD+sS
+         rG4Ss6+J58ckaIKPiI/3f/yNfvkStei34UrAuiYhk/CPyVl3VLr+5r9zSsLLWtrXh6RT
+         i60+PaEDHY94yCgRi+vc07BPL0gEX9aROWRefG41yvyylQeVafmxOv1lmheHgvBsCAjn
+         i4uA==
+X-Forwarded-Encrypted: i=1; AJvYcCVQkONWqTnP2rfTxtVJR3pOn6+Ogoas61K0VZzHz54TaD18XnLQF1jqtt3pZCJUVdF2L2VQjqIZoKgVnxRu@vger.kernel.org
+X-Gm-Message-State: AOJu0YztzrBUhhfUaGxDzFzzXgjRH3223gG7KGDR4miWbdwxq4hIMLQC
+	j2hBp4VJ8H4BgdKEv073+XHHJU/SImTPuIf4ryAtZiT0QaVyClG3qmj9IAZQ8DTFO/Byj4xQhFQ
+	StaQSVyh09cXRITzaNEGUJMhg1Jhu7bPR8muHbA==
+X-Gm-Gg: ASbGnct6HIxN104zhzQwp2IHum8hv8TNgqxV/pTMn1KFU6mUiapze/BoStOmvaLOrgN
+	C+v1Wn+cmcZNCle7W9S1yeKrSMlmP7oMTa4k=
+X-Google-Smtp-Source: AGHT+IGPQzofPCSKwnJOzRNwnbqypQHGaVFPVRHAbVBETWyHajWU00pxqxU268Qgqllb0B6W2GZfn17ZSH3AScx5ITE=
+X-Received: by 2002:a17:906:311b:b0:aa6:9217:fcd1 with SMTP id
+ a640c23a62f3a-aa692180342mr561378166b.52.1733833423910; Tue, 10 Dec 2024
+ 04:23:43 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 5c1Xb9FQdpsr97abkP4ImlQKGrLKw_gq
-X-Proofpoint-GUID: 5c1Xb9FQdpsr97abkP4ImlQKGrLKw_gq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 spamscore=0
- phishscore=0 mlxlogscore=999 priorityscore=1501 clxscore=1015
- malwarescore=0 impostorscore=0 bulkscore=0 lowpriorityscore=0 mlxscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412100092
+References: <20241209-qcom-video-iris-v7-0-05c6bdead47b@quicinc.com> <20241209-qcom-video-iris-v7-14-05c6bdead47b@quicinc.com>
+In-Reply-To: <20241209-qcom-video-iris-v7-14-05c6bdead47b@quicinc.com>
+From: Stefan Schmidt <stefan.schmidt@linaro.org>
+Date: Tue, 10 Dec 2024 13:23:33 +0100
+Message-ID: <CAEvtbuuObqiXMVeaxHu0LLsT3G4Nr-byMSR2drVQq+S8fN5uVQ@mail.gmail.com>
+Subject: Re: [PATCH v7 14/28] media: iris: implement iris v4l2_ctrl_ops
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Cc: Vikash Garodia <quic_vgarodia@quicinc.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Philipp Zabel <p.zabel@pengutronix.de>, Hans Verkuil <hverkuil@xs4all.nl>, 
+	Sebastian Fricke <sebastian.fricke@collabora.com>, 
+	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Nicolas Dufresne <nicolas@ndufresne.ca>, 
+	=?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <u.kleine-koenig@baylibre.com>, 
+	Jianhua Lu <lujianhua000@gmail.com>, linux-media@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Vedang Nagar <quic_vnagar@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 
-For some coresight components like CTI and TPDM, there could be
-numerous of them. From the node name, we can only get the type and
-register address of the component. We can't identify the HW or the
-system the component belongs to. Add label sysfs node support for
-showing the intuitive name of the device.
+Hello Dikshita,
 
-Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
----
- .../testing/sysfs-bus-coresight-devices-cti   |  6 ++++
- .../sysfs-bus-coresight-devices-funnel        |  6 ++++
- .../testing/sysfs-bus-coresight-devices-tpdm  |  6 ++++
- drivers/hwtracing/coresight/coresight-sysfs.c | 32 +++++++++++++++++++
- 4 files changed, 50 insertions(+)
+On Mon, 9 Dec 2024 at 13:57, Dikshita Agarwal <quic_dikshita@quicinc.com> wrote:
 
-diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-cti b/Documentation/ABI/testing/sysfs-bus-coresight-devices-cti
-index bf2869c413e7..631999571197 100644
---- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-cti
-+++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-cti
-@@ -239,3 +239,9 @@ Date:		March 2020
- KernelVersion	5.7
- Contact:	Mike Leach or Mathieu Poirier
- Description:	(Write) Clear all channel / trigger programming.
-+
-+What:           /sys/bus/coresight/devices/<cti-name>/label
-+Date:           Dec 2024
-+KernelVersion   6.13
-+Contact:        Mao Jinlong <quic_jinlmao@quicinc.com>
-+Description:    (Read) Show hardware context information of device.
-diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-funnel b/Documentation/ABI/testing/sysfs-bus-coresight-devices-funnel
-index d75acda5e1b3..6497756a5ced 100644
---- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-funnel
-+++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-funnel
-@@ -10,3 +10,9 @@ Date:		November 2014
- KernelVersion:	3.19
- Contact:	Mathieu Poirier <mathieu.poirier@linaro.org>
- Description:	(RW) Defines input port priority order.
-+
-+What:           /sys/bus/coresight/devices/<memory_map>.funnel/label
-+Date:           Dec 2024
-+KernelVersion   6.13
-+Contact:        Mao Jinlong <quic_jinlmao@quicinc.com>
-+Description:    (Read) Show hardware context information of device.
-diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-index bf710ea6e0ef..31dbf37a8754 100644
---- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-+++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-@@ -257,3 +257,9 @@ Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_t
- Description:
- 		(RW) Set/Get the MSR(mux select register) for the CMB subunit
- 		TPDM.
-+
-+What:           /sys/bus/coresight/devices/<tpdm-name>/label
-+Date:           Dec 2024
-+KernelVersion   6.13
-+Contact:        Mao Jinlong <quic_jinlmao@quicinc.com>
-+Description:    (Read) Show hardware context information of device.
-diff --git a/drivers/hwtracing/coresight/coresight-sysfs.c b/drivers/hwtracing/coresight/coresight-sysfs.c
-index a01c9e54e2ed..4af40cd7d75a 100644
---- a/drivers/hwtracing/coresight/coresight-sysfs.c
-+++ b/drivers/hwtracing/coresight/coresight-sysfs.c
-@@ -7,6 +7,7 @@
- #include <linux/device.h>
- #include <linux/idr.h>
- #include <linux/kernel.h>
-+#include <linux/property.h>
- 
- #include "coresight-priv.h"
- #include "coresight-trace-id.h"
-@@ -366,18 +367,47 @@ static ssize_t enable_source_store(struct device *dev,
- }
- static DEVICE_ATTR_RW(enable_source);
- 
-+static ssize_t label_show(struct device *dev,
-+		struct device_attribute *attr, char *buf)
-+{
-+
-+	const char *str;
-+	int ret = 0;
-+
-+	ret = fwnode_property_read_string(dev_fwnode(dev), "label", &str);
-+	if (ret == 0)
-+		return scnprintf(buf, PAGE_SIZE, "%s\n", str);
-+	else
-+		return ret;
-+}
-+static DEVICE_ATTR_RO(label);
-+
- static struct attribute *coresight_sink_attrs[] = {
- 	&dev_attr_enable_sink.attr,
-+	&dev_attr_label.attr,
- 	NULL,
- };
- ATTRIBUTE_GROUPS(coresight_sink);
- 
- static struct attribute *coresight_source_attrs[] = {
- 	&dev_attr_enable_source.attr,
-+	&dev_attr_label.attr,
- 	NULL,
- };
- ATTRIBUTE_GROUPS(coresight_source);
- 
-+static struct attribute *coresight_link_attrs[] = {
-+	&dev_attr_label.attr,
-+	NULL,
-+};
-+ATTRIBUTE_GROUPS(coresight_link);
-+
-+static struct attribute *coresight_helper_attrs[] = {
-+	&dev_attr_label.attr,
-+	NULL,
-+};
-+ATTRIBUTE_GROUPS(coresight_helper);
-+
- const struct device_type coresight_dev_type[] = {
- 	[CORESIGHT_DEV_TYPE_SINK] = {
- 		.name = "sink",
-@@ -385,6 +415,7 @@ const struct device_type coresight_dev_type[] = {
- 	},
- 	[CORESIGHT_DEV_TYPE_LINK] = {
- 		.name = "link",
-+		.groups = coresight_link_groups,
- 	},
- 	[CORESIGHT_DEV_TYPE_LINKSINK] = {
- 		.name = "linksink",
-@@ -396,6 +427,7 @@ const struct device_type coresight_dev_type[] = {
- 	},
- 	[CORESIGHT_DEV_TYPE_HELPER] = {
- 		.name = "helper",
-+		.groups = coresight_helper_groups,
- 	}
- };
- /* Ensure the enum matches the names and groups */
--- 
-2.17.1
+> +static struct platform_inst_fw_cap inst_fw_cap_sm8550[] = {
+> +       {
+> +               .cap_id = PROFILE,
+> +               .min = V4L2_MPEG_VIDEO_H264_PROFILE_BASELINE,
+> +               .max = V4L2_MPEG_VIDEO_H264_PROFILE_CONSTRAINED_HIGH,
+> +               .step_or_mask = BIT(V4L2_MPEG_VIDEO_H264_PROFILE_BASELINE) |
+> +                               BIT(V4L2_MPEG_VIDEO_H264_PROFILE_CONSTRAINED_HIGH) |
 
+Would it make sense to have
+V4L2_MPEG_VIDEO_H264_PROFILE_CONSTRAINED_HIGH as the maximum as last
+item here?
+You have this sorting in the LEVEL list below and even here in the
+profiles only CONSTRAINED_HIGH is out of order.
+I realise this is technically not needed, but I had to go and look it
+up in the v4l2 enum to check if CONSTRAINED_HIGH is really bigger than
+HIGH and should be listed as .max.
+
+> +                               BIT(V4L2_MPEG_VIDEO_H264_PROFILE_CONSTRAINED_BASELINE) |
+> +                               BIT(V4L2_MPEG_VIDEO_H264_PROFILE_MAIN) |
+> +                               BIT(V4L2_MPEG_VIDEO_H264_PROFILE_HIGH),
+> +               .value = V4L2_MPEG_VIDEO_H264_PROFILE_HIGH,
+> +               .hfi_id = HFI_PROP_PROFILE,
+> +               .flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_MENU,
+> +       },
+> +       {
+> +               .cap_id = LEVEL,
+> +               .min = V4L2_MPEG_VIDEO_H264_LEVEL_1_0,
+> +               .max = V4L2_MPEG_VIDEO_H264_LEVEL_6_2,
+> +               .step_or_mask = BIT(V4L2_MPEG_VIDEO_H264_LEVEL_1_0) |
+> +                               BIT(V4L2_MPEG_VIDEO_H264_LEVEL_1B) |
+> +                               BIT(V4L2_MPEG_VIDEO_H264_LEVEL_1_1) |
+> +                               BIT(V4L2_MPEG_VIDEO_H264_LEVEL_1_2) |
+> +                               BIT(V4L2_MPEG_VIDEO_H264_LEVEL_1_3) |
+> +                               BIT(V4L2_MPEG_VIDEO_H264_LEVEL_2_0) |
+> +                               BIT(V4L2_MPEG_VIDEO_H264_LEVEL_2_1) |
+> +                               BIT(V4L2_MPEG_VIDEO_H264_LEVEL_2_2) |
+> +                               BIT(V4L2_MPEG_VIDEO_H264_LEVEL_3_0) |
+> +                               BIT(V4L2_MPEG_VIDEO_H264_LEVEL_3_1) |
+> +                               BIT(V4L2_MPEG_VIDEO_H264_LEVEL_3_2) |
+> +                               BIT(V4L2_MPEG_VIDEO_H264_LEVEL_4_0) |
+> +                               BIT(V4L2_MPEG_VIDEO_H264_LEVEL_4_1) |
+> +                               BIT(V4L2_MPEG_VIDEO_H264_LEVEL_4_2) |
+> +                               BIT(V4L2_MPEG_VIDEO_H264_LEVEL_5_0) |
+> +                               BIT(V4L2_MPEG_VIDEO_H264_LEVEL_5_1) |
+> +                               BIT(V4L2_MPEG_VIDEO_H264_LEVEL_5_2) |
+> +                               BIT(V4L2_MPEG_VIDEO_H264_LEVEL_6_0) |
+> +                               BIT(V4L2_MPEG_VIDEO_H264_LEVEL_6_1) |
+> +                               BIT(V4L2_MPEG_VIDEO_H264_LEVEL_6_2),
+> +               .value = V4L2_MPEG_VIDEO_H264_LEVEL_6_1,
+> +               .hfi_id = HFI_PROP_LEVEL,
+> +               .flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_MENU,
+> +       },
+
+regards
+Stefan Schmidt
 
