@@ -1,119 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-41198-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41199-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B34789EA706
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 05:09:25 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 89A649EA738
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 05:43:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C5CA9188992E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 04:09:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8043F169559
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2024 04:43:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4BC622489F;
-	Tue, 10 Dec 2024 04:09:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE3681BEF7E;
+	Tue, 10 Dec 2024 04:43:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="N3V/kKSU"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JXNc1HOT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8DE241C6C;
-	Tue, 10 Dec 2024 04:09:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0449F469D;
+	Tue, 10 Dec 2024 04:43:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733803760; cv=none; b=XxjES0zE1XFXMlA4GxkZ5h61k++9OAp82u+hcmRoSv4cVy5bRq26hdXyUxV5UtOjN/TjB1IndgbTfJ8vHX326paSNF95bMgonYDAuKU0NsBSKwRPVer+CGW8Ev+E8zj87v3k0poYEn30I+z1xukamhIgQ4PzUwnhqTv4DuKaqGU=
+	t=1733805834; cv=none; b=h3h9QieZGeeNVAL5trguUfCYabg5aNa/gLHlE1x21aEKjf6mGmmVM3WxTGC/5C50m41VwM/z+BicLfGYY6Kse6Ac9K5VptzAmlicSOr75iaTP2NdVkMWJhSWH1/VZRuSI7oo0Bq4P5CsXVfLftYyBfXRutkyydffV4HyQp4GlBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733803760; c=relaxed/simple;
-	bh=UC9488gl9T6A80VUWGtGF6J5sVo17VFJEmTIVqrxb70=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=q8YzaGq3zLoOFeldGcE9zPdncgw72bl+wOSW2t6lCAXf4dU/zX5gOWtRcpmh5NppZg63fp29B1ozOZi6SfDXoKnV4Y18QVeOMhTTLjT4seExgpNY97aEDZaGbAezz9V134/41OvQ3VV8Jy96oBP8tP9WwkvUQaKUq4BQPZfW/WQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=N3V/kKSU; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=CU/ceaeuMg6s5VeGV4bWHaOpATNGJK0FHJF/eoUa5PA=; b=N3V/kKSU/FUHhKITh5qPkAIq2L
-	yLkapdBDFcBAJ1sXfuSD9kCS4bPgVOYXuql/AHTZ41R2lwONLMeu6pwdwXLWKzYfbA4cHsjb3h3hc
-	Eh+iypQ4ulOV1WzZZY1XfZl+rZ+rJbaBgtKmhCBZJX8dnujmRhbkzGLetblkNadg0H2U=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1tKrYe-00Fksr-DN; Tue, 10 Dec 2024 05:09:12 +0100
-Date: Tue, 10 Dec 2024 05:09:12 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Yijie Yang <quic_yijiyang@quicinc.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Richard Cochran <richardcochran@gmail.com>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, netdev@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: qcs615-ride: Enable ethernet
- node
-Message-ID: <31a87bd9-4ffb-4d5a-a77b-7411234f1a03@lunn.ch>
-References: <ececbbe1-07b3-4050-b3a4-3de9451ac7d7@lunn.ch>
- <89a4f120-6cfd-416d-ab55-f0bdf069d9ce@quicinc.com>
- <c2800557-225d-4fbd-83ee-d4b72eb587ce@oss.qualcomm.com>
- <3c69423e-ba80-487f-b585-1e4ffb4137b6@lunn.ch>
- <2556b02c-f884-40c2-a0d4-0c87da6e5332@quicinc.com>
- <75fb42cc-1cc5-4dd3-924c-e6fda4061f03@quicinc.com>
- <4a6a6697-a476-40f4-b700-09ef18e4ba22@lunn.ch>
- <441f37f5-3c33-4c62-b3fe-728b43669e29@quicinc.com>
- <4287c838-35b2-45bb-b4a2-e128b55ddbaf@lunn.ch>
- <2e518360-be24-45d8-914d-1045c6771620@quicinc.com>
+	s=arc-20240116; t=1733805834; c=relaxed/simple;
+	bh=BFre1Q/RZBsHPJEt+3yr2HTkn+7tOU95wCZviqIYog4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=DF/I11jM3D83gyhTLxnLmwuQt0fC1ro8PS7v1dnRAYcnNNwf6uk1qB8EVczBxCrseV8ViG2QDstrvGdO7OvulbLzcn6RfT0LW5mdzAuxdIbkf0lAuN+Rzadw2bMCCbzKoVDQSj4xR+3Sqe0JR91rq5gapBCxGBRv+W9Ve0lBA8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JXNc1HOT; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BA43Cw0019361;
+	Tue, 10 Dec 2024 04:43:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Ng2RFeyU4jQDif/mpf1Cnnoo9al34JrXPX2txI15hs0=; b=JXNc1HOTWknDkrse
+	TMpVHu/P64zlJiwf0x3Gd27YXSB77dQcI1vNPQbKE2jj2Y+CsuI4tS9915VVuAsP
+	iDe4cVh8b67UNH8mbSYS/jUYtCKGTyTtFhOkVCgS8nv4lgpMITL1328nKu7C0RFo
+	BYFByOCeb64kSDGlsWYWZnAlwSEkY2EKKjZA8cu/tZkJcDZdKTV19DwstqHo8jFL
+	q44D9rsLEADbpoYJiCO/qMJpB8xubNnwVpLJv1F+Y6+PupAIM7hkAPBHOJ1bEpSb
+	x9Qy/lHAh49j6zD3lAqk57trhNtb6gbgNHFqukqFarwgcMlu+jPF9b1eMjuAFPPz
+	UVeedg==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43e3419tx4-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 10 Dec 2024 04:43:47 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BA4hkx1023756
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 10 Dec 2024 04:43:46 GMT
+Received: from [10.216.2.81] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 9 Dec 2024
+ 20:43:40 -0800
+Message-ID: <2d615fdb-a661-4fb5-bde7-46f4690ecdce@quicinc.com>
+Date: Tue, 10 Dec 2024 10:13:37 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2e518360-be24-45d8-914d-1045c6771620@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/7] dt-bindings: i2c: qcom,i2c-geni: Document DT
+ properties for QUP firmware loading
+To: Krzysztof Kozlowski <krzk@kernel.org>, <andi.shyti@kernel.org>,
+        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <gregkh@linuxfoundation.org>, <jirislaby@kernel.org>,
+        <broonie@kernel.or>, <andersson@kernel.org>, <konradybcio@kernel.org>,
+        <johan+linaro@kernel.org>, <dianders@chromium.org>,
+        <agross@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-i2c@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-serial@vger.kernel.org>,
+        <linux-spi@vger.kernel.org>
+CC: <quic_anupkulk@quicinc.com>,
+        Mukesh Kumar Savaliya
+	<quic_msavaliy@quicinc.com>
+References: <20241204150326.1470749-1-quic_vdadhani@quicinc.com>
+ <20241204150326.1470749-2-quic_vdadhani@quicinc.com>
+ <dacfdaf0-329f-4580-94e0-7c3e26b52776@kernel.org>
+Content-Language: en-US
+From: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+In-Reply-To: <dacfdaf0-329f-4580-94e0-7c3e26b52776@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: BPKHs58NCM6xbtkgf3v-goBHtplJZA9K
+X-Proofpoint-ORIG-GUID: BPKHs58NCM6xbtkgf3v-goBHtplJZA9K
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
+ priorityscore=1501 suspectscore=0 mlxlogscore=999 clxscore=1015 mlxscore=0
+ spamscore=0 phishscore=0 malwarescore=0 adultscore=0 impostorscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412100033
 
-> As previously mentioned, using 'rgmii' will enable EMAC to provide the delay
-> while disabling the delay for EPHY. So there's won't be double delay.
+Thanks Krzysztof for the review and helpful comments.
+
+On 12/4/2024 8:36 PM, Krzysztof Kozlowski wrote:
+> On 04/12/2024 16:03, Viken Dadhaniya wrote:
+>> Document the 'qcom,load-firmware' and 'qcom,xfer-mode' properties to
+>> support SE(Serial Engine) firmware loading from the protocol driver and to
+>> select the data transfer mode, either GPI DMA (Generic Packet Interface)
+>> or non-GPI mode (PIO/CPU DMA).
 > 
-> Additionally, the current implementation of the QCOM driver code exclusively
-> supports this mode, with the entire initialization sequence of EMAC designed
-> and fixed for this specific mode.
+> 
+> You described the desired Linux feature or behavior, not the actual
+> hardware. The bindings are about the latter, so instead you need to
+> rephrase the property and its description to match actual hardware
+> capabilities/features/configuration etc.
+Sure, IIUC, i should explain the need of FW loading. Agree that binding 
+is for the hardware. This feature needs to have some intelligence to 
+know that Software driver needs to load Firmware or not ?
 
-OK. If it is impossible to disable these delays, you need to validate
-phy-mode. Only rgmii-id is allowed. Anybody trying to build a board
-using extra long clock lines is out of luck. It does not happen very
-often, but there are a small number of boards which do this, and the
-definitions of phy-mode are designed to support them.
+Let me add description about the actual hardware capabilities, its 
+features. Hope this can be better from my side on V2.
+> 
+> I don't quite get why firmware-name is not suitable here, what is
+> "protocol driver" in this context and how firmware is loaded from it?
+> 
+yes, as per Dmitry's comment, i should replace with 
+/soc/sc7180/firmware.  This would be become "firmware-name" property 
+instead of qcom,load-firmware.
 
-> I'm not sure if there's a disagreement about the definition or a
-> misunderstanding with other vendors. From my understanding, 'rgmii' should
-> not imply that the delay must be provided by the board, based on both the
-> definition in the dt-binding file and the implementations by other EMAC
-> vendors. Most EMAC drivers provide the delay in this mode.
-
-Nope. You are wrong. I've been enforcing this meaning for maybe the
-last 10 years. You can go search the email archive for netdev. Before
-that, we had a bit of a mess, developers were getting it wrong, and
-reviewing was not as good. And i don't review everything, so some bad
-code does get passed me every so often, e.g. if found out today that
-TI AM62 got this wrong, they hard code TX delays in the MAC, and DT
-developers have been using rgmii-rxid, not rgmii-id, and the MAC
-driver is missing the mask operation before calling phy_connect.
-
-> I confirmed that there is no delay on the qcs615-ride board., and the QCOM
-> EMAC driver will adds the delay by shifting the clock after receiving
-> PHY_INTERFACE_MODE_RGMII.
-
-Which is wrong. Because you cannot disable the delay,
-PHY_INTERFACE_MODE_RGMII should return in EINVAL, or maybe
-EOPNOTSUPP. Your hardware only supports PHY_INTERFACE_MODE_RGMII_ID,
-and you need to mask what you pass to phylib/phylink to make it clear
-the MAC has added the delays.
-
-	Andrew
+>>
+>> I2C controller can operate in one of two modes based on the
+>> 'qcom,xfer-mode' property, and the firmware is loaded accordingly.
+>>
+>> Co-developed-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+>> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+>> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+>> ---
+>>   .../devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml   | 11 +++++++++++
+>>   1 file changed, 11 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml b/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
+>> index 9f66a3bb1f80..a26f34fce1bb 100644
+>> --- a/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
+>> +++ b/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
+>> @@ -66,6 +66,15 @@ properties:
+>>     required-opps:
+>>       maxItems: 1
+>>   
+>> +  qcom,load-firmware:
+>> +    type: boolean
+>> +    description: Optional property to load SE (serial engine) Firmware from protocol driver.
+> 
+> 
+> Please wrap code according to coding style (checkpatch is not a coding
+> style description, but only a tool).
+Actually i have ran dt-schema for yaml validation. I couldn't get if you 
+have any comment for description statement OR it's related to code ? 
+Could you please be more descriptive so i can adopt the suggestions.
+> 
+> 
+>> +
+>> +  qcom,xfer-mode:
+>> +    description: Value 1,2 and 3 represents FIFO, CPU DMA and GSI DMA mode respectively.
+>> +    $ref: /schemas/types.yaml#/definitions/uint32
+>> +    enum: [1, 2, 3]
+> 
+> 
+> Use string but anyway this would need some changes and explanation why
+> lack of DMA cannot be used to determine that. CPU DMA and GSI DMA also
+> need some background.
+Sure, i got it.
+I need to add enum strings and shall provide explanation abut modes in use.
+As per Doug's comment, we plan to keep GSI and non-GSI mode. It would be 
+more clear in next patch.
+> 
+> 
+> 
+> Best regards,
+> Krzysztof
 
