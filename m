@@ -1,141 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-41551-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41552-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7D0E49ED4D9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 19:46:43 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 386879ED637
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 20:16:30 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 36659283E92
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 18:46:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D9B2F165C4E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 19:15:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 83562200BA9;
-	Wed, 11 Dec 2024 18:46:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60CDD1C1F2F;
+	Wed, 11 Dec 2024 19:00:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VMpaOa/v"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Et8Fe4Lu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D1D1C3F27;
-	Wed, 11 Dec 2024 18:46:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 474A91C3022
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 19:00:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733942795; cv=none; b=ib29hTdK7OJjDVyKn0XCZ7quxD2fH2O9+irFwG8/IMOxqlrFsuTANBXy52pGFcrQSezKsAaJng7XE+tZ3DUqdNE+4X73+MyF9zzxahv1iC04tvOI6wLLccSTEJSLxfrbZULFrbVDBJOucNBN2rNrSFEjcBSCynL07ySAVZwaxHQ=
+	t=1733943640; cv=none; b=nfOdaIwMuwTn7Vneo3D6pAzTr0onez/19WB60pOXdXvGaWOlquHQK9N+jUNNHbSQC+ArZ1t58tkKBRtoj6yL5JgCCeM4TZAbA1P/WnD/FHBGyMo1W9N3AJiCC2WKJciY7m9mIsZGLDHCYqNhYz64awoHgAngVlidUm5MLlL9XqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733942795; c=relaxed/simple;
-	bh=8SEPiAG5/bZ3zubyts3IFkmbUAYRgHOi97EOjXc5kaI=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
-	 In-Reply-To:Content-Type; b=m3yVq9Q7QOATpkQ5Etx5f2yIzLdj7SZPiEBt8qo6iXeMpV651VUWWgq4f2kkuaY0VVq1g2yPDDrPbacEV3xpZbxnOKgj/kh01N/HoelAke4XazCT6wdy/eI9EPnwC7lEGNRj9L/AsZHbeVyPNCI2/d0qPYIspTq0WsUZsb7laOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=VMpaOa/v; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BBHDGPu003065;
-	Wed, 11 Dec 2024 18:46:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	KKBF9MwwWdxtyhM/vZBDK5wtGQUQme8Sdv89LX9q3k4=; b=VMpaOa/v9X6ACdwL
-	WSIwXzqzOZAiz0No5IAwdkcsl/NUELLHv13Y+iDNo0DBlyRDlJ/d9b1D3WpBxz42
-	3j/Ll/6n1K5RNXJ3dHUfvFQhkVbcTr+HZ0zzlZxk7sl3BzoN1bPZDZccosxldwd9
-	XsUGXYIRPbw8wT4o3UmY2erS80vBspj7U7Nx/woMK3mypS3d0CeCyglgrYWGBlgc
-	WpZ7vOB92Z4PHHejAZJo65k6EwFa27BLNI5KQspL+t9nqXJg0MJIWMtPXjkH5TZm
-	CPPUkykdZi+uqtdCYwWQ1aL0NgvsgZTvnbwWld94Gwq80jkgwDpf+WseqiVKZv0T
-	pFCpgg==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43f0r9txqv-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 11 Dec 2024 18:46:10 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BBIk9WK017308
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 11 Dec 2024 18:46:10 GMT
-Received: from [10.71.111.113] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 11 Dec
- 2024 10:46:09 -0800
-Message-ID: <f353a230-b9ab-4c25-846b-6e5f0e404ca0@quicinc.com>
-Date: Wed, 11 Dec 2024 10:46:09 -0800
+	s=arc-20240116; t=1733943640; c=relaxed/simple;
+	bh=fi0lDtOLuW0t/tSmG3MOxUksjKQjuEDF/3frKFG8+Ck=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UwXkkHUndeufvkJg9FK6uapHsLR9SbOXJ0ScC6D0rRbQNHCQssBiLNca6wSlfkPM/wY0jRMWgKjU1qtP9tcRBe8jznvCScytFHP2RKgHi5igrs7Ng558oYX9QEaO2nJOGzCAwAyYgH7LpEG8bdQVC86ngC2wx76LYNOX4Mwlwcg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Et8Fe4Lu; arc=none smtp.client-ip=209.85.208.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-3022c6155edso26869321fa.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 11:00:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1733943636; x=1734548436; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=3sm2j3frVX6XobbLx+2sssGo00nVIVVj/64ej0M6DaQ=;
+        b=Et8Fe4LuxVo+moKmPKiqqRs9a3nmy6Gklnq5RodP/Ihs+W4jCwghiKzn8VT7wUkHVf
+         PyvJ3i3JEHcRAaigVbmbsbCJm9HHnt7KIjF4CEaApf2Xm5sng9BEzPEstgu/RvyEagTj
+         xKJ3vQedKxGLgfElhQ3B8R2njpnmdTC7KualqhNaoqjOvqwvsy+yBKVcynU12MetO9au
+         Cs7FxiyUYiEw1KmfvCMD7gK9IlpsHSicD5JbwoCqnsMQeJo8qp/x0KviUXZPiYwO3wH3
+         nhLmSs6s7fK0W02U+GjG/twBH1ZlW8WwRgbCtQdm/9BjrJu378HvG0nvxHKd6ftOi1EA
+         mnyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733943636; x=1734548436;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3sm2j3frVX6XobbLx+2sssGo00nVIVVj/64ej0M6DaQ=;
+        b=NNsSK+GgWjroOtcwm/wvop0U3vO/asxWM7Jvj4k/54hlye45xfjnEPDxksmDhRHHJ2
+         WsNkP8kaj2PAgsAgLoTMU9u60Q4NiTGGWzDHvMs3myAr7+6gFLawWuLN3lxveTzgEFqh
+         2tKXlqQtjR5KcJSFNxJXyKnG/39UPK79Me//S1Zgps37idLT4/hT9KfQbh7iYfqaNM/7
+         AkdbrVK6P7/9JbKM/lbNLCmKZJUZ+2jlEUWGHP0IrW9f3/A9Rhb7Cqlzep/GjPaSwAyj
+         C6HCc6QMY93hnzoZ1DGXIjR+BX6DGZVlTKwEFgHStSDChgGf9jDChWayd4sSco6IvoTQ
+         n//Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUyK+Ab3tE89czhUbU/uwujBt5amtzt5Fv5/ouTMyfNH5Pb+9Kth/LyGJS2c0JTeo+zDNgvdiZgvD46HtBk@vger.kernel.org
+X-Gm-Message-State: AOJu0YyD7hij5Cwo0Q6iV9Cm/es/XeIq8gkW+yaq5Hd/dvFh1V29f7uf
+	WaaonRcl1mOsrE+ZPQSMM3lXT5S5JhVRAeHMpFcZpMwuCsWhnV9G4LIx0//ktwg=
+X-Gm-Gg: ASbGncsB0w4Jv6qoHFaBUG5egP6SmDW3bhPf5SUr85wxJ4SO6gDygOZditOkDi/Ny3a
+	lfOvMBNfpbfypgKN3+T5TQNqHLCylrpjirQLcKKXH1Aco4WaYBSjDazR0N5mJ6ObMHFyp2Z7ZJC
+	1RE1v/L94ZEgIIjOlCJiUpqXg0WwRO9pmp8OWwkHIgI1IDCtUm9WhvEMs+6X7CyL+5Bs7YeyqxB
+	MqbUc3jvY+l0vR3QQOSELLJVmwV1rR5GObEOeCfIsoVuq/hRIpb5s+NZt8VcvGIIM3XBMbNlSac
+	Q0kHvYioz/EqYtQKN/ZkzfUDZ9NRtWnKDg==
+X-Google-Smtp-Source: AGHT+IGsgdXAdVI72VjehBhRAGYyQYi2ZlWZ5S+RtIUjGgQQsMEhY9vE/LoWlhZJn7MQjhDvpgk8fA==
+X-Received: by 2002:a2e:bea2:0:b0:302:2620:ecc7 with SMTP id 38308e7fff4ca-30249e89ee5mr1842641fa.35.1733943636318;
+        Wed, 11 Dec 2024 11:00:36 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-302292959c0sm8657671fa.94.2024.12.11.11.00.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Dec 2024 11:00:34 -0800 (PST)
+Date: Wed, 11 Dec 2024 21:00:31 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Johan Hovold <johan@kernel.org>
+Cc: Abel Vesa <abel.vesa@linaro.org>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Karol Herbst <kherbst@redhat.com>, Lyude Paul <lyude@redhat.com>, 
+	Danilo Krummrich <dakr@redhat.com>, Jani Nikula <jani.nikula@linux.intel.com>, 
+	Rodrigo Vivi <rodrigo.vivi@intel.com>, Joonas Lahtinen <joonas.lahtinen@linux.intel.com>, 
+	Tvrtko Ursulin <tursulin@ursulin.net>, Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+	nouveau@lists.freedesktop.org, intel-gfx@lists.freedesktop.org, intel-xe@lists.freedesktop.org, 
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v2 1/4] drm/dp: Add helper to set LTTPRs in transparent
+ mode
+Message-ID: <qh5ochh2cjqj76qqbbj7e2jmyie6pbnvgcr5wti5eigc4qxjod@v5tov4s65sdb>
+References: <20241211-drm-dp-msm-add-lttpr-transparent-mode-set-v2-0-d5906ed38b28@linaro.org>
+ <20241211-drm-dp-msm-add-lttpr-transparent-mode-set-v2-1-d5906ed38b28@linaro.org>
+ <Z1mk08SHEd5_vc99@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 6/7] arm64: dts: qcom: Add board dts files for SM8750
- MTP and QRD
-From: Melody Olvera <quic_molvera@quicinc.com>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon
-	<will@kernel.org>,
-        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>
-References: <20241204-sm8750_master_dt-v3-0-4d5a8269950b@quicinc.com>
- <20241204-sm8750_master_dt-v3-6-4d5a8269950b@quicinc.com>
- <b9225284-7830-4aa4-aed2-7f58fb7320e8@oss.qualcomm.com>
- <79e55e6e-e560-4f43-8d6e-bbaf7fcf157a@quicinc.com>
-Content-Language: en-US
-In-Reply-To: <79e55e6e-e560-4f43-8d6e-bbaf7fcf157a@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Fn3miiM-g8wIKGJTEFmkh3ST2ifxULdN
-X-Proofpoint-GUID: Fn3miiM-g8wIKGJTEFmkh3ST2ifxULdN
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- impostorscore=0 phishscore=0 spamscore=0 clxscore=1015 mlxlogscore=889
- malwarescore=0 lowpriorityscore=0 mlxscore=0 bulkscore=0 suspectscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412110134
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z1mk08SHEd5_vc99@hovoldconsulting.com>
 
+On Wed, Dec 11, 2024 at 03:42:27PM +0100, Johan Hovold wrote:
+> On Wed, Dec 11, 2024 at 03:04:12PM +0200, Abel Vesa wrote:
+>  
+> > +/**
+> > + * drm_dp_lttpr_set_transparent_mode - set the LTTPR in transparent mode
+> > + * @aux: DisplayPort AUX channel
+> > + * @enable: Enable or disable transparent mode
+> > + *
+> > + * Returns 0 on success or a negative error code on failure.
+> > + */
+> > +int drm_dp_lttpr_set_transparent_mode(struct drm_dp_aux *aux, bool enable)
+> > +{
+> > +	u8 val = enable ? DP_PHY_REPEATER_MODE_TRANSPARENT :
+> > +			  DP_PHY_REPEATER_MODE_NON_TRANSPARENT;
+> > +	int ret = drm_dp_dpcd_writeb(aux, DP_PHY_REPEATER_MODE, val);
+> > +
+> > +	return ret == 1 ? 0 : ret;
+> 
+> This looks correct, but I had to go look at drm_dp_dpcd_writeb() to make
+> sure it never returns 0 (for short transfers).
 
+Indeed. It got me a while to check that drm_dp_dpcd_writeb() ->
+drm_dp_mst_dpcd_write() -> drm_dp_send_dpcd_write() ->
+drm_dp_mst_wait_tx_reply() never returns '0'. I'd prefer an explicit
 
-On 12/5/2024 10:21 AM, Melody Olvera wrote:
->
->
-> On 12/5/2024 8:45 AM, Konrad Dybcio wrote:
->> On 5.12.2024 12:18 AM, Melody Olvera wrote:
->>> Add MTP and QRD dts files for SM8750 describing board clocks, 
->>> regulators,
->>> gpio keys, etc.
->>>
->>> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
->>> ---
->> [...]
->>
->> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
->>
->>> +&tlmm {
->>> +    /* reserved for secure world */
->>> +    gpio-reserved-ranges = <36 4>, <74 1>;
->>> +};
->> Any chance you could describe what those specifically are?
->>
->
-> I'm not too certain, and even if I was, I'm not certain I'd be at 
-> liberty to say.
+if (ret < 0)
+	return ret;
+return (ret == 1) ? 0 : -EIO;
 
-Spoke w some folks; looks like we're suing these for NFC eSE. I can add 
-in next ps.
+> 
+> > +}
+> > +EXPORT_SYMBOL(drm_dp_lttpr_set_transparent_mode);
+> 
 
-Thanks,
-Melody
+-- 
+With best wishes
+Dmitry
 
