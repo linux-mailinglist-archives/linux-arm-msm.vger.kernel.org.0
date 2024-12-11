@@ -1,137 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-41402-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41403-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id AF3929EC4AB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 07:21:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 41FC89EC4B1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 07:24:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0103D168BB4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 06:21:06 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 631621685FA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 06:24:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 670651C32E4;
-	Wed, 11 Dec 2024 06:21:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 763871C07FB;
+	Wed, 11 Dec 2024 06:24:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="z2xr0OLS"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dxZ0jaeu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5190E1BB6A0
-	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 06:21:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C52C32451C0;
+	Wed, 11 Dec 2024 06:24:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733898063; cv=none; b=rJkXsaS4OgRMfB7QtK/EnH2Izm31fXizwxvUsz5fZvAuy7rx7ZY4fdVucsExO067iyap6TwyDm8OQkUELpDS0IbL9pFwYlrwh+Tt356MwgZMMVVi7bAt4dc3ZYhPS/n7q1zfpYXWJs7Lil0fRg6hYhzq5dplKd5vpcrNU9t9iE0=
+	t=1733898271; cv=none; b=E48lqoc2GQRYy8cqXub/KFE0tNOIT+NXHOEZ2AN35DAwiXI+7iNS3ndg8C0r+e7f8nmRbrKY9DrpwxiIbf+iNostPBte+m66ziXwUV3oue0KLOD+LkHG56AhiwbcYUYNcEpt1NFvUWIlqlARz/SXlGGjP7Rm8TuyGMHurFw5D3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733898063; c=relaxed/simple;
-	bh=xP/3mFAEUu5jGusceunPOkWKJ2FbuC2oApaFvMz9n7c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=U1/nmF7BSLACxU/01XSQCydkbzmMuuZRU532/CSOpQRFG6CwaQybgObHaktI9+8HG2OVnjlAu6s4acybIvpPMMjLdHV/CKLHRzDazifpDeytewKuYWK2bopWOIs4dLd6vVAqBe00AfP227EbRTFPAJrtfC2ncA+3A7D8CJL14is=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=z2xr0OLS; arc=none smtp.client-ip=209.85.210.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-725d9f57d90so2761034b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2024 22:21:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733898060; x=1734502860; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=0d5CzVXzJ7EqY/542DTDjPbVEeRALSf1iz2hJWMyrGs=;
-        b=z2xr0OLSC0FDc3zS1dL4jVmtckR7p7MjYHnqbv9sGNTUE9cJGdNbxkTTCbrkGAa99U
-         9OaDDRNXeWcUaGl0hEJ9XDTU1WwWNHZAF5rvYrNs9DnXAgSX1YAoUA3FBuac9c83vQfn
-         ObMPRDE1go2eQTRy2qz2OrBX0EOgJ/YRSx6T9b2DzjOpVnw9X4z3WPsTtb08JaE2pQyw
-         VZ1Qn6s5tRTkDszkAbw7FKog/tiqiFh9C8PGEWiHBArQIS0OyeuBQT1gWgyKHQSI3bbC
-         Hw1IOWKbpZ/0rcVsL9eGxigOO9P6Lfn5LMvFWvWEWt2B4PhwII6F0BDa5iucy0cH6X4P
-         ABww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733898060; x=1734502860;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0d5CzVXzJ7EqY/542DTDjPbVEeRALSf1iz2hJWMyrGs=;
-        b=SjQiprXvzWkjU2dasPqvPLV/iE+9uWqcMFhhYh/Ze8QTm/7+nftFPf88G+fmXFLyyX
-         jcJ7BSpu7qP0VCRnJt0yvkU73DUpAxxIjcJvLvHargTffCaearusfM2icQeR3q3BNUE8
-         5ifimCwbYOEKWfjDAnpyGA0MFNy41vR8bEG5hHI0agz6IMzS07DtRkO6j7ZEqB/EgZfd
-         6arA3AVc3YUSnbijqbhlFXPUbxbyMXupkp4qNUrf30a6AvRzupYO256MG218hws1ExO8
-         sWCKdh+a0/O/mUsUlTNgSZ+4tG/eV9XBWyvMHXp9MOvdHnvQYrcY40gz3Cis10zC0FQ/
-         3+8A==
-X-Forwarded-Encrypted: i=1; AJvYcCW1DM0n536kASGl+J124wW77H+TD4qRBAC45p42VsjXA7ZfoKZtgFjyL3shEVgXwOVukq088cuv/TuYIOM9@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz6RtuufcvLJ0mCtO4NjetYvP29c+Jg3xIzoTOmmSGPGSra/YG8
-	cXtA8vAb/nFlaWUGU0Id9xTTgiVQrvwU46uWRJDtdS70AL01acalDuGoy/8FsA==
-X-Gm-Gg: ASbGncvGrbOnwtUnZamTxfesXSkXLultbvuDzeGclpIhpqcQfPQ0jh5VsFVMpdN9DiW
-	3NG5xGaX2V67mbe7TMvkYHEwe5TDFLyYOmKS3PVgyz1O0xN3iFuMAEcV/5MPgNnoJbey8rHHRod
-	eTYoNicExIUpHNIdkY0zL9FZNqdRvtbktaEJgiEhUXYcjGD+s/2UuypQpW+GNuoLqkS0TaSG1ex
-	kE669TQQTzGk3hr2qGJxh4KLOVfnPLIPWGW9rf2tnpxXqH9HwsRamYznrWGy8o=
-X-Google-Smtp-Source: AGHT+IFWvDNrqEB23z/oBgRJDSkzxDUqR7wA2A2btM/Mtu50Ib91aDIP/XMJYo9C7ZTzBqiKgwPjGA==
-X-Received: by 2002:a05:6a20:244f:b0:1e1:bf3d:a190 with SMTP id adf61e73a8af0-1e1c13832f3mr2505278637.30.1733898060524;
-        Tue, 10 Dec 2024 22:21:00 -0800 (PST)
-Received: from thinkpad ([120.60.55.53])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7273c7f3f1fsm3124018b3a.13.2024.12.10.22.20.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Dec 2024 22:20:59 -0800 (PST)
-Date: Wed, 11 Dec 2024 11:50:53 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Ziyue Zhang <quic_ziyuzhan@quicinc.com>, vkoul@kernel.org,
-	kishon@kernel.org, dmitry.baryshkov@linaro.org,
-	abel.vesa@linaro.org, neil.armstrong@linaro.org,
-	andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
-	krzk+dt@kernel.org, conor+dt@kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH 1/3] dt-bindings: phy: qcom,qmp-pcie: add optional
- current load properties
-Message-ID: <20241211062053.vxdpovlmetvyx3za@thinkpad>
-References: <20241204105249.3544114-1-quic_ziyuzhan@quicinc.com>
- <20241204105249.3544114-2-quic_ziyuzhan@quicinc.com>
- <qvjtwilukxbeaxnbyzfkdsfkktm6p4yv3sgx3rbugpb6qkcbjy@rohvixslizhh>
+	s=arc-20240116; t=1733898271; c=relaxed/simple;
+	bh=cXsu/Gi3s+bedrEAgU2nKMRWj1f8OC+Z0CWG92qiJCQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=n/qA6cQesJHUc/3B1+kTP557FTdEwOoBQ+ssTGQgx5E1AV9H8+q4QLbLUnlX4JyVLf1i1YsFeoDEPxPJb7vqPbzzRO7CbDdHQLKwqTJUYfXBRHX+aPJtC6Jd1kVdS1p5qkrZGHyE0DTAYtVX8xJUZnc3pMQUF1ObAwQnWvRaAmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dxZ0jaeu; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BB6JaCQ002655;
+	Wed, 11 Dec 2024 06:24:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	PA0rk8LB7k2DRfwNO6nYoqrgYmmGKKzQ3UQDmIENKTY=; b=dxZ0jaeuK5M0yoUk
+	71k/2XnPHJ3y1TyqW900o9BSElheFDZvB44aeK5uvE3P5PYVEdaarZ3re900ixgM
+	IdbH0ihShqGMXEBIOs5Ip1XOKywl9YnSIg3Ygpyg12MOZ9msWNxH+DLJ4U+hovFt
+	SjujaEl/TnTlvh7FztFL9Ftbc4Sh8EaXH6f8bCRM9HLcD+lTxlFgUqF8ADsTl8zV
+	5EJmrhxdseqPgOD5fel7JY7aS5BISo6cv0LAPp42vt7cUiW/7F2Q4iV2meW3KZd5
+	IUKNMKY15bHlkAUdS81fQL1US33aqUTygIi5Lbu0bUKx/DLj0eygtLf/imZPPccM
+	2XvVww==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43dxw46sxa-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 11 Dec 2024 06:24:19 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BB6OIL6032101
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 11 Dec 2024 06:24:18 GMT
+Received: from [10.204.101.50] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 10 Dec
+ 2024 22:24:12 -0800
+Message-ID: <b4f35301-6361-9e07-73dc-023e87c80857@quicinc.com>
+Date: Wed, 11 Dec 2024 11:54:09 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <qvjtwilukxbeaxnbyzfkdsfkktm6p4yv3sgx3rbugpb6qkcbjy@rohvixslizhh>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v8 27/28] media: iris: enable video driver probe of SM8250
+ SoC
+Content-Language: en-US
+To: Stefan Schmidt <stefan.schmidt@linaro.org>
+CC: Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Abhinav Kumar
+	<quic_abhinavk@quicinc.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        "Rob
+ Herring" <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        "Conor
+ Dooley" <conor+dt@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        "Hans
+ Verkuil" <hverkuil@xs4all.nl>,
+        Sebastian Fricke
+	<sebastian.fricke@collabora.com>,
+        Bryan O'Donoghue
+	<bryan.odonoghue@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Nicolas Dufresne
+	<nicolas@ndufresne.ca>,
+        =?UTF-8?Q?Uwe_Kleine-K=c3=b6nig?=
+	<u.kleine-koenig@baylibre.com>,
+        Jianhua Lu <lujianhua000@gmail.com>, <linux-media@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20241210-qcom-video-iris-v8-0-42c5403cb1a3@quicinc.com>
+ <20241210-qcom-video-iris-v8-27-42c5403cb1a3@quicinc.com>
+ <CAEvtbuuO5Ga+wW9rstX_e_RGnm5jSNSHmyy3w3M9FTopNhKttQ@mail.gmail.com>
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+In-Reply-To: <CAEvtbuuO5Ga+wW9rstX_e_RGnm5jSNSHmyy3w3M9FTopNhKttQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: HWUIum05cGACm-Xsx1JAFYpE3BoK07t2
+X-Proofpoint-GUID: HWUIum05cGACm-Xsx1JAFYpE3BoK07t2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
+ suspectscore=0 priorityscore=1501 adultscore=0 mlxlogscore=999
+ clxscore=1015 spamscore=0 mlxscore=0 lowpriorityscore=0 phishscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412110046
 
-On Thu, Dec 05, 2024 at 11:23:11AM +0100, Krzysztof Kozlowski wrote:
-> On Wed, Dec 04, 2024 at 06:52:47PM +0800, Ziyue Zhang wrote:
-> > On some platforms, the power supply for PCIe PHY is not able to provide
-> > enough current when it works in LPM mode. Hence, PCIe PHY driver needs to
-> > set current load to vote the regulator to HPM mode.
-> > 
-> > Document the current load as properties for each power supply PCIe PHY
-> > required, namely vdda-phy-max-microamp, vdda-pll-max-microamp and
-> > vdda-qref-max-microamp, respectively.PCIe PHY driver should parse them to
-> > set appropriate current load during PHY power on.
-> > 
-> > This three properties are optional and not mandatory for those platforms
-> > that PCIe PHY can still work with power supply.
+
+
+On 12/10/2024 9:53 PM, Stefan Schmidt wrote:
+> hello Dikshita,
 > 
+> On Tue, 10 Dec 2024 at 12:08, Dikshita Agarwal
+> <quic_dikshita@quicinc.com> wrote:
+>>
+>> Initialize the platform data and enable video driver probe of SM8250
+>> SoC. Add a kernel param to select between venus and iris drivers for
+>> platforms supported by both drivers, for ex: SM8250.
+>>
+>> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
 > 
-> Uh uh, so the downstream comes finally!
+> [...]
 > 
-> No sorry guys, use existing regulator bindings for this.
+>> --- a/drivers/media/platform/qcom/iris/iris_ctrls.c
+>> +++ b/drivers/media/platform/qcom/iris/iris_ctrls.c
+>> @@ -17,6 +17,8 @@ static inline bool iris_valid_cap_id(enum platform_inst_fw_cap_type cap_id)
+>>  static enum platform_inst_fw_cap_type iris_get_cap_id(u32 id)
+>>  {
+>>         switch (id) {
+>> +       case V4L2_CID_MPEG_VIDEO_DECODER_MPEG4_DEBLOCK_FILTER:
+>> +               return DEBLOCK;
+>>         case V4L2_CID_MPEG_VIDEO_H264_PROFILE:
+>>                 return PROFILE;
+>>         case V4L2_CID_MPEG_VIDEO_H264_LEVEL:
+>> @@ -32,6 +34,8 @@ static u32 iris_get_v4l2_id(enum platform_inst_fw_cap_type cap_id)
+>>                 return 0;
+>>
+>>         switch (cap_id) {
+>> +       case DEBLOCK:
+>> +               return V4L2_CID_MPEG_VIDEO_DECODER_MPEG4_DEBLOCK_FILTER;
+>>         case PROFILE:
 > 
+> The handling for DEBLOCK does not seem to be part of the SM8250
+> enablement. Or did I miss something?
+> It seems they should be part of a different patch that makes use of
+> the DEBLOCK cap.
+> 
+this cap is part of platform caps of SM8250 and the value(set by
+client/default) of this will set to firmware as part of start streaming
+through set APIs.
+{
++		.cap_id = DEBLOCK,
++		.min = 0,
++		.max = 1,
++		.step_or_mask = 1,
++		.value = 0,
++		.hfi_id = HFI_PROPERTY_CONFIG_VDEC_POST_LOOP_DEBLOCKER,
++		.set = iris_set_u32,
++	},
 
-Maybe they got inspired by upstream UFS bindings?
-Documentation/devicetree/bindings/ufs/ufs-common.yaml:
-
-vcc-max-microamp
-vccq-max-microamp
-vccq2-max-microamp
-
-Regulator binding only describes the min/max load for the regulators and not
-consumers. What if the consumers need to set variable load per platform? Should
-they hardcode the load in driver? (even so, the load should not vary for each
-board).
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+Thanks,
+Dikshita
+> regards
+> Stefan Schmidt
 
