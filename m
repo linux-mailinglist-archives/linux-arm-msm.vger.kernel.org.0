@@ -1,215 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-41387-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41384-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B906A9EC11C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 01:53:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C487A9EC0FF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 01:38:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9AB0D188A6F6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 00:53:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BE3C718891CC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 00:38:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF1482BD04;
-	Wed, 11 Dec 2024 00:53:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4291B29D05;
+	Wed, 11 Dec 2024 00:37:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rocketmail.com header.i=@rocketmail.com header.b="XeZDEnE/"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cwx5Gojo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from sonic302-21.consmr.mail.ir2.yahoo.com (sonic302-21.consmr.mail.ir2.yahoo.com [87.248.110.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C1A8489
-	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 00:53:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=87.248.110.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C3F1259C;
+	Wed, 11 Dec 2024 00:37:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733878393; cv=none; b=AB1dRySNJt/Igl80hCpA3o20OvffrqcdUIxntUC0biYVl/V76iN7FUJZtvlIjMzPBtKGqt1Kk+HneSxYPy7tGiY+aNM4kZn7hR7QA5jumn9h0y9Y35tznsU1W1qENdeVD/zX6dKZCWgt6CB3zMdYQ3LaoR7nqdioHz3lMOUQdiY=
+	t=1733877479; cv=none; b=gTzlia0WNaeg4pgkll0NqM2uosEYDeOFxovJlRShR3KpQrl0p2CTYsSFy2UCI1SBbXd1Fpy2kt4yPKHpp6HOJcAxjaNID3YKr6hZraSh61RljiLW3EM3PJeZz8Kzzki2JtRq5KApvU9wVGDzXzn2gWQcWsytQcqeujTuBEocS9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733878393; c=relaxed/simple;
-	bh=LqHuqGpa5Grtt5aFubFwCo6EDZhmWlFfdhX7oG1lIrA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZWyLlPlj9tEzsTqKcb6oMXsEvsN1QeI1M5pBGLxCu6vJDYRmzbzLjgsdNNAIXfGvNM/pxIxhP94RFyuxOeMy1DD4ND7a3IpAwKpHDXzy9u6PixOsFLVO9qshOd/PSLoMpzBt1WRmXE8WL0pYWlAyYVRhvYLarYU38lAmg+wGbug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=rocketmail.com; spf=pass smtp.mailfrom=rocketmail.com; dkim=pass (2048-bit key) header.d=rocketmail.com header.i=@rocketmail.com header.b=XeZDEnE/; arc=none smtp.client-ip=87.248.110.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=rocketmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rocketmail.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rocketmail.com; s=s2048; t=1733878389; bh=ktowREVGtv7pMwrhJAmbO+gSkvzC8xt1bBOXkRHQ/Y0=; h=Date:Subject:To:Cc:References:From:In-Reply-To:From:Subject:Reply-To; b=XeZDEnE/0q9FfDYJ99v76L29vtFncuQi2guHSaFkMNOjCVhCdaMLmxQL8iRzT2+Bl9pXcx6J6MpXvgyh3z9LH7MY1PQhMKT2i+9e/+19b3RoLq6bLt47bY116eaUxc1R+aOxp9L18mmYA4mD+BZ+VDmbKH7k6CskjKZjIEzUEvjnaYQYjwTFFSKaLIPuUHHnLYCGGjfSh1mBmuNn7GfWb8oUS18i4h/ud1YJ1P+/8tQbpZeKFynB+sHSzt24b/vrAL5ihKPDl+rNk2rHNPie9EExjSFNiAhpfdFw+lVlqpYQQOx9SeendVNQ9ZBNmTKYSWyTpE4s5JK30SdJhmKSnA==
-X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1733878389; bh=vjS+Dqfl1N6hwLTjSBtgSarju8FV0wpRRCmp+swdAA5=; h=X-Sonic-MF:Date:Subject:To:From:From:Subject; b=e8JdVz2rF9OxgVvTdF5/VKKL3kSM+ZlHxqj3aYnA77az0lUdIYcRVvlHO2KUz0a7hn18LAbtb4XIdE+aN0kaNlsa+wQHUMAEUrOd9AHpAYxPZhmwZJLgzfQB4KnJ6Z5jF1fDIMI3ZYQi+3XODR02XOpx4aKGXXggQCU3KQOyh0wTvk1kwzurHCMa2upmaTlD4C0hmi1abMYAmDTAPkVXe/4Iu6lugCCDP4PO6ldORiu2PDin4/0BMSpiRuJb+55LSu302kDki8+m+33TLXMJTF/0XmDrApgwbhMm250Q4ZfoHVZQwSZ9tQYeAaQEbw4JfEcLjfO61wG4Q1g1neW3PA==
-X-YMail-OSG: R_zHgkAVM1lgYkaRnSsW_vEoALixplc.az4r89GopFYXnIWIdp4fkoJ2UmjDnrO
- ah7_sV0NsBPgOidKoqWEHmfzs4pd3d7eLYtFDiUsGAoodhCW105W_SIeJDiwc9_CTJZWmzFKl1y6
- fx74Q02cejSST_s0JB0J1Nx3xfNQn9LlbzTginX0Lj4JriZmPq0z0IjnMOTGOrMx9O1CK_DBSh8B
- DbMWjAup9m6Sd_VVoN43.46GfSy37fT8ulgeXycWsXG04w3.s7aapXqOdIb40ezGiwIKPA3BtMtV
- HjIWffiPyR_cjBGwLl5i1ST_scoDyZC.Mv_RdqtRKjYv5oWxYQiJLK68iQTqJbNFhiICVssy2GZg
- MEt4oJQvnSmk2NjUthGov_6TeIttD6uTOAklOvLG4fpaCP1rna_khx5_LU4BBMR8jkj9kxRc2DHQ
- verhYPq.IUD501kVZnzVX3s8bQNTrbIOz9OWDhMMqcj1HXp.wsoOOGe.ajMLRff2D88s5UZwZ68j
- khCbA9XK4PLnVEmq0jdqB91NFgqo_aQtHVgMXNXpHhK3CglTVZLq4d89pJ2fNGV2_2cdVqBund8t
- 4o.Nf8e0Fjl9ZkTSuVgUTcz41te9Z7UXXPQzCRR31wXl0J0Q4wJRy1tPGTS9j9tNKq9Sb8u5iBhT
- .qAqns8zbFA5ek.2SzmxObim8NB8kVA_XRJ2eb70lXdTh1qKznP5GE5c2bmai1xdK3CTA.oFWH_9
- oTz_jnZQznAcOHKFV4C_oLpM17se1GBDCoZ4d3RR3TXg.iXoa2Ek51m5qcxneurAAIgR0ySpXcFJ
- 8rKbEKZDeDND1elSI.q4vg_0CVdpNksMLxgwUx_MBDys6JqdYG7_qOIewegRAbDNDOs4nAxAFJZS
- mlWRI57KZLoRYTdVCl9H2mqBtF.PWIK2oOKKyrDSTGk1NPjHaw7_GIgWqTNjvpHKTDY84ClOsSew
- P5z8YxYEdeTbUh.vcyPDZGgcvoNK1pvtcM4pfjXgmQKTHnMEYP0vu_rMpRQ.W7gURPUGTk1qlgRR
- oL2Va0clphmjonzkMksGo0dhTPVrvaysbHhIGzk.g4KILELw6sfr3YMzq6zwo0nB2AJUhgNls57K
- 11BkXske5znpwsH6e7s1X.nZxKVX1Ls4V1A.pb_Lbc26cMR5AHeT2dwodl4PFxD7QP6cuLLslRBt
- sYN01mpUPldm8bjxTt0OdwlTBAvNlRwkA6M7eyjSSw01dEwlpYDwpydJAU0iybVc91iGuK1cNWk3
- cNwxA0H_tjkxslvOV3q_buHAPt1TeZLPi9.4d62j2qfjeb.cRuy8ThtR01LgOaMqXjTt6xjzjqPB
- 43ldJbiMrnAFe9vDds9DmDfgcAFk8Oh2jhthjjkzir80PKpaioEn49oaTnXcesyuj5IASMem60XF
- 2PkVVewasoBUDFjlq6WtdLt0I.EAdkQawt.wIjkWxXyjsoIkEzW8MP3oFXoseTUAshyVnT72At_b
- PEQLErHlndwobqWxS_usglZT8crjSeAyR.MBOK22sDhFuRw37ddW4kmCY_qVrhoCIJi5BZEJUndt
- AEy_YCTZwVLAnE7HA4TJw3Cs6aDePhHZk.ZukUchymw2Drgz57BybIWfSfQ4QEChw41oF7QfdTYi
- .1go5SnNmKIPvGF6QZhpSnMiSszG1zEKl5X28o128._7g56koUvzwdBIUkrPLmN21aLw1nFNe7c8
- r8qCj3GJKVt3o92FYQOVcPfZuoxnHjGgVF_uhW3Lyo8WDjNvRajBm604atBT3j.750e9gLxgNXAW
- UxFqzWO6Q06U844ZwcFim2rPNcISLJtZDE4TDawkrmMgV65lLTL6mXsHCskOJmgi6XF.0Kd5PTNM
- QlsHwg1ANBcG.T80az0HhpJ5UrdcdO.x.mPTNWBIWzldor3GtPDyorAVfOi2ftFAI.MIPkf4x04f
- A629lMBLZCNDJcYP2wCg3U8YRsI4uG03Ap2_IIQfP6H5hofYvvW4TJ7W9NgHnk3.jvW873lNEAxG
- KVuvZIYUXqiaeHWqC0Z0VPRjD_TO6d8f2yqJxwnjfMAzCXCBUCq4fUGrqDgT5iLjWsJSVPD_FrpO
- c4kwDMVU81BtBAxH5oab3dFjXpx2h8pVb6njA5njaKKQjOXEs3UWClEW3rpaB8wLsmA.5DZcby3n
- dqBQ0XrXjRMKv2V5Jl5E2ClG8XDzBCUPPdZTSXRUa3Gj3l9sSjMh9o5Hv7nU5VI9pximGhQlkFMJ
- Sojd6DLrhdWc7CEzRAU6oUgKpCzeS7Vu7GFUrL_LBx_MCMfQ.qLMwtxST_pFCEkwEMLeuPnG6tQD
- M2IOuKcR6JjgovUbBPFp0QhPhGiR9SA--
-X-Sonic-MF: <jahau@rocketmail.com>
-X-Sonic-ID: 9d8cd608-909b-4f61-b1d3-8cc7f4afe820
-Received: from sonic.gate.mail.ne1.yahoo.com by sonic302.consmr.mail.ir2.yahoo.com with HTTP; Wed, 11 Dec 2024 00:53:09 +0000
-Received: by hermes--production-ir2-c694d79d9-zzg9t (Yahoo Inc. Hermes SMTP Server) with ESMTPA ID 9eebe7d30b4fb4bf596e1406d98945ad;
-          Wed, 11 Dec 2024 00:32:51 +0000 (UTC)
-Message-ID: <d377405e-4cad-4c2e-ad38-8c0323384c41@rocketmail.com>
-Date: Wed, 11 Dec 2024 01:32:50 +0100
+	s=arc-20240116; t=1733877479; c=relaxed/simple;
+	bh=v811ZU3sV6/EG8JxkRZnks9X9x8zSBV7bWxRiUI0HsY=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Br5HDGcI5lmSv+qeMW+DfvDqQhl8q9ZYSHCG6UmHLxlQLxHTik3nGAHLqQE0z6HisGbMtltZlMUlDeinmxh52AinPJfwxkcX3HBhMSrkLx3YjjHFNm9Nl3LpkGyxmm6bqu8EIRIx3IMTDQm174POhkd8ZJJ3dV/8CjivMYB/lW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cwx5Gojo; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BAGa3Uh024768;
+	Wed, 11 Dec 2024 00:37:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=bmIRd3iGai9B8GwQnitcTjV6
+	mPEycuUXQCqAtqWaspI=; b=cwx5GojoORS34usLwO6coUU47gO6SMjRDwh+Gz0Q
+	7xzGgYSS22GTCw0bCquQtxw6NunQm/Cudm5yjax4Cvcgit3494QMcWMac89qE0sv
+	MUmFU+3hvVHIWDao1AnK/b9v/4TVaGqs8x+sGoXL9uWH7fmKsTdYGnsIvPZqXbO+
+	DBBR09U0cAmS14/2+l6Hogn8wNtSxsUQ14kuLpvXC5QUCz9EBfui1p5dosR3i1jn
+	W5Wzgy47NK0Y8X7GfkNegIxG95AgIemN7Hmg2GQUNspvaRo8DYr6Fw2zYCplJxyd
+	fE83H/3y5cfYHAm4Qf9Wkelfxgt3KYeAgkZ2VjJsPUju3g==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43ceettc8w-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 11 Dec 2024 00:37:43 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BB0bgdg009896
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 11 Dec 2024 00:37:42 GMT
+Received: from hu-pkondeti-hyd (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 10 Dec
+ 2024 16:37:37 -0800
+Date: Wed, 11 Dec 2024 06:07:34 +0530
+From: Pavan Kondeti <quic_pkondeti@quicinc.com>
+To: Marc Zyngier <maz@kernel.org>
+CC: Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Rob Clark
+	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        "Dmitry
+ Baryshkov" <dmitry.baryshkov@linaro.org>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, "Simona
+ Vetter" <simona@ffwll.ch>,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        "Pavan
+ Kondeti" <quic_pkondeti@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+Subject: Re: [PATCH] drm/msm/a6xx: Skip gpu secure fw load in EL2 mode
+Message-ID: <92cee905-a505-4ce9-9bbc-6fba4cea1d80@quicinc.com>
+References: <20241209-drm-msm-kvm-support-v1-1-1c983a8a8087@quicinc.com>
+ <87ed2fs03w.wl-maz@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: msm8916-samsung-serranove: Add display
- panel
-To: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: Stephan Gerhold <stephan@gerhold.net>, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
- ~postmarketos/upstreaming@lists.sr.ht
-References: <20241114220718.12248-1-jahau.ref@rocketmail.com>
- <20241114220718.12248-1-jahau@rocketmail.com>
-Content-Language: en-US
-From: Jakob Hauser <jahau@rocketmail.com>
-In-Reply-To: <20241114220718.12248-1-jahau@rocketmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Mailer: WebService/1.1.23040 mail.backend.jedi.jws.acl:role.jedi.acl.token.atz.jws.hermes.yahoo
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <87ed2fs03w.wl-maz@kernel.org>
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ZVxb1h32_u863zORd3fXSAbJrr3RcbYa
+X-Proofpoint-ORIG-GUID: ZVxb1h32_u863zORd3fXSAbJrr3RcbYa
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
+ spamscore=0 adultscore=0 clxscore=1011 impostorscore=0 mlxlogscore=839
+ bulkscore=0 suspectscore=0 lowpriorityscore=0 malwarescore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412110002
 
-Hi Bjorn, Hi Konrad,
-
-gentle reminder that this patch is still open.
-
-Link: 
-https://lore.kernel.org/linux-arm-msm/20241114220718.12248-1-jahau@rocketmail.com/T/#u
-
-On 14.11.24 23:07, Jakob Hauser wrote:
-> From: Stephan Gerhold <stephan@gerhold.net>
+On Tue, Dec 10, 2024 at 09:24:03PM +0000, Marc Zyngier wrote:
+> > +static int a6xx_switch_secure_mode(struct msm_gpu *gpu)
+> > +{
+> > +	int ret;
+> > +
+> > +#ifdef CONFIG_ARM64
+> > +	/*
+> > +	 * We can access SECVID_TRUST_CNTL register when kernel is booted in EL2 mode. So, use it
+> > +	 * to switch the secure mode to avoid the dependency on zap shader.
+> > +	 */
+> > +	if (is_kernel_in_hyp_mode())
+> > +		goto direct_switch;
 > 
-> Add the Samsung S6E88A0-AMS427AP24 panel to the device tree for the
-> Samsung Galaxy S4 Mini Value Edition. By default the panel displays
-> everything horizontally flipped, so add "flip-horizontal" to the panel
-> node to correct that.
+> No, please. To check whether you are *booted* at EL2, you need to
+> check for is_hyp_available(). Whether the kernel runs at EL1 or EL2 is
+> none of the driver's business, really. This is still absolutely
+> disgusting from an abstraction perspective, but I guess we don't have
+> much choice here.
 > 
-> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-> Co-developed-by: Jakob Hauser <jahau@rocketmail.com>
-> Signed-off-by: Jakob Hauser <jahau@rocketmail.com>
-> ---
-> Patch base is kernel/git/qcom/linux.git current branch "arm64-for-6.13".
-> 
-> The panel driver was recently added to linux-next:
-> https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/log/drivers/gpu/drm/panel/panel-samsung-s6e88a0-ams427ap24.c?h=next-20241101
-> 
-> The associated dt-binding in linux-next is:
-> https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/Documentation/devicetree/bindings/display/panel/samsung,s6e88a0-ams427ap24.yaml?h=next-20241101
-> ---
->   .../dts/qcom/msm8916-samsung-serranove.dts    | 58 +++++++++++++++++++
->   1 file changed, 58 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts b/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts
-> index 5ce8f1350abc..caad1dead2e0 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts
-> +++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts
-> @@ -321,6 +321,41 @@ &blsp_uart2 {
->   	status = "okay";
->   };
->   
-> +&gpu {
-> +	status = "okay";
-> +};
-> +
-> +&mdss {
-> +	status = "okay";
-> +};
-> +
-> +&mdss_dsi0 {
-> +	pinctrl-names = "default", "sleep";
-> +	pinctrl-0 = <&mdss_default>;
-> +	pinctrl-1 = <&mdss_sleep>;
-> +
-> +	panel@0 {
-> +		compatible = "samsung,s6e88a0-ams427ap24";
-> +		reg = <0>;
-> +
-> +		vdd3-supply = <&pm8916_l17>;
-> +		vci-supply = <&pm8916_l6>;
-> +		reset-gpios = <&tlmm 25 GPIO_ACTIVE_LOW>;
-> +		flip-horizontal;
-> +
-> +		port {
-> +			panel_in: endpoint {
-> +				remote-endpoint = <&mdss_dsi0_out>;
-> +			};
-> +		};
-> +	};
-> +};
-> +
-> +&mdss_dsi0_out {
-> +	data-lanes = <0 1>;
-> +	remote-endpoint = <&panel_in>;
-> +};
-> +
->   &mpss_mem {
->   	reg = <0x0 0x86800000 0x0 0x5a00000>;
->   };
-> @@ -330,6 +365,13 @@ &pm8916_resin {
->   	linux,code = <KEY_VOLUMEDOWN>;
->   };
->   
-> +&pm8916_rpm_regulators {
-> +	pm8916_l17: l17 {
-> +		regulator-min-microvolt = <2850000>;
-> +		regulator-max-microvolt = <2850000>;
-> +	};
-> +};
-> +
->   &pm8916_vib {
->   	status = "okay";
->   };
-> @@ -425,6 +467,22 @@ imu_irq_default: imu-irq-default-state {
->   		bias-disable;
->   	};
->   
-> +	mdss_default: mdss-default-state {
-> +		pins = "gpio25";
-> +		function = "gpio";
-> +
-> +		drive-strength = <8>;
-> +		bias-disable;
-> +	};
-> +
-> +	mdss_sleep: mdss-sleep-state {
-> +		pins = "gpio25";
-> +		function = "gpio";
-> +
-> +		drive-strength = <2>;
-> +		bias-pull-down;
-> +	};
-> +
->   	muic_i2c_default: muic-i2c-default-state {
->   		pins = "gpio105", "gpio106";
->   		function = "gpio";
 
-Kind regards,
-Jakob
+Thanks Marc. Any suggestions on how we can make is_hyp_mode_available()
+available for modules? Do you prefer exporting
+kvm_protected_mode_initialized and __boot_cpu_mode symbols directly or
+try something like [1]?
 
+[1]
+https://lore.kernel.org/lkml/1443649252-10702-1-git-send-email-ralf@ramses-pyramidenbau.de/#t
+
+Thanks,
+Pavan
 
