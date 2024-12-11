@@ -1,78 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-41522-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41527-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 21BAF9ECFEB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 16:38:17 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B39A89ED037
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 16:46:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 516C8188A358
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 15:38:17 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1169D16A585
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 15:45:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 252981B6CE5;
-	Wed, 11 Dec 2024 15:38:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA0AA1DA11B;
+	Wed, 11 Dec 2024 15:44:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="c/wjrEaD"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pZ6aMIe7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48F551A76D4
-	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 15:38:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50AF61D5CDD
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 15:44:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733931494; cv=none; b=A5wmDibxqPbMh2OGMazpRlLJXavxU1LQmnfNBvwQ1BhxLL5Zj4RZKSjTaerKcO0/Z/b9fZloEfbiE6n/vLEoL6zBf6m2i0JPCGe1MmMtWXy4yy8ufpczC3Tto1P6o+NT9h7BqxCPGrXttsG9DSBbUPLm5CgIxk4bg2mSlMiPu4k=
+	t=1733931895; cv=none; b=im/yR3Mnwke88gjfVn65zDLH18+ArdypEJYab8atGbHh1zvy6EBK6ZnMGJ+220gtYLWwzzQsnQ9YkxzOHoU5vCm+2fWIPpCMC5F56voQBVaoHsDeCSPd622af6VPqxZu8Ycuo6GNGyB+sjC0H/eAUMs9EN8ppzo+DhwpkhzRYxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733931494; c=relaxed/simple;
-	bh=9s0N/sC2onGljsBGBckykPqI3PZYxylUdQrBTFxK9CE=;
+	s=arc-20240116; t=1733931895; c=relaxed/simple;
+	bh=Y7RUfnCiAOKkUerIqaBCl0TUIFGov53LacoipgJNjPc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=M0T5LqsxTX3Z1YBX95HlVxoxgJAeezqycSCILg+Ep8r2bl7N5fiQ0dB/qenjQPvwa0mxRBPQk8Fpdka7esmrWf1/SQQFn8pPT1GZe/khPiWMz165BSYi1DmRgqH1i0QTu13BmXMoL+kewAdSgT9GGE+u3C7UtDK0wIHhBUTBIbU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=c/wjrEaD; arc=none smtp.client-ip=209.85.208.51
+	 In-Reply-To:Content-Type; b=kgKFLezcjBDlXER5eFw/AHLLhBY5glKsC3fOCjRdDXUbk4y0XiZVvY2lcw4d4CgdNghpK6p2qmyHyLL64guO8jgNF20iCOAUi595bOi3yf8xxXGBCK/Eih6fY1ST/gZnhcah56l1HzzvmYHmMoptZNVPelMtx/J1Z6A7yc/KMy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pZ6aMIe7; arc=none smtp.client-ip=209.85.221.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5cecbddb574so9453098a12.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 07:38:12 -0800 (PST)
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-3862df95f92so3496877f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 07:44:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733931491; x=1734536291; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1733931891; x=1734536691; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=dZL+QjDd50ix4QcrkrbPUTc5iKTneISn5uygpbVvMxE=;
-        b=c/wjrEaDykD/k1KrNFoia+blJ2VdlB/+Oetb3X/R65JNWE+PgoY+DJbVOWaDFDBtX3
-         dYJqQIvctkQzhw0M5sXyznOFO8lXjgEgy1zCNgrVZdRuJlchz2CRq0nUPdrpmkOCIhOC
-         CY9bNlJDAtJp1Xg6u2VbIYmisDU5jhF7byPAJF6XSqSVZDrQu9CoO/uyha4ehPCiuaQj
-         9Af0ivuKN11/+a+gqlH0+Myf9nIixpMiUgJbzfpMrcBwoj0NdeBadBnXW+VubmhDxnCY
-         3NYFC1CmR+XdpVE+HX/1j63/Xx2HQ2wgAuKtGIm8Du+pkHVJhU567lG8hlQ/1bP+519b
-         /RbQ==
+        bh=oBmna7+6RMIWIREX03MVhyyHeHj5nS5NLCMMk7SB1Kc=;
+        b=pZ6aMIe7eYcI80OMcQgywNLBmxx+zZtOtQGjflMD+DILV6NKFxFSZ3YeCAtMHwHKUP
+         KVXf7D6VFsfTJBLLuLsBxsO8HicK8Ub5tYFLBnzqmw+mj4K0fuf4YOG/j/u6ZuD5G9k6
+         1oh82fOxNMPA9K4tEhZswbcvbpbP88hOu0GoSnRhwALU2myveTI5T2pQPL8U4s6mcBBc
+         n4Ma7WUZugsr2qzYh7uhDMQIzEGzz/SRaMvJg69hGqZ5qJ0OSqls+XfSC+TXN0o1Dkee
+         gkjyxPeYmGDU209HDTBKACWSdO73TVktB7TRbIJ/jUHvdvUhUjSCdmQPoZfRvjT3bh+O
+         6Fsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733931491; x=1734536291;
+        d=1e100.net; s=20230601; t=1733931891; x=1734536691;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dZL+QjDd50ix4QcrkrbPUTc5iKTneISn5uygpbVvMxE=;
-        b=GmUrBISQxjbwbbACHrEYA6A5hJimtosiFTTUyMSzl9QcjPPikxIQ8a+76i96WeL4fb
-         z9FLj2zjaT47Z9BQNVhSxhhV0LGUBJVg0LImV9pMSFrKLjN+Fk7Tu5TtveNUAy1Rq3fV
-         F3I1v/16AumWzR0gE7tNR5qEOkRW/5wvom1uErDlPz4J/FCkop4tKhIBW85+IJTLD+s2
-         5egOOTa9NjU3TNYAvRmG1WGF1So1EEUVDLxIqvT3AHc6DVVmK+B4Su2JIUNinrwz5cta
-         yGQdgqwU4fgDjWsYiElFjyKPNfl+1IU7YdF8xINHW45EuDETZ5RWMZRp4X0+WnuyJfdA
-         DGSw==
-X-Forwarded-Encrypted: i=1; AJvYcCVJChi9It1ate8Q3YCR7gOLtScFIDXpcTD0H1pWNZ6CraM8oCfOInoh1RKLc8XcNtqs4WD9QTt1quGnRrBS@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxc1iZVA0HW+TS6ZBOqfwefte6XAeFCHh2KoOt+xbHP+nV/B8pt
-	VCO6PrlMxOIyLH3jUun6DxV0VtCcOXkKX/wdVT6BARRWBuAL28zpI/fUyOHjrbI=
-X-Gm-Gg: ASbGncv+PY9jcc2yGSolan2X7EgY7I7+24vYbCkYM7HxFd7Nu17OvGXaQmkxiqjrH7t
-	Cs4dDWpirQfEVhqgfT8fsDWJAY63I3Ax1MHM21sSwgHBi4xnSSE3niwO6eghFSWUHbVRWme3owf
-	YpDjpdBh8FSRBezAurmN3v0ED6qjiRKv3L4NhtgdbK4YdAXwooPDbUlErg4TSEDXQZDk4cdWcH+
-	kGRaROqzsxRDCitLHWDtOSwBZcAiwqDAMrjmauU/j1FIJ+eusGelHyRFQRL+AMXW4o=
-X-Google-Smtp-Source: AGHT+IGOtavSVi2ZpcjL+dW0dFdaXE7oxFgtmAh3UdBELTKBJeoCykev5SGGl/1KKB6JGd1rlD2VFQ==
-X-Received: by 2002:a05:6402:35d5:b0:5d0:d1e0:8fb2 with SMTP id 4fb4d7f45d1cf-5d445b3cf63mr41326a12.11.1733931490622;
-        Wed, 11 Dec 2024 07:38:10 -0800 (PST)
+        bh=oBmna7+6RMIWIREX03MVhyyHeHj5nS5NLCMMk7SB1Kc=;
+        b=A3Jcbgt3fLf5Y4Fffy2todGmbQCHHhgLY2rhDzgCWAHKg1nBb7S1XMJgM6n/Iu+SXr
+         pJRSTr6yGX7r3h4xLwuZmxDN9bu+3bN//ro0itjex90hq9zfDfAgY2sYgrvrtWWS/TFM
+         BmDmYHmSAoz0NcCZpvh6D8SBeyJ7eXMQAR9pwWUa/5F5vVJPuLhIlKS21mnyo4niVIZY
+         faFuQkPSVhZpMCb0YFS6TSiJgYdBthzp88DUaOz1zY1NKGfq2IPdfPFqjbSZu5Rql7yj
+         /1T7Gvz0EdSR06CPUx0JJDHIyiyi+zAMYORtmns9PfO50M/bY7nYKXvKxhh40zrmKdXn
+         V8pQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWp99dGD2LIF8LnXvJZ8BfaEeNnHzYvWgZcjsgtFyKzxiAIhgVd7t1L1m0hvZ7tEie+ACoHK37pcBFbAJJT@vger.kernel.org
+X-Gm-Message-State: AOJu0YyEpQXFYUDdSH3QnYA/Cw/ZUmAEMDrT+pLwnfX4kOamUkRZZYBb
+	ffZNxWSg4rSHH0BzUs0x88H8Ek/fUDOeior4QvsPJEN+qNWpGMB/5CFnNjqwmSE=
+X-Gm-Gg: ASbGnctvY4TCTPz5o9258GMEvf7q6bN0/DK2cLPQg5WYDLushEXZ0PK4GHnMyhKq/W9
+	gXCT07+hYarCs7vod1MoHDxF/V8D0VhvnBkCM8+x1+eLu0bu2Be9QC1DwFuioqxeAhTVVfT1r+U
+	9jxvNKzYlzGGgRSUfYtJs5z/mzlvVXg+EYSN4T4aSxnqR3/HsS03I5ODQVsc317m41Nygci/soQ
+	Gt5Pfxti3k18CpEPm+L731+HLB6fIUPkdSvLdG4SQmwugiCEK2chHMkm35t0KxFe5M=
+X-Google-Smtp-Source: AGHT+IEWZzmBMWvFGvTooD56kxpnFOuI8vUWhZdHT9OAfinfrH9O5pPMEGROg6P7/K5rwwn2X/PyIA==
+X-Received: by 2002:a05:6000:4807:b0:385:f092:e16 with SMTP id ffacd0b85a97d-387876c41ecmr45709f8f.55.1733931891604;
+        Wed, 11 Dec 2024 07:44:51 -0800 (PST)
 Received: from [192.168.0.40] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5d3c4a42052sm7861107a12.55.2024.12.11.07.38.09
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38782514da2sm1521777f8f.66.2024.12.11.07.44.50
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Dec 2024 07:38:10 -0800 (PST)
-Message-ID: <37523d35-c569-4bef-97aa-46b71236b1eb@linaro.org>
-Date: Wed, 11 Dec 2024 15:38:09 +0000
+        Wed, 11 Dec 2024 07:44:51 -0800 (PST)
+Message-ID: <12dabbc6-5813-4369-b882-2fc72333746c@linaro.org>
+Date: Wed, 11 Dec 2024 15:44:50 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -80,8 +80,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/16] media: qcom: camss: csiphy-3ph: Remove redundant
- PHY init sequence control loop
+Subject: Re: [PATCH 11/16] media: qcom: camss: csid: Add v4l2 ctrl if TPG mode
+ isn't disabled
 To: Depeng Shao <quic_depengs@quicinc.com>, rfoss@kernel.org,
  todor.too@gmail.com, mchehab@kernel.org, robh@kernel.org,
  krzk+dt@kernel.org, conor+dt@kernel.org, vladimir.zapolskiy@linaro.org
@@ -89,50 +89,79 @@ Cc: quic_eberman@quicinc.com, linux-media@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, kernel@quicinc.com
 References: <20241211140738.3835588-1-quic_depengs@quicinc.com>
- <20241211140738.3835588-3-quic_depengs@quicinc.com>
+ <20241211140738.3835588-12-quic_depengs@quicinc.com>
 Content-Language: en-US
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20241211140738.3835588-3-quic_depengs@quicinc.com>
+In-Reply-To: <20241211140738.3835588-12-quic_depengs@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 11/12/2024 14:07, Depeng Shao wrote:
-> From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> There is no CSID TPG in some modern HW, so the v4l2 ctrl in CSID driver
+
+"some modern HW" => "on some SoCs"
+
+> shouldn't be registered. Checking the supported TPG modes to indicate
+> if the TPG HW is existing or not, and only register v4l2 ctrl for CSID
+
+"TP HW is existing or not, and only register" => "TPG hardware exists or 
+not and oly registering"
+
+No need to abbreviate hardware to HW.
+
+>   only when TPG HW is existing.
+
+"when the TPG hardware exists" you could also say "is present" instead 
+of "exists".
+
+You have additional whitespace in your log before " only"
+
 > 
-> Adding a new CSIPHY init sequence using downstream as a reference prompted
-> me to look at why we are splitting up the init sequence into chunks.
-> 
-> Right now we declare CSI PHY init sequences as an array of five equally
-> sized writes with a hard-coded control loop to iterate through each of the
-> five indexes. One bug in this model is that if you don't have an even
-> number of writes, you can't init the PHY as you wish.
-> 
-> In downstream the original code has something of the character
-> phy_init_seq[MAX_LANES][MAX_PARAMS] which in upstream we have translated
-> into phy_init_seq[5][SOME_NUMBER_OF_EQUAL_WRITES];
-> 
-> What the code does is take a pointer to the first index of the
-> r = &phy_init_seq[0][0]; and then literally does write(r, value); r++;
-> 
-> The controlling loop that hard-codes '5' in-lieu of MAX_LANES does no
-> special sleep, fabric-coherence sync or even a printk() to justify its
-> existence. Our compilers are optimising all of this away anyway so lets
-> drop.
-> 
-> Reduce the array declaration down to one flat aggregate init and let the
-> code just step through. As a happy side-effect we can then also handle
-> odd-number writes as the number of elements in the init sequence will no
-> longer have to be evenly divisible.
-> 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > Signed-off-by: Depeng Shao <quic_depengs@quicinc.com>
-> Reviewed-by: Elliot Berman <quic_eberman@quicinc.com>
-> Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 > ---
+>   .../media/platform/qcom/camss/camss-csid.c    | 60 +++++++++++--------
+>   1 file changed, 35 insertions(+), 25 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
+> index 6cf8e434dc05..e26a69a454a7 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csid.c
+> +++ b/drivers/media/platform/qcom/camss/camss-csid.c
+> @@ -760,11 +760,13 @@ static int csid_set_stream(struct v4l2_subdev *sd, int enable)
+>   	int ret;
+>   
+>   	if (enable) {
+> -		ret = v4l2_ctrl_handler_setup(&csid->ctrls);
+> -		if (ret < 0) {
+> -			dev_err(csid->camss->dev,
+> -				"could not sync v4l2 controls: %d\n", ret);
+> -			return ret;
+> +		if (csid->testgen.nmodes != CSID_PAYLOAD_MODE_DISABLED) {
+> +			ret = v4l2_ctrl_handler_setup(&csid->ctrls);
+> +			if (ret < 0) {
+> +				dev_err(csid->camss->dev,
+> +					"could not sync v4l2 controls: %d\n", ret);
+> +				return ret;
+> +			}
+>   		}
+>   
+>   		if (!csid->testgen.enabled &&
+> @@ -838,7 +840,8 @@ static void csid_try_format(struct csid_device *csid,
+>   		break;
+>   
+>   	case MSM_CSID_PAD_SRC:
+> -		if (csid->testgen_mode->cur.val == 0) {
+> +		if (csid->testgen.nmodes == CSID_PAYLOAD_MODE_DISABLED ||
 
-A new version of this patch is required to ensure 7280 is handled
+if (csid->ctrls ||
 
-https://git.codelinaro.org/bryan.odonoghue/kernel/-/commit/4c831fd58aa7629f994b5f4d8533b154a74d35cc
+feels like a more natural test. Less cumbersome and also less typing.
+
+I think that change should be feasible, could you please update your 
+logic from if (csid->testgen.nmodes == CSID_PAYLOAD_MODE_DISABLED) to if 
+(csid->ctrls)
+
+Otherwise looks good but, I'll wait to see your next version before 
+giving an RB.
 
 ---
 bod
