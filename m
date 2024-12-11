@@ -1,185 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-41458-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41459-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 77EE49EC99A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 10:46:18 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id F39799EC9A2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 10:48:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C6041169733
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 09:46:12 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1B2781883C3B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 09:48:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FBB01D5CCD;
-	Wed, 11 Dec 2024 09:46:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D60DF19F12A;
+	Wed, 11 Dec 2024 09:48:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CXK98O+b"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FvYWfXxY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B02F19F12A
-	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 09:46:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FBC2236FA9;
+	Wed, 11 Dec 2024 09:48:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733910371; cv=none; b=nGUu/DT9llTCA1aFUgqHJ93+u9frmieI3NEz6HaXMBJu7RabeLOt/o7DIwEkJ1T0RBaqF+/PHI1fJGpIhqdU0oSxCW4LrOuvLTGgjqE99MQ4rJkUpcFKn2ZP5GUe9tMHfUOLhouHpWUJwjhgidQMuFeSkh+d5FtmCu07cV2Iz9c=
+	t=1733910503; cv=none; b=Rg0+L12HjE7ZunMfevyB6pBqHOCs4fL53hVWQtyOG8tMr0n6rSmRSGl/0+M+df9VeHttIl+URtaAM6RWbJ80yFhtXULs6TePiGguvTGxkC4WlaARE88IGdeTbBoirQOUhgk/zaaXSrzb+8oG6MnxqfMPthsK9Ap77txYsVPKnBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733910371; c=relaxed/simple;
-	bh=96xDb2QJ+Z2BJIZEG1wSU9Udptki77JpU9Ok634UV5w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=C/ZMR8ZDO3LclUmvzar7YSvOAcuBSS4nEwgPnIP6PWYUfunkNgbfHxzwX92JQisRbOP6SQl53LMzApj8s+zpTwzY7qiZBNwLo1r3th+XzpIO3SJJ1eX/N2DThcAt1yr1FEG5g5wqqveQmKVSII+J1GbtdQAZFrRI7FmiF+vCX6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CXK98O+b; arc=none smtp.client-ip=209.85.167.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-540215984f0so2800351e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 01:46:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733910367; x=1734515167; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=tea4vIJiGPJWHixoiDd5FPFnMHQTgOFRwTGQIe3zrGg=;
-        b=CXK98O+btl5yN/TDhGPuzbijVErfJ1QGdUjBjCIuZGWc0IKJ0cCcx1Atacq+kILEaU
-         6++iZS43VIOC2Nj3u1CGJn6YaKjvwuXyWhmXCDhDnk+vM06fuApm6WqYzJQgcYOCv/AT
-         6+h32G/E64BXt7LQxUs5eV7ijckBnFAetUk8LYORYHiZSuoBoYpp65JozAu0Li+NCqQs
-         gUFqMdkXSD7Cesv1J2hJCDxFcW+SEKQnPyhZijKLpO3PBcwezcqVZg7I+t0FjUHUc2ol
-         F8K6XTtumtFkrgLXPBy+R48l/4+cS/gwDAzHkxxCCmk+B7R1pNw7bjgz43e4Iyae42Jm
-         i9fg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733910367; x=1734515167;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tea4vIJiGPJWHixoiDd5FPFnMHQTgOFRwTGQIe3zrGg=;
-        b=QTqyECe/bqB+BrDmzuJonTnKcfO/4qENr7UDM0L4WXix14xZtkf5n2wkqulau3GtR9
-         zgyDgcwXsjncrR9I2mx5CuSMrS2mqI12zviksWfvwiSWd3IBvr1oJy4OOMCtGQw7hL0A
-         b/HnBA65jnDK2adw2M6daWU8dAH6EkunPE9mNDsv0hSpxj1aeq4MCia5RBqqAsvcCm4Q
-         17DkX9Onr0eddrLOK3Gj55sPaIDSnAdDnLWAQ2HvBClWYknVJSB9ts8+qykFipaBi4Hj
-         7271/hYefjp00LKMrdnlT1fdVuTqFeF0ydDzaJ9RDigtU0U1yGdLCkch4R4mWeI4j7ww
-         IOKQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV6Jw6FtO3ph0mSD3pgGMYmGHGHuk+DPhitimzBnhLUroUSyTn8hbqlCjKccEjtMjvQkNjRMjjS/mDqVbXv@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywheb4C85yRFCv4K6P9zjL3jZ/paXLeJEyTfkSjo5va9pkPSSag
-	m2PhuO/Os/sNQa7UxuF8cr+NxsgPl1bF55W4vRdzCIABgWGiRelGtm6rQpshpb0=
-X-Gm-Gg: ASbGnctKegfAlp8PU8z7l92BJwAXxFiYDzv8Hfq3AHAxMcQKlG3ktGlHJ6jsxJptamt
-	4L8YTJDF2mo8KCxyNqpAr5L29r8BnD9BIg3w6c32n7lrfZ2b5eNhPZ9Rxfel0ZDDN8NwTmWjR53
-	NrZefVqj2JxtFKRlZCFi26k3k9bG/+gJpxxRdPqw3FNeghY+qF22ctPEplfc7euEaU1AWvUWN+S
-	UAKF1dnXrMAy5egeI9oCx/IMwa+mRu0W11qfAz9EeWK6r8DGeml9P8J/pWJBA1U05R5QJRyL61X
-	Qy7zlmctMq+lGHhBtxSAGCw4xcQVWd0hPw==
-X-Google-Smtp-Source: AGHT+IEtlbI01qtT4hElvvQMyeb/TKdaC5qWfnqkdfHb5ztyN2VBFJ9f2yMWhkC3MvVYmq106RrFMw==
-X-Received: by 2002:a05:6512:3c85:b0:53e:1c3e:34 with SMTP id 2adb3069b0e04-5402a6056a1mr671998e87.38.1733910367530;
-        Wed, 11 Dec 2024 01:46:07 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53e22974f2bsm1973804e87.99.2024.12.11.01.46.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Dec 2024 01:46:06 -0800 (PST)
-Date: Wed, 11 Dec 2024 11:46:03 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Xiangxu Yin <quic_xiangxuy@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Kuogee Hsieh <quic_khsieh@quicinc.com>, Vinod Koul <vkoul@kernel.org>, 
-	Kishon Vijay Abraham I <kishon@kernel.org>, Linus Walleij <linus.walleij@linaro.org>, 
-	Bartosz Golaszewski <brgl@bgdev.pl>, quic_lliu6@quicinc.com, quic_fangez@quicinc.com, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org, 
-	linux-gpio@vger.kernel.org
-Subject: Re: [PATCH 3/8] phy: qcom: qmp-usbc: Add DP phy mode support on
- QCS615
-Message-ID: <t5vcjlf44fhae4f2h75cfs3f7r6tdstw4ysmkapvvawj6xp23x@xnxqnxvyhshe>
-References: <20241129-add-displayport-support-for-qcs615-platform-v1-0-09a4338d93ef@quicinc.com>
- <20241129-add-displayport-support-for-qcs615-platform-v1-3-09a4338d93ef@quicinc.com>
- <CAA8EJppOR_UXoVpMt-dhfWdCz3UNfsXGdz8X9NqpaSmYj3AZDg@mail.gmail.com>
- <5ea14162-567b-462d-be02-b73b954b7507@quicinc.com>
- <5whv4z7u6fkfwlv5muox5dmv6fow4mga76ammapw7wph7vwv3f@xibcjdfqorgf>
- <iqcofcntirmlwcpyfr4yabymqfcgyrij57bibf337tmxpa73t6@npkt6wquenf6>
- <527baded-f348-48a8-81cd-3f84c0ff1077@quicinc.com>
+	s=arc-20240116; t=1733910503; c=relaxed/simple;
+	bh=PzJ50m4BDRg1Cy0XQKIOaQwF/EIB3tiAhH96mrMxmMQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=i3ljxb2xzOL8ezjSyg+fiZwo7yFUEq11XV8LCgVNIw1bFW98ZZiqRjqX62rMuCorsB4SXZncy8PfhprMfBoAFFKFoRan2OiiN0bbGVjcxrQfzBVTWhqt1xmmJ8BDNnj6A5q/uBcTTbloEhy0RWF2dLNtaWehMDI6Mw8Lm1F7iz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FvYWfXxY; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC8DEC4CED2;
+	Wed, 11 Dec 2024 09:48:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1733910503;
+	bh=PzJ50m4BDRg1Cy0XQKIOaQwF/EIB3tiAhH96mrMxmMQ=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=FvYWfXxYpLmDdBBYotX92qXlwo2x/c82HRq9BDyPIIlny2Dxq5fqxbWaItsnkoTRM
+	 NTTmQm6555A/BuNIu15awhhdT6GZokvHb1I3XHg8+4ZHoayPXShh1o1jojlEcZby0J
+	 +qx0mwawolgDDlyL2XPGQppLLN0AGjgCZsIjrfRN5IeJbGFfYnz4xuzOVDcSH204sn
+	 5FeODFXzcgXXEtX4peStxaoAO3HKg5M9o7hYNHxVBcwHplEuaYcBiGpyN8Xd6egt/h
+	 0SApJ3aRVoTkkVcRhKmNJGKAgtqWQfjy5sHzXN/huocyMNQfXFMxoANaUWmZPhobpI
+	 RyLbIzrZSAvgg==
+Message-ID: <f818f089-0490-42da-9aee-1a7006c11978@kernel.org>
+Date: Wed, 11 Dec 2024 10:48:15 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <527baded-f348-48a8-81cd-3f84c0ff1077@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/4] dt-bindings: net: bluetooth: qca: Expand
+ firmware-name property
+To: "Cheng Jiang (IOE)" <quic_chejiang@quicinc.com>
+Cc: Marcel Holtmann <marcel@holtmann.org>,
+ Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Rob Herring
+ <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Balakrishna Godavarthi <quic_bgodavar@quicinc.com>,
+ Rocky Liao <quic_rjliao@quicinc.com>, linux-bluetooth@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, quic_jiaymao@quicinc.com,
+ quic_shuaz@quicinc.com, quic_zijuhu@quicinc.com, quic_mohamull@quicinc.com
+References: <20241210151636.2474809-1-quic_chejiang@quicinc.com>
+ <20241210151636.2474809-2-quic_chejiang@quicinc.com>
+ <vbwg7djb4me6i4ow2q74ltqjxvkxeulhzyq4n6ak7aifhtf36f@x66pjje2iu6u>
+ <62afbaea-67b1-4572-9e78-d1dbe5fae20a@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <62afbaea-67b1-4572-9e78-d1dbe5fae20a@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Dec 11, 2024 at 08:46:16AM +0800, Xiangxu Yin wrote:
-> 
-> 
-> On 12/10/2024 11:09 PM, Dmitry Baryshkov wrote:
-> > On Thu, Dec 05, 2024 at 08:31:24PM +0200, Dmitry Baryshkov wrote:
-> >> On Thu, Dec 05, 2024 at 09:26:47PM +0800, Xiangxu Yin wrote:
-> >>>
-> >>>
-> >>> On 11/29/2024 10:33 PM, Dmitry Baryshkov wrote:
-> >>>> On Fri, 29 Nov 2024 at 09:59, Xiangxu Yin <quic_xiangxuy@quicinc.com> wrote:
-> >>>>>
-> >>>>> Extended DP support for QCS615 USB or DP phy. Differentiated between
-> >>>>> USBC and DP PHY using the match table’s type, dynamically generating
-> >>>>> different types of cfg and layout attributes during initialization based
-> >>>>> on this type. Static variables are stored in cfg, while parsed values
-> >>>>> are organized into the layout structure.
-> >>>>
-> >>>> We didn't have an understanding / conclusion whether
-> >>>> qcom,usb-ssphy-qmp-usb3-or-dp PHYs are actually a single device / PHY
-> >>>> or two PHYs being placed next to each other. Could you please start
-> >>>> your commit message by explaining it? Or even better, make that a part
-> >>>> of the cover letter for a new series touching just the USBC PHY
-> >>>> driver. DP changes don't have anything in common with the PHY changes,
-> >>>> so you can split the series into two.
-> >>>>
-> >>> Before implement DP extension, we have discussed with abhinav and krishna about whether use combo, usbc or separate phy.
-> >>
-> >> What is "DP extension"?
-> >>
-> I'm sorry confusion casued by my description. It's means extend DP implemnt for USBC phy driver.
-> >>>
-> >>> We identified that DP and USB share some common controls for phy_mode and orientation.
-> >>> Specifically, 'TCSR_USB3_0_DP_PHYMODE' controls who must use the lanes - USB or DP,
-> >>> while PERIPH_SS_USB0_USB3PHY_PCS_MISC_TYPEC_CTRL controls the orientation.
-> >>> It would be more efficient for a single driver to manage these controls. 
-> >>
-> >> The question is about the hardware, not about the driver.
-> >>
-> >>> Additionally, this PHY does not support Alt Mode, and the two control registers are located in separate address spaces. 
-> >>> Therefore, even though the orientation for DP on this platform is always normal and connected to the video output board, 
-> >>> we still decided to base it on the USBC extension.
-> >>
-> >> Could you please clarify, do usb3-or-dp PHYs support DP-over-USB-C? I
-> >> thought that usbc-or-dp platforms support that, but they don't
-> >> support DP+USB pin configuration. Note, the question is broader than
-> >> just QCS615, it covers the PHY type itself.
-> >>
-> >> Also, is TCSR configuration read/write or read-only? Are we supposed to
-> >> set the register from OS or are we supposed to read it and thus detemine
-> >> the PHY mode?
-> > 
-> > Any updates on these two topics?
-> > 
-> Still confirming detail info with HW & design team.
-> I’ll update the information that has been confirmed so far.
-> This phy support DP-over-USB-C,but it's not support alt-mode which 2 lane work for DP, other 2 lane work for USB.
-> TCSR phy mode is read/write reg and we can read for determine phy mode.
+On 11/12/2024 10:39, Cheng Jiang (IOE) wrote:
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml b/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
+>>> index 7bb68311c..2782d2325 100644
+>>> --- a/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
+>>> +++ b/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
+>>> @@ -101,7 +101,10 @@ properties:
+>>>    max-speed: true
+>>>  
+>>>    firmware-name:
+>>> -    description: specify the name of nvm firmware to load
+>>> +    description:
+>>> +      If one item is present, specify the name of the NVM firmware to load.
+>>> +      If two items are present, the first item specifies the name of the NVM,
+>>> +      and the second specifies the name of the rampatch firmware to load.
+>>
+>> Don't repeat constraints in free form text. Use proper constraints so
+>> you can validate your DTS. And then actually do validate your DTS...
+>>
+> It seems unnecessary to add this description, so I will drop this change. Is that okay?
 
-Ok, thanks for the explanation. From my point of view:
+You need to list the items and describe them. See how all other bindings
+do it.
 
-- Implement the DP PHY to be a part of the same driver. Each device
-  supported by the usbc driver should get both PHYs.
-
-- Make sure not to break the ABI: #phy-cells = <0> should still work and
-  return USB PHY, keeping backwards compatibility. Newer devices or
-  upgraded DT for old devices should return USB PHY for <... 0> and DP
-  PHY for <... 1>.
-
-- I'm not shure how to handle the USB and DP coexistence, especially in
-  your case of the USB-or-DP PHY.
-
--- 
-With best wishes
-Dmitry
+Best regards,
+Krzysztof
 
