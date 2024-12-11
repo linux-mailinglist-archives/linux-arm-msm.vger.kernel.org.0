@@ -1,176 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-41556-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41557-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B469B9ED6CC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 20:51:20 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id CD2849ED710
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 21:12:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 11C48165FA6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 19:51:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7C8D51887CAA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 20:12:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4B55C148;
-	Wed, 11 Dec 2024 19:51:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E93A8200BBB;
+	Wed, 11 Dec 2024 20:12:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="N6kXBbX5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FATNfFS1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5B5E2594BD;
-	Wed, 11 Dec 2024 19:51:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D9C81D6DA4
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 20:12:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733946676; cv=none; b=p/CeSpgpqR8wNZGemeIa9HS1G4yG5dBP0ckRKpT7bJPaHLJat7uj8k3TyUtmsHm674HuWN9tF/n/G5TwA2A1IB0bhHhWCc9KHIUmVAbPBsIqbJIpoo9D6K4QE6NxJXoGYpLz8ueY/tjXWAQ3k3qui1UlOuQpex+FMpWRm99DUXk=
+	t=1733947960; cv=none; b=GL1alhWOn9HXmMpX6RcPrqBDitTf1MrAHxqBerQp2vhAVqn9soAD2VvdIbzcMpefldMmp8fzzLUljnxcnxI0LzcAeLntAIlu16qWQUnomxnleDiXbRHTMmSsAwO3zdlIiuI3CPfNiX1HYETTBGLuJjjhsbJVzc3XXL+MYfRGyRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733946676; c=relaxed/simple;
-	bh=fyJgyGt1CiaeIn2+VN6b1zneVUnJ3D4ZvGoNZMQvU3k=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=jNHf6Aceg7UFMmEwbvNwMvVuQGkMMKJuMSH2xnNB2Z7srGElD0XaJkvvg9H2o1vw4uHteAT8OjJ0cBEAFSxtUaPxrOL+raZ6KVzioTNjTHzJYON/vC3ZuMxzu5SN4GSzhiwkpnczE7ly9v3HSEHpoS87YkPe80VVOQyK74aY7GQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=N6kXBbX5; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BBHD9Wf027271;
-	Wed, 11 Dec 2024 19:50:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=MvF/3cEEO+ynWM7AIi6l4o
-	oMXkmQJX7gLsYFNHiZfbo=; b=N6kXBbX59DaNQUS87RC5F0Y22/tjwfVNde0IqV
-	ytj8dRK5Z6J6A4Yy8p2SdhfAK/jexHWwtpfp3QY0zOc/AaolBXt+54Z6d92N8gt0
-	SN+F6j6YBwlTDwzN0tLZy5FIkeBbm0/tREn0DEu7OJVFPyHUVPfx3V1ySBJqFqOv
-	4UoP9yn2HydLano1XtfAB2grocUFDze9FEXetQwp3yJ4ebAQxHF3lE63CazxtBwN
-	I3LP+HcvVKaySbDZ1CpwtSHoKYsXI/Lz1R8kCwTe0QLHR8qd8xFvc0lyCISImZ7h
-	+9QGzSln3BdCelid+MqWAUNcjVhSduD/+Acrq/dKtuQyjeMQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43etn8v083-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 11 Dec 2024 19:50:58 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BBJow5L022678
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 11 Dec 2024 19:50:58 GMT
-Received: from abhinavk-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 11 Dec 2024 11:50:57 -0800
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Date: Wed, 11 Dec 2024 11:50:26 -0800
-Subject: [PATCH v2] drm/msm/dpu: check dpu_plane_atomic_print_state() for
- valid sspp
+	s=arc-20240116; t=1733947960; c=relaxed/simple;
+	bh=/fVcvfI/nJgq0KL9QHFEEc3B//jpEClgu6sMbVc2hJE=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=ij/OydOoOz4khqG0+CIEks2lxwX2mS+/LseV1yN0rBtqbiMBRZr9PwCXBWen+xbkexxJj024Nr81pIgx+zEAi/m+ewF6b7HdvaHQHu2lO70T0YrHnuOKDHphqOwSQDQvBSStj/jptGerp/fEMrWFX2w33F9NoyJKq/5Lv+1kk30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FATNfFS1; arc=none smtp.client-ip=209.85.221.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-38637614567so2252605f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 12:12:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1733947957; x=1734552757; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=TPN2+AhDq4P0SWNYP6pOLiBUFHEUMd0r1OKMpQRaBeY=;
+        b=FATNfFS18kvqaKIJKr/FAXZZq8pJ/DSe7M5/JRLICn/BMsu08fL3+FZjtQ8m4JgnMf
+         opTGKwMkj/aDAc5KoTV90802yFTRaaKVvfbnhqPtKXQcL5MgSBA0K4cNb08RJlVWMur9
+         Bo8EH0L1D0ez1LbfxXYS3zE78TJPNRw/CE5xVP/OvqtBTk4l2iHy0Qhmj2wGGnY1Jt9T
+         kMa9GWTIFfpM9YOnu4B5+7EbpePIh5tJ9DDb35Zes1aVxb4i4T0t3tQ51N1LKWXNMHi2
+         CKdhHQUxhz35Vckk+VlLIMgNUiQKrHd4oHbwGxjgBmYanNhAwg0skyxrGtZEWHBrVCe2
+         QhdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733947957; x=1734552757;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=TPN2+AhDq4P0SWNYP6pOLiBUFHEUMd0r1OKMpQRaBeY=;
+        b=NGZUsRLKTNiSFODy8GqGkCDACeVeUhcTjcnXOwUsFJtSOzoDP8jcjBf0pjX1NhKD4K
+         ja3SyDeofwYDLD9xqatYJFFJdRWUwf+C7BFPpvdPh00LONl2tDCdk3BOSdy0fNzcH944
+         Z+Z+QJKUjO7Ri7bh20QTiYqMtXfVgoSutZves/OPeLb456dmyZuQGW+aRlVd3SHrdgke
+         hzWpuNXPZeTbnGraIgnawggeKDXR7FM/jczTqWyNxLKjyrnvMgn4gLegmN9u0Xsrlpv+
+         DUYQm7HcFW5+MTkkWx4wOlYYxl+IUwZP1uX3XmoWYW54vlJ2Pecxz+9Zfy0ByR17Oibz
+         Oq/A==
+X-Forwarded-Encrypted: i=1; AJvYcCWMy8DWv3a3rUQpX3op9FXBr/jeo/6eSNG4e5SpCSLvKTbdLARk6f+QJoQ5GQnklQSpRenxmAbkl7j2InSZ@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxip4t8YwAicIAhVIHhktvJ+OBXWaWHLyzjD8JVOSEO+Tg2UM9E
+	5CDjRq8N+pFxQQ9GppPOAb64DN0BMbURlXFOOkOkxie77TphqZ5nGspcKCeNLjM=
+X-Gm-Gg: ASbGncvmVRY/BYUvpGqAJ7nkeVU1SGVdJ6/HfX3edUnG0Wt4lKlhiWnW7JdWWgElvjF
+	fFSuwmOKf9t+bB/+lDTXAr3XbTwgY1x2Xjqa9cKmlcRAgANkYrLVaEOhopxpILzhNKErlt6v2Di
+	kYI9dMTaV2xLVnyagt6VcFLQm8S10NLmhH5KfrfyiB5In4GshkqrR2x9D2K13OxUxPtM+6juce3
+	08aqb5HGPeR+3YFaOzcWUPOQQtmSuzU8nA1t3aWV0vviQJMVP3J8VfG
+X-Google-Smtp-Source: AGHT+IGhKdHf66Trsg0Xay3Wa/RqDWr8rS+2Oi6F9OIapryWlc50G8eqxXs0nor3X97sj8+KlZI9gA==
+X-Received: by 2002:a5d:5984:0:b0:385:edd1:2245 with SMTP id ffacd0b85a97d-3864cea45bbmr3619738f8f.30.1733947957412;
+        Wed, 11 Dec 2024 12:12:37 -0800 (PST)
+Received: from localhost ([2.222.231.247])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4361ee54736sm23968785e9.41.2024.12.11.12.12.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 Dec 2024 12:12:37 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20241211-check-state-before-dump-v2-1-62647a501e8c@quicinc.com>
-X-B4-Tracking: v=1; b=H4sIAAHtWWcC/4WNQQ6CMBBFr0Jm7Zi2AQVX3sOwKMNUJgYKLRAN4
- e5WLuDyveS/v0HkIBzhlm0QeJUofkhgThlQZ4cno7SJwSiTa6MqpI7phXG2M2PDzgfGdulHNFb
- pwhIXLq8grcfATt5H+VEn7iTOPnyOo1X/7P/mqlHj1VZt2dBF5aW7T4uQDHQm30O97/sXK4oUU
- cAAAAA=
-X-Change-ID: 20241209-check-state-before-dump-2a015ace5f49
-To: Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, "Simona
- Vetter" <simona@ffwll.ch>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        "Stephen
- Boyd" <swboyd@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1733946657; l=2856;
- i=quic_abhinavk@quicinc.com; s=20240509; h=from:subject:message-id;
- bh=fyJgyGt1CiaeIn2+VN6b1zneVUnJ3D4ZvGoNZMQvU3k=;
- b=IoKRQXDJwrwrnUTWJPB0i6A31PvQtkMtCi8KKkky0EqvmrHTTzCrTcF2+gnjwnAWACKV6MhQo
- 4cwxWyhA/b9BZ5+C5rpe3rEGydrf7kzDtCNakmgvP5C1FDKUeXB/iD4
-X-Developer-Key: i=quic_abhinavk@quicinc.com; a=ed25519;
- pk=SD3D8dOKDDh6BoX3jEYjsHrTFwuIK8+o0cLPgQok9ys=
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: chqW7dXoVeI_8K3WVzQX75NEPwAk413t
-X-Proofpoint-GUID: chqW7dXoVeI_8K3WVzQX75NEPwAk413t
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- lowpriorityscore=0 spamscore=0 impostorscore=0 adultscore=0 suspectscore=0
- bulkscore=0 priorityscore=1501 malwarescore=0 phishscore=0 mlxscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412110141
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 11 Dec 2024 20:12:36 +0000
+Message-Id: <D69592H3JKB6.21HDMPXX9Q6OF@linaro.org>
+Cc: <broonie@kernel.org>, <konradybcio@kernel.org>,
+ <konrad.dybcio@oss.qualcomm.com>, <andersson@kernel.org>,
+ <srinivas.kandagatla@linaro.org>, <tiwai@suse.com>, <lgirdwood@gmail.com>,
+ <perex@perex.cz>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+ <conor+dt@kernel.org>, <dmitry.baryshkov@linaro.org>,
+ <linux-sound@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+ <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v1 05/10] dt-bindings: arm: qcom-soc: extend pattern
+ matching for QRB4210/QRB2210 SoCs
+From: "Alexey Klimov" <alexey.klimov@linaro.org>
+To: "Krzysztof Kozlowski" <krzk@kernel.org>
+X-Mailer: aerc 0.18.2
+References: <20241101053154.497550-1-alexey.klimov@linaro.org>
+ <20241101053154.497550-6-alexey.klimov@linaro.org>
+ <ghlkqehfs5sagxrcvyywixfkt6ie3pwwtqm2j3n3c3xytjl3sb@d435kwmo3nki>
+In-Reply-To: <ghlkqehfs5sagxrcvyywixfkt6ie3pwwtqm2j3n3c3xytjl3sb@d435kwmo3nki>
 
-Similar to the r_pipe sspp protect, add a check to protect
-the pipe state prints to avoid NULL ptr dereference for cases when
-the state is dumped without a corresponding atomic_check() where the
-pipe->sspp is assigned.
+On Fri Nov 1, 2024 at 7:54 AM GMT, Krzysztof Kozlowski wrote:
+> On Fri, Nov 01, 2024 at 05:31:49AM +0000, Alexey Klimov wrote:
+> > Add missing QRB platform name to the pattern matching Qualcomm compatib=
+les.
+> >=20
+> > Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+> > ---
+> >  Documentation/devicetree/bindings/arm/qcom-soc.yaml | 4 ++--
+>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Fixes: 31f7148fd370 ("drm/msm/dpu: move pstate->pipe initialization to dpu_plane_atomic_check")
-Reported-by: Stephen Boyd <swboyd@chromium.org>
-Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/67
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
----
-To: Rob Clark <robdclark@gmail.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Sean Paul <sean@poorly.run>
-To: Marijn Suijten <marijn.suijten@somainline.org>
-To: David Airlie <airlied@gmail.com>
-To: Simona Vetter <simona@ffwll.ch>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: dri-devel@lists.freedesktop.org
-Cc: freedreno@lists.freedesktop.org
-Cc: linux-kernel@vger.kernel.org
-Cc: Stephen Boyd <swboyd@chromium.org>
----
-Changes in v2:
-- move pstate->stage out of the pipe->sspp check
-- add reported-by credits for Stephen
-- Link to v1: https://lore.kernel.org/r/20241209-check-state-before-dump-v1-1-7a9d8bc6048f@quicinc.com
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-index 3ffac24333a2a5b01135d4ece418432d4a74dc04..703e58901d53f26eba69566c2784655015c6a584 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-@@ -1335,12 +1335,15 @@ static void dpu_plane_atomic_print_state(struct drm_printer *p,
- 
- 	drm_printf(p, "\tstage=%d\n", pstate->stage);
- 
--	drm_printf(p, "\tsspp[0]=%s\n", pipe->sspp->cap->name);
--	drm_printf(p, "\tmultirect_mode[0]=%s\n", dpu_get_multirect_mode(pipe->multirect_mode));
--	drm_printf(p, "\tmultirect_index[0]=%s\n",
--		   dpu_get_multirect_index(pipe->multirect_index));
--	drm_printf(p, "\tsrc[0]=" DRM_RECT_FMT "\n", DRM_RECT_ARG(&pipe_cfg->src_rect));
--	drm_printf(p, "\tdst[0]=" DRM_RECT_FMT "\n", DRM_RECT_ARG(&pipe_cfg->dst_rect));
-+	if (pipe->sspp) {
-+		drm_printf(p, "\tsspp[0]=%s\n", pipe->sspp->cap->name);
-+		drm_printf(p, "\tmultirect_mode[0]=%s\n",
-+			   dpu_get_multirect_mode(pipe->multirect_mode));
-+		drm_printf(p, "\tmultirect_index[0]=%s\n",
-+			   dpu_get_multirect_index(pipe->multirect_index));
-+		drm_printf(p, "\tsrc[0]=" DRM_RECT_FMT "\n", DRM_RECT_ARG(&pipe_cfg->src_rect));
-+		drm_printf(p, "\tdst[0]=" DRM_RECT_FMT "\n", DRM_RECT_ARG(&pipe_cfg->dst_rect));
-+	}
- 
- 	if (r_pipe->sspp) {
- 		drm_printf(p, "\tsspp[1]=%s\n", r_pipe->sspp->cap->name);
-
----
-base-commit: 9d6a414ad31e8eb296cd6f2c1834b2c6994960a0
-change-id: 20241209-check-state-before-dump-2a015ace5f49
-
-Best regards,
--- 
-Abhinav Kumar <quic_abhinavk@quicinc.com>
+Since I am not going to use "qrb" in this patches, should I resend
+it as a separate patch? Because we have platforms qrb4210 and etc.?
 
 
